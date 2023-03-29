@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2027" "Monday" "19" "September" "2016" "15:59:31" "-0400" "Mike Santillana" "michael.santillana@wework.com" "<CAARAU46U0p2cvjaqa_MQX_kULk5cDMTufV52zYu-Ad_=8Ps9tg@mail.gmail.com>" "67" "Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" nil nil nil "9" "2016091919:59:31" "[oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" (number mark "U       michael.sant Sep 19   67/2027  " thread-indent "\"Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode\"\n") "<20160919195351.GB29516@hunt>" ("<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>" "<20160919195351.GB29516@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 6050 invoked by uid 550); 19 Sep 2016 20:03:44 -0000
+Received: (qmail 3173 invoked by uid 550); 29 Mar 2023 19:25:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,109 +7,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5258 invoked from network); 19 Sep 2016 19:59:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=wework-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xkR1v6r7Al976LwbTGpEAf4KzwDIzca5Kd8uNdAAj9A=;
-        b=he/wUFhK1GyRYX0TLtuiJW3T+69SCodOaC6a3LA3/PE5eBSDt3rdjnMpy3QJ5BgwTS
-         R1g7L9o0Gqeegs3/eqMhilxx8rZVVr+t73XjbUMFewBUeEvLldmDJcshE/tICMi0ALUc
-         PPQ899nZ/WnJZOTSLerP89ydT//uYXBzNMu2zHYDVjfZC+wEcv0Ck30vZgDyzI0fBCvJ
-         zuoHuIaUk7jpsNnivku92SOAra1FOJk79x4kflcrfGkCWPd41QHauuzpLJlC13oeW0Nl
-         iNUqokdYHkwp+9xBjvAubaCDXEsybfPsPOkQygRiY2IKRl8TP2ITk2Phz+pZWO8e6g3A
-         cF0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xkR1v6r7Al976LwbTGpEAf4KzwDIzca5Kd8uNdAAj9A=;
-        b=b4C/ElUkKhi13xKK0Q/9zRNuEp08tJAvqoH2ERlnms6jV9fjId/ix7OA5EfJPEnthL
-         gLN5/f8UlimU18r7yqzfjSblK9JKYldkRH+5NgnywVr9QixNV7As0dWFjJPCoS3RLgl1
-         nXzLMCWzq8q/ryqe67wfs0aUEdUmtIGCc2fgG4sJkYZMSKrnZosi7sVvI712bQXgFh13
-         HeO/542pe++5B9jbhfL5JTYFKqkLqAoNCCgWaBPoP20141NTytzwfzgKyldRi+60lx+K
-         Nvt2oam+utzI2crcW2x/kDfV5ZOn6A4Tq/EO9MjsgAFtXrkGLBGR5xIWnjugJanX/raz
-         SfLA==
-X-Gm-Message-State: AE9vXwNUN2WCH77YFlZvsVaAIQdiq/KS0LUQGD1fdfr716I7m1y2s42c+IqKuyBjstCsEWruEdSW+e6S5UkxuweN
-X-Received: by 10.28.216.202 with SMTP id p193mr9798718wmg.82.1474315171565;
- Mon, 19 Sep 2016 12:59:31 -0700 (PDT)
+Received: (qmail 3152 invoked from network); 29 Mar 2023 19:25:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=4lqxAw/+bwxLa4WsPr6TSmu7MgGu6dxgy//w05Z1tM4=; b=Fy4oNkes+3ZmJUZ2esRLFA96LE
+	irUWexf1HYIs9S6sdq6t5WACaD53Ue+cv4QEXDWtPNV7cUk18y8NOt/46WUd8jWvQUP1/8ZQLc+bD
+	MbN0YQu9nY1A/ROnu5gVOi6ongDFF3J+UKcVUFcj+VTf1F5N3kLsORVE9cEnbIsPzUE0wTIHoPuqy
+	RjMsf8JFjJuWqjNvejl5T951y8+jtqMq5hlLMYXmkgzpNWD3/y3SnQHDiml9EbV13ADdg7Q7pMpe1
+	ogpUEKRsdb7+0e4P7xRKjBsQkRIhswDMO4gSDchMSPMDz1DKKplSJEmIkdW5zaRdekyzbuX2NYw1n
+	cD1r9BWw==;
+Date: Wed, 29 Mar 2023 20:24:57 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZCSQiSn/4nRls/e+@tautology.pseudorandom.co.uk>
+References: <20230329133450.GK21675@suse.com>
 MIME-Version: 1.0
-In-Reply-To: <20160919195351.GB29516@hunt>
-References: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
- <20160919195351.GB29516@hunt>
-From: Mike Santillana <michael.santillana@wework.com>
-Date: Mon, 19 Sep 2016 15:59:31 -0400
-Message-ID: <CAARAU46U0p2cvjaqa_MQX_kULk5cDMTufV52zYu-Ad_=8Ps9tg@mail.gmail.com>
-To: oss-security@lists.openwall.com, seth.arnold@canonical.com
-Cc: "'Apple' via" <infosec@wework.com>
-Content-Type: multipart/alternative; boundary=001a11468f0c16a705053ce1c068
-Subject: Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in
- GCM Mode
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329133450.GK21675@suse.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] polkitd service user privilege separation
 
---001a11468f0c16a705053ce1c068
-Content-Type: text/plain; charset=UTF-8
+On Wed, 29 Mar 2023 at 15:34:50 +0200, Johannes Segitz wrote:
+> Since the user owns the directory it's easy to escalate from user polkitd
+> to root.
 
-Hi Seth,
+On one hand, yes. This makes the privilege separation not actually very
+practically useful.
 
-The random_iv method automatically sets the IV to be used by the cipher:
-http://ruby-doc.org/stdlib-1.9.3/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv.
-The reason I do "iv = cipher.random_iv" is to get the IV value so I can
-print the value (or traditionally, pass it along so it can be used in the
-decryption phase).
+On the other hand, the entire point of polkit is to answer requests from
+privileged system services, of the form:
 
-I hope this clears the example up a bit.
+    [smcv] wants to [turn off wifi], should I allow this?
 
-Thanks
+(where the parts inside square brackets are examples/placeholders), and
+many of the things you can do with those requests are effectively already
+root-equivalent. In particular, if you have the pkexec tool installed, the
+whole point of that tool is that it's setuid root and makes requests like:
 
+    [smcv] wants to [run as root: mkdir /pwned], should I allow this?
 
-*WeWork | Mike Santillana*
-Security Engineer
-845-709-5655
-www.wework.com
+and it is already trusting the polkitd process, running as the polkitd
+user, to return "yes" or "no" according to the system's security policy.
 
-Create Your Life's Work
+> This demonstration caused some confusion in the original report to
+> upstream. The POC is here to demonstrate the issue, not how real world
+> exploitation would work. A real world exploit would rely on another
+> vulnerability to be able to act as polkitd and then use the issue outlined
+> here to escalate privileges.
 
-On Mon, Sep 19, 2016 at 3:53 PM, Seth Arnold <seth.arnold@canonical.com>
-wrote:
+Let's suppose you're able to act as the polkitd user as a result of a
+vulnerability. Wouldn't it be easier to get root (or more generally,
+permission to do a privileged thing) by tracing, replacing or otherwise
+subverting the polkitd process?
 
-> On Mon, Sep 19, 2016 at 03:20:02PM -0400, Mike Santillana wrote:
-> > An IV reuse bug was discovered in Ruby's OpenSSL library when using
-> > aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
-> > setting the key, the cipher will default to using a static IV. This
-> creates
-> > a static nonce and since aes-gcm is a stream cipher, this can lead to
-> known
-> > cryptographic issues.
-> >
-> > The documentation does not appear to specify the order of operations when
-> > setting the key and IV [1]. As an example, see the following insecure
-> code
-> > snippet below:
-> >
-> > Vulnerable Code:
-> >
-> > def encrypt(plaintext)
-> >     cipher = OpenSSL::Cipher.new('aes-256-gcm')
-> >     iv = cipher.random_iv # Notice here the IV is set before the key
-> >     cipher.key = '11111111111111111111111111111111'
-> >     cipher.auth_data = ""
-> >     ciphertext = cipher.update(plaintext) + cipher.final
-> >     tag = cipher.auth_tag
-> >
-> >     puts "[+] Encrypting: #{plaintext}"
-> >     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
-> > #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
-> > end
->
-> Hello,
->
-> I think you have a mistake in this sample code, 'iv' is assigned but never
-> used (aside from being printed).
->
-> Your github code is far more complicated but looks like it is doing the
-> right thing.
->
-> Thanks
->
+In particular, if the vulnerability you're exploiting is arbitrary code
+execution in the polkitd process (which is normally the only thing
+running as uid polkitd), then you already have the ability to choose
+how polkitd answers those requests; and if you have that, then as an
+attacker, you've already won, because you can send a request that will
+make you root-equivalent (for example from pkexec) and then coerce the
+polkitd process into answering "yes, that's fine".
 
---001a11468f0c16a705053ce1c068--
+polkitd can only be either trusted or untrusted, we can't have it both
+ways. I think the main thing that's wrong here is the documentation that
+claims that the privilege separation is meaningful.
+
+    smcv
