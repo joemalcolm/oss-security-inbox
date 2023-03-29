@@ -1,92 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/5
-Message-Id: <E1qkpDr-0005W1-UI@xenbits.xenproject.org>
-Date: Mon, 25 Sep 2023 17:18:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 439 v2 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/29/1
+Message-ID: <1e4b5d5c-f78e-348e-7651-6013bcd54fc5@redhat.com>
+Date: Wed, 29 Mar 2023 14:31:54 +0200
+From: Olivier Fourdan <ofourdan@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: X.Org Security Advisory: CVE-2023-1393: X.Org Server Overlay Window Use-After-Free
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-            Xen Security Advisory CVE-2023-20588 / XSA-439
-                               version 2
+-------- Forwarded Message --------
+Subject: X.Org Security Advisory: CVE-2023-1393: X.Org Server Overlay Window Use-After-Free
+Date: Wed, 29 Mar 2023 14:15:05 +0200
+From: Olivier Fourdan <ofourdan@...hat.com>
+To: xorg-announce@...ts.x.org
+CC: xorg@...ts.x.org, xorg-devel <xorg-devel@...ts.x.org>, zdi-disclosures@...ndmicro.com
 
-             x86/AMD: Divide speculative information leak
+X.Org Security Advisory: March 29, 2023
 
-UPDATES IN VERSION 2
-====================
+X.Org Server Overlay Window Use-After-Free
+==========================================
 
-Version 1 accidentally linked to the wrong AMD bulletin.  This has been
-corrected in v2.  All other information in v1 is believed to be correct.
+This issue can lead to local privileges elevation on systems where the X
+server is running privileged and remote code execution for ssh X forwarding
+sessions.
 
-ISSUE DESCRIPTION
-=================
+ZDI-CAN-19866/CVE-2023-1393: X.Org Server Overlay Window Use-After-Free
+Local Privilege Escalation Vulnerability
 
-In the Zen1 microarchitecure, there is one divider in the pipeline which
-services uops from both threads.  In the case of #DE, the latched result
-from the previous DIV to execute will be forwarded speculatively.
+If a client explicitly destroys the compositor overlay window (aka COW),
+the Xserver would leave a dangling pointer to that window in the CompScreen
+structure, which will trigger a use-after-free later.
 
-This is a covert channel that allows two threads to communicate without
-any system calls.  In also allows userspace to obtain the result of the
-most recent DIV instruction executed (even speculatively) in the core,
-which can be from a higher privilege context.
+Patches
+-------
+Patch for this issue have been committed to the xorg server git repository.
+xorg-server 21.1.8 will be released shortly and will include this patch.
 
-For more information, see:
- * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
+- commit 26ef545b3 - composite: Fix use-after-free of the COW
+    (https://gitlab.freedesktop.org/xorg/xserver/-/commit/26ef545b3)
 
-IMPACT
+ZDI-CAN-19866/CVE-2023-1393
+
+If a client explicitly destroys the compositor overlay window (aka COW),
+we would leave a dangling pointer to that window in the CompScreen
+structure, which will trigger a use-after-free later.
+
+Make sure to clear the CompScreen pointer to the COW when the latter gets
+destroyed explicitly by the client.
+
+Thanks
 ======
 
-An attacker might be able to infer data from a different execution
-context on the same CPU core.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Only AMD Zen1 CPUs are believed to be vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation.
-
-RESOLUTION
-==========
-
-The patches for Xen overwrite the buffer in the divider on the
-return-to-guest path.
-
-However, as with some prior speculative vulnerabilities, the fix is only
-effective in combination with disabling SMT.  For the same reasons as
-before, Xen does not disable SMT by default.
-
-The system administrator is required to risk-assess their workload, and
-choose whether to enable or disable SMT.  Xen will issue a warning if
-SMT is active and the user has not provided an explicit choice via the
-smt=<bool> command line option.
-
-Details of the vulnerability became public before the Xen patches were
-complete.  Hence the patches are already applied to the appropriate
-trees.  They are:
-
-Xen-unstable: 1c18d7377453^..b5926c6ecf05
-Xen 4.17:     d2d2dcae879c^..9ac2f49f5fa3
-Xen 4.16:     08539e8315fd^..de751c3d906d
-Xen 4.15:     db3386e6cad6^..d7b78041dc81
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmURwLwMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZMjgIAI+pm7OnUq8EbuD6eyB7yDKBRwm9U7Hu2yrO47f0
-CHO/HdMANfx0nCbpKS8+7GXa2gooJXgp3Fo0NGri2G0+hzXNQTsaGnMEMgBV7O0M
-OXYzao39dhPATP4hi5bm0xPTZ+3zMaP06xvl7JqNqsPK8GFz/cZr/Hsz5r2boZRO
-3FXEmbgsG2KTR5+HrSNoeA3LM9aoUqEiIq6oGxLaTr7UI6xK4FL5VFloWhS0r9yp
-gD7HHP6NlV1Ysxt1xKCxf109HrzWEvih/Gd8hG6eqiHR+i2zyS1hna8Ll/sRFkOO
-x9FpYHljtb3WKX9bUh4aZXdoAWRW0aR+SWcXToPSk5aFJiE=
-=W6vz
------END PGP SIGNATURE-----
-
+The vulnerabilities have been discovered by Jan-Niklas Sohn working with
+Trend Micro Zero Day Initiative.
+Download attachment "OpenPGP_0x14706DBE1E4B4540.asc" of type "application/pgp-keys" (2990 bytes)
