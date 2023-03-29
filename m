@@ -1,96 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/1
-Message-ID: <ZRU5efsKAQYM874Z@eldamar.lan>
-Date: Thu, 28 Sep 2023 10:29:45 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/29/4
+Message-ID: <ZCSQiSn/4nRls/e+@tautology.pseudorandom.co.uk>
+Date: Wed, 29 Mar 2023 20:24:57 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+Subject: Re: polkitd service user privilege separation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 29 Mar 2023 at 15:34:50 +0200, Johannes Segitz wrote:
+> Since the user owns the directory it's easy to escalate from user polkitd
+> to root.
 
-On Tue, Sep 26, 2023 at 05:34:54PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> It was great to hear from Vincent that the newer libwebp changes are
-> just "Clean-ups, no security issues there."  Yet I think it would also
-> be great if someone in here double-checks that.
-> 
-> Regarding the assert failure detected by oss-fuzz, "A release build
-> would not be negatively affected."  libwebp does specify -DNDEBUG by
-> default in:
-> 
-> $ fgrep -rl DNDEBUG .
-> ./Makefile.vc
-> ./xcframeworkbuild.sh
-> ./iosbuild.sh
-> ./configure.ac
-> ./makefile.unix
-> 
-> and there's also cmake support, but apparently cmake sets -DNDEBUG for
-> release builds by default.  So at least this statement does appear to be
-> true for libwebp itself as built via the above means.
-> 
-> However, there's also Gradle support, and the gradle* files do not
-> mention NDEBUG.
-> 
-> Also, I wonder if there are other projects building code from libwebp
-> via different build environments.
-> 
-> So there might be (a small minority of) uses of libwebp where the assert
-> exists in a release build of some project.
-> 
-> On Tue, Sep 26, 2023 at 11:43:45AM +0200, Salvatore Bonaccorso wrote:
-> > Maybe related to this question in todays CVEs updates there appeared 
-> > 
-> > https://www.cve.org/CVERecord?id=CVE-2023-5129
-> > 
-> > vs.
-> > 
-> > https://www.cve.org/CVERecord?id=CVE-2023-4863
-> > 
-> > FWIW, I contacted the assigning CNAs so this can be clarified (e.g. if
-> > one of those needs to be rejected).
-> 
-> CVE-2023-5129 description looks like what the original's should have been:
-> 
-> > Assigner: Google LLC
-> > Published: 2023-09-25Updated: 2023-09-25
-> > 
-> > With a specially crafted WebP lossless file, libwebp may write data out
-> > of bounds to the heap. The ReadHuffmanCodes() function allocates the
-> > HuffmanCode buffer with a size that comes from an array of precomputed
-> > sizes: kTableSize. The color_cache_bits value defines which size to use.
-> > The kTableSize array only takes into account sizes for 8-bit first-level
-> > table lookups but not second-level table lookups. libwebp allows codes
-> > that are up to 15-bit (MAX_ALLOWED_CODE_LENGTH). When
-> > BuildHuffmanTable() attempts to fill the second-level tables it may
-> > write data out-of-bounds. The OOB write to the undersized array happens
-> > in ReplicateValue.
-> > 
-> > Vendor
-> > libwebp
-> > 
-> > Product
-> > libwebp
-> > 
-> > Versions
-> > affected from 0.5.0 before 1.3.2
-> > 
-> > Credits
-> > 
-> >     Apple Security Engineering and Architecture (SEAR) finder
-> >     The Citizen Lab at The University of Toronto's Munk School finder
-> > 
-> > References
-> > 
-> >     https://chromium.googlesource.com/webm/libwebp/+/902bc9190331343b2017211debcec8d2ab87e17a
-> >     https://chromium.googlesource.com/webm/libwebp/+/2af26267cdfcb63a88e5c74a85927a12d6ca1d76
+On one hand, yes. This makes the privilege separation not actually very
+practically useful.
 
-An update on this: CVE-2023-5129 has now been rejected.
+On the other hand, the entire point of polkit is to answer requests from
+privileged system services, of the form:
 
-> Rejected Reason: This CVE ID has been rejected or withdrawn by its CVE
-> Numbering Authority. Duplicate of CVE-2023-4863. 
+    [smcv] wants to [turn off wifi], should I allow this?
 
-Regards,
-Salvatore
+(where the parts inside square brackets are examples/placeholders), and
+many of the things you can do with those requests are effectively already
+root-equivalent. In particular, if you have the pkexec tool installed, the
+whole point of that tool is that it's setuid root and makes requests like:
+
+    [smcv] wants to [run as root: mkdir /pwned], should I allow this?
+
+and it is already trusting the polkitd process, running as the polkitd
+user, to return "yes" or "no" according to the system's security policy.
+
+> This demonstration caused some confusion in the original report to
+> upstream. The POC is here to demonstrate the issue, not how real world
+> exploitation would work. A real world exploit would rely on another
+> vulnerability to be able to act as polkitd and then use the issue outlined
+> here to escalate privileges.
+
+Let's suppose you're able to act as the polkitd user as a result of a
+vulnerability. Wouldn't it be easier to get root (or more generally,
+permission to do a privileged thing) by tracing, replacing or otherwise
+subverting the polkitd process?
+
+In particular, if the vulnerability you're exploiting is arbitrary code
+execution in the polkitd process (which is normally the only thing
+running as uid polkitd), then you already have the ability to choose
+how polkitd answers those requests; and if you have that, then as an
+attacker, you've already won, because you can send a request that will
+make you root-equivalent (for example from pkexec) and then coerce the
+polkitd process into answering "yes, that's fine".
+
+polkitd can only be either trusted or untrusted, we can't have it both
+ways. I think the main thing that's wrong here is the documentation that
+claims that the privilege separation is meaningful.
+
+    smcv
