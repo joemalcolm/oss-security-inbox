@@ -1,35 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/26/2
-Message-ID: <ZOotYa5KY5/MGj9X@itl-email>
-Date: Sat, 26 Aug 2023 12:50:40 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/5
+Message-ID: <ccf285d54b65fe5e34852f73ce2aa6f1130ffd6a.camel@devio.us>
+Date: Fri, 31 Mar 2023 04:59:30 +0800
+From: Ailin Nemui <ailin@...io.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel, again
+Subject: Irssi SA-2023-03 / Use after free in printing routine
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 26, 2023 at 02:31:29AM +0000, Seth Arnold wrote:
-> On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
-> > I'd appreciate any well-reasoned votes and constructive suggestions.
-> > Maybe there are good ideas that didn't cross my mind yet.
+Hi,
 
-(snip)
+The issue has been reported to us by ednash, who were experiencing
+frequent crashes of their Irssi. With the release of GLib 2.77, the
+slice memory allocator that was previously obscuring this memory issue
+was removed, thus making it much easier to trip.
 
-> - Ask Red Hat's CNA to consider setting up an automatic CVE assignment
->   process for syzkaller issues. (Red Hat's CNA is now serving as a Root
->   CNA for FOSS issues in general, so it feels like a plausible place to
->   put this process. Google runs syzkaller and has four CNAs, perhaps
->   one of them would be a better fit. Maybe the Linux Foundation could
->   run a CNA for this purpose. I'm not picky.)
-> 
->   We shouldn't indulge the very-low-effort-researchers who aren't putting
->   in much effort but trying to get CVEs.
+When Irssi prints a message while another message is being printed, the
+list that keeps track of Irssi variables for use in statusbar/message
+patterns is not correctly cleaned up, leading to the use after free
+condition.
 
-That would be an awesome idea.  Hopefully "latest kernel has X unfixed
-CVEs" puts pressure on Red Hat, Oracle, SUSE, and other vendors to hire
-more people to fix the problem.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+A CVE has been requested.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+official message: https://irssi.org/security/irssi_sa_2023_03.txt
+
+IRSSI-SA-2023-03 Irssi Security Advisory [1]
+============================================
+[ CVE will be added here ]
+
+Description
+-----------
+
+(a) Use after free while using a stale special collector reference
+    found by ednash. (CWE-416)
+
+
+Impact
+------
+
+May affect the stability of Irssi.
+
+
+Affected versions
+-----------------
+
+(a) Irssi 1.3.0 and later
+
+
+Fixed in
+--------
+
+Irssi 1.4.4
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 1.4.4.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary.
+
+
+Mitigating facts
+----------------
+
+The precondition for this issue is printing a non-formatted line during
+the printing of a formatted line. This is unlikely to happen without
+scripts, and is obscured by the slice allocator when using GLib before
+version 2.77.
+
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2023_03.txt
+
+
