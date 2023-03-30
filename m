@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/5
-Message-ID: <4e9ea108-acec-8d88-1ad3-9bec3c9b26dc@apache.org>
-Date: Fri, 13 Oct 2023 15:13:49 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/1
+Message-ID: <20230330065737.GL21675@suse.com>
+Date: Thu, 30 Mar 2023 08:57:37 +0200
+From: Johannes Segitz <jsegitz@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-42780: Apache Airflow: Improper access control vulnerability in the "List dag warnings" feature 
+Subject: Re: polkitd service user privilege separation
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On Wed, Mar 29, 2023 at 08:24:57PM +0100, Simon McVittie wrote:
+> On Wed, 29 Mar 2023 at 15:34:50 +0200, Johannes Segitz wrote:
+> > This demonstration caused some confusion in the original report to
+> > upstream. The POC is here to demonstrate the issue, not how real world
+> > exploitation would work. A real world exploit would rely on another
+> > vulnerability to be able to act as polkitd and then use the issue outlined
+> > here to escalate privileges.
+> 
+> Let's suppose you're able to act as the polkitd user as a result of a
+> vulnerability. Wouldn't it be easier to get root (or more generally,
+> permission to do a privileged thing) by tracing, replacing or otherwise
+> subverting the polkitd process?
 
-Affected versions:
+yes, that's what I've mentioned in my report
 
-- Apache Airflow before 2.7.2
+.=====
+| If you can act as the polkitd user you can also likely influence the polkit
+| daemon and gain root this way, so this just makes it (a lot) easier to
+| exploit.
+`=====
 
-Description:
+For me it's easier to just write a file instead of subverting the process.
 
-Apache Airflow, versions prior to 2.7.2, contains a security vulnerability that allows authenticated users of Airflow to list warnings for all DAGs, even if the user had no permission to see those DAGs. It would reveal the dag_ids and the stack-traces of import errors for those DAGs with import errors.
-Users of Apache Airflow are advised to upgrade to version 2.7.2 or newer to mitigate the risk associated with this vulnerability.
+> polkitd can only be either trusted or untrusted, we can't have it both
+> ways. I think the main thing that's wrong here is the documentation that
+> claims that the privilege separation is meaningful.
 
-Credit:
+I agree. That's was also my main concern why I wrote this. For any other
+setup I would have requested a CVE for this, but here the permissions just
+make it easier to get root, but aren't really a security boundary. But the
+documentation makes it sound as if the polkitd user is a security boundary,
+which it isn't.
 
-balis0ng (finder)
-Hussein Awala (remediation developer)
+Johannes
+-- 
+GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Frankenstraße 146, 90461 Nürnberg, Germany
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+(HRB 36809, AG Nürnberg)
 
-References:
-
-https://github.com/apache/airflow/pull/34355
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-42780
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
