@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/7
-Message-ID: <ZKdAQ6UhSQTuX83d@netmeister.org>
-Date: Thu, 6 Jul 2023 18:29:23 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/2
+Message-ID: <fde5850e-ac32-0e92-0df6-55f9f2175ca2@apache.org>
+Date: Thu, 30 Mar 2023 09:08:32 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-36461: mastodon: Denial of Service through slow HTTP responses
+Subject: CVE-2023-28935: Apache UIMA DUCC: DUCC (EOL) allows RCE 
 Content-Type: text/plain; charset=utf-8
 
-(I have no affiliation with the project, but posting
-this here because it seems to me that increasingly
-non-packaged / GitHub distributed projects tend not to
-send out announcements here.)
+Severity: moderate
 
-https://github.com/mastodon/mastodon/security/advisories/GHSA-9pxv-6qvf-pjwc
+Description:
 
-(This advisory describes an issue found by Cure53 as
-part of an audit performed at Mozilla's request)
+** UNSUPPORTED WHEN ASSIGNED ** Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Software Foundation Apache UIMA DUCC.
 
-When performing outgoing HTTP queries, Mastodon sets a
-timeout on individual read operations, but a malicious
-server can indefinitely extend the duration of the
-response through slowloris-type attacks.
 
-Impact
-This vulnerability can be used to keep all Mastodon
-workers busy for an extended duration of time, leading
-to the server becoming unresponsive.
+When using the "Distributed UIMA Cluster Computing" (DUCC) module of Apache UIMA, an authenticated user that has the permissions to modify core entities can cause command execution as the system user that runs the web process.
 
-CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
 
-Severity: 7.5/10
+As the "Distributed UIMA Cluster Computing" module for UIMA is retired, we do not plan to release a fix for this issue.
+NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
 
-CVE-2023-36461
+Credit:
 
-Affected versions: all
-Patched versions:  4.1.3, 4.0.5, 3.5.9
+Crilwa (finder)
+
+References:
+
+https://uima.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-28935
+
