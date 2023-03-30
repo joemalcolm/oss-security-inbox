@@ -1,23 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/4
-Message-ID: <CAP9KPhBoy-ES2LxZi1Ax7BaAHwF5B2--ZqWtYUVEBbQ4P66XiQ@mail.gmail.com>
-Date: Fri, 20 Oct 2023 18:41:41 +1100
-From: David Leadbeater <dgl@....cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/4
+Message-ID: <20230330204300.jYitb%steffen@sdaoden.eu>
+Date: Thu, 30 Mar 2023 22:43:00 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Re: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 20 Oct 2023 at 12:58, David Leadbeater <dgl@....cx> wrote:
-[...]
-> Then you get a command being run with no interaction; this appears to
-> work with xterm (384) + fish for example.
+Steffen Nurpmeso wrote in
+ <20230314201652.RlbWr%steffen@...oden.eu>:
+ ...
+ ||Helmut Grohne wrote in
+ || <20230314110138.GA1192267@...divi.de>:
+ |||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+ |||>  * CVE-2021-33844
+ |||
+ |||The original fix for this issue would cause a regression. After applying
+ |||it, sox would be unable to decode WAV GSM files. This has been reported
+ ...
 
-I missed that this is configurable in xterm, so this can be mitigated
-by setting the Xresource:
+Today i got a nice email from Nam Nguyen who pointed out that my
+last patch to this topic (also) introduced a bug.  So i downloaded
+libGSM and yes he was right.  So on top of them all a partial undo
+of the last is necessary; i will attach the full diff, too.
 
-disallowedPasteControls: BS,DEL,ENQ,EOT,ETX,ESC,NUL
+Thank you Nam Nguyen!
+Ciao already here,
 
-i.e. Adding "ETX" (^C) to the default set. (I've asked if this can be
-the new default.)
+    wav_read_fmt(): fix previous! (Nam Nguyen (namn AT berkeley DOT edu))
+---
+ src/wav.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-David
+diff --git a/src/wav.c b/src/wav.c
+index 380796c0f0..b93ee37667 100644
+--- a/src/wav.c
++++ b/src/wav.c
+@@ -654,11 +654,7 @@ static int wav_read_fmt(sox_format_t *ft, uint32_t len)
+     if (err)
+         return SOX_EOF;
+ 
+-    if (wav->bitsPerSample == 0
+-#ifdef HAVE_LIBGSM
+-            && wav->formatTag != WAVE_FORMAT_GSM610
+-#endif
+-    ){
++    if (wav->bitsPerSample == 0){
+         lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample is zero");
+         return SOX_EOF;
+     }
+
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
+
+View attachment "sox-git.patch" of type "text/x-diff" (8021 bytes)
