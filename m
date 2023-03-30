@@ -1,193 +1,201 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/05/1
-Message-ID: <20231105172713.GA21489@openwall.com>
-Date: Sun, 5 Nov 2023 18:27:13 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/31/1
+Message-ID: <87bkk9hljn.fsf@n.m>
+Date: Thu, 30 Mar 2023 16:22:20 -0700
+From: Nam Nguyen <namn@...keley.edu>
 To: oss-security@...ts.openwall.com
-Cc: Pietro Borrello <borrello@...g.uniroma1.it>
-Subject: CVE-2023-1078: Linux: rds_rm_zerocopy_callback() bugs
+Cc: Steffen Nurpmeso <steffen@...oden.eu>
+Subject: Re: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Steffen Nurpmeso writes:
 
-There was a thread on linux-distros in February, where Pietro brought up
-multiple Linux kernel issues at once.  Some of these were already on
-oss-security by the time (as indicated below), four others were brought
-to oss-security on March 1st:
+> Steffen Nurpmeso wrote in
+>  <20230314201652.RlbWr%steffen@...oden.eu>:
+>  ...
+>  ||Helmut Grohne wrote in
+>  || <20230314110138.GA1192267@...divi.de>:
+>  |||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+>  |||>  * CVE-2021-33844
+>  |||
+>  |||The original fix for this issue would cause a regression. After applying
+>  |||it, sox would be unable to decode WAV GSM files. This has been reported
+>  ...
+>
+> Today i got a nice email from Nam Nguyen who pointed out that my
+> last patch to this topic (also) introduced a bug.  So i downloaded
+> libGSM and yes he was right.  So on top of them all a partial undo
+> of the last is necessary; i will attach the full diff, too.
 
-https://www.openwall.com/lists/oss-security/2023/03/01/
+I propose keeping that check in order to fix the regression of not
+opening wav gsm files.
 
-However, it looks like one CVE corresponding to two bugs was not, so I
-am correcting this now.  The missed CVE was assigned as follows:
+Steffn Nurpmeso's patch with tweaks can be found inline at the end of
+this email. This patch retains the line 654 hunk and adds line 961 hunk
+to avoid dividing by 0 for wav gsm files. wav->numSamples is calculated
+similarly to debian's version of sox.
 
-> CVE-2023-1078 - Heap OOB Write in rds_rm_zerocopy_callback()
-> patch:
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=f753a68980cf4b59a80fe677619da2b1804f526d
-> 
-> CVE-2023-1078 - Resource leak (leading to memory exhaustion) in rds_rm_zerocopy_callback()
-> patch:
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=68762148d1b011d47bc2ceed7321739b5aea1e63
+Feedback is welcome as I am not familiar with the code base.
 
-Ubuntu security advisories describe it as:
-
-> It was discovered that the Reliable Datagram Sockets (RDS) protocol
-> implementation in the Linux kernel contained a type confusion vulnerability
-> in some situations. An attacker could use this to cause a denial of service
-> (system crash). (CVE-2023-1078)
-
-You can see Pietro's own more detailed descriptions of the two bugs by
-searching the message below for mentions of rds_rm_zerocopy_callback().
-
-Alexander
-
------ Forwarded message from Pietro Borrello <borrello@...g.uniroma1.it> -----
-
-From: Pietro Borrello <borrello@...g.uniroma1.it>
-Subject: Re: [vs-plain] CVE Request
-CC: linux-distros
-Date: Wed, 22 Feb 2023 20:13:29 +0100
-
-Attached the more detailed report.
-
-- Type Confusion in hid_validate_values()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b12fece4c64857e5fab4290bf01b2e0317a88456
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
-attack-type: physical
-impact: memory corruption -> privilege escalation
-details: hid_validate_values fails to properly check the shape of USB
-reports, causing type confusion if a malicious device advertises
-invalid reports. On default configuration the type confusion results
-in the function failing due to field alignment, but any non-default
-configuration including structure layout randomization or having
-different struct field layout would incur in memory corruption.
-
-- Type Confusion in bigben_probe()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
-attack-type: physical
-impact: memory corruption -> privilege escalation
-details: bigben_probe() fails to properly check the shape of USB
-reports, causing type confusion if a malicious device advertises
-invalid reports. On default configuration the type confusion results
-in the function failing due to field alignment, but any non-default
-configuration including structure layout randomization or having
-different struct field layout would incur in memory corruption.
-
-- NULL Ptr Deref in hid_betopff_play()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=3782c0d6edf658b71354a64d60aa7a296188fc90
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/18/3
-attack-type: physical
-impact: DOS/privilege escalation
-details: betopff_init does not properly check the shape of USB report,
-causing a NULL ptr dereference in hid_betopff_play() on default
-configuration. NULL pointer dereferences may be exploited to achieve
-LPE (e.g., see https://googleprojectzero.blogspot.com/2023/01/exploiting-null-dereferences-in-linux.html).
-On non default configuration, as the NULL deref is caused by a type
-confusion, a different field layout may cause further memory
-corruption.
-
-- KASLR Leak in inet_diag_msg_sctpasoc_fill()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=458e279f861d3f61796894cd158b780765a1569f
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/23/1
-attack-type: local
-impact: information disclosure
-details: a type confusion in inet_diag_msg_sctpasoc_fill() in
-net/sctp/diag.c, uses a type confused pointer to return information to
-userspace when issuing a list_entry() on
-asoc->base.bind_addr.address_list.next when the list is empty.
-The impact of the type confusion is a KASLR leak since the
-`laddr.v6.sin6_addr` is returned from the type confused pointer, which
-overlaps with `struct sctp_endpoint *ep` of the `struct
-sctp_association`.
-
-- Type Confusion in tls_is_tx_ready()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=ffe2a22562444720b05bdfeb999c03e810d84cbb
-attack-type: local
-impact: information disclosure
-details: tls_is_tx_ready() incorrectly checks for list emptyness,
-potentially accessing a type confused entry to the list_head, leaking
-the last byte of the confused field that overlaps with rec->tx_ready.
-
-- Incorrect UID assigned to tun/tap sockets
-patch (tap): https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=66b2c338adce580dfce2199591e65e2bab889cff
-patch (tun): https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=a096ccca6e503a5c575717ff8a36ace27510ab0a
-attack-type: local
-impact: filtering/routing bypass for virtual sockets
-details: tun/tap sockets have their socket UID hardcoded to 0 due to a
-type confusion in their initialization function.
-While it will be often correct, as tuntap devices require
-CAP_NET_ADMIN, it may not always be the case, e.g., a non-root user
-only having that capability. This would make tun/tap sockets being
-incorrectly treated in filtering/routing decisions, possibly bypassing
-network filters.
-
-- Type confusion in pick_next_rt_entity()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7c4a5b89a0b5a57a64b601775b296abf77a9fe97
-attack-type: local
-impact: memory corruption -> privilege escalation
-details: pick_next_rt_entity() may return a type confused entry, not
-detected by the BUG_ON condition, as the confused entry will not be
-NULL, but list_head.
-The buggy error condition would lead to a type confused entry with the
-list head, which would then be used as a type confused
-sched_rt_entity, causing memory corruption.
-
-- Heap OOB Write in rds_rm_zerocopy_callback()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=f753a68980cf4b59a80fe677619da2b1804f526d
-attack-type: local
-impact: memory corruption -> privilege escalation
-details: The rds_rm_zerocopy_callback() issues a list_entry() on the
-actual head of a list, instead of calling list_first_entry(). This
-causes a type confusion and the `struct rds_msg_zcopy_info *info`
-actually points to `&q->zcookie_head`.
-In rds_zcookie_add(), `info->zcookies` is used, which if type confused
-overlaps with `spinlock_t lock` in `struct rds_msg_zcopy_queue`. The
-function writes `cookie`, which is completely controlled by userspace,
-to `ck->cookies[ncookies]`.
-`ncookies` is read from `ck->num` which overlaps with the `lock`
-counter, and is then incremented, also corrupting the `lock`.
-This effectively results in a controlled OOB write from `struct
-rds_msg_zcopy_queue` embedded at the end of `struct rds_sock`.
-The value is completely controlled, while the index depends on the
-`lock` state, being 1 by default, which I suspect can be controlled
-too.
-
-- Type Confusion in sctp_sock_filter()
-*removed from the request as not security relevant in default configurations*
-
-- Resource leak (leading to memory exhaustion) in rds_rm_zerocopy_callback()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=68762148d1b011d47bc2ceed7321739b5aea1e63
-attack-type: local
-impact: DOS
-details: rds_rm_zerocopy_callback() uses list_add_tail() with swapped
-arguments. This links the list head with the new entry, losing the
-references to the remaining part of the list, and causing the resource
-leak of the allocated entries. Repeating the leak may cause resource
-exhaustion.
+debian's sox:
+--8<---------------cut here---------------start------------->8---
+    943     case WAVE_FORMAT_GSM610:
+    944         wav->numSamples = ((qwDataLength / wav->blockAlign) * wav->samplesPerBlock);
+    945         wavgsminit(ft);
+    946         ft->signal.length = wav->numSamples*ft->signal.channels;
+    947         break;
+    948
+    949     default:
+    950         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample) / ft->signal.channels;
+    951         ft->signal.length = wav->numSamples * ft->signal.channels;
+    952     }
+--8<---------------cut here---------------end--------------->8---
 
 
-- Use After Free in asus_remove()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=4ab3a086d10eeec1424f2e8a968827a6336203df
-attack-type: physical
-impact: memory corruption -> privilege escalation
-details: Similarly to CVE-2023-25012 , in asus devices, the
-work_struct may be scheduled by the LED controller while the device is
-disconnecting, triggering a use-after-free on the struct asus_kbd_leds
-*led structure. A malicious USB device may exploit the issue to cause
-memory corruption with controlled data.
+new 961 hunk:
+--8<---------------cut here---------------start------------->8---
+    967 #ifdef HAVE_LIBGSM
+    968     case WAVE_FORMAT_GSM610:
+    969         wav->numSamples = qwDataLength / wav->blockAlign * wav->samplesPerBlock;
+    970         wavgsminit(ft);
+    971         break;
+    972 #endif
+    973
+    974     }
+    975
+    976     if ((!wav->numSamples)
+    977 #ifdef HAVE_LIBGSM
+    978         && wav->formatTag != WAVE_FORMAT_GSM610
+    979 #endif
+    980     )
+    981         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample)
+    982             / ft->signal.channels;
+--8<---------------cut here---------------end--------------->8---
+    
+Test cases
+----------
+Test case 1: convert /dev/null to bug.wav (wav gsm) and then convert
+bug.wav to fail.wav.
 
-- Heap OOB Write in bigben_worker()
-patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b94335f899542a0da5fafc38af8edcaf90195843
-attack-type: local
-impact: memory corruption -> privilege escalation
-details: bigben_probe() does not validate that the output report has
-the needed report values in the first field. A malicious device
-registering a report with one field and a single value causes an heap
-OOB write in bigben_worker() when accessing report_field->value[1] to
-report_field->value[7], with partially user-controlled values.
+This test case is expected to pass.
+
+failing output:
+--8<---------------cut here---------------start------------->8---
+$ sox -t raw -r 44100 -e signed-integer -b 8 /dev/null -t wav -e gsm-full-rate bug.wav
+$ sox bug.wav fail.wav
+sox FAIL formats: can't open input file `bug.wav': WAV file bits per sample is zero
+--8<---------------cut here---------------end--------------->8---
 
 
-Best regards,
-Pietro Borrello
+correct output (which this provides):
+--8<---------------cut here---------------start------------->8---
+$ sox -t raw -r 44100 -e signed-integer -b 8 /dev/null -t wav -e gsm-full-rate bug.wav
+$ sox bug.wav fail.wav
+$ file fail.wav
+fail.wav: RIFF (little-endian) data, WAVE audio, GSM 6.10, mono 44100 Hz
+--8<---------------cut here---------------end--------------->8---
 
------ End forwarded message -----
+Test case 2: convert flac to wav gsm. then, convert wav gsm to wav gsm.
+
+This test case is expected to pass.
+--8<---------------cut here---------------start------------->8---
+$ sox -t flac -r 44100 -e signed-integer -b 16 song.flac -t wav -e gsm-full-rate ok.wav
+$ sox ok.wav ok2.wav
+--8<---------------cut here---------------end--------------->8---
+
+inline patch
+------------
+
+https://marc.info/?l=oss-security&m=167571683504082&w=2
+
+unbreak wav gsm
+https://marc.info/?l=oss-security&m=167882517702862&w=2
+
+Index: src/wav.c
+--- src/wav.c.orig
++++ src/wav.c
+@@ -654,6 +654,15 @@ static int wav_read_fmt(sox_format_t *ft, uint32_t len
+     if (err)
+         return SOX_EOF;
+ 
++    if (wav->bitsPerSample == 0
++#ifdef HAVE_LIBGSM
++            && wav->formatTag != WAVE_FORMAT_GSM610
++#endif
++    ){
++        lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample is zero");
++        return SOX_EOF;
++    }
++
+     /* non-PCM formats except alaw and mulaw formats have extended fmt chunk.
+      * Check for those cases.
+      */
+@@ -961,9 +970,14 @@ static int startread(sox_format_t *ft)
+         wavgsminit(ft);
+         break;
+ #endif
++
+     }
+ 
+-    if (!wav->numSamples)
++    if ((!wav->numSamples)
++#ifdef HAVE_LIBGSM
++            && wav->formatTag != WAVE_FORMAT_GSM610
++#endif
++    )
+         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample)
+             / ft->signal.channels;
+ 
+@@ -1348,8 +1362,10 @@ static int wavwritehdr(sox_format_t * ft, int second_h
+         (dwSamplesWritten + wSamplesPerBlock - 1) / wSamplesPerBlock;
+     dwDataLength = blocksWritten * wBlockAlign;
+ 
++#ifdef HAVE_LIBGSM
+     if (wFormatTag == WAVE_FORMAT_GSM610)
+         dwDataLength = (dwDataLength+1) & ~1u; /* round up to even */
++#endif
+ 
+     if (wFormatTag == WAVE_FORMAT_PCM && (wBitsPerSample > 16 || wChannels > 2)
+         && strcmp(ft->filetype, "wavpcm")) {
+@@ -1444,9 +1460,11 @@ static int wavwritehdr(sox_format_t * ft, int second_h
+             lsx_writew(ft, (uint16_t)(lsx_ms_adpcm_i_coef[i][1]));
+         }
+         break;
++#ifdef HAVE_LIBGSM
+         case WAVE_FORMAT_GSM610:
+         lsx_writew(ft, wSamplesPerBlock);
+         break;
++#endif
+         default:
+         break;
+     }
+@@ -1554,7 +1572,9 @@ static int stopwrite(sox_format_t * ft)
+ 
+         /* Add a pad byte if the number of data bytes is odd.
+            See wavwritehdr() above for the calculation. */
++#ifdef HAVE_LIBGSM
+         if (wav->formatTag != WAVE_FORMAT_GSM610)
++#endif
+           lsx_padbytes(ft, (size_t)((wav->numSamples + wav->samplesPerBlock - 1)/wav->samplesPerBlock*wav->blockAlign) % 2);
+ 
+         free(wav->packet);
+@@ -1594,6 +1614,7 @@ static int seek(sox_format_t * ft, uint64_t offset)
+ 
+   if (ft->encoding.bits_per_sample & 7)
+     lsx_fail_errno(ft, SOX_ENOTSUP, "seeking not supported with this encoding");
++#ifdef HAVE_LIBGSM
+   else if (wav->formatTag == WAVE_FORMAT_GSM610) {
+     int alignment;
+     size_t gsmoff;
+@@ -1613,7 +1634,9 @@ static int seek(sox_format_t * ft, uint64_t offset)
+           new_offset += (wav->samplesPerBlock - alignment);
+       wav->numSamples = ft->signal.length - (new_offset / ft->signal.channels);
+     }
+-  } else {
++  }
++#endif /* HAVE_LIBGSM */
++  else {
+     double wide_sample = offset - (offset % ft->signal.channels);
+     double to_d = wide_sample * ft->encoding.bits_per_sample / 8;
+     off_t to = to_d;
+
