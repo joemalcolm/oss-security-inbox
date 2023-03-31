@@ -1,56 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/29/1
-Message-ID: <1e4b5d5c-f78e-348e-7651-6013bcd54fc5@redhat.com>
-Date: Wed, 29 Mar 2023 14:31:54 +0200
-From: Olivier Fourdan <ofourdan@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/31/5
+Message-ID: <8700c8dd79c510baa1aa7546537bca449988b18f.camel@devio.us>
+Date: Fri, 31 Mar 2023 17:21:09 +0200
+From: Ailin Nemui <ailin@...io.us>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org Security Advisory: CVE-2023-1393: X.Org Server Overlay Window Use-After-Free
+Subject: Re: CVE-2023-29132: Irssi SA-2023-03 / Use after free in printing routine
 Content-Type: text/plain; charset=utf-8
 
+On Fri, 2023-03-31 at 04:59 +0800, Ailin Nemui wrote:
+> A CVE has been requested.
 
--------- Forwarded Message --------
-Subject: X.Org Security Advisory: CVE-2023-1393: X.Org Server Overlay Window Use-After-Free
-Date: Wed, 29 Mar 2023 14:15:05 +0200
-From: Olivier Fourdan <ofourdan@...hat.com>
-To: xorg-announce@...ts.x.org
-CC: xorg@...ts.x.org, xorg-devel <xorg-devel@...ts.x.org>, zdi-disclosures@...ndmicro.com
-
-X.Org Security Advisory: March 29, 2023
-
-X.Org Server Overlay Window Use-After-Free
-==========================================
-
-This issue can lead to local privileges elevation on systems where the X
-server is running privileged and remote code execution for ssh X forwarding
-sessions.
-
-ZDI-CAN-19866/CVE-2023-1393: X.Org Server Overlay Window Use-After-Free
-Local Privilege Escalation Vulnerability
-
-If a client explicitly destroys the compositor overlay window (aka COW),
-the Xserver would leave a dangling pointer to that window in the CompScreen
-structure, which will trigger a use-after-free later.
-
-Patches
--------
-Patch for this issue have been committed to the xorg server git repository.
-xorg-server 21.1.8 will be released shortly and will include this patch.
-
-- commit 26ef545b3 - composite: Fix use-after-free of the COW
-    (https://gitlab.freedesktop.org/xorg/xserver/-/commit/26ef545b3)
-
-ZDI-CAN-19866/CVE-2023-1393
-
-If a client explicitly destroys the compositor overlay window (aka COW),
-we would leave a dangling pointer to that window in the CompScreen
-structure, which will trigger a use-after-free later.
-
-Make sure to clear the CompScreen pointer to the COW when the latter gets
-destroyed explicitly by the client.
-
-Thanks
-======
-
-The vulnerabilities have been discovered by Jan-Niklas Sohn working with
-Trend Micro Zero Day Initiative.
-Download attachment "OpenPGP_0x14706DBE1E4B4540.asc" of type "application/pgp-keys" (2990 bytes)
+CVE-2023-29132 was assigned
