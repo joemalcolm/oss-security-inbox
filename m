@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/24/1
-Message-ID: <CAGUWgD8jWfhdA5+o_BJN-Mgh0+4x7yYPDcjb+Bve14b9Hxnp3A@mail.gmail.com>
-Date: Mon, 24 Apr 2023 16:43:29 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/31/4
+Message-ID: <20230331070234.GP21675@suse.com>
+Date: Fri, 31 Mar 2023 09:02:34 +0200
+From: Johannes Segitz <jsegitz@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Real world vulnerabilities of CWE-1077: Floating Point Comparison with Incorrect Operator?
+Subject: Re: polkitd service user privilege separation
 Content-Type: text/plain; charset=utf-8
 
-Are there real world examples of vulnerabilities of this:
+On Thu, Mar 30, 2023 at 02:08:10PM +0000, Jordan Glover wrote:
+> Is it valid conclusion that polkitd would be better of just running as
+> root? That would clear any possible confusion. Or are there advantages of
+> running it as separate "trusted" user?
 
-https://cwe.mitre.org/data/definitions/1077.html
-CWE-1077: Floating Point Comparison with Incorrect Operator
+It adds an additional step an attacker needs to take before having root
+privileges. Also it is not just about security, it also helps to limit the
+impact of non-security bugs. So I would keep the service user, but add
+clear language that explains that this isn't a meaningful security boundary
+and that this account needs to be considered to have root privileges.
 
-This issue can prevent the product from running reliably. If the
-relevant code is reachable by an attacker, then this reliability
-problem might introduce a vulnerability.
+Johannes
+-- 
+GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Frankenstraße 146, 90461 Nürnberg, Germany
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+(HRB 36809, AG Nürnberg)
 
-One simple example in python:
-
->>> A=(0.1+0.2)+0.3;B=0.1+(0.2+0.3);(A==B,A-B,A,B)
-(False, 1.1102230246251565e-16, 0.6000000000000001, 0.6)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
