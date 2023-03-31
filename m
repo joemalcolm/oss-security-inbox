@@ -1,21 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/4
-Message-ID: <CAGUWgD8-GXOj=hvUzTD0K=GeiQTR-qSstSX0AQ+7GPsv1TWZzQ@mail.gmail.com>
-Date: Thu, 20 Apr 2023 10:58:42 +0300
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Checking existence of firewalled URLs via javascript's script.onload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/31/2
+Message-ID: <20230331003331.bslHg%steffen@sdaoden.eu>
+Date: Fri, 31 Mar 2023 02:33:31 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: Nam Nguyen <namn@...keley.edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 19, 2023 at 5:57 PM Peter Philip Pettersson
-<philip.pettersson@...il.com> wrote:
->
+Hello Nam.
 
-> There are many ways to make arbitrary HTTP requests through a browser, with
-> and without Javascript.
->
-Hi, thanks for the info and for the compliment :)
+Nam Nguyen wrote in
+ <87bkk9hljn.fsf@n.m>:
+ |Steffen Nurpmeso writes:
+ |> Steffen Nurpmeso wrote in
+ |>  <20230314201652.RlbWr%steffen@...oden.eu>:
+ |>  ...
+ |>||Helmut Grohne wrote in
+ |>|| <20230314110138.GA1192267@...divi.de>:
+ |>|||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+ |>|||>  * CVE-2021-33844
+ |>|||
+ |>|||The original fix for this issue would cause a regression. After \
+ |>|||applying
+ |>|||it, sox would be unable to decode WAV GSM files. This has been reported
+ ...
+ |> libGSM and yes he was right.  So on top of them all a partial undo
+ |> of the last is necessary; i will attach the full diff, too.
+ |
+ |I propose keeping that check in order to fix the regression of not
+ |opening wav gsm files.
 
-I can't imagine how can you check for open port/URL
-without javascript, can you give reference or explanation?
-You can make request, but without javascript you can't read the result.
+Oh.  You are surely right.
+
+ |Steffn Nurpmeso's patch with tweaks can be found inline at the end of
+ |this email. This patch retains the line 654 hunk and adds line 961 hunk
+ |to avoid dividing by 0 for wav gsm files. wav->numSamples is calculated
+ |similarly to debian's version of sox.
+
+Not at all.
+
+ |Feedback is welcome as I am not familiar with the code base.
+
+Well me neither (oh i never looked after having seen they use
+floating-point internally, many years ago; i never understood why
+tremor did not fly for OGG, maybe someone knows).
+But yes, i can confirm with your additional condition the Debian
+Bug Report thing works, aka GSM.
+
+  #?0|kent:sox.git$ src/sox -t ogg  /x/music/recs.misc/eisler_tucholsky-rosen_auf_den_weg_gestreut.ogg -t wav -e gsm-full-rate ok.wav
+  #?0|kent:sox.git$ ALSAPCM=xmix sox ok.wav -t alsa
+  sox FAIL formats: can't open input file `ok.wav': WAV file bits per sample is zero
+  #?2|kent:sox.git$ ALSAPCM=xmix src/sox ok.wav -t alsa
+
+  ok.wav:
+
+   File Size: 1.18M     Bit Rate: 71.7k
+  ...
+
+ |new 961 hunk:
+
+But why do you say 961 repeatedly?  Your lines numbers
+
+ |--8<---------------cut here---------------start------------->8---
+ |    967 #ifdef HAVE_LIBGSM
+ |    968     case WAVE_FORMAT_GSM610:
+ |    969         wav->numSamples = qwDataLength / wav->blockAlign * \
+ |    wav->samplesPerBlock;
+ |    970         wavgsminit(ft);
+ |    971         break;
+ |    972 #endif
+ |    973
+ |    974     }
+ |    975
+ |    976     if ((!wav->numSamples)
+ |    977 #ifdef HAVE_LIBGSM
+ |    978         && wav->formatTag != WAVE_FORMAT_GSM610
+ |    979 #endif
+ |    980     )
+ |    981         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_\
+ |    per_sample)
+ |    982             / ft->signal.channels;
+ |--8<---------------cut here---------------end--------------->8---
+
+are almost right, i now have (after reverting my revert)
+
+  --- a/src/wav.c
+  +++ b/src/wav.c
+  @@ -972,7 +972,11 @@ static int startread(sox_format_t *ft)
+   #endif
+       }
+  
+  -    if (!wav->numSamples)
+  +    if (!wav->numSamples
+  +#ifdef HAVE_LIBGSM
+  +            && wav->formatTag != WAVE_FORMAT_GSM610
+  +#endif
+  +    )
+           wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample)
+               / ft->signal.channels;
+
+so your numbers above are +1 compared to "mine"?
+Other than that thanks again.  I did not really look.  (That is,
+for functioning GSM.)  Seems to me no more divisions with
+numSamples or surrounding that, that is all i know.
+
+Ciao!  (I happily post the entire patch again on request.)
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
