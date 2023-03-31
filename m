@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1355" "Tuesday" "1" "December" "2020" "16:16:02" "+0100" "Matthieu Herrb" "matthieu@herrb.eu" "<20201201151602.GC10502@herrb.net>" "53" "[oss-security] X.Org server security advisory: December 1, 2020" nil nil nil "12" "2020120115:16:02" "[oss-security] X.Org server security advisory: December 1, 2020" (number mark "U       matthieu@her Dec  1   53/1355  " thread-indent "\"[oss-security] X.Org server security advisory: December 1, 2020\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] X.Org server security advisory: December 1, 2020" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22065 invoked by uid 550); 1 Dec 2020 15:18:40 -0000
+Received: (qmail 1297 invoked by uid 550); 31 Mar 2023 12:03:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,129 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20398 invoked from network); 1 Dec 2020 15:16:16 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; s=20180121; bh=8O
-	HIBIPofsgcTUNy1MICfZMmvbg=; b=SAtXRRLoP3GxtEvyWml9POSZSwtoL4Ty3z
-	ngFYoWYb/chpmKJX748XCTBcmQPzI21poNkcWfdyHbGUJ8vzpD0x/e2ErFYzKhkC
-	UpSDdtaKYhaKQ6lIYgG+U6kD0zj5TffVOzHNzZUgPSuHgIPSw8gaChJ/FzY3JY0h
-	3pRwwaPdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; q=dns; s=20180121; b=
-	ieHq3rI1S5vV2XtB2iKCLVinEsuHMuvD8rcRoQBw8exafIT5oDvLiodKf6JL9YMp
-	Bd5LJ1pTfZqlxF8bCUXs4FrFfoe2wowz1YC+P6wRLZ5HvsPa4Lud4e+BBM666xgX
-	+UC4SS28YEJKM45jv/W3NMHKM2+Gallih8rbpyCWoE8=
-Date: Tue, 1 Dec 2020 16:16:02 +0100
-From: Matthieu Herrb <matthieu@herrb.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20201201151602.GC10502@herrb.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Subject: [oss-security] X.Org server security advisory: December 1, 2020
+Received: (qmail 27767 invoked from network); 31 Mar 2023 00:33:43 -0000
+Date: Fri, 31 Mar 2023 02:33:31 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: Nam Nguyen <namn@berkeley.edu>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20230331003331.bslHg%steffen@sdaoden.eu>
+In-Reply-To: <87bkk9hljn.fsf@n.m>
+References: <Y91yP6mYIZ+UXmgf@alf.mars> <20230314110138.GA1192267@subdivi.de>
+ <20230314191132.qDz3u%steffen@sdaoden.eu>
+ <20230314201652.RlbWr%steffen@sdaoden.eu>
+ <20230330204300.jYitb%steffen@sdaoden.eu> <87bkk9hljn.fsf@n.m>
+Mail-Followup-To: Nam Nguyen <namn@berkeley.edu>,
+ oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-440-gf136fe83f1
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] Re: sox: patches for old vulnerabilities
 
+Hello Nam.
 
+Nam Nguyen wrote in
+ <87bkk9hljn.fsf@n.m>:
+ |Steffen Nurpmeso writes:
+ |> Steffen Nurpmeso wrote in
+ |>  <20230314201652.RlbWr%steffen@sdaoden.eu>:
+ |>  ...
+ |>||Helmut Grohne wrote in
+ |>|| <20230314110138.GA1192267@subdivi.de>:
+ |>|||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+ |>|||>  * CVE-2021-33844
+ |>|||
+ |>|||The original fix for this issue would cause a regression. After \
+ |>|||applying
+ |>|||it, sox would be unable to decode WAV GSM files. This has been reported
+ ...
+ |> libGSM and yes he was right.  So on top of them all a partial undo
+ |> of the last is necessary; i will attach the full diff, too.
+ |
+ |I propose keeping that check in order to fix the regression of not
+ |opening wav gsm files.
 
-Multiple input validation failures in X server XKB extension
-============================================================
+Oh.  You are surely right.
 
-These issues can lead to privileges elevations for authorized clients
-on systems where the X server is running privileged.
+ |Steffn Nurpmeso's patch with tweaks can be found inline at the end of
+ |this email. This patch retains the line 654 hunk and adds line 961 hunk
+ |to avoid dividing by 0 for wav gsm files. wav->numSamples is calculated
+ |similarly to debian's version of sox.
 
-* CVE-2020-14360 / ZDI CAN 11572 XkbSetMap Out-Of-Bounds Access
+Not at all.
 
-Insufficient checks on the lengths of the XkbSetMap request can lead to
-out of bounds memory accesses in the X server.
+ |Feedback is welcome as I am not familiar with the code base.
 
-* CVE-2020-25712 / ZDI-CAN-11839 XkbSetDeviceInfo Heap-based Buffer Overflow
+Well me neither (oh i never looked after having seen they use
+floating-point internally, many years ago; i never understood why
+tremor did not fly for OGG, maybe someone knows).
+But yes, i can confirm with your additional condition the Debian
+Bug Report thing works, aka GSM.
 
-Insufficient checks on input of the XkbSetDeviceInfo request can lead
-to a buffer overflow on the head in the X server.
+  #?0|kent:sox.git$ src/sox -t ogg  /x/music/recs.misc/eisler_tucholsky-rosen_auf_den_weg_gestreut.ogg -t wav -e gsm-full-rate ok.wav
+  #?0|kent:sox.git$ ALSAPCM=xmix sox ok.wav -t alsa
+  sox FAIL formats: can't open input file `ok.wav': WAV file bits per sample is zero
+  #?2|kent:sox.git$ ALSAPCM=xmix src/sox ok.wav -t alsa
 
-Patches
--------
+  ok.wav:
 
-Patches for these issues have been committed to the xorg server git
-repository. xorg-server 1.20.10 will be released shortly and will
-include these patches.
+   File Size: 1.18M     Bit Rate: 71.7k
+  ...
 
+ |new 961 hunk:
 
-https://gitlab.freedesktop.org/xorg/xserver.git
+But why do you say 961 repeatedly?  Your lines numbers
 
-commit 446ff2d3177087b8173fa779fa5b77a2a128988b
+ |--8<---------------cut here---------------start------------->8---
+ |    967 #ifdef HAVE_LIBGSM
+ |    968     case WAVE_FORMAT_GSM610:
+ |    969         wav->numSamples = qwDataLength / wav->blockAlign * \
+ |    wav->samplesPerBlock;
+ |    970         wavgsminit(ft);
+ |    971         break;
+ |    972 #endif
+ |    973
+ |    974     }
+ |    975
+ |    976     if ((!wav->numSamples)
+ |    977 #ifdef HAVE_LIBGSM
+ |    978         && wav->formatTag != WAVE_FORMAT_GSM610
+ |    979 #endif
+ |    980     )
+ |    981         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_\
+ |    per_sample)
+ |    982             / ft->signal.channels;
+ |--8<---------------cut here---------------end--------------->8---
 
-    Check SetMap request length carefully.
-    
-    Avoid out of bounds memory accesses on too short request.
+are almost right, i now have (after reverting my revert)
 
-    ZDI-CAN 11572 /  CVE-2020-14360
+  --- a/src/wav.c
+  +++ b/src/wav.c
+  @@ -972,7 +972,11 @@ static int startread(sox_format_t *ft)
+   #endif
+       }
+  
+  -    if (!wav->numSamples)
+  +    if (!wav->numSamples
+  +#ifdef HAVE_LIBGSM
+  +            && wav->formatTag != WAVE_FORMAT_GSM610
+  +#endif
+  +    )
+           wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample)
+               / ft->signal.channels;
 
+so your numbers above are +1 compared to "mine"?
+Other than that thanks again.  I did not really look.  (That is,
+for functioning GSM.)  Seems to me no more divisions with
+numSamples or surrounding that, that is all i know.
 
-commit 87c64fc5b0db9f62f4e361444f4b60501ebf67b9
+Ciao!  (I happily post the entire patch again on request.)
 
-    Fix XkbSetDeviceInfo() and SetDeviceIndicators() heap overflows
-
-    ZDI-CAN 11389 / CVE-2020-25712
-
-
-Thanks
-======
-
-These vulnerabilities have been discovered by Jan-Niklas Sohn working
-with Trend Micro Zero Day Initiative.
-
-
--- 
-Matthieu Herrb
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
