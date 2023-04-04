@@ -1,90 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/16/5
-Message-Id: <E1pywNt-00034k-MT@xenbits.xenproject.org>
-Date: Tue, 16 May 2023 15:14:41 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 431 v1 (CVE-2022-42336) - Mishandling of guest SSBD selection on AMD hardware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/04/1
+Message-ID: <56654437.43.1680608310714@appsuite-guard.open-xchange.com>
+Date: Tue, 4 Apr 2023 13:38:30 +0200 (CEST)
+From: Otto Moerbeek <otto.moerbeek@...erdns.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: PowerDNS Security Advisory 2023-02: Deterred spoofing attempts can lead to authoritative servers being marked unavailable
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-            Xen Security Advisory CVE-2022-42336 / XSA-431
+   We have released PowerDNS Recursor 4.6.6, 4.7.5 and 4.8.4 due to
+   a low severity security issue found.
 
-          Mishandling of guest SSBD selection on AMD hardware
+   Please find the full text of the advisory below.
 
-ISSUE DESCRIPTION
-=================
+   The [1]4.6, [2]4.7 and [3]4.8 changelogs are available.
 
-The current logic to set SSBD on AMD Family 17h and Hygon Family 18h
-processors requires that the setting of SSBD is coordinated at a core
-level, as the setting is shared between threads.  Logic was introduced
-to keep track of how many threads require SSBD active in order to
-coordinate it, such logic relies on using a per-core counter of threads
-that have SSBD active.
+   The  [4]4.6.6  ([5]signature), [6]4.7.5 ([7]signature) and
+   [8]4.8.4 ([9]signature) tarballs are available from our download
+   [10]server. Patches are available at [11]patches. Packages for various
+   distributions are available from our [12]repository.
 
-When running on the mentioned hardware, it's possible for a guest to
-under or overflow the thread counter, because each write to
-VIRT_SPEC_CTRL.SSBD by the guest gets propagated to the helper that does
-the per-core active accounting.  Underflowing the counter causes the
-value to get saturated, and thus attempts for guests running on the same
-core to set SSBD won't have effect because the hypervisor assumes it's
-already active.
+   Note that PowerDNS Recursor 4.5.x and older releases are End of Life.
+   Consult the [13]EOL policy for more details.
+     __________________________________________________________________
 
-IMPACT
-======
+PowerDNS Security Advisory 2023-02: Deterred spoofing attempts can lead to
+authoritative servers being marked unavailable
 
-An attacker with control over a guest can mislead other guests into
-observing SSBD active when it is not.
+     * CVE: CVE-2023-26437
+     * Date: 29th of March 2023
+     * Affects: PowerDNS Recursor up to and including 4.6.5, 4.7.4 and
+       4.8.3
+     * Not affected: PowerDNS Recursor 4.6.6, 4.7.5 and 4.8.4
+     * Severity: Low
+     * Impact: Denial of service
+     * Exploit: Successful spoofing may lead to authoritative servers
+       being marked unavailable
+     * Risk of system compromise: None
+     * Solution: Upgrade to patched version
 
-VULNERABLE SYSTEMS
-==================
+   When the recursor detects and deters a spoofing attempt or receives certain malformed DNS
+   packets, it throttles the server that was the target of the impersonation attempt so that other
+   authoritative servers for the same zone will be more likely to be used in the future, in case the
+   attacker controls the path to one server only. Unfortunately this mechanism can be used by an
+   attacker with the ability to send queries to the recursor, guess the correct source port of the
+   corresponding outgoing query and inject packets with a spoofed IP address to force the recursor
+   to mark specific authoritative servers as not available, leading a denial of service for the
+   zones served by those servers.
 
-Only Xen version 4.17 is vulnerable.
+   CVSS 3.0 score: 3.7 (Low)
+   https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/
+   S:C/C:N/I:N/A:L
 
-Only x86 AMD systems are vulnerable.  The vulnerability can be leveraged
-by and affects only HVM guests.
+   Thanks to Xiang Li from Network and Information Security Laboratory,
+   Tsinghua University for reporting this issue.
 
-MITIGATION
-==========
+References
 
-Running PV guests only will prevent the vulnerability.
+   1. https://docs.powerdns.com/recursor/changelog/4.6.html#change-4.6.6
+   2. https://docs.powerdns.com/recursor/changelog/4.7.html#change-4.7.5
+   3. https://docs.powerdns.com/recursor/changelog/4.8.html#change-4.8.4
+   4. https://downloads.powerdns.com/releases/pdns-recursor-4.6.6.tar.bz2
+   5. https://downloads.powerdns.com/releases/pdns-recursor-4.6.6.tar.bz2.sig
+   6. https://downloads.powerdns.com/releases/pdns-recursor-4.7.5.tar.bz2
+   7. https://downloads.powerdns.com/releases/pdns-recursor-4.7.5.tar.bz2.sig
+   8. https://downloads.powerdns.com/releases/pdns-recursor-4.8.4.tar.bz2
+   9. https://downloads.powerdns.com/releases/pdns-recursor-4.8.4.tar.bz2.sig
+  10. https://downloads.powerdns.com/releases/
+  11. https://downloads.powerdns.com/patches/2023-01/
+  12. https://repo.powerdns.com/
+  13. https://docs.powerdns.com/recursor/appendices/EOL.html
 
-Setting `spec-ctrl=ssbd` on the hypervisor command line will force SSBD
-to be unconditionally active.
+--
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+kind regards,
+Otto Moerbeek
+PowerDNS Developer
 
-This issue was discussed in public already.
 
-RESOLUTION
-==========
 
-Applying the attached patch resolves this issue.
+Email: otto.moerbeek@...n-xchange.com
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
 
-xsa431.patch           xen-unstable - Xen 4.17.x
+-------------------------------------------------------------------------------------
+Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366
+Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin
+Chairman of the Board: Richard Seibt
 
-$ sha256sum xsa431*
-e71a8b7e251adf4832a4de9e452c2fd895a56314729c54698d10e344f1996a99  xsa431.patch
-$
------BEGIN PGP SIGNATURE-----
+PowerDNS.COM BV, Koninginnegracht 14L, 2514 AA Den Haag, The Netherlands
+Managing Director: Robert Brandt, Maxim Letski
+-------------------------------------------------------------------------------------
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmRjkhsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZDb8H/0vKLOgBhwKCVc8VYm59FIALd69k4qCLcwwfDuro
-jFum5ATC3Cbx+iEXD2URFY6O+eE71mMBqw3/GT/BiKvsBHQhX5lsJUpxZFscqW9J
-diM69a9BYuNNy+qW3TsslRsW9WGHH5bZoAhxpNKgciE17svJ76IRUsgNf806VRX+
-VBI61wK2s9oqzfTazhQVR9zxFLANTyw7M4EtUXs0y49IUFjnSeVpW7/PdoloPC1C
-m0SG6HSIJ4bH+yAWMqY5GYYVgJOkaStxEM6YLGjT/V078xcDyW2cie3BOtQ8/BI0
-FJ7iwEh932k7VLtd+htBF3vo7CD+teGneeaktqKK2h55ps0=
-=dmhW
------END PGP SIGNATURE-----
-
-Download attachment "xsa431.patch" of type "application/octet-stream" (3403 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
