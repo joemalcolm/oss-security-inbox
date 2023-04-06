@@ -1,37 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/5
-Message-ID: <e9bc0330-6574-e4e4-711e-c47450c53e53@apache.org>
-Date: Mon, 27 Nov 2023 21:58:37 +0000
-From: David Handermann <exceptionfactory@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49145: Apache NiFi: Improper Neutralization of Input in Advanced User Interface for Jolt 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/06/1
+Message-ID: <d55edada-aa6b-f53b-8f5e-41340ea8e7ed@ovn.org>
+Date: Thu, 6 Apr 2023 19:37:53 +0200
+From: Ilya Maximets <i.maximets@....org>
+To: oss-security@...ts.openwall.com, ovs-announce@...nvswitch.org, ovs-discuss <ovs-discuss@...nvswitch.org>
+Cc: i.maximets@....org, Aaron Conole <aconole@...hat.com>, Flavio Leitner <fbl@...hat.com>, David Marchand <david.marchand@...hat.com>
+Subject: [ADVISORY] CVE-2023-1668: Open vSwitch: Remote traffic denial of service via crafted packets with IP proto 0
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Description
+===========
 
-- Apache NiFi 0.7.0 through 1.23.2
+Multiple versions of Open vSwitch are vulnerable to crafted IP packets
+with ip proto set to 0 causing a potential denial of service.
+Triggering the vulnerability will require an attacker to send a crafted
+IP packet with protocol field set to 0 and the flow rules to contain
+'set' actions on other fields in the IP protocol header.  The resulting
+flows will omit required actions, and fail to mask the IP protocol field,
+resulting in a large bucket which captures all IP packets.
 
-Description:
+All versions of Open vSwitch at least as early as 1.5.0 are affected.
 
-Apache NiFi 0.7.0 through 1.23.2 include the JoltTransformJSON Processor, which provides an advanced configuration user interface that is vulnerable to DOM-based cross-site scripting. If an authenticated user, who is authorized to configure a JoltTransformJSON Processor, visits a crafted URL, then arbitrary
-JavaScript code can be executed within the session context of the authenticated user. Upgrading to Apache NiFi 1.24.0 or 2.0.0-M1 is the recommended mitigation.
+The Common Vulnerabilities and Exposures project (cve.mitre.org) has
+assigned the identifier CVE-2023-1668 to this issue.
 
-This issue is being tracked as NIFI-12403 
 
-Credit:
+Mitigation
+==========
 
-Dr. Oliver Matula, DB Systel GmbH (finder)
+For any version of Open vSwitch, preventing packets with network
+protocol number '0' from reaching Open vSwitch will prevent the issue.
+This is difficult to achieve because Open vSwitch obtains packets before
+the iptables or nftables host firewall, so iptables or nftables on the
+Open vSwitch host cannot ordinarily block the vulnerability.
 
-References:
+Another method would be to add a high priority rule to the flow table
+explicitly matching on nw protocol '0' and handling that traffic
+separately:
 
-https://nifi.apache.org/security.html#CVE-2023-49145
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-49145
-https://issues.apache.org/jira/browse/NIFI-12403
+    table=0 priority=32768,ip,nw_proto=0,actions=drop
+    table=0 priority=32768,ipv6,nw_proto=0,actions=drop
+    table=0 priority=32768,arp,arp_op=0,actions=drop
 
-Timeline:
+All 3 OpenFlow rules should be added to every OVS bridge.  This can
+be difficult to maintain during the service restart.
 
-2023-11-22: reported
-2023-11-22: confirmed
-2023-11-22: resolved
 
+Fix
+===
+
+Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer:
+
+* 3.1.x:
+  https://github.com/openvswitch/ovs/commit/61b39d8c4797f1b668e4d5e5350d639fca6082a9
+* 3.0.x:
+  https://github.com/openvswitch/ovs/commit/0ec9af260ad84225e758d249fa32151ddf8a6520
+* 2.17.x:
+  https://github.com/openvswitch/ovs/commit/27fb5db7f727ffc056f024f9ba4936facccb5f40
+* 2.16.x:
+  https://github.com/openvswitch/ovs/commit/42f2b4b9b9a3c11d38f180bf1e35c47b77cd4ce8
+* 2.15.x:
+  https://github.com/openvswitch/ovs/commit/f36509fd64e339ffd33593451099be6baa12ffe6
+* 2.14.x:
+  https://github.com/openvswitch/ovs/commit/b46505f4d26cd4612a533687e7884efcb7a74111
+* 2.13.x:
+  https://github.com/openvswitch/ovs/commit/7fa0106e8594c34f9e16efd87a58e38a947c6c5b
+
+
+Recommendation
+==============
+
+We recommend that users of Open vSwitch apply the linked patches, or
+upgrade to a known patched version of Open vSwitch.  These include:
+
+* 3.1.1
+* 3.0.4
+* 2.17.6
+* 2.16.7
+* 2.15.8
+* 2.14.9
+* 2.13.11
+
+
+Acknowledgements
+================
+
+The Open vSwitch team wishes to thank the reporter:
+
+      David Marchand <dmarchan@...hat.com>
+Download attachment "OpenPGP_0xB9F7EC77C829BF96.asc" of type "application/pgp-keys" (4740 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
