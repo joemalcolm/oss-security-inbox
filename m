@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/8
-Message-ID: <25b8101c-0813-a0e1-91a3-a3bfe9281e35@apache.org>
-Date: Mon, 16 Oct 2023 02:00:08 +0000
-From: Wang Weibing <wwbmmm@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/07/1
+Message-ID: <ac5b8ffa-c396-7733-6786-61f682ad6081@apache.org>
+Date: Fri, 07 Apr 2023 13:57:35 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-45757: Apache bRPC: The builtin service rpcz page has an XSS attack vulnerability 
+Subject: CVE-2023-28707: Airflow Apache Drill Provider Arbitrary File Read Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
-
-Affected versions:
-
-- Apache bRPC 0.9.0 through 1.6.0
+Severity: low
 
 Description:
 
-Security vulnerability in Apache bRPC <=1.6.0 on all platforms allows attackers to inject XSS code to the builtin rpcz page.
-An attacker that can send http request to bRPC server with rpcz enabled can inject arbitrary XSS code to the builtin rpcz page.
+Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Drill Provider.This issue affects Apache Airflow Drill Provider: before 2.3.2.
 
-Solution (choose one of three):
-1. upgrade to bRPC > 1.6.0, download link:  https://dist.apache.org/repos/dist/release/brpc/1.6.1/ 
-2. If you are using an old version of bRPC and hard to upgrade, you can apply this patch:  https://github.com/apache/brpc/pull/2411 
-3. disable rpcz feature
+Credit:
+
+Kai Zhao of 3H Secruity Team (finder)
 
 References:
 
-https://brpc.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-45757
+https://github.com/apache/airflow/pull/30215
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-28707
 
