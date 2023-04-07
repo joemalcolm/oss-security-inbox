@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/3
-Message-ID: <20230223145926.GA7509@localhost.localdomain>
-Date: Thu, 23 Feb 2023 14:59:32 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: Demi Marie Obenour <demi@...isiblethingslab.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/07/2
+Message-ID: <257d8e51-81ab-861d-f87b-3ce1b82d0883@apache.org>
+Date: Fri, 07 Apr 2023 13:59:45 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-28706: Apache Airflow Hive Provider Beeline Remote Command Execution 
 Content-Type: text/plain; charset=utf-8
 
-Hi Demi,
+Severity: low
 
-On Wed, Feb 22, 2023 at 10:17:19AM -0500, Demi Marie Obenour wrote:
-> Is it possible to use this information leak to bypass ASLR without
-> crashing the process?
+Description:
 
-Unfortunately, no: sshd calls _exit() immediately after this information
-leak, and fork()s + re-execv()s itself (and therefore re-randomizes its
-address space) the next time we connect to it; i.e., a memory address
-leaked in one connection is useless in another connection.
+Improper Control of Generation of Code ('Code Injection') vulnerability in Apache Software Foundation Apache Airflow Hive Provider.This issue affects Apache Airflow Hive Provider: before 6.0.0.
 
-> Also, is this flaw expected to be exploitable for code execution on
-> GNU/Linux?
+Credit:
 
-We are focusing on OpenBSD for now, because its malloc seems more
-compatible with this particular double-free bug than glibc's malloc; we
-will look into glibc/Linux at some point, and will keep you posted.
+sw0rd1ight of Caiji Sec Team and 4ra1n of Chaitin Tech (finder)
 
-Thank you very much! With best regards,
+References:
 
--- 
-the Qualys Security Advisory team
+https://github.com/apache/airflow/pull/30212
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-28706
+
