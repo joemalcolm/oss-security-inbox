@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/5
-Message-ID: <ZRm4W-K4CtjLxcAQ@llamedos.localdomain>
-Date: Sun, 1 Oct 2023 19:20:11 +0100
-From: Ken Moffat <zarniwhoop@...world.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/07/3
+Message-ID: <8c38198f-8d5a-e2cd-82e3-95a00a9e3e45@apache.org>
+Date: Fri, 07 Apr 2023 14:01:28 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+Subject: CVE-2023-28710: Apache Airflow Spark Provider Arbitrary File Read via JDBC 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
-> Google has announced another media parsing bug, this time correctly documenting
-> both the base library and Chrome versions affected in the CVE.
-> 
-> https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
-> 
->    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
->    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
->    exploit heap corruption via a crafted HTML page.
->    (Chromium security severity: High)
-> 
+Severity: low
 
-Does anyone know how far back libvpx is affected ?  Asking because
-seamonkey-2.53.17.1 is apparently shipping a version of libvpx-1.7.0
-from 2020 and I'm told it no longer builds against system
-libvpx-1.13.1, although a recent version apparently built against
-libvpx-1.11.0.
+Description:
 
-ĸen
--- 
-  Men marched away, Vimes. And men marched back. How glorious the
-  battles would have been that they never had to fight! -- Jingo
+Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Spark Provider.This issue affects Apache Airflow Spark Provider: before 4.0.1.
+
+Credit:
+
+Xie Jianming of  Nsfocus (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/30223
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-28710
+
