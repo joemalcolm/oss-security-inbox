@@ -1,89 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/14
-Message-ID: <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
-Date: Fri, 29 Sep 2023 19:51:12 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/10/6
+Message-ID: <8a4746bb-6c19-dd80-10ca-9aa2b87d605b@apache.org>
+Date: Mon, 10 Apr 2023 09:21:11 +0000
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+Subject: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2023-09-29 at 12:57 -0700, Travis Finkenauer wrote:
-> 
-> Having a stable ABI has pros and cons. You are correct that Rust does not have
-> a stable ABI by default (although you can you can opt into the C ABI per-type
-> and per-function). A stable ABI is convenient because it lets you link to
-> libraries compiled with different versions of a compiler. However, a stable ABI
-> has performance implications. You are locked into that ABI even if you realize
-> some decisions don't make sense in the future.
-> 
-> ...
-> 
-> I agree that it would be nice if Rust had a better story around dynamic
-> linking. If your "product" is a single executable, then statically linking all
-> of your Rust dependencies may not be a big deal. However, if you are
-> distributing many binaries (such as in an OS image), then you would be
-> building and packaging some libraries multiple times.
+Severity: important
 
-I'll focus on this as the portion most relevant to the list.
+Description:
 
-Any static linking is a big deal, because it embeds vulnerabilities
-where no one is looking for them. It changes the complexity of
-maintaining a secure system from something like O(n) to O(n*m), while
-simultaneously making it impossible to automate. It also wastes space,
-bandwidth, and CPU cycles -- but none of those are deal-breakers.
+Arbitrary file reading vulnerability in Apache Software Foundation Apache OFBiz.This issue affects Apache OFBiz: before 18.12.07.
 
+Required Configurations:
 
-> There are workarounds like putting all of your Rust code in a single dynamic
-> library, but that's obviously not ideal or always feasible. You can also avoid
-> the Rust build tool "cargo" and directly compile dependencies to shared
-> libraries with "rustc", but it's not easy to compile Rust code without "cargo".
+Using the Solr plugin
 
-This is the biggest problem. Cargo is the standard way to build rust
-projects. Nobody is shipping a ./configure script for their rust
-project. Cargo is what's documented. It's what everyone uses. It's
-baked into all of the tools, the books, the domain names, the clever
-puns. It's also a bundling tool.
+Solution:
 
-Without ABI stability, the cargo approach was necessary to avoid
-constant breakage. It's unreasonable to expect end users to track down
-every rust program they're using and rebuild them all manually every
-time a library is rebuilt with a newer version of rust. Instead, it was
-decided that the blessed way to build and distribute rust projects
-would be to bundle the world along with them.
+Upgrade to release 18.12.07
 
-Except, now, this is embarrassing: the only way for people to get
-security updates is to track down every rust program they're using and
-rebuild them all manually. This further presupposes that someone is
-actually looking for security vulnerabilities in the old versions of
-libraries bundled on everyone's systems. And that every rust upstream
-is aware of every vulnerability in every dependency it bundles. None of
-that happens.
+Credit:
 
+Skay <lhcaomail@...il.com> (finder)
 
-> 
-> I'm not that familiar with Haskell, but in Rust when you
-> specify a dependency "foo" version "1.2.3", you are not pinning directly to
-> version "1.2.3". You are actually saying "I depend on 'foo' whose semantic
-> version is compatible with 1.2.3". That means the dependency resolver may
-> resolve "1.2.99" (patch fix) or "1.99.0" (minor version bump). Hence, you
-> don't need to manually update your dependencies every time a new version is
-> published.
+References:
 
-All package managers have something similar. The problem is that when
-the sole way to build and distribute software is to bundle everything
-with it, who cares? Nobody is maintaining long-term-support branches
-for any rust libraries. If someone wants the old API, no problem,
-they're already bundling it!
-
-Now imagine that someone wants to untangle this mess and use dynamic
-linking to make security updates feasible again. They immediately
-encounter diamond dependency conflicts, because no one has ever cared
-to avoid them, because everyone builds rust projects with cargo,
-because that's the only way to avoid breaking your whole system every
-three weeks on rust release day. We're stuck at square one.
-
-Memory issues are relatively hard to find and exploit. In the big
-picture, mitigating them is a small part of what it takes to run a
-secure system. A viable cure for memory issues therefore can't take a
-dump on the way the rest of a secure system is managed.
+https://lists.apache.org/list.html?announce@apache.org
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-47501
 
