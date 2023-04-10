@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/06/2
-Message-ID: <ac30264b-daba-2c9f-95bd-224cdccee419@apache.org>
-Date: Tue, 6 Jun 2023 10:12:29 -0700
-From: Michael Jumper <mjumper@...che.org>
-To: announce@...che.org, announce@...camole.apache.org, dev@...camole.apache.org, user@...camole.apache.org
-Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2023-30576: Apache Guacamole: Use-after-free in handling of RDP audio input buffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/10/2
+Message-ID: <da13c5d2-f965-cace-46d7-1dc92a7cf8c0@apache.org>
+Date: Mon, 10 Apr 2023 06:14:41 +0000
+From: Heping Wang <peacewong@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-27603: Apache Linkis Mangaer module engineConn material upload exists Zip Slip issue 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
-Base CVSS Score: 6.8 (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N)
-
-Affected versions:
-
-- Apache Guacamole 0.9.10 through 1.5.1
+Severity: important
 
 Description:
 
-Apache Guacamole 0.9.10 through 1.5.1 may continue to reference a freed 
-RDP audio input buffer. Depending on timing, this may allow an attacker 
-to execute arbitrary code with the privileges of the guacd process.
+In Apache Linkis <=1.3.1, due to the Manager module engineConn material upload does not check the zip path, This is a Zip Slip issue, which will lead to a potential RCE vulnerability.
 
-Mitigation:
 
-Users of versions of Apache Guacamole 1.5.1 and older should upgrade to 
-the 1.5.2 release.
+We recommend users upgrade the version of Linkis to version 1.3.2.
 
 Credit:
 
-We would like to thank Stefan Schiller (Sonar) for reporting this issue.
+4ra1n (reporter)
 
 References:
 
-https://guacamole.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-30576
+https://linkis.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-27603
 
-Timeline:
-
-2023-04-11: Reported to security@...camole.apache.org
-2023-04-11: Report acknowledged by project
-2023-04-12: Report confirmed by project
-2023-05-09: Fix completed and merged
-2023-05-09: Fix tested and confirmed by reporter
-2023-05-25: Fix released
