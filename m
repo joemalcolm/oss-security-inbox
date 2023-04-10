@@ -1,89 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/20/1
-Message-ID: <CAKe4=-KBsSnPfCDKApdOq9uksfv=AenjWtKPZorRcKo3F+_SEA@mail.gmail.com>
-Date: Tue, 19 Dec 2023 16:49:16 -0600
-From: Jonathan Wright <jonathan@...alinux.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Andrew Lukoshko <alukoshko@...alinux.org>,  benny Vasquez <benny@...alinux.org>, Igor Seletskiy <iseletsk@...alinux.org>,  Darya Malyavkina <dmalyavkina@...udlinux.com>, Jack Aboutboul <jack@...alinux.org>
-Subject: Re: AlmaLinux Distros List Application
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/10/1
+Message-ID: <be3b46f7-0dbf-95cf-b512-1e4a4450763a@apache.org>
+Date: Mon, 10 Apr 2023 06:14:37 +0000
+From: Heping Wang <peacewong@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-27602: Apache Linkis publicsercice module unrestricted upload of file 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 17, 2023 at 2:56 PM Solar Designer <solar@...nwall.com> wrote:
+Severity: important
 
-> Hi,
->
-> On Tue, Dec 12, 2023 at 02:35:35PM -0600, Jonathan Wright wrote:
-> > I'm submitting this application on behalf of the AlmaLinux OS Foundation.
-> >
-> > Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would
-> be
-> > joining if approved.
->
-> This looks reasonable to me.
->
-> >       Historically we have been following Red Hat releases within 1-2
-> days,
-> >       and since our shift in June away from following Red Hat we have
-> been able
-> >       to release some security updates ahead of Red Hat (Iperf3 patch
-> and AMD
-> >       microcode/kernel patches specifically). We would not be beholden
-> to CentOS
-> >       Stream updates for our patch releases.
->
-> This isn't a lot yet.  I suppose linux-distros membership would enable
-> you to do ahead of Red Hat updates more often?
->
+Description:
 
-It's not so much about competing with or doing things before RedHat as it
-is about taking care of our users.  Since June of this year we are no
-longer beholden to RedHat for patches.  Being on the distro list could mean
-getting patches out sooner but that's more or less a side effect, not
-necessarily the goal - though the goal IS getting patches to users as
-quickly as possible, especially those shared on the private list, for
-obvious reasons.
-
-We didn't apply for the distros list before June as there was really no
-point since we were tied to being a clone of RH, but that has now changed
-since we are no longer just a clone, but a compatible downstream OS where
-we can (and have been) make our own changes.
+In Apache Linkis <=1.3.1, The PublicService module uploads files without restrictions on the path to the uploaded files, and file types.
 
 
->
-> >       Immediately we can begin to help reporters ensure their reports are
-> >       following the requirements and are confirmed/replied to. As we
-> > advance our
-> >       understanding of how things operate, and the need arises, we can
-> > expand our
-> >       work into contributing more deeply.
->
-> These tasks are already accepted by some distros.  We can indeed
-> re-assign, so that those older members handle more complex tasks
-> instead, or maybe you'd volunteer for some of the tasks from the
-> "Administrative tasks mostly unrelated to (linux-)distros lists (but
-> relevant to the wider community)" category?  This category is
-> essentially about expanding and improving the public oss-security
-> content and its visibility.
->
+We recommend users upgrade the version of Linkis to version 1.3.2. 
 
-We very likely would be happy to help in this regard, especially if much of
-it can be done without necessarily being on the private side of the list.
-The folks on our side that would be great at this type of work are not the
-same as those of us (myself and Andrew) that would be on the embargoed list.
+For versions 
 
+<=1.3.1, we suggest turning on the file path check switch in linkis.properties
 
->
-> >       Darya Malyavkina from CloudLinux will vouch for us.
->
-> For others reading this - Darya has been on linux-distros for CloudLinux
-> for a long while, so this satisfies the requirement as written.
->
-> Alexander
->
+`wds.linkis.workspace.filesystem.owner.check=true`
+`wds.linkis.workspace.filesystem.path.check=true`
 
+Credit:
 
--- 
-Jonathan Wright
-AlmaLinux Foundation
-Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
+Laihan (reporter)
+
+References:
+
+https://linkis.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-27602
 
