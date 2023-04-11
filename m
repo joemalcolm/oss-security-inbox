@@ -1,86 +1,337 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/2
-Message-ID: <20231229130718.GA6740@openwall.com>
-Date: Fri, 29 Dec 2023 14:07:18 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/11/3
+Message-ID: <CAEBa_SABrLmHEU9FfxF-X2RjScOYLBOefxS2UD28VsNOUVr6zQ@mail.gmail.com>
+Date: Wed, 12 Apr 2023 01:03:04 +0200
+From: valis <sec@...is.email>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-51766: Exim: SMTP smuggling
+Subject: CVE-2023-1281, CVE-2023-1829: Linux kernel: Vulnerabilities in the tcindex classifier
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Exim was also susceptible to SMTP smuggling, and version 4.97.1 is now
-released to address this.  Included below is doc/doc-txt/cve-2023-51766
-from the exim-4.97.1 branch (with erroneous Date: line omitted).
+I have recently discovered two security issues in the tcindex
+classifier (part of the network QoS subsystem of the Linux kernel):
 
-Alexander
+CVE-2023-1281 Race condition leading to an use-after-free when
+updating imperfect hash filters
+CVE-2023-1829 Use-after-free when deleting a perfect hash filter
 
----
-CVE ID:     CVE-2023-51766
-Credits:    https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/
-Version(s): all up to 4.97 inclusive
-Issue:      Given a buggy relay, Exim can be induced to accept a second message embedded
-            as part of the body of a first message
+# Impact / mitigation:
 
-Conditions
-==========
+Both of these vulnerabilities can be used for local privilege escalation.
 
-If *all* the following conditions are met
+The attacker needs CAP_NET_ADMIN to create/change classifiers, so disabling
+unprivileged user namespaces should mitigate both issues.
 
-    Runtime options
-    ---------------
+# Versions affected
 
-    * Exim offers PIPELINING on incoming connections
+CVE-2023-1281 was introduced by:
 
-    * Exim offers CHUNKING on incoming connections
+commit 9b0d4446b56904b59ae3809913b0ac760fa941a6
+Author: Jiri Pirko <jiri@...lanox.com>
+Date:   Fri Aug 4 14:29:15 2017 +0200
 
-    Operation
-    ---------
+    net: sched: avoid atomic swap in tcf_exts_change
 
-    * DATA (as opposed to BDAT) is used for a message reception
+and the earliest affected release is 4.14
 
-    * The relay host sends to the Exim MTA message data including
-      one of "LF . LF" or "CR LF . LF" or "LF . CR LF".
+CVE-2023-1829 has been there since the beginning of the git history
+(2.6.12-rc2) and became exploitable after net/sched netlink interface
+was exposed to user namespaces in version 3.8
 
-    * Exim interprets the sequence as signalling the end of data for
-      the SMTP DATA command, and hence a first message.
+# Fixes
 
-    * Exim interprets further input which the relay had as message body
-      data, as SMTP commands and data. This could include a MAIL, RCPT,
-      BDAT (etc) sequence, resulting in a further message acceptance.
+CVE-2023-1281 was fixed in:
 
-Impact
-======
+commit ee059170b1f7e94e55fa6cadee544e176a6e59c2
+Author: Pedro Tammela <pctammela@...atatu.com>
+Date:   Thu Feb 9 11:37:39 2023 -0300
 
-One or more messages can be accepted by Exim that have not been
-properly validated by the buggy relay.
-
-Fix
-===
-
-Install a fixed Exim version:
-
-    4.98 (once available)
-    4.97.1
-
-If you can't install one of the above versions, ask your package
-maintainer for a version containing the backported fix. On request and
-depending on our resources we will support you in backporting the fix.
-(Please note, that Exim project officially doesn't support versions
-prior the current stable version.)
+    net/sched: tcindex: update imperfect hash filters respecting rcu
 
 
-Workaround
-==========
+In the case of CVE-2023-1829, kernel maintainers have decided to
+remove the entire tcindex classifier due to its lack of known users
+combined with a high number of issues present in the code.
 
-  Disable CHUNKING advertisement for incoming connections.
+This change was committed in:
 
-  An attempt to "smuggle" a DATA command will trip a syncronisation
-  check.
+commit 8c710f75256bb3cf05ac7b1672c82b92c43f3d28
+Author: Jamal Hadi Salim <jhs@...atatu.com>
+Date:   Tue Feb 14 08:49:14 2023 -0500
 
-*or*
+    net/sched: Retire tcindex classifier
 
-  Disable PIPELINING advertisement for incoming connections.
+and has been backported to all -stable kernels.
 
-  The "smuggled" MAIL FROM command will then trip a syncronisation
-  check.
+# Technical details
+
+## CVE-2023-1281 Race condition leading to an use-after-free when
+updating imperfect hash filters
+
+Tcindex classifier handles extensions (like actions) in its .change
+function (tcindex_change) differently than most classifiers.
+
+.change handler is called by tc_new_tfilter() when creating a new filter,
+but also when modifying an existing filter.
+
+In that latter case the .change handler has to create new extension objects
+based on user-provided data, modify or replace the existing filter and
+finally free memory used by the old filter's extensions.
+
+Let's first look at how most classifiers handle changing an existing
+filter. Here's an example from basic_change():
+
+...
+
+[1] err = tcf_exts_init(&fnew->exts, net, TCA_BASIC_ACT, TCA_BASIC_POLICE);
+
+...
+
+[2]     err = basic_set_parms(net, tp, fnew, base, tb, tca[TCA_RATE], flags,
+                              extack);
+...
+[3]     *arg = fnew;
+
+        if (fold) {
+                idr_replace(&head->handle_idr, fnew, fnew->handle);
+                list_replace_rcu(&fold->link, &fnew->link);
+                tcf_unbind_filter(tp, &fold->res);
+                tcf_exts_get_net(&fold->exts);
+[4]             tcf_queue_work(&fold->rwork, basic_delete_filter_work);
+
+
+bool tcf_queue_work(struct rcu_work *rwork, work_func_t func)
+{
+        INIT_RCU_WORK(rwork, func);
+[5]     return queue_rcu_work(tc_filter_wq, rwork);
+}
+
+static void __basic_delete_filter(struct basic_filter *f)
+{
+        tcf_exts_destroy(&f->exts);
+        tcf_em_tree_destroy(&f->ematches);
+        tcf_exts_put_net(&f->exts);
+        free_percpu(f->pf);
+        kfree(f);
+}
+
+static void basic_delete_filter_work(struct work_struct *work)
+{
+        struct basic_filter *f = container_of(to_rcu_work(work),
+                                              struct basic_filter,
+                                              rwork);
+        rtnl_lock();
+        __basic_delete_filter(f);
+        rtnl_unlock();
+}
+
+
+First, a new filter is allocated in fnew and extension structures are
+initialized at [1].
+Then new extensions are configured in basic_set_parms based on user data
+provided through netlink, and the existing filter is replaced with a newly
+created filter at [3].
+
+Finally, the old filter is queued to be deleted by tcf_queue_work().
+
+What's important here is that tcf_queue_work() uses queue_rcu_work(), which
+means that basic_delete_filter_work() will only be called after the RCU
+grace period.
+This prevents the old filter's extensions from being freed while still used
+during basic_classify() (.classify runs in a RCU read-side critical
+section).
+
+Now let's look at a vulnerable tcindex code - it doesn't use
+tcf_queue_work(), but instead destroys old extensions with a
+tcf_exts_change() function:
+
+tcindex_set_parms() is called from tcindex_change() and handles most of the
+work:
+
+struct tcindex_filter_result *r = *arg;
+
+...
+[1] err = tcf_exts_init(&e, net, TCA_TCINDEX_ACT, TCA_TCINDEX_POLICE);
+
+...
+[2] err = tcf_exts_validate(net, tp, tb, est, &e, flags, extack);
+
+..
+[3] r = tcindex_lookup(cp, handle) ? : &new_filter_result
+
+[4] tcf_exts_change(&r->exts, &e);
+
+...
+
+void tcf_exts_change(struct tcf_exts *dst, struct tcf_exts *src)
+{
+#ifdef CONFIG_NET_CLS_ACT
+        struct tcf_exts old = *dst;
+
+        *dst = *src;
+        tcf_exts_destroy(&old);
+#endif
+}
+
+void tcf_exts_destroy(struct tcf_exts *exts)
+{
+#ifdef CONFIG_NET_CLS_ACT
+        if (exts->actions) {
+                tcf_action_destroy(exts->actions, TCA_ACT_UNBIND);
+                kfree(exts->actions);
+        }
+        exts->nr_actions = 0;
+#endif
+}
+
+First, new extensions are allocated as variable e, and initialized at [1]
+and [2] (tcf_exts_validate also allocates action objects if requested by
+the user).
+
+At [3] if a filter with the same hash params already exists, it's directly
+assigned to variable r.
+
+Finally, r->exts is passed to tcf_exts_change and kfree() is called on
+r->exts->actions in tcf_exts_destroy()
+
+At the same time this filter 'r' is still linked to its parent class and is
+in active use by the qdisc.
+
+There is no locking to prevent
+tcindex_change()->tcf_exts_change()->tcf_exts_destroy() being called while
+tcindex_classify() is running and executing actions.
+
+int tcindex_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+struct tcf_result *res)
+{
+...
+
+        return tcf_exts_exec(skb, &f->exts, res);
+}
+
+static inline int
+tcf_exts_exec(struct sk_buff *skb, struct tcf_exts *exts,
+              struct tcf_result *res)
+{
+#ifdef CONFIG_NET_CLS_ACT
+        return tcf_action_exec(skb, exts->actions, exts->nr_actions, res);
+#endif
+        return TC_ACT_OK;
+}
+
+If tcf_exts_destroy() is called while another thread is inside
+tcf_action_exec (which is a non-trivial function that calls multiple action
+handlers in a loop), we get use-after-free on exts->actions array or/and
+individual tc_action objects.
+
+
+## CVE-2023-1829 Use-after-free when deleting a perfect hash filter
+
+There are 2 different hashing methods implemented in tcindex:
+"perfect" and "imperfect" hashes.
+
+Perfect hashes are used for a smaller range of input keys and will be
+chosen if the user provides small enough mask/hash parameters when
+creating the classifier. By default imperfect hashes are used.
+
+It turns out that perfect hash implementation has several issues,
+especially when used with extensions (like actions).
+
+The vulnerability lies is in the tcindex_delete() function and is
+quite easy to understand:
+
+static int tcindex_delete(struct tcf_proto *tp, void *arg, bool *last,
+                          bool rtnl_held, struct netlink_ext_ack *extack)
+{
+        struct tcindex_data *p = rtnl_dereference(tp->root);
+        struct tcindex_filter_result *r = arg;
+        struct tcindex_filter __rcu **walk;
+        struct tcindex_filter *f = NULL;
+
+        pr_debug("tcindex_delete(tp %p,arg %p),p %p\n", tp, arg, p);
+[1]     if (p->perfect) {
+                if (!r->res.class)
+                        return -ENOENT;
+        } else {
+                int i;
+
+                for (i = 0; i < p->hash; i++) {
+                        walk = p->h + i;
+                        for (f = rtnl_dereference(*walk); f;
+                             walk = &f->next, f = rtnl_dereference(*walk)) {
+                                if (&f->result == r)
+                                        goto found;
+                        }
+                }
+                return -ENOENT;
+
+found:
+[2]                rcu_assign_pointer(*walk, rtnl_dereference(f->next));
+        }
+        tcf_unbind_filter(tp, &r->res);
+        /* all classifiers are required to call tcf_exts_destroy() after rcu
+         * grace period, since converted-to-rcu actions are relying on that
+         * in cleanup() callback
+         */
+        if (f) {
+                if (tcf_exts_get_net(&f->result.exts))
+                        tcf_queue_work(&f->rwork, tcindex_destroy_fexts_work);
+                else
+                        __tcindex_destroy_fexts(f);
+        } else {
+                tcindex_data_get(p);
+
+                if (tcf_exts_get_net(&r->exts))
+                        tcf_queue_work(&r->rwork, tcindex_destroy_rexts_work);
+                else
+                        __tcindex_destroy_rexts(r);
+        }
+}
+
+We can see that for imperfect hashes the filter associated with result
+r is removed from the hash table (2), but for perfect hash (1)
+basically nothing is done to delete/deactivate the filter.
+
+Because 'f' is never set in case of imperfect hashes,
+tcindex_destroy_rexts_work() will be called:
+
+static void tcindex_destroy_rexts_work(struct work_struct *work)
+{
+        struct tcindex_filter_result *r;
+
+        r = container_of(to_rcu_work(work),
+                         struct tcindex_filter_result,
+                         rwork);
+        rtnl_lock();
+        __tcindex_destroy_rexts(r);
+        rtnl_unlock();
+}
+
+static void __tcindex_destroy_rexts(struct tcindex_filter_result *r)
+{
+        tcf_exts_destroy(&r->exts);
+        tcf_exts_put_net(&r->exts);
+        tcindex_data_put(r->p);
+}
+
+which leads to tcf_exts_destroy():
+
+void tcf_exts_destroy(struct tcf_exts *exts)
+{
+#ifdef CONFIG_NET_CLS_ACT
+        if (exts->actions) {
+                tcf_action_destroy(exts->actions, TCA_ACT_UNBIND);
+                kfree(exts->actions);
+        }
+        exts->nr_actions = 0;
+#endif
+}
+
+For perfect hash filters that means a use-after-free, as destroyed
+extensions are still used by the active filters.
+
+
+Best regards,
+
+valis
