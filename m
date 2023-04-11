@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/24/3
-Message-ID: <150baa70-a243-0405-55e2-ee8525034fc4@apache.org>
-Date: Fri, 24 Mar 2023 15:05:00 +0000
-From: Marcus Lange <marcus@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/11/2
+Message-ID: <cdb4f336-4403-b778-2ab9-5732bb049ff0@apache.org>
+Date: Tue, 11 Apr 2023 14:16:59 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-47502: Apache OpenOffice: Macro URL arbitrary script execution 
+Subject: CVE-2023-30465: Apache InLong: SQL injection in apache inLong 1.5.0 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Severity: important
 
 Description:
 
-Apache OpenOffice documents can contain links that call internal macros with arbitrary arguments. Several URI Schemes are defined for this purpose.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.5.0. By manipulating the "orderType" parameter and the ordering of the returned content using an SQL injection attack, an attacker can extract the username of the   user with ID 1 from the "user" table, one character at a time.  Users are advised to upgrade to Apache InLong's 1.6.0 or cherry-pick [1] to solve it.
+ 
+ https://programmer.help/blogs/jdbc-deserialization-vulnerability-learning.html 
 
-
-Links can be activated by clicks, or by automatic document events.
-
-The execution of such links must be subject to user approval.
-
-In the affected versions of OpenOffice, approval for certain links is not   requested; when activated, such links could therefore result in arbitrary script execution.
+[1]  https://github.com/apache/inlong/issues/7529 https://github.com/apache/inlong/issues/7529
 
 Credit:
 
-Altin Thartori (tin-z) (reporter)
+escape Wang (finder)
 
 References:
 
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-47502
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-30465
 
