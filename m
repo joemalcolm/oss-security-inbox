@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/1
-Message-ID: <2023122830-stopwatch-sierra-7cf0@gregkh>
-Date: Thu, 28 Dec 2023 10:31:42 +0000
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/11/1
+Message-ID: <ec07456b-6a04-60a3-35e5-c266b6348530@geeklan.co.uk>
+Date: Tue, 11 Apr 2023 12:22:34 +0100
+From: Sevan Janiyan <venture37@...klan.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: CVE-2017-11164 - stack exhaustion in PCRE
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 26, 2023 at 01:35:55AM +0100, Solar Designer wrote:
-> On Tue, Dec 26, 2023 at 12:38:36AM +0100, Steffen Nurpmeso wrote:
-> > and i really today stumbled over his funny opinion
-> > 
-> >   . All "early notice" lists are leaks and should be considered
-> >     public.
-> >   . Unless your project is not used by anyone.
-> >   . Otherwise, why would your government allow it to exist?
-> 
-> I think Greg's stance on this is inconsistent, if we also recall his
-> preference against full public disclosure of issues discussed on private
-> lists and his running of private lists on CPU microarchitectural issues.
+Hi,
+CVE-2017-11164 landed some years back[1] for PCRE 8.x and is marked
+up with a high base score on the article[2], yet no fix was ever listed 
+and is still commonly packaged, so I asked Philip Hazel (the PCRE 
+maintainer) regarding the issue, and this is what Philip said
 
-As you are referring to my talk here, I figured I would point out that
-later on in it I do talk explicitly about the private lists that we run
-for these CPU issues and how much we hate them.  Companies who are
-currently not on these lists are actively trying to circumvent them to
-get access to the information on them, despite all of the lawyers and
-governments involved agreeing that this is the best and only way we know
-how to handle these types of issues at the moment.
+"Stack exhaustion is a FEP (frequently encountered problem) in PCRE1
+(the 8.xx series). There are various limiting options that the user can
+apply to limit stack usage.
 
-In other words, I hate them, companies hate them, and governments hate
-them, but no one involved has solid ideas of what to do instead.
+...
 
-"Luckily" I think that laws like the CRA are going to make them obsolete
-in a few years time so maybe that will cause them to go away as I don't
-see any end of CPU bugs happening before then.
+The code in PCRE2 has been re-written so as to use heap storage instead
+of the stack when executing patterns, thus getting rid of a problem that
+lots of people encountered with PCRE1."
 
-> However, the concern about leaks is valid.  I think the most effective
-> defense we have is the 14 days maximum embargo time, which removes the
-> data's long-term value for potential use in attacks.
+"PCRE1 has become totally obsolete and is no longer maintained. The
+final release was 8.45 (June 2021)"
 
-Again, I still consider this a form of blackmail against open source
-projects when you do this, but hey, you do you :)
+So just a heads up if you're still linking against PCRE 8.x but software
+in question supports PCRE2, perhaps it's time to switch and default to
+PCRE2.
 
-thanks,
 
-greg k-h
+Sevan
+[1] https://www.openwall.com/lists/oss-security/2017/07/11/3
+[2] https://nvd.nist.gov/vuln/detail/CVE-2017-11164
