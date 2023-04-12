@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3240" "Thursday" "10" "November" "2016" "19:15:51" "+0200" "Henri Salo" "henri@nerv.fi" "<20161110171551.GB22569@tunkki>" "65" "[oss-security] CVE request: MyBB multiple vulnerabilities" nil nil nil "11" "2016111017:15:51" "[oss-security] CVE request: MyBB multiple vulnerabilities" (number mark "U       henri@nerv.f Nov 10   65/3240  " thread-indent "\"[oss-security] CVE request: MyBB multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19622 invoked by uid 550); 10 Nov 2016 17:16:07 -0000
+Received: (qmail 27781 invoked by uid 550); 12 Apr 2023 16:14:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +7,237 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19604 invoked from network); 10 Nov 2016 17:16:07 -0000
-X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
-Date: Thu, 10 Nov 2016 19:15:51 +0200
-From: Henri Salo <henri@nerv.fi>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Message-ID: <20161110171551.GB22569@tunkki>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; x-action=pgp-signed
-Content-Transfer-Encoding: 8bit
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE request: MyBB multiple vulnerabilities
+Received: (qmail 27751 invoked from network); 12 Apr 2023 16:14:27 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Message-Id: <18477145-F7AD-455D-A0AB-77B3E402A7B7@beckweb.net>
+Date: Wed, 12 Apr 2023 18:14:15 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1681316067;72546b8b;
+X-HE-SMSGID: 1pmd6t-0001Te-Fi
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Hello MITRE,
+The following releases contain fixes for security vulnerabilities:
 
-Could you assign CVEs for following MyBB vulnerabilities, thank you.
+* Azure Key Vault Plugin 188.vf46b_7fa_846a_1
+* Kubernetes Plugin 3910.ve59cec5e33ea_
 
-Fixed in 1.8.6
-https://blog.mybb.com/2015/09/07/mybb-1-8-6-1-6-18-merge-system-1-8-6-release/
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Medium Risk: Forum password bypass in xmlhttp.php – reported by Devilshakerz
-Low Risk: SQL Injection in Grouppromotions module (ACP) – reported by Devilshakerz
-Low Risk: Possible XSS Injection in the error handler – reported by FooBar123
-Low Risk: Possible XSS issues in old upgrade files – reported by FooBar123
-Low Risk: Possible Full Path Disclosure in publicly accessible error log files – reported by Devilshakerz
+* Assembla merge request builder Plugin
+* Consul KV Builder Plugin
+* Fogbugz Plugin
+* Image Tag Parameter Plugin
+* Lucene-Search Plugin
+* NeuVector Vulnerability Scanner Plugin
+* Quay.io trigger Plugin
+* Report Portal Plugin
+* Thycotic DevOps Secrets Vault Plugin
+* Thycotic Secret Server Plugin
+* TurboScript Plugin
+* WSO2 Oauth Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-04-12/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3075 / CVE-2023-30513 (Kubernetes) & CVE-2023-30514 (Azure Key Vau=
+lt)
+  & CVE-2023-30515 (Thycotic DevOps Secrets Vault)
+Multiple plugins do not properly mask (i.e., replace with asterisks)
+credentials printed in the build log from Pipeline steps like `sh` and
+`bat`, when both of the following conditions are met:
+
+* The credentials are printed in build steps executing on an agent
+  (typically inside a `node` block).
+* Push mode for durable task logging is enabled. This is a hidden option
+  in Pipeline: Nodes and Processes that can be enabled through the Java=20
+  system property `org.jenkinsci.plugins.workflow.steps.durable_task.Durabl=
+eTaskStep.USE_WATCHING`.
+  It is also automatically enabled by some plugins, e.g., OpenTelemetry
+  and Pipeline Logging over CloudWatch.
+
+The following plugins are affected by this vulnerability:
+
+* Kubernetes 3909.v1f2c633e8590 and earlier (SECURITY-3079 /
+  CVE-2023-30513)
+* Azure Key Vault 187.va_cd5fecd198a_ and earlier (SECURITY-3051 /
+  CVE-2023-30514)
+* Thycotic DevOps Secrets Vault 1.0.0 (SECURITY-3078 / CVE-2023-30515)
 
 
-Fixed in 1.8.7
-https://blog.mybb.com/2016/03/11/mybb-1-8-7-merge-system-1-8-7-release/
+SECURITY-2840 / CVE-2023-30516
+Image Tag Parameter Plugin 2.0 improperly introduces an option to opt out
+of SSL/TLS certificate validation when connecting to Docker registries.
 
-Medium risk: Possible SQL Injection in moderation tool – reported by jamslater
-Low risk: Missing permission check in newreply.php – reported by StefanT
-Low risk: Possible XSS Injection on login – reported by Devilshakerz
-Low risk: Possible XSS Injection in member validation – reported by Tim Coen
-Low risk: Possible XSS Injection in User CP – reported by Tim Coen
-Low risk: Possible XSS Injection in Mod CP logs – reported by Starpaul20
-Low risk: Possible XSS Injection when editing users in Mod CP – reported by Tim Coen
-Low risk: Possible XSS Injection when pruning logs in ACP – reported by Devilshakerz
-Low risk: Possibility of retrieving database details through templates – reported by Tim Coen
-Low risk: Disclosure of ACP path when sending mails from ACP – reported by sarisisop
-Low risk: Low adminsid & sid entropy – reported by Devilshakerz
-Low risk: Clickjacking in ACP – reported by DingjieYang
-Low risk: Missing directory listing protection in upload directories – reported by Tim Coen
+Job configurations using Image Tag Parameters that were created before 2.0
+will have SSL/TLS certificate validation disabled by default.
+
+As of publication of this advisory, there is no fix.
 
 
-Fixed in 1.8.8
-https://blog.mybb.com/2016/10/17/mybb-1-8-8-merge-system-1-8-8-release/
+SECURITY-2841 / CVE-2023-30517
+NeuVector Vulnerability Scanner Plugin 1.22 and earlier unconditionally
+disables SSL/TLS certificate and hostname validation when connecting to a
+configured NeuVector Vulnerability Scanner server.
 
-Medium risk: Style import CSS overwrite on Windows servers – reported by patryk
-Medium risk: SQL Injection in the users data handler – reported by afinepl
-Medium risk: SSRF attack in fetch_remote_file() – reported by dawid_golunski
-Medium risk: Possible short name access to ACP backups on Windows servers – reported by kevinoclam
-Low risk: Stored XSS in the ACP – reported by patryk
-Low risk: Loose comparison false positives – reported by Devilshakerz
-Low risk: Possible XSS injection in ACP users module – reported by afinepl
+As of publication of this advisory, there is no fix.
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBAgAGBQJYJKtHAAoJECet96ROqnV0LXgQAKrMRH9ArhiKKdS5UNsAdAtP
-KWc/UEhW1TS/GXbXJ/byUS1EE4BP8KfzwPsVHsM4KDWx/bIVGjx8HK9sUA0lK1Uq
-FFqzQieoAOex8gKS/yHWm4zuY7x2EVNSSl+pR0srnNJt8O1/GmYluDNgIj1BYIuK
-ZdZSF7NuAilp7XG9Z9rxWl1yLtPH81rLhBkQDIR1xOyPruGCLxmAJ5Se059wTNfe
-0wquNr2PisunO1PDmZ0nFTrmTfWWBzV2I3/UFYID9Z0vWd+gpZ6aSyGNFXLsQaS2
-oRQwtlejxBy2updbDFkkTOB0PJN2ctA+Q5N3ueB+Vw+8Mamql54SlA0CJSe1s5/5
-/4BxbOlB0Ju8HthyTWX8V4rugFj2rLNZxHOUaRel/aH83lLfLjjfxiX2mGla5KJH
-zn5dmT4ADJRv5QPx9FubNv4R+YSh0keQsDuK+WIv4qw/I7WVPtLAc98NrSh0JRj5
-KewS04rndPEk3E+T35i/KsC0D26Yr5h1seWfkCsv0lQ6lwFaS6opojKWNflvVkVy
-dSIamrkKazi0w//VxrlVeA4kyZW17zflU00/yOyts5po05qSngPGqVZt5if6elor
-G+NMTt3Dnt8OKzyuqwmCcnhkVwbAbx80ruDKGWcy5YAlKM/44x9hXdO2HcIFAbUf
-rK8ZN9KBcR6VlQjXYqz2
-=Cuu9
------END PGP SIGNATURE-----
+SECURITY-2837 / CVE-2023-30518
+Thycotic Secret Server Plugin 1.0.2 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2849 / CVE-2023-30519
+Quay.io trigger Plugin provides a webhook endpoint at `/quayio-webhook/`
+that can be used to trigger builds of jobs configured to use a specified
+repository.
+
+In Quay.io trigger Plugin 0.1 and earlier, this endpoint can be accessed
+without authentication.
+
+This allows unauthenticated attackers to trigger builds of jobs
+corresponding to the attacker-specified repository.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2850 / CVE-2023-30520
+Quay.io trigger Plugin 0.1 and earlier does not limit URL schemes for
+repository homepage URLs submitted via Quay.io trigger webhooks.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to submit crafted Quay.io trigger webhook
+payloads.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2872 / CVE-2023-30521
+Assembla merge request builder Plugin provides a webhook endpoint at
+`/assembla-webhook/` that can be used to trigger builds of jobs configured
+to use a specified repository.
+
+In Assembla merge request builder Plugin 1.1.13 and earlier, this endpoint
+can be accessed without authentication.
+
+This allows unauthenticated attackers to trigger builds of jobs
+corresponding to the attacker-specified repository.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2873 / CVE-2023-30522
+Fogbugz Plugin provides a webhook endpoint at `/fbTrigger/` that can be
+used to trigger builds of any jobs.
+
+In Fogbugz Plugin 2.2.17 and earlier, this endpoint can be accessed by
+attackers with Item/Read permission, allowing them to trigger builds of
+jobs specified in a `jobname` request parameter.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2945 / CVE-2023-30523 (storage) & CVE-2023-30524 (masking)
+Report Portal Plugin 0.5 and earlier stores ReportPortal access tokens
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These tokens can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+Additionally, the configuration form does not mask these tokens, increasing
+the potential for attackers to observe and capture them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2950 / CVE-2023-30525 (CSRF) & CVE-2023-30526 (missing permission =
+check)
+Report Portal Plugin 0.5 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified bearer token
+authentication.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2992 / CVE-2023-30527 (storage) & CVE-2023-30528 (masking)
+WSO2 Oauth Plugin 1.0 and earlier stores the WSO2 Oauth client secret
+unencrypted in the global `config.xml` file on the Jenkins controller as
+part of its configuration.
+
+This client secret can be viewed by users with access to the Jenkins
+controller file system.
+
+Additionally, the global configuration form does not mask the WSO2 Oauth
+client secret, increasing the potential for attackers to observe and
+capture it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3013 / CVE-2023-30529
+Lucene-Search Plugin 387.v938a_ecb_f7fe9 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to reindex the database.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2944 / CVE-2023-30530 (storage) & CVE-2023-30531 (masking)
+Consul KV Builder Plugin 2.0.13 and earlier stores the HashiCorp Consul ACL
+Token unencrypted in its global configuration file
+`org.jenkinsci.plugins.consulkv.GlobalConsulConfig.xml` on the Jenkins
+controller as part of its configuration.
+
+This token can be viewed by users with access to the Jenkins controller
+file system.
+
+Additionally, the global configuration form does not mask the token,
+increasing the potential for attackers to observe and capture it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2851 / CVE-2023-30532
+TurboScript Plugin provides a webhook endpoint at `/turbo-webhook/` that
+can be used to trigger builds of jobs configured to use a specified
+repository.
+
+In TurboScript Plugin 1.3 and earlier, this endpoint can be accessed by
+attackers with Item/Read permission to trigger builds of jobs corresponding
+to the attacker-specified repository.
+
+As of publication of this advisory, there is no fix.=
