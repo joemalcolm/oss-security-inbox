@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/4
-Message-ID: <77cb8757-3c90-b60c-0eab-99870e4c7da4@apache.org>
-Date: Mon, 16 Oct 2023 01:51:39 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/12/4
+Message-ID: <03df23f7-96c4-f1d1-32ea-86b2881cabe8@oracle.com>
+Date: Wed, 12 Apr 2023 09:55:44 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-43667: Apache InLong: Log Injection in Global functions 
+Subject: Ghostscript CVE-2023-28879: "Shell in the Ghost"
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+I haven't seen mail to the list about this yet, so FYI for those who haven't
+seen it via other channels.
 
-Affected versions:
+https://artifex.com/news/critical-security-vulnerability-fixed-in-ghostscript
+says:
 
-- Apache InLong 1.4.0 through 1.8.0
+> Artifex is pleased to announce that our team of developers have
+> successfully addressed and fixed a critical security vulnerability in
+> Artifex Ghostscript, version 10.01.0. A CVE (Common Vulnerabilities
+> and Exposures) identifier has been assigned to the issue,
+> https://nvd.nist.gov/vuln/detail/CVE-2023-28879.
+> 
+> On March 23, 2023, a security researcher, Hadrien Perrineau, reported
+> the buffer overflow and exploit, on March 24 Artifex fixed the overflow
+> and removed other related code reducing the attack surface. Fixes were
+> published here:
+> 
+> https://git.ghostscript.com/?p=ghostpdl.git;h=37ed5022cecd584de868933b5b60da2e995b3179
+> 
+> https://git.ghostscript.com/?p=ghostpdl.git;h=37ed5022cecd584de868933b5b60da2e995b3179
+> 
+> A release, Ghostscript and GhostPDL 10.01.1, was published on March 27.
+> An email alert was sent out to all Artifex customers on March 27
+> notifying them of the bug and the fix. Artifex worked with customers to
+> integrate the solution into their products as quickly as possible.
+> On April 7 the bug was made public.
+> 
+> Users of Ghostscript are urged to update their software to the latest
+> version immediately. By doing so, they will be able to mitigate the risk
+> associated with this vulnerability and ensure the security and integrity
+> of their systems.
 
-Description:
+A report from those who found the bug, including their POC, was published
+yesterday:
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.8.0, the attacker can create misleading or false records, making it harder to audit
-and trace malicious activities. Users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick [1] to solve it.
+https://offsec.almond.consulting/ghostscript-cve-2023-28879.html
 
-[1]  https://github.com/apache/inlong/pull/8628
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-43667
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
