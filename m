@@ -1,70 +1,226 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/27/1
-Message-ID: <CAFswPa8ERS8LOgMTk_95Dyb7JO_z_82g1zJx9dUP54t1R8ZWGw@mail.gmail.com>
-Date: Sun, 27 Aug 2023 09:41:22 +0200
-From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/12/3
+Message-Id: <18477145-F7AD-455D-A0AB-77B3E402A7B7@beckweb.net>
+Date: Wed, 12 Apr 2023 18:14:15 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel, again
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hey!
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-I'm currently on holidays so sorry for my briefness. I couldn't miss a
-chance to comment on this.
+The following releases contain fixes for security vulnerabilities:
 
-Our team at Google is working on generating CVEs for Syzkaller findings.
-This is not trivial.
+* Azure Key Vault Plugin 188.vf46b_7fa_846a_1
+* Kubernetes Plugin 3910.ve59cec5e33ea_
 
-On Sat, 26 Aug 2023, 23:49 Solar Designer, <solar@...nwall.com> wrote:
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-> > If every syzkaller
-> > issue received a CVE automatically, we'd immediately remove the most
-> > noisome posts.
->
-> Is every syzkaller issue a vulnerability?
->
+* Assembla merge request builder Plugin
+* Consul KV Builder Plugin
+* Fogbugz Plugin
+* Image Tag Parameter Plugin
+* Lucene-Search Plugin
+* NeuVector Vulnerability Scanner Plugin
+* Quay.io trigger Plugin
+* Report Portal Plugin
+* Thycotic DevOps Secrets Vault Plugin
+* Thycotic Secret Server Plugin
+* TurboScript Plugin
+* WSO2 Oauth Plugin
 
-No, they are not. Most (all?) are bugs, so they probably should get fixed,
-but I don't think we can claim them all to be vulnerabilities. Even if we
-did, we probably should help NVD figure out severity for the CVSS or they
-will just have to guess randomly. Figuring out a criteria for what is worth
-a CVE and what is not, as well as deduplicating is probably the main bulk
-of the work here.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-04-12/
 
-> - Ask Red Hat's CNA to consider setting up an automatic CVE assignment
-> >   process for syzkaller issues. (Red Hat's CNA is now serving as a Root
-> >   CNA for FOSS issues in general, so it feels like a plausible place to
-> >   put this process. Google runs syzkaller and has four CNAs, perhaps
-> >   one of them would be a better fit. Maybe the Linux Foundation could
-> >   run a CNA for this purpose. I'm not picky.)
->
-> This is an interesting suggestion.  I think we'd first need to determine
-> whether this can be automated at all without ending up with CVEs
-> assigned in cases where they shouldn't have been per MITRE's guidelines
-> (e.g., when no security boundary is crossed in proper documented usage).
->
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-So right now we have been experimenting with this and want to start with a
-basic heuristic to generate OSV identifiers. If it goes well with OSV we
-may start generating CVEs.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-We analyzed crashes and concluded the only ones we are confident on
-generating CVEs automatically are KASAN crashes that aren't null-ptr-deref
-https://github.com/google/cvelist/blob/cve-automation/fuzzer/syzkaller/unique_to_delta.py#L51
-but we will revise this criteria after we have a first version.
+---
 
-Anyway, as you can imagine, we know generating CVEs automatically can have
-a significant disrupting effect on the industry as a lot of the regulation
-and process depend on it, so we want to minimize the hatemail we'll get.
+SECURITY-3075 / CVE-2023-30513 (Kubernetes) & CVE-2023-30514 (Azure Key Vault)
+  & CVE-2023-30515 (Thycotic DevOps Secrets Vault)
+Multiple plugins do not properly mask (i.e., replace with asterisks)
+credentials printed in the build log from Pipeline steps like `sh` and
+`bat`, when both of the following conditions are met:
 
-Anyway, for the curious on our progress
-  - https://github.com/google/cvelist/tree/cve-automation/fuzzer has some
-details
-  -
-https://github.com/google/cvelist/blob/cve-automation/fuzzer/syzkaller/output.json
-has the output of our current heuristics
+* The credentials are printed in build steps executing on an agent
+  (typically inside a `node` block).
+* Push mode for durable task logging is enabled. This is a hidden option
+  in Pipeline: Nodes and Processes that can be enabled through the Java 
+  system property `org.jenkinsci.plugins.workflow.steps.durable_task.DurableTaskStep.USE_WATCHING`.
+  It is also automatically enabled by some plugins, e.g., OpenTelemetry
+  and Pipeline Logging over CloudWatch.
 
-Any feedback is welcome!
+The following plugins are affected by this vulnerability:
 
->
+* Kubernetes 3909.v1f2c633e8590 and earlier (SECURITY-3079 /
+  CVE-2023-30513)
+* Azure Key Vault 187.va_cd5fecd198a_ and earlier (SECURITY-3051 /
+  CVE-2023-30514)
+* Thycotic DevOps Secrets Vault 1.0.0 (SECURITY-3078 / CVE-2023-30515)
 
+
+SECURITY-2840 / CVE-2023-30516
+Image Tag Parameter Plugin 2.0 improperly introduces an option to opt out
+of SSL/TLS certificate validation when connecting to Docker registries.
+
+Job configurations using Image Tag Parameters that were created before 2.0
+will have SSL/TLS certificate validation disabled by default.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2841 / CVE-2023-30517
+NeuVector Vulnerability Scanner Plugin 1.22 and earlier unconditionally
+disables SSL/TLS certificate and hostname validation when connecting to a
+configured NeuVector Vulnerability Scanner server.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2837 / CVE-2023-30518
+Thycotic Secret Server Plugin 1.0.2 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2849 / CVE-2023-30519
+Quay.io trigger Plugin provides a webhook endpoint at `/quayio-webhook/`
+that can be used to trigger builds of jobs configured to use a specified
+repository.
+
+In Quay.io trigger Plugin 0.1 and earlier, this endpoint can be accessed
+without authentication.
+
+This allows unauthenticated attackers to trigger builds of jobs
+corresponding to the attacker-specified repository.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2850 / CVE-2023-30520
+Quay.io trigger Plugin 0.1 and earlier does not limit URL schemes for
+repository homepage URLs submitted via Quay.io trigger webhooks.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to submit crafted Quay.io trigger webhook
+payloads.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2872 / CVE-2023-30521
+Assembla merge request builder Plugin provides a webhook endpoint at
+`/assembla-webhook/` that can be used to trigger builds of jobs configured
+to use a specified repository.
+
+In Assembla merge request builder Plugin 1.1.13 and earlier, this endpoint
+can be accessed without authentication.
+
+This allows unauthenticated attackers to trigger builds of jobs
+corresponding to the attacker-specified repository.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2873 / CVE-2023-30522
+Fogbugz Plugin provides a webhook endpoint at `/fbTrigger/` that can be
+used to trigger builds of any jobs.
+
+In Fogbugz Plugin 2.2.17 and earlier, this endpoint can be accessed by
+attackers with Item/Read permission, allowing them to trigger builds of
+jobs specified in a `jobname` request parameter.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2945 / CVE-2023-30523 (storage) & CVE-2023-30524 (masking)
+Report Portal Plugin 0.5 and earlier stores ReportPortal access tokens
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These tokens can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+Additionally, the configuration form does not mask these tokens, increasing
+the potential for attackers to observe and capture them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2950 / CVE-2023-30525 (CSRF) & CVE-2023-30526 (missing permission check)
+Report Portal Plugin 0.5 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified bearer token
+authentication.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2992 / CVE-2023-30527 (storage) & CVE-2023-30528 (masking)
+WSO2 Oauth Plugin 1.0 and earlier stores the WSO2 Oauth client secret
+unencrypted in the global `config.xml` file on the Jenkins controller as
+part of its configuration.
+
+This client secret can be viewed by users with access to the Jenkins
+controller file system.
+
+Additionally, the global configuration form does not mask the WSO2 Oauth
+client secret, increasing the potential for attackers to observe and
+capture it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3013 / CVE-2023-30529
+Lucene-Search Plugin 387.v938a_ecb_f7fe9 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to reindex the database.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2944 / CVE-2023-30530 (storage) & CVE-2023-30531 (masking)
+Consul KV Builder Plugin 2.0.13 and earlier stores the HashiCorp Consul ACL
+Token unencrypted in its global configuration file
+`org.jenkinsci.plugins.consulkv.GlobalConsulConfig.xml` on the Jenkins
+controller as part of its configuration.
+
+This token can be viewed by users with access to the Jenkins controller
+file system.
+
+Additionally, the global configuration form does not mask the token,
+increasing the potential for attackers to observe and capture it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2851 / CVE-2023-30532
+TurboScript Plugin provides a webhook endpoint at `/turbo-webhook/` that
+can be used to trigger builds of jobs configured to use a specified
+repository.
+
+In TurboScript Plugin 1.3 and earlier, this endpoint can be accessed by
+attackers with Item/Read permission to trigger builds of jobs corresponding
+to the attacker-specified repository.
+
+As of publication of this advisory, there is no fix.
