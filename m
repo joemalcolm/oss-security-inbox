@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/1
-Message-ID: <05416913-f79b-38c9-5d5d-d49c42106a2c@apache.org>
-Date: Wed, 06 Sep 2023 09:06:31 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/12/1
+Message-ID: <71ec9890-2982-8113-4d13-f7907b3180f8@debian.org>
+Date: Wed, 12 Apr 2023 12:07:02 +0100
+From: Matthew Vernon <matthew@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-36387: Apache Superset: Improper API permission for low privilege users 
+Subject: Re: CVE-2017-11164 - stack exhaustion in PCRE
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+On 11/04/2023 12:22, Sevan Janiyan wrote:
 
-- Apache Superset through 2.1.0
+> "PCRE1 has become totally obsolete and is no longer maintained. The
+> final release was 8.45 (June 2021)"
+> 
+> So just a heads up if you're still linking against PCRE 8.x but software
+> in question supports PCRE2, perhaps it's time to switch and default to
+> PCRE2.
 
-Description:
+I've been trying to push towards getting old-PCRE out of Debian; you can 
+track the outstanding bugs online[0], and there's similar for Ubuntu[1].
 
-An improper default REST API permission for Gamma users in Apache Superset up to and including 2.1.0 allows for an authenticated Gamma user to test database connections.
+Once the next Debian release "bookworm" is out, I'm hoping to be able to 
+make the outstanding bugs release critical, moving towards not shipping 
+the older pcre (called pcre3 in Debian for Historical Reasons) in the 
+next release...
 
-Credit:
+Regards,
 
-Miguel Segovia Gil (finder)
+Matthew
+[PCRE maintainer for Debian]
 
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-36387
-
+[0] 
+https://udd.debian.org/bugs/?release=any&merged=ign&fnewerval=7&flastmodval=7&fusertag=only&fusertagtag=obsolete-pcre3&fusertaguser=matthew-pcredep%40debian.org&allbugs=1&sortby=id&sorto=asc&format=html#results
+[1] https://bugs.launchpad.net/ubuntu/+source/pcre3/+bug/1792544
