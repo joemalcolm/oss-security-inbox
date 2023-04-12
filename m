@@ -1,4 +1,4 @@
-Received: (qmail 8030 invoked by uid 550); 7 Apr 2025 14:01:47 -0000
+Received: (qmail 25770 invoked by uid 550); 12 Apr 2023 15:43:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,108 +7,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7316 invoked from network); 7 Apr 2025 13:41:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=5skEKx4N5aKI+zWTleqyCop7GveU+4Hc52PBG1TTeRs=; b=ZKpgHa/MpuoIcl/xzaLqHaadGS
-	I7G/9WX1GbV3YccA6zXa4nx2nfRv+6Gba8uWgZTbeeViH2DM93PBCd5dk6xKLE36q0i6K8lkScXme
-	714jCgSU7A0ZfZrNr5vWeTl9Z+TDALIgSwFLNCfN23jWGLsPcabJeN6hJyLNG8brh1BxMxv0IxJrY
-	f6bxvKE3JxbvPrd0CQ9LBnKATxj80GTY07dEZuvOKbfK1f2tpYEJRp1pfltI+YPilKW8bJNJJGD+q
-	E5N07NsYtIXm58duVlViuP5ZzoG2NEUjohKXXGY9hiobVOf/sHvzlXihW8+sI8us6F+KORlQsGZ+7
-	HJHfIegQ==;
-Date: Mon, 7 Apr 2025 16:40:48 +0300
-Message-ID: <20250407164048.GB2399468@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="86EH47BPD3050S+t"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0003
-
---86EH47BPD3050S+t
+Received: (qmail 22477 invoked from network); 12 Apr 2023 15:39:29 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+From: Angela Schreiber <angela@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <13ae48ed-68df-186b-ca74-2b6e1cb56a33@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 12 Apr 2023 15:39:15 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-45064: Apache Sling Engine: Include-based XSS 
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwMwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogQXByaWwgMDcsIDIwMjUKQWR2aXNvcnkgSUQgICAgICAgICAgICAg
-OiBXU0EtMjAyNS0wMDAzCldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJraXRn
-dGsub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMDMuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5IFVS
-TCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDAzLmh0bWwKQ1ZF
-IGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC01NDU1MSwgQ1ZFLTIwMjUtMjQyMDgsCiAg
-ICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtMjQyMDksIENWRS0yMDI1LTI0MjEzLAog
-ICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTI0MjE2LCBDVkUtMjAyNS0yNDI2NCwK
-ICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS0zMDQyNy4KClNldmVyYWwgdnVsbmVy
-YWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQuCgpD
-VkUtMjAyNC01NDU1MQogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdl
-YktpdCBiZWZvcmUgMi40OC4xLgogICAgQ3JlZGl0IHRvIGFqYWpmeGhqLgogICAgSW1wYWN0OiBQ
-cm9jZXNzaW5nIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGEgZGVuaWFsLW9mLXNlcnZpY2UuCiAg
-ICBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBtZW1v
-cnkgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI3NTExNwoKQ1ZFLTIwMjUtMjQyMDgK
-ICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIu
-NDguMS4KICAgIENyZWRpdCB0byBNdWhhbW1hZCBaYWlkIEdoaWZhcmkgKE1yLlpoZWVWKSBhbmQg
-S2FsaW1hbnRhbiBVdGFyYS4KICAgIEltcGFjdDogTG9hZGluZyBhIG1hbGljaW91cyBpZnJhbWUg
-bWF5IGxlYWQgdG8gYSBjcm9zcy1zaXRlCiAgICBzY3JpcHRpbmcgYXR0YWNrLiBEZXNjcmlwdGlv
-bjogQSBwZXJtaXNzaW9ucyBpc3N1ZSB3YXMgYWRkcmVzc2VkCiAgICB3aXRoIGFkZGl0aW9uYWwg
-cmVzdHJpY3Rpb25zLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyODYzODEKCkNWRS0yMDI1LTI0MjA5
-CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAy
-LjQ4LjEuCiAgICBDcmVkaXQgdG8gRnJhbmNpc2NvIEFsb25zbyAoQHJldnNraWxscyksIGFuZCBh
-biBhbm9ueW1vdXMgcmVzZWFyY2hlci4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNs
-eSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nl
-c3MgY3Jhc2guIERlc2NyaXB0aW9uOiBBIGJ1ZmZlciBvdmVyZmxvdyBpc3N1ZSB3YXMKICAgIGFk
-ZHJlc3NlZCB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxs
-YTogMjg2NDYyCgpDVkUtMjAyNS0yNDIxMwogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdU
-SyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC4xLgogICAgQ3JlZGl0IHRvIEdvb2dsZSBWOCBT
-ZWN1cml0eSBUZWFtLgogICAgSW1wYWN0OiBBIHR5cGUgY29uZnVzaW9uIGlzc3VlIGNvdWxkIGxl
-YWQgdG8gbWVtb3J5IGNvcnJ1cHRpb24uCiAgICBEZXNjcmlwdGlvbjogVGhpcyBpc3N1ZSB3YXMg
-YWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgaGFuZGxpbmcgb2YKICAgIGZsb2F0cy4gTm90ZSB0aGF0
-IHRoaXMgQ1ZFIGlzIGZpeGVkIG9ubHkgb24gQVJNIGFyY2hpdGVjdHVyZXMuCiAgICB4ODZfNjQg
-aXMgbm90IHZ1bG5lcmFibGUsIHg4NiBpcyBub3QgdnVsbmVyYWJsZSB3aGVuIHRoZSBTU0UyCiAg
-ICBpbnN0cnVjdGlvbiBzZXQgaXMgZW5hYmxlZDsgYnV0IG90aGVyIGFyY2hpdGVjdHVyZXMgcmVt
-YWluCiAgICB2dWxuZXJhYmxlLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyODY2OTQKCkNWRS0yMDI1
-LTI0MjE2CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJl
-Zm9yZSAyLjQ4LjEuCiAgICBDcmVkaXQgdG8gUGF1bCBCYWtrZXIgb2YgUGFyYWdvbkVSUC4KICAg
-IEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBs
-ZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIFNhZmFyaSBjcmFzaC4gRGVzY3JpcHRpb246IFRoZSBp
-c3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAg
-IFdlYktpdCBCdWd6aWxsYTogMjg0MDU1CgpDVkUtMjAyNS0yNDI2NAogICAgVmVyc2lvbnMgYWZm
-ZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC4xLgogICAgQ3JlZGl0
-IHRvIEdhcnkgS3dvbmcsIGFuZCBhbiBhbm9ueW1vdXMgcmVzZWFyY2hlci4KICAgIEltcGFjdDog
-UHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFu
-CiAgICB1bmV4cGVjdGVkIFNhZmFyaSBjcmFzaC4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMg
-YWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBC
-dWd6aWxsYTogMjg1ODkyCgpDVkUtMjAyNS0zMDQyNwogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdl
-YktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC4xLgogICAgQ3JlZGl0IHRvIHJoZXph
-IChAZ2luZ2dpbEJlc2VsKS4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFm
-dGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIFNhZmFyaSBjcmFz
-aC4gRGVzY3JpcHRpb246IEEgdXNlLWFmdGVyLWZyZWUgaXNzdWUgd2FzCiAgICBhZGRyZXNzZWQg
-d2l0aCBpbXByb3ZlZCBtZW1vcnkgbWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTogMjg1
-NjQzCgpXZSByZWNvbW1lbmQgdXBkYXRpbmcgdG8gdGhlIGxhdGVzdCBzdGFibGUgdmVyc2lvbnMg
-b2YgV2ViS2l0R1RLIGFuZCBXUEUKV2ViS2l0LiBJdCBpcyB0aGUgYmVzdCB3YXkgdG8gZW5zdXJl
-IHRoYXQgeW91IGFyZSBydW5uaW5nIHNhZmUgdmVyc2lvbnMKb2YgV2ViS2l0LiBQbGVhc2UgY2hl
-Y2sgb3VyIHdlYnNpdGVzIGZvciBpbmZvcm1hdGlvbiBhYm91dCB0aGUgbGF0ZXN0CnN0YWJsZSBy
-ZWxlYXNlcy4KCkZ1cnRoZXIgaW5mb3JtYXRpb24gYWJvdXQgV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
-S2l0IHNlY3VyaXR5IGFkdmlzb3JpZXMKY2FuIGJlIGZvdW5kIGF0OiBodHRwczovL3dlYmtpdGd0
-ay5vcmcvc2VjdXJpdHkuaHRtbCBvcgpodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkuCgpU
-aGUgV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IHRlYW0sCg==
+Description:
 
---86EH47BPD3050S+t
-Content-Type: application/pgp-signature; name="signature.asc"
+The SlingRequestDispatcher doesn't correctly implement the RequestDispatche=
+r API resulting in a generic type of include-based cross-site scripting iss=
+ues on the Apache Sling level. The vulnerability is exploitable by an attac=
+ker that is able to include a resource with specific content-type and contr=
+ol the include path (i.e. writing content). The impact of a successful atta=
+ck is privilege escalation to administrative power.
 
------BEGIN PGP SIGNATURE-----
 
-iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZ/PV4AAKCRCRxVnb5MkS
-O/SoAJ4toxUbCCZ7F3F/COzqOjLRtpxsFQCffjt2v3aUIYF8SAINuBVOQ1ORHPo=
-=JsrM
------END PGP SIGNATURE-----
 
---86EH47BPD3050S+t--
+
+Please update to Apache Sling Engine >=3D 2.14.0 and enable the "Check Cont=
+ent-Type overrides" configuration option.
+
+Credit:
+
+Lars Krapf (reporter)
+
+References:
+
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2022-45064
+
