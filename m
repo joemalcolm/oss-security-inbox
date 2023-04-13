@@ -1,84 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/5
-Message-ID: <CABdrxGDK0pq4i0eyJ6GU_LDaxeD8Pm5J=4cycYAeP9q3CTGHZA@mail.gmail.com>
-Date: Wed, 25 Oct 2023 09:32:08 -0700
-From: CJ Cullen <cjcullen@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/13/1
+Message-ID: <87y1mwd1xm.fsf@gentoo.org>
+Date: Thu, 13 Apr 2023 02:07:48 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2022-4886: Ingress-nginx `path` sanitization can be bypassed with `log_format` directive
+Subject: Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
-Issue Details
 
-A security issue was discovered in ingress-nginx
-<https://github.com/kubernetes/ingress-nginx> where a user that can create
-or update ingress objects can use directives to bypass the sanitization of
-the `spec.rules[].http.paths[].path` field of an Ingress object (in the `
-networking.k8s.io` or `extensions` API group) to obtain the credentials of
-the ingress-nginx controller. In the default configuration, that credential
-has access to all secrets in the cluster.
+"Jonathan Bar Or (JBO)" <jobaror@...rosoft.com> writes:
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
-and assigned CVE-2022-4886.
-Affected Components and Configurations
+> Hello oss-security,
+>
+> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
+> They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
+> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
+>
+> How can we ensure those fixes get deployed upstream, in major Linux distributions?
 
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -n ingress-nginx`.
+Try emailing the distributions mailing list at lists.linux.dev too?
 
-If you are running the “chrooted” ingress-nginx controller introduced in
-v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), command
-execution is possible but credential extraction is not, so the High
-severity does not apply.
+> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
+>
+> Thanks!
+>                              JBO
 
-Multi-tenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions
 
-   -
-
-   <v1.8.0
-
-Versions allowing mitigation
-
-   -
-
-   v1.8.0
-
-Mitigation
-
-Ingress objects contain a field called pathType that defines the proxy
-behavior. It can be Exact, Prefix and ImplementationSpecific.
-
-When pathType is configured as Exact or Prefix, there is more strict
-validation, allowing only paths starting with "/" and containing only
-alphanumeric characters and "-", "_" and additional "/".
-
-When this option is enabled, the validation happens in the Admission
-Webhook, denying creation of any Ingress containing invalid characters
-(unless pathType is ImplementationSpecific).
-
-https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#strict-validate-path-type
-
-Ingress Admins should enable this validation by default. If you still need
-to allow implementation specific paths due to the usage of features like
-Regex/rewrite on path, we recommend implementing countermeasures to allow
-just trusted users to consume this feature, as an example with OPA:
-https://kubernetes.github.io/ingress-nginx/examples/openpolicyagent/
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See ingress-nginx Issue #10570
-<https://github.com/kubernetes/ingress-nginx/issues/10570> for more details.
-Acknowledgements
-
-This vulnerability was reported by Ginoah, working with the DEVCORE
-Internship Program.
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
+Download attachment "signature.asc" of type "application/pgp-signature" (378 bytes)
