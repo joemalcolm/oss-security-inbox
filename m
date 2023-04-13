@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1417" "Thursday" "26" "April" "2018" "12:11:06" "-0400" "Marshall Schor" "schor@apache.org" "<65b16598-8390-9199-e391-84422cd2f4ac@apache.org>" "45" "[oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure" nil nil nil "4" "2018042616:11:06" "[oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure" (number mark "U       schor@apache Apr 26   45/1417  " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure\"\n") "<fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>" ("<fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16076 invoked by uid 550); 26 Apr 2018 16:18:48 -0000
+Received: (qmail 7513 invoked by uid 550); 13 Apr 2023 12:52:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +7,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11697 invoked from network); 26 Apr 2018 16:11:17 -0000
-References: <fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>
-To: oss-security@lists.openwall.com
-From: Marshall Schor <schor@apache.org>
-Openpgp: preference=signencrypt
-X-Forwarded-Message-Id: <fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>
-Message-ID: <65b16598-8390-9199-e391-84422cd2f4ac@apache.org>
-Date: Thu, 26 Apr 2018 12:11:06 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+Received: (qmail 3726 invoked from network); 13 Apr 2023 09:15:50 -0000
 MIME-Version: 1.0
-In-Reply-To: <fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>
-Content-Type: multipart/alternative;
- boundary="------------757EF9CD05B1293AF3CD97D0"
-Content-Language: en-US
-Subject: [oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion
- (XXE) attack exposure
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ayaya.dev; s=key1;
+	t=1681377338;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ylQUD5RMPRkwnUW1JDRg4gS6VqLEnxdD4ifam6BrlBU=;
+	b=VmE/6E2dZIdiAricSF+nXxhqT9tp2+XQHgNkn+jjhhz8hB43lms1Q9EVtcJIpRTZTVNsqD
+	7wh5jNh3MuYEDcmbW0/GqbCy46/oGojzSL7nCNsnH6jgS7989PODYLafnHviDpGVsH1qep
+	I0YQ7Qr0Xe6hiEfwkJxKAmAbmu+hWuY=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 13 Apr 2023 11:15:38 +0200
+Message-Id: <CRVIITTTDAQ4.1S0X86S5D7TZD@sumire>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "alice" <alice@ayaya.dev>
+To: <oss-security@lists.openwall.com>
+References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
+In-Reply-To: <
+ <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
+X-Migadu-Flow: FLOW_OUT
+Subject: Re: [oss-security] ncurses fixes upstream
 
---------------757EF9CD05B1293AF3CD97D0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+On Wed Apr 12, 2023 at 10:40 PM CEST, Jonathan Bar Or (JBO) wrote:
+> Hello oss-security,
+>
+> Our team has worked with the maintainer of the ncurses library (used by s=
+everal software packages in Linux) to fix several memory corruption vulnera=
+bilities.
+> They are now fixed at commit 20230408 - see details here (https://invisib=
+le-island.net/ncurses/NEWS.html#index-t20230408)
+> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" statu=
+s.
+>
+> How can we ensure those fixes get deployed upstream, in major Linux distr=
+ibutions?
 
-CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure
+having a patch that is possible to apply to ncurses would make this possibl=
+e,
+since otherwise it's not possible to patch anything without just updating t=
+o the
+latest ncurses snapshot.
 
-Severity: Important  
+that said,
 
-Vendor:
-The Apache Software Foundation
+- ncurses doesn't keep any git (or whatever) history anywhere (to my knowle=
+dge),
+  so i don't know where this would even come from
 
-Versions Affected:
-  - uimaj 2.x.x releases prior to 2.10.2
-  - uimaj 3.0.0 releases prior to 3.0.0-beta
-  - uima-as releases prior to 2.10.2
-  - uimaFIT releases prior to 2.4.0
-  - uimaDUCC releases prior to 2.2.2
+- as someone that uses the latest snapshots, 20230401 works, but 20230408 b=
+reaks
+  some applications like tmux (when clicking with the mouse, it just exits)=
+. i
+  assume this breakage is caused by these fixes in question, but i didn't d=
+ebug
+  it further.
 
-Description.
-The details of this vulnerability were reported to the Apache UIMA Private
-mailing list.
+> We've reached out to Arch, RedHat, Canonical and other popular distros in=
+dependently.
+>
+> Thanks!
+>                              JBO
 
-This  vulnerability relates to an XML external entity expansion (XXE) capability
-of various XML parsers. See
-   https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
-for more details.
-
-UIMA as part of its configuration and operation may read XML from various
-sources, which could be tainted in ways to cause inadvertent disclosure of local
-files or other internal content.
-
-Mitigation:
-Users are advised to upgrade these UIMA components to the following levels or later:
-  - uimaj: 2.x.x upgrade to 2.10.2 or later
-  - uimaj: 3.x.x upgrade to 3.0.0 or later
-  - uima-as: upgrade to 2.10.2 or later
-  - uimaFIT: upgrade to 2.4.0 or later
-  - uimaDUCC: upgrade to 2.2.2 or later
-
-Credit: Joern Kottmann
-
--Marshall Schor, on behalf of the UIMA Project Management Committee 
-
-
---------------757EF9CD05B1293AF3CD97D0--
