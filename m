@@ -1,4 +1,4 @@
-Received: (qmail 18116 invoked by uid 550); 4 Sep 2024 17:05:07 -0000
+Received: (qmail 3115 invoked by uid 550); 13 Apr 2023 18:52:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,99 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18097 invoked from network); 4 Sep 2024 17:05:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyphar.com; s=MBO0001;
-	t=1725469497; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type; bh=EY3/mpbfGqXoqECt2EWMiUYL2eKg3++nOyIrlNF27g4=;
-	b=Nqdk4S3K8nNAyBHJhybKtVZ86HuyGZhaJMYWennoqL8K5eMP5SgRssc5Htxz3qORq5Lyzb
-	pXHGVCYOshks6Fd5w5OYbiaIRa8JwKWRLPPa8VlQ9Q7uZ8bbV9zSkX+mO0+NQvvHChX013
-	KL1HJ/y+W+B+eMG2qBzDENH8Rxcui4lgwYX9324lRObVYGxCFWml9HQCVgwo1sXTeCA/BE
-	pHIrusmIr+AhOsi4Zcx7U1+L7IzaeynCeQp/LVvjbPX6cfigQHDmxxm6e15Ih/izUBMSle
-	lTomByTD2DBQ4Vvdrs0ly7lyP9zm4EMYdSNXEkGid7vYkE37xR0kpfMZtDQZUg==
-Date: Thu, 5 Sep 2024 03:04:49 +1000
-From: Aleksa Sarai <cyphar@cyphar.com>
-To: mjo@dojo.mi.org
-Cc: oss-security@lists.openwall.com, security-announce@opencontainers.org
-Message-ID: <20240904.164536-sane.sobs.rich.isotope-eZfAeE5YI4N4@cyphar.com>
+Received: (qmail 8114 invoked from network); 13 Apr 2023 18:34:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1681410838;
+	bh=/ILgI30IHs1KxHXqEQ1bR75kI3rPuuojH0ygx5fpeF0=;
+	h=Message-ID:Date:MIME-Version:To:References:From:Subject:
+	 In-Reply-To:Content-Type;
+	b=o/AUOV9WsLJSoaTpW8VjFWbOUxDehQil0O9E9sa2eAzdsu8rgppljceeWLg4LTXvq
+	 3VpriUCKctgV9zDL+qUf81DCi4QexEThmDv4CFshG1RNo9DRtCKgibCfLH+E0RTCzQ
+	 mo6Spl9DucpVD4d0r85OCXHkNvTM0hOQMTX4JaPW8wDb/c6Z63Yhg2kZniZf4M7b+5
+	 B6IFJ53x1PXr8WaDNkXQ7F5lMzgqeaj5iB4E9t9//VghP4fiYoIrtdLN1SZRtuLQ6K
+	 hOA+A9v7oJruo/2YtirCAPCdIxr5zLRve3v5mAWLz/dy3T8Eo58vRdxUVk1zfewsuG
+	 Kv7OATr8HXyRw==
+Message-ID: <cfaf0c49-2ca1-b7a1-76a2-f495d7f5f7b4@canonical.com>
+Date: Thu, 13 Apr 2023 13:33:56 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wza427svykraw5iz"
-Content-Disposition: inline
-Subject: [oss-security] Re: CVE-2024-45310: runc can be tricked into creating empty
- files/directories on host
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
+From: Mark Esler <mark.esler@canonical.com>
+In-Reply-To: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] ncurses fixes upstream
 
---wza427svykraw5iz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 4/12/23 15:40, Jonathan Bar Or (JBO) wrote:
 
-(I'm not subscribed to openwall and wasn't in Cc -- hopefully this gets
-treated like a reply properly...)
+> Hello oss-security,
+>
+> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
+> They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
+> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
+>
+> How can we ensure those fixes get deployed upstream, in major Linux distributions?
 
-On 2024-09-03, Mike O'Connor said:
-> While I suspect there's enough mitigating factors for this vuln to
-> truly be low severity, proving that arbitrary file creation isn't
-> super-severe (let alone risky) can be hard.  I'm thinking of the Palo
-> Alto mess CVE-2024-3400 from a few months back, where such behavior
-> was thought to not be as big of a deal...  until it was.
->=20
-> What is the security impact of creating an empty /etc/nologin?  Or an
-> empty override file that might cause some systemd service (e.g. some
-> firewall setup) to not to run upon reboot/restart?  Have there been OS
-> assessments about where empty arbitrarily-named files can do the most
-> disruption?  Maybe a title like:
->=20
->      touch considered harmful: How the presence of a file can change
->      OS and application behavior and make your head hurt
->=20
-> Sure, there's predictable tmp, and the impact of removing/overwriting
-> files is pretty obvious.  But, this runc writeup reminded me that the
-> impact of arbirary file creation often gets short-changed.
+(distros maintain "downstream" versions of the ncurses "upstream")
 
-These are very good points, thanks!
+Ideally, a security patch should only include security relevant changes. 
+If a bunch of a documentation or miscellaneous changes are added, it 
+makes backporting difficult (i.e., the non-security relevant changes may 
+not be desired or cause the patch to not apply cleanly to old versions 
+of ncurses). The upstream patch is already made, but that's what I'd 
+recommend for future patches. If there's a regression as Alice suggests, 
+that might be a good opportunity to redo the patch format.
 
-We went back and forth on the assessment and we discussed the
-possibility of DoSes by creating files and so on, but we weren't aware
-of an analysis that showed what the practical impact could be and what a
-reasonable scoring should be. Does it make sense for every 0-byte file
-creation bug to get C:H/I:H/A:H by default? Should we always analyse the
-severity based on the worst possible hypothetical scenario even if it's
-not clear in advance (such as a cron job running filenames as commands,
-as in CVE-2024-3400)?
+http://ncurses.scripts.mit.edu/?p=ncurses.git;a=commit;h=eb51b1ea1f75a0ec17c9c5937cb28df1e8eeec56
 
-The other issue is that these kinds of attacks (involving a malicious
-configuration) are not entirely within runc's threat model and so there
-is an argument that the CVSS score should be 0, but given that tools
-like Docker and Kubernetes (especially the latter) allow untrusted users
-to do somewhat arbitrary configurations we have to shoulder the brunt of
-security issues that come out of that (regardless of runc's threat
-model).
+When you publish the CVE json5, you can references the patch URL and 
+relevant bug discussions to help downstream. Including the CVE number in 
+the patch commit is also quite helpful.
 
-But yeah, there is probably an argument to be made that the impact could
-be argued as moderate, but I wasn't convinced there was a strong enough
-justification to show that I:M is justified for such a restricted
-file-creation attack nor was it clear how to analyse C: and H: outside
-of coming up with hypotheticals that might not be accurate in practice.
+Thank you!
 
-I will keep this discussion in mind when we discuss formalising the runc
-threat model!
-
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
---wza427svykraw5iz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQS2TklVsp+j1GPyqQYol/rSt+lEbwUCZtiTMQAKCRAol/rSt+lE
-b1qMAP0dNo2VWD935tHthmi7xhA5Ujbo3MZ0kRcIGnk5BTreJAD+KvAYZmqKfEEO
-jHKu7zwJ7tYj/J7XnHVg6HmQbhjDTA8=
-=6O2r
------END PGP SIGNATURE-----
-
---wza427svykraw5iz--
+> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
+Which email did you contact Canonical with? I cannot find anything 
+recent for ncurses on security@ubuntu.com
+>
+> Thanks!
+>                               JBO
+>
+>
