@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/7
-Message-ID: <20230202223830.GA1002@localhost.localdomain>
-Date: Thu, 2 Feb 2023 22:38:23 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: Georgi Guninski <gguninski@...il.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: double-free vulnerability in OpenSSH server 9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/13/4
+Message-ID: <cfaf0c49-2ca1-b7a1-76a2-f495d7f5f7b4@canonical.com>
+Date: Thu, 13 Apr 2023 13:33:56 -0500
+From: Mark Esler <mark.esler@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
-Hi Georgi, all,
+On 4/12/23 15:40, Jonathan Bar Or (JBO) wrote:
 
-On Thu, Feb 02, 2023 at 09:06:19PM +0200, Georgi Guninski wrote:
-> Nice find :)
-> This is very complicated codepath, did a human found it "manually"
-> or some analysis program found it?
+> Hello oss-security,
+>
+> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
+> They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
+> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
+>
+> How can we ensure those fixes get deployed upstream, in major Linux distributions?
 
-Good question! Technically, we did not find the double free: we found
-the underlying bug in compat_kex_proposal() (the "unintended" free of
-options.kex_algorithms) during a manual code review, and reported it to
-the OpenSSH developers in July 2022.
+(distros maintain "downstream" versions of the ncurses "upstream")
 
-Unfortunately, back then we (Qualys) mistakenly believed that "this does
-not seem to lead to a use-after-free or double-free, but the dangling
-pointer in options.kex_algorithms is probably not ideal."
+Ideally, a security patch should only include security relevant changes. 
+If a bunch of a documentation or miscellaneous changes are added, it 
+makes backporting difficult (i.e., the non-security relevant changes may 
+not be desired or cause the patch to not apply cleanly to old versions 
+of ncurses). The upstream patch is already made, but that's what I'd 
+recommend for future patches. If there's a regression as Alice suggests, 
+that might be a good opportunity to redo the patch format.
 
-Then, in January 2023, Mantas Mikulenas reported a double free in sshd
-to the OpenSSH bugzilla, and we immediately realized that this was a
-direct consequence of the bug in compat_kex_proposal().
+http://ncurses.scripts.mit.edu/?p=ncurses.git;a=commit;h=eb51b1ea1f75a0ec17c9c5937cb28df1e8eeec56
 
-Thank you very much for your mail! With best regards,
+When you publish the CVE json5, you can references the patch URL and 
+relevant bug discussions to help downstream. Including the CVE number in 
+the patch commit is also quite helpful.
 
--- 
-the Qualys Security Advisory team
+Thank you!
+
+> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
+Which email did you contact Canonical with? I cannot find anything 
+recent for ncurses on security@...ntu.com
+>
+> Thanks!
+>                               JBO
+>
+>
