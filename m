@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/2
-Message-ID: <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
-Date: Fri, 29 Sep 2023 09:16:21 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/13/5
+Message-ID: <ZDhnttxQd7ENy8C/@cc.hsalo.nerv.fi>
+Date: Thu, 13 Apr 2023 23:36:27 +0300
+From: Henri Salo <henri@...v.fi>
+To: Demi Marie Obenour <demi@...isiblethingslab.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2023-09-28 at 16:42 -0400, Demi Marie Obenour wrote:
-> 
-> How long will it take for corporations to accept that writing media
-> codecs in C, C++, or any other memory-unsafe language is a fundamentally
-> bad idea, and that it is better to rewrite the codecs in a safe language
-> (such as Wuffs or Rust) than to try to secure the existing ones?
+On Thu, Apr 13, 2023 at 01:36:14PM -0400, Demi Marie Obenour wrote:
+> What is the reason for the large number of unfixed vulnerabilities?
+> To me, this seems like an argument for not using Jenkins (or at least
+> its plugins) at all.
+> -- 
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
 
-How long will it take for rust to quit changing the language,
-standardize itself, and enforce some notion of API/ABI stability? The
-thing we've already had with C and C++ for decades? As a result of the
-language's instability (and their attempt to hide it with a "package
-manager"), every rust package wants to install a gigabyte of bundled
-dependencies that are all pinned to old versions.
+It's better for organizations to be aware of the vulnerabilities and risks
+related to used software. Sometimes it is challenging to get the author/team to
+fix the security issues (busy/unresponsive/miscommunication etc). This is very
+common with plugins in different software as there are large number of
+developers. It's better for users and community to disclose the issues if no
+fix is provided as plugins can be disabled, WAF can be configured etc.
 
-Software engineering is a fractal. Memory safety inside a language is
-obviously desirable, but not if other design choices force everyone to
-go back to bundled libraries and static linking. The state of rust is
-that it's fun to write, but awful to use. If you want me to switch from
-C to another language, then projects written in that language can't be
-a nightmare to distribute and maintain.
-
-The situation is identical to how, ten years ago, we were going to
-rewrite everything in Haskell. Haskell has the same pro/con list as
-rust. But they never figured it out either. Every new release broke a
-ton of code, and so version constraints became so tight that you
-couldn't install more than a few programs at once without bundling. The
-resulting treadmill was never-ending. Once "this is cool!" wore off,
-everyone was left with "this is a waste of time."
-
-Maybe someone at $corporation has figured out that rust is wasting
-their time.
-
+-- 
+Henri Salo
