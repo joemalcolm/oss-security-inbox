@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/2
-Message-ID: <03F95D3B-FB70-46AC-AC19-9709599B8318@mnx.io>
-Date: Mon, 25 Sep 2023 14:48:45 +0000
-From: Dan McDonald <danmcd@....io>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/15/3
+Message-ID: <40c34c5a-0bb0-a0ba-a738-b21ab336a194@apache.org>
+Date: Sat, 15 Apr 2023 13:24:05 +0000
+From: "Sean R. Owen" <srowen@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-22946: Apache Spark proxy-user privilege escalation from malicious configuration class 
 Content-Type: text/plain; charset=utf-8
 
-On Sep 22, 2023, at 5:40 PM, Solar Designer <solar@...nwall.com> wrote:
-> 
-> So I think we can accept OmniOS as new distros list member, if that's
-> desired and Dan would represent OmniOS on the list.  This subscription
-> on its own would not allow sharing of info with other illumos distros.
+Description:
 
-I've just consulted with one of the OmniOS leaders, and OmniOS is okay with me
-being able to join the list on their behalf.
+In Apache Spark versions prior to 3.4.0, applications using spark-submit can specify a 'proxy-user' to run as, limiting privileges. The application can execute code with the privileges of the submitting user, however, by providing malicious configuration-related classes on the classpath. This affects architectures relying on proxy-user, for example those using Apache Livy to manage submitted applications.
 
-> In special cases, Dan would be able to ask the issue reporters their
-> explicit permission to share with other illumos distros.
+This issue is being tracked as SPARK-41958 
 
-I will be judicious here.
+Work Arounds:
 
-> If those distros do typically need the info, they may request direct
-> list membership.
-> 
-> How does this sound to you, Dan?
+Update to Apache Spark 3.4.0 or later, and ensure that spark.submit.proxyUser.allowCustomClasspathInClusterMode is set to its default of "false", and is not overridden by submitted applications.
 
-I accept.
+Credit:
 
-Thank you,
-Dan
+Hideyuki Furue (finder)
+Yi Wu (Databricks) (remediation developer)
+
+References:
+
+https://spark.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-22946
+https://issues.apache.org/jira/browse/SPARK-41958
 
