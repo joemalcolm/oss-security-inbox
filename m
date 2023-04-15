@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/02/1
-Message-ID: <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
-Date: Mon, 2 Jan 2023 12:51:04 +0100
-From: Arnout Engelen <engelen@...che.org>
-To: John Helmert III <ajak@...too.org>
-Cc: oss-security@...ts.openwall.com, security@...che.org, jorton@...che.org,  carnil@...ian.org
-Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/15/1
+Message-ID: <CAGUWgD8297SAEoSS_hXGzk+VKQ_bE_K5CQeGrA26x0P=xouApQ@mail.gmail.com>
+Date: Sat, 15 Apr 2023 09:33:24 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Dec 31, 2022 at 6:42 PM John Helmert III <ajak@...too.org> wrote:
-> On Sat, Dec 31, 2022 at 10:54:00AM +0100, Arnout Engelen wrote:
-> > On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@...too.org> wrote:
-> > > On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
-> > > > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > > > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > > > > > overflow while processing multipart form uploads.
-> > > > >
-> > > > > Is there a fixed version or patch or upstream issue?
-> >
-> > libapreq2 2.17 was released on the same day as the advisory describing
-> > the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
+On Thu, Apr 13, 2023 at 3:54 PM Sam James <sam@...too.org> wrote:
 >
-> Does it fix CVE-2022-22728? Whether or not it does isn't clear from
-> the changelog [1], and I can't find a reference to the CVE elsewhere
-> in the source tree.
+>
+> "Jonathan Bar Or (JBO)" <jobaror@...rosoft.com> writes:
+>
 
-I think https://svn.apache.org/viewvc?view=revision&revision=1894937
-contained the fix for this issue. This is included in 2.17.
+> > How can we ensure those fixes get deployed upstream, in major Linux distributions?
+>
 
+Isn't MicroSoft member of linux distros mailing list [0], which
+purpose is exactly quietly trading 0days [1]?
 
-Kind regards,
+Does the OP with m$ email address realize this?
 
-Arnout
+[0] https://oss-security.openwall.org/wiki/mailing-lists/distros
+[1] https://seclists.org/oss-sec/2019/q3/19
+Re: linux-distros membership application - Microsoft
