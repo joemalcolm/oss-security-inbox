@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1841" "Wednesday" "12" "August" "2020" "16:07:36" "+0300" "Aki Tuomi" "aki.tuomi@dovecot.fi" "<956af3a4-9b97-ad3f-cea5-001e9afe3435@dovecot.fi>" "65" "[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion" "^Date:" nil nil "8" "2020081213:07:36" "[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion" (number mark "        aki.tuomi@do Aug 12   65/1841  " thread-indent "\"[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11902 invoked by uid 550); 12 Aug 2020 13:19:34 -0000
+Received: (qmail 14242 invoked by uid 550); 15 Apr 2023 12:07:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +6,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30088 invoked from network); 12 Aug 2020 13:07:48 -0000
-Autocrypt: addr=aki.tuomi@dovecot.fi; prefer-encrypt=mutual; keydata=
- xsBNBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2X
- Vbeph+k29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5Rlr
- A2CvviTifz6DwEnbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW
- 2MtsIAE5xbnjZ58LUSZR2CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1
- F1Twbgm6mWVBhK+smDgGxmmuAhH6boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEB
- AAHNJ1R1b21pLCBBa2kgPGFraS50dW9taUBvcGVuLXhjaGFuZ2UuY29tPsLAfgQTAQIAKAIb
- AwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQGTtjY7NEQgYmMwf9
- G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmjaxmxXAah7JZ6dD/66kzlQzK
- QPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4x+GIa+6NJ+y34jZ2
- 84Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGntx8LvO3Ll
- spZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3CyKH
- Stc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8c7ATQRW+27pAQgAosZd
- RB8tui65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbc
- cPe0ZEptkOCOwdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fk
- dTk6xuLp8AamRXvcPZuUPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra
- 9iNckSlZP51OUFBbV/RmbtEC031r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJ
- oMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh88yAennI2SsEvniXQARAQABwsBxBBgBAgAbBQJW
- +27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+
- CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghxmx6+asZXPDHTqhXoswPi28k1u
- CY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6gZhJ7Uwu+JfDnCB7CB
- FjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZariMJU+RQF5/d
- aQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4HejakF5b
- LOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
-Message-ID: <956af3a4-9b97-ad3f-cea5-001e9afe3435@dovecot.fi>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="EfqyJTErrMnTA59pH42z0K30m7ZX6yWly"
-Date: Wed, 12 Aug 2020 16:07:36 +0300
-From: Aki Tuomi <aki.tuomi@dovecot.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-12100: Dovecot IMAP server: Receiving mail with deeply nested MIME parts leads to resource exhaustion
-To: oss-security <oss-security@lists.openwall.com>,
- full-disclosure <full-disclosure@lists.openwall.com>
-
---EfqyJTErrMnTA59pH42z0K30m7ZX6yWly
-Content-Type: multipart/mixed; boundary="65izoVlABH0NR742a1l62CGb6JJLTgr8I"
-
---65izoVlABH0NR742a1l62CGb6JJLTgr8I
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 7528 invoked from network); 15 Apr 2023 06:34:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681540467; x=1684132467;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pSK07dI6/MkeTXFzbZyIyXA3freZ8XD9oxJwJCsj4es=;
+        b=la0v9ibkMegbTFvex/f3lOO0pjWVKWP/oq45wJL9A3uPVqXA1fU5ISMbnACHGIumex
+         u6wgZt4KmUwl5aN4E3kVGZPzN6PwiEN4pYprH9HZqiy8q+cEURwXltAY64EShmV46DL8
+         UW5MxFOlT6rXmAtUQEFuS6pgQUyT57T+vZhw1EOe/LhQTeEFgP/0IrI4u8utkEEtY/A2
+         MzNQPEu7pZiU8bVWAR6qoKAot9EILb7vL5Qsbx+RFBPUcnlrDK8dLY7l7yZV1lm7Pofc
+         I/shl0d3Ke1LilE9TZ9T4bgf5H5aVTjt4dCGFazDchXHXyEQuXaVsqQ9/BL3HPa3bjqR
+         ka8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681540467; x=1684132467;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pSK07dI6/MkeTXFzbZyIyXA3freZ8XD9oxJwJCsj4es=;
+        b=QvTMOygbZNzhdyaOelnEgrmHxMCYFOcPK6EPIshwmgKQEg+4s9DlgYyRVBIoFnV+qS
+         hP6/igd6UBROEXj86NaMRoFAnQFrETuD2RrkLVZihmrzQaMWtQHauJw4MiYU5vSNKS0b
+         yNf2L/2JNlK2bdKaaH4LZMS4kE2USmajc3uN+oCxvBF3UBg0ihfKfjad0qbT8i1gXIqv
+         KOZg47DyUXfpJUwssO0ybsIML6KMvSmYITQyvHK1firT6yCrKs75/34S/mxmxgjir77C
+         gCAaFN+j8QStU5MhdWSYlA8z+Z9jzQTgQiwv0Nv6u9QkqZOTwdmoitmM2sQQQVbvuyDX
+         0ygQ==
+X-Gm-Message-State: AAQBX9dl3NWk8wfWPputfmduzxwtTv4yQfB5Lj14vLfqmUjjFUE0Vj8x
+	OGpzWurn/f89fv6K4fYRp7Hl3U3ryZQuThtePeTxWw3sh2c=
+X-Google-Smtp-Source: AKy350bF3dI89erbhLXkhA1Z7yuPsVc4qqvFwfp/1EOcBOjo7SAczY4lWkb3QNI7tzFb7wM8oZqoSrMA7q0MqaBdtMQ=
+X-Received: by 2002:a17:90a:7c0f:b0:23f:83de:7e4a with SMTP id
+ v15-20020a17090a7c0f00b0023f83de7e4amr8190435pjf.7.1681540466887; Fri, 14 Apr
+ 2023 23:34:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
+ <87y1mwd1xm.fsf@gentoo.org>
+In-Reply-To: <87y1mwd1xm.fsf@gentoo.org>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Sat, 15 Apr 2023 09:33:24 +0300
+Message-ID: <CAGUWgD8297SAEoSS_hXGzk+VKQ_bE_K5CQeGrA26x0P=xouApQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+Subject: Re: [oss-security] ncurses fixes upstream
 
-Open-Xchange Security Advisory 2020-08-12
+On Thu, Apr 13, 2023 at 3:54=E2=80=AFPM Sam James <sam@gentoo.org> wrote:
+>
+>
+> "Jonathan Bar Or (JBO)" <jobaror@microsoft.com> writes:
+>
 
-Affected product: Dovecot IMAP server
-Internal reference: DOP-1849 (Bug ID)
-Vulnerability type: Uncontrolled recursion (CWE-674)
-Vulnerable version: 2.0
-Vulnerable component: submission, lmtp, lda
-Fixed version: 2.3.11.3
-Report confidence: Confirmed
-Solution status: Fix available
-Vendor notification: 2020-04-23
-CVE reference: CVE-2020-12100
-CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+> > How can we ensure those fixes get deployed upstream, in major Linux dis=
+tributions?
+>
 
-Vulnerability Details:
-Receiving mail with deeply nested MIME parts leads to resource
-exhaustion as Dovecot attempts to
-parse it.
+Isn't MicroSoft member of linux distros mailing list [0], which
+purpose is exactly quietly trading 0days [1]?
 
-Risk:
-Malicious actor can cause denial of service to mail delivery by
-repeatedly sending mails with bad
-content.
+Does the OP with m$ email address realize this?
 
-Workaround:
-Limit MIME structures in MTA.
-
-Solution:
-Upgrade to fixed version.
-
-Best regards,
-
-Aki Tuomi
-Open-Xchange oy
-
-
-
---65izoVlABH0NR742a1l62CGb6JJLTgr8I--
-
---EfqyJTErrMnTA59pH42z0K30m7ZX6yWly
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEQtnWz3vebh9IQVAqGTtjY7NEQgYFAl8z6ZgACgkQGTtjY7NE
-QgZ5cQf7B2Q3Cz1ZTRS/1rei7VoOlqiJnysOx1zHBUnHI3S8/IcSuwGSMmUk0Soz
-IfJURpG2lrY5/W8cnvRZrcYaFo/TAvub/wOvn5qA3viPIbr0vcpMXIN+gBnVbp/c
-UFQsUc4KvdfGPkS16kpi5weMbqtt28Cpq1sG6synTaEHThH2p7mNj1Q615BEXk0t
-D4Odct3vECZ0/2nOQJKP74TEi5ix5iJQ5ZiVnJuQ+6rhM1l+vDZCNYUy1DUK7vKT
-linVBzVGKrriyK9r9ZPsfgrj7fGwnHtnJMEyEmp6gMvzwaWiYZd2P2EOA5bhrFcR
-7Q4XdeMWfWHtD9dZgR8CxALIkC8aNw==
-=iExz
------END PGP SIGNATURE-----
-
---EfqyJTErrMnTA59pH42z0K30m7ZX6yWly--
+[0] https://oss-security.openwall.org/wiki/mailing-lists/distros
+[1] https://seclists.org/oss-sec/2019/q3/19
+Re: linux-distros membership application - Microsoft
