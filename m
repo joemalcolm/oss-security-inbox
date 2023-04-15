@@ -1,115 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/7
-Message-ID: <b20ad75f-a368-b528-f471-aa3065483581@gmail.com>
-Date: Wed, 14 Jun 2023 18:53:40 +0200
-From: Till Kamppeter <till.kamppeter@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/15/2
+Message-ID: <20230415123118.GA10525@openwall.com>
+Date: Sat, 15 Apr 2023 14:31:18 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34095: cpdb-libs: Buffer overflows via scanf
+Subject: Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
-Following bug got reported to OpenPrinting's GitHub, repo cpdb-libs, as 
-a private (security) issue report, which is now published:
+On Sat, Apr 15, 2023 at 09:33:24AM +0300, Georgi Guninski wrote:
+> Isn't MicroSoft member of linux distros mailing list [0], which
+> purpose is exactly quietly trading 0days [1]?
+> 
+> Does the OP with m$ email address realize this?
+> 
+> [0] https://oss-security.openwall.org/wiki/mailing-lists/distros
+> [1] https://seclists.org/oss-sec/2019/q3/19
+> Re: linux-distros membership application - Microsoft
 
-https://github.com/OpenPrinting/cpdb-libs/security/advisories/GHSA-25j7-9gfc-f46x
+The (linux-)distros lists are meant for handling of embargoed issues
+prior to their public disclosure and in cases where such private
+handling is expected to help.  In this case, the issue was already
+semi-public (via the fixes and the NEWS file) and I wouldn't expect
+private handling to help more than public does.  Every distro present on
+(linux-)distros is supposed to also be present on oss-security.  So in
+my opinion Jonathan did the right thing of posting this to oss-security
+right away.
 
+Also, in general, choosing whether to post to linux-distros, to distros,
+or to oss-security shouldn't be related to whether one is a member of
+(linux-)distros or not.  Anyone can report an issue to any of these
+lists as appropriate for the given issue and its current status.
 
-Summary
-
-There's multiple instances of buffer overflows in this package via 
-improper use of scanf(3).
-
-
-Details
-
-cpdb-libs/tools/cpdb-text-frontend.c
-
-
-Line 362 in 85555fb
-
-   else if (strcmp(buf, "print-file") == 0)
-
-              char printer_id[BUFSIZE], backend_name[BUFSIZE], 
-file_path[BUFSIZE];
-              scanf("%s%s%s", file_path, printer_id, backend_name);
-
-cpdb-libs/tools/cpdb-text-frontend.c
-
-
-Line 453 in 85555fb
-
-   else if (strcmp(buf, "get-all-translations") == 0)
-
-              char printer_id[BUFSIZE];
-              char backend_name[BUFSIZE];
-              scanf("%s%s", printer_id, backend_name);
-
-cpdb-libs/cpdb/cpdb-frontend.c
-
-
-Line 372 in 85555fb
-
-   PrintBackend *cpdbCreateBackendFromFile(GDBusConnection *connection,
-
-      char obj_path[CPDB_BSIZE];
-      /* ... */
-      if ((file = fopen(path, "r")) == NULL)
-      /* ... */
-      if (fscanf(file, "%s", obj_path) == 0)
-
-
-%s does not place bounds on the allowed input sizes.
-
-
-All scanf() or fscanf() calls in the cpdb-libs package which take 
-strings via %s format conversion directive read these strings into 
-buffers of 1024 characters of length (BUFSIZE). So one can easily 
-replace all occurences of %s by %1023s (accept a maximum of 1023 
-characters to leave space for terminating zero byte) in all lines 
-containing scanf or fscanf, easily automated by running four times the 
-command
-
-perl -p -i -e 's/(scanf\(.*?".*?)%s/\1%1023s/' cpdb/cpdb-frontend.c 
-tools/cpdb-text-frontend.c
-
-and checking with
-
-grep scanf */*.c
-
-
-Quick test/reproducer:
-
-Run
-
-cpdb-text-frontend
-
-and enter a command line (no valid command required, only arbitrary 
-characters) of more than 1024 characters. without the fix you will get a 
-segfault, with the fix no segfault and the overlength of the input gets 
-truncated.
-
-To test the fix in the libraries (not in cpdb-text-backend) you would 
-need to create a file named /tmp/org.openprinting.Backend.CUPS with its 
-first line having more than 1024 characters. Then run
-
-CPDB_DEBUG_LOGFILE=log.txt CPDB_DEBUG_LEVEL=debug 
-CPDB_BACKEND_INFO_DIR=/tmp cpdb-text-frontend
-
-With the original libcpdb-frontend.so.2.0.0 you will get a segmentation 
-fault, with the fix you will reach the command prompt of the text 
-frontend (but without printer list).
-
-
-The report got assigned CVE-2023-34095
-
-
-The fix is committed to the GIT repository of cpdb-libs:
-
-https://github.com/OpenPrinting/cpdb-libs/commit/f181bd1f1
-
-
-Package maintainers/security teams of the operating system 
-distributions, please apply the fix by then.
-
-The fix will be included in the upcoming releases.
-
-    Till
+Alexander
