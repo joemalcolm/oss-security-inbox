@@ -1,44 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/01/3
-Message-ID: <6aff6798-3331-45c9-86fe-b433c6273624@edu.physics.uoc.gr>
-Date: Wed, 1 Nov 2023 13:35:16 +0200
-From: Kapetanakis Giannis <bilias@....physics.uoc.gr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/16/4
+Message-ID: <20230416205727.0XQJ2%steffen@sdaoden.eu>
+Date: Sun, 16 Apr 2023 22:57:27 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5631: XSS vulnerability in Roundcube webmail
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-Versions up to 1.6.3 - not 1.6.4 - are vulnerable.
+Ruihan Li wrote in
+ <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@...tbccffxgv>:
+ ...
+ |be privileged, such as a setuid program. Moreover, if the socket is used as
+ |stdout or stderr, an ioctl call is made to obtain tty parameters, which \
+ |can be
+ |verified through the strace command.
+ |```
+ |# strace -e trace=ioctl sudo > /dev/null
+ |ioctl(3, TIOCGPGRP, [30305])            = 0
+ |ioctl(2, TIOCGWINSZ, {ws_row=45, ws_col=190, ws_xpixel=0, ws_ypixel=0}) = 0
+ |```
+ ...
+ |# find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl \
+ |{} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n \
+ |'V ' || echo -n 'S '; echo {};" \; | sort
+ |S ./chage
+ |S ./expiry
+ |S ./fusermount
+ |S ./fusermount3
+ |S ./gpasswd
+ |S ./ksu
+ |S ./mount.cifs
+ |S ./sg
+ |S ./umount
+ |V ./chfn
+ |V ./chsh
+ |V ./mount
+ |V ./newgrp
+ |V ./passwd
+ |V ./pkexec
+ |V ./screen-4.9.0
+ |V ./su
+ |V ./sudo
+ |V ./unix_chkpwd
+ |```
+ |After manually checking the strace output, it is found that all of \
+ |these ioctl
+ |users are using ioctl calls on stdin, stdout, or stderr to get or set \
+ |some tty
+ |parameters. Note that exactly no arguments are passed to these setuid
 
-https://www.cve.org/CVERecord?id=CVE-2023-5631
+Your discovered bluetooth bug totally aside.
 
-Roundcube before 1.4.15, 1.5.x before 1.5.5, and 1.6.x before 1.6.4 allows stored XSS via an HTML e-mail message with a crafted SVG document because of program/lib/Roundcube/rcube_washtml.php behavior. This could allow a remote attacker to load arbitrary JavaScript code.
+I wonder -- have you verified that they do not use isatty(3) aka
+some tc*() series *first*?  The above with sudo does for example
+not reveal anything as shown, roght?  FD 2 seems to be a terminal,
+.. and whereas i do not have sudo src here, i am sure it uses
+isatty(3) and tcgetattr(3).
 
-G
+I find it hard to believe that people simply use terminal ioctl(2)
+etc on file descriptors without verifying that they are, well,
+indeed terminal file descriptors?  For example, su(1), as above,
+of Linux shadow-utils works a bit, i read for example
 
-On 31/10/2023 23:26, Valtteri Vuorikoski wrote:
-> Not associated with the project or ESET, but didn't see anything here about
-> this yet.
->
-> Roundcube is an open-source webmail client. Versions up to 1.6.4 are
-> vulnerable (including the 1.4.x and 1.5.x series) to an XSS exploit
-> caused by an issue in the sanitization of SVG image elements in HTML
-> emails. ESET describes CVE-2023-5631 as follows in their press release
-> at <https://www.eset.com/us/about/newsroom/press-releases/eset-research-winter-vivern-attacks-roundcube-webmail-servers-of-governments-in-europe-through-zero-1/>:
->
->   By sending a specially crafted email message, attackers are able to
->   load arbitrary JavaScript code in the context of the Roundcube user’s
->   browser window. No manual interaction other than viewing the message
->   in a web browser is required. The final JavaScript payload can
->   exfiltrate email messages to the command and control server of the
->   group.
->
-> The Roundcube project has released new versions for each of the abovementioned
-> release series. The official release notification is at
-> <https://roundcube.net/news/2023/10/16/security-update-1.6.4-released>.
->
-> According to ESET, the vulnerability is being actively exploited to
-> target "governmental entities in Europe".
->
->  -Valtteri
->
->
+       * Be more paranoid, like su from SimplePAMApps.  --marekm
+
+So this general beating onto SETUID or super capable programs
+smells like bad fish Hollywood boom-boom again, no?
+You have to do some things, and if you give up privileges
+thereafter, extended capabilities are gone.
+Here locally Xorg now is
+
+  #!/bin/sh
+  #
+  # Execute Xorg.wrap if it exists otherwise execute Xorg directly.
+  # This allows distros to put the suid wrapper in a separate package.
+
+  basedir="/usr/lib/xorg-server"
+  if [ -x "$basedir"/Xorg.wrap ]; then
+          exec "$basedir"/Xorg.wrap "$@"
+  else
+          exec "$basedir"/Xorg "$@"
+  fi
+
+
+  $ ll /usr/lib/xorg-server|grep Xorg
+  -r-sr-xr-x 1 root root   14632 Mar 31 21:24 Xorg.wrap*
+  -rwxr-xr-x 1 root root 2482224 Mar 31 21:24 Xorg*
+
+and so i had to adjust my startx.sh
+
+  X=
+  if [ -x /usr/lib/xorg-server/Xorg ]; then
+     g=`groups`
+     if { echo ${g} | grep -q video; } >/dev/null 2>&1 &&
+           { echo ${g} | grep -q input; } >/dev/null 2>&1; then
+        X=/usr/lib/xorg-server/Xorg
+     fi
+     unset g
+  fi
+
+  if [ -n "${X}" ]; then
+     :
+  elif [ -x /usr/lib/xorg-server/Xorg.wrap ]; then
+     X=/usr/lib/xorg-server/Xorg.wrap
+  elif command -v Xorg; then
+     X=Xorg
+  else
+     X=X
+  fi
+
+and furthermore i indeed find myself now in video, input (and
+audio) on this box.  What a maintance mess.
+(Maintenance is a real thing, i for example have ssh access to
+servers where in (/var)?/tmp/ you will find stale temporary files
+older than one and a half decade!  Isn't that sheer grazy:
+
+  l#?0|...$ ll /var/tmp/
+  Gesamt 874514
+  -rw-------   1 dam      ...         8192 Nov 22  2008 Rx_2ay14
+  ...
+  -rw-------   1 schwarze ...        25232 Aug  6  2016 aaaJTaazJ
+  ...
+
+Then something capable that is nicely programmed, saw many eyes,
+and looses privileges as soon as possible i prefer.  Hey -- or
+make it message passing aware, use TLS connections, marshal via
+normalized Unicode and XML, and ask question over an otherwise
+under-documented message protocol, that uses totally
+under-documented cryptical XML configuration files, and that
+somehow gives you resources via a passed-back file descriptor, or
+something like this.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
