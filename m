@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6171" "Tuesday" "14" "September" "2021" "17:29:11" "+0200" "Marcus Meissner" "meissner@suse.de" nil "212" "[oss-security] Disclosure: CVE-2021-3744: crypto: ccp - fix resource leaks in ccp_run_aes_gcm_cmd()" nil nil nil "9" nil nil (number mark "U       meissner@sus Sep 14  212/6171  " thread-indent "\"[oss-security] Disclosure: CVE-2021-3744: crypto: ccp - fix resource leaks in ccp_run_aes_gcm_cmd()\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Disclosure: CVE-2021-3744: crypto: ccp - fix resource leaks in ccp_run_aes_gcm_cmd()" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7716 invoked by uid 550); 14 Sep 2021 15:29:24 -0000
+Received: (qmail 32137 invoked by uid 550); 16 Apr 2023 21:00:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,248 +7,150 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7698 invoked from network); 14 Sep 2021 15:29:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1631633352; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=2MByUoJQWQUZneIBnv17KkixJXlX38vNMz2gEsE4a6I=;
-	b=iFDg/hJpv7bIMHNCDs1Y7nXfVoqwMTfmOha4y32axXWvP3Yp9knMGWFBCKZmVLgaM9ni7X
-	1/2JxmWJcdq+Bvl+q2gkP7UTOmylTF536cnzis6SXZlM61J0t+jZj7kc+v/McJ9w9vRPtA
-	11hLJvo9Zf704kL6bbCHIWtHO36MJc8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1631633352;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=2MByUoJQWQUZneIBnv17KkixJXlX38vNMz2gEsE4a6I=;
-	b=hZT/snCBuQD5uI748PUiAZ9ymkARo9UEIMnU5PFOECNywOk0uTjMRphf3e/lFALmIX3x9z
-	6wFAPSz8ePdWGeCA==
-Date: Tue, 14 Sep 2021 17:29:11 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Message-ID: <20210914152910.GG26560@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
- =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
- =?iso-8859-1?Q?g?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: [oss-security] Disclosure: CVE-2021-3744: crypto: ccp - fix resource leaks in
- ccp_run_aes_gcm_cmd()
+Received: (qmail 30530 invoked from network); 16 Apr 2023 20:57:40 -0000
+Date: Sun, 16 Apr 2023 22:57:27 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20230416205727.0XQJ2%steffen@sdaoden.eu>
+In-Reply-To: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-450-g9589f04a75
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth:
+ Unauthorized management command execution
 
-Hi,
+Ruihan Li wrote in
+ <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>:
+ ...
+ |be privileged, such as a setuid program. Moreover, if the socket is used as
+ |stdout or stderr, an ioctl call is made to obtain tty parameters, which \
+ |can be
+ |verified through the strace command.
+ |```
+ |# strace -e trace=ioctl sudo > /dev/null
+ |ioctl(3, TIOCGPGRP, [30305])            = 0
+ |ioctl(2, TIOCGWINSZ, {ws_row=45, ws_col=190, ws_xpixel=0, ws_ypixel=0}) = 0
+ |```
+ ...
+ |# find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl \
+ |{} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n \
+ |'V ' || echo -n 'S '; echo {};" \; | sort
+ |S ./chage
+ |S ./expiry
+ |S ./fusermount
+ |S ./fusermount3
+ |S ./gpasswd
+ |S ./ksu
+ |S ./mount.cifs
+ |S ./sg
+ |S ./umount
+ |V ./chfn
+ |V ./chsh
+ |V ./mount
+ |V ./newgrp
+ |V ./passwd
+ |V ./pkexec
+ |V ./screen-4.9.0
+ |V ./su
+ |V ./sudo
+ |V ./unix_chkpwd
+ |```
+ |After manually checking the strace output, it is found that all of \
+ |these ioctl
+ |users are using ioctl calls on stdin, stdout, or stderr to get or set \
+ |some tty
+ |parameters. Note that exactly no arguments are passed to these setuid
 
-CVE-2021-3744: crypto: ccp - fix resource leaks in ccp_run_aes_gcm_cmd()                                                                                                                     
+Your discovered bluetooth bug totally aside.
 
-This was reported by Tencent researcher <minihanshen@tencent.com> to
-linux-distros, with disclosure date agreed to September 6th.
+I wonder -- have you verified that they do not use isatty(3) aka
+some tc*() series *first*?  The above with sudo does for example
+not reveal anything as shown, roght?  FD 2 seems to be a terminal,
+.. and whereas i do not have sudo src here, i am sure it uses
+isatty(3) and tcgetattr(3).
 
-It was not followed up by timely disclosure so far, also everyone in the thread
-went silent for unknown reasons, even with 3 seperate reminders to publish.
+I find it hard to believe that people simply use terminal ioctl(2)
+etc on file descriptors without verifying that they are, well,
+indeed terminal file descriptors?  For example, su(1), as above,
+of Linux shadow-utils works a bit, i read for example
 
-As its now 1 week after the proposed embargoe end and has also expired the maximum 14 days
-embargo timeline, the linux-distros team publishes it to oss-security.
+       * Be more paranoid, like su from SimplePAMApps.  --marekm
 
-I am quoting the original report email, and the bugfix email from Dan Carpenter for Linux security.
+So this general beating onto SETUID or super capable programs
+smells like bad fish Hollywood boom-boom again, no?
+You have to do some things, and if you give up privileges
+thereafter, extended capabilities are gone.
+Here locally Xorg now is
 
-Ciao, Marcus
+  #!/bin/sh
+  #
+  # Execute Xorg.wrap if it exists otherwise execute Xorg directly.
+  # This allows distros to put the suid wrapper in a separate package.
 
-------------
-
-Hello,
-
-We found a vulnerability similar with CVE-2019-18808(https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-18808) which could allows attackers to cause a denial of service (memory consumption). Next is our analysis.
-
-The vulnerability also appared on ccp_run_aes_gcm_cmd() funciton in driver in the Linux kernel through 5.14.
-// CODE-1
-ccp_run_aes_gcm_cmd(struct ccp_cmd_queue *cmd_q, struct ccp_cmd *cmd)
-{
-  struct ccp_aes_engine *aes = &cmd->u.aes;
-  struct ccp_dm_workarea key, ctx, final_wa, tag;
-  struct ccp_data src, dst;
-  struct ccp_data aad;
-  struct ccp_op op;
-  unsigned int dm_offset;
-  unsigned int authsize;
-  unsigned int jobid;
-  unsigned int ilen;
-  bool in_place = true; /* Default value */
-  __be64 *final;
-  int ret;
-
-  struct scatterlist *p_inp, sg_inp[2];
-  struct scatterlist *p_tag, sg_tag[2];
-  struct scatterlist *p_outp, sg_outp[2];
-  struct scatterlist *p_aad;
-
-  if (!aes->iv)
-return -EINVAL;
-. . . .
-The structure aad,src,dst.. is defined in CODE-1
-//CODE-2
-....
-
-op.init = 1;
-  if (aes->aad_len > 0) {
-    /* Step 1: Run a GHASH over the Additional Authenticated Data */
-    ret = ccp_init_data(&aad, cmd_q, p_aad, aes->aad_len,
-            AES_BLOCK_SIZE,
-            DMA_TO_DEVICE); // init `aad`
-    if (ret)
-      goto e_ctx;
-
-    op.u.aes.mode = CCP_AES_MODE_GHASH;
-    op.u.aes.action = CCP_AES_GHASHAAD;
-
-    while (aad.sg_wa.bytes_left) {
-      ccp_prepare_data(&aad, NULL, &op, AES_BLOCK_SIZE, true);
-
-      ret = cmd_q->ccp->vdata->perform->aes(&op);
-      if (ret) {
-        cmd->engine_error = cmd_q->cmd_error;
-        goto e_aad;
-      }
-
-      ccp_process_data(&aad, NULL, &op);
-      op.init = 0;
-    }
-  }
-// CODE-3
-  op.u.aes.mode = CCP_AES_MODE_GCTR;
-  op.u.aes.action = aes->action;
-
-  if (ilen > 0) {
-    /* Step 2: Run a GCTR over the plaintext */
-    in_place = (sg_virt(p_inp) == sg_virt(p_outp)) ? true : false;
-
-    ret = ccp_init_data(&src, cmd_q, p_inp, ilen,
-            AES_BLOCK_SIZE,
-            in_place ? DMA_BIDIRECTIONAL
-               : DMA_TO_DEVICE);
-    if (ret)
-      goto e_ctx; // whill free the value and return.
-
-    if (in_place) {
-      dst = src;
-    } else {
-      ret = ccp_init_data(&dst, cmd_q, p_outp, ilen,
-              AES_BLOCK_SIZE, DMA_FROM_DEVICE);
-      if (ret)
-        goto e_src;
-}
-. . . . .
-In CODE-2 `aad` will init which will be alloc a memory and then into CODE-3 if `src` init failed it will got `e_ctx`(following code show it) which not free `aad` until the function execute end.
-....
-
-e_tag:
-  ccp_dm_free(&final_wa);
-
-e_dst:
-  if (ilen > 0 && !in_place)
-    ccp_free_data(&dst, cmd_q);
-
-e_src:
-  if (ilen > 0)
-    ccp_free_data(&src, cmd_q);
-
-e_aad:
-  if (aes->aad_len)
-    ccp_free_data(&aad, cmd_q);
-
-e_ctx:
-  ccp_dm_free(&ctx);
-
-e_key:
-  ccp_dm_free(&key);
-
-  return ret;
-}
-
-And then this code is used to support AMD's cryptographic co-processor.
-
-The above is our analysis，I look forward to hearing from you soon
-
-Have a nice day
-Best wishes
-
-Peanuts
-Tencent Security XuanwuLab
-
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: [vs-plain] [PATCH RESEND] crypto: ccp - fix resource leaks in ccp_run_aes_gcm_cmd()                                                                                 
+  basedir="/usr/lib/xorg-server"
+  if [ -x "$basedir"/Xorg.wrap ]; then
+          exec "$basedir"/Xorg.wrap "$@"
+  else
+          exec "$basedir"/Xorg "$@"
+  fi
 
 
+  $ ll /usr/lib/xorg-server|grep Xorg
+  -r-sr-xr-x 1 root root   14632 Mar 31 21:24 Xorg.wrap*
+  -rwxr-xr-x 1 root root 2482224 Mar 31 21:24 Xorg*
 
-There are three bugs in this code:
+and so i had to adjust my startx.sh
 
-1) If we ccp_init_data() fails for &src then we need to free aad.
-   Use goto e_aad instead of goto e_ctx.
-2) The label to free the &final_wa was named incorrectly as "e_tag" but
-   it should have been "e_final_wa".  One error path leaked &final_wa.
-3) The &tag was leaked on one error path.  In that case, I added a free
-   before the goto because the resource was local to that block.
+  X=
+  if [ -x /usr/lib/xorg-server/Xorg ]; then
+     g=`groups`
+     if { echo ${g} | grep -q video; } >/dev/null 2>&1 &&
+           { echo ${g} | grep -q input; } >/dev/null 2>&1; then
+        X=/usr/lib/xorg-server/Xorg
+     fi
+     unset g
+  fi
 
-Fixes: 36cf515b9bbe ("crypto: ccp - Enable support for AES GCM on v5 CCPs")
-Reported-by: "minihanshen(沈明航)" <minihanshen@tencent.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Reviewed-by: John Allen <john.allen@amd.com>
-Tested-by: John Allen <john.allen@amd.com>
----
-Resending because I screwed up the CC list and left off linux-distros.
-Sorry!
+  if [ -n "${X}" ]; then
+     :
+  elif [ -x /usr/lib/xorg-server/Xorg.wrap ]; then
+     X=/usr/lib/xorg-server/Xorg.wrap
+  elif command -v Xorg; then
+     X=Xorg
+  else
+     X=X
+  fi
 
- drivers/crypto/ccp/ccp-ops.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+and furthermore i indeed find myself now in video, input (and
+audio) on this box.  What a maintance mess.
+(Maintenance is a real thing, i for example have ssh access to
+servers where in (/var)?/tmp/ you will find stale temporary files
+older than one and a half decade!  Isn't that sheer grazy:
 
-diff --git a/drivers/crypto/ccp/ccp-ops.c b/drivers/crypto/ccp/ccp-ops.c
-index bb88198c874e..aa4e1a500691 100644
---- a/drivers/crypto/ccp/ccp-ops.c
-+++ b/drivers/crypto/ccp/ccp-ops.c
-@@ -778,7 +778,7 @@ ccp_run_aes_gcm_cmd(struct ccp_cmd_queue *cmd_q, struct ccp_cmd *cmd)
- 				    in_place ? DMA_BIDIRECTIONAL
- 					     : DMA_TO_DEVICE);
- 		if (ret)
--			goto e_ctx;
-+			goto e_aad;
- 
- 		if (in_place) {
- 			dst = src;
-@@ -863,7 +863,7 @@ ccp_run_aes_gcm_cmd(struct ccp_cmd_queue *cmd_q, struct ccp_cmd *cmd)
- 	op.u.aes.size = 0;
- 	ret = cmd_q->ccp->vdata->perform->aes(&op);
- 	if (ret)
--		goto e_dst;
-+		goto e_final_wa;
- 
- 	if (aes->action == CCP_AES_ACTION_ENCRYPT) {
- 		/* Put the ciphered tag after the ciphertext. */
-@@ -873,17 +873,19 @@ ccp_run_aes_gcm_cmd(struct ccp_cmd_queue *cmd_q, struct ccp_cmd *cmd)
- 		ret = ccp_init_dm_workarea(&tag, cmd_q, authsize,
- 					   DMA_BIDIRECTIONAL);
- 		if (ret)
--			goto e_tag;
-+			goto e_final_wa;
- 		ret = ccp_set_dm_area(&tag, 0, p_tag, 0, authsize);
--		if (ret)
--			goto e_tag;
-+		if (ret) {
-+			ccp_dm_free(&tag);
-+			goto e_final_wa;
-+		}
- 
- 		ret = crypto_memneq(tag.address, final_wa.address,
- 				    authsize) ? -EBADMSG : 0;
- 		ccp_dm_free(&tag);
- 	}
- 
--e_tag:
-+e_final_wa:
- 	ccp_dm_free(&final_wa);
- 
- e_dst:
--- 
-2.20.1
+  l#?0|...$ ll /var/tmp/
+  Gesamt 874514
+  -rw-------   1 dam      ...         8192 Nov 22  2008 Rx_2ay14
+  ...
+  -rw-------   1 schwarze ...        25232 Aug  6  2016 aaaJTaazJ
+  ...
+
+Then something capable that is nicely programmed, saw many eyes,
+and looses privileges as soon as possible i prefer.  Hey -- or
+make it message passing aware, use TLS connections, marshal via
+normalized Unicode and XML, and ask question over an otherwise
+under-documented message protocol, that uses totally
+under-documented cryptical XML configuration files, and that
+somehow gives you resources via a passed-back file descriptor, or
+something like this.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
