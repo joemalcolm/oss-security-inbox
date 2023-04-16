@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/7
-Message-ID: <ZRnTNhtSBmN7GFfL@jumper.schlittermann.de>
-Date: Sun, 1 Oct 2023 22:14:46 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/16/2
+Message-ID: <43d3e8f0-bcf3-cfdc-b0f0-e15f2830760f@apache.org>
+Date: Sun, 16 Apr 2023 04:47:12 +0000
+From: Jialin Qiao <qiaojialin@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim4 MTA CVEs assigned from ZDI
+Subject: CVE-2023-24831: Apache IoTDB grafana-connector Login Bypass Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann <hs@...marc.schlittermann.de> (So 01 Okt 2023 18:49:06 CEST):
-> Schedule
-> --------
-> Currently we're in contact with the major distros and aim to release
-> those fixes that are available as soon as possible. (Aiming Monday, Oct
-> 2nd.) The below mentioned commits are currently available in a
-> protected repo to a restricted set of users only.
+Severity: low
 
-We plan¹ to go public with the available fixes (addressing a subset of
-the issues) on Monday, Oct 2nd, 12:00 UTC.
+Description:
 
-By this time we'll provide access the available fixes (based on the
-current master), and to an exim-4.96.1 security release.
+Improper Authentication vulnerability in Apache Software Foundation Apache IoTDB.This issue affects Apache IoTDB Grafana Connector: from 0.13.0 through 0.13.3.
 
-¹) In case none of the major distributions runs asks us for a delay.
+Attackers could login without authorization. This is fixed in 0.13.4.
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+References:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+https://iotdb.apache.org/
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-24831
+
