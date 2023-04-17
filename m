@@ -1,52 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/24/2
-Message-ID: <3cba653e-efec-4264-89df-f88caa37d84d@hlrs.de>
-Date: Tue, 24 Oct 2023 18:56:27 +0200
-From: Martin Hecht <martin.hecht@...s.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/17/4
+Message-ID: <20230417225330.ckXBw%steffen@sdaoden.eu>
+Date: Tue, 18 Apr 2023 00:53:30 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-On 20/10/2023 17:21, Turistu wrote:
-> On Fri, Oct 20, 2023 at 03:27:41PM +0200, Solar Designer wrote:
->>
->> Or isolate Firefox to its own X server (or at least a separate one from
->> where you run terminal emulators managing important stuff), like it
->> happens when you run it in its own VM (or perhaps many instances of it
->> in many VMs) on Qubes OS.  Indeed this also removes the convenience of
-> 
-> If you do that, notice that you will also have to run a window manager
-> inside that separate X server, because firefox (which never implemented
-> the X11 and icccm protocols correctly) needs a wm in order to function
-> properly (more precisely a point-to-focus wm or one that simulates
-> point-to-focus just to keep firefox and some other horrors like old atk
-> java apps happy).
+Jakub Wilk wrote in
+ <20230417064047.dhrrkuzjmtx4yhgj@...lk.net>:
+ |* Steffen Nurpmeso <steffen@...oden.eu>, 2023-04-16 22:57:
+ |>have you verified that they do not use isatty(3)
+ |
+ |I'm pretty sure they do. But isatty(3) is implemented using the TCGETS 
+ |ioctl, so that doesn't help.
 
-there was a recommendation to run firefox as a different user, e.g. 
-firefox, some time ago:
-https://seclists.org/fulldisclosure/2014/Jun/84
+Well everbody knows how this is implemented, most of the time.
+There never was any systemcall that comes otherwise near of doing
+that (except maybe fcntl).  Plan9, maybe.
 
-this firefox user doesn't have access to the primary and secondary 
-selection buffer. Some details have changed, but basically I'm using 
-this approach since then. It's a bit uncomfortable in daily use (like 
-most security measures), because copy&paste out of firefox doesn't work 
-anymore. But there is also this addon as a workaround, which lets me 
-save text selected within firefox to a well-defined file, from where I 
-can pick it up after careful inspection under my regular user:
-https://addons.mozilla.org/en-US/firefox/addon/save-text-to-file/
+By the way out of interest and because of ringing in my ear for
+one target i implemented sandboxing for an iteration of a very
+simple non-front-line server to be released tomorrow,
+pledge/unveil, seccomp(2) (glibc and musl), and capsicum(4) on
+FreeBSD.  seccomp(2) i find so expensive (i'd wish there would be
+a first-level bitset or so), and very hard to do (argument
+checking rather constant-only, of course: one could dynamically
+build the filter, even use a library that aids in doing so, but
+still), that i though the enormous capabilities of Linux regarding
+"ip netns", "unshare" and "capsh", in conjunction with overlayfs,
+ie containment, and keeping the server lean, seems more appealing.
+All the libraries one has to use today, mostly evolving targets,
+and blockboxes from my application's point of view.  Yes,
+i wondered how to create a bigger one i have on my TODO list,
+which requires DNS lookups (and that potentially leads to the
+black hole of TLS, HTTP, HTTP/2, QUIC).  How to write this
+securely with containment as above?
+The musl client of the simple even needs a SYS_ioctl clearance for
+normal writing to stdout (__stdout_write()).
 
-But still, we are left with the problem that within firefox scripts can 
-do all kind of bad things. NoScript addon can help here to some extend:
-https://addons.mozilla.org/en-US/firefox/addon/noscript/
+Ciao!
 
-But unfortunately more and more web pages refuse to display anything if 
-no scripts are allowed at all by default, which forces me to either 
-admit tons of javascript on those pages or just leave them without 
-reading... Ok, using separate browser profiles for different kinds of 
-web pages is another approach (separate profiles for online banking, 
-admin guis, regular browsing, another one for pages you trust less...)
+(P.S.: it is great that QUIC will come "for free" with OpenSSL!)
 
-best regards, Martin
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (5924 bytes)
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
