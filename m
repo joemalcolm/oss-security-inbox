@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/25/2
-Message-ID: <Y9FhZ0vKzTx4WTCH@larwa.hq.kempniu.pl>
-Date: Wed, 25 Jan 2023 18:05:43 +0100
-From: Michał Kępień <michal@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/17/2
+Message-ID: <8b244a2b-5079-02db-135d-f584af57add3@apache.org>
+Date: Mon, 17 Apr 2023 09:57:11 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@....org
-Subject: ISC has disclosed three vulnerabilities in BIND 9 (CVE-2022-3094, CVE-2022-3736, CVE-2022-3924)
+Subject: CVE-2023-25504: Apache Superset: Possible SSRF on import datasets 
 Content-Type: text/plain; charset=utf-8
 
-On 25 January 2023 we (Internet Systems Consortium) disclosed three vulnerabilities affecting our BIND 9 software:
+Description:
 
-- CVE-2022-3094:        An UPDATE message flood may cause named to exhaust all available memory https://kb.isc.org/docs/cve-2022-3094
-- CVE-2022-3736:        named configured to answer from stale cache may terminate unexpectedly while processing RRSIG queries https://kb.isc.org/docs/cve-2022-3736
-- CVE-2022-3924:        named configured to answer from stale cache may terminate unexpectedly at recursive-clients soft quota https://kb.isc.org/docs/cve-2022-3924
+A malicious actor who has been authenticated and granted specific permissions in Apache Superset may use the import dataset feature in order to conduct Server-Side Request Forgery
+attacks and query internal resources on behalf of the server where Superset
+is deployed. This vulnerability exists in Apache Superset versions up to and including 2.0.1.
 
-New versions of BIND 9 are available from https://www.isc.org/downloads
+Credit:
 
-Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of each published release directory:
+Alexey Sabadash, VK (finder)
 
-- https://downloads.isc.org/isc/bind9/9.16.37/patches/
-- https://downloads.isc.org/isc/bind9/9.18.11/patches/
-- https://downloads.isc.org/isc/bind9/9.19.9/patches/
+References:
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-25504
 
--- 
-Best regards,
-Michał Kępień
