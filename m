@@ -1,104 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/1
-Message-ID: <f7fe3602-156f-4d7a-94f9-bc66bd61cd1b@oracle.com>
-Date: Fri, 13 Oct 2023 17:11:55 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/17/3
+Message-ID: <924ee784-a22c-0317-10bf-1cf40789cf80@apache.org>
+Date: Mon, 17 Apr 2023 10:04:21 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Samba 4.19.1, 4.18.8 and 4.17.12 Security Releases are available for Download
+Subject: CVE-2023-27525: Apache Superset: Incorrect default permissions for Gamma role 
 Content-Type: text/plain; charset=utf-8
 
-Forwarding from https://lists.samba.org/archive/samba-announce/2023/000651.html
+Description:
 
-> Release Announcements
-> ---------------------
-> 
-> This is a security release in order to address the following defects:
-> 
-> 
-> o CVE-2023-3961:  Unsanitized pipe names allow SMB clients to connect as 
-> root to
->                    existing unix domain sockets on the file system.
-> https://www.samba.org/samba/security/CVE-2023-3961.html
-> 
-> o CVE-2023-4091:  SMB client can truncate files to 0 bytes by opening 
-> files with
->                    OVERWRITE disposition when using the acl_xattr Samba VFS
->                    module with the smb.conf setting
->                    "acl_xattr:ignore system acls = yes"
-> https://www.samba.org/samba/security/CVE-2023-4091.html
-> 
-> o CVE-2023-4154:  An RODC and a user with the GET_CHANGES right can view all
->                    attributes, including secrets and passwords. 
-> Additionally,
->                    the access check fails open on error conditions.
-> https://www.samba.org/samba/security/CVE-2023-4154.html
-> 
-> o CVE-2023-42669: Calls to the rpcecho server on the AD DC can request 
-> that the
->                    server block for a user-defined amount of time, denying
->                    service.
-> https://www.samba.org/samba/security/CVE-2023-42669.html
-> 
-> o CVE-2023-42670: Samba can be made to start multiple incompatible RPC
->                    listeners, disrupting service on the AD DC.
-> https://www.samba.org/samba/security/CVE-2023-42670.html
-> 
-> 
-> Changes
-> -------
-> 
-> o  Jeremy Allison <jra at samba.org>
->     * BUG 15422: CVE-2023-3961.
-> 
-> o  Andrew Bartlett <abartlet at samba.org>
->     * BUG 15424: CVE-2023-4154.
->     * BUG 15473: CVE-2023-42670.
->     * BUG 15474: CVE-2023-42669.
-> 
-> o  Ralph Boehme <slow at samba.org>
->     * BUG 15439: CVE-2023-4091.
-> 
-> 
-> #######################################
-> Reporting bugs & Development Discussion
-> #######################################
-> 
-> Please discuss this release on the samba-technical mailing list or by
-> joining the #samba-technical:matrix.org matrix room, or
-> #samba-technical IRC channel on irc.libera.chat.
-> 
-> If you do report problems then please try to send high quality
-> feedback. If you don't provide vital information to help us track down
-> the problem then you will probably be ignored.  All bug reports should
-> be filed under the Samba 4.1 and newer product in the project's Bugzilla
-> database (https://bugzilla.samba.org/).
-> 
-> 
-> ======================================================================
-> == Our Code, Our Bugs, Our Responsibility.
-> == The Samba Team
-> ======================================================================
-> 
-> 
-> 
-> ================
-> Download Details
-> ================
-> 
-> The uncompressed tarballs and patch files have been signed
-> using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
-> from:
-> 
->          https://download.samba.org/pub/samba/stable/
-> 
-> The release notes are available online at:
-> 
->          https://www.samba.org/samba/history/samba-4.19.1.html
->          https://www.samba.org/samba/history/samba-4.18.8.html
->          https://www.samba.org/samba/history/samba-4.17.12.html
-> 
-> Our Code, Our Bugs, Our Responsibility.
-> (https://bugzilla.samba.org/)
-> 
->                          --Enjoy
->                          The Samba Team
+An authenticated user with Gamma role authorization could have access to metadata information using non trivial methods in Apache Superset up to and including 2.0.1
+
+Credit:
+
+NTT DATA (finder)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-27525
+
