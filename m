@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1816" "Wednesday" "23" "December" "2015" "16:46:03" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151223214603.D60E56C04DB@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr" "^Cc:" nil nil "12" "2015122321:46:03" "[oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr" (number mark "        cve-assign@m Dec 23   43/1816  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr\"\n") "<996765221.2010506.1450889714081.JavaMail.zimbra@redhat.com>" ("<996765221.2010506.1450889714081.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9529 invoked by uid 550); 23 Dec 2015 21:46:16 -0000
+Received: (qmail 1998 invoked by uid 550); 18 Apr 2023 19:07:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9508 invoked from network); 23 Dec 2015 21:46:16 -0000
-In-Reply-To: <996765221.2010506.1450889714081.JavaMail.zimbra@redhat.com>
-Message-Id: <20151223214603.D60E56C04DB@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 23 Dec 2015 16:46:03 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr
-To: vdronov@redhat.com
+Received: (qmail 31802 invoked from network); 18 Apr 2023 18:59:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
+	Message-ID:References:MIME-Version:Content-Type:
+	Content-Disposition:In-Reply-To; bh=Vl3wHR89hSnf5lIAyHMkZULaUhJC
+	LiN80+sRKgiQrGQ=; b=AC3PNaWI+lGyhBilc9aJYd9zIL50zKUjdFXjQJCY5h3/
+	KpTAyWVjIR5zukIfgKmQ5uFqjvUmQp3pWIh+f8HS/1QFJXan667uRtME0bR3Aml2
+	XWSUrIcA2ROKdCf7CKCj39cyiZA22n185Cjdoe/aZI5EVjlpuax9XH9kQlB2+OM=
+Date: Wed, 19 Apr 2023 02:59:26 +0800
+From: Ruihan Li <lrh2000@pku.edu.cn>
+To: "Todd C. Miller" <Todd.Miller@sudo.ws>
+Cc: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com, 
+	Ruihan Li <lrh2000@pku.edu.cn>
+Message-ID: <wbhfpn7kbwg64jordjxtpqfmmowes5rncupgzfbnqdz3uljioq@hgz2w4thzmya>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+ <20230416205727.0XQJ2%steffen@sdaoden.eu>
+ <20230418005741.GA25557@openwall.com>
+ <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt>
+ <043b82cc304acacf@millert.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <043b82cc304acacf@millert.dev>
+X-CM-TRANSID:5oFpogA3P4+O6D5kYkU1Dw--.16957S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7XrW7Zw4ruFy3JF1ktF4rAFb_yoW3ArX_ur
+	y5tw4kGw42yFs5XF13KF4rCrWIkas3WryDZrZ8XF47Xas7ZFW8CFZ7tryIvwnxCFW2krsx
+	W34rZ3yYkF1S9jkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbV8Fc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
+	wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
+	vE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280
+	aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVWxJr0_GcWlnxkEFVAIw20F6c
+	xK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2Wl
+	Yx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbV
+	WUJVW8JwACjcxG0xvEwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc2xSY4AK6svPMxAI
+	w28IcxkI7VAKI48JMxAIw28IcVCjz48v1sIEY20_Kr1UJr1l4I8I3I0E4IkC6x0Yz7v_Jr
+	0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
+	17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcV
+	C0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY
+	6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvj
+	DU0xZFpf9x0JUQZ23UUUUU=
+X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEEBVPy77qNLwALsf
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized
+ management command execution
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Todd,
 
-> A flaw was found in the overlay filesystem of the Linux kernel which allows
-> an unprivileged user to change attributes of the files in the overlay,
-> particularly allowing access to root-only-accessible files like '/etc/shadow'.
+On Tue, Apr 18, 2023 at 08:27:16AM -0600, Todd C. Miller wrote:
+> That is correct.  There are further changes to use TIOCGWINSZ on
+> /dev/tty instead of stderr.  Using an open fd of /dev/tty makes the
+> isatty() call superfluous but it doesn't hurt to have it.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1291329
+Yeah, I see that you are removing ioctl calls on standard file descriptors. So
+actually, just to confirm, it is feasible to avoid all ioctl calls to standard
+file descriptors with root privileges (under all command line arguments), by
+using /dev/tty, assuming something like the window size... Right?
 
->> A security issue was fixed in kernel 4.4-rc4 resolving the bypassing
->> of filesystem permission checks in overlayfs during the initial
->> copy_up.
+If this is the case, I think it should not be difficult for other setuid
+programs to do similar things. I am just thinking for a while, and cannot find
+a case where ioctl calls are unavoidable.
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=acff81ec2c79492b180fade3c2894425cd35a545
+Thanks,
+Ruihan Li
 
->> Having these two ->setattr() (one to set verbatim copy of metadata,
->> another to do what overlayfs ->setattr() had been asked to do in the
->> first place) combined is where it breaks.
-
-Use CVE-2015-8660.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWexUMAAoJEL54rhJi8gl5IEsQAMv5QaeC971YMHtFge/V5U+A
-8YW0e6efEGffyK8VMPAxDsaXmaCfzw/tSPQvyERnU1dpBaleYq9XxBQ5nmDlOjV0
-0StYAYlWt+WWuKxbcGM0YeQA6oNTnA0repZ/BRztGGYsXmshi/4X/UKSCyM08Ii7
-vh/kWCfA9B3XpCyAB/Iqk3WUHJSULP0hJTvRXA31857+GNav/F4SwkyHRqoQR2G7
-5A4MkGK8OPpRjarCyFRqkSogQc3b3lOkxwoBHFSzOREL2r67xDVPdD3ZDWU0MLSs
-5V+qV+YmQvPOHNGVa3LuKHEmkgY0eLsSivEatgEb8JHjBLPD2+d+PRVg9fltC+Vi
-/hlXWAIjIYhaKK8D/dt8wEJjosdSA4rcS2VrCX3XYQgd5GBqYWQWftoT5dBTPnDk
-1XZrkwo2cJSt/55GwGgBLuN/NF1G/nfEesqIHRg1u4rl3+Zg/SfWhtBE6qGG5BOI
-ei1c1GHi2HuqiAMzonFpkANNMEYwOTajfHfwI2ueMCWZ6L7kX279ZJYj1y1E0l5t
-vtcVb30TvCzkfaul1UmfomYpR38eVAvhX6XT4xziGPTzgWcdO4EYvxVPyLYYo3FE
-lE8iPTiVtkAyjb+jEN2hW9nRQ5bjTgbQ9tSXWCjqdxkcLCY3gmQ0BvaG7r20HkoM
-qX0+9OIXeKUYum3VRc1l
-=OtE0
------END PGP SIGNATURE-----
