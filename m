@@ -1,26 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/06/2
-Message-ID: <8b2cec3e-824b-4cba-6c4e-87bf6862fa5b@apache.org>
-Date: Fri, 06 Jan 2023 07:32:32 +0000
-From: Benoit Tellier <btellier@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/19
+Message-ID: <20230418192822.GA2959@openwall.com>
+Date: Tue, 18 Apr 2023 21:28:22 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45935: Apache James server: Temporary File Information Disclosure 
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Tue, Apr 18, 2023 at 08:13:24PM +0300, 0xef967c36@...il.com wrote:
+> On Tue, Apr 18, 2023 at 05:40:16PM +0200, Solar Designer wrote:
+> > BTW, even with the kernel bug fixed, there are ioctl number clashes
+> > between different devices, so even e.g. isatty(3) is not necessarily
+> > safe if called with elevated privileges under a possible confused deputy
+> > scenario.  Here's strace showing some clashes on older Linux/i386:
+> > 
+> > $ cat isatty.c
+> > int main(void) { return isatty(0); }
+> > $ gcc isatty.c -o isatty
+> > $ strace -e ioctl ./isatty
+> > ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
+> 
+> No, there's no clash. That was a bug in strace (fortunately fixed in
+> newer versions).
+> 
+> Those values macros are different; and they were ALWAYS different.
 
-Usage of temporary files with insecure permissions by the Apache James server allows an attacker with local access to access private user data in transit. 
+Oh, I didn't recall the full story.  Thank you for correcting me.
 
-Vulnerable components includes the SMTP stack and IMAP APPEND command.
+> > IIRC, I was the one to add this feature to strace 20+ years ago:
+> > 
+> > * Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
+> > - Updated to today's CVS version (post-4.4) with an additional fix for
+> > displaying all possible ioctl names when there's more than one match,
 
-This issue affects Apache James server version 3.7.2 and prior versions.
+So what I did back then was actually work around the shortcoming of
+older strace not decoding the full 32 bits, which I did not realize was
+the case.
 
-Credit:
+> There was no number clash. That 'foo or bar or quux' "fix" in strace
+> was stupid.
 
-Benoit Tellier (reporter)
+It was indeed stupid of me not to realize what was going on, but the
+"fix" nevertheless made things slightly better at the time - before it,
+strace reported an arbitrary one of the 16-bit matches.  So in the above
+example, we could have seen just SNDCTL_TMR_TIMEBASE whereas the program
+more likely meant TCGETS.  It took until 2015 for the proper fix by the
+new strace maintainer Dmitry V. Levin, now referenced by Ruihan Li in
+this thread, and that fix involved that "the tools for generating ioctl
+definitions from kernel headers have been rewritten, and the source
+format of ioctl definitions has been extended" resulting in "118 changed
+files with 7,272 additions and 3,004 deletions."
 
-References:
+> $ cc -xc - <<EOT && ./a.out
+> #include <sys/ioctl.h>
+> #include <linux/soundcard.h>
+> #include <sound/asound.h>
+> #include <stdio.h>
+> 
+> int main(int ac, char **av){
+>      printf("%#lx %#lx %#x\n", SNDCTL_TMR_TIMEBASE, SNDRV_TIMER_IOCTL_NEXT_DEVICE, TCGETS);
+>     return 0;
+> }
+> EOT
+> 0xc0045401 0xc0145401 0x5401
 
-https://james.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-45935
+Yes, these are the values I get on the same old test system as well.  So
+it was indeed just strace not decoding the high 16 bits.
 
+Alexander
