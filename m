@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1839" "Wednesday" "13" "January" "2016" "21:06:57" "+0000" "Jason Buberel" "jbuberel@google.com" "<CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>" "43" "[oss-security] [security] Go security release v1.5.3" "^Date:" nil nil "1" "2016011321:06:57" "[oss-security] [security] Go security release v1.5.3" (number mark "        jbuberel@goo Jan 13   43/1839  " thread-indent "\"[oss-security] [security] Go security release v1.5.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24411 invoked by uid 550); 13 Jan 2016 21:07:27 -0000
+Received: (qmail 9638 invoked by uid 550); 18 Apr 2023 13:01:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +6,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24325 invoked from network); 13 Jan 2016 21:07:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=TfKHOe0GpmO3KRzbOiaIWieJ73TDcwn4DvnqiIQ/jak=;
-        b=ppnijJ2CU4QqvartBXzs55kQrSwjPun2QtCtmGLs903zV+J4Z9nIytZ0Hcil9ZT8yv
-         fsZUBMFbyqtzozPf1EsWe2gRiW9M0G7HP3mhqtYn/lr+8AXJtZDlN3ncz8Bz+LhF1t/i
-         07srGW79SAiOdLuoLDu5gnQuNlcb0lLvGuk1qaxVY1FOFfmiXSWdIv/HiJVG72zrmUnf
-         9vVXz+WXVeco7W6t0t/Kx/SowRyslB2ln13xVWntsCrLYOUdh81ujWZnb7/fD4/VOhda
-         RPU2smr4v8HLIwDwDvLBERtnZTE7ExJ85xT2ktr7CxaPC1qRlAfY7kYkliokZT1KrJ1c
-         4UTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=TfKHOe0GpmO3KRzbOiaIWieJ73TDcwn4DvnqiIQ/jak=;
-        b=A18wB54As5xUguQ1YV3WraPNTFg6fx2/t3mO94N85zYAjzIn2paihmnerNnZfO1vDX
-         O0YeN2DPQhqht8gVxBbuxojnyVnjTUhOAarbjr89Df9n7VOIzrku0FNPp+YqbsQLNldw
-         ChAqvx1EiI53Mr3FAAXXndfoRBPSUAlG/f9un2QfbOnJo93J62Ab2vtA87tLp4E4saOx
-         L2LYUEfHFoxmnc+9LSUa2yO3fVbiD1mwCiiCaqYDxKx+wtKv+Dqr4+5wkUouwbPnHTsn
-         fKcp5XkWlXLwT5ktQMXb17ImAUXSDZxb1xvW5MKxgOgeAKQxjVsjzHEmKAmtUUCQI6DD
-         qybg==
-X-Gm-Message-State: ALoCoQmZCm4XNjylMhLHSswD9kpcQUD/Dwkl2AW7VbOkeyIcMxJHm8QuIbe8u+v8gh6NiNywwQ6Rot7HaD01vjsyun1vn1GNHPysBjUcHxWlma8zYMvzVpM=
-X-Received: by 10.129.110.137 with SMTP id j131mr332531ywc.203.1452719228865;
- Wed, 13 Jan 2016 13:07:08 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1146f75098bbd605293d8dc4
-Date: Wed, 13 Jan 2016 21:06:57 +0000
-From: Jason Buberel <jbuberel@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [security] Go security release v1.5.3
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 21624 invoked from network); 18 Apr 2023 12:41:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
+	Message-ID:References:MIME-Version:Content-Type:
+	Content-Disposition:In-Reply-To; bh=+od2/41Rmh1H715ym4FYug0wViLm
+	71cNaaEJjscpCBc=; b=Usu2Jqs+4I/du/j58Y8QsW+r2Y5U8fL6kH1+fXkI8jag
+	GxNRc/Z2SXRLFftEW8RKE4lMr5iXenWaD6K71DUxAFPjB4BOr6NusrdrGFRhj/Y3
+	WCyrogwTwC+V6dSxi3nKr9+0ON3tvgYFwl44xa42dL05/XqvYXkpghUaf03M4R4=
+Date: Tue, 18 Apr 2023 20:41:35 +0800
+From: Ruihan Li <lrh2000@pku.edu.cn>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com, 
+	"Todd C. Miller" <Todd.Miller@sudo.ws>, Ruihan Li <lrh2000@pku.edu.cn>
+Message-ID: <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+ <20230416205727.0XQJ2%steffen@sdaoden.eu>
+ <20230418005741.GA25557@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230418005741.GA25557@openwall.com>
+X-CM-TRANSID:5oFpogD3zAz_jz5kChclDw--.3470S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7tF1rJw4Utw1fXw47Jw4UXFb_yoW8CF1xpF
+	98KwnYyrs8Jr1UuryDuwsrZay5XF1xAry3JFWUCFW09an8WF1Iqrsaq3yftasFvrs7tanF
+	qrsxWa45Ga97uaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvG1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+	w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+	IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
+	z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2vYz4IE04k24V
+	AvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xf
+	McIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7
+	v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVCm-wCF
+	04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26w4UJr1UMxC20s026xCaFVCjc4AY6r
+	1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CE
+	b7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0x
+	vE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAI
+	cVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa
+	73UjIFyTuYvjfUOlksUUUUU
+X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEEBVPy77qNLwAEsQ
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized
+ management command execution
 
---001a1146f75098bbd605293d8dc4
-Content-Type: text/plain; charset=UTF-8
+Hi Solar Designer,
 
-A security-related issue has been reported in Go's math/big package. The
-issue was introduced in Go 1.5. We recommend that all users upgrade to Go
-1.5.3, which fixes the issue. Go programs must be recompiled with Go 1.5.3
-in order to receive the fix.
+> Thank you Ruihan Li for finding and handling this vulnerability so well,
+> and for the detailed write-up.
+> 
+> When discussing this on linux-distros a week ago, I wrote:
 
-The Go team would like to thank Nick Craig-Wood for identifying the issue.
+Also thanks to all the people at linux-distro and s@k.o who helped to
+improve the final disclosure and patches.
 
-This issue can affect RSA computations in crypto/rsa, which is used by
-crypto/tls. TLS servers on 32-bit systems could plausibly leak their RSA
-private key due to this issue. Other protocol implementations that create
-many RSA signatures could also be impacted in the same way.
+> OTOH, not all distros are typical.  Besides Android, we got rid of all
+> SUID binaries in default install of Owl over a decade ago.  While Owl is
+> now effectively EOL'ed, some of its legacy lives on in ALT Linux
+> distros, which are maintained, and other distros can do similar - it's
+> primarily a matter of caring to do it or not.  We did not package sudo
+> in Owl, but if someone were to install it then it'd be the only program
+> exposing this kernel vulnerability.  So in that case, hardening sudo
+> would have helped.
 
-Specifically, incorrect results in one part of the RSA Chinese Remainder
-computation can cause the result to be incorrect in such a way that it
-leaks one of the primes. While RSA blinding should prevent an attacker from
-crafting specific inputs that trigger the bug, on 32-bit systems the bug
-can be expected to occur at random around one in 2^26 times. Thus
-collecting around 64 million signatures (of known data) from an affected
-server should be enough to extract the private key used.
+That's good to know. I was wondering if there were distros that did not
+have setuid binaries, which was why I said only ``a number of distros''
+were vulnerable.
 
-On 64-bit systems, the frequency of the bug is so low (less than one in
-2^50) that it would be very difficult to exploit. Nonetheless, everyone is
-strongly encouraged to upgrade.
+For Steffen Nurpmeso wrote earlier:
+> I wonder -- have you verified that they do not use isatty(3) aka
+> some tc*() series *first*?  The above with sudo does for example
+> not reveal anything as shown, roght?  FD 2 seems to be a terminal,
+> .. and whereas i do not have sudo src here, i am sure it uses
+> isatty(3) and tcgetattr(3).
 
-Go 1.6 will include include a change to double-check the RSA computation,
-which is a generic countermeasure to this class of bug.
+I just noticed that sudo added the isatty check a day ago (April 17th)
+[1]. I think this change was inspired by this vulnerability, wasn't it?
+However, as Jakub Wilk pointed out, isatty is still implemented by an
+ioctl call, so the addition of this check has nothing to do with this
+vulnerability. Nevertheless, it is still a good idea to make sure isatty
+succeeds before using ioctl calls with other (perhaps more complex and
+arbitrary) tty commands.
 
-The CVE issue descriptions and fixes are linked below. Downloads are
-available at http://golang.org/dl for all supported platforms.
+[1]: https://github.com/sudo-project/sudo/commit/5650b436e6ba20807758a4154e709c10c1c87be8 
 
-CVE-2015-8618
+Thanks,
+Ruihan Li
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8618
-
-CLs fixing the issue:
-
-https://go-review.googlesource.com/#/c/17672/
-https://go-review.googlesource.com/#/c/18491/
-
---001a1146f75098bbd605293d8dc4--
