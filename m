@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/12
-Message-ID: <ab2390108dee5325ff7683d404465e32.squirrel@ukinbox.ecrypt.net>
-Date: Tue, 25 Jul 2023 18:12:44 +0100
-From: "Eddie Chapman" <eddie@...k.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/20
+Message-ID: <odkxbhada7uibrlt2cugy5g3kphubqjvbm3ksspkk5tu6ej62z@3iumiral5gxg>
+Date: Tue, 18 Apr 2023 21:48:48 +0200
+From: Jan Fader <oss-security@...erweb.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
+Subject: Re: Checking existence of firewalled web servers in Firefox via iframe.onload
 Content-Type: text/plain; charset=utf-8
 
-alice wrote:
-> this is a disaster of a security announcement from AMD. nothing is fixed
-> except for epyc. the only workaround anyone really has is the chicken bit,
-> thankfully.
+Hi Georgi
 
-Yes, very disappointing. Pure speculation; perhaps they were planning on
-disclosing at the end of the year with full set of Microcode ready but
-something we don't know (yet) forced them to disclose early. Who knows.
+Am Tue 18. Apr. 2023, hat Georgi Guninski geschrieben:
+> In short in Firefox 112, it is possible to check existence
+> of firewalled web servers. This doesn't work in Chrome and Chromium 112
+> for me.
 
-Very unscientific and limited test but I just compiled qemu 7.2.4 on a
-gentoo workstation with a Ryzen 7 3700X (Zen 2) running linux kernel
-5.15.119. Took 5 min 37s. Rebooted into 5.15.122 with the chicken bit fix
-(confirmed in dmesg appears to be applied), compiled qemu again, this time
-it took 5 min 25s. So my initial impression is the chicken bit fix is fine
-in general but remains to be seen if certain workloads significantly
-impacted I guess.
+I can reproduce this in Firefox 112, but also in Chromium 112.0.5615.121
+and Edge 112.0.1722.48.
 
+Regards
+Jan
