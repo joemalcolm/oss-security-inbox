@@ -1,20 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/5
-Message-ID: <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
-Date: Sat, 30 Sep 2023 19:28:46 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/18
+Message-ID: <043b8fbe6e014f17@millert.dev>
+Date: Tue, 18 Apr 2023 13:24:21 -0600
+From: "Todd C. Miller" <Todd.Miller@...o.ws>
+To: Ruihan Li <lrh2000@....edu.cn>
+cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
-> It is also worth noting that Rust-the-language supports dynamic linking.
-> Once Cargo supports this and downstreams (like Fedora) obtain sufficient
-> build capacity, it will be possible to use dynamic linking by performing
-> automatic cascading rebuilds whenever a package is upgraded.  Arch
-> already does this for Haskell IIUC.
+On Wed, 19 Apr 2023 02:59:26 +0800, Ruihan Li wrote:
 
-We do it for Haskell in Gentoo, too, but we have a dark secret: it only
-works because Haskell became unpopular. There are basically only two
-Haskell programs, and everything works for n = 2.
+> Yeah, I see that you are removing ioctl calls on standard file
+> descriptors. So actually, just to confirm, it is feasible to avoid
+> all ioctl calls to standard file descriptors with root privileges
+> (under all command line arguments), by using /dev/tty, assuming
+> something like the window size... Right?
 
+For the most part, yes.  There are still some calls to isatty(3)
+using the standard file descriptors when setting up the event loop
+to run the program but that is after the user has been verified.
+I will add checks that the fd is a character special file before
+calling isatty(3).  In most cases the code wants the contents of
+struct stat anyway, so the S_ISCHR check is basically free.
+
+> If this is the case, I think it should not be difficult for other
+> setuid programs to do similar things.  I am just thinking for a
+> while, and cannot find a case where ioctl calls are unavoidable.
+
+If there are setuid programs that call ttyname(3) that will also
+call tcgetattr(3).  Also, the glibc getpass(3) function will use
+tcgetattr(3) and tcsetattr(3) (to disable echo) on the standard
+input if /dev/tty is not available.  For getpass(3) this could be
+avoided by only trying to disable echo when using /dev/tty.  That
+would change the behavior of things like:
+
+    su < /some/other/tty 
+
+when /dev/tty is unavailable but I don't know what use case that
+would actually support.
+
+ - todd
