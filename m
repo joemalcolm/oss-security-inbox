@@ -1,84 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/3
-Message-ID: <8c649bda-f460-31be-c058-ea2ab5d0a73b@igalia.com>
-Date: Thu, 28 Sep 2023 15:36:09 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0009
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/5
+Message-ID: <20230418012752.GI1655348@millbarge>
+Date: Tue, 18 Apr 2023 01:27:52 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Jacques Le Roux <jleroux@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0009
-------------------------------------------------------------------------
+On Mon, Apr 10, 2023 at 09:21:11AM +0000, Jacques Le Roux wrote:
+> https://lists.apache.org/list.html?announce@apache.org
+> https://ofbiz.apache.org/download.html
+> https://ofbiz.apache.org/security.html
+> https://ofbiz.apache.org/
+> https://www.cve.org/CVERecord?id=CVE-2022-47501
 
-Date reported           : September 28, 2023
-Advisory ID             : WSA-2023-0009
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0009.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0009.html
-CVE identifiers         : CVE-2023-39928, CVE-2023-35074,
-                          CVE-2023-39434, CVE-2023-40451,
-                          CVE-2023-41074, CVE-2023-41993.
+Hello Jacques, thanks for contacting the oss-security mail list about this
+security issue in an Apache project.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+I'd like to suggest that your email would be far more useful if
+it included some details like affected versions: ideally, when a
+vulnerability was introduced, and definitely, when it was fixed, if a
+fix is available. Best would be a direct link to a patch in a source
+control system, or attaching the patch directly.
 
-CVE-2023-39928
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
-    Credit to Marcin 'Icewall' Noga of Cisco Talos.
-    A use-after-free vulnerability exists in the MediaRecorder API of
-    the WebKit GStreamer-based ports (WebKitGTK and WPE WebKit). A
-    specially crafted web page can abuse this vulnerability to cause
-    memory corruption and potentially arbitrary code execution. A user
-    would need to to visit a malicious webpage to trigger this
-    vulnerability. WebKit Bugzilla: 260649.
+This particular email has very few details and no references for a fix so
+it is very difficult for anyone to take concrete actions.
 
-CVE-2023-35074
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
-    Credit to Abysslab Dong Jun Kim(@smlijun) and Jong Seong
-    Kim(@nevul37).
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved memory handling.
+Here's two recent postings that are far easier for downstream distributors
+and consumers alike to use:
+https://www.openwall.com/lists/oss-security/2023/04/04/1
+https://www.openwall.com/lists/oss-security/2023/03/21/3
 
-CVE-2023-39434
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Francisco Alonso (@revskills), and Dohyun Lee (@l33d0hyun)
-    of PK Security.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: A use-after-free issue was addressed with improved
-    memory management.
+I'd like to encourage Apache to use these as inspiration for future
+oss-security postings.
 
-CVE-2023-40451
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to an anonymous researcher.
-    Impact: An attacker with JavaScript execution may be able to execute
-    arbitrary code. Description: This issue was addressed with improved
-    iframe sandbox enforcement.
-
-CVE-2023-41074
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
-    Credit to 이준성(Junsung Lee) of Cross Republic and me Li.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
-
-CVE-2023-41993
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.1.
-    Credit to Bill Marczak of The Citizen Lab at The University of
-    Toronto's Munk School and Maddie Stone of Google's Threat Analysis
-    Group.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: The issue was addressed with improved
-    checks.
+Thanks
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-September 28, 2023
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
