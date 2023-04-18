@@ -1,121 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/2
-Message-Id: <E1r2tyQ-0002ID-NV@xenbits.xenproject.org>
-Date: Tue, 14 Nov 2023 14:01:02 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 446 v2 (CVE-2023-46836) - x86: BTC/SRSO fixes not fully effective
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/13
+Message-ID: <20230418154016.GA959@openwall.com>
+Date: Tue, 18 Apr 2023 17:40:16 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Ruihan Li <lrh2000@....edu.cn>
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, Apr 16, 2023 at 06:12:18PM +0800, Ruihan Li wrote:
+> The exploitation works as long as there are setuid programs (or more
+> precisely, programs with the CAP_NET_ADMIN capability) that invokes ioctl
+> calls on stdin, stdout, or stderr. In most Linux distros, a quick (but very
+> coarse) test reveals that quite a few setuid programs are using ioctl system
+> calls, which are marked with 'V' in the table below:
+> ```
+> # find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl {} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n 'V ' || echo -n 'S '; echo {};" \; | sort
+> S ./chage
+> S ./expiry
+> S ./fusermount
+> S ./fusermount3
+> S ./gpasswd
+> S ./ksu
+> S ./mount.cifs
+> S ./sg
+> S ./umount
+> V ./chfn
+> V ./chsh
+> V ./mount
+> V ./newgrp
+> V ./passwd
+> V ./pkexec
+> V ./screen-4.9.0
+> V ./su
+> V ./sudo
+> V ./unix_chkpwd
+> ```
+> After manually checking the strace output, it is found that all of these ioctl
+> users are using ioctl calls on stdin, stdout, or stderr to get or set some tty
+> parameters. Note that exactly no arguments are passed to these setuid
+> programs. If some crafted arguments are passed, the number of ioctl users may
+> increase. As a result, a number of linux distros can be vulnerable to the
+> exploitation.
 
-            Xen Security Advisory CVE-2023-46836 / XSA-446
-                               version 2
+BTW, even with the kernel bug fixed, there are ioctl number clashes
+between different devices, so even e.g. isatty(3) is not necessarily
+safe if called with elevated privileges under a possible confused deputy
+scenario.  Here's strace showing some clashes on older Linux/i386:
 
-                x86: BTC/SRSO fixes not fully effective
+$ cat isatty.c
+int main(void) { return isatty(0); }
+$ gcc isatty.c -o isatty
+$ strace -e ioctl ./isatty
+ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
 
-UPDATES IN VERSION 2
-====================
+IIRC, I was the one to add this feature to strace 20+ years ago:
 
-Grammar fixes.
+* Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
+- Updated to today's CVS version (post-4.4) with an additional fix for
+displaying all possible ioctl names when there's more than one match,
 
-Public release.
+So the number clashes were known, but the security relevance maybe not.
 
-ISSUE DESCRIPTION
-=================
-
-The fixes for XSA-422 (Branch Type Confusion) and XSA-434 (Speculative
-Return Stack Overflow) are not IRQ-safe.  It was believed that the
-mitigations always operated in contexts with IRQs disabled.
-
-However, the original XSA-254 fix for Meltdown (XPTI) deliberately left
-interrupts enabled on two entry paths; one unconditionally, and one
-conditionally on whether XPTI was active.
-
-As BTC/SRSO and Meltdown affect different CPU vendors, the mitigations
-are not active together by default.  Therefore, there is a race
-condition whereby a malicious PV guest can bypass BTC/SRSO protections
-and launch a BTC/SRSO attack against Xen.
-
-IMPACT
-======
-
-An attacker in a PV guest might be able to infer the contents of memory
-belonging to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Xen is only vulnerable in default configurations on AMD and Hygon CPUs.
-
-Xen is not believed to be vulnerable in default configurations on CPUs
-from other hardware vendors.
-
-Only PV guests can leverage the vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM or PVH VMs will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of XenServer.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa446.patch           xen-unstable - Xen 4.15.x
-
-$ sha256sum xsa446*
-ed27ad5f36af31233e25c80daefb8b0078eeb18cacbc1923fdd6f10f0b394201  xsa446.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmVTfRgMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZfLoH/iZJzkNK4d6vUrx8F5Srm8mAIDMGL4fPvJz00IsO
-7h7+/wz0+FdnaWgT/12kHjIJv7p38rNkyJ3UC3p55NFFGUXKQxaKjJ6YU70IdHmY
-zbQDdYd2eB9dGbAq2NEkZibtg5mhhThBsQw9Sf+YZuSzOV5xRWiEhnBGz7l4+Dym
-bM7vuusZo3/iUc0WgE+p+j85QmzgTFdt7VEUYY2mSTFud+hDYtvx62Ej3AkwCRdu
-I0JbGYcRaDR9RPDae2d9yvz0+E473rFgOSX6DqZLjnQ+UQivZ7eo8soJD87qY4Jh
-OrEDMQWysSNiT90NYWZ+HxsRRZVjPVPoxX6EWEkwC7+CffI=
-=2Xtx
------END PGP SIGNATURE-----
-
-Download attachment "xsa446.patch" of type "application/octet-stream" (4424 bytes)
+Alexander
