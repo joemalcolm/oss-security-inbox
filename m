@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["551" "Friday" "23" "June" "2017" "18:04:00" "-0700" "Linus Torvalds" "torvalds@linux-foundation.org" "<CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>" "16" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" "^Cc:" nil nil "6" "2017062401:04:00" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" (number mark "        torvalds@lin Jun 23   16/551   " thread-indent "\"[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method\"\n") "<20170624005003.GB27479@grsecurity.net>" ("<20170624005003.GB27479@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9737 invoked by uid 550); 24 Jun 2017 01:41:27 -0000
+Received: (qmail 12114 invoked by uid 550); 18 Apr 2023 20:18:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15900 invoked from network); 24 Jun 2017 01:04:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vfQDGYh4iy/VON6For5LIEebMPv7yvIhncIIE0b/E/4=;
-        b=GRtmCDQ+Ml+5lFulPH1Tbkr+bm4u7x6fqbY8BLRfLJYEwUuJbJJz7/9ZHgF83rTXyi
-         5wZo67iwaBZ63THZW8dLerQUTeaK8n/ogdfHc49rkA+QJnBTTThTYvIU7z7YoWn87B37
-         HbSEowVrSSXiTLFAMEvzy8kroDjaZdG7d81XY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vfQDGYh4iy/VON6For5LIEebMPv7yvIhncIIE0b/E/4=;
-        b=LFuIS71sWlJ6OFR70Hw/5qxHZYu9JuW8RVQWbmHSgyPhI6MchGqY8I4D/H3CHJLXvR
-         vYJZez0oqHqdPUJanCOUPPiq8KrNRP1ODXDH+5naW79yGyLMJbTu+2vcIPwiZJIQJL4F
-         77JeSyxEJqweLe08dYsud8/BvKch29xbB6i1TZ5aAfbDq7jgtod2L2oNAeVbv8+hmR2W
-         SqzCCxycjHscF4Dxj4sY34fC1EbA1tSp1xVThDWrXe13ECuv/oXyRTsxgqT2PUWRfG+Q
-         2EM9Nms5F2M9q3EY/0x11i+pIo3C7QNnvwmpLDS7Xbvbc8JBN/7jq0McqoN39weRQ99l
-         4CqQ==
-X-Gm-Message-State: AKS2vOxOrYAHa5lAj5Z72T0i8tCNXqPEmYeW/Xo4/xh2RTlqfv70TaIV
-	11xJuUnkTNR92ug2pLKnLv0bkrUTKOa8
-X-Received: by 10.202.239.131 with SMTP id n125mr5029369oih.19.1498266241111;
- Fri, 23 Jun 2017 18:04:01 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20170624005003.GB27479@grsecurity.net>
-References: <20170624005003.GB27479@grsecurity.net>
-Message-ID: <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: oss-security@lists.openwall.com, pageexec@freemail.hu
-Date: Fri, 23 Jun 2017 18:04:00 -0700
-From: Linus Torvalds <torvalds@linux-foundation.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an
- ignored Secure Boot bypass / rootkit method
-To: Brad Spengler <spender@grsecurity.net>
+Received: (qmail 5282 invoked from network); 18 Apr 2023 20:00:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681848036; x=1684440036;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=TXE3RS2AzNktFs2+oxetAuBSuYJGnLQphGyz3L8/XqU=;
+        b=n7QFDOJyDK6nTOyBqLrhZk6Pz8McfnCUoOubluwwC1khr62H7Qs0/MLkmk0MzwDjTb
+         7wXy8/7PU00D1GhEa6dpYYJbv4boqDJuqIfCa0uTHdzG4tcbdbeixIiZU2Y4hu8wM/Lp
+         468eMG7Eu6APMn2jwb0kTrnRjPjZ5yubp1oYoy80DCk/ys4772Y0cGALmaMQ7a9uEDoP
+         8dkMiRIleMrw4oAa2kOT7bQFAmBT6zsV4TIc3B1Q71UUccPvNS/CTha+QnHabMw30/zO
+         4VpAyra+SLAlq9WYbKD+qU3aJN4tOP95q7LSWrulQ5t12YgBAVSrd5ZKSqDWBMxDPemm
+         onFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681848036; x=1684440036;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TXE3RS2AzNktFs2+oxetAuBSuYJGnLQphGyz3L8/XqU=;
+        b=XfsPg/EJ9oQgKm5WwPz+L/P12HmYgMTP93XobzIzdSPmaqN/TGOYg7SfZGS4tZ14z8
+         qF5zzTTc4fnbIDXP0r6kJ6IqwZcd2KvzplpGYA73suKQa6fzzMTbEeyQYPnYNAuKekbL
+         vJ+mZtEqtAlOSk9r19SYmFXnf2xaiipEdofHb6klHej8who8bxxIAbS3S+r9BuueWnie
+         gThg8fXyOPTCOV2jHItSEyXk2kUMQk0p74DHVZxHuaZPeI1xpG6SJ6mHBZvL3WRnU+B5
+         4sOVttjEUk8eIEdBXv9G+kyVJskb8J8uI9aH3Fc+CeZNqj+jz5xZ+lYtwZHhf6sKveN6
+         yTbw==
+X-Gm-Message-State: AAQBX9eNk94Fp8iu9zz9/5PxlE5vjliRKPLNC/8Qm01d00A41/Pt9lD0
+	atLWDIG0yP2uj0o6fkRlXUepiJwNtB8=
+X-Google-Smtp-Source: AKy350aiuWuaLkatzX/8tveER/IzYndrVodlbycQ/k1DSGQRWJWs8hutJwCePmXfgQzaMeQJXRdrGw==
+X-Received: by 2002:a7b:cb87:0:b0:3f1:71ca:e6d5 with SMTP id m7-20020a7bcb87000000b003f171cae6d5mr7424237wmi.9.1681848036111;
+        Tue, 18 Apr 2023 13:00:36 -0700 (PDT)
+Message-ID: <2ffb794f5e7661c7ff955ebecd4123d3.cedb9d86@offensive.instants>
+Date: Tue, 18 Apr 2023 23:00:13 +0300
+From: 0xef967c36@gmail.com
+To: Ruihan Li <lrh2000@pku.edu.cn>
+Cc: 0xef967c36@gmail.com, oss-security@lists.openwall.com,
+	Solar Designer <solar@openwall.com>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+ <20230418154016.GA959@openwall.com>
+ <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
+ <e6gh3axpoalp7kw7j3v47f6jk7wnz5kcyitltpfijvgs2g6djv@ed3e7aarvaak>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e6gh3axpoalp7kw7j3v47f6jk7wnz5kcyitltpfijvgs2g6djv@ed3e7aarvaak>
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized
+ management command execution
 
-On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@grsecurity.net> wrote:
->
-> BTW, we're happy to go toe-to-toe with you here in public on actual facts
-> instead of pathetic ad hominems.
+On Wed, Apr 19, 2023 at 02:37:35AM +0800, Ruihan Li wrote:
+> It appears that SNDCTL_TMR_TIMEBASE and TCGETS do have the same command code,
+> which sits in the lower 16 bits. But SNDCTL_TMR_TIMEBASE uses a newer command
+> encoding scheme [2] that includes the direction and argument size in the
+> higher 16 bits. TCGETS, on the other hand, contains only the command code, so
 
-Quite frankly, I'd much rather see *you* actually send in patches that
-are acceptable for inclusion, something you've never done.
+That encoding scheme is quite old; it's there since at least 30 years.
 
-As it is, other people have tried to clean up parts of the grsecurity
-patches, and tried to make them acceptable.
+> its higher bits are set to zero (TCGETS should have a really long history,
+> just longer than that of the new ioctl command encoding scheme).
+> 
+> [2]: https://elixir.bootlin.com/linux/v6.3-rc7/source/include/uapi/asm-generic/ioctl.h#L5 
+> 
+> This means we haven't had any collisions yet. Also, since new ioctl commands
 
-Wouldn't it be nice if you actually tried to make the baseline actually better?
+There actually are some collisions, just not the one with isatty() -> TCGETS
 
-Please.
+eg SNDCTL_TMR_START == TCSETS
 
-                Linus
+> will certainly be encoded using the new encoding scheme, which TCGETS does not
+> use, it is very unlikely that new collisions will occur in the future, unless
+> the command code is exactly the same and the higher bits under the new
+> encoding scheme are also occasionally zeros.
+
+The _IO variant (without direction and size) can collide with
+old-style ioctl, like those CDROM*, etc.
