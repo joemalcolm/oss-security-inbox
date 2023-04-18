@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/3
-Message-ID: <50d8e155-b2b2-e1d8-1def-789ad9233e47@apache.org>
-Date: Wed, 14 Jun 2023 07:35:56 +0000
-From: Yasser Zamani <yasserzamani@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: S2-064: CVE-2023-34396: Apache Struts: DoS via OOM owing to no sanity limit on normal form fields in multipart forms 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/2
+Message-ID: <20230418012513.GF1655348@millbarge>
+Date: Tue, 18 Apr 2023 01:25:13 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Olivier Lamy <olamy@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-28158: Apache Archiva privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+On Wed, Mar 29, 2023 at 11:29:40AM +0000, Olivier Lamy wrote:
+> https://archiva.apache.org/
+> https://www.cve.org/CVERecord?id=CVE-2023-28158
+> https://issues.apache.org/jira/browse/n/a
 
-- Apache Struts through 2.5.30
-- Apache Struts through 6.1.2
+Hello Olivier, thanks for contacting the oss-security mail list about this
+security issue in an Apache project.
 
-Description:
+I'd like to suggest that your email would be far more useful if
+it included some details like affected versions: ideally, when a
+vulnerability was introduced, and definitely, when it was fixed, if a
+fix is available. Best would be a direct link to a patch in a source
+control system, or attaching the patch directly.
 
-Allocation of Resources Without Limits or Throttling vulnerability in Apache Software Foundation Apache Struts.This issue affects Apache Struts: through 2.5.30, through 6.1.2.
+This particular email has very few details and no references for a fix so
+it is very difficult for anyone to take concrete actions.
 
-Credit:
+Here's two recent postings that are far easier for downstream distributors
+and consumers alike to use:
+https://www.openwall.com/lists/oss-security/2023/04/04/1
+https://www.openwall.com/lists/oss-security/2023/03/21/3
 
-Matthew McClain (finder)
+I'd like to encourage Apache to use these as inspiration for future
+oss-security postings.
 
-References:
+Thanks
 
-https://cwiki.apache.org/confluence/display/WW/S2-064
-https://struts.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-34396
-
+Download attachment "signature.asc" of type "application/pgp-signature" (485 bytes)
