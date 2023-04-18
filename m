@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/8
-Message-ID: <89deed28-8aa6-a465-e2c9-d8edc93b370b@apache.org>
-Date: Sun, 21 May 2023 08:20:24 +0000
-From: Charles Zhang <dockerzhang@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31103: Apache InLong: Attackers can change the immutable name and type of cluster 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/7
+Message-ID: <20230418012910.GK1655348@millbarge>
+Date: Tue, 18 Apr 2023 01:29:10 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Jialin Qiao <qiaojialin@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-30771: Apache IoTDB Workbench: apache/iotdb-web-workbench: forge the JWTToken to access workbench
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Sun, Apr 16, 2023 at 02:48:14AM +0000, Jialin Qiao wrote:
+> https://iotdb.apache.org
+> https://www.cve.org/CVERecord?id=CVE-2023-30771
 
-Affected versions:
+Hello Jialin, thanks for contacting the oss-security mail list about this
+security issue in an Apache project.
 
-- Apache InLong 1.4.0 through 1.6.0
+I'd like to suggest that your email would be far more useful if
+it included some details like affected versions: ideally, when a
+vulnerability was introduced, and definitely, when it was fixed, if a
+fix is available. Best would be a direct link to a patch in a source
+control system, or attaching the patch directly.
 
-Description:
+This particular email has very few details and no references for a fix so
+it is very difficult for anyone to take concrete actions.
 
-Exposure of Resource to Wrong Sphere Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. 
-Attackers can change the immutable name and type of cluster of InLong. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+Here's two recent postings that are far easier for downstream distributors
+and consumers alike to use:
+https://www.openwall.com/lists/oss-security/2023/04/04/1
+https://www.openwall.com/lists/oss-security/2023/03/21/3
 
-[1]  https://github.com/apache/inlong/pull/7891 https://github.com/apache/inlong/pull/7891
+I'd like to encourage Apache to use these as inspiration for future
+oss-security postings.
 
-References:
+Thanks
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31103
 
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
