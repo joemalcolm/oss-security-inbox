@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5281" "Tuesday" "29" "March" "2016" "16:56:11" "-0600" "Andreas Dilger" "adilger@dilger.ca" "<57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>" "134" "Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS" "^Cc:" nil nil "3" "2016032922:56:11" "[oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" (number mark "        adilger@dilg Mar 29  134/5281  " thread-indent "\"Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS\"\n") "<1459286067.2596.18.camel@debian.org>" ("<f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr>" "<1459286067.2596.18.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9501 invoked by uid 550); 29 Mar 2016 23:03:12 -0000
+Received: (qmail 1694 invoked by uid 550); 18 Apr 2023 19:07:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,179 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5717 invoked from network); 29 Mar 2016 22:56:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dilger-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:mime-version:from:in-reply-to:date:cc:message-id:references
-         :to;
-        bh=bdRfEubjsok0K6WmfIZHEbowBsi+sYxyJJyyTXFrDAA=;
-        b=ECWHuXj0P3Htpxx5JNFJhleFDp+aGD7HiCLzjEPREjWcvSYx/RI2dX68ZNwL4ptAQj
-         ej6b5HBP7TrawU+dd+giKsxotyhfOulI8Hjtk5oynx1Ys9C2BhnuwpOPTWRg0drjg0vB
-         QCdCbheAylkK1CSKjkkSZ9YFwtMaEmvGMwXe4n0VtrXMwWCCLQOxICmWVMsy8ZwIGvj5
-         LEOq+8ghKDQUSIcN8zapS6F9hi11Z/VY+rM53/tpbaA0jODRd1YWrPEl+JvY6IVkcE6o
-         7U4osxHMi4gMFjgJDRdMOty97Fr5Br9CAS+mU4TFiv9854Wq4xGrjcJZ1k66UUt3l7tU
-         6UEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:mime-version:from:in-reply-to:date:cc
-         :message-id:references:to;
-        bh=bdRfEubjsok0K6WmfIZHEbowBsi+sYxyJJyyTXFrDAA=;
-        b=KLY0lvVm4zJxNa9x4GTrRzd0yAi/903/0+tOoWeF7WofOb9ia86wMtWtF7TfE2rO/M
-         IPRb1vbh+kQfZvxCel2uRDH/7XlSKegYQnuBP6PCO7SS23S8qWvSfzLMIkeRVVwN/ggB
-         nIbbXKC9BYufRv9NILjghvTXWVjXZEwbkVUG+bCxbKnnEtytYfi0fFKKeAlbZhoQh1OM
-         QooBZ9t1ihDSIjpxe+1+l/4TO4Dj48UZNJUYiS/5JSCtXvvWaxgwwRpw3Yc1sECaaCei
-         YZ8iC4Ys+he0UnNNkgKb8A+Sgo7vj9rjt1XdqHtnKgWV67qbuBI3k7bvM3u2DHDQfsMg
-         Y9bA==
-X-Gm-Message-State: AD7BkJLn33xvc2kQ72eBhGTAybxmruhxNUOna88md4ei8xZLHH8MBbkvCkypMoxrz0TnoA==
-X-Received: by 10.107.3.34 with SMTP id 34mr5880590iod.17.1459292176119;
-        Tue, 29 Mar 2016 15:56:16 -0700 (PDT)
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F"; protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Pgp-Agent: GPGMail 2.6b2
-In-Reply-To: <1459286067.2596.18.camel@debian.org>
-Message-Id: <57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>
-References: <f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr> <1459286067.2596.18.camel@debian.org>
-X-Mailer: Apple Mail (2.3124)
-Cc: oss-security@lists.openwall.com,
- Theodore Tso <tytso@google.com>,
- linux-ext4@vger.kernel.org
-Date: Tue, 29 Mar 2016 16:56:11 -0600
-From: Andreas Dilger <adilger@dilger.ca>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
-To: Yves-Alexis Perez <corsac@debian.org>
+Received: (qmail 21648 invoked from network); 18 Apr 2023 18:37:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
+	Message-ID:References:MIME-Version:Content-Type:
+	Content-Disposition:In-Reply-To; bh=zKwlY5cu7JSKF0HLctFcJoXNEeEa
+	Tw37jdze6yxS9lY=; b=KcKsxnbPL2w/dwx2x3GQ3tUxapzhFYoH81ANkJqUgsA4
+	NK+XwApG6msuparHOk1uB7dPWRm+GiRRXOnuLRkdF24KlL94pAM2aOS1zRJTnb/X
+	O9Dcw0LHXaHWjWzGjJDLD9iDAgTTY+9zyynOqRxXv92ewe2jDrCPYFpNyzgWBJ0=
+Date: Wed, 19 Apr 2023 02:37:35 +0800
+From: Ruihan Li <lrh2000@pku.edu.cn>
+To: 0xef967c36@gmail.com
+Cc: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>, 
+	Ruihan Li <lrh2000@pku.edu.cn>
+Message-ID: <e6gh3axpoalp7kw7j3v47f6jk7wnz5kcyitltpfijvgs2g6djv@ed3e7aarvaak>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+ <20230418154016.GA959@openwall.com>
+ <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
+X-CM-TRANSID:54FpogDn7Exv4z5ksXXLDw--.20812S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Zr1UWFW3KrWDtFWxKrW5GFg_yoW8CFWkpF
+	W7KF1DGr45WF4Ikrn3Xr10gFyFqr95tFWayF1Ygr98A34YqF9aq3Z2kFs0v3yUXFykZFyS
+	qFWY9r17Gan8Z3DanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvG1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+	w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+	IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2
+	jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr1j6rxdM2vYz4IE04k24V
+	AvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xf
+	McIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7
+	v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVCm-wCF
+	04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26w4UJr1UMxC20s026xCaFVCjc4AY6r
+	1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CE
+	b7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0x
+	vE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAI
+	cVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa
+	73UjIFyTuYvjfUOlksUUUUU
+X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEEBVPy77qNLwAJsd
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized
+ management command execution
 
---Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Hi,
 
-On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@debian.org> wrote:
->=20
-> [dropping MITRE from CC since it's not about the CVE]
-> [adding ext and Theodore to CC]
->=20
-> On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
->> Hello,
->>=20
->> The linux kernel is prone to a Denial of service when mounting specially
->> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the functi=
-on
->> ext4_handle_error who call the panic function on precise circumstance.
->=20
-> Did you contact the upstream maintainers about this? I'm adding them just=
- in
-> case they're not already aware of that=E2=80=A6
->=20
->> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
->> real hardware and Xen DomU PV & HVM (the crash report attached is from a
->> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentO=
-S,
->> Fedora, Linux Mint, QubesOS.
->> This a low security impact bug, because generally only root can mount
->> image, however on Desktop (or possibly server?) system configured with
->> automount the bug is easily triggable (think of android smartphone? Have=
-n't
->> test yet).
+On Tue, Apr 18, 2023 at 08:13:24PM +0300, 0xef967c36@gmail.com wrote:
+> No, there's no clash. That was a bug in strace (fortunately fixed in
+> newer versions).
+> 
+> Those values macros are different; and they were ALWAYS different.
 
-It seems that the important point here is that the filesystem has
-"s_errors=3DEXT4_ERRORS_PANIC" set in the superblock?  I don't think
-the actual corruption that triggered the ext4_error() call is important,
-since there are any number of other failure cases that could generate
-a similar error.
+A quick search shows that it is fixed in df7aa2 ("ioctl: take all 32 bits of
+ioctl commands into account") [1]. The commit message says
+> Historically, only 16 bits (8-bit number and 8-bit type) of 32-bit ioctl
+> commands were used for decoding, which was the source for numerous
+> annoying collisions like this:
+>
+>	ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
+>	ioctl(0, MGSL_IOCGPARAMS or MMTIMER_GETRES or MTIOCTOP or SNDCTL_MIDI_MPUMODE, 0x7fffd47f7338) = -1 ENOTTY (Inappropriate ioctl for device)
+Here the first example is exactly the case we are discussing.
 
-It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
-to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
-is whether there is a way for the ext4 code to know this at mount time?
+[1]: https://github.com/strace/strace/commit/df7aa2b19e6f69c19fbe09180bf1ec4fb52e2615
 
-Cheers, Andreas
+It appears that SNDCTL_TMR_TIMEBASE and TCGETS do have the same command code,
+which sits in the lower 16 bits. But SNDCTL_TMR_TIMEBASE uses a newer command
+encoding scheme [2] that includes the direction and argument size in the
+higher 16 bits. TCGETS, on the other hand, contains only the command code, so
+its higher bits are set to zero (TCGETS should have a really long history,
+just longer than that of the new ioctl command encoding scheme).
 
->> The crafted image may be burn onto SD card or USB key to crash a large
->> panel of linux box.
->>=20
->>=20
->> [ 929.200197] EXT4-fs error (device loop0): ext4_iget:4058: inode #2: co=
-mm
->> mount: bad extended attribute block 8390656
->> [ 929.200226] Kernel panic - not syncing: EXT4-fs (device loop0): panic
->> forced after error
->> [ 929.200226]
->> [ 929.200230] CPU: 1 PID: 980 Comm: mount Tainted: G O
->> 3.18.17-8.pvops.qubes.x86_64 #1
->> [ 929.200233] 0000000000000000 000000007533690c ffff88000ea07aa8
->> ffffffff81722191
->> [ 929.200237] 0000000000000000 ffffffff81a84108 ffff88000ea07b28
->> ffffffff8171a462
->> [ 929.200240] ffff880000000010 ffff88000ea07b38 ffff88000ea07ad8
->> 000000007533690c
->> [ 929.200244] Call Trace:
->> [ 929.200249] [<ffffffff81722191>] dump_stack+0x46/0x58
->> [ 929.200253] [<ffffffff8171a462>] panic+0xd0/0x204
->> [ 929.200257] [<ffffffff812ae4d6>] ext4_handle_error.part.188+0x96/0xa0
->> [ 929.200260] [<ffffffff812ae838>] __ext4_error_inode+0xa8/0x180
->> [ 929.200264] [<ffffffff81292869>] ext4_iget+0x929/0xae0
->> [ 929.200267] [<ffffffff812b31fb>] ext4_fill_super+0x18db/0x2b60
->> [ 929.200270] [<ffffffff8120af20>] mount_bdev+0x1b0/0x1f0
->> [ 929.200273] [<ffffffff812b1920>] ? ext4_calculate_overhead+0x3d0/0x3d0
->> [ 929.200276] [<ffffffff812a3425>] ext4_mount+0x15/0x20
->> [ 929.200278] [<ffffffff8120b879>] mount_fs+0x39/0x1b0
->> [ 929.200282] [<ffffffff811afd95>] ? __alloc_percpu+0x15/0x20
->> [ 929.200285] [<ffffffff8122754b>] vfs_kern_mount+0x6b/0x110
->> [ 929.200287] [<ffffffff8122a38c>] do_mount+0x22c/0xb60
->> [ 929.200290] [<ffffffff811aab96>] ? memdup_user+0x46/0x80
->> [ 929.200292] [<ffffffff8122b002>] SyS_mount+0xa2/0x110
->> [ 929.200295] [<ffffffff8172a609>] system_call_fastpath+0x12/0x17
->> [ 929.200301] Kernel Offset: 0x0 from 0xffffffff81000000 (relocation
->> range: 0xffffffff80000000-0xffffffff9fffffff)c
->>=20
->> I cannot attach the PoC (2x2MB too large) nor sending it in plain text
->> (they are filesystems), so I've uploaded it on this website of free file
->> sharing ... (sorry for the inconvenient):
->> poc.ext2 https://1fichier.com/?zbk2gohk8s
->> poc.ext3 https://1fichier.com/?9r0c8agjfa
->>=20
->> Can you assign a CVE for this?
->> Thank for reading and your time.
->>=20
->> Hugues ANGUELKOV.
->>=20
->>=20
-> --
-> Yves-Alexis
->=20
+[2]: https://elixir.bootlin.com/linux/v6.3-rc7/source/include/uapi/asm-generic/ioctl.h#L5 
 
+This means we haven't had any collisions yet. Also, since new ioctl commands
+will certainly be encoded using the new encoding scheme, which TCGETS does not
+use, it is very unlikely that new collisions will occur in the future, unless
+the command code is exactly the same and the higher bits under the new
+encoding scheme are also occasionally zeros.
 
-Cheers, Andreas
+Thanks,
+Ruihan Li
 
-
-
-
-
-
---Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iQIVAwUBVvsIDHKl2rkXzB/gAQhiaw//cakn6bzIj8DPGH4rY+H4dAcAOcsVySJH
-2enkXEdzXCHsNpTaWaS37e3n/7pbT1Z7uBt6bNbo0HX6ElwphSy/mntAYJFfL0M7
-nejcGjwdLuguT67HRv6JCB1KH7JqFbRbMnnFHEZqj5g8t2FoRHVi0weB9OBsFhDc
-IjYuW9icnAESglrkwRoXB2+3BVkokF3J4hSrh0lVPVndgs4LIDpq2Dh6ZvRJDb7h
-x/MlxjjfUgGQbIu7qj6BoSrfwpW6C/xV/eMrq+nwo9idq3dR99jl7h4rROr70yLP
-4SSe6pxK3ssQmpiMA/7oW+GorLNS9C7u6YZPzysP/gksIrKQD5KLtxH9LjMXTQtY
-LNa+jc2VIiAG+bRco95DWkwJjsmf0HFht7wovQ9wKewLDDBjKS5s3lyT65sRo7g/
-otKiLPOa3ASua7agFcNUsMAIGS12vWycfXHY75HCUcZghYuOwBYxbb2KxBuNFIFQ
-cGrkiY/Awy4wKALsS3k4lqWHGcN3isSJ7VbOGzqm4LrYo7shIEFcUVlVqfaR06HT
-lDqXtrTK6ncXkHEHwUYaFwP70ucxRGtk/OhO3mtZNyfflosJyxPuQl/Krbk6BTwF
-hnKiuZDIwUUBvxns5kaBGcazlbHClyuc86mNXpElMIndaU5j4z0pScxllrJmLnHR
-e6XjV1o70AQ=
-=7tcj
------END PGP SIGNATURE-----
-
---Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F--
