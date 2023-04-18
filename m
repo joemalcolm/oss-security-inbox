@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1172" "Thursday" "28" "June" "2018" "15:57:13" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>" "36" "[oss-security] Apache CXF 3.2.6 and 3.1.16 are released" nil nil nil "6" "2018062814:57:13" "[oss-security] Apache CXF 3.2.6 and 3.1.16 are released" (number mark "U       coheigea@apa Jun 28   36/1172  " thread-indent "\"[oss-security] Apache CXF 3.2.6 and 3.1.16 are released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17483 invoked by uid 550); 28 Jun 2018 15:52:28 -0000
+Received: (qmail 22519 invoked by uid 550); 18 Apr 2023 01:10:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17517 invoked from network); 28 Jun 2018 14:57:28 -0000
-X-Gm-Message-State: APt69E2wkhrqBlVqrNmOhp7f9g/g0tk/NbcE4M+DzM62jwXrj43P6BnN
-	PU7WjmVIKM7aUN0ctscuB7NCrldX2mPBo7NTTP0=
-X-Google-Smtp-Source: ADUXVKI9S91v7VdBYj05szN/f1k9gFLQbjdtv1SHBIPotbOoESALukSNTRBySD2oy1JHsKlnyB5WVdsbUlzGFqk9WRU=
-X-Received: by 2002:a63:7e45:: with SMTP id o5-v6mr8914299pgn.400.1530197834348;
- Thu, 28 Jun 2018 07:57:14 -0700 (PDT)
-MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Thu, 28 Jun 2018 15:57:13 +0100
-X-Gmail-Original-Message-ID: <CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>
-Message-ID: <CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>
-To: users@cxf.apache.org, CXF Dev List <dev@cxf.apache.org>, announce@apache.org
-Cc: Apache Security Response Team <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000005a4152056fb4f24a"
-Subject: [oss-security] Apache CXF 3.2.6 and 3.1.16 are released
+Received: (qmail 19807 invoked from network); 18 Apr 2023 00:58:06 -0000
+Date: Tue, 18 Apr 2023 02:57:41 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Ruihan Li <lrh2000@pku.edu.cn>, "Todd C. Miller" <Todd.Miller@sudo.ws>
+Message-ID: <20230418005741.GA25557@openwall.com>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv> <20230416205727.0XQJ2%steffen@sdaoden.eu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230416205727.0XQJ2%steffen@sdaoden.eu>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 
---0000000000005a4152056fb4f24a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Apache CXF=E2=84=A2 is an open source services framework. CXF helps you bui=
-ld and
-develop services using frontend programming APIs, like JAX-WS and JAX-RS.
-These services can speak a variety of protocols such as SOAP, XML/HTTP,
-RESTful HTTP, or CORBA and work over a variety of transports such as HTTP,
-JMS or JBI.
+Thank you Ruihan Li for finding and handling this vulnerability so well,
+and for the detailed write-up.
 
-The Apache CXF team is proud to announce the release of versions 3.2.6 and
-3.1.16. Over 50 JIRA issues were fixed for 3.2.5 and 25 JIRA items were
-resolved for 3.1.16.
+When discussing this on linux-distros a week ago, I wrote:
 
-In addition, both of these releases contain a fix for a new security
-advisory:
+> Regarding the vulnerability itself, do you think it'd be a good idea to
+> also inform the maintainer of sudo?  My thinking is that sudo could be
+> hardened not to trigger ioctl's (which I guess it does via tcgetattr()
+> or such?) while having euid=0 (and thus root's typical capabilities) -
+> it could temporarily seteuid(uid), then switch back due to saved uid.
+> 
+> Did you identify (m)any other programs usable for this attack?  I guess
+> some with functionality "similar" to sudo's could also be "affected"
+> (there are several implementations of su in different packages for
+> Linux, pkexec, various container entry tools).
 
-CVE-2018-8039: Apache CXF TLS hostname verification does not work correctly
-with com.sun.net.ssl.
+And indeed Ruihan Li came up with the list of other likely usable
+programs on a typical Linux distro, which makes the point of hardening
+only sudo moot, and so we decided to postpone further discussion until
+this is public on oss-security.
 
-The advisory text is available at this location:
-http://cxf.apache.org/security-advisories.data/CVE-2018-8039.txt.asc?versio=
-n=3D1&modificationDate=3D1530184663000&api=3Dv2
+OTOH, not all distros are typical.  Besides Android, we got rid of all
+SUID binaries in default install of Owl over a decade ago.  While Owl is
+now effectively EOL'ed, some of its legacy lives on in ALT Linux
+distros, which are maintained, and other distros can do similar - it's
+primarily a matter of caring to do it or not.  We did not package sudo
+in Owl, but if someone were to install it then it'd be the only program
+exposing this kernel vulnerability.  So in that case, hardening sudo
+would have helped.
 
-Please also refer to the CXF security advisories page:
-http://cxf.apache.org/security-advisories.html
+On Sun, Apr 16, 2023 at 10:57:27PM +0200, Steffen Nurpmeso wrote:
+> So this general beating onto SETUID or super capable programs
+> smells like bad fish Hollywood boom-boom again, no?
 
+That lengthy list of them is actually in defense of sudo not having been
+hardened in this respect - it shows that this would not matter on a
+typical Linux system anyway.
 
---=20
-Colm O hEigeartaigh
+> You have to do some things, and if you give up privileges
+> thereafter, extended capabilities are gone.
 
-Talend Community Coder
-http://coders.talend.com
+POSIX saved IDs should help retain/regain the capabilities.
 
---0000000000005a4152056fb4f24a--
+Alexander
