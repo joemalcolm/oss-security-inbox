@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["762" "Thursday" "22" "October" "2015" "12:25:12" "+0200" "Raphael Hertzog" "hertzog@debian.org" "<20151022102512.GA23523@home.ouaza.com>" "24" "[oss-security] CVE Request: invalid curve attack on bouncycastle" nil nil nil "10" "2015102210:25:12" "[oss-security] CVE Request: invalid curve attack on bouncycastle" (number mark "U       hertzog@debi Oct 22   24/762   " thread-indent "\"[oss-security] CVE Request: invalid curve attack on bouncycastle\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1767 invoked by uid 550); 22 Oct 2015 11:02:32 -0000
+Received: (qmail 31901 invoked by uid 550); 18 Apr 2023 12:59:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15880 invoked from network); 22 Oct 2015 10:25:27 -0000
-Date: Thu, 22 Oct 2015 12:25:12 +0200
-From: Raphael Hertzog <hertzog@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20151022102512.GA23523@home.ouaza.com>
+Received: (qmail 23745 invoked from network); 18 Apr 2023 09:16:04 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: multipart/alternative;
+ boundary="------------G7vDp2IrNTITOTFOV9E1644p"
+Message-ID: <536fea8d-f1e3-0914-49e7-a0961abce35c@apache.org>
+Date: Tue, 18 Apr 2023 11:15:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Content-Language: en-GB, fr
+To: oss-security@lists.openwall.com
+References: <8a4746bb-6c19-dd80-10ca-9aa2b87d605b@apache.org>
+ <20230418012752.GI1655348@millbarge>
+From: Jacques Le Roux <jleroux@apache.org>
+Cc: Arnout Engelen <engelen@apache.org>, seth.arnold@canonical.com,
+ "security@apache.org" <security@apache.org>,
+ "security@ofbiz.apache.org" <security@ofbiz.apache.org>
+Organization: Apache Software Fundation
+Mail-Followup-To: oss-security@lists.openwall.com,
+ Arnout Engelen <engelen@apache.org>, seth.arnold@canonical.com,
+ "security@apache.org" <security@apache.org>,
+ "security@ofbiz.apache.org" <security@ofbiz.apache.org>
+In-Reply-To: <20230418012752.GI1655348@millbarge>
+Subject: Re: [oss-security] CVE-2022-47501: Apache OFBiz: Arbitrary file
+ reading vulnerability
+
+--------------G7vDp2IrNTITOTFOV9E1644p
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Virus-Scanned: clamav-milter 0.98.7 at mail
-X-Virus-Status: Clean
-Subject: [oss-security] CVE Request: invalid curve attack on bouncycastle
 
-Hello,
+Hi Seth,
 
-bouncycastle versions older than 1.51 are vulnerable to an
-invalid curve attack as described in this article:
-http://web-in-security.blogspot.ca/2015/09/practical-invalid-curve-attacks.html
+I used to give more information. For this one, using our "new" internal process* (need an ASF credential) and  following step 11 of**, notably
 
-The attack allows to extract private keys used in elliptic curve
-crytpography with a few thousands queries.
+    <<Generally, reports should contain enough information to enable people to assess the risk the vulnerability poses for their own system, and no
+    more.>>
 
-According to upstream developer Peter Dettman, the issue has been fixed
-with those two commits:
-https://github.com/bcgit/bc-java/commit/5cb2f05
-https://github.com/bcgit/bc-java/commit/e25e94a
+I restricted the information to a minimum.
 
-Could a CVE be assigned to this issue?
+With a request from Arnoult (member of the ASF security team in copy), there is though 2 points that have been changed since.
 
-Thank you.
+When sending to Mitre we replaced
+https://lists.apache.org/list.html?announce@apache.org
+by
+https://lists.apache.org/thread/k8s76l0whydy45bfm4b69vq0mf94p3wc
 
-PS: Please CC me as I'm not subscribed.
--- 
-Raphaël Hertzog ◈ Debian Developer
+You can see the result at https://www.cve.org/CVERecord?id=CVE-2022-47501
 
-Support Debian LTS: http://www.freexian.com/services/debian-lts.html
-Learn to master Debian: http://debian-handbook.info/get/
+We also changed the "problem type" to be more specific. Following the CWE classification, we used "CWE-22 Improper Limitation of a Pathname to a 
+Restricted Directory ('Path Traversal')" rather than "Arbitrary file reading vulnerability" used by the finder who stayed as the CVE title. You can 
+see it at https://cveawg.mitre.org/api/cve/CVE-2022-47501 which is the json version of the report.
+
+Regarding your points:
+
+  * the vulnerability was introduced long ago (years) when the plugin was created. It was around 2013.
+  * https://ofbiz.apache.org/security.html gives indirect information about the fix. Do you suggest that we need to put a direct link like
+    https://github.com/apache/ofbiz-plugins/commit/582add7d3 ?
+
+Thanks for the links. We will certainly consider what can be done to ease the work of downstream distributors and consumers.
+
+Jacques
+
+* https://cveprocess.apache.org/cve5/CVE-2022-47501
+** https://www.apache.org/security/committers.html#vulnerability-handling
+
+Le 18/04/2023 à 03:27, Seth Arnold a écrit :
+> On Mon, Apr 10, 2023 at 09:21:11AM +0000, Jacques Le Roux wrote:
+>> https://lists.apache.org/list.html?announce@apache.org
+>> https://ofbiz.apache.org/download.html
+>> https://ofbiz.apache.org/security.html
+>> https://ofbiz.apache.org/
+>> https://www.cve.org/CVERecord?id=CVE-2022-47501
+> Hello Jacques, thanks for contacting the oss-security mail list about this
+> security issue in an Apache project.
+>
+> I'd like to suggest that your email would be far more useful if
+> it included some details like affected versions: ideally, when a
+> vulnerability was introduced, and definitely, when it was fixed, if a
+> fix is available. Best would be a direct link to a patch in a source
+> control system, or attaching the patch directly.
+>
+> This particular email has very few details and no references for a fix so
+> it is very difficult for anyone to take concrete actions.
+>
+> Here's two recent postings that are far easier for downstream distributors
+> and consumers alike to use:
+> https://www.openwall.com/lists/oss-security/2023/04/04/1
+> https://www.openwall.com/lists/oss-security/2023/03/21/3
+>
+> I'd like to encourage Apache to use these as inspiration for future
+> oss-security postings.
+>
+> Thanks
+>
+--------------G7vDp2IrNTITOTFOV9E1644p--
