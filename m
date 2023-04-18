@@ -1,27 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/5
-Message-ID: <f3008fbc-4dbc-49ae-ba0a-1badbad2466f@oracle.com>
-Date: Fri, 29 Dec 2023 12:50:55 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Claus Assmann <ml+oss@...tp.org>
-Subject: Re: Re: New SMTP smuggling attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/10
+Message-ID: <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt>
+Date: Tue, 18 Apr 2023 20:41:35 +0800
+From: Ruihan Li <lrh2000@....edu.cn>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com,  "Todd C. Miller" <Todd.Miller@...o.ws>, Ruihan Li <lrh2000@....edu.cn>
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-On 12/26/23 11:15, Claus Assmann wrote:
-> On Sun, Dec 24, 2023, Marcus Meissner wrote:
+Hi Solar Designer,
+
+> Thank you Ruihan Li for finding and handling this vulnerability so well,
+> and for the detailed write-up.
 > 
->> - CVE-2023-51765 sendmail
-> 
-> Can you update the text for this (or point me to the proper way/persons
-> to do this)?
+> When discussing this on linux-distros a week ago, I wrote:
 
-https://www.cve.org/CVERecord?id=CVE-2023-51765 shows:
-   Assigner: MITRE Corporation
+Also thanks to all the people at linux-distro and s@k.o who helped to
+improve the final disclosure and patches.
 
-so you can submit updates/corrections via the web form at:
-   https://cveform.mitre.org/
+> OTOH, not all distros are typical.  Besides Android, we got rid of all
+> SUID binaries in default install of Owl over a decade ago.  While Owl is
+> now effectively EOL'ed, some of its legacy lives on in ALT Linux
+> distros, which are maintained, and other distros can do similar - it's
+> primarily a matter of caring to do it or not.  We did not package sudo
+> in Owl, but if someone were to install it then it'd be the only program
+> exposing this kernel vulnerability.  So in that case, hardening sudo
+> would have helped.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+That's good to know. I was wondering if there were distros that did not
+have setuid binaries, which was why I said only ``a number of distros''
+were vulnerable.
+
+For Steffen Nurpmeso wrote earlier:
+> I wonder -- have you verified that they do not use isatty(3) aka
+> some tc*() series *first*?  The above with sudo does for example
+> not reveal anything as shown, roght?  FD 2 seems to be a terminal,
+> .. and whereas i do not have sudo src here, i am sure it uses
+> isatty(3) and tcgetattr(3).
+
+I just noticed that sudo added the isatty check a day ago (April 17th)
+[1]. I think this change was inspired by this vulnerability, wasn't it?
+However, as Jakub Wilk pointed out, isatty is still implemented by an
+ioctl call, so the addition of this check has nothing to do with this
+vulnerability. Nevertheless, it is still a good idea to make sure isatty
+succeeds before using ioctl calls with other (perhaps more complex and
+arbitrary) tty commands.
+
+[1]: https://github.com/sudo-project/sudo/commit/5650b436e6ba20807758a4154e709c10c1c87be8 
+
+Thanks,
+Ruihan Li
 
