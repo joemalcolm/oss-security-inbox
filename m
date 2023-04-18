@@ -1,86 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/04/1
-Message-ID: <890273bb-7f8c-fce1-d13d-6cffb10f3df7@gmail.com>
-Date: Mon, 4 Sep 2023 13:05:31 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/22
+Message-ID: <20230418201229.bx-3k%steffen@sdaoden.eu>
+Date: Tue, 18 Apr 2023 22:12:29 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2023-41164: Potential denial of service vulnerability in django.utils.encoding.uri_to_iri()
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2023/sep/04/security-releases/
+Todd C. Miller wrote in
+ <043b8fbe6e014f17@...lert.dev>:
+ |On Wed, 19 Apr 2023 02:59:26 +0800, Ruihan Li wrote:
+ |
+ |> Yeah, I see that you are removing ioctl calls on standard file
+ |> descriptors. So actually, just to confirm, it is feasible to avoid
+ |> all ioctl calls to standard file descriptors with root privileges
+ |> (under all command line arguments), by using /dev/tty, assuming
+ |> something like the window size... Right?
+ |
+ |For the most part, yes.  There are still some calls to isatty(3)
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.2.5 <https://docs.djangoproject.com/en/dev/releases/4.2.5/>`_,
-`Django 4.1.11 
-<https://docs.djangoproject.com/en/dev/releases/4.1.11/>`_, and
-`Django 3.2.21 <https://docs.djangoproject.com/en/dev/releases/3.2.21/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+Frozen asset that i am,.., but i want to add this.
+The POSIX standard says (i think quoting C99)
 
-CVE-2023-41164: Potential denial of service vulnerability in 
-``django.utils.encoding.uri_to_iri()``
-===================================================================================================
+  [.]the standard input and standard output streams are fully
+  buffered if and only if stream can be determined not to refer to
+  an interactive device.[.]
 
-``django.utils.encoding.uri_to_iri()`` was subject to potential denial 
-of service attack via certain inputs with a very large number of Unicode 
-characters.
+Unless there is a new way of checking and/or unless creating
+interactive devices is restrained to /dev/tty (pty etc) it seems
+some calls done by C libraries cannot be avoided, only be delayed
+a bit further down the road than what musl does.
 
-Thanks `MProgrammer <https://hackerone.com/mprogrammer>`_ for the report.
+  $ cat t.c
+  #include <stdio.h>
+  int main(void) { putc('\n',stdout);return 0; }
+  $ gcc -o zt t.c
 
-This issue has severity "moderate" according to the Django security policy.
+GNU libc:
 
-Affected supported versions
-===========================
+  $ strace ./zt
+  newfstatat(1, "", {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x3), ...}, AT_EMPTY_PATH) = 0
 
-* Django main branch
-* Django 4.2
-* Django 4.1
-* Django 3.2
+  $ strace ./zt >/dev/null
+  newfstatat(1, "", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}, AT_EMPTY_PATH) = 0
+  ioctl(1, TCGETS, 0x7ffe2151dc30)        = -1 ENOTTY (Inappropriate ioctl for device)
 
-Resolution
-==========
+  $ mkfifo c; cat < c & strace ./zt > c
+  newfstatat(1, "", {st_mode=S_IFIFO|0640, st_size=0, ...}, AT_EMPTY_PATH) = 0
 
-Patches to resolve the issue have been applied to Django's main branch 
-and the
-4.2, 4.1, and 3.2 release branches. The patches may be obtained from the
-following changesets:
+musl always simply says
 
-* On the `main branch 
-<https://github.com/django/django/commit/3f41d6d62929dfe53eda8109b3b836f26645bdce>`__
-* On the `4.2 release branch 
-<https://github.com/django/django/commit/9c51b4dcfa0cefcb48231f4d71cafa80821f87b9>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/ba00bc5ec6a7eff5e08be438f7b5b0e9574e8ff0>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/6f030b1149bd8fa4ba90452e77cb3edc095ce54e>`__
+  ioctl(1, TIOCGWINSZ, {ws_row=55, ws_col=191, ws_xpixel=1910, ws_ypixel=1045}) = 0
+or
+  ... = -1 ENOTTY (Not a tty)
 
-The following releases have been issued:
+ |using the standard file descriptors when setting up the event loop
+ |to run the program but that is after the user has been verified.
+ |I will add checks that the fd is a character special file before
+ |calling isatty(3).  In most cases the code wants the contents of
+ |struct stat anyway, so the S_ISCHR check is basically free.
+ |
+ |> If this is the case, I think it should not be difficult for other
+ |> setuid programs to do similar things.  I am just thinking for a
+ |> while, and cannot find a case where ioctl calls are unavoidable.
+ |
+ |If there are setuid programs that call ttyname(3) that will also
+ |call tcgetattr(3).  Also, the glibc getpass(3) function will use
+ |tcgetattr(3) and tcsetattr(3) (to disable echo) on the standard
+ |input if /dev/tty is not available.  For getpass(3) this could be
+ |avoided by only trying to disable echo when using /dev/tty.  That
+ |would change the behavior of things like:
+ |
+ |    su < /some/other/tty 
 
-* Django 4.2.5 (`download Django 4.2.5 
-<https://www.djangoproject.com/m/releases/4.2/Django-4.2.5.tar.gz>`_ | 
-`4.2.5 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.2.5.checksum.txt>`_)
-* Django 4.1.11 (`download Django 4.1.11 
-<https://www.djangoproject.com/m/releases/4.1/Django-4.1.11.tar.gz>`_ | 
-`4.1.11 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.1.11.checksum.txt>`_)
-* Django 3.2.21 (`download Django 3.2.21 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.21.tar.gz>`_ | 
-`3.2.21 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.21.checksum.txt>`_)
+..even though it mostly reiterates what is said.
 
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+ |when /dev/tty is unavailable but I don't know what use case that
+ |would actually support.
 
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
