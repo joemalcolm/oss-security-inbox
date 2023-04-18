@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/1
-Message-ID: <ZIlQkTsEsfKbRus7@eldamar.lan>
-Date: Wed, 14 Jun 2023 07:30:57 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Stack overflow in imagemagick coders/tiff.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/8
+Message-ID: <20230418012942.GL1655348@millbarge>
+Date: Tue, 18 Apr 2023 01:29:42 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Daniel Gaspar <dpgaspar@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-25504: Apache Superset: Possible SSRF on import datasets
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Mon, Apr 17, 2023 at 09:57:11AM +0000, Daniel Gaspar wrote:
+> https://superset.apache.org
+> https://www.cve.org/CVERecord?id=CVE-2023-25504
 
-On Mon, May 29, 2023 at 08:11:18AM +0000, Bastien Roucariès wrote:
-> Hi,
-> 
-> Reading changelog and code of imagemagick, I want to report a stack overflow with crafted tiff file in imagemagick
-> 
-> Fixed (after 6.9.12-26) by:
-> https://github.com/ImageMagick/ImageMagick6/commit/85a370c79afeb45a97842b0959366af5236e9023
+Hello Daniel, thanks for contacting the oss-security mail list about this
+security issue in an Apache project.
 
-CVE-2023-3195 has been assigned for this issue according to
-https://bugzilla.redhat.com/show_bug.cgi?id=2214141 (not yet on
-cve.org feed itself).
+I'd like to suggest that your email would be far more useful if
+it included some details like affected versions: ideally, when a
+vulnerability was introduced, and definitely, when it was fixed, if a
+fix is available. Best would be a direct link to a patch in a source
+control system, or attaching the patch directly.
 
-Regards,
-Salvatore
+This particular email has very few details and no references for a fix so
+it is very difficult for anyone to take concrete actions.
+
+Here's two recent postings that are far easier for downstream distributors
+and consumers alike to use:
+https://www.openwall.com/lists/oss-security/2023/04/04/1
+https://www.openwall.com/lists/oss-security/2023/03/21/3
+
+I'd like to encourage Apache to use these as inspiration for future
+oss-security postings.
+
+Thanks
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
