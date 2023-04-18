@@ -1,4 +1,4 @@
-Received: (qmail 23727 invoked by uid 550); 15 Mar 2023 08:44:18 -0000
+Received: (qmail 8090 invoked by uid 550); 18 Apr 2023 19:29:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23701 invoked from network); 15 Mar 2023 08:44:18 -0000
-Date: Wed, 15 Mar 2023 09:40:18 +0100
-From: Fabian Keil <freebsd-listen@fabiankeil.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20230315094018.27d65aae@fabiankeil.de>
-In-Reply-To: <20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
-References: <20230314095103.1ed76cc0.hanno@hboeck.de>
-	<20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
+Received: (qmail 5897 invoked from network); 18 Apr 2023 19:24:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudo.ws; s=selector2;
+	t=1681845861; h=from:from:reply-to:subject:subject:date:date:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6QNVsRbGSuI+Xw1kT23dIinO0SA4/91mvi27WcWAj/Q=;
+	b=FqD6v3Yv17wh5boCxNQpPiVxbu6zm/cSPi0Af4lbIkbUqKnuSrKNUh4eeA1Cd53pFRvD6X
+	vldG0eFIvIA2VaXepoktGElmQgSc/lUd7JIpT0Bp/02AEp1UPOtAnW41F+UMdkfSnROVqZ
+	4SqDmLwSVwmX2xu9HT4PTxXZp4OJXh9nQq3cMaNqAxsXd9YuSK0k/Ubv05OCQa1zTCOxAi
+	d/3eGREZXyWiQitna99DJXPG7lrjk/Jy9W323BrsoKfaegteoAfeHnToh3YG9xRPJoD4Qk
+	UgI2/dmbZD270krqWFfzw7wMK3BYXegWOY08owbNWcgRXePq523q1N7NdI+aAw==
+From: "Todd C. Miller" <Todd.Miller@sudo.ws>
+To: Ruihan Li <lrh2000@pku.edu.cn>
+cc: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+In-reply-to: Your message of "Wed, 19 Apr 2023 02:59:26 +0800."
+             <wbhfpn7kbwg64jordjxtpqfmmowes5rncupgzfbnqdz3uljioq@hgz2w4thzmya>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv> <20230416205727.0XQJ2%steffen@sdaoden.eu> <20230418005741.GA25557@openwall.com> <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt> <043b82cc304acacf@millert.dev> <wbhfpn7kbwg64jordjxtpqfmmowes5rncupgzfbnqdz3uljioq@hgz2w4thzmya>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/8fkfWhHbFCg55ziP5bQ/287";
- protocol="application/pgp-signature"; micalg=pgp-sha1
-X-Df-Sender: Nzc1MDY3
-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <82886.1681845861.1@xerxes.sudo.ws>
+Date: Tue, 18 Apr 2023 13:24:21 -0600
+Message-ID: <043b8fbe6e014f17@millert.dev>
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 
---Sig_/8fkfWhHbFCg55ziP5bQ/287
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, 19 Apr 2023 02:59:26 +0800, Ruihan Li wrote:
 
-Shawn Webb <shawn.webb@hardenedbsd.org> wrote on 2023-03-14 at 16:57:25:
+> Yeah, I see that you are removing ioctl calls on standard file
+> descriptors. So actually, just to confirm, it is feasible to avoid
+> all ioctl calls to standard file descriptors with root privileges
+> (under all command line arguments), by using /dev/tty, assuming
+> something like the window size... Right?
 
-> On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno B=C3=B6ck wrote:
-> > Hi,
-> >=20
-> > This blogpost highlights TTY Pushback vulnerabilities enabled via the
-> > TIOCSTI kernel functionality available in the Linux kernel:
-> > https://www.errno.fr/TTYPushback.html
-> >=20
-> > This has been discussed here previously:
-> > https://www.openwall.com/lists/oss-security/2017/06/03/9
-> >=20
-> > Though I think there are some noteworthy updates. In the 2017 post
-> > solar designer mentioned that the Linux kernel developers have multiple
-> > times rejected changes in the kernel. However this has now changed:
-> > Starting with Kernel 6.2 it is possible to disable TIOCSTI
-> > (unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
-> > applications practically use TIOCSTI.
-> >=20
-> > This seems to be the only real mitigation for this issue. It appears
-> > su has a parameter, and in sudo one can configure the creation of a new
-> > pty in the sudoers file. I don't consider these as satisfying fixes, as
-> > they are optinal, and thus rely on the expectation that users are aware
-> > of this risk and manually use these mitigations. That does not seem
-> > realistic to me.
-> >=20
-> > This also affects such a large number of tools, not just
-> > su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
-> > affected by this by default.
-> >=20
-> > Thus I strongly recommend that people disable this in the kernel.
-> >=20
-> > [1] https://github.com/containers/bubblewrap/issues/555
->=20
-> With commit c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5[0], I've added a
-> toggle in HardenedBSD to disable TIOCSTI. The toggle is set to
-> prohibit TIOCSTI by default. Now attempts to use TIOCSTI will be met
-> with EPERM.
+For the most part, yes.  There are still some calls to isatty(3)
+using the standard file descriptors when setting up the event loop
+to run the program but that is after the user has been verified.
+I will add checks that the fd is a character special file before
+calling isatty(3).  In most cases the code wants the contents of
+struct stat anyway, so the S_ISCHR check is basically free.
 
-In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't
-noticed any problems.
+> If this is the case, I think it should not be difficult for other
+> setuid programs to do similar things.  I am just thinking for a
+> while, and cannot find a case where ioctl calls are unavoidable.
 
-According to the commit message "TIOCSTI is still used in tcsh,
-but as tcsh isn't compiled on ElectroBSD we don't care".
+If there are setuid programs that call ttyname(3) that will also
+call tcgetattr(3).  Also, the glibc getpass(3) function will use
+tcgetattr(3) and tcsetattr(3) (to disable echo) on the standard
+input if /dev/tty is not available.  For getpass(3) this could be
+avoided by only trying to disable echo when using /dev/tty.  That
+would change the behavior of things like:
 
-> I've verified the toggle in a real-world scenario with the doas issue
-> PoC found at [1].
+    su < /some/other/tty 
 
-I should probably do the same.
+when /dev/tty is unavailable but I don't know what use case that
+would actually support.
 
-Fabian
-
-[0]: <https://www.fabiankeil.de/sourcecode/electrobsd/ElectroBSD-20220822-d=
-9391cfeef5b/0157-sys-kern-Follow-OpenBSD-s-lead-and-remove-TIOCSTI-sup.diff>
-
---Sig_/8fkfWhHbFCg55ziP5bQ/287
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iF0EARECAB0WIQTKUNd6H/m3+ByGULIFiohV/3dUnQUCZBGEcgAKCRAFiohV/3dU
-na0uAJ9R7PKH5fa66X/57i+/umgSSmi8NACePzNxDsD/NTCQYHLInd3FfK8GEQo=
-=cZm/
------END PGP SIGNATURE-----
-
---Sig_/8fkfWhHbFCg55ziP5bQ/287--
+ - todd
