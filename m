@@ -1,116 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/19
-Message-ID: <CA+-XxSFnokvdHyhHxjeQMjKt6CLNR7MO3wxncZ035zrMCoeMQw@mail.gmail.com>
-Date: Mon, 16 Oct 2023 09:51:10 -0700
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/9
+Message-ID: <536fea8d-f1e3-0914-49e7-a0961abce35c@apache.org>
+Date: Tue, 18 Apr 2023 11:15:52 +0200
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Cc: Arnout Engelen <engelen@...che.org>, seth.arnold@...onical.com, "security@...che.org" <security@...che.org>, "security@...iz.apache.org" <security@...iz.apache.org>
+Subject: Re: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Given that we are discussing early disclosure, I am unsure how open source
-relates to it.
-This is "pre" open-sourcing the code, so all the open source-related things
-might not help at all.
+Hi Seth,
 
-I would second the call to "talk to your lawyers," especially when entities
-like Huawei are involved.
-I am singling out Huawei specifically because it is considered a treat to
-US national security and is on the embargo list.
+I used to give more information. For this one, using our "new" internal process* (need an ASF credential) and  following step 11 of**, notably
 
+    <<Generally, reports should contain enough information to enable people to assess the risk the vulnerability poses for their own system, and no
+    more.>>
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://kernelcare.com>   |   Imunify360 <http://imunify360.com/> |
-AlmaLinux <https://almalinux.org>
+I restricted the information to a minimum.
 
+With a request from Arnoult (member of the ASF security team in copy), there is though 2 points that have been changed since.
 
+When sending to Mitre we replaced
+https://lists.apache.org/list.html?announce@apache.org
+by
+https://lists.apache.org/thread/k8s76l0whydy45bfm4b69vq0mf94p3wc
 
-On Mon, Oct 16, 2023 at 9:37 AM Aron Xu <happyaron.xu@...il.com> wrote:
+You can see the result at https://www.cve.org/CVERecord?id=CVE-2022-47501
 
-> Hi,
->
-> On Mon, Oct 16, 2023 at 11:34 PM Demi Marie Obenour
-> <demi@...isiblethingslab.com> wrote:
-> >
-> > On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
-> > > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> > > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > > > > Hi,
-> > > > > >
-> > > > > > Regardless of your viability of subscription status I think we
-> also
-> > > > > > (sadly) have to consider current geopolitical issues here.
-> > > > > >
-> > > > > > As far as I understand, US companies and US citizens are not
-> permitted
-> > > > > > to work with Chinese organizations and/or Chinese nationals.
-> > > > >
-> > > > > They can when working in the open on public projects and other
-> > > > > open-source-like things.  For "closed" lists and groups, please
-> consult
-> > > > > a lawyer as the rules there are quite varied and depends on the
-> > > > > countries and companies involved.
-> > > > >
-> > > > > But to be sure, again, consult your corporate lawyers, they know
-> the
-> > > > > rules and the issues involved better than I do.
-> > > > >
-> > > > > good luck!
-> > > > >
-> > > > > greg k-h
-> > > >
-> > > > The question is _who_ should consult their lawyers.
-> > >
-> > > The people deciding if this group can be added to the closed list as
-> > > they are the ones responsible for it, AND then if the group is added,
-> > > the members of the list need to talk to their lawyers to see if their
-> > > country laws allow them to participate in a closed group with such
-> > > members.  Many countries might be fine, many might not be, it all
-> > > depends on the participants and what country laws they must abide by.
-> > >
-> > > So in short, everyone involved in the list!  :(
-> > >
-> > > good luck!
-> > >
-> > > greg "I talk to too many lawyers" k-h
-> >
-> > The result of this is simply that those who do not have access to
-> > lawyers on staff will not participate, which will reduce the value of
-> > the list substantially.  I suspect that most people who report
-> > vulnerabilities via distros@ fall into this category.  I know I do.
-> >
-> > Therefore, I recommend rejecting the application as too risky from a
-> > legal perspective.
-> >
->
-> Not matter what would be the outcome, I'd like recommend an article
-> from Linux Foundation which I think is a good read:
->
-> https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
->
-> I'm not a lawyer though, but here are a few cents:
->
-> 1) There is no general restrictions against Chinese organizations and
-> nationals;
-> 2) Open source software (which is publicly available) is not subject
-> to EAR (Export Administration Regulation of the US);
-> 3) According to § 734.7[1] of EAR, "knowledge with the intention that
-> such information will be made publicly available if accepted" is
-> treated as "Published" and is considered publicly available.
->
-> If I understand correctly, distros list is targeted to open source
-> software issues with a policy[2] of "Please only use these lists to
-> report and discuss security issues that are not yet public (but that
-> are to be made public very soon)", then everyone could retain their
-> peace of mind.
->
-> Regards,
-> Aron
->
-> [1]
-> https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.7
-> [2]https://oss-security.openwall.org/wiki/mailing-lists/distros
->
+We also changed the "problem type" to be more specific. Following the CWE classification, we used "CWE-22 Improper Limitation of a Pathname to a 
+Restricted Directory ('Path Traversal')" rather than "Arbitrary file reading vulnerability" used by the finder who stayed as the CVE title. You can 
+see it at https://cveawg.mitre.org/api/cve/CVE-2022-47501 which is the json version of the report.
 
+Regarding your points:
+
+  * the vulnerability was introduced long ago (years) when the plugin was created. It was around 2013.
+  * https://ofbiz.apache.org/security.html gives indirect information about the fix. Do you suggest that we need to put a direct link like
+    https://github.com/apache/ofbiz-plugins/commit/582add7d3 ?
+
+Thanks for the links. We will certainly consider what can be done to ease the work of downstream distributors and consumers.
+
+Jacques
+
+* https://cveprocess.apache.org/cve5/CVE-2022-47501
+** https://www.apache.org/security/committers.html#vulnerability-handling
+
+Le 18/04/2023 à 03:27, Seth Arnold a écrit :
+> On Mon, Apr 10, 2023 at 09:21:11AM +0000, Jacques Le Roux wrote:
+>> https://lists.apache.org/list.html?announce@apache.org
+>> https://ofbiz.apache.org/download.html
+>> https://ofbiz.apache.org/security.html
+>> https://ofbiz.apache.org/
+>> https://www.cve.org/CVERecord?id=CVE-2022-47501
+> Hello Jacques, thanks for contacting the oss-security mail list about this
+> security issue in an Apache project.
+>
+> I'd like to suggest that your email would be far more useful if
+> it included some details like affected versions: ideally, when a
+> vulnerability was introduced, and definitely, when it was fixed, if a
+> fix is available. Best would be a direct link to a patch in a source
+> control system, or attaching the patch directly.
+>
+> This particular email has very few details and no references for a fix so
+> it is very difficult for anyone to take concrete actions.
+>
+> Here's two recent postings that are far easier for downstream distributors
+> and consumers alike to use:
+> https://www.openwall.com/lists/oss-security/2023/04/04/1
+> https://www.openwall.com/lists/oss-security/2023/03/21/3
+>
+> I'd like to encourage Apache to use these as inspiration for future
+> oss-security postings.
+>
+> Thanks
+>
