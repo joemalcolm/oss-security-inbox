@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3278" "Wednesday" "1" "September" "2021" "17:15:57" "+0800" "Minh Yuan" "yuanmingbuaa@gmail.com" nil "115" "[oss-security] CVE-2021-3753: A out-of-bounds caused by the race of KDSETMODE in vt for latest Linux" nil nil nil "9" nil nil (number mark "U       yuanmingbuaa Sep  1  115/3278  " thread-indent "\"[oss-security] CVE-2021-3753: A out-of-bounds caused by the race of KDSETMODE in vt for latest Linux\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3753: A out-of-bounds caused by the race of KDSETMODE in vt for latest Linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27892 invoked by uid 550); 1 Sep 2021 09:42:30 -0000
+Received: (qmail 9558 invoked by uid 550); 18 Apr 2023 15:40:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,153 +7,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15997 invoked from network); 1 Sep 2021 09:16:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=MXpRfZ8OcL03bcmzjRj+IHwX2SHoa9dXHONBgGZL3P8=;
-        b=mUOSvYCrGWalkUrQIhWsXxPyz3wgJkYubVaYIodw4Yiqakx6p7LBrvC/Ncp5VJFRIq
-         bIfbtvwC3fNevOlDRrHNRNazpLPK67UyNjbOKkufOsiGS6aR6dzNedk7yBuDH2yjGeJu
-         tsOM/4/zERZzrngjG3oFWpcGqLgFoQl0UpNWUMlGf+KPaw2G/9qAmGf/tCmDhMb2pBvL
-         A+NFEyZbxLLnsreC/uJavo9f2KwAX7Of/lFops6puE+kbr/U/9FNmfHPU3sm6QQ7bZhA
-         QAXol9VyyvueNrm6z/g5cHKYgxzRoXoOFRAEQcdmv9z1Cq0C0Y2kOMkIdov1SK96EzTI
-         mACQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=MXpRfZ8OcL03bcmzjRj+IHwX2SHoa9dXHONBgGZL3P8=;
-        b=mvuwIj57JJAPAjHz22DzbcLQNM3AzlhBfz6WMbqh8S5FQ4aPNWqLfVMSVwxoOOoJQ/
-         VuzTuV79p++JdU5TZgN85uQjI7yfHPJtMQpC93eVm4P3gX4EZctbMHhvgJaf5PTIxvg7
-         gRsrC91P0wnoJ+fwEvX+jwQSP/rW94CDejVsw8IO5J1hKg8S+pzUttK+hSI3IWaOJk3p
-         9WPOSlVKXudpiB1aD6T5NsTJI1CGQX/FAiRUGrU+PGunrhqOrkZXqJaEhz51GbPf1cFU
-         FTkn0RF6jojJIECdLPt54yCvKUgj9a7RkXm+gqlT9M6O29toieVYZdQhr/lv8ue/ECXH
-         nftw==
-X-Gm-Message-State: AOAM530/1iOJd3JpnT+983zR2TxjRQUyN4E7169RdD5dKOlKM7/hZ654
-	vIK9pWIHdjoGYKeZLaSAEplYC1dfrQTvWRriZjyES6ZurjOJ5K27
-X-Google-Smtp-Source: ABdhPJz7vRHYbmH/686UTd9KulK0/sdoACaH0G56ZU3c89CgB4X25UaoPxRjNmt64paIlSWMCa7bqOTfKmkOZ210LNM=
-X-Received: by 2002:a65:46cc:: with SMTP id n12mr15238777pgr.274.1630487795486;
- Wed, 01 Sep 2021 02:16:35 -0700 (PDT)
-MIME-Version: 1.0
-From: Minh Yuan <yuanmingbuaa@gmail.com>
-Date: Wed, 1 Sep 2021 17:15:57 +0800
-Message-ID: <CAH5WSp4XsLN42kbnDknq2c32mZs_5uvyEzgBSQ9ar_ypASbYRw@mail.gmail.com>
+Received: (qmail 9451 invoked from network); 18 Apr 2023 15:40:23 -0000
+Date: Tue, 18 Apr 2023 17:40:16 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000dc53d105caeb85d7"
-Subject: [oss-security] CVE-2021-3753: A out-of-bounds caused by the race of KDSETMODE in vt
- for latest Linux
+Cc: Ruihan Li <lrh2000@pku.edu.cn>
+Message-ID: <20230418154016.GA959@openwall.com>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 
---000000000000dc53d105caeb85d7
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Apr 16, 2023 at 06:12:18PM +0800, Ruihan Li wrote:
+> The exploitation works as long as there are setuid programs (or more
+> precisely, programs with the CAP_NET_ADMIN capability) that invokes ioctl
+> calls on stdin, stdout, or stderr. In most Linux distros, a quick (but very
+> coarse) test reveals that quite a few setuid programs are using ioctl system
+> calls, which are marked with 'V' in the table below:
+> ```
+> # find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl {} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n 'V ' || echo -n 'S '; echo {};" \; | sort
+> S ./chage
+> S ./expiry
+> S ./fusermount
+> S ./fusermount3
+> S ./gpasswd
+> S ./ksu
+> S ./mount.cifs
+> S ./sg
+> S ./umount
+> V ./chfn
+> V ./chsh
+> V ./mount
+> V ./newgrp
+> V ./passwd
+> V ./pkexec
+> V ./screen-4.9.0
+> V ./su
+> V ./sudo
+> V ./unix_chkpwd
+> ```
+> After manually checking the strace output, it is found that all of these ioctl
+> users are using ioctl calls on stdin, stdout, or stderr to get or set some tty
+> parameters. Note that exactly no arguments are passed to these setuid
+> programs. If some crafted arguments are passed, the number of ioctl users may
+> increase. As a result, a number of linux distros can be vulnerable to the
+> exploitation.
 
-Hi,
+BTW, even with the kernel bug fixed, there are ioctl number clashes
+between different devices, so even e.g. isatty(3) is not necessarily
+safe if called with elevated privileges under a possible confused deputy
+scenario.  Here's strace showing some clashes on older Linux/i386:
 
-We recently discovered a race oob read in vt in the latest kernel (
-v4.19.205 for now ), and the patch
-<https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=ffb324e6f874121f7dce5bdae5e05d02baae7269>
-can't
-handle this bug.
+$ cat isatty.c
+int main(void) { return isatty(0); }
+$ gcc isatty.c -o isatty
+$ strace -e ioctl ./isatty
+ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
 
-The root cause of this vulnerability is that the write access to vc_mode is
-not protected by lock in vt_ioctl (KDSETMDE).
-To trigger the oob, we set the crafted vc_visible_origin by using the
-following steps:
+IIRC, I was the one to add this feature to strace 20+ years ago:
 
-  Thread 1                                        Thread 2
-                                                                      Thread
-3
-vt_ioctl()
-    case KDSETMODE:
-        vc->vc_mode = KD_GRAPHICS
+* Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
+- Updated to today's CVS version (post-4.4) with an additional fix for
+displaying all possible ioctl names when there's more than one match,
 
-                                            vt_ioctl()
-                                                case TIOCL_BLANKSCREEN:
-                                                    if (
-vc->vc_mode != KD_TEXT)
+So the number clashes were known, but the security relevance maybe not.
 
-console_blanked = fg_console + 1;
-                                                ... ...
-                                                case VT_RESIZE
-                                                    set_origin()
-                                                        vgacon_set_origin()
-
-// make vc_visible_origin not equal to vga_vram_base
-                                                            if (
-console_blanked && !vga_palette_blanked)
-                                                                return 0;
-
-
-
-                                                     vt_ioctl()
-
-                                                         case
-KDSETMODE:
-
-
-vc->vc_mode = KD_TEXT
-
-                                            write()
-                                                do_con_write()
-                                                    do_con_troll()
-                                                        lf()
-                                                            con_scroll()
-
-// set vga_rolled_over
-                                                                vgacon_scroll()
-                                                                    if (
-c->vc_mode != KD_TEXT)
-
-return false;
-
-oldo = c->vc_origin;
-
-vga_rolled_over = oldo - vga_vram_base;
-
-                                            vt_ioctl()
-                                                case TIOCL_SCROLLCONSOLE:
-wrap = rolled_over + c->vc_size_row
-
-// set vc_visible_origin to oob
-                                                    c->vc_
-visible_origin = vga_vram_base + (from + from_off) % wrap
-
-                                                case TIOCL_SETSEL:
-                                                    // trigger oob
-                                                    sel_pos(ps)
-
-
-
-
-
-
-
-
-
-
-console_lock();
-
-                                                         ...
-
-
-console_unlock();
-
-
-
-        console_lock();
-        ...
-        console_unlock();
-
-
-And the patch for this issue is available now. (
-https://github.com/torvalds/linux/commit/2287a51ba822384834dafc1c798453375d1107c7
-)
-
-Timeline:
-* 08.30.21 - Vulnerability reported to security@kernel.org.
-* 08.31.21 - CVE-2021-3753 assigned.
-* 09.01.21 - Vulnerability opened.
-
-Regards,
-
-Yuan Ming, Tsinghua University
-
---000000000000dc53d105caeb85d7--
+Alexander
