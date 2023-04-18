@@ -1,4 +1,4 @@
-Received: (qmail 9457 invoked by uid 550); 3 Apr 2024 18:37:09 -0000
+Received: (qmail 18357 invoked by uid 550); 18 Apr 2023 20:19:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +7,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22148 invoked from network); 3 Apr 2024 18:02:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1712167334;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4WcCwRqWuCxojSwiH/bDwzvwEef/cai6wLUBSw8Jf0I=;
-	b=gjaHxjXx1hl6hzUmbBFXPHBmbOsrVXG70TidjfOh5aWv5MXnZevItZIxhseIaBRFz0JbSm
-	i+1o3m3mzRDeDaQyDfGr4AcgWmcUTrEISD1T0FFHR1XP4AnDR0pe45wbetL9lPr9w53hIz
-	vJAkMVxFUsq3ouVe7wIduYrC83Z7jjE=
-X-MC-Unique: 6iLYD2sgOz-luavoS_ZPzQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712167331; x=1712772131;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4WcCwRqWuCxojSwiH/bDwzvwEef/cai6wLUBSw8Jf0I=;
-        b=F0b2em6rSBsIudo1ZEpo8/8u2evAtWhXUf/7in39NonI3CscVv9LzqPBCue4jVSyvB
-         24DfHNJzMS/y3KlW22z+166Lkk7pzmfR87KY08knNJUoEBNSX954dfrbc7uGBcLcop3f
-         Xvd+oZCEjOrfgZ0PjSutFvHAwOoPpjtYdrDHkC+Wec9lLH7ErDspjVpoaX8kRf17HO7H
-         Gaanx09OpojR/e58MPhlcQJ5MMH8t3Q0hcUPCE/TrCsy/0GDnIBktyhtgkhz+HAenQUw
-         LxTeLAIX0I4AGfaEJQ/rMgz9N1+v/QrL3CWeWRX8+7m8Eg7k/Ohye0m4Rf8+hwvV/eNb
-         gN8w==
-X-Gm-Message-State: AOJu0Yw+/iQx5yRocfKV+c0wcLfsxdg6RL9HS8iYenrJVLxdE4feTpTr
-	g+2Fi4dX4rYZf64cf9uhzb9o13z7YmNVMA3cjW6r0UHnr4mxDxXWsA2VfD+5yNUX8oh80HaVvWX
-	b4OWqDTiYWfGfna3vRZfmfaxCHM+jlCsSPvdl1Z/5CVkAmdJi93N9CPT2BHqOzvlv30yrZFSgcH
-	o0d1IhRKINGgF3eX/W33GXmCdFsWzFqGKd7mw2csedybvRM2rX
-X-Received: by 2002:a5d:4384:0:b0:343:8097:3e3 with SMTP id i4-20020a5d4384000000b00343809703e3mr144506wrq.40.1712167331182;
-        Wed, 03 Apr 2024 11:02:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgIgEDfEJRUozbOrqU627bXQN48ZUsX6sWja2QrUmdQuuDkjwvATL3Yze4LWNnv+9OpUViLwX0puDBqk0q3RY=
-X-Received: by 2002:a5d:4384:0:b0:343:8097:3e3 with SMTP id
- i4-20020a5d4384000000b00343809703e3mr144496wrq.40.1712167330781; Wed, 03 Apr
- 2024 11:02:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com>
- <7e6a9e00-1caf-4523-b969-fdb410b240f7n@googlegroups.com> <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com>
- <20240403164804.GA10525@openwall.com>
-In-Reply-To: <20240403164804.GA10525@openwall.com>
-From: Michael Dawson <midawson@redhat.com>
-Date: Wed, 3 Apr 2024 14:01:11 -0400
-Message-ID: <CAH0iFcZaZtAfhVwopR1vFgXuQJSvugL8Bz8OmQYS+kpq4VqGiA@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="0000000000008c47dc06153505e4"
-Subject: Re: [oss-security] Fwd: Node.js security update for all active
- release lines
+Received: (qmail 9782 invoked from network); 18 Apr 2023 20:12:42 -0000
+Date: Tue, 18 Apr 2023 22:12:29 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20230418201229.bx-3k%steffen@sdaoden.eu>
+In-Reply-To: <043b8fbe6e014f17@millert.dev>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+ <20230416205727.0XQJ2%steffen@sdaoden.eu>
+ <20230418005741.GA25557@openwall.com>
+ <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt>
+ <043b82cc304acacf@millert.dev>
+ <wbhfpn7kbwg64jordjxtpqfmmowes5rncupgzfbnqdz3uljioq@hgz2w4thzmya>
+ <043b8fbe6e014f17@millert.dev>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-450-g9589f04a75
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth:
+ Unauthorized management command execution
 
---0000000000008c47dc06153505e4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Todd C. Miller wrote in
+ <043b8fbe6e014f17@millert.dev>:
+ |On Wed, 19 Apr 2023 02:59:26 +0800, Ruihan Li wrote:
+ |
+ |> Yeah, I see that you are removing ioctl calls on standard file
+ |> descriptors. So actually, just to confirm, it is feasible to avoid
+ |> all ioctl calls to standard file descriptors with root privileges
+ |> (under all command line arguments), by using /dev/tty, assuming
+ |> something like the window size... Right?
+ |
+ |For the most part, yes.  There are still some calls to isatty(3)
 
-Sorry I don't remember the context as to why we agreed to send this forward
-in the first place.
+Frozen asset that i am,.., but i want to add this.
+The POSIX standard says (i think quoting C99)
 
-As opposed to expanding any work that's a one off for the community
-security stewards, since it sounds like it may not be meeting your needs,
-I'd propose that we just remove it from our security release steps and you
-can subscribe to the nodejs-sec mailing list like everybody else. From that
-you could generate some automation to pull down the content from the
-original post.
+  [.]the standard input and standard output streams are fully
+  buffered if and only if stream can be determined not to refer to
+  an interactive device.[.]
 
-On Wed, Apr 3, 2024 at 12:55=E2=80=AFPM Solar Designer <solar@openwall.com>=
- wrote:
+Unless there is a new way of checking and/or unless creating
+interactive devices is restrained to /dev/tty (pty etc) it seems
+some calls done by C libraries cannot be avoided, only be delayed
+a bit further down the road than what musl does.
 
-> On Wed, Apr 03, 2024 at 08:12:24AM -0700, midawson wrote:
-> > The planned security releases are now available. You can read more about
-> > the details in -
-> > https://nodejs.org/en/blog/vulnerability/april-2024-security-releases/
->
-> Thank you for bringing these to oss-security.  Going forward, it'd be
-> great if you post the actual detail - not only a title+link.
->
-> I'm attaching to this message the Markdown content of the above blog
-> post, as taken from
->
-> https://github.com/nodejs/nodejs.org/blob/main/pages/en/blog/vulnerabilit=
-y/april-2024-security-releases.md
->
-> Alexander
->
+  $ cat t.c
+  #include <stdio.h>
+  int main(void) { putc('\n',stdout);return 0; }
+  $ gcc -o zt t.c
 
---0000000000008c47dc06153505e4--
+GNU libc:
 
+  $ strace ./zt
+  newfstatat(1, "", {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x3), ...}, AT_EMPTY_PATH) = 0
+
+  $ strace ./zt >/dev/null
+  newfstatat(1, "", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}, AT_EMPTY_PATH) = 0
+  ioctl(1, TCGETS, 0x7ffe2151dc30)        = -1 ENOTTY (Inappropriate ioctl for device)
+
+  $ mkfifo c; cat < c & strace ./zt > c
+  newfstatat(1, "", {st_mode=S_IFIFO|0640, st_size=0, ...}, AT_EMPTY_PATH) = 0
+
+musl always simply says
+
+  ioctl(1, TIOCGWINSZ, {ws_row=55, ws_col=191, ws_xpixel=1910, ws_ypixel=1045}) = 0
+or
+  ... = -1 ENOTTY (Not a tty)
+
+ |using the standard file descriptors when setting up the event loop
+ |to run the program but that is after the user has been verified.
+ |I will add checks that the fd is a character special file before
+ |calling isatty(3).  In most cases the code wants the contents of
+ |struct stat anyway, so the S_ISCHR check is basically free.
+ |
+ |> If this is the case, I think it should not be difficult for other
+ |> setuid programs to do similar things.  I am just thinking for a
+ |> while, and cannot find a case where ioctl calls are unavoidable.
+ |
+ |If there are setuid programs that call ttyname(3) that will also
+ |call tcgetattr(3).  Also, the glibc getpass(3) function will use
+ |tcgetattr(3) and tcsetattr(3) (to disable echo) on the standard
+ |input if /dev/tty is not available.  For getpass(3) this could be
+ |avoided by only trying to disable echo when using /dev/tty.  That
+ |would change the behavior of things like:
+ |
+ |    su < /some/other/tty 
+
+..even though it mostly reiterates what is said.
+
+ |when /dev/tty is unavailable but I don't know what use case that
+ |would actually support.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
