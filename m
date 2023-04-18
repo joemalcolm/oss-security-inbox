@@ -1,92 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/22/2
-Message-ID: <20230322170158.GA10390@openwall.com>
-Date: Wed, 22 Mar 2023 18:01:59 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Tomas Mraz <tomas@...nssl.org>
-Subject: CVE-2023-0464: OpenSSL: Excessive Resource Usage Verifying X.509 Policy Constraints
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/4
+Message-ID: <20230418012659.GH1655348@millbarge>
+Date: Tue, 18 Apr 2023 01:26:59 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Heping Wang <peacewong@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-27602: Apache Linkis publicsercice module unrestricted upload of file
 Content-Type: text/plain; charset=utf-8
 
-Somehow the OpenSSL project doesn't post these in here on their own; I
-wish they did, but meanwhile let's forward.
+On Mon, Apr 10, 2023 at 06:14:37AM +0000, Heping Wang wrote:
+> https://linkis.apache.org
+> https://www.cve.org/CVERecord?id=CVE-2023-27602
 
------ Forwarded message from Tomas Mraz <tomas@...nssl.org> -----
+Hello Heping, thanks for contacting the oss-security mail list about this
+security issue in an Apache project.
 
-Date: Wed, 22 Mar 2023 15:49:38 +0000
-From: Tomas Mraz <tomas@...nssl.org>
-To: openssl-project@...nssl.org, openssl-users@...nssl.org,
- openssl-announce@...nssl.org
-Subject: OpenSSL Security Advisory
+I'd like to suggest that your email would be far more useful if
+it included some details like affected versions: ideally, when a
+vulnerability was introduced, and definitely, when it was fixed, if a
+fix is available. Best would be a direct link to a patch in a source
+control system, or attaching the patch directly.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This particular email has very few details and no references for a fix so
+it is very difficult for anyone to take concrete actions.
 
-Excessive Resource Usage Verifying X.509 Policy Constraints (CVE-2023-0464)
-===========================================================================
+Here's two recent postings that are far easier for downstream distributors
+and consumers alike to use:
+https://www.openwall.com/lists/oss-security/2023/04/04/1
+https://www.openwall.com/lists/oss-security/2023/03/21/3
 
-Severity: Low
+I'd like to encourage Apache to use these as inspiration for future
+oss-security postings.
 
-A security vulnerability has been identified in all supported versions
-of OpenSSL related to the verification of X.509 certificate chains
-that include policy constraints.  Attackers may be able to exploit this
-vulnerability by creating a malicious certificate chain that triggers
-exponential use of computational resources, leading to a denial-of-service
-(DoS) attack on affected systems.
+Thanks
 
-Policy processing is disabled by default but can be enabled by passing
-the `-policy' argument to the command line utilities or by calling the
-`X509_VERIFY_PARAM_set1_policies()' function.
 
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 2017771e (for 3.1),
-commit 959c59c7 (for 3.0), commit 879f7080 (for 1.1.1) in the OpenSSL
-git repository, and commit 2dcd4f1e (for 1.0.2) in the OpenSSL git
-repository for premium customers.
-
-Once they are released:
-
-OpenSSL 3.1 users should upgrade to 3.1.1.
-OpenSSL 3.0 users should upgrade to 3.0.9.
-OpenSSL 1.1.1 users should upgrade to 1.1.1u.
-OpenSSL 1.0.2 users should upgrade to 1.0.2zh (premium support customers only).
-
-This issue was reported on 12th January 2023 by David Benjamin (Google).
-The fix was developed by Dr Paul Dale.
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
-
-References
-==========
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230322.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
------BEGIN PGP SIGNATURE-----
-
-iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmQbItgSHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55t8AgP/3mUOflbZ7e8yLjgEMqFqCSFlSQo5bFK
-gh2h2NOKBjkvzFtlqnAR+bqNPAr9CEosSRF1LiVtKu9RhaIh1LlTsp53aFWSP48p
-7LekiPmd5hnorO72dB1eLlbHPIe0lh2It2cDlkYc95BVcttQEzHbyygVKBD0f0cN
-WqslsIeVPIqMIZMHAlpnINz630Rsn/4cif+6U8gYgNN51f7WeCArPp3U7hAhHVuC
-b7lOVXBNzdfdFzKVjSTHqvWBib/Ji+Ga4knHFZya7VLQagKjDJiQB9uBpuCOmzxD
-kb9nJCSroIwf74wDxJxr4gb314/hju+jpC2Xny8l7SXxJUahdMywJLgofPMEOhWb
-lRod8SHr0Je5Gpp4R+p6cmwr0PM76KPxcLOvsa7OsIwIZQvFyxMVvsGYdMxg0ads
-qDqROqkb1Mx+Fa0smySe6Xru0RtEgXAk7AIltz8AqHmCvMED8S7ZwhsHipM/eLYZ
-Iky8SsSYn4K3a4Sa05+IrQARWmDCZHRHp9JfHacPq0HunNrAX5unDfHUNAx1TZcX
-0cSeN/SF56sds+SEjJpURCHxO+Z4toUxpaVKqZyLsDhuq/IwrbbaxhBFkNiHcWOg
-vCinoWvhpjo2YBs0BVJNIu4wpNhnCwOP7+91zmTAvD28xoBhSHKWkwGuypPkW3bO
-Y6lneBDfoNpj
-=iUFS
------END PGP SIGNATURE-----
-
------ End forwarded message -----
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
