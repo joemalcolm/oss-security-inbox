@@ -1,86 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/3
-Message-ID: <40116rn7-8spr-8s65-275q-qq2pr4815911@unkk.fr>
-Date: Mon, 20 Mar 2023 08:26:09 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-27535: FTP too eager connection reuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/15
+Message-ID: <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
+Date: Tue, 18 Apr 2023 20:13:24 +0300
+From: 0xef967c36@...il.com
+To: oss-security@...ts.openwall.com
+Cc: Ruihan Li <lrh2000@....edu.cn>
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-27535: FTP too eager connection reuse
-==============================================
+On Tue, Apr 18, 2023 at 05:40:16PM +0200, Solar Designer wrote:
+> BTW, even with the kernel bug fixed, there are ioctl number clashes
+> between different devices, so even e.g. isatty(3) is not necessarily
+> safe if called with elevated privileges under a possible confused deputy
+> scenario.  Here's strace showing some clashes on older Linux/i386:
+> 
+> $ cat isatty.c
+> int main(void) { return isatty(0); }
+> $ gcc isatty.c -o isatty
+> $ strace -e ioctl ./isatty
+> ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27535.html)
+No, there's no clash. That was a bug in strace (fortunately fixed in
+newer versions).
 
-VULNERABILITY
--------------
+Those values macros are different; and they were ALWAYS different.
 
-libcurl would reuse a previously created FTP connection even when one or more
-options had been changed that could have made the effective user a very
-different one, thus leading to the doing the second transfer with wrong
-credentials.
+> IIRC, I was the one to add this feature to strace 20+ years ago:
+> 
+> * Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
+> - Updated to today's CVS version (post-4.4) with an additional fix for
+> displaying all possible ioctl names when there's more than one match,
+> 
+> So the number clashes were known, but the security relevance maybe not.
 
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse if one of them matches the setup. However, several FTP
-settings were left out from the configuration match checks, making them match
-too easily. The settings in questions are `CURLOPT_FTP_ACCOUNT`,
-`CURLOPT_FTP_ALTERNATIVE_TO_USER`, `CURLOPT_FTP_SSL_CCC` and `CURLOPT_USE_SSL`
-level.
+There was no number clash. That 'foo or bar or quux' "fix" in strace
+was stupid.
 
-We are not aware of any exploit of this flaw.
+$ cc -xc - <<EOT && ./a.out
+#include <sys/ioctl.h>
+#include <linux/soundcard.h>
+#include <sound/asound.h>
+#include <stdio.h>
 
-INFO
-----
-
-CVE-2023-27535 was introduced in [commit
-177dbc7be07125582](https://github.com/curl/curl/commit/177dbc7be07125582),
-shipped in curl 7.13.0.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.13.0 to and including 7.88.1
-- Not affected versions: curl < 7.13.0 and curl >= 8.0.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2023-27535](https://github.com/curl/curl/commit/8f4608468b890dc)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.0.0
-
-  B - Apply the patch to your local version
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 5, 2023. We contacted
-distros@...nwall on March 13, 2023.
-
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+int main(int ac, char **av){
+     printf("%#lx %#lx %#x\n", SNDCTL_TMR_TIMEBASE, SNDRV_TIMER_IOCTL_NEXT_DEVICE, TCGETS);
+    return 0;
+}
+EOT
+0xc0045401 0xc0145401 0x5401
