@@ -1,93 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/6
-Message-ID: <20231014164334.GA19096@openwall.com>
-Date: Sat, 14 Oct 2023 18:43:34 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/12
+Message-ID: <043b82cc304acacf@millert.dev>
+Date: Tue, 18 Apr 2023 08:27:16 -0600
+From: "Todd C. Miller" <Todd.Miller@...o.ws>
+To: Ruihan Li <lrh2000@....edu.cn>
+cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 13, 2023 at 11:19:18PM -0400, Neal Gompa wrote:
-> On Fri, Oct 13, 2023 at 8:07???PM Martin Hecht <martin.hecht@...s.de> wrote:
-> > I'd like to give an example against this. With the recent glibc issue
-> > (CVE-2023-4911) we were closely following the upcoming fixed packages.
-> > While we were installing the Rocky packages in the late evening of Thu Oct 5,
-> > I had the impression that the Redhat packages became available later on Friday.
-> > It might be attributed to some hours of delay between arriving on the repo
-> > servers vs. being announced via advisory. But, anyhow, accusing Rocky being
-> > late in providing packages at least is not valid in general imho. At least
-> > important ones, like this one, seem to arrive rather quickly. Without mentioning
-> > the distros, I have seen quite some announcements even around a week later.
-> 
-> The fix for Rocky 8 and Rocky 9 are purely imports from RHEL:
-> 
-> * R8: https://git.rockylinux.org/staging/rpms/glibc/-/commit/6433675bfaab392b362993d8ff8d576335e6bcd4
-> * R9: https://git.rockylinux.org/staging/rpms/glibc/-/commit/610a8a6829e1e604ff018daccf6bf63620edd19d
+On Tue, 18 Apr 2023 20:41:35 +0800, Ruihan Li wrote:
 
-Right, but we also had an effective mitigation for R9 pushed publicly in
-Security SIG on Oct 3, same day as the vulnerability was made public:
+> I just noticed that sudo added the isatty check a day ago (April 17th)
+> [1]. I think this change was inspired by this vulnerability, wasn't it?
+> However, as Jakub Wilk pointed out, isatty is still implemented by an
+> ioctl call, so the addition of this check has nothing to do with this
+> vulnerability. Nevertheless, it is still a good idea to make sure isatty
+> succeeds before using ioctl calls with other (perhaps more complex and
+> arbitrary) tty commands.
+>
+> [1]: https://github.com/sudo-project/sudo/commit/5650b436e6ba20807758a4154e70
+> 9c10c1c87be8 
 
-https://sig-security.rocky.page/packages/glibc/
+That is correct.  There are further changes to use TIOCGWINSZ on
+/dev/tty instead of stderr.  Using an open fd of /dev/tty makes the
+isatty() call superfluous but it doesn't hurt to have it.
 
-This was possible due to explicit permission I requested/obtained from
-Qualys in a thread on linux-distros.  The rules do mention that things
-like that can be done "with the reporter's explicit approval".  (This
-option also came up in the recent discussion around illumos distros.)
-
-> I did see that Louis Abel attempted to do something for Rocky 8, but
-> it was not shipped.
-
-Yes, I noticed this one too and asked him about it, and yes it was just
-a test that was not shipped.
-
-I would be pushing a Security SIG package addressing the issue for R8 as
-well if we didn't get upstream's update for a day more (after Oct 5).
-
-> I have also not seen much in terms of upstream
-> engagement indicating the bidirectional relationship expected for
-> members of linux-distros@.
-
-I agree this is something to improve, and I intend to be contributing to
-that with my CIQ or Rocky Linux hat on, as well as encourage others with
-Rocky Linux to contribute to upstreams more.
-
-I did contribute to the linux-distros discussion on this glibc issue, to
-an extent greater than I would have without intent to push a mitigation
-or fix into Rocky Linux Security SIG.
-
-> > I think the point here is "*not only* being a rebuild of another distro".
-> > So, their engagement with SIG should already be a valid add-on to be honored.
-> > Anyhow, the fact that CIQ offers LTS branches and professional support,
-> > as well as their promise to provide backports of upstream fixes independent
-> > of RHEL clearly distinguishes them from a "pure distro rebuild".
-> >
-> > https://ciq.com/products/rocky-linux/benefits/enterprise-level-support/
-
-Quoting from the above web page:
-
-"CIQ offers an additional paid service for customers: Rocky Linux Long
-Term Support ("LTS"). This is designed for organizations who want to
-remain on a previous minor release of Rocky Linux (like 8.6), which is
-no longer supported by the public project. CIQ staff will continue
-backporting security and bug fixes into the supported minor releases for
-a period of time, after the public project has retired that minor
-release.
-
-Subscribed customers who value stability can remain on their desired
-release longer, while still enjoying minor security and bugfix updates
-to their packages. As of this writing, CIQ is supporting non-zero,
-even-numbered point releases (8.6, 8.8, 9.2, 9.4, etc.) with its LTS
-offerings. LTS support lasts for 18 months after the release is retired
-from the public project. For example, Rocky 8.6 was retired in November
-2022. CIQ's LTS-8.6 support will last 18 months from that, or May 2024."
-
-> The point I'm making is that SIGs do not count because they cannot
-> obey embargo regulations. No open project or community project can do
-> that without having some mechanism for private controls, which is
-> antithetical to the community process. They fundamentally are
-> ineligible to join because they cannot keep anything secret.
-
-SIGs are ineligible to join on their own.  A distro's security team that
-would only push to SIGs on the coordinated release date can.
-
-Alexander
+ - todd
