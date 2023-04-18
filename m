@@ -1,83 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/12
-Message-ID: <20231003205825.GA24992@openwall.com>
-Date: Tue, 3 Oct 2023 22:58:25 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/1
+Message-ID: <20230418005741.GA25557@openwall.com>
+Date: Tue, 18 Apr 2023 02:57:41 +0200
 From: Solar Designer <solar@...nwall.com>
-To: Andrew Cooper <andrew.cooper3@...rix.com>
-Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+To: oss-security@...ts.openwall.com
+Cc: Ruihan Li <lrh2000@....edu.cn>, "Todd C. Miller" <Todd.Miller@...o.ws>
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2023 at 06:16:22PM +0100, Andrew Cooper wrote:
-> On 26/09/2023 5:09 pm, Solar Designer wrote:
-> > Is the original paper public?
+Hi,
+
+Thank you Ruihan Li for finding and handling this vulnerability so well,
+and for the detailed write-up.
+
+When discussing this on linux-distros a week ago, I wrote:
+
+> Regarding the vulnerability itself, do you think it'd be a good idea to
+> also inform the maintainer of sudo?  My thinking is that sudo could be
+> hardened not to trigger ioctl's (which I guess it does via tcgetattr()
+> or such?) while having euid=0 (and thus root's typical capabilities) -
+> it could temporarily seteuid(uid), then switch back due to saved uid.
 > 
-> https://www.usenix.org/system/files/usenixsecurity23-hofmann.pdf
-> 
-> Section 8.2.1 for the results specific to divides.
+> Did you identify (m)any other programs usable for this attack?  I guess
+> some with functionality "similar" to sudo's could also be "affected"
+> (there are several implementations of su in different packages for
+> Linux, pkexec, various container entry tools).
 
-Thank you!
+And indeed Ruihan Li came up with the list of other likely usable
+programs on a typical Linux distro, which makes the point of hardening
+only sudo moot, and so we decided to postpone further discussion until
+this is public on oss-security.
 
-> > Meanwhile, I observe a difference between Linux and Xen fixes - Linux
-> > uses native-sized DIV and you use byte-sized, as a clever way not to
-> > clobber RDX and maybe achieve lower latency.  Speaking of which:
-> >
-> > $ git clone https://github.com/InstLatx64/InstLatx64
-> > $ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
-> >
-> > Looks like maybe not that much difference, after all, if this data applies.
-> 
-> Agner Fogh's manuals have a little more information, and importantly
-> give the upper bound which tops out at 47 cycles.
+OTOH, not all distros are typical.  Besides Android, we got rid of all
+SUID binaries in default install of Owl over a decade ago.  While Owl is
+now effectively EOL'ed, some of its legacy lives on in ALT Linux
+distros, which are maintained, and other distros can do similar - it's
+primarily a matter of caring to do it or not.  We did not package sudo
+in Owl, but if someone were to install it then it'd be the only program
+exposing this kernel vulnerability.  So in that case, hardening sudo
+would have helped.
 
-Of course, the worst case is much worse like that.  If I'm reading this
-right, the timings I found above are for dividing 0 by something, so
-should apply to Linux's 0/1.  Xen does 1/1 instead:
+On Sun, Apr 16, 2023 at 10:57:27PM +0200, Steffen Nurpmeso wrote:
+> So this general beating onto SETUID or super capable programs
+> smells like bad fish Hollywood boom-boom again, no?
 
-https://github.com/xen-project/xen/commit/d7b78041dc819efde0350f27754a61cb01a93496
+That lengthy list of them is actually in defense of sudo not having been
+hardened in this respect - it shows that this would not matter on a
+typical Linux system anyway.
 
-Luckily, the timings for 1/1 look just as good:
+> You have to do some things, and if you give up privileges
+> thereafter, extended capabilities are gone.
 
-$ grep -r ': DIV .* 1/1' InstLatx64/AuthenticAMD/*_Zen_*.txt
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  415 X86   : DIV r8 1/1                    L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  416 X86   : DIV r8 1/1 ax upd             L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  427 X86   : DIV r16 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  428 X86   : DIV r16 1/1 ax upd            L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  429 X86   : DIV r16 1/1 ax/dx upd         L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  441 X86   : DIV r32 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  442 X86   : DIV r32 1/1 eax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  443 X86   : DIV r32 1/1 eax/edx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  455 AMD64 : DIV r64 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  456 AMD64 : DIV r64 1/1 rax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  457 AMD64 : DIV r64 1/1 rax/rdx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-
-> There is at least a 1 cycle change in latency between the byte and
-> non-byte forms, which I suspect is down to the non-byte forms needing to
-> consume an extra input register before starting.
-
-Makes sense.
-
-> But the main reason for choosing the byte form is indeed fewer moving
-> parts to worry about in the critical sections, where one wrong
-> instruction can render all protections moot.
-
-Right.  Great not to clobber RDX.
-
-However, this may be another reason to actually look into whether the
-remainder also leaked, and whether the byte-sized form prevents that
-leak despite of it not touching the architectural register where the
-remainder would be stored by a preceding larger DIV.  I expect that
-we're fine here - it's the divider unit's internal register and not the
-architectural register that should matter - but worth making sure.  It
-could also theoretically be e.g. some buffer registers in the middle,
-where the byte-sized form wouldn't overwrite the full contents.
+POSIX saved IDs should help retain/regain the capabilities.
 
 Alexander
