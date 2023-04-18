@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["363" "Tuesday" "10" "January" "2017" "11:17:45" "-0500" "Dan McDonald" "danmcd@omniti.com" "<6D927636-CDD5-4A48-90F8-3149133ED354@omniti.com>" "14" "Re: [oss-security] CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)" "^Cc:" nil nil "1" "2017011016:17:45" "[oss-security] CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)" (number mark "        danmcd@omnit Jan 10   14/363   " thread-indent "\"Re: [oss-security] CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)\"\n") "<D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>" ("<D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3654 invoked by uid 550); 10 Jan 2017 16:20:23 -0000
+Received: (qmail 22170 invoked by uid 550); 18 Apr 2023 17:15:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +6,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3106 invoked from network); 10 Jan 2017 16:17:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=omniti-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Yx9cTN2Lq/K9zFXduIETdrqJCWC8qx/QyGfbLfRdLiE=;
-        b=DKGRSY42iCoRnVU6/I9BjFRNW5uzMGMucT6eVvH8LSSy/fjhBOHUJ9dYakr6A6h+jF
-         ou44ZiUcBtIXECN1gaPl/8Zxe/zx2K2RUAqdC6FAkWtqXSlCzZJfe0ctaHd0wyhSkobY
-         1LHy+vqj4zhK91q1dFXUjOvE2weJKaA5V1z+SKSXB9aYhjNL8bWI4C8wHSncH2GR7pLg
-         FHV1VWKhUF20CZMj7fUKCfE/gdF1Cud3G5VP8eo01RFcxF2kSN0F8mGvzjFeh5p6S9nR
-         Ubvh5nLePO7pIWFovIm1d6a9X0w0KWPU4s4e6z+wNmokK2ykwnbijERVQSq8/sqbl3wV
-         4gLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Yx9cTN2Lq/K9zFXduIETdrqJCWC8qx/QyGfbLfRdLiE=;
-        b=gSl++iFugrRZwNUJa60b3SWyRMaBNorOsImq7y+vPx3VSkYhKTMX1Kgm+l804c4m3i
-         /hpDIBS2BT2ZIbJeR1XEPOep3s+gWb0W+uXrKAyBgtYyFwhj7E2xBTGNmmXqnME3WLiW
-         rPccAgwFiBIXTdrk/r1zA0tK4w93+PHv5FCJ2QMWGaP87kPSLXGBl+QozMLqfD2G1+U0
-         DS2c9i2tDLWYyz9PyJ3SwFxHN9PpCZYlb4jYPwZ2S7vAtJt6v+Z88ZtzcsgidRJNSACA
-         vxXkSMxibf+MAhHVcdEF/dXmJmMX45uJ0WzONGr5uaCs+5YWNeZogWhd1+0QUCxlxxkO
-         xUkg==
-X-Gm-Message-State: AIkVDXKCB7ir1STquaVM4nsKTbXN1jafhgucg28cWvsFAx6TH+CpGIC5Aw4eS9yMeOT8GHSM
-X-Received: by 10.55.130.4 with SMTP id e4mr3867688qkd.121.1484065067632;
-        Tue, 10 Jan 2017 08:17:47 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
-In-Reply-To: <D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6D927636-CDD5-4A48-90F8-3149133ED354@omniti.com>
-References: <D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>
-X-Mailer: Apple Mail (2.3259)
-Cc: Dan McDonald <danmcd@omniti.com>
-Date: Tue, 10 Jan 2017 11:17:45 -0500
-From: Dan McDonald <danmcd@omniti.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-7056 ECDSA P-256 timing attack key
- recovery (OpenSSL, LibreSSL, BoringSSL)
+Received: (qmail 17641 invoked from network); 18 Apr 2023 17:13:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681838007; x=1684430007;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qFtge51eb+Tf3A6YN4O3gUeXnFr1K3OEOBVKTmB6ldQ=;
+        b=DBuKDCsM3PNQ/RSboP9HoObVLJUbaCZGM8obFNWgWss5vF9hsm5McRakcFF0yEfDTV
+         DtHVJP3GAQsaPNKoxmX/8fth5blmi1zYTcqNQZ4wYiWRGOwqTGc8rp6EXdVk1bK9IEZg
+         NaRS9WNC6MlgFYnsCbm+rfe3xRSxOtevInuoaRZsnNGZ9l+9jgN2XQGx2YODrVk+vNa0
+         z8AiVPTxjZKoLmYv0QanjcRxOOiFug5/pe1aUG8w0FWztqnV5pLKeUKvY+0l9/c6YyVl
+         Ecso4C7+F8vL/i3DgiQfDlysWFx+Q9+m4NQQLkBnGklb/ifV0/Mq/gyZlGwD5gsY6GYm
+         v0Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681838007; x=1684430007;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qFtge51eb+Tf3A6YN4O3gUeXnFr1K3OEOBVKTmB6ldQ=;
+        b=G35adlSEcU4C6wethHAwfykDaG+iOPX79+vXrhfy77bOX+63jVXPq3pcKj4dtloK+E
+         Ohs0P6J6roFA+hbfe0HNLTCWBMiVkB0PMtP8uhQR1pn5hRk1jA2/u1sPrHJOtWZ2NxWF
+         07gCASDbyEIA/0XC3J18A6zwTWa+BpuUDANB9sev9lHpsABBzTfhrr2srrEZ86OeUvN+
+         ByF3z8hJ/8yd68EJzqk72IITaDD/AMY8OR6XsG9oYCwqBit3C0923EshMaJYdBq6SS1d
+         F37njR0xxMiSUTCy0mfHrL439OrCtdvN34bwwP7KfuTm1bSiEtzoLPmJ5GxY+RlyU9gF
+         t19g==
+X-Gm-Message-State: AAQBX9e+pjYtbRqQgiEABdI+juF44R026jK0XACeIu4ikdUSZHN8OFZ0
+	0B1zbl6NuTN9ifbTV0wQa1mA7kXa4D4=
+X-Google-Smtp-Source: AKy350ZWdlCiMUbVQMODqccWIJHXpC49lKStRA5LDFYW+vP4TdYs3OHDiYxBJKmE5r6uGvmGS3kGjg==
+X-Received: by 2002:a7b:cb07:0:b0:3ed:514d:e07f with SMTP id u7-20020a7bcb07000000b003ed514de07fmr15294228wmj.3.1681838006971;
+        Tue, 18 Apr 2023 10:13:26 -0700 (PDT)
+Message-ID: <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
+Date: Tue, 18 Apr 2023 20:13:24 +0300
+From: 0xef967c36@gmail.com
 To: oss-security@lists.openwall.com
+Cc: Ruihan Li <lrh2000@pku.edu.cn>
+References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
+ <20230418154016.GA959@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230418154016.GA959@openwall.com>
+Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized
+ management command execution
 
+On Tue, Apr 18, 2023 at 05:40:16PM +0200, Solar Designer wrote:
+> BTW, even with the kernel bug fixed, there are ioctl number clashes
+> between different devices, so even e.g. isatty(3) is not necessarily
+> safe if called with elevated privileges under a possible confused deputy
+> scenario.  Here's strace showing some clashes on older Linux/i386:
+> 
+> $ cat isatty.c
+> int main(void) { return isatty(0); }
+> $ gcc isatty.c -o isatty
+> $ strace -e ioctl ./isatty
+> ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
 
-> On Jan 10, 2017, at 10:50 AM, Cesar Pereida Garcia <cesar.pereidagarcia@t=
-ut.fi> wrote:
->=20
-> Mitigation:
-> Users of OpenSSL with the affected versions should apply
-> the patch available in the manuscript at [1].
+No, there's no clash. That was a bug in strace (fortunately fixed in
+newer versions).
 
-You should just mail the patch to this list.  I'm having a hard time copyin=
-g/pasting the uuencoded blob from your paper, Cesar.
+Those values macros are different; and they were ALWAYS different.
 
-Thanks,
-Dan
+> IIRC, I was the one to add this feature to strace 20+ years ago:
+> 
+> * Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
+> - Updated to today's CVS version (post-4.4) with an additional fix for
+> displaying all possible ioctl names when there's more than one match,
+> 
+> So the number clashes were known, but the security relevance maybe not.
 
+There was no number clash. That 'foo or bar or quux' "fix" in strace
+was stupid.
+
+$ cc -xc - <<EOT && ./a.out
+#include <sys/ioctl.h>
+#include <linux/soundcard.h>
+#include <sound/asound.h>
+#include <stdio.h>
+
+int main(int ac, char **av){
+     printf("%#lx %#lx %#x\n", SNDCTL_TMR_TIMEBASE, SNDRV_TIMER_IOCTL_NEXT_DEVICE, TCGETS);
+    return 0;
+}
+EOT
+0xc0045401 0xc0145401 0x5401
