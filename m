@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["310" "Thursday" "17" "September" "2015" "11:08:35" "-0500" "Mark Felder" "feld@feld.me" "<1442506115.698922.386447881.3040FC86@webmail.messagingengine.com>" "16" "Re: [oss-security] CVE-2015-0854: Insecure use of system() in shutter" nil nil nil "9" "2015091716:08:35" "[oss-security] CVE-2015-0854: Insecure use of system() in shutter" (number mark "        feld@feld.me Sep 17   16/310   " thread-indent "\"Re: [oss-security] CVE-2015-0854: Insecure use of system() in shutter\"\n") "<1442161889.9920.4.camel@debian.org>" ("<1442161889.9920.4.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21835 invoked by uid 550); 17 Sep 2015 16:08:49 -0000
+Received: (qmail 12049 invoked by uid 550); 18 Apr 2023 01:29:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21810 invoked from network); 17 Sep 2015 16:08:48 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=YSEie8DpoDKOSbHk2RbJ8M2HTuU=; b=mBTRlu
-	xnB0klQ4s+TyyP5k28O0LQkkiPV6FMiFcadH0eW+ZDfXkuIkjcmfrf/PUM9XaiKN
-	H+laeVaLZOZ1DE4LXgJNejiJr07dRRbR0jRcDHHWITAeGkMmF1OPXkumAYZEY8TY
-	im/QDe0WCKVR5KaCQKG056F9eakKITa464D54=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=YSEie8DpoDKOSbH
-	k2RbJ8M2HTuU=; b=mrr0TdeI7PSV/t9oynXc8yJ/gYcqTrJHoK+6DqXnsMMunYz
-	oWHqofKvyK/HOqVqK+caR9HQ2bV8VCtYllP5uK9iJ17h2FypJPoNiBw12/SvPWlM
-	EWcsLzLl1b3Rbu0mAmK+xD2odJHAbOCs+bnNxcyWMMzryVeB3Y+VgydJg3sM=
-Message-Id: <1442506115.698922.386447881.3040FC86@webmail.messagingengine.com>
-X-Sasl-Enc: Kdv9xL5abWMa3WqiZmcn019rhJZ9JOc2dn17WZPORJN3 1442506115
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-746d2121
-In-Reply-To: <1442161889.9920.4.camel@debian.org>
-References: <1442161889.9920.4.camel@debian.org>
-Date: Thu, 17 Sep 2015 11:08:35 -0500
-From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-0854: Insecure use of system() in shutter
-To: oss-security@lists.openwall.com
+Received: (qmail 11919 invoked from network); 18 Apr 2023 01:29:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1681781384;
+	bh=/mbMVJKdo0hKhf+YHhP2HBugG9Qw8AHA5z1A9+PaorY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=uglTxSXoyyk5IiuekODgeS2hTM8wUXUll8x8KAKEqHQ0bblUB9AWMs3fteJuBLzeq
+	 w7TqBht1+HdDwmd+uy/cBogKfVoCtKqEQG4v7VCHgxr1MBBX60eDN5XJLO7PVARQrk
+	 gZKJEYvsJ/oqGXjyP3ct+qjncDg+rD4kMWaZye6JUCILMNPVtThg9y+EssvBQUppMi
+	 8Fq+LgX7Lje2GjlnrF2rhinL4OHGf7aK228yGhrksK22woFgphr8w6p9miuGVIaIwW
+	 pquu+1vd1/gtnhIPTkhFiS2bSRgxLwZyJtxYzzOPgcr2pn7Hj8JmvVI+HB0nI7JBJV
+	 Ls2jvs0W7Cv9w==
+Date: Tue, 18 Apr 2023 01:29:42 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: Daniel Gaspar <dpgaspar@apache.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20230418012942.GL1655348@millbarge>
+Mail-Followup-To: Daniel Gaspar <dpgaspar@apache.org>,
+	oss-security@lists.openwall.com
+References: <8b244a2b-5079-02db-135d-f584af57add3@apache.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="eWbcAUUbgrfSEG1c"
+Content-Disposition: inline
+In-Reply-To: <8b244a2b-5079-02db-135d-f584af57add3@apache.org>
+Subject: Re: [oss-security] CVE-2023-25504: Apache Superset: Possible SSRF on
+ import datasets
+
+--eWbcAUUbgrfSEG1c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Mon, Apr 17, 2023 at 09:57:11AM +0000, Daniel Gaspar wrote:
+> https://superset.apache.org
+> https://www.cve.org/CVERecord?id=CVE-2023-25504
+
+Hello Daniel, thanks for contacting the oss-security mail list about this
+security issue in an Apache project.
+
+I'd like to suggest that your email would be far more useful if
+it included some details like affected versions: ideally, when a
+vulnerability was introduced, and definitely, when it was fixed, if a
+fix is available. Best would be a direct link to a patch in a source
+control system, or attaching the patch directly.
+
+This particular email has very few details and no references for a fix so
+it is very difficult for anyone to take concrete actions.
+
+Here's two recent postings that are far easier for downstream distributors
+and consumers alike to use:
+https://www.openwall.com/lists/oss-security/2023/04/04/1
+https://www.openwall.com/lists/oss-security/2023/03/21/3
+
+I'd like to encourage Apache to use these as inspiration for future
+oss-security postings.
+
+Thanks
 
 
+--eWbcAUUbgrfSEG1c
+Content-Type: application/pgp-signature; name="signature.asc"
 
-On Sun, Sep 13, 2015, at 11:31, Luke Faraone wrote:
-> 
-> This bug has existed since (at least) 0.85.1, and although a patch is
-> available a fixed version has not been released.
-> 
+-----BEGIN PGP SIGNATURE-----
 
-The xdg functions were not introduced until 0.80, so that is the oldest
-affected version.
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmQ98oYACgkQ8yFyWZ2N
+LpeqiQgAjeOJ0D+gQGQAJbriuuanRK4l71H5YO0w7/JLrXcG4dRZBzcXRxzmfGMT
+xI18T9dBwtPRLCEoYz1h8h4/IBCQ/6rIvi6t5hVQC96DCtNLjItUp1u9hHKpPHf/
+/B1e0puIkYTN/Uq4xYB6octyh0RbRtrY4DUvIhwDiQiW4p7Q+UxZiYWzwFEkoGu6
+YazoO4w25N6Bh+auUDOIUK8TvzcLCYX5oiRdsJP2bBbvsMdCoKA9QLQ9K/9M6VZN
+hWU8ubQmprjPPS5JPUVIsEz5T5zrie8d3+zGcqdkWO4Qmvo94IbDadHeECcwB0l5
+07CNz7xU7VWFZM1h9SdtjBItARIi6g==
+=Yob7
+-----END PGP SIGNATURE-----
 
-
-
--- 
-  Mark Felder
-  feld@feld.me
+--eWbcAUUbgrfSEG1c--
