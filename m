@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1697" "Tuesday" "5" "November" "2019" "08:07:30" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20191105070729.GA7195@lorien.valinor.li>" "44" "Re: [oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" nil nil nil "11" "2019110507:07:30" "[oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" (number mark "U       carnil@debia Nov  5   44/1697  " thread-indent "\"Re: [oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid\"\n") "<ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>" ("<ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>") nil nil nil nil nil nil nil "Re: [oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27782 invoked by uid 550); 5 Nov 2019 07:07:45 -0000
+Received: (qmail 26125 invoked by uid 550); 18 Apr 2023 13:04:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,89 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27756 invoked from network); 5 Nov 2019 07:07:44 -0000
+Received: (qmail 6112 invoked from network); 18 Apr 2023 13:00:34 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=A23Ev8r8BQloNEyIlz+LZgsyhDg2lAqWY3zmJGo8esc=;
-        b=LZ+lhZAT4WBakRZr5S+taT5Ra2F7mp4TPFvELdHgorlnm5UVCUForaguCyHoWTO/vl
-         TRThfYA4wrTtRXlSFby1yXygV20qrwjseSWm8xuV3SO7PgMGEE9u06bzkKVaA7As75BC
-         LFL7hkaR6DLvOMECV8kddpxeVkq8hykNaN5wdrKhtZxDDKXi++RPGHpyZH6wAZtFP5JS
-         7E4vxEmjFpUS6gpqstiHvqf/YeNpy8aqXwJuhyxAET7XeVQ7zMv59nafKuHfiZtcT0L1
-         5E4SKSLQcoDm4Y/QuqSc3Wiu4hiMpejL5kmcZesLRrX1H0STuGJgikPsZfAb2h06dDif
-         156g==
+        d=gmail.com; s=20221208; t=1681822822; x=1684414822;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=g3WQgP07J9gP6Dsa90WXunC0PLS8LOks3KyxD7+hgz8=;
+        b=kqoRimw1WoZKvp/mYzE3wBTWriYF6+Z63muan3sulSbeJKao/LBFE54dMfOrGxhfvh
+         N4FAiY7m60lqNH/VM7VSytphaaYM9UJL26UO5499cijg4ul5KsdEiJu7QXJoHwCW/JPC
+         r1pbbOxP6JdluJJJNf+PsCAJuVFuSQDI/luPCSZpjlCvu/fMVY3wgTteu/X+tkDwqkjq
+         VHlIpEpmPhwlsYoFy3a2bm1jNqBYk6rbm75+nzzXyeIeehKsg3C9hn4AsDIAiiqZz0oJ
+         FUlw7HtKVDJAvtjnbxw8vn77Yx17e6SzzrQbNyQnSxHbDvuw9HFOOT82sWYXBSXQvuHp
+         XlKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=A23Ev8r8BQloNEyIlz+LZgsyhDg2lAqWY3zmJGo8esc=;
-        b=gVRZqBY7LDhvDYPD7XQzp+/4sfads0SmWZ0w6orFk0i1d06okI6JZKOb+qSYstmOVf
-         /X3h0gMGRDb3xEaP6C3m1SlAUPJmKPjvHddgAdr5S6C5Vg0Iur1GEMQ8M7lgUzxAx8GA
-         vgYddvHyLcrmUL9W3//ZxAv3YJWmhIrkZDCSnqrDgv2xhkhej/nScdReMD79/y/T6tRS
-         3Lyq4D9Rxn1r2pIDetNrjNTv77o9jrUnOmojftNHLZITSrGLZCRQMe94+wY32D7n4svU
-         JN7LH661QrldnRCbTzY4dwbr2rYm+8WPVukDYV3P/YKCAWGLybW40/UmQLD2sJvHa4mT
-         OcZw==
-X-Gm-Message-State: APjAAAVIRS29gLxOLxjwbjlnREZ15mk0EGUWRgulygQDtipDotkM3mzc
-	zcsLh9BOnLB80j2zKrzk7y5uKsMq8gY=
-X-Google-Smtp-Source: APXvYqz6Y5xa6QjJnAhxzNqTKuehPRBpBbt4z4e5YqTjhwGVpsElqFj+CmYRCiXGjm+ff6TKMS2ftQ==
-X-Received: by 2002:a5d:444b:: with SMTP id x11mr26788160wrr.207.1572937653066;
-        Mon, 04 Nov 2019 23:07:33 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 5 Nov 2019 08:07:30 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20191105070729.GA7195@lorien.valinor.li>
-References: <ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>
+        d=1e100.net; s=20221208; t=1681822822; x=1684414822;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=g3WQgP07J9gP6Dsa90WXunC0PLS8LOks3KyxD7+hgz8=;
+        b=l8eonpFwZLZhcq8Do2sdNPqVoFGzui6wVh/x5YMV2FyIKiW3r2iehohZ6oz5AETH3r
+         57idMhVaHSs1QVZkikt67po634Ytt5oseYF893AcH0A4WfITyFNyGwmyINbbb8ZmHCAX
+         M1LSGz/yhO9Sm3scQADYsceKp7sId8IDDrB2aOMoMsu+vsKNVFIM4XlE4f5HIL1ENQqU
+         SyILJb+XmbR8k1spzBB+4vu+Bk5XVzGJqFKuv56ZzUC7RqiKIpYleQu5mzwogzcKheDE
+         +cdc9bVF/ym9jqLXI5kHWk+8qVM3vZ/wTxcMxl2iKODsRbmEYqTjkzUcC27RiHzN1wSt
+         oZ5w==
+X-Gm-Message-State: AAQBX9ccaOyETwlozUWZjxojkkdAHQkecr8+ruo/sXkZ0HJ33bzhaxPy
+	k+MMjDd4j6AkrUDyaJlsyOR2iuAYZaMq1vEjfubCw6/zxPCB4w==
+X-Google-Smtp-Source: AKy350axlTc3SWuzbqMzeXcGRUbvJOKAFpUUf5TVOhjkyMUfXZipv1b2m4S8MEnzBjizI3R32XeKnhyjUr9hOEJe1Ms=
+X-Received: by 2002:a17:90a:e517:b0:246:f73c:3aba with SMTP id
+ t23-20020a17090ae51700b00246f73c3abamr2001184pjy.39.1681822822260; Tue, 18
+ Apr 2023 06:00:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] [ Linux kernel ] Exploitable bugs in
- drivers/media/platform/vivid
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Tue, 18 Apr 2023 15:59:17 +0300
+Message-ID: <CAGUWgD88WiJwryGFt9hQe1rEpLX2PKb=ms-8iONvQ2qhDgtigA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Checking existence of firewalled web servers in Firefox via iframe.onload
 
-Hi,
+In short in Firefox 112, it is possible to check existence
+of firewalled web servers. This doesn't work in Chrome and Chromium 112
+for me.
 
-On Sat, Nov 02, 2019 at 10:27:27PM +0300, Alexander Popov wrote:
-> Hello!
-> 
-> I used the syzkaller fuzzer with custom modifications and found a bunch of
-> 5-year old bugs in the Linux kernel. I managed to exploit one of them for a
-> local privilege escalation.
-> 
-> These vulnerabilities are caused by wrong mutex locking in the vivid driver of
-> the V4L2 subsystem. Please see the fixing patch that I've just sent to LKML:
-> https://lore.kernel.org/lkml/20191102190327.24903-1-alex.popov@linux.com/
-> 
-> The vivid driver doesn't require any special hardware. It is shipped in Ubuntu,
-> Debian, Arch Linux, SUSE Linux Enterprise and openSUSE.
-> 
-> On Ubuntu the devices created by this driver are available to the normal user,
-> since Ubuntu applies RW ACL when the user is logged in:
->   a13x@ubuntu_server_1804:~$ getfacl /dev/video0
->   getfacl: Removing leading '/' from absolute path names
->   # file: dev/video0
->   # owner: root
->   # group: video
->   user::rw-
->   user:a13x:rw-
->   group::rw-
->   mask::rw-
->   other::---
-> 
-> (Un)fortunately, I don't know how to autoload the vulnerable driver, which
-> limits the severity of these vulnerabilities. That's why the Linux kernel
-> security team allows me to do the full disclosure.
-> 
-> But there is an interesting aspect -- my PoC exploit bypasses SMEP and SMAP on
-> the fresh Ubuntu Server 18.04. Moreover, it gains the local privilege escalation
-> from the kthread context (where the userspace is not mapped). I'm going to share
-> the details about the exploit techniques later.
-> 
-> For now I would recommend to blacklist the vivid kernel module on your machines.
+If user A has tcp connection to web server B, then in the
+following html:
 
-CVE-2019-18683 was assigned for this issue.
+<iframe src="http://B" onload="load()" onerror="alert('error')" id="i1" />
 
-Regards,
-Salvatore
+the javascript function load() will get executed if B serves
+valid document to A's browser and will not be executed otherwise.
+
+This work for both http and https, and for http it is allowed
+B to be IP address. Under some configurations of Apache2,
+it serves http despite having https configured.
+
+In some sense, this is close to nmap via javascript in a browser.
+
+Potential privacy implication is when the attacker guess the
+range of firewalled IPs and check them all in a loop.
+
+For online test:
+https://j.ludost.net/onload1.html
+
+-- 
+guninski:  https://j.ludost.net/resumegg.pdf
