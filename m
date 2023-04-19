@@ -1,68 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/7
-Message-ID: <02db51d7-974a-53cf-d018-8982bed87da3@tnetconsulting.net>
-Date: Wed, 18 Oct 2023 17:31:07 -0500
-From: Grant Taylor <gtaylor@...tconsulting.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/3
+Message-ID: <u1prvv$11g8$1@ciao.gmane.io>
+Date: Wed, 19 Apr 2023 23:03:27 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
-On 10/18/23 2:30 PM, Michael Orlitzky wrote:
-> That's the crux of it but I don't think it frees Firefox from 
-> responsibility.
+On 2023-04-19, Jonathan Bar Or (JBO) wrote:
+> Yes, now that the cat is out of the bag there's no point - you can find some POCs here (not every find is covered by a POC, FYI):
+> https://drive.google.com/drive/u/0/folders/1XZiHbH7W7is8cwTu7DKrpwBTYuYfRZqE
+>
+> Note not all of them work on Linux - some are macOS focused too.
+>
+> As for Taviso's remark - obviously using "iprog", "rf" or "if" capabilities can be used maliciously if an attacker is able to affect root's terminfo files (directly or with env-vars), but those capabilities are only used by a bunch of programs (e.g. reset, tput and others). Normally putting an "iprog" and calling another ncurses using binary (e.g. top) won't run that program.
+> To be honest, we focused on EoP scenarios, and specifically macOS. macOS is the most sensitive here, since "top" is a SUID binary and doesn't sanitize TERMINFO (or HOME, which can be used too). The bus we found are several memory corruption issues that happen during terminfo db parsing, as well as ncurses functions (e.g. tparm).
+>
+> JBO
+>
 
-Please elaborate on what Firefox's responsibility is here?
+Sure - but the question is whether it's an ncurses bug, or an Apple bug?
 
-> Despite the premise being contrary to common sense and fifty years 
-> of evidence, Firefox promises to sandbox all of the bad things that 
-> untrusted third-party code might do to you.
+It seems like you think it's an ncurses bug, and privileged programs
+should be allowed to use attacker controlled terminfo, so long as they
+don't query certain dangerous caps like rf?
 
-So perhaps Firefox needs to change their statement / stance.  Much like 
-Google Chrome got sued over private browsing mode not preventing web 
-servers of pages your visiting retaining logs.
+I'm not so sure, although maybe ncurses should only search system paths
+when getauxval(AT_SECURE).. is set? Even then, I think the common
+pattern of system("tput ...") would still be broken if you don't
+sanitize the environment (that was the bug I exploited back in the
+day!).
 
-> Are there any other programs that run third-party code by default 
-> and are not considered vulnerabilities?
+Honestly, I kinda think it's an Apple bug :)
 
-I'm sure there are many things that run third-party code that people are 
-not aware are vulnerable.  Email clients like Evolution come to mind.  I 
-would be shocked if OpenOffice / LibreOffice probably also qualify as 
-programs on *nix systems that have the possibility of unexpectedly 
-modifying the clipboard / selection buffers*.
+(is their top binary open source?)
 
-I saw an interesting thread -- I think on the Zsh mailing list -- 
-talking about protecting end users from unexpected things that make 
-sense in hindsight.  E.g. shell globing expanding `*` into all files in 
-the directory, including files with `-` at the start of their name and 
-potentially if not likely altering the behavior of the command, probably 
-in an undesirable way.
-
-I have to wonder how far programs / their programmers must go to protect 
-users from themself.
-
-Where does the program's / programmer's responsibility stop and the 
-users responsibility start?
-
-Aside:  The thread in question brought up some interesting idea, 
-including altering how things that start with unsafe characters -- 
-though I wonder why not all files -- with `./` so the `-bob` file 
-becomes `./-bob` when expanded.  --  I wondered about prefixing globing 
-with `--` which is the de-facto don't process anything after this as a 
-command line flag.
-
-*To those who would complain about my use of the term "buffer" ... I 
-agree that the primary and secondary selection $TERM doesn't contain the 
-selected data, rather pointer to the program containing the data.  But 
-there is $SOMETHING that holds that information about where the 
-selection is, a pointer of sorts.  I'm taking the liberty of using the 
-term "buffer" to refer to this location holding the pointer to the 
-information.  --  The clipboard is different and will retain data after 
-the program that is the source of the data terminates, unlike the 
-primary / secondary selection.
-
-
+Tavis.
 
 -- 
-Grant. . . .
-unix || die
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
