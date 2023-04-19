@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/4
-Message-ID: <df82d924-d2b9-dabd-7463-de632d8aa201@apache.org>
-Date: Wed, 23 Aug 2023 10:33:44 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37379: Apache Airflow: Exposure of sensitive connection information, DOS and SSRF on "test connection" feature 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/3
+Message-ID: <CADVnWi=n4kWTUoT6dqqSE6U2-6qrdzQL5EMprTVqdhW+k2i14Q@mail.gmail.com>
+Date: Wed, 19 Apr 2023 11:44:59 +0800
+From: peacewong <peacewong@...che.org>
+To: Heping Wang <peacewong@...che.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-27602: Apache Linkis publicsercice module unrestricted upload of file
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi  Seth Arnold,
+    Thank you for your reply, I will modify the content according to the
+process
 
-Affected versions:
+Best Regards,
+Peace Wong
 
-- Apache Airflow before 2.7.0
+Seth Arnold <seth.arnold@...onical.com> 于2023年4月18日周二 09:27写道：
 
-Description:
-
-Apache Airflow, in versions prior to 2.7.0, contains a security vulnerability that can be exploited by an authenticated user possessing Connection edit privileges. This vulnerability allows the user to access connection information and exploit the test connection feature by sending many requests, leading to a denial of service (DoS) condition on the server. Furthermore, malicious actors can leverage this vulnerability to establish harmful connections with the server.
-
-Users of Apache Airflow are strongly advised to upgrade to version 2.7.0 or newer to mitigate the risk associated with this vulnerability. Additionally, administrators are encouraged to review and adjust user permissions to restrict access to sensitive functionalities, reducing the attack surface.
-
-Credit:
-
-kuteminh11 (finder)
-khoabda of Zalo Security Team (finder)
-Sayooj B Kumar(Team bi0s & CRED Security team) (finder)
-Son Tran from VNPT - VCI (finder)
-KmhlYXJ0 (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/32052
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-37379
+> On Mon, Apr 10, 2023 at 06:14:37AM +0000, Heping Wang wrote:
+> > https://linkis.apache.org
+> > https://www.cve.org/CVERecord?id=CVE-2023-27602
+>
+> Hello Heping, thanks for contacting the oss-security mail list about this
+> security issue in an Apache project.
+>
+> I'd like to suggest that your email would be far more useful if
+> it included some details like affected versions: ideally, when a
+> vulnerability was introduced, and definitely, when it was fixed, if a
+> fix is available. Best would be a direct link to a patch in a source
+> control system, or attaching the patch directly.
+>
+> This particular email has very few details and no references for a fix so
+> it is very difficult for anyone to take concrete actions.
+>
+> Here's two recent postings that are far easier for downstream distributors
+> and consumers alike to use:
+> https://www.openwall.com/lists/oss-security/2023/04/04/1
+> https://www.openwall.com/lists/oss-security/2023/03/21/3
+>
+> I'd like to encourage Apache to use these as inspiration for future
+> oss-security postings.
+>
+> Thanks
+>
+>
 
