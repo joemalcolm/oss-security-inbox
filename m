@@ -1,51 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/1
-Message-ID: <20230330065737.GL21675@suse.com>
-Date: Thu, 30 Mar 2023 08:57:37 +0200
-From: Johannes Segitz <jsegitz@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/5
+Message-ID: <20230419055256.zhwa4okfxdbsc72z@beesty>
+Date: Tue, 18 Apr 2023 22:52:56 -0700
+From: nightmare.yeah27@...ecat.org
 To: oss-security@...ts.openwall.com
-Subject: Re: polkitd service user privilege separation
+Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 29, 2023 at 08:24:57PM +0100, Simon McVittie wrote:
-> On Wed, 29 Mar 2023 at 15:34:50 +0200, Johannes Segitz wrote:
-> > This demonstration caused some confusion in the original report to
-> > upstream. The POC is here to demonstrate the issue, not how real world
-> > exploitation would work. A real world exploit would rely on another
-> > vulnerability to be able to act as polkitd and then use the issue outlined
-> > here to escalate privileges.
-> 
-> Let's suppose you're able to act as the polkitd user as a result of a
-> vulnerability. Wouldn't it be easier to get root (or more generally,
-> permission to do a privileged thing) by tracing, replacing or otherwise
-> subverting the polkitd process?
+On Tue, Apr 18, 2023 at 02:57:41AM +0200, Solar Designer wrote:
 
-yes, that's what I've mentioned in my report
+> On Sun, Apr 16, 2023 at 10:57:27PM +0200, Steffen Nurpmeso wrote:
 
-.=====
-| If you can act as the polkitd user you can also likely influence the polkit
-| daemon and gain root this way, so this just makes it (a lot) easier to
-| exploit.
-`=====
+> > You have to do some things, and if you give up privileges
+> > thereafter, extended capabilities are gone.
 
-For me it's easier to just write a file instead of subverting the process.
+> POSIX saved IDs should help retain/regain the capabilities.
 
-> polkitd can only be either trusted or untrusted, we can't have it both
-> ways. I think the main thing that's wrong here is the documentation that
-> claims that the privilege separation is meaningful.
+Another (simpler?) way is to fork before giving up privilege.
 
-I agree. That's was also my main concern why I wrote this. For any other
-setup I would have requested a CVE for this, but here the permissions just
-make it easier to get root, but aren't really a security boundary. But the
-documentation makes it sound as if the polkitd user is a security boundary,
-which it isn't.
-
-Johannes
 -- 
-GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Frankenstraße 146, 90461 Nürnberg, Germany
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-(HRB 36809, AG Nürnberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Ian
