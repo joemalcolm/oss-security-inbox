@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2328" "Wednesday" "18" "November" "2015" "11:30:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151118163042.F3D2D42E11D@smtpvbsrv1.mitre.org>" "64" "[oss-security] Re: Buffer overflow in libxml2" "^Cc:" nil nil "11" "2015111816:30:42" "[oss-security] Re: Buffer overflow in libxml2" (number mark "        cve-assign@m Nov 18   64/2328  " thread-indent "\"[oss-security] Re: Buffer overflow in libxml2\"\n") "<CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>" ("<CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24405 invoked by uid 550); 18 Nov 2015 16:30:59 -0000
+Received: (qmail 23879 invoked by uid 550); 20 Apr 2023 08:34:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +6,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24363 invoked from network); 18 Nov 2015 16:30:54 -0000
-In-Reply-To: <CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>
-Message-Id: <20151118163042.F3D2D42E11D@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 18 Nov 2015 11:30:42 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Buffer overflow in libxml2
-To: ya1gaurav@gmail.com
+Received: (qmail 9498 invoked from network); 19 Apr 2023 23:03:45 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+To: oss-security@lists.openwall.com
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Wed, 19 Apr 2023 23:03:27 -0000 (UTC)
+Message-ID: <u1prvv$11g8$1@ciao.gmane.io>
+References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
+ <eff48e8f-cb22-bda0-772b-d9c9c5f16fbc@suse.de>
+ <MW2PR00MB0444E2AA4D31DB0021B8AE2FA862A@MW2PR00MB0444.namprd00.prod.outlook.com>
+User-Agent: slrn/pre1.0.4-5 (Linux)
+Subject: Re: [oss-security] ncurses fixes upstream
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2023-04-19, Jonathan Bar Or (JBO) wrote:
+> Yes, now that the cat is out of the bag there's no point - you can find some POCs here (not every find is covered by a POC, FYI):
+> https://drive.google.com/drive/u/0/folders/1XZiHbH7W7is8cwTu7DKrpwBTYuYfRZqE
+>
+> Note not all of them work on Linux - some are macOS focused too.
+>
+> As for Taviso's remark - obviously using "iprog", "rf" or "if" capabilities can be used maliciously if an attacker is able to affect root's terminfo files (directly or with env-vars), but those capabilities are only used by a bunch of programs (e.g. reset, tput and others). Normally putting an "iprog" and calling another ncurses using binary (e.g. top) won't run that program.
+> To be honest, we focused on EoP scenarios, and specifically macOS. macOS is the most sensitive here, since "top" is a SUID binary and doesn't sanitize TERMINFO (or HOME, which can be used too). The bus we found are several memory corruption issues that happen during terminfo db parsing, as well as ncurses functions (e.g. tparm).
+>
+> JBO
+>
 
-> Please assign CVE for below vulnerability
+Sure - but the question is whether it's an ncurses bug, or an Apple bug?
 
-There were two buffer over-read issues reported at different times; we
-are assigning two CVE IDs.
+It seems like you think it's an ncurses bug, and privileged programs
+should be allowed to use attacker controlled terminfo, so long as they
+don't query certain dangerous caps like rf?
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=756263
-> Reported: 2015-10-08 21:12 UTC by Hugh Davenport
-> 
-> Buffer overead with XML parser in xmlNextChar
-> 
-> AddressSanitizer: global-buffer-overflow ... READ of size 1
-> 
-> there is potential to get input that could cause out of bounds memory
-> to be returned to userspace through the use of libxml2, which could be
-> used to cause denial of service attacks, or gain sensitive
-> information.
-> 
-> https://git.gnome.org/browse/libxml2/commit/?id=ab2b9a93ff19cedde7befbf2fcc48c6e352b6cbe
+I'm not so sure, although maybe ncurses should only search system paths
+when getauxval(AT_SECURE).. is set? Even then, I think the common
+pattern of system("tput ...") would still be broken if you don't
+sanitize the environment (that was the bug I exploited back in the
+day!).
 
-Use CVE-2015-8241.
+Honestly, I kinda think it's an Apple bug :)
 
+(is their top binary open source?)
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=756372
-> Reported: 2015-10-11 03:18 UTC by Hugh Davenport 
-> 
-> Buffer overead with HTML parser in push mode in xmlSAX2TextNode
-> 
-> AddressSanitizer: stack-buffer-overflow ... READ of size 1
-> 
-> there is potential to get input that could cause out of bounds memory
-> to be returned to userspace through the use of libxml2, which could be
-> used to cause denial of service attacks, or gain sensitive
-> information.
+Tavis.
 
-(apparently https://git.gnome.org/browse/libxml2/log/HTMLparser.c
-does not yet have a commit)
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
 
-Use CVE-2015-8242.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWTKddAAoJEL54rhJi8gl5cb0QAI/a8SGInkhVa0m5K3eWYbE4
-F+XXCozYZidv46Ld8zJA/2dXZJ9XlD0sve5THsMH+EKcxPRWrKQMZxhREH9XlygP
-X6SxOT7B2rbxCBW6bj8RaCg23JcbdP+Ev4d6Zd+9eRszvb6fRlAIS/FqbNEIQs1u
-ZOG3NkNCBuVrKICzzRy45xji+MdCaJzlP0rZzvdU/+Alhe5Y3ugAmnsHcq83ghND
-WZfB6PMJDJhPd9yg9cP+2DR8o1iwrln15l0voNAtgVjdioAQgI3XCxOsj4A8W5uI
-vVxtm2c3a4nwJokkeStcKHMHwrgABgk9ijOiePOOAbbKRQYuf+PSh8ziWZCJyH08
-HgEmUva2ONaDPKuuWz6AQ62vGzSpmyXFz5dE/zJIhxB3IJKoVv4gonVSxc5nu4Ar
-Q0yNaLr+xRd2NT3TLXL8wck1QElBjHBPH8HDrb/Q6A4Codqk/tBDzRc0vOWQ4FfY
-7tedv+1zMjx4FIJhK/SnqnQa4ZG9lypvVP00PCbZnpPuiVyLlOPZPxRx7Ifteom8
-zM6+5fsvHMv4vmpB84BOz+9j9AKv36wM1WtdimST4Bl/Pg7f22+v3PJQl06mWB43
-/9lMvsCYbn+NpjBlFOykcrTjUeKYgK8h9tKkDMca2dXAzMpEZHZyR44qXyzSx2rz
-glyY1KJD+cauQcYNVFTC
-=8GTa
------END PGP SIGNATURE-----
