@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["941" "Thursday" "11" "March" "2021" "17:19:44" "+1000" "Wade Mealing" "wmealing@redhat.com" nil "38" "[oss-security] CVE-2021-20269: kexec-tools: incorrect permissions on vmcore-dmesg.txt file" nil nil nil "3" nil nil (number mark "U       wmealing@red Mar 11   38/941   " thread-indent "\"[oss-security] CVE-2021-20269: kexec-tools: incorrect permissions on vmcore-dmesg.txt file\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-20269: kexec-tools: incorrect permissions on vmcore-dmesg.txt file" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13876 invoked by uid 550); 11 Mar 2021 07:20:11 -0000
+Received: (qmail 12033 invoked by uid 550); 19 Apr 2023 09:37:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13855 invoked from network); 11 Mar 2021 07:20:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1615447199;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=VV2Od/PX6fawxs4tXqfeksupFJjKTP5xsXzN6aFhyw0=;
-	b=BuDwRa5auJUyjWJjQ8/vNc7F3MfdGsDl2L2CJf4N/+hF056xhS1HQT3mPCv0u4KMnnQHv1
-	Fk6YIApk3EyQ/jsvlCIlLCk7ihRup7AmDakqielRb3gc6cEzYQxJLgGwPW1cVW7gwSACge
-	Lgv84Sa+lCXNGAxTar7LG4+7L2zpCic=
-X-MC-Unique: 1urApHdGNOe_MFVZGCbnYQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=VV2Od/PX6fawxs4tXqfeksupFJjKTP5xsXzN6aFhyw0=;
-        b=DSMf1Zx3waU07RaD3bK0JQB+PvM54EJpIdm7Fg/qraC0XI7+omg7mgCi5BF2OUqSnr
-         vIP59/MJwJWpiC9psbB3Z0jJK4QloxtJ11KxC71EXiD9jKdcSL7SrMyE7nD9UChTqnB/
-         uixb7bVduN7BSSHoq87bF2vuQw7zC9lB84JLwWQnQAowCJgJFYERZteTn0iWZjWBqmBh
-         nJQ9ti7Hkb5hKMHkxNGySFttyIEF//RrYgb/ExTNptJbMpmOMpoEgkZGWeXVdnPc5fok
-         A57lspsF2AhArh9ONq/PVTBBhhfg8gOE/SJz2/mOZY6v2/b6Yu79m8FAdyKag25NNNOX
-         ej2A==
-X-Gm-Message-State: AOAM533LyxKgwbQ/MzNINIQnPE2dJXJddPHQeGZwf318NbN+3/y8UZyx
-	e80G+Jz4vOWLgydjr/xqw2lFDh8L/ixdLchzHvhdFlo3TN7CPUQRtYkM0vvKwpzICk8nRUHrJ4O
-	EYtw7n4b/lITun5aDHTV8Ox/23GAFEPD+12WNqurjH1us
-X-Received: by 2002:a05:6602:1207:: with SMTP id y7mr5291539iot.23.1615447196255;
-        Wed, 10 Mar 2021 23:19:56 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzrAU4dFBxaazeituNjcFKgkl51kWVf3rBTC5ww7HbHk120fcZm+ZQHacsvunnqNzOIVWO760DKQeZQDWmSvjU=
-X-Received: by 2002:a05:6602:1207:: with SMTP id y7mr5291525iot.23.1615447195998;
- Wed, 10 Mar 2021 23:19:55 -0800 (PST)
+Received: (qmail 13326 invoked from network); 19 Apr 2023 05:45:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1681883126; x=1713419126;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=mAzAYKjH6hmzsTZUacx5d/cKy44ypLJO5cHIInkS+2I=;
+  b=KpkTjDCzbTMLgMUsPkCRefj+WY4RrmMSlHqAYVuCyzG+ed0chWEg/Iha
+   exCZkgwO0mlVhn2CX1U5bG5LmM9rH3jSRDvnS/qfKrm6J1puejamziv+R
+   ZSey2glCCvbxz/bx6aT00aF5gBv+CoFg64XBvBrdPMqUixQTKKproD92R
+   Q=;
+X-IronPort-AV: E=Sophos;i="5.99,208,1677542400"; 
+   d="scan'208,217";a="330889173"
+From: "Vellore Rajakumar, Sri Saran Balaji" <srajakum@amazon.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [kubernetes] CVE-2023-1174, CVE-2023-1944: Network port exposure
+ and ssh access using default password
+Thread-Index: AQHZcoIb/dZvFqrq6UWXHq9juLBWHA==
+Date: Wed, 19 Apr 2023 05:45:10 +0000
+Message-ID: <F2B8265A-672C-4667-8083-51015773475A@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Microsoft-MacOutlook/16.70.23021201
+x-originating-ip: [10.106.100.9]
+Content-Type: multipart/alternative;
+	boundary="_000_F2B8265A672C4667808351015773475Aamazoncom_"
 MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Thu, 11 Mar 2021 17:19:44 +1000
-Message-ID: <CALJHwhT3uLqQEbkVd9f2zMRONWUB3M2_Z60n7jXUPX3=A5d6uA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=wmealing@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="00000000000045704c05bd3d9cb9"
-Subject: [oss-security] CVE-2021-20269: kexec-tools: incorrect permissions on
- vmcore-dmesg.txt file
+Subject: [oss-security] [kubernetes] CVE-2023-1174, CVE-2023-1944: Network port exposure and
+ ssh access using default password
 
---00000000000045704c05bd3d9cb9
-Content-Type: text/plain; charset="UTF-8"
+--_000_F2B8265A672C4667808351015773475Aamazoncom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Gday,
+SGVsbG8gS3ViZXJuZXRlcyBDb21tdW5pdHksDQoNCg0KDQpXZSBoYXZlIHJl
+bGVhc2VkIG1pbmlrdWJlIHYxLjMwLjA8aHR0cHM6Ly9naXRodWIuY29tL2t1
+YmVybmV0ZXMvbWluaWt1YmUvcmVsZWFzZXMvdGFnL3YxLjMwLjA+IHRvIGFk
+ZHJlc3MgdHdvIHNlY3VyaXR5IGlzc3VlcyBpbiBtaW5pa3ViZS4gV2UgcmVj
+b21tZW5kIGFsbCB0byB1cGdyYWRlIG1pbmlrdWJlIHRvIHRoZSBsYXRlc3Qg
+dmVyc2lvbiBhbmQgZGVsZXRlIGFueSBLdWJlcm5ldGVzIGNsdXN0ZXJzIGNy
+ZWF0ZWQgd2l0aCBhbiBhZmZlY3RlZCB2ZXJzaW9uLiBNaW5pa3ViZSBpcyBh
+IHV0aWxpdHkgdG9vbCB0aGF0IHNldHMgdXAgYSBLdWJlcm5ldGVzIGVudmly
+b25tZW50IG9uIGEgbG9jYWwgbWFjaGluZSBmb3IgZGV2ZWxvcGluZyBhbmQg
+dGVzdGluZyBLdWJlcm5ldGVzIGFwcGxpY2F0aW9ucy4gTWluaWt1YmUgaXMg
+bm90IGludGVuZGVkIGZvciBwcm9kdWN0aW9uIHVzZS4NCg0KDQoNCkNWRS0y
+MDIzLTExNzQ6IE5ldHdvcmsgcG9ydCBleHBvc3VyZQ0KDQoNCg0KVGhpcyB2
+dWxuZXJhYmlsaXR5IGV4cG9zZXMgYSBuZXR3b3JrIHBvcnQgaW4gbWluaWt1
+YmUgcnVubmluZyBvbiBtYWNPUyB3aXRoIERvY2tlciBkcml2ZXIgdGhhdCBj
+b3VsZCBlbmFibGUgdW5leHBlY3RlZCByZW1vdGUgYWNjZXNzIHRvIHRoZSBt
+aW5pa3ViZSBjb250YWluZXIuIFRoaXMgaXNzdWUgaGFzIGJlZW4gcmF0ZWQg
+Q1JJVElDQUwgKENWU1M6My4xL0FWOk4vQUM6TC9QUjpOL1VJOk4vUzpVL0M6
+SC9JOkgvQTpIPGh0dHBzOi8vd3d3LmZpcnN0Lm9yZy9jdnNzL2NhbGN1bGF0
+b3IvMy4xI0NWU1M6My4xL0FWOk4vQUM6TC9QUjpOL1VJOk4vUzpVL0M6SC9J
+OkgvQTpIPikgKHNjb3JlOiA5LjgpLg0KDQoNCg0KQW0gSSB2dWxuZXJhYmxl
+Pw0KDQpUaGlzIENWRSBvbmx5IGFmZmVjdHMgY2x1c3RlcnMgcnVubmluZyBv
+biBtYWNPUyB3aXRoIERvY2tlciBkcml2ZXJzLiBJZiB5b3UgaGF2ZSBjcmVh
+dGVkIHRoZSBLdWJlcm5ldGVzIGNsdXN0ZXIgdXNpbmcgb25lIG9mIHRoZSBi
+ZWxvdyBtZW50aW9uZWQgbWluaWt1YmUgdmVyc2lvbnMsIHRoZW4geW91IGFy
+ZSBhZmZlY3RlZCBieSB0aGlzIHZ1bG5lcmFiaWxpdHkuDQoNCg0KDQpBZmZl
+Y3RlZCBWZXJzaW9ucw0KDQrigKIgdjEuMjguMA0KDQrigKIgdjEuMjcuMQ0K
+DQrigKIgdjEuMjcuMA0KDQrigKIgdjEuMjYuMQ0KDQrigKIgdjEuMjYuMA0K
+DQoNCg0KWW91IGNhbiBhbHNvIHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQg
+dG8ga25vdyBpZiB5b3UgYXJlIGFmZmVjdGVkLiBJZiB0aGUgY29tbWFuZCBy
+ZXR1cm5zIDAuMC4wLjAgdGhlbiB5b3UgYXJlIGFmZmVjdGVkIGJ5IHRoaXMg
+dnVsbmVyYWJpbGl0eS4NCg0KYGRvY2tlciBpbnNwZWN0IC0tZm9ybWF0PSd7
+eyhpbmRleCAoaW5kZXggLk5ldHdvcmtTZXR0aW5ncy5Qb3J0cyAiODQ0My90
+Y3AiKSAwKS5Ib3N0SXB9fScgbWluaWt1YmVgDQoNCg0KDQpDVkUtMjAyMy0x
+OTQ0OiBTU0ggYWNjZXNzIHVzaW5nIGRlZmF1bHQgcGFzc3dvcmQNCg0KDQoN
+ClRoaXMgdnVsbmVyYWJpbGl0eSBlbmFibGVzIHNzaCBhY2Nlc3MgdG8gbWlu
+aWt1YmUgY29udGFpbmVyIHVzaW5nIGEgZGVmYXVsdCBwYXNzd29yZC4gVGhp
+cyBpc3N1ZSBoYXMgYmVlbiByYXRlZCBISUdIIChDVlNTOjMuMS9BVjpML0FD
+OkwvUFI6Ti9VSTpOL1M6VS9DOkgvSTpIL0E6SDxodHRwczovL3d3dy5maXJz
+dC5vcmcvY3Zzcy9jYWxjdWxhdG9yLzMuMSNDVlNTOjMuMS9BVjpML0FDOkwv
+UFI6Ti9VSTpOL1M6VS9DOkgvSTpIL0E6SD4pIChzY29yZTogOC40KS4NCg0K
+DQoNCkFtIEkgdnVsbmVyYWJsZT8NCg0KDQoNCkFsbCB2ZXJzaW9ucyBwcmlv
+ciB0byB2LjEuMzAuMCBhcmUgYWZmZWN0ZWQuDQoNCg0KDQpUbyBmaW5kIHRo
+ZSB2ZXJzaW9uIGRlcGxveWVkIGluIHlvdXIgZW52aXJvbm1lbnQsIHJ1biB0
+aGUgZm9sbG93aW5nIGNvbW1hbmQgLQ0KDQpgbWluaWt1YmUgdmVyc2lvbmAN
+Cg0KDQoNCkhvdyBkbyBJIHJlbWVkaWF0ZSB0aGVzZSB2dWxuZXJhYmlsaXRp
+ZXM/DQoNCg0KDQpUbyBtaXRpZ2F0ZSB0aGVzZSB2dWxuZXJhYmlsaXRpZXMs
+IHlvdSBtdXN0IHVwZ3JhZGUgbWluaWt1YmUgdG8gdGhlIGxhdGVzdCB2ZXJz
+aW9uIGFuZCBkZWxldGUgYW55IGNsdXN0ZXJzIGNyZWF0ZWQgdXNpbmcgYW4g
+YWZmZWN0ZWQgdmVyc2lvbi4NCg0KDQoNCkZpeGVkIFZlcnNpb24NCg0K4oCi
+IHYxLjMwLjANCg0KDQoNCk5vdGU6IFRvIGRlbGV0ZSBjbHVzdGVycyBjcmVh
+dGVkIHVzaW5nIHByaW9yIHZlcnNpb25zLCBydW4gYG1pbmlrdWJlIGRlbGV0
+ZSAtLWFsbGANCg0KDQoNClRoYW5rIFlvdSwNCg0KQmFsYWppIG9uIGJlaGFs
+ZiBvZiB0aGUgS3ViZXJuZXRlcyBTZWN1cml0eSBSZXNwb25zZSBDb21taXR0
+ZWUNCg0KDQo=
 
-A flaw was found in the kexec-tools where it made the incorrect permissions
-on the vmcore-dmesg.txt extracted from the vmcore of a previous kernel
-panic.  It is possible that this could be used to leak kernel internal
-information from a previous execution if it was output to the ring buffer
-or part of the panic backtrace.   An unprivileged user with a local account
-can use this to extract kernel internal information resulting in an
-information leak.
-
-TLDR: The vmcore-dmesg.txt is created world readable and should not be.
-
-Red Hat Bugzilla:
-  http://bugzilla.redhat.com/CVE-2021-20269
-
-
-Thank you.
--- 
-
-Wade Mealing
-
-Product Security - Kernel, RHCE
-
-Red Hat
-
-<https://www.redhat.com>
-
-wmealing@redhat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
-
-secalert@redhat.com for urgent response
-
---00000000000045704c05bd3d9cb9--
-
+--_000_F2B8265A672C4667808351015773475Aamazoncom_--
