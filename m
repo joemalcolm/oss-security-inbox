@@ -1,33 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/6
-Message-Id: <C2F1E269-0FD7-45A2-A0E1-F1AC29383C09@dwheeler.com>
-Date: Thu, 4 May 2023 16:50:53 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/11
+Message-ID:  <MW2PR00MB0444E2AA4D31DB0021B8AE2FA862A@MW2PR00MB0444.namprd00.prod.outlook.com>
+Date: Wed, 19 Apr 2023 16:55:06 +0000
+From: "Jonathan Bar Or (JBO)" <jobaror@...rosoft.com>
+To: Carlos López <clopez@...e.de>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: [EXTERNAL] Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
+Yes, now that the cat is out of the bag there's no point - you can find some POCs here (not every find is covered by a POC, FYI):
+https://drive.google.com/drive/u/0/folders/1XZiHbH7W7is8cwTu7DKrpwBTYuYfRZqE
 
-> On May 4, 2023, at 2:23 PM, Rainer Canavan <rainer.canavan@...nga.com> wrote:
-> I'd suspect that the issue in
-> HTTP::Tiny would end up DISPUTED, since not validating TLS names is
-> not the generally expected behavior, although it is documented (in
-> bold no less).
+Note not all of them work on Linux - some are macOS focused too.
 
-I would also expect it to be at most disputed, not rejected.
-As Jeffry Walton noted, failing to validate a certificate is considered
-by many to be a vulnerability, there's even a specific CWE for this case:
-https://cwe.mitre.org/data/definitions/295.html
+As for Taviso's remark - obviously using "iprog", "rf" or "if" capabilities can be used maliciously if an attacker is able to affect root's terminfo files (directly or with env-vars), but those capabilities are only used by a bunch of programs (e.g. reset, tput and others). Normally putting an "iprog" and calling another ncurses using binary (e.g. top) won't run that program.
+To be honest, we focused on EoP scenarios, and specifically macOS. macOS is the most sensitive here, since "top" is a SUID binary and doesn't sanitize TERMINFO (or HOME, which can be used too). The bus we found are several memory corruption issues that happen during terminfo db parsing, as well as ncurses functions (e.g. tparm).
 
-Per the OP:
+JBO
 
-> On Apr 18, 2023, at 11:46 AM, Stig Palmquist <stig@...g.io> wrote:
-> ... We have generated a list of over 300 potentially affected
-> CPAN distributions.
+-----Original Message-----
+From: Carlos López <clopez@...e.de> 
+Sent: Wednesday, April 19, 2023 8:11 AM
+To: Jonathan Bar Or (JBO) <jobaror@...rosoft.com>
+Cc: oss-security@...ts.openwall.com
+Subject: [EXTERNAL] Re: [oss-security] ncurses fixes upstream
 
-A default that potentially causes over 300 other vulnerabilities sounds like
-a root cause vulnerability to me. Clearly many users do *not* treat this as expected behavior.
-A change of the default would, for many, produce the expected behavior.
+[You don't often get email from clopez@...e.de. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 
---- David A. Wheeler
+Hi,
 
+On 12/4/23 22:40, Jonathan Bar Or (JBO) wrote:
+> Hello oss-security,
+>
+> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
+> They are now fixed at commit 20230408 - see details here 
+> (https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Finv
+> isible-island.net%2Fncurses%2FNEWS.html%23index-t20230408&data=05%7C01
+> %7Cjobaror%40microsoft.com%7C0102d7187e894898280408db40e85af7%7C72f988
+> bf86f141af91ab2d7cd011db47%7C1%7C0%7C638175138959984222%7CUnknown%7CTW
+> FpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6
+> Mn0%3D%7C3000%7C%7C%7C&sdata=uRH%2FEXS1rhbBT9vsPN92PjfwjFw9UNLehU9ksP6
+> TX8s%3D&reserved=0) A CVE was assigned (CVE-2023-29491) - it's still 
+> under a "reserved" status.
+
+Are there any plans to disclose any proofs of concept to test these issues? From the distro side these are not only useful to check which ncurses snapshots we need to fix, but also for our QA teams to test the update and detect regressions.
+
+For example, we are not sure if the build option `--disable-root-environ` does anything to mitigate the issues.
+
+> How can we ensure those fixes get deployed upstream, in major Linux distributions?
+> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
+>
+> Thanks!
+>                               JBO
+
+For what is worth, we have not been contacted, as far as I can tell.
+
+Best,
+Carlos
+
+--
+Carlos López
+Security Engineer
+SUSE Software Solutions
