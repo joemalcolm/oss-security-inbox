@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1462" "Thursday" "12" "May" "2016" "23:16:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160513031601.D166C72E017@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request : Use-after-free in openjpeg" nil nil nil "5" "2016051303:16:01" "[oss-security] Re: CVE Request : Use-after-free in openjpeg" (number mark "U       cve-assign@m May 12   36/1462  " thread-indent "\"[oss-security] Re: CVE Request : Use-after-free in openjpeg\"\n") "<55F83A63.3040208@gmail.com>" ("<55F83A63.3040208@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26450 invoked by uid 550); 13 May 2016 03:16:14 -0000
+Received: (qmail 11481 invoked by uid 550); 19 Apr 2023 09:36:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26430 invoked from network); 13 May 2016 03:16:13 -0000
-From: cve-assign@mitre.org
-To: jmm@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <55F83A63.3040208@gmail.com>
-Message-Id: <20160513031601.D166C72E017@smtpvbsrv1.mitre.org>
-Date: Thu, 12 May 2016 23:16:01 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request : Use-after-free in openjpeg
+Received: (qmail 11427 invoked from network); 19 Apr 2023 03:45:28 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AAQBX9cF/0TE1/ibtAFbm2B9MttfKhOvD1tearSjGhch+iPnbwdAETT/
+	PBPiji4Y7MT0BXhKbkBi9BIKR4LtP9hsoJdFHOY=
+X-Google-Smtp-Source: AKy350a93yqgnLewWFGOlrkEYtmnfB5tEoE3lwOFbMAbMCy/CCbnzB6flwRTIGw7vZ7mzSG9esqf3M+Y09uGEk5VH/Y=
+X-Received: by 2002:a0d:ca55:0:b0:54f:89c2:a249 with SMTP id
+ m82-20020a0dca55000000b0054f89c2a249mr2171574ywd.51.1681875912919; Tue, 18
+ Apr 2023 20:45:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <be3b46f7-0dbf-95cf-b512-1e4a4450763a@apache.org> <20230418012659.GH1655348@millbarge>
+In-Reply-To: <20230418012659.GH1655348@millbarge>
+From: peacewong <peacewong@apache.org>
+Date: Wed, 19 Apr 2023 11:44:59 +0800
+X-Gmail-Original-Message-ID: <CADVnWi=n4kWTUoT6dqqSE6U2-6qrdzQL5EMprTVqdhW+k2i14Q@mail.gmail.com>
+Message-ID: <CADVnWi=n4kWTUoT6dqqSE6U2-6qrdzQL5EMprTVqdhW+k2i14Q@mail.gmail.com>
+To: Heping Wang <peacewong@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000058921905f9a8404d"
+Subject: Re: [oss-security] CVE-2023-27602: Apache Linkis publicsercice module
+ unrestricted upload of file
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000058921905f9a8404d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Use-after-free was found in openjpeg
-> (https://github.com/uclouvain/openjpeg). The vuln is fixed in version
-> 2.1.1 and was located in opj_j2k_write_mco function. More details are
-> available here : https://github.com/uclouvain/openjpeg/issues/563.
-> Is it possible to get a CVE for this ?
+Hi  Seth Arnold,
+    Thank you for your reply, I will modify the content according to the
+process
 
->> https://github.com/uclouvain/openjpeg/commit/940100c28ae28931722290794889cf84a92c5f6f
->> j2k.c
+Best Regards,
+Peace Wong
 
-Use CVE-2015-8871.
+Seth Arnold <seth.arnold@canonical.com> =E4=BA=8E2023=E5=B9=B44=E6=9C=8818=
+=E6=97=A5=E5=91=A8=E4=BA=8C 09:27=E5=86=99=E9=81=93=EF=BC=9A
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> On Mon, Apr 10, 2023 at 06:14:37AM +0000, Heping Wang wrote:
+> > https://linkis.apache.org
+> > https://www.cve.org/CVERecord?id=3DCVE-2023-27602
+>
+> Hello Heping, thanks for contacting the oss-security mail list about this
+> security issue in an Apache project.
+>
+> I'd like to suggest that your email would be far more useful if
+> it included some details like affected versions: ideally, when a
+> vulnerability was introduced, and definitely, when it was fixed, if a
+> fix is available. Best would be a direct link to a patch in a source
+> control system, or attaching the patch directly.
+>
+> This particular email has very few details and no references for a fix so
+> it is very difficult for anyone to take concrete actions.
+>
+> Here's two recent postings that are far easier for downstream distributors
+> and consumers alike to use:
+> https://www.openwall.com/lists/oss-security/2023/04/04/1
+> https://www.openwall.com/lists/oss-security/2023/03/21/3
+>
+> I'd like to encourage Apache to use these as inspiration for future
+> oss-security postings.
+>
+> Thanks
+>
+>
 
-iQIcBAEBCAAGBQJXNUZ9AAoJEHb/MwWLVhi2kZcP/iL6ppset8OqSb3ZD3OWUjaF
-JarptdmZEX7Ay6Kzt9BBfYqAhR+Nz3xIpQa+vvNDnvP+ITZ2m9J7zVbTd5iIRAkw
-FXe+6zhXwAGzjHCuFOVeDPZXyfB8v4tNCFNon4cpz0p+CDnJavo0ZQlsS4S8U8FN
-CbnuJUuz1EfbvGtG3GNh2yfdQCK9xX/qzdm+3TjM9FK+THqe3BvIBQ3PK+kEbcgv
-95kSt9rothzIdnE9llyosB5oQeaqgBPbksQUc1WB4OGz3H1aazjcSsGp+54bSaUu
-AgHyF1fRjiR0M771ouRMHo+Ug+0mvbWZiFpwPlzVGV2dPb4YLQpWvZVaOENwdcb9
-RWISBA1NcgbTWPBCJoLt7mgXOlHhm5qBkFXqwpO6ZfQDDoVlPHanp1MQ2CRur87r
-Z9FeRrYUuwH80ndtexD5zMCKnVup+tP6XXudeZJ1FmG394+7du/JnBznohBiPXTh
-K40wRp9mMjsv/jgDoS9Xg6+VzFVHHMvQ8m1KDJacmexHoLHubeAYc32RAJfAZMnC
-P1w3rSV32K6RKGIUnyINAgmzenrbuRxg96Ghq52djEvW2K9PyHFx26F4rlLnOPro
-M4ErrCfvcYNPuyX0vK2zvbzTFRPx5yt6WjAJ4P704fIEUqaDUSWdrYY6/exiN0Kp
-j4XA4VMjVHcbfrPwEW8t
-=s3Bf
------END PGP SIGNATURE-----
+--00000000000058921905f9a8404d--
