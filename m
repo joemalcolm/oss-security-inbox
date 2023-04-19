@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/15
-Message-ID: <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com>
-Date: Tue, 3 Oct 2023 15:02:41 -0700
-From: Jean Luc Picard <atari2600a@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/12
+Message-ID: <20230419172359.GA11033@openwall.com>
+Date: Wed, 19 Apr 2023 19:23:59 +0200
+From: Solar Designer <solar@...nwall.com>
+To: "Jonathan Bar Or (JBO)" <jobaror@...rosoft.com>
+Cc: Carlos L?pez <clopez@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: ncurses fixes upstream
 Content-Type: text/plain; charset=utf-8
 
-Hi, just dropping in, is this the kind of thing to where the userspace &
-kernel layers need mitigation until there's microcode mitigation?  There's
-bound to be more of these issues cropping up now that cstates are finally
-working, meaning more people will daily-drive rather than homelab.
+On Wed, Apr 19, 2023 at 04:55:06PM +0000, Jonathan Bar Or (JBO) wrote:
+> Yes, now that the cat is out of the bag there's no point - you can find some POCs here (not every find is covered by a POC, FYI):
+> https://drive.google.com/drive/u/0/folders/1XZiHbH7W7is8cwTu7DKrpwBTYuYfRZqE
+> 
+> Note not all of them work on Linux - some are macOS focused too.
 
-On Tue, Oct 3, 2023 at 2:46 PM Jeremy Stanley <fungi@...goth.org> wrote:
+I'm attaching the 5 scripts from there to this message for archival,
+as-is (text/plain) and in tar.gz (to avoid any mangling).  There's also
+Ncurses.pdf, but it's too large for the mailing list because of embedded
+screenshots.  SHA-256's of these all:
 
-> On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
-> [...]
-> > If you have a proposal for how you'd prefer it to be done, I'll see what
-> > I can do.  Perhaps BCC oss-security, or just send out a second mail?
->
-> When I send advisories, I prepare two basically identical E-mail
-> messages: one to the project's announcement list and one to
-> oss-security (signing both of them). It seems like this is the most
-> common approach to avoiding cross-posting between lists.
-> --
-> Jeremy Stanley
->
+c3b981fad88f17cc201bfa7f4230a348e30b449238e3d3406852691770876eda  cost_oob_read.sh
+526cde9fc78cb0712c0b725ecea316913f0302194702ebccdf1a1a146f32dac9  gen_terminfo.py
+f787189535fa21a8924db2afc2ef6301a931805b43ef8ea13cdefab6aacb83d0  heap_overflow.sh
+2049668efcf24f34ce200d6c2b96fefc389cf4092cfd6c99f5da66a3d46b9a5f  leak.sh
+66b0706b0852a5b9e9644bea98edc0b0b84f5f7fec028fe2bf03964d46002594  type_confusion.sh
 
+47b30bdd9fbf35cc900c3869e2303d0dabea44176fdfdfced97bd4ee329529c9  ncurses-exp.tar.gz
+
+a8ba31a02b596f7a9f61f61cc7a98ed9aac2d358f49614d4f480bcfad3fd2a78  Ncurses.pdf
+
+Alexander
+
+View attachment "cost_oob_read.sh" of type "text/plain" (296 bytes)
+
+View attachment "gen_terminfo.py" of type "text/plain" (1628 bytes)
+
+View attachment "heap_overflow.sh" of type "text/plain" (4757 bytes)
+
+View attachment "leak.sh" of type "text/plain" (451 bytes)
+
+View attachment "type_confusion.sh" of type "text/plain" (262 bytes)
+
+Download attachment "ncurses-exp.tar.gz" of type "application/x-gzip" (1475 bytes)
