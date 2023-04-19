@@ -1,33 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/2
-Message-ID: <f229a045-e964-c47f-8f69-9d6178032408@apache.org>
-Date: Thu, 21 Dec 2023 07:04:46 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/9
+Message-ID: <CAHQ_-nSmiU3vZM-8skFJ0jvuZhjR5eHWX=UOjZM-i1qy47pUwQ@mail.gmail.com>
+Date: Wed, 19 Apr 2023 07:53:14 -0700
+From: Peter Philip Pettersson <philip.pettersson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-47265: Apache Airflow: DAG Params alllow to embed unchecked Javascript 
+Subject: Re: Checking existence of firewalled URLs via javascript's script.onload
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hi George,
 
-Affected versions:
+There are many ways to make arbitrary HTTP requests through a browser, with
+and without Javascript.
 
-- Apache Airflow 2.6.0 before 2.8.0
+Here's a good writeup from 2018 from the makers of Burp Suite:
+https://portswigger.net/research/exposing-intranets-with-reliable-browser-based-port-scanning
 
-Description:
+I wouldn't consider this a vulnerability in the browser.
 
-Apache Airflow, versions 2.6.0 through 2.7.3 has a stored XSS vulnerability that allows a DAG author to add an unbounded and not-sanitized javascript in the parameter description field of the DAG. This Javascript can be executed on the client side of any of the user who looks at the tasks in the browser sandbox. While this issue does not allow to exit the browser sandbox or manipulation of the server-side data - more than the DAG author already has, it allows to modify what the user looking at the DAG details sees in the browser - which opens up all kinds of possibilities of misleading other users.
+Btw, I remember your exploits from the early 2000s - good stuff :)
 
-Users of Apache Airflow are recommended to upgrade to version 2.8.0 or newer to mitigate the risk associated with this vulnerability
+Regards,
+Philip
 
-Credit:
+On Wed, Apr 19, 2023 at 6:31 AM Georgi Guninski <gguninski@...il.com> wrote:
 
-Jens Scheffler (finder)
-Andrey Anshin (finder)
-Jens Scheffler (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/35460
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-47265
+> There is minor information disclosure vulnerability similar
+> to nmap in browser.
+>
+> It is possible to check the existence of firewalled URL U via
+> the following javascript in a browser:
+>
+> <script src="U"
+>     onload="alert('Exists')"
+>     onerror="alert('Does not exist')">
+>
+> This might have privacy implication on potentially
+> "semi-blind CSRF" (XXX does this makes sense?).
+>
+> Works for me in Firefox, Chrome and Chromium 112.
+>
+> I believe the issue won't be fixed because it will break
+> stuff in the mess called internet.
+>
+> For online test:
+>
+> https://www.guninski.com/onload2.html
+>
+> --
+> guninski:  https://j.ludost.net/resumegg.pdf
+>
 
