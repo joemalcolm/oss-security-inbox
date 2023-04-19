@@ -1,83 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/4
-Message-ID: <xmqqzgah8299.fsf@gitster.g>
-Date: Tue, 17 Jan 2023 10:06:10 -0800
-From: Junio C Hamano <junio@...ox.com>
-To: oss-security@...ts.openwall.com
-Cc: git-security@...glegroups.com
-Subject: Git 2.39.1 and friends
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/6
+Message-ID: <2849a749-83c1-68ab-3e8f-50cc667a6cf8@les7arts.com>
+Date: Wed, 19 Apr 2023 08:25:36 +0200
+From: Jacques Le Roux <jacques.le.roux@...7arts.com>
+To: oss-security@...ts.openwall.com, Arnout Engelen <engelen@...che.org>, "security@...che.org" <security@...che.org>, "security@...iz.apache.org" <security@...iz.apache.org>
+Subject: Re: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
 Content-Type: text/plain; charset=utf-8
 
-The Git project released versions v2.30.7, v2.31.6, v2.32.5,
-v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, v2.38.3, and v2.39.1
-today.  These maintenance releases are to address the security
-issues identified as CVE-2022-41903 and CVE-2022-23521.
+Hi Seth,
 
-The tarballs are found at:
+As I guess you know, the ASF has many (350+) projects: https://projects.apache.org/
+OFBiz is only one of these projects. An "old" one, IIRW it was the 26th to get in.
 
-    https://www.kernel.org/pub/software/scm/git/
+I say that because we have our own security team.
+Yet, all projects are overseen and especially helped by the ASF security team for security matter.
+In other words we (projects) all share the experience and expertise of the ASF security team.
 
-The following public repositories all have a copy of the v2.39.1
-tag, as well as the tags for older maintenance tracks for v2.30.7,
-v2.31.6, v2.32.5, v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, and
-v2.38.3.
+So I must add that the ASF CVE tool has an optional REVIEW status.
+This status allows the ASF security team to review and suggest improvements to the CVE announcement.
+As I did not use this tool before this CVE, I was sure of what I did (my old way) and did not pass by this status.
+If I had did so, the 2 points that you find "nice, and friendly" would have been amended by Arnout's review, lesson learned.
 
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+For the rest I guess your suggestions will be taken seriously by the ASF security team which maintain the CVE tool, especially for the OSS email part.
+I'll also take care of your suggestions for URLS, and will better use the tool that has 16 references types for URLS. Though they maybe need a bit of 
+explanation we are not all security experts :)
 
-The addressed issues are:
+For the list of CVEs you gave, I'm not sure they used the CVE tool but If they did I guess next time it will be better thanks to our improving CVE 
+tool, hopefully by using the REVIEW status
 
- * CVE-2022-41903:
+Thanks again for your suggestions
 
-   git log has the ability to display commits using an arbitrary
-   format with its --format specifiers. This functionality is also
-   exposed to git archive via the export-subst gitattribute.
+Jacques
 
-   When processing the padding operators (e.g., %<(, %<|(, %>(,
-   %>>(, or %><( ), an integer overflow can occur in
-   pretty.c::format_and_pad_commit() where a size_t is improperly
-   stored as an int, and then added as an offset to a subsequent
-   memcpy() call.
-
-   This overflow can be triggered directly by a user running a
-   command which invokes the commit formatting machinery (e.g., git
-   log --format=...). It may also be triggered indirectly through
-   git archive via the export-subst mechanism, which expands format
-   specifiers inside of files within the repository during a git
-   archive.
-
-   This integer overflow can result in arbitrary heap writes, which
-   may result in remote code execution.
-
-* CVE-2022-23521:
-
-    gitattributes are a mechanism to allow defining attributes for
-    paths. These attributes can be defined by adding a `.gitattributes`
-    file to the repository, which contains a set of file patterns and
-    the attributes that should be set for paths matching this pattern.
-
-    When parsing gitattributes, multiple integer overflows can occur
-    when there is a huge number of path patterns, a huge number of
-    attributes for a single pattern, or when the declared attribute
-    names are huge.
-
-    These overflows can be triggered via a crafted `.gitattributes` file
-    that may be part of the commit history. Git silently splits lines
-    longer than 2KB when parsing gitattributes from a file, but not when
-    parsing them from the index. Consequentially, the failure mode
-    depends on whether the file exists in the working tree, the index or
-    both.
-
-    This integer overflow can result in arbitrary heap reads and writes,
-    which may result in remote code execution.
-
-Credit for finding CVE-2022-41903 goes to Joern Schneeweisz of GitLab.
-An initial fix was authored by Markus Vervier of X41 D-Sec. Credit for
-finding CVE-2022-23521 goes to Markus Vervier and Eric Sesterhenn of X41
-D-Sec. This work was sponsored by OSTIF.
-
-The proposed fixes have been polished and extended to cover additional
-findings by Patrick Steinhardt of GitLab, with help from others on the
-Git security mailing list.
+Le 19/04/2023 à 03:29, Seth Arnold a écrit :
+> On Tue, Apr 18, 2023 at 11:15:52AM +0200, Jacques Le Roux wrote:
+>> I used to give more information. For this one, using our "new" internal
+>> process* (need an ASF credential) and  following step 11 of**, notably
+>>
+>>     <<Generally, reports should contain enough information to enable
+>>     people to assess the risk the vulnerability poses for their own
+>>     system, and no more.>>
+>>
+>> I restricted the information to a minimum.
+> Hello Jacques, thanks for the reply. I'd like to suggest that this policy
+> should receive a review, as other list members have found the Apache
+> defaults a bit wanting:
+>
+> https://www.openwall.com/lists/oss-security/2023/01/31/7
+> https://www.openwall.com/lists/oss-security/2022/10/12/2
+> https://www.openwall.com/lists/oss-security/2022/08/26/4
+> https://www.openwall.com/lists/oss-security/2022/01/25/15
+>
+>> When sending to Mitre we replaced
+>> https://lists.apache.org/list.html?announce@apache.org
+>> by
+>> https://lists.apache.org/thread/k8s76l0whydy45bfm4b69vq0mf94p3wc
+>>
+>> You can see the result at https://www.cve.org/CVERecord?id=CVE-2022-47501
+> This is nice, and friendly.
+>
+>> We also changed the "problem type" to be more specific. Following the CWE
+>> classification, we used "CWE-22 Improper Limitation of a Pathname to a
+>> Restricted Directory ('Path Traversal')" rather than "Arbitrary file reading
+>> vulnerability" used by the finder who stayed as the CVE title. You can see
+>> it at https://cveawg.mitre.org/api/cve/CVE-2022-47501 which is the json
+>> version of the report.
+> This is also nice and friendly.
+>
+>> Regarding your points:
+>>
+>>   * the vulnerability was introduced long ago (years) when the plugin was
+>>   created. It was around 2013.
+> This information is gold!
+>
+>>   * https://ofbiz.apache.org/security.html gives indirect information
+>>   about the fix. Do you suggest that we need to put a direct link like
+>>   https://github.com/apache/ofbiz-plugins/commit/582add7d3 ?
+> The link to the security page is a good start; it's even one of the better
+> security.html pages I've seen. (Thanks!) But we've all spent too much time
+> trying to figure out what exactly might have been "the intended content"
+> on a page five or ten years later. Having more specific information (such
+> as the "582add7d3" here) directly available in the list archives will
+> simplify future searches for information.
+>
+>> Thanks for the links. We will certainly consider what can be done to
+>> ease the work of downstream distributors and consumers.
+> Thank you :)
