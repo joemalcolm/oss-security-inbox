@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2135" "Tuesday" "31" "October" "2017" "13:23:52" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20171031132352.2df6d2ad@pc1>" "54" "[oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103112:23:52" "[oss-security] Fw: Security risk of vim swap files" (number mark "        hanno@hboeck Oct 31   54/2135  " thread-indent "\"[oss-security] Fw: Security risk of vim swap files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28362 invoked by uid 550); 31 Oct 2017 12:24:06 -0000
+Received: (qmail 5397 invoked by uid 550); 19 Apr 2023 13:29:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +6,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28322 invoked from network); 31 Oct 2017 12:24:06 -0000
-Message-ID: <20171031132352.2df6d2ad@pc1>
-X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 31 Oct 2017 13:23:52 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Fw: Security risk of vim swap files
+Received: (qmail 7458 invoked from network); 19 Apr 2023 12:46:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681908402; x=1684500402;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4Yi7Hn1zoLabDWsdCbxRIBsJSopy9MoLZTWgJOC7Kcw=;
+        b=TRI9wOlf2l3chkdoUk7vDlbnMpGapfY/XohUp/TsKaVbzhFUt62k61chSWwIUvqHnv
+         TjPo5pq2ErKySQw6ow62qqGU6uS9agI6H152JcsMYR95ZiwtX08Er3agcjoXF0lB15vB
+         dh/J5sriyLDEGVVYdkSpf6CpYdiYzmXZYKlHPGM8lyRXrd0xMLmpyLNUPSJRzNaZuPxI
+         AMuMc2BXYNsJQ+kYMy077MU260Cl/V+xpjhGoMKOjyRt2+FPY1aBTwP1RUVvpIr+OG72
+         3eMida0IJQAMb3wNib3Il35lLt9RNonu3r71+4LI7mIE+fRmsrvcwKHswebzd+Zd+j/S
+         Qzow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681908402; x=1684500402;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4Yi7Hn1zoLabDWsdCbxRIBsJSopy9MoLZTWgJOC7Kcw=;
+        b=Itcb4yJYBciDdvHDqIqxgTzmh8FlQyj25T1dNeCtLvkbNOpAijNlCd3o6q7ldfn+fK
+         99jYI+vSfibXJQOXPLvO5J8whCxKbesnQbJNYsO7NTEqcT3sEs9niwOdk3C9Cod3MAVf
+         wCydYNRvMV8zA/R22nOBTmjq0z8z+yQFSCdW8R8vPsHJGvupVz00rZ+xaOHbe7N9O+2P
+         PoI6uqxGuR9P358OFLAgHmRQwwgcT9Mx0BJRN8zpF4UNuZqy5gnJ+Btzf3vB4rRFIlVy
+         IuwHdfXN16wkYCLsUTq7/u1y3ReGsLgiArkPYgtp49k1nkQEiSNrT3IOKSi+jOib49CX
+         vKUg==
+X-Gm-Message-State: AAQBX9ekfKnda201FefIrkiCDWgcFZO+cOkkHIMxBwMxlnXGdjZGJp6l
+	hKjbk6XAcfQa4jOv/SNv8BcOQcQ4oymxn7+RhfjCzrQS9RUg7g==
+X-Google-Smtp-Source: AKy350ZYIlbSCyVzPdDAz4D5U5KJ54MXH5wZhSPI02I8uL2uzUYxegiAAkUjNxKqDbcYwHMc26x4Lb8oJ6+zCOo9AtE=
+X-Received: by 2002:a05:6a20:c193:b0:d9:77f7:d62e with SMTP id
+ bg19-20020a056a20c19300b000d977f7d62emr3772730pzb.36.1681908402308; Wed, 19
+ Apr 2023 05:46:42 -0700 (PDT)
+MIME-Version: 1.0
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Wed, 19 Apr 2023 15:45:36 +0300
+Message-ID: <CAGUWgD9UDNkNMsixAnLcmS0OuWM0Btvx6fRbRr1OSk1UsXhy2g@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Checking existence of firewalled URLs via javascript's script.onload
 
-I just sent this to the vim dev list, but I guess it's interesting for
-oss-security, too.
+There is minor information disclosure vulnerability similar
+to nmap in browser.
 
-Begin forwarded message:
+It is possible to check the existence of firewalled URL U via
+the following javascript in a browser:
 
-Date: Tue, 31 Oct 2017 11:30:50 +0100
-Subject: Security risk of vim swap files
+<script src="U"
+    onload="alert('Exists')"
+    onerror="alert('Does not exist')">
 
+This might have privacy implication on potentially
+"semi-blind CSRF" (XXX does this makes sense?).
 
-Hi,
+Works for me in Firefox, Chrome and Chromium 112.
 
-I wanted to point out an issue here with vim swap files that make them
-a security problem.
+I believe the issue won't be fixed because it will break
+stuff in the mess called internet.
 
-By default vim creates a file with the name .filename.swp in the same
-directory while editing. They contain the full content of the edited
-file. This usually gets deleted upon exit, but not if vim crashes or
-gets killed (e.g. due to a reboot).
+For online test:
 
-On web servers this can be a severe security risk. One can e.g. scan
-for web hosts that have swap files of PHP configuration files and thus
-expose settings like database passwords. (e.g. wget
-http://example.com/.wp-config.php.swp )
+https://www.guninski.com/onload2.html
 
-In a scan of the alexa top 1 million I found ~750 instances of such
-files. I tried to inform affected people as best as I could. I also
-discovered such scans in my own web server logs, so I assume black hats
-are already aware of this and it's actively exploitet.
-
-I was wondering how to best avoid this on my own servers and I first
-thought about saving the swap files to tmp ( with "set directory").
-However on multiuser systems this creates another security problem.
-These files are world readable, thus instead of leaking information to
-the world it's now leaking information to other users on the same
-system. Thus even if one is aware of the issue it's nontrivial to get
-secure settings (I've now worked around this by having per-user tmp
-dirs with secure permissions.)
-
-I think vim should change the behavior of swap files:
-1. they should be stored in /tmp by default
-2. they should have secure permissions (tmp file security is
-a tricky thing and needs careful consideration to avoid symlink attacks
-and the like, but there are dedicated functions for this like mkstemp).
-3. Ideally they also shouldn't leak currently edited filenames (e.g.
-they shouldn't be called /tmp/.test.txt.swp, but more something
-like /tmp/.vim_swap.123782173)
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
+-- 
+guninski:  https://j.ludost.net/resumegg.pdf
