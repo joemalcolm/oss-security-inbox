@@ -1,13 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/31/5
-Message-ID: <8700c8dd79c510baa1aa7546537bca449988b18f.camel@devio.us>
-Date: Fri, 31 Mar 2023 17:21:09 +0200
-From: Ailin Nemui <ailin@...io.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-29132: Irssi SA-2023-03 / Use after free in printing routine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/1
+Message-ID: <20230419012930.GO1655348@millbarge>
+Date: Wed, 19 Apr 2023 01:29:30 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com, Arnout Engelen <engelen@...che.org>, "security@...che.org" <security@...che.org>, "security@...iz.apache.org" <security@...iz.apache.org>
+Subject: Re: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2023-03-31 at 04:59 +0800, Ailin Nemui wrote:
-> A CVE has been requested.
+On Tue, Apr 18, 2023 at 11:15:52AM +0200, Jacques Le Roux wrote:
+> I used to give more information. For this one, using our "new" internal
+> process* (need an ASF credential) and  following step 11 of**, notably
+> 
+>    <<Generally, reports should contain enough information to enable
+>    people to assess the risk the vulnerability poses for their own
+>    system, and no more.>>
+> 
+> I restricted the information to a minimum.
 
-CVE-2023-29132 was assigned
+Hello Jacques, thanks for the reply. I'd like to suggest that this policy
+should receive a review, as other list members have found the Apache
+defaults a bit wanting:
+
+https://www.openwall.com/lists/oss-security/2023/01/31/7
+https://www.openwall.com/lists/oss-security/2022/10/12/2
+https://www.openwall.com/lists/oss-security/2022/08/26/4
+https://www.openwall.com/lists/oss-security/2022/01/25/15
+
+> When sending to Mitre we replaced
+> https://lists.apache.org/list.html?announce@apache.org
+> by
+> https://lists.apache.org/thread/k8s76l0whydy45bfm4b69vq0mf94p3wc
+> 
+> You can see the result at https://www.cve.org/CVERecord?id=CVE-2022-47501
+
+This is nice, and friendly.
+
+> We also changed the "problem type" to be more specific. Following the CWE
+> classification, we used "CWE-22 Improper Limitation of a Pathname to a
+> Restricted Directory ('Path Traversal')" rather than "Arbitrary file reading
+> vulnerability" used by the finder who stayed as the CVE title. You can see
+> it at https://cveawg.mitre.org/api/cve/CVE-2022-47501 which is the json
+> version of the report.
+
+This is also nice and friendly.
+
+> Regarding your points:
+> 
+>  * the vulnerability was introduced long ago (years) when the plugin was
+>  created. It was around 2013.
+
+This information is gold!
+
+>  * https://ofbiz.apache.org/security.html gives indirect information
+>  about the fix. Do you suggest that we need to put a direct link like
+>  https://github.com/apache/ofbiz-plugins/commit/582add7d3 ?
+
+The link to the security page is a good start; it's even one of the better
+security.html pages I've seen. (Thanks!) But we've all spent too much time
+trying to figure out what exactly might have been "the intended content"
+on a page five or ten years later. Having more specific information (such
+as the "582add7d3" here) directly available in the list archives will
+simplify future searches for information.
+
+> Thanks for the links. We will certainly consider what can be done to
+> ease the work of downstream distributors and consumers.
+
+Thank you :)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
