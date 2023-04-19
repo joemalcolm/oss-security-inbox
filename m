@@ -1,39 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/19/3
-Message-ID: <CAELFjNMCrNxurM6MJ2yc2Xckm9=AVV1XcLmw_GoX6m45s39NLw@mail.gmail.com>
-Date: Tue, 19 Sep 2023 12:43:45 +0200
-From: Martijn Visser <martijnvisser@...che.org>
-To: dev@...nk.apache.org, user <user@...nk.apache.org>,  user-zh <user-zh@...nk.apache.org>, news@...nk.apache.org,  Apache Security Team <security@...che.org>, Andrea Cosentino <ancosen@...il.com>, oss-security@...ts.openwall.com
-Subject: [CVE-2023-41834] Apache Flink Stateful Functions allowed HTTP header injection due to Improper Neutralization of CRLF Sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/8
+Message-ID: <ZD/4ODBjTesPMECg@itl-email>
+Date: Wed, 19 Apr 2023 10:18:27 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Cc: sjn@....org
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-41834: Apache Flink Stateful Functions allowed HTTP header
-injection due to Improper Neutralization of CRLF Sequences
+On Tue, Apr 18, 2023 at 05:46:30PM +0200, Stig Palmquist wrote:
+> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
+> standalone on CPAN, does not verify TLS certs by default. Users must
+> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
+> 
+> We grepped trough CPAN to find distributions using HTTP::Tiny that
+> didn't specify cert verification behaviour, possibly exposing users to
+> mitm attacks. Here are some examples with patches:
+> 
+> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
+>   without verifying server certs. Fixed in v2.35-TRIAL.
+>   https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
+> 
+> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
+>   https://github.com/bluefeet/GitLab-API-v4/pull/57
+> 
+> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
+>   information to a network attacker.
+>   https://github.com/sanko/Finance-Robinhood/pull/6
+> 
+> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
+>   attacker.
+>   https://github.com/pplu/aws-sdk-perl/pull/426
+> 
+> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
+>   attacker.
+>   https://github.com/pplu/cloudhealth-api-perl/pull/2
+> 
+> ... and more. We have generated a list of over 300 potentially affected
+> CPAN distributions.
+> 
+> More info in our blog post:
+> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
 
-Severity: moderate
+IMO this is an HTTP::Tiny vulnerability.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Stateful Functions 3.1.0 to 3.2.0
-
-Description:
-Improper Neutralization of CRLF Sequences in HTTP Headers in Apache
-Flink Stateful Functions 3.1.0, 3.1.1 and 3.2.0 allows remote
-attackers to inject arbitrary HTTP headers and conduct HTTP response
-splitting attacks via crafted HTTP requests. Attackers could
-potentially inject malicious content into the HTTP response that is
-sent to the user. This could include injecting a fake login form or
-other phishing content, or injecting malicious JavaScript code that
-can steal user credentials or perform other malicious actions on the
-user's behalf.
-
-Mitigation:
-Users should upgrade to 3.3.0
-
-Credit:
-This issue was discovered by Andrea Cosentino from Apache Software Foundation
-
-References:
-https://flink.apache.org/security/
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
