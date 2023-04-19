@@ -1,4 +1,4 @@
-Received: (qmail 23790 invoked by uid 550); 13 Feb 2024 14:23:55 -0000
+Received: (qmail 32309 invoked by uid 550); 19 Apr 2023 06:45:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,150 +7,158 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24549 invoked from network); 13 Feb 2024 14:04:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nlnetlabs.nl;
-	s=MBO0001; t=1707833263;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	to:to:cc:mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
-	bh=VvwJmSOiUQiICgHn77cBH1hcO4SCCrpoXghTKgSu5Wg=;
-	b=MlG6h5xm+nTXfQ73dbeu1BcNGFobngN3wu0WkOh3HuxJOjM2k+290Yunn+Sjp0nek8RjMi
-	bhjjV3qA+EfbkCzN1gvqB6dmD1WR2DN532HfG8/+7MQxEbCEwjYnvURJXpnEZr9+gYUCZ0
-	mrZk/k3gjcidLgYo1I8ZsbZBTdwiPX5vW5qOh02KSj8E1useKsCwer6t1rbtkP5iNuWuL6
-	ebpXc1eDfLoLfXaUGwCMJrgImawuZoIqfiFWyUgl0kNyP7auz8X+xAUOIbkDdevTBPSDTo
-	hokl+U0CitZGiWmEWPNEwybTGdAD/ZXr01snpDYVfbO+9XYm5ftHcwGVdXA4vQ==
-Message-ID: <8f2901ed-401d-441a-bcf5-f23eda0d9e88@nlnetlabs.nl>
-Date: Tue, 13 Feb 2024 15:07:38 +0100
+Received: (qmail 27737 invoked from network); 19 Apr 2023 03:57:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=asu-edu.20221208.gappssmtp.com; s=20221208; t=1681876662; x=1684468662;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=27MigfSst87C+RxjI47G8849Sp5TO/29O9Cclfiullk=;
+        b=dY2FiRtestffunc1d8e+UseopZ22nQbgI53Wvj55UN7mlGILnJPOe3D4FVYihsHmE9
+         AVnjb7Nq10jlOJziOGA8HviOkhWr2ECuyNZbalEJDWiN8hiC5v4GCwL+m0TsgieNDx4P
+         0Y72+WIf8UfzA1HiIijmtMWFmnmL/xYOJqckyGmQt32QPw+g8oVnBk5epJjVwP1Xr6Yx
+         9XYkzcs7zp99V+HI6pTTjWrcZOOggXtOqvwgDPeY5DFvxHDV8Vzlw77X1gPfPthADus2
+         HqTEEZC/6FLSyUAorNVb8Z8BEFRFcS5tRukvOs9j4YKn1npkQfsOpEuFp6zdAgUz4Ln4
+         mfNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681876662; x=1684468662;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=27MigfSst87C+RxjI47G8849Sp5TO/29O9Cclfiullk=;
+        b=f54VJO7wc2FEk2SFDZW9DJsqFN1wm3Gzymp7Bhst/9hCT5IRs3YEr6vDWpKrecyniy
+         Yu9lxB1yvCBncUYpaek1HXm77FK4pA4r6+luQihSASIOJMMF/jC/F6GpOM7rGEjFNESu
+         7Ic/+8VhtdDvLrqo3SuDsnQn3yi2ysgP5oD+ozhp3bgryfD8x4mfjgcFyYxqzlHjmhin
+         ll+MQZr3/JzYAvq5f5VUiAxmG8PEKHsaWu7U/x79VtWqqhXwFp8IGWexL6vpHyCxdPwJ
+         gZ3edfx0IjDjdAO7QGynv8EfgpTWZueNyu+gROC6If/g3db6MDuUk1d7S3t1gLbvwCoo
+         TwJg==
+X-Gm-Message-State: AAQBX9dUMOYquM/gzcXGSUbWnhPf9tm8geDbhkTz9g3Q1+aRcORI2dLO
+	Uwt9HPD1Q3eYto5fE+smFtAwsb0+j3l80l+CrC5m4KJBxThJYdXxYa8grQ==
+X-Google-Smtp-Source: AKy350bAbzRp72q3staEdAOFlXhtG8QoslvVQRwpRjyknAIDC7QYg7hBIMSHgAxYwqPZqPL1NkisOXdqOw3h1JZz9XY=
+X-Received: by 2002:a05:6a20:12c9:b0:f0:a282:a343 with SMTP id
+ v9-20020a056a2012c900b000f0a282a343mr2564303pzg.16.1681876662163; Tue, 18 Apr
+ 2023 20:57:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Language: en-GB
-From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
-Autocrypt: addr=yorgos@nlnetlabs.nl; keydata=
- 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
- 3B8+NrtIAE8F4VHNKaM70rYX
+From: Kyle Zeng <yzeng56@asu.edu>
+Date: Wed, 19 Apr 2023 11:57:31 +0800
+Message-ID: <CADCqBhCB1q4Q+_0zuMG6M=BqizH4dmPwhkyKeOb_Pvd1uzbUGA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------7zam4qnb9JNp5uY0kxtO8DKS"
-Subject: [oss-security] Unbound: disclosure of CVE-2023-50387 and CVE-2023-50868 DNSSEC
- validation vulnerabilities
+Cc: Fish Wang <fishw@asu.edu>, Akshay Ajayan <aajayan@asu.edu>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2023-2124: OOB access in the Linux kernel's XFS subsystem
 
---------------7zam4qnb9JNp5uY0kxtO8DKS
-Content-Type: multipart/mixed; boundary="------------cKQR6G1pq8s80W1VcmhGPv80";
- protected-headers="v1"
-From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
-To: oss-security@lists.openwall.com
-Message-ID: <8f2901ed-401d-441a-bcf5-f23eda0d9e88@nlnetlabs.nl>
-Subject: Unbound: disclosure of CVE-2023-50387 and CVE-2023-50868 DNSSEC
- validation vulnerabilities
+Hi there,
 
---------------cKQR6G1pq8s80W1VcmhGPv80
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+We recently found a slab OOB access bug in the Linux kernel's XFS
+subsystem. It can cause denial-of-service and potentially privilege
+escalation.
 
-SGkgdGhlcmUsDQoNCihUaGUgb2ZmaWNpYWwgYW5ub3VuY2VtZW50IGFuZCBt
-b3JlIGluZm9ybWF0aW9uIGNhbiBiZSBmb3VuZCBhdDoNCmh0dHBzOi8vbmxu
-ZXRsYWJzLm5sL25ld3MvMjAyNC9GZWIvMTMvdW5ib3VuZC0xLjE5LjEtcmVs
-ZWFzZWQvKQ0KDQpETlNTRUMgcHJvdG9jb2wgdnVsbmVyYWJpbGl0aWVzIGhh
-dmUgYmVlbiBkaXNjb3ZlcmVkIHRoYXQgcmVuZGVyIHZhcmlvdXMNCkROU1NF
-QyB2YWxpZGF0b3JzIHZpY3RpbXMgb2YgRGVuaWFsIE9mIFNlcnZpY2Ugd2hp
-bGUgdHJ5aW5nIHRvIHZhbGlkYXRlDQpzcGVjaWFsbHkgY3JhZnRlZCBETlNT
-RUMgcmVzcG9uc2VzLg0KDQpUaGVyZSBhcmUgdHdvIGtub3duIHZ1bG5lcmFi
-aWxpdGllczogQ1ZFLTIwMjMtNTAzODcgKHJlZmVycmVkIGhlcmUgYXMNCnRo
-ZSBLZXlUcmFwIHZ1bG5lcmFiaWxpdHkpIGFuZCBDVkUtMjAyMy01MDg2OCAo
-cmVmZXJyZWQgaGVyZSBhcyB0aGUNCk5TRUMzIHZ1bG5lcmFiaWxpdHkpLg0K
-DQpXZSBhcmUgY2F0ZWdvcml6aW5nIHRoZSB2dWxuZXJhYmlsaXRpZXMgd2l0
-aCBhIEhJR0ggc2V2ZXJpdHkgZm9yDQpVbmJvdW5kLg0KV2UgYXJlIHJlbGVh
-c2luZyAxLjE5LjEgb24gdGhlIDEzdGggb2YgRmVicnVhcnkgaW5jbHVkaW5n
-IHRoZSByZWxldmFudA0KZml4ZXMuDQoNCg0KPT0gU3VtbWFyeQ0KQm90aCB2
-dWxuZXJhYmlsaXRpZXMsIHZpYSBzcGVjaWFsbHkgY3JhZnRlZCBETlNTRUMg
-YW5zd2VycywgY2FuIGxlYWQNCkROU1NFQyB2YWxpZGF0b3JzIGRvd24gYSB2
-ZXJ5IENQVSBpbnRlbnNpdmUgYW5kIHRpbWUgY29zdGx5DQp2YWxpZGF0aW9u
-L05TRUMzIGhhc2ggY2FsY3VsYXRpb24gcGF0aC4NClRoaXMgcmVzdWx0cyBp
-biBkZWdyYWRlZCBwZXJmb3JtYW5jZSBhbmQgZGVuaWFsIG9mIHNlcnZpY2Ug
-aW4gdHJpdmlhbGx5DQpvcmNoZXN0cmF0ZWQgYXR0YWNrcy4NCg0KVW5ib3Vu
-ZCAxLjE5LjEgaW5jbHVkZXMgZml4ZXMgZm9yIGJldHRlciBwZXJmb3JtYW5j
-ZSB1bmRlciBzdWNoIEROU1NFQw0KdmFsaWRhdGlvbiBhdHRhY2tzLg0KDQoN
-Cj09IEFmZmVjdGVkIHByb2R1Y3RzDQpVbmJvdW5kIHVwIHRvIGFuZCBpbmNs
-dWRpbmcgMS4xOS4wLg0KDQoNCj09IFNvbHV0aW9uDQpJbnN0YWxsIFVuYm91
-bmQgMS4xOS4xLg0KT3IgYXBwbHkgdGhlIGZvbGxvd2luZyBwYXRjaCB0byB0
-aGUgbGF0ZXN0IFVuYm91bmQgdmVyc2lvbnMgKDEuMTguMCAtIA0KMS4xOS4w
-KToNCmh0dHBzOi8vbmxuZXRsYWJzLm5sL2Rvd25sb2Fkcy91bmJvdW5kL3Bh
-dGNoX0NWRS0yMDIzLTUwMzg3X0NWRS0yMDIzLTUwODY4LmRpZmYNCg0KQXBw
-bHkgdGhlIHBhdGNoIHVzaW5nOg0KDQogICAgIHBhdGNoIC1wMSA8IHBhdGNo
-X0NWRS0yMDIzLTUwMzg3X0NWRS0yMDIzLTUwODY4LmRpZmYNCg0KDQo9PSBB
-Y2tub3dsZWRnbWVudHMNCldlIHdvdWxkIGxpa2UgdG8gdGhhbmsgRWxpYXMg
-SGVmdHJpZywgSGF5YSBTY2h1bG1hbm4sIE5pa2xhcyBWb2dlbCwgYW5kIA0K
-TWljaGFlbCBXYWlkbmVyIGZyb20gdGhlIEdlcm1hbiBOYXRpb25hbCBSZXNl
-YXJjaCBDZW50ZXIgZm9yIEFwcGxpZWQgDQpDeWJlcnNlY3VyaXR5IEFUSEVO
-RSBmb3IgZGlzY292ZXJpbmcgYW5kIHJlc3BvbnNpYmx5IGRpc2Nsb3Npbmcg
-dGhlIA0KS2V5VHJhcCB2dWxuZXJhYmlsaXR5Lg0KV2Ugd291bGQgbGlrZSB0
-byB0aGFuayBQZXRyIMWgcGHEjWVrIGZyb20gSVNDIGZvciBkaXNjb3Zlcmlu
-ZyBhbmQNCnJlc3BvbnNpYmx5IGRpc2Nsb3NpbmcgdGhlIE5TRUMzIHZ1bG5l
-cmFiaWxpdHkuDQoNCg0KKiBUaGlzIGVtYWlsIGlzIHNpZ25lZC4gS2V5cyBv
-ZiB0aGUgTkxuZXQgTGFicyBwZW9wbGUgYXJlIHB1Ymxpc2hlZCBvbg0KaHR0
-cHM6Ly93d3cubmxuZXRsYWJzLm5sL3Blb3BsZS8gKg0KDQpCZXN0IHJlZ2Fy
-ZHMsDQotLSBZb3Jnb3MNCg==
+The root cause of the bug is a missing metadata validation when
+mounting a user-supplied XFS disk image. More specifically, in a
+corner case where there is a dirty log with a buffer log item for an
+AGF and the on-disk buffer appears to be newer, XFS will discard the
+old dirty log and directly use the newer on-disk buffer without
+validating its content. This can lead to malformed metadata flow into
+the kernel and cause catastrophic results. More details can be found
+in the patch mentioned below.
 
---------------cKQR6G1pq8s80W1VcmhGPv80--
+The patch for this bug can be found here:
+https://lore.kernel.org/linux-xfs/20230412214034.GL3223426@dread.disaster.area/T/#m1ebbcd1ad061d2d33bef6f0534a2b014744d152d
+It has been merged into linux-next, 22ed903eee23 ("xfs: verify buffer
+contents when we skip log replay") and will be merged into the main
+tree soon.
 
---------------7zam4qnb9JNp5uY0kxtO8DKS
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Notice that we are aware of two different crashes this bug can lead to
+(the one we found because of invalid `agi_level`, and the one
+discussed in the patch: invalid refcountbt), it is possible that this
+bug can be exploitable to achieve LPE.
 
------BEGIN PGP SIGNATURE-----
+A crash log is attached to the email.
 
-wsF5BAABCAAjFiEElI60IyLF0At5NA9dz/M0TZCHpJAFAmXLd6oFAwAAAAAACgkQz/M0TZCHpJDn
-Jw//TVOXNziZdR4BzZdkF2ZW3HXdpkF5fhNjJd6czt+ChW+X5kaS93LpX0+nPRee52mo4+WmWJlk
-iSnA5g9n8vMePseC/FVIqbvIJeVnlvCkO+F6sn0QcbgXt4uXsZeTuaz2UM8nDwr3kpXye3uNZkx2
-Psm4k+PYJijzQWP8eyOUjyLaAhwv5sdNw4Sh7riXYgLdt+bruc5eN5t8J8Mj7ustwVBK8qsTgMTE
-9c6kHyTTSK3NuEvh2uKq2g/mRgPQm9rwnzefsXs+Ad+VFy9VrBLtrsgIOx2cPhqlJqyLilnmljX3
-G75SOBbGL7BCFmlsndpOxrhYVNwl6k/+GHxv2rKQTDzo8Z9XNtvBoPDQvI87EEuZH4dtQf/iGssw
-k/EbwM4h79pAGGZSuDvug08eMTlYSy3KDN3xejj4RQ9/niMqeNr60VNumZ5+7K/bEkoun9uU8xSo
-i6oLp3hB0NHixKRWefBXyFnm60MWtRx9DMDe0OCy8dawxUuiNEi9j02hrK9wJDwfzXzXGQxiygWh
-jyru/Q2zyRy3CqJLb7ADcSTJXvsuecU1wdpJ/lbAHNrVByi8Ye3KWyG1Rztb8n4xj3DKNXntKMOo
-pdXJ5FnIrSdaVNP1WDP6aqXA3/ZgVSBIF09nUsXqDE2sRyYSBDhzXZ+HqD7zOP15+ovIPEg4CMoC
-3ek=
-=IcFs
------END PGP SIGNATURE-----
+Best,
+Kyle Zeng
+Akshay Ajayan
+Fish Wang
 
---------------7zam4qnb9JNp5uY0kxtO8DKS--
+=================================================
+root@pwn:~# mount 2 test
+[   11.652439] loop0: detected capacity change from 0 to 32768
+[   11.702972] XFS (loop0): Mounting V5 Filesystem
+58c42324-ea61-4f93-a670-9fa85a561ec4
+[   11.704748] XFS (loop0): null uuid in log - IRIX style log
+[   11.705545] XFS (loop0): Torn write (CRC failure) detected at log
+block 0x9. Truncating head block from 0x10.
+[   11.759259] XFS (loop0): Starting recovery (logdev: internal)
+[   11.760440] XFS (loop0): Metadata corruption detected at
+xfs_btree_lookup_get_block+0x259/0x2d0, xfs_inobt block 0x18
+[   11.760950] XFS (loop0): Unmount and run xfs_repair
+[   11.761195] general protection fault, probably for non-canonical
+address 0x6043be0fbf88a15d: 0000 [#1] PREEMPT SMP NOPTI
+[   11.761740] CPU: 2 PID: 510 Comm: mount Not tainted 6.3.0-rc6 #9
+[   11.762018] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.15.0-1 04/01/2014
+[   11.762433] RIP: 0010:xfs_trans_brelse+0x1c/0x1b0
+[   11.762668] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f
+44 00 00 55 48 89 e5 41 55 41 54 49 89 f4 53 48 89 fb e8 e7 b3 4c ff
+48 85 db <4d> 8b ac 24 e0 00 00 00 0f 84 5b 01 00 00 e8 d1 b3 4c ff 66
+90 e8
+[   11.763497] RSP: 0018:ffffa91541c07ab0 EFLAGS: 00010246
+[   11.763746] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff939e5529
+[   11.764071] RDX: ffff8d01062b3f80 RSI: 0000000000000000 RDI: 0000000000000000
+[   11.764398] RBP: ffffa91541c07ac8 R08: ffff8d01062b3f80 R09: 0000000000000000
+[   11.764725] R10: 000000006f6c2820 R11: 0000000020534658 R12: 6043be0fbf88a07d
+[   11.765049] R13: 00000000ffffff8b R14: 6043be0fbf88a07d R15: ffff8d0101db2000
+[   11.765375] FS:  00007f06d7a5ee40(0000) GS:ffff8d013ed00000(0000)
+knlGS:0000000000000000
+[   11.765742] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   11.766009] CR2: 000000000070bdb4 CR3: 0000000006396006 CR4: 0000000000770ee0
+[   11.766336] PKRU: 55555554
+[   11.766467] Call Trace:
+[   11.766590]  <TASK>
+[   11.766706]  xfs_btree_del_cursor+0x45/0x120
+[   11.766918]  xfs_imap_lookup+0x190/0x2d0
+[   11.767111]  ? kmem_cache_alloc+0x17e/0x330
+[   11.767319]  xfs_imap+0x35a/0x4c0
+[   11.767486]  xfs_iget+0x4c7/0x10f0
+[   11.767662]  xfs_mountfs+0x776/0xe00
+[   11.767837]  xfs_fs_fill_super+0x9ee/0xdc0
+[   11.768037]  get_tree_bdev+0x22b/0x350
+[   11.768217]  ? __pfx_xfs_fs_fill_super+0x10/0x10
+[   11.768439]  xfs_fs_get_tree+0x22/0x30
+[   11.768621]  vfs_get_tree+0x35/0x130
+[   11.768797]  path_mount+0xc64/0x1110
+[   11.768973]  __x64_sys_mount+0x19a/0x1f0
+[   11.769164]  do_syscall_64+0x59/0x90
+[   11.769348]  ? syscall_exit_to_user_mode+0x30/0x60
+[   11.769576]  ? do_syscall_64+0x69/0x90
+[   11.769757]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   11.769998] RIP: 0033:0x7f06d6ce948a
+[   11.770168] Code: 48 8b 0d 11 fa 2a 00 f7 d8 64 89 01 48 83 c8 ff
+c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00
+00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d de f9 2a 00 f7 d8 64 89
+01 48
+[   11.770999] RSP: 002b:00007fffdcf3fae8 EFLAGS: 00000206 ORIG_RAX:
+00000000000000a5
+[   11.771345] RAX: ffffffffffffffda RBX: 0000559716172060 RCX: 00007f06d6ce948a
+[   11.771674] RDX: 0000559716174740 RSI: 0000559716173f40 RDI: 000055971617b2a0
+[   11.772000] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000020
+[   11.772352] R10: 00000000c0ed0000 R11: 0000000000000206 R12: 000055971617b2a0
+[   11.772696] R13: 0000559716174740 R14: 0000000000000000 R15: 00000000ffffffff
+[   11.773022]  </TASK>
+[   11.773130] Modules linked in:
+[   11.773303] ---[ end trace 0000000000000000 ]---
+[   11.773601] RIP: 0010:xfs_trans_brelse+0x1c/0x1b0
+[   11.773825] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f
+44 00 00 55 48 89 e5 41 55 41 54 49 89 f4 53 48 89 fb e8 e7 b3 4c ff
+48 85 db <4d> 8b ac 24 e0 00 00 00 0f 84 5b 01 00 00 e8 d1 b3 4c ff 66
+90 e8
+[   11.774693] RSP: 0018:ffffa91541c07ab0 EFLAGS: 00010246
+[   11.774977] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff939e5529
+[   11.775313] RDX: ffff8d01062b3f80 RSI: 0000000000000000 RDI: 0000000000000000
+[   11.775654] RBP: ffffa91541c07ac8 R08: ffff8d01062b3f80 R09: 0000000000000000
+[   11.775979] R10: 000000006f6c2820 R11: 0000000020534658 R12: 6043be0fbf88a07d
+[   11.776307] R13: 00000000ffffff8b R14: 6043be0fbf88a07d R15: ffff8d0101db2000
+[   11.776636] FS:  00007f06d7a5ee40(0000) GS:ffff8d013ed00000(0000)
+knlGS:0000000000000000
+[   11.777003] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   11.777269] CR2: 000000000070bdb4 CR3: 0000000006396006 CR4: 0000000000770ee0
+[   11.777595] PKRU: 55555554
+============
