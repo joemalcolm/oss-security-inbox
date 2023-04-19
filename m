@@ -1,138 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/2
-Message-Id: <E1qqBUv-0002HO-Is@xenbits.xenproject.org>
-Date: Tue, 10 Oct 2023 12:06:01 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 441 v4 (CVE-2023-34324) - Possible deadlock in Linux kernel event handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/2
+Message-ID: <20230419221144.WRtLD%steffen@sdaoden.eu>
+Date: Thu, 20 Apr 2023 00:11:44 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+nightmare.yeah27@...ecat.org wrote in
+ <20230419055256.zhwa4okfxdbsc72z@...sty>:
+ |On Tue, Apr 18, 2023 at 02:57:41AM +0200, Solar Designer wrote:
+ |> On Sun, Apr 16, 2023 at 10:57:27PM +0200, Steffen Nurpmeso wrote:
+ |
+ |>> You have to do some things, and if you give up privileges
+ |>> thereafter, extended capabilities are gone.
+ |
+ |> POSIX saved IDs should help retain/regain the capabilities.
+ |
+ |Another (simpler?) way is to fork before giving up privilege.
 
-            Xen Security Advisory CVE-2023-34324 / XSA-441
-                               version 4
+So it ends up, logically torn into individual pieces, each of
+which with diverted privileges, that all communicate via CMSG or
+shared memory (file maps).  OpenBSD at least provided a nice
+syslog syscall, for FreeBSD and Linux i even had to split out
+logging via syslog(3) to a dedicated logger process, since who
+knows what the C libraries do to get that done, and that is only
+today -- who knows what they do tomorrow.  So many context
+switches, so many detours for each and every thing.  Having said
+that, audio goes these long roads for most of you (i'd say), so
+a litte log message is not a thing.  But, you know, if you have
+some work to do that involves network traffic, including DNS
+resolving, and TLS, then this process (a thread cannot be it
+.. except maybe on Linux when you unroll it through adapted
+clone(2)) should still be constrained via pledge/unveil / capsicum
+/ seccomp, no?  And this seems to be a very complicated thing to
+do given all the libraries one has to use; isn't this
+a maintenance nightmare?  So i was thinking; i mean the BSDs are
+holistical, which, if you build only upon facilities in the base
+system, is maybe doable.  But Linux?
 
-           Possible deadlock in Linux kernel event handling
-
-UPDATES IN VERSION 4
-====================
-
-Public release.
-
-Modified advisory again to state that Arm32 guests are NOT affected.
-
-ISSUE DESCRIPTION
-=================
-
-Closing of an event channel in the Linux kernel can result in a deadlock.
-This happens when the close is being performed in parallel to an unrelated
-Xen console action and the handling of a Xen console interrupt in an
-unprivileged guest.
-
-The closing of an event channel is e.g. triggered by removal of a
-paravirtual device on the other side. As this action will cause console
-messages to be issued on the other side quite often, the chance of
-triggering the deadlock is not neglectable.
-
-Note that 32-bit Arm-guests are not affected, as the 32-bit Linux kernel
-on Arm doesn't use queued-RW-locks, which are required to trigger the
-issue (on Arm32 a waiting writer doesn't block further readers to get
-the lock).
-
-IMPACT
-======
-
-A (malicious) guest administrator could cause a denial of service (DoS)
-in a backend domain (other than dom0) by disabling a paravirtualized
-device.
-
-A malicious backend could cause DoS in a guest running a Linux kernel by
-disabling a paravirtualized device.
-
-VULNERABLE SYSTEMS
-==================
-
-All unprivileged guests running a Linux kernel of version 5.10 and later,
-or with the fixes for XSA-332, are vulnerable.
-
-All guest types are vulnerable.
-
-Only x86- and 64-bit Arm-guests are vulnerable.
-
-Arm-guests running in 32-bit mode are not vulnerable.
-
-Guests not using paravirtualized drivers are not vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered as a bug by Marek Marczykowski-Górecki of
-Invisible Things Lab; the security impact was recognised by Jürgen
-Groß of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa441-linux.patch     Linux
-
-$ sha256sum xsa441*
-937406d86dd6dd3e389fdae726a25e5f0e960f7004c314e370cb2369d6715c24  xsa441-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) on the host and on VMs being
-administered and used only by organisations which are members of the Xen
-Project Security Issue Predisclosure List is permitted during the embargo,
-even on public-facing systems with other untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-Deployment of patches or mitigations is NOT permitted on VMs being
-administered or used by organisations which are not members of the Xen
-Project Security Issue Predisclosure List. On those VMs deployment is
-permitted only AFTER the embargo ends.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmUlNOkMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZOmAH/3D7dRH11wIRyFZ/nj4pwkPfPXvCDtUmaRXfAaV4
-Xe9ODMSevcEQpSFW4VY6eK7DP6kqYMM7myoy+np8Ttnin7+y+PYUJkxM+liqhLyT
-fhGi74NNuQLMvGcSKp26aIHAJNtZqWFeRTlEFJHlY4S6ENRoupWd2T2qgnts00NX
-R4NzZ8yQFcsmvy9gqgq6MYoa2VIrhQlpiDPX81pA/HViv0GiXab1QSYTyI9jQ2EX
-WC19sELYSK2jMAjuejHlw28B+giy0KxcJv6zewn3Jwn8h3ft4AI1OIh4KfOtEad+
-wptYB87EM76Lr3B8ipFEvN4sSU1yBnE4iVOgZpAs74mylN8=
-=hOm2
------END PGP SIGNATURE-----
-
-Download attachment "xsa441-linux.patch" of type "application/octet-stream" (7455 bytes)
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
