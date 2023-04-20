@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["626" "Wednesday" "7" "December" "2016" "11:29:30" "+0800" "haojun hou" "haojunhou@gmail.com" "<CAF5d3DB-uNzML+3Gd0tUgB3-vRG1NHdtqzBm8h42TV0r8tUDZw@mail.gmail.com>" "19" "[oss-security] CVE request -BigTree CMS 4.2.13 Extension Form Builder Multiple Cross-Site Scripting (XSS)" nil nil nil "12" "2016120703:29:30" "[oss-security] CVE request -BigTree CMS 4.2.13 Extension Form Builder Multiple Cross-Site Scripting (XSS)" (number mark "U       haojunhou@gm Dec  7   19/626   " thread-indent "\"[oss-security] CVE request -BigTree CMS 4.2.13 Extension Form Builder Multiple Cross-Site Scripting (XSS)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15979 invoked by uid 550); 7 Dec 2016 03:36:48 -0000
+Received: (qmail 28528 invoked by uid 550); 20 Apr 2023 21:40:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,152 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11752 invoked from network); 7 Dec 2016 03:29:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=0P9dcxJZ8HRN2wkHfiKWrEhyO6ImYVKT7jwepnmQmiA=;
-        b=npSR0M26Zqa3iXnMkzw87AHVXyMFcGVr9CONSQAVJ+GbTvm84mKwzCln1UeHdTMUtg
-         TQhKcfwNfI5oTQO9Jq3l+xVqAKmPkjfGQ0tpZ5Hq2kmiNlL3Ai8ShqFcdZgNBd0mrz04
-         EcAQYBq0kdm4R/04dISMaVHcn/tY5NGzKoJGmzCaFTIpGTrvusHMiNKLJouFLXOXf4pL
-         m0ZOzDo8l4Sa9XVi15UJMcsB7gdv4eChV/cUDb075E5NiGhyfHibzmW+KInnDjjvY7vv
-         TDf42ns+KUsxMcXc9C38j9TB+X3SfqC2iovL4GFbw37rhcJLaZh7CGelOJOcgDU9pSVk
-         Xfjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=0P9dcxJZ8HRN2wkHfiKWrEhyO6ImYVKT7jwepnmQmiA=;
-        b=TJTeOFvy6R/fOYJXY30MktjjlZ4XBsl4b/f/ahFCxfRDMJGNviqNA/YJGoV6C62FME
-         0dEh3WCqxLZvLrnAkbI5X/36dcW27QxfGbCRR8V1zHzjOStQTMzu4n81ny1rt0KFAG3x
-         MCiyCkcU8O+b9jg/N9jEn/YHIMpneGw5cELRhjowR1ci53MEFIw4qKLBc5otOQOP8i2k
-         7YHP4rMryW92ew4b8lkAis9OWqzHG435sc5g3p1ZP63OYsT779HzRsdpI58GNnnAP0Vc
-         g7A6/JU1u9HDV6uV4VScEAasgKw9CCzBZ3pzWb00NOR/3Vsaiqgy3M5zzjbDSgdP2GQO
-         anRg==
-X-Gm-Message-State: AKaTC033RuxQR9Zpdju3P6rW+s8n2bJxG51zUtTCL61/Dmm/aeGASv97ztY5d8rfQ9wVWJjOD/qBduoL5qB/Qw==
-X-Received: by 10.31.153.195 with SMTP id b186mr25844900vke.140.1481081371274;
- Tue, 06 Dec 2016 19:29:31 -0800 (PST)
-MIME-Version: 1.0
-From: haojun hou <haojunhou@gmail.com>
-Date: Wed, 7 Dec 2016 11:29:30 +0800
-Message-ID: <CAF5d3DB-uNzML+3Gd0tUgB3-vRG1NHdtqzBm8h42TV0r8tUDZw@mail.gmail.com>
+Received: (qmail 19845 invoked from network); 20 Apr 2023 21:26:12 -0000
+Date: Thu, 20 Apr 2023 23:26:00 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
-Cc: mr@timbuckingham.com
-Content-Type: multipart/alternative; boundary=001a1141d5b804b4860543092198
-Subject: [oss-security] CVE request -BigTree CMS 4.2.13 Extension Form Builder
- Multiple Cross-Site Scripting (XSS)
+Message-ID: <20230420212600.v56eE%steffen@sdaoden.eu>
+In-Reply-To: <CAH8yC8nYOGAsnPkm+f3-b7r4PvZ=QxeKT9DXK=MoFVoFDGav9w@mail.gmail.com>
+References: <20230418154630.eoheygqyom3c7ovw@stig.io>
+ <ZD/4ODBjTesPMECg@itl-email> <20230419215340.UruCC%steffen@sdaoden.eu>
+ <20230420073459.003a5be2.hanno@hboeck.de>
+ <20230420125645.md-Zo%steffen@sdaoden.eu>
+ <CAH8yC8nYOGAsnPkm+f3-b7r4PvZ=QxeKT9DXK=MoFVoFDGav9w@mail.gmail.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-450-g9589f04a75
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert
+ default, affecting CPAN.pm and other modules
 
---001a1141d5b804b4860543092198
-Content-Type: text/plain; charset=UTF-8
+Jeffrey Walton wrote in
+ <CAH8yC8nYOGAsnPkm+f3-b7r4PvZ=3DQxeKT9DXK=3DMoFVoFDGav9w@mail.gmail.com>:
+ |On Thu, Apr 20, 2023 at 9:05=E2=80=AFAM Steffen Nurpmeso <steffen@sdaoden=
+.eu> \
+ |wrote:
+ |> Hanno B=C3=B6ck wrote in
+ |>  <20230420073459.003a5be2.hanno@hboeck.de>:
+ |>|On Wed, 19 Apr 2023 23:53:40 +0200
+ |>|Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
+ |>|> IMO it is no vulnerability at all since it has "always" been _very
+ |>|> clearly_ (even very lengthily) documented in the manual page.
+ |>|
+ |>|A vulnerability does not go away if it's documented, and I find that a
+ |>|rather strange take.
+ |>
+ |> Hm no, i do not, the latter not at all.  You can bundle a OpenPGP
+ |> / signify / even OpenSSL signature with something and can get
+ |> secure download even over non-encrypted channels.  Even DNSSEC was
+ |> over unencrypted channels for twenty years, and still mostly is,
+ ...
+ |According to the HTTP::Tiny docs:
+ |
+ |    Server identity verification is controversial and potentially tricky
+ |    because it depends on a (usually paid) third-party Certificate
+ |    Authority (CA) trust model to validate a certificate as legitimate.
+ |    This discriminates against servers with self-signed certificates or
+ |    certificates signed by free, community-driven CA's such as CAcert.org.
+ |
+ |I think some of the premises no longer hold.
 
-I reported multiple reflected cross-site scripting vulnerabilities in
-BigTree CMS Extension Form Builder several days ago. Please assign CVEs if
-you think they are suitable for identifiers.Thanks.
+What i thought over twenty years ago.
+All DNS zones should provide the TLS keys to be used to
+communicate securely with them.  So you have a chain of trust that
+can be followed top down, and everone owning a domain could
+provide its own keys.  Only one crypto machinery for it all.
+And IANA should spread the root servers a bit more, i miss lights
+on North Korea, Kuba, Russia, China.
 
-Affected version: BigTree CMS 4.2.13, From Builder 1.1
+ |The threat models I have seen depend upon authentic comms. You have to
+ |know which server you are talking to to ensure confidentiality and
+ |authenticity. There's nothing controversial about them.
 
-Reported by Tim Buckingham in
-*https://github.com/bigtreecms/BigTree-CMS/issues/265
-<https://github.com/bigtreecms/BigTree-CMS/issues/265>*
+You usually ask via DNS to get name -> address mapping.
+Then you connect to the address.
 
-Fixed in:
-https://github.com/Fastspot/bigtree-form-builder/commit/06fde0cc67ff121b212715031e12574f50970fcd
+ |There's also the pervasive spying the world has evidence of since
+ |leaks like Snowden. We know folks are being spied upon by the
 
-Thanks & Regards
+Polemically i would ask you why you need leaks for this.
+More funeral dry than polemically.  I am happy that the German
+police finally got their digital radio, everybody was joking for
+more than a decade that the criminals have much better equipment.
+But you know, i find this sympathic.  They still are policemen.
 
---001a1141d5b804b4860543092198--
+ |government, and we know people can be tortured or die from it if they
+ |live under a despot regime. There's nothing controversial about using
+
+Sorry not with me on the list.  Hundreds of millions of people
+will loose their home because of climate change, today they suffer
+because of plundering of the rich nations (G7 i think they are
+called), all over the planet.  Thirty years ago the US controlled
+banana production saw the most terrible chemicals and wage
+slavery, we see children dismantle poisonous electronic parts, and
+your battery car caused massive environmental damage.  No one can
+describe the illnesses and pain caused by G7, so let us entitle
+a despot regime.  (And not talking about prison and camp
+conditions in USA.  At all.)
+
+ |HTTPS to help achieve confidentiality.
+
+Hallelujah!
+
+ |I don't think HTTPS discriminates against servers with self-signed
+ |certificates. A user is free to limit trust to a single, self-signed
+ |certificate. The docs show the user how to do it.
+
+That seems very, very complicated for non-nerds.
+I fail to see user-enabled documentation for how to achieve this,
+but i am only using command line / console programs, it can be the
+desktop environments make this easy.
+
+Firefox (the Google money takers) puts this into the "unsecure
+don't don't twilight", and that over, and over, and over again.
+It could, for example, give you options, once, always, ask again,
+ask again more easily, do not ask again until YYYY-MM-DD (maybe
+taking into account the certificate expiration).
+What.Do.I.Know.
+
+ |I don't think HTTPS discriminates against free, community-driven CA's.
+ |Let's Encrypt is quite popular and still free.
+
+Luckily CACert.org is still alive.  I thankfully can use it to
+gain a S/MIME certificate.
+Mind you, the IETF has created the conditions to get something
+LetsEncrypt-alike for S/MIME, i was not optimistic it comes for
+real.
+
+ |A more interesting question (to me) is, how does HTTP::Tiny
+ |differentiate between comms that need server authentication (like
+ |fetching a web page) versus those that don't (like a download with a
+ |GPG signature). The answer is likely, HTTP::Tiny cannot.
+ |SinceHTTP::Tiny cannot determine when the user needs HTTPS (or not),
+ |it should default to HTTPS.
+
+It simply creates a connection to the HTTP(S) URL it is given it,
+no?  The rest depends upon the programmer using HTTP::Tiny.
+The connection surely is securely encrypted.
+
+ |In general, nowadays, I think the person who is maintaining HTTP::Tiny
+ |is plunging on the wrong sword. There are better battles to fight
+ |nowadays.
+
+Yes.  Push forward per-domain keys into DNS, maybe.
+Cut'em out, Ride 'em in.  Rawhide!
+
+ |(Sorry to wander off-topic).
+
+Yes, i became beasty, being off-topic is my attitude.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
