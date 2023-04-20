@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/10/5
-Message-ID: <0967fa7d-85a0-9519-67b7-9a5741de4a04@apache.org>
-Date: Mon, 10 Apr 2023 06:15:02 +0000
-From: Heping Wang <peacewong@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/11
+Message-Id: <A35F9CEA-C1F9-4D2B-8771-ED4EBA113B17@dwheeler.com>
+Date: Thu, 20 Apr 2023 11:28:22 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-29216: Apache Linkis DatasourceManager module has a deserialization command execution 
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+> |Steffen Nurpmeso <steffen@...oden.eu> wrote:
+> |> IMO it is no vulnerability at all since it has "always" been _very
+> |> clearly_ (even very lengthily) documented in the manual page.
 
-Description:
+> Hanno Böck replied:
+> |A vulnerability does not go away if it's documented, and I find that a
+> |rather strange take.
 
-In Apache Linkis <=1.3.1, because the parameters are not
-effectively filtered, the attacker uses the MySQL data source and malicious parameters to
-configure a new data source to trigger a deserialization vulnerability, eventually leading to
-remote code execution.
- Versions of Apache Linkis <= 1.3.0 will be affected.
-We recommend users upgrade the version of Linkis to version 1.3.2.
+> On Apr 20, 2023, at 8:56 AM, Steffen Nurpmeso <steffen@...oden.eu> wrote:
+> Hm no, i do not, the latter not at all.  You can bundle a OpenPGP
+> / signify / even OpenSSL signature with something and can get
+> secure download even over non-encrypted channels.
 
-Credit:
+That's true, but irrelevant. The problem is that this function fails to
+perform the security function implied by its name. If
+HTTP::Tiny supports TLS (instead of rejecting it), it needs to verify TLS certs by default.
 
-sw0rd1ight (reporter)
+If there's function named "isodd()" where "isodd(4) === true", that's a bug,
+even if the documentation said that's what it did. The function/method name
+implies functionality. You could call it a naming bug. Papering over bugs helps no one.
 
-References:
+The *default* of an externally-called function needs to be secure.
 
-https://linkis.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-29216
+I'm sympathetic to the problem of loading in the *right* certs, but systems generally
+already have mechanisms for configuring certs. That seems like a solved problem.
 
+--- David A. Wheeler
