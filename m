@@ -1,4 +1,4 @@
-Received: (qmail 18199 invoked by uid 550); 13 Apr 2026 23:49:33 -0000
+Received: (qmail 1842 invoked by uid 550); 20 Apr 2023 13:03:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +7,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14002 invoked from network); 13 Apr 2026 22:58:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1776121071;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=D+QUoLBjtNyIFFgT1nJr18htG5XIL2xqOgoEJ+/JHKQ=;
-	b=O4r4IWndY36697HJ+BXxbgwiHk9xeQKUIP0l9M1BsPXVeIB86REOEKChj+RTBuWpP2s5Kk
-	EQTpkJ+Wjnfdwk8rYBoRTXR3678NpwvqMtFGJkrhvcRr3E/55Apx8xmlrVC+StCG2U+C1m
-	ADW199Ik7M78G/Gv8N8LOZLHDIyRRxixHLCNWxYdzmV3vQZKvE9uq6L7zEzeTcfqY02LoD
-	GiVT0uF7QiUItpPTnYgvx+zkvzokyHF3kXeysZTDQAWV+mZkZaRNVKn1ch9cr6pcA/zliZ
-	GZYju9vdR7EHO5IK9si3XuUEeNvYc3icoFBh+eTqIy1NX1Sv3BAn/oVvS22hZQ==
-Message-ID: <3648aefb-aeb4-4f05-bcb2-fff9f726535c@cpansec.org>
-Date: Mon, 13 Apr 2026 23:57:49 +0100
+Received: (qmail 32210 invoked from network); 20 Apr 2023 12:56:57 -0000
+Date: Thu, 20 Apr 2023 14:56:45 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20230420125645.md-Zo%steffen@sdaoden.eu>
+In-Reply-To: <20230420073459.003a5be2.hanno@hboeck.de>
+References: <20230418154630.eoheygqyom3c7ovw@stig.io>
+ <ZD/4ODBjTesPMECg@itl-email> <20230419215340.UruCC%steffen@sdaoden.eu>
+ <20230420073459.003a5be2.hanno@hboeck.de>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-450-g9589f04a75
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFmiVC/Gm9rjSVY+NVVsb2pIHstYpjTbMqE9FuaWGDNZmma9LETZEGbvdVkuTejRlPj8CyGvbzgmb4N2GAzE4LvjdTA0z7oBXHMiwPY4v/XND4knrB1RDwh6m7exmecMAUy5/bZjZylUWb21/RBeDaIWyUbmkuhbLwXIYkJlEfg5iqri1rQAi1FD9sW6zuIOoqqn82rszqDl2u5bSKNOu3DXRlytZyBy3aeLgs6kvhQXxK7Ot+7kbDrwHkQchDAD6SaaKdly1weSZhHhbqfzWEXM8PBenQUk10fxqA8qeCIWITFd1wyo7U4FIt2SE99UFJYjlsCJ73LrQSdr4xxIvlAa2kZiCdphy4mG7mAimXvnAeWmpXkOZ1lzKjOcp4I8ukGX93/dnlvbQPnnihI9nOjHspgWWfD/p1TQksFDMuvx5BzrX5GuiPmjzAMs5gYTBYYjbhf8P+XMwSSsfpJcvYa9X8iFNRR400hxk5qjIJXkaphRizuvNDVJLy+j2ycjQRXuRW3MZFif9Od4SZbTJVk5UCtCRVSI46by2iOryQCc8bLexS7hovyp35xC5EShzbsFEmm8DlOlXSVq8Zwvbm9owdHMrvVnULJQrGYkP5ZkqCk3e6CmH79y14tjpfixFAbmcijy/7L0CayLdiwC2EgcHpe4+lXwsgHOdNG96NF3A
-Subject: [oss-security] CVE-2026-5086: Crypt::SecretBuffer versions before 0.019 for Perl is
- suseceptible to timing attacks
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert
+ default, affecting CPAN.pm and other modules
 
-========================================================================
-CVE-2026-5086                                        CPAN Security Group
-========================================================================
+Hanno B=C3=B6ck wrote in
+ <20230420073459.003a5be2.hanno@hboeck.de>:
+ |On Wed, 19 Apr 2023 23:53:40 +0200
+ |Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
+ |> IMO it is no vulnerability at all since it has "always" been _very
+ |> clearly_ (even very lengthily) documented in the manual page.
+ |
+ |A vulnerability does not go away if it's documented, and I find that a
+ |rather strange take.
 
-         CVE ID:  CVE-2026-5086
-   Distribution:  Crypt-SecretBuffer
-       Versions:  before 0.019
+Hm no, i do not, the latter not at all.  You can bundle a OpenPGP
+/ signify / even OpenSSL signature with something and can get
+secure download even over non-encrypted channels.  Even DNSSEC was
+over unencrypted channels for twenty years, and still mostly is,
+so, .. that i say that one day, _that_ is strange.
+I mean, i do not want to start useless and fruitless discussions,
+and it will be treated as a bug in HTTP::Tiny no matter what
+i say, hysteria is king.
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-SecretBuffer
-       VCS Repo: https://github.com/nrdvana/perl-Crypt-SecretBuffer
+ |Also I think this discussion was had many times before, as plenty of
+ |libraries in other language ecosystems defaulted to not checking certs
+ |or doing incomplete checks, and over time they all defaulted to the
+ |sane thing: To make the secure setting the default.
+ |The fact that apparently noone has ever checked this for a major perl
+ |library (I mean - CPAN itself, the package manager, is affected) is
+ |quite telling tbh.
 
+There i agree with you.  Now OpenSSL is very likely there, and in
+appropriate versions, and a usable CA might even be available also
+when HTTP::Tiny goes.  Having said that, i think in NetBSD they
+struggle with whether they should install a complete CA by
+default, even though some may not need / want it (whatever else
+reason in their long discussions appeared), i think it is in
+pkgsrc only for now.  Btw, the Mozilla CA contains _only_ entries
+i fully and completely trust; especially so after the state of the
+Netherlands left before Christmas last year.  No.  (And no mission
+here, and no nagging requirement to make money from it, either.)
 
-Crypt::SecretBuffer versions before 0.019 for Perl is suseceptible to
-timing attacks
+(P.S.: about thirty years ago i got a handwritten letter of
+appreciation from a Dutch official, who overwhelmingly thanked me
+for paying a ticket i got when we were there.  So much they
+appreciated honest Germans by then!)
 
-Description
------------
-Crypt::SecretBuffer versions before 0.019 for Perl is suseceptible to
-timing attacks.
-
-For example, if Crypt::SecretBuffer was used to store and compare
-plaintext passwords, then discrepencies in timing could be used to
-guess the secret password.
-
-Problem types
--------------
-- CWE-208 Observable Timing Discrepancy
-
-Solutions
----------
-Upgrade to version 0.019 or later.
-
-
-References
-----------
-https://metacpan.org/release/NERDVANA/Crypt-SecretBuffer-0.019/source/Changes
-
-
-
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
