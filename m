@@ -1,95 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/04/1
-Message-ID: <56654437.43.1680608310714@appsuite-guard.open-xchange.com>
-Date: Tue, 4 Apr 2023 13:38:30 +0200 (CEST)
-From: Otto Moerbeek <otto.moerbeek@...erdns.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: PowerDNS Security Advisory 2023-02: Deterred spoofing attempts can lead to authoritative servers being marked unavailable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/5
+Message-ID: <e5fcafc733c2fca7baf25537eca9837a6950beac.camel@wisec.it>
+Date: Thu, 20 Apr 2023 12:57:18 +0200
+From: Stefano Di Paola <stefano.dipaola@...ec.it>
+To: oss-security@...ts.openwall.com
+Subject: Re: Checking existence of firewalled web servers in Firefox via iframe.onload
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello George,
 
-   We have released PowerDNS Recursor 4.6.6, 4.7.5 and 4.8.4 due to
-   a low severity security issue found.
+from time to time it happens to rediscover techniques issues.
+This is one of those times :)
 
-   Please find the full text of the advisory below.
+In 2006 there has been a lot of interest around browser based port
+scans, in particular to pivot internal networks.
 
-   The [1]4.6, [2]4.7 and [3]4.8 changelogs are available.
+The following links are some of them:
 
-   The  [4]4.6.6  ([5]signature), [6]4.7.5 ([7]signature) and
-   [8]4.8.4 ([9]signature) tarballs are available from our download
-   [10]server. Patches are available at [11]patches. Packages for various
-   distributions are available from our [12]repository.
+http://web.archive.org/web/20060813034434/http://www.spidynamics.com/assets/documents/JSportscan.pdf
 
-   Note that PowerDNS Recursor 4.5.x and older releases are End of Life.
-   Consult the [13]EOL policy for more details.
-     __________________________________________________________________
+https://www.gnucitizen.org/blog/javascript-port-scanner/
 
-PowerDNS Security Advisory 2023-02: Deterred spoofing attempts can lead to
-authoritative servers being marked unavailable
-
-     * CVE: CVE-2023-26437
-     * Date: 29th of March 2023
-     * Affects: PowerDNS Recursor up to and including 4.6.5, 4.7.4 and
-       4.8.3
-     * Not affected: PowerDNS Recursor 4.6.6, 4.7.5 and 4.8.4
-     * Severity: Low
-     * Impact: Denial of service
-     * Exploit: Successful spoofing may lead to authoritative servers
-       being marked unavailable
-     * Risk of system compromise: None
-     * Solution: Upgrade to patched version
-
-   When the recursor detects and deters a spoofing attempt or receives certain malformed DNS
-   packets, it throttles the server that was the target of the impersonation attempt so that other
-   authoritative servers for the same zone will be more likely to be used in the future, in case the
-   attacker controls the path to one server only. Unfortunately this mechanism can be used by an
-   attacker with the ability to send queries to the recursor, guess the correct source port of the
-   corresponding outgoing query and inject packets with a spoofed IP address to force the recursor
-   to mark specific authoritative servers as not available, leading a denial of service for the
-   zones served by those servers.
-
-   CVSS 3.0 score: 3.7 (Low)
-   https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/
-   S:C/C:N/I:N/A:L
-
-   Thanks to Xiang Li from Network and Information Security Laboratory,
-   Tsinghua University for reporting this issue.
-
-References
-
-   1. https://docs.powerdns.com/recursor/changelog/4.6.html#change-4.6.6
-   2. https://docs.powerdns.com/recursor/changelog/4.7.html#change-4.7.5
-   3. https://docs.powerdns.com/recursor/changelog/4.8.html#change-4.8.4
-   4. https://downloads.powerdns.com/releases/pdns-recursor-4.6.6.tar.bz2
-   5. https://downloads.powerdns.com/releases/pdns-recursor-4.6.6.tar.bz2.sig
-   6. https://downloads.powerdns.com/releases/pdns-recursor-4.7.5.tar.bz2
-   7. https://downloads.powerdns.com/releases/pdns-recursor-4.7.5.tar.bz2.sig
-   8. https://downloads.powerdns.com/releases/pdns-recursor-4.8.4.tar.bz2
-   9. https://downloads.powerdns.com/releases/pdns-recursor-4.8.4.tar.bz2.sig
-  10. https://downloads.powerdns.com/releases/
-  11. https://downloads.powerdns.com/patches/2023-01/
-  12. https://repo.powerdns.com/
-  13. https://docs.powerdns.com/recursor/appendices/EOL.html
-
---
-
-kind regards,
-Otto Moerbeek
-PowerDNS Developer
+https://www.blackhat.com/presentations/bh-usa-06/BH-US-06-Grossman.pdf
 
 
+https://www.blackhat.com/presentations/bh-usa-07/Grossman/Whitepaper/bh-usa-07-grossman-WP.pdf
 
-Email: otto.moerbeek@...n-xchange.com
+Some of those thecniques have been mitigated, and some it's still
+there.
 
+There are surely other resources IIRC, although some of them might have
+been deleted, such as the ones on sla.cke.rs which is a real pity..
 
--------------------------------------------------------------------------------------
-Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366
-Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin
-Chairman of the Board: Richard Seibt
+Cheers!
+Stefano
 
-PowerDNS.COM BV, Koninginnegracht 14L, 2514 AA Den Haag, The Netherlands
-Managing Director: Robert Brandt, Maxim Letski
--------------------------------------------------------------------------------------
+Ps. this email applies to the other Script technique thread/email as
+well.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+On Tue, 2023-04-18 at 15:59 +0300, Georgi Guninski wrote:
+> In short in Firefox 112, it is possible to check existence
+> of firewalled web servers. This doesn't work in Chrome and Chromium
+> 112
+> for me.
+> 
+> If user A has tcp connection to web server B, then in the
+> following html:
+> 
+> <iframe src="http://B" onload="load()" onerror="alert('error')"
+> id="i1" />
+> 
+> the javascript function load() will get executed if B serves
+> valid document to A's browser and will not be executed otherwise.
+> 
+> This work for both http and https, and for http it is allowed
+> B to be IP address. Under some configurations of Apache2,
+> it serves http despite having https configured.
+> 
+> In some sense, this is close to nmap via javascript in a browser.
+> 
+> Potential privacy implication is when the attacker guess the
+> range of firewalled IPs and check them all in a loop.
+> 
+> For online test:
+> https://j.ludost.net/onload1.html
+> 
+-- 
+...oOOo...oOOo....
+Stefano Di Paola
+CTO/Chief Scientist IMQ Minded Security
+Software & Security Engineer
+
+Twitter: https://twitter.com/WisecWisec
+Work: https://www.mindedsecurity.com 
+..................
+
