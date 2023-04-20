@@ -1,20 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/3
-Message-ID: <658ed932.4d58967e.bm000@oddnet.de>
-Date: Fri, 29 Dec 2023 15:34:07 +0100
-From: Ingo Brückl <ib@...net.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/4
+Message-ID: <CAGUWgD8-GXOj=hvUzTD0K=GeiQTR-qSstSX0AQ+7GPsv1TWZzQ@mail.gmail.com>
+Date: Thu, 20 Apr 2023 10:58:42 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Markus Koschany <apo@...ian.org>
-Subject: xarchiver: Path traversal with crafted cpio archives
+Subject: Re: Checking existence of firewalled URLs via javascript's script.onload
 Content-Type: text/plain; charset=utf-8
 
-With
+On Wed, Apr 19, 2023 at 5:57 PM Peter Philip Pettersson
+<philip.pettersson@...il.com> wrote:
+>
 
-https://github.com/ib/xarchiver/commit/85dcd9058a528181c786da1899b68110301d1aa1
+> There are many ways to make arbitrary HTTP requests through a browser, with
+> and without Javascript.
+>
+Hi, thanks for the info and for the compliment :)
 
-xarchiver rejects all unmodified cpio versions affected by path traversal
-vulnerability.
-
-It is recommended that all users upgrade to xarchiver 0.5.4.22.
-
-Ingo
+I can't imagine how can you check for open port/URL
+without javascript, can you give reference or explanation?
+You can make request, but without javascript you can't read the result.
