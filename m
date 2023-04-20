@@ -1,84 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/11/3
-Message-ID: <CA+17n5uwjXBDzGGpepNtQSOFQaifnuyodd2EUQxEcCOLH+UUuw@mail.gmail.com>
-Date: Wed, 11 Oct 2023 09:55:24 +0200
-From: Joshua Rogers <megamansec@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/22
+Message-ID: <c1ccf91b-ad4c-9ffa-f31f-48c529dde8cf@gmail.com>
+Date: Thu, 20 Apr 2023 15:44:08 -0700
+From: Matthew Fernandez <matthew.fernandez@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Squid Caching Proxy Security Audit: 55 Vulnerabilities, 35 0days.
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Dear oss-security,
 
-Two and a half years ago an independent audit was performed on The Squid
-Caching Proxy, which ultimately resulted in 55 vulnerabilities being
-discovered in the project's C++ source code.
+On 4/20/23 14:26, Steffen Nurpmeso wrote:
+> Jeffrey Walton wrote in
+>   <CAH8yC8nYOGAsnPkm+f3-b7r4PvZ=QxeKT9DXK=MoFVoFDGav9w@...l.gmail.com>:
+>   |On Thu, Apr 20, 2023 at 9:05 AM Steffen Nurpmeso <steffen@...oden.eu> \
+>   |wrote:
+>   |I don't think HTTPS discriminates against servers with self-signed
+>   |certificates. A user is free to limit trust to a single, self-signed
+>   |certificate. The docs show the user how to do it.
+> 
+> That seems very, very complicated for non-nerds.
+> I fail to see user-enabled documentation for how to achieve this,
+> but i am only using command line / console programs, it can be the
+> desktop environments make this easy.
 
-Although some of the issues have been fixed, the majority (35) remain
-valid. The majority have not been assigned CVEs, and no patches or
-workarounds are available. Some of the listed issues concern more than one
-bug, which is why 45 issues are listed, despite there being 55
-vulnerabilities in total (10 extra of the result of similar, but different
-pathways to reproduce a vulnerability).
-
-After two and a half years of waiting, I have decided to release the issues
-publicly. The Squid Project is aware of this release.
-
-The issues are listed below. Due to the sheer size of issues discovered,
-technical details are not included in this email. However, breakdowns of
-the code and proof-of-concepts can be found on GitHub:
-https://megamansec.github.io/Squid-Security-Audit/
-
-----
-Stack Buffer Overflow in Digest Authentication
-Use-After-Free in TRACE Requests
-Partial Content Parsing Use-After-Free CVE-2021-31807
-X-Forwarded-For Stack Overflow
-Chunked Encoding Stack Overflow
-Use-After-Free in Cache Manager Errors
-Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
-Memory Leak in CacheManager URI Parsing CVE-2021-28652
-RFC 2141 / 2169 (URN) Response Parsing Memory Leak CVE-2021-28651
-Memory Leak in HTTP Response Parsing
-Memory Leak in ESI Error Processing
-1-Byte Buffer OverRead in RFC 1123 date/time Handling
-Null Pointer Dereference in Gopher Response Handling GHSA-cg5h-v6vc-w33f
-One-Byte Buffer OverRead in HTTP Request Header Parsing
-strlen(NULL) Crash Using Digest Authentication
-Assertion in ESI Header Handling
-Integer Overflow in Range Header CVE-2021-31808
-Gopher Assertion Crash
-Whois Assertion Crash
-Assertion in Gopher Response Handling
-RFC 2141 / 2169 (URN) Assertion Crash
-Vary: Other HTTP Response Assertion Crash CVE-2021-28662
-Assertion in Negotiate/NTLM Authentication Using Pipeline Prefetching
-Assertion on IPv6 Host Requests with –disable-ipv6
-Assertion Crash on Unexpected “HTTP/1.1 100 Continue” Response Header
-Pipeline Prefetch Assertion With Double ‘Expect:100-continue’ Request
-Headers
-Pipeline Prefetch Assertion With Invalid Headers
-Assertion Crash in Deferred Requests
-Assertion in Digest Authentication
-FTP URI Assertion
-FTP Authentication Crash
-Unsatisfiable Range Requests Assertion CVE-2021-31806
-Crash in Content-Range Response Header Logic CVE-2021-33620
-Assertion Crash In HTTP Response Headers Handling
-Implicit Assertion in Stream Handling
-Buffer UnderRead in SSL CN Parsing
-Use-After-Free in ESI ‘Try’ (and ‘Choose’) Processing
-Use-After-Free in ESI Expression Evaluation
-Buffer Underflow in ESI
-Assertion in Squid “Helper” Process Creator
-Assertion Due to 0 ESI ‘when’ Checking
-Assertion Using ESI’s When Directive
-Assertion in ESI Variable Assignment (String)
-Assertion in ESI Variable Assignment
-Null Pointer Dereference In ESI’s esi:include and esi:when
-----
-
-
-
-Cheers,
-Josh
-
+I hesitate to reply to this thread because I struggle to understand what 
+topic it has diverged into, but I just wanted to note that embedded 
+browsers configured to accept a single self-signed certificate are not 
+uncommon in corporate environments. Thus a (non-technical) end user may 
+be using a browser like this that has been configured for them by device 
+management. Whether this is a good design/idea, I leave to others’ 
+judgement.
