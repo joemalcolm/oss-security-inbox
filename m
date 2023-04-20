@@ -1,39 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/09/1
-Message-ID: <ZAmHgoA8GvuVpS2V@eldamar.lan>
-Date: Thu, 9 Mar 2023 08:15:14 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/10
+Message-ID: <fd13634f-8b54-c0f2-295d-f77a9dff65fd@apache.org>
+Date: Thu, 20 Apr 2023 14:50:32 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shell command and Emacs Lisp code injection in emacsclient-mail.desktop
+Subject: CVE-2023-25601: Apache DolphinScheduler 3.0.0 to 3.1.1 python gateway has improper authentication 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: important
 
-On Wed, Mar 08, 2023 at 12:37:29PM +0100, Gabriel Corona wrote:
-> emacsclient-mail.desktop is vulnerable to shell command
-> injections and Emacs Lisp injections through a crafted
-> mailto: URI.
+Description:
 
-Two CVEs are assigned by MITRE:
+On version 3.0.0 through 3.1.1, Apache DolphinScheduler's python gateway suffered from improper authentication: an attacker could use a socket bytes attack without authentication. This issue has been fixed from version 3.1.2 onwards. For users who use version 3.0.0 to 3.1.1, you can turn off the python-gateway function by changing the value `python-gateway.enabled=false` in configuration file `application.yaml`. If you are using the python gateway, please upgrade to version 3.1.2 or above.
 
-> 
-> This has been introduced in Emacs 28.1:
-> 
-> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=b1b05c828d67930bb3b897fe98e1992db42cf23c
-> 
-> A fix for shell command injection is currently included
-> in the upcoming 28.3 branch:
-> 
-> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=d32091199ae5de590a83f1542a01d75fba000467
+References:
 
-CVE-2023-27985
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-25601
 
-> 
-> A fix for both is currently included in the upcoming 29.1 branch:
-> 
-> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=3c1693d08b0a71d40a77e7b40c0ebc42dca2d2cc
-
-CVE-2023-27986
-
-Regards,
-Salvatore
