@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1678" "Saturday" "17" "December" "2016" "20:13:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<63d294aeacf743cab535163f5212a6c7@imshyb02.MITRE.ORG>" "39" "[oss-security] Re: CVE request - DCMTK remote stack buffer overflow" nil nil nil "12" "2016121801:13:50" "[oss-security] Re: CVE request - DCMTK remote stack buffer overflow" (number mark "U       cve-assign@m Dec 17   39/1678  " thread-indent "\"[oss-security] Re: CVE request - DCMTK remote stack buffer overflow\"\n") "<CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>" ("<CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24255 invoked by uid 550); 18 Dec 2016 01:14:03 -0000
+Received: (qmail 20468 invoked by uid 550); 20 Apr 2023 16:03:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +7,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24234 invoked from network); 18 Dec 2016 01:14:02 -0000
-From: <cve-assign@mitre.org>
-To: <gjoko@zeroscience.mk>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>
-Message-ID: <63d294aeacf743cab535163f5212a6c7@imshyb02.MITRE.ORG>
-Date: Sat, 17 Dec 2016 20:13:50 -0500
+Received: (qmail 11509 invoked from network); 20 Apr 2023 15:47:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682005648; x=1684597648;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t/HHJzi7bkox5Da1A6/BjRAmDqIHlFmWzrTDqZeL4jI=;
+        b=UTsMJz2PQwEQMDLAk/iwfTPODWybTX4qV9pb2VqiHZeNR9BTOLlKagEbQ8Z+LZJLga
+         YnCIO4zVX0aOBZCGXkamvac/JzpP9J3r76eKxSecnG0jom/bMfqDwmj+zIOU4FHMWilE
+         8Iok2RThix6vxITfPbvrwxez5dNeXtc3M2Xe31/2WYyox/CtjiRCaNtxszv3JwAwLfZm
+         oA2JBHptMzAzgOm9xCjrBoOhIH/KCNtMIjpNT4mNJ2TF2KJHZQQMR97aCX1J7P74CQ3f
+         TSHPLec7LB1prZ6gSIHn240nI5DVXgBlE00L5d5rzEhIuT/Y6AtXrZOrAX32ZFk3J1Io
+         yTfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682005648; x=1684597648;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t/HHJzi7bkox5Da1A6/BjRAmDqIHlFmWzrTDqZeL4jI=;
+        b=fN/fc9JPy4UMhbfxFlRLiIdwuzMxht/XUAoklUN8PqtgzqK7IswLIpD1gSGMpHOs+Y
+         vEtt2IyeW3qjmwbwIPr1tWaWaBjttC4I0V1cgHnQXu+xBS0+NSWY0E0DDHcsYO38GwWj
+         NqZu5/ZbENa6XxfH+8D6+hhKGE4MJNQGGa992DJwSs7CbjWnT+bau5eUp63cvDxYuwUK
+         M8be4er0GRG/O/vWBP+xw8DDjHgF6JMP7Hac+A5oBMKRX+nlNEPe0xF6ErdBFMorStxF
+         sDqJQZrfudItodqdjoThZyrwNue0RRYwpxEfni0WLaaHkVpklrS1emA//Q0evTVLg2Ex
+         Ivcw==
+X-Gm-Message-State: AAQBX9eg0IwNNOuSf8kyFpcZSwXwgXrxlEomPueVZuKar3sDhw3Ay+8z
+	l5cyk25wVIA3lB51VNbMO0OGgWrFJtGPPzM7eYU/RBlWF9E=
+X-Google-Smtp-Source: AKy350YEBd8QOgDODOsGTayvs2FD0fgNyT2jYOfLX/oA1w1UJQplK6ywulXex7M46nxFeMR/GDQkAsU5WkFr5rJEyvw=
+X-Received: by 2002:a05:6830:33c9:b0:6a6:cbd:b3c4 with SMTP id
+ q9-20020a05683033c900b006a60cbdb3c4mr534428ott.2.1682005648192; Thu, 20 Apr
+ 2023 08:47:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request - DCMTK remote stack buffer overflow
+References: <20230418154630.eoheygqyom3c7ovw@stig.io> <ZD/4ODBjTesPMECg@itl-email>
+ <20230419215340.UruCC%steffen@sdaoden.eu> <20230420073459.003a5be2.hanno@hboeck.de>
+ <20230420125645.md-Zo%steffen@sdaoden.eu>
+In-Reply-To: <20230420125645.md-Zo%steffen@sdaoden.eu>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Thu, 20 Apr 2023 11:47:16 -0400
+Message-ID: <CAH8yC8nYOGAsnPkm+f3-b7r4PvZ=QxeKT9DXK=MoFVoFDGav9w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
+ affecting CPAN.pm and other modules
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Apr 20, 2023 at 9:05=E2=80=AFAM Steffen Nurpmeso <steffen@sdaoden.e=
+u> wrote:
+>
+> Hanno B=C3=B6ck wrote in
+>  <20230420073459.003a5be2.hanno@hboeck.de>:
+>  |On Wed, 19 Apr 2023 23:53:40 +0200
+>  |Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
+>  |> IMO it is no vulnerability at all since it has "always" been _very
+>  |> clearly_ (even very lengthily) documented in the manual page.
+>  |
+>  |A vulnerability does not go away if it's documented, and I find that a
+>  |rather strange take.
+>
+> Hm no, i do not, the latter not at all.  You can bundle a OpenPGP
+> / signify / even OpenSSL signature with something and can get
+> secure download even over non-encrypted channels.  Even DNSSEC was
+> over unencrypted channels for twenty years, and still mostly is,
+> so, .. that i say that one day, _that_ is strange.
+> I mean, i do not want to start useless and fruitless discussions,
+> and it will be treated as a bug in HTTP::Tiny no matter what
+> i say, hysteria is king.
 
-> https://github.com/commontk/DCMTK/commit/1b6bb76073a0601b85e90d5b1a5f0c80efe9e7f8
-> https://www.exploit-db.com/exploits/40928/
-> http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php
+According to the HTTP::Tiny docs:
 
-We did not see an efficient way to represent
-1b6bb76073a0601b85e90d5b1a5f0c80efe9e7f8 as a set of independent
-exploitable vulnerabilities. Thus, we are assigning one CVE ID for all
-of the vulnerability information in the above three references. The
-information all seems to be related to mishandling of "wrong length of
-ACSE data structures received over the network" (typically a long
-string sent to TCP port 4242).
+    Server identity verification is controversial and potentially tricky
+    because it depends on a (usually paid) third-party Certificate
+    Authority (CA) trust model to validate a certificate as legitimate.
+    This discriminates against servers with self-signed certificates or
+    certificates signed by free, community-driven CA's such as CAcert.org.
 
-Use CVE-2015-8979.
+I think some of the premises no longer hold.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The threat models I have seen depend upon authentic comms. You have to
+know which server you are talking to to ensure confidentiality and
+authenticity. There's nothing controversial about them.
 
-iQIcBAEBCAAGBQJYVeJ4AAoJEHb/MwWLVhi2uoUQAKCfq7V0TdOe15kyeDbsVrOY
-z/o9Mb5p1tsU9gcr90WNafuLVGtj1HLnN0++TVAq9DI8eEg+9cCpGVcEo3yhPvFz
-ldAUi323dMGE5RI4/HaRSQVU2lie80Aa4fhClFcXNSC7P9Ou3ZDxvIDAgDS4Bhfe
-iKz6jEimDSBZ5M9y2A2CDRZsxELiFCXIyHvXhzC1ivrgNoi1yw735ZW2renndZG4
-OzFA/rZgW2gbCyMMnM2bHidYpk1hvdJSBLlnJlGLZ1hvGYqFiOw9rq6InDff8Uym
-s8srNHb2kylODnnUYl39mUlBGId50wRbi4gWR47tUOizOZP0+HShTgGKdeoHWei3
-/jKt6YVsWPnbL4bGZsKCI688uvf57lW3mked6WJWGHRTt/wujzKBYRRfkV0erOy+
-UK7g0y4WQxOxSqWvAwNq6RPQaVs2UFE+a+Yzt4ao3MYb12Y7p5aGVcxasmOCnhbz
-RbaVBPU/m7lgOM4tT6rjwJSrHsm1OIdvAaeT5sAnV1VoBIPua4kqmhL8SE9IEiV9
-RlhXWlg2zfId9E9i603XIoffWlNcVbQ4e6fs9nysTWy5fBtMBsTeAtH4R+ByPLst
-eZeoyldoU/+ujAxLavc1ibNQG60/7iKnlSDtFE/dhb35ziSblECD/3inlEABC4Vk
-K1DJz5YISme9Xbpp6RFS
-=4GGa
------END PGP SIGNATURE-----
+There's also the pervasive spying the world has evidence of since
+leaks like Snowden. We know folks are being spied upon by the
+government, and we know people can be tortured or die from it if they
+live under a despot regime. There's nothing controversial about using
+HTTPS to help achieve confidentiality.
+
+I don't think HTTPS discriminates against servers with self-signed
+certificates. A user is free to limit trust to a single, self-signed
+certificate. The docs show the user how to do it.
+
+I don't think HTTPS discriminates against free, community-driven CA's.
+Let's Encrypt is quite popular and still free.
+
+A more interesting question (to me) is, how does HTTP::Tiny
+differentiate between comms that need server authentication (like
+fetching a web page) versus those that don't (like a download with a
+GPG signature). The answer is likely, HTTP::Tiny cannot.
+SinceHTTP::Tiny cannot determine when the user needs HTTPS (or not),
+it should default to HTTPS.
+
+In general, nowadays, I think the person who is maintaining HTTP::Tiny
+is plunging on the wrong sword. There are better battles to fight
+nowadays.
+
+(Sorry to wander off-topic).
+
+Jeff
