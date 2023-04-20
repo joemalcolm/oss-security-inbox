@@ -1,141 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/31/2
-Message-Id: <E1qQWG3-0005s9-Ra@xenbits.xenproject.org>
-Date: Mon, 31 Jul 2023 17:00:35 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/6
+Message-ID: <f7586453-d83d-26a6-7d9a-e7a54009209f@innerheight.com>
+Date: Thu, 20 Apr 2023 13:15:38 +0200
+From: Jan Klopper <janklopper@...erheight.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Checking existence of firewalled web servers in Firefox via iframe.onload
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-            Xen Security Advisory CVE-2023-20593 / XSA-433
-                               version 3
+The topic is still relevant.
 
-                          x86/AMD: Zenbleed
+Combining this attack with webservices that might be present behind a 
+NAT network, eg IOT or appliances can result in various serious issues.
 
-UPDATES IN VERSION 3
-====================
+There are loads of devices that do not require csrf, or even POST for 
+requests that update settings or even firmware.
 
-The patch provided with earlier versions was buggy.  It unintentionally
-disable more bits than expected in the control register.  The contents of this
-register is not generally known, so the effects on the system are unknown.
+Performing GET requests on those internal ip's, even though no content 
+will be returned is still plenty dangerous.
+Knowing which ip to perform these attacks on, can be found by looking at 
+the timing of various ready/error calls.
 
-A patch correcting this error has been committed and backported to all stable
-trees which got the XSA-433 fix originally.  Additionally, it is attached to
-this advisory as xsa433-bugfix.patch, and applicable to all branches in this
-form.
+However, it begs the question, is it the browser that is in the wrong 
+here, or those appliances/devices. And, should the browser be guarding 
+users against flaws in those appliances? And where then does the scope 
+of the browsers security features stop?
 
-ISSUE DESCRIPTION
-=================
+I'm also expecting heaps of these issues to re-discovered when looking 
+at the whole websockets domain.
 
-Researchers at Google have discovered Zenbleed, a hardware bug causing
-corruption of the vector registers.
+With regards
+Jan Klopper
 
-When a VZEROUPPER instruction is discarded as part of a bad transient
-execution path, its effect on internal tracking are not unwound
-correctly.  This manifests as the wrong micro-architectural state
-becoming architectural, and corrupting the vector registers.
 
-Note: While this malfunction is related to speculative execution, this
-      is not a speculative sidechannel vulnerability.
-
-The corruption is not random.  It happens to be stale values from the
-physical vector register file, a structure competitively shared between
-sibling threads.  Therefore, an attacker can directly access data from
-the sibling thread, or from a more privileged context.
-
-For more details, see:
-  https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
-  https://github.com/google/security-research/security/advisories/GHSA-v6wh-rxpg-cmm8
-
-IMPACT
-======
-
-With very low probability, corruption of the vector registers can occur.
-This data corruption causes mis-calculations in subsequent logic.
-
-An attacker can exploit this bug to read data from different contexts on
-the same core.  Examples of such data includes key material, cypher and
-plaintext from the AES-NI instructions, or the contents of REP-MOVS
-instructions, commonly used to implement memcpy().
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-This bug is specific to the AMD Zen2 microarchitecture.  AMD do not
-believe that other microarchitectures are affected.
-
-MITIGATION
-==========
-
-This issue can be mitigated by disabling AVX, either by booting Xen with
-`cpuid=no-avx` on the command line, or by specifying `cpuid="host:avx=0"` in
-the vm.cfg file of all untrusted VMs.  However, this will come with a
-significant impact on the system and is not recommended for anyone able to
-deploy the microcode or patch described below.
-
-RESOLUTION
-==========
-
-AMD are producing microcode updates to address the bug.  Consult your
-dom0 OS vendor.  This microcode is effective when late-loaded, which can
-be performed on a live system without reboot.
-
-In cases where microcode is not available, the appropriate attached
-patch updates Xen to use a control register to avoid the issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa433.patch           xen-unstable
-xsa433-4.17.patch      Xen 4.17.x
-xsa433-4.16.patch      Xen 4.16.x
-xsa433-4.15.patch      Xen 4.15.x
-xsa433-4.14.patch      Xen 4.14.x
-
-xsa433-bugfix.patch    xen-unstable - Xen 4.14.x
-
-$ sha256sum xsa433*
-a9331733b63e3e566f1436a48e9bd9e8b86eb48da6a8ced72ff4affb7859e027  xsa433.patch
-6f1db2a2078b0152631f819f8ddee21720dabe185ec49dc9806d4a9d3478adfd  xsa433-4.14.patch
-ca3a92605195307ae9b6ff87240beb52a097c125a760c919d7b9a0aff6e557c0  xsa433-4.15.patch
-e5e94b3de68842a1c8d222802fb204d64acd118e3293c8e909dfaf3ada23d912  xsa433-4.16.patch
-41d12104869b7e8307cd93af1af12b4fd75a669aeff15d31b234dc72981ae407  xsa433-4.17.patch
-b197e45aef1f47b6aebc005f876e3f593c2f32b9e5164a195f487cea6e174f75  xsa433-bugfix.patch
-$
-
-NOTE CONCERNING TIMELINE
-========================
-
-This issue is subject to coordinated disclosure on August 8th.  The
-discoverer chose to publish details ahead of this timeline.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTH6HQMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZlIoH/jv0CJKyFgiaOLp4DFeLfzKLHJDbLKywj0bv4Q3V
-wgrWVYwzVbpPwvuArS1dOujgEosTiUggKbzDPEpHa5reVKeeLwCBFxMrU+KYRf9h
-6eglOJfiW73xxyggnvQLyh3tEGY0sQF0+OFQMsN5twiXsZS0pxLPomq0slun1VkV
-8ZDl4FKjmEmAurE7fOtVdvzwZ6tKVLNaGYIm4wUwNZ0Cd4qo1GHIHsvUT9ZPFc82
-jwMjCwk7Ca0Iv1GMyXESwOyR/0tLm07nT9isdkXcVFNgg8JL4f2CxGK9Vt97POEw
-w9KVo3SoBf+/vY4Fk4HGSXieEofzVBDjO5NkPhESEC+3oMw=
-=Z3fJ
------END PGP SIGNATURE-----
-
-Download attachment "xsa433.patch" of type "application/octet-stream" (4348 bytes)
-
-Download attachment "xsa433-4.14.patch" of type "application/octet-stream" (4332 bytes)
-
-Download attachment "xsa433-4.15.patch" of type "application/octet-stream" (4292 bytes)
-
-Download attachment "xsa433-4.16.patch" of type "application/octet-stream" (4301 bytes)
-
-Download attachment "xsa433-4.17.patch" of type "application/octet-stream" (4348 bytes)
-
-Download attachment "xsa433-bugfix.patch" of type "application/octet-stream" (946 bytes)
+On 20-04-2023 12:57, Stefano Di Paola wrote:
+> Hello George,
+> 
+> from time to time it happens to rediscover techniques issues.
+> This is one of those times :)
+> 
+> In 2006 there has been a lot of interest around browser based port
+> scans, in particular to pivot internal networks.
+> 
+> The following links are some of them:
+> 
+> http://web.archive.org/web/20060813034434/http://www.spidynamics.com/assets/documents/JSportscan.pdf
+> 
+> https://www.gnucitizen.org/blog/javascript-port-scanner/
+> 
+> https://www.blackhat.com/presentations/bh-usa-06/BH-US-06-Grossman.pdf
+> 
+> 
+> https://www.blackhat.com/presentations/bh-usa-07/Grossman/Whitepaper/bh-usa-07-grossman-WP.pdf
+> 
+> Some of those thecniques have been mitigated, and some it's still
+> there.
+> 
+> There are surely other resources IIRC, although some of them might have
+> been deleted, such as the ones on sla.cke.rs which is a real pity..
+> 
+> Cheers!
+> Stefano
+> 
+> Ps. this email applies to the other Script technique thread/email as
+> well.
+> 
+> On Tue, 2023-04-18 at 15:59 +0300, Georgi Guninski wrote:
+>> In short in Firefox 112, it is possible to check existence
+>> of firewalled web servers. This doesn't work in Chrome and Chromium
+>> 112
+>> for me.
+>>
+>> If user A has tcp connection to web server B, then in the
+>> following html:
+>>
+>> <iframe src="http://B" onload="load()" onerror="alert('error')"
+>> id="i1" />
+>>
+>> the javascript function load() will get executed if B serves
+>> valid document to A's browser and will not be executed otherwise.
+>>
+>> This work for both http and https, and for http it is allowed
+>> B to be IP address. Under some configurations of Apache2,
+>> it serves http despite having https configured.
+>>
+>> In some sense, this is close to nmap via javascript in a browser.
+>>
+>> Potential privacy implication is when the attacker guess the
+>> range of firewalled IPs and check them all in a loop.
+>>
+>> For online test:
+>> https://j.ludost.net/onload1.html
+>>
