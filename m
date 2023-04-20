@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2592" "Wednesday" "5" "September" "2018" "07:55:21" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1809041916060.14115@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow" "^Date:" nil nil "9" "2018090505:55:21" "[oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow" (number mark "        daniel@haxx. Sep  5   89/2592  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15726 invoked by uid 550); 5 Sep 2018 05:55:35 -0000
+Received: (qmail 18414 invoked by uid 550); 20 Apr 2023 11:51:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +6,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15708 invoked from network); 5 Sep 2018 05:55:34 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-Message-ID: <alpine.DEB.2.20.1809041916060.14115@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Date: Wed, 5 Sep 2018 07:55:21 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer
- overflow
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
+Received: (qmail 18396 invoked from network); 20 Apr 2023 11:51:50 -0000
+Date: Thu, 20 Apr 2023 11:51:37 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20230420115135.fmeae6hawx7mqqoh@yuggoth.org>
+References: <CAGUWgD9UDNkNMsixAnLcmS0OuWM0Btvx6fRbRr1OSk1UsXhy2g@mail.gmail.com>
+ <CAHQ_-nSmiU3vZM-8skFJ0jvuZhjR5eHWX=UOjZM-i1qy47pUwQ@mail.gmail.com>
+ <CAGUWgD8-GXOj=hvUzTD0K=GeiQTR-qSstSX0AQ+7GPsv1TWZzQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wivrsf4yxvy3f2cb"
+Content-Disposition: inline
+In-Reply-To: <CAGUWgD8-GXOj=hvUzTD0K=GeiQTR-qSstSX0AQ+7GPsv1TWZzQ@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] Checking existence of firewalled URLs via
+ javascript's script.onload
 
-NTLM password overflow via integer overflow
-===========================================
+--wivrsf4yxvy3f2cb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Project curl Security Advisory, September 5th 2018 -
-[Permalink](https://curl.haxx.se/docs/CVE-2018-14618.html)
+On 2023-04-20 10:58:42 +0300 (+0300), Georgi Guninski wrote:
+[...]
+> I can't imagine how can you check for open port/URL without
+> javascript, can you give reference or explanation? You can make
+> request, but without javascript you can't read the result.
 
-VULNERABILITY
--------------
+If the attacker controls the destination, they can simply record
+whether the connection is successfully established at the remote
+end. While this may not tell them much about what specific hosts the
+victim has access to reach, it can easily leak general egress
+filtering information.
+--=20
+Jeremy Stanley
 
-libcurl contains a buffer overrun in the NTLM authentication code.
+--wivrsf4yxvy3f2cb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The internal function `Curl_ntlm_core_mk_nt_hash` multiplies the `length` of
-the password by two (SUM) to figure out how large temporary storage area to
-allocate from the heap.
+-----BEGIN PGP SIGNATURE-----
 
-The `length` value is then subsequently used to iterate over the password and
-generate output into the allocated storage buffer. On systems with a 32 bit
-`size_t`, the math to calculate SUM triggers an integer overflow when the
-password length exceeds 2GB (2^31 bytes). This integer overflow usually causes
-a very small buffer to actually get allocated instead of the intended very
-huge one, making the use of that buffer end up in a heap buffer overflow.
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmRBJ0BfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCm51hAA3q1x+aOKwqcADXPwbUZEPYzuAy6TaVRhFQllhiR+lZUzBM+K6k+pb4JC
+vmkPTkcqk5wnGYBI+1dSq+5p11rU2E10yIDXY0xej67M9s4RUM9jrw27iAp2vxeP
+wfpDWc7fn0K5qiwHiel79x9rrZZgNud9A9qmlU1NipA8MfyUUBjbdXBGXuEc1CqM
+oJwrRfFpKFBohfWjyzZ2qY6wrFMTJdVS+hRMUYJabbDTp1bkYCWeEPNEDExWb/8q
+sphQ3CyxOmMKjME/iec/OBR+BrNfbFMXwc/4/jLekaxxJQmKwFBoXE4dov5HvFGk
+hClNpr9lKvijUnEnbPFUvc5PpWd/q8XR685vk3DQte0Zy81Im0FZmoYfZKpkv41i
+23Di4E+Hikf6C9jQOMDTNrYfYSv+hPcMXuNj7+WS4AtTUYuIoK9UM4XswCfOQeX4
+8j//7lj954+DGIGrFILt9plp9eY1vh80A4YVAVqojUkHWouX5eT5sptqEd5T5+p3
+MtIbhu6vAPiH2Xt4Ks1pR+YqV9vIqF6qcKPRws19yFlVhfLUlZlXN5vY32gXZW8n
+E65tIXaT6GkGs0sgTO4B8ZGeYYrHQTQnQcdFDySNERdjHulCZoso2cCEpPQhG87G
+6KsKyzZIr4WQqY0mQBcPk66JcMzw/CP6i7PdR6a9hxCsWpo99ZM=
+=uZu8
+-----END PGP SIGNATURE-----
 
-(This bug is almost identical to
-[CVE-2017-8816](https://curl.haxx.se/docs/CVE-2017-8816.html).)
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in commit
-[be285cde3f](https://github.com/curl/curl/commit/be285cde3f), April 2006.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-14618 to this issue.
-
-CWE-131: Incorrect Calculation of Buffer Size
-
-AFFECTED VERSIONS
------------------
-
-This issue is only present on 32 bit systems. It also requires the password
-field to use more than 2GB of memory, which should be rare.
-
-- Affected versions: libcurl 7.15.4 to and including 7.61.0
-- Not affected versions: libcurl < 7.15.4 and >= 7.61.1
-
-curl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In libcurl version 7.61.1, the integer overflow is avoided.
-
-A [patch for
-CVE-2018-14618](https://github.com/curl/curl/commit/57d299a499155d4b327e341c6024e293b0418243.patch)
-is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.61.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Put length restrictions on the password you can pass to libcurl
-
-TIME LINE
----------
-
-It was [publicly reported](https://github.com/curl/curl/issues/2756) to the
-curl project on July 18, 2018.  We contacted distros@openwall on August 27.
-
-curl 7.61.1 was released on September 5 2018, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Zhaoyang Wu. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+--wivrsf4yxvy3f2cb--
