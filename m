@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/2
-Message-ID: <20230808131324.GA18709@openwall.com>
-Date: Tue, 8 Aug 2023 15:13:24 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Rafael Silva <rafael.silva@...rform.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Node.js security updates for all active release lines, August 2023
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/16
+Message-ID: <CAKYehMbynyKHX8Qehab06G70Y0EBNCVDUwHxDJm+k92R4s_Tpw@mail.gmail.com>
+Date: Fri, 21 Apr 2023 00:12:17 +0800
+From: Huajie Wang <benjobs@...che.org>
+To: oss-security@...ts.openwall.com
+Cc: dev <dev@...eampark.apache.org>
+Subject: CVE-2022-46365: Apache StreamPark (incubating): Logic error causing any account reset
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Logic error causing any account reset in Apache StreamPark
 
-Something weird has happened with the below message.  Per the headers,
-it looks like it was resent to oss-security by a third-party(?) still on
-July 31, but it actually only hit our mail server today.  I also wonder
-why it wasn't(?) sent directly by Rafael, as the previous one was:
 
-https://www.openwall.com/lists/oss-security/2023/06/14/4
+Severity: Important
 
-Anyway, Rafael, let me also use this opportunity to ask you to please
-include actual detail (such as text/plain copy-paste of the blog posts)
-directly in your messages going forward, if you can.  Please also do
-include the blog links, but ideally not only links.
 
-Thanks,
+Versions Affected:
 
-Alexander
+Apache StreamPark 1.0.0 before 2.0.0
 
-On Mon, Jul 31, 2023 at 07:49:27AM -0700, Rafael Silva wrote:
-> 
-> 
-> 
-> 
-> ---------- Forwarded message ---------
-> From: Rafael Silva <rafael.silva@...rform.com>
-> Date: Monday, July 31, 2023 at 11:48:26???AM UTC-3
-> Subject: Node.js security updates for all active release lines, August 2023
-> To: nodejs-sec <nodejs-sec@...glegroups.com>
-> 
-> 
-> 
-> 
-> The Node.js project will release new versions of all supported release 
-> lines on or shortly after Tuesday, August 8th, 2023.
-> 
-> 
-> For more information see: 
-> https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
+
+Description:
+
+
+When the user use apache streampark and successfully logs in, to
+modify his profile, the username will be passed to the server-layer as
+a parameter, but not verified whether the user name is the currently
+logged user and whether the user is legal, This will allow malicious
+attackers to send any username to modify and reset the account,
+
+
+
+Mitigation:
+
+Users of the affected versions should apply one of the following
+
+
+- Upgrade to Apache StreamPark 2.0.0 or later
+
+References:
+https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-46365
+
+
+
+
+Best,
+Huajie Wang
+
