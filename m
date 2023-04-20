@@ -1,28 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/2
-Message-ID: <a973ae81-dcc2-d506-50e2-a62d46321a32@apache.org>
-Date: Tue, 31 Jan 2023 07:31:21 +0000
-From: Heping Wang <peacewong@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/15
+Message-ID: <CAKYehMa_Fdx---OGfL6DK0Jdm1O67Y6VG0jfN1ukPf6zoDLRgg@mail.gmail.com>
+Date: Fri, 21 Apr 2023 00:09:07 +0800
+From: Huajie Wang <benjobs@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-44645: Apache Linkis (incubating): The DatasourceManager module has a serialization attack vulnerability 
+Cc: dev <dev@...eampark.apache.org>
+Subject: CVE-2022-45802: Apache StreamPark (incubating): Upload any file to any directory
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Apache StreamPark (incubating): Upload any file to any directory
+
+
+Severity: low
+
+
+Versions Affected:
+
+Apache StreamPark 1.0.0 before 2.0.0
+
 
 Description:
 
-In Apache Linkis <=1.3.0 when used with the MySQL Connector/J, a deserialization vulnerability with possible remote code execution impact exists when an attacker has write access to a database and configures new datasource with a MySQL data source and malicious parameters. Therefore, the parameters in the jdbc url should be blacklisted. Versions of Apache Linkis <= 1.3.0 will be affected.
 
-We recommend users to upgrade the version of Linkis to version 1.3.1.
+Streampark allows any users to upload a jar as application, but there
+is no mandatory verification of the uploaded file type, causing users
+to upload some risky files, and may upload them to any directory,
+Users of the affected versions should upgrade to Apache StreamPark
+2.0.0 or later
 
-Credit:
 
-Tian Xin WU (Bearcat) , Vulnerability Researcher at Numen Cyber ​​​​Labs, Singapore. (reporter)
-Department of Cyber Security Research (Jumbo, Unc1e) (remediation developer)
-s3gundo of Hundsun Tech  (remediation developer)
+Mitigation:
+
+Users of the affected versions should apply one of the following
+
+
+- Upgrade to Apache StreamPark 2.0.0 or later
 
 References:
+https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-45802
 
-https://linkis.incubator.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-44645
+
+
+
+Best,
+Huajie Wang
 
