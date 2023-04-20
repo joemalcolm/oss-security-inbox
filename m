@@ -1,50 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/16
-Message-ID: <20231003225156.GA26670@openwall.com>
-Date: Wed, 4 Oct 2023 00:51:56 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/14
+Message-ID: <CAKYehMbX4+vq2adrfE0wpK0uGoORMOeewXB2F=8h1EWzp14h-A@mail.gmail.com>
+Date: Fri, 21 Apr 2023 00:05:14 +0800
+From: Huajie Wang <benjobs@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Cc: dev <dev@...eampark.apache.org>
+Subject: CVE-2022-45801: Apache StreamPark (incubating): LDAP Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 03, 2023 at 03:02:41PM -0700, Jean Luc Picard wrote:
-> Hi, just dropping in, is this the kind of thing to where the userspace &
-> kernel layers need mitigation until there's microcode mitigation?
+Apache StreamPark (incubating): LDAP Injection Vulnerability
 
-In general, kind of yes - it could have been that kind of thing.
 
-More specifically, no - in this case, only kernel and hypervisor
-and system configuration (disable SMT) mitigations are expected.  No
-userspace mitigations, other than maybe specific algorithms avoiding
-integer divide operations based on secrets where they can.  While AMD
-maybe could fix this in microcode (or maybe not, or maybe with
-unacceptable performance penalty), they expressed no plans to do so.
+Severity: Moderate
 
-> On Tue, Oct 3, 2023 at 2:46???PM Jeremy Stanley <fungi@...goth.org> wrote:
-> > On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
-> > [...]
-> > > If you have a proposal for how you'd prefer it to be done, I'll see what
-> > > I can do.  Perhaps BCC oss-security, or just send out a second mail?
-> >
-> > When I send advisories, I prepare two basically identical E-mail
-> > messages: one to the project's announcement list and one to
-> > oss-security (signing both of them). It seems like this is the most
-> > common approach to avoiding cross-posting between lists.
+Versions Affected:
 
-Andrew, sending a second message like Jeremy suggests works best.
-Bcc currently isn't expected to work at all.  Thank you!
+Apache StreamPark 1.0.0 before 2.0.0
 
-BTW, in this case I think the problem was actually for Xen's lists more
-than for oss-security - you included xen-announce among the CC'ed lists,
-and this means e.g. Demi Marie's reply was attempted to be posted to
-there, while certainly not being a valid Xen announcement.  However, I
-guess external messages to the announcement list are very easy to reject
-on your side.  It's not so easy for us on oss-security because we've
-setup some senders to bypass moderation, yet those people participate in
-threads on other lists that might just happen to be CC'ed in here and
-they might not notice that the rest of the sub-thread is moderated-out.
 
-I'm not too concerned about this issue with Xen announcements in
-particular - things have worked pretty well with these so far.
+Description:
 
-Alexander
+Apache StreamPark 1.0.0 to 2.0.0 have a LDAP injection vulnerability.
+LDAP Injection is an attack used to exploit web based applications
+that construct LDAP statements based on user input. When an
+application fails to properly sanitize user input, it's possible to
+modify LDAP statements through techniques similar to SQL Injection.
+LDAP injection attacks could result in the granting of permissions to
+unauthorized queries, and content modification inside the LDAP tree.
+This risk may only occur when the user logs in with ldap, and the user
+name and password login will not be affected, Users of the affected
+versions should upgrade to Apache StreamPark 2.0.0 or later
+
+
+Mitigation:
+
+Users of the affected versions should apply one of the following
+
+- Upgrade to Apache StreamPark 2.0.0 or later
+
+References:
+https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-45801
+
+
+
+Best,
+Huajie Wang
+
