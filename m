@@ -1,170 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/8
-Message-ID: <ZBBdYWmJn07r/UgI@kasco.suse.de>
-Date: Tue, 14 Mar 2023 12:41:21 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/13
+Message-ID: <ZEFiwzjloB3ZkZ9r@openssl.org>
+Date: Thu, 20 Apr 2023 16:05:23 +0000
+From: Tomas Mraz <tomas@...nssl.org>
 To: oss-security@...ts.openwall.com
-Subject: Security issue in Hotspot elevate_perf_privileges.sh (CVE-2023-28144)
+Subject: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-this report is about a possible security vulnerability I found in the Hotspot
-[1] project.
+OpenSSL Security Advisory [20th April 2023]
+===========================================
 
-An openSUSE packager for hotspot requested a review of a Hotspot update to
-version 1.4.1. This version contained a newly added D-Bus helper and Polkit
-authentication. During the review I found a vulnerability in the helper script
-`elevate_perf_privileges.sh` that is likely not exploitable by default, but
-could easily become a local root exploit when Polkit configuration is changed
-or an alternative authentication mechanism with weak authentication
-requirements is used.
+Input buffer over-read in AES-XTS implementation on 64 bit ARM (CVE-2023-1255)
+==============================================================================
 
-[1]: https://github.com/KDAB/hotspot.git
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1208808
+Severity: Low
 
-Introduction
-============
+Issue summary: The AES-XTS cipher decryption implementation for 64 bit ARM
+platform contains a bug that could cause it to read past the input buffer,
+leading to a crash.
 
-Hotspot is a GUI application for doing performance profiling anylsis
-based on Linux performance counters. This report is about the v1.4.1 version
-tag in the upstream repository.
+Impact summary: Applications that use the AES-XTS algorithm on the 64 bit ARM
+platform can crash in rare circumstances. The AES-XTS algorithm is usually
+used for disk encryption.
 
-The Issue
-=========
+The AES-XTS cipher decryption implementation for 64 bit ARM platform will read
+past the end of the ciphertext buffer if the ciphertext size is 4 mod 5, e.g.
+144 bytes or 1024 bytes. If the memory after the ciphertext buffer is
+unmapped, this will trigger a crash which results in a denial of service.
 
-Hotspot temporarily changes Linux Kernel sysctl settings and permissions of
-the `debugfs` and `tracefs` file systems to allow running the GUI application
-as unprivileged users. The issue is related to privilege escalation logic
-which is carried out by the `elevate_perf_privileges.sh` script. This script
-is invoked as root via a range of potential mechanisms like pkexec, kdesu or a
-D-Bus based KDE kauth authentication helper. The mechanism is selected during
-runtime with a prioritization of kauth > pkexec > kdesudo > kdesu.
+If an attacker can control the size and location of the ciphertext buffer
+being decrypted by an application using AES-XTS on 64 bit ARM, the
+application is affected. This is fairly unlikely making this issue
+a Low severity one.
 
-The script receives the path to a temporary file which is by default safely
-created in /tmp via the `QTemporaryFile` class in "src/perfrecord.cpp:142".
-The script contains the following logic during early startup:
+OpenSSL versions 3.0.0 to 3.0.8, and 3.1.0 are vulnerable to this issue,
+including the FIPS provider in those versions.
 
-```sh
-    if [ ! -z "$1" ]; then
-        olduser=$(stat -c '%u' "$1")
-        chown "$(whoami)" "$1"
-        echo "rewriting to $1"
-        # redirect output to file, to enable parsing of output even when
-        # the graphical sudo helper like kdesudo isn't forwarding the text properly
-        $0 2>&1 | tee -a "$1"
-        chown "$olduser" "$1"
-        exit
-    fi
-```
+OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
 
-The two `chown` invocations on the temporary file result in a temporary change
-of the ownership of the temporary file to root, which is originally owned by
-the unprivileged user. It changes ownership of the provided path first to
-`root`, then reexecutes itself, then changes ownership back to the original
-user.
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit bc2f61ad (for 3.1) and
+commit 02ac9c94 (for 3.0) in the OpenSSL git repository.
 
-This offers the following attack vectors:
+This issue was reported on 27th February 2023 by Anton Romanov (Amazon).
+The fix was developed by Nevine Ebeid (Amazon).
 
-- giving ownership of an arbitrary file to root
-- giving ownership of an arbitrary file to the unprivileged user
+General Advisory Notes
+======================
 
-The script accepts arbitrary paths and doesn't check where the file is located
-and what its ownership is. Thus the path can also be a file in any other
-directory. Therefore even without having to win a race condition or using a
-symlink attack, an attacker can simply specify a path to an already existing
-file owned by root e.g. /etc/shadow, which will in the end be owned by the
-unprivileged user.
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230420.txt
 
-It can be argued that this script can only be invoked as root if the root
-password has been supplied to kdesu, pkexec or the Kauth framework and thus
-requires root privileges in the first place. Since the Polkit authentication
-framework is likely used though, there is a certain chance that users or
-integrators want to get rid of the "annoying" authentication dialog and change
-the Polkit policy to something like "yes" for active users to make the
-elevation work out of the box. In this case all locally logged in users could
-trigger the exploit without authenticating as root.
+Note: the online version of the advisory may be updated with additional details
+over time.
 
-Potential Fix
-=============
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
 
-I recommended to upstream to replace the currently overly complex privilege
-escalation logic, that potentially uses a range of alternate privilege
-escalation mechanisms, by a single clean approach like using `pkexec`. Towards
-the helper script subprocess Pipes should be used for consuming the output
-instead of passing a temporary file path to it. This way the problematic
-`chown` calls will no longer be needed.
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
 
-At the moment no proper is available and upstream will require more time to
-address the issue. Using Polkit and the default upstream Polkit policy there
-should not be immediate danger, but users need to be aware that relaxing the
-authentication requirements in any way gives way to the local root exploit.
-
-Upstream added a commit [3] that allows to "opt-in" the risky authentication
-feature during build time.
-
-[3]: https://github.com/KDAB/hotspot/commit/65a246ce9196462081483fd07d97678dcfe36b9c
-
-Further Hardening
-=================
-
-The privileged operations that the script currently performs are the
-following:
-
-    sysctl -wq kernel.kptr_restrict=0 kernel.perf_event_paranoid=-1
-    mount -o remount,mode=755 /sys/kernel/debug
-    mount -o remount,mode=755 /sys/kernel/debug/tracing
-
-Granting world read access to the debug and tracing file systems is a
-bit coarse grained. Sadly these kernel file systems don't support ACL
-entries. If that would be possible then temporarily adding a dedicated ACL for
-the unprivileged user would have been a viable approach.
-
-I recommended to upstream to investigate the option to use a dedicated hotspot
-group that is granted access to the file systems. Furthermore there might be a
-possibility to use the capability `CAP_PERFMON` in conjunction with the lower
-level `perf` tool to obtain the necessary privileges.
-
-Affectedness and CVE Assignment
-===============================
-
-The problematic use of `chown` in the helper script has been introduced in the
-upstream commit 3b4682565f0e53f903f3ad0f3f2c0f236d382efb [4] and has been
-present since release v1.3.0.
-
-I decided to request a CVE for this issue even though it is likely not
-exploitable by default, because of the simplicity of exploiting it and the
-complexity of the overall privilege escalation logic in Hotspot. Mitre
-assigned CVE-2023-28144 for the issue.
-
-[4]: https://github.com/KDAB/hotspot/commit/3b4682565f0e53f903f3ad0f3f2c0f236d382efb
-
-Timeline
-========
-
-2023-03-09: I contacted the main upstream author about the vulnerability,
-            offering coordinated disclosure.
-2023-03-10: The upstream author agreed to publishing the issue without
-            embargo time, because there will be no proper fix available in
-            the short term. Users should be made aware of the issue right now.
-
-            We discussed various security aspects of the current code and
-            potential remedies and improvements.
-2023-03-13: I received the CVE from Mitre and started publishing the available
-            information.
-
-Best Regards
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmRBYoMSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tRl4P/3pRFLUviJ+dgVd0DV25ViBRI2qEOF9O
+FrcpB2buCF6JA2MQBKFV4x6kMjgzjFkj3LyP9eqUCfw6VhRtR6cnVXgUNi+XX3OL
+x8fxMY6OmEy67Oq/w7FL7mth1Rz5trDJWhCoAoKvaBYOWzLhPQVqIXaJ7MY8HPGv
+qoLt2ODYbm0D44LCXiigTIO13HIF5MRRxex1C2+c2ZO7XV3pq0Sr4xcVyBAcneHW
+/dyYNeEsLBaa39QrFoz/h/C96pCHwc10DKRVFUC8q3o10Bs+D46sueoe666cLfeN
+pm2Y/AYaXKLCCFRT3IDJwXgBtcLt+PrZr3C3iyVrCWOcoHzfNS5BzTKOQMv/CSkW
+KEK7ezqOBWvvzeEcFeg6mUcILVRanUEKS+u4tZQ6JzJAck1CHjpcRQVNbxhayjzM
+dTASVeLzb4xrXVVMYLqKeVBACGcOo69oyssnORDg7/iBW/Gm5toUraS/8uKft51W
+NsBUV4A4eagE4VNwCT9mFH7uAXjQgWggivdA6PtaUf/S69wy5Dh1cWc+XWd3suj8
+QgPTU3H0E86BTbIAkBQUatWmMnFc1gxhUpEo+rcGZY00Zkrz42PoCP/pFDsszUt6
+JAlFPS7xQNYAgaUAnkyMTbkSDqFbm8nppAY6l6HpYEVywagoXtSPEgn+miSOJn6S
+7I/fm11VSkjm
+=SU46
+-----END PGP SIGNATURE-----
