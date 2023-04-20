@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1298" "Monday" "2" "October" "2017" "11:01:19" "+0000" "Reed Loden" "reed@reedloden.com" "<CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>" "37" "Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" "^Date:" nil nil "10" "2017100211:01:19" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" (number mark "        reed@reedlod Oct  2   37/1298  " thread-indent "\"Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)\"\n") "<20170929151218.0cfb25c2@pc1>" ("<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>" "<CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>" "<CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>" "<20170929151218.0cfb25c2@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1534 invoked by uid 550); 2 Oct 2017 11:01:43 -0000
+Received: (qmail 22470 invoked by uid 550); 20 Apr 2023 13:13:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +6,169 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1509 invoked from network); 2 Oct 2017 11:01:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=ilCe7la9xlVGwt1V9EWRd/EtSokJl8syf4j7TZHBb/E=;
-        b=i9/+Q7V6J+akmX9xVG1mIyVkAbmxGl1WFsbd4ThhPPYdnLjLtDILETNfL+H9kdsJX0
-         wf1r1szs/gquWa4pgqyzbmq/lljXox+LTUyUE0+V5e0tRWFLHLCJMa/9iNMW5ECuq+0o
-         6Rh+9odKNx2v7zjytmspKD/Mn1FEUXBSQxt2F6q1ZQVtIP57cWTJh6xz+JkKiiHnrRq2
-         JsowOQBQULuRtVj696zRiZ2OrOYvCDbacOtwf/aDkUxdrZqRR0ctsBQE3TL54DcnrNKY
-         xwae7yU+Zv5g4s6RHY7Hcn9jZNUvsUL0X24FHLL9Xyg8pmWqX56YFyyL+MaK1hJP257T
-         vs4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=ilCe7la9xlVGwt1V9EWRd/EtSokJl8syf4j7TZHBb/E=;
-        b=UCBuIWj2rnLRY70jFfNnPVneun+ESjmXZJsIpLU0b9EaSpiGq0ra7th7eIjo3yBu9s
-         v9uZpW96EQRMngfyWS7qpnAriddhtuLwHc/MBtf0XLG/cQulGX0UHvLu5d+bhP2yZ3yU
-         +Vs0rPGQVBSHUJ4EaVc+aJUukjUujISGc632twqvpaOJtft5EHjeq86v1X58fgFVO5cf
-         H/uWCRbILesXeRJkHEAICa0RhneGbwnWNYtvCui+vky9LtbnbI/wIbB8eiCyNQrs53KN
-         Gq3RIUXYdiAAROgvdRDQtizwEWqSAWijaPS3MX28eBSQSH7bysQWnvkKeCYKgblVs/k9
-         J6cw==
-X-Gm-Message-State: AMCzsaWdp5MX2aizpx0vE+0wCx/Su+DXLFFHeA8+jWrXf2jUx9Vr2arr
-	pRDEpaDp0gRyZW2h7jKqf01a2qkDhiTitpkpic+j6fwx
-X-Google-Smtp-Source: AOwi7QC9Fjw/JcRhmRFAL1ZSbruuqP7i5vcA2lcDKmWZUqE3o7nD4f3U7zeyVWHpYVCxZXkR3m5pXWN5cuNju2wMMHE=
-X-Received: by 10.176.66.228 with SMTP id j91mr5327146uaj.34.1506942090023;
- Mon, 02 Oct 2017 04:01:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
- <CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
- <CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com> <20170929151218.0cfb25c2@pc1>
-In-Reply-To: <20170929151218.0cfb25c2@pc1>
-Message-ID: <CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="94eb2c05fda8f92cd4055a8e4b58"
-Date: Mon, 02 Oct 2017 11:01:19 +0000
-From: Reed Loden <reed@reedloden.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)
+Received: (qmail 18300 invoked from network); 20 Apr 2023 13:06:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aruba.it; s=a1;
+	t=1681995956; bh=u5OfYbKVrpK406dkMTVMyX/ZzyWaDgy3GjZoPQd56pA=;
+	h=Subject:From:To:Date:Content-Type:Mime-Version;
+	b=apNx3w6FvjkS5jwPhp4vyeKOghdgvMa2Rd2trA2KNFEkAu/lWYkhlE2EdtYLbg7wR
+	 RpuvfO9udwh5g2tieco7SJ9k7TJck15+8Zo8GTkt2r7aYpPk3fXETalt9VVF82aK+z
+	 H2yYTZ5hkA7c2lEzzeJ70ntvJpktTvsqttN9bDizRiRiFtJIKCSQrGzMmfXu8PntjD
+	 gDp9Vv+Tw5UrOWmqzv1U9xqMcbUmIzMfInAmWDxYZ9cMxTJPXxc73dtyvV2YdE9CYo
+	 q+Soif2l0odpTyOt6PdavEZTj/hvLaYUo3c3h51B/JzEN6fDN9Xh9L9QSkCzKU35LN
+	 1CDbn2PS+rd9Q==
+Message-ID: <12d8c448b765754601b3af0ea7242a01655eb232.camel@wisec.it>
+From: Stefano Di Paola <stefano.dipaola@wisec.it>
 To: oss-security@lists.openwall.com
-
---94eb2c05fda8f92cd4055a8e4b58
+Date: Thu, 20 Apr 2023 15:05:55 +0200
+In-Reply-To: <f7586453-d83d-26a6-7d9a-e7a54009209f@innerheight.com>
+References: 
+	<CAGUWgD88WiJwryGFt9hQe1rEpLX2PKb=ms-8iONvQ2qhDgtigA@mail.gmail.com>
+	 <e5fcafc733c2fca7baf25537eca9837a6950beac.camel@wisec.it>
+	 <f7586453-d83d-26a6-7d9a-e7a54009209f@innerheight.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfMlQXtLMKNzxX/Z8s+Jc6CQ1iwNrlK389w2BfoPF207ovKDnlP+zaf9hufka9bS8X/nQ0viXahW5jbzanDp6SOGZHb+oyUXg0fwp7kVybF275ENDDL5Y
+ egIQb/iT9Q5rnZDEFv7QiuX/sWQoUrcno6Jo1z8oaReCwe/eU+PrvqO1QP9eiOBfRyaya+8JnZpAu7G0G9EdsicOZpMM0nYkImM=
+Subject: Re: [oss-security] Checking existence of firewalled web servers in
+ Firefox via iframe.onload
 
-On Fri, Sep 29, 2017 at 6:12 AM Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+Absolutely agreed!
 
-> On Thu, 28 Sep 2017 23:13:22 -0700
-> Reed Loden <reed@reedloden.com> wrote:
->
-> > Separately, we're happy to announce that libav (
-> > https://git.libav.org/?p=3Dlibav.git;a=3Dsummary) was added to the scope
-> > earlier today.
->
-> I'm surprised by this. When I saw the ibb-data bounty I immediately
-> wondered whether ffmpeg should be in there.
->
-> Is there a reason libav is in and ffmpeg is not? Were there concerns by
-> the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
-> my impression is that many distros who had used libav for some time
-> have switched back and ffmpeg is clearly the more widely used of the
-> forks.)
+What I actually see now as the most effective mitigation is the Chrome
+decision to implement preflight on private network access:
+
+https://developer.chrome.com/blog/private-network-access-preflight/
+
+I hope to see that implemented by Firefox and other browsers as well.
+
+As a side note, 3 years ago I released a proof of concept browser
+extension that alerts the user when a website tries to perform port
+scans or DNS Rebinding attacks.
+https://github.com/mindedsecurity/behave
 
 
-We=E2=80=99d love to have FFmpeg in-scope, but the simple reason is that th=
-ey don=E2=80=99t
-reply to our e-mails. All projects participating must explicitly opt-in,
-and we can=E2=80=99t get anybody at FFmpeg to let us know their thoughts on=
- if they
-would like to be added or not.
+https://blog.mindedsecurity.com/2020/06/behave-monitoring-browser-extension-for.html
 
-If somebody could help with that (or at least put us in contact with the
-appropriate folks), would appreciate it. :-)
+About the rediscovering I know it happens and I've no problem about it,
+but I wish researchers to spend some time checking for previous work
+and give credits ;).
 
-~reed
-(For the IBB)
+Cheers,
+Stefano
 
---94eb2c05fda8f92cd4055a8e4b58--
+On Thu, 2023-04-20 at 13:15 +0200, Jan Klopper wrote:
+> Hi
+> 
+> The topic is still relevant.
+> 
+> Combining this attack with webservices that might be present behind
+> a 
+> NAT network, eg IOT or appliances can result in various serious
+> issues.
+> 
+> There are loads of devices that do not require csrf, or even POST
+> for 
+> requests that update settings or even firmware.
+> 
+> Performing GET requests on those internal ip's, even though no
+> content 
+> will be returned is still plenty dangerous.
+> Knowing which ip to perform these attacks on, can be found by looking
+> at 
+> the timing of various ready/error calls.
+> 
+> However, it begs the question, is it the browser that is in the
+> wrong 
+> here, or those appliances/devices. And, should the browser be
+> guarding 
+> users against flaws in those appliances? And where then does the
+> scope 
+> of the browsers security features stop?
+> 
+> I'm also expecting heaps of these issues to re-discovered when
+> looking 
+> at the whole websockets domain.
+> 
+> With regards
+> Jan Klopper
+> 
+> 
+> On 20-04-2023 12:57, Stefano Di Paola wrote:
+> > Hello George,
+> > 
+> > from time to time it happens to rediscover techniques issues.
+> > This is one of those times :)
+> > 
+> > In 2006 there has been a lot of interest around browser based port
+> > scans, in particular to pivot internal networks.
+> > 
+> > The following links are some of them:
+> > 
+> > 
+http://web.archive.org/web/20060813034434/http://www.spidynamics.com/assets/documents/JSportscan.pdf
+> > 
+> > https://www.gnucitizen.org/blog/javascript-port-scanner/
+> > 
+> > 
+https://www.blackhat.com/presentations/bh-usa-06/BH-US-06-Grossman.pdf
+> > 
+> > 
+> > 
+https://www.blackhat.com/presentations/bh-usa-07/Grossman/Whitepaper/bh-usa-07-grossman-WP.pdf
+> > 
+> > Some of those thecniques have been mitigated, and some it's still
+> > there.
+> > 
+> > There are surely other resources IIRC, although some of them might
+> > have
+> > been deleted, such as the ones on sla.cke.rs which is a real pity..
+> > 
+> > Cheers!
+> > Stefano
+> > 
+> > Ps. this email applies to the other Script technique thread/email
+> > as
+> > well.
+> > 
+> > On Tue, 2023-04-18 at 15:59 +0300, Georgi Guninski wrote:
+> > > In short in Firefox 112, it is possible to check existence
+> > > of firewalled web servers. This doesn't work in Chrome and
+> > > Chromium
+> > > 112
+> > > for me.
+> > > 
+> > > If user A has tcp connection to web server B, then in the
+> > > following html:
+> > > 
+> > > <iframe src="http://B" onload="load()" onerror="alert('error')"
+> > > id="i1" />
+> > > 
+> > > the javascript function load() will get executed if B serves
+> > > valid document to A's browser and will not be executed otherwise.
+> > > 
+> > > This work for both http and https, and for http it is allowed
+> > > B to be IP address. Under some configurations of Apache2,
+> > > it serves http despite having https configured.
+> > > 
+> > > In some sense, this is close to nmap via javascript in a browser.
+> > > 
+> > > Potential privacy implication is when the attacker guess the
+> > > range of firewalled IPs and check them all in a loop.
+> > > 
+> > > For online test:
+> > > https://j.ludost.net/onload1.html
+> > > 
+-- 
+...oOOo...oOOo....
+Stefano Di Paola
+Software & Security Engineer
+
+Owasp Italy R&D Director
+
+Web: www.wisec.it
+Twitter: http://twitter.com/WisecWisec
+..................
+
