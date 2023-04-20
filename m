@@ -1,33 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/25/3
-Message-ID: <8e892059-fa27-7086-13eb-6779d073dc58@apache.org>
-Date: Fri, 25 Aug 2023 17:24:51 +0000
-From: Elad Kalif <eladkal@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/9
+Message-ID: <12d8c448b765754601b3af0ea7242a01655eb232.camel@wisec.it>
+Date: Thu, 20 Apr 2023 15:05:55 +0200
+From: Stefano Di Paola <stefano.dipaola@...ec.it>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-40195: Apache Airflow Spark Provider Deserialization Vulnerability RCE 
+Subject: Re: Checking existence of firewalled web servers in Firefox via iframe.onload
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Absolutely agreed!
 
-Affected versions:
+What I actually see now as the most effective mitigation is the Chrome
+decision to implement preflight on private network access:
 
-- Apache Airflow Spark Provider before 4.1.3
+https://developer.chrome.com/blog/private-network-access-preflight/
 
-Description:
+I hope to see that implemented by Firefox and other browsers as well.
 
-Deserialization of Untrusted Data, Inclusion of Functionality from Untrusted Control Sphere vulnerability in Apache Software Foundation Apache Airflow Spark Provider.
+As a side note, 3 years ago I released a proof of concept browser
+extension that alerts the user when a website tries to perform port
+scans or DNS Rebinding attacks.
+https://github.com/mindedsecurity/behave
 
-When the Apache Spark provider is installed on an Airflow deployment, an Airflow user that is authorized to configure Spark hooks can effectively run arbitrary code on the Airflow node by pointing it at a malicious Spark server. Prior to version 4.1.3, this was not called out in the documentation explicitly, so it is possible that administrators provided authorizations to configure Spark hooks without taking this into account. We recommend administrators to review their configurations to make sure the authorization to configure Spark hooks is only provided to fully trusted users.
 
-To view the warning in the docs please visit  https://airflow.apache.org/docs/apache-airflow-providers-apache-spark/4.1.3/connections/spark.html
+https://blog.mindedsecurity.com/2020/06/behave-monitoring-browser-extension-for.html
 
-Credit:
+About the rediscovering I know it happens and I've no problem about it,
+but I wish researchers to spend some time checking for previous work
+and give credits ;).
 
-happyhacking-k (finder)
+Cheers,
+Stefano
 
-References:
+On Thu, 2023-04-20 at 13:15 +0200, Jan Klopper wrote:
+> Hi
+> 
+> The topic is still relevant.
+> 
+> Combining this attack with webservices that might be present behind
+> a 
+> NAT network, eg IOT or appliances can result in various serious
+> issues.
+> 
+> There are loads of devices that do not require csrf, or even POST
+> for 
+> requests that update settings or even firmware.
+> 
+> Performing GET requests on those internal ip's, even though no
+> content 
+> will be returned is still plenty dangerous.
+> Knowing which ip to perform these attacks on, can be found by looking
+> at 
+> the timing of various ready/error calls.
+> 
+> However, it begs the question, is it the browser that is in the
+> wrong 
+> here, or those appliances/devices. And, should the browser be
+> guarding 
+> users against flaws in those appliances? And where then does the
+> scope 
+> of the browsers security features stop?
+> 
+> I'm also expecting heaps of these issues to re-discovered when
+> looking 
+> at the whole websockets domain.
+> 
+> With regards
+> Jan Klopper
+> 
+> 
+> On 20-04-2023 12:57, Stefano Di Paola wrote:
+> > Hello George,
+> > 
+> > from time to time it happens to rediscover techniques issues.
+> > This is one of those times :)
+> > 
+> > In 2006 there has been a lot of interest around browser based port
+> > scans, in particular to pivot internal networks.
+> > 
+> > The following links are some of them:
+> > 
+> > 
+http://web.archive.org/web/20060813034434/http://www.spidynamics.com/assets/documents/JSportscan.pdf
+> > 
+> > https://www.gnucitizen.org/blog/javascript-port-scanner/
+> > 
+> > 
+https://www.blackhat.com/presentations/bh-usa-06/BH-US-06-Grossman.pdf
+> > 
+> > 
+> > 
+https://www.blackhat.com/presentations/bh-usa-07/Grossman/Whitepaper/bh-usa-07-grossman-WP.pdf
+> > 
+> > Some of those thecniques have been mitigated, and some it's still
+> > there.
+> > 
+> > There are surely other resources IIRC, although some of them might
+> > have
+> > been deleted, such as the ones on sla.cke.rs which is a real pity..
+> > 
+> > Cheers!
+> > Stefano
+> > 
+> > Ps. this email applies to the other Script technique thread/email
+> > as
+> > well.
+> > 
+> > On Tue, 2023-04-18 at 15:59 +0300, Georgi Guninski wrote:
+> > > In short in Firefox 112, it is possible to check existence
+> > > of firewalled web servers. This doesn't work in Chrome and
+> > > Chromium
+> > > 112
+> > > for me.
+> > > 
+> > > If user A has tcp connection to web server B, then in the
+> > > following html:
+> > > 
+> > > <iframe src="http://B" onload="load()" onerror="alert('error')"
+> > > id="i1" />
+> > > 
+> > > the javascript function load() will get executed if B serves
+> > > valid document to A's browser and will not be executed otherwise.
+> > > 
+> > > This work for both http and https, and for http it is allowed
+> > > B to be IP address. Under some configurations of Apache2,
+> > > it serves http despite having https configured.
+> > > 
+> > > In some sense, this is close to nmap via javascript in a browser.
+> > > 
+> > > Potential privacy implication is when the attacker guess the
+> > > range of firewalled IPs and check them all in a loop.
+> > > 
+> > > For online test:
+> > > https://j.ludost.net/onload1.html
+> > > 
+-- 
+...oOOo...oOOo....
+Stefano Di Paola
+Software & Security Engineer
 
-https://github.com/apache/airflow/pull/33233
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-40195
+Owasp Italy R&D Director
+
+Web: www.wisec.it
+Twitter: http://twitter.com/WisecWisec
+..................
 
