@@ -1,4 +1,4 @@
-Received: (qmail 9545 invoked by uid 550); 8 Nov 2023 18:07:26 -0000
+Received: (qmail 7562 invoked by uid 550); 20 Apr 2023 17:50:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +7,95 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6035 invoked from network); 8 Nov 2023 18:05:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699466702; x=1700071502; darn=lists.openwall.com;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3V+Tshgeq/EsIwMP/xMJunf6yNt/VXv2j9QUHXbm29M=;
-        b=RoZFoI5QTuijvW+MwKzx/dex5TWTesBNoZ4jDFh0nf94NoH56wjiCqlCq7G/aNemTp
-         wVWpogLvSjEic6m0LUfGEb2rDn5fC5G9nyhK6saoceKTn/ikHsKGVKpK/OOM9tgUo2ri
-         wg8ubeFHZcFYIuI6RH7BXETh9x1NP2gkgVtnFut5rN+qu8TSTp34e3tNLhpwMP4G6pAG
-         t8M1UltSy/e5db1/btf+VmZ/q50e4MEpgAlEiE4ohjrEr2aJ3LmSQqleWiViRYObesDp
-         Auta+/7qkgd0SM2lcA8nXc9vRdf/YmBWXED4jHEVG3ZpRWvmTrr7qaRM2EC251t5kmWa
-         YQcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699466702; x=1700071502;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3V+Tshgeq/EsIwMP/xMJunf6yNt/VXv2j9QUHXbm29M=;
-        b=oaBFnApFnjekrg5WKk956HEezouejOUbFufI+sMzbSlyBUUesdz2Zg8h473TC9y2Kr
-         twLzMaL2tPn8wZ8qvasTVCbjH/Trc8IKsg+rwxkF1xm9zFUQYEMDtG9Rx+yIWa4NOKnF
-         pJ1h1qgVhGX705Jg4pO1AVGjvOVqdBQyQbrLaewewa7rDNe18iG2l396Obofo1NKJ9fa
-         DHGbqDZ0ANLbfHkH3ZR8jkDgdJpw8vEmzcOofLFoNsFktitH4Ifc1fnKH/miuRVOebgh
-         SdT0FjDuMxq7BpxeHblxrwiPkGQ+QE106ioaINRntN3iWifwiNPl8PAGDdCFDP7Ndmi2
-         CBbg==
-X-Gm-Message-State: AOJu0YxQOC0zI17YfHj3BVmkORpMTL/s5x43omxOS/j7JIQu/7sOGkrK
-	aYAohLlvOrN3aitYxUaW9clqvI7uHVfb6CKhJJs=
-X-Google-Smtp-Source: AGHT+IFE+8hJjDsQ9ee8ESqJYQvd6XGPUfrPPohGa5S0ZTH2i9zySPgx2oJ3zZLU9wH/6HP6lt9+U/M2NKqeZ6oaww4=
-X-Received: by 2002:a05:6000:ce:b0:32d:a35d:bd1c with SMTP id
- q14-20020a05600000ce00b0032da35dbd1cmr2210690wrx.39.1699466702272; Wed, 08
- Nov 2023 10:05:02 -0800 (PST)
+Received: (qmail 1065 invoked from network); 20 Apr 2023 16:05:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1682006724; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=KsEm8pPe4mdGvnS4SfenLhvijXVrwbxY6J561OkR+DA=;
+	b=hMZfeNwW8Rx4Hdf1zFERZDmc8RE75aqSHGOwSHsftTk7rqcyEvyz3h5ajuWOe+7GJJ1N/7
+	ZXP/Fo8ZOD5eGd2zRnJY7J3shyyeZ89lL6mwqSON/XR3li4X0qLsgI1wthR6J0V7gFZqty
+	ThY1Q/jvt5U7vinUQ+1L5wOOkGsSPeyKOQ3bweRSoIOkJxhhAXLhHDloLXetPkMJ92rOSv
+	59cqI1hBLuuschE9EZFLmOhQGAsHVTsGQZA4wrhGxpDY+nWM/UE0x1tMToZiywyjWx3wJg
+	iwL5DhOCIUb/gvJXeJaZTLT7XJFdRPmzSzQ2v/Ccq/XSZAOji3Gq9yD+/VARjg==
+Date: Thu, 20 Apr 2023 16:05:23 +0000
+From: Tomas Mraz <tomas@openssl.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZEFiwzjloB3ZkZ9r@openssl.org>
 MIME-Version: 1.0
-References: <20231105224340.GA25140@openwall.com>
-In-Reply-To: <20231105224340.GA25140@openwall.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Wed, 8 Nov 2023 10:04:51 -0800
-Message-ID: <CAADnVQKaqKJA_PPLNggzt=BY6jqsCbgpA4MM9ikkP+qY4f8zSQ@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>, Daniel Borkmann <daniel@iogearbox.net>
-Cc: oss-security@lists.openwall.com, Hsin-Wei Hung <hsinweih@uci.edu>, 
-	Alexei Starovoitov <ast@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Re: Linux: BPF: issues with copy_from_user_nofault()
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
-On Sun, Nov 5, 2023 at 2:43=E2=80=AFPM Solar Designer <solar@openwall.com> =
-wrote:
->
-> Hi,
->
-> Looks like the below wasn't brought to oss-security yet.
->
-> As I understand from what was posted to the linux-distros thread, the
-> issue was being fixed in:
->
-> https://lore.kernel.org/bpf/20230118051443.78988-1-alexei.starovoitov@gma=
-il.com/
->
-> and actually fixed in:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?=
-id=3Dd319f344561d
->
-> and it should have been merged to stable "tomorrow or so" after June 27,
-> at which point Hsin-Wei Hung was supposed to finally make the
-> oss-security posting, but apparently that never happened.
->
-> Of course, the delay from January 2 to June 28 was way in excess of the
-> supposed maximum, and it is even more ridiculous we didn't post in here
-> for even longer.
->
-> This is what happens when no one in particular keeps tracking issues
-> after they fall out of the attention span.  This is also why we need to
-> take care of the distros list statistics task in real time, not only
-> retroactively like I'm doing for 2023 now.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As I tried to explain, the fix addresses two things:
-- the WARN. By itself it's harmless and the severity is low.
-- lockup with CONFIG_HARDENED_USERCOPY from bpf. That is a real bug
-and backports are necessary.
+OpenSSL Security Advisory [20th April 2023]
+===========================================
 
-But the 2nd part of the fix:
-https://lore.kernel.org/bpf/20230118051443.78988-2-alexei.starovoitov@gmail=
-.com/
+Input buffer over-read in AES-XTS implementation on 64 bit ARM (CVE-2023-1255)
+==============================================================================
 
-was never merged.
-Essentially perf (without any bpf) is broken on arm64 and others.
-arch_perf_out_copy_user() might deadlock with CONFIG_HARDENED_USERCOPY.
+Severity: Low
+
+Issue summary: The AES-XTS cipher decryption implementation for 64 bit ARM
+platform contains a bug that could cause it to read past the input buffer,
+leading to a crash.
+
+Impact summary: Applications that use the AES-XTS algorithm on the 64 bit ARM
+platform can crash in rare circumstances. The AES-XTS algorithm is usually
+used for disk encryption.
+
+The AES-XTS cipher decryption implementation for 64 bit ARM platform will read
+past the end of the ciphertext buffer if the ciphertext size is 4 mod 5, e.g.
+144 bytes or 1024 bytes. If the memory after the ciphertext buffer is
+unmapped, this will trigger a crash which results in a denial of service.
+
+If an attacker can control the size and location of the ciphertext buffer
+being decrypted by an application using AES-XTS on 64 bit ARM, the
+application is affected. This is fairly unlikely making this issue
+a Low severity one.
+
+OpenSSL versions 3.0.0 to 3.0.8, and 3.1.0 are vulnerable to this issue,
+including the FIPS provider in those versions.
+
+OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit bc2f61ad (for 3.1) and
+commit 02ac9c94 (for 3.0) in the OpenSSL git repository.
+
+This issue was reported on 27th February 2023 by Anton Romanov (Amazon).
+The fix was developed by Nevine Ebeid (Amazon).
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230420.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmRBYoMSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tRl4P/3pRFLUviJ+dgVd0DV25ViBRI2qEOF9O
+FrcpB2buCF6JA2MQBKFV4x6kMjgzjFkj3LyP9eqUCfw6VhRtR6cnVXgUNi+XX3OL
+x8fxMY6OmEy67Oq/w7FL7mth1Rz5trDJWhCoAoKvaBYOWzLhPQVqIXaJ7MY8HPGv
+qoLt2ODYbm0D44LCXiigTIO13HIF5MRRxex1C2+c2ZO7XV3pq0Sr4xcVyBAcneHW
+/dyYNeEsLBaa39QrFoz/h/C96pCHwc10DKRVFUC8q3o10Bs+D46sueoe666cLfeN
+pm2Y/AYaXKLCCFRT3IDJwXgBtcLt+PrZr3C3iyVrCWOcoHzfNS5BzTKOQMv/CSkW
+KEK7ezqOBWvvzeEcFeg6mUcILVRanUEKS+u4tZQ6JzJAck1CHjpcRQVNbxhayjzM
+dTASVeLzb4xrXVVMYLqKeVBACGcOo69oyssnORDg7/iBW/Gm5toUraS/8uKft51W
+NsBUV4A4eagE4VNwCT9mFH7uAXjQgWggivdA6PtaUf/S69wy5Dh1cWc+XWd3suj8
+QgPTU3H0E86BTbIAkBQUatWmMnFc1gxhUpEo+rcGZY00Zkrz42PoCP/pFDsszUt6
+JAlFPS7xQNYAgaUAnkyMTbkSDqFbm8nppAY6l6HpYEVywagoXtSPEgn+miSOJn6S
+7I/fm11VSkjm
+=SU46
+-----END PGP SIGNATURE-----
