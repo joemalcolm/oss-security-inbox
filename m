@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/1
-Message-ID: <dc55490f-ec97-15ba-c4e2-531d2f0d6e92@apache.org>
-Date: Thu, 06 Jul 2023 21:25:50 +0000
-From: "Jean-Louis Monteiro" <jlmonteiro@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/1
+Message-ID: <20230420073459.003a5be2.hanno@hboeck.de>
+Date: Thu, 20 Apr 2023 07:34:59 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-33008: Apache Johnzon: Prevent inefficient internal conversion from BigDecimal at large scale 
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Wed, 19 Apr 2023 23:53:40 +0200
+Steffen Nurpmeso <steffen@...oden.eu> wrote:
 
-Affected versions:
+> IMO it is no vulnerability at all since it has "always" been _very
+> clearly_ (even very lengthily) documented in the manual page.
 
-- Apache Johnzon through 1.2.20
+A vulnerability does not go away if it's documented, and I find that a
+rather strange take.
 
-Description:
+Also I think this discussion was had many times before, as plenty of
+libraries in other language ecosystems defaulted to not checking certs
+or doing incomplete checks, and over time they all defaulted to the
+sane thing: To make the secure setting the default.
+The fact that apparently noone has ever checked this for a major perl
+library (I mean - CPAN itself, the package manager, is affected) is
+quite telling tbh.
 
-Deserialization of Untrusted Data vulnerability in Apache Software Foundation Apache Johnzon.
-
-
-A malicious attacker can craft up some JSON input that uses large numbers (numbers such as 1e20000000) that Apache Johnzon will deserialize into BigDecimal and maybe use numbers too large which may result in a slow conversion (Denial of service risk). Apache Johnzon 1.2.21 mitigates this by setting a scale limit of 1000 (by default) to the BigDecimal. 
-
-
-This issue affects Apache Johnzon: through 1.2.20.
-
-This issue is being tracked as JOHNZON-397 
-
-Credit:
-
-PJ Fanning (reporter)
-Jean-Louis Monteiro (remediation developer)
-Romain Manni-Bucau (remediation reviewer)
-
-References:
-
-https://johnzon.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-33008
-https://issues.apache.org/jira/browse/JOHNZON-397
-
+-- 
+Hanno Böck
+https://hboeck.de/
