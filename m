@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2522" "Sunday" "18" "September" "2016" "13:04:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160918170439.ADBAF42E002@smtpvbsrv1.mitre.org>" "56" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability" nil nil nil "9" "2016091817:04:39" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability" (number mark "U       cve-assign@m Sep 18   56/2522  " thread-indent "\"[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability\"\n") "<CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>" ("<CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9847 invoked by uid 550); 18 Sep 2016 17:04:53 -0000
+Received: (qmail 30422 invoked by uid 550); 20 Apr 2023 17:56:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +7,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9817 invoked from network); 18 Sep 2016 17:04:51 -0000
-From: cve-assign@mitre.org
-To: felixk3y@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>
-Message-Id: <20160918170439.ADBAF42E002@smtpvbsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 13:04:39 -0400 (EDT)
-Subject: [oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability
+Received: (qmail 8159 invoked from network); 20 Apr 2023 16:13:06 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AAQBX9fBvUu6s0CeI3BcuqOEayBnZDnDI0APppTCK7cYaMD6iJuzwfJ1
+	Qj2oE9CguenXYFmE9pGVrnj3yBQIxi60OqEh7RY=
+X-Google-Smtp-Source: AKy350aw1jfy6LZUJbVYp9XDmH16IGoj5i+SGgZy1oRswZLymfUilEuadi65M9/cS1/GvRIAuMd16KPKpvny2aLBka0=
+X-Received: by 2002:a05:6402:1a57:b0:506:94ea:9af1 with SMTP id
+ bf23-20020a0564021a5700b0050694ea9af1mr3031497edb.8.1682007148975; Thu, 20
+ Apr 2023 09:12:28 -0700 (PDT)
+MIME-Version: 1.0
+From: Huajie Wang <benjobs@apache.org>
+Date: Fri, 21 Apr 2023 00:12:17 +0800
+X-Gmail-Original-Message-ID: <CAKYehMbynyKHX8Qehab06G70Y0EBNCVDUwHxDJm+k92R4s_Tpw@mail.gmail.com>
+Message-ID: <CAKYehMbynyKHX8Qehab06G70Y0EBNCVDUwHxDJm+k92R4s_Tpw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: dev <dev@streampark.apache.org>
+Content-Type: multipart/alternative; boundary="0000000000009fdd6505f9c6ce7c"
+Subject: [oss-security] CVE-2022-46365: Apache StreamPark (incubating): Logic error causing
+ any account reset
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0000000000009fdd6505f9c6ce7c
+Content-Type: text/plain; charset="UTF-8"
 
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/pixidou/controllers/pixidouController.php#L83-L91
-> The "fid" parameter fail to sufficiently sanitize before using it in an SQL
-> query, In This vulnerability, also lead to Directory traversal, Remote code
-> execution vulnerabilities etc..
-> 
-> 1) Directory traversal vulnerability
-> http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
-> union select
-> 1,'./','1.txt',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../framework/conf/config.php
-> 
-> 2) Remote code execution
->  i. Upload any legal files through website(.jpg|.gif etc..)
->  ii. copy file to evil file(.php etc..)
-> 
-> Proof of concept:
-> http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
-> union select
-> 1,'./','evil.php',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../../../../../../../etc/passwd
-> 
-> And Now, The SQL Injection vulnerability have been fixed.
-> https://exponentcms.lighthouseapp.com/projects/61783/changesets/c1092f167cc6c78dc8bf9bf149946c5219413df3
-> https://github.com/exponentcms/exponent-cms/commit/c1092f167cc6c78dc8bf9bf149946c5219413df3
+Logic error causing any account reset in Apache StreamPark
 
-Use CVE-2016-7452 for the directory traversal issue fixed by the
-"strpos($this->params['cpi'], '..')" check in
-c1092f167cc6c78dc8bf9bf149946c5219413df3.
 
-Use CVE-2016-7453 for the SQL injection issue fixed by the
-intval($this->params['fid']) call in
-c1092f167cc6c78dc8bf9bf149946c5219413df3.
+Severity: Important
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX3shtAAoJEHb/MwWLVhi21KwP/iyL/R3UtWIyGgsRLgYCHfiI
-UcLYWRA9eGFdm9cAeq+C5lJoyKkxjP6jeExQEE0o0jPR0wHcuya87JP8VYxjla0X
-QrsbtRk0N9bWLT9Hnt/AUXl4kRL4/V2rQu1dfdO5/ZT4/fu708qOyBOetVPPp+IY
-i9LteoDEsTeDs8LtF8vQjC9myYSP3uZVOW5yl1s3AmqbebUWHNYOUn5x0ts1h6mu
-4wAxXq7lBS0Lo/pi1OPBZGSlNJ06rgU6giksivSG9EuVQ2c9vngiJLOyGYFCB5kk
-xSHu4m51Wdg34QVlv3qibWtYp9Ni/72yUNpsYwTGZelh4khIRu7sou5Dy0VFKDCX
-elnFnjeF/zffE1hSTZz7Qf6bzikyHr6t7zfoh1Mob3GEc9BskjAuRcy4vS5D1NxK
-vF/ZXTuMA8fYmD83nY55kdGzOBr3rMV22gC2BpMTfAb/GklRTN9X5Jvr2GYQdIF7
-tiNWiq9XA63CrptuZ2iprItCKFNvEtH3O67U7b5ITAzQc8X66PgX9ZpwKAIJGDV8
-EOCycuetg4zUp7uglB5+dznodH404ky2TV0O45K8Bzt4cvh2CBEMNZwI8A4JLzxt
-IuyGjmVlSYEIDzDwK/VV9lHz0uOne5TOs7l5UVTVwk1LGUFWsD6LPyWAIujSplUl
-S56PM1ifmk+8oJ5eQK/e
-=Bayi
------END PGP SIGNATURE-----
+Versions Affected:
+
+Apache StreamPark 1.0.0 before 2.0.0
+
+
+Description:
+
+
+When the user use apache streampark and successfully logs in, to
+modify his profile, the username will be passed to the server-layer as
+a parameter, but not verified whether the user name is the currently
+logged user and whether the user is legal, This will allow malicious
+attackers to send any username to modify and reset the account,
+
+
+
+Mitigation:
+
+Users of the affected versions should apply one of the following
+
+
+- Upgrade to Apache StreamPark 2.0.0 or later
+
+References:
+https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-46365
+
+
+
+
+Best,
+Huajie Wang
+
+--0000000000009fdd6505f9c6ce7c--
