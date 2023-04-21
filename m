@@ -1,42 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/5
-Message-ID: <CAEih1qWNqz23HeSbKN+9=zShNOjnWD1SHbVQT-Mu0qSLsHRADQ@mail.gmail.com>
-Date: Wed, 1 Mar 2023 16:13:11 +0100
-From: Pietro Borrello <borrello@...g.uniroma1.it>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-1076: Linux Kernel: Type Confusion hardcodes tuntap socket UID to root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/21/3
+Message-ID: <65bdc479-3ce7-ffdd-9747-aeef94e6767d@igalia.com>
+Date: Fri, 21 Apr 2023 16:34:17 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0003
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0003
+------------------------------------------------------------------------
 
-I am disclosing a type confusion in the initialization of TUN/TAP sockets
-which hardcodes their UID to 0, usually the root UID.
-sock_init_data() assumes that the `struct socket` passed in input is
-contained in a `struct socket_alloc` allocated with sock_alloc().
-However, tap_open() and tun_chr_open() pass a `struct socket` embedded
-in a `struct tap_queue` and `struct tun_file` respectively, both
-allocated with sk_alloc().
-This causes a type confusion when issuing a container_of() with
-SOCK_INODE() in sock_init_data() which results in assigning a wrong
-sk_uid to the `struct sock` in input.
+Date reported           : April 21, 2023
+Advisory ID             : WSA-2023-0003
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0003.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0003.html
+CVE identifiers         : CVE-2023-25358, CVE-2022-0108, CVE-2022-32885,
+                          CVE-2023-27932, CVE-2023-27954,
+                          CVE-2023-28205.
 
-Due to the type confusion, both sockets happen to have their UID set
-to 0, i.e. root.
-While it will be often correct, as TUN/TAP devices require
-CAP_NET_ADMIN, it may not always be the case.
-Not sure how widespread is the impact of this, it seems the socket UID
-may be used for network filtering and routing, thus TUN/TAP sockets may
-be incorrectly managed, potentially bypassing network filters based on UID.
-Additionally, it seems the sockets with an incorrect UID may be returned
-to the vhost driver when issuing a get_socket() on a TUN/TAP device in
-vhost_net_set_backend().
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-The proposed patches fix the bugs by adding and using sock_init_data_uid(),
-which explicitly takes a UID as argument, and have been merged:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=66b2c338adce580dfce2199591e65e2bab889cff
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=a096ccca6e503a5c575717ff8a36ace27510ab0a
+CVE-2023-25358
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    A use-after-free vulnerability exists in WebCore::RenderLayer. This
+    issue allows remote attackers to execute arbitrary code or cause a
+    denial of service (memory corruption and application crash) via a
+    crafted web site. This is the same issue than CVE-2023-25360,
+    CVE-2023-25361, CVE-2023-25362 and CVE-2023-25363.
 
-The issue has been assigned CVE-2023-1076.
+CVE-2022-0108
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
+    branch before 2.40.1.
+    Credit to Luan Herrera (@lbherrera_).
+    Impact: An HTML document may be able to render iframes with
+    sensitive user information. Description: This issue was addressed
+    with improved iframe sandbox enforcement.
 
-Best regards,
-Pietro Borrello
+CVE-2022-32885
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
+    branch before 2.40.1.
+    Credit to P1umer(@p1umer) and Q1IQ(@q1iqF).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved validation.
+
+CVE-2023-27932
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
+    branch before 2.40.1.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may bypass Same
+    Origin Policy. Description: This issue was addressed with improved
+    state management.
+
+CVE-2023-27954
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
+    branch before 2.40.1.
+    Credit to an anonymous researcher.
+    Impact: A website may be able to track sensitive user information.
+    Description: The issue was addressed by removing origin information.
+
+CVE-2023-28205
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
+    branch before 2.40.1.
+    Credit to Clément Lecigne of Google's Threat Analysis Group and
+    Donncha Ó Cearbhaill of Amnesty International’s Security Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A use after free
+    issue was addressed with improved memory management.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+April 21, 2023
