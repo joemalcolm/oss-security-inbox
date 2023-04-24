@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/4
-Message-ID: <72a6e741-1420-d21d-11cc-2592598e53f4@canonical.com>
-Date: Fri, 22 Sep 2023 07:42:22 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/24/4
+Message-ID: <01e07723-a942-3faf-824a-17585ab7a6d1@apache.org>
+Date: Mon, 24 Apr 2023 19:03:51 +0000
+From: Andy Seaborne <andy@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-22665: Apache Jena: Exposure of arbitrary execution in script engine expressions. 
 Content-Type: text/plain; charset=utf-8
 
-On 2023-09-22 01:28, Hanno Böck wrote:
-> On Thu, 21 Sep 2023 22:52:50 +0200
-> Solar Designer <solar@...nwall.com> wrote:
-> 
->> However, another maybe-important one also made it into 1.3.2:
->>
->> commit 95ea5226c870449522240ccff26f0b006037c520
->> Author: Vincent Rabaud <vrabaud@...gle.com>
->> Date:   Mon Sep 11 16:06:08 2023 +0200
->>
->>      Fix invalid incremental decoding check.
-> 
-> It does not look to me that this fix is in 1.3.2:
-> https://github.com/webmproject/libwebp/commits/v1.3.2
-> 
-> I've seen this commit as well and have been wondering for a few days if
-> we'll hear about abother libwebp issue soon.
-> 
+Severity: important
 
-We (Ubuntu) didn't include that second commit in our libwebp updates, and I 
-don't believe Red Hat/Fedora did either. If that second commit does have a 
-security impact, it probably needs a different CVE to clear up confusion.
+Description:
 
-Marc.
+There is insufficient checking of user queries in Apache Jena versions 4.7.0 and earlier, when invoking custom scripts. It allows a remote user to execute arbitrary javascript via a SPARQL query.
+
+Credit:
+
+L3yx of Syclover Security Team (reporter)
+
+References:
+
+https://jena.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-22665
+
