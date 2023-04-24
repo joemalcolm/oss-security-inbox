@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/11
-Message-ID: <CAGUWgD88WiJwryGFt9hQe1rEpLX2PKb=ms-8iONvQ2qhDgtigA@mail.gmail.com>
-Date: Tue, 18 Apr 2023 15:59:17 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/24/2
+Message-ID: <f91aa07f-0bb2-1e5f-8ba7-952fec3a1758@apache.org>
+Date: Mon, 24 Apr 2023 14:37:44 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Checking existence of firewalled web servers in Firefox via iframe.onload
+Subject: CVE-2023-27524: Apache Superset: Session validation vulnerability when using provided default SECRET_KEY 
 Content-Type: text/plain; charset=utf-8
 
-In short in Firefox 112, it is possible to check existence
-of firewalled web servers. This doesn't work in Chrome and Chromium 112
-for me.
+Description:
 
-If user A has tcp connection to web server B, then in the
-following html:
+Session Validation attacks in Apache Superset versions up to and including 2.0.1. Installations that have not altered the default configured SECRET_KEY according to installation instructions allow for an attacker to authenticate and access unauthorized resources. This does not affect Superset administrators who have changed the default value for SECRET_KEY config.
 
-<iframe src="http://B" onload="load()" onerror="alert('error')" id="i1" />
+Credit:
 
-the javascript function load() will get executed if B serves
-valid document to A's browser and will not be executed otherwise.
+Naveen Sunkavally (Horizon3.ai) (finder)
 
-This work for both http and https, and for http it is allowed
-B to be IP address. Under some configurations of Apache2,
-it serves http despite having https configured.
+References:
 
-In some sense, this is close to nmap via javascript in a browser.
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-27524
 
-Potential privacy implication is when the attacker guess the
-range of firewalled IPs and check them all in a loop.
-
-For online test:
-https://j.ludost.net/onload1.html
-
--- 
-guninski:  https://j.ludost.net/resumegg.pdf
