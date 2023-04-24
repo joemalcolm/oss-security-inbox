@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["693" "Monday" "1" "June" "2020" "17:54:06" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.77.849.2006011752180.62159@xnncv>" "23" "[oss-security] CVE-2020-13659 QEMU: exec: address_space_map returns NULL without setting length to zero may lead to DoS" nil nil nil "6" "2020060112:24:06" "[oss-security] CVE-2020-13659 QEMU: exec: address_space_map returns NULL without setting length to zero may lead to DoS" (number mark "U       ppandit@redh Jun  1   23/693   " thread-indent "\"[oss-security] CVE-2020-13659 QEMU: exec: address_space_map returns NULL without setting length to zero may lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13659 QEMU: exec: address_space_map returns NULL without setting length to zero may lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28252 invoked by uid 550); 1 Jun 2020 12:24:30 -0000
+Received: (qmail 16149 invoked by uid 550); 24 Apr 2023 14:07:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28232 invoked from network); 1 Jun 2020 12:24:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1591014258;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=6pspZxCZu/eaZMKJEDsSypxy7mdE+Ga+l0C0m3MmPJ8=;
-	b=SramXDoAk3SEp7Y2gDVDCEgZ2K7A3a3NmhLzVp3NTo3fuHpv2gMk3cK91A7+FGlRSBT+ea
-	Iih1zVWypKhSGmpmvl3zlGrezywFjPqf/li9p3qZX/z2HeY+FJUYav3bY7j3XWiChXIQaC
-	Fl8dFgOHu09SDSNiXn/5ziiWfGxK4sg=
-X-MC-Unique: DQbGkxwZMYCyyrbISqQhvA-1
-Date: Mon, 1 Jun 2020 17:54:06 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: Alexander Bulekov <alxndr@bu.edu>
-Message-ID: <nycvar.YSQ.7.77.849.2006011752180.62159@xnncv>
+Received: (qmail 3791 invoked from network); 24 Apr 2023 13:44:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682343880; x=1684935880;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8JrkEhvvkfXfwtw3roKGtXwCDPH7M6gVBKqP9xSVepo=;
+        b=bDKZbN37nK0uiHtUgqGJAWJbLKoX6olhzfHAx6fdkG685lplrtqMRb/ML2X4RbjxXM
+         fFh+ptV7AvSI30gNlUdzKSR2d9kln3IilR6MSS/JlHVwHcAjBTW5dlH4IH3AAV8CsqSS
+         2isY3fT7AJfVPpMFFtGcM1JsiwTl8pyXbXzp4LyeJPdzVCjYqq+NS+teCHWas2CdAkhO
+         lwLe+TIjNe2lsismy3IGhtidIx/Okyy1d3EWezesGns/SQ2mDjhWu2UjMExcDPba45kW
+         Y9dNd5Zq4JgvVrSs0rmV9wCmU0krkZRqSpab+FdKYX9riXYxMg02EqIyLaAYWvRnAU95
+         RoDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682343880; x=1684935880;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8JrkEhvvkfXfwtw3roKGtXwCDPH7M6gVBKqP9xSVepo=;
+        b=Tfg2vUvFdYe0XsCqCwe7UtolpM/Qolb+xZwGQZpbxub8zsMkWx2yBs1Qv2XxiRXz4U
+         CgrbkCxwDCIYzHED0eQqxzB+Clno5aFlH4OElwcueckjDZWkbjh1+Idn4YoO+/lz8lif
+         QtVsRECKWdiMFidV/hTNONJoGlYBQKOun9AOzuVFZ57c6q1UQsK+ds8A72+fEt78k4+0
+         W+TKh+Ngw9wmpxexYL3dEkTbPVXlDR/ArmKi6h6Bu1i3Jxf1sJLL7KX/PZ2YqEtgqORk
+         zvDttKZvhQ51CTaib2eUnOWcsaZdaJIcvj8vgGj4aI2AV+Wb9or9qPVl1DCgI/jYwINT
+         hx9w==
+X-Gm-Message-State: AAQBX9fLNpyNkShEROYYVJ6GwSOI9DLPsTZYuNlu9J+uayD43VNqbcAo
+	3oLShSoOgzgTLlau+rUxo8vOpjvEgbJdDt6lCw6DWk+FFzCzUg==
+X-Google-Smtp-Source: AKy350YYdgLaevf7PsTzcU7fPjJvqImqIjv3KDrsF6spO/xym9yEUJQa+WjRodCQz6ivO8rSjMLyXMaj0r+c0YaVlFU=
+X-Received: by 2002:a17:90b:19d5:b0:246:bb31:e848 with SMTP id
+ nm21-20020a17090b19d500b00246bb31e848mr13702394pjb.36.1682343879505; Mon, 24
+ Apr 2023 06:44:39 -0700 (PDT)
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] CVE-2020-13659 QEMU: exec: address_space_map returns NULL without
- setting length to zero may lead to DoS
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Mon, 24 Apr 2023 16:43:29 +0300
+Message-ID: <CAGUWgD8jWfhdA5+o_BJN-Mgh0+4x7yYPDcjb+Bve14b9Hxnp3A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Real world vulnerabilities of CWE-1077: Floating Point Comparison
+ with Incorrect Operator?
 
-   Hello,
+Are there real world examples of vulnerabilities of this:
 
-A NULL pointer dereference issue was found in the MegaRAID SAS 8708EM2 
-emulator of the QEMU. This issue occurs because the address_space_map() API 
-while mapping physical memory into host's virtual address space may return 
-NULL, without setting the length parameter to zero(0). A guest user/process 
-may use this flaw to crash the QEMU process on the host resulting in DoS 
-scenario.
+https://cwe.mitre.org/data/definitions/1077.html
+CWE-1077: Floating Point Comparison with Incorrect Operator
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg07313.html
+This issue can prevent the product from running reliably. If the
+relevant code is reachable by an attacker, then this reliability
+problem might introduce a vulnerability.
 
-Reference:
-----------
-   -> https://bugs.launchpad.net/qemu/+bug/1878259
+One simple example in python:
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+>>> A=(0.1+0.2)+0.3;B=0.1+(0.2+0.3);(A==B,A-B,A,B)
+(False, 1.1102230246251565e-16, 0.6000000000000001, 0.6)
