@@ -1,64 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/11
-Message-ID:  <MW2PR00MB0444E2AA4D31DB0021B8AE2FA862A@MW2PR00MB0444.namprd00.prod.outlook.com>
-Date: Wed, 19 Apr 2023 16:55:06 +0000
-From: "Jonathan Bar Or (JBO)" <jobaror@...rosoft.com>
-To: Carlos López <clopez@...e.de>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: [EXTERNAL] Re: ncurses fixes upstream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/25/1
+Message-Id: <E1prHNo-0005by-4j@xenbits.xenproject.org>
+Date: Tue, 25 Apr 2023 12:02:56 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 430 v2 (CVE-2022-42335) - x86 shadow paging arbitrary pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Yes, now that the cat is out of the bag there's no point - you can find some POCs here (not every find is covered by a POC, FYI):
-https://drive.google.com/drive/u/0/folders/1XZiHbH7W7is8cwTu7DKrpwBTYuYfRZqE
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Note not all of them work on Linux - some are macOS focused too.
+            Xen Security Advisory CVE-2022-42335 / XSA-430
+                               version 2
 
-As for Taviso's remark - obviously using "iprog", "rf" or "if" capabilities can be used maliciously if an attacker is able to affect root's terminfo files (directly or with env-vars), but those capabilities are only used by a bunch of programs (e.g. reset, tput and others). Normally putting an "iprog" and calling another ncurses using binary (e.g. top) won't run that program.
-To be honest, we focused on EoP scenarios, and specifically macOS. macOS is the most sensitive here, since "top" is a SUID binary and doesn't sanitize TERMINFO (or HOME, which can be used too). The bus we found are several memory corruption issues that happen during terminfo db parsing, as well as ncurses functions (e.g. tparm).
+             x86 shadow paging arbitrary pointer dereference
 
-JBO
+UPDATES IN VERSION 2
+====================
 
------Original Message-----
-From: Carlos López <clopez@...e.de> 
-Sent: Wednesday, April 19, 2023 8:11 AM
-To: Jonathan Bar Or (JBO) <jobaror@...rosoft.com>
-Cc: oss-security@...ts.openwall.com
-Subject: [EXTERNAL] Re: [oss-security] ncurses fixes upstream
+Public release.
 
-[You don't often get email from clopez@...e.de. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+ISSUE DESCRIPTION
+=================
 
-Hi,
+In environments where host assisted address translation is necessary
+but Hardware Assisted Paging (HAP) is unavailable, Xen will run guests
+in so called shadow mode.  Due to too lax a check in one of the hypervisor
+routines used for shadow page handling it is possible for a guest with a PCI
+device passed through to cause the hypervisor to access an arbitrary pointer
+partially under guest control.
 
-On 12/4/23 22:40, Jonathan Bar Or (JBO) wrote:
-> Hello oss-security,
->
-> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
-> They are now fixed at commit 20230408 - see details here 
-> (https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Finv
-> isible-island.net%2Fncurses%2FNEWS.html%23index-t20230408&data=05%7C01
-> %7Cjobaror%40microsoft.com%7C0102d7187e894898280408db40e85af7%7C72f988
-> bf86f141af91ab2d7cd011db47%7C1%7C0%7C638175138959984222%7CUnknown%7CTW
-> FpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6
-> Mn0%3D%7C3000%7C%7C%7C&sdata=uRH%2FEXS1rhbBT9vsPN92PjfwjFw9UNLehU9ksP6
-> TX8s%3D&reserved=0) A CVE was assigned (CVE-2023-29491) - it's still 
-> under a "reserved" status.
+IMPACT
+======
 
-Are there any plans to disclose any proofs of concept to test these issues? From the distro side these are not only useful to check which ncurses snapshots we need to fix, but also for our QA teams to test the update and detect regressions.
+Guests running in shadow mode and having a PCI device passed through may be
+able to cause Denial of Service and other problems, escalation of privilege
+cannot be ruled out.
 
-For example, we are not sure if the build option `--disable-root-environ` does anything to mitigate the issues.
+VULNERABLE SYSTEMS
+==================
 
-> How can we ensure those fixes get deployed upstream, in major Linux distributions?
-> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
->
-> Thanks!
->                               JBO
+Only Xen version 4.17 is vulnerable.
 
-For what is worth, we have not been contacted, as far as I can tell.
+Only x86 systems are vulnerable.  The vulnerability can be leveraged only
+by HVM guests running with shadow paging and having a PCI device passed
+through.
 
-Best,
-Carlos
+MITIGATION
+==========
 
---
-Carlos López
-Security Engineer
-SUSE Software Solutions
+Not passing through PCI devices to HVM guests will avoid the vulnerability.
+
+Running HVM guests only in HAP (Hardware Assisted Paging) mode will also
+avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Roger Pau Monné of XenServer.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa430.patch           xen-unstable - Xen 4.17.x
+
+$ sha256sum xsa430*
+c861cabdf546ec7583f2193f9c4f8a62579047315e5fe9eca3e9e944b67ca852  xsa430.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmRHr/4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ6UsH/ib0ei76XtojIl9eaNCPoAotcGBXLDQScV133z5e
+7UhW3JPUEG79+p22ACL52Km7wVtWwuL5QzbBDJaw47hTD1IwvoOTQ8Dx+KwyZGsK
+H8VW8WM70XyqxRJVfA+sEIEfRnxXKfWz6qWV5n2085XzFFwbF9c+ZZ6NafGv/Jd3
+75eUwyGaR0o4YEnzKpLzqYFihK56YyJmZ0+rdYYydHKUy+oVcWjrNEh41Xa6lCJX
+OdZ60inTu8rizItE+xEsKLatvoKVrO9q/zhAtLm+iWldf8PTgY9tq4S89DRMD/BN
+uYIAL1xBCS2HC/IyUXI63PMwHg6fYzq+0JLjtYV0IYDfYE8=
+=tInZ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa430.patch" of type "application/octet-stream" (2638 bytes)
