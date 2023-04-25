@@ -1,116 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/6
-Message-ID: <20231016080850.GF10758@suse.de>
-Date: Mon, 16 Oct 2023 10:08:50 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/25/2
+Message-ID: <xmqqa5yv3n93.fsf@gitster.g>
+Date: Tue, 25 Apr 2023 10:06:16 -0700
+From: Junio C Hamano <gitster@...ox.com>
+To: git@...r.kernel.org
+Cc: Linux Kernel <linux-kernel@...r.kernel.org>, git-packagers@...glegroups.com, oss-security@...ts.openwall.com, git-security@...glegroups.com
+Subject: [ANNOUNCE] Git v2.40.1 and friends
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A maintenance release Git v2.40.1, together with releases for older
+maintenance tracks v2.39.3, v2.38.5, v2.37.7, v2.36.6, v2.35.8,
+v2.34.8, v2.33.8, v2.32.7, v2.31.8, and v2.30.9, are now available
+at the usual places.
 
-Regardless of your viability of subscription status I think we also
-(sadly) have to consider current geopolitical issues here.
+These maintenance releases are to address security issues identified
+as CVE-2023-25652, CVE-2023-25815, and CVE-2023-29007.  They affect
+ranges of existing versions and users are encouraged to upgrade.
 
-As far as I understand, US companies and US citizens are not permitted
-to work with Chinese organizations and/or Chinese nationals.
+The tarballs are found at:
 
-Due to US companies subscribed on the lists this would then likely lead to
-conflicts of interest.
+    https://www.kernel.org/pub/software/scm/git/
 
+The following public repositories all have a copy of the 'v2.40.1'
+tag, as well as the tags for older maintenance tracks listed above:
 
-I have no good idea on how to approach this, perhaps someone else has.
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
+The addressed issues are:
 
-Ciao, Marcus
+ * CVE-2023-25652:
 
-On Mon, Oct 16, 2023 at 09:39:29AM +0800, Aron Xu wrote:
-> Hi,
-> 
-> I'm requesting linux-distros mailing list membership on behalf of
-> openEuler[1], a Linux distro that's actively maintained since 2020. It is
-> hosted by OpenAtom Foundation[2] with many forms of support available from
-> Huawei, Kylin, UnionTech, etc. It is publicly available, free to use and open
-> to contribution.
-> 
-> Here are the responses to the membership criteria:
-> 
-> > 1. Be an actively maintained Unix-like operating system distro with
-> >    substantial use of Open Source components
-> > 2. Have a userbase not limited to your own organization
-> 
-> The distro and its commercial derivatives have more than 4.5 million accumulated
-> deployments on bare metal (since 2020), and even more if considering public and
-> private cloud instances. Joining linux-distros will make a real difference for
-> patching important issues for users.
-> 
-> > 3. Have a publicly verifiable track record, dating back at least 1 year
-> >    and continuing to present day, of fixing security issues (including
-> >    some that had been handled on (linux-)distros, meaning that membership
-> >    would have been relevant to you) and releasing the fixes within 10 days
-> >    (and preferably much less than that) of the issues being made public
-> >    (if it takes you ages to fix an issue, your users wouldn't
-> >    substantially benefit from the additional time, often around 7 days and
-> >    sometimes up to 14 days, that list membership could give you)
-> 
-> The distribution has a complete public record of security fixes[3]. Although
-> there is no defined policy on enforcing release time of security patches
-> (yet), the actual timeline in execution is 7 days for high impact issues and
-> 14 days for medium ones.
-> 
-> > 4. Not be (only) downstream or a rebuild of another distro (or else we
-> >    need convincing additional justification of how the list membership
-> >    would enable you to release fixes sooner, presumably not relying on the
-> >    upstream distro having released their fixes first?)
-> 
-> The distribution is not a downstream or a rebuild of another distro. There
-> are confusions on this question (especially Wikipedia pages) because before
-> the project existed, there is an internal-only distro named "Euler OS" which
-> is RHEL-based. When openEuler project is found the distribution is rebuilt and
-> maintained from scratch, and there are also a few flavors of kernel packages
-> with different patchsets. There are also a few commercial and/or community
-> downstream distros of openEuler, too.
-> 
-> > 5. Be a participant and preferably an active contributor in relevant
-> >    public communities (most notably, if you're not watching for issues
-> >    being made public on oss-security, which are a superset of those that
-> >    had been handled on (linux-)distros, then there's no valid reason for
-> >    you to be on (linux-)distros)
-> 
-> openEuler has been actively working on patching upstream issues and there is a
-> complete tracking and triaging of all issues with a CVE number[4]. The team
-> is following oss-security's information closely, although weren't actively
-> participating in discussions.
-> 
-> > 6. Accept the list policy (see above)
-> > 7. Be able and willing to contribute back (see above), preferably in
-> >    specific ways announced in advance (so that you're responsible for a
-> >    specific area and so that we know what to expect from which member),
-> >    and demonstrate actual contributions once you've been a member for a
-> >    while
-> 
-> Yes we accept the list policy and are willing to contribute back in ways we
-> are able to.
-> 
-> > 8. Be able and willing to handle PGP-encrypted e-mail
-> > 9. Have someone already on the private list, or at least someone else who
-> >    has been active on oss-security for years but is not affiliated with
-> >    your distro nor your organization, vouch for at least one of the people
-> >    requesting membership on behalf of your distro (then that one
-> >    vouched-for person will be able to vouch for others on your team, in
-> >    case you'd like multiple people subscribed)
-> 
-> Besides my role at openEuler, I’m also a part of the Debian Security Team,
-> though I’m not subscribed to linux-distros since there are already people
-> representing. If this application is accepted, I would like to step up to be
-> the representative of openEuler.
-> 
-> 
-> Regards,
-> Aron
-> 
-> [1]https://www.openeuler.org/
-> [2]https://www.openatom.org/
-> [3]https://www.openeuler.org/en/security/security-bulletins/
-> [4]https://www.openeuler.org/en/security/cve
+   By feeding specially crafted input to `git apply --reject`, a
+   path outside the working tree can be overwritten with partially
+   controlled contents (corresponding to the rejected hunk(s) from
+   the given patch).
 
+ * CVE-2023-25815:
+
+   When Git is compiled with runtime prefix support and runs without
+   translated messages, it still used the gettext machinery to
+   display messages, which subsequently potentially looked for
+   translated messages in unexpected places. This allowed for
+   malicious placement of crafted messages.
+
+ * CVE-2023-29007:
+
+   When renaming or deleting a section from a configuration file,
+   certain malicious configuration values may be misinterpreted as
+   the beginning of a new configuration section, leading to arbitrary
+   configuration injection.
+
+Credit for finding CVE-2023-25652 goes to Ry0taK, and the fix was
+developed by Taylor Blau, Junio C Hamano and Johannes Schindelin,
+with the help of Linus Torvalds.
+
+Credit for finding CVE-2023-25815 goes to Maxime Escourbiac and
+Yassine BENGANA of Michelin, and the fix was developed by Johannes
+Schindelin.
+
+Credit for finding CVE-2023-29007 goes to André Baptista and Vítor Pinho
+of Ethiack, and the fix was developed by Taylor Blau, and Johannes
+Schindelin, with help from Jeff King, and Patrick Steinhardt.
+
+Thanks.
