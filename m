@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2445" "Sunday" "30" "October" "2016" "14:29:17" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdTySquYm3M=mk+oVhiYUR+_np3=atHDMryVu6znwJ_0EQ@mail.gmail.com>" "49" "[oss-security] CVE request - integer overflow and crash parsing regex in mujs" nil nil nil "10" "2016103017:29:17" "[oss-security] CVE request - integer overflow and crash parsing regex in mujs" (number mark "U       gustavo.grie Oct 30   49/2445  " thread-indent "\"[oss-security] CVE request - integer overflow and crash parsing regex in mujs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5280 invoked by uid 550); 30 Oct 2016 17:29:31 -0000
+Received: (qmail 19723 invoked by uid 550); 25 Apr 2023 17:08:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,84 +7,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5262 invoked from network); 30 Oct 2016 17:29:30 -0000
+Received: (qmail 17972 invoked from network); 25 Apr 2023 17:06:29 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=7YeKseJl61pgakr1luLWEqAzPaK2VfcBy4zzp+Tja7w=;
-        b=FekimmbvtT5igHGOk4mQ2gi0JLNK4yu5cqYDzy6KRa62lnf5svTeVP/cLG+3lK3MGS
-         Py497AXZrR5yyLTr78v/9ifJ4wjvq6HkaUDI/og3jaU29+7ud5dCJelXU0Iu8z4QeH1p
-         0BmkEwnPMy2hjMHVp/UJattRhq+jEVe48S7EX4bEuSbNNa1xu4a+O1D0mWAg/qVDBxL0
-         KhsXRWKuWn9lu2MsKj0wy3mlYWL6stXwXqv+TTRpqbpem6azXVmdJJdGgp8A23fMW73r
-         It+A12+IJLIOTlEPIV3DL2aLYpPnLdMaEbXvVfqjdoQ+M8z6JOLcgunHATNtiMYivXUR
-         bn3w==
+        d=gmail.com; s=20221208; t=1682442377; x=1685034377;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KWly5LOsfjOzFS+rOBQshUHGQRCOCU7+ddGEcJEuofA=;
+        b=cqSYS5L/Ak25YQ+UZVB9IkSCJnI+yYe6uxjQjtMWcXnzMIpgi70rTlLBFqRZkTnUfV
+         GUAI0NL75eju/cXcMgy4el9iLRe09f3HLlPSxRX1bX6asJzOWbP+5YmKLm0dhPXfxqXe
+         iBJQOk9cXJc+MBNkTJ9ej+pOPwIEkDGHeqotmKV7dO57gIfiH0PD6fHuTlxsbs9gl0+w
+         f9kumNpg5JpBODF3C6SH8dE9vuCjUFJc2JQjpSU5QRWCPHHsp+GQ9myjIxgMLylxUWfA
+         wnul6Mnxc/V8eTnrJ46G+6fIL1fGbxeC8gdlG5oI3HZMBi4G5PM6dcwv1Vfo0SiloE5h
+         fKAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=7YeKseJl61pgakr1luLWEqAzPaK2VfcBy4zzp+Tja7w=;
-        b=AkQPmkOOzYobWkKyhROuH5dyjVhBX+t+/yuzsIEjwAJK0BCNOT95Ec08NuOHqOAXO+
-         gse8dBFz+EEXYJZoj+lY16M0Vk6OOgZkP3Btg4ZG6QMyjuigh+f+GQBHoOc98YWcwkqM
-         v1POnIb4IRBKVBYLc+ZSlfGR+/Fe5oaCvpSv0WXMhuYEEcwX9I26XN7vt53N92dqExid
-         /CRz7kVqEKG7HtLIQ9WMsSx8MjWno89zJTfwvtwLfoiV9LwcX3WHtJmb8mpPvYxocGwI
-         djcCeStYJt8I4pNB7RCdT2xswcRXhiQ4F4QBooqnXl+0Sb2UVlhBLhfjsWgji/Ufhs0L
-         iGUQ==
-X-Gm-Message-State: ABUngvfrfWV4u6XIL+KGQbUDLF1hx7q2C53jQ6zAunZkOYSotleYU3RwTDE35fwAWrTE7EJWAFe8YIlwFPzjGw==
-X-Received: by 10.36.120.76 with SMTP id p73mr6769214itc.45.1477848558173;
- Sun, 30 Oct 2016 10:29:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682442377; x=1685034377;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KWly5LOsfjOzFS+rOBQshUHGQRCOCU7+ddGEcJEuofA=;
+        b=VvicxXyk3ujA59brYHXguFhIjvhwhuU4wvy2gTw8dQwKtZ30DAi4g5x4cdyX7UgUZO
+         LxktTp7iCb+sdevaKmw0xiwi3l0DNj55NptOtiWNHQiNydPJi9G4RwzOo7nxDav20ZI7
+         kX3afI311dzQSHbUE3YNQbhMR6OdRnhXlkwEK7X6hEed1Dq0BwBngygemv842l733CP3
+         ytmKe4igbIo3Zdlx+KUlP6wStCnAHWmkjIUjQ09M9b/69aHN3OF+DfkMtMZApkFC0whX
+         PzShhTPu/dlHbz2p4SkYD9uF6w0xatjEwVvLk15LJL2uMB3ylPvTTDpWTiK1RwRp+k2d
+         R3xQ==
+X-Gm-Message-State: AAQBX9dVJCPdkgepiblQ319aue2hkuUuUjNXUgqwo8uvDBSayxaQ6otC
+	7dzK2jL9emdSkrVfdq8LlDY=
+X-Google-Smtp-Source: AKy350Yv/is3ZvWythLhOTpcul0kCtTQTQ3YaV11KQXNlH7pU738lDHbO9qBksIGHWD61j6HJKWVAA==
+X-Received: by 2002:a05:6a00:1882:b0:63b:59a7:eafa with SMTP id x2-20020a056a00188200b0063b59a7eafamr26004675pfh.25.1682442377158;
+        Tue, 25 Apr 2023 10:06:17 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+    git-packagers@googlegroups.com, oss-security@lists.openwall.com,
+    git-security@googlegroups.com
+Date: Tue, 25 Apr 2023 10:06:16 -0700
+Message-ID: <xmqqa5yv3n93.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Sun, 30 Oct 2016 14:29:17 -0300
-Message-ID: <CACn5sdTySquYm3M=mk+oVhiYUR+_np3=atHDMryVu6znwJ_0EQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114ab4705783c90540186e75
-Subject: [oss-security] CVE request - integer overflow and crash parsing regex in mujs
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] [ANNOUNCE] Git v2.40.1 and friends
 
---001a114ab4705783c90540186e75
-Content-Type: text/plain; charset=UTF-8
+A maintenance release Git v2.40.1, together with releases for older
+maintenance tracks v2.39.3, v2.38.5, v2.37.7, v2.36.6, v2.35.8,
+v2.34.8, v2.33.8, v2.32.7, v2.31.8, and v2.30.9, are now available
+at the usual places.
 
-Hi,
+These maintenance releases are to address security issues identified
+as CVE-2023-25652, CVE-2023-25815, and CVE-2023-29007.  They affect
+ranges of existing versions and users are encouraged to upgrade.
 
-It seems there is an integer overflow somewhere affecting function
-js_regcomp (line 843 in regexp.c) in mujs. To reproduce (tested in revision
-5c337af4b3df80cf967e4f9f6a21522de84b392a):
+The tarballs are found at:
 
-$ echo '(/.{135303839468541,43}/);' | valgrind --quiet ./build/mujs
-==29376== Argument 'size' of function malloc has a fishy (possibly
-negative) value: -5152
-==29376==    at 0x4C2AB8D: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==29376==    by 0x415FCC: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x41D127: js_newregexp (in
-/home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
-==29376==
-==29376== Invalid write of size 2
-==29376==    at 0x415FE1: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x41D127: js_newregexp (in
-/home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
-==29376==  Address 0x2 is not stack'd, malloc'd or (recently) free'd
-==29376==
-==29376==
-==29376== Process terminating with default action of signal 11 (SIGSEGV)
-==29376==  Access not within mapped region at address 0x2
-==29376==    at 0x415FE1: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x41D127: js_newregexp (in
-/home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
+    https://www.kernel.org/pub/software/scm/git/
 
-This test case was found using QuickFuzz. Please assign CVE is suitable.
+The following public repositories all have a copy of the 'v2.40.1'
+tag, as well as the tags for older maintenance tracks listed above:
 
---001a114ab4705783c90540186e75--
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
+
+The addressed issues are:
+
+ * CVE-2023-25652:
+
+   By feeding specially crafted input to `git apply --reject`, a
+   path outside the working tree can be overwritten with partially
+   controlled contents (corresponding to the rejected hunk(s) from
+   the given patch).
+
+ * CVE-2023-25815:
+
+   When Git is compiled with runtime prefix support and runs without
+   translated messages, it still used the gettext machinery to
+   display messages, which subsequently potentially looked for
+   translated messages in unexpected places. This allowed for
+   malicious placement of crafted messages.
+
+ * CVE-2023-29007:
+
+   When renaming or deleting a section from a configuration file,
+   certain malicious configuration values may be misinterpreted as
+   the beginning of a new configuration section, leading to arbitrary
+   configuration injection.
+
+Credit for finding CVE-2023-25652 goes to Ry0taK, and the fix was
+developed by Taylor Blau, Junio C Hamano and Johannes Schindelin,
+with the help of Linus Torvalds.
+
+Credit for finding CVE-2023-25815 goes to Maxime Escourbiac and
+Yassine BENGANA of Michelin, and the fix was developed by Johannes
+Schindelin.
+
+Credit for finding CVE-2023-29007 goes to André Baptista and Vítor Pinho
+of Ethiack, and the fix was developed by Taylor Blau, and Johannes
+Schindelin, with help from Jeff King, and Patrick Steinhardt.
+
+Thanks.
