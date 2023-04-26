@@ -1,71 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/2
-Message-ID: <20231016014814.GA31197@openwall.com>
-Date: Mon, 16 Oct 2023 03:48:14 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/26/1
+Message-ID: <ZEj04rd7LMiLwsKH@kasco.suse.de>
+Date: Wed, 26 Apr 2023 11:54:38 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: VMware Security Response Center <security@...are.com>
-Subject: CVE-2023-20867: open-vm-tools: Authentication Bypass vulnerability in the vgauth module
+Subject: Warpinator: Remote file deletion vulnerability (CVE-2023-29380)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi list,
 
-This was brought to linux-distros on June 6 with "scheduled public
-disclosure on June 13th, 2023."  There's a VMware security advisory that
-says it was published on that date:
+this report is about a remote file deletion vulnerability in Warpinator
+[1].
 
-https://www.vmware.com/security/advisories/VMSA-2023-0013.html
+Introduction
+============
 
-and patches are available at:
+I already reviewed and found issues in Warpinator a while ago [2]. The
+openSUSE packager for Warpinator asked me for a follow-up review after
+updating to upstream release 1.4.3 which contained the fixes for
+CVE-2022-42725.
 
-https://github.com/vmware/open-vm-tools/tree/CVE-2023-20867.patch
+In the course of the review I found another vulnerability which is
+described in detail in the next section.
 
-but the issue was wrongly never brought to oss-security (or at least I
-couldn't find it) - so I am correcting this now.
+The Vulnerability
+=================
 
-Quoting from the linux-distros message:
+In the code base of version 1.4.3 the sender of a file also sends a list
+of `top_dir_basenames` to the peer. While there is now a verification of
+the `relative_path` on the receiving side, the `top_dir_basenames` are
+not verified at all. In `FileReceiver.__init__()` the following code is
+found:
 
-> Description
-> ==============================================================
-> CVE-2023-20867: VMware Tools contains an Authentication Bypass
-> vulnerability in the vgauth module. VMware has evaluated the severity
-> of this issue to be in the Low severity range with a maximum CVSSv3.1
-> base score of 3.9 - CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N.
-> 
-> Known Attack Vectors
-> ==============================================================
-> A fully compromised ESXi host can force VMware Tools to fail to
-> authenticate host-to-guest operations, impacting the confidentiality
-> and integrity of the virtual machine.
+```
+    for name in op.top_dir_basenames:
+        try:
+            path = os.path.join(self.save_path, name)
+            if os.path.isdir(path): # file not found is ok
+                shutil.rmtree(path)
+            else:
+                os.remove(path)
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            logging.warning("Problem removing existing files.  Transfer may not succeed: %s" % e)
+```
 
-Quoting from the GitHub URL above:
+If the sender is passing a string like "../" as part of
+`top_dir_basenames` then this code will delete the complete parent
+directory of the download directory (by default ~/Warpinator) and thus
+the complete home directory of the receiving party. Any other files
+under control of the receiving party are similarly endangered by this
+remote DoS / integrity attack.
 
-> The issue has been fixed in the open-vm-tools version 12.2.5 released on
-> June 13, 2023.
-> 
-> The following patch provided to the open-vm-tools community can be used
-> to apply the security fix to previous open-vm-tools releases.
-> 
-> For releases 12.2.0, 12.1.5, 12.1.0, 12.0.5, 12.0.0, 11.3.5, 11.3.0
-> 
->     2023-20867-Remove-some-dead-code.patch
-> 
-> For releases 11.1.0, 11.1.5, 11.2.0, 11.2.5
-> 
->     2023-20867-Remove-some-dead-code-1110-1125.patch
-> 
-> For releases 11.0.0, 11.0.5
-> 
->     2023-20867-Remove-some-dead-code-1100-1105.patch
-> 
-> For releases 10.3.0, 10.3.5, 10.3.10
-> 
->     2023-20867-Remove-some-dead-code-1030-10310.patch
-> 
-> The patches have been tested against the above open-vm-tools releases.
-> Each applies cleanly with:
-> 
-> git am        for a git repository.
-> patch -p2     in the top directory of an open-vm-tools source tree.
+This can happen automatically if the receiving side is running
+Warpinator in trusted mode, both parties share the same non-default
+group key and unconfirmed file overwrites are allowed. If this is not
+the case then the receiving side will see a confirmation popup like
 
-Alexander
+    X wants to send `../´
+
+This message might not be very suspecting for an average end user. Other
+strings can be used here as well like an absolute path to the user's
+home directory, which could be interpreted as correct, or overlooked.
+
+I investigated whether the fact that this allows to delete the download
+directory completely could lead to a follow-up vulnerability to allow
+overwriting files in other paths again. This seems not to be possible
+though.  The check of the `relative_path()` is stable enough to prevent
+this even if the download directory does not exist at all.
+
+Affectedness
+============
+
+The problematic handling of `top_dir_basenames` was first introduced in
+upstream version 1.0.7.
+
+Bugfixes
+========
+
+The remote file deletion vulnerability has been fixed upstream via
+commit 9aae768 [3].
+
+The fact that this vulnerability escaped both upstream's and my own
+review efforts during handling of CVE-2022-4272 confirmed earlier
+concerns I had about relying on a single line of defense in the
+Warpinator codebase. I recommended to upstream to use an isolation
+technique like Linux mount namespaces to prevent escapes from the
+destined download directory. In the light of this new security issue I
+additionally or alternatively recommended a redesign of the codebase to
+better separate trusted and untrusted codepaths.
+
+Upstream used the 90 days embargo time we offered to implement isolation
+mechanisms either based on Linux namespaces through the Bubblewrap tool,
+or based on the Linux kernel's landlock security module. Only if none of
+both can be established, Warpinator will run in a legacy mode. In
+this case the user will be warned about the weakened security.
+
+The new Warpinator major version release 1.6.0 contains both the bugfix
+for this the remote file deletion issue as well as the added security
+layers.
+
+Timeline
+========
+
+2023-01-25: I reported the newly found issue to upstream and offered
+            coordinated disclosure.
+2023-03-08: Upstream shared the core changes listed above with us, I
+            reviewed them and gave feedback.
+2023-04-05: I received CVE-2023-29380 from Mitre to track the file
+            deletion issue and shared it with upstream.
+2023-04-25: Upstream needed additional time for testing and integration.
+            The 90 days maximum embargo period we offer ends and with
+	    the 1.6.0 release being available we agreed on the
+	    publication of all available information.
+
+References
+==========
+
+[1]: https://github.com/linuxmint/warpinator
+[2]: https://seclists.org/oss-sec/2022/q4/38
+[3]: https://github.com/linuxmint/warpinator/commit/9aae768522b7bbb09c836419893802a02221d663
+
+Best Regards
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
