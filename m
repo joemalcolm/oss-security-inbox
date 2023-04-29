@@ -1,44 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/03/1
-Message-ID: <1420fa80-17ba-e9fa-c6f9-5c917f2b6af3@apache.org>
-Date: Tue, 3 Jan 2023 17:50:57 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/29/1
+Message-ID: <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+Date: Sat, 29 Apr 2023 12:04:07 +0200
+From: Stig Palmquist <stig@...g.io>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45143 Apache Tomcat - JsonErrorReportValve injection
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-45143 Apache Tomcat - JsonErrorReportValve injection
 
-Severity: Low
+- CVE-2023-31484 for CPAN.pm 
+- CVE-2023-31485 for GitLab::API::v4 
+- CVE-2023-31486 for HTTP::Tiny
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Apache Tomcat 10.1.0-M1 to 10.1.1
-Apache Tomcat 9.0.40 to 9.0.68
-Apache Tomcat 8.5.83
-
-Description:
-The JsonErrorReportValve did not escape the type, message or description 
-values. In some circumstances these are constructed from user provided 
-data and it was therefore possible for users to supply values that 
-invalidated or manipulated the JSON output.
-
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 10.1.2 or later
-- Upgrade to Apache Tomcat 9.0.69 or later
-- Upgrade to Apache Tomcat 8.5.84 or later
-
-Credit:
-This issue was identified by the Apache Tomcat security team.
-
-History:
-2023-01-03 Original advisory
-
-References:
-[1] https://tomcat.apache.org/security-10.html
-[2] https://tomcat.apache.org/security-9.html
-[3] https://tomcat.apache.org/security-8.html
+On 2023-04-18 17:46, Stig Palmquist wrote:
+> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
+> standalone on CPAN, does not verify TLS certs by default. Users must
+> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
+> 
+> We grepped trough CPAN to find distributions using HTTP::Tiny that
+> didn't specify cert verification behaviour, possibly exposing users to
+> mitm attacks. Here are some examples with patches:
+> 
+> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
+>   without verifying server certs. Fixed in v2.35-TRIAL.
+>   https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
+> 
+> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
+>   https://github.com/bluefeet/GitLab-API-v4/pull/57
+> 
+> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
+>   information to a network attacker.
+>   https://github.com/sanko/Finance-Robinhood/pull/6
+> 
+> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
+>   attacker.
+>   https://github.com/pplu/aws-sdk-perl/pull/426
+> 
+> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
+>   attacker.
+>   https://github.com/pplu/cloudhealth-api-perl/pull/2
+> 
+> ... and more. We have generated a list of over 300 potentially affected
+> CPAN distributions.
+> 
+> More info in our blog post:
+> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
+> 
+> -- 
+> Stig Palmquist <stig@...g.io>
 
