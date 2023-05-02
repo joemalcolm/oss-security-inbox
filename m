@@ -1,53 +1,149 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/17/5
-Message-ID: <20230317194102.wvso2ex65fuwbukg@jwilk.net>
-Date: Fri, 17 Mar 2023 20:41:02 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/02/3
+Message-ID: <ecfc25d3-9c2f-a3a1-91a8-693577e33e18@oracle.com>
+Date: Tue, 2 May 2023 15:09:32 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
+Subject: Fwd: Retired X.Org Packages
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck <hanno@...eck.de>, 2023-03-17 11:48:
->Jakub Wilk <jwilk@...lk.net> wrote:
->
->>On Linux virtual terminals, it's possible to achieve pretty much the 
->>same effect using TIOCLINUX, the ioctl used by gpm to implement 
->>copy&pasting.
-[...]
->Given this works only on "virtual terminals" (aka not in a terminal 
->window on X, not over SSH), I think the severity is much lower than the 
->TIOCSTI issue.
+The following is *not* a notification of a known vulnerability such as
+this list typically gets.
 
-Agreed.
+Instead it's a warning that if there's unknown vulnerabilities lurking in
+this code (a not unlikely event given much of it dates to the late 80's
+or early 90's, predating much of what the community has learned about
+software insecurity), that the upstream response is likely to be "Well,
+that's another reason to stop shipping it, as we previously suggested."
 
->I've created a patch for the Linux kernel very similar to the patch 
->that allows disabling TIOCSTI.
+This especially applies to things no one remembers the inner workings of and
+which operate in risky network positions, such as the X Firewall Proxy (xfwp)
+or the Xrx browser plugin.
 
-I don't think that's gonna fly, because...
+     -Alan Coopersmith-              alan.coopersmith@...cle.com
+       X.Org Security Response Team - xorg-security@...ts.x.org
 
->+	  The TIOCLINUX ioctl allows implementing copy-and-paste and
->+	  mouse operations in virtual terminals, used by tools like gpm.
+-------- Forwarded Message --------
+Subject: Retired X.Org Packages
+Date: Tue, 2 May 2023 14:59:28 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: distributions@...ts.linux.dev, distributions@...ts.freedesktop.org
+CC: X.Org Development <xorg-devel@...ts.x.org>
 
-TIOCLINUX implements also functionality unrelated to copying and 
-pasting. See the ioctl_console(2) man page:
-https://manpages.debian.org/unstable/manpages-dev/ioctl_console.2.en.html#TIOCLINUX
+We've gotten a few queries at X.Org lately that suggest we've not been as
+effective as we'd wanted at communicating the status of some of our packages,
+so I've made the following list to try to help with that.
 
-For example, apparently some of this stuff is used by systemd:
+We have retired the following X.Org packages in past years - their gitlab repos
+are archived, blocking any further bug filing or git commits, so any distros
+continuing to ship them are doing so at their own risk, with no support from
+upstream - you are their upstream now:
 
-     $ git grep -wB5 TIOCLINUX
-     src/basic/terminal-util.c-                int tiocl[2] = {
-     src/basic/terminal-util.c-                        TIOCL_GETKMSGREDIRECT,
-     src/basic/terminal-util.c-                        0
-     src/basic/terminal-util.c-                };
-     src/basic/terminal-util.c-
-     src/basic/terminal-util.c:                if (ioctl(fd, TIOCLINUX, tiocl) < 0)
-     --
-     src/vconsole/vconsole-setup.c-static int verify_vc_device(int fd) {
-     src/vconsole/vconsole-setup.c-        unsigned char data[] = {
-     src/vconsole/vconsole-setup.c-                TIOCL_GETFGCONSOLE,
-     src/vconsole/vconsole-setup.c-        };
-     src/vconsole/vconsole-setup.c-
-     src/vconsole/vconsole-setup.c:        return RET_NERRNO(ioctl(fd, TIOCLINUX, data));
+app/lbxproxy & lib/liblbxutil:
+  Support for the required LBX extension to X11 was disabled by default
+  in xorg-server 1.1 (May 2006) and removed in 1.2 (January 2007).
+
+app/luit:
+  X.Org stopped maintaining our fork and encourages use of
+  Thomas Dickey's from http://invisible-island.net/luit/ instead.
+
+app/proxymngr, app/xfindproxy, app/xfwp
+  X.Org has deprecated the X11 Proxy Management Protocol and related tools,
+  in favor of using SSH's X11 tunneling instead.
+
+app/xdbedizzy:
+  This was a simple demo of the Double Buffer Extension (DBE),
+  not a useful program.
+
+app/xrx:
+  Most browsers ended support for the old Netscape Plugin API (NPAPI)
+  several years ago.  Even before that, using a browser plugin for remote
+  display of an embedded X11 application never really caught on.
+
+app/xsetmode:
+  Replaced by: xinput --set-mode "device name" ABSOLUTE
+  https://gitlab.freedesktop.org/xorg/app/xsetmode/-/blob/master/README
+
+app/xsetpointer:
+  Doesn't work with xorg-server 1.4 (Sept. 2007) and later
+  https://gitlab.freedesktop.org/xorg/app/xsetpointer/-/blob/master/README
+
+app/xtrap & lib/libXTrap:
+  This was a proposed extension for X11R5, replaced by the XTEST & RECORD
+  extensions in X11R6 (released in 1994). The server side was removed in
+  xorg-server 1.6 (Feb. 2009).
+
+driver/xf86-input-*:
+  Almost all of these are retired now - the only ones from X.Org that are
+  still supported are:
+  For Linux: xf86-input-libinput & xf86-input-evdev
+  For non-Linux: xf86-input-keyboard & xf86-input-mouse
+  For all platforms: xf86-input-elographics, xf86-input-joystick,
+     xf86-input-synaptics, xf86-input-vmmouse, & xf86-input-void
+  (This doesn't include those from other upstreams, such as xf86-input-wacom.)
+
+driver/xf86-video-glide:
+  This was a driver for 3Dfx Voodoo 1 & 2 boards from the late 1990's,
+  using the Glide API.
+
+font/bitstream-speedo: Support for the Speedo font format was disabled by
+  default in X11R6.8 (Sept. 2004), and removed in libXfont 1.4.0 (Feb. 2009)
+
+lib/liboldX:
+  This provided backwards compatibility for apps from X Version 10, which
+  was the version of the X Window System from November 1985, replaced by
+  X11 in September 1987.  35 years seems like more than long enough to port
+  applications to using libX11 instead.
+
+lib/libXevie:
+  The server side of XEvIE was removed in xorg-server 1.6 (Feb. 2009).
+  GNOME's at-spi2-core used libXevie starting in August 2003, but that
+  code was disabled by default in 2015 for the 2.20.0 release, and then
+  removed altogether in the 2.26.0 release in 2017.
+
+lib/libXfontcache:
+  The server side of the FontCache extension was disabled by default in
+  X11R6.8.0 (Sep. 2004) and was removed in xorg-server 1.6 (Feb. 2009).
+
+lib/libxkbui:
+  The only known consumer of this library was the xorgcfg utility, which
+  was disabled by default in xorg-server 1.4 (Sep. 2007) and removed in
+  xorg-server 1.6 (Feb. 2009).
+
+lib/libXxf86misc:
+  The server side of the XFree86-Misc extension was removed in
+  xorg-server 1.6 (Feb. 2009).
+
+
+(This not a complete list - you can find more listed under
+  https://gitlab.freedesktop.org/groups/xorg/-/archived or marked Obsolete in
+  https://gitlab.freedesktop.org/xorg/doc/xorg-docs/-/blob/master/MAINTAINERS
+  I've just listed those which still show up with a fair number of entries
+  on https://repology.org/ as still being in distros.)
+
+
+We have also announced that we plan to retire the following packages soon
+and while their gitlab repos are not yet archived, we expect they will be
+archived in the future, and encourage distros that still ship them to
+consider retiring them on your side as well:
+
+lib/libdmx:
+  The Xdmx server was removed from the xorg-server sources in
+  xorg-server 21 (released Oct. 2021), so this is only useful
+  for communicating with Xdmx from the 1.20 and older releases.
+
+lib/libXp:
+  The Xprt server was removed from the xorg-server sources in
+  xorg-server 1.6 (Feb. 2009), and the separate Xprt repo has
+  been unmaintained since 2009.
+  https://lists.x.org/archives/xorg-announce/2022-September/003212.html
+
+app/xditview:
+  While X.Org hasn't deprecated this yet, you may still be better off
+  using the gxditview fork that's part of the GNU groff package instead.
 
 -- 
-Jakub Wilk
+     -Alan Coopersmith-              alan.coopersmith@...cle.com
+       X.Org Security Response Team - xorg-security@...ts.x.org
+
