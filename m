@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/09/2
-Message-ID: <20230509231434.GA21065@openwall.com>
-Date: Wed, 10 May 2023 01:14:34 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Tobias Holl <tobias@...ll.xyz>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel io_uring out-of-bounds access to physical memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/6
+Message-ID: <8038fdf3-2532-9a54-caf9-7c0d40262f52@thirddimension.net>
+Date: Wed, 3 May 2023 15:57:59 -0400
+From: Reid Sutherland <reid@...rddimension.net>
+To: oss-security@...ts.openwall.com, "David A. Wheeler" <dwheeler@...eeler.com>
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 08, 2023 at 04:01:59PM +0200, Tobias Holl wrote:
-> a bug in the fixed buffer registration code for io_uring
-> (io_sqe_buffer_register in io_uring/rsrc.c) allows out-of-bounds access
-> to physical memory beyond the end of the buffer. This can be used to
-> achieve full local privilege escalation.
+On 5/3/23 15:54, David A. Wheeler wrote:
 > 
-> The vulnerable code landed in 6.3-rc1 with commit 57bebf807e2a
-> ("io_uring/rsrc: optimise registered huge pages").
 > 
-> A fix has been committed upstream for 6.4-rc1 in commit 776617db78c6
-> ("io_uring/rsrc: check for nonconsecutive pages"). The fix has also
-> been staged for 6.3.2.
+>> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
+>>
+>> Who actually decides when something receives a CVE?
 > 
-> CVE assignment for this issue is pending.
+> There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that is, to become a CVE Numbering Authority (CNA) - has to follow various processes. I'm sure it can be improved, like all things. I'm not directly involved in this. You might find more information here:
+> https://www.cve.org/ProgramOrganization/CNAs
+> 
+>>   This can be used to defame projects and products as in this case.
+> 
+> 
+> Identifying a vulnerability does not defame a project. If a library has the functionality to retrieve an https URLs, and fails to verify the server certificates by default, then I (and many others) would call that a vulnerability. After all, the default is what happens. If you request data from <https://google.com>, you wouldn't expect it to use the data from <https://godzilla.com>. There's a general expectation that https://FPP provides a secure connection to FOO (with confidentiality, integrity, and server authentication), unless you specially disable it.
+> 
+> --- David A. Wheeler
+> 
 
-This is now CVE-2023-2598.
 
-Alexander
+A default is not a vulnerability.  There are reasons why defaults cannot 
+be changed in libraries once they are stable.  This is also why 
+documentation exists.
+
+Revoke these CVEs, it's a stain on the process.
