@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/20/3
-Message-ID: <ca835ded-9dcd-4345-a096-ddd9ddcb05e9@oracle.com>
-Date: Mon, 20 Nov 2023 12:05:36 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/7
+Message-ID: <336b0af3-572e-b601-a856-b09d0930d40e@eenterphace.org>
+Date: Wed, 3 May 2023 22:40:30 +0200
+From: Moritz Bechler <mbechler@...terphace.org>
 To: oss-security@...ts.openwall.com
-Subject: GIMP 2.10.36 fixed multiple image format parser vulnerabilities
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-https://www.gimp.org/news/2023/11/07/gimp-2-10-36-released/#fixed-vulnerabilities
-reported:
+Hi,
 
-> Four vulnerabilities were reported by the Zero Day Initiative in code for the following formats and fixed immediately:
 > 
->     DDS: ZDI-CAN-22093
->     PSD: ZDI-CAN-22094
->     PSP: ZDI-CAN-22096 and ZDI-CAN-22097
+> A default is not a vulnerability.  There are reasons why defaults cannot 
+> be changed in libraries once they are stable.  This is also why 
+> documentation exists.
 > 
-> Additionally dependencies have been updated in our binary packages, and with them, some vulnerabilities recently reported in these libraries were fixed.
+> Revoke these CVEs, it's a stain on the process.
 
-These vulnerabilities also had advisories released by ZDI which gave
-the corresponding CVE ids:
 
-ZDI-CAN-22093: CVE-2023-44441
-  GIMP DDS File Parsing Heap-based Buffer Overflow Remote Code Execution Vulnerability
-  https://www.zerodayinitiative.com/advisories/ZDI-23-1592/
+while one may criticize that CVEs have been assigned both for the 
+insecure default and (some of the) insecure usages, at least one of 
+these is a legitimate case, in terms of CVEs likely the latter. And when 
+it comes to defaming projects, at least in my book, choosing, keeping 
+and defending bad defaults speaks to much more than a CVE being assigned.
 
-ZDI-CAN-22094: CVE-2023-44442
-  GIMP PSD File Parsing Heap-based Buffer Overflow Remote Code Execution Vulnerability
-  https://www.zerodayinitiative.com/advisories/ZDI-23-1594/
 
-ZDI-CAN-22096: CVE-2023-44443
-  GIMP PSP File Parsing Integer Overflow Remote Code Execution Vulnerability
-  https://www.zerodayinitiative.com/advisories/ZDI-23-1593/
-
-ZDI-CAN-22097: CVE-2023-44444
-  GIMP PSP File Parsing Off-By-One Remote Code Execution Vulnerability
-  https://www.zerodayinitiative.com/advisories/ZDI-23-1591/
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Moritz
