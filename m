@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/31/3
-Message-ID: <b25b13ef-81bb-4d59-930d-a566659f8b2f@apache.org>
-Date: Fri, 31 Mar 2023 05:28:03 +0000
-From: Benoit Tellier <btellier@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/8
+Message-ID: <d98ab3d26a1aeffb7542ba96b4bb73a5761b052e.camel@orlitzky.com>
+Date: Wed, 03 May 2023 17:55:13 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-26269: Apache James server: Privilege escalation through unauthenticated JMX 
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Wed, 2023-05-03 at 22:40 +0200, Moritz Bechler wrote:
+> 
+> while one may criticize that CVEs have been assigned both for the 
+> insecure default and (some of the) insecure usages, at least one of 
+> these is a legitimate case, in terms of CVEs likely the latter. And when 
+> it comes to defaming projects, at least in my book, choosing, keeping 
+> and defending bad defaults speaks to much more than a CVE being assigned.
 
-Description:
-
-Apache James server version 3.7.3 and earlier provides a JMX management service without authentication by default. This allows privilege escalation by a 
-malicious local user.
-
-Administrators are advised to disable JMX, or set up a JMX password.
-
-Work Arounds:
-
-Note that version 3.7.4 onward will set up a JMX password automatically for Guice users.
-
-Credit:
-
-Matei "Mal" Badanoiu (reporter)
-
-References:
-
-https://james.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-26269
+They're both bad defaults. One explicitly does no authentication, while
+the other uses a corrupt and misunderstood process that can create a
+false sense of security. We disagree on which is worse, but neither
+viewpoint is ludicrous.
 
