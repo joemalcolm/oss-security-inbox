@@ -1,4 +1,4 @@
-Received: (qmail 4088 invoked by uid 550); 14 Oct 2023 16:47:27 -0000
+Received: (qmail 21539 invoked by uid 550); 4 May 2023 10:37:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1664 invoked from network); 14 Oct 2023 16:43:46 -0000
-Date: Sat, 14 Oct 2023 18:43:34 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 1223 invoked from network); 3 May 2023 21:43:46 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <20231014164334.GA19096@openwall.com>
-References: <652920e5.c80a0220.3bcf7.2251@mx.google.com> <956475122.7707678.1697228495449.JavaMail.zimbra@hlrs.de> <CAEg-Je-uxMbiYDADX=+eyTQF+xnjAYA0u1HoygqDa+G=Y=4f-Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEg-Je-uxMbiYDADX=+eyTQF+xnjAYA0u1HoygqDa+G=Y=4f-Q@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list membership application - CIQ Rocky Linux Security Team
+References: <20230418154630.eoheygqyom3c7ovw@stig.io>
+ <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+ <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
+ <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
+ <8038fdf3-2532-9a54-caf9-7c0d40262f52@thirddimension.net>
+ <336b0af3-572e-b601-a856-b09d0930d40e@eenterphace.org>
+From: Reid Sutherland <reid@thirddimension.net>
+Message-ID: <c3576b53-b89b-d706-002d-467acf373a9c@thirddimension.net>
+Date: Wed, 3 May 2023 17:43:28 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 SeaMonkey/2.53.16
+MIME-Version: 1.0
+In-Reply-To: <336b0af3-572e-b601-a856-b09d0930d40e@eenterphace.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
+ affecting CPAN.pm and other modules
 
-On Fri, Oct 13, 2023 at 11:19:18PM -0400, Neal Gompa wrote:
-> On Fri, Oct 13, 2023 at 8:07???PM Martin Hecht <martin.hecht@hlrs.de> wrote:
-> > I'd like to give an example against this. With the recent glibc issue
-> > (CVE-2023-4911) we were closely following the upcoming fixed packages.
-> > While we were installing the Rocky packages in the late evening of Thu Oct 5,
-> > I had the impression that the Redhat packages became available later on Friday.
-> > It might be attributed to some hours of delay between arriving on the repo
-> > servers vs. being announced via advisory. But, anyhow, accusing Rocky being
-> > late in providing packages at least is not valid in general imho. At least
-> > important ones, like this one, seem to arrive rather quickly. Without mentioning
-> > the distros, I have seen quite some announcements even around a week later.
+Moritz Bechler wrote:
+> Hi,
 > 
-> The fix for Rocky 8 and Rocky 9 are purely imports from RHEL:
+>>
+>> A default is not a vulnerability.  There are reasons why defaults 
+>> cannot be changed in libraries once they are stable.  This is also why 
+>> documentation exists.
+>>
+>> Revoke these CVEs, it's a stain on the process.
 > 
-> * R8: https://git.rockylinux.org/staging/rpms/glibc/-/commit/6433675bfaab392b362993d8ff8d576335e6bcd4
-> * R9: https://git.rockylinux.org/staging/rpms/glibc/-/commit/610a8a6829e1e604ff018daccf6bf63620edd19d
+> 
+> while one may criticize that CVEs have been assigned both for the 
+> insecure default and (some of the) insecure usages, at least one of 
+> these is a legitimate case, in terms of CVEs likely the latter. And when 
+> it comes to defaming projects, at least in my book, choosing, keeping 
+> and defending bad defaults speaks to much more than a CVE being assigned.
+> 
 
-Right, but we also had an effective mitigation for R9 pushed publicly in
-Security SIG on Oct 3, same day as the vulnerability was made public:
 
-https://sig-security.rocky.page/packages/glibc/
+Performing outside queries is not a reasonable default in terms of 
+security.  It's up to the developer if they wish to open up the user to 
+that risk.  Libraries cannot shift defaults on a whim, this is why they 
+have documentation.
 
-This was possible due to explicit permission I requested/obtained from
-Qualys in a thread on linux-distros.  The rules do mention that things
-like that can be done "with the reporter's explicit approval".  (This
-option also came up in the recent discussion around illumos distros.)
-
-> I did see that Louis Abel attempted to do something for Rocky 8, but
-> it was not shipped.
-
-Yes, I noticed this one too and asked him about it, and yes it was just
-a test that was not shipped.
-
-I would be pushing a Security SIG package addressing the issue for R8 as
-well if we didn't get upstream's update for a day more (after Oct 5).
-
-> I have also not seen much in terms of upstream
-> engagement indicating the bidirectional relationship expected for
-> members of linux-distros@.
-
-I agree this is something to improve, and I intend to be contributing to
-that with my CIQ or Rocky Linux hat on, as well as encourage others with
-Rocky Linux to contribute to upstreams more.
-
-I did contribute to the linux-distros discussion on this glibc issue, to
-an extent greater than I would have without intent to push a mitigation
-or fix into Rocky Linux Security SIG.
-
-> > I think the point here is "*not only* being a rebuild of another distro".
-> > So, their engagement with SIG should already be a valid add-on to be honored.
-> > Anyhow, the fact that CIQ offers LTS branches and professional support,
-> > as well as their promise to provide backports of upstream fixes independent
-> > of RHEL clearly distinguishes them from a "pure distro rebuild".
-> >
-> > https://ciq.com/products/rocky-linux/benefits/enterprise-level-support/
-
-Quoting from the above web page:
-
-"CIQ offers an additional paid service for customers: Rocky Linux Long
-Term Support ("LTS"). This is designed for organizations who want to
-remain on a previous minor release of Rocky Linux (like 8.6), which is
-no longer supported by the public project. CIQ staff will continue
-backporting security and bug fixes into the supported minor releases for
-a period of time, after the public project has retired that minor
-release.
-
-Subscribed customers who value stability can remain on their desired
-release longer, while still enjoying minor security and bugfix updates
-to their packages. As of this writing, CIQ is supporting non-zero,
-even-numbered point releases (8.6, 8.8, 9.2, 9.4, etc.) with its LTS
-offerings. LTS support lasts for 18 months after the release is retired
-from the public project. For example, Rocky 8.6 was retired in November
-2022. CIQ's LTS-8.6 support will last 18 months from that, or May 2024."
-
-> The point I'm making is that SIGs do not count because they cannot
-> obey embargo regulations. No open project or community project can do
-> that without having some mechanism for private controls, which is
-> antithetical to the community process. They fundamentally are
-> ineligible to join because they cannot keep anything secret.
-
-SIGs are ineligible to join on their own.  A distro's security team that
-would only push to SIGs on the coordinated release date can.
-
-Alexander
