@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/26/1
-Message-ID: <0517227e-d2e6-cd57-55f7-ad089b34b17c@redhat.com>
-Date: Mon, 26 Jun 2023 09:01:05 +0200
-From: Zdenek Dohnal <zdohnal@...hat.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-34241: CUPS: use-after-free in cupsdAcceptClient()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/5
+Message-ID: <CAH8yC8mJHfyn1YGpoSWwNs1nFkWnu8pL7KsO9-sTKDrtu8QR+g@mail.gmail.com>
+Date: Wed, 3 May 2023 15:41:26 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-I'm sorry for the confusion :( - yes, the emails to oss-security were 
-announcing the end of embargoes and that the fixes are already merged.
-
-I've updated the guide I was following to prevent this in the future.
-
-
-Zdenek
-
-On 6/23/23 17:02, Solar Designer wrote:
-> On Thu, Jun 22, 2023 at 12:02:39PM +0200, Zdenek Dohnal wrote:
->> there is currently the embargoed CVE-2023-34241 in CUPS project:
-> Of course, this wasn't actually embargoed anymore at that time - Zdenek
-> simply resent the exact same message he had sent to the distros list on
-> June 13, when the issue was in fact still embargoed.
+On Wed, May 3, 2023 at 3:21 PM Reid Sutherland <reid@...rddimension.net> wrote:
+> On 4/29/23 06:04, Stig Palmquist wrote:
+> >
+> > - CVE-2023-31484 for CPAN.pm
+> > - CVE-2023-31485 for GitLab::API::v4
+> > - CVE-2023-31486 for HTTP::Tiny
+> > ...
 >
-> Similarly, the previous CUPS vulnerability disclosure on June 1 was a
-> copy of the distros message from May 23:
->
-> https://www.openwall.com/lists/oss-security/2023/06/01/1
->
-> Let's be updating these when posting them publicly going forward to
-> avoid confusion - like "was this published inadvertently when still
-> under embargo?" (luckily, no).
->
-> Alexander
->
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
+> Who actually decides when something receives a CVE?  This can be used to
+> defame projects and products as in this case.
 
+"Who decides" can be a tricky question.
+
+Several organizations issue CVEs, like Red Hat and Gentoo. A bug
+usually has to meet a criteria, like falling into a CWE category, to
+be issued by the organization.
+
+You can also get them from Mitre's site. In the case of Mitre, it is
+the person who requests the CVE.
+
+Some CVE's are tenuous or questionable. You often see this from folks
+trying to pad their resume. For example, a researcher may request a
+CVE for a behavior that requires elevated privileges. In this case,
+someone who is Root on Linux or Administrator on Windows can already
+do the damage, so the behavior in question that happens with
+privileges is not really interesting.
+
+In the case of HTTP::Tiny, the default configuration and behavior is
+running afoul of https://cwe.mitre.org/data/definitions/295.html and
+https://cwe.mitre.org/data/definitions/319.html. In this case, the
+industry believes comms should use HTTPS and the name hostname should
+be validated.
+
+Jeff
