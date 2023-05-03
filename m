@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/05/1
-Message-ID:  <SA1PR09MB7583C04FD0BFCF3663F20D22F94DA@SA1PR09MB7583.namprd09.prod.outlook.com>
-Date: Mon, 5 Jun 2023 14:35:15 +0000
-From: cpe_dictionary <cpe_dictionary@...t.gov>
-To: Bastien Roucariès <rouca@...ian.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: cpe_dictionary <cpe_dictionary@...t.gov>
-Subject: RE: Update CVE-2021-3610
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/2
+Message-ID: <c3576b53-b89b-d706-002d-467acf373a9c@thirddimension.net>
+Date: Wed, 3 May 2023 17:43:28 -0400
+From: Reid Sutherland <reid@...rddimension.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+Moritz Bechler wrote:
+> Hi,
+> 
+>>
+>> A default is not a vulnerability.  There are reasons why defaults 
+>> cannot be changed in libraries once they are stable.  This is also why 
+>> documentation exists.
+>>
+>> Revoke these CVEs, it's a stain on the process.
+> 
+> 
+> while one may criticize that CVEs have been assigned both for the 
+> insecure default and (some of the) insecure usages, at least one of 
+> these is a legitimate case, in terms of CVEs likely the latter. And when 
+> it comes to defaming projects, at least in my book, choosing, keeping 
+> and defending bad defaults speaks to much more than a CVE being assigned.
+> 
 
-Thank you for bringing this to our attention. We appreciate community input in order to provide the most accurate and up-to-date information as possible. After reviewing publicly available information we have made the appropriate modifications in addition to adding missing versions for the codebase. Please allow up to 24 hours for the changes to be reflected on the website and in the data feeds.
 
-V/r,
-Common Platform Enumeration Team
-cpe_dictionary@...t.gov
+Performing outside queries is not a reasonable default in terms of 
+security.  It's up to the developer if they wish to open up the user to 
+that risk.  Libraries cannot shift defaults on a whim, this is why they 
+have documentation.
 
------Original Message-----
-From: Bastien Roucariès <rouca@...ian.org> 
-Sent: Monday, May 29, 2023 1:21 PM
-To: oss-security@...ts.openwall.com
-Cc: cpe_dictionary <cpe_dictionary@...t.gov>
-Subject: Update CVE-2021-3610
-
-Hi,
-
-I want to update status of CVE-2021-3610:
-
-Contrary to common belief over the linux distribution this CVE affects imagemagick 6. It was introduced by commit b874d50070557eb98bdc6a3095ef4769af583dd2 for  6.9.10.88
-
-Partial fixes:
-Imagemagick6 <= 6.9.10-92 https://github.com/ImageMagick/ImageMagick6/commit/2d96228eec9fbea62ddb6c1450fa8d43e2c6b68a
-Imagemagick6 <= 6.9.11-10 https://github.com/ImageMagick/ImageMagick6/commit/7374894385161859ffbb84e280fcc89e7ae257e4
-ImageMagick6 <= 6.9.11-54 https://github.com/ImageMagick/ImageMagick6/commit/cdb67005376bcc8cbb0b743fb22787794cd30eb
-ImageMagick6 [1/2]: https://github.com/ImageMagick/ImageMagick6/commit/b307bcadcdf6ea6819951ac1786b7904f27b25c6
-Final fixes
-ImageMagick6 [2/2]: https://github.com/ImageMagick/ImageMagick6/commit/c75ae771a00c38b757c5ef4b424b51e761b02552
-
-I am not subscribed so cc me
-
-Bastien
