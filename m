@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2121" "Friday" "12" "June" "2020" "07:09:13" "+0200" "Jean-Baptiste Onofre" "jb@nanthrax.net" "<4FF677C8-DA5B-4335-8136-6DB805323F05@nanthrax.net>" "55" "[oss-security] [CVE-2020-11980] A remote client could create MBeans from arbitrary URLs" nil nil nil "6" "2020061205:09:13" "[oss-security] [CVE-2020-11980] A remote client could create MBeans from arbitrary URLs" (number mark "U       jb@nanthrax. Jun 12   55/2121  " thread-indent "\"[oss-security] [CVE-2020-11980] A remote client could create MBeans from arbitrary URLs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-11980] A remote client could create MBeans from arbitrary URLs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14026 invoked by uid 550); 12 Jun 2020 11:22:28 -0000
+Received: (qmail 15516 invoked by uid 550); 3 May 2023 20:15:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19806 invoked from network); 12 Jun 2020 05:09:25 -0000
-X-Originating-IP: 78.218.26.15
-From: Jean-Baptiste Onofre <jb@nanthrax.net>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_C05319A1-1113-417B-BDA1-9F3D66FF10C2"
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Message-Id: <4FF677C8-DA5B-4335-8136-6DB805323F05@nanthrax.net>
-Date: Fri, 12 Jun 2020 07:09:13 +0200
+Received: (qmail 7824 invoked from network); 3 May 2023 19:41:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683142897; x=1685734897;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P+6EOa/eQ7cB28E44ypPKH8oekplF/YwbYVGrTE3zYw=;
+        b=hjBT76j70shegDq/wPcTMu6WtlJJOHg07PqWNlWoo5Ne/RGJy19qWWavIXBr4xOi1/
+         agddvIhmxFstOb78hN5BOmh+VzBJYdYm2TGwEYb2FoSetSsV+UsPJ64DfjW+egEmhKLY
+         0FGgxxaoG0fS0n+WRun8l7WRS8NfFy2y+hMrnTeHsILmjHW2ulbPDwWXoHUlYkqlroaa
+         BPSZ8MZbaey1MsdqeHr785EiShW2cCcnDcp9IbnrqY5oCTlmgRi7BMGS1uhfWHG95+6o
+         qV8xl9XViO4JB7X2Ef3IedTvTDdYjjfAbW4QE8jzcFtRa+rjTER8Cyl/nLFCV2b2gaVP
+         HEuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683142897; x=1685734897;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P+6EOa/eQ7cB28E44ypPKH8oekplF/YwbYVGrTE3zYw=;
+        b=GyiT0Ygw4W+WI03K21MZSjvcUktduhFNSw6a4Y9HDNwbmgRc81t4CX60ndg9dA4Jv1
+         EPCuOi+au2tGRgv8/SKT755USvhSYmlZQwdbwdCwiXpUhcQmPzB+Qmu8MCvPIYZwhqMu
+         admKPaIHkHhIc598mXlaavWgsE1pKeL67h/C9FMd2DeYdjhN7U+T0hIxCoDKVOrYpgYm
+         0mTiCKdfFzIAsNJ2vGwVy1fwIHVJJwiHseIvYiE6SayKrFFmEHJLjTNP5uvrOIoxWuz5
+         r9qknOJ5CJjDUmyZpDWRbPHzclQdvmJNXQ4Xx3H1rLvWMidD4tD9cTwq87GQkXJR6DvS
+         FjVQ==
+X-Gm-Message-State: AC+VfDwdPLYhVZ028KidvXFYjePwKfFhMJ9IwHOKOI5XtvZKriJ2U2O3
+	ZA4I2Vznrs8s8H2vFmm4gzTAZwmIHGra16HP3QqBz+1wCEs=
+X-Google-Smtp-Source: ACHHUZ7V6pk+4d23EOI4MuCtAlzvabtojggH+RcrtavIgSBqwe81wUDEcm+WLbiP4vwNAbbrwJcbE8Xm2SIykKPzUEQ=
+X-Received: by 2002:a05:6808:5c6:b0:38d:e632:8304 with SMTP id
+ d6-20020a05680805c600b0038de6328304mr456880oij.54.1683142897369; Wed, 03 May
+ 2023 12:41:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230418154630.eoheygqyom3c7ovw@stig.io> <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+ <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
+In-Reply-To: <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Wed, 3 May 2023 15:41:26 -0400
+Message-ID: <CAH8yC8mJHfyn1YGpoSWwNs1nFkWnu8pL7KsO9-sTKDrtu8QR+g@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
-Subject: [oss-security] [CVE-2020-11980] A remote client could create MBeans from arbitrary
- URLs
-
---Apple-Mail=_C05319A1-1113-417B-BDA1-9F3D66FF10C2
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
+ affecting CPAN.pm and other modules
 
-CVE-2020-11980: A remote client could create MBeans from arbitrary URLs
+On Wed, May 3, 2023 at 3:21=E2=80=AFPM Reid Sutherland <reid@thirddimension=
+.net> wrote:
+> On 4/29/23 06:04, Stig Palmquist wrote:
+> >
+> > - CVE-2023-31484 for CPAN.pm
+> > - CVE-2023-31485 for GitLab::API::v4
+> > - CVE-2023-31486 for HTTP::Tiny
+> > ...
+>
+> Who actually decides when something receives a CVE?  This can be used to
+> defame projects and products as in this case.
 
-Severity: Low
+"Who decides" can be a tricky question.
 
-Vendor: The Apache Software Foundation
+Several organizations issue CVEs, like Red Hat and Gentoo. A bug
+usually has to meet a criteria, like falling into a CWE category, to
+be issued by the organization.
 
-Versions Affected: all versions of Apache Karaf prior to 4.2.9
+You can also get them from Mitre's site. In the case of Mitre, it is
+the person who requests the CVE.
 
-Description:
+Some CVE's are tenuous or questionable. You often see this from folks
+trying to pad their resume. For example, a researcher may request a
+CVE for a behavior that requires elevated privileges. In this case,
+someone who is Root on Linux or Administrator on Windows can already
+do the damage, so the behavior in question that happens with
+privileges is not really interesting.
 
-In Karaf, JMX authentication takes place using JAAS and authorization takes
-place using ACL files. By default, only an "admin" can actually invoke on
-an MBean. However there is a vulnerability there for someone who is not an
-admin, but has a "viewer" role. In the 'etc/jmx.acl.cfg', such as role can
-call get*. This leaves it partially vulnerable to this attack:
+In the case of HTTP::Tiny, the default configuration and behavior is
+running afoul of https://cwe.mitre.org/data/definitions/295.html and
+https://cwe.mitre.org/data/definitions/319.html. In this case, the
+industry believes comms should use HTTPS and the name hostname should
+be validated.
 
-https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html
-
-"A remote client could create a javax.management.loading.MLet MBean and use
-it to create new MBeans from arbitrary URLs, at least if there is no
-security manager. In other words, a rogue remote client could make your
-Java application execute arbitrary code."
-
-It's possible to authenticate as a viewer role + invokes on the MLet
-getMBeansFromURL method, which goes off to a remote server to fetch the
-desired MBean, which is then registered in Karaf. At this point the attack
-fails as "viewer" doesn't have the permission to invoke on the MBean.
-Still, it could act as a SSRF style attack and also it essentially allows a
-"viewer" role to pollute the MBean registry, which is a kind of privilege
-escalation.
-
-
-The vulnerability is low as it's possible to add a ACL to limit access.
-
-This has been fixed in revision:
-
-https://gitbox.apache.org/repos/asf?p=3Dkaraf.git;a=3Dcommit;h=3D3e4c4bed2d=
-08e81ca5961ab5fcadab23470db1c9
-https://gitbox.apache.org/repos/asf?p=3Dkaraf.git;a=3Dcommit;h=3D2ccfba48bd=
-fac6c2cd09c8f058641da0011e4c7e
-
-Mitigation: Apache Karaf users should upgrade to 4.2.9
-or later as soon as possible, or a new JMX ACL in etc configuration.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-6763
-
-Credit: This issue was reported by Colm O hEigeartaigh
-
-
---Apple-Mail=_C05319A1-1113-417B-BDA1-9F3D66FF10C2--
+Jeff
