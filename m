@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/22
-Message-ID: <CAG-20GTRbwEtcQkG035OEQrZ-afZ-t8wCRCa3ZDu+JKbhmQ2-Q@mail.gmail.com>
-Date: Tue, 17 Oct 2023 02:53:07 +0800
-From: Tianyu Chen <billchenchina2001@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/4
+Message-Id: <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
+Date: Wed, 3 May 2023 15:54:38 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 17, 2023, 02:29 Demi Marie Obenour <demi@...isiblethingslab.com>
-wrote:
 
-> To be clear: if openEuler was granted membership, this would ensure that
-> I did not post on distros@ ever again, unless a trusted entity (such as
-> the Linux Foundation) made a public, broadly applicable, and easily
-> interpretable (by non-lawyers) statement stating that it would be okay
-> for me to make such a post.  And maybe not even then.
->
-So why do you believe posting to distros@ is completely lawful? You can't
-promise all subscribers are outside of DPRK, China, Russia, Iran.
 
->
+> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
+> 
+> Who actually decides when something receives a CVE?
+
+There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that is, to become a CVE Numbering Authority (CNA) - has to follow various processes. I'm sure it can be improved, like all things. I'm not directly involved in this. You might find more information here:
+https://www.cve.org/ProgramOrganization/CNAs
+
+>  This can be used to defame projects and products as in this case.
+
+
+Identifying a vulnerability does not defame a project. If a library has the functionality to retrieve an https URLs, and fails to verify the server certificates by default, then I (and many others) would call that a vulnerability. After all, the default is what happens. If you request data from <https://google.com>, you wouldn't expect it to use the data from <https://godzilla.com>. There's a general expectation that https://FPP provides a secure connection to FOO (with confidentiality, integrity, and server authentication), unless you specially disable it.
+
+--- David A. Wheeler
 
