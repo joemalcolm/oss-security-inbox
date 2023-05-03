@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1924" "Thursday" "9" "April" "2015" "17:52:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150409215226.A662B42E024@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request: libX11: buffer overflow in  MakeBigReq macro" nil nil nil "4" "2015040921:52:26" "[oss-security] Re: CVE Request: libX11: buffer overflow in MakeBigReq macro" (number mark "        cve-assign@m Apr  9   44/1924  " thread-indent "\"[oss-security] Re: CVE Request: libX11: buffer overflow in  MakeBigReq macro\"\n") "<55265E1D.4050404@redhat.com>" ("<55265E1D.4050404@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30318 invoked by uid 550); 9 Apr 2015 21:52:39 -0000
+Received: (qmail 9456 invoked by uid 550); 3 May 2023 19:20:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +6,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30297 invoked from network); 9 Apr 2015 21:52:38 -0000
-In-Reply-To: <55265E1D.4050404@redhat.com>
-Message-Id: <20150409215226.A662B42E024@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu,  9 Apr 2015 17:52:26 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: libX11: buffer overflow in  MakeBigReq macro
-To: fweimer@redhat.com
+Received: (qmail 7248 invoked from network); 3 May 2023 19:16:18 -0000
+Message-ID: <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
+Date: Wed, 3 May 2023 15:15:47 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+To: oss-security@lists.openwall.com
+References: <20230418154630.eoheygqyom3c7ovw@stig.io>
+ <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+Content-Language: en-US
+From: Reid Sutherland <reid@thirddimension.net>
+In-Reply-To: <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
+ affecting CPAN.pm and other modules
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Who actually decides when something receives a CVE?  This can be used to 
+defame projects and products as in this case.
 
-> Does this assignment cover application code which has to be recompiled
-> because it included an expansion of broken macro?
 
-It might be worthwhile to answer this in two ways.
-
-First, the scope of the CVE-2013-7439 assignment does cover
-application code that was built with this macro, in the sense that
-applications cannot have their own unique CVE IDs for the same
-problem. In other words, if building with this macro is what is
-calling an application's security into question, then there wouldn't
-be a separate CVE ID for that application.
-
-Second, if an application's vendor wants to publish a security
-advisory mapping to CVE-2013-7439, then it is preferable for the
-vendor to verify that the existence of the macro actually has a
-security impact for that application. However, there is no reasonable
-way for the MITRE CVE team to require that. An application's vendor
-might not have the resources or expertise. For example, the
-application's vendor optionally could decide to map to CVE-2013-7439
-based only on noticing that the macro is used.
-
-In any case, the information posted by others in this thread would be
-very useful for risk-assessment questions that go beyond "how can this
-CVE ID be used."
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVJvNSAAoJEKllVAevmvmsCdIH/A9SWB+8BaxQhyasFAXKz8Qg
-0ikGPGWFOraNdbr46sLC4MhYfE80fNzcurlmTemEsN7xmnmnhRbLjmCPQifYHJ+7
-PMs8eFQxVi91gNCptVn7YWpmtdwI+AzcQeJvezXvWwVsrVktf0/7KvXH5F9zeQ3l
-jk9z2nXTt42e/Kk8JcpIKixS1Em1oNt/YKHBIOz79ufjbCiM1UxAE1aMo2e04YKA
-YCYoPNgMB4eKUiHazTo2HBtm+6u+E2+/+lb008/mnh6fRl+XhVm3gPURpsGgJM+7
-njrDI0eeO5iU6XFSR6pf/Qp+OHNts8hb0U2DKuKlxfMaUZvswlNAZsJHOcl1u/U=
-=DjB/
------END PGP SIGNATURE-----
+On 4/29/23 06:04, Stig Palmquist wrote:
+> 
+> - CVE-2023-31484 for CPAN.pm
+> - CVE-2023-31485 for GitLab::API::v4
+> - CVE-2023-31486 for HTTP::Tiny
+> 
+> On 2023-04-18 17:46, Stig Palmquist wrote:
+>> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
+>> standalone on CPAN, does not verify TLS certs by default. Users must
+>> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
+>>
+>> We grepped trough CPAN to find distributions using HTTP::Tiny that
+>> didn't specify cert verification behaviour, possibly exposing users to
+>> mitm attacks. Here are some examples with patches:
+>>
+>> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
+>>    without verifying server certs. Fixed in v2.35-TRIAL.
+>>    https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
+>>
+>> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
+>>    https://github.com/bluefeet/GitLab-API-v4/pull/57
+>>
+>> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
+>>    information to a network attacker.
+>>    https://github.com/sanko/Finance-Robinhood/pull/6
+>>
+>> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
+>>    attacker.
+>>    https://github.com/pplu/aws-sdk-perl/pull/426
+>>
+>> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
+>>    attacker.
+>>    https://github.com/pplu/cloudhealth-api-perl/pull/2
+>>
+>> ... and more. We have generated a list of over 300 potentially affected
+>> CPAN distributions.
+>>
+>> More info in our blog post:
+>> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
+>>
+>> -- 
+>> Stig Palmquist <stig@stig.io>
+> 
