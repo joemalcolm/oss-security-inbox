@@ -1,55 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/2
-Message-ID: <CAH8yC8nQVki00kqwheM9n0tvJ5o=apNS-tnNcALy7Tvx4TC2Pg@mail.gmail.com>
-Date: Thu, 28 Sep 2023 08:36:53 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/3
+Message-ID: <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
+Date: Wed, 3 May 2023 15:15:47 -0400
+From: Reid Sutherland <reid@...rddimension.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2023 at 11:37 AM Solar Designer <solar@...nwall.com> wrote:
->
-> It was great to hear from Vincent that the newer libwebp changes are
-> just "Clean-ups, no security issues there."  Yet I think it would also
-> be great if someone in here double-checks that.
->
-> Regarding the assert failure detected by oss-fuzz, "A release build
-> would not be negatively affected."  libwebp does specify -DNDEBUG by
-> default in:
->
-> $ fgrep -rl DNDEBUG .
-> ./Makefile.vc
-> ./xcframeworkbuild.sh
-> ./iosbuild.sh
-> ./configure.ac
-> ./makefile.unix
->
-> and there's also cmake support, but apparently cmake sets -DNDEBUG for
-> release builds by default.  So at least this statement does appear to be
-> true for libwebp itself as built via the above means.
->
-> However, there's also Gradle support, and the gradle* files do not
-> mention NDEBUG.
->
-> Also, I wonder if there are other projects building code from libwebp
-> via different build environments.
->
-> So there might be (a small minority of) uses of libwebp where the assert
-> exists in a release build of some project.
+Who actually decides when something receives a CVE?  This can be used to 
+defame projects and products as in this case.
 
-Crypto++ caught a CVE because use of -DNDEBUG was not documented. The
-library's build system used -DNDEBUG (like libwebp), but folks who
-ported to other build systems did not use it. In my mind's eye, others
-who did not use the -DNDEBUG flag should have caught a CVE, not
-Crypto++. Also see CVE-2016-7420 and
-<http://seclists.org/oss-sec/2016/q3/520>.
 
-Crypto++ eventually took away the footgun by supplying its own
-CRYPTOPP_ASSERT that required a user to supply a switch to engage
-asserts. Asserts were no longer enabled by default when someone
-omitted -DNDEBUG. Also see
-<https://github.com/weidai11/cryptopp/blob/master/trap.h>.
-
-I've never seen a CVE for documentation before or since.
-
-Jeff
+On 4/29/23 06:04, Stig Palmquist wrote:
+> 
+> - CVE-2023-31484 for CPAN.pm
+> - CVE-2023-31485 for GitLab::API::v4
+> - CVE-2023-31486 for HTTP::Tiny
+> 
+> On 2023-04-18 17:46, Stig Palmquist wrote:
+>> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
+>> standalone on CPAN, does not verify TLS certs by default. Users must
+>> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
+>>
+>> We grepped trough CPAN to find distributions using HTTP::Tiny that
+>> didn't specify cert verification behaviour, possibly exposing users to
+>> mitm attacks. Here are some examples with patches:
+>>
+>> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
+>>    without verifying server certs. Fixed in v2.35-TRIAL.
+>>    https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
+>>
+>> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
+>>    https://github.com/bluefeet/GitLab-API-v4/pull/57
+>>
+>> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
+>>    information to a network attacker.
+>>    https://github.com/sanko/Finance-Robinhood/pull/6
+>>
+>> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
+>>    attacker.
+>>    https://github.com/pplu/aws-sdk-perl/pull/426
+>>
+>> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
+>>    attacker.
+>>    https://github.com/pplu/cloudhealth-api-perl/pull/2
+>>
+>> ... and more. We have generated a list of over 300 potentially affected
+>> CPAN distributions.
+>>
+>> More info in our blog post:
+>> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
+>>
+>> -- 
+>> Stig Palmquist <stig@...g.io>
+> 
