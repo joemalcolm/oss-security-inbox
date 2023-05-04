@@ -1,86 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/17
-Message-ID: <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
-Date: Tue, 17 Oct 2023 00:15:30 +0800
-From: Aron Xu <happyaron.xu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/8
+Message-ID: <a720f68e-5a14-2264-f8c2-70e9acba4374@apache.org>
+Date: Thu, 04 May 2023 21:37:03 +0000
+From: Ramesh Mani <rmani@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: CVE-2021-40331: Apache Ranger Hive Plugin: Any user with SELECT privilege on a database can alter the ownership of the table in Hive when Apache Ranger Hive Plugin is enabled 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: critical
 
-On Mon, Oct 16, 2023 at 11:34 PM Demi Marie Obenour
-<demi@...isiblethingslab.com> wrote:
->
-> On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
-> > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > > > Hi,
-> > > > >
-> > > > > Regardless of your viability of subscription status I think we also
-> > > > > (sadly) have to consider current geopolitical issues here.
-> > > > >
-> > > > > As far as I understand, US companies and US citizens are not permitted
-> > > > > to work with Chinese organizations and/or Chinese nationals.
-> > > >
-> > > > They can when working in the open on public projects and other
-> > > > open-source-like things.  For "closed" lists and groups, please consult
-> > > > a lawyer as the rules there are quite varied and depends on the
-> > > > countries and companies involved.
-> > > >
-> > > > But to be sure, again, consult your corporate lawyers, they know the
-> > > > rules and the issues involved better than I do.
-> > > >
-> > > > good luck!
-> > > >
-> > > > greg k-h
-> > >
-> > > The question is _who_ should consult their lawyers.
-> >
-> > The people deciding if this group can be added to the closed list as
-> > they are the ones responsible for it, AND then if the group is added,
-> > the members of the list need to talk to their lawyers to see if their
-> > country laws allow them to participate in a closed group with such
-> > members.  Many countries might be fine, many might not be, it all
-> > depends on the participants and what country laws they must abide by.
-> >
-> > So in short, everyone involved in the list!  :(
-> >
-> > good luck!
-> >
-> > greg "I talk to too many lawyers" k-h
->
-> The result of this is simply that those who do not have access to
-> lawyers on staff will not participate, which will reduce the value of
-> the list substantially.  I suspect that most people who report
-> vulnerabilities via distros@ fall into this category.  I know I do.
->
-> Therefore, I recommend rejecting the application as too risky from a
-> legal perspective.
->
+Affected versions:
 
-Not matter what would be the outcome, I'd like recommend an article
-from Linux Foundation which I think is a good read:
-https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
+- Apache Ranger Hive Plugin 2.0.0 through 2.3.0
 
-I'm not a lawyer though, but here are a few cents:
+Description:
 
-1) There is no general restrictions against Chinese organizations and nationals;
-2) Open source software (which is publicly available) is not subject
-to EAR (Export Administration Regulation of the US);
-3) According to § 734.7[1] of EAR, "knowledge with the intention that
-such information will be made publicly available if accepted" is
-treated as "Published" and is considered publicly available.
+Incorrect Permission Assignment for Critical Resource vulnerability in Apache Software Foundation Apache Ranger Hive Plugin.This issue affects Apache Ranger Hive Plugin: from 2.0.0 through 2.3.0.
 
-If I understand correctly, distros list is targeted to open source
-software issues with a policy[2] of "Please only use these lists to
-report and discuss security issues that are not yet public (but that
-are to be made public very soon)", then everyone could retain their
-peace of mind.
+This issue is being tracked as RANGER-3474 RANGER-3357 
 
-Regards,
-Aron
+References:
 
-[1]https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.7
-[2]https://oss-security.openwall.org/wiki/mailing-lists/distros
+https://ranger.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2021-40331
+https://issues.apache.org/jira/browse/RANGER-3474
+https://issues.apache.org/jira/browse/RANGER-3357
+
