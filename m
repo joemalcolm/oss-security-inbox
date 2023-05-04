@@ -1,56 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/3
-Message-ID: <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
-Date: Wed, 3 May 2023 15:15:47 -0400
-From: Reid Sutherland <reid@...rddimension.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/5
+Message-ID: <CAMZuV15xa4hH1TTd_ToPzEi55W04yzoMckiPnE_CtRtqoPYLxQ@mail.gmail.com>
+Date: Thu, 4 May 2023 20:23:45 +0200
+From: Rainer Canavan <rainer.canavan@...nga.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Who actually decides when something receives a CVE?  This can be used to 
-defame projects and products as in this case.
+On Thu, May 4, 2023 at 7:59 PM Sam Bull <9m199i@...bull.org> wrote:
+[...]
+> But, reporting a CVE where there is no vulnerability wastes a lot of time for the project
+> maintainers, as we had last year with this CVE:
+> https://github.com/aio-libs/aiohttp/issues/6801
+>
+> As far as we could tell, it seems a random user reported a DoS vulnerability to Github
+> (maybe?) and got a CVE assigned, with no reproducer or any evidence of a vulnerability,
+> and just a link to an issue which was never considered a security issue by anybody. None
+> of us involved with the project were notified of the report either, we learnt about the
+> CVE from other users asking us about it.
+>
+> It took months to get that satisfactorily revoked and stop getting users asking us about
+> it (apparently there's no standardised way to tell if CVEs are revoked, so seems DB
+> maintainers have to remove them on a case-by-case basis, making the process much longer).
+> So, something somewhere is not fully working in the process.
 
+As a project maintainer, you should be able to ask the CNA to REJECT a
+CVE, or at least have it marked DISPUTED, and that state should be
+reflected in all reasonable CVE databases. You'll still have to figure
+out how to document it as a non-issue inside your project for your
+users to find, but once you've established a working solution, that
+should not take months to resolve. I'd suspect that the issue in
+HTTP::Tiny would end up DISPUTED, since not validating TLS names is
+not the generally expected behavior, although it is documented (in
+bold no less).
 
-On 4/29/23 06:04, Stig Palmquist wrote:
-> 
-> - CVE-2023-31484 for CPAN.pm
-> - CVE-2023-31485 for GitLab::API::v4
-> - CVE-2023-31486 for HTTP::Tiny
-> 
-> On 2023-04-18 17:46, Stig Palmquist wrote:
->> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
->> standalone on CPAN, does not verify TLS certs by default. Users must
->> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
->>
->> We grepped trough CPAN to find distributions using HTTP::Tiny that
->> didn't specify cert verification behaviour, possibly exposing users to
->> mitm attacks. Here are some examples with patches:
->>
->> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
->>    without verifying server certs. Fixed in v2.35-TRIAL.
->>    https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
->>
->> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
->>    https://github.com/bluefeet/GitLab-API-v4/pull/57
->>
->> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
->>    information to a network attacker.
->>    https://github.com/sanko/Finance-Robinhood/pull/6
->>
->> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
->>    attacker.
->>    https://github.com/pplu/aws-sdk-perl/pull/426
->>
->> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
->>    attacker.
->>    https://github.com/pplu/cloudhealth-api-perl/pull/2
->>
->> ... and more. We have generated a list of over 300 potentially affected
->> CPAN distributions.
->>
->> More info in our blog post:
->> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
->>
->> -- 
->> Stig Palmquist <stig@...g.io>
-> 
+Rainer
