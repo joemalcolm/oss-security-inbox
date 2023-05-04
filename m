@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/18/3
-Message-ID: <CAEih1qWG=Ww18e6j-07RKND47_xAbwvPyoyMyiiP8GgeE+fEJw@mail.gmail.com>
-Date: Wed, 18 Jan 2023 16:20:51 +0100
-From: Pietro Borrello <borrello@...g.uniroma1.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/1
+Message-ID: <20230504064858.GF20467@suse.com>
+Date: Thu, 4 May 2023 08:48:58 +0200
+From: Johannes Segitz <jsegitz@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: hid: NULL pointer dereference in hid_betopff_play()
+Cc: Daniel Stenberg <daniel@...x.se>
+Subject: Re: semi-public issues on (linux-)distros
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-I'm disclosing a possible DoS when plugging in a malicious USB device,
-which advertises itself as a betop USB device.
+first of all let me take the opportunity to thank you for your work in this
+area. I'm not a member of the distros list anymore (have been for years),
+but I appreciate very much what you do for the community.
 
-A device driver must check that the device correctly registered the
-expected inputs and reports.
-Otherwise, a malicious USB device may violate assumptions throughout
-the driver's code.
+On Wed, May 03, 2023 at 09:00:11PM +0200, Solar Designer wrote:
+> curl project's handling of security issues has been exemplary so far, in
 
-betopff_init() in the betop driver's code only checks that the device advertises
-at least 4 report values among all its fields, but hid_betopff_play() expects
-at least 4 report fields with a value each.
-A device advertising an output report with one field and 4 report values
-would pass the check but crash the kernel with a NULL pointer dereference
-in hid_betopff_play(), when accessing `betopff->report->field[2]->value[0]`.
+I agree. And I'm happy to see that this is being discussed, as I've seen
+Daniel talking on Mastodon about this and it would be a shame if they
+wouldn't provide their high quality reports to distributions up front
+anymore.
 
-Best regards,
-Pietro Borrello
+> my opinion at least, which gives me reason to expect sound judgement
+> from Daniel on which issues to handle in which way.  Also, like it or
+> not, starting to publicly commit some security fixes is a decision the
+> project has already made, so our only options are (1) to change the list
+> policy, (2) to grant one-time exceptions every time, or (3) to create
+> extra work for Daniel for notifying the individual distros other than
+> via the list (or choose not to).
+
+My vote is for option 1. 
+
+> I would also be happy to have a general solution if we _reasonably_ can,
+> for all projects, but I'm not sure how reasonable that is.  The terms
+> for Linux kernel's vs. curl's exceptions may reasonably vary to meet
+> these project's exact needs and not more: for Linux kernel it's "issues
+> concurrently or very recently handled by the Linux kernel security team"
+> and for curl it can be "low and medium severity issues".
+
+This is indeed tricky. I would not try to sync this to specific conditions
+of the upstream policy, but to the proven track record of an upstream
+project. If they can show that they can reliable do this for security
+issues below a certain threshold they should get approved to post
+semi-public issues onto the list.
+
+And yes, this isn't a hard criterion that can be easily judged, which is
+indeed a problem. There could be some form of vote on the list to decide
+this for each project asking for it. In my experience the subscribers are
+reasonable and I would expect that this would lead to good results.
+
+Johannes
+-- 
+GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Frankenstraße 146, 90461 Nürnberg, Germany
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+(HRB 36809, AG Nürnberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
