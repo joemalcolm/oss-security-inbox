@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/29/1
-Message-ID: <alpine.LSU.2.21.2308291043590.21665@pobox.suse.cz>
-Date: Tue, 29 Aug 2023 10:46:09 +0200 (CEST)
-From: Miroslav Benes <mbenes@...e.cz>
-To: Donald Buczek <buczek@...gen.mpg.de>
-cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com,  Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>,  ksummit@...ts.linux.dev
-Subject: Re: Re: [MAINTAINERS SUMMIT] Handling of embargoed security issues -- security@...g vs. linux-distros@
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/6
+Message-Id: <C2F1E269-0FD7-45A2-A0E1-F1AC29383C09@dwheeler.com>
+Date: Thu, 4 May 2023 16:50:53 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-[ apologies for a slight off topic ]
 
-Hi,
+> On May 4, 2023, at 2:23 PM, Rainer Canavan <rainer.canavan@...nga.com> wrote:
+> I'd suspect that the issue in
+> HTTP::Tiny would end up DISPUTED, since not validating TLS names is
+> not the generally expected behavior, although it is documented (in
+> bold no less).
 
-On Fri, 25 Aug 2023, Donald Buczek wrote:
+I would also expect it to be at most disputed, not rejected.
+As Jeffry Walton noted, failing to validate a certificate is considered
+by many to be a vulnerability, there's even a specific CWE for this case:
+https://cwe.mitre.org/data/definitions/295.html
 
-> We go a long way to avoid rebooting. This might be as easy as disabling 
-> unused dynamic modules by just removing the .ko files from userspace, 
-> but sometimes we even convert an upstream fix into a loadable module 
-> which uses ftrace to replace or wrap the buggy functions in the running 
-> systems. A "reboot party" would only be a measure of last resort.
+Per the OP:
 
-the kernel live patching infrastructure might help you with this. See 
-Documentation/livepatch/ and samples/livepatch/ in the kernel tree.
+> On Apr 18, 2023, at 11:46 AM, Stig Palmquist <stig@...g.io> wrote:
+> ... We have generated a list of over 300 potentially affected
+> CPAN distributions.
 
-Regards,
-Miroslav
+A default that potentially causes over 300 other vulnerabilities sounds like
+a root cause vulnerability to me. Clearly many users do *not* treat this as expected behavior.
+A change of the default would, for many, produce the expected behavior.
+
+--- David A. Wheeler
+
