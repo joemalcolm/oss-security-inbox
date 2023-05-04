@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4265" "Thursday" "17" "August" "2017" "20:14:46" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<929304.649445356-sendEmail@localhost>" "77" "[oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)" nil nil nil "8" "2017081720:14:46" "[oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)" (number mark "U       ago@gentoo.o Aug 17   77/4265  " thread-indent "\"[oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5903 invoked by uid 550); 17 Aug 2017 20:15:06 -0000
+Received: (qmail 13625 invoked by uid 550); 4 May 2023 22:09:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,89 +7,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5734 invoked from network); 17 Aug 2017 20:15:03 -0000
-Message-ID: <929304.649445356-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 17 Aug 2017 20:14:46 +0000
+Received: (qmail 20038 invoked from network); 4 May 2023 21:37:24 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ramesh Mani <rmani@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <a720f68e-5a14-2264-f8c2-70e9acba4374@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 04 May 2023 21:37:03 +0000
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-426991.045548679"
-Subject: [oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)
+Subject: [oss-security] CVE-2021-40331: Apache Ranger Hive Plugin: Any user with SELECT
+ privilege on a database can alter the ownership of the table in Hive when
+ Apache Ranger Hive Plugin is enabled 
 
-------MIME delimiter for sendEmail-426991.045548679
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Severity: critical
+
+Affected versions:
+
+- Apache Ranger Hive Plugin 2.0.0 through 2.3.0
 
 Description:
-libfpx is a library for manipulating FlashPIX images.
 
-I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
-again.
-Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
-are only accepting patches and push new releases.
-This issue was found using the gm command line tool of graphicsmagick.
+Incorrect Permission Assignment for Critical Resource vulnerability in Apac=
+he Software Foundation Apache Ranger Hive Plugin.This issue affects Apache =
+Ranger Hive Plugin: from 2.0.0 through 2.3.0.
 
-The complete ASan output of the issue:
+This issue is being tracked as RANGER-3474 RANGER-3357=20
 
-# gm identify $FILE
-==11430==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fc529a4a4e7 bp 0x000000000001 sp 0x7ffefe672888 T0)
-==11430==The signal is caused by a READ memory access.
-==11430==Hint: address points to the zero page.
-    #0 0x7fc529a4a4e6 in PFileFlashPixView::GetGlobalInfoProperty(unsigned int, OLEProperty**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:791
-    #1 0x7fc529a4b40f in PFileFlashPixView::Init() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:293
-    #2 0x7fc529a4bde9 in PFileFlashPixView::PFileFlashPixView(FicNom&, char const*, mode_Ouverture, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:121
-    #3 0x7fc529a52e92 in PFlashPixImageView::PFlashPixImageView(FicNom&, char const*, mode_Ouverture, long, PSearchHookObject*, FPXStatus*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:405
-    #4 0x7fc529a55c81 in OpenImageByFilename(FicNom&, char const*, unsigned long, unsigned int*, unsigned int*, unsigned int*, unsigned int*, FPXColorspace*, PFlashPixImageView**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1629
-    #5 0x7fc529a55dc9 in FPX_OpenImageByFilename /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1686
-    #6 0x7fc529cc45e6 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:226:16
-    #7 0x7fc52f599e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #8 0x7fc52f596e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
-    #9 0x7fc52f462ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
-    #10 0x7fc52f469065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #11 0x7fc52f5147fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #12 0x7fc52f511931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #13 0x7fc52dd7c680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #14 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+References:
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:791 in PFileFlashPixView::GetGlobalInfoProperty(unsigned int, OLEProperty**)
-==11430==ABORTING
-
-Affected version:
-1.3.1_p6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12921
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00311-libfpx-NULLptr-PFileFlashPixView_GetGlobalInfoProperty
-
-Timeline:
-2017-08-01: bug discovered
-2017-08-09: blog post about the issue
-2017-08-17: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-pfileflashpixviewgetglobalinfoproperty-f_fpxvw-cpp/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-426991.045548679--
+https://ranger.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2021-40331
+https://issues.apache.org/jira/browse/RANGER-3474
+https://issues.apache.org/jira/browse/RANGER-3357
 
