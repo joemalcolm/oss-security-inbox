@@ -1,90 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/5
-Message-ID: <92s379q0-52o-4rp2-o73-p1q92825pr39@unkk.fr>
-Date: Mon, 20 Mar 2023 08:26:17 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-27537: HSTS double-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/7
+Message-ID: <eb6516d2-82f7-481d-f2a4-f7053c05c67f@apache.org>
+Date: Thu, 04 May 2023 20:59:50 +0000
+From: Madhan Neethiraj <madhan@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-45048: Apache Ranger: code execution vulnerability in policy expressions 
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-27537: HSTS double-free
-================================
+Affected versions:
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27537.html)
+- Apache Ranger 2.3.0
 
-VULNERABILITY
--------------
+Description:
 
-libcurl supports sharing HSTS data between separate "handles". This sharing was
-introduced without considerations for do this sharing across separate threads
-but there was no indication of this fact in the documentation.
+Authenticated users with appropriate privileges can create policies having expressions that can exploit code execution vulnerability. This issue affects Apache Ranger: 2.3.0.
 
-Due to missing mutexes or thread locks, two threads sharing the same HSTS data
-could end up doing a double-free or use-after-free.
+Credit:
 
-We are not aware of any exploit of this flaw.
+g1831767442@....com (finder)
 
-INFO
-----
+References:
 
-This feature was not implemented to support sharing between threads. That is
-still left for future improvements. The fix for this issue is therefore a
-documentation update clarifying that sharing HSTS between threads is not
-expected to work.
+https://ranger.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-45048
 
-CVE-2023-27537 was introduced in [commit
-076a2f629119222a](https://github.com/curl/curl/commit/076a2f629119222a), shipped
-in curl 7.88.0.
-
-CWE-415: Double Free
-
-Severity: Low
-
-Severity is set to Low because
-
-  - Not widely used functionality
-  - The timing necessary to trigger this has to match fairly exact
-  - Exploitation this for anything but denial of service is difficult
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.88.0 to and including 7.88.1
-- Not affected versions: curl < 7.88.0 and curl >= 8.0.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2023-27537](https://github.com/curl/curl/commit/dca4cdf071be0)
-
-RECOMMENDATIONS
---------------
-
-  A - Do not share HSTS data between threads
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 8 2023. We contacted
-distros@...nwall on March 13, 2023.
-
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
