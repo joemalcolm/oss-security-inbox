@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2481" "Wednesday" "14" "September" "2016" "08:13:05" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1609140812200.31085@tvnag.unkk.fr>" "84" "[oss-security] [SECURITY VULNERABILITY] curl escape and unescape integer overflows" "^Date:" nil nil "9" "2016091406:13:05" "[oss-security] [SECURITY VULNERABILITY] curl escape and unescape integer overflows" (number mark "U       daniel@haxx. Sep 14   84/2481  " thread-indent "\"[oss-security] [SECURITY VULNERABILITY] curl escape and unescape integer overflows\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5387 invoked by uid 550); 14 Sep 2016 06:13:19 -0000
+Received: (qmail 11576 invoked by uid 550); 4 May 2023 20:51:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5361 invoked from network); 14 Sep 2016 06:13:18 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-Message-ID: <alpine.DEB.2.20.1609140812200.31085@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Date: Wed, 14 Sep 2016 08:13:05 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY VULNERABILITY] curl escape and unescape integer
- overflows
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
+Received: (qmail 11557 invoked from network); 4 May 2023 20:51:14 -0000
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
+Date: Thu, 4 May 2023 16:50:53 -0400
+References: <20230418154630.eoheygqyom3c7ovw@stig.io>
+ <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+ <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
+ <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
+ <66e0470c0fcead1656316f51e560586d9411afe3.camel@sambull.org>
+ <CAMZuV15xa4hH1TTd_ToPzEi55W04yzoMckiPnE_CtRtqoPYLxQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <CAMZuV15xa4hH1TTd_ToPzEi55W04yzoMckiPnE_CtRtqoPYLxQ@mail.gmail.com>
+Message-Id: <C2F1E269-0FD7-45A2-A0E1-F1AC29383C09@dwheeler.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.7)
+Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
+ affecting CPAN.pm and other modules
 
-curl escape and unescape integer overflows
-==========================================
 
-Project cURL Security Advisory, September 14, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160914.html)
+> On May 4, 2023, at 2:23 PM, Rainer Canavan <rainer.canavan@avenga.com> wr=
+ote:
+> I'd suspect that the issue in
+> HTTP::Tiny would end up DISPUTED, since not validating TLS names is
+> not the generally expected behavior, although it is documented (in
+> bold no less).
 
-VULNERABILITY
--------------
+I would also expect it to be at most disputed, not rejected.
+As Jeffry Walton noted, failing to validate a certificate is considered
+by many to be a vulnerability, there's even a specific CWE for this case:
+https://cwe.mitre.org/data/definitions/295.html
 
-The four libcurl functions `curl_escape()`, `curl_easy_escape()`,
-`curl_unescape` and `curl_easy_unescape` perform string URL percent escaping
-and unescaping. They accept custom string length inputs in signed integer
-arguments. (The functions having names without "easy" being the deprecated
-versions of the others.)
+Per the OP:
 
-The provided string length arguments were not properly checked and due to
-arithmetic in the functions, passing in the length 0xffffffff (2^32-1 or
-`UINT_MAX` or even just -1) would end up causing an allocation of zero bytes
-of heap memory that curl would attempt to write gigabytes of data into.
+> On Apr 18, 2023, at 11:46 AM, Stig Palmquist <stig@stig.io> wrote:
+> ... We have generated a list of over 300 potentially affected
+> CPAN distributions.
 
-The use of 'int' for this input type in the API is of course unwise but has
-remained so in order to maintain the API over the years.
+A default that potentially causes over 300 other vulnerabilities sounds like
+a root cause vulnerability to me. Clearly many users do *not* treat this as=
+ expected behavior.
+A change of the default would, for many, produce the expected behavior.
 
-We are not aware of any exploit of this flaw.
+--- David A. Wheeler
 
-INFO
-----
-
-This flaw does not affect the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-7167 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following libcurl versions.
-
-- Affected versions: libcurl 7.11.1 to and including 7.50.2
-- Not affected versions: libcurl < 7.11.1 and libcurl >= 7.50.3
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.50.3, these functions will deny negative string lengths from
-being used.
-
-A [patch for CVE-2016-7167](https://curl.haxx.se/CVE-2016-7167.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.50.3
-
-  B - Apply the patch to your version and rebuild
-
-  C - Make sure you don't pass in string lengths larger than `INT_MAX`
-      (typically 2^31) or negative values to the `curl_easy_(un)escape()`
-      functions!
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 8 by the Mitre CVE
-Assignment Team based on the discussions in [PHP bug report
-72674](https://bugs.php.net/bug.php?id=72674).
-
-libcurl 7.50.3 was released on September 14 2016, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Thanks to the Mitre CVE Assignment Team for reporting this to us.
-
--- 
-
-  / daniel.haxx.se
