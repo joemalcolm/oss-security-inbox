@@ -1,53 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/16/1
-Message-ID: <CAJedcCwWh0NV13rSZdU7jCcQKdTTes=AxSQFwYjbFbB0LyFHbw@mail.gmail.com>
-Date: Tue, 16 May 2023 12:18:30 +0800
-From: Zheng Hacker <hackerzheng666@...il.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: linux kernel 6.3.0: slab-use-after-free Write in txEnd due to race condition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/3
+Message-ID: <66e0470c0fcead1656316f51e560586d9411afe3.camel@sambull.org>
+Date: Thu, 04 May 2023 18:15:19 +0100
+From: Sam Bull <9m199i@...bull.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Greg KH <greg@...ah.com> 于2023年5月15日周一 20:05写道：
->
-> On Mon, May 15, 2023 at 09:34:36AM +0800, 蓝色的小羊 wrote:
-> > Syzkaller reported an error "slab-use-after-free Write in txEnd".
->
-> In the JFS filesystem, right?
->
-> <snip>
->
-> >  fs/jfs/jfs_debug.c  | 2 ++
->
->         $ ./scripts/get_maintainer.pl fs/jfs/jfs_debug.c
->         Dave Kleikamp <shaggy@...nel.org> (odd fixer:JFS FILESYSTEM)
->         jfs-discussion@...ts.sourceforge.net (open list:JFS FILESYSTEM)
->         linux-kernel@...r.kernel.org (open list)
->
-> Any specific reason you didn't send this to the mailing list and
-> developers who can review and apply this potential fix to the kernel
-> tree?
->
-> syzbot-reported issues are not really a new or exciting thing, we get
-> loads of them every week (see the syzbot mailing list and summaries).
-> What is good is for fixes like this one to be sent to us so that we can
-> merge them for all to use.
->
-> That is if anyone is actually using the JFS filesystem anymore, it is
-> pretty obsolete.  Are you using it?
->
+On Wed, 2023-05-03 at 15:54 -0400, David A. Wheeler wrote:
+> > On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
+> > Who actually decides when something receives a CVE?
+> 
+> There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that
+> is, to become a CVE Numbering Authority (CNA) - has to follow various processes.
+> 
+> >  This can be used to defame projects and products as in this case.
+> 
+> Identifying a vulnerability does not defame a project.
 
-Hi Greg,
+But, reporting a CVE where there is no vulnerability wastes a lot of time for the project
+maintainers, as we had last year with this CVE:
+https://github.com/aio-libs/aiohttp/issues/6801
 
-Sorry for our mistake. My friend is not familiar with the rules. We
-should send it to OSS-security after the bug is fixed. The patch now
-is sent to the open mailing list. Sorry again for the unintentional
-mistake.
+As far as we could tell, it seems a random user reported a DoS vulnerability to Github
+(maybe?) and got a CVE assigned, with no reproducer or any evidence of a vulnerability,
+and just a link to an issue which was never considered a security issue by anybody. None
+of us involved with the project were notified of the report either, we learnt about the
+CVE from other users asking us about it.
 
-Best regards,
-Zheng
+It took months to get that satisfactorily revoked and stop getting users asking us about
+it (apparently there's no standardised way to tell if CVEs are revoked, so seems DB
+maintainers have to remove them on a case-by-case basis, making the process much longer).
+So, something somewhere is not fully working in the process.
 
-
-> thanks,
->
-> greg k-h
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
