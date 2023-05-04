@@ -1,55 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/4
-Message-ID: <20230621140228.GA26707@openwall.com>
-Date: Wed, 21 Jun 2023 16:02:28 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Solar Designer talk about 15 years of oss-security at SSTIC conference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/4
+Message-ID: <407acc1c-dc56-d223-7ca9-d8d57532d145@oracle.com>
+Date: Thu, 4 May 2023 11:06:01 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Sam Bull <9m199i@...bull.org>
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 5/4/23 10:15, Sam Bull wrote:
+> On Wed, 2023-05-03 at 15:54 -0400, David A. Wheeler wrote:
+>>> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
+>>> Who actually decides when something receives a CVE?
+>>
+>> There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that
+>> is, to become a CVE Numbering Authority (CNA) - has to follow various processes.
+>>
+>>>   This can be used to defame projects and products as in this case.
+>>
+>> Identifying a vulnerability does not defame a project.
+> 
+> But, reporting a CVE where there is no vulnerability wastes a lot of time for the project
+> maintainers, as we had last year with this CVE:
+> https://github.com/aio-libs/aiohttp/issues/6801
+> 
+> As far as we could tell, it seems a random user reported a DoS vulnerability to Github
+> (maybe?) and got a CVE assigned, with no reproducer or any evidence of a vulnerability,
+> and just a link to an issue which was never considered a security issue by anybody. None
+> of us involved with the project were notified of the report either, we learnt about the
+> CVE from other users asking us about it.
+> 
+> It took months to get that satisfactorily revoked and stop getting users asking us about
+> it (apparently there's no standardised way to tell if CVEs are revoked, so seems DB
+> maintainers have to remove them on a case-by-case basis, making the process much longer).
+> So, something somewhere is not fully working in the process.
+The CVE process is designed with a primary goal of simply providing a unique id
+for each claimed vulnerability - it's intended to not have much deeper meaning
+than creating a UUID.   There is no requirement that the claimed vulnerability
+be well described, proven, accepted, fixed, or anything else beyond not being a
+duplicate of an existing CVE entry.
 
-After SSTIC in Rennes, France, I also gave a revision of the talk at
-BSidesLjubljana in Ljubljana, Slovenia.  Incidentally, this was SSTIC's
-20th anniversary and the event was closed by a related talk on 20+ years
-of CERT-FR and ANSSI, whereas this year's BSidesLjubljana was held in
-the computer history museum, a fitting venue for the beginning of my
-talk, which starts with a retrospective into the 1980s.
+Unfortunately, many CVE consumers assume a far greater level of meaning to CVEs
+than the CVE project intends by them.
 
-Here are the slides:
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-https://www.openwall.com/presentations/SSTIC-BSidesLjubljana2023-oss-security/
-
-I've attached the Markdown source for these to this message.
-
-Video of the SSTIC talk is available via the link to SSTIC conference
-website, and I expect the same will be true for BSidesLjubljana soon.
-
-I'd like to thank the organizers of both of these events for making them
-so great.  It was a pleasant experience attending and speaking at these.
-
-On Sat, Jun 10, 2023 at 10:04:44AM +0000, Katherine Mcmillan wrote:
-> has there ever been any consideration of having an "oss-security-advocacy" list?
-
-No, but your question got me thinking about it now.  I think that before
-possibly setting up a new list, we should have that sort of discussions
-in here - then see if we really want to move them to a separate list.
-
-> I like seeing/sharing relevant updates like this.
-
-I see no problem with them being right on the oss-security list.  While
-we generally don't allow conference CFPs here, we do allow and encourage
-relevant materials from conferences to be shared here.  A minor problem
-is sharing actual content vs. links only - we want the actual content
-for archival, but these days slide decks tend to be a bit too large
-for relaying them to all list members most of whom don't need a copy.
-
-On Tue, Jun 13, 2023 at 07:48:40PM +0300, Georgi Guninski wrote:
-> I am missing the old full disclosure mailing list,
-> there is little discussion on oss-security.
-
-I'm all for more discussion, but I'd like it to be relevant and helpful.
-
-Alexander
-
-View attachment "SSTIC-BSidesLjubljana2023-oss-security.md" of type "text/plain" (10816 bytes)
