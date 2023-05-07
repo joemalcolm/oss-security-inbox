@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2765" "Tuesday" "29" "August" "2017" "14:46:22" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<6609652.OIiHvm4qLd@wanheda>" "69" "[oss-security] A bunch of duplicate CVEs requested for?? bho.." "^Date:" nil nil "8" "2017082912:46:22" "[oss-security] A bunch of duplicate CVEs requested for?? bho.." (number mark "        ago@gentoo.o Aug 29   69/2765  " thread-indent "\"[oss-security] A bunch of duplicate CVEs requested for?? bho..\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7481 invoked by uid 550); 29 Aug 2017 12:46:38 -0000
+Received: (qmail 20100 invoked by uid 550); 7 May 2023 21:16:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +6,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7432 invoked from network); 29 Aug 2017 12:46:37 -0000
-Message-ID: <6609652.OIiHvm4qLd@wanheda>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="UTF-8"
-Date: Tue, 29 Aug 2017 14:46:22 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] A bunch of duplicate CVEs requested for?? bho..
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 23638 invoked from network); 7 May 2023 17:03:08 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Pierre Jeambrun <pierrejeambrun@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <9cb8f8f7-e532-c9df-3e6b-511067d921a9@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 07 May 2023 17:02:53 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-29247: Stored XSS on Apache Airflow 
 
-Hi all.
+Severity: important
 
-In the last time there are some people that run afl for fuzzing...that's just 
-fine and great. Some people miss to communicate their findings to upstream and 
-request a CVE from mitre.
-However I'm noticing that every day there are new duplicates, let me post some 
-examples:
+Affected versions:
 
-1) posted by owl337 on the redhat bugzilla, found by me months ago:
+- Apache Airflow before 2.6.0
 
-https://nvd.nist.gov/vuln/detail/CVE-2017-13753 duplicate of:
-https://nvd.nist.gov/vuln/detail/CVE-2016-9396
+Description:
 
+Task instance details page in the UI is vulnerable to a stored XSS.This iss=
+ue affects Apache Airflow: before 2.6.0.
 
+Credit:
 
-The other recent examples here: http://i.imgur.com/q8g9SQi.png
+taidh from VNPT - VCI (finder)
+kuteminh11 (finder)
 
-2) Other duplicates are filed from qflb.wu which posts on full-disclosure.
-http://seclists.org/fulldisclosure/2017/Jul/author.html
-See about lame/mpg123/libmad
-Some CVEs about lame was issued, also there are an high number of 
-vulnerabilities never confirmed by upstream nor posted on their bug tracking 
-system. Yes, sometimes I receive emails that say that the bug is not 
-reproducible but I'm always trying to help to reproduce. Instead some report 
-says: "If you want the poc please contact me at $email"
+References:
 
-How to avoid to file duplicate? for the example number 1 just checking here:
-https://marc.info/?l=oss-security&w=2&r=1&s=JPC_NOMINALGAIN&q=b
-https://nvd.nist.gov/vuln/search/results?
-adv_search=false&form_type=basic&results_type=overview&search_type=all&query=JPC_NOMINALGAIN
+https://github.com/apache/airflow/pull/30447
+https://github.com/apache/airflow/pull/30779
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-29247
 
-
-Another strange thing, time ago I discovered an FPE in lame, which happens 
-only in the command-line tool:
-https://blogs.gentoo.org/ago/2017/06/17/lame-divide-by-zero-in-parse_wave_header-get_audio-c/
-
-After digging I discovered it was already reported by Brian Carpenter here:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777159 which says:
-
-"fortunately, this is all in the frontend code in
-frontend/get_audio.c:parse_wave_header() and not in the library"
-
-At the time I filed the CVE request I failed too see that it is not suitable 
-for a CVE, follow what mitre said about:
-"There is no CVE ID for this. Even if a web site runs the lame
-command-line tool, a divide-by-zero error does not have any
-availability impact for the web service, because the crash would occur
-in an independent process."
-
-Great..fine..that was my bad, but months later we have:
-https://nvd.nist.gov/vuln/detail/CVE-2017-11720
-"There is a division-by-zero vulnerability in LAME 3.99.5, caused by a 
-malformed input file."
-which points to:
-https://sourceforge.net/p/lame/bugs/460/
-Fortunately the author shared the poc and the password.
-
-I'm providing (http://i.imgur.com/GDWnHRM.png) a screenshot md5sum-included to 
-demonstrate that the issues are identically.
-
-
-Does someone know:
-1) How to avoid that CVE duplicates are issued?
-2) Why the same issue was considered not-suitable and months later suitable 
-for a CVE?
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
