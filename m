@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/9
-Message-ID: <CAH8yC8kEfhZqyby8aFC8hZGS2YBxGvtyjjc07ZiaCE7XJG-h-w@mail.gmail.com>
-Date: Wed, 21 Jun 2023 13:25:58 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/07/1
+Message-ID: <9cb8f8f7-e532-c9df-3e6b-511067d921a9@apache.org>
+Date: Sun, 07 May 2023 17:02:53 +0000
+From: Pierre Jeambrun <pierrejeambrun@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Subject: CVE-2023-29247: Stored XSS on Apache Airflow 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 21, 2023 at 1:15 PM Dave Horsfall <dave@...sfall.org> wrote:
->
-> On Wed, 21 Jun 2023, Jeffrey Walton wrote:
->
-> > Memory leaks on exit are par for the course in GNU software per
-> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
->
-> Don't bother with this, don't bother with that, etc...  Call me old-school
-> (which I am), but I cannot abide sloppy programming[*].
->
-> At the risk of starting a culture war, that is one of the reasons why I
-> avoid GNU libraries whenever possible.
+Severity: important
 
-Yeah, I'm with you. It is sloppy programming from a bygone era.
+Affected versions:
 
-I've had the discussion with Stallman and the Gnulib folks. They don't
-realize the harm they are doing with that policy (or they don't care).
-It makes security testing and evaluation orders of magnitude more
-difficult because it's hard to impossible to differentiate the "good"
-memory leaks from the "bad" memory leaks. Effectively, everyone with
-higher standards must lower their standard to GNU's.
+- Apache Airflow before 2.6.0
 
-Jeff
+Description:
+
+Task instance details page in the UI is vulnerable to a stored XSS.This issue affects Apache Airflow: before 2.6.0.
+
+Credit:
+
+taidh from VNPT - VCI (finder)
+kuteminh11 (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/30447
+https://github.com/apache/airflow/pull/30779
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-29247
+
