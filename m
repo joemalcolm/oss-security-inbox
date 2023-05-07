@@ -1,62 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/10/2
-Message-ID:  <YT2PR01MB98273D8129B5BB67241FB30BE856A@YT2PR01MB9827.CANPRD01.PROD.OUTLOOK.COM>
-Date: Sat, 10 Jun 2023 10:04:44 +0000
-From: Katherine Mcmillan <kmcmi046@...tawa.ca>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Solar Designer talk about 15 years of oss-security at SSTIC conference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/07/2
+Message-ID: <ZFfp47ICc31AgRmN@gentoo.org>
+Date: Sun, 7 May 2023 11:11:47 -0700
+From: John Helmert III <ajak@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
 Content-Type: text/plain; charset=utf-8
 
-Hi Yves-Alexis,
+On Wed, May 03, 2023 at 03:41:26PM -0400, Jeffrey Walton wrote:
+> On Wed, May 3, 2023 at 3:21 PM Reid Sutherland <reid@...rddimension.net> wrote:
+> > On 4/29/23 06:04, Stig Palmquist wrote:
+> > >
+> > > - CVE-2023-31484 for CPAN.pm
+> > > - CVE-2023-31485 for GitLab::API::v4
+> > > - CVE-2023-31486 for HTTP::Tiny
+> > > ...
+> >
+> > Who actually decides when something receives a CVE?  This can be used to
+> > defame projects and products as in this case.
+> 
+> "Who decides" can be a tricky question.
+> 
+> Several organizations issue CVEs, like Red Hat and Gentoo. A bug
+> usually has to meet a criteria, like falling into a CWE category, to
+> be issued by the organization.
 
-Personally, I don’t mind the plug for this at all - wonderful job Solar Designer!
+Actually, Gentoo is NOT a CNA, and thus cannot issue CVEs.
 
-Speaking of which, has there ever been any consideration of having an “oss-security-advocacy” list? I like seeing/sharing relevant updates like this.
+> You can also get them from Mitre's site. In the case of Mitre, it is
+> the person who requests the CVE.
+> 
+> Some CVE's are tenuous or questionable. You often see this from folks
+> trying to pad their resume. For example, a researcher may request a
+> CVE for a behavior that requires elevated privileges. In this case,
+> someone who is Root on Linux or Administrator on Windows can already
+> do the damage, so the behavior in question that happens with
+> privileges is not really interesting.
+> 
+> In the case of HTTP::Tiny, the default configuration and behavior is
+> running afoul of https://cwe.mitre.org/data/definitions/295.html and
+> https://cwe.mitre.org/data/definitions/319.html. In this case, the
+> industry believes comms should use HTTPS and the name hostname should
+> be validated.
+> 
+> Jeff
 
-I also don’t want to use this list to plug oss-security related talks and conferences, but having said that, the *BSD community supports these efforts and I think I can speak for many when I say that we would love to have an oss-security talk at some point at EuroBSDCon. Keep it in mind, and consider submitting an abstract - open source security is a key topic at this conference too!
-
-Sincerely,
-Katie
-
-
-________________________________
-From: Yves-Alexis Perez <corsac@...ian.org>
-Sent: Saturday, June 10, 2023 5:51:21 AM
-To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
-Subject: [oss-security] Solar Designer talk about 15 years of oss-security at SSTIC conference
-
-Attention : courriel externe | external email
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-Hi all,
-
-while conference talks aren't really the list focus, I guess there might be an
-exception for this one.
-
-Earlier this week, Solar Designer made the opening keynote of the SSTIC
-conference in Rennes (France). A retrospective about the open-source security
-community and coordination around vulnerabilities, attack surface etc.
-
-For interested people, the video replay is available at
-https://www.sstic.org/2023/presentation/ouverture_2023/
-
-Many thanks to Solar Designer for the talk and all the years of managing oss-
-security (and the distros list).
-
-Regards,
-- --
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmSER5oACgkQ3rYcyPpX
-RFs8UggAh23FhFo9nbg+hPovw5sZ1cQuHxcCpVmnWE5COhUSzmF1/JVSEZMLWxez
-dOeVEgvCJWOl92u0lwTiTfK+tG4eNi0R2UO+uQHW+pv/5dPMV1ti/DmpwD/BhS6w
-FzzpUdMM05E9hZEDjOfsXJkBn4pMg3kCzrSuK/KlOdkp9/qI7dCD4J27KwZX2VDB
-tih4MjBexSUkdaX/hhvWq7n9plvs5Jbf8U4vy4jBaHFlVdJohu3QVrPb5H7p7mAW
-YVkUhhPX8GSBBtkAoIYcnrDZQv4762PVkixV6dRZlhowjbzsBJ198PRk1Ct7Pepo
-gRAM0FC7qE4GMyXTFhU2b80wLSTB9Q==
-=K4GU
------END PGP SIGNATURE-----
-
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
