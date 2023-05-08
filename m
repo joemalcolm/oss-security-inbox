@@ -1,254 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/5
-Message-Id: <E1qqBYL-0006qP-Hn@xenbits.xenproject.org>
-Date: Tue, 10 Oct 2023 12:09:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 443 v3 (CVE-2023-34325) - Multiple vulnerabilities in libfsimage disk handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/08/3
+Message-ID: <e18a885b-de15-c287-e4a4-a0df7904f15f@tholl.xyz>
+Date: Mon, 8 May 2023 16:01:59 +0200
+From: Tobias Holl <tobias@...ll.xyz>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel io_uring out-of-bounds access to physical memory
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-            Xen Security Advisory CVE-2023-34325 / XSA-443
-                               version 3
-
-	   Multiple vulnerabilities in libfsimage disk handling
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-libfsimage contains parsing code for several filesystems, most of them based on
-grub-legacy code.  libfsimage is used by pygrub to inspect guest disks.
-
-Pygrub runs as the same user as the toolstack (root in a priviledged domain).
-
-At least one issue has been reported to the Xen Security Team that allows an
-attacker to trigger a stack buffer overflow in libfsimage.  After further
-analisys the Xen Security Team is no longer confident in the suitability of
-libfsimage when run against guest controlled input with super user priviledges.
-
-In order to not affect current deployments that rely on pygrub patches are
-provided in the resolution section of the advisory that allow running pygrub in
-deprivileged mode.
-
-IMPACT
-======
-
-A guest using pygrub can escalate its privilege to that of the domain
-construction tools (i.e., normally, to control of the host).
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are affected.
-
-MITIGATION
-==========
-
-Ensuring that guests do not use the pygrub bootloader will avoid this
-vulnerability.
-
-For cases where the PV guest is known to be 64bit, and uses grub2 as a
-bootloader, pvgrub is a suitable alternative pygrub.
-
-Running only HVM guests will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Ferdinand Nölscher of Google.
-
-RESOLUTION
-==========
-
-Applying patches 1-4 resolves the libfsimage XFS stack overflow.  Applying
-patches 5-11 add additional functionality to pygrub and libxl in order to run
-pygrub in a restricted environment using a specific UID.  Check xl.cfg man page
-for information on the bootloader_restrict option.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa443/xsa443-??.patch          xen-unstable
-xsa443/xsa443-4.17-??.patch     Xen 4.17.x
-xsa443/xsa443-4.16-??.patch     Xen 4.16.x
-xsa443/xsa443-4.15-??.patch     Xen 4.15.x
-
-$ sha256sum xsa443*/*
-d2b306efd35b1e207904f4142be724c4b70bacafae73f8efd5ee12570eb235a1  xsa443/xsa443-01.patch
-3af33399c9966465ef65461c344fe0c3184a21a59830de8e3701122cda4f5483  xsa443/xsa443-02.patch
-a260be66f02307143d9e776cac2b95735011056bebd718f175680f879563ea21  xsa443/xsa443-03.patch
-170d511df3a3898ab0302f7e85bc63127cb0b75f73fdcd83104d3f358365f648  xsa443/xsa443-4.15-01.patch
-16c942da8929ab240a8807da05d9b39bbabfb34adc4f5a63bc3d2d99568973b1  xsa443/xsa443-4.15-02.patch
-13fd27948f5a5e21e1a8e0ddf218ec79b44f1fca55fdc371c932ad2dfa5c23ea  xsa443/xsa443-4.15-03.patch
-1c865b8f0048483ea76e8cfbeba1536ca6cbde04c58a7e0d485d46c063046cf4  xsa443/xsa443-4.15-04.patch
-115b9561c0ea8f155d60049a1e60a26e5261147b1d2672d8a96313aef5dd95e6  xsa443/xsa443-4.15-05.patch
-5e54fe8fcd56de43e9035e57ed964cc677aca853b6f205f8576f56aa8f968bf0  xsa443/xsa443-4.15-06.patch
-a0bd7681bd541b21d069cd025cfb97c798c35041300d5cc86f59941471b88b3c  xsa443/xsa443-4.15-07.patch
-165795217669df7fa2f6bcb3eb820f93391c7d46422eb941ae359b43ce5c510f  xsa443/xsa443-4.15-08.patch
-fe8be8c39f83567597ec5077bd6fe8b57324d5f6bed7f5cfbed7df43008f7835  xsa443/xsa443-4.15-09.patch
-48936926848af29786490dd6db3dcfaf8ed8443f1d6ae896dcb95c930e2f4c21  xsa443/xsa443-4.15-10.patch
-213b6a45198869869248b2e3c096fd327f7b0cccbd68faa12335134172c7c908  xsa443/xsa443-4.15-11.patch
-170d511df3a3898ab0302f7e85bc63127cb0b75f73fdcd83104d3f358365f648  xsa443/xsa443-4.16-01.patch
-16c942da8929ab240a8807da05d9b39bbabfb34adc4f5a63bc3d2d99568973b1  xsa443/xsa443-4.16-02.patch
-13fd27948f5a5e21e1a8e0ddf218ec79b44f1fca55fdc371c932ad2dfa5c23ea  xsa443/xsa443-4.16-03.patch
-1c865b8f0048483ea76e8cfbeba1536ca6cbde04c58a7e0d485d46c063046cf4  xsa443/xsa443-4.16-04.patch
-115b9561c0ea8f155d60049a1e60a26e5261147b1d2672d8a96313aef5dd95e6  xsa443/xsa443-4.16-05.patch
-5e54fe8fcd56de43e9035e57ed964cc677aca853b6f205f8576f56aa8f968bf0  xsa443/xsa443-4.16-06.patch
-a0bd7681bd541b21d069cd025cfb97c798c35041300d5cc86f59941471b88b3c  xsa443/xsa443-4.16-07.patch
-165795217669df7fa2f6bcb3eb820f93391c7d46422eb941ae359b43ce5c510f  xsa443/xsa443-4.16-08.patch
-fe8be8c39f83567597ec5077bd6fe8b57324d5f6bed7f5cfbed7df43008f7835  xsa443/xsa443-4.16-09.patch
-c9538238f4b636b7d093a59610b0eab2e7fd409a7cc9e988d006bee4c9b944f7  xsa443/xsa443-4.16-10.patch
-62147de7a6b8a0073c7abe204da25e94871a32c4e3851f9feccf065976dc0267  xsa443/xsa443-4.16-11.patch
-3322213303481fea964cf18e09b172d42caf21fe662c947ae6ddc0d8a1789fa1  xsa443/xsa443-4.17-01.patch
-02cf94559407d693ef2dcfc47671b63f5f27019dd759bae3b5eaaa922fb4ea74  xsa443/xsa443-4.17-02.patch
-189bef69380d6fbd7f571b2fe11908bac26a650e2b0d040e12b8c1266373f8c8  xsa443/xsa443-4.17-03.patch
-cdb4f0dd47a6c8a759ae4ffd400f2ce72675b8779ca5576dea74e372ca77a021  xsa443/xsa443-4.17-04.patch
-2147dcf95b1ad36da0961e2c084072fa9eb59486e9c0ed43444d268a17d01ee1  xsa443/xsa443-4.17-05.patch
-a523273792a77fa55a7ab8925369edcb9d9ae50e8e9236be43f23e66aaa0f5e2  xsa443/xsa443-4.17-06.patch
-54f97e027c80bfed8e3559ba8d89a69d2f4c48e1017c2090af029a01efe49741  xsa443/xsa443-4.17-07.patch
-79667e7b8fbfa43f9135ba14ca364c63e1e7e7c3a68ae12513fe0204e57fa2bd  xsa443/xsa443-4.17-08.patch
-11125e8da5f9e8313d943e6cbba2ff160478681c290b1413c88113292cca91c4  xsa443/xsa443-4.17-09.patch
-113bbc294e10be4e8bf9855536114f875add033f790504f5c744b38da85d1b11  xsa443/xsa443-4.17-10.patch
-7e5c7d4ef0b148ce9421c1856ced8b023bae22abc8e13956fe2832628c9d4189  xsa443/xsa443-4.17-11.patch
-eb81bcbaf1016bce77696c1f2f5cd90b22e11eaa02d15c36c4c704b02981c50d  xsa443/xsa443-04.patch
-5a099d8bf6a06e318f9ff92491ae4191fd2a3f8637a3c9616173bd2c7d56dbb6  xsa443/xsa443-05.patch
-32733ee7dd1baf81338d50532876f211660dd65eb44f3ea121604b4c897ba30f  xsa443/xsa443-06.patch
-9dfe8e70ed3007dbe46de75d6790baa770d91ac42d6abf642ca0f11b8b2d6b6d  xsa443/xsa443-07.patch
-b8040da4d2ef22ed9f96e1648fa8c4682f82bce2d17bbdd9f2250c48f8858d10  xsa443/xsa443-08.patch
-4b0fa7efd271de010943a2974e178d6e9c44c5181a94fc58ddd3f9ecd953d572  xsa443/xsa443-09.patch
-f1b97a6ee5dc15a2b85ffde12242eb65d885b244419f34d737eb4489769f7224  xsa443/xsa443-10.patch
-eafccd01a5458baf2a7f39b3e533fd3638d6f728078c437247dc712856422706  xsa443/xsa443-11.patch
-$
+Hi all,
+
+a bug in the fixed buffer registration code for io_uring
+(io_sqe_buffer_register in io_uring/rsrc.c) allows out-of-bounds access
+to physical memory beyond the end of the buffer. This can be used to
+achieve full local privilege escalation.
+
+The vulnerable code landed in 6.3-rc1 with commit 57bebf807e2a
+("io_uring/rsrc: optimise registered huge pages")¹.
+
+A fix has been committed upstream for 6.4-rc1 in commit 776617db78c6
+("io_uring/rsrc: check for nonconsecutive pages")². The fix has also
+been staged³ for 6.3.2.
+
+CVE assignment for this issue is pending.
+
+
+The idea behind the original commit is that instead of splitting huge
+pages that are registered as a buffer into individual bvec entries
+(expensive), we can just have a single bvec entry for all parts of the
+huge page that are in the buffer (not expensive). Specifically, if all
+pages in the buffer map to the same folio, it will use the first struct
+page and the length of the buffer in a single bvec entry rather than
+mapping each page individually.
+
+For a normal huge page, this works. Unfortunately, this misses the fact
+that just because the pages map to the same folio, they do not
+necessarily have to be consecutive. In fact, they can all be the _same_
+page of memory (e.g. by repeatedly mapping at offset 0 from a memfd).
+Then, the bvec will span far beyond the single page that it is actually
+allowed to touch. Later, IORING_OP_READ_FIXED and IORING_OP_WRITE_FIXED
+allow us to read from and write to the buffer (i.e. the memory pointed
+to by the bvec) at will. This allows read/write access to the physical
+memory behind the single page that we actually have.
+
+The actual length of the buffer (and therefore the limit of our OOB
+access) is only limited by the number of pages we can map (generally
+close to vm.max_map_count, since each mapping of the same page requires
+a new mapping). If hugetlbfs is enabled and huge pages are set up, you
+can use them to access even more memory, but this isn't generally
+required in order to find something interesting in the accessible
+memory.
+
+
+TL;DR bug reproduction steps:
+  1. Create a memfd
+  2. fallocate a single page in that file descriptor
+  3. Use MAP_FIXED to map this page repeatedly, in consecutive locations
+  4. Register the entire region that you just filled up with that page as
+     a fixed buffer with IORING_REGISTER_BUFFERS
+  5. Use IORING_OP_WRITE_FIXED to write the buffer to some other file
+     (OOB read) or IORING_OP_READ_FIXED to read data into the buffer (OOB
+     write).
+
+Of course, from there, we can simply find any interesting object in
+physical memory and start overwriting function pointers to get code
+execution and escalate privileges. A full proof-of-concept exploit with
+a bit more robustness can be found at
+   https://tholl.xyz/static/bugs/2023-io_uring-fixed-buffers/exploit.c
+
+
+-- Tobias
+
+
+¹ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=57bebf807e2abcf87d96b9de1266104ee2d8fc2f
+² https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=776617db78c6d208780e7c69d4d68d1fa82913de
+³ Commit 14ad317320c7c000e89ee5a928b9ca165443af0e for 6.3.2-rc1,
+   https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?h=linux-6.3.y&id=14ad317320c7c000e89ee5a928b9ca165443af0e
 
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmUlPtsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ6lMH/3f5DIVYOXpxa8SQoBSwvcqkaFvDTxYBZnB3EsyT
-LJu3qc4h02ocl+128vmn1f6L2yz9bC1aXZeQdipMQfyHkdZZtmG6RrEeqR53zD65
-s+r2eux/i5F5rTa//2IRfTuupWFbp7B8cHZGNFGWdL4US9KRC2ZqYOch701zz+FN
-bTPNME21WYhlohHN1o3VLfY0BfF3ESFkoRg4KCdSyuyl1JZlEg07X/azW/0VSo9K
-O3zbYo7kVEgqorWAYtZ8WMb/7DCO7lyHp88pFozQGtkE5oP00+nZioXG56kBH6+T
-3URgM26eI/EiECSqHi1v56Glcj9uAWnduCRCutrBmaNOR+E=
-=Grkm
------END PGP SIGNATURE-----
-
-Download attachment "xsa443/xsa443-01.patch" of type "application/octet-stream" (1907 bytes)
-
-Download attachment "xsa443/xsa443-02.patch" of type "application/octet-stream" (1174 bytes)
-
-Download attachment "xsa443/xsa443-03.patch" of type "application/octet-stream" (4970 bytes)
-
-Download attachment "xsa443/xsa443-4.15-01.patch" of type "application/octet-stream" (1907 bytes)
-
-Download attachment "xsa443/xsa443-4.15-02.patch" of type "application/octet-stream" (1174 bytes)
-
-Download attachment "xsa443/xsa443-4.15-03.patch" of type "application/octet-stream" (5023 bytes)
-
-Download attachment "xsa443/xsa443-4.15-04.patch" of type "application/octet-stream" (2138 bytes)
-
-Download attachment "xsa443/xsa443-4.15-05.patch" of type "application/octet-stream" (2019 bytes)
-
-Download attachment "xsa443/xsa443-4.15-06.patch" of type "application/octet-stream" (2036 bytes)
-
-Download attachment "xsa443/xsa443-4.15-07.patch" of type "application/octet-stream" (4265 bytes)
-
-Download attachment "xsa443/xsa443-4.15-08.patch" of type "application/octet-stream" (4477 bytes)
-
-Download attachment "xsa443/xsa443-4.15-09.patch" of type "application/octet-stream" (12166 bytes)
-
-Download attachment "xsa443/xsa443-4.15-10.patch" of type "application/octet-stream" (9005 bytes)
-
-Download attachment "xsa443/xsa443-4.15-11.patch" of type "application/octet-stream" (6491 bytes)
-
-Download attachment "xsa443/xsa443-4.16-01.patch" of type "application/octet-stream" (1907 bytes)
-
-Download attachment "xsa443/xsa443-4.16-02.patch" of type "application/octet-stream" (1174 bytes)
-
-Download attachment "xsa443/xsa443-4.16-03.patch" of type "application/octet-stream" (5023 bytes)
-
-Download attachment "xsa443/xsa443-4.16-04.patch" of type "application/octet-stream" (2138 bytes)
-
-Download attachment "xsa443/xsa443-4.16-05.patch" of type "application/octet-stream" (2019 bytes)
-
-Download attachment "xsa443/xsa443-4.16-06.patch" of type "application/octet-stream" (2036 bytes)
-
-Download attachment "xsa443/xsa443-4.16-07.patch" of type "application/octet-stream" (4265 bytes)
-
-Download attachment "xsa443/xsa443-4.16-08.patch" of type "application/octet-stream" (4477 bytes)
-
-Download attachment "xsa443/xsa443-4.16-09.patch" of type "application/octet-stream" (12166 bytes)
-
-Download attachment "xsa443/xsa443-4.16-10.patch" of type "application/octet-stream" (9005 bytes)
-
-Download attachment "xsa443/xsa443-4.16-11.patch" of type "application/octet-stream" (6491 bytes)
-
-Download attachment "xsa443/xsa443-4.17-01.patch" of type "application/octet-stream" (1907 bytes)
-
-Download attachment "xsa443/xsa443-4.17-02.patch" of type "application/octet-stream" (1174 bytes)
-
-Download attachment "xsa443/xsa443-4.17-03.patch" of type "application/octet-stream" (5023 bytes)
-
-Download attachment "xsa443/xsa443-4.17-04.patch" of type "application/octet-stream" (2165 bytes)
-
-Download attachment "xsa443/xsa443-4.17-05.patch" of type "application/octet-stream" (2019 bytes)
-
-Download attachment "xsa443/xsa443-4.17-06.patch" of type "application/octet-stream" (2036 bytes)
-
-Download attachment "xsa443/xsa443-4.17-07.patch" of type "application/octet-stream" (4265 bytes)
-
-Download attachment "xsa443/xsa443-4.17-08.patch" of type "application/octet-stream" (4477 bytes)
-
-Download attachment "xsa443/xsa443-4.17-09.patch" of type "application/octet-stream" (12166 bytes)
-
-Download attachment "xsa443/xsa443-4.17-10.patch" of type "application/octet-stream" (9005 bytes)
-
-Download attachment "xsa443/xsa443-4.17-11.patch" of type "application/octet-stream" (6491 bytes)
-
-Download attachment "xsa443/xsa443-04.patch" of type "application/octet-stream" (2193 bytes)
-
-Download attachment "xsa443/xsa443-05.patch" of type "application/octet-stream" (2019 bytes)
-
-Download attachment "xsa443/xsa443-06.patch" of type "application/octet-stream" (2036 bytes)
-
-Download attachment "xsa443/xsa443-07.patch" of type "application/octet-stream" (4265 bytes)
-
-Download attachment "xsa443/xsa443-08.patch" of type "application/octet-stream" (4477 bytes)
-
-Download attachment "xsa443/xsa443-09.patch" of type "application/octet-stream" (12161 bytes)
-
-Download attachment "xsa443/xsa443-10.patch" of type "application/octet-stream" (15952 bytes)
-
-Download attachment "xsa443/xsa443-11.patch" of type "application/octet-stream" (6527 bytes)
