@@ -1,64 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/14/5
-Message-ID: <xmqqr0us5dio.fsf@gitster.g>
-Date: Tue, 14 Feb 2023 10:05:03 -0800
-From: Junio C Hamano <gitster@...ox.com>
-To: git@...r.kernel.org
-Cc: Linux Kernel <linux-kernel@...r.kernel.org>, git-packagers@...glegroups.com, oss-security@...ts.openwall.com, git-security@...glegroups.com
-Subject: [Announce] Git 2.39.2 and friends
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/08/2
+Message-ID: <9512ef7c-a3c8-3b19-fcd6-6965a21c5e8b@apache.org>
+Date: Mon, 08 May 2023 11:50:58 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-25754: Apache Airflow: Privilege escalation using airflow logs 
 Content-Type: text/plain; charset=utf-8
 
-A maintenance release Git v2.39.2, together with releases for older
-maintenance tracks v2.38.4, v2.37.6, v2.36.5, v2.35.7, v2.34.7,
-v2.33.7, v2.32.6, v2.31.7, and v2.30.8, are now available at the
-usual places.
+Severity: moderate
 
-These maintenance releases are to address two security issues
-identified as CVE-2023-22490 and CVE-2023-23946.  They both affect
-ranges of existing versions and users are strongly encouraged to
-upgrade.
+Affected versions:
 
-The tarballs are found at:
+- Apache Airflow before 2.6.0
 
-    https://www.kernel.org/pub/software/scm/git/
+Description:
 
-The following public repositories all have a copy of the 'v2.39.2'
-tag, as well as the tags for older maintenance tracks listed above.
+Privilege Context Switching Error vulnerability in Apache Software Foundation Apache Airflow.This issue affects Apache Airflow: before 2.6.0.
 
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+Credit:
 
-The addressed issues are:
+ksw9722@...er.com (finder)
 
- * CVE-2023-22490:
+References:
 
-   Using a specially-crafted repository, Git can be tricked into using
-   its local clone optimization even when using a non-local transport.
-   Though Git will abort local clones whose source $GIT_DIR/objects
-   directory contains symbolic links (c.f., CVE-2022-39253), the objects
-   directory itself may still be a symbolic link.
+https://github.com/apache/airflow/pull/29506
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25754
 
-   These two may be combined to include arbitrary files based on known
-   paths on the victim's filesystem within the malicious repository's
-   working copy, allowing for data exfiltration in a similar manner as
-   CVE-2022-39253.
-
- * CVE-2023-23946:
-
-   By feeding a crafted input to "git apply", a path outside the
-   working tree can be overwritten as the user who is running "git
-   apply".
-
-Credit for finding CVE-2023-22490 goes to yvvdwf, and the fix was
-developed by Taylor Blau, with additional help from others on the
-Git security mailing list.
-
-Credit for finding CVE-2023-23946 goes to Joern Schneeweisz, and the
-fix was developed by Patrick Steinhardt.
-
-Johannes Schindelin helped greatly in packaging the whole thing and
-proofreading the result.
-
-Thanks.
