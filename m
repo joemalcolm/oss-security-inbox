@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/22/4
-Message-ID: <CANQTYRkmodXOwJNCV=gBLOG-usBYxdr1zQdEuQmUSp_1C2Yz=w@mail.gmail.com>
-Date: Tue, 22 Aug 2023 16:07:16 +0800
-From: Nbxiglk <fibr3s@...il.com>
-To: Simon Steiner <simonsteiner1984@...il.com>
-Cc: general@...graphics.apache.org, batik-dev@...graphics.apache.org,  batik-users@...graphics.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: Re: [CVE-2022-44729] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/08/1
+Message-ID: <157c85dc-9fc6-bd11-cc0b-c22a46c2d091@apache.org>
+Date: Mon, 08 May 2023 03:57:31 +0000
+From: Wang Weibing <wwbmmm@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-31039: Apache bRPC: ServerOptions.pid_file may cause arbitrary code execution 
 Content-Type: text/plain; charset=utf-8
 
-Hi，The vuln type inside the email seems to be incorrect, it should be SSRF。
+Severity: important
 
-Simon Steiner <simonsteiner1984@...il.com> 于2023年8月22日周二 16:00写道：
+Affected versions:
 
-> CVE-2022-44729:
->         Apache Batik information disclosure vulnerability
->
-> Severity:
->         Medium
->
-> Vendor:
->         The Apache Software Foundation
->
-> Versions Affected:
->         Batik 1.0 - 1.16
->
-> Description:
->         Block loading external resource by default
->
-> Mitigation:
->         Users should upgrade to Batik 1.17
->
-> Credit:
->         This issue was independently reported by nbxiglk
->
-> References:
->         http://xmlgraphics.apache.org/security.html
->         https://issues.apache.org/jira/browse/BATIK-1349
->
-> The Apache XML Graphics team.
->
->
->
->
->
+- Apache bRPC 0.9.0 before 1.5.0
+
+Description:
+
+Security vulnerability in Apache bRPC <1.5.0 on all platforms allows attackers to execute arbitrary code via ServerOptions::pid_file.
+An attacker that can influence the ServerOptions pid_file parameter with which the bRPC server is started can execute arbitrary code with the permissions of the bRPC process.
+
+Solution:
+1. upgrade to bRPC >= 1.5.0, download link:  https://dist.apache.org/repos/dist/release/brpc/1.5.0/ https://dist.apache.org/repos/dist/release/brpc/1.5.0/ 
+2. If you are using an old version of bRPC and hard to upgrade, you can apply this patch:  https://github.com/apache/brpc/pull/2218 https://github.com/apache/brpc/pull/2218
+
+Required Configurations:
+
+set brpc::ServerOptions::pid_file from user input
+
+Work Arounds:
+
+Apply this patch:  https://github.com/apache/brpc/pull/2218 https://github.com/apache/brpc/pull/2218
+
+References:
+
+https://brpc.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31039
 
