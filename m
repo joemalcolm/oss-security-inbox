@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3172" "Saturday" "9" "May" "2015" "21:18:59" "+0300" "Jouni Malinen" "j@w1.fi" "<20150509181858.GA9017@w1.fi>" "79" "[oss-security] CVE request: hostapd/wpa_supplicant - WPS UPnP vulnerability with HTTP chunked transfer encoding" nil nil nil "5" "2015050918:18:59" "[oss-security] CVE request: hostapd/wpa_supplicant - WPS UPnP vulnerability with HTTP chunked transfer encoding" (number mark "        j@w1.fi      May  9   79/3172  " thread-indent "\"[oss-security] CVE request: hostapd/wpa_supplicant - WPS UPnP vulnerability with HTTP chunked transfer encoding\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16176 invoked by uid 550); 9 May 2015 18:19:12 -0000
+Received: (qmail 32531 invoked by uid 550); 8 May 2023 15:58:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +6,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16155 invoked from network); 9 May 2015 18:19:11 -0000
-Message-ID: <20150509181858.GA9017@w1.fi>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Sat, 9 May 2015 21:18:59 +0300
-From: Jouni Malinen <j@w1.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: hostapd/wpa_supplicant - WPS UPnP vulnerability with
- HTTP chunked transfer encoding
+Received: (qmail 32510 invoked from network); 8 May 2023 15:58:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683561512; x=1686153512;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GlRI8EpBT744WlmFElSN4NqAR42C9PLIBkW3TsKCPJI=;
+        b=kLL+HqiSDV562+WH4h+txosd31VtVZ7Wnfzmlufm+aFw+26Q1vIq+n+jGPwtQPt+ON
+         nYBxQnTyHrUB939EZgKPUvX2WXzEerUW1rG0JN17ldPKuZuq3/uuuvhOMUFPHmIiJUrk
+         U/5pu+AjiS+hHjnScdTgq52vx2jqRhPa3SkXuwPpViHnvW7hHnYu5MMpGh77ilAPCPKw
+         6C1T5gkMSCVusL1A65FWXceJpEnNGdnly6M/el2Ymq+5qSLDAzdQjfj6iS5OPUwku28r
+         xdXdQBnHBM/dUtHOQvBKJern1YmxWeqGjIAyyu65JXQXl8iPrXN+HpOhOzC+6L+BzdO2
+         gcyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683561512; x=1686153512;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GlRI8EpBT744WlmFElSN4NqAR42C9PLIBkW3TsKCPJI=;
+        b=bj26NfpUEG6utYcmSgmOXwBdq6OqY5RsOaImMXV349snYoELSfm56LHPiTQVjrA02P
+         iRYcqzZghZ6YSL+9IJk5XAkZPDFkbXZ+8J4JXELy0IM2b9lmJwRPBKLJcB62C6m922GI
+         SCNTF2XbbuI6Wx2D1rgx30PFK7FR3A1TJP5zigpEifYJMTvH6PmmUoRd+bQJo3TR+G+f
+         +srKghCManiWIByklp8bwZhZz/p2CmybacyHHiDpfvhUcaHwO3eiSm1ovuYfUWDnZTTr
+         oYD7L7EwJ7m3l2NNRTeDrXV/RfdW7fmLBNKidZ4zTH1xA2XcjjXuwLxEDLM1lRbgLzQO
+         SxTQ==
+X-Gm-Message-State: AC+VfDxWIBW1vBv5SD2hWeQUOhlLSlbxDCTbICMe/wmKCz/e43znbv7R
+	NwzQRGyFDgoVuEZOERrmDCjAzVTtsjp1e9RvkG9dSJ3ma0w=
+X-Google-Smtp-Source: ACHHUZ5bNtMSxWgInfSqUdP/T/rfZ9C+6QJVxXGosc71DV1nNr1kv67bsLqNqTfd7a38g9njBj5oVp0t0eV9R0RHXLo=
+X-Received: by 2002:a17:907:a4c:b0:952:b51d:5086 with SMTP id
+ be12-20020a1709070a4c00b00952b51d5086mr7742649ejc.57.1683561511890; Mon, 08
+ May 2023 08:58:31 -0700 (PDT)
+MIME-Version: 1.0
+From: Piotr Krysiuk <piotras@gmail.com>
+Date: Mon, 8 May 2023 16:58:20 +0100
+Message-ID: <CAFzhf4oH6POgqz3r_VSuVc1ZGOZmkKG4cJ0ZuFPm-pwmfLj0yw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2023-32233] Linux kernel use-after-free in Netfilter nf_tables
+ when processing batch requests can be abused to perform arbitrary reads and
+ writes in kernel memory
 
-Could a CVE please be assigned for following?
+An issue has been discovered in the Linux kernel that can be abused by
+unprivileged local users to escalate privileges.
 
+The issue is about Netfilter nf_tables accepting some invalid updates
+to its configuration.
 
-WPS UPnP vulnerability with HTTP chunked transfer encoding
+Netfilter nf_tables allows updating its configuration with batch
+requests that group multiple basic operations into atomic transactions.
+In a specific scenario, an invalid batch request may contain an
+operation that implicitly deletes an existing nft anonymous set
+followed by another operation that attempts to act on the same nft
+anonymous set after it is deleted. In the above scenario, one example
+of the former operation is to delete an existing nft rule that uses an
+nft anonymous set. And an example of the latter operation is an attempt
+to delete an element from that nft anonymous set after the set gets
+deleted. Alternatively, the latter operation could even attempt to
+explicitly delete that nft anonymous set again. In the discussed
+scenario, Netfilter nf_tables fails to reject invalid batch request and
+then it corrupts its own internal state when committing the latter
+operation.
 
-Published: May 4, 2015
-Latest version available from: http://w1.fi/security/2015-2/
+The issue has been reproduced against multiple Linux kernel releases,
+including Linux 6.3.1 (current stable).
 
+We developed an exploit that allows unprivileged local users to start a
+root shell by abusing the above issue. That exploit was shared
+privately with <security@kernel.org> to assist with fix development.
+Somebody from the Linux kernel team then emailed the proposed fix to
+<linux-distros@vs.openwall.org> and that email also included a link to
+download our description of exploitation techniques and our exploit
+source code.
 
-Vulnerability
+Therefore, according to the linux-distros list policy, the exploit must
+be published within 7 days from this advisory. In order to comply with
+that policy, I intend to publish both the description of exploitation
+techniques and also the exploit source code on Monday 15th by email to
+this list.
 
-A vulnerability was found in the WPS UPnP function shared by hostapd
-(WPS AP) and wpa_supplicant (WPS external registrar). The HTTP
-implementation used for the UPnP operations uses a signed integer for
-storing the length of a HTTP chunk when the chunked transfer encoding
-and may end up using a negative value when the chunk length is indicated
-as 0x8000000 or longer. The length validation steps do not handle the
-negative value properly and may end up accepting the length and passing
-a negative value to the memcpy when copying the received data from a
-stack buffer to a heap buffer allocated for the full request. This
-results in stack buffer read overflow and heap buffer write overflow.
+The fix is available from mainline kernel git repository:
 
-Taken into account both hostapd and wpa_supplicant use only a single
-thread, the memcpy call with a negative length value results in heap
-corruption, but due to the negative parameter being interpreted as a
-huge positive integer, process execution terminates in practice before
-being able to run any following operations with the corrupted heap. This
-may allow a possible denial of service attack through
-hostapd/wpa_supplicant process termination under certain conditions.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=c1592a89942e9678f7d9c8030efa777c0d57edab
 
-WPS UPnP operations are performed over a trusted IP network connection,
-i.e., an attack against this vulnerability requires the attacker to have
-access to the IP network. In addition, this requires the WPS UPnP
-functionality to be enabled at runtime. For WPS AP (hostapd) with a
-wired network connectivity, this is commonly enabled. For WPS station
-(wpa_supplicant) WPS UPnP functionality is used only when WPS ER
-functionality has been enabled at runtime (WPS_ER_START command issued
-over the control interface). The vulnerable functionality is not
-reachable without that command having been issued.
+# Discoverers
 
+Patryk Sondej <patryk.sondej@gmail.com>
+Piotr Krysiuk <piotras@gmail.com>
 
-Vulnerable versions/configurations
+# References
 
-hostapd v0.7.0-v2.4 with CONFIG_WPS_UPNP=y in the build configuration
-(hostapd/.config) and upnp_iface parameter included in the runtime
-configuration.
-
-wpa_supplicant v0.7.0-v2.4 with CONFIG_WPS_ER=y in the build
-configuration (wpa_supplicant/.config) and WPS ER functionality enabled
-at runtime with WPS_ER_START control interface command.
-
-
-Acknowledgments
-
-Thanks to Kostya Kortchinsky of Google Security Team for discovering and
-reporting this issue.
-
-
-Possible mitigation steps
-
-- Merge the following commit and rebuild hostapd/wpa_supplicant:
-
-  WPS: Fix HTTP chunked transfer encoding parser
-
-  This patch is available from http://w1.fi/security/2015-2/
-
-- Update to hostapd/wpa_supplicant v2.5 or newer, once available
-
-- Disable WPS UPnP in hostapd runtime configuration (remove the
-  upnp_iface parameter from the configuration file)
-
-- Do not enable WPS ER at runtime in wpa_supplicant (WPS_ER_START
-  control interface command)
-
-- Disable WPS UPnP/ER from the build (remove CONFIG_WPS_UPNP=y from
-  hostapd/.config and CONFIG_WPS_ER=y from wpa_supplicant/.config)
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+CVE-2023-32233 (reserved via https://cveform.mitre.org/)
