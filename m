@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2773" "Thursday" "25" "June" "2015" "16:44:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150625204454.AAC33ABC3A3@smtpvmsrv1.mitre.org>" "66" "[oss-security] Re: Validating OCSP response signatures" nil nil nil "6" "2015062520:44:54" "[oss-security] Re: Validating OCSP response signatures" (number mark "        cve-assign@m Jun 25   66/2773  " thread-indent "\"[oss-security] Re: Validating OCSP response signatures\"\n") "<2276505.0zKI0JqSyt@sarpedon>" ("<2276505.0zKI0JqSyt@sarpedon>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5533 invoked by uid 550); 25 Jun 2015 20:45:12 -0000
+Received: (qmail 20133 invoked by uid 550); 8 May 2023 11:52:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +6,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5483 invoked from network); 25 Jun 2015 20:45:06 -0000
-In-Reply-To: <2276505.0zKI0JqSyt@sarpedon>
-Message-Id: <20150625204454.AAC33ABC3A3@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 25 Jun 2015 16:44:54 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Validating OCSP response signatures
-To: tmb@65535.com
+Received: (qmail 19696 invoked from network); 8 May 2023 11:51:21 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jarek Potiuk <potiuk@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <9512ef7c-a3c8-3b19-fcd6-6965a21c5e8b@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 08 May 2023 11:50:58 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-25754: Apache Airflow: Privilege escalation using airflow
+ logs 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Severity: moderate
 
-> Do we consider failing (by policy) to validate the signature of OCSP responses
-> to be a vulnerability? I did nudge SMC on Twitter but he was reticent to give
-> a definitive view? Affects open and closed source code bases.
+Affected versions:
 
-We're not sure that the MITRE CVE team can provide a useful answer unless
-the question is made more specific.
+- Apache Airflow before 2.6.0
 
-Do you mean something like:
+Description:
 
-  The product's documentation states that it is fully compliant with
-  RFC 2560 including "3.2 ... Prior to accepting a signed response as
-  valid, OCSP clients SHALL confirm that: ... 2. The signature on the
-  response is valid."
+Privilege Context Switching Error vulnerability in Apache Software Foundati=
+on Apache Airflow.This issue affects Apache Airflow: before 2.6.0.
 
-  There is a comment in the source code such as:
-  /* by policy, we do not validate the signature */
+Credit:
 
-  Also, the actual implementation does not validate the signature.
+ksw9722@naver.com (finder)
 
-? This type of issue could typically have a CVE ID for something like
-"misleads users about whether a security feature is offered."
+References:
 
-Or, do you mean that the product's documentation doesn't claim full
-RFC 2560 compliance, and signatures aren't validated for a reason such as:
+https://github.com/apache/airflow/pull/29506
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-25754
 
-  - the vendor feels that online revocation checking, for certificates
-    of web sites, is a fundamentally flawed idea and does not want to
-    bother writing any code (such as the signature-validation part) to
-    support that
-
-  - the vendor feels that online revocation checking, for certificates
-    of web sites, is a fundamentally flawed idea and has disabled
-    their already-written code in a political/advocacy move to try
-    to discourage use of OCSP
-
-  - the vendor feels that validation loops are a more relevant threat
-    than bad signatures
-
-  - the vendor is willing to accept the risk of bad signatures
-    because they feel it's important to accept information about
-    a revocation whenever that information is even possibly valid
-    
-? These would not have CVE IDs. If "by policy" means "for an unknown
-policy reason" then we feel that there probably wouldn't be a CVE ID.
-Vendors that don't want to develop or maintain OCSP code are very
-often doing that for arguably legitimate reasons.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVjGfFAAoJEKllVAevmvmsQvYIAIrkHX4rCC5fxox1xDTKZEyz
-M/blTwJg1oMWhdS3YUIKLRE1B8wEp6WNvPzfhnsLTMHq0ssn1ci646xdsCPZO/TI
-siT8MUIYKircOdKm12HVLu12/maEN4KZHq4xqtETJpLYSV+sUFkEBlGv4tFAdgt1
-iDItm+cZhrLmYsIcnbt+q08dIj733DRsLHzGm7Dx8VV9bMI+4HjJhuKpSazmIZBe
-/eANPvSLerHDycClsqKmxEjWZ+x3d/YhCmIhs8EMXhDT8RyQmmANCrD5iVeOgJF1
-xvPy8jErVQkUW5B87AE8IsLvywACotTyStKiq2QhKbNDGrLoizkUvpVawBd4Fws=
-=Uh4a
------END PGP SIGNATURE-----
