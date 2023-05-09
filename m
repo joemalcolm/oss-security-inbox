@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/7
-Message-ID: <20230314110138.GA1192267@subdivi.de>
-Date: Tue, 14 Mar 2023 12:01:38 +0100
-From: Helmut Grohne <helmut@...divi.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: sox: patches for old vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/09/2
+Message-ID: <20230509231434.GA21065@openwall.com>
+Date: Wed, 10 May 2023 01:14:34 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Tobias Holl <tobias@...ll.xyz>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel io_uring out-of-bounds access to physical memory
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
->  * CVE-2021-33844
+On Mon, May 08, 2023 at 04:01:59PM +0200, Tobias Holl wrote:
+> a bug in the fixed buffer registration code for io_uring
+> (io_sqe_buffer_register in io_uring/rsrc.c) allows out-of-bounds access
+> to physical memory beyond the end of the buffer. This can be used to
+> achieve full local privilege escalation.
+> 
+> The vulnerable code landed in 6.3-rc1 with commit 57bebf807e2a
+> ("io_uring/rsrc: optimise registered huge pages").
+> 
+> A fix has been committed upstream for 6.4-rc1 in commit 776617db78c6
+> ("io_uring/rsrc: check for nonconsecutive pages"). The fix has also
+> been staged for 6.3.2.
+> 
+> CVE assignment for this issue is pending.
 
-The original fix for this issue would cause a regression. After applying
-it, sox would be unable to decode WAV GSM files. This has been reported
-as https://bugs.debian.org/1032082. I am attaching an updated patch that
-fixes this regression. It is meant to replace the previous patch. The
-updated patch includes a regression test case to avoid repeating the
-mistake.
+This is now CVE-2023-2598.
 
-I see that most distributions (e.g. RedHat, SUSE, Gentoo, etc.) have not
-picked up the faulty patch. Ubuntu inherited it from Debian and will
-likely inherit the fix as it gets fixed in Debian releases.
-
-Helmut
-
-View attachment "CVE-2021-33844.patch" of type "text/x-diff" (1186 bytes)
+Alexander
