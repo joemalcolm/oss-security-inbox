@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2780" "Thursday" "18" "May" "2017" "04:24:15" "+0200" "Marc Lehmann" "schmorp@schmorp.de" "<20170518022415.ygonweucssnxmazg@schmorp.de>" "67" "[oss-security] Re: Defense in depth patch for rxvt-unicode" "^Cc:" nil nil "5" "2017051802:24:15" "[oss-security] Re: Defense in depth patch for rxvt-unicode" (number mark "        schmorp@schm May 18   67/2780  " thread-indent "\"[oss-security] Re: Defense in depth patch for rxvt-unicode\"\n") "<CAHmME9rNUXu16RD_fYYDfJa74F8M38tSjk+OU8ugEk8Zi4WKug@mail.gmail.com>" ("<CAHmME9rNUXu16RD_fYYDfJa74F8M38tSjk+OU8ugEk8Zi4WKug@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 31810 invoked by uid 550); 18 May 2017 05:24:38 -0000
+Received: (qmail 22026 invoked by uid 550); 10 May 2023 19:39:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +6,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30194 invoked from network); 18 May 2017 02:24:29 -0000
-Message-ID: <20170518022415.ygonweucssnxmazg@schmorp.de>
-References: <CAHmME9rNUXu16RD_fYYDfJa74F8M38tSjk+OU8ugEk8Zi4WKug@mail.gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 11973 invoked from network); 10 May 2023 19:21:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1683746498;
+	bh=zpTtYbNJ17izx3X2DxDrkdqFQLlg86QpW6IO6Aydd1o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=EpPCQvjVJsYHnwe8n/yGl4DmjHEetyzgHD9KogKwoQuUcXiDDQe3lbWW/Ymgtwm85
+	 PdVhCVzfwatcgxWje1YcJhT+foO8ABVsTAA/PtuolL0GrBEPb2kW7e35hkYdH8hbBe
+	 t2mhOP1NIpjboic4nOJsPbnsLR4TxQKu/8e8mmIWiqgcIMyyemTaTECSRxLKMOQQAN
+	 bwTx8dYG6BsMe/tSCWR+PACl/fg673TVB6tYCX9ldRiLIbZSeY7od+11348PBn1bRC
+	 /PUn7HMB4kCGjzCLj9TgB2sFo4jKnf9aE2rNucUUiH6uOeJAAV+VgltTa87F2c811j
+	 r+iY/JMzU6j5g==
+Date: Wed, 10 May 2023 16:21:31 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+To: oss-security@lists.openwall.com
+Cc: Turritopsis Dohrnii Teo En Ming <tdtemccnp@gmail.com>,
+	ceo@teo-en-ming-corp.com, Piotr Krysiuk <piotras@gmail.com>
+Message-ID: <ZFvuu+PpS3BO2T/t@quatroqueijos.cascardo.eti.br>
+References: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
+ <20230510165545.GA25380@openwall.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHmME9rNUXu16RD_fYYDfJa74F8M38tSjk+OU8ugEk8Zi4WKug@mail.gmail.com>
-OpenPGP: id=904ad2f81fb16978e7536f726dea2ba30bc39eb6;
- url=http://pgp.schmorp.de/schmorp-pgpkey.txt; preference=signencrypt
-Cc: oss-security <oss-security@lists.openwall.com>, rxvt-unicode@schmorp.de,
-	"jer@gentoo.org" <jer@gentoo.org>
-Date: Thu, 18 May 2017 04:24:15 +0200
-From: Marc Lehmann <schmorp@schmorp.de>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Defense in depth patch for rxvt-unicode
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+In-Reply-To: <20230510165545.GA25380@openwall.com>
+Subject: Re: [oss-security] New Linux kernel NetFilter flaw gives attackers
+ root privileges
 
-On Wed, May 17, 2017 at 01:41:32PM +0200, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
-> This email thread concerns my request to Marc to include the attached
-> patch inside rxvt-unicode upstream. My own downstream -- Gentoo's
-> jer@, also CCd -- won't include the patch until the agreement of
-> upstream. Thus, it's important we come to a good conclusion.
+On Wed, May 10, 2023 at 06:55:46PM +0200, Solar Designer wrote:
+> Hi,
+> 
+> On Wed, May 10, 2023 at 11:52:58PM +0800, Turritopsis Dohrnii Teo En Ming wrote:
+> > I have just come across this article. Thought of sharing it.
+> > 
+> > Article: New Linux kernel NetFilter flaw gives attackers root privileges
+> > Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
+> 
+> We don't normally want in here links to news articles on something that
+> was already brought up in here in more detail.  However, as a moderator,
+> I reluctantly approved this posting so that we can use the resulting
+> thread to discuss whether this issue got blown out of proportion and if
+> so what we can do to avoid that going forward.  Here's the original
+> posting this refers to:
+> 
+> https://www.openwall.com/lists/oss-security/2023/05/08/4
+> 
+> Another Linux kernel issue, in io_uring subsystem, was also disclosed in
+> here on the same day, but I think didn't gain such tech media attention:
+> 
+> https://www.openwall.com/lists/oss-security/2023/05/08/3
+> 
+> Is the netfilter issue really worse than the io_uring issue?  I doubt
+> it.  So _maybe_ it was something in the wording that tripped someone
+> writing for one of those tech news websites, then others picked it up?
+> 
+> Piotr's posting about the netfilter issue mentions intent to disclose an
+> exploit later (like it should have, thank you Piotr!)
+> 
+> Tobias' posting directly links to an exploit (which is also fine).
+> 
+> Is intent to disclose an exploit later more newsworthy than having done
+> so right away?  I doubt it.
+> 
+> So maybe it's just random, and there's nothing to see here, after all.
+> 
+> Now as to the actual issue and its description, I think we should
+> clarify what exactly is meant by "unprivileged local users."  Piotr, I
+> guess you actually meant not literally unprivileged, but users with
+> CAP_NET_ADMIN, which can be had via unprivileged user/net namespaces if
+> enabled in the distro / on the system, or when already in a container
+> with such capability granted to container root.  Correct?  I think going
+> forward we should always make this clear right away.  Here's a former
+> netfilter core team leader also bringing this up:
+> 
+> https://twitter.com/LaF0rge/status/1655867494152667140
+> 
+> LaForge - @LaF0rge@chaos.social @LaF0rge:
+> > Really curious to see how CVS-223-32233 for #linux #netfilter nf_tables
+> > https://seclists.org/oss-sec/2023/q2/133 can be exploted fom
+> > "unprivileged local users".  AFAICT, nf_tables_api  goes through
+> > nfnetlink, and nfnetlink_rcv() checks for CAP_NET_ADMIN way  before the
+> > code in nf_tables_api.
+> 
+> and a reply:
+> 
+> Alex Plaskett @alexjplaskett:
+> > Didn't look in depth at this one but you can trigger nf_tables_api
+> > operations from a user / network namespace and distros such as Ubuntu
+> > have unpriv user namespaces enabled.
 
-I don't think we will include this patch upstream.
+If users don't need user namespaces, they can disable it on Ubuntu kernels as a
+mitigation by doing:
 
-> On Wed, May 17, 2017 at 3:17 AM, Marc Lehmann <schmorp@schmorp.de> wrote:
-> This patch was part of a larger discussion on which you were CCd from
-> distros. It seems possible that either those messages didn't make it
-> to you, or you didn't have time to read them.
+sysctl -w kernel.unprivileged_userns_clone=0
 
-I only received a single message.
+Or persisting the option by adding a .conf file at /etc/sysctl.d/ with the
+following line:
 
-> In any case, the attached patch would be a useful defense in depth
-> measure to prevent future integer overflow bugs, such as the one that
-> was recently found in rxvt.
+kernel.unprivileged_userns_clone=0
 
-I am not convinced it is.
+Cascardo.
 
-> Briefly looking though the code, it seems
-> like there is a considerable amount of unchecked integer arithmetic,
-> often passing between several functions in several files.
-
-Likely, yes.
-
-> somehow auditing every arithmetic call path, a considerable
-> undertaking, Alexander and I would recommend simply limiting the range
-> of input from users.
-
-This sounds big, but I don't quite see the patch achieving that, as input is
-processed at many places, yet the patch only changes one place.
-
-> As Alexander wrote in a recent email to you, the general opinion of
-> this list is that terminal emulators should not support the most
-> dangerous uses of escape sequences, even if they're technically valid.
-> The attached patch falls into that category.
-
-I can't see why this patch somehow "unsupports" the most dangerous uses of
-escape sequences.
-
-> You seem to have made the
-> argument that the patch "might break valid uses".
-
-The parameter range is severely limited. This makes the patch rather
-disadvantageous, without any demonstrated benefit.
-
-> you a bit of the backstory and recent basis which motivates this
-> patch. If this is compelling, I'd rest well knowing it's accepted
-> upstream. If this is not compelling, could you indicate to the list
-> why "might break valid uses" outweighs the potential security
-> mitigations?
-
-Valid uses outweigh "potential security mitigations" simply because
-"potential security mitigations" is pretty weightless in itself.
-
-If you are aware of an actual security problem, that would be something to
-attack.
-
--- 
-                The choice of a       Deliantra, the free code+content MORPG
-      -----==-     _GNU_              http://www.deliantra.net
-      ----==-- _       generation
-      ---==---(_)__  __ ____  __      Marc Lehmann
-      --==---/ / _ \/ // /\ \/ /      schmorp@schmorp.de
-      -=====/_/_//_/\_,_/ /_/\_\
+> 
+> As expected.  Now, from a typical distro user's standpoint,
+> "unprivileged local users" may be just right.  However, not all distros
+> have unprivileged user namespaces enabled by default.
+> 
+> Alexander
