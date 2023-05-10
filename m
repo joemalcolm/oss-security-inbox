@@ -1,53 +1,183 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/4
-Message-ID: <20231106202621.GA31244@openwall.com>
-Date: Mon, 6 Nov 2023 21:26:21 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/1
+Message-ID: <80a16fe009b363a5f3b2fdd3219a1435001c3e43.camel@suse.de>
+Date: Wed, 10 May 2023 09:17:26 +0200
+From: Cathy Hu <cahu@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: announcing sponsorship; distros list statistics for 2023
+Subject: Re: CVE-2023-2253: distribution/distribution: Catalog API endpoint can lead to OOM via malicious user input
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Update: 
 
-After 15+ years of being a 100% volunteer effort, Openwall's maintenance
-of oss-security and (linux-)distros is finally sponsored by the OpenSSF,
-a project of the Linux Foundation.  This sponsorship does not provide
-the Linux Foundation with the ability to set policies for community
-resources managed by Openwall.  I am grateful for the support, which
-will help ensure continued operation of these resources on a new level
-while retaining independence.
+The github advisory is public now:
+https://github.com/distribution/distribution/security/advisories/GHSA-hqxw-f8mx-cpmw
 
-As part of the sponsored effort, Openwall (currently me) took
-responsibility for the "statistics" contributing-back task:
+Please refer to the advisory for more information and the affected
+versions and fixing commits.
 
-"Keep track of per-report and per-issue handling and disclosure timelines
-(at least times of notification of (linux-)distros and of public
-disclosure on oss-security), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-input data (except on issues that are still under embargo) by posting to
-oss-security - primary: Openwall, backup: vacant"
+On Tue, 2023-05-09 at 17:17 +0200, Cathy Hu wrote:
+> Publishing to oss-security as our agreed maximum embargo date has
+> passed now
+> 
+> Summary
+> =======
+> 
+> distribution/distribution
+> (https://github.com/distribution/distribution) is the Open Source
+> Registry implementation for storing and distributing container images
+> using the OCI Distribution Specification.
+> 
+> Systems that run distribution/distribution on memory-restricted
+> environments can suffer from denial of service by a crafted malicious
+> /v2/_catalog API endpoint request.
+> 
+> 
+> Affected software
+> =================
+> 
+> - CVE ID: CVE-2023-2253
+> - CVSS Score: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+> (important)
+> - Affected: distribution/distribution < 2.8.2-beta.1 tentatively (!)
+> (not public yet, see timeline section below)
+> - Commit introducing the issue:
+> https://github.com/distribution/distribution/blob/b7e26bac741c76cb792f8e14c41a2163b5dae8df/registry/handlers/catalog.go#L45
+> 
+> The OCI Distribution Specification is *not* affected since the
+> catalog
+> endpoint was moved to a reserved extension:
+> https://github.com/opencontainers/distribution-spec/blob/c3e48b9d94b104d5e3db2f984bb83a55fb7ac023/extensions/README.md?plain=1#L20
+> 
+> 
+> Fix/Patches
+> ===========
+> 
+> Fixes for main and v2.8 are attached to this email.
+> 
+> Patches are available to upstream in the private github advisory (see
+> timeline section below) but not published yet.
+> 
+> 
+> General Recommendation
+> ======================
+> 
+> The /v2/_catalog endpoint was designed specifically to do registry
+> syncs with search or other API systems. Such an endpoint would create
+> a
+> lot of load on the backend system, due to overfetch required to serve
+> a
+> request in certain implementations.
+> 
+> Because of this, we strongly recommend to always this API endpoint
+> behind heightened privilege and avoid leaving it exposed to the
+> internet.
+> 
+> 
+> Background
+> ==========
+> 
+> /v2/_catalog endpoint accepts a parameter to control the maximum
+> amount
+> of records returned (query string: n).
+> 
+> When not given the default n=100 is used. The server trusts that n
+> has
+> an acceptable value, however when using a
+> maliciously large value, it allocates an array/slice of n of strings
+> before filling the slice with data.
+> 
+> 
+> Steps to reproduce (provided by Jose Gomez (SUSE))
+> ==================================================
+> 
+> Have a running registry with at least one image on it. and pass a 
+> sufficiently long
+> `n` to the `/v2/_catalog`.
+> 
+> ---
+> $  = host machine shell A
+> %  = host machine shell B
+> #  = container
+> -- = comment
+> 
+> Tested against main branch (commit-sha: 
+> 362910506bc213e9bfc3e3e8999e0cfc757d34ba):
+> 
+> -- build distribution
+> $ git clone git@...hub.com:distribution/distribution distribution
+> $ cd $_
+> $ make bin/registry
+> $ cat >bin/registry-configuration.yml <<EOF
+> version: 0.1
+> log:
+>  level: info
+> storage:
+>  filesystem:
+>  rootdirectory: /var/lib/docker-registry
+> http:
+>  addr: 0.0.0.0:5000
+> EOF
+> $ docker run --memory "512M" -v $(pwd)/bin:/upstream --rm -it -p 
+> 5000:5000 registry.suse.com/suse/sle15:15.4 /upstream/registry serve 
+> /upstream/registry-configuration.yml
+> 
+> -- on another shell:
+> % docker pull registry.suse.com/bci/bci-busybox
+> % docker tag $_ localhost:5000/busybox
+> % docker push $_
+> % curl localhost:5000/v2/_catalog?n=4294967297
+> -- See the registry process dead.
+> ---
+> 
+> Timeline
+> ========
+> - 2023-01-27: Issue was reported by Jose Gomez (SUSE) to upstream via
+> email to the cncf-distribution-security list
+> - 2023-02-06: Response from upstream, they created a private github
+> advisory repository to work collaboratively on a fix
+> - 2023-02-07: Coordinated release date set to 2023-04-27 13:00 UTC
+> (90
+> days)
+> - 2023-02-10: Initial fix provided by Jose Gomez in the private
+> github
+> advisory for main branch, discussions and improvements
+> - 2023-03-21: Backport provided by Jose Gomez in the private v2.8
+> branch, discussions and improvements
+> - 2023-04-07: I asked upstream in the github advisory for a CVE, no
+> response
+> - 2023-04-24: I posted to distros to ask for a CVE, new CRD agreed
+> with
+> upstream to 2023-05-08 13:00 UTC (max 14 days as per distros list
+> policy); also pre-notified quay and the OCI security contact
+> - 2023-04-25: The OCI security contact provided insight into the OCI
+> spec, upstream added recommendation to advisory to block the
+> endpoint;
+> OCI spec itself is not affected
+> - 2023-05-08: Upstream asked to move coordinated release date +1 day
+> due to bank holiday, we agreed to new CRD: 2023-05-09 15:00 UTC
+> - 2023-05-09 15:00 UTC: Publish to oss-security since the maximum
+> agreed embargo period has passed
+> 
+> 
+> Credits
+> =======
+> 
+> Found and fixes provided by: Jose Gomez (SUSE)
+> 
+> 
 
-At different times, this time-consuming task was handled by Gentoo and
-later by Amazon (thanks!) but was lately left unhandled.  Due to the
-sponsorship, I've now retroactively produced statistics for 2023 so far:
+-- 
+Cathy Hu <cahu@...e.de>
+Security Engineer
+GPG: 5873 CFD1 8C0E A6D4 9CBB F6C4 062A 1016 1505 A08A
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
+SUSE Software Solutions Germany GmbH
+Frankenstrasse 146
+90461 Nürnberg
 
-As expected, this uncovered a few mishandled issues, which I've recently
-pushed out to oss-security.  That's why there are several reports (out
-of a total of 86) with embargo duration way in excess of the allowed
-maximum.  This inflated the average duration accordingly, but the median
-stayed sane at 7 days.  This is also why we need to, and now will, take
-care of the statistics task in real time, not only retroactively, so
-that any mishandling is identified and corrected promptly.
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Martje
+Boudien Moerman (HRB 36809, AG Nürnberg)
 
-Also for the first time (something I haven't seen Gentoo and Amazon do)
-included are the source files I manually created based on review of the
-e-mail threads and external resources referenced from there.  These
-files were processed with the also included (and permissively licensed)
-Perl script I wrote, so that others can reproduce the calculations or
-easily process the data differently.
 
-Stay tuned for further updates.
 
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
