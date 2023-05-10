@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3948" "Thursday" "30" "July" "2020" "18:01:55" "+0200" "Florian Weimer" "fweimer@redhat.com" nil "75" nil "^Cc:" nil nil "7" nil nil (number mark "        fweimer@redh Jul 30   75/3948  " thread-indent "\"[oss-security] Alternative CET ABI\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Alternative CET ABI" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 18062 invoked by uid 550); 30 Jul 2020 16:02:16 -0000
+Received: (qmail 9560 invoked by uid 550); 10 May 2023 16:56:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +6,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17968 invoked from network); 30 Jul 2020 16:02:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1596124923;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=/t9guy78vRPTT6BL7IT2WeMD9e6hnDcbjU3OamD57wI=;
-	b=CWupnQq330xO6h5vX7JE7zK6UU/LriC2oTNf1QbRRT8Q/HoD4KRcdnFIQztNI6WrFwiulJ
-	hxexs+tURqIPx2NqY6DC8wtUIVEtgC53v/M595roXS1v+JTDnepWB5OM3PaqnhY8VFlF7x
-	kDvPj8TTVmY8GomTA7BPIq66lVC5Es4=
-X-MC-Unique: cFYi_ne7Mv2A9VPzGtO_8g-1
-Message-ID: <87k0ylgff0.fsf@oldenburg2.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
-Cc: Szabolcs Nagy <szabolcs.nagy@arm.com>
-Date: Thu, 30 Jul 2020 18:01:55 +0200
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Alternative CET ABI
-To: oss-security@lists.openwall.com, x86-64-abi@googlegroups.com, kernel-hardening@lists.openwall.com
+Received: (qmail 9396 invoked from network); 10 May 2023 16:55:56 -0000
+Date: Wed, 10 May 2023 18:55:46 +0200
+From: Solar Designer <solar@openwall.com>
+To: Turritopsis Dohrnii Teo En Ming <tdtemccnp@gmail.com>
+Cc: oss-security@lists.openwall.com, ceo@teo-en-ming-corp.com,
+	Piotr Krysiuk <piotras@gmail.com>
+Message-ID: <20230510165545.GA25380@openwall.com>
+References: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] New Linux kernel NetFilter flaw gives attackers root privileges
 
-CET (and Arm BTI) restrict targets for indirect jumps and calls to
-landing pads which start with specially-formatted NOP instruction
-dedicated to this purpose (endrb64 in the x86-64 case).
+Hi,
 
-The traditional way of implementing ELF on top of this is to have every
-global function start with that NOP, and also use these NOPs in PLT
-stubs in the main program (which may provide the canonical address of
-functions, i.e. there address may be taken).
+On Wed, May 10, 2023 at 11:52:58PM +0800, Turritopsis Dohrnii Teo En Ming wrote:
+> I have just come across this article. Thought of sharing it.
+> 
+> Article: New Linux kernel NetFilter flaw gives attackers root privileges
+> Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
 
-The downside of this approach is that all functions in the process
-become available for execution, whether they are used in the original
-program or not.  (In principle, control flow integrity provides
-reasonably efficient ways to counteract that, by keeping track of symbol
-resolution and verifying flags at the start of critical functions, but
-we do not have automated support for that today, and there are some open
-issues about complex call graphs.)
+We don't normally want in here links to news articles on something that
+was already brought up in here in more detail.  However, as a moderator,
+I reluctantly approved this posting so that we can use the resulting
+thread to discuss whether this issue got blown out of proportion and if
+so what we can do to avoid that going forward.  Here's the original
+posting this refers to:
 
-CET has a NOTRACK prefix for indirect jumps/and calls.  It asserts that
-the jump target address is trusted and disables the control flow
-integrity check.  It is expected to be used with jump tables and the
-like, in conjunction with RELRO (so that the address has been loaded
-from read-only memory).
+https://www.openwall.com/lists/oss-security/2023/05/08/4
 
-I think this also provides support for a completely different ABI, where
-global functions are not automatically addressable.  It depends on
-BIND_NOW and RELRO, for a read-only GOT.
+Another Linux kernel issue, in io_uring subsystem, was also disclosed in
+here on the same day, but I think didn't gain such tech media attention:
 
-First of all, it needs new relocation types that tell the static link
-editor which symbol references are address-significant.  Generally,
-function addresses which end up in RELRO data only are not
-address-significant if they are used immediately in call instructions
-(without indirection of any form through writable memory).  This means
-that direct calls do not have address significance.  For vtables, it
-depends on how they are used; their function addresses probably need to
-be treated conservatively as address-significant (because the vtable
-pointer is in writable memory; at least for C++ vtables, the address of
-a virtual member function is not significant).
+https://www.openwall.com/lists/oss-security/2023/05/08/3
 
-Functions no longer start with the ENDBR64 prefix.  Instead, the link
-editor produces a PLT entry with an ENDBR64 prefix if it detects any
-address-significant relocation for it.  The PLT entry performs a NOTRACK
-jump to the target address.  This assumes that the target address is
-subject to RELRO, of course, so that redirection is not possible.
-Without address-significant relocations, the link editor produces a PLT
-entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
-perhaps no PLT entry at all.
+Is the netfilter issue really worse than the io_uring issue?  I doubt
+it.  So _maybe_ it was something in the wording that tripped someone
+writing for one of those tech news websites, then others picked it up?
 
-The net effect is that only functions which have their address taken in
-the original program can be called through indirect function calls.  For
-example, this means that the system function in libc is usually dormant,
-and cannot be reached, even if an attacker can cause the process to call
-arbitrary functions with an arbitrary string argument.  The reason is
-that the system function lacks the ENDBR64 prefix, and all PLT entries
-calling it also lack it.
+Piotr's posting about the netfilter issue mentions intent to disclose an
+exploit later (like it should have, thank you Piotr!)
 
-dlopen'ing a shared object which has a address-significant relocation
-against a function is not a problem under this model.  Either there
-already was an address-significant relocation before, then the function
-already has a canonical address, and that can be used.  Or there was
-not, then the just-loaded PLT entry (which as an ENDBR64 prefix)
-provides the canonical address function.
+Tobias' posting directly links to an exploit (which is also fine).
 
-To support dlsym, each global function definition would have a separate
-ENDBR64-enabled PLT/GOT slot for that, with the GOT slot only filled in
-at the time of the dlsym call (with mprotect calls around that, with
-some hand-waving required these can never fail).  This is probably the
-most awkward part about all this.  Alternatively, these stubs could also
-be generated at run time, from a pre-computed code page.
+Is intent to disclose an exploit later more newsworthy than having done
+so right away?  I doubt it.
 
-Obviously, it is too late for that now for x86-64, but maybe someone
-else gets a chance to try this.
+So maybe it's just random, and there's nothing to see here, after all.
 
-Thanks,
-Florian
+Now as to the actual issue and its description, I think we should
+clarify what exactly is meant by "unprivileged local users."  Piotr, I
+guess you actually meant not literally unprivileged, but users with
+CAP_NET_ADMIN, which can be had via unprivileged user/net namespaces if
+enabled in the distro / on the system, or when already in a container
+with such capability granted to container root.  Correct?  I think going
+forward we should always make this clear right away.  Here's a former
+netfilter core team leader also bringing this up:
 
+https://twitter.com/LaF0rge/status/1655867494152667140
+
+LaForge - @LaF0rge@chaos.social @LaF0rge:
+> Really curious to see how CVS-223-32233 for #linux #netfilter nf_tables
+> https://seclists.org/oss-sec/2023/q2/133 can be exploted fom
+> "unprivileged local users".  AFAICT, nf_tables_api  goes through
+> nfnetlink, and nfnetlink_rcv() checks for CAP_NET_ADMIN way  before the
+> code in nf_tables_api.
+
+and a reply:
+
+Alex Plaskett @alexjplaskett:
+> Didn't look in depth at this one but you can trigger nf_tables_api
+> operations from a user / network namespace and distros such as Ubuntu
+> have unpriv user namespaces enabled.
+
+As expected.  Now, from a typical distro user's standpoint,
+"unprivileged local users" may be just right.  However, not all distros
+have unprivileged user namespaces enabled by default.
+
+Alexander
