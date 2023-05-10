@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/20/1
-Message-ID: <CAB8XdGD4OdhJGRuf0JM=YFoUuOUpe0Lx6iWKiMJNofumgj5LqQ@mail.gmail.com>
-Date: Mon, 20 Feb 2023 10:15:04 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/2
+Message-ID: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
+Date: Wed, 10 May 2023 23:52:58 +0800
+From: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25613: LDAP Injection Vulnerability in Apache Kerby
+Cc: ceo@...-en-ming-corp.com
+Subject: New Linux kernel NetFilter flaw gives attackers root privileges
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Subject: New Linux kernel NetFilter flaw gives attackers root privileges
 
-An LDAP Injection vulnerability exists in the LdapIdentityBackend of
-Apache Kerby before 2.0.3.
+Good day from Singapore,
 
-Credit:
+I have just come across this article. Thought of sharing it.
 
-4ra1n of Chaitin Tech (finder)
+Article: New Linux kernel NetFilter flaw gives attackers root privileges
+Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
 
-References:
+Thank you.
 
-https://directory.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25613
+Regards,
+
+Mr. Turritopsis Dohrnii Teo En Ming
+Targeted Individual in Singapore
