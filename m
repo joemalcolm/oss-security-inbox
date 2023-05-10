@@ -1,19 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/20/3
-Message-ID: <1c005469-a540-5cd1-642e-5aebc35dd17b@geeklan.co.uk>
-Date: Thu, 20 Jul 2023 14:41:57 +0100
-From: Sevan Janiyan <venture37@...klan.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/4
+Message-ID: <20230510170709.GA26773@openwall.com>
+Date: Wed, 10 May 2023 19:07:10 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Announce: OpenSSH 9.3p2 released
+Cc: Tobias Holl <tobias@...ll.xyz>
+Subject: Re: Linux kernel io_uring out-of-bounds access to physical memory
 Content-Type: text/plain; charset=utf-8
 
-On 20/07/2023 14:24, Demi Marie Obenour wrote:
-> Should there be a system-wide configuration file containing a list of 
-> known-good PKCS#11 libraries? ssh-agent having to guess if something is 
-> a PKCS#11 library is less than awesome.
+On Mon, May 08, 2023 at 04:01:59PM +0200, Tobias Holl wrote:
+> TL;DR bug reproduction steps:
+>  1. Create a memfd
+>  2. fallocate a single page in that file descriptor
+>  3. Use MAP_FIXED to map this page repeatedly, in consecutive locations
+>  4. Register the entire region that you just filled up with that page as
+>     a fixed buffer with IORING_REGISTER_BUFFERS
+>  5. Use IORING_OP_WRITE_FIXED to write the buffer to some other file
+>     (OOB read) or IORING_OP_READ_FIXED to read data into the buffer (OOB
+>     write).
+> 
+> Of course, from there, we can simply find any interesting object in
+> physical memory and start overwriting function pointers to get code
+> execution and escalate privileges. A full proof-of-concept exploit with
+> a bit more robustness can be found at
+>   https://tholl.xyz/static/bugs/2023-io_uring-fixed-buffers/exploit.c
 
-There's a compile time setting for paths from which you are able to load 
-libraries from.
+I initially overlooked that the exploit was only shared by reference.
+Let's have it right in here for archival.  Attached.
 
+Alexander
 
-Sevan
+View attachment "exploit.c" of type "text/x-c" (25512 bytes)
