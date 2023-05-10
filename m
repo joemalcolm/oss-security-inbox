@@ -1,28 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/11
-Message-ID: <19c1b692-f984-7c1f-b646-6106a82c4881@apache.org>
-Date: Sun, 21 May 2023 08:23:21 +0000
-From: Charles Zhang <dockerzhang@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31454: Apache InLong: IDOR make users can bind any cluster 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/3
+Message-ID: <20230510165545.GA25380@openwall.com>
+Date: Wed, 10 May 2023 18:55:46 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>
+Cc: oss-security@...ts.openwall.com, ceo@...-en-ming-corp.com, Piotr Krysiuk <piotras@...il.com>
+Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Hi,
 
-Affected versions:
+On Wed, May 10, 2023 at 11:52:58PM +0800, Turritopsis Dohrnii Teo En Ming wrote:
+> I have just come across this article. Thought of sharing it.
+> 
+> Article: New Linux kernel NetFilter flaw gives attackers root privileges
+> Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
 
-- Apache InLong 1.2.0 through 1.6.0
+We don't normally want in here links to news articles on something that
+was already brought up in here in more detail.  However, as a moderator,
+I reluctantly approved this posting so that we can use the resulting
+thread to discuss whether this issue got blown out of proportion and if
+so what we can do to avoid that going forward.  Here's the original
+posting this refers to:
 
-Description:
+https://www.openwall.com/lists/oss-security/2023/05/08/4
 
-Incorrect Permission Assignment for Critical Resource Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.2.0 through 1.6.0. 
+Another Linux kernel issue, in io_uring subsystem, was also disclosed in
+here on the same day, but I think didn't gain such tech media attention:
 
-The attacker can bind any cluster, even if he is not the cluster owner. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.[1]
+https://www.openwall.com/lists/oss-security/2023/05/08/3
 
- https://github.com/apache/inlong/pull/7947 https://github.com/apache/inlong/pull/7947
+Is the netfilter issue really worse than the io_uring issue?  I doubt
+it.  So _maybe_ it was something in the wording that tripped someone
+writing for one of those tech news websites, then others picked it up?
 
-References:
+Piotr's posting about the netfilter issue mentions intent to disclose an
+exploit later (like it should have, thank you Piotr!)
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31454
+Tobias' posting directly links to an exploit (which is also fine).
 
+Is intent to disclose an exploit later more newsworthy than having done
+so right away?  I doubt it.
+
+So maybe it's just random, and there's nothing to see here, after all.
+
+Now as to the actual issue and its description, I think we should
+clarify what exactly is meant by "unprivileged local users."  Piotr, I
+guess you actually meant not literally unprivileged, but users with
+CAP_NET_ADMIN, which can be had via unprivileged user/net namespaces if
+enabled in the distro / on the system, or when already in a container
+with such capability granted to container root.  Correct?  I think going
+forward we should always make this clear right away.  Here's a former
+netfilter core team leader also bringing this up:
+
+https://twitter.com/LaF0rge/status/1655867494152667140
+
+LaForge - @LaF0rge@...os.social @LaF0rge:
+> Really curious to see how CVS-223-32233 for #linux #netfilter nf_tables
+> https://seclists.org/oss-sec/2023/q2/133 can be exploted fom
+> "unprivileged local users".  AFAICT, nf_tables_api  goes through
+> nfnetlink, and nfnetlink_rcv() checks for CAP_NET_ADMIN way  before the
+> code in nf_tables_api.
+
+and a reply:
+
+Alex Plaskett @alexjplaskett:
+> Didn't look in depth at this one but you can trigger nf_tables_api
+> operations from a user / network namespace and distros such as Ubuntu
+> have unpriv user namespaces enabled.
+
+As expected.  Now, from a typical distro user's standpoint,
+"unprivileged local users" may be just right.  However, not all distros
+have unprivileged user namespaces enabled by default.
+
+Alexander
