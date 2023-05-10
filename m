@@ -1,29 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/17
-Message-ID: <wbhfpn7kbwg64jordjxtpqfmmowes5rncupgzfbnqdz3uljioq@hgz2w4thzmya>
-Date: Wed, 19 Apr 2023 02:59:26 +0800
-From: Ruihan Li <lrh2000@....edu.cn>
-To: "Todd C. Miller" <Todd.Miller@...o.ws>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com,  Ruihan Li <lrh2000@....edu.cn>
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/8
+Message-ID: <CAARv3RQS-sV4JCkRCJ1EOgfi+9MR0G8MsiS-xT9gXNjddqmJ-A@mail.gmail.com>
+Date: Wed, 10 May 2023 23:52:27 +0200
+From: Tobias Heider <tobias.heider@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>, ceo@...-en-ming-corp.com,  Piotr Krysiuk <piotras@...il.com>
+Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
 Content-Type: text/plain; charset=utf-8
 
-Hi Todd,
+On Wed, May 10, 2023 at 9:39 PM Thadeu Lima de Souza Cascardo
+<cascardo@...onical.com> wrote:
+>
+> On Wed, May 10, 2023 at 06:55:46PM +0200, Solar Designer wrote:
+> > Hi,
+> >
+> > On Wed, May 10, 2023 at 11:52:58PM +0800, Turritopsis Dohrnii Teo En Ming wrote:
+> > > I have just come across this article. Thought of sharing it.
+> > >
+> > > Article: New Linux kernel NetFilter flaw gives attackers root privileges
+> > > Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
+> >
+> > We don't normally want in here links to news articles on something that
+> > was already brought up in here in more detail.  However, as a moderator,
+> > I reluctantly approved this posting so that we can use the resulting
+> > thread to discuss whether this issue got blown out of proportion and if
+> > so what we can do to avoid that going forward.  Here's the original
+> > posting this refers to:
+> >
+> > https://www.openwall.com/lists/oss-security/2023/05/08/4
+> >
+> > Another Linux kernel issue, in io_uring subsystem, was also disclosed in
+> > here on the same day, but I think didn't gain such tech media attention:
+> >
+> > https://www.openwall.com/lists/oss-security/2023/05/08/3
+> >
+> > Is the netfilter issue really worse than the io_uring issue?  I doubt
+> > it.  So _maybe_ it was something in the wording that tripped someone
+> > writing for one of those tech news websites, then others picked it up?
+> >
+> > Piotr's posting about the netfilter issue mentions intent to disclose an
+> > exploit later (like it should have, thank you Piotr!)
+> >
+> > Tobias' posting directly links to an exploit (which is also fine).
+> >
+> > Is intent to disclose an exploit later more newsworthy than having done
+> > so right away?  I doubt it.
+> >
+> > So maybe it's just random, and there's nothing to see here, after all.
+> >
+> > Now as to the actual issue and its description, I think we should
+> > clarify what exactly is meant by "unprivileged local users."  Piotr, I
+> > guess you actually meant not literally unprivileged, but users with
+> > CAP_NET_ADMIN, which can be had via unprivileged user/net namespaces if
+> > enabled in the distro / on the system, or when already in a container
+> > with such capability granted to container root.  Correct?  I think going
+> > forward we should always make this clear right away.  Here's a former
+> > netfilter core team leader also bringing this up:
+> >
+> > https://twitter.com/LaF0rge/status/1655867494152667140
+> >
+> > LaForge - @LaF0rge@...os.social @LaF0rge:
+> > > Really curious to see how CVS-223-32233 for #linux #netfilter nf_tables
+> > > https://seclists.org/oss-sec/2023/q2/133 can be exploted fom
+> > > "unprivileged local users".  AFAICT, nf_tables_api  goes through
+> > > nfnetlink, and nfnetlink_rcv() checks for CAP_NET_ADMIN way  before the
+> > > code in nf_tables_api.
+> >
+> > and a reply:
+> >
+> > Alex Plaskett @alexjplaskett:
+> > > Didn't look in depth at this one but you can trigger nf_tables_api
+> > > operations from a user / network namespace and distros such as Ubuntu
+> > > have unpriv user namespaces enabled.
+>
+> If users don't need user namespaces, they can disable it on Ubuntu kernels as a
+> mitigation by doing:
+>
+> sysctl -w kernel.unprivileged_userns_clone=0
+>
+> Or persisting the option by adding a .conf file at /etc/sysctl.d/ with the
+> following line:
+>
+> kernel.unprivileged_userns_clone=0
+>
+> Cascardo.
 
-On Tue, Apr 18, 2023 at 08:27:16AM -0600, Todd C. Miller wrote:
-> That is correct.  There are further changes to use TIOCGWINSZ on
-> /dev/tty instead of stderr.  Using an open fd of /dev/tty makes the
-> isatty() call superfluous but it doesn't hurt to have it.
+Another thing worth mentioning is that the apparmor team has done some very
+interesting work on providing finer control over unprivileged user namespaces
+on a per application basis:
+https://gitlab.com/apparmor/apparmor/-/wikis/unprivileged_userns_restriction
 
-Yeah, I see that you are removing ioctl calls on standard file descriptors. So
-actually, just to confirm, it is feasible to avoid all ioctl calls to standard
-file descriptors with root privileges (under all command line arguments), by
-using /dev/tty, assuming something like the window size... Right?
+This would allow having opt-in unprivileged userns support only for confined and
+explicitly permitted applications and could hopefully drastically reduce the
+impact of similar bugs in the future.
 
-If this is the case, I think it should not be difficult for other setuid
-programs to do similar things. I am just thinking for a while, and cannot find
-a case where ioctl calls are unavoidable.
+Tobias
 
-Thanks,
-Ruihan Li
-
+>
+> >
+> > As expected.  Now, from a typical distro user's standpoint,
+> > "unprivileged local users" may be just right.  However, not all distros
+> > have unprivileged user namespaces enabled by default.
+> >
+> > Alexander
