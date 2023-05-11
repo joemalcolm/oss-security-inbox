@@ -1,36 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/10
-Message-ID: <CABBoStiUAn_tdyAcVm_YPcXrpEDdsy15EZ=d34TYvmAEZ9vQ7w@mail.gmail.com>
-Date: Tue, 26 Sep 2023 15:00:00 -0400
-From: "Sage [They / Them] McTaggart" <amctagga@...hat.com>
-To: lhenry@...italocean.com, oss-security@...ts.openwall.com
-Subject: CVE-2023-43040 Ceph: Improperly verified POST keys.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/11/1
+Message-ID: <20230511015644.GA30987@openwall.com>
+Date: Thu, 11 May 2023 03:56:44 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Piotr Krysiuk <piotras@...il.com>
+Cc: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>, oss-security@...ts.openwall.com, ceo@...-en-ming-corp.com
+Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
-A flaw was found in Ceph RGW. An unprivileged user can write to any
-bucket(s) accessible by a given key if a POST's form-data contains a key
-called 'bucket' with a value matching the name of the bucket used to sign
-the request.
+On Wed, May 10, 2023 at 08:02:49PM +0100, Piotr Krysiuk wrote:
+> On Wed, May 10, 2023 at 5:55???PM Solar Designer <solar@...nwall.com> wrote:
+> > Is the netfilter issue really worse than the io_uring issue?  I doubt
+> > it.  So _maybe_ it was something in the wording that tripped someone
+> > writing for one of those tech news websites, then others picked it up?
 
-The result of this is that a user could actually upload to any bucket
-accessible by the specified access key as long as the bucket in the POST
-policy matches the bucket in said POST form part.
+When writing the above, I didn't recall that the io_uring issue is
+6.3-only, which does make it relatively less important.
 
-We have assigned it a CVE of CVE-2023-43040 and the patch is attached.
+Brad Spengler reminded me of this aspect on Twitter.  Thanks.
 
-Credits to Lucas Henry of Digital Ocean.
+> I suspect that what triggered the media is the following fragment:
+> 
+> > Somebody from the Linux kernel team then emailed the proposed fix to
+> > <linux-distros@...openwall.org> and that email also included a link to
+> > download our description of exploitation techniques and our exploit
+> > source code.
+> >
+> > Therefore, according to the linux-distros list policy, the exploit must
+> > be published within 7 days from this advisory.
 
-Sage McTaggart
-IBM Product Security
+Oh, that could have looked like drama.  Yes, that could be it.
 
-amct@...hat.com
+> So in the advisory I wanted to explain the reason why the exploit must
+> be posted, given that was not my original plan.
 
-sagemct@....com
+Sure.  I think this is good for transparency.
 
+> > As expected.  Now, from a typical distro user's standpoint,
+> > "unprivileged local users" may be just right.  However, not all distros
+> > have unprivileged user namespaces enabled by default.
+> 
+> You are right, I should have explained the dependencies. Do you think
+> it would be OK to include the correction on Monday? Or is it better to
+> send today (it may catch even more media)? I will make sure to review
+> the wording with you before posting.
 
-Pronouns:They/Them/Theirs
+We're already having this very discussion on the list, just not in the
+same thread... and I just realized that maybe you didn't realize that.
 
-Content of type "text/html" skipped
+When you post the exploitation techniques and the exploit code on
+Monday, please do explain the dependencies in that same message.
 
-View attachment "rgw.patch" of type "text/x-patch" (1716 bytes)
+Thanks,
+
+Alexander
