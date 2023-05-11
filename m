@@ -1,63 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/4
-Message-ID: <2cccd54e-6a8e-8b79-3913-7b13817a0b72@gmail.com>
-Date: Thu, 28 Sep 2023 17:49:08 +0200
-From: Emilio Pozuelo Monfort <pochu27@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/11/2
+Message-ID: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
+Date: Thu, 11 May 2023 07:36:44 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+Subject: Clarification on embargoed testing in a partner cloud
 Content-Type: text/plain; charset=utf-8
 
-On 28/09/2023 14:36, Jeffrey Walton wrote:
-> On Tue, Sep 26, 2023 at 11:37 AM Solar Designer <solar@...nwall.com> wrote:
->>
->> It was great to hear from Vincent that the newer libwebp changes are
->> just "Clean-ups, no security issues there."  Yet I think it would also
->> be great if someone in here double-checks that.
->>
->> Regarding the assert failure detected by oss-fuzz, "A release build
->> would not be negatively affected."  libwebp does specify -DNDEBUG by
->> default in:
->>
->> $ fgrep -rl DNDEBUG .
->> ./Makefile.vc
->> ./xcframeworkbuild.sh
->> ./iosbuild.sh
->> ./configure.ac
->> ./makefile.unix
->>
->> and there's also cmake support, but apparently cmake sets -DNDEBUG for
->> release builds by default.  So at least this statement does appear to be
->> true for libwebp itself as built via the above means.
->>
->> However, there's also Gradle support, and the gradle* files do not
->> mention NDEBUG.
->>
->> Also, I wonder if there are other projects building code from libwebp
->> via different build environments.
->>
->> So there might be (a small minority of) uses of libwebp where the assert
->> exists in a release build of some project.
-> 
-> Crypto++ caught a CVE because use of -DNDEBUG was not documented. The
-> library's build system used -DNDEBUG (like libwebp), but folks who
-> ported to other build systems did not use it. In my mind's eye, others
-> who did not use the -DNDEBUG flag should have caught a CVE, not
-> Crypto++. Also see CVE-2016-7420 and
-> <http://seclists.org/oss-sec/2016/q3/520>.
-> 
-> Crypto++ eventually took away the footgun by supplying its own
-> CRYPTOPP_ASSERT that required a user to supply a switch to engage
-> asserts. Asserts were no longer enabled by default when someone
-> omitted -DNDEBUG. Also see
-> <https://github.com/weidai11/cryptopp/blob/master/trap.h>.
-> 
-> I've never seen a CVE for documentation before or since.
+Hi,
 
-Here's a recent one:
+The Ubuntu security team shares and obtains information about embargoed issues 
+from the distros and linux-distros mailing lists.
 
-https://www.cve.org/CVERecord?id=CVE-2023-0466
+One of our large cloud partners has asked the Ubuntu security team to do 
+automated testing of embargoed security updates on their public cloud before the 
+CRD. While technically we would not be directly sharing details of embargoed 
+issues with them as the tests will be run under accounts owned by the Ubuntu 
+security team, they will be run on their infrastructure. As such, this may 
+hinder our ability to conduct a comprehensive internal investigation of any leak 
+that may occur.
 
-https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=51e8a84ce742db0f6c70510d0159dad8f7825908
+I’m not exactly sure how this scenario fits within the policy of these lists, 
+and would like to validate before we go ahead. ( Policy can be found here: 
+https://oss-security.openwall.org/wiki/mailing-lists/distros )
 
-Cheers,
-Emilio
+Would testing embargoed updates obtained from the distros and linux-distros 
+lists on an external cloud infrastructure violate the terms of those mailing 
+lists? Would testing embargoed updates on an external cloud infrastructure be 
+contrary to the expectations of the vendors posting embargoed issues to those lists?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
