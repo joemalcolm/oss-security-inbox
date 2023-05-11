@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1169" "Saturday" "21" "October" "2017" "19:19:46" "+0100" "Eddie Chapman" "eddie@ehuk.net" "<4eb93d94-2788-3d38-06e7-53cfe9d43a52@ehuk.net>" "28" "[oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak in glob with GLOB_TILDE" nil nil nil "10" "2017102118:19:46" "[oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak in glob with GLOB_TILDE" (number mark "U       eddie@ehuk.n Oct 21   28/1169  " thread-indent "\"[oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak in glob with GLOB_TILDE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3686 invoked by uid 550); 21 Oct 2017 19:43:14 -0000
+Received: (qmail 28107 invoked by uid 550); 11 May 2023 15:20:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9359 invoked from network); 21 Oct 2017 18:19:58 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 99C9D1F623
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1508609986; bh=LAk+SSM9Uh++pY0hCkpAh+k4Inkx5csheNxmFcWa0mA=;
-	h=To:From:Subject:Reply-To:Date:From;
-	b=GHlS3VexoP8vYtpvFEF6zCNxMY40DK1+nkA7Vb57VrFQmwlRiukOUO7ZvoRwNp1Wx
-	 ylILsNr5f12gwLi7tQXieCWBucGNT++tOHZKq7PJKJqZiOhFBCgxKv3OUaBJj5NABS
-	 ujOBPaVGsP+dUJh1ZBqATX9n11oyKj49gtdQjr3o=
-To: oss-security@lists.openwall.com
-From: Eddie Chapman <eddie@ehuk.net>
-Message-ID: <4eb93d94-2788-3d38-06e7-53cfe9d43a52@ehuk.net>
-Date: Sat, 21 Oct 2017 19:19:46 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+Received: (qmail 28089 invoked from network); 11 May 2023 15:20:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1683818426;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IJEU53Ws5eOjyBLXe3P+zXfwcnXOVGtj4EzqJfZMR2g=;
+	b=fd3g3brNA1gmnIbuO8rVFC9RTec4rC34WSOlSvz4IPXVcKBIXRBusX8WxOs5OkQlYpnZR3
+	37XRMGinAeZkkNW7IelCEYYOPorbV1C7ZEB5Hy6yfpvz9a+5oJh/6BAf/4zFc06EcqZlnr
+	jm/FmcelkSDR4ngmuWlLpGPqKwi5ZXk=
+X-MC-Unique: 5q7Gdx02OduiHbdiY7B2Tw-1
+From: Florian Weimer <fweimer@redhat.com>
+To: Tobias Heider <tobias.heider@canonical.com>
+Cc: oss-security@lists.openwall.com,  Turritopsis Dohrnii Teo En Ming
+ <tdtemccnp@gmail.com>,  ceo@teo-en-ming-corp.com,  Piotr Krysiuk
+ <piotras@gmail.com>
+References: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
+	<20230510165545.GA25380@openwall.com>
+	<ZFvuu+PpS3BO2T/t@quatroqueijos.cascardo.eti.br>
+	<CAARv3RQS-sV4JCkRCJ1EOgfi+9MR0G8MsiS-xT9gXNjddqmJ-A@mail.gmail.com>
+Date: Thu, 11 May 2023 17:20:20 +0200
+In-Reply-To: <CAARv3RQS-sV4JCkRCJ1EOgfi+9MR0G8MsiS-xT9gXNjddqmJ-A@mail.gmail.com>
+	(Tobias Heider's message of "Wed, 10 May 2023 23:52:27 +0200")
+Message-ID: <87a5yahp3f.fsf@oldenburg3.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak
- in glob with GLOB_TILDE
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.7
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
+Subject: Re: [oss-security] New Linux kernel NetFilter flaw gives attackers
+ root privileges
 
-Just a heads up for anyone around over the weekend ...
+* Tobias Heider:
 
-== CVE-2017-15670 ==
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15670
-"The GNU C Library (aka glibc or libc6) before 2.27 contains an 
-off-by-one error leading to a heap-based buffer overflow in the glob 
-function in glob.c, related to the processing of home directories using 
-the ~ operator followed by a long string."
+> Another thing worth mentioning is that the apparmor team has done some very
+> interesting work on providing finer control over unprivileged user namespaces
+> on a per application basis:
+> https://gitlab.com/apparmor/apparmor/-/wikis/unprivileged_userns_restriction
+>
+> This would allow having opt-in unprivileged userns support only for
+> confined and explicitly permitted applications and could hopefully
+> drastically reduce the impact of similar bugs in the future.
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=22320
+Doesn't unprivileged chroot need user namespace support?  So a side
+effect of disabling it might be to force applications to switch to
+userspace emulation of pathname lookup.  That doesn't seem like a good
+tradeoff?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1504804
-"It is possible that an attacker might use this to escalate his 
-privileges or execute code."
+Thanks,
+Florian
 
-Upstream patch:
-https://git.savannah.gnu.org/cgit/gnulib.git/commit/?id=2d1bd71ec70a31b01d01b734faa66bb1ed28961f
-
-
-== CVE-2017-15671 ==
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15671
-"The glob function in glob.c in the GNU C Library (aka glibc or libc6) 
-before 2.27, when invoked with GLOB_TILDE, could skip freeing allocated 
-memory when processing the ~ operator with a long user name, potentially 
-leading to a denial of service (memory leak)."
-
-https://sourceware.org/bugzilla/show_bug.cgi?id=22325
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-15671
