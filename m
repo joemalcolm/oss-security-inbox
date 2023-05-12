@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5850" "Wednesday" "25" "January" "2017" "10:16:01" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2979113.NTRsFXjtRy@blackgate>" "135" "[oss-security] jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)" nil nil nil "1" "2017012509:16:01" "[oss-security] jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)" (number mark "U       ago@gentoo.o Jan 25  135/5850  " thread-indent "\"[oss-security] jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28262 invoked by uid 550); 25 Jan 2017 09:16:21 -0000
+Received: (qmail 7840 invoked by uid 550); 12 May 2023 01:14:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,149 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28241 invoked from network); 25 Jan 2017 09:16:20 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 7817 invoked from network); 12 May 2023 01:14:25 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Maxim Solodovnik <solomax@apache.org>
 To: oss-security@lists.openwall.com
-Date: Wed, 25 Jan 2017 10:16:01 +0100
-Message-ID: <2979113.NTRsFXjtRy@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+Message-ID: <9d930de3-d919-ab47-71cd-a6701acc46b9@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 12 May 2023 01:14:09 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)
+Subject: [oss-security] CVE-2023-28936: Apache OpenMeetings: insufficient check of
+ invitation hash 
+
+Severity: critical
+
+Affected versions:
+
+- Apache OpenMeetings 2.0.0 before 7.1.0
 
 Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Another round of fuzzing shows that a crafted image causes a read overflow.
+Attacker can access arbitrary recording/room
 
-The complete ASan output:
+Vendor: The Apache Software Foundation
 
-# imginfo -f $FILE
-warning: ignoring unknown marker segment (0xff70)
-type = 0xff70 (UNKNOWN); len = 35;00 01 43 72 65 61 74 6f 74 3a 30 4a 61 73 50 
-65 72 00 01 00 00 73 69 6f 6e 20 31 2e 39 30 30 2e 39 warning: trailing 
-garbage in marker segment (3 bytes)
-warning: trailing garbage in marker segment (8 bytes)
-warning: trailing garbage in marker segment (6 bytes)
-=================================================================
-==30315==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x61a00001f808 at pc 0x7fb7b2667e54 bp 0x7ffd0a9ab890 sp 0x7ffd0a9ab888
-READ of size 8 at 0x61a00001f808 thread T0
-    #0 0x7fb7b2667e53 in jpc_dec_decodepkt /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:245:14
-    #1 0x7fb7b2667e53 in jpc_dec_decodepkts /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:454
-    #2 0x7fb7b25ccd37 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:628:6
-    #3 0x7fb7b25d6853 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
-    #4 0x7fb7b25d6853 in jpc_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
-    #5 0x7fb7b25a6231 in jp2_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
-    #6 0x7fb7b2568214 in jas_image_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
-    #7 0x50a3be in main /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
-    #8 0x7fb7b164878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #9 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
+Versions=C2=A0Affected: Apache OpenMeetings from 2.0.0 before 7.1.0
 
-0x61a00001f808 is located 48 bytes to the right of 1368-byte region 
-[0x61a00001f280,0x61a00001f7d8)
-allocated by thread T0 here:
-    #0 0x4d2a98 in malloc /tmp/portage/sys-
-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7fb7b2575160 in jas_malloc /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_malloc.c:242:11
-    #2 0x7fb7b2575160 in jas_alloc2 /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_malloc.c:275
-    #3 0x7fb7b25ca2bf in jpc_dec_tileinit /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:841:24
-    #4 0x7fb7b25ca2bf in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:594
-    #5 0x7fb7b25d6853 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
-    #6 0x7fb7b25d6853 in jpc_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
-    #7 0x7fb7b25a6231 in jp2_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
-    #8 0x7fb7b2568214 in jas_image_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
-    #9 0x50a3be in main /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
-    #10 0x7fb7b164878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:245:14 in 
-jpc_dec_decodepkt
-Shadow bytes around the buggy address:
-  0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbef0: 00 00 00 00 00 00 00 00 00 00 00 fa fa fa fa fa
-=>0x0c347fffbf00: fa[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==30315==ABORTING
-
-Affected version:
-2.0.10
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
+This issue is being tracked as OPENMEETINGS-2762=20
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+Stefan Schiller (reporter)
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00126-jasper-heapoverflow-jpc_dec_decodepkt
+References:
 
-Timeline:
-2017-01-25: bug discovered and reported upstream
-2017-01-25: blog post about the issue
+https://openmeetings.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-28936
+https://issues.apache.org/jira/browse/OPENMEETINGS-2762
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/25/jasper-heap-based-buffer-overflow-in-jpc_dec_decodepkt-jpc_t2dec-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
