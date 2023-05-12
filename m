@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/7
-Message-ID: <20230418012910.GK1655348@millbarge>
-Date: Tue, 18 Apr 2023 01:29:10 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Jialin Qiao <qiaojialin@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-30771: Apache IoTDB Workbench: apache/iotdb-web-workbench: forge the JWTToken to access workbench
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/12/3
+Message-ID: <0841cfb9-4068-f742-37ae-1428aff994fe@apache.org>
+Date: Fri, 12 May 2023 01:20:05 +0000
+From: Maxim Solodovnik <solomax@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-29246: Apache OpenMeetings: allows null-byte Injection 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 16, 2023 at 02:48:14AM +0000, Jialin Qiao wrote:
-> https://iotdb.apache.org
-> https://www.cve.org/CVERecord?id=CVE-2023-30771
+Severity: important
 
-Hello Jialin, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+Affected versions:
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
+- Apache OpenMeetings 2.0.0 before 7.1.0
 
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
+Description:
 
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
+An attacker who has gained access to an admin account can perform RCE via null-byte injection
 
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
+Vendor: The Apache Software Foundation
 
-Thanks
+Versions Affected: Apache OpenMeetings from 2.0.0 before 7.1.0
 
+This issue is being tracked as OPENMEETINGS-2765 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Credit:
+
+Stefan Schiller (reporter)
+
+References:
+
+https://openmeetings.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-29246
+https://issues.apache.org/jira/browse/OPENMEETINGS-2765
+
