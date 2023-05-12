@@ -1,112 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/3
-Message-ID: <CAL7+V1zrLPQ_GS49OhWOQX0BfMSDoYmQ8a=c0bvRWp3mpqs88A@mail.gmail.com>
-Date: Wed, 23 Aug 2023 07:37:40 -0700
-From: Rita Zhang <rita.z.zhang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/12/1
+Message-ID: <9d930de3-d919-ab47-71cd-a6701acc46b9@apache.org>
+Date: Fri, 12 May 2023 01:14:09 +0000
+From: Maxim Solodovnik <solomax@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2023-3676: Insufficient input sanitization on Windows nodes leads to privilege escalation
+Subject: CVE-2023-28936: Apache OpenMeetings: insufficient check of invitation hash 
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Severity: critical
 
-A security issue was discovered in Kubernetes where a user that can create
-pods on Windows nodes may be able to escalate to admin privileges on those
-nodes. Kubernetes clusters are only affected if they include Windows nodes.
+Affected versions:
 
-This issue has been rated ***HIGH*** (
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>-
-8.8
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
-and assigned **CVE-2023-3676**
+- Apache OpenMeetings 2.0.0 before 7.1.0
 
-*Am I vulnerable?*
+Description:
 
-Any kubernetes environment with Windows nodes is impacted.  Run `kubectl
-get nodes -l kubernetes.io/os=windows` <http://kubernetes.io/os=windows> to
-see if any Windows nodes are in use.
+Attacker can access arbitrary recording/room
 
-*Affected Versions*
+Vendor: The Apache Software Foundation
 
-- kubelet <= v1.28.0
+Versions Affected: Apache OpenMeetings from 2.0.0 before 7.1.0
 
-- kubelet <= v1.27.4
+This issue is being tracked as OPENMEETINGS-2762 
 
-- kubelet <= v1.26.7
+Credit:
 
-- kubelet <= v1.25.12
+Stefan Schiller (reporter)
 
-- kubelet <= v1.24.16
+References:
 
-*How do I mitigate this vulnerability?*
-
-The provided patch fully mitigates the vulnerability and has no known side
-effects.  Full mitigation for this class of issues requires patches applied
-for CVE-2023-3676, CVE-2023-3955, and CVE-2023-3893.
-
-Outside of applying the provided patch, there are no known mitigations to
-this vulnerability.
-
-*Fixed Versions*
-
-- kubelet v1.28.1
-
-- kubelet v1.27.5
-
-- kubelet v1.26.8
-
-- kubelet v1.25.13
-
-- kubelet v1.24.17
-
-These releases will be published over the course of today, August 23rd,
-2023.
-
-To upgrade, refer to the documentation:
-
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
-
-*Detection*
-
-Kubernetes audit logs can be used to detect if this vulnerability is being
-exploited. Pod create events with embedded powershell commands are a strong
-indication of exploitation. Config maps and secrets that contain embedded
-powershell commands and are mounted into pods are also a strong indication
-of exploitation.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-
-*Additional Details*
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/119339
-
-*Acknowledgements*
-
-This vulnerability was reported by Tomer Peled @tomerpeled92
-
-The issue was fixed and coordinated by the fix team:
-
-James Sturtevant @jsturtevant
-
-Mark Rossetti @marosset
-
-Andy Zhang @andyzhangx
-
-Justin Terry @jterry75
-
-Kulwant Singh @KlwntSingh
-
-Micah Hausler @micahhausler
-
-Rita Zhang @ritazh
-
-and release managers:
-
-Jeremy Rickard @jeremyrickard
-
-Thank You,
-
-Rita Zhang on behalf of the Kubernetes Security Response Committee
+https://openmeetings.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-28936
+https://issues.apache.org/jira/browse/OPENMEETINGS-2762
 
