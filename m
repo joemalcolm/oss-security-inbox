@@ -1,39 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/8
-Message-Id: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
-Date: Thu, 5 Oct 2023 11:08:51 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/14/3
+Message-ID: <20230514214121.GA18829@openwall.com>
+Date: Sun, 14 May 2023 23:41:21 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: European Union Cyber Resilience Act (CRA)
+Subject: Re: Real world vulnerabilities of CWE-1077: Floating Point Comparison with Incorrect Operator?
 Content-Type: text/plain; charset=utf-8
 
-Solar Designed posted on October 1, 2023:
-> The talk... starts with a mention of the European Union Cyber Resiliance Act (CRA)
-> and how it is problematic for Open Source...
-> (If we want to discuss in here, which I'm not sure of, please start a
-> separate thread for this sub-topic, do not just reply to this one.)
+On Mon, Apr 24, 2023 at 04:43:29PM +0300, Georgi Guninski wrote:
+> Are there real world examples of vulnerabilities of this:
+> 
+> https://cwe.mitre.org/data/definitions/1077.html
+> CWE-1077: Floating Point Comparison with Incorrect Operator
+> 
+> This issue can prevent the product from running reliably. If the
+> relevant code is reachable by an attacker, then this reliability
+> problem might introduce a vulnerability.
+> 
+> One simple example in python:
+> 
+> >>> A=(0.1+0.2)+0.3;B=0.1+(0.2+0.3);(A==B,A-B,A,B)
+> (False, 1.1102230246251565e-16, 0.6000000000000001, 0.6)
 
-Fair enough. The CRA *definitely* impacts open source software,
-and it includes security-related requirements. So it seems on-topic for this mailing list, at
-least to note that *many* people find the CRA concerning & to point to more information.
+See this thread:
 
-I think a good place to start is "Understanding the Cyber Resilience Act:
-What Everyone involved in Open Source Development Should Know" from the Linux Foundation:
-https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
+https://www.openwall.com/lists/oss-security/2011/01/05/2
 
-As currently written, individual developers of OSS are "probably excluded by the CRA requirements, even if you occasionally accept donations. But if you regularly charge or accept recurring donations from commercial entities (for example, if you do open source consulting), you’ll likely be covered by the CRA."
-The bigger problem is that nonprofits & private companies are expected to a lot of things that don't make much sense. As noted, "the assumptions the CRA makes about software manufacturers do not necessarily hold for open source software developers."
+"Since this problem stems from a single codebase, strtod.c, so it gets a
+single CVE identifier (already assigned CVE-2010-4645).  The CVE
+description will "blame" strtod.c and mention PHP, and any other
+high-profile software that is discovered to use the same vulnerable,
+shared code."
 
-The Linux Foundation EU has a page about the CRA:
-https://linuxfoundation.eu/cyber-resilience-act
-... it has many links, and is urging people work to #FixTheCRA.
+CVE-2010-4645 description currently in NVD is:
 
-Many organizations *have* been trying to get EU regulators to fix the CRA. This isn't a case where no one spoke up. The problem is that for the most part their concerns have been ignored by regulators:
-https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Eclipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
+"strtod.c, as used in the zend_strtod function in PHP 5.2 before 5.2.17
+and 5.3 before 5.3.5, and other products, allows context-dependent
+attackers to cause a denial of service (infinite loop) via a certain
+floating-point value in scientific notation, which is not properly
+handled in x87 FPU registers, as demonstrated using
+2.2250738585072011e-308."
 
-I think the overall *goals* of the CRA are laudable. However, when evaluating laws & regulations you should always IGNORE their goals, because their goals are IRRELEVANT. What matters is what the laws and regulations will actually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for evaluating laws and regulations. In this case, I think too many regulators are focused on theoretical goals while ignoring what will actually happen.
+Interestingly, at least PHP's fix at the time wasn't to avoid the direct
+comparison, but to avoid having the floating-point values stay in x87 FP
+registers.  This should be sufficient to workaround GCC "bug" 323, but
+it might not be robust across platforms and it does not fix CWE-1077.
 
-Full disclosure: I work for the Linux Foundation, but I'm just speaking for myself here.
-
---- David A. Wheeler
-
+Alexander
