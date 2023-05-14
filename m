@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["916" "Wednesday" "20" "May" "2020" "12:49:32" "+0800" "George Ni" "nic@apache.org" "<CANUbERzvv4k6ac92XyZbVHOBt-ASHDAPgMC8xxFAo1jfNPQ2EA@mail.gmail.com>" "43" "[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability" nil nil nil "5" "2020052004:49:32" "[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability" (number mark "U       nic@apache.o May 20   43/916   " thread-indent "\"[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16116 invoked by uid 550); 20 May 2020 05:34:55 -0000
+Received: (qmail 11645 invoked by uid 550); 14 May 2023 20:26:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +7,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18249 invoked from network); 20 May 2020 04:49:56 -0000
-X-Gm-Message-State: AOAM532kcmtPO3NwO3elCk1pRqwqp5JVRae+NItMupD+3qgQrlOJ48MN
-	S5I2BtLEoWhGELtk11rCGkUjYix5KwpO16WLpuY=
-X-Google-Smtp-Source: ABdhPJwljtwAZnWJJm7zjLe835h77YqciOCi2EM43yCR+CeJ1vA2YYEr45Z2Eygc1oOBxDos4rG69oWUhKqxvFmDrZ0=
-X-Received: by 2002:a05:620a:a83:: with SMTP id v3mr2886952qkg.456.1589950183967;
- Tue, 19 May 2020 21:49:43 -0700 (PDT)
-MIME-Version: 1.0
-From: George Ni <nic@apache.org>
-Date: Wed, 20 May 2020 12:49:32 +0800
-X-Gmail-Original-Message-ID: <CANUbERzvv4k6ac92XyZbVHOBt-ASHDAPgMC8xxFAo1jfNPQ2EA@mail.gmail.com>
-Message-ID: <CANUbERzvv4k6ac92XyZbVHOBt-ASHDAPgMC8xxFAo1jfNPQ2EA@mail.gmail.com>
-To: user <user@kylin.apache.org>, dev <dev@kylin.apache.org>, announce@apache.org, 
-	Johannes Dahse <jdahse@ripstech.com>, Apache Security Team <security@apache.org>, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000ed117905a60d1f2d"
-Subject: [oss-security] [CVE-2020-1956] Apache Kylin command injection vulnerability
+Received: (qmail 10111 invoked from network); 14 May 2023 20:24:34 -0000
+Date: Sun, 14 May 2023 22:24:09 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20230514202409.GA17111@openwall.com>
+References: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Clarification on embargoed testing in a partner cloud
 
---000000000000ed117905a60d1f2d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Marc,
 
-Severity: Important
+Thank you for bringing this up.  I'll share my current thoughts below.
+I do not have a conclusion nor a decision yet, but I hope we'll arrive
+at one in further discussion.
 
-Vendor:
-The Apache Software Foundation
+On Thu, May 11, 2023 at 07:36:44AM -0400, Marc Deslauriers wrote:
+> The Ubuntu security team shares and obtains information about embargoed 
+> issues from the distros and linux-distros mailing lists.
+> 
+> One of our large cloud partners has asked the Ubuntu security team to do 
+> automated testing of embargoed security updates on their public cloud 
+> before the CRD. While technically we would not be directly sharing details 
+> of embargoed issues with them as the tests will be run under accounts owned 
+> by the Ubuntu security team, they will be run on their infrastructure. As 
+> such, this may hinder our ability to conduct a comprehensive internal 
+> investigation of any leak that may occur.
+> 
+> I'm not exactly sure how this scenario fits within the policy of these 
+> lists, and would like to validate before we go ahead. ( Policy can be found 
+> here: https://oss-security.openwall.org/wiki/mailing-lists/distros )
+> 
+> Would testing embargoed updates obtained from the distros and linux-distros 
+> lists on an external cloud infrastructure violate the terms of those 
+> mailing lists?
 
-Versions Affected:
-Kylin 2.3.0 to 2.3.2
-Kylin 2.4.0 to 2.4.1
-Kylin 2.5.0 to 2.5.2
-Kylin 2.6.0 to 2.6.5
-Kylin 3.0.0-alpha, Kylin 3.0.0-alpha2, Kylin 3.0.0-beta, Kylin 3.0.0, Kylin
-3.0.1
+I think this is a gray area.  The policy talks about not sharing beyond
+the need-to-know for getting the issue fixed for your distro's users.
+It also talks about not delivering or deploying.  However, usage of
+cloud resources under the distro's accounts is not exactly sharing, and
+testing in the target environment is relevant to getting the issue fixed
+for the distro's users.
 
-Description:
-Kylin has some restful apis which will concatenate os command with the user
-input string, a user is likely to be able to execute any os command without
-any protection or validation.
+Sure this adds risks.  However, realistically we probably already do
+have distros on the list that use a public cloud for some processing of
+embargoed information.  At least Amazon Linux probably uses AWS -
+probably dedicated instances with no other concurrent VMs on the same
+hardware, but still.  (I am just guessing here.  Maybe it's more
+separated from the public cloud.)
 
-Mitigation:
-Users should upgrade to 3.0.2 or 2.6.6 or set
-kylin.tool.auto-migrate-cube.enabled to false to disable command execution.
+Also, some use third-party e-mail servers, e.g. domains pointing to
+Gmail MX'es.  While mail relayed by (linux-)distros arrives encrypted
+(except for headers), I doubt all other e-mail communication within the
+distros' teams is - and if it is not, then they rely on a similar
+security and legal boundary already (the distro's accounts with a
+third-party provider).  If we don't consider sending e-mail through
+Google servers as sharing with Google, then I guess usage of Google's
+cloud is not sharing either.
 
-Credit:
-This issue was discovered by =EF=BB=BFJohannes Dahse.
+Thus, it could be inconsistent to say that, no, Ubuntu cannot test in
+the cloud while some other distros might be exposing the information to
+similar cloud risks.  It would be wrong to penalize Ubuntu for asking.
 
-References:
-https://kylin.apache.org/docs/security.html
+Another angle is: what's the motivation for testing in the cloud?
+I guess it's about compatibility with the cloud environment
+(hypervisor?), so it is perhaps most relevant to testing of updates to
+low-level components - especially the Linux kernel?  Well, we've granted
+an exception allowing public commits of Linux kernel security fixes.
+Can we at the same time reasonably object to testing of a distro's Linux
+kernel updates under a public cloud account (thus, with more limited
+exposure than the public commits have)?  Well, kind of yes since updates
+can be more revealing than the public fixes - updates typically do
+mention security relevance in change logs.  Also, this exception is made
+use of only for a subset of Linux kernel issues handled on
+linux-distros, not for all.
 
---=20
+That said, maybe exposure of testing in the public cloud can be reduced
+by only doing such testing for low-level packages, not for typical
+userland packages that are not expected to be affected by whether they
+run on Ubuntu's own servers and VMs vs. the cloud?
 
----------------------
+Yet another angle is where linux-distros itself is to be hosted.  So
+far, I insist on non-cloud hosting.  Arguably, allowing for processing
+of embargoed information in the cloud by the member distros is a reason
+for me to give in and accept a cloud hosting offer.  OTOH, a distro's
+usage of the cloud exposes somewhat different information to the risks
+than the list's hosting would.  Only issues being handled by that distro
+rather than all, sometimes only in processed form rather than original
+(e.g., binary update packages vs. list messages), with some delay rather
+than immediately, and no exposure of the list's long-term private key.
 
-Best regards,
+> Would testing embargoed updates on an external cloud 
+> infrastructure be contrary to the expectations of the vendors posting 
+> embargoed issues to those lists?
 
+Not only "vendors" post embargoed issues to those lists.  I think we
+shouldn't violate any sender's reasonable expectations.  That said,
+vendor postings are an interesting subset.  Maybe other distro vendors
+can comment on this, please?  Marcus from SUSE has already commented
+(thanks!), but I think not yet on this specific aspect.
 
-
-Ni Chunen / George
-
---000000000000ed117905a60d1f2d--
+Alexander
