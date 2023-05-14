@@ -1,91 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/07/1
-Message-ID: <ee226490-51c6-f8e9-821a-6061202c01b1@gmail.com>
-Date: Wed, 7 Jun 2023 11:32:31 +0800
-From: Hangyu Hua <hbh25y@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/14/1
+Message-ID: <20230514162713.GA14965@openwall.com>
+Date: Sun, 14 May 2023 18:27:13 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: off-by-one in fl_set_geneve_opt
+Cc: Daniel Stenberg <daniel@...x.se>
+Subject: Re: semi-public issues on (linux-)distros
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+Hi,
 
-I find a off-by-one bug in linux kernel's Flower
-classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege 
-escalation.
+Thank you Johannes for commenting on this.  I think there was plenty of
+time for anyone else to comment as well if they wanted to, but no one
+did, and that's fine.  So I went ahead and made an edit to the policy.
 
-# Details:
+On Thu, May 04, 2023 at 08:48:58AM +0200, Johannes Segitz wrote:
+> On Wed, May 03, 2023 at 09:00:11PM +0200, Solar Designer wrote:
+> > curl project's handling of security issues has been exemplary so far, in
+> 
+> I agree. And I'm happy to see that this is being discussed, as I've seen
+> Daniel talking on Mastodon about this and it would be a shame if they
+> wouldn't provide their high quality reports to distributions up front
+> anymore.
+> 
+> > my opinion at least, which gives me reason to expect sound judgement
+> > from Daniel on which issues to handle in which way.  Also, like it or
+> > not, starting to publicly commit some security fixes is a decision the
+> > project has already made, so our only options are (1) to change the list
+> > policy, (2) to grant one-time exceptions every time, or (3) to create
+> > extra work for Daniel for notifying the individual distros other than
+> > via the list (or choose not to).
+> 
+> My vote is for option 1.
 
-static int fl_set_geneve_opt(const struct nlattr *nla, struct 
-fl_flow_key *key,
-      int depth, int option_len,
-      struct netlink_ext_ack *extack)
-{
-struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
-struct nlattr *class = NULL, *type = NULL, *data = NULL;
-struct geneve_opt *opt;
-int err, data_len = 0;
+The paragraph now reads:
 
-if (option_len > sizeof(struct geneve_opt))
-data_len = option_len - sizeof(struct geneve_opt);
+"Please note that in case a fix for an issue is already in a publicly
+accessible source code repository, we generally consider the issue
+public (and thus you should post to oss-security right away, not report
+the issue to (linux-)distros as we'd merely redirect you to oss-security
+anyway and insist that you make the required posting ASAP).  There can
+be occasional exceptions to this, such as if the publicly accessible fix
+doesn't look like it's for a security issue and not revealing this
+publicly right away is somehow deemed desirable.  In particular, we
+grant such exceptions for (1) Linux kernel issues concurrently or very
+recently handled by the Linux kernel security team and (2) curl issues
+ranked as low or medium severity by the curl project.  In all other
+cases, you'd have to have very sound reasoning to claim an exception
+like this and be prepared to lose your argument and if so to post to
+oss-security ASAP anyway."
 
-opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
-memset(opt, 0xff, option_len);
-opt->length = data_len / 4;
-opt->r1 = 0;
-opt->r2 = 0;
-opt->r3 = 0;
+The addition is "(2) curl issues ranked as low or medium severity by the
+curl project."
 
-...
-if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
-int new_len = key->enc_opts.len;
+> > I would also be happy to have a general solution if we _reasonably_ can,
+> > for all projects, but I'm not sure how reasonable that is.  The terms
+> > for Linux kernel's vs. curl's exceptions may reasonably vary to meet
+> > these project's exact needs and not more: for Linux kernel it's "issues
+> > concurrently or very recently handled by the Linux kernel security team"
+> > and for curl it can be "low and medium severity issues".
+> 
+> This is indeed tricky. I would not try to sync this to specific conditions
+> of the upstream policy, but to the proven track record of an upstream
+> project. If they can show that they can reliable do this for security
+> issues below a certain threshold they should get approved to post
+> semi-public issues onto the list.
+> 
+> And yes, this isn't a hard criterion that can be easily judged, which is
+> indeed a problem. There could be some form of vote on the list to decide
+> this for each project asking for it. In my experience the subscribers are
+> reasonable and I would expect that this would lead to good results.
 
-data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
-data_len = nla_len(data);
-if (data_len < 4) {
-NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
-bytes long");
-return -ERANGE;
-}
-if (data_len % 4) {
-NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
-multiple of 4 bytes long");
-return -ERANGE;
-}
+As you can see, I went for project-specific conditions now.  What you
+suggest above didn't look better to me.  One reason why not is that if
+we'd need "some form of vote on the list" anyway, we can as well do so
+with threads like this one discussing the specific project's needs.
 
-new_len += sizeof(struct geneve_opt) + data_len;
-BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
-if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
-NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
-return -ERANGE;
-}
-opt->length = data_len / 4;
-memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
-}
-...
-}
-
-We can see that opt use key->enc_opts.len to get its pointer from
-key->enc_opts.data[] in [1]. Then length will be set to "data_len /
-4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
-packets and their total size is 252 bytes(key->enc_opts.len = 252)
-then key->enc_opts.len = opt->length = data_len / 4 when the third
-TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
-can bypass the check in [2] and cause out of bound write in
-[3](opt->opt_data = key->enc_opts.data[257]).
-
-# Patch
-
-I already contacted the linux security team and made a patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
-
-# CVE
-
-Pending
-
-# EXP
-
-In order to avoid confusion i will publish it after I get CVE.
-
-Thanks,
-Hangyu
+Alexander
