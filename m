@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/22/2
-Message-ID: <375127d6-abc0-16b3-af1f-858e248d9657@apache.org>
-Date: Wed, 22 Nov 2023 04:31:28 +0000
-From: Wenjun Ruan <wenjun@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/15/4
+Message-ID: <CALQRfL40s=knwPCFNDHrAxFtcU_-O2jeLe3xyFf4DFvT2QZzfQ@mail.gmail.com>
+Date: Mon, 15 May 2023 08:45:33 -0700
+From: "Andrew G. Morgan" <morgan@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45875: Apache DolphinScheduler: Remote command execution Vulnerability in script alert plugin 
+Subject: libcap-2.69 addresses 2 CVEs
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+The release of libcap-2.69, announced here:
 
-Affected versions:
+  https://sites.google.com/site/fullycapable/release-notes-for-libcap#h.iuvg7sbjg8pe
 
-- Apache DolphinScheduler 3.0 through 3.0.1
-- Apache DolphinScheduler 3.1 through 3.1.0
+addresses the following:
 
-Description:
+- LCAP-CR-23-01 (SEVERITY) LOW (CVE-2023-2602) - found by David Gstir
+- LCAP-CR-23-02 (SEVERITY) MEDIUM (CVE-2023-2603) - found by Richard Weinberger
 
-Improper validation of script alert plugin parameters in Apache DolphinScheduler to avoid remote command execution vulnerability.  This issue affects Apache DolphinScheduler version 3.0.1 and prior versions; version 3.1.0 and prior versions.
-This attack can be performed only by authenticated users which can login to DS.
+The full details of both issues are provided in this audit report:
 
-Credit:
+  https://www.x41-dsec.de/static/reports/X41-libcap-Code-Review-2023-OSTIF-Final-Report.pdf
 
-4ra1n of Chaitin Tech (finder)
+Cheers
 
-References:
-
-https://lists.apache.org/thread/r0wqzkjsoq17j6ww381kmpx3jjp9hb6r
-https://dolphinscheduler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-45875
-
+Andrew
