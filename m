@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/6
-Message-ID: <121d245e-3c3a-3933-3831-63894a9caeff@apache.org>
-Date: Fri, 13 Oct 2023 15:14:01 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/15/3
+Message-ID: <2023051547-arming-kinsman-4f0a@gregkh>
+Date: Mon, 15 May 2023 14:05:18 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-45348: Apache Airflow: Configuration information leakage vulnerability 
+Cc: hackerzheng666@...il.com
+Subject: Re: linux kernel 6.3.0: slab-use-after-free Write in txEnd due to race condition
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Mon, May 15, 2023 at 09:34:36AM +0800, 蓝色的小羊 wrote:
+> Syzkaller reported an error "slab-use-after-free Write in txEnd".
 
-Affected versions:
+In the JFS filesystem, right?
 
-- Apache Airflow 2.7.0 before 2.7.2
+<snip>
 
-Description:
+>  fs/jfs/jfs_debug.c  | 2 ++
 
-Apache Airflow, versions 2.7.0 and 2.7.1, is affected by a vulnerability that allows an authenticated user to retrieve sensitive configuration information when the "expose_config" option is set to "non-sensitive-only". The `expose_config` option is False by default.
-It is recommended to upgrade to a version that is not affected.
+	$ ./scripts/get_maintainer.pl fs/jfs/jfs_debug.c
+	Dave Kleikamp <shaggy@...nel.org> (odd fixer:JFS FILESYSTEM)
+	jfs-discussion@...ts.sourceforge.net (open list:JFS FILESYSTEM)
+	linux-kernel@...r.kernel.org (open list)
 
-Credit:
+Any specific reason you didn't send this to the mailing list and
+developers who can review and apply this potential fix to the kernel
+tree?
 
-L3yx of Syclover Security Team (finder)
-Hussein Awala (remediation developer)
+syzbot-reported issues are not really a new or exciting thing, we get
+loads of them every week (see the syzbot mailing list and summaries).
+What is good is for fixes like this one to be sent to us so that we can
+merge them for all to use.
 
-References:
+That is if anyone is actually using the JFS filesystem anymore, it is
+pretty obsolete.  Are you using it?
 
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-45348
+thanks,
 
+greg k-h
