@@ -1,65 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/8
-Message-ID: <20230926160943.GA12790@openwall.com>
-Date: Tue, 26 Sep 2023 18:09:43 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Andrew Cooper <andrew.cooper3@...rix.com>
-Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/15/5
+Message-ID: <CAFzhf4q5uSF6PawxyD6BtRgLTWdXroPVhppEFnfp4v+QjWBFxQ@mail.gmail.com>
+Date: Mon, 15 May 2023 20:13:55 +0100
+From: Piotr Krysiuk <piotras@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Patryk Sondej <patryk.sondej@...il.com>
+Subject: Re: [CVE-2023-32233] Linux kernel use-after-free in Netfilter nf_tables when processing batch requests can be abused to perform arbitrary reads and writes in kernel memory
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2023 at 01:15:55AM +0100, Andrew Cooper wrote:
-> On 25/09/2023 7:28 pm, Solar Designer wrote:
-> > Maybe directly probing for the bug is an option?  Perhaps can be done
-> > within one thread (where the bug doesn't have security impact, but is
-> > detectable anyway, no)?
-> 
-> Unfortunately, direct probing is usually the wrong thing to rely on.
-> 
-> Under virt, one common scenario is that you boot on one system, then get
-> migrated to a different one.  Obviously, it's up to the hypervisor to
-> ensure that the architectural feature still match, but the
-> microarchitecture really does change.
-> 
-> If you probe at boot and positively identify an issue to work around,
-> great.  But as a VM you may not get a heads up that you changed
-> microarchitecture, and even if you do, you don't rescan for everything
-> you ran at boot.
-> 
-> The CPUID bits allow microarchitectural details to be expressed as
-> architectural, and allow a hypervisor to state "here or someone you
-> might move to, the following safety property does not hold."
+On Mon, May 8, 2023 at 4:58 PM Piotr Krysiuk <piotras@...il.com> wrote:
+> Therefore, according to the linux-distros list policy, the exploit must
+> be published within 7 days from this advisory. In order to comply with
+> that policy, I intend to publish both the description of exploitation
+> techniques and also the exploit source code on Monday 15th by email to
+> this list.
 
-I was thinking re-probing after possible VM migration, just like you
-would presumably retest a CPUID bit.  However, in this case probing can
-lead to false negatives if the other thread issues a DIV too or an
-unexpected context switch occurs.
+Per the announcement above, we are publishing the description of
+exploitation techniques and also the exploit source code as attachments
+to this email.
 
-> > Do you know if only the quotient leaks, or also the remainder?  In the
-> > below, I assume the remainder leaks as well.
-> 
-> I'm afraid I don't know.  The original paper says just the quotient, but
-> it also says there are no leaks across privilege boundaries.
+The attached instructions have been tested against Ubuntu 23.04 Desktop
+for amd64. However, the vulnerability is not limited to Ubuntu. The
+affected code originates from the upstream Linux kernel from
+https://kernel.org/ and we confirmed that exploitation is possible
+against some other popular distributions.
 
-Is the original paper public?
 
-Meanwhile, I observe a difference between Linux and Xen fixes - Linux
-uses native-sized DIV and you use byte-sized, as a clever way not to
-clobber RDX and maybe achieve lower latency.  Speaking of which:
+# Affected Configurations
 
-$ git clone https://github.com/InstLatx64/InstLatx64
-$ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+The following describes minimum set of configurations where the bug is
+exploitable. The attached exploit adds a few additional dependencies.
+However, an alternative exploitation method could be developed that
+avoids those additional dependencies.
 
-Looks like maybe not that much difference, after all, if this data applies.
+The capability CAP_NET_ADMIN over the network namespace is required in
+order to exploit the vulnerability.
 
-Thank you for sharing so much detail and thoughts on this, Andrew!
+A well-known technique to obtain that capability is by creating a new
+user/network namespace. In case of the current stable and longterm
+Linux kernels from https://kernel.org/ an unprivileged local user can
+create such namespace when the following configuration option is
+enabled explicitly on top of `x86_64_defconfig`:
 
-Alexander
+    CONFIG_USER_NS
+
+For these kernels, Netfilter nf_tables is also disabled by default and
+the following configuration option must be set explicitly to compile
+it:
+
+    CONFIG_NF_TABLES
+
+And then at least one of the families must also be enabled:
+
+    CONFIG_NF_TABLES_INET
+    CONFIG_NF_TABLES_IPV4
+    CONFIG_NF_TABLES_ARP
+    CONFIG_NF_TABLES_NETDEV
+    CONFIG_NF_TABLES_BRIDGE
+    CONFIG_NF_TABLES_IPV6
+
+For certain older kernels, `nft_set` functionality is disabled by
+default and one of the following configuration option must be set
+explicitly for any such system to be affected (depending on release):
+
+    CONFIG_NF_TABLES_SET
+    CONFIG_NFT_SET_RBTREE
+    CONFIG_NFT_SET_HASH
+    CONFIG_NFT_SET_BITMAP
+
+
+Kind regards,
+
+Patryk Sondej
+Piotr Krysiuk
+
+View attachment "README.md" of type "text/markdown" (10101 bytes)
+
+View attachment "EXPLOIT.md" of type "text/markdown" (4022 bytes)
+
+View attachment "exploit.c" of type "text/x-csrc" (62791 bytes)
