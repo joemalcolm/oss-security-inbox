@@ -1,52 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/29/2
-Message-ID: <ea180550-801c-4a6d-b8aa-dee79d76f17a@oracle.com>
-Date: Wed, 29 Nov 2023 11:30:39 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Python Cryptography advisory: CVE-2023-49083 NULL-dereference when loading PKCS7 certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/16/5
+Message-Id: <E1pywNt-00034k-MT@xenbits.xenproject.org>
+Date: Tue, 16 May 2023 15:14:41 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 431 v1 (CVE-2022-42336) - Mishandling of guest SSBD selection on AMD hardware
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/pyca/cryptography/security/advisories/GHSA-jfhm-5ghh-2f97
-reports:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
--------------------------------------------------------------------------------
-Affected versions >= 3.1, < 41.0.6
-Patched versions >=41.0.6
+            Xen Security Advisory CVE-2022-42336 / XSA-431
 
-Summary
+          Mishandling of guest SSBD selection on AMD hardware
 
-Calling load_pem_pkcs7_certificates or load_der_pkcs7_certificates could lead to 
-a NULL-pointer dereference and segfault.
-PoC
+ISSUE DESCRIPTION
+=================
 
-Here is a Python code that triggers the issue:
+The current logic to set SSBD on AMD Family 17h and Hygon Family 18h
+processors requires that the setting of SSBD is coordinated at a core
+level, as the setting is shared between threads.  Logic was introduced
+to keep track of how many threads require SSBD active in order to
+coordinate it, such logic relies on using a per-core counter of threads
+that have SSBD active.
 
-from cryptography.hazmat.primitives.serialization.pkcs7 import 
-load_der_pkcs7_certificates, load_pem_pkcs7_certificates
+When running on the mentioned hardware, it's possible for a guest to
+under or overflow the thread counter, because each write to
+VIRT_SPEC_CTRL.SSBD by the guest gets propagated to the helper that does
+the per-core active accounting.  Underflowing the counter causes the
+value to get saturated, and thus attempts for guests running on the same
+core to set SSBD won't have effect because the hypervisor assumes it's
+already active.
 
-pem_p7 = b"""
------BEGIN PKCS7-----
-MAsGCSqGSIb3DQEHAg==
------END PKCS7-----
-"""
+IMPACT
+======
 
-der_p7 = b"\x30\x0B\x06\x09\x2A\x86\x48\x86\xF7\x0D\x01\x07\x02"
+An attacker with control over a guest can mislead other guests into
+observing SSBD active when it is not.
 
-load_pem_pkcs7_certificates(pem_p7)
-load_der_pkcs7_certificates(der_p7)
+VULNERABLE SYSTEMS
+==================
 
-Impact
+Only Xen version 4.17 is vulnerable.
 
-Exploitation of this vulnerability poses a serious risk of Denial of Service 
-(DoS) for any application attempting to deserialize a PKCS7 blob/certificate. 
-The consequences extend to potential disruptions in system availability and 
-stability.
+Only x86 AMD systems are vulnerable.  The vulnerability can be leveraged
+by and affects only HVM guests.
 
--------------------------------------------------------------------------------
+MITIGATION
+==========
 
-The fix was in https://github.com/pyca/cryptography/pull/9926
+Running PV guests only will prevent the vulnerability.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Setting `spec-ctrl=ssbd` on the hypervisor command line will force SSBD
+to be unconditionally active.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was discussed in public already.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa431.patch           xen-unstable - Xen 4.17.x
+
+$ sha256sum xsa431*
+e71a8b7e251adf4832a4de9e452c2fd895a56314729c54698d10e344f1996a99  xsa431.patch
+$
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmRjkhsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZDb8H/0vKLOgBhwKCVc8VYm59FIALd69k4qCLcwwfDuro
+jFum5ATC3Cbx+iEXD2URFY6O+eE71mMBqw3/GT/BiKvsBHQhX5lsJUpxZFscqW9J
+diM69a9BYuNNy+qW3TsslRsW9WGHH5bZoAhxpNKgciE17svJ76IRUsgNf806VRX+
+VBI61wK2s9oqzfTazhQVR9zxFLANTyw7M4EtUXs0y49IUFjnSeVpW7/PdoloPC1C
+m0SG6HSIJ4bH+yAWMqY5GYYVgJOkaStxEM6YLGjT/V078xcDyW2cie3BOtQ8/BI0
+FJ7iwEh932k7VLtd+htBF3vo7CD+teGneeaktqKK2h55ps0=
+=dmhW
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa431.patch" of type "application/octet-stream" (3403 bytes)
