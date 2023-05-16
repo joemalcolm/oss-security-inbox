@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["651" "Tuesday" "28" "February" "2017" "17:23:09" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170228162309.e22hyhgw4id7dgdn@eldamar.local>" "23" "[oss-security] Linux: ip: fix IP_CHECKSUM handling (CVE-2017-6347)" nil nil nil "2" "2017022816:23:09" "[oss-security] Linux: ip: fix IP_CHECKSUM handling (CVE-2017-6347)" (number mark "U       carnil@debia Feb 28   23/651   " thread-indent "\"[oss-security] Linux: ip: fix IP_CHECKSUM handling (CVE-2017-6347)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30633 invoked by uid 550); 28 Feb 2017 16:23:23 -0000
+Received: (qmail 29721 invoked by uid 550); 16 May 2023 09:39:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +7,191 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30615 invoked from network); 28 Feb 2017 16:23:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=QdzC8Olnutv+Up2TrJEtt1zGrgFyfAgVHiuG1k2zb0o=;
-        b=ivt7gx7E2ycAO0pn2bb8KtY1zP3g8LTFa2mt/hzn9Xr9yH4ULOBrksZ0GGPXvpoBw8
-         0CtrVRRm+Rl6EeA9FI5xSG1KIKRTlXIRn3N02aNY/3PBf0zXbhR+9oh4gMKH5LJwdJ7a
-         Dy7Od1rbzNEOwWVd1T6mRdansVVhDv6FPUDVfsOP8eAtYpkPbShASkgQwEy9yyOOhbXc
-         Th9CWhzROjaRbMGM32PYDb7HILQ3EtSdiPt31PnkqJSaV99xltto4of4iVmNKiM3S8sq
-         ZN0k62yA7p+bNk7hFnjkt6cPuZDenF3zSEKkAbe6saJT5ZtuNA2NtaN8x8hhb5qpNZqP
-         6vxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=QdzC8Olnutv+Up2TrJEtt1zGrgFyfAgVHiuG1k2zb0o=;
-        b=Yfqrjt1fhguTmpk5R1oQ9bSuk95iHKXFZE8y5WaUz19MSBKUUcZTYKcOPIUmLiVTw4
-         17K1IrYrRu7+On9SJkmG1KjTvTOywKsOZVYkV5lX8IXWfoFRXbWUqtphYPq8Ln9h+9Jg
-         INHfexMfuE/IE0E92mMMEE2d9SnP9lgWiq6wD5JY6fNYOuGpJkZmSgSOV7XjAIx//oKU
-         O5kN8/lRN83Hn67HX9l3sSdanDCYfk+OmjJk07akpzJvHn+0j2h4uw9IfMm6vweHM7J7
-         aQk8/d9J3ipXOxNineFxMv/XCGSegZmkwM39sffda579dShciU0jq4cdPULLpPXPZ1LE
-         jAqA==
-X-Gm-Message-State: AMke39mN5p6gGwfL6+Ul9RWsNlqJRA9hRGcgvULlFT5m+lfEQtCiWfB+vuvzmbSLCOtPAg==
-X-Received: by 10.223.162.18 with SMTP id p18mr3121981wra.7.1488298991293;
-        Tue, 28 Feb 2017 08:23:11 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 28 Feb 2017 17:23:09 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20170228162309.e22hyhgw4id7dgdn@eldamar.local>
-MIME-Version: 1.0
+Received: (qmail 28537 invoked from network); 16 May 2023 09:39:21 -0000
+Date: Tue, 16 May 2023 11:39:16 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: "Andrew G. Morgan" <morgan@kernel.org>
+Message-ID: <20230516093916.GA25040@openwall.com>
+References: <CALQRfL40s=knwPCFNDHrAxFtcU_-O2jeLe3xyFf4DFvT2QZzfQ@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] Linux: ip: fix IP_CHECKSUM handling (CVE-2017-6347)
+In-Reply-To: <CALQRfL40s=knwPCFNDHrAxFtcU_-O2jeLe3xyFf4DFvT2QZzfQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] libcap-2.69 addresses 2 CVEs
 
-Hi
-
-CVE-2017-6347 was assigned by MITRE to the following (via
-https://cveform.mitre.org/):
-
-https://git.kernel.org/linus/ca4ef4574f1ee5252e2cd365f8f5d5bafd048f32
-
-> ip: fix IP_CHECKSUM handling
+On Mon, May 15, 2023 at 08:45:33AM -0700, Andrew G. Morgan wrote:
+> The release of libcap-2.69, announced here:
 > 
-> The skbs processed by ip_cmsg_recv() are not guaranteed to
-> be linear e.g. when sending UDP packets over loopback with
-> MSGMORE.
-> Using csum_partial() on [potentially] the whole skb len
-> is dangerous; instead be on the safe side and use skb_checksum().
+>   https://sites.google.com/site/fullycapable/release-notes-for-libcap#h.iuvg7sbjg8pe
 > 
-> Thanks to syzkaller team to detect the issue and provide the
-> reproducer.
+> addresses the following:
+> 
+> - LCAP-CR-23-01 (SEVERITY) LOW (CVE-2023-2602) - found by David Gstir
+> - LCAP-CR-23-02 (SEVERITY) MEDIUM (CVE-2023-2603) - found by Richard Weinberger
+> 
+> The full details of both issues are provided in this audit report:
+> 
+>   https://www.x41-dsec.de/static/reports/X41-libcap-Code-Review-2023-OSTIF-Final-Report.pdf
 
-The issue was introduced in 4.0 by commit ad6f939ab193. The fix as
-well backported to 4.9.13.
+Here's plain text export of the relevant part from the PDF file above:
 
-Regards,
-Salvatore
+---
+    4.1.1        LCAP-CR-23-01: Memory Leak on pthread_create() Error
+
+        Severity:                   LOW
+        CWE:                      401 - Improper Release of Memory Before Removing Last Reference
+                                  ('Memory Leak')
+        Affected Component:        libcap/psx/psx.c:__wrap_pthread_create()
+
+
+
+    4.1.1.1       Description
+
+    X41 found that the error handling in __wrap_pthread_create() function is wrong and will leak mem-
+    ory in case of an error.
+
+    Function libpsx hooks the pthread_create() function and replaces it with __wrap_pthread_create().
+    This wrapping function will then register the required signal handler and call the actual pthread_create()
+    (__real_pthread_create()). Here, the error handling for __real_pthread_create() is faulty as it checks
+    for a negative return value which cannot happen. Instead, pthread_create() will return a value
+    > 0 in case of an error1 . Thus, for every error in __real_pthread_create() where the tread routine
+    (_psx_start_fn) is not called, the buffer starter will not be freed and thus this memory will be leaked
+    once __wrap_pthread_create() returns.
+
+    A malicious actor who is in the position to cause __real_pthread_create() to return an error, can
+    potentially abuse this to exhaust the process memory. As libpsx hooks all pthread_create() calls
+    of a process, this affects every thread.
+
+
+1    *
+2    * __wrap_pthread_create is the wrapped destination of all regular
+3    * pthread_create calls.
+4    */
+5   int __wrap_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+6                 void *(*start_routine) (void *), void *arg) {
+7       psx_starter_t *starter = calloc(1, sizeof(psx_starter_t));
+8
+
+9           // [...]
+
+        1   https://man7.org/linux/man-pages/man3/pthread_create.3.html
+
+
+
+    X41 D-Sec GmbH                                     PUBLIC                                           Page 14 of 28
+    Source Code Audit on libcap                                    for Open Source Technology Improvement Fund (OSTIF)
+
+
+
+
+10
+
+11        int ret = __real_pthread_create(thread, attr, _psx_start_fn, starter);
+12        if (ret == -1) {
+13            psx_new_state(_PSX_CREATE, _PSX_IDLE);
+14            memset(starter, 0, sizeof(*starter));
+15            free(starter);
+16        } /* else unlock happens in _psx_start_fn */
+17
+
+18        /* the parent can once again receive psx interrupt signals */
+19        pthread_sigmask(SIG_SETMASK, &orig_sigbits, NULL);
+20
+
+21        return ret;
+22   }
+
+
+
+                     Listing 4.1: Code Snippet Showing the Affected Part of __wrap_pthread_create()
+
+
+
+
+     4.1.1.2     Solution Advice
+
+     While not critical, X41 advises fixing the error handling code to prevent any abuse from being
+     possible.
+
+
+
+
+     X41 D-Sec GmbH                                     PUBLIC                                            Page 15 of 28
+     Source Code Audit on libcap                                      for Open Source Technology Improvement Fund (OSTIF)
+
+
+
+
+     4.1.2       LCAP-CR-23-02: Integer Overflow in _libcap_strdup()
+
+         Severity:                  MEDIUM
+         CWE:                      190 - Integer Overflow or Wraparound
+         Affected Component:        libcap/cap_alloc.c:_libcap_strdup()
+
+
+
+     4.1.2.1     Description
+
+     X41 found that in 32 bits execution mode, where sizeof(size_t) equals 4, the _libcap_strdup() func-
+     tion can suffer from an integer overflow of the input string is close to a length of 4GiB. In this
+     case len = strlen(old) + 1 + 2*sizeof(__u32); will overflow and results into a value much smaller than
+     4GiB.
+
+     As consequence the overflow check len & 0xffffffff) != len will have no effect and the strcpy() func-
+     tion at the end of the function will overwrite the heap.
+
+1    __attribute__((visibility ("hidden"))) char *_libcap_strdup(const char *old)
+2    {
+3        struct _cap_alloc_s *header;
+4        char *raw_data;
+5        size_t len;
+6
+
+7    [...]
+8
+
+9          len = strlen(old) + 1 + 2*sizeof(__u32);
+10         if (len < sizeof(struct _cap_alloc_s)) {
+11             len = sizeof(struct _cap_alloc_s);
+12         }
+13         if ((len & 0xffffffff) != len) {
+14             _cap_debug("len is too long for libcap to manage");
+15             errno = EINVAL;
+16             return NULL;
+17         }
+18
+
+19         raw_data = calloc(1, len);
+20
+
+21   [...]
+22
+
+23         strcpy(raw_data, old);
+24         return raw_data;
+25   }
+
+
+
+                          Listing 4.2: Code Snippet Showing the Affected Part of _libcap_strdup()
+
+
+
+
+     X41 D-Sec GmbH                                       PUBLIC                                            Page 16 of 28
+     Source Code Audit on libcap                             for Open Source Technology Improvement Fund (OSTIF)
+
+
+
+
+4.1.2.2     Solution Advice
+
+While the overflow is impossible to exploit on a pure 32 bits system because no user space ap-
+plication can use the whole 32 bits address space it might be possible on a 64 bits kernel in 32
+bits compat mode. In this mode user space is allowed to use the full 32 bits address space. X41
+advises checking whether strlen() returns a sufficient large number to overflow the addition.
+---
+
+Alexander
