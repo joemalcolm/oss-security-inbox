@@ -1,44 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/10
-Message-ID: <ZS1CSkbTjDYdGq8F@itl-email>
-Date: Mon, 16 Oct 2023 10:01:44 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/16/3
+Message-ID: <dcb190ea-fb0f-3459-f420-9575f198a1b0@canonical.com>
+Date: Tue, 16 May 2023 09:04:01 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: Re: Clarification on embargoed testing in a partner cloud
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > Regardless of your viability of subscription status I think we also
-> > (sadly) have to consider current geopolitical issues here.
-> > 
-> > As far as I understand, US companies and US citizens are not permitted
-> > to work with Chinese organizations and/or Chinese nationals.
-> 
-> They can when working in the open on public projects and other
-> open-source-like things.  For "closed" lists and groups, please consult
-> a lawyer as the rules there are quite varied and depends on the
-> countries and companies involved.
-> 
-> But to be sure, again, consult your corporate lawyers, they know the
-> rules and the issues involved better than I do.
-> 
-> good luck!
-> 
-> greg k-h
+Hi,
 
-The question is _who_ should consult their lawyers.  Many security
-researchers are operating on their own time or work with small
-companies.  These researchers may not have access to corporate lawyers
-trained in the relevant areas of law, and expecting them to retain a
-lawyer at their own expense before posting is not reasonable.
-Therefore, if openEuler joining linux-distros would require them to do
-this, the request should (unfortunately) be denied.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+On 2023-05-14 16:24, Solar Designer wrote:
+> Hi Marc,
+> 
+> Thank you for bringing this up.  I'll share my current thoughts below.
+> I do not have a conclusion nor a decision yet, but I hope we'll arrive
+> at one in further discussion.
+> 
+> On Thu, May 11, 2023 at 07:36:44AM -0400, Marc Deslauriers wrote:
+>> The Ubuntu security team shares and obtains information about embargoed
+>> issues from the distros and linux-distros mailing lists.
+>>
+>> One of our large cloud partners has asked the Ubuntu security team to do
+>> automated testing of embargoed security updates on their public cloud
+>> before the CRD. While technically we would not be directly sharing details
+>> of embargoed issues with them as the tests will be run under accounts owned
+>> by the Ubuntu security team, they will be run on their infrastructure. As
+>> such, this may hinder our ability to conduct a comprehensive internal
+>> investigation of any leak that may occur.
+>>
+>> I'm not exactly sure how this scenario fits within the policy of these
+>> lists, and would like to validate before we go ahead. ( Policy can be found
+>> here: https://oss-security.openwall.org/wiki/mailing-lists/distros )
+>>
+>> Would testing embargoed updates obtained from the distros and linux-distros
+>> lists on an external cloud infrastructure violate the terms of those
+>> mailing lists?
+> 
+> I think this is a gray area.  The policy talks about not sharing beyond
+> the need-to-know for getting the issue fixed for your distro's users.
+> It also talks about not delivering or deploying.  However, usage of
+> cloud resources under the distro's accounts is not exactly sharing, and
+> testing in the target environment is relevant to getting the issue fixed
+> for the distro's users.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Yes, this is the unclear area, and is the reason for me asking for 
+clarification. Is using a public cloud under a private account considered 
+sharing with the cloud provider?
+
+While they claim they have mechanisms in place to prevent their employees from 
+accessing private customer data, I am skeptical that a bad employee wouldn't be 
+able to leak sensitive embargoed information, and I wouldn't be able to find 
+out, or investigate thoroughly.
+
+Ideally, I would like this clarified in policy once a decision has been made.
+
+> 
+> Sure this adds risks.  However, realistically we probably already do
+> have distros on the list that use a public cloud for some processing of
+> embargoed information.  At least Amazon Linux probably uses AWS -
+> probably dedicated instances with no other concurrent VMs on the same
+> hardware, but still.  (I am just guessing here.  Maybe it's more
+> separated from the public cloud.)
+> 
+> Also, some use third-party e-mail servers, e.g. domains pointing to
+> Gmail MX'es.  While mail relayed by (linux-)distros arrives encrypted
+> (except for headers), I doubt all other e-mail communication within the
+> distros' teams is - and if it is not, then they rely on a similar
+> security and legal boundary already (the distro's accounts with a
+> third-party provider).  If we don't consider sending e-mail through
+> Google servers as sharing with Google, then I guess usage of Google's
+> cloud is not sharing either.
+
+The Ubuntu security team is still using a self-hosted email server for this 
+exact reason. We were uncomfortable moving along with the rest of the company to 
+a hosted email setup while handling embargoed information.
+
+> 
+> Thus, it could be inconsistent to say that, no, Ubuntu cannot test in
+> the cloud while some other distros might be exposing the information to
+> similar cloud risks.  It would be wrong to penalize Ubuntu for asking.
+> 
+> Another angle is: what's the motivation for testing in the cloud?
+> I guess it's about compatibility with the cloud environment
+> (hypervisor?), so it is perhaps most relevant to testing of updates to
+> low-level components - especially the Linux kernel?  Well, we've granted
+> an exception allowing public commits of Linux kernel security fixes.
+> Can we at the same time reasonably object to testing of a distro's Linux
+> kernel updates under a public cloud account (thus, with more limited
+> exposure than the public commits have)?  Well, kind of yes since updates
+> can be more revealing than the public fixes - updates typically do
+> mention security relevance in change logs.  Also, this exception is made
+> use of only for a subset of Linux kernel issues handled on
+> linux-distros, not for all.
+> 
+> That said, maybe exposure of testing in the public cloud can be reduced
+> by only doing such testing for low-level packages, not for typical
+> userland packages that are not expected to be affected by whether they
+> run on Ubuntu's own servers and VMs vs. the cloud?
+
+They were requesting we test the default package set that is shipped in cloud 
+images, including userland packages that don't have anything specific to their 
+cloud.
+
+> 
+> Yet another angle is where linux-distros itself is to be hosted.  So
+> far, I insist on non-cloud hosting.  Arguably, allowing for processing
+> of embargoed information in the cloud by the member distros is a reason
+> for me to give in and accept a cloud hosting offer.  OTOH, a distro's
+> usage of the cloud exposes somewhat different information to the risks
+> than the list's hosting would.  Only issues being handled by that distro
+> rather than all, sometimes only in processed form rather than original
+> (e.g., binary update packages vs. list messages), with some delay rather
+> than immediately, and no exposure of the list's long-term private key.
+> 
+>> Would testing embargoed updates on an external cloud
+>> infrastructure be contrary to the expectations of the vendors posting
+>> embargoed issues to those lists?
+> 
+> Not only "vendors" post embargoed issues to those lists.  I think we
+> shouldn't violate any sender's reasonable expectations.  That said,
+> vendor postings are an interesting subset.  Maybe other distro vendors
+> can comment on this, please?  Marcus from SUSE has already commented
+> (thanks!), but I think not yet on this specific aspect.
+Yes, that's a bad choice of wording on my part. I did mean the expectations of 
+anyone posting to the list.
+
+Marc.
