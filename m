@@ -1,4 +1,4 @@
-Received: (qmail 5490 invoked by uid 550); 17 Dec 2025 17:23:12 -0000
+Received: (qmail 15403 invoked by uid 550); 16 May 2023 13:04:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,129 +7,150 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20271 invoked from network); 17 Dec 2025 17:01:39 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1765990889; cv=none;
-        d=google.com; s=arc-20240605;
-        b=HeeUhdW99CnQlP6Oaddvj/KA/ZNCBQwFLLbFvDlWSxLQ5SMBaF3+OW9D/TZ+5iDBWa
-         ZD1fB/eOLrj4FHH/lynXMnEM3cNo+/rjOpeONyFr597qMBcpZFnHT9JXpwTkg1i/Brfy
-         EZjMENFidA+mCRu4TCXxZZEU9lcUzU7gj26ChcMi12MxeqSmcyKG6CvMXdFRLloASKnU
-         Ex/ssDSMIIY34ge6Ytf2JQF3Pzh+bq6dP4yplONi2/AIatXosMXRJA5pVdQxpwpCtYgk
-         qBlnJSZDhQD05tREbWYCfS88JNYTl6x7bxs9GMVbDo8vnfoAVBtw/lZj7ZMEKJ/Ud4ip
-         6jlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=MzMfLLCWoSyrDMBJMA6YTHZH2wVajpBjSvCkAsQ1Uio=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=BQnu/TEjkKamwyMwY1QVQQ0FU8Tc4i7UDUzPszdKARCpp4NF0ByS2l4P1ZcS+Ku2ia
-         XI/gXupPJ45dhQcreWORbYNe6clJbbH12z1qpFUi7fg2kQJ6idy9dQOL7iLglhD9M59h
-         vX4ED9QP7toOMoQLFpBYJ78PITMk+cHioYK0MsMVJYypIJDtyKb9nAuVAXuzyzpXHzq+
-         +YM4NtsGvQT41onV7nJDoZoh4wmpt6ppWRfLtusxdUR3lqoFXoo4XYo3pJO5YqjHZt4a
-         xqM8EHzlA8nomEZjGrz9Sx3dUDOM03ZFbxLysRxJ0QPj+wCIsmVz6q5XhbXO+BPnBS1S
-         iorw==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1765990889; x=1766595689; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MzMfLLCWoSyrDMBJMA6YTHZH2wVajpBjSvCkAsQ1Uio=;
-        b=yi+Dis9SeEi5N4qlDDNzU5NqsTbofcXAEsr3DPKyfZayV9V9c6+OLFU1N3lSjYF9nr
-         Ko0AwMZIN+6cYSF4k2EeqHm6BPlTeH+AsZMIDPkEh3g+XxRc9RjmXbag8TcjxnZpl7L0
-         BUVjF+IESUeg8n2fb0AMgJtnfhb6k8DMTPofkASHJ3UB3cgyJsW2H09GmLtaqd4vIIk1
-         g6t+bkLP9Hlg/cggkASPXXjJ4PguGlxkyn2V9ssBMr5fGqo6uBnwL+iFBA5lf1Pll9uX
-         9gI99/C53WOIZSc5uh7cU+J+xUvyuWai3PzduY1hxnzosji32rZA2FSU/ecXAS/CcIOi
-         3JUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765990889; x=1766595689;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MzMfLLCWoSyrDMBJMA6YTHZH2wVajpBjSvCkAsQ1Uio=;
-        b=F3TtuEJc4eUtpmBCovsw+veKGR6ZkhTV/OzZZg4v4L3vQ9v5QVMnZbsRMuCbKR/KXY
-         mqUsE+0O1a5uZMpf0b0lUsa3N+ADSzKFwVSJW/OTji2JX6WzJd+BGGVoSB5DaVNoN8ZX
-         8ljSjhx4B+Oc7+cqiiuE+HMFttWctfk9Y8PJ/NBhiFLgL6hrAdnCtQZxgLSkryB6Ba8T
-         v9Rw2ocOGijnyrcKbhL+fBje9N3g5xl21Ms0zO8ilCK25+1TcHhZtoYsba6C4gsbsWSX
-         rsjUZXjo1JjPPL9pBNs760mhbJwI02eD9de8+KYQEJGqoO1Yp7G73J+DZGKMABgRArK4
-         EPSw==
-X-Gm-Message-State: AOJu0YwiXNgW5wV/SfHTZ5sKxe2cWi1pIB3YdvlM5UzS8D+raG9fUEWI
-	SIRyGKKpJ+sGxgyMxiTqLrUzVHpBFyYa6YL6K76AEbD6rGzC+zUjX/ahzdEl1JUkx7o1F0dXJ1c
-	pngnSuEB9vwpaEwvHwGZ4HCDsW7w5fvsjV00gNDaVEUaifcRBpoHvmtrWbGk=
-X-Gm-Gg: AY/fxX7vUtb7RrhNOawOhbnoyijpM/RF9DPxyojIN4XsHvR2unSanluyRMDYJKSs++6
-	aTSWMEi1r1B2+DElhIXKTiGv1LUVN1Z32Y9K6zQgpUy4SYa02FKnptOFTG74uq289HANEWtBEeM
-	4qpZJeEZaRcqhsb/w8W6JyoXsz5T1/9y6kLD41LiLpQ7AliIjTSmSGXWMsl7+SQOmvXGu0uzD6X
-	8uq6xHSsjQk79zgvIZLa/kjZmYAUeuoIzit/VP99sVQ6yt9yRo6xpjsT0XNUBnbKuWLwWeoA/Wd
-	LZwARFzzuaakAbWTo08BPm/yf8re6RkTraaI+Ms=
-X-Google-Smtp-Source: AGHT+IFkjPG/BoHFWhTrKAmVF5EAD1wrHqm3s5gFtDxy/iI/MwEIo5Wslo51fEkPkaTyAn5nAnjamYOprLa9WEwCcdw=
-X-Received: by 2002:a05:622a:c7:b0:4ed:8103:8c37 with SMTP id
- d75a77b69052e-4f35319c5fcmr13182551cf.12.1765990886401; Wed, 17 Dec 2025
- 09:01:26 -0800 (PST)
+Received: (qmail 15382 invoked from network); 16 May 2023 13:04:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1684242243;
+	bh=+/qNwpIw7tyaXR9cUapkniNbxH9K3JMqKb1ZywETNys=;
+	h=Message-ID:Date:MIME-Version:To:References:From:Subject:
+	 In-Reply-To:Content-Type;
+	b=M7ewqx5ouKF1gwB9i3FlE5Ehoymy4J02f9ripl16MKuRxB3MbJ8XeauHBOdaApnuT
+	 KqusoJYVZ2I+t7s2276KPowJkRKTQDiJm6U21aq5fKKPkpr/7GYvYwpIOa19Ki48hs
+	 GpkadMAX3zYPyswLaTCXi9wVpJtD2AtM7tuH0frg+10SzZvO6cV0dMQE55NlNJgOR/
+	 MnI9aL7/9RdoA9wWMEMgEazVTIf1WyMWZwbGOMEOoxSs9DIsr4al1wUY5KKO4wHjGS
+	 HleszLrDLentGjfs9pvh5JyX0UiR8P84+S8mSAdzPDOY2sARyuUsmmgyBY23lx/pre
+	 x2FoYRMiizKTA==
+Message-ID: <dcb190ea-fb0f-3459-f420-9575f198a1b0@canonical.com>
+Date: Tue, 16 May 2023 09:04:01 -0400
 MIME-Version: 1.0
-From: Craig Ingram <cjingram@google.com>
-Date: Wed, 17 Dec 2025 12:01:14 -0500
-X-Gm-Features: AQt7F2rYhTLCs3su1THBb4LFeo8iME-vkI8DvxkNLijvCsRZMGwlDcSTsgtRZGU
-Message-ID: <CAHXwHVxGkV0vhWR21H88YDqFvexj51-8MskSy+eMOHAUcEx70g@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Content-Language: en-CA
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000076b38b064628cb84"
-Subject: [oss-security] [kubernetes] CVE-2025-14269: Credential caching in Headlamp with Helm enabled
+References: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
+ <20230514202409.GA17111@openwall.com>
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+In-Reply-To: <20230514202409.GA17111@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Clarification on embargoed testing in a partner
+ cloud
 
---00000000000076b38b064628cb84
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Hello Kubernetes Community,
+On 2023-05-14 16:24, Solar Designer wrote:
+> Hi Marc,
+> 
+> Thank you for bringing this up.  I'll share my current thoughts below.
+> I do not have a conclusion nor a decision yet, but I hope we'll arrive
+> at one in further discussion.
+> 
+> On Thu, May 11, 2023 at 07:36:44AM -0400, Marc Deslauriers wrote:
+>> The Ubuntu security team shares and obtains information about embargoed
+>> issues from the distros and linux-distros mailing lists.
+>>
+>> One of our large cloud partners has asked the Ubuntu security team to do
+>> automated testing of embargoed security updates on their public cloud
+>> before the CRD. While technically we would not be directly sharing details
+>> of embargoed issues with them as the tests will be run under accounts owned
+>> by the Ubuntu security team, they will be run on their infrastructure. As
+>> such, this may hinder our ability to conduct a comprehensive internal
+>> investigation of any leak that may occur.
+>>
+>> I'm not exactly sure how this scenario fits within the policy of these
+>> lists, and would like to validate before we go ahead. ( Policy can be found
+>> here: https://oss-security.openwall.org/wiki/mailing-lists/distros )
+>>
+>> Would testing embargoed updates obtained from the distros and linux-distros
+>> lists on an external cloud infrastructure violate the terms of those
+>> mailing lists?
+> 
+> I think this is a gray area.  The policy talks about not sharing beyond
+> the need-to-know for getting the issue fixed for your distro's users.
+> It also talks about not delivering or deploying.  However, usage of
+> cloud resources under the distro's accounts is not exactly sharing, and
+> testing in the target environment is relevant to getting the issue fixed
+> for the distro's users.
 
-A security issue was discovered in the in-cluster version of Headlamp where
-unauthenticated users may be able to reuse cached credentials to access
-Helm functionality through the Headlamp UI. Kubernetes clusters are only
-affected if Headlamp is installed, is configured with config.enableHelm:
-true, and an authorized user has previously accessed the Helm functionality.
+Yes, this is the unclear area, and is the reason for me asking for 
+clarification. Is using a public cloud under a private account considered 
+sharing with the cloud provider?
 
-This issue has been rated High (8.8) (
-CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H>),
-and assigned CVE-2025-14269
-Am I vulnerable?
+While they claim they have mechanisms in place to prevent their employees from 
+accessing private customer data, I am skeptical that a bad employee wouldn't be 
+able to leak sensitive embargoed information, and I wouldn't be able to find 
+out, or investigate thoroughly.
 
-Kubernetes clusters with an in-cluster installation of Headlamp <= v0.38.0
-and config.enableHelm set to true are affected. The Headlamp desktop
-version is not affected.
-Affected Versions
+Ideally, I would like this clarified in policy once a decision has been made.
 
-   -
+> 
+> Sure this adds risks.  However, realistically we probably already do
+> have distros on the list that use a public cloud for some processing of
+> embargoed information.  At least Amazon Linux probably uses AWS -
+> probably dedicated instances with no other concurrent VMs on the same
+> hardware, but still.  (I am just guessing here.  Maybe it's more
+> separated from the public cloud.)
+> 
+> Also, some use third-party e-mail servers, e.g. domains pointing to
+> Gmail MX'es.  While mail relayed by (linux-)distros arrives encrypted
+> (except for headers), I doubt all other e-mail communication within the
+> distros' teams is - and if it is not, then they rely on a similar
+> security and legal boundary already (the distro's accounts with a
+> third-party provider).  If we don't consider sending e-mail through
+> Google servers as sharing with Google, then I guess usage of Google's
+> cloud is not sharing either.
 
-   Headlamp <= v0.38.0
+The Ubuntu security team is still using a self-hosted email server for this 
+exact reason. We were uncomfortable moving along with the rest of the company to 
+a hosted email setup while handling embargoed information.
 
-How do I mitigate this vulnerability?
+> 
+> Thus, it could be inconsistent to say that, no, Ubuntu cannot test in
+> the cloud while some other distros might be exposing the information to
+> similar cloud risks.  It would be wrong to penalize Ubuntu for asking.
+> 
+> Another angle is: what's the motivation for testing in the cloud?
+> I guess it's about compatibility with the cloud environment
+> (hypervisor?), so it is perhaps most relevant to testing of updates to
+> low-level components - especially the Linux kernel?  Well, we've granted
+> an exception allowing public commits of Linux kernel security fixes.
+> Can we at the same time reasonably object to testing of a distro's Linux
+> kernel updates under a public cloud account (thus, with more limited
+> exposure than the public commits have)?  Well, kind of yes since updates
+> can be more revealing than the public fixes - updates typically do
+> mention security relevance in change logs.  Also, this exception is made
+> use of only for a subset of Linux kernel issues handled on
+> linux-distros, not for all.
+> 
+> That said, maybe exposure of testing in the public cloud can be reduced
+> by only doing such testing for low-level packages, not for typical
+> userland packages that are not expected to be affected by whether they
+> run on Ubuntu's own servers and VMs vs. the cloud?
 
-Upgrade to the fixed version. Prior to upgrading, this vulnerability can be
-mitigated by ensuring Headlamp is not publicly exposed with an ingress
-server to limit exposure.
-Fixed Versions
+They were requesting we test the default package set that is shipped in cloud 
+images, including userland packages that don't have anything specific to their 
+cloud.
 
-   -
+> 
+> Yet another angle is where linux-distros itself is to be hosted.  So
+> far, I insist on non-cloud hosting.  Arguably, allowing for processing
+> of embargoed information in the cloud by the member distros is a reason
+> for me to give in and accept a cloud hosting offer.  OTOH, a distro's
+> usage of the cloud exposes somewhat different information to the risks
+> than the list's hosting would.  Only issues being handled by that distro
+> rather than all, sometimes only in processed form rather than original
+> (e.g., binary update packages vs. list messages), with some delay rather
+> than immediately, and no exposure of the list's long-term private key.
+> 
+>> Would testing embargoed updates on an external cloud
+>> infrastructure be contrary to the expectations of the vendors posting
+>> embargoed issues to those lists?
+> 
+> Not only "vendors" post embargoed issues to those lists.  I think we
+> shouldn't violate any sender's reasonable expectations.  That said,
+> vendor postings are an interesting subset.  Maybe other distro vendors
+> can comment on this, please?  Marcus from SUSE has already commented
+> (thanks!), but I think not yet on this specific aspect.
+Yes, that's a bad choice of wording on my part. I did mean the expectations of 
+anyone posting to the list.
 
-   Headlamp v0.39.0
-   https://github.com/kubernetes-sigs/headlamp/releases/tag/v0.39.0
-
-
-To upgrade, refer to the documentation: https://headlamp.dev/docs/latest/
-Detection
-
-Review logs for unexpected access to clusters/main/helm/releases/list and
-other Helm related endpoints.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes-sigs/headlamp/issues/4282
-Acknowledgements
-
-This vulnerability was reported by brndstrp <https://hackerone.com/brndstrp>
-.
-
-Thank You,
-
-Craig Ingram on behalf of the Kubernetes Security Response Committee
-
---00000000000076b38b064628cb84--
+Marc.
