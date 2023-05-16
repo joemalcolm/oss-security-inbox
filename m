@@ -1,125 +1,360 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/02/2
-Message-ID: <20231102225434.GA13082@openwall.com>
-Date: Thu, 2 Nov 2023 23:54:34 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/16/4
+Message-Id: <C430C241-AEFD-494F-82A4-F6509FDE581F@beckweb.net>
+Date: Tue, 16 May 2023 15:09:43 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: David Schögler <david.schoegler@...il.com>, security@...ez.org
-Subject: Bluez, Intel wireless devices: Bluetooth Low Energy stuck in unresponsive state after repeated out of order transmission of packets
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-The below was brought to linux-distros back in March.  Due to the nature
-of the not-yet-researched issue, it was not actionable for distros,
-especially not within a 14 days embargo.  So was not a suitable thing to
-bring to linux-distros.  A linux-distros member promptly replied with:
+The following releases contain fixes for security vulnerabilities:
 
-> Have you already notified the BlueZ Security group (security@...ez.org)? If not, please do so.
+* Ansible Plugin 205.v4cb_c48657c21
+* AppSpider Plugin 1.0.16
+* Azure VM Agents Plugin 853.v4a_1a_dd947520
+* CAS Plugin 1.6.3
+* Code Dx Plugin 4.0.0
+* Email Extension Plugin 2.96.1
+* File Parameter Plugin 285.287.v4b_7b_29d3469d
+* LDAP Plugin 676.vfa_64cf6b_b_002
+* NS-ND Integration Performance Publisher Plugin 4.11.0.48
+* Pipeline Utility Steps Plugin 2.15.3
+* Pipeline: Job Plugin 1295.v395eb_7400005
+* Reverse Proxy Auth Plugin 1.7.5
+* SAML Single Sign On(SSO) Plugin 2.0.1, 2.1.0, and 2.2.0
+* Sidebar Link Plugin 2.2.2
+* TestNG Results Plugin 730.732.v959a_3a_a_eb_a_72
 
-and then we did not track this, so it was not noticed again until I
-started retroactively producing distros list statistics for 2023.  When
-I did, we tried asking David about it, and he provided this additional
-detail on October 24:
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-> I redirected this problem to intel directly as it effects all distros and
-> windows as the problem is the network card reseting(which should not) which
-> is not handled correctly by the bluetooth stack under linux therefore the
-> weird behavior.
+* HashiCorp Vault Plugin
+* LoadComplete support Plugin
+* Tag Profiler Plugin
+* TestComplete support Plugin
+* WSO2 Oauth Plugin
 
-We also tried contacting security@...ez.org on October 19 (and keeping
-them CC'ed later) and security@...el.com on October 24 (after David's
-reply above), but we haven't heard back from either.  I also got a
-couple of bounces for a specific person on security@...ez.org, where
-e-mail forwarding was failing authentication checks; I resent those
-messages to the forwarding target address directly, but also haven't
-heard back.  This makes me wonder if security@...ez.org works at all.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-05-16/
 
-David's message below included PNG images and pcap network capture files
-attached.  I do not re-attach them here because the PNGs are too large
-and I guess the pcaps could reveal David's internal network properties
-(e.g., MAC addresses), which he might not have intended to be public.
-David, please feel free to add tiny files (up to ~100 KiB _total_) in a
-reply if you feel any are relevant and suitable for this public posting.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Thanks,
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Alexander
+---
 
------ Forwarded message from David Schögler <david.schoegler@...il.com> -----
+SECURITY-3042 / CVE-2023-32977
+Pipeline: Job Plugin 1292.v27d8cc3e2602 and earlier does not escape the
+display name of the build that caused an earlier build to be aborted, when
+"Do not allow concurrent builds" is set.
 
-From: David Schögler <david.schoegler@...il.com>
-To: linux-distros
-Subject: [vs-plain] Bluetooth Low Energy stuck in unresponsive state after
- repeated out of order transmission of packets
-Date: Fri, 10 Mar 2023 19:07:51 +0100
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to set build display names immediately.
 
-
-Hello, I would like to report a flaw in the implementation I found.
-
-I have seen the problem with the following cards:
-
-- Intel Wireless-AC 8265
-- Intel AX200
-Bluez 5.64 and Bluez 5.65 on arch Linux and kali Linux (keeping them
-at the newest state since finding) in both virtual machines on windows
-and native Linux.
-
-With the prerequisite:
-
-- We have an active advertising connectable Bluetooth Low Energy
-Service (Simple BLE UART from Bluez examples)
-
-Information about the attacker's hardware and intentions:
-- Used Nrf52840
-- Firmware is completely self-written
-- Goal of my research was to use automata learning to learn the state
-machine used in BLE implementations of different manufacturers and use
-this to find flaws/fingerprint hardware.
+NOTE: The Jenkins security team is not aware of any plugins that allow the
+exploitation of this vulnerability, as the build name must be set before
+the build starts.
 
 
-I managed to bring the device to a state where nothing, but packets
-defined in the link layer of BLE will receive a response.
-Shown in the Wireshark pcaps(marked with "_attack") we can observe
-that the same input sequence of packets on the
-device will respond differently before and after we brought the device
-in this state. In the "before.png" and "after.png".
-We can observe that the system still sends the packets to the device
-but never receives any Number of Completed Packets Events.
+SECURITY-3046 / CVE-2023-32978
+LDAP Plugin 673.v034ec70ec2b_b_ and earlier does not require POST requests
+for a form validation method, resulting in a cross-site request forgery
+(CSRF) vulnerability.
 
-I was not able to pin point the problem inside the Linux kernel.
+This vulnerability allows attackers to connect to an attacker-specified
+LDAP server using attacker-specified credentials.
 
-To reproduce this behavior a repeated out-of-order transmission of
-packets is required:
 
-We had 2 types of queries consisting of:
+SECURITY-3088 (1) / CVE-2023-32979
+Email Extension Plugin 2.96 and earlier does not perform a permission check
+in a method implementing form validation.
 
-1) A secure pairing out of order:
-- CON_REQUEST() always with a unique mac address.
-- SM_Pairing_REQ with authentication=0x9,iocap=0x0
-- ATT_EXCHANGE_MTU_REQ()
-- SM_Public_Key()
-- FEAT_RSP()
-- LENGTH_REQ()
-- TERM_INDICATION()
-2) A just works pairing request out of order
-- CON_REQUEST() always with a unique mac address.
-- SM_Pairing_REQ with authentication=0x0,iocap=0x0
-- ATT_EXCHANGE_MTU_REQ()
-- FEAT_RSP()
-- LENGTH_REQ()
-- TERM_INDICATION()
+This allows attackers with Overall/Read permission to check for the
+existence of files in the `email-templates/` directory in the Jenkins home
+directory on the controller file system.
 
-The behavior is reached by repeatedly mixing the 2 queries (maybe even
-in other situations but this process has brought me there).
-After a few tries, I could 100% reach this state where the card would
-not send any packets beyond BLE link layer packets.
-And it was only after resetting the controller that I got the correct
-behavior again.
 
-I hope I explained it clearly if there is any question I am happy to elaborate.
+SECURITY-3088 (2) / CVE-2023-32980
+Email Extension Plugin 2.96 and earlier does not require POST requests for
+an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
+vulnerability.
 
-Best Regards,
-David Sch??gler
+This allows attackers to make another user stop watching an
+attacker-specified job.
 
------ End forwarded message -----
+
+SECURITY-2196 / CVE-2023-32981
+Pipeline Utility Steps Plugin provides the `untar` and `unzip` Pipeline
+steps to extract archives into job workspaces.
+
+Pipeline Utility Steps Plugin 2.15.2 and earlier does not validate or limit
+file paths of files contained within these archives.
+
+This allows attackers able to provide crafted archives as parameters to
+create or replace arbitrary files on the agent file system with
+attacker-specified content.
+
+
+SECURITY-3017 / CVE-2023-32982 (storage) & CVE-2023-32983 (masking)
+Ansible Plugin allows the specification of extra variables that can be
+passed to Ansible. These extra variables are commonly used to pass secrets.
+
+Ansible Plugin 204.v8191fd551eb_f and earlier stores these extra variables
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These extra variables can be viewed by users with Item/Extended Read
+permission or access to the Jenkins controller file system.
+
+Additionally, the job configuration form does not mask these extra
+variables, increasing the potential for attackers to observe and capture
+them.
+
+
+SECURITY-3047 / CVE-2023-32984
+TestNG Results Plugin 730.v4c5283037693 and earlier does not escape several
+values that are parsed from TestNG report files and displayed on the
+plugin's test information pages.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide a crafted TestNG report file.
+
+
+SECURITY-3125 / CVE-2023-32985
+Sidebar Link Plugin allows specifying files in the `userContent/` directory
+for use as link icons.
+
+Sidebar Link Plugin 2.2.1 and earlier does not restrict the path of files
+in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system.
+
+
+SECURITY-3123 / CVE-2023-32986
+File Parameter Plugin 285.v757c5b_67a_c25 and earlier does not restrict the
+name (and resulting uploaded file name) of Stashed File Parameters.
+
+This allows attackers with Item/Configure permission to create or replace
+arbitrary files on the Jenkins controller file system with
+attacker-specified content.
+
+
+SECURITY-3002 / CVE-2023-32987
+Reverse Proxy Auth Plugin 1.7.4 and earlier does not require POST requests
+for a form validation method, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to connect to an attacker-specified
+LDAP server using attacker-specified credentials.
+
+
+SECURITY-2855 (1) / CVE-2023-32988
+Azure VM Agents Plugin 852.v8d35f0960a_43 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-2855 (2) / CVE-2023-32989 (CSRF) & CVE-2023-32990 (missing permission check)
+Azure VM Agents Plugin 852.v8d35f0960a_43 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified Azure Cloud server using attacker-specified credentials
+IDs obtained through another method.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2993 / CVE-2023-32991 (CSRF) & CVE-2023-32992 (missing permission check)
+SAML Single Sign On(SSO) Plugin 2.0.2 and earlier does not perform
+permission checks in multiple HTTP endpoints.
+
+This allows attackers with Overall/Read permission to send an HTTP request
+to an attacker-specified URL and parse the response as XML, or parse a
+local file on the Jenkins controller as XML.
+
+As the plugin does not configure its XML parser to prevent XML external
+entity (XXE) attacks, attackers can have Jenkins parse a crafted XML
+response that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-3001 (1) / CVE-2023-32993
+SAML Single Sign On(SSO) Plugin 2.0.2 and earlier does not perform hostname
+validation when connecting to miniOrange or the configured IdP to retrieve
+SAML metadata.
+
+This lack of validation could be abused using a man-in-the-middle attack to
+intercept these connections.
+
+
+SECURITY-3001 (2) / CVE-2023-32994
+SAML Single Sign On(SSO) Plugin 2.1.0 and earlier unconditionally disables
+SSL/TLS certificate validation for connections to miniOrange or the
+configured IdP to retrieve SAML metadata.
+
+This lack of validation could be abused using a man-in-the-middle attack to
+intercept these connections.
+
+
+SECURITY-2994 / CVE-2023-32995 (CSRF) & CVE-2023-32996 (missing permission check)
+SAML Single Sign On(SSO) Plugin 2.0.0 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to send an HTTP POST
+request with JSON body containing attacker-specified content, to
+miniOrange's API for sending emails.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-3000 / CVE-2023-32997
+CAS Plugin 1.6.2 and earlier does not invalidate the existing session on
+login.
+
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
+
+
+SECURITY-3118 / CVE-2023-2195 (CSRF) & CVE-2023-2631 (missing permission check)
+Code Dx Plugin 3.1.0 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-3145 / CVE-2023-2196
+Code Dx Plugin 3.1.0 and earlier does not perform a permission check in a
+method implementing form validation.
+
+This allows attackers with Item/Read permission to check for the existence
+of an attacker-specified file path on an agent file system.
+
+
+SECURITY-3146 / CVE-2023-2632 (storage) & CVE-2023-2633 (masking)
+Code Dx Plugin 3.1.0 and earlier stores Code Dx server API keys unencrypted
+in job `config.xml` files on the Jenkins controller as part of its
+configuration.
+
+These API keys can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+Additionally, the job configuration form does not mask these API keys,
+increasing the potential for attackers to observe and capture them.
+
+
+SECURITY-3121 / CVE-2023-32998 (CSRF) & CVE-2023-32999 (missing permission check)
+AppSpider Plugin 1.0.15 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL and send an HTTP POST request with a JSON payload
+consisting of attacker-specified credentials.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2962 / CVE-2023-33000
+NS-ND Integration Performance Publisher Plugin stores credentials in job
+`config.xml` files on the Jenkins controller as part of its configuration.
+
+While these credentials are stored encrypted on disk, in NS-ND Integration
+Performance Publisher Plugin 4.8.0.149 and earlier, the job configuration
+form does not mask these credentials, increasing the potential for
+attackers to observe and capture them.
+
+
+SECURITY-3077 / CVE-2023-33001
+HashiCorp Vault Plugin 360.v0a_1c04cf807d and earlier does not properly
+mask (i.e., replace with asterisks) credentials printed in the build log
+from Pipeline steps like `sh` and `bat`, when both of the following
+conditions are met:
+
+* The credentials are printed in build steps executing on an agent
+(typically inside a `node` block).
+* Push mode for durable task logging is enabled. This is a hidden option
+in Pipeline: Nodes and Processes that can be enabled through the Java
+system property `org.jenkinsci.plugins.workflow.steps.durable_task.DurableTaskStep.USE_WATCHING`.
+It is also automatically enabled by some plugins, e.g., OpenTelemetry
+and Pipeline Logging over CloudWatch.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2892 / CVE-2023-33002
+TestComplete support Plugin 2.8.1 and earlier does not escape the
+TestComplete project name in its test result page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3083 / CVE-2023-33003 (CSRF) & CVE-2023-33004 (missing permission check)
+Tag Profiler Plugin 0.2 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to reset profiler
+statistics.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2991 / CVE-2023-33005
+WSO2 Oauth Plugin 1.0 and earlier does not invalidate the existing session
+on login.
+
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2990 / CVE-2023-33006
+WSO2 Oauth Plugin 1.0 and earlier does not implement a state parameter in
+its OAuth flow, a unique and non-guessable value associated with each
+authentication request.
+
+This vulnerability allows attackers to trick users into logging in to the
+attacker's account.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2903 / CVE-2023-33007
+LoadComplete support Plugin 1.0 and earlier does not escape the
+LoadComplete test name in its test result page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+
