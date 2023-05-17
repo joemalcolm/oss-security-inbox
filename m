@@ -1,27 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/17/1
-Message-ID: <87msu95b1q.fsf@oldenburg.str.redhat.com>
-Date: Sun, 17 Dec 2023 12:21:53 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: Matthias Gerstner <mgerstner@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: budgie-extras: multiple predictable /tmp path issues in various applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/9
+Message-ID: <20230517181942.GA2466@unix-ag.uni-kl.de>
+Date: Wed, 17 May 2023 20:19:42 +0200
+From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: IPv6 and Route of Death
 Content-Type: text/plain; charset=utf-8
 
-* Matthias Gerstner:
+Hi all,
 
-> As a quick fix for all of these issues I suggested to use
-> `$XDG_RUNTIME_DIR` instead of /tmp. This directory is private to the
-> logged in user and cannot be manipulated by other users in the system.
+On Wed, May 17, 2023 at 07:13:51PM +0200, Solar Designer wrote:
+> On Wed, May 17, 2023 at 10:02:31AM -0400, Jeffrey Walton wrote:
+> > This seems to have been dropped as a 0-day. I have not seen a CVE
+> > assigned to it.
+> 
+> The "original writeup" you reference says this is CVE-2023-2156.
+> 
+> > I _think_ this is the original writeup:
+> > 
+> >   * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
 
-Note that on some systems, the XDG_RUNTIME_DIR directory is unavailable
-after user UID switching (e.g., with sudo) because these systems follow
-the specification to the letter and provide a XDG_RUNTIME_DIR setting
-for the logged-in user instead of the current user.  So while it looks
-like a good solution for most cases, it breaks a couple of use cases (or
-still needs fallback even on systems that nominally have XDG_RUNTIME_DIR
-support).
+It also mentions that "the bug patch didn't solve the underlying problem
+(ZDI confirmed this too), so we're still expecting another patch at
+some[ ]point."
 
-Thanks,
-Florian
+The Zero Day Initiative (ZDI) entry[0] linked from the article[1]
+gives a time line:
 
+01/26/22 – ZDI reported the vulnerability to the vendor.
+[...]
+04/14/23 – The vendor informed the ZDI that a new patch would merge
+           into the latest mainline on 04/21/2023.
+04/21/23 – The original finder reports to the vendor that the patch
+           may not work, and it was confirmed by the ZDI that the
+           vulnerability is reproducible on the latest mainline.
+05/02/23 – The ZDI informed the vendor that the case will be published
+           as a zero-day advisory on 05/04/23, and in coordination with
+           Red Hat this vulnerability will be assigned CVE-2023-2156.
+
+[0] https://www.zerodayinitiative.com/advisories/ZDI-23-547/
+[1] https://www.interruptlabs.co.uk/articles/linux-ipv6-route-of-death
+
+The problem described pertains to handling of IPv6 "RPL Source Routing"
+using an IPv6 "Extension Header" of the "Routing Header" variant,
+the "RPL Source Route Header" (SRH, Routing Type 3).  This header
+is described in RFC 6554.  The RFC specifies that RPL border routers
+"do not allow datagrams already carrying an SRH header to enter or exit
+a[n] RPL routing domain."
+
+The informational RFC 9288 recommends that "IPv6 packets with IPv6
+Extension Headers (or options) that are not expected to traverse transit
+routers should be dropped."  This is provided as general advice, not
+specific to RPL.
+
+Of course, filtering at the border does not protect against compromised
+RPL nodes.
+
+Only systems with enabled RPL functionality seem to be vulnerable (as
+far as I understand the report).
+
+The described bug pertains to processing the SRH header at the penultimate
+hop.
+
+The described result of exploiting the vulnerability is a kernel panic,
+i.e., a remote DoS.
+
+HTH,
+Erik
+-- 
+A distributed system is one in which the failure of a computer you didn't
+even know existed can render your own computer unusable.
+                        -- Leslie Lamport
