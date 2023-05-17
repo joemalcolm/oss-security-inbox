@@ -1,39 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/08/2
-Message-ID: <09205bd9-a5b6-48db-81ec-064d77e94248@cispa.de>
-Date: Sun, 8 Oct 2023 08:55:51 +0200
-From: Michael Schwarz <michael.schwarz@...pa.de>
-To: Solar Designer <solar@...nwall.com>
-CC: <oss-security@...ts.openwall.com>, <fabian.thomas@...pa.de>, <lukas.gerlach@...pa.de>, <ruiyi.zhang@...pa.de>, Daniel Weber <daniel.weber@...pa.de>
-Subject: Re: Meltdown-US / Meltdown 3a Remaining Leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/1
+Message-ID: <rs5rs36-4q5q-299q-pr2n-5896n1196054@unkk.fr>
+Date: Wed, 17 May 2023 08:40:59 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: curl: CVE-2023-28319: UAF in SSH sha256 fingerprint check
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+UAF in SSH sha256 fingerprint check
+====================================
 
-On 07.10.23 00:18, Solar Designer wrote:
-> In Linux, /proc/interrupts is generally world-readable.  So perhaps
-> that's something to fix first, since yes it's known to allow for
-> keystroke timing attacks.  Should be fixed in the kernel or/and chmod'ed
-> by the userland.  And then:
-Yes, that is true. Android, for example, prevents unprivileged access 
-since version 8 to this file to prevent such attacks:
+Project curl Security Advisory, May 17th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-28319.html)
 
-https://issuetracker.google.com/issues/37140047?pli=1
+VULNERABILITY
+-------------
 
-If our proposed mitigation is implemented (e.g., as opt-in using a 
-kernel command-line parameter), the implementation could additionally 
-prevent unprivileged access to /proc/interrupts.
+libcurl offers a feature to verify an SSH server's public key using a SHA 256
+hash. When this check fails, libcurl would free the memory for the fingerprint
+before it returns an error message containing the (now freed) hash.
 
-Michael
+This flaw risks inserting sensitive heap-based data into the error message
+that might be shown to users or otherwise get leaked and revealed.
+
+INFO
+----
+
+This only applies to users of the `CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256` option,
+which is **only supported for libcurl built with libssh2** (curl optionally
+supports other SSH backends). Either of the options `CURLOPT_VERBOSE` or
+`CURLOPT_ERRORBUFFER` also need to be set to trigger the problem.
+
+The damage is somewhat limited by the extremely short time window between the
+free and the use of the freed memory.
+
+The largest possible info leak that can happen due to this flaw per trigger
+occasion, is limited to `CURL_ERROR_SIZE` - the error message prefix length
+(69) = 186 bytes. It will also stop at the first null byte within those 186
+bytes.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-28319 to this issue.
+
+CWE-416: Use After Free
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.81.0 to and including 8.0.1
+- Not affected versions: curl < 7.81.0 and curl >= 8.1.0
+- Introduced-in: https://github.com/curl/curl/commit/3467e89bb97e6c87c7
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/8e21b1a05f3c0ee098dbcb6c
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.1.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use `CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256`
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 21 2023. We contacted
+distros@...nwall on May 9, 2023.
+
+curl 8.1.0 was released on May 17 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Wei Chong Tan
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
 
 -- 
 
-Dr. Michael Schwarz
-Faculty
-
-CISPA Helmholtz Center for Information Security
-Stuhlsatzenhaus 5, Saarland Informatics Campus
-66123 Saarbrücken, Germany
-Mail: michael.schwarz@...pa.de
-Web: https://www.cispa.saarland
-
+  / daniel.haxx.se
