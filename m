@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/09/2
-Message-ID: <20231009120943.GA22710@openwall.com>
-Date: Mon, 9 Oct 2023 14:09:43 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/6
+Message-ID: <CAH8yC8kBFkWL1MRGv+z1wJ4Vj2KOmuK1xm63XGgQMJW+OB=Q9Q@mail.gmail.com>
+Date: Wed, 17 May 2023 10:02:31 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How can I join the linux-distros mailing list and become a representative?
+Subject: IPv6 and Route of Death
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 07, 2023 at 08:43:03AM +0000, public1020 wrote:
-> My firm is one of the largest cloud provider in China and I would like to add our distro name to the website and become a disto representative.
-> https://oss-security.openwall.org/wiki/mailing-lists/distros
-> 
-> The reason is that we have our own Linux distribution and we need to receive vulnerabilities notifications to prepare our packages in advance.
-> 
-> How can I do that? Please advise.
+Hi Everyone,
 
-The wiki page you reference above lists the membership criteria and
-links to a couple of example membership request messages.  You may post
-a request like that in here, addressing the criteria in it one by one.
+This seems to have been dropped as a 0-day. I have not seen a CVE
+assigned to it.
 
-The outcome of such posting is not predetermined - your organization
-may or may not be accepted as a linux-distros list member, depending on
-whether it convincingly meets the criteria or maybe not.
+IPv6 and Route of Death:
 
-Alexander
+  * https://www.reddit.com/r/linux/comments/13jfehf/linux_ipv6_route_of_death_0day_no_patch/
+  * https://news.ycombinator.com/item?id=35950379
+
+I _think_ this is the original writeup:
+
+  * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
+
+Jeff
