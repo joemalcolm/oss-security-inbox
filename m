@@ -1,4 +1,4 @@
-Received: (qmail 15960 invoked by uid 550); 1 Feb 2023 10:06:01 -0000
+Received: (qmail 21515 invoked by uid 550); 17 May 2023 06:41:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,145 +7,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15936 invoked from network); 1 Feb 2023 10:06:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1675245949; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nt83o2nNsJQFqIAcqO4cXEp6UsxBPIS9yFyvgO024cM=;
-	b=s7gHIiWmgtQYexROpbFVhdpnJYcouYTvTSCvSYuJFqHS+fimXalycOLinoXAICeRKYan+y
-	FodsxhJIZaC2/bInCdxAqXKQ6ZQRUKuFp9dUKkACKUaImMnHyWwk2DlUvtkeObwT3o/A9Z
-	BF7GNvSf+dAqFBmh80abKH/TcAq6uCA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1675245949;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nt83o2nNsJQFqIAcqO4cXEp6UsxBPIS9yFyvgO024cM=;
-	b=MtaKW0RTu5EhfHs9+AcQmO5G852kHNCIiAywg6Opar3oxLRCip0cFi4QrCXP2Gr5XwWkTS
-	QTlNMfLjMecRMgCQ==
-Date: Wed, 1 Feb 2023 11:05:49 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <Y9o5fXKqZDxOHbNe@kasco.suse.de>
-References: <CAOGQQ29pYOHP2puP-nAzO+Qnbc-OouwnVFpQVY_=OvVo12=Mkw@mail.gmail.com>
+Received: (qmail 20448 invoked from network); 17 May 2023 06:41:20 -0000
+Date: Wed, 17 May 2023 08:41:08 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <11327r71-8651-6825-46n1-97r1s9n6731o@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="mMZSM2ohlcv93G8R"
-Content-Disposition: inline
-In-Reply-To: <CAOGQQ29pYOHP2puP-nAzO+Qnbc-OouwnVFpQVY_=OvVo12=Mkw@mail.gmail.com>
-Subject: Re: [oss-security] pesign: Local privilege escalation on pesign
- systemd service
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] curl: CVE-2023-28321: IDN wildcard match
 
---mMZSM2ohlcv93G8R
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 1 Feb 2023 11:05:49 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] pesign: Local privilege escalation on pesign
- systemd service
+IDN wildcard match
+==================
 
-Hi,
+Project curl Security Advisory, May 17th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-28321.html)
 
-On Tue, Jan 31, 2023 at 12:59:19PM -0300, Marco Benatto wrote:
-> a local privilege escalation vulnerability was found in pesign. This
-> vulnerability has been identified by CVE-2022-3560.
+VULNERABILITY
+-------------
 
-I would like to add some more details about the vulnerability:
+curl supports matching of wildcard patterns when listed as "Subject
+Alternative Name" in TLS server certificates. curl can be built to use its own
+name matching function for TLS rather than one provided by a TLS library. This
+private wildcard matching function would match IDN (International Domain Name)
+hosts incorrectly and could as a result accept patterns that otherwise should
+mismatch.
 
-The project ships a systemd service file that starts a pesign daemon
-instance but also runs a StartPost script:
+IDN hostnames are converted to puny code before used for certificate
+checks. Puny coded names always start with `xn--` and should not be allowed to
+pattern match, but the wildcard check in curl could still check for `x*`,
+which would match even though the IDN name most likely contained nothing even
+resembling an `x`.
 
-```
-ExecStart=3D/usr/bin/pesign --daemonize
-ExecStartPost=3D/usr/libexec/pesign/pesign-authorize
-```
+INFO
+----
 
-This pesign-authorize script is run with root privileges and grants a
-dynamic list of users and groups recursively full access to
-/etc/pki/pesign*/ and /run/pesign via POSIX access control lists.
+curl's wildcard matching function is used only when curl was built to use
+OpenSSL, Schannel or Gskit. All other backends use the matching functions of
+the corresponding TLS library and are thus not vulnerable to this flaw.
 
-The list of users is found in the root controlled files
-/etc/pesign/users and /etc/pesign/groups. By default only pesign:pesign
-are configured.
+This flaw is lessened somewhat by two factors:
 
-# The Vulnerability
+  - Certificates issued by Certificate Authorities for the public Internet are
+    not allowed to use "partial" wildcards, thus completely avoiding this
+    issue.
 
-Since the pesign-authorize script is run at every start of the pesign
-service unit, the directory trees /etc/pki/pesign* and /run/pesign will
-already be controlled by the unprivileged pesign:pesign user and group.
-The script does not take precautions to prevent symlink attacks being
-staged by a compromised unprivileged user account.
+  - In many circumstances, the control of host names used and the wildcards
+    used in issued certificates are controlled by the same entity, making this
+    unlikely to actually become a problem.
 
-A simple demonstration of the attack would be this:
+curl does not need to be built with IDN support to be vulnerable, as a user
+can pass in a puny coded version of the host name directly in the URL and can
+then trigger this flaw.
 
-```
-root# sudo -u pesign -g pesign ln -s /root /etc/pki/pesign/attack
-root# systemctl restart pesign
-root# getfactl /root
-# file: root/
-# owner: root
-# group: root
-user::rwx
-user:pesign:rwx
-group::---
-group:pesign:rwx
-mask::rwx
-other::---
-```
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-28321 to this issue.
 
-Therefore in a default configuration of pesign there is a local pesign
-user or pesign group to root escalation that can be achieved at every
-pesign.service unit start.
+CWE-295: Improper Certificate Validation
 
-I reproduced this on Fedora 35 using pesign version 113 release 18.fc35.
+Severity: Low
 
-# Timeline
+AFFECTED VERSIONS
+-----------------
 
-- 2022-10-11: I reported this to secalert@redhat.com  offering
-  coordinated disclosure.
-- 2022-10-18: RedHat security assigned the CVE for the issue
-- 2022-12-21: RedHat security communicated a coordinated release date
-  for 2023-01-31.
-- 2023-01-27: RedHat security shared the patch with us and informed the
-  distros mailing list about issue and the upcoming release
-- 2023-01-31: the issue has been published
+This bug was introduced in curl when IDN support was first introduced, in curl
+7.12.0 - June 2004. The wildcard function was subsequently updated for this
+case in 2012 (the IDN problem is mentioned in RFC 6125 in a far from obvious
+way) but was done wrongly, so the flaw remained.
 
-Cheers
+- Affected versions: curl 7.12.0 to and including 8.0.1
+- Not affected versions: curl < 7.12.0 and curl >= 8.1.0
+- Introduced-in: https://github.com/curl/curl/commit/9631fa740708b1890197fad
 
-Matthias
+libcurl is used by many applications, but not always advertised as such!
 
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moer=
-man
+SOLUTION
+------------
 
---mMZSM2ohlcv93G8R
-Content-Type: application/pgp-signature; name="signature.asc"
+curl 8.1.0 completely removes the support for "partial" patches and now only
+supports `*.`. No `a*`, `a*b` or `*b` matches. For all host names, IDN or not.
 
------BEGIN PGP SIGNATURE-----
+- Fixed-in: https://github.com/curl/curl/commit/199f2d440d8659b42
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmPaOX0ACgkQFMQFyXGS
-NVMbzw//bBnW9jGu/vJvcZ5s+uM3ntGQhV9pAzIs1LV5Wf1XKA7+worHR/myBA7m
-+zwb0KCX0uHoaV7+o5qW1MF7ExHkOzldVwa3ugXBl05RdM9b6pgzjejl7iwC2GvP
-+u06sqPu9QODJJRkrT3Fbjuffp8fFj+JcCGk64qe/I8DZnEol3uDHx8wGbUcGE/v
-eBT7h1Aq921aoTIDvqY0MjRErwZF20LVYzylKDf1Vk+Ru9J4OLWd6XAuOELAgFfL
-cjbP5EgQs/UD105Nyelstf2FHHBetYtkNltWGXfUOzmSVqkxsXe1mMz+qidLsSTJ
-HlLawM2R3essee/itbXzmmPkrrMpC3lpb7kpMidFRI36xYpI6NQg15kQlzD+wrJ2
-jrLVsn1bwKDxCl7hI+bbTM6segF8L0+JvwtYrvviZ0DQGkjilEG8YkZDD25BQUtW
-GJczQkluIHbJRbzDVNpUoqYZDHfLD8kjX49fR3qRAMMiTsASMuvKd2CGXDOStGBN
-qWkXiVcd1ALsMwGcwXAZ3ZRW6Z0+lW76ijO0enq+3jiqW56YD90y58xXixyYGknR
-JaSY+fymydOJ+ehrS4bTtsicRniZwJXE83hiaXRPy1r83Z8rcr1uBaPox/EJmBh5
-TV6asZtwqSlUytCnNU+bbx3TBC+G4NqssuOkefIZZfNcLrDfJi8=
-=Dmhv
------END PGP SIGNATURE-----
+RECOMMENDATIONS
+--------------
 
---mMZSM2ohlcv93G8R--
+  A - Upgrade curl to version 8.1.0
+
+  B - Apply the patch to your local version
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 17 2023. We contacted
+distros@openwall on May 9, 2023.
+
+curl 8.1.0 was released on May 17 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
