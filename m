@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/24/2
-Message-ID: <9a5af39c-4833-7369-6f78-6bcc3f1d9687@apache.org>
-Date: Fri, 24 Nov 2023 05:29:43 +0000
-From: Zihao Xiang <zihaoxiang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/7
+Message-Id: <D2D5A1F8-9C54-46F3-AA9B-95913B446645@senki.org>
+Date: Wed, 17 May 2023 10:43:50 -0400
+From: Barry Greene <bgreene@...ki.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49068: Apache DolphinScheduler: Information Leakage Vulnerability 
+Subject: Re: IPv6 and Route of Death
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
 
-Affected versions:
+My recommendation - check your “Exploitable Port Filter” rules and include IPv6. Test your gear to insure it ‘can’ filter exertion headers.
 
-- Apache DolphinScheduler before 3.2.1
+Read through RFC 9098.
 
-Description:
+This is an doc on how major ISPs deploy port filtering in their networks. Some are applying RFC 9098.
 
-Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache DolphinScheduler.This issue affects Apache DolphinScheduler: 3.2.1.
+https://www.senki.org/operators-security-toolkit/filtering-exploitable-ports-and-minimizing-risk-to-and-from-your-customers/
 
-Users are recommended to upgrade to version [FIXED_VERSION], which fixes the issue.
 
-References:
+Sent from my iPhone
 
-https://github.com/apache/dolphinscheduler/pull/15192
-https://dolphinscheduler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-49068
+> On May 17, 2023, at 10:23 AM, Jeffrey Walton <noloader@...il.com> wrote:
+> ﻿Hi Everyone,
+> 
+> This seems to have been dropped as a 0-day. I have not seen a CVE
+> assigned to it.
+> 
+> IPv6 and Route of Death:
+> 
+>  * https://www.reddit.com/r/linux/comments/13jfehf/linux_ipv6_route_of_death_0day_no_patch/
+>  * https://news.ycombinator.com/item?id=35950379
+> 
+> I _think_ this is the original writeup:
+> 
+>  * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
+> 
+> Jeff
 
