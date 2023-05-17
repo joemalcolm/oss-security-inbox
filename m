@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["409" "Monday" "26" "October" "2015" "20:32:44" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20151026193244.GA1444@elende.valinor.li>" "16" "[oss-security] CVE Request: Wordpress: Cross-site scripting vulnerability in the user list table" nil nil nil "10" "2015102619:32:44" "[oss-security] CVE Request: Wordpress: Cross-site scripting vulnerability in the user list table" (number mark "        carnil@debia Oct 26   16/409   " thread-indent "\"[oss-security] CVE Request: Wordpress: Cross-site scripting vulnerability in the user list table\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23710 invoked by uid 550); 26 Oct 2015 19:32:57 -0000
+Received: (qmail 21862 invoked by uid 550); 17 May 2023 06:41:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23692 invoked from network); 26 Oct 2015 19:32:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=2NRUP+++k+fgqdtyFtSJBA7YNCQ8DkaFL4afGLmCFSU=;
-        b=e5318h1yyjgWpVlEyMGjEBi2S0eTRVZE5XM3i5cenSso1MB62zUR1dUkeR7swl+fWn
-         2DmcZ9z0h5czUfTF3lLQ0vh6V3//WhC2s3ABVG94qdMyAkwcD7V1i3qDSzRupqBikatL
-         4N62YTbB0NjrRGJVrbpIGNdBMOjsOuAchpqm2MzumUcXHnzM2amVpxCSw14mfn1uwX8c
-         FbCm8iWh8N0XemUz9S3GoLlbGlWzKOkqs5kRusN3iP6aB0XdpHmHM8r3cjpcVjTpmfuy
-         6NB7NOpAa1WxqHBfe5GlU2wfaD+4KTByoeCINQhE1Wb9dZPecGiSR8WFXCLNImwghGmk
-         PN+g==
-X-Received: by 10.180.37.114 with SMTP id x18mr4840799wij.92.1445887965632;
-        Mon, 26 Oct 2015 12:32:45 -0700 (PDT)
-Message-ID: <20151026193244.GA1444@elende.valinor.li>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Craig Small <csmall@debian.org>, security@wordpress.org,
-	CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Mon, 26 Oct 2015 20:32:44 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: Wordpress: Cross-site scripting vulnerability in the
- user list table
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Received: (qmail 21808 invoked from network); 17 May 2023 06:41:24 -0000
+Date: Wed, 17 May 2023 08:41:12 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <s335p31-738-9881-832n-r6945p656r3@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] curl: CVE-2023-28322: more POST-after-PUT confusion
 
-Hi
+more POST-after-PUT confusion
+=============================
 
-Wordpress release 4.3.1 Security and Maintenance Release contained as
-well a fix for a cross-site scripting vulnerability in the user list
-table:
+Project curl Security Advisory, May 17 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-28322.html)
 
-https://wordpress.org/news/2015/09/wordpress-4-3-1/
+VULNERABILITY
+-------------
 
-Upstream commit:
-https://github.com/WordPress/WordPress/commit/f91a5fd10ea7245e5b41e288624819a37adf290a
+When doing HTTP(S) transfers, libcurl might erroneously use the read callback
+(`CURLOPT_READFUNCTION`) to ask for data to send, even when the
+`CURLOPT_POSTFIELDS` option has been set, if the same handle previously was
+used to issue a `PUT` request which used that callback.
 
-Has a CVE for this already been requested as well? If not can you
-assign a CVE?
+This flaw may surprise the application and cause it to misbehave and either
+send off the wrong data or use memory after free or similar in the second
+transfer.
 
-Regards,
-Salvatore
+The problem exists in the logic for a reused handle when it is (expected to
+be) changed from a PUT to a POST.
+
+INFO
+----
+
+The code actually sending wrong data or doing a use-after-free is not present
+in libcurl code but are only presumed scenarios that might become the outcome
+of libcurl surprisingly calling the read callback in a situation where it is
+not expected to.
+
+This flaw cannot be triggered with the command line tool.
+
+This problem is almost identical to
+[CVE-2022-32221](https://curl.se/docs/CVE-2022-32221.html). A difference this
+time is that setting `CURLOPT_POST` for the second transfer avoids the
+problem, where as only setting `CURLOPT_POSTFIELDS` after the PUT still makes
+the second transfer to a PUT and use the callback.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-28322 to this issue.
+
+CWE-440: Expected Behavior Violation
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.7 to and including 8.0.1
+- Not affected versions: libcurl < 7.7 and >= 8.1.0
+- Introduced-in: https://github.com/curl/curl/commit/546572da0457f3
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+This time the logic is improved to avoid having two separate variable fields
+holding info about HTTP method and behavior. Now there is only one, which
+should make it harder to end up in such a confused middle state.
+
+- Fixed-in: https://github.com/curl/curl/commit/7815647d6582c0a4900be2e1de
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.1.0
+
+  B - Apply the patch to your local version
+
+  C - Do not do mix using the read callback and `CURLOPT_POSTFIELDS` string on
+      a reused easy handle
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 19, 2023. We contacted
+distros@openwall on May 9, 2023.
+
+libcurl 8.1.0 was released on May 17 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
