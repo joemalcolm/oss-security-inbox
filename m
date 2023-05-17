@@ -1,71 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/2
-Message-ID: <CAA_Lw3_wha4rCNvu5hbwsu-kEsp96761WgOB4rh7DZxXtiyQZw@mail.gmail.com>
-Date: Wed, 1 Mar 2023 14:04:08 +0100
-From: Noryungi <noryungi@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: sudo: double free with per-command chroot sudoers rules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/3
+Message-ID: <11327r71-8651-6825-46n1-97r1s9n6731o@unkk.fr>
+Date: Wed, 17 May 2023 08:41:08 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: curl: CVE-2023-28321: IDN wildcard match
 Content-Type: text/plain; charset=utf-8
 
-https://www.sudo.ws/security/advisories/double_free/
+IDN wildcard match
+==================
 
-says:
+Project curl Security Advisory, May 17th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-28321.html)
 
-CVE ID
-No CVE has been assigned to this issue due to its low impact.
+VULNERABILITY
+-------------
 
-Le mer. 1 mars 2023 à 13:15, John Helmert III <ajak@...too.org> a écrit :
+curl supports matching of wildcard patterns when listed as "Subject
+Alternative Name" in TLS server certificates. curl can be built to use its own
+name matching function for TLS rather than one provided by a TLS library. This
+private wildcard matching function would match IDN (International Domain Name)
+hosts incorrectly and could as a result accept patterns that otherwise should
+mismatch.
 
-> Has a CVE been requeested?
->
-> On Tue, Feb 28, 2023 at 07:31:11AM -0700, Todd C. Miller wrote:
-> > A flaw exists in sudo's per-command chroot feature that could result
-> > in the variable that stores the command being freed more than once.
-> >
-> > I believe this is a fairly low-impact bug as the per-command chroot
-> > feature is not widely used.  The bug was caught by glibc's double-free
-> > detection while I was performing some chroot-related testing.  No
-> > one else has reported the bug which leads me to believe it probably
-> > has not been encountered in the wild.
-> >
-> > Sudo versions affected:
-> >
-> >     Sudo versions 1.9.8 through 1.9.13p1 inclusive are affected.
-> >     Versions of sudo prior to 1.9.8 are not affected.
-> >
-> > Details:
-> >
-> >     Starting with Sudo 1.9.3, it is possible to specify an alternate
-> >     root directory that sudo will change to before executing the
-> >     command.  For example:
-> >
-> >       someuser ALL = CHROOT=/var/www /bin/sh
-> >
-> >     will result in /bin/sh being run inside the chroot jail /var/www
-> >     when the specific user runs "sudo sh".
-> >
-> >     Sudo 1.9.8 included a fix for a memory leak in the set_cmnd_path()
-> >     function which can result in the "user_cmnd" variable being
-> >     freed twice, but only when processing a sudoers rule that
-> >     contains a "CHROOT" setting.  This does not affect the "chroot"
-> >     Defaults setting.  Only a per-rule "CHROOT" setting will trigger
-> >     the bug.
-> >
-> > Impact:
-> >
-> >     The bug can only be triggered by a user that has been granted
-> >     sudo privileges using a sudoers rule that contain a "CHROOT"
-> >     setting and the rule must match the current host.  If no users
-> >     have sudoers rules containing "CHROOT" there is no impact.  This
-> >     feature is not commonly used.
-> >
-> > Workaround:
-> >
-> >     Remove rules from the sudoers file than contain a "CHROOT"
-> >     setting if using an affected version of sudo.
-> >
-> > Fix:
-> >
-> >     The bug is fixed in sudo 1.9.13p2.
->
+IDN hostnames are converted to puny code before used for certificate
+checks. Puny coded names always start with `xn--` and should not be allowed to
+pattern match, but the wildcard check in curl could still check for `x*`,
+which would match even though the IDN name most likely contained nothing even
+resembling an `x`.
 
+INFO
+----
+
+curl's wildcard matching function is used only when curl was built to use
+OpenSSL, Schannel or Gskit. All other backends use the matching functions of
+the corresponding TLS library and are thus not vulnerable to this flaw.
+
+This flaw is lessened somewhat by two factors:
+
+  - Certificates issued by Certificate Authorities for the public Internet are
+    not allowed to use "partial" wildcards, thus completely avoiding this
+    issue.
+
+  - In many circumstances, the control of host names used and the wildcards
+    used in issued certificates are controlled by the same entity, making this
+    unlikely to actually become a problem.
+
+curl does not need to be built with IDN support to be vulnerable, as a user
+can pass in a puny coded version of the host name directly in the URL and can
+then trigger this flaw.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-28321 to this issue.
+
+CWE-295: Improper Certificate Validation
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+This bug was introduced in curl when IDN support was first introduced, in curl
+7.12.0 - June 2004. The wildcard function was subsequently updated for this
+case in 2012 (the IDN problem is mentioned in RFC 6125 in a far from obvious
+way) but was done wrongly, so the flaw remained.
+
+- Affected versions: curl 7.12.0 to and including 8.0.1
+- Not affected versions: curl < 7.12.0 and curl >= 8.1.0
+- Introduced-in: https://github.com/curl/curl/commit/9631fa740708b1890197fad
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+curl 8.1.0 completely removes the support for "partial" patches and now only
+supports `*.`. No `a*`, `a*b` or `*b` matches. For all host names, IDN or not.
+
+- Fixed-in: https://github.com/curl/curl/commit/199f2d440d8659b42
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.1.0
+
+  B - Apply the patch to your local version
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 17 2023. We contacted
+distros@...nwall on May 9, 2023.
+
+curl 8.1.0 was released on May 17 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
