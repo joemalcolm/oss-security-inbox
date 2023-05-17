@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["15230" "Wednesday" "25" "January" "2017" "19:28:07" "+0100" "Summer of Pwnage" "lists@securify.nl" "<e0f40b5d-6d9b-561e-7e3f-bf146ec26e9a@securify.nl>" "270" "[oss-security] Multiple PHP object injection vulnerabilities affecting three WordPress Plugins" nil nil nil "1" "2017012518:28:07" "[oss-security] Multiple PHP object injection vulnerabilities affecting three WordPress Plugins" (number mark "U       lists@securi Jan 25  270/15230 " thread-indent "\"[oss-security] Multiple PHP object injection vulnerabilities affecting three WordPress Plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30671 invoked by uid 550); 25 Jan 2017 18:28:22 -0000
+Received: (qmail 19811 invoked by uid 550); 17 May 2023 06:41:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,288 +7,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30619 invoked from network); 25 Jan 2017 18:28:19 -0000
-X-Virus-Scanned: amavisd-new at edge1.intern.zimbra-login.net
-From: Summer of Pwnage <lists@securify.nl>
-To: oss-security@lists.openwall.com
-Organization: Securify B.V.
-Message-ID: <e0f40b5d-6d9b-561e-7e3f-bf146ec26e9a@securify.nl>
-Date: Wed, 25 Jan 2017 19:28:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+Received: (qmail 19793 invoked from network); 17 May 2023 06:41:11 -0000
+Date: Wed, 17 May 2023 08:40:59 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <rs5rs36-4q5q-299q-pr2n-5896n1196054@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------BC295E3548973B5C14C3516A"
-Subject: [oss-security] Multiple PHP object injection vulnerabilities affecting three
- WordPress Plugins
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] curl: CVE-2023-28319: UAF in SSH sha256 fingerprint check
 
---------------BC295E3548973B5C14C3516A
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+UAF in SSH sha256 fingerprint check
+====================================
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+Project curl Security Advisory, May 17th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-28319.html)
 
+VULNERABILITY
+-------------
 
+libcurl offers a feature to verify an SSH server's public key using a SHA 256
+hash. When this check fails, libcurl would free the memory for the fingerprint
+before it returns an error message containing the (now freed) hash.
 
+This flaw risks inserting sensitive heap-based data into the error message
+that might be shown to users or otherwise get leaked and revealed.
 
+INFO
+----
 
+This only applies to users of the `CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256` option,
+which is **only supported for libcurl built with libssh2** (curl optionally
+supports other SSH backends). Either of the options `CURLOPT_VERBOSE` or
+`CURLOPT_ERRORBUFFER` also need to be set to trigger the problem.
 
+The damage is somewhat limited by the extremely short time window between the
+free and the use of the freed memory.
 
+The largest possible info leak that can happen due to this flaw per trigger
+occasion, is limited to `CURL_ERROR_SIZE` - the error message prefix length
+(69) = 186 bytes. It will also stop at the first null byte within those 186
+bytes.
 
---------------BC295E3548973B5C14C3516A
-Content-Type: text/plain; charset=UTF-8;
- name="cms_commander_client_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename*0="cms_commander_client_wordpress_plugin_unauthenticated_php_ob";
- filename*1="ject_injection_vulnerability.txt"
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-28319 to this issue.
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpDTVMgQ29tbWFuZGVyIENs
-aWVudCBXb3JkUHJlc3MgUGx1Z2luIHVuYXV0aGVudGljYXRlZCBQSFAgT2Jq
-ZWN0DQppbmplY3Rpb24gdnVsbmVyYWJpbGl0eQ0KLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpZb3JpY2sgS29zdGVyLCBKdW5lIDIwMTYNCg0KLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpBYnN0cmFjdA0KLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tDQpBIFBIUCBPYmplY3QgaW5qZWN0aW9uIHZ1
-bG5lcmFiaWxpdHkgd2FzIGZvdW5kIGluIHRoZSBDTVMgQ29tbWFuZGVyDQpD
-bGllbnQgV29yZFByZXNzIFBsdWdpbiwgd2hpY2ggY2FuIGJlIHVzZWQgYnkg
-YW4gdW5hdXRoZW50aWNhdGVkIHVzZXIgdG8NCmluc3RhbnRpYXRlIGFyYml0
-cmFyeSBQSFAgT2JqZWN0cy4gVXNpbmcgdGhpcyB2dWxuZXJhYmlsaXR5IGl0
-IGlzDQpwb3NzaWJsZSB0byBleGVjdXRlIGFyYml0cmFyeSBQSFAgY29kZS4N
-Cg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpPVkUgSUQNCi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KT1ZFLTIwMTYwODAzLTAwMDMNCg0K
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUZXN0ZWQgdmVyc2lvbnMN
-Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGhpcyBpc3N1ZSB3YXMg
-c3VjY2Vzc2Z1bGx5IHRlc3RlZCBvbiB0aGUgQ01TIENvbW1hbmRlciBDbGll
-bnQgWzJdDQpXb3JkUHJlc3MgUGx1Z2luIHZlcnNpb24gMi4yMS4NCg0KLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpGaXgNCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLQ0KSW5wdXQgdmFsaWRhdGlvbiB3YXMgYWRkZWQgdG8g
-dmVyc2lvbiAyLjIyIFszXSBvZiBDTVMgQ29tbWFuZGVyIENsaWVudA0KdG8g
-bWl0aWdhdGUgdGhpcyBpc3N1ZS4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tDQpJbnRyb2R1Y3Rpb24NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLQ0KVGhlIENNUyBDb21tYW5kZXIgQ2xpZW50IFsyXSBXb3JkUHJlc3Mg
-UGx1Z2luIGNhbiBtYW5hZ2UgbXVsdGlwbGUNCldvcmRQcmVzcyBzaXRlcyBm
-cm9tIGEgc2luZ2xlIGRhc2hib2FyZC4gQSBQSFAgT2JqZWN0IGluamVjdGlv
-biBbNF0NCnZ1bG5lcmFiaWxpdHkgd2FzIGZvdW5kIGluIHRoZSBDTVMgQ29t
-bWFuZGVyIENsaWVudCBXb3JkUHJlc3MgUGx1Z2luLA0Kd2hpY2ggY2FuIGJl
-IHVzZWQgYnkgYW4gdW5hdXRoZW50aWNhdGVkIHVzZXIgdG8gaW5zdGFudGlh
-dGUgYXJiaXRyYXJ5DQpQSFAgT2JqZWN0cy4NCg0KLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpEZXRhaWxzDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0NClRoaXMgaXNzdWUgaXMgcG9zc2libGUgZHVlIHRvIGFuIHVuc2Fm
-ZSBjYWxsIHRvIHVuc2VyaWFsaXplKCkgaW4gdGhlDQpjbXNjX2F1dGhlbnRp
-Y2F0ZSgpIG1ldGhvZC4gVGhlIGlucHV0IGlzIHRha2VuIGRpcmVjdGx5IGZy
-b20gdGhlIFBPU1QNCmJvZHkgYXMgY2FuIGJlIHNlZW4gaW4gdGhlIGZvbGxv
-d2luZyBjb2RlIGZyYWdtZW50Og0KDQpmdW5jdGlvbnMucGhwOg0KDQppZigg
-IWZ1bmN0aW9uX2V4aXN0cygnY21zY19hdXRoZW50aWNhdGUnKSkgew0KCWZ1
-bmN0aW9uIGNtc2NfYXV0aGVudGljYXRlKCkgew0KCQ0KCQlnbG9iYWwgJF9j
-bXNjX2RhdGEsICRfY21zY19hdXRoLCAkY21zY19jb3JlOw0KCQ0KCQlpZiAo
-IWlzc2V0KCRIVFRQX1JBV19QT1NUX0RBVEEpKSB7DQoJCQkkSFRUUF9SQVdf
-UE9TVF9EQVRBID0gZmlsZV9nZXRfY29udGVudHMoJ3BocDovL2lucHV0Jyk7
-DQoJCX0NCgkJLyppZihzdWJzdHIoJEhUVFBfUkFXX1BPU1RfREFUQSwgMCwg
-NykgPT0gImFjdGlvbj0iKXsNCgkJCSRIVFRQX1JBV19QT1NUX0RBVEEgPSBz
-dHJfcmVwbGFjZSgiYWN0aW9uPSIsICIiLA0KJEhUVFBfUkFXX1BPU1RfREFU
-QSk7DQoJCX0qLw0KCQkNCgkJJF9jbXNjX2RhdGEgPSBiYXNlNjRfZGVjb2Rl
-KCRIVFRQX1JBV19QT1NUX0RBVEEpOw0KCQlpZiAoISRfY21zY19kYXRhKXsN
-CgkJCXJldHVybjsNCgkJfQ0KCQkkX2Ntc2NfZGF0YSA9IGNtc2NfcGFyc2Vf
-ZGF0YSggIEB1bnNlcmlhbGl6ZSgkX2Ntc2NfZGF0YSkgICk7DQoNCkl0IGhh
-cyBiZWVuIGNvbmZpcm1lZCB0aGF0IHRoaXMgaXNzdWVzIGNhbiBiZSB1c2Vk
-IHRvIGV4ZWN1dGUgYXJiaXRyYXJ5DQpQSFAgY29kZS4NCi0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLQ0KUmVmZXJlbmNlcw0KLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpbMV0NCmh0dHBzOi8vc3Vtb2Zwd24ubmwvYWR2aXNv
-cnkvMjAxNi9jbXNfY29tbWFuZGVyX2NsaWVudF93b3JkcHJlc3NfcGx1Z2lu
-X3VuYXV0aGVudGljYXRlZF9waHBfb2JqZWN0X2luamVjdGlvbl92dWxuZXJh
-YmlsaXR5Lmh0bWwNClsyXSBodHRwczovL3dvcmRwcmVzcy5vcmcvcGx1Z2lu
-cy9jbXMtY29tbWFuZGVyLWNsaWVudC8NClszXSBodHRwczovL2Rvd25sb2Fk
-cy53b3JkcHJlc3Mub3JnL3BsdWdpbi9jbXMtY29tbWFuZGVyLWNsaWVudC4y
-LjIyLnppcA0KWzRdIGh0dHBzOi8vd3d3Lm93YXNwLm9yZy9pbmRleC5waHAv
-UEhQX09iamVjdF9JbmplY3Rpb24=
+CWE-416: Use After Free
 
---------------BC295E3548973B5C14C3516A
-Content-Type: text/plain; charset=UTF-8;
- name="google_forms_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename*0="google_forms_wordpress_plugin_unauthenticated_php_object_inj";
- filename*1="ection_vulnerability.txt"
+Severity: Medium
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpHb29nbGUgRm9ybXMgV29y
-ZFByZXNzIFBsdWdpbiB1bmF1dGhlbnRpY2F0ZWQgUEhQIE9iamVjdCBpbmpl
-Y3Rpb24NCnZ1bG5lcmFiaWxpdHkNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLQ0KWW9yaWNrIEtvc3RlciwgSnVuZSAyMDE2DQoNCi0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLQ0KQWJzdHJhY3QNCi0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQ0KQSBQSFAgT2JqZWN0IGluamVjdGlvbiB2dWxuZXJhYmls
-aXR5IHdhcyBmb3VuZCBpbiB0aGUgR29vZ2xlIEZvcm1zDQpXb3JkUHJlc3Mg
-UGx1Z2luLCB3aGljaCBjYW4gYmUgdXNlZCBieSBhbiB1bmF1dGhlbnRpY2F0
-ZWQgdXNlciB0bw0KaW5zdGFudGlhdGUgYXJiaXRyYXJ5IFBIUCBPYmplY3Rz
-LiBVc2luZyB0aGlzIHZ1bG5lcmFiaWxpdHkgaXQgaXMNCnBvc3NpYmxlIHRv
-IGV4ZWN1dGUgYXJiaXRyYXJ5IFBIUCBjb2RlLg0KDQotLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0NCk9WRSBJRA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tDQpPVkUtMjAxNjA4MDMtMDAwMQ0KDQotLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0NClRlc3RlZCB2ZXJzaW9ucw0KLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpUaGlzIGlzc3VlIHdhcyBzdWNjZXNzZnVsbHkgdGVz
-dGVkIG9uIHRoZSBHb29nbGUgRm9ybXMgWzJdIFdvcmRQcmVzcw0KUGx1Z2lu
-IHZlcnNpb24gMC44NCAtIDAuODcuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLQ0KRml4DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClRo
-aXMgaXNzdWUgaXMgcmVzb2x2ZWQgaW4gR29vZ2xlIEZvcm1zIHZlcnNpb24g
-MC45MSBbM10uDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KSW50
-cm9kdWN0aW9uDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClRoZSBH
-b29nbGUgRm9ybXMgWzRdIFdvcmRQcmVzcyBQbHVnaW4gZmV0Y2hlcyBhIHB1
-Ymxpc2hlZCBHb29nbGUgRm9ybQ0KdXNpbmcgYSBXb3JkUHJlc3MgY3VzdG9t
-IHBvc3Qgb3Igc2hvcnRjb2RlLCByZW1vdmVzIHRoZSBHb29vZ2xlIHdyYXBw
-ZXINCkhUTUwgYW5kIHRoZW4gcmVuZGVycyBpdCBhcyBhbiBIVE1MIGZvcm0g
-ZW1iZWRkZWQgaW4geW91ciBibG9nIHBvc3Qgb3INCnBhZ2UuIEEgUEhQIE9i
-amVjdCBpbmplY3Rpb24gWzVdIHZ1bG5lcmFiaWxpdHkgd2FzIGZvdW5kIGlu
-IHRoZSBHb29nbGUNCkZvcm1zIFdvcmRQcmVzcyBQbHVnaW4sIHdoaWNoIGNh
-biBiZSB1c2VkIGJ5IGFuIHVuYXV0aGVudGljYXRlZCB1c2VyIHRvDQppbnN0
-YW50aWF0ZSBhcmJpdHJhcnkgUEhQIE9iamVjdHMuDQoNCi0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLQ0KRGV0YWlscw0KLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tDQpUaGlzIGlzc3VlIGlzIHBvc3NpYmxlIGR1ZSB0byB0d28g
-dW5zYWZlIGNhbGxzIHRvIHVuc2VyaWFsaXplKCkgaW4gdGhlDQpQcm9jZXNz
-R29vZ2xlRm9ybSgpIG1ldGhvZC4gVGhlIGlucHV0IGlzIHRha2VuIGRpcmVj
-dGx5IGZyb20gdGhlIFBPU1QNCnJlcXVlc3QgYXMgY2FuIGJlIHNlZW4gaW4g
-dGhlIGZvbGxvd2luZyBjb2RlIGZyYWdtZW50Og0KDQp3cGdmb3JtLWNvcmUu
-cGhwOg0KDQovLyAgTmVlZCB0aGUgYWN0aW9uIHdoaWNoIHdhcyBzYXZlZCBk
-dXJpbmcgZm9ybSBjb25zdHJ1Y3Rpb24NCiRhY3Rpb24gPSB1bnNlcmlhbGl6
-ZShiYXNlNjRfZGVjb2RlKCRfUE9TVFsnd3BnZm9ybS1hY3Rpb24nXSkpIDsN
-CnVuc2V0KCRfUE9TVFsnd3BnZm9ybS1hY3Rpb24nXSkgOw0KJG9wdGlvbnMg
-PSAkX1BPU1RbJ3dwZ2Zvcm0tb3B0aW9ucyddIDsNCnVuc2V0KCRfUE9TVFsn
-d3BnZm9ybS1vcHRpb25zJ10pIDsNCiRvcHRpb25zID0gdW5zZXJpYWxpemUo
-YmFzZTY0X2RlY29kZSgkb3B0aW9ucykpIDsNCg0KSXQgaGFzIGJlZW4gY29u
-ZmlybWVkIHRoYXQgdGhpcyBpc3N1ZXMgY2FuIGJlIHVzZWQgdG8gZXhlY3V0
-ZSBhcmJpdHJhcnkNClBIUCBjb2RlLg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tDQpSZWZlcmVuY2VzDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0NClsxXQ0KaHR0cHM6Ly9zdW1vZnB3bi5ubC9hZHZpc29yeS8yMDE2L2dv
-b2dsZV9mb3Jtc193b3JkcHJlc3NfcGx1Z2luX3VuYXV0aGVudGljYXRlZF9w
-aHBfb2JqZWN0X2luamVjdGlvbl92dWxuZXJhYmlsaXR5Lmh0bWwNClsyXSBo
-dHRwczovL3dvcmRwcmVzcy5vcmcvcGx1Z2lucy93cGdmb3JtDQpbM10gaHR0
-cHM6Ly9kb3dubG9hZHMud29yZHByZXNzLm9yZy9wbHVnaW4vd3BnZm9ybS4w
-LjkxLnppcA0KWzRdIGh0dHBzOi8vd29yZHByZXNzLm9yZy9wbHVnaW5zL3dw
-Z2Zvcm0vDQpbNV0gaHR0cHM6Ly93d3cub3dhc3Aub3JnL2luZGV4LnBocC9Q
-SFBfT2JqZWN0X0luamVjdGlvbg==
+AFFECTED VERSIONS
+-----------------
 
---------------BC295E3548973B5C14C3516A
-Content-Type: text/plain; charset=UTF-8;
- name="infinitewp_client_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename*0="infinitewp_client_wordpress_plugin_unauthenticated_php_objec";
- filename*1="t_injection_vulnerability.txt"
+- Affected versions: curl 7.81.0 to and including 8.0.1
+- Not affected versions: curl < 7.81.0 and curl >= 8.1.0
+- Introduced-in: https://github.com/curl/curl/commit/3467e89bb97e6c87c7
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpJbmZpbml0ZVdQIENsaWVu
-dCBXb3JkUHJlc3MgUGx1Z2luIHVuYXV0aGVudGljYXRlZCBQSFAgT2JqZWN0
-IGluamVjdGlvbg0KdnVsbmVyYWJpbGl0eQ0KLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tDQpZb3JpY2sgS29zdGVyLCBKdW5lIDIwMTYNCg0KLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpBYnN0cmFjdA0KLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tDQpBIFBIUCBPYmplY3QgaW5qZWN0aW9uIHZ1bG5l
-cmFiaWxpdHkgd2FzIGZvdW5kIGluIHRoZSBJbmZpbml0ZVdQIENsaWVudA0K
-V29yZFByZXNzIFBsdWdpbiwgd2hpY2ggY2FuIGJlIHVzZWQgYnkgYW4gdW5h
-dXRoZW50aWNhdGVkIHVzZXIgdG8NCmluc3RhbnRpYXRlIGFyYml0cmFyeSBQ
-SFAgT2JqZWN0cy4gVXNpbmcgdGhpcyB2dWxuZXJhYmlsaXR5IGl0IGlzDQpw
-b3NzaWJsZSB0byBleGVjdXRlIGFyYml0cmFyeSBQSFAgY29kZS4NCg0KLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpPVkUgSUQNCi0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLQ0KT1ZFLTIwMTYwODAzLTAwMDQNCg0KLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUZXN0ZWQgdmVyc2lvbnMNCi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGhpcyBpc3N1ZSB3YXMgc3VjY2Vz
-c2Z1bGx5IHRlc3RlZCBvbiB0aGUgSW5maW5pdGVXUCBDbGllbnQgWzJdDQpX
-b3JkUHJlc3MgUGx1Z2luIHZlcnNpb24gMS41LjEuMy8xLjYuMC4NCg0KLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpGaXgNCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLQ0KSW5wdXQgdmFsaWRhdGlvbiB3YXMgYWRkZWQgdG8g
-dmVyc2lvbiAxLjYuMS4xIG9mIEluZmluaXRlV1AgQ2xpZW50IHRvDQptaXRp
-Z2F0ZSB0aGlzIGlzc3VlLiBKU09OIHN1cHBvcnQgd2FzIGFkZGVkIHRvIElu
-ZmluaXRlV1AgQ2xpZW50IHZlcnNpb24NCjEuNi4zLjIgWzNdLCB3aGljaCB3
-aWxsIGV2ZW50dWFsbHkgcmVwbGFjZSB0aGUgc2VyaWFsaXplZCBkYXRhLg0K
-DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkludHJvZHVjdGlvbg0K
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUaGUgSW5maW5pdGVXUCBD
-bGllbnQgWzJdIFdvcmRQcmVzcyBQbHVnaW4gYWxsb3dzIHVzZXJzIHRvIG1h
-bmFnZQ0KdW5saW1pdGVkIG51bWJlciBvZiBXb3JkUHJlc3Mgc2l0ZXMgZnJv
-bSB0aGVpciBvd24gc2VydmVyLiBBIFBIUCBPYmplY3QNCmluamVjdGlvbiBb
-NF0gdnVsbmVyYWJpbGl0eSB3YXMgZm91bmQgaW4gdGhlIEluZmluaXRlV1Ag
-Q2xpZW50IFdvcmRQcmVzcw0KUGx1Z2luLCB3aGljaCBjYW4gYmUgdXNlZCBi
-eSBhbiB1bmF1dGhlbnRpY2F0ZWQgdXNlciB0byBpbnN0YW50aWF0ZQ0KYXJi
-aXRyYXJ5IFBIUCBPYmplY3RzLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0NCkRldGFpbHMNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
-VGhpcyBpc3N1ZSBpcyBwb3NzaWJsZSBkdWUgdG8gYW4gdW5zYWZlIGNhbGwg
-dG8gdW5zZXJpYWxpemUoKSBpbiB0aGUNCml3cF9tbWJfcGFyc2VfcmVxdWVz
-dCgpIG1ldGhvZC4gVGhlIGlucHV0IGlzIHRha2VuIGRpcmVjdGx5IGZyb20g
-dGhlDQpQT1NUIGJvZHkgYXMgY2FuIGJlIHNlZW4gaW4gdGhlIGZvbGxvd2lu
-ZyBjb2RlIGZyYWdtZW50Og0KDQppbml0LnBocDoNCg0KaWYoICFmdW5jdGlv
-bl9leGlzdHMgKCdpd3BfbW1iX3BhcnNlX3JlcXVlc3QnKSkgew0KCWZ1bmN0
-aW9uIGl3cF9tbWJfcGFyc2VfcmVxdWVzdCgpDQoJew0KCQlnbG9iYWwgJEhU
-VFBfUkFXX1BPU1RfREFUQTsNCgkJJEhUVFBfUkFXX1BPU1RfREFUQV9MT0NB
-TCA9IE5VTEw7DQoJCSRIVFRQX1JBV19QT1NUX0RBVEFfTE9DQUwgPSBmaWxl
-X2dldF9jb250ZW50cygncGhwOi8vaW5wdXQnKTsNCgkJaWYoZW1wdHkoJEhU
-VFBfUkFXX1BPU1RfREFUQV9MT0NBTCkpew0KCQkJaWYgKGlzc2V0KCRIVFRQ
-X1JBV19QT1NUX0RBVEEpKSB7DQoJCQkJJEhUVFBfUkFXX1BPU1RfREFUQV9M
-T0NBTCA9ICRIVFRQX1JBV19QT1NUX0RBVEE7DQoJCQl9DQoJCX0NCgkNCgkJ
-b2Jfc3RhcnQoKTsNCgkNCgkJZ2xvYmFsICRjdXJyZW50X3VzZXIsICRpd3Bf
-bW1iX2NvcmUsICRuZXdfYWN0aW9ucywgJHdwX2RiX3ZlcnNpb24sDQokd3Bt
-dV92ZXJzaW9uLCAkX3dwX3VzaW5nX2V4dF9vYmplY3RfY2FjaGU7DQoJCSRk
-YXRhID0gYmFzZTY0X2RlY29kZSgkSFRUUF9SQVdfUE9TVF9EQVRBX0xPQ0FM
-KTsNCgkJaWYgKCRkYXRhKXsNCgkJCS8vJG51bSA9IEBleHRyYWN0KHVuc2Vy
-aWFsaXplKCRkYXRhKSk7DQoJCQkkdW5zZXJpYWxpemVkX2RhdGEgPSBAdW5z
-ZXJpYWxpemUoJGRhdGEpOw0KCQkJaWYoaXNzZXQoJHVuc2VyaWFsaXplZF9k
-YXRhWydwYXJhbXMnXSkpeyANCgkJCSR1bnNlcmlhbGl6ZWRfZGF0YVsncGFy
-YW1zJ10gPQ0KaXdwX21tYl9maWx0ZXJfcGFyYW1zKCR1bnNlcmlhbGl6ZWRf
-ZGF0YVsncGFyYW1zJ10pOw0KCQl9DQoNCkl0IGhhcyBiZWVuIGNvbmZpcm1l
-ZCB0aGF0IHRoaXMgaXNzdWVzIGNhbiBiZSB1c2VkIHRvIGV4ZWN1dGUgYXJi
-aXRyYXJ5DQpQSFAgY29kZS4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQ0KUmVmZXJlbmNlcw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpb
-MV0NCmh0dHBzOi8vc3Vtb2Zwd24ubmwvYWR2aXNvcnkvMjAxNi9pbmZpbml0
-ZXdwX2NsaWVudF93b3JkcHJlc3NfcGx1Z2luX3VuYXV0aGVudGljYXRlZF9w
-aHBfb2JqZWN0X2luamVjdGlvbl92dWxuZXJhYmlsaXR5Lmh0bWwNClsyXSBo
-dHRwczovL3dvcmRwcmVzcy5vcmcvcGx1Z2lucy9pd3AtY2xpZW50Lw0KWzNd
-IGh0dHBzOi8vZG93bmxvYWRzLndvcmRwcmVzcy5vcmcvcGx1Z2luL2l3cC1j
-bGllbnQuemlwDQpbNF0gaHR0cHM6Ly93d3cub3dhc3Aub3JnL2luZGV4LnBo
-cC9QSFBfT2JqZWN0X0luamVjdGlvbg==
+libcurl is used by many applications, but not always advertised as such!
 
---------------BC295E3548973B5C14C3516A--
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/8e21b1a05f3c0ee098dbcb6c
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.1.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use `CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256`
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 21 2023. We contacted
+distros@openwall on May 9, 2023.
+
+curl 8.1.0 was released on May 17 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Wei Chong Tan
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
