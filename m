@@ -1,44 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/20/1
-Message-ID: <ZVthevPKLmczR1-B@kasco.suse.de>
-Date: Mon, 20 Nov 2023 14:39:02 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/18/1
+Message-ID: <CA+Y=x3nH6AtjW+8VtUQ0DJA2+KXdh1H95Y6dn9yO34UE6Jw6nw@mail.gmail.com>
+Date: Thu, 18 May 2023 15:44:09 +1000
+From: Andrew Worsley <amworsley@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
+Subject: Re: IPv6 and Route of Death
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I think debian stable/bullseye may not be vulnerable with standard kernel:
 
-thank you both for your suggestions. I just reached out to
-hp-security-alert@...com about this.
+The exploit write up suggests it requires the ipv6_rpl_srh_compress()
+routine to be compiled in
+but from my reading of the code (see
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/include/net/rpl.h)
+requires CONFIG_IPV6_RPL_LWTUNNEL to be define which isn't in my
+latest debian amd64 kernel:
 
-There are a couple of other hplip issues I know of that have also been
-left unattended for a long time that I mentioned there as well.
+% grep CONFIG_IPV6_RPL_LWTUNNEL /boot/config-5.10.0-23-amd64
+# CONFIG_IPV6_RPL_LWTUNNEL is not set
 
-Best Regards
+uname -a
+Linux fast 5.10.0-23-amd64 #1 SMP Debian 5.10.179-1 (2023-05-12)
+x86_64 GNU/Linux
 
-Matthias
 
-On Sun, Nov 19, 2023 at 07:11:37AM -0500, Mike O'Connor wrote:
-> [removing security@....com from the Cc:]
-> 
-> This is for hp.com product security, not hpe.com.  HP and HPE are two
-> separate companies, and HPE isn't the printer company.  
-> 
-> To report a potential security vulnerability with a HP product,
-> contact: hp-security-alert@...com
-> 
-> Both HPE and HP are CVE CNAs.  Here's HP's CVE CNA information:
-> https://www.cve.org/PartnerInformation/ListofPartners/partner/hp
-> 
-> 
-> HTH,
-> -Mike
-> 
-> 
-> :Thanks for making the community aware of this issue.
-> :
-> :Perhaps security@....com can help to route internally to get a CVE issued
-> :and find the appropriate owners to fix.
+On Thu, 18 May 2023 at 04:35, Erik Auerswald <auerswal@...x-ag.uni-kl.de> wrote:
+>
+> Hi all,
+>
+> On Wed, May 17, 2023 at 07:13:51PM +0200, Solar Designer wrote:
+> > On Wed, May 17, 2023 at 10:02:31AM -0400, Jeffrey Walton wrote:
+> > > This seems to have been dropped as a 0-day. I have not seen a CVE
+> > > assigned to it.
+> >
+> > The "original writeup" you reference says this is CVE-2023-2156.
+> >
+> > > I _think_ this is the original writeup:
+> > >
+> > >   * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
+>
+> It also mentions that "the bug patch didn't solve the underlying problem
+> (ZDI confirmed this too), so we're still expecting another patch at
+> some[ ]point."
+>
+....
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Is this reasonable?
+
+Thanks
+
+Andrew
