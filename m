@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/5
-Message-ID: <ZQyvYCfvJyVF2KsQ@eldamar.lan>
-Date: Thu, 21 Sep 2023 23:02:24 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/1
+Message-ID: <dab7c670-5833-518d-a77d-73493cb2714f@apache.org>
+Date: Sun, 21 May 2023 08:10:52 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: croc: multiple issues in file sharing utility
+Subject: CVE-2023-31058: Apache InLong: JDBC URL bypassing by adding blanks 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate
 
-On Fri, Sep 08, 2023 at 03:37:55PM +0200, Matthias Gerstner wrote:
-[...]
-> 5) CVE Assignments
-> ==================
-> 
-> I have requested CVEs from Mitre for the more tangible issues 3.1 through 3.5
-> and issue 3.8. I will publish them here once they are available.
+Affected versions:
 
-They are CVE-2023-43616, CVE-2023-43617, CVE-2023-43618,
-CVE-2023-43619, CVE-2023-43620 and CVE-2023-43621.
+- Apache InLong 1.4.0 through 1.6.0
 
-Regards,
-Salvatore
+Description:
+
+Deserialization of Untrusted Data Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. Attackers would bypass the
+'autoDeserialize' option filtering by adding blanks.  Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+
+
+
+[1] 
+
+ https://github.com/apache/inlong/pull/7674 https://github.com/apache/inlong/pull/7674
+
+Credit:
+
+H Ming (finder)
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31058
+
