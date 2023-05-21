@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/1
-Message-ID: <1856911.tdWV9SEqCh@x2>
-Date: Wed, 21 Jun 2023 21:53:54 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/2
+Message-ID: <f244bc0d-3df7-39c6-73a1-25a38b2e16f8@apache.org>
+Date: Sun, 21 May 2023 08:12:21 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Demi Marie Obenour <demi@...isiblethingslab.com>
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Subject: CVE-2023-31062: Apache InLong: Privilege escalation vulnerability for InLong 
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, June 21, 2023 5:54:57 PM EDT Demi Marie Obenour wrote:
-> On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
-> > On Wed, 21 Jun 2023, Jeffrey Walton wrote:
-> > > Memory leaks on exit are par for the course in GNU software per
-> > > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
-> > 
-> > Don't bother with this, don't bother with that, etc...  Call me
-> > old-school (which I am), but I cannot abide sloppy programming[*].
-> 
-> Memory leaks on exit are a _good_ thing in general.  There is absolutely
-> zero point in calling free() if the program is about to exit — the OS
-> will do a better job of freeing resources than the program itself ever
-> could.
+Severity: important
 
-Sure, but how can static analysis or address sanitizers tell the difference 
-between something created and leaked on the error path, vs something that 
-mattered during the life of the program? Meaning something leaks in an event 
-loop and slowly accumulates leakage. Nothing gives you a free pass but the OS 
-when analyzing leaks. Mundane leaks need cleaning up so you can find the real 
-leaks that matter.
+Affected versions:
 
--Steve
+- Apache InLong 1.2.0 through 1.6.0
 
+Description:
+
+Improper Privilege Management Vulnerabilities in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.2.0 through 1.6.0.  When the attacker has access to a valid (but unprivileged) account, the exploit can be executed using Burp Suite by sending a login
+request and following it with a subsequent HTTP request
+using the returned cookie.
+
+Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+
+
+
+[1]  https://github.com/apache/inlong/pull/7836 https://github.com/apache/inlong/pull/7836
+
+Credit:
+
+escape Wang (finder)
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31062
 
