@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/15/1
-Message-ID: <CAGUWgD8297SAEoSS_hXGzk+VKQ_bE_K5CQeGrA26x0P=xouApQ@mail.gmail.com>
-Date: Sat, 15 Apr 2023 09:33:24 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/9
+Message-ID: <34d122dc-0540-d4f8-5b66-a7c437bc541c@apache.org>
+Date: Sun, 21 May 2023 08:21:19 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: ncurses fixes upstream
+Subject: CVE-2023-31206: Apache InLong: Attackers can change the immutable name and type of nodes 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 13, 2023 at 3:54 PM Sam James <sam@...too.org> wrote:
->
->
-> "Jonathan Bar Or (JBO)" <jobaror@...rosoft.com> writes:
->
+Severity: important
 
-> > How can we ensure those fixes get deployed upstream, in major Linux distributions?
->
+Affected versions:
 
-Isn't MicroSoft member of linux distros mailing list [0], which
-purpose is exactly quietly trading 0days [1]?
+- Apache InLong 1.4.0 through 1.6.0
 
-Does the OP with m$ email address realize this?
+Description:
 
-[0] https://oss-security.openwall.org/wiki/mailing-lists/distros
-[1] https://seclists.org/oss-sec/2019/q3/19
-Re: linux-distros membership application - Microsoft
+Exposure of Resource to Wrong Sphere Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. Attackers can change the immutable name and type of nodes of InLong. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+
+ [1]  https://cveprocess.apache.org/cve5/[1]%C2%A0https://github.com/apache/inlong/pull/7891  https://github.com/apache/inlong/pull/7891 https://github.com/apache/inlong/pull/7891
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31206
+
