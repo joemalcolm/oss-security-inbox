@@ -1,80 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/2
-Message-ID: <20230503190011.GA13309@openwall.com>
-Date: Wed, 3 May 2023 21:00:11 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/6
+Message-ID: <55ee885e-001c-10c7-5cad-a2bf49fca5e7@apache.org>
+Date: Sun, 21 May 2023 08:18:30 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Daniel Stenberg <daniel@...x.se>
-Subject: semi-public issues on (linux-)distros
+Subject: CVE-2023-31098: Apache InLong: Weak Password Implementation in InLong 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate
 
-Sometimes upstream projects want to make a security fix technically
-public (such as in a git repository and/or on a mailing list) before it
-is included in a release and announced as such.  This lets those
-projects use their usual development, review, and testing workflow
-instead of having to switch to a special security fix workflow, which
-can save the maintainers time and provide greater quality assurance
-(more eyes, more testing).  Unfortunately, it also means that bad actors
-can potentially spot the fix and infer and exploit the vulnerability
-before the project's downstreams and end-users are made aware of it.
+Affected versions:
 
-This is a tricky trade-off.  The (linux-)distros list policy generally
-does not allow for semi-public fixes like this to be brought to those
-lists and stay "embargoed" there, with occasional exceptions granted on
-a case-by-case basis.  Last year, we also added a general exception for
-the Linux kernel to accommodate their workflow:
+- Apache InLong 1.1.0 through 1.6.0
 
-https://www.openwall.com/lists/oss-security/2022/05/24/1
+Description:
 
-This year, the curl project switched to using publicly-committed fixes
-for low and medium severity security issues.  The first set of such
-issues was brought to the distros list in March and fully publicly
-disclosed a week later:
+Weak Password Requirements vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.1.0 through 1.6.0. 
 
-https://www.openwall.com/lists/oss-security/2023/03/20/
+When users change their password to a simple password (with any character or
+symbol), attackers can easily guess the user's password and access the account.
 
-That was one of those rare exceptions granted on a case-by-case basis,
-and I was going to disclose this fact here on oss-security, which I am
-finally doing now (sorry for the delay!)
+Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
 
-More importantly, since it's a change in curl's approach to handling
-such issues in general, rather than a one-time occurrence, we need to
-discuss how to approach that on further occasions - for curl, or/and in
-general.  Daniel suggests:
 
-> I would of course prefer to see it being done as a proposal that
-> updates the rules to cater for a process like ours. Which incidentally
-> is shared by many other projects as well; it is not a unique situation
-> for curl.
 
-I think it's reasonable to grant a blanket exception like we did for the
-Linux kernel also for curl, limited to low and medium severity issues.
+[1]  https://github.com/apache/inlong/pull/7805 https://github.com/apache/inlong/pull/7805
 
-curl project's handling of security issues has been exemplary so far, in
-my opinion at least, which gives me reason to expect sound judgement
-from Daniel on which issues to handle in which way.  Also, like it or
-not, starting to publicly commit some security fixes is a decision the
-project has already made, so our only options are (1) to change the list
-policy, (2) to grant one-time exceptions every time, or (3) to create
-extra work for Daniel for notifying the individual distros other than
-via the list (or choose not to).
+References:
 
-I would also be happy to have a general solution if we _reasonably_ can,
-for all projects, but I'm not sure how reasonable that is.  The terms
-for Linux kernel's vs. curl's exceptions may reasonably vary to meet
-these project's exact needs and not more: for Linux kernel it's "issues
-concurrently or very recently handled by the Linux kernel security team"
-and for curl it can be "low and medium severity issues".
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31098
 
-So my current proposal is to edit the policy to add curl's "low and
-medium severity issues" as the second pre-granted exception.  If more
-projects request something like this later, we can reconsider and
-generalize this.
-
-I'd appreciate any feedback.
-
-Thanks,
-
-Alexander
