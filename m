@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/5
-Message-ID: <ZR5xJZc32fhGOE+/@jumper.schlittermann.de>
-Date: Thu, 5 Oct 2023 10:17:41 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/5
+Message-ID: <939f2cbc-ee5e-c55c-1390-5087ccddc69d@apache.org>
+Date: Sun, 21 May 2023 08:17:38 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim4 MTA CVEs assigned from ZDI
+Subject: CVE-2023-31066: Apache InLong: Insecure direct object references for inlong sources 
 Content-Type: text/plain; charset=utf-8
 
-Hi ZDI,
+Severity: important
 
-zdi@...ndmicro.com <zdi@...ndmicro.com> (Mi 04 Okt 2023 23:01:37 CEST):
-> We have received a notification from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
+Affected versions:
 
-https://exim.org/static/doc/security/CVE-2023-zdi.txt
+- Apache InLong 1.4.0 through 1.6.0
 
-As publicly advertised, we patched only *a subset* of the issues.  And
-those patches are available to the public.  Unfortunately there is no
-confirmation from your side, whether those fixes really fix the issues.
+Description:
 
-One of the open issues is related to libspf2, which is Exim a user of,
-but not responsible for.
+Files or Directories Accessible to External Parties vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. Different users in InLong could delete, edit, stop, and start others' sources! Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
 
- ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
 
-And about exactly *this libspf2* issue Salvatore asked you for information.
 
-(As I did on Oct 1st already, along with the request for additional information on one of
-the other unfixed issues (DNSDB)). I didn't receive any response yet.
+[1]  https://github.com/apache/inlong/pull/7775 https://github.com/apache/inlong/pull/7775
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+References:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31066
+
