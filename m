@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/09/2
-Message-ID: <20231109133417.GA12926@openwall.com>
-Date: Thu, 9 Nov 2023 14:34:17 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Hsin-Wei Hung <hsinweih@....edu>
-Cc: Alexei Starovoitov <alexei.starovoitov@...il.com>, Daniel Borkmann <daniel@...earbox.net>, oss-security@...ts.openwall.com, Alexei Starovoitov <ast@...nel.org>
-Subject: Re: Linux: BPF: issues with copy_from_user_nofault()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/10
+Message-ID: <83f91fe0-b9f6-11c2-0dd2-bc3a9814a343@apache.org>
+Date: Sun, 21 May 2023 08:22:34 +0000
+From: Charles Zhang <dockerzhang@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-31453: Apache InLong: IDOR make users can delete others' subscription 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 08, 2023 at 08:06:49PM -0800, Hsin-Wei Hung wrote:
-> On Wed, Nov 8, 2023 at 10:05???AM Alexei Starovoitov <alexei.starovoitov@...il.com> wrote:
-> > Essentially perf (without any bpf) is broken on arm64 and others.
-> > arch_perf_out_copy_user() might deadlock with CONFIG_HARDENED_USERCOPY.
-> 
-> Hey,
-> 
-> 
-> Sorry to put everyone in a tough situation. I can post it to
-> oss-security if Alexei agrees. I can also try to pick up the 2nd part
-> of the patch from where it is next week.
-> https://lore.kernel.org/bpf/CAADnVQJRd3r84yLcqH1Z-BYU76SRYuDMOCWRcvBfapsXs_w-rg@mail.gmail.com/
+Severity: important
 
-Thank you Alexei and Hsin-Wei for the replies.
+Affected versions:
 
-This very thread is already on oss-security since I brought it here on
-Nov 5.  I'm confused as to what was (not) merged to where yet, but my
-suggestion is that this be taken care of on the proper Linux lists and
-then a summary brought to oss-security again (e.g., saying that the
-issue is finally fully fixed, and where exactly).
+- Apache InLong 1.2.0 through 1.6.0
 
-Thanks again,
+Description:
 
-Alexander
+Incorrect Permission Assignment for Critical Resource Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.2.0 through 1.6.0. The attacker can delete others' subscriptions, even if they are not the owner
+of the deleted subscription. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+
+[1] 
+
+ https://github.com/apache/inlong/pull/7949 https://github.com/apache/inlong/pull/7949
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31453
+
