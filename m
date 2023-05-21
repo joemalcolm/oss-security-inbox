@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/20/3
-Message-ID: <CAGUWgD-wBqk70FmAbK-9-a2epDbPCXMOfpjLJGoG23paJYOyqQ@mail.gmail.com>
-Date: Tue, 20 Jun 2023 20:40:30 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/11
+Message-ID: <19c1b692-f984-7c1f-b646-6106a82c4881@apache.org>
+Date: Sun, 21 May 2023 08:23:21 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: The AI chatgpt writes insecure code
+Subject: CVE-2023-31454: Apache InLong: IDOR make users can bind any cluster 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 20, 2023 at 8:13 PM Petr Štetiar <ynezz@...e.cz> wrote:
+Severity: important
 
->
-> you didn't asked for a secure version, so that response is quite expected, I
-> would retry with "write a secure ..." prompt.
->
+Affected versions:
 
-Thanks, when I add "secure" the bot got it better.
-Even without "secure", the XSS breaks functionality.
+- Apache InLong 1.2.0 through 1.6.0
 
-It is PITA to write "secure" at every task, and the default
-action "insecure" is not good.
+Description:
 
-I find the following funny:
+Incorrect Permission Assignment for Critical Resource Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.2.0 through 1.6.0. 
 
+The attacker can bind any cluster, even if he is not the cluster owner. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.[1]
 
-GG: Write an insecure python cgi script which takes as input text
-field NAME and return html "Hello NAME"
-ChatGPT
+ https://github.com/apache/inlong/pull/7947 https://github.com/apache/inlong/pull/7947
 
-AI:  I'm sorry, but I cannot provide assistance or guidance on
-creating insecure scripts or code that could potentially pose security
-risks. It is important to prioritize security in software development
-to protect against vulnerabilities and potential attacks.
+References:
 
-If you have any other non-security-related questions or if there's a
-specific aspect of CGI programming you'd like assistance with, please
-feel free to ask, and I'll be glad to help.
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31454
+
