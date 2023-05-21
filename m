@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/16/1
-Message-ID: <f757bf6c-8194-4bbe-bc5d-1bd5dd9d6280@apache.org>
-Date: Sat, 16 Dec 2023 16:01:55 +0000
-From: Mingyu Chen <morningman@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/4
+Message-ID: <3492dcaf-eccc-9767-3ccd-b099dce82bf3@apache.org>
+Date: Sun, 21 May 2023 08:16:20 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-41314: Apache Doris: Missing API authentication allowed DoS 
+Subject: CVE-2023-31065: Apache InLong: Insufficient Session Expiration in InLong 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: moderate
 
 Affected versions:
 
-- Apache Doris 1.2.0 through 2.0.3
+- Apache InLong 1.4.0 through 1.6.0
 
 Description:
 
-The api /api/snapshot and /api/get_log_file would allow unauthenticated access.
-It could allow a DoS attack or get arbitrary files from FE node.
-Please upgrade to 2.0.3 to fix these issues.
+Insufficient Session Expiration vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. 
+
+
+An old session can be used by an attacker even after the user has been deleted or the password has been changed.
+
+
+Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1],[2] to solve it.
+
+
+
+
+[1]  https://github.com/apache/inlong/pull/7836 https://github.com/apache/inlong/pull/7836 
+[2]  https://github.com/apache/inlong/pull/7884 https://github.com/apache/inlong/pull/7884
+
+Credit:
+
+lujie.ac.cn (finder)
 
 References:
 
-https://doris.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-41314
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31065
 
