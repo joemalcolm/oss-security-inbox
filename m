@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/3
-Message-ID: <729502e9-8ccf-ea05-8f3e-4af516a3372f@apache.org>
-Date: Tue, 11 Jul 2023 15:19:18 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/8
+Message-ID: <89deed28-8aa6-a465-e2c9-d8edc93b370b@apache.org>
+Date: Sun, 21 May 2023 08:20:24 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46651: Apache Airflow: Security vulnerability on AirFlow Connections 
+Subject: CVE-2023-31103: Apache InLong: Attackers can change the immutable name and type of cluster 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: important
 
 Affected versions:
 
-- Apache Airflow before 2.6.3
+- Apache InLong 1.4.0 through 1.6.0
 
 Description:
 
-Apache Airflow, versions before 2.6.3, is affected by a vulnerability that allows an unauthorized actor to gain access to sensitive information in Connection edit view. This vulnerability is considered low since it requires someone with access to Connection resources specifically updating the connection to exploit it. Users should upgrade to version 2.6.3 or later which has removed the vulnerability.
+Exposure of Resource to Wrong Sphere Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. 
+Attackers can change the immutable name and type of cluster of InLong. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+
+[1]  https://github.com/apache/inlong/pull/7891 https://github.com/apache/inlong/pull/7891
 
 References:
 
-https://github.com/apache/airflow/pull/32309
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-46651
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31103
 
