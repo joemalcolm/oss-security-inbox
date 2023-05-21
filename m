@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/4
-Message-ID: <20231222121134.GI14101@suse.de>
-Date: Fri, 22 Dec 2023 13:11:37 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/7
+Message-ID: <3dd3f588-efe8-afb6-a553-8ac595133319@apache.org>
+Date: Sun, 21 May 2023 08:19:26 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: CVE-2023-31101: Apache InLong: Users who joined later can see the data of deleted users 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 22, 2023 at 11:09:49AM +0000, Stuart Henderson wrote:
-> On 2023/12/22 11:46, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
-> > 
-> > Not sure if we need it for others like sendmail too, as that is also
-> > referenced by the security researchers.
-> 
-> I'm a little confused by sec-consult's process here. They identify a
-> problem affecting various pieces of software including some very widely
-> deployed open source software, go to the trouble of doing a coordinated
-> disclosure, but only do that with...looking at their timeline... gmx,
-> microsoft and cisco?
+Severity: important
 
-Yes its weird.
+Affected versions:
 
-I was also confused and actually only spotted the OSS software being
-affected on third read over their page.
+- Apache InLong 1.5.0 through 1.6.0
 
-They also reference CERT and VINCE, but at least SUSE was not pulled
-into the VINCE issue if there was any. (as CERT has not published
-anything I am not sure there was any besides the Cisco disclosure).
+Description:
 
-Also postfix timeline starts 4 days ago only.
-https://www.mail-archive.com/postfix-announce@postfix.org/msg00090.html
+Insecure Default Initialization of Resource Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.5.0 through 1.6.0.  Users registered in InLong who joined later can see deleted users' data. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
 
-Ciao, Marcus
+[1]  https://github.com/apache/inlong/pull/7836 https://github.com/apache/inlong/pull/7836
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31101
+
