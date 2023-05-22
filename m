@@ -1,50 +1,162 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/15/2
-Message-ID: <cbcd6db9-393b-b4dc-d97f-5924e88dd9de@oracle.com>
-Date: Thu, 15 Jun 2023 09:39:39 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/22/2
+Message-ID: <b7fbe4e4-9dc5-3872-903c-a16b9ff43c58@brad-house.com>
+Date: Mon, 22 May 2023 08:26:29 -0400
+From: Brad House <brad@...d-house.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [ANNOUNCE] X.Org Security Advisory: Sub-object overflows in libX11
+Cc: Daniel Stenberg <daniel@...x.se>
+Subject: c-ares multiple vulnerabilities: CVE-2023-32067, CVE-2023-31147, CVE-2023-31130, CVE-2023-31124
 Content-Type: text/plain; charset=utf-8
 
--------- Forwarded Message --------
-Subject: [ANNOUNCE] X.Org Security Advisory: Sub-object overflows in libX11
-Date: Thu, 15 Jun 2023 09:34:36 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: xorg-announce@...ts.x.org
-CC: xorg@...ts.x.org, xorg-devel@...ts.x.org
 
-X.Org Security Advisory: June 15, 2023
-
-Buffer overflows in InitExt.c in libX11 prior to 1.8.6 [CVE-2023-3138]
-======================================================================
-
-The functions in src/InitExt.c in libX11 prior to 1.8.6 do not check
-that the values provided for the Request, Event, or Error IDs are
-within the bounds of the arrays that those functions write to, using
-those IDs as array indexes.  Instead they trusted that they were called
-with values provided by an Xserver that was adhering to the bounds
-specified in the X11 protocol, as all X servers provided by X.Org do.
-
-As the protocol only specifies a single byte for these values, an
-out-of-bounds value provided by a malicious server (or a malicious
-proxy-in-the-middle) can only overwrite other portions of the Display
-structure and not write outside the bounds of the Display structure
-itself.  Testing has found it is possible to at least cause the client
-to crash with this memory corruption.
-
-This is fixed in:
-https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/304a654a0d57bf0f00d8998185f0360332cfa36c
-which is included in the libX11 1.8.6 release issued today.
-
-X.Org thanks Gregory James Duck for reporting this issue to our security
-team.
-
---
-         -Alan Coopersmith-              alan.coopersmith@...cle.com
-           X.Org Security Response Team - xorg-security@...ts.x.org
+  CVE-2023-32067
 
 
-Download attachment "OpenPGP_0xA2FB9E081F2D130E.asc" of type "application/pgp-keys" (8713 bytes)
+      Impact
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+Denial of Service.
+
+Attack Steps:
+
+ 1. The target resolver sends a query
+ 2. The attacker forges a malformed UDP packet with a length of 0 and
+    returns them to the target resolver
+ 3. The target resolver erroneously interprets the 0 length as a
+    graceful shutdown of the connection. (this is only valid for TCP
+    connections, UDP is connection-less)
+ 4. Current resolution fails, DoS attack is achieved.
+
+
+      Patches
+
+Patched in 1.19.1
+
+
+      Workarounds
+
+No workarounds are available.
+
+
+      Credit
+
+Xiang Li
+Network and Information Security Laboratory, Tsinghua University
+
+
+----------
+
+
+  CVE-2023-31124
+
+
+      Impact
+
+When cross-compiling c-ares and using the autotools build system, 
+CARES_RANDOM_FILE will not be set, as seen when cross compiling aarch64 
+android. This will downgrade to using rand() as a fallback which could 
+allow an attacker to take advantage of the lack of entropy by not using 
+a CSPRNG.
+
+
+      Patches
+
+Patched in 1.19.1
+
+
+      Workarounds
+
+Use CMake build system
+
+
+      Credit
+
+David Gstir and Hannes Moesl
+X41 D-SEC GmbH
+Audit funded by Open Source Technology Improvement Fund (OSTIF)
+
+
+----------
+
+
+  CVE-2023-31130
+
+
+      Impact
+
+ares_inet_net_pton() is vulnerable to a buffer underflow for certain 
+ipv6 addresses, in particular "0::00:00:00/2" was found to cause an 
+issue. C-ares only uses this function internally for configuration 
+purposes which would require an administrator to configure such an 
+address via ares_set_sortlist().
+
+However, users may externally use ares_inet_net_pton() for other 
+purposes and thus be vulnerable to more severe issues.
+
+
+      Patches
+
+Fixed in 1.19.1
+
+
+      Workarounds
+
+No workarounds are available.
+
+
+      Credit
+
+Hannes Moesl
+X41 D-SEC GmbH
+Audit funded by Open Source Technology Improvement Fund (OSTIF)
+
+
+----------
+
+
+  CVE-2023-31147
+
+
+      Impact
+
+Description of issue(s):
+
+ 1. When /dev/urandom or RtlGenRandom() are unavailable, c-ares uses
+    rand() to generate random numbers used for DNS query ids. This is
+    not a CSPRNG, and it is also not seeded by srand() so will generate
+    predictable output.
+ 2. Input from the random number generator is fed into a non-compilant
+    RC4 implementation and may not be as strong as the original RC4
+    implementation.
+ 3. No attempt is made to look for modern OS-provided CSPRNGs like
+    arc4random() that is widely available.
+
+Correction(s) made:
+
+ 1. Detect arc4random() and if available, use it directly to generate
+    DNS query ids.
+ 2. Use /dev/urandom or RtlGenRandom() directly to generate DNS query
+    ids as a fallback
+ 3. As a last resort, use the current rand() + RC4 logic (should only
+    apply to esoteric systems), with these modifications:
+
+  * replace RC4 implementation with official algorithm
+  * seed rand() using srand()
+
+
+      Patches
+
+Fixed in 1.19.1
+
+
+      Workarounds
+
+No workarounds are available.
+
+
+      Credit
+
+David Gstir and Hannes Moesl
+X41 D-SEC GmbH
+Audit funded by Open Source Technology Improvement Fund (OSTIF)
+
+
