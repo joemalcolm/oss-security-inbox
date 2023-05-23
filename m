@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/5
-Message-ID: <ZY3jHLo_uf0pDj9q@nuvolo>
-Date: Thu, 28 Dec 2023 22:05:32 +0100
-From: Arrigo Marchiori <ardovm@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/23/1
+Message-ID: <0e99031b-398c-6a65-5ac5-6332ca994da0@apache.org>
+Date: Tue, 23 May 2023 09:48:07 +0000
+From: Rongtong Jin <jinrongtong@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43680: Apache OpenOffice: "Use after free" fixed in libexpat
+Subject: CVE-2023-33246: Apache RocketMQ: RocketMQ may have a remote code execution vulnerability when using the update configuration function 
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+Severity: moderate
 
 Affected versions:
 
-- Apache OpenOffice through 4.1.15
+- Apache RocketMQ through 5.1.0
 
 Description:
 
-In libexpat through 2.4.9, there is a use-after free caused by
-overeager destruction of a shared DTD in
-XML_ExternalEntityParserCreate in out-of-memory situations.
+For RocketMQ versions 5.1.0 and below, under certain conditions, there is a risk of remote command execution. 
+
+Several components of RocketMQ, including NameServer, Broker, and Controller, are leaked on the extranet and lack permission verification, an attacker can exploit this vulnerability by using the update configuration function to execute commands as the system users that RocketMQ is running as. Additionally, an attacker can achieve the same effect by forging the RocketMQ protocol content. 
+
+To prevent these attacks, users are recommended to upgrade to version 5.1.1 above for using RocketMQ 5.x or 4.9.6 above for using RocketMQ 4.x .
+
+Credit:
+
+lvyyevd@...il.com (reporter)
 
 References:
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-43680
--- 
-Arrigo
+
+https://rocketmq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-33246
+
