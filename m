@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1911" "Friday" "23" "October" "2020" "10:42:14" "+0000" "Iordache, Alexandra" "aghecen@amazon.com" "<1603449734487.64669@amazon.com>" "57" "[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory" nil nil nil "10" "2020102310:42:14" "[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory" (number mark "U       aghecen@amaz Oct 23   57/1911  " thread-indent "\"[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an unbounded amount of memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13415 invoked by uid 550); 23 Oct 2020 12:02:52 -0000
+Received: (qmail 11765 invoked by uid 550); 25 May 2023 08:22:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +7,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14155 invoked from network); 23 Oct 2020 10:42:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1603449756; x=1634985756;
-  h=from:to:subject:date:message-id:mime-version;
-  bh=BNY1ROIClqZe2MwQfkcS5zoG7RDzZzmLhA1Y8pSWxZk=;
-  b=hFlV1ivktE7eUQDCfd3STTKWcfTSRbqvT+lf29c178IR5o9jVz6whWTC
-   IMSoa26JKjVkHuX08mEgV9rZUTCsVw5thNzNDr8mWEyoqfoL8CwFkJEa9
-   9szXlh0L66xkOiUDRYAux47C6+dxfSWbPfiNysgqmGOI8hU5XpC7LGq2e
-   s=;
-X-IronPort-AV: E=Sophos;i="5.77,407,1596499200"; 
-   d="scan'208,217";a="79561226"
-From: "Iordache, Alexandra" <aghecen@amazon.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2020-27174: Firecracker serial console emulation may
- allocate an unbounded amount of memory
-Thread-Index: AQHWqSkOqmWzUilkpkmvyqHCiY0BKQ==
-Date: Fri, 23 Oct 2020 10:42:14 +0000
-Message-ID: <1603449734487.64669@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.43.160.27]
-Content-Type: multipart/alternative;
-	boundary="_000_160344973448764669amazoncom_"
+Received: (qmail 1522 invoked from network); 24 May 2023 20:41:38 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AC+VfDxZw5r9T27WcehRrA846YC9Q3vPt2H59kCasTncNZQi0j0lJyoI
+	+i8YWcyEUQwZcvstqwhhsah2vGKxJaJ51F46vzY=
+X-Google-Smtp-Source: ACHHUZ5QVvXqMiioxKf8NE8byxNmX/Mnl15e83UziL+F/x2/9Y4y1hDdplBZZz5qqEGkrwQSp+efnEA9mUdlxnd9TSY=
+X-Received: by 2002:a05:6808:aad:b0:394:3f93:ce0e with SMTP id
+ r13-20020a0568080aad00b003943f93ce0emr9192214oij.24.1684960883770; Wed, 24
+ May 2023 13:41:23 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2020-27174: Firecracker serial console emulation may allocate an
- unbounded amount of memory
+From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
+Date: Wed, 24 May 2023 22:41:12 +0200
+X-Gmail-Original-Message-ID: <CAMufup70iLuSiaCbJEajdridr0-v6suxjnCXuZYecbmvGFn2_A@mail.gmail.com>
+Message-ID: <CAMufup70iLuSiaCbJEajdridr0-v6suxjnCXuZYecbmvGFn2_A@mail.gmail.com>
+To: announce@apache.org, Apache Security Team <security@apache.org>, dev@jspwiki.apache.org, 
+	user@jspwiki.apache.org, oss-security@lists.openwall.com, 
+	"Eugene LIM (GOVTECH)" <Eugene_LIM@tech.gov.sg>, 
+	"Jay Kai SNG from.TP (GOVTECH)" <Jay_Kai_SNG_from.TP@tech.gov.sg>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-46907: Apache JSPWiki Cross-site scripting on several plugins
 
---_000_160344973448764669amazoncom_
-Content-Type: text/plain; charset="iso-8859-1"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Severity: moderate
 
-We have identified an issue in the Firecracker serial console emulation of =
-all Firecracker versions up to v0.21.2 and Firecracker v0.22.0
+Description:
+A carefully crafted request on several JSPWiki plugins could trigger
+an XSS vulnerability on Apache JSPWiki, which could allow the attacker
+to execute javascript in the victim's browser and get some sensitive
+information about the victim.
 
-# Issue Description
+Mitigation:
+Apache JSPWiki users should upgrade to 2.12.0 or later.
 
-The Firecracker implementation of the serial console emulation allows buffe=
-ring of an unlimited number of bytes when data is written to the Firecracke=
-r process standard input at a high rate.
+Credit:
+This issue was discovered by Eugene Lim and Sng Jay Kai from
+Government Technology Agency of Singapore
 
-# Impact
-
-Firecracker customers that forward the standard input of the Firecracker pr=
-ocess to untrusted users can become subject to DoS attacks. If memory limit=
-s are not imposed on the Firecracker process, this might impair other micro=
-VMs on the same host from allocating memory, potentially becoming an availa=
-bility issue.
-
-Serial output generated by the guest can't trigger the issue.
-
-# Affected Systems
-
-Firecracker versions v0.22.0 and v0.21.2, while all older releases might be=
- impacted.
-
-# Mitigation
-
-Impact can be mitigated by applying memory limits to the Firecracker proces=
-s or by applying a rate limit when writing to the Firecracker process stand=
-ard input.
-
-Customers may apply:
-Patched binaries mitigating this issue have been released as Firecracker v0=
-.21.3[1] and Firecracker v0.22.1[2].
-If you are using Firecracker versions up to v0.21.2 or Firecracker v0.22.0,=
- we recommend you apply the provided fix.
-
-[1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.21.3
-[2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.22.1?
-
-
-Best regards,
-Alexandra on behalf of the Firecracker maintainers team?
-
-
-
-
-Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar=
- Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in R=
-omania. Registration number J22/2621/2005.
-
---_000_160344973448764669amazoncom_--
-
+References:
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-46907
