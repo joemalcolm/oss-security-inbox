@@ -1,116 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/6
-Message-ID: <ZKc/9yBX5LUezfUH@netmeister.org>
-Date: Thu, 6 Jul 2023 18:28:07 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/5
+Message-ID: <20230524164822.tjqpjhvbhoo6rdve@yuggoth.org>
+Date: Wed, 24 May 2023 16:48:23 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28853: mastodon: Blind LDAP injection in login
+Subject: Re: Clarification on embargoed testing in a partner cloud
 Content-Type: text/plain; charset=utf-8
 
-(I have no affiliation with the project, but posting
-this here because it seems to me that increasingly
-non-packaged / GitHub distributed projects tend not to
-send out announcements here.)
+On 2023-05-24 07:26:42 -0700 (-0700), Anthony Liguori wrote:
+[...]
+> For list members that have questions about AWS, I'm happy to
+> answer, in gory details.  I know other large cloud providers have
+> folks on the list that would likely offer the same (or at least
+> direct to the appropriate people).  I can also help make
+> connections to most of the large cloud providers if folks don't
+> have contacts.
 
-https://github.com/mastodon/mastodon/security/advisories/GHSA-38g9-pfm9-gfqv
+I'm similarly happy to connect interested parties to contacts at the
+hundreds of public cloud service providers who run OpenStack, if
+there are questions along those lines.
 
-Summary
-Mastodon allows configuration of LDAP for
-authentication. The LDAP query made during login is
-insecure and the attacker can perform LDAP injection
-attack to leak arbitrary attributes from LDAP
-database.
+> That said, I don't think this is the most important part of the
+> discussion...
+[...]
 
+Agreed.
 
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N
+With my upstream developer and vulnerability coordinator hat on, I
+don't mind if downstream stakeholders who are given advance notice
+of our upcoming advisories test the included patches on resources in
+"public clouds" (whatever that term really means), as long as
+they're reasonably confident in the contractual relationships they
+have with those providers to operate ethically and above board. But
+also, we intentionally don't open up our embargoed discussions to
+downstream distributors until fairly close to the planned
+publication date, in order to limit the blast radius from accidental
+leaks.
 
-Severity: 7.7/10
+Perhaps unsurprisingly, the OpenStack community does perform
+basically all of its testing and vulnerability management tasks on
+donated resources within OpenStack-based cloud providers, so it
+would be somewhat hypocritical of us to tell our users they
+shouldn't. I get the impression an increasing number of open source
+projects do the same today.
+-- 
+Jeremy Stanley
 
-CVE-2023-28853
-
-Affected versions: >= 2.5.0
-Patched versions:  4.1.3, 4.0.5, 3.5.9
-
-Details
-
-These are the default variables initiated if LDAP is
-configured:
-
-mastodon/config/initializers/devise.rb
-Lines 398 to 414 in 94cbd80
-
- if ENV['LDAP_ENABLED'] == 'true'
-   config.ldap_authentication = true
-   config.check_at_sign       = true
-   config.ldap_host           = ENV.fetch('LDAP_HOST', 'localhost')
-   config.ldap_port           = ENV.fetch('LDAP_PORT', 389).to_i
-   config.ldap_method         = ENV.fetch('LDAP_METHOD', :simple_tls).to_sym
-   config.ldap_base           = ENV.fetch('LDAP_BASE')
-   config.ldap_bind_dn        = ENV.fetch('LDAP_BIND_DN')
-   config.ldap_password       = ENV.fetch('LDAP_PASSWORD')
-   config.ldap_uid            = ENV.fetch('LDAP_UID', 'cn')
-   config.ldap_mail           = ENV.fetch('LDAP_MAIL', 'mail')
-   config.ldap_tls_no_verify  = ENV['LDAP_TLS_NO_VERIFY'] == 'true'
-   config.ldap_search_filter  = ENV.fetch('LDAP_SEARCH_FILTER', '(|(%{uid}=%{email})(%{mail}=%{email}))')
-   config.ldap_uid_conversion_enabled  = ENV['LDAP_UID_CONVERSION_ENABLED'] == 'true'
-   config.ldap_uid_conversion_search   = ENV.fetch('LDAP_UID_CONVERSION_SEARCH', '.,- ')
-   config.ldap_uid_conversion_replace  = ENV.fetch('LDAP_UID_CONVERSION_REPLACE', '_')
- end
-
-
-Then, during the authentication, this line is
-executed:
-
-def authenticate_with_ldap(params = {})
-   ldap   = Net::LDAP.new(ldap_options)
-   filter = format(Devise.ldap_search_filter, uid: Devise.ldap_uid, mail: Devise.ldap_mail, email: params[:email])
-
-   if (user_info = ldap.bind_as(base: Devise.ldap_base, filter: filter, password: params[:password]))
-     ldap_get_user(user_info.first)
-   end
- end
-
-So this query is filled with untrusted input, namely
-user's login:
-
-(|(cn=%{email})(mail=%{email}))
-User can inject LDAP query here. I didn't find a way
-to login as arbitrary user because there are two
-queries - one for fetching the user object and the
-second one for authentication and the injection exists
-in the first one.
-
-However, the attacker can use blind injection
-technique to exfiltrate one bit of information at a
-time.
-
-PoC
-1. Set up Mastodon and LDAP authentication
-2. Create a user admin with any password. The information
-   that we want to leak is the description=LDAP
-   Administrator attribute but it can be any (I'm not yet
-   able to leak password hash but I'm working on it).
-3. Now, as the attacker, create a new account. In my case
-   it's adminmalicious and password test.
-4. Now when we try to log in with the login
-   adminmalicious)(&(cn=admin)(description=A*) and
-   password test. The full query will look like this:
-   (|(cn=adminmalicious)(&(cn=admin)(description=A*))(mail=adminmalicious)(&(cn=admin)(description=A*))).
-   In plain english this query means "If the description
-   of the user admin starts with A, the query will return
-   both admin and adminmalicious". In my example, the
-   admin description does not start with A so only
-   adminmalicious will be returned from the LDAP query
-   and we'll be logged in as adminmalicious.
-5. When we try to log in with
-   adminmalicious)(&(cn=admin)(description=L*), the query
-   will return both admin and adminmalicious but admin
-   will be first and the app will try to login to user
-   admin with the password test which will fail and we
-   will see Invalid E-mail address or password..
-
-Impact
-This way we've leaked one bit of information of other
-user from the database. Of course, this is easy to
-script and leak whole attribute values.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
