@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/2
-Message-ID: <20230314095103.1ed76cc0.hanno@hboeck.de>
-Date: Tue, 14 Mar 2023 09:51:03 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/6
+Message-ID: <0400b167-9673-ae6f-19d4-379b0f40f0d5@behlendorf.com>
+Date: Wed, 24 May 2023 11:40:18 -0700 (PDT)
+From: Brian Behlendorf <brian@...lendorf.com>
 To: oss-security@...ts.openwall.com
-Subject: TTY pushback vulnerabilities / TIOCSTI
+Subject: Re: Clarification on embargoed testing in a partner cloud
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 24 May 2023, Anthony Liguori wrote:
+> I think the right policy for list members is that they are responsible for
+> understanding the third-party infrastructure they use and if they aren't
+> confident that they can maintain the rules of the list, they shouldn't use
+> it.
 
-This blogpost highlights TTY Pushback vulnerabilities enabled via the
-TIOCSTI kernel functionality available in the Linux kernel:
-https://www.errno.fr/TTYPushback.html
+We've known since "On Trusting Trust" that every variable consumed during 
+the SDLC is a vector for compromise, even in very subtle and difficult 
+(impossible? halting problem?) ways to defeat. Inevitably we need to rely 
+on self-attestation, paired with certification processes when called for 
+(e.g. FedRamp). There is emerging regulatory action, at least in the US 
+(see the new White House Cybersecurity Policy) and the EU's CRA, calling 
+for the establishment of clear processes for demonstrating provenance and 
+attestation to at least the build environment and likely eventually the 
+full SDLC.
 
-This has been discussed here previously:
-https://www.openwall.com/lists/oss-security/2017/06/03/9
+A clear and more formal way of understanding the different levels of 
+attestation of one's build environment can be found in the SLSA 
+specification. Here's a story about how Google Cloud incorporates it into 
+build service:
 
-Though I think there are some noteworthy updates. In the 2017 post
-solar designer mentioned that the Linux kernel developers have multiple
-times rejected changes in the kernel. However this has now changed:
-Starting with Kernel 6.2 it is possible to disable TIOCSTI
-(unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
-applications practically use TIOCSTI.
+https://slsa.dev/blog/2022/12/gcb-slsa-verification
 
-This seems to be the only real mitigation for this issue. It appears
-su has a parameter, and in sudo one can configure the creation of a new
-pty in the sudoers file. I don't consider these as satisfying fixes, as
-they are optinal, and thus rely on the expectation that users are aware
-of this risk and manually use these mitigations. That does not seem
-realistic to me.
+Of course attestation is not proof, and even human certification can only 
+go so far. Reproducible builds offer a path there but that goal seems just 
+as far away as it was 20 years ago, when Java was going to solve that for 
+us.
 
-This also affects such a large number of tools, not just
-su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
-affected by this by default.
+I have no recommendation on if or how to use SLSA or something like it in 
+this policy, just that it may be something to consider.
 
-Thus I strongly recommend that people disable this in the kernel.
-
-[1] https://github.com/containers/bubblewrap/issues/555
-
--- 
-Hanno Böck
-https://hboeck.de/
+Brian
