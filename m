@@ -1,94 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/07/4
-Message-ID: <20230707214618.GA29306@openwall.com>
-Date: Fri, 7 Jul 2023 23:46:18 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/4
+Message-ID: <CA+aC4ksAirMkOW5R1p=YzQH6R3gOBJZsiB2YqjH+sB+by2--pw@mail.gmail.com>
+Date: Wed, 24 May 2023 07:26:42 -0700
+From: Anthony Liguori <anthony@...emonkey.ws>
 To: oss-security@...ts.openwall.com
-Cc: Ruihan Li <lrh2000@....edu.cn>
-Subject: Re: StackRot (CVE-2023-3269): Linux kernel privilege escalation vulnerability
+Subject: Re: Clarification on embargoed testing in a partner cloud
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 05, 2023 at 08:12:01PM +0800, Ruihan Li wrote:
-> I reported this vulnerability to the Linux kernel security team on June 15th.
-> Following that, the process of addressing this bug was led by Linus Torvalds.
-> Given its complexity, it took nearly two weeks to develop a set of patches that
-> received consensus.
-> 
-> On June 28th, during the merge window for Linux kernel 5.5, the fix was merged
-> into Linus' tree. Linus provided a [comprehensive merge message][fix] to
-> elucidate the patch series from a technical perspective.
-> 
->  [fix]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9471f1f2f50282b9e8f59198ec6bb738b4ccc009
-> 
-> These patches were subsequently backported to stable kernels ([6.1.37][6.1],
-> [6.3.11][6.3], and [6.4.1][6.4]), effectively resolving the "Stack Rot" bug on
-> July 1st.
-> 
->  [6.1]: https://lore.kernel.org/stable/2023070133-create-stainless-9a8c@gregkh/T/
->  [6.3]: https://lore.kernel.org/stable/2023070146-endearing-bounding-d21a@gregkh/T/
->  [6.4]: https://lore.kernel.org/stable/2023070140-eldercare-landlord-133c@gregkh/T/
+I'm sending from my personal account for convenience but in case anyone
+doesn't know, I work at AWS and am on the private list for Amazon Linux.
 
-Thank you very much Ruihan Li!  This is impressive work both by you and
-by the kernel maintainers.
+On Wed, May 24, 2023 at 6:43 AM Solar Designer <solar@...nwall.com> wrote:
 
-For the oss-security community, I need to acknowledge and explain that
-we made a rare exception from the linux-distros policy on 14 days
-maximum embargo time, and why we did that.  We also made use of the
-exception pre-granted for "Linux kernel issues concurrently or very
-recently handled by the Linux kernel security team", where a "silent"
-fix is possible without us treating that as embargo end.
+> On Wed, May 24, 2023 at 10:45:15AM +0200, Moritz Muhlenhoff wrote:
+> > Am Thu, May 11, 2023 at 01:57:04PM +0200 schrieb Marcus Meissner:
+> > >
+> > > I understand that while some of the operators of the public clouds are
+> also on
+> > > the distro lists, these are parts of very large cooperations and not
+> the same
+> > > team as the intake PSIRT subscribed to distros.
+> > >
+> > > So from my point I would suggest to exclude testing on third party
+> public clouds.
+> >
+> > I agree, FWIW.
+>
+> Thank you.  So far, we have Marc's request for clarification (which
+> didn't express an opinion/preference) and two "suggest[ions] to exclude
+> testing on third party public clouds" above.  I also suggest the same,
+> yet I am not sure whether/how to make that part of the policy.  It is
+> non-obvious whether/where/how to draw the line between (disallowed)
+> sharing and mere (allowed) usage of third-party/rented resources.
+>
+> If we explicitly disallow "testing on third party public clouds", then
+> what about testing on rented dedicated servers (which are often also
+> centrally managed through the provider's infrastructure), or on own
+> servers in rented racks in third-party datacenters (where the datacenter
+> staff has physical access), etc.  And then there's communication over
+> third-party Internet infrastructure, whereas our policy currently
+> doesn't mandate usage of encryption except for messages from the list to
+> its immediate subscribers.
+>
 
-Ruihan Li brought the issue to linux-distros at the same time with
-contacting the Linux kernel security team on June 15th.  This meant the
-latest date for public disclosure would be June 29th.  As it happened,
-this issue was genuinely taking almost the full 14 days to fix,
-including patch review, testing on multiple platforms, and adjustments
-to the initial fixes.  The fix seemed ready on June 28th, and making the
-information fully public on the 29th was within consideration.  However,
-we decided to allocate an extra 6 days beyond the usual maximum of 14,
-until July 5th.  The intent was for the "silent" fix (committed by Linus
-on June 28th) to propagate to stable kernels, to prepared distro updates
-(not to be released with the fix documented until July 5th), and for it
-to stabilize in case more issues are found and addressed in this period
-(which wasn't unlikely given the complexity).
+I don't think this is the right policy.  First, I don't think that terms
+like 'cloud' or even 'colo' are at all well defined.  I can setup a website
+and rent the Raspberry Pi rack next to my desk as a 'Cloud' but that's
+wildly different from something like AWS.
 
-Many of the distros present on linux-distros only used kernels older
-than 6.1, so were not affected.  This meant two things: on one hand, few
-distros would benefit from the delay, but on the other also few would
-possibly be hurt by the delay.  For many, this just did not matter.
+Likewise, colo's vary tremendously in quality of security.  You have places
+like Switch in the US that have crazy security including armed guards.
+I've also visited colo's that are glorified closets with extremely poor
+physical security.
 
-I didn't keep track, but apparently there were first compile-time and
-then runtime issues with the fix on sparc32, parisc, ia64, as addressed
-in this thread:
+I think the right policy for list members is that they are responsible for
+understanding the third-party infrastructure they use and if they aren't
+confident that they can maintain the rules of the list, they shouldn't use
+it.
 
-https://lore.kernel.org/all/CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com/#t
+For list members that have questions about AWS, I'm happy to answer, in
+gory details.  I know other large cloud providers have folks on the list
+that would likely offer the same (or at least direct to the appropriate
+people).  I can also help make connections to most of the large cloud
+providers if folks don't have contacts.
 
-Linus also promptly found (and informed linux-distros on June 29th) that
-a runtime warning message temporarily introduced along with the fix (but
-with a separate commit) was getting triggered too commonly.  This is
-finally fixed in:
+That said, I don't think this is the most important part of the
+discussion...
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6cd06ab12d1afdab3847e7981f301bd0404aaa5c
 
-I'm not currently aware of any other issues found and addressed during
-the extra 6 days, so I'm not sure whether this delay was of sufficient
-benefit.  However, we didn't know in advance - it could well have been.
+> Also, I guess these days there are distros that are primarily built in
+> the cloud yet are not projects of the cloud providers - e.g., projects
+> of startups that got free cloud credits, as well as those that like the
+> flexibility and not needing to manage physical servers themselves.  If
+> one of those wants to join the distros list, do we reject them and
+> require that they setup security build/testing, private issue tracking,
+> e-mail infrastructure out of cloud first, or do we accept (if they meet
+> all other criteria)?  So far, we didn't even ask new members whether
+> they possibly build/test/track in the cloud, and maybe we already have
+> some that do.
+>
 
-> ## Exploit
-> 
-> **The complete exploit code and a comprehensive write-up will be made publicly
-> available no later than the end of July.**
+Building/testing involves a lot of things.  Testing binary artifacts is
+IMHO very low risk.  If an attacker gets a binary but has no additional
+information about a vulnerability, the time and effort it takes to reverse
+engineer what's changed and find the vulnerability is pretty darn high.
+The strict embargo period of the list here is a big mitigation factor.  By
+the time most folks get to this stage, there is maybe a week left in the
+embargo.  IOW, I think scp'ing a binary to a testing box in more or less
+any environment is pretty low risk due to the difficulty of extracting
+information.
 
-The complete exploit code wasn't posted to linux-distros, so it is not
-subject to the policy on maximum of 7 days between vulnerability
-disclosure on oss-security and posting of the exploit to oss-security.
+OTOH, most vendors ship around RPMs and RPMs contain changelogs.  Do they
+change logs contain CVE numbers only or do they describe the CVE in gory
+detail?  This ends up mattering a lot.
 
-Some details on triggering the bug were on linux-distros.  Normally,
-they would be subject to the policy and so brought to oss-security no
-later than July 12th, which Ruihan Li did not object to doing, but
-expressed a preference to post the complete exploit by the end of July
-instead.  I agreed to make this exception.
+And there's a big difference between scp'ing a binary to an instance versus
+publishing a yum repository.  Repositories tend to have broad permissions.
+Is the repo access controlled to include folks outside the strict
+need-to-know in your organization?  Are you also publishing source packages
+as part of this process?
 
-Thanks,
+I think this line of questioning is probably more relevant for folks on
+this list.
 
-Alexander
+Regards,
+
+Anthony Liguori
+
