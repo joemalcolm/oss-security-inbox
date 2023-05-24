@@ -1,50 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/30/2
-Message-ID: <33a99dc0-7403-3ac8-d3df-59544fac800d@igalia.com>
-Date: Tue, 30 May 2023 18:53:41 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/1
+Message-ID: <ZG3Om+8ySRpIuHJu@pisco.westfalen.local>
+Date: Wed, 24 May 2023 10:45:15 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Clarification on embargoed testing in a partner cloud
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0004
-------------------------------------------------------------------------
+Am Thu, May 11, 2023 at 01:57:04PM +0200 schrieb Marcus Meissner:
+> 
+> I understand that while some of the operators of the public clouds are also on
+> the distro lists, these are parts of very large cooperations and not the same
+> team as the intake PSIRT subscribed to distros.
+> 
+> So from my point I would suggest to exclude testing on third party public clouds.
 
-Date reported           : May 30, 2023
-Advisory ID             : WSA-2023-0004
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0004.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0004.html
-CVE identifiers         : CVE-2023-28204, CVE-2023-32373.
+I agree, FWIW.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2023-28204
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.2.
-    Credit to an anonymous researcher.
-    Impact: Processing web content may disclose sensitive information.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: An out-of-bounds read was addressed with
-    improved input validation.
-
-CVE-2023-32373
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.2.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use-after-free
-    issue was addressed with improved memory management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-May 30, 2023
+Cheers,
+        Moritz
