@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/12
-Message-ID: <20230419172359.GA11033@openwall.com>
-Date: Wed, 19 Apr 2023 19:23:59 +0200
-From: Solar Designer <solar@...nwall.com>
-To: "Jonathan Bar Or (JBO)" <jobaror@...rosoft.com>
-Cc: Carlos L?pez <clopez@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: ncurses fixes upstream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/7
+Message-ID: <87zg5tfnwc.fsf_-_@gnu.org>
+Date: Wed, 24 May 2023 22:57:39 +0200
+From: Ludovic Courtès <ludo@....org>
+To: Brian Behlendorf <brian@...lendorf.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Attestation, reproducible builds, and bootstrapping
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 19, 2023 at 04:55:06PM +0000, Jonathan Bar Or (JBO) wrote:
-> Yes, now that the cat is out of the bag there's no point - you can find some POCs here (not every find is covered by a POC, FYI):
-> https://drive.google.com/drive/u/0/folders/1XZiHbH7W7is8cwTu7DKrpwBTYuYfRZqE
-> 
-> Note not all of them work on Linux - some are macOS focused too.
+Hi,
 
-I'm attaching the 5 scripts from there to this message for archival,
-as-is (text/plain) and in tar.gz (to avoid any mangling).  There's also
-Ncurses.pdf, but it's too large for the mailing list because of embedded
-screenshots.  SHA-256's of these all:
+Brian Behlendorf <brian@...lendorf.com> skribis:
 
-c3b981fad88f17cc201bfa7f4230a348e30b449238e3d3406852691770876eda  cost_oob_read.sh
-526cde9fc78cb0712c0b725ecea316913f0302194702ebccdf1a1a146f32dac9  gen_terminfo.py
-f787189535fa21a8924db2afc2ef6301a931805b43ef8ea13cdefab6aacb83d0  heap_overflow.sh
-2049668efcf24f34ce200d6c2b96fefc389cf4092cfd6c99f5da66a3d46b9a5f  leak.sh
-66b0706b0852a5b9e9644bea98edc0b0b84f5f7fec028fe2bf03964d46002594  type_confusion.sh
+> A clear and more formal way of understanding the different levels of
+> attestation of one's build environment can be found in the SLSA
+> specification. Here's a story about how Google Cloud incorporates it
+> into build service:
+>
+> https://slsa.dev/blog/2022/12/gcb-slsa-verification
+>
+> Of course attestation is not proof, and even human certification can
+> only go so far. Reproducible builds offer a path there but that goal
+> seems just as far away as it was 20 years ago, when Java was going to
+> solve that for us.
 
-47b30bdd9fbf35cc900c3869e2303d0dabea44176fdfdfced97bd4ee329529c9  ncurses-exp.tar.gz
+This is not true: reproducible builds are a reality for a number of
+distros already and also upstream (for GNU Guix, we measure 85%
+reproducibility on 22K packages; Debian might be even higher).
 
-a8ba31a02b596f7a9f61f61cc7a98ed9aac2d358f49614d4f480bcfad3fd2a78  Ncurses.pdf
+Bootstrapping has also gone a long way: Guix’s package graph is now
+rooted in a 357-byte “binary”¹; everything else (with the exception of a
+couple of bootstrap compilers such as GHC, for now) is built from
+source, in isolated environments.  A similar bootstrap path is used by
+freedesktop-sdk².
 
-Alexander
+So I disagree that one has to resort to attestation and certification;
+verifiability and auditability are evidently achievable and they provide
+much stronger guarantees.
 
-View attachment "cost_oob_read.sh" of type "text/plain" (296 bytes)
+Ludo’.
 
-View attachment "gen_terminfo.py" of type "text/plain" (1628 bytes)
-
-View attachment "heap_overflow.sh" of type "text/plain" (4757 bytes)
-
-View attachment "leak.sh" of type "text/plain" (451 bytes)
-
-View attachment "type_confusion.sh" of type "text/plain" (262 bytes)
-
-Download attachment "ncurses-exp.tar.gz" of type "application/x-gzip" (1475 bytes)
+¹ https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building-from-source-all-the-way-down/
+² https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/merge_requests/11557
