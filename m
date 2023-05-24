@@ -1,51 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/9
-Message-ID: <20231013173228.S-hVe%steffen@sdaoden.eu>
-Date: Fri, 13 Oct 2023 19:32:28 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/2
+Message-ID: <20230524134130.GC6775@openwall.com>
+Date: Wed, 24 May 2023 15:41:30 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
+Subject: Re: Clarification on embargoed testing in a partner cloud
 Content-Type: text/plain; charset=utf-8
 
-Jonathan Wright wrote in
- <CAKe4=-L2udnhRQ7EVOMihrExiYUVoor3E0+FbNxvZ8iB=pyQ1w@...l.gmail.com>:
+On Wed, May 24, 2023 at 10:45:15AM +0200, Moritz Muhlenhoff wrote:
+> Am Thu, May 11, 2023 at 01:57:04PM +0200 schrieb Marcus Meissner:
+> > 
+> > I understand that while some of the operators of the public clouds are also on
+> > the distro lists, these are parts of very large cooperations and not the same
+> > team as the intake PSIRT subscribed to distros.
+> > 
+> > So from my point I would suggest to exclude testing on third party public clouds.
+> 
+> I agree, FWIW.
 
-[i resort a bit]
+Thank you.  So far, we have Marc's request for clarification (which
+didn't express an opinion/preference) and two "suggest[ions] to exclude
+testing on third party public clouds" above.  I also suggest the same,
+yet I am not sure whether/how to make that part of the policy.  It is
+non-obvious whether/where/how to draw the line between (disallowed)
+sharing and mere (allowed) usage of third-party/rented resources.
 
- |On Tue, Oct 10, 2023 at 2:23 PM Moritz Muehlenhoff <jmm@...til.org> wrote:
- |> On Tue, Oct 10, 2023 at 11:40:06AM -0700, Alan Coopersmith wrote:
- |>> Information I've found so far on open source implementations (most via
- |> the
- |>> current listings in the CVE) include:
- |>
- |> Apache Trafficserver is also affected:
- |> https://lists.apache.org/thread/5py8h42mxfsn8l1wy6o41xwhsjlsd87q
+If we explicitly disallow "testing on third party public clouds", then
+what about testing on rented dedicated servers (which are often also
+centrally managed through the provider's infrastructure), or on own
+servers in rented racks in third-party datacenters (where the datacenter
+staff has physical access), etc.  And then there's communication over
+third-party Internet infrastructure, whereas our policy currently
+doesn't mandate usage of encryption except for messages from the list to
+its immediate subscribers.
 
- |OpenLitespeed is not impacted:
- |https://blog.litespeedtech.com/2023/10/11/rapid-reset-http-2-vulnerablilty/
+Also, I guess these days there are distros that are primarily built in
+the cloud yet are not projects of the cloud providers - e.g., projects
+of startups that got free cloud credits, as well as those that like the
+flexibility and not needing to manage physical servers themselves.  If
+one of those wants to join the distros list, do we reject them and
+require that they setup security build/testing, private issue tracking,
+e-mail infrastructure out of cloud first, or do we accept (if they meet
+all other criteria)?  So far, we didn't even ask new members whether
+they possibly build/test/track in the cloud, and maybe we already have
+some that do.
 
-It did not really surprise me that Glenn Strauss, the wonderful
-developer of the lighttpd that i use for eight years, had to go
-like this (i hope he does not mind i quote #lighttpd here):
+On Tue, May 16, 2023 at 09:04:01AM -0400, Marc Deslauriers wrote:
+> They were requesting we test the default package set that is shipped in
+> cloud images, including userland packages that don't have anything specific
+> to their cloud.
 
-  ...
-  01:45 < gps> [..]No, I did not have prior knowledge.
-  ...
-  02:20 < gps> Confirmed: while all web servers implementing
-    HTTP/2 are exposed to the attack in CVE-2023-44487, the way each
-    web server software processes HTTP/2 affects the size of the
-    impact of the attack.  With lighttpd, the impact is largely
-    limited to the CPU usage parsing the HTTP/2 HEADERS frame,
-    including HPACK decoding.
-  ...
-  03:58 < gps> To be clear, the attack still causes lighttpd to
-    use more resources, but the amplification of resource
-    commitment is constrained in lighttpd due to the design
-    choices made for lighttpd HTTP/2.
+Of course, testing of kernel and other close-to-hardware updates also
+benefits from having a userland similar to or the same as what would be
+used in production.  However, maybe the timing of such testing could be
+dictated by presence of close-to-hardware updates needing the testing.
+In other words, when there are pending userland updates only, don't do
+the testing.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+This is just a suggestion on how to reduce the exposure _if_ any testing
+in the cloud is to be done at all.
+
+Alexander
