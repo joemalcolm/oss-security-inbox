@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["794" "Tuesday" "13" "July" "2021" "17:15:51" "+0000" "Stefan Bodewig" "bodewig@apache.org" nil "26" "[oss-security] CVE-2021-36374: Apache Ant ZIP, and ZIP based, archive denial of service vulerability " nil nil nil "7" nil nil (number mark "U       bodewig@apac Jul 13   26/794   " thread-indent "\"[oss-security] CVE-2021-36374: Apache Ant ZIP, and ZIP based, archive denial of service vulerability \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-36374: Apache Ant ZIP, and ZIP based, archive denial of service vulerability " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26382 invoked by uid 550); 13 Jul 2021 17:57:04 -0000
+Received: (qmail 8060 invoked by uid 550); 24 May 2023 19:03:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26272 invoked from network); 13 Jul 2021 17:16:23 -0000
-Content-Type: text/plain; charset=utf-8
-From: Stefan Bodewig <bodewig@apache.org>
+Received: (qmail 11946 invoked from network); 24 May 2023 18:40:34 -0000
+Date: Wed, 24 May 2023 11:40:18 -0700 (PDT)
+From: Brian Behlendorf <brian@behlendorf.com>
 To: oss-security@lists.openwall.com
-Message-ID: <ffc7668f-036a-0b0b-c512-2eb652d3e885@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 13 Jul 2021 17:15:51 +0000
+In-Reply-To: <CA+aC4ksAirMkOW5R1p=YzQH6R3gOBJZsiB2YqjH+sB+by2--pw@mail.gmail.com>
+Message-ID: <0400b167-9673-ae6f-19d4-379b0f40f0d5@behlendorf.com>
+References: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com> <20230511115704.GJ5725@suse.de> <ZG3Om+8ySRpIuHJu@pisco.westfalen.local> <20230524134130.GC6775@openwall.com> <CA+aC4ksAirMkOW5R1p=YzQH6R3gOBJZsiB2YqjH+sB+by2--pw@mail.gmail.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-36374: Apache Ant ZIP, and ZIP based, archive denial of
- service vulerability 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: Re: [oss-security] Clarification on embargoed testing in a partner
+ cloud
 
-Description:
+On Wed, 24 May 2023, Anthony Liguori wrote:
+> I think the right policy for list members is that they are responsible for
+> understanding the third-party infrastructure they use and if they aren't
+> confident that they can maintain the rules of the list, they shouldn't use
+> it.
 
-When reading a specially crafted ZIP archive, or a derived formats, an Apac=
-he Ant build can be made to allocate large amounts of memory that leads to =
-an out of memory error, even for small inputs. This can be used to disrupt =
-builds using Apache Ant.
+We've known since "On Trusting Trust" that every variable consumed during 
+the SDLC is a vector for compromise, even in very subtle and difficult 
+(impossible? halting problem?) ways to defeat. Inevitably we need to rely 
+on self-attestation, paired with certification processes when called for 
+(e.g. FedRamp). There is emerging regulatory action, at least in the US 
+(see the new White House Cybersecurity Policy) and the EU's CRA, calling 
+for the establishment of clear processes for demonstrating provenance and 
+attestation to at least the build environment and likely eventually the 
+full SDLC.
 
-Commonly used derived formats from ZIP archives are for instance JAR files =
-and many office files.
+A clear and more formal way of understanding the different levels of 
+attestation of one's build environment can be found in the SLSA 
+specification. Here's a story about how Google Cloud incorporates it into 
+build service:
 
-Mitigation:
+https://slsa.dev/blog/2022/12/gcb-slsa-verification
 
-Apache Ant 1.9.x users should upgrade to 1.9.16 or later.
-Apache Ant 1.10.x users should upgrade to 1.10.11 or later.
+Of course attestation is not proof, and even human certification can only 
+go so far. Reproducible builds offer a path there but that goal seems just 
+as far away as it was 20 years ago, when Java was going to solve that for 
+us.
 
-Credit:
+I have no recommendation on if or how to use SLSA or something like it in 
+this policy, just that it may be something to consider.
 
-This issue is similar to https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DC=
-VE-2021-36090 present in Apache Commons Compress which has been detected by=
- OSS Fuzz.
-
-References:
-
-https://ant.apache.org/security.html
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-36090
-
+Brian
