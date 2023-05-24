@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2254" "Thursday" "30" "April" "2015" "14:46:42" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150430144642.54356798@pc1>" "60" "[oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)" nil nil nil "4" "2015043012:46:42" "[oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)" (number mark "        hanno@hboeck Apr 30   60/2254  " thread-indent "\"[oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16104 invoked by uid 550); 30 Apr 2015 12:50:57 -0000
+Received: (qmail 22472 invoked by uid 550); 24 May 2023 20:58:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +6,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16046 invoked from network); 30 Apr 2015 12:50:50 -0000
-Message-ID: <20150430144642.54356798@pc1>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-14941-1430398238-0001-2"
-Date: Thu, 30 Apr 2015 14:46:42 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)
-To: oss-security@lists.openwall.com, fulldisclosure@seclists.org,
-  cve-assign@mitre.org
-
---=_zucker.schokokeks.org-14941-1430398238-0001-2
-Content-Type: text/plain; charset=UTF-8
+Received: (qmail 22440 invoked from network); 24 May 2023 20:57:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
+	s=fencepost-gnu-org; h=MIME-Version:In-Reply-To:Date:References:Subject:To:
+	From; bh=7oWSZvVgpM9SE64OW8Zazpf6khN33C5i+tD68eySeTo=; b=B/iCTTLuzUY+986KgSnA
+	1E4tZCmFb6O/ii6GYQO4wkew6kH/dLP4Vz6E5kmydUOQwuPx4Yv17yTrzrFratCYgIw8vs9UKl237
+	8AJQOJY6KPmUAmxQN0ve8f+a2O29fCze0v3V/FEWC71ebz+pnxXP5Vx59LR5kp0+g9RiG9EAymh3q
+	H5BAJks6Mhqc5/6mV8Mbn9TYCmSsEjNAWMF/pWnGJ1mGHVPXSuWRncutXKnYmQNK1Q+NEGo1f+Cnc
+	SteHf5OLKbMlpzo6DSF459eIOk8RtJHAsM38J1MxDjXwS76RAJn/ze2gQrKsOqvT7qnw5/uO9RwYj
+	uCjDU9L+Sn6Sog==;
+From: =?utf-8?Q?Ludovic_Court=C3=A8s?= <ludo@gnu.org>
+To: Brian Behlendorf <brian@behlendorf.com>
+Cc: oss-security@lists.openwall.com
+References: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
+	<20230511115704.GJ5725@suse.de>
+	<ZG3Om+8ySRpIuHJu@pisco.westfalen.local>
+	<20230524134130.GC6775@openwall.com>
+	<CA+aC4ksAirMkOW5R1p=YzQH6R3gOBJZsiB2YqjH+sB+by2--pw@mail.gmail.com>
+	<0400b167-9673-ae6f-19d4-379b0f40f0d5@behlendorf.com>
+X-URL: http://www.fdn.fr/~lcourtes/
+X-Revolutionary-Date: Quintidi 5 Prairial an 231 de la =?utf-8?Q?R=C3=A9vo?=
+ =?utf-8?Q?lution=2C?= jour du
+ Canard
+X-PGP-Key-ID: 0x090B11993D9AEBB5
+X-PGP-Key: http://www.fdn.fr/~lcourtes/ludovic.asc
+X-PGP-Fingerprint: 3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5
+X-OS: x86_64-pc-linux-gnu
+Date: Wed, 24 May 2023 22:57:39 +0200
+In-Reply-To: <0400b167-9673-ae6f-19d4-379b0f40f0d5@behlendorf.com> (Brian
+	Behlendorf's message of "Wed, 24 May 2023 11:40:18 -0700 (PDT)")
+Message-ID: <87zg5tfnwc.fsf_-_@gnu.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Attestation, reproducible builds, and bootstrapping
 
-https://blog.fuzzing-project.org/9-Heap-overflow-invalid-read-in-Libtasn1-T=
-FPA-0052015.html
+Hi,
 
-While fuzzing GnuTLS I discovered a malformed certificate input sample
-that would cause a heap overflow read of 99 bytes in the DER decoding
-functions of Libtasn1. The heap overflow happens in the function
-_asn1_extract_der_octet().
+Brian Behlendorf <brian@behlendorf.com> skribis:
 
-This issue was reported to the Libtasn1 developer on 16th April. A fix
-was committed on 20th April and is part of the Libtasn1 4.5 release.
-This issue was found with american fuzzy lop and address sanitizer.
+> A clear and more formal way of understanding the different levels of
+> attestation of one's build environment can be found in the SLSA
+> specification. Here's a story about how Google Cloud incorporates it
+> into build service:
+>
+> https://slsa.dev/blog/2022/12/gcb-slsa-verification
+>
+> Of course attestation is not proof, and even human certification can
+> only go so far. Reproducible builds offer a path there but that goal
+> seems just as far away as it was 20 years ago, when Java was going to
+> solve that for us.
 
-http://git.savannah.gnu.org/gitweb/?p=3Dlibtasn1.git;a=3Dcommitdiff;h=3Df97=
-9435823a02f842c41d49cd41cc81f25b5d677
-Git commit / fix
+This is not true: reproducible builds are a reality for a number of
+distros already and also upstream (for GNU Guix, we measure 85%
+reproducibility on 22K packages; Debian might be even higher).
 
-https://lists.gnu.org/archive/html/help-libtasn1/2015-04/msg00000.html
-Libtasn1 4.5 release notes
+Bootstrapping has also gone a long way: Guix=E2=80=99s package graph is now
+rooted in a 357-byte =E2=80=9Cbinary=E2=80=9D=C2=B9; everything else (with =
+the exception of a
+couple of bootstrap compilers such as GHC, for now) is built from
+source, in isolated environments.  A similar bootstrap path is used by
+freedesktop-sdk=C2=B2.
 
-https://crashes.fuzzing-project.org/TFPA-2015-005-libtasn1-4.4-heap-overflo=
-w.crt
-Sample malformed certificate exposing heap overflow (test with
-certtool -i --inder --infile=3D[sample] and address sanitizer or
-valgrind)
+So I disagree that one has to resort to attestation and certification;
+verifiability and auditability are evidently achievable and they provide
+much stronger guarantees.
 
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
+Ludo=E2=80=99.
 
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-14941-1430398238-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJVQiQyAAoJEKWIAHK7tR5C5bkQAKPIECpn8RnxQTwDZg4Ly91P
-8VxPW4qfojIyWxxTPBlXp8XFTiI9x8lggdY4gI2PYMeNNgS0lOGXMK5pplT3VXhJ
-rurARhoVtKzOE2a03Sgm6tXE71sA0xbUr1imRr7/4CEGBv+Come0SaKWWqO8zh6n
-AWQxg/MPc2dPIFo6tZ0JlvmpDU1wWeZ5FB/bAWjPVQsjPIHQbiIkWemtAs+Z6GDR
-G9bkxi6UX5gQR+DKkf1ZHLEfv3U6wj7uiw2O2rrN0zaZrMs9HIa8CNWXWLyvESV6
-zuBJ4hOFPSb4dFEu2Q24EWxFwSwH0nhqmJFy0uRBHs8WybsfqgFX4eWz2GTdcJ8B
-yEqUO9DJC249yBLtINfrZiSuTwp5POKrEa0og22vZ6xRWpKNh3NyMbDd4CuG5VLO
-oEDvYKcQYEEW7oUdx/UzVF7KZD6+H8Jq8CPyYhpzwF3MJklye0nxtb3XQkq63k+h
-7/eySA93Zsr5rRQJLhidNlTDFXf/tReWRp+RHtQl6KJnlMndr9vMRcsLh45+3r4l
-k7w6oGir/MXhxllr+Of/N37FId3O8FtzQXcCg529kYjIAjOKKnHG3tT3tWmxbZoe
-mwp8D9nm+j0rYU7TdHqcBUkE4Isu9rsrExP+VmNfRuGZ3eG+N5ZBVmGWxZRqFWZJ
-v5PuyH04PCgE7V3cNU9B
-=GNNB
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-14941-1430398238-0001-2--
+=C2=B9 https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building=
+-from-source-all-the-way-down/
+=C2=B2 https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/merge_requests/=
+11557
