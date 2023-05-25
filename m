@@ -1,44 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/08/4
-Message-ID: <20231008214734.GA20938@openwall.com>
-Date: Sun, 8 Oct 2023 23:47:34 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/25/2
+Message-ID: <CALrOjAAv=w_y7troEmhi4KqMCOHrYURUb1fBGexuOpdWXzbg2w@mail.gmail.com>
+Date: Thu, 25 May 2023 16:55:20 -0400
+From: Monis Khan <i@...is.app>
 To: oss-security@...ts.openwall.com
-Subject: Re: European Union Cyber Resilience Act (CRA)
+Subject: [kubernetes] CVE-2023-2878: secrets-store-csi-driver discloses service account tokens in logs
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 08, 2023 at 01:56:15PM -0700, Jean Luc Picard wrote:
-> These people are not developers live & govern a part of earth ripe with
-> anti-communist/socialist sentiment.
+Hello Kubernetes Community,
 
-Let's avoid non-essential references to political sentiments here.
+A security issue was discovered in secrets-store-csi-driver where an actor
+with access to the driver logs could observe service account tokens.  These
+tokens could then potentially be exchanged with external cloud providers to
+access secrets stored in cloud vault solutions.  Tokens are only logged
+when TokenRequests is configured in the CSIDriver object
+<https://kubernetes-csi.github.io/docs/token-requests.html> and the driver
+is set to run at log level 2 or greater via the -v flag.
 
-> If you were to explain to them that
-> their cellphones security is protected by things like 'community' &
-> 'sharing', they'd likely blow a gasket.
+This issue has been rated *MEDIUM*
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N>
+(6.5), and assigned *CVE-2023-2878*
 
-Oh, they're well aware of that.  From the Apache Foundation blog post:
+*Am I vulnerable?*
 
-https://news.apache.org/foundation/entry/save-open-source-the-impending-tragedy-of-the-cyber-resilience-act
+You may be vulnerable if TokenRequests is configured in the CSIDriver object
+<https://kubernetes-csi.github.io/docs/token-requests.html> and the driver
+is set to run at log level 2 or greater via the -v flag.
 
-"The current definitions3 are such that the CRA applies to the ASF, all
-of its (volunteer) developers, and all our output. And, as the ASF
-understands from its meeting with policy makers, this was intentional."
+To check if token requests are configured, run the following command:
 
-"As the regulation of open source is intentional, and there is also a
-lot of common sense, good (open source) practices, in the CRA: the
-expectation is that we are past the point where asking for a blanket
-exception is productive."
+kubectl get csidriver secrets-store.csi.k8s.io -o
+jsonpath="{.spec.tokenRequests}"
 
-> It appears it's too late to bring
-> in the real industry experts into the committee meetings but not too late
-> to make a meaningful difference.  That said, the community at large needs
-> to prepare for a lull in rights & freedoms.  Perhaps if it got to a point
-> to where, like the cookie law, some vital repositories start geoip blocking
-> in protest, things might move along.  One thing for sure, things are about
-> to get weird.
+To check if tokens are being logged, examine the secrets-store container
+log:
 
-I advise against premature protests by people who haven't even bothered
-to read the available material on the topic.
+kubectl logs -l app=secrets-store-csi-driver -c secrets-store -f | grep
+--line-buffered "csi.storage.k8s.io/serviceAccount.tokens"
 
-Alexander
+*Affected Versions*
+
+- secrets-store-csi-driver < 1.3.3
+
+*How do I mitigate this vulnerability?*
+
+Prior to upgrading, this vulnerability can be mitigated by running
+secrets-store-csi-driver at log level 0 or 1 via the -v flag.
+
+*Fixed Versions*
+
+- secrets-store-csi-driver >= 1.3.3
+
+To upgrade, refer to the documentation:
+https://secrets-store-csi-driver.sigs.k8s.io/getting-started/upgrades.html#upgrades
+
+*D**etection*
+
+Examine cloud provider logs for unexpected token exchanges, as well as
+unexpected access to cloud vault secrets.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+
+*Acknowledgements*
+
+This vulnerability was reported by Tomer Shaiman @tshaiman from Microsoft.
+
+Thank You,
+
+Mo Khan on behalf of the Kubernetes Security Response Committee
+
