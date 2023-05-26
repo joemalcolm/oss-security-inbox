@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/20
-Message-ID: <odkxbhada7uibrlt2cugy5g3kphubqjvbm3ksspkk5tu6ej62z@3iumiral5gxg>
-Date: Tue, 18 Apr 2023 21:48:48 +0200
-From: Jan Fader <oss-security@...erweb.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/26/1
+Message-ID: <bf62b2f3-3a37-779f-93b0-d716a2012150@apache.org>
+Date: Fri, 26 May 2023 19:54:52 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Checking existence of firewalled web servers in Firefox via iframe.onload
+Subject: CVE-2023-33234: Apache Airflow CNCF Kubernetes Provider: KubernetesPodOperator RCE via connection configuration 
 Content-Type: text/plain; charset=utf-8
 
-Hi Georgi
+Severity: low
 
-Am Tue 18. Apr. 2023, hat Georgi Guninski geschrieben:
-> In short in Firefox 112, it is possible to check existence
-> of firewalled web servers. This doesn't work in Chrome and Chromium 112
-> for me.
+Affected versions:
 
-I can reproduce this in Firefox 112, but also in Chromium 112.0.5615.121
-and Edge 112.0.1722.48.
+- Apache Airflow CNCF Kubernetes Provider 5.0.0 through 6.1.0
 
-Regards
-Jan
+Description:
+
+Arbitrary code execution in Apache Airflow CNCF Kubernetes provider version 5.0.0 allows user to change xcom sidecar image and resources via Airflow connection.
+
+In order to exploit this weakness, a user would already need elevated permissions (Op or Admin) to change the connection object in this manner.  Operators should upgrade to provider version 7.0.0 which has removed the vulnerability.
+
+References:
+
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-33234
+
