@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/27/3
-Message-ID: <eed59b0c-fd99-1a0f-00df-dfbc8c120ec5@apache.org>
-Date: Mon, 27 Mar 2023 16:21:03 +0000
-From: James Dailey <jdailey@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/29/2
+Message-ID: <63f557a7-2578-0ad6-ea9d-a62883356c9d@apache.org>
+Date: Mon, 29 May 2023 10:25:54 +0000
+From: Marcus Eriksson <marcuse@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25196: Apache Fineract: SQL injection vulnerability  
+Subject: CVE-2023-30601: Apache Cassandra: Privilege escalation when enabling FQL/Audit logs 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important
 
+Affected versions:
+
+- Apache Cassandra 4.0.0 through 4.0.9
+- Apache Cassandra 4.1.0 through 4.1.1
+
 Description:
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation Apache Fineract.
-Authorized users may be able to change or add data in certain components.  
+Privilege escalation when enabling FQL/Audit logs allows user with JMX access to run arbitrary commands as the user running Apache Cassandra
+This issue affects Apache Cassandra: from 4.0.0 through 4.0.9, from 4.1.0 through 4.1.1.
 
-This issue affects Apache Fineract: from 1.4 through 1.8.2.
+WORKAROUND
+The vulnerability requires nodetool/JMX access to be exploitable, disable access for any non-trusted users.
+
+MITIGATION
+Upgrade to 4.0.10 or 4.1.2 and leave the new FQL/Auditlog configuration property allow_nodetool_archive_command as false.
+
+This issue is being tracked as CASSANDRA-18550 
 
 Credit:
 
- Zhang Baocheng at Leng Jing Qi Cai Security Lab (reporter)
-Aleks@...che.org (remediation developer)
+Gal Elbaz at Oligo (finder)
 
 References:
 
-https://fineract.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25196
+https://cassandra.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-30601
+https://issues.apache.org/jira/browse/CASSANDRA-18550
 
