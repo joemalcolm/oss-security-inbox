@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/6
-Message-ID: <eff1e2ba-5f3c-beb7-9fb3-a94eb11309a6@apache.org>
-Date: Tue, 17 Jan 2023 19:09:18 +0000
-From: Eric Covener <covener@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-36760: Apache HTTP Server: mod_proxy_ajp Possible request smuggling 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/29/1
+Message-ID: <2308609.bdg04gU6LQ@portable-bastien>
+Date: Mon, 29 May 2023 08:11:18 +0000
+From: Bastien Roucariès <rouca@...ian.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Stack overflow in imagemagick coders/tiff.c
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi,
 
-Description:
+Reading changelog and code of imagemagick, I want to report a stack overflow with crafted tiff file in imagemagick
 
-Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling') vulnerability in mod_proxy_ajp of Apache HTTP Server allows an attacker to smuggle requests to the AJP server it forwards requests to.  This issue affects Apache HTTP Server Apache HTTP Server 2.4 version 2.4.54 and prior versions.
+Fixed (after 6.9.12-26) by:
+https://github.com/ImageMagick/ImageMagick6/commit/85a370c79afeb45a97842b0959366af5236e9023
 
-Credit:
+Original reporter was Muhammad Aldo Firmansyah
 
-ZeddYu_Lu from Qi'anxin Research Institute of Legendsec at Qi'anxin Group (finder)
+Thanks 
 
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-36760
-
-Timeline:
-
-2022-07-12: Reported to security team
-
+Bastien (rouca)
