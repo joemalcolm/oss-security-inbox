@@ -1,49 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/5
-Message-ID: <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
-Date: Fri, 29 Sep 2023 18:06:11 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/29/4
+Message-ID: <4860199.GXAFRqVoOG@portable-bastien>
+Date: Mon, 29 May 2023 17:20:36 +0000
+From: Bastien Roucariès <rouca@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Exim4 MTA CVEs assigned from ZDI
+Cc: cpe_dictionary@...t.gov
+Subject: Update CVE-2021-3610: ImageMagick
 Content-Type: text/plain; charset=utf-8
 
-Hello Exim users,
+Hi,
 
-the ZDI assigned multiple CVEs to the Exim-MTA and published them
-recently:
+I want to update status of CVE-2021-3610:
 
-CVE            Link                                                      Exim-Bug
---------------+---------------------------------------------------------+-----
-CVE-2023-42114 https://www.zerodayinitiative.com/advisories/ZDI-23-1468/  3001 fixed
-CVE-2023-42115 https://www.zerodayinitiative.com/advisories/ZDI-23-1469/  2999 fixed
-CVE-2023-42116 https://www.zerodayinitiative.com/advisories/ZDI-23-1470/  3000 fixed
-CVE-2023-42117 https://www.zerodayinitiative.com/advisories/ZDI-23-1471/
-CVE-2023-42118 https://www.zerodayinitiative.com/advisories/ZDI-23-1472/
-CVE-2023-42119 https://www.zerodayinitiative.com/advisories/ZDI-23-1473/ 
+Contrary to common belief over the linux distribution this CVE affects imagemagick 6. It was introduced by commit b874d50070557eb98bdc6a3095ef4769af583dd2 for  6.9.10.88
 
+Partial fixes:
+Imagemagick6 <= 6.9.10-92 https://github.com/ImageMagick/ImageMagick6/commit/2d96228eec9fbea62ddb6c1450fa8d43e2c6b68a
+Imagemagick6 <= 6.9.11-10 https://github.com/ImageMagick/ImageMagick6/commit/7374894385161859ffbb84e280fcc89e7ae257e4
+ImageMagick6 <= 6.9.11-54 https://github.com/ImageMagick/ImageMagick6/commit/cdb67005376bcc8cbb0b743fb22787794cd30eb
+ImageMagick6 [1/2]: https://github.com/ImageMagick/ImageMagick6/commit/b307bcadcdf6ea6819951ac1786b7904f27b25c6
+Final fixes
+ImageMagick6 [2/2]: https://github.com/ImageMagick/ImageMagick6/commit/c75ae771a00c38b757c5ef4b424b51e761b02552
 
-The ZDI contacted us in June 2022. We asked about details but didn't get
-answers we were able to work with.
+I am not subscribed so cc me
 
-Next contact with ZDI was in May 2023. Right after this contact we
-created project bug tracker for 3 of the 6 issues. 2 high scored of them
-are fixed (OOB access). A minor scored (info leak) is fixed too.
+Bastien
 
-Fixes are available in a protected repository and are ready to be
-applied by the distribution maintainers.
-
-The remaining issues are debatable or miss information we need to fix
-them.
-
-We're more than happy to provide fixes for all issues as soon as we
-receive detailed information.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
