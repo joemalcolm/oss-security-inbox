@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1647" "Friday" "27" "August" "2021" "13:51:16" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "57" "Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 27   57/1647  " thread-indent "\"Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16188 invoked by uid 550); 27 Aug 2021 08:13:30 -0000
+Received: (qmail 1893 invoked by uid 550); 30 May 2023 13:53:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,98 +7,136 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28187 invoked from network); 27 Aug 2021 05:51:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=WeNqM/zzmSpNmp3RIdDs3VnJYipag2WztuQqiYkvtU4=;
-        b=E/3xzEGLYWqHSJSDwqiZYGdJuRQhDMldhmdf92Y7t5Rm/LYBwSB/lcTxRWSZeCwOUy
-         ghSar6LeoAywpLByc/zHTFZKUlAmBY6MV3Bei3UfvjxpAvo9Pq+bD+gN7TcYnAuyVe83
-         FSPbKNc7L2heU5ZStFp0ydG6j6t72+Hlb3/DQvdLtfHAN2BxPNqdFFBHNq3NiFRHRncr
-         OEa51vo8vtzo513SyYcGTiZJ1fjX4OA7qWjH1pRborSWgrkaJI8MxcE5d6y1Av4Jtj+r
-         YlknAo4XoDIBViSdf5rAk48hr9PFrRXSSxHCrwP8rmi3sHKth/vtG50kjTRHK6qfrv0m
-         Nl6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=WeNqM/zzmSpNmp3RIdDs3VnJYipag2WztuQqiYkvtU4=;
-        b=TYycxJcC5HXxqkUBFGRwfmTa98oRWAmeiCMde8m7hyecqRbKhvYYFjI8Irv/6b8n35
-         qjazmUpHMOIpEMGlyr0zYnaZK35c8/qs/FRd89InyGaSFzhofCkEZs0GeczD1P/LTYhO
-         xfdNRsP+l9347nz1iK8/BO6KoSjhf58gFsUQMim+dj6LWnRbx5QBrmqcchOUDbu1fG9M
-         y2UOr+ylXGTllRYDgIvXGNEoux1UcPaEmO7K+rMT99oGFuffbLUMfqE88Rb/VH94M6UH
-         YWcaF1YVsvzRfg+xAEpZ+C0BOF4Ly87Pfeh7tEc3/afyfdn06Doyqfm2xU96o1TM9Wwr
-         Xosg==
-X-Gm-Message-State: AOAM532eWG7N+YuEv8znmbWPA+2TEAeBPLZXdPUZMKEarTnqfzFBUnZp
-	P4BXdomo9M1ql+kMGrU+kVOw05Ok4M0fSIJ5b1BP6IPMa1Cb/g==
-X-Google-Smtp-Source: ABdhPJxxBeL0CdsDm+yCaYE7HTtoICQ5w6beZl5qDmlv/P0vw+e38w2gKxtdapEsZqQCiXxvFqs7bNrlAwvqn4HX9TQ=
-X-Received: by 2002:a25:a241:: with SMTP id b59mr3087288ybi.522.1630043486738;
- Thu, 26 Aug 2021 22:51:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFcO6XMiLJqwy=QW0Mv-yruhytSFRwb3yJsdMRVg3Gghm_5u7g@mail.gmail.com>
-In-Reply-To: <CAFcO6XMiLJqwy=QW0Mv-yruhytSFRwb3yJsdMRVg3Gghm_5u7g@mail.gmail.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Fri, 27 Aug 2021 13:51:16 +0800
-Message-ID: <CAFcO6XOfkH52NQbQj+e4U+TQ=EZizZ-YQbYygS9Mpgwsw040iA@mail.gmail.com>
+Received: (qmail 30676 invoked from network); 30 May 2023 13:49:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1685454574; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=/d2HjdZhdpv6iNJtjHmi3uEjCeoaSK32eHkC59UsfZw=;
+	b=jFyPhEGQSE3+Yg2VKclc5k91ecKsjNlvqOGxyteeJnXPx5IIjNfMZAeCx3JOCe8FO6ksUJ
+	c4YRESdA+KHea+v22+4nG6hX1oIwqb8Q39t8tx4pzUav35bbJVCxbMh8cj9spEzrNk3szP
+	aAwWSQVQoszEZQ9Hg0BzwjeNhMe511z7hdo/fmgIdJHQsAR/8rGPz9tsE6sxee6RFPRJvU
+	koF5DEmX25QIcHBUN1tLCqohlf8zVwv2rFheugt6midLfP0SshXFEMP9ahBYwu4EyK/d9A
+	68Vp+ljZq1hAGqQ1VHD+UMHYUw8QCz0Y3L2+sT4H3WQ/rC3VOtpf/ij5fi0A+Q==
+Date: Tue, 30 May 2023 13:49:33 +0000
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in
- qrtr_endpoint_post in net/qrtr/qrtr.c
+Message-ID: <ZHX+7edYF+NnmMvY@openssl.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
-The patch is available upstream.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7e78c597c3ebfd0cb329aa09a838734147e4f117
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Regards,
- butt3rflyh4ck.
+OpenSSL Security Advisory [30th May 2023]
+=========================================
 
+Possible DoS translating ASN.1 object identifiers (CVE-2023-2650)
+=================================================================
 
-On Wed, Aug 25, 2021 at 10:40 AM butt3rflyh4ck
-<butterflyhuangxx@gmail.com> wrote:
->
-> Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
-> net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
->
-> This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
-> ```
-> if (len != ALIGN(size, 4) + hdrlen)
->                 goto err;
-> ```
-> if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
-> In case of len == hdrlen and size == 0 in header this check won't fail and
-> ```
->  if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
-> bridge other distant nodes */
->              const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
->              qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
->  }
-> ```
-> will also read out of bound from data, which is hdrlen allocated block.
->
->
-> #analyze and some details
-> https://lists.openwall.net/netdev/2021/08/17/124
->
-> #patch
-> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
-> now not available upstream.
->
-> #Timeline
-> *2021/8/17 - Vulnerability reported to netdev@vger.kernel.org.
-> *2021/8/20 - Vulnerability confirmed and patched.
-> *2021/8/23 - Vulnerability reported to secalert@redhat.com.
-> *2021/8/25 - Opened on oss-security@lists.openwall.com.
->
-> #Credit
-> Active Defense Lab of Venustech.
->
->
-> Regards,
->  butt3rflyh4ck.
->
-> --
-> Active Defense Lab of Venustech
+Severity: Moderate
 
+Issue summary: Processing some specially crafted ASN.1 object identifiers or
+data containing them may be very slow.
 
+Impact summary: Applications that use OBJ_obj2txt() directly, or use any of
+the OpenSSL subsystems OCSP, PKCS7/SMIME, CMS, CMP/CRMF or TS with no message
+size limit may experience notable to very long delays when processing those
+messages, which may lead to a Denial of Service.
 
--- 
-Active Defense Lab of Venustech
+An OBJECT IDENTIFIER is composed of a series of numbers - sub-identifiers -
+most of which have no size limit.  OBJ_obj2txt() may be used to translate
+an ASN.1 OBJECT IDENTIFIER given in DER encoding form (using the OpenSSL
+type ASN1_OBJECT) to its canonical numeric text form, which are the
+sub-identifiers of the OBJECT IDENTIFIER in decimal form, separated by
+periods.
+
+When one of the sub-identifiers in the OBJECT IDENTIFIER is very large
+(these are sizes that are seen as absurdly large, taking up tens or hundreds
+of KiBs), the translation to a decimal number in text may take a very long
+time.  The time complexity is O(n^2) with 'n' being the size of the
+sub-identifiers in bytes (*).
+
+With OpenSSL 3.0, support to fetch cryptographic algorithms using names /
+identifiers in string form was introduced.  This includes using OBJECT
+IDENTIFIERs in canonical numeric text form as identifiers for fetching
+algorithms.
+
+Such OBJECT IDENTIFIERs may be received through the ASN.1 structure
+AlgorithmIdentifier, which is commonly used in multiple protocols to specify
+what cryptographic algorithm should be used to sign or verify, encrypt or
+decrypt, or digest passed data.
+
+Applications that call OBJ_obj2txt() directly with untrusted data are
+affected, with any version of OpenSSL.  If the use is for the mere purpose
+of display, the severity is considered low.
+
+In OpenSSL 3.0 and newer, this affects the subsystems OCSP, PKCS7/SMIME,
+CMS, CMP/CRMF or TS.  It also impacts anything that processes X.509
+certificates, including simple things like verifying its signature.
+
+The impact on TLS is relatively low, because all versions of OpenSSL have a
+100KiB limit on the peer's certificate chain.  Additionally, this only
+impacts clients, or servers that have explicitly enabled client
+authentication.
+
+In OpenSSL 1.1.1 and 1.0.2, this only affects displaying diverse objects,
+such as X.509 certificates.  This is assumed to not happen in such a way
+that it would cause a Denial of Service, so these versions are considered
+not affected by this issue in such a way that it would be cause for concern,
+and the severity is therefore considered low.
+
+No version of the FIPS provider is affected by this issue.
+
+OpenSSL 3.0.x and 3.1.x are vulnerable to this issue.
+OpenSSL 1.1.1 and 1.0.2 users may be affected by this issue when calling
+OBJ_obj2txt() directly.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.9.
+OpenSSL 3.1 users should upgrade to OpenSSL 3.1.1.
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1u.
+OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zh (premium support
+customers only).
+
+OSSfuzz first detected and automatically reported this issue on 16th January
+2020. At that time OpenSSL 3.0 was still in early development and it was not
+identified as a security concern at that time. On 23rd April 2023 the issue
+was reexamined and identified as a security issue by Matt Caswell.
+The fix was developed by Richard Levitte.
+
+(*) A measurement showed about 2 seconds for 100KiB and a minute for 500KiB.
+This measurement wasn't made to demonstrate exact time ranges, but rather to
+demonstrate the quadratic nature of the issue.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230530.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/general/security-policy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmR1/kQSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tXS0QAJpUoGfoirteiNuvdRy4PP72E0ZHVsll
+2PlsArtQwogpEJD5Z4Escq+Cb7ZPl7uqBdfosJTX31Kr3e/ri6HY3Bzjxa1xOKUo
+GHC/RADZqGWemBiabr9BDtJAaadQDS3a8tGSklgab0ueHtCX9zX0ptWE3lW8NGp5
+DXQ4pBVzGHpldHgN8OLhpreshbw9RJNvdAXrl445MtUNXy4rJYRTqlHCqwH6qjCM
+a/a6sFaIevgspm85L30YWtx38T+vqfNFhl9RZuKbQB9PlL1g3UWpsnvVUCSrXytH
+ehlNhyfCX03vNn4Ym/Gp9cj5/1EM0wsF6EVuXGBe6+D/vwh5eLTPgndLr8KKo12C
+ysJF4dGdLSKg3KaL6xV4Km+XXv8S4s4MF9FOYqachF6hnBWyTdwkVcTNWBYPmexS
+Kw/MpXku65hWrjZT9FGfoFsl3RBYOde9E31ubd6/gUANkzF8jqaMfn966oCmoz2O
+uQb29gjEKUQWZD8Es23Yub3Jj0wTvN1i03fIhrzzbgoIR/RGOX/4yTKvsoYk2ddG
++30PPLKXrckQ+n4GT8eq1Fdr6ReKjuMpH3b85Ki2pSuwRY666P+pqWwuV9BGT1QP
+uKiSvF4nxdLs4VExQ9XN42zPC6rKKu5t9XxC5xdYEGUKlTxFshDL4dHn93tpl0T3
+vuVUvn6INUsN
+=xLMN
+-----END PGP SIGNATURE-----
