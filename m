@@ -1,34 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/15
-Message-Id: <0C89573D-D4AD-4C3C-8A8A-54333B636005@slcoding.com>
-Date: Tue, 25 Jul 2023 20:14:01 +0200
-From: Lucas Rolff <lucas@...oding.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/01/1
+Message-ID: <c37ab2bd-375c-4963-c570-44be9c4b2d81@redhat.com>
+Date: Thu, 1 Jun 2023 12:35:16 +0200
+From: Zdenek Dohnal <zdohnal@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
+Subject: [vs] CVE-2023-32324 heap buffer overflow in cupsd
 Content-Type: text/plain; charset=utf-8
 
-OS vendors can include it in microcode updates just fine assuming the change is minor (Spectre/Meltdown did take quite some time to iron out stability to live patch it).
+Hi all,
 
-> On 25 Jul 2023, at 19:58, Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
-> 
-> On Tue, Jul 25, 2023 at 06:12:44PM +0100, Eddie Chapman wrote:
->> alice wrote:
->>> this is a disaster of a security announcement from AMD. nothing is fixed
->>> except for epyc. the only workaround anyone really has is the chicken bit,
->>> thankfully.
->> 
->> Yes, very disappointing. Pure speculation; perhaps they were planning on
->> disclosing at the end of the year with full set of Microcode ready but
->> something we don't know (yet) forced them to disclose early. Who knows.
-> 
-> Does AMD make OS-loadable μcode patches available for client platforms,
-> or must all μcode loading on clients be done by the firmware?  If the
-> latter, then it will take a very long time for clients to get patched,
-> even if AMD released the updates promptly.  Also, server platforms can
-> usually reflash the firmware via the BMC, but client platforms do not
-> have this option.
-> -- 
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
+there is currently embargoed CVE-2023-32324 in cups project:
 
+
+      Summary
+
+A heap buffer overflow vulnerability would allow a remote attacker to 
+lauch a dos attack.
+
+
+      Details
+
+A buffer overflow vulnerability in the function |format_log_line| could 
+allow remote attackers to cause a denial-of-service(DoS) on the affected 
+system (not verified for possible arbitrary code execution).
+
+The vulnerability affects the commit #c0c4037 and the latest commit 
+#4310a07 on the GitHub master branch as well as the latest release 
+version v2.4.2. I have only tested these versions so far.
+
+Exploitation of the vulnerability can be triggered when the 
+configuration file |cupsd.conf| sets the value of |loglevel |to |DEBUG| 
+if the log location is set to a file.
+
+
+      Reproduce
+
+$ git clonehttps://github.com/OpenPrinting/cups.git
+$ cd  cups
+$ CFLAGS="-g -fsanitize=address -fPIE" CXXFLAGS="-g -fsanitize=address -fPIE" LDFLAGS="-fsanitize=address" ./configure -with-tls=no --disable-shared
+
+# Now compile cups
+$ make -j
+
+# Adjust conf/cupsd.conf to reproduce the crash - enable debug logging to a file and set cupsd to listen on port 8631
+$ sed -i 's,LogLevel warn,LogLevel debug,' conf/cupsd.conf
+$ sed -i 's,Listen localhost:631,Listen localhost:8631,' conf/cupsd.conf
+
+Run cups and replay the crash.raw
+
+|$ sudo ./scheduler/cupsd -c conf/cupsd.conf -f $ nc 127.0.0.1 8631 < 
+./crash.raw |||
+
+cupsd crashes after the last command and generates the attached ASAN report.
+
+||
+
+||
+
+
+      PoC
+
+crash.raw attached
+
+
+      Impact
+
+Heap buffer overflow.
+
+*Patch*
+
+Committed as 
+https://github.com/OpenPrinting/cups/commit/fd8bc2d32589d1fd91fe1c0521be2a7c0462109e
+
+
+For OpenPriniting CUPS community,
+
+Zdenek Dohnal (CUPS 2.4.x release manager)
+
+-- 
+Zdenek Dohnal
+Senior Software Engineer
+Red Hat, BRQ-TPBC
+
+Content of type "text/html" skipped
+
+View attachment "0001-Consensus-fix.patch" of type "text/x-patch" (804 bytes)
+
+View attachment "asan_report.txt" of type "text/plain" (3254 bytes)
+
+Download attachment "crash.raw" of type "application/octet-stream" (37881 bytes)
