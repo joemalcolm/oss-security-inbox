@@ -1,36 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/3
-Message-ID: <ae91bb8a-9155-6c71-ea73-20df3905202d@apache.org>
-Date: Thu, 28 Dec 2023 20:30:33 +0000
-From: Arrigo Marchiori <ardovm@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-47804: Apache OpenOffice: Macro URL arbitrary script execution 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/05/1
+Message-ID:  <SA1PR09MB7583C04FD0BFCF3663F20D22F94DA@SA1PR09MB7583.namprd09.prod.outlook.com>
+Date: Mon, 5 Jun 2023 14:35:15 +0000
+From: cpe_dictionary <cpe_dictionary@...t.gov>
+To: Bastien Roucariès <rouca@...ian.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: cpe_dictionary <cpe_dictionary@...t.gov>
+Subject: RE: Update CVE-2021-3610
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Good morning,
 
-Affected versions:
+Thank you for bringing this to our attention. We appreciate community input in order to provide the most accurate and up-to-date information as possible. After reviewing publicly available information we have made the appropriate modifications in addition to adding missing versions for the codebase. Please allow up to 24 hours for the changes to be reflected on the website and in the data feeds.
 
-- Apache OpenOffice through 4.1.15
+V/r,
+Common Platform Enumeration Team
+cpe_dictionary@...t.gov
 
-Description:
+-----Original Message-----
+From: Bastien Roucariès <rouca@...ian.org> 
+Sent: Monday, May 29, 2023 1:21 PM
+To: oss-security@...ts.openwall.com
+Cc: cpe_dictionary <cpe_dictionary@...t.gov>
+Subject: Update CVE-2021-3610
 
-Apache OpenOffice documents can contain links that call internal macros with arbitrary arguments. Several URI Schemes are defined for this purpose.
+Hi,
 
-Links can be activated by clicks, or by automatic document events.
+I want to update status of CVE-2021-3610:
 
-The execution of such links must be subject to user approval.
+Contrary to common belief over the linux distribution this CVE affects imagemagick 6. It was introduced by commit b874d50070557eb98bdc6a3095ef4769af583dd2 for  6.9.10.88
 
-In the affected versions of OpenOffice, approval for certain links is not requested; when activated, such links could therefore result in arbitrary script execution.
+Partial fixes:
+Imagemagick6 <= 6.9.10-92 https://github.com/ImageMagick/ImageMagick6/commit/2d96228eec9fbea62ddb6c1450fa8d43e2c6b68a
+Imagemagick6 <= 6.9.11-10 https://github.com/ImageMagick/ImageMagick6/commit/7374894385161859ffbb84e280fcc89e7ae257e4
+ImageMagick6 <= 6.9.11-54 https://github.com/ImageMagick/ImageMagick6/commit/cdb67005376bcc8cbb0b743fb22787794cd30eb
+ImageMagick6 [1/2]: https://github.com/ImageMagick/ImageMagick6/commit/b307bcadcdf6ea6819951ac1786b7904f27b25c6
+Final fixes
+ImageMagick6 [2/2]: https://github.com/ImageMagick/ImageMagick6/commit/c75ae771a00c38b757c5ef4b424b51e761b02552
 
-This is a corner case of CVE-2022-47502.
+I am not subscribed so cc me
 
-Credit:
-
-Amel BOUZIANE-LEBLOND aka Icare Bug Bounty Hunter (reporter)
-
-References:
-
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-47804
-
+Bastien
