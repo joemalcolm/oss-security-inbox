@@ -1,60 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/07/1
-Message-ID: <CAM+3YVqUYBAwOB+P5qjEKiniqABCDUTK6mpZOw8jENm=tSGskg@mail.gmail.com>
-Date: Tue, 7 Nov 2023 08:54:08 +0100
-From: Marco Ivaldi <raptor@...eadbeef.info>
-To: oss-security@...ts.openwall.com
-Subject: HNS-2023-03 - HN Security Advisory - Multiple vulnerabilities in Zephyr RTOS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/06/4
+Message-ID: <ZH9uHeiWrtK5oDz7@itl-email>
+Date: Tue, 6 Jun 2023 13:34:20 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com, announce@...che.org, announce@...camole.apache.org, dev@...camole.apache.org, user@...camole.apache.org
+Cc: security@...camole.apache.org
+Subject: Re: [SECURITY] CVE-2023-30576: Apache Guacamole: Use-after-free in handling of RDP audio input buffer
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Jun 06, 2023 at 10:12:29AM -0700, Michael Jumper wrote:
+> Severity: moderate
+> Base CVSS Score: 6.8 (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N)
 
-Find attached a security advisory that details multiple
-vulnerabilities we discovered in the Zephyr real-time operating
-system.
+Why is this A:N and AC:H?
 
-* Title: Multiple vulnerabilities in Zephyr RTOS
-* OS: Zephyr <= 3.4.0, except for:
-  * CVE-2023-4265 that affects Zephyr <= 3.3.0
-  * CVE-2023-4261 that affects Zephyr <= 3.5.0
-* Author: Marco Ivaldi <marco.ivaldi@...ecurity.it>
-* Date: 2023-11-07
-* CVE IDs and severity:
-  * CVE-2023-3725 - High - 7.6
-  * CVE-2023-4257 - Moderate - 6.8
-  * CVE-2023-4259 - High - 7.1
-  * CVE-2023-4260 - Moderate - 6.3
-  * CVE-2023-4261 - (unreleased)
-  * CVE-2023-4262 - Moderate - 5.1
-  * CVE-2023-4263 - High - 7.6
-  * CVE-2023-4264 - High - 7.1
-  * CVE-2023-4265 - Moderate - 6.4
-  * CVE-2023-5139 - Moderate - 4.4
-  * CVE-2023-5184 - High - 7.0
-  * CVE-2023-5753 - Moderate - 6.3
-* Vendor URL: https://www.zephyrproject.org/
-* Advisory URLs:
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-2g3m-p6c7-8rr3
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-853q-q69w-gf5j
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-gghm-c696-f4j4
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-gj27-862r-55wh
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-5954-jcv4-7rvm
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-56p9-5p3v-hhrc
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-rf6q-rhhp-pqhf
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-rgx6-3w4j-gf5j
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-4vgv-5r6q-r6xh
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-rhrc-pcxp-4453
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-8x3p-q3r5-xh9g
-  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-hmpr-px56-rvww
-
-For additional information, please refer to our vulnerability writeup:
-https://security.humanativaspa.it/ost2-zephyr-rtos-and-a-bunch-of-cves
-
-Regards,
+> Affected versions:
+> 
+> - Apache Guacamole 0.9.10 through 1.5.1
+> 
+> Description:
+> 
+> Apache Guacamole 0.9.10 through 1.5.1 may continue to reference a freed RDP
+> audio input buffer. Depending on timing, this may allow an attacker to
+> execute arbitrary code with the privileges of the guacd process.
+> 
+> Mitigation:
+> 
+> Users of versions of Apache Guacamole 1.5.1 and older should upgrade to the
+> 1.5.2 release.
+> 
+> Credit:
+> 
+> We would like to thank Stefan Schiller (Sonar) for reporting this issue.
+> 
+> References:
+> 
+> https://guacamole.apache.org/
+> https://www.cve.org/CVERecord?id=CVE-2023-30576
+> 
+> Timeline:
+> 
+> 2023-04-11: Reported to security@...camole.apache.org
+> 2023-04-11: Report acknowledged by project
+> 2023-04-12: Report confirmed by project
+> 2023-05-09: Fix completed and merged
+> 2023-05-09: Fix tested and confirmed by reporter
+> 2023-05-25: Fix released
 
 -- 
-Marco Ivaldi
-https://0xdeadbeef.info/
-"When cryptography is outlawed, bayl bhgynjf jvyy unir cevinpl."
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-View attachment "HNS-2023-03-zephyr.txt" of type "text/plain" (34217 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
