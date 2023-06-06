@@ -1,121 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/1
-Message-Id: <E1qqBUr-0002FK-BR@xenbits.xenproject.org>
-Date: Tue, 10 Oct 2023 12:05:57 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 440 v3 (CVE-2023-34323) - xenstored: A transaction conflict can crash C Xenstored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/06/2
+Message-ID: <ac30264b-daba-2c9f-95bd-224cdccee419@apache.org>
+Date: Tue, 6 Jun 2023 10:12:29 -0700
+From: Michael Jumper <mjumper@...che.org>
+To: announce@...che.org, announce@...camole.apache.org, dev@...camole.apache.org, user@...camole.apache.org
+Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2023-30576: Apache Guacamole: Use-after-free in handling of RDP audio input buffer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate
+Base CVSS Score: 6.8 (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N)
 
-            Xen Security Advisory CVE-2023-34323 / XSA-440
-                               version 3
+Affected versions:
 
-        xenstored: A transaction conflict can crash C Xenstored
+- Apache Guacamole 0.9.10 through 1.5.1
 
-UPDATES IN VERSION 3
-====================
+Description:
 
-Public release.
+Apache Guacamole 0.9.10 through 1.5.1 may continue to reference a freed 
+RDP audio input buffer. Depending on timing, this may allow an attacker 
+to execute arbitrary code with the privileges of the guacd process.
 
-ISSUE DESCRIPTION
-=================
+Mitigation:
 
-When a transaction is committed, C Xenstored will first check
-the quota is correct before attempting to commit any nodes.  It would
-be possible that accounting is temporarily negative if a node has
-been removed outside of the transaction.
+Users of versions of Apache Guacamole 1.5.1 and older should upgrade to 
+the 1.5.2 release.
 
-Unfortunately, some versions of C Xenstored are assuming that the
-quota cannot be negative and are using assert() to confirm it.  This
-will lead to C Xenstored crash when tools are built without -DNDEBUG
-(this is the default).
+Credit:
 
-IMPACT
-======
+We would like to thank Stefan Schiller (Sonar) for reporting this issue.
 
-A malicious guest could craft a transaction that will hit the C
-Xenstored bug and crash it.  This will result to the inability to
-perform any further domain administration like starting new guests,
-or adding/removing resources to or from any existing guest.
+References:
 
-VULNERABLE SYSTEMS
-==================
+https://guacamole.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-30576
 
-All versions of Xen up to and including 4.17 are vulnerable if XSA-326
-was ingested.
+Timeline:
 
-All Xen systems using C Xenstored are vulnerable.  C Xenstored built
-using -DNDEBUG (can be specified via EXTRA_CFLAGS_XEN_TOOLS=-DNDEBUG)
-are not vulnerable.  Systems using the OCaml variant of Xenstored are
-not vulnerable.
-
-MITIGATION
-==========
-
-The problem can be avoided by using OCaml Xenstored variant.
-
-CREDITS
-=======
-
-This issue was discovered by Stanislav Uschakow and Julien Grall, all
-from Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa440-4.17.patch      Xen 4.17.x - Xen 4.15.x.
-
-$ sha256sum xsa440*
-187b7edef4f509f3d7ec1662901fa638a900ab4213447438171fb2935f387014  xsa440.meta
-431dab53baf2b57a299d1a151b330b62d9a007715d700e8515db71ff813d0037  xsa440-4.17.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmUlNOMMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZy64IAIZBqlKJAGVeGMzSpuJfkP2YXLe9JNeR46HRG90e
-mV94MWmsf+4kMu2ZhnXQaR2+lafjNfAQVdh9nXV0tdJu//yzLRfXnLfFWrroqBTS
-g69/9zvgGRYvobHe6X/WmLwXCV8N27q04zLK7R9nYwntw2mJBBCvUfRPVHk/6lpH
-4Ke6o0XbjmOjForl2PA3ISRqXKD5nB0pWp1cEfPt3PzCUV02kI/N3veWDRN2wyPN
-jclvwlVVASJdCrcs0+NlOalN5XhD9+K5RN+VVGu3dchXpaa3qEOiTc/V5T1U5cX8
-pqNqUBlo4ECFLygE2aUTITIX+dpLaGYD8rmFq0CPnsB6E5U=
-=6W84
------END PGP SIGNATURE-----
-
-Download attachment "xsa440.meta" of type "application/octet-stream" (1037 bytes)
-
-Download attachment "xsa440-4.17.patch" of type "application/octet-stream" (2177 bytes)
+2023-04-11: Reported to security@...camole.apache.org
+2023-04-11: Report acknowledged by project
+2023-04-12: Report confirmed by project
+2023-05-09: Fix completed and merged
+2023-05-09: Fix tested and confirmed by reporter
+2023-05-25: Fix released
