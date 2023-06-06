@@ -1,59 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/12
-Message-ID: <SJ0PR01MB7413C4BC552E1212F3BEDEC3D1CAA@SJ0PR01MB7413.prod.exchangelabs.com>
-Date: Thu, 5 Oct 2023 17:40:58 +0000
-From: "zdi@...ndmicro.com" <zdi@...ndmicro.com>
-To: Salvatore Bonaccorso <carnil@...ian.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Solar Designer <solar@...nwall.com>
-Subject: RE: Exim4 MTA CVEs assigned from ZDI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/06/5
+Message-ID: <b8241525-7d3d-ada1-ee36-46d711722c53@apache.org>
+Date: Tue, 6 Jun 2023 11:01:30 -0700
+From: Michael Jumper <mjumper@...che.org>
+To: Demi Marie Obenour <demi@...isiblethingslab.com>
+Cc: oss-security@...ts.openwall.com, security@...camole.apache.org
+Subject: Re: [SECURITY] CVE-2023-30576: Apache Guacamole: Use-after-free in handling of RDP audio input buffer
 Content-Type: text/plain; charset=utf-8
 
-Apologies, We have not received any notifications from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
+On 6/6/23 10:34, Demi Marie Obenour wrote:
+> On Tue, Jun 06, 2023 at 10:12:29AM -0700, Michael Jumper wrote:
+>> Severity: moderate
+>> Base CVSS Score: 6.8 (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N)
+> 
+> Why is this A:N ...
 
-Thanks,
-The ZDI Team
+The issue in question has no impact on the availability of a deployed 
+instance of the service.
 
------Original Message-----
-From: ZDI Researcher Mailbox
-Sent: Wednesday, October 4, 2023 2:02 PM
-To: Salvatore Bonaccorso <carnil@...ian.org>; oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: RE: [oss-security] Exim4 MTA CVEs assigned from ZDI
+> ... and AC:H?
 
-Hello Salvatore,
+A successful attack in this case would depend on a complex series of 
+factors and non-deterministic events outside the control of the attacker.
 
-We have received a notification from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
-
-Thanks,
-The ZDI Team
-
------Original Message-----
-From: Salvatore Bonaccorso <salvatore.bonaccorso@...il.com> On Behalf Of Salvatore Bonaccorso
-Sent: Wednesday, October 4, 2023 12:23 PM
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>; ZDI Researcher Mailbox <zdi@...ndmicro.com>
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
-
-Hi ZDI team,
-
-On Fri, Sep 29, 2023 at 07:26:45PM +0000, zdi@...ndmicro.com wrote:
-> Hi,
->
-> The ZDI reached out multiple times to the developers regarding
-> multiple bug reports with little progress to show for it. After our
-> disclosure timeline was exceeded by many months, we notified the
-> maintainer of our intent to publicly disclose these bugs, at which
-> time we were told, "you do what you do." If these bugs have been
-> appropriately addressed, we will update our advisories with a link to
-> the security advisory, code check-in, or other public documentation
-> closing the issue.
-
-As there is still some confusion around the libspf2 related issue: can you confirm or deny if the issue CVE-2023-42118 / ZDI-23-1472 is covered by https://github.com/shevek/libspf2/pull/44 ?
-
-Regards,
-Salvatore
-TREND MICRO EMAIL NOTICE
-
-The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
-
-For details about what personal information we collect and why, please see our Privacy Notice on our website at: Read privacy policy<http://www.trendmicro.com/privacy>
+- Mike
