@@ -1,71 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/7
-Message-ID: <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
-Date: Mon, 25 Sep 2023 18:10:05 +0100
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Cc: "Xen. org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/07/2
+Message-ID: <e93b159a-f165-8ab6-e9ea-ab636c26b9ef@gmail.com>
+Date: Wed, 7 Jun 2023 18:41:34 +0800
+From: Hangyu Hua <hbh25y@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: off-by-one in fl_set_geneve_opt
 Content-Type: text/plain; charset=utf-8
 
-On 25/09/2023 5:36 pm, Solar Designer wrote:
-> Hi,
->
-> Thank you Xen security team for indirectly bringing the various CPU
-> issues in here.  This is very helpful, as your messages on them serve
-> two purposes at once - informing the community about issues fixed in Xen
-> (so directly on-topic here, with Xen being Open Source) and about the
-> CPU issues that typically also need to be mitigated by other projects.
->
-> On Mon, Sep 25, 2023 at 04:05:37PM +0000, Xen. org security team wrote:
->>             Xen Security Advisory CVE-2023-20588 / XSA-439
->>
->>              x86/AMD: Divide speculative information leak
->>
->> ISSUE DESCRIPTION
->> =================
->>
->> In the Zen1 microarchitecure, there is one divider in the pipeline which
->> services uops from both threads.  In the case of #DE, the latched result
->> from the previous DIV to execute will be forwarded speculatively.
->>
->> This is a covert channel that allows two threads to communicate without
->> any system calls.  In also allows userspace to obtain the result of the
->> most recent DIV instruction executed (even speculatively) in the core,
->> which can be from a higher privilege context.
->>
->> For more information, see:
->>  * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
-> The above link is wrong - it's for CVE-2023-20593 Zenbleed in Zen2.
->
-> The correct link for CVE-2023-20588, the DIV bug in Zen1, appears to be:
->
-> https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
+On 7/6/2023 11:32, Hangyu Hua wrote:
+> Hi guys,
+> 
+> I find a off-by-one bug in linux kernel's Flower
+> classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege 
+> escalation.
+> 
+> # Details:
+> 
+> static int fl_set_geneve_opt(const struct nlattr *nla, struct 
+> fl_flow_key *key,
+>       int depth, int option_len,
+>       struct netlink_ext_ack *extack)
+> {
+> struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
+> struct nlattr *class = NULL, *type = NULL, *data = NULL;
+> struct geneve_opt *opt;
+> int err, data_len = 0;
+> 
+> if (option_len > sizeof(struct geneve_opt))
+> data_len = option_len - sizeof(struct geneve_opt);
+> 
+> opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
+> memset(opt, 0xff, option_len);
+> opt->length = data_len / 4;
+> opt->r1 = 0;
+> opt->r2 = 0;
+> opt->r3 = 0;
+> 
+> ...
+> if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
+> int new_len = key->enc_opts.len;
+> 
+> data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
+> data_len = nla_len(data);
+> if (data_len < 4) {
+> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
+> bytes long");
+> return -ERANGE;
+> }
+> if (data_len % 4) {
+> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
+> multiple of 4 bytes long");
+> return -ERANGE;
+> }
+> 
+> new_len += sizeof(struct geneve_opt) + data_len;
+> BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
+> if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
+> NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
+> return -ERANGE;
+> }
+> opt->length = data_len / 4;
+> memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
+> }
+> ...
+> }
+> 
+> We can see that opt use key->enc_opts.len to get its pointer from
+> key->enc_opts.data[] in [1]. Then length will be set to "data_len /
+> 4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
+> packets and their total size is 252 bytes(key->enc_opts.len = 252)
+> then key->enc_opts.len = opt->length = data_len / 4 when the third
+> TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
+> can bypass the check in [2] and cause out of bound write in
+> [3](opt->opt_data = key->enc_opts.data[257]).
+> 
+> # Patch
+> 
+> I already contacted the linux security team and made a patch:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
+> 
+> # CVE
+> 
+> Pending
+> 
+> # EXP
+> 
+> In order to avoid confusion i will publish it after I get CVE.
 
-Oops.  I thought I'd fixed that, but apparently not.
+Hi guys,
 
-You're correct.  I'll issue an update in a moment.
-
->
-> While I am at it, here's the corresponding mitigation in Linux kernel:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
-
-Not really.  That patch entirely misunderstood the vulnerability.  I
-went through several rounds of getting AMD to better-understand their bug.
-
-Linux's fix was rewritten in
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f58d6fbcb7c848b7f2469be339bc571f2e9d245b
-and this implements the same logic as I implemented in Xen.
-
-It's worth noting that because AMD did not allocate a $FOO_NO CPUID bit,
-there's no ability for a VM to figure out that it might move to
-vulnerable hardware and therefore should engage the workaround.  The
-best a VM can do is best-effort based on whether it looks like it's
-booting on a Zen1 system.
-
-Also the cross-thread nature is also poorly reported in public.
+I decide not to publish the exp for ethical reasons. Please email me if 
+any distribution's maintainers need the code.
 
 Thanks,
+Hangyu
 
-~Andrew
+> 
+> Thanks,
+> Hangyu
