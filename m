@@ -1,85 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/10/3
-Message-Id: <0c602545-dfad-4d49-beaa-b5094b343af8@app.fastmail.com>
-Date: Tue, 10 Jan 2023 17:45:06 +0100
-From: "Pietro Albini" <pietro@...troalbini.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/07/1
+Message-ID: <ee226490-51c6-f8e9-821a-6061202c01b1@gmail.com>
+Date: Wed, 7 Jun 2023 11:32:31 +0800
+From: Hangyu Hua <hbh25y@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46176: Cargo does not check SSH host keys
+Subject: Linux kernel: off-by-one in fl_set_geneve_opt
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hi guys,
 
-The Rust Security Response WG was notified that Cargo did not perform SSH host
-key verification when cloning indexes and dependencies via SSH. An attacker
-could exploit this to perform man-in-the-middle (MITM) attacks.
+I find a off-by-one bug in linux kernel's Flower
+classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege 
+escalation.
 
-This vulnerability has been assigned CVE-2022-46176.
+# Details:
 
-## Overview
+static int fl_set_geneve_opt(const struct nlattr *nla, struct 
+fl_flow_key *key,
+      int depth, int option_len,
+      struct netlink_ext_ack *extack)
+{
+struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
+struct nlattr *class = NULL, *type = NULL, *data = NULL;
+struct geneve_opt *opt;
+int err, data_len = 0;
 
-When an SSH client establishes communication with a server, to prevent MITM
-attacks the client should check whether it already communicated with that
-server in the past and what the server's public key was back then. If the key
-changed since the last connection, the connection must be aborted as a MITM
-attack is likely taking place.
+if (option_len > sizeof(struct geneve_opt))
+data_len = option_len - sizeof(struct geneve_opt);
 
-It was discovered that Cargo never implemented such checks, and performed no
-validation on the server's public key, leaving Cargo users vulnerable to MITM
-attacks.
+opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
+memset(opt, 0xff, option_len);
+opt->length = data_len / 4;
+opt->r1 = 0;
+opt->r2 = 0;
+opt->r3 = 0;
 
-## Affected Versions
+...
+if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
+int new_len = key->enc_opts.len;
 
-All Rust versions containing Cargo before 1.66.1 are vulnerable.
+data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
+data_len = nla_len(data);
+if (data_len < 4) {
+NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
+bytes long");
+return -ERANGE;
+}
+if (data_len % 4) {
+NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
+multiple of 4 bytes long");
+return -ERANGE;
+}
 
-Note that even if you don't explicitly use SSH for alternate registry indexes
-or crate dependencies, you might be affected by this vulnerability if you have
-configured git to replace HTTPS connections to GitHub with SSH (through git's
-[`url.<base>.insteadOf`][1] setting), as that'd cause you to clone the
-crates.io index through SSH.
+new_len += sizeof(struct geneve_opt) + data_len;
+BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
+if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
+NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
+return -ERANGE;
+}
+opt->length = data_len / 4;
+memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
+}
+...
+}
 
-## Mitigations
+We can see that opt use key->enc_opts.len to get its pointer from
+key->enc_opts.data[] in [1]. Then length will be set to "data_len /
+4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
+packets and their total size is 252 bytes(key->enc_opts.len = 252)
+then key->enc_opts.len = opt->length = data_len / 4 when the third
+TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
+can bypass the check in [2] and cause out of bound write in
+[3](opt->opt_data = key->enc_opts.data[257]).
 
-We will be releasing Rust 1.66.1 today, 2023-01-10, changing Cargo to check the
-SSH host key and abort the connection if the server's public key is not already
-trusted. We recommend everyone to upgrade as soon as possible.
+# Patch
 
-Patch files for Rust 1.66.0 are also available [here][2] for custom-built
-toolchains.
+I already contacted the linux security team and made a patch:
 
-For the time being Cargo will not ask the user whether to trust a server's
-public key during the first connection. Instead, Cargo will show an error
-message detailing how to add that public key to the list of trusted keys. Note
-that this might break your automated builds if the hosts you clone dependencies
-or indexes from are not already trusted.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
 
-## Acknowledgments
+# CVE
 
-Thanks to the Julia Security Team for disclosing this to us according to our
-[security policy][1]!
+Pending
 
-We also want to thank the members of the Rust project who contributed to fixing
-this issue. Thanks to Eric Huss and Weihang Lo for writing and reviewing the
-patch, Pietro Albini for coordinating the disclosure and writing this advisory,
-and Josh Stone, Josh Triplett and Jacob Finkelman for advising during the
-disclosure.
+# EXP
 
-[1]: https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf
-[2]: https://github.com/rust-lang/wg-security-response/tree/main/patches/CVE-2022-46176
-[3]: https://www.rust-lang.org/policies/security
------BEGIN PGP SIGNATURE-----
+In order to avoid confusion i will publish it after I get CVE.
 
-iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAmO9P+kACgkQ77mGCudS
-Dax2XRAAr3lcAyVphS3Wm8kTKEAtnE4rpWvQnlebMcXO0HF2vNtW3srxJxcyInvm
-dAS6EUah7qe71uwDMeqw6HIqcrLDESoaWFxwyruBHwfP+yQl4xSshnFtk9x1HDtm
-cj66y2NWA726Z0RKWaZ6ePZ95tubnhMPbbMQJq7IYBCSRV5OPr4e51B9du30iGad
-3yxd55mhcMaFViRvdVBDEgQYEN9hWGTzUodITfYyGTeYc7XP//4w9lzOTdW2u20P
-9THdLwCNx6YYPSPMOr/UMAqmcPiqq5iLBfKd/aM+OAab4C1866RNnL40PBYv2lkb
-M3y/oyDL1Ffe6oh/PqoaTIl0TOXdbZ6nElLDiLbZfMKraMJYh4Ue2viEf97DYQ3m
-Kzske/lgdpiLT5LSXK2cUpXiCtKphu5pjqjoZZmfaXQfEZfQ8Jnpiu/xX36OTQ9q
-UuKnqS6tCg3PWld/05rQDNKxQSqMZiyQH2qe81sJNlpB0gxjYdb0H2BOF0Iz7tcI
-bxeFFdB7WXyB/CsSO5M+zW9j8ltT05goOmo/ja04z5UPp9mIeGTSDjynCQPhceqm
-6akhQzA0PyzmlZI5VPOUtc2zmU05cLcqtcU7eHaIfgNoxFtakbh+p0bkJJQwIGMV
-U0w/FDNeVXfCdTMcuxK99hEvxnYK2q4/6K9cyVGKoEjJXRIgyTk=
-=1E15
------END PGP SIGNATURE-----
+Thanks,
+Hangyu
