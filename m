@@ -1,4 +1,4 @@
-Received: (qmail 7958 invoked by uid 550); 11 Feb 2024 20:06:00 -0000
+Received: (qmail 1557 invoked by uid 550); 7 Jun 2023 03:39:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,66 +7,127 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7938 invoked from network); 11 Feb 2024 20:06:00 -0000
+Received: (qmail 28001 invoked from network); 7 Jun 2023 03:32:48 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707682124; x=1708286924; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nHxYSuTRwgtTijP3a7hZdmKuNM0aC1JHMstj5Kj5XNI=;
-        b=KStXfNnRaNvxuLmIIOZ1Kpcihc/IWqALACZMPb6mkXqdmj2VKM4LVC+2sicI79JxDo
-         oUZMwsbt83CHK33sDEi9AYEVtQAKJZE2m9augVgGH3xQvFEDIY1EhayhgBeuXzJao1C3
-         9j5K6aSCfAb2kaZf/aJviVuMv0KpY2vE8N4QeRM/orj4VwBziureKcqogQd4aBNJRxrI
-         5eeMSyOgjMY0BSxs/IaIPeUp60TRCEaaD4mVdCGlWqfWpNAL+VV7ZTGCzW76tixeEmQT
-         B+JkUPYLJAMZQY2mSa/Lvvzh89jlf+2ThCOPz8bJT6TVkYTua6KvjuGhjvVdAClypNEY
-         U7qQ==
+        d=gmail.com; s=20221208; t=1686108755; x=1688700755;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qqHc9UEAodsgetudggc2KEfd+hirA1caIADabIKqO/8=;
+        b=Qlq44V6jvI8DnpWMTJb7YDMtPUxUhjkNCDslZ0qm2QttUy7dVlgtG4NJMGgve68Pt4
+         29QRq6GL7m1MSizvsh6MU21Z4y8N5yX+ivwzfMequ4eK77tFBDMNDqsbCgjc/THdcAuK
+         76s85qMiSMQGcn5A0AnHi3eBHg22FDOpN8gZMAUkMvzSQBnIAbZC0dIChkaV3ML88T2v
+         mp/W0U7OUGQhPSGcfVjGh4NmKA6wA4HNrOKsebbqg4i38DBXco2y1WXingRQSO3s3R7W
+         QhWfmPvfYNpOvnGVOlmmNtXzieeO86LstTIwjlwvGgWnpREMStgVFuraO5NmGGH7OLcR
+         x0dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707682124; x=1708286924;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nHxYSuTRwgtTijP3a7hZdmKuNM0aC1JHMstj5Kj5XNI=;
-        b=pK5U1rhLpkKFctomnFjBzDR08k+gpMz0Ysq6gtfnJxKTqCiiD9DinPskl2rxR1oJK4
-         gXsHF+JGbfBn+ZbiZ6ZZuqP0bHWIddcM3oUmTRZGA1/l7nDGu9VOckJ1/h9juioQT/vc
-         XF/HKxLj5FtYmNX6aH9J/SX3oJJSJPU/adeN55CkDePvBbby6dP19bL72i1BreJwDWjc
-         74Jy/d+e+tvcvSEcqBsUJq6UR6NhApUreIMgy0Gik6hqjfy1mFGWRe4/upwiCT4tcIi+
-         tHdXRFFNhp/6m8+tbAFvwP5mxmUuJueU5DYtoFW9xFYKbGhQVxg2ZM+iLTLXQv+jxjX9
-         fcpA==
-X-Gm-Message-State: AOJu0Yy40cvm1vm9LkuG7hUWztpud0Aedgi/lu5bXctjpYMiILgbAMNI
-	/YyYcUtZ7ve+CMTrh37ydFILFEvqEwCWFr9ydu93Tqy+Zq7gnOEHa3dfdj4ob2g=
-X-Google-Smtp-Source: AGHT+IGxcK9nXFQQPjanGqDGrgEhcolVivnf5HzmtYm7YpYegUmlRZPzmqWfzwC41b/aKuSG8JEqdw==
-X-Received: by 2002:a17:907:9715:b0:a38:4dc0:22f9 with SMTP id jg21-20020a170907971500b00a384dc022f9mr7636183ejc.4.1707682124225;
-        Sun, 11 Feb 2024 12:08:44 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 11 Feb 2024 21:08:43 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZckpS1D7bfqyJeq4@eldamar.lan>
-References: <e24a80c7-33ee-408b-a86c-10eee0fe17a9@oracle.com>
+        d=1e100.net; s=20221208; t=1686108755; x=1688700755;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qqHc9UEAodsgetudggc2KEfd+hirA1caIADabIKqO/8=;
+        b=koIMoX6vMSxS6MaMieODmvqjOAfUhTthzyYX9iHiCWfhp8eGDx/9qEsylHWJTjZgke
+         ZX4SGb1QWlthgsEASIt76/b/NmePjf+EKoyJRaY5eGAV5iu9SbhSmqnu79lF7apvCXZ8
+         YNcAjYqH2KLQgWvN5U77vmdI9FNczQQqA+azu+dG7E/I2Y2tiNcFsv46Tn8BEXd8Iu+h
+         AUryfWT4vCilmHqEHHkkbEXqGXDP3yZM48Rho8/OWZqnpUCfuQ1lOReP7PXy0NxIyAjL
+         M03QmqsdEMHJowe2lr+d8yX4eqZDpFr1q1Y4RzrLhAY3J/4PaabwJOZQKR+lT2AqbY3D
+         XaKg==
+X-Gm-Message-State: AC+VfDyY5JQEXgeLdOx6nzyYq8WAvc3QRJvqo1Pop6yINBxk5jkjN4Xr
+	el80ab/yfPhNIEQypWcLVw3kFz8tjTSph0Jp
+X-Google-Smtp-Source: ACHHUZ5zDIxpN4DtCvQTtIKNEhZRZhDF1dXYYbJKvIsr+1nTdpwCZxrHlAG42K3Mbl/ZMcYSg2CAjg==
+X-Received: by 2002:a05:6a20:394c:b0:100:b92b:e8be with SMTP id r12-20020a056a20394c00b00100b92be8bemr713325pzg.2.1686108755162;
+        Tue, 06 Jun 2023 20:32:35 -0700 (PDT)
+Message-ID: <ee226490-51c6-f8e9-821a-6061202c01b1@gmail.com>
+Date: Wed, 7 Jun 2023 11:32:31 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e24a80c7-33ee-408b-a86c-10eee0fe17a9@oracle.com>
-Subject: Re: [oss-security] libuv 1.48.0 released, fixes CVE-2024-24806
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Hangyu Hua <hbh25y@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Linux kernel: off-by-one in fl_set_geneve_opt
 
-Hi,
+Hi guys,
 
-On Thu, Feb 08, 2024 at 12:15:23PM -0800, Alan Coopersmith wrote:
-> https://github.com/libuv/libuv/releases/tag/v1.48.0 shows the release
-> yesterday of stable release 1.48.0, including a fix for CVE-2024-24806.
-> 
-> https://github.com/libuv/libuv/security/advisories/GHSA-f74f-cvh7-c6q6
-> offers this information about that CVE:
-> 
-> > Affected versions: > 1.45.x
-> > Patched versions:   v1.48.0
+I find a off-by-one bug in linux kernel's Flower
+classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege 
+escalation.
 
-For completeness: The range of affected version in the above was
-rectified after contacting upstream:
+# Details:
 
-https://github.com/libuv/libuv/commit/6dd44caa35b4697d7e8c1b9fa0ba8e95d73355de
+static int fl_set_geneve_opt(const struct nlattr *nla, struct 
+fl_flow_key *key,
+      int depth, int option_len,
+      struct netlink_ext_ack *extack)
+{
+struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
+struct nlattr *class = NULL, *type = NULL, *data = NULL;
+struct geneve_opt *opt;
+int err, data_len = 0;
 
-did introduce the support, which is in v1.24.0.
+if (option_len > sizeof(struct geneve_opt))
+data_len = option_len - sizeof(struct geneve_opt);
 
-Regards,
-Salvatore
+opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
+memset(opt, 0xff, option_len);
+opt->length = data_len / 4;
+opt->r1 = 0;
+opt->r2 = 0;
+opt->r3 = 0;
+
+...
+if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
+int new_len = key->enc_opts.len;
+
+data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
+data_len = nla_len(data);
+if (data_len < 4) {
+NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
+bytes long");
+return -ERANGE;
+}
+if (data_len % 4) {
+NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
+multiple of 4 bytes long");
+return -ERANGE;
+}
+
+new_len += sizeof(struct geneve_opt) + data_len;
+BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
+if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
+NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
+return -ERANGE;
+}
+opt->length = data_len / 4;
+memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
+}
+...
+}
+
+We can see that opt use key->enc_opts.len to get its pointer from
+key->enc_opts.data[] in [1]. Then length will be set to "data_len /
+4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
+packets and their total size is 252 bytes(key->enc_opts.len = 252)
+then key->enc_opts.len = opt->length = data_len / 4 when the third
+TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
+can bypass the check in [2] and cause out of bound write in
+[3](opt->opt_data = key->enc_opts.data[257]).
+
+# Patch
+
+I already contacted the linux security team and made a patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
+
+# CVE
+
+Pending
+
+# EXP
+
+In order to avoid confusion i will publish it after I get CVE.
+
+Thanks,
+Hangyu
