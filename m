@@ -1,154 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/2
-Message-Id: <CC31A878-887C-4C58-9C78-947CB2279BAF@beckweb.net>
-Date: Wed, 25 Oct 2023 15:27:24 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/08/1
+Message-ID: <11dc9c61-7833-5503-75e6-f4ec78a60701@gmail.com>
+Date: Thu, 8 Jun 2023 10:57:33 +0800
+From: Hangyu Hua <hbh25y@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Linux kernel: off-by-one in fl_set_geneve_opt
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On 7/6/2023 18:41, Hangyu Hua wrote:
+> On 7/6/2023 11:32, Hangyu Hua wrote:
+>> Hi guys,
+>>
+>> I find a off-by-one bug in linux kernel's Flower
+>> classifier(NET_CLS_FLOWER). It can cause denial-of-service and 
+>> privilege escalation.
+>>
+>> # Details:
+>>
+>> static int fl_set_geneve_opt(const struct nlattr *nla, struct 
+>> fl_flow_key *key,
+>>       int depth, int option_len,
+>>       struct netlink_ext_ack *extack)
+>> {
+>> struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
+>> struct nlattr *class = NULL, *type = NULL, *data = NULL;
+>> struct geneve_opt *opt;
+>> int err, data_len = 0;
+>>
+>> if (option_len > sizeof(struct geneve_opt))
+>> data_len = option_len - sizeof(struct geneve_opt);
+>>
+>> opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; 
+>> <--- [1]
+>> memset(opt, 0xff, option_len);
+>> opt->length = data_len / 4;
+>> opt->r1 = 0;
+>> opt->r2 = 0;
+>> opt->r3 = 0;
+>>
+>> ...
+>> if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
+>> int new_len = key->enc_opts.len;
+>>
+>> data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
+>> data_len = nla_len(data);
+>> if (data_len < 4) {
+>> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
+>> bytes long");
+>> return -ERANGE;
+>> }
+>> if (data_len % 4) {
+>> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
+>> multiple of 4 bytes long");
+>> return -ERANGE;
+>> }
+>>
+>> new_len += sizeof(struct geneve_opt) + data_len;
+>> BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
+>> if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
+>> NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
+>> return -ERANGE;
+>> }
+>> opt->length = data_len / 4;
+>> memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
+>> }
+>> ...
+>> }
+>>
+>> We can see that opt use key->enc_opts.len to get its pointer from
+>> key->enc_opts.data[] in [1]. Then length will be set to "data_len /
+>> 4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
+>> packets and their total size is 252 bytes(key->enc_opts.len = 252)
+>> then key->enc_opts.len = opt->length = data_len / 4 when the third
+>> TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
+>> can bypass the check in [2] and cause out of bound write in
+>> [3](opt->opt_data = key->enc_opts.data[257]).
+>>
+>> # Patch
+>>
+>> I already contacted the linux security team and made a patch:
+>>
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
+>>
+>> # CVE
+>>
+>> Pending
+>>
+>> # EXP
+>>
+>> In order to avoid confusion i will publish it after I get CVE.
+> 
+> Hi guys,
+> 
+> I decide not to publish the exp for ethical reasons. Please email me if 
+> any distribution's maintainers need the code.
 
-The following releases contain fixes for security vulnerabilities:
+Since some maintainers have requested code from me, I sent the code to
+<linux-distros@...openwall.org>.
 
-* CloudBees CD Plugin 1.1.33
-* GitHub Plugin 1.37.3.1
-* lambdatest-automation Plugin 1.20.10 and 1.21.0
-* Warnings Plugin 10.5.1
+Thanks,
+Hangyu
 
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Edgewall Trac Plugin
-* Gogs Plugin
-* MSTeams Webhook Trigger Plugin
-* Multibranch Scan Webhook Trigger Plugin
-* Zanata Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-10-25/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3246 / CVE-2023-46650
-GitHub Plugin 1.37.3 and earlier does not escape the GitHub project URL on
-the build page when showing changes.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-
-SECURITY-3265 / CVE-2023-46651
-Warnings Plugin 10.5.0 and earlier does not set the appropriate context for
-credentials lookup, allowing the use of system-scoped credentials otherwise
-reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to.
-
-
-SECURITY-3222 / CVE-2023-46652
-lambdatest-automation Plugin 1.20.9 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of LAMBDATEST credentials stored in Jenkins. Those can be used as part
-of an attack to capture the credentials using another vulnerability.
-
-
-SECURITY-3202 / CVE-2023-46653
-lambdatest-automation Plugin 1.20.10 and earlier logs LAMBDATEST
-Credentials access token at the INFO level.
-
-This can result in accidental exposure of the token through the default
-system log.
-
-
-SECURITY-3237 / CVE-2023-46654
-In CloudBees CD Plugin, artifacts that were previously copied from an agent
-to the controller are deleted after publishing by the 'CloudBees CD -
-Publish Artifact' post-build step.
-
-CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
-outside of the expected directory during this cleanup process.
-
-This allows attackers able to configure jobs to delete arbitrary files on
-the Jenkins controller file system.
-
-
-SECURITY-3238 / CVE-2023-46655
-CloudBees CD Plugin temporarily copies files from an agent workspace to the
-controller in preparation for publishing them in the 'CloudBees CD -
-Publish Artifact' post-build step.
-
-CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
-outside of the temporary directory on the controller when collecting the
-list of files to publish.
-
-This allows attackers able to configure jobs to publish arbitrary files
-from the Jenkins controller file system to the previously configured
-CloudBees CD server.
-
-
-SECURITY-2875 / CVE-2023-46656
-Multibranch Scan Webhook Trigger Plugin 1.0.9 and earlier does not use a
-constant-time comparison when checking whether the provided and expected
-webhook token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2896 / CVE-2023-46657
-Gogs Plugin 1.0.15 and earlier does not use a constant-time comparison when
-checking whether the provided and expected webhook token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2876 / CVE-2023-46658
-MSTeams Webhook Trigger Plugin 0.1.1 and earlier does not use a
-constant-time comparison when checking whether the provided and expected
-webhook token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3247 / CVE-2023-46659
-Edgewall Trac Plugin 1.13 and earlier does not escape the Trac website URL
-on the build page.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2879 / CVE-2023-46660
-Zanata Plugin 0.6 and earlier does not use a constant-time comparison when
-checking whether the provided and expected webhook token hashes are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-
+> 
+> Thanks,
+> Hangyu
+> 
+>>
+>> Thanks,
+>> Hangyu
