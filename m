@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/11
-Message-ID: <d8fb0f6d-4865-c82f-91b7-d18788aaa16e@apache.org>
-Date: Tue, 25 Jul 2023 16:54:17 +0000
-From: Junkai Xue <jxue@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/10/1
+Message-ID: <b43dbbf1358a42df945de86dee00f452109a7a2e.camel@debian.org>
+Date: Sat, 10 Jun 2023 11:51:21 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-38647: Apache Helix: Deserialization vulnerability in Helix workflow and REST 
+Subject: Solar Designer talk about 15 years of oss-security at SSTIC conference
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+Hi all,
 
-- Apache Helix through 1.2.0
+while conference talks aren't really the list focus, I guess there might be an
+exception for this one.
 
-Description:
+Earlier this week, Solar Designer made the opening keynote of the SSTIC
+conference in Rennes (France). A retrospective about the open-source security
+community and coordination around vulnerabilities, attack surface etc.
 
-An attacker can use SnakeYAML to deserialize java.net.URLClassLoader and make it load a JAR from a specified URL, and then deserialize javax.script.ScriptEngineManager to load code using that ClassLoader. This unbounded deserialization can likely lead to remote code execution. The code can be run in Helix REST start and Workflow creation.
+For interested people, the video replay is available at
+https://www.sstic.org/2023/presentation/ouverture_2023/
 
-Affect all the versions lower and include 1.2.0.
+Many thanks to Solar Designer for the talk and all the years of managing oss-
+security (and the distros list).
 
-Affected products: helix-core, helix-rest
+Regards,
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-Mitigation: Short term, stop using any YAML based configuration and workflow creation.
-                  Long term, all Helix version bumping up to 1.3.0
-
-Credit:
-
-Qing Xu (reporter)
-
-References:
-
-https://helix.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-38647
-
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmSER5oACgkQ3rYcyPpX
+RFs8UggAh23FhFo9nbg+hPovw5sZ1cQuHxcCpVmnWE5COhUSzmF1/JVSEZMLWxez
+dOeVEgvCJWOl92u0lwTiTfK+tG4eNi0R2UO+uQHW+pv/5dPMV1ti/DmpwD/BhS6w
+FzzpUdMM05E9hZEDjOfsXJkBn4pMg3kCzrSuK/KlOdkp9/qI7dCD4J27KwZX2VDB
+tih4MjBexSUkdaX/hhvWq7n9plvs5Jbf8U4vy4jBaHFlVdJohu3QVrPb5H7p7mAW
+YVkUhhPX8GSBBtkAoIYcnrDZQv4762PVkixV6dRZlhowjbzsBJ198PRk1Ct7Pepo
+gRAM0FC7qE4GMyXTFhU2b80wLSTB9Q==
+=K4GU
+-----END PGP SIGNATURE-----
