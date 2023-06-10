@@ -1,48 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/28/1
-Message-ID: <ZOvSu1BAV0jp/6t9@itl-email>
-Date: Sun, 27 Aug 2023 18:47:54 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel, again
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/10/2
+Message-ID:  <YT2PR01MB98273D8129B5BB67241FB30BE856A@YT2PR01MB9827.CANPRD01.PROD.OUTLOOK.COM>
+Date: Sat, 10 Jun 2023 10:04:44 +0000
+From: Katherine Mcmillan <kmcmi046@...tawa.ca>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Solar Designer talk about 15 years of oss-security at SSTIC conference
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Aug 27, 2023 at 08:56:12PM +0200, Eduardo' Vela" <Nava> wrote:
-> On Sun, 27 Aug 2023, 19:41 Demi Marie Obenour, <demi@...isiblethingslab.com>
-> wrote:
-> 
-> > Does this include unfixed vulnerabilities?
-> >
-> 
-> The link* has more details, but briefly, deduplication is done by fix
-> commit.
-> 
-> Efforts to fix unfixed Syzkaller crashes (also something being worked on)
-> are complementary to the effort to generate CVE identifiers for them, if
-> that's your question (so, yes? Unfixed vulnerabilities found by Syzkaller
-> are meant to be fixed first and then a CVE is generated for the reports
-> fixed by their corresponding Fix commit).
-> 
-> Generating CVEs for Syzkaller reports without deduplicating them first
-> would be disruptive and useless (the link* goes into more details).
-> Deduplication is subjective as it depends on how the bugs are understood.
-> The analysis that is needed to deduplicate is happening as part of the fix
-> review process.
-> 
-> One could, of course, create a different mechanism to automatically (or
-> semi-automatically) deduplicate Syzkaller reports and accept the risk of
-> duplicate CVEs. This may be something to look at in the future, but it's
-> not what's being worked on for the first iteration, and we probably will
-> have a lot to fix and learn from even after the first wave of CVEs are
-> generated.
-> 
-> * https://github.com/google/cvelist/tree/cve-automation/fuzzer
+Hi Yves-Alexis,
 
-That makes sense.  Do you have any information about the efforts to fix
-the crashes?
--- 
+Personally, I don’t mind the plug for this at all - wonderful job Solar Designer!
+
+Speaking of which, has there ever been any consideration of having an “oss-security-advocacy” list? I like seeing/sharing relevant updates like this.
+
+I also don’t want to use this list to plug oss-security related talks and conferences, but having said that, the *BSD community supports these efforts and I think I can speak for many when I say that we would love to have an oss-security talk at some point at EuroBSDCon. Keep it in mind, and consider submitting an abstract - open source security is a key topic at this conference too!
+
 Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Katie
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+________________________________
+From: Yves-Alexis Perez <corsac@...ian.org>
+Sent: Saturday, June 10, 2023 5:51:21 AM
+To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+Subject: [oss-security] Solar Designer talk about 15 years of oss-security at SSTIC conference
+
+Attention : courriel externe | external email
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Hi all,
+
+while conference talks aren't really the list focus, I guess there might be an
+exception for this one.
+
+Earlier this week, Solar Designer made the opening keynote of the SSTIC
+conference in Rennes (France). A retrospective about the open-source security
+community and coordination around vulnerabilities, attack surface etc.
+
+For interested people, the video replay is available at
+https://www.sstic.org/2023/presentation/ouverture_2023/
+
+Many thanks to Solar Designer for the talk and all the years of managing oss-
+security (and the distros list).
+
+Regards,
+- --
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmSER5oACgkQ3rYcyPpX
+RFs8UggAh23FhFo9nbg+hPovw5sZ1cQuHxcCpVmnWE5COhUSzmF1/JVSEZMLWxez
+dOeVEgvCJWOl92u0lwTiTfK+tG4eNi0R2UO+uQHW+pv/5dPMV1ti/DmpwD/BhS6w
+FzzpUdMM05E9hZEDjOfsXJkBn4pMg3kCzrSuK/KlOdkp9/qI7dCD4J27KwZX2VDB
+tih4MjBexSUkdaX/hhvWq7n9plvs5Jbf8U4vy4jBaHFlVdJohu3QVrPb5H7p7mAW
+YVkUhhPX8GSBBtkAoIYcnrDZQv4762PVkixV6dRZlhowjbzsBJ198PRk1Ct7Pepo
+gRAM0FC7qE4GMyXTFhU2b80wLSTB9Q==
+=K4GU
+-----END PGP SIGNATURE-----
+
