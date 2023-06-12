@@ -1,50 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/1
-Message-ID: <ZWRa3EI5Oa-5621n@kasco.suse.de>
-Date: Mon, 27 Nov 2023 10:01:16 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/12/2
+Message-ID: <03c4e506-c64e-c997-2607-a8502a6d097e@apache.org>
+Date: Mon, 12 Jun 2023 14:26:41 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-34059 - File Descriptor Hijack vulnerability in open-vm-tools
+Subject: CVE-2023-34212: Apache NiFi: Potential Deserialization of Untrusted Data with JNDI in JMS Components 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: important
 
-On Sun, Nov 26, 2023 at 11:38:50AM -0800, John Helmert III wrote:
-> On Fri, Oct 27, 2023 at 11:57:46AM +0200, Matthias Gerstner wrote:
-> > Hello list,
-> > 
-> > I want to share my full report for this finding, please find it below.
-> > 
-> > Introduction
-> > ============
-> > 
-> > During a routine review of the setuid-root binary
-> > "vmware-user-suid-wrapper" from the open-vm-tools [1] repository I
-> > discovered the vulnerability described in this report. The version under
-> > review was open-vm-tools version 12.2.0. The setuid-root binary's source
-> > code in the open-vm-tools repository did not change since version 10.3.0
-> > (released in 2018), however, so likely most current installations of
-> > open-vm-tools are affected by this finding.
-> 
-> Hm, it looks like there *was* a commit to vmware-user-suid-wrapper
-> that looks very similar to the patch that was linked in the original
-> advisory mail:
-> 
-> https://github.com/vmware/open-vm-tools/commit/63f7c79c4aecb14d37cc4ce9da509419e31d394f
-> 
-> Was that fix insufficient, or maybe wasn't there when your mail was sent?
+Affected versions:
 
-There seems to be a misunderstanding here. It seems I phrased that not
-properly. I did not mean to say that the issue is unfixed. As the
-initial email from VMware states there is a patch and bugfix release
-available.
+- Apache NiFi 1.8.0 through 1.21.0
 
-What I wanted to express is that all versions of open-vm-tools ranging
-from 10.3.0 up until before the bugfix release are likely affected by
-the issue.
+Description:
 
-Cheers
+The JndiJmsConnectionFactoryProvider Controller Service, along with the ConsumeJMS and PublishJMS Processors, in Apache NiFi 1.8.0 through 1.21.0 allow an authenticated and authorized user to configure URL and library properties that enable deserialization of untrusted data from a remote location.
 
-Matthias
+The resolution validates the JNDI URL and restricts locations to a set of allowed schemes.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+This issue is being tracked as NIFI-11614 
+
+Credit:
+
+Veraxy00 of Qianxin TI Center (finder)
+Matei "Mal" Badanoiu (reporter)
+
+References:
+
+https://nifi.apache.org/security.html#CVE-2023-34212
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-34212
+https://issues.apache.org/jira/browse/NIFI-11614
+
+Timeline:
+
+2023-05-28: reported
+2023-05-29: confirmed
+2023-06-01: resolved
+
