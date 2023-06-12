@@ -1,47 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/15
-Message-ID: <CAKYehMa_Fdx---OGfL6DK0Jdm1O67Y6VG0jfN1ukPf6zoDLRgg@mail.gmail.com>
-Date: Fri, 21 Apr 2023 00:09:07 +0800
-From: Huajie Wang <benjobs@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/12/3
+Message-ID: <a15c3bbf-8edf-e498-93cb-0bbdcab75708@apache.org>
+Date: Mon, 12 Jun 2023 14:28:25 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: dev <dev@...eampark.apache.org>
-Subject: CVE-2022-45802: Apache StreamPark (incubating): Upload any file to any directory
+Subject: CVE-2023-34468: Apache NiFi: Potential Code Injection with Database Services using H2 
 Content-Type: text/plain; charset=utf-8
 
-Apache StreamPark (incubating): Upload any file to any directory
+Severity: important
 
+Affected versions:
 
-Severity: low
-
-
-Versions Affected:
-
-Apache StreamPark 1.0.0 before 2.0.0
-
+- Apache NiFi 0.0.2 through 1.21.0
 
 Description:
 
+The DBCPConnectionPool and HikariCPConnectionPool Controller Services in Apache NiFi 0.0.2 through 1.21.0 allow an authenticated and authorized user to configure a Database URL with the H2 driver that enables custom code execution.
 
-Streampark allows any users to upload a jar as application, but there
-is no mandatory verification of the uploaded file type, causing users
-to upload some risky files, and may upload them to any directory,
-Users of the affected versions should upgrade to Apache StreamPark
-2.0.0 or later
+The resolution validates the Database URL and rejects H2 JDBC locations.
 
+This issue is being tracked as NIFI-11653 
 
-Mitigation:
+Credit:
 
-Users of the affected versions should apply one of the following
-
-
-- Upgrade to Apache StreamPark 2.0.0 or later
+Matei "Mal" Badanoiu (finder)
 
 References:
-https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-45802
 
+https://nifi.apache.org/security.html#CVE-2023-34468
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-34468
+https://issues.apache.org/jira/browse/NIFI-11653
 
+Timeline:
 
-
-Best,
-Huajie Wang
+2023-06-06: reported
+2023-06-06: confirmed
+2023-06-06: resolved
 
