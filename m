@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["751" "Thursday" "1" "August" "2019" "13:46:44" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1908011343470.30404@xnncv>" "22" "[oss-security] CVE-2019-14378 QEMU: slirp: heap buffer overflow during packet reassembly" nil nil nil "8" "2019080108:16:44" "[oss-security] CVE-2019-14378 QEMU: slirp: heap buffer overflow during packet reassembly" (number mark "U       ppandit@redh Aug  1   22/751   " thread-indent "\"[oss-security] CVE-2019-14378 QEMU: slirp: heap buffer overflow during packet reassembly\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-14378 QEMU: slirp: heap buffer overflow during packet reassembly" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28010 invoked by uid 550); 1 Aug 2019 08:17:01 -0000
+Received: (qmail 9329 invoked by uid 550); 12 Jun 2023 19:15:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27992 invoked from network); 1 Aug 2019 08:17:01 -0000
-Date: Thu, 1 Aug 2019 13:46:44 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: Vishnu Dev <vishnudevtj@gmail.com>
-Message-ID: <nycvar.YSQ.7.76.1908011343470.30404@xnncv>
+Received: (qmail 15466 invoked from network); 12 Jun 2023 14:26:55 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: David Handermann <exceptionfactory@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <03c4e506-c64e-c997-2607-a8502a6d097e@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 12 Jun 2023 14:26:41 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Thu, 01 Aug 2019 08:16:49 +0000 (UTC)
-Subject: [oss-security] CVE-2019-14378 QEMU: slirp: heap buffer overflow during packet
- reassembly
+Subject: [oss-security] CVE-2023-34212: Apache NiFi: Potential Deserialization of
+ Untrusted Data with JNDI in JMS Components 
 
-   Hello,
+Severity: important
 
-A heap buffer overflow issue was found in the SLiRP networking implementation 
-of the QEMU emulator. It occurs in ip_reass() routine while reassembling 
-incoming packets, if the first fragment is bigger than the m->m_dat[] buffer.
+Affected versions:
 
-A user/process could use this flaw to crash the Qemu process on the host 
-resulting in DoS or potentially execute arbitrary code with privileges of the 
-QEMU process.
+- Apache NiFi 1.8.0 through 1.21.0
 
-Upstream patch:
----------------
-   -> https://gitlab.freedesktop.org/slirp/libslirp/commit/126c04acbabd7ad32c2b018fe10dfac2a3bc1210
+Description:
 
-This issue was reported by Vishnu Dev(CC'd).
+The JndiJmsConnectionFactoryProvider Controller Service, along with the Con=
+sumeJMS and PublishJMS Processors, in Apache NiFi 1.8.0 through 1.21.0 allo=
+w an authenticated and authorized user to configure URL and library propert=
+ies that enable deserialization of untrusted data from a remote location.
 
-CVE requested via -> https://cveform.mitre.org/
+The resolution validates the JNDI URL and restricts locations to a set of a=
+llowed schemes.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This issue is being tracked as NIFI-11614=20
+
+Credit:
+
+Veraxy00 of Qianxin TI Center (finder)
+Matei "Mal" Badanoiu (reporter)
+
+References:
+
+https://nifi.apache.org/security.html#CVE-2023-34212
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-34212
+https://issues.apache.org/jira/browse/NIFI-11614
+
+Timeline:
+
+2023-05-28: reported
+2023-05-29: confirmed
+2023-06-01: resolved
+
