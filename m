@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5768" "Tuesday" "14" "August" "2018" "17:17:59" "+0000" "Xen.org security team" "security@xen.org" "<E1fpcxD-00079t-UA@xenbits.xenproject.org>" "148" "[oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling" nil nil nil "8" "2018081417:17:59" "[oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling" (number mark "U       security@xen Aug 14  148/5768  " thread-indent "\"[oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13406 invoked by uid 550); 14 Aug 2018 17:18:18 -0000
+Received: (qmail 11299 invoked by uid 550); 13 Jun 2023 17:00:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,165 +7,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13357 invoked from network); 14 Aug 2018 17:18:17 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 3921 invoked from network); 13 Jun 2023 16:50:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686675030; x=1689267030;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7/6ny21TVBOFKbl32Tq54j7NPFXNZcHaTdv4s8qz+js=;
+        b=gMpJam+wVUuFAudKSIwPSnpUTaPyUq+M8nMqSbPBTNT4Hof+sfrCHqbjuMCadMh2v0
+         gEAkRnnDBhUbZgYVAPY/ezFYsqdFgwd8Kd/CtS5OUafL6M6w2aZaXjp7Eanby+axO82L
+         B6Kib7YmIxkUH8EaASmQTT/+vZiJdE1sriyk3SfPtA0S92YBD8XXvJzBXX62dz4T3UWw
+         aGjvyxH4rm3WwrGMPnMvg93BVBiVT/TLQjafFyuYRX+mscRze+1Ey/SBi4Mwe+QJRQTE
+         +RGVz0oWMhiNVVHGqJNejCuBM0+WHoCP8BRyesJgBjXpO2ft4tlo5t00cVx1WvjjpsdM
+         VqkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686675030; x=1689267030;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7/6ny21TVBOFKbl32Tq54j7NPFXNZcHaTdv4s8qz+js=;
+        b=ZPJ+DUGivgLvAJfE6TNUOYvVuKUjCXdGxy9HEQ9ozD/mVUGrdPySYx+7+wzbY2J/4t
+         zU5fRFIfqOqzpZdsGvPelUdYttctExVV1rg0vxYfIJVJM/T/dn/cbLWiKTnIAdOX7lnf
+         9FacIEzEh3XJbtNyTG4i0sqFMZzMPUDesgcwbnwkV7b+kl1sM7EtpgwyX2yfxJ4zXQxZ
+         ktmy9WUKifNTgSbrD7K+taB9P4sJcLvkid2xOD89PaHLyJhwD9CQTYkz2mx7F25cnUQE
+         i327EsQ3URbHJ9TVbWxZ/EICNvjMGeptQxgJjFmONlT6K5qJu6NJHoGJ+unmwFMQPl8q
+         YRBA==
+X-Gm-Message-State: AC+VfDzrmuGvcHTRYYNcoDn0tqgQ101CVXgVknm9Mbdfzk4p6BDHAuBK
+	yHDuiMa1MR9yaxS9fpSYAszEQPBuj1CISrCNJB1CDEEA3cc=
+X-Google-Smtp-Source: ACHHUZ7c5dybSIDxD3x/nAjJuQMFO3eKoCMVbcTb8nUJVwFKwr7tNKZvRlSptaLc2TkeShRv1Ne3IoJXrgl4qye3L9g=
+X-Received: by 2002:a17:90a:8b92:b0:259:b065:da4f with SMTP id
+ z18-20020a17090a8b9200b00259b065da4fmr11727381pjn.36.1686675030135; Tue, 13
+ Jun 2023 09:50:30 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fpcxD-00079t-UA@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:17:59 +0000
-Subject: [oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in
- hash handling
+References: <b43dbbf1358a42df945de86dee00f452109a7a2e.camel@debian.org> <YT2PR01MB98273D8129B5BB67241FB30BE856A@YT2PR01MB9827.CANPRD01.PROD.OUTLOOK.COM>
+In-Reply-To: <YT2PR01MB98273D8129B5BB67241FB30BE856A@YT2PR01MB9827.CANPRD01.PROD.OUTLOOK.COM>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Tue, 13 Jun 2023 19:48:40 +0300
+Message-ID: <CAGUWgD-+BM-vkEoAo_Efa9T7ZJk_DK2w2jEzw7TgXQCVC82G6g@mail.gmail.com>
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] Solar Designer talk about 15 years of oss-security
+ at SSTIC conference
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-                    Xen Security Advisory XSA-270
-                              version 2
-
-           Linux netback driver OOB access in hash handling
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Linux's netback driver allows frontends to control mapping of requests
-to request queues.  When processing a request to set or change this
-mapping, some input validation was missing or flawed.
-
-IMPACT
-======
-
-A malicious or buggy frontend may cause the (usually privileged)
-backend to make out of bounds memory accesses, potentially resulting
-in one or more of privilege escalation, Denial of Service (DoS), or
-information leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-Linux kernel versions from 4.7 onwards are affected.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Felix Wilhelm of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa270.patch           Linux 4.7 ... 4.17
-
-$ sha256sum xsa270*
-392868c37c1fe0d16c36086208fd0fc045c1baf8ab9b207995bce72681cb8c54  xsa270.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbcw6uAAoJEIP+FMlX6CvZjxgH/iUkqOm+3T+Mr51itOmeOThy
-J10GbMvqyI8kb7oTVsfHRTMU/zCm01FSCb94B9WXxrKyr3J2RCWygZpS5D5+ujkK
-w8Ec3tqfRiJ6wXm+SUh+cFeiJBc4BUbTrSgc6VdtNqXO+uGB65CGVqFXTOZfSGMH
-AJKXQYOYe0gLtGU+H1TrCut6IC5RQKkdbI+gCEgahgc9HnPJnOrJZYoDaXsYCt1l
-gFPkd1UcVvtGbn+SUjNpXJlpWH8dY2tPeueqgu9LicGZ8jZkGI8FMCfOQ0g9dFMz
-t0Q8op8N3UAVXsPws+WvbGMuZ9mF71y9y8JUZYKRdg2iLND3CRO+asaMfN+3LSk=
-=gqkS
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa270.patch"
-Content-Disposition: attachment; filename="xsa270.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ZW4tbmV0YmFjazogZml4IGlucHV0IHZhbGlkYXRpb24gaW4geGVudmlm
-X3NldF9oYXNoX21hcHBpbmcoKQoKQm90aCBsZW4gYW5kIG9mZiBhcmUgZnJv
-bnRlbmQgc3BlY2lmaWVkIHZhbHVlcywgc28gd2UgbmVlZCB0byBtYWtlCnN1
-cmUgdGhlcmUncyBubyBvdmVyZmxvdyB3aGVuIGFkZGluZyB0aGUgdHdvIGZv
-ciB0aGUgYm91bmRzIGNoZWNrLiBXZQphbHNvIHdhbnQgdG8gYXZvaWQgdW5k
-ZWZpbmVkIGJlaGF2aW9yIGFuZCBoZW5jZSB1c2Ugb2ZmIHRvIGluZGV4IGlu
-dG8KLT5oYXNoLm1hcHBpbmdbXSBvbmx5IGFmdGVyIGJvdW5kcyBjaGVja2lu
-Zy4gVGhpcyBhdCB0aGUgc2FtZSB0aW1lCmFsbG93cyB0byB0YWtlIGNhcmUg
-b2Ygbm90IGFwcGx5aW5nIG9mZiB0d2ljZSBmb3IgdGhlIGJvdW5kcyBjaGVj
-a2luZwphZ2FpbnN0IHZpZi0+bnVtX3F1ZXVlcy4KCkl0IGlzIGFsc28gaW5z
-dWZmaWNpZW50IHRvIGJvdW5kcyBjaGVjayBjb3B5X29wLmxlbiwgYXMgdGhp
-cyBpcyBsZW4KdHJ1bmNhdGVkIHRvIDE2IGJpdHMuCgpUaGlzIGlzIFhTQS0y
-NzAuCgpSZXBvcnRlZC1ieTogRmVsaXggV2lsaGVsbSA8ZndpbGhlbG1AZ29v
-Z2xlLmNvbT4KU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNo
-QHN1c2UuY29tPgpSZXZpZXdlZC1ieTogUGF1bCBEdXJyYW50IDxwYXVsLmR1
-cnJhbnRAY2l0cml4LmNvbT4KVGVzdGVkLWJ5OiBQYXVsIER1cnJhbnQgPHBh
-dWwuZHVycmFudEBjaXRyaXguY29tPgotLS0KVGhlIGJvdW5kcyBjaGVja2lu
-ZyBhZ2FpbnN0IHZpZi0+bnVtX3F1ZXVlcyBhbHNvIG9jY3VycyB0b28gZWFy
-bHkgYWZhaWN0CihpdCBzaG91bGQgYmUgZG9uZSBhZnRlciB0aGUgZ3JhbnQg
-Y29weSkuIEkgaGF2ZSBwYXRjaGVzIHJlYWR5IGFzIHB1YmxpYwpmb2xsb3ct
-dXBzIGZvciBib3RoIHRoaXMgYW5kIHRoZSAoYXQgbGVhc3QgbGF0ZW50KSBp
-c3N1ZSBvZiB0aGUgbWFwcGluZwphcnJheSBjcm9zc2luZyBhIHBhZ2UgYm91
-bmRhcnkuCgotLS0gYS9kcml2ZXJzL25ldC94ZW4tbmV0YmFjay9oYXNoLmMK
-KysrIGIvZHJpdmVycy9uZXQveGVuLW5ldGJhY2svaGFzaC5jCkBAIC0zMzIs
-MjAgKzMzMiwyMiBAQCB1MzIgeGVudmlmX3NldF9oYXNoX21hcHBpbmdfc2l6
-ZShzdHJ1Y3QKIHUzMiB4ZW52aWZfc2V0X2hhc2hfbWFwcGluZyhzdHJ1Y3Qg
-eGVudmlmICp2aWYsIHUzMiBncmVmLCB1MzIgbGVuLAogCQkJICAgIHUzMiBv
-ZmYpCiB7Ci0JdTMyICptYXBwaW5nID0gJnZpZi0+aGFzaC5tYXBwaW5nW29m
-Zl07CisJdTMyICptYXBwaW5nID0gdmlmLT5oYXNoLm1hcHBpbmc7CiAJc3Ry
-dWN0IGdudHRhYl9jb3B5IGNvcHlfb3AgPSB7CiAJCS5zb3VyY2UudS5yZWYg
-PSBncmVmLAogCQkuc291cmNlLmRvbWlkID0gdmlmLT5kb21pZCwKLQkJLmRl
-c3QudS5nbWZuID0gdmlydF90b19nZm4obWFwcGluZyksCiAJCS5kZXN0LmRv
-bWlkID0gRE9NSURfU0VMRiwKLQkJLmRlc3Qub2Zmc2V0ID0geGVuX29mZnNl
-dF9pbl9wYWdlKG1hcHBpbmcpLAotCQkubGVuID0gbGVuICogc2l6ZW9mKHUz
-MiksCisJCS5sZW4gPSBsZW4gKiBzaXplb2YoKm1hcHBpbmcpLAogCQkuZmxh
-Z3MgPSBHTlRDT1BZX3NvdXJjZV9ncmVmCiAJfTsKIAotCWlmICgob2ZmICsg
-bGVuID4gdmlmLT5oYXNoLnNpemUpIHx8IGNvcHlfb3AubGVuID4gWEVOX1BB
-R0VfU0laRSkKKwlpZiAoKG9mZiArIGxlbiA8IG9mZikgfHwgKG9mZiArIGxl
-biA+IHZpZi0+aGFzaC5zaXplKSB8fAorCSAgICBsZW4gPiBYRU5fUEFHRV9T
-SVpFIC8gc2l6ZW9mKCptYXBwaW5nKSkKIAkJcmV0dXJuIFhFTl9ORVRJRl9D
-VFJMX1NUQVRVU19JTlZBTElEX1BBUkFNRVRFUjsKIAorCWNvcHlfb3AuZGVz
-dC51LmdtZm4gPSB2aXJ0X3RvX2dmbihtYXBwaW5nICsgb2ZmKTsKKwljb3B5
-X29wLmRlc3Qub2Zmc2V0ID0geGVuX29mZnNldF9pbl9wYWdlKG1hcHBpbmcg
-KyBvZmYpOworCiAJd2hpbGUgKGxlbi0tICE9IDApCiAJCWlmIChtYXBwaW5n
-W29mZisrXSA+PSB2aWYtPm51bV9xdWV1ZXMpCiAJCQlyZXR1cm4gWEVOX05F
-VElGX0NUUkxfU1RBVFVTX0lOVkFMSURfUEFSQU1FVEVSOwo=
-
---=separator--
+Na zdorovie tovarish Solar :)
+I am missing the old full disclosure mailing list,
+there is little discussion on oss-security.
