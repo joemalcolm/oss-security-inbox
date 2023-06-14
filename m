@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/05/2
-Message-ID: <ZKWjO36sTTiRedC3@quatroqueijos.cascardo.eti.br>
-Date: Wed, 5 Jul 2023 14:07:07 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/6
+Message-ID: <alpine.GSO.2.20.2306140729130.11306@scrappy.simplesystems.org>
+Date: Wed, 14 Jun 2023 07:52:05 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31248 - Linux kernel nf_tables UAF when using nft_chain_lookup_byid
+Subject: Re: Stack overflow in imagemagick coders/tiff.c
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that it was possible to refer to a deleted nf_tables
-chain when using nft_chain_lookup_byid, leading to a potential
-use-after-free.
+On Wed, 14 Jun 2023, Salvatore Bonaccorso wrote:
 
-Mingi Cho of Theori working with Trend Micro's Zero Day Initiative
-discovered that this vulnerability could be exploited for Local Privilege
-Escalation. This has been reported as ZDI-CAN-20717, and assigned
-CVE-2023-31248.
+> Hi
+>
+> On Mon, May 29, 2023 at 08:11:18AM +0000, Bastien Roucariès wrote:
+>> Hi,
+>>
+>> Reading changelog and code of imagemagick, I want to report a stack overflow with crafted tiff file in imagemagick
+>>
+>> Fixed (after 6.9.12-26) by:
+>> https://github.com/ImageMagick/ImageMagick6/commit/85a370c79afeb45a97842b0959366af5236e9023
+>
+> CVE-2023-3195 has been assigned for this issue according to
+> https://bugzilla.redhat.com/show_bug.cgi?id=2214141 (not yet on
+> cve.org feed itself).
 
-Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
+It seems suspicious that (after looking at the code) this is obviously 
+a heap overflow (of the 'tile_pixels' allocation) rather than a stack 
+overflow.  Whenever something is mischaracterized, it becomes suspect.
 
-This bug was introduced by commit 837830a4b439 ("netfilter: nf_tables: add
-NFTA_RULE_CHAIN_ID attribute"), which is present since v5.9-rc1. It was not
-backported to any upstream LTS kernel.
+The overflow checking while computing 'extent' still seems suspect and 
+is worthy of more inspection, especially on 32-bit systems.
 
-A fix have been sent to netfilter-devel@...r.kernel.org and is at
-https://lore.kernel.org/netfilter-devel/20230705121627.GC19489@breakpoint.cc/T/.
+The development ImageMagick 7.1 is included in oss-fuzz testing (but 
+has not successfully compiled since May 22nd).  Oss-fuzz has 
+discovered 2935 serious issues related to development ImageMagick 7 
+since 2017, and most of those have been fixed in ImageMagick 7, but 
+not in legacy ImageMagick 6.
+
+Linux/OSS distributions still distributing ImageMagick 6 are severely 
+fooling themselves and their users if it is believed that the software 
+can be made secure by applying a few patches.
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
