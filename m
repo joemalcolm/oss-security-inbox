@@ -1,58 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/7
-Message-ID: <7a2b4406-6f0e-4e4f-be43-a0ec27404063@ipsumj.de>
-Date: Tue, 14 Nov 2023 20:19:05 +0100
-From: HW42 <hw42@...umj.de>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Antonio Gomez Iglesias <antonio.gomez.iglesias@...el.com>
-Cc: Tavis Ormandy <taviso@...il.com>
-Subject: Re: CVE-2023-23583: Intel - Denial of Service - Privilege Escalation (Reptar)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/2
+Message-ID: <55e6c435-1cad-505b-e8b2-632e801a19f0@apache.org>
+Date: Wed, 14 Jun 2023 07:34:50 +0000
+From: Yasser Zamani <yasserzamani@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: S2-063: CVE-2023-34149: Apache Struts: DoS via OOM owing to not properly checking of list bounds 
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer:
-> On Tue, Nov 14, 2023 at 10:31:51AM -0800, Antonio Gomez Iglesias wrote:
->> Name of the issue: Redundant Prefix Issue
->>
->> Description of the issue
->> Under certain microarchitectural conditions, Intel has identified cases
->> where execution of an instruction (REP MOVSB) encoded with a redundant
->> REX prefix may result in unpredictable system behavior resulting in a
->> system crash/hang, or, in some limited scenarios, may allow escalation
->> of privilege from CPL3 to CPL0.
->> This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
->> Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
->>
->> Mitigation
->> Intel is providing a microcode update to mitigate this issue: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20231114
-> 
-> Thank you, Antonio!
-> 
-> Here's a writeup and reproducer tool by Tavis Ormandy:
-> 
-> https://lock.cmpxchg8b.com/reptar.html
-> 
-> The GitHub release page above links to Intel security advisory:
-> 
-> https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00950.html
-> 
-> which specifies what CPU generations are affected (from 10th generation
-> Intel Core or 3rd generation Xeon Scalable to current), and links to a
-> table with "an exhaustive list of processors" matched against this issue
-> and previously disclosed issues:
-> 
-> https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
-> 
-> It also says "Please refer to the technical paper here for additional
-> information", where "here" is a link supposedly to "the technical
-> paper", but it's a non-existent page currently, so I'm not posting the
-> URL yet (not sure if it'll stay the same when the page is published).
+Affected versions:
 
-I think that link should point to 
+- Apache Struts through 2.5.30
+- Apache Struts through 6.1.2
 
-https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/redundant-prefix-issue.html
+Description:
 
-This one can be found in the affected processors table.
+Allocation of Resources Without Limits or Throttling vulnerability in Apache Software Foundation Apache Struts.This issue affects Apache Struts: through 2.5.30, through 6.1.2.
 
-Simon
+Credit:
 
+Matthew McClain (finder)
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
+References:
+
+https://cwiki.apache.org/confluence/display/WW/S2-063
+https://struts.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-34149
+
