@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1614" "Friday" "1" "September" "2017" "19:20:54" "+0300" "Vasily Averin" "vvs@virtuozzo.com" "<ec789926-c94c-cbd8-375d-34f34118e74e@virtuozzo.com>" "41" "[oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()" "^Cc:" nil nil "9" "2017090116:20:54" "[oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()" (number mark "        vvs@virtuozz Sep  1   41/1614  " thread-indent "\"[oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3618 invoked by uid 550); 1 Sep 2017 16:22:06 -0000
+Received: (qmail 20054 invoked by uid 550); 14 Jun 2023 12:45:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +6,174 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1621 invoked from network); 1 Sep 2017 16:21:07 -0000
-Message-ID: <ec789926-c94c-cbd8-375d-34f34118e74e@virtuozzo.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Cc: Andrey Konovalov <andreyknvl@google.com>
-Date: Fri, 1 Sep 2017 19:20:54 +0300
-From: Vasily Averin <vvs@virtuozzo.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()
+Received: (qmail 20021 invoked from network); 14 Jun 2023 12:45:30 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Message-Id: <9F2DEC8D-4C06-47FD-B61E-CEA1AF16D799@beckweb.net>
+Date: Wed, 14 Jun 2023 14:45:19 +0200
 To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1686746730;684bdc7f;
+X-HE-SMSGID: 1q9PsF-0004qQ-9O
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-[Suggested description]
-The tcp_disconnect function in net/ipv4/tcp.c in the Linux kernel before 4.12 allows
-local users to cause a denial of service (__tcp_select_window divide-by-zero error and system crash) 
-by triggering a disconnect within a certain tcp_recvmsg code path.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-[VulnerabilityType Other]
-CWE-369: Divide By Zero
+The following releases contain fixes for security vulnerabilities:
 
-[Reference]
-https://groups.google.com/forum/#!topic/syzkaller/e4SrsEBEziQ
-https://www.mail-archive.com/netdev@vger.kernel.org/msg186255.html
-https://github.com/torvalds/linux/commit/499350a5a6e7512d9ed369ed63a4244b6536f4f8
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=499350a5a6e7512d9ed369ed63a4244b6536f4f8
+* Jenkins 2.400
+* Jenkins LTS 2.401.1
+* Checkmarx Plugin 2023.2.6
+* Dimensions Plugin 0.9.3.1
+* Team Concert Plugin 2.4.2
+
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* AWS CodeCommit Trigger Plugin
+* Digital.ai App Management Publisher Plugin
+* Maven Repository Server Plugin
+* Sonargraph Integration Plugin
+* Template Workflows Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-06-14/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3135 / CVE-2023-35141
+Jenkins provides context menus for various UI elements, like links to jobs
+and builds, or breadcrumbs.
+
+In Jenkins 2.399 and earlier, LTS 2.387.3 and earlier, POST requests are
+sent in order to load the list of context actions. If part of the URL
+includes insufficiently escaped user-provided values, a victim may be
+tricked into sending a POST request to an unexpected endpoint (e.g., the
+Script Console) by opening a context menu.
+
+As of publication of this advisory, we are aware of insufficiently escaped
+context menu URLs for label expressions, allowing attackers with
+Item/Configure permissions to exploit this vulnerability.
 
 
-[Discoverer]
-Andrey Konovalov  <andreyknvl@google.com>
+SECURITY-2870 / CVE-2023-35142
+Checkmarx Plugin allows to globally enable or disable SSL/TLS validation
+for connections to the Checkmarx server. Checkmarx Plugin 2022.4.3 and
+earlier disables it by default. Unless changed by an administrator, it
+would cause all connections to the Checkmarx server to ignore SSL/TLS
+validation, thereby enabling potential man-in-the-middle attacks.
 
-It was fixed in linux mainline 4.12-rc3
 
-commit 499350a5a6e7512d9ed369ed63a4244b6536f4f8
-Author: Wei Wang <weiwan@google.com>
-Date:   Thu May 18 11:22:33 2017 -0700
+SECURITY-2932 / CVE pending
+Team Concert Plugin 2.4.1 and earlier does not perform permission checks in
+methods implementing form validation.
 
-    tcp: initialize rcv_mss to TCP_MIN_MSS instead of 0
-    
-    When tcp_disconnect() is called, inet_csk_delack_init() sets
-    icsk->icsk_ack.rcv_mss to 0.
-    This could potentially cause tcp_recvmsg() => tcp_cleanup_rbuf() =>
-    __tcp_select_window() call path to have division by 0 issue.
-    So this patch initializes rcv_mss to TCP_MIN_MSS instead of 0.
-    
-    Reported-by: Andrey Konovalov  <andreyknvl@google.com>
-    Signed-off-by: Wei Wang <weiwan@google.com>
-    Signed-off-by: Eric Dumazet <edumazet@google.com>
-    Signed-off-by: Neal Cardwell <ncardwell@google.com>
-    Signed-off-by: Yuchung Cheng <ycheng@google.com>
-    Signed-off-by: David S. Miller <davem@davemloft.net>
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system.
 
-Thank you,
-	Vasily Averin
+
+SECURITY-3138 / CVE-2023-32261
+Dimensions Plugin 0.9.3 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-3143 / CVE-2023-32262
+Dimensions Plugin 0.9.3 and earlier does not set the appropriate context
+for credentials lookup, allowing the use of System-scoped credentials
+otherwise reserved for the global configuration.
+
+This allows attackers with Item/Configure permission to access and capture
+credentials they are not entitled to.
+
+
+SECURITY-3156 / CVE-2023-35143
+Maven Repository Server Plugin 1.10 and earlier does not escape the
+versions of build artifacts on the Build Artifacts As Maven Repository
+page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control maven project versions in
+`pom.xml`.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2951 / CVE-2023-35144
+Maven Repository Server Plugin 1.10 and earlier does not escape project and
+build display names on the Build Artifacts As Maven Repository page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to change project or build display names.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3155 / CVE-2023-35145
+Sonargraph Integration Plugin 5.0.1 and earlier does not correctly escape
+the file path and the project name for the Log file field form validation.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+NOTE: This issue is caused by an incomplete fix of
+link:/security/advisory/2020-07-02/#SECURITY-1775[SECURITY-1775].
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3166 / CVE-2023-35146
+Template Workflows Plugin 41.v32d86a_313b_4a and earlier does not escape
+names of jobs used as buildings blocks for Template Workflow Job.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to create jobs.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3099 / CVE-2023-35147
+AWS CodeCommit Trigger Plugin allows downloading activity logs of AWS
+Simple Queue Service (SQS) queues.
+
+AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not restrict the
+queue name path parameter in the corresponding HTTP endpoint, allowing
+attackers with Item/Read permission to obtain the contents of arbitrary
+files on the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2911 / CVE-2023-35148 (CSRF) & CVE-2023-35149 (missing permission =
+check)
+Digital.ai App Management Publisher Plugin 2.6 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+
