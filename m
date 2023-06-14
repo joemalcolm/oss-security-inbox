@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/15
-Message-ID: <40dc99e3-c447-471c-858b-98330127a161@oracle.com>
-Date: Mon, 16 Oct 2023 08:53:57 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Demi Marie Obenour <demi@...isiblethingslab.com>
-Subject: Re: linux-distros membership application of openEuler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/3
+Message-ID: <50d8e155-b2b2-e1d8-1def-789ad9233e47@apache.org>
+Date: Wed, 14 Jun 2023 07:35:56 +0000
+From: Yasser Zamani <yasserzamani@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: S2-064: CVE-2023-34396: Apache Struts: DoS via OOM owing to no sanity limit on normal form fields in multipart forms 
 Content-Type: text/plain; charset=utf-8
 
-On 10/16/23 08:18, Demi Marie Obenour wrote:
-> The result of this is simply that those who do not have access to
-> lawyers on staff will not participate, which will reduce the value of
-> the list substantially.  I suspect that most people who report
-> vulnerabilities via distros@ fall into this category.  I know I do.
+Affected versions:
 
-Perhaps linux-distros is different, but on the wider distros list,
-almost all the mail is from project maintainers providing fixes -
-the researchers generally contact the individual projects directly,
-as those projects aren't on the distros list and can't see or respond
-to reports from researchers sent there.
+- Apache Struts through 2.5.30
+- Apache Struts through 6.1.2
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Description:
+
+Allocation of Resources Without Limits or Throttling vulnerability in Apache Software Foundation Apache Struts.This issue affects Apache Struts: through 2.5.30, through 6.1.2.
+
+Credit:
+
+Matthew McClain (finder)
+
+References:
+
+https://cwiki.apache.org/confluence/display/WW/S2-064
+https://struts.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-34396
 
