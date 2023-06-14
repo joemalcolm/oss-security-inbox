@@ -1,31 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/3
-Message-ID: <20231222131102.1b8083c4.hanno@hboeck.de>
-Date: Fri, 22 Dec 2023 13:11:02 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/7
+Message-ID: <b20ad75f-a368-b528-f471-aa3065483581@gmail.com>
+Date: Wed, 14 Jun 2023 18:53:40 +0200
+From: Till Kamppeter <till.kamppeter@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: New SMTP smuggling attack
+Subject: CVE-2023-34095: cpdb-libs: Buffer overflows via scanf
 Content-Type: text/plain; charset=utf-8
 
-In case this helps:
+Following bug got reported to OpenPrinting's GitHub, repo cpdb-libs, as 
+a private (security) issue report, which is now published:
 
-SEC Consult has not published a test tool, and it seems they have not
-tested many mailservers.
-
-I have tried to understand the attack, and came up with a preliminary
-test script myself:
-https://github.com/hannob/smtpsmug
-
-This is pretty much work in progress, not really documented, and I am
-still unsure what exactly the "right" behavior should be.
-But I'm sharing it in case it helps others. I may or may not update /
-improve it in the coming days.
-
-By default it tests whether a server accepts the <lf>.<lf> behavior.
-For testing the sending side, you will need to setup a receiving server
-and analyze it manually.
+https://github.com/OpenPrinting/cpdb-libs/security/advisories/GHSA-25j7-9gfc-f46x
 
 
--- 
-Hanno Böck
-https://hboeck.de/
+Summary
+
+There's multiple instances of buffer overflows in this package via 
+improper use of scanf(3).
+
+
+Details
+
+cpdb-libs/tools/cpdb-text-frontend.c
+
+
+Line 362 in 85555fb
+
+   else if (strcmp(buf, "print-file") == 0)
+
+              char printer_id[BUFSIZE], backend_name[BUFSIZE], 
+file_path[BUFSIZE];
+              scanf("%s%s%s", file_path, printer_id, backend_name);
+
+cpdb-libs/tools/cpdb-text-frontend.c
+
+
+Line 453 in 85555fb
+
+   else if (strcmp(buf, "get-all-translations") == 0)
+
+              char printer_id[BUFSIZE];
+              char backend_name[BUFSIZE];
+              scanf("%s%s", printer_id, backend_name);
+
+cpdb-libs/cpdb/cpdb-frontend.c
+
+
+Line 372 in 85555fb
+
+   PrintBackend *cpdbCreateBackendFromFile(GDBusConnection *connection,
+
+      char obj_path[CPDB_BSIZE];
+      /* ... */
+      if ((file = fopen(path, "r")) == NULL)
+      /* ... */
+      if (fscanf(file, "%s", obj_path) == 0)
+
+
+%s does not place bounds on the allowed input sizes.
+
+
+All scanf() or fscanf() calls in the cpdb-libs package which take 
+strings via %s format conversion directive read these strings into 
+buffers of 1024 characters of length (BUFSIZE). So one can easily 
+replace all occurences of %s by %1023s (accept a maximum of 1023 
+characters to leave space for terminating zero byte) in all lines 
+containing scanf or fscanf, easily automated by running four times the 
+command
+
+perl -p -i -e 's/(scanf\(.*?".*?)%s/\1%1023s/' cpdb/cpdb-frontend.c 
+tools/cpdb-text-frontend.c
+
+and checking with
+
+grep scanf */*.c
+
+
+Quick test/reproducer:
+
+Run
+
+cpdb-text-frontend
+
+and enter a command line (no valid command required, only arbitrary 
+characters) of more than 1024 characters. without the fix you will get a 
+segfault, with the fix no segfault and the overlength of the input gets 
+truncated.
+
+To test the fix in the libraries (not in cpdb-text-backend) you would 
+need to create a file named /tmp/org.openprinting.Backend.CUPS with its 
+first line having more than 1024 characters. Then run
+
+CPDB_DEBUG_LOGFILE=log.txt CPDB_DEBUG_LEVEL=debug 
+CPDB_BACKEND_INFO_DIR=/tmp cpdb-text-frontend
+
+With the original libcpdb-frontend.so.2.0.0 you will get a segmentation 
+fault, with the fix you will reach the command prompt of the text 
+frontend (but without printer list).
+
+
+The report got assigned CVE-2023-34095
+
+
+The fix is committed to the GIT repository of cpdb-libs:
+
+https://github.com/OpenPrinting/cpdb-libs/commit/f181bd1f1
+
+
+Package maintainers/security teams of the operating system 
+distributions, please apply the fix by then.
+
+The fix will be included in the upcoming releases.
+
+    Till
