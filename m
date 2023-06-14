@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/9
-Message-ID: <CADxcaYUqf3E3_Zv_GOSPW34d0qTkZMjoBf5P7FP7vZH18PZRvg@mail.gmail.com>
-Date: Thu, 14 Sep 2023 15:29:45 -0700
-From: Jean Luc Picard <atari2600a@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/8
+Message-ID: <ZIpANf8DGHFYVBFR@netmeister.org>
+Date: Wed, 14 Jun 2023 18:33:25 -0400
+From: Jan Schaumann <jschauma@...meister.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+Subject: RCE in acme.sh < 3.0.6
 Content-Type: text/plain; charset=utf-8
 
-I think they're applying as themselves but as a head proprietor of said
-projects.  Sounds like the kind of stuff that'd make it into a bank
-backend.  I'd listen but I'm just, like, some guy.
+Hi,
 
-On Thu, Sep 14, 2023, 15:27 Dan McDonald <danmcd@....io> wrote:
+I don't think this has been raised here:
 
-> On Sep 14, 2023, at 10:42 AM, Demi Marie Obenour <
-> demi@...isiblethingslab.com> wrote:
-> >
-> >
-> > Would security@...umos.org be a better choice?
->
-> AIUI the rules state only individuals, not groups, can join distros@.
->
-> Dan
->
->
->
+The acme.sh ACME client[1] prior to version 3.0.6[2] has
+an RCE vulnerability allowing a hostile server to
+execute arbitrary commands on the client[3].
 
+I was unable to determine whether a CVE has been
+requested for this issue; both the original discussion
+and a second GitHub issue[4] have been inconclusively
+closed for comments (I've reached out to the author).
+
+The issue is also being discussed on Mozilla's
+dev-security-policy[5].
+
+-Jan
+
+[1] https://github.com/acmesh-official/acme.sh
+[2] https://github.com/acmesh-official/acme.sh/releases
+[3] https://github.com/acmesh-official/acme.sh/issues/4659
+[4] https://github.com/acmesh-official/acme.sh/issues/4665
+[5] https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/heXVr8o83Ys
