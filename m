@@ -1,4 +1,4 @@
-Received: (qmail 11531 invoked by uid 550); 13 Dec 2023 17:22:36 -0000
+Received: (qmail 30301 invoked by uid 550); 15 Jun 2023 13:10:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,192 +7,210 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11501 invoked from network); 13 Dec 2023 17:22:36 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Message-Id: <381C59E7-FFD1-4ED5-B567-40E6D98E13B0@beckweb.net>
-Date: Wed, 13 Dec 2023 18:22:37 +0100
+Received: (qmail 32178 invoked from network); 15 Jun 2023 11:57:05 -0000
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.census 52148336D12C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=census-labs.com;
+	s=D8BFA4EC-CF6E-11EB-AFC5-2C27CB7A6FA6; t=1686830213;
+	bh=9poFCYTyYxMu83OQifFCJDdSrVBYbAe1+HNPmOaCsnQ=;
+	h=Message-ID:Date:MIME-Version:To:From;
+	b=Yx8QqjZlJ6DDGf+M6VVCMEo+8WE77kgAD+DYPVhmKCr6xR9j4fLI8/a0VHg9dpZF2
+	 ODmRdplUznXhwbhmpnzFPl4cGaF1608D7b0niVQx0Wc+8Ylm0cl7WYZ+MJ1MFEAZrl
+	 Hq1AdtXcE7VZGDNmMrA0qcZRZIWBvygctSiAUQAwxY1DKWOEH85l29VHFYKqRJFCf5
+	 Xs9BllMz0KV3k7yfVqfyZMuxIRfbioOvbnFvuu4xDHXX5enVAuLqIuiNsCpCfVbxS0
+	 u70OGvBoF63872bY4Om6vUVh0ja0NSUqVEaExyq37fgPV6mbT5Fme/cytZOHoi/4n5
+	 iuFg9GuZU8mkw==
+Message-ID: <c179150b-68ee-9689-abc9-906a9a7229b3@census-labs.com>
+Date: Thu, 15 Jun 2023 12:56:52 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1702488179;42b86a69;
-X-HE-SMSGID: 1rDSwZ-00063l-O8
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+From: Brian McDermott <bmcdermott@census-labs.com>
+Autocrypt: addr=bmcdermott@census-labs.com; keydata=
+ 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 qw==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------oeth5hadWFS5si9uj3XKXYTd"
+Subject: [oss-security] CVE-2023-1672: race condition in Tang exposes private keys to other
+ processes
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--------------oeth5hadWFS5si9uj3XKXYTd
+Content-Type: multipart/mixed; boundary="------------9NkTXRohICatJ8vD0tmWVh0c";
+ protected-headers="v1"
+From: Brian McDermott <bmcdermott@census-labs.com>
+To: oss-security@lists.openwall.com
+Message-ID: <c179150b-68ee-9689-abc9-906a9a7229b3@census-labs.com>
+Subject: CVE-2023-1672: race condition in Tang exposes private keys to other
+ processes
 
-The following releases contain fixes for security vulnerabilities:
+--------------9NkTXRohICatJ8vD0tmWVh0c
+Content-Type: multipart/mixed; boundary="------------N20V8mQyBMPCNBdR6xGIA1ya"
 
-* Analysis Model API Plugin 11.13.0
-* Nexus Platform Plugin 3.18.1-01
-* Scriptler Plugin 344.v5a_ddb_5f9e685
+--------------N20V8mQyBMPCNBdR6xGIA1ya
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+SGVsbG8gYWxsLA0KDQpUYW5nIChodHRwczovL2dpdGh1Yi5jb20vbGF0Y2hz
+ZXQvdGFuZykgaXMgYW4gb3BlbiBzb3VyY2UgcHJvamVjdCB0aGF0IA0KaXMg
+dXNlZCB0byBiaW5kIGRhdGEgdG8gbmV0d29yayBwcmVzZW5jZS4gSXQgaXMg
+Y29tbW9ubHkgdXNlZCBhbG9uZyB3aXRoIA0KQ2xldmlzIGNsaWVudHMgdG8g
+cHJvdmlkZSBmb3IgdW5hdHRlbmRlZCBMVUtTIGRlY3J5cHRpb24gb2Ygc2Vy
+dmVyIA0Kc3RvcmFnZSB2b2x1bWVzIHdpdGhpbiB0aGUgcmVhbG1zIG9mIGEg
+bmV0d29yaywgd2hlcmUgYSB0cnVzdGVkIFRhbmcgDQpzZXJ2ZXIgaXMgc2l0
+dWF0ZWQuDQoNCkNFTlNVUyBpZGVudGlmaWVkIHRoYXQgdGhlIFRhbmcgc29m
+dHdhcmUgaW4gdmVyc2lvbnMgMTEsIDEyIGFuZCAxMyAoYW5kIA0KcG9zc2li
+bHkgcHJldmlvdXMgdmVyc2lvbnMpIGlzIHZ1bG5lcmFibGUgdG8gYSBmb3Jt
+IG9mIHJhY2UgY29uZGl0aW9uLCANCndoZXJlIHRoZSBUYW5nIHByaXZhdGUg
+a2V5cyBiZWNvbWUgZXhwb3NlZCBmb3IgYSBzbWFsbCB0aW1lIHdpbmRvdyB0
+byANCm90aGVyIHVzZXJzIG9uIHRoZSBzYW1lIGhvc3QuIFRoZSBpc3N1ZSBp
+cyB0cmFja2VkIGFzIENWRS0yMDIzLTE2NzIuIA0KTW9yZSBpbmZvcm1hdGlv
+biByZWdhcmRpbmcgdGhlIHZ1bG5lcmFiaWxpdHkgY2FuIGJlIGZvdW5kIGhl
+cmU6IA0KaHR0cHM6Ly9jZW5zdXMtbGFicy5jb20vbmV3cy8yMDIzLzA2LzE1
+L3JhY2UtdGFuZy8NCg0KVXNlcnMgYXJlIHJlY29tbWVuZGVkIHRvIHVwZ3Jh
+ZGUgdG8gVGFuZyB2ZXJzaW9uIDE0IHdoZXJlIHRoZSBpc3N1ZSBoYXMgDQpi
+ZWVuIHN1ZmZpY2llbnRseSBhZGRyZXNzZWQuDQoNCkJlc3QgcmVnYXJkcywN
+Cg0KQnJpYW4gTWNEZXJtb3R0DQoNCi0tIA0KQnJpYW4gTWNEZXJtb3R0DQpK
+ciBJVCBTZWN1cml0eSBQcm9mZXNzaW9uYWwgSW50ZXJuDQpBZGQ6IFNZTkdS
+T1UgQVZFTlVFIDEyOCwgQXRoZW5zIDExNzQ1LCBHcmVlY2UNCk1vYjogKzMw
+IDY5NDQgNDM1NTQxDQpUZWw6ICszMCAyMTAgMjIwODk4OS05MA0KaHR0cHM6
+Ly9jZW5zdXMtbGFicy5jb20gLS0gSVQgU2VjdXJpdHkgV29ya3MNCg0KQ09O
+RklERU5USUFMSVRZIE5PVElDRQ0KVGhlIGNvbnRlbnRzIG9mIHRoaXMgZW1h
+aWwgbWVzc2FnZSBhbmQgYW55IGF0dGFjaG1lbnRzIGFyZSBpbnRlbmRlZCBz
+b2xlbHkgZm9yIHRoZQ0KYWRkcmVzc2VlKHMpIGFuZCBtaWdodCBjb250YWlu
+IGNvbmZpZGVudGlhbCBhbmQvb3IgcHJpdmlsZWdlZCBpbmZvcm1hdGlvbiBh
+bmQgbWlnaHQNCmJlIGxlZ2FsbHkgcHJvdGVjdGVkIGZyb20gZGlzY2xvc3Vy
+ZS4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCBvZiB0
+aGlzDQptZXNzYWdlIG9yIHRoaXMgbWVzc2FnZSBoYXMgYmVlbiBhZGRyZXNz
+ZWQgdG8geW91IGluIGVycm9yLCBwbGVhc2UgaW1tZWRpYXRlbHkgbm90aWZ5
+DQp0aGUgc2VuZGVyIGFuZCBkZWxldGUgYW55IGNvcGllcyBvZiBpdDsgeW91
+IGFyZSBoZXJlYnkgbm90aWZpZWQgdGhhdCBhbnkgdXNlLCBjb3B5aW5nDQpv
+ciBzdG9yYWdlIG9mIHRoaXMgbWVzc2FnZSBvciBpdHMgYXR0YWNobWVudHMg
+aXMgc3RyaWN0bHkgcHJvaGliaXRlZC4NCg0K
 
-* Deployment Dashboard Plugin
-* Dingding JSON Pusher Plugin
-* HTMLResource Plugin
-* OpenId Connect Authentication Plugin
-* PaaSLane Estimate Plugin
+--------------N20V8mQyBMPCNBdR6xGIA1ya
+Content-Type: application/pgp-keys; name="OpenPGP_0x68BA3525BB668B19.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x68BA3525BB668B19.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-12-13/
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsFNBGPiarYBEADXuDc4yIlcM6Vxqt2XV6guBW7FQv0jbBHlgDytSmXF6vS5yG8j=0A=
+m3OQI4XR7B4ty4hoSvo363Wh6Xsjz9iKS+61An74A/DCgBb/T7ZcOCiUnRTxxfKv=0A=
+NGYCKXvKBtMM3vf3uGcJw5FhRCf/dlYSPEwKSObt0L4Vi4p2BvvsCGRHG8DdCGdl=0A=
+SUzZlHufqJsdt/qocEhBxiEskyYapy5tpH3HCeqIjuhdcGt3FuT1LxLZTuMzDhsZ=0A=
+6CFj+z2H4xANkNNHAvOy9VTwzSC0VoYbymcoQYx8ehTLda588+lU2S0fwOmpjtSw=0A=
+z/YYNjvDvrH6AV0ERPANy+kLVEYuOoNt2XdUGsvJRny20n/dFAb3Skcy4ZSqJmNc=0A=
+q37z/26OblW4APZNCir5EZ3EdS5Rkonl4FAX6gWm0d3yKSSS2ymgvLNKfUCbp0Fl=0A=
+eHgpkDhC8G2ARKjV+5GS3EkdEUzKfTins0LfGJ8Qd+vZpvH0kiMKESi5p75WfF54=0A=
+bRpLEdjoZazpfPt/LRFVn+FOmt91P1qM5yKzam6fz3W6LWwcdJDOcmnWhLl9lhKr=0A=
+2AI0LWYAfhtITBZHsI7PL6E1OBmQptyQ9SrlZkjilNVx5kM2LijqBxEuNvftZQVH=0A=
+VIAw/PVk2zYWbWvgmwXKVLcp+h3hRoJhwjywuf2G6B2zVwKkoS7sAwIQywARAQAB=0A=
+zSxCcmlhbiBNY0Rlcm1vdHQgPGJtY2Rlcm1vdHRAY2Vuc3VzLWxhYnMuY29tPsLB=0A=
+jQQTAQgANxYhBDHUwsbPq+rjjRVUhmi6NSW7ZosZBQJj4mq3BQkHhM4AAhsDBAsJ=0A=
+CAcFFQgJCgsFFgIDAQAACgkQaLo1JbtmixlZig/8D1fbYJCXN5LGfiXxOcmYjRCB=0A=
+sV2jmSrwk+8b8S1SzmXKNh6aTEfVbKcLGps1Bt1nYTTmt+MxiUA+O5AFTnfRn5bj=0A=
+PVHpwIQoKFokSk5tcwecoUly3FslokVMPJwLIA2vdQOgXWlwcewo7RTXwPd07nIi=0A=
+hHPyWcGMV8Ct4/tifJt2rGeRMXm2ZfQXFTd5DTjpBirg1h+WYVrlOv+YZc8labCc=0A=
+MThk2OcLrPnsB542Q/g76AnreO1TqranJmSnQxa9BquESC9vhRBi0iLcgoFJE0F0=0A=
+6qUNfn0tNPPKIYSuFh15MmDvsvDgG5nkVmysbghPa2WHt1CzoI0tcOk94mx95x61=0A=
+pLalt/wGW2Qax9IPwgBs4l+NMvQ7/ZjW6nHnaxvEQJOkEvNSGP/in3HoguCJmQ9T=0A=
+yf1ZHLxTb+whSOlzJaq8d0AM/Djz5prGr3GiWoDBePoxBQuSqbtC+2XeIY60xgT/=0A=
+aLcrCL1sD5NArqP4p5OaXfVZuMVQyTFzcu1B4wY2f8mNxXUItenJleLFashlGPYJ=0A=
+47P3wgt+RAkN/v1y4udGit0OH1o7QouUv+Q14QNcuq9ZUyFM75gi+FWLJgt3ifE9=0A=
+QuMNmib1uegb3uBYsFWT3qKVJhmB7fw1QY7R2igWQyT31GJQHBRgw8uC6p70vOua=0A=
+cin+CBjZSoIqCddP9Z3OwU0EY+JquAEQALD1jg5q5Ee+8dXv6GiruWaEho677RYZ=0A=
+P/Rs8cqS3AMjwf1PDt2TD9qikybatX5F/KY0JfVYTFfo7CQu+/aTUevsuICLFMER=0A=
+WShsN1sXkZxdJJ/JtzkPoX8P/GjNlhrNFiQOcABGattvhg7VBnhJEYw9ffzLT167=0A=
+lULiXI4tPcG9sGzsz1jFfcBBtv1lWwDmltfKP440/uUS+Y2H8T361LOp5VHNu7c3=0A=
+SQhmHx2iiTpFfPofvcRVhSYpn5rfVK2sF3OcU4W+JfnF+bp87Vs+riH793HDmPEj=0A=
+SOMFNdIuuflsy5ZOo/l+khZhEds3G4DphKSsILp/y2hOIYN89helVV/C+zv+blPu=0A=
+whGZekq/+RVFHUuD+jI0T98+KoO73IycbgcbgmlLn+aWPdQZZ+6JEU10mWcSFfCF=0A=
+gqQr1dZMz4KOcW6AE9j/QPT5A/6KYdR3GUKIQGm7VxexOHt8o4B3EyMYq0yPXbx6=0A=
+t+jee5i4vbUW+qXC8dyuRDJQVnwfUTyBFMAmFnGp2sW6UEcleiTKkaz6UBXfqjgI=0A=
+Kbkpo0+XA40rA8KuBvnSEuvqdW7H/efRh0s4V30MHIYoXXbET+6Vt1JzaECJlxOM=0A=
+523DY4dJPtp39y4IMG5680Pc2N2R595P+X/b70HSvnrb2gd9t+vh77vMrHY47CgP=0A=
+sXQpX/OECV8pABEBAAHCwXwEGAEIACYWIQQx1MLGz6vq440VVIZoujUlu2aLGQUC=0A=
+Y+JquQUJB4TOAAIbDAAKCRBoujUlu2aLGYFzD/95SNxalP9sdmAy1CIpQYWhayJz=0A=
+lYXeTGZAFT7jSqTuxq0gBPCEJC2sCSjtQoDMo+XtiqG6e3uqrwkOPxNbahxyoTii=0A=
+5nqj1f53Ny3G2Vyallvyalc9zfD9hpoo23ORF8qb+RfDTX4eHiwbzWXcr7UjsZli=0A=
+2M5KWsJX4Vto6+u1vdHv+FliaBkOTI4Q+MBu/rRr+fIoSWmS7ZGJMsrFI4cxULG2=0A=
+qKsXnRN3kJZuKMG29ujEVLhpFQtZzN+PPYhNH/ksFtBL/u6hzjfEX994UhARzumZ=0A=
+jQcsdw/PNm5eh6hVpx12KfhPB6Z+mWuTCM5PCls1tVCB9va+5DA8fp37fUMWRpiT=0A=
+TtefDc+U7GfNv1ieOhGpnn6dX57FTM4DPXkObiS/1uS1NdUDxnPER0C1WiL7uUHr=0A=
+QudZKuKxeAgcnKj/UVJ3ZEc8AqFXw1IJJDjN5L+1K/XAYx4IifnPXbVYWSJ/CXFr=0A=
+yuSR5rI61l19qghwuSoTamrtI37lIJmHCnfWElHNM+C1y6L4bU6Mn9jPwvki4MMu=0A=
+aBhcBB8VtfoJuXcDkBOFUV8H05Z5MZms9dfCh5zcPphH0rK559WJXHEW9MAERX1U=0A=
+t5wLtSi+YaU/COONMwnvljZBsEGX1skqAFmaZi38BBAoLqqdVHfZJG7CJvttAORQ=0A=
+jm/F0HlZ8gNbO0A8qw=3D=3D=0A=
+=3DIwqr=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+--------------N20V8mQyBMPCNBdR6xGIA1ya--
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+--------------9NkTXRohICatJ8vD0tmWVh0c--
 
----
+--------------oeth5hadWFS5si9uj3XKXYTd
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-SECURITY-3327 / CVE-2023-5072
-Analysis Model API Plugin 11.11.0 and earlier bundles versions of JSON-Java
-vulnerable to CVE-2023-5072.
+-----BEGIN PGP SIGNATURE-----
 
-This may allow attackers able to control input to cause a Denial of Service
-(DoS) by parsing a crafted JSON document.
+wsF5BAABCAAjFiEEMdTCxs+r6uONFVSGaLo1JbtmixkFAmSK/IQFAwAAAAAACgkQaLo1Jbtmixkh
+KBAAiqeINdBsN3Dl70o4cc/SPG155SWLmXRKprDkmhwa9953rRLzU6KsKyEYS1EPIOZw9Qp1dNJH
+igIDiv1yJQygIKib2tCNRTaysogW0k9w9vUJjrAyzbakXhTcxfyp/mpVQ4KZeUzBcYrhIAEZGSBe
+AfS8YFCPpjgyjRYvooleWuuvulnh1bra5OjkPzcJddFu2rfqZQFE2S0SJDk44gLGu1lzRvuvNNV+
+P/+3+SV1F2iMyU1M4GafFF79uvsxJIx7LCdM1tSBB2UMmZDLOqWLp/b21oCMdPCeoTz58rGDtGs9
+Ex1KCNgA14iwDayxeAF4tw9smkZ5aW3VLhihXQEKne8dSHNzeYLdjJcqcnAwVWVtHSy6T1ayXm/S
+7zaPjXKX734P4auCdNwnXT+3HcVp4oBZGFCQ6BRg/slnlkni+87wCNB2gOd+55XJZje4pXdZUiOx
+tUws26RMtCzj1IDg97f+aHxewBTFSV5HDpLvYMN8cRyHJCTDCylLo4Ip3IGlZfLfLweFlm0cGIRH
+e7nl2CQZUcwnFFxX2HtaLil3A/XS71XZIcVchFa2jRjzTN8+5MuOpVAgrWF2Vsqg3SJcDIgg8BjT
+RQbk2WOvjGcBQDfNk9XM0uEpPiMF16Gue2kQ//MaYS2dgzocGjjR6FV+lMpIGrej/8StD8fh84/S
+ODA=
+=yR1Y
+-----END PGP SIGNATURE-----
 
-
-SECURITY-3205 / CVE-2023-50764
-Scriptler Plugin 342.v6a_89fd40f466 and earlier does not restrict a file
-name query parameter in an HTTP endpoint.
-
-This allows attackers with Scriptler/Configure permission to delete
-arbitrary files on the Jenkins controller file system.
-
-
-SECURITY-3206 / CVE-2023-50765
-Scriptler Plugin 342.v6a_89fd40f466 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to read the contents of
-a Groovy script by knowing its ID.
-
-
-SECURITY-3204 / CVE-2023-50766 (CSRF) & CVE-2023-50767 (missing permission =
-check)
-Nexus Platform Plugin 3.18.0-03 and earlier does not perform permission
-checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to send an HTTP request
-to an attacker-specified URL and parse the response as XML.
-
-Additionally, the plugin does not configure its XML parser to prevent XML
-external entity (XXE) attacks, so attackers can have Jenkins parse a
-crafted XML response that uses external entities for extraction of secrets
-from the Jenkins controller or server-side request forgery.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3203 / CVE-2023-50768 (CSRF) & CVE-2023-50769 (missing permission =
-check)
-Nexus Platform Plugin 3.18.0-03 and earlier does not perform permission
-checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP server using attacker-specified credentials IDs
-obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3168 / CVE-2023-50770
-OpenId Connect Authentication Plugin provides an anti-lockout feature,
-which allows administrators to define a local user account that can be used
-to recover access to Jenkins.
-
-In OpenId Connect Authentication Plugin 2.6 and earlier the password to
-that account is stored in a recoverable format.
-
-This allows attackers with access to the Jenkins controller file system to
-recover the plain text password of that account, likely gaining
-administrator access to Jenkins.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2979 / CVE-2023-50771
-OpenId Connect Authentication Plugin 2.6 and earlier improperly determines
-that a redirect URL after login is legitimately pointing to Jenkins.
-
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3184 / CVE-2023-50772 (storage) & CVE-2023-50773 (masking)
-Dingding JSON Pusher Plugin 2.0 and earlier stores access tokens
-unencrypted in job `config.xml` files on the Jenkins controller as part of
-its configuration.
-
-These tokens can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-Additionally, the job configuration form does not mask these tokens,
-increasing the potential for attackers to observe and capture them.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3183 / CVE-2023-50774
-HTMLResource Plugin 1.02 and earlier does not require POST requests for an
-HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to delete arbitrary files on the
-Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3092 / CVE-2023-50775
-Deployment Dashboard Plugin 1.0.10 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to copy jobs.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3182 / CVE-2023-50776 (storage) & CVE-2023-50777 (masking)
-PaaSLane Estimate Plugin 1.0.4 and earlier stores PaaSLane authentication
-tokens unencrypted in job `config.xml` files on the Jenkins controller as
-part of its configuration.
-
-These tokens can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-Additionally, the job configuration form does not mask these tokens,
-increasing the potential for attackers to observe and capture them.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3179 / CVE-2023-50778 (CSRF) & CVE-2023-50779 (missing permission =
-check)
-PaaSLane Estimate Plugin 1.0.4 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using an attacker-specified token.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-
+--------------oeth5hadWFS5si9uj3XKXYTd--
