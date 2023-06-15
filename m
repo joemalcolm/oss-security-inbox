@@ -1,24 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/24/2
-Message-ID: <39fbbc4c-95c1-2997-aeee-57982a76fcbd@apache.org>
-Date: Fri, 24 Mar 2023 15:04:50 +0000
-From: Marcus Lange <marcus@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/15/1
+Message-ID: <c179150b-68ee-9689-abc9-906a9a7229b3@census-labs.com>
+Date: Thu, 15 Jun 2023 12:56:52 +0100
+From: Brian McDermott <bmcdermott@...sus-labs.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-38745: Apache OpenOffice: Empty entry in Java class path 
+Subject: CVE-2023-1672: race condition in Tang exposes private keys to other processes
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hello all,
 
-Description:
+Tang (https://github.com/latchset/tang) is an open source project that 
+is used to bind data to network presence. It is commonly used along with 
+Clevis clients to provide for unattended LUKS decryption of server 
+storage volumes within the realms of a network, where a trusted Tang 
+server is situated.
 
-Apache OpenOffice versions before 4.1.14 may be configured to add an empty entry to the Java class path. This may lead to run arbitrary Java code from the current directory.
+CENSUS identified that the Tang software in versions 11, 12 and 13 (and 
+possibly previous versions) is vulnerable to a form of race condition, 
+where the Tang private keys become exposed for a small time window to 
+other users on the same host. The issue is tracked as CVE-2023-1672. 
+More information regarding the vulnerability can be found here: 
+https://census-labs.com/news/2023/06/15/race-tang/
 
-Credit:
+Users are recommended to upgrade to Tang version 14 where the issue has 
+been sufficiently addressed.
 
-European Commission's Open Source Programme Office (sponsor)
+Best regards,
 
-References:
+Brian McDermott
 
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-38745
+-- 
+Brian McDermott
+Jr IT Security Professional Intern
+Add: SYNGROU AVENUE 128, Athens 11745, Greece
+Mob: +30 6944 435541
+Tel: +30 210 2208989-90
+https://census-labs.com -- IT Security Works
 
+CONFIDENTIALITY NOTICE
+The contents of this email message and any attachments are intended solely for the
+addressee(s) and might contain confidential and/or privileged information and might
+be legally protected from disclosure. If you are not the intended recipient of this
+message or this message has been addressed to you in error, please immediately notify
+the sender and delete any copies of it; you are hereby notified that any use, copying
+or storage of this message or its attachments is strictly prohibited.
+
+
+Download attachment "OpenPGP_0x68BA3525BB668B19.asc" of type "application/pgp-keys" (3156 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
