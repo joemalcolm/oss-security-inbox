@@ -1,4 +1,4 @@
-Received: (qmail 9499 invoked by uid 550); 8 Feb 2024 12:58:50 -0000
+Received: (qmail 32117 invoked by uid 550); 15 Jun 2023 18:39:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25792 invoked from network); 8 Feb 2024 03:26:07 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Wang Weibing <wwbmmm@apache.org>
+Received: (qmail 31934 invoked from network); 15 Jun 2023 18:39:24 -0000
+Date: Thu, 15 Jun 2023 20:38:39 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <5f4d95b0-26e2-be3d-398e-929596b3e8f7@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 08 Feb 2024 03:28:39 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-23452: Apache bRPC: HTTP request smuggling vulnerability 
+Message-ID: <20230615183839.GA12628@openwall.com>
+References: <20170624163950.GA405@openwall.com> <20171120224205.GA14494@openwall.com> <20210110180842.GA2432@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210110180842.GA2432@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] distros list archive
 
-Severity: moderate
+Hi,
 
-Affected versions:
+I've just made a further update of these, until May 31, 2023.
 
-- Apache bRPC 0.9.5 before 1.8.0
+Alexander
 
-Description:
-
-Request smuggling vulnerability in HTTP server in Apache bRPC 0.9.5~1.7.0 o=
-n all platforms allows attacker to smuggle request.
-
-Vulnerability Cause Description=EF=BC=9A
-
-The http_parser does not comply with the RFC-7320 HTTP 1.1 specification.
-
-Attack=C2=A0scenario:
-If a message is received with both a Transfer-Encoding and a Content-Length=
- header field, such a message might indicate an attempt to perform request =
-smuggling or response splitting.
-One particular attack scenario is that a bRPC made http server on the backe=
-nd receiving requests in one persistent connection from frontend server tha=
-t uses TE to parse request with the logic that 'chunk' is contained in the =
-TE field. in that case an attacker can smuggle a request into the connectio=
-n to the backend server.=C2=A0
-
-Solution:
-You can choose one solution from below:
-1. Upgrade bRPC to version 1.8.0, which fixes this issue. Download link:  h=
-ttps://github.com/apache/brpc/releases/tag/1.8.0
- 2. Apply this patch:=C2=A0 https://github.com/apache/brpc/pull/2518
-
-Credit:
-
-Pingtao Wei of 2012 Laboratories (finder)
-Ziyang Chen of 2012 Laboratories (finder)
-Haoran Zhi of 2012 Laboratories (finder)
-Hongpei Li of 2012 Laboratories (finder)
-
-References:
-
-https://github.com/apache/brpc/releases/tag/1.8.0
-https://github.com/apache/brpc/pull/2518
-https://brpc.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-23452
-
+On Sun, Jan 10, 2021 at 07:08:42PM +0100, Solar Designer wrote:
+> Hi,
+> 
+> I've just updated the headers-only archives of (linux-)distros mentioned
+> in the message below to include headers of everything posted until
+> December 31, 2020.  There was relatively little need for this for a
+> while due to the statistics kindly maintained by Gentoo, but now those
+> are lagging behind (last updated until September 2019 inclusive).  They
+> will need to also be updated, and I felt updating these archives might
+> help with hopefully making that upcoming update and with its review.
+> 
+> Alexander
+> 
+> On Mon, Nov 20, 2017 at 11:42:05PM +0100, Solar Designer wrote:
+> > On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
+> > > I've just set up these archives of the private lists up until June 19:
+> > > 
+> > > http://www.openwall.com/lists/linux-distros/
+> > > http://www.openwall.com/lists/distros/
+> > > 
+> > > I did not decrypt the actual messages, but the statistics and the
+> > > message headers should provide some visibility into how much and roughly
+> > > what was discussed and when.
+> > 
+> > I've just updated these with message headers until November 19 (although
+> > there was nothing posted after November 9, until further still-embargoed
+> > messages appeared today).
+> > 
+> > > The messages appearing on distros should be strictly a subset of those
+> > > appearing on linux-distros, as per the description of the lists here:
+> > > 
+> > > http://oss-security.openwall.org/wiki/mailing-lists/distros
+> > > 
+> > > As you may notice, the Subject lines sometimes contain [vs] and other
+> > > times [vs-plain].  This reflects whether the messages traveled to the
+> > > list exploder in encrypted or plaintext form, respectively.  They
+> > > traveled to the list members in re-encrypted form either way.  The
+> > > [vs-plain] case commonly occurs on messages CC'ed to other parties, for
+> > > which the sender might not have had the keys.  MUAs generally don't
+> > > allow a message to be encrypted to a subset of the addressees and sent
+> > > in plaintext to others.
+> > > 
+> > > Enjoy.
+> > 
+> > Alexander
