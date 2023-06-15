@@ -1,76 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/12
-Message-ID: <20230929202415.bmsmbdapaljl2pf2@mutt-hbsd>
-Date: Fri, 29 Sep 2023 16:24:15 -0400
-From: Shawn Webb <shawn.webb@...denedbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/15/3
+Message-ID: <20230615183839.GA12628@openwall.com>
+Date: Thu, 15 Jun 2023 20:38:39 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+Subject: Re: distros list archive
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
-> On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
-> > Google has announced another media parsing bug, this time correctly documenting
-> > both the base library and Chrome versions affected in the CVE.
-> > 
-> > https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
-> > 
-> >    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
-> >    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
-> >    exploit heap corruption via a crafted HTML page.
-> >    (Chromium security severity: High)
-> > 
-> > Unfortunately, the bug report it points to is restricted access still:
-> > https://crbug.com/1486441
-> > 
-> > But the Chrome release notes state:
-> >    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
-> > https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_27.html
-> > 
-> > Mozilla has put out their own security advisory at
-> > https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
-> > and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
-> > Firefox Focus for Android 118.1, and Firefox for Android 118.1.
-> > 
-> > https://bugzilla.mozilla.org/show_bug.cgi?id=1855550 is also still
-> > restricted access.
-> > 
-> > It does not appear that libvpx 1.13.1 has been released yet, but there
-> > are two commits in its git repo with the 1486441 bug id listed:
-> > 
-> > https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d646e4ffef36d590
-> > https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cca6e0417b290282
-> > 
-> > Mozilla's commit references these two libvpx commit ids as well:
-> > https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f9130e1896b695d2
+Hi,
+
+I've just made a further update of these, until May 31, 2023.
+
+Alexander
+
+On Sun, Jan 10, 2021 at 07:08:42PM +0100, Solar Designer wrote:
+> Hi,
 > 
-> How long will it take for corporations to accept that writing media
-> codecs in C, C++, or any other memory-unsafe language is a fundamentally
-> bad idea, and that it is better to rewrite the codecs in a safe language
-> (such as Wuffs or Rust) than to try to secure the existing ones?
-
-$ git clone https://chromium.googlesource.com/webm/libvpx
-$ cd libvpx
-$ git log --reverse
-commit 0ea50ce9cb4b65eee6afa1d041fe8beb5abda667 (tag: v0.9.0)
-Author: John Koleszar <jkoleszar@...gle.com>
-Date:   Tue May 18 11:58:33 2010 -0400
-
-    Initial WebM release
-
-I think this might predate Rust. I wonder how many technical folk
-would welcome alternative implementations of various popular
-libraries.
-
-I especially am grateful for those who advocate for, and help advance,
-software diversity.
-
-Thanks,
-
--- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
-
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+> I've just updated the headers-only archives of (linux-)distros mentioned
+> in the message below to include headers of everything posted until
+> December 31, 2020.  There was relatively little need for this for a
+> while due to the statistics kindly maintained by Gentoo, but now those
+> are lagging behind (last updated until September 2019 inclusive).  They
+> will need to also be updated, and I felt updating these archives might
+> help with hopefully making that upcoming update and with its review.
+> 
+> Alexander
+> 
+> On Mon, Nov 20, 2017 at 11:42:05PM +0100, Solar Designer wrote:
+> > On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
+> > > I've just set up these archives of the private lists up until June 19:
+> > > 
+> > > http://www.openwall.com/lists/linux-distros/
+> > > http://www.openwall.com/lists/distros/
+> > > 
+> > > I did not decrypt the actual messages, but the statistics and the
+> > > message headers should provide some visibility into how much and roughly
+> > > what was discussed and when.
+> > 
+> > I've just updated these with message headers until November 19 (although
+> > there was nothing posted after November 9, until further still-embargoed
+> > messages appeared today).
+> > 
+> > > The messages appearing on distros should be strictly a subset of those
+> > > appearing on linux-distros, as per the description of the lists here:
+> > > 
+> > > http://oss-security.openwall.org/wiki/mailing-lists/distros
+> > > 
+> > > As you may notice, the Subject lines sometimes contain [vs] and other
+> > > times [vs-plain].  This reflects whether the messages traveled to the
+> > > list exploder in encrypted or plaintext form, respectively.  They
+> > > traveled to the list members in re-encrypted form either way.  The
+> > > [vs-plain] case commonly occurs on messages CC'ed to other parties, for
+> > > which the sender might not have had the keys.  MUAs generally don't
+> > > allow a message to be encrypted to a subset of the addressees and sent
+> > > in plaintext to others.
+> > > 
+> > > Enjoy.
+> > 
+> > Alexander
