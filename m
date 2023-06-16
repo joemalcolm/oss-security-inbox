@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["653" "Wednesday" "27" "April" "2016" "15:36:31" "-0400" "Tony Homer" "tony--@apache.org" "<CAKkdKCBWncYOSs+QeD0xR4qs=Mfyto=136MyxO1Zb_1CQiNvRg@mail.gmail.com>" "24" "[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS" nil nil nil "4" "2016042719:36:31" "[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS" (number mark "U       tony--@apach Apr 27   24/653   " thread-indent "\"[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 29722 invoked by uid 550); 27 Apr 2016 19:41:17 -0000
+Received: (qmail 8128 invoked by uid 550); 17 Jun 2023 11:02:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +7,154 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26471 invoked from network); 27 Apr 2016 19:36:45 -0000
-X-Gm-Message-State: AOPr4FUiXGC0xRjtQi3Px6GMv7OSq2LEWcSNqyjOkhPgsX48pJHMlNMPPAazruDkD+Y9qxczzu7Y6NKVx2uiPQ==
+Received: (qmail 13396 invoked from network); 16 Jun 2023 09:44:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1686908640; x=1689500640;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4pHKtXvBO6HBfhyFVLXF0REYU9r06c9Q75Rav/6Q4OU=;
+        b=OLGgMVveYOAeUJwppQMzUYsTB1hrA9BlHUFQIIC6jBNDX3gH1OF78lLMtiZ7t3LgdJ
+         2zoHgzUI1sMFpsEuj5XIw8yP/zOXCuZSXM1un3eK1jgJ1fV0JH0PDxps/e33zX37lgkW
+         N+HNE9WIkmK95GoXeufIcDJU3eq7TAlun9oOM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686908640; x=1689500640;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4pHKtXvBO6HBfhyFVLXF0REYU9r06c9Q75Rav/6Q4OU=;
+        b=DW4aCca+/tTfwCFOrBwpeW5TwI/WkKlmXLHettFmfP5OLgL8tgyICih+dQVQzzWom5
+         UyZfzQaBh4dy7ehQ+zAzvENi7ZiB5Jmj0LsC/Hph0hokEEEmp2GR6V6d1RxEZ8Ycco5F
+         juDvY0QLsSgeoTwpw5wdpx0Wa8gTGrHZzuN74BDnHGqzQsurccevPeNi7oAqOsd9G3w7
+         yUkr+/PiNPmzyJwFnLwl7pxoHbYYxvkqvMc9y7idoX7pTAfIVvFsd0AhhrtSDivIhNiU
+         Bk2FQI+MdtNnv1cSOlthKHnUrCM1elMw1iqNSf+ghlQgHfVp9nZ/G4t+/5UVhekZ40yW
+         bpDA==
+X-Gm-Message-State: AC+VfDzwk2Gwls4wop/YlXH7f2tm0qgSCUngZie+Uk6SMEf7/ENdo6ep
+	vHe1pzAtiptUaipDR277RzGuQMQft5E8KWD9OBr7r5xxdqozC4Kmve6trgIa
+X-Google-Smtp-Source: ACHHUZ5puIk1/VU9NLz3IyCXojMgrcOPjOWprx7AltYbKH+SSv4ScV5R8IBgU2re3dSJwHKVJcuxeCmXkFkO8U5BQeQ=
+X-Received: by 2002:a81:49c9:0:b0:569:51d4:e723 with SMTP id
+ w192-20020a8149c9000000b0056951d4e723mr1867646ywa.36.1686908640100; Fri, 16
+ Jun 2023 02:44:00 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.107.50.10 with SMTP id y10mr12033745ioy.144.1461785791483;
- Wed, 27 Apr 2016 12:36:31 -0700 (PDT)
-Date: Wed, 27 Apr 2016 15:36:31 -0400
-X-Gmail-Original-Message-ID: <CAKkdKCBWncYOSs+QeD0xR4qs=Mfyto=136MyxO1Zb_1CQiNvRg@mail.gmail.com>
-Message-ID: <CAKkdKCBWncYOSs+QeD0xR4qs=Mfyto=136MyxO1Zb_1CQiNvRg@mail.gmail.com>
-From: Tony Homer <tony--@apache.org>
-To: dev@cordova.apache.org, private@cordova.apache.org, 
-	"JPCERT/CC" <vuls@jpcert.or.jp>, security@apache.org, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+From: =?UTF-8?Q?Tam=C3=A1s_Koczka?= <poprdi@chromium.org>
+Date: Fri, 16 Jun 2023 11:43:49 +0200
+Message-ID: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Our learnings from 42 Linux kernel exploits, we are limiting io_uring
 
-CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+Hello everyone,
 
-Severity:
-High
+We've posted the following article to the Google Security Blog which
+contains some of our learnings from 42 Linux kernel exploits we got so
+far on our kCTF VRP and the actions we are taking based on these
+learnings (tl;dr: we are limiting io_uring in our products):
 
-Vendor:
-The Apache Software Foundation
+=======================
+In 2020[1], we integrated kCTF into Google's Vulnerability Rewards
+Program (VRP) to support researchers evaluating the security of Google
+Kubernetes Engine (GKE) and the underlying Linux kernel. As the Linux
+kernel is a key component not just for Google, but for the Internet,
+we started heavily investing in this area. We extended the VRP's scope
+and maximum reward in 2021[2] (to $50k), then again in February
+2022[3] (to $91k), and finally in August 2022[4] (to $133k). In 2022,
+we also summarized our learnings to date in our cookbook[5], and
+introduced our experimental mitigations[6] for the most common
+exploitation techniques.
 
-Versions Affected:
-cordova-ios 3.9.1 and below
+In this post, we'd like to share our learnings and statistics about
+the latest Linux kernel exploit submissions, how effective our
+mitigations[7] are against them, what we do to protect our users, and,
+finally, how we are changing our program to align incentives to the
+areas we are most interested in.
 
-Description:
-Apache Cordova iOS contains 2 methods to bypass the URL access
-restrictions provided by the whitelist. An attacker can use any of the
-2 methods to load malicious resources in an app that uses a whitelist
-to only load trusted resources.
+= Learnings and Statistics =
 
-Upgrade path:
-Developers who are concerned about this issue should install version
-4.0.0 or higher of the cordova-ios platform.
+Since its inception, the program has rewarded researchers with a total
+of 1.8 million USD, and in the past year, there has been a clear
+trend: 60% of the submissions[8] exploited the io_uring component of
+the Linux kernel (we paid out around 1 million USD for io_uring
+alone). Furthermore, io_uring vulnerabilities were used in all the
+submissions which bypassed our mitigations.
 
-Credit:
-This issue was discovered by Muneaki Nishimura (nishimunea) of Recruit
-Technologies Co.,Ltd.
+= Limiting io_uring =
+
+To protect our users, we decided to limit the usage of io_uring in
+Google products:
+
+ * ChromeOS: We disabled[9] io_uring (while we explore new ways to sandbox it).
+
+ * Android: Our seccomp-bpf filter[10] ensures that io_uring is
+unreachable to apps. Future Android releases will use SELinux to limit
+io_uring access to a select few system processes[11].
+
+ * GKE AutoPilot: We are investigating disabling io_uring by default.
+
+ * It is disabled on production Google servers.
+
+While io_uring brings performance benefits, and promptly reacts to
+security issues with comprehensive security fixes (like
+backporting[12] the 5.15 version to the 5.10 stable tree), it is a
+fairly new part of the kernel. As such, io_uring continues to be
+actively developed, but it is still affected by severe vulnerabilities
+and also provides strong exploitation primitives. For these reasons,
+we currently consider it safe only for use by trusted components.
+
+= Transparency =
+
+Currently, we make vulnerability details public on our spreadsheet[8]
+(which now also includes CVE details), and we have summarized
+different exploitation techniques in our cookbook[5]. In the future,
+to make our efforts more transparent and give faster feedback to the
+community, we will ask researchers to open-source their
+submissions[13], including the code they used.
+
+= Introducing kernelCTF =
+
+To better align incentives with our areas of interest, we are shifting
+our focus from GKE and kCTF to the latest stable kernel and our
+mitigations. As a result, starting today we will handle kernel exploit
+submissions under a new name, "kernelCTF," with its own reward
+structure and submission process[14]. The maximum total payout for
+kernelCTF is still $133,337 per submission. While the specific GKE
+kernel configuration is still covered by the new kernelCTF, exploits
+affecting non-kernel components like the full GKE stack (including
+Kubernetes), the container runtime, and GKE itself, are now separately
+eligible for vulnerability rewards under the kCTF VRP which is
+returning to its original reward amounts and conditions.
+
+= Conclusion =
+
+Our goal remains the same: we are building a pipeline to analyze,
+experiment, measure, and build security mitigations to make the Linux
+kernel as safe as possible, with the help of the security community.
+We hope that over time, we will be able to implement security
+mitigations that make it more difficult to exploit Linux kernel
+vulnerabilities.
+
+With the name change, we have moved our communication channel to
+#kernelctf on Discord[15], with a separate #kernelctf-announcements
+channel[16]. Please join us there for the latest updates regarding
+kernelCTF.
+
+[1] https://security.googleblog.com/2020/05/expanding-our-work-with-open-source.html
+[2] https://security.googleblog.com/2021/11/trick-treat-paying-leets-and-sweets-for.html
+[3] https://security.googleblog.com/2022/02/roses-are-red-violets-are-blue-giving.html
+[4] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html
+[5] https://docs.google.com/document/d/1a9uUAISBzw3ur1aLQqKc5JOQLaJYiOP5pe_B4xCT1KA/edit
+[6] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html#:~:text=The%20mitigations%20we%27ve%20built%20attempt%20to%20tackle%20the%20following%20exploit%20primitives
+[7] https://github.com/thejh/linux/blob/slub-virtual/MITIGATION_README
+[8] https://docs.google.com/spreadsheets/d/e/2PACX-1vS1REdTA29OJftst8xN5B5x8iIUcxuK6bXdzF8G1UXCmRtoNsoQ9MbebdRdFnj6qZ0Yd7LwQfvYC2oF/pubhtml
+[9] https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/4228112
+[10] https://cs.android.com/android/platform/superproject/+/master:bionic/libc/SECCOMP_ALLOWLIST_COMMON.TXT
+[11] https://android-review.googlesource.com/c/platform/system/sepolicy/+/2302679
+[12] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=788d0824269bef539fe31a785b1517882eafed93
+[13] https://google.github.io/security-research/kernelctf/rules#note-about-making-the-exploit-public
+[14] https://google.github.io/security-research/kernelctf/rules
+[15] https://discord.gg/A3qZcyaZ69
+[16] https://discord.gg/AjGJ3acF2e
+=======================
+
+The article can also be read on our blog:
+https://security.googleblog.com/2023/06/learnings-from-kctf-vrps-42-linux.html
+
+--
+Tamas
