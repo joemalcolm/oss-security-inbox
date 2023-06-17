@@ -1,37 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/12/1
-Message-ID: <77c37da9-baaa-d5fe-92c8-3dfebf03ae75@apache.org>
-Date: Wed, 12 Jul 2023 09:14:59 +0000
-From: Rongtong Jin <jinrongtong@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/17/1
+Message-ID: <ZI1CALKOZczi4lKI@eldamar.lan>
+Date: Sat, 17 Jun 2023 07:17:52 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37582: Apache RocketMQ: Possible remote code execution when using the update configuration function 
+Subject: Re: Linux kernel: off-by-one in fl_set_geneve_opt
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi,
 
-Affected versions:
+On Wed, Jun 07, 2023 at 11:32:31AM +0800, Hangyu Hua wrote:
+> Hi guys,
+> 
+> I find a off-by-one bug in linux kernel's Flower
+> classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege
+> escalation.
+> 
+> # Details:
+> 
+> static int fl_set_geneve_opt(const struct nlattr *nla, struct fl_flow_key
+> *key,
+>      int depth, int option_len,
+>      struct netlink_ext_ack *extack)
+> {
+> struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
+> struct nlattr *class = NULL, *type = NULL, *data = NULL;
+> struct geneve_opt *opt;
+> int err, data_len = 0;
+> 
+> if (option_len > sizeof(struct geneve_opt))
+> data_len = option_len - sizeof(struct geneve_opt);
+> 
+> opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
+> memset(opt, 0xff, option_len);
+> opt->length = data_len / 4;
+> opt->r1 = 0;
+> opt->r2 = 0;
+> opt->r3 = 0;
+> 
+> ...
+> if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
+> int new_len = key->enc_opts.len;
+> 
+> data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
+> data_len = nla_len(data);
+> if (data_len < 4) {
+> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
+> bytes long");
+> return -ERANGE;
+> }
+> if (data_len % 4) {
+> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
+> multiple of 4 bytes long");
+> return -ERANGE;
+> }
+> 
+> new_len += sizeof(struct geneve_opt) + data_len;
+> BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
+> if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
+> NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
+> return -ERANGE;
+> }
+> opt->length = data_len / 4;
+> memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
+> }
+> ...
+> }
+> 
+> We can see that opt use key->enc_opts.len to get its pointer from
+> key->enc_opts.data[] in [1]. Then length will be set to "data_len /
+> 4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
+> packets and their total size is 252 bytes(key->enc_opts.len = 252)
+> then key->enc_opts.len = opt->length = data_len / 4 when the third
+> TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
+> can bypass the check in [2] and cause out of bound write in
+> [3](opt->opt_data = key->enc_opts.data[257]).
+> 
+> # Patch
+> 
+> I already contacted the linux security team and made a patch:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
+> 
+> # CVE
+> 
+> Pending
+> 
+> # EXP
+> 
+> In order to avoid confusion i will publish it after I get CVE.
 
-- Apache RocketMQ 5.0.0 through 5.1.1
-- Apache RocketMQ through 4.9.6
+CVE-2023-35788 has been assigned for this issue:
+https://www.cve.org/CVERecord?id=CVE-2023-35788
 
-Description:
-
-The RocketMQ NameServer component still has a remote command execution vulnerability as the CVE-2023-33246 issue was not completely fixed in version 5.1.1. 
-
-When NameServer address are leaked on the extranet and lack permission verification, an attacker can exploit this vulnerability by using the update configuration function on the NameServer component to execute commands as the system users that RocketMQ is running as. 
-
-It is recommended for users to upgrade their NameServer version to 5.1.2 or above for RocketMQ 5.x or 4.9.7 or above for RocketMQ 4.x to prevent these attacks.
-
-This issue is being tracked as https://github.com/apache/rocketmq/pull/6843 
-
-Credit:
-
-soreatu@...il.com (finder)
-yuansec@...look.com  (finder)
-
-References:
-
-https://rocketmq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-37582
-https://issues.apache.org/jira/browse/https://github.com/apache/rocketmq/pull/6843
-
+Regards,
+Salvatore
