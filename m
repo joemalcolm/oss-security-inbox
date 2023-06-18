@@ -1,69 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/05/1
-Message-ID: <Y9+dfm0bly+DJSJN@alf.mars>
-Date: Sun, 5 Feb 2023 13:13:50 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/18/1
+Message-ID: <9d0fbd7b-9a2c-ea9c-7c19-66f696291519@apache.org>
+Date: Sun, 18 Jun 2023 13:48:36 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sox: patches for old vulnerabilities
+Subject: CVE-2023-35005: Apache Airflow: Information disclosure on configuration view 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: low
 
-On Sat, Feb 04, 2023 at 12:19:14AM +0100, Steffen Nurpmeso wrote:
-> But i was only wondering a bit, have you checked against the
-> [master] branch?  For example
+Affected versions:
 
-I did a (too) rough survey of the upstream repository and (too quickly)
-concluded that it wouldn't help me with fixing these in Debian, so I
-worked from Debian's fork. I should have made this more clear.
+- Apache Airflow 2.5.0 before 2.6.2
 
->   02-fix-resource-leak-hcom.patch
+Description:
 
-Still needed in git.
+In Apache Airflow, some potentially sensitive values were being shown to the user in certain situations.
 
->   03-fix-regression-in-CVE-2017-11358.patch
 
-I'll be replacing the Debian-specific, broken fix of CVE-2017-11358 with
-the one committed upstream. Thanks.
 
->   04-fix-hcom-big-endian.patch#
 
-Indeed, I should have revisited the upstream tree. Upstream also fixes a
-double free and I'll be replacing my patch with the upstream one.
 
->   06-CVE-2021-33844.patch
 
-The code is refactored, but I think the issue persists in wav_read_fmt
-where wav->bitsPerSample isn't checked.
 
-> and
->   07-CVE-2021-3643.patch
 
-The hunk context changed and channels are now verified, but the size
-validation is still missing. During further analysis I also found that
-my patch is insufficient still.
+This vulnerability is mitigated by the fact configuration is not shown in the UI by default (only if `[webserver] expose_config` is set to `non-sensitive-only`), and not all uncensored values are actually sentitive.
 
-If uc becomes 1, we assign it to v->size, later we pass 6 - v->size as
-the second parameter to lsx_adpcm_init, which is used as an index into a
-static array of 5 elements. We thus have an out-of-bounds read access
-here. I don't yet know where exactly the check belongs as v->size == 1
-may be valid in some contexts still.
 
-Updated patch attached.
 
-> The rest just apply fine, and 02- was needed here, 03- seemed an
-> unrolled dup, 04- in parts (stdint via sox.h, but overflow, sure),
-> it is too late to check the rest, 'will do tomorrow.
 
-Thank you.
 
-> (I an maintaining an official contrib now private sox port for
-> CRUX Linux based upon 42b3557e13e0fe0 as of 20211029.)
+This issue affects Apache Airflow: from 2.5.0 before 2.6.2.
 
-I think it would be good to have a maintained upstream repository of sox
-eventually. It seems like multiple distributions are maintaining
-diverging patch piles now.
+Credit:
 
-Helmut
+Piotr Chomiak from Astro product security team (finder)
 
-View attachment "CVE-2021-3643.patch" of type "text/x-diff" (672 bytes)
+References:
+
+https://github.com/apache/airflow/pull/31788
+https://github.com/apache/airflow/pull/31820
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-35005
+
