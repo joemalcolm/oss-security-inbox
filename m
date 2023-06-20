@@ -1,4 +1,4 @@
-Received: (qmail 11469 invoked by uid 550); 31 Jul 2023 15:40:49 -0000
+Received: (qmail 5366 invoked by uid 550); 21 Jun 2023 11:36:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,98 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9703 invoked from network); 31 Jul 2023 15:38:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1690817882; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=/5ubbJjo+y3e2TPqF0LkBDRIa+0MLLqF+Ix3q/9q1q8=;
-	b=QhQX36s/yExIxE3jQRcUGakUt9by44W4XdbPUYbZGoAqA2z60AcGmTcRU/6E7esJKrAsZM
-	Eq8fUZioXIcPUYLC2alLjnXccpZpkoBqvaIj7Qv3GJMEBHHnmeHo7IOgxyzHgGI+DvyqBA
-	jzVtTpdHAiGzWuJq9OkI9+Nqx9M+njRkgfcKUvqxwYT/YWYztoChHjy4HunRCcRhZS0SPo
-	3K+osdm4JkMNk6fPN+a72vkYvrqqGAMN1/8tDJl3Y3ZvQkqP2Z2ycGFxNNNvt5hhOq5pzt
-	7ChPIXMGz4v4CL9LWNnTszAwQE+nYintQ7JIUXONi+59SMh4erWIO6GbaJirfQ==
-Date: Mon, 31 Jul 2023 15:38:01 +0000
-From: Matt Caswell <matt@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZMfVWXnJDgDYcnPe@openssl.org>
+Received: (qmail 16342 invoked from network); 20 Jun 2023 22:06:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687298787; x=1689890787;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lxrkbEV1+gWdbpBOno5fYTOYcqDL6HEejEadz9TGcj0=;
+        b=QgzGNB0mmfqnsPZE/XQU6zCdf9L1RpZ53RIFGxFeE35xlW3R4g9nPtpYxITXuA3QIG
+         tXvf5t80Bgl5bO07bhDf0SiCKj3KDYCHgIaJ+4G9qPrN7h/PDRco5OQMbRQqFFGcdEYT
+         rkNIW5f6F/PTKjckuD7uRIdd0+fZkqefJRPXJF8PWnwBvLZ+PWF+XBjWcZRm0D6CSxWb
+         1crOFEkt72fZtuuWKR00vNARqRMo8w3o2wv///Z6hV8EAP0hveW0DqJaP5e3euWc1T+7
+         YqEBHph+Yj1nCORbK0Hfh5NgKtXg18Z5X6UhCg4VgfTkJFjMw7IY5UqwDa8Wc4hGLQAG
+         HsXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687298787; x=1689890787;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lxrkbEV1+gWdbpBOno5fYTOYcqDL6HEejEadz9TGcj0=;
+        b=WuA9G4Q3XL2i2S4m+BvhNfxTlEWtwvODOjQaSUV3gsT4w4Lqv86l6dX6kexA7yQE4g
+         dpDUAxyugXr9rvfkgyrxxKB/RCZ2m3T8TOC54L30/m9dYIxbRtsIohx6o3zZrr0wNcJM
+         uTDoZ0OAYZd3ijbyf+VWWcmA5lipN2bsLjwGqFZUEEVQmNYHnGUo1yEqJsluNrWdFwP5
+         Y2Yr9wKNGYXoeHVWgEwTsJKyhUXng185XpHzh1gxCzv328OwnItg6kIc6Y94c/zyhT1X
+         p5oAfiyi3obhaDS64oHVj3Eg5sjcCan/iXM9/F80Oktfy+dJ6hWoWpDTAqN+r4K3dnAo
+         22+g==
+X-Gm-Message-State: AC+VfDxBzfUiphVKdeNis1YgC/ssRN9SLaHmKizcSTCjBlAwO4lWCelS
+	tZbKze/bWVGCzQo7CnJJax3qO7wAQWV2rvvdjfNqFMVje1EIOQ==
+X-Google-Smtp-Source: ACHHUZ68C1tnI40kPGWe8Kgbu9Y3Q4tk9cxycP3jZGBFLEBiCE7jiErKiGa1Ijn6IdDAMY2iQtaicO1FRmuYp1n8KvM=
+X-Received: by 2002:a2e:3a19:0:b0:2b4:73bc:da89 with SMTP id
+ h25-20020a2e3a19000000b002b473bcda89mr5394411lja.12.1687298786609; Tue, 20
+ Jun 2023 15:06:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+References: <CAGUWgD--HN6u3k6ofV07UPo3Bh=HyNRngUV2yz9OkzD5t9m3=A@mail.gmail.com>
+ <180de0a9-351b-a63f-4e2e-26e3a44b7099@oracle.com>
+In-Reply-To: <180de0a9-351b-a63f-4e2e-26e3a44b7099@oracle.com>
+From: Travis Biehn <tbiehn@gmail.com>
+Date: Tue, 20 Jun 2023 17:06:15 -0500
+Message-ID: <CAKtE3zecEsfMQKjnAcdVwUCTfXKOZ4_UXV_KvgA=ZL6PG3jZ_A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000ce54b905fe96dc88"
+Subject: Re: [oss-security] The AI chatgpt writes insecure code
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000ce54b905fe96dc88
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-OpenSSL Security Advisory [31st July 2023]
-==========================================
+On Tue, Jun 20, 2023 at 16:47 Alan Coopersmith <alan.coopersmith@oracle.com>
+wrote:
 
-Excessive time spent checking DH q parameter value (CVE-2023-3817)
-==================================================================
+> On 6/20/23 09:22, Georgi Guninski wrote:
+> > chatgpt is an AI language model and it can write code.
+> >
+> > As expected, it was trained on insecure code and it writes
+> > insecure code.
+>
+> Also as previously reported:
+>
+> https://www.theregister.com/2023/04/21/chatgpt_insecure_code/
+> https://arxiv.org/abs/2304.09655
+>
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@oracle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+>
+>
+ChatGPT will indeed generate =E2=80=98average=E2=80=99 quality code. That=
+=E2=80=99s absolutely
+ending up on GitHub and in dependency repositories. IMO, the situation
+hasn=E2=80=99t changed for us, more code than ever before growing super-lin=
+early
+and tools that produce a bunch of noise.
+On the other side - future coding buddies will be able to use Retrieval
+Augmented Generation for policy following to generate high quality code
+with more reliability.
 
-Severity: Low
+-Travis
 
-Issue summary: Checking excessively long DH keys or parameters may be very slow.
+--=20
+Twitter <https://twitter.com/tbiehn> | LinkedIn
+<http://www.linkedin.com/in/travisbiehn> | GitHub <http://github.com/tbiehn>
+| TravisBiehn.com <http://www.travisbiehn.com>
 
-Impact summary: Applications that use the functions DH_check(), DH_check_ex()
-or EVP_PKEY_param_check() to check a DH key or DH parameters may experience long
-delays. Where the key or parameters that are being checked have been obtained
-from an untrusted source this may lead to a Denial of Service.
-
-The function DH_check() performs various checks on DH parameters. After fixing
-CVE-2023-3446 it was discovered that a large q parameter value can also trigger
-an overly long computation during some of these checks. A correct q value,
-if present, cannot be larger than the modulus p parameter, thus it is
-unnecessary to perform these checks if q is larger than p.
-
-An application that calls DH_check() and supplies a key or parameters obtained
-from an untrusted source could be vulnerable to a Denial of Service attack.
-
-The function DH_check() is itself called by a number of other OpenSSL functions.
-An application calling any of those other functions may similarly be affected.
-The other functions affected by this are DH_check_ex() and
-EVP_PKEY_param_check().
-
-Also vulnerable are the OpenSSL dhparam and pkeyparam command line applications
-when using the "-check" option.
-
-The OpenSSL SSL/TLS implementation is not affected by this issue.
-
-The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
-
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 6a1eb62c2 (for 3.1),
-commit 9002fd073 (for 3.0) and commit 91ddeba0f (for 1.1.1) in the OpenSSL git
-repository. It is available to premium support customer in commit 869ad69a (for
-1.0.2).
-
-This issue was reported on 20th July 2023 by Bernd Edlinger. The fix was
-developed by Tomas Mraz.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230731.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmTH1M4ACgkQ2cTSbQ5g
-RJGhtAf9E3HklBKezKOXvAbsPmCqcjySMVTV/JrBjrDn14UIRjZmhVoHd5QGusN2
-ReRtA3bRL41UQYdLKDkdYjp9XmlDDFb5hKO3G7P0ldtDaw21TkIQeI/90OKjgsQu
-A+vpf/TcE1a1Pbz8cIRKYBjIaS3z9yIDW4eB0gytWxsqMxze+9IOYNuAbDa0KsqO
-PFTUiHr5xu01wsdVdHeUMpZ01E8tGbVwgyY7tvCUAUJcjjLcTb9+gXQLn6cmVRJt
-6kU8jsamkiYpL1MoKI5yQvYx0nXZUxXbH1ICPltytC4pBsMEypCCnJTkcJKhRRNt
-76Z4/x3XDqMzapYMPimIRifdzPV9FQ==
-=Ve/V
------END PGP SIGNATURE-----
+--000000000000ce54b905fe96dc88--
