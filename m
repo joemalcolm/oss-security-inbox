@@ -1,56 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/1
-Message-ID: <20231226003555.GA19071@openwall.com>
-Date: Tue, 26 Dec 2023 01:35:55 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/20/4
+Message-ID: <5a9446f4-8267-e703-421b-79b300b93ad6@apache.org>
+Date: Tue, 20 Jun 2023 19:33:44 +0000
+From: Christopher Tubbs <ctubbsii@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: CVE-2023-34340: Apache Accumulo: Accumulo 2.1.0 may incorrectly validate cached credentials 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 26, 2023 at 12:38:36AM +0100, Steffen Nurpmeso wrote:
-> Hello.  Please allow me a little opinion.
+Severity: critical
 
-Please keep your postings more focused on the thread's topic.
+Affected versions:
 
-> I want to point out that Huawei employees play an important role
-> in creating solutions in the (public and open to anyone) IETF.
-> Also financially.
-> I personally think it is a friendly move to give back and support
-> creating the infrastructure that we all build upon.
+- Apache Accumulo 2.1.0 before 2.1.1
 
-Fair enough.
+Description:
 
-> Which can easily be compared to many non-China companies and their
-> attitude of take but no give.
+Improper Authentication vulnerability in Apache Software Foundation Apache Accumulo.
+This issue affects Apache Accumulo: 2.1.0.
 
-To me, that's not an easy comparison at all.  Most large companies or
-their employees do give something these days, and without actual metrics
-I cannot tell if e.g. Huawei or Microsoft contributes more.
+Accumulo 2.1.0 contains a defect in the user authentication process that may succeed when invalid credentials are provided. Users are advised to upgrade to 2.1.1.
 
->  |However, that might not be enough to prevent people from being concerned
->  |and discouraged from participating if openEuler joins.  This is why I
->  |suggested that it's best if openEuler does not join now, and that people
->  |who had commented before could want to say whether their concerns are
->  |now sufficiently addressed or maybe not.
-> 
-> Me personally no, but for one i am noone regarding vivid members
-> of this list, and second i have no political pressure against me.
+References:
 
-OK.
+https://accumulo.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-34340
 
-> and i really today stumbled over his funny opinion
-> 
->   . All "early notice" lists are leaks and should be considered
->     public.
->   . Unless your project is not used by anyone.
->   . Otherwise, why would your government allow it to exist?
-
-I think Greg's stance on this is inconsistent, if we also recall his
-preference against full public disclosure of issues discussed on private
-lists and his running of private lists on CPU microarchitectural issues.
-
-However, the concern about leaks is valid.  I think the most effective
-defense we have is the 14 days maximum embargo time, which removes the
-data's long-term value for potential use in attacks.
-
-Alexander
