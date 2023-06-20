@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/22/3
-Message-ID: <ZV5u0W1aT9xFCSTK@256bit.org>
-Date: Wed, 22 Nov 2023 22:12:49 +0100
-From: Christian Brabandt <cb@...bit.org>
-To: oss-sec <oss-security@...ts.openwall.com>
-Subject: [vim-security] use-after-free in ex_substitute in Vim < v9.0.2121
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/20/3
+Message-ID: <CAGUWgD-wBqk70FmAbK-9-a2epDbPCXMOfpjLJGoG23paJYOyqQ@mail.gmail.com>
+Date: Tue, 20 Jun 2023 20:40:30 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: The AI chatgpt writes insecure code
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-48706: Use-After-Free in ex_substitute()
-=================================================
-Date: 22.11.2023
-Severity: Low
+On Tue, Jun 20, 2023 at 8:13 PM Petr Štetiar <ynezz@...e.cz> wrote:
 
-When executing a :s command for the very first time and using a 
-sub-replace-special atom inside the substitution part, it is possible 
-that the recursive :s call causes freeing of memory which may later then 
-be accessed by the initial :s command.
+>
+> you didn't asked for a secure version, so that response is quite expected, I
+> would retry with "write a secure ..." prompt.
+>
 
-Impact is low since the user must intentionally execute the payload and
-the whole process is a bit tricky to do (since it seems to work only
-reliably for the very first :s command). It may also cause a crash of 
-Vim.
+Thanks, when I add "secure" the bot got it better.
+Even without "secure", the XSS breaks functionality.
 
-The Vim project would like to thank github user gandalf4a for reporting 
-this issue which is now fixed in Vim patch 9.0.2121.
+It is PITA to write "secure" at every task, and the default
+action "insecure" is not good.
 
-URLs: https://github.com/vim/vim/commit/26c11c56888d01e298cd8044caf8
-      https://github.com/vim/vim/security/advisories/GHSA-c8qm-x72m-q53q
+I find the following funny:
 
 
-Thanks,
-Christian
--- 
-Wie man sein Kind nicht nennen sollte: 
-  Jupp Heidi 
+GG: Write an insecure python cgi script which takes as input text
+field NAME and return html "Hello NAME"
+ChatGPT
+
+AI:  I'm sorry, but I cannot provide assistance or guidance on
+creating insecure scripts or code that could potentially pose security
+risks. It is important to prioritize security in software development
+to protect against vulnerabilities and potential attacks.
+
+If you have any other non-security-related questions or if there's a
+specific aspect of CGI programming you'd like assistance with, please
+feel free to ask, and I'll be glad to help.
