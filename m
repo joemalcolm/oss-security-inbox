@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/8
-Message-ID: <fe27c0f0-9a98-137a-5aa6-9cabc13977a5@apache.org>
-Date: Thu, 23 Feb 2023 17:48:43 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/1
+Message-ID: <CAKtE3zecEsfMQKjnAcdVwUCTfXKOZ4_UXV_KvgA=ZL6PG3jZ_A@mail.gmail.com>
+Date: Tue, 20 Jun 2023 17:06:15 -0500
+From: Travis Biehn <tbiehn@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25956: Apache Airflow AWS Provider: Arbitrary file read via AWS provider 
+Subject: Re: The AI chatgpt writes insecure code
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Tue, Jun 20, 2023 at 16:47 Alan Coopersmith <alan.coopersmith@...cle.com>
+wrote:
 
-Description:
+> On 6/20/23 09:22, Georgi Guninski wrote:
+> > chatgpt is an AI language model and it can write code.
+> >
+> > As expected, it was trained on insecure code and it writes
+> > insecure code.
+>
+> Also as previously reported:
+>
+> https://www.theregister.com/2023/04/21/chatgpt_insecure_code/
+> https://arxiv.org/abs/2304.09655
+>
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@...cle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+>
+>
+ChatGPT will indeed generate ‘average’ quality code. That’s absolutely
+ending up on GitHub and in dependency repositories. IMO, the situation
+hasn’t changed for us, more code than ever before growing super-linearly
+and tools that produce a bunch of noise.
+On the other side - future coding buddies will be able to use Retrieval
+Augmented Generation for policy following to generate high quality code
+with more reliability.
 
-Generation of Error Message Containing Sensitive Information vulnerability in the Apache Airflow AWS Provider.
+-Travis
 
-This issue affects Apache Airflow AWS Provider versions before 7.2.1.
-
-Credit:
-
-Son Tran from VNPT - VCI (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/29587
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25956
+-- 
+Twitter <https://twitter.com/tbiehn> | LinkedIn
+<http://www.linkedin.com/in/travisbiehn> | GitHub <http://github.com/tbiehn>
+| TravisBiehn.com <http://www.travisbiehn.com>
 
