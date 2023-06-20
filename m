@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/10
-Message-ID: <CAK_vis6udRU5MRodhseyqVdPVXD2iv0cU7uXqpAGxpGVh_fKAQ@mail.gmail.com>
-Date: Wed, 8 Nov 2023 15:55:53 -0500
-From: Brian Peters <brianrpeters@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/20/5
+Message-ID: <180de0a9-351b-a63f-4e2e-26e3a44b7099@oracle.com>
+Date: Tue, 20 Jun 2023 14:46:32 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Georgi Guninski <gguninski@...il.com>
+Subject: Re: The AI chatgpt writes insecure code
 Content-Type: text/plain; charset=utf-8
 
-> I somehow doubt the presence of the ! makes much of a difference.
+On 6/20/23 09:22, Georgi Guninski wrote:
+> chatgpt is an AI language model and it can write code.
+> 
+> As expected, it was trained on insecure code and it writes
+> insecure code.
 
-What about NVID? NVID-2023-0001
-Not (A) Vulnerability ID
+Also as previously reported:
 
-On Wed, Nov 8, 2023 at 2:39 PM Vegard Nossum <vegard.nossum@...cle.com>
-wrote:
+https://www.theregister.com/2023/04/21/chatgpt_insecure_code/
+https://arxiv.org/abs/2304.09655
 
->
-> On 08/11/2023 14:22, !CVE Team wrote:
-> > ==============
-> > What is a !CVE
-> > ==============
-> >
-> >     - A common place for !vulnerabilities (read not vulnerabilities)
-> >
-> >     - Security issues not covered by the traditional CVE.
-> >
-> >     - An identifier following common naming starting with an exclamation
-> >       mark(!) Example: !CVE-2023-0001
->
-> I am not a lawyer, but I'd assume you would run into some issues with
-> the naming of all this -- wasn't that the exact issue that somebody else
-> ran into when they tried to assign identifiers to bugs that MITRE
-> wouldn't acknowledge? Here's what they said back then:
->
-> <
-> https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_to_DWF_from_the_CVE_Board
-> >
->
-> I somehow doubt the presence of the ! makes much of a difference.
->
->
-> Vegard
->
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
