@@ -1,25 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/07/1
-Message-ID: <ac5b8ffa-c396-7733-6786-61f682ad6081@apache.org>
-Date: Fri, 07 Apr 2023 13:57:35 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/20/1
+Message-ID: <CAGUWgD--HN6u3k6ofV07UPo3Bh=HyNRngUV2yz9OkzD5t9m3=A@mail.gmail.com>
+Date: Tue, 20 Jun 2023 19:22:25 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28707: Airflow Apache Drill Provider Arbitrary File Read Vulnerability 
+Subject: The AI chatgpt writes insecure code
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+chatgpt is an AI language model and it can write code.
 
-Description:
+As expected, it was trained on insecure code and it writes
+insecure code.
 
-Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Drill Provider.This issue affects Apache Airflow Drill Provider: before 2.3.2.
+https://chat.openai.com/chat
 
-Credit:
+Here is a textbook example of XSS.
 
-Kai Zhao of 3H Secruity Team (finder)
+GG:
+Hi bot :)
+Write a python cgi script which takes as input text field NAME and
+return html "Hello NAME"
 
-References:
+Slightly skipped:
 
-https://github.com/apache/airflow/pull/30215
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-28707
+AI:
 
+import cgi
+
+# Create instance of FieldStorage
+form = cgi.FieldStorage()
+
+# Get value from the 'NAME' field
+name = form.getvalue('NAME')
+
+# Start the HTML response
+print("Content-type: text/html\n")
+print("<h1>Hello, {}</h1>".format(name))
+
+end of session.
+
+When the robots take over the real world, hacking the robots will
+be powerful :)
+
+-- 
+guninski:  https://j.ludost.net/resumegg.pdf
