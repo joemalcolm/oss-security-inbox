@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1343" "Tuesday" "22" "November" "2016" "19:19:59" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<62bd88e18535467990b8b87c1503444c@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)" nil nil nil "11" "2016112300:19:59" "[oss-security] Re: jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)" (number mark "U       cve-assign@m Nov 22   36/1343  " thread-indent "\"[oss-security] Re: jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)\"\n") "<1775367.VDhM2sPmdu@arcadia>" ("<1775367.VDhM2sPmdu@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22418 invoked by uid 550); 23 Nov 2016 00:20:11 -0000
+Received: (qmail 32409 invoked by uid 550); 21 Jun 2023 17:31:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22393 invoked from network); 23 Nov 2016 00:20:10 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <1775367.VDhM2sPmdu@arcadia>
-Message-ID: <62bd88e18535467990b8b87c1503444c@imshyb02.MITRE.ORG>
-Date: Tue, 22 Nov 2016 19:19:59 -0500
+Received: (qmail 23837 invoked from network); 21 Jun 2023 17:26:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687368370; x=1689960370;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TJ96j2Wx1vOf0rfIB4kAr2I5NLY0tNWTLEdTov88sLk=;
+        b=HYK20X17okwTMaMaJy8PD5gx1i8PvbwCMZkGkuFGAiGS147CPjhYHTel+dOLl8fJcf
+         CU+gL4OfWQ3q/paPVfBaEekVhodXVEAcE+VZurdZLxaUqO1GHM8jQbKrbpa+6/4TkRpv
+         i4lTxUr8Gov4SDqbmsNUAprynldOwbok54293VoodHF88/UkSFMgcc+Z+mn3Plg4rqpR
+         YJiXo1Ex26k3boZz4A7Vlwig+TcD2nqp0p+TmCjNOa6Vx53criiien13HaREl1ZJa18U
+         oujmMcw0ilgq/gg3FxoCUfrquiWcAV6fx7sMLBo/mIQAnLy61tPzwYChtH0Y4xuAzxwL
+         ZbPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687368370; x=1689960370;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TJ96j2Wx1vOf0rfIB4kAr2I5NLY0tNWTLEdTov88sLk=;
+        b=c2F/ThIgbtMcWBx+rqIm0avd7fPVU48S7cv7lqYTjz6DDYif5yyGTwsLy4m8Z9/WYI
+         SOLzkrUeTOX9UZWLXJ05dAjFWCpoTd6QekJkbVNG5+ySuCqok5Yu/HJgGjmfK930tiM0
+         cgRC3V6jqs6YWjF8qjWX7UR38ZUhlc5r5AUG1I4Bl0Au/49q8NC35RIYEJh4Nm8X7hY+
+         IVw1gWtk32wAb33UAK6/tJjqeBT336V6lYAsztTGO04Cr1w/bmGVZOxJdOSxL6zSxkjD
+         XZNgks0NV5AKS5thfcKSbiocvM+t9vzG/BNogUtkbxkxGzHbRWNlx8zWSYa2aJDhnE3a
+         5Mdw==
+X-Gm-Message-State: AC+VfDxlf9iCFeswgN8kDxhoZ7EzzSFu/XN/xtINpR/3k+LUiUMoLmYK
+	PT4flHM825OSaLZ1KieYs5bojZPmHDwsU8BYqfWH0D6W
+X-Google-Smtp-Source: ACHHUZ7VnwfB+UYLgwkqRiLJ4OaeMGPcdFznKBlomaslBRVdZfpsBNTITvOxFbp2uE8w7N/zz/3be4of7hLqHF0Mw5U=
+X-Received: by 2002:a05:6870:700c:b0:19f:4696:323a with SMTP id
+ u12-20020a056870700c00b0019f4696323amr17436140oae.15.1687368369757; Wed, 21
+ Jun 2023 10:26:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)
+References: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
+ <CAH8yC8noq14ANkUfn9VVD0ESLey1uv_2yZCV6DX4vgmE4FUatg@mail.gmail.com> <alpine.BSF.2.21.9999.2306220132050.17927@aneurin.horsfall.org>
+In-Reply-To: <alpine.BSF.2.21.9999.2306220132050.17927@aneurin.horsfall.org>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Wed, 21 Jun 2023 13:25:58 -0400
+Message-ID: <CAH8yC8kEfhZqyby8aFC8hZGS2YBxGvtyjjc07ZiaCE7XJG-h-w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Jun 21, 2023 at 1:15=E2=80=AFPM Dave Horsfall <dave@horsfall.org> w=
+rote:
+>
+> On Wed, 21 Jun 2023, Jeffrey Walton wrote:
+>
+> > Memory leaks on exit are par for the course in GNU software per
+> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+>
+> Don't bother with this, don't bother with that, etc...  Call me old-school
+> (which I am), but I cannot abide sloppy programming[*].
+>
+> At the risk of starting a culture war, that is one of the reasons why I
+> avoid GNU libraries whenever possible.
 
-> https://blogs.gentoo.org/ago/2016/11/20/jasper-stack-based-buffer-overflow-in-jpc_tsfb_getbands2-jpc_tsfb-c
+Yeah, I'm with you. It is sloppy programming from a bygone era.
 
-> AddressSanitizer: stack-buffer-overflow
-> WRITE of size 4
+I've had the discussion with Stallman and the Gnulib folks. They don't
+realize the harm they are doing with that policy (or they don't care).
+It makes security testing and evaluation orders of magnitude more
+difficult because it's hard to impossible to differentiate the "good"
+memory leaks from the "bad" memory leaks. Effectively, everyone with
+higher standards must lower their standard to GNU's.
 
-> https://github.com/mdadams/jasper/commit/1abc2e5a401a4bf1d5ca4df91358ce5df111f495
-
-> jpc/jpc_dec.c
-
-Use CVE-2016-9560.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYNN57AAoJEHb/MwWLVhi28acP/3hSYAIq1eaWbaNey2wlw+nX
-MAyAYntbtqAmEiH20z4UYPx3z1PFkC47rkTEuXqCuGlf0eCRWckKs1/v83EXMDoX
-yIzsX9tlXMDvYGrJt9Z7bz4AB3H8g2aEuGgq6CdtHt6IuVzNugqwtiXKSNPsclfl
-bZ0mKlwICSoCSeKZ4lpxdsmkI06MKAqP3/DW0CPH15BJJ1yNXIvtE69+T5+TkdPR
-DZbno/EnnBGkrnJpuMDD1yErFyVzeZcqTMaEnfS7+dmglu5PlrrbG4+/BVKNnIRU
-J8BNYcaZbCCL/9L75aXWKtVLiXGF7+yeNDMFpKFPSVxlcXOmHcVmomplFCnv6z5b
-ecMLx3gg/Jn1fiZJDjVS31UtaqMSnlYzxPkRNkOBJzacniWWsieMgYGfW8wR2XPY
-bxCFFec0YAbck+Im0+QbNM9iTUpL3h462SIoN983AmCscF7hj7UGMcrfS+uIxNDo
-7sbTAPHwNk+/5Rqn0Z+ZJLPfc2STDFfKBKH2vViq1wTjmfO+CsGwyknVoKzx7KJq
-/NYhRKuMMnPTFscBgPe+wB2CpCRGD9NbrirL+uW+i+dnocHUldHLhenJuSvUdNIO
-Y/TOXveXXJmP//iRPcOpACJpCcFHd3DVF61G0R6UPc01gprTzUAmy+FliqXAfFuw
-b3ZoLRfyAny0Vg2BQaOG
-=H8km
------END PGP SIGNATURE-----
+Jeff
