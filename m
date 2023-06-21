@@ -1,4 +1,4 @@
-Received: (qmail 20282 invoked by uid 550); 30 Mar 2024 17:20:58 -0000
+Received: (qmail 6055 invoked by uid 550); 21 Jun 2023 11:36:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +7,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22331 invoked from network); 30 Mar 2024 17:08:15 -0000
-DKIM-Signature: a=rsa-sha256; b=VQqM2Y7/zbaa59VZl/6ieO8nj+gUFALiNPofY3GYVzCCYJNXAJpKwrM0rDLax5eVWCSSPr9OUNmqjgXWLmC3Lk9xaBpl1EIX3BhvphSj8NBiJ/YW0BnN7fOYLRSywbncnlizKcKX0eX7c8EmRAQC1swnWNUGCGQy6zKMvFYDk7JJA6sAxkiNcBZGsm/1emYOBWCfbe92wrwyZaXRKmeDcloTEgdVmmobZAmnO0op9htrtQY7oGvkJJmjDLWG4jBCaIzDbPlKUjaMAO1506rN7BHnecYFf4NiBAPItb+1IW1xkJPFxkFjsQSXCm4Oka2lzW/XiGngsyO6+zvZrAXNUg==; s=purelymail2; d=levitati.ng; v=1; bh=fIlW8NT2ImJmWm27gfjAQBv2kQ4okLXIlfylp5zkgfM=; h=Received:From:To:Subject;
-DKIM-Signature: a=rsa-sha256; b=ONBf+k25y8nzgSDeaqXcNClMmABUE+KWp2NMNSsxn6R3MJYmb0Sb4KlLvr8lnIpjweN28tmHPovrSJPzVsLhR0OtZnO02P8p2k7bvwixPr7YKsNQ4EJGG4myiagdZGeqmVGDxFK5uPBC4nZhFWRjrMnycJZQeReRw3mQPjbFKywTgRz7jqwugfbr2iPdlAmsjCF1folZ6nZGA/tM1IQZ03qydHyZi8LkhDvtrJSjfxsVuB6e7hqoh3t9dRAicOxxB75q+z3oOnWGQTzRDLWk2fASA11RTSNqDovOkDmtvQzntfofRSsXLLsHUtcBKrAJxjAnfRAOLaalx45Um2fR+g==; s=purelymail2; d=purelymail.com; v=1; bh=fIlW8NT2ImJmWm27gfjAQBv2kQ4okLXIlfylp5zkgfM=; h=Feedback-ID:Received:From:To:Subject;
-Feedback-ID: 25799:4744:null:purelymail
-X-Pm-Original-To: oss-security@lists.openwall.com
+Received: (qmail 32276 invoked from network); 21 Jun 2023 06:45:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687329943; x=1689921943;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RkrDAQ5d35ui0co+IDLiquaIRFiqfDqExGSDyyOM2T8=;
+        b=VL6YRcavcSov1RJcRlsPOc7MSx8KTeIgLaDKNbmmM4iDYME7IPKLRgLR9WFSiu7OC2
+         uXzSekX1OVaYUB447lUhZ2dgXdiluEeQxQI9DqBPE7hlrgsgetZyGNtt91Euh6pNLqT/
+         CWfujuaIg8dZ6KXKvNX7knMqJvANRdngJKV+tJjstDTb08AWpkfuSEm9uMXj1PW+2UiL
+         ABkBLBydfI6NDUnVvcFhMNYSzKrqFZyzMg3RnZMXzcNPuLxEZwZSHrIPcMnqaN+iyd3X
+         sEC2cT06nLTu+k4YZwH8Yfwf9EFla5eGWnmW2xHruVVgUBeaHkQeYmZPPTaykEN1R9wK
+         r1EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687329943; x=1689921943;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RkrDAQ5d35ui0co+IDLiquaIRFiqfDqExGSDyyOM2T8=;
+        b=Xr2RdujsJMAPcNvOvwSMT9UScU4AcYqi/I0xX7tEWimWTII7RjIa83oU3sk1hrDDLw
+         orC3BeRxhnX+dk1lU7qu+mDsJcXLSUyOrVF266ww9U8jkCtka4HCL0Y+yPo+UdoivmQC
+         us+yWO1FAO1aytPskyWmuhI/80rd1zP0TwPIiGdgUhRffnE802OzB3KvY0RUl9AoIdVO
+         yGNbjULTbONmFoy0iol66VWeqiO0pzcJ5Z5iiVKMHEUhj+iro8YHM8W7DTOi/KYIldy2
+         V952cCpdKvJ9I1TpnEiFIr6KkzosCihzrWUI1Jioj7W8KwLK+ec+rUzMvfsb4pXMs/P4
+         jwow==
+X-Gm-Message-State: AC+VfDwkcMCQLy142Wbn0qg5onJmJrsJRTI7wTsykPV7EdtENOp0jD8u
+	/ev/DT3F2+LdlfDP3xXylqdhx5B92e43sdsV8oyohCDbgLY=
+X-Google-Smtp-Source: ACHHUZ7mKZiZISMGvohULMcrQs7GMekkALlx/B6WYbJ14YjSGAwpq7idvw9MpPgJFmfSmaA7o2pcXqHTiY6uPltYujE=
+X-Received: by 2002:a05:6870:9444:b0:1ad:4d4:34c5 with SMTP id
+ e4-20020a056870944400b001ad04d434c5mr2083086oal.39.1687329943294; Tue, 20 Jun
+ 2023 23:45:43 -0700 (PDT)
 MIME-Version: 1.0
-Date: Sat, 30 Mar 2024 18:07:59 +0100
-From: "Rein Fernhout (Levitating)" <me@levitati.ng>
+References: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
+In-Reply-To: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Wed, 21 Jun 2023 02:45:29 -0400
+Message-ID: <CAH8yC8noq14ANkUfn9VVD0ESLey1uv_2yZCV6DX4vgmE4FUatg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Jonathan Schleifer <js@nil.im>
-In-Reply-To: <fc8936e9-4e95-4aef-ac30-f2d99817f3f7@nil.im>
-References: <f0a95b6f-8738-4ca6-9462-35bdca04293a@nil.im>
- <12bfdf5d8ee20d341ce5ac206dc72b7b@purelymail.com>
- <fc8936e9-4e95-4aef-ac30-f2d99817f3f7@nil.im>
-User-Agent: Purely Mail via Roundcube/1.6.5
-Message-ID: <f98881fa1619aab0e1b358fe89e749a2@purelymail.com>
-X-Sender: me@levitati.ng
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
-I am currently checking out the RISC-V test files. They were updated around the same time as the others.
+On Tue, Jun 20, 2023 at 6:49=E2=80=AFPM Alan Coopersmith
+<alan.coopersmith@oracle.com> wrote:
+>
+> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
+> since it claims this bug has a CVSS of 9.8.
+>
+>  From what I see at https://github.com/yasm/yasm/issues/210 though, I can=
+'t
+> see any CVSS higher than 0.0 being relevant here and think the CVE should
+> be withdrawn.  Am I missing something here?  All I see is 2 objects of
+> 16 bytes each not being freed in the fraction of a second before the
+> command exits and automatically frees the memory - in a command the user
+> deliberately chooses to run, which runs as themselves with no raised
+> privileges, on an input file they provide, and which exits after processi=
+ng
+> the file and doesn't hang around keeping that memory allocated - not a bit
+> of security risk at all there.  (Yes, it's a small bug and is good to fix,
+> but not to raise security alarms for.)
 
-> My main worry is that when I extracted it, I replaced the sed in here:
+Memory leaks on exit are par for the course in GNU software per
+https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
 
-You can just use 'sed r\n filename' and it should work. I think it just reads the file and appends a newline.
+Nothing to see here, just move on.
 
-Extracting it can be simplified to:
-sed r\n $(grep -aErls "#{4}[[:alnum:]]{5}#{4}$" .) | tr "\t \-_" " \t_\-" | xz -d 2>/dev/null
-
-Where the grep finds bad-3-corrupt_lzma2.xz
-
-As for the extra code in 5.6.1, I think because the greps are for some specific bytes they are meant for 1 or 2 specific test files that don't actually exist yet, but might've been uploaded later. Using grep, the right offsets are found, and this is then read, translated, decompressed and executed. The translation is the same for both.
-
-> I think it's time to coordinate things.
-
-There is already some discussion on #tukaani on Libera.
-
-I also joined your channel.
-
-My mail client had format=flowed enabled so my list of test files by Jia was malformed, but here they are again (without the summaries).
-
-bad-3-corrupt_lzma2.xz     74b138d2a6529f2c07729d7c77b1725a8e8b16f1
-bad-dict_size.lzma         cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
-good-1-riscv-lzma2-1.xz    a67dcce6109c2f932a0a86abb0d7a95d3c31fb3e
-good-1-riscv-lzma2-2.xz    a67dcce6109c2f932a0a86abb0d7a95d3c31fb3e
-good-2cat.xz               cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
-good-large_compressed.lzma 74b138d2a6529f2c07729d7c77b1725a8e8b16f1
-good-small_compressed.lzma cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
-
-On 2024-03-30 17:17, Jonathan Schleifer wrote:
-> Am 30.03.24 um 16:10 schrieb Rein Fernhout (Levitating):
-> 
->> The script attached by Andres was from 5.6.0.
->> I extracted the script from both versions and I can verify your diff.
->> I attached the two versions I extracted.
->> 
->> It definitely does look like the 5.6.1 version looks for 2 extra scripts to execute.
->> I don't get any matches on the greps either though.
-> 
-> My main worry is that when I extracted it, I replaced the sed in here:
-> 
-> sed \"r\n\" $gl_am_configmake | eval $gl_path_map | $gl_localedir_prefix -d 2>/dev/null
-> 
-> With a simple cat, as I could not make sed work. This worries me as it means there is probably some other transformation that I'm missing that would have made the sed work. Which means there's transformations I'm missing and those could as well mutate some of the test files or resulting payloads. So it could either change the grep itself, or create files that match the grep.
-> 
-> Which means I'm not sure that actually no files match and it actually executes nothing.
-> 
->> I also want to look more into the object file.
-> 
-> I think it's time to coordinate things.
-> 
-> I created a chat room for this on Matrix, IRC and Discord -- all bridged together so it's essentially one chat room. Those interested, please join:
-> 
-> Matrix: #xz-backdoor-reversing:nil.im
-> IRC: #xz-backdoor-reversing on irc.oftc.net
-> Discord: https://discord.gg/XqTshWbR5F
+Jeff
