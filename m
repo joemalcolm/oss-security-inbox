@@ -1,52 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/9
-Message-ID: <CAHQ_-nSmiU3vZM-8skFJ0jvuZhjR5eHWX=UOjZM-i1qy47pUwQ@mail.gmail.com>
-Date: Wed, 19 Apr 2023 07:53:14 -0700
-From: Peter Philip Pettersson <philip.pettersson@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Checking existence of firewalled URLs via javascript's script.onload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/5
+Message-ID: <alpine.BSF.2.21.9999.2306220132050.17927@aneurin.horsfall.org>
+Date: Thu, 22 Jun 2023 01:44:04 +1000 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-Hi George,
+On Wed, 21 Jun 2023, Jeffrey Walton wrote:
 
-There are many ways to make arbitrary HTTP requests through a browser, with
-and without Javascript.
+> Memory leaks on exit are par for the course in GNU software per
+> https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
 
-Here's a good writeup from 2018 from the makers of Burp Suite:
-https://portswigger.net/research/exposing-intranets-with-reliable-browser-based-port-scanning
+Don't bother with this, don't bother with that, etc...  Call me old-school 
+(which I am), but I cannot abide sloppy programming[*].
 
-I wouldn't consider this a vulnerability in the browser.
+At the risk of starting a culture war, that is one of the reasons why I 
+avoid GNU libraries whenever possible.
 
-Btw, I remember your exploits from the early 2000s - good stuff :)
+[*]
+And don't even mention "AI-generated code".
 
-Regards,
-Philip
-
-On Wed, Apr 19, 2023 at 6:31 AM Georgi Guninski <gguninski@...il.com> wrote:
-
-> There is minor information disclosure vulnerability similar
-> to nmap in browser.
->
-> It is possible to check the existence of firewalled URL U via
-> the following javascript in a browser:
->
-> <script src="U"
->     onload="alert('Exists')"
->     onerror="alert('Does not exist')">
->
-> This might have privacy implication on potentially
-> "semi-blind CSRF" (XXX does this makes sense?).
->
-> Works for me in Firefox, Chrome and Chromium 112.
->
-> I believe the issue won't be fixed because it will break
-> stuff in the mess called internet.
->
-> For online test:
->
-> https://www.guninski.com/onload2.html
->
-> --
-> guninski:  https://j.ludost.net/resumegg.pdf
->
-
+-- Dave
