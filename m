@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/24/5
-Message-ID: <20230624210805.GA16950@openwall.com>
-Date: Sat, 24 Jun 2023 23:08:05 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/2
+Message-ID: <CAH8yC8noq14ANkUfn9VVD0ESLey1uv_2yZCV6DX4vgmE4FUatg@mail.gmail.com>
+Date: Wed, 21 Jun 2023 02:45:29 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Opinion: Governments don't want IT security, they want to have cyber weapons
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 24, 2023 at 11:23:18AM +0000, cbf0001@...ton.me wrote:
-> I agree with Solar and David, please stop lowering the bar with content that is not relevant to the distro subscribers.
+On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
+<alan.coopersmith@...cle.com> wrote:
+>
+> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
+> since it claims this bug has a CVSS of 9.8.
+>
+>  From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
+> see any CVSS higher than 0.0 being relevant here and think the CVE should
+> be withdrawn.  Am I missing something here?  All I see is 2 objects of
+> 16 bytes each not being freed in the fraction of a second before the
+> command exits and automatically frees the memory - in a command the user
+> deliberately chooses to run, which runs as themselves with no raised
+> privileges, on an input file they provide, and which exits after processing
+> the file and doesn't hang around keeping that memory allocated - not a bit
+> of security risk at all there.  (Yes, it's a small bug and is good to fix,
+> but not to raise security alarms for.)
 
-Thanks for the feedback.  Subscribers to oss-security are by far not
-only distros, though.
+Memory leaks on exit are par for the course in GNU software per
+https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
 
-I also received 5 off-list replies (as I had asked for).  All of them
-were against somewhat off-topic content like Georgi's recent postings
-getting through to the list on further occasions.  So the list will be
-moderated more strictly accordingly.
+Nothing to see here, just move on.
 
-No need for further replies to this thread, please.
-
-Alexander
+Jeff
