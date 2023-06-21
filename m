@@ -1,99 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/13/1
-Message-ID: <85s1o0qq-3n86-1s3q-s29p-54n951o27q2n@unkk.fr>
-Date: Wed, 13 Sep 2023 08:31:25 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: CVE-2023-38039 curl: HTTP headers eat all memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/11
+Message-ID: <CABdrxGCTFixuOZWpSVzgbVnj4Em=GpMgapSarnLHAV9+3CG0bw@mail.gmail.com>
+Date: Wed, 21 Jun 2023 11:19:42 -0700
+From: CJ Cullen <cjcullen@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: [kubernetes/kops] CVE-2023-1943: Privilege Escalation in kOps using GCE/GCP Provider in Gossip Mode
 Content-Type: text/plain; charset=utf-8
 
-HTTP headers eat all memory
-===========================
+Issue Details
 
-Project curl Security Advisory, September 13 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-38039.html)
+A security issue was reported in kOps <https://github.com/kubernetes/kops>
+with the GCP Provider running in Gossip Mode
+<https://kops.sigs.k8s.io/gossip/>, where Node service account credentials
+could be used by a container running in the cluster to retrieve sensitive
+information from the state storage bucket and escalate to cluster-admin
+permissions.
 
-VULNERABILITY
--------------
+This issue has been rated High (CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
+and assigned CVE-2023-1943.
+Affected Components and Configurations
 
-When curl retrieves an HTTP response, it stores the incoming headers so that
-they can be accessed later via the libcurl headers API.
+This bug affects the kOps GCP provider, only when running in Gossip Mode.
+See below for information about other providers.
+Affected Versions
 
-However, curl did not have a limit in how many or how large headers it would
-accept in a response, allowing a malicious server to stream an endless series
-of headers and eventually cause curl to run out of heap memory.
+   -
 
-INFO
-----
+   v1.26.0 - v1.26.1
+   -
 
-Since libcurl allocates memory on the heap to store each header individually,
-the exact number of headers required for this to become a problem will vary
-greatly from case to case. As the headers typically need to be transfered over
-a network to curl, the available bandwidth will also affect how likely or how
-fast this problem can be triggered.
+   <v1.25.4
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-38039 to this issue.
+Fixed Versions
 
-CWE-770: Allocation of Resources Without Limits or Throttling
+   -
 
-Severity: Medium
+   v1.26.2
+   -
 
-AFFECTED VERSIONS
------------------
+   V1.25.4
 
-- Affected versions: libcurl 7.84.0 to and including 8.2.1
-- Not affected versions: libcurl < 7.84.0 and >= 8.3.0
-- Introduced-in: https://github.com/curl/curl/commit/4d94fac9f0d1dd
 
-libcurl is used by many applications, but not always advertised as such!
+Recent kOps improvements have systematically reduced the potential for this
+class of attacks, by reducing or eliminating cloud credentials/privileges
+on the nodes.  The recommended versions vary by cloud:
 
-This flaw existed already in 7.83.0 source code but in that release the
-feature was still marked **EXPERIMENTAL** and was not enabled in normal
-builds. The label was removed in 7.84.0 why we consider that as the first
-vulnerable version.
+AWS users: should not be affected in recent versions.  kOps version 1.26
+(or later) is recommended, but not a critical update.
 
-SOLUTION
-------------
+GCE users: recommended kOps version is 1.26.3 (or later).
 
-Starting in curl 8.3.0, curl returns an error if the total size of the headers
-in a single HTTP response exceeds 300 KB.
+DigitalOcean users: recommended kOps version is 1.27.0-alpha.2 (or later),
+with `--dns=none` for new clusters.  Cloud credentials have been removed
+from the nodes in this configuration.  Future versions will likely make
+dns=none the default.
 
-- Fixed-in: https://github.com/curl/curl/commit/3ee79c1674fd6f9
+Hetzner users: recommended kOps version is 1.27.0-alpha.2 (or later).
+Cloud credentials have been removed from the nodes in this configuration.
 
-RECOMMENDATIONS
---------------
+(Azure, Scaleway and other cloud providers are following the same approach,
+but as these are in alpha we recommend using the latest kOps version, and
+generally do not recommend production usage when in alpha).
+Detection
 
-  A - Upgrade curl to version 8.3.0
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
 
-  B - Apply the patch to your local version
+See kOps Issue #15539 <https://github.com/kubernetes/kops/issues/15539> for
+more details.
+Acknowledgements
 
-  C - Monitor response headers and return error if too much
+This vulnerability was reported by James Cleverley-Prance
 
-TIMELINE
---------
+Thank You,
 
-This issue was reported to the curl project on July 17, 2023. We contacted
-distros@...nwall on September 6, 2023.
+CJ Cullen on behalf of the Kubernetes Security Response Committee
 
-This report arrived before the 8.2.0 and 8.2.1 releases shipped (on July 19
-and July 26), but we did not manage to work it through and fix it in time for
-those releases.
-
-libcurl 8.3.0 was released on September 13 2023, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: selmelc on hackerone
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
