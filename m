@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2220" "Wednesday" "17" "May" "2017" "09:56:27" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87inkzd1tg.fsf@fifthhorseman.net>" "63" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Cc:" nil nil "5" "2017051713:56:27" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        dkg@fifthhor May 17   63/2220  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" "<CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21915 invoked by uid 550); 17 May 2017 15:04:46 -0000
+Received: (qmail 27793 invoked by uid 550); 21 Jun 2023 21:49:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +6,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7825 invoked from network); 17 May 2017 14:57:08 -0000
-In-Reply-To: <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>
-References: <20170501164428.GA12322@openwall.com> <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com> <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com> <20170516220345.GA10874@openwall.com> <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com> <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de> <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>
-Message-ID: <87inkzd1tg.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, rxvt-unicode@lists.schmorp.de, rxvt@schmorp.de
-Date: Wed, 17 May 2017 09:56:27 -0400
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
-To: Robert =?utf-8?B?xZp3acSZY2tp?= <robert@swiecki.net>,
- oss-security@lists.openwall.com
-
---=-=-=
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 18180 invoked from network); 21 Jun 2023 21:41:44 -0000
+From: Taylor R Campbell <riastradh@NetBSD.org>
+To: oss-security@lists.openwall.com
+In-reply-to: <CAN5gJXqyLMcJD0Wnfy6B4OJKpaggjZGHN-nRkk8DDO=s=y6TLg@mail.gmail.com> (agc@pkgsrc.org)
+Date: Wed, 21 Jun 2023 21:41:30 +0000
+Sender: Taylor R Campbell <campbell@mumble.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <20230621214131.C670B6033F@jupiter.mumble.net>
+Subject: [oss-security] Re: PAM/Kerberos issue on NetBSD
 
-On Wed 2017-05-17 12:51:57 +0200, Robert =C5=9Awi=C4=99cki wrote:
-> Please consider the following example:
+> Date: Tue, 20 Jun 2023 17:16:58 -0700
+> From: Alistair Crooks <agc@pkgsrc.org>
+>=20
+> + Linux - not believed to be affected (would be good to get some
+> corroboration for this)
+
+Linux pam_krb5[1] and sssd-krb5[2] are both affected by the same
+attack, but they have always been _documented_ to be affected; unlike
+BSD pam_krb5, it's just not news that they are affected.
+
+(Side note: pam_krb5 (and sssd-krb5) is not and never has been the
+normal way to do Kerberos authentication in network services.  (E.g.,
+in sshd, you set `GSSAPIAuthentication yes' for that.)  pam_krb5 has
+always been an abuse of Kerberos as a method to check a password,
+which Kerberos was designed to avoid, through SSO.)
+
+
+The pam_krb5 overview[3] says:
+
+> pam_authenticate does a complete authentication, including checking
+> the resulting TGT by obtaining a service ticket for the local host
+> if possible, but this requires read access to the system keytab.  If
+> the keytab doesn't exist, can't be read, or doesn't include the
+> appropriate credentials, the default is to accept the
+> authentication.  This can be controlled by setting
+> verify_ap_req_nofail to true in [libdefaults] in /etc/krb5.conf.
+
+The pam_krb5 man page[4] says:
+
+> If that keytab cannot be read or if no keys are found in it, the
+> default (potentially insecure) behavior is to skip this check.  If
+> you want to instead fail authentication if the obtained tickets
+> cannot be checked, set verify_ap_req_nofail to true in the
+> [libdefaults] section of /etc/krb5.conf.  Note that this will affect
+> applications other than this PAM module.
+
+The sssd-krb5 man page[5] says:
+
+> krb5_validate (boolean)
+>    Verify with the help of krb5_keytab that the TGT obtained has not
+>    been spoofed.  The keytab is checked for entries sequentially,
+>    and the first entry with a matching realm is used for validation.
+>    If no entry matches the realm, the last entry in the keytab is
+>    used.  This process can be used to validate environments using
+>    cross-realm trust by placing the appropriate keytab entry as the
+>    last entry or the only entry in the keytab file.
 >
-> $ tail -n1 /etc/hosts | xxd
-> 00000000: 3132 372e 302e 302e 3309 1b47 513b 205a  127.0.0.3..GQ; Z
-> 00000010: 5a5a 0a                                  ZZ.
-> $ ping ZZZ
-> PING ; (127.0.0.3) 56(84) bytes of data.
-> ^[G0
-> 64 bytes from ; (127.0.0.3): icmp_seq=3D1 ttl=3D64 time=3D0.039 ms
-> ^[G0
-> 64 bytes from ; (127.0.0.3): icmp_seq=3D2 ttl=3D64 time=3D0.032 ms
-> ^[G0
-> ^C
-> --- ; ping statistics ---
-> 2 packets transmitted, 2 received, 0% packet loss, time 1014ms
-> rtt min/avg/max/mdev =3D 0.032/0.035/0.039/0.006 ms
-> ^[G0
-> $ 0
-> bash: 0: command not found
+>    Default: false=20
 
-what version of ping are you using?  I was unable to replicate this with
-either the debian iputils-ping package version 3:20161105-1, or with
-debian inetutils-ping package version 2:1.9.4-2+b1.  neither of them seem to
-do a getnameinfo() at all if it is initially supplied with an IP
-address.
+Exception: Oracle Linux appears to ship an mit-krb5-based Kerberos
+modified to have default-secure settings instead of default-insecure,
+and provides instructions for setting verify_ap_req_nofail for
+insecure compatibility[6][7][8].
 
-That said, with the same last line of /etc/hosts, getent is willing
-to pass along the garbage chars:
 
-0 test@host:~$ getent hosts 127.0.0.3
-127.0.0.3       ; ZZZ
-^[G0
-0 test@host:~$ 0
-bash: 0: command not found
-127 test@host:~$=20
+The verify_ap_req_nofail option rates pretty high among the
+worst-named knobs I have ever seen, and has been confusing people for
+decades[9][10].  I filed an issue to make it default-secure in
+Heimdal[11]; this could pose compatibility issues, but sites that
+continue rely on the insecure option can always set it in their
+krb5.conf.
 
-    --dkg
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlkcVosACgkQFJitxsGS
-Mjf+5g/+MZ9GmNN83BI7PqXKV75QPUi6pEY14ZUW9IdLjpBnOchB1MKwLO8wkt2t
-xPZiwzH/rirnv2s+5R4gRZn5eTvDw6+oGXNu/b6AG63UFPkm9wkEUfEFkIbfnUnh
-nIjAvNyPzJL8h3lrOVc5pVOW79M+Wc2Yihiz5QZaA5dH9bY7uil46UYedF+CShB0
-ZS8Dh16niHQLVGIpC4IZVfZnxi7xbGOuHvcMCna3Tpo3+0R/5XjqCb9d7Zk9wU1x
-RC5s55ZCRIt8x+PhJUj1gbU1H4l+y5pwrsVNIFzM/SWeoQIURZxWsoJkl5M30Vpf
-b6LXQpXUk55i9XOOmQ2/GJK0Za7bHvBhxwlUijZVdaNrpMQ1vzIFPKgShsLfElZS
-Q3fsIwEH0xv1PjJnXXVopy2iD6pWmOnDiIl9UEjO/dKOizM8nYwEhjo3LM0HvvAG
-8bARvfNSMThjHe+5XGrizeZ2OeDEttpmKswC+ik6cG98EWVSPRAwnlM7bbDE8gfI
-8A+IZ79B4+PKp/9JvmAHqA8kKMxbDCQRGNEPjTiT3j9MXls4aHroxBcWqbB1A62s
-mEitOtlVG3rPEmlqqMbJP3ohyoP9cVbwUoo7no0r49lAgN6DBd0ZFKgz/ElWP41V
-hmy+vjlWc+erMDhThOp0MesV9Zuucpa5rx2F0jefrRTV1FXimJI=
-=JzAt
------END PGP SIGNATURE-----
---=-=-=--
+[1] https://www.eyrie.org/~eagle/software/pam-krb5/
+[2] https://github.com/SSSD/sssd/tree/master/src/providers/krb5
+[3] https://www.eyrie.org/~eagle/software/pam-krb5/readme.html
+[4] https://www.eyrie.org/~eagle/software/pam-krb5/pam-krb5.html
+[5] https://linux.die.net/man/5/sssd-krb5
+[6] https://docs.oracle.com/cd/E26505_01/html/E27224/setup-148.html
+[7] https://docs.oracle.com/cd/E26505_01/html/816-5174/krb5.conf-4.html#REF=
+MAN4krb5.conf-4
+[8] https://docs.oracle.com/cd/E19253-01/816-4557/gihyu/
+[9] https://www.stacken.kth.se/lists/heimdal-discuss/2002-08/msg00001.html
+[10] https://mailman.mit.edu/pipermail/krbdev/2011-January/009778.html
+[11] https://github.com/heimdal/heimdal/issues/1129
