@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/7
-Message-ID: <284ffee8-6813-45ee-1a86-1183a02755c1@apache.org>
-Date: Wed, 06 Sep 2023 09:40:57 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/13
+Message-ID: <ZJNx4OBlGqGFgOYD@itl-email>
+Date: Wed, 21 Jun 2023 17:54:57 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37941: Apache Superset: Metadata db write access can lead to remote code execution 
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
+> On Wed, 21 Jun 2023, Jeffrey Walton wrote:
+> 
+> > Memory leaks on exit are par for the course in GNU software per
+> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+> 
+> Don't bother with this, don't bother with that, etc...  Call me old-school 
+> (which I am), but I cannot abide sloppy programming[*].
 
-- Apache Superset 1.5.0 through 2.1.0
+Memory leaks on exit are a _good_ thing in general.  There is absolutely
+zero point in calling free() if the program is about to exit — the OS
+will do a better job of freeing resources than the program itself ever
+could.  Furthermore, preventing all memory leaks may well require
+freeing resources that are being used by other threads in the same
+process, resulting in use-after-free!  Again, much better to just leak
+the memory and let the OS deal with it.  One can provide a function to
+clean up the resources in preparation for e.g. dlclose(), but it should
+not be called automatically.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Description:
-
-If an attacker gains write access to the Apache Superset metadata database, they could persist a specifically crafted Python object that may lead to remote code execution on Superset's web backend. This vulnerability impacts Apache Superset versions 1.5.0 up to and including 2.1.0.
-
-Credit:
-
-Dinis Cruz, cruzdinis@...pt (finder)
-Naveen Sunkavally (Horizon3.ai) (finder)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-37941
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
