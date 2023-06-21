@@ -1,51 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/5
-Message-ID: <2023100223-unlawful-reaffirm-aa99@gregkh>
-Date: Mon, 2 Oct 2023 13:08:45 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/10
+Message-ID: <CAH8yC8k=-aVSwDXTOq0dSe7Ojw3Fy3M6ug6YVBb=bj4ZQYmq=A@mail.gmail.com>
+Date: Wed, 21 Jun 2023 13:26:32 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: "Linux Kernel security demistified"
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 02, 2023 at 11:48:15AM +0400, Loganaden Velvindron wrote:
-> On Mon, 2 Oct 2023 at 11:10, Greg KH <greg@...ah.com> wrote:
+On Wed, Jun 21, 2023 at 1:22 PM Alan Coopersmith
+<alan.coopersmith@...cle.com> wrote:
+>
+> On 6/20/23 23:45, Jeffrey Walton wrote:
+> > On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
+> > <alan.coopersmith@...cle.com> wrote:
+> >>
+> >> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
+> >> since it claims this bug has a CVSS of 9.8.
+> >>
+> >>   From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
+> >> see any CVSS higher than 0.0 being relevant here and think the CVE should
+> >> be withdrawn.  Am I missing something here?  All I see is 2 objects of
+> >> 16 bytes each not being freed in the fraction of a second before the
+> >> command exits and automatically frees the memory - in a command the user
+> >> deliberately chooses to run, which runs as themselves with no raised
+> >> privileges, on an input file they provide, and which exits after processing
+> >> the file and doesn't hang around keeping that memory allocated - not a bit
+> >> of security risk at all there.  (Yes, it's a small bug and is good to fix,
+> >> but not to raise security alarms for.)
 > >
-> > On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
-> > > There's also an upcoming Webinar:
-> > >
-> > > https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
-> > >
-> > > > Demystifying the Linux Kernel Security Process
-> > > > October 3, 2023 | 07:00 AM PDT (UTC-7)
-> > > >
-> > > > Join an interactive, complimentary Mentorship Session exploring
-> > > > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
-> > > > Kernel Maintainer & Fellow, The Linux Foundation
-> > > >
-> > > > There is a lot of misunderstanding about how the Linux kernel deals with
-> > > > security vulnerabilities.  This talk will go into how the Linux kernel
-> > > > security team works, how changes are propagated out to the public, and
-> > > > how users must take advantage of these changes in order to have a secure
-> > > > system.
+> > Memory leaks on exit are par for the course in GNU software per
+> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
 > >
-> > It's going to be much the same talk, with only minor tweaks as I forgot
-> > some points I wanted to make in the first one.
-> >
-> > Thanks for the link to my slides and presentation, glad to see that
-> > information get spread wider!
-> >
-> It was a very insightful talk. However, I'm not sure whether companies
-> would even be willing to start a conversation with an open source
-> community without
-> an NDA being signed.
+> > Nothing to see here, just move on.
+>
+> This isn't a GNU program, but that doesn't matter here.  My argument
+> is still that this CVE should be revoked, and that this class of bug
+> shouldn't have CVEs issued.
 
-Then those companies are not going to get very far, sorry.
+Agreed. I'm not sure how that got a CVE given its par for the course.
 
-We've been working this way for Linux for a very long time now, and it's
-worked very well without any NDAs.  For good reasons, you never want to
-sign one as it turns out to make the info you learn in them _more_
-likely to leak, talk to a lawyer for all the fun details.
-
-thanks,
-
-greg k-h
+Jeff
