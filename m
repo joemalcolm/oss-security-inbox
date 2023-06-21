@@ -1,52 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/17
-Message-Id: <CUBHCOEVELYD.2SECD6I5QE7QA@sumire>
-Date: Tue, 25 Jul 2023 18:55:11 +0000
-From: "alice" <alice@...ya.dev>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/4
+Message-ID: <20230621140228.GA26707@openwall.com>
+Date: Wed, 21 Jun 2023 16:02:28 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Solar Designer talk about 15 years of oss-security at SSTIC conference
 Content-Type: text/plain; charset=utf-8
 
-On Tue Jul 25, 2023 at 6:30 PM UTC, Jeffrey Walton wrote:
-> On Tue, Jul 25, 2023 at 2:14 PM Demi Marie Obenour
-> <demi@...isiblethingslab.com> wrote:
-> >
-> > On Tue, Jul 25, 2023 at 06:12:44PM +0100, Eddie Chapman wrote:
-> > > alice wrote:
-> > > > this is a disaster of a security announcement from AMD. nothing is fixed
-> > > > except for epyc. the only workaround anyone really has is the chicken bit,
-> > > > thankfully.
-> > >
-> > > Yes, very disappointing. Pure speculation; perhaps they were planning on
-> > > disclosing at the end of the year with full set of Microcode ready but
-> > > something we don't know (yet) forced them to disclose early. Who knows.
-> >
-> > Does AMD make OS-loadable μcode patches available for client platforms,
-> > or must all μcode loading on clients be done by the firmware?  If the
-> > latter, then it will take a very long time for clients to get patched,
-> > even if AMD released the updates promptly.  Also, server platforms can
-> > usually reflash the firmware via the BMC, but client platforms do not
-> > have this option.
->
-> Related, Ubuntu released an updated amd64-microcode around (or before)
-> 1:45 PM EST today. My Ubuntu machines have already been patched.
->
-> I was kind of surprised to see how quickly it landed.
+Hi all,
 
-the updated amd64-microcode only contains the fixes published to linux-firmware,
-which only affects epyc cpus, as noted. unless you're running epyc cpus (which
-is slightly unlikely so i thought i'd mention it, but apologies if that is
-indeed the case) you didn't actually receive any fix.
+After SSTIC in Rennes, France, I also gave a revision of the talk at
+BSidesLjubljana in Ljubljana, Slovenia.  Incidentally, this was SSTIC's
+20th anniversary and the event was closed by a related talk on 20+ years
+of CERT-FR and ANSSI, whereas this year's BSidesLjubljana was held in
+the computer history museum, a fitting venue for the beginning of my
+talk, which starts with a retrospective into the 1980s.
 
-the latest kernel released today sets the chicken bit if no patched ucode is
-loaded which also works to mitigate the issue.
-(https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=522b1d69219d8f083173819fde04f994aa051a98)
+Here are the slides:
 
-you can test this by running the zenbleed reproduction, from
-https://cmpxchg8b.com/files/zenbleed-v5.tar.gz
+https://www.openwall.com/presentations/SSTIC-BSidesLjubljana2023-oss-security/
 
-(if it outputs anything, you're vulnerable)
+I've attached the Markdown source for these to this message.
 
->
-> Jeff
+Video of the SSTIC talk is available via the link to SSTIC conference
+website, and I expect the same will be true for BSidesLjubljana soon.
 
+I'd like to thank the organizers of both of these events for making them
+so great.  It was a pleasant experience attending and speaking at these.
+
+On Sat, Jun 10, 2023 at 10:04:44AM +0000, Katherine Mcmillan wrote:
+> has there ever been any consideration of having an "oss-security-advocacy" list?
+
+No, but your question got me thinking about it now.  I think that before
+possibly setting up a new list, we should have that sort of discussions
+in here - then see if we really want to move them to a separate list.
+
+> I like seeing/sharing relevant updates like this.
+
+I see no problem with them being right on the oss-security list.  While
+we generally don't allow conference CFPs here, we do allow and encourage
+relevant materials from conferences to be shared here.  A minor problem
+is sharing actual content vs. links only - we want the actual content
+for archival, but these days slide decks tend to be a bit too large
+for relaying them to all list members most of whom don't need a copy.
+
+On Tue, Jun 13, 2023 at 07:48:40PM +0300, Georgi Guninski wrote:
+> I am missing the old full disclosure mailing list,
+> there is little discussion on oss-security.
+
+I'm all for more discussion, but I'd like it to be relevant and helpful.
+
+Alexander
+
+View attachment "SSTIC-BSidesLjubljana2023-oss-security.md" of type "text/plain" (10816 bytes)
