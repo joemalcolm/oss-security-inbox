@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/31/4
-Message-ID: <20230331070234.GP21675@suse.com>
-Date: Fri, 31 Mar 2023 09:02:34 +0200
-From: Johannes Segitz <jsegitz@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/9
+Message-ID: <CAH8yC8kEfhZqyby8aFC8hZGS2YBxGvtyjjc07ZiaCE7XJG-h-w@mail.gmail.com>
+Date: Wed, 21 Jun 2023 13:25:58 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: polkitd service user privilege separation
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 30, 2023 at 02:08:10PM +0000, Jordan Glover wrote:
-> Is it valid conclusion that polkitd would be better of just running as
-> root? That would clear any possible confusion. Or are there advantages of
-> running it as separate "trusted" user?
+On Wed, Jun 21, 2023 at 1:15 PM Dave Horsfall <dave@...sfall.org> wrote:
+>
+> On Wed, 21 Jun 2023, Jeffrey Walton wrote:
+>
+> > Memory leaks on exit are par for the course in GNU software per
+> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+>
+> Don't bother with this, don't bother with that, etc...  Call me old-school
+> (which I am), but I cannot abide sloppy programming[*].
+>
+> At the risk of starting a culture war, that is one of the reasons why I
+> avoid GNU libraries whenever possible.
 
-It adds an additional step an attacker needs to take before having root
-privileges. Also it is not just about security, it also helps to limit the
-impact of non-security bugs. So I would keep the service user, but add
-clear language that explains that this isn't a meaningful security boundary
-and that this account needs to be considered to have root privileges.
+Yeah, I'm with you. It is sloppy programming from a bygone era.
 
-Johannes
--- 
-GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Frankenstraße 146, 90461 Nürnberg, Germany
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-(HRB 36809, AG Nürnberg)
+I've had the discussion with Stallman and the Gnulib folks. They don't
+realize the harm they are doing with that policy (or they don't care).
+It makes security testing and evaluation orders of magnitude more
+difficult because it's hard to impossible to differentiate the "good"
+memory leaks from the "bad" memory leaks. Effectively, everyone with
+higher standards must lower their standard to GNU's.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Jeff
