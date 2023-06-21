@@ -1,66 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/1
-Message-ID: <7ddb3c1b-71a1-83f9-1b3f-342fcb455935@apache.org>
-Date: Wed, 08 Nov 2023 07:38:43 +0000
-From: Richard Eckart de Castilho <rec@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/6
+Message-ID: <ZJMhapAB3v_6YLmg@larwa.hq.kempniu.pl>
+Date: Wed, 21 Jun 2023 18:12:26 +0200
+From: Michał Kępień <michal@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-39913: Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK: Potential untrusted code execution when deserializing certain binary CAS formats 
+Cc: security-officer@....org
+Subject: ISC has disclosed two vulnerabilities in BIND 9 (CVE-2023-2828, CVE-2023-2911)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On 21 June 2023 we (Internet Systems Consortium) disclosed two vulnerabilities affecting our BIND 9 software:
 
-Affected versions:
+- CVE-2023-2828:        named's configured cache size limit can be significantly exceeded https://kb.isc.org/docs/cve-2023-2828
+- CVE-2023-2911:        Exceeding the recursive-clients quota may cause named to terminate unexpectedly when stale-answer-client-timeout is set to 0 https://kb.isc.org/docs/cve-2023-2911
 
-- Apache UIMA Java SDK before 3.5.0
-- Apache UIMA Java SDK before 3.5.0
-- Apache UIMA Java SDK before 3.5.0
-- Apache UIMA Java SDK before 3.5.0
+New versions of BIND 9 are available from https://www.isc.org/downloads
 
-Description:
+Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of each published release directory:
 
-Deserialization of Untrusted Data, Improper Input Validation vulnerability in Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK.This issue affects Apache UIMA Java SDK: before 3.5.0.
+- https://downloads.isc.org/isc/bind9/9.16.42/patches/
+- https://downloads.isc.org/isc/bind9/9.18.16/patches/
+- https://downloads.isc.org/isc/bind9/9.19.14/patches/
 
-Users are recommended to upgrade to version 3.5.0, which fixes the issue.
+With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
 
-There are several locations in the code where serialized Java objects are deserialized without verifying the data. This affects in particular:
-  *  the deserialization of a Java-serialized CAS, but also other binary CAS formats that include TSI information using the CasIOUtils class;
-  *  the CAS Editor Eclipse plugin which uses the the CasIOUtils class to load data;
-  *  the deserialization of a Java-serialized CAS of the Vinci Analysis Engine service which can receive using Java-serialized CAS objects over network connections;
-  *  the CasAnnotationViewerApplet and the CasTreeViewerApplet;
-  *  the checkpointing feature of the CPE module.
-
-Note that the UIMA framework by default does not start any remotely accessible services (i.e. Vinci) that would be vulnerable to this issue. A user or developer would need to make an active choice to start such a service. However, users or developers may use the CasIOUtils in their own applications and services to parse serialized CAS data. They are affected by this issue unless they ensure that the data passed to CasIOUtils is not a serialized Java object.
-
-When using Vinci or using CasIOUtils in own services/applications, the unrestricted deserialization of Java-serialized CAS files may allow arbitrary (remote) code execution.
-
-As a remedy, it is possible to set up a global or context-specific ObjectInputFilter (cf.  https://openjdk.org/jeps/290  and  https://openjdk.org/jeps/415 ) if running UIMA on a Java version that supports it. 
-
-Note that Java 1.8 does not support the ObjectInputFilter, so there is no remedy when running on this out-of-support platform. An upgrade to a recent Java version is strongly recommended if you need to secure an UIMA version that is affected by this issue.
-
-To mitigate the issue on a Java 9+ platform, you can configure a filter pattern through the "jdk.serialFilter" system property using a semicolon as a separator:
-
-To allow deserializing Java-serialized binary CASes, add the classes:
-  *  org.apache.uima.cas.impl.CASCompleteSerializer
-  *  org.apache.uima.cas.impl.CASMgrSerializer
-  *  org.apache.uima.cas.impl.CASSerializer
-  *  java.lang.String
-
-To allow deserializing CPE Checkpoint data, add the following classes (and any custom classes your application uses to store its checkpoints):
-  *  org.apache.uima.collection.impl.cpm.CheckpointData
-  *  org.apache.uima.util.ProcessTrace
-  *  org.apache.uima.util.impl.ProcessTrace_impl
-  *  org.apache.uima.collection.base_cpm.SynchPoint
-
-Make sure to use "!*" as the final component to the filter pattern to disallow deserialization of any classes not listed in the pattern.
-
-Apache UIMA 3.5.0 uses tightly scoped ObjectInputFilters when reading Java-serialized data depending on the type of data being expected. Configuring a global filter is not necessary with this version.
-
-Credit:
-
-Huangzhicong from CodeSafe Team of Legendsec at Qi’anxin (reporter)
-
-References:
-
-https://uima.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-39913
-
+-- 
+Best regards,
+Michał Kępień
