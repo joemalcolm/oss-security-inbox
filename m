@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/8
-Message-ID: <7e000a79-32ea-51e3-2d6a-5d00d30e57d4@apache.org>
-Date: Fri, 13 Oct 2023 15:14:32 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/8
+Message-ID: <CAAHN_R0PrisCtNJNVfCqp3pHsqFPT+P2aRPLdcknGC9w8vOCWA@mail.gmail.com>
+Date: Wed, 21 Jun 2023 13:20:37 -0400
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-42663: Apache Airflow: Bypass permission verification to view task instances of other dags 
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
+<alan.coopersmith@...cle.com> wrote:
+>
+> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
+> since it claims this bug has a CVSS of 9.8.
+>
+>  From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
+> see any CVSS higher than 0.0 being relevant here and think the CVE should
+> be withdrawn.  Am I missing something here?  All I see is 2 objects of
 
-Affected versions:
+I wrote a SECURITY.md[1] for yasm a while back to push back on such
+bogus CVEs, so this CVE should actually get rejected.
 
-- Apache Airflow before 2.7.2
+Sid
 
-Description:
+[1] https://github.com/yasm/yasm/blob/master/SECURITY.md
 
-Apache Airflow, versions before 2.7.2, has a vulnerability that allows an authorized user who has access to read specific DAGs only, to read information about task instances in other DAGs.
-Users of Apache Airflow are advised to upgrade to version 2.7.2 or newer to mitigate the risk associated with this vulnerability.
-
-Credit:
-
-balis0ng (finder)
-Ephraim Anierobi (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/34315
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-42663
-
+-- 
+https://gotplt.org
