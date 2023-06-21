@@ -1,33 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/25/1
-Message-ID: <32345105-4692-465c-9a1d-e668c23df18d@hostland.ru>
-Date: Mon, 25 Dec 2023 21:27:37 +0300
-From: kai <kai@...tland.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/12
+Message-Id: <20230621214131.C670B6033F@jupiter.mumble.net>
+Date: Wed, 21 Jun 2023 21:41:30 +0000
+From: Taylor R Campbell <riastradh@...BSD.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: Re: PAM/Kerberos issue on NetBSD
 Content-Type: text/plain; charset=utf-8
 
-Happy christmas list!
+> Date: Tue, 20 Jun 2023 17:16:58 -0700
+> From: Alistair Crooks <agc@...src.org>
+> 
+> + Linux - not believed to be affected (would be good to get some
+> corroboration for this)
 
-If anyone needs patch for postfix's 3.3.0-1ubuntu0.4 
-smtpd_forbid_bare_newline feature it has been attached to this message
+Linux pam_krb5[1] and sssd-krb5[2] are both affected by the same
+attack, but they have always been _documented_ to be affected; unlike
+BSD pam_krb5, it's just not news that they are affected.
 
-On 24/12/2023 12.33, Marcus Meissner wrote:
-> On Sat, Dec 23, 2023 at 02:29:34PM +0200, Valtteri Vuorikoski wrote:
->> On Fri, Dec 22, 2023 at 11:46:48AM +0100, Marcus Meissner wrote:
->>> Hi,
->>>
->>> FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
->>>
->>> Not sure if we need it for others like sendmail too, as that is also
->>> referenced by the security researchers.
->> Looks like exim opened a bug on this yesterday too, no sign of CVE yet:
->> <https://bugs.exim.org/show_bug.cgi?id=3063>
-> CVEs are assigned now for:
+(Side note: pam_krb5 (and sssd-krb5) is not and never has been the
+normal way to do Kerberos authentication in network services.  (E.g.,
+in sshd, you set `GSSAPIAuthentication yes' for that.)  pam_krb5 has
+always been an abuse of Kerberos as a method to check a password,
+which Kerberos was designed to avoid, through SSO.)
+
+
+The pam_krb5 overview[3] says:
+
+> pam_authenticate does a complete authentication, including checking
+> the resulting TGT by obtaining a service ticket for the local host
+> if possible, but this requires read access to the system keytab.  If
+> the keytab doesn't exist, can't be read, or doesn't include the
+> appropriate credentials, the default is to accept the
+> authentication.  This can be controlled by setting
+> verify_ap_req_nofail to true in [libdefaults] in /etc/krb5.conf.
+
+The pam_krb5 man page[4] says:
+
+> If that keytab cannot be read or if no keys are found in it, the
+> default (potentially insecure) behavior is to skip this check.  If
+> you want to instead fail authentication if the obtained tickets
+> cannot be checked, set verify_ap_req_nofail to true in the
+> [libdefaults] section of /etc/krb5.conf.  Note that this will affect
+> applications other than this PAM module.
+
+The sssd-krb5 man page[5] says:
+
+> krb5_validate (boolean)
+>    Verify with the help of krb5_keytab that the TGT obtained has not
+>    been spoofed.  The keytab is checked for entries sequentially,
+>    and the first entry with a matching realm is used for validation.
+>    If no entry matches the realm, the last entry in the keytab is
+>    used.  This process can be used to validate environments using
+>    cross-realm trust by placing the appropriate keytab entry as the
+>    last entry or the only entry in the keytab file.
 >
-> - CVE-2023-51764 postfix
-> - CVE-2023-51765 sendmail
-> - CVE-2023-51766 exim
->
-> Ciao, Marcus
-View attachment "smtp-smuggling33.patch" of type "text/x-patch" (6395 bytes)
+>    Default: false 
+
+Exception: Oracle Linux appears to ship an mit-krb5-based Kerberos
+modified to have default-secure settings instead of default-insecure,
+and provides instructions for setting verify_ap_req_nofail for
+insecure compatibility[6][7][8].
+
+
+The verify_ap_req_nofail option rates pretty high among the
+worst-named knobs I have ever seen, and has been confusing people for
+decades[9][10].  I filed an issue to make it default-secure in
+Heimdal[11]; this could pose compatibility issues, but sites that
+continue rely on the insecure option can always set it in their
+krb5.conf.
+
+
+[1] https://www.eyrie.org/~eagle/software/pam-krb5/
+[2] https://github.com/SSSD/sssd/tree/master/src/providers/krb5
+[3] https://www.eyrie.org/~eagle/software/pam-krb5/readme.html
+[4] https://www.eyrie.org/~eagle/software/pam-krb5/pam-krb5.html
+[5] https://linux.die.net/man/5/sssd-krb5
+[6] https://docs.oracle.com/cd/E26505_01/html/E27224/setup-148.html
+[7] https://docs.oracle.com/cd/E26505_01/html/816-5174/krb5.conf-4.html#REFMAN4krb5.conf-4
+[8] https://docs.oracle.com/cd/E19253-01/816-4557/gihyu/
+[9] https://www.stacken.kth.se/lists/heimdal-discuss/2002-08/msg00001.html
+[10] https://mailman.mit.edu/pipermail/krbdev/2011-January/009778.html
+[11] https://github.com/heimdal/heimdal/issues/1129
