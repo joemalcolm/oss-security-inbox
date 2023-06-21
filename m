@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2619" "Tuesday" "3" "November" "2015" "22:19:33" "-0600" "Austin English" "austinenglish@gmail.com" "<CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>" "82" "Re: [oss-security] Re: CVE request for wget" nil nil nil "11" "2015110404:19:33" "[oss-security] Re: CVE request for wget" (number mark "        austinenglis Nov  3   82/2619  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "<20151001231046.GB16643@hunt>" "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>" "<CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9335 invoked by uid 550); 4 Nov 2015 04:20:25 -0000
+Received: (qmail 29913 invoked by uid 550); 21 Jun 2023 17:20:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +6,150 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9311 invoked from network); 4 Nov 2015 04:20:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=EakN7MOWYDftRSMRnQ7YJzDecu2xd2B7pZek0RXmvgI=;
-        b=CkzTbc79HWTjRlXOu6GAns3fW0t4TFAfBRkO1TNJqSLgi8XIdBHzpbtKO0Pz6VnGH+
-         mo3PP5ERhAnS9MdnHanIM5rhfYJS+BiT6KVilY32wM029CotHyvfyQJ7QddWxiAYJW3q
-         2eeb2bb4H2FYpvswIPKbYhKyxqjEdQL86QJJVqsh0Ir56Xr9ZK+L5dNrCpQY2AUUZUgI
-         4Feq7gmXPcGiqhW3EkRZtDLb8WLG4rsH3BVZQ11PpeWBaaU3wH5D9/EPnA47Cl6aCA+t
-         1OCumgyDmlAES3/JMiBfsTPJeX3omKrz/mW/ASqksZxQdDR44DJulqHRNqveAzVcBtO2
-         YtKQ==
-X-Received: by 10.50.66.208 with SMTP id h16mr15461136igt.24.1446610813277;
- Tue, 03 Nov 2015 20:20:13 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>
-References: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
- <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org> <20151001231046.GB16643@hunt>
- <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com> <CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>
-Message-ID: <CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=047d7bdca4fea75e130523af537b
-Date: Tue, 3 Nov 2015 22:19:33 -0600
-From: Austin English <austinenglish@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request for wget
-To: cve-assign@mitre.org, Austin English <austinenglish@gmail.com>, 
-	oss-security@lists.openwall.com
+Received: (qmail 29852 invoked from network); 21 Jun 2023 17:20:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : to : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-03-30;
+ bh=8K2+T0sKEYj7dA+hTjO7uuTIxVXV2oRKBSecDHsti6M=;
+ b=WKSX9uQZAgGSk7PiTjcbo+LR8POxBCTEE4PJbJhM3SSWZ8ZcMPmXbedAF4SvoX7/yFhz
+ E3u5GU3efR+5s5SkMxjAyQ7bQvEfhpqaBE2KM42jdpGIseHWuKvVApfY8kHQvc9YH1FT
+ +qOdZHHlPgnJGn5i5G23rLf4anRofeZp1MyjatZ0GMCi+RGU5tAWbwcVzI5/8KjU3RYN
+ uD3LRrsHzwuL/vV4tCZiR6ms4DJ/6IO/T1gacaPTISz+iJBpd/kJ9+7rbqk7ND0YN6cF
+ o1c5PHoQQmCbVy+P7HZk6f5Pf5Tz+kbVZJQo/pXWqWMJQSrDk5WBzkegzvz9wGmABeT7 1Q== 
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jRCYe3FkdFsKBF1zbuyIK5tOa2VqRbfTGip/hGhD8ryaUqmL1WxB/Zb6aqrtu8gt/BPKY727fMerHMeiUKCIwvhH3+e3X2zo1gjbcvR1NCa9OXavvLsiWAfjSzjPFT5PYOo8mcQY8iEPvuwcG3+THDPFC4zuPcfuyqEjKBO0qavhCueCfqfKDjSz5qp8KBKL8RLkVKfiCxadSjmj4AKI911ofaYiU5ZUBIa0bUtOIjy4TUtnT6aUReKC25pxHP5vngSe9RKqbWyooGPI+6pv9Heza93jZE/HHnjb0NeTuSFCKGQ55E371h87XJ8Y9nWLP/VlHtDuuA95eWR8mftE4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8K2+T0sKEYj7dA+hTjO7uuTIxVXV2oRKBSecDHsti6M=;
+ b=fc/ydUW0SqJs+OVl9YrPl0Ef1SYFfVjJ9iLODBgqAp6AQ5xSh0eY34mUo6q7cLw398V8TJmchgKt5JfP5vVUsE9kiZoD7Ky3z9yia55p3if0RYWO1gTSMWcJdYHYS0w+MBak606tKojSgyfDPT6ZCNlJ/BXx2eMLN5JifjkBOSRvfL1iDDTxkycYlIuANLvtcyu1NYOHE3+BCh4xzXt1VNIRXDJnoNAVP+jvAE5ZVwPvQkBnRsI9QYGqJWr3F04RMYMIxZamnJ1NPobM9dZfcbrf0QWUjG7WgNqhxV/Re+7u59129fpIFljr4NXRHuNGnBnC6XYEz3CYOf/Q57orPQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8K2+T0sKEYj7dA+hTjO7uuTIxVXV2oRKBSecDHsti6M=;
+ b=D7zLbiMW8pt22ZssnM7d2OqkUy51jDlgNuAzc7bmAQ9KGbBrdYE0lk6ew0VatPB2Eu04jyOlYlEkEv+7xhEDSXnoR7bswrTOpvubT30oHh3BxzX2rAy41lj+Av2IVWwa+d9MbFOtCch0ipLiprlwsgg3uMjI+3j5z4hEX7K3Z+U=
+Message-ID: <201c4d4e-a734-4642-f0b3-74ee7d0d87c5@oracle.com>
+Date: Wed, 21 Jun 2023 10:19:58 -0700
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+References: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
+ <CAH8yC8noq14ANkUfn9VVD0ESLey1uv_2yZCV6DX4vgmE4FUatg@mail.gmail.com>
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+In-Reply-To: <CAH8yC8noq14ANkUfn9VVD0ESLey1uv_2yZCV6DX4vgmE4FUatg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DM6PR13CA0062.namprd13.prod.outlook.com
+ (2603:10b6:5:134::39) To IA0PR10MB7303.namprd10.prod.outlook.com
+ (2603:10b6:208:40d::5)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR10MB7303:EE_|PH8PR10MB6576:EE_
+X-MS-Office365-Filtering-Correlation-Id: 15231b55-38a1-4530-f415-08db727bbf60
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	WuYO72Ov7/F5sL2M+WMQNcRYPBlHzWBca/T2MTVbkfAJrABcApTZXVVVo8AdM0gr9K/RO+HRjSunxLcCftKuOrMj5n+76VJkRIXD1Lme7UqGlgNHF/TXLK7OzIxiAccp82SeSHUkNaLpnzu9SUB7jmzB2Tr5ARIvQ714rj8a3vtBHGlGZvF7lHUt6sw9KnA+LI18ZlJOtvcRwK+4UYRcCToKEQ2op3pK7kfvcD37Xn1kL85Sx8/WYqX/2+shLX1nW/zD3Ldbpyn6bPakiUA5zMac/bZz4OkdL0amX55zFWsoroNrNRwg9JkisyLN0K2Efp6b/DrCaQj8Kv7kTnWlWWuDkOv/vwIiYmGJ0Xo6oc8TsWLhQx0rhkMFzUCLD4udYtxl5CjU8qe5EXxSr6m0Q+LOm3Mx6lfTo3t6RYRkt75cOKQvtFuncrJmAvQPYEyhtVT6wx+oPrCjc5tWwP9pZ8E2ixsUUtV9bRupky8tFQvmLE/+u0en69KFubbjWR6by9O1/eNjkwz8V6r7pUcEJzzUrWqnG16foQqPCLsdcd2IQsLQ6aILk7i3Rq0i4IdoWx8cheyoisNzIh7wFj0j3rExTfOQ9vzNF7sprv3j8cFUKAAkItoXK2ABbvRnEY35+T0ylhYZo0ptHxK1A72l8KLR5vaH4JpcxEo3Eq/stz8=
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR10MB7303.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(39860400002)(376002)(136003)(396003)(346002)(366004)(451199021)(6666004)(2906002)(83380400001)(186003)(15650500001)(2616005)(6512007)(66556008)(6916009)(66476007)(66946007)(316002)(26005)(44832011)(478600001)(8936002)(53546011)(6506007)(5660300002)(41300700001)(8676002)(966005)(6486002)(38100700002)(36756003)(31696002)(86362001)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?K3NOL2Y4UDVmMHdQOEVwU1R5b0hDcG9rMUFDWGw5L3Rzc2R3dW4wMGgwMUN0?=
+ =?utf-8?B?cG8xMnVZN2JwTmNBQmdMMDRVdU9mRnRxRWF0SG1Ua2cyNDluenluQmlxbU5M?=
+ =?utf-8?B?eEVQOGZZNUtLcXd3MzFXT2tnSFd0OU1yUDd2Z3owVkZCRVg2RWwyejBTRmFq?=
+ =?utf-8?B?R1YxZHlsVzN3clF1eHBMdjE5MGUwVkdqbEhDa3BGeThHajFCZVFyeWN1Y1l6?=
+ =?utf-8?B?bDZWUVZieFVoOUlHWXZZNGdzbkt4Q2lxWlp2YW53UUJ3aWZIekI3ZWdHcERv?=
+ =?utf-8?B?ZVVlTFdIUlRiUmlrRTNUM1l0V3YrWnU2WUN0ek53N0E5MWdvOUJza1B2REF5?=
+ =?utf-8?B?WXpoZFRSMnFyL29jdlYyUTUrUHdUeCtsS1hjZitPSVNIc1BmZC92K0VDWDBJ?=
+ =?utf-8?B?a2dkSUUzdktoMTF0cDBtWmtQcHJKYlEwNlBBdEVVeWpZaGJ2ZjFGaGxvVkRm?=
+ =?utf-8?B?bUIxTGhtMzI3ajhKV0crRGVVWGFlNHd3VGI3NEhTNGZjOTJGQ2pzZ3o5UmVP?=
+ =?utf-8?B?eU5TeTZ4a2x4NEZOa0lhdmRZNzQwUlZwV2hOQVlPdHc2RkoyL1F3K3EvTTlP?=
+ =?utf-8?B?bEU1S2Z2U0MxaGRpd016SkZ1VmFvSDloKzlxcitUcHlhSGZEekxnUkIyWEdo?=
+ =?utf-8?B?b25qSStlY1dDMEFiMUhqNFpaRlJtdGgvbjVKTjZiNmNKRUl3OEQzWVp5U2xr?=
+ =?utf-8?B?MmpqVVBGaE9MeUVnZkVLeVBTNW9UbThFSFNScnhOOGxqbDUxTitBK1JHaVBr?=
+ =?utf-8?B?ZmJIWERuUjNEckI3a0hIZk01Z2VsOHYzKzdiU2pLWW1OeGU1cTZSbW1yQkJV?=
+ =?utf-8?B?UmZYc2Z2NEhBZHdDd25DU3M5V0NCZ1prN1JLN2JXZFNPZGdwcjl0d1pwWmpw?=
+ =?utf-8?B?aFJWOVUwMEVNZXNNZUxXNGJZTEFpR2Q0YVc3VS93ZnFWRExpbldhd1IxWFpr?=
+ =?utf-8?B?c3JaTTBhS0ZOaUpmOGJyMC9yM3BOd3pZS1A4WDZvb1YxVFNlWnBBbzdSeWlv?=
+ =?utf-8?B?cWVFTWd3VVJ6NEZHM1daQlFJak9sZG1QR1ZmbDRJcndQbUVEVW0rVHpMay9H?=
+ =?utf-8?B?SUkyU1pDN0FLTVR6aEJVaXBDRWFteTJyRXQvbEtERHJBSU92RjMvbHh5VU5l?=
+ =?utf-8?B?L0pCZjZqNlVMMnBDSVlDZHZSUkY2b0wvd3crK1ZUbzNzeUI1ekRWYzFlejBO?=
+ =?utf-8?B?K0FlbEV6a0pFNE1VRzVTV0Q0VE1MZ29aY1NqSEFkQTNTN1VnQTZzUXRGend6?=
+ =?utf-8?B?THVsVU4xMUJtaTJqR2kxSU5Ibko1eXpaWkk5bkVvRUlZRFowVVRMMHNUVVZD?=
+ =?utf-8?B?cDcrakNwU1lxek9HUDF4Znd1SG5kdVJENm1sUU80akxXK3h2NDVrZUtrL3BU?=
+ =?utf-8?B?My9aV1I4NFlOMTJILzJDdTFzWmFJa0hwMWY3QlpYUm9yNW1zVldJdnAxamZ6?=
+ =?utf-8?B?RmZMN1pnN0FOcEx4SGNYWnBUUzZHbTczQjZ4WU4vSm5ObVFUMFgxcGwveWJ2?=
+ =?utf-8?B?Y1IwZXhrYmh5Tk0vNjAyUS9CR05CWGJFM3UrVTYwR252RmRUMXRvbzRZWms2?=
+ =?utf-8?B?L0hZeG05WVdNa2w5Q01DNXViajlleXNQMmhJU3R0eHMrTTZ6bm5jRkdxbGh0?=
+ =?utf-8?B?RTgxMHRPVm5VSldNeVBVOWthemVmSWpCaDBtSXdLVlVZRmlrRG1LK29Jd2FS?=
+ =?utf-8?B?U1l1VU8rbkNoMVZEZEZmRXRwOGdjaFdNVlMxNzVJZ2JtNlJocVdobE8wNStS?=
+ =?utf-8?B?YWdWSThWdHlBbzQ4T0RFV1ZjKzlINjB6QldGeG9zYVJydHVtYlJjYUtTNHBI?=
+ =?utf-8?B?elM2ZUttR2Z6MHRXOC9NQlFHT1QwaWVHaWRmTFloRVY3dUFkZHRmUXJEMUp4?=
+ =?utf-8?B?QVJZejhBYTZJamZ6Q2tXckxsOVF1eDZMVW41c1lweUQrSUt2NjdMSTA5bkx3?=
+ =?utf-8?B?T3NKcjNFVnJXVE1jaGtUTXJIbzJJUGJDUHRYcFdPYlE4ZU5BUURsS1g3ZS8z?=
+ =?utf-8?B?cDF4TmlVQ1FGVVFGT1RNTFNRLzVxOCtaNy9ITGVheHR6ajhhM09LYi8raDBv?=
+ =?utf-8?B?TGpheWVhTXkyNmMxQVVyQWJGSWZVeHNDNjQrcXJaK3JYcXhwajJuYUZONGQx?=
+ =?utf-8?B?YUc2clgrQndwNDUwSitFVTlwd0p6TWw3YUFqSDQxUWZtUVlpVTUvYkVEUjA5?=
+ =?utf-8?B?VWc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	+r7UAccZYf4kE15+OUoBgkq5AGrXKGDkmoOTO0RVLC65OoDs//pcsSiJ5XiKsBh0YiNPl5M5b+ePnwZXfrzW9Koe2NfERsJEhp0AJldImO6zEqRemkSuPQBHv2T0xWyRx5SEzi2evbvwIqohk4ezngQka2Ek9wGI6VhP+RIopLCR/Km/wjlROdCA7WhnsBaWoYMmHHJ33iGuCuuxAive+sTzDPwnhUb6ieWsSrpNXH79EQg205wZ59Dvpsfa81FBf9bFd4KHA/ux71Na43A6KwgeK1IKe0KtS+WD07cTfgwtKWc0JYUWANLa9YwyeBZ4SAKPCrdluPozfKxAFz5RtxNafPNtBmRvD/iKYbP8orWBC8Q/V3kdKsFdU0bwsoWr1pUTfVDzv3HIZiL2nMLV63Lk9RjcM/an1VDwgw+V6Gzep3RQzkS5jciPVyufEkZ8Ndcxhnam0Hhu/JPdUJBSWb66A6odBjlgDP4lYyYI7JIxDtO0p22H+dZqS+uvhqmo83O6Du4vLSwVG7Cacps10IwhsIWsLdU3ZIdbDZEuyXRz1PKeoK8njH7E8Nji3GaYpQkFUEPyb1DaV3QfBKynQA3xcrfDs3udhpkzZFMm7KdT7QgEchCYejvMouv6c2xQi+DmF+5vBLUdIr5zF/hY66aDOEudCCFqNOp4oTZ50FGfG+WpzIqVZGjVwhfuV5/IHgDD5h7eW4moDJ+b57a3hLO0o9quslV83VETrBTuW+dc43NS9qdMQxB00xiXEUV7/dySIMa803pnuTDwel8laQ==
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15231b55-38a1-4530-f415-08db727bbf60
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR10MB7303.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2023 17:20:02.1835
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZfsjBCBJTz/YDM+HACdKHAiAvwtvzjcmYfXKZcCZYk0HOAC5GQkP7okvNUuTZAE94VrYG603cDDofmDqD7UKTWBowDQ0bD2moCGMihKHkXE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR10MB6576
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-21_10,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 adultscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 phishscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306210146
+X-Proofpoint-GUID: znwCuVGsa-v0Q3-6AtSoMgpXAcTOjgL8
+X-Proofpoint-ORIG-GUID: znwCuVGsa-v0Q3-6AtSoMgpXAcTOjgL8
+Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
---047d7bdca4fea75e130523af537b
-Content-Type: text/plain; charset=UTF-8
-
-And 1.7 is now out as well:
-https://tails.boum.org/news/version_1.7/index.en.html
-
-With the fix included and documented
-
-On Mon, Nov 2, 2015 at 2:37 AM, Austin English <austinenglish@gmail.com>
-wrote:
-
-> The fix has been released in 1.7-rc1,
-> https://tails.boum.org/news/test_1.7-rc1/index.en.html
->
-> On Mon, Oct 26, 2015 at 3:21 PM, Austin English <austinenglish@gmail.com>
-> wrote:
->
->> On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold <seth.arnold@canonical.com>
->> wrote:
->> > On Thu, Oct 01, 2015 at 06:57:26PM -0400, cve-assign@mitre.org wrote:
->> >> If there is any additional Tails vulnerability related to this,
->> >> another CVE ID may be needed. For example,
->> >>
->> >>   https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
->> >>
->> >> says
->> >>
->> >>   to be 100% sure, you should add --passive-ftp to your command line.
->> >>   If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
->> >>   --no-passive-ftp (or passiveftp = off).
->> >>
->> >> If Tails is supposed to try to ensure that, perhaps there's a
->> >> requirement to have something like:
->> >>
->> >>   alias wget="wget --passive-ftp"
->> >>
->> >> in a system-wide location (possibly /etc/bash.bashrc). The concept of
->> >> CVE IDs for "failure of a torify step" issues is new, and we aren't
->> >> sure of the best approach.
->> >
->> > I suspect using a bash alias in a site-wide config might then qualify
->> for
->> > another CVE in the future, along the lines of "programs that spawn wget
->> > via system(3), popen(3), or exec family of functions can use unsafe
->> active
->> > mode by accident". If Tails is in the business of fixing these things
->> > for safety, removing active ftp support from tools seems like better
->> fix.
->> >
->> > Thanks
+On 6/20/23 23:45, Jeffrey Walton wrote:
+> On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
+> <alan.coopersmith@oracle.com> wrote:
 >>
->> A fix has been applied to Tails git:
+>> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
+>> since it claims this bug has a CVSS of 9.8.
 >>
->> https://labs.riseup.net/code/projects/tails/repository/revisions/b9fd6312435d55dd0bc0b6abdb7994da4d66e2b2
->>
->> In short, the wget binary is moved to /usr/lib/wget/wget, and a
->> wrapper script is put in place in /usr/bin/wget. The wrapper ensures
->> that wget is called via torsocks, and additionally, also forces
->> --passive-ftp.
->>
->> Moving wget to /usr/lib/wget/wget gets the potentially dangerous wget
->> binary out of $PATH. A dedicated attacker could check if /usr/bin/wget
->> is a script and then parse it to find the actual binary, but that
->> would need to be a very dedicated attacker and at that point, there
->> are more feasible attacks available.
->>
->> --
->> -Austin
->>
->
->
->
-> --
-> -Austin
->
+>>   From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
+>> see any CVSS higher than 0.0 being relevant here and think the CVE should
+>> be withdrawn.  Am I missing something here?  All I see is 2 objects of
+>> 16 bytes each not being freed in the fraction of a second before the
+>> command exits and automatically frees the memory - in a command the user
+>> deliberately chooses to run, which runs as themselves with no raised
+>> privileges, on an input file they provide, and which exits after processing
+>> the file and doesn't hang around keeping that memory allocated - not a bit
+>> of security risk at all there.  (Yes, it's a small bug and is good to fix,
+>> but not to raise security alarms for.)
+> 
+> Memory leaks on exit are par for the course in GNU software per
+> https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+> 
+> Nothing to see here, just move on.
 
-
+This isn't a GNU program, but that doesn't matter here.  My argument
+is still that this CVE should be revoked, and that this class of bug
+shouldn't have CVEs issued.
 
 -- 
--Austin
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
---047d7bdca4fea75e130523af537b--
