@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3503" "Wednesday" "15" "January" "2020" "16:09:07" "+0100" "Daniel Beck" "ml@beckweb.net" "<CECBBC6C-2C36-45A1-8560-9726EA991FC6@beckweb.net>" "93" "[oss-security] Multiple vulnerabilities in Jenkins plugins" "^Date:" nil nil "1" "2020011515:09:07" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "        ml@beckweb.n Jan 15   93/3503  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30065 invoked by uid 550); 15 Jan 2020 15:09:20 -0000
+Received: (qmail 26064 invoked by uid 550); 22 Jun 2023 10:57:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +6,118 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30044 invoked from network); 15 Jan 2020 15:09:19 -0000
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <CECBBC6C-2C36-45A1-8560-9726EA991FC6@beckweb.net>
-X-Mailer: Apple Mail (2.3445.104.11)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1579100959;24877032;
-X-HE-SMSGID: 1irkI7-0005Qc-VY
-Date: Wed, 15 Jan 2020 16:09:07 +0100
-From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Received: (qmail 10121 invoked from network); 22 Jun 2023 10:02:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1687428164;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=DNrmkRJJUBalsRa+JJ77WYmUJtwM1TdYM0av0CI+9dg=;
+	b=RBUBAVkySD1nrthSTGxVZFPtMsVlCWGB5BXguSGHwO/hKjENekzzJvcL4qhU+ITakp31/u
+	+72NosYXG3HsgvqF4rX1z1qfbTbLBhQDL0OcmHBF7zjjHi8aacm8M4kZp106PjWX9Id6eL
+	LqVjnmGHuY9/PVSYO3mmuZTLCjMstVE=
+X-MC-Unique: 4k0aIm_2O2CgM_-Nhyzd8g-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687428161; x=1690020161;
+        h=content-language:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DNrmkRJJUBalsRa+JJ77WYmUJtwM1TdYM0av0CI+9dg=;
+        b=iZ4fdWsVm8TGO476X7nGkP0bqhor35kBqn71D5ZeKifOYR1EtBI864RFZs++oEkNsf
+         +Flhxo+5zqAjjS1Eaqj4y1/92ymP10yWhURyalrCHBGWS4qALi1EYQVS1H3lPv0q/LyW
+         H/cmsCJrpviI062GvhaSJzd+oQDPtriiol/r2sqU4h/4CyoQIhY6JvjviK6CSPtUEZg1
+         ugIlPuFWZ5mQ/p6icpkk+WPjYgC+rKBegNwqXasLLjdaC4Q7VgqbAeQWT3RKyKItVVni
+         TS8Uojs01zjvBVrT9RO2W0PFCZjfgz6mQ6mpuj1F1h7HuWjScUUD+p9DhKO/ISnl1QIM
+         xSTg==
+X-Gm-Message-State: AC+VfDwnNYGi87lVwaug/HrN1exe73+ecFkKjjX1fkPhe7POQSUbLhUF
+	BaXygDf8OmXm85gfdZX/7LPy+dsOVnV2XtT93UNFnNp16O3Zd38E+0+0T0sJYc827c/oVcqaXMG
+	45g4DjA3V0998E1GYob3ZO1vjANCAKhMq8pYSpe5bxINr+TDpR0BoBweqhZnDXPk26y1MxJ97Pd
+	4ItAJHRTD0OyE=
+X-Received: by 2002:aa7:c44d:0:b0:518:72d8:2cc5 with SMTP id n13-20020aa7c44d000000b0051872d82cc5mr12253487edr.33.1687428160971;
+        Thu, 22 Jun 2023 03:02:40 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ4qP7ZBQMdHlebMNRGlg2DqQuuwhJQmsbdS8rcR2ZVzUSkBim6JkxZo4X4odxhiqdtPHtNfNw==
+X-Received: by 2002:aa7:c44d:0:b0:518:72d8:2cc5 with SMTP id n13-20020aa7c44d000000b0051872d82cc5mr12253471edr.33.1687428160567;
+        Thu, 22 Jun 2023 03:02:40 -0700 (PDT)
+Message-ID: <c2d7a824-5122-e130-68c8-44ddc1ffd241@redhat.com>
+Date: Thu, 22 Jun 2023 12:02:39 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+From: Zdenek Dohnal <zdohnal@redhat.com>
 To: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative;
+ boundary="------------IMl8ITRW0GgyqTGuDzP2ulyB"
+Content-Language: en-US
+Subject: [oss-security] CVE-2023-34241: CUPS: use-after-free in cupsdAcceptClient()
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--------------IMl8ITRW0GgyqTGuDzP2ulyB
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The following releases contain fixes for security vulnerabilities:
+Hi all,
 
-* Amazon EC2 Plugin 1.48
-* Health Advisor by CloudBees Plugin 3.0.1
-* Redgate SQL Change Automation Plugin 2.0.5
-* Robot Framework Plugin 2.0.1
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Gitlab Hook Plugin
-* Sounds Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-01-15/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1004 / CVE-2020-2090 (CSRF) & CVE-2020-2091 (missing permission ch=
-eck)
-Amazon EC2 Plugin 1.47 and earlier does not perform permission checks in
-methods performing form validation. This allows users with Overall/Read
-access to Jenkins to connect to an attacker-specified URL within the AWS
-region using attacker-specified credentials IDs obtained through another
-method.
-
-NOTE: This vulnerability might also allow attackers to capture credentials
-stored in Jenkins. We have not been able to confirm that this is possible.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a CSRF vulnerability.
+there is currently the embargoed CVE-2023-34241 in CUPS project:
 
 
-SECURITY-1698 / CVE-2020-2092
-Robot Framework Plugin 2.0.0 and earlier does not configure the XML parser
-to prevent XML external entity (XXE) attacks.
+      Summary
 
-This allows a user able to control the input files for the 'Publish Robot
-Framework' post-build step to have Jenkins parse a crafted file that uses
-external entities for extraction of secrets from the Jenkins master,
-server-side request forgery, or denial-of-service attacks.
+Cups logs data of free memory to the logging service AFTER the 
+connection has been closed, when it should have logged the data right 
+before.
 
 
-SECURITY-1708 / CVE-2020-2093 (CSRF) & CVE-2020-2094 (missing permission ch=
-eck)
-Health Advisor by CloudBees Plugin 3.0 and earlier does not perform
-permission checks in methods performing form validation. This allows users
-with Overall/Read access to send an email with fixed content to an
-attacker-specified recipient.
+      Details
 
-Additionally, these form validation methods do not require POST requests,
-resulting in a CSRF vulnerability.
+The exact cause of this issue is the function httpClose(con->http) being 
+called in scheduler/client.c before
 
+|httpClose(con->http); cupsdLogClient(con, CUPSDLOGWARN, "IP lookup 
+failed - connection from %s closed!", httpGetHostname(con->http, NULL, 0));|
 
-SECURITY-1696 / CVE-2020-2095
-Redgate SQL Change Automation Plugin 2.0.4 and earlier stores a NuGet API
-key unencrypted in job `config.xml` files as part of its configuration.
-This credential could be viewed by users with Extended Read permission or
-access to the master file system.
+The problem is that httpClose always, provided its argument is not null, 
+frees the pointer at the end of the call, only for cupsdLogClient to 
+pass the pointer to httpGetHostname.
 
-This is due to an incomplete fix of
-link:/security/advisory/2019-12-17/#SECURITY-1598[SECURITY-1598].
+This issue happens in function cupsdAcceptClient if LogLevel is |warn| 
+or higher and in two scenarios:
 
-
-SECURITY-1683 / CVE-2020-2096
-Gitlab Hook Plugin 1.4.2 and earlier does not escape project names in the
-`build_now` endpoint. This results in a reflected cross-site scripting
-vulnerability.
-
-As of publication of this advisory, there is no fix.
+  * there is a double-lookup for the IP Address (|HostNameLookups
+    Double| is set in |cupsd.conf|) which fails to resolve,
+  * or if CUPS is compiled with TCP wrappers and the connection is
+    refused by rules from |/etc/hosts.allow| and |/etc/hosts.deny|.
 
 
-SECURITY-814 / CVE-2020-2097 (permission check) & CVE-2020-2098 (CSRF)
-Sounds Plugin 0.5 and earlier does not perform permission checks in URLs
-performing form validation. This allows attackers with Overall/Read access
-to execute arbitrary OS commands as the OS user account running Jenkins.
+      Reproducer
 
-Additionally, these form validation URLs do not require POST requests,
-resulting in a CSRF vulnerability.
+None provided
 
-As of publication of this advisory, there is no fix.
+
+      Impact
+
+This is a use-after-free bug, that impacts the entire cupsd process.
+
+If you need an exploit scenario, consider: local (unprivileged) attacker 
+who happens to be able to read the log using it to exfiltrate private 
+keys and info from a privileged cups daemon
+or simply denial-of-service by making it crash.
+
+
+      Patch
+
+Committed as 
+https://github.com/OpenPrinting/cups/commit/9809947a959e18409dcf562a3466ef246cb90cb2
+
+
+For OpenPrinting CUPS community,
+
+Zdenek Dohnal (CUPS 2.4.x release manager)
+
+-- 
+Zdenek Dohnal
+Senior Software Engineer
+Red Hat, BRQ-TPBC
+
+--------------IMl8ITRW0GgyqTGuDzP2ulyB--
 
