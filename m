@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/06/4
-Message-ID: <ZH9uHeiWrtK5oDz7@itl-email>
-Date: Tue, 6 Jun 2023 13:34:20 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com, announce@...che.org, announce@...camole.apache.org, dev@...camole.apache.org, user@...camole.apache.org
-Cc: security@...camole.apache.org
-Subject: Re: [SECURITY] CVE-2023-30576: Apache Guacamole: Use-after-free in handling of RDP audio input buffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/1
+Message-ID: <1856911.tdWV9SEqCh@x2>
+Date: Wed, 21 Jun 2023 21:53:54 -0400
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Demi Marie Obenour <demi@...isiblethingslab.com>
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 06, 2023 at 10:12:29AM -0700, Michael Jumper wrote:
-> Severity: moderate
-> Base CVSS Score: 6.8 (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N)
+On Wednesday, June 21, 2023 5:54:57 PM EDT Demi Marie Obenour wrote:
+> On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
+> > On Wed, 21 Jun 2023, Jeffrey Walton wrote:
+> > > Memory leaks on exit are par for the course in GNU software per
+> > > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+> > 
+> > Don't bother with this, don't bother with that, etc...  Call me
+> > old-school (which I am), but I cannot abide sloppy programming[*].
+> 
+> Memory leaks on exit are a _good_ thing in general.  There is absolutely
+> zero point in calling free() if the program is about to exit — the OS
+> will do a better job of freeing resources than the program itself ever
+> could.
 
-Why is this A:N and AC:H?
+Sure, but how can static analysis or address sanitizers tell the difference 
+between something created and leaked on the error path, vs something that 
+mattered during the life of the program? Meaning something leaks in an event 
+loop and slowly accumulates leakage. Nothing gives you a free pass but the OS 
+when analyzing leaks. Mundane leaks need cleaning up so you can find the real 
+leaks that matter.
 
-> Affected versions:
-> 
-> - Apache Guacamole 0.9.10 through 1.5.1
-> 
-> Description:
-> 
-> Apache Guacamole 0.9.10 through 1.5.1 may continue to reference a freed RDP
-> audio input buffer. Depending on timing, this may allow an attacker to
-> execute arbitrary code with the privileges of the guacd process.
-> 
-> Mitigation:
-> 
-> Users of versions of Apache Guacamole 1.5.1 and older should upgrade to the
-> 1.5.2 release.
-> 
-> Credit:
-> 
-> We would like to thank Stefan Schiller (Sonar) for reporting this issue.
-> 
-> References:
-> 
-> https://guacamole.apache.org/
-> https://www.cve.org/CVERecord?id=CVE-2023-30576
-> 
-> Timeline:
-> 
-> 2023-04-11: Reported to security@...camole.apache.org
-> 2023-04-11: Report acknowledged by project
-> 2023-04-12: Report confirmed by project
-> 2023-05-09: Fix completed and merged
-> 2023-05-09: Fix tested and confirmed by reporter
-> 2023-05-25: Fix released
+-Steve
 
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
