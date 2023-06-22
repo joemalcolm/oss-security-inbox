@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1439" "Friday" "14" "October" "2016" "03:17:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161014071750.E195342E060@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: another recursion in GRE" nil nil nil "10" "2016101407:17:50" "[oss-security] Re: CVE Request: another recursion in GRE" (number mark "U       cve-assign@m Oct 14   37/1439  " thread-indent "\"[oss-security] Re: CVE Request: another recursion in GRE\"\n") "<20161013161041.GR25134@suse.de>" ("<20161013161041.GR25134@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7519 invoked by uid 550); 14 Oct 2016 09:55:54 -0000
+Received: (qmail 30249 invoked by uid 550); 22 Jun 2023 12:45:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7492 invoked from network); 14 Oct 2016 09:55:54 -0000
-From: cve-assign@mitre.org
-To: meissner@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20161013161041.GR25134@suse.de>
-Message-Id: <20161014071750.E195342E060@smtpvbsrv1.mitre.org>
-Date: Fri, 14 Oct 2016 03:17:50 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: another recursion in GRE
+Received: (qmail 23748 invoked from network); 22 Jun 2023 12:35:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687437327; x=1690029327;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mT9u1vO/DelgLzsyrF1aW++wi+vffCyV4FaYh7oO258=;
+        b=A7YnjbtCGcplgmb+GhOJTa+btH2K7K0oV8WgnbBfkg7C1sUFoAryvfTVq4UuLtpvMj
+         vxDbIHOyxeOMjp4k585/Z+y+GfWqTfrno54RtR0macFp4OfUY1y99Yvr7dA+2hnsd0Mo
+         XJ+wGNFEJ5yhtmO4XMrEtLeWIfn0DGRV7ZlvrvvADGQITXsCLVGCq+WRRlzFfPQSyB5o
+         4I2xg0BUqTyjmgYSqB2riplL2qiyM2wEMNGJFh33z4lQQxMc370DH4GNrkH5+Z22cZ0N
+         LWGAuczj95Z95aOlggeOU0BCugXek1aOi3dJVEiPjs5HnsABsk86T1T7gJoixxs1Qt04
+         2rdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687437327; x=1690029327;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mT9u1vO/DelgLzsyrF1aW++wi+vffCyV4FaYh7oO258=;
+        b=ELpi1U4VIM1V/RnxQZjsGZeMqntb+iIApn4pG6WSMY7TsU1IH0Fxr0njSugJNT7Gbf
+         t0k0hCHNYeKaAXyZqF1sCXC0d1k6yNl27NUlRN8Pdd9gTLpiaBdSi9wtf1Gqb+ZsLLUu
+         eiSmQaVgOSIuK2Ju8rWQF0rIUWRgP4xLqFQPz5IPEm+7TF17Men/iCO4e8l7BEeoQx3e
+         SeX7p9o+q3rfB6GeMuI6+6/Yo0E6B/dHDs2ISBmdA1NTSrIjNuWNRuwYEpJA85eis8zV
+         mu7CkwbM7khVmM85Wdq/TOAVMdaaJxLZdpuWnnXhv4XCVb26VxVZGbp/JEWCOyVG7pv3
+         0Y8Q==
+X-Gm-Message-State: AC+VfDzDcpXzv1VeFwEtaK1+u8sAFV37H8+QH2e4IXkaaHK4NPphoOfl
+	eHOWKD41d5NOEoLsCdoTWyWm/c+WUwSWjg4xTt3qClkFBdA=
+X-Google-Smtp-Source: ACHHUZ7E93zYl7O4ePIm7JdwhB/DV3kYYOAA4JZ/TkMHuOrD7bR4ZEY3McJQYA/Rn13oDWIrKLdnYTRVHW4/WJRbEps=
+X-Received: by 2002:a05:6820:1018:b0:55d:cb99:1976 with SMTP id
+ v24-20020a056820101800b0055dcb991976mr11706211oor.0.1687437326611; Thu, 22
+ Jun 2023 05:35:26 -0700 (PDT)
+MIME-Version: 1.0
+From: Jyoti Raval <jenyraval@gmail.com>
+Date: Thu, 22 Jun 2023 18:05:14 +0530
+Message-ID: <CANo=s0ZesZj2nzHGxeG4CEjcB+dAxBF8pMDWB_mAMvgSm_gnSA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000006efb5705feb71ea4"
+Subject: [oss-security] Open Source Tool | MPT: Pentest In Action!
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0000000000006efb5705feb71ea4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> If a packet has the layout: | IPv4 header | GRE header | IPv4 header | GRE header | ...
-> depending on left over stack it could run the kernel out of stack due to
-> recursion and so crash the kernel.
+Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
+<https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-acti=
+on/>
 
-> commit fac8e0f579695a3ecbc4d3cac369139d7f819971
+MPT aims to provide one stop solution for managing all pentests that are
+running across organisation.
+<https://github.com/jenyraval/MPT#why>Why?
 
->     This
->     generalizes that solution to prevent any kind of tunnel stacking
->     that would cause problems.
+Security penetration testing is more than necessary. If not all, most
+organisations either have their own penetration testing team in-house or
+they have third party pentesters. In any fast paced organisation with
+multiple product lines and development planning timelines, it becomes
+challenging for security teams to efficiently manage all these pentest
+activities and effectively produce security assessment reports and track
+them.
 
-Use CVE-2016-8666.
+In order to solve above challenges I have developed a solution called
+=E2=80=98Managing Pentest (MPT: Pentest in Action)=E2=80=99
+<https://github.com/jenyraval/MPT#what>What?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+MPT helps us solve various problems:
 
-iQIcBAEBCAAGBQJYAIYdAAoJEHb/MwWLVhi25UIP/iSHd0YpyLjwP1wtmcZYOXx7
-jT7XMtGRXR7uXNUGBDd92u7VMe9Vy344znXvevg2MSRfIW1i8t6lQvaNE3TDDxC4
-yDXlnrLaSR6bfjNCv9ngaEiSgKlG+640LL5OTQvMQC8mhN+Bh3/UWmp1UjyadBEt
-wks3QEZQAhtnbLAUOa7j7BGZu5+F52WUtzwc5j4ncLZ7jbR8nUPg+DgASu2HRgiB
-MhPZsaGnyuNIXis35IgB08p91IsIOrg055s3j8uFle7twyaEykU1XbbpnAwGu8q7
-p3tw9cNp1KI7XbjbLG2Dh+wxubvvwJ0NsV4g5FXbXbn7CxJ/UWJ2Deymn/NdwXgg
-wrmkMy/N2H8eLweP3tn3KQlNef/4G3D9hHsqnb8KoOX+3cmH3UMMb7oSoovhCyQm
-/rBfmHX38BVRF2Rq8qYIS5hBADSo0DtLmSmqtMLsVI2Dflyo79CX7cSjAvhezxJu
-c4hqHbum5DsgvHFUS5gEIRQEHjv4sDRVYGav7Aik6NG6dlA7edGmLaWGczqtgujP
-c1BvVbbzDm9Ug9Hvq9C+qfjfDoPVtw/SpUz5T+jcu1BFf0aaUkejhrdn1FCtb1GC
-pbZIDGt4vRoeNAzUd4kCkjtS3cvbOK+MtsuV0C4YzdMwfG5odSS7bS1KX0zt6pL7
-2ZaO/xi1g1pNa4zIuC4S
-=ShWc
------END PGP SIGNATURE-----
+   - Asset DB to know all organisation assets that are in pentest process.
+   You can=E2=80=99t secure what you are not aware of!
+   - Tracking each pentest
+   - Pentesting activity knowledge which comprises of what particular let
+   say application does, or the purpose of hardware that we are testing
+   - When next pentester takes over the testing, all they have to do is
+   view the asset and associated information which is already there.
+   - Time taken for each pentest
+   - Real time tracking of activity
+   - Issue status
+   - Common issues that are observed
+
+MPT also has security pentest analytics which helps us not only track and
+view everything in single pane of glass but also helps with:
+
+   - Finding improvement areas to boost pen tester productivity
+   - Understand the current risk posture
+   - Understand recurring issues
+   - Average amount of time taken for each pentest vs asset size
+   - Average high/medium/low fixing time
+   - Most number of vulnerabilities fixed in a year
+   - Class of new vulnerabilities discovered
+   - Developer trends
+   - Open findings
+   - Critical assessments
+   - Asset health
+   - Top pentester reported findings
+   - Average busy time for each pentester
+
+Github - https://github.com/jenyraval/MPT
+
+--0000000000006efb5705feb71ea4--
