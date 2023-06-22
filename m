@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/6
-Message-ID: <6352d70e-c156-fb64-6b03-ca3f89331f88@apache.org>
-Date: Thu, 23 Feb 2023 17:43:54 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/7
+Message-ID: <8e637dad-3c59-7108-064b-148c61ab3177@apache.org>
+Date: Thu, 22 Jun 2023 20:12:03 +0000
+From: Dominik Riemer <riemer@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25693: Sqoop Apache Airflow Provider Remote Code Execution Vulnerability 
+Subject: CVE-2023-31469: Apache StreamPipes: Privilege escalation through non-admin user 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: important
+
+Affected versions:
+
+- Apache StreamPipes 0.69.0 through 0.91.0
 
 Description:
 
-Improper Input Validation vulnerability in the Apache Airflow Sqoop Provider.
-
-This issue affects Apache Airflow Sqoop Provider versions before 3.1.1.
+A REST interface in Apache StreamPipes (versions 0.69.0 to 0.91.0) was not properly restricted to admin-only access. This allowed a non-admin user with valid login credentials to elevate privileges beyond the initially assigned roles.
+The issue is resolved by upgrading to StreamPipes 0.92.0.
 
 Credit:
 
- L3yx of Syclover Security Team (finder)
+Xun Bai, LJQC Open Source Security Institute (finder)
 
 References:
 
-https://github.com/apache/airflow/pull/29500
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25693
+https://streampipes.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-31469
 
