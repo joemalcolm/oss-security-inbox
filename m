@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1135" "Tuesday" "1" "August" "2017" "13:40:45" "-0700" "Sean Cassidy" "sean@defensestorm.com" "<CABOeKPFALNQqQvDOdAuCc6HNC7eEoshjneyiu-0euhThiuv-8g@mail.gmail.com>" "30" "Re: [oss-security] Syslog forwarding with IP spoofing" nil nil nil "8" "2017080120:40:45" "[oss-security] Syslog forwarding with IP spoofing" (number mark "U       sean@defense Aug  1   30/1135  " thread-indent "\"Re: [oss-security] Syslog forwarding with IP spoofing\"\n") "<1501597646.744346.23695.25373@mail.rambler.ru>" ("<1501597640.407871.9894.30815@mail.rambler.ru>" "<1501597646.744346.23695.25373@mail.rambler.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28154 invoked by uid 550); 1 Aug 2017 20:55:25 -0000
+Received: (qmail 20244 invoked by uid 550); 22 Jun 2023 01:54:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13474 invoked from network); 1 Aug 2017 20:41:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=defensestorm-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=d8/ShoLISIY6VGzIDSGN7EJhO259QH+eS8fVHkI61ec=;
-        b=M1z8SHsCEf0ecqp8zcx91zhXfh3ZpJkLvncpsapK6r/8r5J919vtBPb2QhVUA7UA2e
-         SY36BiHYMFjUCbEOgeWvsE0ZjmcPTW5biUr7KkZTnK7Dq/jD/sGs26DTIYNWf6Xk0MO/
-         CGII6veDjOjCwzA9IWOPqefuoOykswuqUsanVLk4NL9C48P6EkWopZ9qWt6QhpYpvo3N
-         FwTA0eVe2TnHL7rP9JLLvJ5KciLVPZbegVsYP1lIfpkzqrRa4689KR9LeYdqVn+GzcpE
-         x/CPW34L3qkwjCTDPOrxegxjxY/SVJyQU4xPV7fOZ94eEGGgjH3lH1j8VDFOOJisfABD
-         8KBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=d8/ShoLISIY6VGzIDSGN7EJhO259QH+eS8fVHkI61ec=;
-        b=ZOLMajRJbeLqJWG1TkqXJFTwfLhfrfrnEIKFhvuMQ1B6eC/cCtjmMzOgNnkzKKAJGJ
-         sxbnoNlsM7HNjW1gn9mY+ktmivfAX0zfC47PBScHyCQLCNlZLjhZUihHaB9UL+EXsC5e
-         R0TKCF+IPxd27mjw01TDih8MZ2sDLtsFxdUxdkb8UjSRJOOw2dtU8nqunVzZvCkBidDP
-         oMS95u4va7nbBJp0mO9tdGesiUI4zFR8heqYzkIfQt7g94e77O3W0V11mwA4ogEsHcm7
-         8AMkGirwDn2hgO9hY/JVsQ4nvzXe/EBz+l0iwhMkojdOswSbFWCBsiwXeDQMmz5S2bf1
-         Q19Q==
-X-Gm-Message-State: AIVw113yZuDy+VMJSOa3xxAVNk4FvVRZ1A94iwjYU+XvY1p0KRfa7jqR
-	nWKVMtm9eOmy60aGhwGthYMSPWAqdiLaQu3p8A==
-X-Received: by 10.25.99.145 with SMTP id v17mr6990426lfi.209.1501620075822;
- Tue, 01 Aug 2017 13:41:15 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <1501597646.744346.23695.25373@mail.rambler.ru>
-References: <1501597640.407871.9894.30815@mail.rambler.ru> <1501597646.744346.23695.25373@mail.rambler.ru>
-From: Sean Cassidy <sean@defensestorm.com>
-Date: Tue, 1 Aug 2017 13:40:45 -0700
-Message-ID: <CABOeKPFALNQqQvDOdAuCc6HNC7eEoshjneyiu-0euhThiuv-8g@mail.gmail.com>
+Received: (qmail 20224 invoked from network); 22 Jun 2023 01:54:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1687398839;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UuMq8HPYKOr3Sn58L5OnHZh/Y8zwws4bZTdQMK9yI30=;
+	b=GUNY9bXC8sxbxcftaOmN8Nl1dGyjQDazQt3rvsLlK7fc3yyYldjKI/QhrkRtkGceeF4kwy
+	rXdaOeeUTGdxnZzC35QmgqpvAvLOIn1xnuyNzg3NGui9lEpqhCf7G1Dhi0dPULT8niJKC2
+	SwIzbb2/PG5uZPtoyz47vznOeEAqcT0=
+X-MC-Unique: zlweZMSQNFGtB1_fAmzW2A-1
+From: Steve Grubb <sgrubb@redhat.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Cc: Demi Marie Obenour <demi@invisiblethingslab.com>
+Date: Wed, 21 Jun 2023 21:53:54 -0400
+Message-ID: <1856911.tdWV9SEqCh@x2>
+Organization: Red Hat
+In-Reply-To: <ZJNx4OBlGqGFgOYD@itl-email>
+References: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
+ <alpine.BSF.2.21.9999.2306220132050.17927@aneurin.horsfall.org>
+ <ZJNx4OBlGqGFgOYD@itl-email>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.2
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Syslog forwarding with IP spoofing
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
-On Tue, Aug 1, 2017 at 7:27 AM, =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B0=D0=BD=
-=D0=B4=D1=80 =D0=9D=D0=BE=D1=81=D0=B0=D1=80=D0=B5=D0=B2 <nosarev-ay@rambler=
-.ru> wrote:
->
-> Good day!
->
->
-> I need to recive syslog messages, filter them and send them forward to th=
-e SIEM.
->
-> Also HOST field is not represented in syslog, so i need to spoof IP of fo=
-rwarding
-> packets to bind messages recived by SIEM to it's original source IP.
->
-> If i will try to add some marks to syslog message, I will need to override
-> parsers for each syslog source type, so it seems like abad idea.
->
-> Is there any open source tool for that task?
+On Wednesday, June 21, 2023 5:54:57 PM EDT Demi Marie Obenour wrote:
+> On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
+> > On Wed, 21 Jun 2023, Jeffrey Walton wrote:
+> > > Memory leaks on exit are par for the course in GNU software per
+> > > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+> >=20
+> > Don't bother with this, don't bother with that, etc...  Call me
+> > old-school (which I am), but I cannot abide sloppy programming[*].
+>=20
+> Memory leaks on exit are a _good_ thing in general.  There is absolutely
+> zero point in calling free() if the program is about to exit =E2=80=94 th=
+e OS
+> will do a better job of freeing resources than the program itself ever
+> could.
 
-I would use syslog-ng for this. It can rewrite syslog messages
-(including adding/modifying the HOST field) and then do nearly
-anything with the result. You can have it call a program, put it on an
-AMQP queue, write it to disk, or whatever, really.
+Sure, but how can static analysis or address sanitizers tell the difference=
+=20
+between something created and leaked on the error path, vs something that=20
+mattered during the life of the program? Meaning something leaks in an even=
+t=20
+loop and slowly accumulates leakage. Nothing gives you a free pass but the =
+OS=20
+when analyzing leaks. Mundane leaks need cleaning up so you can find the re=
+al=20
+leaks that matter.
 
-https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-=
-ose-guide-admin/html/chapter-manipulating-messages.html
-https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-=
-ose-guide-admin/html/chapter-destinations.html
+-Steve
 
-Sean
+
