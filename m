@@ -1,86 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/20/2
-Message-ID: <ZLk1hSUEt00caovk@itl-email>
-Date: Thu, 20 Jul 2023 09:24:21 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/6
+Message-ID: <ZJRD9Co3XtDxeuyF@itl-email>
+Date: Thu, 22 Jun 2023 08:50:42 -0400
 From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Announce: OpenSSH 9.3p2 released
+To: Steve Grubb <sgrubb@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 19, 2023 at 08:40:40AM -0600, Damien Miller wrote:
-> OpenSSH 9.3p2 has just been released. It will be available from the
-> mirrors listed at https://www.openssh.com/ shortly.
+On Wed, Jun 21, 2023 at 09:53:54PM -0400, Steve Grubb wrote:
+> On Wednesday, June 21, 2023 5:54:57 PM EDT Demi Marie Obenour wrote:
+> > On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
+> > > On Wed, 21 Jun 2023, Jeffrey Walton wrote:
+> > > > Memory leaks on exit are par for the course in GNU software per
+> > > > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+> > > 
+> > > Don't bother with this, don't bother with that, etc...  Call me
+> > > old-school (which I am), but I cannot abide sloppy programming[*].
+> > 
+> > Memory leaks on exit are a _good_ thing in general.  There is absolutely
+> > zero point in calling free() if the program is about to exit — the OS
+> > will do a better job of freeing resources than the program itself ever
+> > could.
 > 
-> OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-> includes sftp client and server support.
-> 
-> Once again, we would like to thank the OpenSSH community for their
-> continued support of the project, especially those who contributed
-> code or patches, reported bugs, tested snapshots or donated to the
-> project. More information on donations may be found at:
-> https://www.openssh.com/donations.html
-> 
-> Changes since OpenSSH 9.3
-> =========================
-> 
-> This release fixes a security bug.
-> 
-> Security
-> ========
-> 
-> Fix CVE-2023-38408 - a condition where specific libaries loaded via
-> ssh-agent(1)'s PKCS#11 support could be abused to achieve remote
-> code execution via a forwarded agent socket if the following
-> conditions are met:
-> 
-> * Exploitation requires the presence of specific libraries on
->   the victim system.
-> * Remote exploitation requires that the agent was forwarded
->   to an attacker-controlled system.
-> 
-> Exploitation can also be prevented by starting ssh-agent(1) with an
-> empty PKCS#11/FIDO allowlist (ssh-agent -P '') or by configuring
-> an allowlist that contains only specific provider libraries.
-> 
-> This vulnerability was discovered and demonstrated to be exploitable
-> by the Qualys Security Advisory team. 
->  
-> In addition to removing the main precondition for exploitation,
-> this release removes the ability for remote ssh-agent(1) clients
-> to load PKCS#11 modules by default (see below).
-> 
-> Potentially-incompatible changes
-> --------------------------------
-> 
->  * ssh-agent(8): the agent will now refuse requests to load PKCS#11
->    modules issued by remote clients by default. A flag has been added
->    to restore the previous behaviour "-Oallow-remote-pkcs11".
-> 
->    Note that ssh-agent(8) depends on the SSH client to identify
->    requests that are remote. The OpenSSH >=8.9 ssh(1) client does
->    this, but forwarding access to an agent socket using other tools
->    may circumvent this restriction.
-> 
-> Checksums:
-> ==========
-> 
-> - SHA1 (openssh-9.3p2.tar.gz) = 219cf700c317f400bb20b001c0406056f7188ea4
-> - SHA256 (openssh-9.3p2.tar.gz) = IA6+FH9ss/EB/QzfngJEKvfdyimN/9n0VoeOfMrGdug=
-> 
-> Please note that the SHA256 signatures are base64 encoded and not
-> hexadecimal (which is the default for most checksum tools). The PGP
-> key used to sign the releases is available from the mirror sites:
-> https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-> 
-> Reporting Bugs:
-> ===============
-> 
-> - Please read https://www.openssh.com/report.html
->   Security bugs should be reported directly to openssh@...nssh.com
+> Sure, but how can static analysis or address sanitizers tell the difference 
+> between something created and leaked on the error path, vs something that 
+> mattered during the life of the program? Meaning something leaks in an event 
+> loop and slowly accumulates leakage. Nothing gives you a free pass but the OS 
+> when analyzing leaks. Mundane leaks need cleaning up so you can find the real 
+> leaks that matter.
 
-Should there be a system-wide configuration file containing a list of
-known-good PKCS#11 libraries?  ssh-agent having to guess if something is
-a PKCS#11 library is less than awesome.
+glibc exports a function for this exact purpose, and sanitizers call it
+precisely to avoid false leak reports.  Static analyzers can also be
+told to act as if that function is called.
 -- 
 Sincerely,
 Demi Marie Obenour (she/her/hers)
