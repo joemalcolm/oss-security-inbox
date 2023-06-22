@@ -1,30 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/3
-Message-ID: <6d19c7c3-3070-062b-e705-275e15abc645@apache.org>
-Date: Wed, 29 Nov 2023 23:02:30 +0000
-From: Cédric Damioli <cdamioli@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45135: Apache Cocoon: SQL injection in DatabaseCookieAuthenticatorAction 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/2
+Message-ID: <87edm49pvd.fsf@hope.eyrie.org>
+Date: Wed, 21 Jun 2023 19:45:26 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: Taylor R Campbell <riastradh@...BSD.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: PAM/Kerberos issue on NetBSD
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Taylor R Campbell <riastradh@...BSD.org> writes:
 
-Affected versions:
+> Linux pam_krb5[1] and sssd-krb5[2] are both affected by the same attack,
+> but they have always been _documented_ to be affected; unlike BSD
+> pam_krb5, it's just not news that they are affected.
 
-- Apache Cocoon 2.2.0 before 2.3.0
+Yes, this is a long-standing and well-known issue with Kerberos PAM
+modules.  It's hard to solve properly because PAM modules are often
+invoked as non-root users for other good security reasons and thus do not
+have access to the system keytab, which means that doing proper KDC
+verification requires providing them with a separate keytab for some other
+principal that is safe to expose to whatever unprivileged user the PAM
+module is running as.  Sometimes there is no safe option.
 
-Description:
+The correct fix without requiring protocol changes is probably a system
+service running in a different privilege domain that exposes an API that
+allows the PAM module to verify tickets with a keytab but protects the
+keytab from being read by the PAM module.  I am aware of private
+implementations of this approach, but I don't know if anyone has put one
+in a public module.  I was going to do that at one point and never found
+the time.
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Cocoon.This issue affects Apache Cocoon: from 2.2.0 before 2.3.0.
+There are other ways to fix this problem by using more sophisticated
+Keberos protocols.  For example, I think (although am not 100% sure) that
+using FAST for the authentication protects against this attack because I
+believe the FAST armor will authenticate the Kerberos KDC.
 
-Users are recommended to upgrade to version 2.3.0, which fixes the issue.
+> (Side note: pam_krb5 (and sssd-krb5) is not and never has been the
+> normal way to do Kerberos authentication in network services.  (E.g., in
+> sshd, you set `GSSAPIAuthentication yes' for that.)  pam_krb5 has always
+> been an abuse of Kerberos as a method to check a password, which
+> Kerberos was designed to avoid, through SSO.)
 
-Credit:
+This is only mostly true.  The primary exception is using a Kerberos PAM
+module with console / desktop environment login on a Linux desktop or
+laptop, where often people do prefer to use their Kerberos password as
+their local system password so that they acquire Kerberos credentials at
+the same time that they gain access to their local system.  In that case,
+pam_krb5 is a replacement for kinit, and is using Kerberos as intended.
+This used to be a fairly popular configuration for people using Linux at
+institutions that used Kerberos for the site-wide authentication system.
+It's been a while since I've worked for one of those institutions, so I'm
+not sure if it still is.
 
-QSec-Team (finder)
+But yes, a lot of the uses are places that should use GSSAPI but don't for
+various reasons (usually because the client is not capable of GSSAPI, such
+as lots of mail clients).
 
-References:
+> The verify_ap_req_nofail option rates pretty high among the worst-named
+> knobs I have ever seen, and has been confusing people for
+> decades[9][10].  I filed an issue to make it default-secure in
+> Heimdal[11]; this could pose compatibility issues, but sites that
+> continue rely on the insecure option can always set it in their
+> krb5.conf.
 
-https://cocoon.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-45135
+The primary thing that I would expect this to break is screen lock
+programs for people who use Kerberos for local authentication.  (Also IMAP
+and POP servers not configured with their own keytab and not running as
+root, but there the solution is generally to get them a keytab.)
 
+-- 
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
