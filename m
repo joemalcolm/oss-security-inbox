@@ -1,94 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/2
-Message-ID: <ZUkLvzta7YHSu/2l@openssl.org>
-Date: Mon, 6 Nov 2023 15:52:31 +0000
-From: Richard Levitte <levitte@...nssl.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/4
+Message-ID: <c2d7a824-5122-e130-68c8-44ddc1ffd241@redhat.com>
+Date: Thu, 22 Jun 2023 12:02:39 +0200
+From: Zdenek Dohnal <zdohnal@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL Security Advisory
+Subject: CVE-2023-34241: CUPS: use-after-free in cupsdAcceptClient()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hi all,
 
-OpenSSL Security Advisory [6th November 2023]
-=============================================
+there is currently the embargoed CVE-2023-34241 in CUPS project:
 
-Excessive time spent in DH check / generation with large Q parameter value (CVE-2023-5678)
-==========================================================================================
 
-Severity: Low
+      Summary
 
-Issue summary: Generating excessively long X9.42 DH keys or checking
-excessively long X9.42 DH keys or parameters may be very slow.
+Cups logs data of free memory to the logging service AFTER the 
+connection has been closed, when it should have logged the data right 
+before.
 
-Impact summary: Applications that use the functions DH_generate_key() to
-generate an X9.42 DH key may experience long delays.  Likewise, applications
-that use DH_check_pub_key(), DH_check_pub_key_ex() or EVP_PKEY_public_check()
-to check an X9.42 DH key or X9.42 DH parameters may experience long delays.
-Where the key or parameters that are being checked have been obtained from
-an untrusted source this may lead to a Denial of Service.
 
-While DH_check() performs all the necessary checks (as of CVE-2023-3817),
-DH_check_pub_key() doesn't make any of these checks, and is therefore
-vulnerable for excessively large P and Q parameters.
+      Details
 
-Likewise, while DH_generate_key() performs a check for an excessively large
-P, it doesn't check for an excessively large Q.
+The exact cause of this issue is the function httpClose(con->http) being 
+called in scheduler/client.c before
 
-An application that calls DH_generate_key() or DH_check_pub_key() and
-supplies a key or parameters obtained from an untrusted source could be
-vulnerable to a Denial of Service attack.
+|httpClose(con->http); cupsdLogClient(con, CUPSDLOGWARN, "IP lookup 
+failed - connection from %s closed!", httpGetHostname(con->http, NULL, 0));|
 
-DH_generate_key() and DH_check_pub_key() are also called by a number of
-other OpenSSL functions.  An application calling any of those other
-functions may similarly be affected.  The other functions affected by this
-are DH_check_pub_key_ex(), EVP_PKEY_public_check(), and EVP_PKEY_generate().
+The problem is that httpClose always, provided its argument is not null, 
+frees the pointer at the end of the call, only for cupsdLogClient to 
+pass the pointer to httpGetHostname.
 
-Also vulnerable are the OpenSSL pkey command line application when using the
-"-pubcheck" option, as well as the OpenSSL genpkey command line application.
+This issue happens in function cupsdAcceptClient if LogLevel is |warn| 
+or higher and in two scenarios:
 
-The OpenSSL SSL/TLS implementation is not affected by this issue.
+  * there is a double-lookup for the IP Address (|HostNameLookups
+    Double| is set in |cupsd.conf|) which fails to resolve,
+  * or if CUPS is compiled with TCP wrappers and the connection is
+    refused by rules from |/etc/hosts.allow| and |/etc/hosts.deny|.
 
-The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
 
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+      Reproducer
 
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available.
-The fix is also available in commit ddeb4b6c6d527e54ce9a99cba785c0f7776e54b6
-(for 3.1) and commit db925ae2e65d0d925adef429afc37f75bd1c2017 (for 3.0).
-It is available to premium support customers in commit
-710fee740904b6290fef0dd5536fbcedbc38ff0c (for 1.1.1) and in commit
-34efaef6c103d636ab507a0cc34dca4d3aecc055 (for 1.0.2). 
+None provided
 
-This issue was reported on 16th August 2023 by David Benjamin (Google). The
-fix was developed by Richard Levitte.
 
-General Advisory Notes
-======================
+      Impact
 
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20231106.txt
+This is a use-after-free bug, that impacts the entire cupsd process.
 
-Note: the online version of the advisory may be updated with additional
-details over time.
+If you need an exploit scenario, consider: local (unprivileged) attacker 
+who happens to be able to read the log using it to exfiltrate private 
+keys and info from a privileged cups daemon
+or simply denial-of-service by making it crash.
 
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/general/security-policy.html
------BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEeVOsH7w9yLOykjk+1enkP3357owFAmVJCvoACgkQ1enkP335
-7oytjRAAl2eNIEk0dNel7QoTFCTyXFl7IWUqWqNqx1WEr4oD/2SnFiOtQzOGl1U2
-+Wr7y0GBz1cfY7xj5yw3JBajnq8v92rWHXfLheN4makflwhHwjx/faX/uTGey5Xp
-+5ZdKZTnkSMC4gY4gS3/SWlmyHZAYVjs/OJIlKXNYRl0q+91OBydQEcixvetIF+c
-tdog1im+92xvkOtm6RfYJXEg84keft4twzw+xxeiFQ8c856SvBOSEtIhewpF9gyo
-mP2QS8/Ne6zeLXuw52pbwc/nXSXR1qPSwv+PDcDMIaVtAKYthdMbsugW05pNori1
-+bjbDQ9lM+No+jtbkWXObGKuXciWCnqGmKxgBIDCmpvTKSVJ2Bfnewy08a+nMkG4
-ZNmvOpF53dqVAaJRMPPZURW5697cYteF1WDWen48rx+eEP96KGB0u/jPitF1yGWC
-larXfkpeoL8nK8c8BZS9wF1J8xUfH1TBzl78YdQInI6yNH1cIXCYquGPVYgJQU4O
-TIQwqYCghL2+c46AkooepW5E7ltWK7LHB/64BU7BiTZeMKH+DO8L1YvFgliZLpzo
-v9n3amunUylXzdcDznt01PtIwzTsEAKioxl0Xq7k9EQyNAdx3BL21MifkjxofUTV
-54AyaYXtBVHNxqsZrdv6wVGc7F23vqmhmtS5IpgPkxtDQzKWdYk=
-=FBln
------END PGP SIGNATURE-----
+      Patch
+
+Committed as 
+https://github.com/OpenPrinting/cups/commit/9809947a959e18409dcf562a3466ef246cb90cb2
+
+
+For OpenPrinting CUPS community,
+
+Zdenek Dohnal (CUPS 2.4.x release manager)
+
+-- 
+Zdenek Dohnal
+Senior Software Engineer
+Red Hat, BRQ-TPBC
+
