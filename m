@@ -1,50 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/2
-Message-ID: <CAHrFiA8AHe6mk3cVSubH3b0CH1A=vSqqtmFvcoPwiK2zTQ8RUg@mail.gmail.com>
-Date: Wed, 13 Dec 2023 15:11:32 +0100
-From: Jakub Jelen <jjelen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/5
+Message-ID: <CANo=s0ZesZj2nzHGxeG4CEjcB+dAxBF8pMDWB_mAMvgSm_gnSA@mail.gmail.com>
+Date: Thu, 22 Jun 2023 18:05:14 +0530
+From: Jyoti Raval <jenyraval@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-40660: Potential PIN bypass with empty PIN in OpenSC before 0.24.0
+Subject: Open Source Tool | MPT: Pentest In Action!
 Content-Type: text/plain; charset=utf-8
 
-When the token/card was plugged into the computer and authenticated
-from one process, it could be used to provide cryptographic operations
-from different process when the empty, zero-length PIN was provided
-and the token could track the login status using some of its
-internals. This is dangerous for OS logon/screen unlock and small
-tokens that are plugged permanently to the computer. The bypass was
-removed and OpenSC implemented explicit logout for most of the card
-drivers to prevent leaving unattended logged-in tokens.
+Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
+<https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
 
-The PoC is available for MacOS screen unlock bypass with Yubikey. The
-issue can be reproduced also with a PKCS#11 module and Minidriver if
-the calling applications does not bail out on empty pin (For example
-with Firefox. The SSSD does not allow empty PIN under Linux even
-before reaching out to the PKCS#11 module).
+MPT aims to provide one stop solution for managing all pentests that are
+running across organisation.
+<https://github.com/jenyraval/MPT#why>Why?
 
-Note, that the login tracking is still useful on the pkcs15init layer
-so the second commit restores the similar code block in more
-appropriate place which could not be misused to bypass authentication
-on PKCS#11 layer.
+Security penetration testing is more than necessary. If not all, most
+organisations either have their own penetration testing team in-house or
+they have third party pentesters. In any fast paced organisation with
+multiple product lines and development planning timelines, it becomes
+challenging for security teams to efficiently manage all these pentest
+activities and effectively produce security assessment reports and track
+them.
 
-Affected versions: OpenSC 0.17.0 - 0.23.0
+In order to solve above challenges I have developed a solution called
+‘Managing Pentest (MPT: Pentest in Action)’
+<https://github.com/jenyraval/MPT#what>What?
 
-Fixed with:
+MPT helps us solve various problems:
 
-868f76fb31255fd3fdacfc3e476452efeb61c3e7
-80cc5d30635f0d2c92b5099c0f9dc680d0ffce2f
+   - Asset DB to know all organisation assets that are in pentest process.
+   You can’t secure what you are not aware of!
+   - Tracking each pentest
+   - Pentesting activity knowledge which comprises of what particular let
+   say application does, or the purpose of hardware that we are testing
+   - When next pentester takes over the testing, all they have to do is
+   view the asset and associated information which is already there.
+   - Time taken for each pentest
+   - Real time tracking of activity
+   - Issue status
+   - Common issues that are observed
 
-Originally reported by Deepanjan Pal (Oracle Corporation)
+MPT also has security pentest analytics which helps us not only track and
+view everything in single pane of glass but also helps with:
 
-CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H (7.3)
+   - Finding improvement areas to boost pen tester productivity
+   - Understand the current risk posture
+   - Understand recurring issues
+   - Average amount of time taken for each pentest vs asset size
+   - Average high/medium/low fixing time
+   - Most number of vulnerabilities fixed in a year
+   - Class of new vulnerabilities discovered
+   - Developer trends
+   - Open findings
+   - Critical assessments
+   - Asset health
+   - Top pentester reported findings
+   - Average busy time for each pentester
 
-
-
-The full release notes for the 0.24.0 is available in announce list:
-
-https://sourceforge.net/p/opensc/mailman/message/58712583/
-
-and on github:
-
-https://github.com/OpenSC/OpenSC/releases/tag/0.24.0
+Github - https://github.com/jenyraval/MPT
 
