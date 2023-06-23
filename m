@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/1
-Message-ID: <20230922072817.092917d2.hanno@hboeck.de>
-Date: Fri, 22 Sep 2023 07:28:17 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/1
+Message-ID: <72BCBA86-4192-47C9-ACA7-5F1A39994104@amazon.com>
+Date: Fri, 23 Jun 2023 01:20:17 +0000
+From: "Smith, Stewart" <trawets@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 21 Sep 2023 22:52:50 +0200
-Solar Designer <solar@...nwall.com> wrote:
-
-> However, another maybe-important one also made it into 1.3.2:
+On Jun 20, 2023, at 3:47 PM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
+> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
+> since it claims this bug has a CVSS of 9.8.
 > 
-> commit 95ea5226c870449522240ccff26f0b006037c520
-> Author: Vincent Rabaud <vrabaud@...gle.com>
-> Date:   Mon Sep 11 16:06:08 2023 +0200
+> From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
+> see any CVSS higher than 0.0 being relevant here and think the CVE should
+> be withdrawn.  Am I missing something here?  All I see is 2 objects of
+> 16 bytes each not being freed in the fraction of a second before the
+> command exits and automatically frees the memory - in a command the user
+> deliberately chooses to run, which runs as themselves with no raised
+> privileges, on an input file they provide, and which exits after processing
+> the file and doesn't hang around keeping that memory allocated - not a bit
+> of security risk at all there.  (Yes, it's a small bug and is good to fix,
+> but not to raise security alarms for.)
 > 
->     Fix invalid incremental decoding check.
+> --
+>        -Alan Coopersmith-                 alan.coopersmith@...cle.com
+>         Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-It does not look to me that this fix is in 1.3.2:
-https://github.com/webmproject/libwebp/commits/v1.3.2
+I don’t think you are, I can’t see anything here either.
 
-I've seen this commit as well and have been wondering for a few days if
-we'll hear about abother libwebp issue soon.
-
--- 
-Hanno Böck
-https://hboeck.de/
+Even if you were doing all the wrong things and running a yasm-as-a-service continually building untrusted source right alongside other processes as the same user, that contain all sorts of things you don’t want exposed, I still don’t see how this would be anything but a 0.0.
