@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["945" "Thursday" "25" "June" "2015" "07:09:35" "+0000" "Damien Regad" "dregad@mantisbt.org" "<loom.20150625T090750-338@post.gmane.org>" "33" "[oss-security] Re: CVE Request: Information disclosure in MantisBT" nil nil nil "6" "2015062507:09:35" "[oss-security] Re: CVE Request: Information disclosure in MantisBT" (number mark "U       dregad@manti Jun 25   33/945   " thread-indent "\"[oss-security] Re: CVE Request: Information disclosure in MantisBT\"\n") "<20150625024518.E36E5ABC026@smtpvmsrv1.mitre.org>" ("<mmfd21$39r$1@ger.gmane.org>" "<20150625024518.E36E5ABC026@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26484 invoked by uid 550); 25 Jun 2015 07:10:13 -0000
+Received: (qmail 19721 invoked by uid 550); 23 Jun 2023 11:22:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26464 invoked from network); 25 Jun 2015 07:10:13 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 18334 invoked from network); 23 Jun 2023 11:22:31 -0000
+Date: Fri, 23 Jun 2023 13:22:17 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-From: Damien Regad <dregad@mantisbt.org>
-Date: Thu, 25 Jun 2015 07:09:35 +0000 (UTC)
-Message-ID: <loom.20150625T090750-338@post.gmane.org>
-References: <mmfd21$39r$1@ger.gmane.org> <20150625024518.E36E5ABC026@smtpvmsrv1.mitre.org>
+Cc: Jyoti Raval <jenyraval@gmail.com>
+Message-ID: <20230623112217.GA6878@openwall.com>
+References: <CANo=s0ZesZj2nzHGxeG4CEjcB+dAxBF8pMDWB_mAMvgSm_gnSA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 193.134.187.35 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0)
-Subject: [oss-security] Re: CVE Request: Information disclosure in MantisBT
+Content-Disposition: inline
+In-Reply-To: <CANo=s0ZesZj2nzHGxeG4CEjcB+dAxBF8pMDWB_mAMvgSm_gnSA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Open Source Tool | MPT: Pentest In Action!
 
- <cve-assign@...> writes:
+Hi,
 
-> Use CVE-2015-5059 for the issue in which $g_view_proj_doc_threshold
-> had been ANYBODY but is supposed to be VIEWER.
+For those wondering why this got through moderation, it's because we do
+have a relevant item among the list content guidelines:
 
-Thanks for the CVE. 
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-> Is there any related security problem caused by this possible
-> inconsistency in the code:
-> 
->   define( 'ANYBODY', 0 );
-> 
->   function access_get_global_level
-> 
->           if( empty( $p_user_id ) && !auth_is_user_authenticated() ) {
->                   return false;
-> 
->   function access_get_project_level
-> 
->           if( empty( $p_user_id ) && !auth_is_user_authenticated() ) {
->                   return ANYBODY;
-> 
-> ? In other words, is an unauthenticated client sometimes, but not always,
-> considered to have the ANYBODY access level?
+"Occasional announcements of Open Source security tools (and relevant
+features of non-security tools) are acceptable, but only for initial
+announcements and major updates (not for minor updates).  Especially
+desirable are news on tools/features aimed to enhance security of other
+Open Source software."
 
-Thanks for bringing this to my attention. At first glance it certainly looks
-like an inconsistency; I will review the code in detail to determine whether
-this is intentional or not, and will let you know.
+Unfortunately, this particular tool doesn't appear to be "aimed to
+enhance security of other Open Source software".
 
-Cheers
-Damien
+On Thu, Jun 22, 2023 at 06:05:14PM +0530, Jyoti Raval wrote:
+> Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
+> <https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
 
+This isn't a topic for oss-security.  But per the above, an Open Source
+security tool announced for the first time nevertheless is.
 
+> Github - https://github.com/jenyraval/MPT
+
+Also, security issues in an Open Source tool are on topic here.  Let's
+see what we have for this one:
+
+login.php:
+      $myusername = mysqli_real_escape_string($db,$_POST['username']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['password']);
+
+      $sql = "SELECT id FROM login WHERE username = '$myusername' and password = '$mypassword'";
+      $result = mysqli_query($db,$sql);
+
+No use of prepared statements, instead relying solely on escaping.
+Given that the specialized escaping function is used, this is supposed
+to work, but I think is a higher risk than prepared statements.  I'll
+spare this one from an OVE ID assignment, although I do think it's
+unjustified risk exposure.
+
+Plaintext password storage.  OVE-20230623-0001
+
+Password comparison potentially vulnerable to remote timing attack
+(depending on undocumented MySQL server internal workings, which isn't
+something to rely upon for security).  OVE-20230623-0002
+
+live_edit.php:
+$input = filter_input_array(INPUT_POST);
+if ($input['action'] == 'edit') {
+$update_field='';
+if(isset($input['status'])) {
+$update_field.= "status='".$input['status']."'";
+}
+if($update_field && $input['id']) {
+$sql_query = "UPDATE issuedetails SET $update_field WHERE id='" . $input['id'] . "'";
+mysqli_query($db, $sql_query) or die("database error:". mysqli_error($conn));
+
+(Yes, the lack of indentation is in the original.)
+
+Apparently, no escaping nor filtering is actually performed here, and
+also no use of prepared statements.  Likely (post-authentication?) SQL
+injection possibility.  OVE-20230623-0003
+
+Per PHP documentation, filter_input_array() "is useful for retrieving
+many values without repetitively calling filter_input()."  As optional
+second argument (missing here), it'd accept an actual filter.  The
+default is FILTER_DEFAULT, just like for filter_input(), the
+documentation for which says: "If omitted, FILTER_DEFAULT will be used,
+which is equivalent to FILTER_UNSAFE_RAW.  This will result in no
+filtering taking place by default."
+
+Should PHP possibly want to deprecate usage of filter_input() and
+filter_input_array() without a filter specified, as this provides a
+false sense of security?
+
+I could be missing something here - the above is based solely on my
+current reading of PHP documentation.
+
+Throughout the MPT codebase, data already in the database is trusted not
+to cause SQL injections nor XSS.  As I'm not seriously auditing this
+codebase, I did not check the data flow, but I suspect that no
+validation sufficient against both of these risks takes place on
+entering the data into the database.  Even if
+mysqli_real_escape_string() is used, which it appears to be in many
+places, this should only prevent SQL injection on the INSERT/UPDATE
+itself, but not on subsequent reusage of the string SELECT'ed back from
+the database in further SQL queries.  It also does not prevent XSS.
+Let's call this OVE-20230623-0004, although it could as well be two IDs.
+
+I think that's enough to turn the thread into something relevant here -
+especially the question on PHP's filter_input*() and its hardening.
+
+Alexander
