@@ -1,46 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/27/1
-Message-ID: <73b96607-5080-939c-d354-33da849d195d@oracle.com>
-Date: Thu, 27 Jul 2023 13:36:17 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/7
+Message-ID: <20230623113856.GA7102@openwall.com>
+Date: Fri, 23 Jun 2023 13:38:56 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-38633 in librsvg: Arbitrary file read when xinclude href has special characters
+Cc: Jyoti Raval <jenyraval@...il.com>
+Subject: Re: Open Source Tool | MPT: Pentest In Action!
 Content-Type: text/plain; charset=utf-8
 
-I haven't seen this go by yet, so for those who haven't seen it:
+I think I overlooked two things:
 
-https://gitlab.gnome.org/GNOME/librsvg/-/issues/996 reports:
+On Fri, Jun 23, 2023 at 01:22:17PM +0200, Solar Designer wrote:
+> On Thu, Jun 22, 2023 at 06:05:14PM +0530, Jyoti Raval wrote:
+> > Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
+> > <https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
+> 
+> This isn't a topic for oss-security.  But per the above, an Open Source
+> security tool announced for the first time nevertheless is.
 
-CVE-2023-38633: Arbitrary file read when xinclude href has special characters
+While the code is technically open source, for it to be on-topic here
+it'd have to be under an Open Source license - and there's no license
+currently specified in the GitHub repo.  Jyoti, please fix this.
 
-This was reported by Zac Sims.
+> > Github - https://github.com/jenyraval/MPT
 
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="300" height="300" xmlns:xi="http://www.w3.org/2001/XInclude">
-   <rect width="300" height="300" style="fill:rgb(255,255,255);" />
-   <text x="10" y="100">
-     <xi:include href=".?../../../../../../../../../../etc/passwd" parse="text" 
-encoding="UTF-8">
-       <xi:fallback>file not found</xi:fallback>
-     </xi:include>
-   </text>
-</svg>
+> live_edit.php:
+> $input = filter_input_array(INPUT_POST);
+> if ($input['action'] == 'edit') {
+> $update_field='';
+> if(isset($input['status'])) {
+> $update_field.= "status='".$input['status']."'";
+> }
+> if($update_field && $input['id']) {
+> $sql_query = "UPDATE issuedetails SET $update_field WHERE id='" . $input['id'] . "'";
+> mysqli_query($db, $sql_query) or die("database error:". mysqli_error($conn));
+> 
+> (Yes, the lack of indentation is in the original.)
+> 
+> Apparently, no escaping nor filtering is actually performed here, and
+> also no use of prepared statements.  Likely (post-authentication?) SQL
+> injection possibility.  OVE-20230623-0003
 
-This ends up actually including the contents of /etc/passwd, bypassing the 
-checks in UrlResolver::resolve_href().
+Actually, this looks pre-authentication.  Most of this project's PHP
+files include session.php, which attempts an authentication check, but
+live_edit.php does not include it.
 
-The above linked bug report provides further analysis and links to merge 
-requests for the fixes.   Fixes have been published in new releases of
-librsvg for many release trains:
-
-     2.56.3
-     2.55.3
-     2.54.6
-     2.52.10
-     2.50.8
-     2.48.11
-     2.46.6
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Alexander
