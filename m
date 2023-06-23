@@ -1,33 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/4
-Message-ID: <20230510170709.GA26773@openwall.com>
-Date: Wed, 10 May 2023 19:07:10 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/3
+Message-ID: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com>
+Date: Fri, 23 Jun 2023 11:34:28 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Tobias Holl <tobias@...ll.xyz>
-Subject: Re: Linux kernel io_uring out-of-bounds access to physical memory
+Subject: Opinion: Governments don't want IT security, they want to have cyber weapons
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 08, 2023 at 04:01:59PM +0200, Tobias Holl wrote:
-> TL;DR bug reproduction steps:
->  1. Create a memfd
->  2. fallocate a single page in that file descriptor
->  3. Use MAP_FIXED to map this page repeatedly, in consecutive locations
->  4. Register the entire region that you just filled up with that page as
->     a fixed buffer with IORING_REGISTER_BUFFERS
->  5. Use IORING_OP_WRITE_FIXED to write the buffer to some other file
->     (OOB read) or IORING_OP_READ_FIXED to read data into the buffer (OOB
->     write).
-> 
-> Of course, from there, we can simply find any interesting object in
-> physical memory and start overwriting function pointers to get code
-> execution and escalate privileges. A full proof-of-concept exploit with
-> a bit more robustness can be found at
->   https://tholl.xyz/static/bugs/2023-io_uring-fixed-buffers/exploit.c
+Some time ago i posted this on my blog [1] and on linkedin [2]
 
-I initially overlooked that the exploit was only shared by reference.
-Let's have it right in here for archival.  Attached.
+What the security community thinks about it?
 
-Alexander
+Inline:
 
-View attachment "exploit.c" of type "text/x-c" (25512 bytes)
+Tue Aug 17 14:35:14 EEST 2021
+Opinion: Governments don't want IT security, they want to have cyber weapons
+
+
+Support for the above claim:
+
+    In 2015 exploits of NSA were leaked by Shadow crew. Search terms:
+nsa leak shadow crew. E.g. see NSA Hacked? 'Shadow Brokers' Crew
+Claims Compromise Of Surveillance Op
+    From 2015 search terms "hacking team" leak, E.g. Hacking Team Leak
+Shows How Secretive Zero-Day Exploit Sales Work
+
+    It provides both the exploits and RCS to government intelligence
+and law enforcement agencies around the world, and has come under
+attack for selling to repressive regimes, who've used them to target
+political activists and dissidents. But more interesting than the fact
+that the company possessed zero days---this was already known---is the
+correspondence around how Hacking Team acquired these valuable tools,
+prized equally by criminal hackers and government intelligence
+agencies.
+
+    From 2021: Search terms pegasus spying scandal. The allegations
+that spy software known as Pegasus may have been used to carry out
+surveillance on journalists, activists - and even perhaps political
+leaders - highlights that surveillance is now for sale.
+
+If governments wanted security, they would report the bugs to the vendors.
+
+Like in traditional warfare, cyber warfare requires weapons. It is
+very hard to construct physical nuclear bomb, but to construct cyber
+nuclear bomb requires just skills and zero budget. Some drunk skilled
+kid may do a lot of damage in the real world.
+
+Who watches the watchers?
+
+
+[1]:  https://j.ludost.net/blog/archives/2021/08/17/opinion_governments_dont_want_it_security_they_want_to_have_cyber_weapons/index.html
+[2] https://www.linkedin.com/pulse/opinion-governments-dont-want-security-have-cyber-weapons-guninski
+
+-- 
+guninski https://j.ludost.net/resumegg.pdf
