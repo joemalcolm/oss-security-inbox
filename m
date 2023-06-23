@@ -1,57 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/9
-Message-ID:  <YT2PR01MB9827F9C7112CAAF0FFFC320CE8CAA@YT2PR01MB9827.CANPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 5 Oct 2023 15:59:57 +0000
-From: Katherine Mcmillan <kmcmi046@...tawa.ca>
-To: "dwheeler@...eeler.com" <dwheeler@...eeler.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: European Union Cyber Resilience Act (CRA)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/6
+Message-ID: <20230623112217.GA6878@openwall.com>
+Date: Fri, 23 Jun 2023 13:22:17 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Jyoti Raval <jenyraval@...il.com>
+Subject: Re: Open Source Tool | MPT: Pentest In Action!
 Content-Type: text/plain; charset=utf-8
 
-"However, when evaluating laws & regulations you should always IGNORE their goals, because their goals are IRRELEVANT. What matters is what the laws and regulations will actually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for evaluating laws and regulations. In this case, I think too many regulators are focused on theoretical goals while ignoring what will actually happen."
+Hi,
 
-Wisely said, David.
+For those wondering why this got through moderation, it's because we do
+have a relevant item among the list content guidelines:
 
-Full disclosure, I work for the Linux/Unix Management Directorate for the Government of Canada and this is something we, of course, also have our eyes on.
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Sincerely,
-Katie
-________________________________
-From: David A. Wheeler <dwheeler@...eeler.com>
-Sent: 05 October 2023 11:08
-To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
-Subject: [oss-security] European Union Cyber Resilience Act (CRA)
+"Occasional announcements of Open Source security tools (and relevant
+features of non-security tools) are acceptable, but only for initial
+announcements and major updates (not for minor updates).  Especially
+desirable are news on tools/features aimed to enhance security of other
+Open Source software."
 
-Attention : courriel externe | external email
+Unfortunately, this particular tool doesn't appear to be "aimed to
+enhance security of other Open Source software".
 
-Solar Designed posted on October 1, 2023:
-> The talk... starts with a mention of the European Union Cyber Resiliance Act (CRA)
-> and how it is problematic for Open Source...
-> (If we want to discuss in here, which I'm not sure of, please start a
-> separate thread for this sub-topic, do not just reply to this one.)
+On Thu, Jun 22, 2023 at 06:05:14PM +0530, Jyoti Raval wrote:
+> Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
+> <https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
 
-Fair enough. The CRA *definitely* impacts open source software,
-and it includes security-related requirements. So it seems on-topic for this mailing list, at
-least to note that *many* people find the CRA concerning & to point to more information.
+This isn't a topic for oss-security.  But per the above, an Open Source
+security tool announced for the first time nevertheless is.
 
-I think a good place to start is "Understanding the Cyber Resilience Act:
-What Everyone involved in Open Source Development Should Know" from the Linux Foundation:
-https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
+> Github - https://github.com/jenyraval/MPT
 
-As currently written, individual developers of OSS are "probably excluded by the CRA requirements, even if you occasionally accept donations. But if you regularly charge or accept recurring donations from commercial entities (for example, if you do open source consulting), you’ll likely be covered by the CRA."
-The bigger problem is that nonprofits & private companies are expected to a lot of things that don't make much sense. As noted, "the assumptions the CRA makes about software manufacturers do not necessarily hold for open source software developers."
+Also, security issues in an Open Source tool are on topic here.  Let's
+see what we have for this one:
 
-The Linux Foundation EU has a page about the CRA:
-https://linuxfoundation.eu/cyber-resilience-act
-... it has many links, and is urging people work to #FixTheCRA.
+login.php:
+      $myusername = mysqli_real_escape_string($db,$_POST['username']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['password']);
 
-Many organizations *have* been trying to get EU regulators to fix the CRA. This isn't a case where no one spoke up. The problem is that for the most part their concerns have been ignored by regulators:
-https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Eclipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
+      $sql = "SELECT id FROM login WHERE username = '$myusername' and password = '$mypassword'";
+      $result = mysqli_query($db,$sql);
 
-I think the overall *goals* of the CRA are laudable. However, when evaluating laws & regulations you should always IGNORE their goals, because their goals are IRRELEVANT. What matters is what the laws and regulations will actually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for evaluating laws and regulations. In this case, I think too many regulators are focused on theoretical goals while ignoring what will actually happen.
+No use of prepared statements, instead relying solely on escaping.
+Given that the specialized escaping function is used, this is supposed
+to work, but I think is a higher risk than prepared statements.  I'll
+spare this one from an OVE ID assignment, although I do think it's
+unjustified risk exposure.
 
-Full disclosure: I work for the Linux Foundation, but I'm just speaking for myself here.
+Plaintext password storage.  OVE-20230623-0001
 
---- David A. Wheeler
+Password comparison potentially vulnerable to remote timing attack
+(depending on undocumented MySQL server internal workings, which isn't
+something to rely upon for security).  OVE-20230623-0002
 
+live_edit.php:
+$input = filter_input_array(INPUT_POST);
+if ($input['action'] == 'edit') {
+$update_field='';
+if(isset($input['status'])) {
+$update_field.= "status='".$input['status']."'";
+}
+if($update_field && $input['id']) {
+$sql_query = "UPDATE issuedetails SET $update_field WHERE id='" . $input['id'] . "'";
+mysqli_query($db, $sql_query) or die("database error:". mysqli_error($conn));
 
+(Yes, the lack of indentation is in the original.)
+
+Apparently, no escaping nor filtering is actually performed here, and
+also no use of prepared statements.  Likely (post-authentication?) SQL
+injection possibility.  OVE-20230623-0003
+
+Per PHP documentation, filter_input_array() "is useful for retrieving
+many values without repetitively calling filter_input()."  As optional
+second argument (missing here), it'd accept an actual filter.  The
+default is FILTER_DEFAULT, just like for filter_input(), the
+documentation for which says: "If omitted, FILTER_DEFAULT will be used,
+which is equivalent to FILTER_UNSAFE_RAW.  This will result in no
+filtering taking place by default."
+
+Should PHP possibly want to deprecate usage of filter_input() and
+filter_input_array() without a filter specified, as this provides a
+false sense of security?
+
+I could be missing something here - the above is based solely on my
+current reading of PHP documentation.
+
+Throughout the MPT codebase, data already in the database is trusted not
+to cause SQL injections nor XSS.  As I'm not seriously auditing this
+codebase, I did not check the data flow, but I suspect that no
+validation sufficient against both of these risks takes place on
+entering the data into the database.  Even if
+mysqli_real_escape_string() is used, which it appears to be in many
+places, this should only prevent SQL injection on the INSERT/UPDATE
+itself, but not on subsequent reusage of the string SELECT'ed back from
+the database in further SQL queries.  It also does not prevent XSS.
+Let's call this OVE-20230623-0004, although it could as well be two IDs.
+
+I think that's enough to turn the thread into something relevant here -
+especially the question on PHP's filter_input*() and its hardening.
+
+Alexander
