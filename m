@@ -1,85 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/4
-Message-ID: <25sspro4-64s5-1141-22s6-p27o7pn929@unkk.fr>
-Date: Mon, 20 Mar 2023 08:26:12 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-27536: GSS delegation too eager connection re-use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/8
+Message-ID: <CAAHN_R2F99BmuwkLMiL8MFeuoB0UxdvVxLaRxXP3z2nebY_B=g@mail.gmail.com>
+Date: Fri, 23 Jun 2023 07:29:40 -0400
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-27536: GSS delegation too eager connection re-use
-==========================================================
+On Fri, Jun 23, 2023 at 2:40 AM Smith, Stewart <trawets@...zon.com> wrote:
+> I don’t think you are, I can’t see anything here either.
+>
+> Even if you were doing all the wrong things and running a yasm-as-a-service continually building untrusted source right alongside other processes as the same user, that contain all sorts of things you don’t want exposed, I still don’t see how this would be anything but a 0.0.
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27536.html)
+I know you probably only said that for effect but if someone is
+running a compiler-as-a-service building untrusted source but hasn't
+sandboxed it, the security issue is in the setup, not the compiler.
+Compilers for the most part have to assume trusted input because not
+doing so is a practical nightmare.  The golang project is the only one
+I know that accepts CVEs for untrusted input to the compiler (more
+power to them, and commiserations to the ecosystem that has to
+continuously respin everything to appease the CVE bots) while all
+other projects, implicitly or otherwise, reject the notion that you
+can just throw them on the internet and assume everything will be OK.
 
-VULNERABILITY
--------------
-
-libcurl would reuse a previously created connection even when the GSS
-delegation (`CURLOPT_GSSAPI_DELEGATION`) option had been changed that could
-have changed the user's permissions in a second transfer.
-
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse if one of them matches the setup. However, this GSS
-delegation setting was left out from the configuration match checks, making
-them match too easily, affecting krb5/kerberos/negotiate/GSSAPI transfers.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-CVE-2023-27536 was introduced in [commit
-ebf42c4be76df4](https://github.com/curl/curl/commit/ebf42c4be76df4), shipped
-in curl 7.22.0.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.22.0 to and including 7.88.1
-- Not affected versions: curl < 7.22.0 and curl >= 8.0.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2023-27536](https://github.com/curl/curl/commit/cb49e67303dba)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.0.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use the `CURLOPT_GSSAPI_DELEGATION` option
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 7, 2023. We contacted
-distros@...nwall on March 13, 2023.
-
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
+Sid
 -- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+https://gotplt.org
