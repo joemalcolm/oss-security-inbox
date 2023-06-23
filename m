@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2424" "Monday" "3" "June" "2019" "22:19:23" "+0200" "Heiko Schlittermann" "hs@schlittermann.de" "<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>" "70" "[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil "6" "2019060320:19:23" "[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" (number mark "U       hs@schlitter Jun  3   70/2424  " thread-indent "\"[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1719 invoked by uid 550); 4 Jun 2019 09:40:13 -0000
+Received: (qmail 27943 invoked by uid 550); 23 Jun 2023 07:02:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11720 invoked from network); 3 Jun 2019 20:19:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
-	bh=2lclSOjUQl2rNlQ4Oeyr8LFQNTl1OC1pC3FlG8xUvbU=; b=R5eTEkqD/uOcWHYMqFh0X5oibr
-	0nffzmBSu8tVjsRysI6R5Ou+O+1SsyvrsUhtfUvOTWzHhPRJCDuKK2UuxdLUMqEDhkdPZHFJD+mtf
-	/m3AKYgkX+wUe+LQ8hnBO1Trlqa3eQMDrJwmK83Nwo9Exx7oSNmudEAy6ryq5fjauVX0=;
-Date: Mon, 3 Jun 2019 22:19:23 +0200
-From: Heiko Schlittermann <hs@schlittermann.de>
+Received: (qmail 27916 invoked from network); 23 Jun 2023 07:02:05 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3e; t=1687503713; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to; bh=S7Xy6GN79KoK9D/1yYHyMoEBqUgm6oRrktGiT6DYhDE=;
+	b=ah05EUBBSAVi/m+TjIwdDLOI1nDcgS4q6K2OgftB0wsWOFGmY07m8XlPnWh1cAijgAdleo
+	2AxafAEit0DqCvAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1687503713; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to; bh=S7Xy6GN79KoK9D/1yYHyMoEBqUgm6oRrktGiT6DYhDE=;
+	b=GrrzQYR2tMSCqNXlUcjV+IRut4LpyblUXYvDIgDf244HUf3WKJXSiMnYxfQPzWTm1E33De
+	LmkWhNJOlqBs2K+d84TZaJ3QwNwhh00VP0WZOqgDLBL961N8BgDKVBIquxueT6MJzTW0/a
+	v+TOEAp5/TMl/BXHu9VbI0oYA8sCoAiahM0IAm372m4Dl18GgXdHnEDh8tXOS1fSz02THz
+	JfE6wB19t4YmApdqCT7kqUMvgYjhBu8A/fe1AGhktnFrsMX2+2vNPHXisV8PoKy1fyZ7Ib
+	V3UIql5YANtoIPmw5cHhQkxiF52kwKEXEA1tKs4LP/9lm3H7HOzIwT0UQyL3Iw==
+Date: Fri, 23 Jun 2023 08:01:53 +0100
+From: Stuart Henderson <stu@spacehopper.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
+Message-ID: <ZJVDYZd5Q_cGtMcL@symphytum.spacehopper.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="y6v6vtkvoi6qfk2h"
-Content-Disposition: inline
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
-
---y6v6vtkvoi6qfk2h
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <72BCBA86-4192-47C9-ACA7-5F1A39994104@amazon.com>
+ <CAH8yC8njh+1Q2QHvkN2pwAFWsL+v1HdxFYZYBDjk9h9qZHUcfA@mail.gmail.com>
+Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
-CVE-2019-10149 Exim 4.87 to 4.91
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
+On 2023/06/23 01:20, Smith, Stewart wrote:
+> Even if you were doing all the wrong things and running a yasm-as-a-service continually building untrusted source right alongside other processes as the same user, that contain all sorts of things you don’t want exposed, I still don’t see how this would be anything but a 0.0.
 
-We received a report of a possible remote exploit.  Currently there is no
-evidenice of an active use of this exploit.
+Some are conflating "doesn't work how we want with our tools to find
+leaks and vulnerabilities without extra work" with a vulnerability itself.
 
-A patch exists already, is being tested, and backported to all
-versions we released since (and including) 4.87.
-
-The severity depends on your configuration.  It depends on how close to
-the standard configuration your Exim runtime configuration is. The
-closer the better.
-
-Exim 4.92 is not vulnerable.
-
-Next steps:
-
-* t0:    Distros will get access to our non-public security Git repo
-         (access is granted based on the SSH keys that are known to us)
-
-* t0+7d: Coordinated Release Date: Distros should push the patched
-         version to their repos. The Exim maintainers will publish
-         the fixed source to the official and public Git repo.
-
-t0    is expected to be 2019-06-04, 10:00 UTC
-t0+7d is expected to be 2019-06-04, 10:00 UTC
+Still, this is just how the CVE system works, it's not imho really
+useful as anything more than a ticket system tracking id to tie
+together information about a particular thing which may/may not be
+an actual problem (and possibly less useful than that).
 
 
-Timeline
---------
+On 2023/06/21 22:11, Jeffrey Walton wrote:
+> Just ask the OpenJDK developers who had to contend with the OpenSSL
+> memory leaks that exhausted all memory on Android devices. The
 
-* 2019-05-27 Report from Qualys to exim-security list
-* 2019-05-27 Patch provided by Jeremy Harris
-* 2019-05-29 CVE-2019-10149 assigned from Qualys via RedHat
-* 2019-06-03 This announcement
+not GNU
 
-Updates will follow, here and on
-http://www.exim.org/static/doc/security/CVE-2019-10149.txt
+> Another offender from GNU is ncurses. It leaks like a sieve, too.
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+also not GNU
 
---y6v6vtkvoi6qfk2h
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlz1gMoACgkQr0zGdqa2
-wUL1kggA2GotUsi/TJQ4MF60Q5Dj4oYs9kNpKSCsOhhqAhI3Bq29sOGVUqT/3qSK
-6GBTxT0pCrfnQc2TCq9pIH5gGcmOMxBQcQ1shV3qdg5699J25Yxo2PheSZr/pJRw
-2PQTqCXO7pG7jWJp7FngKxt2/Fzy6dAjjBWR8iUnjcVmbQaURQs3jGBFBvdwEWFs
-M/gt7hTcAosJ2XiSpUwsSMslaWOg1rNm0Lw8vH2qj0qLuSW2BrZVQ1f29xFKFpdb
-qPignYqsVYmP5zd+joDo2pr1ujHdL721V/lLsyDsSwYovz8ixN1xJn/454A35Ss7
-suwju/QuIzlJ6jQj21P596GOdUJPfA==
-=fB8/
------END PGP SIGNATURE-----
-
---y6v6vtkvoi6qfk2h--
