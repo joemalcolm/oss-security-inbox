@@ -1,90 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/7
-Message-ID: <ZFvuu+PpS3BO2T/t@quatroqueijos.cascardo.eti.br>
-Date: Wed, 10 May 2023 16:21:31 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/4
+Message-ID: <20230623121412.25fbf45a.hanno@hboeck.de>
+Date: Fri, 23 Jun 2023 12:14:12 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>, ceo@...-en-ming-corp.com, Piotr Krysiuk <piotras@...il.com>
-Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 10, 2023 at 06:55:46PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> On Wed, May 10, 2023 at 11:52:58PM +0800, Turritopsis Dohrnii Teo En Ming wrote:
-> > I have just come across this article. Thought of sharing it.
-> > 
-> > Article: New Linux kernel NetFilter flaw gives attackers root privileges
-> > Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
-> 
-> We don't normally want in here links to news articles on something that
-> was already brought up in here in more detail.  However, as a moderator,
-> I reluctantly approved this posting so that we can use the resulting
-> thread to discuss whether this issue got blown out of proportion and if
-> so what we can do to avoid that going forward.  Here's the original
-> posting this refers to:
-> 
-> https://www.openwall.com/lists/oss-security/2023/05/08/4
-> 
-> Another Linux kernel issue, in io_uring subsystem, was also disclosed in
-> here on the same day, but I think didn't gain such tech media attention:
-> 
-> https://www.openwall.com/lists/oss-security/2023/05/08/3
-> 
-> Is the netfilter issue really worse than the io_uring issue?  I doubt
-> it.  So _maybe_ it was something in the wording that tripped someone
-> writing for one of those tech news websites, then others picked it up?
-> 
-> Piotr's posting about the netfilter issue mentions intent to disclose an
-> exploit later (like it should have, thank you Piotr!)
-> 
-> Tobias' posting directly links to an exploit (which is also fine).
-> 
-> Is intent to disclose an exploit later more newsworthy than having done
-> so right away?  I doubt it.
-> 
-> So maybe it's just random, and there's nothing to see here, after all.
-> 
-> Now as to the actual issue and its description, I think we should
-> clarify what exactly is meant by "unprivileged local users."  Piotr, I
-> guess you actually meant not literally unprivileged, but users with
-> CAP_NET_ADMIN, which can be had via unprivileged user/net namespaces if
-> enabled in the distro / on the system, or when already in a container
-> with such capability granted to container root.  Correct?  I think going
-> forward we should always make this clear right away.  Here's a former
-> netfilter core team leader also bringing this up:
-> 
-> https://twitter.com/LaF0rge/status/1655867494152667140
-> 
-> LaForge - @LaF0rge@...os.social @LaF0rge:
-> > Really curious to see how CVS-223-32233 for #linux #netfilter nf_tables
-> > https://seclists.org/oss-sec/2023/q2/133 can be exploted fom
-> > "unprivileged local users".  AFAICT, nf_tables_api  goes through
-> > nfnetlink, and nfnetlink_rcv() checks for CAP_NET_ADMIN way  before the
-> > code in nf_tables_api.
-> 
-> and a reply:
-> 
-> Alex Plaskett @alexjplaskett:
-> > Didn't look in depth at this one but you can trigger nf_tables_api
-> > operations from a user / network namespace and distros such as Ubuntu
-> > have unpriv user namespaces enabled.
+On Tue, 20 Jun 2023 15:47:28 -0700
+Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
 
-If users don't need user namespaces, they can disable it on Ubuntu kernels as a
-mitigation by doing:
+> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out
+> scanners since it claims this bug has a CVSS of 9.8.
 
-sysctl -w kernel.unprivileged_userns_clone=0
+The problem really is that these scanners are assuming something that
+is not true. They assume that data from vulnerability databases is
+reliable.
 
-Or persisting the option by adding a .conf file at /etc/sysctl.d/ with the
-following line:
+These debates are coming on a regular basis, usually either "should
+this thing get a CVE?" and "is this a reasonable CVSS value /
+criticality rating?"
 
-kernel.unprivileged_userns_clone=0
+It's actually quite simple: There are dozends (maybe hundreds?) of CVEs
+issued every day. If you want them to be properly vetted, you'd need to
+have a massive team of security professionals doing that vetting. No
+such team exists, so the only plausible assumption is that CVE and CVSS
+data is by default unreliable.
 
-Cascardo.
+If your scanner sounds an alarm because someone added a high CVSS
+rating to a CVE entry, you should assume that the people creating that
+scanner don't know what they are doing.
 
-> 
-> As expected.  Now, from a typical distro user's standpoint,
-> "unprivileged local users" may be just right.  However, not all distros
-> have unprivileged user namespaces enabled by default.
-> 
-> Alexander
+-- 
+Hanno Böck
+https://hboeck.de/
