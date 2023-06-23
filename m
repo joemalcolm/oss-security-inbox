@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/3
-Message-ID: <ZRqLs+ZoggKAcxBx@jumper.schlittermann.de>
-Date: Mon, 2 Oct 2023 11:21:55 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/10
+Message-ID: <20230623150242.GA10337@openwall.com>
+Date: Fri, 23 Jun 2023 17:02:42 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim4 MTA CVEs assigned from ZDI
+Cc: Zdenek Dohnal <zdohnal@...hat.com>
+Subject: Re: CVE-2023-34241: CUPS: use-after-free in cupsdAcceptClient()
 Content-Type: text/plain; charset=utf-8
 
-We go public with the available fixes (addressing a subset of
-the issues) on Monday, Oct 2nd, 12:00 UTC.
+On Thu, Jun 22, 2023 at 12:02:39PM +0200, Zdenek Dohnal wrote:
+> there is currently the embargoed CVE-2023-34241 in CUPS project:
 
-The distribution points will be:
+Of course, this wasn't actually embargoed anymore at that time - Zdenek
+simply resent the exact same message he had sent to the distros list on
+June 13, when the issue was in fact still embargoed.
 
-- git://git.exim.org
-  branches:
-  - spa-auth-fixes (based on the current master)
-  - exim-4.96+security (based on exim-4.96) 
-  - exim-4.96.1+fixes (based on exim-4.96.1 with the fixes from exim-4.96+fixes)
-  tags:
-  - exim-4.96.1
+Similarly, the previous CUPS vulnerability disclosure on June 1 was a
+copy of the distros message from May 23:
 
-- tarballs for exim-4.96.1: https://ftp.exim.org/pub/exim/exim4/
+https://www.openwall.com/lists/oss-security/2023/06/01/1
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+Let's be updating these when posting them publicly going forward to
+avoid confusion - like "was this published inadvertently when still
+under embargo?" (luckily, no).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Alexander
