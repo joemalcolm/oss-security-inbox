@@ -1,44 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/13/3
-Message-ID: <c41da935-496d-6d34-8514-ef001a6941d1@apache.org>
-Date: Wed, 13 Sep 2023 20:06:05 +0000
-From: "Gary D. Gregory" <ggregory@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-42503: Apache Commons Compress: Denial of service via CPU consumption for malformed TAR file 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/24/1
+Message-ID: <20230624062900.7nu5keinnfducn22@jwilk.net>
+Date: Sat, 24 Jun 2023 08:29:00 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2023-31975: memory leak in yasm
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+* Stuart Henderson <stu@...cehopper.org>, 2023-06-23 08:01:
+>>Another offender from GNU is ncurses. It leaks like a sieve, too.
+>also not GNU
 
-Affected versions:
+ncurses is a GNU package:
+https://www.gnu.org/manual/blurbs.html#ncurses
 
-- Apache Commons Compress 1.22 before 1.24.0
-
-Description:
-
-Improper Input Validation, Uncontrolled Resource Consumption vulnerability in Apache Commons Compress in TAR parsing.This issue affects Apache Commons Compress: from 1.22 before 1.24.0.
-
-Users are recommended to upgrade to version 1.24.0, which fixes the issue.
-
-A third party can create a malformed TAR file by manipulating file modification times headers, which when parsed with Apache Commons Compress, will cause a denial of service issue via CPU consumption.
-
-In version 1.22 of Apache Commons Compress, support was added for file modification times with higher precision (issue # COMPRESS-612 [1]). The format for the PAX extended headers carrying this data consists of two numbers separated by a period [2], indicating seconds and subsecond precision (for example “1647221103.5998539”). The impacted fields are “atime”, “ctime”, “mtime” and “LIBARCHIVE.creationtime”. No input validation is performed prior to the parsing of header values.
-
-Parsing of these numbers uses the BigDecimal [3] class from the JDK which has a publicly known algorithmic complexity issue when doing operations on large numbers, causing denial of service (see issue # JDK-6560193 [4]). A third party can manipulate file time headers in a TAR file by placing a number with a very long fraction (300,000 digits) or a number with exponent notation (such as “9e9999999”) within a file modification time header, and the parsing of files with these headers will take hours instead of seconds, leading to a denial of service via exhaustion of CPU resources. This issue is similar to CVE-2012-2098 [5].
-
-[1]:  https://issues.apache.org/jira/browse/COMPRESS-612 
-[2]:  https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13_05 
-[3]:  https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html 
-[4]:  https://bugs.openjdk.org/browse/JDK-6560193 
-[5]:  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2098 
-
-Only applications using CompressorStreamFactory class (with auto-detection of file types), TarArchiveInputStream and TarFile classes to parse TAR files are impacted. Since this code was introduced in v1.22, only that version and later versions are impacted.
-
-Credit:
-
-Yakov Shafranovich, Amazon Web Services (reporter)
-
-References:
-
-https://commons.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-42503
-
+-- 
+Jakub Wilk
