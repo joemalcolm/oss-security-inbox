@@ -1,46 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/19/2
-Message-ID:  <DS7PR10MB53580D81F624AC15BEBBC39AFDFAA@DS7PR10MB5358.namprd10.prod.outlook.com>
-Date: Tue, 19 Sep 2023 14:46:35 +0000
-From: Casper Dik <casper.dik@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Steve Thompson <susurrus.of.qualia@...il.com>
-Subject: RE: [External] : Possible AMD Zen2 CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/24/2
+Message-ID: <L14GKS6NenAaizYfAL1_wfSb0GYF9nnxQCUc5bB29pkHaIKrtWCn4qtCAXr8sxuo1GOtG2yiH2zsHOV7iSizWFi8yaEt6O0mGfTh02j2xU4=@proton.me>
+Date: Sat, 24 Jun 2023 11:23:18 +0000
+From: cbf0001@...ton.me
+To: oss-security@...ts.openwall.com
+Subject: Re: Opinion: Governments don't want IT security, they want to have cyber weapons
 Content-Type: text/plain; charset=utf-8
 
-I think you've run into an issue with gcc.
+I agree with Solar and David, please stop lowering the bar with content that is not relevant to the distro subscribers.
 
-It does not always honor the order and it I have seen issues
-where I was not able to get gcc to properly order the code unless
-I was using some trick.  That particular trick, a smidgen of volatile
-casts did not work.
+Warm regards,
+Cbf Primmo
 
-The code in question:
+On Fri, Jun 23, 2023 at 21:37, David A. Wheeler <[dwheeler@...eeler.com](mailto:On Fri, Jun 23, 2023 at 21:37, David A. Wheeler <<a href=)> wrote:
 
-#if defined BROKEN
-      temp = ++obj.value;
-#else
-      ++obj.value;
-#endif
-      t1lock_release(&obj.lock);
-
-In the "good" binary the "incw" of the obj.lock is after the "incq" of obj.value;
-but in the "bad" binary you see the instructions correctly, incw before incq.
-
-I had the problem with an Intel system running Solaris (hence  different
-assembly output):
-
-good:
-     wr_thread+0xe7:         48 ff 05 8a 09 10  incq   +0x10098a(%rip)   <obj+0x8>
-                            00 
-    wr_thread+0xee:         66 ff 05 7b 09 10  incw   +0x10097b(%rip)   <obj>
-                            00 
-
-bad:
-    wr_thread+0xee:         66 ff 05 8b 09 10  incw   +0x10098b(%rip)   <obj>
-                            00 
-    wr_thread+0xf5:         48 ff c0           incq   %rax
-    wr_thread+0xf8:         48 89 05 89 09 10  movq   %rax,+0x100989(%rip)      <obj+0x8>
-                            00 
-    wr_thread+0xff:         48 89 05 9a 09 10  movq   %rax,+0x10099a(%rip) 
-     
-Casper
+>> On Jun 23, 2023, at 6:28 AM, Solar Designer <solar@...nwall.com> wrote:
+>> I actually think we should be rejecting postings like this. I accepted
+>> this one as an example. By "postings like this" I mean rants without
+>> proposed solutions, not helpful for this community (and where replies
+>> are unlikely to be helpful either), and/or lacking focus on Open Source.
+>> I think in this case it's all 3 of these.
+>
+> I agree with you. I'd prefer if this (and ALL mailing lists) tried to stay on-topic. Currently that's
+> "Discussion of security flaws, concepts, and practices in the Open Source community".
+>
+>> I think the recent thread
+>> "The AI chatgpt writes insecure code" was of similarly questionable
+>> value for this list's subscribers.
+>
+> I think the *first* post that "AI systems (including LLMs)
+> often generate insecure code" was plausibly on-topic.
+> Now that it's happened, we don't need any more such posts.
+>
+> If someone has a solution, with evidence that it *works* and can be used in OSS,
+> that would be relevant (and possibly interesting).
+>
+> Regarding your comment:
+>
+>> I think most governments do want IT security. Some also want "cyber
+>> weapons", which is partially contradictory, but that's how it is:
+>> https://en.wikipedia.org/wiki/NOBUS
+>
+> Since we're on this topic, my understanding of US policy (at least at one time) was that
+> it's considered a trade-off, so what will be done is decided on a case-by-case basis by the "VEP process":
+> "The Vulnerabilities Equities Process (VEP) balances whether to disseminate vulnerability information to the vendor/supplier in the expectation that it will be patched, or to temporarily restrict the knowledge of the vulnerability to the USG, and potentially other partners, so that it can be used for national security and law enforcement purposes, such as intelligence collection, military operations, and/or counterintelligence."
+> https://trumpwhitehouse.archives.gov/sites/whitehouse.gov/files/images/External%20-%20Unclassified%20VEP%20Charter%20FINAL.PDF
+> That's a little old, and I don't know if the policy has been changed, but that's an official page from the US archives.
+>
+> I have opinions about this policy, generally negative, but I think that discussion is outside the scope of this mailing list so I'l stop there.
+>
+> So having discussed this, I look forward to more messages focused on the topics of this mailing list :-).
+>
+> --- David A. Wheeler
