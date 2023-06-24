@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7843" "Thursday" "20" "September" "2018" "02:01:10" "+0200" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<4bd9dcef-f7d6-d266-6c05-b9749fa8ae31@x41-dsec.de>" "244" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple Vulnerabilities in mgetty" nil nil nil "9" "2018092000:01:10" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple Vulnerabilities in mgetty" (number mark "U       advisories@x Sep 20  244/7843  " thread-indent "\"[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple Vulnerabilities in mgetty\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24015 invoked by uid 550); 20 Sep 2018 05:50:01 -0000
+Received: (qmail 23979 invoked by uid 550); 24 Jun 2023 06:29:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,262 +7,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23729 invoked from network); 20 Sep 2018 00:01:44 -0000
-From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
-To: bugtraq@securityfocus.com, fulldisclosure@seclists.org,
- oss-security@lists.openwall.com
-Message-ID: <4bd9dcef-f7d6-d266-6c05-b9749fa8ae31@x41-dsec.de>
-Date: Thu, 20 Sep 2018 02:01:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+Received: (qmail 23961 invoked from network); 24 Jun 2023 06:29:14 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-97G002069c0605-6432-48b6-828e-e04b2079d35d,
+                    CEF47B23AFC8FCF4343565AAEC5CE9EE8E5F06FB) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 5.172.255.126
+Date: Sat, 24 Jun 2023 08:29:00 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20230624062900.7nu5keinnfducn22@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <72BCBA86-4192-47C9-ACA7-5F1A39994104@amazon.com>
+ <CAH8yC8njh+1Q2QHvkN2pwAFWsL+v1HdxFYZYBDjk9h9qZHUcfA@mail.gmail.com>
+ <ZJVDYZd5Q_cGtMcL@symphytum.spacehopper.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple
- Vulnerabilities in mgetty
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <ZJVDYZd5Q_cGtMcL@symphytum.spacehopper.org>
+X-Originating-IP: [37.59.142.97]
+X-ClientProxiedBy: DAG8EX2.mxp6.local (172.16.2.72) To DAG4EX1.mxp6.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 2aaac724-1dff-4b2b-92e1-6daa16de76ea
+X-Ovh-Tracer-Id: 10173350085371025175
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvhedrgeegiedgieeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujghisehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpeetudethfelieeijeejleegkefhtedujeekleefveffleevkeeljeffueethfdutdenucffohhmrghinhepghhnuhdrohhrghenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrleejpdehrddujedvrddvheehrdduvdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeojhifihhlkhesjhifihhlkhdrnhgvtheqpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhoheegkedpmhhouggvpehsmhhtphhouhht
+Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Stuart Henderson <stu@spacehopper.org>, 2023-06-23 08:01:
+>>Another offender from GNU is ncurses. It leaks like a sieve, too.
+>also not GNU
 
-X41 D-Sec GmbH Security Advisory: X41-2018-007
+ncurses is a GNU package:
+https://www.gnu.org/manual/blurbs.html#ncurses
 
-Multiple Vulnerabilities in mgetty
-==================================
-
-
-Overview
-- --------
-Confirmed Affected Versions: 1.2.0
-Patched Versions: 1.2.1
-Vendor: mgetty
-Vendor URL: http://mgetty.greenie.net
-Credit: X41 D-Sec GmbH, Eric Sesterhenn
-Status: Public
-Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2018-007-mgetty
-
-
-Summary and Impact
-- ------------------
-Multiple issues have been identified in the mgetty fax software. These
-might be used by local users to elevate their privileges.
-X41 did not perform a full test or audit on the software.
-
-
-Product Description
-- -------------------
-- From the vendor: For those of you that do not know mgetty+sendfax yet:
-it's a reliable and proven fax send and receive solution for unix and
-Linux. But it can do much more... so read the docs and be surprised.
-
-Shell injection via faxq-helper
-===============================
-Severity Rating: Medium
-Vector: Fax Job
-CVE: CVE-2018-16741
-CWE: 78
-CVSS Score: 6.1
-CVSS Vector: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N
-In fax/faxq-helper.c function do_activate(), not all characters are
-properly sanitized to prevent command injection. It is possible to use
-||, && or > to change the control flow.
-
-{% highlight c %}
-        /* replace all quote characters, backslash and ';' by '' */
-        for( q = buf; *q != '\0'; q++ )
-        {
-            if ( *q == '\'' || *q == '"' || *q == '`' ||
-                 *q == '\' || *q == ';' )
-                                    { *q = ''; }
-        }
-{% endhighlight %}
-
-A job file containing malicious input can be constructed using
-faxq-helper activate <jobid>. One faxrunq is started, the code is
-executed as the user running the command.
-
-{% highlight bash %}
-        /* replace all quote characters, backslash and ';' by '' */
-    #               "   '    \    $   ;
-    command=tr -d '\042\047\140\134\044\073' <JOB | \
-             $AWK 'BEGIN { phone="-"; flags=""; pages="" }
-                  $1=="phone" { phone=$2 }
-                  $1=="header"     { flags=flags" -h "$2 }
-                  $1=="poll"       { flags=flags" -p" }
-                  $1=="normalres" { flags=flags" -n" }
-                  $1=="accthandle" { flags=flags" -A
-\""substr($0,13)"\"" }
-                  $1=="pages" { for( i=2; i<=NF; i++) pages=pages$i" " }
-                  END { printf "'"$FAXSENDER"' -v%s %s %s", \
-                               flags, phone, pages }' -`
-
-
-execute faxsend command
-=======================
-$echo "$command"
-
-eval $command
-{% endhighlight %}
-
-
-Stack Based Buffer Overflow With Long Username in
-contrib/next-login/login.c
-============================================================================
-Severity Rating: Low
-Vector: Command Line Parameter
-CVE: CVE-2018-16743
-CWE: 121
-CVSS Score: 2.9
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N
-In file contrib/next-login/login.c the command line parameter username
-is passed unsanitized to strcpy(), which causes a stack based buffer
-overflow if too long.
-
-{% highlight c %}
-        char tbuf[MAXPATHLEN + 2], tname[sizeof(PATHTTY) + 10];
-...
-        if (*argv) {
-                username = *argv;
-                ask = 0;
-...
-                if (failures && strcmp(tbuf, username)) {
-                        if (failures > (pwd ? 0 : 1))
-                                badlogin(tbuf);
-                        failures = 0;
-                }
-                (void)strcpy(tbuf, username);
-{% endhighlight %}
-
-
-Stack Based Buffer Overflow With Long Argument in contrib/scrts.c
-=================================================================
-Severity Rating: Low
-Vector: Command Line Parameter
-CVE: CVE-2018-16742
-CWE: 121
-CVSS Score: 2.9
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N
-In file contrib/scrts.c a stack buffer overflow can be triggered via
-command line parameter.
-
-{% highlight c %}
-int main( int argc, char ** argv )
-{
-int i, fd;
-struct termios tio;
-char device[1000];
-
-for ( i=1; i<argc; i++ )
-
-{
-
-    if ( strchr( argv[i], '/' ) == NULL )
-
-        sprintf( device, "/dev/%s", argv[i] );
-
-    else
-
-        strcpy( device, argv[i] );
-{% endhighlight %}
-
-
-Stack Based Buffer Overflow and Command injection in faxrec.c
-=============================================================
-Severity Rating: Low
-Vector: Command Line Parameter
-CVE: CVE-2018-16744 (for command injection), CVE-2018-16745 (for overflow)
-CWE: 121
-CVSS Score: 2.9
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N
-In file faxrec.c function fax_notify_mail(), the mail_to parameter is
-not sanitized. It could allow for command injection or a buffer
-overflow if it is too long. If is called from facrec() which in turn
-is called from main() in mgetty.c. Since the notify_mail parameter is
-a configuration parameter, it should only be possible to set it from
-trusted source. If mgetty would be used with e.g. a webfront end, this
-might be abused for a privilege escalation.
-
-{% highlight c %}
-void faxnotifymail P3( (pagenum, ppagenum, mailto),
-                          int pagenum, int ppagenum, char * mailto )
-{
-FILE  * pipefp;
-char  * filename, * p;
-char    buf[256];
-int     r;
-timet  ti;
-    lprintf( LNOISE, "faxnotifymail: sending mail to: %s", mailto );
-    sprintf( buf, "%s %s >/dev/null 2>&1", MAILER, mailto );
-    pipefp = popen( buf, "w" );
-{% endhighlight %}
-
-
-Endless loop in g3/g32pbm.c
-===========================
-When converting g32 files using g3/g32pbm.c, an endless loop can be
-triggered by malformed input file. Example can be found at
-files/g32pmbinfiniteloop.
-
-Out Of Bounds Access in g3/pbm2g3.c
-===================================
-When converting pbm files using g3/pbm2g3.c, out of bounds accesses
-can occur with malformed input files in putwhitespan(). An example can
-be found with files/pbm2g2oobaccess.
-
-{% highlight c %}
-     putcode( twhite[l].bitcode, twhite[l].bitlength );
-{% endhighlight %}
-
-
-Workaround
-- ----------
-None.
-
-
-Timeline
-- --------
-2018-06-07 Issues found
-2018-08-27 Issue reported to vendor
-2018-08-28 Vendor reply
-2018-09-08 Vendors sends patches
-2018-09-08 CVE IDs requested
-2018-09-09 CVE IDs assigned
-2018-09-11 Patched Version released
-2018-09-11 Advisory released
-
-About X41 D-SEC GmbH
-====================
-X41 is an expert provider for application security services.
-Having extensive industry experience and expertise in the area of
-information security, a strong core security team of world class
-security experts enables X41 to perform premium security services.
-Fields of expertise in the area of application security are security
-centered code reviews, binary reverse engineering and vulnerability
-discovery.
-Custom research and a IT security consulting and support services are
-core competencies of X41.
-
-- -- 
-X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
-T: +49 241 9809418-0, Fax: -9
-Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
-Geschäftsführer: Markus Vervier
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJLBAEBCAA1FiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlui40AXHGFkdmlzb3Jp
-ZXNAeDQxLWRzZWMuZGUACgkQo5Klpg50CxDAKg/6AmXcOmQnCDVgORX9xbmLvCXc
-EcfNX7MNKlvegdm4D0TWb9WZKbWC0ubv1vSMB35qtYKMtdIwh/lYReb01/+WmRwV
-alZTSnoPZmy3Wt0e1mzkSEjJqauawbVAZfi9bfgUmX1faWDkntkoOhfJVcGy2Tia
-g0eiang5lg1v4m5yjiE4EHyzBKy+DqEYf6VNCje7cIQG/tFhuvatmd1HulZpFgK5
-D/VBRCctKXaLNuoe5cIRmRD2tJZ4O7NmhudBVxJSrShTtv4cO0M6xPD0ddzhSHtn
-JnuNdqYY0+sdVO+uf9kOF8qHG6iW1fLKiQAuyYZCTCZELDOUzby1x0IN2XwNxiX4
-b2sl1vp/XoPvlIloZehTOtaYZimUjoSo65nMZb5Dlnc5zjkWHitD8CSSnuTJbuUQ
-NL9b4IYJjGqjuTl9UAbdi4dXLUEgiXe4gTr399LqFKyRwYj1CJ5LKR+C6F1YW6FG
-y8BoT4JGUd269HcQMUhO286XuEB3yGdEiEpY4M2iakyi880GNUf5bWi3dxC3LDIG
-l7yHqLFZku3Aa7PZMCsfIr9NVG0gkEido8lm3LPnxnl5NbBEyZZh8IAwSKRrdKIZ
-MXzuedk1J6i0K2pwy6xMDkLz+VeMmOzn2HuCVh4cD5Z/Bq0wmrpBB76hdKOdxfVV
-c+Rqt+7zn4K6wFi28S0=
-=g4wJ
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
