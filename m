@@ -1,4 +1,4 @@
-Received: (qmail 28334 invoked by uid 550); 4 Nov 2025 15:01:25 -0000
+Received: (qmail 1779 invoked by uid 550); 24 Jun 2023 12:32:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,111 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28289 invoked from network); 4 Nov 2025 15:01:24 -0000
-Date: Tue, 4 Nov 2025 15:01:12 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
+Received: (qmail 9585 invoked from network); 24 Jun 2023 11:23:34 -0000
+Date: Sat, 24 Jun 2023 11:23:18 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1687605802; x=1687865002;
+	bh=LtLgC3yFyZOxy6nHJkh/4rN7+69VknMOnJlipDplMgU=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=DY/Q16LgMJXrKJWFHFkWLkYFflBRPIX116Oxx1bzd5PJfmrLEKrLJtbQurdLYHsXM
+	 V0RNofMAj26FkplEVG5J7bGWxAZA4uPcYMQEXQJg6i10Cr2M7mpa2DlfVSvxfzxT2a
+	 dgJJxgqS2FFoT5jwK+wBkPSzN6lzBeu69ne7QUlaIDvRB+FEfn4jW6uJVlV9Nr6fZD
+	 VmrkD2oWqY+158yO4HV4oZ/ivuggn4Fvvx1RonqK0HJFWN8gbHYSqnpT0JmRez7XsX
+	 lPHAiPHFllgHv5zKh1RgX9CL6LKL8TAOMsqi6jXBNSqV0J2WywtI8j1mbIzfmR4q8U
+	 xfQf7RnFWSHlQ==
 To: oss-security@lists.openwall.com
-Message-ID: <aQoVOMxbrWQ7JzCV@yuggoth.org>
-Mail-Followup-To: oss-security@lists.openwall.com
+From: cbf0001@proton.me
+Message-ID: <L14GKS6NenAaizYfAL1_wfSb0GYF9nnxQCUc5bB29pkHaIKrtWCn4qtCAXr8sxuo1GOtG2yiH2zsHOV7iSizWFi8yaEt6O0mGfTh02j2xU4=@proton.me>
+In-Reply-To: <B8655473-CC69-403E-BB35-5F233EF95D1A@dwheeler.com>
+References: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com> <20230623102833.GA6568@openwall.com> <B8655473-CC69-403E-BB35-5F233EF95D1A@dwheeler.com>
+Feedback-ID: 63079058:user:proton
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="amfe7WPq04lnwdVx"
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: 66.70.103.60
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: [oss-security] [OSSA-2025-002] OpenStack Keystone: Unauthenticated access to EC2/S3
- token endpoints can grant Keystone authorization (CVE PENDING)
+Content-Type: multipart/alternative;
+ boundary="b1_0vdaS6r0r9JmT59bkGTWr6pqFgyhiSjiP1tHKxY"
+Subject: Re: [oss-security] Opinion: Governments don't want IT security, they want to have cyber weapons
 
---amfe7WPq04lnwdVx
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--b1_0vdaS6r0r9JmT59bkGTWr6pqFgyhiSjiP1tHKxY
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2025-002: Unauthenticated access to EC2/S3 token endpoints can grant
-                Keystone authorization
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+SSBhZ3JlZSB3aXRoIFNvbGFyIGFuZCBEYXZpZCwgcGxlYXNlIHN0b3AgbG93
+ZXJpbmcgdGhlIGJhciB3aXRoIGNvbnRlbnQgdGhhdCBpcyBub3QgcmVsZXZh
+bnQgdG8gdGhlIGRpc3RybyBzdWJzY3JpYmVycy4KCldhcm0gcmVnYXJkcywK
+Q2JmIFByaW1tbwoKT24gRnJpLCBKdW4gMjMsIDIwMjMgYXQgMjE6MzcsIERh
+dmlkIEEuIFdoZWVsZXIgPFtkd2hlZWxlckBkd2hlZWxlci5jb21dKG1haWx0
+bzpPbiBGcmksIEp1biAyMywgMjAyMyBhdCAyMTozNywgRGF2aWQgQS4gV2hl
+ZWxlciA8PGEgaHJlZj0pPiB3cm90ZToKCj4+IE9uIEp1biAyMywgMjAyMywg
+YXQgNjoyOCBBTSwgU29sYXIgRGVzaWduZXIgPHNvbGFyQG9wZW53YWxsLmNv
+bT4gd3JvdGU6Cj4+IEkgYWN0dWFsbHkgdGhpbmsgd2Ugc2hvdWxkIGJlIHJl
+amVjdGluZyBwb3N0aW5ncyBsaWtlIHRoaXMuIEkgYWNjZXB0ZWQKPj4gdGhp
+cyBvbmUgYXMgYW4gZXhhbXBsZS4gQnkgInBvc3RpbmdzIGxpa2UgdGhpcyIg
+SSBtZWFuIHJhbnRzIHdpdGhvdXQKPj4gcHJvcG9zZWQgc29sdXRpb25zLCBu
+b3QgaGVscGZ1bCBmb3IgdGhpcyBjb21tdW5pdHkgKGFuZCB3aGVyZSByZXBs
+aWVzCj4+IGFyZSB1bmxpa2VseSB0byBiZSBoZWxwZnVsIGVpdGhlciksIGFu
+ZC9vciBsYWNraW5nIGZvY3VzIG9uIE9wZW4gU291cmNlLgo+PiBJIHRoaW5r
+IGluIHRoaXMgY2FzZSBpdCdzIGFsbCAzIG9mIHRoZXNlLgo+Cj4gSSBhZ3Jl
+ZSB3aXRoIHlvdS4gSSdkIHByZWZlciBpZiB0aGlzIChhbmQgQUxMIG1haWxp
+bmcgbGlzdHMpIHRyaWVkIHRvIHN0YXkgb24tdG9waWMuIEN1cnJlbnRseSB0
+aGF0J3MKPiAiRGlzY3Vzc2lvbiBvZiBzZWN1cml0eSBmbGF3cywgY29uY2Vw
+dHMsIGFuZCBwcmFjdGljZXMgaW4gdGhlIE9wZW4gU291cmNlIGNvbW11bml0
+eSIuCj4KPj4gSSB0aGluayB0aGUgcmVjZW50IHRocmVhZAo+PiAiVGhlIEFJ
+IGNoYXRncHQgd3JpdGVzIGluc2VjdXJlIGNvZGUiIHdhcyBvZiBzaW1pbGFy
+bHkgcXVlc3Rpb25hYmxlCj4+IHZhbHVlIGZvciB0aGlzIGxpc3QncyBzdWJz
+Y3JpYmVycy4KPgo+IEkgdGhpbmsgdGhlICpmaXJzdCogcG9zdCB0aGF0ICJB
+SSBzeXN0ZW1zIChpbmNsdWRpbmcgTExNcykKPiBvZnRlbiBnZW5lcmF0ZSBp
+bnNlY3VyZSBjb2RlIiB3YXMgcGxhdXNpYmx5IG9uLXRvcGljLgo+IE5vdyB0
+aGF0IGl0J3MgaGFwcGVuZWQsIHdlIGRvbid0IG5lZWQgYW55IG1vcmUgc3Vj
+aCBwb3N0cy4KPgo+IElmIHNvbWVvbmUgaGFzIGEgc29sdXRpb24sIHdpdGgg
+ZXZpZGVuY2UgdGhhdCBpdCAqd29ya3MqIGFuZCBjYW4gYmUgdXNlZCBpbiBP
+U1MsCj4gdGhhdCB3b3VsZCBiZSByZWxldmFudCAoYW5kIHBvc3NpYmx5IGlu
+dGVyZXN0aW5nKS4KPgo+IFJlZ2FyZGluZyB5b3VyIGNvbW1lbnQ6Cj4KPj4g
+SSB0aGluayBtb3N0IGdvdmVybm1lbnRzIGRvIHdhbnQgSVQgc2VjdXJpdHku
+IFNvbWUgYWxzbyB3YW50ICJjeWJlcgo+PiB3ZWFwb25zIiwgd2hpY2ggaXMg
+cGFydGlhbGx5IGNvbnRyYWRpY3RvcnksIGJ1dCB0aGF0J3MgaG93IGl0IGlz
+Ogo+PiBodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9OT0JVUwo+Cj4g
+U2luY2Ugd2UncmUgb24gdGhpcyB0b3BpYywgbXkgdW5kZXJzdGFuZGluZyBv
+ZiBVUyBwb2xpY3kgKGF0IGxlYXN0IGF0IG9uZSB0aW1lKSB3YXMgdGhhdAo+
+IGl0J3MgY29uc2lkZXJlZCBhIHRyYWRlLW9mZiwgc28gd2hhdCB3aWxsIGJl
+IGRvbmUgaXMgZGVjaWRlZCBvbiBhIGNhc2UtYnktY2FzZSBiYXNpcyBieSB0
+aGUgIlZFUCBwcm9jZXNzIjoKPiAiVGhlIFZ1bG5lcmFiaWxpdGllcyBFcXVp
+dGllcyBQcm9jZXNzIChWRVApIGJhbGFuY2VzIHdoZXRoZXIgdG8gZGlzc2Vt
+aW5hdGUgdnVsbmVyYWJpbGl0eSBpbmZvcm1hdGlvbiB0byB0aGUgdmVuZG9y
+L3N1cHBsaWVyIGluIHRoZSBleHBlY3RhdGlvbiB0aGF0IGl0IHdpbGwgYmUg
+cGF0Y2hlZCwgb3IgdG8gdGVtcG9yYXJpbHkgcmVzdHJpY3QgdGhlIGtub3ds
+ZWRnZSBvZiB0aGUgdnVsbmVyYWJpbGl0eSB0byB0aGUgVVNHLCBhbmQgcG90
+ZW50aWFsbHkgb3RoZXIgcGFydG5lcnMsIHNvIHRoYXQgaXQgY2FuIGJlIHVz
+ZWQgZm9yIG5hdGlvbmFsIHNlY3VyaXR5IGFuZCBsYXcgZW5mb3JjZW1lbnQg
+cHVycG9zZXMsIHN1Y2ggYXMgaW50ZWxsaWdlbmNlIGNvbGxlY3Rpb24sIG1p
+bGl0YXJ5IG9wZXJhdGlvbnMsIGFuZC9vciBjb3VudGVyaW50ZWxsaWdlbmNl
+LiIKPiBodHRwczovL3RydW1wd2hpdGVob3VzZS5hcmNoaXZlcy5nb3Yvc2l0
+ZXMvd2hpdGVob3VzZS5nb3YvZmlsZXMvaW1hZ2VzL0V4dGVybmFsJTIwLSUy
+MFVuY2xhc3NpZmllZCUyMFZFUCUyMENoYXJ0ZXIlMjBGSU5BTC5QREYKPiBU
+aGF0J3MgYSBsaXR0bGUgb2xkLCBhbmQgSSBkb24ndCBrbm93IGlmIHRoZSBw
+b2xpY3kgaGFzIGJlZW4gY2hhbmdlZCwgYnV0IHRoYXQncyBhbiBvZmZpY2lh
+bCBwYWdlIGZyb20gdGhlIFVTIGFyY2hpdmVzLgo+Cj4gSSBoYXZlIG9waW5p
+b25zIGFib3V0IHRoaXMgcG9saWN5LCBnZW5lcmFsbHkgbmVnYXRpdmUsIGJ1
+dCBJIHRoaW5rIHRoYXQgZGlzY3Vzc2lvbiBpcyBvdXRzaWRlIHRoZSBzY29w
+ZSBvZiB0aGlzIG1haWxpbmcgbGlzdCBzbyBJJ2wgc3RvcCB0aGVyZS4KPgo+
+IFNvIGhhdmluZyBkaXNjdXNzZWQgdGhpcywgSSBsb29rIGZvcndhcmQgdG8g
+bW9yZSBtZXNzYWdlcyBmb2N1c2VkIG9uIHRoZSB0b3BpY3Mgb2YgdGhpcyBt
+YWlsaW5nIGxpc3QgOi0pLgo+Cj4gLS0tIERhdmlkIEEuIFdoZWVsZXI=
 
-:Date: November 04, 2025
-:CVE: PENDING
+--b1_0vdaS6r0r9JmT59bkGTWr6pqFgyhiSjiP1tHKxY--
 
-Affects
-~~~~~~~
-- Keystone: <26.0.1, =3D=3D27.0.0, =3D=3D28.0.0
-
-Description
-~~~~~~~~~~~
-kay reported a vulnerability in Keystone=E2=80=99s ec2tokens and s3tokens
-APIs. By sending those endpoints a valid AWS Signature (e.g., from a
-presigned S3 URL), an unauthenticated attacker may obtain Keystone
-authorization (ec2tokens can yield a fully scoped token; s3tokens
-can reveal scope accepted by some services), resulting in
-unauthorized access and privilege escalation. Deployments where
-/v3/ec2tokens or /v3/s3tokens are reachable by unauthenticated
-clients (e.g., exposed on a public API) are affected.
-
-Patches
-~~~~~~~
-- https://review.opendev.org/966073 (2024.2/dalmatian(keystone))
-- https://review.opendev.org/966067 (2024.2/dalmatian(swift))
-- https://review.opendev.org/966071 (2025.1/epoxy(keystone))
-- https://review.opendev.org/966064 (2025.1/epoxy(swift))
-- https://review.opendev.org/966070 (2025.2/flamingo(keystone))
-- https://review.opendev.org/966063 (2025.2/flamingo(swift))
-- https://review.opendev.org/966069 (2026.1/gazpacho(keystone))
-- https://review.opendev.org/966062 (2026.1/gazpacho(swift))
-
-Credits
-~~~~~~~
-- kay (CVE PENDING)
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2119646
-
-Notes
-~~~~~
-- While the indicated Keystone patches are sufficient to mitigate this
-   vulnerability, corresponding changes for Swift are included which keep
-   its optional S3-like API working.
-- MITRE CVE Request 1930434 has been awaiting assignment since
-   2025-09-24, but once completed will result in an errata revision to
-   this advisory reflecting the correct CVE ID. If any other CNA has
-   assigned a CVE themselves in the meantime, please reject it so that we
-   don't end up with duplicates.
-
---=20
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
-
---amfe7WPq04lnwdVx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmkKFThfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCl+XhAA1YcqyBU6Swolo3Z02oDPGrEBqJp7O6feBZisiu5OUJjN9ETkzMxbem2l
-TZvWpOiwLRqpZ81igsomEPVktBhiG2eruqMTxOgidFKWgSipyvy7w8tnqXK9Vv0p
-Wp7TjeyI3qr8Chp7nJgKobw2CYdrOdC0UWFEFbY8ui+qRyaUJc4NTDVQ4cfS9iSp
-ykuCpbTH+yUMeEy7/FDG87B5KoVmsDo/d8jvZZ1eLFJutewAKar8uTeYWvz0LJPx
-7dmaAsGKk+KxP82gXl9o3Oh46RGtQnJuct93DDaQF6+CTwEwMF1blNjuuPLEz6we
-jOp0em1DUMIcAe4qgSo0FQLfnhjifzN6eg0tm+ezQanHHwIM9BOYwzQ5IVGEzFha
-yXV0o/DPsrc1AM5LpC4RCcBpv1Cn/KWMn18iZVeAhIE6Q5vt3vNi2dxy8F7mKJ5R
-vnnjLw5KzXd3/Nt10/keQpi4YwC7CWQyjX9UAOSTYWBcE1NrcJi3Y1UTmYEX44IP
-Nrug7Bog5Qt5VxXmymvkLMhxkrERny9Ik7p9/jGJhRt8MGGyE50rQ6yTG8b8EDQk
-m1S+hSKBcshN0iMA5e9Q1O+gAhCfUkUrb1V9nGdl42nnJRznD5OfLjA8xE0lcADt
-m/g/pRvbGK4hZ9Fbfcq626uWnnFI8VwsDhyx6pBy2Cwj6I1Mm2U=
-=ji5x
------END PGP SIGNATURE-----
-
---amfe7WPq04lnwdVx--
