@@ -1,20 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/10/3
-Message-ID: <20230810180937.GA1577154@millbarge>
-Date: Thu, 10 Aug 2023 18:09:37 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/26/2
+Message-ID: <46feeb7c-00af-4cf6-486e-a122519904ec@apache.org>
+Date: Mon, 26 Jun 2023 15:52:56 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-3772: Linux kernel: xfrm_update_ae_params NULL pointer dereference
+Subject: CVE-2023-34395: Apache Airflow ODBC Provider: Remote code execution vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 10, 2023 at 10:13:54AM +0800, Lin Ma wrote:
-> Hello there, we found a NPD bug in Linux kernel XFRM submodule.
+Severity: moderate
 
-> [fix status]:
-> to ipsec tree now but not yet upstream, see https://kernel.googlesource.com/pub/scm/linux/kernel/git/klassert/ipsec/
+Affected versions:
 
-More specifically, https://kernel.googlesource.com/pub/scm/linux/kernel/git/klassert/ipsec/+/00374d9b6d9f932802b55181be9831aa948e5b7c%5E%21/#F0
+- Apache Airflow ODBC Provider before 4.0.0
 
-Thanks
+Description:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Improper Neutralization of Argument Delimiters in a Command ('Argument Injection') vulnerability in Apache Software Foundation Apache Airflow ODBC Provider.
+In OdbcHook, A privilege escalation vulnerability exists in a system due to controllable ODBC driver parameters that allow the loading of arbitrary dynamic-link libraries, resulting in command execution.
+Starting version 4.0.0 driver can be set only from the hook constructor.
+This issue affects Apache Airflow ODBC Provider: before 4.0.0.
+
+Credit:
+
+KmhlYXJ0 (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/31713
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-34395
+
