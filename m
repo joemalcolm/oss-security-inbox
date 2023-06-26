@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/6
-Message-ID: <ZJMhapAB3v_6YLmg@larwa.hq.kempniu.pl>
-Date: Wed, 21 Jun 2023 18:12:26 +0200
-From: Michał Kępień <michal@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/26/3
+Message-ID: <db7ff106-1c0f-48b1-8073-91ecce24448a@apache.org>
+Date: Mon, 26 Jun 2023 15:59:46 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@....org
-Subject: ISC has disclosed two vulnerabilities in BIND 9 (CVE-2023-2828, CVE-2023-2911)
+Subject: CVE-2023-22886: Apache Airflow JDBC Provider: RCE Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On 21 June 2023 we (Internet Systems Consortium) disclosed two vulnerabilities affecting our BIND 9 software:
+Severity: low
 
-- CVE-2023-2828:        named's configured cache size limit can be significantly exceeded https://kb.isc.org/docs/cve-2023-2828
-- CVE-2023-2911:        Exceeding the recursive-clients quota may cause named to terminate unexpectedly when stale-answer-client-timeout is set to 0 https://kb.isc.org/docs/cve-2023-2911
+Affected versions:
 
-New versions of BIND 9 are available from https://www.isc.org/downloads
+- Apache Airflow JDBC Provider before 4.0.0
 
-Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of each published release directory:
+Description:
 
-- https://downloads.isc.org/isc/bind9/9.16.42/patches/
-- https://downloads.isc.org/isc/bind9/9.18.16/patches/
-- https://downloads.isc.org/isc/bind9/9.19.14/patches/
+Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow JDBC Provider.
+Airflow JDBC Provider Connection’s [Connection URL] parameters had no
+restrictions, which made it possible to implement RCE attacks via
+different type JDBC drivers, obtain airflow server permission.
+This issue affects Apache Airflow JDBC Provider: before 4.0.0.
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+Credit:
 
--- 
-Best regards,
-Michał Kępień
+heart Y (finder)
+happyhacking (finder)
+
+References:
+
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-22886
+
