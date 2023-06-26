@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/2
-Message-ID: <8bc38f4f-69db-9105-85fc-e34b7b6ec5ae@apache.org>
-Date: Tue, 25 Jul 2023 02:27:32 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/26/4
+Message-ID: <2425a854-4b5c-2967-986f-6c068d76ea3f@apache.org>
+Date: Mon, 26 Jun 2023 16:12:55 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34189: Apache InLong: General user can delete and update process 
+Subject: CVE-2023-35798: Airflow Apache ODBC and MSSQL Providers Arbitrary File Read Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: low
 
 Affected versions:
 
-- Apache InLong 1.4.0 through 1.7.0
+- Apache Airflow ODBC Provider before 4.0.0
+- Apache Airflow MSSQL Provider before 3.4.1
 
 Description:
 
-Exposure of Resource to Wrong Sphere Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.7.0. The attacker could use general users to delete and update the process, which only the admin can operate occurrences. 
+Input Validation vulnerability in Apache Software Foundation Apache Airflow ODBC Provider, Apache Software Foundation Apache Airflow MSSQL Provider.This vulnerability is considered low since it requires DAG code to use `get_sqlalchemy_connection` and someone with access to connection resources specifically updating the connection to exploit it.
 
-Users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick  https://github.com/apache/inlong/pull/8109  to solve it.
+This issue affects Apache Airflow ODBC Provider: before 4.0.0; Apache Airflow MSSQL Provider: before 3.4.1.
+
+It is recommended to upgrade to a version that is not affected
+
+Credit:
+
+id_No2015429 of 3H Secruity Team (finder)
 
 References:
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-34189
+https://github.com/apache/airflow/pull/31984
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-35798
 
