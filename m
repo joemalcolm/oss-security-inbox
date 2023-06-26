@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3174" "Wednesday" "29" "March" "2017" "16:57:49" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>" "93" "Re: [oss-security] information about pwn2own Kernel problem" nil nil nil "3" "2017032921:57:49" "[oss-security] information about pwn2own Kernel problem" (number mark "U       tyhicks@cano Mar 29   93/3174  " thread-indent "\"Re: [oss-security] information about pwn2own Kernel problem\"\n") "<CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>" ("<20170322103936.GB28849@suse.de>" "<9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>" "<d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>" "<CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27747 invoked by uid 550); 29 Mar 2017 21:58:08 -0000
+Received: (qmail 9819 invoked by uid 550); 26 Jun 2023 11:43:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,115 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27729 invoked from network); 29 Mar 2017 21:58:07 -0000
-To: oss-security@lists.openwall.com
-References: <20170322103936.GB28849@suse.de>
- <9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>
- <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
- <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
-Cc: "security@ubuntu.com" <security@ubuntu.com>
-From: Tyler Hicks <tyhicks@canonical.com>
-Message-ID: <d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>
-Date: Wed, 29 Mar 2017 16:57:49 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+Received: (qmail 10157 invoked from network); 26 Jun 2023 07:01:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1687762870;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ceBNFsPUArIBCIThtx1IeB7WclRV0vJAcmZbDao+wXk=;
+	b=ED6Z5ZpncrAG1bUIrRkjHfgwllGFEBfkhMkfCWgxi1tFhej83lnjUQcS9+t4ThAkTwn1YU
+	8mZ5FxuAhEi+ydE8J3qdpPgbeCk/d0H1WpIfHZyw4Njgobe1haDOalB/dzLAXJ++PJSWBv
+	vurUHD2ApvEMeabMEu6OySlW0te5IwM=
+X-MC-Unique: 5WH8Fn5NM4G4BW_oVvmZfQ-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687762867; x=1690354867;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ceBNFsPUArIBCIThtx1IeB7WclRV0vJAcmZbDao+wXk=;
+        b=kh2j/1KSn/ri8zrGHBs4Y9WNPxClHHCpLtayy56Xolgg+JzmavAsZ8yHA4/QlzjuZT
+         WKmB95dLpkHRr79wh+uaonHEICA4+9MrlHtp9i7IjdxmFmckwd0A7oxBgH9OKQvNycbl
+         2okRHbQyV27KHNztPOGSoDtns/+eHASJgmqDbY9O57/TSaZzkFRSrsww/INkcOHx7C1q
+         TQ8TnVB5TG7+e48ml83xf+876m+3wLvusvUC5t3O1KeG+VLUsVS9IjV38kTPUETeKNEY
+         GRuRvSKZGaGnJVbs96y35UmvLsrLV3i1qahkX5oP3TggCRmHgW6URwBXA6+Zp1Uc5bJz
+         0YHw==
+X-Gm-Message-State: AC+VfDxSWjmBmhKqI2QmyJPgQxhSZ2p9rOIpxZZnXOsgGw9Qu1rMl1aK
+	u8N+B3qXg97dZbe1a7MbzzhMYmnWZ2+OvIXNdnuJzF8OuKyIqavj63r43q874j7errPz13curhd
+	Nd6wVQV9LFcdGG74EYMiD4SBvDxLi
+X-Received: by 2002:a05:6402:da:b0:518:7415:3b61 with SMTP id i26-20020a05640200da00b0051874153b61mr15674951edu.23.1687762867422;
+        Mon, 26 Jun 2023 00:01:07 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5ojNBD5LBYceAuJJuNpOnOzo9hqQUWpbtXeUrtfMkQ88rfi720h9a7JYikyzqB1e/ZrmPy2w==
+X-Received: by 2002:a05:6402:da:b0:518:7415:3b61 with SMTP id i26-20020a05640200da00b0051874153b61mr15674935edu.23.1687762867073;
+        Mon, 26 Jun 2023 00:01:07 -0700 (PDT)
+Message-ID: <0517227e-d2e6-cd57-55f7-ad089b34b17c@redhat.com>
+Date: Mon, 26 Jun 2023 09:01:05 +0200
 MIME-Version: 1.0
-In-Reply-To: <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs"
-Subject: Re: [oss-security] information about pwn2own Kernel problem
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+References: <c2d7a824-5122-e130-68c8-44ddc1ffd241@redhat.com>
+ <20230623150242.GA10337@openwall.com>
+From: Zdenek Dohnal <zdohnal@redhat.com>
+In-Reply-To: <20230623150242.GA10337@openwall.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2023-34241: CUPS: use-after-free in
+ cupsdAcceptClient()
 
---goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs
-Content-Type: multipart/mixed; boundary="NX0Fi52s4i5M7ixD0N02V6MSE6lD99IEu";
- protected-headers="v1"
-From: Tyler Hicks <tyhicks@canonical.com>
-To: oss-security@lists.openwall.com
-Cc: "security@ubuntu.com" <security@ubuntu.com>
-Message-ID: <d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>
-Subject: Re: [oss-security] information about pwn2own Kernel problem
-References: <20170322103936.GB28849@suse.de>
- <9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>
- <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
- <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
-In-Reply-To: <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
+I'm sorry for the confusion :( - yes, the emails to oss-security were 
+announcing the end of embargoes and that the fixes are already merged.
 
---NX0Fi52s4i5M7ixD0N02V6MSE6lD99IEu
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-This issue is no longer embargoed and I've just sent some details to
-this list:
-
-  http://openwall.com/lists/oss-security/2017/03/29/2
-
-The upstream kernel was affected and fixes have been committed.
-
-Tyler
-
-On 03/22/2017 05:19 PM, Dave Null wrote:
-> I was wondering this myself. I'm not sure if ZDI does any variant
-> investigation when they pick up a bug. Really hoping this doesn't jump fr=
-om
-> a distro related problem to a Linux problem.
->=20
-> -noid
->=20
-> Crypto: https://keybase.io/noid
-> None are more hopelessly enslaved than those who falsely believe they are
-> free - Goethe
-> --
->=20
-> On Wed, Mar 22, 2017 at 1:54 PM, Luedtke, Nicholas (HPE Linux Security) <
-> nicholas.luedtke@hpe.com> wrote:
->=20
->>
->> On 3/22/2017 2:21 PM, Tyler Hicks wrote:
->>> ZDI disclosed the information to the Ubuntu Security team a little less
->>> than 48 hours ago.
->>>
->>> The Ubuntu Kernel team has triaged the issue and came up with a
->>> potential fix. That fix is undergoing internal review and I'll be
->>> disseminating it via the usual channels once that is complete.
->>>
->>> Tyler
->> Is this an Ubuntu specific issue? Or does it affect the upstream kernels
->> as well?
->>
->>
->> --
->> Nicholas Luedtke
->> HPE Linux Security, Hewlett-Packard Enterprise
->>
->>
->>
->>
->=20
+I've updated the guide I was following to prevent this in the future.
 
 
+Zdenek
 
---NX0Fi52s4i5M7ixD0N02V6MSE6lD99IEu--
+On 6/23/23 17:02, Solar Designer wrote:
+> On Thu, Jun 22, 2023 at 12:02:39PM +0200, Zdenek Dohnal wrote:
+>> there is currently the embargoed CVE-2023-34241 in CUPS project:
+> Of course, this wasn't actually embargoed anymore at that time - Zdenek
+> simply resent the exact same message he had sent to the distros list on
+> June 13, when the issue was in fact still embargoed.
+>
+> Similarly, the previous CUPS vulnerability disclosure on June 1 was a
+> copy of the distros message from May 23:
+>
+> https://www.openwall.com/lists/oss-security/2023/06/01/1
+>
+> Let's be updating these when posting them publicly going forward to
+> avoid confusion - like "was this published inadvertently when still
+> under embargo?" (luckily, no).
+>
+> Alexander
+>
+-- 
+Zdenek Dohnal
+Senior Software Engineer
+Red Hat, BRQ-TPBC
 
---goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJY3C3dAAoJENaSAD2qAscKoWQP/Ay+uJE/+jDqK/g9pyF+dwNa
-Xov8jtuGtzy98q3Qm10ovnLaxjeIjNLJhVVJQzZDWL35UoBLawbGRut6A7zJOcTT
-lp8CRkbaAebFQQkzy2mh+Dl1Wu75WkLtrWuseyDpH0c9AngNj1k6KpVBV38By7dl
-b9E6PgoebqKkURwp6YPEopNIe3WpNGaq7e3gGRiw4hlxMFzWk0pnuPXlWa5woOIq
-KppXI9XYn4LYJ32qo39rd21seL3To+U71eC9Id+YpH0JpKaLKwLcGVCb4WH1R2YZ
-chDRqF+iO801QfSScTkXczrHt4M9haldAkkqi15v78ImMouewBnh0KpBaYicZm7n
-9vFqOIUTjmlX2/gdPkC214cT0tHurgsWigfWIzOfy1qElBAXxC9a0RQqwjgGxO1m
-UjcCJhsJmwQDYwA4fY8WrZ8CSseFo9Zl57vOOfUzYt4H7ThnIUIiwQZVE7cqwaJ3
-YXn171k7Yr6giGqNWUO0BYKRA9Hy2dOfayY+SU8+9HwiQCqAnA9QZ/lcMXxX1tHs
-TMDTLTDwHUy7i5ahzYy34DrzuE4fG2ZEHqd2HK7TsAuz5xmtP6+ZVprOdrVAM7LN
-QNt3CBuaTG1olrmFyJ3zSho3WxB4L9aULkpv6chYxHWLw9igl1lHSM9IDHZ6mTr1
-LJoFIZOFznYFNQV5hjbj
-=W+Zq
------END PGP SIGNATURE-----
-
---goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs--
