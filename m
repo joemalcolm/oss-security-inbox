@@ -1,46 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/12
-Message-ID: <2023101622-imply-tidal-b6cf@gregkh>
-Date: Mon, 16 Oct 2023 16:52:32 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/29/1
+Message-ID: <c5e6ac62-28b2-76be-f65b-07449c82b536@igalia.com>
+Date: Thu, 29 Jun 2023 15:07:40 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0005
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > Hi,
-> > > 
-> > > Regardless of your viability of subscription status I think we also
-> > > (sadly) have to consider current geopolitical issues here.
-> > > 
-> > > As far as I understand, US companies and US citizens are not permitted
-> > > to work with Chinese organizations and/or Chinese nationals.
-> > 
-> > They can when working in the open on public projects and other
-> > open-source-like things.  For "closed" lists and groups, please consult
-> > a lawyer as the rules there are quite varied and depends on the
-> > countries and companies involved.
-> > 
-> > But to be sure, again, consult your corporate lawyers, they know the
-> > rules and the issues involved better than I do.
-> > 
-> > good luck!
-> > 
-> > greg k-h
-> 
-> The question is _who_ should consult their lawyers.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0005
+------------------------------------------------------------------------
 
-The people deciding if this group can be added to the closed list as
-they are the ones responsible for it, AND then if the group is added,
-the members of the list need to talk to their lawyers to see if their
-country laws allow them to participate in a closed group with such
-members.  Many countries might be fine, many might not be, it all
-depends on the participants and what country laws they must abide by.
+Date reported           : June 29, 2023
+Advisory ID             : WSA-2023-0005
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0005.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0005.html
+CVE identifiers         : CVE-2022-48503, CVE-2023-32435,
+                          CVE-2023-32439.
 
-So in short, everyone involved in the list!  :(
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-good luck!
+CVE-2022-48503
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
+    Credit to Dongzhuo Zhao working with ADLab of Venustech, and ZhaoHai
+    of Cyberpeace Tech Co., Ltd.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved bounds checks.
 
-greg "I talk to too many lawyers" k-h
+CVE-2023-32435
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
+    Credit to Georgy Kucherin (@kucher1n), Leonid Bezvershenko (@bzvr_),
+    and Boris Larin (@oct0xor) of Kaspersky.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Apple is aware of a report that this issue may have been actively
+    exploited. Description: A memory corruption issue was addressed with
+    improved state management.
+
+CVE-2023-32439
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.3.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A type confusion
+    issue was addressed with improved checks.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+June 29, 2023
