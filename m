@@ -1,4 +1,4 @@
-Received: (qmail 3524 invoked by uid 550); 13 Apr 2026 14:31:53 -0000
+Received: (qmail 1927 invoked by uid 550); 29 Jun 2023 13:07:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +7,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17655 invoked from network); 13 Apr 2026 14:27:54 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1776090364; bh=LDBJhuaXHmtLuO6F/d1v54z7M1YQo0mQif9AisXeA70=;
-	h=From:Date:Subject:To:From;
-	b=5toHlHrHYDhwtMVdaGbDwLnSfS3e3V23bi2IHdJ7swJHHMfec2rDNpCWryEJVfrRy
-	 hGCGzQP5+kZErjk2Qsf5IiNU9JPSdBSXOWo1NUMCgvY6fZurNGC/K6GNG5XHLdeZ9a
-	 07XmYYrFhzF5yYIYiPC2jyj2U59hxb7UyNgf2iXyskELs3ZW9yc4GIv8/T8K0Y6E7r
-	 jatb8/BB0po3GLR8nq41RENR8dmy6BUsRvaAc4/0KmczHkKEz3loLnXHXhgkgPYk6I
-	 1SyVBs90xpyNSmLVpW6Rju1XMxH+r/FFygei31/hdxl2Lo/kSgbZeLmIu+pVLWRn7q
-	 gDA+fyWFqCFyQ==
-X-Gm-Message-State: AOJu0Yy51ev8fK8t4lC/wEtnjv5LhommQ8lpqcqRZlksLmOkZ92SrP3Z
-	eoZATcj62z4+sJlY2cL0mJEIHMTUofiET8+GIwnvahzdrFxQZCQMsrjQK0APnrxXppBgv2nHY8/
-	bIzmlA3IlmR2EK7in+bIugRdjzQlgLWU=
-X-Received: by 2002:ac8:5d8d:0:b0:50b:4051:2cab with SMTP id
- d75a77b69052e-50dd5c1d36amr214794621cf.58.1776090363916; Mon, 13 Apr 2026
- 07:26:03 -0700 (PDT)
+Received: (qmail 1897 invoked from network); 29 Jun 2023 13:07:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=MMFBqtiH3VwNJ9ylG0dSTTre2Gx5/g9BWfY9S4y0pkY=; b=RiHwINHTu5o1UcUbbM1+0YPyFE
+	pNd61q7mCLOZaEfOcK2khOWOvONH2zl/0DkpI33UrSryba9Id1VCM83Da0tl7PkpgoXDo8R/pLM6F
+	Dk4QYtKBFbuwUvqUZIgPEhHLeEw7NSiRwf6EamtP0Qlsat7TTyFv0avD9KBajXHhVPr+BiGcBJz+I
+	STLHVyQxm9oQN9bznPeDgnQOZzDDY0c7EaX8wmgHdLZKeqOMJCt8desn4gS8qUTnnu6frLny4Kf4Y
+	RlhZyoUbB0WxU7z4t6ewlTGlFWc0U3k4WyxRmrdxqU61/idYryRQkZxzQCpZWu874s7T9t5r46fYM
+	WuTBR3fw==;
+Message-ID: <c5e6ac62-28b2-76be-f65b-07449c82b536@igalia.com>
+Date: Thu, 29 Jun 2023 15:07:40 +0200
 MIME-Version: 1.0
-From: David Handermann <exceptionfactory@apache.org>
-Date: Mon, 13 Apr 2026 09:25:52 -0500
-X-Gmail-Original-Message-ID: <CAEqiR7SDjvexnZ13sYUaMFYMcqk+hgLzOmTJ4MwEyrD=Z9tqcA@mail.gmail.com>
-X-Gm-Features: AQROBzAIh3-dug8E2i1oM6bnhejaB5WB7SPRtE18QxNuqRpTRRqhuPzAZliv0cU
-Message-ID: <CAEqiR7SDjvexnZ13sYUaMFYMcqk+hgLzOmTJ4MwEyrD=Z9tqcA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2026-39816: Apache NiFi: Missing Execute Code Required Permission
- on TinkerpopClientService
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-GB
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0005
 
-Severity: High
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0005
+------------------------------------------------------------------------
 
-Affected versions:
+Date reported           : June 29, 2023
+Advisory ID             : WSA-2023-0005
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0005.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0005.html
+CVE identifiers         : CVE-2022-48503, CVE-2023-32435,
+                          CVE-2023-32439.
 
-- Apache NiFi (org.apache.nifi:nifi-other-graph-services-nar) 2.0.0-M1
-through 2.8.0
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Description:
+CVE-2022-48503
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
+    Credit to Dongzhuo Zhao working with ADLab of Venustech, and ZhaoHai
+    of Cyberpeace Tech Co., Ltd.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved bounds checks.
 
-The optional extension component TinkerpopClientService is missing the
-Restricted annotation with the Execute Code Required Permission in
-Apache NiFi 2.0.0-M1 through 2.8.0. The TinkerpopClientService
-supports configuration of ByteCode Submission for the Script
-Submission Type, enabling Groovy Script execution in the service prior
-to submitting the query. The missing Restricted annotation allows
-users without the Execute Code Permission to configure the Service in
-installations that use fine-grained authorization and have the
-optional TinkerpopClientService installed. Apache NiFi installations
-that do not have the nifi-other-graph-services-nar installed are not
-subject to this vulnerability. Upgrading to Apache NiFi 2.9.0 is the
-recommended mitigation.
+CVE-2023-32435
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
+    Credit to Georgy Kucherin (@kucher1n), Leonid Bezvershenko (@bzvr_),
+    and Boris Larin (@oct0xor) of Kaspersky.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Apple is aware of a report that this issue may have been actively
+    exploited. Description: A memory corruption issue was addressed with
+    improved state management.
 
-This issue is being tracked as NIFI-15800
+CVE-2023-32439
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.3.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A type confusion
+    issue was addressed with improved checks.
 
-Credit:
 
-John Walker from ZeroPath (finder)
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-References:
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-39816
-https://issues.apache.org/jira/browse/NIFI-15800
-
-Timeline:
-
-2026-04-03: reported
-2026-04-06: patched
+The WebKitGTK and WPE WebKit team,
+June 29, 2023
