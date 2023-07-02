@@ -1,96 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/4
-Message-ID: <F2B8265A-672C-4667-8083-51015773475A@amazon.com>
-Date: Wed, 19 Apr 2023 05:45:10 +0000
-From: "Vellore Rajakumar, Sri Saran Balaji" <srajakum@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [kubernetes] CVE-2023-1174, CVE-2023-1944: Network port exposure and ssh access using default password
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/02/2
+Message-ID: <77145bb1-a648-e46c-1159-5286c4f3b000@apache.org>
+Date: Sun, 02 Jul 2023 10:16:17 +0000
+From: Elad Kalif <eladkal@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-35797: Apache Airflow Hive Provider Beeline RCE with Principal 
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Severity: moderate
 
+Affected versions:
 
+- Apache Airflow Apache Hive Provider before 6.1.1
 
-We have released minikube v1.30.0<https://github.com/kubernetes/minikube/releases/tag/v1.30.0> to address two security issues in minikube. We recommend all to upgrade minikube to the latest version and delete any Kubernetes clusters created with an affected version. Minikube is a utility tool that sets up a Kubernetes environment on a local machine for developing and testing Kubernetes applications. Minikube is not intended for production use.
+Description:
 
+Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Hive Provider.
+This issue affects Apache Airflow Apache Hive Provider: before 6.1.1.
 
+Before version 6.1.1 it was possible to bypass the security check to RCE via
+principal parameter. For this to be exploited it requires access to modifying the connection details.
 
-CVE-2023-1174: Network port exposure
+It is recommended updating provider version to 6.1.1 in order to avoid this vulnerability.
 
+Credit:
 
+id_No2015429 of 3H Secruity Team (reporter)
 
-This vulnerability exposes a network port in minikube running on macOS with Docker driver that could enable unexpected remote access to the minikube container. This issue has been rated CRITICAL (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H>) (score: 9.8).
+References:
 
-
-
-Am I vulnerable?
-
-This CVE only affects clusters running on macOS with Docker drivers. If you have created the Kubernetes cluster using one of the below mentioned minikube versions, then you are affected by this vulnerability.
-
-
-
-Affected Versions
-
-• v1.28.0
-
-• v1.27.1
-
-• v1.27.0
-
-• v1.26.1
-
-• v1.26.0
-
-
-
-You can also run the following command to know if you are affected. If the command returns 0.0.0.0 then you are affected by this vulnerability.
-
-`docker inspect --format='{{(index (index .NetworkSettings.Ports "8443/tcp") 0).HostIp}}' minikube`
-
-
-
-CVE-2023-1944: SSH access using default password
-
-
-
-This vulnerability enables ssh access to minikube container using a default password. This issue has been rated HIGH (CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H>) (score: 8.4).
-
-
-
-Am I vulnerable?
-
-
-
-All versions prior to v.1.30.0 are affected.
-
-
-
-To find the version deployed in your environment, run the following command -
-
-`minikube version`
-
-
-
-How do I remediate these vulnerabilities?
-
-
-
-To mitigate these vulnerabilities, you must upgrade minikube to the latest version and delete any clusters created using an affected version.
-
-
-
-Fixed Version
-
-• v1.30.0
-
-
-
-Note: To delete clusters created using prior versions, run `minikube delete --all`
-
-
-
-Thank You,
-
-Balaji on behalf of the Kubernetes Security Response Committee
-
+https://github.com/apache/airflow/pull/31983
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-35797
 
