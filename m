@@ -1,27 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/5
-Message-ID: <20230314120117.46a105cc.hanno@hboeck.de>
-Date: Tue, 14 Mar 2023 12:01:17 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/03/1
+Message-ID: <5afa0e5a-8058-469e-6ad7-587cf4e2a0cd@gmail.com>
+Date: Mon, 3 Jul 2023 10:05:54 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+Subject: Django: CVE-2023-36053: Potential regular expression denial of service vulnerability in EmailValidator/URLValidator
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 14 Mar 2023 11:46:33 +0100
-Peter Bex <peter@...e-magic.net> wrote:
+https://www.djangoproject.com/weblog/2023/jul/03/security-releases/
 
-> Indeed, opendoas (the portable version of OpenBSD's "doas") has this
-> exact bug as well: https://github.com/Duncaen/OpenDoas/issues/106
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.2.3 <https://docs.djangoproject.com/en/dev/releases/4.2.3/>`_,
+`Django 4.1.10 
+<https://docs.djangoproject.com/en/dev/releases/4.1.10/>`_, and
+`Django 3.2.20 <https://docs.djangoproject.com/en/dev/releases/3.2.20/>`_.
+These releases addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-Though some context is relevant here: doas is a tool from OpenBSD.
-According to the Linux kernel commit message [1] OpenBSD has fixed this
-already 3 years ago by entirely removing TIOCSTI [2][3].
+CVE-2023-36053: Potential regular expression denial of service 
+vulnerability in ``EmailValidator``/``URLValidator``
+===================================================================================================================
 
-[1]
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83efeeeb3d04
-[2] https://undeadly.org/cgi?action=article;sid=20170701132619
-[3] https://marc.info/?l=openbsd-cvs&m=149870941319610
+``EmailValidator`` and ``URLValidator`` were subject to potential regular
+expression denial of service attack via a very large number of domain name
+labels of emails and URLs.
 
--- 
-Hanno Böck
-https://hboeck.de/
+Thanks Seokchan Yoon for reports.
+
+This issue has severity "moderate" according to the Django security policy.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 4.2
+* Django 4.1
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch 
+and the
+4.2, 4.1, and 3.2 release branches. The patches may be obtained from the
+following changesets:
+
+* On the `main branch 
+<https://github.com/django/django/commit/ad0410ec4f458aa39803e5f6b9a3736527062dcd>`__
+* On the `4.2 release branch 
+<https://github.com/django/django/commit/b7c5feb35a31799de6e582ad6a5a91a9de74e0f9>`__
+* On the `4.1 release branch 
+<https://github.com/django/django/commit/beb3f3d55940d9aa7198bf9d424ab74e873aec3d>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/454f2fb93437f98917283336201b4048293f7582>`__
+
+The following releases have been issued:
+
+* Django 4.2.3 (`download Django 4.2.3 
+<https://www.djangoproject.com/m/releases/4.2/Django-4.2.3.tar.gz>`_ | 
+`4.2.3 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.2.3.checksum.txt>`_)
+* Django 4.1.10 (`download Django 4.1.10 
+<https://www.djangoproject.com/m/releases/4.1/Django-4.1.10.tar.gz>`_ | 
+`4.1.10 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.1.10.checksum.txt>`_)
+* Django 3.2.20 (`download Django 3.2.20 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.20.tar.gz>`_ | 
+`3.2.20 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.20.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
