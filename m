@@ -1,61 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/5
-Message-ID: <CANo=s0ZesZj2nzHGxeG4CEjcB+dAxBF8pMDWB_mAMvgSm_gnSA@mail.gmail.com>
-Date: Thu, 22 Jun 2023 18:05:14 +0530
-From: Jyoti Raval <jenyraval@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/05/2
+Message-ID: <ZKWjO36sTTiRedC3@quatroqueijos.cascardo.eti.br>
+Date: Wed, 5 Jul 2023 14:07:07 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Open Source Tool | MPT: Pentest In Action!
+Subject: CVE-2023-31248 - Linux kernel nf_tables UAF when using nft_chain_lookup_byid
 Content-Type: text/plain; charset=utf-8
 
-Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
-<https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
+It was discovered that it was possible to refer to a deleted nf_tables
+chain when using nft_chain_lookup_byid, leading to a potential
+use-after-free.
 
-MPT aims to provide one stop solution for managing all pentests that are
-running across organisation.
-<https://github.com/jenyraval/MPT#why>Why?
+Mingi Cho of Theori working with Trend Micro's Zero Day Initiative
+discovered that this vulnerability could be exploited for Local Privilege
+Escalation. This has been reported as ZDI-CAN-20717, and assigned
+CVE-2023-31248.
 
-Security penetration testing is more than necessary. If not all, most
-organisations either have their own penetration testing team in-house or
-they have third party pentesters. In any fast paced organisation with
-multiple product lines and development planning timelines, it becomes
-challenging for security teams to efficiently manage all these pentest
-activities and effectively produce security assessment reports and track
-them.
+Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
 
-In order to solve above challenges I have developed a solution called
-‘Managing Pentest (MPT: Pentest in Action)’
-<https://github.com/jenyraval/MPT#what>What?
+This bug was introduced by commit 837830a4b439 ("netfilter: nf_tables: add
+NFTA_RULE_CHAIN_ID attribute"), which is present since v5.9-rc1. It was not
+backported to any upstream LTS kernel.
 
-MPT helps us solve various problems:
-
-   - Asset DB to know all organisation assets that are in pentest process.
-   You can’t secure what you are not aware of!
-   - Tracking each pentest
-   - Pentesting activity knowledge which comprises of what particular let
-   say application does, or the purpose of hardware that we are testing
-   - When next pentester takes over the testing, all they have to do is
-   view the asset and associated information which is already there.
-   - Time taken for each pentest
-   - Real time tracking of activity
-   - Issue status
-   - Common issues that are observed
-
-MPT also has security pentest analytics which helps us not only track and
-view everything in single pane of glass but also helps with:
-
-   - Finding improvement areas to boost pen tester productivity
-   - Understand the current risk posture
-   - Understand recurring issues
-   - Average amount of time taken for each pentest vs asset size
-   - Average high/medium/low fixing time
-   - Most number of vulnerabilities fixed in a year
-   - Class of new vulnerabilities discovered
-   - Developer trends
-   - Open findings
-   - Critical assessments
-   - Asset health
-   - Top pentester reported findings
-   - Average busy time for each pentester
-
-Github - https://github.com/jenyraval/MPT
-
+A fix have been sent to netfilter-devel@...r.kernel.org and is at
+https://lore.kernel.org/netfilter-devel/20230705121627.GC19489@breakpoint.cc/T/.
