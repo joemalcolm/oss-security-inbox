@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["584" "Wednesday" "10" "June" "2015" "16:24:06" "+0200" "Petr Matousek" "pmatouse@redhat.com" "<20150610142405.GB19706@dhcp-25-225.brq.redhat.com>" "18" "Re: [oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap overflow in QEMU PCNET controller, allowing guest->host escape" nil nil nil "6" "2015061014:24:06" "[oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap overflow in QEMU PCNET controller, allowing guest->host escape" (number mark "U       pmatouse@red Jun 10   18/584   " thread-indent "\"Re: [oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap overflow in QEMU PCNET controller, allowing guest->host escape\"\n") "<E1Z2giD-0007Hh-AZ@xenbits.xen.org>" ("<E1Z2giD-0007Hh-AZ@xenbits.xen.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3768 invoked by uid 550); 10 Jun 2015 14:24:22 -0000
+Received: (qmail 28431 invoked by uid 550); 5 Jul 2023 17:08:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3746 invoked from network); 10 Jun 2015 14:24:21 -0000
-Date: Wed, 10 Jun 2015 16:24:06 +0200
-From: Petr Matousek <pmatouse@redhat.com>
+Received: (qmail 27952 invoked from network); 5 Jul 2023 17:07:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1688576831;
+	bh=7jnrj7jb9n4s7sWSQgtFYwb4UKksJmDAWfnw7IiqQTw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	b=EoZSEX3IoCuL+mqFIyLeIjAKNT8FJp6/7ZZ/VdkIaSH4hBqyogzn7Hlm3Gsnj5Wog
+	 M9QcW7VRIf+DPU8V5gmtHSL6j7FhLZRzlHd3xHU+fX3pvLd0fhWPlk2tds4TR6ZXyl
+	 l9NA6SgeBbPyT2IUmn8aTivf0pjr/VsN7E7lOFdrhxtfzJMw9TITRZDaER/gJ2GEqM
+	 YkmfZiDmXJ7AgvLtruKubWmh7GdGzWI59QeN4+v5GqFNyOoxNHWBT7wv4qRw7M3foX
+	 soGYQ1coX/Js5iXo7YwcpOYXozKDdIYiX9W/3cDxJR7/rN0xgLPH5Gc+Ola3m3YrDS
+	 xZKSf6jnsc7WA==
+Date: Wed, 5 Jul 2023 14:07:07 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20150610142405.GB19706@dhcp-25-225.brq.redhat.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <E1Z2giD-0007Hh-AZ@xenbits.xen.org>
+Message-ID: <ZKWjO36sTTiRedC3@quatroqueijos.cascardo.eti.br>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <E1Z2giD-0007Hh-AZ@xenbits.xen.org>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Subject: Re: [oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap
- overflow in QEMU PCNET controller, allowing guest->host escape
+Subject: [oss-security] CVE-2023-31248 - Linux kernel nf_tables UAF when using
+ nft_chain_lookup_byid
 
-On Wed, Jun 10, 2015 at 02:10:37PM +0000, Xen.org security team wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
->             Xen Security Advisory CVE-2015-3209 / XSA-135
->                               version 3
-> 
->  Heap overflow in QEMU PCNET controller, allowing guest->host escape
+It was discovered that it was possible to refer to a deleted nf_tables
+chain when using nft_chain_lookup_byid, leading to a potential
+use-after-free.
 
-QEMU upstream patch submission:
-https://www.mail-archive.com/qemu-devel@nongnu.org/msg302403.html
+Mingi Cho of Theori working with Trend Micro's Zero Day Initiative
+discovered that this vulnerability could be exploited for Local Privilege
+Escalation. This has been reported as ZDI-CAN-20717, and assigned
+CVE-2023-31248.
 
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-3209
+Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
 
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+This bug was introduced by commit 837830a4b439 ("netfilter: nf_tables: add
+NFTA_RULE_CHAIN_ID attribute"), which is present since v5.9-rc1. It was not
+backported to any upstream LTS kernel.
+
+A fix have been sent to netfilter-devel@vger.kernel.org and is at
+https://lore.kernel.org/netfilter-devel/20230705121627.GC19489@breakpoint.cc/T/.
