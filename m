@@ -1,149 +1,276 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/18/2
-Message-ID: <CADW8OBuhuCTq-MvcFuAxOc6pWrkmOd-mwV9yasNRfbnD9s85-g@mail.gmail.com>
-Date: Tue, 17 Jan 2023 23:11:09 -0700
-From: Kyle Zeng <zengyhkyle@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/05/1
+Message-ID: <xhhkp3aknwwlmrmmqmr532yfq3ioqh6jbkrxfqf6ovlj2szsai@f3sjwakyq323>
+Date: Wed, 5 Jul 2023 20:12:01 +0800
+From: Ruihan Li <lrh2000@....edu.cn>
 To: oss-security@...ts.openwall.com
-Subject: null pointer dereference in Linux kernel
+Cc: Ruihan Li <lrh2000@....edu.cn>
+Subject: StackRot (CVE-2023-3269): Linux kernel privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Hi all,
 
-I recently found a null pointer dereference in Linux kernel that
-affects multiple kernel versions. According to the versions that got
-patched, the vulnerability affects 6.1, 5.15, 5.10, 5.4, and 4.19.
+**This serves as an "early" disclosure of the StackRot vulnerability, in
+compliance with [the policy of the linux-distros list][po]. While all the
+essential vulnerability details have been provided here, the complete exploit
+code and a comprehensive write-up will be made publicly available no later than
+the end of July. This oss-security thread will be notified, and any
+updates will be reflected in [the GitHub repository][gh].**
 
-[Root Cause Analysis]
-The bug is in "rawv6_push_pending_frames" function in net/ipv6/raw.c.
-According to Herbert Xu, who fixed the bug, the root cause is that
-"total_len = inet_sk(sk)->cork.base.length" in this function also
-counts the length of the extension header (+ the amount of valid data
-in the socket cork queue). In the vulnerable version of the function,
-it directly uses the length as the amount of data in the cork queue.
-In the following code:
+ [po]: https://oss-security.openwall.org/wiki/mailing-lists/distros
+ [gh]: https://github.com/lrh2000/StackRot
 
-    struct sk_buff *csum_skb = NULL;
-    ...
-    skb_queue_walk(&sk->sk_write_queue, skb) {
-        ...
-        if (offset >= len) {
-            offset -= len;
-            continue;
-        }
-        csum_skb = skb;
-    }
-    skb = csum_skb;
+A flaw was found in the handling of stack expansion in the Linux kernel 6.1
+through 6.4, aka "Stack Rot". The maple tree, responsible for managing virtual
+memory areas, can undergo node replacement without properly acquiring the MM
+write lock, leading to use-after-free issues. An unprivileged local user could
+use this flaw to compromise the kernel and escalate their privileges.
 
-If the `offset` is larger than the amount of data in the socket cork
-queue but smaller than valid data length + extension header length,
-then the loop shown above will always enter the "if (offset >= len)"
-branch. As a result, csum_skb will never be set. Consequently, the
-final skb variable will be set to NULL.
+As StackRot is a Linux kernel vulnerability found in the memory management
+subsystem, it affects almost all kernel configurations and requires minimal
+capabilities to trigger. However, it should be noted that maple nodes are freed
+using RCU callbacks, delaying the actual memory deallocation until after the
+RCU grace period. Consequently, exploiting this vulnerability is considered
+challenging.
 
-Null dereference happens in the following "skb_transport_offset(skb);" call.
+To the best of my knowledge, there are currently no publicly available exploits
+targeting use-after-free-by-RCU (UAFBR) bugs. This marks the first instance
+where UAFBR bugs have been proven to be exploitable, even without the presence
+of CONFIG_PREEMPT or CONFIG_SLAB_MERGE_DEFAULT settings. Notably, this exploit
+has been successfully demonstrated in the environment provided by [Google kCTF
+VRP][ctf] ([bzImage_upstream_6.1.25][img], [config][cfg]).
 
-[Patch]
-I have contacted Linux kernel team and helped them prepare a patch.
-The patch to this bug has been merged into the mainline and stable
-trees: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cb3e9864cdbe35ff6378966660edbcbac955fe17
+ [ctf]: https://google.github.io/kctf/vrp.html
+ [img]: https://storage.googleapis.com/kctf-vrp-public-files/bzImage_upstream_6.1.25
+ [cfg]: https://storage.googleapis.com/kctf-vrp-public-files/bzImage_upstream_6.1.25_config
 
-This bug does not have a CVE number assigned yet. I'll appreciate it
-if someone from the list can give it a CVE number to notify other
-vendors about its security implication.
+The StackRot vulnerability has been present in the Linux kernel since version
+6.1 when the VMA tree structure was [changed][ch] from red-black trees to maple
+trees.
 
-A crash report is attached to the email. And a poc that triggers oops
-can be found here:
-https://lore.kernel.org/netdev/Y7s%2FFofVXLwoVgWt@westworld/
+ [ch]: https://lore.kernel.org/lkml/20220906194824.2110408-1-Liam.Howlett@oracle.com/
 
-Best,
-Kyle Zeng
+## Background
 
+Whenever the `mmap()` system call is utilized to establish a memory mapping,
+the kernel generates a structure called `vm_area_struct` to represent the
+corresponding virtual memory area (VMA). This structure stores various
+information including flags, properties, and other pertinent details related to
+the mapping.
 
-=====================================
-general protection fault, probably for non-canonical address
-0xdffffc0000000018: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
-CPU: 0 PID: 619 Comm: syz-executor390 Not tainted 5.10.140+ #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:skb_transport_header include/linux/skbuff.h:2500 [inline]
-RIP: 0010:skb_transport_offset include/linux/skbuff.h:2606 [inline]
-RIP: 0010:rawv6_push_pending_frames net/ipv6/raw.c:593 [inline]
-RIP: 0010:rawv6_sendmsg+0x4368/0x5db0 net/ipv6/raw.c:956
-Code: e8 cd ca e0 fb e9 51 fe ff ff e8 c3 7b 61 fb 49 89 dd 48 bd 00
-00 00 00 00 fc ff df 49 8d bd c0 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c
-28 00 74 05 e8 bd ca e0 fb 49 8b 9d c0 00 00 00 49 8d bd b2
-RSP: 0018:ffff888013ddf7e8 EFLAGS: 00010206
-RAX: 0000000000000018 RBX: 0000000000000000 RCX: ffff888011f05500
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: 00000000000000c0
-RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed10027a9afc
-R10: 0000000000000000 R11: 0000000000000000 R12: 00000000479c45b8
-R13: 0000000000000000 R14: ffff888013d4d800 R15: 00000000000000d8
-FS:  00005555560ca3c0(0000) GS:ffff88806b800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020001000 CR3: 000000000eb5a002 CR4: 0000000000170ef0
-Call Trace:
- sock_sendmsg_nosec net/socket.c:651 [inline]
- sock_sendmsg net/socket.c:671 [inline]
- kernel_sendmsg+0x20a/0x230 net/socket.c:691
- sock_no_sendpage+0xde/0x130 net/core/sock.c:2852
- kernel_sendpage+0x4c8/0x530 net/socket.c:3514
- sock_sendpage+0x83/0xb0 net/socket.c:944
- pipe_to_sendpage+0x4c0/0x630 fs/splice.c:364
- splice_from_pipe_feed fs/splice.c:418 [inline]
- __splice_from_pipe+0x655/0xf60 fs/splice.c:562
- splice_from_pipe fs/splice.c:597 [inline]
- generic_splice_sendpage+0x132/0x1a0 fs/splice.c:743
- do_splice_from fs/splice.c:764 [inline]
- do_splice+0x1ea8/0x2da0 fs/splice.c:1057
- __do_splice fs/splice.c:1135 [inline]
- __do_sys_splice fs/splice.c:1341 [inline]
- __se_sys_splice+0x935/0xdc0 fs/splice.c:1323
- do_syscall_64+0x13a/0x160 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
-RIP: 0033:0x7f111d8c47dd
-Code: c3 e8 e7 22 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
-89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d
-01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fff0105cb48 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
-RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f111d8c47dd
-RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 00007fff0105cb80 R08: 000000000804ffe2 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000bbd1 R14: 00007fff0105cb64 R15: 00007fff0105cb70
-Modules linked in:
----[ end trace 66de936c85813c54 ]---
-RIP: 0010:skb_transport_header include/linux/skbuff.h:2500 [inline]
-RIP: 0010:skb_transport_offset include/linux/skbuff.h:2606 [inline]
-RIP: 0010:rawv6_push_pending_frames net/ipv6/raw.c:593 [inline]
-RIP: 0010:rawv6_sendmsg+0x4368/0x5db0 net/ipv6/raw.c:956
-Code: e8 cd ca e0 fb e9 51 fe ff ff e8 c3 7b 61 fb 49 89 dd 48 bd 00
-00 00 00 00 fc ff df 49 8d bd c0 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c
-28 00 74 05 e8 bd ca e0 fb 49 8b 9d c0 00 00 00 49 8d bd b2
-RSP: 0018:ffff888013ddf7e8 EFLAGS: 00010206
-RAX: 0000000000000018 RBX: 0000000000000000 RCX: ffff888011f05500
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: 00000000000000c0
-RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed10027a9afc
-R10: 0000000000000000 R11: 0000000000000000 R12: 00000000479c45b8
-R13: 0000000000000000 R14: ffff888013d4d800 R15: 00000000000000d8
-FS:  00005555560ca3c0(0000) GS:ffff88806b800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020001000 CR3: 000000000eb5a002 CR4: 0000000000170ef0
-----------------
-Code disassembly (best guess):
-   0: e8 cd ca e0 fb        call   0xfbe0cad2
-   5: e9 51 fe ff ff        jmp    0xfffffe5b
-   a: e8 c3 7b 61 fb        call   0xfb617bd2
-   f: 49 89 dd              mov    %rbx,%r13
-  12: 48 bd 00 00 00 00 00 movabs $0xdffffc0000000000,%rbp
-  19: fc ff df
-  1c: 49 8d bd c0 00 00 00 lea    0xc0(%r13),%rdi
-  23: 48 89 f8              mov    %rdi,%rax
-  26: 48 c1 e8 03          shr    $0x3,%rax
-* 2a: 80 3c 28 00          cmpb   $0x0,(%rax,%rbp,1) <-- trapping instruction
-  2e: 74 05                je     0x35
-  30: e8 bd ca e0 fb        call   0xfbe0caf2
-  35: 49 8b 9d c0 00 00 00 mov    0xc0(%r13),%rbx
-  3c: 49                    rex.WB
-  3d: 8d                    .byte 0x8d
-  3e: bd                    .byte 0xbd
-  3f: b2                    .byte 0xb2
+```c
+struct vm_area_struct {
+        long unsigned int          vm_start;             /*     0     8 */
+        long unsigned int          vm_end;               /*     8     8 */
+        struct mm_struct *         vm_mm;                /*    16     8 */
+        pgprot_t                   vm_page_prot;         /*    24     8 */
+        long unsigned int          vm_flags;             /*    32     8 */
+        union {
+                struct {
+                        struct rb_node rb __attribute__((__aligned__(8))); /*    40    24 */
+                        /* --- cacheline 1 boundary (64 bytes) --- */
+                        long unsigned int rb_subtree_last; /*    64     8 */
+                } __attribute__((__aligned__(8))) shared __attribute__((__aligned__(8))); /*    40    32 */
+                struct anon_vma_name * anon_name;        /*    40     8 */
+        } __attribute__((__aligned__(8)));               /*    40    32 */
+        /* --- cacheline 1 boundary (64 bytes) was 8 bytes ago --- */
+        struct list_head           anon_vma_chain;       /*    72    16 */
+        struct anon_vma *          anon_vma;             /*    88     8 */
+        const struct vm_operations_struct  * vm_ops;     /*    96     8 */
+        long unsigned int          vm_pgoff;             /*   104     8 */
+        struct file *              vm_file;              /*   112     8 */
+        void *                     vm_private_data;      /*   120     8 */
+        /* --- cacheline 2 boundary (128 bytes) --- */
+        atomic_long_t              swap_readahead_info;  /*   128     8 */
+        struct vm_userfaultfd_ctx  vm_userfaultfd_ctx;   /*   136     0 */
+
+        /* size: 136, cachelines: 3, members: 14 */
+        /* forced alignments: 1 */
+        /* last cacheline: 8 bytes */
+} __attribute__((__aligned__(8)));
+```
+
+Subsequently, when the kernel encounters page faults or other memory-related
+system calls, it requires fast lookup of the VMA solely based on the address.
+Previously, the VMAs were managed using red-black trees. However, starting from
+Linux kernel version 6.1, the migration to maple trees took place. [Maple
+trees][mt] are RCU-safe B-tree data structures optimized for storing
+non-overlapping ranges. Nonetheless, their intricate nature adds complexity to
+the codebase and introduces the StackRot vulnerability.
+
+ [mt]: https://docs.kernel.org/6.4/core-api/maple_tree.html
+
+In essence, the maple tree is composed of maple nodes. Throughout this article,
+it is assumed that the maple tree has only a single root node, which can
+contain a maximum of 16 intervals. Each interval can either represent a gap or
+point to a VMA. Thus, no gaps are allowed between two intervals.
+
+```c
+struct maple_range_64 {
+        struct maple_pnode *       parent;               /*     0     8 */
+        long unsigned int          pivot[15];            /*     8   120 */
+        /* --- cacheline 2 boundary (128 bytes) --- */
+        union {
+                void *             slot[16];             /*   128   128 */
+                struct {
+                        void *     pad[15];              /*   128   120 */
+                        /* --- cacheline 3 boundary (192 bytes) was 56 bytes ago --- */
+                        struct maple_metadata meta;      /*   248     2 */
+                };                                       /*   128   128 */
+        };                                               /*   128   128 */
+
+        /* size: 256, cachelines: 4, members: 3 */
+};
+```
+
+The structure `maple_range_64` represents a maple node in the following manner.
+The pivots indicate the endpoints of 16 intervals, while the slots are used to
+reference the VMA structure when the node is considered a leaf node. The layout
+of pivots and slots can be visualized as shown below:
+
+```
+ Slots -> | 0 | 1 | 2 | ... | 12 | 13 | 14 | 15 |
+          ┬   ┬   ┬   ┬     ┬    ┬    ┬    ┬    ┬
+          │   │   │   │     │    │    │    │    └─ Implied maximum
+          │   │   │   │     │    │    │    └─ Pivot 14
+          │   │   │   │     │    │    └─ Pivot 13
+          │   │   │   │     │    └─ Pivot 12
+          │   │   │   │     └─ Pivot 11
+          │   │   │   └─ Pivot 2
+          │   │   └─ Pivot 1
+          │   └─ Pivot 0
+          └─  Implied minimum
+```
+
+Regarding concurrent modification, the maple tree imposes restrictions,
+requiring an exclusive lock to be held by writers. In the case of the VMA tree,
+the exclusive lock corresponds to the MM write lock. As for readers, two
+options are available. The first option involves holding the MM read lock,
+which results in the writer being blocked by the MM read-write lock.
+Alternatively, the second option is to enter the RCU critical section. By doing
+so, the writer is not blocked, and readers can continue their operations since
+the maple tree is RCU-safe. While most existing VMA accesses opt for the first
+option, the second option is employed in a few performance-critical scenarios,
+such as lockless page faults.
+
+However, there is an additional aspect that requires particular attention,
+which pertains to stack expansion. The stack represents a memory area that is
+mapped with the MAP_GROWSDOWN flag, indicating automatic expansion when an
+address below the region is accessed. In such cases, the start address of the
+corresponding VMA is adjusted, as well as the associated interval within the
+maple tree. Notably, these adjustments are made without holding the MM write
+lock.
+
+```c
+static inline
+void do_user_addr_fault(struct pt_regs *regs,
+                        unsigned long error_code,
+                        unsigned long address)
+{
+	// ...
+
+	if (unlikely(!mmap_read_trylock(mm))) {
+		// ...
+	}
+	// ...
+	if (unlikely(expand_stack(vma, address))) {
+		// ...
+	}
+
+	// ...
+}
+```
+
+Typically, a gap exists between the stack VMA and its neighboring VMA, as the
+kernel enforces a stack guard. In this scenario, when expanding the stack, only
+the pivot value in the maple node needs updating, a process that can be
+performed atomically. However, if the neighboring VMA also possesses the
+MAP_GROWSDOWN flag, no stack guard is enforced. Consequently, the stack
+expansion can eliminate the gap. In such situations, the gap interval within
+the maple node must be removed. As the maple tree is RCU-safe, overwriting the
+node in-place is not possible. Instead, a new node is created, triggering node
+replacement, and the old node is subsequently destroyed using an RCU callback.
+
+```c
+int expand_downwards(struct vm_area_struct *vma, unsigned long address)
+{
+	// ...
+
+	if (prev) {
+		if (!(prev->vm_flags & VM_GROWSDOWN) &&
+		    vma_is_accessible(prev) &&
+		    (address - prev->vm_end < stack_guard_gap))
+			return -ENOMEM;
+	}
+
+	// ...
+}
+```
+
+The RCU callback is invoked only after all pre-existing RCU critical sections
+have concluded. However, the issue arises when accessing VMAs, as only the MM
+read lock is held, and it does not enter the RCU critical section.
+Consequently, in theory, the callback could be invoked at any time, resulting
+in the freeing of the old maple node. However, pointers to the old node may
+have already been fetched, leading to a use-after-free bug when attempting
+subsequent access to it.
+
+The backtrace where use-after-free (UAF) occurs is shown below:
+
+```
+  - CPU 0 -                                        - CPU 1 -
+
+  mm_read_lock()                                    mm_read_lock()
+  expand_stack()                                    find_vma_prev()
+    expand_downwards()                                mas_walk()
+      mas_store_prealloc()                              mas_state_walk()
+        mas_wr_story_entry()                              mas_start()
+          mas_wr_modify()                                   mas_root()
+            mas_wr_store_node()                               node = rcu_dereference_check()
+              mas_replace()                                   [ The node pointer is recorded ]
+                mas_free()
+                  ma_free_rcu()
+                    call_rcu(&mt_free_rcu)
+                    [ The node is dead ]
+  mm_read_unlock()
+
+  [ Wait for the next RCU grace period.. ]
+  rcu_do_batch()                                      mas_prev()
+    mt_free_rcu()                                       mas_prev_entry()
+      kmem_cache_free()                                   mas_prev_nentry()
+      [ The node is freed ]                                 mas_slot()
+                                                              mt_slot()
+                                                                rcu_dereference_check(node->..)
+                                                                [ UAF occurs here ]
+                                                    mm_read_unlock()
+```
+
+## Fix
+
+I reported this vulnerability to the Linux kernel security team on June 15th.
+Following that, the process of addressing this bug was led by Linus Torvalds.
+Given its complexity, it took nearly two weeks to develop a set of patches that
+received consensus.
+
+On June 28th, during the merge window for Linux kernel 5.5, the fix was merged
+into Linus' tree. Linus provided a [comprehensive merge message][fix] to
+elucidate the patch series from a technical perspective.
+
+ [fix]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9471f1f2f50282b9e8f59198ec6bb738b4ccc009
+
+These patches were subsequently backported to stable kernels ([6.1.37][6.1],
+[6.3.11][6.3], and [6.4.1][6.4]), effectively resolving the "Stack Rot" bug on
+July 1st.
+
+ [6.1]: https://lore.kernel.org/stable/2023070133-create-stainless-9a8c@gregkh/T/
+ [6.3]: https://lore.kernel.org/stable/2023070146-endearing-bounding-d21a@gregkh/T/
+ [6.4]: https://lore.kernel.org/stable/2023070140-eldercare-landlord-133c@gregkh/T/
+
+## Exploit
+
+**The complete exploit code and a comprehensive write-up will be made publicly
+available no later than the end of July.**
+
+Thanks,
+Ruihan Li
+
