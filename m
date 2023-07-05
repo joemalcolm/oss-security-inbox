@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1091" "Tuesday" "8" "August" "2017" "16:50:44" "+0200" "Daniel Beck" "ml@beckweb.net" "<4FAC7CFD-313D-44AF-8A91-50C41EB4D3C1@beckweb.net>" "28" "[oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted" nil nil nil "8" "2017080814:50:44" "[oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted" (number mark "U       ml@beckweb.n Aug  8   28/1091  " thread-indent "\"[oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31912 invoked by uid 550); 8 Aug 2017 14:50:58 -0000
+Received: (qmail 5396 invoked by uid 550); 5 Jul 2023 17:10:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +7,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31817 invoked from network); 8 Aug 2017 14:50:56 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <4FAC7CFD-313D-44AF-8A91-50C41EB4D3C1@beckweb.net>
-Date: Tue, 8 Aug 2017 16:50:44 +0200
+Received: (qmail 32197 invoked from network); 5 Jul 2023 17:09:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1688576952;
+	bh=+QiouUAq9OLnE5Uz6AgzIxGVYw0otZF/5XOpbMg4iaU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	b=jBwUg7KpA2xS0dHsktReEZJZpD0ykeZ3Blmo7lK3GIL/jOBL+8C94/AQCxlfvRwsw
+	 qmmhOlN9h7QRVPPEVLfBBuk25LLMgTiyoJdDylCkzyPFOvLPMelDcOZw40bZBRm3qf
+	 T4DkB8IL+Sjzvq+jJ+GfvDNa46mex5dBPDkL6EYfFjxrH6VmieBiMC+gaDhvQITlKh
+	 USPHkLod6358g/Ez4evhbl6a5brU1Q0ChTG+lHuSJUtqAFhTR3r8Nx2o/z+T1Q+e9H
+	 iSOY0xO62E/zZWqyg6cI8YsDri9Ea/vdfgKWvjugRKc9w3GDsozMoXahROECSeX15D
+	 mWe8MBUZngWiw==
+Date: Wed, 5 Jul 2023 14:09:08 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1502203856;a18aed28;
-X-HE-SMSGID: 1df5qH-00061U-2Z
-Subject: [oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted
+Message-ID: <ZKWjtBNBcNYlmDu7@quatroqueijos.cascardo.eti.br>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] CVE-2023-35001 - Linux kernel nf_tables nft_byteorder_eval OOB
+ read/write
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases contain fixes for security vulnerabilities:
+It was discovered that it was possible to cause an out-of-bounds read or
+write when processing an nft_byteorder expression.
 
-* SAML Plugin 1.0.3
+Tanguy DUBROCA (@SidewayRE) from @Synacktiv working with Trend Micro's Zero
+Day Initiative discovered that this vulnerability could be exploited for
+Local Privilege Escalation. This has been reported as ZDI-CAN-20721, and
+assigned CVE-2023-35001.
 
-Users of these plugins should upgrade them to the indicated versions.
+Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
 
-Descriptions of the vulnerabilities are below. Some more details, 
-severity, and attribution can be found here:
-https://jenkins.io/security/advisory/2017-08-08/
+This bug was introduced by commit 96518518cc41 ("netfilter: add nftables"),
+which is present since v3.13-rc1.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you find security vulnerabilities in Jenkins, please report them as 
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-JENKINS-46007
-The SAML Plugin stored passwords unencrypted as part of its configuration. 
-This allowed users with Jenkins master local file system access and Jenkins 
-administrators to retrieve the stored password. The latter could result in 
-exposure of the passwords through browser extensions, cross-site scripting 
-vulnerabilities, etc.
-
+A fix has been sent to netfilter-devel@vger.kernel.org and is at
+https://lore.kernel.org/netfilter-devel/20230705121515.747251-1-cascardo@canonical.com/T/.
