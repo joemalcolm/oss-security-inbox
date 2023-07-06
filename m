@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/06/1
-Message-ID: <8d7e4288-c676-d775-2064-533734d70ef5@apache.org>
-Date: Tue, 6 Jun 2023 10:12:15 -0700
-From: Michael Jumper <mjumper@...che.org>
-To: announce@...che.org, announce@...camole.apache.org, dev@...camole.apache.org, user@...camole.apache.org
-Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2023-30575: Apache Guacamole: Incorrect calculation of Guacamole protocol element lengths
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/7
+Message-ID: <ZKdAQ6UhSQTuX83d@netmeister.org>
+Date: Thu, 6 Jul 2023 18:29:23 -0400
+From: Jan Schaumann <jschauma@...meister.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-36461: mastodon: Denial of Service through slow HTTP responses
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
-Base CVSS Score: 6.5 (AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N)
+(I have no affiliation with the project, but posting
+this here because it seems to me that increasingly
+non-packaged / GitHub distributed projects tend not to
+send out announcements here.)
 
-Affected versions:
+https://github.com/mastodon/mastodon/security/advisories/GHSA-9pxv-6qvf-pjwc
 
-- Apache Guacamole through 1.5.1
+(This advisory describes an issue found by Cure53 as
+part of an audit performed at Mozilla's request)
 
-Description:
+When performing outgoing HTTP queries, Mastodon sets a
+timeout on individual read operations, but a malicious
+server can indefinitely extend the duration of the
+response through slowloris-type attacks.
 
-Apache Guacamole 1.5.1 and older may incorrectly calculate the lengths 
-of instruction elements sent during the Guacamole protocol handshake, 
-potentially allowing an attacker to inject Guacamole instructions during 
-the handshake through specially-crafted data.
+Impact
+This vulnerability can be used to keep all Mastodon
+workers busy for an extended duration of time, leading
+to the server becoming unresponsive.
 
-Mitigation:
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
 
-Users of versions of Apache Guacamole 1.5.1 and older should upgrade to 
-the 1.5.2 release.
+Severity: 7.5/10
 
-Credit:
+CVE-2023-36461
 
-We would like to thank Stefan Schiller (Sonar) for reporting this issue.
-
-References:
-
-https://guacamole.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-30575
-
-Timeline:
-
-2023-04-11: Reported to security@...camole.apache.org
-2023-04-11: Report acknowledged by project
-2023-04-12: Report confirmed by project
-2023-05-09: Fix completed and merged
-2023-05-09: Fix tested and confirmed by reporter
-2023-05-25: Fix released
+Affected versions: all
+Patched versions:  4.1.3, 4.0.5, 3.5.9
