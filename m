@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7299" "Friday" "1" "September" "2017" "12:19:57" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<772188.223523216-sendEmail@localhost>" "123" "[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)" "^Date:" nil nil "9" "2017090112:19:57" "[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)" (number mark "        ago@gentoo.o Sep  1  123/7299  " thread-indent "\"[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16136 invoked by uid 550); 1 Sep 2017 12:20:14 -0000
+Received: (qmail 11800 invoked by uid 550); 6 Jul 2023 22:23:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,136 +6,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16118 invoked from network); 1 Sep 2017 12:20:13 -0000
-Message-ID: <772188.223523216-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-29040.7122383876"
-Date: Fri, 1 Sep 2017 12:19:57 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 11752 invoked from network); 6 Jul 2023 22:23:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
+	s=2023; t=1688682206;
+	bh=lU6QI/n6xzW4eA48X1/WmKVyvOCQ3V6xz2egR2aYHic=;
+	h=From:To:Subject:Content-Type:From:To:Subject;
+	b=EBqKa2aA6bmCmf4J9ulD36Eb0dXd1W58HYDjhC2j2RG5eee/8lFh3FLTd1texwpDo
+	 eiUXam5IB7buk7PFyQGAWzP2UJI9DdvUhGqlpm3S/AnUGT2JA9UTvXyOsDV5DCu5Kc
+	 M1mythCI7zISJgS759Nr49QYQ278Z6+hVhc18sQw/h82JiNRrpnGoAqX/25l6ruie3
+	 bEQ4OnnSjXE2mnubjl4njlN4BuZVCXYmurHlwpDrZC5fOV7KB/ExAS4nvt8R+uzUVG
+	 MNMgSAhF+/3OJaiR60CNf09xHvNKbFW8mzliSekv47acfdKZhi3aWEddetHATmbdJd
+	 0nkgsHPS1ndMA==
+Date: Thu, 6 Jul 2023 18:23:25 -0400
+From: Jan Schaumann <jschauma@netmeister.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZKc+3fA5yQVqHVTc@netmeister.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] CVE-2023-36459: mastodon: XSS through oEmbed preview cards
 
-------MIME delimiter for sendEmail-29040.7122383876
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+(I have no affiliation with the project, but posting
+this here because it seems to me that increasingly
+non-packaged / GitHub distributed projects tend not to
+send out announcements here.)
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+https://github.com/mastodon/mastodon/security/advisories/GHSA-ccm4-vgcc-73hp
 
-After some test I realized that the fix for CVE-2017-11403 was not enough, see also:
-https://blogs.gentoo.org/ago/2017/07/12/graphicsmagick-use-after-free-in-closeblob-blob-c/
+(This advisory describes an issue found by Cure53 as
+part of an audit performed at Mozilla's request)
 
-The complete ASan output of the issue:
+Using carefully crafted oEmbed data, an attacker can
+bypass the HTML sanitization performed by Mastodon and
+include arbitrary HTML in oEmbed preview cards.
 
-# gm identify $FILE
-==20404==ERROR: AddressSanitizer: heap-use-after-free on address 0x6230000053c0 at pc 0x7fc01a253357 bp 0x7fffcd2d2630 sp 0x7fffcd2d2628
-READ of size 8 at 0x6230000053c0 thread T0
-    #0 0x7fc01a253356 in CloseBlob /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3
-    #1 0x7fc013fbed77 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5144:11
-    #2 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #3 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #4 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #5 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #6 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #7 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #8 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+Impact
+This introduces a vector for Cross-site-scripting
+(XSS) payloads that can be rendered in the user's
+browser when a preview card for a malicious link is
+clicked through.
 
-0x6230000053c0 is located 6848 bytes inside of 6856-byte region [0x623000003900,0x6230000053c8)
-freed by thread T0 here:
-    #0 0x4cf4d0 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55
-    #1 0x7fc01a8f13d2 in MagickFree /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:509:5
-    #2 0x7fc01a7dc750 in DestroyImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:1277:3
-    #3 0x7fc01a8a7cda in DestroyImageList /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/list.c:239:5
-    #4 0x7fc013fbed6f in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5143:11
-    #5 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #6 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #7 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #8 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #9 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #10 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N
 
-previously allocated by thread T0 here:
-    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fc01a8f04d6 in MagickMalloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:156:10
-    #2 0x7fc01a7a6fa3 in AllocateImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:336:18
-    #3 0x7fc013f7819a in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:3872:9
-    #4 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #5 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #6 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #7 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #8 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #9 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+Severity: 9.3/10
 
-SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3 in CloseBlob
-Shadow bytes around the buggy address:
-  0x0c467fff8a20: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a30: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a40: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a50: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a60: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-=>0x0c467fff8a70: fd fd fd fd fd fd fd fd[fd]fa fa fa fa fa fa fa
-  0x0c467fff8a80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8a90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8aa0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8ab0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8ac0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==20404==ABORTING
+CVE-2023-36459
 
-Affected version:
-1.3.26
-
-Fixed version:
-N/A
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/98721124e51f
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-Waiting for a CVE assignment
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00333-graphicsmagick-UAF-CloseBlob
-
-Timeline:
-2017-08-02: bug discovered and reported to upstream
-2017-08-27: upstream released a fix
-2017-09-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/01/graphicsmagick-use-after-free-in-closeblob-blob-c-incomplete-fix-for-cve-2017-11403/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-29040.7122383876--
-
+Affected versions: >= 1.3
+Patched versions:  4.1.3, 4.0.5, 3.5.9
