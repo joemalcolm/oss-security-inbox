@@ -1,101 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/4
-Message-ID: <s335p31-738-9881-832n-r6945p656r3@unkk.fr>
-Date: Wed, 17 May 2023 08:41:12 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: curl: CVE-2023-28322: more POST-after-PUT confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/4
+Message-ID: <ZKc+hwsLvLmZeYZB@netmeister.org>
+Date: Thu, 6 Jul 2023 18:21:59 -0400
+From: Jan Schaumann <jschauma@...meister.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-36460: mastodon: Arbitrary file creation through media attachments
 Content-Type: text/plain; charset=utf-8
 
-more POST-after-PUT confusion
-=============================
+(I have no affiliation with the project, but posting
+this here because it seems to me that increasingly
+non-packaged / GitHub distributed projects tend not to
+send out announcements here.)
 
-Project curl Security Advisory, May 17 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-28322.html)
+https://github.com/mastodon/mastodon/security/advisories/GHSA-9928-3cp5-93fm
 
-VULNERABILITY
--------------
+(This advisory describes an issue found by Cure53 as
+part of an audit performed at Mozilla's request)
 
-When doing HTTP(S) transfers, libcurl might erroneously use the read callback
-(`CURLOPT_READFUNCTION`) to ask for data to send, even when the
-`CURLOPT_POSTFIELDS` option has been set, if the same handle previously was
-used to issue a `PUT` request which used that callback.
+Using carefully crafted media files, attackers can
+cause Mastodon's media processing code to create
+arbitrary files at any location.
 
-This flaw may surprise the application and cause it to misbehave and either
-send off the wrong data or use memory after free or similar in the second
-transfer.
+Impact
+This allows attackers to create and overwrite any file
+Mastodon has access to, allowing Denial of Service and
+arbitrary Remote Code Execution.
 
-The problem exists in the logic for a reused handle when it is (expected to
-be) changed from a PUT to a POST.
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
 
-INFO
-----
+Severity: 9.9/10
 
-The code actually sending wrong data or doing a use-after-free is not present
-in libcurl code but are only presumed scenarios that might become the outcome
-of libcurl surprisingly calling the read callback in a situation where it is
-not expected to.
+CVE-2023-36460
 
-This flaw cannot be triggered with the command line tool.
-
-This problem is almost identical to
-[CVE-2022-32221](https://curl.se/docs/CVE-2022-32221.html). A difference this
-time is that setting `CURLOPT_POST` for the second transfer avoids the
-problem, where as only setting `CURLOPT_POSTFIELDS` after the PUT still makes
-the second transfer to a PUT and use the callback.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-28322 to this issue.
-
-CWE-440: Expected Behavior Violation
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.7 to and including 8.0.1
-- Not affected versions: libcurl < 7.7 and >= 8.1.0
-- Introduced-in: https://github.com/curl/curl/commit/546572da0457f3
-
-libcurl is used by many applications, but not always advertised as such!
-
-SOLUTION
-------------
-
-This time the logic is improved to avoid having two separate variable fields
-holding info about HTTP method and behavior. Now there is only one, which
-should make it harder to end up in such a confused middle state.
-
-- Fixed-in: https://github.com/curl/curl/commit/7815647d6582c0a4900be2e1de
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.1.0
-
-  B - Apply the patch to your local version
-
-  C - Do not do mix using the read callback and `CURLOPT_POSTFIELDS` string on
-      a reused easy handle
-
-TIMELINE
---------
-
-This issue was reported to the curl project on April 19, 2023. We contacted
-distros@...nwall on May 9, 2023.
-
-libcurl 8.1.0 was released on May 17 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Affected versions: >= 3.5.0
+Patched versions:  4.1.3, 4.0.5, 3.5.9
