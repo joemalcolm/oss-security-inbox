@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["746" "Friday" "17" "February" "2017" "13:03:11" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1702171300440.22691@wniryva>" "27" "[oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping" nil nil nil "2" "2017021707:33:11" "[oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping" (number mark "U       ppandit@redh Feb 17   27/746   " thread-indent "\"[oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10174 invoked by uid 550); 17 Feb 2017 07:33:29 -0000
+Received: (qmail 13474 invoked by uid 550); 6 Jul 2023 22:29:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +7,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10156 invoked from network); 17 Feb 2017 07:33:28 -0000
-Date: Fri, 17 Feb 2017 13:03:11 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-Message-ID: <alpine.LFD.2.20.1702171300440.22691@wniryva>
+Received: (qmail 13395 invoked from network); 6 Jul 2023 22:29:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
+	s=2023; t=1688682563;
+	bh=0b7yAqEhcv5938gKqyEl09DYCC2aCCi/zAnIuR70kdw=;
+	h=From:To:Subject:Content-Type:From:To:Subject;
+	b=QgY7nqhBahJQ9w25GXheofdwvpvgxEABO9dFqLWPEYIANOuBmdmXyCYTKhC21cJ8b
+	 stRejtCB760d14/Nk61ENwcn8Iuzz/fXaVhxw90h05zSpWQnDJxBVjNnK8I29la9ob
+	 jdRkpq0OZSgBNTjAwajBFy2rlKCd3HXrA5uxr/jJDgrbyr77GnI2oTZ5aCMyxsoZe9
+	 EA3/AKvjgn8xcGNlYZUUQYB6BB6Ny+7iuKPp9c8pLau0iTXcB1eF8BQxhs+bnbQL6V
+	 HkG+n220XJKBEpx1LwiYvzUIAp1epQtW71QeAQYLOQzmUSn8bEWOdWxtJUKTkqZ5HA
+	 NAZg/fqvoi1cA==
+Date: Thu, 6 Jul 2023 18:29:23 -0400
+From: Jan Schaumann <jschauma@netmeister.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZKdAQ6UhSQTuX83d@netmeister.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Fri, 17 Feb 2017 07:33:17 +0000 (UTC)
-Subject: [oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when
- doing vlan stripping
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] CVE-2023-36461: mastodon: Denial of Service through slow HTTP
+ responses
 
-   Hello,
+(I have no affiliation with the project, but posting
+this here because it seems to me that increasingly
+non-packaged / GitHub distributed projects tend not to
+send out announcements here.)
 
-Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
-vulnerable to an out-of-bounds access issue. It could occur while stripping 
-VLAN header from 'eth_buf' buffer in receiving packets.
+https://github.com/mastodon/mastodon/security/advisories/GHSA-9pxv-6qvf-pjwc
 
-A remote user/process could use this issue to crash Qemu process resulting in 
-DoS.
+(This advisory describes an issue found by Cure53 as
+part of an audit performed at Mozilla's request)
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg03527.html
+When performing outgoing HTTP queries, Mastodon sets a
+timeout on individual read operations, but a malicious
+server can indefinitely extend the duration of the
+response through slowloris-type attacks.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1423358
+Impact
+This vulnerability can be used to keep all Mastodon
+workers busy for an extended duration of time, leading
+to the server becoming unresponsive.
 
-Note:- It requires 'VLANSTRIP' feature to be enabled on the vmxnet3 device.
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
 
+Severity: 7.5/10
 
-'CVE-2017-6058' assigned via -> https://cveform.mitre.org/
+CVE-2023-36461
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Affected versions: all
+Patched versions:  4.1.3, 4.0.5, 3.5.9
