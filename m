@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/10/3
-Message-ID: <CAOJKFBBeRpoYjwUsJNH=c5aAQ+H=rmGPiTUQ+qB7rZ0J1Qt+rQ@mail.gmail.com>
-Date: Mon, 10 Jul 2023 10:08:22 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/1
+Message-ID: <dc55490f-ec97-15ba-c4e2-531d2f0d6e92@apache.org>
+Date: Thu, 06 Jul 2023 21:25:50 +0000
+From: "Jean-Louis Monteiro" <jlmonteiro@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-42009: Apache Ambari: A malicious authenticated user can remotely execute arbitrary code in the context of the application.
+Subject: CVE-2023-33008: Apache Johnzon: Prevent inefficient internal conversion from BigDecimal at large scale 
 Content-Type: text/plain; charset=utf-8
 
-Do you have an example proof of concept or a bug link for this?
+Severity: important
 
-On Mon, Jul 10, 2023 at 10:06 AM Brahma Reddy Battula <brahma@...che.org>
-wrote:
+Affected versions:
 
-> Affected versions:
->
-> - Apache Ambari 2.7.0 through 2.7.6
->
-> Description:
->
-> SpringEL injection in the server agent in Apache Ambari version 2.7.0 to
-> 2.7.6 allows a malicious authenticated user to execute arbitrary code
-> remotely. Users are recommended to upgrade to 2.7.7.
->
-> Credit:
->
-> Jecki Go (jecgo@...a.com) (finder)
->
-> References:
->
-> https://ambari.apache.org/
-> https://www.cve.org/CVERecord?id=CVE-2022-42009
->
->
+- Apache Johnzon through 1.2.20
+
+Description:
+
+Deserialization of Untrusted Data vulnerability in Apache Software Foundation Apache Johnzon.
+
+
+A malicious attacker can craft up some JSON input that uses large numbers (numbers such as 1e20000000) that Apache Johnzon will deserialize into BigDecimal and maybe use numbers too large which may result in a slow conversion (Denial of service risk). Apache Johnzon 1.2.21 mitigates this by setting a scale limit of 1000 (by default) to the BigDecimal. 
+
+
+This issue affects Apache Johnzon: through 1.2.20.
+
+This issue is being tracked as JOHNZON-397 
+
+Credit:
+
+PJ Fanning (reporter)
+Jean-Louis Monteiro (remediation developer)
+Romain Manni-Bucau (remediation reviewer)
+
+References:
+
+https://johnzon.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-33008
+https://issues.apache.org/jira/browse/JOHNZON-397
 
