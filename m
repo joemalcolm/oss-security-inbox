@@ -1,138 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/4
-Message-ID: <20231003191637.GA22984@openwall.com>
-Date: Tue, 3 Oct 2023 21:16:37 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/2
+Message-ID: <CAL7+V1y9LJpXOBsjP2u+488XPwv430F5iHwTPHLeJh9W_BOOMw@mail.gmail.com>
+Date: Thu, 6 Jul 2023 14:27:48 -0700
+From: Rita Zhang <rita.z.zhang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-4806, CVE-2023-5156: glibc: potential use-after-free in getaddrinfo()
+Subject: [kubernetes] CVE-2023-2727: Bypassing policies imposed by the ImagePolicyWebhook admission plugin
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kubernetes Community,
 
-I wish someone more knowledgeable about this specific issue would post
-this, but since no one did, let me do it.
+A security issue was discovered in Kubernetes where users may be able to
+launch containers using images that are restricted by ImagePolicyWebhook
+when using ephemeral containers. Kubernetes clusters are only affected if
+the ImagePolicyWebhook admission plugin is used together with ephemeral
+containers.
 
-Current upstream glibc NEWS contains these entries:
+This issue has been rated *Medium* (
+CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N>),
+and assigned CVE-2023-2727
 
-> CVE-2023-4806: When an NSS plugin only implements the
-> _gethostbyname2_r and _getcanonname_r callbacks, getaddrinfo could use
-> memory that was freed during buffer resizing, potentially causing a
-> crash or read or write to arbitrary memory.
-> 
-> CVE-2023-5156: The fix for CVE-2023-4806 introduced a memory leak when
-> an application calls getaddrinfo for AF_INET6 with AI_CANONNAME,
-> AI_ALL and AI_V4MAPPED flags set.
+*Am I vulnerable?*
+Clusters are impacted by this vulnerability if all of the following are
+true:
 
-Apparently, CVE-2023-4806 has existed for ages, whereas CVE-2023-5156
-only existed for ~10 days last month.
+   1. The ImagePolicyWebhook admission plugin is used to restrict use of
+   certain images
+   2. Pods are using ephemeral containers.
 
-Bug 30843 (CVE-2023-4806) - potential use-after-free in getcanonname:
+*Affected Versions*
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=30843
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=973fe93a5675c42798b2161c6f29c01b0e243994
+   - kube-apiserver v1.27.0 - v1.27.2
+   - kube-apiserver v1.26.0 - v1.26.5
+   - kube-apiserver v1.25.0 - v1.25.10
+   - kube-apiserver <= v1.24.14
 
-Main upstream commit:
+*How do I mitigate this vulnerability?*
+This issue can be mitigated by applying the patch provided for the
+kube-apiserver component. This patch prevents ephemeral containers from
+using an image that is restricted by ImagePolicyWebhook.
 
-> commit 973fe93a5675c42798b2161c6f29c01b0e243994
-> Author: Siddhesh Poyarekar <siddhesh@...rceware.org>
-> Date:   Fri Sep 15 13:51:12 2023 -0400
-> 
->     getaddrinfo: Fix use after free in getcanonname (CVE-2023-4806)
->     
->     When an NSS plugin only implements the _gethostbyname2_r and
->     _getcanonname_r callbacks, getaddrinfo could use memory that was freed
->     during tmpbuf resizing, through h_name in a previous query response.
->     
->     The backing store for res->at->name when doing a query with
->     gethostbyname3_r or gethostbyname2_r is tmpbuf, which is reallocated in
->     gethosts during the query.  For AF_INET6 lookup with AI_ALL |
->     AI_V4MAPPED, gethosts gets called twice, once for a v6 lookup and second
->     for a v4 lookup.  In this case, if the first call reallocates tmpbuf
->     enough number of times, resulting in a malloc, th->h_name (that
->     res->at->name refers to) ends up on a heap allocated storage in tmpbuf.
->     Now if the second call to gethosts also causes the plugin callback to
->     return NSS_STATUS_TRYAGAIN, tmpbuf will get freed, resulting in a UAF
->     reference in res->at->name.  This then gets dereferenced in the
->     getcanonname_r plugin call, resulting in the use after free.
->     
->     Fix this by copying h_name over and freeing it at the end.  This
->     resolves BZ #30843, which is assigned CVE-2023-4806.
->     
->     Signed-off-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
+Note: Validation webhooks (such as Gatekeeper
+<https://open-policy-agent.github.io/gatekeeper-library/website/validation/allowedrepos/>
+and Kyverno
+<https://kyverno.io/policies/other/allowed-image-repos/allowed-image-repos/>)
+can also be used to enforce the same restrictions.
 
-also backported by upstream to branches all the way back to 2.34, but
-apparently even older are affected.
+*Fixed Versions*
 
-Apparently, the issue is only exposed in obscure conditions:
+   - kube-apiserver v1.27.3
+   - kube-apiserver v1.26.6
+   - kube-apiserver v1.25.11
+   - kube-apiserver v1.24.15
 
-https://bugzilla.redhat.com/show_bug.cgi?id=2237782
+These releases have been published today, June 14th, 2023.
 
-> Guilherme de Almeida Suckevicz 2023-09-06 20:48:11 UTC
-> 
-> In an extremely rare situation, the getaddrinfo function in glibc may
-> access memory that has already been freed, resulting in an application
-> crash.
-> 
-> This issue is only exploitable when a NSS module implements only the
-> _nss_*_gethostbyname2_r hook without implementing the
-> _nss_*_gethostbyname3_r hook. There are no known modules that are
-> implemented in this way.
-> 
-> In addition to that condition, the resolved name should return a large
-> number of IPv6 as well as IPv4 and the call to the getaddrinfo function
-> should have AF_INET6 with AI_CANONNAME, AI_ALL and AI_V4MAPPED as flags.
+*Detection*
+Pod update requests using an ephemeral container with an image that should
+have been restricted by an ImagePolicyWebhook will be captured in API audit
+logs. You can also use `kubectl get pods` to find active pods with
+ephemeral containers running an image that should have been restricted in
+your cluster with this issue.
 
-> Siddhesh Poyarekar 2023-09-14 10:31:42 UTC
-> 
-> A clarification on this: the NSS module needs to do *all* of the
-> following to expose the vulnerability:
-> 
-> 1) Implement _nss_*_gethostbyname2_r hook
-> 2) implement _nss_*_getcanonname_r hook
-> 3) NOT implement _nss_*_gethostbyname3_r hook
-> 
-> The samba wins module for example satisfies 1) and 3) but not 2) thus
-> eliminating it as a possible vector for this vulnerability.
+*Additional Details*
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/118640
 
-https://access.redhat.com/security/cve/CVE-2023-4806
+Thank You,
+Rita Zhang on behalf of the Kubernetes Security Response Committee
 
-> Description
-> 
-> A flaw was found in glibc. In an extremely rare situation, the
-> getaddrinfo function may access memory that has been freed, resulting in
-> an application crash. This issue is only exploitable when a NSS module
-> implements only the nss_gethostbyname2_r and nss_getcanonname_r hooks
-> without implementing the nss*_gethostbyname3_r hook. The resolved name
-> should return a large number of IPv6 and IPv4, and the call to the
-> getaddrinfo function should have the AF_INET6 address family with
-> AI_CANONNAME, AI_ALL and AI_V4MAPPED as flags.
-> 
-> Statement
-> 
-> This issue is only exploitable with very specific conditions, as
-> detailed in the description. However, all glibc versions shipped in Red
-> Hat Enterprise Linux are vulnerable to this issue.
-
-Bug 30884 (CVE-2023-5156) - Memory leak in getaddrinfo after fix for bug 30843:
-
-https://sourceware.org/bugzilla/show_bug.cgi?id=30884
-https://sourceware.org/git/?p=glibc.git;a=commit;h=ec6b95c3303c700eb89eebeda2d7264cc184a796
-
-> commit ec6b95c3303c700eb89eebeda2d7264cc184a796
-> Author: Romain Geissler <romain.geissler@...deus.com>
-> Date:   Mon Sep 25 01:21:51 2023 +0100
-> 
->     Fix leak in getaddrinfo introduced by the fix for CVE-2023-4806 [BZ #30843]
->     
->     This patch fixes a very recently added leak in getaddrinfo.
->     
->     Reviewed-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
-
-https://bugzilla.redhat.com/show_bug.cgi?id=2240541
-https://access.redhat.com/security/cve/CVE-2023-5156
-
-Puzzlingly, the latter URL lists RHEL 9 as affected, even though I think
-the original buggy fix hasn't yet made it into a RHEL 9 glibc update.
-Maybe that's part of Red Hat's tracking of what's in their pipeline.
-
-Alexander
