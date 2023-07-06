@@ -1,37 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/9
-Message-ID: <20231003201212.GA24599@openwall.com>
-Date: Tue, 3 Oct 2023 22:12:13 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/3
+Message-ID: <CAL7+V1zEJQLeNE2Gm-1SaY4Gv1fRsTTtJNFQVKa85s8H0TyeNw@mail.gmail.com>
+Date: Thu, 6 Jul 2023 14:27:49 -0700
+From: Rita Zhang <rita.z.zhang@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: kvm@...e.kernel.org, devel@...4.systems, "Xen.org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Subject: [kubernetes] CVE-2023-2728: Bypassing enforce mountable secrets policy imposed by the ServiceAccount admission plugin Rita Zhang <rita.z.zhang@...il.com>
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2023 at 09:59:19PM -0400, Demi Marie Obenour wrote:
-> These detailed security advisories are one of the things I love about
-> Xen.  It's hard to trust a hypervisor (KVM) that will not issue them,
-> for then one has no way to know if a particular problem got fixed.
+Hello Kubernetes Community,
 
-I concur.  I'd appreciate security advisories from the KVM project.
+A security issue was discovered in Kubernetes where users may be able to
+launch containers that bypass the mountable secrets policy enforced by the
+ServiceAccount admission plugin when using ephemeral containers. The policy
+ensures pods running with a service account may only reference secrets
+specified in the service account’s secrets field. Kubernetes clusters are
+only affected if the ServiceAccount admission plugin and the
+*kubernetes.io/enforce-mountable-secrets
+<http://kubernetes.io/enforce-mountable-secrets>* annotation are used
+together with ephemeral containers.
 
-> I'm CCing KVM here to make sure they have a fix.  From their Git commit
-> history, I am almost certain that seL4 does not.  I'm CCing the seL4
-> developers to alert them of this and suggest that the x86 port be
-> removed or at least have a big warning.
+This issue has been rated *Medium* (
+CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N>),
+and
+assigned CVE-2023-2728
 
-I strongly oppose removal of a port/support for a certain architecture
-just because some implementations of it are/were problematic.  Adding a
-warning is fine.
+*Am I vulnerable?*
+Clusters are impacted by this vulnerability if all of the following are
+true:
 
-Alexander
+   1. The ServiceAccount admission plugin is used. Most cluster should have
+   this on by default as recommended in
+   https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount
+   2. The *kubernetes.io/enforce-mountable-secrets
+   <http://kubernetes.io/enforce-mountable-secrets>* annotation is used by
+   a service account. This annotation is not added by default.
+   3. Pods are using ephemeral containers.
 
-P.S. Demi Marie, please note that oss-security list content guidelines
-explicitly discourage CC'ing other lists(*), and Xen advisories are
-already stretching this.  In this reply, I am still CC'ing many of what
-you had CC'ed as I am following up on your specific points relevant to
-those lists, but in general let's be more careful about this.
+*Affected Versions*
 
-(*) Because we may then get off-topic follow-ups from there, especially
-if CC'ing project user lists or high-volume lists like LKML.  In this
-specific case, we're lucky so far.
+   - kube-apiserver v1.27.0 - v1.27.2
+   - kube-apiserver v1.26.0 - v1.26.5
+   - kube-apiserver v1.25.0 - v1.25.10
+   - kube-apiserver <= v1.24.14
+
+*How do I mitigate this vulnerability?*
+This issue can be mitigated by applying the patch provided for the
+kube-apiserver component. The patch prevents ephemeral containers from
+bypassing the mountable secrets policy enforced by the ServiceAccount
+admission plugin.
+
+*Fixed Versions*
+
+   - kube-apiserver v1.27.3
+   - kube-apiserver v1.26.6
+   - kube-apiserver v1.25.11
+   - kube-apiserver v1.24.15
+
+These releases have been published today, June 14th, 2023.
+
+*Detection*
+Pod update requests using an ephemeral container that exploits this
+vulnerability with unintended secret will be captured in API audit logs.
+You can also use kubectl get pods to find active pods with ephemeral
+containers running with a secret that is not referenced by the service
+account in your cluster.
+
+*Additional Details*
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/118640
+
+Thank You,
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
