@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2681" "Thursday" "11" "July" "2019" "16:56:23" "+0100" "Simon McVittie" "smcv@debian.org" "<20190711155623.GA17634@espresso.pseudorandom.co.uk>" "48" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Date:" nil nil "7" "2019071115:56:23" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        smcv@debian. Jul 11   48/2681  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190711093326.328948dc@jabberwock.cb.piermont.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "<20190711093326.328948dc@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1646 invoked by uid 550); 11 Jul 2019 15:56:43 -0000
+Received: (qmail 5192 invoked by uid 550); 6 Jul 2023 21:55:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1626 invoked from network); 11 Jul 2019 15:56:43 -0000
-Message-ID: <20190711155623.GA17634@espresso.pseudorandom.co.uk>
-References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
- <20190709113036.0f12d057@jabberwock.cb.piermont.com>
- <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
- <20190711093326.328948dc@jabberwock.cb.piermont.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190711093326.328948dc@jabberwock.cb.piermont.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Thu, 11 Jul 2019 16:56:23 +0100
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Privileged File Access from Desktop Applications
+Received: (qmail 17852 invoked from network); 6 Jul 2023 21:28:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688678881; x=1691270881;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=te3quHZPrAVEB+WNjFVnc1SnG60NJORTEiglXb3lx/0=;
+        b=p7LS5m5No482yTp2xMpMWL9jWaIt8d5YhC626XD53VQh1e4a4S2Kz4NCv7jK3+fTwR
+         MnPJ24wAMX6c1nnG50e1fg6uLbsy2YMX5LFHtMCFj3229papjYPZpTaAOaNtMEDEFtCN
+         t2EZVu1k4PQOcikCJ8WwJDZmqxALcYQduBbJpDkJaDhXOX49ITmJvs0tNHjW/z1yr0j6
+         JA5od9TfM6OAqaRxjecQ+9FSSDqwFOV7dfpn3MeeRigxMJOh96DG36OlBxYFA6TR2Fpq
+         pmjTHBYoG+PvwuCyuu3viZt98MXVmuhxV8SkUmlT0SUhP6PtKsr3uSsWEBfl+obOoCdi
+         6S4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688678881; x=1691270881;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=te3quHZPrAVEB+WNjFVnc1SnG60NJORTEiglXb3lx/0=;
+        b=ltbzzGiIgjofcNYs4PxbrNFCR9sGx54+25VdNMe6nfPaMXeCdSO+938lZklrokcafA
+         GN9qe1WjjBNgTRlE173gOfx5fktYE4+7ykPHNAZbJaGIwZw/ZqYY5iJw5v4dU6mf8BJu
+         JaLoVjUg/J0jFPbvarv3Mt3vrBLHURZ8GfOQ8iRsMX0IBpK/3mZWePReRb5LMRU2Bq/g
+         ZGtxSEmFwRTXBZARfZbML6S5cU0LgkAv+de4sKBZ4QWZP5FL0HBEKI1FfWnaw2+vYYhv
+         7py3xpAXqvsy1jq6RPLY5pdoFO3zJudYKjsdTiFXLFVB+e7EeouenM8K55O8G2q1RBlo
+         a51w==
+X-Gm-Message-State: ABy/qLYQMB76lmoc28vZjB4beWmOJQDEEIo79gyzpKJZLA4XA+MHryh6
+	Nrs7w7PT/k4uj2+nS7uLMCtJcWy3wGAnEwxyx1tRefuNdo0=
+X-Google-Smtp-Source: APBJJlGGpuxNMlY5bXVSEgCqPCWHtbn5NAdj8a34sZbB0wt4UvIEe1AuoH0G5wcLMHaEKhd34BFW/O76HS7D5Dq1j2I=
+X-Received: by 2002:a25:a241:0:b0:c5f:85f5:a0e3 with SMTP id
+ b59-20020a25a241000000b00c5f85f5a0e3mr2831320ybi.13.1688678880677; Thu, 06
+ Jul 2023 14:28:00 -0700 (PDT)
+MIME-Version: 1.0
+From: Rita Zhang <rita.z.zhang@gmail.com>
+Date: Thu, 6 Jul 2023 14:27:49 -0700
+Message-ID: <CAL7+V1zEJQLeNE2Gm-1SaY4Gv1fRsTTtJNFQVKa85s8H0TyeNw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000d2942605ffd83075"
+Subject: [oss-security] [kubernetes] CVE-2023-2728: Bypassing enforce mountable secrets
+ policy imposed by the ServiceAccount admission plugin Rita Zhang <rita.z.zhang@gmail.com>
 
-On Thu, 11 Jul 2019 at 09:33:26 -0400, Perry E. Metzger wrote:
-> if you logged in as root, you could run GUI applications as root
+--000000000000d2942605ffd83075
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes, that is my understanding. Apps run as uid N trust uid N's Wayland
-compositor, and uid N's Wayland compositor allows connections by apps
-run as uid N and rejects all others. This is approximately the same
-security policy as an Xorg X11 server with "xhost +si:localuser:USERNAME"
-(and nothing else that would allow access, e.g. no xauth(1) tokens).
+Hello Kubernetes Community,
 
-Logging in to a typical graphical desktop environment as root is probably
-*also* a bad idea, because a full desktop environment is a huge attack
-surface to be running with a complete set of capabilities; but it does
-avoid some of the problems that come with running individual applications
-as root.
+A security issue was discovered in Kubernetes where users may be able to
+launch containers that bypass the mountable secrets policy enforced by the
+ServiceAccount admission plugin when using ephemeral containers. The policy
+ensures pods running with a service account may only reference secrets
+specified in the service account=E2=80=99s secrets field. Kubernetes cluste=
+rs are
+only affected if the ServiceAccount admission plugin and the
+*kubernetes.io/enforce-mountable-secrets
+<http://kubernetes.io/enforce-mountable-secrets>* annotation are used
+together with ephemeral containers.
 
-Graphical toolkits typically (have to!) trust their X11/Wayland display
-(to not send them forged input events, if nothing else), but an app
-running as uid 0 has no good reason why it should trust an X11 server
-or Wayland compositor running as uid 1000. By sending appropriate input
-events, the X11 server or Wayland compositor can make the app do anything
-for which it has UI. This makes the privilege boundary between uid 1000
-and uid 0, when a user with uid 1000 will escalate privileges to uid 0,
-somewhat illusory.
+This issue has been rated *Medium* (
+CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U=
+/C:H/I:H/A:N>),
+and
+assigned CVE-2023-2728
 
-If the graphical toolkit or app was not designed to be robust against
-a malicious display server, or if it was designed to be robust against
-a malicious display server but has bugs in the implementation of that
-design, then the user might also be able to subvert the app, escalating
-from limited root privileges (for example a GUI running as root for
-network configuration, which allows network configuration within certain
-parameters) to unlimited root privileges (arbitrary code execution).
+*Am I vulnerable?*
+Clusters are impacted by this vulnerability if all of the following are
+true:
 
-Similarly, if we want accessibility features (screen readers, magnifiers,
-on-screen keyboards, alternative input methods, etc.), then graphical
-toolkits have to trust the accessibility provider, but an app running
-as uid 0 doesn't really have any good reason to be trusting accessibility
-technologies running as uid 1000 either.
+   1. The ServiceAccount admission plugin is used. Most cluster should have
+   this on by default as recommended in
+   https://kubernetes.io/docs/reference/access-authn-authz/admission-contro=
+llers/#serviceaccount
+   2. The *kubernetes.io/enforce-mountable-secrets
+   <http://kubernetes.io/enforce-mountable-secrets>* annotation is used by
+   a service account. This annotation is not added by default.
+   3. Pods are using ephemeral containers.
 
-In X11, there is also the problem that every client (app) can usually spy
-on the input and output of every other client, and fake input into every
-other client, which means compromising any app compromises every app.
-Wayland doesn't generally have that, because only special privileged
-connections are normally allowed to take screenshots, receive input while
-not in focus, or forge input events (but note that these connections
-are privileged within the context of a desktop session, not privileged
-within the context of the overall system).
+*Affected Versions*
 
-    smcv
+   - kube-apiserver v1.27.0 - v1.27.2
+   - kube-apiserver v1.26.0 - v1.26.5
+   - kube-apiserver v1.25.0 - v1.25.10
+   - kube-apiserver <=3D v1.24.14
+
+*How do I mitigate this vulnerability?*
+This issue can be mitigated by applying the patch provided for the
+kube-apiserver component. The patch prevents ephemeral containers from
+bypassing the mountable secrets policy enforced by the ServiceAccount
+admission plugin.
+
+*Fixed Versions*
+
+   - kube-apiserver v1.27.3
+   - kube-apiserver v1.26.6
+   - kube-apiserver v1.25.11
+   - kube-apiserver v1.24.15
+
+These releases have been published today, June 14th, 2023.
+
+*Detection*
+Pod update requests using an ephemeral container that exploits this
+vulnerability with unintended secret will be captured in API audit logs.
+You can also use kubectl get pods to find active pods with ephemeral
+containers running with a secret that is not referenced by the service
+account in your cluster.
+
+*Additional Details*
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/118640
+
+Thank You,
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
+--000000000000d2942605ffd83075--
