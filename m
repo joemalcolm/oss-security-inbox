@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1327" "Friday" "23" "August" "2019" "11:01:42" "-0700" "David Tomaschik" "davidtomaschik@google.com" "<CAOAQt7WYP3ZhgHZexBUh_PFpEFyNSz+xJzYLpiNdihQf1weJ+Q@mail.gmail.com>" "43" "[oss-security] CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry" "^Date:" nil nil "8" "2019082318:01:42" "[oss-security] CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry" (number mark "U       davidtomasch Aug 23   43/1327  " thread-indent "\"[oss-security] CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10232 invoked by uid 550); 23 Aug 2019 19:57:42 -0000
+Received: (qmail 3947 invoked by uid 550); 6 Jul 2023 21:55:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1846 invoked from network); 23 Aug 2019 18:02:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=uN8scj41I65FXBUnEpWuyAV+fHurJuYRIjvPuradA38=;
-        b=tnfrWv/C1N3Q/hM3efnropIZRpakitV6EMYzDpMHa34ssVtmLbWqJc/wHQzCXVLBV9
-         o6vY967KmSMXB2JA3AkLTt50A55xsffQk0jQPC2kxqf3I84Jkdxo0BDFYzP54dPgDrl1
-         KcGCtSKtc74Yx6cpMYGbFkGx/0EI5ZlnbvEFJ4rGW1Mz4p2vUCPRqYwoQFgVgQjI801d
-         m5IGKBgLSXJk73NmOO4s5IlvjP3gcU5b1FdsUtVL0jOdaRou0Icoja+U/seJUZuKZYip
-         EIwjrfHEGX9QU2zbWGBDgsiTAkbYu0OU3Roq5qy8w2rO7X8vrWdRlRhCROYxkkYP1VbQ
-         e65A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=uN8scj41I65FXBUnEpWuyAV+fHurJuYRIjvPuradA38=;
-        b=a+TIlQOdKIJz8ErGtqsLmNvqiJ2lWrzKFmxAmU9H3J6w5b7wTkbNtl86Yf+KmZVEBB
-         0FAdDUEHwiTQp08ZHjhEDsoZbTOTMvs6fA83SJE3XY76uen/oMTrMbW1bsN5zvRhNbNH
-         muzpyEt1mBRem2bI1fN/EPittnbp5PKiyUoztEunhXfVPTSiwbOihGxXzGbunJuitTvp
-         yD6OTbQxxXXg8V2twSjuxl/Eenw0W3sZyt7HW9QgaUUwFwR99geFU+OlQ50GJ9PEob1y
-         t4Wotxri7309G3JTdmcyFPFARCYlrtmmDvT8vlndNXBQGcTabeWfPM0nOah29ndBAVFS
-         t7EQ==
-X-Gm-Message-State: APjAAAXblnHN92TO07xEJ75zcXhFNNmTCs1NTYueEaPSBCNq8f6zWBGH
-	4l2mCkYBst95LdVfhy/Rb9sabpIka94mqRJQZQ5O9iwhido=
-X-Google-Smtp-Source: APXvYqyjMUUi0i/M9L1WZjdl5gAM/PgERukf0BwZoLnfRV+eZt7P8u8S2tJJrPOGRG1sdlG5RkU0ZblcdwO92zGjytU=
-X-Received: by 2002:a17:906:7695:: with SMTP id o21mr5303418ejm.175.1566583315032;
- Fri, 23 Aug 2019 11:01:55 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAOAQt7WYP3ZhgHZexBUh_PFpEFyNSz+xJzYLpiNdihQf1weJ+Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000000160350590cc9acb"
-Date: Fri, 23 Aug 2019 11:01:42 -0700
-From: David Tomaschik <davidtomaschik@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry
+Received: (qmail 17824 invoked from network); 6 Jul 2023 21:28:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688678880; x=1691270880;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=geRYFXoIccAG6SRfGTxMbpaoq9rSFxMmYrq6oLwCS+s=;
+        b=nzpQ6MLJZQOzoA9Orf0osB/o/fSXP5Wasp2etuy116i1BFCjDNHKHp/zmDSRs9zWqs
+         jnb/xhREwQLmGStzJS5ui5bsaKyAdrJ+u4A57Haroe7OMEYGjfVrwPVkWsK2GLqluslW
+         kHuvrBrkacf+mxFrxECADDRzY/4PlI0k6Ji6UIXzBhPqNamCmhRqAw2HfDBd8wY1eaOZ
+         a32sOxfVY9SqS085RSHCBcBqnaHuPIGo6XwD6KTAySjwTNTJ6zvXIZ8+JR0eT/UEuexW
+         mOprD7nkTbaORUPAQe/F4f0KOjWOEuYKmv2SOjEXDBvI06UU32e2Nd7VrlIp0EgNXsjK
+         v46A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688678880; x=1691270880;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=geRYFXoIccAG6SRfGTxMbpaoq9rSFxMmYrq6oLwCS+s=;
+        b=Apad/s0tpAl0MlApUorNws+wejDEmcUzG7aVy5Rcp9ELl09rN+pIEZjIO3aKLms/KV
+         G82/cakvAfRCW0ahkRiZ9kmv8cMhjoT+g1ieMlynGXl9m8oqEZmVIltHoexKP3K493r4
+         YCKCfhq7yXxLo9m7lnhLqea8fj99O9yPBT1jVKfQB0NB52E5u06tc24CmM7pln8GOee+
+         vf5kDc3j7V8ycIIZRdIgF50Y9b+cXg7le9Aw80rsIFaip/+O9Lxey/uSq2khnZNQ2+fI
+         owJF8GPf5KXE5QYQKFVZRdpCc7Ex7vBPtP1ti/0JL5b07POA2yZJJw7UTR9XNVHcngoC
+         xuhg==
+X-Gm-Message-State: ABy/qLYRysCz42aH56AOOxcujJTeJc9h5UbzfPHXhruAgCz4OoVrJ4I2
+	Q+qwFOQl8fejN52PkPYGxIB3g6jzTmgFrpcjWtNpC0kEu0Y=
+X-Google-Smtp-Source: APBJJlHCG5Jdz/djWG0oHwJ8G2Dt867UxZO6QR1hT4lhvXO+eoL+JPn0LgoAAwJKth6JFTycmC4uSCqJWkePQ4sacWQ=
+X-Received: by 2002:a81:92c3:0:b0:57a:3942:bb74 with SMTP id
+ j186-20020a8192c3000000b0057a3942bb74mr2748238ywg.17.1688678879475; Thu, 06
+ Jul 2023 14:27:59 -0700 (PDT)
+MIME-Version: 1.0
+From: Rita Zhang <rita.z.zhang@gmail.com>
+Date: Thu, 6 Jul 2023 14:27:48 -0700
+Message-ID: <CAL7+V1y9LJpXOBsjP2u+488XPwv430F5iHwTPHLeJh9W_BOOMw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000c03f2405ffd83000"
+Subject: [oss-security] [kubernetes] CVE-2023-2727: Bypassing policies imposed by the
+ ImagePolicyWebhook admission plugin
 
---0000000000000160350590cc9acb
+--000000000000c03f2405ffd83000
 Content-Type: text/plain; charset="UTF-8"
 
-CVE-2019-10071: Timing Attack in HMAC Verification in Apache Tapestry
+Hello Kubernetes Community,
 
-Affected versions:
-- Apache Tapestry 5.3.6 through current releases.
+A security issue was discovered in Kubernetes where users may be able to
+launch containers using images that are restricted by ImagePolicyWebhook
+when using ephemeral containers. Kubernetes clusters are only affected if
+the ImagePolicyWebhook admission plugin is used together with ephemeral
+containers.
 
-Description:
-Apache Tapestry uses HMACs to verify the integrity of objects stored on the
-client side.  This was added to address the Java deserialization
-vulnerability
-disclosed in CVE-2014-1972.  In the fix for the previous vulnerability, the
-HMACs were compared by string comparison, which is known to be vulnerable to
-timing attacks.
+This issue has been rated *Medium* (
+CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N>),
+and assigned CVE-2023-2727
 
-Mitigation:
-No new release of Tapestry has occurred since the issue was reported.
-Affected
-organizations may want to consider locally applying commit
-d3928ad44714b949d247af2652c84dae3c27e1b1.
+*Am I vulnerable?*
+Clusters are impacted by this vulnerability if all of the following are
+true:
 
-Timeline:
-- 2019-03-12: Issue discovered.
-- 2019-03-13: Issue reported to security@apache.org.
-- 2019-03-29: Pinged thread to ask for update.
-- 2019-04-19: Fix committed.
-- 2019-04-23: Asked about release timeline, response "in the upcoming
-months"
-- 2019-05-28: Pinging again about release.
-- 2019-06-24: Asked again, asked for CVE number assigned.  No update on
-  timeline.
-- 2019-08-22: Disclosure posted.
+   1. The ImagePolicyWebhook admission plugin is used to restrict use of
+   certain images
+   2. Pods are using ephemeral containers.
 
-This vulnerability was discovered by David Tomaschik of the Google Security
-Team.
+*Affected Versions*
 
--- 
-David Tomaschik
-Security Engineer
-ISA Assessments
+   - kube-apiserver v1.27.0 - v1.27.2
+   - kube-apiserver v1.26.0 - v1.26.5
+   - kube-apiserver v1.25.0 - v1.25.10
+   - kube-apiserver <= v1.24.14
 
---0000000000000160350590cc9acb--
+*How do I mitigate this vulnerability?*
+This issue can be mitigated by applying the patch provided for the
+kube-apiserver component. This patch prevents ephemeral containers from
+using an image that is restricted by ImagePolicyWebhook.
+
+Note: Validation webhooks (such as Gatekeeper
+<https://open-policy-agent.github.io/gatekeeper-library/website/validation/allowedrepos/>
+and Kyverno
+<https://kyverno.io/policies/other/allowed-image-repos/allowed-image-repos/>)
+can also be used to enforce the same restrictions.
+
+*Fixed Versions*
+
+   - kube-apiserver v1.27.3
+   - kube-apiserver v1.26.6
+   - kube-apiserver v1.25.11
+   - kube-apiserver v1.24.15
+
+These releases have been published today, June 14th, 2023.
+
+*Detection*
+Pod update requests using an ephemeral container with an image that should
+have been restricted by an ImagePolicyWebhook will be captured in API audit
+logs. You can also use `kubectl get pods` to find active pods with
+ephemeral containers running an image that should have been restricted in
+your cluster with this issue.
+
+*Additional Details*
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/118640
+
+Thank You,
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
+--000000000000c03f2405ffd83000--
