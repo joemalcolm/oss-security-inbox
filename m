@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2993" "Friday" "31" "July" "2020" "16:04:21" "+0200" "Matthieu Herrb" "matthieu@herrb.eu" nil "92" nil "^Date:" nil nil "7" nil nil (number mark "        matthieu@her Jul 31   92/2993  " thread-indent "\"[oss-security] Fwd: X.Org security advisory: July 31, 2020: Xserver\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: X.Org security advisory: July 31, 2020: Xserver" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 31808 invoked by uid 550); 31 Jul 2020 14:07:51 -0000
+Received: (qmail 1390 invoked by uid 550); 6 Jul 2023 22:22:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,118 +6,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29875 invoked from network); 31 Jul 2020 14:04:35 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; s=20180121; bh=WV
-	oVxHbJdAkocWXZKDJHUUcAA3k=; b=OF57W8oqQ3sKLmkAQyV75DnnqK46lvpsSG
-	wAlqecYa+JxkDYXZSzSBFju5KP45z26qcYv8Aie9gV+jkHlBYrmip1C0gCJf+rcZ
-	uQJxsNXbkFswEpJoUiaqYdyjj+2os3z0ELSoTAkGxQoWuL+bcMC2xwQ9xuWeNckW
-	BzihhUNb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; q=dns; s=20180121; b=
-	uHL9CQcOghdkkU9iVZnq4UN1XcLW8/Yznj8aD8Sot5X4xJp7o3qCYlyEEYuZlKFe
-	RFPvnOCyql2p8shaMJ+VqSYjGE6x6Xy5vS/gLEoTHCbFRDSeCxRmg7tKlJu4W5gm
-	+tGOCFpuSOg9+A/FRjKkSGigVOZB+6YvwD412KXgZSk=
-Message-ID: <20200731140421.GD69757@zuma.herrb.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DHghc3FnY75Ze2RR"
-Content-Disposition: inline
-Date: Fri, 31 Jul 2020 16:04:21 +0200
-From: Matthieu Herrb <matthieu@herrb.eu>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Fwd: X.Org security advisory: July 31, 2020: Xserver
+Received: (qmail 1369 invoked from network); 6 Jul 2023 22:22:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
+	s=2023; t=1688682119;
+	bh=rEpGi5DcD9I/68b+Ew+R7Sp/TfYJJXCRUy7o78Enu5M=;
+	h=From:To:Subject:Content-Type:From:To:Subject;
+	b=AxyShG8N2BtwdulJ4eP4dD8SVYC4fCvCAlkCMTB8qyif/zZfQQHRmd/+PzY+i08Xd
+	 ZSaKG6B6HLarvFy/L8VF5IdDgwvSwgtptgk4v69A8J207qnywawtbOxuPx7ffmzw73
+	 inLk/qKhO6JBdHtsAw5z67kt0mTMz8/Ie8argZoHL8oHi77LfvVpe3qXN734qHSp8/
+	 br12KMA9F1PtS5b2WReSkcUzUWYtUgAHMmcnX4cd8nWoRcQWGUwuUA6FWMVZOUFeP8
+	 i6nWae0XVPaRkQQK+pD6xhcoYbMTqrwrYhaVbMJSwEeL5Z5KqCD35Hu1uOb0Ata6XW
+	 r56T4l9gme/AA==
+Date: Thu, 6 Jul 2023 18:21:59 -0400
+From: Jan Schaumann <jschauma@netmeister.org>
 To: oss-security@lists.openwall.com
-
---DHghc3FnY75Ze2RR
+Message-ID: <ZKc+hwsLvLmZeYZB@netmeister.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2023-36460: mastodon: Arbitrary file creation through media
+ attachments
 
------ Forwarded message from Matthieu Herrb <matthieu@herrb.eu> -----
+(I have no affiliation with the project, but posting
+this here because it seems to me that increasingly
+non-packaged / GitHub distributed projects tend not to
+send out announcements here.)
 
-Date: Fri, 31 Jul 2020 15:44:44 +0200
-From: Matthieu Herrb <matthieu@herrb.eu>
-To: xorg-announce@lists.x.org
-Cc: xorg-devel@lists.x.org
-Subject: X.Org security advisory: July 31, 2020: Xserver
+https://github.com/mastodon/mastodon/security/advisories/GHSA-9928-3cp5-93fm
 
-X.Org security advisory: July 31, 2020
+(This advisory describes an issue found by Cure53 as
+part of an audit performed at Mozilla's request)
 
-X Server Pixel Data Uninitialized Memory Information Disclosure=20
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Using carefully crafted media files, attackers can
+cause Mastodon's media processing code to create
+arbitrary files at any location.
 
-CVE-2020-14347
+Impact
+This allows attackers to create and overwrite any file
+Mastodon has access to, allowing Denial of Service and
+arbitrary Remote Code Execution.
 
-Allocation for pixmap data in AllocatePixmap() does not initialize the
-memory in xserver, it leads to leak uninitialize heap memory to
-clients. When the X server runs with elevated privileges.
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
 
-This flaw can lead to ASLR bypass, which when combined with other
-flaws (known/unknown) could lead to lead to privilege elevation in the
-client.
+Severity: 9.9/10
 
-Patch
-=3D=3D=3D=3D=3D
+CVE-2023-36460
 
-A patch for this issue has been commited to the xorg server git
-repository.  xorg-server 1.20.9 will be released shortly and will
-include this patch.
-
-https://gitlab.freedesktop.org/xorg/xserver.git
-
-diff --git a/dix/pixmap.c b/dix/pixmap.c
-index 1186d7dbb..5a0146bbb 100644
---- a/dix/pixmap.c
-+++ b/dix/pixmap.c
-@@ -116,7 +116,7 @@ AllocatePixmap(ScreenPtr pScreen, int pixDataSize)
-     if (pScreen->totalPixmapSize > ((size_t) - 1) - pixDataSize)
-         return NullPixmap;
-=20
--    pPixmap =3D malloc(pScreen->totalPixmapSize + pixDataSize);
-+    pPixmap =3D calloc(1, pScreen->totalPixmapSize + pixDataSize);
-     if (!pPixmap)
-         return NullPixmap;
-=20=20=20=20
-Thanks
-=3D=3D=3D=3D=3D=3D
-
-This vulnerability was discovered by Jan-Niklas Sohn working with
-Trend Micro Zero Day Initiative.
-
---=20
-Matthieu Herrb
-
-
-
-_______________________________________________
-xorg-announce mailing list
-xorg-announce@lists.x.org
-https://lists.x.org/mailman/listinfo/xorg-announce
-
-
------ End forwarded message -----
-
---DHghc3FnY75Ze2RR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIVAwUBXyQk4Whzk+430Sj4AQIUbg/9F7SGoRxQsgXmiZqxF0Bfv1oihSMNbBTY
-JVDoiY8bWsTUmY2b2rnUjuRljncywSgqm/6FKAD3taXg7Nujj49Y4qmat1hPusQD
-Petn+3tRbbD9ZVNVELsNvWaXMdrIgZq59imq/oWHyNHhkUML6UVgKWnyQzAbLx/N
-BF+YCbEHKNhXUXDfkZdmB0PAYfjycX6QvqIQyb73Xpb5CCefjLP3Q5wWNismOduY
-VIPjjkZ6VoidMlqMk1kZEbZmx8pqchugqcfJPbE/xdnUaw9dOzU/qqUtVOtRxLZe
-B0HkEj5/5zJQpEWX+oCoUgr6gxJmIq0DJs34ofEo+o6iKCyIuPsf9LGKnSIb3Xl7
-fdgTaytkhq0qANp1IYV8I0Ly7jlS07KT4A63qXPcZgDVIRoBB8UoFF0hCnjvAam3
-+B1nv/uNYg6KLxfcLbQD2XaPXvt0QdlaeBqQn2e3J636Nvo11qNuavcevxVRhKZP
-HOnIOPZKc/rT6xwanBx2OK5Q3CEh97pYL4jIyfWVda5w8L5zBedHCtP6qxsfa8xs
-Ke04qX/ismJeGTBCZayT5YqvmpYFkBavMEoRNodTdlN1b1ZroKRpQtOFaXwSqw9S
-66Tiy88ltsfYypLuQ8FViVpKd8LCY+05yfvABRsNU56HW7njnbAT34+VLnln0o3A
-/S+PIZGWOAA=
-=V7bA
------END PGP SIGNATURE-----
-
---DHghc3FnY75Ze2RR--
+Affected versions: >= 3.5.0
+Patched versions:  4.1.3, 4.0.5, 3.5.9
