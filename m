@@ -1,51 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/15/1
-Message-ID: <c179150b-68ee-9689-abc9-906a9a7229b3@census-labs.com>
-Date: Thu, 15 Jun 2023 12:56:52 +0100
-From: Brian McDermott <bmcdermott@...sus-labs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/07/4
+Message-ID: <20230707214618.GA29306@openwall.com>
+Date: Fri, 7 Jul 2023 23:46:18 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-1672: race condition in Tang exposes private keys to other processes
+Cc: Ruihan Li <lrh2000@....edu.cn>
+Subject: Re: StackRot (CVE-2023-3269): Linux kernel privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+On Wed, Jul 05, 2023 at 08:12:01PM +0800, Ruihan Li wrote:
+> I reported this vulnerability to the Linux kernel security team on June 15th.
+> Following that, the process of addressing this bug was led by Linus Torvalds.
+> Given its complexity, it took nearly two weeks to develop a set of patches that
+> received consensus.
+> 
+> On June 28th, during the merge window for Linux kernel 5.5, the fix was merged
+> into Linus' tree. Linus provided a [comprehensive merge message][fix] to
+> elucidate the patch series from a technical perspective.
+> 
+>  [fix]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9471f1f2f50282b9e8f59198ec6bb738b4ccc009
+> 
+> These patches were subsequently backported to stable kernels ([6.1.37][6.1],
+> [6.3.11][6.3], and [6.4.1][6.4]), effectively resolving the "Stack Rot" bug on
+> July 1st.
+> 
+>  [6.1]: https://lore.kernel.org/stable/2023070133-create-stainless-9a8c@gregkh/T/
+>  [6.3]: https://lore.kernel.org/stable/2023070146-endearing-bounding-d21a@gregkh/T/
+>  [6.4]: https://lore.kernel.org/stable/2023070140-eldercare-landlord-133c@gregkh/T/
 
-Tang (https://github.com/latchset/tang) is an open source project that 
-is used to bind data to network presence. It is commonly used along with 
-Clevis clients to provide for unattended LUKS decryption of server 
-storage volumes within the realms of a network, where a trusted Tang 
-server is situated.
+Thank you very much Ruihan Li!  This is impressive work both by you and
+by the kernel maintainers.
 
-CENSUS identified that the Tang software in versions 11, 12 and 13 (and 
-possibly previous versions) is vulnerable to a form of race condition, 
-where the Tang private keys become exposed for a small time window to 
-other users on the same host. The issue is tracked as CVE-2023-1672. 
-More information regarding the vulnerability can be found here: 
-https://census-labs.com/news/2023/06/15/race-tang/
+For the oss-security community, I need to acknowledge and explain that
+we made a rare exception from the linux-distros policy on 14 days
+maximum embargo time, and why we did that.  We also made use of the
+exception pre-granted for "Linux kernel issues concurrently or very
+recently handled by the Linux kernel security team", where a "silent"
+fix is possible without us treating that as embargo end.
 
-Users are recommended to upgrade to Tang version 14 where the issue has 
-been sufficiently addressed.
+Ruihan Li brought the issue to linux-distros at the same time with
+contacting the Linux kernel security team on June 15th.  This meant the
+latest date for public disclosure would be June 29th.  As it happened,
+this issue was genuinely taking almost the full 14 days to fix,
+including patch review, testing on multiple platforms, and adjustments
+to the initial fixes.  The fix seemed ready on June 28th, and making the
+information fully public on the 29th was within consideration.  However,
+we decided to allocate an extra 6 days beyond the usual maximum of 14,
+until July 5th.  The intent was for the "silent" fix (committed by Linus
+on June 28th) to propagate to stable kernels, to prepared distro updates
+(not to be released with the fix documented until July 5th), and for it
+to stabilize in case more issues are found and addressed in this period
+(which wasn't unlikely given the complexity).
 
-Best regards,
+Many of the distros present on linux-distros only used kernels older
+than 6.1, so were not affected.  This meant two things: on one hand, few
+distros would benefit from the delay, but on the other also few would
+possibly be hurt by the delay.  For many, this just did not matter.
 
-Brian McDermott
+I didn't keep track, but apparently there were first compile-time and
+then runtime issues with the fix on sparc32, parisc, ia64, as addressed
+in this thread:
 
--- 
-Brian McDermott
-Jr IT Security Professional Intern
-Add: SYNGROU AVENUE 128, Athens 11745, Greece
-Mob: +30 6944 435541
-Tel: +30 210 2208989-90
-https://census-labs.com -- IT Security Works
+https://lore.kernel.org/all/CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com/#t
 
-CONFIDENTIALITY NOTICE
-The contents of this email message and any attachments are intended solely for the
-addressee(s) and might contain confidential and/or privileged information and might
-be legally protected from disclosure. If you are not the intended recipient of this
-message or this message has been addressed to you in error, please immediately notify
-the sender and delete any copies of it; you are hereby notified that any use, copying
-or storage of this message or its attachments is strictly prohibited.
+Linus also promptly found (and informed linux-distros on June 29th) that
+a runtime warning message temporarily introduced along with the fix (but
+with a separate commit) was getting triggered too commonly.  This is
+finally fixed in:
 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6cd06ab12d1afdab3847e7981f301bd0404aaa5c
 
-Download attachment "OpenPGP_0x68BA3525BB668B19.asc" of type "application/pgp-keys" (3156 bytes)
+I'm not currently aware of any other issues found and addressed during
+the extra 6 days, so I'm not sure whether this delay was of sufficient
+benefit.  However, we didn't know in advance - it could well have been.
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+> ## Exploit
+> 
+> **The complete exploit code and a comprehensive write-up will be made publicly
+> available no later than the end of July.**
+
+The complete exploit code wasn't posted to linux-distros, so it is not
+subject to the policy on maximum of 7 days between vulnerability
+disclosure on oss-security and posting of the exploit to oss-security.
+
+Some details on triggering the bug were on linux-distros.  Normally,
+they would be subject to the policy and so brought to oss-security no
+later than July 12th, which Ruihan Li did not object to doing, but
+expressed a preference to post the complete exploit by the end of July
+instead.  I agreed to make this exception.
+
+Thanks,
+
+Alexander
