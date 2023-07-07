@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/16/1
-Message-ID: <687042794.320019.1678958511445.JavaMail.zimbra@census-labs.com>
-Date: Thu, 16 Mar 2023 11:21:51 +0200 (EET)
-From: Giannis Christodoulakos <gchristodoulakos@...sus-labs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/07/3
+Message-ID: <8a1b0d74-3dc0-1228-1bf1-d086ad7d84e1@apache.org>
+Date: Fri, 07 Jul 2023 12:34:46 +0000
+From: Guillaume Nodet <gnodet@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24278 - Reflected XSS vulnerabilities in Squidex "/squid.svg" endpoint
+Subject: CVE-2023-35887: Apache MINA SSHD: Information disclosure bugs with RootedFilesystem 
 Content-Type: text/plain; charset=utf-8
 
-Hello all, 
+Affected versions:
 
-Squidex, a "headless" open source CMS framework was found to have two reflected XSS vulnerabilities in the "/squid.svg" endpoint 
-affecting versions prior to 7.4.0. The vulnerabilities have been addressed in version 7.4.0 of the framework. 
+- Apache MINA SSHD 1.0 before 2.10
 
-CVE-2023-24278 was assigned to these vulnerabilities by MITRE. 
+Description:
 
-The vulnerabilities affect both authenticated and unauthenticated users and allow for 
-malicious JavaScript to be executed within victim user browsers. Moreover, the vulnerabilities 
-enable an attacker to collect the CMS authentication token from browser local storage 
-and it is therefore possible for the attacker to gain unauthorized access to a victim user's session. 
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Software Foundation Apache MINA.
 
-More information about these issues is available here: 
-[ https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ | https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ ] 
+In SFTP servers implemented using Apache MINA SSHD that use a RootedFileSystem, logged users may be able to discover "exists/does not exist" information about items outside the rooted tree via paths including parent navigation ("..") beyond the root, or involving symlinks.
 
-Best regards, 
+This issue affects Apache MINA: from 1.0 before 2.10.
 
-Ioannis Christodoulakos 
+Thanks to Andrew Pikler for discovering the issue and helping to fix it.
+
+This issue is being tracked as SSHD-1324 
+
+References:
+
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-35887
+https://issues.apache.org/jira/browse/SSHD-1324
 
