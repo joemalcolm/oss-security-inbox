@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2993" "Thursday" "31" "December" "2015" "14:43:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151231194350.6E71936E244@smtpvbsrv1.mitre.org>" "76" "[oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces" "^Cc:" nil nil "12" "2015123119:43:50" "[oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces" (number mark "        cve-assign@m Dec 31   76/2993  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces\"\n") "<567339BE.3090404@canonical.com>" ("<567339BE.3090404@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30244 invoked by uid 550); 31 Dec 2015 19:44:02 -0000
+Received: (qmail 25996 invoked by uid 550); 7 Jul 2023 11:56:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +6,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30225 invoked from network); 31 Dec 2015 19:44:01 -0000
-In-Reply-To: <567339BE.3090404@canonical.com>
-Message-Id: <20151231194350.6E71936E244@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 31 Dec 2015 14:43:50 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces
-To: john.johansen@canonical.com
+Received: (qmail 7763 invoked from network); 7 Jul 2023 11:22:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688728915; x=1691320915;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4C8DL3F9zFjftHXR/MrRNVwEUjmaB5579xyVOv1pgdk=;
+        b=KPSW5o5HxDf3i6D3cBIXySiPQXUk9vOn7AqYf9qXLrREN8Qe13AGCBXKXcmLroOhPU
+         i2mRKK3AzoOrfeE0gWUCUOzLDgeYLVUJg2aMVs6tNIfplD6xC68PkT6i1IwKXn7n8KsM
+         PQqwnpgyxwHW0WsyUNpHJ7XSWDBCkY6sfb6xatN4gze6a0IlZiaaVF5JJrVvfR7UEVfI
+         2nuCg3BNvIeFEcXSM8GTn13BnGw7OXLKBGXL8UCyC3idulbBKkP/0Hot5TZEvShnjjSd
+         cK4GRjotAvYcIik73f72d3VioMjoMrGum+PpktimR26IC4XDKHIClsXwJ0iYVAiNIBW/
+         /Fhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688728915; x=1691320915;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4C8DL3F9zFjftHXR/MrRNVwEUjmaB5579xyVOv1pgdk=;
+        b=HD3FsK7Wf5EfpXVMk228Uxn7RKfFL9PBTZTZOQJfYZBI3eKYq93sTuE/z6HZarAQXv
+         oeKsVvGLtna4nzSXIvisDeYH86+A8oAXAQZ+CawEhLuFWlxuA7fnInUWYiNR+tp3ghla
+         X8x+N7nYDqfmkwk1b3pt2yfSNgUW/zXIcONIF0a+xkghaqYZMnAgE0kxMhDKbafW3x9W
+         NoeV/vSD+MOMwmMX60DT5RsUYtaVW3s9OZs1L9VAAht/2jAlwQdzIJ+ttegHHssgscJk
+         hmX65XpsgA30VK0aIQC91zLO+CeFcckY8dvueSiD+IHfqpYKkz18YBmXIEQynkngdpQJ
+         TDOw==
+X-Gm-Message-State: ABy/qLZh4gKUDM+1rpZKZRUuSrmTTi2jZ0zskBGqjvkgNIkYsurHqzB6
+	eXqS+SH+R9+nUUgn7cBPeI2v16Qtb+i9wUr7zA2urSZX7o8=
+X-Google-Smtp-Source: APBJJlHjAUIX2fgjeNxPvzKf9DpoMrcwSoHMnhgq1+BITM3QmGzdR7dw7PXyimvf7YtwthdRaFY9wsb0xsLx4UaVL3g=
+X-Received: by 2002:a2e:9316:0:b0:2b6:ded8:6fc1 with SMTP id
+ e22-20020a2e9316000000b002b6ded86fc1mr3503639ljh.25.1688728914860; Fri, 07
+ Jul 2023 04:21:54 -0700 (PDT)
+MIME-Version: 1.0
+From: Andrea Cosentino <ancosen@gmail.com>
+Date: Fri, 7 Jul 2023 13:21:42 +0200
+Message-ID: <CAELOW3U5UQsjXcV1Katmq=7bCzHFG90WHgckMXiCXobzN7+nkQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000179d8005ffe3d769"
+Subject: [oss-security] CVE-2023-34442: Apache Camel JIRA: Temporary file information
+ disclosure in Camel-Jira
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000179d8005ffe3d769
+Content-Type: text/plain; charset="UTF-8"
 
-Use CVE-2015-8709 for the issue fixed in the
-https://lkml.org/lkml/2015/12/25/71 post.
+Severity: low
 
-(This is not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
-and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
-current end of the earlier discussion.)
+Affected versions:
 
-This issue has been covered in security advisories from one or more
-Linux distributions, e.g.,
+- Apache Camel JIRA 3.x through <=3.14.8
+- Apache Camel JIRA 3.18.x through <=3.18.7
+- Apache Camel JIRA 3.20.x through <= 3.20.5
+- Apache Camel JIRA 4.x through <= 4.0.0-M3
 
->> http://www.ubuntu.com/usn/usn-2847-1
->> 
->> Jann Horn discovered a ptrace issue with user namespaces in the Linux
->> kernel. The namespace owner could potentially exploit this flaw by ptracing
->> a root owned process entering the user namespace to elevate its privileges
->> and potentially gain access outside of the namespace.
->> (http://bugs.launchpad.net/bugs/1527374)
+Description:
 
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in
+Apache Software Foundation Apache Camel.This issue affects Apache Camel:
+from 3.X through <=3.14.8, from 3.18.X through <=3.18.7, from 3.20.X
+through <= 3.20.5, from 4.X through <= 4.0.0-M3.
 
-There has been some discussion of whether the finding was a
-vulnerability discovery, e.g.,
+Users should upgrade to 3.14.9, 3.18.8, 3.20.6 or 3.21.0 and for users on
+Camel 4.x update to 4.0.0-M1
 
->>> Date: Fri, 18 Dec 2015 00:07:19 +0100
->>> From: Jann Horn <jann@thejh.net>
->>> 
->>> I'm not sure whether this is CVE-worthy - the user_namespaces
->>> manpage says "the process has full privileges for operations
->>> inside the user namespace, but is unprivileged for operations
->>> outside the namespace". ptrace()ing a process in the
->>> namespace can reasonably be considered an "operation inside
->>> the user namespace" ...
->>> 
->>> In my opinion, this patch is somewhere between hardening and
->>> a security feature, but I wouldn't really call it a vuln fix.
+This issue is being tracked as CAMEL-19421
 
+Credit:
 
->>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
->>>> From: Serge Hallyn <serge.hallyn@ubuntu.com>
->>>> 
->>>>> ptrace()ing a process in the
->>>>> namespace can reasonably be considered an "operation inside
->>>>> the user namespace"
->>>> 
->>>> Except by creating a file in the host namespace, you were, as
->>>> root in the container, able to escape your namespace, right?
+This issue was discovered by Jonathan Leitschuh of the Open Source Security
+Foundation: Project Alpha-Omega (reporter)
 
-We feel that, more generally, the usn-2847-1 mention of "and
-potentially gain access outside of the namespace" is a realistic
-concern.
+References:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-34442
+https://issues.apache.org/jira/browse/CAMEL-19421
+https://camel.apache.org/security/CVE-2023-34442.html
 
-iQIcBAEBCAAGBQJWhYUBAAoJEL54rhJi8gl5clsQAJ0zSFW9FO3915URxP2n8G8o
-ZhSK+jSGkt2LyKDA6pUooumSsK0AcFyHickeGcvpQwG3QVhgAhMXAafcgmPxA6yo
-H1lagz87clNL96IRK4IqQF9Go8ESqxDay+lUidazRPpIvGUSx+0/qQ0OlRWixGmW
-CeumSsAP2bHTEf/r6LVliPU5+2/nRdvRsSa+OXF4z6vJerzHGJAMvipaXf3otts+
-VQzco/jc8R5zODFTc7xqVmIBbzyCPtP47BvmPXDJaVelt9kPima+qLOFC4ahEdw8
-qChsbHH8Ab1Tv5WATqopWJ6oLQ6g4yFihrtfPr1w9JaDMoFPs3s8OKXji+RkR09F
-om+7qSXTMft25wdeBoh1eTyceLD5ZdjB82cwhxLxthjyYjQTmKcQU5HBXD9xZee9
-SVs03pBTYXyo0rt+z1mvaL7rsuXn6NXLRt3mwDHO7qpwKJKU3nJjt9OOdan+Cipb
-Fj8/ypwFLvOBeEMC3Ymi8yhb7JOGtMetKI/q/nvouscovNeM7rfYeFIrNAup71du
-PNn2to5riQHeK/XsxBYi3VUK2wHm2MyKvcwaq5wzyw0GKBCdPXYnGKYQ8k8KnT7/
-b1SPmfL/8GpYENEAjtXbPNp18CwY5pXE/+u7HrX+GsBUjpapayx3o2Jsjr12/4x7
-36dwQ8gGQoWfBFgofWSs
-=YkNx
------END PGP SIGNATURE-----
+--000000000000179d8005ffe3d769--
