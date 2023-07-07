@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["754" "Sunday" "6" "November" "2016" "21:35:24" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161106203524.hkl2ketyczothiuk@eldamar.local>" "24" "[oss-security] Clarification about CVE-2016-1841 for libxslt" nil nil nil "11" "2016110620:35:24" "[oss-security] Clarification about CVE-2016-1841 for libxslt" (number mark "U       carnil@debia Nov  6   24/754   " thread-indent "\"[oss-security] Clarification about CVE-2016-1841 for libxslt\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31884 invoked by uid 550); 6 Nov 2016 20:35:38 -0000
+Received: (qmail 25715 invoked by uid 550); 7 Jul 2023 21:46:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31860 invoked from network); 6 Nov 2016 20:35:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=rFweSlsBbDWznVhaFPIDVt62DJ6zcBmWgENmdnZNdYo=;
-        b=FzqBadYFbXq1srY3QV3mo5Vz8rUe4QLhySyzdaes1wK1LfsIMpHdym45iIvxBJyIgJ
-         WPxins58dKBSGYSu5to64DsRiRVqnU5mIbanccL7+RJzDpzynWU4uVHPDoHt/wpe5PhG
-         9jHo1h9onGwrjDtVmUmmqrKF61/8kOuuTEuj9QenIsRJeHIjKhiIn/33sMQNlb3PLFUp
-         YOmigQPTA5X7X+QBdR9QrZm4H1UzfeUNvJtZOzZkFHwh3tKBnfGO9sKMTp+re/gnCRNL
-         a/WjGnjX7XSsU0OkrejBgQlc7r/q5GUeah2j3Fw3vp6vXSRQSvFgNwPfnlPpOwOyu6k4
-         ihFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=rFweSlsBbDWznVhaFPIDVt62DJ6zcBmWgENmdnZNdYo=;
-        b=AoIImSp1A6n6k4Zzl0yJ2kYzZkFFsQqBoka8bZkV8MQ7OIRaJSJswI3wesnv/6JwvD
-         egtfnp/2zxihKK5USIR1DGQNAg1oyz2q46SoXVHbBsyOTCLryqdqjfsPowxywzEBlchX
-         CIJ+KYgrJwfJzFb8x2cQP3pAUXXeQsVdGZp+GRr9OoUnQJTdUWdXIG2RcDRmxT/nlX9S
-         JAcLej0HulmUikM05MFsXhOcN6GdR9hOJyY2soBjdL8MZknOXcNHEAPcJhJIDl1J3BGX
-         0jaze1rlhksjpKgkWWKKuBmuOqMON3gyOk7nrtQ3TG9Cf7rBaajJ4sQ/ojV42BJ1su3h
-         7qLA==
-X-Gm-Message-State: ABUngvdUcO1irYv01j5RiMOv3tusch3qWRJsdvX8vJhUW69RnKLJBx0iyFbTDeTMiYGy3A==
-X-Received: by 10.194.178.100 with SMTP id cx4mr3375487wjc.15.1478464526202;
-        Sun, 06 Nov 2016 12:35:26 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 6 Nov 2016 21:35:24 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Message-ID: <20161106203524.hkl2ketyczothiuk@eldamar.local>
-MIME-Version: 1.0
+Received: (qmail 24486 invoked from network); 7 Jul 2023 21:46:27 -0000
+Date: Fri, 7 Jul 2023 23:46:18 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Ruihan Li <lrh2000@pku.edu.cn>
+Message-ID: <20230707214618.GA29306@openwall.com>
+References: <xhhkp3aknwwlmrmmqmr532yfq3ioqh6jbkrxfqf6ovlj2szsai@f3sjwakyq323>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: NeoMutt/20161014 (1.7.1)
-Subject: [oss-security] Clarification about CVE-2016-1841 for libxslt
+In-Reply-To: <xhhkp3aknwwlmrmmqmr532yfq3ioqh6jbkrxfqf6ovlj2szsai@f3sjwakyq323>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] StackRot (CVE-2023-3269): Linux kernel privilege escalation vulnerability
 
-Hi
+On Wed, Jul 05, 2023 at 08:12:01PM +0800, Ruihan Li wrote:
+> I reported this vulnerability to the Linux kernel security team on June 15th.
+> Following that, the process of addressing this bug was led by Linus Torvalds.
+> Given its complexity, it took nearly two weeks to develop a set of patches that
+> received consensus.
+> 
+> On June 28th, during the merge window for Linux kernel 5.5, the fix was merged
+> into Linus' tree. Linus provided a [comprehensive merge message][fix] to
+> elucidate the patch series from a technical perspective.
+> 
+>  [fix]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9471f1f2f50282b9e8f59198ec6bb738b4ccc009
+> 
+> These patches were subsequently backported to stable kernels ([6.1.37][6.1],
+> [6.3.11][6.3], and [6.4.1][6.4]), effectively resolving the "Stack Rot" bug on
+> July 1st.
+> 
+>  [6.1]: https://lore.kernel.org/stable/2023070133-create-stainless-9a8c@gregkh/T/
+>  [6.3]: https://lore.kernel.org/stable/2023070146-endearing-bounding-d21a@gregkh/T/
+>  [6.4]: https://lore.kernel.org/stable/2023070140-eldercare-landlord-133c@gregkh/T/
 
-CVE-2016-1841 is assigned for libxslt, and the CVE description from
-MITRE states:
+Thank you very much Ruihan Li!  This is impressive work both by you and
+by the kernel maintainers.
 
-> libxslt, as used in Apple iOS before 9.3.2, OS X before 10.11.5,
-> tvOS before 9.2.1, and watchOS before 2.2.1, allows remote attackers
-> to execute arbitrary code or cause a denial of service (memory
-> corruption) via a crafted web site. 
+For the oss-security community, I need to acknowledge and explain that
+we made a rare exception from the linux-distros policy on 14 days
+maximum embargo time, and why we did that.  We also made use of the
+exception pre-granted for "Linux kernel issues concurrently or very
+recently handled by the Linux kernel security team", where a "silent"
+fix is possible without us treating that as embargo end.
 
-Following the references from Apple, this seems to be related to an
-issue reported by Sebastian Apelt. Recent bug reports and commits
-related to issues reported by SEbastian Apelt seem to be:
+Ruihan Li brought the issue to linux-distros at the same time with
+contacting the Linux kernel security team on June 15th.  This meant the
+latest date for public disclosure would be June 29th.  As it happened,
+this issue was genuinely taking almost the full 14 days to fix,
+including patch review, testing on multiple platforms, and adjustments
+to the initial fixes.  The fix seemed ready on June 28th, and making the
+information fully public on the 29th was within consideration.  However,
+we decided to allocate an extra 6 days beyond the usual maximum of 14,
+until July 5th.  The intent was for the "silent" fix (committed by Linus
+on June 28th) to propagate to stable kernels, to prepared distro updates
+(not to be released with the fix documented until July 5th), and for it
+to stabilize in case more issues are found and addressed in this period
+(which wasn't unlikely given the complexity).
 
-https://bugzilla.gnome.org/show_bug.cgi?id=758291
+Many of the distros present on linux-distros only used kernels older
+than 6.1, so were not affected.  This meant two things: on one hand, few
+distros would benefit from the delay, but on the other also few would
+possibly be hurt by the delay.  For many, this just did not matter.
 
-with corresponding upstream commit:
+I didn't keep track, but apparently there were first compile-time and
+then runtime issues with the fix on sparc32, parisc, ia64, as addressed
+in this thread:
 
-https://git.gnome.org/browse/libxslt/commit/?id=fc1ff481fd01e9a65a921c542fed68d8c965e8a3
+https://lore.kernel.org/all/CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com/#t
 
-Is this CVE association correct?
+Linus also promptly found (and informed linux-distros on June 29th) that
+a runtime warning message temporarily introduced along with the fix (but
+with a separate commit) was getting triggered too commonly.  This is
+finally fixed in:
 
-Regards,
-Salvatore
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6cd06ab12d1afdab3847e7981f301bd0404aaa5c
+
+I'm not currently aware of any other issues found and addressed during
+the extra 6 days, so I'm not sure whether this delay was of sufficient
+benefit.  However, we didn't know in advance - it could well have been.
+
+> ## Exploit
+> 
+> **The complete exploit code and a comprehensive write-up will be made publicly
+> available no later than the end of July.**
+
+The complete exploit code wasn't posted to linux-distros, so it is not
+subject to the policy on maximum of 7 days between vulnerability
+disclosure on oss-security and posting of the exploit to oss-security.
+
+Some details on triggering the bug were on linux-distros.  Normally,
+they would be subject to the policy and so brought to oss-security no
+later than July 12th, which Ruihan Li did not object to doing, but
+expressed a preference to post the complete exploit by the end of July
+instead.  I agreed to make this exception.
+
+Thanks,
+
+Alexander
