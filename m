@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/6
-Message-ID: <CAH0iFcYFkYr=QkM1QN3x5CxWWw_zkh1GpoZnDEw5_trg_oszRw@mail.gmail.com>
-Date: Tue, 7 Feb 2023 13:28:43 -0500
-From: Michael Dawson <midawson@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/07/1
+Message-ID: <u8857u$14pa$1@ciao.gmane.io>
+Date: Fri, 7 Jul 2023 04:44:46 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Node.js security upates for all active release lines, February 2023
+Subject: manjaro pamac vulnerability
 Content-Type: text/plain; charset=utf-8
 
-FYI
+FYI, I noticed a blog post about this:
 
----------- Forwarded message ---------
-From: midawson <midawson@...hat.com>
-Date: Tue, Feb 7, 2023 at 1:27 PM
-Subject: Re: Node.js security upates for all active release lines, February
-2023
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+https://github.com/c-skills/vala-vala-hey/blob/master/vala-vala-hey
 
+I didn't test it, but if you can't trust stealth who can you trust? :)
 
-Sorry I managed to mess up the link in the original update, it should be
- https://nodejs.org/en/blog/vulnerability/february-2023-security-releases/
-<https://nodejs.org/en/blog/vulnerability/february-2023-security-releases/>
+I'm not familiar with manjaro, I dunno if it's the polkit config for their dbus service.
 
-On Tuesday, February 7, 2023 at 1:11:54 PM UTC-5 midawson wrote:
+Tavis.
 
-> The Node.js project will release new versions of all supported release
-> lines on or shortly after Tuesday February 14th 2023. For more information
-> see:
-> https://nodejs.org/en/blog/vulnerability/february-2023-security-releases/
-> <https://nodejs.org/en/blog/vulnerability/september-2022-security-releases/>
->
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
