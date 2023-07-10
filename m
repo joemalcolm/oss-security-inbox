@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/07/1
-Message-ID: <7357024.lOV4Wx5bFT@intra>
-Date: Mon, 07 Aug 2023 08:57:44 +0200
-From: Michael Daum <daum@...haeldaumconsulting.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/10/2
+Message-ID: <ddecd987-beac-94f8-ad9d-bac236faa4dc@apache.org>
+Date: Mon, 10 Jul 2023 14:02:27 +0000
+From: Brahma Reddy Battula <brahma@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Foswiki-2.1.8 has been released
+Subject: CVE-2022-45855: Apache Ambari: Allows authenticated metrics consumers to perform RCE 
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+Affected versions:
 
-we've got a new release out. Update is highly recommended as it fixes 9 critical security related bugs, i.e.
+- Apache Ambari 2.7.0 through 2.7.6
 
-CVE-2023-33756: SpreadSheetPlugin's EVAL feature exposes information about paths and files on the server
-CVE-2023-24698: Local file inclusion vulnerability in viewfile
+Description:
 
-Read more about it at https://blog.foswiki.org/Blog/Foswiki218IsReleased
+SpringEL injection in the metrics source in Apache Ambari version 2.7.0 to 2.7.6 allows a malicious authenticated user to execute arbitrary code remotely. Users are recommended to upgrade to 2.7.7.
 
-Regards,
-Michael.
+Credit:
 
--- 
--- Michael Daum Consulting
--- Knowledge Management Service & Solutions
--- https://www.michaeldaumconsulting.com
--- Tel: +49 (0)40 21 99 27 51
+rg <18993610179@....com> (finder)
 
+References:
+
+https://ambari.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-45855
 
