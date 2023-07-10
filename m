@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/7
-Message-ID: <a31439c1-ac0f-ddce-b675-467bdd868b32@apache.org>
-Date: Fri, 13 Oct 2023 15:14:12 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/10/3
+Message-ID: <CAOJKFBBeRpoYjwUsJNH=c5aAQ+H=rmGPiTUQ+qB7rZ0J1Qt+rQ@mail.gmail.com>
+Date: Mon, 10 Jul 2023 10:08:22 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-42792: Apache Airflow: Improper access control to DAG resources 
+Subject: Re: CVE-2022-42009: Apache Ambari: A malicious authenticated user can remotely execute arbitrary code in the context of the application.
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Do you have an example proof of concept or a bug link for this?
 
-Affected versions:
+On Mon, Jul 10, 2023 at 10:06 AM Brahma Reddy Battula <brahma@...che.org>
+wrote:
 
-- Apache Airflow before 2.7.2
-
-Description:
-
-Apache Airflow, in versions prior to 2.7.2, contains a security vulnerability that allows an authenticated user with limited access to some DAGs, to craft a request that could give the user write access to various DAG resources for DAGs that the user had no access to, thus, enabling the user to clear DAGs they shouldn't.
-
-Users of Apache Airflow are strongly advised to upgrade to version 2.7.2 or newer to mitigate the risk associated with this vulnerability.
-
-Credit:
-
-balis0ng (finder)
-Jarek Potiuk (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/34366
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-42792
+> Affected versions:
+>
+> - Apache Ambari 2.7.0 through 2.7.6
+>
+> Description:
+>
+> SpringEL injection in the server agent in Apache Ambari version 2.7.0 to
+> 2.7.6 allows a malicious authenticated user to execute arbitrary code
+> remotely. Users are recommended to upgrade to 2.7.7.
+>
+> Credit:
+>
+> Jecki Go (jecgo@...a.com) (finder)
+>
+> References:
+>
+> https://ambari.apache.org/
+> https://www.cve.org/CVERecord?id=CVE-2022-42009
+>
+>
 
