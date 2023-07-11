@@ -1,51 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/8
-Message-ID: <ZD/4ODBjTesPMECg@itl-email>
-Date: Wed, 19 Apr 2023 10:18:27 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/1
+Message-ID: <16f05379-b48d-bdbe-ba77-367e6c01fa9e@apache.org>
+Date: Tue, 11 Jul 2023 15:15:49 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: sjn@....org
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: CVE-2023-35908: Apache Airflow: Access to DAGs without relevant permission 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 18, 2023 at 05:46:30PM +0200, Stig Palmquist wrote:
-> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
-> standalone on CPAN, does not verify TLS certs by default. Users must
-> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
-> 
-> We grepped trough CPAN to find distributions using HTTP::Tiny that
-> didn't specify cert verification behaviour, possibly exposing users to
-> mitm attacks. Here are some examples with patches:
-> 
-> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
->   without verifying server certs. Fixed in v2.35-TRIAL.
->   https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
-> 
-> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
->   https://github.com/bluefeet/GitLab-API-v4/pull/57
-> 
-> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
->   information to a network attacker.
->   https://github.com/sanko/Finance-Robinhood/pull/6
-> 
-> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
->   attacker.
->   https://github.com/pplu/aws-sdk-perl/pull/426
-> 
-> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
->   attacker.
->   https://github.com/pplu/cloudhealth-api-perl/pull/2
-> 
-> ... and more. We have generated a list of over 300 potentially affected
-> CPAN distributions.
-> 
-> More info in our blog post:
-> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
+Severity: low
 
-IMO this is an HTTP::Tiny vulnerability.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Affected versions:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+- Apache Airflow before 2.6.3
+
+Description:
+
+Apache Airflow, versions before 2.6.3, is affected by a vulnerability that allows unauthorized read access to a DAG through the URL. It is recommended to upgrade to a version that is not affected
+
+Credit:
+
+Name : Karthikeyan Singaravelan  Employer : Visa (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/32014
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-35908
+
