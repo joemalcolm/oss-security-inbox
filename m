@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1301" "Monday" "7" "February" "2022" "22:04:17" "+0100" "Gabriel Corona" "gabriel.corona@enst-bretagne.fr" nil "42" "[oss-security] Browser-mediated attacks on WebDriver servers" nil nil nil "2" nil nil (number mark "U       gabriel.coro Feb  7   42/1301  " thread-indent "\"[oss-security] Browser-mediated attacks on WebDriver servers\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Browser-mediated attacks on WebDriver servers" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 6113 invoked by uid 550); 7 Feb 2022 21:18:59 -0000
+Received: (qmail 15693 invoked by uid 550); 11 Jul 2023 16:20:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +7,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28404 invoked from network); 7 Feb 2022 21:04:29 -0000
-Message-ID: <9e4aa379-70ce-3bf9-1480-c36a1b9fa4e0@enst-bretagne.fr>
-Date: Mon, 7 Feb 2022 22:04:17 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Content-Language: en-US
+Received: (qmail 3610 invoked from network); 11 Jul 2023 15:49:47 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Dave Fisher <wave@apache.org>
 To: oss-security@lists.openwall.com
-From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Browser-mediated attacks on WebDriver servers
+Message-ID: <3701072d-3473-d682-a769-43a8c65deaf3@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 11 Jul 2023 15:49:33 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-30429: Apache Pulsar: Incorrect Authorization for
+ Function Worker when using mTLS Authentication through Pulsar Proxy 
 
-Several browser-mediated attacks on WebDriver servers:
+Affected versions:
 
-* GeckoDriver CSRF vulnerability (CVE-2020-15660);
-* GeckoDriver DNS-rebinding vulnerability (CVE-2021-4138);
-* Chromedriver localhost-bound same-site/cross-origin request forgery 
-vulnerability;
-* Selenium server/Grid CSRF vulnerability;
-* Selenium server/Grid DNS-rebinding vulnerability.
+- Apache Pulsar before 2.10.4
+- Apache Pulsar 2.11.0
 
-In all cases this could be used to trigger arbitrary code execution.
+Description:
 
-GeckoDriver CSRF vulnerability
-==============================
+Incorrect Authorization vulnerability in Apache Software Foundation Apache =
+Pulsar.
 
-This is CVE-2020-15660. Fixed in GeckoDriver v0.27.0.
+This issue affects Apache Pulsar: before 2.10.4, and 2.11.0.
 
-GeckoDriver DNS-rebinding vulnerability
-=======================================
+When a client connects to the Pulsar Function Worker via the Pulsar Proxy w=
+here the Pulsar Proxy uses mTLS authentication to authenticate with the Pul=
+sar Function Worker, the Pulsar Function Worker incorrectly performs author=
+ization by using the Proxy's role for authorization instead of the client's=
+ role, which can lead to privilege escalation, especially if the proxy is c=
+onfigured with a superuser role.
 
-This is CVE-2021-4138. Fixed in GeckoDriver v0.30.0.
+The recommended mitigation for impacted users is to upgrade the Pulsar Func=
+tion Worker to a patched version.
 
-Chromedriver localhost-bound same-site/cross-origin request forgery
-===================================================================
+2.10 Pulsar Function Worker users should upgrade to at least 2.10.4.
+2.11 Pulsar Function Worker users should upgrade to at least 2.11.1.
+3.0 Pulsar Function Worker users are unaffected.
+Any users running the Pulsar Function Worker for 2.9.* and earlier should u=
+pgrade to one of the above patched versions.
 
-A XSS on another localhost-bound service could be exploited to trigger
-arbitrary code execution.
+Credit:
 
-Reference: https://bugs.chromium.org/p/chromium/issues/detail?id=1100097
+Michael Marshall of DataStax (finder)
 
-Selenium server/Grid CSRF vulnerability
-=======================================
+References:
 
-A CVE-ID has been requested from MITRE.
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-30429
 
-This is fixed in SeleniumServer 4.
-
-Selenium server/Grid DNS-rebinding vulnerability
-====================================
-
-A CVE-ID has been requested from MITRE.
-
-This is fixed in SeleniumServer 4.
