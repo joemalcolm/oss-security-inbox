@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/19/3
-Message-ID: <a3830426-0e83-631c-df91-6ba69c00a333@apache.org>
-Date: Wed, 19 Jul 2023 06:24:52 +0000
-From: Weijie Wu <wuweijie@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/5
+Message-ID: <8fdef484-31c0-fb48-0c7d-f318688b5e7d@apache.org>
+Date: Tue, 11 Jul 2023 15:28:03 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28754: ShardingSphere-Agent: Deserialization vulnerability in ShardingSphere Agent 
+Subject: CVE-2023-22888: Apache Airflow: Scheduler remote DoS 
 Content-Type: text/plain; charset=utf-8
 
 Severity: low
 
 Affected versions:
 
-- ShardingSphere-Agent through 5.3.2
+- Apache Airflow before 2.6.3
 
 Description:
 
-Deserialization of Untrusted Data vulnerability in Apache ShardingSphere-Agent, which allows attackers to execute arbitrary code by constructing a special YAML configuration file.
-
-The attacker needs to have permission to modify the ShardingSphere Agent YAML configuration file on the target machine, and the target machine can access the URL with the arbitrary code JAR.
-An attacker can use SnakeYAML to deserialize java.net.URLClassLoader and make it load a JAR from a specified URL, and then deserialize javax.script.ScriptEngineManager to load code using that ClassLoader. When the ShardingSphere JVM process starts and uses the ShardingSphere-Agent, the arbitrary code specified by the attacker will be executed during the deserialization of the YAML configuration file by the Agent.
-
-This issue affects ShardingSphere-Agent: through 5.3.2. This vulnerability is fixed in Apache ShardingSphere 5.4.0.
+Apache Airflow, versions before 2.6.3, is affected by a vulnerability that allows an attacker to cause a service disruption by manipulating the run_id parameter. This vulnerability is considered low since it requires an authenticated user to exploit it. It is recommended to upgrade to a version that is not affected
 
 Credit:
 
-Liav Gutman of the JFrog CSO Research team (finder)
+Zhipeng Zhang (@timon8) (finder)
 
 References:
 
-https://shardingsphere.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-28754
+https://github.com/apache/airflow/pull/32293
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-22888
 
