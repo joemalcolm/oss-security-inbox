@@ -1,48 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/16
-Message-ID: <CAKYehMbynyKHX8Qehab06G70Y0EBNCVDUwHxDJm+k92R4s_Tpw@mail.gmail.com>
-Date: Fri, 21 Apr 2023 00:12:17 +0800
-From: Huajie Wang <benjobs@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/8
+Message-ID: <3701072d-3473-d682-a769-43a8c65deaf3@apache.org>
+Date: Tue, 11 Jul 2023 15:49:33 +0000
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: dev <dev@...eampark.apache.org>
-Subject: CVE-2022-46365: Apache StreamPark (incubating): Logic error causing any account reset
+Subject: CVE-2023-30429: Apache Pulsar: Incorrect Authorization for Function Worker when using mTLS Authentication through Pulsar Proxy 
 Content-Type: text/plain; charset=utf-8
 
-Logic error causing any account reset in Apache StreamPark
+Affected versions:
 
-
-Severity: Important
-
-
-Versions Affected:
-
-Apache StreamPark 1.0.0 before 2.0.0
-
+- Apache Pulsar before 2.10.4
+- Apache Pulsar 2.11.0
 
 Description:
 
+Incorrect Authorization vulnerability in Apache Software Foundation Apache Pulsar.
 
-When the user use apache streampark and successfully logs in, to
-modify his profile, the username will be passed to the server-layer as
-a parameter, but not verified whether the user name is the currently
-logged user and whether the user is legal, This will allow malicious
-attackers to send any username to modify and reset the account,
+This issue affects Apache Pulsar: before 2.10.4, and 2.11.0.
 
+When a client connects to the Pulsar Function Worker via the Pulsar Proxy where the Pulsar Proxy uses mTLS authentication to authenticate with the Pulsar Function Worker, the Pulsar Function Worker incorrectly performs authorization by using the Proxy's role for authorization instead of the client's role, which can lead to privilege escalation, especially if the proxy is configured with a superuser role.
 
+The recommended mitigation for impacted users is to upgrade the Pulsar Function Worker to a patched version.
 
-Mitigation:
+2.10 Pulsar Function Worker users should upgrade to at least 2.10.4.
+2.11 Pulsar Function Worker users should upgrade to at least 2.11.1.
+3.0 Pulsar Function Worker users are unaffected.
+Any users running the Pulsar Function Worker for 2.9.* and earlier should upgrade to one of the above patched versions.
 
-Users of the affected versions should apply one of the following
+Credit:
 
-
-- Upgrade to Apache StreamPark 2.0.0 or later
+Michael Marshall of DataStax (finder)
 
 References:
-https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-46365
 
-
-
-
-Best,
-Huajie Wang
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-30429
 
