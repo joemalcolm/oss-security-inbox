@@ -1,36 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/21
-Message-ID: <2ffb794f5e7661c7ff955ebecd4123d3.cedb9d86@offensive.instants>
-Date: Tue, 18 Apr 2023 23:00:13 +0300
-From: 0xef967c36@...il.com
-To: Ruihan Li <lrh2000@....edu.cn>
-Cc: 0xef967c36@...il.com, oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/7
+Message-ID: <3e0b0918-b02b-c7a9-af1f-4e08b44ed0dc@apache.org>
+Date: Tue, 11 Jul 2023 15:48:17 +0000
+From: Dave Fisher <wave@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-30428: Apache Pulsar Broker: Incorrect Authorization Validation for Rest Producer 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 19, 2023 at 02:37:35AM +0800, Ruihan Li wrote:
-> It appears that SNDCTL_TMR_TIMEBASE and TCGETS do have the same command code,
-> which sits in the lower 16 bits. But SNDCTL_TMR_TIMEBASE uses a newer command
-> encoding scheme [2] that includes the direction and argument size in the
-> higher 16 bits. TCGETS, on the other hand, contains only the command code, so
+Affected versions:
 
-That encoding scheme is quite old; it's there since at least 30 years.
+- Apache Pulsar Broker 2.9.0 through 2.9.5
+- Apache Pulsar Broker 2.10.0 before 2.10.4
+- Apache Pulsar Broker 2.11.0
 
-> its higher bits are set to zero (TCGETS should have a really long history,
-> just longer than that of the new ioctl command encoding scheme).
-> 
-> [2]: https://elixir.bootlin.com/linux/v6.3-rc7/source/include/uapi/asm-generic/ioctl.h#L5 
-> 
-> This means we haven't had any collisions yet. Also, since new ioctl commands
+Description:
 
-There actually are some collisions, just not the one with isatty() -> TCGETS
+Incorrect Authorization vulnerability in Apache Software Foundation Apache Pulsar Broker's Rest Producer allows authenticated user with a custom HTTP header to produce a message to any topic using the broker's admin role.
+This issue affects Apache Pulsar Brokers: from 2.9.0 through 2.9.5, from 2.10.0 before 2.10.4, 2.11.0.
 
-eg SNDCTL_TMR_START == TCSETS
+The vulnerability is exploitable when an attacker can connect directly to the Pulsar Broker. If an attacker is connecting through the Pulsar Proxy, there is no known way to exploit this authorization vulnerability.
 
-> will certainly be encoded using the new encoding scheme, which TCGETS does not
-> use, it is very unlikely that new collisions will occur in the future, unless
-> the command code is exactly the same and the higher bits under the new
-> encoding scheme are also occasionally zeros.
+There are two known risks for affected users. First, an attacker could produce garbage messages to any topic in the cluster. Second, an attacker could produce messages to the topic level policies topic for other tenants and influence topic settings that could lead to exfiltration and/or deletion of messages for other tenants.
 
-The _IO variant (without direction and size) can collide with
-old-style ioctl, like those CDROM*, etc.
+2.8 Pulsar Broker users and earlier are unaffected.
+2.9 Pulsar Broker users should upgrade to one of the patched versions.
+2.10 Pulsar Broker users should upgrade to at least 2.10.4.
+2.11 Pulsar Broker users should upgrade to at least 2.11.1.
+3.0 Pulsar Broker users are unaffected.
+
+Credit:
+
+Michael Marshall of DataStax (finder)
+
+References:
+
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-30428
+
