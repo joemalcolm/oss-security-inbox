@@ -1,110 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/6
-Message-ID: <CAL7+V1wuchRgyUhLms8r-cqR42OSn6G0R2GqJZy2sfHDSrU0uQ@mail.gmail.com>
-Date: Wed, 23 Aug 2023 07:37:43 -0700
-From: Rita Zhang <rita.z.zhang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/10
+Message-ID: <593dd14d-afef-1ced-dda0-db0ff16d6f12@apache.org>
+Date: Tue, 11 Jul 2023 15:50:50 +0000
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2023-3893: Insufficient input sanitization on kubernetes-csi-proxy leads to privilege escalation
+Subject: CVE-2023-37579: Apache Pulsar Function Worker: Incorrect Authorization for Function Worker Can Leak Sink/Source Credentials 
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Affected versions:
 
-A security issue was discovered in Kubernetes where a user that can create
-pods on Windows nodes running kubernetes-csi-proxy may be able to escalate
-to admin privileges on those nodes. Kubernetes clusters are only affected
-if they include Windows nodes running kubernetes-csi-proxy.
+- Apache Pulsar Function Worker before 2.10.4
+- Apache Pulsar Function Worker 2.11.0
 
-This issue has been rated ***HIGH*** (
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>
--
-8.8
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
-and assigned **CVE-2023-3893**
+Description:
 
-*Am I vulnerable?*
+Incorrect Authorization vulnerability in Apache Software Foundation Apache Pulsar Function Worker.
 
-Any kubernetes environment with Windows nodes that are running
-kubernetes-csi-proxy is impacted.  This is a common default configuration
-on Windows nodes.  Run `kubectl get nodes -l kubernetes.io/os=windows`
-<http://kubernetes.io/os=windows> to see if any Windows nodes are in use.
+This issue affects Apache Pulsar: before 2.10.4, and 2.11.0.
 
-*Affected Versions*
+Any authenticated user can retrieve a source's configuration or a sink's configuration without authorization. Many sources and sinks contain credentials in the configuration, which could lead to leaked credentials. This vulnerability is mitigated by the fact that there is not a known way for an authenticated user to enumerate another tenant's sources or sinks, meaning the source or sink name would need to be guessed in order to exploit this vulnerability.
 
-- kubernetes-csi-proxy <= v2.0.0-alpha.0
+The recommended mitigation for impacted users is to upgrade the Pulsar Function Worker to a patched version.
 
-- kubernetes-csi-proxy <= v1.1.2
+2.10 Pulsar Function Worker users should upgrade to at least 2.10.4.
+2.11 Pulsar Function Worker users should upgrade to at least 2.11.1.
+3.0 Pulsar Function Worker users are unaffected.
+Any users running the Pulsar Function Worker for 2.9.* and earlier should upgrade to one of the above patched versions.
 
-*How do I mitigate this vulnerability?*
+Credit:
 
-The provided patch fully mitigates the vulnerability and has no known side
-effects.  Full mitigation for this class of issues requires patches applied
-for CVE-2023-3676, CVE-2023-3955, and CVE-2023-3893.
+Michael Marshall of DataStax (finder)
 
-Outside of applying the provided patch, there are no known mitigations to
-this vulnerability.
+References:
 
-*Fixed Versions*
-
-- kubernetes-csi-proxy v2.0.0-alpha.1
-
-- kubernetes-csi-proxy v1.1.3
-
-These releases will be published over the course of today, August 23rd,
-2023.
-
-To upgrade: cordon the node, stop the associated Windows service, replace
-the csi-proxy.exe binary, restart the associated Windows service, and
-un-cordon the node.  See the installation docs for more details:
-https://github.com/kubernetes-csi/csi-proxy#installation
-
-If a Windows host process daemon set is used to run kubernetes-csi-proxy
-such as
-https://github.com/kubernetes-csi/csi-driver-smb/blob/master/charts/latest/csi-driver-smb/templates/csi-proxy-windows.yaml,
-simply upgrade the image to a fixed version such as
-ghcr.io/kubernetes-sigs/sig-windows/csi-proxy:v1.1.3
-
-*Detection*
-
-Kubernetes audit logs can be used to detect if this vulnerability is being
-exploited. Pod create events with embedded powershell commands are a strong
-indication of exploitation.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-
-*Additional Details*
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/119594
-
-*Acknowledgements*
-
-This vulnerability was discovered by James Sturtevant @jsturtevant and Mark
-Rossetti @marosset during the process of fixing CVE-2023-3676 (that
-original CVE was reported by Tomer Peled @tomerpeled92)
-
-The issue was fixed and coordinated by the fix team:
-
-James Sturtevant @jsturtevant
-
-Mark Rossetti @marosset
-
-Andy Zhang @andyzhangx
-
-Justin Terry @jterry75
-
-Kulwant Singh @KlwntSingh
-
-Micah Hausler @micahhausler
-
-Rita Zhang @ritazh
-
-and release managers:
-
-Mauricio Poppe @mauriciopoppe
-
-Thank You,
-
-Rita Zhang on behalf of the Kubernetes Security Response Committee
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-37579
 
