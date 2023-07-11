@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/30/1
-Message-ID: <ZT/qnsR7RiQSv99z@hill.local>
-Date: Mon, 30 Oct 2023 13:40:46 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/2
+Message-ID: <74f238d9-5533-2bc4-0597-1c662235b0a1@apache.org>
+Date: Tue, 11 Jul 2023 15:18:21 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: pdp@...s.io
-Subject: Re: NATS: 2023-01: Adding accounts for just the system account adds auth bypass
+Subject: CVE-2023-22887: Apache Airflow path traversal by authenticated user 
 Content-Type: text/plain; charset=utf-8
 
-On 2023-10-29 at 15:51 -0400, Phil Pennock wrote:
-> On 2023-10-28 at 17:51 +0200, Salvatore Bonaccorso wrote:
-> > On Thu, Oct 12, 2023 at 10:39:53PM -0400, Phil Pennock wrote:
-> > > [ CVE has been requested, still waiting for assignment, so we're just
-> > >   inventing our own in-house numbering for advisories; we'll make sure
-> > >   this one continues to work after the CVE is issued ]
-> > > 
-> > > NATS-advisory-ID: 2023-01
-> > > CVE: pending
-> > > Date: 2023-10-12
-> > > Fixed in: 2.9.23, 2.10.2
-> > 
-> > While I see the later NATS-advisory-ID 2023-02 has a CVE assigned, for
-> > the 2023-01 was above with CVE pending. has one been assigned in
-> > meanwhile?
-> 
-> No.
+Severity: low
 
-Now: yes.  CVE-2023-47090 has been assigned today.
+Affected versions:
 
-My thanks to whomever gave the nudge.
+- Apache Airflow before 2.6.3
 
-(Website will be updated as soon as GitHub has an action runner
-available to process the pages build).
+Description:
 
--Phil
+Apache Airflow, versions before 2.6.3, is affected by a vulnerability that allows an attacker to perform unauthorized file access outside the intended directory structure by manipulating the run_id parameter. This vulnerability is considered low since it requires an authenticated user to exploit it. It is recommended to upgrade to a version that is not affected
+
+Credit:
+
+Zhipeng Zhang (@Timon8) (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/32293
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-22887
+
