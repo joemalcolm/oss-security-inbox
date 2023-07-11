@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/9
-Message-ID: <a2402c1e2398b8f0818955dc1ced6be6d790b69f.camel@orlitzky.com>
-Date: Wed, 18 Oct 2023 19:48:15 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/11
+Message-ID: <fefc8687-7f62-7ca4-361a-be7f0a3b0c74@apache.org>
+Date: Tue, 11 Jul 2023 16:44:10 +0000
+From: Andy Seaborne <andy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: CVE-2023-32200: Apache Jena: Exposure of execution in script engine expressions. 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2023-10-18 at 17:31 -0500, Grant Taylor wrote:
-> On 10/18/23 2:30 PM, Michael Orlitzky wrote:
-> > That's the crux of it but I don't think it frees Firefox from 
-> > responsibility.
-> 
-> Please elaborate on what Firefox's responsibility is here?
+Severity: important
 
-Among other things, it should not let random webpages delete my data.
-The data in the selection buffer do not belong to Firefox, and REALLY
-do not belong to the webpages I visit. They belong to me; I put them
-there. I should be the only one who can modify them. Same as when you
-create a file on UNIX.
+Affected versions:
 
-Javascript has been able to do all kinds of insane things in the past,
-so there's some room for disagreement here. But the fact that they
-disallow this with the usual Ctrl-C clipboard suggests that, at some
-point, someone was smart enough to recognize this as a problem.
+- Apache Jena 3.7.0 through 4.8.0
 
+Description:
 
-> > Despite the premise being contrary to common sense and fifty years 
-> > of evidence, Firefox promises to sandbox all of the bad things that 
-> > untrusted third-party code might do to you.
-> 
-> So perhaps Firefox needs to change their statement / stance. 
+There is insufficient restrictions of called script functions in Apache Jena
+ versions 4.8.0 and earlier. It allows a 
+remote user to execute javascript via a SPARQL query.
+This issue affects Apache Jena: from 3.7.0 through 4.8.0.
 
-It _would_ save a lot of trouble if we all just admitted that the
-modern web is stupid and will never work properly.
+Credit:
+
+s3gundo of Alibaba (reporter)
+
+References:
+
+https://www.cve.org/CVERecord?id=CVE-2023-22665
+https://jena.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-32200
 
