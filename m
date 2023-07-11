@@ -1,4 +1,4 @@
-Received: (qmail 13894 invoked by uid 550); 6 Nov 2023 15:53:42 -0000
+Received: (qmail 15930 invoked by uid 550); 11 Jul 2023 16:20:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13869 invoked from network); 6 Nov 2023 15:53:41 -0000
-Authentication-Results: garm.ovh; auth=pass (GARM-110S00424ffb5f2-bc93-4e88-aaab-3d5e6bb71c44,
-                    7469ECB41B307C9EA952388331F2B84A6BBAA60D) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp: 5.172.255.13
-Date: Mon, 6 Nov 2023 16:53:27 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
-To: <oss-security@lists.openwall.com>
-Message-ID: <20231106155327.vekxv4lvtal44aaw@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <9db1110b-7dbb-4e32-b174-b62672181c8e@oracle.com>
+Received: (qmail 4072 invoked from network); 11 Jul 2023 15:50:29 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Dave Fisher <wave@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <6ced3d94-54c0-3b5d-2582-25dc94110b03@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 11 Jul 2023 15:50:17 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <9db1110b-7dbb-4e32-b174-b62672181c8e@oracle.com>
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG5EX2.mxp6.local (172.16.2.42) To DAG4EX1.mxp6.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 332b1021-c8fd-4125-8346-ba21b77932c4
-X-Ovh-Tracer-Id: 863002279813961495
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvkedruddugedgkedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujghisehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpedvueeukedugffhgeevffdvveeviedvveevhfetteffhfelleegfeefueehvdeigfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhfvghrrhhouhhsqdhshihsthgvmhhsrdgtohhmnecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrdduuddtpdehrddujedvrddvheehrddufeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepoehjfihilhhksehjfihilhhkrdhnvghtqedpnhgspghrtghpthhtohepuddprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdfovfetjfhoshhtpehmohehvdelpdhmohguvgepshhmthhpohhuth
-Subject: Re: [oss-security] Session File Relative Path Traversal in sudo-rs
+Subject: [oss-security] CVE-2023-31007: Apache Pulsar: Broker does not always disconnect
+ client when authentication data expires 
 
-* Alan Coopersmith <alan.coopersmith@oracle.com>, 2023-11-02 11:40:
->This vulnerability requires two pre-conditions:
->
->1) Your OS allows usernames containing both '.' and '/' characters.
->
->2) Your site allows users to create usernames containing both '.' and 
->'/' characters, with no process or manual review that denies such 
->things.
->
->If both are true, when sudo-rs created a filename containing the 
->username, it failed to escape the characters, letting them be 
->interpreted by the filesystem as references to higher level directories 
->('/../..' etc.)
+Affected versions:
 
-The original sudo implementation is affected too:
-https://github.com/sudo-project/sudo/commit/7363ad7b3230b7b0
+- Apache Pulsar before 2.9.5
+- Apache Pulsar 2.10.0 through 2.10.3
+- Apache Pulsar 2.11.0
 
-https://ferrous-systems.com/blog/sudo-rs-audit/ says it's "a lower 
-security severity due to [sudo's] use of the openat function", but I 
-can't see how openat() would help.
+Description:
 
--- 
-Jakub Wilk
+Improper Authentication vulnerability in Apache Software Foundation Apache =
+Pulsar Broker allows a client to stay connected to a broker after authentic=
+ation data expires if the client connected through the Pulsar Proxy when th=
+e broker is configured with authenticateOriginalAuthData=3Dfalse or if a cl=
+ient connects directly to a broker with a specially crafted connect command=
+ when the broker is configured with authenticateOriginalAuthData=3Dfalse.
+
+This issue affects Apache Pulsar: through 2.9.4, from 2.10.0 through 2.10.3=
+, 2.11.0.
+
+2.9 Pulsar Broker users should upgrade to at least 2.9.5.
+2.10 Pulsar Broker users should upgrade to at least 2.10.4.
+2.11 Pulsar Broker users should upgrade to at least 2.11.1.
+3.0 Pulsar Broker users are unaffected.
+Any users running the Pulsar Broker for 2.8.* and earlier should upgrade to=
+ one of the above patched versions.
+
+Credit:
+
+Michael Marshall of DataStax (finder)
+
+References:
+
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-31007
+
