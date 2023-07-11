@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["672" "Thursday" "19" "March" "2015" "15:18:33" "-0400" "Steven M. Christey" "coley@mitre.org" "<Pine.LNX.4.64.1503191517340.4141@beijing.mitre.org>" "18" "[oss-security] cve-assign delays" nil nil nil "3" "2015031919:18:33" "[oss-security] cve-assign delays" (number mark "        coley@mitre. Mar 19   18/672   " thread-indent "\"[oss-security] cve-assign delays\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3184 invoked by uid 550); 19 Mar 2015 19:18:50 -0000
+Received: (qmail 11762 invoked by uid 550); 11 Jul 2023 15:31:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +6,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3131 invoked from network); 19 Mar 2015 19:18:46 -0000
-X-Authentication-Warning: beijing.mitre.org: coley owned process doing -bs
-Message-ID: <Pine.LNX.4.64.1503191517340.4141@beijing.mitre.org>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-cc: cve-assign@mitre.org
-Date: Thu, 19 Mar 2015 15:18:33 -0400 (EDT)
-From: "Steven M. Christey" <coley@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] cve-assign delays
+Received: (qmail 25876 invoked from network); 11 Jul 2023 15:18:35 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <74f238d9-5533-2bc4-0597-1c662235b0a1@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 11 Jul 2023 15:18:21 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-22887: Apache Airflow path traversal by authenticated
+ user 
 
+Severity: low
 
-We recognize that some requesters have experienced delays, and
-sometimes lengthy delays, in getting CVE IDs assigned. We apologize
-for those delays.
+Affected versions:
 
-The number of cve-assign requests has been growing dramatically, as
-has the number of unique and new requesters. Our goal is always to
-provide reasonable response times, and we were caught by the spike in
-requests.
+- Apache Airflow before 2.6.3
 
-We are working to improve our responsiveness through a combination of
-process changes, improved communications, and staffing shifts.
+Description:
 
-We appreciate your understanding and expect that you will see positive
-changes in the cve-assign response times over the coming weeks.
+Apache Airflow, versions before 2.6.3, is affected by a vulnerability that =
+allows an attacker to perform unauthorized file access outside the intended=
+ directory structure by manipulating the run_id parameter. This vulnerabili=
+ty is considered low since it requires an authenticated user to exploit it.=
+ It is recommended to upgrade to a version that is not affected
 
-Best regards,
-Steve Christey Coley
+Credit:
+
+Zhipeng Zhang (@Timon8) (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/32293
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-22887
+
