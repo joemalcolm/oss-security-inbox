@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/2
-Message-ID: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
-Date: Sat, 14 Oct 2023 18:39:49 +1100
-From: Matthew Fernandez <matthew.fernandez@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/4
+Message-ID: <6eff6ca4-f60c-7624-562b-6d4835eb7f0d@apache.org>
+Date: Tue, 11 Jul 2023 15:20:28 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: sandboxing,of upstream programs by distros
+Subject: CVE-2023-36543: Apache Airflow: ReDoS via dags function 
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Severity: low
 
-I asked Alexander about this off-list in relation to his thread 
-“linux-distros list membership application - CIQ Rocky Linux Security 
-Team” but he suggested I bring it on-list instead.
+Affected versions:
 
-Is there interest/solutions within the Rock Security SIG or other 
-distro’s security teams for sandboxing that package upstreams can opt into?
+- Apache Airflow before 2.6.3
 
-To step this out a bit… we have a large, old code base that was written 
-decades prior to current best practices. It has numerous known memory 
-safety issues and ever-dwindling maintainer capacity. It is also a 
-dependency, either directly or indirectly, of a significant fraction of 
-the world’s software. I am guessing this scenario sounds uncomfortably 
-familiar/common to many on this list.
+Description:
 
-We (the maintainers) have discussed sandboxing as a way of mitigating 
-the risk of known bugs. However, one of the problems is that we don’t 
-know the complete set of required privileges of our dependencies. The 
-software can be configured with or without various libraries and also 
-has a plugin mechanism for dynamic code loading. Basically if a 
-sandboxing solution like seccomp wants to know our full set of system 
-calls, we ourselves don’t know it.
+Apache Airflow, versions before 2.6.3, has a vulnerability where an authenticated user can use crafted input to make the current request hang. It is recommended to upgrade to a version that is not affected
 
-The downstream maintainer packaging the software for, e.g. Rocky, does 
-though. They have a complete picture of which libraries/features are 
-enabled and how locked down the plugin stuff is.
+Credit:
 
-So, where I’m going with this, is that if the various packaging 
-ecosystems could (or do) offer sandboxing to upstream, people like us 
-would gladly opt in to it. Of course, these downstream maintainers can 
-already seccomp our software today. But expecting them to reverse 
-engineer our exact needs seems a bit much.
+National Cyber Security VietNam (NCS VietNam) (finder)
+hungtd (finder)
 
-I’d be interested to hear any thoughts on this.
+References:
 
-Thanks,
-Matt
+https://github.com/apache/airflow/pull/32060
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-36543
+
