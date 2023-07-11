@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/23/2
-Message-ID: <croalohbjdjf2cb6e5ol2l7rsdoxd6mr4mw55lyzzf7ljkkx5a@czm7be4dpjj4>
-Date: Sat, 23 Dec 2023 14:29:34 +0200
-From: Valtteri Vuorikoski <vuori@...com.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/6
+Message-ID: <20230711153603.GA12449@openwall.com>
+Date: Tue, 11 Jul 2023 17:36:03 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Cc: Brandon Perry <bperry.volatile@...il.com>, Brahma Reddy Battula <brahma@...che.org>, Jecki Go <jecgo@...a.com>
+Subject: Re: CVE-2022-42009: Apache Ambari: A malicious authenticated user can remotely execute arbitrary code in the context of the application.
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 22, 2023 at 11:46:48AM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
-> 
-> Not sure if we need it for others like sendmail too, as that is also
-> referenced by the security researchers.
+On Mon, Jul 10, 2023 at 10:08:22AM -0500, Brandon Perry wrote:
+> Do you have an example proof of concept or a bug link for this?
 
-Looks like exim opened a bug on this yesterday too, no sign of CVE yet:
-<https://bugs.exim.org/show_bug.cgi?id=3063>
+Added CC's.
+Brahma or Jecki, can you address Brandon's question above, please?
 
- -Valtteri
+Alexander
 
+> On Mon, Jul 10, 2023 at 10:06???AM Brahma Reddy Battula <brahma@...che.org> wrote:
+> > Affected versions:
+> >
+> > - Apache Ambari 2.7.0 through 2.7.6
+> >
+> > Description:
+> >
+> > SpringEL injection in the server agent in Apache Ambari version 2.7.0 to
+> > 2.7.6 allows a malicious authenticated user to execute arbitrary code
+> > remotely. Users are recommended to upgrade to 2.7.7.
+> >
+> > Credit:
+> >
+> > Jecki Go (jecgo@...a.com) (finder)
+> >
+> > References:
+> >
+> > https://ambari.apache.org/
+> > https://www.cve.org/CVERecord?id=CVE-2022-42009
