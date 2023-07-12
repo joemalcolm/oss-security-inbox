@@ -1,4 +1,4 @@
-Received: (qmail 21806 invoked by uid 550); 21 Mar 2025 17:37:11 -0000
+Received: (qmail 30374 invoked by uid 550); 12 Jul 2023 18:51:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26366 invoked from network); 21 Mar 2025 16:32:03 -0000
+Received: (qmail 23583 invoked from network); 12 Jul 2023 18:24:46 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Arnout Engelen <engelen@apache.org>
+From: Elad Kalif <eladkal@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <b19f3bf9-39f5-23db-d993-dd75dc21f17c@apache.org>
+Message-ID: <85b6b155-cfe9-ab68-c93a-cce73046a7af@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 21 Mar 2025 16:29:17 +0000
+Date: Wed, 12 Jul 2023 18:24:33 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-26796: Apache Oozie: XSS in Oozie Web Console 
+Subject: [oss-security] CVE-2023-37415: Apache Airflow Apache Hive Provider: Improper
+ Input Validation in Hive Provider with proxy_user 
 
 Severity: moderate
 
 Affected versions:
 
-- Apache Oozie: all versions
+- Apache Airflow Apache Hive Provider before 6.1.2
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** Improper Neutralization of Input During Web=
- Page Generation ('Cross-site Scripting') vulnerability in Apache Oozie.
+Improper Input Validation vulnerability in Apache Software Foundation Apach=
+e Airflow Apache Hive Provider.
 
-This issue affects Apache Oozie: all versions.
+Patching on top of CVE-2023-35797
+Before=C2=A06.1.2=C2=A0the proxy_user option can also inject semicolon.
 
-As this project is retired, we do not plan to release a version that fixes =
-this issue. Users are recommended to find an alternative or restrict access=
- to the instance to trusted users.
+This issue affects Apache Airflow Apache Hive Provider: before 6.1.2.
 
-NOTE: This vulnerability only affects products that are no longer supported=
- by the maintainer.
+It is recommended updating provider version to 6.1.2 in order to avoid this=
+ vulnerability.
 
 Credit:
 
-Nikhil Daf (finder)
+Son Tran from VNPT - VCI (reporter)
 
 References:
 
-https://oozie.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-26796
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-37415
 
