@@ -1,58 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/10/2
-Message-ID: <Y71wQPQeIU1pTxCy@gentoo.org>
-Date: Tue, 10 Jan 2023 08:03:44 -0600
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/12/3
+Message-ID: <85b6b155-cfe9-ab68-c93a-cce73046a7af@apache.org>
+Date: Wed, 12 Jul 2023 18:24:33 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Type Confusion in Linux Kernel
+Subject: CVE-2023-37415: Apache Airflow Apache Hive Provider: Improper Input Validation in Hive Provider with proxy_user 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 09, 2023 at 03:09:22PM -0700, Kyle Zeng wrote:
-> Hi there,
-> 
-> I recently found a type-confusion vulnerability in the Linux kernel.
-> Since it interprets random data as pointers, it is potentially
-> exploitable. According to the fix commit, this bug was introduced in
-> Linux-2.6.12-rc2 in 2005. I already contacted security@...nel.org and
-> helped them patch the vulnerability.
-> 
-> # Vulnerability
-> The vulnerability is caused by accessing classification results before
-> checking the classification return code in the network scheduler's
-> code. For example, in the following snippet from `cbq_classify`:
-> ~~~
-> struct cbq_class *cl;
-> ......
-> result = tcf_classify(skb, fl, &res, true);
-> if (!fl || result < 0)
-> goto fallback;
-> 
-> cl = (void *)res.class;
-> ~~~
-> It checks `result < 0` before casting `res.class` to `struct cbq_class
-> *`. However, `result >= 0` does not ensure `res.class` contains valid
-> results. Specifically, it is possible `result` itself says the packet
-> is invalid and should be dropped (`TC_ACT_SHOT`) while at the same
-> time res.class contains invalid data because res.class is a huge union
-> attribute and can be used for other purposes before it is marked as
-> `TC_ACT_SHOT`. As a result, it is a type confusion between `struct
-> cbq_class` and whatever struct that res.class was used as before it is
-> returned.
-> 
-> # Patch
-> Two schedulers have the same vulnerable code patterns and the fixes
-> can be found https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12
-> and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a2965c7be0522eaa18808684b7b82b248515511b
-> 
-> This vulnerability does not have a CVE assigned. I'll appreciate it if
-> anyone on the mailing list can give it a CVE to signify its security
-> implications.
+Severity: moderate
 
-You haven't really elaborated on the security implications, but you
-can request a CVE at cveform.mitre.org I guess. MITRE tends to be
-prickley regarding kernel issues, though.
+Affected versions:
 
-> Best,
-> Kyle Zeng
+- Apache Airflow Apache Hive Provider before 6.1.2
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Description:
+
+Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Apache Hive Provider.
+
+Patching on top of CVE-2023-35797
+Before 6.1.2 the proxy_user option can also inject semicolon.
+
+This issue affects Apache Airflow Apache Hive Provider: before 6.1.2.
+
+It is recommended updating provider version to 6.1.2 in order to avoid this vulnerability.
+
+Credit:
+
+Son Tran from VNPT - VCI (reporter)
+
+References:
+
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-37415
+
