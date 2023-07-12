@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/22/2
-Message-ID: <Y/YyAyP4+WYltYm6@itl-email>
-Date: Wed, 22 Feb 2023 10:17:19 -0500
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/12/1
+Message-ID: <77c37da9-baaa-d5fe-92c8-3dfebf03ae75@apache.org>
+Date: Wed, 12 Jul 2023 09:14:59 +0000
+From: Rongtong Jin <jinrongtong@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
+Subject: CVE-2023-37582: Apache RocketMQ: Possible remote code execution when using the update configuration function 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 22, 2023 at 05:54:36AM +0000, Qualys Security Advisory wrote:
-> Hi all,
-> 
-> Another quick update on the exploitation of this double-free bug on
-> OpenBSD:
-> 
-> a/ our previous attack (the arbitrary control of sshd's instruction
-> pointer via the EVP_AES_KEY structure) works only on OpenBSD amd64, not
-> on OpenBSD i386;
-> 
-> b/ we were able to recycle the chunk of memory where
-> options.kex_algorithms was allocated, into a chunk of a different size
-> (which gives us greater freedom), but this happens with such a low
-> probability (even on i386) that we do not consider this particular
-> attack to be practical;
-> 
-> c/ as a direct consequence of CVE-2023-25136, we found an information
-> leak (of bits and pieces from the memory of the unprivileged sshd
-> process), but it is unlikely to be useful in practice.
+Severity: moderate
 
-Is it possible to use this information leak to bypass ASLR without
-crashing the process?  If so, then one could use the control of the
-instruction pointer to jump to a ROP chain and get code execution.
-This flaw would then be at least the third RCE in OpenBSD’s default
-install, and the second in OpenSSH.
+Affected versions:
 
-Also, is this flaw expected to be exploitable for code execution on
-GNU/Linux?
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+- Apache RocketMQ 5.0.0 through 5.1.1
+- Apache RocketMQ through 4.9.6
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Description:
+
+The RocketMQ NameServer component still has a remote command execution vulnerability as the CVE-2023-33246 issue was not completely fixed in version 5.1.1. 
+
+When NameServer address are leaked on the extranet and lack permission verification, an attacker can exploit this vulnerability by using the update configuration function on the NameServer component to execute commands as the system users that RocketMQ is running as. 
+
+It is recommended for users to upgrade their NameServer version to 5.1.2 or above for RocketMQ 5.x or 4.9.7 or above for RocketMQ 4.x to prevent these attacks.
+
+This issue is being tracked as https://github.com/apache/rocketmq/pull/6843 
+
+Credit:
+
+soreatu@...il.com (finder)
+yuansec@...look.com  (finder)
+
+References:
+
+https://rocketmq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-37582
+https://issues.apache.org/jira/browse/https://github.com/apache/rocketmq/pull/6843
+
