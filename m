@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2608" "Wednesday" "2" "November" "2016" "08:10:38" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020810030.375@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds" nil nil nil "11" "2016110207:10:38" "[oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds" (number mark "U       daniel@haxx. Nov  2   89/2608  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11568 invoked by uid 550); 2 Nov 2016 07:10:53 -0000
+Received: (qmail 16313 invoked by uid 550); 12 Jul 2023 14:10:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +7,266 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11453 invoked from network); 2 Nov 2016 07:10:51 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 2 Nov 2016 08:10:38 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1611020810030.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1129329158-1500688241-1478070638=:375"
-Subject: [oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds
+Received: (qmail 16283 invoked from network); 12 Jul 2023 14:10:56 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Message-Id: <C710E6BF-A7C7-4ADF-95A5-8C6A920601C1@beckweb.net>
+Date: Wed, 12 Jul 2023 16:10:45 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1689171056;13f14026;
+X-HE-SMSGID: 1qJaYH-0005VK-Ah
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins 
 
---1129329158-1500688241-1478070638=:375
-Content-Type: text/plain; format=flowed; charset=VISCII
-Content-Transfer-Encoding: 8BIT
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-glob parser write/read out of bounds
-====================================
+The following releases contain fixes for security vulnerabilities:
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102F.html)
+* Active Directory Plugin 2.30.1
+* Datadog Plugin 5.4.2
+* External Monitor Job Type Plugin 207.v98a_a_37a_85525
+* mabl Plugin 0.0.47
+* OpenShift Login Plugin 1.1.0.230.v5d7030b_f5432
+* Oracle Cloud Infrastructure Compute Plugin 1.0.17
+* Orka by MacStadium Plugin 1.34
+* SAML Single Sign On(SSO) Plugin 2.3.1
 
-VULNERABILITY
--------------
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-The curl tool's "globbing" feature allows a user to specify a numerical range
-through which curl will iterate. It is typically specified as [1-5],
-specifying the first and the last numbers in the range. Or with [a-z], using
-letters.
+* Assembla Auth Plugin
+* Benchmark Evaluator Plugin
+* ElasticBox CI Plugin
+* MathWorks Polyspace Plugin
+* Pipeline restFul API Plugin
+* Rebuilder Plugin
+* Sumologic Publisher Plugin
+* Test Results Aggregator Plugin
 
-1. The curl code for parsing the second *unsigned* number did not check for a
-leading minus character, which allowed a user to specify `[1--1]` with no
-complaints and have the latter `-1` number get turned into the largest
-unsigned long value the system can handle. This would ultimately cause curl to
-write outside the dedicated malloced buffer after no less than 100,000
-iterations, since it would have room for 5 digits but not 6.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-07-12/
 
-2. When the range is specified with letters, and the ending letter is left out
-`[L-]`, the code would still advance its read pointer 5 bytes even if the
-string was just 4 bytes and end up reading outside the given buffer.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This flaw exists only in the curl tool, not in the libcurl library.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-We are not aware of any exploit of this flaw.
+---
 
-INFO
-----
+SECURITY-3133 / CVE-2023-37942
+External Monitor Job Type Plugin 206.v9a_94ff0b_4a_10 and earlier does not
+configure its XML parser to prevent XML external entity (XXE) attacks.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8620 to this issue.
+This allows attackers with Item/Build permission to have Jenkins parse a
+crafted HTTP request with XML data that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
 
-AFFECTED VERSIONS
------------------
 
-This flaw exists in the following curl versions.
+SECURITY-3059 / CVE-2023-37943
+Active Directory Plugin allows testing a new, unsaved configuration by
+performing a connection test (the button labeled "Test Domain").
 
-- Affected versions: curl 7.34.0 to and including 7.50.3
-- Not affected versions: curl < 7.34.0 and curl >= 7.51.0
+Active Directory Plugin 2.30 and earlier ignores the "Require TLS" and
+"StartTls" options and always performs the connection test to Active
+directory unencrypted. This allows attackers able to capture network
+traffic between the Jenkins controller and Active Directory servers to
+obtain Active Directory credentials.
 
-libcurl is used by many applications, but not always advertised as such!
+NOTE: This only affects the connection test. Connections established during
+the login process are encrypted if the corresponding TLS option is enabled.
 
-THE SOLUTION
-------------
 
-In version 7.51.0, the function reading data will consider reading a zero size
-to be an error and bail out.
+SECURITY-3130 / CVE-2023-37944
+Datadog Plugin 5.4.1 and earlier does not perform a permission check in an
+HTTP endpoint.
 
-A [patch for CVE-2016-8620](https://curl.haxx.se/CVE-2016-8620.patch) is
-available.
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
 
-RECOMMENDATIONS
----------------
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+SECURITY-3164 / CVE-2023-37945
+SAML Single Sign On(SSO) Plugin 2.3.0 and earlier does not perform a
+permission check in an HTTP endpoint.
 
-  A - Upgrade curl and libcurl to version 7.51.0
+This allows attackers with Overall/Read permission to download a string
+representation of the current security realm (Java `Object#toString()`),
+which potentially includes sensitive information.
 
-  B - Apply the patch to your version and rebuild
 
-  C - Switch off globbing or make sure you have all ranges in use verified!
+SECURITY-2998 / CVE-2023-37946
+OpenShift Login Plugin 1.1.0.227.v27e08dfb_1a_20 and earlier does not
+invalidate the existing session on login.
 
-TIME LINE
----------
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
 
-It was first reported to the curl project on October 2 by Lu§t Nguy­n.
 
-We contacted distros@openwall on October 19.
+SECURITY-2999 / CVE-2023-37947
+OpenShift Login Plugin 1.1.0.227.v27e08dfb_1a_20 and earlier improperly
+determines that a redirect URL after login is legitimately pointing to
+Jenkins.
 
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
+This allows attackers to perform phishing attacks by having users go to a
+Jenkins URL that will forward them to a different site after successful
+authentication.
 
-CREDITS
--------
 
-Thanks to Lu§t Nguy­n.
+SECURITY-3044 / CVE-2023-37948
+Oracle Cloud Infrastructure Compute Plugin 1.0.16 and earlier does not
+perform SSH host key validation when connecting to OCI clouds.
 
--- 
+This lack of validation could be abused using a man-in-the-middle attack to
+intercept these connections to OCI clouds.
 
-  / daniel.haxx.se
---1129329158-1500688241-1478070638=:375--
+
+SECURITY-3128 / CVE-2023-37949
+Orka by MacStadium Plugin 1.33 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+
+SECURITY-3137 (1) / CVE-2023-37950
+mabl Plugin 0.0.46 and earlier does not perform a permission check in an
+HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-3137 (2) / CVE-2023-37951
+mabl Plugin 0.0.46 and earlier does not set the appropriate context for
+credentials lookup, allowing the use of System-scoped credentials otherwise
+reserved for the global configuration.
+
+This allows attackers with Item/Configure permission to access and capture
+credentials they are not entitled to.
+
+
+SECURITY-3127 / CVE-2023-37952 (CSRF) & CVE-2023-37953 (missing permission =
+check)
+mabl Plugin 0.0.46 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-3033 / CVE-2023-37954
+Rebuilder Plugin 320.v5a_0933a_e7d61 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to rebuild a previous build.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3122 / CVE-2023-37955 (CSRF) & CVE-2023-37956 (missing permission =
+check)
+Test Results Aggregator Plugin 1.2.13 and earlier does not perform a
+permission check in an HTTP endpoint implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3126 / CVE-2023-37957
+Pipeline restFul API Plugin 0.11 and earlier does not require POST requests
+for an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+This vulnerability allows attackers to have Jenkins connect to an
+attacker-specified URL, capturing a newly generated JCLI token that allows
+impersonating the victim.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3117 / CVE-2023-37958 (CSRF) & CVE-2023-37959 (missing permission =
+check)
+Sumologic Publisher Plugin 2.2.1 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3124 / CVE-2023-37960
+MathWorks Polyspace Plugin 1.0.5 and earlier does not restrict the path of
+the attached files in Polyspace Notification post-build step.
+
+This allows attackers with Item/Configure permission to send emails with
+arbitrary files from the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2988 / CVE-2023-37961
+Assembla Auth Plugin 1.14 and earlier does not implement a state parameter
+in its OAuth flow, a unique and non-guessable value associated with each
+authentication request.
+
+This vulnerability allows attackers to trick users into logging in to the
+attacker's account.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3119 / CVE-2023-37962 (CSRF) & CVE-2023-37963 (missing permission =
+check)
+Benchmark Evaluator Plugin 1.0.1 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL and to check for the existence of directories,
+`.csv`, and `.ycsb` files on the Jenkins controller file system.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3131 / CVE-2023-37964 (CSRF) & CVE-2023-37965 (missing permission =
+check)
+ElasticBox CI Plugin 5.0.1 and earlier does not perform permission checks
+in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+
