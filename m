@@ -1,4 +1,4 @@
-Received: (qmail 5270 invoked by uid 550); 19 Jul 2023 06:31:06 -0000
+Received: (qmail 13959 invoked by uid 550); 13 Jul 2023 16:26:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5249 invoked from network); 19 Jul 2023 06:31:05 -0000
-Date: Wed, 19 Jul 2023 08:30:54 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <7pr128ns-95o4-266p-rprn-4n1q23s4r67n@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 13935 invoked from network); 13 Jul 2023 16:26:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
+	s=2023; t=1689265598;
+	bh=gH2Oa0UXytZtVYiok/cOdKRfg2gToTbhWDj08GrF2G4=;
+	h=From:To:Subject:Content-Type:From:To:Subject;
+	b=rISOTqCXXSlIxlCyqM2UguOWcRsfCjAcpWzv9cb6gLOfpisNIbgC31RluIFh+a3nB
+	 gqML0SzYmgAHnwpebu/fIhnG4az6YM2khvvnRdRznHmLaQrOv0epnP/JjKDBffP/5B
+	 L+CENHKveiHndYY56UAlO7+9bx40Acyxf7zhpnuu4XmWcBv+dQDZl+vyQ4DETbO/1m
+	 slmxJmSpSn5kIuwFl2qoEa3jUKJyxKBv+zpSVqV+AVIUWjUry2jTKgclc+zpMOuZGU
+	 GWWbBWiwDrpq45hcOyXVSlDAG8UryIvXD4RAfJ3Ghy80oT+Wi2ZsuxkuedIz6x0SFr
+	 1jz1SHPIr67Jw==
+Date: Thu, 13 Jul 2023 12:26:38 -0400
+From: Jan Schaumann <jschauma@netmeister.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZLAlvlNOdMKixhiG@netmeister.org>
+References: <ZIpANf8DGHFYVBFR@netmeister.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] curl: fopen race condition: CVE-2023-32001
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZIpANf8DGHFYVBFR@netmeister.org>
+Subject: Re: [oss-security] RCE in acme.sh < 3.0.6
 
-fopen race condition
-====================
+Just closing the loop here: this has now been assigned
+CVE-2023-38198:
 
-Project curl Security Advisory, July 19 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-32001.html)
+https://www.cve.org/CVERecord?id=CVE-2023-38198
 
-VULNERABILITY
--------------
 
-libcurl can be told to save cookie, HSTS and/or alt-svc data to files. When
-doing this, it called `stat()` followed by `fopen()` in a way that made it
-vulnerable to a TOCTOU race condition problem.
-
-By exploiting this flaw, an attacker could trick the victim to create or
-overwrite protected files holding this data in ways it was not intended to.
-
-INFO
-----
-
-The attacker needs permissions and rights enough to be able to create or
-rename directory entries in the directory the victim saves their files.
-
-This race condition modifies the behavior of symbolic link files in affected
-components, they might be followed instead of being overwritten when the
-condition is met leading to undesired and potentially destructive behavior.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-32001 to this issue.
-
-CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.84.0 to and including 8.1.2
-- Not affected versions: libcurl < 7.84.0 and >= 8.2.0
-- Introduced-in: https://github.com/curl/curl/commit/20f9dd6bae50b722
-
-libcurl is used by many applications, but not always advertised as such!
-
-SOLUTION
-------------
-
-- Fixed-in: https://github.com/curl/curl/commit/0c667188e0c6cda615a0
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.2.0
-
-  B - Apply the patch to your local version
-
-  C - Do not save cookie, HSTS or alt-svc data
-
-TIMELINE
---------
-
-This issue was reported to the curl project on June 27, 2023. We contacted
-distros@openwall on July 12, 2023.
-
-libcurl 8.2.0 was released on July 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: selmelc on hackerone
-- Patched-by: selmelc on hackerone
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Jan Schaumann <jschauma@netmeister.org> wrote:
+> Hi,
+> 
+> I don't think this has been raised here:
+> 
+> The acme.sh ACME client[1] prior to version 3.0.6[2] has
+> an RCE vulnerability allowing a hostile server to
+> execute arbitrary commands on the client[3].
+> 
+> I was unable to determine whether a CVE has been
+> requested for this issue; both the original discussion
+> and a second GitHub issue[4] have been inconclusively
+> closed for comments (I've reached out to the author).
+> 
+> The issue is also being discussed on Mozilla's
+> dev-security-policy[5].
+> 
+> -Jan
+> 
+> [1] https://github.com/acmesh-official/acme.sh
+> [2] https://github.com/acmesh-official/acme.sh/releases
+> [3] https://github.com/acmesh-official/acme.sh/issues/4659
+> [4] https://github.com/acmesh-official/acme.sh/issues/4665
+> [5] https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/heXVr8o83Ys
