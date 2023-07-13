@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/7
-Message-ID: <3e0b0918-b02b-c7a9-af1f-4e08b44ed0dc@apache.org>
-Date: Tue, 11 Jul 2023 15:48:17 +0000
-From: Dave Fisher <wave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/13/1
+Message-ID: <ZLAlvlNOdMKixhiG@netmeister.org>
+Date: Thu, 13 Jul 2023 12:26:38 -0400
+From: Jan Schaumann <jschauma@...meister.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-30428: Apache Pulsar Broker: Incorrect Authorization Validation for Rest Producer 
+Subject: Re: RCE in acme.sh < 3.0.6
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Just closing the loop here: this has now been assigned
+CVE-2023-38198:
 
-- Apache Pulsar Broker 2.9.0 through 2.9.5
-- Apache Pulsar Broker 2.10.0 before 2.10.4
-- Apache Pulsar Broker 2.11.0
+https://www.cve.org/CVERecord?id=CVE-2023-38198
 
-Description:
 
-Incorrect Authorization vulnerability in Apache Software Foundation Apache Pulsar Broker's Rest Producer allows authenticated user with a custom HTTP header to produce a message to any topic using the broker's admin role.
-This issue affects Apache Pulsar Brokers: from 2.9.0 through 2.9.5, from 2.10.0 before 2.10.4, 2.11.0.
-
-The vulnerability is exploitable when an attacker can connect directly to the Pulsar Broker. If an attacker is connecting through the Pulsar Proxy, there is no known way to exploit this authorization vulnerability.
-
-There are two known risks for affected users. First, an attacker could produce garbage messages to any topic in the cluster. Second, an attacker could produce messages to the topic level policies topic for other tenants and influence topic settings that could lead to exfiltration and/or deletion of messages for other tenants.
-
-2.8 Pulsar Broker users and earlier are unaffected.
-2.9 Pulsar Broker users should upgrade to one of the patched versions.
-2.10 Pulsar Broker users should upgrade to at least 2.10.4.
-2.11 Pulsar Broker users should upgrade to at least 2.11.1.
-3.0 Pulsar Broker users are unaffected.
-
-Credit:
-
-Michael Marshall of DataStax (finder)
-
-References:
-
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-30428
-
+Jan Schaumann <jschauma@...meister.org> wrote:
+> Hi,
+> 
+> I don't think this has been raised here:
+> 
+> The acme.sh ACME client[1] prior to version 3.0.6[2] has
+> an RCE vulnerability allowing a hostile server to
+> execute arbitrary commands on the client[3].
+> 
+> I was unable to determine whether a CVE has been
+> requested for this issue; both the original discussion
+> and a second GitHub issue[4] have been inconclusively
+> closed for comments (I've reached out to the author).
+> 
+> The issue is also being discussed on Mozilla's
+> dev-security-policy[5].
+> 
+> -Jan
+> 
+> [1] https://github.com/acmesh-official/acme.sh
+> [2] https://github.com/acmesh-official/acme.sh/releases
+> [3] https://github.com/acmesh-official/acme.sh/issues/4659
+> [4] https://github.com/acmesh-official/acme.sh/issues/4665
+> [5] https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/heXVr8o83Ys
