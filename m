@@ -1,34 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/19/1
-Message-ID: <20230319091821.6f2073fb.hanno@hboeck.de>
-Date: Sun, 19 Mar 2023 09:18:21 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Jakub Wilk <jwilk@...lk.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/14/1
+Message-Id: <E1qKMmq-00035B-SS@xenbits.xenproject.org>
+Date: Fri, 14 Jul 2023 17:41:00 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Notice 1 v1 - winpvdrvbuild.xenproject.org potentially compromised
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 17 Mar 2023 20:41:02 +0100
-Jakub Wilk <jwilk@...lk.net> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> TIOCLINUX implements also functionality unrelated to copying and 
-> pasting. See the ioctl_console(2) man page:
-> https://manpages.debian.org/unstable/manpages-dev/ioctl_console.2.en.html#TIOCLINUX
-> 
-> For example, apparently some of this stuff is used by systemd:
+                     Xen Security Notice 1
 
-Ok, good point. So disabling TIOCLINUX isn't an option.
+         winpvdrvbuild.xenproject.org potentially compromised
 
-Looking into it, maybe restricting any TIOCLINUX sub features that
-implement anything related to selection would be a good option. The gpm
-daemon runs as root anyway.
+ISSUE DESCRIPTION
+=================
 
-Do you see any risk left if
-TIOCL_SETSEL
-TIOCL_PASTESEL
-TIOCL_SELLOADLUT
-are no longer accessible to non-privileged processes?
+Software running on the Xen Project hosted subdomain
+winpvdrvbuild.xenproject.org is outdated and vulnerable to several
+CVEs.  Some of the reported issues include remote code execution.  The
+affected host was running the Jenkins build system for the Windows PV
+Drivers subproject.
 
--- 
-Hanno Böck
-https://hboeck.de/
+IMPACT
+======
+
+Since the list of CVEs reported include remote code execution we no
+longer have confidence that binaries previously available at:
+
+https://xenbits.xen.org/pvdrivers/win/
+
+are trustworthy.  This includes binaries signed with Xen Project's EV
+key that is cross-signed by Microsoft.
+
+Note that the source code for the windows drivers, hosted on
+xenbits.xen.org is in a separate system and we are confident that it
+has not been tampered with.  The EV key was also not available to the
+possibly compromised system.
+
+ACTIONS TAKEN
+=============
+
+The possibly compromised system has been decommissioned.
+
+We have removed all previous binaries from:
+
+https://xenbits.xen.org/pvdrivers/win/
+
+A new set of drivers based on the current master branch
+(9.0-unstable) and built on a trusted environment have been uploaded
+on the same folder with the following hashes:
+
+$ sha256sum xen*.tar
+b089e46d52ffc64a14799c609272ccdded805c1552a88b45d95a64a27e775de7  xenbus.tar
+afc6f11f9078cb457daa000b8b8d8ab69656d3950e7afbf6f40aaa5da217301a  xencons.tar
+7bbcedcda5e2ffa8ab32eb3d207d1c7db5b91e22926b26d75750bfadde6611f0  xenhid.tar
+a8f3344e370647696e3ed39201f5c9db693aca1c093a638fde8b7a928a4416c2  xeniface.tar
+560d7049f5e321545dda25c26b5f56e0975a7f62d35629f4c9a73f0fbd148cf3  xennet.tar
+9cb34cd135aab045a2401098c4044c95dbd179c454718e43045e433401b8e3dd  xenvbd.tar
+47c1b9bc6e90e20d3f524036a3171cf7f8da1d94186febbae0d4a108db7bb3b5  xenvif.tar
+09a4b108a9d3fca699c3c31aeb4836cfee2538e588462b0646dcccbde42a4263  xenvkbd.tar
+
+ACTIONS IN PROGRESS
+===================
+
+The security team is attempting to inspect existing binaries to
+determine whether there are any obvious signs of tampering.
+
+CREDITS
+=======
+
+We would like to thank Mahmud Hasan for bringing this to our
+attention.
+
+WHAT IS AN XSN
+==============
+
+A Xen Security Notice is a mechanism the Security Team was already in
+the process of introducing, for providing official communication of
+security-relevant information that is not of the form that fits in the
+normal XSA template.  Please bear with us as we find the right balance
+while trying to fast-track it into use.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmSxe3YMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZgwgH/1serMIChH2tFlbU0HSgVk07KCO17lFcCJnhDSA8
+uEv3uYiW8NCZEwaD2wmgxN9tW7yTIoeSrsnTyU9D305M6gy3F9g1XcktAv9HhtEO
+fS/Pdq1q/ec4vStOYUzx6yG/2GIKNYny5Um4X2Odr/dvYcdZJPkmeJtv6yIa5wSC
+q3jCou/VoBCwXUGqlqzRdRsJ+srmsFfmsTn/oNuM28gkV+qRAUc+J6z+psObo2yp
+KE/Jgl9B6Nq2+d7sbcgto77a/4FrgtW01qFgIbvQPcE8BBlPF4xymKeCBSGEY/yL
+MrOyYpw81cOd0IvSVdQglW63+DO76EksBJJWQbtazwhbPDs=
+=jmGB
+-----END PGP SIGNATURE-----
+
