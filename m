@@ -1,82 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/21/1
-Message-ID: <CA+17n5sr6yGrWws73FYSSrMyfQy+m-JjiGZ9KrEf9OyYunY1Vw@mail.gmail.com>
-Date: Sat, 21 Oct 2023 21:24:58 +0200
-From: Joshua Rogers <megamansec@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/15/1
+Message-ID: <ZLHFcUb95IUuBQ6p@openssl.org>
+Date: Fri, 14 Jul 2023 22:00:17 +0000
+From: Tomas Mraz <tomas@...nssl.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Squid Caching Proxy Security Audit: 55 Vulnerabilities, 35 0days.
+Subject: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've updated the page with the following IDs which may be used for tracking:
+OpenSSL Security Advisory [14th July 2023]
+==========================================
 
-strlen(NULL) Crash Using Digest Authentication
-        GHSA-254c-93q9-cp53
+AES-SIV implementation ignores empty associated data entries (CVE-2023-2975)
+============================================================================
 
-Assertion Due to 0 ESI 'when' Checking
-        GHSA-4g88-277m-q89r
+Severity: Low
 
-Assertion Using ESI's When Directive
-        GHSA-4g88-277m-q89r
+Issue summary: The AES-SIV cipher implementation contains a bug that causes
+it to ignore empty associated data entries which are unauthenticated as
+a consequence.
 
-Stack Buffer Overflow in Digest Authentication
-        GHSA-phqj-m8gv-cq4g
+Impact summary: Applications that use the AES-SIV algorithm and want to
+authenticate empty data entries as associated data can be misled by removing,
+adding or reordering such empty entries as these are ignored by the OpenSSL
+implementation. We are currently unaware of any such applications.
 
-Buffer Underflow in ESI
-        GHSA-wgvf-q977-9xjg
+The AES-SIV algorithm allows for authentication of multiple associated
+data entries along with the encryption. To authenticate empty data the
+application has to call EVP_EncryptUpdate() (or EVP_CipherUpdate()) with
+NULL pointer as the output buffer and 0 as the input buffer length.
+The AES-SIV implementation in OpenSSL just returns success for such a call
+instead of performing the associated data authentication operation.
+The empty data thus will not be authenticated.
 
-Cheers,
-Josh
+As this issue does not affect non-empty associated data authentication and
+we expect it to be rare for an application to use empty associated data
+entries this is qualified as Low severity issue.
 
-On Fri, Oct 13, 2023 at 8:23 PM Joshua Rogers <megamansec@...il.com> wrote:
+OpenSSL versions 3.0.0 to 3.0.9, and 3.1.0 to 3.1.1 are vulnerable to this
+issue. The FIPS provider is not affected as the AES-SIV algorithm is not
+FIPS approved and FIPS provider does not implement it.
 
-> Hi Amos, oss-security,
->
-> I've added GHSA-543m-w2m2-g255 and CVE-2021-46784 for 'Cache Poisoning by
-> Large Stored Response Headers (With Bonus XSS)' and 'Assertion in Gopher
-> Response Handling' respectively: GHSA-543m-w2m2-g255 and CVE-2021-46784
->
-> However, for "Gopher Assertion Crash", GHSA-f5cp-6rh3-284w does not apply.
-> "Gopher Assertion Crash" concerns an assertion "assertion failed:
-> store.cc:832: "store_status == STORE_PENDING"" while GHSA-f5cp-6rh3-284w
-> concerns an assertion: "assertion failed: String.cc:172: "canGrowBy(len)""
->
-> To the best of my knowledge the former (without a current GHSA or CVE) is
-> unfixed.
->
-> Cheers,
-> Josh
->
-> On Fri, Oct 13, 2023 at 3:54 AM Amos Jeffries <squid3@...enet.co.nz>
-> wrote:
->
->> Some reference updates.
->>
->>
->> On 11/10/23 20:55, Joshua Rogers wrote:
->> >
->> > The issues are listed below. Due to the sheer size of issues discovered,
->> > technical details are not included in this email. However, breakdowns of
->> > the code and proof-of-concepts can be found on GitHub:
->> > https://megamansec.github.io/Squid-Security-Audit/
->> >
->>
->> > Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
->>
->>   ... GHSA-543m-w2m2-g255
->>
->> > Gopher Assertion Crash
->>
->>   ... GHSA-f5cp-6rh3-284w
->>
->> > Assertion in Gopher Response Handling
->>
->>   ... CVE-2021-46784 / GHSA-f5cp-6rh3-284w
->>
->>
->>
->> AYJ
->>
->
+OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
 
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 6a83f0c9 (for 3.1) and
+commit 00e2f5ee (for 3.0) in the OpenSSL git repository.
+
+This issue was reported on 16th May 2023 by Juerg Wullschleger (Google).
+The fix was developed by Tomas Mraz.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230714.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmSxxSgACgkQUnRmohyn
+nm3ogw//Zqnff7kHNFaqXQB7plwif+utEBi6/siMNC+/bTn8RSRWsuIJp0vgGTB/
+EEkiD2vK5Twrf1mYpKgOiCdQq2AaneHbjqcLtkmBS2apeXcGsBB6ZQgJKe1kRhaL
+nC87QJKuUdlQojS4+SBD+MIz/ET1uQNsjjvKfANpKK0L4TgUs2tHNskZG3H6p4az
+Kt0uhKaAFBp7jGb+wt3zYIgoyLvnZvx51mIwrf/vv3VAJl8OgEgG+hIk+8AtAVEa
+ZCWmkDRuuJxEHuwCjX0iSncwqIViph1JnpqnrXARNcdfZCMdAIfEmVdSTfXmmlQr
+TmQPDiBDIlk5ZjHlOGbVCEkUnPQAwiKEQ5bi0x4zI1e/yN64RTARjjaXn5nQsyTf
+XHHqFQNSCZ9Fpc4JVuJsSzzxnALKuzIC6uUwzPZxfDQ844e7EBim/V42kcbKizbZ
+N073hrxkm54nGRdfXkDguGPGK82GwHJnxPo7COBiBnROswWK++o2eW9PJwD2Vkt3
+dQ7t58YXDc+76+yE+L4mYuF6ml6wmUPx9kBzhzBxjgINZod5O8YyuTRrqnRbtsFU
+yasNBspjAaVdS5zRFewn4ghQTKIv6OfBn2fTIUNVCfXeAR9Dzd5Ts5zAcYJTaT3o
+NNLUBwvP+Fcm2rE2RZ3p6n6YmQLiY8URjtxGGPxJsLDaCTw6IiY=
+=eZhV
+-----END PGP SIGNATURE-----
