@@ -1,4 +1,4 @@
-Received: (qmail 21507 invoked by uid 550); 18 Jul 2024 12:33:45 -0000
+Received: (qmail 17413 invoked by uid 550); 14 Jul 2023 18:09:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +7,211 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24230 invoked from network); 18 Jul 2024 10:12:48 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Huajie Wang <benjobs@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <fc99feb6-aad8-ccd8-9001-42024fc36940@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 18 Jul 2024 10:11:22 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-29178: Apache StreamPark: FreeMarker SSTI RCE
- Vulnerability 
+Received: (qmail 15952 invoked from network); 14 Jul 2023 18:07:20 -0000
+Date: Fri, 14 Jul 2023 20:06:56 +0200
+From: Solar Designer <solar@openwall.com>
+To: Tamas Koczka <poprdi@chromium.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20230714180656.GA30858@openwall.com>
+References: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Our learnings from 42 Linux kernel exploits, we are limiting io_uring
 
-Severity: moderate
+Hi,
 
-Affected versions:
+Thank you for bringing this to oss-security back then.  I have a few
+questions below that I think you could clarify for everyone.  I'll quote
+more of your message than I normally do since it's been a while.
 
-- Apache StreamPark 1.0.0 before 2.1.4
+On Fri, Jun 16, 2023 at 11:43:49AM +0200, Tamas Koczka wrote:
+> We've posted the following article to the Google Security Blog which
+> contains some of our learnings from 42 Linux kernel exploits we got so
+> far on our kCTF VRP and the actions we are taking based on these
+> learnings (tl;dr: we are limiting io_uring in our products):
+> 
+> =======================
+> In 2020[1], we integrated kCTF into Google's Vulnerability Rewards
+> Program (VRP) to support researchers evaluating the security of Google
+> Kubernetes Engine (GKE) and the underlying Linux kernel. As the Linux
+> kernel is a key component not just for Google, but for the Internet,
+> we started heavily investing in this area. We extended the VRP's scope
+> and maximum reward in 2021[2] (to $50k), then again in February
+> 2022[3] (to $91k), and finally in August 2022[4] (to $133k). In 2022,
+> we also summarized our learnings to date in our cookbook[5], and
+> introduced our experimental mitigations[6] for the most common
+> exploitation techniques.
+> 
+> In this post, we'd like to share our learnings and statistics about
+> the latest Linux kernel exploit submissions, how effective our
+> mitigations[7] are against them, what we do to protect our users, and,
+> finally, how we are changing our program to align incentives to the
+> areas we are most interested in.
+> 
+> = Learnings and Statistics =
+> 
+> Since its inception, the program has rewarded researchers with a total
+> of 1.8 million USD, and in the past year, there has been a clear
+> trend: 60% of the submissions[8] exploited the io_uring component of
+> the Linux kernel (we paid out around 1 million USD for io_uring
+> alone). Furthermore, io_uring vulnerabilities were used in all the
+> submissions which bypassed our mitigations.
+> 
+> = Limiting io_uring =
+> 
+> To protect our users, we decided to limit the usage of io_uring in
+> Google products:
+> 
+>  * ChromeOS: We disabled[9] io_uring (while we explore new ways to sandbox it).
+> 
+>  * Android: Our seccomp-bpf filter[10] ensures that io_uring is
+> unreachable to apps. Future Android releases will use SELinux to limit
+> io_uring access to a select few system processes[11].
+> 
+>  * GKE AutoPilot: We are investigating disabling io_uring by default.
+> 
+>  * It is disabled on production Google servers.
+> 
+> While io_uring brings performance benefits, and promptly reacts to
+> security issues with comprehensive security fixes (like
+> backporting[12] the 5.15 version to the 5.10 stable tree), it is a
+> fairly new part of the kernel. As such, io_uring continues to be
+> actively developed, but it is still affected by severe vulnerabilities
+> and also provides strong exploitation primitives. For these reasons,
+> we currently consider it safe only for use by trusted components.
 
-Description:
+There's a recent write-up on an exploitation technique that also
+partially describes CVE-2023-21400, "a double free vulnerability in
+io_uring [...] found by Ye Zhang and [Nicolas Wu] last year, affecting
+kernel 5.10. [...] we exploit CVE-2023-21400 with Dirty Pagetable on
+Google Pixel 7."
 
-On versions before 2.1.4, a user could log in and perform a template inject=
-ion attack resulting in Remote Code Execution on the server,=C2=A0The attac=
-ker must successfully log into the system to launch an attack, so this is a=
- moderate-impact vulnerability.
+Dirty Pagetable: A Novel Exploitation Technique To Rule Linux Kernel
+https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
 
-Mitigation:
+I wish this vulnerability and exploitation technique were properly
+brought to oss-security on its own, and in a context not limited to
+Google Pixel.  Maybe it will be once the full description is made
+public, as right now the write-up above omits vulnerability detail.
 
-all users should upgrade to 2.1.4
+It appears that this got patched in the July 5 update for Google Pixel:
 
-Credit:
+Pixel Update Bulletin - July 2023
+Published July 5, 2023
+https://source.android.com/docs/security/bulletin/pixel/2023-07-01
 
-L0ne1y (reporter)
+"For Google devices, security patch levels of 2023-07-05 or later
+address all issues in this bulletin and all issues in the July 2023
+Android Security Bulletin."
 
-References:
+"CVE-2023-21400	A-264663832 *	EoP	Moderate	Kernel io_uring"
 
-https://streampark.incubator.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-29178
+Nothing is mentioned about seccomp-bpf on either of the above web pages,
+although maybe it's factored into the Moderate severity rating?
 
+I understand that with vulnerability detail still not public you might
+not be able to tell much, but I am wondering whether there's any
+inconsistency here (seccomp-bpf on Android was meant to prevent this,
+but did not?) or just a misunderstanding or something else.  I wonder
+if a vulnerability in io_uring could be such that it's exploitable
+without io_uring access directly from the attacking app.
+
+> = Transparency =
+> 
+> Currently, we make vulnerability details public on our spreadsheet[8]
+> (which now also includes CVE details), and we have summarized
+> different exploitation techniques in our cookbook[5]. In the future,
+> to make our efforts more transparent and give faster feedback to the
+> community, we will ask researchers to open-source their
+> submissions[13], including the code they used.
+
+For archival and relevant discussions on linux-distros list policy, let
+me quote what [13] currently says:
+
+Quote start:
+> Note about making the exploit public
+> 
+> You can publish your exploit at any time you would like to, but we
+> recommend publishing the exploit 30 days after the vulnerability was
+> disclosed. This gives the industry time to apply patches. Read our
+> stance on the topic in Google's disclosure policy.
+> 
+> We only process submissions after the exploit is public (and we can only
+> issue rewards when the submission was processed), but not sooner than 30
+> days after the vulnerability disclosure.
+> 
+> If you publish sooner than 30 days, you won't get the reward faster. If
+> you want to delay the publication (disclose later than 30 days), you
+> could do that, but you would get the money later (we want to encourage
+> you to publish the exploit details sooner than later).
+> 
+> The above is about the exploit itself, not the vulnerability. We
+> automatically share some limited vulnerability details of the
+> submissions on our public submission spreadsheet, as a CVE, and as soon
+> as you submit the vulnerability details via the form.
+Quote end.
+
+In the above, do you mean 30 days after _public_ disclosure (or e.g.
+disclosure to Google, to upstream, or something else)?  I suggest you
+clarify this.
+
+> = Introducing kernelCTF =
+> 
+> To better align incentives with our areas of interest, we are shifting
+> our focus from GKE and kCTF to the latest stable kernel and our
+> mitigations. As a result, starting today we will handle kernel exploit
+> submissions under a new name, "kernelCTF," with its own reward
+> structure and submission process[14]. The maximum total payout for
+> kernelCTF is still $133,337 per submission. While the specific GKE
+> kernel configuration is still covered by the new kernelCTF, exploits
+> affecting non-kernel components like the full GKE stack (including
+> Kubernetes), the container runtime, and GKE itself, are now separately
+> eligible for vulnerability rewards under the kCTF VRP which is
+> returning to its original reward amounts and conditions.
+
+Are there separate bug bounty programs for ChromeOS and Android, which
+would also cover relevant Linux kernel issues?  If so, a Linux kernel
+bug can potentially be eligible for up to 4 Google bug bounty programs,
+right?  Are the program terms compatible?
+
+> = Conclusion =
+> 
+> Our goal remains the same: we are building a pipeline to analyze,
+> experiment, measure, and build security mitigations to make the Linux
+> kernel as safe as possible, with the help of the security community.
+> We hope that over time, we will be able to implement security
+> mitigations that make it more difficult to exploit Linux kernel
+> vulnerabilities.
+> 
+> With the name change, we have moved our communication channel to
+> #kernelctf on Discord[15], with a separate #kernelctf-announcements
+> channel[16]. Please join us there for the latest updates regarding
+> kernelCTF.
+> 
+> [1] https://security.googleblog.com/2020/05/expanding-our-work-with-open-source.html
+> [2] https://security.googleblog.com/2021/11/trick-treat-paying-leets-and-sweets-for.html
+> [3] https://security.googleblog.com/2022/02/roses-are-red-violets-are-blue-giving.html
+> [4] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html
+> [5] https://docs.google.com/document/d/1a9uUAISBzw3ur1aLQqKc5JOQLaJYiOP5pe_B4xCT1KA/edit
+> [6] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html#:~:text=The%20mitigations%20we%27ve%20built%20attempt%20to%20tackle%20the%20following%20exploit%20primitives
+> [7] https://github.com/thejh/linux/blob/slub-virtual/MITIGATION_README
+> [8] https://docs.google.com/spreadsheets/d/e/2PACX-1vS1REdTA29OJftst8xN5B5x8iIUcxuK6bXdzF8G1UXCmRtoNsoQ9MbebdRdFnj6qZ0Yd7LwQfvYC2oF/pubhtml
+> [9] https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/4228112
+> [10] https://cs.android.com/android/platform/superproject/+/master:bionic/libc/SECCOMP_ALLOWLIST_COMMON.TXT
+> [11] https://android-review.googlesource.com/c/platform/system/sepolicy/+/2302679
+> [12] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=788d0824269bef539fe31a785b1517882eafed93
+> [13] https://google.github.io/security-research/kernelctf/rules#note-about-making-the-exploit-public
+> [14] https://google.github.io/security-research/kernelctf/rules
+> [15] https://discord.gg/A3qZcyaZ69
+> [16] https://discord.gg/AjGJ3acF2e
+> =======================
+> 
+> The article can also be read on our blog:
+> https://security.googleblog.com/2023/06/learnings-from-kctf-vrps-42-linux.html
+
+Thank you for your efforts, and for the transparency.
+
+Alexander
