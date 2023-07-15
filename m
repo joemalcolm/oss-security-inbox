@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/12/2
-Message-ID: <1e0d6c23-49ff-d833-ed26-bbdbeae93fd5@apache.org>
-Date: Tue, 12 Sep 2023 09:01:32 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/15/2
+Message-ID: <5bd36d34-4ded-2506-e1b4-260d3005b70f@apache.org>
+Date: Sat, 15 Jul 2023 12:45:38 +0000
+From: Xue Weiming <mikexue@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-40611: Apache Airflow Dag Runs Broken Access Control Vulnerability 
+Subject: CVE-2023-26512: Apache EventMesh RabbitMQ-Connector plugin allows RCE through deserialization of untrusted data 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: critical
 
 Affected versions:
 
-- Apache Airflow before 2.7.1
+- Apache EventMesh (incubating) 1.7.0 through 1.8.0
 
 Description:
 
-Apache Airflow, versions before 2.7.1, is affected by a vulnerability that allows authenticated and DAG-view authorized Users to modify some DAG run detail values when submitting notes. This could have them alter details such as configuration parameters, start date, etc.
+CWE-502 Deserialization of Untrusted Data at the rabbitmq-connector plugin module in Apache EventMesh (incubating) V1.7.0\V1.8.0 on windows\linux\mac os e.g. platforms allows attackers to send controlled message and 
 
-Users should upgrade to version 2.7.1 or later which has removed the vulnerability.
+remote code execute via rabbitmq messages. Users can use the code under the master branch in project repo to fix this issue, we will release the new version as soon as possible.
 
 Credit:
 
-happyhacking (finder)
+xuxiaoyu of HW GTS shengjian lab (reporter)
 
 References:
 
-https://github.com/apache/airflow/pull/33413
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-40611
+https://eventmesh.incubator.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-26512
 
