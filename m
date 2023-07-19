@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["561" "Sunday" "25" "April" "2021" "12:56:35" "+0200" "Gabriel Corona" "gabriel.corona@enst-bretagne.fr" nil "20" "[oss-security] Re: DNS rebinding vulnerability in npupnp" nil nil nil "4" nil nil (number mark "U       gabriel.coro Apr 25   20/561   " thread-indent "\"[oss-security] Re: DNS rebinding vulnerability in npupnp\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: DNS rebinding vulnerability in npupnp" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32467 invoked by uid 550); 25 Apr 2021 11:06:46 -0000
+Received: (qmail 31973 invoked by uid 550); 19 Jul 2023 14:40:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +7,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30079 invoked from network); 25 Apr 2021 10:56:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:subject:from:to:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EN2aqmoSSrgtoJPwXI0iqyvNT/NFxoOfas9xzLzLXTc=;
-        b=ZCLbL/px5Kj7FEtjUDWNuw4s9ITKLpAsicth8H1JAaf6qfSblfUJZs56YyT7rFvZbp
-         XbtcNVwnrkkEC9Xx9zizSAUIIGwEDHCs0UWRxrlhscVlbXKXx6pqPikDXN2dVGMi6wtx
-         mSn8to9Two0f7/5Wvnwn1fnRiygl2A0YOfwgBYNw4Sp6sh6g9dEbSANeZ6Jg8D3einMj
-         2xgA4hYKdHWpgWFamiBpAu2GD6ukRIp2385o+Yvltzo1/qEM69Wkn3fxS3KEZTboj3RX
-         NIjoOHP5WnDJaD7rcbzksbzgTwJFuNPBUyzSUmw0KN7nvg4XBJ+0WQr5PXIoP1PtXREK
-         p+iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:subject:from:to:references:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EN2aqmoSSrgtoJPwXI0iqyvNT/NFxoOfas9xzLzLXTc=;
-        b=ZkhnbrkTnLVqLOIpGG/9ksz3dQWhoAjciiZOE9xH0IzsxWGxLOJ6W2vyctDCTwGQ9k
-         ausE6PP09qYsUwHJv4b0VxbJQmlK2rDl0KDrdzSK/b8YaTVq9/U5j29wiSz95hdbMxDt
-         dQuFYRqaUlojXLYA1R1/FwbAqdDA2DtHY6ZJH2AI82XxRZKYVKqrfzjSSxP3MpdxnuDC
-         9pscl62Y1ZfWIp1HGpXCqAp8ngtN0IZxN0/tqOjDj058D//6OhsCRF6gEFCmPctc0gLw
-         07o+owenpX1nWHEj9+BDr3Zbg/zUd/vZavvDvGrSvdOR08ZkZfikLACD3iQ0cP4ocjK/
-         VMhw==
-X-Gm-Message-State: AOAM532Dh46e1eLLXFYaOfbbot0o4bChv3rxRQrN/ZHs3lpGyJdHzPJz
-	Yd5pn/jOFg5yZh24/wma8GbVC7TAjegrkg==
-X-Google-Smtp-Source: ABdhPJwv3neQnR7G4es2I+k22vlA0O59kfLqvnPAq96iMnMMkwvIiBupmKt5ITeieBRFmL68VGNUyg==
-X-Received: by 2002:a05:6000:10f:: with SMTP id o15mr16670539wrx.98.1619348198631;
-        Sun, 25 Apr 2021 03:56:38 -0700 (PDT)
-Sender: Gabriel Corona <corona.gabriel@gmail.com>
-From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+Received: (qmail 31933 invoked from network); 19 Jul 2023 14:40:53 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Wed, 19 Jul 2023 08:40:40 -0600 (MDT)
 To: oss-security@lists.openwall.com
-References: <729765b4-00fc-bf19-d0b0-0f3923f685b9@enst-bretagne.fr>
-Message-ID: <787be56d-f920-3846-6a0e-82ce30be6c40@enst-bretagne.fr>
-Date: Sun, 25 Apr 2021 12:56:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
-MIME-Version: 1.0
-In-Reply-To: <729765b4-00fc-bf19-d0b0-0f3923f685b9@enst-bretagne.fr>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: DNS rebinding vulnerability in npupnp
+Message-ID: <e9c022742fc07cee@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 9.3p2 released
 
-Le 20/04/2021 à 09:54, Gabriel Corona a écrit :
-> The server-part of npupnp, a library used to implement UUPnP clients and
-> servers, is vulnerable to DNS rebinding attacks.
-> 
-> Impact: A remote web server can exploit this vulnerability to trick the
-> user browser into triggering actions on the local UPnP services
-> implemented using this library.
-> 
-> This is fixed in v4.1.4.
-> 
-> https://framagit.org/medoc92/npupnp
-> https://www.lesbonscomptes.com/upmpdcli/npupnp-doc/libnpupnp.html
-> 
-> A CVE as been requested.
-> 
+OpenSSH 9.3p2 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-This is CVE-2021-31718.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-Gabriel
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
+
+Changes since OpenSSH 9.3
+=========================
+
+This release fixes a security bug.
+
+Security
+========
+
+Fix CVE-2023-38408 - a condition where specific libaries loaded via
+ssh-agent(1)'s PKCS#11 support could be abused to achieve remote
+code execution via a forwarded agent socket if the following
+conditions are met:
+
+* Exploitation requires the presence of specific libraries on
+  the victim system.
+* Remote exploitation requires that the agent was forwarded
+  to an attacker-controlled system.
+
+Exploitation can also be prevented by starting ssh-agent(1) with an
+empty PKCS#11/FIDO allowlist (ssh-agent -P '') or by configuring
+an allowlist that contains only specific provider libraries.
+
+This vulnerability was discovered and demonstrated to be exploitable
+by the Qualys Security Advisory team. 
+ 
+In addition to removing the main precondition for exploitation,
+this release removes the ability for remote ssh-agent(1) clients
+to load PKCS#11 modules by default (see below).
+
+Potentially-incompatible changes
+--------------------------------
+
+ * ssh-agent(8): the agent will now refuse requests to load PKCS#11
+   modules issued by remote clients by default. A flag has been added
+   to restore the previous behaviour "-Oallow-remote-pkcs11".
+
+   Note that ssh-agent(8) depends on the SSH client to identify
+   requests that are remote. The OpenSSH >=8.9 ssh(1) client does
+   this, but forwarding access to an agent socket using other tools
+   may circumvent this restriction.
+
+Checksums:
+==========
+
+- SHA1 (openssh-9.3p2.tar.gz) = 219cf700c317f400bb20b001c0406056f7188ea4
+- SHA256 (openssh-9.3p2.tar.gz) = IA6+FH9ss/EB/QzfngJEKvfdyimN/9n0VoeOfMrGdug=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
+
 
