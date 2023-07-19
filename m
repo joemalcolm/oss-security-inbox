@@ -1,89 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/13/4
-Message-ID: <20230113173016.GA23279@openwall.com>
-Date: Fri, 13 Jan 2023 18:30:16 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Davide Ornaghi <d.ornaghi97@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-0179: Linux kernel stack buffer overflow in nftables: PoC and writeup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/19/5
+Message-ID: <CAJ33NAWcjFPKG-6p2dzjJoO0MZjTCu3xx7U40YumQfW9pPyg0w@mail.gmail.com>
+Date: Wed, 19 Jul 2023 18:28:10 +0530
+From: Sandipan Roy <saroy@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello Tomas,
 
-Just sharing a little detail on handling of this issue:
+I guess the Advisory URL is wrong here, it's redirected to CVE-2023-2975
+advisory.
 
-On Fri, Jan 13, 2023 at 04:22:47PM +0100, Davide Ornaghi wrote:
-> While auditing the Linux kernel (6.2.0-rc1, commit
-> 1b929c02afd37871d5afb9d498426f83432e71c2), I found a buffer overflow
-> vulnerability within the Netfilter subsystem which has been assigned
-> CVE-2023-0179.
-> CVE-2023-0179 is exploitable starting from commit f6ae9f1 up to commit
-> 696e1a48b1a1.
-> The exploitation could allow the leakage of both stack and heap addresses
-> and, potentially, a Local Privilege Escalation to the root user via
-> arbitrary code execution.
 
-Davide brought this to linux-distros early on Jan 11, Red Hat assigned
-the CVE ID on the same day, and Greg KH helped bring this to attention
-of Netfilter maintainers - all of which is appreciated!
+On Wed, Jul 19, 2023 at 5:09 PM Tomas Mraz <tomas@...nssl.org> wrote:
 
-Also the same day, Davide posted this publicly to Linux kernel mailing
-lists and syzkaller, but the message only(?) got through to syzkaller:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> OpenSSL Security Advisory [19th July 2023]
+> ==========================================
+>
+> Excessive time spent checking DH keys and parameters (CVE-2023-3446)
+> ====================================================================
+>
+> Severity: Low
+>
+> Issue summary: Checking excessively long DH keys or parameters may be very
+> slow.
+>
+> Impact summary: Applications that use the functions DH_check(),
+> DH_check_ex()
+> or EVP_PKEY_param_check() to check a DH key or DH parameters may
+> experience long
+> delays. Where the key or parameters that are being checked have been
+> obtained
+> from an untrusted source this may lead to a Denial of Service.
+>
+> The function DH_check() performs various checks on DH parameters. One of
+> those
+> checks confirms that the modulus ("p" parameter) is not too large. Trying
+> to use
+> a very large modulus is slow and OpenSSL will not normally use a modulus
+> which
+> is over 10,000 bits in length.
+>
+> However the DH_check() function checks numerous aspects of the key or
+> parameters
+> that have been supplied. Some of those checks use the supplied modulus
+> value
+> even if it has already been found to be too large.
+>
+> An application that calls DH_check() and supplies a key or parameters
+> obtained
+> from an untrusted source could be vulernable to a Denial of Service attack.
+>
+> The function DH_check() is itself called by a number of other OpenSSL
+> functions.
+> An application calling any of those other functions may similarly be
+> affected.
+> The other functions affected by this are DH_check_ex() and
+> EVP_PKEY_param_check().
+>
+> Also vulnerable are the OpenSSL dhparam and pkeyparam command line
+> applications
+> when using the "-check" option.
+>
+> The OpenSSL SSL/TLS implementation is not affected by this issue.
+>
+> The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
+>
+> OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+>
+> Due to the low severity of this issue we are not issuing new releases of
+> OpenSSL at this time. The fix will be included in the next releases when
+> they
+> become available. The fix is also available in commit fc9867c1 (for 3.1),
+> commit 1fa20cf2 (for 3.0) and commit 8780a896 (for 1.1.1) in the OpenSSL
+> git
+> repository. It is available to premium support customer in commit 9a0a4d3c
+> (for
+> 1.0.2).
+>
+> OSSfuzz first detected and automatically reported this issue on 25th June
+> 2023 using a fuzzer recently added to OpenSSL written by Kurt Roeckx. The
+> fix
+> was developed by Matt Caswell.
+>
+> General Advisory Notes
+> ======================
+>
+> URL for this Security Advisory:
+> https://www.openssl.org/news/secadv/20230714.txt
+>
+> Note: the online version of the advisory may be updated with additional
+> details
+> over time.
+>
+> For details of OpenSSL severity classifications please see:
+> https://www.openssl.org/policies/secpolicy.html
+>
+> OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date
+> security
+> fixes for 1.1.1 will only be available to premium support customers.
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmS3yhISHHRvbWFzQG9w
+> ZW5zc2wub3JnAAoJEFJ0ZqIcp55tn1MP/3rGGOFg5XqhMW5hjzdH/u7wbZSQIBGr
+> PwGCCYm8McrgHsmqvE5efo5QIxjNj09xS/6+h+WsWeXkAvuL37idzQ5FC8oAlop2
+> XvjI0bJfCNQA8NcEFecWROHv9G7XEX7g+yV/yBUkT1CnuzqNjdnNeqBCIYafTE/x
+> X4mZKaj/dJZTB/c8XI5foGZ9RklsO3QqrPt2DGhusP/u57ayghWLqv/7EyogDyeS
+> 2FfB1yYsM0pmO7TjzrSlVhwPqAmsNGwOYVH8ggHGr9pRIbRQhrfKKVqn+o/5JLeR
+> XXIXQGTiXhs0eDcO3N+kgWf0PXpuA5x03EZlrGOJoJLf0Gw6Mds8mjMD8s1RWJbD
+> pogwwfGEavedW5WUH1f1W1cpoHqmSNwGrFIJJfZ0t1X4/z8/U6CipF6bCCjfEiFS
+> ROzOkj44O8rXNwU4+ACxBx/E+PLpP0zhn9uJNTzBfMTonFNyWxuFwpVv3EIHrrq+
+> YB/ccvbWXapejxIRHhrI41eA7tflZAPBNw8CwBfBRfQbJ+BOveKjGhaGfe3JUDiO
+> Ry97AGuRGlSCkhUrW9Iy5qrNTnT6AFbdUDpip77UUQDn1eYusW5YtHsLiJpouFq+
+> MPMn0B7mJypHjvDm4QeaUuJMaYHvcJtpRN684MXfBkcMsAldeYuwO0dl3E3HB5Dr
+> uP4KAxS6q91M
+> =sghT
+> -----END PGP SIGNATURE-----
+>
+>
 
-https://groups.google.com/g/syzkaller/c/YRNDJBsJn_s?pli=1
+-- 
+*Sandipan Roy*
 
-and a Netfilter maintainer posted the patch to netfilter-devel:
+Product Security Engineer, Product Security
 
-https://patchwork.ozlabs.org/project/netfilter-devel/patch/20230111212251.193032-4-pablo@netfilter.org/
+Secure Engineering - Incident Response
 
-Both messages contained the CVE ID, making it obvious that this is a
-security issue.
+Email: sandipan@...hat.com
 
-Davide - this is absolutely not your fault.  It's just that
-linux-distros and Linux kernel team's preferences and thus policies and
-instructions differ and are not always compatible, which was indeed
-difficult from your side to make sense of.
+PGP:0x4B5C7470051BB332 <https://bytehackr.fedorapeople.org/saroy.asc>
 
-After that point, Greg KH nevertheless insisted on not posting this to
-oss-security until the fix is merged - and today's merging of it into
-linux-next was not enough to make him happy.  (I wonder how much longer
-we were supposed to sit on this issue.)
+*secalert@...hat.com <secalert@...hat.com>* For Urgent Response.
+<https://www.redhat.com/>
 
-We did add an exception for Linux kernel issues last year:
-
-https://www.openwall.com/lists/oss-security/2022/05/24/1
-
-However, it only applies "if the publicly accessible fix doesn't look
-like it's for a security issue", which wasn't the case this time.
-
-Regardless, this disclosure made Greg KH really unhappy - as if we
-violated some prior agreement, which wasn't the case.  It may well be
-the last straw that will result in Linux kernel documentation getting
-updated so that reporters would not be instructed to contact
-linux-distros anymore (or would even be instructed not to?)  On one
-hand, this is bad.  On the other, everyone is tired of the
-inconsistencies and the drama.
-
-Brainstorming on possible alternatives, I suppose we (oss-security
-community?) could want to setup a crawler detecting likely security
-issues on Linux kernel mailing lists and among Linux kernel commits
-(including branches).  This could detect even more issues than are being
-brought to linux-distros and oss-security now.  Unfortunately, we would
-have less information on those issues (not the full original reports),
-but I suppose them starting to appear on oss-security would sometimes
-encourage the reporters to follow-up with the additional detail?
-
-Apparently, grsecurity is successfully doing something similar, and
-quite possibly bad actors are doing it too - so us doing it would help
-level the playing field.  A public effort like this would possibly
-result in mailing list postings and commit messages becoming more
-obscure or even specifically tailored to avoid our detection if we make
-our keyword lists, etc. public (a reason not to, since the bad actors
-would not?)
-
-This situation where two well-meaning communities with a common end goal
-could end up treating each other as adversaries is indeed ridiculous.
-
-I welcome better ideas, if anyone has any.
-
-Alexander
