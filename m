@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4558" "Tuesday" "22" "December" "2015" "18:47:18" "+0000" "Xen.org security team" "security@xen.org" "<E1aBRxu-0003xS-QB@xenbits.xen.org>" "128" "[oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional logging upon guest changing callback method" "^CC:" nil nil "12" "2015122218:47:18" "[oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional logging upon guest changing callback method" (number mark "        security@xen Dec 22  128/4558  " thread-indent "\"[oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional logging upon guest changing callback method\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15845 invoked by uid 550); 22 Dec 2015 18:47:44 -0000
+Received: (qmail 10001 invoked by uid 550); 19 Jul 2023 14:36:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,146 +6,333 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15787 invoked from network); 22 Dec 2015 18:47:38 -0000
-Message-Id: <E1aBRxu-0003xS-QB@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-CC: Xen.org security team <security@xen.org>
-Date: Tue, 22 Dec 2015 18:47:18 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional
- logging upon guest changing callback method
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Received: (qmail 3549 invoked from network); 19 Jul 2023 14:32:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1689777127; x=1690381927;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U8hnluctZeVFv+di0yKnQ7rcmJZQk9emU0FSYyncLFE=;
+        b=kd+6DgTUM65Tcf4SnI0mzH52wlH7KO2hpY8e9oHWdPsujxP2utIpUELIFjprVUxgVR
+         P0YsNXpfk9cVXhqWJIUaT3xOLrlhP2Rnl3FrBiqgO3OBOeKC14DM/cHw4yzOkm4tnsNv
+         4W2T22qkKeIG8UOu6fGFupLT0BWfvp30Itubc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689777127; x=1690381927;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=U8hnluctZeVFv+di0yKnQ7rcmJZQk9emU0FSYyncLFE=;
+        b=ZWzwEUzZr1VLl/dJN/jCxQY5Gru6wMRH22XgSzE6FXkfvD8UNLqUoAST3zYHdVwxNz
+         JYcqJ7Fznu4OX2S0qOyNVOABytjyNW6kq5yx5FOwbs1RD46tjvbLYfSk9q2BHmNgflLA
+         fEgUp9YEq3qX0gsia03MVq1MH5p+i9FhZQg9x62MZsL5SeLcpiRh5LQVvNIPR1PLohUU
+         NMJLdgvJ6zZ9HOHHIfS4YSHLLBVixmLxHtgNjrPUVjGmqhwcewKvF/4BAKf5d2v7AC48
+         3a5v5xZ0eD9v2JaZIW5GyMA8qQHSSkdTIfzAoykiJ7NJM91KxBtg3wfvay58zJWYKAOu
+         uzeg==
+X-Gm-Message-State: ABy/qLbGohXVWoFeNatoW3CbPX2CP8WPwvQAclWi5mnVjKzQjrZW236I
+	32zmFulhPD5UkQsMenEvg4HBMji2dAKpXT+QkuJNQi/ZdvuVoD5fJGA=
+X-Google-Smtp-Source: APBJJlHq44toalKxu9KMDxGWmdeaxdWXIn3rGZZu3AzlPKriq3mXAB2Jz3JxZK1AhPEZsqELdpifOil6K27jcuzsVaQ=
+X-Received: by 2002:a0d:f602:0:b0:577:1d1c:7b94 with SMTP id
+ g2-20020a0df602000000b005771d1c7b94mr21281126ywf.18.1689777126668; Wed, 19
+ Jul 2023 07:32:06 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
+ <20230714180656.GA30858@openwall.com>
+In-Reply-To: <20230714180656.GA30858@openwall.com>
+From: =?UTF-8?Q?Tam=C3=A1s_Koczka?= <poprdi@chromium.org>
+Date: Wed, 19 Jul 2023 16:31:55 +0200
+Message-ID: <CAEviOmMwtgbEu-mz1CLEa95=iqMPENc1gjo4Pczb1Ham=PCQ9Q@mail.gmail.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Our learnings from 42 Linux kernel exploits, we
+ are limiting io_uring
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hey!
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Answering the questions organized by topics, if I miss something,
+please feel free to ask.
 
-            Xen Security Advisory CVE-2015-8615 / XSA-169
-                              version 2
+Topic 1) VRP programs
 
-    x86: unintentional logging upon guest changing callback method
+We have multiple Vulnerability Rewards Programs[1], including Android
+VRP, Chrome (OS) VRP and kernelCTF (as part of Google VRP) and a
+vulnerability can be eligible for multiple programs as long as the
+reporters are following the respective rules of the different
+programs.
 
-UPDATES IN VERSION 2
-====================
+I am working on kernelCTF (previously: kCTF VRP), and as far as I know
+the program rules are not synchronized explicitly, it is possible that
+there are cases where the different VRP programs are not compatible.
+We encourage researchers to contact us if they run into a conflict
+like this and we will look into what we can do.
 
-CVE assigned.
+The disclosure policies are also different in different VRP programs,
+kernelCTF requires researchers to publish all the details of the
+vulnerabilities, exploits and techniques they are using.
 
-ISSUE DESCRIPTION
-=================
+Topic 2) Android, CVE-2023-21400, io_uring
 
-HYPERVISOR_hvm_op sub-op HVMOP_set_param's HVM_PARAM_CALLBACK_IRQ
-operation intends to log the new callback method in debug builds only.
-The full message, however, is split into two parts, the second one of
-which didn't get suppressed on non-debug builds as would have been
-intended.
+For kernelCTF / kCTF VRP did not get a submission for CVE-2023-21400
+(this can be tracked on our public spreadsheet[2]), but I read about
+this vuln in the news and I personally think the prerequisite for the
+exploit that you are already running in a non-Zygote process[3] (e.g.
+adb shell) where you are not limited by seccomp.
 
-These log messages are not rate-limited and can be triggered by guests.
+Seccomp is only applied by processes forked from the Zygote process,
+which is true for Android user apps, but not for e.g. system services,
+components. The future SELinux policy[4] will limit the io_uring
+attack surface to only fastbootd and snapuserd (but won't allow e.g.
+adbd). Based on this I believe CVE-2023-21400 is not exploitable
+directly from a malicious app, you need to get code execution in a
+system component and then you can use CVE-2023-21400 to elevate your
+privileges to root.
 
-IMPACT
-======
+I think (again, personal opinion) it's factored in the Medium
+severity[5], and system app -> root is only considered as "A general
+bypass for operating system protections" (Medium) and not a "Local
+arbitrary code execution in ... the OS Kernel" (High).
 
-A malicious guest could cause repeated logging to the hypervisor
-console, leading to a Denial of Service attack.
+Topic 3) Disclosure details
 
-VULNERABLE SYSTEMS
-==================
+The submission workflow[6] explains in more detail what we consider as
+a disclosure, but tl;dr: either a CVE or an oss-sec post.
 
-Xen version 4.6 is affected.  Older Xen versions are unaffected.
+> 4) Wait for us to publish the CVE or publish the vulnerability details yo=
+urself on oss-sec.
+> 5) After the vulnerability is disclosed via a CVE or oss-sec, wait 30 day=
+s (recommendation, see notes below) and send us your exploit with the descr=
+iption of the exploitation technique via a PR to https://github.com/google/=
+security-research/ (see required structure below).
 
-ARM systems are not affected.
+But thanks for the tip, maybe we will repeat this information in the
+other section to keep them together.
 
-Only x86 HVM guests can expose this vulnerability.
+Also thanks for the questions, I hope my answers make some aspects more cle=
+ar,
+Tamas
 
-MITIGATION
-==========
+[1] https://bughunters.google.com/about/rules
+[2] https://docs.google.com/spreadsheets/d/e/2PACX-1vS1REdTA29OJftst8xN5B5x=
+8iIUcxuK6bXdzF8G1UXCmRtoNsoQ9MbebdRdFnj6qZ0Yd7LwQfvYC2oF/pubhtml#
+[3] https://miro.medium.com/v2/1*oVJgKQJMm0p1-whfB6W4kg.png
+[4] https://android-review.git.corp.google.com/c/platform/system/sepolicy/+=
+/2302679
+[5] https://source.android.com/docs/security/overview/updates-resources#sev=
+erity
+[6] https://google.github.io/security-research/kernelctf/rules.html#1-day-s=
+ubmissions
 
-Running only PV guests will avoid this issue.
-
-The problematic log messages are issued with priority Warning.
-Therefore they can be rate limited by adding "loglvl=error/warning" to
-the hypervisor command line or suppressed entirely by adding
-"loglvl=error".
-
-On systems where the guest kernel is controlled by the host rather
-than guest administrator, running only kernels which do not excessively
-invoke this operation will also prevent untrusted guest users from
-exploiting this issue. However untrusted guest administrators can still
-trigger it unless further steps are taken to prevent them from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-The fix for this bug was publicly posted on xen-devel, before it was
-appreciated that there was a security problem.
-
-CREDITS
-=======
-
-This issue was discovered as a bug by Malcolm Crossley of Citrix; the
-security impact was recognised by Jan Beulich of SuSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa169.patch        xen-unstable, Xen 4.6.x
-
-$ sha256sum xsa169*
-b818922880313cdbc12ea68ae757da5eabed9b3c9e1f8acefe1653683545ccbe  xsa169.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJWeZqAAAoJEIP+FMlX6CvZ/HcIAMLIVFDrwUahqNkGIaS0rXrn
-LJG6+oMewioAm05NEKI+2wkJn6T4ycJsn+rVWMyOTHpS39vA1kMZK3/Pb/smV3B1
-2K+g8avmSjB22VEhjEoKIGniozkPIInB5Pvchf0GY6C30/LJM2ef3hJeQHUA+W9q
-68HiXZrwFUUBRcpjoSX3ru954Fcfe0VDpEvIRJRS1O4v/XXJeesavt/0/5PnaP34
-sRXr9+l7Ku+Q9z7sh9V87W9Lv98qXnuVns7c3GKIcmDEcvWDihwazCbvuVOZsvQW
-UoV4/LTiJ2bTqnGp2woUqlTfe7MIOHPzjmR88Pj+/ibveObkcVMDxyz4r34wyxw=
-=D97B
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa169.patch"
-Content-Disposition: attachment; filename="xsa169.patch"
-Content-Transfer-Encoding: base64
-
-eDg2OiBtYWtlIGRlYnVnIG91dHB1dCBjb25zaXN0ZW50IGluIGh2bV9zZXRf
-Y2FsbGJhY2tfdmlhCgpUaGUgdW5jb25kaXRpb25hbCBwcmludGtzIGluIHRo
-ZSBzd2l0Y2ggc3RhdGVtZW50IG9mIHRoZQpodm1fc2V0X2NhbGxiYWNrX3Zp
-YSBmdW5jdGlvbiByZXN1bHRzIGluIFhlbiBsb2cgc3BhbSBpbiBub24gZGVi
-dWcKdmVyc2lvbnMgb2YgWGVuLiBUaGUgcHJpbnRrcyBhcmUgZm9yIGRlYnVn
-IG91dHB1dCBvbmx5IHNvIGNvbmRpdGlvbmFsbHkKY29tcGlsZSB0aGUgZW50
-aXJlIHN3aXRjaCBzdGF0ZW1lbnQgb24gZGVidWcgdmVyc2lvbnMgb2YgWGVu
-IG9ubHkuCgpUaGlzIGlzIFhTQS0xNjkuCgpTaWduZWQtb2ZmLWJ5OiBNYWxj
-b2xtIENyb3NzbGV5IDxtYWxjb2xtLmNyb3NzbGV5QGNpdHJpeC5jb20+ClJl
-dmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+CkFj
-a2VkLWJ5OiBJYW4gQ2FtcGJlbGwgPGlhbi5jYW1wYmVsbEBjaXRyaXguY29t
-PgoKLS0tIGEveGVuL2FyY2gveDg2L2h2bS9pcnEuYworKysgYi94ZW4vYXJj
-aC94ODYvaHZtL2lycS5jCkBAIC0zODYsNyArMzg2LDggQEAgdm9pZCBodm1f
-c2V0X2NhbGxiYWNrX3ZpYShzdHJ1Y3QgZG9tYWluCiAKICAgICBzcGluX3Vu
-bG9jaygmZC0+YXJjaC5odm1fZG9tYWluLmlycV9sb2NrKTsKIAotICAgIGRw
-cmludGsoWEVOTE9HX0dfSU5GTywgIkRvbSV1IGNhbGxiYWNrIHZpYSBjaGFu
-Z2VkIHRvICIsIGQtPmRvbWFpbl9pZCk7CisjaWZuZGVmIE5ERUJVRworICAg
-IHByaW50ayhYRU5MT0dfR19JTkZPICJEb20ldSBjYWxsYmFjayB2aWEgY2hh
-bmdlZCB0byAiLCBkLT5kb21haW5faWQpOwogICAgIHN3aXRjaCAoIHZpYV90
-eXBlICkKICAgICB7CiAgICAgY2FzZSBIVk1JUlFfY2FsbGJhY2tfZ3NpOgpA
-QCAtNDAyLDYgKzQwMyw3IEBAIHZvaWQgaHZtX3NldF9jYWxsYmFja192aWEo
-c3RydWN0IGRvbWFpbgogICAgICAgICBwcmludGsoIk5vbmVcbiIpOwogICAg
-ICAgICBicmVhazsKICAgICB9CisjZW5kaWYKIH0KIAogc3RydWN0IGh2bV9p
-bnRhY2sgaHZtX3ZjcHVfaGFzX3BlbmRpbmdfaXJxKHN0cnVjdCB2Y3B1ICp2
-KQo=
-
---=separator--
+On Fri, Jul 14, 2023 at 8:07=E2=80=AFPM Solar Designer <solar@openwall.com>=
+ wrote:
+>
+> Hi,
+>
+> Thank you for bringing this to oss-security back then.  I have a few
+> questions below that I think you could clarify for everyone.  I'll quote
+> more of your message than I normally do since it's been a while.
+>
+> On Fri, Jun 16, 2023 at 11:43:49AM +0200, Tamas Koczka wrote:
+> > We've posted the following article to the Google Security Blog which
+> > contains some of our learnings from 42 Linux kernel exploits we got so
+> > far on our kCTF VRP and the actions we are taking based on these
+> > learnings (tl;dr: we are limiting io_uring in our products):
+> >
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > In 2020[1], we integrated kCTF into Google's Vulnerability Rewards
+> > Program (VRP) to support researchers evaluating the security of Google
+> > Kubernetes Engine (GKE) and the underlying Linux kernel. As the Linux
+> > kernel is a key component not just for Google, but for the Internet,
+> > we started heavily investing in this area. We extended the VRP's scope
+> > and maximum reward in 2021[2] (to $50k), then again in February
+> > 2022[3] (to $91k), and finally in August 2022[4] (to $133k). In 2022,
+> > we also summarized our learnings to date in our cookbook[5], and
+> > introduced our experimental mitigations[6] for the most common
+> > exploitation techniques.
+> >
+> > In this post, we'd like to share our learnings and statistics about
+> > the latest Linux kernel exploit submissions, how effective our
+> > mitigations[7] are against them, what we do to protect our users, and,
+> > finally, how we are changing our program to align incentives to the
+> > areas we are most interested in.
+> >
+> > =3D Learnings and Statistics =3D
+> >
+> > Since its inception, the program has rewarded researchers with a total
+> > of 1.8 million USD, and in the past year, there has been a clear
+> > trend: 60% of the submissions[8] exploited the io_uring component of
+> > the Linux kernel (we paid out around 1 million USD for io_uring
+> > alone). Furthermore, io_uring vulnerabilities were used in all the
+> > submissions which bypassed our mitigations.
+> >
+> > =3D Limiting io_uring =3D
+> >
+> > To protect our users, we decided to limit the usage of io_uring in
+> > Google products:
+> >
+> >  * ChromeOS: We disabled[9] io_uring (while we explore new ways to sand=
+box it).
+> >
+> >  * Android: Our seccomp-bpf filter[10] ensures that io_uring is
+> > unreachable to apps. Future Android releases will use SELinux to limit
+> > io_uring access to a select few system processes[11].
+> >
+> >  * GKE AutoPilot: We are investigating disabling io_uring by default.
+> >
+> >  * It is disabled on production Google servers.
+> >
+> > While io_uring brings performance benefits, and promptly reacts to
+> > security issues with comprehensive security fixes (like
+> > backporting[12] the 5.15 version to the 5.10 stable tree), it is a
+> > fairly new part of the kernel. As such, io_uring continues to be
+> > actively developed, but it is still affected by severe vulnerabilities
+> > and also provides strong exploitation primitives. For these reasons,
+> > we currently consider it safe only for use by trusted components.
+>
+> There's a recent write-up on an exploitation technique that also
+> partially describes CVE-2023-21400, "a double free vulnerability in
+> io_uring [...] found by Ye Zhang and [Nicolas Wu] last year, affecting
+> kernel 5.10. [...] we exploit CVE-2023-21400 with Dirty Pagetable on
+> Google Pixel 7."
+>
+> Dirty Pagetable: A Novel Exploitation Technique To Rule Linux Kernel
+> https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
+>
+> I wish this vulnerability and exploitation technique were properly
+> brought to oss-security on its own, and in a context not limited to
+> Google Pixel.  Maybe it will be once the full description is made
+> public, as right now the write-up above omits vulnerability detail.
+>
+> It appears that this got patched in the July 5 update for Google Pixel:
+>
+> Pixel Update Bulletin - July 2023
+> Published July 5, 2023
+> https://source.android.com/docs/security/bulletin/pixel/2023-07-01
+>
+> "For Google devices, security patch levels of 2023-07-05 or later
+> address all issues in this bulletin and all issues in the July 2023
+> Android Security Bulletin."
+>
+> "CVE-2023-21400 A-264663832 *   EoP     Moderate        Kernel io_uring"
+>
+> Nothing is mentioned about seccomp-bpf on either of the above web pages,
+> although maybe it's factored into the Moderate severity rating?
+>
+> I understand that with vulnerability detail still not public you might
+> not be able to tell much, but I am wondering whether there's any
+> inconsistency here (seccomp-bpf on Android was meant to prevent this,
+> but did not?) or just a misunderstanding or something else.  I wonder
+> if a vulnerability in io_uring could be such that it's exploitable
+> without io_uring access directly from the attacking app.
+>
+> > =3D Transparency =3D
+> >
+> > Currently, we make vulnerability details public on our spreadsheet[8]
+> > (which now also includes CVE details), and we have summarized
+> > different exploitation techniques in our cookbook[5]. In the future,
+> > to make our efforts more transparent and give faster feedback to the
+> > community, we will ask researchers to open-source their
+> > submissions[13], including the code they used.
+>
+> For archival and relevant discussions on linux-distros list policy, let
+> me quote what [13] currently says:
+>
+> Quote start:
+> > Note about making the exploit public
+> >
+> > You can publish your exploit at any time you would like to, but we
+> > recommend publishing the exploit 30 days after the vulnerability was
+> > disclosed. This gives the industry time to apply patches. Read our
+> > stance on the topic in Google's disclosure policy.
+> >
+> > We only process submissions after the exploit is public (and we can only
+> > issue rewards when the submission was processed), but not sooner than 30
+> > days after the vulnerability disclosure.
+> >
+> > If you publish sooner than 30 days, you won't get the reward faster. If
+> > you want to delay the publication (disclose later than 30 days), you
+> > could do that, but you would get the money later (we want to encourage
+> > you to publish the exploit details sooner than later).
+> >
+> > The above is about the exploit itself, not the vulnerability. We
+> > automatically share some limited vulnerability details of the
+> > submissions on our public submission spreadsheet, as a CVE, and as soon
+> > as you submit the vulnerability details via the form.
+> Quote end.
+>
+> In the above, do you mean 30 days after _public_ disclosure (or e.g.
+> disclosure to Google, to upstream, or something else)?  I suggest you
+> clarify this.
+>
+> > =3D Introducing kernelCTF =3D
+> >
+> > To better align incentives with our areas of interest, we are shifting
+> > our focus from GKE and kCTF to the latest stable kernel and our
+> > mitigations. As a result, starting today we will handle kernel exploit
+> > submissions under a new name, "kernelCTF," with its own reward
+> > structure and submission process[14]. The maximum total payout for
+> > kernelCTF is still $133,337 per submission. While the specific GKE
+> > kernel configuration is still covered by the new kernelCTF, exploits
+> > affecting non-kernel components like the full GKE stack (including
+> > Kubernetes), the container runtime, and GKE itself, are now separately
+> > eligible for vulnerability rewards under the kCTF VRP which is
+> > returning to its original reward amounts and conditions.
+>
+> Are there separate bug bounty programs for ChromeOS and Android, which
+> would also cover relevant Linux kernel issues?  If so, a Linux kernel
+> bug can potentially be eligible for up to 4 Google bug bounty programs,
+> right?  Are the program terms compatible?
+>
+> > =3D Conclusion =3D
+> >
+> > Our goal remains the same: we are building a pipeline to analyze,
+> > experiment, measure, and build security mitigations to make the Linux
+> > kernel as safe as possible, with the help of the security community.
+> > We hope that over time, we will be able to implement security
+> > mitigations that make it more difficult to exploit Linux kernel
+> > vulnerabilities.
+> >
+> > With the name change, we have moved our communication channel to
+> > #kernelctf on Discord[15], with a separate #kernelctf-announcements
+> > channel[16]. Please join us there for the latest updates regarding
+> > kernelCTF.
+> >
+> > [1] https://security.googleblog.com/2020/05/expanding-our-work-with-ope=
+n-source.html
+> > [2] https://security.googleblog.com/2021/11/trick-treat-paying-leets-an=
+d-sweets-for.html
+> > [3] https://security.googleblog.com/2022/02/roses-are-red-violets-are-b=
+lue-giving.html
+> > [4] https://security.googleblog.com/2022/08/making-linux-kernel-exploit=
+-cooking.html
+> > [5] https://docs.google.com/document/d/1a9uUAISBzw3ur1aLQqKc5JOQLaJYiOP=
+5pe_B4xCT1KA/edit
+> > [6] https://security.googleblog.com/2022/08/making-linux-kernel-exploit=
+-cooking.html#:~:text=3DThe%20mitigations%20we%27ve%20built%20attempt%20to%=
+20tackle%20the%20following%20exploit%20primitives
+> > [7] https://github.com/thejh/linux/blob/slub-virtual/MITIGATION_README
+> > [8] https://docs.google.com/spreadsheets/d/e/2PACX-1vS1REdTA29OJftst8xN=
+5B5x8iIUcxuK6bXdzF8G1UXCmRtoNsoQ9MbebdRdFnj6qZ0Yd7LwQfvYC2oF/pubhtml
+> > [9] https://chromium-review.googlesource.com/c/chromiumos/third_party/k=
+ernel/+/4228112
+> > [10] https://cs.android.com/android/platform/superproject/+/master:bion=
+ic/libc/SECCOMP_ALLOWLIST_COMMON.TXT
+> > [11] https://android-review.googlesource.com/c/platform/system/sepolicy=
+/+/2302679
+> > [12] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/c=
+ommit/?id=3D788d0824269bef539fe31a785b1517882eafed93
+> > [13] https://google.github.io/security-research/kernelctf/rules#note-ab=
+out-making-the-exploit-public
+> > [14] https://google.github.io/security-research/kernelctf/rules
+> > [15] https://discord.gg/A3qZcyaZ69
+> > [16] https://discord.gg/AjGJ3acF2e
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > The article can also be read on our blog:
+> > https://security.googleblog.com/2023/06/learnings-from-kctf-vrps-42-lin=
+ux.html
+>
+> Thank you for your efforts, and for the transparency.
+>
+> Alexander
