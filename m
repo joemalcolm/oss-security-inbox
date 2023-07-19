@@ -1,80 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/19/8
-Message-ID: <e9c022742fc07cee@cvs.openbsd.org>
-Date: Wed, 19 Jul 2023 08:40:40 -0600 (MDT)
-From: Damien Miller <djm@....openbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/19/3
+Message-ID: <a3830426-0e83-631c-df91-6ba69c00a333@apache.org>
+Date: Wed, 19 Jul 2023 06:24:52 +0000
+From: Weijie Wu <wuweijie@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Announce: OpenSSH 9.3p2 released
+Subject: CVE-2023-28754: ShardingSphere-Agent: Deserialization vulnerability in ShardingSphere Agent 
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH 9.3p2 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+Severity: low
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+Affected versions:
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+- ShardingSphere-Agent through 5.3.2
 
-Changes since OpenSSH 9.3
-=========================
+Description:
 
-This release fixes a security bug.
+Deserialization of Untrusted Data vulnerability in Apache ShardingSphere-Agent, which allows attackers to execute arbitrary code by constructing a special YAML configuration file.
 
-Security
-========
+The attacker needs to have permission to modify the ShardingSphere Agent YAML configuration file on the target machine, and the target machine can access the URL with the arbitrary code JAR.
+An attacker can use SnakeYAML to deserialize java.net.URLClassLoader and make it load a JAR from a specified URL, and then deserialize javax.script.ScriptEngineManager to load code using that ClassLoader. When the ShardingSphere JVM process starts and uses the ShardingSphere-Agent, the arbitrary code specified by the attacker will be executed during the deserialization of the YAML configuration file by the Agent.
 
-Fix CVE-2023-38408 - a condition where specific libaries loaded via
-ssh-agent(1)'s PKCS#11 support could be abused to achieve remote
-code execution via a forwarded agent socket if the following
-conditions are met:
+This issue affects ShardingSphere-Agent: through 5.3.2. This vulnerability is fixed in Apache ShardingSphere 5.4.0.
 
-* Exploitation requires the presence of specific libraries on
-  the victim system.
-* Remote exploitation requires that the agent was forwarded
-  to an attacker-controlled system.
+Credit:
 
-Exploitation can also be prevented by starting ssh-agent(1) with an
-empty PKCS#11/FIDO allowlist (ssh-agent -P '') or by configuring
-an allowlist that contains only specific provider libraries.
+Liav Gutman of the JFrog CSO Research team (finder)
 
-This vulnerability was discovered and demonstrated to be exploitable
-by the Qualys Security Advisory team. 
- 
-In addition to removing the main precondition for exploitation,
-this release removes the ability for remote ssh-agent(1) clients
-to load PKCS#11 modules by default (see below).
+References:
 
-Potentially-incompatible changes
---------------------------------
-
- * ssh-agent(8): the agent will now refuse requests to load PKCS#11
-   modules issued by remote clients by default. A flag has been added
-   to restore the previous behaviour "-Oallow-remote-pkcs11".
-
-   Note that ssh-agent(8) depends on the SSH client to identify
-   requests that are remote. The OpenSSH >=8.9 ssh(1) client does
-   this, but forwarding access to an agent socket using other tools
-   may circumvent this restriction.
-
-Checksums:
-==========
-
-- SHA1 (openssh-9.3p2.tar.gz) = 219cf700c317f400bb20b001c0406056f7188ea4
-- SHA256 (openssh-9.3p2.tar.gz) = IA6+FH9ss/EB/QzfngJEKvfdyimN/9n0VoeOfMrGdug=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
-
+https://shardingsphere.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-28754
 
