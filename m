@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["498" "Friday" "20" "April" "2018" "05:30:39" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1871023181.21407601.1524216639486.JavaMail.zimbra@redhat.com>" "14" "[oss-security] Re: a number of CVEs for issues in the filesystem's code in the Linux kernel" nil nil nil "4" "2018042009:30:39" "[oss-security] Re: a number of CVEs for issues in the filesystem's code in the Linux kernel" (number mark "U       vdronov@redh Apr 20   14/498   " thread-indent "\"[oss-security] Re: a number of CVEs for issues in the filesystem's code in the Linux kernel\"\n") "<2142970777.14264014.1522310169467.JavaMail.zimbra@redhat.com>" ("<2142970777.14264014.1522310169467.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9788 invoked by uid 550); 20 Apr 2018 09:30:52 -0000
+Received: (qmail 1247 invoked by uid 550); 19 Jul 2023 11:37:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +7,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9767 invoked from network); 20 Apr 2018 09:30:51 -0000
-Date: Fri, 20 Apr 2018 05:30:39 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
+Received: (qmail 32462 invoked from network); 19 Jul 2023 11:35:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1689766537; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=qDRzZG43MpsV//k5p6pnNP4+Ein3XzAcIUvFJahJPjI=;
+	b=IX0tANYQjODoNVhrtg37M0MSrkPHb4BwwirqEZjvrfo6At7/t1Dgrt9HtIjcQ3tYtMbbL1
+	mdV2JNIpuLEuFjbLIy5yXVV8TsZmT6qXC7Fyl5sqNfE12Qt0ZQIqdV7HlNZS+Qf5tmEwWF
+	KafzTcl//lXyC2xBwHOgpRdSj8J8hG2Vem6RRP7SGioJEisF3oMnV4yX7d9dZ3jRoBSAkv
+	iRlPuRA1BvMKte9oT00u/1QF9okDDHLEyFtzJ7+CFhdZH89MomyvBtc+AWx9R6yU4e/eFu
+	Sj/nE13wVMOh0CuPSj3m9GkL1dJ9Bv01nECdgWbKSHPO+ijPV8GMeVWgvPZN1A==
+Date: Wed, 19 Jul 2023 11:35:37 +0000
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
-Message-ID: <1871023181.21407601.1524216639486.JavaMail.zimbra@redhat.com>
-In-Reply-To: <2142970777.14264014.1522310169467.JavaMail.zimbra@redhat.com>
-References: <2142970777.14264014.1522310169467.JavaMail.zimbra@redhat.com>
+Message-ID: <ZLfKifcpS49KPOWy@openssl.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.36.112.40, 10.4.195.1]
-Thread-Topic: a number of CVEs for issues in the filesystem's code in the Linux kernel
-Thread-Index: /YQE+LsYQpClvt6cRm598X5di0FwKo2AQwiR
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.48]); Fri, 20 Apr 2018 09:30:39 +0000 (UTC)
-Subject: [oss-security] Re: a number of CVEs for issues in the filesystem's code in the
- Linux kernel
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It appeared that there is another reproducer for CVE-2018-1092 ("kernel:
-NULL pointer dereference in ext4/mballoc.c:ext4_process_freed_data() when
-mounting crafted ext4 image") which possibly affects a wider range of
-systems (than a previous one):
+OpenSSL Security Advisory [19th July 2023]
+==========================================
 
-https://bugzilla.kernel.org/show_bug.cgi?id=199275
+Excessive time spent checking DH keys and parameters (CVE-2023-3446)
+====================================================================
 
-It was verified that a crash caused by this reproducer (88.img) is fixed
-by the same upstream commit 8e4b5eae5decd.
+Severity: Low
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Issue summary: Checking excessively long DH keys or parameters may be very slow.
+
+Impact summary: Applications that use the functions DH_check(), DH_check_ex()
+or EVP_PKEY_param_check() to check a DH key or DH parameters may experience long
+delays. Where the key or parameters that are being checked have been obtained
+from an untrusted source this may lead to a Denial of Service.
+
+The function DH_check() performs various checks on DH parameters. One of those
+checks confirms that the modulus ("p" parameter) is not too large. Trying to use
+a very large modulus is slow and OpenSSL will not normally use a modulus which
+is over 10,000 bits in length.
+
+However the DH_check() function checks numerous aspects of the key or parameters
+that have been supplied. Some of those checks use the supplied modulus value
+even if it has already been found to be too large.
+
+An application that calls DH_check() and supplies a key or parameters obtained
+from an untrusted source could be vulernable to a Denial of Service attack.
+
+The function DH_check() is itself called by a number of other OpenSSL functions.
+An application calling any of those other functions may similarly be affected.
+The other functions affected by this are DH_check_ex() and
+EVP_PKEY_param_check().
+
+Also vulnerable are the OpenSSL dhparam and pkeyparam command line applications
+when using the "-check" option.
+
+The OpenSSL SSL/TLS implementation is not affected by this issue.
+
+The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
+
+OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit fc9867c1 (for 3.1),
+commit 1fa20cf2 (for 3.0) and commit 8780a896 (for 1.1.1) in the OpenSSL git
+repository. It is available to premium support customer in commit 9a0a4d3c (for
+1.0.2).
+
+OSSfuzz first detected and automatically reported this issue on 25th June
+2023 using a fuzzer recently added to OpenSSL written by Kurt Roeckx. The fix
+was developed by Matt Caswell.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230714.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmS3yhISHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tn1MP/3rGGOFg5XqhMW5hjzdH/u7wbZSQIBGr
+PwGCCYm8McrgHsmqvE5efo5QIxjNj09xS/6+h+WsWeXkAvuL37idzQ5FC8oAlop2
+XvjI0bJfCNQA8NcEFecWROHv9G7XEX7g+yV/yBUkT1CnuzqNjdnNeqBCIYafTE/x
+X4mZKaj/dJZTB/c8XI5foGZ9RklsO3QqrPt2DGhusP/u57ayghWLqv/7EyogDyeS
+2FfB1yYsM0pmO7TjzrSlVhwPqAmsNGwOYVH8ggHGr9pRIbRQhrfKKVqn+o/5JLeR
+XXIXQGTiXhs0eDcO3N+kgWf0PXpuA5x03EZlrGOJoJLf0Gw6Mds8mjMD8s1RWJbD
+pogwwfGEavedW5WUH1f1W1cpoHqmSNwGrFIJJfZ0t1X4/z8/U6CipF6bCCjfEiFS
+ROzOkj44O8rXNwU4+ACxBx/E+PLpP0zhn9uJNTzBfMTonFNyWxuFwpVv3EIHrrq+
+YB/ccvbWXapejxIRHhrI41eA7tflZAPBNw8CwBfBRfQbJ+BOveKjGhaGfe3JUDiO
+Ry97AGuRGlSCkhUrW9Iy5qrNTnT6AFbdUDpip77UUQDn1eYusW5YtHsLiJpouFq+
+MPMn0B7mJypHjvDm4QeaUuJMaYHvcJtpRN684MXfBkcMsAldeYuwO0dl3E3HB5Dr
+uP4KAxS6q91M
+=sghT
+-----END PGP SIGNATURE-----
