@@ -1,40 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/20/2
-Message-ID: <18193dfc-fdc7-566c-ff72-f2543331de43@apache.org>
-Date: Wed, 20 Dec 2023 03:25:55 +0000
-From: Michael Marshall <mmarshall@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/19/8
+Message-ID: <e9c022742fc07cee@cvs.openbsd.org>
+Date: Wed, 19 Jul 2023 08:40:40 -0600 (MDT)
+From: Damien Miller <djm@....openbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37544: Apache Pulsar WebSocket Proxy: Improper Authentication for WebSocket Proxy Endpoint Allows DoS 
+Subject: Announce: OpenSSH 9.3p2 released
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+OpenSSH 9.3p2 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-- Apache Pulsar WebSocket Proxy 2.8.0 through 2.8.*
-- Apache Pulsar WebSocket Proxy 2.9.0 through 2.9.*
-- Apache Pulsar WebSocket Proxy 2.10.0 through 2.10.4
-- Apache Pulsar WebSocket Proxy 2.11.0 through 2.11.1
-- Apache Pulsar WebSocket Proxy 3.0.0
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-Description:
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-Improper Authentication vulnerability in Apache Pulsar WebSocket Proxy allows an attacker to connect to the /pingpong endpoint without authentication.
+Changes since OpenSSH 9.3
+=========================
 
-This issue affects Apache Pulsar WebSocket Proxy: from 2.8.0 through 2.8.*, from 2.9.0 through 2.9.*, from 2.10.0 through 2.10.4, from 2.11.0 through 2.11.1, 3.0.0.
+This release fixes a security bug.
 
-The known risks include a denial of service due to the WebSocket Proxy accepting any connections, and excessive data transfer due to misuse of the WebSocket ping/pong feature.
+Security
+========
 
-2.10 Pulsar WebSocket Proxy users should upgrade to at least 2.10.5.
-2.11 Pulsar WebSocket Proxy users should upgrade to at least 2.11.2.
-3.0 Pulsar WebSocket Proxy users should upgrade to at least 3.0.1.
-3.1 Pulsar WebSocket Proxy users are unaffected.
-Any users running the Pulsar WebSocket Proxy for 2.8, 2.9, and earlier should upgrade to one of the above patched versions.
+Fix CVE-2023-38408 - a condition where specific libaries loaded via
+ssh-agent(1)'s PKCS#11 support could be abused to achieve remote
+code execution via a forwarded agent socket if the following
+conditions are met:
 
-Credit:
+* Exploitation requires the presence of specific libraries on
+  the victim system.
+* Remote exploitation requires that the agent was forwarded
+  to an attacker-controlled system.
 
-Michael Marshall of DataStax (finder)
+Exploitation can also be prevented by starting ssh-agent(1) with an
+empty PKCS#11/FIDO allowlist (ssh-agent -P '') or by configuring
+an allowlist that contains only specific provider libraries.
 
-References:
+This vulnerability was discovered and demonstrated to be exploitable
+by the Qualys Security Advisory team. 
+ 
+In addition to removing the main precondition for exploitation,
+this release removes the ability for remote ssh-agent(1) clients
+to load PKCS#11 modules by default (see below).
 
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-37544
+Potentially-incompatible changes
+--------------------------------
+
+ * ssh-agent(8): the agent will now refuse requests to load PKCS#11
+   modules issued by remote clients by default. A flag has been added
+   to restore the previous behaviour "-Oallow-remote-pkcs11".
+
+   Note that ssh-agent(8) depends on the SSH client to identify
+   requests that are remote. The OpenSSH >=8.9 ssh(1) client does
+   this, but forwarding access to an agent socket using other tools
+   may circumvent this restriction.
+
+Checksums:
+==========
+
+- SHA1 (openssh-9.3p2.tar.gz) = 219cf700c317f400bb20b001c0406056f7188ea4
+- SHA256 (openssh-9.3p2.tar.gz) = IA6+FH9ss/EB/QzfngJEKvfdyimN/9n0VoeOfMrGdug=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
+
 
