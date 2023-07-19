@@ -1,33 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/6
-Message-ID: <55ee885e-001c-10c7-5cad-a2bf49fca5e7@apache.org>
-Date: Sun, 21 May 2023 08:18:30 +0000
-From: Charles Zhang <dockerzhang@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31098: Apache InLong: Weak Password Implementation in InLong 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/19/1
+Message-ID: <7pr128ns-95o4-266p-rprn-4n1q23s4r67n@unkk.fr>
+Date: Wed, 19 Jul 2023 08:30:54 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: curl: fopen race condition: CVE-2023-32001
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+fopen race condition
+====================
 
-Affected versions:
+Project curl Security Advisory, July 19 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-32001.html)
 
-- Apache InLong 1.1.0 through 1.6.0
+VULNERABILITY
+-------------
 
-Description:
+libcurl can be told to save cookie, HSTS and/or alt-svc data to files. When
+doing this, it called `stat()` followed by `fopen()` in a way that made it
+vulnerable to a TOCTOU race condition problem.
 
-Weak Password Requirements vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.1.0 through 1.6.0. 
+By exploiting this flaw, an attacker could trick the victim to create or
+overwrite protected files holding this data in ways it was not intended to.
 
-When users change their password to a simple password (with any character or
-symbol), attackers can easily guess the user's password and access the account.
+INFO
+----
 
-Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+The attacker needs permissions and rights enough to be able to create or
+rename directory entries in the directory the victim saves their files.
 
+This race condition modifies the behavior of symbolic link files in affected
+components, they might be followed instead of being overwritten when the
+condition is met leading to undesired and potentially destructive behavior.
 
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-32001 to this issue.
 
-[1]  https://github.com/apache/inlong/pull/7805 https://github.com/apache/inlong/pull/7805
+CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition
 
-References:
+Severity: Medium
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31098
+AFFECTED VERSIONS
+-----------------
 
+- Affected versions: libcurl 7.84.0 to and including 8.1.2
+- Not affected versions: libcurl < 7.84.0 and >= 8.2.0
+- Introduced-in: https://github.com/curl/curl/commit/20f9dd6bae50b722
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/0c667188e0c6cda615a0
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.2.0
+
+  B - Apply the patch to your local version
+
+  C - Do not save cookie, HSTS or alt-svc data
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on June 27, 2023. We contacted
+distros@...nwall on July 12, 2023.
+
+libcurl 8.2.0 was released on July 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: selmelc on hackerone
+- Patched-by: selmelc on hackerone
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
