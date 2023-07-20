@@ -1,39 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/13/1
-Message-ID: <ZLAlvlNOdMKixhiG@netmeister.org>
-Date: Thu, 13 Jul 2023 12:26:38 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/20/2
+Message-ID: <ZLk1hSUEt00caovk@itl-email>
+Date: Thu, 20 Jul 2023 09:24:21 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RCE in acme.sh < 3.0.6
+Subject: Re: Announce: OpenSSH 9.3p2 released
 Content-Type: text/plain; charset=utf-8
 
-Just closing the loop here: this has now been assigned
-CVE-2023-38198:
+On Wed, Jul 19, 2023 at 08:40:40AM -0600, Damien Miller wrote:
+> OpenSSH 9.3p2 has just been released. It will be available from the
+> mirrors listed at https://www.openssh.com/ shortly.
+> 
+> OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+> includes sftp client and server support.
+> 
+> Once again, we would like to thank the OpenSSH community for their
+> continued support of the project, especially those who contributed
+> code or patches, reported bugs, tested snapshots or donated to the
+> project. More information on donations may be found at:
+> https://www.openssh.com/donations.html
+> 
+> Changes since OpenSSH 9.3
+> =========================
+> 
+> This release fixes a security bug.
+> 
+> Security
+> ========
+> 
+> Fix CVE-2023-38408 - a condition where specific libaries loaded via
+> ssh-agent(1)'s PKCS#11 support could be abused to achieve remote
+> code execution via a forwarded agent socket if the following
+> conditions are met:
+> 
+> * Exploitation requires the presence of specific libraries on
+>   the victim system.
+> * Remote exploitation requires that the agent was forwarded
+>   to an attacker-controlled system.
+> 
+> Exploitation can also be prevented by starting ssh-agent(1) with an
+> empty PKCS#11/FIDO allowlist (ssh-agent -P '') or by configuring
+> an allowlist that contains only specific provider libraries.
+> 
+> This vulnerability was discovered and demonstrated to be exploitable
+> by the Qualys Security Advisory team. 
+>  
+> In addition to removing the main precondition for exploitation,
+> this release removes the ability for remote ssh-agent(1) clients
+> to load PKCS#11 modules by default (see below).
+> 
+> Potentially-incompatible changes
+> --------------------------------
+> 
+>  * ssh-agent(8): the agent will now refuse requests to load PKCS#11
+>    modules issued by remote clients by default. A flag has been added
+>    to restore the previous behaviour "-Oallow-remote-pkcs11".
+> 
+>    Note that ssh-agent(8) depends on the SSH client to identify
+>    requests that are remote. The OpenSSH >=8.9 ssh(1) client does
+>    this, but forwarding access to an agent socket using other tools
+>    may circumvent this restriction.
+> 
+> Checksums:
+> ==========
+> 
+> - SHA1 (openssh-9.3p2.tar.gz) = 219cf700c317f400bb20b001c0406056f7188ea4
+> - SHA256 (openssh-9.3p2.tar.gz) = IA6+FH9ss/EB/QzfngJEKvfdyimN/9n0VoeOfMrGdug=
+> 
+> Please note that the SHA256 signatures are base64 encoded and not
+> hexadecimal (which is the default for most checksum tools). The PGP
+> key used to sign the releases is available from the mirror sites:
+> https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+> 
+> Reporting Bugs:
+> ===============
+> 
+> - Please read https://www.openssh.com/report.html
+>   Security bugs should be reported directly to openssh@...nssh.com
 
-https://www.cve.org/CVERecord?id=CVE-2023-38198
+Should there be a system-wide configuration file containing a list of
+known-good PKCS#11 libraries?  ssh-agent having to guess if something is
+a PKCS#11 library is less than awesome.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-
-Jan Schaumann <jschauma@...meister.org> wrote:
-> Hi,
-> 
-> I don't think this has been raised here:
-> 
-> The acme.sh ACME client[1] prior to version 3.0.6[2] has
-> an RCE vulnerability allowing a hostile server to
-> execute arbitrary commands on the client[3].
-> 
-> I was unable to determine whether a CVE has been
-> requested for this issue; both the original discussion
-> and a second GitHub issue[4] have been inconclusively
-> closed for comments (I've reached out to the author).
-> 
-> The issue is also being discussed on Mozilla's
-> dev-security-policy[5].
-> 
-> -Jan
-> 
-> [1] https://github.com/acmesh-official/acme.sh
-> [2] https://github.com/acmesh-official/acme.sh/releases
-> [3] https://github.com/acmesh-official/acme.sh/issues/4659
-> [4] https://github.com/acmesh-official/acme.sh/issues/4665
-> [5] https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/heXVr8o83Ys
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
