@@ -1,98 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/4
-Message-Id: <E1qTQ4E-0002Mq-KX@xenbits.xenproject.org>
-Date: Tue, 08 Aug 2023 17:00:22 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 434 v1 (CVE-2023-20569) - x86/AMD: Speculative Return Stack Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/6
+Message-ID: <635dea71-43eb-d11b-f030-a2c5a39f109d@igalia.com>
+Date: Fri, 21 Jul 2023 17:42:24 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0006
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0006
+------------------------------------------------------------------------
 
-            Xen Security Advisory CVE-2023-20569 / XSA-434
+Date reported           : July 21, 2023
+Advisory ID             : WSA-2023-0006
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0006.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0006.html
+CVE identifiers         : CVE-2023-37450, CVE-2023-32393.
 
-               x86/AMD: Speculative Return Stack Overflow
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-ISSUE DESCRIPTION
-=================
+CVE-2023-37450
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.4.
+    Credit to an anonymous researcher.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Apple is aware of a report that this issue may have been actively
+    exploited. Description: The issue was addressed with improved
+    checks.
 
-Researchers from ETH Zurich have extended their prior research (XSA-422,
-Branch Type Confusion, a.k.a Retbleed) and have discovered INCEPTION,
-also know as RAS (Return Address Stack) Poisoning, and Speculative
-Return Stack Overflow.
+CVE-2023-32393
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
+    Credit to Francisco Alonso (@revskills).
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved memory handling.
 
-The RAS is updated when a CALL instruction is predicted, rather than at
-a later point in the pipeline.  However, the RAS is still fundamentally
-a circular stack.
 
-It is possible to poison the branch type and target predictions such
-that, at a point of the attackers choosing, the branch predictor
-predicts enough CALLs back-to-back to wrap around the entire RAS and
-overwrite a correct return prediction with one of the attackers
-choosing.
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-This allows the attacker to control RET speculation in a victim context,
-and leak arbitrary data as a result.
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-For more details, see:
-  https://comsec.ethz.ch/inception
-  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-7005
-
-IMPACT
-======
-
-An attacker might be able to infer the contents of memory belonging to
-other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Only CPUs from AMD are believed to be potentially vulnerable.  CPUs from
-other manufacturers are not believed to be impacted.
-
-At the time of writing, all in-support AMD CPUs (that is, Zen1 thru Zen4
-microarchitectures) are believed to be potentially vulnerable.  Older
-CPUs have not been analysed.
-
-By default following XSA-422, Xen mitigates BTC on AMD Zen2 and older
-CPUs by issuing an IBPB on entry to Xen.  On Zen2 and older CPUs, this
-is believed to be sufficient to protect against SRSO too.
-
-AMD Zen3 and Zen4 CPUs are susceptible to SRSO too.  All versions of Xen
-are vulnerable on these CPUs.
-
-MITIGATION
-==========
-
-On Zen3 and Zen4, there is no mitigation.
-
-RESOLUTION
-==========
-
-AMD are producing microcode updates for Zen3 and Zen4.  Consult your
-dom0 OS vendor.
-
-With the microcode update applied, booting Xen with
-`spec-ctrl=ibpb-entry` is sufficient to protect against SRSO.
-
-The appropriate set of patches will default to using IBPB-on-entry on
-Zen3 and Zen4 CPUs, as well as synthesise new CPUID bits for guests to
-use in order to determine their susceptibility in a migration-safe way.
-
-The patches for this issue interact texturally but not logically with
-the fixes for XSA-435, which itself has complexities.  See XSA-435 for
-details of how to obtain the fixes.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZOsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ8uMIAL2xBV/B3O0t90aFhX75dOWZBUkujMN0xHDjyI+c
-lnEmy44QnX+jI9IBSuc4qaJmLXnUO71WsMU1XeKucOnh9E1kjgHB2H0GgS+GI6dG
-LtAVxn+RRK39YIO0CHAXvr/tlX/eyodvxtmxOKLRY47J0hHLToXBEdc2VfXrUEfk
-8AZn4hhHDGfRMX7jguxPFnrKCS3sZCFn1FYPtUxNGi2BbUzFacc+zZ2OISR7C59H
-24q9UIgUVoVwOnUWBEzW6oHmjP44Q0kG3E8LhZQhr1YkAG++KapgTPllc3cU4xja
-G8ozTeMeyVbM29EMS7QknOlkvMSUmtgzNg7Pt6El9oSyuH4=
-=rrcN
------END PGP SIGNATURE-----
-
+The WebKitGTK and WPE WebKit team,
+July 21, 2023
