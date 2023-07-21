@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3191" "Tuesday" "26" "May" "2015" "08:53:43" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<556488F7.9030708@redhat.com>" "86" "[oss-security] FreeRDP tmp flaws" nil nil nil "5" "2015052614:53:43" "[oss-security] FreeRDP tmp flaws" (number mark "        kseifried@re May 26   86/3191  " thread-indent "\"[oss-security] FreeRDP tmp flaws\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23554 invoked by uid 550); 26 May 2015 14:53:57 -0000
+Received: (qmail 15771 invoked by uid 550); 21 Jul 2023 11:24:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +6,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22473 invoked from network); 26 May 2015 14:53:56 -0000
-Message-ID: <556488F7.9030708@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Tue, 26 May 2015 08:53:43 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] FreeRDP tmp flaws
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-        Assign a CVE Identifier <cve-assign@mitre.org>
+Received: (qmail 30364 invoked from network); 21 Jul 2023 02:46:44 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=geeklan.co.uk; h=
+	message-id:date:mime-version:subject:to:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=geeklan;
+	 bh=pKB47l8RKwxpzMsdDT6amPS+rn4=; b=P9EYyJUt7gLNL1B3GTdtdTN1XslY
+	Zz1SvvZur1KJojODEnjrwnr4Xsr/nPFVG6jx0TFKS4ClKL72RKcH97ngo3b5MdUK
+	m6O1WUCG2NYXpARqEmUALJENnNpy98B43o5NbOIBgRNH+UOKv4oV7kTHSojX3UH7
+	NmQEAyPxAhQNbKq8CeIRxJGNUrnoceLT+dPOARxaCuMpeS3Fl87XOOALW5qVZtXT
+	2XCV/XZ/aMjWCvzvi0wY4x0XIpiQC2eDEMyLdXPidwO/m8a2VZt4sQv0dTppJdd4
+	8JygHdjKWXEV0QseZ9a+XRqxK5kQVLx/jlGO71U9zoSRImcD4C3HfbSIRg==
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=geeklan.co.uk; h=message-id
+	:date:mime-version:subject:to:references:from:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=geeklan; b=WMd
+	P4NsYBQYcTqNF7cnRmL5T723ySLcB4lO+zqHuO3TRHcZIL/fl0nL6CAzY1VwMmA4
+	iO/gspsV+D80zT+sXPEA66KUojVqaXxZ+jJJkYOxq6bkEpcUZ0ls4icgpn5HMWnQ
+	58Q/OKCep8p2qWpZivYtPf9lGsmniXHkofrSifoSuXh5Bx5Oi8QDMLpC1JJs3NOl
+	icSgAEiQUAHDQTwJ/ymjQdrohl80D8TiUIo5/V21HQsfrfUDFXeRq9yIhPd7eoOu
+	G74U9mk9ooLT3cs0pzOpMbHeq3igRG8rBSY6QlKTTRo2Wg5Uh/ZRbk0AeLI7qyyl
+	8JK7yTjb1VVwAtNmv+w==
+Message-ID: <806c9e2b-a090-8b03-4da7-b58ab040a251@geeklan.co.uk>
+Date: Fri, 21 Jul 2023 03:46:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+References: <e9c022742fc07cee@cvs.openbsd.org> <ZLk1hSUEt00caovk@itl-email>
+ <1c005469-a540-5cd1-642e-5aebc35dd17b@geeklan.co.uk>
+ <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
+From: Sevan Janiyan <venture37@geeklan.co.uk>
+In-Reply-To: <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
 
---vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 21/07/2023 02:04, Matthew Fernandez wrote:
+> I don’t think this helps much though, right? The Qualys research that
+>  motivated this found an exploit chain using only libs present in 
+> /usr/lib in a default Ubuntu install.
 
-This may need 2 CVE's because different versions are affected.
+Yes, you're right, but, you can be a bit more granular in the paths that
+you allow without introducing more knobs for when you forward your
+agent. e.g Ubuntu & Debian install the relevant libraries into
+/usr/lib/$ARCH-linux-gnu/pkcs11. Rather than permitting anything from
+/usr/lib, only load from the pkcs11 directory.
+Looking into it, it looks like both distros (inherited from Debian?)
+install some libraries into /usr/lib/$ARCH-linux-gnu and symlink into
+/usr/lib/$ARCH-linux-gnu/pkcs11 so that would need to change to go the
+other way. e.g opensc-pkcs11.so is symlinked as such.
 
-Upstream has no security address I can find, filing a GitHUB issue (what
-their wiki says to do) which is public so also posting here.
-
-This is in the RHEL 7 version and upstream:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-./channels/drdynvc/tsmf/tsmf_media.c:			snprintf(buf, sizeof(buf),
-"/tmp/FreeRDP_Frame_%d.ppm", frame_id);
-                /* Dump a .ppm image for every 30 frames. Assuming the
-frame is in YUV format, we
-                   extract the Y values to create a grayscale image. */
-                static int frame_id =3D 0;
-                char buf[100];
-                FILE * fp;
-                if ((frame_id % 30) =3D=3D 0)
-                {
-                        snprintf(buf, sizeof(buf),
-"/tmp/FreeRDP_Frame_%d.ppm", frame_id);
-                        fp =3D fopen(buf, "wb");
-                        fwrite("P5\n", 1, 3, fp);
-                        snprintf(buf, sizeof(buf), "%d %d\n",
-sample->stream->width, sample->stream->height);
-                        fwrite(buf, 1, strlen(buf), fp);
-                        fwrite("255\n", 1, 4, fp);
-                        fwrite(sample->data, 1, sample->stream->width *
-sample->stream->height, fp);
-                        fflush(fp);
-                        fclose(fp);
-                }
-                frame_id++;
-#endif
-        }
-}
-
-This is in the RHEL 7 version, not in upstream currently:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-./libfreerdp-gdi/gdi.c:			sprintf(tile_bitmap, "/tmp/rfx/tile_%d.bmp",
-tilenum++);
-
-int tilenum =3D 0;
-
-
-#ifdef DUMP_REMOTEFX_TILES
-                        sprintf(tile_bitmap, "/tmp/rfx/tile_%d.bmp",
-tilenum++);
-                        freerdp_bitmap_write(tile_bitmap,
-gdi->tile->bitmap->data, 64, 64, 32);
-#endif
-
-
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> If you want to lock down loading to a specific non-/usr/lib path that
+> you have control over, this suggests you know and are in control of
+> the PKCS#11 providers you’re going to support. In which case, why not
+> avoid dynamic loading to begin with? I guess the allowlist and new
+> defaults are the answer to this conundrum though.
+I was thinking how you would address the issue if you were responsible 
+for the OS/distro build rather than on the user/operator side and that 
+it would be easier to insure that the PKCS#11 libraries you are 
+packaging get installed into a specific directory and only permit the 
+ssh-agent to load from that directory, avoiding the need to maintain an 
+allowlist. The number of shared libraries you would then need to analyse 
+would be significantly smaller too (60,000? yikes)
 
 
---vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVZIj3AAoJEBYNRVNeJnmT06EQANUNkOnsamc/X5E30St756XX
-4C4nmpgRNHq3TMozer9LpySlQKDxiNaxLekHuymsy+f/yTH9lpaAI0Y9csd4JfC5
-GAeV+xyq+OoCfJXgRZUMz68GO3yZ4Si35EXvVZmf5TTYSK5mSSZdgVwgixvY7UcG
-49HXGQOkOmdsvqeNLKOI9yTtijMoH1OgDo4QW5bsa7gDvH9udtF6l9MirCFhENAR
-gO9pDILHVOGHYm35JejSjx/wrFLfVGzJZpeFTFXfMUqiAPMdsV927EWzm1K9g+lN
-6Fz93xbkaUzn47WpVuT0jg2hTPjtCBucf/ZsKp6TxLtRxrlDlFdjBZl9UalZ2kfo
-BazeZxggGUYWVtuiVaOBCkrU/sSUVBfoo2QqxSKjzr3iin59yviB4ras3rVl1Ex8
-/tjHDScSjW43pZSWaJ5RnoeSPZ3FYd+Mq5Vs/60IFgDJAIrik3tyYwvAXJlINqQI
-Kzq0DPZEHT3A7py3gtRWzfzfkyvm5eZn0Me1pkay4igV/Ai4tWkXQd59MmX65gDN
-OX0kmnbwgvz9GsipHqIqWddypDTMMbXQ1bBQcxhzOO2N63VksnuC7AiCUWLW1ecM
-ROvdb3WOrb1sQrqEbpAxJLm/WKlDiV7cqmt7Z0u6vQCvgkg0b55xUVTms6/DlgsF
-pM0465zUlmK5f1A6HHwG
-=ySbE
------END PGP SIGNATURE-----
-
---vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C--
+Sevan
