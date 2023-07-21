@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/29/4
-Message-ID: <ZCSQiSn/4nRls/e+@tautology.pseudorandom.co.uk>
-Date: Wed, 29 Mar 2023 20:24:57 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: polkitd service user privilege separation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/5
+Message-ID: <20230721121019.GB25354@localhost.localdomain>
+Date: Fri, 21 Jul 2023 12:10:31 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Demi Marie Obenour <demi@...isiblethingslab.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Announce: OpenSSH 9.3p2 released
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 29 Mar 2023 at 15:34:50 +0200, Johannes Segitz wrote:
-> Since the user owns the directory it's easy to escalate from user polkitd
-> to root.
+Hi,
 
-On one hand, yes. This makes the privilege separation not actually very
-practically useful.
+On Thu, Jul 20, 2023 at 09:22:08PM -0400, Demi Marie Obenour wrote:
+> IMO the root cause of this problem is that PKCS#11 libraries are installed
+> in /usr/lib, rather than in /usr/lib/pkcs11 or another subdirectory.
+> There should be an automated way to check if a library is a PKCS#11
+> library without having to load it.
 
-On the other hand, the entire point of polkit is to answer requests from
-privileged system services, of the form:
+Wednesday's release was a security-only release, the two patches it
+contains are very simple, unlikely to break any existing installation,
+and one of these patches at least (the s/error/fatal/ one) is very easy
+to backport.
 
-    [smcv] wants to [turn off wifi], should I allow this?
+But the OpenSSH developers have done an amazing job and have not only
+prepared these security-only patches, they have also prepared two more
+defense-in-depth patches (which are more intrusive and therefore need
+testing by the community first):
 
-(where the parts inside square brackets are examples/placeholders), and
-many of the things you can do with those requests are effectively already
-root-equivalent. In particular, if you have the pkexec tool installed, the
-whole point of that tool is that it's setuid root and makes requests like:
+https://github.com/openssh/openssh-portable/commit/29ef8a04866ca14688d5b7fed7b8b9deab851f77
+https://github.com/openssh/openssh-portable/commit/099cdf59ce1e72f55d421c8445bf6321b3004755
 
-    [smcv] wants to [run as root: mkdir /pwned], should I allow this?
+The first one of these patches is probably what you are looking for
+("check if a library is a PKCS#11 library without having to load it").
 
-and it is already trusting the polkitd process, running as the polkitd
-user, to return "yes" or "no" according to the system's security policy.
+Thanks again to the OpenSSH developers for their incredible work! With
+best regards,
 
-> This demonstration caused some confusion in the original report to
-> upstream. The POC is here to demonstrate the issue, not how real world
-> exploitation would work. A real world exploit would rely on another
-> vulnerability to be able to act as polkitd and then use the issue outlined
-> here to escalate privileges.
-
-Let's suppose you're able to act as the polkitd user as a result of a
-vulnerability. Wouldn't it be easier to get root (or more generally,
-permission to do a privileged thing) by tracing, replacing or otherwise
-subverting the polkitd process?
-
-In particular, if the vulnerability you're exploiting is arbitrary code
-execution in the polkitd process (which is normally the only thing
-running as uid polkitd), then you already have the ability to choose
-how polkitd answers those requests; and if you have that, then as an
-attacker, you've already won, because you can send a request that will
-make you root-equivalent (for example from pkexec) and then coerce the
-polkitd process into answering "yes, that's fine".
-
-polkitd can only be either trusted or untrusted, we can't have it both
-ways. I think the main thing that's wrong here is the documentation that
-claims that the privilege separation is meaningful.
-
-    smcv
+-- 
+the Qualys Security Advisory team
