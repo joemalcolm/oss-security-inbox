@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/07/2
-Message-ID: <257d8e51-81ab-861d-f87b-3ce1b82d0883@apache.org>
-Date: Fri, 07 Apr 2023 13:59:45 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/1
+Message-ID: <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
+Date: Fri, 21 Jul 2023 11:04:49 +1000
+From: Matthew Fernandez <matthew.fernandez@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28706: Apache Airflow Hive Provider Beeline Remote Command Execution 
+Subject: Re: Announce: OpenSSH 9.3p2 released
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
 
-Description:
 
-Improper Control of Generation of Code ('Code Injection') vulnerability in Apache Software Foundation Apache Airflow Hive Provider.This issue affects Apache Airflow Hive Provider: before 6.0.0.
+On 7/20/23 23:41, Sevan Janiyan wrote:
+> On 20/07/2023 14:24, Demi Marie Obenour wrote:
+>> Should there be a system-wide configuration file containing a list of 
+>> known-good PKCS#11 libraries? ssh-agent having to guess if something 
+>> is a PKCS#11 library is less than awesome.
+> 
+> There's a compile time setting for paths from which you are able to load 
+> libraries from.
 
-Credit:
-
-sw0rd1ight of Caiji Sec Team and 4ra1n of Chaitin Tech (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/30212
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-28706
-
+I don’t think this helps much though, right? The Qualys research that 
+motivated this found an exploit chain using only libs present in 
+/usr/lib in a default Ubuntu install. If you want to lock down loading 
+to a specific non-/usr/lib path that you have control over, this 
+suggests you know and are in control of the PKCS#11 providers you’re 
+going to support. In which case, why not avoid dynamic loading to begin 
+with? I guess the allowlist and new defaults are the answer to this 
+conundrum though.
