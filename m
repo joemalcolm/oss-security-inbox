@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/22/2
-Message-ID: <001501d9d4ce$bd31a880$3794f980$@gmail.com>
-Date: Tue, 22 Aug 2023 09:00:38 +0100
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
-Subject: [CVE-2022-44729] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/2
+Message-ID: <20230721074206.GS1466@suse.de>
+Date: Fri, 21 Jul 2023 09:42:09 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Announce: OpenSSH 9.3p2 released
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-44729:
-        Apache Batik information disclosure vulnerability
+On Fri, Jul 21, 2023 at 11:04:49AM +1000, Matthew Fernandez wrote:
+> 
+> 
+> On 7/20/23 23:41, Sevan Janiyan wrote:
+> > On 20/07/2023 14:24, Demi Marie Obenour wrote:
+> > > Should there be a system-wide configuration file containing a list
+> > > of known-good PKCS#11 libraries? ssh-agent having to guess if
+> > > something is a PKCS#11 library is less than awesome.
+> > 
+> > There's a compile time setting for paths from which you are able to load
+> > libraries from.
+> 
+> I don’t think this helps much though, right? The Qualys research that
+> motivated this found an exploit chain using only libs present in /usr/lib in
+> a default Ubuntu install. If you want to lock down loading to a specific
+> non-/usr/lib path that you have control over, this suggests you know and are
+> in control of the PKCS#11 providers you’re going to support. In which case,
+> why not avoid dynamic loading to begin with? I guess the allowlist and new
+> defaults are the answer to this conundrum though.
 
-Severity:
-        Medium
+The openssh fixing patches (besides disallowing this remote agent
+behaviour by default) now just abort() the pkcs11 helper if they load a library 
+without the pkcs11 interface C_GetFunctionList() which should largely
+solve the problem, unless a library can be exploited on first load.
 
-Vendor:
-        The Apache Software Foundation
+Longrange thinking is if these kind of load/unload impacts could be
+detected by tooling easily and/or get fixed in affected libraries.
 
-Versions Affected:
-        Batik 1.0 - 1.16
-
-Description:
-        Block loading external resource by default
-
-Mitigation:
-        Users should upgrade to Batik 1.17
-
-Credit:
-        This issue was independently reported by nbxiglk
-
-References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1349
-
-The Apache XML Graphics team.
-
-
-
-
+Ciao, Marcus
