@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/2
-Message-ID: <20231001110346.GA25232@unix-ag.uni-kl.de>
-Date: Sun, 1 Oct 2023 13:03:46 +0200
-From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/4
+Message-ID: <806c9e2b-a090-8b03-4da7-b58ab040a251@geeklan.co.uk>
+Date: Fri, 21 Jul 2023 03:46:28 +0100
+From: Sevan Janiyan <venture37@...klan.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: Haskell programs in distributions (was: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx))
+Subject: Re: Announce: OpenSSH 9.3p2 released
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 21/07/2023 02:04, Matthew Fernandez wrote:
+> I don’t think this helps much though, right? The Qualys research that
+>  motivated this found an exploit chain using only libs present in 
+> /usr/lib in a default Ubuntu install.
 
-On Sat, Sep 30, 2023 at 07:28:46PM -0400, Michael Orlitzky wrote:
-> On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
-> > It is also worth noting that Rust-the-language supports dynamic linking.
-> > Once Cargo supports this and downstreams (like Fedora) obtain sufficient
-> > build capacity, it will be possible to use dynamic linking by performing
-> > automatic cascading rebuilds whenever a package is upgraded.  Arch
-> > already does this for Haskell IIUC.
-> 
-> We do it for Haskell in Gentoo, too, but we have a dark secret: it only
-> works because Haskell became unpopular. There are basically only two
-> Haskell programs, and everything works for n = 2.
+Yes, you're right, but, you can be a bit more granular in the paths that
+you allow without introducing more knobs for when you forward your
+agent. e.g Ubuntu & Debian install the relevant libraries into
+/usr/lib/$ARCH-linux-gnu/pkcs11. Rather than permitting anything from
+/usr/lib, only load from the pkcs11 directory.
+Looking into it, it looks like both distros (inherited from Debian?)
+install some libraries into /usr/lib/$ARCH-linux-gnu and symlink into
+/usr/lib/$ARCH-linux-gnu/pkcs11 so that would need to change to go the
+other way. e.g opensc-pkcs11.so is symlinked as such.
 
-I am curious, what two prgrams do you think of?
+> If you want to lock down loading to a specific non-/usr/lib path that
+> you have control over, this suggests you know and are in control of
+> the PKCS#11 providers you’re going to support. In which case, why not
+> avoid dynamic loading to begin with? I guess the allowlist and new
+> defaults are the answer to this conundrum though.
+I was thinking how you would address the issue if you were responsible 
+for the OS/distro build rather than on the user/operator side and that 
+it would be easier to insure that the PKCS#11 libraries you are 
+packaging get installed into a specific directory and only permit the 
+ssh-agent to load from that directory, avoiding the need to maintain an 
+allowlist. The number of shared libraries you would then need to analyse 
+would be significantly smaller too (60,000? yikes)
 
-I know of two Haskell programs I regularly use, Pandoc and ShellCheck.
 
-Best regards,
-Erik
--- 
-[T]he most dangerous enemy of a better solution is an existing codebase
-that is just good enough.
-                        -- Eric S. Raymond
+Sevan
