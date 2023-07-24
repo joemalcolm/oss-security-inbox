@@ -1,55 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/6
-Message-ID: <20230921211142.GA14441@openwall.com>
-Date: Thu, 21 Sep 2023 23:11:42 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/24/3
+Message-ID: <43f83e16-e492-4540-b34d-d2b51da2bb74@canonical.com>
+Date: Mon, 24 Jul 2023 13:41:36 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>, Donald Buczek <buczek@...gen.mpg.de>, Greg KH <gregkh@...uxfoundation.org>
-Subject: Re: linux-distros list policy and Linux kernel, again
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-A clarification/correction:
+Hi,
 
-On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
-> I recognize that 14 days might not always be enough to get a fix ready,
-> especially not for many of the CPU microarchitectural issues being
-> handled since mid-2017 and affecting many proprietary OSes as well (who
-> may be used to much longer disclosure timelines and would object to
-> Linux's earlier fix and disclosure).  I am glad that almost none of such
-> issues were brought to (linux-)distros, and never when it was still more
-> than 14 days until public disclosure.  We had a lot of luck there.
-> Linux kernel security team has its own mailing list (encrypted, so more
-> secure than s@k.o) for handling of those, which is great:
+There seems to be confusion regarding which is the correct commit:
+
+Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which is for 
+family 17h.
+
+This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is for family 
+19h.
+
+I assume the 17h family one is the correct one?
+
+Thanks,
+
+Marc.
+
+
+
+On 2023-07-24 10:28, Tavis Ormandy wrote:
+> Hello, this is CVE-2023-20593, a use-after-free in AMD Zen2 processors.
 > 
-> https://www.kernel.org/doc/html/latest/process/embargoed-hardware-issues.html
+> Yes, you read that right :)
 > 
-> I mean, this is "great" within the constraints of the rest of the
-> industry.  Of course, I'd very much like disclosure timelines for that
-> kind of issues to also become much shorter.  This is just not the case.
+> This includes at least the following products:
 > 
-> In terms of (linux-)distros list policy, what can we do here?  Accept up
-> to 7 days since fix is ready and thus accept arbitrarily long embargoes
-> and more likely have issues "requiring" such embargoes brought to the
-> list?  BTW, for CPU microarchitectural issues, that would probably need
-> to be for the full distros list, not limited to Linux, and from what I
-> know disclosure timelines for such issues may be 3 to 12+ months.
+> - AMD Ryzen 3000 Series Processors
+> - AMD Ryzen PRO 3000 Series Processors
+> - AMD Ryzen Threadripper 3000 Series Processors
+> - AMD Ryzen 4000 Series Processors with Radeon Graphics
+> - AMD Ryzen PRO 4000 Series Processors
+> - AMD Ryzen 5000 Series Processors with Radeon Graphics
+> - AMD Ryzen 7020 Series Processors with Radeon Graphics
+> - AMD EPYC 7002 Series Processors
+> 
+> I've written a blog post with a detailed description of this bug,
+> it's available here:
+> 
+> https://lock.cmpxchg8b.com/zenbleed.html
+> 
+> # Background
+> 
+> The vector register file (RF) is a resource shared among all tasks on
+> the same physical core. The register allocation table (RAT) keeps track
+> of how RF resources are assigned and mapped to named registers. However,
+> no RF space is needed to store a register with a zero value - a flag
+> called the z-bit can simply be set in the RAT.
+> 
+> # Vulnerability
+> 
+> If the z-bit is set speculatively, then it would not be sufficient to
+> unset it again on branch misprediction. That's because the previously
+> allocated RF space could have been reallocated between those two events.
+> That would effectively be a UaF.
+> 
+> We have discovered that this really can happen under certain specific
+> conditions. Specifically, an instruction that uses merge optimization, a
+> register rename, and a mispredicted VZEROUPPER instruction must enter
+> the FP backend simultaneously.
+> 
+> # Impact
+> 
+> The practical result here is that you can spy on the registers of other
+> processes. No system calls or privileges are required.
+> 
+> It works across virtual machines and affects all operating systems.
+> 
+> I have written a poc for this issue that's fast enough to reconstruct
+> keys and passwords as users log in.
+> 
+> # Solution
+> 
+> AMD have released a patch for this issue available here:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=b250b32ab1d044953af2dc5e790819a7703b7ee6
+> 
+> There is a software workaround, you can set the chicken bit DE_CFG[9].
+> This may have some performance cost, and the microcode update is
+> preferred.
+> 
+> It is not sufficient to disable SMT.
+> 
+> # Credit
+> 
+> This bug was discovered by Tavis Ormandy of Google Information Security.
+> 
+> 
 
-A linux-distros member pointed out to me off-list that the above sounded
-like I'm against CPU microarchitectural issues being reported to distros
-at all.  This is not the case.  There is in fact a way to report such
-issues to the distros list now and stay within the current policies -
-simply bring them to there when a coordinated disclosure date is already
-finalized and it's in e.g. just 7 days.  In such cases, also microcode
-fixes and/or proposed OS-level workarounds are likely to already exist.
-
-For example, Tavis brought Zenbleed to the distros list 2 days before
-its public disclosure here:
-
-https://www.openwall.com/lists/oss-security/2023/07/24/1
-
-and this little heads-up, even if over a weekend, was appreciated.
-
-I think e.g. 7 days (anything up to 14, if the CRD is certain and final)
-will work even better.
-
-Alexander
