@@ -1,42 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/18/1
-Message-ID: <36F38D40-5F90-4E1B-B7A2-121431A3E6FE@mnx.io>
-Date: Mon, 18 Sep 2023 17:36:13 +0000
-From: Dan McDonald <danmcd@....io>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/24/2
+Message-Id: <E1qNy2D-00042T-65@xenbits.xenproject.org>
+Date: Mon, 24 Jul 2023 16:03:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 433 v1 - x86/AMD: Zenbleed
 Content-Type: text/plain; charset=utf-8
 
-On Sep 15, 2023, at 5:09 PM, Solar Designer <solar@...nwall.com> wrote:
-> 
-> Hi Dan,
-> 
-> Your request looks good to me, except that this criterion:
-> 
-> On Wed, Sep 13, 2023 at 08:21:22PM +0000, Dan McDonald wrote:
->>> Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
-> 
-> is meant to be about the distro, not about you personally.
-> 
-> Alan Coopersmith also correctly pointed this out and made suggestions.
-> 
-> Can you show illumos fixing non-illumos-only security issues within days
-> after public disclosure, so that a few days of advance notice would have
-> made those fixes even quicker?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It's a per-illumos-distro property.  OmniOS has Stable & LTS releases.   Here's the current-stable
-release notes, dynamically updated every time they update:
+                    Xen Security Advisory XSA-433
 
-	https://github.com/omniosorg/omnios-build/blob/r151046/doc/ReleaseNotes.md
+                          x86/AMD: Zenbleed
 
-So I'm not sure if a few days of advance notice would make those quicker,
-but I do know that other distros have biweekly scheduled releases, and advance
-notice there would keep those wheels spinning faster.  Esp. since "patch tuesday"
-is a mere one-day before the release branch is forked off on release weeks.
+ISSUE DESCRIPTION
+=================
 
-Our security coordination in illumos is to warn distro-runners, and they make their own
-decisions based on that data. None have ever violated embargos.
+Researchers at Google have discovered Zenbleed, a hardware bug causing
+corruption of the vector registers.
 
-Thanks,
-Dan
+When a VZEROUPPER instruction is discarded as part of a bad transient
+execution path, its effect on internal tracking are not unwound
+correctly.  This manifests as the wrong micro-architectural state
+becoming architectural, and corrupting the vector registers.
 
+Note: While this malfunction is related to speculative execution, this
+      is not a speculative sidechannel vulnerability.
+
+The corruption is not random.  It happens to be stale values from the
+physical vector register file, a structure competitively shared between
+sibling threads.  Therefore, an attacker can directly access data from
+the sibling thread, or from a more privileged context.
+
+For more details, see:
+  https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+  https://github.com/google/security-research/security/advisories/GHSA-v6wh-rxpg-cmm8
+
+IMPACT
+======
+
+With very low probability, corruption of the vector registers can occur.
+This data corruption causes mis-calculations in subsequent logic.
+
+An attacker can exploit this bug to read data from different contexts on
+the same core.  Examples of such data includes key material, cypher and
+plaintext from the AES-NI instructions, or the contents of REP-MOVS
+instructions, commonly used to implement memcpy().
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+This bug is specific to the AMD Zen2 microarchitecture.  AMD do not
+believe that other microarchitectures are affected.
+
+MITIGATION
+==========
+
+This issue can be mitigated by disabling AVX, either by booting Xen with
+`cpuid=no-avx` on the command line, or by specifying `cpuid="host:avx=0"` in
+the vm.cfg file of all untrusted VMs.  However, this will come with a
+significant impact on the system and is not recommended for anyone able to
+deploy the microcode or patch described below.
+
+RESOLUTION
+==========
+
+AMD are producing microcode updates to address the bug.  Consult your
+dom0 OS vendor.  This microcode is effective when late-loaded, which can
+be performed on a live system without reboot.
+
+In cases where microcode is not available, the appropriate attached
+patch updates Xen to use a control register to avoid the issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa433.patch           xen-unstable
+xsa433-4.17.patch      Xen 4.17.x
+xsa433-4.16.patch      Xen 4.16.x
+xsa433-4.15.patch      Xen 4.15.x
+xsa433-4.14.patch      Xen 4.14.x
+
+$ sha256sum xsa433*
+a9331733b63e3e566f1436a48e9bd9e8b86eb48da6a8ced72ff4affb7859e027  xsa433.patch
+6f1db2a2078b0152631f819f8ddee21720dabe185ec49dc9806d4a9d3478adfd  xsa433-4.14.patch
+ca3a92605195307ae9b6ff87240beb52a097c125a760c919d7b9a0aff6e557c0  xsa433-4.15.patch
+e5e94b3de68842a1c8d222802fb204d64acd118e3293c8e909dfaf3ada23d912  xsa433-4.16.patch
+41d12104869b7e8307cd93af1af12b4fd75a669aeff15d31b234dc72981ae407  xsa433-4.17.patch
+$
+
+NOTE CONCERNING TIMELINE
+========================
+
+This issue is subject to coordinated disclosure on August 8th.  The
+discoverer chose to publish details ahead of this timeline.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmS+oDEMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ4JkIAMOW9i78luUOEgggrQDp97T1CMAhew+3v+r2ZPMl
+z7a6ATRU3oW7yeepYEP/1mrRFi2E09zrj0rDLvLVrYrhqeDGVIL+ZfI480508/5Y
+ubRYZC13rA3jDMDu9r+oBIzObumecRAVj54j5BQmuKyXDqkDMGfbVShpMMvARvhE
+wqlBXNFB1Z+ARlDrDZZo6sKhfUqHS4Fo8iilWthKxY9Eb0cxxA1PazMJz5OOaqe6
+6Y3hHrSN4dq3DseAhYGgtw+BOTa/XlgAzkdlJM0DvooS22HFuHqwB7dckrtpCMlC
+6I3P3p0GfsnG8U99lxYWzuEbtAKwSsFf/da2S8A4rel0aOE=
+=xmQd
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa433.patch" of type "application/octet-stream" (4348 bytes)
+
+Download attachment "xsa433-4.14.patch" of type "application/octet-stream" (4332 bytes)
+
+Download attachment "xsa433-4.15.patch" of type "application/octet-stream" (4292 bytes)
+
+Download attachment "xsa433-4.16.patch" of type "application/octet-stream" (4301 bytes)
+
+Download attachment "xsa433-4.17.patch" of type "application/octet-stream" (4348 bytes)
