@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1989" "Thursday" "26" "May" "2016" "14:26:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160526182609.ED687ABC298@smtpvmsrv1.mitre.org>" "47" "[oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function" nil nil nil "5" "2016052618:26:09" "[oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function" (number mark "U       cve-assign@m May 26   47/1989  " thread-indent "\"[oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function\"\n") "<alpine.LFD.2.20.1605251802140.15974@wniryva>" ("<alpine.LFD.2.20.1605251802140.15974@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16118 invoked by uid 550); 26 May 2016 18:26:23 -0000
+Received: (qmail 27771 invoked by uid 550); 24 Jul 2023 17:41:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +7,117 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16081 invoked from network); 26 May 2016 18:26:21 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1605251802140.15974@wniryva>
-Message-Id: <20160526182609.ED687ABC298@smtpvmsrv1.mitre.org>
-Date: Thu, 26 May 2016 14:26:09 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function
+Received: (qmail 27747 invoked from network); 24 Jul 2023 17:41:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1690220497;
+	bh=pGcpvH7KuAAc7Myj2UgR0JCb0CPw2X4KYyJt2iwSx7Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type;
+	b=p9Dkf7nYCP43ELKFXnXeqlTBZUBCmswF4/KC05Bx2RGQ8WeGhE2+uL9dXxisYNEeo
+	 FoRZfurXxpM+JKzc7hZJtIz1hxpzHcBC/i8zh9dPhVhY94TfrYOQsw7rdZ+ZpDGv+W
+	 PXwplgIM1RhzwEaDG5lvtYMFDCgMp2B0XDZQsmZm67RYF8x0TEsxQjkgJjRWqBfQ23
+	 WIcLhHCwA3mBR9/gCXNrJ7yoPTfXA9N2uOJUvwzLN/a6RE5t1I6n5iSHo6owCE+Cl5
+	 MEEu4NYhoOrbpbOyMJytE/LzIdY2w4PyHn12os/YGFtLAV0XEFIgmGdzBsIo58m5Ji
+	 WzsNFmrieIx8A==
+Message-ID: <43f83e16-e492-4540-b34d-d2b51da2bb74@canonical.com>
+Date: Mon, 24 Jul 2023 13:41:36 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Content-Language: en-CA
+To: oss-security@lists.openwall.com
+References: <ZL6Kgih+pRaeA2e/@thinkstation.cmpxchg8b.net>
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+In-Reply-To: <ZL6Kgih+pRaeA2e/@thinkstation.cmpxchg8b.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2023-20593: A use-after-free in AMD Zen2
+ Processors
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
-> emulation support is vulnerable to an out-of-bounds read access issue. It
-> could occur while looking up MegaRAID Firmware Interface(MFI) command frames
-> in 'megasas_lookup_frame' routine.
+There seems to be confusion regarding which is the correct commit:
+
+Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which is for 
+family 17h.
+
+This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is for family 
+19h.
+
+I assume the 17h family one is the correct one?
+
+Thanks,
+
+Marc.
+
+
+
+On 2023-07-24 10:28, Tavis Ormandy wrote:
+> Hello, this is CVE-2023-20593, a use-after-free in AMD Zen2 processors.
 > 
-> A privileged user inside guest could use this flaw to read invalid memory
-> leading to crash the Qemu process on the host.
+> Yes, you read that right :)
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04424.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1336461
+> This includes at least the following products:
+> 
+> - AMD Ryzen 3000 Series Processors
+> - AMD Ryzen PRO 3000 Series Processors
+> - AMD Ryzen Threadripper 3000 Series Processors
+> - AMD Ryzen 4000 Series Processors with Radeon Graphics
+> - AMD Ryzen PRO 4000 Series Processors
+> - AMD Ryzen 5000 Series Processors with Radeon Graphics
+> - AMD Ryzen 7020 Series Processors with Radeon Graphics
+> - AMD EPYC 7002 Series Processors
+> 
+> I've written a blog post with a detailed description of this bug,
+> it's available here:
+> 
+> https://lock.cmpxchg8b.com/zenbleed.html
+> 
+> # Background
+> 
+> The vector register file (RF) is a resource shared among all tasks on
+> the same physical core. The register allocation table (RAT) keeps track
+> of how RF resources are assigned and mapped to named registers. However,
+> no RF space is needed to store a register with a zero value - a flag
+> called the z-bit can simply be set in the RAT.
+> 
+> # Vulnerability
+> 
+> If the z-bit is set speculatively, then it would not be sufficient to
+> unset it again on branch misprediction. That's because the previously
+> allocated RF space could have been reallocated between those two events.
+> That would effectively be a UaF.
+> 
+> We have discovered that this really can happen under certain specific
+> conditions. Specifically, an instruction that uses merge optimization, a
+> register rename, and a mispredicted VZEROUPPER instruction must enter
+> the FP backend simultaneously.
+> 
+> # Impact
+> 
+> The practical result here is that you can spy on the registers of other
+> processes. No system calls or privileges are required.
+> 
+> It works across virtual machines and affects all operating systems.
+> 
+> I have written a poc for this issue that's fast enough to reconstruct
+> keys and passwords as users log in.
+> 
+> # Solution
+> 
+> AMD have released a patch for this issue available here:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=b250b32ab1d044953af2dc5e790819a7703b7ee6
+> 
+> There is a software workaround, you can set the chicken bit DE_CFG[9].
+> This may have some performance cost, and the microcode update is
+> preferred.
+> 
+> It is not sufficient to disable SMT.
+> 
+> # Credit
+> 
+> This bug was discovered by Tavis Ormandy of Google Information Security.
+> 
+> 
 
->> While doing MegaRAID SAS controller command frame lookup, routine
->> 'megasas_lookup_frame' uses 'read_queue_head' value as an index
->> into 'frames[MEGASAS_MAX_FRAMES=2048]' array. Limit its value
->> within array bounds to avoid any OOB access.
-
-Use CVE-2016-5107.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXRz1JAAoJEHb/MwWLVhi2IHIP/2H2PSIdn9u6NM0/+piwp64W
-uDXllEWxQn/g0GVY411lOtjVAYx61u1V5735Ft0O4GpgygYbpHzZu1DJ1R5dkVcO
-iebNKl9R0p5XjOnUXSNkXXMJpElpHu1bsoU/szE+APYjBMFxifmDFQzOXojOvo1u
-TYkRxE0JG/SkCWnSChoGEcjOtewqVhI/sYGv+SGRZOClMmKZsv/OQnwhcRYJ9OcE
-/zvrOFMNCpJojNo+6szHlqqQsU1/6URrRBEhGbSpj2TH/9KQHMUKrAnCMxgWe06N
-D4WDQWGb2MUuS7JEdssRGLnIzhr78GR/F24J5ofYCew48oRtxof8NFyRAcy9NUZM
-SKo5POqRX+yfOOcQiHG/zEE2Dg39mYon539jrvx5dhGnrN2nhdY/4jBKl/wEjkR7
-dhbADHx5ogTCbKrm4hwB7KOco3JxywF0G1/G88EMSnXTaOpAdjWvlGdOw+qrGWAe
-MK1DzPgzd//Z7l2OQVFsfLQ0KQIHkZTS7RSOF1ltCF35d1B7ydvd2m51aoaURuSu
-JOL0h8AqaYS2Xo90J9g6nFl48NCFeFvwg5vs4Ag7lQIfh0d+qIZdSaA5AtEBzKbX
-gUaMSkRXwMpUuGtPVldwaYoTn934U6Ip/ffRdeDui4klcOrLITIIadvQspfj9ekG
-slNT+Dd0uYveHivvS8Z6
-=CpLG
------END PGP SIGNATURE-----
