@@ -1,36 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/4
-Message-ID: <ZKc+hwsLvLmZeYZB@netmeister.org>
-Date: Thu, 6 Jul 2023 18:21:59 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/24/1
+Message-ID: <ZL6Kgih+pRaeA2e/@thinkstation.cmpxchg8b.net>
+Date: Mon, 24 Jul 2023 07:28:18 -0700
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-36460: mastodon: Arbitrary file creation through media attachments
+Subject: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-(I have no affiliation with the project, but posting
-this here because it seems to me that increasingly
-non-packaged / GitHub distributed projects tend not to
-send out announcements here.)
+Hello, this is CVE-2023-20593, a use-after-free in AMD Zen2 processors.
 
-https://github.com/mastodon/mastodon/security/advisories/GHSA-9928-3cp5-93fm
+Yes, you read that right :)
 
-(This advisory describes an issue found by Cure53 as
-part of an audit performed at Mozilla's request)
+This includes at least the following products:
 
-Using carefully crafted media files, attackers can
-cause Mastodon's media processing code to create
-arbitrary files at any location.
+- AMD Ryzen 3000 Series Processors
+- AMD Ryzen PRO 3000 Series Processors
+- AMD Ryzen Threadripper 3000 Series Processors
+- AMD Ryzen 4000 Series Processors with Radeon Graphics
+- AMD Ryzen PRO 4000 Series Processors
+- AMD Ryzen 5000 Series Processors with Radeon Graphics
+- AMD Ryzen 7020 Series Processors with Radeon Graphics
+- AMD EPYC 7002 Series Processors
 
-Impact
-This allows attackers to create and overwrite any file
-Mastodon has access to, allowing Denial of Service and
-arbitrary Remote Code Execution.
+I've written a blog post with a detailed description of this bug,
+it's available here:
 
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+https://lock.cmpxchg8b.com/zenbleed.html
 
-Severity: 9.9/10
+# Background
 
-CVE-2023-36460
+The vector register file (RF) is a resource shared among all tasks on
+the same physical core. The register allocation table (RAT) keeps track
+of how RF resources are assigned and mapped to named registers. However,
+no RF space is needed to store a register with a zero value - a flag
+called the z-bit can simply be set in the RAT.
 
-Affected versions: >= 3.5.0
-Patched versions:  4.1.3, 4.0.5, 3.5.9
+# Vulnerability
+
+If the z-bit is set speculatively, then it would not be sufficient to
+unset it again on branch misprediction. That's because the previously
+allocated RF space could have been reallocated between those two events.
+That would effectively be a UaF.
+
+We have discovered that this really can happen under certain specific
+conditions. Specifically, an instruction that uses merge optimization, a
+register rename, and a mispredicted VZEROUPPER instruction must enter
+the FP backend simultaneously.
+
+# Impact
+
+The practical result here is that you can spy on the registers of other
+processes. No system calls or privileges are required.
+
+It works across virtual machines and affects all operating systems.
+
+I have written a poc for this issue that's fast enough to reconstruct
+keys and passwords as users log in.
+
+# Solution
+
+AMD have released a patch for this issue available here:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=b250b32ab1d044953af2dc5e790819a7703b7ee6
+
+There is a software workaround, you can set the chicken bit DE_CFG[9].
+This may have some performance cost, and the microcode update is
+preferred.
+
+It is not sufficient to disable SMT.
+
+# Credit
+
+This bug was discovered by Tavis Ormandy of Google Information Security.
+
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
+
+Download attachment "zenbleed-v5.tar.gz" of type "application/gzip" (11790 bytes)
