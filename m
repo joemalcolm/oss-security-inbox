@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1342" "Monday" "16" "January" "2017" "19:11:33" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e442aa4c259f4f8f855d4e2125208702@imshyb01.MITRE.ORG>" "35" "[oss-security] Re: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)" "^CC:" nil nil "1" "2017011700:11:33" "[oss-security] Re: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)" (number mark "U       cve-assign@m Jan 16   35/1342  " thread-indent "\"[oss-security] Re: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)\"\n") "<1672685.X2bF2OodFF@blackgate>" ("<1672685.X2bF2OodFF@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26246 invoked by uid 550); 17 Jan 2017 00:11:48 -0000
+Received: (qmail 1115 invoked by uid 550); 25 Jul 2023 17:06:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26046 invoked from network); 17 Jan 2017 00:11:45 -0000
-In-Reply-To: <1672685.X2bF2OodFF@blackgate>
-Message-ID: <e442aa4c259f4f8f855d4e2125208702@imshyb01.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-Date: Mon, 16 Jan 2017 19:11:33 -0500
-From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)
-To: <ago@gentoo.org>
+Received: (qmail 26563 invoked from network); 25 Jul 2023 16:54:31 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Junkai Xue <jxue@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <d8fb0f6d-4865-c82f-91b7-d18788aaa16e@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 25 Jul 2023 16:54:17 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-38647: Apache Helix: Deserialization vulnerability in
+ Helix workflow and REST 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important
 
-> [] https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jas_matrix_asl-jas_seq-c
-> 
-> AddressSanitizer: SEGV on unknown address
-> The signal is caused by a READ memory access.
-> 
-> jas_matrix_asl ... jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11
+Affected versions:
 
-Use CVE-2017-5505.
+- Apache Helix through 1.2.0
 
+Description:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+An attacker can use SnakeYAML to deserialize java.net.URLClassLoader and ma=
+ke it load a JAR from a specified URL, and then deserialize javax.script.Sc=
+riptEngineManager to load code using that ClassLoader. This unbounded deser=
+ialization can likely lead to remote code execution.=C2=A0The code can be r=
+un in Helix REST start and Workflow creation.
 
-iQIcBAEBCAAGBQJYfV+YAAoJEHb/MwWLVhi2JbMQAKJyXcljg++i7XUckrbXk7aw
-rtgu6dCKSX2Vuaj1A16M0z4axW5rBztxCIKYW8YsB9h5WtQaEmN2S5yVHvnWZXAm
-/FYxaAWXsGKBEpL/V/MH7xbcBgoqgwDhV4RqS/qdJqesftimzep8DN0Ko88ix2Qd
-Sqbn0YpPEIj/BeWib7Sji7wX/9a615hL4wdEK2GmmFOUeWSIyVUEL42aGxNlWSe1
-FLNg3/YC+LV+8XSB2HKg2gAKtQICj0ZBQAiJRJqAtSWrKCdc8wrVHRZfX9eSuPdp
-1YiCiNoQu6yQTopiWPY8HzILhMIg9Ao0gQVplHt1Uwqmke37oQTO+rzPQ1bY8R8m
-i/3HqRMmMh8DYPtYd09GZ5YERvuGXC6I46hQNFL1aTK71tMJjHwoypO+1Zh50wkZ
-uv9+tYu2uFm4FSk/ngaxphfqqr/Kchuni5xU7IVGRgyE6I7akMK3+lBrff1ppFYN
-cewXe3/Kb7SpudiEKRPfhLMSf9xbwt9p6k/osc5KUYfNpH9hSC5+DzTuZeBvuo9z
-dCD7LN6HeYRYLtw8z7gvCykQo1ij2j51n4C7gYo9Ju7qElceEskHjNhx9En52vxd
-TqJ5ru/07S60soE1aOHBQW+262Kr6/0BmbJrQe/DEeDkPczO4GfX1vHZ205yyyyf
-ODkC2oAB3jzKmXez32l1
-=w95I
------END PGP SIGNATURE-----
+Affect all the versions lower and include 1.2.0.
+
+Affected products: helix-core, helix-rest
+
+Mitigation: Short term, stop using any YAML based configuration and workflo=
+w creation.
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Long term, a=
+ll Helix version bumping up to 1.3.0
+
+Credit:
+
+Qing Xu (reporter)
+
+References:
+
+https://helix.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-38647
+
