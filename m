@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/12/3
-Message-ID: <0841cfb9-4068-f742-37ae-1428aff994fe@apache.org>
-Date: Fri, 12 May 2023 01:20:05 +0000
-From: Maxim Solodovnik <solomax@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/16
+Message-ID: <CAH8yC8mhacP4=w2AbF5jFY5EMmk0Q0X3GZG9OkLnoGMg_XiS6A@mail.gmail.com>
+Date: Tue, 25 Jul 2023 14:30:43 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-29246: Apache OpenMeetings: allows null-byte Injection 
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Tue, Jul 25, 2023 at 2:14 PM Demi Marie Obenour
+<demi@...isiblethingslab.com> wrote:
+>
+> On Tue, Jul 25, 2023 at 06:12:44PM +0100, Eddie Chapman wrote:
+> > alice wrote:
+> > > this is a disaster of a security announcement from AMD. nothing is fixed
+> > > except for epyc. the only workaround anyone really has is the chicken bit,
+> > > thankfully.
+> >
+> > Yes, very disappointing. Pure speculation; perhaps they were planning on
+> > disclosing at the end of the year with full set of Microcode ready but
+> > something we don't know (yet) forced them to disclose early. Who knows.
+>
+> Does AMD make OS-loadable μcode patches available for client platforms,
+> or must all μcode loading on clients be done by the firmware?  If the
+> latter, then it will take a very long time for clients to get patched,
+> even if AMD released the updates promptly.  Also, server platforms can
+> usually reflash the firmware via the BMC, but client platforms do not
+> have this option.
 
-Affected versions:
+Related, Ubuntu released an updated amd64-microcode around (or before)
+1:45 PM EST today. My Ubuntu machines have already been patched.
 
-- Apache OpenMeetings 2.0.0 before 7.1.0
+I was kind of surprised to see how quickly it landed.
 
-Description:
-
-An attacker who has gained access to an admin account can perform RCE via null-byte injection
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: Apache OpenMeetings from 2.0.0 before 7.1.0
-
-This issue is being tracked as OPENMEETINGS-2765 
-
-Credit:
-
-Stefan Schiller (reporter)
-
-References:
-
-https://openmeetings.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-29246
-https://issues.apache.org/jira/browse/OPENMEETINGS-2765
-
+Jeff
