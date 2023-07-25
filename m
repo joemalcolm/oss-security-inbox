@@ -1,4 +1,4 @@
-Received: (qmail 5999 invoked by uid 550); 13 Oct 2022 11:47:40 -0000
+Received: (qmail 13711 invoked by uid 550); 25 Jul 2023 13:23:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,68 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12208 invoked from network); 13 Oct 2022 05:43:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f76xrVYEFO2SE657LDkkRlS2drSld9L2PHsGvtXGmaU=;
-        b=NNE/ulWOhlSG94GkOKDV4MUAj8u9XyeZq/hRMTVF442goPMW03CjoLwv7oQUDbKUis
-         A5LXkTfmBoED5hahzAIRvkZgnnjQP+v+DeMcjwbk9bSVuGKA2ZRqtKnZ1tTsg8BovEZJ
-         aWIaLIjYlVvYLDKFsRKLCMmbX1NLoTRewZkD7Cf9yw6X3FR8zUfNzYhh2yVRdU6bGgDN
-         dq8TxzUFLo8Hwv8n/fNM3Qm63KUUo0yeSJjdMKSYrs5syOqWLVskon1pB/tOEnR42QYw
-         uB2GZZLnn/ny1EEZ1oRU2cDXvqrMYQNACUvBt6VvNEEeCnGPjnGfUKzY27Yc3EvuzVNc
-         fWtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f76xrVYEFO2SE657LDkkRlS2drSld9L2PHsGvtXGmaU=;
-        b=gv3o4lJ7JrctzN1d/ufPdLXuVdeh0Zamfx+JLY2y0lgwpH9wfMvxqqwKd2qrVeE7wE
-         QVloBBiJj3GZFcs9UirP8JXKr/ALG6u1ir47nj5FWB6OUJM+F55un3joO8Kui8nTY/Qe
-         A5Pt4kKVbOIKD1gUcx3KfA92k60qexTnENOI1LaTn7v0/oRAJfrCPSN78kH8uz4ttL6T
-         9/+iYf2zHTnd0osDybFOeCEja2zkmuk4sVjoHvlDlQThgjrUo0nJAtiinJvp1xgN9WKw
-         1xo5l/nsMWZ40qnK6uIliYi4SFNXTTZU6t1F4mvVv12yL4qPxmsuyCNyM5jiFTmIAnJv
-         ch4Q==
-X-Gm-Message-State: ACrzQf3Kn7ZMnHRx4wsc0P6v62UOXGvIAaD5yaCFNE4vQ31fDOPWf+Gg
-	7Lu+tu+tJbpASyToNjKP2A+mOWAldZDy6Fs1hE17xFxB/oo=
-X-Google-Smtp-Source: AMsMyM5syZ2CKsXrUXcmr1cCTvAX5WahuBeJDqJhiSP8sqWrrO023ZV46dMFgGKf2BmxQQ35poM++AsyTnDsEftJODQ=
-X-Received: by 2002:a5d:524c:0:b0:22e:39c9:3567 with SMTP id
- k12-20020a5d524c000000b0022e39c93567mr19226164wrc.463.1665639808682; Wed, 12
- Oct 2022 22:43:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
- <20220906115010.gs7kec3wkmayhmhf@yuggoth.org> <CAGUWgD9x1RJdYcr9NCUOjaVNYdnhrPkSjNoh_NaLGu99q65W-w@mail.gmail.com>
- <87leqwtr7t.fsf@hope.eyrie.org>
-In-Reply-To: <87leqwtr7t.fsf@hope.eyrie.org>
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Thu, 13 Oct 2022 08:43:15 +0300
-Message-ID: <CAGUWgD-qOonOY_MakeWtotx4mC6KXsg1zLOo9zzx6DKtdaXLsg@mail.gmail.com>
+Received: (qmail 13693 invoked from network); 25 Jul 2023 13:23:33 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Julian Reschke <reschke@apache.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
- overflow in mpz type
+Message-ID: <51769413-37d8-4f9a-6e37-1b50a7ff555a@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 25 Jul 2023 13:23:19 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-37895: Apache Jackrabbit RMI access can lead to RCE 
 
-On Tue, Sep 6, 2022 at 7:17 PM Russ Allbery <eagle@eyrie.org> wrote:
->
->
-> I would only call it a DoS if it crosses a privilege boundary.  A user can
-> always DoS themselves; that's just Ctrl-C.  :)
->
-Observe that ubuntu issue advisory about libgmp crash
-without mentioning potential exploitability.
+Severity: critical
 
-quote:
-https://ubuntu.com/security/notices/USN-5672-1
+Affected versions:
 
-Details
-12 October 2022
+- Apache Jackrabbit Webapp (jackrabbit-webapp) 2.21.0 before 2.21.18
+- Apache Jackrabbit Webapp (jackrabbit-webapp) 1.0.0 before 2.20.11
+- Apache Jackrabbit Standalone (jackrabbit-standalone and jackrabbit-standa=
+lone-components) 2.21.0 before 2.21.18
+- Apache Jackrabbit Standalone (jackrabbit-standalone and jackrabbit-standa=
+lone-components) 1.0.0 before 2.20.11
 
-It was discovered that GMP did not properly manage memory
-on 32-bit platforms when processing a specially crafted
-input. An attacker could possibly use this issue to cause
-applications using GMP to crash, resulting in a denial of
-service.
+Description:
 
-References
-CVE-2021-43618
+Java object deserialization issue in Jackrabbit webapp/standalone on all pl=
+atforms allows attacker to remotely execute code via RMIVersions up to (inc=
+luding) 2.20.10 (stable branch) and 2.21.17 (unstable branch) use the compo=
+nent "commons-beanutils", which contains a class that can be used for remot=
+e code execution over RMI.
+
+Users are advised to immediately update to versions 2.20.11 or 2.21.18. Not=
+e that earlier stable branches (1.0.x .. 2.18.x) have been EOLd already and=
+ do not receive updates anymore.
+
+In general, RMI support can expose vulnerabilities by the mere presence of =
+an exploitable class on the classpath. Even if Jackrabbit itself does not c=
+ontain any code known to be exploitable anymore, adding other components to=
+ your server can expose the same type of problem. We therefore recommend to=
+ disable RMI access altogether (see further below), and will discuss deprec=
+ating RMI support in future Jackrabbit releases.
+
+How to check whether RMI support is enabledRMI support can be over an RMI-s=
+pecific TCP port, and over an HTTP binding. Both are by default enabled in =
+Jackrabbit webapp/standalone.
+
+The native RMI protocol by default uses port 1099. To check whether it is e=
+nabled, tools like "netstat" can be used to check.
+
+RMI-over-HTTP in Jackrabbit by default uses the path "/rmi". So when runnin=
+g standalone on port 8080, check whether an HTTP GET request on localhost:8=
+080/rmi returns 404 (not enabled) or 200 (enabled). Note that the HTTP path=
+ may be different when the webapp is deployed in a container as non-root co=
+ntext, in which case the prefix is under the user's control.
+
+Turning off RMIFind web.xml (either in JAR/WAR file or in unpacked web appl=
+ication folder), and remove the declaration and the mapping definition for =
+the RemoteBindingServlet:
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <servlet>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <servlet-name>RMI</servlet-name>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <servlet-class>org.apache.jackrab=
+bit.servlet.remote.RemoteBindingServlet</servlet-class>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 </servlet>
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <servlet-mapping>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <servlet-name>RMI</servlet-name>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <url-pattern>/rmi</url-pattern>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 </servlet-mapping>
+
+Find the bootstrap.properties file (in $REPOSITORY_HOME), and set
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0  rmi.enabled=3Dfalse
+
+=C2=A0 =C2=A0 and also remove
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0  rmi.host
+=C2=A0 =C2=A0 =C2=A0 =C2=A0  rmi.port
+=C2=A0 =C2=A0 =C2=A0 =C2=A0  rmi.url-pattern
+
+=C2=A0If there is no file named bootstrap.properties in $REPOSITORY_HOME, i=
+t is located somewhere in the classpath. In this case, place a copy in $REP=
+OSITORY_HOME and modify it as explained.
+
+Credit:
+
+Siebene@ (reporter)
+Michael D=C3=BCrig (other)
+Manfred Baedke (other)
+
+References:
+
+https://lists.apache.org/list.html?users@jackrabbit.apache.org
+https://jackrabbit.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-37895
+
+Timeline:
+
+2023-06-30: Reported
+2023-07-20: Release vote for unstable branch with fix
+2023-07-20: Release vote for stable branch with fix
+2023-07-24: unstable branch (2.21.18) released
+2023-07-24: stable branch (2.20.11) released
+
