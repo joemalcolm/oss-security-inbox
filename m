@@ -1,4 +1,4 @@
-Received: (qmail 1581 invoked by uid 550); 16 Nov 2024 23:40:04 -0000
+Received: (qmail 7638 invoked by uid 550); 25 Jul 2023 08:59:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,176 +7,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31913 invoked from network); 16 Nov 2024 23:39:35 -0000
-Date: Sun, 17 Nov 2024 00:39:27 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 25981 invoked from network); 25 Jul 2023 02:33:27 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Charles Zhang <dockerzhang@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20241116233927.GA703@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] PostgreSQL: 4 CVEs fixed in 17.1, 16.5, 15.9, 14.14, 13.17, 12.21
+Message-ID: <cbfab1ae-27dd-ec5a-ce17-13c69bb3b488@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 25 Jul 2023 02:33:14 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-35088: Apache InLong: SQL injection in audit endpoint 
 
-Hi,
+Severity: moderate
 
-As announced in:
+Affected versions:
 
-https://www.postgresql.org/about/news/postgresql-171-165-159-1414-1317-and-1221-released-2955/
-https://www.postgresql.org/message-id/173159332163.1547975.13346191756810493274%40wrigleys.postgresql.org
+- Apache InLong 1.4.0 through 1.7.0
 
-new PostgreSQL updates to all supported versions fix 4 CVEs and 35
-non-security bugs.
+Description:
 
-CVE-2024-10976 PostgreSQL row security below e.g. subqueries disregards user ID changes (CVSS 4.2)
-CVE-2024-10977 PostgreSQL libpq retains an error message from man-in-the-middle (CVSS 3.1)
-CVE-2024-10978 PostgreSQL SET ROLE, SET SESSION AUTHORIZATION reset to wrong user ID (CVSS 4.2)
-CVE-2024-10979 PostgreSQL PL/Perl environment variable changes execute arbitrary code (CVSS 8.8)
+Improper Neutralization of Special Elements Used in an SQL Command ('SQL In=
+jection') vulnerability in Apache Software Foundation Apache InLong.This is=
+sue affects Apache InLong: from 1.4.0 through 1.7.0.=C2=A0
+In the toAuditCkSql method, the groupId, streamId, auditId, and dt are dire=
+ctly concatenated into the SQL query statement, which may lead to SQL injec=
+tion attacks.
+Users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick [1] to=
+ solve it.
 
-CVE-2024-10979 is pretty serious, so I'll copy its description to here:
+[1]  https://github.com/apache/inlong/pull/8198
 
----
-Incorrect control of environment variables in PostgreSQL
-[PL/Perl](https://www.postgresql.org/docs/current/plperl.html) allows an
-unprivileged database user to change sensitive process environment variables
-(e.g. `PATH`). That often suffices to enable arbitrary code execution, even if
-the attacker lacks a database server operating system user. Versions before
-PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 are affected.
+References:
 
-The PostgreSQL project thanks Coby Abrams for reporting this problem.
----
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-35088
 
-Descriptions of all 4 are included in the (truncated) forwarded message:
-
------ Forwarded message from PostgreSQL Global Development Group <announce-noreplypostgresql!org> -----
-
-From: PostgreSQL Global Development Group <announce-noreply () postgresql ! org>
-Date: Thu, 14 Nov 2024 14:08:41 +0000
-To: postgresql-announce
-Subject: PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 Released!
-X-MARC-Message: https://marc.info/?l=postgresql-announce&m=173159323709237
-
-The PostgreSQL Global Development Group has released an update to all supported
-versions of PostgreSQL, including 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21.
-This release fixes 4 security vulnerabilities and over 35 bugs reported over the
-last several months.
-
-For the full list of changes, please review the
-[release notes](https://www.postgresql.org/docs/release/).
-
-PostgreSQL 12 EOL Notice
-------------------------
-
-**This is the final release of PostgreSQL 12**. PostgreSQL 12 is now end-of-life
-and will no longer receive security and bug fixes. If you are
-running PostgreSQL 12 in a production environment, we suggest that you make
-plans to upgrade to a newer, supported version of PostgreSQL. Please see our
-[versioning policy](https://www.postgresql.org/support/versioning/) for more
-information.
-
-Security Issues
----------------
-
-### [CVE-2024-10976](https://www.postgresql.org/support/security/CVE-2024-10976/): \
-PostgreSQL row security below e.g. subqueries disregards user ID changes
-
-CVSS v3.1 Base Score: \
-[4.2](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N)
-
-
-Supported, Vulnerable Versions: 12 - 17.
-
-Incomplete tracking in PostgreSQL of tables with row security allows a reused
-query to view or change different rows from those intended.
-[CVE-2023-2455](https://www.postgresql.org/support/security/CVE-2023-2455/) and
-[CVE-2016-2193](https://www.postgresql.org/support/security/CVE-2016-2193/)
-fixed most interaction between row security and user ID changes.
-They missed cases where a subquery, WITH query, security invoker view, or
-SQL-language function references a table with a row-level security policy.
-This has the same consequences as the two earlier CVEs.
-That is to say, it leads to potentially incorrect policies being applied in
-cases where role-specific policies are used and a given query is planned under
-one role and then executed under other roles. This scenario can happen under
-security definer functions or when a common user and query is planned initially
-and then re-used across multiple SET ROLEs.
-
-Applying an incorrect policy may permit a user to complete otherwise-forbidden
-reads and modifications. This affects only databases that have used
-[`CREATE POLICY`](https://www.postgresql.org/docs/current/sql-createpolicy.html)
-to define a row security policy. An attacker must tailor an attack to a
-particular application's pattern of query plan reuse, user ID changes, and
-role-specific row security policies. Versions before
-PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 are affected.
-
-The PostgreSQL project thanks Wolfgang Walther for reporting this problem.
-
-### [CVE-2024-10977](https://www.postgresql.org/support/security/CVE-2024-10977/): \
-PostgreSQL libpq retains an error message from man-in-the-middle
-
-CVSS v3.1 Base Score: \
-[3.1](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N)
-
-
-Supported, Vulnerable Versions: 12 - 17.
-
-Client use of server error message in PostgreSQL allows a server not trusted
-under current SSL or GSS settings to furnish arbitrary non-NUL bytes to the
-libpq application. For example, a man-in-the-middle attacker could send a long
-error message that a human or screen-scraper user of psql mistakes for valid
-query results. This is probably not a concern for clients where the user
-interface unambiguously indicates the boundary between one error message and
-other text. Versions before PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21
-are affected.
-
-The PostgreSQL project thanks Jacob Champion for reporting this problem.
-
-### [CVE-2024-10978](https://www.postgresql.org/support/security/CVE-2024-10978/): \
-PostgreSQL SET ROLE, SET SESSION AUTHORIZATION reset to wrong user ID
-
-CVSS v3.1 Base Score: \
-[4.2](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N)
-
-
-Supported, Vulnerable Versions: 12 - 17.
-
-Incorrect privilege assignment in PostgreSQL allows a less-privileged
-application user to view or change different rows from those intended. An attack
-requires the application to use
-[`SET ROLE`](https://www.postgresql.org/docs/current/sql-set-role.html),
-[`SET SESSION AUTHORIZATION`](https://www.postgresql.org/docs/current/sql-set-session-authorization.html),
- or an equivalent feature. The problem arises when an application query uses
-parameters from the attacker or conveys query results to the attacker. If that
-query reacts to `current_setting('role')` or the current user ID, it may modify
-or return data as though the session had not used `SET ROLE` or
-`SET SESSION AUTHORIZATION`.  The attacker does not control which incorrect user
-ID applies. Query text from less-privileged sources is not a concern here,
-because `SET ROLE` and `SET SESSION AUTHORIZATION` are not sandboxes for unvetted
-queries. Versions before PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21
-are affected.
-
-The PostgreSQL project thanks Tom Lane for reporting this problem.
-
-### [CVE-2024-10979](https://www.postgresql.org/support/security/CVE-2024-10979/): \
-PostgreSQL PL/Perl environment variable changes execute arbitrary code
-
-CVSS v3.1 Base Score: \
-[8.8](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
-
-
-Supported, Vulnerable Versions: 12 - 17.
-
-Incorrect control of environment variables in PostgreSQL
-[PL/Perl](https://www.postgresql.org/docs/current/plperl.html) allows an
-unprivileged database user to change sensitive process environment variables
-(e.g. `PATH`). That often suffices to enable arbitrary code execution, even if
-the attacker lacks a database server operating system user. Versions before
-PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 are affected.
-
-The PostgreSQL project thanks Coby Abrams for reporting this problem.
-
------ Truncated forwarded message -----
-
-The full message was much longer, also describing non-security changes.
-
-Alexander
