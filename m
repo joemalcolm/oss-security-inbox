@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["765" "Monday" "11" "April" "2016" "17:57:36" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1604111754560.8367@wniryva>" "25" "[oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator" nil nil nil "4" "2016041112:27:36" "[oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator" (number mark "U       ppandit@redh Apr 11   25/765   " thread-indent "\"[oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26469 invoked by uid 550); 11 Apr 2016 12:27:58 -0000
+Received: (qmail 7491 invoked by uid 550); 25 Jul 2023 08:59:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +7,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26442 invoked from network); 11 Apr 2016 12:27:57 -0000
-Date: Mon, 11 Apr 2016 17:57:36 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: "Bazhaniuk, Oleksandr" <oleksandr.bazhaniuk@intel.com>
-Message-ID: <alpine.LFD.2.20.1604111754560.8367@wniryva>
+Received: (qmail 22097 invoked from network); 25 Jul 2023 02:27:54 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Charles Zhang <dockerzhang@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <8bc38f4f-69db-9105-85fc-e34b7b6ec5ae@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 25 Jul 2023 02:27:32 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Subject: [oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator
+Subject: [oss-security] CVE-2023-34189: Apache InLong: General user can delete and update
+ process 
 
-   Hello,
+Severity: important
 
-Qemu emulator built with the Luminary Micro Stellaris Ethernet Controller is 
-vulnerable to a buffer overflow issue. It could occur while receiving network 
-packets in stellaris_enet_receive(), if the guest NIC is configured to accept 
-large(MTU) packets.
+Affected versions:
 
-A remote user/process could use this flaw to crash the Qemu process on a host, 
-resulting in DoS.
+- Apache InLong 1.4.0 through 1.7.0
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01334.html
+Description:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1325884
+Exposure of Resource to Wrong Sphere Vulnerability in Apache Software Found=
+ation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.=
+7.0. The attacker could use general users to delete and update the process,=
+ which only the admin can operate occurrences.=C2=A0
 
-This issue was discovered by Oleksandr Bazhaniuk of Advanced Threat Research 
-team at Intel Inc.
+Users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick  https=
+://github.com/apache/inlong/pull/8109 =C2=A0to solve it.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-34189
+
