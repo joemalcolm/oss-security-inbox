@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/20/2
-Message-ID: <ZQriTiZWE_r8Mkpe@larwa.hq.kempniu.pl>
-Date: Wed, 20 Sep 2023 14:15:10 +0200
-From: Michał Kępień <michal@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/9
+Message-ID: <20230725140904.GA8733@openwall.com>
+Date: Tue, 25 Jul 2023 16:09:04 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@....org
-Subject: ISC has disclosed two vulnerabilities in BIND 9 (CVE-2023-3341, CVE-2023-4236)
+Cc: Tamas Koczka <poprdi@...omium.org>
+Subject: Re: Our learnings from 42 Linux kernel exploits, we are limiting io_uring
 Content-Type: text/plain; charset=utf-8
 
-On 20 September 2023 we (Internet Systems Consortium) disclosed two vulnerabilities affecting our BIND 9 software:
+On Tue, Jul 25, 2023 at 02:31:55PM +0200, Marcus Meissner wrote:
+> https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
+> 
+> has been updated with exploit information.
+> 
+> I tried to backtrack through kernel git to find the exact commit where
+> this locking problem got fixed, but I gave up after a while after multiple
+> refactoring (and a filemove) in the io_uring codel.
 
-- CVE-2023-3341:        A stack exhaustion flaw in control channel code may cause named to terminate unexpectedly https://kb.isc.org/docs/cve-2023-3341
-- CVE-2023-4236:        named may terminate unexpectedly under high DNS-over-TLS query load https://kb.isc.org/docs/cve-2023-4236
+I guess it's this:
 
-New versions of BIND 9 are available from https://www.isc.org/downloads
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.15.y&id=fb348857e7b67eefe365052f1423427b66dedbf3
 
-Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of each published release directory:
+as mentioned in:
 
-- https://downloads.isc.org/isc/bind9/9.16.44/patches/
-- https://downloads.isc.org/isc/bind9/9.18.19/patches/
-- https://downloads.isc.org/isc/bind9/9.19.17/patches/
+https://twitter.com/VAR10CK/status/1683303642173153280
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
-
--- 
-Best regards,
-Michał Kępień
+Alexander
