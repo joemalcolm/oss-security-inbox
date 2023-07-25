@@ -1,23 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/12
-Message-ID: <CAH8yC8mJO_-K3Sr4_cJPyV0QAFx_o3dEneS0aq4QRPSf5yNPLA@mail.gmail.com>
-Date: Thu, 19 Oct 2023 18:38:58 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/17
+Message-Id: <CUBHCOEVELYD.2SECD6I5QE7QA@sumire>
+Date: Tue, 25 Jul 2023 18:55:11 +0000
+From: "alice" <alice@...ya.dev>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 19, 2023 at 6:22 PM niekt0 <niekt0@...eria.cz> wrote:
+On Tue Jul 25, 2023 at 6:30 PM UTC, Jeffrey Walton wrote:
+> On Tue, Jul 25, 2023 at 2:14 PM Demi Marie Obenour
+> <demi@...isiblethingslab.com> wrote:
+> >
+> > On Tue, Jul 25, 2023 at 06:12:44PM +0100, Eddie Chapman wrote:
+> > > alice wrote:
+> > > > this is a disaster of a security announcement from AMD. nothing is fixed
+> > > > except for epyc. the only workaround anyone really has is the chicken bit,
+> > > > thankfully.
+> > >
+> > > Yes, very disappointing. Pure speculation; perhaps they were planning on
+> > > disclosing at the end of the year with full set of Microcode ready but
+> > > something we don't know (yet) forced them to disclose early. Who knows.
+> >
+> > Does AMD make OS-loadable μcode patches available for client platforms,
+> > or must all μcode loading on clients be done by the firmware?  If the
+> > latter, then it will take a very long time for clients to get patched,
+> > even if AMD released the updates promptly.  Also, server platforms can
+> > usually reflash the firmware via the BMC, but client platforms do not
+> > have this option.
 >
-> the problem with modification of "clipboard" is unfortunately much broader, than just command execution in the shell. Imagine situation like pasting a bank account number for money transfer into internetbankig web page, and some browser tab in background silently replaces the number. Or replaces the bitcoin address, to make situation more dramatic. The direct command execution is probably the most straight-forward approach, but with bit of a creativity you can come with many various attack scenarios.
+> Related, Ubuntu released an updated amd64-microcode around (or before)
+> 1:45 PM EST today. My Ubuntu machines have already been patched.
 >
-> While I agree that application isolation in X11 is a security problem, this bug/feature is bit of a new pokemon, it also breaks tab isolation within a browser itself, when used under X11.
+> I was kind of surprised to see how quickly it landed.
 
-I think it's worse than described now. We've got those apps that
-monitor the clipboard and ship the data back to a server. That
-includes sensitive information like bank accounts and passwords.
-Confer, <https://www.reddit.com/r/iphone/comments/hlfmba/apps_caught_snooping_clipboard_contents_even/>.
+the updated amd64-microcode only contains the fixes published to linux-firmware,
+which only affects epyc cpus, as noted. unless you're running epyc cpus (which
+is slightly unlikely so i thought i'd mention it, but apologies if that is
+indeed the case) you didn't actually receive any fix.
 
-And I believe Reddit does it for targeted advertising.
+the latest kernel released today sets the chicken bit if no patched ucode is
+loaded which also works to mitigate the issue.
+(https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=522b1d69219d8f083173819fde04f994aa051a98)
 
-Jeff
+you can test this by running the zenbleed reproduction, from
+https://cmpxchg8b.com/files/zenbleed-v5.tar.gz
+
+(if it outputs anything, you're vulnerable)
+
+>
+> Jeff
+
