@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/6
-Message-ID: <ZRLUvitwwOp190UE@quatroqueijos.cascardo.eti.br>
-Date: Tue, 26 Sep 2023 09:55:26 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/6
+Message-ID: <20230725100133.GA6563@openwall.com>
+Date: Tue, 25 Jul 2023 12:01:33 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: mutt 2.2.12 security update
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 09, 2023 at 07:00:40PM -0000, Tavis Ormandy wrote:
-> FYI, a mutt update that fixes a crash on header parsing:
-> 
-> http://lists.mutt.org/pipermail/mutt-announce/Week-of-Mon-20230904/000056.html
-> 
-> Tavis.
-> 
-> -- 
->  _o)            $ lynx lock.cmpxchg8b.com
->  /\\  _o)  _o)  $ finger taviso@....org
-> _\_V _( ) _( )  @taviso
-> 
+On Mon, Jul 24, 2023 at 07:28:18AM -0700, Tavis Ormandy wrote:
+> Hello, this is CVE-2023-20593, a use-after-free in AMD Zen2 processors.
 
-These are CVE-2023-4874 and CVE-2023-4875.
+An impressive finding, indeed!
 
-Cascardo.
+On a related note:
+
+A few months earlier, Tavis found a _different_ AMD Zen1/Zen2 bug, which
+turned out to have already been known and patched in AMD microcode
+updates for many affected parts (but apparently not all).  There's also
+a kernel level workaround, which was included into Linux in response to
+Tavis' rediscovery of that issue.  Here are the links for that other
+issue/fix, for distros to double-check they're fixing this one as well:
+
+x86: AMD Zen2 ymm registers rolling back (Feb 21, 2023)
+https://lore.kernel.org/lkml/Y%2FW4x7%2FKFqmDmmR7@thinkstation.cmpxchg8b.net/
+
+x86/CPU/AMD: Disable XSAVES on AMD family 0x17 (Mar 8, 2023)
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b0563468eeac88ebc70559d52a0b66efc37e4e9d
+
+Once again, it's a different bug - not the one that this oss-security
+thread is mainly about - but both have cross-process security impact,
+affect similar AMD CPUs, and need to be taken care of by similar means
+(microcode updates or/and disabling of affected CPU features in the
+kernel).
+
+Alexander
