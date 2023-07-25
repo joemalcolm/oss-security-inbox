@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/10
-Message-ID: <be1b1e24-dd0c-4296-b7e0-5c6a77601ee4@oracle.com>
-Date: Fri, 15 Dec 2023 14:44:43 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/10
+Message-ID: <590db97f-212d-6dbe-c02f-c9064330f9fb@apache.org>
+Date: Tue, 25 Jul 2023 15:02:59 +0000
+From: Carsten Ziegeler <cziegeler@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: jq 1.7.1 fixes CVE-2023-50246 & CVE-2023-50268
+Subject: CVE-2023-38435: Apache Felix Healthcheck Webconsole Plugin: XSS in healthcheck webconsole plugin 
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/jqlang/jq/releases/tag/jq-1.7.1 lists these two fixes
-among the changes in this week's release of jq 1.7.1:
+Severity: moderate
 
-     CVE-2023-50246: Fix heap buffer overflow in jvp_literal_number_literal
-     CVE-2023-50268: fix stack-buffer-overflow if comparing nan with payload
+Affected versions:
 
-They've also published advisories on github for each:
+- Apache Felix Healthcheck Webconsole Plugin through 2.0.2
 
-[oss-fuzz] Issue 64771: jq:jq_fuzz_execute: Stack-buffer-overflow in decNaNs
-https://github.com/jqlang/jq/security/advisories/GHSA-7hmr-442f-qc8j
+Description:
 
-heap-buffer-overflow exists in the function decToString in decNumber.c
-https://github.com/jqlang/jq/security/advisories/GHSA-686w-5m7m-54vc
+An improper neutralization of input during web page generation ('Cross-site Scripting') [CWE-79] vulnerability in Apache Felix Healthcheck Webconsole Plugin version 2.0.2 and prior may allow an attacker to perform a reflected cross-site scripting (XSS) attack.
 
-The fixes appear to be in:
-https://github.com/jqlang/jq/commit/c9a51565214eece8f1053089739aea73145bfd6b
-https://github.com/jqlang/jq/commit/71c2ab509a8628dbbad4bc7b3f98a64aa90d3297
+Upgrade to Apache Felix Healthcheck Webconsole Plugin 2.1.0 or higher.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Credit:
+
+ This vulnerability was found by xray web vulnerability scanner (github.com/chaitin/xray) (finder)
+
+References:
+
+https://felix.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-38435
+
