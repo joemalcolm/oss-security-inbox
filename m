@@ -1,87 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/27/5
-Message-ID: <20230327193159.GB6662@openwall.com>
-Date: Mon, 27 Mar 2023 21:31:59 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/15
+Message-Id: <0C89573D-D4AD-4C3C-8A8A-54333B636005@slcoding.com>
+Date: Tue, 25 Jul 2023 20:14:01 +0200
+From: Lucas Rolff <lucas@...oding.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: New distros list statistics
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+OS vendors can include it in microcode updates just fine assuming the change is minor (Spectre/Meltdown did take quite some time to iron out stability to live patch it).
 
-Thank you very much for contributing this, Anthony!
-
-I've just edited the wiki to credit Amazon for this (just like we did
-for Gentoo's similar contribution in 2017-2019) and to assign the task
-to Amazon.  Please let me know whether this is right.
-
-On Thu, Mar 23, 2023 at 08:37:42PM -0700, Anthony Liguori wrote:
-> I've been working to automate[*] tracking posting on the distros@ mailing
-> list for reporting purposes.  This includes searching oss-security for
-> posting information, extracting CVEs, and trying to tie it all together.
+> On 25 Jul 2023, at 19:58, Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
 > 
-> Anywhere, I have full stats for 2022 and stats for Jan/Feb of 2023.  As
-> long as everyone is happy with the content, I'll update regularly moving
-> forward.
+> On Tue, Jul 25, 2023 at 06:12:44PM +0100, Eddie Chapman wrote:
+>> alice wrote:
+>>> this is a disaster of a security announcement from AMD. nothing is fixed
+>>> except for epyc. the only workaround anyone really has is the chicken bit,
+>>> thankfully.
+>> 
+>> Yes, very disappointing. Pure speculation; perhaps they were planning on
+>> disclosing at the end of the year with full set of Microcode ready but
+>> something we don't know (yet) forced them to disclose early. Who knows.
 > 
-> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2022
-> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
-> 
-> [*] this has to be invoked manually in order to unlock my signing key so
-> it's only semi-automated.
+> Does AMD make OS-loadable μcode patches available for client platforms,
+> or must all μcode loading on clients be done by the firmware?  If the
+> latter, then it will take a very long time for clients to get patched,
+> even if AMD released the updates promptly.  Also, server platforms can
+> usually reflash the firmware via the BMC, but client platforms do not
+> have this option.
+> -- 
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
+> Invisible Things Lab
 
-Yes, please do update this regularly.
-
-Regarding the content, I notice some issues that I hope you can address:
-
-You show "Coordinated Release Date" and "Days embargoed (scheduled)" as
-7.00 days from date "Reported" for most entries, which I assume is in
-most cases a placeholder when no specific CRD was extracted.  I
-understand it would be tricky to extract that from the private list
-threads automatically.  So for now I suggest that instead of stating
-7.00 in such cases, you leave these fields blank.  Longer-term, maybe we
-need to agree on a syntax (to include in list messages setting, ack'ing,
-or adjusting the CRD), so that your script would extract this more
-reliably?
-
-By the way, when an initially set CRD is later adjusted, how would you
-report that - report just one of them (I guess so, but need to decide
-and document which one) or add an extra column?  What if there's more
-than one adjustment?
-
-You show extreme delays of 150+ days for two Linux kernel issues that
-you claim were brought to linux-distros in March 2022.  Neither of these
-two looks correct to me.  In one case, I merely added detail to an old
-thread where satisfactory disclosure on oss-security had been made
-months earlier.  In the other, you seem to link to a wrong CVE ID and
-thus picked up a correspondingly wrong linux-distros disclosure; in
-fact, you also list the same CVE ID for another issue, where it's
-probably correct, and you show that one was disclosed publicly on time.
-
-You show "A race condition vulnerability in drivers/tty/tty_buffers.c"
-as Reported on 2022-05-26, but I see this Subject first appear on
-2022-04-24.  You show nothing Reported in April at all, but I think this
-is a counter-example.  In fact, I only checked this one because I found
-it weird to see nothing for April.  I guess there are more issues like
-this that I did not notice.
-
-I think more issues were handled via (linux-)distros than you report.
-For example, we had some "Embargoed OpenSSL issue" pre-notifications in
-2022, but you don't list them.  I understand they were not full
-disclosures of the issues to linux-distros - rather, the distros were
-invited to contact OpenSSL for more information - yet I think we should
-not exclude them from statistics.  Perhaps your script didn't capture
-something else as well.
-
-Once you've addressed these, I think it'd be a good idea to re-add the
-average and median embargo times - I think per year would be enough.
-
-Overall, this makes me skeptical about the automated processing.  We
-track these issues manually anyway, like we ought to, so we can as well
-manually keep track of the aspects needed for the statistics collection
-and reporting.  This would take some effort, but that's fine, and maybe
-we'll end up cross-verifying results of both approaches.
-
-Thanks again,
-
-Alexander
