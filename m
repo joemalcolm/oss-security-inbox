@@ -1,47 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/04/2
-Message-ID: <20230203231914.Vs2o_%steffen@sdaoden.eu>
-Date: Sat, 04 Feb 2023 00:19:14 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
-To: Helmut Grohne <helmut@...divi.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: sox: patches for old vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/1
+Message-ID: <ZL8lFPN2e+6jX5HH@largo.jsg.id.au>
+Date: Tue, 25 Jul 2023 11:27:48 +1000
+From: Jonathan Gray <jsg@....id.au>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+On Mon, Jul 24, 2023 at 01:41:36PM -0400, Marc Deslauriers wrote:
+> Hi,
+> 
+> There seems to be confusion regarding which is the correct commit:
+> 
+> Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which is
+> for family 17h.
+> 
+> This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is for
+> family 19h.
+> 
+> I assume the 17h family one is the correct one?
+> 
+> Thanks,
+> 
+> Marc.
 
-Helmut Grohne wrote in
- <Y91yP6mYIZ+UXmgf@....mars>:
- |I am working on fixing known vulnerabilities in sox and since upstream
- |seems mostly dead (no commits in more than a year, no replies to bug
- |reports), I am posting my results here. My work on sox is compensated by
- |Freexian SARL.
+Yes, but it by no means covers all zen 2 models.  See amd-ucode/README
 
-Thank you for this work on sox!
-But i was only wondering a bit, have you checked against the
-[master] branch?  For example
+  Family=0x17 Model=0x31 Stepping=0x00: Patch=0x0830107a Length=3200 bytes
+  Family=0x17 Model=0xa0 Stepping=0x00: Patch=0x08a00008 Length=3200 bytes
 
-  02-fix-resource-leak-hcom.patch
-  03-fix-regression-in-CVE-2017-11358.patch
-  04-fix-hcom-big-endian.patch#
-  06-CVE-2021-33844.patch
-and
-  07-CVE-2021-3643.patch
+17-31-00 Rome/Castle Peak	0x0830107a
+17-a0-00 Mendocino		0x08a00008
 
-do not apply against it, and he introduced functions like
-dictvalid() to do things you seem to unroll differently?
+Models missing include:
 
-The rest just apply fine, and 02- was needed here, 03- seemed an
-unrolled dup, 04- in parts (stdint via sox.h, but overflow, sure),
-it is too late to check the rest, 'will do tomorrow.
-(I an maintaining an official contrib now private sox port for
-CRUX Linux based upon 42b3557e13e0fe0 as of 20211029.)
+17-60-01 Renoir			0x0860010b
+17-68-01 Lucienne		0x08608105
+17-71-00 Matisse		0x08701032
+17-90-02 Van Gogh
 
-Ciao!
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+The known good patch levels are used by xen and linux.  But the
+microcode for Renoir, Lucienne and Matisse is not available as far as
+I can tell.
