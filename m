@@ -1,50 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/11/4
-Message-ID: <CAP9KPhBTE-juckdOFzTAtm6311D5yOYfudq0r5=49bNECDa62w@mail.gmail.com>
-Date: Thu, 11 May 2023 13:01:57 +1000
-From: David Leadbeater <dgl@....cx>
-To: oss-security@...ts.openwall.com
-Cc: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>, ceo@...-en-ming-corp.com,  Piotr Krysiuk <piotras@...il.com>
-Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/5
+Message-Id: <CUB4TMY2T01E.9PNA8WXRWGZR@sumire>
+Date: Tue, 25 Jul 2023 09:06:05 +0000
+From: "alice" <alice@...ya.dev>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 May 2023 at 08:08, Tobias Heider <tobias.heider@...onical.com> wrote:
-[...]
-> This would allow having opt-in unprivileged userns support only for confined and
-> explicitly permitted applications and could hopefully drastically reduce the
-> impact of similar bugs in the future.
+On Tue Jul 25, 2023 at 1:27 AM UTC, Jonathan Gray wrote:
+> On Mon, Jul 24, 2023 at 01:41:36PM -0400, Marc Deslauriers wrote:
+> > Hi,
+> > 
+> > There seems to be confusion regarding which is the correct commit:
+> > 
+> > Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which is
+> > for family 17h.
+> > 
+> > This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is for
+> > family 19h.
+> > 
+> > I assume the 17h family one is the correct one?
+> > 
+> > Thanks,
+> > 
+> > Marc.
+>
+> Yes, but it by no means covers all zen 2 models.  See amd-ucode/README
+>
+>   Family=0x17 Model=0x31 Stepping=0x00: Patch=0x0830107a Length=3200 bytes
+>   Family=0x17 Model=0xa0 Stepping=0x00: Patch=0x08a00008 Length=3200 bytes
+>
+> 17-31-00 Rome/Castle Peak	0x0830107a
+> 17-a0-00 Mendocino		0x08a00008
+>
+> Models missing include:
+>
+> 17-60-01 Renoir			0x0860010b
+> 17-68-01 Lucienne		0x08608105
+> 17-71-00 Matisse		0x08701032
+> 17-90-02 Van Gogh
+>
+> The known good patch levels are used by xen and linux.  But the
+> microcode for Renoir, Lucienne and Matisse is not available as far as
+> I can tell.
 
-While I think more explicit configurability is good and needed here,
-it's possible to selectively block user namespaces by blocking
-unshare/clone/setns via seccomp policies. For example Docker's default
-policy[1] blocks unshare() and certain arguments to clone().
+the amd security bulletin at
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+states that really only 2nd-gen epyc is fixed. etas for all other cpus (consumer
+level) are in october/november/december.
 
-This is also configurable in systemd through the "RestrictNamespaces"
-property on a service. The downside is this is per service, for
-example setting "RestrictNamespaces=true" on sshd.service, but then a
-user could run an exploit via say cron, so you'd have to audit all
-your services for this to be a complete mitigation.
+quoting above:
+2nd Gen AMD EPYC™ Processors "Rome" (fixed)
+AMD Ryzen 3000 Series Desktop Processors "Matisse" (Target Dec 2023)
+AMD Ryzen 4000 Series Desktop Processors with Radeon Graphics "Renoir" AM4 (Target Dec 2023)
+AMD Ryzen Threadripper 3000 Series Processors "Castle Peak" HEDT (Target Oct 2023)
+AMD Ryzen Threadripper PRO 3000WX Series Processors "Castle Peak" WS SP3 (Target Nov 2023/Dec 2023)
+AMD Ryzen 5000 Series Mobile Processors with Radeon Graphics "Lucienne" (Target Dec 2023)
+AMD Ryzen 4000 Series Mobile Processors with Radeon Graphics "Renoir" (Target Nov 2023)
+AMD Ryzen 7020 Series Processors "Mendocino" FT6 (Target Dec 2023)
 
-It's also worth pointing out user namespaces can be a powerful
-security feature, again with systemd (using systemd-run for
-demonstration purposes, I'd expect this to be an actual unit
-configuration in production use):
-
-sudo systemd-run -t -p PrivateUsers=true -p RestrictNamespaces=true -p
-DynamicUser=true /bin/bash
-
-Will give you a shell inside a user namespace providing some isolation
-(see the docs for PrivateUsers[2]), but it restricts "unshare -Ur"
-because of the RestrictNamespaces:
-
-unshare: unshare failed: Operation not permitted
-
-As this and other bugs have shown CAP_NET_ADMIN inside a user
-namespace is a large attack surface, but an unprivileged user inside a
-user namespace, without the ability to create further namespaces can
-actually be a worthwhile hardening.
-
-David
-
-[1]: https://github.com/moby/moby/blob/master/profiles/seccomp/default.json#L626-L632
-[2]: https://www.freedesktop.org/software/systemd/man/systemd.exec.html#PrivateUsers=
+this is a disaster of a security announcement from AMD. nothing is fixed except
+for epyc. the only workaround anyone really has is the chicken bit, thankfully.
