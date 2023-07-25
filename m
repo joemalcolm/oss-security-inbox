@@ -1,91 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/7
-Message-ID: <20231222150438.GA13989@unix-ag.uni-kl.de>
-Date: Fri, 22 Dec 2023 16:04:38 +0100
-From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/8
+Message-ID: <51769413-37d8-4f9a-6e37-1b50a7ff555a@apache.org>
+Date: Tue, 25 Jul 2023 13:23:19 +0000
+From: Julian Reschke <reschke@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: CVE-2023-37895: Apache Jackrabbit RMI access can lead to RCE 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: critical
 
-On Fri, Dec 22, 2023 at 01:11:37PM +0100, Marcus Meissner wrote:
-> On Fri, Dec 22, 2023 at 11:09:49AM +0000, Stuart Henderson wrote:
-> > On 2023/12/22 11:46, Marcus Meissner wrote:
-> > > 
-> > > FWIW as no CVEs were to be found yet, I filed a CVE request for
-> > > Postfix now.
-> > > 
-> > > Not sure if we need it for others like sendmail too, as that is
-> > > also referenced by the security researchers.
+Affected versions:
 
-I'd think that sendmail should have a CVE, too, or there could be one
-CVE pertaining to both Postfix and sendmail, because SEC Consult write
-in their blog post:
+- Apache Jackrabbit Webapp (jackrabbit-webapp) 2.21.0 before 2.21.18
+- Apache Jackrabbit Webapp (jackrabbit-webapp) 1.0.0 before 2.20.11
+- Apache Jackrabbit Standalone (jackrabbit-standalone and jackrabbit-standalone-components) 2.21.0 before 2.21.18
+- Apache Jackrabbit Standalone (jackrabbit-standalone and jackrabbit-standalone-components) 1.0.0 before 2.20.11
 
-   "After testing some popular e-mail software in their default
-    configuration, it turned out that Postfix and Sendmail fulfil the
-    requirements, are affected and can be smuggled to."
+Description:
 
-As such I'd say that both Postfix and sendmail are known to be vulnerable.
+Java object deserialization issue in Jackrabbit webapp/standalone on all platforms allows attacker to remotely execute code via RMIVersions up to (including) 2.20.10 (stable branch) and 2.21.17 (unstable branch) use the component "commons-beanutils", which contains a class that can be used for remote code execution over RMI.
 
-> > I'm a little confused by sec-consult's process here. They identify
-> > a problem affecting various pieces of software including some very
-> > widely deployed open source software, go to the trouble of doing
-> > a coordinated disclosure, but only do that with...looking at their
-> > timeline... gmx, microsoft and cisco?
-> 
-> Yes its weird.
-> 
-> I was also confused and actually only spotted the OSS software being
-> affected on third read over their page.
-> 
-> They also reference CERT and VINCE, but at least SUSE was not pulled
-> into the VINCE issue if there was any. (as CERT has not published
-> anything I am not sure there was any besides the Cisco disclosure).
+Users are advised to immediately update to versions 2.20.11 or 2.21.18. Note that earlier stable branches (1.0.x .. 2.18.x) have been EOLd already and do not receive updates anymore.
 
-According to the timeline, they involved CERT/CC and VINCE in August:
+In general, RMI support can expose vulnerabilities by the mere presence of an exploitable class on the classpath. Even if Jackrabbit itself does not contain any code known to be exploitable anymore, adding other components to your server can expose the same type of problem. We therefore recommend to disable RMI access altogether (see further below), and will discuss deprecating RMI support in future Jackrabbit releases.
 
-    2023-08-17: Contacting CERT Coordination Center (CERT/CC) for further
-                discussion with Cisco
-    ...
-    2023-09-13: CERT/CC accepts the case
-    ...
-    2023-11-29: CERT/CC allows public release of SMTP smuggling, since
-                no software vulnerabilities were identified ("it's not
-                a bug, it's a feature")
-    ...
-    2023-12-18: Release date of blog post
+How to check whether RMI support is enabledRMI support can be over an RMI-specific TCP port, and over an HTTP binding. Both are by default enabled in Jackrabbit webapp/standalone.
 
-The first timeline entry omits a bit from the text, i.e., VINCE:
+The native RMI protocol by default uses port 1099. To check whether it is enabled, tools like "netstat" can be used to check.
 
-   "we contacted CERT/CC on 17th August to get some help for further
-    discussion with Cisco and involve other potentially affected vendors
-    (such as sendmail) through the VINCE communication platform."
+RMI-over-HTTP in Jackrabbit by default uses the path "/rmi". So when running standalone on port 8080, check whether an HTTP GET request on localhost:8080/rmi returns 404 (not enabled) or 200 (enabled). Note that the HTTP path may be different when the webapp is deployed in a container as non-root context, in which case the prefix is under the user's control.
 
-> Also postfix timeline starts 4 days ago only.
-> https://www.mail-archive.com/postfix-announce@postfix.org/msg00090.html
+Turning off RMIFind web.xml (either in JAR/WAR file or in unpacked web application folder), and remove the declaration and the mapping definition for the RemoteBindingServlet:
 
-This is three days after the SEC Consult blog post.
+        <servlet>
+            <servlet-name>RMI</servlet-name>
+            <servlet-class>org.apache.jackrabbit.servlet.remote.RemoteBindingServlet</servlet-class>
+        </servlet>
 
-My personal interpretation is as follows:
+        <servlet-mapping>
+            <servlet-name>RMI</servlet-name>
+            <url-pattern>/rmi</url-pattern>
+        </servlet-mapping>
 
-  * SEC Consult concentrated on the big email platforms, because of the
-    potential impact.
-  * They informed platforms that could be used to perform the attack
-    against vulnerable targets.
-  * They informed Cisco since they used an affected Cisco product
-    and could thus be targeted (even though for Cisco this is not a
-    vulnerability, but a feature).
-  * They involved CERT/CC and VINCE, probably with the assumption that
-    this would result in identifying and informing affected vendors
-    and projects.
-  * The CERT/CC and VINCE involvement resulted in "there is no
-    vulnerability".
-  * SEC Consult publish their findings.
+Find the bootstrap.properties file (in $REPOSITORY_HOME), and set
 
-Now, others (including me) see this as a vulnerability affecting at
-least some open source email servers.  SNAFU.
+         rmi.enabled=false
 
-Cheers,
-Erik
+    and also remove
+
+         rmi.host
+         rmi.port
+         rmi.url-pattern
+
+ If there is no file named bootstrap.properties in $REPOSITORY_HOME, it is located somewhere in the classpath. In this case, place a copy in $REPOSITORY_HOME and modify it as explained.
+
+Credit:
+
+Siebene@ (reporter)
+Michael Dürig (other)
+Manfred Baedke (other)
+
+References:
+
+https://lists.apache.org/list.html?users@jackrabbit.apache.org
+https://jackrabbit.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-37895
+
+Timeline:
+
+2023-06-30: Reported
+2023-07-20: Release vote for unstable branch with fix
+2023-07-20: Release vote for stable branch with fix
+2023-07-24: unstable branch (2.21.18) released
+2023-07-24: stable branch (2.20.11) released
+
