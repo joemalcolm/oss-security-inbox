@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/28/5
-Message-ID: <86140d54-a24f-6135-6f1c-d64a241a1006@apache.org>
-Date: Tue, 28 Nov 2023 16:20:15 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/3
+Message-ID: <8dcf2ad6-d544-974c-b11e-3d8ed44c7dbf@apache.org>
+Date: Tue, 25 Jul 2023 02:29:50 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-42505: Apache Superset: Sensitive information disclosure on db connection details 
+Subject: CVE-2023-34434: Apache InLong: JDBC URL bypassing by allowLoadLocalInfileInPath param 
 Content-Type: text/plain; charset=utf-8
+
+Severity: important
 
 Affected versions:
 
-- Apache Superset before 3.0.0
+- Apache InLong 1.4.0 through 1.7.0
 
 Description:
 
-An authenticated user with read permissions on database connections metadata could potentially access sensitive information such as the connection's username.
+Deserialization of Untrusted Data Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.7.0. 
 
-This issue affects Apache Superset before 3.0.0.
+The attacker could bypass the current logic and achieve arbitrary file reading. To solve it, users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick  https://github.com/apache/inlong/pull/8130 .
 
 Credit:
 
- Leonel John Erik Angel Torres (finder)
+sw0rd1ight and 4ra1n of Chaitin Tech (finder)
 
 References:
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-42505
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-34434
 
