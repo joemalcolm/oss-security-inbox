@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/15/4
-Message-ID: <CALQRfL40s=knwPCFNDHrAxFtcU_-O2jeLe3xyFf4DFvT2QZzfQ@mail.gmail.com>
-Date: Mon, 15 May 2023 08:45:33 -0700
-From: "Andrew G. Morgan" <morgan@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/4
+Message-ID: <cbfab1ae-27dd-ec5a-ce17-13c69bb3b488@apache.org>
+Date: Tue, 25 Jul 2023 02:33:14 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: libcap-2.69 addresses 2 CVEs
+Subject: CVE-2023-35088: Apache InLong: SQL injection in audit endpoint 
 Content-Type: text/plain; charset=utf-8
 
-The release of libcap-2.69, announced here:
+Severity: moderate
 
-  https://sites.google.com/site/fullycapable/release-notes-for-libcap#h.iuvg7sbjg8pe
+Affected versions:
 
-addresses the following:
+- Apache InLong 1.4.0 through 1.7.0
 
-- LCAP-CR-23-01 (SEVERITY) LOW (CVE-2023-2602) - found by David Gstir
-- LCAP-CR-23-02 (SEVERITY) MEDIUM (CVE-2023-2603) - found by Richard Weinberger
+Description:
 
-The full details of both issues are provided in this audit report:
+Improper Neutralization of Special Elements Used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.7.0. 
+In the toAuditCkSql method, the groupId, streamId, auditId, and dt are directly concatenated into the SQL query statement, which may lead to SQL injection attacks.
+Users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick [1] to solve it.
 
-  https://www.x41-dsec.de/static/reports/X41-libcap-Code-Review-2023-OSTIF-Final-Report.pdf
+[1]  https://github.com/apache/inlong/pull/8198
 
-Cheers
+References:
 
-Andrew
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-35088
+
