@@ -1,94 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/5
-Message-ID: <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
-Date: Wed, 18 Oct 2023 13:25:21 -0500
-From: Grant Taylor <gtaylor@...tconsulting.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/11
+Message-ID: <d8fb0f6d-4865-c82f-91b7-d18788aaa16e@apache.org>
+Date: Tue, 25 Jul 2023 16:54:17 +0000
+From: Junkai Xue <jxue@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: CVE-2023-38647: Apache Helix: Deserialization vulnerability in Helix workflow and REST 
 Content-Type: text/plain; charset=utf-8
 
-I have some misgivings about this.
+Severity: important
 
-On 10/16/23 7:17 PM, turistu wrote:
-> In firefox running on X11, any script from any page can freely write 
-> to the primary selection,
+Affected versions:
 
-I'm largely inclined to say "so what is the problem here?" but I'm 
-trying to keep an open mind and understand ~> maybe learn something.
+- Apache Helix through 1.2.0
 
-The *primary* /selection/ /buffer/ is updated by simply selecting text 
-on the screen.
+Description:
 
-About the only thing that I can see being a problem is if something 
-updates the chosen selection buffer without my knowledge while I'm in 
-the middle of doing something using the selection buffer.
+An attacker can use SnakeYAML to deserialize java.net.URLClassLoader and make it load a JAR from a specified URL, and then deserialize javax.script.ScriptEngineManager to load code using that ClassLoader. This unbounded deserialization can likely lead to remote code execution. The code can be run in Helix REST start and Workflow creation.
 
-*Selection* /buffer/ being a buffer referencing something that is selected.
+Affect all the versions lower and include 1.2.0.
 
-Remember, the selection buffers; primary and / or secondary, are 
-completely independent of the clipboard.
+Affected products: helix-core, helix-rest
 
-> and that can be easily exploited to run arbitrary code on the user's 
-> machine.
+Mitigation: Short term, stop using any YAML based configuration and workflow creation.
+                  Long term, all Helix version bumping up to 1.3.0
 
-I'm not convinced of that.
+Credit:
 
-1st, simply updating the selection buffer doesn't mean that what's in it 
-will be used for anything,
-2nd, the updated selection buffer must be used in a way that tries to 
-execute a command or maliciously alters contents, e.g. swapping 
-something of value for something else malicious, say an address to send 
-something.
+Qing Xu (reporter)
 
-> No user interaction is necessary -- any page able to run javascript 
-> can do it ....
+References:
 
-The ability to update the selection buffer doesn't extend into the 
-ability to cause what's in the selection buffer to be executed.
-
-> This applies to all the versions of mozilla/firefox and their 
-> derivatives (seamonkey, etc) ....
-
-It probably applies to a lot more than that.  I suspect that anything 
-that can run 3rd party code can do the same thing.
-
-> Sooner or later, when trying to paste something in the terminal with 
-> shift-Insert or middle click, you will end up running the command 
-> `writeXPrimary()` has injected just between your copy and paste.
-
-I can do the same thing with most shells that you're claiming is a 
-Mozilla / Firefox bug:
-
-    while sleep 1; do echo "yes LOL" | xsel -ip; done
-
-Change your sleep duration, what goes into the primary selection buffer, 
-tool used to modify the selection buffer, which selection buffer / 
-clipboard you monkey with, etc.
-
-I think that this is more a problem with X11 security than it is a 
-problem specific to Mozilla / Firefox.
-
-This X11 security issue is well known and has been well known for 
-decades.  Anybody / anything that can read / write to your DISPLAY can 
-do this.
-
-Maybe the fact that malicious JavaScript can do this is a surprise.  But 
-I don't see this as a new issue.
-
-As I said earlier, I'm unconvinced that this is a Mozilla / Firefox 
-specific bug, but I'm trying to keep an open mind and understand ~> 
-maybe learn something.
-
-As for patching Firefox, that's sort of like closing one vector out of 
-the undetermined / infinite number that exist on the system.
-
-Yes, what you're talking about is a problem.  It's also a known problem. 
-  What's more is I believe the root of the problem is outside of where 
-you have targeted your scrutiny.
-
-
-
--- 
-Grant. . . .
-unix || die
+https://helix.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-38647
 
