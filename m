@@ -1,86 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/06/2
-Message-ID: <15454126-8o30-6q3n-8r56-22n65qr61n8@unkk.fr>
-Date: Wed, 6 Dec 2023 08:29:50 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: HSTS long file name clears contents
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/14
+Message-ID: <ZMANYXG61AR/oTGa@itl-email>
+Date: Tue, 25 Jul 2023 13:58:54 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
 Content-Type: text/plain; charset=utf-8
 
-HSTS long file name clears contents
-===================================
+On Tue, Jul 25, 2023 at 06:12:44PM +0100, Eddie Chapman wrote:
+> alice wrote:
+> > this is a disaster of a security announcement from AMD. nothing is fixed
+> > except for epyc. the only workaround anyone really has is the chicken bit,
+> > thankfully.
+> 
+> Yes, very disappointing. Pure speculation; perhaps they were planning on
+> disclosing at the end of the year with full set of Microcode ready but
+> something we don't know (yet) forced them to disclose early. Who knows.
 
-Project curl Security Advisory, December 6 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-46219.html)
-
-VULNERABILITY
--------------
-
-When saving HSTS data to an excessively long file name, curl could end up
-removing all contents, making subsequent requests using that file unaware of
-the HSTS status they should otherwise use.
-
-INFO
-----
-
-The reason for this bug is that save function appended a suffix to the file
-name, created a temporary file and then in the last step renamed that to the
-final name. When the file name length was close to the limit of what is
-allowed on the file system, adding the extension would make it too long and
-then trigger this bug.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-46219 to this issue.
-
-CWE-311: Missing Encryption of Sensitive Data
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.84.0 to and including 8.4.0
-- Not affected versions: curl < 7.84.0 and >= 8.5.0
-- Introduced-in: https://github.com/curl/curl/commit/20f9dd6bae50b722
-
-libcurl is used by many applications, but not always advertised as such!
-
-This flaw is also accessible using the curl command line tool.
-
-SOLUTION
-------------
-
-Starting in curl 8.5.0, the temporary file name made done using a pure random
-sequence of letters instead of being based on the original.
-
-- Fixed-in: https://github.com/curl/curl/commit/73b65e94f3531179de45
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.5.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use HSTS
-
-TIMELINE
---------
-
-This issue was reported to the curl project on November 2, 2023. We contacted
-distros@...nwall on November 28, 2023.
-
-curl 8.5.0 was released on December 6 2023, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Maksymilian Arciemowicz
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
+Does AMD make OS-loadable μcode patches available for client platforms,
+or must all μcode loading on clients be done by the firmware?  If the
+latter, then it will take a very long time for clients to get patched,
+even if AMD released the updates promptly.  Also, server platforms can
+usually reflash the firmware via the BMC, but client platforms do not
+have this option.
 -- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-  / daniel.haxx.se
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
