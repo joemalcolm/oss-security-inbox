@@ -1,94 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/2
-Message-ID: <677r5sr8-q659-pq78-587-n42q2q86oqs0@unkk.fr>
-Date: Mon, 20 Mar 2023 08:26:06 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-27534: SFTP path ~ resolving discrepancy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/26/1
+Message-Id: <E1qOcS0-0007bb-Pt@xenbits.xenproject.org>
+Date: Wed, 26 Jul 2023 11:13:04 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 433 v2 (CVE-2023-20593) - x86/AMD: Zenbleed
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-27534: SFTP path ~ resolving discrepancy
-=================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27534.html)
+            Xen Security Advisory CVE-2023-20593 / XSA-433
+                              version 2
 
-VULNERABILITY
--------------
+                          x86/AMD: Zenbleed
 
-curl supports SFTP transfers. curl's SFTP implementation offers a special
-feature in the path component of URLs: a tilde (`~`) character as the first
-path element in the path to denotes a path relative to the user's home
-directory. This is supported because of wording in the [once proposed
-to-become RFC
-draft](https://datatracker.ietf.org/doc/html/draft-ietf-secsh-scp-sftp-ssh-uri-04)
-that was to dictate how SFTP URLs work.
+UPDATES IN VERSION 2
+====================
 
-Due to a bug, the handling of the tilde in SFTP path did however not only
-replace it when it is used stand-alone as the first path element but also
-wrongly when used as a mere prefix in the first element.
+Include the CVE, which was missed accidentally in the rush of
+timelines repeatedly moving underfoot.
 
-Using a path like `/~2/foo` when accessing a server using the user `dan` (with
-home directory `/home/dan`) would then quite surprisingly access the file
-`/home/dan2/foo`.
+ISSUE DESCRIPTION
+=================
 
-This can be taken advantage of to circumvent filtering or worse.
+Researchers at Google have discovered Zenbleed, a hardware bug causing
+corruption of the vector registers.
 
-We are not aware of any exploit of this flaw.
+When a VZEROUPPER instruction is discarded as part of a bad transient
+execution path, its effect on internal tracking are not unwound
+correctly.  This manifests as the wrong micro-architectural state
+becoming architectural, and corrupting the vector registers.
 
-INFO
-----
+Note: While this malfunction is related to speculative execution, this
+      is not a speculative sidechannel vulnerability.
 
-CVE-2023-27534 was introduced in [commit
-ba6f20a244](https://github.com/curl/curl/commit/ba6f20a244), shipped in curl
-7.18.0.
+The corruption is not random.  It happens to be stale values from the
+physical vector register file, a structure competitively shared between
+sibling threads.  Therefore, an attacker can directly access data from
+the sibling thread, or from a more privileged context.
 
-CWE-22: Improper Limitation of a Pathname to a Restricted Directory
+For more details, see:
+  https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+  https://github.com/google/security-research/security/advisories/GHSA-v6wh-rxpg-cmm8
 
-Severity: Low
+IMPACT
+======
 
-AFFECTED VERSIONS
------------------
+With very low probability, corruption of the vector registers can occur.
+This data corruption causes mis-calculations in subsequent logic.
 
-- Affected versions: curl 7.18.0 to and including 7.88.1
-- Not affected versions: curl < 7.18.0 and curl >= 8.0.0
+An attacker can exploit this bug to read data from different contexts on
+the same core.  Examples of such data includes key material, cypher and
+plaintext from the AES-NI instructions, or the contents of REP-MOVS
+instructions, commonly used to implement memcpy().
 
-libcurl is used by many applications, but not always advertised as such!
+VULNERABLE SYSTEMS
+==================
 
-THE SOLUTION
-------------
+Systems running all versions of Xen are affected.
 
-A [fix for CVE-2023-27534](https://github.com/curl/curl/commit/4e2b52b5f7a3bf50a)
+This bug is specific to the AMD Zen2 microarchitecture.  AMD do not
+believe that other microarchitectures are affected.
 
-RECOMMENDATIONS
---------------
+MITIGATION
+==========
 
-  A - Upgrade curl to version 8.0.0
+This issue can be mitigated by disabling AVX, either by booting Xen with
+`cpuid=no-avx` on the command line, or by specifying `cpuid="host:avx=0"` in
+the vm.cfg file of all untrusted VMs.  However, this will come with a
+significant impact on the system and is not recommended for anyone able to
+deploy the microcode or patch described below.
 
-  B - Apply the patch to your local version
+RESOLUTION
+==========
 
-  C - Avoid using tilde in SFTP URL paths.
+AMD are producing microcode updates to address the bug.  Consult your
+dom0 OS vendor.  This microcode is effective when late-loaded, which can
+be performed on a live system without reboot.
 
-TIMELINE
---------
+In cases where microcode is not available, the appropriate attached
+patch updates Xen to use a control register to avoid the issue.
 
-This issue was reported to the curl project on March 5, 2023. We contacted
-distros@...nwall on March 13, 2023.
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
+xsa433.patch           xen-unstable
+xsa433-4.17.patch      Xen 4.17.x
+xsa433-4.16.patch      Xen 4.16.x
+xsa433-4.15.patch      Xen 4.15.x
+xsa433-4.14.patch      Xen 4.14.x
 
-CREDITS
--------
+$ sha256sum xsa433*
+a9331733b63e3e566f1436a48e9bd9e8b86eb48da6a8ced72ff4affb7859e027  xsa433.patch
+6f1db2a2078b0152631f819f8ddee21720dabe185ec49dc9806d4a9d3478adfd  xsa433-4.14.patch
+ca3a92605195307ae9b6ff87240beb52a097c125a760c919d7b9a0aff6e557c0  xsa433-4.15.patch
+e5e94b3de68842a1c8d222802fb204d64acd118e3293c8e909dfaf3ada23d912  xsa433-4.16.patch
+41d12104869b7e8307cd93af1af12b4fd75a669aeff15d31b234dc72981ae407  xsa433-4.17.patch
+$
 
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
+NOTE CONCERNING TIMELINE
+========================
 
-Thanks a lot!
+This issue is subject to coordinated disclosure on August 8th.  The
+discoverer chose to publish details ahead of this timeline.
+-----BEGIN PGP SIGNATURE-----
 
--- 
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTA/2cMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ0EIH/02n/gvMGF5RCwfs/uvwjsQASAgELWTgAFv+tXOG
+yLZWCxNkWAWDxTWAEWfdcSsLCN8GDc4c6lNuhqnV3mVsIDiGSHmXgSkI9pcCQ79T
+2KTgC+ncMM4yeYTI5SUL4xvzzIQ/38t5gK5+AyPxg3jpMhCLEz2dJwbjgd4CKai+
+ax+l3cX9ibLj/lQQwvgkPXweAVsfILnCAB5J1VQb1Jw0DWauYJLurMj0flz82a2O
+NftdEx3b5ADDxXHdE52J5p/kpXMDohdPm0R07Y63j+eY+QJADLHfwE+n4pqyzvDf
+kPEGUtxbcCj4VygmO6xrHgoHYqaGbRYeHJyHEt4jpZDLwP4=
+=9wn5
+-----END PGP SIGNATURE-----
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Download attachment "xsa433.patch" of type "application/octet-stream" (4348 bytes)
+
+Download attachment "xsa433-4.14.patch" of type "application/octet-stream" (4332 bytes)
+
+Download attachment "xsa433-4.15.patch" of type "application/octet-stream" (4292 bytes)
+
+Download attachment "xsa433-4.16.patch" of type "application/octet-stream" (4301 bytes)
+
+Download attachment "xsa433-4.17.patch" of type "application/octet-stream" (4348 bytes)
