@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/05/3
-Message-ID: <824d0fa7-8068-4a06-9185-58b25eb4c678@oracle.com>
-Date: Tue, 5 Dec 2023 12:59:57 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/29/1
+Message-ID: <caf72d56-b63f-61d3-1d4d-7f3fee472b9f@apache.org>
+Date: Sat, 29 Jul 2023 02:25:39 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: SLAM: Spectre based on Linear Address Masking
+Subject: CVE-2023-36542: Apache NiFi: Potential Code Injection with Properties Referencing Remote Resources 
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability in closed source CPUs which open source OSes may need
-to mitigate was disclosed today:
+Severity: moderate
 
-https://www.vusec.net/projects/slam/
-https://github.com/vusec/slam
-https://www.youtube.com/watch?v=y4wZ-tREaNk
-https://x.com/vu5ec/status/1732099516621521003
+Affected versions:
 
-The first page lists these processors as affected:
+- Apache NiFi 0.0.2 through 1.22.0
 
-    - Existing AMD CPUs vulnerable to CVE-2020-12965;
-    - Future Intel CPUs supporting LAM (both 4- and 5-level paging);
-    - Future AMD CPUs supporting UAI and 5-level paging;
-    - Future Arm CPUs supporting TBI and 5-level paging.
+Description:
 
-as it takes advantage of CPU features which allow masking off some bits of
-pointer addresses to store additional data in, such as Intel’s Linear Address
-Masking (LAM), AMD’s Upper Address Ignore (UAI), or ARM's Top-byte Ignore (TBI).
+Apache NiFi 0.0.2 through 1.22.0 include Processors and Controller Services that support HTTP URL references for retrieving drivers, which allows an authenticated and authorized user to configure a location that enables custom code execution. The resolution introduces a new Required Permission for referencing remote resources, restricting configuration of these components to privileged users. The permission prevents unprivileged users from configuring Processors and Controller Services annotated with the new Reference Remote Resources restriction. Upgrading to Apache NiFi 1.23.0 is the recommended mitigation.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+This issue is being tracked as NIFI-11744 
+
+Credit:
+
+nbxiglk (finder)
+
+References:
+
+https://nifi.apache.org/security.html#CVE-2023-36542
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-36542
+https://issues.apache.org/jira/browse/NIFI-11744
+
+Timeline:
+
+2023-06-19: reported
+2023-06-21: confirmed
+2023-06-21: resolved
+
