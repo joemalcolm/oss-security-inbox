@@ -1,67 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/3
-Message-ID: <CABdrxGDrYdK-nhcA_Jt9=2MYvyxwS46-14MwMsaa-+tiQTQnfw@mail.gmail.com>
-Date: Wed, 25 Oct 2023 09:32:13 -0700
-From: CJ Cullen <cjcullen@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/31/1
+Message-ID: <ZMfVWXnJDgDYcnPe@openssl.org>
+Date: Mon, 31 Jul 2023 15:38:01 +0000
+From: Matt Caswell <matt@...nssl.org>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2023-5044: Code injection via nginx.ingress.kubernetes.io/permanent-redirect annotation
+Subject: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Issue Details
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A security issue was identified in ingress-nginx
-<https://github.com/kubernetes/ingress-nginx> where the
-nginx.ingress.kubernetes.io/permanent-redirect annotation on an Ingress
-object (in the `networking.k8s.io` or `extensions` API group) can be used
-to inject arbitrary commands, and obtain the credentials of the
-ingress-nginx controller. In the default configuration, that credential has
-access to all secrets in the cluster.
+OpenSSL Security Advisory [31st July 2023]
+==========================================
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
-and assigned CVE-2023-5044.
-Affected Components and Configurations
+Excessive time spent checking DH q parameter value (CVE-2023-3817)
+==================================================================
 
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -n ingress-nginx`.
+Severity: Low
 
-If you are running the “chrooted” ingress-nginx controller introduced in
-v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), command
-execution is possible but credential extraction is not, so the High
-severity does not apply.
+Issue summary: Checking excessively long DH keys or parameters may be very slow.
 
-Multi-tenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions
+Impact summary: Applications that use the functions DH_check(), DH_check_ex()
+or EVP_PKEY_param_check() to check a DH key or DH parameters may experience long
+delays. Where the key or parameters that are being checked have been obtained
+from an untrusted source this may lead to a Denial of Service.
 
-   -
+The function DH_check() performs various checks on DH parameters. After fixing
+CVE-2023-3446 it was discovered that a large q parameter value can also trigger
+an overly long computation during some of these checks. A correct q value,
+if present, cannot be larger than the modulus p parameter, thus it is
+unnecessary to perform these checks if q is larger than p.
 
-   <v1.9.0
+An application that calls DH_check() and supplies a key or parameters obtained
+from an untrusted source could be vulnerable to a Denial of Service attack.
 
-Versions allowing mitigation
+The function DH_check() is itself called by a number of other OpenSSL functions.
+An application calling any of those other functions may similarly be affected.
+The other functions affected by this are DH_check_ex() and
+EVP_PKEY_param_check().
 
-   -
+Also vulnerable are the OpenSSL dhparam and pkeyparam command line applications
+when using the "-check" option.
 
-   v1.9.0
+The OpenSSL SSL/TLS implementation is not affected by this issue.
 
-Mitigation
+The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
 
-Ingress Administrators should set the --enable-annotation-validation flag
-to enforce restrictions on the contents of ingress-nginx annotation fields.
-Detection
+OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
 
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 6a1eb62c2 (for 3.1),
+commit 9002fd073 (for 3.0) and commit 91ddeba0f (for 1.1.1) in the OpenSSL git
+repository. It is available to premium support customer in commit 869ad69a (for
+1.0.2).
 
-See ingress-nginx Issue #10572
-<https://github.com/kubernetes/ingress-nginx/issues/10572> for more details.
-Acknowledgements
+This issue was reported on 20th July 2023 by Bernd Edlinger. The fix was
+developed by Tomas Mraz.
 
-This vulnerability was reported by Jan-Otto Kröpke (Cloudeteer GmbH)
+General Advisory Notes
+======================
 
-Thank You,
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230731.txt
 
-CJ Cullen on behalf of the Kubernetes Security Response Committee
+Note: the online version of the advisory may be updated with additional details
+over time.
 
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmTH1M4ACgkQ2cTSbQ5g
+RJGhtAf9E3HklBKezKOXvAbsPmCqcjySMVTV/JrBjrDn14UIRjZmhVoHd5QGusN2
+ReRtA3bRL41UQYdLKDkdYjp9XmlDDFb5hKO3G7P0ldtDaw21TkIQeI/90OKjgsQu
+A+vpf/TcE1a1Pbz8cIRKYBjIaS3z9yIDW4eB0gytWxsqMxze+9IOYNuAbDa0KsqO
+PFTUiHr5xu01wsdVdHeUMpZ01E8tGbVwgyY7tvCUAUJcjjLcTb9+gXQLn6cmVRJt
+6kU8jsamkiYpL1MoKI5yQvYx0nXZUxXbH1ICPltytC4pBsMEypCCnJTkcJKhRRNt
+76Z4/x3XDqMzapYMPimIRifdzPV9FQ==
+=Ve/V
+-----END PGP SIGNATURE-----
