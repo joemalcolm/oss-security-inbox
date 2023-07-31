@@ -1,4 +1,4 @@
-Received: (qmail 26127 invoked by uid 550); 29 Apr 2026 03:19:05 -0000
+Received: (qmail 11469 invoked by uid 550); 31 Jul 2023 15:40:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26070 invoked from network); 29 Apr 2026 03:19:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777432736; x=1778037536; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rRQ/rmwh3IToQjBSJLsVmuii2FWjZ1bfTvmBPriqfCQ=;
-        b=aV1KT1dZAxnOFS7JyUhY8eco95U3JgQx7VRwh+GFwOJ4hc/yQ1Q0sYyAXWA5H7tn9p
-         16PlcisTZH/ItK92mJobrh7ypSNLKC2GT2b7aEa15PFzPdlmc23bB7ILLWsZlCs6AK/6
-         SLEmp/mu6eYxdMCyUNBCVnnF/TtnKwiUGVlU5eAKR1Gpv9NWo3Uirv+vtatOUGkJ4/ZB
-         NK2H8FfHb70tPyiijnuirXR7DGdh5dlvJtlBnH/I9Iv3ghQuDIYLdQlZZiXk0yYvzSpu
-         TxgUuDbIfIqPyDJBFN2A35ij1xOJMxsyLCZ8Rkxn6Eh2O9Chcs+E52270eKKDeQriWHP
-         lQ4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777432736; x=1778037536;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rRQ/rmwh3IToQjBSJLsVmuii2FWjZ1bfTvmBPriqfCQ=;
-        b=PfyKewxFqR8cngNZN0bor3GcKXb9fPx4yhOLyUAKZJ5yDA19uYxFxlyKzuE6pzCDGX
-         hitxES99acVI5oDelREsedm44uznfYBZH1mHmv0splz3fdlq0o3xZOOLFgUkukXrfwny
-         UGoVsDASGLC7CJF3GqvEQ15FA2qG4Cgbc9hOJoxQrYIlRKwp9jZPjlJtDtO0itI3aBU6
-         XxnXhSbDl9kpNpvHRh9KUbBYpQtd5ukl5qMV5WRApJC7rK0+xTMhGh9GSKrAPkCOCRpb
-         gqlKQb/TWI9DhU8L91QjJXJvVM/XuR9z1sK6tFfk2aujReI0aaKOQIHhjIokcNFPVEDg
-         Ke4A==
-X-Gm-Message-State: AOJu0YxA8wU0BC2+2iw5DaRKciqahBwqBbW9dKK3+X6yACBukAggYCJ7
-	T5VGlnpTmn99i2jmDsPZyS1cVCsP+SHen73Jyiu6RYEiaBUu4cGlv+/mMQPHv6bE
-X-Gm-Gg: AeBDiev9pTpREY7Vq8G6MIPWhaigEB7TKhRDKh/6iwbdxuX7qu2Z/IlIEHVlmr+MwKS
-	3Bo3rMbbnfwD2owo5Nj2P2NErshmBQgC6+Kj5w+pf9PA6HDYD3woDramwiUntwC2PBiEWDmoq21
-	H0+Xh48wGRyi3n5bitLDLREN0SGOAPQPrsqZUM9tpqV0ym4bO9YA7rdmtmJBOV1nUDZ2G+hgm4R
-	23hK8GUaxBPlRIhxiKpPo61dCxK4KVN5C1JQrmBHH/s6Yjvj0hmo61XLM41gUUODBaly0TWUZrR
-	POKglDcMPAqBeBFMhMiqPT6cJXd/C5TFXARAwEuJu7tQ+FiNZ6cNpz1Unv0WmVwuCBKIRXQTtnd
-	zDNvIn4AH533smTpLuWggNF4VaiibEMgSghOCdHzcEPQv7N9rQYXULEXSuJJtytQ1pm7uBNRGP1
-	oXgOWsUBb7CX0vfF+muL6lReQbiCve
-X-Received: by 2002:a05:6808:d4a:b0:479:a90b:a011 with SMTP id 5614622812f47-47c29044165mr3126430b6e.41.1777432736670;
-        Tue, 28 Apr 2026 20:18:56 -0700 (PDT)
-Message-ID: <91b42b0c-9103-4ef3-a806-26e9de10e177@gmail.com>
-Date: Tue, 28 Apr 2026 22:18:46 -0500
+Received: (qmail 9703 invoked from network); 31 Jul 2023 15:38:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1690817882; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=/5ubbJjo+y3e2TPqF0LkBDRIa+0MLLqF+Ix3q/9q1q8=;
+	b=QhQX36s/yExIxE3jQRcUGakUt9by44W4XdbPUYbZGoAqA2z60AcGmTcRU/6E7esJKrAsZM
+	Eq8fUZioXIcPUYLC2alLjnXccpZpkoBqvaIj7Qv3GJMEBHHnmeHo7IOgxyzHgGI+DvyqBA
+	jzVtTpdHAiGzWuJq9OkI9+Nqx9M+njRkgfcKUvqxwYT/YWYztoChHjy4HunRCcRhZS0SPo
+	3K+osdm4JkMNk6fPN+a72vkYvrqqGAMN1/8tDJl3Y3ZvQkqP2Z2ycGFxNNNvt5hhOq5pzt
+	7ChPIXMGz4v4CL9LWNnTszAwQE+nYintQ7JIUXONi+59SMh4erWIO6GbaJirfQ==
+Date: Mon, 31 Jul 2023 15:38:01 +0000
+From: Matt Caswell <matt@openssl.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZMfVWXnJDgDYcnPe@openssl.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com,
- MOHAMED AZIZ RAHMOUNI <mohamedaziz.rahmouni@insat.ucar.tn>,
- secalert@redhat.com, Dmitry@butskoy.name
-References: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: =?UTF-8?Q?Re=3A_=5Boss-security=5D_=5BSECURITY=5D_Out-of-Bounds_Rea?=
- =?UTF-8?Q?d_in_MPLS_Extension_Parsing_=E2=80=94_traceroute_2=2E1=2E2?=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
-On 4/28/26 17:03, MOHAMED AZIZ RAHMOUNI wrote:
-> Hello,
->
-> I am reporting a security vulnerability I discovered in traceroute 
-> 2.1.2 during manual code review and dynamic fuzzing.
->
-> [...]
->
-> I am following a 90-day responsible disclosure policy. I intend to 
-> publish details publicly on 2026-07-27 unless a patch is available 
-> sooner, at which point I will coordinate the disclosure timeline with you.
->
-> Please confirm receipt of this report.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Oops.  The oss-security mailing list is public.  If you want to do 
-coordinated disclosure, you might want to avoid sending the initial 
-report to a public mailing list.  :-)
+OpenSSL Security Advisory [31st July 2023]
+==========================================
 
-It is very fortunate that, as Dmitry Butskoy indicated in his reply, 
-your copy appears to have been tampered with and the official sources do 
-not have this problem.
+Excessive time spent checking DH q parameter value (CVE-2023-3817)
+==================================================================
 
+Severity: Low
 
--- Jacob
+Issue summary: Checking excessively long DH keys or parameters may be very slow.
 
+Impact summary: Applications that use the functions DH_check(), DH_check_ex()
+or EVP_PKEY_param_check() to check a DH key or DH parameters may experience long
+delays. Where the key or parameters that are being checked have been obtained
+from an untrusted source this may lead to a Denial of Service.
 
+The function DH_check() performs various checks on DH parameters. After fixing
+CVE-2023-3446 it was discovered that a large q parameter value can also trigger
+an overly long computation during some of these checks. A correct q value,
+if present, cannot be larger than the modulus p parameter, thus it is
+unnecessary to perform these checks if q is larger than p.
+
+An application that calls DH_check() and supplies a key or parameters obtained
+from an untrusted source could be vulnerable to a Denial of Service attack.
+
+The function DH_check() is itself called by a number of other OpenSSL functions.
+An application calling any of those other functions may similarly be affected.
+The other functions affected by this are DH_check_ex() and
+EVP_PKEY_param_check().
+
+Also vulnerable are the OpenSSL dhparam and pkeyparam command line applications
+when using the "-check" option.
+
+The OpenSSL SSL/TLS implementation is not affected by this issue.
+
+The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
+
+OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 6a1eb62c2 (for 3.1),
+commit 9002fd073 (for 3.0) and commit 91ddeba0f (for 1.1.1) in the OpenSSL git
+repository. It is available to premium support customer in commit 869ad69a (for
+1.0.2).
+
+This issue was reported on 20th July 2023 by Bernd Edlinger. The fix was
+developed by Tomas Mraz.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230731.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmTH1M4ACgkQ2cTSbQ5g
+RJGhtAf9E3HklBKezKOXvAbsPmCqcjySMVTV/JrBjrDn14UIRjZmhVoHd5QGusN2
+ReRtA3bRL41UQYdLKDkdYjp9XmlDDFb5hKO3G7P0ldtDaw21TkIQeI/90OKjgsQu
+A+vpf/TcE1a1Pbz8cIRKYBjIaS3z9yIDW4eB0gytWxsqMxze+9IOYNuAbDa0KsqO
+PFTUiHr5xu01wsdVdHeUMpZ01E8tGbVwgyY7tvCUAUJcjjLcTb9+gXQLn6cmVRJt
+6kU8jsamkiYpL1MoKI5yQvYx0nXZUxXbH1ICPltytC4pBsMEypCCnJTkcJKhRRNt
+76Z4/x3XDqMzapYMPimIRifdzPV9FQ==
+=Ve/V
+-----END PGP SIGNATURE-----
