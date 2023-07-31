@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/4
-Message-ID: <cbfab1ae-27dd-ec5a-ce17-13c69bb3b488@apache.org>
-Date: Tue, 25 Jul 2023 02:33:14 +0000
-From: Charles Zhang <dockerzhang@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-35088: Apache InLong: SQL injection in audit endpoint 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/1
+Message-Id: <69edd0e8-5d29-43ab-b18a-524bbb517944n@googlegroups.com>
+Date: Mon, 31 Jul 2023 07:49:27 -0700 (PDT)
+From: Rafael Silva <rafael.silva@...rform.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Fwd: Node.js security updates for all active release lines, August 2023
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
 
-Affected versions:
 
-- Apache InLong 1.4.0 through 1.7.0
+---------- Forwarded message ---------
+From: Rafael Silva <rafael.silva@...rform.com>
+Date: Monday, July 31, 2023 at 11:48:26 AM UTC-3
+Subject: Node.js security updates for all active release lines, August 2023
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-Description:
 
-Improper Neutralization of Special Elements Used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.7.0. 
-In the toAuditCkSql method, the groupId, streamId, auditId, and dt are directly concatenated into the SQL query statement, which may lead to SQL injection attacks.
-Users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick [1] to solve it.
+The Node.js project will release new versions of all supported release 
+lines on or shortly after Tuesday, August 8th, 2023.
 
-[1]  https://github.com/apache/inlong/pull/8198
+For more information see: 
+https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
 
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-35088
-
+Content of type "text/html" skipped
