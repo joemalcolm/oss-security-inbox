@@ -1,77 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/5
-Message-ID: <e5fcafc733c2fca7baf25537eca9837a6950beac.camel@wisec.it>
-Date: Thu, 20 Apr 2023 12:57:18 +0200
-From: Stefano Di Paola <stefano.dipaola@...ec.it>
-To: oss-security@...ts.openwall.com
-Subject: Re: Checking existence of firewalled web servers in Firefox via iframe.onload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/01/1
+Message-Id: <E1qQqc6-0003DF-Fl@xenbits.xenproject.org>
+Date: Tue, 01 Aug 2023 14:44:42 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 436 v1 (CVE-2023-34320) - arm: Guests can trigger a deadlock on Cortex-A77
 Content-Type: text/plain; charset=utf-8
 
-Hello George,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-from time to time it happens to rediscover techniques issues.
-This is one of those times :)
+            Xen Security Advisory CVE-2023-34320 / XSA-436
 
-In 2006 there has been a lot of interest around browser based port
-scans, in particular to pivot internal networks.
+           arm: Guests can trigger a deadlock on Cortex-A77
 
-The following links are some of them:
+ISSUE DESCRIPTION
+=================
 
-http://web.archive.org/web/20060813034434/http://www.spidynamics.com/assets/documents/JSportscan.pdf
+Cortex-A77 cores (r0p0 and r1p0) are affected by erratum 1508412
+where software, under certain circumstances, could deadlock a core
+due to the execution of either a load to device or non-cacheable memory,
+and either a store exclusive or register read of the Physical
+Address Register (PAR_EL1) in close proximity.
 
-https://www.gnucitizen.org/blog/javascript-port-scanner/
+IMPACT
+======
 
-https://www.blackhat.com/presentations/bh-usa-06/BH-US-06-Grossman.pdf
+A (malicious) guest that doesn't include the workaround for erratum
+1508412 could deadlock the core.  This will ultimately result to
+a deadlock of the system.
 
+VULNERABLE SYSTEMS
+==================
 
-https://www.blackhat.com/presentations/bh-usa-07/Grossman/Whitepaper/bh-usa-07-grossman-WP.pdf
+Systems running all version of Xen are affected.
 
-Some of those thecniques have been mitigated, and some it's still
-there.
+This bug is specific to Arm Cortex-A77 cores r0p0 and r1p0.
 
-There are surely other resources IIRC, although some of them might have
-been deleted, such as the ones on sla.cke.rs which is a real pity..
+MITIGATION
+==========
 
-Cheers!
-Stefano
+There are no known mitigations.
 
-Ps. this email applies to the other Script technique thread/email as
-well.
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-On Tue, 2023-04-18 at 15:59 +0300, Georgi Guninski wrote:
-> In short in Firefox 112, it is possible to check existence
-> of firewalled web servers. This doesn't work in Chrome and Chromium
-> 112
-> for me.
-> 
-> If user A has tcp connection to web server B, then in the
-> following html:
-> 
-> <iframe src="http://B" onload="load()" onerror="alert('error')"
-> id="i1" />
-> 
-> the javascript function load() will get executed if B serves
-> valid document to A's browser and will not be executed otherwise.
-> 
-> This work for both http and https, and for http it is allowed
-> B to be IP address. Under some configurations of Apache2,
-> it serves http despite having https configured.
-> 
-> In some sense, this is close to nmap via javascript in a browser.
-> 
-> Potential privacy implication is when the attacker guess the
-> range of firewalled IPs and check them all in a loop.
-> 
-> For online test:
-> https://j.ludost.net/onload1.html
-> 
--- 
-...oOOo...oOOo....
-Stefano Di Paola
-CTO/Chief Scientist IMQ Minded Security
-Software & Security Engineer
+This issue has been publicly documented.
 
-Twitter: https://twitter.com/WisecWisec
-Work: https://www.mindedsecurity.com 
-..................
+RESOLUTION
+==========
 
+To handle properly the erratum, it is necessary to have an updated
+firmware and that both the hypervisor and guest OSes have the workaround.
+This means it is not possible to security support Xen on the Cortex-A77,
+even on systems which have the workaround enabled.
+
+Applying the attached patches will document the situation and also
+add the workaround in Xen if someone wish to run on Cortex-A77 with
+only trusted guests.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa436/xsa436.patch           xen-unstable - Xen 4.17.x
+xsa436/xsa436-4.16.patch      Xen 4.16.x
+xsa436/xsa436-4.15.patch      Xen 4.15.x
+
+$ sha256sum xsa436* xsa436*/*
+64d34753cdbbcfec2c80db2daad98529bf900935419d0214057e962098b38160  xsa436.meta
+cc0f1303d4ad4c4750bd555622b87a9721e0253759b07915e6ba5216c24e8f8d  xsa436/xsa436.patch
+97d1bd7716637efce1fa5d7f608d7f26b2b396fa20b966c8c0cd22ef61dc07d4  xsa436/xsa436-4.15.patch
+e1264a44df39d56a2c6246d8f9f511d0371a5f416c364ef766ea5a59e7b46f92  xsa436/xsa436-4.16.patch
+$
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTJGVoMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZIpMIAJJ/58V/2+aEQfc0Fd+UDegr+69PsgRVRKofbX5o
+M8r0hCLoowsEvI8vxloaOCTtgEwzFq2zCYsUED1nn0iLk0MqK6t9njkuVD3cmuqt
+WaVXiW7uJU8ph2pwscv2tVPBBYblT7+Y3fuHsbXEjEW40yQkStkD5NMgwH5Z0bhq
+61zCZm+/xK66VBKnrWFdlTaueOLT11/lGPskISquWrYjz7Vr873k89fXdGURn6+9
+N7gdl3eIDqkpGTXvUPFdPwwE+z1ESxGig24RYNQmt3UpLbIQO2wGp0HXbsJ8e1cj
+r4KNhSFm/h6tsjOYxm5Jmi4an4gAOlVxCSNds2/+oZQVHpQ=
+=GNOw
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa436.meta" of type "application/octet-stream" (1098 bytes)
+
+Download attachment "xsa436/xsa436.patch" of type "application/octet-stream" (10609 bytes)
+
+Download attachment "xsa436/xsa436-4.15.patch" of type "application/octet-stream" (10522 bytes)
+
+Download attachment "xsa436/xsa436-4.16.patch" of type "application/octet-stream" (10520 bytes)
