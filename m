@@ -1,49 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/14/3
-Message-ID: <20230514214121.GA18829@openwall.com>
-Date: Sun, 14 May 2023 23:41:21 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Real world vulnerabilities of CWE-1077: Floating Point Comparison with Incorrect Operator?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/02/1
+Message-ID: <2e988a57-9577-8ccc-7d0b-9e663f218431@igalia.com>
+Date: Wed, 2 Aug 2023 11:09:30 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0007
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 24, 2023 at 04:43:29PM +0300, Georgi Guninski wrote:
-> Are there real world examples of vulnerabilities of this:
-> 
-> https://cwe.mitre.org/data/definitions/1077.html
-> CWE-1077: Floating Point Comparison with Incorrect Operator
-> 
-> This issue can prevent the product from running reliably. If the
-> relevant code is reachable by an attacker, then this reliability
-> problem might introduce a vulnerability.
-> 
-> One simple example in python:
-> 
-> >>> A=(0.1+0.2)+0.3;B=0.1+(0.2+0.3);(A==B,A-B,A,B)
-> (False, 1.1102230246251565e-16, 0.6000000000000001, 0.6)
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0007
+------------------------------------------------------------------------
 
-See this thread:
+Date reported           : August 02, 2023
+Advisory ID             : WSA-2023-0007
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0007.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0007.html
+CVE identifiers         : CVE-2023-38133, CVE-2023-38572,
+                          CVE-2023-38592, CVE-2023-38594,
+                          CVE-2023-38595, CVE-2023-38597,
+                          CVE-2023-38599, CVE-2023-38600,
+                          CVE-2023-38611.
 
-https://www.openwall.com/lists/oss-security/2011/01/05/2
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-"Since this problem stems from a single codebase, strtod.c, so it gets a
-single CVE identifier (already assigned CVE-2010-4645).  The CVE
-description will "blame" strtod.c and mention PHP, and any other
-high-profile software that is discovered to use the same vulnerable,
-shared code."
+CVE-2023-38133
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to YeongHyeon Choi (@hyeon101010).
+    Impact: Processing web content may disclose sensitive information.
+    Description: The issue was addressed with improved checks.
 
-CVE-2010-4645 description currently in NVD is:
+CVE-2023-38572
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
+    Pvt. Ltd, Pune - India.
+    Impact: A website may be able to bypass Same Origin Policy.
+    Description: The issue was addressed with improved checks.
 
-"strtod.c, as used in the zend_strtod function in PHP 5.2 before 5.2.17
-and 5.3 before 5.3.5, and other products, allows context-dependent
-attackers to cause a denial of service (infinite loop) via a certain
-floating-point value in scientific notation, which is not properly
-handled in x87 FPU registers, as demonstrated using
-2.2250738585072011e-308."
+CVE-2023-38592
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
+    Pvt. Ltd, Pune - India, Valentino Dalla Valle, Pedro Bernardo, Marco
+    Squarcina, and Lorenzo Veronese of TU Wien.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: A logic issue was addressed with improved restrictions.
 
-Interestingly, at least PHP's fix at the time wasn't to avoid the direct
-comparison, but to avoid having the floating-point values stay in x87 FP
-registers.  This should be sufficient to workaround GCC "bug" 323, but
-it might not be robust across platforms and it does not fix CWE-1077.
+CVE-2023-38594
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Yuhao Hu.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
 
-Alexander
+CVE-2023-38595
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to an anonymous researcher, Jiming Wang, and Jikai Ren.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
+
+CVE-2023-38597
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to 이준성(Junsung Lee) of Cross Republic.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
+
+CVE-2023-38599
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Hritvik Taneja, Jason Kim, Jie Jeff Xu, Stephan van
+    Schaik, Daniel Genkin, and Yuval Yarom.
+    Impact: A website may be able to track sensitive user information.
+    Description: A logic issue was addressed with improved state
+    management.
+
+CVE-2023-38600
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Anonymous working with Trend Micro Zero Day Initiative.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
+
+CVE-2023-38611
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Francisco Alonso (@revskills).
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved memory handling.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+August 02, 2023
