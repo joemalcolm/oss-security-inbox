@@ -1,4 +1,4 @@
-Received: (qmail 17592 invoked by uid 550); 3 Aug 2023 12:06:03 -0000
+Received: (qmail 7259 invoked by uid 550); 2 Aug 2023 09:09:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,145 +7,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15697 invoked from network); 3 Aug 2023 12:03:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	pietroalbini.org; h=cc:content-type:content-type:date:date:from
-	:from:in-reply-to:message-id:mime-version:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1691064221; x=1691150621; bh=Lw
-	EN4+JQyHJIuZH3s5nieheQkABL2CpsWNlIFTRv/t4=; b=PL7nJDUmfVkW3HZjuY
-	uafMKLu98nHek4ObesMHX/YPcjrxjreKBj2/kqrGowB2pbAFKSBg07H9b1bmlgPD
-	1tndo4zHqh2gq4lLnTHPWrlGw8QZ9MbsDg3dsqxRF7Ax+ZKldqF4PiB4Bo3/n7sR
-	SWpDfVXOAGGmbazOgPAwIgxljBqFQAbtlPbf5DqSk+zQYxOlFgI4Zwa4R+CtgxR5
-	xdHeR4h5TuOWTVyln5pJMYYcLksMqO2i0gwb0FR7NBubaLPEPnAB6tGWH8hzWQTP
-	K2cYBXi7MjQ9jwg4oyz3Wq2iZHSLhtTmInUceJrKzkOFQmxI+sodwfacChdTgX/d
-	2+8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1691064221; x=1691150621; bh=LwEN4+JQyHJIuZH3s5nieheQkABL2CpsWNl
-	IFTRv/t4=; b=OswQPUenvEHn89XYX7KklDglDZlKByzzB3YE8MO13L1RfM3JneG
-	juLQhG6M8RcmJzrEyESOXJqBRFQ/DGXNTyN/Sj92CL9to7I40bj8JbuvocuFxNwZ
-	iLvnBdRkUbsvQnWODD/5eUZc2/TiVGB94WTzcpGtQtNdCxbdb7fM1qy5XikM9QBz
-	qOBmNzb15v8NdPoQlgkGbKGh79yw3IEK4vdJSUBatVbutcLGRsLdTZqRY5slYSkr
-	JOg3pvbFk3DibYuBazrdR24/9hoTNFD3bncQvkiGoMOCjA75AJjbX/k/R6UK+hFv
-	EMRULfiWjQDJEfk11445qMQ9EWvc00+eB7A==
-X-ME-Sender: <xms:nJfLZEp0pj5GvO1sykuwHaXL94-JGlWJJxwLK8k2W-DkxNX_agX_Lw>
-    <xme:nJfLZKobiOGQ0SxGVFpbmbR9mt0i7XEevXcpm6k8bK-ig7pXf-a7W2ESXHp-Chuso
-    a77sjJCiNLFbirFxuM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrkedvgdegiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
-    ertdenucfhrhhomhepfdfrihgvthhrohcutehlsghinhhifdcuoehpihgvthhrohesphhi
-    vghtrhhorghlsghinhhirdhorhhgqeenucggtffrrghtthgvrhhnpedvffetueelleegve
-    ejiedvleelvdettdeggeejkeefvdefleegffehjedvuefhtdenucffohhmrghinhepfihi
-    khhiphgvughirgdrohhrghdpghhithhhuhgsrdgtohhmpdhruhhsthdqlhgrnhhgrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhi
-    vghtrhhosehpihgvthhrohgrlhgsihhnihdrohhrgh
-X-ME-Proxy: <xmx:nZfLZJPb5jO_PsW5ZKegg713JOZtASNw_46u-ij5y2p4CtzyMm6yhQ>
-    <xmx:nZfLZL77-KzWJ79aoz_Uc2ujajGMF-6HFPF6I8lw4apySMSrWBmfkA>
-    <xmx:nZfLZD6om2sZaSCcX0iDLXByis-xTg9fzzCiByv2XnS0XlT_lZhEng>
-    <xmx:nZfLZFFescZiAMSJP8RFrkKnYZFzrEURjIiJ9YXSdLUapf-gKu1x4Q>
-Feedback-ID: i6b794706:Fastmail
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-624-g7714e4406d-fm-20230801.001-g7714e440
-Mime-Version: 1.0
-Message-Id: <af14cd93-8173-47f9-b1eb-540e87dbf270@app.fastmail.com>
-Date: Thu, 03 Aug 2023 14:03:20 +0200
-From: "Pietro Albini" <pietro@pietroalbini.org>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain
-Subject: [oss-security] CVE-2023-38497: Cargo does not respect umask when extracting packages
+Received: (qmail 7229 invoked from network); 2 Aug 2023 09:09:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=cWA2hqlTh0ZnG7giP7DyxBHfdBHl0vAmPIJPlu2zXWA=; b=pKp20gNDuE3qHo7/hWYcLEqjW2
+	VBIrOruNKTqZIHbl5TC+30iaSYy5kIRx3cNcioFUXZykU33nGraRrzwIXrcEf9FLudBHIYgsXIAmI
+	zBxvOrYkVxy3jKUwnQrfVAocovgvYNCT3VOHOi5yNURv4Wz4NLH+dvquvpgknxwp8ZvECf+veaI7A
+	3rLZxJ+lHx7GZ+FITih04Or/1MyeEpv1TBoUDRuPEs3uvOLTxr/bmbftB0M0n/Rv/3ZlHid017WWG
+	aPf2q8ATjzQuCcG3UtoXSsDa88sGM21+TDhrgxAhHpfMlwviJ9ii3OPlURdVfVSp31itFJcuPIehu
+	I1qX9bvQ==;
+Message-ID: <2e988a57-9577-8ccc-7d0b-9e663f218431@igalia.com>
+Date: Wed, 2 Aug 2023 11:09:30 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-GB
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0007
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0007
+------------------------------------------------------------------------
 
-The Rust Security Response WG was notified that Cargo did not respect the umask
-when extracting crate archives on UNIX-like systems. If the user downloaded a
-crate containing files writeable by any local user, another local user could
-exploit this to change the source code compiled and executed by the current
-user.
+Date reported           : August 02, 2023
+Advisory ID             : WSA-2023-0007
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0007.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0007.html
+CVE identifiers         : CVE-2023-38133, CVE-2023-38572,
+                          CVE-2023-38592, CVE-2023-38594,
+                          CVE-2023-38595, CVE-2023-38597,
+                          CVE-2023-38599, CVE-2023-38600,
+                          CVE-2023-38611.
 
-This vulnerability has been assigned CVE-2023-38497.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-## Overview
+CVE-2023-38133
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to YeongHyeon Choi (@hyeon101010).
+    Impact: Processing web content may disclose sensitive information.
+    Description: The issue was addressed with improved checks.
 
-In UNIX-like systems, each file has three sets of permissions: for the user
-owning the file, for the group owning the file, and for all other local users.
-The "[umask][1]" is configured on most systems to limit those permissions
-during file creation, removing dangerous ones. For example, the default umask
-on macOS and most Linux distributions only allow the user owning a file to
-write to it, preventing the group owning it or other local users from doing the
-same.
+CVE-2023-38572
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
+    Pvt. Ltd, Pune - India.
+    Impact: A website may be able to bypass Same Origin Policy.
+    Description: The issue was addressed with improved checks.
 
-When a dependency is downloaded by Cargo, its source code has to be extracted
-on disk to allow the Rust compiler to read as part of the build. To improve
-performance, this extraction only happens the first time a dependency is used,
-caching the pre-extracted files for future invocations.
+CVE-2023-38592
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
+    Pvt. Ltd, Pune - India, Valentino Dalla Valle, Pedro Bernardo, Marco
+    Squarcina, and Lorenzo Veronese of TU Wien.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: A logic issue was addressed with improved restrictions.
 
-Unfortunately, it was discovered that Cargo did not respect the umask during
-extraction, and propagated the permissions stored in the crate archive as-is.
-If an archive contained files writeable by any user on the system (and the
-system configuration didn't prevent writes through other security measures),
-another local user on the system could replace or tweak the source code of a
-dependency, potentially achieving code execution the next time the project is
-compiled.
+CVE-2023-38594
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Yuhao Hu.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
 
-## Affected Versions
+CVE-2023-38595
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to an anonymous researcher, Jiming Wang, and Jikai Ren.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
 
-All Rust versions before 1.71.1 on UNIX-like systems (like macOS and Linux) are
-affected. Note that additional system-dependent security measures configured on
-the local system might prevent the vulnerability from being exploited.
+CVE-2023-38597
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to 이준성(Junsung Lee) of Cross Republic.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
 
-Users on Windows and other non-UNIX-like systems are not affected.
+CVE-2023-38599
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Hritvik Taneja, Jason Kim, Jie Jeff Xu, Stephan van
+    Schaik, Daniel Genkin, and Yuval Yarom.
+    Impact: A website may be able to track sensitive user information.
+    Description: A logic issue was addressed with improved state
+    management.
 
-## Mitigations
+CVE-2023-38600
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Anonymous working with Trend Micro Zero Day Initiative.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
 
-We recommend all users to update to Rust 1.71.1, which will be released later
-today, as it fixes the vulnerability by respecting the umask when extracting
-crate archives. If you build your own toolchain, patches for 1.71.0 source
-tarballs are [available here][2].
+CVE-2023-38611
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Francisco Alonso (@revskills).
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved memory handling.
 
-To prevent existing cached extractions from being exploitable, the Cargo binary
-included in Rust 1.71.1 or later will purge the caches it tries to access if
-they were generated by older Cargo versions.
 
-If you cannot update to Rust 1.71.1, we recommend configuring your system to
-prevent other local users from accessing the Cargo directory, usually located
-in `~/.cargo`:
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-```
-chmod go= ~/.cargo
-```
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-## Acknowledgments
-
-We want to thank Addison Crump for responsibly disclosing this to us according
-to the [Rust security policy][3].
-
-We also want to thank the members of the Rust project who helped us disclose
-the vulnerability: Weihang Lo for developing the fix; Eric Huss for reviewing
-the fix; Pietro Albini for writing this advisory; Pietro Albini, Manish
-Goregaokar and Josh Stone for coordinating this disclosure; Josh Triplett, Arlo
-Siemen, Scott Schafer, and Jacob Finkelman for advising during the disclosure.
-
-[1]: https://en.wikipedia.org/wiki/Umask
-[2]: https://github.com/rust-lang/wg-security-response/tree/main/patches/CVE-2023-38497
-[3]: https://www.rust-lang.org/policies/security
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAmTLX38ACgkQ77mGCudS
-Daxn7Q/+Oid260WnVd1sH9njTJt/+zBImTjbfNaMge6PzFteKat/D15YPgpaFEmy
-WM+gH9ejz+oOgjw2DTdeMHzh9i137kchNfzgEY6Cl0SMxc5NymA47Q2zrSt+TBK6
-L362q5dw/Ic1Sf5GRt7J4xeLjY4Vj8FFve1Jnd3VW+QQkATBJn01SLyTD4uXE5tJ
-1UX9IkG1n2y9wXgvkmMYInAnOux8mAb5Sx5JYAtPBO7jV2xfg5ffME6BIzH4F7xw
-wL5k7epvHbtwt2eHVetbHf8UjTiuZxDK8GWbMPqe59AheoLRfgmw06qxVwxI8lEJ
-cWTnZDZEdSXgpy9OphoTYAonQp7qdzoQdXpc4dQxpWkTa3+kvB9SD9H+OVTiYYEv
-EctRt7CQGeTFmpotwq3wwpv8XjWvpjdRie1TIMA5WejZecHiL/iiZxkn00DxW3RP
-dp6Qvqb/jxl7dfRTSm3mH+iqVkv8GtEWwbfK0LE3i9O1ezmQ0m7kjKbgv+NP8p8v
-mtGM1K/IDGYIUgOXha46wqXv9/1f6tCeOcuC9C1j24Jbl7ScmwanQ0VmZWZBfhFD
-EBrLaSlHl45GwSyEaIe7REtOrCR4UCAvHMe1Rxw0KdWe//8Qrtq4agqVg4DYr0/h
-WzDXqlbVAQqKWehaQtJfhQ8xW3XYQBmYLZOsWmBKUKVMnUsTkFQ=
-=XCFS
------END PGP SIGNATURE-----
+The WebKitGTK and WPE WebKit team,
+August 02, 2023
