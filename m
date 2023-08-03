@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2110" "Wednesday" "8" "February" "2017" "22:47:37" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdRJfTeyHky2mxgPvt4+sW6U9K2GqHXZpqprKNqjzeJ=oA@mail.gmail.com>" "55" "Re: [oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)" nil nil nil "2" "2017020901:47:37" "[oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)" (number mark "U       gustavo.grie Feb  8   55/2110  " thread-indent "\"Re: [oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)\"\n") "<20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>" ("<CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>" "<20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9700 invoked by uid 550); 9 Feb 2017 01:47:50 -0000
+Received: (qmail 17592 invoked by uid 550); 3 Aug 2023 12:06:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,95 +7,145 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9676 invoked from network); 9 Feb 2017 01:47:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=KmocEnf6odJDEVkhaYisDqQ7JqVneplO95D3MbyfwwM=;
-        b=XiYcTNJ4T+DSyutlG4Oi0a3b2U9sDbN7J6oMQYOY9ICG7HmfOTykavlo2saEhjHlnM
-         DStFoS0tVPNzu/hBt3uyxhhlzHTk03ARlG99pT2AejSbgEO8T4Pbo3HJoAJGbM37I1oY
-         /pmLI5ATqLylfGbD0hCDhyhP4UasC1LMnBWTz/FUXS/CdI+XDzK/4MrG/PqHVPmSlM2l
-         NXCMYllEC0NPSrfl60NHXlKSU0LjU64gZf1uD91K9ZTUM6YHPxLG/fPqzglDml2Sr4nr
-         ZPq9vEw/mo/ywMCIFFun9Th0wCBDXtSgzn93jOGzfQ7qLS9lOuIJC2DHNPd0QMpfCGZB
-         +E2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=KmocEnf6odJDEVkhaYisDqQ7JqVneplO95D3MbyfwwM=;
-        b=uWjIK8oWO5X487pyG0FyG0V+psY972zQAH1PAQa4vzRqH8Pz93n7ns3qLUD3Mgu2fg
-         Kqb/cu9g1tUrVhzlMO9390cmMD5CkYKyn+6B8yqiUyCHI8nwQ8jMs5YJWmw2NLcwRNZC
-         kCrpMtMq/vYk3v5PL1r3XJ8RnaFLlTG1x+Q3mV8K1Q777g0io+2iAb4Rs4pIgiS7J/1p
-         FNiapOnmxVyDfC6N8RFEdOHJPHAi+CNQ2apxG0eyCqrdXcvyyMuBg7FtyZSWjxALSFXv
-         XbFAam0Z4qLARKEND7DJckf8hlX8I4NwYHNpibdBN8g6WbZB2ew1bRd39SO7Ka2F3Aib
-         +05Q==
-X-Gm-Message-State: AMke39kJjZUPr1M6x41FvGKTUu8rGHS0xGgEP5OlbYbmuqNHW2IOfDqQK5z2VXfqOyadEjJF/HxsWYx39M/wXg==
-X-Received: by 10.107.165.146 with SMTP id o140mr1117036ioe.42.1486604857727;
- Wed, 08 Feb 2017 17:47:37 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>
-References: <CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>
- <20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Wed, 8 Feb 2017 22:47:37 -0300
-Message-ID: <CACn5sdRJfTeyHky2mxgPvt4+sW6U9K2GqHXZpqprKNqjzeJ=oA@mail.gmail.com>
+Received: (qmail 15697 invoked from network); 3 Aug 2023 12:03:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	pietroalbini.org; h=cc:content-type:content-type:date:date:from
+	:from:in-reply-to:message-id:mime-version:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1691064221; x=1691150621; bh=Lw
+	EN4+JQyHJIuZH3s5nieheQkABL2CpsWNlIFTRv/t4=; b=PL7nJDUmfVkW3HZjuY
+	uafMKLu98nHek4ObesMHX/YPcjrxjreKBj2/kqrGowB2pbAFKSBg07H9b1bmlgPD
+	1tndo4zHqh2gq4lLnTHPWrlGw8QZ9MbsDg3dsqxRF7Ax+ZKldqF4PiB4Bo3/n7sR
+	SWpDfVXOAGGmbazOgPAwIgxljBqFQAbtlPbf5DqSk+zQYxOlFgI4Zwa4R+CtgxR5
+	xdHeR4h5TuOWTVyln5pJMYYcLksMqO2i0gwb0FR7NBubaLPEPnAB6tGWH8hzWQTP
+	K2cYBXi7MjQ9jwg4oyz3Wq2iZHSLhtTmInUceJrKzkOFQmxI+sodwfacChdTgX/d
+	2+8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1691064221; x=1691150621; bh=LwEN4+JQyHJIuZH3s5nieheQkABL2CpsWNl
+	IFTRv/t4=; b=OswQPUenvEHn89XYX7KklDglDZlKByzzB3YE8MO13L1RfM3JneG
+	juLQhG6M8RcmJzrEyESOXJqBRFQ/DGXNTyN/Sj92CL9to7I40bj8JbuvocuFxNwZ
+	iLvnBdRkUbsvQnWODD/5eUZc2/TiVGB94WTzcpGtQtNdCxbdb7fM1qy5XikM9QBz
+	qOBmNzb15v8NdPoQlgkGbKGh79yw3IEK4vdJSUBatVbutcLGRsLdTZqRY5slYSkr
+	JOg3pvbFk3DibYuBazrdR24/9hoTNFD3bncQvkiGoMOCjA75AJjbX/k/R6UK+hFv
+	EMRULfiWjQDJEfk11445qMQ9EWvc00+eB7A==
+X-ME-Sender: <xms:nJfLZEp0pj5GvO1sykuwHaXL94-JGlWJJxwLK8k2W-DkxNX_agX_Lw>
+    <xme:nJfLZKobiOGQ0SxGVFpbmbR9mt0i7XEevXcpm6k8bK-ig7pXf-a7W2ESXHp-Chuso
+    a77sjJCiNLFbirFxuM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrkedvgdegiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
+    ertdenucfhrhhomhepfdfrihgvthhrohcutehlsghinhhifdcuoehpihgvthhrohesphhi
+    vghtrhhorghlsghinhhirdhorhhgqeenucggtffrrghtthgvrhhnpedvffetueelleegve
+    ejiedvleelvdettdeggeejkeefvdefleegffehjedvuefhtdenucffohhmrghinhepfihi
+    khhiphgvughirgdrohhrghdpghhithhhuhgsrdgtohhmpdhruhhsthdqlhgrnhhgrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhi
+    vghtrhhosehpihgvthhrohgrlhgsihhnihdrohhrgh
+X-ME-Proxy: <xmx:nZfLZJPb5jO_PsW5ZKegg713JOZtASNw_46u-ij5y2p4CtzyMm6yhQ>
+    <xmx:nZfLZL77-KzWJ79aoz_Uc2ujajGMF-6HFPF6I8lw4apySMSrWBmfkA>
+    <xmx:nZfLZD6om2sZaSCcX0iDLXByis-xTg9fzzCiByv2XnS0XlT_lZhEng>
+    <xmx:nZfLZFFescZiAMSJP8RFrkKnYZFzrEURjIiJ9YXSdLUapf-gKu1x4Q>
+Feedback-ID: i6b794706:Fastmail
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-624-g7714e4406d-fm-20230801.001-g7714e440
+Mime-Version: 1.0
+Message-Id: <af14cd93-8173-47f9-b1eb-540e87dbf270@app.fastmail.com>
+Date: Thu, 03 Aug 2023 14:03:20 +0200
+From: "Pietro Albini" <pietro@pietroalbini.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1141f0c877a92005480f2aea
-Subject: Re: [oss-security] Re: CVE request: Null pointer derefence parsing
- xml file using libxml 2.9.4 (in recover mode)
+Content-Type: text/plain
+Subject: [oss-security] CVE-2023-38497: Cargo does not respect umask when extracting packages
 
---001a1141f0c877a92005480f2aea
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-2017-02-08 19:32 GMT-03:00 Ian Zimmerman <itz@primate.net>:
+The Rust Security Response WG was notified that Cargo did not respect the umask
+when extracting crate archives on UNIX-like systems. If the user downloaded a
+crate containing files writeable by any local user, another local user could
+exploit this to change the source code compiled and executed by the current
+user.
 
-> On 2016-11-05 10:04, Gustavo Grieco wrote:
->
-> > We found a null pointer dereference when parsing a xml file using recover
-> > mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
-> >
-> > $ xmllint --recover crash-libxml2-recover.xml
-> >
-> > ==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
-> > (pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
-> >     #0 0x4fbd87 in xmlDumpElementContent
-> > /home/g/Work/Code/libxml2-2.9.4/valid.c:1181
-> >     #1 0x4fbcd5 in xmlDumpElementContent
-> > /home/g/Work/Code/libxml2-2.9.4/valid.c:1177
-> >     #2 0x4fe5ff in xmlDumpElementDecl
-> > /home/g/Work/Code/libxml2-2.9.4/valid.c:1706
-> >     #3 0x72e714 in xmlBufDumpElementDecl
-> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
-> >     #4 0x73048f in xmlNodeDumpOutputInternal
-> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
-> >     #5 0x72fc47 in xmlNodeListDumpOutput
-> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
-> >     #6 0x72f6d5 in xmlDtdDumpOutput
-> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
-> >     #7 0x73038f in xmlNodeDumpOutputInternal
-> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
-> >     #8 0x732412 in xmlDocContentDumpOutput
-> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
-> >     #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.
-> 4/xmlsave.c:1936
-> >     #10 0x40ba0f in parseAndPrintFile
-> > /home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
-> >     #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
-> >     #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
-> >     #13 0x4032b9 in _start
-> > (/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
->
-> Where did this one ever go?  Is there a CVE?  Is there a patch?
->
+This vulnerability has been assigned CVE-2023-38497.
 
-AFAIK: no patch, no CVE.
+## Overview
 
+In UNIX-like systems, each file has three sets of permissions: for the user
+owning the file, for the group owning the file, and for all other local users.
+The "[umask][1]" is configured on most systems to limit those permissions
+during file creation, removing dangerous ones. For example, the default umask
+on macOS and most Linux distributions only allow the user owning a file to
+write to it, preventing the group owning it or other local users from doing the
+same.
 
->
-> --
-> Please *no* private Cc: on mailing lists and newsgroups
-> Personal signed mail: please _encrypt_ and sign
-> Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
->
+When a dependency is downloaded by Cargo, its source code has to be extracted
+on disk to allow the Rust compiler to read as part of the build. To improve
+performance, this extraction only happens the first time a dependency is used,
+caching the pre-extracted files for future invocations.
 
---001a1141f0c877a92005480f2aea--
+Unfortunately, it was discovered that Cargo did not respect the umask during
+extraction, and propagated the permissions stored in the crate archive as-is.
+If an archive contained files writeable by any user on the system (and the
+system configuration didn't prevent writes through other security measures),
+another local user on the system could replace or tweak the source code of a
+dependency, potentially achieving code execution the next time the project is
+compiled.
+
+## Affected Versions
+
+All Rust versions before 1.71.1 on UNIX-like systems (like macOS and Linux) are
+affected. Note that additional system-dependent security measures configured on
+the local system might prevent the vulnerability from being exploited.
+
+Users on Windows and other non-UNIX-like systems are not affected.
+
+## Mitigations
+
+We recommend all users to update to Rust 1.71.1, which will be released later
+today, as it fixes the vulnerability by respecting the umask when extracting
+crate archives. If you build your own toolchain, patches for 1.71.0 source
+tarballs are [available here][2].
+
+To prevent existing cached extractions from being exploitable, the Cargo binary
+included in Rust 1.71.1 or later will purge the caches it tries to access if
+they were generated by older Cargo versions.
+
+If you cannot update to Rust 1.71.1, we recommend configuring your system to
+prevent other local users from accessing the Cargo directory, usually located
+in `~/.cargo`:
+
+```
+chmod go= ~/.cargo
+```
+
+## Acknowledgments
+
+We want to thank Addison Crump for responsibly disclosing this to us according
+to the [Rust security policy][3].
+
+We also want to thank the members of the Rust project who helped us disclose
+the vulnerability: Weihang Lo for developing the fix; Eric Huss for reviewing
+the fix; Pietro Albini for writing this advisory; Pietro Albini, Manish
+Goregaokar and Josh Stone for coordinating this disclosure; Josh Triplett, Arlo
+Siemen, Scott Schafer, and Jacob Finkelman for advising during the disclosure.
+
+[1]: https://en.wikipedia.org/wiki/Umask
+[2]: https://github.com/rust-lang/wg-security-response/tree/main/patches/CVE-2023-38497
+[3]: https://www.rust-lang.org/policies/security
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAmTLX38ACgkQ77mGCudS
+Daxn7Q/+Oid260WnVd1sH9njTJt/+zBImTjbfNaMge6PzFteKat/D15YPgpaFEmy
+WM+gH9ejz+oOgjw2DTdeMHzh9i137kchNfzgEY6Cl0SMxc5NymA47Q2zrSt+TBK6
+L362q5dw/Ic1Sf5GRt7J4xeLjY4Vj8FFve1Jnd3VW+QQkATBJn01SLyTD4uXE5tJ
+1UX9IkG1n2y9wXgvkmMYInAnOux8mAb5Sx5JYAtPBO7jV2xfg5ffME6BIzH4F7xw
+wL5k7epvHbtwt2eHVetbHf8UjTiuZxDK8GWbMPqe59AheoLRfgmw06qxVwxI8lEJ
+cWTnZDZEdSXgpy9OphoTYAonQp7qdzoQdXpc4dQxpWkTa3+kvB9SD9H+OVTiYYEv
+EctRt7CQGeTFmpotwq3wwpv8XjWvpjdRie1TIMA5WejZecHiL/iiZxkn00DxW3RP
+dp6Qvqb/jxl7dfRTSm3mH+iqVkv8GtEWwbfK0LE3i9O1ezmQ0m7kjKbgv+NP8p8v
+mtGM1K/IDGYIUgOXha46wqXv9/1f6tCeOcuC9C1j24Jbl7ScmwanQ0VmZWZBfhFD
+EBrLaSlHl45GwSyEaIe7REtOrCR4UCAvHMe1Rxw0KdWe//8Qrtq4agqVg4DYr0/h
+WzDXqlbVAQqKWehaQtJfhQ8xW3XYQBmYLZOsWmBKUKVMnUsTkFQ=
+=XCFS
+-----END PGP SIGNATURE-----
