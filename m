@@ -1,53 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/10
-Message-ID: <20230314201652.RlbWr%steffen@sdaoden.eu>
-Date: Tue, 14 Mar 2023 21:16:52 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
-To: Helmut Grohne <helmut@...divi.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: sox: patches for old vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/05/1
+Message-ID: <CAF1aazB_eBVHv75fjPKHQXvuq7jqZhz_9JOhqMhbpPPA+cVRFg@mail.gmail.com>
+Date: Sat, 5 Aug 2023 16:12:10 -0400
+From: Dave <snoopdave@...il.com>
+To: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  srivani.reddy@...urelayer7.net, dev@...ler.apache.org,  Roller User <user@...ler.apache.org>
+Subject: CVE-2023-37581: Apache Roller: XSS vulnerability for site with untrusted users
 Content-Type: text/plain; charset=utf-8
 
-Hello Helmut, list, and special greetings to the happy moderator,
+The Apache Roller project would like to announce a vulnerability that may
+impact Roller installations that allow group blogging with untrusted users.
 
-Steffen Nurpmeso wrote in
- <20230314191132.qDz3u%steffen@...oden.eu>:
- ...
- |Helmut Grohne wrote in
- | <20230314110138.GA1192267@...divi.de>:
- ||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
- ||>  * CVE-2021-33844
- ||
- ||The original fix for this issue would cause a regression. After applying
- ||it, sox would be unable to decode WAV GSM files. This has been reported
- ...
- |You have chosen not to update to latest possible git(?).
- ...
- ||From: Helmut Grohne <helmut@...divi.de>
- ||Subject: wav: reject 0 bits per sample to avoid division by zero
- ||Bug: https://sourceforge.net/p/sox/bugs/349/
- ||Bug-Debian: https://bugs.debian.org/1021135
- | ...
- ||--- a/src/wav.c
- ||+++ b/src/wav.c
- ...
+Severity:
 
-So then my take for the git variant would be as attached.
-It compiles, but no GSM here.
-(It seems our dear sox developer was out of dynamic tension when
-he did that, overall.)
+Medium (only impacts group blogging sites with untrusted users)
 
-Ciao,
+Description:
 
-P.S.: on OpenBSD they committed additional code hunks; i still
-have not looked into this, but have it on that stairway to over
-the clowds to work through.
+Insufficient input validation and sanitation in Weblog Category name,
+Website About and File Upload features in all versions of Apache Roller on
+all platforms allows an authenticated user to perform an XSS attack.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Mitigation:
 
-View attachment "sox-git.patch" of type "text/x-diff" (2475 bytes)
+If you are not running a group blog, then no mitigation is needed. If you
+are running a group blog and you do not have Roller configured for
+untrusted users, then you need to do nothing because you trust your users
+to author raw HTML and other web content.
+
+But, if you are running a group blog and you do not trust your users to
+author HTML, CSS and JavaScript then you should upgrade to Roller 6.1.2 and
+you should disable Roller's File Upload feature. Roller 6.1.2 is available
+for download here: https://roller.apache.org/downloads/downloads.html
+
+Apache Roller would like to thank Srivani Reddy for reporting this
+vulnerability.
+
