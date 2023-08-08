@@ -1,60 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/2
-Message-ID: <ZRhUF9yHctTj5DhO@itl-email>
-Date: Sat, 30 Sep 2023 13:00:03 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/2
+Message-ID: <20230808131324.GA18709@openwall.com>
+Date: Tue, 8 Aug 2023 15:13:24 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Rafael Silva <rafael.silva@...rform.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fwd: Node.js security updates for all active release lines, August 2023
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 30, 2023 at 09:57:13AM +0900, Dominique Martinet wrote:
-> Michael Orlitzky wrote on Fri, Sep 29, 2023 at 07:51:12PM -0400:
-> > > There are workarounds like putting all of your Rust code in a single dynamic
-> > > library, but that's obviously not ideal or always feasible. You can also avoid
-> > > the Rust build tool "cargo" and directly compile dependencies to shared
-> > > libraries with "rustc", but it's not easy to compile Rust code without "cargo".
-> > 
-> > This is the biggest problem. Cargo is the standard way to build rust
-> > projects. Nobody is shipping a ./configure script for their rust
-> > project. Cargo is what's documented. It's what everyone uses. It's
-> > baked into all of the tools, the books, the domain names, the clever
-> > puns. It's also a bundling tool.
-> > 
-> > Without ABI stability, the cargo approach was necessary to avoid
-> > constant breakage. It's unreasonable to expect end users to track down
-> > every rust program they're using and rebuild them all manually every
-> > time a library is rebuilt with a newer version of rust. Instead, it was
-> > decided that the blessed way to build and distribute rust projects
-> > would be to bundle the world along with them.
-> > 
-> > Except, now, this is embarrassing: the only way for people to get
-> > security updates is to track down every rust program they're using and
-> > rebuild them all manually. This further presupposes that someone is
-> > actually looking for security vulnerabilities in the old versions of
-> > libraries bundled on everyone's systems. And that every rust upstream
-> > is aware of every vulnerability in every dependency it bundles. None of
-> > that happens.
+Hi,
+
+Something weird has happened with the below message.  Per the headers,
+it looks like it was resent to oss-security by a third-party(?) still on
+July 31, but it actually only hit our mail server today.  I also wonder
+why it wasn't(?) sent directly by Rafael, as the previous one was:
+
+https://www.openwall.com/lists/oss-security/2023/06/14/4
+
+Anyway, Rafael, let me also use this opportunity to ask you to please
+include actual detail (such as text/plain copy-paste of the blog posts)
+directly in your messages going forward, if you can.  Please also do
+include the blog links, but ideally not only links.
+
+Thanks,
+
+Alexander
+
+On Mon, Jul 31, 2023 at 07:49:27AM -0700, Rafael Silva wrote:
 > 
-> For what it's worth, fedora is working very hard to improve this:
-> they're still rebuilding each crate everytime it's a dependency for a
-> program, but they're shipping each crate (source) only once, so when a
-> lib is updated there's the tooling to rebuild everything that depends on
-> it.
-> (And, if said program no longer compiles, maintainers get the fun of
-> fixing it or contacting upstream to report the problem, hoping they're
-> OK with distributions basically ignoring the Cargo.lock... But I think
-> it's better from a distribution point of view that e.g. nixos that does
-> respect the Cargo.lock, as that means dependencies never get updated if
-> the upstream doesn't pay attention as you pointed out)
-
-It is also worth noting that Rust-the-language supports dynamic linking.
-Once Cargo supports this and downstreams (like Fedora) obtain sufficient
-build capacity, it will be possible to use dynamic linking by performing
-automatic cascading rebuilds whenever a package is upgraded.  Arch
-already does this for Haskell IIUC.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+> 
+> 
+> 
+> ---------- Forwarded message ---------
+> From: Rafael Silva <rafael.silva@...rform.com>
+> Date: Monday, July 31, 2023 at 11:48:26???AM UTC-3
+> Subject: Node.js security updates for all active release lines, August 2023
+> To: nodejs-sec <nodejs-sec@...glegroups.com>
+> 
+> 
+> 
+> 
+> The Node.js project will release new versions of all supported release 
+> lines on or shortly after Tuesday, August 8th, 2023.
+> 
+> 
+> For more information see: 
+> https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
