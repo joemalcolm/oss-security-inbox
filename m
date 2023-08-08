@@ -1,64 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/2
-Message-ID: <CADxcaYX-XvrKe4R-mSzK2iNVm9F_dRtz1Bf2Zi8jqWbCXGKK9g@mail.gmail.com>
-Date: Tue, 3 Oct 2023 16:04:31 -0700
-From: Jean Luc Picard <atari2600a@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/8
+Message-ID: <ZNKJAaZ+mGnORQNS@itl-email>
+Date: Tue, 8 Aug 2023 14:26:58 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com, "Xen. org security team" <security@....org>
+Subject: Re: Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
 Content-Type: text/plain; charset=utf-8
 
-No intent?  It wouldn't be terribly hard, they could just RNG over the
-register afterwards or run a 1/1 to nullify any data left therein.  The
-latter would require control lines to be in place, the latter would just
-mean extending the microcode instruction.  That said I could understand the
-want to depricate zen1 support entirely, everyone upgraded when they could
-it was super super cheap to do so & there weren't really any enterprise
-users.
-
-On Tue, Oct 3, 2023 at 3:54 PM Solar Designer <solar@...nwall.com> wrote:
-
-> On Tue, Oct 03, 2023 at 03:02:41PM -0700, Jean Luc Picard wrote:
-> > Hi, just dropping in, is this the kind of thing to where the userspace &
-> > kernel layers need mitigation until there's microcode mitigation?
->
-> In general, kind of yes - it could have been that kind of thing.
->
-> More specifically, no - in this case, only kernel and hypervisor
-> and system configuration (disable SMT) mitigations are expected.  No
-> userspace mitigations, other than maybe specific algorithms avoiding
-> integer divide operations based on secrets where they can.  While AMD
-> maybe could fix this in microcode (or maybe not, or maybe with
-> unacceptable performance penalty), they expressed no plans to do so.
->
-> > On Tue, Oct 3, 2023 at 2:46???PM Jeremy Stanley <fungi@...goth.org>
-> wrote:
-> > > On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
-> > > [...]
-> > > > If you have a proposal for how you'd prefer it to be done, I'll see
-> what
-> > > > I can do.  Perhaps BCC oss-security, or just send out a second mail?
-> > >
-> > > When I send advisories, I prepare two basically identical E-mail
-> > > messages: one to the project's announcement list and one to
-> > > oss-security (signing both of them). It seems like this is the most
-> > > common approach to avoiding cross-posting between lists.
->
-> Andrew, sending a second message like Jeremy suggests works best.
-> Bcc currently isn't expected to work at all.  Thank you!
->
-> BTW, in this case I think the problem was actually for Xen's lists more
-> than for oss-security - you included xen-announce among the CC'ed lists,
-> and this means e.g. Demi Marie's reply was attempted to be posted to
-> there, while certainly not being a valid Xen announcement.  However, I
-> guess external messages to the announcement list are very easy to reject
-> on your side.  It's not so easy for us on oss-security because we've
-> setup some senders to bypass moderation, yet those people participate in
-> threads on other lists that might just happen to be CC'ed in here and
-> they might not notice that the rest of the sub-thread is moderated-out.
->
-> I'm not too concerned about this issue with Xen announcements in
-> particular - things have worked pretty well with these so far.
->
+On Tue, Aug 08, 2023 at 08:00:09PM +0200, Solar Designer wrote:
+> On Mon, Jul 31, 2023 at 05:00:35PM +0000, Xen. org security team wrote:
+> > The patch provided with earlier versions was buggy.  It unintentionally
+> > disable more bits than expected in the control register.  The contents of this
+> > register is not generally known, so the effects on the system are unknown.
+> > 
+> > A patch correcting this error has been committed and backported to all stable
+> > trees which got the XSA-433 fix originally.  Additionally, it is attached to
+> > this advisory as xsa433-bugfix.patch, and applicable to all branches in this
+> > form.
+> 
+> where xsa433-bugfix.patch includes this description:
+> 
+> > This line:
+> > 
+> > 	val &= ~chickenbit;
+> > 
+> > ends up truncating val to 32 bits, and turning off various errata workarounds
+> > in Zen2 systems.
+> 
+> and that patch then corrects the truncation by changing the type of the
+> chickenbit variable to 64-bit.  The context is:
+> 
+> +	/*
+> +	 * Microcode is the preferred mitigation, in terms of performance.
+> +	 * However, without microcode, this chickenbit (specific to the Zen2
+> +	 * uarch) disables Floating Point Mov-Elimination to mitigate the
+> +	 * issue.
+> +	 */
+> +	val &= ~chickenbit;
+> +	if (sig->rev < good_rev)
+> +		val |= chickenbit;
+> 
+> This leaves me wondering: why have this line at all?  I understand Xen
+> wanting to enable the chicken bit on vulnerable CPUs, but why disable it
+> on other AMD CPUs?  If someone or something had enabled the bit, that's
+> probably intentional, and even if not it probably shouldn't be Xen's
+> business to alter CPU behavior beyond what's necessary for Xen itself to
+> work reliably and securely.
+> 
+> Am I missing something?
+> 
 > Alexander
->
 
+The microcode is effective when late-loaded, and this code might run
+after a microcode update and/or kexec.  Not sure if this is the actual
+explanation.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
