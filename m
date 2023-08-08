@@ -1,26 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/12/2
-Message-ID: <Y8A+/ys+5oIRzr9V@kroah.com>
-Date: Thu, 12 Jan 2023 18:10:23 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/3
+Message-Id: <E1qTQ3w-0002JL-FQ@xenbits.xenproject.org>
+Date: Tue, 08 Aug 2023 17:00:04 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 432 v2 (CVE-2023-34319) - Linux: buffer overrun in netback due to unusual packet
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
-> Hi all,
-> 
-> # Description
-> A NULL Pointer Dereference bug in nvmet_setup_auth
-> (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
-> Since the bug occurs in the authentication feature, it can be easily
-> triggered by an unauthorized client in the pre-auth stage.
-> Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Meta-comment, why are CVE's being assigned for issues found, and then
-fixed, in development kernel releases?  Who assigned this CVE, MITRE or
-someone else?
+            Xen Security Advisory CVE-2023-34319 / XSA-432
+                               version 2
 
-thanks,
+        Linux: buffer overrun in netback due to unusual packet
 
-greg k-h
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The fix for XSA-423 added logic to Linux'es netback driver to deal with
+a frontend splitting a packet in a way such that not all of the headers
+would come in one piece.  Unfortunately the logic introduced there
+didn't account for the extreme case of the entire packet being split
+into as many pieces as permitted by the protocol, yet still being
+smaller than the area that's specially dealt with to keep all (possible)
+headers together.  Such an unusual packet would therefore trigger a
+buffer overrun in the driver.
+
+IMPACT
+======
+
+An unprivileged guest can cause Denial of Service (DoS) of the host by
+sending network packets to the backend, causing the backend to crash.
+
+Data corruption or privilege escalation seem unlikely but have not been
+ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems using a Linux based network backend with kernel 3.19 and
+newer are vulnerable, on the assumption that the fix for XSA-423 was
+taken.  Systems using other network backends are not known to be
+vulnerable.
+
+MITIGATION
+==========
+
+Using another PV network backend (e.g. the qemu based "qnic" backend)
+will mitigate the problem.
+
+Using a dedicated network driver domain per guest will mitigate the
+problem.
+
+CREDITS
+=======
+
+This issue was discovered by Ross Lagerwall of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa432-linux.patch           Linux 6.3 - 6.5-rc
+
+$ sha256sum xsa432*
+bf7acd23be1d185c40aca8b4f7700e25afd482d9ac8671ae22b021380b059091  xsa432-linux.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZKYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZv9YH+wSW/H8BRo3hat2ssz4GOkNf/okVzOFyde0n6rsI
+uPeRbRqjnd9f+rvHFIYhi9sa2MUSZ9Lg/WwmZ1YdTFXB1PBZw1iDujB1HvDu7Xlm
+E0f6IkdhC17YaiBnmsUOwGhE/1wj0KOF86t92VX5skWK9NQ2OMOSYsBxHLFkNmBd
+VNHApva8ICfSfUA4pXuh3Zgaw2yw8k2ZcyFN8Aixd+1Vrxq7jfZ/PUL6hfLaNjLs
+a5xdj/b5+RuwRMqOI8jCFQXSgZLPDtZIIAFRi93ZMtUraARSjiN0tLpoRXsKp1u+
+0T1sgTApHJGTm7jgPAz3WMCh2innRBkEVvU55hRKZ4INIbc=
+=mMq6
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa432-linux.patch" of type "application/octet-stream" (2685 bytes)
