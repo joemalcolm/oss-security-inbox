@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3183" "Wednesday" "1" "July" "2015" "12:12:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150701161241.4E08636E002@smtpvbsrv1.mitre.org>" "78" "[oss-security] Re: CVE Request: two security issues in openSSH 6.9" nil nil nil "7" "2015070116:12:41" "[oss-security] Re: CVE Request: two security issues in openSSH 6.9" (number mark "        cve-assign@m Jul  1   78/3183  " thread-indent "\"[oss-security] Re: CVE Request: two security issues in openSSH 6.9\"\n") "<5593DC98.7000204@suse.de>" ("<5593DC98.7000204@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20017 invoked by uid 550); 1 Jul 2015 16:12:53 -0000
+Received: (qmail 27940 invoked by uid 550); 8 Aug 2023 17:00:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +6,118 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19999 invoked from network); 1 Jul 2015 16:12:52 -0000
-In-Reply-To: <5593DC98.7000204@suse.de>
-Message-Id: <20150701161241.4E08636E002@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  1 Jul 2015 12:12:41 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: two security issues in openSSH 6.9
-To: astieger@suse.de
+Received: (qmail 27859 invoked from network); 8 Aug 2023 17:00:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=XF+UrQzxCsQAO1ziUVnoWjoX2Wjp8D0sLL+ai1kpVc8=; b=pwUzTpFpAOwLBfHDBG7djxbQM4
+	mREzvolVB1T3ZIfsnyjjGMkT/B+fTcsuD7VhpYtCCAZNS96m/098QIRxLlkXVmFn20J4I+/sPmHpx
+	J1cwyy6tGPdnkTtnXoAV/aPTQ13vad0Cl5z3AwoJOSTGUzVOOnXTgoBGmiqJ8jMc2P20=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1qTQ4E-0002Mq-KX@xenbits.xenproject.org>
+Date: Tue, 08 Aug 2023 17:00:22 +0000
+Subject: [oss-security] Xen Security Advisory 434 v1 (CVE-2023-20569) - x86/AMD:
+ Speculative Return Stack Overflow
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-> The openSSH 6.9 release contains the following changes declared as
-> security issues:
+            Xen Security Advisory CVE-2023-20569 / XSA-434
 
-We don't know whether the upstream vendor uses:
+               x86/AMD: Speculative Return Stack Overflow
 
-   Security
-   --------
+ISSUE DESCRIPTION
+=================
 
-exclusively to mean that they are announcing vulnerability fixes, or
-sometimes instead to mean that a change is otherwise related to
-security.
+Researchers from ETH Zurich have extended their prior research (XSA-422,
+Branch Type Confusion, a.k.a Retbleed) and have discovered INCEPTION,
+also know as RAS (Return Address Stack) Poisoning, and Speculative
+Return Stack Overflow.
 
-> https://anongit.mindrot.org/openssh.git/commit/?h=V_6_9&id=1bf477d3cdf1a864646d59820878783d42357a1d
+The RAS is updated when a CALL instruction is predicted, rather than at
+a later point in the pipeline.  However, the RAS is still fundamentally
+a circular stack.
 
-Use CVE-2015-5352 for the issue in which the refusal deadline was not
-checked within the x11_open_helper function. (There's extra code to
-make the x11_refuse_time value usable within two source-code files,
-but adding that code doesn't seem to be related to any independent
-problem.)
+It is possible to poison the branch type and target predictions such
+that, at a point of the attackers choosing, the branch predictor
+predicts enough CALLs back-to-back to wrap around the entire RAS and
+overwrite a correct return prediction with one of the attackers
+choosing.
 
+This allows the attacker to control RET speculation in a victim context,
+and leak arbitrary data as a result.
 
-We didn't completely understand the rationale for moving "system(cmd)"
-after the x11_refuse_time assignment, or whether this is addressing an
-independent problem. It seems conceivable that there's a very slow
-network connection to the X server, and an "xauth generate" may
-therefore take a very long time. So, we think this might add a risk
-that, by the time system(cmd) finishes, the refusal deadline has
-already passed. If we're misunderstanding this or there's a
-vulnerability fixed by moving the system(cmd) call, please let us
-know.
+For more details, see:
+  https://comsec.ethz.ch/inception
+  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-7005
 
-> - if (x11_refuse_time != 0 && monotime() >= x11_refuse_time) {
-> + if (x11_refuse_time != 0 && (u_int)monotime() >= x11_refuse_time) {
+IMPACT
+======
 
-We're guessing that this isn't a vulnerability fix, and that the
-author just somehow doesn't want x11_refuse_time to be a time_t.
+An attacker might be able to infer the contents of memory belonging to
+other guests.
 
-> "fail open"
-> behaviour in the X11 server when clients attempted connections with
-> expired credentials.
+VULNERABLE SYSTEMS
+==================
 
-The scope of CVE-2015-5352 does not include any fail-open
-characteristics of an X server. There could possibly be a separate CVE
-ID if there is an error that needs to be fixed in the X codebase.
+Only CPUs from AMD are believed to be potentially vulnerable.  CPUs from
+other manufacturers are not believed to be impacted.
 
+At the time of writing, all in-support AMD CPUs (that is, Zen1 thru Zen4
+microarchitectures) are believed to be potentially vulnerable.  Older
+CPUs have not been analysed.
 
->  * ssh-agent(1): fix weakness of agent locking (ssh-add -x) to
->    password guessing by implementing an increasing failure delay,
->    storing a salted hash of the password rather than the password
->    itself and using a timing-safe comparison function for verifying
->    unlock attempts.
+By default following XSA-422, Xen mitigates BTC on AMD Zen2 and older
+CPUs by issuing an IBPB on entry to Xen.  On Zen2 and older CPUs, this
+is believed to be sufficient to protect against SRSO too.
 
-Our current thought is that a CVE ID may not be needed because attacks
-against ssh-agent locking don't cross a privilege boundary. In other
-words, the changelog entry could be interpreted to mean addition of a
-new security feature related to a threat model that wasn't in the
-previous design goals (e.g., password guessing by malware running
-under the same account).
+AMD Zen3 and Zen4 CPUs are susceptible to SRSO too.  All versions of Xen
+are vulnerable on these CPUs.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+MITIGATION
+==========
+
+On Zen3 and Zen4, there is no mitigation.
+
+RESOLUTION
+==========
+
+AMD are producing microcode updates for Zen3 and Zen4.  Consult your
+dom0 OS vendor.
+
+With the microcode update applied, booting Xen with
+`spec-ctrl=ibpb-entry` is sufficient to protect against SRSO.
+
+The appropriate set of patches will default to using IBPB-on-entry on
+Zen3 and Zen4 CPUs, as well as synthesise new CPUID bits for guests to
+use in order to determine their susceptibility in a migration-safe way.
+
+The patches for this issue interact texturally but not logically with
+the fixes for XSA-435, which itself has complexities.  See XSA-435 for
+details of how to obtain the fixes.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVlBB+AAoJEKllVAevmvms7U0IAJ/pkfdTyBGALMZ9cGuQ3drG
-Y4k+4sD105NJ6skzjfGOrssX9fjgc0z/ZRo+E7oups8/FrZeKwAshVATh1kxkOPe
-tCyFFSSIVohbNM1xIluSGLgtlXSTjM7useVL589YFyrO6sXrqYjh27fu616XDPPq
-etQA+P07uj/AdPR+REWIyeX7Err9D9LEIB8kP42CYcHxblxZe5tfKixFeq6+q7bm
-p/MDDckK374YoE7LXXPzF1e93CM2opAykI+W2J8W5IwL0I2C8vKO2eLUFZxkvVAH
-IAV168RI5oAZnw7uwpI5evYuvM+VWwAJwWXtaPh+u054g4TuEWdw+Gi2tDb2j5o=
-=kcq2
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZOsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ8uMIAL2xBV/B3O0t90aFhX75dOWZBUkujMN0xHDjyI+c
+lnEmy44QnX+jI9IBSuc4qaJmLXnUO71WsMU1XeKucOnh9E1kjgHB2H0GgS+GI6dG
+LtAVxn+RRK39YIO0CHAXvr/tlX/eyodvxtmxOKLRY47J0hHLToXBEdc2VfXrUEfk
+8AZn4hhHDGfRMX7jguxPFnrKCS3sZCFn1FYPtUxNGi2BbUzFacc+zZ2OISR7C59H
+24q9UIgUVoVwOnUWBEzW6oHmjP44Q0kG3E8LhZQhr1YkAG++KapgTPllc3cU4xja
+G8ozTeMeyVbM29EMS7QknOlkvMSUmtgzNg7Pt6El9oSyuH4=
+=rrcN
 -----END PGP SIGNATURE-----
+
+--=separator--
