@@ -1,97 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/15/1
-Message-ID: <0c888152-705e-e0cf-9184-82e6ba7d1c6a@igalia.com>
-Date: Wed, 15 Nov 2023 21:31:10 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0010
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/6
+Message-ID: <20230808180009.GA20736@openwall.com>
+Date: Tue, 8 Aug 2023 20:00:09 +0200
+From: Solar Designer <solar@...nwall.com>
+To: "Xen. org security team" <security@....org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0010
-------------------------------------------------------------------------
+On Mon, Jul 31, 2023 at 05:00:35PM +0000, Xen. org security team wrote:
+> The patch provided with earlier versions was buggy.  It unintentionally
+> disable more bits than expected in the control register.  The contents of this
+> register is not generally known, so the effects on the system are unknown.
+> 
+> A patch correcting this error has been committed and backported to all stable
+> trees which got the XSA-433 fix originally.  Additionally, it is attached to
+> this advisory as xsa433-bugfix.patch, and applicable to all branches in this
+> form.
 
-Date reported           : November 15, 2023
-Advisory ID             : WSA-2023-0010
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0010.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0010.html
-CVE identifiers         : CVE-2022-32919, CVE-2022-32933,
-                          CVE-2022-46705, CVE-2022-46725,
-                          CVE-2023-32359, CVE-2023-41983,
-                          CVE-2023-42852.
+where xsa433-bugfix.patch includes this description:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> This line:
+> 
+> 	val &= ~chickenbit;
+> 
+> ends up truncating val to 32 bits, and turning off various errata workarounds
+> in Zen2 systems.
 
-CVE-2022-32919
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
-    Credit to @real_as3617.
-    Impact: Visiting a website that frames malicious content may lead to
-    UI spoofing. Description: The issue was addressed with improved UI
-    handling.
-    WebKit Bugzilla: 247461
+and that patch then corrects the truncation by changing the type of the
+chickenbit variable to 64-bit.  The context is:
 
-CVE-2022-32933
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
-    Credit to Binoy Chitale, MS student, Stony Brook University, Nick
-    Nikiforakis, Associate Professor, Stony Brook University, Jason
-    Polakis, Associate Professor, University of Illinois at Chicago, Mir
-    Masood Ali, PhD student, University of Illinois at Chicago, Chris
-    Kanich, Associate Professor, University of Illinois at Chicago, and
-    Mohammad Ghasemisharif, PhD Candidate, University of Illinois at
-    Chicago.
-    Impact: A website may be able to track the websites a user visited
-    in private browsing mode. Description: An information disclosure
-    issue was addressed by removing the vulnerable code.
-    WebKit Bugzilla: 239547
++	/*
++	 * Microcode is the preferred mitigation, in terms of performance.
++	 * However, without microcode, this chickenbit (specific to the Zen2
++	 * uarch) disables Floating Point Mov-Elimination to mitigate the
++	 * issue.
++	 */
++	val &= ~chickenbit;
++	if (sig->rev < good_rev)
++		val |= chickenbit;
 
-CVE-2022-46705
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
-    Credit to Hyeon Park (@tree_segment) of Team ApplePIE.
-    Impact: Visiting a malicious website may lead to address bar
-    spoofing. Description: A spoofing issue existed in the handling of
-    URLs. This issue was addressed with improved input validation.
-    WebKit Bugzilla: 247287
+This leaves me wondering: why have this line at all?  I understand Xen
+wanting to enable the chicken bit on vulnerable CPUs, but why disable it
+on other AMD CPUs?  If someone or something had enabled the bit, that's
+probably intentional, and even if not it probably shouldn't be Xen's
+business to alter CPU behavior beyond what's necessary for Xen itself to
+work reliably and securely.
 
-CVE-2022-46725
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
-    Credit to Hyeon Park (@tree_segment) of Team ApplePIE.
-    Impact: Visiting a malicious website may lead to address bar
-    spoofing. Description: A spoofing issue existed in the handling of
-    URLs. This issue was addressed with improved input validation.
-    WebKit Bugzilla: 247289
+Am I missing something?
 
-CVE-2023-32359
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
-    Credit to Claire Houston.
-    Impact: A user's password may be read aloud by a text-to-speech
-    accessibility feature. Description: This issue was addressed with
-    improved redaction of sensitive information.
-    WebKit Bugzilla: 248717
-
-CVE-2023-41983
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.2.
-    Credit to 이준성(Junsung Lee).
-    Impact: Processing web content may lead to a denial-of-service.
-    Description: The issue was addressed with improved memory handling.
-    WebKit Bugzilla: 260757
-
-CVE-2023-42852
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.2.
-    Credit to an anonymous researcher.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: A logic issue was addressed with improved checks.
-    WebKit Bugzilla: 260173
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-November 15, 2023
+Alexander
