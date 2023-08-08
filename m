@@ -1,104 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/29/3
-Message-ID: <20230329133450.GK21675@suse.com>
-Date: Wed, 29 Mar 2023 15:34:50 +0200
-From: Johannes Segitz <jsegitz@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: polkitd service user privilege separation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/4
+Message-Id: <E1qTQ4E-0002Mq-KX@xenbits.xenproject.org>
+Date: Tue, 08 Aug 2023 17:00:22 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 434 v1 (CVE-2023-20569) - x86/AMD: Speculative Return Stack Overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'm a member of the SUSE product security team. During the product audit
-for SLES 15 SP5 I noticed an issue with polkit:
+            Xen Security Advisory CVE-2023-20569 / XSA-434
 
-# Default rules config writeable for the service user
+               x86/AMD: Speculative Return Stack Overflow
 
-polkit stores rules in /etc/polkit-1/rules.d. We follow the upstream
-provided permissions for this folder, so polkitd owns it and permissions
-are set to 700:
+ISSUE DESCRIPTION
+=================
 
-localhost:/etc/polkit-1/rules.d # ls -lah
-total 64K
-drwx------ 1 polkitd root  44 Mar  8 18:29 .
-drwxr-xr-x 1 root    root  14 Mar  8 17:16 ..
--rw-r--r-- 1 root    root 64K Mar  8 17:18 90-default-privs.rules
+Researchers from ETH Zurich have extended their prior research (XSA-422,
+Branch Type Confusion, a.k.a Retbleed) and have discovered INCEPTION,
+also know as RAS (Return Address Stack) Poisoning, and Speculative
+Return Stack Overflow.
 
-Since the user owns the directory it's easy to escalate from user polkitd
-to root. The user can create own rules that are interpreted by the polkit
-authority which in turn grants root privileges via e.g. the setuid-root
-binary pkexec.
+The RAS is updated when a CALL instruction is predicted, rather than at
+a later point in the pipeline.  However, the RAS is still fundamentally
+a circular stack.
 
-# POC
+It is possible to poison the branch type and target predictions such
+that, at a point of the attackers choosing, the branch predictor
+predicts enough CALLs back-to-back to wrap around the entire RAS and
+overwrite a correct return prediction with one of the attackers
+choosing.
 
-To show the impact of this get access to a shell running as polkitd. The
-easiest way is to spawn a root shell, then change into the polkitd user:
+This allows the attacker to control RET speculation in a victim context,
+and leak arbitrary data as a result.
 
-root $ sudo -u polkitd /bin/sh
-polkitd $ id
-uid=475(polkitd) gid=475(polkitd) groups=475(polkitd)
-polkitd $ pkexec id
-==== AUTHENTICATING FOR org.freedesktop.policykit.exec ====
-Authentication is needed to run `/usr/bin/id' as the super user
-Authenticating as: root
-Password:
+For more details, see:
+  https://comsec.ethz.ch/inception
+  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-7005
 
-So with the default rules the root password would be required. Since the
-rules directory is writeable we can add a rule that allows everything:
+IMPACT
+======
 
-polkitd $ echo 'polkit.addRule(function(action, subject) { return "yes"; });' > /etc/polkit-1/rules.d/00-allow-all.rules
-polkitd $ pkexec id
-uid=0(root) gid=0(root) groups=0(root)
+An attacker might be able to infer the contents of memory belonging to
+other guests.
 
-This demonstration caused some confusion in the original report to
-upstream. The POC is here to demonstrate the issue, not how real world
-exploitation would work. A real world exploit would rely on another
-vulnerability to be able to act as polkitd and then use the issue outlined
-here to escalate privileges.
+VULNERABLE SYSTEMS
+==================
 
-# Proposed solution
+Only CPUs from AMD are believed to be potentially vulnerable.  CPUs from
+other manufacturers are not believed to be impacted.
 
-If you can act as the polkitd user you can also likely influence the polkit
-daemon and gain root this way, so this just makes it (a lot) easier to exploit.
-I still think it's worthwhile to keep the user for the daemon and not run it as
-root.
+At the time of writing, all in-support AMD CPUs (that is, Zen1 thru Zen4
+microarchitectures) are believed to be potentially vulnerable.  Older
+CPUs have not been analysed.
 
-For existing installations change the permissions of
-- /etc/polkit-1/rules.d
-- /usr/share/polkit-1/rules.d
-to root:polkitd, 750 to make it harder to gain root privileges.
+By default following XSA-422, Xen mitigates BTC on AMD Zen2 and older
+CPUs by issuing an IBPB on entry to Xen.  On Zen2 and older CPUs, this
+is believed to be sufficient to protect against SRSO too.
 
-SELinux or other more fine-grained control could be used to make escalating
-to root harder, by restricting the amount of freedom polkitd has. But in
-the end it's probably not possible to fully prevent this.
+AMD Zen3 and Zen4 CPUs are susceptible to SRSO too.  All versions of Xen
+are vulnerable on these CPUs.
 
-Currently the documentation raises the expectation that there's a security
-boundary (man polkit):
-The polkit authority is implemented as an system daemon, polkitd(8), which
-itself has little privilege as it is running as the polkitd system user.
+MITIGATION
+==========
 
-Through this posting I wanted to raise awareness that the polkitd user in a
-default installation is equivalent to root without any further counter
-measures. In my opinion this should be stated in the man pages so that
-users are aware of this. At the moment most people would likely assume that
-the user serves a similar roles as other service users.
+On Zen3 and Zen4, there is no mitigation.
 
-# Communication with upstream
+RESOLUTION
+==========
 
-- 2023-03-09: Informed upstream via confidential ticket:
-  https://gitlab.freedesktop.org/polkit/polkit/-/issues/191
-- 2023-03-15: Proposed documentation fix, not merged
-  https://gitlab.freedesktop.org/polkit/polkit/-/issues/191#note_1824052
-- 2023-03-21: Partial fix for the permission in
-  https://gitlab.freedesktop.org/polkit/polkit/-/merge_requests/153
-- 2023-03-29: Issue is public
+AMD are producing microcode updates for Zen3 and Zen4.  Consult your
+dom0 OS vendor.
 
-Johannes
--- 
-GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Frankenstraße 146, 90461 Nürnberg, Germany
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-(HRB 36809, AG Nürnberg)
+With the microcode update applied, booting Xen with
+`spec-ctrl=ibpb-entry` is sufficient to protect against SRSO.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+The appropriate set of patches will default to using IBPB-on-entry on
+Zen3 and Zen4 CPUs, as well as synthesise new CPUID bits for guests to
+use in order to determine their susceptibility in a migration-safe way.
+
+The patches for this issue interact texturally but not logically with
+the fixes for XSA-435, which itself has complexities.  See XSA-435 for
+details of how to obtain the fixes.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZOsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ8uMIAL2xBV/B3O0t90aFhX75dOWZBUkujMN0xHDjyI+c
+lnEmy44QnX+jI9IBSuc4qaJmLXnUO71WsMU1XeKucOnh9E1kjgHB2H0GgS+GI6dG
+LtAVxn+RRK39YIO0CHAXvr/tlX/eyodvxtmxOKLRY47J0hHLToXBEdc2VfXrUEfk
+8AZn4hhHDGfRMX7jguxPFnrKCS3sZCFn1FYPtUxNGi2BbUzFacc+zZ2OISR7C59H
+24q9UIgUVoVwOnUWBEzW6oHmjP44Q0kG3E8LhZQhr1YkAG++KapgTPllc3cU4xja
+G8ozTeMeyVbM29EMS7QknOlkvMSUmtgzNg7Pt6El9oSyuH4=
+=rrcN
+-----END PGP SIGNATURE-----
+
