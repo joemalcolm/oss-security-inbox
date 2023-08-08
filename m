@@ -1,103 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/10
-Message-ID: <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
-Date: Fri, 29 Sep 2023 19:26:45 +0000
-From: "zdi@...ndmicro.com" <zdi@...ndmicro.com>
-To: Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Exim4 MTA CVEs assigned from ZDI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/5
+Message-Id: <E1qTQ4I-0002Ny-AH@xenbits.xenproject.org>
+Date: Tue, 08 Aug 2023 17:00:26 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 435 v1 (CVE-2022-40982) - x86/Intel: Gather Data Sampling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The ZDI reached out multiple times to the developers regarding multiple bug reports with little progress to show for it. After our disclosure timeline was exceeded by many months, we notified the maintainer of our intent to publicly disclose these bugs, at which time we were told, "you do what you do." If these bugs have been appropriately addressed, we will update our advisories with a link to the security advisory, code check-in, or other public documentation closing the issue.
+            Xen Security Advisory CVE-2022-40982 / XSA-435
 
-Thanks,
-The ZDI
+                    x86/Intel: Gather Data Sampling
 
------Original Message-----
-From: Solar Designer <solar@...nwall.com>
-Sent: Friday, September 29, 2023 11:59 AM
-To: oss-security@...ts.openwall.com
-Cc: ZDI Researcher Mailbox <zdi@...ndmicro.com>
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
+ISSUE DESCRIPTION
+=================
 
-Hi,
+A researcher has discovered Gather Data Sampling, a transient execution
+side-channel whereby the AVX GATHER instructions can forward the content
+of stale vector registers to dependent instructions.
 
-Thank you for posting this, Heiko!  Also thank you Markus for bringing this up in the other thread:
+The physical register file is a structure competitively shared between
+sibling threads.  Therefore an attacker can infer data from the sibling
+thread, or from a more privileged context.
 
-https://www.openwall.com/lists/oss-security/2023/09/29/3
+For more details, see:
+  https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/gather-data-sampling.html
 
-I've attached plain text exports of the ZDI advisories to this message for archival.
+IMPACT
+======
 
-Out of the Exim Bugzilla entries in Markus' message, only
-https://bugs.exim.org/show_bug.cgi?id=3001 is currently open to the public, and it says:
+An attacker can infer data from different contexts on the same core.
+Examples of such data includes key material, cipher and plaintext from
+the AES-NI instructions, or the contents of REP-MOVS instructions,
+commonly used to implement memcpy().
 
-> Bug 3001 - infoleak in SPA authenticator, client
->
-> Comment 1 Jeremy Harris 2023-05-11 20:02:32 UTC
->
-> ZDI-CAN-17433 (Trend Micro)
->
-> A crafted SPA challenge from the server can cause the client
-> authenticator to read OOB; the data is then returned to the server.
->
-> Fix: validate the offset contained in the challenge, to avoid reading
-> past the end of the challenge data structure.
->
-> Vulnerable since at least 4.50, probably longer.
->
-> Comment 2 Heiko Schlittermann 2023-09-29 16:01:58 UTC
->
-> should be fixed in 04107e98d58efb69f7e2d7b81176e5374c7098a3
+VULNERABLE SYSTEMS
+==================
 
-On Fri, Sep 29, 2023 at 06:06:11PM +0200, Heiko Schlittermann wrote:
-> the ZDI assigned multiple CVEs to the Exim-MTA and published them
-> recently:
->
-> CVE            Link                                                      Exim-Bug
-> --------------+---------------------------------------------------------+-----
-> CVE-2023-42114
-> https://www.zerodayinitiative.com/advisories/ZDI-23-1468/  3001 fixed
-> CVE-2023-42115
-> https://www.zerodayinitiative.com/advisories/ZDI-23-1469/  2999 fixed
-> CVE-2023-42116
-> https://www.zerodayinitiative.com/advisories/ZDI-23-1470/  3000 fixed
-> CVE-2023-42117
-> https://www.zerodayinitiative.com/advisories/ZDI-23-1471/
-> CVE-2023-42118
-> https://www.zerodayinitiative.com/advisories/ZDI-23-1472/
-> CVE-2023-42119
-> https://www.zerodayinitiative.com/advisories/ZDI-23-1473/
->
-> The ZDI contacted us in June 2022. We asked about details but didn't
-> get answers we were able to work with.
->
-> Next contact with ZDI was in May 2023. Right after this contact we
-> created project bug tracker for 3 of the 6 issues. 2 high scored of
-> them are fixed (OOB access). A minor scored (info leak) is fixed too.
->
-> Fixes are available in a protected repository and are ready to be
-> applied by the distribution maintainers.
+Systems running all versions of Xen are affected.
 
-Are distros allowed to make their updates public as soon as they can (presumably after requesting access to the protected repository)?
+See the Intel documentation for a list of affected processors.
 
-I suggest that you set a specific date/time e.g. in 2 days from now when both the Exim project will make the repo and the fixed bug entries (2999 and 3000) public _and_ distros will release updates.
+CPUs from other hardware vendors are not believed to be affected.
 
-> The remaining issues are debatable or miss information we need to fix
-> them.
->
-> We're more than happy to provide fixes for all issues as soon as we
-> receive detailed information.
+MITIGATION
+==========
 
-Are you actively requesting such information from ZDI now?
+This issue can be mitigated by disabling AVX, either by booting Xen with
+`cpuid=no-avx` on the command line, or by specifying `cpuid="host:avx=0"`
+in the vm.cfg file of all untrusted VMs.  However, this may come with a
+significant performance impact on the system and is not recommended for
+anyone able to deploy the microcode and patch described below.
 
-This looks like sloppy handling of these issues so far by both ZDI and Exim - neither team pinging the other for 10 months, then Exim taking 4 months to fix even the 2 high-scored issues it did have sufficient info on.  What are you doing to improve the handling from this point on?
+RESOLUTION
+==========
 
-Thanks again,
+Intel are producing microcode updates to address the issue for most
+affected CPUs.  Consult your dom0 OS vendor.  This microcode is
+effective when late-loaded, which can be performed on a live system
+without reboot.
 
-Alexander
-TREND MICRO EMAIL NOTICE
+Without microcode, disabling AVX is the only mitigation.  This is
+implemented by the patches to Xen on hardware believed to be vulnerable.
 
-The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
+In addition, to indicate safety to guest kernels, Xen needs to
+synthesise new bits for guests to see, which depends on MSR_ARCH_CAPS
+being visible to guests.  The work to support MSR_ARCH_CAPS is extensive
+and has been going on in public in earnest since March.  The backports
+to security trees are more-extensive still.
 
-For details about what personal information we collect and why, please see our Privacy Notice on our website at: Read privacy policy<http://www.trendmicro.com/privacy>
+Therefore, we have decided to produce new releases on all stable trees.
+Please find fixes in the respective branches under the following release
+tags:
+
+  RELEASE-4.17.2
+  RELEASE-4.16.5
+  RELEASE-4.15.5
+  RELEASE-4.14.6
+
+Other release activities (tarballs, announcements, etc) will happen in
+due course.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZQcMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZoMQH/RAjt/wZHCg/aFunhbiAbdzWmJo36Cz6KL+R2G+v
+sBiPMsBvZxSikl6yeYAADgEUFKqNWQhLCAl6oaqgPbtDhFOxeZ72DRhgwZIx2KNL
+85ECXk3rFhipiai6oHHbOemjPglXsyz+B5+NE64gOjpjdms9cfvfWnMnSQRF+NKa
+vbpEeP+KIK1EcmKOp/xfzjjgEzg7VmJ8jnct0A77sUQYi3Ll1+ENLEcqDElP+Qob
+wmM6QYkz78q/xO+R+bT+NNJ33q6JXQdixXa3ddiWrcvL/A3SveqtQh78u9daKmFM
+aaivBTgJSWk0348aelEF8UjLNKx8rVRc4Dk2elioiE1PCe8=
+=05gz
+-----END PGP SIGNATURE-----
+
