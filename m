@@ -1,50 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/17/2
-Message-ID: <20231217205642.GA7164@openwall.com>
-Date: Sun, 17 Dec 2023 21:56:42 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Jonathan Wright <jonathan@...alinux.org>, Andrew Lukoshko <alukoshko@...alinux.org>, benny Vasquez <benny@...alinux.org>, Igor Seletskiy <iseletsk@...alinux.org>, Darya Malyavkina <dmalyavkina@...udlinux.com>, Jack Aboutboul <jack@...alinux.org>
-Subject: Re: AlmaLinux Distros List Application
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/7
+Message-ID: <240c8fa4-2872-0584-3cfd-7648ea4dc0eb@citrix.com>
+Date: Tue, 8 Aug 2023 19:18:51 +0100
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: Solar Designer <solar@...nwall.com>, "Xen. org security team" <security@....org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 08/08/2023 7:00 pm, Solar Designer wrote:
+> On Mon, Jul 31, 2023 at 05:00:35PM +0000, Xen. org security team wrote:
+>> The patch provided with earlier versions was buggy.  It unintentionally
+>> disable more bits than expected in the control register.  The contents of this
+>> register is not generally known, so the effects on the system are unknown.
+>>
+>> A patch correcting this error has been committed and backported to all stable
+>> trees which got the XSA-433 fix originally.  Additionally, it is attached to
+>> this advisory as xsa433-bugfix.patch, and applicable to all branches in this
+>> form.
+> where xsa433-bugfix.patch includes this description:
+>
+>> This line:
+>>
+>> 	val &= ~chickenbit;
+>>
+>> ends up truncating val to 32 bits, and turning off various errata workarounds
+>> in Zen2 systems.
+> and that patch then corrects the truncation by changing the type of the
+> chickenbit variable to 64-bit.  The context is:
+>
+> +	/*
+> +	 * Microcode is the preferred mitigation, in terms of performance.
+> +	 * However, without microcode, this chickenbit (specific to the Zen2
+> +	 * uarch) disables Floating Point Mov-Elimination to mitigate the
+> +	 * issue.
+> +	 */
+> +	val &= ~chickenbit;
+> +	if (sig->rev < good_rev)
+> +		val |= chickenbit;
+>
+> This leaves me wondering: why have this line at all?  I understand Xen
+> wanting to enable the chicken bit on vulnerable CPUs, but why disable it
+> on other AMD CPUs?  If someone or something had enabled the bit, that's
+> probably intentional, and even if not it probably shouldn't be Xen's
+> business to alter CPU behavior beyond what's necessary for Xen itself to
+> work reliably and securely.
+>
+> Am I missing something?
 
-On Tue, Dec 12, 2023 at 02:35:35PM -0600, Jonathan Wright wrote:
-> I'm submitting this application on behalf of the AlmaLinux OS Foundation.
-> 
-> Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would be
-> joining if approved.
+There is an earlier exit in this function for any non-Zen2 system.
 
-This looks reasonable to me.
+So here, we are strictly on Zen2 (all vulnerable), and either have good
+microcode or not.
 
->       Historically we have been following Red Hat releases within 1-2 days,
->       and since our shift in June away from following Red Hat we have been able
->       to release some security updates ahead of Red Hat (Iperf3 patch and AMD
->       microcode/kernel patches specifically). We would not be beholden to CentOS
->       Stream updates for our patch releases.
+The microcode fix is far more performant than the chickenbit.
 
-This isn't a lot yet.  I suppose linux-distros membership would enable
-you to do ahead of Red Hat updates more often?
+This chickenbit is something unrelated to FP move-elimination on other
+microarchitectures.
 
->       Immediately we can begin to help reporters ensure their reports are
->       following the requirements and are confirmed/replied to. As we
-> advance our
->       understanding of how things operate, and the need arises, we can
-> expand our
->       work into contributing more deeply.
-
-These tasks are already accepted by some distros.  We can indeed
-re-assign, so that those older members handle more complex tasks
-instead, or maybe you'd volunteer for some of the tasks from the
-"Administrative tasks mostly unrelated to (linux-)distros lists (but
-relevant to the wider community)" category?  This category is
-essentially about expanding and improving the public oss-security
-content and its visibility.
-
->       Darya Malyavkina from CloudLinux will vouch for us.
-
-For others reading this - Darya has been on linux-distros for CloudLinux
-for a long while, so this satisfies the requirement as written.
-
-Alexander
+~Andrew
