@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2012" "Tuesday" "6" "September" "2016" "20:54:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160907005443.AF3AB6C5469@smtpvmsrv1.mitre.org>" "48" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list" nil nil nil "9" "2016090700:54:43" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list" (number mark "U       cve-assign@m Sep  6   48/2012  " thread-indent "\"[oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list\"\n") "<alpine.LFD.2.20.1609061716580.21893@wniryva>" ("<alpine.LFD.2.20.1609061716580.21893@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30521 invoked by uid 550); 7 Sep 2016 00:54:56 -0000
+Received: (qmail 28119 invoked by uid 550); 8 Aug 2023 17:00:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +7,116 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30461 invoked from network); 7 Sep 2016 00:54:55 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1609061716580.21893@wniryva>
-Message-Id: <20160907005443.AF3AB6C5469@smtpvmsrv1.mitre.org>
-Date: Tue,  6 Sep 2016 20:54:43 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list
+Received: (qmail 28074 invoked from network); 8 Aug 2023 17:00:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=en5sf8iDi6wMkkzej5Amgs+r5p4GVNXHBgZi2MSJb+Y=; b=MPKkG5jYUN1tO1svplxiF31itS
+	EfRa7qABXTT6mdyJmfkzEiCeGh5QCYMrshVCbcsWvIX4jERLUo2cWdKnhrclAI/UVwb1RBiK7fOtQ
+	ffUNRwKar3WoVhwdaOwzqdlBce6uDGTNfeRu1D1JuxEEmTV07FG3UNJGgqPEUEEMhfDo=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1qTQ4I-0002Ny-AH@xenbits.xenproject.org>
+Date: Tue, 08 Aug 2023 17:00:26 +0000
+Subject: [oss-security] Xen Security Advisory 435 v1 (CVE-2022-40982) - x86/Intel: Gather
+ Data Sampling
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
-> emulation support is vulnerable to an infinite loop issue. It could occur
-> while processing an IO request descriptor, building SG list.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00772.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1373478
+            Xen Security Advisory CVE-2022-40982 / XSA-435
 
->> In PVSCSI paravirtual SCSI bus, the request descriptor data
->> length is defined to be 64 bit. While building SG list from
->> a request descriptor, it gets truncated to 32bit in routine
->> 'pvscsi_convert_sglist'. This could lead to an infinite loop
->> situation for arbitrarily large 'dataLen' values. Check
->> SG list element count to avoid  it.
+                    x86/Intel: Gather Data Sampling
 
-Use CVE-2016-7156.
+ISSUE DESCRIPTION
+=================
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
-that may be an expected place for a later update.
+A researcher has discovered Gather Data Sampling, a transient execution
+side-channel whereby the AVX GATHER instructions can forward the content
+of stale vector registers to dependent instructions.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+The physical register file is a structure competitively shared between
+sibling threads.  Therefore an attacker can infer data from the sibling
+thread, or from a more privileged context.
+
+For more details, see:
+  https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/gather-data-sampling.html
+
+IMPACT
+======
+
+An attacker can infer data from different contexts on the same core.
+Examples of such data includes key material, cipher and plaintext from
+the AES-NI instructions, or the contents of REP-MOVS instructions,
+commonly used to implement memcpy().
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+See the Intel documentation for a list of affected processors.
+
+CPUs from other hardware vendors are not believed to be affected.
+
+MITIGATION
+==========
+
+This issue can be mitigated by disabling AVX, either by booting Xen with
+`cpuid=no-avx` on the command line, or by specifying `cpuid="host:avx=0"`
+in the vm.cfg file of all untrusted VMs.  However, this may come with a
+significant performance impact on the system and is not recommended for
+anyone able to deploy the microcode and patch described below.
+
+RESOLUTION
+==========
+
+Intel are producing microcode updates to address the issue for most
+affected CPUs.  Consult your dom0 OS vendor.  This microcode is
+effective when late-loaded, which can be performed on a live system
+without reboot.
+
+Without microcode, disabling AVX is the only mitigation.  This is
+implemented by the patches to Xen on hardware believed to be vulnerable.
+
+In addition, to indicate safety to guest kernels, Xen needs to
+synthesise new bits for guests to see, which depends on MSR_ARCH_CAPS
+being visible to guests.  The work to support MSR_ARCH_CAPS is extensive
+and has been going on in public in earnest since March.  The backports
+to security trees are more-extensive still.
+
+Therefore, we have decided to produce new releases on all stable trees.
+Please find fixes in the respective branches under the following release
+tags:
+
+  RELEASE-4.17.2
+  RELEASE-4.16.5
+  RELEASE-4.15.5
+  RELEASE-4.14.6
+
+Other release activities (tarballs, announcements, etc) will happen in
+due course.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXz2NGAAoJEHb/MwWLVhi2qM8P+gKKm8ns+cMWH6cCcT+M7Izh
-G3uH1T2Kgz+8JhXDAKAyYrCnPXFkrAHULGX8RYmZJ8pDeKpNfqcF6NIz8TqaF+e2
-1HHDKX7NsSn3ODL3KI0JdAq1nfQ4leut0h+6OQnAbUAVJJGplWNPfRd2eIqfOUHv
-/Ew51J6R6oEaVV/+QL8PYNz/7U2MbmlrH56Pj4v3pqzeEc4MJgkX5EcGc01n/vZd
-/ir6HjirzTajWsAoOZqRiQ9euentjOGwsTPIxCQ4v+MKWFdU+AdMonpoKic6dQj+
-IuVQA0y59pkcXxfcWOhGghanCYh3hvnrSWUtL/PDeUSufyAwKJaVoo/IPKtwZVMW
-PrsaxfPTzlYzwHc0usJPuMWjEytf9mWNU0jX/84tMNakTFLYXcCsAl9tH5iHmiVp
-MIvAACVTQSQ7qx6s4UTz5PLbln1kZ3E5ZsXEv5rTZktwQ+2FDl31nuNLKZckYxKw
-6bz4BHFO0FYmFU0TNjVIGfOypGh4ctX1N4pj9tAx87fk7+qT+LXDeNUztkW0nsdM
-7zMI193LH+SzTcDH0B7Fkyeg2K8CmqPnctaRdhHo/man9i/MEZUiYn3Skk+AhJd/
-yr3bwK5I1stfSSglp+uzjzLNZUQmg9sOA0aJrCddaQzyiNitusVDSCW6AKruBzln
-1pxmVAwD3Eyefat/NQi8
-=DZ2t
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZQcMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZoMQH/RAjt/wZHCg/aFunhbiAbdzWmJo36Cz6KL+R2G+v
+sBiPMsBvZxSikl6yeYAADgEUFKqNWQhLCAl6oaqgPbtDhFOxeZ72DRhgwZIx2KNL
+85ECXk3rFhipiai6oHHbOemjPglXsyz+B5+NE64gOjpjdms9cfvfWnMnSQRF+NKa
+vbpEeP+KIK1EcmKOp/xfzjjgEzg7VmJ8jnct0A77sUQYi3Ll1+ENLEcqDElP+Qob
+wmM6QYkz78q/xO+R+bT+NNJ33q6JXQdixXa3ddiWrcvL/A3SveqtQh78u9daKmFM
+aaivBTgJSWk0348aelEF8UjLNKx8rVRc4Dk2elioiE1PCe8=
+=05gz
 -----END PGP SIGNATURE-----
+
+--=separator--
