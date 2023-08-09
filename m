@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7364" "Tuesday" "7" "April" "2015" "03:34:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150407073412.354C26C0003@smtpvmsrv1.mitre.org>" "172" "[oss-security] Re: CVE request: MediaWiki 1.24.2/1.23.9/1.19.24" nil nil nil "4" "2015040707:34:12" "[oss-security] Re: CVE request: MediaWiki 1.24.2/1.23.9/1.19.24" (number mark "        cve-assign@m Apr  7  172/7364  " thread-indent "\"[oss-security] Re: CVE request: MediaWiki 1.24.2/1.23.9/1.19.24\"\n") "<CAKcmtDzP7GhQWdTNb2XaVD1dzfDPXzyjWRhoYaKPrZy+NALygA@mail.gmail.com>" ("<CAKcmtDzP7GhQWdTNb2XaVD1dzfDPXzyjWRhoYaKPrZy+NALygA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32672 invoked by uid 550); 7 Apr 2015 07:34:25 -0000
+Received: (qmail 11440 invoked by uid 550); 9 Aug 2023 20:45:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,185 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32625 invoked from network); 7 Apr 2015 07:34:23 -0000
-In-Reply-To: <CAKcmtDzP7GhQWdTNb2XaVD1dzfDPXzyjWRhoYaKPrZy+NALygA@mail.gmail.com>
-Message-Id: <20150407073412.354C26C0003@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  7 Apr 2015 03:34:12 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: MediaWiki 1.24.2/1.23.9/1.19.24
-To: csteipp@wikimedia.org
+Received: (qmail 9286 invoked from network); 9 Aug 2023 20:42:36 -0000
+X-SourceIP: 86.4.155.149
+X-Authenticated-Sender: zarniwhoop@ntlworld.com
+X-Spam: 0
+X-Authority: v=2.4 cv=B/V/kshM c=1 sm=1 tr=0 ts=64d3fa30 cx=a_exe
+ a=69rpv3kaMhdJyoIRs2s4pw==:117 a=69rpv3kaMhdJyoIRs2s4pw==:17
+ a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=-LCu6K_DAAAA:8 a=RV0cxRsU81jr09BM0WsA:9
+ a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=J-JL0wFkX4TZ9yyCLs2E:22
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ntlworld.com;
+	s=meg.feb2017; t=1691613744;
+	bh=JwEDRfnN1KOCERMmNHoEP3rNQfUfRWanvqDGnSIiIHw=;
+	h=Date:From:To:Subject;
+	b=StSD0M62VBgifpzR+GH6oOk1FP/181/3N8FNrXgsa50sK4g+MyeFilY92j9PgB1de
+	 NqrRnZjsd+AnAs8fDM/V8AbtL/KIuugvD3C5QlEwxyd3iCWbS7mKUAI/vzr8pJ1SAR
+	 iVOYV3QvncG/k/CX41t/EyErE/yEObmA4vMB91+LvkiBRadez2DuU/ccEsGyM9AEUp
+	 ujVgtUmW9hD9734B/YcfdW/XJMBzt3Jkse/2oYi4xLE0AIfFpj2raaAFdaStVr/P3k
+	 Uq8UGtxZoL+G840PnEbklZNkvXzyLPrY8lPautqM/YB9AktOXLUsm5NEXDUjkFCDQQ
+	 6yjc/R5Ub95DA==
+Date: Wed, 9 Aug 2023 21:42:23 +0100
+From: Ken Moffat <zarniwhoop@ntlworld.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <ZNP6L6elsrB8pFsh@llamedos.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-Clacks-Overhead: GNU Terry Pratchett
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/2.2.10 (2023-03-25)
+X-CMAE-Envelope: MS4xfNNB490X1M3xo/Nfasgft/FNMMCpr5frev8oOg4Jcrzt5rX1sjh6uld8FUEp1nNjX1Oib7O5WyKi4IVet1mPO7XHrrGJ9eaWpUZ2Iq8PNDd+dJMR4roP
+ /12YeJ+vUlQCCZwCYY7qkO2bGGchMySdllwLiTFrqlUT+6uVRYKdOlsMe3/pK7+KIlKW/fSIdpmfScjJ/V64i6NKKtwEqS/mskk=
+Subject: [oss-security] Node.js security updates for August
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Reading the blog entry for this,
+https://nodejs.org/en/blog/vulnerability/august-2023-security-releases
+it appears that ALL of these vulnerabilities are for an experimental
+feature ?
 
-> * iSEC Partners discovered a way to circumvent the SVG MIME blacklist for
-> embedded resources (iSEC-WMF1214-11). This allowed an attacker to embed
-> JavaScript in the SVG. The issue was additionally identified by Mario
-> Heiderich / Cure53. MIME types are now whitelisted.
-> https://phabricator.wikimedia.org/T85850
+If so, is it practical to disable the feature when building current
+LTS releases, or indeed when building current release ?  If not, is
+there any easy way to determine what uses it ?
 
-Use CVE-2015-2931 for this issue involving an incomplete list of
-disallowed MIME types for data: URIs (the application/xml type wasn't
-in this list). In other words, CVE-2015-2931 does not refer more
-generally to the desirability of the "MIME types are now whitelisted"
-decision.
-
-
-> * MediaWiki user Bawolff pointed out that the SVG filter to prevent
-> injecting JavaScript using animate elements was incorrect.
-> https://phabricator.wikimedia.org/T86711
-
-Use CVE-2015-2932 for this issue involving an incomplete list of
-dangerous parts of HTML5. (The list is supposed to include all uses of
-'animate attributename="xlink:href"' in SVG documents.)
-
-
-> * MediaWiki user Bawolff reported a stored XSS vulnerability due to the way
-> attributes were expanded in MediaWiki's Html class, in combination with
-> LanguageConverter substitutions.
-> https://phabricator.wikimedia.org/T73394
-
-Use CVE-2015-2933 for this XSS issue.
-
-Also, this part of T73394 seems potentially interesting although it is
-apparently neither a MediaWiki bug nor a PHP bug:
-
-  https://phabricator.wikimedia.org/T73394#750588
-  preg_match() silently returns false on limit exhaustion
-
-In other words, if a PHP application uses
-"ini_set('pcre.recursion_limit'" and does not properly handle the
-preg_match return value, then a hard-to-find XSS vulnerability might
-exist.
-
-
-> * Internal review discovered that MediaWiki's SVG filtering could be
-> bypassed with entity encoding under the Zend interpreter. This could be
-> used to inject JavaScript. This issue was also discovered by Mario Gomes /
-> Beyond Security.
-> https://phabricator.wikimedia.org/T88310
-
-Use CVE-2015-2934 for this interaction issue in which (roughly
-speaking) secure operation of MediaWiki had been relying on a libxml
-behavior that was removed for unrelated security reasons. (In other
-words, it's apparently an usual type of vulnerability whose avoidance
-requires studying all "improvements" in new releases of library code,
-and determining whether any of them have unintended adverse
-consequences.)
-
-
-> * iSEC Partners discovered a way to bypass the style filtering for SVG
-> files (iSEC-WMF1214-3) to load external resource. This could violate the
-> anonymity of users viewing the SVG.
-> https://phabricator.wikimedia.org/T85349
-
-Use CVE-2015-2935 for this issue of information leaks observable in
-log files on an attacker-controlled web server. This issue exists
-because of an incomplete fix for CVE-2014-7199.
-
-
-> * Internal review and iSEC Partners discovered (iSEC-WMF1214-1) that
-> MediaWiki versions using PBKDF2 for password hashing (the default since
-> 1.24) are vulnerable to DoS attacks using extremely long passwords.
-> https://phabricator.wikimedia.org/T64685
-
-Use CVE-2015-2936 for this vulnerability with a CPU consumption impact.
-
-
-> * Internal review found that MediaWiki is vulnerable to "Quadratic Blowup"
-> DoS attacks, under both HHVM and Zend PHP.
-> https://phabricator.wikimedia.org/T71210
-
-Use CVE-2015-2937. This is a quadratic issue and isn't the same as the
-CVE-2015-2942 exponential issue affecting only HHVM (see below).
-
-
-> * iSEC Partners reported that the MediaWiki feature allowing a user to
-> preview another user's custom JavaScript could be abused for privilege
-> escalation (iSEC-WMF1214-10). This feature has been removed.
-> https://phabricator.wikimedia.org/T85855
-
-Use CVE-2015-2938 for this XSS issue.
-
-
-> * Extension:Scribunto - MediaWiki user Jackmcbarn discovered that function
-> names were sanitized in Lua error backtraces, which could lead to XSS.
-> https://phabricator.wikimedia.org/T85113
-
-Use CVE-2015-2939 for this XSS issue. In the above quoted text, "were
-sanitized" should be "were not sanitized" instead.
-
-
-> * Extension:CheckUser - iSEC Partners discovered that the CheckUser
-> extension did not prevent CSRF attacks on the form allowing checkusers to
-> look up sensitive information about other users (iSEC-WMF1214-6). Since the
-> use of CheckUser is logged, the CSRF could be abused to defame a trusted
-> user or flood the logs with noise.
-> https://phabricator.wikimedia.org/T85858
-
-For purposes of CVE, we'll accept reports from a software's author
-stating that there is a CSRF vulnerability for a request to read data.
-Use CVE-2015-2940. This does not mean that similar reports from
-arbitrary researchers about arbitrary products would have CVE IDs
-assigned. For many products, the implied security policy does not
-include a CSRF protection mechanism that prevents all
-undesirable/confusing log entries.
-
-
-> I'm not sure if CVE's are assigned for specific runtime
-> configurations? For MediaWiki, we say that HHVM support is experimental,
-> although we do run Wikipedia on it.
-
-There isn't a general rule that CVE IDs are assigned for arbitrary
-unsupported deployments of a product. Our impression is that users may
-realistically decide that the HHVM support is "complete enough" for
-their purposes. Also, in some cases, HHVM support is referenced or
-documented in places that don't directly discuss the experimental
-nature, such as on the http://www.mediawiki.org/wiki/HHVM and
-http://www.mediawiki.org/wiki/Manual:How_to_debug pages. So, here, we
-do want to assign CVE IDs applicable only to HHVM deployments.
-
-
-> * iSEC Partners discovered a XSS vulnerability in the way api errors were
-> reflected under HHVM versions before 3.6.1 (iSEC-WMF1214-8). MediaWiki now
-> detects and mitigates this issue on older versions of HHVM.
-> https://phabricator.wikimedia.org/T85851
-
-It seems that the major concern here is the HHVM vulnerability fixed
-by the
-https://github.com/facebook/hhvm/commit/324701c9fd31beb4f070f1b7ef78b115fbdfec34
-commit. Use CVE-2014-9714 for that HHVM vulnerability.
-
-As far as we can tell, T85851 is recommending
-https://gerrit.wikimedia.org/r/#/c/201020/1/includes/api/ApiFormatWddx.php,unified
-as a vulnerability fix for MediaWiki deployments that use an older
-version of HHVM. Use CVE-2015-2941 for this MediaWiki vulnerability in
-which unsafe calls to wddx_serialize_value can occur.
-
-
-> * iSEC Partners discovered that MediaWiki's SVG and XMP parsing running
-> under HHVM was susceptible to "Billion Laughs" DoS attacks
-> (iSEC-WMF1214-13).
-> https://phabricator.wikimedia.org/T85848
-
-Use CVE-2015-2942 for this exponential issue, which is different from
-the CVE-2015-2937 quadratic issue mentioned above.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVI4etAAoJEKllVAevmvmsxk0H/R0orjbDyN56mEOJ9a/rlowS
-D5cuaiDe4dzWbqEOzii8g+3d2iVsb1BUJHxfuGOFjf0zstb2KhJP5iaKN6hsXcHn
-HKdtHE8uKMzs5DYxxeGsbphrp/J/Uff1+G7vwPmBTG3Z+tcLNXstuoIO18Pg3HuP
-yT/P37KKJvlyhn5l325M4h0ln3kRu7egDHEctsJGNnb0IHoSoT8VmaiMYs/OwdP/
-GT0XZVc7iNIBpXx0Ao03HxaSMgEfFs5X8PNnO95j9V9ngcP7zKQVT9ycsBHAhawP
-dP+etPml55OJJKViqVZji5Dvv6BxZWnBACgzDI9ZcNFSHSykgr6Y3E+6nxmEKWY=
-=vxIE
------END PGP SIGNATURE-----
+ĸen
+-- 
+Ankh-Morpork! It's a wonderful town! The trolls are up and the
+dwarfs are down! Slightly better than living in a hole in the
+ground! Ankh-Morpork! It's a wonderfuuuuullll townnn!
