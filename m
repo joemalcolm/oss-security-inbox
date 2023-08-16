@@ -1,89 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/3
-Message-ID: <CAN5gJXqyLMcJD0Wnfy6B4OJKpaggjZGHN-nRkk8DDO=s=y6TLg@mail.gmail.com>
-Date: Tue, 20 Jun 2023 17:16:58 -0700
-From: Alistair Crooks <agc@...src.org>
-To: oss-security@...ts.openwall.com
-Subject: PAM/Kerberos issue on NetBSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/16/1
+Message-ID:  <MAXPR01MB350100A5BBBD4B0E8AE07E79D015A@MAXPR01MB3501.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 16 Aug 2023 03:45:35 +0000
+From: Srivani Reddy <srivani.reddy@...urelayer7.net>
+To: Dave <snoopdave@...il.com>, Apache Security Team <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "dev@...ler.apache.org" <dev@...ler.apache.org>, Roller User <user@...ler.apache.org>, Sandeep Kamble <sandeep@...urelayer7.net>
+Subject: Re: CVE-2023-37581: Apache Roller: XSS vulnerability for site with untrusted users
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Hi Dave,
 
-The fix for a pam/kerberos issue on NetBSD has already been fixed and
-pullups requested for release branches, see:
-https://mail-index.netbsd.org/source-changes/2023/06/20/msg145461.html
-(commit log appended to this mail) and CVE-2023-3326
-
-For various platforms, the exposure is not thought to be that great
-
-+ Linux - not believed to be affected (would be good to get some
-corroboration for this)
-+ FreeBSD - affected, but not in the default install
-+ OpenBSD - no kerberos
-+ DragonflyBSD - no kerberos
-+ NetBSD - sadly affected
-
-This was found via code inspection by Taylor Campbell (riastradh@...BSD.org
-)
-
-My apologies for the pre-announcement not making the distros list ahead of
-time, an internal miscommunication.
+Can you please change the name Srivani Reddy to our company SecureLayer7 Technologies Pvt Ltd as we submitted the vulnerability?
 
 Regards,
-agc
-
-Module Name:    src
-Committed By:   riastradh
-Date:           Tue Jun 20 22:17:18 UTC 2023
-
-Modified Files:
-        src/lib/libpam/modules/pam_krb5: pam_krb5.8 pam_krb5.c
-
-Log Message:
-pam_krb5: Refuse to operate without a key to verify tickets.
-
-New allow_kdc_spoof overrides this to restore previous behaviour
-which was vulnerable to KDC spoofing, because without a host or
-service key, pam_krb5 can't distinguish the legitimate KDC from a
-spoofed one.
-
-This way, having pam_krb5 enabled isn't dangerous even if you create
-an empty /etc/krb5.conf to use client SSO without any host services.
-
-Perhaps this should use krb5_verify_init_creds(3) instead, and
-thereby respect the rather obscurely named krb5.conf option
-verify_ap_req_nofail like the Linux pam_krb5 does, but:
-
-- verify_ap_req_nofail is default-off (i.e., vulnerable by default),
-- changing verify_ap_req_nofail to default-on would probably affect
-  more things and therefore be riskier,
-- allow_kdc_spoof is a much clearer way to spell the idea,
-- this patch is a smaller semantic change and thus less risky, and
-- a security change with compatibility issues shouldn't have a
-  workaround that might introduce potentially worse security issues
-  or more compatibility issues.
-
-Perhaps this should use krb5_verify_user(3) with secure=1 instead,
-for simplicity, but it's not clear how to do that without first
-prompting for the password -- which we shouldn't do at all if we
-later decide we won't be able to use it anyway -- and without
-repeating a bunch of the logic here anyway to pick the service name.
-
-References about verify_ap_req_nofail:
-- mit-krb5 discussion about verify_ap_req_nofail:
-  https://mailman.mit.edu/pipermail/krbdev/2011-January/009778.html
-- Oracle has the default-secure setting in their krb5 system:
-  https://docs.oracle.com/cd/E26505_01/html/E27224/setup-148.html
-  https://docs.oracle.com/cd/E26505_01/html/816-5174/krb5.conf-4.html#REFMAN4krb5.conf-4
-  https://docs.oracle.com/cd/E19253-01/816-4557/gihyu/
-- Heimdal issue on verify_ap_req_nofail default:
-  https://github.com/heimdal/heimdal/issues/1129
+Srivani
 
 
-To generate a diff of this commit:
-cvs rdiff -u -r1.12 -r1.13 src/lib/libpam/modules/pam_krb5/pam_krb5.8
-cvs rdiff -u -r1.30 -r1.31 src/lib/libpam/modules/pam_krb5/pam_krb5.c
+________________________________
+From: Dave <snoopdave@...il.com>
+Sent: Sunday, August 6, 2023 1:42:26 AM
+To: Apache Security Team <security@...che.org>; oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>; Srivani Reddy <srivani.reddy@...urelayer7.net>; dev@...ler.apache.org <dev@...ler.apache.org>; Roller User <user@...ler.apache.org>
+Subject: CVE-2023-37581: Apache Roller: XSS vulnerability for site with untrusted users
 
-Please note that diffs are not public domain; they are subject to the
-copyright notices on the relevant files.
+
+The Apache Roller project would like to announce a vulnerability that may impact Roller installations that allow group blogging with untrusted users.
+
+Severity:
+
+Medium (only impacts group blogging sites with untrusted users)
+
+Description:
+
+Insufficient input validation and sanitation in Weblog Category name, Website About and File Upload features in all versions of Apache Roller on all platforms allows an authenticated user to perform an XSS attack.
+
+Mitigation:
+
+If you are not running a group blog, then no mitigation is needed. If you are running a group blog and you do not have Roller configured for untrusted users, then you need to do nothing because you trust your users to author raw HTML and other web content.
+
+But, if you are running a group blog and you do not trust your users to author HTML, CSS and JavaScript then you should upgrade to Roller 6.1.2 and you should disable Roller's File Upload feature. Roller 6.1.2 is available for download here: https://roller.apache.org/downloads/downloads.html
+
+Apache Roller would like to thank Srivani Reddy for reporting this vulnerability.
+
+
+This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error please notify the system manager. This message contains confidential information and is intended only for the individual named. If you are not the named addressee you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately by e-mail if you have received this e-mail by mistake and delete this e-mail from your system. If you are not the intended recipient you are notified that disclosing, copying, distributing or taking any action in reliance on the contents of this information is strictly prohibited.
 
