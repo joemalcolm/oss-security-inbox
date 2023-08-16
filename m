@@ -1,94 +1,213 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/18
-Message-ID: <2023101605-outshoot-undying-fb27@gregkh>
-Date: Mon, 16 Oct 2023 18:49:38 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/16/2
+Message-Id: <12CEE5C7-4E38-4998-BB27-A445F742C6C7@beckweb.net>
+Date: Wed, 16 Aug 2023 15:11:18 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
-> Hi,
-> 
-> On Mon, Oct 16, 2023 at 11:34 PM Demi Marie Obenour
-> <demi@...isiblethingslab.com> wrote:
-> >
-> > On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
-> > > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> > > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > > > > Hi,
-> > > > > >
-> > > > > > Regardless of your viability of subscription status I think we also
-> > > > > > (sadly) have to consider current geopolitical issues here.
-> > > > > >
-> > > > > > As far as I understand, US companies and US citizens are not permitted
-> > > > > > to work with Chinese organizations and/or Chinese nationals.
-> > > > >
-> > > > > They can when working in the open on public projects and other
-> > > > > open-source-like things.  For "closed" lists and groups, please consult
-> > > > > a lawyer as the rules there are quite varied and depends on the
-> > > > > countries and companies involved.
-> > > > >
-> > > > > But to be sure, again, consult your corporate lawyers, they know the
-> > > > > rules and the issues involved better than I do.
-> > > > >
-> > > > > good luck!
-> > > > >
-> > > > > greg k-h
-> > > >
-> > > > The question is _who_ should consult their lawyers.
-> > >
-> > > The people deciding if this group can be added to the closed list as
-> > > they are the ones responsible for it, AND then if the group is added,
-> > > the members of the list need to talk to their lawyers to see if their
-> > > country laws allow them to participate in a closed group with such
-> > > members.  Many countries might be fine, many might not be, it all
-> > > depends on the participants and what country laws they must abide by.
-> > >
-> > > So in short, everyone involved in the list!  :(
-> > >
-> > > good luck!
-> > >
-> > > greg "I talk to too many lawyers" k-h
-> >
-> > The result of this is simply that those who do not have access to
-> > lawyers on staff will not participate, which will reduce the value of
-> > the list substantially.  I suspect that most people who report
-> > vulnerabilities via distros@ fall into this category.  I know I do.
-> >
-> > Therefore, I recommend rejecting the application as too risky from a
-> > legal perspective.
-> >
-> 
-> Not matter what would be the outcome, I'd like recommend an article
-> from Linux Foundation which I think is a good read:
-> https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
-> 
-> I'm not a lawyer though, but here are a few cents:
-> 
-> 1) There is no general restrictions against Chinese organizations and nationals;
-> 2) Open source software (which is publicly available) is not subject
-> to EAR (Export Administration Regulation of the US);
-> 3) According to § 734.7[1] of EAR, "knowledge with the intention that
-> such information will be made publicly available if accepted" is
-> treated as "Published" and is considered publicly available.
-> 
-> If I understand correctly, distros list is targeted to open source
-> software issues with a policy[2] of "Please only use these lists to
-> report and discuss security issues that are not yet public (but that
-> are to be made public very soon)", then everyone could retain their
-> peace of mind.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-But note, the information is _not_ public for a period of time, and so,
-might fall outside of the information described above in the lf article.
+The following releases contain fixes for security vulnerabilities:
 
-Especially given the content of the information as well, this isn't just
-"here's a patch to add a new feature for foo-baz" type of stuff.
+* Blue Ocean Plugin 1.27.5.1
+* Config File Provider Plugin 953.v0432a_802e4d2
+* Delphix Plugin 3.0.3
+* Flaky Test Handler Plugin 1.2.3
+* Folders Plugin 6.848.ve3b_fd7839a_81
+* Fortify Plugin 22.2.39
+* NodeJS Plugin 1.6.0.1
+* Shortcut Job Plugin 0.5
+* Tuleap Authentication Plugin 1.1.21
 
-Again, if you have questions, please talk to a lawyer from your company
-as only they can answer it properly for your situation.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-thanks,
+* Docker Swarm Plugin
+* Favorite View Plugin
+* Gogs Plugin
+* Maven Artifact ChoiceListProvider (Nexus) Plugin
 
-greg k-h
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-08-16/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3106 / CVE-2023-40336
+Folders Plugin 6.846.v23698686f0f6 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to copy an item, which could
+potentially automatically approve unsandboxed scripts and allow the
+execution of unsafe scripts.
+
+
+SECURITY-3105 / CVE-2023-40337
+Folders Plugin 6.846.v23698686f0f6 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to copy a view inside a folder.
+
+
+SECURITY-3109 / CVE-2023-40338
+Folders Plugin displays an error message when attempting to access the Scan
+Organization Folder Log if no logs are available.
+
+In Folders Plugin 6.846.v23698686f0f6 and earlier, this error message
+includes the absolute path of a log file, exposing information about the
+Jenkins controller file system.
+
+
+SECURITY-3090 / CVE-2023-40339
+Config File Provider Plugin 952.va_544a_6234b_46 and earlier does not mask
+(i.e., replace with asterisks) credentials specified in configuration files
+when they're written to the build log.
+
+
+SECURITY-3196 / CVE-2023-40340
+NodeJS Plugin integrates with Config File Provider Plugin to specify custom
+NPM settings, including credentials for authentication, in a Npm config
+file.
+
+NodeJS Plugin 1.6.0 and earlier does not properly mask (i.e., replace with
+asterisks) credentials specified in the Npm config file in Pipeline build
+logs.
+
+
+SECURITY-3116 / CVE-2023-40341
+Blue Ocean Plugin 1.27.5 and earlier does not require POST requests for an
+HTTP endpoint, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+This vulnerability allows attackers to connect to an attacker-specified
+URL, capturing GitHub credentials associated with an attacker-specified
+job.
+
+
+SECURITY-3115 / CVE-2023-4301 (CSRF) & CVE-2023-4302 (missing permission check)
+Fortify Plugin 22.1.38 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-3140 / CVE-2023-4303
+Fortify Plugin 22.1.38 and earlier does not escape the error message for a
+form validation method. This results in an HTML injection vulnerability.
+
+NOTE: Since Jenkins 2.275 and LTS 2.263.2, a security hardening for form
+validation responses prevents JavaScript execution, so no scripts can be
+injected.
+
+
+SECURITY-3223 / CVE-2023-40342
+Flaky Test Handler Plugin 1.2.2 and earlier does not escape JUnit test
+contents when showing them on the Jenkins UI.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control JUnit report file contents.
+
+
+SECURITY-3229 / CVE-2023-40343
+Tuleap Authentication Plugin 1.1.20 and earlier does not use a
+constant-time comparison when checking whether two authentication tokens
+are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid authentication token.
+
+
+SECURITY-3214 (1) / CVE-2023-40344
+Delphix Plugin 3.0.2 and earlier does not perform a permission check in an
+HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-3214 (2) / CVE-2023-40345
+Delphix Plugin 3.0.2 and earlier does not set the appropriate context for
+credentials lookup, allowing the use of System-scoped credentials otherwise
+reserved for the global configuration.
+
+This allows attackers with Overall/Read permission to access and capture
+credentials they are not entitled to.
+
+
+SECURITY-3071 / CVE-2023-40346
+Shortcut Job Plugin 0.4 and earlier does not escape the shortcut
+redirection URL.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure shortcut jobs.
+
+
+SECURITY-3153 / CVE-2023-40347
+Maven Artifact ChoiceListProvider (Nexus) Plugin 1.14 and earlier does not
+set the appropriate context for credentials lookup, allowing the use of
+System-scoped credentials otherwise reserved for the global configuration.
+
+This allows attackers with Item/Configure permission to access and capture
+credentials they are not entitled to.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2894 / CVE-2023-40348 (information disclosure) & CVE-2023-40349 (insecure default)
+Gogs Plugin provides a webhook endpoint at `/gogs-webhook` that can be used
+to trigger builds of jobs. In Gogs Plugin 1.0.15 and earlier, an option to
+specify a Gogs secret for this webhook is provided, but not enabled by
+default.
+
+This allows unauthenticated attackers to trigger builds of jobs
+corresponding to the attacker-specified job name.
+
+Additionally, the output of the webhook endpoint includes whether a job
+corresponding to the attacker-specified job name exists, even if the
+attacker has no permission to access it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2811 / CVE-2023-40350
+Docker Swarm Plugin processes Docker responses to generate the Docker Swarm
+Dashboard view.
+
+Docker Swarm Plugin 1.11 and earlier does not escape values returned from
+Docker before inserting them into the Docker Swarm Dashboard view. This
+results in a stored cross-site scripting (XSS) vulnerability exploitable by
+attackers able to control responses from Docker.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3201 / CVE-2023-40351
+Favorite View Plugin 5.v77a_37f62782d and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to add or remove views from another
+user's favorite views tab bar.
+
+As of publication of this advisory, there is no fix.
+
+
+
