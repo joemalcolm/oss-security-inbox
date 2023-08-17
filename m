@@ -1,96 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/20/3
-Message-ID: <20231220084053.GD25373@suse.de>
-Date: Wed, 20 Dec 2023 09:41:07 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/17/1
+Message-ID: <4d92373c-e3c9-c1ef-56f7-0cfb4cc8b10f@apache.org>
+Date: Thu, 17 Aug 2023 13:07:16 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-48795: Prefix Truncation Attacks in SSH Specification (Terrapin Attack)
+Subject: CVE-2023-40272: Apache Airflow Spark Provider Arbitrary File Read via JDBC 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 19, 2023 at 01:31:03PM -0800, Alan Coopersmith wrote:
-> On 12/18/23 08:08, Fabian Bäumer wrote:
-> > ### Mitigations
-> > 
-> > To mitigate this protocol vulnerability, OpenSSH suggested a so-called
-> > "strict kex" which alters the SSH handshake to ensure a
-> > Man-in-the-Middle attacker cannot introduce unauthenticated messages as
-> > well as convey sequence number manipulation across handshakes. Support
-> > for strict key exchange has been added to a variety of SSH
-> > implementations, including OpenSSH itself, PuTTY, libssh, and more.
-> > 
-> > **Warning: To take effect, both the client and server must support this
-> > countermeasure.**
-> 
-> Open source projects I see have implemented this already are:
-> 
-> - AsyncSSH 2.14.2:
->   https://asyncssh.readthedocs.io/en/latest/changes.html#release-2-14-2-18-dec-2023
-> 
-> - Dropbear git:
->   https://github.com/mkj/dropbear/commit/6e43be5c7b99dbee49dc72b6f989f29fdd7e9356
-> 
-> - Erlang ssh 5.1.1:
->   https://www.erlang.org/doc/apps/ssh/notes
-> 
-> - golang.org/x/crypto 0.17.0:
->   https://groups.google.com/g/golang-announce/c/qA3XtxvMUyg
-> 
-> - libssh 0.10.6 and 0.9.8:
->   https://www.libssh.org/2023/12/18/libssh-0-10-6-and-libssh-0-9-8-security-releases/
-> 
-> - libssh2 git:
->   https://github.com/libssh2/libssh2/issues/1290
->   https://github.com/libssh2/libssh2/pull/1291
-> 
-> - OpenSSH 9.6:
->   https://www.openssh.com/txt/release-9.6
-> 
-> - Paramiko 3.4.0:
->   https://www.paramiko.org/changelog.html#3.4.0
-> 
-> - PuTTY 0.80:
->   https://lists.tartarus.org/pipermail/putty-announce/2023/000037.html
-> 
-> - russh 0.40.2:
->   https://github.com/warp-tech/russh/releases/tag/v0.40.2
-> 
-> - SFTPGo 2.5.6:
->   https://github.com/drakkan/sftpgo/releases/tag/v2.5.6
-> 
-> - ssh2 [node.js/npm] 1.15.0:
->   https://github.com/mscdex/ssh2/commits/v1.15.0
-> 
-> - Tera Term 5.1:
->   https://github.com/TeraTermProject/teraterm/releases/tag/v5.1
-> 
-> - Thrussh 0.35.1:
->   https://pijul.org/posts/2023-12-18-thrussh-cve/
-> 
-> There's also some open bugs against these open source projects that are not yet handled:
-> 
-> - Apache Mina:
->   https://github.com/apache/mina-sshd/issues/445
-> 
-> - ProFTPD (mod_sftp):
->   https://github.com/proftpd/proftpd/issues/1760
-> 
-> - SSHJ:
->   https://github.com/hierynomus/sshj/issues/916
+Severity: moderate
 
-some more
+Affected versions:
 
-Jsch (Java SSH): release 0.2.15 fixes it https://github.com/mwiede/jsch/releases/tag/jsch-0.2.15
+- Apache Airflow Spark Provider before 4.1.3
 
-Also apache-sshd and trilead-ssh2 as Java SSH implementations are
-affected.
+Description:
 
-tinyssh affected, has a ticket open.
+Apache Airflow Spark Provider, versions before 4.1.3, is affected by a vulnerability that allows an attacker to pass in malicious parameters when establishing a connection giving an opportunity to read files on the Airflow server.
+It is recommended to upgrade to a version that is not affected.
 
-rubygem-net-ssh also affected.
+Credit:
 
-The rust ecosystem has a ssh crate which fixates its used libssh version. "libssh2-sys", so
-crates and binaries referencing will need updates.
+sw0rd1ight (finder)
 
-python Twisted has an SSH stack too, but no chacha or etm macs so far. 
+References:
 
-Ciao, Marcus
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-40272
+
