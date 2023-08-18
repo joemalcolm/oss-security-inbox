@@ -1,18 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/7
-Message-ID: <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
-Date: Thu, 19 Oct 2023 17:04:10 +0100
-From: Sam Bull <9m199i@...bull.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/18/1
+Message-ID: <20230818002043.GA2155861@millbarge>
+Date: Fri, 18 Aug 2023 00:20:43 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Elad Kalif <eladkal@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-40272: Apache Airflow Spark Provider Arbitrary File Read via JDBC
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
-> I think that this is more a problem with X11 security than it is a 
-> problem specific to Mozilla / Firefox.
+On Thu, Aug 17, 2023 at 01:07:16PM +0000, Elad Kalif wrote:
+> https://airflow.apache.org/
+> https://www.cve.org/CVERecord?id=CVE-2023-40272
 
-Also a problem with shell security. If you paste something with line breaks into bash, it
-executes them. If you paste the same into fish, it doesn't (it'll display the multi-line
-input and expect you to hit the enter key to execute it as a command).
+hello Elad, thanks for contacting the oss-security mail list about this
+security issue in an Apache project.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+I'd like to suggest that your email would be far more useful if it
+included details like a direct link to a patch in a source control
+system or attached the patch directly.
+
+It is also helpful to know when a flaw was introduced, if this information
+is already known.
+
+This particular email has very few details and no references for a fix so
+it is very difficult for anyone to take concrete actions.
+
+Here's two recent postings that are far easier for downstream distributors
+and consumers alike to use:
+https://www.openwall.com/lists/oss-security/2023/04/04/1
+https://www.openwall.com/lists/oss-security/2023/03/21/3
+
+I'd like to encourage Apache to use these as inspiration for future
+oss-security postings.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
