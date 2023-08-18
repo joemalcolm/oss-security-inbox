@@ -1,61 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/10
-Message-ID: <7c9b118c6c5280ae9331628449449f0ac1a32b17.camel@sambull.org>
-Date: Thu, 19 Oct 2023 18:17:00 +0100
-From: Sam Bull <9m199i@...bull.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/18/2
+Message-ID: <7c583366-9388-6d73-bafe-aba03be24df9@apache.org>
+Date: Fri, 18 Aug 2023 20:50:18 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: CVE-2023-40037: Apache NiFi: Incomplete Validation of JDBC and JNDI Connection URLs 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2023-10-19 at 18:45 +0200, Steffen Nurpmeso wrote:
-> Sam Bull wrote in
->  <d85658c838a1338c829cee30fb9c344688a2a470.camel@...bull.org>:
->  |On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
->  |> I think that this is more a problem with X11 security than it is a 
->  |> problem specific to Mozilla / Firefox.
->  |
->  |Also a problem with shell security. If you paste something with line \
->  |breaks into bash, it
->  |executes them. If you paste the same into fish, it doesn't (it'll display \
->  |the multi-line
->  |input and expect you to hit the enter key to execute it as a command).
-> 
-> That is plain not true
+Severity: moderate
 
-OK, the behaviour on my terminal is completely different depending solely on which shell I
-use:
+Affected versions:
 
-   s@...aptop ~> bash
-   s@...aptop:~$ That is plain not true, but depends on the "bracketed paste" mode
+- Apache NiFi 1.21.0 through 1.23.0
 
-   Command 'That' not found, did you mean:
+Description:
 
-     command 'phat' from deb phat-utils (1.5-3build2)
-     command 'chat' from deb ppp (2.4.7-2+4.1ubuntu5.1)
-     command 'jhat' from deb openjdk-8-jdk-headless (8u382-ga-1~20.04.1)
+Apache NiFi 1.21.0 through 1.23.0 support JDBC and JNDI JMS access in several Processors and Controller Services with connection URL validation that does not provide sufficient protection against crafted inputs. An authenticated and authorized user can bypass connection URL validation using custom input formatting. The resolution enhances connection URL validation and introduces validation for additional related properties. Upgrading to Apache NiFi 1.23.1 is the recommended mitigation.
 
-   Try: sudo apt install <deb name>
+This issue is being tracked as NIFI-11920 
 
-   s@...aptop:~$ of readline which in turn depends on the terminal (emulator) and
-   bash: syntax error near unexpected token `('
-   s@...aptop:~$ likely even upon the ncurses library.
-   likely: command not found
-   s@...aptop:~$ See bash(1) (Readline Variables, enable-bracketed-paste, default
-   bash: syntax error near unexpected token `('
-   s@...aptop:~$ on).  Btw Mr. Dickey (ncurses, xterm, vile, etc) has an
-   bash: syntax error near unexpected token `)'
+Credit:
 
-   s@...aptop:~$ fish
-   s@...aptop ~> That is plain not true, but depends on the "bracketed paste" mode
-                 of readline which in turn depends on the terminal (emulator) and
-                 likely even upon the ncurses library.
-                 See bash(1) (Readline Variables, enable-bracketed-paste, default
-                 on).  Btw Mr. Dickey (ncurses, xterm, vile, etc) has an
-                 informative page on this:
+Matei "Mal" Badanoiu (finder)
 
+References:
 
-> That observation may be outdated. At least my bash 5.2.15 on Debian
+https://nifi.apache.org/security.html#CVE-2023-40037
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-40037
+https://issues.apache.org/jira/browse/NIFI-11920
 
-Yes, I'm on an older release still, so maybe it has been fixed in the past 3 or so years.
+Timeline:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+2023-08-06: reported
+
