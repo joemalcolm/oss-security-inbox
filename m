@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["967" "Monday" "1" "February" "2021" "23:49:20" "+0000" "Aleksey Yeschenko" "aleksey@apache.org" "<DFF27630-BB03-4FC8-9A1D-75F16C947044@apache.org>" "32" "[oss-security] [CVE-2020-17516] Apache Cassandra internode encryption enforcement vulnerability " nil nil nil "2" "2021020123:49:20" "[oss-security] [CVE-2020-17516] Apache Cassandra internode encryption enforcement vulnerability" (number mark "U       aleksey@apac Feb  1   32/967   " thread-indent "\"[oss-security] [CVE-2020-17516] Apache Cassandra internode encryption enforcement vulnerability \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-17516] Apache Cassandra internode encryption enforcement vulnerability " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16228 invoked by uid 550); 2 Feb 2021 07:36:53 -0000
+Received: (qmail 21735 invoked by uid 550); 20 Aug 2023 18:55:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1494 invoked from network); 1 Feb 2021 23:49:34 -0000
-X-ME-Sender: <xms:gZMYYDWA1yyY5VA0RA03dZdCzOT2avHSCXIUbMZbT4yrzSvUJUKUIQ>
-    <xme:gZMYYLlQwyOwrLoyb3PATkFmq5VNj-BdMpSMilkvABHULPkWHXsKE6WV4LJWMN7Fo
-    jbPLzQgVLEPNBj6fxw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeelgddtkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephfgtgfgguffkfffvofesthhqmhdthh
-    dtjeenucfhrhhomheptehlvghkshgvhicujggvshgthhgvnhhkohcuoegrlhgvkhhsvgih
-    segrphgrtghhvgdrohhrgheqnecuggftrfgrthhtvghrnhepvdfffeeikeefledufeefje
-    ekudfguedtleduudekvdegjeejleetveevgffhkeevnecukfhppeekuddruddtiedrgeeh
-    rddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grlhgvkhhsvgihodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdduudefudeg
-    hedtudeiqddvheduleegkedvgedqrghlvghkshgvhieppegrphgrtghhvgdrohhrgheshi
-    gvshgthhgvnhhkohdrtghomh
-X-ME-Proxy: <xmx:gZMYYPbsm4TWAlcBQw_vSU2D6baKL_kE39gZxrCXpH2VOdPL5eCsjQ>
-    <xmx:gZMYYOVU9JgrwiDjwEEDTw_YtbB8OVFpmEswhmyH7N3KNfJwMQU0VA>
-    <xmx:gZMYYNmnrbk3TxNGD5qur4Yt0APwcizrQZpA0jYXnRY91MXP70MU2A>
-    <xmx:gZMYYJzcYZ9gWRHI5iYrD5ADw_U6HNu-dHztChAE2wCCKLjgHcaJ3w>
-From: Aleksey Yeschenko <aleksey@apache.org>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
-Message-Id: <DFF27630-BB03-4FC8-9A1D-75F16C947044@apache.org>
-Date: Mon, 1 Feb 2021 23:49:20 +0000
+Received: (qmail 20373 invoked from network); 20 Aug 2023 18:54:42 -0000
+Authentication-Results: apache.org; auth=none
+From: Stefan Bodewig <bodewig@apache.org>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3654.40.0.2.32)
-Subject: [oss-security] [CVE-2020-17516] Apache Cassandra internode encryption enforcement
- vulnerability 
+Date: Sun, 20 Aug 2023 20:54:13 +0200
+Message-ID: <877cppilyi.fsf@v45346.1blu.de>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] CVE-2022-46751: Apache Ivy: XML External Entity vulnerability in Apache Ivy 
 
-CVE-2020-17516: Apache Cassandra doesn't enforce encryption setting on inbo=
-und internode connections
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Severity:
-Important
+Severity: moderate
 
-Vendor:
-The Apache Software Foundation
+Affected versions:
 
-Versions Affected:
-Cassandra 2.1.0 to 2.1.22
-Cassandra 2.2.0 to 2.2.19
-Cassandra 3.0.0 to 3.0.23
-Cassandra 3.11.0 to 3.11.9
+- - Apache Ivy 1.0.0 through 2.5.1
 
 Description:
-When using =E2=80=98dc=E2=80=99 or =E2=80=98rack=E2=80=99 internode_encrypt=
-ion setting, a Cassandra instance allows both encrypted
-and unencrypted connections. A misconfigured node or a malicious user can u=
-se the unencrypted
-connection despite not being in the same rack or dc, and bypass mutual TLS =
-requirement.
 
-Mitigation:
-Users of ALL versions should switch from =E2=80=98dc=E2=80=99 or =E2=80=98r=
-ack=E2=80=99 to =E2=80=98all=E2=80=99 internode_encryption setting, as they=
- are inherently insecure
-3.0.x users should additionally upgrade to 3.0.24
-3.11.x users should additionally upgrade to 3.11.10
+Improper Restriction of XML External Entity Reference, XML Injection (aka Blind XPath Injection) vulnerability in Apache Software Foundation Apache Ivy.This issue affects any version of Apache Ivy prior to 2.5.2.
+
+When Apache Ivy prior to 2.5.2 parses XML files - either its own configuration, Ivy files or Apache Maven POMs - it will allow downloading external document type definitions and expand any entity references contained therein when used.
+
+This can be used to exfiltrate data, access resources only the machine running Ivy has access to or disturb the execution of Ivy in different ways.
+
+Starting with Ivy 2.5.2 DTD processing is disabled by default except when parsing Maven POMs where the default is to allow DTD processing but only to include a DTD snippet shipping with Ivy that is needed to deal with existing Maven POMs that are not valid XML files but are nevertheless accepted by Maven. Access can be be made more lenient via newly introduced system properties where needed.
+
+Users of Ivy prior to version 2.5.2 can use Java system properties to restrict processing of external DTDs, see the section about "JAXP Properties for External Access restrictions" inside Oracle's "Java API for XML Processing (JAXP) Security Guide".
 
 Credit:
-This issue was discoverd by Jon Meredith=
+
+CC Bomber, Kitri BoB (finder)
+Jenkins Security Team (reporter)
+
+References:
+
+https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-94ABC0EE-9DC8-44F0-84AD-47ADD5340477
+https://gitbox.apache.org/repos/asf?p=ant-ivy.git;a=commit;h=2be17bc18b0e1d4123007d579e43ba1a4b6fab3d
+https://lists.apache.org/thread/9gcz4xrsn8c7o9gb377xfzvkb8jltffr
+https://ant.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-46751
+
+Timeline:
+
+2022-11-30: reported to the ASF security team
+2023-08-20: made public
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAmTiYVUACgkQohFa4V9ri3J3GQCeJtCHJPATZc1KNH66qv6TCwb+
+ossAnRDxeSXNQ+4G4vk9UtA9BdreXk1V
+=d0O7
+-----END PGP SIGNATURE-----
