@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1211" "Saturday" "13" "June" "2015" "11:17:05" "+0200" "Bastian Blank" "waldi@debian.org" "<20150613091637.GE11230@mail.waldi.eu.org>" "36" "[oss-security] CVE-2015-1850: OpenStack Cinder/Nova: Format-guessing and file disclosure in image convert" nil nil nil "6" "2015061309:17:05" "[oss-security] CVE-2015-1850: OpenStack Cinder/Nova: Format-guessing and file disclosure in image convert" (number mark "        waldi@debian Jun 13   36/1211  " thread-indent "\"[oss-security] CVE-2015-1850: OpenStack Cinder/Nova: Format-guessing and file disclosure in image convert\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3878 invoked by uid 550); 13 Jun 2015 09:17:21 -0000
+Received: (qmail 28599 invoked by uid 550); 22 Aug 2023 19:54:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3840 invoked from network); 13 Jun 2015 09:17:17 -0000
-Message-ID: <20150613091637.GE11230@mail.waldi.eu.org>
-Mail-Followup-To: Bastian Blank <waldi@debian.org>,
-	oss-security@lists.openwall.com
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Sat, 13 Jun 2015 11:17:05 +0200
-From: Bastian Blank <waldi@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-1850: OpenStack Cinder/Nova: Format-guessing and file
- disclosure in image convert
-To: oss-security@lists.openwall.com
+Received: (qmail 15613 invoked from network); 22 Aug 2023 08:05:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692691524; x=1693296324;
+        h=thread-index:content-language:content-transfer-encoding
+         :mime-version:message-id:date:subject:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eEHU5iHK+SaSlLi/TDwlgOQQk2QZZtlHlM/opJ1dacM=;
+        b=EvEyW5O1HZd+RGApDHKyYK/uIPobskqnm9PM9Vo7YXOSRNYNWBILYE643bb5IE2mOp
+         lYEMn/40oUOuB5G6ChyaO6Sd60AkzHahIdXNcakYEuVntYTO+AlyRwKKezrCbdUKJbIE
+         Ql7AaIKgACyJV9edcEpMECtnYJY6tqorJSEWGRoq4yM8lf5dCDG/O9aSxsOad7N2cK+B
+         rqv+IqicF9e1xB1Cg/ftijwG3qLsa4spXDDrwWKC+M7q22LYet6HeA0y4mvY7Unr/dvK
+         L0XNJB1d6JIAzVCrqvLGL28xyNvaoFVRtiG/uYplymNRdHzrdcvpjuHx1UD2aoaJSB4n
+         PYyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692691524; x=1693296324;
+        h=thread-index:content-language:content-transfer-encoding
+         :mime-version:message-id:date:subject:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eEHU5iHK+SaSlLi/TDwlgOQQk2QZZtlHlM/opJ1dacM=;
+        b=LQ9ngJ/2Ky13QvfwyOQpwjagSOqDxVqGlYTeq63wQjYu+6mZrWpX5JzyzcK+1xfjE8
+         7vln6eW4hiy8Nof4ss+R+KX+l3lvS/ztoXnK0PCknU5L3Y6iQHWAkqYha6iMv9NcTyzb
+         dNhP4XpDqIVsKGcHj4q2VllpAJbmcyXKDCoxm7sfhhzRjAN9hBPQyOlSZC0QZn98MQuU
+         Rm2AyduBrG0d7njcIydpmWxnM2e5tqlJQ+JETrGRv36MvkwBuGUgzkD4HFKXwZgu3qLC
+         KzaFaEHM5AksnG6wDCARAbTdNd4QbjLlFozjJqOmcq5cT/Quxz2Yqscaj5l50QMk+X8h
+         +TXQ==
+X-Gm-Message-State: AOJu0Yywxcx0GWZypUvaxt9mPbxZhfKKzK+dWQOH+FBJtyyBOB4/zFGH
+	C97ndatHXq8+xrVnd9YjDHvOXdedsge2AA==
+X-Google-Smtp-Source: AGHT+IHyc4EbO3Bl0Zq+s2zJmJssCbiQ+b616DeBu00M19BAi2tFZCXQL4xPm4+Y8CTOZKsVuRohCA==
+X-Received: by 2002:a5d:4b8f:0:b0:317:4bde:9e72 with SMTP id b15-20020a5d4b8f000000b003174bde9e72mr9248361wrt.10.1692691523723;
+        Tue, 22 Aug 2023 01:05:23 -0700 (PDT)
+From: "Simon Steiner" <simonsteiner1984@gmail.com>
+To: <general@xmlgraphics.apache.org>,
+	<batik-dev@xmlgraphics.apache.org>,
+	<batik-users@xmlgraphics.apache.org>,
+	"'Apache Security Team'" <security@apache.org>,
+	<oss-security@lists.openwall.com>
+Date: Tue, 22 Aug 2023 09:05:22 +0100
+Message-ID: <001601d9d4cf$66c49ba0$344dd2e0$@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-gb
+Thread-Index: AdnUzqTJlqivUE/xT2KKfzq5XGk4Tg==
+Subject: [oss-security] [CVE-2022-44730] Apache Batik information disclosure vulnerability
 
-Hi
+CVE-2022-44730:
+        Apache Batik information disclosure vulnerability
 
-OpenStack Cinder and Nova do not provide input format to several calls
-of "qemu-img convert".  In Cinder these calls are done as root.  This
-allows the attacker to play the format guessing in qemu-img by providing
-input with a qcow2 signature.  If this signature contains a base file,
-this file will be read by a process running as root and embedded in the
-output.  This bug is similar to CVE-2013-1922 and has been assigned
-CVE-2015-1850.
+Severity:
+        Medium
 
-Tested with: lvm backed volume storage in Cinder, it may apply to others
-as well.
+Vendor:
+        The Apache Software Foundation
 
-Steps to reproduce:
-- create volume and attach to vm,
-- create a qcow2 signature on the volume containing a base-file[1] from
-  within the vm and
-- trigger an upload to Glance with "cinder upload-to-image --disk-type
-  qcow2"[2].
-The image uploaded to Glance will have the base-file from the
-cinder-volume host embedded.
+Versions Affected:
+        Batik 1.0 - 1.16
 
-Affected versions: tested on 2014.1.3, found while reading 2014.2.1
+Description:
+        Switch to empty whitelist for rhino
 
-Timeline:
-- Reported upstream 2015-01-27
-- Published 2015-06-13
+Mitigation:
+        Users should upgrade to Batik 1.17
 
-Regards,
-Bastian Blank
+Credit:
+        This issue was independently reported by Julien Lacour
 
-[1]: qemu-img create -f qcow2 -b /etc/passwd /dev/vdb
-[2]: The disk-type != raw triggers the use of "qemu-img convert"
--- 
-You can't evaluate a man by logic alone.
-		-- McCoy, "I, Mudd", stardate 4513.3
+References:
+        http://xmlgraphics.apache.org/security.html
+        https://issues.apache.org/jira/browse/BATIK-1347
+
+The Apache XML Graphics team.
+
+
+
+
+
