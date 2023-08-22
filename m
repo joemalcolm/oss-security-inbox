@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/13
-Message-ID: <ZJNx4OBlGqGFgOYD@itl-email>
-Date: Wed, 21 Jun 2023 17:54:57 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/22/2
+Message-ID: <001501d9d4ce$bd31a880$3794f980$@gmail.com>
+Date: Tue, 22 Aug 2023 09:00:38 +0100
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
+Subject: [CVE-2022-44729] Apache Batik information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
-> On Wed, 21 Jun 2023, Jeffrey Walton wrote:
-> 
-> > Memory leaks on exit are par for the course in GNU software per
-> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
-> 
-> Don't bother with this, don't bother with that, etc...  Call me old-school 
-> (which I am), but I cannot abide sloppy programming[*].
+CVE-2022-44729:
+        Apache Batik information disclosure vulnerability
 
-Memory leaks on exit are a _good_ thing in general.  There is absolutely
-zero point in calling free() if the program is about to exit — the OS
-will do a better job of freeing resources than the program itself ever
-could.  Furthermore, preventing all memory leaks may well require
-freeing resources that are being used by other threads in the same
-process, resulting in use-after-free!  Again, much better to just leak
-the memory and let the OS deal with it.  One can provide a function to
-clean up the resources in preparation for e.g. dlclose(), but it should
-not be called automatically.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Severity:
+        Medium
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Vendor:
+        The Apache Software Foundation
+
+Versions Affected:
+        Batik 1.0 - 1.16
+
+Description:
+        Block loading external resource by default
+
+Mitigation:
+        Users should upgrade to Batik 1.17
+
+Credit:
+        This issue was independently reported by nbxiglk
+
+References:
+        http://xmlgraphics.apache.org/security.html
+        https://issues.apache.org/jira/browse/BATIK-1349
+
+The Apache XML Graphics team.
+
+
+
+
