@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1135" "Wednesday" "29" "July" "2015" "22:16:57" "+0200" "z80" "z80@bytealchemy.be" "<55B934B9.7040803@bytealchemy.be>" "40" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072920:16:57" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        z80@bytealch Jul 29   40/1135  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<20150724155625.GA15469@zoho.com>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<20150724155625.GA15469@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32240 invoked by uid 550); 29 Jul 2015 20:51:46 -0000
+Received: (qmail 29755 invoked by uid 550); 22 Aug 2023 19:54:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5736 invoked from network); 29 Jul 2015 20:17:19 -0000
-X-Virus-Scanned: Debian amavisd-new at mfilter14-d.gandi.net
-X-Originating-IP: 91.182.98.9
-References: <20150723170954.GA17931@localhost.localdomain>
- <87h9oud89s.fsf@lysator.liu.se> <20150724155625.GA15469@zoho.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <55B934B9.7040803@bytealchemy.be>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-In-Reply-To: <20150724155625.GA15469@zoho.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 29 Jul 2015 22:16:57 +0200
-From: z80 <z80@bytealchemy.be>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245
- userhelper - CVE-2015-3246 libuser
-To: oss-security@lists.openwall.com
+Received: (qmail 17450 invoked from network); 22 Aug 2023 08:07:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692691652; x=1693296452;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=TEn3b12zxBO3tCWYK7rd3VZ4otirDFYwtnMU9aZCso0=;
+        b=Py1i4aCgx0rOG3DD7E6ZYmi+ZnAHedksoAhi1OHjzurRIik5ILrStsm7S46LZyY5XE
+         9x6fHYOX0g/oBEPYBrxC9zYuZpGlzBNZC0B0IIw5haX7tgV0XyhySn4U5E4AzUwZzSuq
+         qFIV2dtda8y4JeJ2PWEglJvOElpd2u81okwBPtagLmNHJNo2M1z8c2GtBGQ4FmQ7mbYA
+         6CWBssFdv7RQgfT+v2ESmFr730n4UrsxHa4C44jgQVVpMIqFHupWOcNVAsZJuT9rPv5x
+         q/NwrmezKeZEBWDXORhggoQnSIDN3umIHDOqZYE1bY6HOY6w8gf7jcU6xJQ6LJ19NSfb
+         vRng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692691652; x=1693296452;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TEn3b12zxBO3tCWYK7rd3VZ4otirDFYwtnMU9aZCso0=;
+        b=HUhkGxvPF+amQWZ2M4B6yj/2AsiYTdKdm+LjsLIeu7Q2jytkXrFWn1rShfyKt82yLO
+         9djgjJOtkbYULBKMDfaZL6aH43Y5RxuPEZ037Lw0HN1/DSxeXhWzOkiGgFogWyS38spW
+         iWxoI2jSzIXDO4AHFBQ4SfcAsmb4g51hXBjoAMhJtXHBYIpAWJpTj+U/c+oxDY8uNLwA
+         m+pc3xE9BSj4stg1RRzB9V/KKd0hFsodR8xhmGMaXnKdPQl+rEz/oi7c5Ok0xpWRIHJT
+         j5vneVOFNtqu7/3lyqovR7cG+7GQcnaTEMZ78SpVgeZnU5jpGPWbdE3En+oIG+6ggqjY
+         vo2A==
+X-Gm-Message-State: AOJu0YyDLMjt3LrBvppmuGAmKmdkBicaomh4LqSsAYZ7Drsg3YAUh6Gg
+	zUZdXrv6oagfnAVa3vMay+lmNj+TstBTHQXxc8k=
+X-Google-Smtp-Source: AGHT+IEoPgTnpLd+L+m8cADZPjc+7gnSNRiSBk2jM3xwzzrg4GMyVgqxq18BKo18rc+h25oZxFf6xIOin7nqrspzO/k=
+X-Received: by 2002:a05:6102:412:b0:445:202:d278 with SMTP id
+ d18-20020a056102041200b004450202d278mr3144551vsq.32.1692691652305; Tue, 22
+ Aug 2023 01:07:32 -0700 (PDT)
+MIME-Version: 1.0
+References: <001501d9d4ce$bd31a880$3794f980$@gmail.com>
+In-Reply-To: <001501d9d4ce$bd31a880$3794f980$@gmail.com>
+From: Nbxiglk <fibr3s@gmail.com>
+Date: Tue, 22 Aug 2023 16:07:16 +0800
+Message-ID: <CANQTYRkmodXOwJNCV=gBLOG-usBYxdr1zQdEuQmUSp_1C2Yz=w@mail.gmail.com>
+To: Simon Steiner <simonsteiner1984@gmail.com>
+Cc: general@xmlgraphics.apache.org, batik-dev@xmlgraphics.apache.org, 
+	batik-users@xmlgraphics.apache.org, 
+	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000a6690d06037e7ccb"
+Subject: [oss-security] Re: [CVE-2022-44729] Apache Batik information disclosure vulnerability
 
+--000000000000a6690d06037e7ccb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Actually, the things is very simple:
+Hi=EF=BC=8CThe vuln type inside the email seems to be incorrect, it should =
+be SSRF=E3=80=82
 
-- H4x0rz: Lose The Ego!
-- H4x0rz: Lose The L33t Principles!
+Simon Steiner <simonsteiner1984@gmail.com> =E4=BA=8E2023=E5=B9=B48=E6=9C=88=
+22=E6=97=A5=E5=91=A8=E4=BA=8C 16:00=E5=86=99=E9=81=93=EF=BC=9A
 
-- H4x0rz: Use your Brain v1.0
+> CVE-2022-44729:
+>         Apache Batik information disclosure vulnerability
+>
+> Severity:
+>         Medium
+>
+> Vendor:
+>         The Apache Software Foundation
+>
+> Versions Affected:
+>         Batik 1.0 - 1.16
+>
+> Description:
+>         Block loading external resource by default
+>
+> Mitigation:
+>         Users should upgrade to Batik 1.17
+>
+> Credit:
+>         This issue was independently reported by nbxiglk
+>
+> References:
+>         http://xmlgraphics.apache.org/security.html
+>         https://issues.apache.org/jira/browse/BATIK-1349
+>
+> The Apache XML Graphics team.
+>
+>
+>
+>
+>
 
-What would Brain v1.0 have told you when thinking about releasing an
-exploit at the same time than the patch...
-
-
-
-
-On 24/07/2015 17:56, mancha wrote:
-> On Thu, Jul 23, 2015 at 08:43:43PM +0200, Leif Nixon wrote:
->> Qualys Security Advisory <qsa@qualys.com> writes:
->>
->>> Hello, it is July 23, 2015, 17:00 UTC, the Coordinated Release Date
->>> for CVE-2015-3245 and CVE-2015-3246.  Please find our advisory
->>> below, and our exploit attached.
->>
->> *Why* are you releasing a full exploit just minutes after the patch is
->> released?
->>
->> (Disclosure: I am employed by Red Hat, but this is my purely personal
->> question.)
->>
->> -- Leif Nixon
->=20
-> There was absolutely nothing wrong with Qualys' timing. When the embargo
-> ends, it ends.=20=20
->=20
-> The real problem is the underlying model: "responsible disclosure". It's
-> nothing more than a CYA strategy that doesn't maximize the ecosystem's
-> welfare. The positive-sounding name fools some into thinking it a good
-> thing.
->=20
-> --mancha
->=20
+--000000000000a6690d06037e7ccb--
