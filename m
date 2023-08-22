@@ -1,65 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/9
-Message-ID: <CAH8yC8mV5LGBhbFHo+u7j7xWGbKS5_tOPiGA=1XhwCg65-Dj3A@mail.gmail.com>
-Date: Fri, 29 Sep 2023 14:29:17 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/22/4
+Message-ID: <CANQTYRkmodXOwJNCV=gBLOG-usBYxdr1zQdEuQmUSp_1C2Yz=w@mail.gmail.com>
+Date: Tue, 22 Aug 2023 16:07:16 +0800
+From: Nbxiglk <fibr3s@...il.com>
+To: Simon Steiner <simonsteiner1984@...il.com>
+Cc: general@...graphics.apache.org, batik-dev@...graphics.apache.org,  batik-users@...graphics.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: Re: [CVE-2022-44729] Apache Batik information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 28, 2023 at 5:10 PM Demi Marie Obenour
-<demi@...isiblethingslab.com> wrote:
+Hi，The vuln type inside the email seems to be incorrect, it should be SSRF。
+
+Simon Steiner <simonsteiner1984@...il.com> 于2023年8月22日周二 16:00写道：
+
+> CVE-2022-44729:
+>         Apache Batik information disclosure vulnerability
 >
-> On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
-> > Google has announced another media parsing bug, this time correctly documenting
-> > both the base library and Chrome versions affected in the CVE.
-> >
-> > https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
-> >
-> >    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
-> >    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
-> >    exploit heap corruption via a crafted HTML page.
-> >    (Chromium security severity: High)
-> >
-> > Unfortunately, the bug report it points to is restricted access still:
-> > https://crbug.com/1486441
-> >
-> > But the Chrome release notes state:
-> >    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
-> > https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_27.html
-> >
-> > Mozilla has put out their own security advisory at
-> > https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
-> > and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
-> > Firefox Focus for Android 118.1, and Firefox for Android 118.1.
-> >
-> > https://bugzilla.mozilla.org/show_bug.cgi?id=1855550 is also still
-> > restricted access.
-> >
-> > It does not appear that libvpx 1.13.1 has been released yet, but there
-> > are two commits in its git repo with the 1486441 bug id listed:
-> >
-> > https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d646e4ffef36d590
-> > https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cca6e0417b290282
-> >
-> > Mozilla's commit references these two libvpx commit ids as well:
-> > https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f9130e1896b695d2
+> Severity:
+>         Medium
 >
-> How long will it take for corporations to accept that writing media
-> codecs in C, C++, or any other memory-unsafe language is a fundamentally
-> bad idea, and that it is better to rewrite the codecs in a safe language
-> (such as Wuffs or Rust) than to try to secure the existing ones?
+> Vendor:
+>         The Apache Software Foundation
+>
+> Versions Affected:
+>         Batik 1.0 - 1.16
+>
+> Description:
+>         Block loading external resource by default
+>
+> Mitigation:
+>         Users should upgrade to Batik 1.17
+>
+> Credit:
+>         This issue was independently reported by nbxiglk
+>
+> References:
+>         http://xmlgraphics.apache.org/security.html
+>         https://issues.apache.org/jira/browse/BATIK-1349
+>
+> The Apache XML Graphics team.
+>
+>
+>
+>
+>
 
-Small nit... Folks would lose a lot of platforms by selecting Rust.
-Rust is only guaranteed to work on a handful of platforms. At this
-time, it looks like it is i686 and x86_64. Confer,
-<https://doc.rust-lang.org/nightly/rustc/platform-support.html>.
-
-And that's been my experience with Rust. For a new project I worked
-on, Rust only worked on x86_64. It could not compile its own cargos on
-armv7, aarch64 or powerpc. We had to (re)start a project from scratch
-after that. And it got written in C, though we should have done it in
-C++. We lost so much time due to Rust we did not have the cycles to
-move from C to C++.
-
-Jeff
