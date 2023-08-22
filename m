@@ -1,26 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/29/2
-Message-ID: <9cf178b1-ac5a-111c-0784-622d3743845d@apache.org>
-Date: Wed, 29 Mar 2023 11:29:40 +0000
-From: Olivier Lamy <olamy@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28158: Apache Archiva privilege escalation 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/22/5
+Message-ID: <27c254dd-41da-7326-f49f-5eb6aeeac5ae@eenterphace.org>
+Date: Tue, 22 Aug 2023 23:21:47 +0200
+From: Moritz Bechler <mbechler@...terphace.org>
+To: oss-security@...ts.openwall.com, Simon Steiner <simonsteiner1984@...il.com>, fibr3s@...il.com
+Cc: security@...che.org
+Subject: Re: [CVE-2022-44730] Apache Batik information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-Privilege escalation via stored XSS using the file upload service to upload malicious content.
-The issue can be exploited only by authenticated users which can create directory name to inject some XSS content and gain some privileges such admin user.
+> CVE-2022-44730:
+>          Apache Batik information disclosure vulnerability
+> 
+> Severity:
+>          Medium
+> 
+> Vendor:
+>          The Apache Software Foundation
+> 
+> Versions Affected:
+>          Batik 1.0 - 1.16
+> 
+> Description:
+>          Switch to empty whitelist for rhino
 
-This issue is being tracked as n/a 
+And here the liked bug does not reference the appropriate commit, but 
+one in which the whitelist wasn't actually empty 
+(<https://svn.apache.org/viewvc?view=revision&revision=1905011> would be 
+the more recent update). Putting java.lang.System on that list would 
+have been a pretty bad choice, so, good that that did not make it into 
+the release.
 
-Credit:
 
-sandr0 (sandr0.xyz)  (finder)
+  I have the feeling that maybe Apache has a mail template that has 
+"information disclosure vulnerability" in the subject as an example, as 
+I have noticed in other cases that the subjects indicate information 
+disclosure when the issue really is something else.
 
-References:
 
-https://archiva.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-28158
-https://issues.apache.org/jira/browse/n/a
+Moritz
 
