@@ -1,46 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/3
-Message-ID: <CA+ZBtZ4o+6JaQvuZB=oL6c3U7MG9Lfnu-d9CjFP3jxN37OZQLw@mail.gmail.com>
-Date: Thu, 19 Oct 2023 12:31:59 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/5
+Message-ID: <CAL7+V1zmb66gKzeQUe9qzJ1MVVn=ua2JEfY-_jiMk8zJ-+K+zw@mail.gmail.com>
+Date: Wed, 23 Aug 2023 07:37:42 -0700
+From: Rita Zhang <rita.z.zhang@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: dev@...nyu.apache.org
-Subject: CVE-2023-25753: Server-Side Request Forgery in Apache ShenYu
+Subject: [kubernetes] CVE-2023-3955: Insufficient input sanitization on Windows nodes leads to privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hello Kubernetes Community,
 
-Affected versions:
+A security issue was discovered in Kubernetes where a user that can create
+pods on Windows nodes may be able to escalate to admin privileges on those
+nodes. Kubernetes clusters are only affected if they include Windows nodes.
 
-- Apache ShenYu through 2.5.1
+This issue has been rated ***HIGH*** (
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>
+-
+8.8
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
+and assigned **CVE-2023-3955**
 
-Description:
+*Am I vulnerable?*
 
-There exists an SSRF (Server-Side Request Forgery) vulnerability
-located at the /sandbox/proxyGateway endpoint. This vulnerability
-allows us to manipulate arbitrary requests and retrieve corresponding
-responses by inputting any URL into the requestUrl parameter.
+Any kubernetes environment with Windows nodes is impacted.  Run `kubectl
+get nodes -l kubernetes.io/os=windows` <http://kubernetes.io/os=windows> to
+see if any Windows nodes are in use.
 
-Of particular concern is our ability to exert control over the HTTP
-method, cookies, IP address, and headers. This effectively grants us
-the capability to dispatch complete HTTP requests to hosts of our
-choosing.
+*Affected Versions*
 
-This issue affects Apache ShenYu: 2.5.1.
+- kubelet <= v1.28.0
 
-Upgrade to Apache ShenYu 2.6.0 or apply patch
-https://github.com/apache/shenyu/pull/4776  .
+- kubelet <= v1.27.4
 
-Credit:
+- kubelet <= v1.26.7
 
-by3 (finder)
+- kubelet <= v1.25.12
 
-References:
+- kubelet <= v1.24.16
 
-https://shenyu.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-25753
+*How do I mitigate this vulnerability?*
 
---
+The provided patch fully mitigates the vulnerability (see fix impact
+below).  Full mitigation for this class of issues requires patches applied
+for CVE-2023-3676, CVE-2023-3955, and CVE-2023-3893.
 
-Zhang Yonglun
-Apache ShenYu & ShardingSphere
+Outside of applying the patch, there are no known mitigations to this
+vulnerability.
+
+*Fixed Versions*
+
+- kubelet v1.28.1
+
+- kubelet v1.27.5
+
+- kubelet v1.26.8
+
+- kubelet v1.25.13
+
+- kubelet v1.24.17
+
+These releases will be published over the course of today, August 23rd,
+2023.
+
+***Fix impact:*** Passing Windows Powershell disk format options to in-tree
+volume plugins will result in an error during volume provisioning on the
+node.  There are no known use cases for this functionality, nor is this
+functionality supported by any known out-of-tree CSI driver.
+
+To upgrade, refer to the documentation:
+
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+
+*Detection*
+
+Kubernetes audit logs can be used to detect if this vulnerability is being
+exploited. Pod create events with embedded powershell commands are a strong
+indication of exploitation.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+
+*Additional Details*
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/119595
+
+*Acknowledgements*
+
+This vulnerability was discovered by James Sturtevant @jsturtevant and Mark
+Rossetti @marosset during the process of fixing CVE-2023-3676 (that
+original CVE was reported by Tomer Peled @tomerpeled92)
+
+The issue was fixed and coordinated by the fix team:
+
+James Sturtevant @jsturtevant
+
+Mark Rossetti @marosset
+
+Andy Zhang @andyzhangx
+
+Justin Terry @jterry75
+
+Kulwant Singh @KlwntSingh
+
+Micah Hausler @micahhausler
+
+Rita Zhang @ritazh
+
+and release managers:
+
+Jeremy Rickard @jeremyrickard
+
+Thank You,
+
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
