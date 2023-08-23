@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["760" "Monday" "22" "February" "2016" "13:25:33" "+0100" "Stefan Cornelius" "scorneli@redhat.com" "<20160222132533.7c9cf4f7@redhat.com>" "28" "Re: [oss-security] CVE Request -- Buffer overflow in Python-Pillow and PIL" "^Cc:" nil nil "2" "2016022212:25:33" "[oss-security] CVE Request -- Buffer overflow in Python-Pillow and PIL" (number mark "        scorneli@red Feb 22   28/760   " thread-indent "\"Re: [oss-security] CVE Request -- Buffer overflow in Python-Pillow and PIL\"\n") "<009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>" ("<009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15629 invoked by uid 550); 22 Feb 2016 12:25:52 -0000
+Received: (qmail 32725 invoked by uid 550); 23 Aug 2023 17:29:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15611 invoked from network); 22 Feb 2016 12:25:51 -0000
-Message-ID: <20160222132533.7c9cf4f7@redhat.com>
-In-Reply-To: <009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>
-References: <009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
-Date: Mon, 22 Feb 2016 13:25:33 +0100
-From: Stefan Cornelius <scorneli@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request -- Buffer overflow in Python-Pillow
- and PIL
-To: Eric Soroos <eric@soroos.net>
+Received: (qmail 3646 invoked from network); 23 Aug 2023 10:33:58 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <df82d924-d2b9-dabd-7463-de632d8aa201@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Aug 2023 10:33:44 +0000
+MIME-Version: 1.0
+Subject: [oss-security] =?UTF-8?Q?CVE-2023-37379=3A_Apache_Airflow=3A_Expo?=
+ =?UTF-8?Q?sure_of_sensitive_connection_information?=
+ =?UTF-8?Q?=2C_DOS_and_SSRF_on_=22test_connection?=
+ =?UTF-8?Q?=22_feature=20?=
 
-On Tue, 2 Feb 2016 18:51:24 +0000
-Eric Soroos <eric@soroos.net> wrote:
+Severity: moderate
 
-> Hello,=20
->=20
-> I=E2=80=99d like to request a CVE number for all versions of Python Pillo=
-w <=3D
-> 3.1.0  and PIL =3D=3D 1.1.7 (at the least).=20
->=20
-> There is a buffer overflow in PcdDecode.c, where the decoder writes
-> assuming 4 bytes per pixel into a 3 byte per pixel wide buffer,
-> allowing writing 768 bytes off the end of the buffer. This overwrites
-> objects in Python's stack, leading to a crash.=20
->=20
-> This issue and the patch are public:
-> https://github.com/python-pillow/Pillow/pull/1706
->=20
-> Thanks,=20
->=20
-> Eric
+Affected versions:
 
-Hi,
+- Apache Airflow before 2.7.0
 
-I don't think this ever got a CVE? Could one please be assigned?
+Description:
 
-Thanks and kind regards,
---=20
-Stefan Cornelius / Red Hat Product Security
+Apache Airflow, in versions prior to 2.7.0, contains a security vulnerabili=
+ty that can be exploited by an authenticated user possessing Connection edi=
+t privileges. This vulnerability allows the user to access connection infor=
+mation and exploit the test connection feature by sending many requests, le=
+ading to a denial of service (DoS) condition on the server. Furthermore, ma=
+licious actors can leverage this vulnerability to establish harmful connect=
+ions with the server.
+
+Users of Apache Airflow are strongly advised to upgrade to version 2.7.0 or=
+ newer to mitigate the risk associated with this vulnerability. Additionall=
+y, administrators are encouraged to review and adjust user permissions to r=
+estrict access to sensitive functionalities, reducing the attack surface.
+
+Credit:
+
+kuteminh11 (finder)
+khoabda of Zalo Security Team (finder)
+Sayooj B Kumar(Team bi0s & CRED Security team) (finder)
+Son Tran from VNPT - VCI (finder)
+KmhlYXJ0 (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/32052
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-37379
+
