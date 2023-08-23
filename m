@@ -1,4 +1,4 @@
-Received: (qmail 32446 invoked by uid 550); 9 Mar 2026 19:15:11 -0000
+Received: (qmail 3469 invoked by uid 550); 23 Aug 2023 17:30:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,133 +7,153 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13395 invoked from network); 9 Mar 2026 17:30:08 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1773077399; cv=none;
-        d=google.com; s=arc-20240605;
-        b=H6icERyNAoP+il7CD4C+XtL64a3k5GiYHaPz69rXyZS6GeLgMjZrUvHVb7dCxJcJJQ
-         iFb14koe9n1wO/pTzym05NMerhyv5Lh0+C4MIODiIrBQkJiuQw6Ev5oRBe7efZWmeKqz
-         oYnT9YeBBZ0+mB6jn+YX6/cIzjiHy/STfxb3xVZ9oHVn3rHHUnQonQbJK9TK2Ka19Jp6
-         0eWhVZ54lDttPLQD9gIJgX1X0Jf7Vk/+e16ExXmihSITY4sIZcCNvkOErz2pviHeU2s+
-         MXWhbU9tqoDlyCVflKHW7W35NfaFTFUS4cO041G2VVAZGpL4OwwfnXZS4qE4vNIAzArO
-         XCQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=KipMVVuGQMbQ4BsqUAHiLUTatcHz9+mB2xDvVvuesng=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=iDFsq1RBZ2mBxNYPmz0PEjx+enA/VDMqP8PlkWq0qfOqS300t5aZWtJwDo1W9l7+0s
-         IMhZYAq+8G4hCLlzzpoabs0Rax+duHDks00gRJizdnBJaPsZv2Gy+d5Xib/dxzjyt9uE
-         jh5Nw/4/4Q5/JKSgajsVftQ5+MRc6Q/Fq2m91v3u9YT0DtVp5pa40mXBSxOE+mzQ8tZj
-         SfVGpMOkHSRu7vOCEnSURlrCMcWlYGXV/llbUgbwChprUqKHi/x/S/3PyC8i08bdeohr
-         38HQAM33NqRiCgxEsXHIuBsilsH14vo2cLe4aCahS6cztLd4gK5EzLpD/5o8tHGW0zhS
-         KMLA==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: (qmail 24301 invoked from network); 23 Aug 2023 14:38:05 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773077399; x=1773682199; darn=lists.openwall.com;
+        d=gmail.com; s=20221208; t=1692801473; x=1693406273;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=KipMVVuGQMbQ4BsqUAHiLUTatcHz9+mB2xDvVvuesng=;
-        b=OKHmQ7bVx/KFrwuVbzRa+WGIcChepfBOSV9JM6o972th9PidoGG3h6FntMRFtPpiXq
-         DROC19Fp2yO/RReJ8BfxbKN0AZGVCsEvRm3uOStKqIPW/QHkBncLOHG3GehcOfvQZlHq
-         wJ5xM2N8CHzKmw0oNgAfcHq1vrHIhapXLe7TAKq8V0pHycrC5XgbxNIj996ZGnEbNw8e
-         biTkFSTXKNfTVh4cmgPbX+fywNIZoCge3YS/xM/cPdDK77llsL0pAyENds0dx5/+3jLx
-         pp7O99svNuWhOwWuyemsERZiOelO2Kg1ThEWPHi2brhPwBr2dqS6wNAzNN3AVdB2XBVH
-         fkYg==
+        bh=fby/o7+R+dLVKWDff1K/+zo5HjIoR+kwdYioALBWseQ=;
+        b=L2ju5Kqn9ds8F34iP6380ssVpZxnS+9fJK83UruWiDi4yDVZ1/QX3mfzM+RUzcI/5l
+         kM6Q2U/3mjCSyNIIEE3LFyDXpaR+cAfNrpmmVD3IzLIAInI7Q1OHDXBvzYavlUblDxQJ
+         BFIFqKUVNE0XuG8H0ayV4x4tpVhGX+xzMLZghSd8AIDmfemfthtaA2CIszxEbB8KRRCx
+         VpGlCsa6e0m8Yc/2SLCx1O8w6uHDPZw/ovcyTgW2X5iOjGHn0OyoLUyuv1Ja0bz7IdoW
+         Kd3xZF0/KaZ2TSeahAAxzzLRXrC7p2k71qZ+V7HoCCopghYSb6rU5Vf4kcyTdZ8/vUvs
+         6i2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773077399; x=1773682199;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KipMVVuGQMbQ4BsqUAHiLUTatcHz9+mB2xDvVvuesng=;
-        b=cjqWOvFwKeiYKSZncSqHXc5+VNFGjSMw1tbaEMAHdqhQVPUBMIjnH+sTcVIsWgdO/2
-         r0soPRE1TO1KG8iGbfpkc8yP/P88s8hSEe7UOqmBQy0uKdM8KpUKrLGkG6G+Srgn8ZHw
-         wZ1caE7enkI8Qn1nfUSlx3469mdEehNIYsjrJY+ihEKvRsOQD54IqH3P5DSwFj3/DFZ8
-         SP1M4Pv3yKU4RiK4+xztJJJ+/uYc3RBr7aR2P2Qtr1DAuyNcZmVSFd0FZ09OYNKNyYwh
-         RLR9Wf7k4CnLgijAMPDLlfz7UIPc9FfVYaEOu+wzNSjUPg2WRzc7k5p9fR+t+JuMyu7k
-         +JXg==
-X-Gm-Message-State: AOJu0YxVVSQWWWsZSBE+1LJJy9Jg8IDSiZgfBa2LTnDAejizmmgCZsft
-	SzLic4jxwlEC2aHQ+dEf0vUSc+AMC2N8mnHWeU+LLH2Zoi6FDiH4W+UMh4j9fAAvgaSr7IrLuB1
-	uAHqXGSLoOnng1PaO640b8Bb2lKKLPhIJ+Kgt
-X-Gm-Gg: ATEYQzylnV3Kk312cWVPPj2wTN9yfnFpWhRakEeQQuHBd6avsBA9VKSel+KUuPrMFBE
-	TcL/YKJuAGMinNKLkyhAseIt5Ovy6zaz1rXAa1t8c9bxPnEF6/4kAT5C59lOZVPxrM5GvvBp6L4
-	xqA+w+DAQuIBfpl/4cKKW7ptkoVixgIWTQKJdZuGSeXHYgx8nTgr1JELHD1PvH9eylKbgNkLWdE
-	Wwt92WtGjN7Q/mKiVzAI+wTCapwHSBULX8topD1idIMeiDCTOG3y4CiM4E/ltNmkepZVA02Q4u7
-	KFGzDWkf
-X-Received: by 2002:a05:6102:41a6:b0:600:11e1:2a4b with SMTP id
- ada2fe7eead31-60011e12bf3mr2541145137.34.1773077398817; Mon, 09 Mar 2026
- 10:29:58 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692801473; x=1693406273;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fby/o7+R+dLVKWDff1K/+zo5HjIoR+kwdYioALBWseQ=;
+        b=Lqkz+Ixs52aY+0yyW49XEzh7FhhDFPOzR0R51N8Cuzs+BbdRyZc3NJvrGzplWmCwil
+         SkM71bLPBQ1WKh4XLHK3C77wMI02wcxzdUfpUURstexk//aJw3qgVmj+9WKkX/qTQ8iN
+         Av9+roNGWCwf76Kp2DK1quCBgOrNsmRWZQ4QWgE8YfD9BK/9/a281KITv4Eqi1F72SWl
+         +6lRt0pMldor0AimgigPLi+HmTX+yB2bMooneGvopIWSuEXN4P7HqN5/UkYNy3Dbt0IM
+         qgW5+v5ZpJoqvaNhDBP+Pi77WDTO/3Kx5ABqwpmWciH820hYd4D4aklHm5NZYgDC9l63
+         wbeQ==
+X-Gm-Message-State: AOJu0YyKQshMtBbWmubZ0gYiPW5rzZHQ0s9uifvsX2HRZ+hKxIC9ug9l
+	xkyfE2pijKlMdCSPoIrfNGQQJ/nVitGbrUuo4ZrlL870/sw=
+X-Google-Smtp-Source: AGHT+IF9Mw+wV1cYNxOkqTrvtO+mS+59yDN3QtHwvbWuxkzDs08MzuXKyZoLVdsJiAKWwPPS8rsdUdh8hDu68NhY980=
+X-Received: by 2002:a0d:ea14:0:b0:58c:9651:8f with SMTP id t20-20020a0dea14000000b0058c9651008fmr13774109ywe.10.1692801472981;
+ Wed, 23 Aug 2023 07:37:52 -0700 (PDT)
 MIME-Version: 1.0
-From: Tabitha Sable <tabitha.c.sable@gmail.com>
-Date: Mon, 9 Mar 2026 12:29:47 -0500
-X-Gm-Features: AaiRm50h848hJJcTzbFq89ha8Qum4I0kB8uacJ0M1aLQis9vcJmVG4sfY8naM3w
-Message-ID: <CAM62Sm+vbcd9O8JJ4MA-hhbaY2OxK9+PxQdECVueZYxEXqZFVw@mail.gmail.com>
+From: Rita Zhang <rita.z.zhang@gmail.com>
+Date: Wed, 23 Aug 2023 07:37:42 -0700
+Message-ID: <CAL7+V1zmb66gKzeQUe9qzJ1MVVn=ua2JEfY-_jiMk8zJ-+K+zw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000008410de064c9ac0c4"
-Subject: [oss-security] [kubernetes] CVE-2026-3288: ingress-nginx rewrite-target nginx
- configuration injection
+Content-Type: multipart/alternative; boundary="00000000000078ff040603980e5b"
+Subject: [oss-security] [kubernetes] CVE-2023-3955: Insufficient input sanitization on
+ Windows nodes leads to privilege escalation
 
---0000000000008410de064c9ac0c4
+--00000000000078ff040603980e5b
 Content-Type: text/plain; charset="UTF-8"
 
 Hello Kubernetes Community,
 
-A security issue was discovered in ingress-nginx where the
-nginx.ingress.kubernetes.io/rewrite-target Ingress annotation can be used
-to inject configuration into nginx. This can lead to arbitrary code
-execution in the context of the ingress-nginx controller, and disclosure of
-Secrets accessible to the controller. (Note that in the default
-installation, the controller can access all Secrets cluster-wide.)
+A security issue was discovered in Kubernetes where a user that can create
+pods on Windows nodes may be able to escalate to admin privileges on those
+nodes. Kubernetes clusters are only affected if they include Windows nodes.
 
-This issue has been rated **HIGH** ([CVSS calculator](
-https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H),
-score: 8.8), and assigned **CVE-2026-3288**
+This issue has been rated ***HIGH*** (
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>
+-
+8.8
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
+and assigned **CVE-2023-3955**
 
-### Am I vulnerable?
+*Am I vulnerable?*
 
-This issue affects ingress-nginx. If you do not have ingress-nginx
-installed on your cluster, you are not affected. You can check this by
-running `kubectl get pods --all-namespaces --selector
-app.kubernetes.io/name=ingress-nginx`.
+Any kubernetes environment with Windows nodes is impacted.  Run `kubectl
+get nodes -l kubernetes.io/os=windows` <http://kubernetes.io/os=windows> to
+see if any Windows nodes are in use.
 
-#### Affected Versions
+*Affected Versions*
 
-- ingress-nginx: < 1.13.8
-- ingress-nginx: < 1.14.4
-- ingress-nginx: < 1.15.0
+- kubelet <= v1.28.0
 
-### How do I mitigate this vulnerability?
+- kubelet <= v1.27.4
 
-Prior to upgrading, this vulnerability can be mitigated by using admission
-control to block the use of the rewrite-target annotation.
+- kubelet <= v1.26.7
 
-#### Fixed Versions
+- kubelet <= v1.25.12
 
-- ingress-nginx: 1.13.8
-- ingress-nginx: 1.14.4
-- ingress-nginx: 1.15.0
+- kubelet <= v1.24.16
 
-#### How to upgrade?
+*How do I mitigate this vulnerability?*
 
-To upgrade, refer to the documentation: [Upgrading Ingress-nginx](
-https://kubernetes.github.io/ingress-nginx/deploy/upgrade/)
+The provided patch fully mitigates the vulnerability (see fix impact
+below).  Full mitigation for this class of issues requires patches applied
+for CVE-2023-3676, CVE-2023-3955, and CVE-2023-3893.
 
-### Detection
+Outside of applying the patch, there are no known mitigations to this
+vulnerability.
 
-Suspicious data within the `rules.http.paths.path` field of an Ingress
-resource could indicate an attempt to exploit this vulnerability.
+*Fixed Versions*
+
+- kubelet v1.28.1
+
+- kubelet v1.27.5
+
+- kubelet v1.26.8
+
+- kubelet v1.25.13
+
+- kubelet v1.24.17
+
+These releases will be published over the course of today, August 23rd,
+2023.
+
+***Fix impact:*** Passing Windows Powershell disk format options to in-tree
+volume plugins will result in an error during volume provisioning on the
+node.  There are no known use cases for this functionality, nor is this
+functionality supported by any known out-of-tree CSI driver.
+
+To upgrade, refer to the documentation:
+
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+
+*Detection*
+
+Kubernetes audit logs can be used to detect if this vulnerability is being
+exploited. Pod create events with embedded powershell commands are a strong
+indication of exploitation.
 
 If you find evidence that this vulnerability has been exploited, please
 contact security@kubernetes.io
 
+*Additional Details*
+
 See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/137560
+https://github.com/kubernetes/kubernetes/issues/119595
 
-#### Acknowledgements
+*Acknowledgements*
 
-This vulnerability was reported by Kai Aizen
+This vulnerability was discovered by James Sturtevant @jsturtevant and Mark
+Rossetti @marosset during the process of fixing CVE-2023-3676 (that
+original CVE was reported by Tomer Peled @tomerpeled92)
+
+The issue was fixed and coordinated by the fix team:
+
+James Sturtevant @jsturtevant
+
+Mark Rossetti @marosset
+
+Andy Zhang @andyzhangx
+
+Justin Terry @jterry75
+
+Kulwant Singh @KlwntSingh
+
+Micah Hausler @micahhausler
+
+Rita Zhang @ritazh
+
+and release managers:
+
+Jeremy Rickard @jeremyrickard
 
 Thank You,
 
-Tabitha Sable on behalf of the Kubernetes Security Response Committee
+Rita Zhang on behalf of the Kubernetes Security Response Committee
 
---0000000000008410de064c9ac0c4--
+--00000000000078ff040603980e5b--
