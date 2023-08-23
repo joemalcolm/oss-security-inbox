@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/9
-Message-ID: <20230725140904.GA8733@openwall.com>
-Date: Tue, 25 Jul 2023 16:09:04 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/4
+Message-ID: <df82d924-d2b9-dabd-7463-de632d8aa201@apache.org>
+Date: Wed, 23 Aug 2023 10:33:44 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Tamas Koczka <poprdi@...omium.org>
-Subject: Re: Our learnings from 42 Linux kernel exploits, we are limiting io_uring
+Subject: CVE-2023-37379: Apache Airflow: Exposure of sensitive connection information, DOS and SSRF on "test connection" feature 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 25, 2023 at 02:31:55PM +0200, Marcus Meissner wrote:
-> https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
-> 
-> has been updated with exploit information.
-> 
-> I tried to backtrack through kernel git to find the exact commit where
-> this locking problem got fixed, but I gave up after a while after multiple
-> refactoring (and a filemove) in the io_uring codel.
+Severity: moderate
 
-I guess it's this:
+Affected versions:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.15.y&id=fb348857e7b67eefe365052f1423427b66dedbf3
+- Apache Airflow before 2.7.0
 
-as mentioned in:
+Description:
 
-https://twitter.com/VAR10CK/status/1683303642173153280
+Apache Airflow, in versions prior to 2.7.0, contains a security vulnerability that can be exploited by an authenticated user possessing Connection edit privileges. This vulnerability allows the user to access connection information and exploit the test connection feature by sending many requests, leading to a denial of service (DoS) condition on the server. Furthermore, malicious actors can leverage this vulnerability to establish harmful connections with the server.
 
-Alexander
+Users of Apache Airflow are strongly advised to upgrade to version 2.7.0 or newer to mitigate the risk associated with this vulnerability. Additionally, administrators are encouraged to review and adjust user permissions to restrict access to sensitive functionalities, reducing the attack surface.
+
+Credit:
+
+kuteminh11 (finder)
+khoabda of Zalo Security Team (finder)
+Sayooj B Kumar(Team bi0s & CRED Security team) (finder)
+Son Tran from VNPT - VCI (finder)
+KmhlYXJ0 (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/32052
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-37379
+
