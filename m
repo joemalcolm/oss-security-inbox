@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/5
-Message-ID: <alpine.BSF.2.21.9999.2306220132050.17927@aneurin.horsfall.org>
-Date: Thu, 22 Jun 2023 01:44:04 +1000 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2023-31975: memory leak in yasm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/1
+Message-ID: <924cd47e-e1b8-b70e-88b1-4a7ddf11e15a@apache.org>
+Date: Wed, 23 Aug 2023 10:32:26 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-40273: Session fixation in Apache Airflow web interface 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 21 Jun 2023, Jeffrey Walton wrote:
+Severity: low
 
-> Memory leaks on exit are par for the course in GNU software per
-> https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+Affected versions:
 
-Don't bother with this, don't bother with that, etc...  Call me old-school 
-(which I am), but I cannot abide sloppy programming[*].
+- Apache Airflow before 2.7.0
 
-At the risk of starting a culture war, that is one of the reasons why I 
-avoid GNU libraries whenever possible.
+Description:
 
-[*]
-And don't even mention "AI-generated code".
+The session fixation vulnerability allowed the authenticated user to continue accessing Airflow webserver even after the password of the user has been reset by the admin - up until the expiry of the session of the user. Other than manually cleaning the session database (for database session backend), or changing the secure_key and restarting the webserver, there were no mechanisms to force-logout the user (and all other users with that).
 
--- Dave
+With this fix implemented, when using the database session backend, the existing sessions of the user are invalidated when the password of the user is reset. When using the securecookie session backend, the sessions are NOT invalidated and still require changing the secure key and restarting the webserver (and logging out all other users), but the user resetting the password is informed about it with a flash message warning displayed in the UI. Documentation is also updated explaining this behaviour.
+
+Users of Apache Airflow are advised to upgrade to version 2.7.0 or newer to mitigate the risk associated with this vulnerability.
+
+Credit:
+
+Yusuf AYDIN (@h1_yusuf) (finder)
+L3yx of Syclover Security Team. (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/33347
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-40273
+
