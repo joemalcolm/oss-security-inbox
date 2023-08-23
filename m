@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["552" "Tuesday" "3" "October" "2017" "15:17:58" "+0200" "Moritz Muehlenhoff" "jmm@inutil.org" "<20171003131758.GA6606@inutil.org>" "13" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "10" "2017100313:17:58" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        jmm@inutil.o Oct  3   13/552   " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20171003112709.GA30134@kroah.com>" ("<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>" "<20170926150446.GA11530@kroah.com>" "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>" "<20170927125149.GA2500@openwall.com>" "<20170927130424.GA19695@kroah.com>" "<20170928073533.mlntvkfnzl6sann7@eldamar.local>" "<20170928143420.GB6123@kroah.com>" "<20170928213721.GA5119@grsecurity.net>" "<20171003112709.GA30134@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17798 invoked by uid 550); 3 Oct 2017 13:18:10 -0000
+Received: (qmail 27851 invoked by uid 550); 23 Aug 2023 17:29:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +6,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17769 invoked from network); 3 Oct 2017 13:18:10 -0000
-Message-ID: <20171003131758.GA6606@inutil.org>
-References: <20170926073214.GA8108@kroah.com>
- <4188502.8b3PN4uBSd@wanheda>
- <20170926150446.GA11530@kroah.com>
- <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
- <20170927125149.GA2500@openwall.com>
- <20170927130424.GA19695@kroah.com>
- <20170928073533.mlntvkfnzl6sann7@eldamar.local>
- <20170928143420.GB6123@kroah.com>
- <20170928213721.GA5119@grsecurity.net>
- <20171003112709.GA30134@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171003112709.GA30134@kroah.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: jmm@inutil.org
-X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
-Date: Tue, 3 Oct 2017 15:17:58 +0200
-From: Moritz Muehlenhoff <jmm@inutil.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+Received: (qmail 3280 invoked from network); 23 Aug 2023 10:33:10 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <924cd47e-e1b8-b70e-88b1-4a7ddf11e15a@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Aug 2023 10:32:26 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-40273: Session fixation in Apache Airflow web interface 
 
-On Tue, Oct 03, 2017 at 01:27:09PM +0200, Greg KH wrote:
-> I don't know how you can "reject" a CVE, is there a proceedure
-> somewhere?  There's lots of CVEs out there that people create against
-> the kernel that just aren't issues at all, but I've been ignoring them
-> as it makes people happy to assign and track them for no reason.
-> 
-> Is there some way a project can get them rejected?
+Severity: low
 
-You can suggest rejection via https://cveform.mitre.org/ and selecting
-"Request an update to an existing CVE Entry" as the request type.
+Affected versions:
 
-Cheers,
-        Moritz
+- Apache Airflow before 2.7.0
+
+Description:
+
+The session fixation vulnerability allowed the authenticated user to contin=
+ue accessing Airflow webserver even after the password of the user has been=
+ reset by the admin - up until the expiry of the session of the user. Other=
+ than manually cleaning the session database (for database=C2=A0session bac=
+kend), or changing the secure_key and restarting the webserver, there were =
+no mechanisms to force-logout the user (and all other users with that).
+
+With this fix implemented, when using the=C2=A0database=C2=A0session backen=
+d, the existing sessions of the user are invalidated when the password of t=
+he user is reset. When using the securecookie=C2=A0session backend, the ses=
+sions are NOT invalidated and still require changing the secure key and res=
+tarting the webserver (and logging out all other users), but the user reset=
+ting the password is informed about it with a flash message warning display=
+ed in the UI. Documentation is also updated explaining this behaviour.
+
+Users of Apache Airflow are advised to upgrade to version 2.7.0 or newer to=
+ mitigate the risk associated with this vulnerability.
+
+Credit:
+
+Yusuf AYDIN (@h1_yusuf) (finder)
+L3yx of Syclover Security Team. (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/33347
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-40273
+
