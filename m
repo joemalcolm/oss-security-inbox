@@ -1,64 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/1
-Message-ID: <20230117160111.htaewnl2wmuqlgq7@yuggoth.org>
-Date: Tue, 17 Jan 2023 16:01:11 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/2
+Message-ID: <0227aa7c-d06f-93d7-34f2-931d922c0c53@apache.org>
+Date: Wed, 23 Aug 2023 10:33:16 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2023-001] Swift: Arbitrary file access through custom S3 XML entities (CVE-2022-47950)
+Subject: CVE-2023-39441: Apache Airflow SMTP Provider, Apache Airflow IMAP Provider, Apache Airflow: SMTP/IMAP client components allowed MITM due to missing Certificate Validation 
 Content-Type: text/plain; charset=utf-8
 
-===================================================================
-OSSA-2023-001: Arbitrary file access through custom S3 XML entities
-===================================================================
+Severity: moderate
 
-:Date: January 17, 2023
-:CVE: CVE-2022-47950
+Affected versions:
 
+- Apache Airflow SMTP Provider before 1.30
+- Apache Airflow IMAP Provider before 3.3.0
+- Apache Airflow before 2.7.0
 
-Affects
-~~~~~~~
-- Swift: <2.28.1, >=2.29.0 <2.29.2, ==2.30.0
+Description:
 
+Apache Airflow SMTP Provider before 1.3.0, Apache Airflow IMAP Provider before 3.3.0, and Apache Airflow before 2.7.0 are affected by the Validation of OpenSSL Certificate vulnerability.
 
-Description
-~~~~~~~~~~~
-Sébastien Meriot (OVH) reported a vulnerability in Swift's S3 XML
-parser. By supplying specially crafted XML files an authenticated user
-may coerce the S3 API into returning arbitrary file contents from the
-host server resulting in unauthorized read access to potentially
-sensitive data; this impacts both s3api deployments (Rocky or later),
-and swift3 deployments (Queens and earlier, no longer actively
-developed). Only deployments with S3 compatibility enabled are
-affected.
+The default SSL context with SSL library did not check a server's X.509 certificate.  Instead, the code accepted any certificate, which could result in the disclosure of mail server credentials or mail contents when the client connects to an attacker in a MITM position.
 
+Users are strongly advised to upgrade to Apache Airflow version 2.7.0 or newer, Apache Airflow IMAP Provider version 3.3.0 or newer, and Apache Airflow SMTP Provider version 1.3.0 or newer to mitigate the risk associated with this vulnerability
 
-Patches
-~~~~~~~
-- https://review.opendev.org/870823 (2023.1/antelope)
-- https://review.opendev.org/870828 (Wallaby)
-- https://review.opendev.org/870827 (Xena)
-- https://review.opendev.org/870826 (Yoga)
-- https://review.opendev.org/870825 (Zed)
+Credit:
 
+Martin Schobert, Pentagrid AG (finder)
 
-Credits
-~~~~~~~
-- Sébastien Meriot from OVH (CVE-2022-47950)
+References:
 
+https://github.com/apache/airflow/pull/33075
+https://github.com/apache/airflow/pull/33108
+https://github.com/apache/airflow/pull/33070
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-39441
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1998625
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-47950
-
-
-Notes
-~~~~~
-- The stable/wallaby branch is under extended maintenance and will receive no
-  new point releases, but a patch for it is provided as a courtesy.
-
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
