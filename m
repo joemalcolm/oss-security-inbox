@@ -1,104 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/6
-Message-ID: <20230623112217.GA6878@openwall.com>
-Date: Fri, 23 Jun 2023 13:22:17 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/6
+Message-ID: <CAL7+V1wuchRgyUhLms8r-cqR42OSn6G0R2GqJZy2sfHDSrU0uQ@mail.gmail.com>
+Date: Wed, 23 Aug 2023 07:37:43 -0700
+From: Rita Zhang <rita.z.zhang@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Jyoti Raval <jenyraval@...il.com>
-Subject: Re: Open Source Tool | MPT: Pentest In Action!
+Subject: [kubernetes] CVE-2023-3893: Insufficient input sanitization on kubernetes-csi-proxy leads to privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kubernetes Community,
 
-For those wondering why this got through moderation, it's because we do
-have a relevant item among the list content guidelines:
+A security issue was discovered in Kubernetes where a user that can create
+pods on Windows nodes running kubernetes-csi-proxy may be able to escalate
+to admin privileges on those nodes. Kubernetes clusters are only affected
+if they include Windows nodes running kubernetes-csi-proxy.
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+This issue has been rated ***HIGH*** (
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>
+-
+8.8
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
+and assigned **CVE-2023-3893**
 
-"Occasional announcements of Open Source security tools (and relevant
-features of non-security tools) are acceptable, but only for initial
-announcements and major updates (not for minor updates).  Especially
-desirable are news on tools/features aimed to enhance security of other
-Open Source software."
+*Am I vulnerable?*
 
-Unfortunately, this particular tool doesn't appear to be "aimed to
-enhance security of other Open Source software".
+Any kubernetes environment with Windows nodes that are running
+kubernetes-csi-proxy is impacted.  This is a common default configuration
+on Windows nodes.  Run `kubectl get nodes -l kubernetes.io/os=windows`
+<http://kubernetes.io/os=windows> to see if any Windows nodes are in use.
 
-On Thu, Jun 22, 2023 at 06:05:14PM +0530, Jyoti Raval wrote:
-> Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
-> <https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
+*Affected Versions*
 
-This isn't a topic for oss-security.  But per the above, an Open Source
-security tool announced for the first time nevertheless is.
+- kubernetes-csi-proxy <= v2.0.0-alpha.0
 
-> Github - https://github.com/jenyraval/MPT
+- kubernetes-csi-proxy <= v1.1.2
 
-Also, security issues in an Open Source tool are on topic here.  Let's
-see what we have for this one:
+*How do I mitigate this vulnerability?*
 
-login.php:
-      $myusername = mysqli_real_escape_string($db,$_POST['username']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']);
+The provided patch fully mitigates the vulnerability and has no known side
+effects.  Full mitigation for this class of issues requires patches applied
+for CVE-2023-3676, CVE-2023-3955, and CVE-2023-3893.
 
-      $sql = "SELECT id FROM login WHERE username = '$myusername' and password = '$mypassword'";
-      $result = mysqli_query($db,$sql);
+Outside of applying the provided patch, there are no known mitigations to
+this vulnerability.
 
-No use of prepared statements, instead relying solely on escaping.
-Given that the specialized escaping function is used, this is supposed
-to work, but I think is a higher risk than prepared statements.  I'll
-spare this one from an OVE ID assignment, although I do think it's
-unjustified risk exposure.
+*Fixed Versions*
 
-Plaintext password storage.  OVE-20230623-0001
+- kubernetes-csi-proxy v2.0.0-alpha.1
 
-Password comparison potentially vulnerable to remote timing attack
-(depending on undocumented MySQL server internal workings, which isn't
-something to rely upon for security).  OVE-20230623-0002
+- kubernetes-csi-proxy v1.1.3
 
-live_edit.php:
-$input = filter_input_array(INPUT_POST);
-if ($input['action'] == 'edit') {
-$update_field='';
-if(isset($input['status'])) {
-$update_field.= "status='".$input['status']."'";
-}
-if($update_field && $input['id']) {
-$sql_query = "UPDATE issuedetails SET $update_field WHERE id='" . $input['id'] . "'";
-mysqli_query($db, $sql_query) or die("database error:". mysqli_error($conn));
+These releases will be published over the course of today, August 23rd,
+2023.
 
-(Yes, the lack of indentation is in the original.)
+To upgrade: cordon the node, stop the associated Windows service, replace
+the csi-proxy.exe binary, restart the associated Windows service, and
+un-cordon the node.  See the installation docs for more details:
+https://github.com/kubernetes-csi/csi-proxy#installation
 
-Apparently, no escaping nor filtering is actually performed here, and
-also no use of prepared statements.  Likely (post-authentication?) SQL
-injection possibility.  OVE-20230623-0003
+If a Windows host process daemon set is used to run kubernetes-csi-proxy
+such as
+https://github.com/kubernetes-csi/csi-driver-smb/blob/master/charts/latest/csi-driver-smb/templates/csi-proxy-windows.yaml,
+simply upgrade the image to a fixed version such as
+ghcr.io/kubernetes-sigs/sig-windows/csi-proxy:v1.1.3
 
-Per PHP documentation, filter_input_array() "is useful for retrieving
-many values without repetitively calling filter_input()."  As optional
-second argument (missing here), it'd accept an actual filter.  The
-default is FILTER_DEFAULT, just like for filter_input(), the
-documentation for which says: "If omitted, FILTER_DEFAULT will be used,
-which is equivalent to FILTER_UNSAFE_RAW.  This will result in no
-filtering taking place by default."
+*Detection*
 
-Should PHP possibly want to deprecate usage of filter_input() and
-filter_input_array() without a filter specified, as this provides a
-false sense of security?
+Kubernetes audit logs can be used to detect if this vulnerability is being
+exploited. Pod create events with embedded powershell commands are a strong
+indication of exploitation.
 
-I could be missing something here - the above is based solely on my
-current reading of PHP documentation.
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
 
-Throughout the MPT codebase, data already in the database is trusted not
-to cause SQL injections nor XSS.  As I'm not seriously auditing this
-codebase, I did not check the data flow, but I suspect that no
-validation sufficient against both of these risks takes place on
-entering the data into the database.  Even if
-mysqli_real_escape_string() is used, which it appears to be in many
-places, this should only prevent SQL injection on the INSERT/UPDATE
-itself, but not on subsequent reusage of the string SELECT'ed back from
-the database in further SQL queries.  It also does not prevent XSS.
-Let's call this OVE-20230623-0004, although it could as well be two IDs.
+*Additional Details*
 
-I think that's enough to turn the thread into something relevant here -
-especially the question on PHP's filter_input*() and its hardening.
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/119594
 
-Alexander
+*Acknowledgements*
+
+This vulnerability was discovered by James Sturtevant @jsturtevant and Mark
+Rossetti @marosset during the process of fixing CVE-2023-3676 (that
+original CVE was reported by Tomer Peled @tomerpeled92)
+
+The issue was fixed and coordinated by the fix team:
+
+James Sturtevant @jsturtevant
+
+Mark Rossetti @marosset
+
+Andy Zhang @andyzhangx
+
+Justin Terry @jterry75
+
+Kulwant Singh @KlwntSingh
+
+Micah Hausler @micahhausler
+
+Rita Zhang @ritazh
+
+and release managers:
+
+Mauricio Poppe @mauriciopoppe
+
+Thank You,
+
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
