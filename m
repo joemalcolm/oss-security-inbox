@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3537" "Thursday" "6" "August" "2020" "10:40:49" "-0700" "James Bottomley" "jejb@linux.ibm.com" "<1596735649.25458.15.camel@linux.ibm.com>" "74" "Re: [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" nil nil nil "8" "2020080617:40:49" "[oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" (number mark "U       jejb@linux.i Aug  6   74/3537  " thread-indent "\"Re: [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon\"\n") "<20200806110623.yubvwntnnuhff46p@archlinux.org>" ("<20200520125438.GB12616@f195.suse.de>" "<hmnd04492x6.fsf@jsnitsel.users.ipa.redhat.com>" "<20200806110623.yubvwntnnuhff46p@archlinux.org>") nil nil nil nil nil nil nil "Re: [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10041 invoked by uid 550); 6 Aug 2020 22:00:23 -0000
+Received: (qmail 11856 invoked by uid 550); 25 Aug 2023 22:24:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,110 +7,218 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15945 invoked from network); 6 Aug 2020 17:41:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : reply-to : to : cc : date : in-reply-to : references : content-type
- : mime-version; s=pp1; bh=Ggdixp25COrAnJXMiiC7x7g8FhnFwCDtJQoF4j14188=;
- b=I8tet/R7kjWwKUHIjt/P3MS9eNHKXPFQIqwYk4DsA3cgNvi3FXbVg+A6tkm/gq9Ih3nG
- aji+oqOoggtG6AQMwPe2lhWYttMDdedic6FndjFtX54i35bswsQ3Gx3hIR/F5oUxi+ey
- n96Qx8pY01WMi2paBb3ZKLomA9iTY7G8RZslJua2+Urnc1yqaezgUxHN2Zc2d8ruI91P
- Szu1ozhsbzQwm1vjhfh/KnQjFEdJSVfFgzsTYYPoH7yu/rqSDgtoCa56RQsGhJW8T1b7
- hVRVR1wmw2zL/lgSFV9oZpqchb6jqIjnyGt3c490GIkXGHAsQDMgu8DD3WNpg+8K649d 8Q== 
-Message-ID: <1596735649.25458.15.camel@linux.ibm.com>
-From: James Bottomley <jejb@linux.ibm.com>
-To: Jonas Witschel <diabonas@archlinux.org>, oss-security@lists.openwall.com
-Cc: trousers-tech@lists.sourceforge.net, security@suse.de
-Date: Thu, 06 Aug 2020 10:40:49 -0700
-In-Reply-To: <20200806110623.yubvwntnnuhff46p@archlinux.org>
-References: <20200520125438.GB12616@f195.suse.de>
-	 <hmnd04492x6.fsf@jsnitsel.users.ipa.redhat.com>
-	 <20200806110623.yubvwntnnuhff46p@archlinux.org>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-rSaRzopW7gQzI/88oCVR"
-X-Mailer: Evolution 3.26.6 
+Received: (qmail 11670 invoked from network); 25 Aug 2023 22:24:12 -0000
+Date: Sat, 26 Aug 2023 00:23:59 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Vegard Nossum <vegard.nossum@oracle.com>, Jiri Kosina <jkosina@suse.cz>,
+	Donald Buczek <buczek@molgen.mpg.de>,
+	Greg KH <gregkh@linuxfoundation.org>
+Message-ID: <20230825222359.GA10424@openwall.com>
 Mime-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
- definitions=2020-08-06_13:2020-08-06,2020-08-06 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- lowpriorityscore=0 spamscore=0 impostorscore=0 mlxscore=0 phishscore=0
- clxscore=1034 malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2008060115
-Subject: Re: [oss-security] Multiple Security
- Issues in the TrouSerS tpm1.2 tscd Daemon
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] linux-distros list policy and Linux kernel, again
 
---=-rSaRzopW7gQzI/88oCVR
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Thu, 2020-08-06 at 13:06 +0200, Jonas Witschel wrote:
-> On 2020-08-05 14:51, Jerry Snitselaar wrote:
-> > > Mitigation and Bugfixes
-> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > >=20
-> > > It seems best to me to run the tcsd as the tss:tss user and group
-> > > right away and to not rely on the privilege drop logic
-> > > implemented in the daemon itself. All of a), b) and c) should no
-> > > longer be problematic in this case. I found that on Debian and
-> > > Gentoo Linux this is already the case. To make this work a
-> > > udev rule needs to be packaged that passes ownership of /dev/tpm0
-> > > device to the tss user. To prevent regressions when switching
-> > > from the privilege drop approach to this new approach, a possibly
-> > > already existing /var/lib/tpm/system.auth file needs to be safely
-> > > chown()'ed to the tss user during package updates.
-> > >=20
-> >=20
-> > On Fedora and RHEL there currently is a udev rule (from upstream)
-> > that ships with the tpm2-tss package that is setting ownership of
-> > /dev/tpm0 to tss:root. I don't recall what the reasoning was for
-> > the group being root. For /dev/tpmrm0 it sets it to tss:tss, so not
-> > sure what the reason was for /dev/tpm0. I believe that package is
-> > part of a default install, so that will need to be worked out. I
-> > don't know if you run into that with SUSE as well.
->=20
-> The idea behind not giving the tss group access to /dev/tpm0 as well
-> is to prevent users from gaining direct access to the TPM and being
-> able to DoS it. Users privileged to access the TPM should be added to
-> the tss group so that they can access the TPM trough an access
-> broker/resource manager (like tpm2-abrmd, the in-kernel resource
-> manager /dev/tpmrm0, or tcsd in case of TPM 1.2), but not have "bare
-> metal" access, which is limited to the tss user and root. See [1] for
-> reference.
+This is sort of continuation to a thread I started in here last year, at
+the time focusing on allowing "embargoes" on publicly fixed Linux kernel
+issues, which we ended up agreeing to:
 
-That may be a bit of a misconception about how tpmrm operates.  It's
-simply the in-kernel resource manager which virtualizes the transient
-objects and the session handles (as far as the latter can be
-virtualized), so users making contact with the TPM over the tpmrm
-device can't interfere with each other (very necessary with TPM 2.0
-because it only has room for 3 transient keys).  However, a user with
-tpmrm access can still DoS the TPM by making it derive RSA keys, for
-instance.  Plus they can still access the full range of TPM privileged
-commands if they have the authorizations.  There was talk of adding a
-command restriction filter to tpmrm, but it's very hard to do reliably,
-which is why it's not been done.
+https://www.openwall.com/lists/oss-security/2022/05/15/1
 
-Basically TPM should be treated as a single owner resource, but that
-single owner still needs help: I use my TPM for keys for ssh, gpg,
-openvpn, secure boot and my general CA infrastructure.  Since those
-applications operate independently, they could stack enough transient
-objects into the TPM to give me an out of memory error unless I go via
-the tpmrm device.
+BTW, this recent thread on "Quality standards for embargoed code" is
+relevant to that previous topic:
 
-James
+https://lore.kernel.org/ksummit/2023081527-amendment-professed-0a42@gregkh/T/#t
 
---=-rSaRzopW7gQzI/88oCVR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+(It's harder/worse to test code changes that are not yet public, which
+is something we also recently discussed in context of and granted an
+exception to the curl project.)
 
------BEGIN PGP SIGNATURE-----
+This time, there are at least two more points of contention to discuss.
 
-iHUEABMIAB0WIQTnYEDbdso9F2cI+arnQslM7pishQUCXyxAogAKCRDnQslM7pis
-hX1bAQCn28W27fDJlsK+M9+oxX8SNel9/KqL7CiWGCRmtKrj1gD/eh0V2TTrbKfu
-l8fxLZBwYwrvTUl2WHmPE8g1MYUxULI=
-=BL+Q
------END PGP SIGNATURE-----
+Thank you Donald Buczek for bringing this to oss-security (and beating
+me to it), with your specific needs explained:
 
---=-rSaRzopW7gQzI/88oCVR--
+https://www.openwall.com/lists/oss-security/2023/08/25/1
+https://lore.kernel.org/ksummit/nycvar.YFH.7.76.2308160014330.14207@cbobk.fhfr.pm/T/#t
 
+Here I'd like to start a new thread just on oss-security (no cross-post,
+but some people CC'ed) and with more context given.
+
+For some years until recently, the Linux kernel's
+Documentation/admin-guide/security-bugs.rst directed people to also
+report "sensitive bugs, such as those that might lead to privilege
+escalations" to linux-distros.  On one hand, that was great -
+cooperation between Linux kernel upstream and Linux distros.  On the
+other hand, the specific wording did not fully match linux-distros
+policy, yet it bypassed a visit to the wiki page on linux-distros with
+the instructions and policy on it by directly giving out the posting
+address.  This resulted in people reporting issues to linux-distros
+without having actually read and accepted the policy.
+
+Last year, Vegard Nossum suggested edits (and then revised them this
+year) to try and make things much clearer for reporters:
+
+https://lore.kernel.org/all/20230305220010.20895-1-vegard.nossum@oracle.com/
+https://vegard.github.io/security-v3/Documentation/output/process/security-bugs.html
+
+As I recall, when Vegard offered this edited documentation (the second
+URL above) to people who reported something to linux-distros but were
+confused, they said that version of the documentation was indeed much
+clearer.  However, the changes didn't get merged, which I speculate is
+in part a result of them changing several things at once and thus making
+it harder for all reviewers to agree on them.  Besides, I am not sure
+this was the right direction: maybe rather than duplicate and explain
+linux-distros policy aspects in Linux kernel documentation, it was
+better to refer to linux-distros instructions and omit the linux-distros
+posting address from the kernel documentation.
+
+Then there was the recent lengthy linux-distros and s@k.o thread on the
+StackRot (CVE-2023-3269) vulnerability, publicly disclosed here:
+
+https://www.openwall.com/lists/oss-security/2023/07/05/1
+
+In that private thread, two linux-distros policy aspects came up as
+being inconsistent with s@k.o preferences:
+
+1. For s@k.o, public disclosure is typically in up to 7 days since fix
+is ready, but for linux-distros the deadline is 14 days max since
+linux-distros is notified even if the fix is not ready.  Apparently,
+this one makes Greg KH particularly unhappy about linux-distros.
+
+2. _If_ the reporter shares PoCs/exploits with linux-distros, then per
+current policy those should also be made public (within up to 7 days
+more after the vulnerability is publicly disclosed as such).  Linus
+Torvalds said that this must be up to the reporter only, and we should
+not be imposing such policy.  In a sense, this is already up to the
+reporter - if they disagree, they just shouldn't post PoCs/exploits to
+linux-distros - can instead post an offer to share with individual
+distros if they want to, or not share at all.  However, this is
+problematic in practice because not everyone reads the rules before
+posting and sometimes people change their mind during the embargo time
+(or are required to "change their mind" by their employer, etc.)
+
+I had already recognized both of these as problems - e.g., the latter
+one also came up in Mathias Krause's disclosure of another Linux kernel
+vulnerability in 2022:
+
+https://www.openwall.com/lists/oss-security/2022/02/03/1
+
+At the time, I thought that maybe increasing the maximum delay for
+PoC/exploit publication from 7 to 30 days would be appropriate, but we
+did not formally do it.  I effectively granted a similar exception to
+Ruihan Li for StackRot this time, even though the full exploit wasn't
+even shared with linux-distros and Ruihan was willing to publish the
+PoCs that he did share on time.  I also informed Ruihan of this policy
+aspect early enough, so we dodged that bullet that time, but at the same
+time made Linus aware of this general issue, triggering his criticism.
+(That's fine, it's good to have criticism.)
+
+Overall, even though these issues were mostly avoided for StackRot in
+particular, bringing them up in this thread ended up being the last
+straw for the Linux kernel security folks to say they don't want to deal
+with linux-distros anymore, resulting in this edit to the documentation:
+
+https://git.kernel.org/linus/4fee0915e649b
+
+This has a spiteful commit message and a calmer almost constructive
+actual change.  Knowing that the status quo was problematic and not
+having a better solution ready (other than Vegard's elaborate edits), I
+actually approved of this edit as well.  It says:
+
+---
+The kernel security team strongly recommends that reporters of potential
+security issues NEVER contact the "linux-distros" mailing list until
+AFTER discussing it with the kernel security team.  Do not Cc: both
+lists at once.  You may contact the linux-distros mailing list after a
+fix has been agreed on and you fully understand the requirements that
+doing so will impose on you and the kernel community.
+
+The different lists have different goals and the linux-distros rules do
+not contribute to actually fixing any potential security problems.
+---
+
+(I take issue with the second paragraph, as I explained in the message
+Donald forwarded in here earlier today.)
+
+So the kernel security team can, after having arrived at a fix, choose
+to direct the reporter to also contact linux-distros.  I don't know
+whether this would actually be happening or not.  Maybe some friendly
+dialogue (which I hope this message can be a part of) and agreeing on
+things could make that more likely.
+
+I think the two linux-distros policy aspects above do not preclude such
+cooperation.  However, I am willing to discuss possible policy changes
+(or perhaps Linux kernel exceptions).
+
+I recognize that 14 days might not always be enough to get a fix ready,
+especially not for many of the CPU microarchitectural issues being
+handled since mid-2017 and affecting many proprietary OSes as well (who
+may be used to much longer disclosure timelines and would object to
+Linux's earlier fix and disclosure).  I am glad that almost none of such
+issues were brought to (linux-)distros, and never when it was still more
+than 14 days until public disclosure.  We had a lot of luck there.
+Linux kernel security team has its own mailing list (encrypted, so more
+secure than s@k.o) for handling of those, which is great:
+
+https://www.kernel.org/doc/html/latest/process/embargoed-hardware-issues.html
+
+I mean, this is "great" within the constraints of the rest of the
+industry.  Of course, I'd very much like disclosure timelines for that
+kind of issues to also become much shorter.  This is just not the case.
+
+In terms of (linux-)distros list policy, what can we do here?  Accept up
+to 7 days since fix is ready and thus accept arbitrarily long embargoes
+and more likely have issues "requiring" such embargoes brought to the
+list?  BTW, for CPU microarchitectural issues, that would probably need
+to be for the full distros list, not limited to Linux, and from what I
+know disclosure timelines for such issues may be 3 to 12+ months.
+
+As to publishing PoCs/exploits, this is already mitigated by the Linux
+kernel documentation edit making it less likely (but far from
+impossible) that people would send stuff to linux-distros without being
+aware of the policy.  We could further mitigate this issue by allowing
+up to 30 days (but perhaps suggesting at most 7 days?)  As I recall, how
+much time to allow here was first discussed in context of an Exim issue
+that was expected to be so easy to independently come up with an exploit
+for that even 7 days seemed excessive, so 24 hours was agreed upon for
+that occasion:
+
+https://www.openwall.com/lists/oss-security/2019/06/05/4
+
+However, issues vary, and maybe 1 to 30 days on a case-by-case basis is
+reasonable?
+
+Another option is to completely remove this requirement (only for Linux
+kernel issues or for all), but there are reasons to keep it:
+
+1. To reduce the value of information staying in linux-distros members'
+mailboxes/computers to potential attackers.
+
+The issues with highly valuable information staying in there are that
+such people/resources become more lucrative attack targets, and that
+compromises/leaks might not be detected, in which case the situation is
+worse than with full publication (only bad actors benefit).
+
+2. To let the wider community benefit from those PoCs/exploits.
+
+There are many uses for PoCs/exploits other than testing by upstream
+developers or attacking systems in the wild.  Other uses include:
+testing of (possibly different or backported) fixes by other distros
+(not all of which are on linux-distros for a variety of reasons) and by
+advanced users, reuses by other developers and security researchers to
+better understand the problem and as templates for further PoC/exploit
+development (such as in determining and demonstrating exploitability of
+further related bugs), testing and improvement of (non-)effectiveness of
+general security hardening mitigations and of security monitoring tools.
+
+I'd appreciate any well-reasoned votes and constructive suggestions.
+Maybe there are good ideas that didn't cross my mind yet.
+
+Thanks,
+
+Alexander
