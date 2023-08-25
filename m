@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/14/6
-Message-ID: <alpine.GSO.2.20.2306140729130.11306@scrappy.simplesystems.org>
-Date: Wed, 14 Jun 2023 07:52:05 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/25/3
+Message-ID: <8e892059-fa27-7086-13eb-6779d073dc58@apache.org>
+Date: Fri, 25 Aug 2023 17:24:51 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Stack overflow in imagemagick coders/tiff.c
+Subject: CVE-2023-40195: Apache Airflow Spark Provider Deserialization Vulnerability RCE 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 14 Jun 2023, Salvatore Bonaccorso wrote:
+Severity: moderate
 
-> Hi
->
-> On Mon, May 29, 2023 at 08:11:18AM +0000, Bastien Roucariès wrote:
->> Hi,
->>
->> Reading changelog and code of imagemagick, I want to report a stack overflow with crafted tiff file in imagemagick
->>
->> Fixed (after 6.9.12-26) by:
->> https://github.com/ImageMagick/ImageMagick6/commit/85a370c79afeb45a97842b0959366af5236e9023
->
-> CVE-2023-3195 has been assigned for this issue according to
-> https://bugzilla.redhat.com/show_bug.cgi?id=2214141 (not yet on
-> cve.org feed itself).
+Affected versions:
 
-It seems suspicious that (after looking at the code) this is obviously 
-a heap overflow (of the 'tile_pixels' allocation) rather than a stack 
-overflow.  Whenever something is mischaracterized, it becomes suspect.
+- Apache Airflow Spark Provider before 4.1.3
 
-The overflow checking while computing 'extent' still seems suspect and 
-is worthy of more inspection, especially on 32-bit systems.
+Description:
 
-The development ImageMagick 7.1 is included in oss-fuzz testing (but 
-has not successfully compiled since May 22nd).  Oss-fuzz has 
-discovered 2935 serious issues related to development ImageMagick 7 
-since 2017, and most of those have been fixed in ImageMagick 7, but 
-not in legacy ImageMagick 6.
+Deserialization of Untrusted Data, Inclusion of Functionality from Untrusted Control Sphere vulnerability in Apache Software Foundation Apache Airflow Spark Provider.
 
-Linux/OSS distributions still distributing ImageMagick 6 are severely 
-fooling themselves and their users if it is believed that the software 
-can be made secure by applying a few patches.
+When the Apache Spark provider is installed on an Airflow deployment, an Airflow user that is authorized to configure Spark hooks can effectively run arbitrary code on the Airflow node by pointing it at a malicious Spark server. Prior to version 4.1.3, this was not called out in the documentation explicitly, so it is possible that administrators provided authorizations to configure Spark hooks without taking this into account. We recommend administrators to review their configurations to make sure the authorization to configure Spark hooks is only provided to fully trusted users.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+To view the warning in the docs please visit  https://airflow.apache.org/docs/apache-airflow-providers-apache-spark/4.1.3/connections/spark.html
+
+Credit:
+
+happyhacking-k (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/33233
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-40195
+
