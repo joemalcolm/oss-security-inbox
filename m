@@ -1,16 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/8
-Message-ID: <Y9lVXsU5SAXDeBes@quantum.stat.colostate.edu>
-Date: Tue, 31 Jan 2023 10:52:30 -0700
-From: Zube <Zube@...t.colostate.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/25/2
+Message-ID: <55a24bf6-82c1-4f5a-712d-04d187a5be30@apache.org>
+Date: Fri, 25 Aug 2023 12:17:33 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-24963: Apache Portable Runtime (APR): out-of-bound writes in the apr_encode family of functions
+Subject: CVE-2023-27604: Apache Airflow Sqoop Provider: Airflow Sqoop Provider RCE Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-> And what's the fix?  Is there a patch to apply or new version to upgrade to?
+Severity: moderate
 
-https://apr.apache.org/download.cgi
+Affected versions:
 
-has 1.7.1 and 1.6.2, although the directories created are labeled -rc2 and -rc3. 
+- Apache Airflow Sqoop Provider before 4.0.0
 
-Cheers.
+Description:
+
+Apache Airflow Sqoop Provider, versions before 4.0.0, is affected by a vulnerability that allows an attacker pass parameters with the connections, which makes it possible to implement RCE attacks via ‘sqoop import --connect’, obtain airflow server permissions, etc. The attacker needs to be logged in and have authorization (permissions) to create/edit connections.
+
+ It is recommended to upgrade to a version that is not affected.
+This issue was reported independently by happyhacking-k, And Xie Jianming and LiuHui of Caiji Sec Team also reported it.
+
+Credit:
+
+happyhacking-k (finder)
+Xie Jianming of Caiji Sec Team (finder)
+Liu Hui of Caiji Sec Team (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/33039
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-27604
+
