@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/13/4
-Message-ID: <cfaf0c49-2ca1-b7a1-76a2-f495d7f5f7b4@canonical.com>
-Date: Thu, 13 Apr 2023 13:33:56 -0500
-From: Mark Esler <mark.esler@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/26/2
+Message-ID: <ZOotYa5KY5/MGj9X@itl-email>
+Date: Sat, 26 Aug 2023 12:50:40 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ncurses fixes upstream
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-On 4/12/23 15:40, Jonathan Bar Or (JBO) wrote:
+On Sat, Aug 26, 2023 at 02:31:29AM +0000, Seth Arnold wrote:
+> On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
+> > I'd appreciate any well-reasoned votes and constructive suggestions.
+> > Maybe there are good ideas that didn't cross my mind yet.
 
-> Hello oss-security,
->
-> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
-> They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
-> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
->
-> How can we ensure those fixes get deployed upstream, in major Linux distributions?
+(snip)
 
-(distros maintain "downstream" versions of the ncurses "upstream")
+> - Ask Red Hat's CNA to consider setting up an automatic CVE assignment
+>   process for syzkaller issues. (Red Hat's CNA is now serving as a Root
+>   CNA for FOSS issues in general, so it feels like a plausible place to
+>   put this process. Google runs syzkaller and has four CNAs, perhaps
+>   one of them would be a better fit. Maybe the Linux Foundation could
+>   run a CNA for this purpose. I'm not picky.)
+> 
+>   We shouldn't indulge the very-low-effort-researchers who aren't putting
+>   in much effort but trying to get CVEs.
 
-Ideally, a security patch should only include security relevant changes. 
-If a bunch of a documentation or miscellaneous changes are added, it 
-makes backporting difficult (i.e., the non-security relevant changes may 
-not be desired or cause the patch to not apply cleanly to old versions 
-of ncurses). The upstream patch is already made, but that's what I'd 
-recommend for future patches. If there's a regression as Alice suggests, 
-that might be a good opportunity to redo the patch format.
+That would be an awesome idea.  Hopefully "latest kernel has X unfixed
+CVEs" puts pressure on Red Hat, Oracle, SUSE, and other vendors to hire
+more people to fix the problem.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-http://ncurses.scripts.mit.edu/?p=ncurses.git;a=commit;h=eb51b1ea1f75a0ec17c9c5937cb28df1e8eeec56
-
-When you publish the CVE json5, you can references the patch URL and 
-relevant bug discussions to help downstream. Including the CVE number in 
-the patch commit is also quite helpful.
-
-Thank you!
-
-> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
-Which email did you contact Canonical with? I cannot find anything 
-recent for ncurses on security@...ntu.com
->
-> Thanks!
->                               JBO
->
->
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
