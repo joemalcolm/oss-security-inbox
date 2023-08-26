@@ -1,201 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/25/3
-Message-ID: <20231225233836.R7BLTwQ-@steffen%sdaoden.eu>
-Date: Tue, 26 Dec 2023 00:38:36 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/26/1
+Message-ID: <20230826023129.GA2930052@millbarge>
+Date: Sat, 26 Aug 2023 02:31:29 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-Hello.  Please allow me a little opinion.
+On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
+> I'd appreciate any well-reasoned votes and constructive suggestions.
+> Maybe there are good ideas that didn't cross my mind yet.
 
-Solar Designer wrote in
- <20231225220925.GA17188@...nwall.com>:
- |On Sun, Dec 24, 2023 at 09:43:06PM +0800, Alexander E. Patrakov wrote:
- ...
- |Also, as I pointed out, even the US sanctions against Huawei don't seem
- |to apply to what we're doing, per LF's public statement and per my own
- |reading (but I am not a lawyer).
+I think we'd all be better served to wait until next year before we try to
+make changes. Some additional space would probably do everyone some good.
 
-I want to point out that Huawei employees play an important role
-in creating solutions in the (public and open to anyone) IETF.
-Also financially.
-I personally think it is a friendly move to give back and support
-creating the infrastructure that we all build upon.
-Which can easily be compared to many non-China companies and their
-attitude of take but no give.
+For my own part, I was frustrated getting a dozen emails about the policy
+and deadlines and folks saying "we don't even have a fix yet please back
+off" etc over and over and over again. There were usually more emails
+about the policy than about the issue. I can't speak for the others but
+perhaps if we, as a group, were less vocal about the policies on every
+single bug report it might have been easier to work together.
 
-(Read also: in the ever-more over-engineering that goes on.)
+For every security issue in the kernel that gets a CVE and The Whole
+Process, I'm sure there's five or ten more that go unnoticed by the
+wider world. Trying to do The Security Process on the ones that come to
+light feels silly when there's far more issues that may allow privilege
+escalation that never get the theater treatment. While we can (and should)
+try to bring more of these to light we might also reduce the friction on
+the ones that do come to light.
 
- |However, that might not be enough to prevent people from being concerned
- |and discouraged from participating if openEuler joins.  This is why I
- |suggested that it's best if openEuler does not join now, and that people
- |who had commented before could want to say whether their concerns are
- |now sufficiently addressed or maybe not.
+I was also annoyed with the endless stream of "I found a security bug in
+the kernel, give me a CVE!" that are a mangled syzkaller reproducer and
+no work to diagnose the problem or propose a patch. If every syzkaller
+issue received a CVE automatically, we'd immediately remove the most
+noisome posts.
 
-Me personally no, but for one i am noone regarding vivid members
-of this list, and second i have no political pressure against me.
+Here's what I think would help the most, if we in the future try to get
+copied on reports "like the old days":
 
- |> Also, Igor has communicated an important note about the mandatory
- |> disclosure of vulnerabilities to the Chinese government. Therefore, a
- |> question arises: is the Chinese government the only one that requires
- |> this?
- |
- |These are valid concerns.
+- No replies from distros@ subscribers about list policies. None. distros@
+  subscribers can and should feel free to engage about the bug, about
+  testing, about concerns, etc. But none about the list policies.
 
-Now -- by sheer accident i today (while clearing out my mbox for
-the yearly archiving) read your email from October 1st from this list
-(20231001191303.GA8910@...nwall.com>, Subject: [oss-security]
-"Linux Kernel security demistified"), where you have posted
+  We all know that the kernel developers don't just sit on reports for
+  six months before they're forced to take action by public posts. They
+  want fixes in a timely fashion and they're doing the work to deliver
+  fixes in a timely fashion.
 
-  Greg KH gave a talk entitled "Linux Kernel security demistified" at
-  Kernel Recipes 2023 (10th Edition) on September 26 in Paris, France.
+  They publish their patches in public very soon after the work is
+  complete which addresses your concern about the inboxes and mail
+  servers being a jackpot of private vulnerabilities.
 
-  Thank you, Greg!
+  We shouldn't harangue them about the policies.
 
-  Here are the slides:
+- Make it clear to all that distributions can apply fixes to their kernels
+  as soon as patches are in publicly visible trees or mail lists. Trying
+  to coordinate dates didn't work well: The kernel people don't want
+  to hold off on publishing fixes for an arbitrary reason. The distro
+  people have their own cycles for integrating patches, performing quality
+  control, preferences to not publish updates on important holidays or
+  weekends, etc.
 
-  https://git.sr.ht/~gregkh/presentation-security/blob/3547183843399d693c35b502cf4a313e256d0dd8/security-stuff.pdf
-  ...
+  Let's just let the kernel developers work on fixes on their own schedule
+  and whenever they go public, just go with it.
 
-and i really today stumbled over his funny opinion
+  We shouldn't try to coordinate dates.
 
-  . All "early notice" lists are leaks and should be considered
-    public.
-  . Unless your project is not used by anyone.
-  . Otherwise, why would your government allow it to exist?
+- Ask Red Hat's CNA to consider setting up an automatic CVE assignment
+  process for syzkaller issues. (Red Hat's CNA is now serving as a Root
+  CNA for FOSS issues in general, so it feels like a plausible place to
+  put this process. Google runs syzkaller and has four CNAs, perhaps
+  one of them would be a better fit. Maybe the Linux Foundation could
+  run a CNA for this purpose. I'm not picky.)
 
-Also this year we seem to have had the 10th anniversary of the NSA
-leaks (with nice to read stories of world-hoppers like Bruce
-Schneier), we have the (pretty biased in my opinion, also
-referring to lots of decade-old pre-NSA leak data) RFC 9505 "A
-Survey of Worldwide Censorship Techniques" that happened to happen
-around that anniversary.
+  We shouldn't indulge the very-low-effort-researchers who aren't putting
+  in much effort but trying to get CVEs.
 
-  ...
- |Per my reading, the EU CRA (which isn't final yet and isn't in effect
- |yet) is going to require something related, but different.  The proposal
+Thanks
 
-We hopefully scrape past that backdoor-to-everything (after court
-rules, (((.. or for security agencies ..)))) that at leat the now
-deselected polish government pushed for, *if* i understood that
-correctly (which i think i did).
-
- |from 2022:
-
-We also saw
-
-  https://epicenter.works/fileadmin/user_upload/eIDAS_Open_Letter-2023-11-01-Academics_NGOs.pdf
-
-("live update" aka current version here:
-
-  https://nce.mpi-sp.org/index.php/s/cG88cptFdaDNyRr)
-
-in November this year.
-
-  1. Undermining website authentication undermines communications security
-  The current text of Article 45 mandates that browsers must
-  accept any root certificates provided by any Member State (and
-  any third party country approved by the EU) and will have severe
-  consequences for the privacy of European citizens, the security
-  of European commerce, and the Internet as a whole
-
-By the way i was silenced on the IH mailing-list after responding
-to an email which included
-
-  https://www.msn.com/en-us/news/world/polarized-world-threatens-open-internet-icann/ar-AA1kjXU2
-
-The headline as such is terribly opinionated then when, if ever
-but in the earliest days when (military) academics talked with
-each other alone, was this ever true.  I for one will never kill
-a russian or had such a desire, yet this was ok to write (to say
-the least), but on the other hand the legendary David Peel and the
-Lower East Side Band concert in Central Park ("Have a Marijuna")
-from i think 1969 could by no means be found by Google in the
-past.
-OF COURSE -- was this by law?  Maybe not.  Yet it is everywhere.
-
-As long as the root servers are not spread all over the place
-there is no "open internet".  Never was.
-
-By the way you can see things on Wikipedia that every little child
-can look at, but -- in my opinion -- should not.
-That system failed.  How can it be made better?  I do not know.
-
- ...
- |includes the below:
- |
- |"The manufacturer shall, without undue delay and in any event within 24
- |hours of becoming aware of it, notify to ENISA any actively exploited
- |vulnerability contained in the product with digital elements."
-
-At least this is now a public law.
-Noone will ever convince me that a company like Microsoft, Apple,
-but also for example Software AG and other German companies,
-remain silent against their own government --- especially after
-they did not do that the first time, and even more especially so
-if the government uses that software itself.
-Come on, i really want to know: how realistic is that?
-And i tell you what: despite the terrible politics that Germany
-performs except for some things (for example yesterday 70 percent
-of electricity came from wind, and i am hoping for hydrogen), and
-i am deeply run down from German politics, that you can trust me,
-you know: i would do that if i would maintain such a thing.
-_Of_course_.
-
-(Disclaimer: i apologise to all those countries that are misused
-economically, which' people have a shorter painful life span
-because of substances or working conditions 'caused by us, or
-fooled with faked crypto and other secret service ashole shit we
-fooled you with for half a century and longer.  All my heart.)
-
-  ...
-  etc
-  ...
- |I'm not currently aware of related legislation elsewhere, but I would be
- |unsurprised if it exists.
- |
- |Overall, I am concerned about this trend towards more government
- |oversight.  While we also have our policies, we do not have a monopoly,
- ...
-
-Well at least it will now become an open law.
-And "freedom is a state of mind" was true 3500 years ago,
-currently is, and will be as long as people live.
-The brain chips surely will be as selective and opinionated in
-what they serve except for maybe complete latin vocabularies and
-historical data points (and that already is a problem).
-
-In the companies root certificates, and hey, if even for virus
-filtering, and such, etc, everywhere, if you drive Tesla or likely
-any other modern car (i refer to Mozilla's car privacy and
-security) then data is collected, and even if that data is not
-capable to, maybe in ten years it is.  The psychological bandwidth
-of the human being is quite small, effectively, and if you are
-permanently traced including temperature, in-seat-movement, eye
-movement, (even sexual activities, if there is camera, and
-microphone, and humidity sensor, etc), then at least in the future
-you are psychologically transparent.  And data inter-connection
-with buying behaviour and such.
-By the way: please protect me from terrorism!
-
-This is of course all a person's free will in a free world.
-So off-topic.
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
-|
-| Only in December: lightful Dubai COP28 Narendra Modi quote:
-|  A small part of humanity has ruthlessly exploited nature.
-|  But the entire humanity is bearing the cost of it,
-|  especially the inhabitants of the Global South.
-|  The selfishness of a few will lead the world into darkness,
-|  not just for themselves but for the entire world.
-|  [Christians might think of Revelation 11:18
-|    The nations were angry, and your wrath has come[.]
-|    [.]for destroying those who destroy the earth.
-|   But i find the above more kind, and much friendlier]
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
