@@ -1,4 +1,4 @@
-Received: (qmail 5961 invoked by uid 550); 18 Apr 2026 17:18:37 -0000
+Received: (qmail 11896 invoked by uid 550); 26 Aug 2023 16:51:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,145 +7,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3978 invoked from network); 18 Apr 2026 12:14:36 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1776514466; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UQZ6DfvMe/uMDrUKM3xhrB69fEQtG4j/ZV8jZXbwXjsBZRpAhuMmuHAztrGnZM4F+I
-         HMvLZxOcm34V/9jj20gGMHhjT1QcOUu1D3syTL0EcGZm6m/BS5TpzQDpLZHXgEc9A+E9
-         W1EdZg+SjKl9o7hwQgO684tpUwM9n7LExmCy4QXXcerWZZ1d2LFtZx8yZ2vyNDRTXQxA
-         F1LTk0OHeA7+lsplBvQn7vc4ce5m3AY0Fryny0hmqd05KwuG51bh7KGGYhhy7gHlgwLs
-         jJAmXVxiVi7fMdntWxBAx8JZcN6peMt1+lLaIDyNCTA0Jlz0XXNvePXr0AJyodQCfh8l
-         jrxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=R8+QSW6HFAZL0QuP3Hm3hXBPteElrn0x3Thwmf2l8Tc=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=cCQqHD2zisj3SXRKSnCpL0UXFpPGHGJnNRCbmc4qgGFn7OOF2w+PFhgSZaIdrXHujG
-         1zWzZTJBzgPZyrJcRjoxG1tpczCzlMR1nn1Z78+I3RJOZWD0dDJsKTEB+5UYz5LGm6en
-         lFRqEP3TZ0a+RsamjZtgxutOv+jhRg2VykY83WlH+GKfRXljBH4BgC38XT1IuBwgHNsX
-         f6CYihYAn8znmR8ga84iycEnFZm2H7qP5hUdi3wyWsrWTaSlm/4YudSahtmAiIT19jZI
-         ccJUPD8bFU0wBSvpZOrWOSMM/t1k/t7yao3E93fcy3NucsbwCXrLnJaAQvgkMuGnv955
-         5x6Q==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776514466; x=1777119266; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R8+QSW6HFAZL0QuP3Hm3hXBPteElrn0x3Thwmf2l8Tc=;
-        b=C//I/7MFOQH78eqYcunN3lW45pIpQ8uFL34JfoyCarsMHglJTB4voldMRFDYamfwbJ
-         4PDKm+KPe6jWU5bV9phrkGFYdLeKM+WmSHxl/C3gs3xOT0kdht55tgXkEzZv+X9UCVsQ
-         EgNjOfmy7lxVct5D3VK15IMbTggEnul0iII2QBxovT9tEvs91EHfBLGAgt2Iw3fpcDdR
-         v+kRYN5qvTrPjFrPyik0N0TuTjsrXJkAmhKPaF3AlByCP9Hwf1WwGjn13F+ka/QzoARf
-         BfiuAIsIjOqPOlo1SJXLsyjNaXC69a6QmtdvhAb6blTGegazQEuzgVRFopGC6K05q9VC
-         eLcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776514466; x=1777119266;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=R8+QSW6HFAZL0QuP3Hm3hXBPteElrn0x3Thwmf2l8Tc=;
-        b=Ve5tOS4C82xRSpwHI+8Rly/SqX8xmu+/QXlP7rIGb3XX1ryo63kCdx135frnr5AG/1
-         WTpgnOgOu8btF1YmnU5Bs5LIwbCjdD1DtMhPngmXD6R6+9x1Txa4zC2HEvuBwGjXmV9U
-         P50JrDR3/5ZvYbJ5BLceJgbfYLaDrwhkbj99mp3gp3uL8nOGtGuNRniiwwsrGgTb2Pp5
-         WBA/u+XRe0GmZfcn6WdfCzMRR4UCnCXPMe/l+Wqich59KgVOIZRacyevDJPOT58XfbQB
-         JwBLylYsSwDPK9RBWj/ZBXHIVgh4/1q7gtpEp7Hr7xdwDpbNx9/VR4CBapcLhJKNU6/P
-         0eSQ==
-X-Gm-Message-State: AOJu0YzhOElQUVIVGotzZcQ18Fwp4/rj8hnxyRneR6/KzQ+Ybvb33B7y
-	f3QmVNK0OEpOk0rpnqUsUTLMbOkvjDvr6o4Am6BVedqoYtMQFnLDh8A2lgii1Om1QooUqpNY3po
-	XbAZ5hx9BH9V6QnPF0jEg/J2wj/YMEiwpNWZN
-X-Gm-Gg: AeBDiesfiCAMBJdN/PZTko3cQluOtm2lxdHsVO3BE1k6/9TpL4aelWwmacLhCSE+LGP
-	IbNC2lPOLB2YGP/+qPk6eZZ3jKhUqIaPGFQ44X6WGqhGl5rBiUTPNTMcC8vfd5BZiiWXnYt6w5U
-	+XfxRcsveKDJYTcd8KC1gwTLso4gCbPOPkaSM2y7FWNiaa85XhNDHqE2MwWIH1rsncgH+IfR+Cd
-	QcUvnM/QvFRiyqojmBgDWAEI4ykPszUhIeLvTtP4qWYCTdRItqqKUTIx6miygmUprgGd6Eab0OG
-	s83snzs2wOcrUw4NzlAQTnX9cY1gzg==
-X-Received: by 2002:a05:6512:138c:b0:5a2:a52a:c69e with SMTP id
- 2adb3069b0e04-5a4172dc4bbmr1141121e87.4.1776514465926; Sat, 18 Apr 2026
- 05:14:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAPmip_xXkz6hjTUUKbaHr1hwq5ROfpNwn5Rq-t9cxMgs6uXhZQ@mail.gmail.com>
- <CAPmip_xVPZ_mFkTUjGd=k_3K222BQxPhySy1ei2VieqBp=pBng@mail.gmail.com> <CAPmip_zm57=Za1HVTM4RMr9xZiS3YNRcYRwXHXwPN3yMRC_eug@mail.gmail.com>
-In-Reply-To: <CAPmip_zm57=Za1HVTM4RMr9xZiS3YNRcYRwXHXwPN3yMRC_eug@mail.gmail.com>
-From: cyber security <cs7778503@gmail.com>
-Date: Sat, 18 Apr 2026 08:14:12 -0400
-X-Gm-Features: AQROBzBT8dtHnxSu0a7CECjlSWdANsJRfKQhcIL3j2Hw9-xHTzO-DPzNJYw2udY
-Message-ID: <CAPmip_yuO6dEb7VNUmysMU3u1=4bjxpJyq=Q3SMAbM-ijAvqEA@mail.gmail.com>
+Received: (qmail 11600 invoked from network); 26 Aug 2023 16:51:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm1; t=
+	1693068643; x=1693155043; bh=8cHEFtEgzssieldMGUpXvXMn31GsbBbCa8e
+	X4ZsWKvY=; b=hQgWDXYoD70cw8yWVgMRUTUcCaVzTsc731qtk8+00PF4ASuDtQV
+	pWLjtAH6wSTGEqSwF5XHaKevhJLvJ84B4sygI3T8jtgb+S//3kVtFNyQTotHOgYA
+	yzrX2KOI4FyDikZEKlG1KNEnudVbplYleNTApqVs6tjABxnjINp1ree28hHa0ZSr
+	yfFHzJa/OetaZsmx87hQsHv6ODejVQQp3z1ViPUvDHZIgSPOEct2Yppk18xBO7N9
+	rFhAB3lpEcpdDGH2MWvYest6feZuReOl57Vi7cu2TFRl3SKEBhhoxjyj8e34YMiC
+	7gVpSvhXLYL+g4Imv0ducG28tfOYn53duBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1693068643; x=1693155043; bh=8cHEFtEgzssie
+	ldMGUpXvXMn31GsbBbCa8eX4ZsWKvY=; b=igvVISuP8evrUzqNTPYQdFEXrUP7R
+	muWnFG5Nzgqlwzjw82+sCkwWTKRaaGxjfLMuFSV0y4Y6VW/YNTq4cvbLhCnVaeD6
+	VuR2MZtBCDRLMdY4WbK6IuR/XWW8gCVITHj/sMtswcOCvf3DN0YTXgUQUFxWXXND
+	OnL0fCDos5KfCggecwwRGGDRLsxHowArAkG7hAWDGBSqdFHNATqEYtApRPmnS6cU
+	it7Mo37o5iuies4pcXbp9zfKBW8OmK0vVffN//OPeK8WN6dBzAPL7zXiz/a7bzhc
+	833sUNBqZ8PeIcBqDM149NDq7Inn9M96I/uRD5lBW9gZBtqc+JR9LT7fw==
+X-ME-Sender: <xms:Yi3qZB1OrD5QhCtyKfUFreZPpXyjpeJuEPE_XjIq7HSdzNLwY8u4aA>
+    <xme:Yi3qZIFsPe4NVvBYDDVdqZtbzJiprD1cQ8JKsNq-VPdUnluwIiBN_fut6T9cOy_E8
+    qhhrcRCZjnm4Hs>
+X-ME-Received: <xmr:Yi3qZB5x73vgpUYMGCZ_8dUCxcv4paSy_f1meQUyIuC7YqNpnARrNwZU2cxZEnT8cf2xc9zLOOp_sDMKK9EGmxGkYcSO97jtnqfMsgNckul6K5YI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudeftddguddthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghm
+    ihesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrh
+    hnpeeigfeifedvgfejleefieefgfejvddvfeelgeelieefgeffhffgffeffffhueduheen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmih
+    esihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:Yi3qZO2JH3U7e_8K00fJOL58rTFCU4ERufRM1tc0hBcRSbVYLes4iA>
+    <xmx:Yi3qZEFsGB3tvv6orfe82eED8QhpwNKpPmJcz6frn1m-jtQajT-TOA>
+    <xmx:Yi3qZP8Ze__AG9UKablg0gOEHBQmGSOq6AEq3EhxOi2JoxRnjobl_A>
+    <xmx:Yy3qZIR_O_KC2bK340ZxYvcM8db3Pkezvt9f3i3L6MjCKMuos1he2g>
+Feedback-ID: iac594737:Fastmail
+Date: Sat, 26 Aug 2023 12:50:40 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <ZOotYa5KY5/MGj9X@itl-email>
+References: <20230825222359.GA10424@openwall.com>
+ <20230826023129.GA2930052@millbarge>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aLG73Qr9yjPBLFdw"
+Content-Disposition: inline
+In-Reply-To: <20230826023129.GA2930052@millbarge>
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
+
+--aLG73Qr9yjPBLFdw
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Re: [CVE-2026-33691] OWASP CRS whitespace padding bypass vulnerability
+Date: Sat, 26 Aug 2023 12:50:40 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
 
-Also you can use CVE-2026-33691, to disable security headers while bypassin=
-g CRS
+On Sat, Aug 26, 2023 at 02:31:29AM +0000, Seth Arnold wrote:
+> On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
+> > I'd appreciate any well-reasoned votes and constructive suggestions.
+> > Maybe there are good ideas that didn't cross my mind yet.
 
-More info at https://unlockoldupload.hashnode.dev/turn-off-security-headers=
--using-cve-2026-33691
+(snip)
 
-On Sat, Apr 18, 2026 at 3:00=E2=80=AFAM cyber security <cs7778503@gmail.com=
-> wrote:
->
-> After deep analysis we confirm, that CVE-2026-33691 aka it alias
-> UnlockOldUpload, can even disable ModSecurity WAF
->
-> More info at https://unlockoldupload.hashnode.dev/disable-modsecurity-waf=
--using-cve-2026-33691.
->
-> On Thu, Apr 16, 2026 at 3:37=E2=80=AFPM cyber security <cs7778503@gmail.c=
-om> wrote:
-> >
-> > Deep analysis by US confirm, that using CVE-2026-33691, in any
-> > platform wheter windows or linux or mac, you can bypass unpatched CRS
-> > and use CVE-2015-10138
-> >
-> > as confirmed, as we see in that line
-> >
-> > ```
-> >    1   // Lines 493-498 of public/includes/UploadHandler.php
-> >    2   protected function trim_file_name($name, $type =3D null, $index =
-=3D
-> > null, $content_range =3D null) {
-> >    3       // Remove path information and dots around the filename...
-> >    4       // Also remove control characters and spaces (\x00..\x20)
-> > around the filename:
-> >    5       $name =3D trim(basename(stripslashes($name)), ".\x00..\x20");
-> >    6       // ...
-> >    7   }
-> > ```
-> >
-> > It unlocks the old CVE-2015-10138 and an attacker get RCE if WAFs are
-> > not patched, that unlocks the old vuln power against a modern WAF,
-> > most peoples rely only on the WAF alone and `Work The Flow File
-> > Upload` plugin is never patched and even run **EOL** that is very
-> > common, That is the danger, after that confirm, we see one wordpress
-> > plugin confirmed trims whitespaces from uploaded files
-> >
-> > On Sun, Mar 29, 2026 at 3:33=E2=80=AFAM cyber security <cs7778503@gmail=
-.com> wrote:
-> > >
-> > > A vulnerability was identified in OWASP CRS where whitespace padding
-> > > in filenames can bypass file upload extension checks, allowing uploads
-> > > of dangerous files such as .php, .phar, .jsp, and .jspx. This issue
-> > > has been assigned CVE=E2=80=912026=E2=80=9133691.
-> > >
-> > > Impact: Attackers may evade CRS protections and upload web shells
-> > > disguised with whitespace=E2=80=91padded extensions. Exploitation is =
-most
-> > > practical on Windows backends that normalize whitespace in filenames
-> > > before execution, In linux harder because it require a backend that
-> > > use like `.strip()` and `.trim()` and other whitespace trimming
-> > > methods depending on the language here vulnerable to that or the
-> > > webserver strip whitespaces or the backend on general, If not they not
-> > > vulnerable to that.
-> > >
-> > > Fix: Patched in CRS v3.3.9, v4.25.x LTS, and v4.8.x. Security fixes
-> > > are always backported to supported branches.
-> > >
-> > > References:
-> > >
-> > > Full advisory: https://github.com/coreruleset/coreruleset/security/ad=
-visories/GHSA-rw5f-9w43-gv2w
-> > >
-> > > Credits: Reported by RelunSec (aka @HackingRepo on Github).
+> - Ask Red Hat's CNA to consider setting up an automatic CVE assignment
+>   process for syzkaller issues. (Red Hat's CNA is now serving as a Root
+>   CNA for FOSS issues in general, so it feels like a plausible place to
+>   put this process. Google runs syzkaller and has four CNAs, perhaps
+>   one of them would be a better fit. Maybe the Linux Foundation could
+>   run a CNA for this purpose. I'm not picky.)
+>=20
+>   We shouldn't indulge the very-low-effort-researchers who aren't putting
+>   in much effort but trying to get CVEs.
+
+That would be an awesome idea.  Hopefully "latest kernel has X unfixed
+CVEs" puts pressure on Red Hat, Oracle, SUSE, and other vendors to hire
+more people to fix the problem.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+--aLG73Qr9yjPBLFdw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmTqLWAACgkQsoi1X/+c
+IsElaw//eipaDMfdDPuEhygCSEoxNpgp8yIRhz6kE7FhQxAoa65szbZX6WoxyPSR
+TMjV7yjkFm83CNKcvOM2LVFCUsb5eblENgttkmbuoCu/fIMwpjd4mZiueIH8F3Ad
+65OZEjtr5B6OwiuJ3TE/TqBTeJAtmMVvO9op9FyRbEHVZ9HMZOaamawi7NSnKJDo
+FXuCr4Riuqp6n7M/l/9u1MUseF/QHlFhs6Ke1pVSYIl2YvIlF5K7dMVsfJeQ8bCZ
+KwcGr8EcECdRdPGxkQtDU1zBzwnUxiGP7ZMFMWMOKbwAE3F09FLkJyRLb13oK2Gd
+igqvDxarzQsZjd9vv+k+PZI1gDaIy0Kd8eiOgaIMIyv1vR3QqYegcgcMDXxNOKyZ
+yWxQ0H3YTrko5EIOaPs0DsuNGEI8R32q7VbO1Ix/78VT23cf8zVuWzkLVktCv06U
+xxwWFDCwcOhuNXFmQa3DlhSAs0fwRk8wc3PsDXHx8Lc4oUycvtfNJxCgJ9thJql9
+b1DU8Obf4/K3jQ0Afdg3lHTPogV21FKNUWegFQLmdv76js46JQlW5Q4LMpPPEVyx
+LrMaeSiaZQBkysugh/ODmsTmOcXVvIVMAa8HuvL9AHwU4Fnax1ptfL3K/FFKz/7a
+zKzjkApwfs0ZSogUpep4llSCqFokH3Gc9eUdBe4R+3tAocsU+mA=
+=OzyY
+-----END PGP SIGNATURE-----
+
+--aLG73Qr9yjPBLFdw--
