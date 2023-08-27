@@ -1,63 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/2
-Message-ID: <20230524134130.GC6775@openwall.com>
-Date: Wed, 24 May 2023 15:41:30 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/27/4
+Message-ID: <CAFswPa83igZYQN7oAEEZERPCyOuiJv3sFD_+SZx2M_g8fhJDbg@mail.gmail.com>
+Date: Sun, 27 Aug 2023 20:56:12 +0200
+From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Clarification on embargoed testing in a partner cloud
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 24, 2023 at 10:45:15AM +0200, Moritz Muhlenhoff wrote:
-> Am Thu, May 11, 2023 at 01:57:04PM +0200 schrieb Marcus Meissner:
-> > 
-> > I understand that while some of the operators of the public clouds are also on
-> > the distro lists, these are parts of very large cooperations and not the same
-> > team as the intake PSIRT subscribed to distros.
-> > 
-> > So from my point I would suggest to exclude testing on third party public clouds.
-> 
-> I agree, FWIW.
+On Sun, 27 Aug 2023, 19:41 Demi Marie Obenour, <demi@...isiblethingslab.com>
+wrote:
 
-Thank you.  So far, we have Marc's request for clarification (which
-didn't express an opinion/preference) and two "suggest[ions] to exclude
-testing on third party public clouds" above.  I also suggest the same,
-yet I am not sure whether/how to make that part of the policy.  It is
-non-obvious whether/where/how to draw the line between (disallowed)
-sharing and mere (allowed) usage of third-party/rented resources.
+> Does this include unfixed vulnerabilities?
+>
 
-If we explicitly disallow "testing on third party public clouds", then
-what about testing on rented dedicated servers (which are often also
-centrally managed through the provider's infrastructure), or on own
-servers in rented racks in third-party datacenters (where the datacenter
-staff has physical access), etc.  And then there's communication over
-third-party Internet infrastructure, whereas our policy currently
-doesn't mandate usage of encryption except for messages from the list to
-its immediate subscribers.
+The link* has more details, but briefly, deduplication is done by fix
+commit.
 
-Also, I guess these days there are distros that are primarily built in
-the cloud yet are not projects of the cloud providers - e.g., projects
-of startups that got free cloud credits, as well as those that like the
-flexibility and not needing to manage physical servers themselves.  If
-one of those wants to join the distros list, do we reject them and
-require that they setup security build/testing, private issue tracking,
-e-mail infrastructure out of cloud first, or do we accept (if they meet
-all other criteria)?  So far, we didn't even ask new members whether
-they possibly build/test/track in the cloud, and maybe we already have
-some that do.
+Efforts to fix unfixed Syzkaller crashes (also something being worked on)
+are complementary to the effort to generate CVE identifiers for them, if
+that's your question (so, yes? Unfixed vulnerabilities found by Syzkaller
+are meant to be fixed first and then a CVE is generated for the reports
+fixed by their corresponding Fix commit).
 
-On Tue, May 16, 2023 at 09:04:01AM -0400, Marc Deslauriers wrote:
-> They were requesting we test the default package set that is shipped in
-> cloud images, including userland packages that don't have anything specific
-> to their cloud.
+Generating CVEs for Syzkaller reports without deduplicating them first
+would be disruptive and useless (the link* goes into more details).
+Deduplication is subjective as it depends on how the bugs are understood.
+The analysis that is needed to deduplicate is happening as part of the fix
+review process.
 
-Of course, testing of kernel and other close-to-hardware updates also
-benefits from having a userland similar to or the same as what would be
-used in production.  However, maybe the timing of such testing could be
-dictated by presence of close-to-hardware updates needing the testing.
-In other words, when there are pending userland updates only, don't do
-the testing.
+One could, of course, create a different mechanism to automatically (or
+semi-automatically) deduplicate Syzkaller reports and accept the risk of
+duplicate CVEs. This may be something to look at in the future, but it's
+not what's being worked on for the first iteration, and we probably will
+have a lot to fix and learn from even after the first wave of CVEs are
+generated.
 
-This is just a suggestion on how to reduce the exposure _if_ any testing
-in the cloud is to be done at all.
+* https://github.com/google/cvelist/tree/cve-automation/fuzzer
 
-Alexander
+>
+
