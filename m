@@ -1,38 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/2
-Message-ID: <20230418012513.GF1655348@millbarge>
-Date: Tue, 18 Apr 2023 01:25:13 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Olivier Lamy <olamy@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-28158: Apache Archiva privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/28/1
+Message-ID: <ZOvSu1BAV0jp/6t9@itl-email>
+Date: Sun, 27 Aug 2023 18:47:54 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 29, 2023 at 11:29:40AM +0000, Olivier Lamy wrote:
-> https://archiva.apache.org/
-> https://www.cve.org/CVERecord?id=CVE-2023-28158
-> https://issues.apache.org/jira/browse/n/a
+On Sun, Aug 27, 2023 at 08:56:12PM +0200, Eduardo' Vela" <Nava> wrote:
+> On Sun, 27 Aug 2023, 19:41 Demi Marie Obenour, <demi@...isiblethingslab.com>
+> wrote:
+> 
+> > Does this include unfixed vulnerabilities?
+> >
+> 
+> The link* has more details, but briefly, deduplication is done by fix
+> commit.
+> 
+> Efforts to fix unfixed Syzkaller crashes (also something being worked on)
+> are complementary to the effort to generate CVE identifiers for them, if
+> that's your question (so, yes? Unfixed vulnerabilities found by Syzkaller
+> are meant to be fixed first and then a CVE is generated for the reports
+> fixed by their corresponding Fix commit).
+> 
+> Generating CVEs for Syzkaller reports without deduplicating them first
+> would be disruptive and useless (the link* goes into more details).
+> Deduplication is subjective as it depends on how the bugs are understood.
+> The analysis that is needed to deduplicate is happening as part of the fix
+> review process.
+> 
+> One could, of course, create a different mechanism to automatically (or
+> semi-automatically) deduplicate Syzkaller reports and accept the risk of
+> duplicate CVEs. This may be something to look at in the future, but it's
+> not what's being worked on for the first iteration, and we probably will
+> have a lot to fix and learn from even after the first wave of CVEs are
+> generated.
+> 
+> * https://github.com/google/cvelist/tree/cve-automation/fuzzer
 
-Hello Olivier, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+That makes sense.  Do you have any information about the efforts to fix
+the crashes?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
-
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
-
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
-
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (485 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
