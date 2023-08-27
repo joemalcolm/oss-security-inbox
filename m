@@ -1,212 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/3
-Message-ID: <729ab9380799c1ae@cvs.openbsd.org>
-Date: Thu, 2 Feb 2023 06:15:13 -0700 (MST)
-From: Damien Miller <djm@....openbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/27/5
+Message-ID: <ZOuqk2+3EMBV3pPy@1wt.eu>
+Date: Sun, 27 Aug 2023 21:57:07 +0200
+From: Willy Tarreau <w@....eu>
 To: oss-security@...ts.openwall.com
-Subject: Announce: OpenSSH 9.2 released
+Cc: Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>, Donald Buczek <buczek@...gen.mpg.de>, Greg KH <gregkh@...uxfoundation.org>
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH 9.2 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+Hi Alexander,
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
+> In terms of (linux-)distros list policy, what can we do here?  Accept up
+> to 7 days since fix is ready and thus accept arbitrarily long embargoes
+> and more likely have issues "requiring" such embargoes brought to the
+> list?  BTW, for CPU microarchitectural issues, that would probably need
+> to be for the full distros list, not limited to Linux, and from what I
+> know disclosure timelines for such issues may be 3 to 12+ months.
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+Please note that delays are not specific to hardware issues. We've had
+to work maybe 3 months with a reporter on a randomness problem that
+allowed to some extents to guess TCP ports and sequence numbers, and it
+required us to imagine various approaches that shouldn't break TCP, and
+iterate with the researchers who studied them, tested them before getting
+back to us with "it still isn't sufficient". It was a long and painful
+one, nobody remained idle, yet it was really needed to get to the end of
+it before publishing anything. Further, the researchers asked us to keep
+some details on hold for a while because they were preparing a paper, and
+this is also something to keep in mind (some of them depened on this,
+though we must not accept that it drags for too long).
 
-Changes since OpenSSH 9.1
-=========================
+As such I think that it's not a good solution to anything to require a
+disclosure before a fix is ready. Actually there can be one exception:
+when no more progress is being made. I don't think I would personally be
+shocked by saying that a discussion that remained inactive for 7 days
+leads to publication, it would sufficiently put the pressure on all parties
+not to let it cool rot. And difficult issues generally don't stay inactive
+for more than a few days.
 
-This release fixes a number of security bugs.
+> As to publishing PoCs/exploits, this is already mitigated by the Linux
+> kernel documentation edit making it less likely (but far from
+> impossible) that people would send stuff to linux-distros without being
+> aware of the policy.  We could further mitigate this issue by allowing
+> up to 30 days (but perhaps suggesting at most 7 days?)
 
-Security
-========
+I don't think maintaining pressure on the reporter regarding the need
+for publishing reproducers is doing any good. It should be up to the
+reporter to say "please keep this confidential". We've had many of
+these on s@k.o, and it's perfectly understandable. Knowing that they
+must be very careful about what they share because it will be published
+is a big constraint, whether it's in terms of code quality, authorization
+from an employer or customer, code that was blatantly copy-pasted from
+another exploit just to help with testing, etc. All of this is useful
+for those trying to fix the problem and do not strictly need to be
+published, so it's pointless to add pressure on the reporter regarding
+this.
 
-This release contains fixes for two security problems and a memory
-safety problem. The memory safety problem is not believed to be
-exploitable, but we report most network-reachable memory faults as
-security bugs.
-
- * sshd(8): fix a pre-authentication double-free memory fault
-   introduced in OpenSSH 9.1. This is not believed to be exploitable,
-   and it occurs in the unprivileged pre-auth process that is
-   subject to chroot(2) and is further sandboxed on most major
-   platforms.
-
- * ssh(8): in OpenSSH releases after 8.7, the PermitRemoteOpen option
-   would ignore its first argument unless it was one of the special
-   keywords "any" or "none", causing the permission list to fail open
-   if only one permission was specified. bz3515
-
- * ssh(1): if the CanonicalizeHostname and CanonicalizePermittedCNAMEs
-   options were enabled, and the system/libc resolver did not check
-   that names in DNS responses were valid, then use of these options
-   could allow an attacker with control of DNS to include invalid
-   characters (possibly including wildcards) in names added to
-   known_hosts files when they were updated. These names would still
-   have to match the CanonicalizePermittedCNAMEs allow-list, so
-   practical exploitation appears unlikely.
-
-Potentially-incompatible changes
---------------------------------
-
- * ssh(1): add a new EnableEscapeCommandline ssh_config(5) option that
-   controls whether the client-side ~C escape sequence that provides a
-   command-line is available. Among other things, the ~C command-line
-   could be used to add additional port-forwards at runtime.
-
-   This option defaults to "no", disabling the ~C command-line that
-   was previously enabled by default. Turning off the command-line
-   allows platforms that support sandboxing of the ssh(1) client
-   (currently only OpenBSD) to use a stricter default sandbox policy.
-
-New features
-------------
-
- * sshd(8): add support for channel inactivity timeouts via a new
-   sshd_config(5) ChannelTimeout directive. This allows channels that
-   have not seen traffic in a configurable interval to be
-   automatically closed. Different timeouts may be applied to session,
-   X11, agent and TCP forwarding channels.
-
- * sshd(8): add a sshd_config UnusedConnectionTimeout option to
-   terminate client connections that have no open channels for a
-   length of time. This complements the ChannelTimeout option above.
-    
- * sshd(8): add a -V (version) option to sshd like the ssh client has.
-
- * ssh(1): add a "Host" line to the output of ssh -G showing the
-   original hostname argument. bz3343
-    
- * scp(1), sftp(1): add a -X option to both scp(1) and sftp(1) to
-   allow control over some SFTP protocol parameters: the copy buffer
-   length and the number of in-flight requests, both of which are used
-   during upload/download. Previously these could be controlled in
-   sftp(1) only. This makes them available in both SFTP protocol
-   clients using the same option character sequence.
-    
- * ssh-keyscan(1): allow scanning of complete CIDR address ranges,
-   e.g.  "ssh-keyscan 192.168.0.0/24". If a CIDR range is passed, then
-   it will be expanded to all possible addresses in the range
-   including the all-0s and all-1s addresses. bz#976
-
- * ssh(1): support dynamic remote port forwarding in escape
-   command-line's -R processing. bz#3499
-
-Bugfixes
---------
-
- * ssh(1): when restoring non-blocking mode to stdio fds, restore
-   exactly the flags that ssh started with and don't just clobber them
-   with zero, as this could also remove the append flag from the set.
-   bz3523
-    
- * ssh(1): avoid printf("%s", NULL) if using UserKnownHostsFile=none
-   and a hostkey in one of the system known hosts file changes.
-    
- * scp(1): switch scp from using pipes to a socket-pair for
-   communication with its ssh sub-processes, matching how sftp(1)
-   operates.
-
- * sshd(8): clear signal mask early in main(); sshd may have been
-   started with one or more signals masked (sigprocmask(2) is not
-   cleared on fork/exec) and this could interfere with various things,
-   e.g. the login grace timer. Execution environments that fail to
-   clear the signal mask before running sshd are clearly broken, but
-   apparently they do exist.
-    
- * ssh(1): warn if no host keys for hostbased auth can be loaded.
-    
- * sshd(8): Add server debugging for hostbased auth that is queued and
-   sent to the client after successful authentication, but also logged
-   to assist in diagnosis of HostbasedAuthentication problems. bz3507
-
- * ssh(1): document use of the IdentityFile option as being usable to
-   list public keys as well as private keys. GHPR352
-    
- * sshd(8): check for and disallow MaxStartups values less than or
-   equal to zero during config parsing, rather than failing later at
-   runtime.  bz3489
-    
- * ssh-keygen(1): fix parsing of hex cert expiry times specified on
-   the command-line when acting as a CA.
- 
- * scp(1): when scp(1) is using the SFTP protocol for transport (the
-   default), better match scp/rcp's handling of globs that don't match
-   the globbed characters but do match literally (e.g. trying to
-   transfer a file named "foo.[1]"). Previously scp(1) in SFTP mode
-   would not match these pathnames but legacy scp/rcp mode would.
-   bz3488
-    
- * ssh-agent(1): document the "-O no-restrict-websafe" command-line
-   option.
-
- * ssh(1): honour user's umask(2) if it is more restrictive then the
-   ssh default (022).
-
-Portability
------------
-
- * sshd(8): allow writev(2) in the Linux seccomp sandbox. This seems
-   to be used by recent glibcs at least in some configurations during
-   error conditions. bz3512.
-
- * sshd(8): simply handling of SSH_CONNECTION PAM env var, removing
-   global variable and checking the return value from pam_putenv.
-   bz3508
-
- * sshd(8): disable SANDBOX_SECCOMP_FILTER_DEBUG that was mistakenly
-   enabled during the OpenSSH 9.1 release cycle.
-
- * misc: update autotools and regenerate the config files using the
-   latest autotools
-
- * all: use -fzero-call-used-regs=used on clang 15 instead of
-   -fzero-call-used-reg=all, as some versions of clang 15 have
-   miscompile code when it was enabled. bz3475
-
- * sshd(8): defer PRNG seeding until after the initial closefrom(2)
-   call. PRNG seeding will initialize OpenSSL, and some engine
-   providers (e.g. Intel's QAT) will open descriptors for their own
-   use that closefrom(2) could clobber. bz3483
-
- * misc: in the poll(2)/ppoll(2) compatibility code, avoid assuming
-   the layout of fd_set.
-
- * sftp-server(8), ssh-agent(1): fix ptrace(2) disabling on older
-   FreeBSD kernels. Some versions do not support using id 0 to refer
-   to the current PID for procctl, so try again with getpid()
-   explicitly before failing.
-
- * configure.ac: fix -Wstrict-prototypes in configure test code.
-   Clang 16 now warns on this and legacy prototypes will be removed
-   in C23. GHPR355
-
- * configure.ac: fix setres*id checks to work with clang-16. glibc
-   has the prototypes for setresuid behind _GNU_SOURCE, and clang 16
-   will error out on implicit function definitions. bz3497
-
-Checksums:
-==========
-
-- SHA1 (openssh-9.2.tar.gz) = e4b806b7c81b87d6c90afe97b3d016ba6cf3ba1c
-- SHA256 (openssh-9.2.tar.gz) = yYe9uaaWSeetXGXOxuaaEiIsLnvITmGW+l5dgMZb9QU=
-
-- SHA1 (openssh-9.2p1.tar.gz) = 3b172b8e971773a7018bbf3231f6589ae539ca4b
-- SHA256 (openssh-9.2p1.tar.gz) = P2bb8WVftF9Q4cVtpiqwEhjCKIB7ITONY068351xz0Y=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
+Just my two cents,
+willy
