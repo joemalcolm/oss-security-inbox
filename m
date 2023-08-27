@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1395" "Wednesday" "25" "January" "2017" "12:36:07" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<c653003f75544875890faf69aa90562a@imshyb01.MITRE.ORG>" "33" "[oss-security] Re: Please assign CVE to PageKit Remote Password Reset Vulnerability" nil nil nil "1" "2017012517:36:07" "[oss-security] Re: Please assign CVE to PageKit Remote Password Reset Vulnerability" (number mark "U       cve-assign@m Jan 25   33/1395  " thread-indent "\"[oss-security] Re: Please assign CVE to PageKit Remote Password Reset Vulnerability\"\n") "<CALq7B36BC=Jfwb=sN0OMnEzvFQG6WT6syGBrneJEOpYq9sLmwg@mail.gmail.com>" ("<CALq7B36BC=Jfwb=sN0OMnEzvFQG6WT6syGBrneJEOpYq9sLmwg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9900 invoked by uid 550); 25 Jan 2017 17:36:19 -0000
+Received: (qmail 19709 invoked by uid 550); 27 Aug 2023 19:02:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9876 invoked from network); 25 Jan 2017 17:36:19 -0000
-From: <cve-assign@mitre.org>
-To: <sandeepk.l337@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CALq7B36BC=Jfwb=sN0OMnEzvFQG6WT6syGBrneJEOpYq9sLmwg@mail.gmail.com>
-Message-ID: <c653003f75544875890faf69aa90562a@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 12:36:07 -0500
+Received: (qmail 9699 invoked from network); 27 Aug 2023 18:56:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1693162582; x=1693767382; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Dzqa+nrhm3AZLbWxX8nwc/s3Z1dow4ddOwXi9Qo9Khc=;
+        b=xyBFKkD+VaQ53xz42dItC2xEz1539+lbJoyxCLqTOOsOCHWJ0nIqi+MIVl1UQF7vM4
+         uXOuZX6yb2S0YdXAhoSjmO99+2dAKUza9JnjGk6pR3dhQxpJCgT2axvgzOPGgqYQ2k72
+         27x2om0W6KHAo8X06ciehOUYBRK1N2gEiSXTskvnfRlZeRw2ArJtJIkvoee/s1ocxC6Q
+         qwXKYRFIO/vHwlkIscu5cQKHaLHHhrRAbGv/KmZ+sCxl0wxyC8Rz0tsY8oNTzaVfz5K6
+         aG9uniPvrB6BTNjxLqNCGgb5z4G4afHUBICjWzLhtHboQ+oYpmh4FCSUq0mhCEzJU0D2
+         u0Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693162582; x=1693767382;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dzqa+nrhm3AZLbWxX8nwc/s3Z1dow4ddOwXi9Qo9Khc=;
+        b=Ch14WdvPx50iNET/Dp6hLLbjFLCONwUu7HytQfzHHawkq8n5kyPLXjNMIAJavPX12j
+         B2vP0ZrjYA7QMNkzW73hgQbApQMYPUBf05D9Nw3fllsqiSHSEXh3+lSkD8NdrJFOlOL2
+         C5P0waBJfaoGDs41cSYnl/aO2rU3KLDoSiDW3l+IdcliMsNHfBMMDTLku/pC4sfs3vbE
+         eHl4K7ZY2Ul3nw3lt9IZiZ7SAhkKEtVyv5j8cN3KcV2jn5KW2+l+Qga7M9EqlCI4tHA4
+         ddaQoU9A6cJFHvQ5vYix2JalpJxsZdzie34aPFTcG3lErXS7JLDXSdWTG0vEOo2UiU3A
+         lXeg==
+X-Gm-Message-State: AOJu0YwwznYpGk5+GcaqdIVge40BJyvnGbH1av6RWNS19IhUJ6C9ea8N
+	/ydpv0a5mQLMqT4LuqfSeKo5ad/3mdQ56cFsXhIlHSwjkcPPNrdBNVwHK1A/
+X-Google-Smtp-Source: AGHT+IG/NP+DWLA3Ejghs67Vv3VA72S0OpRi34jus73eazrFbB/OxPEtkPRGXkZnOHIhuHXbvhc4L3Xn/1v0gCDT30s=
+X-Received: by 2002:a05:6e02:1be3:b0:34c:b5cb:43d1 with SMTP id
+ y3-20020a056e021be300b0034cb5cb43d1mr324323ilv.10.1693162582131; Sun, 27 Aug
+ 2023 11:56:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: Please assign CVE to PageKit Remote Password Reset Vulnerability
+References: <20230825222359.GA10424@openwall.com> <20230826023129.GA2930052@millbarge>
+ <20230826214914.GA18442@openwall.com> <CAFswPa8ERS8LOgMTk_95Dyb7JO_z_82g1zJx9dUP54t1R8ZWGw@mail.gmail.com>
+ <ZOuKYMvCQ8EqIx4C@itl-email>
+In-Reply-To: <ZOuKYMvCQ8EqIx4C@itl-email>
+From: "Eduardo' Vela\" <Nava>" <evn@google.com>
+Date: Sun, 27 Aug 2023 20:56:12 +0200
+Message-ID: <CAFswPa83igZYQN7oAEEZERPCyOuiJv3sFD_+SZx2M_g8fhJDbg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000041abdb0603ec2216"
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000041abdb0603ec2216
+Content-Type: text/plain; charset="UTF-8"
 
-> https://securelayer7.net/download/pdf/SecureLayer7-Pentest-report-Pagekit-CMS.pdf
-> https://securelayer7.net/download/poc/password-reset-vulnerability-exploit-ruby-pagekit-cms.rb.txt
-> https://github.com/pagekit/pagekit/commit/e0454f9c037c427a5ff76a57e78dbf8cc00c268b
+On Sun, 27 Aug 2023, 19:41 Demi Marie Obenour, <demi@invisiblethingslab.com>
+wrote:
 
-Use CVE-2017-5594.
+> Does this include unfixed vulnerabilities?
+>
 
-The scope of this CVE is only SL7_PGKT_01 in the PDF.
+The link* has more details, but briefly, deduplication is done by fix
+commit.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Efforts to fix unfixed Syzkaller crashes (also something being worked on)
+are complementary to the effort to generate CVE identifiers for them, if
+that's your question (so, yes? Unfixed vulnerabilities found by Syzkaller
+are meant to be fixed first and then a CVE is generated for the reports
+fixed by their corresponding Fix commit).
 
-iQIcBAEBCAAGBQJYiOF9AAoJEHb/MwWLVhi2LIUP/0lqqF1H5+610HMuNwOUtszA
-4LRdcemLVhe23rF8NknoqzYrU5yn3i0L2aHA9Pr73d/8qfHorlzUuXr+MWWkWSm8
-SLsNZMNtV9RvDCrHlzGgj7TTXgEIqQt9ZIT3fB60D0U1MNgJjzLdi9BjXZBj2gnV
-91hcwgoSfbpG0V6STrTjOWX+kD154gfgP9V2ODE06KSDGmhW5vEGA4Zg4imB/jJW
-txp7dnbnUZvNFeCB0M51XTTfh/1jUFU6zKEtIQBVhrW4XDtPr4iz8Fw4ULctIZbw
-xmfQz21L6h7Lm7+4VvGSgz6bQD49Bu1DHa3aw9vujGNORvNJtlGF28ZncptrCWmM
-L6k4TjiAKkmpHxi6WfoJEx8V5nChsYU1lrxBqHPe35D/GAK/wM1RmqSaTNgLRk5X
-DNZ2E4aYGK5X4JBGHkVX9IZvpuJOwNyg6nlON7+xQUGBCBtAlje2K6Pog82Y2Cok
-QaqBloctKTsMjV/MeX4az4g2cEUkkSW/XOGcIOdzLBwX6S+MdWI6xri6KJ9J/ArM
-G1horfrsbhyBOMzNFp3egmUZ8bsLJd2u2YghkJD7Nx04wt/e+dtMn9RIm+QvgGb/
-QmhuscXIb9gU4uBsIGZlJVO4XxNLrjzQ59hjEusVIXLzIEj9k3dRXNPWPGupvTqx
-QQRuBMUuSrx0R/ryXHMu
-=ltpz
------END PGP SIGNATURE-----
+Generating CVEs for Syzkaller reports without deduplicating them first
+would be disruptive and useless (the link* goes into more details).
+Deduplication is subjective as it depends on how the bugs are understood.
+The analysis that is needed to deduplicate is happening as part of the fix
+review process.
+
+One could, of course, create a different mechanism to automatically (or
+semi-automatically) deduplicate Syzkaller reports and accept the risk of
+duplicate CVEs. This may be something to look at in the future, but it's
+not what's being worked on for the first iteration, and we probably will
+have a lot to fix and learn from even after the first wave of CVEs are
+generated.
+
+* https://github.com/google/cvelist/tree/cve-automation/fuzzer
+
+>
+
+--00000000000041abdb0603ec2216--
