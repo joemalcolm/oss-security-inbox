@@ -1,27 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/15/1
-Message-ID: <20230915210906.GA22532@openwall.com>
-Date: Fri, 15 Sep 2023 23:09:06 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/27/3
+Message-ID: <ZOuKYMvCQ8EqIx4C@itl-email>
+Date: Sun, 27 Aug 2023 13:39:41 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-Hi Dan,
+On Sun, Aug 27, 2023 at 09:41:22AM +0200, Eduardo' Vela" <Nava> wrote:
+> Hey!
+> 
+> I'm currently on holidays so sorry for my briefness. I couldn't miss a
+> chance to comment on this.
+> 
+> Our team at Google is working on generating CVEs for Syzkaller findings.
+> This is not trivial.
 
-Your request looks good to me, except that this criterion:
+Do you plan to generate CVEs only for fixed issues, or also for unfixed
+ones?  The latter might be better, as it would reflect the actual
+security of the Linux kernel.
 
-On Wed, Sep 13, 2023 at 08:21:22PM +0000, Dan McDonald wrote:
-> > Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
+> On Sat, 26 Aug 2023, 23:49 Solar Designer, <solar@...nwall.com> wrote:
+> 
+> > > If every syzkaller
+> > > issue received a CVE automatically, we'd immediately remove the most
+> > > noisome posts.
+> >
+> > Is every syzkaller issue a vulnerability?
+> >
+> 
+> No, they are not. Most (all?) are bugs, so they probably should get fixed,
+> but I don't think we can claim them all to be vulnerabilities. Even if we
+> did, we probably should help NVD figure out severity for the CVSS or they
+> will just have to guess randomly. Figuring out a criteria for what is worth
+> a CVE and what is not, as well as deduplicating is probably the main bulk
+> of the work here.
 
-is meant to be about the distro, not about you personally.
+The issues also need to actually be fixed.  That will require that
+somebody (Google, Red Hat, Oracle, or someone else) hires additional
+people to do the work.
 
-Alan Coopersmith also correctly pointed this out and made suggestions.
+> > - Ask Red Hat's CNA to consider setting up an automatic CVE assignment
+> > >   process for syzkaller issues. (Red Hat's CNA is now serving as a Root
+> > >   CNA for FOSS issues in general, so it feels like a plausible place to
+> > >   put this process. Google runs syzkaller and has four CNAs, perhaps
+> > >   one of them would be a better fit. Maybe the Linux Foundation could
+> > >   run a CNA for this purpose. I'm not picky.)
+> >
+> > This is an interesting suggestion.  I think we'd first need to determine
+> > whether this can be automated at all without ending up with CVEs
+> > assigned in cases where they shouldn't have been per MITRE's guidelines
+> > (e.g., when no security boundary is crossed in proper documented usage).
+> >
+> 
+> So right now we have been experimenting with this and want to start with a
+> basic heuristic to generate OSV identifiers. If it goes well with OSV we
+> may start generating CVEs.
+> 
+> We analyzed crashes and concluded the only ones we are confident on
+> generating CVEs automatically are KASAN crashes that aren't null-ptr-deref
+> https://github.com/google/cvelist/blob/cve-automation/fuzzer/syzkaller/unique_to_delta.py#L51
+> but we will revise this criteria after we have a first version.
+> 
+> Anyway, as you can imagine, we know generating CVEs automatically can have
+> a significant disrupting effect on the industry as a lot of the regulation
+> and process depend on it, so we want to minimize the hatemail we'll get.
 
-Can you show illumos fixing non-illumos-only security issues within days
-after public disclosure, so that a few days of advance notice would have
-made those fixes even quicker?
+Much of the problem comes from generating a huge number of reports and
+not helping to fix them.  This causes upstream maintainers to
+de-prioritize syzbot reports or even outright burn out (as in the case
+of Darrick Wong).
 
-Thanks,
+> Anyway, for the curious on our progress
+>   - https://github.com/google/cvelist/tree/cve-automation/fuzzer has some details
+>   - https://github.com/google/cvelist/blob/cve-automation/fuzzer/syzkaller/output.json
+>     has the output of our current heuristics
 
-Alexander
+Does this include unfixed vulnerabilities?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
