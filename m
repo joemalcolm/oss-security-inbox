@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1934" "Tuesday" "15" "December" "2015" "00:54:08" "+0300" "Solar Designer" "solar@openwall.com" "<20151214215407.GA26624@openwall.com>" "39" "Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" "^Date:" nil nil "12" "2015121421:54:08" "[oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" (number mark "        solar@openwa Dec 15   39/1934  " thread-indent "\"Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness\"\n") "<566F3135.4050009@halfdog.net>" ("<565F679F.9050600@halfdog.net>" "<566E0678.1080808@halfdog.net>" "<86fuz570iy.fsf@desk.des.no>" "<566F3135.4050009@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5821 invoked by uid 550); 14 Dec 2015 21:54:19 -0000
+Received: (qmail 7854 invoked by uid 550); 27 Aug 2023 19:57:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5800 invoked from network); 14 Dec 2015 21:54:19 -0000
-Message-ID: <20151214215407.GA26624@openwall.com>
-References: <565F679F.9050600@halfdog.net> <566E0678.1080808@halfdog.net> <86fuz570iy.fsf@desk.des.no> <566F3135.4050009@halfdog.net>
-Mime-Version: 1.0
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 7833 invoked from network); 27 Aug 2023 19:57:21 -0000
+Date: Sun, 27 Aug 2023 21:57:07 +0200
+From: Willy Tarreau <w@1wt.eu>
+To: oss-security@lists.openwall.com
+Cc: Vegard Nossum <vegard.nossum@oracle.com>, Jiri Kosina <jkosina@suse.cz>,
+        Donald Buczek <buczek@molgen.mpg.de>,
+        Greg KH <gregkh@linuxfoundation.org>
+Message-ID: <ZOuqk2+3EMBV3pPy@1wt.eu>
+References: <20230825222359.GA10424@openwall.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <566F3135.4050009@halfdog.net>
-User-Agent: Mutt/1.4.2.3i
-Date: Tue, 15 Dec 2015 00:54:08 +0300
-From: Solar Designer <solar@openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness
-To: oss-security@lists.openwall.com
+In-Reply-To: <20230825222359.GA10424@openwall.com>
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
 
-halfdog -
+Hi Alexander,
 
-> http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
-> http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
+> In terms of (linux-)distros list policy, what can we do here?  Accept up
+> to 7 days since fix is ready and thus accept arbitrarily long embargoes
+> and more likely have issues "requiring" such embargoes brought to the
+> list?  BTW, for CPU microarchitectural issues, that would probably need
+> to be for the full distros list, not limited to Linux, and from what I
+> know disclosure timelines for such issues may be 3 to 12+ months.
 
-Thank you for documenting these peculiar findings.  While your web pages
-are nicely formatted and have helpful cross-references, could you please
-post the actual content to oss-security directly?  If you can't easily
-include everything into a message body yet keep it reasonable, then you
-may attach several text files, including the CreateSetgidBinary.c
-program.  I hope your website will still be available with this content
-years later, but regardless I'd prefer discussion threads in here not to
-rely on external content unnecessarily.  If we can make a discussion
-thread more self-contained, we should.  Including external URLs for
-reference and better formatting and cross-references is great, but it
-does not eliminate the need to also include the most essential content
-directly in your posting.
+Please note that delays are not specific to hardware issues. We've had
+to work maybe 3 months with a reporter on a randomness problem that
+allowed to some extents to guess TCP ports and sequence numbers, and it
+required us to imagine various approaches that shouldn't break TCP, and
+iterate with the researchers who studied them, tested them before getting
+back to us with "it still isn't sufficient". It was a long and painful
+one, nobody remained idle, yet it was really needed to get to the end of
+it before publishing anything. Further, the researchers asked us to keep
+some details on hold for a while because they were preparing a paper, and
+this is also something to keep in mind (some of them depened on this,
+though we must not accept that it drags for too long).
 
-On Mon, Dec 14, 2015 at 09:14:29PM +0000, halfdog wrote:
-> Dag-Erling Smorgrav wrote:
-> > And the PAM issue?
-> 
-> That's the most questionable. Should it be expected from the pam
-> libraries to refuse authentication, when the owner/group of
-> /etc/shadow is completely off? Of course, attacker with possibility to
-> modify ownership of a single file would also find numerous other
-> targets to work on, but should it be so easy?
+As such I think that it's not a good solution to anything to require a
+disclosure before a fix is ready. Actually there can be one exception:
+when no more progress is being made. I don't think I would personally be
+shocked by saying that a discussion that remained inactive for 7 days
+leads to publication, it would sufficiently put the pressure on all parties
+not to let it cool rot. And difficult issues generally don't stay inactive
+for more than a few days.
 
-(You mean PAM modules like pam_unix here, not PAM libraries like libpam.
-And of course this question is not limited to systems with PAM.)
+> As to publishing PoCs/exploits, this is already mitigated by the Linux
+> kernel documentation edit making it less likely (but far from
+> impossible) that people would send stuff to linux-distros without being
+> aware of the policy.  We could further mitigate this issue by allowing
+> up to 30 days (but perhaps suggesting at most 7 days?)
 
-I don't feel about this strongly, but I also see little need to
-introduce this kind of paranoia into pam_unix and the like.  As you
-point out, there are "numerous other targets", and some of them are not
-much or any harder to make use of - e.g., root's cron jobs, sshd_config
-"Subsystem" line, lots of scripts and binaries (but these might require
-waiting until they're run next).
+I don't think maintaining pressure on the reporter regarding the need
+for publishing reproducers is doing any good. It should be up to the
+reporter to say "please keep this confidential". We've had many of
+these on s@k.o, and it's perfectly understandable. Knowing that they
+must be very careful about what they share because it will be published
+is a big constraint, whether it's in terms of code quality, authorization
+from an employer or customer, code that was blatantly copy-pasted from
+another exploit just to help with testing, etc. All of this is useful
+for those trying to fix the problem and do not strictly need to be
+published, so it's pointless to add pressure on the reporter regarding
+this.
 
-Alexander
+Just my two cents,
+willy
