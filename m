@@ -1,30 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/15/3
-Message-ID: <40c34c5a-0bb0-a0ba-a738-b21ab336a194@apache.org>
-Date: Sat, 15 Apr 2023 13:24:05 +0000
-From: "Sean R. Owen" <srowen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/27/1
+Message-ID: <CAFswPa8ERS8LOgMTk_95Dyb7JO_z_82g1zJx9dUP54t1R8ZWGw@mail.gmail.com>
+Date: Sun, 27 Aug 2023 09:41:22 +0200
+From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22946: Apache Spark proxy-user privilege escalation from malicious configuration class 
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hey!
 
-In Apache Spark versions prior to 3.4.0, applications using spark-submit can specify a 'proxy-user' to run as, limiting privileges. The application can execute code with the privileges of the submitting user, however, by providing malicious configuration-related classes on the classpath. This affects architectures relying on proxy-user, for example those using Apache Livy to manage submitted applications.
+I'm currently on holidays so sorry for my briefness. I couldn't miss a
+chance to comment on this.
 
-This issue is being tracked as SPARK-41958 
+Our team at Google is working on generating CVEs for Syzkaller findings.
+This is not trivial.
 
-Work Arounds:
+On Sat, 26 Aug 2023, 23:49 Solar Designer, <solar@...nwall.com> wrote:
 
-Update to Apache Spark 3.4.0 or later, and ensure that spark.submit.proxyUser.allowCustomClasspathInClusterMode is set to its default of "false", and is not overridden by submitted applications.
+> > If every syzkaller
+> > issue received a CVE automatically, we'd immediately remove the most
+> > noisome posts.
+>
+> Is every syzkaller issue a vulnerability?
+>
 
-Credit:
+No, they are not. Most (all?) are bugs, so they probably should get fixed,
+but I don't think we can claim them all to be vulnerabilities. Even if we
+did, we probably should help NVD figure out severity for the CVSS or they
+will just have to guess randomly. Figuring out a criteria for what is worth
+a CVE and what is not, as well as deduplicating is probably the main bulk
+of the work here.
 
-Hideyuki Furue (finder)
-Yi Wu (Databricks) (remediation developer)
+> - Ask Red Hat's CNA to consider setting up an automatic CVE assignment
+> >   process for syzkaller issues. (Red Hat's CNA is now serving as a Root
+> >   CNA for FOSS issues in general, so it feels like a plausible place to
+> >   put this process. Google runs syzkaller and has four CNAs, perhaps
+> >   one of them would be a better fit. Maybe the Linux Foundation could
+> >   run a CNA for this purpose. I'm not picky.)
+>
+> This is an interesting suggestion.  I think we'd first need to determine
+> whether this can be automated at all without ending up with CVEs
+> assigned in cases where they shouldn't have been per MITRE's guidelines
+> (e.g., when no security boundary is crossed in proper documented usage).
+>
 
-References:
+So right now we have been experimenting with this and want to start with a
+basic heuristic to generate OSV identifiers. If it goes well with OSV we
+may start generating CVEs.
 
-https://spark.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22946
-https://issues.apache.org/jira/browse/SPARK-41958
+We analyzed crashes and concluded the only ones we are confident on
+generating CVEs automatically are KASAN crashes that aren't null-ptr-deref
+https://github.com/google/cvelist/blob/cve-automation/fuzzer/syzkaller/unique_to_delta.py#L51
+but we will revise this criteria after we have a first version.
+
+Anyway, as you can imagine, we know generating CVEs automatically can have
+a significant disrupting effect on the industry as a lot of the regulation
+and process depend on it, so we want to minimize the hatemail we'll get.
+
+Anyway, for the curious on our progress
+  - https://github.com/google/cvelist/tree/cve-automation/fuzzer has some
+details
+  -
+https://github.com/google/cvelist/blob/cve-automation/fuzzer/syzkaller/output.json
+has the output of our current heuristics
+
+Any feedback is welcome!
+
+>
 
