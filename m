@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["747" "Wednesday" "27" "June" "2018" "07:58:05" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2VHcobRNJHiz_eKmf6qnrRvmvicjat21QXjwYWFY7wYZw@mail.gmail.com>" "29" "Re: [oss-security] CVE for PyYAML RCE-factory API" "^Date:" nil nil "6" "2018062711:58:05" "[oss-security] CVE for PyYAML RCE-factory API" (number mark "        alex.gaynor@ Jun 27   29/747   " thread-indent "\"Re: [oss-security] CVE for PyYAML RCE-factory API\"\n") "<20180627033113.GC14157@hunt>" ("<CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>" "<20180627033113.GC14157@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20275 invoked by uid 550); 27 Jun 2018 11:58:29 -0000
+Received: (qmail 15897 invoked by uid 550); 28 Aug 2023 18:07:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20251 invoked from network); 27 Jun 2018 11:58:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=BRcf1UJbw3KM2gR2zgshXxfFqLpP2JSvmZZfIYw2H+Y=;
-        b=LjB7Hk5mqqfCCWAqRRFw+Ie4JybfBjVUkg3ok3G8Vlv3D0myJ3cy12WG2/VmpmFhk1
-         NgV8tanBy5FJh1YoMd+NHuZgzHntjOMwdxcdhBxmqAPJLbR+MroyF5TmKStNdVWjGbRN
-         trlcaJJ4Z7cWHQd7zHojJS6/5Osbzorqne2fl5fZaXh7LJDnSlHywvbYNbpSdS3P3pHp
-         6hz15sT0Q4GLG4koMlorXr4XuLn+GyAPNt42wO7PuokHwZg1+I9Fvvax94y8wrs/TpXu
-         jY6OtF5qdeorfl2EWkyHWo6cFR5GNTpJREkiYF6jJcAiCgOfdR9sJIJY7CU0lSXyLxRo
-         rfMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=BRcf1UJbw3KM2gR2zgshXxfFqLpP2JSvmZZfIYw2H+Y=;
-        b=lSZg6UbwcOFTEK2lcub7YfAHa4jbrznhfnW4gnvp7Rg0NmIbDWyZkhyA/2D+Y3hjEt
-         5VURnwYTPqkPJ0Bms7wcxPbAsZqYbZf80B4w0e+yu7OrJSi8rCJ0bu3jMxRCOjTZo/kZ
-         4DxiK9E/ueCGfx71Akpv+qfT8tm7qhJevl/iB3S9pGwTUzmCnErZffyoIlZbRsdnxBVS
-         Gnp5mXBv6n1C7APyIEG5MKjKWwucz3vUBQEdDS7JV2TcwtHnJaRT3bPVMPfZLnCTpkEb
-         cxvG7JcXxCsVJlk0jg8/9JkzZGO54E0rI8eRzzBQntwHZ2g1+m/7d/iXjdr7LgtcEek4
-         amYg==
-X-Gm-Message-State: APt69E1S/UBXvt+s8cIVtjKdg3V1Beepc2NqsfCFikeIE4kle8LztEgw
-	RtpTZplhkV87cArAfHNDJritdtkJ5C2Qm39wUCYb8cPq
-X-Google-Smtp-Source: AAOMgpeQDVzW4dUs3gsi36hyUZWtKv/0/ppxF76ry2egUlPDVoaqRDHci32o73HwteVpvdIznf/ZdcBNIKv/TNkSgeo=
-X-Received: by 2002:a2e:91d6:: with SMTP id u22-v6mr4137814ljg.64.1530100697462;
- Wed, 27 Jun 2018 04:58:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>
- <20180627033113.GC14157@hunt>
-In-Reply-To: <20180627033113.GC14157@hunt>
-Message-ID: <CAFRnB2VHcobRNJHiz_eKmf6qnrRvmvicjat21QXjwYWFY7wYZw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000008afbcb056f9e5437"
-Date: Wed, 27 Jun 2018 07:58:05 -0400
-From: Alex Gaynor <alex.gaynor@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for PyYAML RCE-factory API
-To: oss-security@lists.openwall.com
+Received: (qmail 11389 invoked from network); 28 Aug 2023 18:05:34 -0000
+Date: Mon, 28 Aug 2023 20:05:18 +0200
+From: Solar Designer <solar@openwall.com>
+To: Willy Tarreau <w@1wt.eu>
+Cc: oss-security@lists.openwall.com,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
+	Greg KH <gregkh@linuxfoundation.org>
+Message-ID: <20230828180518.GA29293@openwall.com>
+References: <20230825222359.GA10424@openwall.com> <ZOuqk2+3EMBV3pPy@1wt.eu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZOuqk2+3EMBV3pPy@1wt.eu>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
 
---0000000000008afbcb056f9e5437
-Content-Type: text/plain; charset="UTF-8"
+Hi Willy,
 
-Thanks -- this issue was assigned CVE-2017-18342.
+Thank you for your helpful feedback and criticism.
 
-Alex
+I just noticed the recent ksummit list thread is also summarized by LWN:
 
-On Tue, Jun 26, 2018 at 11:32 PM Seth Arnold <seth.arnold@canonical.com>
-wrote:
+https://lwn.net/Articles/941745/
 
-> On Tue, Jun 26, 2018 at 09:18:39PM -0400, Alex Gaynor wrote:
-> > Because of the degree to which this API presented a footgun, I would like
-> > to request a CVE for it.
->
-> This makes sense to me. You can make CVE requests on:
->
-> https://cveform.mitre.org/
->
-> Thanks
->
+In there, Johannes Segitz (SUSE, and a former linux-distros subscriber)
+made a comment saying (among other things):
 
+"I see the 14 day requirement by distros as the major problem in the way
+it is currently run. I understand why solar designer insists on this (it
+is really tricky to keep information private for any extended time), but
+this then leads to people working around distros and distributing the
+information up front, only to notify distros when it's basically already
+solved and widely known."
 
--- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: D1B3 ADC0 E023 8CA6
+I think people handling a complex issue more privately at first and only
+notifying distros when no more than 14 days is left until planned public
+disclosure is actually fine.  I doubt all distros need to be involved in
+early analysis and fixing of a complex issue e.g. in the kernel.
 
---0000000000008afbcb056f9e5437--
+On Sun, Aug 27, 2023 at 09:57:07PM +0200, Willy Tarreau wrote:
+> On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
+> > In terms of (linux-)distros list policy, what can we do here?  Accept up
+> > to 7 days since fix is ready and thus accept arbitrarily long embargoes
+> > and more likely have issues "requiring" such embargoes brought to the
+> > list?  BTW, for CPU microarchitectural issues, that would probably need
+> > to be for the full distros list, not limited to Linux, and from what I
+> > know disclosure timelines for such issues may be 3 to 12+ months.
+> 
+> Please note that delays are not specific to hardware issues. We've had
+> to work maybe 3 months with a reporter on a randomness problem that
+> allowed to some extents to guess TCP ports and sequence numbers, and it
+> required us to imagine various approaches that shouldn't break TCP, and
+> iterate with the researchers who studied them, tested them before getting
+> back to us with "it still isn't sufficient". It was a long and painful
+> one, nobody remained idle, yet it was really needed to get to the end of
+> it before publishing anything. Further, the researchers asked us to keep
+> some details on hold for a while because they were preparing a paper, and
+> this is also something to keep in mind (some of them depened on this,
+> though we must not accept that it drags for too long).
+
+Yes, I understand that such cases and such incentives exist.  In those
+cases, the issue should only be brought to (linux-)distros when it's
+almost ready for publication.
+
+That said, can you share more detail on the specific issue you referred
+to above and its handling/disclosure timeline?  Was it ever brought to
+oss-security, and if not then why not?
+
+I am guessing this is related to your work on random32 in 2020:
+
+https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
+
+If so, it looks like the original issue became public via your commit in
+July 2020, but further issues with that fix commit were discovered and
+fixes for them prepared in public in August and only merged in October.
+
+So I guess some lengthy private discussion occurred before July 2020,
+but it wasn't enough anyway, which makes me question the value of having
+the initial handling in private.  Maybe the issue wasn't critical enough
+and privately-fixable enough for that.  Maybe this actually illustrates
+that such issues are best handled entirely in public... if it were not
+for the researchers' incentive you mentioned (plan to publish a paper).
+
+> As such I think that it's not a good solution to anything to require a
+> disclosure before a fix is ready. Actually there can be one exception:
+> when no more progress is being made. I don't think I would personally be
+> shocked by saying that a discussion that remained inactive for 7 days
+> leads to publication, it would sufficiently put the pressure on all parties
+> not to let it cool rot. And difficult issues generally don't stay inactive
+> for more than a few days.
+
+Makes sense.  The current kernel documentation edit should take care of
+this (no linux-distros notification until fix is ready) for cases where
+the reporter learns of linux-distros from there.  Maybe we should even
+duplicate this information on the linux-distros wiki page?
+
+Alternatively, we may need to relax the policy.
+
+> > As to publishing PoCs/exploits, this is already mitigated by the Linux
+> > kernel documentation edit making it less likely (but far from
+> > impossible) that people would send stuff to linux-distros without being
+> > aware of the policy.  We could further mitigate this issue by allowing
+> > up to 30 days (but perhaps suggesting at most 7 days?)
+> 
+> I don't think maintaining pressure on the reporter regarding the need
+> for publishing reproducers is doing any good. It should be up to the
+> reporter to say "please keep this confidential". We've had many of
+> these on s@k.o, and it's perfectly understandable. Knowing that they
+> must be very careful about what they share because it will be published
+> is a big constraint, whether it's in terms of code quality, authorization
+> from an employer or customer, code that was blatantly copy-pasted from
+> another exploit just to help with testing, etc. All of this is useful
+> for those trying to fix the problem and do not strictly need to be
+> published, so it's pointless to add pressure on the reporter regarding
+> this.
+
+Via links from the new LWN story, I also found your similar comments
+from 2022:
+
+https://lwn.net/Articles/897065/
+
+Here's a thought experiment: what if the list were not private at all,
+e.g. like oss-security is not?  Sure someone can ask to "please keep
+this confidential", but if it's posted to the list that would be
+ineffective.  So what people sometimes do on public lists, Bugzillas,
+GitHub issues, etc. is share private reproducers with individual
+maintainers out-of-band, such as via direct e-mail, while keeping the
+main discussion on the list, etc.  I see no good reason why the same
+can't be happening on a temporarily-private list.  So the real problem
+may be that (linux-)distros is misunderstood as permanently-private
+rather than temporarily-private.  Unfortunately, I don't know how to
+address that reliably.  Even with automated delayed publication, some
+people would initially have the wrong idea... maybe unless they have to
+pass through a web page with the public archives before finding the
+posting address?
+
+Alternatively, we may need to relax the policy.
+
+Just thinking out loud.
+
+Alexander
