@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4218" "Thursday" "21" "April" "2016" "09:12:29" "+0100" "Sysdream Labs" "labs@sysdream.com" "<57188B6D.7050401@sysdream.com>" "141" "[oss-security] Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (predicatable filename)" nil nil nil "4" "2016042108:12:29" "[oss-security] Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (predicatable filename)" (number mark "U       labs@sysdrea Apr 21  141/4218  " thread-indent "\"[oss-security] Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (predicatable filename)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19719 invoked by uid 550); 21 Apr 2016 16:18:02 -0000
+Received: (qmail 5194 invoked by uid 550); 30 Aug 2023 15:27:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,159 +7,237 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3084 invoked from network); 21 Apr 2016 08:12:42 -0000
-X-Virus-Scanned: amavisd-new at sysdream.com
-To: oss-security@lists.openwall.com, fulldisclosure@seclists.org
-From: Sysdream Labs <labs@sysdream.com>
-Message-ID: <57188B6D.7050401@sysdream.com>
-Date: Thu, 21 Apr 2016 09:12:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="lwU5gESX7lvRm8NeG95lmcrp478XP8HbR"
-Subject: [oss-security] Wordpress iThemes Security (Better WP Security) Insecure
- Backup/Logfile Generation (predicatable filename)
+Received: (qmail 3897 invoked from network); 30 Aug 2023 15:26:48 -0000
+Date: Wed, 30 Aug 2023 17:26:33 +0200
+From: Solar Designer <solar@openwall.com>
+To: Willy Tarreau <w@1wt.eu>
+Cc: oss-security@lists.openwall.com,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
+	Greg KH <gregkh@linuxfoundation.org>
+Message-ID: <20230830152633.GA6199@openwall.com>
+References: <20230825222359.GA10424@openwall.com> <ZOuqk2+3EMBV3pPy@1wt.eu> <20230828180518.GA29293@openwall.com> <ZOzy5H/9go9KPfm3@1wt.eu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZOzy5H/9go9KPfm3@1wt.eu>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
 
---lwU5gESX7lvRm8NeG95lmcrp478XP8HbR
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi Willy,
 
-Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Gen=
-eration (predicatable filename)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
+On Mon, Aug 28, 2023 at 09:17:56PM +0200, Willy Tarreau wrote:
+> what I suspect instead
+> is that reporting security issues is so stressful for anyone (constantly
+> making sure not to do a mistake nor to send to the wrong people) that once
+> they see the fix merged, they just relax and consider the job done, so
+> most likely linux-distros isn't even contacted at this point. And it's
+> very possible that some having experienced a friendly process on s@k.o
+> and felt some unneeded pressure on l-d just don't want to go there again.
+> I personally see this a bit like projects asking to sign a CLA: you come
+> there saying "hey, you had a bug there, I fixed it, look" and in return
+> you feel like you're swamped by some heavy process so you just give up,
+> swearing you'll never go there again. That might be exagerated but I
+> can understand how it could be felt that way. I'm having periods where
+> it's very difficult for me to find even one extra hour a day, and I would
+> certainly not appreciate at all being pressured like this to tidy my stuff
+> and prepare for it to be published when I have other things to do, after
+> having made the effort to report a bug. So that's something to keep in
+> mind, not everyone deals with it the same way.
 
+Of course, I understand this.  (linux-)distros isn't a send-and-forget
+list, and this does exclude its usage by people who are aware of this
+fact and only want or have time to send one message without staying on
+top of the issue afterwards.  The obvious alternative would be
+vendor-sec alike, without specific rules, which had its other problems.
 
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+In practice, no matter what we say in the policy, sometimes the reporter
+just won't communicate further.  In those cases, (specific) list members
+should take over, including making the eventual public disclosure.  What
+we could possibly do, if we want to and have the resources, is make this
+a pre-allowed option for reporters, instead of an undesirable exception,
+which it currently is.
 
-When using the "database backup/logging on filesystem" feature, iThemes sec=
-urity generates a weak filename allowing attackers to obtain the backup/log=
- file if they know when the backup/log file was generated (timestamp).
+> I couldn't blame a bug reporter for
+> wanting to have their week-ends and nights again and think everything's
+> behind them and in someone else's hands now.
 
-**Access Vector**: remote
+Right.  This is in part a matter of resources - are we providing only
+the lists infrastructure and list members' best-effort volunteer
+contributions to issue handling, or are we providing any guaranteed
+service?  For the latter, perhaps list admin(s) (me) should always take
+over whenever the member distros don't handle that sort of
+contributing-back tasks on time.  Then we'll be able to provide a
+guarantee that all issues will be handled without the reporter having to
+stay on top of them.
 
-**Security Risk**: medium
+A drawback is that this may encourage lower-quality or lower-relevance
+reports, including of issues that are not worth handling in private.  So
+it could end up wasting those extra resources allocated to this effort.
 
-**Vulnerability**: CWE-330
+> On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
+> > That said, can you share more detail on the specific issue you referred
+> > to above and its handling/disclosure timeline?  Was it ever brought to
+> > oss-security, and if not then why not?
+> 
+> I just checked and I'm not seeing any traces of it there. I don't even
+> know who normally notifies about such issues there.
 
-**CVSS Base Score**: 7.5
+If you worked on the issue, then perhaps you were the most appropriate
+person to notify oss-security about it?
 
+Note: this is unrelated to disclosure timelines, policy, etc. - I am
+talking about public notification for the already-public issue.
 
----------------
-Vulnerable code
----------------
+> > I am guessing this is related to your work on random32 in 2020:
+> > 
+> > https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
+> 
+> Ah yes indeed it's that one! How painful memories suddently come back!
+> 
+> > If so, it looks like the original issue became public via your commit in
+> > July 2020, but further issues with that fix commit were discovered and
+> > fixes for them prepared in public in August and only merged in October.
+> > 
+> > So I guess some lengthy private discussion occurred before July 2020,
+> 
+> Yeah it started in early March, and Eric, Amit and I basically spent all
+> our week-ends and numerous evenings experimenting with different methods
+> to deliver good enough randoms without breaking the principle of not
+> reusing the same IDs too fast (still have a long minimal period), and
+> running tests on real traffic, counting failures. At some point in July
+> I gave up and concluded we couldn't fix it alone between us and needed
+> some public help, hence the posting.
 
-The vulnerable code is located at core/modules/backup/class-itsec-backup.ph=
-p, line 244 :
+After I posted the above, Brad Spengler pointed me at another related
+issue that you worked on in 2022:
 
-        $file =3D 'backup-' . substr( sanitize_title( get_bloginfo( 'name' =
-) ), 0, 20 ) . '-' . $current_time . '-' . ITSEC_Lib::get_random( mt_rand( =
-5, 10 ) );
+https://lore.kernel.org/all/20220502084614.24123-1-w@1wt.eu/
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef562489818723ea0a66c57bfdfbf151ad568c42
 
-In core/class-itsec-logger.php, line  :
+In fact, your description above sounds like it could be (in part?) for
+that newer issue.
 
-        $itsec_globals['settings']['log_info'] =3D substr( sanitize_title( =
-get_bloginfo( 'name' ) ), 0, 20 ) . '-' . ITSEC_Lib::get_random( mt_rand( 0=
-, 10 ) );
+Anyway, perhaps both of these should have been brought to oss-security
+at some point, but they were not?  As to handling them in private on
+linux-distros, I see little value in that, so they're not a reason for
+us to have allowed longer embargoes.
 
+> > but it wasn't enough anyway, which makes me question the value of having
+> > the initial handling in private.  Maybe the issue wasn't critical enough
+> > and privately-fixable enough for that.  Maybe this actually illustrates
+> > that such issues are best handled entirely in public... if it were not
+> > for the researchers' incentive you mentioned (plan to publish a paper).
+> 
+> It's always the same for random attacks: the reporter sees a very high
+> success rate in a lab while those dealing with production know for sure
+> that the success rate is so close to zero in field that it cannoot be
+> represented on a float. But there's a wide spectrum between the two,
+> such as mostly idle routers serving as route reflectors, or monitoring
+> devices etc. Thus you start from "it could theoretically be damaging in
+> certain environments, let's be careful", with the researchers initially
+> willing to be discrete since working to prepare a paper. As we made
+> progress and saw the risks of attack significantly fade away but never
+> close enough to zero, we concluded that in the worst case we had something
+> better than the original and it wasn't that much of a problem anymore to
+> make it public. But I think the researchers also progressed on their side
+> seeing the hopes to get a quick fix fade away and the reality hit the
+> theory, thus being more willing to disclose more of their work. It's a
+> bit of everything.
 
-In core/class-itsec-lib.php, function get_random, line 415:
+OK.  None of this feels like good material for linux-distros (except
+maybe very close to its publication, if there was a known date), but it
+does feel like good material for eventual summary on oss-security.
 
-        public static function get_random( $length, $base32 =3D false, $spe=
-cial_chars =3D false ) {
+> > Alternatively, we may need to relax the policy.
+> 
+> I personally think it does have a flaw that is emphasized by the linux
+> kernel handling but can actually affect other projects. Some sole
+> developers might just not have enough resources to do everything in
+> 14 days, from diagnosing the problem at night or only during a few work
+> hours, setting up a lab on the week-end to test a fix, to contacting
+> whoever needs to be contacted and making releases. Some even make the
+> mistake of developing new stuff in maintenance branches and feel like
+> they need to finish before releasing (already seen)! I remember having
+> had to search in my boxes of hardware to re-assemble a working PC with
+> a floppy drive just to be able to validate a fix in the floppy driver.
+> You can be sure I only did that the week-end after the report, but
+> that's possibly 5 days lost already!
 
-                if ( true =3D=3D=3D $base32 ) {
+This is partially addressed in our current instructions, which say:
 
-                        $string =3D 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+"Please notify upstream projects/developers of the affected software,
+other affected distro vendors, and/or affected Open Source projects
+before notifying one of these mailing lists in order to ensure that
+these other parties are OK with the maximum embargo period that would
+apply (and if not, then you may have to delay your notification to the
+mailing list)"
 
-                } else {
+Incidentally, this is consistent with the Linux kernel documentation
+edit that prompted this thread.
 
-                        $string =3D 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKL=
-MNOPQRSTUVWXYZ0123456789';
+> I understand the rationale behind your policy. I, too, was on vendor-sec
+> where we saw some vendors say "just FYI we're trying to fix this, we'll
+> keep you updated" and one year later, no news. But all those doing a
+> serious work (and there are, and the linux security team is doing that
+> serious work) can be heavily penalized by that policy when they're not
+> quick enough to obtain a fix. The linux people are known for being vocal,
+> so you hear about them. But other developers might just feel completely
+> crushed by this and it could really be harmful to them, especially when
+> they're new to this and haven't been dealing with security reports for
+> 25 years like many of us.
+> 
+> That's why I tend to think that what would better address what you want
+> to prevent, is ensuring the discussion doesn't come to a stall. This
+> could remove a lot of frustration. And if something has to be published
+> before the end because the developers or vendor stay silent, it's much
+> more powerful to say "they didn't dare responding for 14 days" than
+> "they couldn't figure a working fix for this complex issue in 14 days".
 
-                        if ( true =3D=3D=3D $special_chars ) {
+I had similar thoughts too, but OTOH allowing arbitrarily long even if
+non-stalled discussions means not only longer embargoes and higher risk
+and impact of leaks, but also a greater number of simultaneous
+discussions on the list.  When issues take a long time to handle and
+many are tracked at once, this increases/wastes the effort per issue.
 
-                                $string .=3D '_)(*&^%$#@!~`:;<>,.?/{}[]|';
+> > So the real problem
+> > may be that (linux-)distros is misunderstood as permanently-private
+> > rather than temporarily-private.  Unfortunately, I don't know how to
+> > address that reliably.  Even with automated delayed publication, some
+> > people would initially have the wrong idea... maybe unless they have to
+> > pass through a web page with the public archives before finding the
+> > posting address?
+> 
+> Just a stupid idea, it could possibly be addressed by a confirmation
+> e-mail on an opening thread. Something like "we need you to confirm that
+> what you posted will be made public by YY/MM/DD, if that's really what
+> you want, please visit this link within 24h otherwise all your materials
+> will be destroyed".
 
-                        }
+We already use a somewhat obscure posting address and a required Subject
+prefix, although the latter is currently not enforced strictly (is
+mostly an anti-spam measure, so is bypassed by some other keywords
+contained in the headers and/or message).  I think part of the problem
+was that the kernel documentation gave these away directly, without
+people having to see our policy and instructions first.
 
-                }
+> I'm not sure, that's just an idea. But yes, it needs
+> to be understood as public so that confidential stuff is not shared
+> there, and it must be possible to ask for some materials to be erased
+> early if the reporter wasn't aware of this or made a mistake (e.g. send
+> a pcap just before the security team says "never ever share a pcap!").
 
-                return substr( str_shuffle( $string ), mt_rand( 0, strlen( =
-$string ) - $length ), $length );
+There's no reliable way to erase stuff from all subscribers' mailboxes.
+At "best", we could exclude it from delayed publication.
 
-        }
+> You're welcome. I don't want to interfere with the lists you operate
+> nor with those working on them, but I observe that there has been some
+> frictions multiple times for reasons that are probably not too hard to
+> address if respective participants discuss just a bit, which is why I'm
+> sharing some observations ;-)
 
+I appreciate this.
 
-The str_shuffle should *never* be used for generating secure strings as it =
-uses the PHP rand() function and just shuffles the characters' position.
+Thanks,
 
---------
-Solution
---------
-
-Make sure to generate non-predictable strings, using cryptographically secu=
-re generators.=20
-Update iThemes Security to version >=3D 5.3.1
-
-Affected versions
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-* iThemes Security <=3D 5.3.0
-
-Timeline (dd/mm/yyyy)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-* 26/02/2016 : Initial contact with iThemes.
-* 26/02/2016 : iThemes confirms the vulnerabilities.
-* 29/02/2016 : iThemes publishes a new version (5.3.1) of iThemes Security =
-that fixes the vulnerabilities.
-
-Credits
-=3D=3D=3D=3D=3D=3D=3D
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
-
---=20
-SYSDREAM Labs <labs@sysdream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
---lwU5gESX7lvRm8NeG95lmcrp478XP8HbR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXGIttAAoJEI60jNnVslmhrtkQAIWC6Rlbog7ag/pVuLJdvvJ2
-zAc6C5LHfOkbNS+QOUAtpcWmgWDpUMSSYp8K3eD8Ld3n9IlLO0TWXIdShQeWV4D0
-3ZJSUgmBppZ5ci5Sz5A3TLjTmUt7vVX/LGjCp9TN3FC2jgK4TruDo4xnkwdQiFbG
-o7ctRYC9Crr5E6R66aCgfUbg0Pvq9pVH8JOg7g6P6X3NkEHsAk+a6gHD8JiFOTGL
-t6FCCAk0jjKgpgDQ+a/wzg/UQ9a9/q8mPY17Ny54x8WnPpu3zrBNZ0a1LH1O3jTA
-0Eq7NChXBCi25dFMgdig5/1HVrky53z3iGM/H/YOI/f5anQpUxPb8SwMxXqIa8jM
-NPtV7E1kbSmR+EFME1xkMO1bOWELQc4DHEkpgALkfYDvKm+kztbHaLB2GGrP6UL2
-GtT1dD0gnewA+2rKDGiKQch6e4PRWa1VwO0AUOpuv1a/oydMpR/X0FtQKil76zha
-EnlsBsFK+OVUCsCkztexW0gkjnFE5jiaMIi92l5xgXlEZG/amVqO8WtokU+crQF2
-0GWhMNjTRrodzaSOocNphXANOnSKPVlZZ4vWOWeOODTxMelhmZye0Hw4X6NEaUn0
-jY7wLb3eSoxb9jRu6aRuGXaKp8v90gBT/mrMZP4nxGRCW17NI/tJh0ZmipMDAZ25
-8XViJJTUptiSOFZgcIpQ
-=iFat
------END PGP SIGNATURE-----
-
---lwU5gESX7lvRm8NeG95lmcrp478XP8HbR--
+Alexander
