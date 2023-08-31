@@ -1,46 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/08/5
-Message-ID: <50dfd9cf-a4c8-9b4c-6419-91f68ca45e88@di.uniroma1.it>
-Date: Fri, 8 Sep 2023 19:48:21 +0200
-From: Enrico Bassetti <bassetti@...uniroma1.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/01/1
+Message-ID: <f04d5222-231d-4428-aa03-92266fb5113e@leventepolyak.net>
+Date: Fri, 1 Sep 2023 00:23:32 +0200
+From: Levente Polyak <levente@...entepolyak.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-4809: FreeBSD pf bypass when using IPv6
+Cc: Frederik Schwan <freswa@...hlinux.org>
+Subject: Replacement of Allan McRae on linux-distros for Arch Linux
 Content-Type: text/plain; charset=utf-8
 
-Hello *,
+Hi,
 
-A few months ago, as part of our investigations on IPv6 security in the 
-NetSecurityLab @ Sapienza University, we discovered a vulnerability that 
-allows attackers to bypass rules in pf-based IPv6 firewalls in 
-particular conditions.
+I'd like to request to replace one of our representatives on the 
+linux-distros list for Arch Linux.
 
-Vulnerability (TL;DR)
-==============
-A FreeBSD with `pf` as firewall for IPv6 traffic and `scrub` enabled to 
-reassemble IPv6 fragments is vulnerable to an attack that uses a crafted 
-packet posing as IPv6 "atomic" fragment to bypass the rules. After the 
-fragment is matched against some firewall rules (but not all!), it is 
-then "corrected" and forwarded to the destination (if no "deny" rule is 
-matched).
+Please replace:
+- Allan McRae <allan@...hlinux.org> [0]
+
+With:
+- Frederik Schwan <freswa@...hlinux.org> [1]
+   GPG: 05C7775A9E8B977407FE08E69D4C5AA15426DA0A
 
 
-References
-==============
-This vulnerability has been assigned the ID CVE-2023-4809.
+The reason for this is that Allan has stepped down from most of his 
+current duties and will focus solely on Pacman development, so we'd like 
+to subscribe Frederik as his replacement. Frederik's GPG key can also be 
+found as part of the Arch Linux keyring, visualized here [2].
 
-The FreeBSD advisory is at
-https://www.freebsd.org/security/advisories/FreeBSD-SA-23:10.pf.asc
+This request is signed using my key, which is subscribed on 
+linux-distros, but can also be checked here [3].
 
-We wrote a description with an example at:
-https://www.enricobassetti.it/2023/09/cve-2023-4809-freebsd-pf-bypass-when-using-ipv6/
+Thanks a lot,
+Levente Polyak
+Arch Linux
 
+[0]: https://archlinux.org/people/developers/#allan
+[1]: https://archlinux.org/people/developers/#freswa
+[2]: https://archlinux.org/master-keys/
+[3]: https://archlinux.org/people/developers/#anthraxx
 
-Solution
-==============
-The solution is to update FreeBSD to the latest version. All FreeBSD 
-versions up to (but not including) 13.2-STABLE, 13.2-RELEASE-p3, 
-12.4-STABLE, and 12.4-RELEASE-p5 are affected.
-
-
-Best regards,
-Enrico Bassetti
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
