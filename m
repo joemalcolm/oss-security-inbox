@@ -1,91 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/01/1
-Message-ID: <c37ab2bd-375c-4963-c570-44be9c4b2d81@redhat.com>
-Date: Thu, 1 Jun 2023 12:35:16 +0200
-From: Zdenek Dohnal <zdohnal@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [vs] CVE-2023-32324 heap buffer overflow in cupsd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/31/1
+Message-ID:  <CH0PR05MB10203918AA236673B9B9CE00BB9E5A@CH0PR05MB10203.namprd05.prod.outlook.com>
+Date: Thu, 31 Aug 2023 09:26:26 +0000
+From: VMware Security Response Center <security@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [Security Advisory] open-vm-tools: SAML token signature bypass vulnerability (CVE-2023-20900)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
-
-there is currently embargoed CVE-2023-32324 in cups project:
-
-
-      Summary
-
-A heap buffer overflow vulnerability would allow a remote attacker to 
-lauch a dos attack.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
 
-      Details
+Please see the security advisory here: https://www.vmware.com/security/advisories/VMSA-2023-0019.html 
 
-A buffer overflow vulnerability in the function |format_log_line| could 
-allow remote attackers to cause a denial-of-service(DoS) on the affected 
-system (not verified for possible arbitrary code execution).
+Description
+==============================================================
+CVE-2023-20900: VMware Tools contains a SAML token signature bypass vulnerability. VMware has evaluated the severity of this issue to be in the Important severity range with a maximum CVSSv3.1 base score of 7.5 - CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H.
 
-The vulnerability affects the commit #c0c4037 and the latest commit 
-#4310a07 on the GitHub master branch as well as the latest release 
-version v2.4.2. I have only tested these versions so far.
+Known Attack Vectors
+==============================================================
+A malicious actor with man-in-the-middle (MITM) network positioning between vCenter server and the virtual machine may be able to bypass SAML token signature verification, to perform VMware Tools Guest Operations.
 
-Exploitation of the vulnerability can be triggered when the 
-configuration file |cupsd.conf| sets the value of |loglevel |to |DEBUG| 
-if the log location is set to a file.
+Upstream fix for CVE-2023-20900
+==============================================================
+https://github.com/vmware/open-vm-tools/blob/CVE-2023-20900.patch/CVE-2023-20900.patch
+-----BEGIN PGP SIGNATURE-----
 
-
-      Reproduce
-
-$ git clonehttps://github.com/OpenPrinting/cups.git
-$ cd  cups
-$ CFLAGS="-g -fsanitize=address -fPIE" CXXFLAGS="-g -fsanitize=address -fPIE" LDFLAGS="-fsanitize=address" ./configure -with-tls=no --disable-shared
-
-# Now compile cups
-$ make -j
-
-# Adjust conf/cupsd.conf to reproduce the crash - enable debug logging to a file and set cupsd to listen on port 8631
-$ sed -i 's,LogLevel warn,LogLevel debug,' conf/cupsd.conf
-$ sed -i 's,Listen localhost:631,Listen localhost:8631,' conf/cupsd.conf
-
-Run cups and replay the crash.raw
-
-|$ sudo ./scheduler/cupsd -c conf/cupsd.conf -f $ nc 127.0.0.1 8631 < 
-./crash.raw |||
-
-cupsd crashes after the last command and generates the attached ASAN report.
-
-||
-
-||
-
-
-      PoC
-
-crash.raw attached
-
-
-      Impact
-
-Heap buffer overflow.
-
-*Patch*
-
-Committed as 
-https://github.com/OpenPrinting/cups/commit/fd8bc2d32589d1fd91fe1c0521be2a7c0462109e
-
-
-For OpenPriniting CUPS community,
-
-Zdenek Dohnal (CUPS 2.4.x release manager)
-
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
-
-Content of type "text/html" skipped
-
-View attachment "0001-Consensus-fix.patch" of type "text/x-patch" (804 bytes)
-
-View attachment "asan_report.txt" of type "text/plain" (3254 bytes)
-
-Download attachment "crash.raw" of type "application/octet-stream" (37881 bytes)
+iHUEAREIAB0WIQQ950nPZL1VtgrpULuSf/JD335VcQUCZPBa5gAKCRCSf/JD335V
+cZZTAP9QYJDWCzECKYakbqu4fui7CditlHnew0qs0KjG9qfC3QEA7wLPBfudDBkj
+ivy2KsHabG03funx8dWl/x77TfFbUlI=
+=sAT7
+-----END PGP SIGNATURE-----
