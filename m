@@ -1,94 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/18/3
-Message-ID: <a8637927-82b1-4f95-a7e8-7aa6cbaca455@rub.de>
-Date: Mon, 18 Dec 2023 17:08:14 +0100
-From: Fabian Bäumer <fabian.baeumer@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/02/1
+Message-ID: <254f89c1-4e22-9920-273e-2bc4a3642dc3@apache.org>
+Date: Sat, 02 Sep 2023 20:41:50 +0000
+From: Marton Szasz <szaszm@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Brinkmann <marcus.brinkmann@....de>
-Subject: CVE-2023-48795: Prefix Truncation Attacks in SSH Specification (Terrapin Attack)
+Subject: CVE-2023-41180: Apache NiFi MiNiFi C++: Incorrect Certificate Validation in InvokeHTTP for MiNiFi C++ 
 Content-Type: text/plain; charset=utf-8
 
-### Summary
+Severity: important
 
-Parts of the SSH specification are vulnerable to a novel prefix 
-truncation attack (a.k.a. Terrapin attack), which allows a 
-man-in-the-middle attacker to strip an arbitrary number of messages 
-right after the initial key exchange, breaking SSH extension negotiation 
-(RFC8308) in the process and thus downgrading connection security.
+Affected versions:
 
-### Mitigations
+- Apache NiFi MiNiFi C++ 0.13.0 through 0.14.0
 
-To mitigate this protocol vulnerability, OpenSSH suggested a so-called 
-"strict kex" which alters the SSH handshake to ensure a 
-Man-in-the-Middle attacker cannot introduce unauthenticated messages as 
-well as convey sequence number manipulation across handshakes. Support 
-for strict key exchange has been added to a variety of SSH 
-implementations, including OpenSSH itself, PuTTY, libssh, and more.
+Description:
 
-**Warning: To take effect, both the client and server must support this 
-countermeasure.**
+Incorrect certificate validation in InvokeHTTP on Apache NiFi MiNiFi C++ versions 0.13 to 0.14 allows an intermediary to present a forged certificate during TLS handshake negotation. The Disable Peer Verification property of InvokeHTTP was effectively flipped,  disabling verification by default, when using HTTPS.
 
-As a stop-gap measure, peers may also (temporarily) disable the affected 
-algorithms and use unaffected alternatives like AES-GCM instead until 
-patches are available.
+Mitigation: Set the Disable Peer Verification property of InvokeHTTP to true when using MiNiFi C++ versions 0.13.0 or 0.14.0. Upgrading to MiNiFi C++ 0.15.0 corrects the default behavior.
 
-### Details
+This issue is being tracked as MINIFICPP-2170 
 
-The SSH specifications of ChaCha20-Poly1305 
-(chacha20-poly1305@...nssh.com) and Encrypt-then-MAC (*-etm@...nssh.com 
-MACs) are vulnerable against an arbitrary prefix truncation attack 
-(a.k.a. Terrapin attack). This allows for an extension negotiation 
-downgrade by stripping the SSH_MSG_EXT_INFO sent after the first message 
-after SSH_MSG_NEWKEYS, downgrading security, and disabling attack 
-countermeasures in some versions of OpenSSH. When targeting 
-Encrypt-then-MAC, this attack requires the use of a CBC cipher to be 
-practically exploitable due to the internal workings of the cipher mode. 
-Additionally, this novel attack technique can be used to exploit 
-previously unexploitable implementation flaws in a Man-in-the-Middle 
-scenario.
+Credit:
 
-The attack works by an attacker injecting an arbitrary number of 
-SSH_MSG_IGNORE messages during the initial key exchange and consequently 
-removing the same number of messages just after the initial key exchange 
-has concluded. This is possible due to missing authentication of the 
-excess SSH_MSG_IGNORE messages and the fact that the implicit sequence 
-numbers used within the SSH protocol are only checked after the initial 
-key exchange.
+Ferenc Gerlits (finder)
 
-In the case of ChaCha20-Poly1305, the attack is guaranteed to work on 
-every connection as this cipher does not maintain an internal state 
-other than the message's sequence number. In the case of 
-Encrypt-Then-MAC, practical exploitation requires the use of a CBC 
-cipher; while theoretical integrity is broken for all ciphers when using 
-this mode, message processing will fail at the application layer for CTR 
-and stream ciphers.
+References:
 
-For more details and a pre-print of the associated research paper, see 
-https://terrapin-attack.com.
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-41180
+https://issues.apache.org/jira/browse/MINIFICPP-2170
 
-### Impact
-
-This attack targets the specification of ChaCha20-Poly1305 
-(chacha20-poly1305@...nssh.com) and Encrypt-then-MAC 
-(*-etm@...nssh.com), which are widely adopted by well-known SSH 
-implementations and can be considered de-facto standard. These 
-algorithms can be practically exploited; however, in the case of 
-Encrypt-Then-MAC, we additionally require the use of a CBC cipher. As a 
-consequence, this attack works against all well-behaving SSH 
-implementations supporting either of those algorithms and can be used to 
-downgrade (but not fully strip) connection security in case SSH 
-extension negotiation (RFC8308) is supported. The attack may also enable 
-attackers to exploit certain implementation flaws in a man-in-the-middle 
-(MitM) scenario.
-
--- 
-M. Sc. Fabian Bäumer
-
-Chair for Network and Data Security
-Ruhr University Bochum
-Universitätsstr. 150, Building MC 4/145
-44780 Bochum
-Germany
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (5977 bytes)
