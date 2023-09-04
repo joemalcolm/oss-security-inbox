@@ -1,27 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/5
-Message-ID: <6a6d77d1-ca77-0286-12d7-3e5e2e5fa1f6@apache.org>
-Date: Thu, 23 Feb 2023 17:43:10 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/04/1
+Message-ID: <890273bb-7f8c-fce1-d13d-6cffb10f3df7@gmail.com>
+Date: Mon, 4 Sep 2023 13:05:31 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25692: Apache Airflow Google Provider: Google Cloud Sql Provider Denial Of Service 
+Subject: Django: CVE-2023-41164: Potential denial of service vulnerability in django.utils.encoding.uri_to_iri()
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+https://www.djangoproject.com/weblog/2023/sep/04/security-releases/
 
-Description:
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.2.5 <https://docs.djangoproject.com/en/dev/releases/4.2.5/>`_,
+`Django 4.1.11 
+<https://docs.djangoproject.com/en/dev/releases/4.1.11/>`_, and
+`Django 3.2.21 <https://docs.djangoproject.com/en/dev/releases/3.2.21/>`_.
+These releases addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-Improper Input Validation vulnerability in the Apache Airflow Google Provider.
+CVE-2023-41164: Potential denial of service vulnerability in 
+``django.utils.encoding.uri_to_iri()``
+===================================================================================================
 
-This issue affects Apache Airflow Google Provider versions before 8.10.0.
+``django.utils.encoding.uri_to_iri()`` was subject to potential denial 
+of service attack via certain inputs with a very large number of Unicode 
+characters.
 
-Credit:
+Thanks `MProgrammer <https://hackerone.com/mprogrammer>`_ for the report.
 
-Xie Jianming of Caiji Sec Team (finder)
+This issue has severity "moderate" according to the Django security policy.
 
-References:
+Affected supported versions
+===========================
 
-https://github.com/apache/airflow/pull/29499
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25692
+* Django main branch
+* Django 4.2
+* Django 4.1
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch 
+and the
+4.2, 4.1, and 3.2 release branches. The patches may be obtained from the
+following changesets:
+
+* On the `main branch 
+<https://github.com/django/django/commit/3f41d6d62929dfe53eda8109b3b836f26645bdce>`__
+* On the `4.2 release branch 
+<https://github.com/django/django/commit/9c51b4dcfa0cefcb48231f4d71cafa80821f87b9>`__
+* On the `4.1 release branch 
+<https://github.com/django/django/commit/ba00bc5ec6a7eff5e08be438f7b5b0e9574e8ff0>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/6f030b1149bd8fa4ba90452e77cb3edc095ce54e>`__
+
+The following releases have been issued:
+
+* Django 4.2.5 (`download Django 4.2.5 
+<https://www.djangoproject.com/m/releases/4.2/Django-4.2.5.tar.gz>`_ | 
+`4.2.5 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.2.5.checksum.txt>`_)
+* Django 4.1.11 (`download Django 4.1.11 
+<https://www.djangoproject.com/m/releases/4.1/Django-4.1.11.tar.gz>`_ | 
+`4.1.11 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.1.11.checksum.txt>`_)
+* Django 3.2.21 (`download Django 3.2.21 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.21.tar.gz>`_ | 
+`3.2.21 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.21.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
