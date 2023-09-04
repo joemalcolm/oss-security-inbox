@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1320" "Wednesday" "16" "March" "2016" "12:45:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160316164539.43CF5EBC143@smtpvmsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request : Use-after-free in gifcolor" nil nil nil "3" "2016031616:45:39" "[oss-security] Re: CVE Request : Use-after-free in gifcolor" (number mark "U       cve-assign@m Mar 16   35/1320  " thread-indent "\"[oss-security] Re: CVE Request : Use-after-free in gifcolor\"\n") "<56E9516E.4030608@gmail.com>" ("<56E9516E.4030608@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15897 invoked by uid 550); 16 Mar 2016 16:45:51 -0000
+Received: (qmail 30440 invoked by uid 550); 4 Sep 2023 20:14:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +7,238 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15867 invoked from network); 16 Mar 2016 16:45:51 -0000
-From: cve-assign@mitre.org
-To: josselin.feist@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <56E9516E.4030608@gmail.com>
-Message-Id: <20160316164539.43CF5EBC143@smtpvmsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 12:45:39 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request : Use-after-free in gifcolor
+Received: (qmail 30419 invoked from network); 4 Sep 2023 20:14:39 -0000
+Date: Mon, 4 Sep 2023 22:14:26 +0200
+From: Willy Tarreau <w@1wt.eu>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com, Vegard Nossum <vegard.nossum@oracle.com>,
+        Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
+        Greg KH <gregkh@linuxfoundation.org>
+Message-ID: <20230904201426.GA3577@1wt.eu>
+References: <20230825222359.GA10424@openwall.com>
+ <ZOuqk2+3EMBV3pPy@1wt.eu>
+ <20230828180518.GA29293@openwall.com>
+ <ZOzy5H/9go9KPfm3@1wt.eu>
+ <20230830152633.GA6199@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230830152633.GA6199@openwall.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Alexander,
 
-> Two possible consecutives calls to EGifCloseFile at line 122 and 124,
-> with the same first parameter (GifFile) could lead to two calls to
-> free
+On Wed, Aug 30, 2023 at 05:26:33PM +0200, Solar Designer wrote:
+> > I couldn't blame a bug reporter for
+> > wanting to have their week-ends and nights again and think everything's
+> > behind them and in someone else's hands now.
+> 
+> Right.  This is in part a matter of resources - are we providing only
+> the lists infrastructure and list members' best-effort volunteer
+> contributions to issue handling, or are we providing any guaranteed
+> service?  For the latter, perhaps list admin(s) (me) should always take
+> over whenever the member distros don't handle that sort of
+> contributing-back tasks on time.  Then we'll be able to provide a
+> guarantee that all issues will be handled without the reporter having to
+> stay on top of them.
+> 
+> A drawback is that this may encourage lower-quality or lower-relevance
+> reports, including of issues that are not worth handling in private.  So
+> it could end up wasting those extra resources allocated to this effort.
 
-> this is also a use-after-free
+Absolutely. But I'm sensing something in the way you're presenting these
+possibilities, it is that there is a perceived (by some?) guarantee of
+service that implies that someone (possibly you) has to do the job for
+others to consume the result of this work. If that's the case it can
+mean the relation is significantly skewed and the person(s) willing to
+make the efforts are indeed likely to get overwhelmed. At least on s@k.o
+we're sufficient to share the effort depending on skills and availability,
+and we can rely on maintainers' support.
 
-> A fix could be simply to remove the second call to EGifCloseFile.
+> > On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
+> > > That said, can you share more detail on the specific issue you referred
+> > > to above and its handling/disclosure timeline?  Was it ever brought to
+> > > oss-security, and if not then why not?
+> > 
+> > I just checked and I'm not seeing any traces of it there. I don't even
+> > know who normally notifies about such issues there.
+> 
+> If you worked on the issue, then perhaps you were the most appropriate
+> person to notify oss-security about it?
 
-Use CVE-2016-3177.
+Honestly, no, for multiple reasons: The first one being that I'm terrible
+at dealing with processes and this becomes a big effort. The second one is
+that it's already not easy to have participants available with enough time
+to work on reports, to if we add to them as a punishment to have to do that
+extra work, that's not going to be motivating to work on reports. The third
+one is more related to some of my personal convictions: I'm personally not
+convinced of the interest of encouraging distros to focus on a tiny subset
+of all the fixes, because for one that passes via s@k.o, maybe 50-100 are
+regularly merged and might be of similar or even higher importance. And it
+is my belief that all fixes are needed, not just the ones that are reported
+via discrete channels because the reporter is uncertain about the impacts
+a public report could have. I know that some do not share this opinion (and
+I don't want to debate this here). Finally my feeling is that if the person
+that sent a first report was interested in reporting their findings, it's
+probably up to the same person to advertise it everywhere they want (after
+understanding the consequences, of course).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> Note: this is unrelated to disclosure timelines, policy, etc. - I am
+> talking about public notification for the already-public issue.
 
-iQIcBAEBCAAGBQJW6Y0hAAoJEL54rhJi8gl5ghwP/joKr1pUl7IDb/5LAWOMQxeQ
-h00wAoH0AkMb/hI3GXTdbALXzVGSZ8OT6BKQerR9raYTZeUyWi65+xmPdS3yXDQW
-q+y1hsksxX3ugU3drcBNnlTxXqHKVIYRUwyqXYclVbMmd8hwqNBqc6dvpwiqGnEb
-CALN799cMf2wjBFajkN6BWxdj0uULjtdCE6FfwVBkwusaEQrFaQj8qa07VjpyPQy
-cqfnx0w3fraDm9bZ0h7vZtPKT6l8+GOp9ZuEOFacPz7wROyftNalSra9wRmaqEcr
-A7TU6xqu1+FUcwN4mK9IDQvWQup3bxZ7xg9Vu2ckQ0dLJjyrmLBccFcajicGV0wN
-twblpPYjUss53bjgUBNfSLZFvZcEQTuzlyPiXXPxkO35fypS5pZ7bGkkW1JXo37v
-HjYyvwO2kSBg5dXxmMqW4fXdzND/nSPTl9q7PKwL6hb7GpXudaPFAETPuQPpx6RK
-EnXpQkeYIn15lGgjJrYhOywMZajNT0yO597w3jQ0B+z/wkrVp3Nr6k854mApM/cc
-rech7Ff6XGvPTDUARhwV+gR8izkEOsumd397mQMPMdiHDBwEU2i0+kkBqAaWX0/O
-duoNOSJjdrIQYTHh4MXFgynFDU+PocFCv07UcFHAmhns48d5LdOahPQxm9PRLB/H
-buvp1GGX8I2tnLoTbdfX
-=qHvQ
------END PGP SIGNATURE-----
+Yes that's my understanding as well ;-)
+
+> > > I am guessing this is related to your work on random32 in 2020:
+> > > 
+> > > https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
+(...)
+> After I posted the above, Brad Spengler pointed me at another related
+> issue that you worked on in 2022:
+> 
+> https://lore.kernel.org/all/20220502084614.24123-1-w@1wt.eu/
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef562489818723ea0a66c57bfdfbf151ad568c42
+
+Ah, Brad knows well I'm not committing much and that whenever my name is
+CCed on a patch, it smells as much as those that are not sent for review
+first ;-)
+
+Regarding the patch above, I had memories of having worked at least twice
+on some related stuff and got confused by the first link you sent because
+I mixed the two. Now I understand. That's old and confused in my mind.
+
+> In fact, your description above sounds like it could be (in part?) for
+> that newer issue.
+
+Maybe, I don't remember well :-/  For me when a fix is merged I can flush
+my mind on an issue (this makes it very hard for me to write changelogs
+after series of bugfixes in other projects BTW).
+
+> Anyway, perhaps both of these should have been brought to oss-security
+> at some point, but they were not?
+
+But one could actually ask why just these ones and none of the numerous
+other ones merged in the same stable kernels.
+
+> As to handling them in private on
+> linux-distros, I see little value in that, so they're not a reason for
+> us to have allowed longer embargoes.
+
+Good point indeed.
+
+> > > Alternatively, we may need to relax the policy.
+> > 
+> > I personally think it does have a flaw that is emphasized by the linux
+> > kernel handling but can actually affect other projects. Some sole
+> > developers might just not have enough resources to do everything in
+> > 14 days, from diagnosing the problem at night or only during a few work
+> > hours, setting up a lab on the week-end to test a fix, to contacting
+> > whoever needs to be contacted and making releases. Some even make the
+> > mistake of developing new stuff in maintenance branches and feel like
+> > they need to finish before releasing (already seen)! I remember having
+> > had to search in my boxes of hardware to re-assemble a working PC with
+> > a floppy drive just to be able to validate a fix in the floppy driver.
+> > You can be sure I only did that the week-end after the report, but
+> > that's possibly 5 days lost already!
+> 
+> This is partially addressed in our current instructions, which say:
+> 
+> "Please notify upstream projects/developers of the affected software,
+> other affected distro vendors, and/or affected Open Source projects
+> before notifying one of these mailing lists in order to ensure that
+> these other parties are OK with the maximum embargo period that would
+> apply (and if not, then you may have to delay your notification to the
+> mailing list)"
+> 
+> Incidentally, this is consistent with the Linux kernel documentation
+> edit that prompted this thread.
+
+Looks good.
+
+> > I understand the rationale behind your policy. I, too, was on vendor-sec
+> > where we saw some vendors say "just FYI we're trying to fix this, we'll
+> > keep you updated" and one year later, no news. But all those doing a
+> > serious work (and there are, and the linux security team is doing that
+> > serious work) can be heavily penalized by that policy when they're not
+> > quick enough to obtain a fix. The linux people are known for being vocal,
+> > so you hear about them. But other developers might just feel completely
+> > crushed by this and it could really be harmful to them, especially when
+> > they're new to this and haven't been dealing with security reports for
+> > 25 years like many of us.
+> > 
+> > That's why I tend to think that what would better address what you want
+> > to prevent, is ensuring the discussion doesn't come to a stall. This
+> > could remove a lot of frustration. And if something has to be published
+> > before the end because the developers or vendor stay silent, it's much
+> > more powerful to say "they didn't dare responding for 14 days" than
+> > "they couldn't figure a working fix for this complex issue in 14 days".
+> 
+> I had similar thoughts too, but OTOH allowing arbitrarily long even if
+> non-stalled discussions means not only longer embargoes and higher risk
+> and impact of leaks, but also a greater number of simultaneous
+> discussions on the list.  When issues take a long time to handle and
+> many are tracked at once, this increases/wastes the effort per issue.
+
+That's true. Actually I'm really wondering what the value of l-d is now,
+if long embargoes are too much of a problem, short ones are too short for
+developers to produce a fix, and bug reporters are progressively encouraged
+to first contact projects then directly oss-sec, I feel like the value of
+l-d becomes pretty low at this point in the process, but I could be
+mistaken, of course. Maybe that's also why we're discussing here after all,
+to find how to make it more useful to all parties.
+
+> > > So the real problem
+> > > may be that (linux-)distros is misunderstood as permanently-private
+> > > rather than temporarily-private.  Unfortunately, I don't know how to
+> > > address that reliably.  Even with automated delayed publication, some
+> > > people would initially have the wrong idea... maybe unless they have to
+> > > pass through a web page with the public archives before finding the
+> > > posting address?
+> > 
+> > Just a stupid idea, it could possibly be addressed by a confirmation
+> > e-mail on an opening thread. Something like "we need you to confirm that
+> > what you posted will be made public by YY/MM/DD, if that's really what
+> > you want, please visit this link within 24h otherwise all your materials
+> > will be destroyed".
+> 
+> We already use a somewhat obscure posting address and a required Subject
+> prefix, although the latter is currently not enforced strictly (is
+> mostly an anti-spam measure, so is bypassed by some other keywords
+> contained in the headers and/or message).  I think part of the problem
+> was that the kernel documentation gave these away directly, without
+> people having to see our policy and instructions first.
+
+I hadn't thought about this but it would be possible that some are lost
+due to this. I've often wondered how people manage never to forget to
+prepend "VS" there ;-)
+
+> > I'm not sure, that's just an idea. But yes, it needs
+> > to be understood as public so that confidential stuff is not shared
+> > there, and it must be possible to ask for some materials to be erased
+> > early if the reporter wasn't aware of this or made a mistake (e.g. send
+> > a pcap just before the security team says "never ever share a pcap!").
+> 
+> There's no reliable way to erase stuff from all subscribers' mailboxes.
+
+Absolutely, but mistakes happen and that's also why participants have
+to be trusted at little bit, and that's how a private list is reassuring
+for first-time reporters.
+
+> At "best", we could exclude it from delayed publication.
+
+That must be sufficient for most reporters. One reason s@k.o is never
+published precisely is to protect reporters' data. Some might for example
+share a reproducer with a network capture or a dmesg output that reveals
+a customer's name that is totally irrelevant to the problem, and that
+would cause needless hassle for the reporter to hide if the info were
+ever made public. I'm seeing this in haproxy where some reporters spend
+time taking screenshots and editing them for posts on github, and finally
+sending unedited traces privately because it's easier for them. So I do
+think that on s@k.o we have an easier process for reporters to share their
+observations while feeling they're safe enough.
+
+Thus I do think that there's definitely something that needs to be worked
+on regarding this specific point affecting what has to be published.
+
+Regards,
+Willy
