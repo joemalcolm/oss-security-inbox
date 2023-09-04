@@ -1,73 +1,225 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/9
-Message-ID: <20230517181942.GA2466@unix-ag.uni-kl.de>
-Date: Wed, 17 May 2023 20:19:42 +0200
-From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: IPv6 and Route of Death
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/04/2
+Message-ID: <20230904201426.GA3577@1wt.eu>
+Date: Mon, 4 Sep 2023 22:14:26 +0200
+From: Willy Tarreau <w@....eu>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>, Donald Buczek <buczek@...gen.mpg.de>, Greg KH <gregkh@...uxfoundation.org>
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi Alexander,
 
-On Wed, May 17, 2023 at 07:13:51PM +0200, Solar Designer wrote:
-> On Wed, May 17, 2023 at 10:02:31AM -0400, Jeffrey Walton wrote:
-> > This seems to have been dropped as a 0-day. I have not seen a CVE
-> > assigned to it.
+On Wed, Aug 30, 2023 at 05:26:33PM +0200, Solar Designer wrote:
+> > I couldn't blame a bug reporter for
+> > wanting to have their week-ends and nights again and think everything's
+> > behind them and in someone else's hands now.
 > 
-> The "original writeup" you reference says this is CVE-2023-2156.
+> Right.  This is in part a matter of resources - are we providing only
+> the lists infrastructure and list members' best-effort volunteer
+> contributions to issue handling, or are we providing any guaranteed
+> service?  For the latter, perhaps list admin(s) (me) should always take
+> over whenever the member distros don't handle that sort of
+> contributing-back tasks on time.  Then we'll be able to provide a
+> guarantee that all issues will be handled without the reporter having to
+> stay on top of them.
 > 
-> > I _think_ this is the original writeup:
+> A drawback is that this may encourage lower-quality or lower-relevance
+> reports, including of issues that are not worth handling in private.  So
+> it could end up wasting those extra resources allocated to this effort.
+
+Absolutely. But I'm sensing something in the way you're presenting these
+possibilities, it is that there is a perceived (by some?) guarantee of
+service that implies that someone (possibly you) has to do the job for
+others to consume the result of this work. If that's the case it can
+mean the relation is significantly skewed and the person(s) willing to
+make the efforts are indeed likely to get overwhelmed. At least on s@k.o
+we're sufficient to share the effort depending on skills and availability,
+and we can rely on maintainers' support.
+
+> > On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
+> > > That said, can you share more detail on the specific issue you referred
+> > > to above and its handling/disclosure timeline?  Was it ever brought to
+> > > oss-security, and if not then why not?
 > > 
-> >   * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
+> > I just checked and I'm not seeing any traces of it there. I don't even
+> > know who normally notifies about such issues there.
+> 
+> If you worked on the issue, then perhaps you were the most appropriate
+> person to notify oss-security about it?
 
-It also mentions that "the bug patch didn't solve the underlying problem
-(ZDI confirmed this too), so we're still expecting another patch at
-some[ ]point."
+Honestly, no, for multiple reasons: The first one being that I'm terrible
+at dealing with processes and this becomes a big effort. The second one is
+that it's already not easy to have participants available with enough time
+to work on reports, to if we add to them as a punishment to have to do that
+extra work, that's not going to be motivating to work on reports. The third
+one is more related to some of my personal convictions: I'm personally not
+convinced of the interest of encouraging distros to focus on a tiny subset
+of all the fixes, because for one that passes via s@k.o, maybe 50-100 are
+regularly merged and might be of similar or even higher importance. And it
+is my belief that all fixes are needed, not just the ones that are reported
+via discrete channels because the reporter is uncertain about the impacts
+a public report could have. I know that some do not share this opinion (and
+I don't want to debate this here). Finally my feeling is that if the person
+that sent a first report was interested in reporting their findings, it's
+probably up to the same person to advertise it everywhere they want (after
+understanding the consequences, of course).
 
-The Zero Day Initiative (ZDI) entry[0] linked from the article[1]
-gives a time line:
+> Note: this is unrelated to disclosure timelines, policy, etc. - I am
+> talking about public notification for the already-public issue.
 
-01/26/22 – ZDI reported the vulnerability to the vendor.
-[...]
-04/14/23 – The vendor informed the ZDI that a new patch would merge
-           into the latest mainline on 04/21/2023.
-04/21/23 – The original finder reports to the vendor that the patch
-           may not work, and it was confirmed by the ZDI that the
-           vulnerability is reproducible on the latest mainline.
-05/02/23 – The ZDI informed the vendor that the case will be published
-           as a zero-day advisory on 05/04/23, and in coordination with
-           Red Hat this vulnerability will be assigned CVE-2023-2156.
+Yes that's my understanding as well ;-)
 
-[0] https://www.zerodayinitiative.com/advisories/ZDI-23-547/
-[1] https://www.interruptlabs.co.uk/articles/linux-ipv6-route-of-death
+> > > I am guessing this is related to your work on random32 in 2020:
+> > > 
+> > > https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
+(...)
+> After I posted the above, Brad Spengler pointed me at another related
+> issue that you worked on in 2022:
+> 
+> https://lore.kernel.org/all/20220502084614.24123-1-w@1wt.eu/
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef562489818723ea0a66c57bfdfbf151ad568c42
 
-The problem described pertains to handling of IPv6 "RPL Source Routing"
-using an IPv6 "Extension Header" of the "Routing Header" variant,
-the "RPL Source Route Header" (SRH, Routing Type 3).  This header
-is described in RFC 6554.  The RFC specifies that RPL border routers
-"do not allow datagrams already carrying an SRH header to enter or exit
-a[n] RPL routing domain."
+Ah, Brad knows well I'm not committing much and that whenever my name is
+CCed on a patch, it smells as much as those that are not sent for review
+first ;-)
 
-The informational RFC 9288 recommends that "IPv6 packets with IPv6
-Extension Headers (or options) that are not expected to traverse transit
-routers should be dropped."  This is provided as general advice, not
-specific to RPL.
+Regarding the patch above, I had memories of having worked at least twice
+on some related stuff and got confused by the first link you sent because
+I mixed the two. Now I understand. That's old and confused in my mind.
 
-Of course, filtering at the border does not protect against compromised
-RPL nodes.
+> In fact, your description above sounds like it could be (in part?) for
+> that newer issue.
 
-Only systems with enabled RPL functionality seem to be vulnerable (as
-far as I understand the report).
+Maybe, I don't remember well :-/  For me when a fix is merged I can flush
+my mind on an issue (this makes it very hard for me to write changelogs
+after series of bugfixes in other projects BTW).
 
-The described bug pertains to processing the SRH header at the penultimate
-hop.
+> Anyway, perhaps both of these should have been brought to oss-security
+> at some point, but they were not?
 
-The described result of exploiting the vulnerability is a kernel panic,
-i.e., a remote DoS.
+But one could actually ask why just these ones and none of the numerous
+other ones merged in the same stable kernels.
 
-HTH,
-Erik
--- 
-A distributed system is one in which the failure of a computer you didn't
-even know existed can render your own computer unusable.
-                        -- Leslie Lamport
+> As to handling them in private on
+> linux-distros, I see little value in that, so they're not a reason for
+> us to have allowed longer embargoes.
+
+Good point indeed.
+
+> > > Alternatively, we may need to relax the policy.
+> > 
+> > I personally think it does have a flaw that is emphasized by the linux
+> > kernel handling but can actually affect other projects. Some sole
+> > developers might just not have enough resources to do everything in
+> > 14 days, from diagnosing the problem at night or only during a few work
+> > hours, setting up a lab on the week-end to test a fix, to contacting
+> > whoever needs to be contacted and making releases. Some even make the
+> > mistake of developing new stuff in maintenance branches and feel like
+> > they need to finish before releasing (already seen)! I remember having
+> > had to search in my boxes of hardware to re-assemble a working PC with
+> > a floppy drive just to be able to validate a fix in the floppy driver.
+> > You can be sure I only did that the week-end after the report, but
+> > that's possibly 5 days lost already!
+> 
+> This is partially addressed in our current instructions, which say:
+> 
+> "Please notify upstream projects/developers of the affected software,
+> other affected distro vendors, and/or affected Open Source projects
+> before notifying one of these mailing lists in order to ensure that
+> these other parties are OK with the maximum embargo period that would
+> apply (and if not, then you may have to delay your notification to the
+> mailing list)"
+> 
+> Incidentally, this is consistent with the Linux kernel documentation
+> edit that prompted this thread.
+
+Looks good.
+
+> > I understand the rationale behind your policy. I, too, was on vendor-sec
+> > where we saw some vendors say "just FYI we're trying to fix this, we'll
+> > keep you updated" and one year later, no news. But all those doing a
+> > serious work (and there are, and the linux security team is doing that
+> > serious work) can be heavily penalized by that policy when they're not
+> > quick enough to obtain a fix. The linux people are known for being vocal,
+> > so you hear about them. But other developers might just feel completely
+> > crushed by this and it could really be harmful to them, especially when
+> > they're new to this and haven't been dealing with security reports for
+> > 25 years like many of us.
+> > 
+> > That's why I tend to think that what would better address what you want
+> > to prevent, is ensuring the discussion doesn't come to a stall. This
+> > could remove a lot of frustration. And if something has to be published
+> > before the end because the developers or vendor stay silent, it's much
+> > more powerful to say "they didn't dare responding for 14 days" than
+> > "they couldn't figure a working fix for this complex issue in 14 days".
+> 
+> I had similar thoughts too, but OTOH allowing arbitrarily long even if
+> non-stalled discussions means not only longer embargoes and higher risk
+> and impact of leaks, but also a greater number of simultaneous
+> discussions on the list.  When issues take a long time to handle and
+> many are tracked at once, this increases/wastes the effort per issue.
+
+That's true. Actually I'm really wondering what the value of l-d is now,
+if long embargoes are too much of a problem, short ones are too short for
+developers to produce a fix, and bug reporters are progressively encouraged
+to first contact projects then directly oss-sec, I feel like the value of
+l-d becomes pretty low at this point in the process, but I could be
+mistaken, of course. Maybe that's also why we're discussing here after all,
+to find how to make it more useful to all parties.
+
+> > > So the real problem
+> > > may be that (linux-)distros is misunderstood as permanently-private
+> > > rather than temporarily-private.  Unfortunately, I don't know how to
+> > > address that reliably.  Even with automated delayed publication, some
+> > > people would initially have the wrong idea... maybe unless they have to
+> > > pass through a web page with the public archives before finding the
+> > > posting address?
+> > 
+> > Just a stupid idea, it could possibly be addressed by a confirmation
+> > e-mail on an opening thread. Something like "we need you to confirm that
+> > what you posted will be made public by YY/MM/DD, if that's really what
+> > you want, please visit this link within 24h otherwise all your materials
+> > will be destroyed".
+> 
+> We already use a somewhat obscure posting address and a required Subject
+> prefix, although the latter is currently not enforced strictly (is
+> mostly an anti-spam measure, so is bypassed by some other keywords
+> contained in the headers and/or message).  I think part of the problem
+> was that the kernel documentation gave these away directly, without
+> people having to see our policy and instructions first.
+
+I hadn't thought about this but it would be possible that some are lost
+due to this. I've often wondered how people manage never to forget to
+prepend "VS" there ;-)
+
+> > I'm not sure, that's just an idea. But yes, it needs
+> > to be understood as public so that confidential stuff is not shared
+> > there, and it must be possible to ask for some materials to be erased
+> > early if the reporter wasn't aware of this or made a mistake (e.g. send
+> > a pcap just before the security team says "never ever share a pcap!").
+> 
+> There's no reliable way to erase stuff from all subscribers' mailboxes.
+
+Absolutely, but mistakes happen and that's also why participants have
+to be trusted at little bit, and that's how a private list is reassuring
+for first-time reporters.
+
+> At "best", we could exclude it from delayed publication.
+
+That must be sufficient for most reporters. One reason s@k.o is never
+published precisely is to protect reporters' data. Some might for example
+share a reproducer with a network capture or a dmesg output that reveals
+a customer's name that is totally irrelevant to the problem, and that
+would cause needless hassle for the reporter to hide if the info were
+ever made public. I'm seeing this in haproxy where some reporters spend
+time taking screenshots and editing them for posts on github, and finally
+sending unedited traces privately because it's easier for them. So I do
+think that on s@k.o we have an easier process for reporters to share their
+observations while feeling they're safe enough.
+
+Thus I do think that there's definitely something that needs to be worked
+on regarding this specific point affecting what has to be published.
+
+Regards,
+Willy
