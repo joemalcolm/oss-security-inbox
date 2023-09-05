@@ -1,4 +1,4 @@
-Received: (qmail 29869 invoked by uid 550); 26 Aug 2025 19:29:45 -0000
+Received: (qmail 7424 invoked by uid 550); 5 Sep 2023 11:48:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +7,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28445 invoked from network); 26 Aug 2025 19:29:39 -0000
-Date: Tue, 26 Aug 2025 21:29:34 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 5817 invoked from network); 5 Sep 2023 09:35:54 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Arnout Engelen <engelen@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20250826192934.GA4202@openwall.com>
-References: <CAG8b5tQyFKNedYpJ_tNzRROuJy5yJfewqOAqjQ9_zNfMiK5dFg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG8b5tQyFKNedYpJ_tNzRROuJy5yJfewqOAqjQ9_zNfMiK5dFg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] libssh2 Base64 Encoding Heap Overflow in Known Hosts SHA1 Hash Processing
+Message-ID: <68fdf04f-c761-5eee-3a08-e9285f2ae320@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 05 Sep 2023 09:35:40 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-40743: Apache Axis 1.x (EOL) may allow RCE when untrusted
+ input is passed to getService 
 
-Hi,
+Severity: low
 
-Thank you for finding this, getting it fixed, and bringing it in here.
+Affected versions:
 
-Just one minor detail:
+- Apache Axis through 1.3
 
-On Tue, Aug 26, 2025 at 09:56:06PM +0400, Dhiraj Mishra wrote:
-> I've successfully created a libFuzzer harness targeting the
-> libssh2_knownhost_readline() API, used for parsing SSH known_hosts files.
-> The fuzzer discovered a heap buffer overflow vulnerability in the
-> _libssh2_base64_encode() function when processing malformed hashed hostname
-> entries.
+Description:
 
-> ==41411==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x6020000000d5 at pc 0x00010728cb0f bp 0x7ff7b9a37f90 sp 0x7ff7b9a37758
-> READ of size 6 at 0x6020000000d5 thread T0
+** UNSUPPORTED WHEN ASSIGNED ** When integrating Apache Axis 1.x in an appl=
+ication, it may not have been obvious that looking up a service through "Se=
+rviceFactory.getService" allows potentially dangerous lookup mechanisms suc=
+h as LDAP. When passing untrusted input to this API method, this could expo=
+se the application to DoS, SSRF and even attacks leading to RCE.
 
-> SUMMARY: AddressSanitizer: heap-buffer-overflow misc.c:463 in
-> _libssh2_base64_encode
+As Axis 1 has been EOL we recommend you migrate to a different SOAP engine,=
+ such as Apache Axis 2/Java. As a workaround, you may review your code to v=
+erify no untrusted or unsanitized input is passed to "ServiceFactory.getSer=
+vice", or by applying the patch from  https://github.com/apache/axis-axis1-=
+java/commit/7e66753427466590d6def0125e448d2791723210 . The Apache Axis proj=
+ect does not expect to create an Axis 1.x release fixing this problem, thou=
+gh contributors that would like to work towards this are welcome.
 
-This looks like yet another case of ASan mislabeling over-reads as
-overflows (which it does all the time).
+Credit:
 
-Can someone in particular please volunteer for getting this wording
-fixed in ASan, I guess separately in clang and gcc?
+Letian Yuan (finder)
 
-Meanwhile, we should be careful to recognize and re-label such findings,
-so e.g. this message's Subject and first paragraph should correctly say
-"over-read" and not "overflow".  Of course, until ASan's wording is
-fixed, realistically many if not most vulnerability reports based on
-fuzzing+ASan will continue to be mislabeled like that, probably also
-leading to wrong CVSS vectors and thus wrong scores (likely
-exaggerated).  But at least the few of us reading this message may try
-and do better, please.
+References:
 
-Thanks,
+https://github.com/apache/axis-axis1-java/commit/7e66753427466590d6def0125e=
+448d2791723210
+https://axis.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-40743
 
-Alexander
