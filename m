@@ -1,237 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/21/4
-Message-Id: <7B02B649-609D-491C-B80E-A6CD114D27BA@beckweb.net>
-Date: Tue, 21 Mar 2023 15:30:46 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/05/2
+Message-Id: <E1qdUve-0000uM-7J@xenbits.xenproject.org>
+Date: Tue, 05 Sep 2023 12:13:10 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 437 v2 (CVE-2023-34321) - arm32: The cache may not be properly cleaned/invalidated
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+            Xen Security Advisory CVE-2023-34321 / XSA-437
+                               version 2
 
-* JaCoCo Plugin 3.3.2.1
-* OctoPerf Load Testing Plugin 4.5.1, 4.5.2, and 4.5.3
-* Pipeline Aggregator View Plugin 1.14
-* Role-based Authorization Strategy Plugin 587.588.v850a_20a_30162
+            arm32: The cache may not be properly cleaned/invalidated
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+UPDATES IN VERSION 2
+====================
 
-* AbsInt a³ Plugin
-* Convert To Pipeline Plugin
-* Cppcheck Plugin
-* Crap4J Plugin
-* Mashup Portlets Plugin
-* Performance Publisher Plugin
-* Phabricator Differential Plugin
-* remote-jobs-view-plugin Plugin
-* Visual Studio Code Metrics Plugin
+Public release.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-03-21/
+ISSUE DESCRIPTION
+=================
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Arm provides multiple helpers to clean & invalidate the cache
+for a given region.  This is, for instance, used when allocating
+guest memory to ensure any writes (such as the ones during scrubbing)
+have reached memory before handing over the page to a guest.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Unfortunately, the arithmetics in the helpers can overflow and would
+then result to skip the cache cleaning/invalidation.  Therefore there
+is no guarantee when all the writes will reach the memory.
 
----
+IMPACT
+======
 
-SECURITY-3053 / CVE-2023-28668
-Permissions in Jenkins can be enabled and disabled. Some permissions are
-disabled by default, e.g., Overall/Manage or Item/Extended Read. Disabled
-permissions cannot be granted directly, only through greater permissions
-that imply them (e.g., Overall/Administer or Item/Configure).
+A malicious guest may be able to read sensitive data from memory that
+previously belonged to another guest.
 
-Role-based Authorization Strategy Plugin 587.v2872c41fa_e51 and earlier
-grants permissions even after they've been disabled.
+VULNERABLE SYSTEMS
+==================
 
-This allows attackers to have greater access than they're entitled to after
-the following operations took place:
+Systems running all version of Xen are affected.
 
-1. A permission is granted to attackers directly or through groups. 2. The
-permission is disabled, e.g., through the script console.
+Only systems running Xen on Arm 32-bit are vulnerable.  Xen on Arm 64-bit
+is not affected.
 
+MITIGATION
+==========
 
-SECURITY-3061 / CVE-2023-28669
-JaCoCo Plugin 3.3.2 and earlier does not escape class and method names
-shown on the UI.
+There is no known mitigation.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control input files for the 'Record JaCoCo
-coverage report' post-build action.
+CREDITS
+=======
 
+This issue was discovered by Julien Grall of Amazon.
 
-SECURITY-2885 / CVE-2023-28670
-Pipeline Aggregator View Plugin 1.13 and earlier does not escape a variable
-representing the current view's URL in inline JavaScript.
+RESOLUTION
+==========
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by authenticated attackers with Overall/Read permission.
+Applying the appropriate attached patch resolves this issue.
 
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-SECURITY-3067 (1) / CVE-2023-28671
-OctoPerf Load Testing Plugin Plugin 4.5.0 and earlier does not require POST
-requests for a connection test HTTP endpoint, resulting in a cross-site
-request forgery (CSRF) vulnerability.
+xsa437/xsa437.patch           xen-unstable - Xen 4.17.x
+xsa437/xsa437-4.16.patch      Xen 4.16.x - Xen 4.15.x
 
-This vulnerability allows attackers to connect to an attacker-specified URL
-using attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
+$ sha256sum xsa437* xsa437*/*
+259b872275d9d77fc1744df886ffe611d933889bb5ea2833f3c7d8f554eff061  xsa437.meta
+31b1a4050403fc83d4ea7619155105001cfd2f739ceb0b0cc7212ab7d0b9d559  xsa437/xsa437.patch
+ada8ba64e8562ff6016d456e08b7a171ef356cf476c643df9f66b8650009115c  xsa437/xsa437-4.16.patch
+$
 
+DEPLOYMENT DURING EMBARGO
+=========================
 
-SECURITY-3067 (2) / CVE-2023-28672
-OctoPerf Load Testing Plugin Plugin 4.5.1 and earlier does not perform a
-permission check in a connection test HTTP endpoint.
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-SECURITY-3067 (3) / CVE-2023-28673
-OctoPerf Load Testing Plugin Plugin 4.5.2 and earlier does not perform a
-permission check in an HTTP endpoint.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTorfoMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZIv8H/1Grce6f0aytYn0WTXyMdEXtUCkaHQd/pkNkXTe4
+uOfNTBM0z2m6MUBATFNUyTiBqm+I8ywZWDp5UVW8nD2YF2hEIGrhdkDMK+cQg98q
+iZ+RW4W0cIjZFTbYXRRUm6RPhp31cx4kvTHKk2+imD1bTa/4SVFyDy2ps5ybim9b
+1QnPw2+Kbvd2orx6VHpCjnpTqsElRRA1phN9t87UZhgFBCeeatYizHNNqUrvBZXg
+UPsB3ERyxAyMqET82jGboUfwmjpctr1I+p9UvEvY9aViSXy+SMnNi84fFSzBrOXr
+EaKUg0glvV3uaNwbvJQfmgkhDUOwXN/ySO7Hcu7QpfmUn70=
+=2wxR
+-----END PGP SIGNATURE-----
 
-SECURITY-3067 (4) / CVE-2023-28674 (CSRF) & CVE-2023-28675 (missing permission check)
-OctoPerf Load Testing Plugin Plugin 4.5.2 and earlier does not perform
-permission checks in several HTTP endpoints.
+Download attachment "xsa437.meta" of type "application/octet-stream" (1099 bytes)
 
-This allows attackers with Overall/Read permission to connect to a
-previously configured Octoperf server using attacker-specified credentials.
+Download attachment "xsa437/xsa437.patch" of type "application/octet-stream" (4739 bytes)
 
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2963 / CVE-2023-28676
-Convert To Pipeline Plugin 1.0 and earlier does not require POST requests
-for the HTTP endpoint converting a Freestyle project to Pipeline, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to create a Pipeline based on a
-Freestyle project. Combined with SECURITY-2966, this can result in the
-execution of unsandboxed Pipeline scripts.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2966 / CVE-2023-28677
-Convert To Pipeline Plugin 1.0 and earlier uses basic string concatenation
-to convert Freestyle projects' Build Environment, Build Steps, and
-Post-build Actions to the equivalent Pipeline step invocations.
-
-This allows attackers able to configure Freestyle projects to prepare a
-crafted configuration that injects Pipeline script code into the
-(unsandboxed) Pipeline resulting from a convertion by Convert To Pipeline
-Plugin. If an administrator converts the Freestyle project to a Pipeline,
-the script will be pre-approved.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2809 / CVE-2023-28678
-Cppcheck Plugin 1.26 and earlier does not escape file names from Cppcheck
-report files before showing them on the Jenkins UI.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control report file contents.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2813 / CVE-2023-28679
-Mashup Portlets Plugin 1.1.2 and earlier provides the "Generic JS Portlet"
-feature that lets a user populate a portlet using a custom JavaScript
-expression.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by authenticated attackers with Overall/Read permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2925 / CVE-2023-28680
-Crap4J Plugin 0.9 and earlier does not configure its XML parser to prevent
-XML external entity (XXE) attacks.
-
-This allows attackers able to control Crap Report file contents to have
-Jenkins parse a crafted XML document that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2926 / CVE-2023-28681
-Visual Studio Code Metrics Plugin 1.7 and earlier does not configure its
-XML parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control VS Code Metrics File contents to have
-Jenkins parse a crafted XML document that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2928 / CVE-2023-28682
-Performance Publisher Plugin 8.09 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control PerfPublisher report files to have
-Jenkins parse a crafted XML document that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2942 / CVE-2023-28683
-Phabricator Differential Plugin 2.1.5 and earlier does not configure its
-XML parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control coverage report file contents for the
-'Post to Phabricator' post-build action to have Jenkins parse a crafted XML
-document that uses external entities for extraction of secrets from the
-Jenkins controller or server-side request forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2956 / CVE-2023-28684
-remote-jobs-view-plugin Plugin 0.0.3 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows authenticated attackers with Overall/Read permission to have
-Jenkins parse a crafted XML document that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2930 / CVE-2023-28685
-AbsInt a³ Plugin 1.1.0 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control 'Project File (APX)' contents to have
-Jenkins parse a crafted XML document that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Download attachment "xsa437/xsa437-4.16.patch" of type "application/octet-stream" (4714 bytes)
