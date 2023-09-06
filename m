@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/7
-Message-ID: <336b0af3-572e-b601-a856-b09d0930d40e@eenterphace.org>
-Date: Wed, 3 May 2023 22:40:30 +0200
-From: Moritz Bechler <mbechler@...terphace.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/6
+Message-ID: <23a4e7b4-1db4-9ab1-0a79-48484874b5b3@apache.org>
+Date: Wed, 06 Sep 2023 09:34:41 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: CVE-2023-39265: Apache Superset: Possible Unauthorized Registration of SQLite Database Connections 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Affected versions:
 
-> 
-> A default is not a vulnerability.  There are reasons why defaults cannot 
-> be changed in libraries once they are stable.  This is also why 
-> documentation exists.
-> 
-> Revoke these CVEs, it's a stain on the process.
+- Apache Superset through 2.1.0
 
+Description:
 
-while one may criticize that CVEs have been assigned both for the 
-insecure default and (some of the) insecure usages, at least one of 
-these is a legitimate case, in terms of CVEs likely the latter. And when 
-it comes to defaming projects, at least in my book, choosing, keeping 
-and defending bad defaults speaks to much more than a CVE being assigned.
+Apache Superset would allow for SQLite database connections to be incorrectly registered when an attacker uses alternative driver names like sqlite+pysqlite or by using database imports. This could allow for unexpected file creation on Superset webservers. Additionally, if Apache Superset is using a SQLite database for its metadata (not advised for production use) it could result in more severe vulnerabilities related to confidentiality and integrity. This vulnerability exists in Apache Superset versions up to and including 2.1.0.
 
+Credit:
 
-Moritz
+Naveen Sunkavally (Horizon3.ai) (finder)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-39265
+
