@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/01/2
-Message-ID: <20230901115203.GA14407@openwall.com>
-Date: Fri, 1 Sep 2023 13:52:04 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Levente Polyak <levente@...entepolyak.net>
-Cc: oss-security@...ts.openwall.com, Frederik Schwan <freswa@...hlinux.org>
-Subject: Re: Replacement of Allan McRae on linux-distros for Arch Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/2
+Message-ID: <d4c80a00-82dd-d901-70dc-a7a42f0a83f2@apache.org>
+Date: Wed, 06 Sep 2023 09:10:14 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-36388: Apache Superset: Improper API permission for low privilege users allows for SSRF 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Affected versions:
 
-On Fri, Sep 01, 2023 at 12:23:32AM +0200, Levente Polyak wrote:
-> I'd like to request to replace one of our representatives on the 
-> linux-distros list for Arch Linux.
+- Apache Superset through 2.1.0
 
-This is a fine request, but in general requests for changes in who is
-subscribed for an already-subscribed distro don't need to be on
-oss-security, which is why we're not seeing a lot of them in here.
+Description:
 
-I'll take this one off-list.
+Improper REST API permission in Apache Superset up to and including 2.1.0 allows for an authenticated Gamma users to test network connections, possible SSRF.
 
-Alexander
+Credit:
+
+https://github.com/vin01 (finder)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-36388
+
