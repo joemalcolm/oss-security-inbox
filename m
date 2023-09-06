@@ -1,52 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/6
-Message-ID: <alpine.GSO.2.20.2310221118590.6992@scrappy.simplesystems.org>
-Date: Sun, 22 Oct 2023 11:26:25 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/8
+Message-ID: <563ebe58-26b5-e04e-9fe3-5a7156682610@apache.org>
+Date: Wed, 06 Sep 2023 09:46:10 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sandboxing,of upstream programs by distros
+Subject: CVE-2023-32672: Apache Superset: SQL parser edge case bypasses data access authorization 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 22 Oct 2023, Demi Marie Obenour wrote:
+Affected versions:
 
->> Unfortunately, most Linux IPC mechanisms are not very secure since they rely
->> on historical Unix privilege models to control access.
->
-> If one can bypass access control on IPC, one can easily get root by
-> sending malicious commands to systemd, so I don't think this is
-> something to worry about.
+- Apache Superset through 2.1.0
 
-Looking at the 5 rules you posted, my concern is addressed by rule #2 
-(I/O resources opened in advance).
+Description:
 
-> 2. All I/O resources (such as file descriptors) must be acquired before
->   processing untrusted input.  It must not be possible to use these
->   resources to access additional resources the program should not have
->   access to.
+An Incorrect authorisation check in SQLLab in Apache Superset versions up to and including 2.1.0. This vulnerability allows an authenticated user to query tables that they do not have proper access to within Superset. The vulnerability can be exploited by leveraging a SQL parsing vulnerability.
 
-This request seems the most challenging to satisfy.
+Credit:
 
-> A command-line tool can probably meet all of these requirements but the
-> last one quite easily.  For a library, the difficulty of meeting these
-> requirements will depend significantly on the library API.  I am not
-> familiar with the GraphicsMagick API and so am not sure how difficult it
-> will be for the GraphicsMagick API to support sandboxing.
+Arnaud Pascal @ Vaadata (finder)
 
-A different I/O interface module would need to be developed to support 
-the possibility of opening an output descriptor in advance.
+References:
 
-If one looks at ImageMagick, VIPS, GraphicsMagick, etc., one will 
-quickly see that those implementations optionally depend on tens of 
-other implementations.  For example, VIPS normally links with 
-ImageMagick or GraphicsMagick.  So many important programs have 
-complex dependencies.
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-32672
 
-It is common for temporary files to be created and so this issue would 
-need to be addressed.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
