@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/12/1
-Message-ID: <8ad24599-cecf-33c5-6e5c-c592a786e2cc@apache.org>
-Date: Sun, 12 Nov 2023 11:11:07 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/4
+Message-ID: <9a2c2f90-582b-dfb7-058e-70f58acbae7d@apache.org>
+Date: Wed, 06 Sep 2023 09:21:13 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-47037: Apache Airflow missing fix for CVE-2023-40611 in 2.7.1 (DAG run broken access) 
+Subject: CVE-2023-27526: Apache Superset: Improper Authorization check on import charts 
 Content-Type: text/plain; charset=utf-8
-
-Severity: low
 
 Affected versions:
 
-- Apache Airflow before 2.7.3
+- Apache Superset through 2.1.0
 
 Description:
 
-We failed to apply CVE-2023-40611 in 2.7.1 and this vulnerability was marked as fixed then. 
-
-Apache Airflow, versions before 2.7.3, is affected by a vulnerability that allows authenticated and DAG-view authorized Users to modify some DAG run detail values when submitting notes. This could have them alter details such as configuration parameters, start date, etc. 
-
-Users should upgrade to version 2.7.3 or later which has removed the vulnerability.
+A non Admin authenticated user could incorrectly create resources using the import charts feature, on Apache Superset up to and including 2.1.0.
 
 Credit:
 
-Tareq Ahamed from Hackerone (reporter)
- Augusto Hidalgo (remediation developer)
+NTT DATA (finder)
 
 References:
 
-https://github.com/apache/airflow/pull/33413
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-47037
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-27526
 
