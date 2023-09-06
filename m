@@ -1,71 +1,248 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/2
-Message-ID: <CAL7+V1y9LJpXOBsjP2u+488XPwv430F5iHwTPHLeJh9W_BOOMw@mail.gmail.com>
-Date: Thu, 6 Jul 2023 14:27:48 -0700
-From: Rita Zhang <rita.z.zhang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/9
+Message-Id: <EC7CFAAF-40C7-4B69-82DD-84AACEB879A7@beckweb.net>
+Date: Wed, 6 Sep 2023 13:16:13 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2023-2727: Bypassing policies imposed by the ImagePolicyWebhook admission plugin
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-A security issue was discovered in Kubernetes where users may be able to
-launch containers using images that are restricted by ImagePolicyWebhook
-when using ephemeral containers. Kubernetes clusters are only affected if
-the ImagePolicyWebhook admission plugin is used together with ephemeral
-containers.
+The following releases contain fixes for security vulnerabilities:
 
-This issue has been rated *Medium* (
-CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N>),
-and assigned CVE-2023-2727
+* Azure AD Plugin 397.v907382dd9b_98 and 378.380.v545b_1154b_3fb_
+* Bitbucket Push and Pull Request Plugin 2.8.4
+* Google Login Plugin 1.8
+* Job Configuration History Plugin 1229.v3039470161a_d
+* Pipeline Maven Integration Plugin 1331.v003efa_fd6e81
+* Qualys Container Scanning Connector Plugin 1.6.2.7
+* SSH2 Easy Plugin 1.6
 
-*Am I vulnerable?*
-Clusters are impacted by this vulnerability if all of the following are
-true:
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-   1. The ImagePolicyWebhook admission plugin is used to restrict use of
-   certain images
-   2. Pods are using ephemeral containers.
+* Assembla Auth Plugin
+* AWS CodeCommit Trigger Plugin
+* Frugal Testing Plugin
+* Ivy Plugin
+* TAP Plugin
 
-*Affected Versions*
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-09-06/
 
-   - kube-apiserver v1.27.0 - v1.27.2
-   - kube-apiserver v1.26.0 - v1.26.5
-   - kube-apiserver v1.25.0 - v1.25.10
-   - kube-apiserver <= v1.24.14
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-*How do I mitigate this vulnerability?*
-This issue can be mitigated by applying the patch provided for the
-kube-apiserver component. This patch prevents ephemeral containers from
-using an image that is restricted by ImagePolicyWebhook.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Note: Validation webhooks (such as Gatekeeper
-<https://open-policy-agent.github.io/gatekeeper-library/website/validation/allowedrepos/>
-and Kyverno
-<https://kyverno.io/policies/other/allowed-image-repos/allowed-image-repos/>)
-can also be used to enforce the same restrictions.
+---
 
-*Fixed Versions*
+SECURITY-3233 / CVE-2023-41930 (path traversal) & CVE-2023-41931 (XSS)
+Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
+restrict a `name` query parameter when rendering a history entry. This
+allows attackers to have Jenkins render a manipulated configuration history
+that was not created by the plugin.
 
-   - kube-apiserver v1.27.3
-   - kube-apiserver v1.26.6
-   - kube-apiserver v1.25.11
-   - kube-apiserver v1.24.15
+The history view does not property sanitize or escape the timestamp value
+from history entries when rendering a history entry. This typically isn't a
+problem, as the value is numeric in genuine history entries. Combined with
+the path traversal vulnerability, this results in a stored cross-site
+scripting (XSS) vulnerability exploitable by attackers with the ability to
+create a file on the controller (e.g., archived artifacts).
 
-These releases have been published today, June 14th, 2023.
 
-*Detection*
-Pod update requests using an ephemeral container with an image that should
-have been restricted by an ImagePolicyWebhook will be captured in API audit
-logs. You can also use `kubectl get pods` to find active pods with
-ephemeral containers running an image that should have been restricted in
-your cluster with this issue.
+SECURITY-3235 / CVE-2023-41932 (path traversal) & CVE-2023-41933 (XXE)
+Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
+restrict `timestamp` query parameters in multiple endpoints. This allows
+attackers with Job Config History/DeleteEntry permission to delete
+attacker-specified directories on the Jenkins controller file system as
+long as they contain a file called `history.xml`.
 
-*Additional Details*
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/118640
+Additionally, Job Configuration History Plugin 1227.v7a_79fc4dc01f and
+earlier does not configure its XML parser to prevent XML external entity
+(XXE) attacks. This allows attackers with Item/Configure permission to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
 
-Thank You,
-Rita Zhang on behalf of the Kubernetes Security Response Committee
+
+SECURITY-3257 / CVE-2023-41934
+Pipeline Maven Integration Plugin integrates with Config File Provider
+Plugin to specify custom Maven settings, including credentials for
+authentication.
+
+Pipeline Maven Integration Plugin 1330.v18e473854496 and earlier does not
+properly mask (i.e., replace with asterisks) usernames of credentials
+specified in custom Maven settings in Pipeline build logs if "Treat
+username as secret" is checked.
+
+
+SECURITY-3227 / CVE-2023-41935
+Azure AD Plugin 396.v86ce29279947 and earlier, except
+378.380.v545b_1154b_3fb_, does not use a constant-time comparison when
+checking whether the provided and expected CSRF protection nonce are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid nonce.
+
+
+SECURITY-3228 / CVE-2023-41936
+Google Login Plugin 1.7 and earlier does not use a constant-time comparison
+when checking whether the provided and expected token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid token.
+
+
+SECURITY-3165 / CVE-2023-41937
+Bitbucket Push and Pull Request Plugin provides a webhook endpoint at
+`/bitbucket-hook/` to receive webhook notifications.
+
+When acting on these notifications, Bitbucket Push and Pull Request Plugin
+2.4.0 through 2.8.3 (both inclusive) trusts values provided in the webhook
+payload, including certain URLs, and uses configured Bitbucket credentials
+to connect to those URLs. This allows attackers to capture Bitbucket
+credentials stored in Jenkins by sending a crafted webhook payload.
+
+NOTE: Successful exploitation requires that a build is triggered. This is
+the case when the repository has changed since the previous build, or the
+option "Trigger also if nothing has changed in the repo" is checked.
+
+
+SECURITY-3018 / CVE pending
+Qualys Container Scanning Connector Plugin 1.6.2.6 and earlier does not
+correctly perform a permission check in multiple HTTP endpoints.
+
+This allows attackers with global Item/Configure permission (while lacking
+Item/Configure permission on any particular job) to do the following:
+
+* Enumerate credentials IDs of credentials stored in Jenkins.
+  Those can be used as part of an attack to capture the credentials using
+  another vulnerability.
+* Connect to an attacker-specified webserver using attacker-specified
+credentials IDs obtained through another method, capturing credentials
+stored in Jenkins.
+
+
+SECURITY-2924 / CVE-2022-46751
+Ivy Plugin 2.5 and earlier bundles versions of Apache Ivy vulnerable to
+CVE-2022-46751.
+
+This allows attackers able to control the input file for the "Trigger the
+build of other projects based on the Ivy dependency management system"
+post-build step to have Jenkins parse a crafted XML document that uses
+external entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3093 / CVE-2023-41938
+Ivy Plugin 2.5 and earlier does not require POST requests for an HTTP
+endpoint, resulting in a cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to delete disabled modules.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3064 / CVE-2023-41939
+SSH2 Easy Plugin 1.4 and earlier does not verify that permissions
+configured to be granted are enabled. This may allow users formerly granted
+(typically optional permissions, like Overall/Manage) to access
+functionality they're no longer entitled to.
+
+NOTE: As a workaround, administrators can save the permission configuration
+after disabling a permission, as that will overwrite any permission
+assignments of disabled permissions.
+
+
+SECURITY-3190 / CVE-2023-41940
+TAP Plugin 2.3 and earlier does not escape TAP file contents.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control TAP file contents.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3101 (1) / CVE-2023-41941
+AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of AWS credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3101 (2) / CVE-2023-41942 (CSRF) & CVE-2023-41943 (permission check)
+AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to clear the SQS queue.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3102 / CVE-2023-41944
+AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not escape the queue
+name parameter passed to a form validation URL, when rendering an error
+message.
+
+This results in an HTML injection vulnerability.
+
+NOTE: Since Jenkins 2.275 and LTS 2.263.2, a
+link:/doc/upgrade-guide/2.263/#formvalidation[security hardening] for form
+validation responses prevents JavaScript execution, so no scripts can be
+injected.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3065 / CVE-2023-41945
+Assembla Auth Plugin provides an authorization strategy that defines four
+levels of access to Jenkins, based on the corresponding permissions in
+Assembla spaces: ALL, EDIT, VIEW, and NONE.
+
+Assembla Auth Plugin 1.14 and earlier does not verify that the permissions
+it grants are enabled. This results in users with EDIT permissions to be
+granted Overall/Manage and Overall/SystemRead permissions, even if those
+permissions are disabled and should not be granted.
+
+NOTE: Additionally, the plugin also grants the deprecated permissions
+Overall/RunScripts, Overall/UploadPlugins and Overall/ConfigureUpdateCenter
+to users with EDIT access. These permissions allow arbitrary code execution
+through various means in Jenkins before 2.222. Additionally, plugins not
+yet adapted to the changes in Jenkins 2.222 may also provide access to
+sensitive features to users with these permissions.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3082 / CVE-2023-41946 (CSRF) & CVE-2023-41947 (permission check)
+Frugal Testing Plugin 1.1 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to do the following:
+
+* Connect to Frugal Testing using attacker-specified username and password.
+* Retrieve test IDs and names from Frugal Testing, if a valid credential
+  corresponds to the attacker-specified username.
+
+Additionally, these endpoints do not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
 
