@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/1
-Message-ID: <2aff3b25-81e9-1bbd-6338-cea12a825809@apache.org>
-Date: Tue, 31 Jan 2023 07:31:04 +0000
-From: Heping Wang <peacewong@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/1
+Message-ID: <05416913-f79b-38c9-5d5d-d49c42106a2c@apache.org>
+Date: Wed, 06 Sep 2023 09:06:31 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-44644: Apache Linkis (incubating): The DatasourceManager module has a Local File Read Vulnerability 
+Subject: CVE-2023-36387: Apache Superset: Improper API permission for low privilege users 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Affected versions:
+
+- Apache Superset through 2.1.0
 
 Description:
 
-In Apache Linkis <=1.3.0 when used with the MySQL Connector/J, an authenticated attacker could read arbitrary local file by connecting a rogue mysql server, By adding allowLoadLocalInfile to true in the jdbc parameter. Therefore, the parameters in the jdbc url should be blacklisted. Versions of Apache Linkis <= 1.3.0 will be affected. 
-
-We recommend users upgrade the version of Linkis to version 1.3
+An improper default REST API permission for Gamma users in Apache Superset up to and including 2.1.0 allows for an authenticated Gamma user to test database connections.
 
 Credit:
 
-Department of Cyber Security Research (Jumbo, Unc1e), Beijing Zhiqian Technology Co., LTD (reporter)
-s3gundo of Hundsun Tech  (reporter)
+Miguel Segovia Gil (finder)
 
 References:
 
-https://linkis.incubator.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-44644
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-36387
 
