@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/10
-Message-ID: <ZRsnx11QaUs1dQAp@westworld>
-Date: Mon, 2 Oct 2023 13:27:51 -0700
-From: Kyle Zeng <zengyhkyle@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2023-42754] null pointer dereference in Linux kernel ipv4 stack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/7
+Message-ID: <284ffee8-6813-45ee-1a86-1183a02755c1@apache.org>
+Date: Wed, 06 Sep 2023 09:40:57 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-37941: Apache Superset: Metadata db write access can lead to remote code execution 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 02, 2023 at 10:21:06PM +0200, Solar Designer wrote:
-> On Mon, Oct 02, 2023 at 12:53:20PM -0700, Kyle Zeng wrote:
-> > when the skb is rerouted through ipvs, its skb->dev is NULL. Then the
-> > following `dev_net` call, which accesses `dev->nd_net`, becomes null
-> > pointer dereference.
-> 
-> When reporting issues like this, please always note the privileges
-> required for attack.  For the example above, it appears to be
-> CAP_NET_ADMIN within the namespace:
+Affected versions:
 
-Yes, to the best of my knowledge, CAP_NET_ADMIN is required for triggering
-the bug (at least for the attached proof-of-concept code), which can be
-obtained in user namespace (enabled by default in most desktop environments).
+- Apache Superset 1.5.0 through 2.1.0
 
-And thank you for letting me know. I will report the privilege
-requirement properly next time.
+Description:
 
-Best,
-Kyle Zeng
+If an attacker gains write access to the Apache Superset metadata database, they could persist a specifically crafted Python object that may lead to remote code execution on Superset's web backend. This vulnerability impacts Apache Superset versions 1.5.0 up to and including 2.1.0.
+
+Credit:
+
+Dinis Cruz, cruzdinis@...pt (finder)
+Naveen Sunkavally (Horizon3.ai) (finder)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-37941
+
