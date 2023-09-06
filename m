@@ -1,100 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/8
-Message-ID: <20230929165914.GA31245@openwall.com>
-Date: Fri, 29 Sep 2023 18:59:14 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/3
+Message-ID: <2bcf3e11-a838-b120-5902-48f8ec5d90a4@apache.org>
+Date: Wed, 06 Sep 2023 09:17:37 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: zdi@...ndmicro.com
-Subject: Re: Exim4 MTA CVEs assigned from ZDI
+Subject: CVE-2023-27523: Apache Superset: Improper data permission validation on Jinja templated queries 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Affected versions:
 
-Thank you for posting this, Heiko!  Also thank you Markus for bringing
-this up in the other thread:
+- Apache Superset through 2.1.0
 
-https://www.openwall.com/lists/oss-security/2023/09/29/3
+Description:
 
-I've attached plain text exports of the ZDI advisories to this message
-for archival.
+Improper data authorization check on Jinja templated queries in Apache Superset up to and including 2.1.0 allows for an authenticated user to issue queries on database tables they may not have access to.
 
-Out of the Exim Bugzilla entries in Markus' message, only
-https://bugs.exim.org/show_bug.cgi?id=3001 is currently open to the
-public, and it says:
+Credit:
 
-> Bug 3001 - infoleak in SPA authenticator, client
-> 
-> Comment 1 Jeremy Harris 2023-05-11 20:02:32 UTC
-> 
-> ZDI-CAN-17433 (Trend Micro)
-> 
-> A crafted SPA challenge from the server can cause the client authenticator
-> to read OOB; the data is then returned to the server.
-> 
-> Fix: validate the offset contained in the challenge, to avoid reading
-> past the end of the challenge data structure.
-> 
-> Vulnerable since at least 4.50, probably longer.
-> 
-> Comment 2 Heiko Schlittermann 2023-09-29 16:01:58 UTC
-> 
-> should be fixed in 04107e98d58efb69f7e2d7b81176e5374c7098a3
+Jingjing Hu (finder)
 
-On Fri, Sep 29, 2023 at 06:06:11PM +0200, Heiko Schlittermann wrote:
-> the ZDI assigned multiple CVEs to the Exim-MTA and published them
-> recently:
-> 
-> CVE            Link                                                      Exim-Bug
-> --------------+---------------------------------------------------------+-----
-> CVE-2023-42114 https://www.zerodayinitiative.com/advisories/ZDI-23-1468/  3001 fixed
-> CVE-2023-42115 https://www.zerodayinitiative.com/advisories/ZDI-23-1469/  2999 fixed
-> CVE-2023-42116 https://www.zerodayinitiative.com/advisories/ZDI-23-1470/  3000 fixed
-> CVE-2023-42117 https://www.zerodayinitiative.com/advisories/ZDI-23-1471/
-> CVE-2023-42118 https://www.zerodayinitiative.com/advisories/ZDI-23-1472/
-> CVE-2023-42119 https://www.zerodayinitiative.com/advisories/ZDI-23-1473/ 
-> 
-> The ZDI contacted us in June 2022. We asked about details but didn't get
-> answers we were able to work with.
-> 
-> Next contact with ZDI was in May 2023. Right after this contact we
-> created project bug tracker for 3 of the 6 issues. 2 high scored of them
-> are fixed (OOB access). A minor scored (info leak) is fixed too.
-> 
-> Fixes are available in a protected repository and are ready to be
-> applied by the distribution maintainers.
+References:
 
-Are distros allowed to make their updates public as soon as they can
-(presumably after requesting access to the protected repository)?
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-27523
 
-I suggest that you set a specific date/time e.g. in 2 days from now when
-both the Exim project will make the repo and the fixed bug entries (2999
-and 3000) public _and_ distros will release updates.
-
-> The remaining issues are debatable or miss information we need to fix
-> them.
-> 
-> We're more than happy to provide fixes for all issues as soon as we
-> receive detailed information.
-
-Are you actively requesting such information from ZDI now?
-
-This looks like sloppy handling of these issues so far by both ZDI and
-Exim - neither team pinging the other for 10 months, then Exim taking 4
-months to fix even the 2 high-scored issues it did have sufficient info
-on.  What are you doing to improve the handling from this point on?
-
-Thanks again,
-
-Alexander
-
-View attachment "ZDI-23-1468-ZDI-CAN-17433-CVE-2023-42114.txt" of type "text/plain" (2458 bytes)
-
-View attachment "ZDI-23-1469-ZDI-CAN-17434-CVE-2023-42115.txt" of type "text/plain" (2432 bytes)
-
-View attachment "ZDI-23-1470-ZDI-CAN-17515-CVE-2023-42116.txt" of type "text/plain" (2442 bytes)
-
-View attachment "ZDI-23-1471-ZDI-CAN-17554-CVE-2023-42117.txt" of type "text/plain" (2448 bytes)
-
-View attachment "ZDI-23-1472-ZDI-CAN-17578-CVE-2023-42118.txt" of type "text/plain" (2436 bytes)
-
-View attachment "ZDI-23-1473-ZDI-CAN-17643-CVE-2023-42119.txt" of type "text/plain" (2436 bytes)
