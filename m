@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2082" "Monday" "14" "December" "2015" "14:31:13" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151214193113.546CDABC018@smtpvmsrv1.mitre.org>" "47" "[oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" "^Cc:" nil nil "12" "2015121419:31:13" "[oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" (number mark "        cve-assign@m Dec 14   47/2082  " thread-indent "\"[oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness\"\n") "<566E0678.1080808@halfdog.net>" ("<566E0678.1080808@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24242 invoked by uid 550); 14 Dec 2015 19:32:00 -0000
+Received: (qmail 11849 invoked by uid 550); 6 Sep 2023 11:16:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +6,257 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24134 invoked from network); 14 Dec 2015 19:31:25 -0000
-In-Reply-To: <566E0678.1080808@halfdog.net>
-Message-Id: <20151214193113.546CDABC018@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Mon, 14 Dec 2015 14:31:13 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness
+Received: (qmail 11810 invoked from network); 6 Sep 2023 11:16:35 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
+Message-Id: <EC7CFAAF-40C7-4B69-82DD-84AACEB879A7@beckweb.net>
+Date: Wed, 6 Sep 2023 13:16:13 +0200
 To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3731.700.6)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1693998995;d2085863;
+X-HE-SMSGID: 1qdqWF-0003vZ-M9
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-> http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
-> http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+The following releases contain fixes for security vulnerabilities:
 
-The MITRE CVE team doesn't exactly know what we can do with these
-references. The first one mentions a CVE ID from Ubuntu,
-CVE-2015-1336, but
-http://people.canonical.com/~ubuntu-security/cve/2015/CVE-2015-1336.html
-doesn't yet exist. Possibly the CVE ID is supposed to be for use of
-"chown man" in /etc/cron.daily/man-db within both Ubuntu and Debian
-distributions.
+* Azure AD Plugin 397.v907382dd9b_98 and 378.380.v545b_1154b_3fb_
+* Bitbucket Push and Pull Request Plugin 2.8.4
+* Google Login Plugin 1.8
+* Job Configuration History Plugin 1229.v3039470161a_d
+* Pipeline Maven Integration Plugin 1331.v003efa_fd6e81
+* Qualys Container Scanning Connector Plugin 1.6.2.7
+* SSH2 Easy Plugin 1.6
 
-The second one doesn't mention any CVE ID. Would it be useful for
-MITRE to assign a CVE ID for the permissions/ownerships error of:
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-  drwxr-sr-x 25 man root 4096 May 15 00:40 /var/cache/man
+* Assembla Auth Plugin
+* AWS CodeCommit Trigger Plugin
+* Frugal Testing Plugin
+* Ivy Plugin
+* TAP Plugin
 
-? Our understanding is that this is, more or less, currently
-unsupported by the Linux kernel. In other words, it is not valid to
-choose that specific set of permissions/ownerships if one is concerned
-about an attack by someone with the uid of the man account. This issue
-affects both Ubuntu and Debian distributions.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-09-06/
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-iQIcBAEBCAAGBQJWbxiyAAoJEL54rhJi8gl552wP/3D/YIy6rhxrmiWHUXu0gxAA
-Xq8HHyVOTT1o1ZWmY/BkKWfGXMjD0CcE46ie0e2nqaT2DBtcr94n3djJ7TeAcrjf
-D8lS7TTqMzO5IjR0kAWxxj9UzwUeKDjQk7//u4RGm1+5zm6wx3V9ES5Ey3I7eBu9
-+Xb92pIl00PFaJ0xR8mYXiwBYtEDXgeY3F7AXeVWU+yGlfgJ+vZYJvb8wCm/daYE
-6Flg2+6ij2UUjx5UJd1SG6k1j7vfzWHYf0nqJvZwyTUN/ljBV3Nq4Q2er/4DYsaQ
-g+hEC3g3hFVqfeJKyi1fBFmk784bCR3hrBXPiwEB+61bFTIpXSX55sZiaqlKxFad
-LcJqOUDkqUlhR0+KUIXYgVEKHPrmJtfJZAbZdZYpNuduSnVsS7T+A5ub3Brz1CZs
-zaIwemEIgKV5o9YRSF51ZBWj2yecUdkpQ53388b0NyHCx+g9G1w4CpLxnKtVZJOm
-YYp1kn3HgqXJ1l2L5HrDlrNW0KN6P6YrxgG6lr0gUwVd96ER8823m95kteiEik2p
-J+SWLnphlWvSjVUU3Bwlg/iHzOOY2HOPycEb/SJhqg6FTGzs55QPkrSQnU4hdOgF
-EojG2z3HzXcB6edefm/O/WWhosQ+NJhxdaO4/rnTxtfV2sokt/6988eiK8to7kdk
-gGnY6T6rbsl7x+DBnpHr
-=lZEJ
------END PGP SIGNATURE-----
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3233 / CVE-2023-41930 (path traversal) & CVE-2023-41931 (XSS)
+Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
+restrict a `name` query parameter when rendering a history entry. This
+allows attackers to have Jenkins render a manipulated configuration history
+that was not created by the plugin.
+
+The history view does not property sanitize or escape the timestamp value
+from history entries when rendering a history entry. This typically isn't a
+problem, as the value is numeric in genuine history entries. Combined with
+the path traversal vulnerability, this results in a stored cross-site
+scripting (XSS) vulnerability exploitable by attackers with the ability to
+create a file on the controller (e.g., archived artifacts).
+
+
+SECURITY-3235 / CVE-2023-41932 (path traversal) & CVE-2023-41933 (XXE)
+Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
+restrict `timestamp` query parameters in multiple endpoints. This allows
+attackers with Job Config History/DeleteEntry permission to delete
+attacker-specified directories on the Jenkins controller file system as
+long as they contain a file called `history.xml`.
+
+Additionally, Job Configuration History Plugin 1227.v7a_79fc4dc01f and
+earlier does not configure its XML parser to prevent XML external entity
+(XXE) attacks. This allows attackers with Item/Configure permission to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+
+SECURITY-3257 / CVE-2023-41934
+Pipeline Maven Integration Plugin integrates with Config File Provider
+Plugin to specify custom Maven settings, including credentials for
+authentication.
+
+Pipeline Maven Integration Plugin 1330.v18e473854496 and earlier does not
+properly mask (i.e., replace with asterisks) usernames of credentials
+specified in custom Maven settings in Pipeline build logs if "Treat
+username as secret" is checked.
+
+
+SECURITY-3227 / CVE-2023-41935
+Azure AD Plugin 396.v86ce29279947 and earlier, except
+378.380.v545b_1154b_3fb_, does not use a constant-time comparison when
+checking whether the provided and expected CSRF protection nonce are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid nonce.
+
+
+SECURITY-3228 / CVE-2023-41936
+Google Login Plugin 1.7 and earlier does not use a constant-time comparison
+when checking whether the provided and expected token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid token.
+
+
+SECURITY-3165 / CVE-2023-41937
+Bitbucket Push and Pull Request Plugin provides a webhook endpoint at
+`/bitbucket-hook/` to receive webhook notifications.
+
+When acting on these notifications, Bitbucket Push and Pull Request Plugin
+2.4.0 through 2.8.3 (both inclusive) trusts values provided in the webhook
+payload, including certain URLs, and uses configured Bitbucket credentials
+to connect to those URLs. This allows attackers to capture Bitbucket
+credentials stored in Jenkins by sending a crafted webhook payload.
+
+NOTE: Successful exploitation requires that a build is triggered. This is
+the case when the repository has changed since the previous build, or the
+option "Trigger also if nothing has changed in the repo" is checked.
+
+
+SECURITY-3018 / CVE pending
+Qualys Container Scanning Connector Plugin 1.6.2.6 and earlier does not
+correctly perform a permission check in multiple HTTP endpoints.
+
+This allows attackers with global Item/Configure permission (while lacking
+Item/Configure permission on any particular job) to do the following:
+
+* Enumerate credentials IDs of credentials stored in Jenkins.
+  Those can be used as part of an attack to capture the credentials using
+  another vulnerability.
+* Connect to an attacker-specified webserver using attacker-specified
+credentials IDs obtained through another method, capturing credentials
+stored in Jenkins.
+
+
+SECURITY-2924 / CVE-2022-46751
+Ivy Plugin 2.5 and earlier bundles versions of Apache Ivy vulnerable to
+CVE-2022-46751.
+
+This allows attackers able to control the input file for the "Trigger the
+build of other projects based on the Ivy dependency management system"
+post-build step to have Jenkins parse a crafted XML document that uses
+external entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3093 / CVE-2023-41938
+Ivy Plugin 2.5 and earlier does not require POST requests for an HTTP
+endpoint, resulting in a cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to delete disabled modules.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3064 / CVE-2023-41939
+SSH2 Easy Plugin 1.4 and earlier does not verify that permissions
+configured to be granted are enabled. This may allow users formerly granted
+(typically optional permissions, like Overall/Manage) to access
+functionality they're no longer entitled to.
+
+NOTE: As a workaround, administrators can save the permission configuration
+after disabling a permission, as that will overwrite any permission
+assignments of disabled permissions.
+
+
+SECURITY-3190 / CVE-2023-41940
+TAP Plugin 2.3 and earlier does not escape TAP file contents.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control TAP file contents.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3101 (1) / CVE-2023-41941
+AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of AWS credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3101 (2) / CVE-2023-41942 (CSRF) & CVE-2023-41943 (permission check)
+AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to clear the SQS queue.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3102 / CVE-2023-41944
+AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not escape the queue
+name parameter passed to a form validation URL, when rendering an error
+message.
+
+This results in an HTML injection vulnerability.
+
+NOTE: Since Jenkins 2.275 and LTS 2.263.2, a
+link:/doc/upgrade-guide/2.263/#formvalidation[security hardening] for form
+validation responses prevents JavaScript execution, so no scripts can be
+injected.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3065 / CVE-2023-41945
+Assembla Auth Plugin provides an authorization strategy that defines four
+levels of access to Jenkins, based on the corresponding permissions in
+Assembla spaces: ALL, EDIT, VIEW, and NONE.
+
+Assembla Auth Plugin 1.14 and earlier does not verify that the permissions
+it grants are enabled. This results in users with EDIT permissions to be
+granted Overall/Manage and Overall/SystemRead permissions, even if those
+permissions are disabled and should not be granted.
+
+NOTE: Additionally, the plugin also grants the deprecated permissions
+Overall/RunScripts, Overall/UploadPlugins and Overall/ConfigureUpdateCenter
+to users with EDIT access. These permissions allow arbitrary code execution
+through various means in Jenkins before 2.222. Additionally, plugins not
+yet adapted to the changes in Jenkins 2.222 may also provide access to
+sensitive features to users with these permissions.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3082 / CVE-2023-41946 (CSRF) & CVE-2023-41947 (permission check)
+Frugal Testing Plugin 1.1 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to do the following:
+
+* Connect to Frugal Testing using attacker-specified username and password.
+* Retrieve test IDs and names from Frugal Testing, if a valid credential
+  corresponds to the attacker-specified username.
+
+Additionally, these endpoints do not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+
