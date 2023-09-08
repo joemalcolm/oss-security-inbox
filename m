@@ -1,4 +1,4 @@
-Received: (qmail 20100 invoked by uid 550); 5 Jan 2026 22:04:05 -0000
+Received: (qmail 26317 invoked by uid 550); 8 Sep 2023 22:37:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,245 +7,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32188 invoked from network); 5 Jan 2026 21:41:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sambull.org; h=
-	cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1767649257; x=1767735657; bh=2PhMUb1yl7FkzX+gcOu5bn2HWEScNtFH
-	PBhEGNgdWew=; b=YJlb+HgY4RlqbGqESKwOsHmJ3sMuO0TP8oI7aRKXFYU5k0UP
-	C3/ccHmQ40SOZ3DdmiF2lVd/J2yLEwfRpl7cYucaeNlwhaVZe4O5sFzM7YOMderM
-	eTFc4AR2V32LGgLXrBHN8grCW7nZlU7Gnz8dBJQKo/7LnVxFYdks6vQklwwbLYIZ
-	XOG6QT+qeRsYZlTbSXHOLkkw7Z+QuNMZuEDtVmLbo1VdyPVRVxbKr3CSvTr5w838
-	7cXWe112v+2KHoDdTrZhYm9tid3T+BtqXHyaTcApkfzsf3hLDun2tS3oRM6J+jhR
-	VPwdNxUUSSEC84Rcutm1XyVERmvc+Ge2RANp/A==
+Received: (qmail 24449 invoked from network); 8 Sep 2023 22:35:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm1; t=
+	1694212511; x=1694298911; bh=e9La6cj/4Bj+QaGq8PfYJLFC7E/nYqPZzyJ
+	C4ltFkKc=; b=JFLRWyDLZd5vormwyhqzgLgwmdKynZD/tWv0WD2d+6J84O66uB/
+	o7Dr59fHS/zcFRsLkUjb0OSAPEW+NRHC3/b1vzJrZnnvc68fqwVGPF8974tctI3N
+	XELA4qiMi4gkKeny6jlsyE7ZP2hw7o8bCuWLjnM4rvKAM0bfns9Wcvm8N85jGLPO
+	03k87n+IRlBDnphtUqOGDmIsP9Dbfk6tVGZSBlSwM90zGr+wiiBCWCpuPo2EpzRD
+	WW/nYqL2igSJB4bDLjOte3sDPowYS+oi+0K0poY/Tljgi1w3LB8FT0VHiG/9Wh2/
+	td+ggJRaGBUjdByUwZn17Ity4g39PE52RfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767649257; x=
-	1767735657; bh=2PhMUb1yl7FkzX+gcOu5bn2HWEScNtFHPBhEGNgdWew=; b=Y
-	WAhVcRu6Q/ChSCqn+ahCWl6h19MhKIGzFnA+L62ZbBMqoK4N5uGPmdK7SkBa3jE3
-	eJxJEttiKJN3KbUYOAvnXAd1XfUJOl3QF09MjB2hRJXjCeLo+ipSwQ8q2ykpZD+V
-	2iw+e1fjtvGDJTzHhZaX1OdsJVbHPT0HcB04WQ3bsFy7NasIir4RVvJGmgWzkohe
-	Ym/JRaeW5j0zJmhpfARWArOl7Hb7dXevQdJx1SwPnpNhXbDXsbTewa9wQ3J3L0uU
-	K0xBQLNDxoShGWvFJTIeI2Ia2VRUBmdzVpKD0VfYxvtC5b3WM/DH70eJ+Wiq7/jm
-	z+VCot2j8Ah4yEYefHsXA==
-X-ME-Sender: <xms:6C9caTMsn0AJ1h5e8wzuSBu_jWxFoe9Jt1IXvU3eg5D4yyBi3ypC3w>
-    <xme:6C9caU64HyX8IsdvSKzA5S72u-zttMTAglKb2ERRMusShyfIM93UHyW8aErkMHZyD
-    mjFWclg_qesR1YWpEEBkd2IUkrV9jkKsCJoRbP3YT590zdQSA>
-X-ME-Received: <xmr:6C9caX74IVY5olgUcdz6cLMRAuqUWYABZytRngLzeusOCDKhfyW1jOA93yoG957iexty6sGqKx_fSiHZ2lxb9x6mHXPfxeXLYdvv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelkeegudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgtfgggsehgtderredtreejne
-    cuhfhrohhmpefurghmuceuuhhllhcuoeelmhduleelihesshgrmhgsuhhllhdrohhrgheq
-    necuggftrfgrthhtvghrnhepffejgfejhefgveetgeefvdevkeegfeeiheetvdffveevje
-    euhfevfffghfekvedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeelmhduleelihesshgrmh
-    gsuhhllhdrohhrghdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtg
-    homh
-X-ME-Proxy: <xmx:6C9cac2CVfIHVdMxd7f1jhonf7_ShHVoL8L5spa7imtdVuYD4bmPWg>
-    <xmx:6C9cabXUDf6HziSAStCUIY_0XNF7ApnsoFttKgbTs699KqdoZ8C4Nw>
-    <xmx:6C9caf4bhWfC03GhP8tS-X73PjoqRJAYhQdg8c9l5Xq1nZzOGVsnzQ>
-    <xmx:6C9caaIo-svSfaJIFnMr20yRZnaLZzEv0R12iO_GudcOFCdHpcbHrg>
-    <xmx:6S9caSOWNvq8fYp3MROglVZ2yQ3rQF3JEmeQdCjn4EXr4Cb-t5dgxfxi>
-Feedback-ID: ie6294588:Fastmail
-Message-ID: <401a17361111759bd1c222bb5e43f4f11815735e.camel@sambull.org>
-From: Sam Bull <9m199i@sambull.org>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1694212511; x=1694298911; bh=e9La6cj/4Bj+Q
+	aGq8PfYJLFC7E/nYqPZzyJC4ltFkKc=; b=GLrxuUngSc14haOq2S63bDgnS7SNk
+	i4XVaT5ADs3PG0Mo5buCx28bsnO1C1OPeefvNoa5cygO2Qfk94VNDzSfxn1ielQb
+	89qWeCX739wtEuo4F899TBuLzzbKriaHHEWJ88TjmGABN8tYqjkBrRN6iIitzeHV
+	VoYatcX1xmbeihPyssANjAJqwNmnSYSn8fkcYsmRvl7cowlBOuq88XfJP9zpO4wr
+	vr8I9Q1HCCDzgJI96Vaiy68dlELkQ1QlSx/NkTFWEG/lN9LgvswtQ87b0q3iK23p
+	Yto1oEvy7N7bD7hVv9Je5WPhRp/pbBWOLYKGdV2N8+XcPaSYl6M4lsOnQ==
+X-ME-Sender: <xms:nqH7ZIQKjmScBltDNAw6ikHS4cM_L7__CYWXNTAFZcoiESftqOClKA>
+    <xme:nqH7ZFwuk99Q9DjrcJ2mMd9niX1xacc4WmmI36GT2jVBDyJIlEmA1xfxC2UZyXMZO
+    E7YJuQo1xok3wQ>
+X-ME-Received: <xmr:nqH7ZF29genZDtJ5X1CKKgaF2ddMzuADvheZnnB-mOeTPFinJaNggDfVuQ8d7ed1Ai3M7gxQxhlGj8Flm2evGH8KOxdEhmQgOsFBk8KRTe8iPlBa>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudehkedguddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
+    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
+    epffejleegffeuteejffekleekffegheetudfgvdefvdegvdetkeeuieffudejjeegnecu
+    ffhomhgrihhnpehophgvnhgsshgurdhorhhgpdhfrhgrgheiughouhgslhgvrghtohhmih
+    gtrdhphidpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhslhgrsg
+    drtghomh
+X-ME-Proxy: <xmx:nqH7ZMCa_nghbtv0mWXv5foOKUDG_8ah7pa2x8hCeYw_JCGFWPz9Hg>
+    <xmx:nqH7ZBgotKhu-CjiRalaKD4ewd1dF6Yi8ccjZricRQi3G2cfrzBKXA>
+    <xmx:nqH7ZIo-wffgGDkFTUfoHmcJ_lUe4ZPq-psJZpTmDtda5Tssk3y4lw>
+    <xmx:n6H7ZMvBOzzfDYD3ex1P3wPB_uB06vXCMWON7LIy9yJm6CDyrVadKQ>
+Feedback-ID: iac594737:Fastmail
+Date: Fri, 8 Sep 2023 18:34:52 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-Date: Mon, 05 Jan 2026 21:40:47 +0000
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-svlf4zgFpPgbsvYWrvOr"
-User-Agent: Evolution 3.38.3-1+deb11u3 
+Message-ID: <ZPuhj1UJpvl0hZCH@itl-email>
+References: <50dfd9cf-a4c8-9b4c-6419-91f68ca45e88@di.uniroma1.it>
+ <ZPucT1zmygLfWnPR@t430s.bluhm.invalid>
 MIME-Version: 1.0
-Subject: [oss-security] Multiple vulnerabilities in aiohttp
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HNWG7965Z1baehmS"
+Content-Disposition: inline
+In-Reply-To: <ZPucT1zmygLfWnPR@t430s.bluhm.invalid>
+Subject: Re: [oss-security] CVE-2023-4809: FreeBSD pf bypass when using IPv6
 
---=-svlf4zgFpPgbsvYWrvOr
-Content-Type: text/plain; charset="UTF-8"
+--HNWG7965Z1baehmS
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Fri, 8 Sep 2023 18:34:52 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2023-4809: FreeBSD pf bypass when using IPv6
 
-aiohttp is an async Python library providing both an HTTP client and a web =
-framework.
-These advisories primarily apply to users of the web framework.
+On Sat, Sep 09, 2023 at 12:12:31AM +0200, Alexander Bluhm wrote:
+> On Fri, Sep 08, 2023 at 07:48:21PM +0200, Enrico Bassetti wrote:
+> > A FreeBSD with `pf` as firewall for IPv6 traffic and `scrub` enabled to=
+=20
+> > reassemble IPv6 fragments is vulnerable to an attack that uses a crafte=
+d=20
+> > packet posing as IPv6 "atomic" fragment to bypass the rules.
+>=20
+> I would like to mention that OpenBSD pf is not affected by the bug.
+> As I am the original author of IPv6 fragment reassembly, I have
+> just added a regression test to show that our pf drops such packets.
+>=20
+> https://cvsweb.openbsd.org/src/regress/sys/netinet6/frag6/frag6_doubleato=
+mic.py
+>=20
+> This behavior seems to be present since 2013 when I added support
+> for atomic fragments to pf.  The relevant code is in OpenBSD
+> pf_walk_header6() in pf.c.  There a bunch of sanity checks are done
+> for the IPv6 header chain resulting in packet drops.  This function
+> does not exist in FreeBSD.
+>=20
+> https://github.com/openbsd/src/blame/cc53a24ce58eb2212822060db742650de278=
+7ee4/sys/net/pf.c#L7076
 
-We'd first like to thank Radically Open Security (particularly Thomas Rinsm=
-a) for
-conducting a security audit. We'd also like to thank the NLnet foundation f=
-or funding the
-audit and development work spent on fixing these issues. Also thanks to oth=
-er reporters
-and our regular sponsors.
+FreeBSD should include this in its pf, and probably adopt a bunch more
+changes from OpenBSD pf.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-All of the below issues have been fixed in version 3.13.3.
-
-
-## (Severity: High) CVE-2025-69223 - aiohttp HTTP Parser auto_decompress fe=
-ature
-susceptible to zip bomb
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-6mq8-rvhq-8wgg
-
-### Summary
-A zip bomb can be used to execute a DoS against the aiohttp server.
-
-### Impact
-An attacker may be able to send a compressed request that when decompressed=
- by aiohttp
-could exhaust the host's memory.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/2b920c39002cee0ec5b402581=
-779bbaaf7c9138a
-
-
-## (Severity: High) CVE-2025-69228 - Denial of service through large payloa=
-ds
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-6jhg-hg63-jvvf
-
-### Summary
-A request can be crafted in such a way that an aiohttp server's memory fill=
-s up
-uncontrollably during processing.
-
-### Impact
-If an application includes a handler that uses the `Request.post()` method,=
- an attacker
-may be able to freeze the server by exhausting the memory.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/b7dbd35375aedbcd712cbae8a=
-d513d56d11cce60
-
-
-## (Severity: High) CVE-2025-69227 - DoS when bypassing asserts
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-jj3x-wxrx-4x23
-
-### Summary
-When assert statements are bypassed, an infinite loop can occur, resulting =
-in a DoS attack
-when processing a POST body.
-
-### Impact
-If optimisations are enabled (`-O` or `PYTHONOPTIMIZE=3D1`), and the applic=
-ation includes a
-handler that uses the `Request.post()` method, then an attacker may be able=
- to execute a
-DoS attack with a specially crafted message.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/bc1319ec3cbff9438a758951a=
-30907b072561259
-
-
-## (Severity: Medium) CVE-2025-69229 - DoS through chunked messages
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-g84x-mcqj-x9qq
-
-### Summary
-
-Handling of chunked messages can result in excessive blocking CPU usage whe=
-n receiving a
-large number of chunks.
-
-### Impact
-
-If an application makes use of the `request.read()` method in an endpoint, =
-it may be
-possible for an attacker to cause the server to spend a moderate amount of =
-blocking CPU
-time (e.g. 1 second) while processing the request. This could potentially l=
-ead to DoS as
-the server would be unable to handle other requests during that time.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/dc3170b56904bdf814228fae7=
-0a5501a42a6c712
-Patch: https://github.com/aio-libs/aiohttp/commit/4ed97a4e46eaf61bd0f050632=
-45f613469700229
-
-
-## (Severity: Low) CVE-2025-69230 - Cookie Parser Warning Storm
-
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-fh55-r93g-j68g
-
-### Summary
-Reading multiple invalid cookies can lead to a logging storm.
-
-### Impact
-If the ``cookies`` attribute is accessed in an application, then an attacke=
-r may be able
-to trigger a storm of warning-level logs using a specially crafted Cookie h=
-eader.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/64629a0834f94e46d9881f4e9=
-9c41a137e1f3326
-
-
-## (Severity: Low) CVE-2025-69226 - Brute-force leak of internal static =EF=
-=AC=81le path
-components
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-54jq-c3m8-4m76
-
-### Summary
-Path normalization for static files prevents path traversal, but opens up t=
-he ability for
-an attacker to ascertain the existence of absolute path components.
-
-### Impact
-If an application uses `web.static()` (not recommended for production deplo=
-yments), it may
-be possible for an attacker to ascertain the existence of path components.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/f2a86fd5ac0383000d1715afd=
-dfa704413f0711e
-
-
-## (Severity: Low) CVE-2025-69224 - Unicode processing of header values cou=
-ld cause
-parsing discrepancies
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-69f9-5gxw-wvc2
-
-### Summary
-The Python HTTP parser may allow a request smuggling attack with the presen=
-ce of non-ASCII
-characters.
-
-### Impact
-If a pure Python version of aiohttp is installed (i.e. without the usual C =
-extensions) or
-AIOHTTP_NO_EXTENSIONS is enabled, then an attacker may be able to execute a=
- request
-smuggling attack to bypass certain firewalls or proxy protections.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/32677f2adfd907420c078dda6=
-b79225c6f4ebce0
-
-
-
-## (Severity: Low) CVE-2025-69225 - Unicode match groups in regexes for ASC=
-II protocol
-elements
-https://github.com/aio-libs/aiohttp/security/advisories/GHSA-mqqc-3gqh-h2x8
-
-### Summary
-
-The parser allows non-ASCII decimals to be present in the Range header.
-
-### Impact
-
-There is no known impact, but there is the possibility that there's a metho=
-d to exploit a
-request smuggling vulnerability.
-
-Patch: https://github.com/aio-libs/aiohttp/commit/c7b7a044f88c71cefda95ec75=
-cdcfaa4792b3b96
-
---=-svlf4zgFpPgbsvYWrvOr
+--HNWG7965Z1baehmS
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQS7LDpjuw7VQ6ct5tdf6SjNlibOKwUCaVwv3wAKCRBf6SjNlibO
-K4UcAKCwhXkB3+Hp0560ymjGjj/WYTqTFwCdHUpMta/5plbkwK5y6NmA0B37JIU=
-=i9GO
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmT7oY8ACgkQsoi1X/+c
+IsFRZxAAxDPbPmEMNSYmX0P4f9OdYY3yveDRScIr2BMozpxyOhGhYqvXHLZDnYf+
+ZaqetQkH2J/Si7tGQVh4dXvSLgIPoa5OURpHjI0H5DE8vtg58KzVVCCfJQow9mAm
+rFyFTp8jRwBLLfxyL2NDQOjLh2ozpWP/niLgGMXil4afOa/t1ZaPwoU5mSWHAZ3T
+AO57Qy8MrgaZ9aCC2akSll3jJr+x7tiGfgHBOv7+7Ljg9usP2C4mFXtVOxT7BPmU
+6HsZDjAkdIdWIm/ogFW7sClBNr8WQOnqAmUDBOKSj6Tn3W4E+8u2uNCIlZsDydc2
+1ys7f0E74qWKbnMaPyz1PpMgSsQ5ysoJhi08UjWAopQ+6PNsZ7S6DckivhvXK1c0
+Kw46yTBCuvVrOahAqGAX5NbXnMLAAvmYXI6PLuEQNKhKv6E8yARXfnzV3loUgBQL
+lR657lGFIvZ8FgHsVi5i4duiMUiV46kbQ6HqeDtb0ywSztSZm6NZArciTIOlrBlR
+2kCq68t97LxtlbvtPlmxPgy/tNGuGBaQ4BOj+/Hrl0qg4vNqVvBHQLWzf+4o9y4M
+Y/ENYhRHFffjAQ/nDnb82sATQ98CmNt3zu1M2QxI3jJTRJYfz54zQ2SDGKIAKcoh
+bB41TsGgA2uckrGgVqFs+KjuXVWnPwYT2QdcSEZtslfp/gliGtk=
+=I2UD
 -----END PGP SIGNATURE-----
 
---=-svlf4zgFpPgbsvYWrvOr--
-
+--HNWG7965Z1baehmS--
