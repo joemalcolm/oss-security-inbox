@@ -1,37 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/23/2
-Message-ID: <0227aa7c-d06f-93d7-34f2-931d922c0c53@apache.org>
-Date: Wed, 23 Aug 2023 10:33:16 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/08/3
+Message-ID: <CAFRnB2X-zM6W8t_bE5x=PAwkEB-fUj7JFt8uerXKL1kpPU3o=w@mail.gmail.com>
+Date: Fri, 8 Sep 2023 12:15:28 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-39441: Apache Airflow SMTP Provider, Apache Airflow IMAP Provider, Apache Airflow: SMTP/IMAP client components allowed MITM due to missing Certificate Validation 
+Subject: Re: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Can you please expand on what "we are currently not aware of any
+concrete application that would be affected by this issue" means?
 
-Affected versions:
+Are you saying that you are not aware of anyone using OpenSSL to
+provide TLS on Windows, or are you saying that common TLS servers
+(nginx, apache, etc.) are not impacted by this vulnerability?
 
-- Apache Airflow SMTP Provider before 1.30
-- Apache Airflow IMAP Provider before 3.3.0
-- Apache Airflow before 2.7.0
+Regards,
+Alex
 
-Description:
+On Fri, Sep 8, 2023 at 7:11 AM Tomas Mraz <tomas@...nssl.org> wrote:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> OpenSSL Security Advisory [8th September 2023]
+> ==============================================
+>
+> POLY1305 MAC implementation corrupts XMM registers on Windows (CVE-2023-4807)
+> =============================================================================
+>
+> Severity: Low
+>
+> Issue summary: The POLY1305 MAC (message authentication code) implementation
+> contains a bug that might corrupt the internal state of applications on the
+> Windows 64 platform when running on newer X86_64 processors supporting the
+> AVX512-IFMA instructions.
+>
+> Impact summary: If in an application that uses the OpenSSL library an attacker
+> can influence whether the POLY1305 MAC algorithm is used, the application
+> state might be corrupted with various application dependent consequences.
+>
+> The POLY1305 MAC (message authentication code) implementation in OpenSSL does
+> not save the contents of non-volatile XMM registers on Windows 64 platform
+> when calculating the MAC of data larger than 64 bytes. Before returning to
+> the caller all the XMM registers are set to zero rather than restoring their
+> previous content. The vulnerable code is used only on newer x86_64 processors
+> supporting the AVX512-IFMA instructions.
+>
+> The consequences of this kind of internal application state corruption can
+> be various - from no consequences, if the calling application does not
+> depend on the contents of non-volatile XMM registers at all, to the worst
+> consequences, where the attacker could get complete control of the application
+> process. However given the contents of the registers are just zeroized so
+> the attacker cannot put arbitrary values inside, the most likely consequence,
+> if any, would be an incorrect result of some application dependent
+> calculations or a crash leading to a denial of service.
+>
+> The POLY1305 MAC algorithm is most frequently used as part of the
+> CHACHA20-POLY1305 AEAD (authenticated encryption with associated data)
+> algorithm. The most common usage of this AEAD cipher is with TLS protocol
+> versions 1.2 and 1.3 and a malicious client can influence whether this AEAD
+> cipher is used by the server. This implies that server applications using
+> OpenSSL can be potentially impacted. However we are currently not aware of
+> any concrete application that would be affected by this issue therefore we
+> consider this a Low severity security issue.
+>
+> As a workaround the AVX512-IFMA instructions support can be disabled at
+> runtime by setting the environment variable OPENSSL_ia32cap:
+>
+>    OPENSSL_ia32cap=:~0x200000
+>
+> OpenSSL versions 1.1.1 to 1.1.1v, 3.0.0 to 3.0.10, and 3.1.0 to 3.1.2 are
+> vulnerable to this issue. The FIPS provider is not affected because the
+> POLY1305 MAC algorithm is not FIPS approved and the FIPS provider does not
+> implement it.
+>
+> OpenSSL version 1.0.2 is not affected by this issue.
+>
+> Due to the low severity of this issue we are not issuing new releases of
+> OpenSSL at this time. The fix will be included in the next releases when they
+> become available. The fix is also available in commit 4bfac447 (for 3.1),
+> commit 6754de4a (for 3.0), and commit a632d534 (for 1.1.1) in the OpenSSL git
+> repository.
+>
+> This issue was reported publicly on GitHub on 23rd July 2023 by Zach Wilson
+> (Nvidia) and subsequently to the OpenSSL security team on 28th August 2023
+> by Bernd Edlinger. The fix disabling the vulnerable codepath was developed
+> by Bernd Edlinger.
+>
+> General Advisory Notes
+> ======================
+>
+> URL for this Security Advisory:
+> https://www.openssl.org/news/secadv/20230908.txt
+>
+> Note: the online version of the advisory may be updated with additional details
+> over time.
+>
+> For details of OpenSSL severity classifications please see:
+> https://www.openssl.org/policies/secpolicy.html
+>
+> OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+> fixes for 1.1.1 will only be available to premium support customers.
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmT6/5ESHHRvbWFzQG9w
+> ZW5zc2wub3JnAAoJEFJ0ZqIcp55tLK8P/joFSPF9oBeoMBcSZJ5eG26WNoqvj2hh
+> kYggHZL++wzFpBDgRwjyQW7Pm6BsythIYwId+6+QPJNCxf7juWv7vWuO42KbMqXh
+> KnDk4NmFOKv6aF4TahfytgLzljVMwwRs9k+kmFfTNOq66NNiJBKFcIzTp7UlOkUD
+> SOwify1Yq/du6jYyXX0tD+l6IfIEBlPPx+o5L8PG5+G+yR8bvHnlu1MrM3jYlil7
+> 7AQjqk+115Y6cJpER9FHW5oLApK2yn3mSlQ+0Cn9LjqCaYGAlJTHe1wP9OMmV+nk
+> fhH5S714WvMgYxfbNgAsvfLBuahJkCyZ7ddaRF/OZtU5Kk72aK+mFVqxf7hgHHd6
+> 0W7xMIdZzhyfytQMKq3IK8bhc1T83nk83FxdDodx0XARNNoMAiYFbnQtuCtZzIM8
+> WVXh9Yad37Nxg27rmjYdzezyeGTGT2dlwKMhNqHlp/rf9A67sC+Lrt9UJL7nAyJo
+> zmmNjrZQuc+WGpQvKjHxirGuRzqLxPxQNQinXK4X23QsdbiFoMB/INd+7GqKfuOE
+> 2kdGH3hBpSoP9MrI9LHqq1G9fNnp/NOgUuwbxFXapDoNZMbOoDftpjZwCyRKqbf5
+> PQSDny0hDER43/MNZOnmRlnFJHMjLKxi28BqwZpt6ZmdQM8FpZkNsMWnPic1J0tK
+> V+IiOjmRLVcj
+> =2sPx
+> -----END PGP SIGNATURE-----
 
-Apache Airflow SMTP Provider before 1.3.0, Apache Airflow IMAP Provider before 3.3.0, and Apache Airflow before 2.7.0 are affected by the Validation of OpenSSL Certificate vulnerability.
 
-The default SSL context with SSL library did not check a server's X.509 certificate.  Instead, the code accepted any certificate, which could result in the disclosure of mail server credentials or mail contents when the client connects to an attacker in a MITM position.
 
-Users are strongly advised to upgrade to Apache Airflow version 2.7.0 or newer, Apache Airflow IMAP Provider version 3.3.0 or newer, and Apache Airflow SMTP Provider version 1.3.0 or newer to mitigate the risk associated with this vulnerability
-
-Credit:
-
-Martin Schobert, Pentagrid AG (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/33075
-https://github.com/apache/airflow/pull/33108
-https://github.com/apache/airflow/pull/33070
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-39441
-
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
