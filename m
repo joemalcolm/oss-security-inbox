@@ -1,62 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/8
-Message-ID: <ZNKJAaZ+mGnORQNS@itl-email>
-Date: Tue, 8 Aug 2023 14:26:58 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com, "Xen. org security team" <security@....org>
-Subject: Re: Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/08/1
+Message-ID: <ZPr/3h1O1g0iHyIq@openssl.org>
+Date: Fri, 8 Sep 2023 11:05:02 +0000
+From: Tomas Mraz <tomas@...nssl.org>
+To: oss-security@...ts.openwall.com
+Subject: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 08, 2023 at 08:00:09PM +0200, Solar Designer wrote:
-> On Mon, Jul 31, 2023 at 05:00:35PM +0000, Xen. org security team wrote:
-> > The patch provided with earlier versions was buggy.  It unintentionally
-> > disable more bits than expected in the control register.  The contents of this
-> > register is not generally known, so the effects on the system are unknown.
-> > 
-> > A patch correcting this error has been committed and backported to all stable
-> > trees which got the XSA-433 fix originally.  Additionally, it is attached to
-> > this advisory as xsa433-bugfix.patch, and applicable to all branches in this
-> > form.
-> 
-> where xsa433-bugfix.patch includes this description:
-> 
-> > This line:
-> > 
-> > 	val &= ~chickenbit;
-> > 
-> > ends up truncating val to 32 bits, and turning off various errata workarounds
-> > in Zen2 systems.
-> 
-> and that patch then corrects the truncation by changing the type of the
-> chickenbit variable to 64-bit.  The context is:
-> 
-> +	/*
-> +	 * Microcode is the preferred mitigation, in terms of performance.
-> +	 * However, without microcode, this chickenbit (specific to the Zen2
-> +	 * uarch) disables Floating Point Mov-Elimination to mitigate the
-> +	 * issue.
-> +	 */
-> +	val &= ~chickenbit;
-> +	if (sig->rev < good_rev)
-> +		val |= chickenbit;
-> 
-> This leaves me wondering: why have this line at all?  I understand Xen
-> wanting to enable the chicken bit on vulnerable CPUs, but why disable it
-> on other AMD CPUs?  If someone or something had enabled the bit, that's
-> probably intentional, and even if not it probably shouldn't be Xen's
-> business to alter CPU behavior beyond what's necessary for Xen itself to
-> work reliably and securely.
-> 
-> Am I missing something?
-> 
-> Alexander
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The microcode is effective when late-loaded, and this code might run
-after a microcode update and/or kexec.  Not sure if this is the actual
-explanation.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+OpenSSL Security Advisory [8th September 2023]
+==============================================
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+POLY1305 MAC implementation corrupts XMM registers on Windows (CVE-2023-4807)
+=============================================================================
+
+Severity: Low
+
+Issue summary: The POLY1305 MAC (message authentication code) implementation
+contains a bug that might corrupt the internal state of applications on the
+Windows 64 platform when running on newer X86_64 processors supporting the
+AVX512-IFMA instructions.
+
+Impact summary: If in an application that uses the OpenSSL library an attacker
+can influence whether the POLY1305 MAC algorithm is used, the application
+state might be corrupted with various application dependent consequences.
+
+The POLY1305 MAC (message authentication code) implementation in OpenSSL does
+not save the contents of non-volatile XMM registers on Windows 64 platform
+when calculating the MAC of data larger than 64 bytes. Before returning to
+the caller all the XMM registers are set to zero rather than restoring their
+previous content. The vulnerable code is used only on newer x86_64 processors
+supporting the AVX512-IFMA instructions.
+
+The consequences of this kind of internal application state corruption can
+be various - from no consequences, if the calling application does not
+depend on the contents of non-volatile XMM registers at all, to the worst
+consequences, where the attacker could get complete control of the application
+process. However given the contents of the registers are just zeroized so
+the attacker cannot put arbitrary values inside, the most likely consequence,
+if any, would be an incorrect result of some application dependent
+calculations or a crash leading to a denial of service.
+
+The POLY1305 MAC algorithm is most frequently used as part of the
+CHACHA20-POLY1305 AEAD (authenticated encryption with associated data)
+algorithm. The most common usage of this AEAD cipher is with TLS protocol
+versions 1.2 and 1.3 and a malicious client can influence whether this AEAD
+cipher is used by the server. This implies that server applications using
+OpenSSL can be potentially impacted. However we are currently not aware of
+any concrete application that would be affected by this issue therefore we
+consider this a Low severity security issue.
+
+As a workaround the AVX512-IFMA instructions support can be disabled at
+runtime by setting the environment variable OPENSSL_ia32cap:
+
+   OPENSSL_ia32cap=:~0x200000
+
+OpenSSL versions 1.1.1 to 1.1.1v, 3.0.0 to 3.0.10, and 3.1.0 to 3.1.2 are
+vulnerable to this issue. The FIPS provider is not affected because the
+POLY1305 MAC algorithm is not FIPS approved and the FIPS provider does not
+implement it.
+
+OpenSSL version 1.0.2 is not affected by this issue.
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 4bfac447 (for 3.1),
+commit 6754de4a (for 3.0), and commit a632d534 (for 1.1.1) in the OpenSSL git
+repository.
+
+This issue was reported publicly on GitHub on 23rd July 2023 by Zach Wilson
+(Nvidia) and subsequently to the OpenSSL security team on 28th August 2023
+by Bernd Edlinger. The fix disabling the vulnerable codepath was developed
+by Bernd Edlinger.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230908.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers. 
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmT6/5ESHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tLK8P/joFSPF9oBeoMBcSZJ5eG26WNoqvj2hh
+kYggHZL++wzFpBDgRwjyQW7Pm6BsythIYwId+6+QPJNCxf7juWv7vWuO42KbMqXh
+KnDk4NmFOKv6aF4TahfytgLzljVMwwRs9k+kmFfTNOq66NNiJBKFcIzTp7UlOkUD
+SOwify1Yq/du6jYyXX0tD+l6IfIEBlPPx+o5L8PG5+G+yR8bvHnlu1MrM3jYlil7
+7AQjqk+115Y6cJpER9FHW5oLApK2yn3mSlQ+0Cn9LjqCaYGAlJTHe1wP9OMmV+nk
+fhH5S714WvMgYxfbNgAsvfLBuahJkCyZ7ddaRF/OZtU5Kk72aK+mFVqxf7hgHHd6
+0W7xMIdZzhyfytQMKq3IK8bhc1T83nk83FxdDodx0XARNNoMAiYFbnQtuCtZzIM8
+WVXh9Yad37Nxg27rmjYdzezyeGTGT2dlwKMhNqHlp/rf9A67sC+Lrt9UJL7nAyJo
+zmmNjrZQuc+WGpQvKjHxirGuRzqLxPxQNQinXK4X23QsdbiFoMB/INd+7GqKfuOE
+2kdGH3hBpSoP9MrI9LHqq1G9fNnp/NOgUuwbxFXapDoNZMbOoDftpjZwCyRKqbf5
+PQSDny0hDER43/MNZOnmRlnFJHMjLKxi28BqwZpt6ZmdQM8FpZkNsMWnPic1J0tK
+V+IiOjmRLVcj
+=2sPx
+-----END PGP SIGNATURE-----
