@@ -1,4 +1,4 @@
-Received: (qmail 15988 invoked by uid 550); 16 Oct 2023 17:21:38 -0000
+Received: (qmail 12021 invoked by uid 550); 8 Sep 2023 17:34:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,160 +7,185 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7592 invoked from network); 16 Oct 2023 17:13:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697476373; x=1698081173; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6vlUCXxZODMznZOGehi3iTglWDm4Ak25W4V83ZAkUmk=;
-        b=mpEwXkMW7PfdCyHFpfbpnlixatg3nkzcxpgWyDMpuSKvcEvspAxlI8HMa+SNDx2uA3
-         tHEdZkNNZhZv4x6aB/Zab/QLO/uS37Y8sCWeZYLjzyiubiKlUivSmm2BWEkW9GgOpjrL
-         Zv5ohgTabfWq0SMu+A9S5MjvR9BnBAKcBqKR3esJ/7HIQXSzSnhD/gBPlMcqrynK9cFk
-         VCSs2KYtusCjIO8ZIAgmoZohvQHQXOHdL6sMFBEDC5wsUVZPdK8IITraARPJtRh4xD0z
-         +Hj6RNolQ7XAxqLDmyDbJAPfPVfuoEMvNfRiF0nbnMJkcNxduL/Z2nLmS1N2uEJsJwOV
-         ij0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697476373; x=1698081173;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6vlUCXxZODMznZOGehi3iTglWDm4Ak25W4V83ZAkUmk=;
-        b=O46MsFTtdIVZTT/aO04EfRtWsF1u/HmEUiNH363L9Pjmy7a8xVE5A1hHTwN35ogLue
-         TLSiSaJk32FfmC/lLmDJjgOjdwR3pUw9OUrLKU+ioEk3jBErMYynTkjCt192kZjaVcYL
-         OLjfZIQZ4A6sYUBd7/y/4lXns2Elbcw0eUn3ZjHDytjkN/+uAOM/v+Rq41atLs5g3H7c
-         T1vdRO+G3/d2W1GezvC/wHw5rfc+WyegYsbtzWQcKgjDQLYbM9J9QTd8dPBDEjLiTqdH
-         irQM6knpBAo8rbN8zJIrpqDmRbNIPyBSAKf8fMHZJy2HCO5rO53bSCNHpk8fH277vhoR
-         dzHw==
-X-Gm-Message-State: AOJu0YyFeeJcfndqbRIYAzSVAoqcwDPxGcyYSBeHv2Rg3R35DaNM/QsY
-	2cRVy/nO+0DRE75GmLAjqoYFHzGJB5CHiO971A3i4qfCSROQLg==
-X-Google-Smtp-Source: AGHT+IGea2b+tf83r+lMlmn6KFMpQ7Rj4e+Q0+5y/80NWrw/rFE4/tzHmUG2tDexnHl3+msPRGIpl5mG1kIgGN60TxY=
-X-Received: by 2002:a17:90a:db8e:b0:27d:a94e:607f with SMTP id
- h14-20020a17090adb8e00b0027da94e607fmr1414446pjv.43.1697476372687; Mon, 16
- Oct 2023 10:12:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <ZSyUUSF_-3YbT14k@workstation> <20231016080850.GF10758@suse.de>
- <2023101612-snare-dart-c7cf@gregkh> <ZS1CSkbTjDYdGq8F@itl-email>
- <2023101622-imply-tidal-b6cf@gregkh> <ZS1UPsZo1VyHDAkV@itl-email>
- <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com> <2023101605-outshoot-undying-fb27@gregkh>
-In-Reply-To: <2023101605-outshoot-undying-fb27@gregkh>
-From: Aron Xu <happyaron.xu@gmail.com>
-Date: Tue, 17 Oct 2023 01:12:37 +0800
-Message-ID: <CAMr=8w5fMdeY4Fund1=3W+w37T3_jsBZBS7AyS-ZGLK9t3R3wg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Received: (qmail 11485 invoked from network); 8 Sep 2023 17:33:33 -0000
+Date: Fri, 8 Sep 2023 19:33:21 +0200
+From: Solar Designer <solar@openwall.com>
+To: Willy Tarreau <w@1wt.eu>
+Cc: oss-security@lists.openwall.com,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
+	Greg KH <gregkh@linuxfoundation.org>
+Message-ID: <20230908173321.GA17366@openwall.com>
+References: <20230825222359.GA10424@openwall.com> <ZOuqk2+3EMBV3pPy@1wt.eu> <20230828180518.GA29293@openwall.com> <ZOzy5H/9go9KPfm3@1wt.eu> <20230830152633.GA6199@openwall.com> <20230904201426.GA3577@1wt.eu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230904201426.GA3577@1wt.eu>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
 
-On Tue, Oct 17, 2023 at 12:51=E2=80=AFAM Greg KH <greg@kroah.com> wrote:
->
-> On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
-> > Hi,
-> >
-> > On Mon, Oct 16, 2023 at 11:34=E2=80=AFPM Demi Marie Obenour
-> > <demi@invisiblethingslab.com> wrote:
-> > >
-> > > On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
-> > > > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> > > > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > > > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > > > > > Hi,
-> > > > > > >
-> > > > > > > Regardless of your viability of subscription status I think w=
-e also
-> > > > > > > (sadly) have to consider current geopolitical issues here.
-> > > > > > >
-> > > > > > > As far as I understand, US companies and US citizens are not =
-permitted
-> > > > > > > to work with Chinese organizations and/or Chinese nationals.
-> > > > > >
-> > > > > > They can when working in the open on public projects and other
-> > > > > > open-source-like things.  For "closed" lists and groups, please=
- consult
-> > > > > > a lawyer as the rules there are quite varied and depends on the
-> > > > > > countries and companies involved.
-> > > > > >
-> > > > > > But to be sure, again, consult your corporate lawyers, they kno=
-w the
-> > > > > > rules and the issues involved better than I do.
-> > > > > >
-> > > > > > good luck!
-> > > > > >
-> > > > > > greg k-h
-> > > > >
-> > > > > The question is _who_ should consult their lawyers.
-> > > >
-> > > > The people deciding if this group can be added to the closed list as
-> > > > they are the ones responsible for it, AND then if the group is adde=
-d,
-> > > > the members of the list need to talk to their lawyers to see if the=
-ir
-> > > > country laws allow them to participate in a closed group with such
-> > > > members.  Many countries might be fine, many might not be, it all
-> > > > depends on the participants and what country laws they must abide b=
-y.
-> > > >
-> > > > So in short, everyone involved in the list!  :(
-> > > >
-> > > > good luck!
-> > > >
-> > > > greg "I talk to too many lawyers" k-h
-> > >
-> > > The result of this is simply that those who do not have access to
-> > > lawyers on staff will not participate, which will reduce the value of
-> > > the list substantially.  I suspect that most people who report
-> > > vulnerabilities via distros@ fall into this category.  I know I do.
-> > >
-> > > Therefore, I recommend rejecting the application as too risky from a
-> > > legal perspective.
-> > >
-> >
-> > Not matter what would be the outcome, I'd like recommend an article
-> > from Linux Foundation which I think is a good read:
-> > https://www.linuxfoundation.org/resources/publications/understanding-us=
--export-controls-with-open-source-projects
-> >
-> > I'm not a lawyer though, but here are a few cents:
-> >
-> > 1) There is no general restrictions against Chinese organizations and n=
-ationals;
-> > 2) Open source software (which is publicly available) is not subject
-> > to EAR (Export Administration Regulation of the US);
-> > 3) According to =C2=A7 734.7[1] of EAR, "knowledge with the intention t=
-hat
-> > such information will be made publicly available if accepted" is
-> > treated as "Published" and is considered publicly available.
-> >
-> > If I understand correctly, distros list is targeted to open source
-> > software issues with a policy[2] of "Please only use these lists to
-> > report and discuss security issues that are not yet public (but that
-> > are to be made public very soon)", then everyone could retain their
-> > peace of mind.
->
-> But note, the information is _not_ public for a period of time, and so,
-> might fall outside of the information described above in the lf article.
->
-> Especially given the content of the information as well, this isn't just
-> "here's a patch to add a new feature for foo-baz" type of stuff.
->
+Hi,
 
-That's actually the critical thing covered by =C2=A7 734.7[1] of EAR
-mentioned in the last message. The original EAR text says "knowledge
-with the intention that such information will be made publicly
-available if accepted" in the "Published" category, so it is
-considered publicly available while in the process of getting actually
-published.
+I've just relaxed the policy on posting exploits.  It used to say:
 
-> Again, if you have questions, please talk to a lawyer from your company
-> as only they can answer it properly for your situation.
->
+"If you shared exploit(s) that are not an essential part of the issue
+description, then at your option you may slightly delay posting them to
+oss-security but you must post the exploits to oss-security within at
+most 7 days of making the mandatory posting above."
 
-And again I'm not a lawyer for sure, :-)
+Now it says:
 
-Well I've contacted OpenAtom Foundation's lawyer and am waiting for a
-response, but I'm not sure yet whether they would provide a public
-response.
+"If you shared exploit(s) that are not an essential part of the issue
+description, then at your option you may delay or withhold posting them
+to oss-security, and you're encouraged to post the exploits to
+oss-security in 1 to 30 days of making the mandatory posting above. The
+delay may reasonably match your estimate for independent development of
+such exploits."
 
+So it's no longer a requirement ("or withhold" is now an option), and
+the recommended delay is now 1 to 30 days (which covers the real-world
+range from the old Exim bug to the recent Linux StackRot bug).  I also
+added a sentence suggesting how to choose the delay.
 
-Regards,
-Aron
+I made this change mainly because we cannot reasonably force a person to
+post exploits when they're threatened by their employer, an affected
+vendor, government officials, etc. - even if they originally intended to
+post.  Actually, the same issue can occur for the issue description as
+well, in which case we'll have to take over and make that posting
+ourselves.  We could also be doing that for exploits in such cases, but
+that's not so obviously the right thing to do.
+
+On Mon, Sep 04, 2023 at 10:14:26PM +0200, Willy Tarreau wrote:
+> On Wed, Aug 30, 2023 at 05:26:33PM +0200, Solar Designer wrote:
+> > This is in part a matter of resources - are we providing only
+> > the lists infrastructure and list members' best-effort volunteer
+> > contributions to issue handling, or are we providing any guaranteed
+> > service?  For the latter, perhaps list admin(s) (me) should always take
+> > over whenever the member distros don't handle that sort of
+> > contributing-back tasks on time.  Then we'll be able to provide a
+> > guarantee that all issues will be handled without the reporter having to
+> > stay on top of them.
+> > 
+> > A drawback is that this may encourage lower-quality or lower-relevance
+> > reports, including of issues that are not worth handling in private.  So
+> > it could end up wasting those extra resources allocated to this effort.
+> 
+> Absolutely. But I'm sensing something in the way you're presenting these
+> possibilities, it is that there is a perceived (by some?) guarantee of
+> service that implies that someone (possibly you) has to do the job for
+> others to consume the result of this work. If that's the case it can
+> mean the relation is significantly skewed and the person(s) willing to
+> make the efforts are indeed likely to get overwhelmed. At least on s@k.o
+> we're sufficient to share the effort depending on skills and availability,
+> and we can rely on maintainers' support.
+
+I think there isn't currently a perceived guarantee of service, but
+there would be under (your previously implied) suggestion that we (in my
+words) support the send-and-forget use case for reporters.  If we do
+that, I actually expect that the member distros would take care of it
+most of the time, but to have a guarantee that this is done every time
+and on time, someone specific would need to track all issues and take
+care of any that would fall through the cracks.  I may start doing that
+under the potential LF sponsorship, if it does materialize, at which
+point whether to announce this as a guaranteed service or not would be a
+matter of preference.
+
+> > > On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
+> > > > That said, can you share more detail on the specific issue you referred
+> > > > to above and its handling/disclosure timeline?  Was it ever brought to
+> > > > oss-security, and if not then why not?
+> > > 
+> > > I just checked and I'm not seeing any traces of it there. I don't even
+> > > know who normally notifies about such issues there.
+> > 
+> > If you worked on the issue, then perhaps you were the most appropriate
+> > person to notify oss-security about it?
+> 
+> Honestly, no, for multiple reasons: The first one being that I'm terrible
+> at dealing with processes and this becomes a big effort. The second one is
+> that it's already not easy to have participants available with enough time
+> to work on reports, to if we add to them as a punishment to have to do that
+> extra work, that's not going to be motivating to work on reports.
+
+What reports are you referring to, and if they exist anyway then can't
+they be posted to oss-security as-is?
+
+> The third
+> one is more related to some of my personal convictions: I'm personally not
+> convinced of the interest of encouraging distros to focus on a tiny subset
+> of all the fixes, because for one that passes via s@k.o, maybe 50-100 are
+> regularly merged and might be of similar or even higher importance. And it
+> is my belief that all fixes are needed, not just the ones that are reported
+> via discrete channels because the reporter is uncertain about the impacts
+> a public report could have. I know that some do not share this opinion (and
+> I don't want to debate this here). Finally my feeling is that if the person
+> that sent a first report was interested in reporting their findings, it's
+> probably up to the same person to advertise it everywhere they want (after
+> understanding the consequences, of course).
+
+> For me when a fix is merged I can flush
+> my mind on an issue (this makes it very hard for me to write changelogs
+> after series of bugfixes in other projects BTW).
+
+This is reasonable.  However, for certain other projects we're seeing
+their upstreams consistently disclose security vulnerabilities in here.
+
+> > Anyway, perhaps both of these should have been brought to oss-security
+> > at some point, but they were not?
+> 
+> But one could actually ask why just these ones and none of the numerous
+> other ones merged in the same stable kernels.
+
+I'd actually prefer all, and if there are ever too many for oss-security
+we could setup a sub-list for the Linux kernel.
+
+However, I think these two do stand out in that they're in designs and
+algorithms rather than code, and could thus be relevant beyond Linux,
+kernel, and TCP/IP stacks (e.g., randomness and non-repetitiveness
+preferences for TCP and UDP ports are very similar to those for DNS
+query IDs).  So we could potentially have fruitful discussions of the
+wider context (what other projects did when, and what is yet to do).
+
+> Actually I'm really wondering what the value of l-d is now,
+> if long embargoes are too much of a problem, short ones are too short for
+> developers to produce a fix, and bug reporters are progressively encouraged
+> to first contact projects then directly oss-sec, I feel like the value of
+> l-d becomes pretty low at this point in the process, but I could be
+> mistaken, of course. Maybe that's also why we're discussing here after all,
+> to find how to make it more useful to all parties.
+
+I think the value of (linux-)distros is similar to what it was at its
+inception - it's not declining.  Short embargoes are generally either
+after an initial upstream fix is ready (but before it's public, except
+for Linux kernel and curl) or are in fact sufficient to produce a fix.
+I never encouraged over-use of (linux-)distros even for issues that are
+best brought to oss-security right away - this isn't a new thing.
+
+> > We already use a somewhat obscure posting address and a required Subject
+> > prefix, although the latter is currently not enforced strictly (is
+> > mostly an anti-spam measure, so is bypassed by some other keywords
+> > contained in the headers and/or message).  I think part of the problem
+> > was that the kernel documentation gave these away directly, without
+> > people having to see our policy and instructions first.
+> 
+> I hadn't thought about this but it would be possible that some are lost
+> due to this. I've often wondered how people manage never to forget to
+> prepend "VS" there ;-)
+
+I did think of this when I first added the [vs] check because of spam,
+and indeed am worried that desirable messages may occasionally be lost.
+
+We're not dropping the messages silently, nor producing bounce messages.
+We're rejecting in response to SMTP DATA command, so there isn't a later
+bounce message that may itself be caught by the sender's spam filter,
+unless the sender is using a forwarding address.  So in most cases the
+sender would be aware.  Another mitigation is those additional keywords.
+
+> I do think that there's definitely something that needs to be worked
+> on regarding this specific point affecting what has to be published.
+
+OK, I hope today's policy change looks good to you.
+
+Thanks,
+
+Alexander
