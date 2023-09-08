@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/1
-Message-ID: <21nn3332-526s-6n4o-qs0o-4q5951q2op0n@inai.de>
-Date: Mon, 2 Oct 2023 04:11:15 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/08/6
+Message-ID: <ZPucT1zmygLfWnPR@t430s.bluhm.invalid>
+Date: Sat, 9 Sep 2023 00:12:31 +0200
+From: Alexander Bluhm <alexander.bluhm@....net>
 To: oss-security@...ts.openwall.com
-Subject: Re: "Linux Kernel security demistified"
+Subject: Re: CVE-2023-4809: FreeBSD pf bypass when using IPv6
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Sep 08, 2023 at 07:48:21PM +0200, Enrico Bassetti wrote:
+> A FreeBSD with `pf` as firewall for IPv6 traffic and `scrub` enabled to 
+> reassemble IPv6 fragments is vulnerable to an attack that uses a crafted 
+> packet posing as IPv6 "atomic" fragment to bypass the rules.
 
-On Sunday 2023-10-01 21:13, Solar Designer wrote:
->
->Here are the slides:
->
->https://git.sr.ht/~gregkh/presentation-security
->https://git.sr.ht/~gregkh/presentation-security/blob/3547183843399d693c35b502cf4a313e256d0dd8/security-stuff.pdf
+I would like to mention that OpenBSD pf is not affected by the bug.
+As I am the original author of IPv6 fragment reassembly, I have
+just added a regression test to show that our pf drops such packets.
 
-Had a little chuckle.
+https://cvsweb.openbsd.org/src/regress/sys/netinet6/frag6/frag6_doubleatomic.py
 
-Slide 50: "If you are not using a stable kernel, your system is insecure."
-Slide 10: "All releases are stable."
+This behavior seems to be present since 2013 when I added support
+for atomic fragments to pf.  The relevant code is in OpenBSD
+pf_walk_header6() in pf.c.  There a bunch of sanity checks are done
+for the IPv6 header chain resulting in packet drops.  This function
+does not exist in FreeBSD.
 
-What a relief! :D
+https://github.com/openbsd/src/blame/cc53a24ce58eb2212822060db742650de2787ee4/sys/net/pf.c#L7076
+
+bluhm
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
