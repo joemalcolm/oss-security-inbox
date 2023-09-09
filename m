@@ -1,40 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/25/1
-Message-ID: <ZWJUDWTquSuqfmSk@gentoo.org>
-Date: Sat, 25 Nov 2023 12:07:41 -0800
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/09/1
+Message-ID: <udifco$gpb$1@ciao.gmane.io>
+Date: Sat, 9 Sep 2023 19:00:40 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: zihaoxiang@...che.org
-Subject: Re: CVE-2023-49068: Apache DolphinScheduler: Information Leakage Vulnerability
+Subject: mutt 2.2.12 security update
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 24, 2023 at 05:29:43AM +0000, Zihao Xiang wrote:
-> Severity: important
-> 
-> Affected versions:
-> 
-> - Apache DolphinScheduler before 3.2.1
-> 
-> Description:
-> 
-> Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache DolphinScheduler.This issue affects Apache DolphinScheduler: 3.2.1.
-> 
-> Users are recommended to upgrade to version [FIXED_VERSION], which fixes the issue.
+FYI, a mutt update that fixes a crash on header parsing:
 
-So <3.2.1 is affected, but also =3.2.1, and "[FIXED_VERSION]" was
-seemingly not replaced in the template. What are the correct affected
-and unaffected versions? I tried to dig into what releases the fix
-commit is in, but I found that that commit doesn't seem to be in any
-tags yet, either?
+http://lists.mutt.org/pipermail/mutt-announce/Week-of-Mon-20230904/000056.html
 
-~/git/dolphinscheduler $ git tag --contains 7308888c703fbe227887d2426273100582096134
-~/git/dolphinscheduler $
+Tavis.
 
-> References:
-> 
-> https://github.com/apache/dolphinscheduler/pull/15192
-> https://dolphinscheduler.apache.org
-> https://www.cve.org/CVERecord?id=CVE-2023-49068
-> 
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
