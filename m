@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/9
-Message-ID: <fc3a5306-5009-425d-bea7-b1b0ceb3288b@oracle.com>
-Date: Fri, 20 Oct 2023 11:42:10 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-45853: overflows in MiniZip in zlib through 1.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/11/1
+Message-ID: <e3905b54-e8b1-05dc-8216-3c3c32bdbf58@igalia.com>
+Date: Mon, 11 Sep 2023 18:05:55 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0008
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-45853 was published last week for:
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0008
+------------------------------------------------------------------------
 
-    MiniZip in zlib through 1.3 has an integer overflow and resultant heap-based
-    buffer overflow in zipOpenNewFileInZip4_64 via a long filename, comment, or
-    extra field. NOTE: MiniZip is not a supported part of the zlib product.
+Date reported           : September 11, 2023
+Advisory ID             : WSA-2023-0008
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0008.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0008.html
+CVE identifiers         : CVE-2023-28198, CVE-2023-32370,
+                          CVE-2023-40397.
 
-where "long" means "longer than can be stored in the 16-bit length value used
-for the length of these fields".
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-minizip is part of the contrib directory in zlib, which doesn't seem to be built
-by default as far as I can tell, yet NVD has assigned a CVSS of 9.8 to make CVE
-scanners scream at full volume, while Red Hat went with a CVSS of 5.3 instead:
+CVE-2023-28198
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.1.
+    Credit to hazbinhotel working with Trend Micro Zero Day Initiative.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: A use-after-free issue was addressed with improved
+    memory management.
 
-https://access.redhat.com/security/cve/CVE-2023-45853#cve-cvss-v3
+CVE-2023-32370
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.1.
+    Credit to Gertjan Franken of imec-DistriNet, KU Leuven.
+    Impact: Content Security Policy to block domains with wildcards may
+    fail. Description: A logic issue was addressed with improved
+    validation.
 
-A fix has been checked into the upstream git repo:
-https://github.com/madler/zlib/pull/843
-but a release has not yet been made including it.
+CVE-2023-40397
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Johan Carlsson (joaxcar).
+    Impact: A remote attacker may be able to cause arbitrary javascript
+    code execution. Description: The issue was addressed with improved
+    checks.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+September 11, 2023
