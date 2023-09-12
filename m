@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/4
-Message-ID: <6284ffe9-d228-46f0-be8c-c7f78a030523@oracle.com>
-Date: Sat, 30 Sep 2023 13:38:27 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/12/2
+Message-ID: <1e0d6c23-49ff-d833-ed26-bbdbeae93fd5@apache.org>
+Date: Tue, 12 Sep 2023 09:01:32 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+Subject: CVE-2023-40611: Apache Airflow Dag Runs Broken Access Control Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On 9/28/23 11:37, Alan Coopersmith wrote:
-> It does not appear that libvpx 1.13.1 has been released yet,
+Severity: low
 
-It was released yesterday, with the note:
+Affected versions:
 
-    "This release contains two security related fixes. One each for VP8 and VP9."
+- Apache Airflow before 2.7.1
 
-    https://github.com/webmproject/libvpx/releases/tag/v1.13.1
+Description:
 
-CVE-2023-44488 has been assigned to the VP9 bug:
+Apache Airflow, versions before 2.7.1, is affected by a vulnerability that allows authenticated and DAG-view authorized Users to modify some DAG run detail values when submitting notes. This could have them alter details such as configuration parameters, start date, etc.
 
-    "VP9 in libvpx before 1.13.1 mishandles widths, leading to a crash related
-     to encoding."
+Users should upgrade to version 2.7.1 or later which has removed the vulnerability.
 
-    https://www.cve.org/CVERecord?id=CVE-2023-44488
+Credit:
 
-It points to this commit for the fix:
+happyhacking (finder)
 
-    https://github.com/webmproject/libvpx/commit/263682c9a29395055f3b3afe2d97be1828a6223f
+References:
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+https://github.com/apache/airflow/pull/33413
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-40611
 
-
-Download attachment "OpenPGP_0xA2FB9E081F2D130E.asc" of type "application/pgp-keys" (8713 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
