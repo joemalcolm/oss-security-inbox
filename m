@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1642" "Thursday" "8" "September" "2016" "02:51:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160908065142.EF4D81BE24C@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: File Roller path traversal" nil nil nil "9" "2016090806:51:42" "[oss-security] Re: CVE Request: File Roller path traversal" (number mark "U       cve-assign@m Sep  8   38/1642  " thread-indent "\"[oss-security] Re: CVE Request: File Roller path traversal\"\n") "<43cd1612-2d42-a944-8089-bce6e48b45d6@canonical.com>" ("<43cd1612-2d42-a944-8089-bce6e48b45d6@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22078 invoked by uid 550); 8 Sep 2016 06:51:55 -0000
+Received: (qmail 20122 invoked by uid 550); 13 Sep 2023 09:38:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22060 invoked from network); 8 Sep 2016 06:51:55 -0000
-From: cve-assign@mitre.org
-To: tyhicks@canonical.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, paobac@src.gnome.org, security@ubuntu.com
-In-Reply-To: <43cd1612-2d42-a944-8089-bce6e48b45d6@canonical.com>
-Message-Id: <20160908065142.EF4D81BE24C@smtpvbsrv1.mitre.org>
-Date: Thu,  8 Sep 2016 02:51:42 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: File Roller path traversal
+Received: (qmail 15650 invoked from network); 13 Sep 2023 09:32:20 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <64f0e35f-4579-c9a6-5820-693c1b5f8395@apache.org>
+Date: Wed, 13 Sep 2023 10:31:03 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+From: Mark Thomas <markt@apache.org>
+To: oss-security@lists.openwall.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [SECURITY] CVE-2023-41081 Apache Tomcat Connectors (mod_jk)
+ Information Disclosure
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2023-41081 Apache Tomcat Connectors (mod_jk) Information Disclosure
 
-> File Roller 3.5.4 through 3.20.2 was affected by a path traversal bug
-> that could result in deleted files if a user were tricked into opening a
-> malicious archive.
-> 
-> http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.20/file-roller-3.20.3.news
-> http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.21/file-roller-3.21.90.news
-> Distro bug: https://launchpad.net/bugs/1171236
-> Upstream bug: https://bugzilla.gnome.org/show_bug.cgi?id=698554
-> Fixed by:
-> https://git.gnome.org/browse/file-roller/commit/?id=f70be1f41688859ec8dbe266df35a1839ceb96c5
+Severity: Important
 
-Use CVE-2016-7162.
+Vendor: The Apache Software Foundation
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Versions Affected:
+- Apache Tomcat Connectors mod_jk Connector 1.2.0 to 1.2.48
 
-iQIcBAEBCAAGBQJX0QmDAAoJEHb/MwWLVhi2DqkQAI/f8t2ZR6E+2yHJ1My3OBum
-2yuJFIdnkCzGonivRLk5l8Gj7v9tKMwqOP8HUFSy6bBzGy3fA+DOiAhjq+WJoGSQ
-tbjn2ATBnS4KylAJCD0luGV50A/qEo/kZ50K4+pVlK/jVOH5oQepxCFWrh9Nybnc
-9gr4DCwXubsi1l5Pjr1KzDZQyJInDdVH/Q4RlN7g3ZkenzFoMOWtQoeIsOnnfpw4
-3XTDto5EW4mAq/4kUFGoxAScpu3qhIVMU9ms6mL9KeSkRzXUl5Hrn4VYvHKya8fY
-Mpa+6dVrLYkkdB3ey76LJhTYQcx4qdNTjtgf+c0SmUjoqNaWIno1YkfajRWEEhyO
-fQzDyySAidxZMjG2wkqOn0rVAkJ2kRbStbAPNnS/RrGowp4GTGkmUvqxrv/+R3T0
-msdoVlz4DEy1RpNLI5uEfmKOJDtoRVHYgqm1S+VLokMRahA/Lcru+pgTzIzAJnwV
-+WHMUEVHur0fMdWVvdbtyYJKS5ti72HSxXM8182neiwA9yJH/Z+S4v5PMH4aGaHv
-riPEgRVpKLMPFnqV0zl6AuJWL4ljLRF2yhcrjcFlkNGk2vs95gEdeZv64xiLIW09
-k1eMhHaw9ZkWiJ/vaynDZrJ7NcvbI5PX6yVXNGEW+EA0csTHlm83w3cALY4ii+pq
-qrPRq/IrV7vf/vMs8Dmn
-=zLoP
------END PGP SIGNATURE-----
+Description:
+In some circumstances, such as when a configuration included
+"JkOptions +ForwardDirectories" but the configuration did not provide 
+explicit mounts for all possible proxied requests, mod_jk would use an 
+implicit mapping and map the request to the first defined worker. Such 
+an implicit mapping could result in the unintended exposure of the 
+status worker and/or bypass security constraints configured in httpd. As 
+of JK 1.2.49, the implicit mapping functionality has been removed and 
+all mappings must now be via explicit configuration.
+Only mod_jk is affected by this issue. The ISAPI redirector is not affected.
+
+Mitigation:
+Users of affected versions should apply one of the following mitigations:
+- Upgrade to Apache Tomcat Connector (mod_jk) 1.2.49 or later.
+- Ensure explicit mounts are configured for all possible proxied
+   requests
+
+Credit:
+This vulnerability was reported responsibly to the Tomcat security team 
+by Karl von Randow.
+
+References:
+[1] http://tomcat.apache.org/security-jk.html
