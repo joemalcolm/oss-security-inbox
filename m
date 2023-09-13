@@ -1,123 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/24/2
-Message-Id: <E1qNy2D-00042T-65@xenbits.xenproject.org>
-Date: Mon, 24 Jul 2023 16:03:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 433 v1 - x86/AMD: Zenbleed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/13/5
+Message-ID:  <YT4PR01MB98293522FFEC4031EC4BD7D1E8F0A@YT4PR01MB9829.CANPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 13 Sep 2023 22:39:49 +0000
+From: Katherine Mcmillan <kmcmi046@...tawa.ca>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Dan,
 
-                    Xen Security Advisory XSA-433
+I saw your email about joining oss-security, and I think it’s a wonderful idea for illumos. I am fully in support of this, and I’m wondering: is there a Foundation of any kind behind illumos? Are there any conferences dedicated to illumos or SmartOS?
 
-                          x86/AMD: Zenbleed
+Thank you,
+Katie
+________________________________
+From: Dan McDonald <danmcd@....io>
+Sent: Wednesday, September 13, 2023 9:21:22 PM
+To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+Cc: Dan McDonald <danmcd@....io>
+Subject: [oss-security] illumos (or at least danmcd) membership in the distros list
 
-ISSUE DESCRIPTION
-=================
+Attention : courriel externe | external email
 
-Researchers at Google have discovered Zenbleed, a hardware bug causing
-corruption of the vector registers.
+I'm requesting membership (for danmcd@....io <mailto:danmcd@....io> ) on the "distros" mailing list on behalf of illumos ( https://illumos.org ). We would join non-Linux participants such as those from Oracle Solaris, FreeBSD, NetBSD, and pkgsrc.
 
-When a VZEROUPPER instruction is discarded as part of a bad transient
-execution path, its effect on internal tracking are not unwound
-correctly.  This manifests as the wrong micro-architectural state
-becoming architectural, and corrupting the vector registers.
+illumos was a fork of the old OpenSolaris, established in 2010.  Once Oracle closed OpenSolaris after illumos forked, we became the continuing legacy of what was OpenSolaris's OS/Net consolidation.  Like Linux, we have downstream distros.  Unlike Linux, illumos is more than what Linux would call, "kernel".  I know that Oracle Solaris is already on this list, but we are not a downstream of them, despite our common ancestry.
 
-Note: While this malfunction is related to speculative execution, this
-      is not a speculative sidechannel vulnerability.
+For now, I would like to add myself:  danmcd@....io.  I will be forwarding under separate cover a copy of this to security@...umos,org, which has participants from distros.  In addition to being a member of the illumos security team, I'm also the lead for the SmartOS distro of illumos.  Other distro leads may request joining here.
 
-The corruption is not random.  It happens to be stale values from the
-physical vector register file, a structure competitively shared between
-sibling threads.  Therefore, an attacker can directly access data from
-the sibling thread, or from a more privileged context.
+I will now address the eligibility guildelines:
 
-For more details, see:
-  https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
-  https://github.com/google/security-research/security/advisories/GHSA-v6wh-rxpg-cmm8
+> • Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
+>
+>     • Have a userbase not limited to your own organization
 
-IMPACT
-======
+illumos certainly qualifies for these criteria.
 
-With very low probability, corruption of the vector registers can occur.
-This data corruption causes mis-calculations in subsequent logic.
+> • Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
 
-An attacker can exploit this bug to read data from different contexts on
-the same core.  Examples of such data includes key material, cypher and
-plaintext from the AES-NI instructions, or the contents of REP-MOVS
-instructions, commonly used to implement memcpy().
 
-VULNERABLE SYSTEMS
-==================
+There are people on this list who know me from one or more of:
 
-Systems running all versions of Xen are affected.
+- Old-days of Solaris inside Sun
 
-This bug is specific to the AMD Zen2 microarchitecture.  AMD do not
-believe that other microarchitectures are affected.
+- OpenSolaris
 
-MITIGATION
-==========
+- illumos
 
-This issue can be mitigated by disabling AVX, either by booting Xen with
-`cpuid=no-avx` on the command line, or by specifying `cpuid="host:avx=0"` in
-the vm.cfg file of all untrusted VMs.  However, this will come with a
-significant impact on the system and is not recommended for anyone able to
-deploy the microcode or patch described below.
+who can vouch for my record here.  As an example, consider this (migrated from blogs.sun.com) post from 2007:  https://kebe.com/blog/?p=413
 
-RESOLUTION
-==========
+> • Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
 
-AMD are producing microcode updates to address the bug.  Consult your
-dom0 OS vendor.  This microcode is effective when late-loaded, which can
-be performed on a live system without reboot.
 
-In cases where microcode is not available, the appropriate attached
-patch updates Xen to use a control register to avoid the issue.
+Per earlier, because we forked OpenSolaris and Oracle closed it, illumos is the most-upstream in this sphere.
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+> • Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
 
-xsa433.patch           xen-unstable
-xsa433-4.17.patch      Xen 4.17.x
-xsa433-4.16.patch      Xen 4.16.x
-xsa433-4.15.patch      Xen 4.15.x
-xsa433-4.14.patch      Xen 4.14.x
 
-$ sha256sum xsa433*
-a9331733b63e3e566f1436a48e9bd9e8b86eb48da6a8ced72ff4affb7859e027  xsa433.patch
-6f1db2a2078b0152631f819f8ddee21720dabe185ec49dc9806d4a9d3478adfd  xsa433-4.14.patch
-ca3a92605195307ae9b6ff87240beb52a097c125a760c919d7b9a0aff6e557c0  xsa433-4.15.patch
-e5e94b3de68842a1c8d222802fb204d64acd118e3293c8e909dfaf3ada23d912  xsa433-4.16.patch
-41d12104869b7e8307cd93af1af12b4fd75a669aeff15d31b234dc72981ae407  xsa433-4.17.patch
-$
+If you look at the illumos mailing list, I've addressed a few security vulnerabilities there.  E.g. https://illumos.topicbox.com/groups/developer/T13ef186a53edeb5c-M821cc18b5884e04e16daa8fd/cve-2023-31284-buffer-overflow-in-dev-net
 
-NOTE CONCERNING TIMELINE
-========================
+> • Accept the list policy (see above)
+> • Be able and willing to contribute back (see above), preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
+>
+>     • Be able and willing to handle PGP-encrypted e-mail
 
-This issue is subject to coordinated disclosure on August 8th.  The
-discoverer chose to publish details ahead of this timeline.
------BEGIN PGP SIGNATURE-----
+I will abide by these.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmS+oDEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ4JkIAMOW9i78luUOEgggrQDp97T1CMAhew+3v+r2ZPMl
-z7a6ATRU3oW7yeepYEP/1mrRFi2E09zrj0rDLvLVrYrhqeDGVIL+ZfI480508/5Y
-ubRYZC13rA3jDMDu9r+oBIzObumecRAVj54j5BQmuKyXDqkDMGfbVShpMMvARvhE
-wqlBXNFB1Z+ARlDrDZZo6sKhfUqHS4Fo8iilWthKxY9Eb0cxxA1PazMJz5OOaqe6
-6Y3hHrSN4dq3DseAhYGgtw+BOTa/XlgAzkdlJM0DvooS22HFuHqwB7dckrtpCMlC
-6I3P3p0GfsnG8U99lxYWzuEbtAKwSsFf/da2S8A4rel0aOE=
-=xmQd
------END PGP SIGNATURE-----
+> • Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
 
-Download attachment "xsa433.patch" of type "application/octet-stream" (4348 bytes)
+Per above, I believe someone on this maling list can vouch for me.
 
-Download attachment "xsa433-4.14.patch" of type "application/octet-stream" (4332 bytes)
+Thank you,
+Dan McDonald -- illumos core team, and SmartOS lead
 
-Download attachment "xsa433-4.15.patch" of type "application/octet-stream" (4292 bytes)
 
-Download attachment "xsa433-4.16.patch" of type "application/octet-stream" (4301 bytes)
-
-Download attachment "xsa433-4.17.patch" of type "application/octet-stream" (4348 bytes)
