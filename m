@@ -1,48 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/14
-Message-ID: <CAKYehMbX4+vq2adrfE0wpK0uGoORMOeewXB2F=8h1EWzp14h-A@mail.gmail.com>
-Date: Fri, 21 Apr 2023 00:05:14 +0800
-From: Huajie Wang <benjobs@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: dev <dev@...eampark.apache.org>
-Subject: CVE-2022-45801: Apache StreamPark (incubating): LDAP Injection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/13/4
+Message-ID: <6EBBC128-36D2-4262-88F4-6889E9E6DE1E@mnx.io>
+Date: Wed, 13 Sep 2023 20:21:22 +0000
+From: Dan McDonald <danmcd@....io>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Dan McDonald <danmcd@....io>
+Subject: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Apache StreamPark (incubating): LDAP Injection Vulnerability
+I'm requesting membership (for danmcd@....io <mailto:danmcd@....io> ) on the "distros" mailing list on behalf of illumos ( https://illumos.org ). We would join non-Linux participants such as those from Oracle Solaris, FreeBSD, NetBSD, and pkgsrc.
+
+illumos was a fork of the old OpenSolaris, established in 2010.  Once Oracle closed OpenSolaris after illumos forked, we became the continuing legacy of what was OpenSolaris's OS/Net consolidation.  Like Linux, we have downstream distros.  Unlike Linux, illumos is more than what Linux would call, "kernel".  I know that Oracle Solaris is already on this list, but we are not a downstream of them, despite our common ancestry.
+
+For now, I would like to add myself:  danmcd@....io.  I will be forwarding under separate cover a copy of this to security@...umos,org, which has participants from distros.  In addition to being a member of the illumos security team, I'm also the lead for the SmartOS distro of illumos.  Other distro leads may request joining here.
+
+I will now address the eligibility guildelines:
+
+> • Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
+> 
+>     • Have a userbase not limited to your own organization
+
+illumos certainly qualifies for these criteria.
+
+> • Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
 
 
-Severity: Moderate
+There are people on this list who know me from one or more of:
 
-Versions Affected:
+- Old-days of Solaris inside Sun
 
-Apache StreamPark 1.0.0 before 2.0.0
+- OpenSolaris
 
+- illumos
 
-Description:
+who can vouch for my record here.  As an example, consider this (migrated from blogs.sun.com) post from 2007:  https://kebe.com/blog/?p=413
 
-Apache StreamPark 1.0.0 to 2.0.0 have a LDAP injection vulnerability.
-LDAP Injection is an attack used to exploit web based applications
-that construct LDAP statements based on user input. When an
-application fails to properly sanitize user input, it's possible to
-modify LDAP statements through techniques similar to SQL Injection.
-LDAP injection attacks could result in the granting of permissions to
-unauthorized queries, and content modification inside the LDAP tree.
-This risk may only occur when the user logs in with ldap, and the user
-name and password login will not be affected, Users of the affected
-versions should upgrade to Apache StreamPark 2.0.0 or later
+> • Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
 
 
-Mitigation:
+Per earlier, because we forked OpenSolaris and Oracle closed it, illumos is the most-upstream in this sphere.
 
-Users of the affected versions should apply one of the following
-
-- Upgrade to Apache StreamPark 2.0.0 or later
-
-References:
-https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-45801
+> • Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
 
 
+If you look at the illumos mailing list, I've addressed a few security vulnerabilities there.  E.g. https://illumos.topicbox.com/groups/developer/T13ef186a53edeb5c-M821cc18b5884e04e16daa8fd/cve-2023-31284-buffer-overflow-in-dev-net
 
-Best,
-Huajie Wang
+> • Accept the list policy (see above)
+> • Be able and willing to contribute back (see above), preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
+> 
+>     • Be able and willing to handle PGP-encrypted e-mail
+
+I will abide by these.
+
+> • Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+
+Per above, I believe someone on this maling list can vouch for me.
+
+Thank you,
+Dan McDonald -- illumos core team, and SmartOS lead
 
