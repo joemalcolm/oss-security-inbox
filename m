@@ -1,53 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/05/1
-Message-ID: <a4993da7-a79b-c22b-b25c-337537a8f4b3@igalia.com>
-Date: Tue, 5 Dec 2023 14:57:21 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0011
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/13/2
+Message-ID: <64f0e35f-4579-c9a6-5820-693c1b5f8395@apache.org>
+Date: Wed, 13 Sep 2023 10:31:03 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2023-41081 Apache Tomcat Connectors (mod_jk) Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
+CVE-2023-41081 Apache Tomcat Connectors (mod_jk) Information Disclosure
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0011
-------------------------------------------------------------------------
+Severity: Important
 
-Date reported           : December 05, 2023
-Advisory ID             : WSA-2023-0011
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0011.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0011.html
-CVE identifiers         : CVE-2023-42916, CVE-2023-42917.
+Vendor: The Apache Software Foundation
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Versions Affected:
+- Apache Tomcat Connectors mod_jk Connector 1.2.0 to 1.2.48
 
-CVE-2023-42916
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.3.
-    Credit to Clément Lecigne of Google's Threat Analysis Group.
-    Impact: Processing web content may disclose sensitive information.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: An out-of-bounds read was addressed with
-    improved input validation.
-    WebKit Bugzilla: 265041
+Description:
+In some circumstances, such as when a configuration included
+"JkOptions +ForwardDirectories" but the configuration did not provide 
+explicit mounts for all possible proxied requests, mod_jk would use an 
+implicit mapping and map the request to the first defined worker. Such 
+an implicit mapping could result in the unintended exposure of the 
+status worker and/or bypass security constraints configured in httpd. As 
+of JK 1.2.49, the implicit mapping functionality has been removed and 
+all mappings must now be via explicit configuration.
+Only mod_jk is affected by this issue. The ISAPI redirector is not affected.
 
-CVE-2023-42917
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.3.
-    Credit to Clément Lecigne of Google's Threat Analysis Group.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: A memory corruption vulnerability was
-    addressed with improved locking.
-    WebKit Bugzilla: 265067
+Mitigation:
+Users of affected versions should apply one of the following mitigations:
+- Upgrade to Apache Tomcat Connector (mod_jk) 1.2.49 or later.
+- Ensure explicit mounts are configured for all possible proxied
+   requests
 
+Credit:
+This vulnerability was reported responsibly to the Tomcat security team 
+by Karl von Randow.
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-December 05, 2023
+References:
+[1] http://tomcat.apache.org/security-jk.html
