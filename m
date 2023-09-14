@@ -1,25 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/4
-Message-ID: <ae728a21-91d5-463d-9f54-44186a01253d@intel.com>
-Date: Tue, 14 Nov 2023 10:31:51 -0800
-From: Antonio Gomez Iglesias <antonio.gomez.iglesias@...el.com>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE-2023-23583: Intel - Denial of Service - Privilege Escalation (Reptar)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/4
+Message-ID: <ZQMbzCxj5XhW5+a5@itl-email>
+Date: Thu, 14 Sep 2023 10:42:19 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Cc: Dan McDonald <danmcd@....io>
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Name of the issue: Redundant Prefix Issue
+On Wed, Sep 13, 2023 at 08:21:22PM +0000, Dan McDonald wrote:
+> I'm requesting membership (for danmcd@....io <mailto:danmcd@....io> ) on the "distros" mailing list on behalf of illumos ( https://illumos.org ). We would join non-Linux participants such as those from Oracle Solaris, FreeBSD, NetBSD, and pkgsrc.
+> 
+> illumos was a fork of the old OpenSolaris, established in 2010.  Once Oracle closed OpenSolaris after illumos forked, we became the continuing legacy of what was OpenSolaris's OS/Net consolidation.  Like Linux, we have downstream distros.  Unlike Linux, illumos is more than what Linux would call, "kernel".  I know that Oracle Solaris is already on this list, but we are not a downstream of them, despite our common ancestry.
+> 
+> For now, I would like to add myself:  danmcd@....io.  I will be forwarding under separate cover a copy of this to security@...umos,org, which has participants from distros.  In addition to being a member of the illumos security team, I'm also the lead for the SmartOS distro of illumos.  Other distro leads may request joining here.
+> 
+> I will now address the eligibility guildelines:
+> 
+> > • Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
+> > 
+> >     • Have a userbase not limited to your own organization
+> 
+> illumos certainly qualifies for these criteria.
+> 
+> > • Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
+> 
+> 
+> There are people on this list who know me from one or more of:
+> 
+> - Old-days of Solaris inside Sun
+> 
+> - OpenSolaris
+> 
+> - illumos
+> 
+> who can vouch for my record here.  As an example, consider this (migrated from blogs.sun.com) post from 2007:  https://kebe.com/blog/?p=413
+> 
+> > • Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+> 
+> 
+> Per earlier, because we forked OpenSolaris and Oracle closed it, illumos is the most-upstream in this sphere.
+> 
+> > • Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
+> 
+> 
+> If you look at the illumos mailing list, I've addressed a few security vulnerabilities there.  E.g. https://illumos.topicbox.com/groups/developer/T13ef186a53edeb5c-M821cc18b5884e04e16daa8fd/cve-2023-31284-buffer-overflow-in-dev-net
+> 
+> > • Accept the list policy (see above)
+> > • Be able and willing to contribute back (see above), preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
+> > 
+> >     • Be able and willing to handle PGP-encrypted e-mail
+> 
+> I will abide by these.
+> 
+> > • Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+> 
+> Per above, I believe someone on this maling list can vouch for me.
+> 
+> Thank you,
+> Dan McDonald -- illumos core team, and SmartOS lead
+> 
 
+Would security@...umos.org be a better choice?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Description of the issue
-Under certain microarchitectural conditions, Intel has identified cases
-where execution of an instruction (REP MOVSB) encoded with a redundant
-REX prefix may result in unpredictable system behavior resulting in a
-system crash/hang, or, in some limited scenarios, may allow escalation
-of privilege from CPL3 to CPL0.
-This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
-Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
-
-
-Mitigation
-Intel is providing a microcode update to mitigate this issue: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20231114
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
