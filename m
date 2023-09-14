@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/26/2
-Message-ID: <46feeb7c-00af-4cf6-486e-a122519904ec@apache.org>
-Date: Mon, 26 Jun 2023 15:52:56 +0000
-From: Elad Kalif <eladkal@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34395: Apache Airflow ODBC Provider: Remote code execution vulnerability 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/8
+Message-ID: <42346bcd-ce05-4221-b89b-eaa98d27f03e@oracle.com>
+Date: Thu, 14 Sep 2023 14:36:47 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Dan McDonald <danmcd@....io>
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On 9/13/23 13:21, Dan McDonald wrote:
+>> • Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
 
-Affected versions:
+For this criteria I think you'd want to point to either the github logs
+or release announcements for the distros themselves (OpenIndiana,
+SmartOS, OmniOS, etc.) as it's asking for the history of the distro in
+security response.   I don't think the illumos-gate has any relevant
+history for this criteria - you can certainly show fixing security bugs
+in that code base, but I don't think any of them would have been shared
+on the distros list, as illumos-gate only contains a small number of
+externally maintained FOSS packages - most illumos distros add many more
+FOSS packages on top of what the gate ships, and its those FOSS packages
+(things like curl, cups, git, sudo, etc.) that info is shared about on the
+distros list, as you can see at https://www.openwall.com/lists/distros/ .
 
-- Apache Airflow ODBC Provider before 4.0.0
+>> • Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+> 
+> Per above, I believe someone on this maling list can vouch for me.
 
-Description:
+I am on the distros list, and have been active on oss-security for years,
+and can vouch for Dan personally.
 
-Improper Neutralization of Argument Delimiters in a Command ('Argument Injection') vulnerability in Apache Software Foundation Apache Airflow ODBC Provider.
-In OdbcHook, A privilege escalation vulnerability exists in a system due to controllable ODBC driver parameters that allow the loading of arbitrary dynamic-link libraries, resulting in command execution.
-Starting version 4.0.0 driver can be set only from the hook constructor.
-This issue affects Apache Airflow ODBC Provider: before 4.0.0.
-
-Credit:
-
-KmhlYXJ0 (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/31713
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-34395
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
