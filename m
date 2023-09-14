@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/28/1
-Message-ID: <e4c0830d-754a-2b9f-4379-cd13dd3c69d9@apache.org>
-Date: Sat, 28 Oct 2023 06:30:28 +0000
-From: Elad Kalif <eladkal@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/6
+Message-ID: <20230914151403.GA15124@openwall.com>
+Date: Thu, 14 Sep 2023 17:14:03 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46215: Apache Airflow Celery provider, Apache Airflow: Sensitive information logged as clear text when rediss, amqp, rpc protocols are used as Celery result backend 
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Thu, Sep 14, 2023 at 10:42:19AM -0400, Demi Marie Obenour wrote:
+> On Wed, Sep 13, 2023 at 08:21:22PM +0000, Dan McDonald wrote:
+> > For now, I would like to add myself:  danmcd@....io.
+> 
+> Would security@...umos.org be a better choice?
 
-Affected versions:
+No.  One of the differences of (linux-)distros from its predecessor
+vendor-sec is that we don't subscribe any exploder addresses - we only
+subscribe individuals.  Some distro security teams can be rather large,
+with not everyone in there needing direct (linux-)distros subscription.
+Also, by far not every issue is relevant to every distro.  So the
+distro's individual representatives on (linux-)distros are supposed to
+share only relevant information with others on their teams.
 
-- Apache Airflow Celery provider 3.3.0 through 3.4.0
-- Apache Airflow 1.10.0 before 2.7.0
+That said, the membership is for the distro, not for the individuals.
+The Subject line here is confused about that.  The difference is in what
+uses of information are allowed (only for the distro's security) and in
+conditions for staying subscribed (only while requested by the distro's
+leadership and only as needed for the distro's security).
 
-Description:
-
-Insertion of Sensitive Information into Log File vulnerability in Apache Airflow Celery provider, Apache Airflow.
-
-Sensitive information logged as clear text when rediss, amqp, rpc protocols are used as Celery result backend
-Note: the vulnerability is about the information exposed in the logs not about accessing the logs.
-
-This issue affects Apache Airflow Celery provider: from 3.3.0 through 3.4.0; Apache Airflow: from 1.10.0 through 2.6.3.
-
-Users are recommended to upgrade Airflow Celery provider to version 3.4.1 and Apache Airlfow to version 2.7.0 which fixes the issue.
-
-Credit:
-
-husseinawala (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/34954
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46215
-
+Alexander
