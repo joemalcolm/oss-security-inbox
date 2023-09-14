@@ -1,87 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/8
-Message-ID: <20230925182834.GA8247@openwall.com>
-Date: Mon, 25 Sep 2023 20:28:34 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Andrew Cooper <andrew.cooper3@...rix.com>
-Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/1
+Message-ID: <alpine.GSO.2.20.2309140824140.3888@scrappy.simplesystems.org>
+Date: Thu, 14 Sep 2023 08:36:17 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 25, 2023 at 06:10:05PM +0100, Andrew Cooper wrote:
-> On 25/09/2023 5:36 pm, Solar Designer wrote:
-> > While I am at it, here's the corresponding mitigation in Linux kernel:
-> >
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
-> 
-> Not really.  That patch entirely misunderstood the vulnerability.  I
-> went through several rounds of getting AMD to better-understand their bug.
-> 
-> Linux's fix was rewritten in
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f58d6fbcb7c848b7f2469be339bc571f2e9d245b
-> and this implements the same logic as I implemented in Xen.
+On Wed, 13 Sep 2023, Dan McDonald wrote:
 
-Oh wow.  Thank you for correcting me (and correcting AMD first?)
+> I'm requesting membership (for danmcd@....io <mailto:danmcd@....io> ) on the "distros" mailing list on behalf of illumos ( https://illumos.org ). We would join non-Linux participants such as those from Oracle Solaris, FreeBSD, NetBSD, and pkgsrc.
 
-> It's worth noting that because AMD did not allocate a $FOO_NO CPUID bit,
-> there's no ability for a VM to figure out that it might move to
-> vulnerable hardware and therefore should engage the workaround.  The
-> best a VM can do is best-effort based on whether it looks like it's
-> booting on a Zen1 system.
+I am not a member of the 'distros' list, but can vouch for Dan 
+McDonald's dedication and capabilities, as observed over several 
+years.  Dan did not mention it, but he previously became the primary 
+maintainer of an Illumos distribution known as "OmniOS", which I use. 
+As a maintainer, Dan did pay close attention to security issues.
 
-Maybe directly probing for the bug is an option?  Perhaps can be done
-within one thread (where the bug doesn't have security impact, but is
-detectable anyway, no)?
+In terms of capabilites, Illumos-based distributions are similar in 
+capabilty to major Linux distributions, or the major BSD 
+distributions.  Illumos has a long heritage derived from Solaris, 
+which emerged from SunOS/SVR4, but includes many unique capabilities, 
+some of which were developed under Illumos after 2010. Each 
+Illumos-based distribution seems to target a different usage model.
 
-> Also the cross-thread nature is also poorly reported in public.
-
-Right, I couldn't find it mentioned anywhere other than your advisory.
-
-Do you know if only the quotient leaks, or also the remainder?  In the
-below, I assume the remainder leaks as well.
-
-I'm concerned it could affect some cryptographic code, in particular
-(but in a very minor way) typical implementations of Argon2.  There's a
-3-year-pending pull request to the upstream/reference Argon2
-implementation that I think would avoid the issue there (by optimizing
-out the divides):
-
-https://github.com/P-H-C/phc-winner-argon2/pull/306
-
-but there are many other implementations and I guess (almost?) all use
-the programming language's modulo division operation as-is.  Luckily,
-the severity is minor - this would only affect the cache-timing unsafe
-flavors, providing an extra (more direct and maybe more reliable?)
-side-channel, and this only matters when the attacker has a copy of or
-has guessed the salts (the same as for other cache-timing unsafe
-password hashes/KDFs).  So in terms of threat models and attack vectors,
-no change at all, but real-world (in)feasibility of otherwise-similar
-attacks can vary.  No big deal, just something to improve where we can.
-
-For others reading just the list postings and for archival, this newer
-Linux kernel commit is:
-
-> author	Borislav Petkov (AMD) <bp@...en8.de>	2023-08-11 23:38:24 +0200
-> committer	Borislav Petkov (AMD) <bp@...en8.de>	2023-08-14 11:02:50 +0200
-> 
-> x86/CPU/AMD: Fix the DIV(0) initial fix attempt
-> 
-> Initially, it was thought that doing an innocuous division in the #DE
-> handler would take care to prevent any leaking of old data from the
-> divider but by the time the fault is raised, the speculation has already
-> advanced too far and such data could already have been used by younger
-> operations.
-> 
-> Therefore, do the innocuous division on every exit to userspace so that
-> userspace doesn't see any potentially old data from integer divisions in
-> kernel space.
-> 
-> Do the same before VMRUN too, to protect host data from leaking into the
-> guest too.
-> 
-> Fixes: 77245f1c3c64 ("x86/CPU/AMD: Do not leak quotient data after a division by 0")
-> Signed-off-by: Borislav Petkov (AMD) <bp@...en8.de>
-> Cc: <stable@...nel.org>
-> Link: https://lore.kernel.org/r/20230811213824.10025-1-bp@alien8.de
-
-Alexander
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
