@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/19/1
-Message-ID: <9d46de17-2d89-2795-3096-6e2e46687e9a@apache.org>
-Date: Sun, 19 Nov 2023 07:59:35 +0000
-From: Xiang Chen <cdmikechen@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46302: Apache Submarine: Fix CVE-2022-1471 SnakeYaml unsafe deserialization 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/7
+Message-ID: <37FAC982-F2BB-49DE-9534-8A34D3FAD497@mnx.io>
+Date: Thu, 14 Sep 2023 15:49:22 +0000
+From: Dan McDonald <danmcd@....io>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Sorry for being unclear (but I tried to understand the possible distinction in the parenthesized bit of the subject).
 
-Affected versions:
+On Sep 14, 2023, at 11:14 AM, Solar Designer <solar@...nwall.com> wrote:
+> 
+> That said, the membership is for the distro, not for the individuals.
+> The Subject line here is confused about that.  The difference is in what
+> uses of information are allowed (only for the distro's security) and in
+> conditions for staying subscribed (only while requested by the distro's
+> leadership and only as needed for the distro's security).
 
-- Apache Submarine 0.7.0 before 0.8.0
+Regardless of the precise semantics, I'm here on behalf of illumos, and I'm volunteering/happy to be the individual representing illumos.
 
-Description:
-
-Apache Software Foundation Apache Submarine has a bug when serializing against yaml. The bug is caused by snakeyaml  https://nvd.nist.gov/vuln/detail/CVE-2022-1471 .
-
-Apache Submarine uses JAXRS to define REST endpoints.  In order to
-handle YAML requests (using application/yaml content-type), it defines
-a YamlEntityProvider entity provider that will process all incoming
-YAML requests.  In order to unmarshal the request, the readFrom method
-is invoked, passing the entityStream containing the user-supplied data in `submarine-server/server-core/src/main/java/org/apache/submarine/server/utils/YamlUtils.java`.
- 
-We have now fixed this issue in the new version by replacing to `jackson-dataformat-yaml`.
-This issue affects Apache Submarine: from 0.7.0 before 0.8.0. Users are recommended to upgrade to version 0.8.0, which fixes this issue.
-If using the version smaller than 0.8.0  and not want to upgrade, you can try cherry-pick PR  https://github.com/apache/submarine/pull/1054  and rebuild the submart-server image to fix this.
-
-This issue is being tracked as SUBMARINE-1371 
-
-Credit:
-
-GHSL team member @jorgectf (Jorge Rosillo) (reporter)
-
-References:
-
-https://issues.apache.org/jira/browse/SUBMARINE-1371
-https://github.com/apache/submarine/pull/1054
-https://submarine.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46302
-https://issues.apache.org/jira/browse/SUBMARINE-1371
+Hope this helps,
+Dan
 
