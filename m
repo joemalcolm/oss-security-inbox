@@ -1,111 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/5
-Message-ID: <ZTVFrvd2h+70PhaV@itl-email>
-Date: Sun, 22 Oct 2023 11:54:03 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/3
+Message-ID: <bfd06da9-4b55-ddf4-7b51-9cda1ac57fdd@apache.org>
+Date: Thu, 14 Sep 2023 06:27:25 +0000
+From: Elad Kalif <eladkal@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sandboxing,of upstream programs by distros
+Subject: CVE-2023-41267: Apache HDFS Provider error message suggested installation of incorrect pip package 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 22, 2023 at 09:19:59AM -0500, Bob Friesenhahn wrote:
-> On Sat, 21 Oct 2023, Demi Marie Obenour wrote:
-> > > 
-> > > For Rocky Linux Security SIG, the only relevant thing mentioned so far
-> > > was possibly offering an OpenBSD pledge()-alike that other packages
-> > > could use.  However, I am skeptical any actually would, unless we also
-> > > introduce such uses ourselves and maintain own "override" packages
-> > > (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
-> > > software.  Initially, we are going to only create "override' packages
-> > > for core or very commonly used/exposed components, and to do so only for
-> > > specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
-> > > coming from EPEL and with most of its dependency libraries coming from
-> > > AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
-> > > make the cut, at least not initially.
-> > 
-> > Has deprecating ImageMagick and/or GraphicsMagick outright been
-> > considered?  I don’t just mean the downstream packages, but the entire
-> > upstream projects, or at least the libraries.
-> 
-> RHEL already deprecated ImageMagick several years ago and advised users to
-> use GraphicsMagick (https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/7.7_release_notes/deprecated_functionality).
-> Those users were confused given that many of the recipes they were using for
-> ImageMagick did not work with GraphicsMagick. The solution for those users
-> was to find a different way to install ImageMagick.
-> 
-> > One option would be to instead make an IPC call to a persistent daemon
-> > running in the background.  That said, has wasm2c been considered?  The
-> > best fix would be something that can make C code memory-safe, even if it
-> > comes at a performance hit of 4x or more (like SoftBound+CETS did).
-> > Stuff that cares about performance should be migrating to something like
-> > libvips or ImageFlow.
-> > 
-> > If neither of these are options, I think the entire library will need to
-> > be deprecated for eventual removal.  The command-line tools can remain,
-> > but they can be much more strongly sandboxed than a library can, because
-> > they have the entire process to themselves.
-> 
-> Any deprecations or sandboxing approaches which fail to understand and
-> address the needs of the "user" will fail.  Replacing package 'A' with
-> package 'B', where package 'B' works totally differently, or performs
-> different functions than package 'A' will fail because the users will not
-> use it.
+Severity: low
 
-That is true.
+Affected versions:
 
-> Unfortunately, most Linux IPC mechanisms are not very secure since they rely
-> on historical Unix privilege models to control access.
+- Apache Airflow HDFS Provider before 4.1.1
 
-If one can bypass access control on IPC, one can easily get root by
-sending malicious commands to systemd, so I don't think this is
-something to worry about.
+Description:
 
-> Common ways to assure
-> security such as TLS usually result in a considerable reduction of
-> performance. Solutions like Landlock seem useful for very restricted usage
-> applications.  Sandboxing solutions which work for any use of a program seem
-> better than requiring a client/server model.
+In the Apache Airflow HDFS Provider, versions prior to 4.1.1, a documentation info pointed users to an install incorrect pip package. As this package name was unclaimed, in theory, an attacker could claim this package and provide code that would be executed when this package was installed. The Airflow team has since taken ownership of the package (neutralizing the risk), and fixed the doc strings in version 4.1.1
 
-The advantage of a client/server model is that it avoids a library
-having to spawn child processes, which was mentioned as a concern
-earlier.  I agree that it is more effort than desirable.
+Credit:
 
-> As the developer/maintainer of a complex C program (GraphicsMagick), I
-> appreciate any advice on improvements which make it more suitable for
-> sandboxing, or less likely to appear as a hazard on the security radar.
+AnupamAs01 (finder)
 
-To make a program suitable for sandboxing, several requirements must be
-met:
+References:
 
-1. The program must run in a separate address space.  This can either be
-   a OS process, a software fault isolation (SFI) container, or a SFI
-   container inside an OS process.  If an SFI container is used without
-   a separate OS process, additional care must be taken to prevent
-   side-channel attacks, so I do not recommend this solution without
-   significant additional research.
+https://github.com/apache/airflow/pull/33813
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-41267
 
-2. All I/O resources (such as file descriptors) must be acquired before
-   processing untrusted input.  It must not be possible to use these
-   resources to access additional resources the program should not have
-   access to.
-
-3. Before processing untrusted input, the program must lose the ability
-   to acquire additional I/O resources.
-
-4. The address space (whether an OS process or an SFI container) must
-   not be reused once processing has completed, unless it can be
-   forcibly and verifiably reset to its initial state.
-
-5. If the inputs to the processing were untrusted, the results must also
-   be considered untrusted.
-
-A command-line tool can probably meet all of these requirements but the
-last one quite easily.  For a library, the difficulty of meeting these
-requirements will depend significantly on the library API.  I am not
-familiar with the GraphicsMagick API and so am not sure how difficult it
-will be for the GraphicsMagick API to support sandboxing.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
