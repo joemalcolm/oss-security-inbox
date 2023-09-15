@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/4
-Message-ID: <806c9e2b-a090-8b03-4da7-b58ab040a251@geeklan.co.uk>
-Date: Fri, 21 Jul 2023 03:46:28 +0100
-From: Sevan Janiyan <venture37@...klan.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/15/1
+Message-ID: <20230915210906.GA22532@openwall.com>
+Date: Fri, 15 Sep 2023 23:09:06 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Announce: OpenSSH 9.3p2 released
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-On 21/07/2023 02:04, Matthew Fernandez wrote:
-> I don’t think this helps much though, right? The Qualys research that
->  motivated this found an exploit chain using only libs present in 
-> /usr/lib in a default Ubuntu install.
+Hi Dan,
 
-Yes, you're right, but, you can be a bit more granular in the paths that
-you allow without introducing more knobs for when you forward your
-agent. e.g Ubuntu & Debian install the relevant libraries into
-/usr/lib/$ARCH-linux-gnu/pkcs11. Rather than permitting anything from
-/usr/lib, only load from the pkcs11 directory.
-Looking into it, it looks like both distros (inherited from Debian?)
-install some libraries into /usr/lib/$ARCH-linux-gnu and symlink into
-/usr/lib/$ARCH-linux-gnu/pkcs11 so that would need to change to go the
-other way. e.g opensc-pkcs11.so is symlinked as such.
+Your request looks good to me, except that this criterion:
 
-> If you want to lock down loading to a specific non-/usr/lib path that
-> you have control over, this suggests you know and are in control of
-> the PKCS#11 providers you’re going to support. In which case, why not
-> avoid dynamic loading to begin with? I guess the allowlist and new
-> defaults are the answer to this conundrum though.
-I was thinking how you would address the issue if you were responsible 
-for the OS/distro build rather than on the user/operator side and that 
-it would be easier to insure that the PKCS#11 libraries you are 
-packaging get installed into a specific directory and only permit the 
-ssh-agent to load from that directory, avoiding the need to maintain an 
-allowlist. The number of shared libraries you would then need to analyse 
-would be significantly smaller too (60,000? yikes)
+On Wed, Sep 13, 2023 at 08:21:22PM +0000, Dan McDonald wrote:
+> > Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
 
+is meant to be about the distro, not about you personally.
 
-Sevan
+Alan Coopersmith also correctly pointed this out and made suggestions.
+
+Can you show illumos fixing non-illumos-only security issues within days
+after public disclosure, so that a few days of advance notice would have
+made those fixes even quicker?
+
+Thanks,
+
+Alexander
