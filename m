@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/7
-Message-ID: <807803eb-4bbf-20a3-6a79-df3ade2444ca@apache.org>
-Date: Mon, 20 Mar 2023 12:11:45 +0000
-From: Radu Cotescu <radu@...che.org>
-To: announce@...che.org, users@...ng.apache.org, dev@...ng.apache.org, oss-security@...ts.openwall.com, security@...ng.apache.org
-Subject: CVE-2023-26513: Apache Sling Resource Merger: Requests to certain paths managed by the Apache Sling Resource Merger can lead to DoS 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/18/1
+Message-ID: <36F38D40-5F90-4E1B-B7A2-121431A3E6FE@mnx.io>
+Date: Mon, 18 Sep 2023 17:36:13 +0000
+From: Dan McDonald <danmcd@....io>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Sep 15, 2023, at 5:09 PM, Solar Designer <solar@...nwall.com> wrote:
+> 
+> Hi Dan,
+> 
+> Your request looks good to me, except that this criterion:
+> 
+> On Wed, Sep 13, 2023 at 08:21:22PM +0000, Dan McDonald wrote:
+>>> Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
+> 
+> is meant to be about the distro, not about you personally.
+> 
+> Alan Coopersmith also correctly pointed this out and made suggestions.
+> 
+> Can you show illumos fixing non-illumos-only security issues within days
+> after public disclosure, so that a few days of advance notice would have
+> made those fixes even quicker?
 
-Excessive Iteration vulnerability in Apache Software Foundation Apache Sling Resource Merger.This issue affects Apache Sling Resource Merger: from 1.2.0 before 1.4.2.
+It's a per-illumos-distro property.  OmniOS has Stable & LTS releases.   Here's the current-stable
+release notes, dynamically updated every time they update:
 
-This issue is being tracked as SLING-11776 
+	https://github.com/omniosorg/omnios-build/blob/r151046/doc/ReleaseNotes.md
 
-Credit:
+So I'm not sure if a few days of advance notice would make those quicker,
+but I do know that other distros have biweekly scheduled releases, and advance
+notice there would keep those wheels spinning faster.  Esp. since "patch tuesday"
+is a mere one-day before the release branch is forked off on release weeks.
 
- Alex Collignon (reporter)
+Our security coordination in illumos is to warn distro-runners, and they make their own
+decisions based on that data. None have ever violated embargos.
 
-References:
-
-https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-26513
-https://issues.apache.org/jira/browse/SLING-11776
+Thanks,
+Dan
 
