@@ -1,66 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/9
-Message-ID: <20231215204820.fMhEka3U@steffen%sdaoden.eu>
-Date: Fri, 15 Dec 2023 21:48:20 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
-To: oss-security@...ts.openwall.com
-Subject: Re: XDG_RUNTIME_DIR "misuse" as $TMPDIR (was: Re: budgie-extras: multiple predictable /tmp path issues in various applications)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/18/2
+Message-ID: <CAA0MYJUHngYsTR0miEO31PpMp+TyCgj6ebt9F4b2289SFwy5TQ@mail.gmail.com>
+Date: Mon, 18 Sep 2023 13:37:20 -0700
+From: Steve Thompson <susurrus.of.qualia@...il.com>
+To: Steve Thompson <susurrus.of.qualia@...il.com>, oss-security@...ts.openwall.com
+Subject: Possible AMD Zen2 CVE
 Content-Type: text/plain; charset=utf-8
 
-Hello Matthias.
+I've been beating my head against a wall for a while on this.  I'm not a
+security researcher, or even currently employed in the industry so my
+ability to analyze the problem I've seemingly discovered here is somewhat
+limited.
 
-Matthias Gerstner wrote in
- <ZXw5wvknxlxHfRkI@...co.suse.de>:
- |On Thu, Dec 14, 2023 at 11:15:02PM +0100, Steffen Nurpmeso wrote:
- |> All that makes me think whether XDG_RUNTIME_DIR is such a good
- |> target for temporary files, generally speaking.
- |
- |in general I would also not recommend using it for temporary files. At
- |least in this concrete case of the budgie-extras applications the files
- |placed in there can be considered small enough for a desktop environment.
- |
- |I recommended using XDG_RUNTIME_DIR as a quick fix for these issues, but
- |as I also tried to point out, I don't believe the way temporary files
- |are used here is a good design.
- |
- |At least the immediate dangers for security should be addressed by these
- |quick fixes applied, so sacrificing a bit of the cleanliness of the
- |filesystem seems justified.
+I have a laptop with an AMD Ryzen 5700U.  I've been fooling around with
+spinlocks for a while and for various reasons.  Back in late March I
+basically finished a R/W ticket spinlock that I instrumented for testing
+purposes.  A short test program was written and I found I was getting
+deadlocks and other odd symptoms.  I was unsure of the implementation of
+the algorithm and so I looked and looked at the code until my eyes started
+bleeding.  The errors were occurring within a few thousand iterations with
+moderate parallelism.
 
-It was nothing against you personally, indeed.  But i have
-encountered the same advice fly by several times, and, by sheer
-accident, in a thread on openbsd-misc, cwm on wayland, just today.
-Ie that big composer problem i also have with Wayland was then
-addressed with a link to a "hikari" composer, which seems to be
-something "acceptible to me" in the Wayland future that we have to
-deal with (unfortunately), and in its README(.md that is) you read
+I eventually wrote several alternate implementations of naive spinlocks,
+ticket spinlocks, and MCS spinlocks.   Many of them were problematic.   I
+eventually developed a much simplified test program implementing a very
+basic ticket spinlock that can be made to fail with a trivial code change
+that should not affect the operation of the algorithm.
 
-  This section describes how to use `/tmp` as your
-  `XDG_RUNTIME_DIR`. Some Wayland clients (e.g. native Wayland
-  `firefox`) require `posix_fallocate` to work in that
-  directory.[.]
+The code is included as an attachment; it is relatively short at ~300 LOC,
+and most of those lines are boilerplate or initialization code.  The
+business end is the wr_thread() function which is the vector passed to
+pthread_create(),   In a loop, the following code is found:
 
-  Additionally set `XDG_RUNTIME_DIR` to `/tmp` in your
-  environment.
+      nr_spin = t1lock_acquire(&obj.lock);
+#if defined BROKEN
+      temp = ++obj.value;
+#else
+      ++obj.value;
+#endif
+      t1lock_release(&obj.lock);
 
-I see this contradicts my statement somewhat, but the link
-XDG_RUNTIME_DIR and "temporary directory" tends to settle in the
-back of minds, which is all my lengthy mail was about.
+If "BROKEN" is defined, you can see that an additional cache-line write is
+made with the assignment to 'temp'.  When this code path is enabled, the
+underlying cmpxchg operation in t1lock_acquire() occasionally succeeds when
+it shouldn't, with a probability on the order of 1:5*10^6 when the CPU
+frequency is allowed to climb to 4.3GHz. or thereabouts.  I should, but
+have not yet investigated whether using an attached 4K, 60Hz monitor
+notably affects this problem.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
-|
-| Only in December: lightful Dubai COP28 Narendra Modi quote:
-|  A small part of humanity has ruthlessly exploited nature.
-|  But the entire humanity is bearing the cost of it,
-|  especially the inhabitants of the Global South.
-|  The selfishness of a few will lead the world into darkness,
-|  not just for themselves but for the entire world.
-|  [Christians might think of Revelation 11:18
-|    The nations were angry, and your wrath has come[.]
-|    [.]for destroying those who destroy the earth.
-|   But i find the above more kind, and much friendlier]
+The test program is essentially a bank-account simulator that adds $.01 to
+'obj.value' each iteration for N threads.  If the cmpxchg operation in
+t1lock_acquire() functions correctly, the final "balance" in obj.value will
+be the number of threads multiplied by the number of iterations each thread
+performs.  When the "-DBROKEN" codepath is enabled, the final result may be
+less than expected, indicating data loss from colliding threads.  Very
+occasionally, a deadlock of all threads is observed.
+
+As the probability of this error occurring is relatively low in a test
+program that really hammers on a single shared resource, I would expect
+this bug to manifest relatively rarely under typical usage patterns for
+code that is found to be vulnerable.  However, different test programs,
+such as with the previously mentioned R/W ticket lock show much higher
+error-rates.  In that case, the lock structure is five fields in a 32 or
+64-bit word.  One bit is used for mutual-exclusion between threads and the
+other fields track queue depth and/or the number of instantaneous active
+read-only threads.  It appears that the act of using a cmpxchg operation
+followed by non-atomic field updates and a release operation on a single
+machine word vastly increases the probability of an error occurring in
+comparison to the included test code.
+
+I have not yet found the underlying microarchitectural features responsible
+for the manifestiation of this apparent CPU bug, which implies that
+individual spinlock algorithms must be tested in-situ to identify code
+arrangements that trigger the bug. It is my impression thus far that most
+spinlock implementations do not do this testing, which suggests that the
+number of spinlocks in the wild that are vulnerable to this bug is
+currently unknown.  This bug might be exploitable to cause scheduler
+malfunctions, database corruption, etc. in a deterministic fashion,
+although i have yet to generate an exploit to this end -- that is beyond my
+expertise at this stage.
+
+Currently, I lack access to a lab where this can be tested on other CPUs,
+Intel or otherwise to determine the scope of affected processors.  (I have,
+however, detected the problem on a Core 2 Duo Macbook Pro from the Jurassic
+period, which is interesting.)
+
+The bug has not been verified yet.  I have been dealing with HP as the
+laptop is under warranty, but in approximately two months they have been
+unable to find a technician able to understand the source code or who is
+able to interpret the results.  It is still possible I have made some sort
+of stupid error, but at this point I am reasonably confident I am using
+atomic operations correctly as per the x86-64 architecture specification
+documents.
+
+I've posted this here to acquire feedback, and I would greatly appreciate
+advice on how to better characterize what is going on here, etc.   Calling
+the test program with four threads and 10^7 for the number of loop
+iterations will usually trigger the bug.
+
+Content of type "text/html" skipped
+
+View attachment "bug_src.c" of type "text/x-csrc" (8213 bytes)
