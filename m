@@ -1,81 +1,168 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/4
-Message-ID: <CAEih1qWYc1B5nXxhTMoT7++9p4FhCPSuGamJOJp7OtRgEsC5pw@mail.gmail.com>
-Date: Wed, 1 Mar 2023 16:06:03 +0100
-From: Pietro Borrello <borrello@...g.uniroma1.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/18/3
+Message-ID: <CADW8OBsWg915wHWVkMEtoMS1e11bBK-ohU8LEHm5nop=Sj2WZA@mail.gmail.com>
+Date: Mon, 18 Sep 2023 13:54:03 -0700
+From: Kyle Zeng <zengyhkyle@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-1079: Linux Kernel: Use-After-Free in asus_kbd_backlight_set()
+Subject: [CVE-2023-42752] integer overflow in Linux kernel leading to exploitable memory access
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi there,
 
-I'm disclosing a Use After Free that may be triggered when plugging in a
-malicious USB device, which advertises itself as an asus device.
+I recently found an integer overflow in the Linux kernel, which leads
+to the kernel allocating `skb_shared_info` in the userspace, which is
+exploitable in systems without SMAP protection since `skb_shared_info`
+contains references to function pointers.
 
-The device uses a worker `asus_worker` scheduled by asus_kbd_backlight_set() to
-communicate with the hardware.
-The work_struct is embedded in `struct asus_kbd_leds`, and at device removal,
-`struct asus_kbd_leds` is freed.
+I verified the existence of the vulnerability on both the main tree
+and v6.1.y, more versions may be affected (potentially all stable
+trees).
 
-However, concurrently with device removal, the LED controller
-asus_kbd_backlight_set() may schedule a worker whose use would
-result in a use-after-free.
+[Root Cause]
 
-Following the debug check triggered by freeing a work_struct in use:
+The root cause of the vulnerability is an insufficient check for
+integer overflow in `__alloc_skb`. As shown below:
 ```
-[   77.409878][ T1169] usb 1-1: USB disconnect, device number 2
-[   77.423606][ T1169] ODEBUG: free active (active state 0) object
-type: work_struct hint: asus_kbd_backlight_work+0x0/0x2c0
-[   77.425222][ T1169] WARNING: CPU: 0 PID: 1169 at
-lib/debugobjects.c:505 debug_check_no_obj_freed+0x43a/0x630
-[   77.426599][ T1169] Modules linked in:
-[   77.427322][ T1169] CPU: 0 PID: 1169 Comm: kworker/0:3 Not tainted
-6.1.0-rc4-dirty #43
-[   77.428404][ T1169] Hardware name: QEMU Standard PC (i440FX + PIIX,
-1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-[   77.429644][ T1169] Workqueue: usb_hub_wq hub_event
-[   77.430296][ T1169] RIP: 0010:debug_check_no_obj_freed+0x43a/0x630
-[   77.431142][ T1169] Code: 48 89 ef e8 28 82 58 ff 49 8b 14 24 4c 8b
-45 00 48 c7 c7 40 5f 09 87 48 c7 c6 60 5b 09 87 89 d9 4d 89 f9 31 c0
-e8 46 25 ef fe <0f> 0b 4c 8b 64 24 20 48 ba 00 00 00 00 00 fc ff df ff
-05 4f 7c 17
-[   77.433691][ T1169] RSP: 0018:ffffc9000069ee60 EFLAGS: 00010246
-[   77.434470][ T1169] RAX: b85d2b40c12d7600 RBX: 0000000000000000
-RCX: ffff888117a78000
-[   77.435507][ T1169] RDX: 0000000000000000 RSI: 0000000080000000
-RDI: 0000000000000000
-[   77.436521][ T1169] RBP: ffffffff86e88380 R08: ffffffff8130793b
-R09: ffffed103ecc4ed6
-[   77.437582][ T1169] R10: ffffed103ecc4ed6 R11: 0000000000000000
-R12: ffffffff87095fb8
-[   77.438593][ T1169] R13: ffff88810e348fe0 R14: ffff88810e348fd4
-R15: ffffffff852b5780
-[   77.439667][ T1169] FS:  0000000000000000(0000)
-GS:ffff8881f6600000(0000) knlGS:0000000000000000
-[   77.440842][ T1169] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   77.441688][ T1169] CR2: 00007ffc05495ff0 CR3: 000000010cdf0000
-CR4: 00000000001006f0
-[   77.442720][ T1169] Call Trace:
-[   77.443167][ T1169]  <TASK>
-[   77.443555][ T1169]  slab_free_freelist_hook+0x89/0x160
-[   77.444302][ T1169]  ? devres_release_all+0x262/0x350
-[   77.444990][ T1169]  __kmem_cache_free+0x71/0x110
-[   77.445638][ T1169]  devres_release_all+0x262/0x350
-[   77.446309][ T1169]  ? devres_release+0x90/0x90
-[   77.446978][ T1169]  device_release_driver_internal+0x5e5/0x8a0
-[   77.447748][ T1169]  bus_remove_device+0x2ea/0x400
-[   77.448421][ T1169]  device_del+0x64f/0xb40
-[   77.448976][ T1169]  ? kill_device+0x150/0x150
-[   77.449577][ T1169]  ? print_irqtrace_events+0x1f0/0x1f0
-[   77.450307][ T1169]  hid_destroy_device+0x66/0x100
-[   77.450938][ T1169]  usbhid_disconnect+0x9a/0xc0
+struct sk_buff *__alloc_skb(unsigned int size, ...)
+{
+        ......
+        data = kmalloc_reserve(&size, gfp_mask, node, &pfmemalloc);
+        if (unlikely(!data))
+                goto nodata;
+        ......
+}
 ```
+`size` is an `unsigned int` and it is potentially controlled by users.
+In `kmalloc_reserve`, it will round up the size by `PAGE_SIZE <<
+get_order(size);` in `kmalloc_size_roundup`. Since `size` is `unsigned
+int`, the roundup logic will make it 0 if the original value is
+something huge such as 0xfffffed0. As a result, `data` will actually
+become `ZERO_SIZE_PTR`, which is 0x10 instead of 0. Since the check
+does not consider the case, the kernel will happily continue
+processing the `data` as if it is a valid kernel pointer.
 
-The proposed patch uses a spinlock to safely prevent the worker to be scheduled
-at device removal, and has been merged in the Linux tree:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=4ab3a086d10eeec1424f2e8a968827a6336203df
+Later when the kernel tries to finalize the skb object in
+`__finalize_skb_around`, it has the code: `shinfo = skb_shinfo(skb);`,
+which is `skb->head+skb->end` where `skb->head` is 0x10 and `skb->end`
+is a large size such as 0xfffffed0. As a result, `shinfo` points to a
+userspace pointer.
 
-The issue has been assigned CVE-2023-1079.
+The kernel crashes at `memset(shinfo, 0, offsetof(struct
+skb_shared_info, dataref));` in systems with SMAP enabled.
 
-Best regards,
-Pietro Borrello
+The root cause of the bug was introduced in v6.2-rc1 in
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=12d6c1d3a2ad.
+But it gets backported to all stable trees, which may potentially
+introduce the bug to stable trees (that's why I could trigger the bug
+in v6.1.y). According to Vegard Nossum, this is the backported buggy
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=0dbc898f5917
+
+[Impact]
+
+* The vulnerability is likely exploitable in systems without SMAP
+protection since `shinfo` has a function pointer member
+`destructor_arg`. Attackers can overwrite it to obtain code execution
+in kernel space.
+* The vulnerability can lead to local DoS from a user having access to
+user namespace
+* The vulnerability cannot be triggered remotely according to Eric Dumazet
+
+[Patch]
+
+I already contacted the linux kernel security team and assisted them
+in fixing the vulnerability.
+The patch consists of two commits:
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=915d975b2ffa
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=c3b704d4a4a2
+
+[Proof-of-Concept]
+
+A crashing poc is attached.
+
+Thanks,
+Kyle Zeng
+
+=================[Crashing Splash]==========================
+
+[    4.367486] BUG: unable to handle page fault for address: 00000000fffffed0
+[    4.367792] #PF: supervisor write access in kernel mode
+[    4.368029] #PF: error_code(0x0002) - not-present page
+[    4.368260] PGD da2f067 P4D da2f067 PUD 0
+[    4.368447] Oops: 0002 [#1] PREEMPT SMP KASAN NOPTI
+[    4.368668] CPU: 0 PID: 440 Comm: poc Tainted: G        W          6.5.0+ #47
+[    4.368987] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.15.0-1 04/01/2014
+[    4.369355] RIP: 0010:memset_orig+0x72/0xac
+[    4.369546] Code: 47 28 48 89 47 30 48 89 47 38 48 8d 7f 40 75 d8
+0f 1f 84 00 00 00 00 00 89 d1 83 e1 38 74 14 c1 e9 03 66 0f 1f 44 00
+00 ff c9 <48> 89 07 48 8d 7f 08 75 f5 83 e2 07 74 0a ff ca 88 07 48 8d
+7f 01
+[    4.370379] RSP: 0000:ffff88800e627a48 EFLAGS: 00010206
+[    4.370626] RAX: 0000000000000000 RBX: 0000000000000010 RCX: 0000000000000003
+[    4.370947] RDX: 0000000000000020 RSI: 0000000000000000 RDI: 00000000fffffed0
+[    4.371263] RBP: 00000000fffffec0 R08: ffff88800d8faad7 R09: 0000000000000000
+[    4.371580] R10: 00000000fffffed0 R11: ffffed1001b1f55b R12: 1ffff11001b1f557
+[    4.371896] R13: ffff88800d8faac0 R14: dffffc0000000000 R15: 1ffff11001b1f558
+[    4.372212] FS:  000000000207a3c0(0000) GS:ffff888036000000(0000)
+knlGS:0000000000000000
+[    4.372568] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    4.372825] CR2: 00000000fffffed0 CR3: 000000001115c005 CR4: 0000000000770ef0
+[    4.373147] PKRU: 55555554
+[    4.373278] Call Trace:
+[    4.373392]  <TASK>
+[    4.373491]  ? __die_body+0x67/0xb0
+[    4.373653]  ? page_fault_oops+0x65a/0x7f0
+[    4.373839]  ? exc_page_fault+0x76/0xe0
+[    4.374013]  ? asm_exc_page_fault+0x22/0x30
+[    4.374202]  ? memset_orig+0x72/0xac
+[    4.374371]  __build_skb_around+0x202/0x3c0
+[    4.374560]  __alloc_skb+0x214/0x4e0
+[    4.374724]  igmpv3_newpack+0xf8/0xfb0
+[    4.374895]  add_grhead+0x6e/0x2b0
+[    4.375051]  add_grec+0xfcf/0x12d0
+[    4.375216]  igmp_ifc_timer_expire+0x72c/0xd20
+[    4.375412]  ? igmp_gq_timer_expire+0x90/0x90
+[    4.375614]  call_timer_fn+0xb9/0x1c0
+[    4.375781]  ? igmp_gq_timer_expire+0x90/0x90
+[    4.375984]  __run_timers+0x683/0x790
+[    4.376148]  run_timer_softirq+0x46/0x80
+[    4.376330]  __do_softirq+0x22e/0x51e
+[    4.376497]  __irq_exit_rcu+0x6f/0x120
+[    4.376673]  sysvec_apic_timer_interrupt+0x43/0xb0
+[    4.376884]  asm_sysvec_apic_timer_interrupt+0x16/0x20
+[    4.377119] RIP: 0033:0x401e38
+[    4.377260] Code: 53 07 00 89 45 bc 8b 05 3a 36 10 00 48 8d 55 b8
+41 b8 08 00 00 00 48 89 d1 ba 23 00 00 00 be 00 00 00 00 89 c7 e8 c8
+32 07 00 <eb> fe f3 0f 1e fa 55 48 89 e5 48 83 ec 70 48 89 7d 98 48 89
+75 90
+[    4.378101] RSP: 002b:00007ffc1f22b390 EFLAGS: 00000207
+[    4.378370] RAX: 0000000000000000 RBX: 00007ffc1f22b5d8 RCX: 000000000047510e
+[    4.378725] RDX: 0000000000000023 RSI: 0000000000000000 RDI: 0000000000000006
+[    4.379060] RBP: 00007ffc1f22b3e0 R08: 0000000000000008 R09: 0000000000000000
+[    4.379385] R10: 00007ffc1f22b398 R11: 0000000000000206 R12: 0000000000000001
+[    4.379717] R13: 00007ffc1f22b5c8 R14: 00000000004ff740 R15: 0000000000000002
+[    4.380048]  </TASK>
+[    4.380152] Modules linked in:
+[    4.380296] CR2: 00000000fffffed0
+[    4.380451] ---[ end trace 0000000000000000 ]---
+[    4.380661] RIP: 0010:memset_orig+0x72/0xac
+[    4.380851] Code: 47 28 48 89 47 30 48 89 47 38 48 8d 7f 40 75 d8
+0f 1f 84 00 00 00 00 00 89 d1 83 e1 38 74 14 c1 e9 03 66 0f 1f 44 00
+00 ff c9 <48> 89 07 48 8d 7f 08 75 f5 83 e2 07 74 0a ff ca 88 07 48 8d
+7f 01
+[    4.381706] RSP: 0000:ffff88800e627a48 EFLAGS: 00010206
+[    4.381949] RAX: 0000000000000000 RBX: 0000000000000010 RCX: 0000000000000003
+[    4.382275] RDX: 0000000000000020 RSI: 0000000000000000 RDI: 00000000fffffed0
+[    4.382607] RBP: 00000000fffffec0 R08: ffff88800d8faad7 R09: 0000000000000000
+[    4.382926] R10: 00000000fffffed0 R11: ffffed1001b1f55b R12: 1ffff11001b1f557
+[    4.383271] R13: ffff88800d8faac0 R14: dffffc0000000000 R15: 1ffff11001b1f558
+[    4.383590] FS:  000000000207a3c0(0000) GS:ffff888036000000(0000)
+knlGS:0000000000000000
+[    4.384012] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    4.384298] CR2: 00000000fffffed0 CR3: 000000001115c005 CR4: 0000000000770ef0
+[    4.384635] PKRU: 55555554
+[    4.384763] Kernel panic - not syncing: Fatal exception in interrupt
+[    4.385239] Kernel Offset: disabled
+[    4.385413] Rebooting in 1000 seconds..
+
+View attachment "poc.c" of type "text/x-csrc" (1903 bytes)
