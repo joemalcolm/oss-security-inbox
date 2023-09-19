@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3875" "Monday" "22" "August" "2016" "18:57:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>" "89" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016082222:57:53" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        cve-assign@m Aug 22   89/3875  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160822205542.GB12931@kroah.com>" ("<20160822205542.GB12931@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32181 invoked by uid 550); 22 Aug 2016 22:58:07 -0000
+Received: (qmail 25697 invoked by uid 550); 19 Sep 2023 17:31:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +6,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32146 invoked from network); 22 Aug 2016 22:58:05 -0000
-In-Reply-To: <20160822205542.GB12931@kroah.com>
-Message-Id: <20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, meissner@suse.de
-Date: Mon, 22 Aug 2016 18:57:53 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
-To: greg@kroah.com
+Received: (qmail 9418 invoked from network); 19 Sep 2023 10:45:21 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AOJu0Yz0uDoYGlxfjGPKHWoHCh9fW97FM2BdFfWPv2p3YcHDMXMdYvMw
+	QbLCWDTE/O2/CxViVdzg5gHheV7XTimCfvarAMKySg==
+X-Google-Smtp-Source: AGHT+IFHuv1wcRKbHYmphwMqI1Qg+LCwSO+eRCZ0pjaCqaXhayFMA6QPt7Bfg2vAqGaWpmPcfB9LI3FK3giN5HwofLo=
+X-Received: by 2002:a17:907:97cb:b0:9aa:f7f:e276 with SMTP id
+ js11-20020a17090797cb00b009aa0f7fe276mr3051533ejc.38.1695120235789; Tue, 19
+ Sep 2023 03:43:55 -0700 (PDT)
+MIME-Version: 1.0
+From: Martijn Visser <martijnvisser@apache.org>
+Date: Tue, 19 Sep 2023 12:43:45 +0200
+X-Gmail-Original-Message-ID: <CAELFjNMCrNxurM6MJ2yc2Xckm9=AVV1XcLmw_GoX6m45s39NLw@mail.gmail.com>
+Message-ID: <CAELFjNMCrNxurM6MJ2yc2Xckm9=AVV1XcLmw_GoX6m45s39NLw@mail.gmail.com>
+To: dev@flink.apache.org, user <user@flink.apache.org>, 
+	user-zh <user-zh@flink.apache.org>, news@flink.apache.org, 
+	Apache Security Team <security@apache.org>, Andrea Cosentino <ancosen@gmail.com>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2023-41834] Apache Flink Stateful Functions allowed HTTP header
+ injection due to Improper Neutralization of CRLF Sequences
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2023-41834: Apache Flink Stateful Functions allowed HTTP header
+injection due to Improper Neutralization of CRLF Sequences
 
-> What "tool" was assigned this CVE for other operating systems
-> that do the same thing (all BSDs, OS-X, Windows, etc.)?
+Severity: moderate
 
-We didn't find any information about a tool name and thus simply
-listed the OS itself (CVE-2011-0638, CVE-2011-0639).
+Vendor:
+The Apache Software Foundation
 
+Versions Affected:
+Stateful Functions 3.1.0 to 3.2.0
 
->>   - the Linux kernel does not require a configuration in which a newly
->>     connected USB device is recognized in any way
+Description:
+Improper Neutralization of CRLF Sequences in HTTP Headers in Apache
+Flink Stateful Functions 3.1.0, 3.1.1 and 3.2.0 allows remote
+attackers to inject arbitrary HTTP headers and conduct HTTP response
+splitting attacks via crafted HTTP requests. Attackers could
+potentially inject malicious content into the HTTP response that is
+sent to the user. This could include injecting a fake login form or
+other phishing content, or injecting malicious JavaScript code that
+can steal user credentials or perform other malicious actions on the
+user's behalf.
 
-> I don't understand this statement, can you clarify?
+Mitigation:
+Users should upgrade to 3.3.0
 
-To clarify: the ability of an attacker to connect a USB device and
-trigger potentially unsafe device communication (e.g., injecting text
-into an application) does not mean that the Linux kernel is missing an
-access-control feature.
+Credit:
+This issue was discovered by Andrea Cosentino from Apache Software Foundation
 
-
->>    - a Linux distribution may ship with a default configuration in
->>      which a newly connected USB device can operate as a keyboard and
->>      inject text into an application
-
-> Yes, but I don't understand, perhaps what you really mean to say is:
->        A Linux distribution may ship with a default configuration of
->        trusting all new devices that are plugged in without any form of
->        userspace authentication before they begin to operate.
-
-Agreed. If it is trusting all new devices in this way, it would also
-be trusting all new devices that wish to operate as keyboards.
-
-
->>     there is no comprehensive method
->>     for "asking a user" about a new USB device in a way that is
->>     compatible with all use cases
-
-> Huh?
-
-A Linux distribution cannot expect that there is a logged-in user who
-can provide sane answers to questions about each new USB device at the
-instant that that device is connected. For example, there isn't a
-comprehensive solution of the form "a distribution must ensure that
-an application pops up a dialog asking about each new device."
-
-
->>   - if anyone (whether a Linux distribution or other type of product)
->>     is announcing a required security update, in which software or
->>     configuration is being changed to address malicious keyboard
->>     attacks, then we can assign a CVE ID to associate with the update
->>     announcement
-
-> Why would a CVE be needed for a "my distro decides to not trust USB
-> devices as much as your distro does" type decision?
-
-To improve the usability of CVE for patch management, we allow a CVE
-mapping for an issue where the author of the code has announced a
-required security patch, even if the issue is not universally
-recognized as an exploitable vulnerability. This can be helpful in
-situations where a vendor has direct knowledge of advertised use cases
-or customer expectations. For example, if there's a Linux distro
-designed specifically for connecting compromised mobile phones over
-USB and initiating forensic analysis, then it's perhaps reasonable to
-say that unrestricted acceptance of new USB keyboards is a CVE-worthy
-vulnerability for that one distro.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXu4LCAAoJEHb/MwWLVhi25yAQAIpHJGpnkiVI8osth0zpuGNJ
-RwNEne6YpaP0evP3Rj8RahQ8qMB0lEQPnH0sHliuRT5rUsZx40IEsHNoOOg8s5EE
-vKxuYU/lhrYsWPqYTkjKJjxvuLO2dARzytDkLCyK69snQzEBYY8i7YTlI/Q2+1Fd
-qKy0RlbJdrdGzjIuR+j3zovMna3qFIsnWPl0uVi5RQCM8S6AJy6KTCeSYurncsqu
-KDIjvWIWMavV5mTzy1RevSShB6StnP/F8MeUqIUF3xbIAfGOqG51mr7XnUYOEIPM
-U0imdTupQgJ4wJjYs7Q0RiSSUrlbLHWD+s7URoqez5rqMgbBc1ugq1uBlo5DBHWk
-uwEwn4mwVrMXu9k04yY8FyplntQDkDULKCCC1hsiExMO5gBhCDYi9CbYrTszP8NF
-q/ynMDJxOY5GmFPD5fafmKUKa3G+KXRt7MpU+LNfH5c7KiOcNOt7Igon2NI2RqOA
-HxliE2ZhB4kkf/qD+wqbVC0ZQegXnnKiIOEvFqUY2FpHOLvZ0A+EuIlGjy+N8zLW
-Eji1Imq6wr+p95eXzvp5w2fVVydujDQD/xI2p3isb7Tv640s4plC22rjMVPd0zbz
-hE6g97Q2gSzCsBnC3ZlF30PVeLw2vErlnFoBqy6IRgBRBNQCzv94SRy9DUNICKX+
-fhdbnuRUSLsHmqtLmH7+
-=fXqf
------END PGP SIGNATURE-----
+References:
+https://flink.apache.org/security/
