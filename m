@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/17/1
-Message-ID: <ZBQ5Z9wfWqONphtz@momentum.pseudorandom.co.uk>
-Date: Fri, 17 Mar 2023 09:56:55 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: flatpak: CVE-2023-28100: TIOCLINUX can send commands outside sandbox if running on a virtual console
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/19/3
+Message-ID: <CAELFjNMCrNxurM6MJ2yc2Xckm9=AVV1XcLmw_GoX6m45s39NLw@mail.gmail.com>
+Date: Tue, 19 Sep 2023 12:43:45 +0200
+From: Martijn Visser <martijnvisser@...che.org>
+To: dev@...nk.apache.org, user <user@...nk.apache.org>,  user-zh <user-zh@...nk.apache.org>, news@...nk.apache.org,  Apache Security Team <security@...che.org>, Andrea Cosentino <ancosen@...il.com>, oss-security@...ts.openwall.com
+Subject: [CVE-2023-41834] Apache Flink Stateful Functions allowed HTTP header injection due to Improper Neutralization of CRLF Sequences
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/flatpak/flatpak/security/advisories/GHSA-7qpw-3vjv-xrqp
-Vulnerable: all < 1.10.8, 1.12.x < 1.12.8, 1.14.x < 1.14.4, 1.15.x < 1.15.4
-Fixed: 1.15.4, 1.14.x >= 1.14.4, 1.12.x >= 1.12.8, 1.10.x >= 1.10.8
+CVE-2023-41834: Apache Flink Stateful Functions allowed HTTP header
+injection due to Improper Neutralization of CRLF Sequences
 
-Flatpak is a system for building, distributing, and running sandboxed
-desktop applications on Linux.
+Severity: moderate
 
-Jakub Wilk mentioned on the oss-security mailing list that various
-projects' mitigations for the problematic design of the TIOCSTI ioctl
-are not sufficient in all cases, because Linux virtual terminals
-implement copy/paste via the TIOCLINUX ioctl, which can have a similar
-effect. Flatpak is one of the projects affected by this.
+Vendor:
+The Apache Software Foundation
 
-If a malicious Flatpak app is run on a Linux virtual console such as
-/dev/tty1, it can copy text from the virtual console and paste it back
-into the virtual console's input buffer, from which the command might
-be run by the user's shell after the Flatpak app has exited. This is
-similar to CVE-2017-5226, but using the TIOCLINUX ioctl command instead
-of TIOCSTI.
+Versions Affected:
+Stateful Functions 3.1.0 to 3.2.0
 
-This has been fixed in Flatpak upstream releases 1.14.4, 1.15.4, 1.12.8
-and 1.10.8 by preventing the TIOCLINUX ioctl via a seccomp filter,
-in the same way that was already done for the TIOCSTI ioctl.
+Description:
+Improper Neutralization of CRLF Sequences in HTTP Headers in Apache
+Flink Stateful Functions 3.1.0, 3.1.1 and 3.2.0 allows remote
+attackers to inject arbitrary HTTP headers and conduct HTTP response
+splitting attacks via crafted HTTP requests. Attackers could
+potentially inject malicious content into the HTTP response that is
+sent to the user. This could include injecting a fake login form or
+other phishing content, or injecting malicious JavaScript code that
+can steal user credentials or perform other malicious actions on the
+user's behalf.
 
-Mitigation: ordinary graphical terminal emulators like xterm,
-gnome-terminal and Konsole are unaffected. This vulnerability is specific
-to the Linux virtual consoles /dev/tty1, /dev/tty2 and so on, which are
-not commonly used to run Flatpak apps: Flatpak is primarily designed
-to be used in a Wayland or X11 graphical environment, either with no
-controlling terminal (the most common case) or from a graphical terminal
-emulator (while debugging or developing).
+Mitigation:
+Users should upgrade to 3.3.0
 
-Workaround: avoid running untrusted Flatpak apps (`flatpak run ...`)
-from the text-mode virtual consoles.
+Credit:
+This issue was discovered by Andrea Cosentino from Apache Software Foundation
+
+References:
+https://flink.apache.org/security/
