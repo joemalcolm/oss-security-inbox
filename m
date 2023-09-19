@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/11/5
-Message-ID: <87a5yahp3f.fsf@oldenburg3.str.redhat.com>
-Date: Thu, 11 May 2023 17:20:20 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Tobias Heider <tobias.heider@...onical.com>
-Cc: oss-security@...ts.openwall.com,  Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>,  ceo@...-en-ming-corp.com,  Piotr Krysiuk <piotras@...il.com>
-Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/19/2
+Message-ID:  <DS7PR10MB53580D81F624AC15BEBBC39AFDFAA@DS7PR10MB5358.namprd10.prod.outlook.com>
+Date: Tue, 19 Sep 2023 14:46:35 +0000
+From: Casper Dik <casper.dik@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Steve Thompson <susurrus.of.qualia@...il.com>
+Subject: RE: [External] : Possible AMD Zen2 CVE
 Content-Type: text/plain; charset=utf-8
 
-* Tobias Heider:
+I think you've run into an issue with gcc.
 
-> Another thing worth mentioning is that the apparmor team has done some very
-> interesting work on providing finer control over unprivileged user namespaces
-> on a per application basis:
-> https://gitlab.com/apparmor/apparmor/-/wikis/unprivileged_userns_restriction
->
-> This would allow having opt-in unprivileged userns support only for
-> confined and explicitly permitted applications and could hopefully
-> drastically reduce the impact of similar bugs in the future.
+It does not always honor the order and it I have seen issues
+where I was not able to get gcc to properly order the code unless
+I was using some trick.  That particular trick, a smidgen of volatile
+casts did not work.
 
-Doesn't unprivileged chroot need user namespace support?  So a side
-effect of disabling it might be to force applications to switch to
-userspace emulation of pathname lookup.  That doesn't seem like a good
-tradeoff?
+The code in question:
 
-Thanks,
-Florian
+#if defined BROKEN
+      temp = ++obj.value;
+#else
+      ++obj.value;
+#endif
+      t1lock_release(&obj.lock);
 
+In the "good" binary the "incw" of the obj.lock is after the "incq" of obj.value;
+but in the "bad" binary you see the instructions correctly, incw before incq.
+
+I had the problem with an Intel system running Solaris (hence  different
+assembly output):
+
+good:
+     wr_thread+0xe7:         48 ff 05 8a 09 10  incq   +0x10098a(%rip)   <obj+0x8>
+                            00 
+    wr_thread+0xee:         66 ff 05 7b 09 10  incw   +0x10097b(%rip)   <obj>
+                            00 
+
+bad:
+    wr_thread+0xee:         66 ff 05 8b 09 10  incw   +0x10098b(%rip)   <obj>
+                            00 
+    wr_thread+0xf5:         48 ff c0           incq   %rax
+    wr_thread+0xf8:         48 89 05 89 09 10  movq   %rax,+0x100989(%rip)      <obj+0x8>
+                            00 
+    wr_thread+0xff:         48 89 05 9a 09 10  movq   %rax,+0x10099a(%rip) 
+     
+Casper
