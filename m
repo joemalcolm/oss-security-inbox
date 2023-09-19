@@ -1,88 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/24/2
-Message-ID: <20230124160818.wlaspet7jsmths2p@yuggoth.org>
-Date: Tue, 24 Jan 2023 16:08:18 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2023-002] Cinder, Glance, Nova: Arbitrary file access through custom VMDK flat descriptor (CVE-2022-47951)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/19/1
+Message-ID: <4de172a2-afc4-24b8-572a-24390fc1a74c@googlemail.com>
+Date: Tue, 19 Sep 2023 09:47:55 +0200
+From: Mathias Krause <minipli@...glemail.com>
+To: Steve Thompson <susurrus.of.qualia@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Possible AMD Zen2 CVE
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-OSSA-2023-002: Arbitrary file access through custom VMDK flat descriptor
-========================================================================
+Hi Steve,
 
-:Date: January 24, 2023
-:CVE: CVE-2022-47951
+On 18.09.23 22:37, Steve Thompson wrote:
+> [snip]  In a loop, the following code is found:
+> 
+>           nr_spin = t1lock_acquire(&obj.lock);
+>     #if defined BROKEN
+>           temp = ++obj.value;
+>     #else
+>           ++obj.value;
+>     #endif
+>           t1lock_release(&obj.lock);
+> 
+> If "BROKEN" is defined, you can see that an additional cache-line write
+> is made with the assignment to 'temp'.  When this code path is enabled,
+> the underlying cmpxchg operation in t1lock_acquire() occasionally
+> succeeds when it shouldn't...
 
+I think you're misinterpreting the generated binary. Looking only at the
+difference in the core loop give us the following diff between good and bad:
 
-Affects
-~~~~~~~
-- Cinder, glance, nova:
-  Cinder <19.1.2, >=20.0.0 <20.0.2, ==21.0.0;
-  Glance <23.0.1, >=24.0.0 <24.1.1, ==25.0.0;
-  Nova <24.1.2, >=25.0.0 <25.0.2, ==26.0.0
+$ objdump -wdr --no-show-raw-insn good
+[...]
+0000000000001580 <wr_thread>:
+     ::
+    1653:       incq   0x2a4e(%rip)        # 40a8 <obj+0x8>
+    165a:       incw   (%rbx)
 
+In 'good' the increment of obj.value at 1653 is followed by the
+increment of obj.lock.ticket. Everything looking good so far.
 
-Description
-~~~~~~~~~~~
-Guillaume Espanel, Pierre Libeau, Arnaud Morin and Damien Rannou
-(OVH) reported a vulnerability in VMDK image processing for Cinder,
-Glance and Nova. By supplying a specially created VMDK flat image
-which references a specific backing file path, an authenticated user
-may convince systems to return a copy of that file's contents from
-the server resulting in unauthorized access to potentially sensitive
-data. All Cinder deployments are affected; only Glance deployments
-with image conversion enabled are affected; all Nova deployments are
-affected.
+$ objdump -wdr --no-show-raw-insn bad
+[...]
+0000000000001580 <wr_thread>:
+     ::
+    1653:       mov    0x2a4e(%rip),%rax        # 40a8 <obj+0x8>
+    165a:       incw   (%rbx)
+    165d:       inc    %rax
+    1660:       mov    %rax,0x2a41(%rip)        # 40a8 <obj+0x8>
+    1667:       mov    %rax,0x2a5a(%rip)        # 40c8 <temp>
 
+In 'bad', however, obj.value is incremented only *after* obj.lock.ticket
+was incremented and the lock thereby released, allowing further threads
+to take it. This allows the data race between the read of obj.value in
+1653, its increment in 165d (after the lock was released again) and
+writing back the possibly out-of-date value to obj.value at 1660.
 
-Patches
-~~~~~~~
-- https://review.opendev.org/871631 (Train(cinder))
-- https://review.opendev.org/871630 (Train(glance))
-- https://review.opendev.org/871629 (Ussuri(cinder))
-- https://review.opendev.org/871626 (Ussuri(glance))
-- https://review.opendev.org/871628 (Victoria(cinder))
-- https://review.opendev.org/871623 (Victoria(glance))
-- https://review.opendev.org/871627 (Wallaby(cinder))
-- https://review.opendev.org/871621 (Wallaby(glance))
-- https://review.opendev.org/871625 (Xena(cinder))
-- https://review.opendev.org/871619 (Xena(glance))
-- https://review.opendev.org/871622 (Xena(nova))
-- https://review.opendev.org/871620 (Yoga(cinder))
-- https://review.opendev.org/871617 (Yoga(glance))
-- https://review.opendev.org/871624 (Yoga(nova))
-- https://review.opendev.org/871618 (Zed(cinder))
-- https://review.opendev.org/871614 (Zed(glance))
-- https://review.opendev.org/871616 (Zed(nova))
-- https://review.opendev.org/871615 (2023.1/antelope(cinder))
-- https://review.opendev.org/871613 (2023.1/antelope(glance))
-- https://review.opendev.org/871612 (2023.1/antelope(nova))
+What's clear from the above code dump that the code is missing a memory
+barrier. Adding it, like the patch at the end of the email does, gives
+me the following:
 
+$ objdump -wdr --no-show-raw-insn not_bad
+[...]
+0000000000001580 <wr_thread>:
+     ::
+    1653:       mov    0x2a4e(%rip),%rax        # 40a8 <obj+0x8>
+    165a:       inc    %rax
+    165d:       mov    %rax,0x2a44(%rip)        # 40a8 <obj+0x8>
+    1664:       mov    %rax,0x2a5d(%rip)        # 40c8 <temp>
+    166b:       incw   (%rbx)
 
-Credits
-~~~~~~~
-- Guillaume Espanel from OVH (CVE-2022-47951)
-- Pierre Libeau from OVH (CVE-2022-47951)
-- Arnaud Morin from OVH (CVE-2022-47951)
-- Damien Rannou from OVH (CVE-2022-47951)
+It's basically the same instructions as for 'bad' but the lock release,
+i.e. obj.lock.ticket++, was moved after the write operations to 166b,
+preventing the data race of 'bad'.
 
+Here's the fix:
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1996188
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-47951
+--- a/bug_src.c
++++ b/bug_src.c
+@@ -91,6 +91,7 @@ typedef struct {
 
+ __inline__ void   t1lock_release(t1lock * oo)
+ {
++   __asm__ ("" ::: "memory");
+    oo->ticket++;
 
-Notes
-~~~~~
-- The stable/wallaby, stable/victoria, stable/ussuri, and
-  stable/train branches are under extended maintenance and will
-  receive no new point releases, but patches for them are provided
-  as a courtesy where possible.
+    return;
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+The code probably needs more memory barriers to prevent making the
+compiler moving reads and writes outside of the critical section. But, I
+guess, there are good online resources to read up the requirements, e.g.
+what's written for the Linux kernel should be a good start:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+ https://www.kernel.org/doc/Documentation/memory-barriers.txt
+
+Cheers,
+Mathias
