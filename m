@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1220" "Tuesday" "2" "May" "2017" "12:58:22" "+0000" "Ari Kauppi" "Ari.Kauppi@synopsys.com" "<739C33C0-C0EC-46AF-B1EA-1D1BBEC1E654@synopsys.com>" "20" "[oss-security] CVE-2017-7645 Linux kernel: nfsd: remote DoS" nil nil nil "5" "2017050212:58:22" "[oss-security] CVE-2017-7645 Linux kernel: nfsd: remote DoS" (number mark "U       Ari.Kauppi@s May  2   20/1220  " thread-indent "\"[oss-security] CVE-2017-7645 Linux kernel: nfsd: remote DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23739 invoked by uid 550); 2 May 2017 13:08:20 -0000
+Received: (qmail 29702 invoked by uid 550); 20 Sep 2023 13:27:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +7,221 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7351 invoked from network); 2 May 2017 12:58:37 -0000
-From: Ari Kauppi <Ari.Kauppi@synopsys.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2017-7645 Linux kernel: nfsd: remote DoS
-Thread-Index: AQHSw0PHH7lSiW+FVUWredyK+cDRkg==
-Date: Tue, 2 May 2017 12:58:22 +0000
-Message-ID: <739C33C0-C0EC-46AF-B1EA-1D1BBEC1E654@synopsys.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.112.3.24]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <277ED400993DCA4F87E0F391796582BC@internal.synopsys.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2017-7645 Linux kernel: nfsd: remote DoS
+Received: (qmail 28501 invoked from network); 20 Sep 2023 13:26:52 -0000
+Date: Wed, 20 Sep 2023 15:26:42 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Zdenek Dohnal <zdohnal@redhat.com>
+Message-ID: <20230920132642.GA4325@openwall.com>
+References: <f09b6919-97dc-a406-e6c4-add189505d48@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f09b6919-97dc-a406-e6c4-add189505d48@redhat.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2023-4504 cups, libppd: Postscript parsing heap-based buffer overflow
 
-SGksDQoNCkxpbnV4IGtlcm5lbCBORlN2MyBhbmQgTkZTdjIgc2VydmVycyBh
-cmUgdnVsbmVyYWJsZSB0byBhIHJlbW90ZSBEb1MgYXR0YWNrLg0KDQpBIHNw
-ZWNpZmljYWxseSBjcmFmdGVkIHJlcXVlc3QgY2FuIG92ZXJmbG93IHRoZSBy
-ZXF1ZXN0L3Jlc3BvbnNlIHBhZ2UNCmFycmF5LiBBIGZldyBkaXN0aW5jdCBh
-dHRhY2sgdmVjdG9ycyBleGlzdCB3aGljaCBhbGwgbGVhZCB0byBzeXN0ZW0g
-aGFuZy9jcmFzaA0KYW5kIGhhdmUgcG9zc2libHkgb3RoZXIgdW5zcGVjaWZp
-ZWQgaW1wYWN0Lg0KDQpUaGUgYXR0YWNrIHZlY3RvcnMgcmVxdWlyZSBhdCBs
-ZWFzdCByZWFkIGFjY2VzcyB0byBhIE5GUyBtb3VudCBvbiB0aGUgdGFyZ2V0
-IGhvc3QuDQoNClRoZSBpc3N1ZSBoYXMgYmVlbiB2ZXJpZmllZCB0byBiZSBy
-ZXByb2R1Y2libGUgb24gbXVsdGlwbGUgYmFzZWxpbmVzLiBBdCBsZWFzdA0K
-Mi42LjMyLCAzLjIsIDQuNCwgNC44IGFuZCA0LjEwIGJhc2VsaW5lcyAoYW5k
-IGRpc3RyaWJ1dGlvbnMgZGVyaXZlZCBmcm9tIHRob3NlKQ0KaGF2ZSBiZWVu
-IGNvbmZpcm1lZCB0byBiZSB2dWxuZXJhYmxlLiBGaXhlZCBpbiA0LjExIHJl
-bGVhc2UuDQoNCkNWU1M6My4wL0FWOk4vQUM6TC9QUjpML1VJOk4vUzpDL0M6
-Ti9JOk4vQTpIICg3LjcgLyBIaWdoKQ0KDQpVcHN0cmVhbSBwYXRjaDoNCmh0
-dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvbGludXMvZTY4MzhhMjllY2I0ODRjOTdl
-NGVmZWY5NDI5NjQzYjk4NTFmYmE2ZQ0KDQpUaGlzIGlzc3VlIHdhcyBmb3Vu
-ZCBieSBUdW9tYXMgSGFhbnDDpMOkIGFuZCBNYXR0aSBLYW11bmVuIGZyb20g
-U3lub3BzeXMgTHRkDQp3aXRoIFN5bm9wc3lzIERlZmVuc2ljcyBmdXp6ZXIu
-DQoNClRoYW5rcywNCg0KLS0NCkFyaSBLYXVwcGkgLyBTeW5vcHN5cyBMdGQu
+Hi,
+
+"Snippet of the vulnerable code" got badly misformatted in the
+text/plain version of Zdenek's message.  I include a properly formatted
+snippet below, extracted from the text/html version.
+
+Alexander
+
+On Wed, Sep 20, 2023 at 02:56:51PM +0200, Zdenek Dohnal wrote:
+> there is the same vulnerability in CUPS and libppd projects.
+> 
+> The original CUPS report:
+> 
+> 
+>  CVE-2023-4504: OpenPrinting CUPS Postscript Parsing Heap Overflow
+> 
+> AHA! <https://takeonme.org/> has discovered an issue with CUPS from 
+> OpenPrinting, and is publishing
+> this disclosure in accordance with AHA!'s standard disclosure policy 
+> <https://takeonme.org/cve.html> today,
+> on $DATE. CVE-2023-4504 <https://takeonme.org/cves/CVE-2023-4504.html> 
+> has been assigned to this issue.
+> 
+> Any questions about this disclosure should be directed to
+> *cve@takeonme.org*.
+> 
+> 
+>  Executive Summary
+> 
+> Due to failure in validating the length provided by an attacker-crafted 
+> CUPS document, CUPS version v2.5b1 and prior, by default, is susceptible 
+> to a heap-based buffer overflow, and possibly code execution. 
+> CVE-2023-4504 <https://takeonme.org/cves/CVE-2023-4504.html> appears to 
+> be an instance of CWE-122 
+> <https://cwe.mitre.org/data/definitions/122.html>, a heap-based buffer 
+> overflow.
+> 
+> 
+>  Technical Details
+> 
+> The |scan_ps| function in the CUPS codebase provides functionality that 
+> scans through a string looking for the next Postscript object. When 
+> iterating through a string which contains an open parenthesis and ends 
+> with a single backslash (0x5c) character, the code incorrectly iterates 
+> forward a character without properly checking the bounds of the string 
+> resulting in a 1 byte read beyond the allocated heap buffer.
+> 
+> Snippet of the vulnerable code:
+> 
+> cups/cups/raster-interpret.c
+
+ 1039 static _cups_ps_obj_t   *               /* O  - New object or NULL on EOF */
+ 1040 scan_ps(_cups_ps_stack_t *st,           /* I  - Stack */
+ 1041         char             **ptr)         /* IO - String pointer */
+ 1042 {
+ ...
+ 1085   switch (*cur)
+ 1086   {
+ 1087     case '(' :                          /* (string) */
+ 1088         obj.type = CUPS_PS_STRING;
+ 1089         start    = cur;
+ 1090
+ 1091         for (cur ++, parens = 1, valptr = obj.value.string,
+ 1092                  valend = obj.value.string + sizeof(obj.value.string) - 1;
+ 1093              *cur;
+ 1094              cur ++)
+ 1095         {
+ 1096           if (*cur == ')' && parens == 1)
+ 1097             break;
+ 1098
+ 1099           if (*cur == '(')
+ 1100             parens ++;
+ 1101           else if (*cur == ')')
+ 1102             parens --;
+ 1103
+ 1104           if (valptr >= valend)
+ 1105           {
+ 1106             *ptr = start;
+ 1107
+ 1108             return (NULL);
+ 1109           }
+ 1110
+ 1111           if (*cur == '\\')
+ 1112           {
+ 1113            /*
+ 1114             * Decode escaped character...
+ 1115             */
+ 1116
+ 1117             cur ++;
+ 1118
+ 1119             if (*cur == 'b')
+ 1120               *valptr++ = '\b';
+ 1121             else if (*cur == 'f')
+ 1122               *valptr++ = '\f';
+ 1123             else if (*cur == 'n')
+ 1124               *valptr++ = '\n';
+ 1125             else if (*cur == 'r')
+ 1126               *valptr++ = '\r';
+ 1127             else if (*cur == 't')
+ 1128               *valptr++ = '\t';
+ 1129             else if (*cur >= '0' && *cur <= '7')
+ 1130             {
+ 1131               int ch = *cur - '0';
+ 1132
+ 1133               if (cur[1] >= '0' && cur[1] <= '7')
+ 1134               {
+ 1135                 cur ++;
+ 1136                 ch = (ch << 3) + *cur - '0';
+ 1137               }
+ 1138
+ 1139               if (cur[1] >= '0' && cur[1] <= '7')
+ 1140               {
+ 1141                 cur ++;
+ 1142                 ch = (ch << 3) + *cur - '0';
+ 1143               }
+ 1144
+ 1145               *valptr++ = (char)ch;
+ 1146             }
+ 1147             else if (*cur == '\r')
+ 1148             {
+ 1149               if (cur[1] == '\n')
+ 1150                 cur ++;
+ 1151             }
+ 1152             else if (*cur != '\n')
+ 1153               *valptr++ = *cur;
+ 1154           }
+ 1155           else
+ 1156             *valptr++ = *cur;
+ 1157         }
+
+> Line 1085 contains the case statement which provides the logic used to 
+> iterate through the given string.
+> 
+> On line 1091, the for loop within the case statement is used to iterate 
+> through each character after encountering an open paranthesis character 
+> (0x28), storing the pointer to the current character in |cur|.
+> 
+> On line 1111, the code checks if the current character is a backslash 
+> and finally, in line 1117, the character index is incremented without 
+> checking the length, now pointing to the null byte terminating the string.
+> 
+> Upon the next iteration of the loop, on line 1094, the loop now begins 
+> iterating through unallocated memory resulting in undefined behaviour.
+> 
+> A Base64 encoded blob of an example PostScript document that can trigger 
+> the issue is below.
+> 
+> |L///KFwAY3V1ZQ== |
+> 
+> 
+>  Attacker Value
+> 
+> By providing this malformed PostScript document, an attacker could 
+> compromise the machine running the software. Once compromised, this can 
+> provide an attacker a unique, privileged position in the targeted network.
+> 
+> 
+>  Credit
+> 
+> This issue is being disclosed through the AHA! CNA and is credited to: 
+> zenofex <https://mastodon.social/@zenofex> and WanderingGlitch 
+> <https://infosec.exchange/@WanderingGlitch>
+> 
+> CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:N
+> 
+> ========================================================================================
+> 
+> *Notes:*
+> 
+> - I've tried to reproduce the issue with any filter and PPD using the 
+> code, but I didn't get crash nor valgrind report - maybe ASAN could show 
+> the vulnerability, but I haven't tried this.
+> 
+> - the vulnerability should show up when you send the postscript string 
+> above to a printer which requires cups-raster format (the vulnerable 
+> code is in path when you convert postscript to raster), which is not 
+> common these days - nor sending postscript or producing cups-raster.
+> 
+> *Updated Notes:*
+> 
+> I found out the vulnerability should happen only if malformed PostScript 
+> sequence is in PPD file, not if the sequence is sent for printing 
+> (vulnerable code was in library function used for reading PS sequence 
+> which are in PPDs).
+> 
+> *Commits fixing the issue:*
+> 
+> cups: https://github.com/OpenPrinting/cups/commit/2431caddb7e6
+> 
+> libppd: https://github.com/OpenPrinting/libppd/commit/262c909ac5
+> 
+> 
+> Have a nice day,
+> 
+> 
+> Zdenek Dohnal
+> 
+> CUPS 2.4.x release manager
+> 
+> 
+> -- 
+> Zdenek Dohnal
+> Senior Software Engineer
+> Red Hat, BRQ-TPBC
