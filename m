@@ -1,152 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/11/1
-Message-ID: <s8o190rp-15r7-9nn6-782-3sqpqsn5qpsr@unkk.fr>
-Date: Wed, 11 Oct 2023 07:58:42 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-38545: SOCKS5 heap buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/20/5
+Message-Id: <26FA0F7F-3AA3-467E-BBC5-142319CD6C28@beckweb.net>
+Date: Wed, 20 Sep 2023 17:46:40 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-SOCKS5 heap buffer overflow
-===========================
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Project curl Security Advisory, October 11 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-38545.html)
+The following releases contain fixes for security vulnerabilities:
 
-VULNERABILITY
--------------
+* Jenkins 2.424
+* Jenkins LTS 2.414.2
+* Build Failure Analyzer Plugin 2.4.2
 
-This flaw makes curl overflow a heap based buffer in the SOCKS5 proxy
-handshake.
 
-When curl is asked to pass along the hostname to the SOCKS5 proxy to allow
-that to resolve the address instead of it getting done by curl itself, the
-maximum length that hostname can be is 255 bytes.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-09-20/
 
-If the hostname is detected to be longer than 255 bytes, curl switches to
-local name resolving and instead passes on the resolved address only to the
-proxy. Due to a bug, the local variable that means "let the host resolve the
-name" could get the wrong value during a slow SOCKS5 handshake, and contrary
-to the intention, copy the too long hostname to the target buffer instead of
-copying just the resolved address there.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-TERMINOLOGY
------------
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-The curl library is known as libcurl and the command line tool that uses the
-library is known as the curl tool. Either or both may be referred to as just
-curl. The distinctive names are used in this document when necessary.
+---
 
-INFO
-----
+SECURITY-3261 / CVE-2023-43494
+Jenkins allows filtering builds in the build history widget by specifying
+an expression that searches for matching builds by name, description,
+parameter values, etc.
 
-The hostname comes from the URL that curl has been told to operate with.
+Jenkins 2.50 through 2.423 (both inclusive), LTS 2.60.1 through 2.414.1
+(both inclusive) does not exclude sensitive build variables (e.g., password
+parameter values) from this search.
 
-The target buffer is the heap-based download buffer in libcurl that is reused
-for SOCKS negotiation before the transfer has started. The size of the buffer
-is 16kB by default, but can be set to different sizes by the application. The
-curl tool sets it to 102400 bytes by default - but it sets the buffer size to
-a smaller size if `--limit-rate` is set lower than 102400 bytes per second.
+This allows attackers with Item/Read permission to obtain values of
+sensitive variables used in builds by iteratively testing different
+characters until the correct sequence is discovered.
 
-libcurl provides the `CURLOPT_BUFFERSIZE` option to change the size of the
-download buffer.
 
-libcurl accepts hostnames up to 65535 bytes in the URL.
+SECURITY-3245 / CVE-2023-43495
+`ExpandableDetailsNote` allows annotating build log content with additional
+information that can be revealed when interacted with.
 
-If the used hostname is longer than the target buffer, there is a `memcpy()`
-that overwrites the buffer into the heap. The URL parser and possibly an IDN
-library (if curl is built with one) have to accept the hostname, which
-somewhat limits the set of available byte sequences that can be used in the
-copy.
+Jenkins 2.423 and earlier, LTS 2.414.1 and earlier does not escape the
+value of the `caption` constructor parameter of `ExpandableDetailsNote`.
 
-For an overflow to happen it needs a slow enough SOCKS5 handshake to trigger
-the local variable bug, and the client using a hostname longer than the
-download buffer. Perhaps with a malicious HTTPS server doing a redirect to an
-especially crafted URL.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide `caption` parameter values.
 
-Typical server latency is likely "slow" enough to trigger this bug without an
-attacker needing to influence it by DoS or SOCKS server control.
+NOTE: As of publication, the related API is not used within Jenkins (core),
+and the Jenkins security team is not aware of any affected plugins.
 
-An overflow is only possible in applications that do not set
-`CURLOPT_BUFFERSIZE` or set it smaller than 65541. Since the curl tool sets
-`CURLOPT_BUFFERSIZE` to 100kB by default it is not vulnerable unless rate
-limiting was set by the user to a rate smaller than 65541 bytes/second.
 
-The options that cause SOCKS5 with remote hostname to be used in libcurl:
-- `CURLOPT_PROXYTYPE` set to type `CURLPROXY_SOCKS5_HOSTNAME`, or:
-- `CURLOPT_PROXY` or `CURLOPT_PRE_PROXY` set to use the scheme `socks5h://`
-- One of the proxy environment variables can be set to use the `socks5h://`
-   scheme. For example `http_proxy`, `HTTPS_PROXY` or `ALL_PROXY`.
+SECURITY-3072 / CVE-2023-43496
+Jenkins creates a temporary file when a plugin is deployed directly from a
+URL.
 
-The options that cause SOCKS5 with remote hostname to be used in the curl tool:
-- `--socks5-hostname`, or:
-- `--proxy` or `--preproxy` set to use the scheme `socks5h://`
-- Environment variables as described in the libcurl section.
+Jenkins 2.423 and earlier, LTS 2.414.1 and earlier creates this temporary
+file in the system temporary directory with the default permissions for
+newly created files.
 
-This bug was introduced when the SOCKS5 handshake code was converted from a
-blocking function into a non-blocking state machine.
+If these permissions are overly permissive, they may allow attackers with
+access to the Jenkins controller file system to read and write the file
+before it is installed in Jenkins, potentially resulting in arbitrary code
+execution.
 
-**The analysis in this section is specific to curl version 8.** Some older
-versions of curl version 7 have less restriction on hostname length and/or a
-smaller SOCKS negotiation buffer size that cannot be overridden by
-CURLOPT_BUFFERSIZE.
+IMPORTANT: This vulnerability only affects operating systems using a shared
+temporary directory for all users (typically Linux). Additionally, the
+default permissions for newly created files generally only allow attackers
+to read the temporary file, but not write to it.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-38545 to this issue.
 
-CWE-122: Heap-based Buffer Overflow
+SECURITY-3073 / CVE-2023-43497 (Stapler) & CVE-2023-43498 (MultipartFormDataParser)
+In Jenkins 2.423 and earlier, LTS 2.414.1 and earlier, uploaded files
+processed via the Stapler web framework and the Jenkins API
+`MultipartFormDataParser` create temporary files in the system temporary
+directory with the default permissions for newly created files.
 
-Severity: High
+If these permissions are overly permissive, attackers with access to the
+system temporary directory may be able to read and write the file before it
+is used.
 
-HackerOne: https://hackerone.com/reports/2187833
+IMPORTANT: This vulnerability only affects operating systems using a shared
+temporary directory for all users (typically Linux). Additionally, the
+default permissions for newly created files generally only allow attackers
+to read the temporary file, but not write to it.
 
-AFFECTED VERSIONS
------------------
 
-- Affected versions: libcurl 7.69.0 to and including 8.3.0
-- Not affected versions: libcurl < 7.69.0 and >= 8.4.0
-- Introduced-in: https://github.com/curl/curl/commit/4a4b63daaa
+SECURITY-3244 / CVE-2023-43499
+Build Failure Analyzer Plugin 2.4.1 and earlier does not escape Failure
+Cause names in build logs.
 
-libcurl is used by many applications, but not always advertised as such!
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to create or update Failure Causes.
 
-SOLUTION
---------
 
-Starting in curl 8.4.0, curl no longer switches to local resolve mode if the
-name is too long but is instead rightfully returning an error.
+SECURITY-3226 / CVE-2023-43500 (CSRF) & CVE-2023-43501 (missing permission check)
+Build Failure Analyzer Plugin 2.4.1 and earlier does not perform a
+permission check in a connection test HTTP endpoint.
 
-- Fixed-in: https://github.com/curl/curl/commit/fb4415d8aee6c1
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified hostname and port using attacker-specified username and
+password.
 
-[Patch collection for older versions](https://curl.se/docs/CVE-2023-38545_patches.zip)
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
 
-RECOMMENDATIONS
----------------
 
-  A - Upgrade curl to version 8.4.0
+SECURITY-3239 / CVE-2023-43502
+Build Failure Analyzer Plugin 2.4.1 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
 
-  B - Apply the patch to your local version
+This vulnerability allows attackers to delete Failure Causes.
 
-  C - Do not use `CURLPROXY_SOCKS5_HOSTNAME` proxies with curl
 
-  D - Do not set a proxy environment variable to socks5h://
 
-TIMELINE
---------
-
-This issue was reported to the curl project on September 30, 2023. We contacted
-distros@...nwall on October 3, 2023.
-
-libcurl 8.4.0 was released on October 11 2023, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Jay Satiro
-- Patched-by: Jay Satiro
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
