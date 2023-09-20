@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/09/2
-Message-ID: <20230309133444.GA22470@localhost.localdomain>
-Date: Thu, 9 Mar 2023 13:34:58 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: Georgi Guninski <gguninski@...il.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/20/2
+Message-ID: <ZQriTiZWE_r8Mkpe@larwa.hq.kempniu.pl>
+Date: Wed, 20 Sep 2023 14:15:10 +0200
+From: Michał Kępień <michal@....org>
+To: oss-security@...ts.openwall.com
+Cc: security-officer@....org
+Subject: ISC has disclosed two vulnerabilities in BIND 9 (CVE-2023-3341, CVE-2023-4236)
 Content-Type: text/plain; charset=utf-8
 
-Hi Georgi,
+On 20 September 2023 we (Internet Systems Consortium) disclosed two vulnerabilities affecting our BIND 9 software:
 
-On Mon, Mar 06, 2023 at 09:53:06AM +0200, Georgi Guninski wrote:
-> So besides the double free bug you managed to circumvent
-> the mitigation in both linux and openbsd, right?
-> Did you find weakness in the mitigation or did you find
-> fundamental way to exploit double free?
+- CVE-2023-3341:        A stack exhaustion flaw in control channel code may cause named to terminate unexpectedly https://kb.isc.org/docs/cve-2023-3341
+- CVE-2023-4236:        named may terminate unexpectedly under high DNS-over-TLS query load https://kb.isc.org/docs/cve-2023-4236
 
-We have not been able to do anything useful on Linux (glibc) yet.
+New versions of BIND 9 are available from https://www.isc.org/downloads
 
-On OpenBSD, what we did works only because this double free is of the
-form "free(ptr); many other malloc() and free() calls; free(ptr);".
+Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of each published release directory:
 
-If it were of the form "free(ptr); no other malloc() or free() call;
-free(ptr);" then this double free would be caught immediately by
-malloc's security checks.
+- https://downloads.isc.org/isc/bind9/9.16.44/patches/
+- https://downloads.isc.org/isc/bind9/9.18.19/patches/
+- https://downloads.isc.org/isc/bind9/9.19.17/patches/
 
-Hopefully this helps! With best regards,
+With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
 
 -- 
-the Qualys Security Advisory team
+Best regards,
+Michał Kępień
