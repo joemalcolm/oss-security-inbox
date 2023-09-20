@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/1
-Message-Id: <E1r2tyE-0002BZ-FS@xenbits.xenproject.org>
-Date: Tue, 14 Nov 2023 14:00:50 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/20/1
+Message-Id: <E1qitNQ-0001Pu-0K@xenbits.xenproject.org>
+Date: Wed, 20 Sep 2023 09:20:08 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 445 v3 (CVE-2023-46835) - x86/AMD: mismatch in IOMMU quarantine page table levels
+Subject: Xen Security Advisory 438 v2 (CVE-2023-34322) - top-level shadow reference dropped too early for 64-bit PV guests
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2023-46835 / XSA-445
-                               version 3
+            Xen Security Advisory CVE-2023-34322 / XSA-438
+                               version 2
 
-        x86/AMD: mismatch in IOMMU quarantine page table levels
+   top-level shadow reference dropped too early for 64-bit PV guests
 
-UPDATES IN VERSION 3
+UPDATES IN VERSION 2
 ====================
 
 Public release.
@@ -24,56 +24,46 @@ Public release.
 ISSUE DESCRIPTION
 =================
 
-The current setup of the quarantine page tables assumes that the
-quarantine domain (dom_io) has been initialized with an address width
-of DEFAULT_DOMAIN_ADDRESS_WIDTH (48) and hence 4 page table levels.
+For migration as well as to work around kernels unaware of L1TF (see
+XSA-273), PV guests may be run in shadow paging mode.  Since Xen itself
+needs to be mapped when PV guests run, Xen and shadowed PV guests run
+directly the respective shadow page tables.  For 64-bit PV guests this
+means running on the shadow of the guest root page table.
 
-However dom_io being a PV domain gets the AMD-Vi IOMMU page tables
-levels based on the maximum (hot pluggable) RAM address, and hence on
-systems with no RAM above the 512GB mark only 3 page-table levels are
-configured in the IOMMU.
-
-On systems without RAM above the 512GB boundary
-amd_iommu_quarantine_init() will setup page tables for the scratch
-page with 4 levels, while the IOMMU will be configured to use 3 levels
-only, resulting in the last page table directory (PDE) effectively
-becoming a page table entry (PTE), and hence a device in quarantine
-mode gaining write access to the page destined to be a PDE.
-
-Due to this page table level mismatch, the sink page the device gets
-read/write access to is no longer cleared between device assignment,
-possibly leading to data leaks.
+In the course of dealing with shortage of memory in the shadow pool
+associated with a domain, shadows of page tables may be torn down.  This
+tearing down may include the shadow root page table that the CPU in
+question is presently running on.  While a precaution exists to
+supposedly prevent the tearing down of the underlying live page table,
+the time window covered by that precaution isn't large enough.
 
 IMPACT
 ======
 
-A device in quarantine mode can access data from previous quarantine
-page table usages, possibly leaking data used by previous domains that
-also had the device assigned.
+Privilege escalation, Denial of Service (DoS) affecting the entire host,
+and information leaks all cannot be ruled out.
 
 VULNERABLE SYSTEMS
 ==================
 
-All Xen versions supporting PCI passthrough are affected.
+All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
+versions have not been inspected.
 
-Only x86 AMD systems with IOMMU hardware are vulnerable.
-
-Only x86 guests which have physical devices passed through to them can
-leverage the vulnerability.
+Only x86 systems are vulnerable.  Only 64-bit PV guests can leverage the
+vulnerability, and only when running in shadow mode.  Shadow mode would
+be in use when migrating guests or as a workaround for XSA-273 (L1TF).
 
 MITIGATION
 ==========
 
-Not passing through physical devices to guests will avoid the
-vulnerability.
+Running only HVM or PVH guests will avoid the vulnerability.
 
-Not using quarantine scratch-page mode will avoid the vulnerability,
-but could result in other issues.
+Running PV guests in the PV shim will also avoid the vulnerability.
 
 CREDITS
 =======
 
-This issue was discovered by Roger Pau Monné of XenServer.
+This issue was discovered by Tim Deegan, and Jan Beulich of SUSE.
 
 RESOLUTION
 ==========
@@ -85,16 +75,16 @@ apply to the stable branches, and may not apply cleanly to the most
 recent release tarball.  Downstreams are encouraged to update to the
 tip of the stable branch before applying these patches.
 
-xsa445.patch           xen-unstable
-xsa445-4.17.patch      Xen 4.17.x
-xsa445-4.16.patch      Xen 4.16.x
-xsa445-4.15.patch      Xen 4.15.x
+xsa438.patch           xen-unstable
+xsa438-4.17.patch      Xen 4.17.x
+xsa438-4.16.patch      Xen 4.16.x
+xsa438-4.15.patch      Xen 4.15.x
 
-$ sha256sum xsa445*
-751892f1a603dbee7ecb82d046aee6d87bf10398f365d3880a7f7d32eb3d73c1  xsa445.patch
-9ae729410504961578e679ba19931646802b213d026b6587fb1abb43b2629186  xsa445-4.15.patch
-55fe5925741b650fe2583a1e9855ea66c4fe0212de4fe93535fd592188fa64d4  xsa445-4.16.patch
-7c4478d348dad0d9c71685a8c402df78d74c6b4d3c3e1627115b91967e54d94a  xsa445-4.17.patch
+$ sha256sum xsa438*
+f30067fa3732fb52042b14a2836b610c29af47461425f1a1ccec21cb8a5a48b1  xsa438.patch
+a2e7d7c12ea19fb95e2d825fda5f7d0124cbb5c4a369cb58ab6036d266b7e297  xsa438-4.15.patch
+eb75fbeb4aa635d6104c12acd5f7311e477f7c159f2ec4eca8a345327a9aee24  xsa438-4.16.patch
+f3a305c86124e48b9afa14f3ba76b81d1f5d8d472e2412ae3d014305c749a86a  xsa438-4.17.patch
 $
 
 DEPLOYMENT DURING EMBARGO
@@ -122,20 +112,20 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmVTfRsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZJdUIAJOmkQjl9EbYfiuBclmQJgOik6dYwYfFRNr+Q7g0
-mWWQRF9BRSZkkzKipBeFWgBkQcx/3qo5HFBfElp9Atq4JpwXlcn9iBDR9fj5Zojl
-lUxKHbppKZ9lG6izHjZNVgOOmYkLBxi8STWlB4aXrxhqbgxEnv4MESC809qUuzsy
-lXl8AZERW7f/L8aW5IlpQqVKskc3NXUtvrhwyegrzL5SQfeGxIl3EPChA0UGq3PC
-McBQWtyMBZHmwOQco8o8QenflWpRmgO4nYHdy2CAJ5XfCqa5bgNs61AR12BAUSaS
-5MLSRtCIn2VYxrfsHrE2aCYJHLvzRzWnR09N0p8DKW+4AXY=
-=gjG7
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmUKuSAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZtL0IAL3mXsj7Q5Xfu/Tof0a1ie7TnpvZ2qXxzoLlyiFR
+Vra9gs83Nw7n45yXFFVLSzTjmz2bCbCmUowPp6TxF9Nawt0JocbF80JpYKEojEko
+6B2BAdUFhPXtx1D6NruzG2gVr5qn/eNJjIIos0o7tzxtBPLKX9qzLh3FmZK5BJm2
+HyKMLIEZuVipb3Qtb+avUDHvLjee6p4eaaWOk08g3sSWhtSfwxlS4IF9j1G2Oejj
+QKZ1XILCP8miXmuUZJ/L/7CzFvOm+DKNVFZYhFT0fjDWk3vNhtLcBv5s36Z65gKK
+MvKe7owffmclQLWjOekYNm8dG5gQ/OkWRAPbxiwRMegT22g=
+=L3du
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa445.patch" of type "application/octet-stream" (2915 bytes)
+Download attachment "xsa438.patch" of type "application/octet-stream" (17005 bytes)
 
-Download attachment "xsa445-4.15.patch" of type "application/octet-stream" (2942 bytes)
+Download attachment "xsa438-4.15.patch" of type "application/octet-stream" (16486 bytes)
 
-Download attachment "xsa445-4.16.patch" of type "application/octet-stream" (2961 bytes)
+Download attachment "xsa438-4.16.patch" of type "application/octet-stream" (16142 bytes)
 
-Download attachment "xsa445-4.17.patch" of type "application/octet-stream" (2915 bytes)
+Download attachment "xsa438-4.17.patch" of type "application/octet-stream" (16350 bytes)
