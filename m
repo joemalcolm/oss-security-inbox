@@ -1,4 +1,4 @@
-Received: (qmail 16273 invoked by uid 550); 7 May 2026 16:41:48 -0000
+Received: (qmail 20421 invoked by uid 550); 20 Sep 2023 13:05:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +7,197 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1942 invoked from network); 7 May 2026 07:22:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1778138560; x=1778224960; bh=/5lil5HF9cPgOZEUMtyy/BxL/h0yfBkT
-	4lLA3M78K+c=; b=C2lMFvdw9ZSxHKru4v1Ym3GDhufNxoNEkgsfQMi8WgWNOu40
-	ZUYylwbHlFZblDhK8ryzNxbm0TuPfJ0Mm9av2YToSVMq3Q0zv4AoYKzK/atz6guc
-	3rFscW507fAWE2PAJpttLKl5WSObSsTtRDH7hg+sunpuroAFRYEJnUjL9x34g2xK
-	66aJWPdEWyUCL3hu42p8SOdlbjXJQOzalGAlPwXZqoLeWEN7eXCg5W2Hc93HlzNQ
-	X10bhNBj2BX5GhhiVY1UQSrnRsYG4Gkcc7j8hRZ3aYOtABnFnryOYi+nJErIxv6Y
-	FwZz8s27ysI9R+tOu0mrxCCqCYxTt0ugSxT17w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778138560; x=
-	1778224960; bh=/5lil5HF9cPgOZEUMtyy/BxL/h0yfBkT4lLA3M78K+c=; b=H
-	2f2LP6CFPqCWnOYXrmib8OJ5LWbrxnMli5n/p6hIjdqwZV61G9yO4P+H+2tiu/mp
-	PJsJToOfbGA6Qy8ABjCp4SzTM3kCCqKpErrRToLmPR7m5KcOvAA+i+i0+LrP2/YY
-	AtRGjtsKwPDI+5Pn3NrfSyPjEP9CStmKuwkWqtBQ7ZUY+o/AktJn2HwUeGQs8hQ0
-	l6rHmXJVglN0K+SCJcHtY7cklxaI4+zkEasOfaLjlu8vLJfw2qi4wOA80HqhqbEy
-	SBxb0z+RyoxyIxCgYq2m18AXvSO7NdATo3bcMDjT+frRXJzXAmptTEe27L2ro88B
-	OJ+bqSsN8tQb2SASmgV3w==
-X-ME-Sender: <xms:vz38aYs_W5e-YS2995aJLVJwDSv9j3mgRjQrftVyQz5eeExtAVGo2Q>
-    <xme:vz38acYEtTEKieRCcox3GNAYNnZGiAYcR6-dx6n7R7714FgBPI-JPZUXrV1DglYyQ
-    L1L9ddxfpZEqJyrwOjfUmCjS7VnJrBZ2TO3p2-qBejV-GsCPdTn-2c>
-X-ME-Received: <xmr:vz38aZZXB2M8UyQZ942ZIxb2R-R5wfqIzwYg9t9P6hGYSNvdcaWxs4jA7QUkNew1c0Er-PknK9v52i99KIQj7Ck4O_mv3Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdeikeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkgggtsehgtderredttddtne
-    cuhfhrohhmpeetlhihshhsrgcutfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucgg
-    tffrrghtthgvrhhnpeethfekudegffdtieeklefgueekieefkefhgedukeejuefgieejte
-    dtleetuddtgeenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhephhhisegrlhihshhsrgdrihhspd
-    hnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhs
-    qdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:vz38aQWQjv3a7P7bu7yNZzTBLWWDEjcrnPDfstX1QfgoCmGfugg1tA>
-    <xmx:vz38aY3F2MY8racSx3YT5QdX6z3SmuYl0rwiXfqegjoZtGF2_R-pJw>
-    <xmx:vz38afa3b5GBoM6rSrGjGi77glcUQdfKsdijUkzyNpSYGqoOWWbPGw>
-    <xmx:vz38aTphn0WXe_qM6RRn_-92vwVQ0OS18y8Gve37p3oXaE6Tg_jwSg>
-    <xmx:wD38adlroGmPTaWL5KSaL5cVLQOedF9Z5pu9r0WDU4QlljJKTWYdzNHA>
-Feedback-ID: i12284293:Fastmail
-From: Alyssa Ross <hi@alyssa.is>
-To: oss-security@lists.openwall.com
-Date: Thu, 07 May 2026 09:22:35 +0200
-Message-ID: <875x4zk7k4.fsf@alyssa.is>
+Received: (qmail 14057 invoked from network); 20 Sep 2023 12:57:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1695214618;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=rqqU9Qnrpehb3xyW3b5MrOHXXWrtINRXbY8CLu8II2s=;
+	b=gkP+jCEgRWje9C11H0NrNeP7GjhLP3X6u3x9NPpXyzTcdtdQIWGrI6v1q0tiUKb5QX8npG
+	MrWi6RQYTshkXWSkmdhYjSqi1FFccc8lcqt+kFCHrmq/m6hxTovkLqvc/DpUtscCW9exc1
+	w0zprGTUe1YPRcDqs5d0bL16RKZaAp0=
+X-MC-Unique: 6sYZL92bNjSXsPbymmrpDQ-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695214614; x=1695819414;
+        h=subject:from:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rqqU9Qnrpehb3xyW3b5MrOHXXWrtINRXbY8CLu8II2s=;
+        b=ZwAJ9MObhn7oV1wVbMxbEGIBmEuLvLMmHod8E/BlEdHK+4DUm0XJdcd+psWxOKgIrD
+         48kIiauOTdePK44U4uNgS62GlBWcarSDJ3YGZE6jhkfzI0pE/vtuCKvgDDuc80deypc4
+         o6MLh66ryTkAMm6CFn0OpCE5C/Xf5qYR8hHC0nHIEdKUIsgUVznZYVLFowOfHVAd113O
+         1C54B+XT9oRXTsBu2ZwyWg+9EkDZNANu527/heSudukStmjKtQ3RbqERy1y9mo9C0s3f
+         VBZocvq9Zw8lPZm8wueocy+0HWDP+HBSFsfor12lI5l1JrMNxtGHZVtpxvje/7X3H7+4
+         mRVQ==
+X-Gm-Message-State: AOJu0YzE4KChe4CJHv0hwAm0QcoJVwW89UtnUatXfpX7iSO3cBGybKB8
+	bH/8+M9hE1WE/5l0epRZ+OTc2RKu7DmioP/nLxwFrFSJyOvDRyDes2vj3aNToCz36c+wtSlP7KQ
+	+lD85TqCnEGvQuo1Z3G0w5LDzSmiK9KtBTONbL3/R1map7Kq/HgrwAnUKWVg1znPrki7PvxJEFU
+	1/itPnBJXdXis=
+X-Received: by 2002:a17:906:220f:b0:9ad:7e21:2ce with SMTP id s15-20020a170906220f00b009ad7e2102cemr2152185ejs.1.1695214614087;
+        Wed, 20 Sep 2023 05:56:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCJVIUJ8auxo9vYfxvt7zZ6qWgENd47cqyuNLAEAGnxmz879viuUHZ8paWaG7VTNPVMYmVwA==
+X-Received: by 2002:a17:906:220f:b0:9ad:7e21:2ce with SMTP id s15-20020a170906220f00b009ad7e2102cemr2152169ejs.1.1695214613604;
+        Wed, 20 Sep 2023 05:56:53 -0700 (PDT)
+Message-ID: <f09b6919-97dc-a406-e6c4-add189505d48@redhat.com>
+Date: Wed, 20 Sep 2023 14:56:51 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: [oss-security] XSS in Postorius (Mailman 3) 1.3.13 and earlier
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+To: oss-security@lists.openwall.com
+From: Zdenek Dohnal <zdohnal@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative;
+ boundary="------------owWTFMig2a5HUTmwMFAlQWTE"
+Content-Language: en-US
+Subject: [oss-security] CVE-2023-4504 cups, libppd: Postscript parsing heap-based buffer
+ overflow
 
---=-=-=
-Content-Type: text/plain
+--------------owWTFMig2a5HUTmwMFAlQWTE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The current released version of Postorius, and earlier versions, contain
-an XSS vulnerability in the admin UI.  A fix was merged upstream in
-January 2025, which included documentation of the security issue in the
-news file[1], but no release has been made since, and I don't see any
-previous discussion in the oss-security archives.  Distributions
-packaging the latest release that have not backported this fix are
-vulnerable.  I have heard that this issue is being actively exploited.
+Hi all,
 
-[1]: https://gitlab.com/mailman/postorius/-/commit/c4706abd05ba6bcf472fc674b160d3a9d6a4868b
+there is the same vulnerability in CUPS and libppd projects.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+The original CUPS report:
 
------BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQQGoGac7QfI+H5ZtFCZddwkt31pFQUCafw9uwAKCRCZddwkt31p
-FUTSAP0Uq1KXfF0+SYzhdkWHUcv77SGgVr+Kw9WrUntSWtX2awEA21hAGCKRxPjo
-/7VlxLrSVuCPz5Hterj/Qlh7dojb+wc=
-=dUQh
------END PGP SIGNATURE-----
---=-=-=--
+  CVE-2023-4504: OpenPrinting CUPS Postscript Parsing Heap Overflow
+
+AHA! <https://takeonme.org/> has discovered an issue with CUPS from 
+OpenPrinting, and is publishing
+this disclosure in accordance with AHA!'s standard disclosure policy 
+<https://takeonme.org/cve.html> today,
+on $DATE. CVE-2023-4504 <https://takeonme.org/cves/CVE-2023-4504.html> 
+has been assigned to this issue.
+
+Any questions about this disclosure should be directed to
+*cve@takeonme.org*.
+
+
+  Executive Summary
+
+Due to failure in validating the length provided by an attacker-crafted 
+CUPS document, CUPS version v2.5b1 and prior, by default, is susceptible 
+to a heap-based buffer overflow, and possibly code execution. 
+CVE-2023-4504 <https://takeonme.org/cves/CVE-2023-4504.html> appears to 
+be an instance of CWE-122 
+<https://cwe.mitre.org/data/definitions/122.html>, a heap-based buffer 
+overflow.
+
+
+  Technical Details
+
+The |scan_ps| function in the CUPS codebase provides functionality that 
+scans through a string looking for the next Postscript object. When 
+iterating through a string which contains an open parenthesis and ends 
+with a single backslash (0x5c) character, the code incorrectly iterates 
+forward a character without properly checking the bounds of the string 
+resulting in a 1 byte read beyond the allocated heap buffer.
+
+Snippet of the vulnerable code:
+
+cups/cups/raster-interpret.c
+
+|1039 static _cups_ps_obj_t * /* O - New object or NULL on EOF */ 1040 
+scan_ps(_cups_ps_stack_t *st, /* I - Stack */ 1041 char **ptr) /* IO - 
+String pointer */ 1042 { ... 1085 switch (*cur) 1086 { 1087 case '(' : 
+/* (string) */ 1088 obj.type = CUPS_PS_STRING; 1089 start = cur; 1090 
+1091 for (cur ++, parens = 1, valptr = obj.value.string, 1092 valend = 
+obj.value.string + sizeof(obj.value.string) - 1; 1093 *cur; 1094 cur ++) 
+1095 { 1096 if (*cur == ')' && parens == 1) 1097 break; 1098 1099 if 
+(*cur == '(') 1100 parens ++; 1101 else if (*cur == ')') 1102 parens --; 
+1103 1104 if (valptr >= valend) 1105 { 1106 *ptr = start; 1107 1108 
+return (NULL); 1109 } 1110 1111 if (*cur == '\\') 1112 { 1113 /* 1114 * 
+Decode escaped character... 1115 */ 1116 1117 cur ++; 1118 1119 if (*cur 
+== 'b') 1120 *valptr++ = '\b'; 1121 else if (*cur == 'f') 1122 *valptr++ 
+= '\f'; 1123 else if (*cur == 'n') 1124 *valptr++ = '\n'; 1125 else if 
+(*cur == 'r') 1126 *valptr++ = '\r'; 1127 else if (*cur == 't') 1128 
+*valptr++ = '\t'; 1129 else if (*cur >= '0' && *cur <= '7') 1130 { 1131 
+int ch = *cur - '0'; 1132 1133 if (cur[1] >= '0' && cur[1] <= '7') 1134 
+{ 1135 cur ++; 1136 ch = (ch << 3) + *cur - '0'; 1137 } 1138 1139 if 
+(cur[1] >= '0' && cur[1] <= '7') 1140 { 1141 cur ++; 1142 ch = (ch << 3) 
++ *cur - '0'; 1143 } 1144 1145 *valptr++ = (char)ch; 1146 } 1147 else if 
+(*cur == '\r') 1148 { 1149 if (cur[1] == '\n') 1150 cur ++; 1151 } 1152 
+else if (*cur != '\n') 1153 *valptr++ = *cur; 1154 } 1155 else 1156 
+*valptr++ = *cur; 1157 } |
+
+Line 1085 contains the case statement which provides the logic used to 
+iterate through the given string.
+
+On line 1091, the for loop within the case statement is used to iterate 
+through each character after encountering an open paranthesis character 
+(0x28), storing the pointer to the current character in |cur|.
+
+On line 1111, the code checks if the current character is a backslash 
+and finally, in line 1117, the character index is incremented without 
+checking the length, now pointing to the null byte terminating the string.
+
+Upon the next iteration of the loop, on line 1094, the loop now begins 
+iterating through unallocated memory resulting in undefined behaviour.
+
+A Base64 encoded blob of an example PostScript document that can trigger 
+the issue is below.
+
+|L///KFwAY3V1ZQ== |
+
+
+  Attacker Value
+
+By providing this malformed PostScript document, an attacker could 
+compromise the machine running the software. Once compromised, this can 
+provide an attacker a unique, privileged position in the targeted network.
+
+
+  Credit
+
+This issue is being disclosed through the AHA! CNA and is credited to: 
+zenofex <https://mastodon.social/@zenofex> and WanderingGlitch 
+<https://infosec.exchange/@WanderingGlitch>
+
+CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:N
+
+========================================================================================
+
+*Notes:*
+
+- I've tried to reproduce the issue with any filter and PPD using the 
+code, but I didn't get crash nor valgrind report - maybe ASAN could show 
+the vulnerability, but I haven't tried this.
+
+- the vulnerability should show up when you send the postscript string 
+above to a printer which requires cups-raster format (the vulnerable 
+code is in path when you convert postscript to raster), which is not 
+common these days - nor sending postscript or producing cups-raster.
+
+*Updated Notes:*
+
+I found out the vulnerability should happen only if malformed PostScript 
+sequence is in PPD file, not if the sequence is sent for printing 
+(vulnerable code was in library function used for reading PS sequence 
+which are in PPDs).
+
+*Commits fixing the issue:*
+
+cups: https://github.com/OpenPrinting/cups/commit/2431caddb7e6
+
+libppd: https://github.com/OpenPrinting/libppd/commit/262c909ac5
+
+
+Have a nice day,
+
+
+Zdenek Dohnal
+
+CUPS 2.4.x release manager
+
+
+-- 
+Zdenek Dohnal
+Senior Software Engineer
+Red Hat, BRQ-TPBC
+
+--------------owWTFMig2a5HUTmwMFAlQWTE--
+
