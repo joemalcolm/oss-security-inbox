@@ -1,38 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/2
-Message-ID: <20230721074206.GS1466@suse.de>
-Date: Fri, 21 Jul 2023 09:42:09 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/1
+Message-ID: <ZQxRYY0HLhGyn4jf@thinkstation.cmpxchg8b.net>
+Date: Thu, 21 Sep 2023 07:21:21 -0700
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Announce: OpenSSH 9.3p2 released
+Subject: MOV{H,L}PS instructions can fail on Genoa (Zen 4)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 21, 2023 at 11:04:49AM +1000, Matthew Fernandez wrote:
-> 
-> 
-> On 7/20/23 23:41, Sevan Janiyan wrote:
-> > On 20/07/2023 14:24, Demi Marie Obenour wrote:
-> > > Should there be a system-wide configuration file containing a list
-> > > of known-good PKCS#11 libraries? ssh-agent having to guess if
-> > > something is a PKCS#11 library is less than awesome.
-> > 
-> > There's a compile time setting for paths from which you are able to load
-> > libraries from.
-> 
-> I don’t think this helps much though, right? The Qualys research that
-> motivated this found an exploit chain using only libs present in /usr/lib in
-> a default Ubuntu install. If you want to lock down loading to a specific
-> non-/usr/lib path that you have control over, this suggests you know and are
-> in control of the PKCS#11 providers you’re going to support. In which case,
-> why not avoid dynamic loading to begin with? I guess the allowlist and new
-> defaults are the answer to this conundrum though.
+Hey, when fuzzing Genoa (AMD Zen 4) I noticed that sometimes the
+MOV{H,L}PS instructions don't seem to work? I asked AMD if they consider
+this a vulnerability, and they didn't.. so I'll just document it here
+for reference...
 
-The openssh fixing patches (besides disallowing this remote agent
-behaviour by default) now just abort() the pkcs11 helper if they load a library 
-without the pkcs11 interface C_GetFunctionList() which should largely
-solve the problem, unless a library can be exploited on first load.
+Quick background, these instructions load two 32-bit packed singles from the
+source operand into the low (movlps) or high (movhps) 64-bits of a vector
+register.
 
-Longrange thinking is if these kind of load/unload impacts could be
-detected by tooling easily and/or get fixed in affected libraries.
+Consider this minimal example:
 
-Ciao, Marcus
+section .data
+    a: dq 0x1111111111111111
+    b: dq 0x2222222222222222
+
+section .text
+    movhps  xmm0, [rel a]
+    movlps  xmm0, [rel b]
+
+
+The result should be xmm0 has the value 0x11111111111111112222222222222222.
+
+Genoa added support for AVX512, which gives you a bunch more vector
+registers, so now you can do:
+
+    movhps  xmm28, [rel b]
+
+However, I've found that non-deterministically, when using any register
+above xmm15, previous (pipelined?) operations on other registers fail.
+
+Here is an example:
+
+section .data
+    data: dd 0x11111111, 0x22222222, 0x33333333, 0x44444444
+    zero: dd 0,0,0,0
+
+section .text
+    vmovdqu  xmm0, [rel data]
+    vmovlps  xmm1, xmm0, [rel zero]
+    vmovhps  xmm17, xmm0, [rel zero]
+
+I think the expected result would be:
+
+xmm0  = 0x44444444333333332222222211111111
+xmm1  = 0x44444444333333330000000000000000
+xmm17 = 0x00000000000000002222222211111111
+
+However, on genoa we non-deterministically get xmm1=0.
+
+I don't know the cause or where the bug is, any feedback welcome. I've
+attached a testcase (I ported it to C from a raw fuzzer generated
+testcase, hopefully it compiles consistently!).
+
+I can reproduce it with pure intrinsics too (no asm), but the output is
+not consistent across gcc versions. The attached version does use some
+inline asm.
+
+I think it should produce no output at all, but on Genoa it does sometimes
+produce output for me.
+
+Compile with:
+
+$ gcc -mavx512vl -o movhps movhps.c
+
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
+
+View attachment "movhps.c" of type "text/plain" (1293 bytes)
