@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2008" "Friday" "14" "July" "2017" "23:50:03" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170714235003.507f2dbf@pc1>" "51" "Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" "^Date:" nil nil "7" "2017071421:50:03" "[oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" (number mark "        hanno@hboeck Jul 14   51/2008  " thread-indent "\"Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler\"\n") "<20170713154344.GG21662@suse.com>" ("<20170713154344.GG21662@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23566 invoked by uid 550); 14 Jul 2017 21:50:16 -0000
+Received: (qmail 21622 invoked by uid 550); 21 Sep 2023 14:21:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,177 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22524 invoked from network); 14 Jul 2017 21:50:16 -0000
-Message-ID: <20170714235003.507f2dbf@pc1>
-In-Reply-To: <20170713154344.GG21662@suse.com>
-References: <20170713154344.GG21662@suse.com>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-13017-1500069005-0001-2"
-Date: Fri, 14 Jul 2017 23:50:03 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-1000083: evince: Command injection
- vulnerability in CBT handler
+Received: (qmail 21549 invoked from network); 21 Sep 2023 14:21:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695306083; x=1695910883; darn=lists.openwall.com;
+        h=user-agent:content-disposition:mime-version:message-id:subject:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=huZE/mVEe0gglQ824CsTY+8VofG4WaW1Rx1NENqvkJ4=;
+        b=lRWl+a/xfiXab7ivvKuEMpPacpagRSzloKLE7LnnMNfR4yvj9j+N9N7tSh30PzTxiA
+         q00S2CqyHC7xGk/H78mwwtyjlSFzH+QoARwg5ra1qHwl2wP3HR01BzIKobXKPMTJQ60c
+         ErO6/Yzzo33/vxlTv53T+Pvbjdb6arhdZq5WCDJBc/X1esz43AGThkwHDoj8MJNdGLEv
+         BBrncPdy3413CZluZ7PLPSV5lS/LXi8EUBhPMvhL1KnxmfMz2pnd/5bkYy7zFtABZNIs
+         35R3VtnMXIfQBx3frjxbd17A/DG/cecFGzMVluMQHUYNi346NHZuGhL2r6EhgquUmmuC
+         CIPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695306083; x=1695910883;
+        h=user-agent:content-disposition:mime-version:message-id:subject:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=huZE/mVEe0gglQ824CsTY+8VofG4WaW1Rx1NENqvkJ4=;
+        b=ApTz+RYsUViJBen9IzRxkYpP7xZvt6IPiXwzsc03cDVVu40u/eZyuc5f8aPiGH3aYI
+         vY8qTu7T1gKpsR3w6sl8181U/kKZcb7Tg7ywTEKZ2rOdEyod3h5vpPW1aPyaGpwd5M8J
+         EbZPhulgGq32nB9wHjoplvUVX/G94f6UxV3+FMH94JQM9w6SVBYd2862UzZScLdEfSuj
+         RUqz1BRH1RTL/yo8h5PLrJi5HCljrYD9wUhyK/EMTMiH0iKzsZ+pafnfOtcBVQ9Rtl9u
+         IR7R9ACaTw5yb/pUhSGIyQygpeDQFIZEqXl5dImqhEd7603cBxNIjWKl60ZyFRkLREyT
+         E5Ow==
+X-Gm-Message-State: AOJu0YwqVD1UDhZUxB0dSQpdg56T4Y6EGZZT9q39+NgUKd49nPgUAdTf
+	mh9t45aN+i6v1jLZauujwLrJ4exD2DI=
+X-Google-Smtp-Source: AGHT+IHGyXJcDGRlvF2hffWveWV0E0stw4hC83EGkCL4OJmi2qQh/nyZ3j3evM42PaK9N9K2UaGP7w==
+X-Received: by 2002:a05:6a20:3ca7:b0:159:b4ba:a5bf with SMTP id b39-20020a056a203ca700b00159b4baa5bfmr5930921pzj.13.1695306082848;
+        Thu, 21 Sep 2023 07:21:22 -0700 (PDT)
+Date: Thu, 21 Sep 2023 07:21:21 -0700
+From: Tavis Ormandy <taviso@gmail.com>
 To: oss-security@lists.openwall.com
+Message-ID: <ZQxRYY0HLhGyn4jf@thinkstation.cmpxchg8b.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="EyzYklt4zakDr1HU"
+Content-Disposition: inline
+User-Agent: Mutt/2.2.7 (2022-08-07)
+Subject: [oss-security] MOV{H,L}PS instructions can fail on Genoa (Zen 4)
 
---=_zucker.schokokeks.org-13017-1500069005-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--EyzYklt4zakDr1HU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi,
+Hey, when fuzzing Genoa (AMD Zen 4) I noticed that sometimes the
+MOV{H,L}PS instructions don't seem to work? I asked AMD if they consider
+this a vulnerability, and they didn't.. so I'll just document it here
+for reference...
 
-When I saw this and the proposed fix (the backport fix, not the one in
-git head), which was to remove tar support, but leave the command line
-calling of all the other tools looked suspicious to me.
+Quick background, these instructions load two 32-bit packed singles from the
+source operand into the low (movlps) or high (movhps) 64-bits of a vector
+register.
 
-I played around a while, I haven't been able to find any more command
-injections. However I discussed this with Tobias M=C3=BCller and he found
-out that another evince backend - the dvi one - also calls a shell
-command with insufficient escaping:
-https://bugzilla.gnome.org/show_bug.cgi?id=3D784947
+Consider this minimal example:
 
-While I didn't find any more command injections, I figured out that
-with a password protected zip file as a cbz one can cause evince to
-hang:
-https://bugzilla.gnome.org/show_bug.cgi?id=3D784963
+section .data
+    a: dq 0x1111111111111111
+    b: dq 0x2222222222222222
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+section .text
+    movhps  xmm0, [rel a]
+    movlps  xmm0, [rel b]
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
---=_zucker.schokokeks.org-13017-1500069005-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+The result should be xmm0 has the value 0x11111111111111112222222222222222.
 
------BEGIN PGP SIGNATURE-----
+Genoa added support for AVX512, which gives you a bunch more vector
+registers, so now you can do:
 
-iQIzBAEBCAAdFiEE/nN1f6YOTiG5N1efpYgAcru1HkIFAllpPIsACgkQpYgAcru1
-HkIp7hAAyAfg3yohYg5h2gGeSJDkGjGcEuBsVaCn+Y7R9xhJofhSnGv88KKVFdCy
-whcgOkqwW8CO4Ch3X3i24zEaMdLZX9Uj62W1NtJIRxCUBp3DusnfpZ3kbaOAOvCW
-jqaVqGkUch3Bgt7ShcOoANeXWtw4xPem8ShfeipY/LgpuuzB8UB+N7/nvD6dc0N4
-gVdfxFqDusaX6UusqrEc1xso2kMRX8KSBAReTdNjG+zVKIe39LNJmYeWEjeZoMob
-dATepRAkml0BU1aoJQyt8eeqMp035fCysUIZZhsY7VktWr7yGOgA8bVw7jUW88mP
-q7gHkl8cUzE5Kroce8f9AgVHkTIBvKaOOKjANLbci+6SWp7zQd4eJaFibYoNBGkJ
-tLZVL4wGA0uRHeAPRz/J4YrIcfg7nCMp5RqnBhmvTgZ1ZoZFLSF3HOJ5dTQIFDNU
-/LsqB9ZCzd96vZvDfo6Q8E/PvqH7bXciNCT4dE2jeEk8P6zCDNP7oiqHA6qizpaA
-ZsW6hhatyunumFGwA3hDge0Y2E/CNuVUo+wd55DMFsYAjBuwRtD9sFXn6uBRIOS6
-72A5VMDycoxiLTJwZt7YdvzRqjSnxkPdMLRLVou+F+8eo7lo1ZS/p+R125YzqV7x
-xFxRIvuzl9mTZbZ8qkw/rgrY18h54xl7nc7ys5w9q8ER7jvJY+c=
-=/KPH
------END PGP SIGNATURE-----
+    movhps  xmm28, [rel b]
 
---=_zucker.schokokeks.org-13017-1500069005-0001-2--
+However, I've found that non-deterministically, when using any register
+above xmm15, previous (pipelined?) operations on other registers fail.
+
+Here is an example:
+
+section .data
+    data: dd 0x11111111, 0x22222222, 0x33333333, 0x44444444
+    zero: dd 0,0,0,0
+
+section .text
+    vmovdqu  xmm0, [rel data]
+    vmovlps  xmm1, xmm0, [rel zero]
+    vmovhps  xmm17, xmm0, [rel zero]
+
+I think the expected result would be:
+
+xmm0  = 0x44444444333333332222222211111111
+xmm1  = 0x44444444333333330000000000000000
+xmm17 = 0x00000000000000002222222211111111
+
+However, on genoa we non-deterministically get xmm1=0.
+
+I don't know the cause or where the bug is, any feedback welcome. I've
+attached a testcase (I ported it to C from a raw fuzzer generated
+testcase, hopefully it compiles consistently!).
+
+I can reproduce it with pure intrinsics too (no asm), but the output is
+not consistent across gcc versions. The attached version does use some
+inline asm.
+
+I think it should produce no output at all, but on Genoa it does sometimes
+produce output for me.
+
+Compile with:
+
+$ gcc -mavx512vl -o movhps movhps.c
+
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
+
+--EyzYklt4zakDr1HU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="movhps.c"
+
+#define _GNU_SOURCE
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <x86intrin.h>
+#include <immintrin.h>
+#include <sched.h>
+#include <syscall.h>
+#include <err.h>
+
+#define __aligned __attribute__((aligned(32)))
+
+#if !defined(__AVX512VL__)
+# error You must compile this with -mavx512vl to get the needed intrinsics
+#endif
+
+static const uint64_t kData[] = { 0x4444444444444444, 0x4242424242424242 };
+static const uint64_t kZero;
+
+static void vmovhps_testcase()
+{
+    uint64_t result[2] __aligned = {0};
+    register __m128i r0  asm("xmm0");
+    register __m128i r1  asm("xmm1");
+    register __m128i r17 asm("xmm17");
+    uint64_t count = 0;
+
+    _mm256_zeroall();
+
+    do {
+        count++;
+
+        // Trigger bug
+        asm volatile ("vmovdqu %1, %0"      : "=v"(r0)  : "m"(kData));
+        asm volatile ("vmovlps %2, %1, %0"  : "=v"(r1)  : "v"(r0), "m"(kZero));
+        asm volatile ("vmovhps %2, %1, %0"  : "=v"(r17) : "v"(r0), "m"(kZero));
+    } while (!_mm_testz_si128(r1, r1));
+
+    _mm_storeu_si128((void *) result, r1);
+
+    fprintf(stderr, "After %llu: %016llx, %016llx\n", count, result[0], result[1]);
+    return;
+}
+
+int main(int argc, char **argv)
+{
+    while (true) {
+        vmovhps_testcase();
+    }
+    return 0;
+}
+
+--EyzYklt4zakDr1HU--
