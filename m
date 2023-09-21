@@ -1,46 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/5
-Message-ID: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
-Date: Thu, 28 Sep 2023 11:37:23 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/6
+Message-ID: <20230921211142.GA14441@openwall.com>
+Date: Thu, 21 Sep 2023 23:11:42 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+Cc: Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>, Donald Buczek <buczek@...gen.mpg.de>, Greg KH <gregkh@...uxfoundation.org>
+Subject: Re: linux-distros list policy and Linux kernel, again
 Content-Type: text/plain; charset=utf-8
 
-Google has announced another media parsing bug, this time correctly documenting
-both the base library and Chrome versions affected in the CVE.
+A clarification/correction:
 
-https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
+On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
+> I recognize that 14 days might not always be enough to get a fix ready,
+> especially not for many of the CPU microarchitectural issues being
+> handled since mid-2017 and affecting many proprietary OSes as well (who
+> may be used to much longer disclosure timelines and would object to
+> Linux's earlier fix and disclosure).  I am glad that almost none of such
+> issues were brought to (linux-)distros, and never when it was still more
+> than 14 days until public disclosure.  We had a lot of luck there.
+> Linux kernel security team has its own mailing list (encrypted, so more
+> secure than s@k.o) for handling of those, which is great:
+> 
+> https://www.kernel.org/doc/html/latest/process/embargoed-hardware-issues.html
+> 
+> I mean, this is "great" within the constraints of the rest of the
+> industry.  Of course, I'd very much like disclosure timelines for that
+> kind of issues to also become much shorter.  This is just not the case.
+> 
+> In terms of (linux-)distros list policy, what can we do here?  Accept up
+> to 7 days since fix is ready and thus accept arbitrarily long embargoes
+> and more likely have issues "requiring" such embargoes brought to the
+> list?  BTW, for CPU microarchitectural issues, that would probably need
+> to be for the full distros list, not limited to Linux, and from what I
+> know disclosure timelines for such issues may be 3 to 12+ months.
 
-    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
-    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
-    exploit heap corruption via a crafted HTML page.
-    (Chromium security severity: High)
+A linux-distros member pointed out to me off-list that the above sounded
+like I'm against CPU microarchitectural issues being reported to distros
+at all.  This is not the case.  There is in fact a way to report such
+issues to the distros list now and stay within the current policies -
+simply bring them to there when a coordinated disclosure date is already
+finalized and it's in e.g. just 7 days.  In such cases, also microcode
+fixes and/or proposed OS-level workarounds are likely to already exist.
 
-Unfortunately, the bug report it points to is restricted access still:
-https://crbug.com/1486441
+For example, Tavis brought Zenbleed to the distros list 2 days before
+its public disclosure here:
 
-But the Chrome release notes state:
-    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
-https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_27.html
+https://www.openwall.com/lists/oss-security/2023/07/24/1
 
-Mozilla has put out their own security advisory at
-https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
-and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
-Firefox Focus for Android 118.1, and Firefox for Android 118.1.
+and this little heads-up, even if over a weekend, was appreciated.
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1855550 is also still
-restricted access.
+I think e.g. 7 days (anything up to 14, if the CRD is certain and final)
+will work even better.
 
-It does not appear that libvpx 1.13.1 has been released yet, but there
-are two commits in its git repo with the 1486441 bug id listed:
-
-https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d646e4ffef36d590
-https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cca6e0417b290282
-
-Mozilla's commit references these two libvpx commit ids as well:
-https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f9130e1896b695d2
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Alexander
