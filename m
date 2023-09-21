@@ -1,49 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/3
-Message-ID: <20231006173834.GA11017@openwall.com>
-Date: Fri, 6 Oct 2023 19:38:34 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/3
+Message-ID: <CAKK2xXj0KVXv=6Lm3_4=Y8QOuh7tDqhOnKh_2sJzwz3trPE9Tw@mail.gmail.com>
+Date: Thu, 21 Sep 2023 22:10:15 +0200
+From: Stian Kristoffersen <wayphinder@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: "Linux Kernel security demistified"
+Subject: Supply Chain Issues in PyPI
 Content-Type: text/plain; charset=utf-8
 
-Hi Willy,
+Here is a summary of some security research into the PyPI ecosystem:
 
-On Thu, Oct 05, 2023 at 07:59:57AM +0200, Willy Tarreau wrote:
-> On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
-> > I wonder whether the kernel documentation could, however, be encouraging
-> > rather than discouraging (as it currently is) about issue reporters
-> > themselves contacting linux-distros after a fix is ready.  I wonder if a
-> > patch like that would be accepted?
-> 
-> Just as a quick heads up on this, I discussed with Greg there and proposed
-> to send a patch proposal to rework that part to take into account your now
-> relaxed rules. My goal is to let the reporter decide on their own, and let
-> them decide what they want to do after checking the linux-distros rules.
+https://stiankri.substack.com/p/supply-chain-issues-in-pypi
 
-This sounds just right to me.  Thank you!
+It includes:
 
-> There could be a good motivation for some reporters to go there because a
-> number of them are first-timers who are seeking a Curriculum Vitae Enhancer
-> (CVE) ID that s@k.o doesn't deal with. But I also want to remind (I know I
-> may sound like a scratched record) that it's not because some may report
-> there that distros will magically be aware of all security issues, given
-> that those arriving on s@k.o are really a tiny portion and many more bugs
-> are fixed without anyone having a security look on them.
+ - A PyPI upload Denial of Service vulnerability.
 
-Of course.  What makes these reports special is that the reporters often
-intend to make them public as security issues, sometimes have exploits.
+ - Challenges with reproducibility in the PyPI ecosystem.
 
-> I'm just too short of time for now, having to catch up with what I left
-> for the 3 days of KR2023, but it's on my todo list to propose a patch to
-> Greg. I'm having reasonable hopes that we can end up with something
-> smoother in the near future.
+ - Distribution Confusion in PyPI: a new way to distribute malicious
+packages. Including how it affects Pip and Poetry.
 
-Sounds great.
+ - Manifest Confusion in PyPI: how package managers and security
+scanning tools resolve dependencies in different ways.
 
-Please keep me and Vegard Nossum <vegard.nossum@...cle.com> CC'ed on the
-patch submission.
-
-Thanks,
-
-Alexander
+Best regards,
+Stian Kristoffersen
