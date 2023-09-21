@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1057" "Thursday" "6" "July" "2017" "13:33:36" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170706113336.GI5923@suse.de>" "28" "[oss-security] X.Org X Server stack overflow and information leak" nil nil nil "7" "2017070611:33:36" "[oss-security] X.Org X Server stack overflow and information leak" (number mark "U       meissner@sus Jul  6   28/1057  " thread-indent "\"[oss-security] X.Org X Server stack overflow and information leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25934 invoked by uid 550); 6 Jul 2017 11:33:48 -0000
+Received: (qmail 13618 invoked by uid 550); 21 Sep 2023 21:02:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25909 invoked from network); 6 Jul 2017 11:33:48 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 6 Jul 2017 13:33:36 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Message-ID: <20170706113336.GI5923@suse.de>
+Received: (qmail 13585 invoked from network); 21 Sep 2023 21:02:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695330146; x=1695934946; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PU2fg0djprK6Xbxxofgqg1SbLDEX/vvJyolyRTTp9bo=;
+        b=Jv76QfYf1iyJJqA3lc4tUquWjF6spnsCfNXiZFnZ2LouqLpe3Qw+Ts7jyDHHcvY8pG
+         vPMhBW1zQPIbVVLz2C71MWzLjZbcTK32vWQr1SUv0iybmYAyfVq0F+ZqAYmO+em1gI1I
+         ccwbG8qftdNu2OhO6d0a7CSiB/a2EZoXc+hxaAUW8tA+psNJOi61NDAhxoJ9JvWfEfWE
+         RvQFDB5fY/2AzKyQMKfhz6Szow+Vo72wjLWfQ8DMEOt8Xm3ujA9n8EwVYIclnjokr02V
+         CkB8zeP6ua02PeL4i5d5tv8i/XE7MjLwJoqnnEsIwA2x6QlA0L2hPEqKW/asHMRc7vYG
+         AjEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695330146; x=1695934946;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=PU2fg0djprK6Xbxxofgqg1SbLDEX/vvJyolyRTTp9bo=;
+        b=PIiuzT7qD4iQD6hwpHajsISoXc6t+mN2BRv9cqBZwkcVfHuRYAUZjXzliVhqaF68VV
+         3fTSKasLhAE5QqR1A5JQxY8l8iQIOWHkaay8fK1jjfwQrfXGJSP/onYs9C4IcJ9SUPEe
+         RjFdsHzkeUeYAoMBXIFUBcckzfCjZgNdEQUrr859tRAj17qfZZw+i24LLSm7cHWqnubU
+         yk0L4nAoMDnVfq0DeSgUwD8z0lgoFT5TdBIddmt8sldlZwx3K9CRvLMiwxAi82c5cBpl
+         w2nH1urqSiLGoqmUnP/w1GiFqN/7xAft8d3aHRe0DBmJY4E7Wnl71hlftoUXyWZLs9uF
+         bQtA==
+X-Gm-Message-State: AOJu0YzUxmDz/YM6FQ54cBZ5TACaS+8VQ3x+WR9TFnT7LGlKgAEwK5XZ
+	5R9GVelgLn1rGXqhdhwwrf8clko7APeefw==
+X-Google-Smtp-Source: AGHT+IEAVWbndAN2Et0Rib9P0Bo8qQBdDaYuaz/jOOspqDCOFMnwCWsfdkLNzuDgEyCRVoRX4o944Q==
+X-Received: by 2002:a05:600c:2203:b0:401:b204:3b8d with SMTP id z3-20020a05600c220300b00401b2043b8dmr6134666wml.27.1695330146159;
+        Thu, 21 Sep 2023 14:02:26 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 21 Sep 2023 23:02:24 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZQyvYCfvJyVF2KsQ@eldamar.lan>
+References: <ZPsjthELNqb7nPFf@kasco.suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] X.Org X Server stack overflow and information leak
+In-Reply-To: <ZPsjthELNqb7nPFf@kasco.suse.de>
+Subject: [oss-security] Re: croc: multiple issues in file sharing utility
 
 Hi,
 
-This issue got lost under the Qualys noise :(
+On Fri, Sep 08, 2023 at 03:37:55PM +0200, Matthias Gerstner wrote:
+[...]
+> 5) CVE Assignments
+> ==================
+> 
+> I have requested CVEs from Mitre for the more tangible issues 3.1 through 3.5
+> and issue 3.8. I will publish them here once they are available.
 
-https://bugzilla.suse.com/show_bug.cgi?id=1035283
+They are CVE-2023-43616, CVE-2023-43617, CVE-2023-43618,
+CVE-2023-43619, CVE-2023-43620 and CVE-2023-43621.
 
-CVE-2017-10971:
-	The endianess handling for X Events assumed a fixed size of X Event structures and
-	had a specific 32 byte stack buffer for that. 
-
-	However "GenericEvents" can have any size, so if the events were sent in the wrong
-	endianess, this stack buffer could be overflowed easily.
-
-	So authenticated X users could overflow the stack in the X Server and with the X 
-	server usually running as root gaining root prileveges.
-
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=ba336b24052122b136486961c82deac76bbde455
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=8caed4df36b1f802b4992edcfd282cbeeec35d9d
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=215f894965df5fb0bb45b107d84524e700d2073c
-
-
-CVE-2017-10972:
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=05442de962d3dc624f79fc1a00eca3ffc5489ced
-
-	An information leak out of the X server due to an uninitialized stack area when swapping
-	event endianess.
-
-Ciao, Marcus
+Regards,
+Salvatore
