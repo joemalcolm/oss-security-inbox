@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2813" "Wednesday" "20" "September" "2017" "20:39:24" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<bf63ff44-fb2b-bc2b-9cad-ba818bb57162@orlitzky.com>" "82" "[oss-security] CVE-2017-14609 Kannel privilege escalation via PID file manipulation" nil nil nil "9" "2017092100:39:24" "[oss-security] CVE-2017-14609 Kannel privilege escalation via PID file manipulation" (number mark "U       michael@orli Sep 20   82/2813  " thread-indent "\"[oss-security] CVE-2017-14609 Kannel privilege escalation via PID file manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3123 invoked by uid 550); 21 Sep 2017 00:39:51 -0000
+Received: (qmail 20443 invoked by uid 550); 22 Sep 2023 11:42:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,104 +7,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3102 invoked from network); 21 Sep 2017 00:39:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1505954378; bh=bKjhkVCffntBgp6gnwAqvgGy3BbivRwe4FBlb63ImF0=;
-	h=To:From:Subject:Date;
-	b=lhX6YD51lowjow1tyCdCt+t9kn+FYWcf9s2MvzxhbhKR/puSAH0fM4WhU9+ywaWSg
-	 Jbn0+SETBzgD0j812/6HO0Bc95rytLsPrItDG6eXgx4guWL1+9bbX1T9lAoHiyHMyQ
-	 qO6DNU+YUPW+nhVfy889xRrYKKRJgc0LZsn37HxU=
-To: oss-security <oss-security@lists.openwall.com>
-From: Michael Orlitzky <michael@orlitzky.com>
-Message-ID: <bf63ff44-fb2b-bc2b-9cad-ba818bb57162@orlitzky.com>
-Date: Wed, 20 Sep 2017 20:39:24 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+Received: (qmail 20422 invoked from network); 22 Sep 2023 11:42:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1695382944;
+	bh=mGbCogMbRPz1SUdLUFYtYkvfE0bQpw+dfjP64x9vFCU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type;
+	b=in3JhLLZK/lmBMO4zubJiSHg8L4qiKPvlQC3Xljw2ywfmy1xZ1Il8bq10TJDDHXv6
+	 6EiwWN3Hz4hmZG82vZaK5RA+/4qMcbZazlCAp+Amz+yRzcNVWRlPth2xO0JOKjUctT
+	 wUu1qRqaj/Vr13nMxWa3iQSiKA6z+AxNDBhEpak1DCE2WQb2QQQ5R6GHmTNKTiEFY6
+	 ou/JgHO1c4abCWb01Rv+l3vaVNx9WWwWImqkZM8fUmS8XBLmiQQ+8LPX2f5cpLoLdf
+	 dxpqeuaBC/yC8dXMlMbBtHeWGFsfBtPHmei/h14K/zQcYaarnlKPn6rQM1KlQ4gWIz
+	 larXHsJIUSuQA==
+Message-ID: <72a6e741-1420-d21d-11cc-2592598e53f4@canonical.com>
+Date: Fri, 22 Sep 2023 07:42:22 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Content-Language: en-CA
+To: oss-security@lists.openwall.com, =?UTF-8?Q?Hanno_B=c3=b6ck?=
+ <hanno@hboeck.de>
+References: <20230921205250.GA13106@openwall.com>
+ <20230922072817.092917d2.hanno@hboeck.de>
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+In-Reply-To: <20230922072817.092917d2.hanno@hboeck.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2017-14609 Kannel privilege escalation via PID file manipulation
+Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in
+ WebP Codec
 
-Product: Kannel (open source WAP and SMS gateway)
-Versions-affected: all
-Bug-report: https://redmine.kannel.org/issues/771
-Author: Michael Orlitzky
+On 2023-09-22 01:28, Hanno Böck wrote:
+> On Thu, 21 Sep 2023 22:52:50 +0200
+> Solar Designer <solar@openwall.com> wrote:
+> 
+>> However, another maybe-important one also made it into 1.3.2:
+>>
+>> commit 95ea5226c870449522240ccff26f0b006037c520
+>> Author: Vincent Rabaud <vrabaud@google.com>
+>> Date:   Mon Sep 11 16:06:08 2023 +0200
+>>
+>>      Fix invalid incremental decoding check.
+> 
+> It does not look to me that this fix is in 1.3.2:
+> https://github.com/webmproject/libwebp/commits/v1.3.2
+> 
+> I've seen this commit as well and have been wondering for a few days if
+> we'll hear about abother libwebp issue soon.
+> 
 
+We (Ubuntu) didn't include that second commit in our libwebp updates, and I 
+don't believe Red Hat/Fedora did either. If that second commit does have a 
+security impact, it probably needs a different CVE to clear up confusion.
 
-(This hasn't been fixed upstream but I don't expect a response, so I'd
-rather not make people wait for the workaround.)
-
-
-== Summary ==
-
-The Kannel daemons create their PID files after dropping privileges to
-a non-root user. That may be exploited (through init scripts or other
-management tools) by the unprivileged user to kill root processes,
-since when a daemon is stopped, root usually sends a SIGTERM to the
-contents of its PID file (which are under the control of the runtime
-user).
-
-
-== Details ==
-
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signaled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfil that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user.
-
-This is commonly exploitable through init scripts that are run as root
-and which blindly trust the contents of their PID files. Kannel itself
-ships a few such a init scripts as debian/*.init.
-
-
-== Exploitation ==
-
-There is only a risk of exploitation when some other user relies on
-the data in the PID file.
-
-An example scenario involving an init script would be,
-
-1. I run "/etc/init.d/bearerbox start" to start the daemon.
-
-2. bearerbox drops to the "kannel" user.
-
-3. bearerbox writes its PID file, now owned by the "kannel" user.
-
-4. Someone compromises the daemon.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/bearerbox stop" to stop the daemon while I
-   investigate.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-
-== Workaround ==
-
-The Kannel daemons can be run in the foreground (by omitting
-the --daemonize, --pid-file, and --user flags) under a modern init
-system like systemd or OpenRC. Those init systems create the PID file as
-root, and it can be relocated to a root-owned directory like /run to
-avoid the vulnerability.
-
-A SysV-style init script can mitigate the risk by verifying the PID
-data. You can get the user of the process whose PID you find with
-
-  ps -p <pid> -o user=
-
-and you can get the name of the command with
-
-  ps -p <pid> -o comm=
-
-Init script authors should check the output of those two command against
-the expected values before sending a signal to a running process. That
-will eliminate the most serious risks.
+Marc.
