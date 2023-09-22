@@ -1,4 +1,4 @@
-Received: (qmail 3685 invoked by uid 550); 11 Sep 2024 05:47:43 -0000
+Received: (qmail 19974 invoked by uid 550); 22 Sep 2023 05:28:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,106 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3667 invoked from network); 11 Sep 2024 05:47:43 -0000
-Date: Wed, 11 Sep 2024 07:47:34 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <q478r2op-02n1-662n-sp5r-r88n79141r63@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 19956 invoked from network); 22 Sep 2023 05:28:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1695360499; bh=VBp6twgtOlwaZ2fH+963fo70Fln/xYibX0b2bqFlQYE=;
+	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=WIvjv4HM+rCBBF4kZDBheTJCpAWZnpsr3T7pLi7Yh8XwF0z+RMCSROry+mtDTRgy1
+	 l66A8nZlexV4PmtywdQHk8QZjwDj8nKev6LcWsRUnljJBDLSj852w8OdIRopsTGLi1
+	 H8rvNkuGTYFb9yeP3A2CInF6WsMVmlHnVdB1iYoNouAvYQFpiehWiVDNJPAIKJNkH1
+	 UIXY/UdJtHv2AqwTcyQKEmEfcQxZPFJXgX+MUsQLRGqrUHlD+R90sBbTQf1HBr7CPU
+	 77YtPW5IRReB4CZb4ygQNTmQLrBiiXokkuUOU7Iq1WsRDD0Q3cnhzbsHC+N9c5ep+6
+	 HwphWuSfdS+lQ==
+Original-Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in
+ WebP Codec
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date: Fri, 22 Sep 2023 07:28:17 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20230922072817.092917d2.hanno@hboeck.de>
+In-Reply-To: <20230921205250.GA13106@openwall.com>
+References: <20230921205250.GA13106@openwall.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-8096: OCSP stapling bypass with
- GnuTLS
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in
+ WebP Codec
 
-OCSP stapling bypass with GnuTLS
-================================
+On Thu, 21 Sep 2023 22:52:50 +0200
+Solar Designer <solar@openwall.com> wrote:
 
-Project curl Security Advisory, September 11th 2024 -
-[Permalink](https://curl.se/docs/CVE-2024-8096.html)
+> However, another maybe-important one also made it into 1.3.2:
+>=20
+> commit 95ea5226c870449522240ccff26f0b006037c520
+> Author: Vincent Rabaud <vrabaud@google.com>
+> Date:   Mon Sep 11 16:06:08 2023 +0200
+>=20
+>     Fix invalid incremental decoding check.
 
-VULNERABILITY
--------------
+It does not look to me that this fix is in 1.3.2:
+https://github.com/webmproject/libwebp/commits/v1.3.2
 
-When curl is told to use the Certificate Status Request TLS extension, often
-referred to as OCSP stapling, to verify that the server certificate is valid,
-it might fail to detect some OCSP problems and instead wrongly consider the
-response as fine.
+I've seen this commit as well and have been wondering for a few days if
+we'll hear about abother libwebp issue soon.
 
-If the returned status reports another error than "revoked" (like for example
-"unauthorized") it is not treated as a bad certficate.
-
-INFO
-----
-
-This issue only exists when curl is built to use the GnuTLS library. curl can
-be made to use a large variety of TLS libraries and GnuTLS is not the most
-common choice.
-
-OCSP stapling is not a widely used feature on the open web, perhaps partly
-because so many big name sites do not support it.
-
-This bug is **not** considered a *C mistake* (likely to have been avoided had
-we not been using C).
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2024-8096 to this issue.
-
-CWE-295: Improper Certificate Validation
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-The vulnerable code can only be reached when curl is built to use GnuTLS.
-
-- Affected versions: curl 7.41.0 to and including 8.9.1
-- Not affected versions: curl < 7.41.0 and >= 8.10.0
-- Introduced-in: https://github.com/curl/curl/commit/f13669a375f
-
-libcurl is used by many applications, but not always advertised as such!
-
-SOLUTION
-------------
-
-- Fixed-in: https://github.com/curl/curl/commit/aeb1a281cab13c7ba
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 8.10.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Build your curl with an unaffected TLS backend
-
-TIMELINE
----------
-
-This issue was reported to the curl project on August 19, 2024. We contacted
-distros@openwall on September 3, 2024.
-
-curl 8.10.0 was released on September 11 2024 around 06:00 UTC, coordinated
-with the publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
