@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2045" "Thursday" "19" "October" "2017" "20:32:55" "+0000" "Robert Watson" "robertcwatson1@gmail.com" "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>" "52" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017101920:32:55" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        robertcwatso Oct 19   52/2045  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<20171019194428.GK20315@hunt>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "<20171019194428.GK20315@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 6064 invoked by uid 550); 20 Oct 2017 11:16:04 -0000
+Received: (qmail 3567 invoked by uid 550); 22 Sep 2023 21:41:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +6,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24168 invoked from network); 19 Oct 2017 20:33:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=d7pGs9HhqHHMyrqFbEoghghVnhag07yVJ7L93UrnkMc=;
-        b=K6Batw7xo2bR/FXxR5Q9CI+nlG4NiAo77cGk6sagIGWW5EQu9GpilQaUDi+lMUbgT4
-         rmgdbx35j1USsLhUtIPFz7YaQDKK14+hqbU0MdK/yeYtD3PLQ2G+JVE05XC7cfvpAb/i
-         d/orY1EdLBdN6lLD/nEHlmPh5C5gGYoqayYRl7EGIdwu+kgCa9z/R/9+dPKOTtjytub9
-         6CYTbkAQfFalE1sn8wIUpsGUgbEqfuFvqlaLwFWo263GsjeN/vX0acYRfgqxiJcDHvJ+
-         8VlKbvSlQdcavE1yHSnSM65rVDuvOrPRv85Z9uIDX/lC5sDX0R51CnoZ5vS1KQDCkh81
-         sbwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=d7pGs9HhqHHMyrqFbEoghghVnhag07yVJ7L93UrnkMc=;
-        b=i0yBwJxIxKLEmwET/xjh+y7xdXvGXMd1DUpkZxb7GIB1+vOGj8pJMBl8xIbLFwVydn
-         2vqZtQJYo1WykWVqVi4BPZ52lQhlwUtUpUebh0DpzSnfZ34xxgTbuLGkKAcWP5QaTDbL
-         46v00Y9uV9egfwBZmHKDrepQePXJK/kICIxFOpHIiaiODi8b9Wp7SDbuq+h36MKF2Fyz
-         iyhMf0yAUcIzmhdUKTsRJ/Rmde4UV6082TgBuYR6CVR6WPIvf66edAiLz9U4l4PvD1Nf
-         VlDKk/YCMsT1tfzYrvb/LgfKZWz7ObeuOs62hqPe72z/LnC83+CpuWM5HEbHEWAOkLlX
-         dvag==
-X-Gm-Message-State: AMCzsaXSItK0IjKuTCgOw0eAZnMlIlLTAgTP42HlJWc4Eh9VV7ZtjABh
-	wzkcwcF95hGihEJJ26QCR71ieZpPlruqTkHI5yo=
-X-Google-Smtp-Source: ABhQp+TfkjQqK4LylWi+8KrRlXhfiuwS76vOeftHwOr/eTqVF4P9JarPD8ETam+IoivTXjvXmxOsjO4zl3KVD373FME=
-X-Received: by 10.28.48.150 with SMTP id w144mr2537802wmw.23.1508445186378;
- Thu, 19 Oct 2017 13:33:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org> <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
- <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
- <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com> <20171019194428.GK20315@hunt>
-In-Reply-To: <20171019194428.GK20315@hunt>
-Message-ID: <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a1142427e7f51ad055bec43b5"
-Date: Thu, 19 Oct 2017 20:32:55 +0000
-From: Robert Watson <robertcwatson1@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
- Debian mirror script ftpsync
+Received: (qmail 1884 invoked from network); 22 Sep 2023 21:40:20 -0000
+Date: Fri, 22 Sep 2023 23:40:06 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20230922214006.GA20989@openwall.com>
+References: <6EBBC128-36D2-4262-88F4-6889E9E6DE1E@mnx.io> <20230915210906.GA22532@openwall.com> <36F38D40-5F90-4E1B-B7A2-121431A3E6FE@mnx.io> <20230922172755.GA18909@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230922172755.GA18909@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] illumos (or at least danmcd) membership in the distros list
 
---001a1142427e7f51ad055bec43b5
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Sep 22, 2023 at 07:27:55PM +0200, Solar Designer wrote:
+> On Mon, Sep 18, 2023 at 05:36:13PM +0000, Dan McDonald wrote:
+> > On Sep 15, 2023, at 5:09 PM, Solar Designer <solar@openwall.com> wrote:
+> > > Can you show illumos fixing non-illumos-only security issues within days
+> > > after public disclosure, so that a few days of advance notice would have
+> > > made those fixes even quicker?
+> > 
+> > It's a per-illumos-distro property.  OmniOS has Stable & LTS releases.   Here's the current-stable
+> > release notes, dynamically updated every time they update:
+> > 
+> > 	https://github.com/omniosorg/omnios-build/blob/r151046/doc/ReleaseNotes.md
+> > 
+> > So I'm not sure if a few days of advance notice would make those quicker,
+> > but I do know that other distros have biweekly scheduled releases, and advance
+> > notice there would keep those wheels spinning faster.  Esp. since "patch tuesday"
+> > is a mere one-day before the release branch is forked off on release weeks.
+> 
+> This looks pretty good for OmniOS, e.g. for OpenSSL CVE-2023-3817 it
+> appears to be 4 days from OpenSSL advisory on "31st July 2023" to OmniOS
+> "r151046n (2023-08-03)", and even something like 1 day for OpenSSH
+> update to "9.3p2, fixing CVE-2023-38408" and for "AMD CPU microcode
+> updated to 20230719, mitigating CVE-2023-20593 on some Zen2 processors"
+> in "r151046m (2023-07-25)" (it was brought to oss-security on July 24).
+> 
+> That page above goes back to May 2023.  Were there separate ones for
+> older releases?  For "a publicly verifiable track record, dating back at
+> least 1 year and continuing to present day".
 
-Scripts depend on the underlying functionality of the various utilities
-like rsync that they call. I'm having trouble understanding how a script
-could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
+I see this one goes from December 2022 to present:
 
-We are overwhelmed with more vulnerabilities than can be fixed quickly
-already.
+https://github.com/omniosorg/omnios-build/blob/r151044/doc/ReleaseNotes.md
 
-Are "just to be safer" type things really a wise use of our resources?
+and this one from May 2022 to April 2023:
 
-Does a proliferation of a large number of low-caliber problems make
-monitoring these lists more trouble than it's worth? Does it cause
-high-impact problems to be lost amongst low-impact ones?
+https://github.com/omniosorg/omnios-build/blob/r151042/doc/ReleaseNotes.md
 
-On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@canonical.com> wrote:
+So that's already more than a year, and I don't need to look further.
 
-> On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
-> > Removing the ability for rsync to copy symlinks pointing to targets
-> outside
-> > the mirror tree would greatly cripple it. I need to understand how the
-> > danger is worth the loss of this functionality.
->
-> Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
-> script that calls rsync:
->
-> +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links --timeout
-> 3600 --stats --no-human-readable"}
->
->
-> https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
->
-> Of course for people who run this mirroring tool as a specific user
-> account and set file permissions appropriately this is more or less a
-> no-op. But this is a useful hardening for people who run the ftpsync
-> command as a user with too many privileges. (I wouldn't have bothered
-> filing for a CVE for this change; I see it as a simple hardening change.)
->
-> This option shouldn't cripple ftpsync as a well-run repository is highly
-> unlikely to have symlinks pointing out of the tree. A repository with
-> symlinks pointing out of the tree is already not a suitable rsync source.
->
-> Thanks
->
--- 
+Also, I note this reply by Bob Friesenhahn:
 
-Robert "DocSalvager" Watson
-... trust in truth keeps hope alive
-www.DocSalvage.info
+https://www.openwall.com/lists/oss-security/2023/09/14/1
 
---001a1142427e7f51ad055bec43b5--
+On Thu, Sep 14, 2023 at 08:36:17AM -0500, Bob Friesenhahn wrote:
+> I am not a member of the 'distros' list, but can vouch for Dan
+> McDonald's dedication and capabilities, as observed over several
+> years.  Dan did not mention it, but he previously became the primary
+> maintainer of an Illumos distribution known as "OmniOS", which I use.
+> As a maintainer, Dan did pay close attention to security issues.
+
+So I think we can accept OmniOS as new distros list member, if that's
+desired and Dan would represent OmniOS on the list.  This subscription
+on its own would not allow sharing of info with other illumos distros.
+
+In special cases, Dan would be able to ask the issue reporters their
+explicit permission to share with other illumos distros.
+
+If those distros do typically need the info, they may request direct
+list membership.
+
+How does this sound to you, Dan?
+
+Alexander
