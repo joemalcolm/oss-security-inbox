@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/1
-Message-ID: <e31de680-52c6-e824-ffc4-080f15cd0972@apache.org>
-Date: Tue, 28 Mar 2023 10:09:24 +0000
-From: Maxim Solodovnik <solomax@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28326: Apache OpenMeetings: allows user impersonation 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/6
+Message-ID: <CAJMnc16px2pgN9qmH6iw=by+DLu4cXBmZZpDGe3Lf_QWPEW0bg@mail.gmail.com>
+Date: Fri, 22 Sep 2023 16:50:44 +0200
+From: Vincent Rabaud <vrabaud@...gle.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Hi, we have commented on that here:
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62136#c7
 
-Description:
+On Fri, Sep 22, 2023 at 12:54 PM Solar Designer <solar@...nwall.com> wrote:
 
-Vendor: The Apache Software Foundation
-
-Versions Affected: Apache OpenMeetings from 2.0.0 before 7.0.0
-
-Description: Attacker can elevate their privileges in any room
-
-This issue is being tracked as OPENMEETINGS-2739 
-
-Credit:
-
-Dennis Zimmt (reporter)
-
-References:
-
-https://openmeetings.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-28326
-https://issues.apache.org/jira/browse/OPENMEETINGS-2739
+> On Fri, Sep 22, 2023 at 07:28:17AM +0200, Hanno B??ck wrote:
+> > On Thu, 21 Sep 2023 22:52:50 +0200 Solar Designer <solar@...nwall.com>
+> wrote:
+> >
+> > > However, another maybe-important one also made it into 1.3.2:
+> > >
+> > > commit 95ea5226c870449522240ccff26f0b006037c520
+> > > Author: Vincent Rabaud <vrabaud@...gle.com>
+> > > Date:   Mon Sep 11 16:06:08 2023 +0200
+> > >
+> > >     Fix invalid incremental decoding check.
+> >
+> > It does not look to me that this fix is in 1.3.2:
+> > https://github.com/webmproject/libwebp/commits/v1.3.2
+> >
+> > I've seen this commit as well and have been wondering for a few days if
+> > we'll hear about abother libwebp issue soon.
+>
+> Oh, you're correct - this commit is _not_ in 1.3.2.
+>
+> I was looking at the main branch and wrongly assumed that all I see in
+> there before:
+>
+> commit ca332209cb5567c9b249c86788cb2dbf8847e760 (tag: v1.3.2, origin/1.3.2)
+>
+> is in 1.3.2.  However, that commit tagged 1.3.2 got into main as part of
+> a merge commit, by which point main already had other commits including
+> 95ea5226c870449522240ccff26f0b006037c520 that were not in 1.3.2 branch/tag.
+>
+> So there may be 1 to 3 commits fixing more security issues after 1.3.2.
+>
+> Thank you for correcting me!
+>
+> Alexander
+>
 
