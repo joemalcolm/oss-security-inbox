@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/2
-Message-ID: <20231018134540.GA13253@openwall.com>
-Date: Wed, 18 Oct 2023 15:45:40 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/3
+Message-ID: <20230922105410.GA15143@openwall.com>
+Date: Fri, 22 Sep 2023 12:54:11 +0200
 From: Solar Designer <solar@...nwall.com>
-To: Matt Caswell <matt@...nssl.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: upcoming release of OpenSSL 3.1.4 and 3.0.12
+To: oss-security@...ts.openwall.com
+Cc: Vincent Rabaud <vrabaud@...gle.com>
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 18, 2023 at 02:30:22PM +0100, Matt Caswell wrote:
-> On 17/10/2023 19:06, Solar Designer wrote:
-> >Matt, I'd appreciate it if you (or your team) would also be posting
-> >these to oss-security going forward, roughly at the same time with
-> >posting them to your project's public lists.  Also, more specific
-> >Subject lines on these and on the eventual security advisories would be
-> >helpful.  Thank you!
+On Fri, Sep 22, 2023 at 07:28:17AM +0200, Hanno B??ck wrote:
+> On Thu, 21 Sep 2023 22:52:50 +0200 Solar Designer <solar@...nwall.com> wrote:
 > 
-> Ok. Are you only interested in release pre-announcements for releases 
-> which contain security fixes, or do you want to know about all OpenSSL 
-> releases?
+> > However, another maybe-important one also made it into 1.3.2:
+> > 
+> > commit 95ea5226c870449522240ccff26f0b006037c520
+> > Author: Vincent Rabaud <vrabaud@...gle.com>
+> > Date:   Mon Sep 11 16:06:08 2023 +0200
+> > 
+> >     Fix invalid incremental decoding check.
+> 
+> It does not look to me that this fix is in 1.3.2:
+> https://github.com/webmproject/libwebp/commits/v1.3.2
+> 
+> I've seen this commit as well and have been wondering for a few days if
+> we'll hear about abother libwebp issue soon.
 
-Only for releases which contain security fixes, please.  Thank you!
+Oh, you're correct - this commit is _not_ in 1.3.2.
 
-And for other Open Source project maintainers reading this - it's the
-same for your projects as well - if you issue pre-announcements of
-security fixes anywhere public, then please also post them in here.
+I was looking at the main branch and wrongly assumed that all I see in
+there before:
+
+commit ca332209cb5567c9b249c86788cb2dbf8847e760 (tag: v1.3.2, origin/1.3.2)
+
+is in 1.3.2.  However, that commit tagged 1.3.2 got into main as part of
+a merge commit, by which point main already had other commits including
+95ea5226c870449522240ccff26f0b006037c520 that were not in 1.3.2 branch/tag.
+
+So there may be 1 to 3 commits fixing more security issues after 1.3.2.
+
+Thank you for correcting me!
 
 Alexander
