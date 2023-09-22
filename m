@@ -1,162 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/22/2
-Message-ID: <b7fbe4e4-9dc5-3872-903c-a16b9ff43c58@brad-house.com>
-Date: Mon, 22 May 2023 08:26:29 -0400
-From: Brad House <brad@...d-house.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Stenberg <daniel@...x.se>
-Subject: c-ares multiple vulnerabilities: CVE-2023-32067, CVE-2023-31147, CVE-2023-31130, CVE-2023-31124
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/8
+Message-ID: <CAJMnc14+zKq=VOFPcq_1O+spgoGDi1oO1BVbaj4Vi8zNf1CKiQ@mail.gmail.com>
+Date: Fri, 22 Sep 2023 17:50:33 +0200
+From: Vincent Rabaud <vrabaud@...gle.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-
-  CVE-2023-32067
-
-
-      Impact
-
-Denial of Service.
-
-Attack Steps:
-
- 1. The target resolver sends a query
- 2. The attacker forges a malformed UDP packet with a length of 0 and
-    returns them to the target resolver
- 3. The target resolver erroneously interprets the 0 length as a
-    graceful shutdown of the connection. (this is only valid for TCP
-    connections, UDP is connection-less)
- 4. Current resolution fails, DoS attack is achieved.
-
-
-      Patches
-
-Patched in 1.19.1
-
-
-      Workarounds
-
-No workarounds are available.
-
-
-      Credit
-
-Xiang Li
-Network and Information Security Laboratory, Tsinghua University
-
-
-----------
-
-
-  CVE-2023-31124
-
-
-      Impact
-
-When cross-compiling c-ares and using the autotools build system, 
-CARES_RANDOM_FILE will not be set, as seen when cross compiling aarch64 
-android. This will downgrade to using rand() as a fallback which could 
-allow an attacker to take advantage of the lack of entropy by not using 
-a CSPRNG.
-
-
-      Patches
-
-Patched in 1.19.1
-
-
-      Workarounds
-
-Use CMake build system
-
-
-      Credit
-
-David Gstir and Hannes Moesl
-X41 D-SEC GmbH
-Audit funded by Open Source Technology Improvement Fund (OSTIF)
-
-
-----------
-
-
-  CVE-2023-31130
-
-
-      Impact
-
-ares_inet_net_pton() is vulnerable to a buffer underflow for certain 
-ipv6 addresses, in particular "0::00:00:00/2" was found to cause an 
-issue. C-ares only uses this function internally for configuration 
-purposes which would require an administrator to configure such an 
-address via ares_set_sortlist().
-
-However, users may externally use ares_inet_net_pton() for other 
-purposes and thus be vulnerable to more severe issues.
-
-
-      Patches
-
-Fixed in 1.19.1
-
-
-      Workarounds
-
-No workarounds are available.
-
-
-      Credit
-
-Hannes Moesl
-X41 D-SEC GmbH
-Audit funded by Open Source Technology Improvement Fund (OSTIF)
-
-
-----------
-
-
-  CVE-2023-31147
-
-
-      Impact
-
-Description of issue(s):
-
- 1. When /dev/urandom or RtlGenRandom() are unavailable, c-ares uses
-    rand() to generate random numbers used for DNS query ids. This is
-    not a CSPRNG, and it is also not seeded by srand() so will generate
-    predictable output.
- 2. Input from the random number generator is fed into a non-compilant
-    RC4 implementation and may not be as strong as the original RC4
-    implementation.
- 3. No attempt is made to look for modern OS-provided CSPRNGs like
-    arc4random() that is widely available.
-
-Correction(s) made:
-
- 1. Detect arc4random() and if available, use it directly to generate
-    DNS query ids.
- 2. Use /dev/urandom or RtlGenRandom() directly to generate DNS query
-    ids as a fallback
- 3. As a last resort, use the current rand() + RC4 logic (should only
-    apply to esoteric systems), with these modifications:
-
-  * replace RC4 implementation with official algorithm
-  * seed rand() using srand()
-
-
-      Patches
-
-Fixed in 1.19.1
-
-
-      Workarounds
-
-No workarounds are available.
-
-
-      Credit
-
-David Gstir and Hannes Moesl
-X41 D-SEC GmbH
-Audit funded by Open Source Technology Improvement Fund (OSTIF)
-
+Clean-ups, no security issues there.
+
+Le ven. 22 sept. 2023, 17:35, Solar Designer <solar@...nwall.com> a écrit :
+
+> On Fri, Sep 22, 2023 at 04:50:44PM +0200, Vincent Rabaud wrote:
+> > Hi, we have commented on that here:
+> > https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62136#c7
+>
+> Thank you!  I include the relevant comments below:
+>
+> > Comment 6 by t...@...ter.vg on Mon, Sep 18, 2023, 4:58 PM GMT+2
+> >
+> > Can I request a CVE assignment for this issue (so I can note it
+> > correctly in Firefox advisories)?
+> >
+> > Comment 7 by jz...@...gle.com on Tue, Sep 19, 2023, 3:22 AM GMT+2
+> >
+> > This was an incorrect check in an assert(). A release build would not be
+> > negatively affected. The conditions were updated, but previously the
+> > file would not cause an issue in that mode. Vincent, please correct me
+> > if I'm wrong.
+> >
+> > Comment 8 by vrabaud@...gle.com on Tue, Sep 19, 2023, 11:08 AM GMT+2
+> >
+> > Exactly. And instead of fixing the assert, the patch uses an early exit
+> > to not reach the assert, which is also an optimization.
+>
+> Vincent, what about these commits? -
+>
+> commit dce8397fec159c9edfeec7c6388cb81428c87ed8
+> Author: Masahiro Hanada <hanada@...ark-techno.com>
+> Date:   Thu Sep 14 19:37:24 2023 +0900
+>
+>     Fix next is invalid pointer when WebPSafeMalloc fails
+>
+>     When WebPSafeMalloc fails on VP8LHuffmanTablesAllocate,
+>     next is not initialized to NULL.
+>     VP8LHuffmanTablesDeallocate uses next to know the following nodes.
+>     A patch fixes this issue.
+>
+>     Change-Id: I144ae84cd97e5bca227018ef1afa95361267902c
+>
+> commit 433c7dca11bb5b001ce5ad36ac1afd2906a2f13e
+> Author: Vincent Rabaud <vrabaud@...gle.com>
+> Date:   Thu Sep 14 09:31:19 2023 +0200
+>
+>     Fix static analyzer warnings.
+>
+>     Change-Id: I45f0db2310b1188809963af93240e3d438f807b8
+>
+> The "next is not initialized to NULL" one sounds like it could mean
+> stale memory contents (possibly deliberately sprayed) could be used as a
+> pointer, so it could be a security issue.
+>
+> The warnings fixes could be just that, or some of those warnings could
+> have been for real issues (perhaps also something used uninitialized).
+>
+> In other words, are the issues fixed there known to be benign, are not
+> sufficiently researched, or researched and known to be vulnerabilities?
+>
+> Alexander
+>
 
