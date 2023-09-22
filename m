@@ -1,60 +1,180 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/3
-Message-ID: <20230930182645.zZWIG%steffen@sdaoden.eu>
-Date: Sat, 30 Sep 2023 20:26:45 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/2
+Message-ID: <1afd8036-850f-c98e-5ee8-9e95f658e82e@vanrees.org>
+Date: Fri, 22 Sep 2023 12:14:42 +0200
+From: Maurits van Rees <maurits@...rees.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+Subject: Plone security advisory 2023/09/21
 Content-Type: text/plain; charset=utf-8
 
-Dominique Martinet wrote in
- <ZRdyaYEi9YOZUXAg@...ewreck.org>:
- ...
- |For what it's worth,[.]
+Various vulnerabilities in Plone and Zope have been reported and fixed. 
+They affect all supported Plone versions: 5.2 and 6.0. Older Plone 
+versions are likely also affected.
+There will be no traditional hotfix package for these: you should update 
+the version pins of individual packages. See [this 
+post](https://community.plone.org/t/less-plone-hotfix-packages/17931?u=mauritsvanrees) 
+about why we do less hotfix packages.
 
-I want to point out to the surprise of many that languages like
-C and C++ allow the possibility to create and use collection aka
-container as well as string objects through which access at
-invalid offsets etc cause runtime errors, or assertions aka
-panics, however desired.
-The same is true for loaders of multimedia formats, one can use
-"functions" which ensure overflow does not occur.
-On the other hand to me rust is a terrible thing, and often the
-file prologues with lots of [] directives are deep and dark
-forests.  This is of course my personal opinion only.
-Objective fact is that many of the OSS tools which get CVEs here
-do not see any noticeable money in a market of many many billion
-and with tens of thousands of programmers; i do not count the
-multi-million-line monsters browsers and offices here, it is only
-about the hundreds to thousands of topic libraries, and the
-hundreds to thousands little programs which make up a system.
-I am super happy that OpenSSL is now funded!
-It has an illness factor that it is ok to spend lots of time and
-money for a from-scratch rewrite in "safe" language XY (rust, go,
-swift (that i at least like a bit) etc), instead of allowing
-people to put some sense in software which possibly was written
-in a rapid development mode to fit some desire or lack.  Then
-again from scratch rewrites of something that already has seen
-a mature state regarding desired functionality, interface etc
-may make things better than something out in the blue, started on
-a friday night, and then filled over time with more and more
-functionality as the smoke cleared away.
-Putting blame on languages in specialist forums which know better
-seems a bit odd.  Most bugs i unfortunately produce are logic
-errors, no language will help.  Or recently a memory leak upon
-SIGINT that causes this old software to longjmp away, i hope for
-a rewrite to get rid of the jumps.
-But yes yes, automatic checks and such are nice, i started (over
-perl) with JAVA that does this.  I heard (IANA TZ started using
-it) that new ISO C ships with checked arithmetic.  Maybe that
-comes twenty years too late.  Maybe special types or prefixes
-could have been used long ago to achieve the same more nicely,
-compiler sizes seem not to be the issue.  But you _can_ if you
-_want_ or _need_, .. since ever.
+The information can be found here:
+https://community.plone.org/t/plone-security-advisory-2023-09-21/17941
+https://plone.org/security/hotfix/20230921
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+The text is included below.
+
+
+## Denial of service
+
+In `plone.rest` when the `++api++` traverser is accidentally used 
+multiple times in a url, handling it takes increasingly longer, making 
+the server less responsive.
+
+Security advisory: 
+[CVE-2023-42457](https://github.com/plone/plone.rest/security/advisories/GHSA-h6rp-mprm-xgcq).
+
+## Stored XSS
+
+There is a stored cross site scripting vulnerability for SVG images. A 
+[security hotfix from 
+2021](https://github.com/plone/Products.PloneHotfix20210518) already 
+partially fixed this, by making sure SVG images are always downloaded 
+instead of shown inline. But the same problem still exists for *scales* 
+of SVG images. And it exists for *user portraits*, both in Volto and 
+ClassicUI.
+
+Technically, ClassicUI is not vulnerable for the user portrait part, 
+because you cannot upload an SVG as user portrait. But in Volto you can, 
+so you may be able to access a vulnerable url in the backend anyway.
+
+Note that a page that uses an image tag with an SVG image as source is 
+never vulnerable, even when the SVG image contains malicious code. To 
+exploit the vulnerability, an attacker would first need to upload a 
+malicious SVG image, and then trick a user into following a specially 
+crafted link.
+
+Fixes are needed in three packages. We link to the security advisories:
+
+* 
+[`plone.namedfile`](https://github.com/plone/plone.namedfile/security/advisories/GHSA-jj7c-jrv4-c65x) 
+CVE-2023-41048
+* 
+[`Zope`](https://github.com/zopefoundation/Zope/security/advisories/GHSA-wm8q-9975-xh5v) 
+CVE-2023-42458
+* 
+[`plone.restapi`](https://github.com/plone/plone.restapi/security/advisories/GHSA-hc5c-r8m5-2gfh) 
+also CVE-2023-42458
+
+## Information disclosure and sandbox escape
+
+Earlier this month, new Zope releases were made, which included security 
+releases of `AccessControl` and `RestrictedPython` . See the [community 
+announcement](https://community.plone.org/t/zope-4-8-9-and-5-8-4-released-with-a-security-fix/17849).
+
+## Fixed Plone versions
+
+All needed packages are included in Plone 5.2.14 and 6.0.7 which have 
+just been released.
+
+## Package versions
+
+If you cannot or do not want to upgrade your entire Plone version, you 
+can upgrade individual package versions.
+
+Fixes are available in these versions:
+
+```
+AccessControl = 4.4, 5.8, 6.2
+RestrictedPython = 5.4, 6.2
+plone.namedfile = 5.6.1, 6.0.3, 6.1.3, 6.2.1
+plone.rest = 2.0.1, 3.0.1
+plone.restapi = 8.43.4
+Zope = 4.8.10, 5.8.5
+```
+
+If you are using Buildout, then for the `Zope`, `AccessControl` and 
+`RestrictedPython` versions it is best to update the `[buildout] 
+extends` lines to include the following.
+
+For Plone 5.2: 
+https://zopefoundation.github.io/Zope/releases/4.8.10/versions.cfg
+
+For Plone 6: 
+https://zopefoundation.github.io/Zope/releases/5.8.5/versions.cfg
+
+So which versions of these packages should you use on which Plone version?
+
+To avoid surprises, you should use the version that is closest to the 
+version you are already using. If you use the default versions, the 
+following should help. This uses the Buildout notation. If you use a pip 
+constraints file, you should use a double equals sign.
+
+### Plone 5.2
+
+```
+AccessControl = 4.4
+plone.namedfile = 5.6.1
+RestrictedPython = 5.4
+Zope = 4.8.10
+```
+
+If you run Plone 5.2 on Python 3, and you are already using 
+`plone.restapi` 8, then you can additionally use:
+
+```
+plone.restapi = 8.43.4
+```
+
+### Plone 6.0.0/6.0.1
+
+```
+AccessControl = 5.8
+plone.namedfile = 6.0.3
+plone.rest = 2.0.1
+plone.restapi = 8.43.4
+RestrictedPython = 6.2
+Zope = 5.8.5
+```
+
+### Plone 6.0.2
+
+```
+AccessControl = 5.8
+plone.namedfile = 6.0.3
+plone.rest = 3.0.1
+plone.restapi = 8.43.4
+RestrictedPython = 6.2
+Zope = 5.8.5
+```
+
+### Plone 6.0.3/6.0.4
+
+```
+AccessControl = 6.2
+plone.namedfile = 6.0.3
+plone.rest = 3.0.1
+plone.restapi = 8.43.4
+RestrictedPython = 6.2
+Zope = 5.8.5
+```
+
+### Plone 6.0.5/6.0.6
+
+```
+AccessControl = 6.2
+plone.namedfile = 6.1.3
+plone.rest = 3.0.1
+plone.restapi = 8.43.4
+RestrictedPython = 6.2
+Zope = 5.8.5
+```
+
+If you are having problems with the installation, or see regressions, 
+please make a post in this thread, and anyone can help you.
+
+If you see further security problems, please [mail the Plone/Zope 
+Security Team](mailto:security@...ne.org).
+
+
+-- 
+Maurits van Rees https://maurits.vanrees.org/
+Plone/Zope Security Team
+
