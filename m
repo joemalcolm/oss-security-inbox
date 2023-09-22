@@ -1,86 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/22
-Message-ID: <20230418201229.bx-3k%steffen@sdaoden.eu>
-Date: Tue, 18 Apr 2023 22:12:29 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/9
+Message-ID: <20230922172755.GA18909@openwall.com>
+Date: Fri, 22 Sep 2023 19:27:55 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Todd C. Miller wrote in
- <043b8fbe6e014f17@...lert.dev>:
- |On Wed, 19 Apr 2023 02:59:26 +0800, Ruihan Li wrote:
- |
- |> Yeah, I see that you are removing ioctl calls on standard file
- |> descriptors. So actually, just to confirm, it is feasible to avoid
- |> all ioctl calls to standard file descriptors with root privileges
- |> (under all command line arguments), by using /dev/tty, assuming
- |> something like the window size... Right?
- |
- |For the most part, yes.  There are still some calls to isatty(3)
+On Mon, Sep 18, 2023 at 05:36:13PM +0000, Dan McDonald wrote:
+> On Sep 15, 2023, at 5:09 PM, Solar Designer <solar@...nwall.com> wrote:
+> > Can you show illumos fixing non-illumos-only security issues within days
+> > after public disclosure, so that a few days of advance notice would have
+> > made those fixes even quicker?
+> 
+> It's a per-illumos-distro property.  OmniOS has Stable & LTS releases.   Here's the current-stable
+> release notes, dynamically updated every time they update:
+> 
+> 	https://github.com/omniosorg/omnios-build/blob/r151046/doc/ReleaseNotes.md
+> 
+> So I'm not sure if a few days of advance notice would make those quicker,
+> but I do know that other distros have biweekly scheduled releases, and advance
+> notice there would keep those wheels spinning faster.  Esp. since "patch tuesday"
+> is a mere one-day before the release branch is forked off on release weeks.
 
-Frozen asset that i am,.., but i want to add this.
-The POSIX standard says (i think quoting C99)
+This looks pretty good for OmniOS, e.g. for OpenSSL CVE-2023-3817 it
+appears to be 4 days from OpenSSL advisory on "31st July 2023" to OmniOS
+"r151046n (2023-08-03)", and even something like 1 day for OpenSSH
+update to "9.3p2, fixing CVE-2023-38408" and for "AMD CPU microcode
+updated to 20230719, mitigating CVE-2023-20593 on some Zen2 processors"
+in "r151046m (2023-07-25)" (it was brought to oss-security on July 24).
 
-  [.]the standard input and standard output streams are fully
-  buffered if and only if stream can be determined not to refer to
-  an interactive device.[.]
+That page above goes back to May 2023.  Were there separate ones for
+older releases?  For "a publicly verifiable track record, dating back at
+least 1 year and continuing to present day".
 
-Unless there is a new way of checking and/or unless creating
-interactive devices is restrained to /dev/tty (pty etc) it seems
-some calls done by C libraries cannot be avoided, only be delayed
-a bit further down the road than what musl does.
+> Our security coordination in illumos is to warn distro-runners, and they make their own
+> decisions based on that data. None have ever violated embargos.
 
-  $ cat t.c
-  #include <stdio.h>
-  int main(void) { putc('\n',stdout);return 0; }
-  $ gcc -o zt t.c
+This sounds very different from how the existing distros list members
+operate.  In fact, it may be inconsistent with our current policy for
+list members, which says:
 
-GNU libc:
+https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
 
-  $ strace ./zt
-  newfstatat(1, "", {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x3), ...}, AT_EMPTY_PATH) = 0
+"Aside from your participation in discussions with the reporter and on
+the (linux-)distros lists (including possibly continuing to CC other
+prior recipients of the information), the information you receive
+through the (linux-)distros lists must not be made public, shared, nor
+even hinted at anywhere beyond the need-to-know within your distro's
+team except with the reporter's explicit approval, until the agreed upon
+public disclosure date/time or substantially complete publication by
+others.  Neither you nor others you inform may use the information for
+anything other than getting the issue fixed for your distro's users and,
+only in rare extreme cases, for deployment of maximally non-revealing
+changes to maintain security of your distro's infrastructure most
+essential to the distro users' security in face of the security issue
+being dealt with.  The need-to-know condition is met only if the person
+needs to participate in one of these two activities."
 
-  $ strace ./zt >/dev/null
-  newfstatat(1, "", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}, AT_EMPTY_PATH) = 0
-  ioctl(1, TCGETS, 0x7ffe2151dc30)        = -1 ENOTTY (Inappropriate ioctl for device)
+Note the words "within your distro's team".  However, now you say you'll
+"warn distro-runners", and in your first message you wrote:
 
-  $ mkfifo c; cat < c & strace ./zt > c
-  newfstatat(1, "", {st_mode=S_IFIFO|0640, st_size=0, ...}, AT_EMPTY_PATH) = 0
+> Like Linux, we have downstream distros.  Unlike Linux, illumos is more
+> than what Linux would call, "kernel".
 
-musl always simply says
+So you'd be joining as upstream for multiple other distros, who you'd be
+sharing the info with.  I'd say that per the current criteria and policy
+for members, those individual distros would need to qualify and join (or
+not) one by one.  I actually doubt all of them would meet our current
+criteria, so your warning all of them would be a bypass.
 
-  ioctl(1, TIOCGWINSZ, {ws_row=55, ws_col=191, ws_xpixel=1910, ws_ypixel=1045}) = 0
-or
-  ... = -1 ENOTTY (Not a tty)
+Now, given good enough reasons, the criteria could be changed or an
+exception could be made.  I think illumos is a great project, it's great
+that you have a distro ecosystem, and several people I recognize have
+spoken in favor (including off-list).  However, I am not convinced we
+have a case here where we'd want to accept indirect sharing of info with
+distros some of which might not qualify on their own.  If we were to do
+that, then why would we be subjecting other distros (non-illumos)
+applying on their own to these same criteria, or would we relax for all?
 
- |using the standard file descriptors when setting up the event loop
- |to run the program but that is after the user has been verified.
- |I will add checks that the fd is a character special file before
- |calling isatty(3).  In most cases the code wants the contents of
- |struct stat anyway, so the S_ISCHR check is basically free.
- |
- |> If this is the case, I think it should not be difficult for other
- |> setuid programs to do similar things.  I am just thinking for a
- |> while, and cannot find a case where ioctl calls are unavoidable.
- |
- |If there are setuid programs that call ttyname(3) that will also
- |call tcgetattr(3).  Also, the glibc getpass(3) function will use
- |tcgetattr(3) and tcsetattr(3) (to disable echo) on the standard
- |input if /dev/tty is not available.  For getpass(3) this could be
- |avoided by only trying to disable echo when using /dev/tty.  That
- |would change the behavior of things like:
- |
- |    su < /some/other/tty 
+Please correct me if I misunderstood something, or/and suggest a way
+forward (either fully consistent with the constraints above or with
+specific changes you'd propose and the community would find reasonable).
 
-..even though it mostly reiterates what is said.
+Thanks,
 
- |when /dev/tty is unavailable but I don't know what use case that
- |would actually support.
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Alexander
