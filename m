@@ -1,20 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/2
-Message-ID: <42ccb113-9e59-b1ec-980c-adf4f75f26af@apache.org>
-Date: Mon, 30 Jan 2023 15:49:25 +0000
-From: Jialin Qiao <qiaojialin@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24830: Apache IoTDB: apache/iotdb-web-workbench: create a user without authorization 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/4
+Message-ID: <72a6e741-1420-d21d-11cc-2592598e53f4@canonical.com>
+Date: Fri, 22 Sep 2023 07:42:22 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On 2023-09-22 01:28, Hanno Böck wrote:
+> On Thu, 21 Sep 2023 22:52:50 +0200
+> Solar Designer <solar@...nwall.com> wrote:
+> 
+>> However, another maybe-important one also made it into 1.3.2:
+>>
+>> commit 95ea5226c870449522240ccff26f0b006037c520
+>> Author: Vincent Rabaud <vrabaud@...gle.com>
+>> Date:   Mon Sep 11 16:06:08 2023 +0200
+>>
+>>      Fix invalid incremental decoding check.
+> 
+> It does not look to me that this fix is in 1.3.2:
+> https://github.com/webmproject/libwebp/commits/v1.3.2
+> 
+> I've seen this commit as well and have been wondering for a few days if
+> we'll hear about abother libwebp issue soon.
+> 
 
-Description:
+We (Ubuntu) didn't include that second commit in our libwebp updates, and I 
+don't believe Red Hat/Fedora did either. If that second commit does have a 
+security impact, it probably needs a different CVE to clear up confusion.
 
-Improper Authentication vulnerability in Apache Software Foundation Apache IoTDB.This issue affects Apache IoTDB: from 0.13.0 before 0.13.3.
-
-References:
-
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-24830
-
+Marc.
