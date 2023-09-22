@@ -1,107 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/1
-Message-ID: <20231022000649.GA14340@openwall.com>
-Date: Sun, 22 Oct 2023 02:06:49 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/1
+Message-ID: <20230922072817.092917d2.hanno@hboeck.de>
+Date: Fri, 22 Sep 2023 07:28:17 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: sandboxing,of upstream programs by distros
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-Hi Matt,
+On Thu, 21 Sep 2023 22:52:50 +0200
+Solar Designer <solar@...nwall.com> wrote:
 
-I'm sorry I didn't follow up on this sooner.
-
-On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
-> Is there interest/solutions within the Rock Security SIG or other 
-> distro's security teams for sandboxing that package upstreams can opt 
-> into?
-
-For Rocky Linux Security SIG, the only relevant thing mentioned so far
-was possibly offering an OpenBSD pledge()-alike that other packages
-could use.  However, I am skeptical any actually would, unless we also
-introduce such uses ourselves and maintain own "override" packages
-(replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
-software.  Initially, we are going to only create "override' packages
-for core or very commonly used/exposed components, and to do so only for
-specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
-coming from EPEL and with most of its dependency libraries coming from
-AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
-make the cut, at least not initially.
-
-Also, continuing these examples, it's probably more realistic to sandbox
-their command-line tools, whereas the underlying libraries are probably
-more exposed via language bindings.  Would we be introducing creation of
-child processes into the libraries?  That's tricky as it could violate
-expectations of programs using such libraries.  (Yet at Openwall we did
-a similar thing in pam_tcb, albeit limiting this maybe-unexpected
-behavior to setups that opted-in to it with the "fork" option in the PAM
-configuration file.  So it's not completely out of consideration.)
-
-Speaking of pledge() for Linux, there's this project by Justine Tunney:
-
-https://justine.lol/pledge/
-https://github.com/jart/cosmopolitan/blob/master/libc/calls/pledge-linux.c
-
-This is part of Justine's libc implementation, but a comment says:
-
- * This file contains only the minimum amount of Linux-specific code
- * that's necessary to get a pledge() policy installed. This file is
- * designed to not use static or tls memory or libc depnedencies, so
- * it can be transplanted into codebases and injected into programs.
-
-Are there already other projects using this?  Any distros offering it?
-
-> To step this out a bit... we have a large, old code base that was written 
-> decades prior to current best practices. It has numerous known memory 
-> safety issues and ever-dwindling maintainer capacity. It is also a 
-> dependency, either directly or indirectly, of a significant fraction of 
-> the world's software. I am guessing this scenario sounds uncomfortably 
-> familiar/common to many on this list.
+> However, another maybe-important one also made it into 1.3.2:
 > 
-> We (the maintainers) have discussed sandboxing as a way of mitigating 
-> the risk of known bugs. However, one of the problems is that we don't 
-> know the complete set of required privileges of our dependencies. The 
-> software can be configured with or without various libraries and also 
-> has a plugin mechanism for dynamic code loading. Basically if a 
-> sandboxing solution like seccomp wants to know our full set of system 
-> calls, we ourselves don't know it.
-
-With pledge(), you could provide coarse-grained "promises" rather than
-constrain yourself to individual syscalls.  Maybe that would work for
-you?  However, it'd only be reliably used by packages if those introduce
-a build-time dependency on whatever package provides pledge().  So e.g.
-if we add a package providing pledge() in Rocky Linux Security SIG repo,
-that won't be picked up by my example packages above built as part of
-EPEL (not part of Rocky Linux project) or AppStream (part of the
-project, but currently unlikely to be overridden in the SIG).
-
-OTOH, you could even integrate the pledge-linux.c file in your project,
-in which case it could become a standard feature used by many Linux
-distros and extra package repos once they update to your newer version.
-
-> The downstream maintainer packaging the software for, e.g. Rocky, does 
-> though. They have a complete picture of which libraries/features are 
-> enabled and how locked down the plugin stuff is.
+> commit 95ea5226c870449522240ccff26f0b006037c520
+> Author: Vincent Rabaud <vrabaud@...gle.com>
+> Date:   Mon Sep 11 16:06:08 2023 +0200
 > 
-> So, where I'm going with this, is that if the various packaging 
-> ecosystems could (or do) offer sandboxing to upstream, people like us 
-> would gladly opt in to it. Of course, these downstream maintainers can 
-> already seccomp our software today. But expecting them to reverse 
-> engineer our exact needs seems a bit much.
+>     Fix invalid incremental decoding check.
 
-I find the above two paragraphs somewhat contradictory - the downstream
-maintainer packaging the software does have technical ability to figure
-out the exact set of syscalls the software will use on their distro with
-current versions of other packages, but OTOH "expecting them to reverse
-engineer our exact needs seems a bit much."  I'd say that figuring out
-that exact set _is_ this kind of reverse-engineering, and is too much to
-expect from a typical package maintainer, who is not focusing on just
-this one package.  Besides, the exact set of syscalls may also change as
-other packages get updated; this is not something guaranteed to stay
-stable within what's normally considered a stable ABI.  So that person
-would also need to identify and introduce extra explicit package version
-dependencies, and to do extra package rebuilds to keep those satisfied.
+It does not look to me that this fix is in 1.3.2:
+https://github.com/webmproject/libwebp/commits/v1.3.2
 
-Maybe a coarse-grained pledge() would make this more realistic, or not.
+I've seen this commit as well and have been wondering for a few days if
+we'll hear about abother libwebp issue soon.
 
-Alexander
+-- 
+Hanno Böck
+https://hboeck.de/
