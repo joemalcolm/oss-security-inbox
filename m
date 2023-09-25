@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1800" "Monday" "1" "May" "2017" "19:25:00" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<1493659500.2460.28.camel@debian.org>" "56" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Date:" nil nil "5" "2017050117:25:00" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        corsac@debia May  1   56/1800  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170501164428.GA12322@openwall.com>" ("<20170501164428.GA12322@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19532 invoked by uid 550); 1 May 2017 17:25:17 -0000
+Received: (qmail 9559 invoked by uid 550); 25 Sep 2023 17:18:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +6,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19511 invoked from network); 1 May 2017 17:25:16 -0000
-Message-ID: <1493659500.2460.28.camel@debian.org>
-In-Reply-To: <20170501164428.GA12322@openwall.com>
-References: <20170501164428.GA12322@openwall.com>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-Y+lXDX6fAwGIeLOCTSju"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Date: Mon, 01 May 2017 19:25:00 +0200
-From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape
- sequences
-To: oss-security@lists.openwall.com
+Received: (qmail 9539 invoked from network); 25 Sep 2023 17:18:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=1SeR4xn+wsNgQw8XgwMb9lXe9y838lCWovJEFN+RunU=; b=oxJl0jPqT1ibAXYpXztu3+sfO+
+	+Vnlx+Mgz6IB0NtzNPsMWkmHd1s/ePd8uilCSY73JsDYmDJ4MTJV6fv4oNq+AfgHxJsLKXwj7Uun0
+	spLxfMmtZOJa95Tz0zWY4XifMlQWrH0kIGUh2TauM22i/XZglUrQs+9teUPo1n0eiUN4=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1qkpDr-0005W1-UI@xenbits.xenproject.org>
+Date: Mon, 25 Sep 2023 17:18:15 +0000
+Subject: [oss-security] Xen Security Advisory 439 v2 (CVE-2023-20588) - x86/AMD: Divide
+ speculative information leak
 
---=-Y+lXDX6fAwGIeLOCTSju
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-On Mon, 2017-05-01 at 18:44 +0200, Solar Designer wrote:
-> Yves-Alexis Perez of Debian pointed out that whether these crashes occur
-> or not may be related to the version of vte.=C2=A0 I'll leave it up to hi=
-m to
-> post a follow-up on that.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Indeed, original tests by Solar Designer and Jason A. Donenfeld might have
-targeted xfce4-terminal 0.6 which is written in GTK2 and use vte2 while more
-recent versions (starting 0.8) use GTK3 and vte3.
+            Xen Security Advisory CVE-2023-20588 / XSA-439
+                               version 2
 
-I tried running the perl script with current Debian sid and:
+             x86/AMD: Divide speculative information leak
 
-xfce4-terminal 0.8.4-1
-libvte-2.91-0:amd64 0.46.1-1
-libgtk-3-0:amd64 3.22.12-1
+UPDATES IN VERSION 2
+====================
 
-I wasn't able to make the process crash (it seems stuck at some point but t=
-he
-window is somehow resized and I don't have access to the content so it' not
-clear why).
+Version 1 accidentally linked to the wrong AMD bulletin.  This has been
+corrected in v2.  All other information in v1 is believed to be correct.
 
-Out of curiosity I also tried lxterminal (0.3.0-1) which is vte2 based, alo=
-ng
-with:
+ISSUE DESCRIPTION
+=================
 
-libvte9 1:0.28.2-5+b
-libgtk2.0-0:amd64 2.24.31-2
+In the Zen1 microarchitecure, there is one divider in the pipeline which
+services uops from both threads.  In the case of #DE, the latched result
+from the previous DIV to execute will be forwarded speculatively.
 
-and I wasn't able to crash the process either. This time the perl process
-terminates successfully.
+This is a covert channel that allows two threads to communicate without
+any system calls.  In also allows userspace to obtain the result of the
+most recent DIV instruction executed (even speculatively) in the core,
+which can be from a higher privilege context.
 
-Regards,
---=20
-Yves-Alexis=
+For more information, see:
+ * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
 
---=-Y+lXDX6fAwGIeLOCTSju
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+IMPACT
+======
 
+An attacker might be able to infer data from a different execution
+context on the same CPU core.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only AMD Zen1 CPUs are believed to be vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation.
+
+RESOLUTION
+==========
+
+The patches for Xen overwrite the buffer in the divider on the
+return-to-guest path.
+
+However, as with some prior speculative vulnerabilities, the fix is only
+effective in combination with disabling SMT.  For the same reasons as
+before, Xen does not disable SMT by default.
+
+The system administrator is required to risk-assess their workload, and
+choose whether to enable or disable SMT.  Xen will issue a warning if
+SMT is active and the user has not provided an explicit choice via the
+smt=<bool> command line option.
+
+Details of the vulnerability became public before the Xen patches were
+complete.  Hence the patches are already applied to the appropriate
+trees.  They are:
+
+Xen-unstable: 1c18d7377453^..b5926c6ecf05
+Xen 4.17:     d2d2dcae879c^..9ac2f49f5fa3
+Xen 4.16:     08539e8315fd^..de751c3d906d
+Xen 4.15:     db3386e6cad6^..d7b78041dc81
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCAAdFiEEl0WwInMjgf6efq/1bdtT8qZ1wKUFAlkHb2wACgkQbdtT8qZ1
-wKUxfggAg89XSONEjTtET9rSWcJEB4A+6Qyiz+smT8i0bYE8f23fK3uUfmIAp4aG
-ZuEFh9I/S+DkVGKBuHUjfe+IzXpRGcB/rYR7q/eaPFf4b/luj+zi/Vc4k124E2vu
-QDMtPewKdO75o6YsZSLeixQyDCDnbcx/3ylThfR9ClEvLpT8gCP1QxsqJAtS3TFI
-HZY5mQbrh3/AzFASQs9rPEUKl7o0pC33Lx3P/cgOTko57wqjrTRJDoKbp/59Rv2/
-q0THPYhQNzcP49MkE3gCzjH6nkR6PDK2hAN5xB3yM24NhgWwM2owWEIiSgTvrLvt
-qzps8Ug7hyPEXUTG8ScMlIgPAHTbww==
-=QO1X
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmURwLwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZMjgIAI+pm7OnUq8EbuD6eyB7yDKBRwm9U7Hu2yrO47f0
+CHO/HdMANfx0nCbpKS8+7GXa2gooJXgp3Fo0NGri2G0+hzXNQTsaGnMEMgBV7O0M
+OXYzao39dhPATP4hi5bm0xPTZ+3zMaP06xvl7JqNqsPK8GFz/cZr/Hsz5r2boZRO
+3FXEmbgsG2KTR5+HrSNoeA3LM9aoUqEiIq6oGxLaTr7UI6xK4FL5VFloWhS0r9yp
+gD7HHP6NlV1Ysxt1xKCxf109HrzWEvih/Gd8hG6eqiHR+i2zyS1hna8Ll/sRFkOO
+x9FpYHljtb3WKX9bUh4aZXdoAWRW0aR+SWcXToPSk5aFJiE=
+=W6vz
 -----END PGP SIGNATURE-----
 
---=-Y+lXDX6fAwGIeLOCTSju--
+--=separator--
