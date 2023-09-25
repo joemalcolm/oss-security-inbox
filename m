@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["502" "Tuesday" "7" "July" "2015" "14:18:27" "+0200" "Stefan Castille" "stefan.castille@bonnierdigital.se" "<559BC393.5000602@bonnierdigital.se>" "18" "[oss-security] CVE request CSRF in sogo" nil nil nil "7" "2015070712:18:27" "[oss-security] CVE request CSRF in sogo" (number mark "        stefan.casti Jul  7   18/502   " thread-indent "\"[oss-security] CVE request CSRF in sogo\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5381 invoked by uid 550); 7 Jul 2015 12:28:39 -0000
+Received: (qmail 32626 invoked by uid 550); 25 Sep 2023 18:29:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +6,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24183 invoked from network); 7 Jul 2015 12:18:40 -0000
-Message-ID: <559BC393.5000602@bonnierdigital.se>
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.7.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.41.80.170]
-X-ClientProxiedBy: EX11.bondom.bonnier.se (172.29.192.31) To
- EX11.bondom.bonnier.se (172.29.192.31)
-Date: Tue, 7 Jul 2015 14:18:27 +0200
-From: Stefan Castille <stefan.castille@bonnierdigital.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request CSRF in sogo
-To: <oss-security@lists.openwall.com>
+Received: (qmail 32163 invoked from network); 25 Sep 2023 18:28:43 -0000
+Date: Mon, 25 Sep 2023 20:28:34 +0200
+From: Solar Designer <solar@openwall.com>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: oss-security@lists.openwall.com,
+	"Xen. org security team" <security-team-members@xen.org>
+Message-ID: <20230925182834.GA8247@openwall.com>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <20230925163652.GA6750@openwall.com> <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=koi8-r
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 
-Hej,
+On Mon, Sep 25, 2023 at 06:10:05PM +0100, Andrew Cooper wrote:
+> On 25/09/2023 5:36 pm, Solar Designer wrote:
+> > While I am at it, here's the corresponding mitigation in Linux kernel:
+> >
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
+> 
+> Not really.š That patch entirely misunderstood the vulnerability.š I
+> went through several rounds of getting AMD to better-understand their bug.
+> 
+> Linux's fix was rewritten in
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f58d6fbcb7c848b7f2469be339bc571f2e9d245b
+> and this implements the same logic as I implemented in Xen.
 
-I would like to request a CVE for a CSRF vulnerability in sogo, the open
-groupware platform.
+Oh wow.  Thank you for correcting me (and correcting AMD first?)
 
-site: www.sogo.nu
-Previously requested: no
-Type: CSRF
-Affected versions: up till 2.3.0 (current)
-Description: The application does not protect against CSRF attacks for
-most of its functions. Only change password seems to have some
-protection. But functions such as sending email, setting up mail forward
-and everything else is not protected.
+> It's worth noting that because AMD did not allocate a $FOO_NO CPUID bit,
+> there's no ability for a VM to figure out that it might move to
+> vulnerable hardware and therefore should engage the workaround.š The
+> best a VM can do is best-effort based on whether it looks like it's
+> booting on a Zen1 system.
 
-http://www.sogo.nu/bugs/view.php?id=3246
+Maybe directly probing for the bug is an option?  Perhaps can be done
+within one thread (where the bug doesn't have security impact, but is
+detectable anyway, no)?
 
-Stefan Castille
+> Also the cross-thread nature is also poorly reported in public.
 
+Right, I couldn't find it mentioned anywhere other than your advisory.
+
+Do you know if only the quotient leaks, or also the remainder?  In the
+below, I assume the remainder leaks as well.
+
+I'm concerned it could affect some cryptographic code, in particular
+(but in a very minor way) typical implementations of Argon2.  There's a
+3-year-pending pull request to the upstream/reference Argon2
+implementation that I think would avoid the issue there (by optimizing
+out the divides):
+
+https://github.com/P-H-C/phc-winner-argon2/pull/306
+
+but there are many other implementations and I guess (almost?) all use
+the programming language's modulo division operation as-is.  Luckily,
+the severity is minor - this would only affect the cache-timing unsafe
+flavors, providing an extra (more direct and maybe more reliable?)
+side-channel, and this only matters when the attacker has a copy of or
+has guessed the salts (the same as for other cache-timing unsafe
+password hashes/KDFs).  So in terms of threat models and attack vectors,
+no change at all, but real-world (in)feasibility of otherwise-similar
+attacks can vary.  No big deal, just something to improve where we can.
+
+For others reading just the list postings and for archival, this newer
+Linux kernel commit is:
+
+> author	Borislav Petkov (AMD) <bp@alien8.de>	2023-08-11 23:38:24 +0200
+> committer	Borislav Petkov (AMD) <bp@alien8.de>	2023-08-14 11:02:50 +0200
+> 
+> x86/CPU/AMD: Fix the DIV(0) initial fix attempt
+> 
+> Initially, it was thought that doing an innocuous division in the #DE
+> handler would take care to prevent any leaking of old data from the
+> divider but by the time the fault is raised, the speculation has already
+> advanced too far and such data could already have been used by younger
+> operations.
+> 
+> Therefore, do the innocuous division on every exit to userspace so that
+> userspace doesn't see any potentially old data from integer divisions in
+> kernel space.
+> 
+> Do the same before VMRUN too, to protect host data from leaking into the
+> guest too.
+> 
+> Fixes: 77245f1c3c64 ("x86/CPU/AMD: Do not leak quotient data after a division by 0")
+> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+> Cc: <stable@kernel.org>
+> Link: https://lore.kernel.org/r/20230811213824.10025-1-bp@alien8.de
+
+Alexander
