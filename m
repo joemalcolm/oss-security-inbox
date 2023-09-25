@@ -1,101 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/24/1
-Message-ID: <ZTfewnLUAolOmzp0@openssl.org>
-Date: Tue, 24 Oct 2023 15:12:02 +0000
-From: OpenSSL <openssl@...nssl.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/9
+Message-ID: <20230925192334.GA8663@openwall.com>
+Date: Mon, 25 Sep 2023 21:23:34 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL Security Advisory
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Sep 25, 2023 at 02:48:45PM +0000, Dan McDonald wrote:
+> On Sep 22, 2023, at 5:40 PM, Solar Designer <solar@...nwall.com> wrote:
+> > 
+> > So I think we can accept OmniOS as new distros list member, if that's
+> > desired and Dan would represent OmniOS on the list.  This subscription
+> > on its own would not allow sharing of info with other illumos distros.
+> 
+> I've just consulted with one of the OmniOS leaders, and OmniOS is okay with me
+> being able to join the list on their behalf.
+> 
+> > In special cases, Dan would be able to ask the issue reporters their
+> > explicit permission to share with other illumos distros.
+> 
+> I will be judicious here.
+> 
+> > If those distros do typically need the info, they may request direct
+> > list membership.
+> > 
+> > How does this sound to you, Dan?
+> 
+> I accept.
 
-OpenSSL Security Advisory [24th October 2023]
-=============================================
+Great.  I've just subscribed Dan to the distros list (Dan provided the
+key to me off-list).
 
-Incorrect cipher key & IV length processing (CVE-2023-5363)
-===========================================================
+Dan, although not strictly required, are there any contributing-back
+task(s) you'd help with? -
 
-Severity: Moderate
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-Issue summary: A bug has been identified in the processing of key and
-initialisation vector (IV) lengths.  This can lead to potential truncation
-or overruns during the initialisation of some symmetric ciphers.
+Most tasks requiring list membership are best handled by someone on
+linux-distros (so that the member distro sees all issues, including
+Linux-only ones), but I've recently added some to:
 
-Impact summary: A truncation in the IV can result in non-uniqueness,
-which could result in loss of confidentiality for some cipher modes.
+Administrative tasks mostly unrelated to (linux-)distros lists (but
+relevant to the wider community)
 
-When calling EVP_EncryptInit_ex2(), EVP_DecryptInit_ex2() or
-EVP_CipherInit_ex2() the provided OSSL_PARAM array is processed after
-the key and IV have been established.  Any alterations to the key length,
-via the "keylen" parameter or the IV length, via the "ivlen" parameter,
-within the OSSL_PARAM array will not take effect as intended, potentially
-causing truncation or overreading of these values.  The following ciphers
-and cipher modes are impacted: RC2, RC4, RC5, CCM, GCM and OCB.
+1. Help ensure that each message posted to oss-security contains the
+most essential information (e.g., vulnerability detail and/or exploit)
+directly in the message itself (and in plain text) rather than only by
+reference to an external resource, and add the missing information
+(e.g., in your own words, by quoting with proper attribution, and/or by
+creating and attaching a properly attributed text/plain export of a
+previously referenced web page) and remind the original sender of this
+requirement (for further occasions) in a "reply" posting when necessary
+- primary: Oracle Solaris, backup: Container-Optimized OS
 
-For the CCM, GCM and OCB cipher modes, truncation of the IV can result in
-loss of confidentiality.  For example, when following NIST's SP 800-38D
-section 8.2.1 guidance for constructing a deterministic IV for AES in
-GCM mode, truncation of the counter portion could lead to IV reuse.
+2. Develop tools to help with the above (crawl URLs in messages and
+produce draft follow-ups for manual editing+posting)
 
-Both truncations and overruns of the key and overruns of the IV will
-produce incorrect results and could, in some cases, trigger a memory
-exception.  However, these issues are not currently assessed as security
-critical.
+3. Monitor for Open Source security issues/topics published elsewhere,
+identify which of these would fit, and bring them to oss-security
 
-Changing the key and/or IV lengths is not considered to be a common operation
-and the vulnerable API was recently introduced. Furthermore it is likely that
-application developers will have spotted this problem during testing since
-decryption would fail unless both peers in the communication were similarly
-vulnerable. For these reasons we expect the probability of an application being
-vulnerable to this to be quite low. However if an application is vulnerable then
-this issue is considered very serious. For these reasons we have assessed this
-issue as Moderate severity overall.
+4. Develop tools to help with the above (automatically monitor Open
+Source projects' and other relevant third-party mailing lists, websites,
+social media, source code repositories, releases for likely Open Source
+security issues/topics)
 
-The OpenSSL SSL/TLS implementation is not affected by this issue.
+5. Directly encourage upstreams, researchers, umbrella organizations,
+packagers, distros, etc. to report to the lists
 
-The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this because
-the issue lies outside of the FIPS provider boundary.
+6. Suggest and provide examples of quality improvements for such reports
+(beyond them containing the most essential information)
 
-OpenSSL 3.1 and 3.0 are vulnerable to this issue.
+7. Set up and maintain more reliable oss-security Twitter/Mastodon
+feed(s) (the existing Twitter feed occasionally misses messages)
 
-OpenSSL 3.0 users should upgrade to OpenSSL 3.0.12.
-OpenSSL 3.1 users should upgrade to OpenSSL 3.1.4.
+8. Set up and maintain new curated "best of oss-security"
+Twitter/Mastodon feed(s)
 
-This issue was reported on 21st September 2023 by Tony Battersby of
-Cybernetics.  The fix was developed by Dr Paul Dale.  This problem was
-independently reported on the 3rd of December 2022 as part of issue
-#19822, but it was not recognised as a security vulnerability at that
-time.
+Out of these, items 1 and 3 existed before, and I see Alan Coopersmith
+from Oracle Solaris help with item 3 (thank you, Alan!), e.g.:
 
-General Advisory Notes
-======================
+https://www.openwall.com/lists/oss-security/2023/07/27/1
+https://www.openwall.com/lists/oss-security/2023/06/20/6
+https://www.openwall.com/lists/oss-security/2023/04/12/4
 
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20231024.txt
+but somehow not with item 1 - maybe it's some confusion, which we should
+correct?  I don't recall Container-Optimized OS actually doing anything
+on item 1, where they're backup.  Please correct me if I'm wrong (just
+didn't notice/recall something).  Maybe we should free item 1 up for new
+volunteers now.
 
-Note: the online version of the advisory may be updated with additional details
-over time.
+For many of these, the primary/backup notion doesn't fully apply -
+there's simply enough work for more than one volunteer person/team.
 
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/general/security-policy.html
+If anyone wants to help with any of these, please reply.
 
-OpenSSL 1.1.1 is out of support and no longer receiving public updates. Extended
-support is available for premium support customers:
-https://www.openssl.org/support/contracts.html
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE78CkZ9YTy4PH7W0w2JTizos9efUFAmU33bsACgkQ2JTizos9
-efVwAg/8Dh8qiBA3LEzTP39JtwAZzf0MPUEe0I5bvS7GUXIX8EemYojcNyoa/i+x
-Lr/DQtRJ0j/woiy2PhMFbej+NNMwtHD4Cu83JB+wEEiXbnt4n5yi+rWb9hw19Fs6
-g17EDbsi1j5fgCQ81Psgxg02bgC/3iE2AnDYty6mRQnfMPe599SMUEnUsRfeGdTh
-QGOwLbAH58a3OydMFD5tUHY6JKKwU7WhLrYanAT7YIlU4oQbAIEKL7+K0roIzhyq
-3o7EjtfKAr2ttcl+iOXdJYRb+0OwP59y/BBAOOOdCcb2oqDs1fPvXB8BXHhR43Ew
-i5EF47fUFxICu2kuXEe00RbbJipAqF5S0KvIKurYPjepukWjOqnNBQc4euned0gN
-bYcQgMLjYoZAp79V42kRMTQ+uMP1ElUCx4gwY8iOn6R65TmHloiNWv/q0I3XhWeH
-piLOv9lm/pMNmArpFGpySQzTY/wyyEvc9ZQcThSdWSiJOIebG4wFLYP+LvzG81/Q
-KX0yMK1dB8nyD6n+p14aIxhaWHr/7YgNO0882YbG11OQftIB5HXIXsQT5XFdVm8h
-OUCJfj1iPv1O3Xr7UkTISzGzRZyYLoUxFSi9+DrMHWaK9pQqSYDjqB6XE8vImnZN
-wJJj9hGRRZzCON5pXuh5+bIPSozdUPaZtWWm9ICobB/PLyvD05M=
-=aGd3
------END PGP SIGNATURE-----
+Alexander
