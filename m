@@ -1,36 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/5
-Message-ID: <632a3fb2-1f92-0ef5-6f1d-fbb04edb95dd@apache.org>
-Date: Mon, 16 Oct 2023 01:51:45 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/12
+Message-ID: <ZRHp39Aa3dOf1y/O@westworld>
+Date: Mon, 25 Sep 2023 13:13:19 -0700
+From: Kyle Zeng <zengyhkyle@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-43668: Apache InLong: Jdbc Connection Security Bypass in InLong 
+Subject: [CVE-2023-42755] Linux kernel wild pointer access <= v6.2
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Hi there,
 
-Affected versions:
+I recently found a bug in the rsvp traffic classifier in the Linux kernel.
+This classifier is already retired in the upstream but affects all stable
+releases. More specifically, this bug affects v6.1, v5.15, v5.10, v5.4,
+v4.19, and v4.14.
 
-- Apache InLong 1.4.0 through 1.8.0
+The symptom of the bug is that the kernel can be tricked into accessing a
+wild pointer, thus crash the kernel.
 
-Description:
+[Root Cause]
+The root cause of the bug is an slab-out-of-bound access, but since the
+offset to the original pointer is an `unsigned int` fully controlled by
+users, the behaviour is ususally a wild pointer access.
 
-Authorization Bypass Through User-Controlled Key vulnerability in Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.8.0, 
+in `rsvp_change`, RSVP_PINFO is passed to the kernel without any checks
+~~~
+static int rsvp_change(...)
+{
+        ......
+        if (tb[TCA_RSVP_PINFO]) {
+                pinfo = nla_data(tb[TCA_RSVP_PINFO]);
+                f->spi = pinfo->spi;
+                f->tunnelhdr = pinfo->tunnelhdr;
+        }
+        ......
+        if (pinfo) {
+                s->dpi = pinfo->dpi;
+                s->protocol = pinfo->protocol;
+                s->tunnelid = pinfo->tunnelid;
+        }
+        ......
+}
+~~~
 
-some sensitive params  checks will be bypassed, like "autoDeserizalize","allowLoadLocalInfile"....
+As a result, later when the classifier actually does the classification
+in `rsvp_classify`:
+~~~
+TC_INDIRECT_SCOPE int RSVP_CLS(struct sk_buff *skb, const struct tcf_proto *tp,
+                               struct tcf_result *res)
+{
+        ......
+        *(u32 *)(xprt + s->dpi.offset) ^ s->dpi.key)
+        ......
+}
+~~~
+`xprt + s->dpi.offset` becomes a wild pointer and crashes the kernel.
 
-.  
+[Severity]
+This will cause a local denial-of-service.
 
-Users are advised to upgrade to Apache InLong's 1.9.0 or cherry-pick [1] to solve it.
+[Patch]
+The patch is to follow the upstream and retire the rsvp classifier in
+all the stable trees.
+And it is queued in all the stable trees, but not merged yet.
+For example, the patch for v6.1 can be found here:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
 
-[1]  https://github.com/apache/inlong/pull/8604
+[Affected Version]
+I confirmed that this bug affects v6.2, v6.1, v5.15, v5.10, v5.4,
+v4.19, and v4.14.
 
-Credit:
+[Proof-of-Concept]
+A PoC file is attached to this email.
 
-nbxiglk (finder)
+[Splash]
+A kernel oops splash is attached to this email.
 
-References:
+This issue is assigned with CVE-2023-42755.
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-43668
+Best,
+Kyle Zeng
 
+View attachment "poc.c" of type "text/x-csrc" (27151 bytes)
+
+View attachment "splash" of type "text/plain" (5006 bytes)
