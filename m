@@ -1,69 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/4
-Message-ID: <91be5904-210a-4e21-aa50-e77a41304a1f@oracle.com>
-Date: Fri, 6 Oct 2023 14:19:17 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVEs assigned for reachable assertions in avahi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/8
+Message-ID: <20230925182834.GA8247@openwall.com>
+Date: Mon, 25 Sep 2023 20:28:34 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Andrew Cooper <andrew.cooper3@...rix.com>
+Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-While the CVE database still shows them as reserved, Red Hat's & Debian's
-trackers show several CVE's being assigned for client requests that can
-cause the Avahi server to abort with an assertion failure.  Only one of
-them has a fix available so far.
+On Mon, Sep 25, 2023 at 06:10:05PM +0100, Andrew Cooper wrote:
+> On 25/09/2023 5:36 pm, Solar Designer wrote:
+> > While I am at it, here's the corresponding mitigation in Linux kernel:
+> >
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
+> 
+> Not really.  That patch entirely misunderstood the vulnerability.  I
+> went through several rounds of getting AMD to better-understand their bug.
+> 
+> Linux's fix was rewritten in
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f58d6fbcb7c848b7f2469be339bc571f2e9d245b
+> and this implements the same logic as I implemented in Xen.
 
-----------------------------------------------------------------------------
+Oh wow.  Thank you for correcting me (and correcting AMD first?)
 
-CVE-2023-38469: https://github.com/lathiat/avahi/issues/455
-  Reachable assertion in avahi_dns_packet_append_record
+> It's worth noting that because AMD did not allocate a $FOO_NO CPUID bit,
+> there's no ability for a VM to figure out that it might move to
+> vulnerable hardware and therefore should engage the workaround.  The
+> best a VM can do is best-effort based on whether it looks like it's
+> booting on a Zen1 system.
 
-"It can be triggered by unprivileged local users
-  (unless disable-user-service-publishing is set to yes explicitly):
+Maybe directly probing for the bug is an option?  Perhaps can be done
+within one thread (where the bug doesn't have security impact, but is
+detectable anyway, no)?
 
-  avahi-publish -s T _qotd._tcp 22 $(perl -le 'print "A " x 100000')"
+> Also the cross-thread nature is also poorly reported in public.
 
-----------------------------------------------------------------------------
+Right, I couldn't find it mentioned anywhere other than your advisory.
 
-CVE-2023-38470: https://github.com/lathiat/avahi/issues/454
-  Reachable assertion in avahi_escape_label
+Do you know if only the quotient leaks, or also the remainder?  In the
+below, I assume the remainder leaks as well.
 
-"avahi-resolve -n ',.=.}.=.?-.}.=.?.?.}.}.?.?.?.z.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.=.=.?.?.}.}.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.=.=.?.?.}.}.?.?.?.zM.?`?.}.}.}.?.?.?.r.=.?.}.=.?.?.}.?.?.?.}.=.?.?.}??.}.}.?.?.?.z.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.?`?.}.}.}.??.?.zM.?`?.}.}.}.?.?.?.r.=.?.}.=.?.?.}.?.?.?.}.=.?.?.}??.}.}.?.?.?.z.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.?`?.}.}.}.?.?.?.r.=.=.?.?`.?.?}.}.}.?.?.?.r.=.?.}.=.?.?.}.?.?.?.}.=.?.?.}'"
+I'm concerned it could affect some cryptographic code, in particular
+(but in a very minor way) typical implementations of Argon2.  There's a
+3-year-pending pull request to the upstream/reference Argon2
+implementation that I think would avoid the issue there (by optimizing
+out the divides):
 
-Fix: https://github.com/lathiat/avahi/commit/94cb6489114636940ac683515417990b55b5d66c
+https://github.com/P-H-C/phc-winner-argon2/pull/306
 
-----------------------------------------------------------------------------
+but there are many other implementations and I guess (almost?) all use
+the programming language's modulo division operation as-is.  Luckily,
+the severity is minor - this would only affect the cache-timing unsafe
+flavors, providing an extra (more direct and maybe more reliable?)
+side-channel, and this only matters when the attacker has a copy of or
+has guessed the salts (the same as for other cache-timing unsafe
+password hashes/KDFs).  So in terms of threat models and attack vectors,
+no change at all, but real-world (in)feasibility of otherwise-similar
+attacks can vary.  No big deal, just something to improve where we can.
 
-CVE-2023-38471: https://github.com/lathiat/avahi/issues/453
-  Reachable assertion in dbus_set_host_name
+For others reading just the list postings and for archival, this newer
+Linux kernel commit is:
 
-"It can be triggered by unprivileged local users unless 1c599d8 is backported.
+> author	Borislav Petkov (AMD) <bp@...en8.de>	2023-08-11 23:38:24 +0200
+> committer	Borislav Petkov (AMD) <bp@...en8.de>	2023-08-14 11:02:50 +0200
+> 
+> x86/CPU/AMD: Fix the DIV(0) initial fix attempt
+> 
+> Initially, it was thought that doing an innocuous division in the #DE
+> handler would take care to prevent any leaking of old data from the
+> divider but by the time the fault is raised, the speculation has already
+> advanced too far and such data could already have been used by younger
+> operations.
+> 
+> Therefore, do the innocuous division on every exit to userspace so that
+> userspace doesn't see any potentially old data from integer divisions in
+> kernel space.
+> 
+> Do the same before VMRUN too, to protect host data from leaking into the
+> guest too.
+> 
+> Fixes: 77245f1c3c64 ("x86/CPU/AMD: Do not leak quotient data after a division by 0")
+> Signed-off-by: Borislav Petkov (AMD) <bp@...en8.de>
+> Cc: <stable@...nel.org>
+> Link: https://lore.kernel.org/r/20230811213824.10025-1-bp@alien8.de
 
-  busctl call org.freedesktop.Avahi / org.freedesktop.Avahi.Server2 SetHostName "s" 'A\.B'"
-
-----------------------------------------------------------------------------
-
-CVE-2023-38472: https://github.com/lathiat/avahi/issues/452
-  Reachable assertion in avahi_rdata_parse
-
-"It can be reproduced by calling something like
-
-   org.freedesktop.Avahi /Client*/EntryGroup* org.freedesktop.Avahi.EntryGroup AddRecord "iiusqquay" 0 0 0 '' 0 0 0 0
-
-  using
-
-   avahi_entry_group_add_record (group, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC, 0, "Test", 0x01, 0x10, 120, "", 0)
-
-  from inside a client creating EntryGroups. It can be triggered by unprivileged
-  users unless disable-user-service-publishing is set to yes explicitly.
-  By default it's set to no."
-
-----------------------------------------------------------------------------
-
-CVE-2023-38473: https://github.com/lathiat/avahi/issues/451
-   Reachable assertion in avahi_alternative_host_name
-
-"busctl call org.freedesktop.Avahi / org.freedesktop.Avahi.Server GetAlternativeHostName "s" ').'"
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Alexander
