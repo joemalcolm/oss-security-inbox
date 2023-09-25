@@ -1,21 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/4
-Message-ID: <418142a4-27db-192b-5c9e-38384e079527@apache.org>
-Date: Thu, 23 Feb 2023 17:16:39 +0000
-From: Jarek Potiuk <potiuk@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25691: Apache Airflow Google Provider: Google Cloud Sql Provider Remote Command Execution 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/5
+Message-Id: <E1qkpDr-0005W1-UI@xenbits.xenproject.org>
+Date: Mon, 25 Sep 2023 17:18:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 439 v2 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
+            Xen Security Advisory CVE-2023-20588 / XSA-439
+                               version 2
 
-Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Google Provider.This issue affects Apache Airflow Google Provider: before 8.10.0.
+             x86/AMD: Divide speculative information leak
 
-References:
+UPDATES IN VERSION 2
+====================
 
-https://github.com/apache/airflow/pull/29497
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25691
+Version 1 accidentally linked to the wrong AMD bulletin.  This has been
+corrected in v2.  All other information in v1 is believed to be correct.
+
+ISSUE DESCRIPTION
+=================
+
+In the Zen1 microarchitecure, there is one divider in the pipeline which
+services uops from both threads.  In the case of #DE, the latched result
+from the previous DIV to execute will be forwarded speculatively.
+
+This is a covert channel that allows two threads to communicate without
+any system calls.  In also allows userspace to obtain the result of the
+most recent DIV instruction executed (even speculatively) in the core,
+which can be from a higher privilege context.
+
+For more information, see:
+ * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
+
+IMPACT
+======
+
+An attacker might be able to infer data from a different execution
+context on the same CPU core.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only AMD Zen1 CPUs are believed to be vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation.
+
+RESOLUTION
+==========
+
+The patches for Xen overwrite the buffer in the divider on the
+return-to-guest path.
+
+However, as with some prior speculative vulnerabilities, the fix is only
+effective in combination with disabling SMT.  For the same reasons as
+before, Xen does not disable SMT by default.
+
+The system administrator is required to risk-assess their workload, and
+choose whether to enable or disable SMT.  Xen will issue a warning if
+SMT is active and the user has not provided an explicit choice via the
+smt=<bool> command line option.
+
+Details of the vulnerability became public before the Xen patches were
+complete.  Hence the patches are already applied to the appropriate
+trees.  They are:
+
+Xen-unstable: 1c18d7377453^..b5926c6ecf05
+Xen 4.17:     d2d2dcae879c^..9ac2f49f5fa3
+Xen 4.16:     08539e8315fd^..de751c3d906d
+Xen 4.15:     db3386e6cad6^..d7b78041dc81
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmURwLwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZMjgIAI+pm7OnUq8EbuD6eyB7yDKBRwm9U7Hu2yrO47f0
+CHO/HdMANfx0nCbpKS8+7GXa2gooJXgp3Fo0NGri2G0+hzXNQTsaGnMEMgBV7O0M
+OXYzao39dhPATP4hi5bm0xPTZ+3zMaP06xvl7JqNqsPK8GFz/cZr/Hsz5r2boZRO
+3FXEmbgsG2KTR5+HrSNoeA3LM9aoUqEiIq6oGxLaTr7UI6xK4FL5VFloWhS0r9yp
+gD7HHP6NlV1Ysxt1xKCxf109HrzWEvih/Gd8hG6eqiHR+i2zyS1hna8Ll/sRFkOO
+x9FpYHljtb3WKX9bUh4aZXdoAWRW0aR+SWcXToPSk5aFJiE=
+=W6vz
+-----END PGP SIGNATURE-----
 
