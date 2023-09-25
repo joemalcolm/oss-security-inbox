@@ -1,24 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/24/4
-Message-ID: <01e07723-a942-3faf-824a-17585ab7a6d1@apache.org>
-Date: Mon, 24 Apr 2023 19:03:51 +0000
-From: Andy Seaborne <andy@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/3
+Message-ID: <CADW8OBs6sEqGxKnUzJy8nro0tXCf-P=7erGFUaqWm5Kv7WyCoA@mail.gmail.com>
+Date: Mon, 25 Sep 2023 15:26:01 -0700
+From: Kyle Zeng <zengyhkyle@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22665: Apache Jena: Exposure of arbitrary execution in script engine expressions. 
+Subject: Re: [CVE-2023-42755] Linux kernel wild pointer access <= v6.2
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+> [Patch]
+> The patch is to follow the upstream and retire the rsvp classifier in
+> all the stable trees.
+> And it is queued in all the stable trees, but not merged yet.
+> For example, the patch for v6.1 can be found here:
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
+>
+Correction: as pointed out by Brad Spengler, the patch was merged into
+stable trees 2 days ago. For example, the patch for v6.1 can be found here:
+https://github.com/gregkh/linux/commit/b93aeb6352b0229e3c5ca5ca4ff015b015aff33c
 
-Description:
-
-There is insufficient checking of user queries in Apache Jena versions 4.7.0 and earlier, when invoking custom scripts. It allows a remote user to execute arbitrary javascript via a SPARQL query.
-
-Credit:
-
-L3yx of Syclover Security Team (reporter)
-
-References:
-
-https://jena.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22665
-
+Thanks,
+Kyle Zeng
