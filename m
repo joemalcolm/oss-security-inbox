@@ -1,36 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/4
-Message-ID: <20230623121412.25fbf45a.hanno@hboeck.de>
-Date: Fri, 23 Jun 2023 12:14:12 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/1
+Message-ID: <20230925102911.GA4097@openwall.com>
+Date: Mon, 25 Sep 2023 12:29:11 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Subject: CVE-2023-4527: glibc: Stack read overflow in getaddrinfo in no-aaaa mode
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 20 Jun 2023 15:47:28 -0700
-Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
+Hi,
 
-> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out
-> scanners since it claims this bug has a CVSS of 9.8.
+A bug affecting glibc 2.36+ was reported and fixed earlier this month:
 
-The problem really is that these scanners are assuming something that
-is not true. They assume that data from vulnerability databases is
-reliable.
+https://sourceware.org/bugzilla/show_bug.cgi?id=30842
 
-These debates are coming on a regular basis, usually either "should
-this thing get a CVE?" and "is this a reasonable CVSS value /
-criticality rating?"
+> Florian Weimer 2023-09-12 15:16:27 UTC
+> 
+> If the system is configured in no-aaaa mode via /etc/resolv.conf,
+> getaddrinfo is called for the AF_UNSPEC address family, and a DNS
+> response is received over TCP that is larger than 2048 bytes,
+> getaddrinfo may potentially disclose stack contents via the returned
+> address data, or crash. While name lookup normally just fails
+> incorrectly, crashes are not difficult to trigger, with valid DNS
+> responses that are propagated by DNS resolvers.
+> 
+> Introduced by:
+> 
+> commit f282cdbe7f436c75864e5640a409a10485e9abb2
+> Author: Florian Weimer <fweimer@...hat.com>
+> Date:   Fri Jun 24 18:16:41 2022 +0200
+> 
+>     resolv: Implement no-aaaa stub resolver option
+>     
+>     Reviewed-by: Carlos O'Donell <carlos@...hat.com>
 
-It's actually quite simple: There are dozends (maybe hundreds?) of CVEs
-issued every day. If you want them to be properly vetted, you'd need to
-have a massive team of security professionals doing that vetting. No
-such team exists, so the only plausible assumption is that CVE and CVSS
-data is by default unreliable.
+> Florian Weimer 2023-09-13 12:58:01 UTC
+> 
+> All impacted branches fixed.
 
-If your scanner sounds an alarm because someone added a high CVSS
-rating to a CVE entry, you should assume that the people creating that
-scanner don't know what they are doing.
+Even though upstream 2.35 and older are not affected, the problematic
+commit was backported into some distro packages of older glibc:
 
--- 
-Hanno Böck
-https://hboeck.de/
+https://access.redhat.com/security/cve/CVE-2023-4527
+
+> Statement
+> This issue only affect systems configured with no-aaaa mode via
+> /etc/resolv.conf.
+> 
+> The no-aaaa stub resolver option was backported only to Red Hat
+> Enterprise Linux versions 8.7 and 9.1. Therefore, previous versions are
+> not affected.
+> 
+> Mitigation
+> Removing the no-aaaa diagnostic option from /etc/resolv.conf will
+> mitigate this flaw.
+
+Also tracked here:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=2234712
+
+The feature is described in a glibc NEWS entry for 2.36 as follows:
+
+https://lists.gnu.org/archive/html/info-gnu/2022-08/msg00000.html
+
+> * The "no-aaaa" DNS stub resolver option has been added.  System
+>   administrators can use it to suppress AAAA queries made by the stub
+>   resolver, including AAAA lookups triggered by NSS-based interfaces
+>   such as getaddrinfo.  Only DNS lookups are affected: IPv6 data in
+>   /etc/hosts is still used, getaddrinfo with AI_PASSIVE will still
+>   produce IPv6 addresses, and configured IPv6 name servers are still
+>   used.  To produce correct Name Error (NXDOMAIN) results, AAAA queries
+>   are translated to A queries.  The new resolver option is intended
+>   primarily for diagnostic purposes, to rule out that AAAA DNS queries
+>   have adverse impact.  It is incompatible with EDNS0 usage and DNSSEC
+>   validation by applications.
+
+Alexander
