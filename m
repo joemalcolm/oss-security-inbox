@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3040" "Wednesday" "6" "April" "2016" "11:57:03" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160406155703.E732F33204D@smtpvbsrv1.mitre.org>" "63" "[oss-security] Re: CVE Request - xchat/hexchat doesn't properly verify SSL certificates" nil nil nil "4" "2016040615:57:03" "[oss-security] Re: CVE Request - xchat/hexchat doesn't properly verify SSL certificates" (number mark "U       cve-assign@m Apr  6   63/3040  " thread-indent "\"[oss-security] Re: CVE Request - xchat/hexchat doesn't properly verify SSL certificates\"\n") "<5703B83B.30108@redhat.com>" ("<5703B83B.30108@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26248 invoked by uid 550); 6 Apr 2016 15:57:16 -0000
+Received: (qmail 21698 invoked by uid 550); 25 Sep 2023 16:05:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,75 +7,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26230 invoked from network); 6 Apr 2016 15:57:16 -0000
-From: cve-assign@mitre.org
-To: anemec@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <5703B83B.30108@redhat.com>
-Message-Id: <20160406155703.E732F33204D@smtpvbsrv1.mitre.org>
-Date: Wed,  6 Apr 2016 11:57:03 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - xchat/hexchat doesn't properly verify SSL certificates
+Received: (qmail 21680 invoked from network); 25 Sep 2023 16:05:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=lPmB8qQQXXuq9W/r6/iH+aRzO+9NkrUlusE1Zq/F/90=; b=v3AGhr0xJI5Z01nn0CKPu9Yp+S
+	96eNghllz9dalMVS1WAZrKpjGWgqjM9aSNDEGe+QMDu9RXQZ/01hVnYkFnUg4+ok2lkxzA7VSJ5R6
+	QmGVJf6I/Arru2hOcWi9ccFN/n6O3Bv1D7j8SZ4568C5/igjCI1xIqVHFOEtNQetSAbw=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1qko5Z-0003cF-KD@xenbits.xenproject.org>
+Date: Mon, 25 Sep 2023 16:05:37 +0000
+Subject: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide
+ speculative information leak
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I noticed that this issue never got a CVE assigned.
-> http://seclists.org/oss-sec/2015/q1/342
-> 
-> Could one be assigned now, or was it deemed not CVE worthy?
+            Xen Security Advisory CVE-2023-20588 / XSA-439
 
-Use CVE-2013-7449.
+             x86/AMD: Divide speculative information leak
 
-This is an issue that had extensive debate on oss-security, e.g., the
-http://www.openwall.com/lists/oss-security/2015/01/29/27 and
-http://www.openwall.com/lists/oss-security/2015/01/30/18 posts. Also,
-https://github.com/hexchat/hexchat/issues/524 only has an
-"enhancement" label and not a "bug" label.
-https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d
-doesn't directly suggest that the vendor interpreted this as a bug
-fix. The vendor's original goal may have been to support the use case
-in which people deploying IRC client or server code simply do not want
-to bother arranging for any type of verifiable server certificate
-(either by using a CA or self signing), these people are not concerned
-that a man-in-the-middle attacker may intentionally set up something
-to read or modify their traffic, and these people are only concerned
-with already-existing observation of over-the-wire cleartext. For
-example, client users may have connected via https only because they
-don't want their IRC messages to trigger IDS rules on their own local
-networks, and therefore automatically send chat snippets to their
-local network administrators.
+ISSUE DESCRIPTION
+=================
 
-However, XChat and HexChat are general-purpose IRC clients that, based
-on their documentation, would appear suitable for any IRC client user
-to connect to any SSL IRC server. They didn't advertise that the SSL
-behavior was intended only for a
-prefer-not-to-accidentally-hit-an-IDS-rule use case. In creating a
-patch, the vendor never stated that the old behavior was once the
-desired behavior. So, even with the "enhancement" label, this issue
-must be interpreted as a vulnerability and must have a CVE ID.
+In the Zen1 microarchitecure, there is one divider in the pipeline which
+services uops from both threads.  In the case of #DE, the latched result
+from the previous DIV to execute will be forwarded speculatively.
 
-For affected products, also note the mention of XChat-GNOME in the
-http://www.openwall.com/lists/oss-security/2015/01/29/24 post.
+This is a covert channel that allows two threads to communicate without
+any system calls.  In also allows userspace to obtain the result of the
+most recent DIV instruction executed (even speculatively) in the core,
+which can be from a higher privilege context.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+For more information, see:
+ * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+
+IMPACT
+======
+
+An attacker might be able to infer data from a different execution
+context on the same CPU core.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only AMD Zen1 CPUs are believed to be vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation.
+
+RESOLUTION
+==========
+
+The patches for Xen overwrite the buffer in the divider on the
+return-to-guest path.
+
+However, as with some prior speculative vulnerabilities, the fix is only
+effective in combination with disabling SMT.  For the same reasons as
+before, Xen does not disable SMT by default.
+
+The system administrator is required to risk-assess their workload, and
+choose whether to enable or disable SMT.  Xen will issue a warning if
+SMT is active and the user has not provided an explicit choice via the
+smt=<bool> command line option.
+
+Details of the vulnerability became public before the Xen patches were
+complete.  Hence the patches are already applied to the appropriate
+trees.  They are:
+
+Xen-unstable: 1c18d7377453^..b5926c6ecf05
+Xen 4.17:     d2d2dcae879c^..9ac2f49f5fa3
+Xen 4.16:     08539e8315fd^..de751c3d906d
+Xen 4.15:     db3386e6cad6^..d7b78041dc81
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXBS+qAAoJEL54rhJi8gl5tvAQALd6ceYTkPnzK/zFFs6Th+B4
-w2vie2yj2/BcvrfmPut6kIEC8owgdzaK5gWwcVzuDlMC9y5puyrheSD8YXH/4ad2
-TJdcA2UYcUl0UIM4ZzXyZmu1EJqgMeJ9FXHW/aIsg0drBin3X71zO7Hiq+BMGvw8
-BqcrJQrp0aBKMzOQtoI+FZW2LDn+FcsNaIVxXuU8CrziYMbaIlycQn6dnUGE7qJ1
-r7f+1bM5wH0NUY+IVdg4II8hjrPih8O2FmGSEg15OLteaBHPoZYNEK3hX8VCdonu
-1inSYxFAF0co+28bGmCJ8CcAjT9NPWbvmxbp0h1rwkZKLic8YAZ/IWW8k/qO0Rkr
-TLXHFYpTSKIz/bCwgc6KU8VOWJnt7XzQAGOmQVrylQvbC+5ImyojaXUBZmTEAZzG
-rY1mwhVOy1A5fouulr4s1jtRp5+wMf3V7OpV9rBL0xERZ4c14z6zkHinzaUVqeVa
-e2ShMgcrr9dl2sRC9cX2sM1/zPQqia+ArGU//NJK92cKvg1v9XGnkjJrKCVva0Y1
-9uFe4n18cRK2lD7+XI4pQSxBuoyojGiNgxjldIlCaR/fhfDvV9qhIIdf0K74IICp
-eMAWRrmPtlrjqp4J7JO5vIXyRDcRfT/k9lTni9G7FD5ayMVkwU+q4qEf7fTSZpuE
-Xy7K17ik/6TMYx7edjmf
-=0Fpa
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmURr2UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZA1QH/RNSR1O6QJjd7z2gSGA9Yka7VWyYOMB2J01AaIl7
+69zCRkpqg+baF1aQaAVR0fj39aF7M7xXrd/LSk+E4BBiCRSxxRzbWUGYn9qTLR9w
+srbpGXqy0aWod9MiwfbTuEzf9uG8XpwOGoRg6p6YBRYE3WrQxIVnYY+KjeeToTEs
++UXZ0iZPrjaGaqKnF+PpkX4CMsqHhxk3iJw+ZFX2V4fVNRYgCOpjejmMjbWM4ABr
+eSsCjTU92/YZvFOsTeIzu74h5yM6SH+XTPW2S8Ve5j3mk7sM8nIiYbIyTMWNCJID
+HXeodt6eHjhZzV2z7f+/zEngnoITIqz+X3tRcTkHB9+H5jU=
+=AtsG
 -----END PGP SIGNATURE-----
+
+--=separator--
