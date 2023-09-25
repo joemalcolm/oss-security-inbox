@@ -1,116 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/05/2
-Message-ID: <Y7b0rzSF7dF5Hgdu@itl-email>
-Date: Thu, 5 Jan 2023 11:02:50 -0500
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Code execution through MIME-type association of Mono interpreter and security expectations of MIME type associations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/7
+Message-ID: <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
+Date: Mon, 25 Sep 2023 18:10:05 +0100
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Cc: "Xen. org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 04, 2023 at 11:47:12PM +0100, Gabriel Corona wrote:
-> On Debian and derivatives, the mono-runtime-common package associates
-> the application/x-ms-dos-executable MIME type with the Mono CLR
-> interpreter [1]. This makes it very easy for an attacker to trigger
-> arbitrary code execution through programs such as Chromium [2], Firefox
-> [3] and Thunderbird [4] when the Mono packages are installed.
-> 
-> This has been fixed in package 6.8.0.105+dfsg-3.3 [5] which is available
-> in Debian testing, Debian Sid and Ubuntu Lunar (23.04). This has
-> currently not been fixed in any stable distribution.
-> 
-> On Firefox and Thunderbird, a user interface is used to let the user
-> confirm which program to use to open the file. In this case, we can
-> trick the user into thinking he is about to open the file with a
-> innocuous program by serving the file with a special MIME type such as
-> inode/directory or x-scheme-handler/trash [3,4]. These MIME types are
-> typically associated with a file manager. When called this way, several
-> file managers will try to open the file based on MIME-type associations
-> (where the MIME-type is inferred either from the file name extension or
-> from the file content). Thunar, PCManFM, PCManFM-Qt were found to
-> exhibit this behavior.
-> 
-> For Thunar, this behavior has been fixed in v4.16.7 and v4.17.2 [7].
-> 
-> We can use a visually confusable file name such as REPORT.ΡDF (notice
-> the non-ASCII first letter in the extension) in order to trick the user
-> into thinking he is opening a "safe" file type while disabling MIME-type
-> detection based on the file name extension.
-> 
-> Moreover, in Firefox and Thunderbird [8], we can corrupt the file
-> association database (handlers.json) in order to display a bogus file
-> type description associated with the inode/directory or x-scheme-
-> handler/trash MIME type. This is done by first serving a "safe" file
-> type (such as a PDF) with this MIME type.
-> 
-> This begs several questions about file associations:
-> 
-> * Is it legitimate to register file associations for programs
->   which can exbibit arbitrary code execution such as unsandboxed
->   program interpreters?
+On 25/09/2023 5:36 pm, Solar Designer wrote:
+> Hi,
+>
+> Thank you Xen security team for indirectly bringing the various CPU
+> issues in here.  This is very helpful, as your messages on them serve
+> two purposes at once - informing the community about issues fixed in Xen
+> (so directly on-topic here, with Xen being Open Source) and about the
+> CPU issues that typically also need to be mitigated by other projects.
+>
+> On Mon, Sep 25, 2023 at 04:05:37PM +0000, Xen. org security team wrote:
+>>             Xen Security Advisory CVE-2023-20588 / XSA-439
+>>
+>>              x86/AMD: Divide speculative information leak
+>>
+>> ISSUE DESCRIPTION
+>> =================
+>>
+>> In the Zen1 microarchitecure, there is one divider in the pipeline which
+>> services uops from both threads.  In the case of #DE, the latched result
+>> from the previous DIV to execute will be forwarded speculatively.
+>>
+>> This is a covert channel that allows two threads to communicate without
+>> any system calls.  In also allows userspace to obtain the result of the
+>> most recent DIV instruction executed (even speculatively) in the core,
+>> which can be from a higher privilege context.
+>>
+>> For more information, see:
+>>  * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+> The above link is wrong - it's for CVE-2023-20593 Zenbleed in Zen2.
+>
+> The correct link for CVE-2023-20588, the DIV bug in Zen1, appears to be:
+>
+> https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
 
-No.  Failure to do this is a major cause of security problems in
-Microsoft Windows.
+Oops.  I thought I'd fixed that, but apparently not.
 
-> * When a program (such as a file manager) is called with a regular file
->   it does not handle, should it spawn a new program for handling the
->   file without user confirmation (as it may be exploited for file type
->   spoofing)?
+You're correct.  I'll issue an update in a moment.
 
-No, it should not.
+>
+> While I am at it, here's the corresponding mitigation in Linux kernel:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
 
-> * Should a client program reject special/bogus MIME types such as
->   inode/* and x-scheme-handler/* as they are not expected to be
->   used in this context (and it may be exploited for file type spoofing)?
+Not really.  That patch entirely misunderstood the vulnerability.  I
+went through several rounds of getting AMD to better-understand their bug.
 
-Yes, and there needs to be a database of such types.
+Linux's fix was rewritten in
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f58d6fbcb7c848b7f2469be339bc571f2e9d245b
+and this implements the same logic as I implemented in Xen.
 
-> I would consider the following behaviors to be vulnerabilities:
-> 
-> * Association of the Mono interpreter with a MIME type in the
->   Debian/Ubuntu packages;
+It's worth noting that because AMD did not allocate a $FOO_NO CPUID bit,
+there's no ability for a VM to figure out that it might move to
+vulnerable hardware and therefore should engage the workaround.  The
+best a VM can do is best-effort based on whether it looks like it's
+booting on a Zen1 system.
 
-I agree.
+Also the cross-thread nature is also poorly reported in public.
 
-> * Thunar delegates to MIME type associations when opened with a regular
->   file (CVE-2021-32563);
+Thanks,
 
-I agree.
-
-> * PCManFM delegates to MIME type associations when opened with a regular
->   file;
-
-I agree.
-
-> * PCManFM-Qt delegates to MIME type associations when opened with a
->   regular file;
-
-I agree.
-
-> * Firefox and Thunderbird accept "special" MIME types (inode/* and
->   x-scheme-handler/*) from remote servers;
-
-Not sure what you mean by “accept”.  Do you mean that download should be
-aborted?
-
-> * File type spoofing by corrupting the Firefox and Thunderbird
->   handlers.json database.
-
-I agree.
-
-> [1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=972146
-> [2] https://www.gabriel.urdhr.fr/videos/chromium-filetype-spoofing-poc.ogv
-> [3] https://www.gabriel.urdhr.fr/videos/firefox-filetype-spoofing-poc.ogv
-> [4] https://www.gabriel.urdhr.fr/videos/thunderbird-filetype-spoofing-poc.ogv
-> [5] https://packages.debian.org/buster/mono-runtime-common
-> [6] https://packages.ubuntu.com/search?keywords=mono-runtime-common&searchon=names&suite=all&section=all
-> [7] https://nvd.nist.gov/vuln/detail/CVE-2021-32563
-> [8] https://www.gabriel.urdhr.fr/videos/firefox-filetype-spoofing-poc2.ogv
-
-Qubes OS should probably register a catchall handler for special MIME
-types that does nothing.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+~Andrew
