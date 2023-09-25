@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2963" "Sunday" "28" "February" "2016" "14:21:07" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<1586796749.30137780.1456687267516.JavaMail.zimbra@redhat.com>" "71" "Re: [oss-security] Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver" nil nil nil "2" "2016022819:21:07" "[oss-security] Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver" (number mark "U       vdronov@redh Feb 28   71/2963  " thread-indent "\"Re: [oss-security] Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver\"\n") "<20160228184139.BC0FC3320B7@smtpvbsrv1.mitre.org>" ("<20160228184139.BC0FC3320B7@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 4007 invoked by uid 550); 28 Feb 2016 19:21:22 -0000
+Received: (qmail 11468 invoked by uid 550); 25 Sep 2023 19:24:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,92 +7,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3989 invoked from network); 28 Feb 2016 19:21:21 -0000
-Date: Sun, 28 Feb 2016 14:21:07 -0500 (EST)
-From: Vladis Dronov <vdronov@redhat.com>
+Received: (qmail 9921 invoked from network); 25 Sep 2023 19:23:54 -0000
+Date: Mon, 25 Sep 2023 21:23:34 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <1586796749.30137780.1456687267516.JavaMail.zimbra@redhat.com>
-In-Reply-To: <20160228184139.BC0FC3320B7@smtpvbsrv1.mitre.org>
-References: <20160228184139.BC0FC3320B7@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.112.16]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF44 (Linux)/8.0.6_GA_5922)
-Thread-Topic: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
-Thread-Index: BEOvVZ8jEkQe7M3fSLYt+Ow1sfXkOA==
-Subject: Re: [oss-security] Re: CVE request -- linux kernel: visor: crash on
- invalid USB device descriptors in treo_attach() in visor driver
+Message-ID: <20230925192334.GA8663@openwall.com>
+References: <6EBBC128-36D2-4262-88F4-6889E9E6DE1E@mnx.io> <20230915210906.GA22532@openwall.com> <36F38D40-5F90-4E1B-B7A2-121431A3E6FE@mnx.io> <20230922172755.GA18909@openwall.com> <20230922214006.GA20989@openwall.com> <03F95D3B-FB70-46AC-AC19-9709599B8318@mnx.io>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <03F95D3B-FB70-46AC-AC19-9709599B8318@mnx.io>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] illumos (or at least danmcd) membership in the distros list
 
-Hello,
-
->> We don't really understand "An upstream patch" here.
-Indeed, the correct commit is cac9b50b0d. I'm sorry for the error.
-
-We will use CVE-2016-2782, thank you.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-
-
------ Original Message -----
-From: cve-assign@mitre.org
-To: vdronov@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Sent: Sunday, February 28, 2016 7:41:39 PM
-Subject: [oss-security] Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> A local kernel crash on invalid USB device requiring the visor driver was reported.
-> The treo_attach() function of the [visor] driver, which is called during the driver
-> initialization process, was dereferencing the bulk-in and interrupt-in urbs without
-> first making sure they had been allocated by the core. Due to an incomplete sanity
-> check, the visor driver tries to dereference null-pointers, which results in crash.
+On Mon, Sep 25, 2023 at 02:48:45PM +0000, Dan McDonald wrote:
+> On Sep 22, 2023, at 5:40 PM, Solar Designer <solar@openwall.com> wrote:
+> > 
+> > So I think we can accept OmniOS as new distros list member, if that's
+> > desired and Dan would represent OmniOS on the list.  This subscription
+> > on its own would not allow sharing of info with other illumos distros.
 > 
-> References:
+> I've just consulted with one of the OmniOS leaders, and OmniOS is okay with me
+> being able to join the list on their behalf.
 > 
-> Red Hat public Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1312670
+> > In special cases, Dan would be able to ask the issue reporters their
+> > explicit permission to share with other illumos distros.
 > 
-> An upstream patch: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cb3232138e37129e88240a98a1d2aba2187ff57c
+> I will be judicious here.
+> 
+> > If those distros do typically need the info, they may request direct
+> > list membership.
+> > 
+> > How does this sound to you, Dan?
+> 
+> I accept.
 
-We don't really understand "An upstream patch" here. We think you mean
-the patch is
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cac9b50b0d75a1d50d6c056ff65c005f3224c8e0
-instead. In any case, use CVE-2016-2782 for the reported treo_attach
-vulnerability.
+Great.  I've just subscribed Dan to the distros list (Dan provided the
+key to me off-list).
 
+Dan, although not strictly required, are there any contributing-back
+task(s) you'd help with? -
 
-> this flaw is very similar to already existing
-> CVE-2015-7566 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7566).
-> This is the same type of a flaw, which just exists in the different function
-> treo_attach() (instead of clie_5_attach()), so probably we can use the same
-> CVE-2015-7566 for this.
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-We're not going to change or expand the meaning of CVE-2015-7566
-several weeks later.
+Most tasks requiring list membership are best handled by someone on
+linux-distros (so that the member distro sees all issues, including
+Linux-only ones), but I've recently added some to:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Administrative tasks mostly unrelated to (linux-)distros lists (but
+relevant to the wider community)
 
-iQIcBAEBCAAGBQJW0z65AAoJEL54rhJi8gl56wkP/Aoe0dtizrz4nd4CopPTiDOD
-g+x7UmKmjqlAIlJ6nKwGLmv7by9yvOjZnKnaxQOU/EG+wSL3GpSnVojsrNVZSQGu
-V5iacBA2GW0a4kd8g7bBnK4ViXuoeJII31LfEYVIrAUXXL9h+fOZSjjy4/L+kk1m
-VFSCVIa2jbzHvJr+iNIs0oWFmXQjcuzyFzsOOjbgAvtBFEOL4JW+LAW7qMp8mXTR
-+DpMkaG1JqjzO+Qcj931kNN0MAc5SZBs5+vB0kcI7+g5bKpN01qITvME2szk1iZg
-GRrVyYKzfc16KcjWjbWJNr6i8TuyE/8UvYOmr9c9DNZjM2yAObBpYehrVApTmAmj
-yp/pc+QAFUDGMvalgAwtlEie/c+0cihTGN/BkftFd5/RW8JM6Tm3xcl2/ktK6OGC
-X5L6Mm+q73oVK+YEj3ky5kHYkEsjSrTfN+RrdqE/8r7gNoDhjbaiI4fbq41iFWru
-33XexHwVjtVBJboJ5nKQHBpfUdksQ7gY+6rI9rah4Njt2K2EWwzY+Ibw79d+9i8M
-yJ2grJC/rOzNIDAyU0nyiSWibxEq2HvqmWyfc6CxBgfbXgcTbHxcgWHvTjVuBUfb
-VcDYFPggg/sxehevY34lcbQCJG/GGWihdNuJ2dY/4jOBqLgjlsGNES/lTd6GXjFF
-9IbRRVCzbBb3fap+Ol1N
-=6+yK
------END PGP SIGNATURE-----
+1. Help ensure that each message posted to oss-security contains the
+most essential information (e.g., vulnerability detail and/or exploit)
+directly in the message itself (and in plain text) rather than only by
+reference to an external resource, and add the missing information
+(e.g., in your own words, by quoting with proper attribution, and/or by
+creating and attaching a properly attributed text/plain export of a
+previously referenced web page) and remind the original sender of this
+requirement (for further occasions) in a "reply" posting when necessary
+- primary: Oracle Solaris, backup: Container-Optimized OS
+
+2. Develop tools to help with the above (crawl URLs in messages and
+produce draft follow-ups for manual editing+posting)
+
+3. Monitor for Open Source security issues/topics published elsewhere,
+identify which of these would fit, and bring them to oss-security
+
+4. Develop tools to help with the above (automatically monitor Open
+Source projects' and other relevant third-party mailing lists, websites,
+social media, source code repositories, releases for likely Open Source
+security issues/topics)
+
+5. Directly encourage upstreams, researchers, umbrella organizations,
+packagers, distros, etc. to report to the lists
+
+6. Suggest and provide examples of quality improvements for such reports
+(beyond them containing the most essential information)
+
+7. Set up and maintain more reliable oss-security Twitter/Mastodon
+feed(s) (the existing Twitter feed occasionally misses messages)
+
+8. Set up and maintain new curated "best of oss-security"
+Twitter/Mastodon feed(s)
+
+Out of these, items 1 and 3 existed before, and I see Alan Coopersmith
+from Oracle Solaris help with item 3 (thank you, Alan!), e.g.:
+
+https://www.openwall.com/lists/oss-security/2023/07/27/1
+https://www.openwall.com/lists/oss-security/2023/06/20/6
+https://www.openwall.com/lists/oss-security/2023/04/12/4
+
+but somehow not with item 1 - maybe it's some confusion, which we should
+correct?  I don't recall Container-Optimized OS actually doing anything
+on item 1, where they're backup.  Please correct me if I'm wrong (just
+didn't notice/recall something).  Maybe we should free item 1 up for new
+volunteers now.
+
+For many of these, the primary/backup notion doesn't fully apply -
+there's simply enough work for more than one volunteer person/team.
+
+If anyone wants to help with any of these, please reply.
+
+Alexander
