@@ -1,32 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/9
-Message-ID: <20231002202106.GA17010@openwall.com>
-Date: Mon, 2 Oct 2023 22:21:06 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Kyle Zeng <zengyhkyle@...il.com>
-Subject: Re: [CVE-2023-42754] null pointer dereference in Linux kernel ipv4 stack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/3
+Message-Id: <E1qko5Z-0003cF-KD@xenbits.xenproject.org>
+Date: Mon, 25 Sep 2023 16:05:37 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 02, 2023 at 12:53:20PM -0700, Kyle Zeng wrote:
-> when the skb is rerouted through ipvs, its skb->dev is NULL. Then the
-> following `dev_net` call, which accesses `dev->nd_net`, becomes null
-> pointer dereference.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-When reporting issues like this, please always note the privileges
-required for attack.  For the example above, it appears to be
-CAP_NET_ADMIN within the namespace:
+            Xen Security Advisory CVE-2023-20588 / XSA-439
 
-static int
-do_ip_vs_set_ctl(struct sock *sk, int cmd, sockptr_t ptr, unsigned int len)
-{
-[...]
-	if (!ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN))
-		return -EPERM;
+             x86/AMD: Divide speculative information leak
 
-I guess other possibilities for triggering this issue (if any) have
-similar requirements.
+ISSUE DESCRIPTION
+=================
 
-Thanks,
+In the Zen1 microarchitecure, there is one divider in the pipeline which
+services uops from both threads.  In the case of #DE, the latched result
+from the previous DIV to execute will be forwarded speculatively.
 
-Alexander
+This is a covert channel that allows two threads to communicate without
+any system calls.  In also allows userspace to obtain the result of the
+most recent DIV instruction executed (even speculatively) in the core,
+which can be from a higher privilege context.
+
+For more information, see:
+ * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+
+IMPACT
+======
+
+An attacker might be able to infer data from a different execution
+context on the same CPU core.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only AMD Zen1 CPUs are believed to be vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation.
+
+RESOLUTION
+==========
+
+The patches for Xen overwrite the buffer in the divider on the
+return-to-guest path.
+
+However, as with some prior speculative vulnerabilities, the fix is only
+effective in combination with disabling SMT.  For the same reasons as
+before, Xen does not disable SMT by default.
+
+The system administrator is required to risk-assess their workload, and
+choose whether to enable or disable SMT.  Xen will issue a warning if
+SMT is active and the user has not provided an explicit choice via the
+smt=<bool> command line option.
+
+Details of the vulnerability became public before the Xen patches were
+complete.  Hence the patches are already applied to the appropriate
+trees.  They are:
+
+Xen-unstable: 1c18d7377453^..b5926c6ecf05
+Xen 4.17:     d2d2dcae879c^..9ac2f49f5fa3
+Xen 4.16:     08539e8315fd^..de751c3d906d
+Xen 4.15:     db3386e6cad6^..d7b78041dc81
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmURr2UMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZA1QH/RNSR1O6QJjd7z2gSGA9Yka7VWyYOMB2J01AaIl7
+69zCRkpqg+baF1aQaAVR0fj39aF7M7xXrd/LSk+E4BBiCRSxxRzbWUGYn9qTLR9w
+srbpGXqy0aWod9MiwfbTuEzf9uG8XpwOGoRg6p6YBRYE3WrQxIVnYY+KjeeToTEs
++UXZ0iZPrjaGaqKnF+PpkX4CMsqHhxk3iJw+ZFX2V4fVNRYgCOpjejmMjbWM4ABr
+eSsCjTU92/YZvFOsTeIzu74h5yM6SH+XTPW2S8Ve5j3mk7sM8nIiYbIyTMWNCJID
+HXeodt6eHjhZzV2z7f+/zEngnoITIqz+X3tRcTkHB9+H5jU=
+=AtsG
+-----END PGP SIGNATURE-----
+
