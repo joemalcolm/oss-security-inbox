@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["998" "Tuesday" "31" "January" "2017" "11:59:11" "-0500" "Max Veytsman" "max@appcanary.com" "<CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>" "39" "[oss-security] CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r" nil nil nil "1" "2017013116:59:11" "[oss-security] CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r" (number mark "U       max@appcanar Jan 31   39/998   " thread-indent "\"[oss-security] CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5133 invoked by uid 550); 31 Jan 2017 17:11:32 -0000
+Received: (qmail 9711 invoked by uid 550); 25 Sep 2023 10:29:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,75 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32162 invoked from network); 31 Jan 2017 16:59:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=appcanary.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=xvr35ZOB8U6AJ0fadTo/zlcw90LZhoDckI00dfEyz24=;
-        b=pdR8lW7lQzEukePr+ul3JQn2eMW0mvf65HlAZWwe62IbN233JV25jXG9XiRV+cLe2P
-         SlUrrH/AFqiv0XO7pXvlpBJgQC+RKqDmdHFwOxHvVS/dt7VQqp2JkOjfs8K9LMTNfsd7
-         028gytiIScNODxMGzqoRwpveoDcCO87xEP8acw586OZ+tZ6nYQxJ9SVc/ODTph0UEfBk
-         YnPqSI7hxAIhfbwCCwVjY0JWuj8jusn/S2tIqHyArAVgKyaqMcJrFQ3hV11l7arNOy1/
-         uuddAq52OPY1T+BW6YpQn+vpzPpoBXrlKBB96dKf00dr/4bA6naPz8CgHJ7O5tpUpcQ5
-         3M4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=xvr35ZOB8U6AJ0fadTo/zlcw90LZhoDckI00dfEyz24=;
-        b=llN0dPJPECLq80kS2fng+TsPZvBABSQc7EDELeJoduSbLnla33amVdY1KABCVcnJn7
-         MLhXAoeiJVnHW9q3Rsm2Hi/FuioEs2DkyfnAtecheSDPjwVF08DW2G+hmbp+/VVjW/5u
-         FRYqWE3tVuJXNWfN8QaswqaW3rezCBoiIbUYWTeTzPslEUFsZA/lAoNWuKlZaSVgJfvM
-         Dx14ggvxdM2FDG17AvIlVRIwpNgDb1OLIT49SJrUHUv0KAe253lImSSJBurWzDkhMA+L
-         9emBuBMNbL0CeLUmCw3KDxYMADjo+0isXSl2OWGkI+g7w3q3JXHbKZ2F0rnGz7queq0b
-         WRyA==
-X-Gm-Message-State: AIkVDXJUsg/BbW0hHfSlENXwzkUbqheG3U/zgopRAnfdXfLAjhqSiq1pRrXj6s6zOVGGwadsHmeiIuli9u0n4g==
-X-Received: by 10.55.153.130 with SMTP id b124mr27122364qke.82.1485881971901;
- Tue, 31 Jan 2017 08:59:31 -0800 (PST)
-MIME-Version: 1.0
-From: Max Veytsman <max@appcanary.com>
-Date: Tue, 31 Jan 2017 11:59:11 -0500
-Message-ID: <CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>
+Received: (qmail 9594 invoked from network); 25 Sep 2023 10:29:22 -0000
+Date: Mon, 25 Sep 2023 12:29:11 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c07b19c1d1f9d054766db95
-Subject: [oss-security] CVE requests: code injection in rubygem espeak-ruby and code
- injection in rubygem festivaltts4r
+Message-ID: <20230925102911.GA4097@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2023-4527: glibc: Stack read overflow in getaddrinfo in no-aaaa mode
 
---94eb2c07b19c1d1f9d054766db95
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Two similar vulnerabilities in ruby text-to-speech libraries.
+A bug affecting glibc 2.36+ was reported and fixed earlier this month:
 
-1) espeak-ruby
+https://sourceware.org/bugzilla/show_bug.cgi?id=30842
 
-Rubygem espeak-ruby passes user modifiable strings directly to a shell
-command.
+> Florian Weimer 2023-09-12 15:16:27 UTC
+> 
+> If the system is configured in no-aaaa mode via /etc/resolv.conf,
+> getaddrinfo is called for the AF_UNSPEC address family, and a DNS
+> response is received over TCP that is larger than 2048 bytes,
+> getaddrinfo may potentially disclose stack contents via the returned
+> address data, or crash. While name lookup normally just fails
+> incorrectly, crashes are not difficult to trigger, with valid DNS
+> responses that are propagated by DNS resolvers.
+> 
+> Introduced by:
+> 
+> commit f282cdbe7f436c75864e5640a409a10485e9abb2
+> Author: Florian Weimer <fweimer@redhat.com>
+> Date:   Fri Jun 24 18:16:41 2022 +0200
+> 
+>     resolv: Implement no-aaaa stub resolver option
+>     
+>     Reviewed-by: Carlos O'Donell <carlos@redhat.com>
 
-An attacker can execute malicious commands by modifying the strings that
-are passed as arguments to the speak, save, bytes and bytes_wav methods in
-the lib/espeak/speech.rb.
+> Florian Weimer 2023-09-13 12:58:01 UTC
+> 
+> All impacted branches fixed.
 
-https://github.com/dejan/espeak-ruby/issues/7
+Even though upstream 2.35 and older are not affected, the problematic
+commit was backported into some distro packages of older glibc:
 
-Patched in 1.0.3
-https://github.com/spejman/festivaltts4r/issues/1
+https://access.redhat.com/security/cve/CVE-2023-4527
 
-2) festivaltts4r
+> Statement
+> This issue only affect systems configured with no-aaaa mode via
+> /etc/resolv.conf.
+> 
+> The no-aaaa stub resolver option was backported only to Red Hat
+> Enterprise Linux versions 8.7 and 9.1. Therefore, previous versions are
+> not affected.
+> 
+> Mitigation
+> Removing the no-aaaa diagnostic option from /etc/resolv.conf will
+> mitigate this flaw.
 
-Rubygem festivaltts4r passes user modifiable strings directly to a shell
-command.
+Also tracked here:
 
-An attacker can execute malicious commands by modifying the strings that
-are passed as arguments to the to_speech and and to_mp3 methods in
-lib/festivaltts4r/festival4r.rb.
+https://bugzilla.redhat.com/show_bug.cgi?id=2234712
 
-https://github.com/spejman/festivaltts4r/issues/1
+The feature is described in a glibc NEWS entry for 2.36 as follows:
 
-No patch
-Credit: Brendan Coles
+https://lists.gnu.org/archive/html/info-gnu/2022-08/msg00000.html
 
---
-Max Veytsman
-Co-founder appcanary.com
-@mveytsman <https://twitter.com/mveytsman>
+> * The "no-aaaa" DNS stub resolver option has been added.  System
+>   administrators can use it to suppress AAAA queries made by the stub
+>   resolver, including AAAA lookups triggered by NSS-based interfaces
+>   such as getaddrinfo.  Only DNS lookups are affected: IPv6 data in
+>   /etc/hosts is still used, getaddrinfo with AI_PASSIVE will still
+>   produce IPv6 addresses, and configured IPv6 name servers are still
+>   used.  To produce correct Name Error (NXDOMAIN) results, AAAA queries
+>   are translated to A queries.  The new resolver option is intended
+>   primarily for diagnostic purposes, to rule out that AAAA DNS queries
+>   have adverse impact.  It is incompatible with EDNS0 usage and DNSSEC
+>   validation by applications.
 
---94eb2c07b19c1d1f9d054766db95--
+Alexander
