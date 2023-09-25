@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/16/1
-Message-ID: <ac40a15d-b99f-ab01-d219-2a6b455766e2@apache.org>
-Date: Mon, 16 Jan 2023 09:08:13 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/6
+Message-ID: <1128980d-952b-4936-b75e-62e27747686e@oracle.com>
+Date: Mon, 25 Sep 2023 10:23:25 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43717: Apache Superset: Cross-Site Scripting on dashboards 
+Subject: Re: illumos (or at least danmcd) membership in the distros list
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On 9/22/23 14:40, Solar Designer wrote:
+> So I think we can accept OmniOS as new distros list member, if that's
+> desired and Dan would represent OmniOS on the list. 
 
-Dashboard rendering does not sufficiently sanitize the content of markdown components leading to possible XSS attack vectors that can be performed by authenticated users with create dashboard permissions. This issue affects Apache Superset version 1.5.2 and prior versions and version 2.0.0.
+As an existing list member with familiarity with the illumos distros,
+this makes sense to me.  Membership for the other distros in the illumos
+family (SmartOS, OpenIndiana, Tribblix, etc.) would also make sense.
 
-Credit:
+A membership for illumos itself would make sense if things like the
+CPU speculative execution vulnerabilities were shared on this list,
+but they historically haven't been, and as recently discussed, their
+long embargo period means they probably shouldn't be, at least not
+until everything is ready to release - which means kernel & hypervisor
+makers need to get notified of the changes they need to make via other
+channels (which the major CPU vendors already have).  Mitigations
+that require only microcode updates would fit the distros list,
+but since the CPU vendors have their own notification channels
+for the other issues, they've been using those instead.
 
-Positive Technologies (finder)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-43717
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
