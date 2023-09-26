@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/5
-Message-ID: <16acad3f-b909-c85f-bc41-2d81b5054ba8@apache.org>
-Date: Thu, 30 Nov 2023 11:16:38 +0000
-From: Cédric Damioli <cdamioli@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/2
+Message-ID: <ZRKpbYtTL0OYpzKy@kroah.com>
+Date: Tue, 26 Sep 2023 11:50:37 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49733: Apache Cocoon's StreamGenerator is vulnerable to XXE injection 
+Subject: Re: [CVE-2023-42755] Linux kernel wild pointer access <= v6.2
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Mon, Sep 25, 2023 at 01:13:19PM -0700, Kyle Zeng wrote:
+> [Patch]
+> The patch is to follow the upstream and retire the rsvp classifier in
+> all the stable trees.
+> And it is queued in all the stable trees, but not merged yet.
+> For example, the patch for v6.1 can be found here:
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
 
-Affected versions:
+This change is in released kernels already, specifically all of the
+following ones:
+	4.14.326 4.19.295 5.4.257 5.10.197 5.15.133 6.1.55 6.3
 
-- Apache Cocoon 2.2.0 before 2.3.0
+Perhaps this advisory was written before those kernels were released?
 
-Description:
+> [Affected Version]
+> I confirmed that this bug affects v6.2, v6.1, v5.15, v5.10, v5.4,
+> v4.19, and v4.14.
 
-Improper Restriction of XML External Entity Reference vulnerability in Apache Cocoon.This issue affects Apache Cocoon: from 2.2.0 before 2.3.0.
+v6.2 is long end-of-life, sorry, that's not going to be fixed.  But for
+all of the other versions you quote above, it should now be resolved.
 
-Users are recommended to upgrade to version 2.3.0, which fixes the issue.
+thanks,
 
-References:
-
-https://cocoon.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-49733
-
+greg k-h
