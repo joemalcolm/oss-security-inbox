@@ -1,27 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/3
-Message-ID: <CAKK2xXj0KVXv=6Lm3_4=Y8QOuh7tDqhOnKh_2sJzwz3trPE9Tw@mail.gmail.com>
-Date: Thu, 21 Sep 2023 22:10:15 +0200
-From: Stian Kristoffersen <wayphinder@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Supply Chain Issues in PyPI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/9
+Message-ID: <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
+Date: Tue, 26 Sep 2023 18:16:22 +0100
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-Here is a summary of some security research into the PyPI ecosystem:
+On 26/09/2023 5:09 pm, Solar Designer wrote:
+> On Tue, Sep 26, 2023 at 01:15:55AM +0100, Andrew Cooper wrote:
+>> On 25/09/2023 7:28 pm, Solar Designer wrote:
+>>> Maybe directly probing for the bug is an option?  Perhaps can be done
+>>> within one thread (where the bug doesn't have security impact, but is
+>>> detectable anyway, no)?
+>> Unfortunately, direct probing is usually the wrong thing to rely on.
+>>
+>> Under virt, one common scenario is that you boot on one system, then get
+>> migrated to a different one.  Obviously, it's up to the hypervisor to
+>> ensure that the architectural feature still match, but the
+>> microarchitecture really does change.
+>>
+>> If you probe at boot and positively identify an issue to work around,
+>> great.  But as a VM you may not get a heads up that you changed
+>> microarchitecture, and even if you do, you don't rescan for everything
+>> you ran at boot.
+>>
+>> The CPUID bits allow microarchitectural details to be expressed as
+>> architectural, and allow a hypervisor to state "here or someone you
+>> might move to, the following safety property does not hold."
+> I was thinking re-probing after possible VM migration, just like you
+> would presumably retest a CPUID bit.
 
-https://stiankri.substack.com/p/supply-chain-issues-in-pypi
+I did enquire about this, but the Linux maintainers and Microsoft were
+distinctly unreceptive to the idea.  Not that I blame them - it's hard
+enough to do late microcode loading, livepatching and activation of new
+safety properties when the uarch isn't moving underfoot.
 
-It includes:
+> However, in this case probing can
+> lead to false negatives if the other thread issues a DIV too or an
+> unexpected context switch occurs.
 
- - A PyPI upload Denial of Service vulnerability.
+Yes, many things become racy under virt, hence why we try our best to
+stick to architecturally enumerated properties.
 
- - Challenges with reproducibility in the PyPI ecosystem.
+>>> Do you know if only the quotient leaks, or also the remainder?  In the
+>>> below, I assume the remainder leaks as well.
+>> I'm afraid I don't know.  The original paper says just the quotient, but
+>> it also says there are no leaks across privilege boundaries.
+> Is the original paper public?
 
- - Distribution Confusion in PyPI: a new way to distribute malicious
-packages. Including how it affects Pip and Poetry.
+https://www.usenix.org/system/files/usenixsecurity23-hofmann.pdf
 
- - Manifest Confusion in PyPI: how package managers and security
-scanning tools resolve dependencies in different ways.
+Section 8.2.1 for the results specific to divides.
 
-Best regards,
-Stian Kristoffersen
+> Meanwhile, I observe a difference between Linux and Xen fixes - Linux
+> uses native-sized DIV and you use byte-sized, as a clever way not to
+> clobber RDX and maybe achieve lower latency.  Speaking of which:
+>
+> $ git clone https://github.com/InstLatx64/InstLatx64
+> $ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+>
+> Looks like maybe not that much difference, after all, if this data applies.
+
+Agner Fogh's manuals have a little more information, and importantly
+give the upper bound which tops out at 47 cycles.
+
+There is at least a 1 cycle change in latency between the byte and
+non-byte forms, which I suspect is down to the non-byte forms needing to
+consume an extra input register before starting.
+
+But the main reason for choosing the byte form is indeed fewer moving
+parts to worry about in the critical sections, where one wrong
+instruction can render all protections moot.
+
+> Thank you for sharing so much detail and thoughts on this, Andrew!
+
+You're welcome.
+
+~Andrew
