@@ -1,43 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/1
-Message-ID: <CAKtE3zecEsfMQKjnAcdVwUCTfXKOZ4_UXV_KvgA=ZL6PG3jZ_A@mail.gmail.com>
-Date: Tue, 20 Jun 2023 17:06:15 -0500
-From: Travis Biehn <tbiehn@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/1
+Message-ID: <ZRKn0bQVe4MBMYiC@eldamar.lan>
+Date: Tue, 26 Sep 2023 11:43:45 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: The AI chatgpt writes insecure code
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 20, 2023 at 16:47 Alan Coopersmith <alan.coopersmith@...cle.com>
-wrote:
+Hi,
 
-> On 6/20/23 09:22, Georgi Guninski wrote:
-> > chatgpt is an AI language model and it can write code.
-> >
-> > As expected, it was trained on insecure code and it writes
-> > insecure code.
->
-> Also as previously reported:
->
-> https://www.theregister.com/2023/04/21/chatgpt_insecure_code/
-> https://arxiv.org/abs/2304.09655
->
-> --
->          -Alan Coopersmith-                 alan.coopersmith@...cle.com
->           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
->
->
-ChatGPT will indeed generate ‘average’ quality code. That’s absolutely
-ending up on GitHub and in dependency repositories. IMO, the situation
-hasn’t changed for us, more code than ever before growing super-linearly
-and tools that produce a bunch of noise.
-On the other side - future coding buddies will be able to use Retrieval
-Augmented Generation for policy following to generate high quality code
-with more reliability.
+On Thu, Sep 21, 2023 at 10:52:50PM +0200, Solar Designer wrote:
+> Hi,
+> 
+> Ideally this should have been brought in here ~10 days ago, but I guess
+> better late than never, and I'd like to encourage others to be bringing
+> relevant stuff to the list.
+> 
+> On September 11, Google announced an update to Chrome:
+> 
+> https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_11.html
+> 
+> fixing this issue:
+> 
+> > Critical CVE-2023-4863: Heap buffer overflow in WebP. Reported by Apple
+> > Security Engineering and Architecture (SEAR) and The Citizen Lab at The
+> > University of Toronto's Munk School on 2023-09-06
+> > 
+> > We would also like to thank all security researchers that worked with us
+> > during the development cycle to prevent security bugs from ever reaching
+> > the stable channel.
+> > 
+> > Google is aware that an exploit for CVE-2023-4863 exists in the wild.
+> 
+> With the bug being in a library used by many projects, this made people
+> wonder why a CVE was assigned to Chrome rather than to libwebp:
+> 
+> https://adamcaudill.com/2023/09/14/whose-cve-is-it-anyway/
 
--Travis
+Maybe related to this question in todays CVEs updates there appeared 
 
--- 
-Twitter <https://twitter.com/tbiehn> | LinkedIn
-<http://www.linkedin.com/in/travisbiehn> | GitHub <http://github.com/tbiehn>
-| TravisBiehn.com <http://www.travisbiehn.com>
+https://www.cve.org/CVERecord?id=CVE-2023-5129
 
+vs.
+
+https://www.cve.org/CVERecord?id=CVE-2023-4863
+
+FWIW, I contacted the assigning CNAs so this can be clarified (e.g. if
+one of those needs to be rejected).
+
+Regards,
+Salvatore
