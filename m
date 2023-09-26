@@ -1,47 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/29/1
-Message-ID: <ZT632cGIWqgIJCoj@fullerene.field.pennock-tech.net>
-Date: Sun, 29 Oct 2023 15:51:53 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
-To: oss-security@...ts.openwall.com
-Cc: pdp@...s.io
-Subject: Re: NATS: 2023-01: Adding accounts for just the system account adds auth bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/8
+Message-ID: <20230926160943.GA12790@openwall.com>
+Date: Tue, 26 Sep 2023 18:09:43 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Andrew Cooper <andrew.cooper3@...rix.com>
+Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-On 2023-10-28 at 17:51 +0200, Salvatore Bonaccorso wrote:
-> On Thu, Oct 12, 2023 at 10:39:53PM -0400, Phil Pennock wrote:
-> > [ CVE has been requested, still waiting for assignment, so we're just
-> >   inventing our own in-house numbering for advisories; we'll make sure
-> >   this one continues to work after the CVE is issued ]
-> > 
-> > NATS-advisory-ID: 2023-01
-> > CVE: pending
-> > Date: 2023-10-12
-> > Fixed in: 2.9.23, 2.10.2
+On Tue, Sep 26, 2023 at 01:15:55AM +0100, Andrew Cooper wrote:
+> On 25/09/2023 7:28 pm, Solar Designer wrote:
+> > Maybe directly probing for the bug is an option?  Perhaps can be done
+> > within one thread (where the bug doesn't have security impact, but is
+> > detectable anyway, no)?
 > 
-> While I see the later NATS-advisory-ID 2023-02 has a CVE assigned, for
-> the 2023-01 was above with CVE pending. has one been assigned in
-> meanwhile?
+> Unfortunately, direct probing is usually the wrong thing to rely on.
+> 
+> Under virt, one common scenario is that you boot on one system, then get
+> migrated to a different one.  Obviously, it's up to the hypervisor to
+> ensure that the architectural feature still match, but the
+> microarchitecture really does change.
+> 
+> If you probe at boot and positively identify an issue to work around,
+> great.  But as a VM you may not get a heads up that you changed
+> microarchitecture, and even if you do, you don't rescan for everything
+> you ran at boot.
+> 
+> The CPUID bits allow microarchitectural details to be expressed as
+> architectural, and allow a hypervisor to state "here or someone you
+> might move to, the following safety property does not hold."
 
-No.
+I was thinking re-probing after possible VM migration, just like you
+would presumably retest a CPUID bit.  However, in this case probing can
+lead to false negatives if the other thread issues a DIV too or an
+unexpected context switch occurs.
 
-For 2023-01 I went with our existing procedure and requested an
-assignment from MITRE, just as in all prior cases.  I got the automated
-acknowledgement (on Thursday 28th Sep, request ID 1532633).  I've yet to
-get a CVE assignment.
+> > Do you know if only the quotient leaks, or also the remainder?  In the
+> > below, I assume the remainder leaks as well.
+> 
+> I'm afraid I don't know.  The original paper says just the quotient, but
+> it also says there are no leaks across privilege boundaries.
 
-So for the next one, I tried a new approach.  I filled out the GitHub
-Security Advisory flow ahead of release, got a GHSA, and requested a CVE
-immediately.  It looks like that was issued the next day.
+Is the original paper public?
 
-Going forward, the NATS project will be using GitHub's processes for
-requesting a CVE assignment.  Our documented procedures have been
-updated.
+Meanwhile, I observe a difference between Linux and Xen fixes - Linux
+uses native-sized DIV and you use byte-sized, as a clever way not to
+clobber RDX and maybe achieve lower latency.  Speaking of which:
 
-I'm adjusting our published text format to have known aliases near the
-top, to make it easier to cross-reference.  For NATS advisory 2023-01,
-this is aka GHSA-fr2g-9hjm-wr23 and GO-2023-2133.
+$ git clone https://github.com/InstLatx64/InstLatx64
+$ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
 
--Phil
+Looks like maybe not that much difference, after all, if this data applies.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Thank you for sharing so much detail and thoughts on this, Andrew!
+
+Alexander
