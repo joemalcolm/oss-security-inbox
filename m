@@ -1,88 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/27/1
-Message-ID: <Y9L5/9/Oi732Y+a5@gmail.com>
-Date: Thu, 26 Jan 2023 22:09:03 +0000
-From: Eric Biggers <ebiggers@...nel.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Data operand dependent timing on Intel and Arm CPUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/11
+Message-ID: <dd528c33-b4a1-4e4e-b8f5-7103be42ad95@oracle.com>
+Date: Tue, 26 Sep 2023 16:04:28 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: administrative tasks (was: illumos (or at least danmcd) membership in the distros list)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 25, 2023 at 10:44:45PM +0100, Solar Designer wrote:
-> Hi Eric,
+On 9/25/23 12:23, Solar Designer wrote:
+> Administrative tasks mostly unrelated to (linux-)distros lists (but
+> relevant to the wider community)
 > 
-> Thank you for bringing this up in here.
+> 1. Help ensure that each message posted to oss-security contains the
+> most essential information (e.g., vulnerability detail and/or exploit)
+> directly in the message itself (and in plain text) rather than only by
+> reference to an external resource, and add the missing information
+> (e.g., in your own words, by quoting with proper attribution, and/or by
+> creating and attaching a properly attributed text/plain export of a
+> previously referenced web page) and remind the original sender of this
+> requirement (for further occasions) in a "reply" posting when necessary
+> - primary: Oracle Solaris, backup: Container-Optimized OS
 > 
-> There was also a brief Twitter thread on it in August 2022, started by
-> Adam Langley:
+> 2. Develop tools to help with the above (crawl URLs in messages and
+> produce draft follow-ups for manual editing+posting)
 > 
-> https://twitter.com/agl__/status/1561374334714671104
+> 3. Monitor for Open Source security issues/topics published elsewhere,
+> identify which of these would fit, and bring them to oss-security
 > 
-> In it Adam Langley, wrote:
-> > It appears that Intel doesn't guarantee constant-time execution of _any_
-> > instructions on Ice Lake or later unless a configuration bit is set:
-> > https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
-> > 
-> > Ice Lake was released in 2019 but this information is only a few months
-> > old. So hopefully multiplication etc actually is always constant-time on
-> > existing chips and this is just preparing for the future?
-> > 
-> > I guess the steady state is that every OS sets this DOITM bit all the
-> > time, but Intel get to publish benchmarks based on variable-time
-> > instructions and claim that they're using the default configuration?
+> 4. Develop tools to help with the above (automatically monitor Open
+> Source projects' and other relevant third-party mailing lists, websites,
+> social media, source code repositories, releases for likely Open Source
+> security issues/topics)
 > 
-> My reply was:
-> > Reading between the lines, I think this is a vulnerability and
-> > mitigations disclosure for 6th to 12th gen (fixed in 13th?), disguised
-> > as a feature. They discovered that "data values may delay instruction
-> > retirement by, at most, one cycle" for vector multiplication and bit
-> > count.
+> 5. Directly encourage upstreams, researchers, umbrella organizations,
+> packagers, distros, etc. to report to the lists
 > 
-> On Wed, Jan 25, 2023 at 11:34:43AM -0800, Eric Biggers wrote:
-> > I'd like to draw people's attention to the fact that on recent Intel and Arm
-> > CPUs, by default the execution time of instructions may depend on the data
-> > values operated on.  This even includes instructions like additions, XORs, and
-> > AES instructions, that are traditionally assumed to be constant-time with
-> > respect to the data values operated on.
+> 6. Suggest and provide examples of quality improvements for such reports
+> (beyond them containing the most essential information)
 > 
-> FWIW, I'm not aware of any indication that e.g. "additions, XORs, and
-> AES instructions" have data-dependent timing on CPUs released so far.
+> 7. Set up and maintain more reliable oss-security Twitter/Mastodon
+> feed(s) (the existing Twitter feed occasionally misses messages)
+> 
+> 8. Set up and maintain new curated "best of oss-security"
+> Twitter/Mastodon feed(s)
+> 
+> Out of these, items 1 and 3 existed before, and I see Alan Coopersmith
+> from Oracle Solaris help with item 3 (thank you, Alan!), e.g.:
+> 
+> https://www.openwall.com/lists/oss-security/2023/07/27/1
+> https://www.openwall.com/lists/oss-security/2023/06/20/6
+> https://www.openwall.com/lists/oss-security/2023/04/12/4
+> 
+> but somehow not with item 1 - maybe it's some confusion, which we should
+> correct?  I don't recall Container-Optimized OS actually doing anything
+> on item 1, where they're backup.  Please correct me if I'm wrong (just
+> didn't notice/recall something).  Maybe we should free item 1 up for new
+> volunteers now.
 
-Sure.  To be clear, I don't have specific knowledge of how particular
-instructions behave on particular CPUs.  Research into the real-world behavior
-is absolutely needed.  I'm just going off what the Intel documentation is saying
-is possible / allowed now.  Additions, XORs, and AES-NI instructions all show in
-the following list of instructions:
-https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/resources/data-operand-independent-timing-instructions.html
+Apologies, I may have misremembered exactly what I supposed to be doing at some
+point, and in hindsight, much of what I have done was closer to #6 than #1:
 
-Now, that list is titled "Data Operand Independent Timing Instructions".  That
-sounds good; it means they have data operand independent timing, right?
+https://www.openwall.com/lists/oss-security/2022/01/25/15
+https://www.openwall.com/lists/oss-security/2022/10/12/2
+https://www.openwall.com/lists/oss-security/2023/01/31/7
 
-Actually, not necessarily.  If you read the documentation fully, specifically
-the "Data Operand Independent Timing Mode (DOITM)" section of
-https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html,
-it says that the instructions in that list are only guaranteed to have data
-operand independent timing ***if the DOITM flag is enabled***.
+but I at least did some of #1 if you look far enough back:
 
-Also, Intel writes:
+https://www.openwall.com/lists/oss-security/2022/08/09/1
 
-	"For Intel® Core™ family processors based on microarchitectures before
-	Ice Lake and Intel Atom® family processors based on microarchitectures
-	before Gracemont that do not enumerate IA32_UARCH_MISC_CTL, developers
-	may assume that the instructions listed here operate as if DOITM is
-	enabled."
+I've also tried to set a good example in the messages I post on behalf of X.Org.
 
-So, Intel is saying that on older CPUs, the instructions in that list are
-guaranteed to always have data operand independent timing.  But on newer CPUs it
-is ***explicitly not guaranteed by default***.
+I'd be happy to pass on #1 to someone else and continue doing #3.  I don't have
+the bandwidth to write tools to automate it though (#4) - I mostly monitor
+chatter on twitter & mastodon, watch the newly published CVE list, and monitor
+updates to https://salsa.debian.org/security-tracker-team/security-tracker.git.
 
-I'd be happy if people looked into this and found that in the real world, data
-operand independent timing by default is actually still the status quo.
 
-Of course, that would mean that while enabling DOITM would not currently be
-important, the overhead of enabling it would also be very small.
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-Conversely, if DOITM gets more expensive in the future, surely that could only
-be the result of it becoming much more important to enable anyway...
-
-- Eric
