@@ -1,116 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/25/2
-Message-ID: <20231225220925.GA17188@openwall.com>
-Date: Mon, 25 Dec 2023 23:09:25 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/4
+Message-ID: <2023092630-survivor-headrest-02b0@gregkh>
+Date: Tue, 26 Sep 2023 06:58:45 +0200
+From: Greg KH <gregkh@...uxfoundation.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: Re: [CVE-2023-42755] Linux kernel wild pointer access <= v6.2
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander, Igor, and all -
+On Mon, Sep 25, 2023 at 01:13:19PM -0700, Kyle Zeng wrote:
+> [Patch]
+> The patch is to follow the upstream and retire the rsvp classifier in
+> all the stable trees.
+> And it is queued in all the stable trees, but not merged yet.
+> For example, the patch for v6.1 can be found here:
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
 
-On Sun, Dec 24, 2023 at 09:43:06PM +0800, Alexander E. Patrakov wrote:
-> Thanks for the summary that you posted. I have read it carefully and
-> found a phrase, "an isolated one application like that so far", that
-> effectively says that this legal issue regarding communications to
-> sanctioned entities is *new*.
+This change is in released kernels already, specifically all of the
+following ones:
+	4.14.326 4.19.295 5.4.257 5.10.197 5.15.133 6.1.55 6.3
 
-What I meant is that it's the first time this was brought up as a
-concern about a new member application.
+Perhaps this advisory was written before those kernels were released?
 
-> Could you please recheck that it is indeed the case?
+> [Affected Version]
+> I confirmed that this bug affects v6.2, v6.1, v5.15, v5.10, v5.4,
+> v4.19, and v4.14.
 
-I (or anyone) could check oss-security list archives to see if a similar
-concern was possibly brought up before, but I think I'd have remembered
-if this were the case.
+v6.2 is long end-of-life, sorry.  But for all of the other versions you
+quote above, it should now be resolved.
 
-> The question formally arises because there are Alt
-> Linux representatives on the list already, and I do not know if there
-> are US sanctions against them.
+thanks,
 
-As far as I'm aware, there are currently no US sanctions against them.
-
-Also, as I pointed out, even the US sanctions against Huawei don't seem
-to apply to what we're doing, per LF's public statement and per my own
-reading (but I am not a lawyer).
-
-However, that might not be enough to prevent people from being concerned
-and discouraged from participating if openEuler joins.  This is why I
-suggested that it's best if openEuler does not join now, and that people
-who had commented before could want to say whether their concerns are
-now sufficiently addressed or maybe not.
-
-> Also, Igor has communicated an important note about the mandatory
-> disclosure of vulnerabilities to the Chinese government. Therefore, a
-> question arises: is the Chinese government the only one that requires
-> this?
-
-These are valid concerns.
-
-Per my reading, the EU CRA (which isn't final yet and isn't in effect
-yet) is going to require something related, but different.  The proposal
-from 2022:
-
-https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454
-
-includes the below:
-
-"The manufacturer shall, without undue delay and in any event within 24
-hours of becoming aware of it, notify to ENISA any actively exploited
-vulnerability contained in the product with digital elements."
-
-"The manufacturer shall, without undue delay and in any event within 24
-hours of becoming aware of it, notify to ENISA any incident having
-impact on the security of the product with digital elements."
-
-"Manufacturers shall, upon identifying a vulnerability in a component,
-including in an open source component, which is integrated in the
-product with digital elements, report the vulnerability to the person or
-entity maintaining the component."
-
-As you can see, this separates "actively exploited vulnerability" and
-"incident" requiring timely reporting to a government agency vs. "a
-vulnerability" requiring (not so timely) reporting to upstream.  When a
-vulnerability is actively exploited, we'll generally want to publish it
-within 24 hours anyway, and we generally want to notify upstream anyway,
-so EU list members would probably be able to comply with these while
-meeting our usual policy as well.
-
-I'm not currently aware of related legislation elsewhere, but I would be
-unsurprised if it exists.
-
-Overall, I am concerned about this trend towards more government
-oversight.  While we also have our policies, we do not have a monopoly,
-so if folks disagree they can choose not to participate or set up
-something different, whereas with laws opting-out is much harder.
-
-> Can existing list members certify that they do not have any
-> requirement placed upon them by the applicable laws to disclose the
-> postings beyond what is permitted by the list policy - i.e., "at
-> anywhere beyond the need-to-know within your distro's team"?
-
-We might not want to require that.  It may be sufficient that they
-certify they don't violate the list policy, so that if they take a legal
-risk it's on them and it's not increased by us having made that request.
-
-> On Sun, Dec 24, 2023 at 2:50 AM Igor Seletskiy <i@...udlinux.com> wrote:
-> > Based on what I know, in 2021, China passed a legislature that requires
-> > people to disclose vulnerabilities to the Chinese government within 2 days.
-> > I don't have a good grasp on the actual terms/conditions, but based on this:
-> > https://www.chinalawtranslate.com/en/product-security-vulnerabilites/
-> >
-> > *(2) Infomation on the relevant vulnerabilities shall be reported to the
-> > Ministry of Industry and Information Technology's network security threat
-> > and vulnerability information-sharing platform within 2 days; The content
-> > sent shall include the name, model number, and version of the products in
-> > which network product security vulnerabilities exist, as well as the
-> > vulnerability's technical characteristics, threat, scope of impact, and so
-> > forth.*
-> >
-> > I read it as adding Chinese entities or residents to the list would force
-> > them to disclose a subset of security vulnerabilities to the Chinese
-> > government before public disclosure.
-
-Ouch.  This does look more problematic than the proposed EU CRA wording.
-
-Alexander
+greg k-h
