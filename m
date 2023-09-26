@@ -1,4 +1,4 @@
-Received: (qmail 25880 invoked by uid 550); 8 Aug 2023 17:00:26 -0000
+Received: (qmail 22199 invoked by uid 550); 26 Sep 2023 18:35:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,197 +7,132 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25858 invoked from network); 8 Aug 2023 17:00:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=hx/b/ysblgOZvwHoYIpAdSgwsVEOYjRPfsd5/+vNC9k=; b=0DBpqTbjDr8PJUmiugsxaL363J
-	ZWHE8GoyZaK4fHSBjk6bca98y80xB/RKuSadVHblLGpj3ceLkOooIBE0JnLHN53OQnNq6adHxxj7j
-	8slVTZJRPziCiSVbeKyPB4RhCqNOfuK5hDimQIdAsL1aq4MpWX8qOecTwdslljwwWrjI=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 16207 invoked from network); 26 Sep 2023 17:16:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=citrix.com; s=google; t=1695748583; x=1696353383; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=mdmafulyYir0v8F63reNxH6A8CxMkGvtJ/FAgnTQ4hQ=;
+        b=V/0ZccK0R7PK1iCXnKZ741odwu5QZtdvKOaj63tRmt5PMrr6UsXQEVedKV7y/KgUFv
+         ut0CNRDpmM72Y4/5xsnzQsz1A8ZlgGpOEK2A7puQ15XcmZQj+JkoskQFILfpCgdFvs2n
+         0aRRUG4F5j5WQIYhCAxgw1fH64/65K5GakENc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695748583; x=1696353383;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mdmafulyYir0v8F63reNxH6A8CxMkGvtJ/FAgnTQ4hQ=;
+        b=Gcfv2Ecmq4a1GalxT3Z1jl+LMDcIW/MdiV+nL+kMdCF9vToRFlvnCl0fvOSHI8lU8n
+         F9PbknIWAol4D88qy+v6xfNB6gqldKbuA8LjHaPldn5aljHrRQuo1tDXtN51YWXAlfzJ
+         1c36AAp6NNQtgrQzc53CNGtGvzMY0/TObOAofNivTQx8+6js3726O+45REiZvj7tPish
+         R4p495pZedGncfNvc1UfjqiWxlctUMvfYup8x7Tw1NTUCUUJSHOstDtfwcGs2/BcgNyc
+         NDH6pNN4LDbtDAL4CbLQBfetQrCZIP47V01l26S+bU2CSUOvK7rO3znM0GpIRl/U6BRq
+         rfGg==
+X-Gm-Message-State: AOJu0Yx9M82MolOqzef1DA+4Pug5FnDwmmC0SL6LJ5ElcMTvqXiviCH3
+	Z1mZZDzSlqVE7ArqjMDZQiR68W05isEsjtADhF0=
+X-Google-Smtp-Source: AGHT+IFNtDFnNKvcohLpbW1NfNgCQN4G5R3Tsj7ehNrAwRcFVqc0L1+1HVuYEuXGlXaCf6YW9V4BEg==
+X-Received: by 2002:a5d:414d:0:b0:31f:eb8d:481f with SMTP id c13-20020a5d414d000000b0031feb8d481fmr8789043wrq.29.1695748583324;
+        Tue, 26 Sep 2023 10:16:23 -0700 (PDT)
+Message-ID: <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
+Date: Tue, 26 Sep 2023 18:16:22 +0100
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1qTQ3w-0002JL-FQ@xenbits.xenproject.org>
-Date: Tue, 08 Aug 2023 17:00:04 +0000
-Subject: [oss-security] Xen Security Advisory 432 v2 (CVE-2023-34319) - Linux: buffer
- overrun in netback due to unusual packet
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+Content-Language: en-GB
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com,
+ "Xen. org security team" <security-team-members@xen.org>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org>
+ <20230925163652.GA6750@openwall.com>
+ <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
+ <20230925182834.GA8247@openwall.com>
+ <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com>
+ <20230926160943.GA12790@openwall.com>
+In-Reply-To: <20230926160943.GA12790@openwall.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) -
+ x86/AMD: Divide speculative information leak
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On 26/09/2023 5:09 pm, Solar Designer wrote:
+> On Tue, Sep 26, 2023 at 01:15:55AM +0100, Andrew Cooper wrote:
+>> On 25/09/2023 7:28 pm, Solar Designer wrote:
+>>> Maybe directly probing for the bug is an option?  Perhaps can be done
+>>> within one thread (where the bug doesn't have security impact, but is
+>>> detectable anyway, no)?
+>> Unfortunately, direct probing is usually the wrong thing to rely on.
+>>
+>> Under virt, one common scenario is that you boot on one system, then get
+>> migrated to a different one.  Obviously, it's up to the hypervisor to
+>> ensure that the architectural feature still match, but the
+>> microarchitecture really does change.
+>>
+>> If you probe at boot and positively identify an issue to work around,
+>> great.  But as a VM you may not get a heads up that you changed
+>> microarchitecture, and even if you do, you don't rescan for everything
+>> you ran at boot.
+>>
+>> The CPUID bits allow microarchitectural details to be expressed as
+>> architectural, and allow a hypervisor to state "here or someone you
+>> might move to, the following safety property does not hold."
+> I was thinking re-probing after possible VM migration, just like you
+> would presumably retest a CPUID bit.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I did enquire about this, but the Linux maintainers and Microsoft were
+distinctly unreceptive to the idea.  Not that I blame them - it's hard
+enough to do late microcode loading, livepatching and activation of new
+safety properties when the uarch isn't moving underfoot.
 
-            Xen Security Advisory CVE-2023-34319 / XSA-432
-                               version 2
+> However, in this case probing can
+> lead to false negatives if the other thread issues a DIV too or an
+> unexpected context switch occurs.
 
-        Linux: buffer overrun in netback due to unusual packet
+Yes, many things become racy under virt, hence why we try our best to
+stick to architecturally enumerated properties.
 
-UPDATES IN VERSION 2
-====================
+>>> Do you know if only the quotient leaks, or also the remainder?  In the
+>>> below, I assume the remainder leaks as well.
+>> I'm afraid I don't know.  The original paper says just the quotient, but
+>> it also says there are no leaks across privilege boundaries.
+> Is the original paper public?
 
-Public release.
+https://www.usenix.org/system/files/usenixsecurity23-hofmann.pdf
 
-ISSUE DESCRIPTION
-=================
+Section 8.2.1 for the results specific to divides.
 
-The fix for XSA-423 added logic to Linux'es netback driver to deal with
-a frontend splitting a packet in a way such that not all of the headers
-would come in one piece.  Unfortunately the logic introduced there
-didn't account for the extreme case of the entire packet being split
-into as many pieces as permitted by the protocol, yet still being
-smaller than the area that's specially dealt with to keep all (possible)
-headers together.  Such an unusual packet would therefore trigger a
-buffer overrun in the driver.
+> Meanwhile, I observe a difference between Linux and Xen fixes - Linux
+> uses native-sized DIV and you use byte-sized, as a clever way not to
+> clobber RDX and maybe achieve lower latency.  Speaking of which:
+>
+> $ git clone https://github.com/InstLatx64/InstLatx64
+> $ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
+> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+>
+> Looks like maybe not that much difference, after all, if this data applies.
 
-IMPACT
-======
+Agner Fogh's manuals have a little more information, and importantly
+give the upper bound which tops out at 47 cycles.
 
-An unprivileged guest can cause Denial of Service (DoS) of the host by
-sending network packets to the backend, causing the backend to crash.
+There is at least a 1 cycle change in latency between the byte and
+non-byte forms, which I suspect is down to the non-byte forms needing to
+consume an extra input register before starting.
 
-Data corruption or privilege escalation seem unlikely but have not been
-ruled out.
+But the main reason for choosing the byte form is indeed fewer moving
+parts to worry about in the critical sections, where one wrong
+instruction can render all protections moot.
 
-VULNERABLE SYSTEMS
-==================
+> Thank you for sharing so much detail and thoughts on this, Andrew!
 
-All systems using a Linux based network backend with kernel 3.19 and
-newer are vulnerable, on the assumption that the fix for XSA-423 was
-taken.  Systems using other network backends are not known to be
-vulnerable.
+You're welcome.
 
-MITIGATION
-==========
-
-Using another PV network backend (e.g. the qemu based "qnic" backend)
-will mitigate the problem.
-
-Using a dedicated network driver domain per guest will mitigate the
-problem.
-
-CREDITS
-=======
-
-This issue was discovered by Ross Lagerwall of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa432-linux.patch           Linux 6.3 - 6.5-rc
-
-$ sha256sum xsa432*
-bf7acd23be1d185c40aca8b4f7700e25afd482d9ac8671ae22b021380b059091  xsa432-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZKYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZv9YH+wSW/H8BRo3hat2ssz4GOkNf/okVzOFyde0n6rsI
-uPeRbRqjnd9f+rvHFIYhi9sa2MUSZ9Lg/WwmZ1YdTFXB1PBZw1iDujB1HvDu7Xlm
-E0f6IkdhC17YaiBnmsUOwGhE/1wj0KOF86t92VX5skWK9NQ2OMOSYsBxHLFkNmBd
-VNHApva8ICfSfUA4pXuh3Zgaw2yw8k2ZcyFN8Aixd+1Vrxq7jfZ/PUL6hfLaNjLs
-a5xdj/b5+RuwRMqOI8jCFQXSgZLPDtZIIAFRi93ZMtUraARSjiN0tLpoRXsKp1u+
-0T1sgTApHJGTm7jgPAz3WMCh2innRBkEVvU55hRKZ4INIbc=
-=mMq6
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa432-linux.patch"
-Content-Disposition: attachment; filename="xsa432-linux.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogUm9zcyBMYWdlcndhbGwgPHJvc3MubGFnZXJ3YWxsQGNpdHJpeC5j
-b20+ClN1YmplY3Q6IHhlbi9uZXRiYWNrOiBGaXggYnVmZmVyIG92ZXJydW4g
-dHJpZ2dlcmVkIGJ5IHVudXN1YWwgcGFja2V0CgpJdCBpcyBwb3NzaWJsZSB0
-aGF0IGEgZ3Vlc3QgY2FuIHNlbmQgYSBwYWNrZXQgdGhhdCBjb250YWlucyBh
-IGhlYWQgKyAxOApzbG90cyBhbmQgeWV0IGhhcyBhIGxlbiA8PSBYRU5fTkVU
-QkFDS19UWF9DT1BZX0xFTi4gVGhpcyBjYXVzZXMgbnJfc2xvdHMKdG8gdW5k
-ZXJmbG93IGluIHhlbnZpZl9nZXRfcmVxdWVzdHMoKSB3aGljaCB0aGVuIGNh
-dXNlcyB0aGUgc3Vic2VxdWVudApsb29wJ3MgdGVybWluYXRpb24gY29uZGl0
-aW9uIHRvIGJlIHdyb25nLCBjYXVzaW5nIGEgYnVmZmVyIG92ZXJydW4gb2YK
-cXVldWUtPnR4X21hcF9vcHMuCgpSZXdvcmsgdGhlIGNvZGUgdG8gYWNjb3Vu
-dCBmb3IgdGhlIGV4dHJhIGZyYWdfb3ZlcmZsb3cgc2xvdHMuCgpUaGlzIGlz
-IENWRS0yMDIzLTM0MzE5IC8gWFNBLTQzMi4KCkZpeGVzOiBhZDdmNDAyYWU0
-ZjQgKCJ4ZW4vbmV0YmFjazogRW5zdXJlIHByb3RvY29sIGhlYWRlcnMgZG9u
-J3QgZmFsbCBpbiB0aGUgbm9uLWxpbmVhciBhcmVhIikKU2lnbmVkLW9mZi1i
-eTogUm9zcyBMYWdlcndhbGwgPHJvc3MubGFnZXJ3YWxsQGNpdHJpeC5jb20+
-ClJldmlld2VkLWJ5OiBQYXVsIER1cnJhbnQgPHBhdWxAeGVuLm9yZz4KUmV2
-aWV3ZWQtYnk6IFdlaSBMaXUgPHdlaS5saXVAa2VybmVsLm9yZz4KLS0tCiBk
-cml2ZXJzL25ldC94ZW4tbmV0YmFjay9uZXRiYWNrLmMgfCAxNSArKysrKysr
-KysrLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMCBpbnNlcnRpb25zKCspLCA1
-IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvbmV0L3hlbi1u
-ZXRiYWNrL25ldGJhY2suYyBiL2RyaXZlcnMvbmV0L3hlbi1uZXRiYWNrL25l
-dGJhY2suYwppbmRleCBjMTUwMWY0MWUyZDguLjcyMDkxYjMzMTk2MyAxMDA2
-NDQKLS0tIGEvZHJpdmVycy9uZXQveGVuLW5ldGJhY2svbmV0YmFjay5jCisr
-KyBiL2RyaXZlcnMvbmV0L3hlbi1uZXRiYWNrL25ldGJhY2suYwpAQCAtMzk2
-LDcgKzM5Niw3IEBAIHN0YXRpYyB2b2lkIHhlbnZpZl9nZXRfcmVxdWVzdHMo
-c3RydWN0IHhlbnZpZl9xdWV1ZSAqcXVldWUsCiAJc3RydWN0IGdudHRhYl9t
-YXBfZ3JhbnRfcmVmICpnb3AgPSBxdWV1ZS0+dHhfbWFwX29wcyArICptYXBf
-b3BzOwogCXN0cnVjdCB4ZW5fbmV0aWZfdHhfcmVxdWVzdCAqdHhwID0gZmly
-c3Q7CiAKLQlucl9zbG90cyA9IHNoaW5mby0+bnJfZnJhZ3MgKyAxOworCW5y
-X3Nsb3RzID0gc2hpbmZvLT5ucl9mcmFncyArIGZyYWdfb3ZlcmZsb3cgKyAx
-OwogCiAJY29weV9jb3VudChza2IpID0gMDsKIAlYRU5WSUZfVFhfQ0Ioc2ti
-KS0+c3BsaXRfbWFzayA9IDA7CkBAIC00NjIsOCArNDYyLDggQEAgc3RhdGlj
-IHZvaWQgeGVudmlmX2dldF9yZXF1ZXN0cyhzdHJ1Y3QgeGVudmlmX3F1ZXVl
-ICpxdWV1ZSwKIAkJfQogCX0KIAotCWZvciAoc2hpbmZvLT5ucl9mcmFncyA9
-IDA7IHNoaW5mby0+bnJfZnJhZ3MgPCBucl9zbG90czsKLQkgICAgIHNoaW5m
-by0+bnJfZnJhZ3MrKywgZ29wKyspIHsKKwlmb3IgKHNoaW5mby0+bnJfZnJh
-Z3MgPSAwOyBucl9zbG90cyA+IDAgJiYgc2hpbmZvLT5ucl9mcmFncyA8IE1B
-WF9TS0JfRlJBR1M7CisJICAgICBzaGluZm8tPm5yX2ZyYWdzKyssIGdvcCsr
-LCBucl9zbG90cy0tKSB7CiAJCWluZGV4ID0gcGVuZGluZ19pbmRleChxdWV1
-ZS0+cGVuZGluZ19jb25zKyspOwogCQlwZW5kaW5nX2lkeCA9IHF1ZXVlLT5w
-ZW5kaW5nX3JpbmdbaW5kZXhdOwogCQl4ZW52aWZfdHhfY3JlYXRlX21hcF9v
-cChxdWV1ZSwgcGVuZGluZ19pZHgsIHR4cCwKQEAgLTQ3NiwxMiArNDc2LDEy
-IEBAIHN0YXRpYyB2b2lkIHhlbnZpZl9nZXRfcmVxdWVzdHMoc3RydWN0IHhl
-bnZpZl9xdWV1ZSAqcXVldWUsCiAJCQl0eHArKzsKIAl9CiAKLQlpZiAoZnJh
-Z19vdmVyZmxvdykgeworCWlmIChucl9zbG90cyA+IDApIHsKIAogCQlzaGlu
-Zm8gPSBza2Jfc2hpbmZvKG5za2IpOwogCQlmcmFncyA9IHNoaW5mby0+ZnJh
-Z3M7CiAKLQkJZm9yIChzaGluZm8tPm5yX2ZyYWdzID0gMDsgc2hpbmZvLT5u
-cl9mcmFncyA8IGZyYWdfb3ZlcmZsb3c7CisJCWZvciAoc2hpbmZvLT5ucl9m
-cmFncyA9IDA7IHNoaW5mby0+bnJfZnJhZ3MgPCBucl9zbG90czsKIAkJICAg
-ICBzaGluZm8tPm5yX2ZyYWdzKyssIHR4cCsrLCBnb3ArKykgewogCQkJaW5k
-ZXggPSBwZW5kaW5nX2luZGV4KHF1ZXVlLT5wZW5kaW5nX2NvbnMrKyk7CiAJ
-CQlwZW5kaW5nX2lkeCA9IHF1ZXVlLT5wZW5kaW5nX3JpbmdbaW5kZXhdOwpA
-QCAtNDkyLDYgKzQ5MiwxMSBAQCBzdGF0aWMgdm9pZCB4ZW52aWZfZ2V0X3Jl
-cXVlc3RzKHN0cnVjdCB4ZW52aWZfcXVldWUgKnF1ZXVlLAogCQl9CiAKIAkJ
-c2tiX3NoaW5mbyhza2IpLT5mcmFnX2xpc3QgPSBuc2tiOworCX0gZWxzZSBp
-ZiAobnNrYikgeworCQkvKiBBIGZyYWdfbGlzdCBza2Igd2FzIGFsbG9jYXRl
-ZCBidXQgaXQgaXMgbm8gbG9uZ2VyIG5lZWRlZAorCQkgKiBiZWNhdXNlIGVu
-b3VnaCBzbG90cyB3ZXJlIGNvbnZlcnRlZCB0byBjb3B5IG9wcyBhYm92ZS4K
-KwkJICovCisJCWtmcmVlX3NrYihuc2tiKTsKIAl9CiAKIAkoKmNvcHlfb3Bz
-KSA9IGNvcCAtIHF1ZXVlLT50eF9jb3B5X29wczsK
-
---=separator--
+~Andrew
