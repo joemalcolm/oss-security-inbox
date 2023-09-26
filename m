@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4479" "Friday" "14" "February" "2020" "14:57:58" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "108" nil "^Cc:" nil nil "2" nil nil (number mark "        clopez@igali Feb 14  108/4479  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0002\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0002" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1939 invoked by uid 550); 14 Feb 2020 13:58:22 -0000
+Received: (qmail 26612 invoked by uid 550); 26 Sep 2023 16:11:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,180 +6,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1907 invoked from network); 14 Feb 2020 13:58:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=4JYbeHTkkGNHhKyYAGESw5Lz+UTZt2CJYkzZbOmIzWU=;
-	b=HVlPBO89Bt/6APyYo2MW8HVqy2k4fTYSNQk/cykDQ0r4yxpSrdoHJDR+MIKkAEE2M2uAwYEZNIu9yGDD+mSHGmIbmdrB1ivsYPvRr7TK/Vgt9CiL5TnD0JIn0KipIeqgZfNTLcLOi9rvxnxnY+GrMcRmLZQMG/VbCnB7luBYNuIME0IVBfDXR8AFCJ/Gjjix3ySA1PbbNwekbSMywPZjaigP0N9reypFGiRSTPSm6vcth0Eugsc1EQfqe7RJK/hw+Tq1lmCOouo5TO+pFuG/w1F5cBQusUyuXy4E0sc9lU2Bh7q3egnzKGVJ/Xd99lgu9lkopVjE+ghbbsJ0FyLVhg==;
-Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
- url=http://key.neutrino.es
-Autocrypt: addr=clopez@igalia.com; prefer-encrypt=mutual; keydata=
- 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
- clOhRuoxQ9cr+zEBVw==
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-ID: <4bf21a19-3427-d699-0bdf-0de8bf647959@igalia.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="CTFOVDqKTxtAYmH81b2DoWBCYSAzXRWQf"
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Date: Fri, 14 Feb 2020 14:57:58 +0100
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2020-0002
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Received: (qmail 25984 invoked from network); 26 Sep 2023 16:09:57 -0000
+Date: Tue, 26 Sep 2023 18:09:43 +0200
+From: Solar Designer <solar@openwall.com>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: oss-security@lists.openwall.com,
+	"Xen. org security team" <security-team-members@xen.org>
+Message-ID: <20230926160943.GA12790@openwall.com>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <20230925163652.GA6750@openwall.com> <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com> <20230925182834.GA8247@openwall.com> <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=koi8-r
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 
---CTFOVDqKTxtAYmH81b2DoWBCYSAzXRWQf
-Content-Type: multipart/mixed; boundary="YNE9uI3H8wQ7xx0DWKmzHUsVe3DqPtr4z";
- protected-headers="v1"
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-ID: <4bf21a19-3427-d699-0bdf-0de8bf647959@igalia.com>
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2020-0002
+On Tue, Sep 26, 2023 at 01:15:55AM +0100, Andrew Cooper wrote:
+> On 25/09/2023 7:28 pm, Solar Designer wrote:
+> > Maybe directly probing for the bug is an option?  Perhaps can be done
+> > within one thread (where the bug doesn't have security impact, but is
+> > detectable anyway, no)?
+> 
+> Unfortunately, direct probing is usually the wrong thing to rely on.
+> 
+> Under virt, one common scenario is that you boot on one system, then get
+> migrated to a different one.š Obviously, it's up to the hypervisor to
+> ensure that the architectural feature still match, but the
+> microarchitecture really does change.
+> 
+> If you probe at boot and positively identify an issue to work around,
+> great.š But as a VM you may not get a heads up that you changed
+> microarchitecture, and even if you do, you don't rescan for everything
+> you ran at boot.
+> 
+> The CPUID bits allow microarchitectural details to be expressed as
+> architectural, and allow a hypervisor to state "here or someone you
+> might move to, the following safety property does not hold."
 
---YNE9uI3H8wQ7xx0DWKmzHUsVe3DqPtr4z
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+I was thinking re-probing after possible VM migration, just like you
+would presumably retest a CPUID bit.  However, in this case probing can
+lead to false negatives if the other thread issues a DIV too or an
+unexpected context switch occurs.
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2020-0002
-------------------------------------------------------------------------
+> > Do you know if only the quotient leaks, or also the remainder?  In the
+> > below, I assume the remainder leaks as well.
+> 
+> I'm afraid I don't know.  The original paper says just the quotient, but
+> it also says there are no leaks across privilege boundaries.
 
-Date reported           : February 14, 2020
-Advisory ID             : WSA-2020-0002
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2020-0002.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2020-0002.html
-CVE identifiers         : CVE-2020-3862, CVE-2020-3864, CVE-2020-3865,
-                          CVE-2020-3867, CVE-2020-3868.
+Is the original paper public?
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Meanwhile, I observe a difference between Linux and Xen fixes - Linux
+uses native-sized DIV and you use byte-sized, as a clever way not to
+clobber RDX and maybe achieve lower latency.  Speaking of which:
 
-CVE-2020-3862
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Srikanth Gatta of Google Chrome.
-    Impact: A malicious website may be able to cause a denial of
-    service. Description: A denial of service issue was addressed with
-    improved memory handling.
+$ git clone https://github.com/InstLatx64/InstLatx64
+$ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
 
-CVE-2020-3864
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: A DOM object context may not have had a unique security
-    origin. Description: A logic issue was addressed with improved
-    validation.
+Looks like maybe not that much difference, after all, if this data applies.
 
-CVE-2020-3865
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Ryan Pickren (ryanpickren.com).
-    Impact: A top-level DOM object context may have incorrectly been
-    considered secure. Description: A logic issue was addressed with
-    improved validation.
+Thank you for sharing so much detail and thoughts on this, Andrew!
 
-CVE-2020-3867
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
-
-CVE-2020-3868
-    Versions affected: WebKitGTK before 2.26.4 and WPE WebKit before
-    2.26.4.
-    Credit to Marcin Towalski of Cisco Talos.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-February 14, 2020
-
-
---YNE9uI3H8wQ7xx0DWKmzHUsVe3DqPtr4z--
-
---CTFOVDqKTxtAYmH81b2DoWBCYSAzXRWQf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Comment: You can fetch my GnuPG key from http://key.neutrino.es
-
-iQIzBAEBCgAdFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAl5Gp2YACgkQllCJzmuV
-+IIGaw/9Hdxnv6Ij7LKcXeXZCJ90xHA5C1No3wjqGwdmri+evpGYVaz69NGikqZ4
-kD6VPkkL46Gib5ZIKqYPxf9CA65J6vHdEoUFoZAru+GCHtiAoHLx89AfjKHf5Ri9
-VEw96aI2VmhUglv9jcmbcm7bzY9SxGsgxPsOQRoXm5tlsn6Wyc2a6UdKrPRrnl46
-4ZoIgKO5p23uleUi8ULtkewnfVmxMfZe0pmO5SaOBvgjYFhRKQ96p3e+N9S4OqW2
-DEy2gjtru2AWFWT7aXyIdmQ820IGsbwchMczPighVj9ZM6QkEOJVMAJLj1YihEiA
-vPKYkssz4JPrCu3N3gqBKHiJ/yGHX7r1AnQ6A0nQ5zpomUb9AUII7nR5EGQPBzPY
-bR7suozIDRJ9XzP5CA+NBgCnpyy8dXYbcAqfSgBxcDpsKVwOxbQQ2E2DAJUySwV4
-qsHQefEulQzszzOYOtNDoOiJFA35kANjKFPFvAQ4PlKxXdGoBOPRt6LaAgnVNdAI
-7Hnqp/E5kcH/kzkLz56oJ2Y4SOaG+RSR+YpeiRMszrMALz+U7I0hZcmcPsa5GImW
-S5bRVN7444sVSkof9ewTczv+veQYE0663POZKWSAcF/zZst0wdqIXPpQDWbCtiGO
-JF8OCvV7hYa/D3rQ5ymIXt3NWLxoWCOy/MtkShajVQIyYNT3BjI=
-=hEKA
------END PGP SIGNATURE-----
-
---CTFOVDqKTxtAYmH81b2DoWBCYSAzXRWQf--
+Alexander
