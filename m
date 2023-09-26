@@ -1,102 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/14/1
-Message-ID: <CAJwKpyQjA_giVHegda7CvLLCgpE3f4QPpTFpKbYqguJ=adZ7zg@mail.gmail.com>
-Date: Tue, 14 Feb 2023 09:40:43 +0100
-From: Carlton Gibson <carlton.gibson@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Django - CVE-2023-24580: Potential denial-of-service vulnerability in file uploads
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/10
+Message-ID: <CABBoStiUAn_tdyAcVm_YPcXrpEDdsy15EZ=d34TYvmAEZ9vQ7w@mail.gmail.com>
+Date: Tue, 26 Sep 2023 15:00:00 -0400
+From: "Sage [They / Them] McTaggart" <amctagga@...hat.com>
+To: lhenry@...italocean.com, oss-security@...ts.openwall.com
+Subject: CVE-2023-43040 Ceph: Improperly verified POST keys.
 Content-Type: text/plain; charset=utf-8
 
-Django security releases issued: 4.1.7, 4.0.10, and 3.2.18
+Hello all,
+A flaw was found in Ceph RGW. An unprivileged user can write to any
+bucket(s) accessible by a given key if a POST's form-data contains a key
+called 'bucket' with a value matching the name of the bucket used to sign
+the request.
 
-Details are available on the Django project weblog:
-https://www.djangoproject.com/weblog/2023/feb/14/security-releases/
+The result of this is that a user could actually upload to any bucket
+accessible by the specified access key as long as the bucket in the POST
+policy matches the bucket in said POST form part.
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing
-`Django 4.1.7 <https://docs.djangoproject.com/en/dev/releases/4.1.7/>`_,
-`Django 4.0.10 <https://docs.djangoproject.com/en/dev/releases/4.0.10/>`_,
-and
-`Django 3.2.18 <https://docs.djangoproject.com/en/dev/releases/3.2.18/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+We have assigned it a CVE of CVE-2023-43040 and the patch is attached.
 
-CVE-2023-24580: Potential denial-of-service vulnerability in file uploads
-=========================================================================
+Credits to Lucas Henry of Digital Ocean.
 
-Passing certain inputs to multipart forms could result in too many open
-files
-or memory exhaustion, and provided a potential vector for a
-denial-of-service
-attack.
+Sage McTaggart
+IBM Product Security
 
-The number of files parts parsed is now limited via the new
-``DATA_UPLOAD_MAX_NUMBER_FILES`` setting.
+amct@...hat.com
 
-Thanks to Jakob Ackermann for the report.
+sagemct@....com
 
-This issue has severity "moderate" according to the Django security policy.
 
-Affected supported versions
-===========================
+Pronouns:They/Them/Theirs
 
-* Django main branch
-* Django 4.2 (currently at pre-release alpha status)
-* Django 4.1
-* Django 4.0
-* Django 3.2
+Content of type "text/html" skipped
 
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch and
-the
-4.2, 4.1, 4.0, and 3.2 release branches. The patches may be obtained from
-the
-following changesets:
-
-* On the `main branch <
-https://github.com/django/django/commit/85ac33591c393f1480d4f23b4daff40119cb6410
->`__
-* On the `4.2 release branch <
-https://github.com/django/django/commit/7ac5ff37b822c14e5b6be99da7f618eb1fe06062
->`__
-* On the `4.1 release branch <
-https://github.com/django/django/commit/628b33a854a9c68ec8a0c51f382f304a0044ec92
->`__
-* On the `4.0 release branch <
-https://github.com/django/django/commit/83f1ea83e4553e211c1c5a0dfc197b66d4e50432
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/a665ed5179f5bbd3db95ce67286d0192eff041d8
->`__
-
-The following releases have been issued:
-
-* Django 4.1.7 (`download Django 4.1.7 <
-https://www.djangoproject.com/m/releases/4.1/Django-4.1.7.tar.gz>`_ |
-`4.1.7 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.1.7.checksum.txt>`_)
-* Django 4.0.10 (`download Django 4.0.10 <
-https://www.djangoproject.com/m/releases/4.0/Django-4.0.10.tar.gz>`_ |
-`4.0.10 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.0.10.checksum.txt>`_)
-* Django 3.2.18 (`download Django 3.2.18 <
-https://www.djangoproject.com/m/releases/3.2/Django-3.2.18.tar.gz>`_ |
-`3.2.18 checksums <
-https://www.djangoproject.com/m/pgp/Django-3.2.18.checksum.txt>`_)
-
-The PGP key ID used for this release is Carlton Gibson: `E17DF5C82B4F9D00 <
-https://github.com/carltongibson.gpg>`_
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+View attachment "rgw.patch" of type "text/x-patch" (1716 bytes)
