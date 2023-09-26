@@ -1,56 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/3
-Message-ID: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com>
-Date: Fri, 23 Jun 2023 11:34:28 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/7
+Message-ID: <20230926153454.GA12511@openwall.com>
+Date: Tue, 26 Sep 2023 17:34:54 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Opinion: Governments don't want IT security, they want to have cyber weapons
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-Some time ago i posted this on my blog [1] and on linkedin [2]
+Hi,
 
-What the security community thinks about it?
+It was great to hear from Vincent that the newer libwebp changes are
+just "Clean-ups, no security issues there."  Yet I think it would also
+be great if someone in here double-checks that.
 
-Inline:
+Regarding the assert failure detected by oss-fuzz, "A release build
+would not be negatively affected."  libwebp does specify -DNDEBUG by
+default in:
 
-Tue Aug 17 14:35:14 EEST 2021
-Opinion: Governments don't want IT security, they want to have cyber weapons
+$ fgrep -rl DNDEBUG .
+./Makefile.vc
+./xcframeworkbuild.sh
+./iosbuild.sh
+./configure.ac
+./makefile.unix
 
+and there's also cmake support, but apparently cmake sets -DNDEBUG for
+release builds by default.  So at least this statement does appear to be
+true for libwebp itself as built via the above means.
 
-Support for the above claim:
+However, there's also Gradle support, and the gradle* files do not
+mention NDEBUG.
 
-    In 2015 exploits of NSA were leaked by Shadow crew. Search terms:
-nsa leak shadow crew. E.g. see NSA Hacked? 'Shadow Brokers' Crew
-Claims Compromise Of Surveillance Op
-    From 2015 search terms "hacking team" leak, E.g. Hacking Team Leak
-Shows How Secretive Zero-Day Exploit Sales Work
+Also, I wonder if there are other projects building code from libwebp
+via different build environments.
 
-    It provides both the exploits and RCS to government intelligence
-and law enforcement agencies around the world, and has come under
-attack for selling to repressive regimes, who've used them to target
-political activists and dissidents. But more interesting than the fact
-that the company possessed zero days---this was already known---is the
-correspondence around how Hacking Team acquired these valuable tools,
-prized equally by criminal hackers and government intelligence
-agencies.
+So there might be (a small minority of) uses of libwebp where the assert
+exists in a release build of some project.
 
-    From 2021: Search terms pegasus spying scandal. The allegations
-that spy software known as Pegasus may have been used to carry out
-surveillance on journalists, activists - and even perhaps political
-leaders - highlights that surveillance is now for sale.
+On Tue, Sep 26, 2023 at 11:43:45AM +0200, Salvatore Bonaccorso wrote:
+> Maybe related to this question in todays CVEs updates there appeared 
+> 
+> https://www.cve.org/CVERecord?id=CVE-2023-5129
+> 
+> vs.
+> 
+> https://www.cve.org/CVERecord?id=CVE-2023-4863
+> 
+> FWIW, I contacted the assigning CNAs so this can be clarified (e.g. if
+> one of those needs to be rejected).
 
-If governments wanted security, they would report the bugs to the vendors.
+CVE-2023-5129 description looks like what the original's should have been:
 
-Like in traditional warfare, cyber warfare requires weapons. It is
-very hard to construct physical nuclear bomb, but to construct cyber
-nuclear bomb requires just skills and zero budget. Some drunk skilled
-kid may do a lot of damage in the real world.
+> Assigner: Google LLC
+> Published: 2023-09-25Updated: 2023-09-25
+> 
+> With a specially crafted WebP lossless file, libwebp may write data out
+> of bounds to the heap. The ReadHuffmanCodes() function allocates the
+> HuffmanCode buffer with a size that comes from an array of precomputed
+> sizes: kTableSize. The color_cache_bits value defines which size to use.
+> The kTableSize array only takes into account sizes for 8-bit first-level
+> table lookups but not second-level table lookups. libwebp allows codes
+> that are up to 15-bit (MAX_ALLOWED_CODE_LENGTH). When
+> BuildHuffmanTable() attempts to fill the second-level tables it may
+> write data out-of-bounds. The OOB write to the undersized array happens
+> in ReplicateValue.
+> 
+> Vendor
+> libwebp
+> 
+> Product
+> libwebp
+> 
+> Versions
+> affected from 0.5.0 before 1.3.2
+> 
+> Credits
+> 
+>     Apple Security Engineering and Architecture (SEAR) finder
+>     The Citizen Lab at The University of Toronto's Munk School finder
+> 
+> References
+> 
+>     https://chromium.googlesource.com/webm/libwebp/+/902bc9190331343b2017211debcec8d2ab87e17a
+>     https://chromium.googlesource.com/webm/libwebp/+/2af26267cdfcb63a88e5c74a85927a12d6ca1d76
 
-Who watches the watchers?
-
-
-[1]:  https://j.ludost.net/blog/archives/2021/08/17/opinion_governments_dont_want_it_security_they_want_to_have_cyber_weapons/index.html
-[2] https://www.linkedin.com/pulse/opinion-governments-dont-want-security-have-cyber-weapons-guninski
-
--- 
-guninski https://j.ludost.net/resumegg.pdf
+Alexander
