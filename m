@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/3
-Message-ID: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
-Date: Fri, 29 Sep 2023 15:59:09 +0200
-From: Markus Gschwendt <office+osssecurity@...out.at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/6
+Message-ID: <ZRLUvitwwOp190UE@quatroqueijos.cascardo.eti.br>
+Date: Tue, 26 Sep 2023 09:55:26 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple Exim4 Zero Days
+Subject: Re: mutt 2.2.12 security update
 Content-Type: text/plain; charset=utf-8
 
-I bring this up as I have not yet seen any information here about
-several CVEs related to Exim Mailserver which were published by ZDI on
-2023-09-27 [1]:
+On Sat, Sep 09, 2023 at 07:00:40PM -0000, Tavis Ormandy wrote:
+> FYI, a mutt update that fixes a crash on header parsing:
+> 
+> http://lists.mutt.org/pipermail/mutt-announce/Week-of-Mon-20230904/000056.html
+> 
+> Tavis.
+> 
+> -- 
+>  _o)            $ lynx lock.cmpxchg8b.com
+>  /\\  _o)  _o)  $ finger taviso@....org
+> _\_V _( ) _( )  @taviso
+> 
 
-* CVE-2023-42114 [CVSS 3.7]
-* CVE-2023-42115 [CVSS 9.8]
-* CVE-2023-42116 [CVSS 8.1]
-* CVE-2023-42117 [CVSS 8.1]
-* CVE-2023-42118 [CVSS 7.5]
-* CVE-2023-42119 [CVSS 3.1]
+These are CVE-2023-4874 and CVE-2023-4875.
 
-There also seem to be issues in Exim's bug tracker related to those:
-https://bugs.exim.org/show_bug.cgi?id=2999
-https://bugs.exim.org/show_bug.cgi?id=3000
-https://bugs.exim.org/show_bug.cgi?id=3001
-https://bugs.exim.org/show_bug.cgi?id=3002
-https://bugs.exim.org/show_bug.cgi?id=3003
-
-According to ZDI the original reports were sent in June 2022.
-
-I'm wondering if somebody knows anything about mitigations and/or why
-there are still no fixes for these issues after more than a year.
-
-Markus
-
-[1] https://www.zerodayinitiative.com/advisories/published/
-    search for exim
-
+Cascardo.
