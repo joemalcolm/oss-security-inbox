@@ -1,111 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/20
-Message-ID: <CAMr=8w5fMdeY4Fund1=3W+w37T3_jsBZBS7AyS-ZGLK9t3R3wg@mail.gmail.com>
-Date: Tue, 17 Oct 2023 01:12:37 +0800
-From: Aron Xu <happyaron.xu@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/27/1
+Message-ID: <ZROMd1GCpD8uDtbE@itl-email>
+Date: Tue, 26 Sep 2023 21:59:19 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, kvm@...e.kernel.org, devel@...4.systems
+Cc: "Xen.org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 17, 2023 at 12:51 AM Greg KH <greg@...ah.com> wrote:
->
-> On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
-> > Hi,
-> >
-> > On Mon, Oct 16, 2023 at 11:34 PM Demi Marie Obenour
-> > <demi@...isiblethingslab.com> wrote:
-> > >
-> > > On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
-> > > > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> > > > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > > > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > > > > > Hi,
-> > > > > > >
-> > > > > > > Regardless of your viability of subscription status I think we also
-> > > > > > > (sadly) have to consider current geopolitical issues here.
-> > > > > > >
-> > > > > > > As far as I understand, US companies and US citizens are not permitted
-> > > > > > > to work with Chinese organizations and/or Chinese nationals.
-> > > > > >
-> > > > > > They can when working in the open on public projects and other
-> > > > > > open-source-like things.  For "closed" lists and groups, please consult
-> > > > > > a lawyer as the rules there are quite varied and depends on the
-> > > > > > countries and companies involved.
-> > > > > >
-> > > > > > But to be sure, again, consult your corporate lawyers, they know the
-> > > > > > rules and the issues involved better than I do.
-> > > > > >
-> > > > > > good luck!
-> > > > > >
-> > > > > > greg k-h
-> > > > >
-> > > > > The question is _who_ should consult their lawyers.
-> > > >
-> > > > The people deciding if this group can be added to the closed list as
-> > > > they are the ones responsible for it, AND then if the group is added,
-> > > > the members of the list need to talk to their lawyers to see if their
-> > > > country laws allow them to participate in a closed group with such
-> > > > members.  Many countries might be fine, many might not be, it all
-> > > > depends on the participants and what country laws they must abide by.
-> > > >
-> > > > So in short, everyone involved in the list!  :(
-> > > >
-> > > > good luck!
-> > > >
-> > > > greg "I talk to too many lawyers" k-h
-> > >
-> > > The result of this is simply that those who do not have access to
-> > > lawyers on staff will not participate, which will reduce the value of
-> > > the list substantially.  I suspect that most people who report
-> > > vulnerabilities via distros@ fall into this category.  I know I do.
-> > >
-> > > Therefore, I recommend rejecting the application as too risky from a
-> > > legal perspective.
-> > >
-> >
-> > Not matter what would be the outcome, I'd like recommend an article
-> > from Linux Foundation which I think is a good read:
-> > https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
-> >
-> > I'm not a lawyer though, but here are a few cents:
-> >
-> > 1) There is no general restrictions against Chinese organizations and nationals;
-> > 2) Open source software (which is publicly available) is not subject
-> > to EAR (Export Administration Regulation of the US);
-> > 3) According to § 734.7[1] of EAR, "knowledge with the intention that
-> > such information will be made publicly available if accepted" is
-> > treated as "Published" and is considered publicly available.
-> >
-> > If I understand correctly, distros list is targeted to open source
-> > software issues with a policy[2] of "Please only use these lists to
-> > report and discuss security issues that are not yet public (but that
-> > are to be made public very soon)", then everyone could retain their
-> > peace of mind.
->
-> But note, the information is _not_ public for a period of time, and so,
-> might fall outside of the information described above in the lf article.
->
-> Especially given the content of the information as well, this isn't just
-> "here's a patch to add a new feature for foo-baz" type of stuff.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-That's actually the critical thing covered by § 734.7[1] of EAR
-mentioned in the last message. The original EAR text says "knowledge
-with the intention that such information will be made publicly
-available if accepted" in the "Published" category, so it is
-considered publicly available while in the process of getting actually
-published.
+On Mon, Sep 25, 2023 at 04:05:37PM +0000, Xen Security wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+>             Xen Security Advisory CVE-2023-20588 / XSA-439
+> 
+>              x86/AMD: Divide speculative information leak
+> 
+> ISSUE DESCRIPTION
+> =================
+> 
+> In the Zen1 microarchitecure, there is one divider in the pipeline which
+> services uops from both threads.  In the case of #DE, the latched result
+> from the previous DIV to execute will be forwarded speculatively.
+> 
+> This is a covert channel that allows two threads to communicate without
+> any system calls.  In also allows userspace to obtain the result of the
+> most recent DIV instruction executed (even speculatively) in the core,
+> which can be from a higher privilege context.
+> 
+> For more information, see:
+>  * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+> 
+> IMPACT
+> ======
+> 
+> An attacker might be able to infer data from a different execution
+> context on the same CPU core.
+> 
+> VULNERABLE SYSTEMS
+> ==================
+> 
+> All versions of Xen are vulnerable.
+> 
+> Only AMD Zen1 CPUs are believed to be vulnerable.
+> 
+> MITIGATION
+> ==========
+> 
+> There is no mitigation.
+> 
+> RESOLUTION
+> ==========
+> 
+> The patches for Xen overwrite the buffer in the divider on the
+> return-to-guest path.
+> 
+> However, as with some prior speculative vulnerabilities, the fix is only
+> effective in combination with disabling SMT.  For the same reasons as
+> before, Xen does not disable SMT by default.
+> 
+> The system administrator is required to risk-assess their workload, and
+> choose whether to enable or disable SMT.  Xen will issue a warning if
+> SMT is active and the user has not provided an explicit choice via the
+> smt=<bool> command line option.
+> 
+> Details of the vulnerability became public before the Xen patches were
+> complete.  Hence the patches are already applied to the appropriate
+> trees.  They are:
+> 
+> Xen-unstable: 1c18d7377453^..b5926c6ecf05
+> Xen 4.17:     d2d2dcae879c^..9ac2f49f5fa3
+> Xen 4.16:     08539e8315fd^..de751c3d906d
+> Xen 4.15:     db3386e6cad6^..d7b78041dc81
+> -----BEGIN PGP SIGNATURE-----
+> 
+> iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmURr2UMHHBncEB4ZW4u
+> b3JnAAoJEIP+FMlX6CvZA1QH/RNSR1O6QJjd7z2gSGA9Yka7VWyYOMB2J01AaIl7
+> 69zCRkpqg+baF1aQaAVR0fj39aF7M7xXrd/LSk+E4BBiCRSxxRzbWUGYn9qTLR9w
+> srbpGXqy0aWod9MiwfbTuEzf9uG8XpwOGoRg6p6YBRYE3WrQxIVnYY+KjeeToTEs
+> +UXZ0iZPrjaGaqKnF+PpkX4CMsqHhxk3iJw+ZFX2V4fVNRYgCOpjejmMjbWM4ABr
+> eSsCjTU92/YZvFOsTeIzu74h5yM6SH+XTPW2S8Ve5j3mk7sM8nIiYbIyTMWNCJID
+> HXeodt6eHjhZzV2z7f+/zEngnoITIqz+X3tRcTkHB9+H5jU=
+> =AtsG
+> -----END PGP SIGNATURE-----
 
-> Again, if you have questions, please talk to a lawyer from your company
-> as only they can answer it properly for your situation.
->
+These detailed security advisories are one of the things I love about
+Xen.  It's hard to trust a hypervisor (KVM) that will not issue them,
+for then one has no way to know if a particular problem got fixed.
 
-And again I'm not a lawyer for sure, :-)
+I'm CCing KVM here to make sure they have a fix.  From their Git commit
+history, I am almost certain that seL4 does not.  I'm CCing the seL4
+developers to alert them of this and suggest that the x86 port be
+removed or at least have a big warning.
+- -- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+-----BEGIN PGP SIGNATURE-----
 
-Well I've contacted OpenAtom Foundation's lawyer and am waiting for a
-response, but I'm not sure yet whether they would provide a public
-response.
-
-
-Regards,
-Aron
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmUTjHcACgkQsoi1X/+c
+IsH6/w//RbvVlls3bC5IUSv+cB3e8aQmiFOuosxycKki3PjMeHD/nmTnlQIZteQU
+EXRJRilEIfI8QsDiHKXtLz/gv9oDAvPKoUnqvdoRp9XKtUJ/USueDfujtWXSZB92
+yhXMvCQ7m8Jaz0am7MbVBnZP3l2MTopHXxTe9ukeBJ2OAbGPFpjgv5d7uBpjmfTb
+vb2YE8fL1iS2hK1njBWifL+Ss70JNlSfIHBHRVMtNZg6xyC0B7fW7PPtXHWfVjMd
+PR6huOFg1v504ijacOYYW0eWjUv2aaURsKKAJaw5OnxbLzv6m+AxNBVAnss00PH7
+B8KxhCNFOliGIm0Ih2S4F7EXFIYBQlzzAp1M95qzgY6FEurBasQ7OAQcsOFx1yae
+UCm56PCZcoQhEKDbA96zJhxi1E320W5MMQeYm3ByB1/jCRQxq+4gRVUp2T00tFAu
+C/LwdQJ5p5iHqhtZ9Y6YceA7OPbU+N4NhHC8azKj7gDvkpAYWrq1LzQrGaGE65Ax
+Th8BdD06iMK4ZZljl1MwkwLrZw3PMOpNz6I2YKQ/NktDGIDDIDDYQXCsoRb2Z+NU
+ZFAyaj5aUKMQCvzya+MYXP48r+CQl3nl4jLr6Fa0yEvn1ouWEByYuPOWR4JuyZI/
+WtNSpCHRoyqX7SF60FWM5yDGCwJ07eJrmzIKWje6uthjmqjDmFc=
+=WiIH
+-----END PGP SIGNATURE-----
