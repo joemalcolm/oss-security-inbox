@@ -1,97 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/01/2
-Message-ID: <ba36d013-359f-4a0c-be68-793370be38de@gmail.com>
-Date: Wed, 1 Nov 2023 08:04:37 +0100
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/27/2
+Message-ID: <ZRSUQPPuoCdY+fGP@westworld>
+Date: Wed, 27 Sep 2023 13:44:48 -0700
+From: Kyle Zeng <zengyhkyle@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2023-46695: Potential denial of service vulnerability in UsernameField on Windows
+Subject: [CVE-2023-42756] Linux kernel race condition in netfilter
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2023/nov/01/security-releases/
+Hi there,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.2.7 <https://docs.djangoproject.com/en/dev/releases/4.2.7/>`_,
-`Django 4.1.13 
-<https://docs.djangoproject.com/en/dev/releases/4.1.13/>`_, and
-`Django 3.2.23 <https://docs.djangoproject.com/en/dev/releases/3.2.23/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+I recently found a race condition bug in the Linux kernel between
+IPSET_CMD_ADD and IPSET_CMD_SWAP in netfilter/ip_set, which can
+lead to the invocation of `__ip_set_put` on a wrong `set`, triggering
+the `BUG_ON(set->ref == 0);` check in it, which leads to local DoS.
+I confirm it at least affect upstream, v6.5.rc7, v6.1, and v5.10.
 
-CVE-2023-46695: Potential denial of service vulnerability in 
-``UsernameField`` on Windows
-=========================================================================================
+[Root Cause]
+The bug is in the netfilter subsystem.
+In `ip_set_swap` function, it will hold the `ip_set_ref_lock`
+and then do the following to swap the sets:
+~~~
+        strncpy(from_name, from->name, IPSET_MAXNAMELEN);
+        strncpy(from->name, to->name, IPSET_MAXNAMELEN);
+        strncpy(to->name, from_name, IPSET_MAXNAMELEN);
 
-The NFKC normalization is slow on Windows. As a consequence,
-``django.contrib.auth.forms.UsernameField`` was subject to a potential 
-denial
-of service attack via certain inputs with a very large number of Unicode
-characters.
+        swap(from->ref, to->ref);
+~~~
+But in the retry loop in `call_ad`:
+~~~
+                if (retried) {
+                        __ip_set_get(set);
+                        nfnl_unlock(NFNL_SUBSYS_IPSET);
+                        cond_resched();
+                        nfnl_lock(NFNL_SUBSYS_IPSET);
+                        __ip_set_put(set);
+                }
+~~~
+No lock is hold when it does the `cond_resched()`.
+As a result, `ip_set_ref_lock` (in thread 2) can swap the set with
+another when thread 1 is doing the `cond_resched()`. When thread 1
+wakes up, the `set` variable alreays means another `set`, calling
+`__ip_set_put` on it will decrease the refcount on the wrong `set`,
+triggering the `BUG_ON` call.
 
-In order to avoid the vulnerability, invalid values longer than
-``UsernameField.max_length`` are no longer normalized, since they cannot 
-pass
-validation anyway.
+According to Jozsef Kadlecsik, who fixed the bug, the root cause is that
+the `call_ad` function is using a wrong ref counter. Instead of using
+`__ip_set_get`, which operates on `set->ref`, the correct way is to
+operate on `set->ref_netlink`.
 
-Thanks `MProgrammer <https://hackerone.com/mprogrammer>`_ for the report.
+[Severity]
+It will invoke a `BUG_ON` call, leading to kernel panic.
+In other words, it will lead to local DoS.
 
-This issue has severity "moderate" according to the Django security policy.
+[Patch]
+Jozsef Kadlecsik prepared a patch and it got merged into mainline and
+stables already.
+The patch can be found here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7433b6d2afd512d04398c73aa984d1e285be125b
 
-Affected supported versions
-===========================
+[Proof-of-Concept]
+A proof-of-concept code to trigger the bug is attached to this email.
 
-* Django main branch
-* Django 5.0 (currently at beta status)
-* Django 4.2
-* Django 4.1
-* Django 3.2
+Best,
+Kyle
 
-Resolution
-==========
+========================================================================
+[    5.110096] ------------[ cut here ]------------
+[    5.110337] kernel BUG at net/netfilter/ipset/ip_set_core.c:677!
+[    5.110618] invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+[    5.110892] CPU: 2 PID: 507 Comm: poc Not tainted 6.1.47+ #67
+[    5.111143] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+[    5.111490] RIP: 0010:call_ad+0x83e/0x850
+[    5.111677] Code: 89 df e8 35 c6 d2 fd e9 d4 fd ff ff 44 89 f9 80 e1 07 80 c1 03 38 c1 0f 8c d7 fd ff ff 4c 89 ff e8 a7 c5 d2 fd e9 ca fd ff ff <0f> 0b e8 0b 09 85 00 66 2e 0f 1f 84 00 00 00 00 00 90 0f 1f 44 00
+[    5.112481] RSP: 0018:ffff88800c4d7350 EFLAGS: 00010246
+[    5.112718] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00000000000000ff
+[    5.113047] RDX: ffff88800b658324 RSI: 0000000000000004 RDI: ffff88800c4d7314
+[    5.113373] RBP: ffff88800c4d7448 R08: dffffc0000000000 R09: ffffed100189ae63
+[    5.113696] R10: dfffe9100189ae64 R11: 1ffff1100189ae62 R12: dffffc0000000000
+[    5.114024] R13: 1ffff110016cb067 R14: ffff88800b658338 R15: ffffffff8557d401
+[    5.114346] FS:  00000000027203c0(0000) GS:ffff888034f00000(0000) knlGS:0000000000000000
+[    5.114745] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    5.115049] CR2: 000000000046c280 CR3: 000000000d71c005 CR4: 0000000000770ee0
+[    5.115478] PKRU: 55555554
+[    5.115653] Call Trace:
+[    5.115799]  <TASK>
+[    5.115923]  ? __die_body+0x67/0xb0
+[    5.116125]  ? die+0xa0/0xc0
+[    5.116295]  ? do_trap+0x124/0x350
+[    5.116485]  ? call_ad+0x83e/0x850
+[    5.116670]  ? call_ad+0x83e/0x850
+[    5.116855]  ? handle_invalid_op+0x96/0xd0
+[    5.117084]  ? call_ad+0x83e/0x850
+[    5.117270]  ? exc_invalid_op+0x2f/0x40
+[    5.117453]  ? asm_exc_invalid_op+0x16/0x20
+[    5.117633]  ? call_ad+0x83e/0x850
+[    5.117782]  ip_set_ad+0x68e/0x7d0
+[    5.117932]  ? mutex_lock+0x76/0xc0
+[    5.118083]  nfnetlink_rcv_msg+0x6a7/0x830
+[    5.118262]  netlink_rcv_skb+0x15a/0x330
+[    5.118430]  ? nfnetlink_unbind+0x180/0x180
+[    5.118632]  nfnetlink_rcv+0x22d/0x1e70
+[    5.118797]  ? __stack_depot_save+0x35/0x480
+[    5.118982]  ? kasan_set_track+0x61/0x70
+[    5.119150]  ? kasan_set_track+0x4c/0x70
+[    5.119318]  ? __kasan_kmalloc+0x85/0x90
+[    5.119486]  ? netlink_sendmsg+0x509/0xa00
+[    5.119660]  ? __sys_sendto+0x494/0x4b0
+[    5.119826]  ? __x64_sys_sendto+0xda/0xf0
+[    5.119998]  ? do_syscall_64+0x67/0x90
+[    5.120159]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[    5.120383]  ? __netlink_lookup+0x2fa/0x310
+[    5.120562]  netlink_unicast+0x675/0x8a0
+[    5.120731]  netlink_sendmsg+0x685/0xa00
+[    5.120902]  ? netlink_getsockopt+0x3f0/0x3f0
+[    5.121093]  __sys_sendto+0x494/0x4b0
+[    5.121264]  __x64_sys_sendto+0xda/0xf0
+[    5.121438]  do_syscall_64+0x67/0x90
+[    5.121628]  ? exit_to_user_mode_prepare+0x12/0xa0
+[    5.121874]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[    5.122142] RIP: 0033:0x475b30
+[    5.122305] Code: c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 1d 45 31 c9 45 31 c0 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 68 c3 0f 1f 80 00 00 00 00 41 54 48 83 ec 20
+[    5.123328] RSP: 002b:00007ffc64795c98 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+[    5.123741] RAX: ffffffffffffffda RBX: 00007ffc64795f48 RCX: 0000000000475b30
+[    5.124512] RDX: 000000000000007c RSI: 00000000027244a0 RDI: 0000000000000005
+[    5.124905] RBP: 00007ffc64795d40 R08: 0000000000000000 R09: 0000000000000000
+[    5.125416] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+[    5.125860] R13: 00007ffc64795f38 R14: 0000000000500740 R15: 0000000000000002
+[    5.126282]  </TASK>
+[    5.126408] Modules linked in:
+[    5.126613] ---[ end trace 0000000000000000 ]---
+[    5.127317] RIP: 0010:call_ad+0x83e/0x850
+[    5.127565] Code: 89 df e8 35 c6 d2 fd e9 d4 fd ff ff 44 89 f9 80 e1 07 80 c1 03 38 c1 0f 8c d7 fd ff ff 4c 89 ff e8 a7 c5 d2 fd e9 ca fd ff ff <0f> 0b e8 0b 09 85 00 66 2e 0f 1f 84 00 00 00 00 00 90 0f 1f 44 00
+[    5.128567] RSP: 0018:ffff88800c4d7350 EFLAGS: 00010246
+[    5.128928] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00000000000000ff
+[    5.129356] RDX: ffff88800b658324 RSI: 0000000000000004 RDI: ffff88800c4d7314
+[    5.129766] RBP: ffff88800c4d7448 R08: dffffc0000000000 R09: ffffed100189ae63
+[    5.130203] R10: dfffe9100189ae64 R11: 1ffff1100189ae62 R12: dffffc0000000000
+[    5.130602] R13: 1ffff110016cb067 R14: ffff88800b658338 R15: ffffffff8557d401
+[    5.130973] FS:  00000000027203c0(0000) GS:ffff888034f00000(0000) knlGS:0000000000000000
+[    5.131454] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    5.131809] CR2: 000000000046c280 CR3: 000000000d71c005 CR4: 0000000000770ee0
+[    5.132290] PKRU: 55555554
+[    5.132452] Kernel panic - not syncing: Fatal exception in interrupt
+[    5.133092] Kernel Offset: disabled
+[    5.133320] Rebooting in 1000 seconds..
 
-Patches to resolve the issue have been applied to Django's main branch 
-and the
-5.0, 4.2, 4.1, and 3.2 release branches. The patches may be obtained 
-from the
-following changesets:
-
-* On the `main branch 
-<https://github.com/django/django/commit/05ba4130ee878c4f520b5d34bb11eaad794623be>`__
-* On the `5.0 release branch 
-<https://github.com/django/django/commit/bb71d34551207b2472c493655d0d7f3b2975d686>`__
-* On the `4.2 release branch 
-<https://github.com/django/django/commit/048a9ebb6ea468426cb4e57c71572cbbd975517f>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/4965bfdde2e5a5c883685019e57d123a3368a75e>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/f9a7fb8466a7ba4857eaf930099b5258f3eafb2b>`__
-
-The following releases have been issued:
-
-* Django 4.2.7 (`download Django 4.2.7 
-<https://www.djangoproject.com/m/releases/4.2/Django-4.2.7.tar.gz>`_ | 
-`4.2.7 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.2.7.checksum.txt>`_)
-* Django 4.1.13 (`download Django 4.1.13 
-<https://www.djangoproject.com/m/releases/4.1/Django-4.1.13.tar.gz>`_ | 
-`4.1.13 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.1.13.checksum.txt>`_)
-* Django 3.2.23 (`download Django 3.2.23 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.23.tar.gz>`_ | 
-`3.2.23 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.23.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+View attachment "poc.c" of type "text/x-csrc" (4656 bytes)
