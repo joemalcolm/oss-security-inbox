@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6381" "Monday" "8" "August" "2016" "23:15:10" "-0700" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160808231510.6514ee1c@pc1>" "130" "[oss-security] MatrixSSL Bignum bugs" "^Date:" nil nil "8" "2016080906:15:10" "[oss-security] MatrixSSL Bignum bugs" (number mark "        hanno@hboeck Aug  8  130/6381  " thread-indent "\"[oss-security] MatrixSSL Bignum bugs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17863 invoked by uid 550); 9 Aug 2016 06:15:53 -0000
+Received: (qmail 17441 invoked by uid 550); 28 Sep 2023 21:08:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,145 +6,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17744 invoked from network); 9 Aug 2016 06:15:26 -0000
-Message-ID: <20160808231510.6514ee1c@pc1>
-X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-29352-1470723316-0001-2"
-Date: Mon, 8 Aug 2016 23:15:10 -0700
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] MatrixSSL Bignum bugs
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>,
-  cve-assign@mitre.org
+Received: (qmail 30387 invoked from network); 28 Sep 2023 20:42:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+	1695933760; x=1696020160; bh=m/nAAVTAuyuZLTfCwDWmBPb8Glz1ZN67Mib
+	tXNRooiU=; b=tVo4sA14rHIoazxx/lRevNYxvTqrPbSZGQpbpe9IpFvf9MXOk7l
+	ncDWBPIONdqJCKkFgo3XIpQxuTNG9BaPau9UwSlIAY2KowOeNznWQx4wWHQd+xSa
+	laFPl/025h4i3vZWz+Gct5C3RFi+IvkfWiLMcMosMMgOtyf/cvV5SEflvp31jVNS
+	BEMQh8S+4/acKmOr/4Yvo7E0utBip6BbDIYgM9CJekNeK8LHK4w2orlcDZQHx9E/
+	0+E80UmD4pYzdJyOmUrrrxpRCjmDxyHFEIKh9aSPFMvHMYmyfsGRMNU1mz/lI/82
+	H2eRUEJS6AkPQYJO5cgboWHbrwEZvXqUd0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1695933760; x=1696020160; bh=m/nAAVTAuyuZL
+	TfCwDWmBPb8Glz1ZN67MibtXNRooiU=; b=fOGy+XLTUmt6fkCRFVEeT8Eq0zYfa
+	POF4Pb3yyG/Powb9a06h4twCyduhdwXIENKQDcqJT9XN4Ip4fiX/o5DPlEjyq+cS
+	1ygH2TW+kQTykKZ1RYl5knHZIH/yQdGQf0ZXFFxcCdX4SF3UiAKRlnkRE2Mic/hx
+	FCoaysXK5pLDKupQD8+6Jilr3cKhauI+NHk0ey8VOuKP/YmGLZwbCNUUOVlmr+Bl
+	PUVhHR4bn6VucxXFvjpD43wi4U0hVQwE1f7AB65vMWfhgXvhpgBt8Lw4pZyyEcce
+	zXvUKl8Ar0VCkNbTrKIOTTnltKJoYJsz4SjnhyWWm1qW9t7KjKw8tYiSg==
+X-ME-Sender: <xms:QOUVZXa2TV9_Xz9Ydj71ZKqHvlEcX8I17djZltQhwWw4ASMvRsDOaw>
+    <xme:QOUVZWbQwjYeyPGExmuDFmy2cLv6AngJiZSOj8vAP0l0Nxbp0Btc4d4NIhzguw-MW
+    qGJrjCiK7jNzTM>
+X-ME-Received: <xmr:QOUVZZ-3luEHrbF5GPBgrLbdQPixc6k_5xL9C6d8BBi2cN0F4N5Q-bc-1JMBCwtO7134mlmKj9Yk_3n18quLh6Dg5N-znh-5vnRUo9_J1R2Zb1xz>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrtddtgdduvddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeffvghmihcu
+    ofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihesihhnvhhishhisghlvghthhhinhhgsh
+    hlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdtgffghefhjeeigfejgfeguefg
+    feejudfhtdelhfetheettdffieeltedvheenucffohhmrghinheptghvvgdrohhrghdptg
+    hrsghughdrtghomhdpghhoohhglhgvsghlohhgrdgtohhmpdhmohiiihhllhgrrdhorhhg
+    pdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:QOUVZdp0nONzisw7381IJdZMOG90nko-TaM-Ab3Zl1rcUCp54mKfhQ>
+    <xmx:QOUVZSph1XsWHrT6kebmpMxamgmxobxmNA5_vz3QVdyzFvQCgowG0A>
+    <xmx:QOUVZTS3xO5jNweBR06fh1V7d9cO06CApdLj3WayimVXu-rJDt_YAg>
+    <xmx:QOUVZf05tsJtf1FFa190mh0RPWEezwtptFdG6XLKnB--DB3XzcAF6A>
+Feedback-ID: iac594737:Fastmail
+Date: Thu, 28 Sep 2023 16:42:33 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Message-ID: <ZRXlPoozp5n+cWv1@itl-email>
+References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lXauG7w/YBYGURfo"
+Content-Disposition: inline
+In-Reply-To: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
+Subject: Re: [oss-security] CVE-2023-5217: Heap buffer overflow in vp8
+ encoding in libvpx
 
---=_zucker.schokokeks.org-29352-1470723316-0001-2
-Content-Type: text/plain; charset=UTF-8
+--lXauG7w/YBYGURfo
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Thu, 28 Sep 2023 16:42:33 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2023-5217: Heap buffer overflow in vp8
+ encoding in libvpx
 
-Wrote that about a week ago and forgot to forward it here, can't hurt
-if a few more people have a look.
+On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
+> Google has announced another media parsing bug, this time correctly docum=
+enting
+> both the base library and Chrome versions affected in the CVE.
+>=20
+> https://www.cve.org/CVERecord?id=3DCVE-2023-5217 states:
+>=20
+>    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior =
+to
+>    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentia=
+lly
+>    exploit heap corruption via a crafted HTML page.
+>    (Chromium security severity: High)
+>=20
+> Unfortunately, the bug report it points to is restricted access still:
+> https://crbug.com/1486441
+>=20
+> But the Chrome release notes state:
+>    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
+> https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-d=
+esktop_27.html
+>=20
+> Mozilla has put out their own security advisory at
+> https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
+> and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
+> Firefox Focus for Android 118.1, and Firefox for Android 118.1.
+>=20
+> https://bugzilla.mozilla.org/show_bug.cgi?id=3D1855550 is also still
+> restricted access.
+>=20
+> It does not appear that libvpx 1.13.1 has been released yet, but there
+> are two commits in its git repo with the 1486441 bug id listed:
+>=20
+> https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d646=
+e4ffef36d590
+> https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cca6=
+e0417b290282
+>=20
+> Mozilla's commit references these two libvpx commit ids as well:
+> https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f9130e=
+1896b695d2
 
---------
-
-If you've been following my fuzzing work you will be aware that I've
-fuzzed various bignum libraries and found several bugs by comparing
-implementations against each other.
-
-I recently had a look at the MatrixSSL's modular exponentiation
-function, for reasons I'll explain later. I wrote a wrapper, similar to
-previous experiments, comparing its result to OpenSSL.
-https://github.com/hannob/bignum-fuzz/blob/master/openssl-vs-matrixssl-mode=
-xp.c
-
-I immediately noted that the pstm_exptmod() function of MatrixSSL has
-certain limitations that weren't documented. If one tries to calculate
-a modular exponentiation with the base equal to the modulus (a^b mod a,
-code) it would return an error. If one tries to calculate a modular
-exponentiation with the base zero (0^b mod a, code) it would crash with
-an invalid free operation, potentially leading to memory corruption.
-https://github.com/hannob/bignum-fuzz/blob/master/matrixssl-base-zero.c
-
-In normal cryptographic operations these values should never appear.
-But these values are in many situations attacker controlled. One
-situation is during an RSA key exchange. What happens here is that a
-client encrypts a random secret with the server's key. However a
-malicious client could simply send a zero or the key's modulus here. I
-created a patch against openssl that allows to test this. Both values
-crash the MatrixSSL server. However the crash seems not to happen in
-pstm_exptmod(), it hits another bug earlier. In both cases the crash
-happens due to an invalid memory read in the function pstm_reverse(),
-which is not prepared for zero-sized inputs and will underflow the len
-variable.
-https://github.com/hannob/bignum-fuzz/blob/master/openssl-break-rsa-values.=
-diff
-
-The crashes have been fixed in 3.8.4, but the pstm_exptmod() function
-still doesn't accept these inputs. However it no longer crashes with a
-zero base. It may be possible that these issues can be triggered
-through other code paths. I haven't tested Diffie Hellman key
-exchanges, which also allows putting attacker-controlled values into a
-modular exponentiation.
-http://www.matrixssl.org/blog/releases/matrixssl_3_8_4
-
-This is an interesting class of bugs. Bignum functions often aren't
-designed to handle all inputs and only consider values that make sense
-in the context of the cryptographic operations. However if they are
-attacker-controlled this may lead to problems. I just discovered a
-somewhat similar issue in Nettle. They switched their RSA
-implementation from GMP's mpz_powm() function to mpz_powm_sec(), which
-is supposed to be sidechannel resistant. However mpz_powm_sec() is no
-drop-in replacement. Unlike mpz_pown() it doesn't accept even moduli
-and crashes with a floating point error. Therefore when trying to use a
-specifically crafted RSA key with an even modulus this will crash.
-Fortunately this was discovered before the change made it into a
-release.
-https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003104.html
-
-But back to MatrixSSL: Independent of these corner case values that
-lead to failures I was able to identify an input value that caused a
-wrong calculation result.
-
-There's a particularly severe risk with calculation errors in the
-modulo exponentiation when it comes to the RSA algorithm. A common way
-to speed up the calculation of RSA signatures is an algorithm based on
-the chinese remainder theorem (CRT) that splits it up into two smaller
-calculations. However if one of these calculations goes wrong an
-attacker can learn the private key. Last year Florian Weimer observed
-that various devices had this error and he could extract their keys. He
-recently mentioned on the oss-security mailing list that he also
-observed this in devices using MatrixSSL.
-http://www.openwall.com/lists/oss-security/2016/06/27/1
-
-The way the MatrixSSL team "fixed" the miscalculation issue is not
-really satisfying: They now restrict the input to the pstm_exptmod()
-function to a set of bit sizes (512, 1024, 1536, 2048, 3072, 4096). My
-test input had a different bit size, therefore I cannot reproduce the
-miscalculation any more, but the underlying bug is most likely still
-there. I've tried to find inputs matching these restrictions and still
-causing wrong results, but without success yet. Independent of that the
-restriction means that connections to sites with unusual key sizes or
-Diffie Hellman moduli will no longer work. While they are not common,
-there is no rule that RSA keys or Diffie Hellman moduli need to have
-certain sizes.
-
-Despite the fact that the bug may be still there the CRT attack will
-probably no longer work. A protection mechanism against that was
-implemented in version 3.8.3.
-
-I got told by the MatrixSSL developers that their bignum code is based
-on libtommath. Therefore I also checked if the same bugs appeared
-there. That wasn't the case. The test input causing wrong results in
-MatrixSSL were correctly calculated by libtommath and it was also
-capable of correctly using a zero base or a base equal to the modulus.
+How long will it take for corporations to accept that writing media
+codecs in C, C++, or any other memory-unsafe language is a fundamentally
+bad idea, and that it is better to rewrite the codecs in a safe language
+(such as Wuffs or Rust) than to try to secure the existing ones?
 --=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-29352-1470723316-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+--lXauG7w/YBYGURfo
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQIcBAEBCgAGBQJXqXTuAAoJEKWIAHK7tR5ChP0P/1Cj5ul6Yk64mXiq9bvzE+yw
-rYZjqDucZOr1BhzmipvwtsHcDmxOrxb2ODBBOutDkUl+XMCKc01793f/HMLz11Ez
-txKL9SMQ5ikdJbTsP+r02hkrE5I7f/TslynIzyEQ2Mr8fYdz+WR4bMCmLqcpTJdw
-4QsYQPdMIzALHZSxq2/skym2SqoicAhErJLH+AsGXYT7q0wseKnrU7PMJuvL1Xgx
-cXtuIaa5WLAjiSLvygrG1/DaVP77nTUfqNdQYGJCSufg3v9ThVHomDbMCYTkdZ/C
-Vj4+uS05PZW5sbSN3U2vyfumyjiVTo9Cb+eG07hC+2mlPyNDix2qH0WIveaPr5Im
-oFkU90XHJnwfhUCbtj9y48eO6SyHHXIu+fUWaMBZ7GkKmL0vKEj77WJNR4+Lq9Dw
-5dgsDmVONPs1YXrTLA+y2XRR1lU7f8N9Uod1s9ZzUU6S0MVDRFYAJI7nv7ZBwifj
-0YGKt8NLewwjHzxkGOWtei2VyDUxSaV2IEo7TQdRsRNf2fqpVkhSG77YxdixCf4p
-IU1tPVFS9kgF+JH2SfF8LFjExairLNcKmaXMWclMxQ5EXzpDSJuXjenY9aPjrIyA
-ZI2X0wJmbjRMAI3kwvF8dX+dd9A3rOIxZsfhP6uLCUuEnv51JBi6B+ZwnmS3JL5w
-/UQ2ImAX/ireJS497u88
-=C6kn
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmUV5T4ACgkQsoi1X/+c
+IsEADBAAwD+PkMMT6LDfH5/GSKgBCbFSNeHoAyIcAQTiwuB4/yeaUYfN3YlJ+tjC
+7/sPEq7eIPowI4zEn4eOmZs48ZfC/yPax2Zjw/GS9u62FvbMAdcapS1tb+sH8HHJ
+6+BBAJ0k32bu6IM4PtKuMO9U3DZ4sdjtMT4MKdUtWOCxtv/uX/GtsPBkRHtpCRxL
+fR28xm7h2hptJpN0KtY55ZT/1lRBWAKcyPgQYA5a+33BA1G5cQFAfDXVWx8Eqs0e
+bvb/fJGDZBlGZNSLf0Sg7RDMSABOlopZSj7uc4E1HaIPW9GYKqzdA5yBygS9SS8a
+dLOYWu0fwPt8QK1iHx3ztVv6G7YsYjJnDKu6WsReHtA27NR6mt8evB/zzMxA0Qh1
+d5rX/6s6V4bTSwPAB/10vf3w6xv5+WPAqt96CtZLwG2Jg2/Z73BGZDo2pUIXRHSR
+0z7hw8QevS3lc8jyJUnHI3/8FEKeRPrGjd+3QQipu1RoUglUW4iA+mfM2tU85QPg
+ksuAl6mbQhniz2Q7igIP+cwnEiwWEjTO+vPqwhoHbBmyHko2scp07LQoAbwqmTGP
+/h3kDa2k10sosCVtDhIW74Gr2wvywkCyJtzCKDTAUz2tQC7HpieJ3FvKZQ/gNlyW
+ZBh3vGtMMkbZKTiqOOGT5Y9/3rJuPCo4os3cgTOMM15gKl27RjY=
+=mICf
 -----END PGP SIGNATURE-----
 
---=_zucker.schokokeks.org-29352-1470723316-0001-2--
+--lXauG7w/YBYGURfo--
