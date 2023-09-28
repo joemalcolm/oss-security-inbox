@@ -1,33 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/31/1
-Message-ID:  <CH0PR05MB10203918AA236673B9B9CE00BB9E5A@CH0PR05MB10203.namprd05.prod.outlook.com>
-Date: Thu, 31 Aug 2023 09:26:26 +0000
-From: VMware Security Response Center <security@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [Security Advisory] open-vm-tools: SAML token signature bypass vulnerability (CVE-2023-20900)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/2
+Message-ID: <CAH8yC8nQVki00kqwheM9n0tvJ5o=apNS-tnNcALy7Tvx4TC2Pg@mail.gmail.com>
+Date: Thu, 28 Sep 2023 08:36:53 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Sep 26, 2023 at 11:37 AM Solar Designer <solar@...nwall.com> wrote:
+>
+> It was great to hear from Vincent that the newer libwebp changes are
+> just "Clean-ups, no security issues there."  Yet I think it would also
+> be great if someone in here double-checks that.
+>
+> Regarding the assert failure detected by oss-fuzz, "A release build
+> would not be negatively affected."  libwebp does specify -DNDEBUG by
+> default in:
+>
+> $ fgrep -rl DNDEBUG .
+> ./Makefile.vc
+> ./xcframeworkbuild.sh
+> ./iosbuild.sh
+> ./configure.ac
+> ./makefile.unix
+>
+> and there's also cmake support, but apparently cmake sets -DNDEBUG for
+> release builds by default.  So at least this statement does appear to be
+> true for libwebp itself as built via the above means.
+>
+> However, there's also Gradle support, and the gradle* files do not
+> mention NDEBUG.
+>
+> Also, I wonder if there are other projects building code from libwebp
+> via different build environments.
+>
+> So there might be (a small minority of) uses of libwebp where the assert
+> exists in a release build of some project.
 
+Crypto++ caught a CVE because use of -DNDEBUG was not documented. The
+library's build system used -DNDEBUG (like libwebp), but folks who
+ported to other build systems did not use it. In my mind's eye, others
+who did not use the -DNDEBUG flag should have caught a CVE, not
+Crypto++. Also see CVE-2016-7420 and
+<http://seclists.org/oss-sec/2016/q3/520>.
 
-Please see the security advisory here: https://www.vmware.com/security/advisories/VMSA-2023-0019.html 
+Crypto++ eventually took away the footgun by supplying its own
+CRYPTOPP_ASSERT that required a user to supply a switch to engage
+asserts. Asserts were no longer enabled by default when someone
+omitted -DNDEBUG. Also see
+<https://github.com/weidai11/cryptopp/blob/master/trap.h>.
 
-Description
-==============================================================
-CVE-2023-20900: VMware Tools contains a SAML token signature bypass vulnerability. VMware has evaluated the severity of this issue to be in the Important severity range with a maximum CVSSv3.1 base score of 7.5 - CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H.
+I've never seen a CVE for documentation before or since.
 
-Known Attack Vectors
-==============================================================
-A malicious actor with man-in-the-middle (MITM) network positioning between vCenter server and the virtual machine may be able to bypass SAML token signature verification, to perform VMware Tools Guest Operations.
-
-Upstream fix for CVE-2023-20900
-==============================================================
-https://github.com/vmware/open-vm-tools/blob/CVE-2023-20900.patch/CVE-2023-20900.patch
------BEGIN PGP SIGNATURE-----
-
-iHUEAREIAB0WIQQ950nPZL1VtgrpULuSf/JD335VcQUCZPBa5gAKCRCSf/JD335V
-cZZTAP9QYJDWCzECKYakbqu4fui7CditlHnew0qs0KjG9qfC3QEA7wLPBfudDBkj
-ivy2KsHabG03funx8dWl/x77TfFbUlI=
-=sAT7
------END PGP SIGNATURE-----
+Jeff
