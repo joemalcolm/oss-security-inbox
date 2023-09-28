@@ -1,87 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/07/3
-Message-ID: <a1858f69-212b-f8f7-d9f2-3015bd60544a@apache.org>
-Date: Sun, 07 May 2023 19:32:59 +0000
-From: Robert Middleton <rmiddleton@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/4
+Message-ID: <2cccd54e-6a8e-8b79-3913-7b13817a0b72@gmail.com>
+Date: Thu, 28 Sep 2023 17:49:08 +0200
+From: Emilio Pozuelo Monfort <pochu27@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31038: Apache Log4cxx: SQL injection when using ODBC appender 
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-Severity: 6.8
+On 28/09/2023 14:36, Jeffrey Walton wrote:
+> On Tue, Sep 26, 2023 at 11:37 AM Solar Designer <solar@...nwall.com> wrote:
+>>
+>> It was great to hear from Vincent that the newer libwebp changes are
+>> just "Clean-ups, no security issues there."  Yet I think it would also
+>> be great if someone in here double-checks that.
+>>
+>> Regarding the assert failure detected by oss-fuzz, "A release build
+>> would not be negatively affected."  libwebp does specify -DNDEBUG by
+>> default in:
+>>
+>> $ fgrep -rl DNDEBUG .
+>> ./Makefile.vc
+>> ./xcframeworkbuild.sh
+>> ./iosbuild.sh
+>> ./configure.ac
+>> ./makefile.unix
+>>
+>> and there's also cmake support, but apparently cmake sets -DNDEBUG for
+>> release builds by default.  So at least this statement does appear to be
+>> true for libwebp itself as built via the above means.
+>>
+>> However, there's also Gradle support, and the gradle* files do not
+>> mention NDEBUG.
+>>
+>> Also, I wonder if there are other projects building code from libwebp
+>> via different build environments.
+>>
+>> So there might be (a small minority of) uses of libwebp where the assert
+>> exists in a release build of some project.
+> 
+> Crypto++ caught a CVE because use of -DNDEBUG was not documented. The
+> library's build system used -DNDEBUG (like libwebp), but folks who
+> ported to other build systems did not use it. In my mind's eye, others
+> who did not use the -DNDEBUG flag should have caught a CVE, not
+> Crypto++. Also see CVE-2016-7420 and
+> <http://seclists.org/oss-sec/2016/q3/520>.
+> 
+> Crypto++ eventually took away the footgun by supplying its own
+> CRYPTOPP_ASSERT that required a user to supply a switch to engage
+> asserts. Asserts were no longer enabled by default when someone
+> omitted -DNDEBUG. Also see
+> <https://github.com/weidai11/cryptopp/blob/master/trap.h>.
+> 
+> I've never seen a CVE for documentation before or since.
 
-Affected versions:
+Here's a recent one:
 
-- Apache Log4cxx 0.9.0 before 1.1.0
+https://www.cve.org/CVERecord?id=CVE-2023-0466
 
-Description:
+https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=51e8a84ce742db0f6c70510d0159dad8f7825908
 
-SQL injection in Log4cxx when using the ODBC appender to send log messages to a database.  No fields sent to the database were properly escaped for SQL injection.  This has been the case since at least version 0.9.0(released 2003-08-06)
-
-
-
-
-Note that Log4cxx is a C++ framework, so only C++ applications are affected.
-
-Before version 1.1.0, the ODBC appender was automatically part of Log4cxx if the library was found when compiling the library.  As of version 1.1.0, this must be both explicitly enabled in order to be compiled in.
-
-
-
-
-Three preconditions must be met for this vulnerability to be possible:
-
-1. Log4cxx compiled with ODBC support(before version 1.1.0, this was auto-detected at compile time)
-
-2. ODBCAppender enabled for logging messages to, generally done via a config file
-
-3. User input is logged at some point. If your application does not have user input, it is unlikely to be affected.
-
-
-
-
-
-Users are recommended to upgrade to version 1.1.0 which properly binds the parameters to the SQL statement, or migrate to the new DBAppender class which supports an ODBC connection in addition to other databases. 
-Note that this fix does require a configuration file update, as the old configuration files will not configure properly.  An example is shown below, and more information may be found in the Log4cxx documentation on the ODBCAppender.
-
-
-
-
-
-Example of old configuration snippet:
-
-<appender name="SqlODBCAppender" class="ODBCAppender">
-
-    <param name="sql" value="INSERT INTO logs (message) VALUES ('%m')" />
-
-    ... other params here ...
-
-</appender>
-
-
-
-
-The migrated configuration snippet with new ColumnMapping parameters:
-
-
-<appender name="SqlODBCAppender" class="ODBCAppender">
-
-
-
-
-    <param name="sql" value="INSERT INTO logs (message) VALUES (?)" />
-
-    <param name="ColumnMapping" value="message"/>
-    ... other params here ...
-
-
-</appender>
-
-Required Configurations:
-
-Log4cxx must be built with ODBC support, and configured to log messages to a database for this to occur
-
-
-References:
-
-https://logging.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-31038
-
+Cheers,
+Emilio
