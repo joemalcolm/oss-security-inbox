@@ -1,31 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/5
-Message-ID: <dd885ef0-4191-4224-8707-73e9f1061f0e@pietroalbini.org>
-Date: Mon, 6 Nov 2023 23:20:08 +0100
-From: Pietro Albini <pietro@...troalbini.org>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-46176: Cargo does not check SSH host keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/3
+Message-ID: <8c649bda-f460-31be-c058-ea2ab5d0a73b@igalia.com>
+Date: Thu, 28 Sep 2023 15:36:09 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0009
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0009
+------------------------------------------------------------------------
 
- > I think the libgit2 issue was never brought to oss-security, so I am
- > passing its mention to here now.  Also per that thread, CVE-2022-46176
- > is only for the Cargo issue.  libgit2 was supposed to get its own CVE,
- > but no one in the thread knew whether they actually did.
+Date reported           : September 28, 2023
+Advisory ID             : WSA-2023-0009
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0009.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0009.html
+CVE identifiers         : CVE-2023-39928, CVE-2023-35074,
+                          CVE-2023-39434, CVE-2023-40451,
+                          CVE-2023-41074, CVE-2023-41993.
 
-The Rust project was in contact with the libgit2 maintainers to coordinate the 
-two disclosures (that's why we mentioned it in the distros email), but some 
-miscommunication happened and the libgit2 side of the advisory didn't end up 
-being posted here by its maintainers.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-libgit2's advisory is available here, and has CVE-2023-22742 assigned to it:
+CVE-2023-39928
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
+    Credit to Marcin 'Icewall' Noga of Cisco Talos.
+    A use-after-free vulnerability exists in the MediaRecorder API of
+    the WebKit GStreamer-based ports (WebKitGTK and WPE WebKit). A
+    specially crafted web page can abuse this vulnerability to cause
+    memory corruption and potentially arbitrary code execution. A user
+    would need to to visit a malicious webpage to trigger this
+    vulnerability. WebKit Bugzilla: 260649.
 
-https://github.com/libgit2/libgit2/security/advisories/GHSA-8643-3wh5-rmjq
+CVE-2023-35074
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
+    Credit to Abysslab Dong Jun Kim(@smlijun) and Jong Seong
+    Kim(@nevul37).
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved memory handling.
 
- > I don't know whether libgit2 was actually fixed on that date as planned.
+CVE-2023-39434
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Francisco Alonso (@revskills), and Dohyun Lee (@l33d0hyun)
+    of PK Security.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: A use-after-free issue was addressed with improved
+    memory management.
 
-The libgit2 advisory and fix ended up being published later, on January 20th.
+CVE-2023-40451
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to an anonymous researcher.
+    Impact: An attacker with JavaScript execution may be able to execute
+    arbitrary code. Description: This issue was addressed with improved
+    iframe sandbox enforcement.
 
-Pietro.
-Rust Security Response WG
+CVE-2023-41074
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
+    Credit to 이준성(Junsung Lee) of Cross Republic and me Li.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
+
+CVE-2023-41993
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.1.
+    Credit to Bill Marczak of The Citizen Lab at The University of
+    Toronto's Munk School and Maddie Stone of Google's Threat Analysis
+    Group.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Apple is aware of a report that this issue may have been actively
+    exploited. Description: The issue was addressed with improved
+    checks.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+September 28, 2023
