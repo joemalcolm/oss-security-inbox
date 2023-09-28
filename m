@@ -1,4 +1,4 @@
-Received: (qmail 16336 invoked by uid 550); 8 Apr 2025 20:29:34 -0000
+Received: (qmail 11279 invoked by uid 550); 28 Sep 2023 13:36:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,120 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19546 invoked from network); 8 Apr 2025 20:13:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202408; h=OpenPGP:Content-Type:MIME-Version:Reply-To:
-	Message-ID:Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References:OpenPGP:Organization:Auto-Submitted;
-	bh=6hBODjIaL2eJC3aYi/xhrtoXa2RitQFQBJa++8oQfKY=; t=1744143184; x=1745352784; 
-	b=QZLvZJBUrQHpS885aNlyb5VWc7M23aBTkunfRk22e+MTKsyXuMDk2DDmbH+r4fON3Gzbb4LxmfS
-	iad9o4J8Vk9VXdJFb/ZXuwp2jiQDFPN7CRCwWyvZSh6qfDg+EOFroAugRb8DUro3X8Yv4m4lgYNJC
-	v3XFsIfrFO9Uzc2IwVg5pD+wi/ShzZ1LoZGBzJ51BVKscsQ4yXKMsZ8kJUXhPDbngs1N0DXOT2uzp
-	sSiKVseEzLdlqenVHJMBWZ4rXPNwI5c5PnK05tx3CvO56uJYsRJrsD3N9lWvBp5KMoxgeCIup/+ah
-	H8hj449BVJndv2p73bYKtfZ78vNu5CyT37Xw==;
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202408e2; h=OpenPGP:Content-Type:MIME-Version:Reply-To:
-	Message-ID:Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References:OpenPGP:Organization:Auto-Submitted;
-	bh=6hBODjIaL2eJC3aYi/xhrtoXa2RitQFQBJa++8oQfKY=; t=1744143184; x=1745352784; 
-	b=wLiDGtaVWEvGrDtuu20PGOeN7dNUWG7H++hXjYpn8YmEOEBt9sIKobIj7vSkKd5ue5dmj+kl5Zl
-	Q6lGC+HM/BA==;
-Date: Tue, 8 Apr 2025 16:12:49 -0400
-From: Phil Pennock <oss-security-phil@spodhuis.org>
-To: oss-security@lists.openwall.com
-Cc: pdp@nats.io
-Message-ID: <Z_WDQW-c48zcimAf@fullerene.field.pennock-tech.net>
+Received: (qmail 10223 invoked from network); 28 Sep 2023 13:36:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=zS1NgXkw0b8PIiuDkPNLPPtu25s3dpuI1js8FG4w1ME=; b=kIhrRqQm0tgty8TFrHb3YIMnO7
+	fjrPKrbfIk9i1JRgTKfygO0NmV1gb6LzzPHwfE7svS4uBZmrXu3biv9zcDEeIoowD3m5q5mUWzPJa
+	hZkwNv8A/Nx9oiqwQpW6Hg1vZbI0mXzAQ55oysbePnBLfzQt/P53VFSWe9WsPuoTJOqwWLLiHDj/G
+	Fwoao+AyVX2gJILs8vhNB5/7uEI+GBbwvIB+LCA2pinkGGtIDq9/xXUgFgkW64s7qZd2NEA5aSCi2
+	aFDzmx71ANSglIIkJ4fBVHXNNaPLUL7LJU2ygKXynLBALWTTzWAAEDQfDJg2PMKt9r1Vo6pEm27bV
+	2MfNBpyQ==;
+Message-ID: <8c649bda-f460-31be-c058-ea2ab5d0a73b@igalia.com>
+Date: Thu, 28 Sep 2023 15:36:09 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="/yBInQGRIXpwZTnJ"
-Content-Disposition: inline
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/key2020-cv25519.asc
-Subject: [oss-security] CVE-2025-30215: nats-server: Missing access controls for JS API
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-GB
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0009
 
---/yBInQGRIXpwZTnJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0009
+------------------------------------------------------------------------
 
-Missing access controls for JS API in multi-tenancy
+Date reported           : September 28, 2023
+Advisory ID             : WSA-2023-0009
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0009.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0009.html
+CVE identifiers         : CVE-2023-39928, CVE-2023-35074,
+                          CVE-2023-39434, CVE-2023-40451,
+                          CVE-2023-41074, CVE-2023-41993.
 
-NATS-advisory-ID: 2025-01
-Aliases: CVE-2025-30215, GHSA-fhg8-qxh5-7q3w
-Date: 2025-04-08
-Fixed-In: nats-server 2.11.1, 2.10.27
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Background:
+CVE-2023-39928
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
+    Credit to Marcin 'Icewall' Noga of Cisco Talos.
+    A use-after-free vulnerability exists in the MediaRecorder API of
+    the WebKit GStreamer-based ports (WebKitGTK and WPE WebKit). A
+    specially crafted web page can abuse this vulnerability to cause
+    memory corruption and potentially arbitrary code execution. A user
+    would need to to visit a malicious webpage to trigger this
+    vulnerability. WebKit Bugzilla: 260649.
 
-NATS.io is a high performance open source pub-sub distributed communication
-technology, built for the cloud, on-premise, IoT, and edge computing.
+CVE-2023-35074
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
+    Credit to Abysslab Dong Jun Kim(@smlijun) and Jong Seong
+    Kim(@nevul37).
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved memory handling.
 
-The NATS account system provides for multi-tenancy and isolation.
-JetStream provides for persistent storage of messages and at-least-once
-guarantees.
+CVE-2023-39434
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to Francisco Alonso (@revskills), and Dohyun Lee (@l33d0hyun)
+    of PK Security.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: A use-after-free issue was addressed with improved
+    memory management.
 
+CVE-2023-40451
+    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
+    Credit to an anonymous researcher.
+    Impact: An attacker with JavaScript execution may be able to execute
+    arbitrary code. Description: This issue was addressed with improved
+    iframe sandbox enforcement.
 
-Problem Description:
+CVE-2023-41074
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
+    Credit to 이준성(Junsung Lee) of Cross Republic and me Li.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved checks.
 
-The management of JetStream assets happens with messages in the `$JS.`
-subject namespace in the system account; this is partially exposed into
-regular accounts to allow account holders to manage their assets.
-
-Some of the JS API requests were missing access controls, allowing any
-user with JS management permissions in any account to perform certain
-administrative actions on any JS asset in any other account.
-At least one of the unprotected APIs allows for data destruction.
-None of the affected APIs allow disclosing stream contents.
-
-
-Affected versions:
-
-NATS Server:
- * Version 2 from v2.2.0 onwards, prior to v2.11.1 or v2.10.27
-
-
-Workarounds:
-
-None
-
-
-Solution:
-
-Upgrade the NATS server to a fixed version.
-
-
-Credits:
-
-This problem was reported by Thomas Morgan on 2025-03-05.
-
-
-Timeline Note:
-
-The GHSA is currently (2024-04-08) still draft, and we intend to publish
-it one week from today, with the original reporter's full details on how
-they verified the bug.
-
-
-References:
-
- * This document is canonically:
-   <https://advisories.nats.io/CVE/secnote-2025-01.txt>
- * GHSA advisory (pending):
-   <https://github.com/nats-io/nats-server/security/advisories/GHSA-fhg8-qxh5-7q3w>
- * MITRE CVE entry:
-   <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-30215>
+CVE-2023-41993
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.1.
+    Credit to Bill Marczak of The Citizen Lab at The University of
+    Toronto's Munk School and Maddie Stone of Google's Threat Analysis
+    Group.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Apple is aware of a report that this issue may have been actively
+    exploited. Description: The issue was addressed with improved
+    checks.
 
 
---/yBInQGRIXpwZTnJ
-Content-Type: application/pgp-signature; name="signature.asc"
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
------BEGIN PGP SIGNATURE-----
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-iHUEABYIAB0WIQSpb2i1s4FmGYGL+VvhPiXtYNF+awUCZ/WDOAAKCRDhPiXtYNF+
-a7DoAQCFTGp10m0oKo2gnXOZ9wyvl8PE4vh91hsGTQvp+616RgEA+afEcXgaIsTw
-lPdBkm4nX7oD83hsZd8TowSQUOgHNAc=
-=aDrL
------END PGP SIGNATURE-----
-
---/yBInQGRIXpwZTnJ--
+The WebKitGTK and WPE WebKit team,
+September 28, 2023
