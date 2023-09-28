@@ -1,44 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/26/2
-Message-ID: <841313aeae2c595e9ed3cf2f7197a7c3.939be4cb@humanizers.horsehide>
-Date: Thu, 26 Oct 2023 23:11:32 +0300
-From: Turistu <turistu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/6
+Message-ID: <ZRXlPoozp5n+cWv1@itl-email>
+Date: Thu, 28 Sep 2023 16:42:33 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
-> ### Firefox Patch
-> ```
-> diff -r 9b362770f30b layout/generic/nsFrameSelection.cpp
-> --- a/layout/generic/nsFrameSelection.cpp	Fri Oct 06 12:03:17 2023 +0000
-> +++ b/layout/generic/nsFrameSelection.cpp	Sun Oct 08 11:04:41 2023 +0300
-> @@ -3345,6 +3345,10 @@
->      return;  // Don't care if we are still dragging.
->    }
->  
-> +  if (aReason & nsISelectionListener::JS_REASON) {
-> +    return;
-> +  }
-> +
->    if (!aDocument || aSelection.IsCollapsed()) {
->  #ifdef DEBUG_CLIPBOARD
->      fprintf(stderr, "CLIPBOARD: no selection/collapsed selection\n");
-> ```
+On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
+> Google has announced another media parsing bug, this time correctly documenting
+> both the base library and Chrome versions affected in the CVE.
 > 
-> The idea of this patch was to *always* prevent javascript from indirectly
-> messing with the primary selection via the Selection API. However, it turned
-> out that the `JS_REASON` flag was not reliable; if javascript calls some
-> function like `addRange()` or `selectAllChildren()` while the user has started
-> dragging but hasn't released the mouse button yet, that code will be called
-> *without* that flag but with the text set by javascript, not the text
-> selected by the user. However, I think that this patch is still enough
+> https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
+> 
+>    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
+>    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
+>    exploit heap corruption via a crafted HTML page.
+>    (Chromium security severity: High)
+> 
+> Unfortunately, the bug report it points to is restricted access still:
+> https://crbug.com/1486441
+> 
+> But the Chrome release notes state:
+>    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
+> https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_27.html
+> 
+> Mozilla has put out their own security advisory at
+> https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
+> and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
+> Firefox Focus for Android 118.1, and Firefox for Android 118.1.
+> 
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1855550 is also still
+> restricted access.
+> 
+> It does not appear that libvpx 1.13.1 has been released yet, but there
+> are two commits in its git repo with the 1486441 bug id listed:
+> 
+> https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d646e4ffef36d590
+> https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cca6e0417b290282
+> 
+> Mozilla's commit references these two libvpx commit ids as well:
+> https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f9130e1896b695d2
 
-They have recently added a (functionally identical) patch to mozilla-central:
-https://hg.mozilla.org/mozilla-central/rev/88e0043c5aa4234dada941ac2fd0ded875210508
+How long will it take for corporations to accept that writing media
+codecs in C, C++, or any other memory-unsafe language is a fundamentally
+bad idea, and that it is better to rewrite the codecs in a safe language
+(such as Wuffs or Rust) than to try to secure the existing ones?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-So the most egregious issue should be fixed in their "nighly" pre-release
-version of firefox soon.
-
-I have updated my write-up with that and more info at:
-https://github.com/turistu/odds-n-ends/blob/main/firefox/pastejack.md
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
