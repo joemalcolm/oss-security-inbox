@@ -1,45 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/12/2
-Message-ID: <9112e483-7262-06ac-9211-2dbdca45c7e9@apache.org>
-Date: Tue, 12 Dec 2023 20:09:47 +0000
-From: Nick Vatamaniuc <vatamane@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/7
+Message-ID: <e211acf3-b142-261d-21e1-ae4494ebc0c6@christopherschultz.net>
+Date: Thu, 28 Sep 2023 16:45:36 -0400
+From: Christopher Schultz <chris@...istopherschultz.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-45725: Apache CouchDB, IBM Cloudant: Privilege Escalation Using _design Documents 
+Subject: CVE-2023-41081: Apache Tomcat Connectors: Unexpected use of first declared worker in mod_jk for unmapped request [CORRECTION]
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: important
 
 Affected versions:
 
-- Apache CouchDB through 3.3.2
-- IBM Cloudant before 8413
+- Apache Tomcat Connectors 1.2.0 through 1.2.48
 
 Description:
 
-Design document functions which receive a user http request object may expose authorization or session cookie headers of the user who accesses the document.
+Important: Authentication Bypass CVE-2023-41081
 
-These design document functions are:
-  *    list
-  *    show
-  *    rewrite
-  *    update
+The mod_jk component of Apache Tomcat Connectors in some circumstances, 
+such as when a configuration included "JkOptions +ForwardDirectories" 
+but the configuration did not       provide explicit mounts for all 
+possible proxied requests, mod_jk would       use an implicit mapping 
+and map the request to the first defined worker. Such an implicit 
+mapping could result in the unintended exposure of the status worker 
+and/or bypass security constraints configured in httpd. As of JK 1.2.49, 
+the implicit mapping functionality has been removed and all mappings 
+must now be via explicit configuration. Only mod_jk is affected by this 
+issue. The ISAPI redirector is not affected.
 
-An attacker can leak the session component using an HTML-like output, insert the session as an external resource (such as an image), or store the credential in a _local document with an "update" function.
+This issue affects Apache Tomcat Connectors (mod_jk only): from 1.2.0 
+through 1.2.48.
 
-For the attack to succeed the attacker has to be able to insert the design documents into the database, then manipulate a user to access a function from that design document.
+Users are recommended to upgrade to version 1.2.49, which fixes the issue.
 
-Workaround: Avoid using design documents from untrusted sources which may attempt to access or manipulate request object's headers
+History
+2023-09-13 Original advisory
+
+2023-09-28 Updated summary
 
 Credit:
 
-Natan Nehorai from the JFrog Vulnerability Research Team (finder)
-Or Peles from the JFrog Vulnerability Research Team (reporter)
-Richard Ellis from IBM/Cloudant Team (finder)
-Mike Rhodes from IBM/Cloudant Team (finder)
+Karl von Randow (finder)
 
 References:
 
-https://docs.couchdb.org/en/stable/cve/2023-45725.html
-https://couchdb.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-45725
+https://lists.apache.org/thread/rd1r26w7271jyqgzr4492tooyt583d8b
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-41081
 
