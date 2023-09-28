@@ -1,71 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/12
-Message-ID: <CAH8yC8nYOGAsnPkm+f3-b7r4PvZ=QxeKT9DXK=MoFVoFDGav9w@mail.gmail.com>
-Date: Thu, 20 Apr 2023 11:47:16 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/1
+Message-ID: <ZRU5efsKAQYM874Z@eldamar.lan>
+Date: Thu, 28 Sep 2023 10:29:45 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 20, 2023 at 9:05 AM Steffen Nurpmeso <steffen@...oden.eu> wrote:
->
-> Hanno Böck wrote in
->  <20230420073459.003a5be2.hanno@...eck.de>:
->  |On Wed, 19 Apr 2023 23:53:40 +0200
->  |Steffen Nurpmeso <steffen@...oden.eu> wrote:
->  |> IMO it is no vulnerability at all since it has "always" been _very
->  |> clearly_ (even very lengthily) documented in the manual page.
->  |
->  |A vulnerability does not go away if it's documented, and I find that a
->  |rather strange take.
->
-> Hm no, i do not, the latter not at all.  You can bundle a OpenPGP
-> / signify / even OpenSSL signature with something and can get
-> secure download even over non-encrypted channels.  Even DNSSEC was
-> over unencrypted channels for twenty years, and still mostly is,
-> so, .. that i say that one day, _that_ is strange.
-> I mean, i do not want to start useless and fruitless discussions,
-> and it will be treated as a bug in HTTP::Tiny no matter what
-> i say, hysteria is king.
+Hi,
 
-According to the HTTP::Tiny docs:
+On Tue, Sep 26, 2023 at 05:34:54PM +0200, Solar Designer wrote:
+> Hi,
+> 
+> It was great to hear from Vincent that the newer libwebp changes are
+> just "Clean-ups, no security issues there."  Yet I think it would also
+> be great if someone in here double-checks that.
+> 
+> Regarding the assert failure detected by oss-fuzz, "A release build
+> would not be negatively affected."  libwebp does specify -DNDEBUG by
+> default in:
+> 
+> $ fgrep -rl DNDEBUG .
+> ./Makefile.vc
+> ./xcframeworkbuild.sh
+> ./iosbuild.sh
+> ./configure.ac
+> ./makefile.unix
+> 
+> and there's also cmake support, but apparently cmake sets -DNDEBUG for
+> release builds by default.  So at least this statement does appear to be
+> true for libwebp itself as built via the above means.
+> 
+> However, there's also Gradle support, and the gradle* files do not
+> mention NDEBUG.
+> 
+> Also, I wonder if there are other projects building code from libwebp
+> via different build environments.
+> 
+> So there might be (a small minority of) uses of libwebp where the assert
+> exists in a release build of some project.
+> 
+> On Tue, Sep 26, 2023 at 11:43:45AM +0200, Salvatore Bonaccorso wrote:
+> > Maybe related to this question in todays CVEs updates there appeared 
+> > 
+> > https://www.cve.org/CVERecord?id=CVE-2023-5129
+> > 
+> > vs.
+> > 
+> > https://www.cve.org/CVERecord?id=CVE-2023-4863
+> > 
+> > FWIW, I contacted the assigning CNAs so this can be clarified (e.g. if
+> > one of those needs to be rejected).
+> 
+> CVE-2023-5129 description looks like what the original's should have been:
+> 
+> > Assigner: Google LLC
+> > Published: 2023-09-25Updated: 2023-09-25
+> > 
+> > With a specially crafted WebP lossless file, libwebp may write data out
+> > of bounds to the heap. The ReadHuffmanCodes() function allocates the
+> > HuffmanCode buffer with a size that comes from an array of precomputed
+> > sizes: kTableSize. The color_cache_bits value defines which size to use.
+> > The kTableSize array only takes into account sizes for 8-bit first-level
+> > table lookups but not second-level table lookups. libwebp allows codes
+> > that are up to 15-bit (MAX_ALLOWED_CODE_LENGTH). When
+> > BuildHuffmanTable() attempts to fill the second-level tables it may
+> > write data out-of-bounds. The OOB write to the undersized array happens
+> > in ReplicateValue.
+> > 
+> > Vendor
+> > libwebp
+> > 
+> > Product
+> > libwebp
+> > 
+> > Versions
+> > affected from 0.5.0 before 1.3.2
+> > 
+> > Credits
+> > 
+> >     Apple Security Engineering and Architecture (SEAR) finder
+> >     The Citizen Lab at The University of Toronto's Munk School finder
+> > 
+> > References
+> > 
+> >     https://chromium.googlesource.com/webm/libwebp/+/902bc9190331343b2017211debcec8d2ab87e17a
+> >     https://chromium.googlesource.com/webm/libwebp/+/2af26267cdfcb63a88e5c74a85927a12d6ca1d76
 
-    Server identity verification is controversial and potentially tricky
-    because it depends on a (usually paid) third-party Certificate
-    Authority (CA) trust model to validate a certificate as legitimate.
-    This discriminates against servers with self-signed certificates or
-    certificates signed by free, community-driven CA's such as CAcert.org.
+An update on this: CVE-2023-5129 has now been rejected.
 
-I think some of the premises no longer hold.
+> Rejected Reason: This CVE ID has been rejected or withdrawn by its CVE
+> Numbering Authority. Duplicate of CVE-2023-4863. 
 
-The threat models I have seen depend upon authentic comms. You have to
-know which server you are talking to to ensure confidentiality and
-authenticity. There's nothing controversial about them.
-
-There's also the pervasive spying the world has evidence of since
-leaks like Snowden. We know folks are being spied upon by the
-government, and we know people can be tortured or die from it if they
-live under a despot regime. There's nothing controversial about using
-HTTPS to help achieve confidentiality.
-
-I don't think HTTPS discriminates against servers with self-signed
-certificates. A user is free to limit trust to a single, self-signed
-certificate. The docs show the user how to do it.
-
-I don't think HTTPS discriminates against free, community-driven CA's.
-Let's Encrypt is quite popular and still free.
-
-A more interesting question (to me) is, how does HTTP::Tiny
-differentiate between comms that need server authentication (like
-fetching a web page) versus those that don't (like a download with a
-GPG signature). The answer is likely, HTTP::Tiny cannot.
-SinceHTTP::Tiny cannot determine when the user needs HTTPS (or not),
-it should default to HTTPS.
-
-In general, nowadays, I think the person who is maintaining HTTP::Tiny
-is plunging on the wrong sword. There are better battles to fight
-nowadays.
-
-(Sorry to wander off-topic).
-
-Jeff
+Regards,
+Salvatore
