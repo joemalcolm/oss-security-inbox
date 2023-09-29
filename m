@@ -1,72 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/4
-Message-ID: <c2d7a824-5122-e130-68c8-44ddc1ffd241@redhat.com>
-Date: Thu, 22 Jun 2023 12:02:39 +0200
-From: Zdenek Dohnal <zdohnal@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/9
+Message-ID: <CAH8yC8mV5LGBhbFHo+u7j7xWGbKS5_tOPiGA=1XhwCg65-Dj3A@mail.gmail.com>
+Date: Fri, 29 Sep 2023 14:29:17 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34241: CUPS: use-after-free in cupsdAcceptClient()
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Thu, Sep 28, 2023 at 5:10 PM Demi Marie Obenour
+<demi@...isiblethingslab.com> wrote:
+>
+> On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
+> > Google has announced another media parsing bug, this time correctly documenting
+> > both the base library and Chrome versions affected in the CVE.
+> >
+> > https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
+> >
+> >    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
+> >    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
+> >    exploit heap corruption via a crafted HTML page.
+> >    (Chromium security severity: High)
+> >
+> > Unfortunately, the bug report it points to is restricted access still:
+> > https://crbug.com/1486441
+> >
+> > But the Chrome release notes state:
+> >    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
+> > https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_27.html
+> >
+> > Mozilla has put out their own security advisory at
+> > https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
+> > and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
+> > Firefox Focus for Android 118.1, and Firefox for Android 118.1.
+> >
+> > https://bugzilla.mozilla.org/show_bug.cgi?id=1855550 is also still
+> > restricted access.
+> >
+> > It does not appear that libvpx 1.13.1 has been released yet, but there
+> > are two commits in its git repo with the 1486441 bug id listed:
+> >
+> > https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d646e4ffef36d590
+> > https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cca6e0417b290282
+> >
+> > Mozilla's commit references these two libvpx commit ids as well:
+> > https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f9130e1896b695d2
+>
+> How long will it take for corporations to accept that writing media
+> codecs in C, C++, or any other memory-unsafe language is a fundamentally
+> bad idea, and that it is better to rewrite the codecs in a safe language
+> (such as Wuffs or Rust) than to try to secure the existing ones?
 
-there is currently the embargoed CVE-2023-34241 in CUPS project:
+Small nit... Folks would lose a lot of platforms by selecting Rust.
+Rust is only guaranteed to work on a handful of platforms. At this
+time, it looks like it is i686 and x86_64. Confer,
+<https://doc.rust-lang.org/nightly/rustc/platform-support.html>.
 
+And that's been my experience with Rust. For a new project I worked
+on, Rust only worked on x86_64. It could not compile its own cargos on
+armv7, aarch64 or powerpc. We had to (re)start a project from scratch
+after that. And it got written in C, though we should have done it in
+C++. We lost so much time due to Rust we did not have the cycles to
+move from C to C++.
 
-      Summary
-
-Cups logs data of free memory to the logging service AFTER the 
-connection has been closed, when it should have logged the data right 
-before.
-
-
-      Details
-
-The exact cause of this issue is the function httpClose(con->http) being 
-called in scheduler/client.c before
-
-|httpClose(con->http); cupsdLogClient(con, CUPSDLOGWARN, "IP lookup 
-failed - connection from %s closed!", httpGetHostname(con->http, NULL, 0));|
-
-The problem is that httpClose always, provided its argument is not null, 
-frees the pointer at the end of the call, only for cupsdLogClient to 
-pass the pointer to httpGetHostname.
-
-This issue happens in function cupsdAcceptClient if LogLevel is |warn| 
-or higher and in two scenarios:
-
-  * there is a double-lookup for the IP Address (|HostNameLookups
-    Double| is set in |cupsd.conf|) which fails to resolve,
-  * or if CUPS is compiled with TCP wrappers and the connection is
-    refused by rules from |/etc/hosts.allow| and |/etc/hosts.deny|.
-
-
-      Reproducer
-
-None provided
-
-
-      Impact
-
-This is a use-after-free bug, that impacts the entire cupsd process.
-
-If you need an exploit scenario, consider: local (unprivileged) attacker 
-who happens to be able to read the log using it to exfiltrate private 
-keys and info from a privileged cups daemon
-or simply denial-of-service by making it crash.
-
-
-      Patch
-
-Committed as 
-https://github.com/OpenPrinting/cups/commit/9809947a959e18409dcf562a3466ef246cb90cb2
-
-
-For OpenPrinting CUPS community,
-
-Zdenek Dohnal (CUPS 2.4.x release manager)
-
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
-
+Jeff
