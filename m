@@ -1,81 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/26/1
-Message-ID: <20230826023129.GA2930052@millbarge>
-Date: Sat, 26 Aug 2023 02:31:29 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/6
+Message-ID: <b6e3aaa0-5d6b-cb13-d602-142f325a5544@apache.org>
+Date: Fri, 29 Sep 2023 16:12:45 +0000
+From: Ryan Skraba <rskraba@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel, again
+Subject: CVE-2023-39410: Apache Avro Java SDK: Memory when deserializing untrusted data in Avro Java SDK 
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
-> I'd appreciate any well-reasoned votes and constructive suggestions.
-> Maybe there are good ideas that didn't cross my mind yet.
+Severity: low
 
-I think we'd all be better served to wait until next year before we try to
-make changes. Some additional space would probably do everyone some good.
+Affected versions:
 
-For my own part, I was frustrated getting a dozen emails about the policy
-and deadlines and folks saying "we don't even have a fix yet please back
-off" etc over and over and over again. There were usually more emails
-about the policy than about the issue. I can't speak for the others but
-perhaps if we, as a group, were less vocal about the policies on every
-single bug report it might have been easier to work together.
+- Apache Avro Java SDK before 1.11.3
 
-For every security issue in the kernel that gets a CVE and The Whole
-Process, I'm sure there's five or ten more that go unnoticed by the
-wider world. Trying to do The Security Process on the ones that come to
-light feels silly when there's far more issues that may allow privilege
-escalation that never get the theater treatment. While we can (and should)
-try to bring more of these to light we might also reduce the friction on
-the ones that do come to light.
+Description:
 
-I was also annoyed with the endless stream of "I found a security bug in
-the kernel, give me a CVE!" that are a mangled syzkaller reproducer and
-no work to diagnose the problem or propose a patch. If every syzkaller
-issue received a CVE automatically, we'd immediately remove the most
-noisome posts.
+When deserializing untrusted or corrupted data, it is possible for a reader to consume memory beyond the allowed constraints and thus lead to out of memory on the system.
 
-Here's what I think would help the most, if we in the future try to get
-copied on reports "like the old days":
+This issue affects Java applications using Apache Avro Java SDK up to and including 1.11.2.  Users should update to apache-avro version 1.11.3 which addresses this issue.
 
-- No replies from distros@ subscribers about list policies. None. distros@
-  subscribers can and should feel free to engage about the bug, about
-  testing, about concerns, etc. But none about the list policies.
+This issue is being tracked as AVRO-3819 
 
-  We all know that the kernel developers don't just sit on reports for
-  six months before they're forced to take action by public posts. They
-  want fixes in a timely fashion and they're doing the work to deliver
-  fixes in a timely fashion.
+Credit:
 
-  They publish their patches in public very soon after the work is
-  complete which addresses your concern about the inboxes and mail
-  servers being a jackpot of private vulnerabilities.
+Adam Korczynski at ADA Logics Ltd (finder)
 
-  We shouldn't harangue them about the policies.
+References:
 
-- Make it clear to all that distributions can apply fixes to their kernels
-  as soon as patches are in publicly visible trees or mail lists. Trying
-  to coordinate dates didn't work well: The kernel people don't want
-  to hold off on publishing fixes for an arbitrary reason. The distro
-  people have their own cycles for integrating patches, performing quality
-  control, preferences to not publish updates on important holidays or
-  weekends, etc.
+https://avro.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-39410
+https://issues.apache.org/jira/browse/AVRO-3819
 
-  Let's just let the kernel developers work on fixes on their own schedule
-  and whenever they go public, just go with it.
-
-  We shouldn't try to coordinate dates.
-
-- Ask Red Hat's CNA to consider setting up an automatic CVE assignment
-  process for syzkaller issues. (Red Hat's CNA is now serving as a Root
-  CNA for FOSS issues in general, so it feels like a plausible place to
-  put this process. Google runs syzkaller and has four CNAs, perhaps
-  one of them would be a better fit. Maybe the Linux Foundation could
-  run a CNA for this purpose. I'm not picky.)
-
-  We shouldn't indulge the very-low-effort-researchers who aren't putting
-  in much effort but trying to get CVEs.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
