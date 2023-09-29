@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/18/2
-Message-Id: <26BD1B76-2CA5-4BC9-8601-60A5F78892A0@zoulas.com>
-Date: Sat, 18 Mar 2023 09:34:04 -0400
-From: Christos Zoulas <christos@...las.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/1
+Message-ID: <fu34pmyckhgrjugxc2pqbj5afhtsf5jisnbpjghhkr7rfie3my@53a2ma3ekn6i>
+Date: Thu, 28 Sep 2023 17:10:09 -0700
+From: nightmare.yeah27@...ecat.org
 To: oss-security@...ts.openwall.com
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-I think that the original reason was for csh(1) to implement file completion:
-https://nxr.netbsd.org/xref/src/bin/csh/file.c#161
-I still have a use case for it. Sometimes I lose my VPN tunnel and an
-ssh session where I am running vi(1) suddenly dies. When I ssh to that
-machine, I can easily find the tty where the vi session is with ps(1) and
-then type "sti pts/X :wq\\n" and save the file  (https://man.netbsd.org/sti.8):-)
-Of course on NetBSD you need to be root to use TIOCSTI.
+On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
 
-Best,
+> How long will it take for corporations to accept that writing media
+> codecs in C, C++, or any other memory-unsafe language is a
+> fundamentally bad idea, and that it is better to rewrite the codecs
+> in a safe language (such as Wuffs or Rust) than to try to secure the
+> existing ones?
 
-christos
+Wouldn't the low-level code have to ultimately depend on unsafe Rust
+modules, or similar feature in other safe language?
 
-> On Mar 17, 2023, at 7:13 PM, Lyndon Nerenberg (VE7TFX/VE6BBM) <lyndon@...hanc.ca> wrote:
-> 
-> Does anyone even remember why TIOCSTI was added in the
-> first place?  I remember stumbling across it decades
-> ago (SVR?), but I've ever seen a use case for it.
-> It puzzled me back then why it even existed.
-> 
-> --lyndon
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
+-- 
+Ian
