@@ -1,92 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/4
-Message-ID: <bfeb845f-4e9a-69fa-3c09-a97eed9d3247@gmail.com>
-Date: Wed, 1 Feb 2023 12:00:48 +0100
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/8
+Message-ID: <20230929165914.GA31245@openwall.com>
+Date: Fri, 29 Sep 2023 18:59:14 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2023-23969: Potential denial-of-service via Accept-Language headers.
+Cc: zdi@...ndmicro.com
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2023/feb/01/security-releases/
+Hi,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.1.6 <https://docs.djangoproject.com/en/dev/releases/4.1.6/>`_,
-`Django 4.0.9 <https://docs.djangoproject.com/en/dev/releases/4.0.9/>`_, and
-`Django 3.2.17 <https://docs.djangoproject.com/en/dev/releases/3.2.17/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+Thank you for posting this, Heiko!  Also thank you Markus for bringing
+this up in the other thread:
 
-CVE-2023-23969: Potential denial-of-service via ``Accept-Language`` headers
-===========================================================================
+https://www.openwall.com/lists/oss-security/2023/09/29/3
 
-The parsed values of ``Accept-Language`` headers are cached in order to 
-avoid
-repetitive parsing. This leads to a potential denial-of-service vector via
-excessive memory usage if large header values are sent.
+I've attached plain text exports of the ZDI advisories to this message
+for archival.
 
-In order to avoid this vulnerability, the ``Accept-Language`` header is now
-parsed up to a maximum length.
+Out of the Exim Bugzilla entries in Markus' message, only
+https://bugs.exim.org/show_bug.cgi?id=3001 is currently open to the
+public, and it says:
 
-Thanks to Nick Pope for the report and patch.
+> Bug 3001 - infoleak in SPA authenticator, client
+> 
+> Comment 1 Jeremy Harris 2023-05-11 20:02:32 UTC
+> 
+> ZDI-CAN-17433 (Trend Micro)
+> 
+> A crafted SPA challenge from the server can cause the client authenticator
+> to read OOB; the data is then returned to the server.
+> 
+> Fix: validate the offset contained in the challenge, to avoid reading
+> past the end of the challenge data structure.
+> 
+> Vulnerable since at least 4.50, probably longer.
+> 
+> Comment 2 Heiko Schlittermann 2023-09-29 16:01:58 UTC
+> 
+> should be fixed in 04107e98d58efb69f7e2d7b81176e5374c7098a3
 
-This issue has severity "moderate" according to the Django security policy.
+On Fri, Sep 29, 2023 at 06:06:11PM +0200, Heiko Schlittermann wrote:
+> the ZDI assigned multiple CVEs to the Exim-MTA and published them
+> recently:
+> 
+> CVE            Link                                                      Exim-Bug
+> --------------+---------------------------------------------------------+-----
+> CVE-2023-42114 https://www.zerodayinitiative.com/advisories/ZDI-23-1468/  3001 fixed
+> CVE-2023-42115 https://www.zerodayinitiative.com/advisories/ZDI-23-1469/  2999 fixed
+> CVE-2023-42116 https://www.zerodayinitiative.com/advisories/ZDI-23-1470/  3000 fixed
+> CVE-2023-42117 https://www.zerodayinitiative.com/advisories/ZDI-23-1471/
+> CVE-2023-42118 https://www.zerodayinitiative.com/advisories/ZDI-23-1472/
+> CVE-2023-42119 https://www.zerodayinitiative.com/advisories/ZDI-23-1473/ 
+> 
+> The ZDI contacted us in June 2022. We asked about details but didn't get
+> answers we were able to work with.
+> 
+> Next contact with ZDI was in May 2023. Right after this contact we
+> created project bug tracker for 3 of the 6 issues. 2 high scored of them
+> are fixed (OOB access). A minor scored (info leak) is fixed too.
+> 
+> Fixes are available in a protected repository and are ready to be
+> applied by the distribution maintainers.
 
-Affected supported versions
-===========================
+Are distros allowed to make their updates public as soon as they can
+(presumably after requesting access to the protected repository)?
 
-* Django main branch
-* Django 4.2 (currently at pre-release alpha status)
-* Django 4.1
-* Django 4.0
-* Django 3.2
+I suggest that you set a specific date/time e.g. in 2 days from now when
+both the Exim project will make the repo and the fixed bug entries (2999
+and 3000) public _and_ distros will release updates.
 
-Resolution
-==========
+> The remaining issues are debatable or miss information we need to fix
+> them.
+> 
+> We're more than happy to provide fixes for all issues as soon as we
+> receive detailed information.
 
-Patches to resolve the issue have been applied to Django's main branch 
-and the
-4.2, 4.1, 4.0, and 3.2 release branches. The patches may be obtained 
-from the
-following changesets:
+Are you actively requesting such information from ZDI now?
 
-* On the `main branch 
-<https://github.com/django/django/commit/8c660fb59239828583f17cdede3b64f208b8752c>`__
-* On the `4.2 release branch 
-<https://github.com/django/django/commit/8a7b22d4a623bcd95190d2f5a958472fb41e576d>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/9d7bd5a56b1ce0576e8e07a8001373576d277942>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/4452642f193533e288a52c02efb5bbc766a68f95>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/c7e0151fdf33e1b11d488b6f67b94fdf3a30614a>`__
+This looks like sloppy handling of these issues so far by both ZDI and
+Exim - neither team pinging the other for 10 months, then Exim taking 4
+months to fix even the 2 high-scored issues it did have sufficient info
+on.  What are you doing to improve the handling from this point on?
 
-The following releases have been issued:
+Thanks again,
 
-* Django 4.1.6 (`download Django 4.1.6 
-<https://www.djangoproject.com/m/releases/4.1/Django-4.1.6.tar.gz>`_ | 
-`4.1.6 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.1.6.checksum.txt>`_)
-* Django 4.0.9 (`download Django 4.0.9 
-<https://www.djangoproject.com/m/releases/4.0/Django-4.0.9.tar.gz>`_ | 
-`4.0.9 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.0.9.checksum.txt>`_)
-* Django 3.2.17 (`download Django 3.2.17 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.17.tar.gz>`_ | 
-`3.2.17 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.17.checksum.txt>`_)
+Alexander
 
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+View attachment "ZDI-23-1468-ZDI-CAN-17433-CVE-2023-42114.txt" of type "text/plain" (2458 bytes)
 
-General notes regarding security reporting
-==========================================
+View attachment "ZDI-23-1469-ZDI-CAN-17434-CVE-2023-42115.txt" of type "text/plain" (2432 bytes)
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+View attachment "ZDI-23-1470-ZDI-CAN-17515-CVE-2023-42116.txt" of type "text/plain" (2442 bytes)
 
+View attachment "ZDI-23-1471-ZDI-CAN-17554-CVE-2023-42117.txt" of type "text/plain" (2448 bytes)
+
+View attachment "ZDI-23-1472-ZDI-CAN-17578-CVE-2023-42118.txt" of type "text/plain" (2436 bytes)
+
+View attachment "ZDI-23-1473-ZDI-CAN-17643-CVE-2023-42119.txt" of type "text/plain" (2436 bytes)
