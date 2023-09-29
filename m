@@ -1,51 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/2
-Message-ID: <874jh4dscg.fsf@canonical.com>
-Date: Thu, 30 Nov 2023 10:28:55 +1030
-From: Alex Murray <alex.murray@...onical.com>
-To: Matthias Gerstner <mgerstner@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/12
+Message-ID: <20230929202415.bmsmbdapaljl2pf2@mutt-hbsd>
+Date: Fri, 29 Sep 2023 16:24:15 -0400
+From: Shawn Webb <shawn.webb@...denedbsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-Hi Matthias
+On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
+> On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
+> > Google has announced another media parsing bug, this time correctly documenting
+> > both the base library and Chrome versions affected in the CVE.
+> > 
+> > https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
+> > 
+> >    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
+> >    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
+> >    exploit heap corruption via a crafted HTML page.
+> >    (Chromium security severity: High)
+> > 
+> > Unfortunately, the bug report it points to is restricted access still:
+> > https://crbug.com/1486441
+> > 
+> > But the Chrome release notes state:
+> >    Google is aware that an exploit for CVE-2023-5217 exists in the wild.
+> > https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_27.html
+> > 
+> > Mozilla has put out their own security advisory at
+> > https://www.mozilla.org/en-US/security/advisories/mfsa2023-44/
+> > and delivered fixes in Firefox 118.0.1, Firefox ESR 115.3.1,
+> > Firefox Focus for Android 118.1, and Firefox for Android 118.1.
+> > 
+> > https://bugzilla.mozilla.org/show_bug.cgi?id=1855550 is also still
+> > restricted access.
+> > 
+> > It does not appear that libvpx 1.13.1 has been released yet, but there
+> > are two commits in its git repo with the 1486441 bug id listed:
+> > 
+> > https://github.com/webmproject/libvpx/commit/3fbd1dca6a4d2dad332a2110d646e4ffef36d590
+> > https://github.com/webmproject/libvpx/commit/af6dedd715f4307669366944cca6e0417b290282
+> > 
+> > Mozilla's commit references these two libvpx commit ids as well:
+> > https://hg.mozilla.org/mozilla-central/rev/c53f5ef77b62b79af86951a7f9130e1896b695d2
+> 
+> How long will it take for corporations to accept that writing media
+> codecs in C, C++, or any other memory-unsafe language is a fundamentally
+> bad idea, and that it is better to rewrite the codecs in a safe language
+> (such as Wuffs or Rust) than to try to secure the existing ones?
 
-I just wanted to follow-up on this to see if a CVE was ever assigned?
+$ git clone https://chromium.googlesource.com/webm/libvpx
+$ cd libvpx
+$ git log --reverse
+commit 0ea50ce9cb4b65eee6afa1d041fe8beb5abda667 (tag: v0.9.0)
+Author: John Koleszar <jkoleszar@...gle.com>
+Date:   Tue May 18 11:58:33 2010 -0400
+
+    Initial WebM release
+
+I think this might predate Rust. I wonder how many technical folk
+would welcome alternative implementations of various popular
+libraries.
+
+I especially am grateful for those who advocate for, and help advance,
+software diversity.
 
 Thanks,
-Alex
 
-On Mon, 2023-11-20 at 14:39:02 +0100, Matthias Gerstner wrote:
+-- 
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
 
-> Hi,
->
-> thank you both for your suggestions. I just reached out to
-> hp-security-alert@...com about this.
->
-> There are a couple of other hplip issues I know of that have also been
-> left unattended for a long time that I mentioned there as well.
->
-> Best Regards
->
-> Matthias
->
-> On Sun, Nov 19, 2023 at 07:11:37AM -0500, Mike O'Connor wrote:
->> [removing security@....com from the Cc:]
->> 
->> This is for hp.com product security, not hpe.com.  HP and HPE are two
->> separate companies, and HPE isn't the printer company.  
->> 
->> To report a potential security vulnerability with a HP product,
->> contact: hp-security-alert@...com
->> 
->> Both HPE and HP are CVE CNAs.  Here's HP's CVE CNA information:
->> https://www.cve.org/PartnerInformation/ListofPartners/partner/hp
->> 
->> 
->> HTH,
->> -Mike
->> 
->> 
->> :Thanks for making the community aware of this issue.
->> :
->> :Perhaps security@....com can help to route internally to get a CVE issued
->> :and find the appropriate owners to fix.
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
