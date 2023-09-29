@@ -1,53 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/01/1
-Message-ID: <9bf069f5-9476-45b0-a89b-6b5dbf1235ee@oracle.com>
-Date: Thu, 30 Nov 2023 16:42:04 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/2
+Message-ID: <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
+Date: Fri, 29 Sep 2023 09:16:21 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: New CVEs and security fix releases for perl
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-[While https://github.com/Perl/perl5/blob/blead/pod/perlsecpolicy.pod states
-  they will send security advisories to this list, I haven't seen any come
-  through yet for these issues.  -alan-]
+On Thu, 2023-09-28 at 16:42 -0400, Demi Marie Obenour wrote:
+> 
+> How long will it take for corporations to accept that writing media
+> codecs in C, C++, or any other memory-unsafe language is a fundamentally
+> bad idea, and that it is better to rewrite the codecs in a safe language
+> (such as Wuffs or Rust) than to try to secure the existing ones?
 
-https://metacpan.org/release/PEVANS/perl-5.38.1/view/pod/perldelta.pod lists
-two new CVE's:
+How long will it take for rust to quit changing the language,
+standardize itself, and enforce some notion of API/ABI stability? The
+thing we've already had with C and C++ for decades? As a result of the
+language's instability (and their attempt to hide it with a "package
+manager"), every rust package wants to install a gigabyte of bundled
+dependencies that are all pinned to old versions.
 
---------------------------------------------------------------------------------
-CVE-2023-47038 - Write past buffer end via illegal user-defined Unicode property
+Software engineering is a fractal. Memory safety inside a language is
+obviously desirable, but not if other design choices force everyone to
+go back to bundled libraries and static linking. The state of rust is
+that it's fun to write, but awful to use. If you want me to switch from
+C to another language, then projects written in that language can't be
+a nightmare to distribute and maintain.
 
-This vulnerability was reported directly to the Perl security team by
-Nathan Mills the.true.nathan.mills@...il.com.
+The situation is identical to how, ten years ago, we were going to
+rewrite everything in Haskell. Haskell has the same pro/con list as
+rust. But they never figured it out either. Every new release broke a
+ton of code, and so version constraints became so tight that you
+couldn't install more than a few programs at once without bundling. The
+resulting treadmill was never-ending. Once "this is cool!" wore off,
+everyone was left with "this is a waste of time."
 
-A crafted regular expression when compiled by perl 5.30.0 through 5.38.0 can
-cause a one-byte attacker controlled buffer overflow in a heap allocated buffer.
---------------------------------------------------------------------------------
-CVE-2023-47039 - Perl for Windows binary hijacking vulnerability
+Maybe someone at $corporation has figured out that rust is wasting
+their time.
 
-This vulnerability was reported to the Intel Product Security Incident Response
-Team (PSIRT) by GitHub user ycdxsb
-https://github.com/ycdxsb/WindowsPrivilegeEscalation.
-PSIRT then reported it to the Perl security team.
-
-Perl for Windows relies on the system path environment variable to find the
-shell (cmd.exe). When running an executable which uses Windows Perl interpreter,
-Perl attempts to find and execute cmd.exe within the operating system. However,
-due to path search order issues, Perl initially looks for cmd.exe in the current
-working directory.
-
-An attacker with limited privileges can exploit this behavior by placing cmd.exe
-in locations with weak permissions, such as C:\ProgramData. By doing so, when an
-administrator attempts to use this executable from these compromised locations,
-arbitrary code can be executed.
---------------------------------------------------------------------------------
-
-The 5.34.2, 5.36.2 and 5.38.1 releases were issued with fixes for these issues.
-However, there were issues with those releases, as noted in the email at
-https://www.nntp.perl.org/group/perl.perl5.porters/2023/11/msg267365.html
-and thus versions 5.34.3, 5.36.3 and 5.38.2 were released to fix those issues:
-https://www.nntp.perl.org/group/perl.perl5.porters/2023/11/msg267400.html
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
