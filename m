@@ -1,28 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/3
-Message-ID: <aae46329-1847-01a5-95f0-6fa1d5672c0c@apache.org>
-Date: Mon, 27 Nov 2023 09:39:08 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/13
+Message-ID: <7f2a8960-dec5-4cb8-b4f2-d2366c4d9a21@oracle.com>
+Date: Fri, 29 Sep 2023 14:52:17 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-42501: Apache Superset: Unnecessary read permissions within the Gamma role 
+Subject: 3 buffer overflows in gstreamer's gst-plugins-bad before 1.22.6
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+https://gstreamer.freedesktop.org/security/sa-2023-0006.html reports:
 
-- Apache Superset before 2.1.2
+    Security Advisory 2023-0006 (ZDI-CAN-21660) (CVE-2023-40474)
 
-Description:
+    Details:
+    Heap-based buffer overflow in the MXF file demuxer when handling malformed
+    files with uncompressed video in GStreamer versions before 1.22.6.
 
-Unnecessary read permissions within the Gamma role would allow authenticated users to read configured CSS templates and annotations.
-This issue affects Apache Superset: before 2.1.2.
-Users should upgrade to version or above 2.1.2 and run `superset init` to reconstruct the Gamma role or remove `can_read` permission from the mentioned resources.
+    Impact:
+    It is possible for a malicious third party to trigger a crash in the
+    application, and possibly also effect code execution through heap
+    manipulation.
 
-Credit:
+    Solution:
+    The gst-plugins-bad 1.22.6 releases address the issue. People using older
+    branches of GStreamer should apply the patch and recompile.
 
-Miguel Segovia Gil (finder)
+    Patches:
+    https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/5362.patch
+    (includes patch for SA-2023-0007 / ZDI-CAN-21661 / CVE-2023-40475)
 
-References:
+https://gstreamer.freedesktop.org/security/sa-2023-0007.html reports:
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-42501
+    Security Advisory 2023-0007 (ZDI-CAN-21661) (CVE-2023-40475)
 
+    Details:
+    Heap-based buffer overflow in the MXF file demuxer when handling malformed
+    files with AES3 audio in GStreamer versions before 1.22.6.
+
+    Impact:
+    It is possible for a malicious third party to trigger a crash in the
+    application, and possibly also effect code execution through heap
+    manipulation.
+
+    Solution:
+    The gst-plugins-bad 1.22.6 releases address the issue. People using older
+    branches of GStreamer should apply the patch and recompile.
+
+    Patches:
+    https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/5362.patch
+    (includes patch for SA-2023-0006 / ZDI-CAN-21660 / CVE-2023-40474)
+
+https://gstreamer.freedesktop.org/security/sa-2023-0008.html reports:
+
+    Security Advisory 2023-0008 (ZDI-CAN-21768) (CVE-2023-40476)
+
+    Details:
+    Stack-based buffer overflow in the H.265 video parser when handling malformed
+    H.265 video streams in GStreamer versions before 1.22.6.
+
+    Impact:
+    It is possible for a malicious third party to trigger a crash in the
+    application, and possibly also effect code execution through stack
+    manipulation.
+
+    Solution:
+    The gst-plugins-bad 1.22.6 releases address the issue. People using older
+    branches of GStreamer should apply the patch and recompile.
+
+    Patches:
+    https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/5364.patch
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
