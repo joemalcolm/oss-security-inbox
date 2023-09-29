@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/3
-Message-ID: <983f05b5-33be-d71b-6798-41a39faa971b@apache.org>
-Date: Tue, 26 Dec 2023 12:02:12 +0000
-From: Deepak Dixit <deepak@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/5
+Message-ID: <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
+Date: Fri, 29 Sep 2023 18:06:11 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-51467: Apache OFBiz: Pre-authentication Remote Code Execution (RCE) vulnerability 
+Subject: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Hello Exim users,
 
-Affected versions:
+the ZDI assigned multiple CVEs to the Exim-MTA and published them
+recently:
 
-- Apache OFBiz before 18.12.11
+CVE            Link                                                      Exim-Bug
+--------------+---------------------------------------------------------+-----
+CVE-2023-42114 https://www.zerodayinitiative.com/advisories/ZDI-23-1468/  3001 fixed
+CVE-2023-42115 https://www.zerodayinitiative.com/advisories/ZDI-23-1469/  2999 fixed
+CVE-2023-42116 https://www.zerodayinitiative.com/advisories/ZDI-23-1470/  3000 fixed
+CVE-2023-42117 https://www.zerodayinitiative.com/advisories/ZDI-23-1471/
+CVE-2023-42118 https://www.zerodayinitiative.com/advisories/ZDI-23-1472/
+CVE-2023-42119 https://www.zerodayinitiative.com/advisories/ZDI-23-1473/ 
 
-Description:
 
-The vulnerability allows attackers to bypass authentication to achieve a simple Server-Side Request Forgery (SSRF)
+The ZDI contacted us in June 2022. We asked about details but didn't get
+answers we were able to work with.
 
-This issue is being tracked as OFBIZ-12873 
+Next contact with ZDI was in May 2023. Right after this contact we
+created project bug tracker for 3 of the 6 issues. 2 high scored of them
+are fixed (OOB access). A minor scored (info leak) is fixed too.
 
-Credit:
+Fixes are available in a protected repository and are ready to be
+applied by the distribution maintainers.
 
-Hasib Vhora, Senior Threat Researcher, SonicWall  (finder)
-Gao Tian (finder)
-L0ne1y (finder)
+The remaining issues are debatable or miss information we need to fix
+them.
 
-References:
+We're more than happy to provide fixes for all issues as soon as we
+receive detailed information.
 
-https://ofbiz.apache.org/download.html
-https://ofbiz.apache.org/security.html
-https://ofbiz.apache.org/release-notes-18.12.11.html
-https://issues.apache.org/jira/browse/OFBIZ-12873
-https://ofbiz.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-51467
-https://issues.apache.org/jira/browse/OFBIZ-12873
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
