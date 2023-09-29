@@ -1,70 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/1
-Message-ID: <20230419012930.GO1655348@millbarge>
-Date: Wed, 19 Apr 2023 01:29:30 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com, Arnout Engelen <engelen@...che.org>, "security@...che.org" <security@...che.org>, "security@...iz.apache.org" <security@...iz.apache.org>
-Subject: Re: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/11
+Message-ID: <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
+Date: Fri, 29 Sep 2023 12:57:37 -0700
+From: Travis Finkenauer <tmfink@...iper.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 18, 2023 at 11:15:52AM +0200, Jacques Le Roux wrote:
-> I used to give more information. For this one, using our "new" internal
-> process* (need an ASF credential) and  following step 11 of**, notably
-> 
->    <<Generally, reports should contain enough information to enable
->    people to assess the risk the vulnerability poses for their own
->    system, and no more.>>
-> 
-> I restricted the information to a minimum.
+On 9/29/23 6:16 AM, Michael Orlitzky wrote:
+> How long will it take for rust to quit changing the language,
+> standardize itself, and enforce some notion of API/ABI stability? The
+> thing we've already had with C and C++ for decades? As a result of the
+> language's instability (and their attempt to hide it with a "package
+> manager"), every rust package wants to install a gigabyte of bundled
+> dependencies that are all pinned to old versions.
 
-Hello Jacques, thanks for the reply. I'd like to suggest that this policy
-should receive a review, as other list members have found the Apache
-defaults a bit wanting:
+As of the 1.0 stable release of Rust in 2015, the language and standard library
+API are stable. Code you write for Rust stable 1.0 should compile with the
+latest stable Rust compiler (currently 1.72.1). Backwards-incompatible changes
+are made when required to fix a soundness bug, which is very infrequent. When
+such changes are made, a tool "crater" is used survey the impact of the change
+on the package ecosystem.
 
-https://www.openwall.com/lists/oss-security/2023/01/31/7
-https://www.openwall.com/lists/oss-security/2022/10/12/2
-https://www.openwall.com/lists/oss-security/2022/08/26/4
-https://www.openwall.com/lists/oss-security/2022/01/25/15
+https://github.com/rust-lang/crater
 
-> When sending to Mitre we replaced
-> https://lists.apache.org/list.html?announce@apache.org
-> by
-> https://lists.apache.org/thread/k8s76l0whydy45bfm4b69vq0mf94p3wc
-> 
-> You can see the result at https://www.cve.org/CVERecord?id=CVE-2022-47501
+In order to allow opt-in breaking changes, a Rust "crate" (package) can specify
+an "edition" (similar to a C++ standard) which may have some breaking changes
+(and new features). Each crate specifies its edition independently. Your crate
+which uses the 2021 edition can depend on another crate which uses the 2015
+edition.
 
-This is nice, and friendly.
+Having a stable ABI has pros and cons. You are correct that Rust does not have
+a stable ABI by default (although you can you can opt into the C ABI per-type
+and per-function). A stable ABI is convenient because it lets you link to
+libraries compiled with different versions of a compiler. However, a stable ABI
+has performance implications. You are locked into that ABI even if you realize
+some decisions don't make sense in the future.
 
-> We also changed the "problem type" to be more specific. Following the CWE
-> classification, we used "CWE-22 Improper Limitation of a Pathname to a
-> Restricted Directory ('Path Traversal')" rather than "Arbitrary file reading
-> vulnerability" used by the finder who stayed as the CVE title. You can see
-> it at https://cveawg.mitre.org/api/cve/CVE-2022-47501 which is the json
-> version of the report.
+By making no promises of a stable ABI, the Rust compiler can use optimizations
+that would otherwise not be possible. For example, since the 1.0 release, the
+Rust compiler reorders struct fields and uses "niche optimizations" to pack
+enum variants into unused bits.
 
-This is also nice and friendly.
+Also, I will note that the C++ standard does not promise ABI stability.
+However, in practice, C++ ABI does not change often since some C++ committee
+vendors have just been very quick to veto changes to the C++ standard that
+would necessitate an ABI break. This means certain bugs can't be fixed and
+optimizations can't be taken by C++.
 
-> Regarding your points:
-> 
->  * the vulnerability was introduced long ago (years) when the plugin was
->  created. It was around 2013.
+To quote the blog post "The Day The Standard Library Died":
+"But like everything, stability has a cost, and the entire C++ ecosystem is paying it."
 
-This information is gold!
+https://cor3ntin.github.io/posts/abi/
 
->  * https://ofbiz.apache.org/security.html gives indirect information
->  about the fix. Do you suggest that we need to put a direct link like
->  https://github.com/apache/ofbiz-plugins/commit/582add7d3 ?
+> Software engineering is a fractal. Memory safety inside a language is
+> obviously desirable, but not if other design choices force everyone to
+> go back to bundled libraries and static linking. The state of rust is
+> that it's fun to write, but awful to use. If you want me to switch from
+> C to another language, then projects written in that language can't be
+> a nightmare to distribute and maintain.
 
-The link to the security page is a good start; it's even one of the better
-security.html pages I've seen. (Thanks!) But we've all spent too much time
-trying to figure out what exactly might have been "the intended content"
-on a page five or ten years later. Having more specific information (such
-as the "582add7d3" here) directly available in the list archives will
-simplify future searches for information.
+I agree that it would be nice if Rust had a better story around dynamic
+linking. If your "product" is a single executable, then statically linking all
+of your Rust dependencies may not be a big deal. However, if you are
+distributing many binaries (such as in an OS image), then you would be
+building and packaging some libraries multiple times.
 
-> Thanks for the links. We will certainly consider what can be done to
-> ease the work of downstream distributors and consumers.
+There are workarounds like putting all of your Rust code in a single dynamic
+library, but that's obviously not ideal or always feasible. You can also avoid
+the Rust build tool "cargo" and directly compile dependencies to shared
+libraries with "rustc", but it's not easy to compile Rust code without "cargo".
 
-Thank you :)
+> The situation is identical to how, ten years ago, we were going to
+> rewrite everything in Haskell. Haskell has the same pro/con list as
+> rust. But they never figured it out either. Every new release broke a
+> ton of code, and so version constraints became so tight that you
+> couldn't install more than a few programs at once without bundling. The
+> resulting treadmill was never-ending. Once "this is cool!" wore off,
+> everyone was left with "this is a waste of time."
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+I would say that Rust does not have the same pro/con list as Haskell since
+Haskell does not have the same C-like performance as Rust and Haskell is
+probably much more difficult to learn for most people.
+
+As mentioned above, Rust releases are backwards-compatible.
+
+I'm not that familiar with Haskell, but in Rust when you
+specify a dependency "foo" version "1.2.3", you are not pinning directly to
+version "1.2.3". You are actually saying "I depend on 'foo' whose semantic
+version is compatible with 1.2.3". That means the dependency resolver may
+resolve "1.2.99" (patch fix) or "1.99.0" (minor version bump). Hence, you
+don't need to manually update your dependencies every time a new version is
+published.
