@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/8
-Message-ID: <ZR25fFZDBJVCrurM@tomti.i.net-space.pl>
-Date: Wed, 4 Oct 2023 21:14:04 +0200
-From: Daniel Kiper <daniel.kiper@...cle.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Maxim Suhanov <dfirblog@...il.com>
-Subject: Re: CVE-2023-4692, CVE-2023-4693: grub2: OOB write, read via specially crafted NTFS filesystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/3
+Message-ID: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
+Date: Fri, 29 Sep 2023 15:59:09 +0200
+From: Markus Gschwendt <office+osssecurity@...out.at>
+To: oss-security@...ts.openwall.com
+Subject: Multiple Exim4 Zero Days
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 04, 2023 at 05:13:57PM +0200, Solar Designer wrote:
-> Hi,
->
-> A couple of issues in GRUB relevant to setups with Secure Boot got fixed:
->
-> https://lore.kernel.org/all/ZRxK8s4nQV2jBq%2F9@tomti.i.net-space.pl/
->
-> Daniel, I'd appreciate it if you post things like this to oss-security
-> going forward.  Thank you!
+I bring this up as I have not yet seen any information here about
+several CVEs related to Exim Mailserver which were published by ZDI on
+2023-09-27 [1]:
 
-Sure thing! I hope I can post to this ML without being member of it.
+* CVE-2023-42114 [CVSS 3.7]
+* CVE-2023-42115 [CVSS 9.8]
+* CVE-2023-42116 [CVSS 8.1]
+* CVE-2023-42117 [CVSS 8.1]
+* CVE-2023-42118 [CVSS 7.5]
+* CVE-2023-42119 [CVSS 3.1]
 
-Daniel
+There also seem to be issues in Exim's bug tracker related to those:
+https://bugs.exim.org/show_bug.cgi?id=2999
+https://bugs.exim.org/show_bug.cgi?id=3000
+https://bugs.exim.org/show_bug.cgi?id=3001
+https://bugs.exim.org/show_bug.cgi?id=3002
+https://bugs.exim.org/show_bug.cgi?id=3003
+
+According to ZDI the original reports were sent in June 2022.
+
+I'm wondering if somebody knows anything about mitigations and/or why
+there are still no fixes for these issues after more than a year.
+
+Markus
+
+[1] https://www.zerodayinitiative.com/advisories/published/
+    search for exim
+
