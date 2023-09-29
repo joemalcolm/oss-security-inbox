@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/6
-Message-ID: <ZY3jsgyKFEVWZJW4@nuvolo>
-Date: Thu, 28 Dec 2023 22:08:02 +0100
-From: Arrigo Marchiori <ardovm@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/7
+Message-ID: <ZRb8vSZlWXIJtPjS@itl-email>
+Date: Fri, 29 Sep 2023 12:35:07 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-5639: Apache OpenOffice: Loading internal / external resources without warning
+Subject: Re: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+On Thu, Sep 28, 2023 at 05:10:09PM -0700, nightmare.yeah27@...ecat.org wrote:
+> On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
+> 
+> > How long will it take for corporations to accept that writing media
+> > codecs in C, C++, or any other memory-unsafe language is a
+> > fundamentally bad idea, and that it is better to rewrite the codecs
+> > in a safe language (such as Wuffs or Rust) than to try to secure the
+> > existing ones?
+> 
+> Wouldn't the low-level code have to ultimately depend on unsafe Rust
+> modules, or similar feature in other safe language?
 
-Affected versions:
+In Wuffs, every memory access is checked for safety at compile-time, and
+that includes being in-bounds.  If the compiler cannot prove that every
+access is safe, the code will not compile.  There are no bounds checks
+at runtime.
 
-- Apache OpenOffice through 4.1.15
-
-Description:
-
-In Apache OpenOffice and LibreOffice embedded content will be opened
-automatically without that a warning is shown.
-
-Credit:
-
-The Apache OpenOffice Security Team would like to thank Timo Warns and
-Joachim Mammele for discovering and reporting this attack vector.
-
-References:
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2012-5639
+Interfacing with hardware accelerators obviously will need unsafe code,
+but my understanding is that most vulnerabilities are in various
+parsers or in the code the accelerators replace, not in the code that
+interfaces with the accelerators.
 -- 
-Arrigo
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
