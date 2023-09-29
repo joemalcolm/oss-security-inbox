@@ -1,45 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/09/4
-Message-ID: <ZU0aglk9Rt60nIQ-@dojo.mi.org>
-Date: Thu, 9 Nov 2023 12:44:34 -0500
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/4
+Message-ID: <CAFRnB2ULCAXn6y0b5jGKqf+G11iX+CYCrH8DfraPRQfRAfCtxA@mail.gmail.com>
+Date: Fri, 29 Sep 2023 10:35:02 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: !CVE Team <contact@...cve.org>
-Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
+Subject: Re: Multiple Exim4 Zero Days
 Content-Type: text/plain; charset=utf-8
 
-!CVE Team,
+Do I understand correctly that none of these are fixed upstream?
 
->From an open source perspective, the CNA(s) who might be assigning
-CVEs might not be a "vendor".  As just one example, the GitHub CNA
-assigns tons of CVEs for open source software using GitHub's Security
-Advisories, but I wouldn't think of GitHub as a "vendor" for all the
-projects they host.  How do you deal with CNAs who might be fine with
-assigning a CVE, but tagging it as DISPUTED?  Perhaps they don't want
-to build deprecated decades-old code to scope out the severity of a
-buffer overflow some random fuzzbot found.  How would !CVE work for
-the Linux kernel, where most security fixes have git commit hashes but
-not CVEs?  You don't seem resourced for that.
+Alex
 
-Overall, it seems like the prbolem you're trying to solve is "I'm not
-getting my unique tag from CVEs CNAs for my vulnerability".  Your fix
-is "some other unique tag mechanism for vulnerabilities".  I think I
-see where this might be going:
+PS: I'd be remiss if I did not note that it appears that 5/6 of these
+vulnerabilities have "C is not a memory safe language" as a proximate
+cause.
 
-https://xkcd.com/927/
+On Fri, Sep 29, 2023 at 10:27 AM Markus Gschwendt
+<office+osssecurity@...out.at> wrote:
+>
+> I bring this up as I have not yet seen any information here about
+> several CVEs related to Exim Mailserver which were published by ZDI on
+> 2023-09-27 [1]:
+>
+> * CVE-2023-42114 [CVSS 3.7]
+> * CVE-2023-42115 [CVSS 9.8]
+> * CVE-2023-42116 [CVSS 8.1]
+> * CVE-2023-42117 [CVSS 8.1]
+> * CVE-2023-42118 [CVSS 7.5]
+> * CVE-2023-42119 [CVSS 3.1]
+>
+> There also seem to be issues in Exim's bug tracker related to those:
+> https://bugs.exim.org/show_bug.cgi?id=2999
+> https://bugs.exim.org/show_bug.cgi?id=3000
+> https://bugs.exim.org/show_bug.cgi?id=3001
+> https://bugs.exim.org/show_bug.cgi?id=3002
+> https://bugs.exim.org/show_bug.cgi?id=3003
+>
+> According to ZDI the original reports were sent in June 2022.
+>
+> I'm wondering if somebody knows anything about mitigations and/or why
+> there are still no fixes for these issues after more than a year.
+>
+> Markus
+>
+> [1] https://www.zerodayinitiative.com/advisories/published/
+>     search for exim
+>
 
-Have you considered, I dunno, working with the CVE folks, addressing
-what CNA rules you think may be broken?  Not all vulnerabilties are
-created equal, and it may make sense to create more alternate systems
-to deal with that.  But, forking off on your own should be done with
-some due diligence.  The last thing the security community needsi are
-even more fractured efforts, as they deal with enough fractured stuff.
-
-
-My $0.02, FWIW...
--Mike
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"But we decide which is right...  and which is an illusion."     -Moody Blues
+All that is necessary for evil to succeed is for good people to do nothing.
