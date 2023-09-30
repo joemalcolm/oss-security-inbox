@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["883" "Saturday" "17" "December" "2016" "16:52:06" "+0100" "Gjoko Krstic" "gjoko@zeroscience.mk" "<CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>" "16" "[oss-security] CVE request - DCMTK remote stack buffer overflow" nil nil nil "12" "2016121715:52:06" "[oss-security] CVE request - DCMTK remote stack buffer overflow" (number mark "U       gjoko@zerosc Dec 17   16/883   " thread-indent "\"[oss-security] CVE request - DCMTK remote stack buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28289 invoked by uid 550); 17 Dec 2016 16:03:52 -0000
+Received: (qmail 32711 invoked by uid 550); 30 Sep 2023 09:37:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15436 invoked from network); 17 Dec 2016 15:53:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=zeroscience.mk; s=default; h=Content-Type:To:Subject:Message-ID:Date:From:
-	MIME-Version:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=uYj8arL5ackvZ1a0RqvVitSowN5oyixDvH+LM4SWr70=; b=NIMGouRyX6eIWEN7z6iIkVQmfd
-	UWKT263S1BsU1yCERjMlUbs7LCFZqFJJ/Evjq6YbwGnBQtX68ap0LC0oLw8VO64CjGTonVwiCIqaW
-	jMxHzd1oEMzQ7pp7+uWl1Cq6fRKy6wlqD6PepoPmRgvgfovCrs0oouNhHXq+eTspGDiM=;
-X-Gm-Message-State: AIkVDXI7tCACYYyFKMLvu/9auC/SgB+0zwbqQCqGbPsR6TdkWejCfeU5Ly6iNY7pa0y/fBFOHcaw7Bo135WOqg==
-X-Received: by 10.237.61.130 with SMTP id i2mr8715542qtf.293.1481989966647;
- Sat, 17 Dec 2016 07:52:46 -0800 (PST)
-MIME-Version: 1.0
-From: Gjoko Krstic <gjoko@zeroscience.mk>
-Date: Sat, 17 Dec 2016 16:52:06 +0100
-X-Gmail-Original-Message-ID: <CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>
-Message-ID: <CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>
+Received: (qmail 30087 invoked from network); 30 Sep 2023 00:57:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1696035452; bh=AcbW7W0aWPDuIYd2m7T/aswnjWYitVzHKDuNEcvdCmw=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=p92RJ7WmhT+fjv5GBsiqWyz++0pyH2WG5Q7OtZGNNh4eOpYdbDk1zSR2ZDVy3qyeY
+	 ZTrWtsiEz0UsD/RKoqM5c95T1hoKEcto1NLjeYRP/woY5x1eWtAISHWevtGMuPR7FK
+	 EAXFFsNg9nmMXbOXlUhod7iiRAZAxkQA+7fewbw1dQWqjT3cdhZVbuIUOoZTC2gUji
+	 hyMUTBsZzn02c18qYDHxcCjx31gd2l/obKdpcWRRf7mp9miuU8LwQnb+NZ8dUnVJ+9
+	 lHc1KRo8VMuPER24SJOJXXlHxs+jEOnKjzfdjrm6xMg52bB8kpnXWCEdIGOsVvvbH8
+	 5cRd/xOtGPb6w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1696035452; bh=AcbW7W0aWPDuIYd2m7T/aswnjWYitVzHKDuNEcvdCmw=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=p92RJ7WmhT+fjv5GBsiqWyz++0pyH2WG5Q7OtZGNNh4eOpYdbDk1zSR2ZDVy3qyeY
+	 ZTrWtsiEz0UsD/RKoqM5c95T1hoKEcto1NLjeYRP/woY5x1eWtAISHWevtGMuPR7FK
+	 EAXFFsNg9nmMXbOXlUhod7iiRAZAxkQA+7fewbw1dQWqjT3cdhZVbuIUOoZTC2gUji
+	 hyMUTBsZzn02c18qYDHxcCjx31gd2l/obKdpcWRRf7mp9miuU8LwQnb+NZ8dUnVJ+9
+	 lHc1KRo8VMuPER24SJOJXXlHxs+jEOnKjzfdjrm6xMg52bB8kpnXWCEdIGOsVvvbH8
+	 5cRd/xOtGPb6w==
+Date: Sat, 30 Sep 2023 09:57:13 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1144542e85dca10543dcad16
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - a1.xocluster.com
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - zeroscience.mk
-X-Get-Message-Sender-Via: a1.xocluster.com: authenticated_id: gjoko@zeroscience.mk
-X-Authenticated-Sender: a1.xocluster.com: gjoko@zeroscience.mk
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Subject: [oss-security] CVE request - DCMTK remote stack buffer overflow
+Message-ID: <ZRdyaYEi9YOZUXAg@codewreck.org>
+References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
+ <ZRXlPoozp5n+cWv1@itl-email>
+ <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
+ <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
+ <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
+Subject: [oss-security] Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer
+ overflow in vp8 encoding in libvpx)
 
---001a1144542e85dca10543dcad16
-Content-Type: text/plain; charset=UTF-8
+Michael Orlitzky wrote on Fri, Sep 29, 2023 at 07:51:12PM -0400:
+> > There are workarounds like putting all of your Rust code in a single dynamic
+> > library, but that's obviously not ideal or always feasible. You can also avoid
+> > the Rust build tool "cargo" and directly compile dependencies to shared
+> > libraries with "rustc", but it's not easy to compile Rust code without "cargo".
+> 
+> This is the biggest problem. Cargo is the standard way to build rust
+> projects. Nobody is shipping a ./configure script for their rust
+> project. Cargo is what's documented. It's what everyone uses. It's
+> baked into all of the tools, the books, the domain names, the clever
+> puns. It's also a bundling tool.
+> 
+> Without ABI stability, the cargo approach was necessary to avoid
+> constant breakage. It's unreasonable to expect end users to track down
+> every rust program they're using and rebuild them all manually every
+> time a library is rebuilt with a newer version of rust. Instead, it was
+> decided that the blessed way to build and distribute rust projects
+> would be to bundle the world along with them.
+> 
+> Except, now, this is embarrassing: the only way for people to get
+> security updates is to track down every rust program they're using and
+> rebuild them all manually. This further presupposes that someone is
+> actually looking for security vulnerabilities in the old versions of
+> libraries bundled on everyone's systems. And that every rust upstream
+> is aware of every vulnerability in every dependency it bundles. None of
+> that happens.
 
-*"At several places in the code a wrong length of ACSE data structures
-received over the network can cause overflows or underflows when processing
-those data structures. Related checks have been added at various places in
-order to prevent such (possible) attacks. Thanks to Kevin Basista for the
-report."The bug will indeed affect all DCMTK-based server applications that
-accept incoming DICOM network connections that are using the dcmtk-3.6.0
-and earlier versions. Developers are advised to apply the
-patched-DCMTK-3.6.1_20160216 fix commit from Dec 14,
-2015.http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php
-<http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php>https://bugs.gentoo.org/show_bug.cgi?id=602918
-<https://bugs.gentoo.org/show_bug.cgi?id=602918>*
+For what it's worth, fedora is working very hard to improve this:
+they're still rebuilding each crate everytime it's a dependency for a
+program, but they're shipping each crate (source) only once, so when a
+lib is updated there's the tooling to rebuild everything that depends on
+it.
+(And, if said program no longer compiles, maintainers get the fun of
+fixing it or contacting upstream to report the problem, hoping they're
+OK with distributions basically ignoring the Cargo.lock... But I think
+it's better from a distribution point of view that e.g. nixos that does
+respect the Cargo.lock, as that means dependencies never get updated if
+the upstream doesn't pay attention as you pointed out)
 
---001a1144542e85dca10543dcad16--
+-- 
+Dominique Martinet | Asmadeus
