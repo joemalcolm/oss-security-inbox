@@ -1,43 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/5
-Message-ID: <CAH8yC8mJHfyn1YGpoSWwNs1nFkWnu8pL7KsO9-sTKDrtu8QR+g@mail.gmail.com>
-Date: Wed, 3 May 2023 15:41:26 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/2
+Message-ID: <ZRhUF9yHctTj5DhO@itl-email>
+Date: Sat, 30 Sep 2023 13:00:03 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 3, 2023 at 3:21 PM Reid Sutherland <reid@...rddimension.net> wrote:
-> On 4/29/23 06:04, Stig Palmquist wrote:
-> >
-> > - CVE-2023-31484 for CPAN.pm
-> > - CVE-2023-31485 for GitLab::API::v4
-> > - CVE-2023-31486 for HTTP::Tiny
-> > ...
->
-> Who actually decides when something receives a CVE?  This can be used to
-> defame projects and products as in this case.
+On Sat, Sep 30, 2023 at 09:57:13AM +0900, Dominique Martinet wrote:
+> Michael Orlitzky wrote on Fri, Sep 29, 2023 at 07:51:12PM -0400:
+> > > There are workarounds like putting all of your Rust code in a single dynamic
+> > > library, but that's obviously not ideal or always feasible. You can also avoid
+> > > the Rust build tool "cargo" and directly compile dependencies to shared
+> > > libraries with "rustc", but it's not easy to compile Rust code without "cargo".
+> > 
+> > This is the biggest problem. Cargo is the standard way to build rust
+> > projects. Nobody is shipping a ./configure script for their rust
+> > project. Cargo is what's documented. It's what everyone uses. It's
+> > baked into all of the tools, the books, the domain names, the clever
+> > puns. It's also a bundling tool.
+> > 
+> > Without ABI stability, the cargo approach was necessary to avoid
+> > constant breakage. It's unreasonable to expect end users to track down
+> > every rust program they're using and rebuild them all manually every
+> > time a library is rebuilt with a newer version of rust. Instead, it was
+> > decided that the blessed way to build and distribute rust projects
+> > would be to bundle the world along with them.
+> > 
+> > Except, now, this is embarrassing: the only way for people to get
+> > security updates is to track down every rust program they're using and
+> > rebuild them all manually. This further presupposes that someone is
+> > actually looking for security vulnerabilities in the old versions of
+> > libraries bundled on everyone's systems. And that every rust upstream
+> > is aware of every vulnerability in every dependency it bundles. None of
+> > that happens.
+> 
+> For what it's worth, fedora is working very hard to improve this:
+> they're still rebuilding each crate everytime it's a dependency for a
+> program, but they're shipping each crate (source) only once, so when a
+> lib is updated there's the tooling to rebuild everything that depends on
+> it.
+> (And, if said program no longer compiles, maintainers get the fun of
+> fixing it or contacting upstream to report the problem, hoping they're
+> OK with distributions basically ignoring the Cargo.lock... But I think
+> it's better from a distribution point of view that e.g. nixos that does
+> respect the Cargo.lock, as that means dependencies never get updated if
+> the upstream doesn't pay attention as you pointed out)
 
-"Who decides" can be a tricky question.
+It is also worth noting that Rust-the-language supports dynamic linking.
+Once Cargo supports this and downstreams (like Fedora) obtain sufficient
+build capacity, it will be possible to use dynamic linking by performing
+automatic cascading rebuilds whenever a package is upgraded.  Arch
+already does this for Haskell IIUC.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Several organizations issue CVEs, like Red Hat and Gentoo. A bug
-usually has to meet a criteria, like falling into a CWE category, to
-be issued by the organization.
-
-You can also get them from Mitre's site. In the case of Mitre, it is
-the person who requests the CVE.
-
-Some CVE's are tenuous or questionable. You often see this from folks
-trying to pad their resume. For example, a researcher may request a
-CVE for a behavior that requires elevated privileges. In this case,
-someone who is Root on Linux or Administrator on Windows can already
-do the damage, so the behavior in question that happens with
-privileges is not really interesting.
-
-In the case of HTTP::Tiny, the default configuration and behavior is
-running afoul of https://cwe.mitre.org/data/definitions/295.html and
-https://cwe.mitre.org/data/definitions/319.html. In this case, the
-industry believes comms should use HTTPS and the name hostname should
-be validated.
-
-Jeff
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
