@@ -1,88 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/23/1
-Message-ID: <c15f3a69-2ded-7343-4f6c-51fc5d83a956@gmail.com>
-Date: Mon, 23 Oct 2023 17:33:31 +1100
-From: Matthew Fernandez <matthew.fernandez@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/1
+Message-ID: <ZRdyaYEi9YOZUXAg@codewreck.org>
+Date: Sat, 30 Sep 2023 09:57:13 +0900
+From: Dominique Martinet <asmadeus@...ewreck.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sandboxing,of upstream programs by distros
+Subject: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 Content-Type: text/plain; charset=utf-8
 
-> On 10/22/23 11:06, Solar Designer wrote:
->> For Rocky Linux Security SIG, the only relevant thing mentioned so far
->> was possibly offering an OpenBSD pledge()-alike that other packages
->> could use.
+Michael Orlitzky wrote on Fri, Sep 29, 2023 at 07:51:12PM -0400:
+> > There are workarounds like putting all of your Rust code in a single dynamic
+> > library, but that's obviously not ideal or always feasible. You can also avoid
+> > the Rust build tool "cargo" and directly compile dependencies to shared
+> > libraries with "rustc", but it's not easy to compile Rust code without "cargo".
+> 
+> This is the biggest problem. Cargo is the standard way to build rust
+> projects. Nobody is shipping a ./configure script for their rust
+> project. Cargo is what's documented. It's what everyone uses. It's
+> baked into all of the tools, the books, the domain names, the clever
+> puns. It's also a bundling tool.
+> 
+> Without ABI stability, the cargo approach was necessary to avoid
+> constant breakage. It's unreasonable to expect end users to track down
+> every rust program they're using and rebuild them all manually every
+> time a library is rebuilt with a newer version of rust. Instead, it was
+> decided that the blessed way to build and distribute rust projects
+> would be to bundle the world along with them.
+> 
+> Except, now, this is embarrassing: the only way for people to get
+> security updates is to track down every rust program they're using and
+> rebuild them all manually. This further presupposes that someone is
+> actually looking for security vulnerabilities in the old versions of
+> libraries bundled on everyone's systems. And that every rust upstream
+> is aware of every vulnerability in every dependency it bundles. None of
+> that happens.
 
-Thanks for bringing up pledge(). That was partly what spurred this line 
-of thinking – pledge() is our probable solution on OpenBSD, and it 
-wasn’t clear what the equivalent approach on Linux would be.
+For what it's worth, fedora is working very hard to improve this:
+they're still rebuilding each crate everytime it's a dependency for a
+program, but they're shipping each crate (source) only once, so when a
+lib is updated there's the tooling to rebuild everything that depends on
+it.
+(And, if said program no longer compiles, maintainers get the fun of
+fixing it or contacting upstream to report the problem, hoping they're
+OK with distributions basically ignoring the Cargo.lock... But I think
+it's better from a distribution point of view that e.g. nixos that does
+respect the Cargo.lock, as that means dependencies never get updated if
+the upstream doesn't pay attention as you pointed out)
 
->> Initially, we are going to only create "override' packages
->> for core or very commonly used/exposed components, and to do so only for
->> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
->> coming from EPEL and with most of its dependency libraries coming from
->> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
->> make the cut, at least not initially.
-
-I see. Thanks for letting me know.
-
->> I find the above two paragraphs somewhat contradictory…
-
-Yes, I see what you’re saying, and I take your point. Perhaps this was a 
-bit “have my cake and eat it too” on my side.
-
-> On 10/22/23 11:45, Demi Marie Obenour wrote:
->> That said, has wasm2c been considered?  The
->> best fix would be something that can make C code memory-safe, even if it
->> comes at a performance hit
-
-Funny you should mention this, it’s what we presently suggest to 
-security-concerned users. There’s a kind downstream contributor who has 
-done the necessary gymnastics to produce a WASM-ised version of our 
-program. I have not looked into how they achieve this, but I would not 
-be surprised if it involves something like this.
-
-> On 10/23/23 01:19, Bob Friesenhahn wrote:
->> On Sat, 21 Oct 2023, Demi Marie Obenour wrote:
->>>
->>> If neither of these are options, I think the entire library will need to
->>> be deprecated for eventual removal.  The command-line tools can remain,
->>> but they can be much more strongly sandboxed than a library can, because
->>> they have the entire process to themselves.
->> 
->> Any deprecations or sandboxing approaches which fail to understand and 
->> address the needs of the "user" will fail.  Replacing package 'A' with 
->> package 'B', where package 'B' works totally differently, or performs 
->> different functions than package 'A' will fail because the users will 
->> not use it.
-
-I think here Bob has really nailed what makes deprecation an unworkable 
-strategy for these kind of situations. Unless you can stand up an 
-absolutely 1-for-1 drop-in replacement, the ecosystem won’t move. And 
-we’re talking about pieces of software that took many person-years of 
-effort to create. We’re had numerous contributors propose a rewrite in a 
-memory safe language and I have (sincerely) wished each of them the best 
-of luck, and then never heard from them again. I think we’re all roughly 
-on the same page about the desirable end state, but I don’t see this 
-kind of deprecation as a strategy that will get us there.
-
-> On 10/23/23 02:54, Demi Marie Obenour wrote:
->> A command-line tool can probably meet all of these requirements but the
->> last one quite easily.  For a library, the difficulty of meeting these
->> requirements will depend significantly on the library API.
-
-Library vs cli is an interesting dimension to this I had not really 
-teased out. I agree with you, that sandboxing a library is in some ways 
-trickier because you’re doing work on behalf of a caller whose needs you 
-don’t statically know.
-
-> On 10/22/23 20:50, Mickaël Salaün wrote:
->> for a Linux fine-grained sandboxing it would be
->> wiser to use the underlying kernel sandboxing feature: Landlock
->> See https://landlock.io/
-
-Thanks for the reminder. I was aware of Landlock, but hadn’t immediately 
-connected it with my current task. I’ll go take a look and see what I 
-can learn.
-
-Thanks everyone for the comments so far in this thread. Already giving 
-me much to think about :)
+-- 
+Dominique Martinet | Asmadeus
