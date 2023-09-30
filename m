@@ -1,27 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/4
-Message-ID: <add56994-a1d9-5545-dbb9-6a37ba4ea926@apache.org>
-Date: Mon, 27 Nov 2023 09:44:33 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/3
+Message-ID: <20230930182645.zZWIG%steffen@sdaoden.eu>
+Date: Sat, 30 Sep 2023 20:26:45 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-43701: Apache Superset: Stored XSS on API endpoint 
+Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Dominique Martinet wrote in
+ <ZRdyaYEi9YOZUXAg@...ewreck.org>:
+ ...
+ |For what it's worth,[.]
 
-- Apache Superset before 2.1.2
+I want to point out to the surprise of many that languages like
+C and C++ allow the possibility to create and use collection aka
+container as well as string objects through which access at
+invalid offsets etc cause runtime errors, or assertions aka
+panics, however desired.
+The same is true for loaders of multimedia formats, one can use
+"functions" which ensure overflow does not occur.
+On the other hand to me rust is a terrible thing, and often the
+file prologues with lots of [] directives are deep and dark
+forests.  This is of course my personal opinion only.
+Objective fact is that many of the OSS tools which get CVEs here
+do not see any noticeable money in a market of many many billion
+and with tens of thousands of programmers; i do not count the
+multi-million-line monsters browsers and offices here, it is only
+about the hundreds to thousands of topic libraries, and the
+hundreds to thousands little programs which make up a system.
+I am super happy that OpenSSL is now funded!
+It has an illness factor that it is ok to spend lots of time and
+money for a from-scratch rewrite in "safe" language XY (rust, go,
+swift (that i at least like a bit) etc), instead of allowing
+people to put some sense in software which possibly was written
+in a rapid development mode to fit some desire or lack.  Then
+again from scratch rewrites of something that already has seen
+a mature state regarding desired functionality, interface etc
+may make things better than something out in the blue, started on
+a friday night, and then filled over time with more and more
+functionality as the smoke cleared away.
+Putting blame on languages in specialist forums which know better
+seems a bit odd.  Most bugs i unfortunately produce are logic
+errors, no language will help.  Or recently a memory leak upon
+SIGINT that causes this old software to longjmp away, i hope for
+a rewrite to get rid of the jumps.
+But yes yes, automatic checks and such are nice, i started (over
+perl) with JAVA that does this.  I heard (IANA TZ started using
+it) that new ISO C ships with checked arithmetic.  Maybe that
+comes twenty years too late.  Maybe special types or prefixes
+could have been used long ago to achieve the same more nicely,
+compiler sizes seem not to be the issue.  But you _can_ if you
+_want_ or _need_, .. since ever.
 
-Description:
-
-Improper payload validation and an improper REST API response type, made it possible for an authenticated malicious actor to store malicious code into Chart's metadata, this code could get executed if a user specifically accesses a specific deprecated API endpoint. This issue affects Apache Superset versions prior to 2.1.2. 
-Users are recommended to upgrade to version 2.1.2, which fixes this issue.
-
-Credit:
-
-Nick Barnes, Praetorian Security Inc. (reporter)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-43701
-
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
