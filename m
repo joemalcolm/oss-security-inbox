@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/6
-Message-ID: <20230418012833.GJ1655348@millbarge>
-Date: Tue, 18 Apr 2023 01:28:33 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Angela Schreiber <angela@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-45064: Apache Sling Engine: Include-based XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/5
+Message-ID: <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
+Date: Sat, 30 Sep 2023 19:28:46 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 12, 2023 at 03:39:15PM +0000, Angela Schreiber wrote:
-> https://sling.apache.org/
-> https://www.cve.org/CVERecord?id=CVE-2022-45064
+On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
+> It is also worth noting that Rust-the-language supports dynamic linking.
+> Once Cargo supports this and downstreams (like Fedora) obtain sufficient
+> build capacity, it will be possible to use dynamic linking by performing
+> automatic cascading rebuilds whenever a package is upgraded.  Arch
+> already does this for Haskell IIUC.
 
-Hello Angela, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+We do it for Haskell in Gentoo, too, but we have a dark secret: it only
+works because Haskell became unpopular. There are basically only two
+Haskell programs, and everything works for n = 2.
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
-
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
-
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
-
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
-
-Thanks
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
