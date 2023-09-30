@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/6
-Message-ID: <a0276903-ad5c-7dfb-250e-9c812502a56c@apache.org>
-Date: Thu, 19 Oct 2023 09:41:13 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/4
+Message-ID: <6284ffe9-d228-46f0-be8c-c7f78a030523@oracle.com>
+Date: Sat, 30 Sep 2023 13:38:27 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-45802: Apache HTTP Server: HTTP/2 stream memory not reclaimed right away on RST 
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On 9/28/23 11:37, Alan Coopersmith wrote:
+> It does not appear that libvpx 1.13.1 has been released yet,
 
-Affected versions:
+It was released yesterday, with the note:
 
-- Apache HTTP Server 2.4.17 through 2.4.57
+    "This release contains two security related fixes. One each for VP8 and VP9."
 
-Description:
+    https://github.com/webmproject/libvpx/releases/tag/v1.13.1
 
-When a HTTP/2 stream was reset (RST frame) by a client, there was a time window were the request's memory resources were not reclaimed immediately. Instead, de-allocation was deferred to connection close. A client could send new requests and resets, keeping the connection busy and open and causing the memory footprint to keep on growing. On connection close, all resources were reclaimed, but the process might run out of memory before that.
+CVE-2023-44488 has been assigned to the VP9 bug:
 
-This was found by the reporter during testing of CVE-2023-44487 (HTTP/2 Rapid Reset Exploit) with their own test client. During "normal" HTTP/2 use, the probability to hit this bug is very low. The kept memory would not become noticeable before the connection closes or times out.
+    "VP9 in libvpx before 1.13.1 mishandles widths, leading to a crash related
+     to encoding."
 
-Users are recommended to upgrade to version 2.4.58, which fixes the issue.
+    https://www.cve.org/CVERecord?id=CVE-2023-44488
 
-Credit:
+It points to this commit for the fix:
 
-Will Dormann of Vul Labs (finder)
-David Warren of Vul Labs (finder)
+    https://github.com/webmproject/libvpx/commit/263682c9a29395055f3b3afe2d97be1828a6223f
 
-References:
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-45802
 
-Timeline:
+Download attachment "OpenPGP_0xA2FB9E081F2D130E.asc" of type "application/pgp-keys" (8713 bytes)
 
-2023-10-12: reported
-
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
