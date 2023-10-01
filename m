@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1409" "Friday" "23" "June" "2017" "12:26:26" "-0400" "Leo Famulari" "leo@famulari.name" "<20170623162626.GA3446@jasmine.lan>" "39" "Re: [oss-security] CVE-2017-9772: OCaml release 4.04.2" nil nil nil "6" "2017062316:26:26" "[oss-security] CVE-2017-9772: OCaml release 4.04.2" (number mark "U       leo@famulari Jun 23   39/1409  " thread-indent "\"Re: [oss-security] CVE-2017-9772: OCaml release 4.04.2\"\n") "<20170623162447.GA12500@jasmine.lan>" ("<21771A83-D685-4776-9CE7-883775F05977@inria.fr>" "<6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>" "<20170623162447.GA12500@jasmine.lan>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23615 invoked by uid 550); 23 Jun 2017 21:51:10 -0000
+Received: (qmail 11783 invoked by uid 550); 1 Oct 2023 12:21:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +7,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11331 invoked from network); 23 Jun 2017 16:26:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
-	 h=content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=p0y20pqWGYB67cChk2WJp/ibE6Wyxw4pJng+3/
-	pfMhU=; b=tum+0+sHGWDQst2OIBErvTyK5BG0DvDms6JgjQbhPqSF8XvJfJv+TS
-	MkAD/QhDVeZ4h6n+dCg1tpCcm92tubSNeN2A7Iyv/R1eLbrnoDa0eeepS6fl/4XF
-	MFgd1nVXuHkbPYiSKkAUCO3x64+ToW0aaOlRr/7c2ycTsSP4+wJvQ=
+Received: (qmail 30106 invoked from network); 1 Oct 2023 05:16:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=p0y20pqWGYB67cChk2
-	WJp/ibE6Wyxw4pJng+3/pfMhU=; b=FlLxrvnB7zSnVrfE6EqMcLtiSPZNDjYMhW
-	rxJk21zQA0Wx6kCGK5u1Jl9kCTbaTxNIi7BQZsvzZ11e30iFZmgo0dIB/kZtQ70s
-	8/QbuG5dX0dmgPSiz43OecKo3/dA32RI7Brup0jncc7jGVDjZlHolDrLkVyKjJ/G
-	SVWDBWZbj89mYll/yUTKmnbL6k9IYhWJOGoJXYMsLe7t/xxfCdFTU5PXgWTjQYJC
-	oNXMiEfHUPClT4vG5n98GIUXS2XVzIS/vr0xj7Oj93Zf6ftNlbZCXcY1mZVRi9de
-	FVyiwIRf4vIx7i20pDxlIGD1aRKwfiAUegfydZhqH0YkcDIaAR1A==
-X-ME-Sender: <xms:NUFNWeoDKt1t1tlsmdo0v1G5oH9jNW4hrrXf5UHnXR8iuXqESK-MYw>
-X-Sasl-enc: srTMnwbo1q4057Na0hOjzxQ0l4SWoqGKXipxLAq+Vo7U 1498235189
-Date: Fri, 23 Jun 2017 12:26:26 -0400
-From: Leo Famulari <leo@famulari.name>
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+	1696137379; x=1696223779; bh=8Wp1ZWQD7WbQIfF/HQZVIZh8liJjyqOTlcf
+	mBRZDfKY=; b=qB4qWJUJ930zjIV7EV+9NniVJCglCudmm8RrMGGCNl9PaQc6QKM
+	ldA2STDfmScIeZVHzvEFi8I+RVEz8UWRNoX0cHFcGdUx7C/V9w4iUC3KGSWiRZXw
+	cfXkORusbeGuYUXL1ov3cpfEXxea4sZoNs8X9ovMQunRLgC45FsqczNv10ysFoRk
+	NgyZp9Atohw0pZ8RHIP3/zkJeQtMXSAdAoo6Ahjeb2LaIrNWPoYp/kW/M+7JyxNU
+	aYSOxECxfo1f1wM5RIUgVy6xMksqL9YYsjB4wgxykVu9nGhAIdFtFc1HBgxlyDVm
+	Lb8nKRkGYBMFCFI9ARTO4WI93hjrVqcwANg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1696137379; x=1696223779; bh=8Wp1ZWQD7WbQI
+	fF/HQZVIZh8liJjyqOTlcfmBRZDfKY=; b=V+zaPBsLCg4O20eitMSCsimi77DnT
+	HUXQprkVF6yijMmrZvfuPHlcHdhV15fpjOpPNTaIP4z4sbOJamO82FD1uONYIJjQ
+	hVSAor9RSlCiGmpNT+iDVzhedTOah2Sf9cML6crfqnhPrttK+nGqJiEXLJIpC5p7
+	+DtBu8N+Zsa47stTKcjCb/Bj01yDg7vdaw4N2ZJkPyHnN/mCVlZabklHcRYkHh/v
+	pmGeIES/6yMJ5gNO6bEXeJ+cxpZfhjhxGKchTNz9mRK7s+i2Lgalv7xqe4p7ELKW
+	X3wTioFFk9961tH7KpiTW1s4WN2OIXmUCrD/R612qsU3nEIJFfYYI374Q==
+X-ME-Sender: <xms:owAZZTcZO5CtGYpFiebU5bGfemukz2UlRuCdvIX3_zwepFKqQv_UWw>
+    <xme:owAZZZNCe7onw1Wh5d3O5q6-kBPLmW3xeuiYCGKb8s7W5Oog2Q1UacPcNe-Dl36O7
+    8Mob3wq8GKgJx8>
+X-ME-Received: <xmr:owAZZcjCL_VJ_u_pBrvx1D7dPlrbo8TsW1EODEQv0ditYa53au0a_f7ZavRO-PRiPW_qCkPg_RY25fW17NCKfzy7njqRcFT8ww37BjssxSUSMwoX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudejgddugecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
+    dttddvnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
+    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    eigfeifedvgfejleefieefgfejvddvfeelgeelieefgeffhffgffeffffhueduheenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesih
+    hnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:owAZZU8LmZNUb5Tv0kTHB-KuzAzjWX_QKVDjWws5J9md4kW92uMK-Q>
+    <xmx:owAZZfuOaoOHTj8HVl6eIGWnxavSb608LAs5pqcsIJo8Vq_trnVQVw>
+    <xmx:owAZZTH_Hqts_q3XllH0GI1YZIIqi5obB7aSlXhSSehB17JI8qMTPQ>
+    <xmx:owAZZd7TiqbQcpFYeDeEjASLvj9fKqG8bj89uXgJc5fzUffEBLFOhg>
+Feedback-ID: iac594737:Fastmail
+Date: Sun, 1 Oct 2023 01:16:01 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20170623162626.GA3446@jasmine.lan>
-References: <21771A83-D685-4776-9CE7-883775F05977@inria.fr>
- <6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>
- <20170623162447.GA12500@jasmine.lan>
+Message-ID: <ZRkAokgUEw9cD7yG@itl-email>
+References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
+ <ZRXlPoozp5n+cWv1@itl-email>
+ <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
+ <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
+ <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
+ <ZRdyaYEi9YOZUXAg@codewreck.org>
+ <ZRhUF9yHctTj5DhO@itl-email>
+ <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="W/nzBZO5zC0uMSeA"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pEQ1GQC2q28eXEOb"
 Content-Disposition: inline
-In-Reply-To: <20170623162447.GA12500@jasmine.lan>
-User-Agent: Mutt/1.8.3 (2017-05-23)
-Subject: Re: [oss-security] CVE-2017-9772: OCaml release 4.04.2
+In-Reply-To: <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
+Subject: Re: [oss-security] Rust programs in distrbutions (Was:
+ CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 
---W/nzBZO5zC0uMSeA
-Content-Type: text/plain; charset=us-ascii
+--pEQ1GQC2q28eXEOb
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Sun, 1 Oct 2023 01:16:01 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Rust programs in distrbutions (Was:
+ CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 
-On Fri, Jun 23, 2017 at 12:24:47PM -0400, Leo Famulari wrote:
-> Hi Anil,
+On Sat, Sep 30, 2023 at 07:28:46PM -0400, Michael Orlitzky wrote:
+> On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
+> > It is also worth noting that Rust-the-language supports dynamic linking.
+> > Once Cargo supports this and downstreams (like Fedora) obtain sufficient
+> > build capacity, it will be possible to use dynamic linking by performing
+> > automatic cascading rebuilds whenever a package is upgraded.  Arch
+> > already does this for Haskell IIUC.
 >=20
-> Can you tell us where to get OCaml 4.04.2? It's not available here:
->=20
-> https://ocaml.org/releases/
+> We do it for Haskell in Gentoo, too, but we have a dark secret: it only
+> works because Haskell became unpopular. There are basically only two
+> Haskell programs, and everything works for n =3D 2.
 
-Sorry for the noise, I see that it's available on GitHub:
+Why would this not work for a more popular language like Rust?  I know
+that Gentoo is limited by the compute resources of a single machine, but
+cascading rebuilds should not be a problem for modern distributed build
+infrastructure, provided that the build clusters are sufficiently large.
 
-https://github.com/ocaml/ocaml/releases
+Also, are the two programs GHC and Pandoc?
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Is that the new canonical source of OCaml releases?
-
---W/nzBZO5zC0uMSeA
+--pEQ1GQC2q28eXEOb
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAllNQTIACgkQJkb6MLrK
-fwj6BBAApEVwD9/S1qAZw+ltPH2rFjWV1tRNz1gsW85hG+Vr6Mv+UbXByYAHropL
-mbulnO21FHcJT9TIXSBHRs5YITQNLvkDyJ+MeHPiLDtq13jJfhQM6nrbkY+Lt9dG
-/RmvQXrRM9LgagbMkpZUTnweEFySwplZn9ut+63pcezhSaIZ6DSmFKufUuwfg5rt
-0UQXRmncg0iFaY+TkvavlDc5G+NxG0CEvLgNYDadkuZbp1yRay5JHbeD6cEq6yJM
-e5xXYk/HxiacEyDa9Rg74TlqCngcGSzUqH211UlFA9aiGiFv0wPV0MIKgEFDzPXA
-NQEWLTbJRIPlBJv12jNOi/ZVpge3vnUD7NFsa+tBHnAWpMuYVvCQoGwQO7LDVSV9
-pccmCQ+W/A8pwTkV/akhae0o2CTEAKUE2UA1bhez1tlBBzRt6lQC3mpPy9MiHlEV
-Vx13t1cJsHTkyq1ZYCJ8JYtsLlcMH+JY2KPHoyXlbs9CMs0lu6HQDjqXzc2l54AC
-gfiYC8GZVvHYUl7PrT6HVzpz0zkgjR+1Dg7/BbYlZ1UQEVF6AAbvV1ud8FKsm4Z9
-8buORKm9SKtu/wgSvtwFByGFhxdeLwM3gMaOH8Ve+bTNA6v/F9rRD2zQ5Qd5OhFV
-7LEawt5NB/m+sgt4hOxUbQYyW3urLdyAI+Bd5p3M1dZP+mBSfIA=
-=gmXU
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmUZAKEACgkQsoi1X/+c
+IsEz2hAAu6NXrMlBnU6A8UaxtU9Hg2BA0u4XIdhHIOyQKrcrJzreHKDjirT5T6Js
+Eeuhazom2ojW9HzOQm1ELPe5gkJIhSEyZt9r/IVPJdmzKmTwSOc1qxEftpvHzPNU
+oGfUcrVv2uU2AAKRNmFtq426EXwtTypB7XLALihRYtFwI+6oboZAcVH5WtVVPrOx
+tZfKcrkqH0EebwKQ6ZDdQzxKkfQaiwGKrQMhK4PTvReoekt0g4Eo5lyogM3llmZj
+APaYb0mgNpbmTvPgiykK4U9vPMuKP/19/dqBt4TSlxcej4f9j61hKnBH0leX3gPH
+HpZIcYRe3oVhEFkSMRQVBaplURvXZt4DJ04pxaViMC61bznXl4v5azhJ3C3H7exn
+a1emkOWqrry7sK5CzeJr2E7JHQTm5p9Nh+MCKpr2qHwjubVgWWjx12K3r9CgMnws
+C+3GAlZ6LTEvnNvp4ApWGEsqbLjKLxhby/xbLAoKnDVGLylPkfdkGlEhd7OhdJ45
+Me/cowj0h4U5E4tNqiADw+/LN08BBZ2FSTZWKxWUO15pwF0i6H6xGzj2IHUBUY9G
+fOiQ3nSfQ6/5y6Blj0jx1pTh19lpTCsPb2yyH6VhY4/f+9Jw3ZgUc0V1vpVDaseP
+qq6OJtKyTx73WJShpSzSQlBfQ9YXSsWnG7zSRLD5D5RdQGoVCnc=
+=9EOl
 -----END PGP SIGNATURE-----
 
---W/nzBZO5zC0uMSeA--
+--pEQ1GQC2q28eXEOb--
