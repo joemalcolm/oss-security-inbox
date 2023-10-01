@@ -1,33 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/24/4
-Message-ID: <29582adc-1944-9191-ec59-3d1ee26d3cad@apache.org>
-Date: Mon, 24 Jul 2023 18:06:06 +0000
-From: Brian Demers <bdemers@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/6
+Message-ID: <20231001191303.GA8910@openwall.com>
+Date: Sun, 1 Oct 2023 21:13:03 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34478: Apache Shiro before 1.12.0, or 2.0.0-alpha-3, may be susceptible to a path traversal attack when used together with APIs or other web frameworks that route requests based on non-normalized requests. 
+Subject: "Linux Kernel security demistified"
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Hi,
 
-Affected versions:
+Greg KH gave a talk entitled "Linux Kernel security demistified" at
+Kernel Recipes 2023 (10th Edition) on September 26 in Paris, France.
 
-- Apache Shiro before 1.12.0
-- Apache Shiro before 2.0.0-alpha-3
+Thank you, Greg!
 
-Description:
+Here are the slides:
 
-Apache Shiro, before 1.12.0 or 2.0.0-alpha-3, may be susceptible to a path traversal attack that results in an authentication bypass when used together with APIs or other web frameworks that route requests based on non-normalized requests.
+https://git.sr.ht/~gregkh/presentation-security
+https://git.sr.ht/~gregkh/presentation-security/blob/3547183843399d693c35b502cf4a313e256d0dd8/security-stuff.pdf
 
-Mitigation: Update to Apache Shiro 1.12.0+ or 2.0.0-alpha-3+
+Video:
 
-Credit:
+https://www.youtube.com/watch?v=xDHTn0auo2w&t=14975s (4:09:30 to 5:00:40)
 
-tkswifty (finder)
-Ha1c9on (finder)
+My summary and thoughts:
 
-References:
+The talk is primarily about the Linux kernel security process.  It
+starts with a mention of the European Union Cyber Resiliance Act (CRA)
+and how it is problematic for Open Source, a topic we haven't yet
+touched here on oss-security, but many relevant organizations have, e.g.
+here's Apache Foundation's summary from July:
 
-https://lists.apache.org/thread/mbv26onkgw9o35rldh7vmq11wpv2t2qk
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-34478
+https://news.apache.org/foundation/entry/save-open-source-the-impending-tragedy-of-the-cyber-resilience-act
 
+(If we want to discuss in here, which I'm not sure of, please start a
+separate thread for this sub-topic, do not just reply to this one.)
+
+A relevant point is that governments and companies want "early security
+notices".  Another is that "early notice lists are leaks and should be
+considered public."  A way out of this mess is not to play the game.
+This adds to the many technical reasons also given in the talk not to
+document security fixes as such, not to assign CVEs, and to recommend
+usage of upstream stable kernel trees over "enterprise" distro kernels.
+
+There are relevant questions and answers after the talk, including on
+(not) notifying the linux-distros list.  I can see how this fits in with
+not playing the game to avoid the slippery slope.  As usual, it remains
+up to issue reporters to choose who or what lists they notify.
+
+I wonder whether the kernel documentation could, however, be encouraging
+rather than discouraging (as it currently is) about issue reporters
+themselves contacting linux-distros after a fix is ready.  I wonder if a
+patch like that would be accepted?
+
+In an answer, Greg blames linux-distros for "blackmailing" the kernel
+security team by our requirement to make everything including exploits
+(if posted to the list) public, a requirement we had already lifted:
+
+https://www.openwall.com/lists/oss-security/2023/09/08/4
+
+and by having a (low) maximum embargo time (14 days).  Google P0's 90
+days is mentioned as adequate maximum (with typical times until a Linux
+kernel fix is ready being way shorter than that).  Yet a slide says "No
+embargoes longer than 7 days" without a mention this is 7 days after fix
+is ready (I assume an inadvertent omission).
+
+I was/am of course thinking whether we should possibly make the
+linux-distros embargo times consistent with s@...'s as an exception.
+We had already granted the Linux kernel and curl exceptions allowing
+semi-public fixes, then relaxed the rules on exploit posting, and now
+this remains the final inconsistency.  We could address it, too.
+
+However, if a reason to stop notifying linux-distros is avoiding a
+precedent of s@k.o providing early security notices to any other group,
+then us adjusting the rules would be counter-productive as it'd remove
+the needed excuse.  Of course, I don't expect any reply to this - it's
+just an impression/insight I got from the talk, and it's kind of fine.
+I understand the kernel security team works under pressure as-is and I
+don't want to add to that.
+
+There's also an upcoming Webinar:
+
+https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
+
+> Demystifying the Linux Kernel Security Process
+> October 3, 2023 | 07:00 AM PDT (UTC-7)
+> 
+> Join an interactive, complimentary Mentorship Session exploring
+> Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
+> Kernel Maintainer & Fellow, The Linux Foundation
+> 
+> There is a lot of misunderstanding about how the Linux kernel deals with
+> security vulnerabilities.  This talk will go into how the Linux kernel
+> security team works, how changes are propagated out to the public, and
+> how users must take advantage of these changes in order to have a secure
+> system.
+
+(Announcements of upcoming events generally don't fit oss-security, but
+including this along with material from the prior event is acceptable.)
+
+Alexander
