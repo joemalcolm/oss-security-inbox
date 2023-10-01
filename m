@@ -1,4 +1,4 @@
-Received: (qmail 19998 invoked by uid 550); 13 Jan 2026 16:14:16 -0000
+Received: (qmail 26468 invoked by uid 550); 1 Oct 2023 16:49:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +7,157 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17408 invoked from network); 13 Jan 2026 07:20:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768288812; x=1768893612; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PUMfTkqP3JdTyWQrpXQCO8UtmfuKBFWKaB9PgPs62iA=;
-        b=UXzp+f8PtVGXvWtlgmSSEgG8PAElCrVof+fK3XxjlaIXX92LlpdjBc3pLHnWou8b9q
-         pMLRV8ngmko2JHLV9oe60QNQaIykEpXfs+5Ks8IQ/E/cem7CTXdEU9NAXyrKmgt6ETzI
-         h7tXjxAfr5QYl8kUicHvUeFykcCbW/nJFW3Bn3sbYwUlJJERRCO4RFTKl4IvFLHH0hoO
-         nK1kgz90H4JJXTAiGxkwkkXOttNnMlvV9gMpis0uvGHEdkL+X+ML4rw7lsCqTnKI5aEQ
-         eUWr7F4ziwwk0D1yAuVJgUwu/gQt5H3e8FUmNpsI8xpQ/d5qwjaFPJjlGuElDtlhcmlk
-         q0Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768288812; x=1768893612;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PUMfTkqP3JdTyWQrpXQCO8UtmfuKBFWKaB9PgPs62iA=;
-        b=q9ZemVpuXVfY1iEh+TMD4UO0e1fzVwIF6i/xP34kWOijVD4xj+55n6z0FLCpWPYAsG
-         I3g5BwN0+kd77BwvpZevfhg2RmzZ/b9QGE8ROdaw3cDHroc4sWMNyEac8MdQ3Kq5rk4Y
-         +dSd9fOmCAg/LHMOeU7t5DIw+x7tN84ceCtZg81JUsp4kxpYfhc8zu5MjKmj3eg7cyGm
-         zv3CzP5JXicaBqD5RZAQ56+TKA99I6lxJMi/lmGAHw4OYoEKlDtoKFDidIpwNDKI8JMk
-         MNpxYoIIPXB2Opq+w15yWkbodrX0CFoitdjcDdmQCWnLsV/MccDWgkB72UToKr3C4RJD
-         bJkQ==
-X-Gm-Message-State: AOJu0Ywor4ztV9++L8mGsvWtl9Hjyu1bTSeQJtwdIODGpOFaPbbIqvOE
-	fBBKU6GPPDhjGrrk/ur2QZtqFDWgsdO2Cf1gpuIiLJw6vEN1dcKVVN5MY/dxxchH
-X-Gm-Gg: AY/fxX5VMZtZwaBHtyAKGgy/J0q1BcZSQ0Su7CL9GSfQzh/snpLgY70yHMjRZu9vlpy
-	OKDFTnMxOl0kEwNElQObE2vvWURTPwv1zBkH2EPLasb73G9wLULxu/hAIP/BPaBa+LT7J/CBqse
-	NjmSzU5rqxCQF+Ez9jwo3PIP5ertC51uuGUvJeOfdpRCG5w/4UjUYt9C7ElVHnGh6gFvMlf9bCk
-	1erf8dCqijUYxkuFmBGdM3jWAur9FEySZ8EaF7KILv+OU6GyvTKN2iPKUsguVsIbJLNfEhNbAY5
-	VYQLwWXf6Y0rUH0fgrM2MDYl6ChQEdU3FIZCHifkW3LrpMX5kMhTX6/fQCENa1KzBmWmmIrsHHy
-	VIIcszuFELXD8UgWFfmdz5xjN3ZWIq/94IG5+6KatZhrJvGN4KBQSIOjtb9+Etwo6BBUOj7hQqW
-	UCD0USKCA=
-X-Google-Smtp-Source: AGHT+IH3qDEyW5JtOyi/dniWBMyE55FjAXCM/CHY5snsM6PZTjAEQiGCABu+8/L2+X2qMMjt6xRduA==
-X-Received: by 2002:a05:6830:901:b0:7c7:586c:846a with SMTP id 46e09a7af769-7ce507f846emr11991795a34.0.1768282415287;
-        Mon, 12 Jan 2026 21:33:35 -0800 (PST)
-Message-ID: <5abff9bf-99f8-41ad-a0ee-0f0b072d7910@gmail.com>
-Date: Mon, 12 Jan 2026 23:33:29 -0600
+Received: (qmail 26450 invoked from network); 1 Oct 2023 16:49:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
+	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=RDP3gUw6hpjmFU2KgcW+J/eu1m/jt8yyEBkyNFyNh/c=; b=fG0UoVJwWHlio83qbh06h7As0W
+	k6WDj+T6umAfHMK/rzvefpP2eEqf2Pud077AsEh0uJwwtabe8J2XYjqWpC3DAUBbzflxG0nFb9uEx
+	EAdvbgPxEvWraaxN7LbjEEgx/P7tcuAPhzZzt1oug8l9036W6lm38wdT5TSweoiTmNAVYxb2D5oU5
+	f9/aYkSR8uYYkYURJHJWfMIGBn57gf8YVjNkLO9ztb0RWXdwdWODoGh9aCt9eot5qYQcOM5C4+43O
+	EeA6cuez0dGjrqTSWxgscJqyn5CQBDNZtvjb3DOGX81AI409RwjvvbpbI47G6SP+UbHb4l1Y+bSYo
+	fxXlb1dw==;
+Date: Sun, 1 Oct 2023 18:49:06 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+To: oss-security@lists.openwall.com
+Message-ID: <ZRmjAky/SBs4aCIw@jumper.schlittermann.de>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
+ <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Greg KH <greg@kroah.com>
-Cc: Alan Coopersmith <alan.coopersmith@oracle.com>
-References: <f6825a3e-06ba-4672-afc1-171c7ae48d9d@oracle.com>
- <56e7f252-59a4-447c-b8ee-29e647c6bc3b@gmail.com>
- <9151rn19-0on4-96s6-p3oq-qq07188p9n0r@vanv.qr>
- <2026011249-radiantly-scrambled-299e@gregkh>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <2026011249-radiantly-scrambled-299e@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Null Pointer Dereference in HarfBuzz
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QTkO3LhuYLnK6yOJ"
+Content-Disposition: inline
+In-Reply-To: <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Signal: +49.172.7909055
+X-Phone: +49.172.7909055
+X-SMS: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
-On 1/12/26 07:43, Greg KH wrote:
-> On Mon, Jan 12, 2026 at 10:42:33AM +0100, Jan Engelhardt wrote:
->> On Monday 2026-01-12 04:09, Jacob Bachmeyer wrote:
->>> In short, this is a crash bug, but not a security issue.  This is different
->>> from (for example) a parser bug that results in NULL being dereferenced if
->>> crafted input is processed.
->>>
->>> Are we now using CVE IDs as some kind of global bug tracker?
->> Isn't that how the Linux kernel works these days,
->> as per <https://docs.kernel.org/process/cve.html>:
->>
->> "almost any bug might be exploitable to compromise the security of
->> the kernel, but the possibility of exploitation is often not evident
->> when the bug is fixed"
-> The kernel might be a bit "different" here, given that any type of bug
-> that happens at the level of Linux can cause a system failure (i.e.
-> vulnerability), while I don't know if harfbuzz is at that same level
-> (i.e. does it claim to support any invalid input, like the kernel does?)
+--QTkO3LhuYLnK6yOJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The bug only occurs if allocation returns a NULL pointer in a context 
-that does not appear to depend on input at all; the attacker does not 
-get to cause an attempt to allocate HUGE_VALUE here.
+Dear Exim users,
 
-If an attacker can craft input such that millions of 
-"SubtableUnicodesCache" objects are allocated when normal processing 
-only allocates one, that would be a security issue leading to DoS, but 
-that is not the bug reported here.
+thank you for your patience.  The following tries to provide an abstract
+about the topics that arose during the recent hours.
 
-Such an issue would also *itself* be a vehicle for DoS by allocating all 
-available memory.  This NULL pointer deference would make that 
-hypothetical DoS harder to exploit by crashing the affected program as 
-soon as memory pressure is extreme enough for an allocation to fail.
+Summary
+-------
+Six 0day exploits were filed against Exim.
 
+None of these issues is related to transport security (TLS) being
+on or off.
 
--- Jacob
+* 3 of them are related to SPA/NTLM, and EXTERNAL auth. If you do not use
+  SPA/NTLM, or EXTERNAL authentication, you're not affected.
+  These issues are fixed.
 
+* One issue is related to data received from a proxy-protocol proxy. If
+  you do not use a proxy in front of Exim, you're not affected. If your
+  proxy is trustworthy, you're not affected. We're working on a fix.
 
+* One is related to libspf2. If you do not use the `spf` lookup type
+  or the `spf` ACL condition, you are not affected.
+
+* The last one is related to DNS lookups. If you use a trustworthy
+  resolver (which does validation of the data it receives), you're
+  not affected. We're working on a fix.
+
+Schedule
+--------
+Currently we're in contact with the major distros and aim to release
+those fixes that are available as soon as possible. (Aiming Monday, Oct
+2nd.) The below mentioned commits are currently available in a
+protected repo to a restricted set of users only.
+
+More Details
+------------
+
+ZDI-23-1468 | ZDI-CAN-17433 | CVE-2023-42114 | Exim bug 3001
+------------------------------------------------------------
+Subject:    NTLM Challenge Out-Of-Bounds Read
+CVSS Score: 3.7
+Mitigation: Do not use SPA (NTLM) authentication
+Subsystem:  SPA auth
+Fixed:      04107e98d, 4.96.1, 4.97
+
+ZDI-23-1469 | ZDI-CAN-17434 | CVE-2023-42115 | Exim bug 2999
+------------------------------------------------------------
+Subject:    AUTH Out-Of-Bounds Write
+CVSS Score: 9.8
+Mitigation: Do not offer EXTERNAL authentication.
+Subsystem:  EXTERNAL auth
+Fixed:      7bb5bc2c6, 4.96.1, 4.97
+
+ZDI-23-1470 | ZDI-CAN-17515 | CVE-2023-42116 | Exim bug 3000
+------------------------------------------------------------
+Subject:    SMTP Challenge Stack-based Buffer Overflow
+CVSS Score: 8.1
+Mitigation: Do not use SPA (NTLM) authentication
+Subsystem:  SPA auth
+Fixed:      e17b8b0f1, 4.96.1, 4.97
+
+ZDI-23-1471 | ZDI-CAN-17554 | CVE-2023-42117 | Exim Bug 3031
+-------------------------------------------------------------
+Subject:    Improper Neutralization of Special Elements
+CVSS Score: 8.1
+Mitigation: Do not use Exim behind an untrusted proxy-protocol proxy
+Subsystem:  proxy protocol (not socks!)
+Fix:        not yet
+
+ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
+------------------------------------------------------------
+Subject:    libspf2 Integer Underflow
+CVSS Score: 7.5
+Mitigation: Do not use the `spf` condition in your ACL
+Subsystem:  spf
+Remark:     It is debatable if this should be filed against
+            libspf2.
+
+ZDI-23-1473 | ZDI-CAN-17643 | CVE-2023-42219 | Exim Bug 3033
+------------------------------------------------------------
+Subject:    dnsdb Out-Of-Bounds Read
+CVSS Score: 3.1
+Mitigation: Use a trustworthy DNS resolver which is able to
+            validate the data according to the DNS record types.
+Subsystem:  dns lookups
+Fix:        not yet
+Remark:     It is still under consideration.
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+
+--QTkO3LhuYLnK6yOJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmUZowEACgkQr0zGdqa2
+wULriAf+M0A+BFDuPLiWxh0fT2c68s4dvO4GzSYSC90aZ6vAIAok7xA9ch0PbNEs
+eNwvcaX6jhtoeGZlZbXU9RgGGxYE1a1j8rdeuCvdRt6KkJMk4din+eKwDA7zNe4T
+t425qb0vBHDVkk4gyzKXNhL3AhIzREsINxgZPlYuh6Za2G93MUcMRtHYGYPA/qxV
+gb/mhNMi2upvMnEZYo+28Mnmkx0RSOSo1+uQcSbuQiJMfMTyXAE2TOLxwQJ9Eezk
+X8kCtxhE40DtxO5DSYRbVlvmryPMv3rpbHweND8lBy4g2ZtoQ1iXIJozxax1Oxy6
+kL/xDcHOVjyoJ7d2Z1yXbyk0L+4iQw==
+=E2nT
+-----END PGP SIGNATURE-----
+
+--QTkO3LhuYLnK6yOJ--
