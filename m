@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["215" "Monday" "17" "August" "2015" "12:38:34" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUDJbSmjcgOAe27h9k4h5dq6cHUXOTgbO9YTkCanopGzUA@mail.gmail.com>" "5" "Re: [oss-security] Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015081719:38:34" "[oss-security] Terminal escape sequences - the new XSS for admins?" (number mark "        lcamtuf@core Aug 17    5/215   " thread-indent "\"Re: [oss-security] Terminal escape sequences - the new XSS for admins?\"\n") "<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" ("<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24479 invoked by uid 550); 17 Aug 2015 19:39:06 -0000
+Received: (qmail 25830 invoked by uid 550); 1 Oct 2023 19:13:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24454 invoked from network); 17 Aug 2015 19:39:05 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=P/fo+BvrZaWUBEgiX+iFUu83+eNexWKoIJd5rirRKr4=;
-        b=h69XxXn1ljDAOwQtqYHL+5BLr5flfEkKvCC9jTOOvjroKjCXCFs5vNEbhaNeocl8gc
-         wLSQVgmuZClebHPorNxgR1ZwHFUKFb+rbO9VLXOBsDgEEY8MwqUStDVepghPVfCxTbmb
-         m6UEXEcWAFrVNvwwcHZeY7f4uRPUtknay2fa6EifLVeni1bRexjSb/TNChhWtTm8WxGE
-         NF6F4saKhtzGJpeh7R+Jt9p/CqPqoCgLpoNkk7qe6+R4fq0Ioaphnf9UGmvCP68zgGbW
-         G4YCU6lvrhftEirosVf3j/EWDQADi25Zdme9djQNwfHOqB8OHPcZlbXM52Oi9IFUjTcX
-         PBcg==
-X-Gm-Message-State: ALoCoQnBaYOUXonVu0jJBJAwzCyC9h5ggAGWa5l3XChkTVv8Iv/jpBXgpTHNPEf8Cf7dt2dzH7Y5
-X-Received: by 10.50.92.100 with SMTP id cl4mr2523445igb.97.1439840333576;
- Mon, 17 Aug 2015 12:38:53 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
-References: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
-Message-ID: <CALx_OUDJbSmjcgOAe27h9k4h5dq6cHUXOTgbO9YTkCanopGzUA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 17 Aug 2015 12:38:34 -0700
-From: Michal Zalewski <lcamtuf@coredump.cx>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Terminal escape sequences - the new XSS for admins?
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 24337 invoked from network); 1 Oct 2023 19:13:08 -0000
+Date: Sun, 1 Oct 2023 21:13:03 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20231001191303.GA8910@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] "Linux Kernel security demistified"
 
-> http://turbochaos.blogspot.ca/2014/08/journalctl-terminal-escape-injection.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1084577
+Hi,
 
-Another nice tidbit:
-https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=202326
+Greg KH gave a talk entitled "Linux Kernel security demistified" at
+Kernel Recipes 2023 (10th Edition) on September 26 in Paris, France.
+
+Thank you, Greg!
+
+Here are the slides:
+
+https://git.sr.ht/~gregkh/presentation-security
+https://git.sr.ht/~gregkh/presentation-security/blob/3547183843399d693c35b502cf4a313e256d0dd8/security-stuff.pdf
+
+Video:
+
+https://www.youtube.com/watch?v=xDHTn0auo2w&t=14975s (4:09:30 to 5:00:40)
+
+My summary and thoughts:
+
+The talk is primarily about the Linux kernel security process.  It
+starts with a mention of the European Union Cyber Resiliance Act (CRA)
+and how it is problematic for Open Source, a topic we haven't yet
+touched here on oss-security, but many relevant organizations have, e.g.
+here's Apache Foundation's summary from July:
+
+https://news.apache.org/foundation/entry/save-open-source-the-impending-tragedy-of-the-cyber-resilience-act
+
+(If we want to discuss in here, which I'm not sure of, please start a
+separate thread for this sub-topic, do not just reply to this one.)
+
+A relevant point is that governments and companies want "early security
+notices".  Another is that "early notice lists are leaks and should be
+considered public."  A way out of this mess is not to play the game.
+This adds to the many technical reasons also given in the talk not to
+document security fixes as such, not to assign CVEs, and to recommend
+usage of upstream stable kernel trees over "enterprise" distro kernels.
+
+There are relevant questions and answers after the talk, including on
+(not) notifying the linux-distros list.  I can see how this fits in with
+not playing the game to avoid the slippery slope.  As usual, it remains
+up to issue reporters to choose who or what lists they notify.
+
+I wonder whether the kernel documentation could, however, be encouraging
+rather than discouraging (as it currently is) about issue reporters
+themselves contacting linux-distros after a fix is ready.  I wonder if a
+patch like that would be accepted?
+
+In an answer, Greg blames linux-distros for "blackmailing" the kernel
+security team by our requirement to make everything including exploits
+(if posted to the list) public, a requirement we had already lifted:
+
+https://www.openwall.com/lists/oss-security/2023/09/08/4
+
+and by having a (low) maximum embargo time (14 days).  Google P0's 90
+days is mentioned as adequate maximum (with typical times until a Linux
+kernel fix is ready being way shorter than that).  Yet a slide says "No
+embargoes longer than 7 days" without a mention this is 7 days after fix
+is ready (I assume an inadvertent omission).
+
+I was/am of course thinking whether we should possibly make the
+linux-distros embargo times consistent with s@k.o's as an exception.
+We had already granted the Linux kernel and curl exceptions allowing
+semi-public fixes, then relaxed the rules on exploit posting, and now
+this remains the final inconsistency.  We could address it, too.
+
+However, if a reason to stop notifying linux-distros is avoiding a
+precedent of s@k.o providing early security notices to any other group,
+then us adjusting the rules would be counter-productive as it'd remove
+the needed excuse.  Of course, I don't expect any reply to this - it's
+just an impression/insight I got from the talk, and it's kind of fine.
+I understand the kernel security team works under pressure as-is and I
+don't want to add to that.
+
+There's also an upcoming Webinar:
+
+https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
+
+> Demystifying the Linux Kernel Security Process
+> October 3, 2023 | 07:00 AM PDT (UTC-7)
+> 
+> Join an interactive, complimentary Mentorship Session exploring
+> Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
+> Kernel Maintainer & Fellow, The Linux Foundation
+> 
+> There is a lot of misunderstanding about how the Linux kernel deals with
+> security vulnerabilities.  This talk will go into how the Linux kernel
+> security team works, how changes are propagated out to the public, and
+> how users must take advantage of these changes in order to have a secure
+> system.
+
+(Announcements of upcoming events generally don't fit oss-security, but
+including this along with material from the prior event is acceptable.)
+
+Alexander
