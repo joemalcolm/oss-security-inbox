@@ -1,57 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/14
-Message-ID:  <SA1PR14MB45951B834771F85BBB40E7BAF1CAA@SA1PR14MB4595.namprd14.prod.outlook.com>
-Date: Thu, 5 Oct 2023 20:44:39 +0000
-From: Cory McIntire <cory.mcintire@...pros.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "zdi@...ndmicro.com" <zdi@...ndmicro.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/7
+Message-ID: <ZRnTNhtSBmN7GFfL@jumper.schlittermann.de>
+Date: Sun, 1 Oct 2023 22:14:46 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: oss-security@...ts.openwall.com
 Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-Just to be clear, Exim did release 4.96.1 with 3 of the 6 patched:
+Heiko Schlittermann <hs@...marc.schlittermann.de> (So 01 Okt 2023 18:49:06 CEST):
+> Schedule
+> --------
+> Currently we're in contact with the major distros and aim to release
+> those fixes that are available as soon as possible. (Aiming Monday, Oct
+> 2nd.) The below mentioned commits are currently available in a
+> protected repo to a restricted set of users only.
 
-https://git.exim.org/exim.git/blob/b9e0b12d9b665bbff996382264d4ba97d1a61efd:/doc/doc-txt/ChangeLog
+We plan¹ to go public with the available fixes (addressing a subset of
+the issues) on Monday, Oct 2nd, 12:00 UTC.
 
+By this time we'll provide access the available fixes (based on the
+current master), and to an exim-4.96.1 security release.
 
-Regards,
-Cory McIntire | Lead – cPanel Application Security Team | Release Manager – EasyApache
-cory.mcintire@...pros.com<mailto:cory.mcintire@...pros.com> | cPanel – a webpros company
+¹) In case none of the major distributions runs asks us for a delay.
 
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-
-
-From: Salvatore Bonaccorso <salvatore.bonaccorso@...il.com> on behalf of Salvatore Bonaccorso <carnil@...ian.org>
-Date: Thursday, October 5, 2023 at 14:13
-To: zdi@...ndmicro.com <zdi@...ndmicro.com>
-Cc: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
-Hi ZDI team,
-
-I do not want to land between fronts but here is my understanding:
-
-On Thu, Oct 05, 2023 at 05:40:58PM +0000, zdi@...ndmicro.com wrote:
-> Apologies, We have not received any notifications from the
-> developers that these issues have been patched. We will be happy to
-> update our advisories once they do so.
-
-So this feels like a locked situation. One one side I read from Exim
-maintainers, that there was not much information provided to actually
-determine where the issue is, neither if it is specific to Exim's use
-of libspf2 or if the issue is actually in libspf2.
-
-On the ZDI side I read that advisories will be updated once ZDI gets
-notification from the Exim developers that the issue is patched.
-
-And on a third front, there is the libspf2 report at
-https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fshevek%2Flibspf2%2Fpull%2F44&data=05%7C01%7Ccory.mcintire%40webpros.com%7Ca71a744a7ab24a5e023608dbc5d722f0%7Cf8497356a834406086b6d4b1d8059ee0%7C0%7C0%7C638321300025204208%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=Sc%2Bxzp0WFVsWUshEHXSj60TaLK36D6Yfi9H6zRTUMMA%3D&reserved=0<https://github.com/shevek/libspf2/pull/44> which *might* be related,
-but nobody can tell if it's the same as ZDI-23-1472.
-
-Again, my interest is to see this situation unblocked, and just asking
-as a member of a distribution which might have affected packages and
-for which we would want to deploy updates covering the fixes.
-
-Thanks in advance,
-
-Regards,
-Salvatore
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
