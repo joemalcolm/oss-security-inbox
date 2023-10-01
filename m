@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/12/1
-Message-ID: <71ec9890-2982-8113-4d13-f7907b3180f8@debian.org>
-Date: Wed, 12 Apr 2023 12:07:02 +0100
-From: Matthew Vernon <matthew@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/1
+Message-ID: <ZRkAokgUEw9cD7yG@itl-email>
+Date: Sun, 1 Oct 2023 01:16:01 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-11164 - stack exhaustion in PCRE
+Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2023 12:22, Sevan Janiyan wrote:
-
-> "PCRE1 has become totally obsolete and is no longer maintained. The
-> final release was 8.45 (June 2021)"
+On Sat, Sep 30, 2023 at 07:28:46PM -0400, Michael Orlitzky wrote:
+> On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
+> > It is also worth noting that Rust-the-language supports dynamic linking.
+> > Once Cargo supports this and downstreams (like Fedora) obtain sufficient
+> > build capacity, it will be possible to use dynamic linking by performing
+> > automatic cascading rebuilds whenever a package is upgraded.  Arch
+> > already does this for Haskell IIUC.
 > 
-> So just a heads up if you're still linking against PCRE 8.x but software
-> in question supports PCRE2, perhaps it's time to switch and default to
-> PCRE2.
+> We do it for Haskell in Gentoo, too, but we have a dark secret: it only
+> works because Haskell became unpopular. There are basically only two
+> Haskell programs, and everything works for n = 2.
 
-I've been trying to push towards getting old-PCRE out of Debian; you can 
-track the outstanding bugs online[0], and there's similar for Ubuntu[1].
+Why would this not work for a more popular language like Rust?  I know
+that Gentoo is limited by the compute resources of a single machine, but
+cascading rebuilds should not be a problem for modern distributed build
+infrastructure, provided that the build clusters are sufficiently large.
 
-Once the next Debian release "bookworm" is out, I'm hoping to be able to 
-make the outstanding bugs release critical, moving towards not shipping 
-the older pcre (called pcre3 in Debian for Historical Reasons) in the 
-next release...
+Also, are the two programs GHC and Pandoc?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Regards,
-
-Matthew
-[PCRE maintainer for Debian]
-
-[0] 
-https://udd.debian.org/bugs/?release=any&merged=ign&fnewerval=7&flastmodval=7&fusertag=only&fusertagtag=obsolete-pcre3&fusertaguser=matthew-pcredep%40debian.org&allbugs=1&sortby=id&sorto=asc&format=html#results
-[1] https://bugs.launchpad.net/ubuntu/+source/pcre3/+bug/1792544
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
