@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/3
-Message-ID: <6e8f9006-ad6c-c97d-b14e-97be90964314@apache.org>
-Date: Wed, 01 Feb 2023 10:43:09 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/5
+Message-ID: <ZRm4W-K4CtjLxcAQ@llamedos.localdomain>
+Date: Sun, 1 Oct 2023 19:20:11 +0100
+From: Ken Moffat <zarniwhoop@...world.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24997: Apache InLong: Jdbc Connection Security Bypass in InLong 
+Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
+> Google has announced another media parsing bug, this time correctly documenting
+> both the base library and Chrome versions affected in the CVE.
+> 
+> https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
+> 
+>    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
+>    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
+>    exploit heap corruption via a crafted HTML page.
+>    (Chromium security severity: High)
+> 
 
-Bypass Through User-Controlled Key vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.1.0 through 1.5.0. Users are advised to upgrade to Apache InLong's latest version or cherry-pick  https://github.com/apache/inlong/pull/7223 https://github.com/apache/inlong/pull/7223  to solve it.
+Does anyone know how far back libvpx is affected ?  Asking because
+seamonkey-2.53.17.1 is apparently shipping a version of libvpx-1.7.0
+from 2020 and I'm told it no longer builds against system
+libvpx-1.13.1, although a recent version apparently built against
+libvpx-1.11.0.
 
-Credit:
-
-This issue was discovered by s3gundo of Hundsun Tech (finder)
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-24997
-
+ĸen
+-- 
+  Men marched away, Vimes. And men marched back. How glorious the
+  battles would have been that they never had to fight! -- Jingo
