@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/7
-Message-ID: <37FAC982-F2BB-49DE-9534-8A34D3FAD497@mnx.io>
-Date: Thu, 14 Sep 2023 15:49:22 +0000
-From: Dan McDonald <danmcd@....io>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/2
+Message-ID: <20231001110346.GA25232@unix-ag.uni-kl.de>
+Date: Sun, 1 Oct 2023 13:03:46 +0200
+From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Haskell programs in distributions (was: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx))
 Content-Type: text/plain; charset=utf-8
 
-Sorry for being unclear (but I tried to understand the possible distinction in the parenthesized bit of the subject).
+Hi,
 
-On Sep 14, 2023, at 11:14 AM, Solar Designer <solar@...nwall.com> wrote:
+On Sat, Sep 30, 2023 at 07:28:46PM -0400, Michael Orlitzky wrote:
+> On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
+> > It is also worth noting that Rust-the-language supports dynamic linking.
+> > Once Cargo supports this and downstreams (like Fedora) obtain sufficient
+> > build capacity, it will be possible to use dynamic linking by performing
+> > automatic cascading rebuilds whenever a package is upgraded.  Arch
+> > already does this for Haskell IIUC.
 > 
-> That said, the membership is for the distro, not for the individuals.
-> The Subject line here is confused about that.  The difference is in what
-> uses of information are allowed (only for the distro's security) and in
-> conditions for staying subscribed (only while requested by the distro's
-> leadership and only as needed for the distro's security).
+> We do it for Haskell in Gentoo, too, but we have a dark secret: it only
+> works because Haskell became unpopular. There are basically only two
+> Haskell programs, and everything works for n = 2.
 
-Regardless of the precise semantics, I'm here on behalf of illumos, and I'm volunteering/happy to be the individual representing illumos.
+I am curious, what two prgrams do you think of?
 
-Hope this helps,
-Dan
+I know of two Haskell programs I regularly use, Pandoc and ShellCheck.
 
+Best regards,
+Erik
+-- 
+[T]he most dangerous enemy of a better solution is an existing codebase
+that is just good enough.
+                        -- Eric S. Raymond
