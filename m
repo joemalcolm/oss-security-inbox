@@ -1,4 +1,4 @@
-Received: (qmail 17559 invoked by uid 550); 22 Oct 2025 15:54:46 -0000
+Received: (qmail 6048 invoked by uid 550); 1 Oct 2023 13:03:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +7,157 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18297 invoked from network); 22 Oct 2025 15:21:44 -0000
-ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org BCE054D078A
-Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
-ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1761146493; cv=none; b=UWTlnckFxy/Q3ap7FN4+qMlIodvFbpmWo5YDZMxQX1xqvmZHZQHehkZeTEJF00g+hdDH6qyzoEDv5GH37doBLbJ7AVvXxQVp1jn6liDBPxKJJWRnw55qiTNSte3Vp38vI1Zpw9RMVHn69AsMaunFzGDKQbZXNH0oVxAgzXP6Ujw=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1761146493;
-	c=relaxed/relaxed; bh=UvyASZu+xVByUzOKwK9VnDhX1ZaxW6WkFLXMZo2Fibs=;
-	h=DKIM-Signature:DKIM-Signature:Date:From:To:Subject:Message-ID:
-	 MIME-Version; b=XFX7WW5HJ+Ln1EFriqya/JoGaFj7wVXze15bNOIwlLit6DulY9W8OBCW1b6BvneW9hkubPpBPLstx1v4jGdSNRU4xtFUFOM5ta4P0a3+Q8EkA6dinkfRR1rRfK6l1N4GcFXAdLeuM3bk7qVuf2Id4flm6NpE9K5MnXWcIMsFFa8=
-ARC-Authentication-Results: i=1; mx.pao1.isc.org
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org BCE054D078A
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1761146493; bh=i+XyrcIMRbzlX0tSXdPjRetTq90a/NeELCHNVswKdlU=;
-	h=Date:From:To:Cc:Subject;
-	b=fHUrSKKm1d19Kbh4WIDTyt3uaNYERcAjT77IhjLIgm79vlXchYfVydeL17dLx0D7Q
-	 ekMv61Y1rpc5lHHC/icnsSTAc20g/Bznzstg9cK2ux7VIHfQpgnOna5vITgKu1yXBY
-	 r5qH4YzB+mDdNXT9HZvtDstMMcytPZtLre9T6qO4=
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org A5EE32E601D2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1761146493;
-	bh=UvyASZu+xVByUzOKwK9VnDhX1ZaxW6WkFLXMZo2Fibs=;
-	h=Date:From:To:Message-ID:MIME-Version;
-	b=bFzmaq2LAYHTz0QIVaaaqKMQQlfSCXCd1dDZ9YgECilMIL62ewr6G3JIf+ROcZZpm
-	 U8HR/IUN9a2B/z95spqw5P+v6l/zi8WPOFQqmOyRV7Zm+loCe3y8kOLL+TSPbQYnwo
-	 vgc3Bd7xPVEbCUMp0QGMQAWKNUMUXL0vnfWvFa8M=
-Date: Wed, 22 Oct 2025 17:21:29 +0200
-From: =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Received: (qmail 5707 invoked from network); 1 Oct 2023 13:02:34 -0000
+Date: Sun, 1 Oct 2023 15:02:23 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: security-officer@isc.org
-Message-ID: <aPj2effljuW4V1rA@larwa.hq.kempniu.pl>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Message-ID: <20231001130223.GA6586@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] ISC has disclosed three vulnerabilities in BIND 9 (CVE-2025-8677,
- CVE-2025-40778, CVE-2025-40780)
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] linux-distros list membership application - CIQ Rocky Linux Security Team
 
-On 22 October 2025 we (Internet Systems Consortium) disclosed three vulnerabilities affecting our BIND 9 software:
+Hi,
 
-- CVE-2025-8677:        Resource exhaustion via malformed DNSKEY handling https://kb.isc.org/docs/cve-2025-8677
-- CVE-2025-40778:       Cache poisoning attacks with unsolicited RRs https://kb.isc.org/docs/cve-2025-40778
-- CVE-2025-40780:       Cache poisoning due to weak PRNG https://kb.isc.org/docs/cve-2025-40780
+Rocky Linux is a prominent Enterprise Linux distribution in the spirit
+of original goals of the CentOS project, founded by Gregory Kurtzer, who
+had also co-founded CentOS and is founder and CEO of the primary
+corporate sponsor of the Rocky Linux project, CIQ:
 
-New versions of BIND 9 are available from https://www.isc.org/downloads
+https://rockylinux.org
+https://ciq.com
 
-Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of each published release directory:
+Besides heavily sponsoring Rocky Linux (yet without being its owner),
+CIQ also has its own Open Source and commercial offerings:
 
-- https://downloads.isc.org/isc/bind9/9.18.41/patches/
-- https://downloads.isc.org/isc/bind9/9.20.15/patches/
-- https://downloads.isc.org/isc/bind9/9.21.14/patches/
+"Our software stack consists of Rocky Linux the CentOS replacement,
+Apptainer the container solution of choice for HPC, Warewulf a
+provisioning and cluster management solution, and Fuzzball our
+next-generation performance computing platform that is multi-cloud,
+multi-site, multi-cluster, and multi-node."
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+Most relevant here, CIQ maintains LTS branches of Rocky Linux point
+releases (such as of 8.6 when current is 8.8), providing security
+updates to those of its customers who wish to otherwise stay at a given
+point release.
 
--- 
-Best regards,
-Michał Kępień
+Further, the Rocky Linux project isn't limited to being a resurrection
+of CentOS (its packages being bug-for-bug compatible with RHEL), but
+also has a number of Special Interest Groups (SIGs) offering additional
+package repositories:
+
+https://wiki.rockylinux.org/special_interest_groups/
+
+I have recently joined this effort and we're now getting the Security
+SIG going.  This means an optional repository of extra packages for
+Enterprise Linux distros adding security features and even overriding
+some packages with hardened alternatives.  We already have a few
+packages of both kinds, and many more are planned.  If anyone else wants
+to join this effort - in any capacity including development,
+maintenance, testing, documentation, or something else - let me know!
+
+This application is for CIQ Rocky Linux Security Team, which means CIQ
+employees, (sub)contractors, and/or Rocky Linux project contributors
+trusted and tasked with producing security updates for Rocky Linux,
+CIQ's LTS branches of Rocky Linux, and possibly CIQ's other offerings
+building upon Rocky Linux.
+
+I address the 9 membership criteria below:
+
+> Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
+
+Rocky Linux has been actively maintained since its release in 2021, and
+is an Open Source project.  Many of CIQ's additional offerings are also
+Open Source projects on their own.
+
+> Have a userbase not limited to your own organization
+
+Rocky Linux has been publicly available since its release in 2021, and
+per EPEL repository access statistics has gained a userbase on par with
+other major EL distributions:
+
+https://ciq.com/blog/tracking-rocky-linux-growth-using-fedoras-epel-project/
+https://brentk.io/thoughts/analysis/epel-distribution-statistics.html
+https://rocky-stats.tiuxo.com
+
+Further, CIQ has its customer base for Rocky Linux support, including
+for the LTS branches.
+
+> Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
+
+The publicly verifiable track record currently consists of timely
+rebuild and re-release of RHEL security update packages and security
+advisories, as published here:
+
+https://errata.rockylinux.org
+
+Not currently verifiable publicly, but Gregory further tells me:
+
+"We've been doing LTS privately to our customers for over a year now.
+This means we maintain security fixes for customers who need long term
+support for point releases."
+
+> Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+
+Besides being a "downstream or a rebuild of another distro", CIQ has its
+LTS branches and Rocky Linux has its additional and replacement packages
+via the SIGs.  Security maintenance for these should be provided by CIQ
+and Rocky Linux.
+
+Some security issues in upstream packages may be mitigated or fixed by
+pushing "security override" packages via CIQ's customer-facing repos and
+the Security SIG repos, without waiting on upstream distro's fixes and
+for issues or point releases where no upstream fixes are expected.
+
+Related previously accepted membership application (precedent) is
+CloudLinux's, which is now perhaps best known for AlmaLinux, another
+prominent EL distribution:
+
+http://www.openwall.com/lists/oss-security/2017/07/02/2
+
+Also, CentOS was once a member.
+
+> Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
+
+I have been a participant on oss-security since its inception, and have
+made relevant contributions.  Others with CIQ and Rocky Linux are also
+involved in various communities, and we'll ensure that the team to be
+subscribed to linux-distros isn't blind to publicly disclosed issues.
+
+> Accept the list policy
+
+CIQ Rocky Linux Security Team accepts the linux-distros list policy.
+
+> Be able and willing to contribute back, preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
+
+I've been contributing to oss-security and linux-distros since their
+inception.  We'll also look for additional ways CIQ and/or Rocky Linux
+can contribute, depending on expertise, interests, other related duties,
+and availability of specific people we may add.
+
+> Be able and willing to handle PGP-encrypted e-mail
+
+Of course.  I am already subscribed with my PGP key.
+
+My current subscription is as list admin and it also was for Openwall.
+Openwall no longer qualifies for linux-distros membership as a distro
+since we've effectively EOL'ed the Openwall GNU/*/Linux distro (we still
+do maintain many other projects, but not a full distro).  However, I
+and/or someone else from Openwall would have needed to stay subscribed
+as list admin anyway.
+
+With my new Rocky Linux role, my subscription's purpose will once again
+double as list admin and for the distro.
+
+> Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+
+I suppose someone in here can vouch for me.  Please do - ideally, if you
+also have something else to say on this application in the same message,
+not to spam list members with messages solely to meet this formality.
+
+I may then get additional CIQ and/or Rocky Linux people subscribed,
+effectively vouching for them, after making sure they understand and
+accept the list policy.
+
+Alexander
