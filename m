@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/9
-Message-ID: <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
-Date: Sat, 23 Dec 2023 00:40:06 +0800
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/1
+Message-ID: <21nn3332-526s-6n4o-qs0o-4q5951q2op0n@inai.de>
+Date: Mon, 2 Oct 2023 04:11:15 +0200 (CEST)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: Re: "Linux Kernel security demistified"
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 22, 2023 at 11:57 PM Rodrigo Freire <rfreire@...hat.com> wrote:
->
-> On Fri, Dec 22, 2023 at 12:10 PM Erik Auerswald
-> <auerswal@...x-ag.uni-kl.de> wrote:
-> >   * The CERT/CC and VINCE involvement resulted in "there is no
-> >     vulnerability".
->
-> I'm trying to make sense of it - where's the compromise of the
-> Confidentiality, Integrity or Availability of the affected mail
-> servers?
->
 
-The integrity of the sender's identity, as a minimum, is compromised
-here. Normally, when relaying mail, servers add a "Received:" header
-that specifies where they received the connection from. This allows
-tracking down the true origin of the message. The smuggled message
-does not have such a header and thus misrepresents the vulnerable
-relay as the ultimate sender. Additionally, if the relay has
-destination-based deny lists that deny some but not all addresses on
-the destination domain, they are sidestepped.
+On Sunday 2023-10-01 21:13, Solar Designer wrote:
+>
+>Here are the slides:
+>
+>https://git.sr.ht/~gregkh/presentation-security
+>https://git.sr.ht/~gregkh/presentation-security/blob/3547183843399d693c35b502cf4a313e256d0dd8/security-stuff.pdf
 
--- 
-Alexander E. Patrakov
+Had a little chuckle.
+
+Slide 50: "If you are not using a stable kernel, your system is insecure."
+Slide 10: "All releases are stable."
+
+What a relief! :D
