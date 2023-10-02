@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8209" "Wednesday" "17" "June" "2015" "14:04:28" "+0200" "Sebastian Wolfgang Kraemer | HSASec" "Sebastian.Kraemer@HS-Augsburg.de" "<5581624C.8090804@HS-Augsburg.de>" "168" "[oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats" nil nil nil "6" "2015061712:04:28" "[oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats" (number mark "        Sebastian.Kr Jun 17  168/8209  " thread-indent "\"[oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1574 invoked by uid 550); 17 Jun 2015 12:45:15 -0000
+Received: (qmail 20320 invoked by uid 550); 2 Oct 2023 12:03:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,184 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32061 invoked from network); 17 Jun 2015 12:04:43 -0000
-X-Virus-Scanned: Debian amavisd-new at hs-augsburg.de
-Message-ID: <5581624C.8090804@HS-Augsburg.de>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha1; boundary="------------ms020705030909070908060602"
-CC: cve-assign@mitre.org
-Date: Wed, 17 Jun 2015 14:04:28 +0200
-From: Sebastian Wolfgang Kraemer | HSASec <Sebastian.Kraemer@HS-Augsburg.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-
---------------ms020705030909070908060602
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 20293 invoked from network); 2 Oct 2023 12:03:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1696248195; bh=BarBKVgY133pa5AoNAZNoVZ303ydF9CdLuZhj1zx68w=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=lJulsGBWgolV6x5eyvFNHkczrr02yS1mzBhAcXWP9saH8Pe+OaFinTSnEy/f5F9ee
+	 zZv2NjgHvG3A2oc3Gv/UYPXta7f7f5dtvADELhGUqCJ2lz4A9mYakja9BS38wUEfy7
+	 F9p8cgaZtnPGnQ84n54Aig9IYvjUma6ScyvJC/dU=
+Message-ID: <6cfbc14a0c3b3cca937468eb9e6d618ab88a8d55.camel@orlitzky.com>
+From: Michael Orlitzky <michael@orlitzky.com>
+To: oss-security@lists.openwall.com
+Date: Mon, 02 Oct 2023 08:03:14 -0400
+In-Reply-To: <ZRkAokgUEw9cD7yG@itl-email>
+References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
+	 <ZRXlPoozp5n+cWv1@itl-email>
+	 <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
+	 <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
+	 <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
+	 <ZRdyaYEi9YOZUXAg@codewreck.org> <ZRhUF9yHctTj5DhO@itl-email>
+	 <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
+	 <ZRkAokgUEw9cD7yG@itl-email>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 
+MIME-Version: 1.0
+Subject: Re: [oss-security] Rust programs in distrbutions (Was:
+ CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 
-Greetings,
+On Sun, 2023-10-01 at 01:16 -0400, Demi Marie Obenour wrote:
+>=20
+> Why would this not work for a more popular language like Rust?  I know
+> that Gentoo is limited by the compute resources of a single machine, but
+> cascading rebuilds should not be a problem for modern distributed build
+> infrastructure, provided that the build clusters are sufficiently large.
 
-we discovered a vulnerability in the following component and want to
-request a CVE for it:
+The rebuilds aren't the problem, it's the labor required to bestow
+version compatibility unto hundreds of packages whose authors have
+never had to care about it.
 
-Product-Type:=20=20=20=20=20
-Wordpress Plugin
+If I'm trying to package Foo and if it depends on Bar, one common
+problem is that Foo will use pessimistic version bounds like <=3DBar-1.0.
+(Even if Bar-1.0 is ancient, that's no problem for users of the
+bundling tool including upstream itself.) Now suppose Bar-1.1 is
+released. If you're very lucky, then Foo will work unmodified with Bar-
+1.1. Except you still have to patch out the <=3DBar-1.0 constraint,
+because otherwise the build system / bundling tool will reject your
+Bar-1.1.
 
-Product:=20=20=20=20=20=20=20=20=20
-WP-Stats (https://de.wordpress.org/plugins/wp-stats/)
+Do you send that change upstream? When upstream changes their
+constraints, do they release a new version? Do you package it? Were
+there other breaking changes in Foo's git repo at the time and did they
+incidentally get released along with your tiny constraint fix?
+Remember, you're dealing with people who have never had to make a
+distinction between bugfix and feature releases, because all consumers
+(except you!) use the bundling tool. How long does all this take?=20
 
-Version:=20=20=20=20=20=20=20=20=20
-2.51
+Anyway. More likely, Foo needs some help to work with Bar-1.1, because
+its build system is asking for <=3DBar-1.0, and, as a result, upstream
+doesn't notice when Bar makes new releases. So now you have to patch in
+support for Bar-1.1, while remaining backwards-compatible with Bar-1.0,
+because you have other packages that need Bar-1.0. There's another
+patch. You send it upstream, and they tell you to kick rocks. Why
+should they support both Bar-1.0 and 1.1? You're not using the
+language-specific build/bundling tool? Sorry, that's an unsupported use
+case. Hope you like being lectured about "best practices" by a high
+school student.
 
-Vendor:=20=20=20=20=20=20=20=20=20
-lesterchan@gmail.com
+Eventually a new release of Foo comes out that supports Bar-1.1.
+Except, to package the new version of Foo, you have to repeat that
+entire process, patching in backwards-compatibility for Bar-1.0,
+because upstream didn't include it. You've now got two versions of Foo
+in the tree, so push "patch everything else to support the new version
+of Foo" onto your TODO stack. Ad infinitum.
 
-Fixed:=20=20=20=20=20=20=20=20=20=20=20=20=20
-reported: 2015-06-16
-fixed in version 2.52, 2015-06-17
+This is all for one dependency of one package. The dependency tree for
+pandoc has ~175 packages in it. How many of those get version bumps in
+a day? For Haskell, thankfully, the answer is now low. Rust, on the
+other hand, is popular.
 
-Changelog:=20=20=20=20=20=20=20=20=20
-https://wordpress.org/plugins/wp-stats/changelog/
+It's a full-time job treading water.
 
-PoC available:=20=20=20=20=20
-yes
-
-Description:
-persistent XSS in wordpress-admin-panel enabled by csrf-vulnerability in
-admin-menu of plugin
-
-Researchers:
-* Michael Kapfer (Michael.Kapfer@hs-augsburg.de)
-* Sebastian Kraemer (Sebastian.Kraemer@hsasec.de)
-
-
-Best regards,
- the HSASec-Team
- (https://www.hsasec.de)
-=20
+Contrast this with C, where upstream projects support multiple versions
+of OpenSSL, LibreSSL, BoringSSL, etc. all at the same time, because
+there's no telling what might be installed on the user's system, and
+without static linking or a bundling build tool, it all has to work
+together. It's a little more work for the upstream project, but a lot
+less for its users. That's how it should be though because the number
+of (users * packages) explodes as you move downstream.
 
 
---------------ms020705030909070908060602
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
-AQAAoIIP6DCCBNUwggO9oAMCAQICCFBOxvU9EbRkMA0GCSqGSIb3DQEBCwUA
-MHExCzAJBgNVBAYTAkRFMRwwGgYDVQQKExNEZXV0c2NoZSBUZWxla29tIEFH
-MR8wHQYDVQQLExZULVRlbGVTZWMgVHJ1c3QgQ2VudGVyMSMwIQYDVQQDExpE
-ZXV0c2NoZSBUZWxla29tIFJvb3QgQ0EgMjAeFw0xNDA3MjIxMjA4MjZaFw0x
-OTA3MDkyMzU5MDBaMFoxCzAJBgNVBAYTAkRFMRMwEQYDVQQKEwpERk4tVmVy
-ZWluMRAwDgYDVQQLEwdERk4tUEtJMSQwIgYDVQQDExtERk4tVmVyZWluIFBD
-QSBHbG9iYWwgLSBHMDEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
-AQDpm8NnhfkNrvWNVMOWUDU9YuluTO2U1wBblSJ01CDrNI/W7MAxBAuZgeKm
-FNJSoCgjhIt0iQReW+DieMF4yxbLKDU5ey2QRdDtoAB6fL9KDhsAw4bpXCsx
-EXsM84IkQ4wcOItqaACa7txPeKvSxhObdq3u3ibo7wGvdA/BCaL2a869080U
-ME/15eOkyGKbghoDJzANAmVgTe3RCSMqljVYJ9N2xnG2kB3E7f81hn1vM7Pb
-D8URwoqDoZRdQWvY0hD1TP3KUazZve+Sg7va64sWVlZDz+HVEz2mHycwzUlU
-28kTNJpxdcVs6qcLmPkhnSevPqM5OUhqjK3JmfvDEvK9AgMBAAGjggGGMIIB
-gjAOBgNVHQ8BAf8EBAMCAQYwHQYDVR0OBBYEFEm3xs/oPR9/6kR7Eyn38Qpw
-Pt5kMB8GA1UdIwQYMBaAFDHDeRu69VPXF+CJei0XbAqzK50zMBIGA1UdEwEB
-/wQIMAYBAf8CAQIwYgYDVR0gBFswWTARBg8rBgEEAYGtIYIsAQEEAgIwEQYP
-KwYBBAGBrSGCLAEBBAMAMBEGDysGAQQBga0hgiwBAQQDATAPBg0rBgEEAYGt
-IYIsAQEEMA0GCysGAQQBga0hgiweMD4GA1UdHwQ3MDUwM6AxoC+GLWh0dHA6
-Ly9wa2kwMzM2LnRlbGVzZWMuZGUvcmwvRFRfUk9PVF9DQV8yLmNybDB4Bggr
-BgEFBQcBAQRsMGowLAYIKwYBBQUHMAGGIGh0dHA6Ly9vY3NwMDMzNi50ZWxl
-c2VjLmRlL29jc3ByMDoGCCsGAQUFBzAChi5odHRwOi8vcGtpMDMzNi50ZWxl
-c2VjLmRlL2NydC9EVF9ST09UX0NBXzIuY2VyMA0GCSqGSIb3DQEBCwUAA4IB
-AQBjICj9nCGGcr45Rlk5MiW8qQGbDczKfUGchm0KbiyzE1l1sTOSG2EnFv/D
-stU1gvuEKgFJvWa7Zi+ywgZdbj9u4wFaW8pDY1yVtuExpx/VB19N5mWCTjL5
-w3x6S81NXHTuIfJ1AuxSPtLJatOQI25JZzW+f01WpOzML8+3oZeocj7JvEDW
-WqQIPda8gsO3tzKOsSyOam23NQIZz/U5RFhjpyQAELC7/E6vbi84u6VXST/Y
-blBvLJeW3B1GmmWJz67M8uXZn1OzPqEvkqnYC8aEHwTG6x7on321e6UC8STF
-JGMRNMxakyAqeYg6JUKQqWU7fIbTEhUjKfws2sw5W1QXMIIFZDCCBEygAwIB
-AgIHF5Bg+UNu4DANBgkqhkiG9w0BAQsFADBaMQswCQYDVQQGEwJERTETMBEG
-A1UEChMKREZOLVZlcmVpbjEQMA4GA1UECxMHREZOLVBLSTEkMCIGA1UEAxMb
-REZOLVZlcmVpbiBQQ0EgR2xvYmFsIC0gRzAxMB4XDTE0MDUxMjE1MDYxN1oX
-DTE5MDcwOTIzNTkwMFowgYgxCzAJBgNVBAYTAkRFMSAwHgYDVQQKExdGYWNo
-aG9jaHNjaHVsZSBBdWdzYnVyZzEWMBQGA1UECxMNUmVjaGVuemVudHJ1bTEd
-MBsGA1UEAxMURkggQXVnc2J1cmcgQ0EgLSBHMDIxIDAeBgkqhkiG9w0BCQEW
-EWNhQGZoLWF1Z3NidXJnLmRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
-CgKCAQEAkq9QGU/FLHb/yS/l5t4d26+K60FlBpBOqc3rT3BFetsfh6xSk/3G
-BrWzo4GOvOcIpXYoNXu9Za8Y+JUMlExMhAuKG3rIPtnES9tREncDFoC6V4Pu
-ArFmv6T9TLUrWDov6vx9LnfG3RD0vrSPJ0muo/PMUrlZ6ldSok8OfLvgcuqg
-FYY02drh59TMjqWFQ//pkmGQPaFYwnt2E5DPF/m2u8H8NHf77u7f0xG2tJfQ
-nOQFTazeIWVykxhUnuP08JE2EMgnifxY6sJ5tmq6IiaJFbipIuaWo0c5yHuR
-oynZrkiTxrcY0cjjSePT5wjaSZixpGsDP2mwdLOXznvgsG20WwIDAQABo4IB
-/jCCAfowEgYDVR0TAQH/BAgwBgEB/wIBATAOBgNVHQ8BAf8EBAMCAQYwEQYD
-VR0gBAowCDAGBgRVHSAAMB0GA1UdDgQWBBTVcBfj3sGX9Ag+6ToRs+iI8ZBH
-5DAfBgNVHSMEGDAWgBRJt8bP6D0ff+pEexMp9/EKcD7eZDAcBgNVHREEFTAT
-gRFjYUBmaC1hdWdzYnVyZy5kZTCBiAYDVR0fBIGAMH4wPaA7oDmGN2h0dHA6
-Ly9jZHAxLnBjYS5kZm4uZGUvZ2xvYmFsLXJvb3QtY2EvcHViL2NybC9jYWNy
-bC5jcmwwPaA7oDmGN2h0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFsLXJv
-b3QtY2EvcHViL2NybC9jYWNybC5jcmwwgdcGCCsGAQUFBwEBBIHKMIHHMDMG
-CCsGAQUFBzABhidodHRwOi8vb2NzcC5wY2EuZGZuLmRlL09DU1AtU2VydmVy
-L09DU1AwRwYIKwYBBQUHMAKGO2h0dHA6Ly9jZHAxLnBjYS5kZm4uZGUvZ2xv
-YmFsLXJvb3QtY2EvcHViL2NhY2VydC9jYWNlcnQuY3J0MEcGCCsGAQUFBzAC
-hjtodHRwOi8vY2RwMi5wY2EuZGZuLmRlL2dsb2JhbC1yb290LWNhL3B1Yi9j
-YWNlcnQvY2FjZXJ0LmNydDANBgkqhkiG9w0BAQsFAAOCAQEAptjTJ7XD5Aiw
-AYqtvwbbBd1NJ2zh/Usst1D8xXHrc06Xgat0arfrsjnqtjN4k8fD26O1O3CU
-Uz/Vgi+LerGsD+T6L6/KgTTm1TE2Qxtj4TUO8eopN4fZ/MjBk31TXG4aFInb
-N4ciWGjgg7IG7q9I5ALLB/2a9sRIGDxf3lwwACa/YyVeejNcQFUlwx69ZDiP
-ME4LQbEA6iCZXXXWpgDgjS050MfL+Y9I2CL4zmB8+ZOtW8GaRcnhMWo+eRaD
-/dmYXZUoi7zq3Pm2+z5zxziMfMYmQ5THkW2VKVbKHJOjRf4coMRpE9ppUB0b
-I7MXyZqiY4pPmUDIy66QRkYudbTM/jCCBaMwggSLoAMCAQICBxZNOg9gTK4w
-DQYJKoZIhvcNAQEFBQAwgYgxCzAJBgNVBAYTAkRFMSAwHgYDVQQKExdGYWNo
-aG9jaHNjaHVsZSBBdWdzYnVyZzEWMBQGA1UECxMNUmVjaGVuemVudHJ1bTEd
-MBsGA1UEAxMURkggQXVnc2J1cmcgQ0EgLSBHMDIxIDAeBgkqhkiG9w0BCQEW
-EWNhQGZoLWF1Z3NidXJnLmRlMB4XDTEzMDkwOTEyMTgwN1oXDTE2MDkwODEy
-MTgwN1owgYQxCzAJBgNVBAYTAkRFMTswOQYDVQQKEzJIb2Noc2NodWxlIGZ1
-ZXIgYW5nZXdhbmR0ZSBXaXNzZW5zY2hhZnRlbiBBdWdzYnVyZzETMBEGA1UE
-CxMKSW5mb3JtYXRpazEjMCEGA1UEAxMaU2ViYXN0aWFuIFdvbGZnYW5nIEty
-YWVtZXIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD3Wm6mycm7
-N3SvVVb+oExwUPbvqE+u1jDZDP4Ww901HINnPCD4zJlwPhtAoPZYERFwmv9C
-qeKbI4k37+nyqMaKoctErenz4M7g1lxEAjIUOcAULql+sJYKe2qWkE/ghtIv
-vjrZNmLWQyd+2PrGTYbamFWYGpq9CD9sj5r8aZ/7gfpVgBY1TQCY3nF1Iix3
-XRvhlD3Vf5/ZLbq87EMBYu+n4XAaTW6iroCfzSQE1HepRnUEDChLQqpnCb2/
-vgJ9osqYYvbOxiyZlZNy/Z3r4wVatE9ibKsT7sfVK++ODEXw28N4jYtsug46
-ez9I5K3JJ50pqE8tNNgPvpg4RReYfZ79AgMBAAGjggISMIICDjAvBgNVHSAE
-KDAmMBEGDysGAQQBga0hgiwBAQQDADARBg8rBgEEAYGtIYIsAgEEAwAwCQYD
-VR0TBAIwADALBgNVHQ8EBAMCBeAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsG
-AQUFBwMEMB0GA1UdDgQWBBSbBAX/LbJGXpLpkGNzBn+7h+uy2DAfBgNVHSME
-GDAWgBTVcBfj3sGX9Ag+6ToRs+iI8ZBH5DArBgNVHREEJDAigSBTZWJhc3Rp
-YW4uS3JhZW1lckBocy1hdWdzYnVyZy5kZTCBjQYDVR0fBIGFMIGCMD+gPaA7
-hjlodHRwOi8vY2RwMS5wY2EuZGZuLmRlL2ZoLWF1Z3NidXJnLWNhL3B1Yi9j
-cmwvZ19jYWNybC5jcmwwP6A9oDuGOWh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUv
-ZmgtYXVnc2J1cmctY2EvcHViL2NybC9nX2NhY3JsLmNybDCBpgYIKwYBBQUH
-AQEEgZkwgZYwSQYIKwYBBQUHMAKGPWh0dHA6Ly9jZHAxLnBjYS5kZm4uZGUv
-ZmgtYXVnc2J1cmctY2EvcHViL2NhY2VydC9nX2NhY2VydC5jcnQwSQYIKwYB
-BQUHMAKGPWh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZmgtYXVnc2J1cmctY2Ev
-cHViL2NhY2VydC9nX2NhY2VydC5jcnQwDQYJKoZIhvcNAQEFBQADggEBAGJb
-pOVdo6BD+IRVD2vUmEwhxpxIKhz5UrR+tdZNy6TIJ2EDt2gB8ohTjDnR2dyQ
-voXEZLvdEPmhXo+ca2y3h2sD+c9KT1xwQJuP/faRKfsKi6upxevrNmZtWSwC
-KOdQRfWQFoCNab4oNFXwcDvvvd+2TLiPHidQw9OUblhWJp+rSVKgfcDwXNSA
-IJRT2hc0FxLUUs74k3IjVldZSkCB0TzuYbqv8fF5jHzaPEWjP0cCut+M/s7G
-LkV8Phe5mmHAEuHIjiAV+IQP4NHoB8vKmYp2F17hBPf0T4KqEhXi61yqXbTg
-7EBXVzm/p4aneBCPwyhwRtTU9ncd/zTcnjynAU8xggPdMIID2QIBATCBlDCB
-iDELMAkGA1UEBhMCREUxIDAeBgNVBAoTF0ZhY2hob2Noc2NodWxlIEF1Z3Ni
-dXJnMRYwFAYDVQQLEw1SZWNoZW56ZW50cnVtMR0wGwYDVQQDExRGSCBBdWdz
-YnVyZyBDQSAtIEcwMjEgMB4GCSqGSIb3DQEJARYRY2FAZmgtYXVnc2J1cmcu
-ZGUCBxZNOg9gTK4wCQYFKw4DAhoFAKCCAh0wGAYJKoZIhvcNAQkDMQsGCSqG
-SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTUwNjE3MTIwNDI4WjAjBgkqhkiG
-9w0BCQQxFgQU5kTKE0VpdvaL1UgdALslKuqp0lswbAYJKoZIhvcNAQkPMV8w
-XTALBglghkgBZQMEASowCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMA4GCCqG
-SIb3DQMCAgIAgDANBggqhkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG9w0D
-AgIBKDCBpQYJKwYBBAGCNxAEMYGXMIGUMIGIMQswCQYDVQQGEwJERTEgMB4G
-A1UEChMXRmFjaGhvY2hzY2h1bGUgQXVnc2J1cmcxFjAUBgNVBAsTDVJlY2hl
-bnplbnRydW0xHTAbBgNVBAMTFEZIIEF1Z3NidXJnIENBIC0gRzAyMSAwHgYJ
-KoZIhvcNAQkBFhFjYUBmaC1hdWdzYnVyZy5kZQIHFk06D2BMrjCBpwYLKoZI
-hvcNAQkQAgsxgZeggZQwgYgxCzAJBgNVBAYTAkRFMSAwHgYDVQQKExdGYWNo
-aG9jaHNjaHVsZSBBdWdzYnVyZzEWMBQGA1UECxMNUmVjaGVuemVudHJ1bTEd
-MBsGA1UEAxMURkggQXVnc2J1cmcgQ0EgLSBHMDIxIDAeBgkqhkiG9w0BCQEW
-EWNhQGZoLWF1Z3NidXJnLmRlAgcWTToPYEyuMA0GCSqGSIb3DQEBAQUABIIB
-AN2n2jqdnofuc8t6l321a0jhjJV9/sQKAtf2mGsWuIiFmI424TfH54Y32JeJ
-dqS5m2KigWaq49AMvJ+a0dZS7W0DFFOio2rB0FsUzEhXxfyDDS4Y9Xchk5H1
-iT/c8tMp654/tmMfPZa2T+TQnaK3QlTFlY3YDG8OGraomTaj9AfB3ZdAwXwj
-3kk863/vqW8OwBQkx+AczHwYIzCRti1o7hgdXh/QCcqkSa+Wvxw9C+bF52gA
-Blk6gS8ZpLKkzzaKYCcjf2AfLiuDozOHMy87x18YQ9HJZhEY2zZiib5IKEi4
-qPa/Vmpf4ohEpK090cZusoyK7kKZ1VUdkBLl25o78x0AAAAAAAA=
+> Also, are the two programs GHC and Pandoc?
 
---------------ms020705030909070908060602--
+I was thinking pandoc and git-annex, but shellcheck is valid too
+(thanks Erik).
+
+
