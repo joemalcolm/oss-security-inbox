@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1620" "Wednesday" "25" "January" "2017" "11:40:57" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<13a9a29f65f54f3498314ef5a425d9bc@imshyb01.MITRE.ORG>" "42" "[oss-security] Re: CVE request: lcms2 heap OOB read parsing crafted ICC profile" nil nil nil "1" "2017012516:40:57" "[oss-security] Re: CVE request: lcms2 heap OOB read parsing crafted ICC profile" (number mark "U       cve-assign@m Jan 25   42/1620  " thread-indent "\"[oss-security] Re: CVE request: lcms2 heap OOB read parsing crafted ICC profile\"\n") "<20170123030704.GA404@sin.redhat.com>" ("<20170123030704.GA404@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11828 invoked by uid 550); 25 Jan 2017 16:41:10 -0000
+Received: (qmail 15697 invoked by uid 550); 2 Oct 2023 09:22:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +7,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11804 invoked from network); 25 Jan 2017 16:41:10 -0000
-From: <cve-assign@mitre.org>
-To: <dmoppert@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<i.elsayed92@gmail.com>
-In-Reply-To: <20170123030704.GA404@sin.redhat.com>
-Message-ID: <13a9a29f65f54f3498314ef5a425d9bc@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 11:40:57 -0500
+Received: (qmail 15676 invoked from network); 2 Oct 2023 09:22:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
+	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=EKj5euBWAvm/ZVRx9DijNvIqFAXLcdsYXer371fWBSI=; b=BXHP1m6dAyj+qQaCir4D5vFMzj
+	d7h36iItzRddfzu5KKZZ5dEKR0/jRr27KYfbhCpalcy8Y9v9ZyQDTjLZHzxzarznMyoRjYrdLayL3
+	172D1JIX09pb6joYNS7CForoA/sW2hAEPLnmhBqd0xDAJ5Gxm+YLtYWOd0VtLrWLV71PwTb6UX36w
+	JakgUGLj/REHktkE+3Kg2w6vvCIQmtqxMTZwBOhpposoo5iZP2BpTHj12hnOtgHZdQrghuvT7x90p
+	KEPATx2jKQM4BcNTRS46pyTtrJjw3mAEgRjVx2qYy+oAxFtuSzTTjDETq82/EIgSK9lhVTI3C6p9w
+	QvVVI+DQ==;
+Date: Mon, 2 Oct 2023 11:21:55 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+To: oss-security@lists.openwall.com
+Message-ID: <ZRqLs+ZoggKAcxBx@jumper.schlittermann.de>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
+ <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
+ <ZRmjAky/SBs4aCIw@jumper.schlittermann.de>
+ <ZRnTNhtSBmN7GFfL@jumper.schlittermann.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: lcms2 heap OOB read parsing crafted ICC profile
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yqlEinXgFEx6ILCW"
+Content-Disposition: inline
+In-Reply-To: <ZRnTNhtSBmN7GFfL@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Signal: +49.172.7909055
+X-Phone: +49.172.7909055
+X-SMS: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--yqlEinXgFEx6ILCW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> An out-of-bounds heap read in lcms2 ("Little Colour Management System"),
-> in the function Type_MLU_Read in cmstypes.c. This could be triggered by
-> an untrusted image with a crafted ICC profile.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1367357
-> 
-> https://github.com/mm2/Little-CMS/commit/5ca71a7bc18b6897ab21d815d15e218e204581e2
+We go public with the available fixes (addressing a subset of
+the issues) on Monday, Oct 2nd, 12:00 UTC.
 
->> Added an extra check to MLU bounds
+The distribution points will be:
 
->> http://www.openwall.com/lists/oss-security/2016/08/15/9
+- git://git.exim.org
+  branches:
+  - spa-auth-fixes (based on the current master)
+  - exim-4.96+security (based on exim-4.96)=20
+  - exim-4.96.1+fixes (based on exim-4.96.1 with the fixes from exim-4.96+f=
+ixes)
+  tags:
+  - exim-4.96.1
 
->> The vulnerability is read read-out-of 
->> bounds which enables me to read most of the data in the heap.
+- tarballs for exim-4.96.1: https://ftp.exim.org/pub/exim/exim4/
 
-Use CVE-2016-10165.
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+--yqlEinXgFEx6ILCW
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYiNShAAoJEHb/MwWLVhi2tNYQAIIsVVuBdlAUm922u1XxVFd0
-TvjrdIxzVWumze5hyQEdcGHdPZENi3OS2lpHvll3ePXjic4FNUhPaQYp1FWjk+Oy
-QZmM1sS/vKeeSXaGjeRkvCdaI3eG6W/qF+Znsm6t5aUVrMgb4CO5LnG89JghsVcC
-lknYsY84/9AjmxyyTuIwHwmirbzKC0MSxCTUz/7bMt3JTA/FmFhVGNjD8886XFmN
-ihlRBxixjsW/9GjOKy3aszA3ejhlMrLHrjeo03CFHeNHA6u8zOtg08ysOa+U//wK
-grvFTd99vn/tioP5RaoLOQ2qgXb0Pr196S0/2eJwxfpyxdE7unfGnbH/u91ge+t6
-uqS4sNt3COGCSiksDOjC1fQJoV/CkgofkIFjyKA252SnBN5YAobQdoF4tSrNQqiE
-ywDAeh/Nss/GNrNXfAfC3OCa9zXay6gQZeYs6/8Wn7CrRMuVN946wnQbPd0rbA10
-gLOR3kEIg38KFmFPoXFAqorXeHiE/mt7luAtzqmlGhr0GV53Kp+dwmxA95S0pdWS
-+Cu7zQFqFMiQI8mO8/MB1BNLrIz41kLqbziuVxYO40DC4dkXJDNnyeoSM0CrCd5z
-LwAyeO+JdIrwOiAzRoPnjhcQP8vZX82aCmjhg29XN6NN1HV7BDUGyOVhzu48GvKL
-Qqok7Oon7vjbFPBLJR8J
-=XkOt
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmUai7IACgkQr0zGdqa2
+wUJGCAf6AqCCsZm8O6GdE5BdL46vRUQVRqJtF1GzfUJizpeVUXVts8QzeZLRTNt4
+9nTVOBh4HS9v8z6+Qv8QsmkPnMBUnjONHnV0ymwn3+QS5LAIHfqs5h605KuCstTk
+v+5pNMCuJKwEj200pwBFsSncur+cDcU5p87Bi+GBagxXPGlYYjpEqzSW5xyyWO/h
+4ZBrhZa8igpqJFAa9P69/yb/RSUEoSL6LY4q7FKB13db6/3u/IkpHAKcMRN0hSB9
+vtAvNpC/L+AAKrIQcjC3PvzyDfKcF3RFLs6RapyqG2SyOQFlJMOYCZakYsBz3tSA
+TqEopfPB51X3oU8vadYCXgmNANBD7g==
+=bmQc
 -----END PGP SIGNATURE-----
+
+--yqlEinXgFEx6ILCW--
