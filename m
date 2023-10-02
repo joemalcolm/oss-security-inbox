@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7819" "Wednesday" "13" "February" "2019" "20:31:51" "+1100" "Aleksa Sarai" "cyphar@cyphar.com" "<20190213093151.znxnjuqtwbdlwnom@yavin>" "156" "[oss-security] CVE-2019-5736: runc container breakout exploit code" "^Date:" nil nil "2" "2019021309:31:51" "[oss-security] CVE-2019-5736: runc container breakout exploit code" (number mark "        cyphar@cypha Feb 13  156/7819  " thread-indent "\"[oss-security] CVE-2019-5736: runc container breakout exploit code\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28212 invoked by uid 550); 13 Feb 2019 09:32:10 -0000
+Received: (qmail 3225 invoked by uid 550); 2 Oct 2023 11:09:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,172 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28188 invoked from network); 13 Feb 2019 09:32:09 -0000
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Message-ID: <20190213093151.znxnjuqtwbdlwnom@yavin>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="m5uxedbejb3lw7mx"
-Content-Disposition: inline
-Date: Wed, 13 Feb 2019 20:31:51 +1100
-From: Aleksa Sarai <cyphar@cyphar.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-5736: runc container breakout exploit code
+Received: (qmail 3207 invoked from network); 2 Oct 2023 11:09:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm2; t=1696244929; x=1696331329; bh=fi
+	RWpfA2Wm+ZF+B9l9MDRm4zKXkJ+hNjSpvcoMknyyw=; b=y3GOZSNHOyqFcyig9h
+	os5d+Z9+7ntyd9DvIQ2m3th3Syxp+IXsdC949qpVHl13/bpFWuRxxkUXY6LJwquC
+	IsoHBDgEHAngnxqdxErXUG1zQTs8clCDRnCqeJKOA1shDXeBdVNmJ/kTNHluOrsf
+	fu2WjsOsKJueyUT8izt3+BkBc90Ka3phcUiSIrSyjbutQeGwZ767WFAjU3I38B1Q
+	16dU7Q+SM7vxRahc6gEL8gf/uDYLv0RbOU/ZCZjLXtanpdky/wZinN3n6+PkmTdk
+	//ZFb8fsGWItPZnNUVqb9Czj5jPGHSLZbLq3FqTdhboJPtFcP0eSHpLb+yV2gIN+
+	Mnqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1696244929; x=1696331329; bh=fiRWpfA2Wm+ZF
+	+B9l9MDRm4zKXkJ+hNjSpvcoMknyyw=; b=YxDULgUIxokwos3Yq0h6PE3uj6/Uq
+	d+S9n+FLNVbyldeA5FktWqGPPN3moYm2UNtiFbF7VX8gsT3TcGFPcu++ZIFuYPLO
+	aW+d3W8JjgbLwF1PAcWms5SZnwi8mq/tSMWRzuktW/dfrZM4l1WvRkXievKCzsEA
+	dF0Go6/9+v7GaDCFhfzz2Bq+OCjHE8BfWw2Aoo5GIT7lSL8dGxlqMN0fV2ONs6X7
+	HcEGxUDBM/LxXAXzMLeProVSfQKVXYQ7r9BBk1dr+jqokUX3onh8AuRaURpDlJMs
+	A/ncNQiANMFPh74Df5okqHM73DvR+45rsQPidY1ELBKLC/hTwnJHHGhkQ==
+X-ME-Sender: <xms:waQaZTZrShcQo0EI-rrMNdgAwctJFtunnIf0r5o7u3TG_rsawZHM5A>
+    <xme:waQaZSZGwLjrUDGmOp56sG3l_NPvppJ4gI0lNhxvGH6WLrmyfA4WwF54BhK-0l5HY
+    NKfkVJwzk_XDg>
+X-ME-Received: <xmr:waQaZV9aTP8vAWab_0w3uhysHq6jaGcjxz4TPiBPGUzIBxE8eDoEJ41-l6Dc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdelgdefjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
+    ucggtffrrghtthgvrhhnpeejheeiuedugfeffeeffeevteeugfehffejfffgjeduffetie
+    eigeduvdeutedvteenucffohhmrghinheplhhinhhugihfohhunhgurghtihhonhdrohhr
+    ghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrh
+    gvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:waQaZZpAK0Pd2fHZmVj_s8SzEZLGeX-AVlg3JM6m55kwB7iVv7tvgQ>
+    <xmx:waQaZeqhsMseN-Al5VvvwnQSyBdKOuXjO6LzWdJWxEvkPyXmjCmzDg>
+    <xmx:waQaZfTISxwOor5zw_NVbVy3SaHhnOHWVUS-DBqWa90sPedUiX3LJw>
+    <xmx:waQaZVTEAI7zpQAx7WHYgTDSW-n8TJAMTFU7tdijTmnfYe9aY6QDzQ>
+Feedback-ID: i787e41f1:Fastmail
+Date: Mon, 2 Oct 2023 13:08:45 +0200
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-
---m5uxedbejb3lw7mx
-Content-Type: multipart/mixed; boundary="qpea7sltvqhhtddl"
-Content-Disposition: inline
-
-
---qpea7sltvqhhtddl
+Message-ID: <2023100223-unlawful-reaffirm-aa99@gregkh>
+References: <20231001191303.GA8910@openwall.com>
+ <2023100203-narrow-reliant-2560@gregkh>
+ <CAOp4FwSbzz9EgZoCjPG_0=-in3y7RpWaLmvQgFzAPGk7K8M48A@mail.gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAOp4FwSbzz9EgZoCjPG_0=-in3y7RpWaLmvQgFzAPGk7K8M48A@mail.gmail.com>
+Subject: Re: [oss-security] "Linux Kernel security demistified"
 
-Someone outside of the embargo has posted a PoC of the exploit for
-CVE-2019-5736 (which is related though not using the same vector)[1].
-Since the original researchers have posted a blog post explaining the
-exploit in some detail[2], I've decided to post the exploit code early
--- since the cat is out of the bag anyway.
+On Mon, Oct 02, 2023 at 11:48:15AM +0400, Loganaden Velvindron wrote:
+> On Mon, 2 Oct 2023 at 11:10, Greg KH <greg@kroah.com> wrote:
+> >
+> > On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> > > There's also an upcoming Webinar:
+> > >
+> > > https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
+> > >
+> > > > Demystifying the Linux Kernel Security Process
+> > > > October 3, 2023 | 07:00 AM PDT (UTC-7)
+> > > >
+> > > > Join an interactive, complimentary Mentorship Session exploring
+> > > > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
+> > > > Kernel Maintainer & Fellow, The Linux Foundation
+> > > >
+> > > > There is a lot of misunderstanding about how the Linux kernel deals with
+> > > > security vulnerabilities.  This talk will go into how the Linux kernel
+> > > > security team works, how changes are propagated out to the public, and
+> > > > how users must take advantage of these changes in order to have a secure
+> > > > system.
+> >
+> > It's going to be much the same talk, with only minor tweaks as I forgot
+> > some points I wanted to make in the first one.
+> >
+> > Thanks for the link to my slides and presentation, glad to see that
+> > information get spread wider!
+> >
+> It was a very insightful talk. However, I'm not sure whether companies
+> would even be willing to start a conversation with an open source
+> community without
+> an NDA being signed.
 
-CVE-2019-5736.tar.xz has the exploit code and an explanation of how to
-use it. Our exploit code uses shared libraries, but you can create a
-similar exploit by doing something like (thanks to Darren Shepherd from
-Rancher Labs for pointing this out):
+Then those companies are not going to get very far, sorry.
 
-1. Run a script with a #!-line of "#!/proc/self/exe events" which will
-   run "runc events" (which blocks for long enough).
-2. A malicious process then opens /proc/$pid/exe (this is now allowed
-   because the non-dumpable bit was cleared on execve).
-3. Kill "runc events" and then re-open the exe fd read-write using the
-   "/proc/self/fd/..." trick.
+We've been working this way for Linux for a very long time now, and it's
+worked very well without any NDAs.  For good reasons, you never want to
+sign one as it turns out to make the info you learn in them _more_
+likely to leak, talk to a lawyer for all the fun details.
 
-This is basically what [1] does -- but it does come with the downside
-that you can't craft a malicious image that does this, you need to have
-a separate program already running in the container and then attack
-"docker exec".
+thanks,
 
-As discussed in the previous mail, this exploit code also impacts LXC
-(and several other runtimes have contacted me to say that they are also
-vulnerable -- I would suggest that runtimes should ask to join
-<security-announce@opencontainers.org>).
-
-[1]: https://github.com/feexd/pocs/blob/master/CVE-2019-5736/exploit.c
-[2]: https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-=
-and.html
-
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
---qpea7sltvqhhtddl
-Content-Type: application/x-xz
-Content-Disposition: attachment; filename="CVE-2019-5736.tar.xz"
-Content-Transfer-Encoding: base64
-
-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
-
---qpea7sltvqhhtddl--
-
---m5uxedbejb3lw7mx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEb6Gz4/mhjNy+aiz1Snvnv3Dem58FAlxj5AcACgkQSnvnv3De
-m59mXxAAqQQNI+fJgLRgrJxI69Ik8MuQUWWYXQ8XFE1+OFVbc2TPT81jnTlbAHEF
-qArw0/OQIyBpdgFtPzLigkd1mlxlHMgHB5b/nCtd20qlRDhWOu41wX/2KwwANQ4M
-sxYndxFO6zxJskUc04AUwerzBOoMKkIPHBvoT0n8x5M/q3cOrLAan1JKANcdwkNN
-3t9IxP1Oo6FNrkJxGgfmd/ZpW4bRY7Dt6pm5DQ1UknFxpOsZQGqATx37K8R4PPCX
-dZCJ7kP22IMZMKsRAbiqSOKBIY1SD+CBV0Wp+ZO5ro7xT65XoDhQnqmmA71cpWfi
-JDi5MZl2mbU9ocUxlPx3PSJ6/1vaCsYGalF5ljSzpCQMFMLEVPY/UFayVrkcxgqv
-gBpHzg1HPRZ7/VpNb6u3ZxEUAZvT9FkBK/jn22De+nQtc5p6C2oL9DsAt6m2wh5n
-pEyKROquRH7Y7FrRkc4L2RnU3+35Q5fPuy2BbAfxWExXo+oNdTpjs0lwoKoRxQ7+
-KGZtY1b6lGjTNn+R6U7GTn/uu1HzApxXT8UeoJSMq0uNBlIugAMfyjWlkLkCP/Ej
-aZgq6ynmLTyd3EGGQmRyuVqSiEaIdgLVafHP67NjLu9WxT4pNggBaZzl17raYwBd
-ROkAw9r4TDi4Z1TABQI1lGn9jvXbK5rLewgwxSXZmAuj9JFEtpU=
-=mHDo
------END PGP SIGNATURE-----
-
---m5uxedbejb3lw7mx--
+greg k-h
