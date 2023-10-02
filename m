@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1591" "Saturday" "5" "September" "2015" "12:39:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150905163939.EF74C36E3D5@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user" nil nil nil "9" "2015090516:39:39" "[oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user" (number mark "U       cve-assign@m Sep  5   40/1591  " thread-indent "\"[oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user\"\n") "<20150904180811.GA22933@eldamar.local>" ("<20150904180811.GA22933@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26188 invoked by uid 550); 5 Sep 2015 16:39:51 -0000
+Received: (qmail 9767 invoked by uid 550); 2 Oct 2023 07:09:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26170 invoked from network); 5 Sep 2015 16:39:51 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20150904180811.GA22933@eldamar.local>
-Message-Id: <20150905163939.EF74C36E3D5@smtpvbsrv1.mitre.org>
-Date: Sat,  5 Sep 2015 12:39:39 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user
+Received: (qmail 9749 invoked from network); 2 Oct 2023 07:09:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm2; t=1696230532; x=1696316932; bh=Cd
+	vdu0HhLse2Gs052T8GJ1iTtNII1NpnpEINDeZhSCs=; b=SD6wY99k+W9ChoQNfN
+	Xtp2qCOSiWEUSQDOYnPyW2i2rxm8iBcTpG4hpOXKJ3171JMXxKbfPRUoYfoXftNW
+	JSIG36l5kaOBNNbImltPTYmjtNEumbCLf2lADuCvlBBPi9JatjG06ZV70jIroIau
+	AHxM0Q2q4RG2U3UysQeNbdE2BfBadQ9AIGF7xx9t7lkpP1buOR5KUu3X3TAK5ATK
+	q8BfZLMTmZvOQphdjxRx8aFH740WkqEFLGkxwOiCxVTkKZEXX1vYrl8xgiTubWal
+	oXSe2NbbnPYvq2NZKlpBr/s8n2FiligfWl/n7l6XXjWdKIEM8d68NiH0o3gT1Vln
+	MZoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1696230532; x=1696316932; bh=Cdvdu0HhLse2G
+	s052T8GJ1iTtNII1NpnpEINDeZhSCs=; b=ir1rcLRdVD2jU0xUQ+7rHZPY+u1Jb
+	XEZNNfLwR8br1iweGaOg+xZ7fJol9nsYlXZrjlLioE5CTr25QEarD8OiOBRAY35H
+	JhlhOrlg+ik1KjQODm7ooGrBlhY2/poYzducFmzLEsNjfh3b4vGEx8n61Z3cbnEU
+	XSCp0N5/QpqfGBdFefrd4fx9fwXTE4Y9K7USsmWb6lfuuZFHWpZjF3Q3NLBwHDZU
+	OFykeQMdn6Kj8RlAJ4j3SCEn+GScEA0MUXwPtcc/WItOY/BfQ3O3hxFHjOQDO+ys
+	6l3ymhoTCHyMOxJC9nsCYrub8RYjIbKgn6LkEwax1bNB9opNBfICE8zqw==
+X-ME-Sender: <xms:g2waZSGzsbQ82W7cmu6LulD-sEV2KUWirdcXj9MVgUMS-wDB7oBzxw>
+    <xme:g2waZTUH-55ffpcrw3R7trND23d4LsavcWG-wtHmjMeXVezp2ETbjjXdqk74GmSjr
+    Fb4D-hvFekjIg>
+X-ME-Received: <xmr:g2waZcIHmMsAT4gw0V49Z1R21z_xzeE7WSP9gW4ixIwig5d-76Padh6lJRwMM7drUo90BPwsJcCDukSBZpbUbioikrmTx9PLi_mylQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekgdduudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
+    ucggtffrrghtthgvrhhnpeejheeiuedugfeffeeffeevteeugfehffejfffgjeduffetie
+    eigeduvdeutedvteenucffohhmrghinheplhhinhhugihfohhunhgurghtihhonhdrohhr
+    ghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrh
+    gvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:g2waZcEFb-7Fn3imU4VXstZlsiMkfik-ufhjq2QkNz8WmZeUyxbuLA>
+    <xmx:g2waZYWdoCxGBXzlos6u2r7VomCGtFm7eDWpeU_cXds-xJyqabbviA>
+    <xmx:g2waZfMra1vcd70XSUzegQ9-4HJFCa6D0dwWs_gryLCMetsMfJWCiw>
+    <xmx:hGwaZRebwXB8oB6am8GGaqEC9ZRblutxaZ3GvaXR5wGa0wLVHH-T0w>
+Feedback-ID: i787e41f1:Fastmail
+Date: Mon, 2 Oct 2023 09:08:50 +0200
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <2023100203-narrow-reliant-2560@gregkh>
+References: <20231001191303.GA8910@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231001191303.GA8910@openwall.com>
+Subject: Re: [oss-security] "Linux Kernel security demistified"
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://pgbouncer.github.io/2015/09/pgbouncer-1-6-1/
-> https://github.com/pgbouncer/pgbouncer/issues/69
-> https://github.com/pgbouncer/pgbouncer/commit/7ca3e5279d05fceb1e8a043c6f5b6f58dea3ed38
-
-> http://comments.gmane.org/gmane.comp.db.postgresql.pgbouncer.general/1251
+On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> There's also an upcoming Webinar:
 > 
-> auth_user is already set (to the config 
-> auth_user value). Thus, getting no rows back from the auth_query lets one 
-> log in as the powerful auth_user user
+> https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
+> 
+> > Demystifying the Linux Kernel Security Process
+> > October 3, 2023 | 07:00 AM PDT (UTC-7)
+> > 
+> > Join an interactive, complimentary Mentorship Session exploring
+> > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
+> > Kernel Maintainer & Fellow, The Linux Foundation
+> > 
+> > There is a lot of misunderstanding about how the Linux kernel deals with
+> > security vulnerabilities.  This talk will go into how the Linux kernel
+> > security team works, how changes are propagated out to the public, and
+> > how users must take advantage of these changes in order to have a secure
+> > system.
 
-> The real bug was assigning db->auth_user to client->auth_user in the
-> first place.
+It's going to be much the same talk, with only minor tweaks as I forgot
+some points I wanted to make in the first one.
 
-Use CVE-2015-6817.
+Thanks for the link to my slides and presentation, glad to see that
+information get spread wider!
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJV6xpiAAoJEL54rhJi8gl5xggP/ifKkzMNnMHj6gpM3wvGfgNk
-7cp/i+FaEz/q6o+f7ZGY7uTRnPaaD51QXWQpg4FZZpEN5MuXCEYzx9zwXZVJxEte
-Pbim83MHo0ubnMABwkP/9rKDo5l+e3mFHB5DM+mKsWwdwudK1wUCoTxWo19VISPn
-nZH6sEwPmj2OFIRD01sq7J/WPaE1Yc7UGDLX2nwO6+sGQfkTLcOl6DXSXQWry0xO
-PJiUKynWfSnEr8fyGtw1/8Y0X7JcBTSxOJ/fcPxSpTfatmtePnMYRf9a8+AlS7fV
-K8tuecXItQo8hyQEKxzayMy0tilFOww3xWoxdLTeziQZeIvywjvL9Keij+PhHTXH
-+Fcb4sMb7O1wdpIx4mlvTvleF1PHTccUB41tqRvWz+V+i9ag49ER+qpEpJkhpZ5V
-tNJkEf4O71lDFgzWnSXfJeNYUDasMkK/JqJyZ8jrUDlIkrKfqjrsgnji1ytuD+wh
-5rMWNjDeFMUtzEWR8fDTDCVzcYPmnvI1yaW+U9EjHzXzFqKLaueP9NTQGtBTBCnq
-cRhI435z59m7ILXTbVGxo4IGmhVtLWqZMSfHI/7ImQBuNYfMw6thRA9hHHOUEP6m
-iSsRrrahj3aYOJCmt76c1cyk0wy/MoW2oE6Ijt9+dKenFC11sn0rx4YLW5gbkbs3
-DxI5O04+S3maL6o50vuE
-=7MYo
------END PGP SIGNATURE-----
+greg k-h
