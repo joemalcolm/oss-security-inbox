@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/05/3
-Message-ID: <ZKWjtBNBcNYlmDu7@quatroqueijos.cascardo.eti.br>
-Date: Wed, 5 Jul 2023 14:09:08 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/2
+Message-ID: <2023100203-narrow-reliant-2560@gregkh>
+Date: Mon, 2 Oct 2023 09:08:50 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-35001 - Linux kernel nf_tables nft_byteorder_eval OOB read/write
+Subject: Re: "Linux Kernel security demistified"
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that it was possible to cause an out-of-bounds read or
-write when processing an nft_byteorder expression.
+On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> There's also an upcoming Webinar:
+> 
+> https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
+> 
+> > Demystifying the Linux Kernel Security Process
+> > October 3, 2023 | 07:00 AM PDT (UTC-7)
+> > 
+> > Join an interactive, complimentary Mentorship Session exploring
+> > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
+> > Kernel Maintainer & Fellow, The Linux Foundation
+> > 
+> > There is a lot of misunderstanding about how the Linux kernel deals with
+> > security vulnerabilities.  This talk will go into how the Linux kernel
+> > security team works, how changes are propagated out to the public, and
+> > how users must take advantage of these changes in order to have a secure
+> > system.
 
-Tanguy DUBROCA (@SidewayRE) from @Synacktiv working with Trend Micro's Zero
-Day Initiative discovered that this vulnerability could be exploited for
-Local Privilege Escalation. This has been reported as ZDI-CAN-20721, and
-assigned CVE-2023-35001.
+It's going to be much the same talk, with only minor tweaks as I forgot
+some points I wanted to make in the first one.
 
-Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
+Thanks for the link to my slides and presentation, glad to see that
+information get spread wider!
 
-This bug was introduced by commit 96518518cc41 ("netfilter: add nftables"),
-which is present since v3.13-rc1.
-
-A fix has been sent to netfilter-devel@...r.kernel.org and is at
-https://lore.kernel.org/netfilter-devel/20230705121515.747251-1-cascardo@canonical.com/T/.
+greg k-h
