@@ -1,24 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/06/1
-Message-ID: <CAGUWgD-RAoKOCtQ3COqyuFKxo0KHnwQFYpV9ZRfyidWPd4v2VA@mail.gmail.com>
-Date: Mon, 6 Mar 2023 09:53:06 +0200
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/4
+Message-ID: <CAOp4FwSbzz9EgZoCjPG_0=-in3y7RpWaLmvQgFzAPGk7K8M48A@mail.gmail.com>
+Date: Mon, 2 Oct 2023 11:48:15 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
+Subject: Re: "Linux Kernel security demistified"
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 13, 2023 at 2:05 PM Qualys Security Advisory <qsa@...lys.com> wrote:
+On Mon, 2 Oct 2023 at 11:10, Greg KH <greg@...ah.com> wrote:
 >
-> Hi all,
+> On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> > There's also an upcoming Webinar:
+> >
+> > https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
+> >
+> > > Demystifying the Linux Kernel Security Process
+> > > October 3, 2023 | 07:00 AM PDT (UTC-7)
+> > >
+> > > Join an interactive, complimentary Mentorship Session exploring
+> > > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
+> > > Kernel Maintainer & Fellow, The Linux Foundation
+> > >
+> > > There is a lot of misunderstanding about how the Linux kernel deals with
+> > > security vulnerabilities.  This talk will go into how the Linux kernel
+> > > security team works, how changes are propagated out to the public, and
+> > > how users must take advantage of these changes in order to have a secure
+> > > system.
 >
-> On Thu, Feb 02, 2023 at 01:02:04PM +0000, Qualys Security Advisory wrote:
-> > Exploiting this vulnerability will not be easy: modern memory allocators
-> > provide protections against double frees, and the impacted sshd process
-> > is unprivileged and heavily sandboxed.
+> It's going to be much the same talk, with only minor tweaks as I forgot
+> some points I wanted to make in the first one.
 >
-> Quick update: we were able to gain arbitrary control of the "rip"
+> Thanks for the link to my slides and presentation, glad to see that
+> information get spread wider!
+>
+It was a very insightful talk. However, I'm not sure whether companies
+would even be willing to start a conversation with an open source
+community without
+an NDA being signed.
 
-So besides the double free bug you managed to circumvent
-the mitigation in both linux and openbsd, right?
-Did you find weakness in the mitigation or did you find
-fundamental way to exploit double free?
+Coming from a developing country in Africa, we are building cloud
+services in our new data centers for local businesses.
+We wish we could offer the same level of security as large cloud
+services if the large hardware companies
+were willing to open a channel to us despite us being still at the
+early stage ...
+
+
+
+> greg k-h
