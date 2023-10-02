@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/22/1
-Message-ID: <85222bd6-c08d-1e2f-69da-102f42610736@apache.org>
-Date: Wed, 22 Nov 2023 00:15:24 +0000
-From: Xiang Chen <cdmikechen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/3
+Message-ID: <ZRqLs+ZoggKAcxBx@jumper.schlittermann.de>
+Date: Mon, 2 Oct 2023 11:21:55 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37924: Apache Submarine: SQL injection from unauthorized login 
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+We go public with the available fixes (addressing a subset of
+the issues) on Monday, Oct 2nd, 12:00 UTC.
 
-Affected versions:
+The distribution points will be:
 
-- Apache Submarine 0.7.0 before 0.8.0
+- git://git.exim.org
+  branches:
+  - spa-auth-fixes (based on the current master)
+  - exim-4.96+security (based on exim-4.96) 
+  - exim-4.96.1+fixes (based on exim-4.96.1 with the fixes from exim-4.96+fixes)
+  tags:
+  - exim-4.96.1
 
-Description:
+- tarballs for exim-4.96.1: https://ftp.exim.org/pub/exim/exim4/
 
-Apache Software Foundation Apache Submarine has an SQL injection vulnerability when a user logs in. This issue can result in unauthorized login.
-Now we have fixed this issue and now user must have the correct login to access workbench.
-This issue affects Apache Submarine: from 0.7.0 before 0.8.0. We recommend that all submarine users with 0.7.0 upgrade to 0.8.0, which not only fixes the issue, supports the oidc authentication mode, but also removes the case of unauthenticated logins.
-If using the version lower than 0.8.0 and not want to upgrade, you can try cherry-pick PR  https://github.com/apache/submarine/pull/1037 https://github.com/apache/submarine/pull/1054  and rebuild the submarine-server image to fix this.
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-This issue is being tracked as SUBMARINE-1361 
-
-Credit:
-
-lengjingqicai(棱镜七彩开源安全研究院) (reporter)
-
-References:
-
-https://issues.apache.org/jira/browse/SUBMARINE-1361
-https://github.com/apache/submarine/pull/1037
-https://submarine.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-37924
-https://issues.apache.org/jira/browse/SUBMARINE-1361
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
