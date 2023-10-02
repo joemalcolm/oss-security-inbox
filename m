@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/1
-Message-ID: <23f62888-1023-1f89-651a-0f858e91c770@apache.org>
-Date: Mon, 30 Jan 2023 15:41:45 +0000
-From: Jialin Qiao <qiaojialin@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/9
+Message-ID: <20231002202106.GA17010@openwall.com>
+Date: Mon, 2 Oct 2023 22:21:06 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24829: Apache IoTDB: apache/iotdb-web-workbench: forge the JWTToken to access workbench 
+Cc: Kyle Zeng <zengyhkyle@...il.com>
+Subject: Re: [CVE-2023-42754] null pointer dereference in Linux kernel ipv4 stack
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Mon, Oct 02, 2023 at 12:53:20PM -0700, Kyle Zeng wrote:
+> when the skb is rerouted through ipvs, its skb->dev is NULL. Then the
+> following `dev_net` call, which accesses `dev->nd_net`, becomes null
+> pointer dereference.
 
-Incorrect Authorization vulnerability in Apache Software Foundation Apache IoTDB iotdb-web-workbench.This issue affects users' access to the system without authorization.
+When reporting issues like this, please always note the privileges
+required for attack.  For the example above, it appears to be
+CAP_NET_ADMIN within the namespace:
 
-This CVE is fixed in iotdb-web-workbench tag v0.13.3.
+static int
+do_ip_vs_set_ctl(struct sock *sk, int cmd, sockptr_t ptr, unsigned int len)
+{
+[...]
+	if (!ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN))
+		return -EPERM;
 
-References:
+I guess other possibilities for triggering this issue (if any) have
+similar requirements.
 
-https://iotdb.apache.org/
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-24829
+Thanks,
 
+Alexander
