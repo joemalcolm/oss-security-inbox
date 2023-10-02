@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2316" "Thursday" "28" "July" "2016" "17:01:38" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160728210138.B68BC42E01D@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: paps: heap overflow when processing crafted file" "^Cc:" nil nil "7" "2016072821:01:38" "[oss-security] Re: paps: heap overflow when processing crafted file" (number mark "        cve-assign@m Jul 28   48/2316  " thread-indent "\"[oss-security] Re: paps: heap overflow when processing crafted file\"\n") "<1668779.EJMXeZi6qq@arcadia>" ("<1668779.EJMXeZi6qq@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11527 invoked by uid 550); 28 Jul 2016 21:01:50 -0000
+Received: (qmail 30136 invoked by uid 550); 2 Oct 2023 10:34:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11506 invoked from network); 28 Jul 2016 21:01:50 -0000
-In-Reply-To: <1668779.EJMXeZi6qq@arcadia>
-Message-Id: <20160728210138.B68BC42E01D@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 28 Jul 2016 17:01:38 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: paps: heap overflow when processing crafted file
-To: ago@gentoo.org
+Received: (qmail 20378 invoked from network); 2 Oct 2023 07:48:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696232910; x=1696837710; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+G3h1gEk89fd1oEjt39zZlUWjuhsrQPIVATehEO6VQE=;
+        b=BkwH4TrjzEwiV8t7wnWE2gZGgMplPTvZ5cCmb9ABSwfZ6sN0GYSXjJsqW/J+DOCEsU
+         ZNJvSiF9j/S817KFKfGpq2cIn1HBY48x0FOX8vqJMT90V7E4kJQjzFSvS6DvszNSfTgg
+         dELufIGkOlxjXi9yvPcm0JwuY/0GLQ7b/9uUW7FOQP/quiknRVl4U6D2Gm2237jyG8if
+         FwKErplfltmpzKiPXfwkjP7ev9CFWEBxR0kjwRwK0e7cIniIUMknhhELQWDLCxrRPATk
+         ilomXvzEfp5IviSjtatMks6MwwVK+ysI1PgnTiwJ70OaRZDSW+lIex9U4Bi5zgEyvdYr
+         aLYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696232910; x=1696837710;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+G3h1gEk89fd1oEjt39zZlUWjuhsrQPIVATehEO6VQE=;
+        b=UerC/fBPq7AMeq2GI4JIGRZe5Za1jytQB4kU1sdcfq8GTnQZod2ZSbX6AI6TC7xEqk
+         DWM68SQXzfbB0Lua7VjZL8HkbjcDtjSZ78N+Fytc5GOnLlAq1mkdD6zf4hbZ/lBYGkC8
+         9pzAwKJ4TDR6Iy9osyHHAi3UreBoFcg9r4uHe3UDiOMF78BJcOWCZegm8LGjn0Y7OdeM
+         +oMr1sATReMnrv+zBoWgBGIxVHmDiGQ+dcFFa3LKdeFkStSvK/8on6tCNVie2irp6Drc
+         1SALWstyovP+cs2LGrwpoqFTfBMgrGXtI6E0HnC/RYXGNLnr2Bbof8XdGTiMFQhwyxtr
+         eAAw==
+X-Gm-Message-State: AOJu0Yxyl7PzdPz2ceLoDhga43+S1/L9Q/W0J8XLnB7erpURY003KKyA
+	LzvWipj45/uibvQV8LCfyIPLM3E7mzjFbgQ4/3nZ1Y/H
+X-Google-Smtp-Source: AGHT+IFZ2T/Sw9XSWok9XERSEwFLn/yuGIDRTz6OUzeubqRCF/AMpO6KUPgJp29MMUu5smdEcikwa1n5oBGzM0XW0OQ=
+X-Received: by 2002:a2e:9e4d:0:b0:2b6:fa3f:9230 with SMTP id
+ g13-20020a2e9e4d000000b002b6fa3f9230mr7653015ljk.46.1696232909812; Mon, 02
+ Oct 2023 00:48:29 -0700 (PDT)
+MIME-Version: 1.0
+References: <20231001191303.GA8910@openwall.com> <2023100203-narrow-reliant-2560@gregkh>
+In-Reply-To: <2023100203-narrow-reliant-2560@gregkh>
+From: Loganaden Velvindron <loganaden@gmail.com>
+Date: Mon, 2 Oct 2023 11:48:15 +0400
+Message-ID: <CAOp4FwSbzz9EgZoCjPG_0=-in3y7RpWaLmvQgFzAPGk7K8M48A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] "Linux Kernel security demistified"
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, 2 Oct 2023 at 11:10, Greg KH <greg@kroah.com> wrote:
+>
+> On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> > There's also an upcoming Webinar:
+> >
+> > https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
+> >
+> > > Demystifying the Linux Kernel Security Process
+> > > October 3, 2023 | 07:00 AM PDT (UTC-7)
+> > >
+> > > Join an interactive, complimentary Mentorship Session exploring
+> > > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
+> > > Kernel Maintainer & Fellow, The Linux Foundation
+> > >
+> > > There is a lot of misunderstanding about how the Linux kernel deals with
+> > > security vulnerabilities.  This talk will go into how the Linux kernel
+> > > security team works, how changes are propagated out to the public, and
+> > > how users must take advantage of these changes in order to have a secure
+> > > system.
+>
+> It's going to be much the same talk, with only minor tweaks as I forgot
+> some points I wanted to make in the first one.
+>
+> Thanks for the link to my slides and presentation, glad to see that
+> information get spread wider!
+>
+It was a very insightful talk. However, I'm not sure whether companies
+would even be willing to start a conversation with an open source
+community without
+an NDA being signed.
 
-> it was discovered during fuzzing that a crafted file causes an heap overflow
-> in paps ( https://sourceforge.net/projects/paps/ ).
+Coming from a developing country in Africa, we are building cloud
+services in our new data centers for local businesses.
+We wish we could offer the same level of security as large cloud
+services if the large hardware companies
+were willing to open a channel to us despite us being still at the
+early stage ...
 
-We would need someone to contribute additional risk analysis before we
-would assign a CVE ID. We realize that
-https://blogs.gentoo.org/ago/2016/07/28/paps-heap-based-buffer-overflow-in-read_file-paps-c/
-says "It provides both a stand alone command line tool as well as a
-library." The https://sourceforge.net/p/paps/code/ci/master/tree/src/
-code has the library (in libpaps.c) whereas the
-https://github.com/dov/paps code does not. In any case,
-https://blogs.gentoo.org/ago/2016/07/28/paps-heap-based-buffer-overflow-in-read_file-paps-c/
-is about a buffer under-read in the read_file function, which is only
-called from main (not called from any library code). Also, the patch
-is apparently only about handling empty files, not about handling any
-other type of crafted file. If the user runs the command-line program
-on an empty file, a "heap-buffer-overflow ... READ of size 1" occurs
-when trying to read the last character of the file to determine if
-it's a \n character. To avoid this impact, the user can simply stop
-running paps on empty files.
 
-Because we don't see any other risk, we are not providing a CVE ID at
-this time.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXmnJYAAoJEHb/MwWLVhi2bCMP/i+FA2Xil4NRi7Qwn+2v+F11
-o3Hl5Ef1Xooj3qPBCpK+Y5bUHRHhAUGD/kwe7DUx4RO96VyBAwKULSnhPz6BvZ87
-8LWGqh0cY6p8+kCZE8yFiSgwOi9MwHz4RMkjsYtsWlVVBtBsqakf7hZ2FZ5x3rRi
-xcjy6AEWpuhFDqFVXzaZm+BaNyn5ZwxuodxM7KPKkp0NM3hWn4Rp+vL2K/d/GI3a
-AvKLOEVZAbJpfXSt5Po86mX0n0Cn5gMFGmCumxsvZoygZLsASgE6F9pPWsg9wOrh
-GwCwL4S2Zk56x9w9j7RK1lX8jwkTW7tqw8YqUePihUDrhkbKhWG7DtOW+7WKi2yP
-MOAl23ODkf71WT9LC7gxtOHSKhN14rr26VpawhLI4YEMXHIcJFTqBaprVUPLcbAb
-m+bR2hFqXmSpYj4CcjIzFp6WvlpTKRJPQWb6+cZtOJmqCpyuG23Uf3tjYqyktYSV
-HXTdmU1s5vmaUGzjh/5OOLXs8CprrmwWTMWvR7x48D+ZW+P+0XVOZ9Hr6NmoJhfp
-XQjUUhLwcNy9RAeiX9wp5o73XoGi+AtkXR9ZvZGjQmsK+e5h52IMZi8eMCqUHkMw
-rlYSQ3eynlNbQEcbi19m2XS40mfyApkIiqylbTDD2WZ6JgqcfUOUAHoAo6DwVeFt
-YhpgVbqRajNuWJco7FBh
-=Q5EF
------END PGP SIGNATURE-----
+> greg k-h
