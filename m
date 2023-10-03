@@ -1,38 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/10
-Message-ID: <593dd14d-afef-1ced-dda0-db0ff16d6f12@apache.org>
-Date: Tue, 11 Jul 2023 15:50:50 +0000
-From: Dave Fisher <wave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/3
+Message-ID: <20231003183018.GA22672@openwall.com>
+Date: Tue, 3 Oct 2023 20:30:18 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37579: Apache Pulsar Function Worker: Incorrect Authorization for Function Worker Can Leak Sink/Source Credentials 
+Subject: Re: CVE-2023-4911: Local Privilege Escalation in the glibc's ld.so
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Hi,
 
-- Apache Pulsar Function Worker before 2.10.4
-- Apache Pulsar Function Worker 2.11.0
+Thanks Qualys for the impressive research on this, as is usual for you.
+Also thank you to the upstream maintainer Siddhesh Poyarekar for staying
+on top of this issue.
 
-Description:
+This is now fixed in upstream glibc:
 
-Incorrect Authorization vulnerability in Apache Software Foundation Apache Pulsar Function Worker.
+https://sourceware.org/git/?p=glibc.git;a=commit;h=1056e5b4c3f2d90ed2b4a55f96add28da2f4c8fa
 
-This issue affects Apache Pulsar: before 2.10.4, and 2.11.0.
+> commit 1056e5b4c3f2d90ed2b4a55f96add28da2f4c8fa (HEAD -> master, origin/master, origin/HEAD)
+> Author: Siddhesh Poyarekar <siddhesh@...rceware.org>
+> Date:   Tue Sep 19 18:39:32 2023 -0400
+> 
+>     tunables: Terminate if end of input is reached (CVE-2023-4911)
+>     
+>     The string parsing routine may end up writing beyond bounds of tunestr
+>     if the input tunable string is malformed, of the form name=name=val.
+>     This gets processed twice, first as name=name=val and next as name=val,
+>     resulting in tunestr being name=name=val:name=val, thus overflowing
+>     tunestr.
+>     
+>     Terminate the parsing loop at the first instance itself so that tunestr
+>     does not overflow.
+>     
+>     This also fixes up tst-env-setuid-tunables to actually handle failures
+>     correct and add new tests to validate the fix for this CVE.
+>     
+>     Signed-off-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
+>     Reviewed-by: Carlos O'Donell <carlos@...hat.com>
 
-Any authenticated user can retrieve a source's configuration or a sink's configuration without authorization. Many sources and sinks contain credentials in the configuration, which could lead to leaked credentials. This vulnerability is mitigated by the fact that there is not a known way for an authenticated user to enumerate another tenant's sources or sinks, meaning the source or sink name would need to be guessed in order to exploit this vulnerability.
+For those wondering, the preceding related commit is _not_ part of the
+security fix, as we discussed privately:
 
-The recommended mitigation for impacted users is to upgrade the Pulsar Function Worker to a patched version.
+> commit 0d5f9ea97f1b39f2a855756078771673a68497e1
+> Author: Siddhesh Poyarekar <siddhesh@...rceware.org>
+> Date:   Tue Sep 19 13:25:40 2023 -0400
+> 
+>     Propagate GLIBC_TUNABLES in setxid binaries
+>     
+>     GLIBC_TUNABLES scrubbing happens earlier than envvar scrubbing and some
+>     tunables are required to propagate past setxid boundary, like their
+>     env_alias.  Rely on tunable scrubbing to clean out GLIBC_TUNABLES like
+>     before, restoring behaviour in glibc 2.37 and earlier.
+>     
+>     Signed-off-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
+>     Reviewed-by: Carlos O'Donell <carlos@...hat.com>
 
-2.10 Pulsar Function Worker users should upgrade to at least 2.10.4.
-2.11 Pulsar Function Worker users should upgrade to at least 2.11.1.
-3.0 Pulsar Function Worker users are unaffected.
-Any users running the Pulsar Function Worker for 2.9.* and earlier should upgrade to one of the above patched versions.
+(It actually re-exposes the risky functionality somewhat more.)
 
-Credit:
+On Tue, Oct 03, 2023 at 05:50:36PM +0000, Qualys Security Advisory wrote:
+> Recently, we discovered a vulnerability (a buffer overflow) in the
+> dynamic loader's processing of the GLIBC_TUNABLES environment variable
+> (https://www.gnu.org/software/libc/manual/html_node/Tunables.html). This
+> vulnerability was introduced in April 2021 (glibc 2.34) by commit 2ed18c
+> ("Fix SXID_ERASE behavior in setuid programs (BZ #27471)").
 
-Michael Marshall of DataStax (finder)
+> Last-minute note: although glibc 2.34 is vulnerable to this buffer
+> overflow, its tunables_strdup() uses __sbrk(), not __minimal_malloc()
+> (which was introduced in glibc 2.35 by commit b05fae, "elf: Use the
+> minimal malloc on tunables_strdup"); we have not yet investigated
+> whether glibc 2.34 is exploitable or not.
 
-References:
+RHEL 8 includes a backport of the problematic commit 2ed18c5b534d in
+glibc-rh1934155-6.patch starting with:
 
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-37579
+* Wed Apr 14 2021 Siddhesh Poyarekar <siddhesh@...hat.com> - 2.28-157
+- Consistently SXID_ERASE tunables in sxid binaries (#1934155)
 
+So RHEL (rebuild) distros of both RHEL 8 and RHEL 9 contain the bug.
+However, Qualys' specific exploitation method shouldn't work against
+them.  It is not currently known whether another exploitation method
+exists that would work on pre-2.35 glibc such as RHEL's backports.
+
+The one-line reproducer from Qualys:
+
+> $ env -i "GLIBC_TUNABLES=glibc.malloc.mxfast=glibc.malloc.mxfast=A" "Z=`printf '%08192x' 1`" /usr/bin/su --help
+
+does cause a segfault on (rebuilds of) both RHEL 8 and 9 that I tested.
+
+Besides the proper upstream fix, a mitigation is to exclude tunables
+support for SUID/SGID programs, which ALT Linux did in:
+
+https://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=5d1686416ab766f3dd0780ab730650c4c0f76ca9
+
+I briefly tested my port of this (along with the rest of ALT Linux's
+glibc environment sanitization changes) to a RHEL 9 rebuild modified
+glibc package today (as now pushed to Rocky Linux Security SIG repo),
+and it seems to work as intended (the reproducer does not segfault
+anymore, but another tunable still has effect in my test on an
+unprivileged program).
+
+Alexander
