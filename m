@@ -1,33 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/6
-Message-ID: <8038fdf3-2532-9a54-caf9-7c0d40262f52@thirddimension.net>
-Date: Wed, 3 May 2023 15:57:59 -0400
-From: Reid Sutherland <reid@...rddimension.net>
-To: oss-security@...ts.openwall.com, "David A. Wheeler" <dwheeler@...eeler.com>
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/12
+Message-ID: <20231003205825.GA24992@openwall.com>
+Date: Tue, 3 Oct 2023 22:58:25 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Andrew Cooper <andrew.cooper3@...rix.com>
+Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-On 5/3/23 15:54, David A. Wheeler wrote:
+On Tue, Sep 26, 2023 at 06:16:22PM +0100, Andrew Cooper wrote:
+> On 26/09/2023 5:09 pm, Solar Designer wrote:
+> > Is the original paper public?
 > 
+> https://www.usenix.org/system/files/usenixsecurity23-hofmann.pdf
 > 
->> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
->>
->> Who actually decides when something receives a CVE?
-> 
-> There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that is, to become a CVE Numbering Authority (CNA) - has to follow various processes. I'm sure it can be improved, like all things. I'm not directly involved in this. You might find more information here:
-> https://www.cve.org/ProgramOrganization/CNAs
-> 
->>   This can be used to defame projects and products as in this case.
-> 
-> 
-> Identifying a vulnerability does not defame a project. If a library has the functionality to retrieve an https URLs, and fails to verify the server certificates by default, then I (and many others) would call that a vulnerability. After all, the default is what happens. If you request data from <https://google.com>, you wouldn't expect it to use the data from <https://godzilla.com>. There's a general expectation that https://FPP provides a secure connection to FOO (with confidentiality, integrity, and server authentication), unless you specially disable it.
-> 
-> --- David A. Wheeler
-> 
+> Section 8.2.1 for the results specific to divides.
 
+Thank you!
 
-A default is not a vulnerability.  There are reasons why defaults cannot 
-be changed in libraries once they are stable.  This is also why 
-documentation exists.
+> > Meanwhile, I observe a difference between Linux and Xen fixes - Linux
+> > uses native-sized DIV and you use byte-sized, as a clever way not to
+> > clobber RDX and maybe achieve lower latency.  Speaking of which:
+> >
+> > $ git clone https://github.com/InstLatx64/InstLatx64
+> > $ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+> >
+> > Looks like maybe not that much difference, after all, if this data applies.
+> 
+> Agner Fogh's manuals have a little more information, and importantly
+> give the upper bound which tops out at 47 cycles.
 
-Revoke these CVEs, it's a stain on the process.
+Of course, the worst case is much worse like that.  If I'm reading this
+right, the timings I found above are for dividing 0 by something, so
+should apply to Linux's 0/1.  Xen does 1/1 instead:
+
+https://github.com/xen-project/xen/commit/d7b78041dc819efde0350f27754a61cb01a93496
+
+Luckily, the timings for 1/1 look just as good:
+
+$ grep -r ': DIV .* 1/1' InstLatx64/AuthenticAMD/*_Zen_*.txt
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  415 X86   : DIV r8 1/1                    L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  416 X86   : DIV r8 1/1 ax upd             L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  427 X86   : DIV r16 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  428 X86   : DIV r16 1/1 ax upd            L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  429 X86   : DIV r16 1/1 ax/dx upd         L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  441 X86   : DIV r32 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  442 X86   : DIV r32 1/1 eax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  443 X86   : DIV r32 1/1 eax/edx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  455 AMD64 : DIV r64 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  456 AMD64 : DIV r64 1/1 rax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  457 AMD64 : DIV r64 1/1 rax/rdx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+
+> There is at least a 1 cycle change in latency between the byte and
+> non-byte forms, which I suspect is down to the non-byte forms needing to
+> consume an extra input register before starting.
+
+Makes sense.
+
+> But the main reason for choosing the byte form is indeed fewer moving
+> parts to worry about in the critical sections, where one wrong
+> instruction can render all protections moot.
+
+Right.  Great not to clobber RDX.
+
+However, this may be another reason to actually look into whether the
+remainder also leaked, and whether the byte-sized form prevents that
+leak despite of it not touching the architectural register where the
+remainder would be stored by a preceding larger DIV.  I expect that
+we're fine here - it's the divider unit's internal register and not the
+architectural register that should matter - but worth making sure.  It
+could also theoretically be e.g. some buffer registers in the middle,
+where the byte-sized form wouldn't overwrite the full contents.
+
+Alexander
