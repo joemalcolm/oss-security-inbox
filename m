@@ -1,4 +1,4 @@
-Received: (qmail 5258 invoked by uid 550); 30 Mar 2024 16:40:49 -0000
+Received: (qmail 1269 invoked by uid 550); 3 Oct 2023 19:30:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22510 invoked from network); 30 Mar 2024 16:30:40 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 31946 invoked from network); 3 Oct 2023 19:27:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1696361216;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vy5wHuB9s10T03Td1/Yo2/f0aMWTCx4UNWUbTV8Hqcw=;
+	b=V5Ob0KHiGlHFC96lu8ecyCXEm/XliGyKo8ARtv3jt8KRrTbftSabpc7Zs8gcr6X47SwAZL
+	O7ALu5m0foV4lZXG5HZxB+cHF1filnF/5gqKmn6R4R0so0Vh01jzo2YsFtPmKeCXxC8SbC
+	4JIHDXFiftf+9U0iSsCzy7wsIpxXAms=
+X-MC-Unique: SNwRB1N4NaWuWMEMjDjv6Q-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696361213; x=1696966013;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vy5wHuB9s10T03Td1/Yo2/f0aMWTCx4UNWUbTV8Hqcw=;
+        b=icF07ZAm3lDWe1Ip7JNZFqXSZuAJ7D505CjQH3+q2pC0UNf+6ug0lDLJJ7hQZeQKwU
+         pUIMFj+0PPApR92/GeHCthpFFmtGWlAmINDcOCjCu1lRWLn4zsPRMAtHiFxhF2H8+wdW
+         Yr32LnacapDJn9+li2W1ulxfX6SI16gKeVoSpvLRa4BT0UeF1sRE7JK+sN+L/kzfdKlx
+         7VAWSLfk5HCaldsidEDlWtHadV5ghzMQmC3DmKlxS2ItJMAQB4pRbTrOSKkDAIzvVrIF
+         gBy69AemzBB8Z/S7VBHeb42FwGfzaJVXHeRqq1aMSQf3xZB+4iU+7gaoOduhTaQjORkT
+         +WGw==
+X-Gm-Message-State: AOJu0YyBX+20VA1uZmv5pQl6elBiZ43nJAyA2Ycy/c9/Z1H8g55/1R1q
+	1YfKjtWqEON7sW+5gEvO+BRqWGKNre9qbgM3C1QrbUWsWQBQywLtvWQjVQNXzYBjkLkFfJVPoI2
+	cGlHTZwIUjAxe0uU76/rmiolJXCBkibiqvJ9rRU/tHxA+C0Ds2mT7
+X-Received: by 2002:a17:906:76d6:b0:9ae:6a8b:f8bb with SMTP id q22-20020a17090676d600b009ae6a8bf8bbmr126987ejn.6.1696361213791;
+        Tue, 03 Oct 2023 12:26:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGO2RfLRGLFqzaE2KgELhdlfpmEzOt55HWz+60rAzB1a3DZN0fwfzkimK1yjVNAXKj5FpWs+2Xl+RzBop3iPao=
+X-Received: by 2002:a17:906:76d6:b0:9ae:6a8b:f8bb with SMTP id
+ q22-20020a17090676d600b009ae6a8bf8bbmr126973ejn.6.1696361213461; Tue, 03 Oct
+ 2023 12:26:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <20231003191637.GA22984@openwall.com>
+In-Reply-To: <20231003191637.GA22984@openwall.com>
+From: Rodrigo Freire <rfreire@redhat.com>
+Date: Tue, 3 Oct 2023 16:26:42 -0300
+Message-ID: <CAHjsZGaZcrGn-cuv9yiXpPR81pebRd=AimOeR2xPiQR-GMiZkQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Sat, 30 Mar 2024 16:30:25 -0000 (UTC)
-Message-ID: <uu9en0$oga$1@ciao.gmane.io>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
- <uu7da3$87n$1@ciao.gmane.io>
- <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
- <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
- <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
- <uu7k2m$61a$1@ciao.gmane.io>
- <4f2d978b-e94d-44c1-b6d1-d4c18c9d9eb0@canonical.com>
- <uu7uid$4ig$1@ciao.gmane.io>
- <f5595730-197f-41ed-9c72-d92bd6eddd36@canonical.com>
- <uu9bjm$52r$1@ciao.gmane.io>
- <58b6eab8-3634-414a-a513-57e62b05a0b7@canonical.com>
-User-Agent: slrn/1.0.3 (Linux)
-Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2023-4806, CVE-2023-5156: glibc: potential
+ use-after-free in getaddrinfo()
 
-On 2024-03-30, Marc Deslauriers wrote:
-> On 2024-03-30 11:37, Tavis Ormandy wrote:
->> On 2024-03-30, Marc Deslauriers wrote:
->>> That is the problem, having more eyes on a 0-day also means more eyes from
->>> malicious entities. Neither having an embargo nor immediately posting publicly
->>> are ideal solutions. There needs to be a compromise, and while I understand and
->>> respect your point of view, I don't think we'll ever see eye-to-eye on what the
->>> acceptable compromise should be.
->>>
->> 
->> Yeah, but your acceptable compromise *must* include Canonical having
->> advance knowledge of backdoors, correct?
->
-> Not necessarily. 
+On Tue, Oct 3, 2023 at 4:18=E2=80=AFPM Solar Designer <solar@openwall.com> =
+wrote:
+> Hi,
 
-Okay, you could unsubscribe from distros to help make the embargo stronger? :)
+Hello,
 
-> For example, I don't have access to embargoed Chrome 0-days 
-> before the updates come out, and a lot of other folks don't either. Should all 
-> Chrome 0-days be public before the updates are available? Are you advocating for 
-> this?
+<snip>
 
-Yes! If you have knowledge of *any* software that is backdoored or
-compromised or is being actively exploited with a 0day, I'm advocating
--- please -- for you to make that public.
+> https://access.redhat.com/security/cve/CVE-2023-5156
+> Puzzlingly, the latter URL lists RHEL 9 as affected, even though I think
+> the original buggy fix hasn't yet made it into a RHEL 9 glibc update.
+> Maybe that's part of Red Hat's tracking of what's in their pipeline.
 
-This applies to literally *any* software, hardware or other product.
-
->
->> 
->> There are a lot of other users and organizations out there, and I think
->> most of them also like having some agency, I know I do. If our roles
->> were reversed -- my organization was on distros and yours was not -- do
->> you think you would still be arguing for embargoes on backdoors?
->
-> I'm not necessarily arguing for embargoes on backdoors, I'm saying that posting 
-> publicly about it before even knowing what it was would have resulted in a worse 
-> outcome. That's my opinion, you may think it's a wrong.
-
-Yes, I think it's wrong.
-
->
-> Perhaps the question here is why isn't your organization on one of the multitude 
-> of places where this issue was discussed in private for a few hours, and where 
-> it was decided that this should be public?
-
-I think maybe you're saying that if I was on the list, then I would like
-embargoes too!
-
-It's definitely better for the organizations on the list, no question.
-As you know, I was a distros and vendor-sec member for years, so I do
-know how they work :)
-
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
+The affected code was backported into RHEL9's glibc and it is affected.
+The fix is traversing our productization pipeline and we will ship
+when it's done.
 
