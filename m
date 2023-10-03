@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["525" "Friday" "17" "September" "2021" "11:07:19" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" nil "16" "[oss-security] CVE-2021-40690: Apache Santuario: Bypass of the secureValidation property" nil nil nil "9" nil nil (number mark "U       coheigea@apa Sep 17   16/525   " thread-indent "\"[oss-security] CVE-2021-40690: Apache Santuario: Bypass of the secureValidation property\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-40690: Apache Santuario: Bypass of the secureValidation property" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14160 invoked by uid 550); 17 Sep 2021 11:19:07 -0000
+Received: (qmail 3810 invoked by uid 550); 3 Oct 2023 21:44:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13830 invoked from network); 17 Sep 2021 10:07:44 -0000
-X-Gm-Message-State: AOAM533+/PK+wEW1a0YpiYPV9sOXcjwyrnynzpU8ZsH5PgR9FuNjclmD
-	B/018EHxQQNstFSQWf3SQKpjC+9djfgKZDKZuBA=
-X-Google-Smtp-Source: ABdhPJwxanztmQ4DC+jPw/EPE+spuyv6/2ocd/2k1wKYn/LbRJ6BDkczO6XJrsjtv/jk5WIgCgpGrOtRY4C+VAaLAnc=
-X-Received: by 2002:a05:6102:30ad:: with SMTP id y13mr1833672vsd.60.1631873250480;
- Fri, 17 Sep 2021 03:07:30 -0700 (PDT)
-MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Fri, 17 Sep 2021 11:07:19 +0100
-X-Gmail-Original-Message-ID: <CAB8XdGAMZrPaNOxowgAaotbePiiC4EOTYw7Ri3DNqAVZQb0y8g@mail.gmail.com>
-Message-ID: <CAB8XdGAMZrPaNOxowgAaotbePiiC4EOTYw7Ri3DNqAVZQb0y8g@mail.gmail.com>
+Received: (qmail 3783 invoked from network); 3 Oct 2023 21:44:38 -0000
+Date: Tue, 3 Oct 2023 21:44:24 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2021-40690: Apache Santuario: Bypass of the secureValidation property
+Message-ID: <20231003214424.prarc3aboi3ar7zk@yuggoth.org>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org>
+ <ZROMd1GCpD8uDtbE@itl-email>
+ <20231003201212.GA24599@openwall.com>
+ <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lgk3s2nvcv7xr6ql"
+Content-Disposition: inline
+In-Reply-To: <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) -
+ x86/AMD: Divide speculative information leak
 
-Description:
+--lgk3s2nvcv7xr6ql
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-All versions of Apache Santuario - XML Security for Java prior to
-2.2.3 and 2.1.7 are vulnerable to an issue where the
-"secureValidation" property is not passed correctly when creating a
-KeyInfo from a KeyInfoReference element. This allows an attacker to
-abuse an XPath Transform to extract any local .xml files in a
-RetrievalMethod element.
+On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
+[...]
+> If you have a proposal for how you'd prefer it to be done, I'll see what
+> I can do.  Perhaps BCC oss-security, or just send out a second mail?
 
-Credit:
+When I send advisories, I prepare two basically identical E-mail
+messages: one to the project's announcement list and one to
+oss-security (signing both of them). It seems like this is the most
+common approach to avoiding cross-posting between lists.
+--=20
+Jeremy Stanley
 
-An Trinh, Calif.
+--lgk3s2nvcv7xr6ql
+Content-Type: application/pgp-signature; name="signature.asc"
 
-References:
+-----BEGIN PGP SIGNATURE-----
 
-https://lists.apache.org/thread.html/r8848751b6a5dd78cc9e99d627e74fecfaffdfa1bb615dce827aad633%40%3Cdev.santuario.apache.org%3E
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmUcizJfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCntARAAjntV3rWV6kJjuu3FATC9JbyPtELf8bLij+eAttKRhoG544M0fVG/nycV
+4ggtkwAD6KP6WFEswL6GCsgZWeP/o6AzJ6m3M0oL+ANvfac30WzHBUYEcVHdjO40
+5C7VmpWMLkUm/w8mIkezzmRVELJWDX/hE2bxFkU2SYUEJxAeW5kC5NC6TZxxJmov
+SIBz+9D5fUewkr4oGoC6pScHCW+0NYYOW8Sv/KjGxqR/2+ITrpJDjpn2qvc0tEvs
+G+kY6LjhAScUTC0+s4BB+pO3Dk8jq131vo1yvGyFSN11Eg+OQJffqzC0no8exEAi
+c1YO+9YXtgj4YZFYuEUZHoavimAkTHiUo2da8tN/thp3RouA0NwhKHy0YmacscAh
+NxicbCZEFjLRXeeKzYBspxEUZqw0ED99TWUXnA69nBkph4E13s/0zzAtL4xoEvvQ
+zplDZpiQj9muCSkrEj0FhwhGHfKrkx3ElUJJWU5NJ0KULY4jIHpb5x6I6VCh+MBl
+9ylDeCyIBeCd+q88uw1/lzFOeZYPrTKqJ3wGUBj9ynj8CyljY74kv5P9K+W2J7nD
+3J82CDbv9ujHNIB3nfFGI/0U+BXWpH/w36uw9WPs9/a2IUGtGEvojILBSPeDtTZA
+jjeJQ4o5tdDXt6K4788jFAaG0MsgI7Z8bJIP+B3Ry15EbedCAwY=
+=rT6F
+-----END PGP SIGNATURE-----
+
+--lgk3s2nvcv7xr6ql--
