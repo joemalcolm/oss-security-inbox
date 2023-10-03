@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["807" "Wednesday" "1" "November" "2017" "11:56:06" "-0700" "Bill Farner" "wfarner@apache.org" "<CAFWq12XK1SHqMYtxkgMmVq1JpfNL=kQb8qFnkLfn60qPsAxiRA@mail.gmail.com>" "23" "[oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability" nil nil nil "11" "2017110118:56:06" "[oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability" (number mark "U       wfarner@apac Nov  1   23/807   " thread-indent "\"[oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3854 invoked by uid 550); 1 Nov 2017 19:05:48 -0000
+Received: (qmail 7299 invoked by uid 550); 3 Oct 2023 22:53:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27991 invoked from network); 1 Nov 2017 18:56:21 -0000
-X-Gm-Message-State: AMCzsaX3EVBEBC4f4+T72/4iwn24mlZ74vr9+hqvxzn24SqaY4VcrX96
-	Nm8uT8a1ogTPbfNVSbOwiH5DEAVZGG2Ut4v0qdc=
-X-Google-Smtp-Source: ABhQp+TLg3bzphKZ3vkQMaXMILSjs6aiFvSjCIFaFxhc/aPzgTqzoeKNUiwlVV+/yYHUT6UkVvnzwAeJIJAU6L7WVJI=
-X-Received: by 10.28.62.67 with SMTP id l64mr929895wma.6.1509562567240; Wed,
- 01 Nov 2017 11:56:07 -0700 (PDT)
-MIME-Version: 1.0
-From: Bill Farner <wfarner@apache.org>
-Date: Wed, 1 Nov 2017 11:56:06 -0700
-X-Gmail-Original-Message-ID: <CAFWq12XK1SHqMYtxkgMmVq1JpfNL=kQb8qFnkLfn60qPsAxiRA@mail.gmail.com>
-Message-ID: <CAFWq12XK1SHqMYtxkgMmVq1JpfNL=kQb8qFnkLfn60qPsAxiRA@mail.gmail.com>
+Received: (qmail 5985 invoked from network); 3 Oct 2023 22:52:20 -0000
+Date: Wed, 4 Oct 2023 00:51:56 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a1148fcb8963672055cf06c6f"
-Subject: [oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability
+Message-ID: <20231003225156.GA26670@openwall.com>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <ZROMd1GCpD8uDtbE@itl-email> <20231003201212.GA24599@openwall.com> <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com> <20231003214424.prarc3aboi3ar7zk@yuggoth.org> <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 
---001a1148fcb8963672055cf06c6f
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Oct 03, 2023 at 03:02:41PM -0700, Jean Luc Picard wrote:
+> Hi, just dropping in, is this the kind of thing to where the userspace &
+> kernel layers need mitigation until there's microcode mitigation?
 
-Versions Affected:
-Aurora 0.10.0 to 0.18.0
+In general, kind of yes - it could have been that kind of thing.
 
-Description:
-The affected versions of the scheduler rely on a version of Apache Shiro
-which is vulnerable to CVE-2016-4437.  Under certain conditions, the
-vulnerability allows remote attackers to execute arbitrary code or bypass
-intended access restrictions via an unspecified request parameter.
+More specifically, no - in this case, only kernel and hypervisor
+and system configuration (disable SMT) mitigations are expected.  No
+userspace mitigations, other than maybe specific algorithms avoiding
+integer divide operations based on secrets where they can.  While AMD
+maybe could fix this in microcode (or maybe not, or maybe with
+unacceptable performance penalty), they expressed no plans to do so.
 
-Mitigation:
-0.18.0 users should upgrade to 0.18.1
-0.10.0 - 0.17.0 users should upgrade to 0.18.1 or apply this patch
-https://git-wip-us.apache.org/repos/asf?p=aurora.git;a=commit;h=ec640117
-Alternatively, INI configuration mitigations outlined in CVE-2016-4437
-may be applied.
+> On Tue, Oct 3, 2023 at 2:46???PM Jeremy Stanley <fungi@yuggoth.org> wrote:
+> > On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
+> > [...]
+> > > If you have a proposal for how you'd prefer it to be done, I'll see what
+> > > I can do.  Perhaps BCC oss-security, or just send out a second mail?
+> >
+> > When I send advisories, I prepare two basically identical E-mail
+> > messages: one to the project's announcement list and one to
+> > oss-security (signing both of them). It seems like this is the most
+> > common approach to avoiding cross-posting between lists.
 
-Credit:
-This issue was discovered by Greg Harris from the Fitbit Security team.
+Andrew, sending a second message like Jeremy suggests works best.
+Bcc currently isn't expected to work at all.  Thank you!
 
---001a1148fcb8963672055cf06c6f--
+BTW, in this case I think the problem was actually for Xen's lists more
+than for oss-security - you included xen-announce among the CC'ed lists,
+and this means e.g. Demi Marie's reply was attempted to be posted to
+there, while certainly not being a valid Xen announcement.  However, I
+guess external messages to the announcement list are very easy to reject
+on your side.  It's not so easy for us on oss-security because we've
+setup some senders to bypass moderation, yet those people participate in
+threads on other lists that might just happen to be CC'ed in here and
+they might not notice that the rest of the sub-thread is moderated-out.
+
+I'm not too concerned about this issue with Xen announcements in
+particular - things have worked pretty well with these so far.
+
+Alexander
