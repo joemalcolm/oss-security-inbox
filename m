@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1159" "Tuesday" "12" "May" "2015" "14:33:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150512183355.76334B2E0A0@smtpvbsrv1.mitre.org>" "29" "[oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors" nil nil nil "5" "2015051218:33:55" "[oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors" (number mark "        cve-assign@m May 12   29/1159  " thread-indent "\"[oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors\"\n") "<20150511135955.GJ6507@core.inversepath.com>" ("<20150511135955.GJ6507@core.inversepath.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13765 invoked by uid 550); 12 May 2015 18:34:12 -0000
+Received: (qmail 7685 invoked by uid 550); 3 Oct 2023 19:17:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +6,144 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13721 invoked from network); 12 May 2015 18:34:07 -0000
-In-Reply-To: <20150511135955.GJ6507@core.inversepath.com>
-Message-Id: <20150512183355.76334B2E0A0@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 12 May 2015 14:33:55 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors
-To: lcars@ocert.org
+Received: (qmail 7514 invoked from network); 3 Oct 2023 19:16:52 -0000
+Date: Tue, 3 Oct 2023 21:16:37 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20231003191637.GA22984@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2023-4806, CVE-2023-5156: glibc: potential use-after-free in getaddrinfo()
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> an integer overflow condition which lead to a buffer overflow. The
-> vulnerability concerns the 'len' variable, parsed without validation from
-> opened images, used in the ljpeg_start() function.
+I wish someone more knowledgeable about this specific issue would post
+this, but since no one did, let me do it.
 
-> https://github.com/LibRaw/LibRaw/commit/4606c28f494a750892c5c1ac7903e62dd1c6fdb5
-> https://github.com/rawstudio/rawstudio/commit/983bda1f0fa5fa86884381208274198a620f006e
-> http://www.ocert.org/advisories/ocert-2015-006.html
+Current upstream glibc NEWS contains these entries:
 
-Use CVE-2015-3885.
+> CVE-2023-4806: When an NSS plugin only implements the
+> _gethostbyname2_r and _getcanonname_r callbacks, getaddrinfo could use
+> memory that was freed during buffer resizing, potentially causing a
+> crash or read or write to arbitrary memory.
+> 
+> CVE-2023-5156: The fix for CVE-2023-4806 introduced a memory leak when
+> an application calls getaddrinfo for AF_INET6 with AI_CANONNAME,
+> AI_ALL and AI_V4MAPPED flags set.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Apparently, CVE-2023-4806 has existed for ages, whereas CVE-2023-5156
+only existed for ~10 days last month.
 
-iQEcBAEBAgAGBQJVUkc+AAoJEKllVAevmvmsyYwH/13dB8lcpUnYyyuswusPp7XA
-mrfbvB2SO7vuDDSrf3ppdtiFtlzsOtbhDoBE7b4AHz3w+cbp8fBOED543gVTBRni
-oGTwMb4enGL3a7l/nTytWqqerlyY5gK7EUq2nHEGE/RbZgeTOsGV0Qp90mIChwTz
-g19zhl3lKK6JCbxI5jhMqiU32KACInFvmJ0+ueN5Pbr7noTC71xIj6ZXpiIOWHEH
-5m/O4qti0iOwDvtqiapoUABwkPAwj81kWwdeIsE8gu0+Qjd29VZorpi/yP9sMqLQ
-BMFcRgDTzV+e3an/l0BOo+myuc9wRyw80ZzbfofF3GDxO4t2ZZLsZfYm+XoHZUI=
-=+nnf
------END PGP SIGNATURE-----
+Bug 30843 (CVE-2023-4806) - potential use-after-free in getcanonname:
+
+https://sourceware.org/bugzilla/show_bug.cgi?id=30843
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=973fe93a5675c42798b2161c6f29c01b0e243994
+
+Main upstream commit:
+
+> commit 973fe93a5675c42798b2161c6f29c01b0e243994
+> Author: Siddhesh Poyarekar <siddhesh@sourceware.org>
+> Date:   Fri Sep 15 13:51:12 2023 -0400
+> 
+>     getaddrinfo: Fix use after free in getcanonname (CVE-2023-4806)
+>     
+>     When an NSS plugin only implements the _gethostbyname2_r and
+>     _getcanonname_r callbacks, getaddrinfo could use memory that was freed
+>     during tmpbuf resizing, through h_name in a previous query response.
+>     
+>     The backing store for res->at->name when doing a query with
+>     gethostbyname3_r or gethostbyname2_r is tmpbuf, which is reallocated in
+>     gethosts during the query.  For AF_INET6 lookup with AI_ALL |
+>     AI_V4MAPPED, gethosts gets called twice, once for a v6 lookup and second
+>     for a v4 lookup.  In this case, if the first call reallocates tmpbuf
+>     enough number of times, resulting in a malloc, th->h_name (that
+>     res->at->name refers to) ends up on a heap allocated storage in tmpbuf.
+>     Now if the second call to gethosts also causes the plugin callback to
+>     return NSS_STATUS_TRYAGAIN, tmpbuf will get freed, resulting in a UAF
+>     reference in res->at->name.  This then gets dereferenced in the
+>     getcanonname_r plugin call, resulting in the use after free.
+>     
+>     Fix this by copying h_name over and freeing it at the end.  This
+>     resolves BZ #30843, which is assigned CVE-2023-4806.
+>     
+>     Signed-off-by: Siddhesh Poyarekar <siddhesh@sourceware.org>
+
+also backported by upstream to branches all the way back to 2.34, but
+apparently even older are affected.
+
+Apparently, the issue is only exposed in obscure conditions:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=2237782
+
+> Guilherme de Almeida Suckevicz 2023-09-06 20:48:11 UTC
+> 
+> In an extremely rare situation, the getaddrinfo function in glibc may
+> access memory that has already been freed, resulting in an application
+> crash.
+> 
+> This issue is only exploitable when a NSS module implements only the
+> _nss_*_gethostbyname2_r hook without implementing the
+> _nss_*_gethostbyname3_r hook. There are no known modules that are
+> implemented in this way.
+> 
+> In addition to that condition, the resolved name should return a large
+> number of IPv6 as well as IPv4 and the call to the getaddrinfo function
+> should have AF_INET6 with AI_CANONNAME, AI_ALL and AI_V4MAPPED as flags.
+
+> Siddhesh Poyarekar 2023-09-14 10:31:42 UTC
+> 
+> A clarification on this: the NSS module needs to do *all* of the
+> following to expose the vulnerability:
+> 
+> 1) Implement _nss_*_gethostbyname2_r hook
+> 2) implement _nss_*_getcanonname_r hook
+> 3) NOT implement _nss_*_gethostbyname3_r hook
+> 
+> The samba wins module for example satisfies 1) and 3) but not 2) thus
+> eliminating it as a possible vector for this vulnerability.
+
+https://access.redhat.com/security/cve/CVE-2023-4806
+
+> Description
+> 
+> A flaw was found in glibc. In an extremely rare situation, the
+> getaddrinfo function may access memory that has been freed, resulting in
+> an application crash. This issue is only exploitable when a NSS module
+> implements only the nss_gethostbyname2_r and nss_getcanonname_r hooks
+> without implementing the nss*_gethostbyname3_r hook. The resolved name
+> should return a large number of IPv6 and IPv4, and the call to the
+> getaddrinfo function should have the AF_INET6 address family with
+> AI_CANONNAME, AI_ALL and AI_V4MAPPED as flags.
+> 
+> Statement
+> 
+> This issue is only exploitable with very specific conditions, as
+> detailed in the description. However, all glibc versions shipped in Red
+> Hat Enterprise Linux are vulnerable to this issue.
+
+Bug 30884 (CVE-2023-5156) - Memory leak in getaddrinfo after fix for bug 30843:
+
+https://sourceware.org/bugzilla/show_bug.cgi?id=30884
+https://sourceware.org/git/?p=glibc.git;a=commit;h=ec6b95c3303c700eb89eebeda2d7264cc184a796
+
+> commit ec6b95c3303c700eb89eebeda2d7264cc184a796
+> Author: Romain Geissler <romain.geissler@amadeus.com>
+> Date:   Mon Sep 25 01:21:51 2023 +0100
+> 
+>     Fix leak in getaddrinfo introduced by the fix for CVE-2023-4806 [BZ #30843]
+>     
+>     This patch fixes a very recently added leak in getaddrinfo.
+>     
+>     Reviewed-by: Siddhesh Poyarekar <siddhesh@sourceware.org>
+
+https://bugzilla.redhat.com/show_bug.cgi?id=2240541
+https://access.redhat.com/security/cve/CVE-2023-5156
+
+Puzzlingly, the latter URL lists RHEL 9 as affected, even though I think
+the original buggy fix hasn't yet made it into a RHEL 9 glibc update.
+Maybe that's part of Red Hat's tracking of what's in their pipeline.
+
+Alexander
