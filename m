@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1478" "Sunday" "4" "December" "2016" "22:24:21" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<86dc641af9b1454bb9cb64f523c87a60@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification" nil nil nil "12" "2016120503:24:21" "[oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification" (number mark "U       cve-assign@m Dec  4   37/1478  " thread-indent "\"[oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification\"\n") "<20161203094405.udrlvszru3jxezia@eldamar.local>" ("<20161203094405.udrlvszru3jxezia@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30466 invoked by uid 550); 5 Dec 2016 03:24:33 -0000
+Received: (qmail 1258 invoked by uid 550); 3 Oct 2023 19:46:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30444 invoked from network); 5 Dec 2016 03:24:33 -0000
-From: <cve-assign@mitre.org>
-To: <carnil@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161203094405.udrlvszru3jxezia@eldamar.local>
-Message-ID: <86dc641af9b1454bb9cb64f523c87a60@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:24:21 -0500
+Received: (qmail 28148 invoked from network); 3 Oct 2023 19:40:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696361996; x=1696966796; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oSjYoyOoBnU9lkWPgpD6q0XtoHU09PVrr3YuQZIyPkA=;
+        b=QygKwbez4uEyAPBN65uha9x9++LTMZJW9LXG9toWAs7BSJyzFjC3A/QwxyFPeagtkl
+         G9eWW9j1B8EkAeqKxNfxU5XrGIs96KGF5HIoIgyzgjCVLQMg5jeqGX67MEDWtbxBLwCY
+         xPye2VxHxxAHI/YM4kTI3x3Hk0siNtXb22tc+PhE3MmeGYtcw1WOpxt5UesS3BIDzPdK
+         7CozJVBHiafqchO2U9V+dvVTrjFmxAJpR4Q3LdWZG+JiUVjqnGWpdg1z8diPqzNQME4R
+         DYhy1QmMnR5bPSoDXbFrD2U52lSXSsy0CzPSDfEoLoFVv2DtVj0luzT7FAF2pNlplq4e
+         TbkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696361996; x=1696966796;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oSjYoyOoBnU9lkWPgpD6q0XtoHU09PVrr3YuQZIyPkA=;
+        b=peYB08CpgOkoPM/8Oq+A9V3cUi+M2lqW4ovMUnGnWXOqYlHbUGhHlIguTtpWbCVUWG
+         Ax0zpOR7/l/6+Cjz063JDfQQeKURqosDZa5cRxBEaalN82BPfHLiD+QPAb929dpFLJli
+         RFt2NTuFyMcfIp9Vqme1yLUBim/uBoQOPiiEAtvwhjtkmQ/yA44WI09l/JBKvztoF/Mo
+         Ov8hBEFAjpf7hBspQROcOiZrHX0Zei5FpTaDuz8z/ECJIaDaQWHjpxAKMMilmgM1cY1r
+         WEJ+2CGHRcxsc/ylNOvTXo+KkABPy/5XkHT1Nm2ZXNtPiRz1olGDIozsIzHbuXf3ggvu
+         VMRA==
+X-Gm-Message-State: AOJu0YxczhRYfbHnql63eYBM7WPRKcMN5BTd9kx9BmOby3y1QtG5iYp+
+	87/U9D3F+JZOVCi3B9tekRFiyks1nEdBcI9xAuMh1kER
+X-Google-Smtp-Source: AGHT+IHztyLetS2Uddy7RyuKP9pycMCEdVTDf3wbRX9/GhAXNe4F/bzDQbqETwHL/8CXEvOu0HO4X5CggTREw4DdwDA=
+X-Received: by 2002:a0d:c906:0:b0:595:9135:83c7 with SMTP id
+ l6-20020a0dc906000000b00595913583c7mr472917ywd.47.1696361996176; Tue, 03 Oct
+ 2023 12:39:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification
+References: <20231003191637.GA22984@openwall.com> <CAHjsZGaZcrGn-cuv9yiXpPR81pebRd=AimOeR2xPiQR-GMiZkQ@mail.gmail.com>
+In-Reply-To: <CAHjsZGaZcrGn-cuv9yiXpPR81pebRd=AimOeR2xPiQR-GMiZkQ@mail.gmail.com>
+From: Siddhesh Poyarekar <siddhesh.poyarekar@gmail.com>
+Date: Tue, 3 Oct 2023 15:39:44 -0400
+Message-ID: <CAAHN_R1ATfyJD=QikN=crfRgX-YzO9zw3hdQbXoipiTb1k1uVQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2023-4806, CVE-2023-5156: glibc: potential
+ use-after-free in getaddrinfo()
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Oct 3, 2023 at 3:31=E2=80=AFPM Rodrigo Freire <rfreire@redhat.com> =
+wrote:
+>
+> On Tue, Oct 3, 2023 at 4:18=E2=80=AFPM Solar Designer <solar@openwall.com=
+> wrote:
+> > Hi,
+>
+> Hello,
+>
+> <snip>
+>
+> > https://access.redhat.com/security/cve/CVE-2023-5156
+> > Puzzlingly, the latter URL lists RHEL 9 as affected, even though I think
+> > the original buggy fix hasn't yet made it into a RHEL 9 glibc update.
+> > Maybe that's part of Red Hat's tracking of what's in their pipeline.
+>
+> The affected code was backported into RHEL9's glibc and it is affected.
+> The fix is traversing our productization pipeline and we will ship
+> when it's done.
 
-> https://simplesamlphp.org/security/201612-01
-> https://github.com/simplesamlphp/saml2/pull/81
-> https://github.com/simplesamlphp/saml2/commit/7008b0916426212c1cc2fc238b38ab9ebff0748c
+To elaborate, none of the *released* versions of rhel-9 are affected
+by it, but the RHEL process is using it to coordinate things in the
+release pipeline.
 
->> convert an error state, signaled by the value -1, to a successful
->> verification of the signature (represented by the boolean true)
+Thanks,
+Sid
 
->> an error during signature verification is treated as a successful
->> verification
-
-Use CVE-2016-9814.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYRNj2AAoJEHb/MwWLVhi2LPoQAIka//ctCZOUgkIQaf0t5UYI
-hgd2XPcl6LHfOzJA+hvmERO4uxgceqNQ8nhZxkIsWs8tA/eibpHBpz2UebkcKt6r
-3IRwP3Xo3NBVpHXYcL6snoDJ6eYipeQeVwEVnoudxIFrzXcHL7YJNpXbRDUA/n44
-hoDlc2OZyeMzPWU+fvLXuyi/ylm2AOUJIbb9icONyhdKKyQiI61oInhbGCG47qi0
-lhUUQMyTHgTlRtYGSUyJWzRo0u5OIJaS+XAgUPhWK670kTJ8ZEhVcKJNRrLiRxu6
-1SHna5o26O6LHTIyJMhKcOfMYpWCUnHhqBTn+IwBalumYJucBW3k9MIBn3M0Odtp
-s8mcPQ4NX70uLCEh7+alOF4Pi7tUI6N+KvFX5IUsbBhVW0afpSgl9B5BsLmEmDKT
-M+szOjUQ1AaNfptqpDTWSSpusK9assQ+2g5warmw6ndPvhcjx4/1KmpInI0kCMQ3
-9nZ/blvuMPd9QkiuD9YKG1qOnAO1qK7IdWKDwmVvZqweuawfJgoUknHd4a5tduaJ
-REMTO+CPkk2th2dEAi9/yZywzCExOw2Am5qOIwiv6tei0GFmwRHrauglQQDE4NP8
-rU49wxNYW1UOP6Yd4d2rZHiJQBhvkByhPSIWJWxggnl4cTLL5sKxSdFLech1bWuv
-6ZF1/SgEqZUECFXhsUlY
-=NZRo
------END PGP SIGNATURE-----
+--=20
+https://gotplt.org
