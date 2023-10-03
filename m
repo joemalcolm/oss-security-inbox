@@ -1,83 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/12
-Message-Id: <20230621214131.C670B6033F@jupiter.mumble.net>
-Date: Wed, 21 Jun 2023 21:41:30 +0000
-From: Taylor R Campbell <riastradh@...BSD.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: PAM/Kerberos issue on NetBSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/13
+Message-ID: <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com>
+Date: Tue, 3 Oct 2023 22:37:08 +0100
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Cc: "Xen.org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-> Date: Tue, 20 Jun 2023 17:16:58 -0700
-> From: Alistair Crooks <agc@...src.org>
-> 
-> + Linux - not believed to be affected (would be good to get some
-> corroboration for this)
+On 03/10/2023 9:12 pm, Solar Designer wrote:
+> P.S. Demi Marie, please note that oss-security list content guidelines
+> explicitly discourage CC'ing other lists(*), and Xen advisories are
+> already stretching this.
 
-Linux pam_krb5[1] and sssd-krb5[2] are both affected by the same
-attack, but they have always been _documented_ to be affected; unlike
-BSD pam_krb5, it's just not news that they are affected.
+Sorry, I hadn't realised we were bending the rules.  The emailing-out
+infrastructure predates my involvement.
 
-(Side note: pam_krb5 (and sssd-krb5) is not and never has been the
-normal way to do Kerberos authentication in network services.  (E.g.,
-in sshd, you set `GSSAPIAuthentication yes' for that.)  pam_krb5 has
-always been an abuse of Kerberos as a method to check a password,
-which Kerberos was designed to avoid, through SSO.)
+If you have a proposal for how you'd prefer it to be done, I'll see what
+I can do.  Perhaps BCC oss-security, or just send out a second mail?
 
+Thanks,
 
-The pam_krb5 overview[3] says:
-
-> pam_authenticate does a complete authentication, including checking
-> the resulting TGT by obtaining a service ticket for the local host
-> if possible, but this requires read access to the system keytab.  If
-> the keytab doesn't exist, can't be read, or doesn't include the
-> appropriate credentials, the default is to accept the
-> authentication.  This can be controlled by setting
-> verify_ap_req_nofail to true in [libdefaults] in /etc/krb5.conf.
-
-The pam_krb5 man page[4] says:
-
-> If that keytab cannot be read or if no keys are found in it, the
-> default (potentially insecure) behavior is to skip this check.  If
-> you want to instead fail authentication if the obtained tickets
-> cannot be checked, set verify_ap_req_nofail to true in the
-> [libdefaults] section of /etc/krb5.conf.  Note that this will affect
-> applications other than this PAM module.
-
-The sssd-krb5 man page[5] says:
-
-> krb5_validate (boolean)
->    Verify with the help of krb5_keytab that the TGT obtained has not
->    been spoofed.  The keytab is checked for entries sequentially,
->    and the first entry with a matching realm is used for validation.
->    If no entry matches the realm, the last entry in the keytab is
->    used.  This process can be used to validate environments using
->    cross-realm trust by placing the appropriate keytab entry as the
->    last entry or the only entry in the keytab file.
->
->    Default: false 
-
-Exception: Oracle Linux appears to ship an mit-krb5-based Kerberos
-modified to have default-secure settings instead of default-insecure,
-and provides instructions for setting verify_ap_req_nofail for
-insecure compatibility[6][7][8].
-
-
-The verify_ap_req_nofail option rates pretty high among the
-worst-named knobs I have ever seen, and has been confusing people for
-decades[9][10].  I filed an issue to make it default-secure in
-Heimdal[11]; this could pose compatibility issues, but sites that
-continue rely on the insecure option can always set it in their
-krb5.conf.
-
-
-[1] https://www.eyrie.org/~eagle/software/pam-krb5/
-[2] https://github.com/SSSD/sssd/tree/master/src/providers/krb5
-[3] https://www.eyrie.org/~eagle/software/pam-krb5/readme.html
-[4] https://www.eyrie.org/~eagle/software/pam-krb5/pam-krb5.html
-[5] https://linux.die.net/man/5/sssd-krb5
-[6] https://docs.oracle.com/cd/E26505_01/html/E27224/setup-148.html
-[7] https://docs.oracle.com/cd/E26505_01/html/816-5174/krb5.conf-4.html#REFMAN4krb5.conf-4
-[8] https://docs.oracle.com/cd/E19253-01/816-4557/gihyu/
-[9] https://www.stacken.kth.se/lists/heimdal-discuss/2002-08/msg00001.html
-[10] https://mailman.mit.edu/pipermail/krbdev/2011-January/009778.html
-[11] https://github.com/heimdal/heimdal/issues/1129
+~Andrew
