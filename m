@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/7
-Message-ID: <377ad636-7363-ead2-b0e2-ccfc532a6f96@apache.org>
-Date: Thu, 23 Feb 2023 17:45:35 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/14
+Message-ID: <20231003214424.prarc3aboi3ar7zk@yuggoth.org>
+Date: Tue, 3 Oct 2023 21:44:24 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25696: Apache Airflow Hive Provider Beeline RCE 
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
+[...]
+> If you have a proposal for how you'd prefer it to be done, I'll see what
+> I can do.  Perhaps BCC oss-security, or just send out a second mail?
 
-Description:
+When I send advisories, I prepare two basically identical E-mail
+messages: one to the project's announcement list and one to
+oss-security (signing both of them). It seems like this is the most
+common approach to avoiding cross-posting between lists.
+-- 
+Jeremy Stanley
 
-Improper Input Validation vulnerability in the Apache Airflow Hive Provider.
-
-This issue affects Apache Airflow Hive Provider versions before 5.1.3.
-
-Credit:
-
-id_No2015429 of 3H Secruity Team (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/29502
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25696
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
