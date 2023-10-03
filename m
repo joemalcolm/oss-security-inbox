@@ -1,18 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/8
-Message-ID: <CAHjsZGbiZYGug2L04iZ+VEmMg-pdfKyKOGdcSeCLnsZYd0Vm2Q@mail.gmail.com>
-Date: Fri, 22 Dec 2023 12:47:44 -0300
-From: Rodrigo Freire <rfreire@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/16
+Message-ID: <20231003225156.GA26670@openwall.com>
+Date: Wed, 4 Oct 2023 00:51:56 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 22, 2023 at 12:10 PM Erik Auerswald
-<auerswal@...x-ag.uni-kl.de> wrote:
->   * The CERT/CC and VINCE involvement resulted in "there is no
->     vulnerability".
+On Tue, Oct 03, 2023 at 03:02:41PM -0700, Jean Luc Picard wrote:
+> Hi, just dropping in, is this the kind of thing to where the userspace &
+> kernel layers need mitigation until there's microcode mitigation?
 
-I'm trying to make sense of it - where's the compromise of the
-Confidentiality, Integrity or Availability of the affected mail
-servers?
+In general, kind of yes - it could have been that kind of thing.
 
+More specifically, no - in this case, only kernel and hypervisor
+and system configuration (disable SMT) mitigations are expected.  No
+userspace mitigations, other than maybe specific algorithms avoiding
+integer divide operations based on secrets where they can.  While AMD
+maybe could fix this in microcode (or maybe not, or maybe with
+unacceptable performance penalty), they expressed no plans to do so.
+
+> On Tue, Oct 3, 2023 at 2:46???PM Jeremy Stanley <fungi@...goth.org> wrote:
+> > On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
+> > [...]
+> > > If you have a proposal for how you'd prefer it to be done, I'll see what
+> > > I can do.  Perhaps BCC oss-security, or just send out a second mail?
+> >
+> > When I send advisories, I prepare two basically identical E-mail
+> > messages: one to the project's announcement list and one to
+> > oss-security (signing both of them). It seems like this is the most
+> > common approach to avoiding cross-posting between lists.
+
+Andrew, sending a second message like Jeremy suggests works best.
+Bcc currently isn't expected to work at all.  Thank you!
+
+BTW, in this case I think the problem was actually for Xen's lists more
+than for oss-security - you included xen-announce among the CC'ed lists,
+and this means e.g. Demi Marie's reply was attempted to be posted to
+there, while certainly not being a valid Xen announcement.  However, I
+guess external messages to the announcement list are very easy to reject
+on your side.  It's not so easy for us on oss-security because we've
+setup some senders to bypass moderation, yet those people participate in
+threads on other lists that might just happen to be CC'ed in here and
+they might not notice that the rest of the sub-thread is moderated-out.
+
+I'm not too concerned about this issue with Xen announcements in
+particular - things have worked pretty well with these so far.
+
+Alexander
