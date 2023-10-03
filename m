@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/24/1
-Message-ID: <CA+aC4kvP=EatKudD=V7Dzx6BRUN_0TQqyj_Xd0wOpzvnoG58wA@mail.gmail.com>
-Date: Thu, 23 Mar 2023 20:37:42 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/10
+Message-ID: <e4e38e9c-370a-4b4e-a525-101d1f68e9e7@oracle.com>
+Date: Tue, 3 Oct 2023 13:16:44 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: New distros list statistics
+Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
+Subject: Re: Fwd: X.Org Security Advisory: Issues in libX11 prior to 1.8.7 & libXpm prior to 3.5.17
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 10/3/23 09:31, Alan Coopersmith wrote:
+> X.Org Security Advisory:  October 3, 2023
+> 
+> Issues in libX11 prior to 1.8.7 & libXpm prior to 3.5.17
+> ========================================================
 
-I've been working to automate[*] tracking posting on the distros@ mailing
-list for reporting purposes.  This includes searching oss-security for
-posting information, extracting CVEs, and trying to tie it all together.
+Two additional things we shared with the distros list pre-disclosure:
 
-Anywhere, I have full stats for 2022 and stats for Jan/Feb of 2023.  As
-long as everyone is happy with the content, I'll update regularly moving
-forward.
+1) Test cases for 3 of the XPM bugs - instead of attaching them to the emails
+    to test which of your mail readers are still vulnerable to these bugs,
+    we've checked them in to the libXpm git repo - see the commits starting
+    with "test" listed on:
+    https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commits/libXpm-3.5.17?ref_type=tags
+    (The test case for CVE-2023-43788 was already in the repo from
+     CVE-2022-46285 from earlier this year).
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2022
-https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
+2) When Dr. Duck reported the libX11 issue included in this set as
+    CVE-2023-43785 he also reported several other bugs as potential
+    security issues.  We determined they did not meet our vulnerability
+    criteria but fixed them as general bugs and improved hardening.
+    If you are backporting individual patches instead of upgrading to
+    the new releases, you may want to consider if they meet your criteria
+    for backporting as well:
 
-[*] this has to be invoked manually in order to unlock my signing key so
-it's only semi-automated.
+    https://gitlab.freedesktop.org/xorg/lib/libx11/-/merge_requests/233
+    https://gitlab.freedesktop.org/xorg/lib/libxrandr/-/merge_requests/6
+    https://gitlab.freedesktop.org/xorg/app/xrandr/-/merge_requests/12
 
-Regards,
+    Each merge request contains a comment with our reasoning.
 
-Anthony Liguori
+    Of course, our releases also contain other bug fixes & hardening besides
+    those listed here.
 
+-- 
+      -Alan Coopersmith-              alan.coopersmith@...cle.com
+        X.Org Security Response Team - xorg-security@...ts.x.org
