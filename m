@@ -1,52 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/10
-Message-ID: <20231222164156.GA6189@openwall.com>
-Date: Fri, 22 Dec 2023 17:41:56 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/8
+Message-ID: <CAAHN_R2jD-CdpMauH+L_pz1mYBiKSD03jh8Azhw8KUFG=f+ytw@mail.gmail.com>
+Date: Tue, 3 Oct 2023 15:47:06 -0400
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [pfx-ann] Postfix stable release 3.8.4
+Subject: Re: CVE-2023-4806, CVE-2023-5156: glibc: potential use-after-free in getaddrinfo()
 Content-Type: text/plain; charset=utf-8
 
------ Forwarded message from Wietse Venema via Postfix-announce <postfix-announce@...tfix.org> -----
+On Tue, Oct 3, 2023 at 3:18 PM Solar Designer <solar@...nwall.com> wrote:
+> I wish someone more knowledgeable about this specific issue would post
+> this, but since no one did, let me do it.
+>
+> Current upstream glibc NEWS contains these entries:
 
-To: Postfix announce <postfix-announce@...tfix.org>
-Date: Fri, 22 Dec 2023 11:30:21 -0500 (EST)
-CC: Postfix users <postfix-users@...tfix.org>
-Subject: [pfx-ann] Postfix stable release 3.8.4
-From: Wietse Venema via Postfix-announce <postfix-announce@...tfix.org>
-Reply-To: Wietse Venema <wietse@...cupine.org>
+We're in the process of setting up a glibc CNA, so we will hopefully
+send out upstream advisories more regularly once we've got that in
+place.
 
-[An on-line version of this announcement will be available at https://www.postfix.org/announcements/postfix-3.8.4.html]
+>
+> > CVE-2023-4806: When an NSS plugin only implements the
+> > _gethostbyname2_r and _getcanonname_r callbacks, getaddrinfo could use
+> > memory that was freed during buffer resizing, potentially causing a
+> > crash or read or write to arbitrary memory.
+> >
+> > CVE-2023-5156: The fix for CVE-2023-4806 introduced a memory leak when
+> > an application calls getaddrinfo for AF_INET6 with AI_CANONNAME,
+> > AI_ALL and AI_V4MAPPED flags set.
+>
+> Apparently, CVE-2023-4806 has existed for ages, whereas CVE-2023-5156
+> only existed for ~10 days last month.
 
-Fixed with Postfix 3.8.4:
+CVE-2023-5156 was a regression from the fix to CVE-2023-4806; we
+requested a separate CVE for the benefit of distributions that may
+have already released the fix for the first CVE.
 
-  * Security: this release adds support to defend
-    against an email spoofing attack (SMTP smuggling) on
-    recipients at a Postfix server. For background, see
-    https://www.postfix.org/smtp-smuggling.html.
+>
+> Bug 30843 (CVE-2023-4806) - potential use-after-free in getcanonname:
+>
+> https://sourceware.org/bugzilla/show_bug.cgi?id=30843
+> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=973fe93a5675c42798b2161c6f29c01b0e243994
+>
+> Main upstream commit:
+>
+> > commit 973fe93a5675c42798b2161c6f29c01b0e243994
+> > Author: Siddhesh Poyarekar <siddhesh@...rceware.org>
+> > Date:   Fri Sep 15 13:51:12 2023 -0400
+> >
+> >     getaddrinfo: Fix use after free in getcanonname (CVE-2023-4806)
+> >
+> >     When an NSS plugin only implements the _gethostbyname2_r and
+> >     _getcanonname_r callbacks, getaddrinfo could use memory that was freed
+> >     during tmpbuf resizing, through h_name in a previous query response.
+> >
+> >     The backing store for res->at->name when doing a query with
+> >     gethostbyname3_r or gethostbyname2_r is tmpbuf, which is reallocated in
+> >     gethosts during the query.  For AF_INET6 lookup with AI_ALL |
+> >     AI_V4MAPPED, gethosts gets called twice, once for a v6 lookup and second
+> >     for a v4 lookup.  In this case, if the first call reallocates tmpbuf
+> >     enough number of times, resulting in a malloc, th->h_name (that
+> >     res->at->name refers to) ends up on a heap allocated storage in tmpbuf.
+> >     Now if the second call to gethosts also causes the plugin callback to
+> >     return NSS_STATUS_TRYAGAIN, tmpbuf will get freed, resulting in a UAF
+> >     reference in res->at->name.  This then gets dereferenced in the
+> >     getcanonname_r plugin call, resulting in the use after free.
+> >
+> >     Fix this by copying h_name over and freeing it at the end.  This
+> >     resolves BZ #30843, which is assigned CVE-2023-4806.
+> >
+> >     Signed-off-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
+>
+> also backported by upstream to branches all the way back to 2.34, but
+> apparently even older are affected.
 
-    Sites concerned about SMTP smuggling attacks should enable this
-    feature on Internet-facing Postfix servers. For compatibility
-    with non-standard clients, Postfix by default excludes clients
-    in mynetworks from this countermeasure.
+Yes, I've checked back to 2.28 for rhel-8; in fact that was where I
+discovered the bug first and had hoped that my refactor had fixed it
+like in case of CVE-2023-4813, but unfortunately it wasn't :/
 
-    The recommended settings are:
-
-	# Optionally disconnect remote SMTP clients that send bare newlines,
-	# but allow local clients with non-standard SMTP implementations
-	# such as netcat, fax machines, or load balancer health checks.
-	#
-	smtpd_forbid_bare_newline = yes
-	smtpd_forbid_bare_newline_exclusions = $mynetworks
-
-    The smtpd_forbid_bare_newline feature is disabled by default.
-
-You can find the updated Postfix source code at the mirrors listed at
-https://www.postfix.org/.
-
-	Wietse
-_______________________________________________
-Postfix-announce mailing list -- postfix-announce@...tfix.org
-To unsubscribe send an email to postfix-announce-leave@...tfix.org
-
------ End forwarded message -----
+Thanks,
+Sid
