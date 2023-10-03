@@ -1,110 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/08/1
-Message-ID: <11dc9c61-7833-5503-75e6-f4ec78a60701@gmail.com>
-Date: Thu, 8 Jun 2023 10:57:33 +0800
-From: Hangyu Hua <hbh25y@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/11
+Message-ID: <20231003203853.GA24745@openwall.com>
+Date: Tue, 3 Oct 2023 22:38:53 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: off-by-one in fl_set_geneve_opt
+Cc: Andreas Kling <kling@...enityos.org>
+Subject: Wuffs (was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
 Content-Type: text/plain; charset=utf-8
 
-On 7/6/2023 18:41, Hangyu Hua wrote:
-> On 7/6/2023 11:32, Hangyu Hua wrote:
->> Hi guys,
->>
->> I find a off-by-one bug in linux kernel's Flower
->> classifier(NET_CLS_FLOWER). It can cause denial-of-service and 
->> privilege escalation.
->>
->> # Details:
->>
->> static int fl_set_geneve_opt(const struct nlattr *nla, struct 
->> fl_flow_key *key,
->>       int depth, int option_len,
->>       struct netlink_ext_ack *extack)
->> {
->> struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
->> struct nlattr *class = NULL, *type = NULL, *data = NULL;
->> struct geneve_opt *opt;
->> int err, data_len = 0;
->>
->> if (option_len > sizeof(struct geneve_opt))
->> data_len = option_len - sizeof(struct geneve_opt);
->>
->> opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; 
->> <--- [1]
->> memset(opt, 0xff, option_len);
->> opt->length = data_len / 4;
->> opt->r1 = 0;
->> opt->r2 = 0;
->> opt->r3 = 0;
->>
->> ...
->> if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
->> int new_len = key->enc_opts.len;
->>
->> data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
->> data_len = nla_len(data);
->> if (data_len < 4) {
->> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
->> bytes long");
->> return -ERANGE;
->> }
->> if (data_len % 4) {
->> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
->> multiple of 4 bytes long");
->> return -ERANGE;
->> }
->>
->> new_len += sizeof(struct geneve_opt) + data_len;
->> BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
->> if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
->> NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
->> return -ERANGE;
->> }
->> opt->length = data_len / 4;
->> memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
->> }
->> ...
->> }
->>
->> We can see that opt use key->enc_opts.len to get its pointer from
->> key->enc_opts.data[] in [1]. Then length will be set to "data_len /
->> 4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
->> packets and their total size is 252 bytes(key->enc_opts.len = 252)
->> then key->enc_opts.len = opt->length = data_len / 4 when the third
->> TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
->> can bypass the check in [2] and cause out of bound write in
->> [3](opt->opt_data = key->enc_opts.data[257]).
->>
->> # Patch
->>
->> I already contacted the linux security team and made a patch:
->>
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
->>
->> # CVE
->>
->> Pending
->>
->> # EXP
->>
->> In order to avoid confusion i will publish it after I get CVE.
-> 
-> Hi guys,
-> 
-> I decide not to publish the exp for ethical reasons. Please email me if 
-> any distribution's maintainers need the code.
+On Fri, Sep 29, 2023 at 12:35:07PM -0400, Demi Marie Obenour wrote:
+> On Thu, Sep 28, 2023 at 05:10:09PM -0700, nightmare.yeah27@...ecat.org wrote:
+> > On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
+> > 
+> > > How long will it take for corporations to accept that writing media
 
-Since some maintainers have requested code from me, I sent the code to
-<linux-distros@...openwall.org>.
+Demi Marie, for further occasions I'd appreciate it if such tangential
+topics be started in their own threads (OK to refer to current context,
+but not mix with it in same thread) and be worded non-provocatively.
 
-Thanks,
-Hangyu
+Luckily, we got quite reasonable follow-ups this time - much better than
+typical (anti-)Rust flamewars on tech news sites.  So I don't really
+complain.  But I was reluctant and worried about accepting the above.
 
+> > > codecs in C, C++, or any other memory-unsafe language is a
+> > > fundamentally bad idea, and that it is better to rewrite the codecs
+> > > in a safe language (such as Wuffs or Rust) than to try to secure the
+> > > existing ones?
+> > 
+> > Wouldn't the low-level code have to ultimately depend on unsafe Rust
+> > modules, or similar feature in other safe language?
 > 
-> Thanks,
-> Hangyu
+> In Wuffs, every memory access is checked for safety at compile-time, and
+> that includes being in-bounds.  If the compiler cannot prove that every
+> access is safe, the code will not compile.  There are no bounds checks
+> at runtime.
 > 
->>
->> Thanks,
->> Hangyu
+> Interfacing with hardware accelerators obviously will need unsafe code,
+> but my understanding is that most vulnerabilities are in various
+> parsers or in the code the accelerators replace, not in the code that
+> interfaces with the accelerators.
+
+The mention of Rust triggered people, but let's not overlook Wuffs,
+"Wrangling Untrusted File Formats Safely":
+
+https://github.com/google/wuffs
+
+I was actually unaware of Wuffs, so I appreciate learning of it.  As I
+understand, it's a language currently transpiled to C:
+
+https://github.com/google/wuffs/tree/main/release/c
+
+> Wuffs the Library ships as a "single file C library", also known as a
+> "header file library".
+> 
+> To use that library in your C/C++ project, you just need to copy one
+> file from this directory, or otherwise integrate that one file into your
+> build system.
+
+The C file containing all of the parsers currently implemented in Wuffs
+is around 2 MB in size.  That's a lot, but then there are many parsers:
+
+https://github.com/google/wuffs/tree/main/std
+
+$ ls std/
+adler32  bmp  bzip2  cbor  crc32  deflate  gif  gzip  jpeg  json  lzw
+netpbm  nie  png  tga  wbmp  zlib
+
+Curiously, some of these optionally use SIMD - all while retaining the
+language's safety guarantees?
+
+Even though this looks like a Google project, I think a better place for
+its initial adoption could be a hobbyist OS and web browser project like
+what Andreas Kling is working on.  I'm not saying this is necessarily a
+good idea, it just feels more realistic to me.
+
+Alexander
