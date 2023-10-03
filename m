@@ -1,4 +1,4 @@
-Received: (qmail 1493 invoked by uid 550); 4 May 2026 01:06:51 -0000
+Received: (qmail 9927 invoked by uid 550); 3 Oct 2023 19:47:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,95 +7,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25694 invoked from network); 3 May 2026 21:36:13 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: Taeyang Lee <0wn@theori.io>, Brad Spengler <spender@grsecurity.net>
-In-Reply-To: <87v7d4b7a3.fsf@gentoo.org>
-Organization: Gentoo
-References: <afJorKIje4O6dXbH@netmeister.org> <87v7d4b7a3.fsf@gentoo.org>
-User-Agent: mu4e 1.14.1; emacs 31.0.50
-Date: Sun, 03 May 2026 22:36:00 +0100
-Message-ID: <87jytkb2gv.fsf@gentoo.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Precise disclosure contents for copyfail (Re:
- [oss-security] CVE-2026-31431: CopyFail: linux local privilege scalation)
+Received: (qmail 1234 invoked from network); 3 Oct 2023 19:46:34 -0000
+Date: Tue, 3 Oct 2023 21:46:04 +0200
+From: Solar Designer <solar@openwall.com>
+To: Alan Coopersmith <alan.coopersmith@oracle.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20231003194604.GA23320@openwall.com>
+References: <6EBBC128-36D2-4262-88F4-6889E9E6DE1E@mnx.io> <20230915210906.GA22532@openwall.com> <36F38D40-5F90-4E1B-B7A2-121431A3E6FE@mnx.io> <20230922172755.GA18909@openwall.com> <20230922214006.GA20989@openwall.com> <03F95D3B-FB70-46AC-AC19-9709599B8318@mnx.io> <20230925192334.GA8663@openwall.com> <dd528c33-b4a1-4e4e-b8f5-7103be42ad95@oracle.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dd528c33-b4a1-4e4e-b8f5-7103be42ad95@oracle.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] administrative tasks (was: illumos (or at least danmcd) membership in the distros list)
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, Sep 26, 2023 at 04:04:28PM -0700, Alan Coopersmith wrote:
+> On 9/25/23 12:23, Solar Designer wrote:
+> >Administrative tasks mostly unrelated to (linux-)distros lists (but
+> >relevant to the wider community)
+> >
+> >1. Help ensure that each message posted to oss-security contains the
+> >most essential information (e.g., vulnerability detail and/or exploit)
+> >directly in the message itself (and in plain text) rather than only by
+> >reference to an external resource, and add the missing information
+> >(e.g., in your own words, by quoting with proper attribution, and/or by
+> >creating and attaching a properly attributed text/plain export of a
+> >previously referenced web page) and remind the original sender of this
+> >requirement (for further occasions) in a "reply" posting when necessary
+> >- primary: Oracle Solaris, backup: Container-Optimized OS
 
-Sam James <sam@gentoo.org> writes:
+> >3. Monitor for Open Source security issues/topics published elsewhere,
+> >identify which of these would fit, and bring them to oss-security
 
-> Jan Schaumann <jschauma@netmeister.org> writes:
->
->> Hi,
->>
->> This is currently making the rounds and looks pretty
->> severe:
->>
->> https://copy.fail/
->>
->> A local privilege escalation vulnerability with a
->> working PoC python script exploiting a logic flaw in
->> the kernel crypto API (AF_ALG) affecting most Linux
->> distributions.
->>
->> More detailed write-up:
->> https://xint.io/blog/copy-fail-linux-distributions
->>
->> [...]
->
-> Are we aware of what precisely xint disclosed to the kernel security
-> team?
->
-> My assumption based on the tool output in the write-up is that enough
-> was disclosed to know this was at least an easily-exploitable LPE (*).
+> >6. Suggest and provide examples of quality improvements for such reports
+> >(beyond them containing the most essential information)
 
-It's been pointed out to me that Brad Spengler has commented on X [0],
-linking to Brian Pak of xint saying [1]:
+> Apologies, I may have misremembered exactly what I supposed to be doing at 
+> some
+> point, and in hindsight, much of what I have done was closer to #6 than #1:
+> 
+> https://www.openwall.com/lists/oss-security/2022/01/25/15
+> https://www.openwall.com/lists/oss-security/2022/10/12/2
+> https://www.openwall.com/lists/oss-security/2023/01/31/7
+> 
+> but I at least did some of #1 if you look far enough back:
+> 
+> https://www.openwall.com/lists/oss-security/2022/08/09/1
+> 
+> I've also tried to set a good example in the messages I post on behalf of 
+> X.Org.
 
-> We also provided a fully working exploit to the kernel security team
-> when we reported. We=E2=80=99ve since learned that such details don=E2=80=
-=99t
-> automatically get forwarded downstream and that Linux kernel commit
-> messages are typically kept minimal. That=E2=80=99s simply how the proces=
-s works.
+Yes, I appreciate all of this!
 
-So yes, the kernel team were very much aware of the impact from the
-offset.
+> I'd be happy to pass on #1 to someone else and continue doing #3.  I don't 
+> have
+> the bandwidth to write tools to automate it though (#4) - I mostly monitor
+> chatter on twitter & mastodon, watch the newly published CVE list, and 
+> monitor updates to 
+> https://salsa.debian.org/security-tracker-team/security-tracker.git.
 
-I hadn't seen Brian's thread until now, it is interesting reading [2].
+That's pretty good.  I've just made you primary for #3, and consequently
+upgraded Container-Optimized OS to primary for #1 - although I expect
+I'll also need to ping them off-list for things to actually be happening.
 
-Thanks to Brad and the person who sent me the link to the tweet.
+Container-Optimized OS folks, please let me know if you see this and
+think you don't need further pings. ;-)
 
->
-> (*) Because part of their promotion here is for the tool's ability to
-> get the analysis right, so it implies that they didn't figure it out
-> later, and that the tool did "most of the work". Whether or not that's
-> actually the case, I of course don't know.
->
-> thanks,
-> sam
+I'd also appreciate others helping with all of these tasks.  For #3,
+there are simply too many relevant "Open Source security issues/topics
+published elsewhere" for Alan to notice and handle them all alone.
 
-[0] https://xcancel.com/spendergrsec/status/2051045704487829878
-[1] https://xcancel.com/brian_pak/status/2050255271184994538
-[2] https://xcancel.com/brian_pak/status/2050255258098766101#m
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmn3v8AbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkDQx
-AQC3zq0HJ6+LU3jbbrmp9b0z42D8K1iQH+iz0le+OyrVigEAiWzuDOgEyj/GY9Ga
-MCPiOCqXfSBDJbm/qaBarRvxqwc=
-=Z7yu
------END PGP SIGNATURE-----
---=-=-=--
+Alexander
