@@ -1,103 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/2
-Message-ID: <q1os2n8q-qpn1-8q75-281r-np43p555q14@unkk.fr>
-Date: Wed, 15 Feb 2023 08:28:55 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: curl: CVE-2023-23915: HSTS amnesia with --parallel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/5
+Message-ID: <CAHjsZGaZcrGn-cuv9yiXpPR81pebRd=AimOeR2xPiQR-GMiZkQ@mail.gmail.com>
+Date: Tue, 3 Oct 2023 16:26:42 -0300
+From: Rodrigo Freire <rfreire@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-4806, CVE-2023-5156: glibc: potential use-after-free in getaddrinfo()
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-23915: HSTS amnesia with --parallel
-============================================
+On Tue, Oct 3, 2023 at 4:18 PM Solar Designer <solar@...nwall.com> wrote:
+> Hi,
 
-Project curl Security Advisory, February 15 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-23915.html)
+Hello,
 
-VULNERABILITY
--------------
+<snip>
 
-curl's HSTS cache saving behaves wrongly when multiple URLs are requested in
-parallel.
+> https://access.redhat.com/security/cve/CVE-2023-5156
+> Puzzlingly, the latter URL lists RHEL 9 as affected, even though I think
+> the original buggy fix hasn't yet made it into a RHEL 9 glibc update.
+> Maybe that's part of Red Hat's tracking of what's in their pipeline.
 
-Using its HSTS support, curl can be instructed to use HTTPS instead of using
-an insecure clear-text HTTP step even when HTTP is provided in the URL. This
-HSTS mechanism would however surprisingly fail when multiple transfers are done
-in parallel as the HSTS cache file gets overwritten by the most recently
-completed transfer.
+The affected code was backported into RHEL9's glibc and it is affected.
+The fix is traversing our productization pipeline and we will ship
+when it's done.
 
-A later HTTP-only transfer to the earlier host name would then *not* get
-upgraded properly to HSTS.
-
-Reproducible like this:
-
-1. `curl --hsts hsts.txt --parallel https://curl.se https://example.com`
-2. `curl --hsts hsts.txt http://curl.se`
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This is a curl command line issue and does not affect libcurl.
-
-This flaw was introduced in [commit
-7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
-shipped enabled by default from [commit
-d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
-curl 7.77.0.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-23915 to this issue.
-
-CWE-319: Cleartext Transmission of Sensitive Information
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.77.0 to and including 7.87.0
-- Not affected versions: curl < 7.77.0 and curl >= 7.88.0
-
-curl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-7.88.0 will share the HSTS state properly between transfers, making each
-subsequent save store a complete state.
-
-A [fix for CVE-2023-23914](https://github.com/curl/curl/pull/10138)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.88.0
-
-  B - Apply the patch to your local version
-
-  C - Specify all URLs with `HTTPS://` and not `HTTP://`
-
-TIMELINE
---------
-
-This issue was reported to the curl project on December 21, 2022. We contacted
-distros@...nwall on February 7, 2022.
-
-curl 7.88.0 was released on February 15 2023, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
