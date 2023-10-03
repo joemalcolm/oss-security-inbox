@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3945" "Thursday" "14" "September" "2017" "07:01:45" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<163984.21171786-sendEmail@localhost>" "98" "[oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)" nil nil nil "9" "2017091407:01:45" "[oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)" (number mark "U       ago@gentoo.o Sep 14   98/3945  " thread-indent "\"[oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13940 invoked by uid 550); 14 Sep 2017 07:02:03 -0000
+Received: (qmail 17852 invoked by uid 550); 3 Oct 2023 20:59:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,110 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13816 invoked from network); 14 Sep 2017 07:02:02 -0000
-Message-ID: <163984.21171786-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 14 Sep 2017 07:01:45 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-788858.915054337"
-Subject: [oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)
+Received: (qmail 17429 invoked from network); 3 Oct 2023 20:58:32 -0000
+Date: Tue, 3 Oct 2023 22:58:25 +0200
+From: Solar Designer <solar@openwall.com>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: oss-security@lists.openwall.com,
+	"Xen. org security team" <security-team-members@xen.org>
+Message-ID: <20231003205825.GA24992@openwall.com>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <20230925163652.GA6750@openwall.com> <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com> <20230925182834.GA8247@openwall.com> <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com> <20230926160943.GA12790@openwall.com> <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 
-------MIME delimiter for sendEmail-788858.915054337
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+On Tue, Sep 26, 2023 at 06:16:22PM +0100, Andrew Cooper wrote:
+> On 26/09/2023 5:09 pm, Solar Designer wrote:
+> > Is the original paper public?
+> 
+> https://www.usenix.org/system/files/usenixsecurity23-hofmann.pdf
+> 
+> Section 8.2.1 for the results specific to divides.
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+Thank you!
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+> > Meanwhile, I observe a difference between Linux and Xen fixes - Linux
+> > uses native-sized DIV and you use byte-sized, as a clever way not to
+> > clobber RDX and maybe achieve lower latency.  Speaking of which:
+> >
+> > $ git clone https://github.com/InstLatx64/InstLatx64
+> > $ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
+> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+> >
+> > Looks like maybe not that much difference, after all, if this data applies.
+> 
+> Agner Fogh's manuals have a little more information, and importantly
+> give the upper bound which tops out at 47 cycles.
 
-The complete ASan output of the issue:
+Of course, the worst case is much worse like that.  If I'm reading this
+right, the timings I found above are for dividing 0 by something, so
+should apply to Linux's 0/1.  Xen does 1/1 instead:
 
-# aacgain -f $FILE
-==23791==ERROR: AddressSanitizer: global-buffer-overflow on address 0x00000107ff80 at pc 0x0000008e2acc bp 0x7fff34f7d100 sp 0x7fff34f7d0f8
-WRITE of size 8 at 0x00000107ff80 thread T0
-    #0 0x8e2acb in III_dequantize_sample /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779
-    #1 0x8e2acb in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1646
-    #2 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
-    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #4 0x7f36927b3680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+https://github.com/xen-project/xen/commit/d7b78041dc819efde0350f27754a61cb01a93496
 
-0x00000107ff80 is located 32 bytes to the left of global variable 'sideinfo' defined in 'layer3.c:1521:21' (0x107ffa0) of size 488
-0x00000107ff80 is located 0 bytes to the right of global variable 'hybridIn' defined in 'layer3.c:1612:17' (0x107db80) of size 9216
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779 in III_dequantize_sample
-Shadow bytes around the buggy address:
-  0x000080207fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x000080207ff0:[f9]f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208030: 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x000080208040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==23791==ABORTING
+Luckily, the timings for 1/1 look just as good:
 
-Affected version:
-1.5.2
+$ grep -r ': DIV .* 1/1' InstLatx64/AuthenticAMD/*_Zen_*.txt
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  415 X86   : DIV r8 1/1                    L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  416 X86   : DIV r8 1/1 ax upd             L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  427 X86   : DIV r16 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  428 X86   : DIV r16 1/1 ax upd            L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  429 X86   : DIV r16 1/1 ax/dx upd         L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  441 X86   : DIV r32 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  442 X86   : DIV r32 1/1 eax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  443 X86   : DIV r32 1/1 eax/edx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  455 AMD64 : DIV r64 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  456 AMD64 : DIV r64 1/1 rax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
+InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  457 AMD64 : DIV r64 1/1 rax/rdx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
 
-Fixed version:
-N/A
+> There is at least a 1 cycle change in latency between the byte and
+> non-byte forms, which I suspect is down to the non-byte forms needing to
+> consume an extra input register before starting.
 
-Commit fix:
-N/A
+Makes sense.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+> But the main reason for choosing the byte form is indeed fewer moving
+> parts to worry about in the critical sections, where one wrong
+> instruction can render all protections moot.
 
-CVE:
-CVE-2017-14409
+Right.  Great not to clobber RDX.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00350-aacgain-globaloverflow-III_dequantize_sample
+However, this may be another reason to actually look into whether the
+remainder also leaked, and whether the byte-sized form prevents that
+leak despite of it not touching the architectural register where the
+remainder would be stored by a preceding larger DIV.  I expect that
+we're fine here - it's the divider unit's internal register and not the
+architectural register that should matter - but worth making sure.  It
+could also theoretically be e.g. some buffer registers in the middle,
+where the byte-sized form wouldn't overwrite the full contents.
 
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-global-buffer-overflow-in-iii_dequantize_sample-mpglibdbllayer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-788858.915054337--
-
+Alexander
