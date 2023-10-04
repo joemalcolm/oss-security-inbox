@@ -1,65 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/11
-Message-ID: <20231222175221.GA7191@unix-ag.uni-kl.de>
-Date: Fri, 22 Dec 2023 18:52:21 +0100
-From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/6
+Message-ID: <CA+fOnFbWkvAi61HywFWrnm+6dcT-OvYEmDQ7kij5bLTc+fSerA@mail.gmail.com>
+Date: Wed, 4 Oct 2023 13:02:50 -0300
+From: Natalia Bidart <nataliabidart@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Cc: Django Security Team <security@...ngoproject.com>
+Subject: Django: CVE-2023-43665: Denial-of-service possibility in django.utils.text.Truncator
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+https://www.djangoproject.com/weblog/2023/oct/04/security-releases/
 
-On Sat, Dec 23, 2023 at 12:40:06AM +0800, Alexander E. Patrakov wrote:
-> On Fri, Dec 22, 2023 at 11:57 PM Rodrigo Freire <rfreire@...hat.com> wrote:
-> > On Fri, Dec 22, 2023 at 12:10 PM Erik Auerswald
-> > <auerswal@...x-ag.uni-kl.de> wrote:
-> > 
-> > >   * The CERT/CC and VINCE involvement resulted in "there is no
-> > >     vulnerability".
-> >
-> > I'm trying to make sense of it - where's the compromise of the
-> > Confidentiality, Integrity or Availability of the affected mail
-> > servers?
-> 
-> The integrity of the sender's identity, as a minimum, is compromised
-> here. Normally, when relaying mail, servers add a "Received:" header
-> that specifies where they received the connection from. This allows
-> tracking down the true origin of the message. The smuggled message
-> does not have such a header and thus misrepresents the vulnerable
-> relay as the ultimate sender. Additionally, if the relay has
-> destination-based deny lists that deny some but not all addresses on
-> the destination domain, they are sidestepped.
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
+team
+is issuing
+`Django 4.2.6 <https://docs.djangoproject.com/en/dev/releases/4.2.6/>`_,
+`Django 4.1.12 <https://docs.djangoproject.com/en/dev/releases/4.1.12/>`_,
+and
+`Django 3.2.22 <https://docs.djangoproject.com/en/dev/releases/3.2.22/>`_.
+These releases address the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-Indeed, this is an integrity attack.  It breaks the integrity of an email
-system, as opposed to the integrity of a single product.  This might
-make it a bit harder to understand, although the SEC Consult blog post[1]
-provides an in-depth description of the issue.
+CVE-2023-43665: Denial-of-service possibility in django.utils.text.Truncator
+============================================================================
 
-[1]: https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/
+Following the fix for CVE-2019-14232, the regular expressions used in the
+implementation of ``django.utils.text.Truncator``’s ``chars()`` and
+``words()`` methods
+(with ``html=True``) were revised and improved. However, these regular
+expressions
+still exhibited linear backtracking complexity, so when given a very long,
+potentially malformed HTML input, the evaluation would still be slow,
+leading
+to a potential denial of service vulnerability.
 
-Any user of an affected outbound server can spoof email from any user of
-the same outbound server despite SPF and DKIM (DMARC+DKIM can prevent this
-in some cases, also more senders can be spoofed in specific cases, for
-details see the blog post[1]).  But for this to work, the inbound server
-must act as a confused deputy.  Both outbound and inbound servers need to
-be differently vulnerable to enable the attack.  This specific attack can
-be prevented unilaterally on either the outbound or the inbound server.
+The ``chars()`` and ``words()`` methods are used to implement the
+``truncatechars_html``
+and ``truncatewords_html`` template filters, which were thus also
+vulnerable.
 
-According to the blog post[1], GMX immediatly understood the threat to
-their system and fixed it on their side (at least as an outbound server).
-Microsoft also understood the threat, they just took longer to implement
-a fix (at least as an outbound server).
+The input processed by ``Truncator``, when operating in HTML mode, has been
+limited
+to the first five million characters in order to avoid potential performance
+and memory issues.
 
-[The Cisco Secure Email [Cloud] Gateway's default enabled feature to act
-as a facilitator of the attack is a bit perplexing.  I would expect an
-email security product to thwart attacks, not enable them.]
+Thanks Wenchao Li of Alibaba Group for the report.
 
-For email server open source projects, relevant for the oss-security
-list, the primary vulnerability is to act as a confused deputy inbound
-server, because users of such email servers usually have a much smaller
-number of accounts than the big freemail providers.  But, in general,
-they could also possibly act as a vulnerable outbound server, e.g.,
-after a legitimite user account has been compromised.
+This issue has severity "moderate" according to the Django security policy.
 
-Cheers,
-Erik
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 5.0 (currently at pre-release alpha status)
+* Django 4.2
+* Django 4.1
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch and
+the
+5.0, 4.2, 4.1, and 3.2 release branches. The patches may be obtained from
+the
+following changesets:
+
+* On the `main branch <
+https://github.com/django/django/commit/17b51094d778b421bb2b3aae0c270894b050455d
+>`__
+* On the `5.0 release branch <
+https://github.com/django/django/commit/8124c42601b9abfeb234056092a62a22a22107cb
+>`__
+* On the `4.2 release branch <
+https://github.com/django/django/commit/be9c27c4d18c2e6a5be8af4e53c0797440794473
+>`__
+* On the `4.1 release branch <
+https://github.com/django/django/commit/c7b7024742250414e426ad49fb80db943e7ba4e8
+>`__
+* On the `3.2 release branch <
+https://github.com/django/django/commit/ccdade1a0262537868d7ca64374de3d957ca50c5
+>`__
+
+The following releases have been issued:
+
+* Django 4.2.6 (`download Django 4.2.6 <
+https://www.djangoproject.com/m/releases/4.2/Django-4.2.6.tar.gz>`_ |
+`4.2.6 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.2.6.checksum.txt>`_)
+* Django 4.1.12 (`download Django 4.1.12 <
+https://www.djangoproject.com/m/releases/4.1/Django-4.1.12.tar.gz>`_ |
+`4.1.12 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.1.12.checksum.txt>`_)
+* Django 3.2.22 (`download Django 3.2.22 <
+https://www.djangoproject.com/m/releases/3.2/Django-3.2.22.tar.gz>`_ |
+`3.2.22 checksums <
+https://www.djangoproject.com/m/pgp/Django-3.2.22.checksum.txt>`_)
+
+The PGP key ID used for this release is Natalia Bidart: `2EE82A8D9470983E <
+https://github.com/nessita.gpg>`_
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
