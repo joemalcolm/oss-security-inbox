@@ -1,86 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/03/1
-Message-ID: <5afa0e5a-8058-469e-6ad7-587cf4e2a0cd@gmail.com>
-Date: Mon, 3 Jul 2023 10:05:54 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/3
+Message-ID: <20231004134150.GB27450@openwall.com>
+Date: Wed, 4 Oct 2023 15:41:50 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2023-36053: Potential regular expression denial of service vulnerability in EmailValidator/URLValidator
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2023/jul/03/security-releases/
+Regarding AMD not intending to provide a microcode mitigation:
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.2.3 <https://docs.djangoproject.com/en/dev/releases/4.2.3/>`_,
-`Django 4.1.10 
-<https://docs.djangoproject.com/en/dev/releases/4.1.10/>`_, and
-`Django 3.2.20 <https://docs.djangoproject.com/en/dev/releases/3.2.20/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+On Tue, Oct 03, 2023 at 04:04:31PM -0700, Jean Luc Picard wrote:
+> No intent?  It wouldn't be terribly hard
 
-CVE-2023-36053: Potential regular expression denial of service 
-vulnerability in ``EmailValidator``/``URLValidator``
-===================================================================================================================
+Possibly not terribly hard, but (with my also too limited understanding)
+probably not in any of the ways you suggested.
 
-``EmailValidator`` and ``URLValidator`` were subject to potential regular
-expression denial of service attack via a very large number of domain name
-labels of emails and URLs.
+> That said I could understand the
+> want to depricate zen1 support entirely, everyone upgraded when they could
+> it was super super cheap to do so & there weren't really any enterprise
+> users.
 
-Thanks Seokchan Yoon for reports.
+That's false.
 
-This issue has severity "moderate" according to the Django security policy.
+Zen1 is still found in major clouds.  The AMD security bulletin:
 
-Affected supported versions
-===========================
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
 
-* Django main branch
-* Django 4.2
-* Django 4.1
-* Django 3.2
+specifically lists "Datacenter AMD EPYC 7001 Processors" as affected,
+and these are used e.g. in:
 
-Resolution
-==========
+https://aws.amazon.com/about-aws/whats-new/2021/04/amazon-ec2-instances-featuring-amd-epyc-processors-are-now-available-in-additional-regions/
 
-Patches to resolve the issue have been applied to Django's main branch 
-and the
-4.2, 4.1, and 3.2 release branches. The patches may be obtained from the
-following changesets:
+"M5a, R5a and T3a instances are variants of Amazon EC2 general purpose
+(M5), memory optimized (R5) and burstable general-purpose (T3) instance
+families. These instances feature AMD EPYC 7001 series processors"
 
-* On the `main branch 
-<https://github.com/django/django/commit/ad0410ec4f458aa39803e5f6b9a3736527062dcd>`__
-* On the `4.2 release branch 
-<https://github.com/django/django/commit/b7c5feb35a31799de6e582ad6a5a91a9de74e0f9>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/beb3f3d55940d9aa7198bf9d424ab74e873aec3d>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/454f2fb93437f98917283336201b4048293f7582>`__
+That was in 2021, but indeed the T3a tab at:
 
-The following releases have been issued:
+https://aws.amazon.com/ec2/amd/
 
-* Django 4.2.3 (`download Django 4.2.3 
-<https://www.djangoproject.com/m/releases/4.2/Django-4.2.3.tar.gz>`_ | 
-`4.2.3 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.2.3.checksum.txt>`_)
-* Django 4.1.10 (`download Django 4.1.10 
-<https://www.djangoproject.com/m/releases/4.1/Django-4.1.10.tar.gz>`_ | 
-`4.1.10 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.1.10.checksum.txt>`_)
-* Django 3.2.20 (`download Django 3.2.20 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.20.tar.gz>`_ | 
-`3.2.20 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.20.checksum.txt>`_)
+still says:
 
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+"Amazon EC2 T3a instances feature AMD EPYC 7000 series processors"
 
-General notes regarding security reporting
-==========================================
+T3 are the most common/default AWS instance family with Intel CPUs, and
+T3a are probably the most commonly used AMD alternative to them.
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+I don't mean to single out AWS, I think it's similar with many other
+cloud and dedicated server providers.  This is just a prominent example.
 
+Alexander
