@@ -1,97 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/05/6
-Message-ID: <20231105230810.GA26924@openwall.com>
-Date: Mon, 6 Nov 2023 00:08:10 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/5
+Message-ID: <20231004151357.GA29150@openwall.com>
+Date: Wed, 4 Oct 2023 17:13:57 +0200
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Pietro Albini <pietro@...troalbini.org>
-Subject: Re: CVE-2022-46176: Cargo does not check SSH host keys
+Cc: Daniel Kiper <daniel.kiper@...cle.com>, Maxim Suhanov <dfirblog@...il.com>
+Subject: CVE-2023-4692, CVE-2023-4693: grub2: OOB write, read via specially crafted NTFS filesystem
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Tue, Jan 10, 2023 at 05:45:06PM +0100, Pietro Albini wrote:
-> The Rust Security Response WG was notified that Cargo did not perform SSH host
-> key verification when cloning indexes and dependencies via SSH. An attacker
-> could exploit this to perform man-in-the-middle (MITM) attacks.
+A couple of issues in GRUB relevant to setups with Secure Boot got fixed:
+
+https://lore.kernel.org/all/ZRxK8s4nQV2jBq%2F9@tomti.i.net-space.pl/
+
+Daniel, I'd appreciate it if you post things like this to oss-security
+going forward.  Thank you!
+
+> Date: Tue, 3 Oct 2023 19:10:10 +0200
+> From: Daniel Kiper <daniel.kiper@...cle.com>
+> To: grub-devel@....org
+> Cc: dfirblog@...il.com
+> Subject: [SECURITY PATCH 0/6] GRUB2 NTFS driver vulnerabilities - 2023/10/03
 > 
-> This vulnerability has been assigned CVE-2022-46176.
+> Hi all,
+> 
+> This patch set contains a bundle of fixes for various security flaws discovered
+> in the GRUB2 NTFS driver code recently. The most severe ones, i.e. potentially
+> exploitable, have CVEs assigned and are listed at the end of this email.
+> 
+> Details of exactly what needs updating will be provided by the respective
+> distros and vendors when updates become available.
+> 
+> Full mitigation against all CVEs will require updated shim with latest SBAT
+> (Secure Boot Advanced Targeting) [1] data provided by distros and vendors.
+> This time UEFI revocation list (dbx) will not be used and revocation of broken
+> artifacts will be done with SBAT only. For information on how to apply the
+> latest SBAT revocations, please see mokutil(1). Vendor shims may explicitly
+> permit known older boot artifacts to boot.
+> 
+> Updated GRUB2, shim and other boot artifacts from all the affected vendors will
+> be made available when the embargo lifts or some time thereafter.
+> 
+> I am posting all the GRUB2 upstream patches which fix all security bugs found
+> and reported up until now. Major Linux distros carry or will carry soon one
+> form or another of these patches. Now all the GRUB2 upstream patches are in
+> the GRUB2 git repository [2] too.
+> 
+> I would like to thank Maxim Suhanov for responsible disclosure and preparation
+> of patches required to fully fix all known issues.
+> 
+> Daniel
+> 
+> [1] https://github.com/rhboot/shim/blob/main/SBAT.md
+> 
+> [2] https://git.savannah.gnu.org/gitweb/?p=grub.git
+>     https://git.savannah.gnu.org/git/grub.git
+> 
+> *******************************************************************************
+> 
+> CVE-2023-4692 grub2: OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
+> 5.3/AV:L/AC:H/PR:H/UI:N/S:C/C:N/I:H/A:N
+> 
+> There is an out-of-bounds write in grub-core/fs/ntfs.c. An attacker may
+> leverage this vulnerability by presenting a specially crafted NTFS filesystem
+> image leading to GRUB's heap metadata corruption. Additionally, in some
+> circumstances, the attack may also corrupt the UEFI firmware heap metadata.
+> As a result arbitrary code execution and secure boot protection bypass may
+> be achieved.
+> 
+> Reported-by: Maxim Suhanov
+> 
+> *******************************************************************************
+> 
+> CVE-2023-4693 grub2: OOB read when reading data from the resident $DATA attribute
+> 5.3/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
+> 
+> There is an out-of-bounds read at grub-core/fs/ntfs.c. A physically present
+> attacker may leverage that by presenting a specially crafted NTFS file system
+> image to read arbitrary memory locations. A successful attack may allow
+> sensitive data cached in memory or EFI variables values to be leaked presenting
+> a high confidentiality risk.
+> 
+> Reported-by: Maxim Suhanov
+> 
+> *******************************************************************************
+> 
+>  grub-core/fs/ntfs.c | 121 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------------
+>  1 file changed, 105 insertions(+), 16 deletions(-)
+> 
+> Maxim Suhanov (6):
+>       fs/ntfs: Fix an OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
+>       fs/ntfs: Fix an OOB read when reading data from the resident $DATA attribute
+>       fs/ntfs: Fix an OOB read when parsing directory entries from resident and non-resident index attributes
+>       fs/ntfs: Fix an OOB read when parsing bitmaps for index attributes
+>       fs/ntfs: Fix an OOB read when parsing a volume label
+>       fs/ntfs: Make code more readable
 
-In the distros thread leading to the above oss-security posting, Pietro
-Albini also wrote:
+The two issues are described in more detail in the individual commits:
 
-> Note that while investigating this we discovered that the underlying library
-> Cargo uses for git operations, libgit2, does not perform SSH host key checking
-> either. We've been coordinating with them, and they'll also release a fix on
-> 2023-01-10.
+> Subject: [SECURITY PATCH 1/6] fs/ntfs: Fix an OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
+> Date: Tue,  3 Oct 2023 19:12:23 +0200
+> 
+> From: Maxim Suhanov <dfirblog@...il.com>
+> 
+> When parsing an extremely fragmented $MFT file, i.e., the file described
+> using the $ATTRIBUTE_LIST attribute, current NTFS code will reuse a buffer
+> containing bytes read from the underlying drive to store sector numbers,
+> which are consumed later to read data from these sectors into another buffer.
+> 
+> These sectors numbers, two 32-bit integers, are always stored at predefined
+> offsets, 0x10 and 0x14, relative to first byte of the selected entry within
+> the $ATTRIBUTE_LIST attribute. Usually, this won't cause any problem.
+> 
+> However, when parsing a specially-crafted file system image, this may cause
+> the NTFS code to write these integers beyond the buffer boundary, likely
+> causing the GRUB memory allocator to misbehave or fail. These integers contain
+> values which are controlled by on-disk structures of the NTFS file system.
+> 
+> Such modification and resulting misbehavior may touch a memory range not
+> assigned to the GRUB and owned by firmware or another EFI application/driver.
+> 
+> This fix introduces checks to ensure that these sector numbers are never
+> written beyond the boundary.
+> 
+> Fixes: CVE-2023-4692
 
-I think the libgit2 issue was never brought to oss-security, so I am
-passing its mention to here now.  Also per that thread, CVE-2022-46176
-is only for the Cargo issue.  libgit2 was supposed to get its own CVE,
-but no one in the thread knew whether they actually did.
-
-I don't know whether libgit2 was actually fixed on that date as planned.
+> Subject: [SECURITY PATCH 2/6] fs/ntfs: Fix an OOB read when reading data from the resident $DATA attribute
+> Date: Tue,  3 Oct 2023 19:12:24 +0200
+> 
+> From: Maxim Suhanov <dfirblog@...il.com>
+> 
+> When reading a file containing resident data, i.e., the file data is stored in
+> the $DATA attribute within the NTFS file record, not in external clusters,
+> there are no checks that this resident data actually fits the corresponding
+> file record segment.
+> 
+> When parsing a specially-crafted file system image, the current NTFS code will
+> read the file data from an arbitrary, attacker-chosen memory offset and of
+> arbitrary, attacker-chosen length.
+> 
+> This allows an attacker to display arbitrary chunks of memory, which could
+> contain sensitive information like password hashes or even plain-text,
+> obfuscated passwords from BS EFI variables.
+> 
+> This fix implements a check to ensure that resident data is read from the
+> corresponding file record segment only.
+> 
+> Fixes: CVE-2023-4693
 
 Alexander
-
-P.S. I'm quoting the rest of the oss-security posting I'm "replying" to
-below, for context since it's been a while.
-
-On Tue, Jan 10, 2023 at 05:45:06PM +0100, Pietro Albini wrote:
-> The Rust Security Response WG was notified that Cargo did not perform SSH host
-> key verification when cloning indexes and dependencies via SSH. An attacker
-> could exploit this to perform man-in-the-middle (MITM) attacks.
-> 
-> This vulnerability has been assigned CVE-2022-46176.
-> 
-> ## Overview
-> 
-> When an SSH client establishes communication with a server, to prevent MITM
-> attacks the client should check whether it already communicated with that
-> server in the past and what the server's public key was back then. If the key
-> changed since the last connection, the connection must be aborted as a MITM
-> attack is likely taking place.
-> 
-> It was discovered that Cargo never implemented such checks, and performed no
-> validation on the server's public key, leaving Cargo users vulnerable to MITM
-> attacks.
-> 
-> ## Affected Versions
-> 
-> All Rust versions containing Cargo before 1.66.1 are vulnerable.
-> 
-> Note that even if you don't explicitly use SSH for alternate registry indexes
-> or crate dependencies, you might be affected by this vulnerability if you have
-> configured git to replace HTTPS connections to GitHub with SSH (through git's
-> [`url.<base>.insteadOf`][1] setting), as that'd cause you to clone the
-> crates.io index through SSH.
-> 
-> ## Mitigations
-> 
-> We will be releasing Rust 1.66.1 today, 2023-01-10, changing Cargo to check the
-> SSH host key and abort the connection if the server's public key is not already
-> trusted. We recommend everyone to upgrade as soon as possible.
-> 
-> Patch files for Rust 1.66.0 are also available [here][2] for custom-built
-> toolchains.
-> 
-> For the time being Cargo will not ask the user whether to trust a server's
-> public key during the first connection. Instead, Cargo will show an error
-> message detailing how to add that public key to the list of trusted keys. Note
-> that this might break your automated builds if the hosts you clone dependencies
-> or indexes from are not already trusted.
-> 
-> ## Acknowledgments
-> 
-> Thanks to the Julia Security Team for disclosing this to us according to our
-> [security policy][1]!
-> 
-> We also want to thank the members of the Rust project who contributed to fixing
-> this issue. Thanks to Eric Huss and Weihang Lo for writing and reviewing the
-> patch, Pietro Albini for coordinating the disclosure and writing this advisory,
-> and Josh Stone, Josh Triplett and Jacob Finkelman for advising during the
-> disclosure.
-> 
-> [1]: https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf
-> [2]: https://github.com/rust-lang/wg-security-response/tree/main/patches/CVE-2022-46176
-> [3]: https://www.rust-lang.org/policies/security
