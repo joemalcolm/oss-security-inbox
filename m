@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1978" "Monday" "29" "January" "2018" "16:24:33" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<640ffdd4-35db-1a4e-49ff-2ff0b512941f@treenet.co.nz>" "54" "Re: [oss-security] SQUID-2018:2 Denial of Service issue in HTTP Message processing" nil nil nil "1" "2018012903:24:33" "[oss-security] SQUID-2018:2 Denial of Service issue in HTTP Message processing" (number mark "U       squid3@treen Jan 29   54/1978  " thread-indent "\"Re: [oss-security] SQUID-2018:2 Denial of Service issue in HTTP Message processing\"\n") "<0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>" ("<0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27917 invoked by uid 550); 29 Jan 2018 04:25:54 -0000
+Received: (qmail 26188 invoked by uid 550); 4 Oct 2023 19:23:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15636 invoked from network); 29 Jan 2018 03:24:45 -0000
+Received: (qmail 26137 invoked from network); 4 Oct 2023 19:23:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696447374; x=1697052174; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8wbJEgAPFDIZMh81Ki1dy23UV4F9a/BdujltpKgrP1U=;
+        b=RX2TmS/qoMCWOUOA7GOql/h8EqDertbNpVO0GRXgTUrd1ad/ydyRbuJN+4DUfwTGzE
+         PCBBiWqR8uek/tHTO4FfC3HfzPsrDeWKNEKx9TiljUcdrQb5LRF3s5BZ1tUpvrk29XVr
+         O+x1ZLjMe/Znk1j8+qCTGUaseoO8uEnJQevEzFsZCcK+VEzTVm2oL3DzAPraB0cRprUf
+         fa8W44W/OYb6tCKyUWHfk/pLPgEzzMmk0oazbVUWtycgNadd1p6gogW64NEl87udCvkC
+         H/VPAIV87p9DIuNToVjE7d/wkXyUhmeMNFmaBBNY84EVk9kHiA8j2qZaR9iixtX5MtP4
+         zUFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696447374; x=1697052174;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8wbJEgAPFDIZMh81Ki1dy23UV4F9a/BdujltpKgrP1U=;
+        b=RoFWdajLSoCJ0Q8R+cLE7Ndf0tpgIMvykLh7ANFDKu9NdDIKpbxUHR76jw6nG8sYel
+         aIzLIyWg8BOSinJHbKA+EsBK2goEJbHIPxziRFuP/9VRKUUoTxh7sVmF9ks6CMkS2BC1
+         QV+BFiosiNCq5uO2AME1YHt1KiStDqWm/Ce9PfXcww95JJ7Ra8Mf4qgaG2Wb3PQwchYl
+         Mrle731IasfCkZH6NPa6HPhx1bh1L69I5gsHUHce1Az+Xr9zW7lddMzkrJLIauHzl5u+
+         OO69cFryLNhq/fDphaWxZQzg5R2EDUaoWt+DJNM0NE7ITVO+eUzlBGy4DMZCvvim2keQ
+         HlRg==
+X-Gm-Message-State: AOJu0YwcvDCK3IirFFVZEoCIsZY27W9vJ86zGp+34BVMPtkd+YcWfiUU
+	m8r10jq3rwn2SAViNXWTavY3Rfj/Ec9Yyg==
+X-Google-Smtp-Source: AGHT+IF7oc9KfEpTxOq+m+UlgNen8YtDbfrvwVMY2O5F0Vz09vzFLleGlXm7w9ePUzNOqzRpHioOlg==
+X-Received: by 2002:a17:906:23e2:b0:9ad:7d5c:3d4b with SMTP id j2-20020a17090623e200b009ad7d5c3d4bmr2608964ejg.35.1696447373793;
+        Wed, 04 Oct 2023 12:22:53 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 4 Oct 2023 21:22:52 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-References: <0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>
-From: Amos Jeffries <squid3@treenet.co.nz>
-Message-ID: <640ffdd4-35db-1a4e-49ff-2ff0b512941f@treenet.co.nz>
-Date: Mon, 29 Jan 2018 16:24:33 +1300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+Cc: Solar Designer <solar@openwall.com>, zdi@trendmicro.com
+Message-ID: <ZR27jCirFcyI7smg@eldamar.lan>
+References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
+ <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
+ <20230929165914.GA31245@openwall.com>
+ <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
 MIME-Version: 1.0
-In-Reply-To: <0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="PunoEcIRWQUPxVcgMRpku3x59K8uSMAb2"
-Subject: Re: [oss-security] SQUID-2018:2 Denial of Service issue in HTTP
- Message processing
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
+Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
---PunoEcIRWQUPxVcgMRpku3x59K8uSMAb2
-Content-Type: multipart/mixed; boundary="2HEzAUewhtSyVmT40zfXi0eI6M0x0EHqk";
- protected-headers="v1"
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com
-Message-ID: <640ffdd4-35db-1a4e-49ff-2ff0b512941f@treenet.co.nz>
-Subject: Re: [oss-security] SQUID-2018:2 Denial of Service issue in HTTP
- Message processing
-References: <0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>
-In-Reply-To: <0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>
+Hi ZDI team,
 
---2HEzAUewhtSyVmT40zfXi0eI6M0x0EHqk
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+On Fri, Sep 29, 2023 at 07:26:45PM +0000, zdi@trendmicro.com wrote:
+> Hi,
+> 
+> The ZDI reached out multiple times to the developers regarding
+> multiple bug reports with little progress to show for it. After our
+> disclosure timeline was exceeded by many months, we notified the
+> maintainer of our intent to publicly disclose these bugs, at which
+> time we were told, "you do what you do." If these bugs have been
+> appropriately addressed, we will update our advisories with a link
+> to the security advisory, code check-in, or other public
+> documentation closing the issue.
 
-On 22/01/18 22:42, Amos Jeffries wrote:
-> Notes for OSS-Security people:
->=20
-> * CVE has been requested through DWF, waiting on assignment.
->=20
+As there is still some confusion around the libspf2 related issue: can
+you confirm or deny if the issue CVE-2023-42118 / ZDI-23-1472 is
+covered by https://github.com/shevek/libspf2/pull/44 ?
 
-
-CVE-2018-1000027
-
-Amos Jeffries
-The Squid Software Foundation
-
-
---2HEzAUewhtSyVmT40zfXi0eI6M0x0EHqk--
-
---PunoEcIRWQUPxVcgMRpku3x59K8uSMAb2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEAimzwkzOwlQSfJUyANhjZ5QgvdMFAlpuk/EACgkQANhjZ5Qg
-vdObvhAAsZY1xGHg0PC0vxciOsTJzrlQOQg8z2dyyNMRaleVtC7giteAUFEFjJLa
-C0fMafctp7uTy3o7tGCJZbcjajQV+vErRtsf4/ErE2yz01XCXh4gIgtpkcdE8fcJ
-C04dgI/aWA5VdMr/wtypotkdNIJZ0+twwL4EZ8w47GnN59Sn4Mjr1Cne+t5agw3n
-eHBqwgpI6CKVjMijr83I4IYp85kxKYY7eQK+4K0FTW2eqUL7JDGK6j7SHwai5+Vo
-VzUxSVGpImcz+TTuMWQU+1w3wdBCwqk3gcUskrOFJZHcVfM41sKqMIQJCMEoGEwB
-8NOhHX1CPKPHqvSFY1AgkiaBSBDiYF9k9hfvFscI35gCFgbE+GV+9T2tsCzRxjJj
-PNy4YeWxV2EAvsyasn+wxFXJ4VJHRu8l66FmoyAWDLW/O7OgNwQABvyZMekSnNLG
-Nx2Bi5U6E/RPe0pZMSQi3x2EGWrTpSCITnpDcS3KJnRq1NRU4jL8mU3vsLmOs05o
-rA5nYt4CV4Bmzn7z9RJqLNIRmLYF0s6w5R9PjnGRyX1uRPdwQZCl04ocGIbnPibY
-VvX9WfsIttRDzskxMtTmKGYHeiYUCGGRQL6H+QVPV4tVkM/GkOKNSDovCAKeDwSN
-ASgmZzJ5TJAJxUcLYNK6b9DrinJP45CfDCe951//X7DhsZMs158=
-=/4H7
------END PGP SIGNATURE-----
-
---PunoEcIRWQUPxVcgMRpku3x59K8uSMAb2--
+Regards,
+Salvatore
