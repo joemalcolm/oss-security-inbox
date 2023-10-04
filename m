@@ -1,4 +1,4 @@
-Received: (qmail 32026 invoked by uid 550); 16 Jun 2025 17:14:09 -0000
+Received: (qmail 15559 invoked by uid 550); 4 Oct 2023 13:42:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30463 invoked from network); 16 Jun 2025 14:27:03 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <6f098cf1-6aba-4e35-b72f-af8994cef75d@apache.org>
-Date: Mon, 16 Jun 2025 15:18:47 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
+Received: (qmail 14069 invoked from network); 4 Oct 2023 13:41:55 -0000
+Date: Wed, 4 Oct 2023 15:41:50 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-49125: Apache Tomcat: Security constraint bypass for
- pre/post-resources
+Message-ID: <20231004134150.GB27450@openwall.com>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <ZROMd1GCpD8uDtbE@itl-email> <20231003201212.GA24599@openwall.com> <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com> <20231003214424.prarc3aboi3ar7zk@yuggoth.org> <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com> <20231003225156.GA26670@openwall.com> <CADxcaYX-XvrKe4R-mSzK2iNVm9F_dRtz1Bf2Zi8jqWbCXGKK9g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CADxcaYX-XvrKe4R-mSzK2iNVm9F_dRtz1Bf2Zi8jqWbCXGKK9g@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 
-Severity: moderate
+Regarding AMD not intending to provide a microcode mitigation:
 
-Affected versions:
+On Tue, Oct 03, 2023 at 04:04:31PM -0700, Jean Luc Picard wrote:
+> No intent?  It wouldn't be terribly hard
 
-- Apache Tomcat 11.0.0-M1 through 11.0.7
-- Apache Tomcat 10.1.0-M1 through 10.1.41
-- Apache Tomcat 9.0.0.M1 through 9.0.105
+Possibly not terribly hard, but (with my also too limited understanding)
+probably not in any of the ways you suggested.
 
-Description:
+> That said I could understand the
+> want to depricate zen1 support entirely, everyone upgraded when they could
+> it was super super cheap to do so & there weren't really any enterprise
+> users.
 
-Authentication Bypass Using an Alternate Path or Channel vulnerability 
-in Apache Tomcat.  When using PreResources or PostResources mounted 
-other than at the root of the web application, it was possible to access 
-those resources via an unexpected path. That path was likely not to be 
-protected by the same security constraints as the expected path, 
-allowing those security constraints to be bypassed.
+That's false.
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 
-10.1.0-M1 through 10.1.41, from 9.0.0.M1 through 9.0.105.
+Zen1 is still found in major clouds.  The AMD security bulletin:
 
-Users are recommended to upgrade to version 11.0.8, 10.1.42 or 9.0.106, 
-which fix the issue.
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
 
-Credit:
+specifically lists "Datacenter AMD EPYC 7001 Processors" as affected,
+and these are used e.g. in:
 
-Greg K (https://github.com/gregk4sec) (finder)
+https://aws.amazon.com/about-aws/whats-new/2021/04/amazon-ec2-instances-featuring-amd-epyc-processors-are-now-available-in-additional-regions/
 
-References:
+"M5a, R5a and T3a instances are variants of Amazon EC2 general purpose
+(M5), memory optimized (R5) and burstable general-purpose (T3) instance
+families. These instances feature AMD EPYC 7001 series processors"
 
-https://lists.apache.org/thread/m66cytbfrty9k7dc4cg6tl1czhsnbywk
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-49125
+That was in 2021, but indeed the T3a tab at:
+
+https://aws.amazon.com/ec2/amd/
+
+still says:
+
+"Amazon EC2 T3a instances feature AMD EPYC 7000 series processors"
+
+T3 are the most common/default AWS instance family with Intel CPUs, and
+T3a are probably the most commonly used AMD alternative to them.
+
+I don't mean to single out AWS, I think it's similar with many other
+cloud and dedicated server providers.  This is just a prominent example.
+
+Alexander
