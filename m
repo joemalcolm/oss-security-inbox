@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3377" "Tuesday" "17" "March" "2015" "08:11:58" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<5508443E.401@oracle.com>" "91" "[oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont" nil nil nil "3" "2015031715:11:58" "[oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont" (number mark "        alan.coopers Mar 17   91/3377  " thread-indent "\"[oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont\"\n") "<20150317150833.GA2934@also.us.oracle.com>" ("<20150317150833.GA2934@also.us.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20387 invoked by uid 550); 17 Mar 2015 15:12:32 -0000
+Received: (qmail 2001 invoked by uid 550); 4 Oct 2023 15:14:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +6,159 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20345 invoked from network); 17 Mar 2015 15:12:26 -0000
-Message-ID: <5508443E.401@oracle.com>
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:17.0) Gecko/20150125 Thunderbird/17.0.11
-MIME-Version: 1.0
-References: <20150317150833.GA2934@also.us.oracle.com>
-In-Reply-To: <20150317150833.GA2934@also.us.oracle.com>
-X-Forwarded-Message-Id: <20150317150833.GA2934@also.us.oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: acsinet22.oracle.com [141.146.126.238]
-CC: "X.Org Security Team" <xorg-security@lists.x.org>
-Date: Tue, 17 Mar 2015 08:11:58 -0700
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues
- in libXfont
+Received: (qmail 1836 invoked from network); 4 Oct 2023 15:14:13 -0000
+Date: Wed, 4 Oct 2023 17:13:57 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Daniel Kiper <daniel.kiper@oracle.com>,
+	Maxim Suhanov <dfirblog@gmail.com>
+Message-ID: <20231004151357.GA29150@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2023-4692, CVE-2023-4693: grub2: OOB write, read via specially crafted NTFS filesystem
 
+Hi,
 
+A couple of issues in GRUB relevant to setups with Secure Boot got fixed:
 
+https://lore.kernel.org/all/ZRxK8s4nQV2jBq%2F9@tomti.i.net-space.pl/
 
--------- Original Message --------
-Subject: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in 
-libXfont
-Date: Tue, 17 Mar 2015 08:08:33 -0700
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-To: xorg-announce@lists.x.org
-CC: William Robinet <william.robinet@conostix.com>, xorg@lists.x.org, 
-xorg-devel@lists.x.org, Ilja Van Sprundel <ivansprundel@ioactive.com>
+Daniel, I'd appreciate it if you post things like this to oss-security
+going forward.  Thank you!
 
-X.Org Security Advisory:  March 17, 2015
-More BDF file parsing issues in libXfont
-========================================
+> Date: Tue, 3 Oct 2023 19:10:10 +0200
+> From: Daniel Kiper <daniel.kiper@oracle.com>
+> To: grub-devel@gnu.org
+> Cc: dfirblog@gmail.com
+> Subject: [SECURITY PATCH 0/6] GRUB2 NTFS driver vulnerabilities - 2023/10/03
+> 
+> Hi all,
+> 
+> This patch set contains a bundle of fixes for various security flaws discovered
+> in the GRUB2 NTFS driver code recently. The most severe ones, i.e. potentially
+> exploitable, have CVEs assigned and are listed at the end of this email.
+> 
+> Details of exactly what needs updating will be provided by the respective
+> distros and vendors when updates become available.
+> 
+> Full mitigation against all CVEs will require updated shim with latest SBAT
+> (Secure Boot Advanced Targeting) [1] data provided by distros and vendors.
+> This time UEFI revocation list (dbx) will not be used and revocation of broken
+> artifacts will be done with SBAT only. For information on how to apply the
+> latest SBAT revocations, please see mokutil(1). Vendor shims may explicitly
+> permit known older boot artifacts to boot.
+> 
+> Updated GRUB2, shim and other boot artifacts from all the affected vendors will
+> be made available when the embargo lifts or some time thereafter.
+> 
+> I am posting all the GRUB2 upstream patches which fix all security bugs found
+> and reported up until now. Major Linux distros carry or will carry soon one
+> form or another of these patches. Now all the GRUB2 upstream patches are in
+> the GRUB2 git repository [2] too.
+> 
+> I would like to thank Maxim Suhanov for responsible disclosure and preparation
+> of patches required to fully fix all known issues.
+> 
+> Daniel
+> 
+> [1] https://github.com/rhboot/shim/blob/main/SBAT.md
+> 
+> [2] https://git.savannah.gnu.org/gitweb/?p=grub.git
+>     https://git.savannah.gnu.org/git/grub.git
+> 
+> *******************************************************************************
+> 
+> CVE-2023-4692 grub2: OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
+> 5.3/AV:L/AC:H/PR:H/UI:N/S:C/C:N/I:H/A:N
+> 
+> There is an out-of-bounds write in grub-core/fs/ntfs.c. An attacker may
+> leverage this vulnerability by presenting a specially crafted NTFS filesystem
+> image leading to GRUB's heap metadata corruption. Additionally, in some
+> circumstances, the attack may also corrupt the UEFI firmware heap metadata.
+> As a result arbitrary code execution and secure boot protection bypass may
+> be achieved.
+> 
+> Reported-by: Maxim Suhanov
+> 
+> *******************************************************************************
+> 
+> CVE-2023-4693 grub2: OOB read when reading data from the resident $DATA attribute
+> 5.3/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
+> 
+> There is an out-of-bounds read at grub-core/fs/ntfs.c. A physically present
+> attacker may leverage that by presenting a specially crafted NTFS file system
+> image to read arbitrary memory locations. A successful attack may allow
+> sensitive data cached in memory or EFI variables values to be leaked presenting
+> a high confidentiality risk.
+> 
+> Reported-by: Maxim Suhanov
+> 
+> *******************************************************************************
+> 
+>  grub-core/fs/ntfs.c | 121 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------------
+>  1 file changed, 105 insertions(+), 16 deletions(-)
+> 
+> Maxim Suhanov (6):
+>       fs/ntfs: Fix an OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
+>       fs/ntfs: Fix an OOB read when reading data from the resident $DATA attribute
+>       fs/ntfs: Fix an OOB read when parsing directory entries from resident and non-resident index attributes
+>       fs/ntfs: Fix an OOB read when parsing bitmaps for index attributes
+>       fs/ntfs: Fix an OOB read when parsing a volume label
+>       fs/ntfs: Make code more readable
 
-Description:
-============
+The two issues are described in more detail in the individual commits:
 
-Ilja van Sprundel, a security researcher with IOActive, has discovered an
-issue in the parsing of BDF font files by libXfont.  Additional testing by
-Alan Coopersmith and William Robinet with the American Fuzzy Lop (afl) tool
-uncovered two more issues in the parsing of BDF font files.
+> Subject: [SECURITY PATCH 1/6] fs/ntfs: Fix an OOB write when parsing the $ATTRIBUTE_LIST attribute for the $MFT file
+> Date: Tue,  3 Oct 2023 19:12:23 +0200
+> 
+> From: Maxim Suhanov <dfirblog@gmail.com>
+> 
+> When parsing an extremely fragmented $MFT file, i.e., the file described
+> using the $ATTRIBUTE_LIST attribute, current NTFS code will reuse a buffer
+> containing bytes read from the underlying drive to store sector numbers,
+> which are consumed later to read data from these sectors into another buffer.
+> 
+> These sectors numbers, two 32-bit integers, are always stored at predefined
+> offsets, 0x10 and 0x14, relative to first byte of the selected entry within
+> the $ATTRIBUTE_LIST attribute. Usually, this won't cause any problem.
+> 
+> However, when parsing a specially-crafted file system image, this may cause
+> the NTFS code to write these integers beyond the buffer boundary, likely
+> causing the GRUB memory allocator to misbehave or fail. These integers contain
+> values which are controlled by on-disk structures of the NTFS file system.
+> 
+> Such modification and resulting misbehavior may touch a memory range not
+> assigned to the GRUB and owned by firmware or another EFI application/driver.
+> 
+> This fix introduces checks to ensure that these sector numbers are never
+> written beyond the boundary.
+> 
+> Fixes: CVE-2023-4692
 
-As libXfont is used by the X server to read font files, and an unprivileged
-user with access to the X server can tell the X server to read a given font
-file from a path of their choosing, these vulnerabilities have the potential
-to allow unprivileged users to run code with the privileges of the X server
-(often root access).
+> Subject: [SECURITY PATCH 2/6] fs/ntfs: Fix an OOB read when reading data from the resident $DATA attribute
+> Date: Tue,  3 Oct 2023 19:12:24 +0200
+> 
+> From: Maxim Suhanov <dfirblog@gmail.com>
+> 
+> When reading a file containing resident data, i.e., the file data is stored in
+> the $DATA attribute within the NTFS file record, not in external clusters,
+> there are no checks that this resident data actually fits the corresponding
+> file record segment.
+> 
+> When parsing a specially-crafted file system image, the current NTFS code will
+> read the file data from an arbitrary, attacker-chosen memory offset and of
+> arbitrary, attacker-chosen length.
+> 
+> This allows an attacker to display arbitrary chunks of memory, which could
+> contain sensitive information like password hashes or even plain-text,
+> obfuscated passwords from BS EFI variables.
+> 
+> This fix implements a check to ensure that resident data is read from the
+> corresponding file record segment only.
+> 
+> Fixes: CVE-2023-4693
 
-The vulnerabilities are:
-
-- CVE-2015-1802: bdfReadProperties: property count needs range check
-
-     The bdf parser reads a count for the number of properties defined in
-     a font from the font file, and allocates arrays with entries for each
-     property based on that count.  It never checked to see if that count
-     was negative, or large enough to overflow when multiplied by the size
-     of the structures being allocated, and could thus allocate the wrong
-     buffer size, leading to out of bounds writes.
-
-- CVE-2015-1803: bdfReadCharacters: bailout if a char's bitmap cannot be read
-
-     If the bdf parser failed to parse the data for the bitmap for any
-     character, it would proceed with an invalid pointer to the bitmap
-     data and later crash when trying to read the bitmap from that pointer.
-
-- CVE-2015-1804: bdfReadCharacters: ensure metrics fit into xCharInfo struct
-
-     The bdf parser read metrics values as 32-bit integers, but stored
-     them into 16-bit integers.  Overflows could occur in various operations
-     leading to out-of-bounds memory access.
-
-Affected Versions
-=================
-
-X.Org believes all prior versions of this library contain these flaws,
-dating back to its introduction in X11R5.
-
-
-Fixes
-=====
-
-Fixes are available in the patches for these libXfont git commits:
-       2deda9906480f9c8ae07b8c2a5510cc7e4c59a8e
-       78c2e3d70d29698244f70164428bd2868c0ab34c
-       2351c83a77a478b49cba6beb2ad386835e264744
-
-Which are now available from:
-       git://anongit.freedesktop.org/git/xorg/lib/libXfont
-       http://cgit.freedesktop.org/xorg/lib/libXfont/
-
-Fixes will also be included in the libXfont 1.5.1 & 1.4.9 module releases
-from X.Org.
-
-Thanks
-======
-
-X.Org thanks Ilja van Sprundel of IOActive, Alan Coopersmith of Oracle, and
-William Robinet of Conostix for reporting these issues to our security team
-and helping evaluate and test the fixes; and thanks Michal Zalewski and the
-American Fuzzy Lop community for providing their fuzz testing tool as an open
-source project we can all benefit from at http://lcamtuf.coredump.cx/afl/ .
-
--- 
-	-Alan Coopersmith-              alan.coopersmith@oracle.com
-	  X.Org Security Response Team - xorg-security@lists.x.org
-
-
-
-
+Alexander
