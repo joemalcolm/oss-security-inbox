@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/3
-Message-ID: <20230314103626.3ucbt2rjdfhjbe6t@jwilk.net>
-Date: Tue, 14 Mar 2023 11:36:26 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/7
+Message-ID: <ZR27jCirFcyI7smg@eldamar.lan>
+Date: Wed, 4 Oct 2023 21:22:52 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, zdi@...ndmicro.com
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck <hanno@...eck.de>, 2023-03-14 09:51:
->In the 2017 post solar designer mentioned that the Linux kernel 
->developers have multiple times rejected changes in the kernel.
+Hi ZDI team,
 
-I believe this is the post in question:
-https://www.openwall.com/lists/oss-security/2017/06/03/9
+On Fri, Sep 29, 2023 at 07:26:45PM +0000, zdi@...ndmicro.com wrote:
+> Hi,
+> 
+> The ZDI reached out multiple times to the developers regarding
+> multiple bug reports with little progress to show for it. After our
+> disclosure timeline was exceeded by many months, we notified the
+> maintainer of our intent to publicly disclose these bugs, at which
+> time we were told, "you do what you do." If these bugs have been
+> appropriately addressed, we will update our advisories with a link
+> to the security advisory, code check-in, or other public
+> documentation closing the issue.
 
->Starting with Kernel 6.2 it is possible to disable TIOCSTI (unset 
->CONFIG_LEGACY_TIOCSTI).
+As there is still some confusion around the libspf2 related issue: can
+you confirm or deny if the issue CVE-2023-42118 / ZDI-23-1472 is
+covered by https://github.com/shevek/libspf2/pull/44 ?
 
-Nice, but...
-
-On Linux virtual terminals, it's possible to achieve pretty much the 
-same effect using TIOCLINUX, the ioctl used by gpm to implement 
-copy&pasting.
-
-I've attached a minimal PoC. A more elaborate one is here:
-https://github.com/jwilk/ttyjack
-
--- 
-Jakub Wilk
-
-View attachment "minittyjack.c" of type "text/x-csrc" (584 bytes)
+Regards,
+Salvatore
