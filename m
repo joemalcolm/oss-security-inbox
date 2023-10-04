@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1914" "Thursday" "4" "June" "2015" "09:57:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>" "53" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060413:57:44" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        cve-assign@m Jun  4   53/1914  " thread-indent "\"[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<alpine.LFD.2.11.1506041320520.16237@wniryva>" ("<alpine.LFD.2.11.1506041320520.16237@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7631 invoked by uid 550); 4 Jun 2015 13:57:56 -0000
+Received: (qmail 26341 invoked by uid 550); 4 Oct 2023 14:12:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +6,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7613 invoked from network); 4 Jun 2015 13:57:56 -0000
-In-Reply-To: <alpine.LFD.2.11.1506041320520.16237@wniryva>
-Message-Id: <20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu,  4 Jun 2015 09:57:44 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic
-To: ppandit@redhat.com
+Received: (qmail 20130 invoked from network); 4 Oct 2023 14:05:31 -0000
+Date: Wed, 4 Oct 2023 16:05:26 +0200
+From: Solar Designer <solar@openwall.com>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: oss-security@lists.openwall.com,
+	"Xen. org security team" <security-team-members@xen.org>,
+	t-jhofmann@microsoft.com, fournet@microsoft.com,
+	boris.koepf@microsoft.com, e.vannacci@vu.nl
+Message-ID: <20231004140526.GA27641@openwall.com>
+References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <20230925163652.GA6750@openwall.com> <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com> <20230925182834.GA8247@openwall.com> <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com> <20230926160943.GA12790@openwall.com> <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com> <20231003205825.GA24992@openwall.com> <4b386d20-6b24-427b-ac3f-2098cf402329@citrix.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b386d20-6b24-427b-ac3f-2098cf402329@citrix.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
->> From: ebiederm@xmission.com (Eric W. Biederman)
->> 
->> The core issue is that a unprivileged user could call umount(MNT_DETACH)
->> and in the right circumstances gain access to every file on essentially
->> any filesystem in the mount namespace.
->> 
->> e0c9c0afd2fc958ffa34b697972721d81df8a56f mnt: Update detach_mounts to leave mounts connected
->> is the real bug fix that fixes a fairly scary issue.
-
-> From: P J P <ppandit@redhat.com>
+On Wed, Oct 04, 2023 at 02:10:59AM +0100, Andrew Cooper wrote:
+> On 03/10/2023 9:58 pm, Solar Designer wrote:
+> > However, this may be another reason to actually look into whether the
+> > remainder also leaked, and whether the byte-sized form prevents that
+> > leak despite of it not touching the architectural register where the
+> > remainder would be stored by a preceding larger DIV.  I expect that
+> > we're fine here - it's the divider unit's internal register and not the
+> > architectural register that should matter - but worth making sure.  It
+> > could also theoretically be e.g. some buffer registers in the middle,
+> > where the byte-sized form wouldn't overwrite the full contents.
 > 
-> Thank you so much for throwing light on the real issue and
-> its corresponding fix.
+> I've spent a while trying to reason about this...  I'm not sure I'm any
+> the wiser, but here goes.
 
-As far as we can tell, the new information is extremely important but
-the original CVE request remains valid as well.
+Thank you!  This is helpful, but unfortunately doesn't appear (or at
+least not to me) to address the case of the remainder in its own
+register being overwritten or not by a smaller DIV that doesn't produce
+it in that register.  Of course, under the hood it's at least a rename
+register rather than the RDX that programs see, and it's supposedly
+getting a value copied from a DIV unit's internal register.  So the
+question is probably about the latter register being overwritten or not.
 
-Use CVE-2015-4176 for the issue fixed in
-e0c9c0afd2fc958ffa34b697972721d81df8a56f. This code change is present
-in 4.0.2.
+The USENIX Security paper you referenced includes this:
 
-Use CVE-2015-4177 for the issue fixed in
-cd4a40174b71acd021877341684d8bb1dc8ea4ae. This code change is not
-present in 4.0.2.
+> The source code, experiments, and executable leakage models are
+> available at https://github.com/microsoft/sca-fuzzer
 
-Use CVE-2015-4178 for the issue fixed in
-820f9f147dcce2602eefd9b575bbbd9ea14f0953. This code change is not
-present in 4.0.2.
+I think ideally one of us should come up with a single-process
+reproducer (using code from that repo or otherwise), see if it "leaks"
+the remainder, introduce a byte-sized DIV "mitigation" in it, and see if
+that mitigation fully works or maybe not.
 
-Earlier messages in this thread suggest why
-cd4a40174b71acd021877341684d8bb1dc8ea4ae and
-820f9f147dcce2602eefd9b575bbbd9ea14f0953 can be treated as different
-types of problems.
+Alternatively, maybe the paper authors (CC'ed) have comments on this?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVcFiAAAoJEKllVAevmvmsPdoIAIOhSovjCxHR7BbxfDPTjowL
-x4RtY/SVcOVCYLOeM6ys68joTPB+ZPk9CkoShgWBphI895hwBPpIc8nHxk5GjZMq
-PRekCMzaq3ODAbT9JDiEirbOf2YHQJ7PAq3on5ifBZuP7y+K/bXrrjPIfqceWsiM
-19e/evfP5ilmFHyVgnU3k12+2Q/LrDttVownh+5dnTL0MnPnwQ5jJP4c0bU5TvG4
-Ws3Gvc+vTheTvn6fNYP76ynn/UlNnJPY40DIPOBM4qdpSJjLYUwUZSqrzGHaKO13
-DUa+X4AfLo/BR/nj4vuHz6uXrW99++tC1T2R1N8ai0ORlN9n5eiORiU+BdEiYco=
-=JpSG
------END PGP SIGNATURE-----
+Alexander
