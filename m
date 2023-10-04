@@ -1,19 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/21/1
-Message-ID: <622ff321-4b43-9b15-c450-7eab4da22269@geeklan.co.uk>
-Date: Fri, 21 Apr 2023 00:05:39 +0100
-From: Sevan Janiyan <venture37@...klan.co.uk>
-To: oss-security@...ts.openwall.com
-Subject: Re: ncurses fixes upstream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/4
+Message-ID: <20231004140526.GA27641@openwall.com>
+Date: Wed, 4 Oct 2023 16:05:26 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Andrew Cooper <andrew.cooper3@...rix.com>
+Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>, t-jhofmann@...rosoft.com, fournet@...rosoft.com, boris.koepf@...rosoft.com, e.vannacci@...nl
+Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 Content-Type: text/plain; charset=utf-8
 
-On 20/04/2023 00:03, Tavis Ormandy wrote:
-> Honestly, I kinda think it's an Apple bug 😄
+On Wed, Oct 04, 2023 at 02:10:59AM +0100, Andrew Cooper wrote:
+> On 03/10/2023 9:58 pm, Solar Designer wrote:
+> > However, this may be another reason to actually look into whether the
+> > remainder also leaked, and whether the byte-sized form prevents that
+> > leak despite of it not touching the architectural register where the
+> > remainder would be stored by a preceding larger DIV.  I expect that
+> > we're fine here - it's the divider unit's internal register and not the
+> > architectural register that should matter - but worth making sure.  It
+> > could also theoretically be e.g. some buffer registers in the middle,
+> > where the byte-sized form wouldn't overwrite the full contents.
 > 
-> (is their top binary open source?)
+> I've spent a while trying to reason about this...  I'm not sure I'm any
+> the wiser, but here goes.
 
-Yes, there's a source dump mirror on github.
-https://github.com/apple-oss-distributions/top
+Thank you!  This is helpful, but unfortunately doesn't appear (or at
+least not to me) to address the case of the remainder in its own
+register being overwritten or not by a smaller DIV that doesn't produce
+it in that register.  Of course, under the hood it's at least a rename
+register rather than the RDX that programs see, and it's supposedly
+getting a value copied from a DIV unit's internal register.  So the
+question is probably about the latter register being overwritten or not.
 
+The USENIX Security paper you referenced includes this:
 
-Sevan
+> The source code, experiments, and executable leakage models are
+> available at https://github.com/microsoft/sca-fuzzer
+
+I think ideally one of us should come up with a single-process
+reproducer (using code from that repo or otherwise), see if it "leaks"
+the remainder, introduce a byte-sized DIV "mitigation" in it, and see if
+that mitigation fully works or maybe not.
+
+Alternatively, maybe the paper authors (CC'ed) have comments on this?
+
+Alexander
