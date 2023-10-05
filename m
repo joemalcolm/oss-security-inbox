@@ -1,4 +1,4 @@
-Received: (qmail 16046 invoked by uid 550); 23 Aug 2022 15:39:00 -0000
+Received: (qmail 13415 invoked by uid 550); 5 Oct 2023 16:04:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,108 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12048 invoked from network); 23 Aug 2022 15:29:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=bAlvl4blhwQ2/YS9diBGOWoh9iMEtK94c41iXdSjzI0=;
-        b=CvdIOiYpQ3OaRyEJAEcA7ft9sijNtdb3as5Y2BfLepYBgUK9ZacszzMvmHV4Qat6kC
-         RY6FeemQrPUwlR6kImo+7wS+MUw3vcOxduYsd9HtKR7epzbZYHIJLtdS3noAqIcAnfST
-         HiNo0sTlXV/RSnaw2jTH1p1PW5aGluDJF1VCzWcWkgqHvYhCOZ4P/baL6EhaXyLAkIps
-         rmmZaLaezjdlVzU4mdKG4TrClMHryl51PC88mXzXRWp5y2Tn4NbjUzTPIwJ36+7IshjX
-         7iy6Uw1y+mQ3Zt78dS4frWLogTxukBYFxe5uzyWW3B4FdzZ0pf/SxgP08FjmY5xks+aP
-         2cFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=bAlvl4blhwQ2/YS9diBGOWoh9iMEtK94c41iXdSjzI0=;
-        b=2cSOe7jJL1DKk6MKxALHWvXUWOYdkpLs7x0/NQE4MD6lAEKF/yeIRctJRcJeK113IE
-         QtYSwKKrSuMAIx1uG490/A/i9D7fq1aFH9iB24B0Uiov80r4W3D31D07B9T6d0lXRbcT
-         hykjqkiMrlPvUQTNuzbjUdYNz0H9QUR7vNfLl66CO0SSnRRnVLCMt8ZytAi0F7SCGosi
-         edSakubw9xhmXqjDHj1HK8tIz/UKIPBqTdjDAvKTsLz4+fhGFdWqTWcyfQsOpBc8zq9r
-         m2nZZMO06MwZUxMl/Eq5+zE38MMT4TeVmFD4pKqKIU6HWQ4Cx5Bllup6cjLxFm2gFqmZ
-         m0Pg==
-X-Gm-Message-State: ACgBeo02mIIu8SWMJPC9Q1Pu5WkWyljNWW2uRUhdEDirczLBsYW5/tZm
-	Uj3wqfJQ1DXNrNbuxhQ96B0A/FpPqKEx8bnYLo9hWhakXm0=
-X-Google-Smtp-Source: AA6agR58PGk20/wWWdf9TPfYHyOeeS3VSFX+PpWIfnk2tp0yOGZJ6qEWWziDRQlcr9+bhKkd5KlhfntHDeSmckyVeXU=
-X-Received: by 2002:a67:ee4d:0:b0:390:9027:3776 with SMTP id
- g13-20020a67ee4d000000b0039090273776mr8076vsp.84.1661268580224; Tue, 23 Aug
- 2022 08:29:40 -0700 (PDT)
-MIME-Version: 1.0
-From: Wadeck Follonier <wadeck.follonier@gmail.com>
-Date: Tue, 23 Aug 2022 17:29:03 +0200
-Message-ID: <CAK_ifP47=74WfAVBGV+EnrtBZ92Zjsk8Zbib8AdVfQQNWj6YXw@mail.gmail.com>
+Received: (qmail 11410 invoked from network); 5 Oct 2023 16:02:47 -0000
+Date: Thu, 5 Oct 2023 18:02:43 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000099d55005e6ea3ba4"
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Cc: zdi@trendmicro.com
+Message-ID: <20231005160242.GA4750@openwall.com>
+References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at> <ZRb180+B34Wmg1IM@jumper.schlittermann.de> <20230929165914.GA31245@openwall.com> <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com> <ZR27jCirFcyI7smg@eldamar.lan> <SJ0PR01MB74130DAEAADAB8F76876E418D1CBA@SJ0PR01MB7413.prod.exchangelabs.com> <ZR5xJZc32fhGOE+/@jumper.schlittermann.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZR5xJZc32fhGOE+/@jumper.schlittermann.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
---00000000000099d55005e6ea3ba4
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Oct 05, 2023 at 10:17:41AM +0200, Heiko Schlittermann wrote:
+> Hi ZDI,
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+If we want to talk to ZDI, we need to CC them explicitly - added.
 
-The following releases contain fixes for security vulnerabilities:
+ZDI - please let us all know if you have any comments on the below.
 
-* CollabNet Plugins Plugin 2.0.9
-* Git Plugin 4.11.5
-* Job Configuration History Plugin 1166.vc9f255f45b_8a
+Also to ZDI, I think at this point it'd work best if you make all of
+the available detail on these bugs public.  Will you, please?  The
+advisories you published so far are non-specific to the point of being
+almost useless beyond an initial heads-up.  Sorry for being so direct.
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+> zdi@trendmicro.com <zdi@trendmicro.com> (Mi 04 Okt 2023 23:01:37 CEST):
+> > We have received a notification from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
+> 
+> https://exim.org/static/doc/security/CVE-2023-zdi.txt
+> 
+> As publicly advertised, we patched only *a subset* of the issues.  And
+> those patches are available to the public.  Unfortunately there is no
+> confirmation from your side, whether those fixes really fix the issues.
+> 
+> One of the open issues is related to libspf2, which is Exim a user of,
+> but not responsible for.
+> 
+>  ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
+> 
+> And about exactly *this libspf2* issue Salvatore asked you for information.
+> 
+> (As I did on Oct 1st already, along with the request for additional information on one of
+> the other unfixed issues (DNSDB)). I didn't receive any response yet.
+> 
+>     Best regards from Dresden/Germany
+>     Viele Gr????e aus Dresden
+>     Heiko Schlittermann
+> --
+>  SCHLITTERMANN.de ---------------------------- internet & unix support -
+>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-* Kubernetes Continuous Deploy Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2022-08-23/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2796 / CVE-2022-38663
-Git Plugin 4.11.4 and earlier does not properly mask (i.e., replace with
-asterisks) credentials in the build log provided by the Git Username and
-Password (`gitUsernamePassword`) credentials binding. Usernames are masked
-instead of passwords in cases when usernames are not set to be treated as
-secret.
-
-
-SECURITY-2765 / CVE-2022-38664
-Job Configuration History Plugin 1165.v8cc9fd1f4597 and earlier does not
-escape the job name on the System Configuration History page.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to configure job names.
-
-
-SECURITY-2157 / CVE-2022-38665
-CollabNet Plugins Plugin 2.0.8 and earlier stores a RabbitMQ password
-unencrypted in its global configuration file
-`hudson.plugins.collabnet.share.TeamForgeShare.xml` on the Jenkins
-controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-
-SECURITY-2448 / CVE-2021-25738
-Kubernetes Continuous Deploy Plugin 2.3.1 and earlier bundles a version of
-Kubernetes Java Client library with the vulnerability CVE-2021-25738 that
-does not configure its YAML parser to prevent the instantiation of
-arbitrary types.
-
-This results in a remote code execution (RCE) vulnerability exploitable by
-users able to provide YAML input files to Kubernetes Continuous Deploy
-Plugin's build step.
-
-As of publication of this advisory, there is no fix.
-
---00000000000099d55005e6ea3ba4--
+Alexander
