@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/5
-Message-ID: <20231226191528.GA6930@veps.esmtp.org>
-Date: Tue, 26 Dec 2023 19:15:28 +0000
-From: Claus Assmann <ml+oss@...tp.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/3
+Message-ID: <20231005055957.GB12482@1wt.eu>
+Date: Thu, 5 Oct 2023 07:59:57 +0200
+From: Willy Tarreau <w@....eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: New SMTP smuggling attack
+Subject: Re: "Linux Kernel security demistified"
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 24, 2023, Marcus Meissner wrote:
+Hi Alexander,
 
-> - CVE-2023-51765 sendmail
+On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> I wonder whether the kernel documentation could, however, be encouraging
+> rather than discouraging (as it currently is) about issue reporters
+> themselves contacting linux-distros after a fix is ready.  I wonder if a
+> patch like that would be accepted?
 
-Can you update the text for this (or point me to the proper way/persons
-to do this)?
+Just as a quick heads up on this, I discussed with Greg there and proposed
+to send a patch proposal to rework that part to take into account your now
+relaxed rules. My goal is to let the reporter decide on their own, and let
+them decide what they want to do after checking the linux-distros rules.
+There could be a good motivation for some reporters to go there because a
+number of them are first-timers who are seeking a Curriculum Vitae Enhancer
+(CVE) ID that s@k.o doesn't deal with. But I also want to remind (I know I
+may sound like a scratched record) that it's not because some may report
+there that distros will magically be aware of all security issues, given
+that those arriving on s@k.o are really a tiny portion and many more bugs
+are fixed without anyone having a security look on them.
 
-1.
-"sendmail through at least 8.14.7"
-->
-sendmail up to and including 8.17.2
+I'm just too short of time for now, having to catch up with what I left
+for the 3 days of KR2023, but it's on my todo list to propose a patch to
+Greg. I'm having reasonable hopes that we can end up with something
+smoother in the near future.
 
-2.
-remove the seemingly unrelated reference to
-"Merge sendmail 8.14.8 to HEAD  freebsd/freebsd-src@...76dd"
-
-3.
-Mention that 8.18 fixes the problem:
-	Accept only CR LF . CR LF as end of an SMTP message as
-		required by the RFCs when the new srv_features
-		option 'o' is used.
-
-sendmail 8.18.0.2 is available at
-https://ftp.sendmail.org/snapshots/sendmail.8.18.0.2.tar.gz
-https://ftp.sendmail.org/snapshots/sendmail.8.18.0.2.tar.gz.sig
-
+Cheers,
+Willy
