@@ -1,4 +1,4 @@
-Received: (qmail 10236 invoked by uid 550); 15 May 2026 05:12:24 -0000
+Received: (qmail 24334 invoked by uid 550); 5 Oct 2023 08:17:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,103 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10212 invoked from network); 15 May 2026 05:12:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778821933; x=1779426733; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vF69Y5v/PGgYCmqLyhA4S5R7Zii1z80Y5UFwssp7pI0=;
-        b=sl4JJZMUUwjq4jBwIM6vNGgDNjLxWAa0xSg4Rt72E/xbEsUtaItOVdkg+44nf7JtI0
-         RWTfwE9opQgkTHTKxHU1kYgjXe/wPlCAp8dTprCL2NumHTHAnayyIJuaREkEsiEExBH4
-         OfE/v2jfYxF7Ks5MFJcTZyfJzDmPsiBphWVjSuptzA4sIy3YpaHLmuF7Mqir2lAVSW0c
-         5/GpF+9HpPOeizEyrPVpqO+dScKkg7FmHJXThOJ2ACM5icQYOPaJ7D3TVWAJHcU+M3Cx
-         BXZvkXvljiNBGjkVt9P+D5s203oRnhOfVz9ap8v+WMYUQKZ+ISns8o4KwHHAvyOhCMJq
-         vAmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778821933; x=1779426733;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vF69Y5v/PGgYCmqLyhA4S5R7Zii1z80Y5UFwssp7pI0=;
-        b=Rzw+onkqCc7jEf61HzmnQItjIbPRemwKpnJ7BGgc3prxScp5nbpAwhuqbGFBSPtC+h
-         9n5AMAD1CvKI8Zrsu0JgB9Cu2chFq+17YyeJGq1VWk4J759+NSPhjHIKuL3e/q7CFq6P
-         2oDTeibbyXISlV9UAZ+5a52910GJCy1dyjgvY6wKNgpNZqadLK9Sx81WVBGGCpkwjIi2
-         4vuASsKPvlHzsN2AFOCQHIp5hWizs4+7OgBoCAIE9BhscAPCGH6ELLlkyp4oW5+iXyn3
-         iV2LZygroQ6bmZWqOkHeY6XGFdSp1Mi0qbn/yCXIeKJ3VOM4utQd79nF2EJq5rQ1OIRB
-         53WQ==
-X-Gm-Message-State: AOJu0YwS2w6r63dA76jDm7FhWs3MfikHqRXP7M3KQJSTPjVbHBpKG4kh
-	9y0jGErae0O9UT2N73LChvhYOeXK1vadJEawtV8xJJbRW2Xd64yEq39UCAUQXsb8
-X-Gm-Gg: Acq92OGeuaUzI/yyeTSjEphNPa6T5BVBA5C8vpsbiibYkm+TBHDQiMTFNgrZagJCMkx
-	8R1TSyQykh6vmwrDYvY/X0pwSiZIjL+g3f4CFKLsEhI1PAQUEocOoLEkekeIHXAx3x9+ZMEQ138
-	grvz+K/8Qs7hsboKh9vhGOC61FllKTI94feB6lyYXUKCbl44A8uNctFzr4oYgaeWCtjUY2CgY95
-	TjFSr1jj5a6AU8+RMFdOODehOmJDuEDo47tbM6KP6JuXtHx1P4WaE0HRfH6tcm+dXc+t3ZhfICC
-	9jkSyYrPtrp1KCbX6YnUT9MZ9bkNZa9C3gHggxfgOlsn2dUo1ipDmpWyG/2tKlyC99866CULH2Y
-	fn3csZA3h68EiBsZRXmcG2ZYRjzp7zN0cs47tSJKz4WrvUDFz5VDk12/dRWj+FN2/oJwlss7zy6
-	WIBo8xuWR1ljmoag9Kg6EGl1rWCq4Gd+6JSVxJY4QuZdl9yxOw1hm1DarFqmQ=
-X-Received: by 2002:a05:600c:8597:b0:48f:d5d7:df89 with SMTP id 5b1f17b1804b1-48fe630a2b6mr18617915e9.25.1778821932917;
-        Thu, 14 May 2026 22:12:12 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Fri, 15 May 2026 07:12:08 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 24313 invoked from network); 5 Oct 2023 08:17:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
+	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=4I5fpC5joVkWCJRMBt28Ub57/gWo5hpx+7a4NrH/6uY=; b=LwzHlIkHkJwcG7XxY241bCL1fv
+	tAfJJG0SQuEO5AU9Ns9rrKqUdyjTnd2NBL67TL6QgFQBT2sIkKKEU6v5vijOy0E7V0nOkMhVJAJRr
+	AXDWDcOK+/RJNogBhzSLtoqbR00M8VkF6Pn+k2pPrviWiqs9BzjLVNtJTH9suBgNIRsBHtl+1EP5f
+	bgoiXiYYMytxYYSdTo3El1puZ8XGqJwG50spADon2BWrVc6KbqkQG7IcAGw0QJM7wC+0jWW1mQrXV
+	2Xp+JDVL3XPdzqC7a7TupnVEp8hrU+r9mlO1qgPDw8X8VId5yt9W1cPddQLvmPutaGyNvCVdekW4b
+	mJ2u8aag==;
+Date: Thu, 5 Oct 2023 10:17:41 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
 To: oss-security@lists.openwall.com
-Message-ID: <agarKP9wHQMGuV_D@eldamar.lan>
-References: <20260515022033.GA10889@localhost.localdomain>
- <87cxyxe76j.fsf@gentoo.org>
+Message-ID: <ZR5xJZc32fhGOE+/@jumper.schlittermann.de>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
+ <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
+ <20230929165914.GA31245@openwall.com>
+ <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
+ <ZR27jCirFcyI7smg@eldamar.lan>
+ <SJ0PR01MB74130DAEAADAB8F76876E418D1CBA@SJ0PR01MB7413.prod.exchangelabs.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Fg3v0fsm7ThrgSUp"
 Content-Disposition: inline
-In-Reply-To: <87cxyxe76j.fsf@gentoo.org>
-Subject: Re: [oss-security] Logic bug in the Linux kernel's
- __ptrace_may_access() function
+In-Reply-To: <SJ0PR01MB74130DAEAADAB8F76876E418D1CBA@SJ0PR01MB7413.prod.exchangelabs.com>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Signal: +49.172.7909055
+X-Phone: +49.172.7909055
+X-SMS: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
-Hi
+--Fg3v0fsm7ThrgSUp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 15, 2026 at 03:29:56AM +0100, Sam James wrote:
-> Qualys Security Advisory <qsa@qualys.com> writes:
-> 
-> > Hi all,
-> >
-> > Today a vulnerability that we reported to security@kernel was fixed:
-> >
-> >   https://github.com/torvalds/linux/commit/31e62c2ebbfdc3fe3dbdf5e02c92a9dc67087a3a
-> >
-> > [...]
-> >
-> > Today we also contacted the linux-distros@openwall, but since exploits
-> > are already public we were told to send this to oss-security@openwall
-> > instead, hence this post. We are not publishing our advisory yet, to
-> > give distributions and users a chance to patch.
-> 
-> Thank you. I'm sorry you've had your moment somewhat spoiled.
-> 
-> I include some notes for readers.
-> 
-> --
-> 
-> Please note that despite the commit title and contents, it is not
-> exclusive to ptrace, and ptrace restriction mechanisms will not help
-> here.
-> 
-> As for mitigations: I don't think there are any real ones.
-> 
-> Some ideas:
-> * Block pidfd_getfd. I don't think it's actually used that heavily and
->   there's often fallbacks for older kernels when it is.
-> 
-> * You could remove the world-executable bit from ssh-keysign
->   but this is *not* the only binary affected, and this is a very weak
->   mitigation indeed __only for the PoC__.
-> 
-> The patch from Linus applies cleanly down to 6.6 or so. For 6.1 (IIRC),
-> there was a trivial conflict (attached for convenience).
-> 
-> For 5.10, a prerequisite commit is handy:
-> 5bc78502322a5e4eef3f1b2a2813751dc6434143, then apply the 6.1 version.
+Hi ZDI,
 
-I'm not 100% certian, but setting restrictive kernel.yama.ptrace_scope
-might as well serve as temporary workaround. Can you confirm?
+zdi@trendmicro.com <zdi@trendmicro.com> (Mi 04 Okt 2023 23:01:37 CEST):
+> We have received a notification from the developers that these issues hav=
+e been patched. We will be happy to update our advisories once they do so.
 
-Regards,
-Salvatore
+https://exim.org/static/doc/security/CVE-2023-zdi.txt
+
+As publicly advertised, we patched only *a subset* of the issues.  And
+those patches are available to the public.  Unfortunately there is no
+confirmation from your side, whether those fixes really fix the issues.
+
+One of the open issues is related to libspf2, which is Exim a user of,
+but not responsible for.
+
+ ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
+
+And about exactly *this libspf2* issue Salvatore asked you for information.
+
+(As I did on Oct 1st already, along with the request for additional informa=
+tion on one of
+the other unfixed issues (DNSDB)). I didn't receive any response yet.
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+
+--Fg3v0fsm7ThrgSUp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmUecSUACgkQr0zGdqa2
+wUKVcggA2HlStICK/4BG5u2EPdwRy+7uZecohpZ6Tiw5yFn8lwFZN5/8On04rsmO
+PhDApwEs4+tl10pflp3BYTWvMUj7s4hhuuctoVZ6nujym1CUulG8Eup00JVQrpvF
+xMIsDwPW1BjcOkXWZgELKMlAJUMVJH7a30YWI4GzmHTbQB7DbXXepVb2Pst/JAGg
+7vt73JbkO/MCuAyccdIGFao0N37WVw7aOoWG4a6yeoBYERCmVbpDtk8T+eOW4AvU
+mVbfHiwr7cSUFR6DYbYiXF35Ty2+TeYTBpc3jjokJSoxvWNPMaWN5mSmoxKdVnxj
+Pm/SDoyWzGlwJ5dsFewxylWN7aimZA==
+=IVKa
+-----END PGP SIGNATURE-----
+
+--Fg3v0fsm7ThrgSUp--
