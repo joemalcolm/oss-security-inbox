@@ -1,51 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/29/1
-Message-ID: <20230429100407.3yqdy2vtzokv3t5l@stig.io>
-Date: Sat, 29 Apr 2023 12:04:07 +0200
-From: Stig Palmquist <stig@...g.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/11
+Message-ID: <20231005182818.64a446f0@fabiankeil.de>
+Date: Thu, 5 Oct 2023 18:28:18 +0200
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: Re: There is a curl "severity HIGH security problem" pre-announcement on GitHub
 Content-Type: text/plain; charset=utf-8
 
+Shawn Webb <shawn.webb@...denedbsd.org> wrote on 2023-10-05 at 09:54:11:
 
-- CVE-2023-31484 for CPAN.pm 
-- CVE-2023-31485 for GitLab::API::v4 
-- CVE-2023-31486 for HTTP::Tiny
+> On Thu, Oct 05, 2023 at 10:14:49AM +0200, Erik Auerswald wrote:
 
-On 2023-04-18 17:46, Stig Palmquist wrote:
-> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
-> standalone on CPAN, does not verify TLS certs by default. Users must
-> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
+> > there is a pre-announcement of a curl security problem with high severity
+> > that can be found on GitHub:
+> > 
+> >  - https://github.com/curl/curl/discussions
+> >  - https://github.com/curl/curl/discussions/12026
 > 
-> We grepped trough CPAN to find distributions using HTTP::Tiny that
-> didn't specify cert verification behaviour, possibly exposing users to
-> mitm attacks. Here are some examples with patches:
-> 
-> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
->   without verifying server certs. Fixed in v2.35-TRIAL.
->   https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
-> 
-> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
->   https://github.com/bluefeet/GitLab-API-v4/pull/57
-> 
-> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
->   information to a network attacker.
->   https://github.com/sanko/Finance-Robinhood/pull/6
-> 
-> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
->   attacker.
->   https://github.com/pplu/aws-sdk-perl/pull/426
-> 
-> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
->   attacker.
->   https://github.com/pplu/cloudhealth-api-perl/pull/2
-> 
-> ... and more. We have generated a list of over 300 potentially affected
-> CPAN distributions.
-> 
-> More info in our blog post:
-> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
-> 
-> -- 
-> Stig Palmquist <stig@...g.io>
+> I wonder if this could also be coordinated through CERT VINCE since
+> there will be a wider impact than those on the distros mailing list.
 
+I wondered what "CERT VINCE" is supposed to mean so I tried to
+search the English Wikipedia but was unsuccessful. Probably
+even the English Wikipedia can't keep up with all the "CERTS"
+that are available now.
+
+Anyway, after a proper web search I ended at [0] which says:
+
+| Welcome to the Vulnerability Information and Coordination
+| Environment (VINCE). If you are a vendor and would like to
+| communicate with us about a vulnerability or update your
+| contact information, please create an account or sign in. You
+| can also report a vulnerability to us, with or without a VINCE
+| account. For more information see the VINCE Documentation site
+
+There doesn't seem to be a period after the last sentence,
+but maybe that's art or the page is still under construction.
+
+Apparently they are "Sponsored by CISA." and apparently
+CISA is "America's Cyber Defence Agency" [1] which seems
+to be relying a bit too much on computers without lower
+caps, otherwise their website would probably look a bit
+more professional.
+
+Luckily I use ElectroBSD [2] so I was able to spell their
+name using lower caps anyway.
+
+I also briefly looked at the "VINCE"
+"Vulnerability Disclosure Guidance" [3] and read:
+
+| A vulnerability is difficult to define. It can be thought of as
+| a flaw in software or hardware components that allows an
+| attacker to perform actions that wouldn't normally be
+| allowed. The impact of such vulnerabilities varies
+| greatly. They may allow the attacker to learn someone's private
+| email address, take control of a computer, or even cause
+| physical damage and bodily injury.
+
+My first impression is that they may be targeting children
+below ten and I wish them the best of luck in their endeavors.
+I'm already a bit older than ten and I already have enough
+accounts for somewhat dubious sites that could leak my data
+at any minute.
+
+Anyway, I suppose nobody on this list will stop you, Shawn,
+from personally giving "CERT VINCE" a heads-up that a somewhat
+important curl [4] patch will probably be published around
+2023-10-11.
+
+If they ask you what curl is you should probably use simple
+words when you explain it.
+
+Happy hacking
+Fabian
+
+[0] <https://kb.cert.org/vince/>
+[1] <https://www.cisa.gov/>
+[2] <https://www.fabiankeil.de/gehacktes/electrobsd/>
+[3] <https://kb.cert.org/vuls/guidance/>
+[4] <https://curl.se/>
