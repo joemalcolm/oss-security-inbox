@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/7
-Message-ID: <87zg5tfnwc.fsf_-_@gnu.org>
-Date: Wed, 24 May 2023 22:57:39 +0200
-From: Ludovic Courtès <ludo@....org>
-To: Brian Behlendorf <brian@...lendorf.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Attestation, reproducible builds, and bootstrapping
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/7
+Message-ID: <20231005135411.dw3mfr2zigmx2h5e@mutt-hbsd>
+Date: Thu, 5 Oct 2023 09:54:11 -0400
+From: Shawn Webb <shawn.webb@...denedbsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: There is a curl "severity HIGH security problem" pre-announcement on GitHub
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Oct 05, 2023 at 10:14:49AM +0200, Erik Auerswald wrote:
+> Hi,
+> 
+> there is a pre-announcement of a curl security problem with high severity
+> that can be found on GitHub:
+> 
+>  - https://github.com/curl/curl/discussions
+>  - https://github.com/curl/curl/discussions/12026
 
-Brian Behlendorf <brian@...lendorf.com> skribis:
+I wonder if this could also be coordinated through CERT VINCE since
+there will be a wider impact than those on the distros mailing list.
 
-> A clear and more formal way of understanding the different levels of
-> attestation of one's build environment can be found in the SLSA
-> specification. Here's a story about how Google Cloud incorporates it
-> into build service:
->
-> https://slsa.dev/blog/2022/12/gcb-slsa-verification
->
-> Of course attestation is not proof, and even human certification can
-> only go so far. Reproducible builds offer a path there but that goal
-> seems just as far away as it was 20 years ago, when Java was going to
-> solve that for us.
+Thanks,
 
-This is not true: reproducible builds are a reality for a number of
-distros already and also upstream (for GNU Guix, we measure 85%
-reproducibility on 22K packages; Debian might be even higher).
+-- 
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
 
-Bootstrapping has also gone a long way: Guix’s package graph is now
-rooted in a 357-byte “binary”¹; everything else (with the exception of a
-couple of bootstrap compilers such as GHC, for now) is built from
-source, in isolated environments.  A similar bootstrap path is used by
-freedesktop-sdk².
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
 
-So I disagree that one has to resort to attestation and certification;
-verifiability and auditability are evidently achievable and they provide
-much stronger guarantees.
-
-Ludo’.
-
-¹ https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building-from-source-all-the-way-down/
-² https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/merge_requests/11557
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
