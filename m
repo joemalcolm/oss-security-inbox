@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/7
-Message-ID: <ZRb8vSZlWXIJtPjS@itl-email>
-Date: Fri, 29 Sep 2023 12:35:07 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/1
+Message-ID: <20231005012718.GA2484@openwall.com>
+Date: Thu, 5 Oct 2023 03:27:18 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+Subject: Re: CVE-2023-4911: Local Privilege Escalation in the glibc's ld.so
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 28, 2023 at 05:10:09PM -0700, nightmare.yeah27@...ecat.org wrote:
-> On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
-> 
-> > How long will it take for corporations to accept that writing media
-> > codecs in C, C++, or any other memory-unsafe language is a
-> > fundamentally bad idea, and that it is better to rewrite the codecs
-> > in a safe language (such as Wuffs or Rust) than to try to secure the
-> > existing ones?
-> 
-> Wouldn't the low-level code have to ultimately depend on unsafe Rust
-> modules, or similar feature in other safe language?
+On Tue, Oct 03, 2023 at 05:50:36PM +0000, Qualys Security Advisory wrote:
+> We successfully exploited this vulnerability and obtained full root
+> privileges on the default installations of Fedora 37 and 38, Ubuntu
+> 22.04 and 23.04, Debian 12 and 13; other distributions are probably also
+> vulnerable and exploitable (one notable exception is Alpine Linux, which
+> uses musl libc, not the glibc). We will not publish our exploit for now;
+> however, this buffer overflow is easily exploitable (by transforming it
+> into a data-only attack), and other researchers might publish working
+> exploits shortly after this coordinated disclosure.
 
-In Wuffs, every memory access is checked for safety at compile-time, and
-that includes being in-bounds.  If the compiler cannot prove that every
-access is safe, the code will not compile.  There are no bounds checks
-at runtime.
+And they did, here are a couple:
 
-Interfacing with hardware accelerators obviously will need unsafe code,
-but my understanding is that most vulnerabilities are in various
-parsers or in the code the accelerators replace, not in the code that
-interfaces with the accelerators.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+https://github.com/leesh3288/CVE-2023-4911
+https://github.com/RickdeJager/CVE-2023-4911
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
