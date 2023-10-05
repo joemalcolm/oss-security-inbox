@@ -1,59 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/29/1
-Message-ID: <c5e6ac62-28b2-76be-f65b-07449c82b536@igalia.com>
-Date: Thu, 29 Jun 2023 15:07:40 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/1
+Message-ID: <CADxcaYUjjVmubF+VBTEZH=xF32S4ERDSzK-765zNpuTDQ++UZQ@mail.gmail.com>
+Date: Thu, 5 Oct 2023 21:28:26 +0000
+From: Jean Luc Picard <atari2600a@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: "Linux Kernel security demistified"
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0005
-------------------------------------------------------------------------
+Hey just dropping in as I do, I really appreciated the talk once it hit the
+linux foundations channel & I got to watching it.  It flowed really really
+well, Very thought-provoking to the point of making the whole thing seem
+like 15 minutes rather than an hour.  I haven't been as enamered with a
+discussion of security philosophy since I watched CISSP test-prep so I
+could crash-course CISSP without having to actually pay for it (for fun).
 
-Date reported           : June 29, 2023
-Advisory ID             : WSA-2023-0005
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0005.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0005.html
-CVE identifiers         : CVE-2022-48503, CVE-2023-32435,
-                          CVE-2023-32439.
+On Thu, Oct 5, 2023 at 6:02 AM Willy Tarreau <w@....eu> wrote:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> Hi Alexander,
+>
+> On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> > I wonder whether the kernel documentation could, however, be encouraging
+> > rather than discouraging (as it currently is) about issue reporters
+> > themselves contacting linux-distros after a fix is ready.  I wonder if a
+> > patch like that would be accepted?
+>
+> Just as a quick heads up on this, I discussed with Greg there and proposed
+> to send a patch proposal to rework that part to take into account your now
+> relaxed rules. My goal is to let the reporter decide on their own, and let
+> them decide what they want to do after checking the linux-distros rules.
+> There could be a good motivation for some reporters to go there because a
+> number of them are first-timers who are seeking a Curriculum Vitae Enhancer
+> (CVE) ID that s@k.o doesn't deal with. But I also want to remind (I know I
+> may sound like a scratched record) that it's not because some may report
+> there that distros will magically be aware of all security issues, given
+> that those arriving on s@k.o are really a tiny portion and many more bugs
+> are fixed without anyone having a security look on them.
+>
+> I'm just too short of time for now, having to catch up with what I left
+> for the 3 days of KR2023, but it's on my todo list to propose a patch to
+> Greg. I'm having reasonable hopes that we can end up with something
+> smoother in the near future.
+>
+> Cheers,
+> Willy
+>
 
-CVE-2022-48503
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
-    Credit to Dongzhuo Zhao working with ADLab of Venustech, and ZhaoHai
-    of Cyberpeace Tech Co., Ltd.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved bounds checks.
-
-CVE-2023-32435
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
-    Credit to Georgy Kucherin (@kucher1n), Leonid Bezvershenko (@bzvr_),
-    and Boris Larin (@oct0xor) of Kaspersky.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: A memory corruption issue was addressed with
-    improved state management.
-
-CVE-2023-32439
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.3.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A type confusion
-    issue was addressed with improved checks.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-June 29, 2023
