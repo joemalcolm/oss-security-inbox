@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["324" "Tuesday" "16" "August" "2016" "11:49:32" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160816094932.GA1197@suse.de>" "14" "[oss-security] CVE Request: Default password in openstack / crowbar trove" nil nil nil "8" "2016081609:49:32" "[oss-security] CVE Request: Default password in openstack / crowbar trove" (number mark "U       meissner@sus Aug 16   14/324   " thread-indent "\"[oss-security] CVE Request: Default password in openstack / crowbar trove\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22095 invoked by uid 550); 16 Aug 2016 09:49:44 -0000
+Received: (qmail 1037 invoked by uid 550); 5 Oct 2023 01:27:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +7,32 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22077 invoked from network); 16 Aug 2016 09:49:44 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 16 Aug 2016 11:49:32 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>,
-	cve-assign@mitre.org
-Message-ID: <20160816094932.GA1197@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Received: (qmail 32635 invoked from network); 5 Oct 2023 01:27:29 -0000
+Date: Thu, 5 Oct 2023 03:27:18 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20231005012718.GA2484@openwall.com>
+References: <20231003175031.GA16924@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] CVE Request: Default password in openstack / crowbar trove
+In-Reply-To: <20231003175031.GA16924@localhost.localdomain>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2023-4911: Local Privilege Escalation in the glibc's ld.so
 
-Hi,
+On Tue, Oct 03, 2023 at 05:50:36PM +0000, Qualys Security Advisory wrote:
+> We successfully exploited this vulnerability and obtained full root
+> privileges on the default installations of Fedora 37 and 38, Ubuntu
+> 22.04 and 23.04, Debian 12 and 13; other distributions are probably also
+> vulnerable and exploitable (one notable exception is Alpine Linux, which
+> uses musl libc, not the glibc). We will not publish our exploit for now;
+> however, this buffer overflow is easily exploitable (by transforming it
+> into a data-only attack), and other researchers might publish working
+> exploits shortly after this coordinated disclosure.
 
-In crowbar-openstack / trove , the trove service user has a default password.
+And they did, here are a couple:
 
-https://bugzilla.suse.com/show_bug.cgi?id=991729
+https://github.com/leesh3288/CVE-2023-4911
+https://github.com/RickdeJager/CVE-2023-4911
 
-https://github.com/crowbar/crowbar-openstack/pull/485
-
-The patch changes it be randomly generated.
-
-Please assign a CVE id.
-The patch changes it be randomöly generated., the I
-
-Ciao, Marcus
+Alexander
