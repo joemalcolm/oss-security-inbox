@@ -1,23 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/16/2
-Message-ID: <43d3e8f0-bcf3-cfdc-b0f0-e15f2830760f@apache.org>
-Date: Sun, 16 Apr 2023 04:47:12 +0000
-From: Jialin Qiao <qiaojialin@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/2
+Message-ID: <20231005071555.16bfd8b1@fabiankeil.de>
+Date: Thu, 5 Oct 2023 07:15:55 +0200
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24831: Apache IoTDB grafana-connector Login Bypass Vulnerability 
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+"zdi@...ndmicro.com" <zdi@...ndmicro.com> wrote on 2023-10-04 at 21:01:37:
 
-Description:
+> We have received a notification from the developers that these
+> issues have been patched. We will be happy to update our advisories once they do so.
 
-Improper Authentication vulnerability in Apache Software Foundation Apache IoTDB.This issue affects Apache IoTDB Grafana Connector: from 0.13.0 through 0.13.3.
+Are you saying "the developers" were lying to you and did
+not actually patch anything yet?
 
-Attackers could login without authorization. This is fixed in 0.13.4.
-
-References:
-
-https://iotdb.apache.org/
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-24831
-
+Fabian
