@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/19/3
-Message-ID: <03fcd35e-e2f6-820a-6f8c-0a32c689243a@apache.org>
-Date: Tue, 19 Dec 2023 09:44:03 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/6
+Message-ID: <20231005081449.GA20205@unix-ag.uni-kl.de>
+Date: Thu, 5 Oct 2023 10:14:49 +0200
+From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49734: Apache Superset: Privilege Escalation Vulnerability 
+Subject: There is a curl "severity HIGH security problem" pre-announcement on GitHub
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Hi,
 
-- Apache Superset before 2.1.2
-- Apache Superset 3.0.0 before 3.0.2
+there is a pre-announcement of a curl security problem with high severity
+that can be found on GitHub:
 
-Description:
+ - https://github.com/curl/curl/discussions
+ - https://github.com/curl/curl/discussions/12026
 
-An authenticated Gamma user has the ability to create a dashboard and add charts to it, this user would automatically become one of the owners of the charts allowing him to incorrectly have write permissions to these charts.This issue affects Apache Superset: before 2.1.2, from 3.0.0 before 3.0.2.
+(I have seen a link to it from some web site, and did not see it on this
+list yet.)
 
-Users are recommended to upgrade to version 3.0.2 or 2.1.3, which fixes the issue.
+There is little information available, the GitHub discussions post says:
 
-Credit:
+   "We are cutting the release cycle short and will release curl 8.4.0 on
+    October 11, including fixes for a severity HIGH CVE and one severity
+    LOW. The one rated HIGH is probably the worst curl security flaw in
+    a long time.
 
-Jordan Velich (finder)
+    The new version and details about the two CVEs will be published
+    around 06:00 UTC on the release day.
 
-References:
+    * CVE-2023-38545: severity HIGH (affects both libcurl and the curl tool)
+    * CVE-2023-38546: severity LOW (affects libcurl only, not the tool)
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-49734
+    Now you know. Plan accordingly."
 
+Best regards,
+Erik
