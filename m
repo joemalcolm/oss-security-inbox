@@ -1,73 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/7
-Message-ID: <ZSrK1GqJsL8oD7y+@itl-email>
-Date: Sat, 14 Oct 2023 13:07:30 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: sandboxing,of upstream programs by distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/12
+Message-ID: <SJ0PR01MB7413C4BC552E1212F3BEDEC3D1CAA@SJ0PR01MB7413.prod.exchangelabs.com>
+Date: Thu, 5 Oct 2023 17:40:58 +0000
+From: "zdi@...ndmicro.com" <zdi@...ndmicro.com>
+To: Salvatore Bonaccorso <carnil@...ian.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Solar Designer <solar@...nwall.com>
+Subject: RE: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
-> Hi all,
-> 
-> I asked Alexander about this off-list in relation to his thread
-> “linux-distros list membership application - CIQ Rocky Linux Security Team”
-> but he suggested I bring it on-list instead.
-> 
-> Is there interest/solutions within the Rock Security SIG or other distro’s
-> security teams for sandboxing that package upstreams can opt into?
-> 
-> To step this out a bit… we have a large, old code base that was written
-> decades prior to current best practices. It has numerous known memory safety
-> issues and ever-dwindling maintainer capacity. It is also a dependency,
-> either directly or indirectly, of a significant fraction of the world’s
-> software. I am guessing this scenario sounds uncomfortably familiar/common
-> to many on this list.
+Apologies, We have not received any notifications from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
 
-Which software is this?  Are there plans to at least fix the known
-memory safety problems?  If not, I think it would be best to disable the
-known-vulnerable features by default.  If the entire software package is
-vulnerable, I recommend deprecating it and recommending that downstream
-users migrate to a more secure alternative.
+Thanks,
+The ZDI Team
 
-> We (the maintainers) have discussed sandboxing as a way of mitigating the
-> risk of known bugs. However, one of the problems is that we don’t know the
-> complete set of required privileges of our dependencies. The software can be
-> configured with or without various libraries and also has a plugin mechanism
-> for dynamic code loading. Basically if a sandboxing solution like seccomp
-> wants to know our full set of system calls, we ourselves don’t know it.
+-----Original Message-----
+From: ZDI Researcher Mailbox
+Sent: Wednesday, October 4, 2023 2:02 PM
+To: Salvatore Bonaccorso <carnil@...ian.org>; oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: RE: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
-You have to be willing to break compatibility to at least some degree.
-If you try to support everything, you wind up with something like Qubes
-OS’s “convert to trusted image”, which creates and destroys an entire
-virtual machine for every operation.  Even then, you will still break
-a (hypothetical) plugin that accesses the Internet, because that VM
-should not have network access.
+Hello Salvatore,
 
-What I would do is compile a list of system calls that are reasonable to
-make after startup.  Once all plugins have been loaded and all
-configuration files have been read, no plugin should be opening files or
-making network connections.  If it does, that plugin is broken and needs
-to be fixed.  You can have these system calls fail rather than killing
-the entire process, but you cannot try to support arbitrary plugins.
-That said, I expect most existing plugins will work fine with
-sandboxing.
+We have received a notification from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
 
-> The downstream maintainer packaging the software for, e.g. Rocky, does
-> though. They have a complete picture of which libraries/features are enabled
-> and how locked down the plugin stuff is.
-> 
-> So, where I’m going with this, is that if the various packaging ecosystems
-> could (or do) offer sandboxing to upstream, people like us would gladly opt
-> in to it. Of course, these downstream maintainers can already seccomp our
-> software today. But expecting them to reverse engineer our exact needs seems
-> a bit much.
-> 
-> I’d be interested to hear any thoughts on this.
+Thanks,
+The ZDI Team
 
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+-----Original Message-----
+From: Salvatore Bonaccorso <salvatore.bonaccorso@...il.com> On Behalf Of Salvatore Bonaccorso
+Sent: Wednesday, October 4, 2023 12:23 PM
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>; ZDI Researcher Mailbox <zdi@...ndmicro.com>
+Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Hi ZDI team,
+
+On Fri, Sep 29, 2023 at 07:26:45PM +0000, zdi@...ndmicro.com wrote:
+> Hi,
+>
+> The ZDI reached out multiple times to the developers regarding
+> multiple bug reports with little progress to show for it. After our
+> disclosure timeline was exceeded by many months, we notified the
+> maintainer of our intent to publicly disclose these bugs, at which
+> time we were told, "you do what you do." If these bugs have been
+> appropriately addressed, we will update our advisories with a link to
+> the security advisory, code check-in, or other public documentation
+> closing the issue.
+
+As there is still some confusion around the libspf2 related issue: can you confirm or deny if the issue CVE-2023-42118 / ZDI-23-1472 is covered by https://github.com/shevek/libspf2/pull/44 ?
+
+Regards,
+Salvatore
+TREND MICRO EMAIL NOTICE
+
+The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
+
+For details about what personal information we collect and why, please see our Privacy Notice on our website at: Read privacy policy<http://www.trendmicro.com/privacy>
