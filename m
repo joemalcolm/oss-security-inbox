@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["921" "Sunday" "16" "April" "2017" "13:08:27" "+0000" "7b4xrw+5q6jtt69cnwlw@guerrillamail.com" "7b4xrw+5q6jtt69cnwlw@guerrillamail.com" "<7a824313c433c54a212afb25498e8556581@guerrillamail.com>" "33" "[oss-security] MantisBT - Full admin access vulnerability" nil nil nil "4" "2017041613:08:27" "[oss-security] MantisBT - Full admin access vulnerability" (number mark "U       7b4xrw+5q6jt Apr 16   33/921   " thread-indent "\"[oss-security] MantisBT - Full admin access vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31817 invoked by uid 550); 16 Apr 2017 13:44:51 -0000
+Received: (qmail 17749 invoked by uid 550); 5 Oct 2023 15:09:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9933 invoked from network); 16 Apr 2017 13:08:42 -0000
-MIME-Version: 1.0
-Message-ID: <7a824313c433c54a212afb25498e8556581@guerrillamail.com>
-Date: Sun, 16 Apr 2017 13:08:27 +0000
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: <7b4xrw+5q6jtt69cnwlw@guerrillamail.com>
-X-Originating-IP: [176.10.104.243]
-Content-Type: text/plain; charset="utf-8"
+Received: (qmail 17706 invoked from network); 5 Oct 2023 15:09:23 -0000
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Domain-Signer: PHP mailDomainSigner 0.2-20110415 <http://code.google.com/p/php-mail-domain-signer/>
-DKIM-Signature: v=1; a=rsa-sha256; s=highgrade; d=guerrillamail.com; l=997;
-	t=1492348110; c=relaxed/relaxed; h=to:from:subject;
-	bh=F1l50mlPfk2WYBIxaj0+tDWH1P6nfTiffrMNtOKkK48=;
-	b=DP3vQ6/TBhhZn6BWpBoUTp6kmTx960FLQSGq/1Tz+yri+/6cGhp2dJYCzQB4yfBVVx1wVT81BLCG
-	cCEACe0bMM4bSJH/wUuYcKcw9vN4L7Bzc+fYZXFAGWMowqfL3+7uX/gU2dSwh+886EEP9V/VfUPN
-	Qp5Wo8eV8LGItNlDx1MrSWqiPHNN+kuCIESkB/iCMd6KiLqiT350ZTUKX3KN4tHfRAw9G8ZHn858
-	VkgDxDogWz/NsBbLzmwCB0n4dMdYja7KJsriiUvW+NhFnQv5Bj/5IuwfNet3U9GBhBuAvuwLDjv4
-	F0B0xeycy6+2ctrfxKWEfPTpglG/2msGm8ikNg==
-Subject: [oss-security] MantisBT - Full admin access vulnerability
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
+Message-Id: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
+Date: Thu, 5 Oct 2023 11:08:51 -0400
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3731.700.6)
+Subject: [oss-security] European Union Cyber Resilience Act (CRA)
 
-A vulnerability exists in MantisBT where any users password can be reset:
+Solar Designed posted on October 1, 2023:
+> The talk... starts with a mention of the European Union Cyber Resiliance =
+Act (CRA)
+> and how it is problematic for Open Source...
+> (If we want to discuss in here, which I'm not sure of, please start a
+> separate thread for this sub-topic, do not just reply to this one.)
 
-Visiting /verify.php?id=3DXXX&confirm_hash=3D
+Fair enough. The CRA *definitely* impacts open source software,
+and it includes security-related requirements. So it seems on-topic for thi=
+s mailing list, at
+least to note that *many* people find the CRA concerning & to point to more=
+ information.
 
-where XXX is the userid of the user. id=3D1 is the default 'administrator' =
-account if it still exists.
+I think a good place to start is "Understanding the Cyber Resilience Act:
+What Everyone involved in Open Source Development Should Know" from the Lin=
+ux Foundation:
+https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
 
-On a unpatched instance of mantisBT, this will provide a form to enter a ne=
-w password for a user.
+As currently written, individual developers of OSS are "probably excluded b=
+y the CRA requirements, even if you occasionally accept donations. But if y=
+ou regularly charge or accept recurring donations from commercial entities =
+(for example, if you do open source consulting), you=E2=80=99ll likely be c=
+overed by the CRA."
+The bigger problem is that nonprofits & private companies are expected to a=
+ lot of things that don't make much sense. As noted, "the assumptions the C=
+RA makes about software manufacturers do not necessarily hold for open sour=
+ce software developers."
 
-This works on any enabled account (including users with admin access) - pro=
-viding an anonymous user with admin access to the system
+The Linux Foundation EU has a page about the CRA:
+https://linuxfoundation.eu/cyber-resilience-act
+... it has many links, and is urging people work to #FixTheCRA.
 
-The issue can be resolved by checking the value of $t_token_confirm_hash is=
- not null in verify.php
+Many organizations *have* been trying to get EU regulators to fix the CRA. =
+This isn't a case where no one spoke up. The problem is that for the most p=
+art their concerns have been ignored by regulators:
+https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Ecli=
+pse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to=
+-European-Commission-Regarding-the-Cyber-Resilience-Act.html
 
-i.e. changing the code to read:
+I think the overall *goals* of the CRA are laudable. However, when evaluati=
+ng laws & regulations you should always IGNORE their goals, because their g=
+oals are IRRELEVANT. What matters is what the laws and regulations will act=
+ually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for=
+ evaluating laws and regulations. In this case, I think too many regulators=
+ are focused on theoretical goals while ignoring what will actually happen.
 
-if( $f_confirm_hash !=3D=3D $t_token_confirm_hash || null =3D=3D=3D $t_toke=
-n_confirm_hash ) {
-	trigger_error( ERROR_LOST_PASSWORD_CONFIRM_HASH_INVALID, ERROR );
-}
+Full disclosure: I work for the Linux Foundation, but I'm just speaking for=
+ myself here.
 
-
-
-
-
-----
-Sent using Guerrillamail.com
-Block or report abuse: https://www.guerrillamail.com//abuse/?a=3DTlJnSB4FQK=
-EHgRqt0HIWYQDUA8WA19lHxqhOMtz5Bg%3D%3D
-
+--- David A. Wheeler
 
