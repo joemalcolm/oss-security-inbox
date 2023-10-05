@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/23/2
-Message-ID: <bd530d8e-f453-71e6-6645-029ae552fa3d@apache.org>
-Date: Mon, 23 Oct 2023 15:38:43 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/5
+Message-ID: <ZR5xJZc32fhGOE+/@jumper.schlittermann.de>
+Date: Thu, 5 Oct 2023 10:17:41 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46288: Apache Airflow: Sensitive parameters exposed in API when "non-sensitive-only" configuration is set 
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hi ZDI,
 
-Affected versions:
+zdi@...ndmicro.com <zdi@...ndmicro.com> (Mi 04 Okt 2023 23:01:37 CEST):
+> We have received a notification from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
 
-- Apache Airflow 2.4.0 before 2.7.0
+https://exim.org/static/doc/security/CVE-2023-zdi.txt
 
-Description:
+As publicly advertised, we patched only *a subset* of the issues.  And
+those patches are available to the public.  Unfortunately there is no
+confirmation from your side, whether those fixes really fix the issues.
 
-Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Airflow.This issue affects Apache Airflow from 2.4.0 to 2.7.0.
+One of the open issues is related to libspf2, which is Exim a user of,
+but not responsible for.
 
-Sensitive configuration information has been exposed to authenticated users with the ability to read configuration via Airflow REST API for configuration even when the expose_config option is set to non-sensitive-only. The expose_config option is False by default. It is recommended to upgrade to a version that is not affected if you set expose_config to non-sensitive-only configuration. This is a different error than CVE-2023-45348 which allows authenticated user to retrieve individual configuration values in 2.7.* by specially crafting their request (solved in 2.7.2).
+ ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
 
-Users are recommended to upgrade to version 2.7.2, which fixes the issue and additionally fixes CVE-2023-45348.
+And about exactly *this libspf2* issue Salvatore asked you for information.
 
-Credit:
+(As I did on Oct 1st already, along with the request for additional information on one of
+the other unfixed issues (DNSDB)). I didn't receive any response yet.
 
-id_No2015429 of 3H Secruity Team (finder)
-Lee, Wei (finder)
-Lee, Wei (remediation developer)
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-References:
-
-https://github.com/apache/airflow/pull/32261
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46288
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
