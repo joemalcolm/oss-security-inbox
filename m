@@ -1,98 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/2
-Message-ID: <CAOvp68HCA1VXqCpnM9hMOo=BTCghgXfy85e6QxzUVFsaykiwvw@mail.gmail.com>
-Date: Tue, 28 Mar 2023 08:00:00 +0800
-From: Zhenghan Wang <wzhmmmmm@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/9
+Message-ID:  <YT2PR01MB9827F9C7112CAAF0FFFC320CE8CAA@YT2PR01MB9827.CANPRD01.PROD.OUTLOOK.COM>
+Date: Thu, 5 Oct 2023 15:59:57 +0000
+From: Katherine Mcmillan <kmcmi046@...tawa.ca>
+To: "dwheeler@...eeler.com" <dwheeler@...eeler.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: European Union Cyber Resilience Act (CRA)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+"However, when evaluating laws & regulations you should always IGNORE their goals, because their goals are IRRELEVANT. What matters is what the laws and regulations will actually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for evaluating laws and regulations. In this case, I think too many regulators are focused on theoretical goals while ignoring what will actually happen."
 
-In the Bluetooth subsystem, a double free vulnerability was found in the
-hci_conn_cleanup function of net/bluetooth/hci_conn.c, which may cause DOS
-or privilege escalation.
+Wisely said, David.
 
-Version: Linux kernel 6.2 (this problem also exists in 6.3-rc1)
+Full disclosure, I work for the Linux/Unix Management Directorate for the Government of Canada and this is something we, of course, also have our eyes on.
 
+Sincerely,
+Katie
+________________________________
+From: David A. Wheeler <dwheeler@...eeler.com>
+Sent: 05 October 2023 11:08
+To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+Subject: [oss-security] European Union Cyber Resilience Act (CRA)
 
-At the end of the hci_conn_del_sysfs(conn) function in the hci_conn_cleanup
-function, hci_dev_put(hdev) will be called. The hci_dev_put function will
-eventually call kfree to release the space used by name:
+Attention : courriel externe | external email
 
-```
-hci_dev_put
-put_device
-kobject_put
-kref_put
-kobject_release
-kobject_cleanup
-kfree_const
-kfree
-```
+Solar Designed posted on October 1, 2023:
+> The talk... starts with a mention of the European Union Cyber Resiliance Act (CRA)
+> and how it is problematic for Open Source...
+> (If we want to discuss in here, which I'm not sure of, please start a
+> separate thread for this sub-topic, do not just reply to this one.)
 
-After the hci_conn_del_sysfs function ends, the hci_dev_put function is
-called again in the hci_conn_cleanup function, and their parameters hdev
-are the same, so double free will be caused when the name is released.
+Fair enough. The CRA *definitely* impacts open source software,
+and it includes security-related requirements. So it seems on-topic for this mailing list, at
+least to note that *many* people find the CRA concerning & to point to more information.
 
-In addition, at the end of hci_conn_cleanup, the hci_conn_put function is
-called again, which will call the put_device function to release conn->dev.
-Obviously conn->dev has been released, so there will also be a double free
-problem here.
+I think a good place to start is "Understanding the Cyber Resilience Act:
+What Everyone involved in Open Source Development Should Know" from the Linux Foundation:
+https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
 
-Call Trace from syzbot,
-https://syzkaller.appspot.com/bug?id=1bb51491ca5df96a5f724899d1dbb87afda61419
+As currently written, individual developers of OSS are "probably excluded by the CRA requirements, even if you occasionally accept donations. But if you regularly charge or accept recurring donations from commercial entities (for example, if you do open source consulting), you’ll likely be covered by the CRA."
+The bigger problem is that nonprofits & private companies are expected to a lot of things that don't make much sense. As noted, "the assumptions the CRA makes about software manufacturers do not necessarily hold for open source software developers."
 
-Here's a simplified flow:
+The Linux Foundation EU has a page about the CRA:
+https://linuxfoundation.eu/cyber-resilience-act
+... it has many links, and is urging people work to #FixTheCRA.
 
-hci_conn_del_sysfs:
-  hci_dev_put
-    put_device
-      kobject_put
-        kref_put
-          kobject_release
-            kobject_cleanup
-              kfree_const
-                kfree(name)
+Many organizations *have* been trying to get EU regulators to fix the CRA. This isn't a case where no one spoke up. The problem is that for the most part their concerns have been ignored by regulators:
+https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Eclipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
 
-hci_dev_put:
-  ...
-    kfree(name)
+I think the overall *goals* of the CRA are laudable. However, when evaluating laws & regulations you should always IGNORE their goals, because their goals are IRRELEVANT. What matters is what the laws and regulations will actually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for evaluating laws and regulations. In this case, I think too many regulators are focused on theoretical goals while ignoring what will actually happen.
 
-hci_conn_put:
-  put_device
-    ...
-      kfree(name)
+Full disclosure: I work for the Linux Foundation, but I'm just speaking for myself here.
 
-This patch drop the hci_dev_put and hci_conn_put function call in
-hci_conn_cleanup function, because the object isfreed in hci_conn_del_sysfs
-function.
-https://lore.kernel.org/lkml/20230309074645.74309-1-wzhmmmmm@gmail.com/
+--- David A. Wheeler
 
-Signed-off-by: ZhengHan Wang <wzhmmmmm@...il.com>
----
- net/bluetooth/hci_conn.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index acf563fbdfd9..a0ccbef34bc2 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -152,10 +152,6 @@ static void hci_conn_cleanup(struct hci_conn *conn)
-    hci_conn_del_sysfs(conn);
-
-    debugfs_remove_recursive(conn->debugfs);
--
--   hci_dev_put(hdev);
--
--   hci_conn_put(conn);
- }
-
- static void le_scan_cleanup(struct work_struct *work)
---
-2.25.1
-
-Regards,
-
-Zhenghan Wang
 
