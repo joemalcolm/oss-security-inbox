@@ -1,4 +1,4 @@
-Received: (qmail 21883 invoked by uid 550); 29 Dec 2025 06:06:41 -0000
+Received: (qmail 32721 invoked by uid 550); 5 Oct 2023 16:28:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +7,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21838 invoked from network); 29 Dec 2025 06:06:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766988390; x=1767593190; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hRYMN+2Izjat+SpH7JmNQUsvVyS0lhEhaErdfgoyK74=;
-        b=VEN9iHNKLfmjm264kqX3nGVR8aXHByIi5pd5Zx9ZMvEGZrTVInZC12gm+H0gom/BWG
-         Ehd/L2v0P9LuK1Wi+Q/bmP0QkmKP5fG8kUAwEXHGjhGmUchcYgtw21aDTV0HmxGNCsSF
-         t1p4fZLvhLGeKkn+ckwCXloPeuN4ExxT7JxBYPuGUjcCT5N0j2G1XXEREJjxIvyxGrdR
-         8GmUtnSIuI5aebilUsB/fHKHdJpWZqKsTpZYBdgSzc6aa/DuIhlbcPfp+c7N1tE0tTq8
-         ttcym891CNiOU48pRJZo/mNFShcB2fUgirJ6XT+tgJiWRfdm6dz+PqP6UBvpfS55OZzy
-         YEhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766988390; x=1767593190;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hRYMN+2Izjat+SpH7JmNQUsvVyS0lhEhaErdfgoyK74=;
-        b=owyeq0CTbMRvkLL33GSrMrgZET5sRptwD8fERiO2WvI6rJRRC+WRLUbKZ+XONmqy/t
-         atyCEZvjAO+cPYt9knGdxCBCycrjuxcVT3zfJpBRnlcxlMEG2OdL8LP4vGUU/Sze0LNA
-         4yPRYrFnlyopI2jdlNpWWZ+FPCEnlXKmohAFNXfiWdhjqeb5ow4j0sF3GgyB+sGQZJMh
-         i1vKpOklBAcxqCPl4xChTHftk0w4XzbjqgwoKqEm+PS9+Zxp2fdm8bNFv4MkDnUEm3Aa
-         VQqMdvNBhJsQRfBjBdAYEJHfR+KbHJGOhxo+ADbKpdGzafW1UPdKUz0GoHGarx6xEfA7
-         zzfg==
-X-Gm-Message-State: AOJu0Yxl4OQkURNWDNYYOw8Ts5oiXe/ICBxIOBQ8q0UCU1gVz1rDzUn1
-	YH1yj3KMUlw7AqA3ci5S5Wz8xgf0yZ+NiuBTJoc6HTQ2PdJo6jqzcEIBdVqYoAEB
-X-Gm-Gg: AY/fxX6v7GkYmmnkNgqFIbANU856JpYgsvvjVo09XDJZ7fH2+Ia9AtzB4suuN1x5OxL
-	rf85Osn609mWsloPPucNQ+1kRPdIFUj1Ce+cgqnfV11RzAFxSlXERxu9u+BrejkXiGwntW5gmWG
-	Bknx1XSVn7nxKbgEirivJ1VRAx6BMYAD8YbmbHgoFzTpzfK8knae4qvSWRG97iyhsn1sVVqHNPP
-	Acjbzt3EX2qCqDsgVblalQzkpCK2ij1PE4uIN6d0rUaevRPOAexZC0+RbtWmL7RCGrEeEoLBUGI
-	u9u81zZZmANgTEM5vjhdlTm87fTqWMFgnIMFp48S3Ao8T2vLdTfFidtrbs/vR4jv9zGuWCmhN8o
-	BkSBzOySersywS9ZaM84yauPtn9D84NT47pcOZ9r31zlA3r+u+ZRuxLzE9teOu2YiedJUjHXTsf
-	Z1fJ5t/ffXH6sxQ3a4GJpLKVVHIHTmQqv1VD0LwCUtUMFm
-X-Google-Smtp-Source: AGHT+IGTpaO1Lqi3bbymdFENMwYQffU+HQ5CI7V5DMEQgokZtthPimTKiPiQ+emhnZyc5WOHk75M6A==
-X-Received: by 2002:a05:6000:400f:b0:431:5ca:c1a9 with SMTP id ffacd0b85a97d-4324e4c9e82mr39206002f8f.23.1766988389729;
-        Sun, 28 Dec 2025 22:06:29 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Mon, 29 Dec 2025 07:06:27 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 32700 invoked from network); 5 Oct 2023 16:28:30 -0000
+Date: Thu, 5 Oct 2023 18:28:18 +0200
+From: Fabian Keil <freebsd-listen@fabiankeil.de>
 To: oss-security@lists.openwall.com
-Cc: Solar Designer <solar@openwall.com>, contact@gpg.fail
-Message-ID: <aVIaYxlz7Am8NcgF@eldamar.lan>
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
- <20251228042744.GA629@openwall.com>
- <0009d6cc-143e-41e6-b240-eb526a9cb306@gmail.com>
+Message-ID: <20231005182818.64a446f0@fabiankeil.de>
+In-Reply-To: <20231005135411.dw3mfr2zigmx2h5e@mutt-hbsd>
+References: <20231005081449.GA20205@unix-ag.uni-kl.de>
+	<20231005135411.dw3mfr2zigmx2h5e@mutt-hbsd>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0009d6cc-143e-41e6-b240-eb526a9cb306@gmail.com>
-Subject: Re: [oss-security] Many vulnerabilities in GnuPG
-X-Spam: Yes
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: Nzc1MDY3
+Subject: Re: [oss-security] There is a curl "severity HIGH security problem"
+ pre-announcement on GitHub
 
-Hi,
+Shawn Webb <shawn.webb@hardenedbsd.org> wrote on 2023-10-05 at 09:54:11:
 
-FTR, these two got CVE assignments so far:
+> On Thu, Oct 05, 2023 at 10:14:49AM +0200, Erik Auerswald wrote:
 
-On Sun, Dec 28, 2025 at 12:47:30AM -0600, Jacob Bachmeyer wrote:
-[...]
-> Item 3: Cleartext Signature Plaintext Truncated for Hash Calculation
-https://gpg.fail/formfeed
+> > there is a pre-announcement of a curl security problem with high severity
+> > that can be found on GitHub:
+> > 
+> >  - https://github.com/curl/curl/discussions
+> >  - https://github.com/curl/curl/discussions/12026
+> 
+> I wonder if this could also be coordinated through CERT VINCE since
+> there will be a wider impact than those on the distros mailing list.
 
-https://www.cve.org/CVERecord?id=CVE-2025-68972
+I wondered what "CERT VINCE" is supposed to mean so I tried to
+search the English Wikipedia but was unsuccessful. Probably
+even the English Wikipedia can't keep up with all the "CERTS"
+that are available now.
 
-> Item 5: Memory Corruption in ASCII-Armor Parsing
-https://gpg.fail/memcpy
+Anyway, after a proper web search I ended at [0] which says:
 
-https://www.cve.org/CVERecord?id=CVE-2025-68973
+| Welcome to the Vulnerability Information and Coordination
+| Environment (VINCE). If you are a vendor and would like to
+| communicate with us about a vulnerability or update your
+| contact information, please create an account or sign in. You
+| can also report a vulnerability to us, with or without a VINCE
+| account. For more information see the VINCE Documentation site
 
-Regards,
-Salvatore
+There doesn't seem to be a period after the last sentence,
+but maybe that's art or the page is still under construction.
+
+Apparently they are "Sponsored by CISA." and apparently
+CISA is "America's Cyber Defence Agency" [1] which seems
+to be relying a bit too much on computers without lower
+caps, otherwise their website would probably look a bit
+more professional.
+
+Luckily I use ElectroBSD [2] so I was able to spell their
+name using lower caps anyway.
+
+I also briefly looked at the "VINCE"
+"Vulnerability Disclosure Guidance" [3] and read:
+
+| A vulnerability is difficult to define. It can be thought of as
+| a flaw in software or hardware components that allows an
+| attacker to perform actions that wouldn't normally be
+| allowed. The impact of such vulnerabilities varies
+| greatly. They may allow the attacker to learn someone's private
+| email address, take control of a computer, or even cause
+| physical damage and bodily injury.
+
+My first impression is that they may be targeting children
+below ten and I wish them the best of luck in their endeavors.
+I'm already a bit older than ten and I already have enough
+accounts for somewhat dubious sites that could leak my data
+at any minute.
+
+Anyway, I suppose nobody on this list will stop you, Shawn,
+from personally giving "CERT VINCE" a heads-up that a somewhat
+important curl [4] patch will probably be published around
+2023-10-11.
+
+If they ask you what curl is you should probably use simple
+words when you explain it.
+
+Happy hacking
+Fabian
+
+[0] <https://kb.cert.org/vince/>
+[1] <https://www.cisa.gov/>
+[2] <https://www.fabiankeil.de/gehacktes/electrobsd/>
+[3] <https://kb.cert.org/vuls/guidance/>
+[4] <https://curl.se/>
