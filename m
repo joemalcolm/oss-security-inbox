@@ -1,87 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/21/3
-Message-ID: <65bdc479-3ce7-ffdd-9747-aeef94e6767d@igalia.com>
-Date: Fri, 21 Apr 2023 16:34:17 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/13
+Message-ID: <ZR8KgeGG_jLN5n4a@eldamar.lan>
+Date: Thu, 5 Oct 2023 21:12:01 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: "zdi@...ndmicro.com" <zdi@...ndmicro.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0003
-------------------------------------------------------------------------
+Hi ZDI team,
 
-Date reported           : April 21, 2023
-Advisory ID             : WSA-2023-0003
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0003.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0003.html
-CVE identifiers         : CVE-2023-25358, CVE-2022-0108, CVE-2022-32885,
-                          CVE-2023-27932, CVE-2023-27954,
-                          CVE-2023-28205.
+I do not want to land between fronts but here is my understanding:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+On Thu, Oct 05, 2023 at 05:40:58PM +0000, zdi@...ndmicro.com wrote:
+> Apologies, We have not received any notifications from the
+> developers that these issues have been patched. We will be happy to
+> update our advisories once they do so.
 
-CVE-2023-25358
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
-    lab.
-    A use-after-free vulnerability exists in WebCore::RenderLayer. This
-    issue allows remote attackers to execute arbitrary code or cause a
-    denial of service (memory corruption and application crash) via a
-    crafted web site. This is the same issue than CVE-2023-25360,
-    CVE-2023-25361, CVE-2023-25362 and CVE-2023-25363.
+So this feels like a locked situation. One one side I read from Exim
+maintainers, that there was not much information provided to actually
+determine where the issue is, neither if it is specific to Exim's use
+of libspf2 or if the issue is actually in libspf2.
 
-CVE-2022-0108
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to Luan Herrera (@lbherrera_).
-    Impact: An HTML document may be able to render iframes with
-    sensitive user information. Description: This issue was addressed
-    with improved iframe sandbox enforcement.
+On the ZDI side I read that advisories will be updated once ZDI gets
+notification from the Exim developers that the issue is patched.
 
-CVE-2022-32885
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to P1umer(@p1umer) and Q1IQ(@q1iqF).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved validation.
+And on a third front, there is the libspf2 report at
+https://github.com/shevek/libspf2/pull/44 which *might* be related,
+but nobody can tell if it's the same as ZDI-23-1472. 
 
-CVE-2023-27932
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may bypass Same
-    Origin Policy. Description: This issue was addressed with improved
-    state management.
+Again, my interest is to see this situation unblocked, and just asking
+as a member of a distribution which might have affected packages and
+for which we would want to deploy updates covering the fixes.
 
-CVE-2023-27954
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to an anonymous researcher.
-    Impact: A website may be able to track sensitive user information.
-    Description: The issue was addressed by removing origin information.
+Thanks in advance,
 
-CVE-2023-28205
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to Clément Lecigne of Google's Threat Analysis Group and
-    Donncha Ó Cearbhaill of Amnesty International’s Security Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use after free
-    issue was addressed with improved memory management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-April 21, 2023
+Regards,
+Salvatore
