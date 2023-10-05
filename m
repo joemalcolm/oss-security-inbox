@@ -1,105 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/11/2
-Message-ID: <r85p1n21-op55-n272-q38p-44pp3qq4o852@unkk.fr>
-Date: Wed, 11 Oct 2023 07:59:02 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-38546
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/14
+Message-ID:  <SA1PR14MB45951B834771F85BBB40E7BAF1CAA@SA1PR14MB4595.namprd14.prod.outlook.com>
+Date: Thu, 5 Oct 2023 20:44:39 +0000
+From: Cory McIntire <cory.mcintire@...pros.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "zdi@...ndmicro.com" <zdi@...ndmicro.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-cookie injection with none file
-===============================
+Just to be clear, Exim did release 4.96.1 with 3 of the 6 patched:
 
-Project curl Security Advisory, October 11 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-38546.html)
+https://git.exim.org/exim.git/blob/b9e0b12d9b665bbff996382264d4ba97d1a61efd:/doc/doc-txt/ChangeLog
 
-VULNERABILITY
--------------
 
-This flaw allows an attacker to insert cookies at will into a running program
-using libcurl, if the specific series of conditions are met.
+Regards,
+Cory McIntire | Lead – cPanel Application Security Team | Release Manager – EasyApache
+cory.mcintire@...pros.com<mailto:cory.mcintire@...pros.com> | cPanel – a webpros company
 
-libcurl performs transfers. In its API, an application creates "easy handles"
-that are the individual handles for single transfers.
 
-libcurl provides a function call that duplicates en easy handle called
-[curl_easy_duphandle](https://curl.se/libcurl/c/curl_easy_duphandle.html).
 
-If a transfer has cookies enabled when the handle is duplicated, the
-cookie-enable state is also cloned - but without cloning the actual
-cookies. If the source handle did not read any cookies from a specific file on
-disk, the cloned version of the handle would instead store the file name as
-`none` (using the four ASCII letters, no quotes).
 
-Subsequent use of the cloned handle that does not explicitly set a source to
-load cookies from would then inadvertently load cookies from a file named
-`none` - if such a file exists and is readable in the current directory of the
-program using libcurl. And if using the correct file format of course.
+From: Salvatore Bonaccorso <salvatore.bonaccorso@...il.com> on behalf of Salvatore Bonaccorso <carnil@...ian.org>
+Date: Thursday, October 5, 2023 at 14:13
+To: zdi@...ndmicro.com <zdi@...ndmicro.com>
+Cc: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
+Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
+Hi ZDI team,
 
-INFO
-----
+I do not want to land between fronts but here is my understanding:
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-38546 to this issue.
+On Thu, Oct 05, 2023 at 05:40:58PM +0000, zdi@...ndmicro.com wrote:
+> Apologies, We have not received any notifications from the
+> developers that these issues have been patched. We will be happy to
+> update our advisories once they do so.
 
-CWE-73: External Control of File Name or Path
+So this feels like a locked situation. One one side I read from Exim
+maintainers, that there was not much information provided to actually
+determine where the issue is, neither if it is specific to Exim's use
+of libspf2 or if the issue is actually in libspf2.
 
-Severity: Low
+On the ZDI side I read that advisories will be updated once ZDI gets
+notification from the Exim developers that the issue is patched.
 
-We set it to low because the flaw requires a series of conditions to be met
-and the likeliness that they shall allow an attacker to take advantage of it
-is low. Even if the bug could be made to trigger, the risk that a cookie
-injection can be done to cause harm is additionally also low.
+And on a third front, there is the libspf2 report at
+https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fshevek%2Flibspf2%2Fpull%2F44&data=05%7C01%7Ccory.mcintire%40webpros.com%7Ca71a744a7ab24a5e023608dbc5d722f0%7Cf8497356a834406086b6d4b1d8059ee0%7C0%7C0%7C638321300025204208%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=Sc%2Bxzp0WFVsWUshEHXSj60TaLK36D6Yfi9H6zRTUMMA%3D&reserved=0<https://github.com/shevek/libspf2/pull/44> which *might* be related,
+but nobody can tell if it's the same as ZDI-23-1472.
 
-AFFECTED VERSIONS
------------------
+Again, my interest is to see this situation unblocked, and just asking
+as a member of a distribution which might have affected packages and
+for which we would want to deploy updates covering the fixes.
 
-- Affected versions: libcurl 7.9.1 to and including 8.3.0
-- Not affected versions: libcurl < 7.9.1 and >= 8.4.0
-- Introduced-in: https://github.com/curl/curl/commit/74d5a6fb3b9a96d9f
+Thanks in advance,
 
-libcurl is used by many applications, but not always advertised as such!
+Regards,
+Salvatore
 
-The (flawed) logic that created this bug existed even before the
-`curl_easy_duphandle()` function was added, but it did not become this problem
-until this API was introduced.
-
-This flaw is not accessible using the curl command line tool.
-
-SOLUTION
-------------
-
-Starting in curl 8.4.0, curl not longer stores the file name in the cookie struct.
-
-- Fixed-in: https://github.com/curl/curl/commit/61275672b46d9abb32857404
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.4.0
-
-  B - Apply the patch to your local version
-
-  C - Call `curl_easy_setopt(cloned_curl, CURLOPT_COOKIELIST, "ALL");` right
-      after every `curl_easy_duphandle();` call.
-
-TIMELINE
---------
-
-This issue was reported to the curl project on September 14, 2023. We contacted
-distros@...nwall on October 3, 2023.
-
-libcurl 8.4.0 was released on October 11 2023, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: w0x42 on hackerone
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
