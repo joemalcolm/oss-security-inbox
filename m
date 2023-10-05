@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/7
-Message-ID: <ZR27jCirFcyI7smg@eldamar.lan>
-Date: Wed, 4 Oct 2023 21:22:52 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/8
+Message-Id: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
+Date: Thu, 5 Oct 2023 11:08:51 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, zdi@...ndmicro.com
-Subject: Re: Exim4 MTA CVEs assigned from ZDI
+Subject: European Union Cyber Resilience Act (CRA)
 Content-Type: text/plain; charset=utf-8
 
-Hi ZDI team,
+Solar Designed posted on October 1, 2023:
+> The talk... starts with a mention of the European Union Cyber Resiliance Act (CRA)
+> and how it is problematic for Open Source...
+> (If we want to discuss in here, which I'm not sure of, please start a
+> separate thread for this sub-topic, do not just reply to this one.)
 
-On Fri, Sep 29, 2023 at 07:26:45PM +0000, zdi@...ndmicro.com wrote:
-> Hi,
-> 
-> The ZDI reached out multiple times to the developers regarding
-> multiple bug reports with little progress to show for it. After our
-> disclosure timeline was exceeded by many months, we notified the
-> maintainer of our intent to publicly disclose these bugs, at which
-> time we were told, "you do what you do." If these bugs have been
-> appropriately addressed, we will update our advisories with a link
-> to the security advisory, code check-in, or other public
-> documentation closing the issue.
+Fair enough. The CRA *definitely* impacts open source software,
+and it includes security-related requirements. So it seems on-topic for this mailing list, at
+least to note that *many* people find the CRA concerning & to point to more information.
 
-As there is still some confusion around the libspf2 related issue: can
-you confirm or deny if the issue CVE-2023-42118 / ZDI-23-1472 is
-covered by https://github.com/shevek/libspf2/pull/44 ?
+I think a good place to start is "Understanding the Cyber Resilience Act:
+What Everyone involved in Open Source Development Should Know" from the Linux Foundation:
+https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
 
-Regards,
-Salvatore
+As currently written, individual developers of OSS are "probably excluded by the CRA requirements, even if you occasionally accept donations. But if you regularly charge or accept recurring donations from commercial entities (for example, if you do open source consulting), you’ll likely be covered by the CRA."
+The bigger problem is that nonprofits & private companies are expected to a lot of things that don't make much sense. As noted, "the assumptions the CRA makes about software manufacturers do not necessarily hold for open source software developers."
+
+The Linux Foundation EU has a page about the CRA:
+https://linuxfoundation.eu/cyber-resilience-act
+... it has many links, and is urging people work to #FixTheCRA.
+
+Many organizations *have* been trying to get EU regulators to fix the CRA. This isn't a case where no one spoke up. The problem is that for the most part their concerns have been ignored by regulators:
+https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Eclipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
+
+I think the overall *goals* of the CRA are laudable. However, when evaluating laws & regulations you should always IGNORE their goals, because their goals are IRRELEVANT. What matters is what the laws and regulations will actually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for evaluating laws and regulations. In this case, I think too many regulators are focused on theoretical goals while ignoring what will actually happen.
+
+Full disclosure: I work for the Linux Foundation, but I'm just speaking for myself here.
+
+--- David A. Wheeler
+
