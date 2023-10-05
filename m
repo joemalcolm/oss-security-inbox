@@ -1,85 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/12
-Message-ID: <ZRHp39Aa3dOf1y/O@westworld>
-Date: Mon, 25 Sep 2023 13:13:19 -0700
-From: Kyle Zeng <zengyhkyle@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/10
+Message-ID: <20231005160242.GA4750@openwall.com>
+Date: Thu, 5 Oct 2023 18:02:43 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2023-42755] Linux kernel wild pointer access <= v6.2
+Cc: zdi@...ndmicro.com
+Subject: Re: Exim4 MTA CVEs assigned from ZDI
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+On Thu, Oct 05, 2023 at 10:17:41AM +0200, Heiko Schlittermann wrote:
+> Hi ZDI,
 
-I recently found a bug in the rsvp traffic classifier in the Linux kernel.
-This classifier is already retired in the upstream but affects all stable
-releases. More specifically, this bug affects v6.1, v5.15, v5.10, v5.4,
-v4.19, and v4.14.
+If we want to talk to ZDI, we need to CC them explicitly - added.
 
-The symptom of the bug is that the kernel can be tricked into accessing a
-wild pointer, thus crash the kernel.
+ZDI - please let us all know if you have any comments on the below.
 
-[Root Cause]
-The root cause of the bug is an slab-out-of-bound access, but since the
-offset to the original pointer is an `unsigned int` fully controlled by
-users, the behaviour is ususally a wild pointer access.
+Also to ZDI, I think at this point it'd work best if you make all of
+the available detail on these bugs public.  Will you, please?  The
+advisories you published so far are non-specific to the point of being
+almost useless beyond an initial heads-up.  Sorry for being so direct.
 
-in `rsvp_change`, RSVP_PINFO is passed to the kernel without any checks
-~~~
-static int rsvp_change(...)
-{
-        ......
-        if (tb[TCA_RSVP_PINFO]) {
-                pinfo = nla_data(tb[TCA_RSVP_PINFO]);
-                f->spi = pinfo->spi;
-                f->tunnelhdr = pinfo->tunnelhdr;
-        }
-        ......
-        if (pinfo) {
-                s->dpi = pinfo->dpi;
-                s->protocol = pinfo->protocol;
-                s->tunnelid = pinfo->tunnelid;
-        }
-        ......
-}
-~~~
+> zdi@...ndmicro.com <zdi@...ndmicro.com> (Mi 04 Okt 2023 23:01:37 CEST):
+> > We have received a notification from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
+> 
+> https://exim.org/static/doc/security/CVE-2023-zdi.txt
+> 
+> As publicly advertised, we patched only *a subset* of the issues.  And
+> those patches are available to the public.  Unfortunately there is no
+> confirmation from your side, whether those fixes really fix the issues.
+> 
+> One of the open issues is related to libspf2, which is Exim a user of,
+> but not responsible for.
+> 
+>  ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
+> 
+> And about exactly *this libspf2* issue Salvatore asked you for information.
+> 
+> (As I did on Oct 1st already, along with the request for additional information on one of
+> the other unfixed issues (DNSDB)). I didn't receive any response yet.
+> 
+>     Best regards from Dresden/Germany
+>     Viele Gr????e aus Dresden
+>     Heiko Schlittermann
+> --
+>  SCHLITTERMANN.de ---------------------------- internet & unix support -
+>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-As a result, later when the classifier actually does the classification
-in `rsvp_classify`:
-~~~
-TC_INDIRECT_SCOPE int RSVP_CLS(struct sk_buff *skb, const struct tcf_proto *tp,
-                               struct tcf_result *res)
-{
-        ......
-        *(u32 *)(xprt + s->dpi.offset) ^ s->dpi.key)
-        ......
-}
-~~~
-`xprt + s->dpi.offset` becomes a wild pointer and crashes the kernel.
-
-[Severity]
-This will cause a local denial-of-service.
-
-[Patch]
-The patch is to follow the upstream and retire the rsvp classifier in
-all the stable trees.
-And it is queued in all the stable trees, but not merged yet.
-For example, the patch for v6.1 can be found here:
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
-
-[Affected Version]
-I confirmed that this bug affects v6.2, v6.1, v5.15, v5.10, v5.4,
-v4.19, and v4.14.
-
-[Proof-of-Concept]
-A PoC file is attached to this email.
-
-[Splash]
-A kernel oops splash is attached to this email.
-
-This issue is assigned with CVE-2023-42755.
-
-Best,
-Kyle Zeng
-
-View attachment "poc.c" of type "text/x-csrc" (27151 bytes)
-
-View attachment "splash" of type "text/plain" (5006 bytes)
+Alexander
