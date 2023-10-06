@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/17/3
-Message-ID: <235eb56c-4f49-b803-fb0a-4765e08b79fd@posteo.de>
-Date: Tue, 17 Oct 2023 11:44:55 +0000
-From: "W. Wadepohl" <w.wadepohl@...teo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/5
+Message-ID: <27cb8fce-75c8-47bb-9dbc-87dbe14a6109@oracle.com>
+Date: Fri, 6 Oct 2023 15:04:27 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: CVE-2023-45322: Use-after-free in libxml2 through 2.11.5
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann wrote in
->   |And adhere the spirit of Free and Open Source (as far as I understand it),
->   |that there is no instance that can judge about political, ethical,
->   |religious issues. Free means free. Open means open.
-I acknowledge that linux-distros list is not free as in freedom. The 
-members of linux-distros mostly do business in the U.S. and therfore 
-they have to comply to the rules of the U.S. This rules does not honor 
-the freedom of the open source community. They exclude parts of the free 
-community.
+https://www.cve.org/CVERecord?id=CVE-2023-45322 was published today.  It reports:
 
-That's sad and they do not support the concept of freedom on whose 
-foundation the open source community is built.
+ > libxml2 through 2.11.5 has a use-after-free that can only occur after a
+ > certain memory allocation fails. This occurs in xmlUnlinkNode in tree.c.
+ > NOTE: the vendor's position is "I don't think these issues are critical
+ > enough to warrant a CVE ID ... because an attacker typically can't control
+ > when memory allocations fail."
 
-BTW: As I exlained some times ago, the most instances of GNU/Linux are 
-NOT distros, but embedded systems. The embargo of security information 
-to these developers makes the internet more insecure. Maybe the European 
-CRA will change something in the future.
+The reproducer is attached to the upstream bug report at:
+https://gitlab.gnome.org/GNOME/libxml2/-/issues/583
+and is run via
+"./libxml2/xmllint --copy --html --maxmem 315229 input.xml"
 
-I'm not happy to get information about security vulnerabilities/fixes 
-with a time lag where my tenthousends of IoT devices are vulnerable.
+The fix is in the git master branch, but not yet any release:
+https://gitlab.gnome.org/GNOME/libxml2/-/commit/d39f78069dff496ec865c73aa44d7110e429bce9
 
 -- 
-Wolfram Wadepohl
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
