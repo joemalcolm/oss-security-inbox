@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["752" "Monday" "22" "May" "2017" "15:13:42" "-0600" "Kurt Seifried" "kseifrie@redhat.com" "<0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>" "25" "Re: [oss-security] How to request a CVE for open source projects" "^Date:" nil nil "5" "2017052221:13:42" "[oss-security] How to request a CVE for open source projects" (number mark "        kseifrie@red May 22   25/752   " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<20170522194526.GC63527@wopr>" ("<1495476334.15944.2@mail.igalia.com>" "<20170522185720.GA13059@suse.de>" "<20170522194526.GC63527@wopr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20383 invoked by uid 550); 22 May 2017 21:13:55 -0000
+Received: (qmail 32326 invoked by uid 550); 6 Oct 2023 17:38:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20362 invoked from network); 22 May 2017 21:13:55 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
-         :subject:message-id:references:in-reply-to:to;
-        bh=hdO5KX1EnpWSsbF6UmGAw/+Vjgs/E1LAALyFrexyywM=;
-        b=LAhK/r3II4PnyVreP80HdQUIrEVRboyjab2qIIVZsF9tz5GYHitsaIidYNrxfgU32O
-         IasCt48qO+SD5DXxPVFaWJpQ2AoNHxdrPnhtye1YX//71o4C3/Cdw4atgvjbZpAosCEG
-         aKucvljtGdPo9WrGdVqq0xMENCWT/tfQb2Y22zHYs772b6vhqsKDh/DRgt2aCsepxRyH
-         bVuwtSLhCkfguQVTtMTq5LiMEWRWTvfNMeuwM3Bgd6w7J0Ai62s8Y0AevpvDVfEy6FxA
-         3IVXDoovpp7LPicTbfCqO1L6lRwamobs34xhSno1ltVbMifQri60ajQfI5v7sqUN2TI8
-         SiMQ==
-X-Gm-Message-State: AODbwcBV0c+TXS+0DKg8gMk+kNmQ4A8wCeMAUMwuxyhkpA3OVe0ytTEi
-	L+TZ3dWJWNWdPTWF7tGONQ==
-X-Received: by 10.107.136.17 with SMTP id k17mr25539363iod.89.1495487623462;
-        Mon, 22 May 2017 14:13:43 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (1.0)
-Message-Id: <0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
-References: <1495476334.15944.2@mail.igalia.com> <20170522185720.GA13059@suse.de> <20170522194526.GC63527@wopr>
-In-Reply-To: <20170522194526.GC63527@wopr>
-X-Mailer: iPhone Mail (14F89)
-Date: Mon, 22 May 2017 15:13:42 -0600
-From: Kurt Seifried <kseifrie@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to request a CVE for open source projects
+Received: (qmail 32167 invoked from network); 6 Oct 2023 17:38:42 -0000
+Date: Fri, 6 Oct 2023 19:38:34 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20231006173834.GA11017@openwall.com>
+References: <20231001191303.GA8910@openwall.com> <20231005055957.GB12482@1wt.eu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231005055957.GB12482@1wt.eu>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] "Linux Kernel security demistified"
 
-Well actually they can. Why do you think we (DWF) have an extensible Json f=
-ormat with the data hosted in git? Hint: so people can contribute.
+Hi Willy,
 
+On Thu, Oct 05, 2023 at 07:59:57AM +0200, Willy Tarreau wrote:
+> On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
+> > I wonder whether the kernel documentation could, however, be encouraging
+> > rather than discouraging (as it currently is) about issue reporters
+> > themselves contacting linux-distros after a fix is ready.  I wonder if a
+> > patch like that would be accepted?
+> 
+> Just as a quick heads up on this, I discussed with Greg there and proposed
+> to send a patch proposal to rework that part to take into account your now
+> relaxed rules. My goal is to let the reporter decide on their own, and let
+> them decide what they want to do after checking the linux-distros rules.
 
--Kurt
+This sounds just right to me.  Thank you!
 
+> There could be a good motivation for some reporters to go there because a
+> number of them are first-timers who are seeking a Curriculum Vitae Enhancer
+> (CVE) ID that s@k.o doesn't deal with. But I also want to remind (I know I
+> may sound like a scratched record) that it's not because some may report
+> there that distros will magically be aware of all security issues, given
+> that those arriving on s@k.o are really a tiny portion and many more bugs
+> are fixed without anyone having a security look on them.
 
+Of course.  What makes these reports special is that the reporters often
+intend to make them public as security issues, sometimes have exploits.
 
+> I'm just too short of time for now, having to catch up with what I left
+> for the 3 days of KR2023, but it's on my todo list to propose a patch to
+> Greg. I'm having reasonable hopes that we can end up with something
+> smoother in the near future.
 
+Sounds great.
 
-> On May 22, 2017, at 13:45, Kurt H Maier <khm@sciops.net> wrote:
->=20
->> On Mon, May 22, 2017 at 08:57:21PM +0200, Marcus Meissner wrote:
->>=20
->> Please everyone do the distributors a favour and link to GIT commits wit=
-h fixes for
->> the requested CVE or at least explicit single reproducers, as we have in=
-creasing trouble
->> of associating CVEs with the correct place in code.
->=20
-> This is only gonna get worse now that mitre cut the mailing list out of
-> the process, and third-party participants can no longer add commentary
-> and insight into the reported vulnerabilities.
->=20
-> khm
+Please keep me and Vegard Nossum <vegard.nossum@oracle.com> CC'ed on the
+patch submission.
+
+Thanks,
+
+Alexander
