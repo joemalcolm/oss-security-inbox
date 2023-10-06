@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/04/1
-Message-ID: <b449ea7c-4709-b624-3563-dbc3d2c9a9ab@apache.org>
-Date: Tue, 04 Jul 2023 12:16:34 +0000
-From: Arnout Engelen <engelen@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34150: Apache Any23: Possible excessive allocation of resources reading input. 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/6
+Message-ID: <20231006221824.GA14376@openwall.com>
+Date: Sat, 7 Oct 2023 00:18:24 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Daniel Weber <daniel.weber@...pa.de>
+Cc: oss-security@...ts.openwall.com, fabian.thomas@...pa.de, lukas.gerlach@...pa.de, ruiyi.zhang@...pa.de, Michael Schwarz <michael.schwarz@...pa.de>
+Subject: Re: Meltdown-US / Meltdown 3a Remaining Leakage
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Hello Daniel et al.,
 
-- Apache Any23 through 2.7
+Thank you very much for your research and for posting about it in here!
 
-Description:
+On Fri, Oct 06, 2023 at 12:07:17PM +0200, Daniel Weber wrote:
+> we analyzed the remaining leakage of the "original" Meltdown attack 
+> (Meltdown-US) (1) and the variant Meltdown 3a (2). We discovered that 
+> the "original" Meltdown attack can be abused to infer the cache state of 
+> memory pages that remain mapped despite KPTI. This allows an attacker to 
+> monitor interrupt activity.
 
-** UNSUPPORTED WHEN ASSIGNED ** Use of TikaEncodingDetector in Apache Any23 can cause excessive memory usage.
+I assume you're talking specifically about Linux's KPTI.  Let's be
+naming Linux explicitly, as this list isn't only about Linux.
 
-Credit:
+In Linux, /proc/interrupts is generally world-readable.  So perhaps
+that's something to fix first, since yes it's known to allow for
+keystroke timing attacks.  Should be fixed in the kernel or/and chmod'ed
+by the userland.  And then:
 
-Liran Mendelovich (finder)
+> 1) Preventing the Meltdown attack from leaking information about the 
+> cache state can be achieved by marking the remaining memory pages, e.g., 
+> the IDT, as uncacheable. This can be achieved by using a memory-type 
+> range register (MTRR) or by modifying the corresponding page-table entries.
 
-References:
-
-https://attic.apache.org/projects/any23.html
-https://www.cve.org/CVERecord?id=CVE-2023-34150
-
+Alexander
