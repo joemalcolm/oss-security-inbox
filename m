@@ -1,41 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/10/1
-Message-ID: <b43dbbf1358a42df945de86dee00f452109a7a2e.camel@debian.org>
-Date: Sat, 10 Jun 2023 11:51:21 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Solar Designer talk about 15 years of oss-security at SSTIC conference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/07/1
+Message-ID: <1iLJYbN7VtNIg5-o6dPXR34I6-WI5UdW2ZyWFSMgRiR-abCcth2LlXBumowcq4HAvy0WbBfFYUed5j7mwz_SwP2GDSowzBRxHijTRpxXSYk=@proton.me>
+Date: Sat, 07 Oct 2023 08:43:03 +0000
+From: public1020 <public1020@...ton.me>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: How can I join the linux-distros mailing list and become a representative?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+My firm is one of the largest cloud provider in China and I would like to add our distro name to the website and become a disto representative.
+https://oss-security.openwall.org/wiki/mailing-lists/distros
 
-Hi all,
+The reason is that we have our own Linux distribution and we need to receive vulnerabilities notifications to prepare our packages in advance.
 
-while conference talks aren't really the list focus, I guess there might be an
-exception for this one.
-
-Earlier this week, Solar Designer made the opening keynote of the SSTIC
-conference in Rennes (France). A retrospective about the open-source security
-community and coordination around vulnerabilities, attack surface etc.
-
-For interested people, the video replay is available at
-https://www.sstic.org/2023/presentation/ouverture_2023/
-
-Many thanks to Solar Designer for the talk and all the years of managing oss-
-security (and the distros list).
-
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmSER5oACgkQ3rYcyPpX
-RFs8UggAh23FhFo9nbg+hPovw5sZ1cQuHxcCpVmnWE5COhUSzmF1/JVSEZMLWxez
-dOeVEgvCJWOl92u0lwTiTfK+tG4eNi0R2UO+uQHW+pv/5dPMV1ti/DmpwD/BhS6w
-FzzpUdMM05E9hZEDjOfsXJkBn4pMg3kCzrSuK/KlOdkp9/qI7dCD4J27KwZX2VDB
-tih4MjBexSUkdaX/hhvWq7n9plvs5Jbf8U4vy4jBaHFlVdJohu3QVrPb5H7p7mAW
-YVkUhhPX8GSBBtkAoIYcnrDZQv4762PVkixV6dRZlhowjbzsBJ198PRk1Ct7Pepo
-gRAM0FC7qE4GMyXTFhU2b80wLSTB9Q==
-=K4GU
------END PGP SIGNATURE-----
+How can I do that? Please advise.
