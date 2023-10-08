@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1766" "Thursday" "11" "February" "2016" "11:09:45" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160211160945.927E16C016A@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: Linux kernel: Flaw in CXGB3 driver." nil nil nil "2" "2016021116:09:45" "[oss-security] Re: Linux kernel: Flaw in CXGB3 driver." (number mark "U       cve-assign@m Feb 11   42/1766  " thread-indent "\"[oss-security] Re: Linux kernel: Flaw in CXGB3 driver.\"\n") "<929915505.18990807.1455190810330.JavaMail.zimbra@redhat.com>" ("<929915505.18990807.1455190810330.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1790 invoked by uid 550); 11 Feb 2016 16:09:58 -0000
+Received: (qmail 7996 invoked by uid 550); 8 Oct 2023 09:04:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1771 invoked from network); 11 Feb 2016 16:09:57 -0000
-From: cve-assign@mitre.org
-To: wmealing@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <929915505.18990807.1455190810330.JavaMail.zimbra@redhat.com>
-Message-Id: <20160211160945.927E16C016A@smtpvmsrv1.mitre.org>
-Date: Thu, 11 Feb 2016 11:09:45 -0500 (EST)
-Subject: [oss-security] Re: Linux kernel: Flaw in CXGB3 driver.
+Received: (qmail 32747 invoked from network); 8 Oct 2023 06:56:05 -0000
+Message-ID: <09205bd9-a5b6-48db-81ec-064d77e94248@cispa.de>
+Date: Sun, 8 Oct 2023 08:55:51 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Solar Designer <solar@openwall.com>
+CC: <oss-security@lists.openwall.com>, <fabian.thomas@cispa.de>,
+	<lukas.gerlach@cispa.de>, <ruiyi.zhang@cispa.de>, Daniel Weber
+	<daniel.weber@cispa.de>
+References: <0fedc6a9-9be7-56f3-2ee0-0e07875b86ba@cispa.de>
+ <20231006221824.GA14376@openwall.com>
+Content-Language: en-US
+From: Michael Schwarz <michael.schwarz@cispa.de>
+In-Reply-To: <20231006221824.GA14376@openwall.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.250.9.199]
+X-ClientProxiedBy: excmbx-11.um.gwdg.de (134.76.9.220) To excmbx-08.um.gwdg.de
+ (134.76.9.215)
+X-Virus-Scanned: (clean) by clamav
+Subject: Re: [oss-security] Meltdown-US / Meltdown 3a Remaining Leakage
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Alexander,
 
-> The kernel would incorrectly misinterpret the congestion as an error
-> condition and incorrectly free/clean up the skb. When the device would
-> then send the skb's queued, these structures would be referenced and
-> may panic the system or allow an attacker to escalate privileges in a
-> use-after-free scenario.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1303532
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=67f1aee6f45059fd6b0f5b0ecb2c97ad0451f6b3
+On 07.10.23 00:18, Solar Designer wrote:
+> In Linux, /proc/interrupts is generally world-readable.  So perhaps
+> that's something to fix first, since yes it's known to allow for
+> keystroke timing attacks.  Should be fixed in the kernel or/and chmod'ed
+> by the userland.  And then:
+Yes, that is true. Android, for example, prevents unprivileged access 
+since version 8 to this file to prevent such attacks:
 
->> iw_cxgb3: Fix incorrectly returning error on success
+https://issuetracker.google.com/issues/37140047?pli=1
 
->> The cxgb3_*_send() functions return NET_XMIT_ values, which are
->> positive integers values. So don't treat positive return values
->> as an error.
+If our proposed mitigation is implemented (e.g., as opt-in using a 
+kernel command-line parameter), the implementation could additionally 
+prevent unprivileged access to /proc/interrupts.
 
-Use CVE-2015-8812.
+Michael
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
 
-iQIcBAEBCAAGBQJWvLGDAAoJEL54rhJi8gl57ccP/i7P/Xbr+IaRUk+au68bEyZN
-sHQgp11Wtr/HqXIiWStT8RKXvtawLfaV85TvrbfjGk/nqnkVHbHoN2cdxC2uJ7xY
-8wxTxFqp/Wbficv8WqgB0u5f0TF/1TqHAqKf96KP3CriXrCOtkOc1hx74NhmFjot
-pcET5/eAuQo6/AjlY7TYQeSz+3G9AOXzLsFEb3Lx5LabeKPM0tgjzWJ1IJW5kHLh
-XL84Gg13K0Bmbu3XNj2a5yljPjCRv3qUChPuSd28u46Kks6KbYcmhYZJZ6kylgGR
-IlqygWH5G7q/sKLDrqii/QUe4nu1tKevAd7XwMpghiVSb46+YrsAXIkpSnR8/cPd
-9gZypJTefYhE4DWjSCMCoQLuYua0tTBy7ux0ddRNBPPIg2fvmEYQh+k2L7fHSFAR
-PZwqzB9m96LUlmrlN5JNdpJ17KofwEe31DO0OqIR3oDM+YekmvkeH26Mqf9ptYO+
-AsLkK3ETCgbaF+qFdj0w/zUWn0gDjh4jZ8cqFg5K6KmPPXGI7NNIGPucqPsgreav
-5ZypVYSxiy9PDYribiTjPFiWjP39I4DGXfkWrCtAvYSk8XZ9R+RMV8SdX4ESEguY
-7j0U0QCrAz8FQ9jZbB5IYXJFGDfifA5ZfGlAGat6ErFAZu7dubuwu9cCPV7FdrTf
-7OzqpxKgRFFRMU/A8fGk
-=uNQt
------END PGP SIGNATURE-----
+Dr. Michael Schwarz
+Faculty
+
+CISPA Helmholtz Center for Information Security
+Stuhlsatzenhaus 5, Saarland Informatics Campus
+66123 Saarbrücken, Germany
+Mail: michael.schwarz@cispa.de
+Web: https://www.cispa.saarland
+
