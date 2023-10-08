@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["759" "Thursday" "2" "July" "2020" "13:34:03" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2007021325170.16951@tvnag.unkk.fr>" "20" "Re: [oss-security] Contributing Back" "^cc:" nil nil "7" "2020070211:34:03" "[oss-security] Contributing Back" (number mark "        daniel@haxx. Jul  2   20/759   " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>" ("<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>" "<CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30152 invoked by uid 550); 2 Jul 2020 11:34:18 -0000
+Received: (qmail 21712 invoked by uid 550); 8 Oct 2023 08:19:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +6,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30110 invoked from network); 2 Jul 2020 11:34:18 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.2007021325170.16951@tvnag.unkk.fr>
-References: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com> <CAKgU3W_1sg2DLq3_H2hs6QTb0sK=7by7f8bbkhdjZia6zStoQQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-cc: oss-security@lists.openwall.com, xiao.zhang@windriver.com,
-        Solar Designer <solar@openwall.com>
-Date: Thu, 2 Jul 2020 13:34:03 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Contributing Back
-To: Francis Perron <francisp@google.com>
+Received: (qmail 21691 invoked from network); 8 Oct 2023 08:19:48 -0000
+Date: Sun, 8 Oct 2023 10:18:13 +0200
+From: Fabian Keil <freebsd-listen@fabiankeil.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20231008101808.54aa75f7@fabiankeil.de>
+In-Reply-To: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
+References: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: Nzc1MDY3
+Subject: Re: [oss-security] European Union Cyber Resilience Act (CRA)
 
-On Thu, 2 Jul 2020, Francis Perron wrote:
+"David A. Wheeler" <dwheeler@dwheeler.com> wrote on 2023-10-05 at 11:08:51:
 
->  this delay may be possible due to many things, but the simplest possibility 
-> that comes to mind is that Daniel (here cc'd) from H1 has only gotten a 
-> reservation of CVE number, and he and MITRE have not triggered the 
-> submission yet.
+> Solar Designed posted on October 1, 2023:
+> > The talk... starts with a mention of the European Union Cyber Resiliance Act (CRA)
+> > and how it is problematic for Open Source...
+> > (If we want to discuss in here, which I'm not sure of, please start a
+> > separate thread for this sub-topic, do not just reply to this one.)
+> 
+> Fair enough. The CRA *definitely* impacts open source software,
+> and it includes security-related requirements. So it seems on-topic for this mailing list, at
+> least to note that *many* people find the CRA concerning & to point to more information.
 
-In the curl project we (nowadays) request and get CVE IDs from Hackerone, and 
-we've subsequently told them to publish these two recent curl related CVE IDs 
-when we made them public to the world - I suspect this is just them being a 
-little slow. We don't have any direct contact with MITRE.
+I agree that it's on-topic.
 
-All details regarding the two recent curl flaws are here:
+> I think a good place to start is "Understanding the Cyber Resilience Act:
+> What Everyone involved in Open Source Development Should Know" from the Linux Foundation:
+> https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
 
-  https://curl.haxx.se/docs/CVE-2020-8169.html
-  https://curl.haxx.se/docs/CVE-2020-8177.html
+I tried to access this URL but it seems to be "protected" by
+ClownFlare and as a Tor user I'm apparently not allowed to
+access the page without executing proprietary JavaScript,
+for details see [0].
 
--- 
+Maybe someone from the "Linux Foundation" could fix this
+as it looks a bit ridiculous to me.
 
-  / daniel.haxx.se
+If their GNU/Linux servers can't handle the load anymore
+they could probably simply use a BSD instead ...
+
+> The Linux Foundation EU has a page about the CRA:
+> https://linuxfoundation.eu/cyber-resilience-act
+> ... it has many links, and is urging people work to #FixTheCRA.
+
+Sounds somewhat interesting but accessing it seems to require
+the execution of proprietary JavaScript as well so I didn't read
+it either.
+
+> Many organizations *have* been trying to get EU regulators
+> to fix the CRA. This isn't a case where no one spoke up.
+> The problem is that for the most part their concerns have
+> been ignored by regulators:
+> https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Eclipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
+
+Great, a link that actually works.
+
+The "demands" seem somewhat reasonable to me:
+
+| Moving forward, we urge you to engage with the open source
+| community and take our concerns into account as you consider the
+| implementation of the Cyber Resilience Act. Specifically, moving
+| forward, we urge you to:
+|
+| 1. Recognise the unique characteristics of open source software
+|    and ensure that the Cyber Resilience Act does not
+|    unintentionally harm the open source ecosystem.
+| 2. Consult with the open source community during the co-legislative
+|    process.
+| 3. Ensure that any development under the CRA takes into account
+|    the diversity of open and transparent open source software
+|    development practices.
+| 4. Establish a mechanism for ongoing dialogue and collaboration
+|    between the European institutions and the open source community,
+|    to ensure that future legislation and policy decisions are informed.
+
+Of course the organisations that wrote the letter don't actually
+represent the whole "open source community" which I assume includes
+the free software community as well but I assume the "demands" will
+be ignored anyway so it probably doesn't make a difference.
+
+> I think the overall *goals* of the CRA are laudable.
+
+I must confess that I still haven't figured out what the goals
+are supposed to be. The article you posted above doesn't seem
+to mention the goals or maybe I just overlooked them.
+
+Anyway:
+
+>                                                      However,
+> when evaluating laws & regulations you should always IGNORE
+> their goals, because their goals are IRRELEVANT. What matters
+> is what the laws and regulations will actually *CAUSE*. Put
+> another way, RESULTS are the *only* legitimate basis for
+> evaluating laws and regulations.
+
+Agreed.
+
+> In this case, I think too many regulators are focused on
+> theoretical goals while ignoring what will actually happen.
+
+Given that we are talking about the EU I also wouldn't
+rule out the possibility that at least some regulators
+have already been bought by "lobbyists" and thus aren't
+interested in doing "the right thing" anyway and then
+there are probably a fair amount of regulators who are
+simply to stupid to understand reasonable arguments ...
+
+Happy hacking,
+Fabian
+
+[0] <https://curl.se/mail/lib-2023-09/0056.html>
