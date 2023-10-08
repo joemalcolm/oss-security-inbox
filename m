@@ -1,57 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/08/1
-Message-ID: <a6c3f418-bb63-4591-b0c1-fc3e90eb0c1d@oracle.com>
-Date: Fri, 8 Dec 2023 10:54:02 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/08/4
+Message-ID: <20231008214734.GA20938@openwall.com>
+Date: Sun, 8 Oct 2023 23:47:34 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49284: fish command substitution output can trigger shell expansion
+Subject: Re: European Union Cyber Resilience Act (CRA)
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/fish-shell/fish-shell/security/advisories/GHSA-2j9r-pm96-wp4f
-reports:
+On Sun, Oct 08, 2023 at 01:56:15PM -0700, Jean Luc Picard wrote:
+> These people are not developers live & govern a part of earth ripe with
+> anti-communist/socialist sentiment.
 
-Package: fish-shell
-Affected versions: < 3.6.2
-Patched versions: 3.6.2
-CVSS: 3.9 (CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:L)
-CVE ID: CVE-2023-49284
+Let's avoid non-essential references to political sentiments here.
 
-Impact:
+> If you were to explain to them that
+> their cellphones security is protected by things like 'community' &
+> 'sharing', they'd likely blow a gasket.
 
-fish shell uses certain Unicode non-characters internally for marking wildcards 
-and expansions. It will incorrectly allow these markers to be read on command 
-substitution output, rather than transforming them into a safe internal 
-representation.
+Oh, they're well aware of that.  From the Apache Foundation blog post:
 
-While this may cause unexpected behavior with direct input (for example, echo 
-\UFDD2HOME has the same output as echo $HOME), this may become a minor security 
-problem if the output is being fed from an external program into a command 
-substitution where this output may not be expected.
+https://news.apache.org/foundation/entry/save-open-source-the-impending-tragedy-of-the-cyber-resilience-act
 
-Consider the following:
+"The current definitions3 are such that the CRA applies to the ASF, all
+of its (volunteer) developers, and all our output. And, as the ASF
+understands from its meeting with policy makers, this was intentional."
 
-In foo.py:
+"As the regulation of open source is intentional, and there is also a
+lot of common sense, good (open source) practices, in the CRA: the
+expectation is that we are past the point where asking for a blanket
+exception is productive."
 
-print("\ufdd2HOME") # Perhaps this value is retrieved from a database or 
-external source
+> It appears it's too late to bring
+> in the real industry experts into the committee meetings but not too late
+> to make a meaningful difference.  That said, the community at large needs
+> to prepare for a lull in rights & freedoms.  Perhaps if it got to a point
+> to where, like the cookie law, some vital repositories start geoip blocking
+> in protest, things might move along.  One thing for sure, things are about
+> to get weird.
 
-At the shell:
+I advise against premature protests by people who haven't even bothered
+to read the available material on the topic.
 
- > echo $(python3 foo.py)
-/home/fishuser
-
-This design flaw was introduced in very early versions of fish, predating the 
-version control system, and is thought to be present in every version of fish 
-released in the last 15 years or more, although with different characters.
-
-Code execution does not appear to be possible, but denial of service (through 
-large brace expansion) or information disclosure (such as variable expansion) is 
-potentially possible under certain circumstances.
-
-Patches:
-
-fish shell 3.6.2 has been released to correct this issue.
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Alexander
