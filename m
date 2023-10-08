@@ -1,113 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/16/2
-Message-Id: <E1pSiJN-0000j3-5f@xenbits.xenproject.org>
-Date: Thu, 16 Feb 2023 17:44:49 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 426 v2 (CVE-2022-27672) - x86: Cross-Thread Return Address Predictions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/08/3
+Message-ID: <CADxcaYWJSr58Jt4AurxpvMCk3-K_SvfgExn_jnAZ7wyFWQ8ouQ@mail.gmail.com>
+Date: Sun, 8 Oct 2023 13:56:15 -0700
+From: Jean Luc Picard <atari2600a@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: European Union Cyber Resilience Act (CRA)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+These people are not developers live & govern a part of earth ripe with
+anti-communist/socialist sentiment.  If you were to explain to them that
+their cellphones security is protected by things like 'community' &
+'sharing', they'd likely blow a gasket.  It appears it's too late to bring
+in the real industry experts into the committee meetings but not too late
+to make a meaningful difference.  That said, the community at large needs
+to prepare for a lull in rights & freedoms.  Perhaps if it got to a point
+to where, like the cookie law, some vital repositories start geoip blocking
+in protest, things might move along.  One thing for sure, things are about
+to get weird.
 
-            Xen Security Advisory CVE-2022-27672 / XSA-426
-                               version 2
+On Sun, Oct 8, 2023 at 1:21 AM Fabian Keil <freebsd-listen@...iankeil.de>
+wrote:
 
-             x86: Cross-Thread Return Address Predictions
+> "David A. Wheeler" <dwheeler@...eeler.com> wrote on 2023-10-05 at
+> 11:08:51:
+>
+> > Solar Designed posted on October 1, 2023:
+> > > The talk... starts with a mention of the European Union Cyber
+> Resiliance Act (CRA)
+> > > and how it is problematic for Open Source...
+> > > (If we want to discuss in here, which I'm not sure of, please start a
+> > > separate thread for this sub-topic, do not just reply to this one.)
+> >
+> > Fair enough. The CRA *definitely* impacts open source software,
+> > and it includes security-related requirements. So it seems on-topic for
+> this mailing list, at
+> > least to note that *many* people find the CRA concerning & to point to
+> more information.
+>
+> I agree that it's on-topic.
+>
+> > I think a good place to start is "Understanding the Cyber Resilience Act:
+> > What Everyone involved in Open Source Development Should Know" from the
+> Linux Foundation:
+> >
+> https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
+>
+> I tried to access this URL but it seems to be "protected" by
+> ClownFlare and as a Tor user I'm apparently not allowed to
+> access the page without executing proprietary JavaScript,
+> for details see [0].
+>
+> Maybe someone from the "Linux Foundation" could fix this
+> as it looks a bit ridiculous to me.
+>
+> If their GNU/Linux servers can't handle the load anymore
+> they could probably simply use a BSD instead ...
+>
+> > The Linux Foundation EU has a page about the CRA:
+> > https://linuxfoundation.eu/cyber-resilience-act
+> > ... it has many links, and is urging people work to #FixTheCRA.
+>
+> Sounds somewhat interesting but accessing it seems to require
+> the execution of proprietary JavaScript as well so I didn't read
+> it either.
+>
+> > Many organizations *have* been trying to get EU regulators
+> > to fix the CRA. This isn't a case where no one spoke up.
+> > The problem is that for the most part their concerns have
+> > been ignored by regulators:
+> >
+> https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Eclipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
+>
+> Great, a link that actually works.
+>
+> The "demands" seem somewhat reasonable to me:
+>
+> | Moving forward, we urge you to engage with the open source
+> | community and take our concerns into account as you consider the
+> | implementation of the Cyber Resilience Act. Specifically, moving
+> | forward, we urge you to:
+> |
+> | 1. Recognise the unique characteristics of open source software
+> |    and ensure that the Cyber Resilience Act does not
+> |    unintentionally harm the open source ecosystem.
+> | 2. Consult with the open source community during the co-legislative
+> |    process.
+> | 3. Ensure that any development under the CRA takes into account
+> |    the diversity of open and transparent open source software
+> |    development practices.
+> | 4. Establish a mechanism for ongoing dialogue and collaboration
+> |    between the European institutions and the open source community,
+> |    to ensure that future legislation and policy decisions are informed.
+>
+> Of course the organisations that wrote the letter don't actually
+> represent the whole "open source community" which I assume includes
+> the free software community as well but I assume the "demands" will
+> be ignored anyway so it probably doesn't make a difference.
+>
+> > I think the overall *goals* of the CRA are laudable.
+>
+> I must confess that I still haven't figured out what the goals
+> are supposed to be. The article you posted above doesn't seem
+> to mention the goals or maybe I just overlooked them.
+>
+> Anyway:
+>
+> >                                                      However,
+> > when evaluating laws & regulations you should always IGNORE
+> > their goals, because their goals are IRRELEVANT. What matters
+> > is what the laws and regulations will actually *CAUSE*. Put
+> > another way, RESULTS are the *only* legitimate basis for
+> > evaluating laws and regulations.
+>
+> Agreed.
+>
+> > In this case, I think too many regulators are focused on
+> > theoretical goals while ignoring what will actually happen.
+>
+> Given that we are talking about the EU I also wouldn't
+> rule out the possibility that at least some regulators
+> have already been bought by "lobbyists" and thus aren't
+> interested in doing "the right thing" anyway and then
+> there are probably a fair amount of regulators who are
+> simply to stupid to understand reasonable arguments ...
+>
+> Happy hacking,
+> Fabian
+>
+> [0] <https://curl.se/mail/lib-2023-09/0056.html>
+>
 
-UPDATES IN VERSION 2
-====================
-
-Xen 4.16 is vulnerable too.  The previous analysis of impacted versions
-was incorrect.
-
-The same patch is applicable to Xen 4.16, and the staging-4.16 branch
-has already had the backport applied.
-
-ISSUE DESCRIPTION
-=================
-
-It has been discovered that on some AMD CPUs, the RAS (Return Address
-Stack, also called RAP - Return Address Predictor - in some AMD
-documentation, and RSB - Return Stack Buffer - in Intel terminology) is
-dynamically partitioned between non-idle threads.  This allows an
-attacker to control speculative execution on the adjacent thread.
-
-For more details, see:
-  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1045
-
-IMPACT
-======
-
-An attacker might be able to infer the contents of arbitrary host
-memory, including memory assigned to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Only AMD CPUs are known to be potentially vulnerable.  CPUs from other
-hardware vendors are not believed to be impacted.
-
-Only the Zen1 and Zen2 microarchitectures are believed to be potentially
-vulnerable.  Other microarchitectures are not believed to be vulnerable.
-
-Only configurations with SMT activate are potentially vulnerable.  If
-SMT is disabled by the firmware, or at runtime with `smt=0` on Xen's
-command line, then the platform is not vulnerable.
-
-Xen 4.16 and later contains an optimisation, specifically:
-
-  c/s afab477fba3b ("x86/spec-ctrl: Skip RSB overwriting when safe to do so")
-
-which in combination with disabling 32bit PV guests (either at compile
-time with CONFIG_PV32=n, or at runtime with `pv=no-32` on the command
-line) renders Xen vulnerable to attack from PV guests.
-
-Note: multiple downstreams are known to have backported this
-optimisation to older versions of Xen.  Consult your software vendor
-documentation.
-
-MITIGATION
-==========
-
-On otherwise-vulnerable configurations, the issue can be mitigated by
-booting Xen with `spec-ctrl=rsb`, which will override the aforementioned
-optimisation.
-
-Alternatively, SMT can be disabled either in the firmware, or by booting
-Xen with `smt=0`.
-
-Alternatively, if 32bit PV guests are only runtime disabled in Xen, this
-issue can also be mitigated by booting Xen with `pv=32` to enable
-support 32bit PV guests.  It is not necessary for a 32bit PV guest to
-actually be running in order to mitigate the issue.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa426.patch          xen-unstable - Xen 4.16
-
-$ sha256sum xsa426*
-425b1d8931e02852afec9fe3d9f1d009f6d8a33c6387b2e8b3896f374732d470  xsa426.patch
-$
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmPuawUMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZW1UIAJ6tjOwbjPJigbSVVfyr5FRnIIYjzVBqkhL5ufvc
-TQY6ZoPsEEkXzx+jJeVa3NveiegqNvIdK26exlp7n2NrrWCRWlrdGlp+/83TWfUA
-gwxBzERTVBmi67+9razBYKzxKAwXO2zOHsvgSB2aCX43K+e9SvlKMny8Wp9j0Z99
-SRGxzZ8D4I7kKnMMpQIGvp/rt5+k+Q2oxXmNHnIsnCGshF+Y+zK7VwlSEpFYE1ga
-78XWYULa1qOEbaj+xsPtf9mMIiWfViwKkX7ZT/EPFBbFxGHSK/aeiQmWdNcFGI3D
-6L7vfJIo1Xsw26ozja+C+m3cFPhNSYJDRj92oCKmLPl8iII=
-=hFGs
------END PGP SIGNATURE-----
-
-Download attachment "xsa426.patch" of type "application/octet-stream" (5190 bytes)
