@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/5
-Message-ID: <20230419055256.zhwa4okfxdbsc72z@beesty>
-Date: Tue, 18 Apr 2023 22:52:56 -0700
-From: nightmare.yeah27@...ecat.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/09/2
+Message-ID: <20231009120943.GA22710@openwall.com>
+Date: Mon, 9 Oct 2023 14:09:43 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Subject: Re: How can I join the linux-distros mailing list and become a representative?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 18, 2023 at 02:57:41AM +0200, Solar Designer wrote:
+On Sat, Oct 07, 2023 at 08:43:03AM +0000, public1020 wrote:
+> My firm is one of the largest cloud provider in China and I would like to add our distro name to the website and become a disto representative.
+> https://oss-security.openwall.org/wiki/mailing-lists/distros
+> 
+> The reason is that we have our own Linux distribution and we need to receive vulnerabilities notifications to prepare our packages in advance.
+> 
+> How can I do that? Please advise.
 
-> On Sun, Apr 16, 2023 at 10:57:27PM +0200, Steffen Nurpmeso wrote:
+The wiki page you reference above lists the membership criteria and
+links to a couple of example membership request messages.  You may post
+a request like that in here, addressing the criteria in it one by one.
 
-> > You have to do some things, and if you give up privileges
-> > thereafter, extended capabilities are gone.
+The outcome of such posting is not predetermined - your organization
+may or may not be accepted as a linux-distros list member, depending on
+whether it convincingly meets the criteria or maybe not.
 
-> POSIX saved IDs should help retain/regain the capabilities.
-
-Another (simpler?) way is to fork before giving up privilege.
-
--- 
-Ian
+Alexander
