@@ -1,28 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/4
-Message-ID: <a177ab3b-4b58-c2a5-bccc-f3d549bd09e0@apache.org>
-Date: Fri, 15 Dec 2023 10:59:40 +0000
-From: Huajie Wang <benjobs@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/09/1
+Message-Id: <3C6BAFEB-A4D8-4691-9C7A-76B36B1BB74D@webweaving.org>
+Date: Mon, 9 Oct 2023 12:52:59 +0200
+From: Dirk-Willem van Gulik <dirkx@...weaving.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-30867: Apache StreamPark (incubating): Authenticated system users could trigger SQL injection vulnerability 
+Subject: Re: European Union Cyber Resilience Act (CRA)
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On 8 Oct 2023, at 22:56, Jean Luc Picard <atari2600a@...il.com> wrote:
 
-Affected versions:
+> 'sharing', they'd likely blow a gasket.  It appears it's too late to bring
+> in the real industry experts into the committee meetings but not too late
+> to make a meaningful difference.  That said, the community at large needs
+> to prepare for a lull in rights & freedoms.  Perhaps if it got to a point
 
-- Apache StreamPark (incubating) 2.0.0 before 2.1.2
+While I am not quite sure what qualifies as a `real’ industry expert :) — fair to assume that over the last 2 years a very sizeable body of such domain experts have enagaged with the European Commission, with the members (Shadows) of the European Parliament, with the Council (and at the national level - as in effect the council ‘is’ the cabinets/ministers at country level).
 
-Description:
+This was not just open source [1,2,3,4] but also the industry [5,6]. In particular.
 
-In the Streampark platform, when users log in to the system and use certain features, some pages provide a name-based fuzzy search, such as job names, role names, etc. The sql syntax :select * from table where jobName like '%jobName%'. However, the jobName field may receive illegal parameters, leading to SQL injection. This could potentially result in information leakage.
+If you are in any doubt - check the last page of 6 for the ‘who’ — that is the entire Who-is-who of Europes technical industry and notice that 5 comes from one of the most powerful industry bodies in Europe. And know that the interaction was not just `an email’ or a `like’ — but involved may face to face meetings, in Brussels.
 
-Mitigation:
+At this point I think it is fair to assume that the policy makers understand the impact the CRA can have on this industry. 
 
-Users are recommended to upgrade to version 2.1.2, which fixes the issue.
+And that they are (fairly!!, that is their role) trading this impact against the damage that bad software/security practices of our industry is doing to society.  Which is also considerable.
 
-References:
+Much like, in the latter half of the previous century, society introduced things such as safety belts, roll-cages and crumple zones for cars — accepting that it would literally decimate a very large industry; allowing only a few large (combined brand) players to survive. And making cars 10-30% more expensive.
 
-https://streampark.incubator.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-30867
+My reading is that part of  ‘forcing’ the CRA on open source is their hope that this will make it cheaper and more `do able’ for SME’s in Europe to implement the CRA. I.e. move the ‘cost’ of CRA compliance `upstream’ — away from the downstream*. And, perhaps, their hope is that the open-source is soo crucial to the industry - that industry will simply fund this**, ***.
 
+Obviously it is galling that open source (say, at the ASF),  is usually NOT the one patching & fixing late - au contraire) — but we are part of this industry & often the foundation of it all.
+
+Also note that the CRA is the `light’ one, impact wise. 
+
+The real sizzler for the industry (and not so much for Open Source)  is the Product Liability Directive — that introduces `strict liability[7].
+
+With kind regards,
+
+Dw 
+
+
+1: https://news.apache.org/foundation/entry/save-open-source-the-impending-tragedy-of-the-cyber-resilience-act
+2: https://eclipse-foundation.blog/2023/02/23/cyber-resilience-act-good-intentions-and-unintended-consequences/ (and a lot of others)
+3: https://blog.sonatype.com/eu-cyber-resilience-act-good-for-software-supply-chain-security-bad-for-open-source
+4: https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
+5: https://www.vda.de/dam/jcr:888e90b1-84dc-4660-a266-f246a141112f/VDA%20Brief%20position%20FOSS_EN.pdf?mode=view
+6: https://cdn.digitaleurope.org/uploads/2023/09/DIGITALEUROPE_Building-a-strong-foundation-for-the-CRA_key-considerations-for-trilogues.pdf
+7: Using the USA term for this; `when a defendant is fully liable for the effects of its product regardless of what the expected/intended when putting it on the market’
+
+*: Ignoring the rather large issue that, like `trust not being transitive’ — notified bodies/certification authorities generally do not allow such/look at the final step.
+**: And there is this assumption; based on the high 100’s if not mid 1000’s of millions put into open source foundations by big-tech - that they are already funded well enough as it is.
+***: my personal expectation is the opposite; the two or three main players in this industry may well fund this only for their own clouds & and simply tell the punters that you must run on platform X or Y in their cloud in order to be compliant.
