@@ -1,32 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/1
-Message-ID: <20231106155327.vekxv4lvtal44aaw@jwilk.net>
-Date: Mon, 6 Nov 2023 16:53:27 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Session File Relative Path Traversal in sudo-rs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/1
+Message-Id: <E1qqBUr-0002FK-BR@xenbits.xenproject.org>
+Date: Tue, 10 Oct 2023 12:05:57 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 440 v3 (CVE-2023-34323) - xenstored: A transaction conflict can crash C Xenstored
 Content-Type: text/plain; charset=utf-8
 
-* Alan Coopersmith <alan.coopersmith@...cle.com>, 2023-11-02 11:40:
->This vulnerability requires two pre-conditions:
->
->1) Your OS allows usernames containing both '.' and '/' characters.
->
->2) Your site allows users to create usernames containing both '.' and 
->'/' characters, with no process or manual review that denies such 
->things.
->
->If both are true, when sudo-rs created a filename containing the 
->username, it failed to escape the characters, letting them be 
->interpreted by the filesystem as references to higher level directories 
->('/../..' etc.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The original sudo implementation is affected too:
-https://github.com/sudo-project/sudo/commit/7363ad7b3230b7b0
+            Xen Security Advisory CVE-2023-34323 / XSA-440
+                               version 3
 
-https://ferrous-systems.com/blog/sudo-rs-audit/ says it's "a lower 
-security severity due to [sudo's] use of the openat function", but I 
-can't see how openat() would help.
+        xenstored: A transaction conflict can crash C Xenstored
 
--- 
-Jakub Wilk
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+When a transaction is committed, C Xenstored will first check
+the quota is correct before attempting to commit any nodes.  It would
+be possible that accounting is temporarily negative if a node has
+been removed outside of the transaction.
+
+Unfortunately, some versions of C Xenstored are assuming that the
+quota cannot be negative and are using assert() to confirm it.  This
+will lead to C Xenstored crash when tools are built without -DNDEBUG
+(this is the default).
+
+IMPACT
+======
+
+A malicious guest could craft a transaction that will hit the C
+Xenstored bug and crash it.  This will result to the inability to
+perform any further domain administration like starting new guests,
+or adding/removing resources to or from any existing guest.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen up to and including 4.17 are vulnerable if XSA-326
+was ingested.
+
+All Xen systems using C Xenstored are vulnerable.  C Xenstored built
+using -DNDEBUG (can be specified via EXTRA_CFLAGS_XEN_TOOLS=-DNDEBUG)
+are not vulnerable.  Systems using the OCaml variant of Xenstored are
+not vulnerable.
+
+MITIGATION
+==========
+
+The problem can be avoided by using OCaml Xenstored variant.
+
+CREDITS
+=======
+
+This issue was discovered by Stanislav Uschakow and Julien Grall, all
+from Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa440-4.17.patch      Xen 4.17.x - Xen 4.15.x.
+
+$ sha256sum xsa440*
+187b7edef4f509f3d7ec1662901fa638a900ab4213447438171fb2935f387014  xsa440.meta
+431dab53baf2b57a299d1a151b330b62d9a007715d700e8515db71ff813d0037  xsa440-4.17.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmUlNOMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZy64IAIZBqlKJAGVeGMzSpuJfkP2YXLe9JNeR46HRG90e
+mV94MWmsf+4kMu2ZhnXQaR2+lafjNfAQVdh9nXV0tdJu//yzLRfXnLfFWrroqBTS
+g69/9zvgGRYvobHe6X/WmLwXCV8N27q04zLK7R9nYwntw2mJBBCvUfRPVHk/6lpH
+4Ke6o0XbjmOjForl2PA3ISRqXKD5nB0pWp1cEfPt3PzCUV02kI/N3veWDRN2wyPN
+jclvwlVVASJdCrcs0+NlOalN5XhD9+K5RN+VVGu3dchXpaa3qEOiTc/V5T1U5cX8
+pqNqUBlo4ECFLygE2aUTITIX+dpLaGYD8rmFq0CPnsB6E5U=
+=6W84
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa440.meta" of type "application/octet-stream" (1037 bytes)
+
+Download attachment "xsa440-4.17.patch" of type "application/octet-stream" (2177 bytes)
