@@ -1,90 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/06/1
-Message-ID: <44rno294-n080-r594-2r8n-1146rr47nr5r@unkk.fr>
-Date: Wed, 6 Dec 2023 08:29:10 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: cookie mixed case PSL bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/10
+Message-ID: <c00af948-7407-4211-aeb3-38ac206cda8c@apache.org>
+Date: Tue, 10 Oct 2023 15:41:32 -0300
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-45648: Apache Tomcat: Trailer header parsing too lenient
 Content-Type: text/plain; charset=utf-8
 
-cookie mixed case PSL bypass
-============================
+Severity: important
 
-Project curl Security Advisory, December 6 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-46218.html)
+Affected versions:
 
-VULNERABILITY
--------------
+- Apache Tomcat 11.0.0-M1 through 11.0.0-M11
+- Apache Tomcat 10.1.0-M1 through 10.1.13
+- Apache Tomcat 9.0.0-M1 through 9.0.81
+- Apache Tomcat 8.5.0 through 8.5.93
 
-This flaw allows a malicious HTTP server to set "super cookies" in curl that
-are then passed back to more origins than what is otherwise allowed or
-possible. This allows a site to set cookies that then would get sent to
-different and unrelated sites and domains.
+Description:
 
-It could do this by exploiting a mixed case flaw in curl's function that
-verifies a given cookie domain against the Public Suffix List (PSL). For
-example a cookie could be set with `domain=co.UK` when the URL used a
-lowercase hostname `curl.co.uk`, even though `co.uk` is listed as a PSL
-domain.
+Improper Input Validation vulnerability in Apache Tomcat.Tomcat from 
+11.0.0-M1 through 11.0.0-M11, from 10.1.0-M1 through 10.1.13, from 
+9.0.0-M1 through 9.0.81 and from 8.5.0 through 8.5.93 did not correctly 
+parse HTTP trailer headers. A specially
+crafted, invalid trailer header could cause Tomcat to treat a single
+request as multiple requests leading to the possibility of request
+smuggling when behind a reverse proxy.
 
-INFO
-----
+Users are recommended to upgrade to version 11.0.0-M12 onwards, 10.1.14 
+onwards, 9.0.81 onwards or 8.5.94 onwards, which fix the issue.
 
-When curl is built without PSL support, it cannot protect against this problem
-but it is expected to not allow "too wide" cookies when PSL support is
-enabled.
+Credit:
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-46218 to this issue.
+Keran Mu and Jianjun Chen from Tsinghua University and Zhongguancun 
+Laboratory (finder)
 
-CWE-201: Information Exposure Through Sent Data
+References:
 
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.46.0 to and including 8.4.0
-- Not affected versions: curl < 7.46.0 and >= 8.5.0
-- Introduced-in: https://github.com/curl/curl/commit/e77b5b7453c1e8c
-
-libcurl is used by many applications, but not always advertised as such!
-
-This flaw is also accessible using the curl command line tool.
-
-SOLUTION
-------------
-
-Starting in curl 8.5.0, the code lowercases both strings before checks.
-
-- Fixed-in: https://github.com/curl/curl/commit/2b0994c29a721c91c57
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.5.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use cookies
-
-TIMELINE
---------
-
-This issue was reported to the curl project on October 16, 2023. We contacted
-distros@...nwall on November 28, 2023.
-
-curl 8.5.0 was released on December 6 2023, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+https://lists.apache.org/thread/2pv8yz1pyp088tsxfb7ogltk9msk0jdp
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-45648
