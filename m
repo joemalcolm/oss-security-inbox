@@ -1,4 +1,4 @@
-Received: (qmail 29894 invoked by uid 550); 30 Apr 2026 02:26:02 -0000
+Received: (qmail 5644 invoked by uid 550); 10 Oct 2023 19:37:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +7,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13554 invoked from network); 30 Apr 2026 02:22:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=innora.ai;
-	s=protonmail2; t=1777515762; x=1777774962;
-	bh=TZI0AkJUG3sd4wdkuXto0MEZLLacS0FQvWmHY0yWg+o=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=azo2hj0ml3Mf9ECw53eiSG962QxTfgD69sPGf7cJGmgSYteh+lLlUn0h8J4oJG8jX
-	 aMJnwCxcZk0baHFbx6IPMqGDIq9UvbG7rK68PBc5A297tmAM8LD+zbNE9yuFnIFoAE
-	 dX66Ki+frDfnIci17RB7ihjjtn7eJHr2/AHWJM6OfT5aVwjh/L+ZJnF6xfusoSGPlX
-	 4qzpBipb8ogPgVTIvCZC5qz7aV5bIAMLBQfrXHxHi7woltRf7ev3jF/KvVJoZ7WyaR
-	 m4zJfIMa9fJb3l+N1JGTMjQzWVZG65cC0RGmqdNIqyQUOTUmRA5VVFZ9dplxB7hz13
-	 DMf+SOfOZzHkw==
-Date: Thu, 30 Apr 2026 02:22:36 +0000
-To: oss-security@lists.openwall.com
-From: Feng Ning <feng@innora.ai>
-Message-ID: <afK86CC-LCeCSOZM@ans-MacBook-Pro.local>
-Feedback-ID: 140578448:user:proton
-X-Pm-Message-ID: b3c0f2d88f02796da0c231e1549bfd29ae3f4e92
+Received: (qmail 5728 invoked from network); 10 Oct 2023 18:42:18 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <c00af948-7407-4211-aeb3-38ac206cda8c@apache.org>
+Date: Tue, 10 Oct 2023 15:41:32 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] [CVE-2026-37555] libsndfile IMA-ADPCM integer overflow (incomplete fix for CVE-2022-33065)
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2023-45648: Apache Tomcat: Trailer header parsing too lenient
 
-Hi,
+Severity: important
 
-I'm disclosing an integer overflow vulnerability in libsndfile's IMA-ADPCM =
-decoder that leads to heap corruption when processing crafted WAV files.
+Affected versions:
 
-**CVE:** CVE-2026-37555
-**Product:** libsndfile (Erik de Castro Lopo)
-**Affected:** Current master and all release versions through 1.2.2
-**CWE:** CWE-190 (Integer Overflow)
-**CVSS 3.1:** 7.8 (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H)
-**Credit:** Feng Ning, Innora Security Research
+- Apache Tomcat 11.0.0-M1 through 11.0.0-M11
+- Apache Tomcat 10.1.0-M1 through 10.1.13
+- Apache Tomcat 9.0.0-M1 through 9.0.81
+- Apache Tomcat 8.5.0 through 8.5.93
 
-## Summary
+Description:
 
-This is an incomplete fix for CVE-2022-33065. The original fix in src/ima_a=
-dpcm.c correctly cast the multiplication to sf_count_t on the AIFF code pat=
-h (line 241) but missed two other locations performing the same type of ari=
-thmetic.
+Improper Input Validation vulnerability in Apache Tomcat.Tomcat from 
+11.0.0-M1 through 11.0.0-M11, from 10.1.0-M1 through 10.1.13, from 
+9.0.0-M1 through 9.0.81 and from 8.5.0 through 8.5.93 did not correctly 
+parse HTTP trailer headers. A specially
+crafted, invalid trailer header could cause Tomcat to treat a single
+request as multiple requests leading to the possibility of request
+smuggling when behind a reverse proxy.
 
-## Details
+Users are recommended to upgrade to version 11.0.0-M12 onwards, 10.1.14 
+onwards, 9.0.81 onwards or 8.5.94 onwards, which fix the issue.
 
-In src/ima_adpcm.c, sample count calculations use int*int multiplication th=
-at overflows before assignment to sf_count_t:
+Credit:
 
-**Line 235 (WAV open path):**
-```c
-sf.frames =3D samplesperblock * blocks;
-```
+Keran Mu and Jianjun Chen from Tsinghua University and Zhongguancun 
+Laboratory (finder)
 
-**Line 167 (close path):**
-```c
-sf.frames =3D samplesperblock * blockcount / channels;
-```
+References:
 
-Both `samplesperblock` and `blocks`/`blockcount` are `int`. When their prod=
-uct exceeds INT32_MAX, the multiplication wraps. For example, samplesperblo=
-ck=3D50000 and blocks=3D50000 yields 2,500,000,000, which overflows int32 t=
-o -1,794,967,296. This negative value propagates into frame count calculati=
-ons, leading to undersized buffer allocations and heap corruption during de=
-coding.
-
-For comparison, the AIFF path at line 241 was already fixed in the CVE-2022=
--33065 patch:
-```c
-sf.frames =3D (sf_count_t) samplesperblock * blocks / channels;
-```
-
-## Fix
-
-Cast the first operand to sf_count_t on lines 235 and 167, matching the exi=
-sting fix on line 241:
-
-```c
-sf.frames =3D (sf_count_t) samplesperblock * blocks;
-sf.frames =3D (sf_count_t) samplesperblock * blockcount / channels;
-```
-
-## References
-
-- CVE-2022-33065 (original fix, incomplete)
-- MITRE ticket #2019024
-
-I've contacted the maintainer. No patch has been released yet.
-
-Regards,
-Feng Ning
-
+https://lists.apache.org/thread/2pv8yz1pyp088tsxfb7ogltk9msk0jdp
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-45648
