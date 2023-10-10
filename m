@@ -1,40 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/28/2
-Message-ID: <33d63ef9-833d-4878-97c0-d4b9bcaad077@apache.org>
-Date: Tue, 28 Nov 2023 15:32:50 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/9
+Message-ID: <bce9569b-9775-4d0f-a691-8e22078b191b@apache.org>
+Date: Tue, 10 Oct 2023 14:42:59 -0300
 From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46589: Apache Tomcat: HTTP request smuggling via malformed trailer headers
+Subject: CVE-2023-42795: Apache Tomcat: Failure during request clean-up leads to sensitive data leaking to subsequent requests
 Content-Type: text/plain; charset=utf-8
 
 Severity: important
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.0-M10
-- Apache Tomcat 10.1.0-M1 through 10.1.15
-- Apache Tomcat 9.0.0-M1 through 9.0.82
-- Apache Tomcat 8.5.0 through 8.5.95
+- Apache Tomcat 11.0.0-M1 through 11.0.0-M11
+- Apache Tomcat 10.1.0-M1 through 10.1.13
+- Apache Tomcat 9.0.0-M1 through 9.0.80
+- Apache Tomcat 8.5.0 through 8.5.93
 
 Description:
 
-Improper Input Validation vulnerability in Apache Tomcat.Tomcat from 
-11.0.0-M1 through 11.0.0-M10, from 10.1.0-M1 through 10.1.15, from 
-9.0.0-M1 through 9.0.82 and from 8.5.0 through 8.5.95 did not correctly 
-parse HTTP trailer headers. A trailer header that exceeded the header 
-size limit could cause Tomcat to treat a single
-request as multiple requests leading to the possibility of request
-smuggling when behind a reverse proxy.
+Incomplete Cleanup vulnerability in Apache Tomcat.When recycling various 
+internal objects in Apache Tomcat from 11.0.0-M1 through 11.0.0-M11, 
+from 10.1.0-M1 through 10.1.13, from 9.0.0-M1 through 9.0.80 and from 
+8.5.0 through 8.5.93, an error could cause Tomcat to skip some parts of 
+the recycling process leading to information leaking from the current 
+request/response to the next.
 
-Users are recommended to upgrade to version 11.0.0-M11 onwards, 10.1.16 
-onwards, 9.0.83 onwards or 8.5.96 onwards, which fix the issue.
-
-Credit:
-
-Norihito Aimoto (OSSTech Corporation)  (finder)
+Users are recommended to upgrade to version 11.0.0-M12 onwards, 10.1.14 
+onwards, 9.0.81 onwards or 8.5.94 onwards, which fixes the issue.
 
 References:
 
-https://lists.apache.org/thread/0rqq6ktozqc42ro8hhxdmmdjm1k1tpxr
+https://lists.apache.org/thread/065jfyo583490r9j2v73nhpyxdob56lw
 https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46589
+https://www.cve.org/CVERecord?id=CVE-2023-42795
