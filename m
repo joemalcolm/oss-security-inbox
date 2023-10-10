@@ -1,226 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/12/3
-Message-Id: <18477145-F7AD-455D-A0AB-77B3E402A7B7@beckweb.net>
-Date: Wed, 12 Apr 2023 18:14:15 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/6
+Message-ID: <51049a59-5e4b-4def-895f-97b9c2b92b24@oracle.com>
+Date: Tue, 10 Oct 2023 11:40:06 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+[I've seen multiple news articles & blogs in the wake of the coordinated
+  disclosure today, but no postings here yet, so lets start fixing that.]
 
-The following releases contain fixes for security vulnerabilities:
+Google, Cloudflare, AWS, and others released details today of a protocol-level
+issue in HTTP/2 being exploited in recent months for denial-of-service attacks:
 
-* Azure Key Vault Plugin 188.vf46b_7fa_846a_1
-* Kubernetes Plugin 3910.ve59cec5e33ea_
+https://cloud.google.com/blog/products/identity-security/how-it-works-the-novel-http2-rapid-reset-ddos-attack
+https://blog.cloudflare.com/technical-breakdown-http2-rapid-reset-ddos-attack/
+https://aws.amazon.com/blogs/security/how-aws-protects-customers-from-ddos-events/
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+This attack works via the multiplexed streams feature of HTTP/2, in which the
+client repeatedly makes a request for a new stream, and then immediately sends
+a RST_STREAM frame to cancel them, resulting in the server doing lots of extra
+work to set up and tear down the streams, while not hitting any server-side
+limit on a maximum number of active streams per connection.
 
-* Assembla merge request builder Plugin
-* Consul KV Builder Plugin
-* Fogbugz Plugin
-* Image Tag Parameter Plugin
-* Lucene-Search Plugin
-* NeuVector Vulnerability Scanner Plugin
-* Quay.io trigger Plugin
-* Report Portal Plugin
-* Thycotic DevOps Secrets Vault Plugin
-* Thycotic Secret Server Plugin
-* TurboScript Plugin
-* WSO2 Oauth Plugin
+CVE-2023-44487 was issued to track this issue across implementations:
+https://www.cve.org/CVERecord?id=CVE-2023-44487
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-04-12/
+A script to check for affected implemenations has been posted at:
+https://github.com/bcdannyboy/CVE-2023-44487
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Information I've found so far on open source implementations (most via the
+current listings in the CVE) include:
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+- Apache httpd:
+   https://chaos.social/@icing/111210915918780532
 
----
+- caddy:
+   https://github.com/caddyserver/caddy/issues/5877
 
-SECURITY-3075 / CVE-2023-30513 (Kubernetes) & CVE-2023-30514 (Azure Key Vault)
-  & CVE-2023-30515 (Thycotic DevOps Secrets Vault)
-Multiple plugins do not properly mask (i.e., replace with asterisks)
-credentials printed in the build log from Pipeline steps like `sh` and
-`bat`, when both of the following conditions are met:
+- envoy:
+   https://github.com/envoyproxy/envoy/pull/30055
 
-* The credentials are printed in build steps executing on an agent
-  (typically inside a `node` block).
-* Push mode for durable task logging is enabled. This is a hidden option
-  in Pipeline: Nodes and Processes that can be enabled through the Java 
-  system property `org.jenkinsci.plugins.workflow.steps.durable_task.DurableTaskStep.USE_WATCHING`.
-  It is also automatically enabled by some plugins, e.g., OpenTelemetry
-  and Pipeline Logging over CloudWatch.
+- golang:
+   https://github.com/golang/go/issues/63417
+   https://groups.google.com/g/golang-announce/c/iNNxDTCjZvo
 
-The following plugins are affected by this vulnerability:
+- h2o:
+   https://github.com/h2o/h2o/security/advisories/GHSA-2m7v-gc89-fjqf
+   https://github.com/h2o/h2o/pull/3291
 
-* Kubernetes 3909.v1f2c633e8590 and earlier (SECURITY-3079 /
-  CVE-2023-30513)
-* Azure Key Vault 187.va_cd5fecd198a_ and earlier (SECURITY-3051 /
-  CVE-2023-30514)
-* Thycotic DevOps Secrets Vault 1.0.0 (SECURITY-3078 / CVE-2023-30515)
+- haproxy:
+   https://github.com/haproxy/haproxy/issues/2312
 
+- hyper:
+   https://seanmonstar.com/post/730794151136935936/hyper-http2-rapid-reset-unaffected
 
-SECURITY-2840 / CVE-2023-30516
-Image Tag Parameter Plugin 2.0 improperly introduces an option to opt out
-of SSL/TLS certificate validation when connecting to Docker registries.
+- jetty:
+   https://github.com/eclipse/jetty.project/issues/10679
+   https://github.com/eclipse/jetty.project/releases/tag/jetty-12.0.2
+   https://github.com/eclipse/jetty.project/releases/tag/jetty-11.0.17
+   https://github.com/eclipse/jetty.project/releases/tag/jetty-10.0.17
+   https://github.com/eclipse/jetty.project/releases/tag/jetty-9.4.53.v20231009
 
-Job configurations using Image Tag Parameters that were created before 2.0
-will have SSL/TLS certificate validation disabled by default.
+- netty:
+   https://github.com/netty/netty/commit/58f75f665aa81a8cbcf6ffa74820042a285c5e61
 
-As of publication of this advisory, there is no fix.
+- nghttp2:
+   https://github.com/nghttp2/nghttp2/pull/1961
+   https://github.com/nghttp2/nghttp2/releases/tag/v1.57.0
 
+- nginx:
+   https://www.nginx.com/blog/http-2-rapid-reset-attack-impacting-f5-nginx-products/
+   https://mailman.nginx.org/pipermail/nginx-devel/2023-October/S36Q5HBXR7CAIMPLLPRSSSYR4PCMWILK.html
 
-SECURITY-2841 / CVE-2023-30517
-NeuVector Vulnerability Scanner Plugin 1.22 and earlier unconditionally
-disables SSL/TLS certificate and hostname validation when connecting to a
-configured NeuVector Vulnerability Scanner server.
+- nodejs:
+   https://github.com/nodejs/node/pull/50121
 
-As of publication of this advisory, there is no fix.
+- proxygen:
+   https://github.com/facebook/proxygen/pull/466
 
+- swift-nio-http2:
+   https://forums.swift.org/t/swift-nio-http2-security-update-cve-2023-44487-http-2-dos/67764
 
-SECURITY-2837 / CVE-2023-30518
-Thycotic Secret Server Plugin 1.0.2 and earlier does not perform a
-permission check in an HTTP endpoint.
+- tomcat:
+   https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.0-M12
+   https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.14
+   https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.81
+   https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.94
 
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2849 / CVE-2023-30519
-Quay.io trigger Plugin provides a webhook endpoint at `/quayio-webhook/`
-that can be used to trigger builds of jobs configured to use a specified
-repository.
-
-In Quay.io trigger Plugin 0.1 and earlier, this endpoint can be accessed
-without authentication.
-
-This allows unauthenticated attackers to trigger builds of jobs
-corresponding to the attacker-specified repository.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2850 / CVE-2023-30520
-Quay.io trigger Plugin 0.1 and earlier does not limit URL schemes for
-repository homepage URLs submitted via Quay.io trigger webhooks.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to submit crafted Quay.io trigger webhook
-payloads.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2872 / CVE-2023-30521
-Assembla merge request builder Plugin provides a webhook endpoint at
-`/assembla-webhook/` that can be used to trigger builds of jobs configured
-to use a specified repository.
-
-In Assembla merge request builder Plugin 1.1.13 and earlier, this endpoint
-can be accessed without authentication.
-
-This allows unauthenticated attackers to trigger builds of jobs
-corresponding to the attacker-specified repository.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2873 / CVE-2023-30522
-Fogbugz Plugin provides a webhook endpoint at `/fbTrigger/` that can be
-used to trigger builds of any jobs.
-
-In Fogbugz Plugin 2.2.17 and earlier, this endpoint can be accessed by
-attackers with Item/Read permission, allowing them to trigger builds of
-jobs specified in a `jobname` request parameter.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2945 / CVE-2023-30523 (storage) & CVE-2023-30524 (masking)
-Report Portal Plugin 0.5 and earlier stores ReportPortal access tokens
-unencrypted in job `config.xml` files on the Jenkins controller as part of
-its configuration.
-
-These tokens can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-Additionally, the configuration form does not mask these tokens, increasing
-the potential for attackers to observe and capture them.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2950 / CVE-2023-30525 (CSRF) & CVE-2023-30526 (missing permission check)
-Report Portal Plugin 0.5 and earlier does not perform a permission check in
-a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified bearer token
-authentication.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2992 / CVE-2023-30527 (storage) & CVE-2023-30528 (masking)
-WSO2 Oauth Plugin 1.0 and earlier stores the WSO2 Oauth client secret
-unencrypted in the global `config.xml` file on the Jenkins controller as
-part of its configuration.
-
-This client secret can be viewed by users with access to the Jenkins
-controller file system.
-
-Additionally, the global configuration form does not mask the WSO2 Oauth
-client secret, increasing the potential for attackers to observe and
-capture it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3013 / CVE-2023-30529
-Lucene-Search Plugin 387.v938a_ecb_f7fe9 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to reindex the database.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2944 / CVE-2023-30530 (storage) & CVE-2023-30531 (masking)
-Consul KV Builder Plugin 2.0.13 and earlier stores the HashiCorp Consul ACL
-Token unencrypted in its global configuration file
-`org.jenkinsci.plugins.consulkv.GlobalConsulConfig.xml` on the Jenkins
-controller as part of its configuration.
-
-This token can be viewed by users with access to the Jenkins controller
-file system.
-
-Additionally, the global configuration form does not mask the token,
-increasing the potential for attackers to observe and capture it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2851 / CVE-2023-30532
-TurboScript Plugin provides a webhook endpoint at `/turbo-webhook/` that
-can be used to trigger builds of jobs configured to use a specified
-repository.
-
-In TurboScript Plugin 1.3 and earlier, this endpoint can be accessed by
-attackers with Item/Read permission to trigger builds of jobs corresponding
-to the attacker-specified repository.
-
-As of publication of this advisory, there is no fix.
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
