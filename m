@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3175" "Friday" "3" "February" "2017" "18:02:53" "+0100" "Andreas Stieger" "astieger@suse.com" "<51722bb1-e4c8-4aa3-0008-0994c35ff2ce@suse.com>" "88" "Re: [oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read" nil nil nil "2" "2017020317:02:53" "[oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read" (number mark "U       astieger@sus Feb  3   88/3175  " thread-indent "\"Re: [oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read\"\n") "<26fd3ab9-bc82-6180-2b93-9eed6308fd0d@oracle.com>" ("<CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>" "<26fd3ab9-bc82-6180-2b93-9eed6308fd0d@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15783 invoked by uid 550); 3 Feb 2017 17:03:15 -0000
+Received: (qmail 1655 invoked by uid 550); 10 Oct 2023 12:06:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,109 +7,222 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15764 invoked from network); 3 Feb 2017 17:03:14 -0000
-To: oss-security@lists.openwall.com
-References: <CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>
- <26fd3ab9-bc82-6180-2b93-9eed6308fd0d@oracle.com>
-From: Andreas Stieger <astieger@suse.com>
-Organization: SUSE Linux GmbH
-Message-ID: <51722bb1-e4c8-4aa3-0008-0994c35ff2ce@suse.com>
-Date: Fri, 3 Feb 2017 18:02:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+Received: (qmail 1613 invoked from network); 10 Oct 2023 12:06:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=D37PBAC+RolY3esUiWHAEVeU0TNDo2qa+fvFZqvFW40=; b=pW495gIoBCV6hyolajy4eEsnWF
+	61JxceFiXPg3KLY3azjMnlyO3Y1u7KnjJ5VFHio7qHVtT/sWrvI/Yvx8TrJhWP3bTjnfdPjIRAp5z
+	chDbep5J/BYnlR2oRJZp2xAQa3f/uVgKWFn3/sddGtVhMrMVyAFIuyhVjWJ/YBXMo7eM=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-In-Reply-To: <26fd3ab9-bc82-6180-2b93-9eed6308fd0d@oracle.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="FPwx8001WBlbTxbONasiGRx9NQA7bCNFJ"
-Subject: Re: [oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption /
- SLAB-Out-of-Bounds Read
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1qqBUr-0002FK-BR@xenbits.xenproject.org>
+Date: Tue, 10 Oct 2023 12:05:57 +0000
+Subject: [oss-security] Xen Security Advisory 440 v3 (CVE-2023-34323) - xenstored: A
+ transaction conflict can crash C Xenstored
 
---FPwx8001WBlbTxbONasiGRx9NQA7bCNFJ
-Content-Type: multipart/mixed; boundary="Cpt2kxjUvkBnxDhUJn0CrHtxveJaj4eef";
- protected-headers="v1"
-From: Andreas Stieger <astieger@suse.com>
-To: oss-security@lists.openwall.com
-Message-ID: <51722bb1-e4c8-4aa3-0008-0994c35ff2ce@suse.com>
-Subject: Re: [oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption /
- SLAB-Out-of-Bounds Read
-References: <CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>
- <26fd3ab9-bc82-6180-2b93-9eed6308fd0d@oracle.com>
-In-Reply-To: <26fd3ab9-bc82-6180-2b93-9eed6308fd0d@oracle.com>
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
---Cpt2kxjUvkBnxDhUJn0CrHtxveJaj4eef
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+            Xen Security Advisory CVE-2023-34323 / XSA-440
+                               version 3
 
+        xenstored: A transaction conflict can crash C Xenstored
 
-On 02/03/2017 12:29 PM, John Haxby wrote:
-> On 03/02/17 05:52, Wade Mealing wrote:
->> Mounting a crafted EXT4 image read-only leads to a memory corruption and
->> SLAB-Out-of-Bounds Reads (according to KASAN).  Since the mounting
->> procedure is a privileged operation, an attacker is probably not able
->> to trigger this vulnerability on the commandline.
->> Instead the automatic mounting feature of the GUI via a crafted
->> USB-device is required.
->>
->> From full disclosure at:
->>
->> http://seclists.org/fulldisclosure/2016/Nov/75
->>
->> If it has been assigned elsewhere, I am unable to see it.
-> The bugzilla link from the above isn't accessible.  Are we missing any
-> useful information?
+UPDATES IN VERSION 3
+====================
 
+Public release.
 
-https://bugzilla.suse.com/show_bug.cgi?id=3D1023377#c1
+ISSUE DESCRIPTION
+=================
 
-RH: https://bugzilla.redhat.com/show_bug.cgi?id=3D1395190
-ML: http://www.spinics.net/lists/linux-ext4/msg54572.html
+When a transaction is committed, C Xenstored will first check
+the quota is correct before attempting to commit any nodes.  It would
+be possible that accounting is temporarily negative if a node has
+been removed outside of the transaction.
 
-Introduced in:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=
-=3D952fc18ef9ec707ebdc16c0786ec360295e5ff15
-(first in v3.6-rc1...)
+Unfortunately, some versions of C Xenstored are assuming that the
+quota cannot be negative and are using assert() to confirm it.  This
+will lead to C Xenstored crash when tools are built without -DNDEBUG
+(this is the default).
 
-Fix:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=
-=3D3a4b77cd47bb837b8557595ec7425f281f2ca1fe
-(first in v4.10-rc1)
+IMPACT
+======
 
+A malicious guest could craft a transaction that will hit the C
+Xenstored bug and crash it.  This will result to the inability to
+perform any further domain administration like starting new guests,
+or adding/removing resources to or from any existing guest.
 
-Andreas
+VULNERABLE SYSTEMS
+==================
 
---=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG N=C3=BCrnberg)
+All versions of Xen up to and including 4.17 are vulnerable if XSA-326
+was ingested.
 
+All Xen systems using C Xenstored are vulnerable.  C Xenstored built
+using -DNDEBUG (can be specified via EXTRA_CFLAGS_XEN_TOOLS=-DNDEBUG)
+are not vulnerable.  Systems using the OCaml variant of Xenstored are
+not vulnerable.
 
+MITIGATION
+==========
 
---Cpt2kxjUvkBnxDhUJn0CrHtxveJaj4eef--
+The problem can be avoided by using OCaml Xenstored variant.
 
---FPwx8001WBlbTxbONasiGRx9NQA7bCNFJ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+CREDITS
+=======
 
+This issue was discovered by Stanislav Uschakow and Julien Grall, all
+from Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa440-4.17.patch      Xen 4.17.x - Xen 4.15.x.
+
+$ sha256sum xsa440*
+187b7edef4f509f3d7ec1662901fa638a900ab4213447438171fb2935f387014  xsa440.meta
+431dab53baf2b57a299d1a151b330b62d9a007715d700e8515db71ff813d0037  xsa440-4.17.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEELRFTXKGyY4WwZ7oiLNapVeFZRUYFAliUt70ACgkQLNapVeFZ
-RUYQPxAAoQK5MvvsOjHz5CaUNMFqeepGP/lvsLGX3Ul2loj7KYG6xknS/rdtrMdI
-YUapqQJEC7iSgw0iUMcfUoRONe+/I82Sxqtpv5uTmXj47x2soOxt0C3IYDJbkf7Q
-hXTfIdKCavFH75EY2rJYBBdethPoif6ZFMRtZEj7PiBPczbHyUKDwLCmn2Eu5Ul7
-YCCXYx9S25ewNgDRthedTwqhsmrqcjhNClktRhzzcuqtn4HpDrddf7giniwzGB4j
-QJOixGHm7za4tE4sxAoWDTaC2MdMVAn3twhtPJen+IL9+RSrA9CDUlS0/FYUpBX8
-zw3KWDzgpR12PWNCm2gkx7QNdrAm1FE1hbCzlPGJ59NDRpONVVebyPR4qyKGKsvs
-AYuPBdhg1TdSSRtH8hv48xIdXCl23NKOFPmLBV3e7zmW1etgi1W/r2LW459Ket1e
-hXGhXyi4eWelAShrjB1Z/EljzB3CmuCIKvtXjeVw4kBlCNjmk9748FCaJujzUKOL
-TYEnIYLwj1u+gj07or0ZAWgfS/IMPV94N4k2rjeysy3a3k5+lbzbKIXNgW8DNb67
-hXK7ukGBAtWpbZiZ+xHmhwv4vdqFWgWYZ4PY5iJrD8niJk8FfQoc1dRcxlKLBG8A
-lYdbOx66DVC/thvt1uW3zncr2GdxJz2LAOsB0HWyglBngDM0DRU=
-=1piS
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmUlNOMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZy64IAIZBqlKJAGVeGMzSpuJfkP2YXLe9JNeR46HRG90e
+mV94MWmsf+4kMu2ZhnXQaR2+lafjNfAQVdh9nXV0tdJu//yzLRfXnLfFWrroqBTS
+g69/9zvgGRYvobHe6X/WmLwXCV8N27q04zLK7R9nYwntw2mJBBCvUfRPVHk/6lpH
+4Ke6o0XbjmOjForl2PA3ISRqXKD5nB0pWp1cEfPt3PzCUV02kI/N3veWDRN2wyPN
+jclvwlVVASJdCrcs0+NlOalN5XhD9+K5RN+VVGu3dchXpaa3qEOiTc/V5T1U5cX8
+pqNqUBlo4ECFLygE2aUTITIX+dpLaGYD8rmFq0CPnsB6E5U=
+=6W84
 -----END PGP SIGNATURE-----
 
---FPwx8001WBlbTxbONasiGRx9NQA7bCNFJ--
+--=separator
+Content-Type: application/octet-stream; name="xsa440.meta"
+Content-Disposition: attachment; filename="xsa440.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiA0NDAsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNyIsCiAgICAiNC4xNiIsCiAgICAiNC4xNSIK
+ICBdLAogICJUcmVlcyI6IFsKICAgICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6
+IHsKICAgICI0LjE1IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIzYTlhMjkwMWNjOGIy
+NGYyOGRiZGM2ZmI2M2Y1NzAwNmM3N2ExZjQ3IiwKICAgICAgICAgICJQcmVy
+ZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAg
+InhzYTQ0MC00LjE3LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAg
+ICAgfQogICAgfSwKICAgICI0LjE2IjogewogICAgICAiUmVjaXBlcyI6IHsK
+ICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJjNDUw
+YTRiYzExZTk3ZWFiZTk3ZGNlZmUwNmY1MTBkN2FjZWE4ZDZkIiwKICAgICAg
+ICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAg
+ICAgICAgICAgInhzYTQ0MC00LjE3LnBhdGNoIgogICAgICAgICAgXQogICAg
+ICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE3IjogewogICAgICAiUmVj
+aXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJl
+ZiI6ICI5MGM1NDBjNTg5ODVkYzc3NGNmMGExZDJkYzQyMzQ3M2QzZjM3MjY3
+IiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hl
+cyI6IFsKICAgICAgICAgICAgInhzYTQ0MC00LjE3LnBhdGNoIgogICAgICAg
+ICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogImQwOWU0NGU1ZDhmZGZlMGE4YjhhZjFlZjYwNGRi
+YzY5OTQ5N2UxMWEiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAg
+ICAgICJQYXRjaGVzIjogW10KICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9
+Cn0=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa440-4.17.patch"
+Content-Disposition: attachment; filename="xsa440-4.17.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA1ZDhiM2QxZWM5OGU1NjE1NWQ5NjUwZDdmNGE3MGNkOGJhOWRjMjdk
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
+PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBGcmksIDIyIFNlcCAyMDIzIDEx
+OjMyOjE2ICswMTAwClN1YmplY3Q6IHRvb2xzL3hlbnN0b3JlZDogZG9tYWlu
+X2VudHJ5X2ZpeCgpOiBIYW5kbGUgY29uZmxpY3RpbmcgdHJhbnNhY3Rpb24K
+ClRoZSBmdW5jdGlvbiBkb21haW5fZW50cnlfZml4KCkgd2lsbCBiZSBpbml0
+aWFsbHkgY2FsbGVkIHRvIGNoZWNrIGlmIHRoZQpxdW90YSBpcyBjb3JyZWN0
+IGJlZm9yZSBhdHRlbXB0IHRvIGNvbW1pdCBhbnkgbm9kZXMuIFNvIGl0IHdv
+dWxkIGJlCnBvc3NpYmxlIHRoYXQgYWNjb3VudGluZyBpcyB0ZW1wb3Jhcmls
+eSBuZWdhdGl2ZS4gVGhpcyBpcyB0aGUgY2FzZQppbiB0aGUgZm9sbG93aW5n
+IHNlcXVlbmNlOgoKICAxKSBDcmVhdGUgNTAgbm9kZXMKICAyKSBTdGFydCB0
+d28gdHJhbnNhY3Rpb25zCiAgMykgRGVsZXRlIGFsbCB0aGUgbm9kZXMgaW4g
+ZWFjaCB0cmFuc2FjdGlvbgogIDQpIENvbW1pdCB0aGUgdHdvIHRyYW5zYWN0
+aW9ucwoKQmVjYXVzZSB0aGUgZmlyc3QgdHJhbnNhY3Rpb24gd2lsbCBoYXZl
+IHN1Y2NlZWQgYW5kIHVwZGF0ZWQgdGhlCmFjY291bnRpbmcsIHRoZXJlIGlz
+IG5vIGd1YXJhbnRlZSB0aGF0ICdkLT5uYmVudHJ5ICsgbnVtJyB3aWxsIHN0
+aWxsCmJlIGFib3ZlIDAuIFNvIHRoZSBhc3NlcnQoKSB3b3VsZCBiZSB0cmln
+Z2VyZWQuClRoZSBhc3NlcnQoKSB3YXMgaW50cm9kdWNlZCBpbiBkYmVmMWY3
+NDgyODkgKCJ0b29scy94ZW5zdG9yZTogc2ltcGxpZnkKYW5kIGZpeCBwZXIg
+ZG9tYWluIG5vZGUgYWNjb3VudGluZyIpIHdpdGggdGhlIGFzc3VtcHRpb24g
+dGhhdCB0aGUKdmFsdWUgY2FuJ3QgYmUgbmVnYXRpdmUuIEFzIHRoaXMgaXMg
+bm90IHRydWUgcmV2ZXJ0IHRvIHRoZSBvcmlnaW5hbApjaGVjayBidXQgcmVz
+dHJpY3RlZCB0byB0aGUgcGF0aCB3aGVyZSB3ZSBkb24ndCB1cGRhdGUuIFRh
+a2UgdGhlCm9wcG9ydHVuaXR5IHRvIGV4cGxhaW4gdGhlIHJhdGlvbmFsZSBi
+ZWhpbmQgdGhlIGNoZWNrLgoKVGhpcyBDVkUtMjAyMy0zNDMyMyAvIFhTQS00
+NDAuCgpSZXBvcnRlZC1ieTogU3RhbmlzbGF2IFVzY2hha293IDxzdXNjaGFr
+b0BhbWF6b24uZGU+CkZpeGVzOiBkYmVmMWY3NDgyODkgKCJ0b29scy94ZW5z
+dG9yZTogc2ltcGxpZnkgYW5kIGZpeCBwZXIgZG9tYWluIG5vZGUgYWNjb3Vu
+dGluZyIpClNpZ25lZC1vZmYtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFt
+YXpvbi5jb20+ClJldmlld2VkLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NA
+c3VzZS5jb20+CgpkaWZmIC0tZ2l0IGEvdG9vbHMveGVuc3RvcmUveGVuc3Rv
+cmVkX2RvbWFpbi5jIGIvdG9vbHMveGVuc3RvcmUveGVuc3RvcmVkX2RvbWFp
+bi5jCmluZGV4IGFhODY4OTJmZWQ5ZS4uNjA3NGRmMjEwYzZlIDEwMDY0NAot
+LS0gYS90b29scy94ZW5zdG9yZS94ZW5zdG9yZWRfZG9tYWluLmMKKysrIGIv
+dG9vbHMveGVuc3RvcmUveGVuc3RvcmVkX2RvbWFpbi5jCkBAIC0xMDk0LDEw
+ICsxMDk0LDIwIEBAIGludCBkb21haW5fZW50cnlfZml4KHVuc2lnbmVkIGlu
+dCBkb21pZCwgaW50IG51bSwgYm9vbCB1cGRhdGUpCiAJfQogCiAJY250ID0g
+ZC0+bmJlbnRyeSArIG51bTsKLQlhc3NlcnQoY250ID49IDApOwogCi0JaWYg
+KHVwZGF0ZSkKKwlpZiAodXBkYXRlKSB7CisJCWFzc2VydChjbnQgPj0gMCk7
+CiAJCWQtPm5iZW50cnkgPSBjbnQ7CisJfSBlbHNlIGlmIChjbnQgPCAwKSB7
+CisJCS8qCisJCSAqIEluIGEgdHJhbnNhY3Rpb24gd2hlbiBhIG5vZGUgaXMg
+YmVpbmcgYWRkZWQvcmVtb3ZlZCBBTkQKKwkJICogdGhlIHNhbWUgbm9kZSBo
+YXMgYmVlbiBhZGRlZC9yZW1vdmVkIG91dHNpZGUgdGhlCisJCSAqIHRyYW5z
+YWN0aW9uIGluIHBhcmFsbGVsLCB0aGUgcmVzdWx0IHZhbHVlIG1heSBiZSBu
+ZWdhdGl2ZS4KKwkJICogVGhpcyBpcyBubyBwcm9ibGVtLCBhcyB0aGUgdHJh
+bnNhY3Rpb24gd2lsbCBmYWlsIGR1ZSB0bworCQkgKiB0aGUgcmVzdWx0aW5n
+IGNvbmZsaWN0LiBTbyBvdmVycmlkZSAnY250Jy4KKwkJICovCisJCWNudCA9
+IDA7CisJfQogCiAJcmV0dXJuIGRvbWlkX2lzX3VucHJpdmlsZWdlZChkb21p
+ZCkgPyBjbnQgOiAwOwogfQo=
+
+--=separator--
