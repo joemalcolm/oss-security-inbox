@@ -1,20 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/10
-Message-ID: <fd13634f-8b54-c0f2-295d-f77a9dff65fd@apache.org>
-Date: Thu, 20 Apr 2023 14:50:32 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/11/3
+Message-ID: <CA+17n5uwjXBDzGGpepNtQSOFQaifnuyodd2EUQxEcCOLH+UUuw@mail.gmail.com>
+Date: Wed, 11 Oct 2023 09:55:24 +0200
+From: Joshua Rogers <megamansec@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25601: Apache DolphinScheduler 3.0.0 to 3.1.1 python gateway has improper authentication 
+Subject: Squid Caching Proxy Security Audit: 55 Vulnerabilities, 35 0days.
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Dear oss-security,
 
-Description:
+Two and a half years ago an independent audit was performed on The Squid
+Caching Proxy, which ultimately resulted in 55 vulnerabilities being
+discovered in the project's C++ source code.
 
-On version 3.0.0 through 3.1.1, Apache DolphinScheduler's python gateway suffered from improper authentication: an attacker could use a socket bytes attack without authentication. This issue has been fixed from version 3.1.2 onwards. For users who use version 3.0.0 to 3.1.1, you can turn off the python-gateway function by changing the value `python-gateway.enabled=false` in configuration file `application.yaml`. If you are using the python gateway, please upgrade to version 3.1.2 or above.
+Although some of the issues have been fixed, the majority (35) remain
+valid. The majority have not been assigned CVEs, and no patches or
+workarounds are available. Some of the listed issues concern more than one
+bug, which is why 45 issues are listed, despite there being 55
+vulnerabilities in total (10 extra of the result of similar, but different
+pathways to reproduce a vulnerability).
 
-References:
+After two and a half years of waiting, I have decided to release the issues
+publicly. The Squid Project is aware of this release.
 
-https://dolphinscheduler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-25601
+The issues are listed below. Due to the sheer size of issues discovered,
+technical details are not included in this email. However, breakdowns of
+the code and proof-of-concepts can be found on GitHub:
+https://megamansec.github.io/Squid-Security-Audit/
+
+----
+Stack Buffer Overflow in Digest Authentication
+Use-After-Free in TRACE Requests
+Partial Content Parsing Use-After-Free CVE-2021-31807
+X-Forwarded-For Stack Overflow
+Chunked Encoding Stack Overflow
+Use-After-Free in Cache Manager Errors
+Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
+Memory Leak in CacheManager URI Parsing CVE-2021-28652
+RFC 2141 / 2169 (URN) Response Parsing Memory Leak CVE-2021-28651
+Memory Leak in HTTP Response Parsing
+Memory Leak in ESI Error Processing
+1-Byte Buffer OverRead in RFC 1123 date/time Handling
+Null Pointer Dereference in Gopher Response Handling GHSA-cg5h-v6vc-w33f
+One-Byte Buffer OverRead in HTTP Request Header Parsing
+strlen(NULL) Crash Using Digest Authentication
+Assertion in ESI Header Handling
+Integer Overflow in Range Header CVE-2021-31808
+Gopher Assertion Crash
+Whois Assertion Crash
+Assertion in Gopher Response Handling
+RFC 2141 / 2169 (URN) Assertion Crash
+Vary: Other HTTP Response Assertion Crash CVE-2021-28662
+Assertion in Negotiate/NTLM Authentication Using Pipeline Prefetching
+Assertion on IPv6 Host Requests with –disable-ipv6
+Assertion Crash on Unexpected “HTTP/1.1 100 Continue” Response Header
+Pipeline Prefetch Assertion With Double ‘Expect:100-continue’ Request
+Headers
+Pipeline Prefetch Assertion With Invalid Headers
+Assertion Crash in Deferred Requests
+Assertion in Digest Authentication
+FTP URI Assertion
+FTP Authentication Crash
+Unsatisfiable Range Requests Assertion CVE-2021-31806
+Crash in Content-Range Response Header Logic CVE-2021-33620
+Assertion Crash In HTTP Response Headers Handling
+Implicit Assertion in Stream Handling
+Buffer UnderRead in SSL CN Parsing
+Use-After-Free in ESI ‘Try’ (and ‘Choose’) Processing
+Use-After-Free in ESI Expression Evaluation
+Buffer Underflow in ESI
+Assertion in Squid “Helper” Process Creator
+Assertion Due to 0 ESI ‘when’ Checking
+Assertion Using ESI’s When Directive
+Assertion in ESI Variable Assignment (String)
+Assertion in ESI Variable Assignment
+Null Pointer Dereference In ESI’s esi:include and esi:when
+----
+
+
+
+Cheers,
+Josh
 
