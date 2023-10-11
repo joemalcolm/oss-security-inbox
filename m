@@ -1,68 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/11/3
-Message-ID: <20230511115704.GJ5725@suse.de>
-Date: Thu, 11 May 2023 13:57:04 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/11/4
+Message-ID: <1f492976-2168-3281-af17-ff8d26d071d1@apache.org>
+Date: Wed, 11 Oct 2023 11:49:52 +0000
+From: Andor Molnar <andor@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Clarification on embargoed testing in a partner cloud
+Subject: CVE-2023-44981: Apache ZooKeeper: Authorization bypass in SASL Quorum Peer Authentication 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: critical
 
+Affected versions:
 
-On Thu, May 11, 2023 at 07:36:44AM -0400, Marc Deslauriers wrote:
-> Hi,
-> 
-> The Ubuntu security team shares and obtains information about embargoed
-> issues from the distros and linux-distros mailing lists.
-> 
-> One of our large cloud partners has asked the Ubuntu security team to do
-> automated testing of embargoed security updates on their public cloud before
-> the CRD. While technically we would not be directly sharing details of
-> embargoed issues with them as the tests will be run under accounts owned by
-> the Ubuntu security team, they will be run on their infrastructure. As such,
-> this may hinder our ability to conduct a comprehensive internal
-> investigation of any leak that may occur.
-> 
-> I’m not exactly sure how this scenario fits within the policy of these
-> lists, and would like to validate before we go ahead. ( Policy can be found
-> here: https://oss-security.openwall.org/wiki/mailing-lists/distros )
-> 
-> Would testing embargoed updates obtained from the distros and linux-distros
-> lists on an external cloud infrastructure violate the terms of those mailing
-> lists? Would testing embargoed updates on an external cloud infrastructure
-> be contrary to the expectations of the vendors posting embargoed issues to
-> those lists?
+- Apache ZooKeeper 3.9.0
+- Apache ZooKeeper 3.8.0 through 3.8.2
+- Apache ZooKeeper 3.7.0 through 3.7.1
+- Apache ZooKeeper before 3.7.0
 
-Let me add some cents here from SUSE perspective.
+Description:
 
-At SUSE we are common criteria certified, including the handling of
-embargoed issues, which has similar strictness.
+Authorization Bypass Through User-Controlled Key vulnerability in Apache ZooKeeper. If SASL Quorum Peer authentication is enabled in ZooKeeper (quorum.auth.enableSasl=true), the authorization is done by verifying that the instance part in SASL authentication ID is listed in zoo.cfg server list. The instance part in SASL auth ID is optional and if it's missing, like 'eve@...MPLE.COM', the authorization check will be skipped. As a result an arbitrary endpoint could join the cluster and begin propagating counterfeit changes to the leader, essentially giving it complete read-write access to the data tree. Quorum Peer authentication is not enabled by default.
 
-For CC we have to have processes in such a way that embargoed information
-must not touch or be controlled by third party systems not within the
-CC scope, which basically excludes everything not in the protected space
-of our physical SUSE datacenter.
+Users are recommended to upgrade to version 3.9.1, 3.8.3, 3.7.2, which fixes the issue.
 
-So we have real tight need to know, "must not leave any SUSE premise or
-SUSE employee eyes" rules on embargoed security issues.
+Alternately ensure the ensemble election/quorum communication is protected by a firewall as this will mitigate the issue.
 
-Relevant scope of information is really "anything where people can derive
-knowledge from", and this includes security patched binaries (or also
-rpm changelogs).
+See the documentation for more details on correct cluster administration.
 
+Credit:
 
-In regards to distros, 
-https://oss-security.openwall.org/wiki/mailing-lists/distros
-is similar strict.
+Damien Diederen <ddiederen@...che.org> (reporter)
 
->From this page all info on distros is (at least) TLP:AMBER ( https://www.first.org/tlp/ )
-and TLP:AMBER would exclude disclosing information outside of the need-to-know within your organization.
+References:
 
-I understand that while some of the operators of the public clouds are also on
-the distro lists, these are parts of very large cooperations and not the same
-team as the intake PSIRT subscribed to distros.
+https://zookeeper.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-44981
 
-So from my point I would suggest to exclude testing on third party public clouds.
-
-Ciao, Marcus
