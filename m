@@ -1,67 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/7
-Message-ID: <20230922153516.GA17264@openwall.com>
-Date: Fri, 22 Sep 2023 17:35:16 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Vincent Rabaud <vrabaud@...gle.com>
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/11/2
+Message-ID: <r85p1n21-op55-n272-q38p-44pp3qq4o852@unkk.fr>
+Date: Wed, 11 Oct 2023 07:59:02 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2023-38546
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 22, 2023 at 04:50:44PM +0200, Vincent Rabaud wrote:
-> Hi, we have commented on that here:
-> https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62136#c7
+cookie injection with none file
+===============================
 
-Thank you!  I include the relevant comments below:
+Project curl Security Advisory, October 11 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-38546.html)
 
-> Comment 6 by t...@...ter.vg on Mon, Sep 18, 2023, 4:58 PM GMT+2
-> 
-> Can I request a CVE assignment for this issue (so I can note it
-> correctly in Firefox advisories)?
-> 
-> Comment 7 by jz...@...gle.com on Tue, Sep 19, 2023, 3:22 AM GMT+2
-> 
-> This was an incorrect check in an assert(). A release build would not be
-> negatively affected. The conditions were updated, but previously the
-> file would not cause an issue in that mode. Vincent, please correct me
-> if I'm wrong.
-> 
-> Comment 8 by vrabaud@...gle.com on Tue, Sep 19, 2023, 11:08 AM GMT+2
-> 
-> Exactly. And instead of fixing the assert, the patch uses an early exit
-> to not reach the assert, which is also an optimization.
+VULNERABILITY
+-------------
 
-Vincent, what about these commits? -
+This flaw allows an attacker to insert cookies at will into a running program
+using libcurl, if the specific series of conditions are met.
 
-commit dce8397fec159c9edfeec7c6388cb81428c87ed8
-Author: Masahiro Hanada <hanada@...ark-techno.com>
-Date:   Thu Sep 14 19:37:24 2023 +0900
+libcurl performs transfers. In its API, an application creates "easy handles"
+that are the individual handles for single transfers.
 
-    Fix next is invalid pointer when WebPSafeMalloc fails
+libcurl provides a function call that duplicates en easy handle called
+[curl_easy_duphandle](https://curl.se/libcurl/c/curl_easy_duphandle.html).
 
-    When WebPSafeMalloc fails on VP8LHuffmanTablesAllocate,
-    next is not initialized to NULL.
-    VP8LHuffmanTablesDeallocate uses next to know the following nodes.
-    A patch fixes this issue.
+If a transfer has cookies enabled when the handle is duplicated, the
+cookie-enable state is also cloned - but without cloning the actual
+cookies. If the source handle did not read any cookies from a specific file on
+disk, the cloned version of the handle would instead store the file name as
+`none` (using the four ASCII letters, no quotes).
 
-    Change-Id: I144ae84cd97e5bca227018ef1afa95361267902c
+Subsequent use of the cloned handle that does not explicitly set a source to
+load cookies from would then inadvertently load cookies from a file named
+`none` - if such a file exists and is readable in the current directory of the
+program using libcurl. And if using the correct file format of course.
 
-commit 433c7dca11bb5b001ce5ad36ac1afd2906a2f13e
-Author: Vincent Rabaud <vrabaud@...gle.com>
-Date:   Thu Sep 14 09:31:19 2023 +0200
+INFO
+----
 
-    Fix static analyzer warnings.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-38546 to this issue.
 
-    Change-Id: I45f0db2310b1188809963af93240e3d438f807b8
+CWE-73: External Control of File Name or Path
 
-The "next is not initialized to NULL" one sounds like it could mean
-stale memory contents (possibly deliberately sprayed) could be used as a
-pointer, so it could be a security issue.
+Severity: Low
 
-The warnings fixes could be just that, or some of those warnings could
-have been for real issues (perhaps also something used uninitialized).
+We set it to low because the flaw requires a series of conditions to be met
+and the likeliness that they shall allow an attacker to take advantage of it
+is low. Even if the bug could be made to trigger, the risk that a cookie
+injection can be done to cause harm is additionally also low.
 
-In other words, are the issues fixed there known to be benign, are not
-sufficiently researched, or researched and known to be vulnerabilities?
+AFFECTED VERSIONS
+-----------------
 
-Alexander
+- Affected versions: libcurl 7.9.1 to and including 8.3.0
+- Not affected versions: libcurl < 7.9.1 and >= 8.4.0
+- Introduced-in: https://github.com/curl/curl/commit/74d5a6fb3b9a96d9f
+
+libcurl is used by many applications, but not always advertised as such!
+
+The (flawed) logic that created this bug existed even before the
+`curl_easy_duphandle()` function was added, but it did not become this problem
+until this API was introduced.
+
+This flaw is not accessible using the curl command line tool.
+
+SOLUTION
+------------
+
+Starting in curl 8.4.0, curl not longer stores the file name in the cookie struct.
+
+- Fixed-in: https://github.com/curl/curl/commit/61275672b46d9abb32857404
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.4.0
+
+  B - Apply the patch to your local version
+
+  C - Call `curl_easy_setopt(cloned_curl, CURLOPT_COOKIELIST, "ALL");` right
+      after every `curl_easy_duphandle();` call.
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on September 14, 2023. We contacted
+distros@...nwall on October 3, 2023.
+
+libcurl 8.4.0 was released on October 11 2023, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: w0x42 on hackerone
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
