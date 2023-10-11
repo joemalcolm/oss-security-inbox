@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3033" "Saturday" "16" "May" "2015" "22:21:23" "+0000" "mancha" "mancha1@zoho.com" "<20150516222123.GB14372@zoho.com>" "85" "Re: [oss-security] about this openssh heap overflow" nil nil nil "5" "2015051622:21:23" "[oss-security] about this openssh heap overflow" (number mark "        mancha1@zoho May 16   85/3033  " thread-indent "\"Re: [oss-security] about this openssh heap overflow\"\n") "<20150516234714.1aff6d98@pc1>" ("<20150516125812.22c2523d@pc1>" "<20150516211007.GA14372@zoho.com>" "<20150516234714.1aff6d98@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13856 invoked by uid 550); 16 May 2015 22:21:49 -0000
+Received: (qmail 28089 invoked by uid 550); 11 Oct 2023 13:59:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +6,180 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13835 invoked from network); 16 May 2015 22:21:48 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=Sl65kbafvwK2rj16CkEBAKso+ze3M94+7lAsKDl60Gml4wdTdb8JMihSQDrfuQEjrAIbfqHwW6Ui
-    PoYBdOUSDYmxNvtn6B2DqImnxLa977k+IZjM1ZWkDkL3oWTLGzTf  
-Message-ID: <20150516222123.GB14372@zoho.com>
-References: <20150516125812.22c2523d@pc1>
- <20150516211007.GA14372@zoho.com>
- <20150516234714.1aff6d98@pc1>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aM3YZ0Iwxop3KEKx"
-Content-Disposition: inline
-In-Reply-To: <20150516234714.1aff6d98@pc1>
-X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
-X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
-X-Zoho-Virus-Status: 1
-Date: Sat, 16 May 2015 22:21:23 +0000
-From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] about this openssh heap overflow
+Received: (qmail 27855 invoked from network); 11 Oct 2023 13:59:37 -0000
+Date: Wed, 11 Oct 2023 15:59:27 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-
---aM3YZ0Iwxop3KEKx
-Content-Type: text/plain; charset=utf-8
+Message-ID: <20231011135927.GA31034@openwall.com>
+References: <20231001130223.GA6586@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20231001130223.GA6586@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros list membership application - CIQ Rocky Linux Security Team
 
-On Sat, May 16, 2015 at 11:47:14PM +0200, Hanno B=C3=B6ck wrote:
-> On Sat, 16 May 2015 21:10:07 +0000 mancha <mancha1@zoho.com> wrote:
->=20
-> > So, we're dealing with an OOB *read* triggered by a crafted config.
-> > By the way, if an attacker has write privileges to your config you
-> > have bigger fish to fry.
->=20
-> Uh no. Has nothing to do with the config (you may mix this up with
-> another issue I recently reported to ssh regarding config parsing, but
-> that's unrelated).
->=20
-> It's an OOB triggered in the client by a specific banner string from
-> the server.
+Hi,
 
-My git repo was out of sync so 26e0bcf766fadb4 came up after:
+I'd appreciate others in here (especially "someone already on the
+private list, or at least someone else who has been active on
+oss-security for years but is not affiliated") helping review the
+application below.  Normally, I'd just accept an application like this
+based on it fitting the criteria (per my review) and lack of objections,
+however for my own application it would be best to hear from others.
 
-$ git log -i --grep Hanno
+Meanwhile, the Security SIG has started functioning and has been
+announced on its own:
 
-After a git pull I see 77199d6ec8986d4 is the fix for the issue you're
-talking about. I stand corrected.
+https://rockylinux.org/pl/news/security-sig-update/
+https://sig-security.rocky.page
 
-> > Notices are already going up describing this as heap buffer overflow
-> > with "high" risk. [1]
->=20
-> That's of course bogus.
+Thanks,
 
-Not everyone will realize that.
+Alexander
 
->=20
-> > Serves as a good reminder that context and phrasing are critically
-> > important when publicly discussing bugs with possible security
-> > impact in order to avoid tsunamis of the-sky-is-falling posts &
-> > articles.
->=20
-> One take away from this story for me - also after criticism I got on
-> twitter: The term "heap overflow" seems to be prone for
-> misunderstanding.  Some people consider every out of bounds thing an
-> "overflow", some think that only oob writes should be considered
-> "overflows.
->=20
-> To avoid confusion I'll call similar issues "out of bounds read"
-> instead of "read heap overflow" in the future. Probably a wording less
-> prone to misunderstandings.
-
-Good idea.=20
-
->=20
-> (address sanitizer calls every oob read a heap/stack/global buffer
-> overflow, that is the main reason I used that term in the past - I
-> often sticked to the wording address sanitizer used)
-
-Another take-away might be to be extra careful when discussing potential
-security issues with critical security infrastructure such as OpenSSL
-and OpenSSH.
-
---mancha
-
---aM3YZ0Iwxop3KEKx
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJVV8LjAAoJEB4VYy8JqhaD48YQAIHh/9Bz0lWMZNw8ADNquSC2
-x459zQS1SmHvGB3a8IYIDXNkRGCqHMH65sKLksGfqGV07v4XuTHxyuq0URHPSlET
-9AfQ/eCOlI2WOHO4a7AVIE0464Rba1mSm7rhRTKQCNo69BEMYuOdDXq3qwzewNMv
-6UFY4y3s9WyyszjlCZhW6fgevHijnW1h8xiFOhdYbokckI0hJIQBl3iFFnHFjIDy
-hjtHf/hcygL2UiEA54b0iKKSem2izU4vkRiSH/DsBr6HmO4x6NQhSUJu/sumIRGI
-qjWItKLkIFo4B+zMquX4/HRfGViX9nSrXOT59+6VHbD9bm6FdJbcCHBB8apJS318
-ykPht+m7ZsP35eyP5pxJCjASxyHz3ip+xGpxwr8cuMIsxWnSExH8vIgRUHXPTm84
-/7qw1P9j2TRpoCEvKqUrqdwRnAUJYRl+24ZSlLT/UruA27TubR8RkTl+3llhzMC/
-pI5BTtVfJc/E/Wtu7P8OLk46a/VPvp2br0Or6+stEGWHntZG6ixOGNdI/OzVyV/Q
-MID15/M5MXrfRiaI5THQHmthRjrbum7nUmIwRIkrng/+UgQDNknaRUBWtW4HvnfD
-3nh505aNGaHsmLq+WYAUmdcIH0U/ySB7k7qaV7d9X6IgPrJNxGxbQiFR/tsSdEdf
-Au58aATlXOmKunBPeSQ9
-=Jb4G
------END PGP SIGNATURE-----
-
---aM3YZ0Iwxop3KEKx--
-
+On Sun, Oct 01, 2023 at 03:02:23PM +0200, Solar Designer wrote:
+> Hi,
+> 
+> Rocky Linux is a prominent Enterprise Linux distribution in the spirit
+> of original goals of the CentOS project, founded by Gregory Kurtzer, who
+> had also co-founded CentOS and is founder and CEO of the primary
+> corporate sponsor of the Rocky Linux project, CIQ:
+> 
+> https://rockylinux.org
+> https://ciq.com
+> 
+> Besides heavily sponsoring Rocky Linux (yet without being its owner),
+> CIQ also has its own Open Source and commercial offerings:
+> 
+> "Our software stack consists of Rocky Linux the CentOS replacement,
+> Apptainer the container solution of choice for HPC, Warewulf a
+> provisioning and cluster management solution, and Fuzzball our
+> next-generation performance computing platform that is multi-cloud,
+> multi-site, multi-cluster, and multi-node."
+> 
+> Most relevant here, CIQ maintains LTS branches of Rocky Linux point
+> releases (such as of 8.6 when current is 8.8), providing security
+> updates to those of its customers who wish to otherwise stay at a given
+> point release.
+> 
+> Further, the Rocky Linux project isn't limited to being a resurrection
+> of CentOS (its packages being bug-for-bug compatible with RHEL), but
+> also has a number of Special Interest Groups (SIGs) offering additional
+> package repositories:
+> 
+> https://wiki.rockylinux.org/special_interest_groups/
+> 
+> I have recently joined this effort and we're now getting the Security
+> SIG going.  This means an optional repository of extra packages for
+> Enterprise Linux distros adding security features and even overriding
+> some packages with hardened alternatives.  We already have a few
+> packages of both kinds, and many more are planned.  If anyone else wants
+> to join this effort - in any capacity including development,
+> maintenance, testing, documentation, or something else - let me know!
+> 
+> This application is for CIQ Rocky Linux Security Team, which means CIQ
+> employees, (sub)contractors, and/or Rocky Linux project contributors
+> trusted and tasked with producing security updates for Rocky Linux,
+> CIQ's LTS branches of Rocky Linux, and possibly CIQ's other offerings
+> building upon Rocky Linux.
+> 
+> I address the 9 membership criteria below:
+> 
+> > Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
+> 
+> Rocky Linux has been actively maintained since its release in 2021, and
+> is an Open Source project.  Many of CIQ's additional offerings are also
+> Open Source projects on their own.
+> 
+> > Have a userbase not limited to your own organization
+> 
+> Rocky Linux has been publicly available since its release in 2021, and
+> per EPEL repository access statistics has gained a userbase on par with
+> other major EL distributions:
+> 
+> https://ciq.com/blog/tracking-rocky-linux-growth-using-fedoras-epel-project/
+> https://brentk.io/thoughts/analysis/epel-distribution-statistics.html
+> https://rocky-stats.tiuxo.com
+> 
+> Further, CIQ has its customer base for Rocky Linux support, including
+> for the LTS branches.
+> 
+> > Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
+> 
+> The publicly verifiable track record currently consists of timely
+> rebuild and re-release of RHEL security update packages and security
+> advisories, as published here:
+> 
+> https://errata.rockylinux.org
+> 
+> Not currently verifiable publicly, but Gregory further tells me:
+> 
+> "We've been doing LTS privately to our customers for over a year now.
+> This means we maintain security fixes for customers who need long term
+> support for point releases."
+> 
+> > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+> 
+> Besides being a "downstream or a rebuild of another distro", CIQ has its
+> LTS branches and Rocky Linux has its additional and replacement packages
+> via the SIGs.  Security maintenance for these should be provided by CIQ
+> and Rocky Linux.
+> 
+> Some security issues in upstream packages may be mitigated or fixed by
+> pushing "security override" packages via CIQ's customer-facing repos and
+> the Security SIG repos, without waiting on upstream distro's fixes and
+> for issues or point releases where no upstream fixes are expected.
+> 
+> Related previously accepted membership application (precedent) is
+> CloudLinux's, which is now perhaps best known for AlmaLinux, another
+> prominent EL distribution:
+> 
+> http://www.openwall.com/lists/oss-security/2017/07/02/2
+> 
+> Also, CentOS was once a member.
+> 
+> > Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
+> 
+> I have been a participant on oss-security since its inception, and have
+> made relevant contributions.  Others with CIQ and Rocky Linux are also
+> involved in various communities, and we'll ensure that the team to be
+> subscribed to linux-distros isn't blind to publicly disclosed issues.
+> 
+> > Accept the list policy
+> 
+> CIQ Rocky Linux Security Team accepts the linux-distros list policy.
+> 
+> > Be able and willing to contribute back, preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
+> 
+> I've been contributing to oss-security and linux-distros since their
+> inception.  We'll also look for additional ways CIQ and/or Rocky Linux
+> can contribute, depending on expertise, interests, other related duties,
+> and availability of specific people we may add.
+> 
+> > Be able and willing to handle PGP-encrypted e-mail
+> 
+> Of course.  I am already subscribed with my PGP key.
+> 
+> My current subscription is as list admin and it also was for Openwall.
+> Openwall no longer qualifies for linux-distros membership as a distro
+> since we've effectively EOL'ed the Openwall GNU/*/Linux distro (we still
+> do maintain many other projects, but not a full distro).  However, I
+> and/or someone else from Openwall would have needed to stay subscribed
+> as list admin anyway.
+> 
+> With my new Rocky Linux role, my subscription's purpose will once again
+> double as list admin and for the distro.
+> 
+> > Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+> 
+> I suppose someone in here can vouch for me.  Please do - ideally, if you
+> also have something else to say on this application in the same message,
+> not to spam list members with messages solely to meet this formality.
+> 
+> I may then get additional CIQ and/or Rocky Linux people subscribed,
+> effectively vouching for them, after making sure they understand and
+> accept the list policy.
+> 
+> Alexander
