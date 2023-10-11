@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1056" "Thursday" "22" "August" "2019" "11:27:23" "-0700" "Kurt H Maier" "khm@sciops.net" "<20190822182723.GA77294@wopr>" "17" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082218:27:23" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        khm@sciops.n Aug 22   17/1056  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<63686C1A-E1C5-4351-948B-EFAE6FBA616A@oracle.com>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" "<63686C1A-E1C5-4351-948B-EFAE6FBA616A@oracle.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23704 invoked by uid 550); 22 Aug 2019 18:27:41 -0000
+Received: (qmail 1508 invoked by uid 550); 11 Oct 2023 05:58:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +6,160 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23683 invoked from network); 22 Aug 2019 18:27:40 -0000
-Message-ID: <20190822182723.GA77294@wopr>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
- <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
- <20190822093122.GQ6086@suse.de>
- <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
- <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
- <20190822135753.10d124a4@jabberwock.cb.piermont.com>
- <63686C1A-E1C5-4351-948B-EFAE6FBA616A@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <63686C1A-E1C5-4351-948B-EFAE6FBA616A@oracle.com>
-Date: Thu, 22 Aug 2019 11:27:23 -0700
-From: Kurt H Maier <khm@sciops.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB
- subsystem x2
-To: oss-security@lists.openwall.com
+Received: (qmail 1487 invoked from network); 11 Oct 2023 05:58:54 -0000
+Date: Wed, 11 Oct 2023 07:58:42 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <s8o190rp-15r7-9nn6-782-3sqpqsn5qpsr@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2023-38545: SOCKS5 heap buffer
+ overflow
 
-On Thu, Aug 22, 2019 at 07:17:34PM +0100, John Haxby wrote:
-> 
-> If I'm going to attack random devices I'm not going to do it with some random driver that may or may not be present on a phone.  And as this is a null pointer reference we're talking about you plug the phone and and it reboots so you won't do that more than once.   That's it, that's the limit of the vulnerability.
-> 
-> If I'm going to go to the trouble of emulating a device so I can sneak it into a public charging point I'm not going to do it just to make a phone reboot.  I'm going to pick a UAF vulnerability with an exploit that actually does something useful, something beyond just making the phone reboot.
-> 
-> Either that or I'm going to sneak in a USB killer and destroy the phones.
-> 
-> No matter what, emulating a device just to cause a null dereference is not CVE worthy.   If it is, then we need a CVE for power buttons on laptops and phones.
-> 
-> jch
-> 
+SOCKS5 heap buffer overflow
+===========================
 
-Undisclosed impromptu power buttons are absolutely a concern, regardless
-of your personal pen-testing preferences.
+Project curl Security Advisory, October 11 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-38545.html)
 
-khm
+VULNERABILITY
+-------------
+
+This flaw makes curl overflow a heap based buffer in the SOCKS5 proxy
+handshake.
+
+When curl is asked to pass along the hostname to the SOCKS5 proxy to allow
+that to resolve the address instead of it getting done by curl itself, the
+maximum length that hostname can be is 255 bytes.
+
+If the hostname is detected to be longer than 255 bytes, curl switches to
+local name resolving and instead passes on the resolved address only to the
+proxy. Due to a bug, the local variable that means "let the host resolve the
+name" could get the wrong value during a slow SOCKS5 handshake, and contrary
+to the intention, copy the too long hostname to the target buffer instead of
+copying just the resolved address there.
+
+TERMINOLOGY
+-----------
+
+The curl library is known as libcurl and the command line tool that uses the
+library is known as the curl tool. Either or both may be referred to as just
+curl. The distinctive names are used in this document when necessary.
+
+INFO
+----
+
+The hostname comes from the URL that curl has been told to operate with.
+
+The target buffer is the heap-based download buffer in libcurl that is reused
+for SOCKS negotiation before the transfer has started. The size of the buffer
+is 16kB by default, but can be set to different sizes by the application. The
+curl tool sets it to 102400 bytes by default - but it sets the buffer size to
+a smaller size if `--limit-rate` is set lower than 102400 bytes per second.
+
+libcurl provides the `CURLOPT_BUFFERSIZE` option to change the size of the
+download buffer.
+
+libcurl accepts hostnames up to 65535 bytes in the URL.
+
+If the used hostname is longer than the target buffer, there is a `memcpy()`
+that overwrites the buffer into the heap. The URL parser and possibly an IDN
+library (if curl is built with one) have to accept the hostname, which
+somewhat limits the set of available byte sequences that can be used in the
+copy.
+
+For an overflow to happen it needs a slow enough SOCKS5 handshake to trigger
+the local variable bug, and the client using a hostname longer than the
+download buffer. Perhaps with a malicious HTTPS server doing a redirect to an
+especially crafted URL.
+
+Typical server latency is likely "slow" enough to trigger this bug without an
+attacker needing to influence it by DoS or SOCKS server control.
+
+An overflow is only possible in applications that do not set
+`CURLOPT_BUFFERSIZE` or set it smaller than 65541. Since the curl tool sets
+`CURLOPT_BUFFERSIZE` to 100kB by default it is not vulnerable unless rate
+limiting was set by the user to a rate smaller than 65541 bytes/second.
+
+The options that cause SOCKS5 with remote hostname to be used in libcurl:
+- `CURLOPT_PROXYTYPE` set to type `CURLPROXY_SOCKS5_HOSTNAME`, or:
+- `CURLOPT_PROXY` or `CURLOPT_PRE_PROXY` set to use the scheme `socks5h://`
+- One of the proxy environment variables can be set to use the `socks5h://`
+   scheme. For example `http_proxy`, `HTTPS_PROXY` or `ALL_PROXY`.
+
+The options that cause SOCKS5 with remote hostname to be used in the curl tool:
+- `--socks5-hostname`, or:
+- `--proxy` or `--preproxy` set to use the scheme `socks5h://`
+- Environment variables as described in the libcurl section.
+
+This bug was introduced when the SOCKS5 handshake code was converted from a
+blocking function into a non-blocking state machine.
+
+**The analysis in this section is specific to curl version 8.** Some older
+versions of curl version 7 have less restriction on hostname length and/or a
+smaller SOCKS negotiation buffer size that cannot be overridden by
+CURLOPT_BUFFERSIZE.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-38545 to this issue.
+
+CWE-122: Heap-based Buffer Overflow
+
+Severity: High
+
+HackerOne: https://hackerone.com/reports/2187833
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.69.0 to and including 8.3.0
+- Not affected versions: libcurl < 7.69.0 and >= 8.4.0
+- Introduced-in: https://github.com/curl/curl/commit/4a4b63daaa
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+--------
+
+Starting in curl 8.4.0, curl no longer switches to local resolve mode if the
+name is too long but is instead rightfully returning an error.
+
+- Fixed-in: https://github.com/curl/curl/commit/fb4415d8aee6c1
+
+[Patch collection for older versions](https://curl.se/docs/CVE-2023-38545_patches.zip)
+
+RECOMMENDATIONS
+---------------
+
+  A - Upgrade curl to version 8.4.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use `CURLPROXY_SOCKS5_HOSTNAME` proxies with curl
+
+  D - Do not set a proxy environment variable to socks5h://
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on September 30, 2023. We contacted
+distros@openwall on October 3, 2023.
+
+libcurl 8.4.0 was released on October 11 2023, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Jay Satiro
+- Patched-by: Jay Satiro
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
