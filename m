@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1972" "Thursday" "17" "November" "2016" "19:54:20" "-0500" "Jacobo Avariento" "spinfoo.vuln@gmail.com" "<cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>" "48" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" "^Cc:" nil nil "11" "2016111800:54:20" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "        spinfoo.vuln Nov 17   48/1972  " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" "<20161116155529.GJ5329@io.lakedaemon.net>" "<c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>" "<20161117163922.GL5329@io.lakedaemon.net>" "<6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>" "<20161117175017.GM5329@io.lakedaemon.net>" "<8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19490 invoked by uid 550); 18 Nov 2016 01:16:07 -0000
+Received: (qmail 12192 invoked by uid 550); 12 Oct 2023 16:23:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +6,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9240 invoked from network); 18 Nov 2016 00:54:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=2FX6wvvluqw22Oy7o6rhRHAbvJTZnuAjCE+9uf8dh4k=;
-        b=nFSbb7cVSZrk9kemQz36IT4rwITGclz1CtuRC8AbJxd2DYdR4v/u/E3uHHG2scyIlw
-         rwyQn+hAzwF6QivDyDIm4e1YKI64r7VxdABDXN+vb6qHMByMid20cpSacduduM8hv2BM
-         KvkDuiUt0p4MXGq50BGLSmsZe+0R7mcQNzNwaO9jswRYGD3Fe5NO6XpXGSJBiqujsMvQ
-         uAWAd3FBp39GMVG4x35H9vSUSuhr0gU0HT8DGXZ4bH7WjwnMWatbGkXJgLRXOq07VwSq
-         NXJVnxelNDMgEDG8REL2GMM8eiJHFeiun5iCw+6rgwlPN1QBnQ99Fqut3ju7DyCROIHP
-         wwNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=2FX6wvvluqw22Oy7o6rhRHAbvJTZnuAjCE+9uf8dh4k=;
-        b=JOfnXODjg+mgSw3chicLGZnBeQzHfcq8ZAxHWmUiGS7ZJ699846D1x0LcyQb09a316
-         6Q25jgualtkH+wlSJMJAGIXQBofetBijUXyQE4fcf4q9cwDbn3moNiDxkG2lbfUX9WxQ
-         iuUvv1KhQWRoIPCTIaaiu0kRi+GsBOZFxnxuzg9WYATmtpHQFNLF2vERUvHs09KvYb+p
-         4IOZAA822RRgHOfeHNI6nnAYRHL8vU/UpJTm26jUnHFDzQDGwq3/0E+MZ6HGI4SEOLfk
-         aAM0SR6g9RFfOfe7774vfMyqAkiM9qRjmzV5YHjnBm3cMXd7h0xMaOfBqOPs1wYKRXtL
-         shCg==
-X-Gm-Message-State: ABUngvfKIpjm+yGyABfmak0PCU1LuCGjl4dKxg1JX+XW88J8fcAWN323lb1X3l1shuGQnw==
-X-Received: by 10.176.2.110 with SMTP id 101mr4384331uas.8.1479430462729;
-        Thu, 17 Nov 2016 16:54:22 -0800 (PST)
-References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
- <20161116155529.GJ5329@io.lakedaemon.net>
- <c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>
- <20161117163922.GL5329@io.lakedaemon.net>
- <6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>
- <20161117175017.GM5329@io.lakedaemon.net>
- <8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>
-Message-ID: <cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: john.haxby@oracle.com, osssecurity@lakedaemon.net
-Date: Thu, 17 Nov 2016 19:54:20 -0500
-From: Jacobo Avariento <spinfoo.vuln@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
-To: oss-security@lists.openwall.com
+Received: (qmail 29974 invoked from network); 12 Oct 2023 16:06:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1697126770;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RVVglt80bdNdD0LGrnzrOd1/SfBsG2sms/08m/Urv8g=;
+	b=Ih+ia59pwXzs39riaIMIz+YlJfQpEPxhg956tfdIY3flHLnXBroGDxduSdEDLMgeokh0z9
+	8Ic6flbOPyT8Gw9VOgjNDXjX7xTqBf3IKERMe48jPuYOkdZKvHNC+cA0kpDITExmPKamjs
+	pctDbL0L/bYlOrDI/qMe6M8mUhKdlVk=
+X-MC-Unique: OJ5LMm9INgeMCocrQ7ybtQ-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697126766; x=1697731566;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RVVglt80bdNdD0LGrnzrOd1/SfBsG2sms/08m/Urv8g=;
+        b=wDl6jRUJF1Z2JJfszdbiK4PoDwZp72U+8XKqPCov+ZVO8IpVVSIuzDHZR2Z/QtCDYT
+         W4tUIVJbfyg22YDBPJqlry+rtLY4td2xmHLXRk2/6IqGmTFwWIyGPyDJJN0tcdcIfg72
+         z4jC6L0j9sDTC9DuZ83PpIupdgJJ45A3SS1+9lrcM0/KNLMucRcV/+qXD1okf8pFibZZ
+         h1Bdmx+GbOhon0T8S2UyRgSry/237kKpPXdi6WpHuijTgGoQqOEJMBfE5W5Ml5c8Ubik
+         oSo/PhHffVsBJ0TUU2CAIsRXeWbAZLfR7H0/zcvNWXtYFRN/oBje8Czwp5tAngQloPlb
+         jLSg==
+X-Gm-Message-State: AOJu0Yx9qIu1qyQkdvxJ+RmRwHqkDEpWZC4RHSuRulXzA5OVi8NmKNLw
+	UEHEowOslcBePB3ppyGhpGvS8pT8Vd/ICp97O/nfA9KNVv44PqinJFeDDwL/N60dqPqd+TQXwGc
+	B4LiSAqps9SFSugOmzQxY3GOitAzKJ71/xUVA0vfxzxMzPNDE4bR3eJLJ1dNk6UzSLdXxTI7XIh
+	2zu4zOx95De2+x8N2HKgQ=
+X-Received: by 2002:a05:6808:2a62:b0:3af:c13c:b442 with SMTP id fu2-20020a0568082a6200b003afc13cb442mr8573173oib.10.1697126766111;
+        Thu, 12 Oct 2023 09:06:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTnO530Cayu9tCzIZjFcZ8uNGBvWJAreuJLy1xwrd37GnuqtfFYGqfRhTO93Rzc9moCCaRw4w3Hw==
+X-Received: by 2002:a05:6808:2a62:b0:3af:c13c:b442 with SMTP id fu2-20020a0568082a6200b003afc13cb442mr8573163oib.10.1697126765715;
+        Thu, 12 Oct 2023 09:06:05 -0700 (PDT)
+Date: Thu, 12 Oct 2023 09:06:05 -0700 (PDT)
+From: midawson <midawson@redhat.com>
+To: <oss-security@lists.openwall.com>
+Message-Id: <8c24a607-244c-4690-8d7d-c9c4383305cfn@googlegroups.com>
+In-Reply-To: <8f721d36-96bf-4449-9f05-36e24e9eca49n@googlegroups.com>
+References: <8f721d36-96bf-4449-9f05-36e24e9eca49n@googlegroups.com>
+MIME-Version: 1.0
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2614_1418633193.1697126765529"
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, October
+ 2023
 
-Good debate.
+------=_Part_2614_1418633193.1697126765529
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_2615_996173807.1697126765529"
 
-Actually when using full disk encryption, to lock the BIOS and GRUB must
-be mandatory, otherwise you are protecting your confidentiality but not
-your integrity. Even with a password in GRUB with an unprotected BIOS
-you can also boot from a USB device and access encrypted partitions,
-delete them, etc.
-
-Just to mention another method complimentary to the "rd.shell=0" a
-similar behaviour to this "flaw" can be achieved using at the boot
-sequence "rd.break=pre-udev", this also gives you a root shell with
-access to the hard disk.
-
-Regards
+------=_Part_2615_996173807.1697126765529
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
 
-On 11/17/2016 02:15 PM, John Haxby wrote:
-> On 17/11/16 17:50, Jason Cooper wrote:
->> Hi John,
->>
->> On Thu, Nov 17, 2016 at 04:56:06PM +0000, John Haxby wrote:
->>>> On 17/11/16 16:39, Jason Cooper wrote:
->>>>>> However, the golden rule still applies.  Physical access trumps all
->>>>>> defensive measures.  The absolute best you can do is detect that
->>>>>> physical access occurred.  From there, you're hoping there are no
->>>>>> hardware implants or other devices outside the scope of software
->>>>>> security.
->>>> I agree.  However, it ought be to be harder than leaning on the enter
->>>> key to break into a system.  You lock your doors even though it doesn't
->>>> stop a determined burglar?
->> Yes, as I said before, non-deterministic failure modes are bad.  This
->> CVE is a bug in the initrd script and needs to be fixed.  What I
->> disagree with, and still do, is the "sky is falling!" nature of the
->> alert.
-> Yup.  I agree there, but that's down to the publicity its received.  We
-> can't do much but grin and bear that.   Red Hat have given this a CVSS2
-> score of 7.2 which reflects the _potential_ severity but marked it as
-> "moderate" which reflects the actual effect.   It's most serious for
-> people like me who have an encrypted root but no grub password (and no
-> rd.shell=0) but, no, the sky is not falling.
->
-> jch
->
 
--- 
-https://github.com/spinfoo
-https://pa.linkedin.com/in/jacoboavariento
+---------- Forwarded message ---------
+From: midawson <midawson@redhat.com>
+Date: Thursday, October 12, 2023 at 11:58:09=E2=80=AFAM UTC-4
+Subject: Node.js security updates for all active release lines, October 2023
+To: nodejs-sec <nodejs-sec@googlegroups.com>
+
+
+The Node.js project will release new versions of all supported release=20
+lines on or shortly after Friday October 13 2023. For more information=20
+see:=20=20
+https://nodejs.org/en/blog/vulnerability/october-2023-security-releases
+
+------=_Part_2615_996173807.1697126765529
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<br /><br /><div><div dir=3D"auto">---------- Forwarded message ---------<b=
+r />From: <span dir=3D"auto">midawson &lt;midawson@redhat.com&gt;</span><br=
+ />Date: Thursday, October 12, 2023 at 11:58:09=E2=80=AFAM UTC-4<br />Subje=
+ct: Node.js security updates for all active release lines, October 2023<br =
+/>To: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@googlegroups.com&gt;</sp=
+an><br /></div><br /><br />The Node.js project will release new versions of=
+ all supported release lines on or shortly after Friday October 13 2023. Fo=
+r more information see:=C2=A0 <a href=3D"https://nodejs.org/en/blog/vulnera=
+bility/october-2023-security-releases" target=3D"_blank" rel=3D"nofollow">h=
+ttps://nodejs.org/en/blog/vulnerability/october-2023-security-releases</a><=
+br /></div>=
+
+------=_Part_2615_996173807.1697126765529--
+
+------=_Part_2614_1418633193.1697126765529--
 
