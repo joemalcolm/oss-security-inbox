@@ -1,50 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/28/7
-Message-ID: <e211acf3-b142-261d-21e1-ae4494ebc0c6@christopherschultz.net>
-Date: Thu, 28 Sep 2023 16:45:36 -0400
-From: Christopher Schultz <chris@...istopherschultz.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/12/2
+Message-ID: <a1749667-3d73-4fdf-805c-5fedbf5d2745@oracle.com>
+Date: Thu, 12 Oct 2023 21:43:09 +0200
+From: Vegard Nossum <vegard.nossum@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-41081: Apache Tomcat Connectors: Unexpected use of first declared worker in mod_jk for unmapped request [CORRECTION]
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
 
-Affected versions:
+On 11/10/2023 15:59, Solar Designer wrote:
+> I'd appreciate others in here (especially "someone already on the
+> private list, or at least someone else who has been active on
+> oss-security for years but is not affiliated") helping review the
+> application below.  Normally, I'd just accept an application like this
+> based on it fitting the criteria (per my review) and lack of objections,
+> however for my own application it would be best to hear from others.
 
-- Apache Tomcat Connectors 1.2.0 through 1.2.48
+[...]
 
-Description:
+> On Sun, Oct 01, 2023 at 03:02:23PM +0200, Solar Designer wrote:
+>>> Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+>>
+>> I suppose someone in here can vouch for me.  Please do - ideally, if you
+>> also have something else to say on this application in the same message,
+>> not to spam list members with messages solely to meet this formality.
+>>
+>> I may then get additional CIQ and/or Rocky Linux people subscribed,
+>> effectively vouching for them, after making sure they understand and
+>> accept the list policy.
 
-Important: Authentication Bypass CVE-2023-41081
+Hi,
 
-The mod_jk component of Apache Tomcat Connectors in some circumstances, 
-such as when a configuration included "JkOptions +ForwardDirectories" 
-but the configuration did not       provide explicit mounts for all 
-possible proxied requests, mod_jk would       use an implicit mapping 
-and map the request to the first defined worker. Such an implicit 
-mapping could result in the unintended exposure of the status worker 
-and/or bypass security constraints configured in httpd. As of JK 1.2.49, 
-the implicit mapping functionality has been removed and all mappings 
-must now be via explicit configuration. Only mod_jk is affected by this 
-issue. The ISAPI redirector is not affected.
+As a current distros member, I see no problem with this whatsoever and I
+appreciate the transparency.
 
-This issue affects Apache Tomcat Connectors (mod_jk only): from 1.2.0 
-through 1.2.48.
+Thanks,
 
-Users are recommended to upgrade to version 1.2.49, which fixes the issue.
 
-History
-2023-09-13 Original advisory
-
-2023-09-28 Updated summary
-
-Credit:
-
-Karl von Randow (finder)
-
-References:
-
-https://lists.apache.org/thread/rd1r26w7271jyqgzr4492tooyt583d8b
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-41081
-
+Vegard
