@@ -1,25 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/5
-Message-ID: <20230315104035.4b48f27d.hanno@hboeck.de>
-Date: Wed, 15 Mar 2023 10:40:35 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/2
+Message-ID: <ZSit-X8iB2gx54hq@fullerene.field.pennock-tech.net>
+Date: Thu, 12 Oct 2023 22:39:53 -0400
+From: Phil Pennock <oss-security-phil@...dhuis.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+Cc: pdp@...s.io
+Subject: NATS: 2023-01: Adding accounts for just the system account adds auth bypass
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 15 Mar 2023 20:03:11 +1100 (EST)
-Dave Horsfall <dave@...sfall.org> wrote:
+[ CVE has been requested, still waiting for assignment, so we're just
+  inventing our own in-house numbering for advisories; we'll make sure
+  this one continues to work after the CVE is issued ]
 
-> I hate tossing out functionality; would you not make it a privileged 
-> operation instead?
+NATS-advisory-ID: 2023-01
+CVE: pending
+Date: 2023-10-12
+Fixed in: 2.9.23, 2.10.2
 
-From a security perspective tossing out functionality is the better
-option compared to restricting access. If there is practically no use
-of that functionality and it's mostly a security risk, then removing it
-is the right choice.
+Background:
 
-Reducing complexity is a good principle for IT security.
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
 
--- 
-Hanno Böck
-https://hboeck.de/
+NATS users exist within accounts, and once using accounts, the old
+authorization block is not applicable.
+
+
+Problem Description:
+
+Without any authorization rules in the nats-server, users can connect
+without authentication.
+
+Before nats-server 2.2.0, all authentication and authorization rules for
+a nats-server lived in an "authorization" block, defining users.  With
+nats-server 2.2.0 all users live inside accounts.  When using the
+authorization block, whose syntax predates this, those users will be
+placed into the implicit global account, "$G".  Users inside accounts go
+into the newer "accounts" block.
+
+If an "accounts" block is defined, in simple deployment scenarios this
+is often used only to enable client access to the system account.  When
+the only account added is the system account "$SYS", the nats-server
+would create an implicit user in "$G" and set it as the `no_auth_user`
+account, enabling the same "without authentication" logic as without
+any rules.
+
+This preserved the ability to connect simply, and then add one
+authenticated login for system access.
+
+But with an "authorization" block, this is wrong.  Users exist in the
+global account, with login rules.  And in simple testing, they might
+still connect fine without administrators seeing that authentication has
+been disabled.
+
+The blind-spot on our part came from encouraging and documenting a
+switch to using only "accounts", instead of "authorization".
+
+In the fixed versions, using an "authorization" block will inhibit the
+implicit creation of a "$G" user and setting it as the `no_auth_user`
+target.  In unfixed versions, just creating a second account, with no
+users, will also inhibit this behavior.
+
+
+Affected versions:
+
+NATS Server:
+ * 2.2.0 up to and including 2.9.22 and 2.10.1
+ * Fixed with nats-io/nats-server: 2.10.2 and backported to 2.9.23
+
+
+Workarounds:
+
+In the "accounts" block, define a second non-system account, leave
+it empty.
+
+    accounts {
+        SYS: {
+            users: [
+                { user: sysuser, password: makemeasandwich }
+            ]
+        }
+        DUMMY: {}  # for security, before 2.10.2
+    }
+    system_account: SYS
+
+
+Solution:
+
+Any one of these:
+
+ 1. Upgrade the NATS server to at least 2.10.2 (or 2.9.23)
+ 2. Or define a dummy account
+ 3. Or complete the migration of authorization entries to be inside
+    a named account in the "accounts" block
+
+
+Credits:
+
+Problem reported by Alex Herrington.
+Addressed publicly in a GitHub Discussion prior to this advisory.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
