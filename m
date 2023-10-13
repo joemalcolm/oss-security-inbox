@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/07/2
-Message-ID: <ab5131d7-9e35-8e4b-1e13-48504f3eb9b2@apache.org>
-Date: Tue, 07 Nov 2023 09:53:35 +0000
-From: Jacques Le Roux <jleroux@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46819: Apache OFBiz: Execution of Solr plugin queries without authentication 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/10
+Message-ID: <CA+17n5sRt+SzQv+3-W0JugU4S3VV-C7n6a26D4PdQoOciuwwiQ@mail.gmail.com>
+Date: Fri, 13 Oct 2023 20:23:36 +0200
+From: Joshua Rogers <megamansec@...il.com>
+To: Amos Jeffries <squid3@...enet.co.nz>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Squid Caching Proxy Security Audit: 55 Vulnerabilities, 35 0days.
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi Amos, oss-security,
 
-Affected versions:
+I've added GHSA-543m-w2m2-g255 and CVE-2021-46784 for 'Cache Poisoning by
+Large Stored Response Headers (With Bonus XSS)' and 'Assertion in Gopher
+Response Handling' respectively: GHSA-543m-w2m2-g255 and CVE-2021-46784
 
-- Apache OFBiz before 18.12.09
+However, for "Gopher Assertion Crash", GHSA-f5cp-6rh3-284w does not apply.
+"Gopher Assertion Crash" concerns an assertion "assertion failed:
+store.cc:832: "store_status == STORE_PENDING"" while GHSA-f5cp-6rh3-284w
+concerns an assertion: "assertion failed: String.cc:172: "canGrowBy(len)""
 
-Description:
+To the best of my knowledge the former (without a current GHSA or CVE) is
+unfixed.
 
-Missing Authentication in Apache Software Foundation Apache OFBiz when using the Solr plugin.
-This issue affects Apache OFBiz: before 18.12.09. 
+Cheers,
+Josh
 
-Users are recommended to upgrade to version 18.12.09
+On Fri, Oct 13, 2023 at 3:54 AM Amos Jeffries <squid3@...enet.co.nz> wrote:
 
-Credit:
-
-Anonymous by demand (finder)
-
-References:
-
-https://ofbiz.apache.org/download.html
-https://ofbiz.apache.org/security.html
-https://ofbiz.apache.org/release-notes-18.12.09.html
-https://ofbiz.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46819
+> Some reference updates.
+>
+>
+> On 11/10/23 20:55, Joshua Rogers wrote:
+> >
+> > The issues are listed below. Due to the sheer size of issues discovered,
+> > technical details are not included in this email. However, breakdowns of
+> > the code and proof-of-concepts can be found on GitHub:
+> > https://megamansec.github.io/Squid-Security-Audit/
+> >
+>
+> > Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
+>
+>   ... GHSA-543m-w2m2-g255
+>
+> > Gopher Assertion Crash
+>
+>   ... GHSA-f5cp-6rh3-284w
+>
+> > Assertion in Gopher Response Handling
+>
+>   ... CVE-2021-46784 / GHSA-f5cp-6rh3-284w
+>
+>
+>
+> AYJ
+>
 
