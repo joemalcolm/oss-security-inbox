@@ -1,46 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/12
-Message-ID: <20231108231309.GA10833@openwall.com>
-Date: Thu, 9 Nov 2023 00:13:09 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: !CVE Team <contact@...cve.org>
-Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/1
+Message-ID: <fc7f78ee-8322-4d6b-b07b-923954016c05@treenet.co.nz>
+Date: Fri, 13 Oct 2023 14:54:02 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com, Joshua Rogers <megamansec@...il.com>
+Subject: Re: Squid Caching Proxy Security Audit: 55 Vulnerabilities, 35 0days.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Some reference updates.
 
-I don't like to reject messages (and so far haven't rejected any in this
-thread), but let's please only post when we have something valuable to
-add, which also fits the topic of this list.  In this thread, when
-you're not CC'ing the OP (which I've re-added here), they probably won't
-even see your comments.
 
-On Wed, Nov 08, 2023 at 12:46:13PM -0800, Jean Luc Picard wrote:
-> I have a number of natsec-ey google reports that went nowhere didnt't get
-> credit or a dime out of it.  Most are nullified by the current state of
-> affairs struck by xAI (ie how to cook crack) but others I still feel should
-> be looked at by the greater community.  Is this the apprapriate aggregate
-> platform now?
+On 11/10/23 20:55, Joshua Rogers wrote:
+> 
+> The issues are listed below. Due to the sheer size of issues discovered,
+> technical details are not included in this email. However, breakdowns of
+> the code and proof-of-concepts can be found on GitHub:
+> https://megamansec.github.io/Squid-Security-Audit/
+> 
 
-You write "natsec-ey".  That feels off-topic here.  So is your message
-actually off-topic and should have been rejected?   No need to reply,
-just please apply the "is my message on-topic" filter before you post.
+> Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
 
-In general, if you've found something valuable, just share it where
-appropriate - if it's a vulnerability in Open Source software, please
-post in here.  You don't need a CVE for this, nor any CVE alternative.
+  ... GHSA-543m-w2m2-g255
 
-On Wed, Nov 08, 2023 at 03:55:53PM -0500, Brian Peters wrote:
-> What about NVID? NVID-2023-0001
-> Not (A) Vulnerability ID
+> Gopher Assertion Crash
 
-Now that reads like pun on NIST's NVD.
+  ... GHSA-f5cp-6rh3-284w
 
-We can come up with lots of other suggested names (and I had made some
-suggestions too), but I think we don't need to continue much further.
+> Assertion in Gopher Response Handling
 
-So let's wind this thread down unless there's something truly new and
-on-topic to add.  I'll start rejecting messages if I have to.
+  ... CVE-2021-46784 / GHSA-f5cp-6rh3-284w
 
-Alexander
+
+
+AYJ
