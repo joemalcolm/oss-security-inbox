@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/6
-Message-ID: <CAOGQQ29pYOHP2puP-nAzO+Qnbc-OouwnVFpQVY_=OvVo12=Mkw@mail.gmail.com>
-Date: Tue, 31 Jan 2023 12:59:19 -0300
-From: Marco Benatto <mbenatto@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/6
+Message-ID: <121d245e-3c3a-3933-3831-63894a9caeff@apache.org>
+Date: Fri, 13 Oct 2023 15:14:01 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: pesign: Local privilege escalation on pesign systemd service
+Subject: CVE-2023-45348: Apache Airflow: Configuration information leakage vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Severity: important
 
-a local privilege escalation vulnerability was found in pesign. This
-vulnerability has been identified by CVE-2022-3560.
+Affected versions:
+
+- Apache Airflow 2.7.0 before 2.7.2
 
 Description:
 
-"The pesign deamon started by the systemd service of the pesign
-package is vulnerable to a path traversal vulnerability allowing a local
-privilege escalation. When properly exploited this flaw allows a
-malicious unprivileged user with access to pesign user or group can
-gain access to higher privileged files and directories."
+Apache Airflow, versions 2.7.0 and 2.7.1, is affected by a vulnerability that allows an authenticated user to retrieve sensitive configuration information when the "expose_config" option is set to "non-sensitive-only". The `expose_config` option is False by default.
+It is recommended to upgrade to a version that is not affected.
 
-CVSSv3.1:7.8/CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+Credit:
 
-The patch for this issue is attached to this message.
+L3yx of Syclover Security Team (finder)
+Hussein Awala (remediation developer)
 
-I'd like to thank Matthias Gerstner from SUSE Security Team for
-reporting this issue.
+References:
 
-Marco Benatto
-Red Hat Product Security
-secalert@...hat.com for urgent response
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-45348
 
-View attachment "0001-Use-normal-file-permissions-instead-of-ACLs.patch" of type "text/x-patch" (2258 bytes)
