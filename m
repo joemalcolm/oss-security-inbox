@@ -1,49 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/5
-Message-ID: <20230524164822.tjqpjhvbhoo6rdve@yuggoth.org>
-Date: Wed, 24 May 2023 16:48:23 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/9
+Message-ID: <20231013173228.S-hVe%steffen@sdaoden.eu>
+Date: Fri, 13 Oct 2023 19:32:28 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Clarification on embargoed testing in a partner cloud
+Subject: Re: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
 Content-Type: text/plain; charset=utf-8
 
-On 2023-05-24 07:26:42 -0700 (-0700), Anthony Liguori wrote:
-[...]
-> For list members that have questions about AWS, I'm happy to
-> answer, in gory details.  I know other large cloud providers have
-> folks on the list that would likely offer the same (or at least
-> direct to the appropriate people).  I can also help make
-> connections to most of the large cloud providers if folks don't
-> have contacts.
+Jonathan Wright wrote in
+ <CAKe4=-L2udnhRQ7EVOMihrExiYUVoor3E0+FbNxvZ8iB=pyQ1w@...l.gmail.com>:
 
-I'm similarly happy to connect interested parties to contacts at the
-hundreds of public cloud service providers who run OpenStack, if
-there are questions along those lines.
+[i resort a bit]
 
-> That said, I don't think this is the most important part of the
-> discussion...
-[...]
+ |On Tue, Oct 10, 2023 at 2:23 PM Moritz Muehlenhoff <jmm@...til.org> wrote:
+ |> On Tue, Oct 10, 2023 at 11:40:06AM -0700, Alan Coopersmith wrote:
+ |>> Information I've found so far on open source implementations (most via
+ |> the
+ |>> current listings in the CVE) include:
+ |>
+ |> Apache Trafficserver is also affected:
+ |> https://lists.apache.org/thread/5py8h42mxfsn8l1wy6o41xwhsjlsd87q
 
-Agreed.
+ |OpenLitespeed is not impacted:
+ |https://blog.litespeedtech.com/2023/10/11/rapid-reset-http-2-vulnerablilty/
 
-With my upstream developer and vulnerability coordinator hat on, I
-don't mind if downstream stakeholders who are given advance notice
-of our upcoming advisories test the included patches on resources in
-"public clouds" (whatever that term really means), as long as
-they're reasonably confident in the contractual relationships they
-have with those providers to operate ethically and above board. But
-also, we intentionally don't open up our embargoed discussions to
-downstream distributors until fairly close to the planned
-publication date, in order to limit the blast radius from accidental
-leaks.
+It did not really surprise me that Glenn Strauss, the wonderful
+developer of the lighttpd that i use for eight years, had to go
+like this (i hope he does not mind i quote #lighttpd here):
 
-Perhaps unsurprisingly, the OpenStack community does perform
-basically all of its testing and vulnerability management tasks on
-donated resources within OpenStack-based cloud providers, so it
-would be somewhat hypocritical of us to tell our users they
-shouldn't. I get the impression an increasing number of open source
-projects do the same today.
--- 
-Jeremy Stanley
+  ...
+  01:45 < gps> [..]No, I did not have prior knowledge.
+  ...
+  02:20 < gps> Confirmed: while all web servers implementing
+    HTTP/2 are exposed to the attack in CVE-2023-44487, the way each
+    web server software processes HTTP/2 affects the size of the
+    impact of the attack.  With lighttpd, the impact is largely
+    limited to the CPU usage parsing the HTTP/2 HEADERS frame,
+    including HPACK decoding.
+  ...
+  03:58 < gps> To be clear, the attack still causes lighttpd to
+    use more resources, but the amplification of resource
+    commitment is constrained in lighttpd due to the design
+    choices made for lighttpd HTTP/2.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
