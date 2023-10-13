@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2282" "Tuesday" "16" "January" "2018" "23:03:20" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<be5a8985-59e8-1b2a-174e-7309979b4bc1@orlitzky.com>" "58" "[oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and systemd service" nil nil nil "1" "2018011704:03:20" "[oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and systemd service" (number mark "U       michael@orli Jan 16   58/2282  " thread-indent "\"[oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and systemd service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22490 invoked by uid 550); 17 Jan 2018 04:03:43 -0000
+Received: (qmail 26344 invoked by uid 550); 13 Oct 2023 18:27:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +7,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22422 invoked from network); 17 Jan 2018 04:03:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1516161802; bh=dxCncmhunnCMvSOZLqwwl6KIoX6azRrv2bH4RGhWHpw=;
-	h=To:From:Subject:Date;
-	b=eUwB3hhJFg+3DFMLfDdzVMmgOmzeiG6Qs5myrroCcgvCb5vlN0hWRhBHuZ6rC5X9t
-	 Td4WgL3+lTJL98Ae3jojmseqnuzK3assP6SdqckDvsEfHQHftcwQH2EMOO+9Dhsq8S
-	 YzmG3tRdM2N8nJq5kZuqUJv+kx8zitF26/ifpP+E=
-To: oss-security@lists.openwall.com
-From: Michael Orlitzky <michael@orlitzky.com>
-Message-ID: <be5a8985-59e8-1b2a-174e-7309979b4bc1@orlitzky.com>
-Date: Tue, 16 Jan 2018 23:03:20 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+Received: (qmail 23679 invoked from network); 13 Oct 2023 18:23:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697221427; x=1697826227; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y8RvIP6sEzuZYpLLK2nEXTmMSGlCeOYOT5d00EUBnAk=;
+        b=kT9PJ+A/snC9xQ3oWermETyvyybfF2aBEzgQRrdWhHvqOVLkk3xQyMi4/C6UhtPYWr
+         T2wVnEMXs/QUP/n41dfQTBsieUrqnximxji5Rv1smEkn2gqTeqQMfQY9NnrUYnOMrj9L
+         rhcRgSwfg+jPmqSt1t6qdLXVudFd+ckRf6tyHMrotLQsgxOg+Gst68ZRXImfjfMCo2ja
+         OQBkmhOrAOAqIycmckMkuD8Q+rAuQmcK9caiJjce8S00fXvfdgoV1XEPXfmfnNVfySc6
+         s+Y13a0r866CZ6qajMkAkIW6lxtPpHpf/IUc/FIqS+s6ggl2N415Vi9GvSqA/pB9OSwB
+         hU3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697221427; x=1697826227;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y8RvIP6sEzuZYpLLK2nEXTmMSGlCeOYOT5d00EUBnAk=;
+        b=KtUWsXMtPw7Aen0m3543DkxfJJnA1iCmsKOOz8abD3FWVAFr2kUo8QhFMHk1V4b73j
+         XO1Q4SO4hTQ67DRZyGR/zp2+u1TI3C3zWoLlKGW7ffN5Q4h5DbeimDTjmwCHH6pkBZbX
+         chzA095SK+tkErEoJmRvH47smIGjIMvyMBpAayUn6eTKq1Dw3T8pDKRXDy4+WBDfDtc8
+         kkPxRzCQ5Fe/MxmvMYOy/33qTbH97dcK5wocQPM1Dk+nHyYNpIZmrC0t+I5x51wadiyB
+         kxud0TqtLGqLO9LLflvhfJ0pfY07ccCcPnHNxVHR9bsitogBL3cdXPQt2DkMhzSd6I2c
+         zEgw==
+X-Gm-Message-State: AOJu0YyAsUKIz/S4669ZBVY0BeUdTq5splrkVn+/OTAlhdHDZaoOxqfy
+	sQW+Ln2AhPIwukD4QSmh+BzgTQO6hjOB0kYYf1ZvHCsT0KdnXw==
+X-Google-Smtp-Source: AGHT+IGjN0QBdqu+nM7i5ZXUyUDfjOSxQWf3A5bbDX23KrlevXViW1LFaUdSr151t2+hHSzw9fv3yrgPZ6xHnPj9yLI=
+X-Received: by 2002:a1f:c7c5:0:b0:4a1:a334:57f0 with SMTP id
+ x188-20020a1fc7c5000000b004a1a33457f0mr9429700vkf.3.1697221427598; Fri, 13
+ Oct 2023 11:23:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and
- systemd service
+References: <CA+17n5uwjXBDzGGpepNtQSOFQaifnuyodd2EUQxEcCOLH+UUuw@mail.gmail.com>
+ <fc7f78ee-8322-4d6b-b07b-923954016c05@treenet.co.nz>
+In-Reply-To: <fc7f78ee-8322-4d6b-b07b-923954016c05@treenet.co.nz>
+From: Joshua Rogers <megamansec@gmail.com>
+Date: Fri, 13 Oct 2023 20:23:36 +0200
+Message-ID: <CA+17n5sRt+SzQv+3-W0JugU4S3VV-C7n6a26D4PdQoOciuwwiQ@mail.gmail.com>
+To: Amos Jeffries <squid3@treenet.co.nz>
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000004c29c306079d28e2"
+Subject: Re: [oss-security] Squid Caching Proxy Security Audit: 55
+ Vulnerabilities, 35 0days.
 
-Product: Icinga2 open source monitoring system
-Versions-affected: 2.8.0 and earlier (all current 2.x versions)
-Author: Michael Orlitzky
-Bug-report: https://github.com/Icinga/icinga2/issues/5793
+--0000000000004c29c306079d28e2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Amos, oss-security,
 
-== Summary ==
+I've added GHSA-543m-w2m2-g255 and CVE-2021-46784 for 'Cache Poisoning by
+Large Stored Response Headers (With Bonus XSS)' and 'Assertion in Gopher
+Response Handling' respectively: GHSA-543m-w2m2-g255 and CVE-2021-46784
 
-The icinga2 init script and systemd service file allow the unprivileged
-$ICINGA2_USER to gain root privileges by replacing the target of chown
-with a link.
+However, for "Gopher Assertion Crash", GHSA-f5cp-6rh3-284w does not apply.
+"Gopher Assertion Crash" concerns an assertion "assertion failed:
+store.cc:832: "store_status =3D=3D STORE_PENDING"" while GHSA-f5cp-6rh3-284w
+concerns an assertion: "assertion failed: String.cc:172: "canGrowBy(len)""
 
+To the best of my knowledge the former (without a current GHSA or CVE) is
+unfixed.
 
-== Details ==
+Cheers,
+Josh
 
-The "chown" command follows both symlinks and hard links by default on
-a vanilla Linux kernel. It is therefore unsafe to call "chown" on a
-path that is not wholly controlled by root; if the target path can be
-replaced with a link by a non-root user, then that user can do so to
-gain root when "chown" is called.
+On Fri, Oct 13, 2023 at 3:54=E2=80=AFAM Amos Jeffries <squid3@treenet.co.nz=
+> wrote:
 
-The "etc/initsystem/prepare-dirs" script that ships with icinga2 calls
-"chown" in that manner, leading to a root exploit for the $ICINGA2_USER.
-For example,
+> Some reference updates.
+>
+>
+> On 11/10/23 20:55, Joshua Rogers wrote:
+> >
+> > The issues are listed below. Due to the sheer size of issues discovered,
+> > technical details are not included in this email. However, breakdowns of
+> > the code and proof-of-concepts can be found on GitHub:
+> > https://megamansec.github.io/Squid-Security-Audit/
+> >
+>
+> > Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
+>
+>   ... GHSA-543m-w2m2-g255
+>
+> > Gopher Assertion Crash
+>
+>   ... GHSA-f5cp-6rh3-284w
+>
+> > Assertion in Gopher Response Handling
+>
+>   ... CVE-2021-46784 / GHSA-f5cp-6rh3-284w
+>
+>
+>
+> AYJ
+>
 
-  chown $ICINGA2_USER... $(dirname -- $ICINGA2_PID_FILE)
-  if [ -f $ICINGA2_PID_FILE ]; then
-    chown $ICINGA2_USER:$ICINGA2_GROUP $ICINGA2_PID_FILE
-  fi
-
-The first line gives away ownership of the directory containing the
-$ICINGA2_PID_FILE, and the next line calls chown on that file. The
-exploit is that, after the first line executes, the $ICINGA2_USER can
-simply replace $ICINGA2_PID_FILE with a link (sym or hard) to a
-root-owned file. The call to "chown" will then change ownership of the
-link's target. That is easily exploitable to gain root, by taking
-ownership of e.g. "/etc/passwd" or root's ".bashrc" file.
-
-The prepare-dirs script is used by both the SysV-style init script,
-
-  start() {
-    printf "Starting Icinga 2: "
-    @CMAKE_INSTALL_PREFIX@/lib/icinga2/prepare-dirs $SYSCONFIGFILE
-    ...
-
-and the systemd service file,
-
-  ExecStartPre=.../prepare-dirs @ICINGA2_SYSCONFIGFILE@
-
-and so both are vulnerable to the problem in prepare-dirs.
-
-To exploit the "chown" calls the first time the service is started,
-you would need to take advantage of the race condition to create a
-link before the "-f" test is executed. However, there's a much easier
-scenario: if the service is started, stopped, and started again (even
-across reboots, for persistent directories), then the "-f" test will
-succeed, and call "chown" on a path that has been controlled by
-$ICINGA2_USER since the first time the service was started.
+--0000000000004c29c306079d28e2--
