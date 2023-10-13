@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/5
-Message-ID: <5627ee07-06b9-69d4-0556-a1e65699008e@apache.org>
-Date: Thu, 21 Dec 2023 10:57:26 +0000
-From: Haonan Hou <haonan@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/7
+Message-ID: <a31439c1-ac0f-ddce-b675-467bdd868b32@apache.org>
+Date: Fri, 13 Oct 2023 15:14:12 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-51656: Apache IoTDB: Unsafe deserialize map in Sync Tool 
+Subject: CVE-2023-42792: Apache Airflow: Improper access control to DAG resources 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: moderate
 
 Affected versions:
 
-- Apache IoTDB 0.13.0 through 0.13.4
+- Apache Airflow before 2.7.2
 
 Description:
 
-Deserialization of Untrusted Data vulnerability in Apache IoTDB.This issue affects Apache IoTDB: from 0.13.0 through 0.13.4.
+Apache Airflow, in versions prior to 2.7.2, contains a security vulnerability that allows an authenticated user with limited access to some DAGs, to craft a request that could give the user write access to various DAG resources for DAGs that the user had no access to, thus, enabling the user to clear DAGs they shouldn't.
 
-Users are recommended to upgrade to version 1.2.2, which fixes the issue.
+Users of Apache Airflow are strongly advised to upgrade to version 2.7.2 or newer to mitigate the risk associated with this vulnerability.
+
+Credit:
+
+balis0ng (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-51656
+https://github.com/apache/airflow/pull/34366
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-42792
 
