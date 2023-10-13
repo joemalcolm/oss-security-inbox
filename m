@@ -1,51 +1,244 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/17/4
-Message-ID: <20230417225330.ckXBw%steffen@sdaoden.eu>
-Date: Tue, 18 Apr 2023 00:53:30 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/3
+Message-ID: <652920e5.c80a0220.3bcf7.2251@mx.google.com>
+Date: Fri, 13 Oct 2023 03:50:13 -0700 (PDT)
+From: Neal Gompa <ngompa13@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-Jakub Wilk wrote in
- <20230417064047.dhrrkuzjmtx4yhgj@...lk.net>:
- |* Steffen Nurpmeso <steffen@...oden.eu>, 2023-04-16 22:57:
- |>have you verified that they do not use isatty(3)
- |
- |I'm pretty sure they do. But isatty(3) is implemented using the TCGETS 
- |ioctl, so that doesn't help.
 
-Well everbody knows how this is implemented, most of the time.
-There never was any systemcall that comes otherwise near of doing
-that (except maybe fcntl).  Plan9, maybe.
+On Wed, Oct 11, 2023 at 10:00 AM Solar Designer <solar@...nwall.com> wrote:
+>
+> Hi,
+>
+> I'd appreciate others in here (especially "someone already on the
+> private list, or at least someone else who has been active on
+> oss-security for years but is not affiliated") helping review the
+> application below.  Normally, I'd just accept an application like this
+> based on it fitting the criteria (per my review) and lack of objections,
+> however for my own application it would be best to hear from others.
+>
+> Meanwhile, the Security SIG has started functioning and has been
+> announced on its own:
+>
+> https://rockylinux.org/pl/news/security-sig-update/
+> https://sig-security.rocky.page
+>
 
-By the way out of interest and because of ringing in my ear for
-one target i implemented sandboxing for an iteration of a very
-simple non-front-line server to be released tomorrow,
-pledge/unveil, seccomp(2) (glibc and musl), and capsicum(4) on
-FreeBSD.  seccomp(2) i find so expensive (i'd wish there would be
-a first-level bitset or so), and very hard to do (argument
-checking rather constant-only, of course: one could dynamically
-build the filter, even use a library that aids in doing so, but
-still), that i though the enormous capabilities of Linux regarding
-"ip netns", "unshare" and "capsh", in conjunction with overlayfs,
-ie containment, and keeping the server lean, seems more appealing.
-All the libraries one has to use today, mostly evolving targets,
-and blockboxes from my application's point of view.  Yes,
-i wondered how to create a bigger one i have on my TODO list,
-which requires DNS lookups (and that potentially leads to the
-black hole of TLS, HTTP, HTTP/2, QUIC).  How to write this
-securely with containment as above?
-The musl client of the simple even needs a SYS_ioctl clearance for
-normal writing to stdout (__stdout_write()).
+While I have not been subscribed to this mailing list for long, I have
+"lurked" for a while as part of doing work in Fedora, Mageia, and
+openSUSE.
 
-Ciao!
+Feel free to take my opinion with as much salt as you'd like, but I do
+not believe that Rocky Linux qualifies for it. My rationale is given
+inline below.
 
-(P.S.: it is great that QUIC will come "for free" with OpenSSL!)
+>
+> On Sun, Oct 01, 2023 at 03:02:23PM +0200, Solar Designer wrote:
+> > Hi,
+> >
+> > Rocky Linux is a prominent Enterprise Linux distribution in the spirit
+> > of original goals of the CentOS project, founded by Gregory Kurtzer, who
+> > had also co-founded CentOS and is founder and CEO of the primary
+> > corporate sponsor of the Rocky Linux project, CIQ:
+> >
+> > https://rockylinux.org
+> > https://ciq.com
+> >
+> > Besides heavily sponsoring Rocky Linux (yet without being its owner),
+> > CIQ also has its own Open Source and commercial offerings:
+> >
+> > "Our software stack consists of Rocky Linux the CentOS replacement,
+> > Apptainer the container solution of choice for HPC, Warewulf a
+> > provisioning and cluster management solution, and Fuzzball our
+> > next-generation performance computing platform that is multi-cloud,
+> > multi-site, multi-cluster, and multi-node."
+> >
+> > Most relevant here, CIQ maintains LTS branches of Rocky Linux point
+> > releases (such as of 8.6 when current is 8.8), providing security
+> > updates to those of its customers who wish to otherwise stay at a given
+> > point release.
+> >
+> > Further, the Rocky Linux project isn't limited to being a resurrection
+> > of CentOS (its packages being bug-for-bug compatible with RHEL), but
+> > also has a number of Special Interest Groups (SIGs) offering additional
+> > package repositories:
+> >
+> > https://wiki.rockylinux.org/special_interest_groups/
+> >
+> > I have recently joined this effort and we're now getting the Security
+> > SIG going.  This means an optional repository of extra packages for
+> > Enterprise Linux distros adding security features and even overriding
+> > some packages with hardened alternatives.  We already have a few
+> > packages of both kinds, and many more are planned.  If anyone else wants
+> > to join this effort - in any capacity including development,
+> > maintenance, testing, documentation, or something else - let me know!
+> >
+> > This application is for CIQ Rocky Linux Security Team, which means CIQ
+> > employees, (sub)contractors, and/or Rocky Linux project contributors
+> > trusted and tasked with producing security updates for Rocky Linux,
+> > CIQ's LTS branches of Rocky Linux, and possibly CIQ's other offerings
+> > building upon Rocky Linux.
+> >
+> > I address the 9 membership criteria below:
+> >
+> > > Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
+> >
+> > Rocky Linux has been actively maintained since its release in 2021, and
+> > is an Open Source project.  Many of CIQ's additional offerings are also
+> > Open Source projects on their own.
+> >
+> > > Have a userbase not limited to your own organization
+> >
+> > Rocky Linux has been publicly available since its release in 2021, and
+> > per EPEL repository access statistics has gained a userbase on par with
+> > other major EL distributions:
+> >
+> > https://ciq.com/blog/tracking-rocky-linux-growth-using-fedoras-epel-project/
+> > https://brentk.io/thoughts/analysis/epel-distribution-statistics.html
+> > https://rocky-stats.tiuxo.com
+> >
+> > Further, CIQ has its customer base for Rocky Linux support, including
+> > for the LTS branches.
+> >
+> > > Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
+> >
+> > The publicly verifiable track record currently consists of timely
+> > rebuild and re-release of RHEL security update packages and security
+> > advisories, as published here:
+> >
+> > https://errata.rockylinux.org
+> >
+> > Not currently verifiable publicly, but Gregory further tells me:
+> >
+> > "We've been doing LTS privately to our customers for over a year now.
+> > This means we maintain security fixes for customers who need long term
+> > support for point releases."
+> >
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+>>From my point of view, this does not count. Rocky's public track record
+of rebuilding RHEL updates and shipping them in a timely fashion does
+not indicate that Rocky/CIQ can respond effectively when you have a craft
+updates from scratch. Furthermore, there are public posts and articles
+indicating that Rocky Linux/CIQ has trouble with shipping updates in a
+timely fashion at all.
+
+Examples on updates:
+https://forums.rockylinux.org/t/some-errata-missing-in-comparison-with-rhel-and-almalinux/3843
+https://forums.rockylinux.org/t/rocky-linux-9-errata-missing-late-8-errata/6890
+https://forums.rockylinux.org/t/errata-rockylinux-org-not-updated-since-sep-02-2022/7676
+
+Example on releases: https://www.theregister.com/2022/07/18/rocky_linux_9/
+
+> > > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+> >
+> > Besides being a "downstream or a rebuild of another distro", CIQ has its
+> > LTS branches and Rocky Linux has its additional and replacement packages
+> > via the SIGs.  Security maintenance for these should be provided by CIQ
+> > and Rocky Linux.
+> >
+
+Special interest groups cannot count because they are intended to be
+public community projects. Unless you're saying that all Rocky Linux
+SIGs are shadows of CIQ work that can be held back for public consumption,
+that is effectively out of scope for consideration.
+
+Otherwise, Fedora and CentOS SIGs would be eligible for linux-distros@
+(and my understanding is that they are not).
+
+I will also note that CIQ/RESF/Rocky have made public statements about
+maintaining the pure-rebuild nature of the distribution, which I
+believe summarily disqualifies it.
+
+https://ciq.com/blog/rhel-changes-what-it-means-for-ciq/
+https://rockylinux.org/news/2023-06-22-press-release/
+https://rockylinux.org/news/brave-new-world-path-forward/
+https://rockylinux.org/news/keeping-open-source-open/
+
+> > Some security issues in upstream packages may be mitigated or fixed by
+> > pushing "security override" packages via CIQ's customer-facing repos and
+> > the Security SIG repos, without waiting on upstream distro's fixes and
+> > for issues or point releases where no upstream fixes are expected.
+> >
+> > Related previously accepted membership application (precedent) is
+> > CloudLinux's, which is now perhaps best known for AlmaLinux, another
+> > prominent EL distribution:
+> >
+> > http://www.openwall.com/lists/oss-security/2017/07/02/2
+> >
+
+CloudLinux's membership was based on the fact that they replaced and
+maintained a very large chunk of the distribution for their own
+purpose. They used a RHEL compatible userland, but most of the server
+software stacks and the kernel were replaced with their own builds.
+They wanted access for the maintenance of that stuff, which is very
+reasonable.
+
+Rocky/CIQ has not demonstrated a similar need from my point of view.
+
+> > Also, CentOS was once a member.
+> >
+
+CentOS was a very strange project in that it operated in a very closed
+fashion and it was difficult for volunteers to join the effort. I do
+not pretend to know if the current rules existed when CentOS was a
+member, but I would not accept them today on the basis that it's
+effectively a RHEL build.
+
+Fedora is not a member because there is no mechanism in the project to
+hide anything from the community. For this reason, I have not
+considered joining as a representative of CentOS Hyperscale, Mageia,
+or Fedora (all distributions that I do participate in security
+response for).
+
+> > > Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
+> >
+> > I have been a participant on oss-security since its inception, and have
+> > made relevant contributions.  Others with CIQ and Rocky Linux are also
+> > involved in various communities, and we'll ensure that the team to be
+> > subscribed to linux-distros isn't blind to publicly disclosed issues.
+> >
+> > > Accept the list policy
+> >
+> > CIQ Rocky Linux Security Team accepts the linux-distros list policy.
+> >
+> > > Be able and willing to contribute back, preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
+> >
+> > I've been contributing to oss-security and linux-distros since their
+> > inception.  We'll also look for additional ways CIQ and/or Rocky Linux
+> > can contribute, depending on expertise, interests, other related duties,
+> > and availability of specific people we may add.
+> >
+> > > Be able and willing to handle PGP-encrypted e-mail
+> >
+> > Of course.  I am already subscribed with my PGP key.
+> >
+> > My current subscription is as list admin and it also was for Openwall.
+> > Openwall no longer qualifies for linux-distros membership as a distro
+> > since we've effectively EOL'ed the Openwall GNU/*/Linux distro (we still
+> > do maintain many other projects, but not a full distro).  However, I
+> > and/or someone else from Openwall would have needed to stay subscribed
+> > as list admin anyway.
+> >
+> > With my new Rocky Linux role, my subscription's purpose will once again
+> > double as list admin and for the distro.
+> >
+> > > Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
+> >
+> > I suppose someone in here can vouch for me.  Please do - ideally, if you
+> > also have something else to say on this application in the same message,
+> > not to spam list members with messages solely to meet this formality.
+> >
+> > I may then get additional CIQ and/or Rocky Linux people subscribed,
+> > effectively vouching for them, after making sure they understand and
+> > accept the list policy.
+> >
+
+While I certainly recognize you and value your contributions
+over the years, I do not feel that you alone is sufficient for
+Rocky/CIQ to be accepted onto linux-distros@.
+
+
+--
+真実はいつも一つ！/ Always, there's only one truth!
