@@ -1,42 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/6
-Message-ID: <f6168eac-5db1-e92c-778f-c6c2d4878e70@igalia.com>
-Date: Wed, 15 Feb 2023 16:01:23 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/11
+Message-ID: <956475122.7707678.1697228495449.JavaMail.zimbra@hlrs.de>
+Date: Fri, 13 Oct 2023 22:21:35 +0200 (CEST)
+From: Martin Hecht <martin.hecht@...s.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0002
-------------------------------------------------------------------------
+Hi,
 
-Date reported           : February 15, 2023
-Advisory ID             : WSA-2023-0002
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0002.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0002.html
-CVE identifiers         : CVE-2023-23529.
+On Fri, Oct 13, 2023 at 12:50 "Neal Gompa" <ngompa13@...il.com> wrote:
+> > The publicly verifiable track record currently consists of timely
+> > rebuild and re-release of RHEL security update packages and security
+> > advisories, as published here:
+> >
+> > https://errata.rockylinux.org
+> >
+> > Not currently verifiable publicly, but Gregory further tells me:
+> >
+> > "We've been doing LTS privately to our customers for over a year now.
+> > This means we maintain security fixes for customers who need long term
+> > support for point releases."
+> >
+> From my point of view, this does not count. Rocky's public track record
+> of rebuilding RHEL updates and shipping them in a timely fashion does
+> not indicate that Rocky/CIQ can respond effectively when you have a craft
+> updates from scratch. Furthermore, there are public posts and articles
+> indicating that Rocky Linux/CIQ has trouble with shipping updates in a
+> timely fashion at all.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+I'd like to give an example against this. With the recent glibc issue 
+(CVE-2023-4911) we were closely following the upcoming fixed packages. 
+While we were installing the Rocky packages in the late evening of Thu Oct 5, 
+I had the impression that the Redhat packages became available later on Friday.
+It might be attributed to some hours of delay between arriving on the repo 
+servers vs. being announced via advisory. But, anyhow, accusing Rocky being
+late in providing packages at least is not valid in general imho. At least 
+important ones, like this one, seem to arrive rather quickly. Without mentioning 
+the distros, I have seen quite some announcements even around a week later.
 
-CVE-2023-23529
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.5.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A type confusion
-    issue was addressed with improved checks.
+> > > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+> >
+> > Besides being a "downstream or a rebuild of another distro", CIQ has its
+> > LTS branches and Rocky Linux has its additional and replacement packages
+> > via the SIGs.  Security maintenance for these should be provided by CIQ
+> > and Rocky Linux.
+> 
+> Special interest groups cannot count because they are intended to be
+> public community projects. Unless you're saying that all Rocky Linux
+> SIGs are shadows of CIQ work that can be held back for public consumption,
+> that is effectively out of scope for consideration.
+
+I think the point here is "*not only* being a rebuild of another distro". 
+So, their engagement with SIG should already be a valid add-on to be honored.
+Anyhow, the fact that CIQ offers LTS branches and professional support, 
+as well as their promise to provide backports of upstream fixes independent 
+of RHEL clearly distinguishes them from a "pure distro rebuild".
+
+https://ciq.com/products/rocky-linux/benefits/enterprise-level-support/
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+> > Some security issues in upstream packages may be mitigated or fixed by
+> > pushing "security override" packages via CIQ's customer-facing repos and
+> > the Security SIG repos, without waiting on upstream distro's fixes and
+> > for issues or point releases where no upstream fixes are expected.
+> >
+> > Related previously accepted membership application (precedent) is
+> > CloudLinux's, which is now perhaps best known for AlmaLinux, another
+> > prominent EL distribution:
+> >
+> > http://www.openwall.com/lists/oss-security/2017/07/02/2
+> 
+> CloudLinux's membership was based on the fact that they replaced and
+> maintained a very large chunk of the distribution for their own
+> purpose. They used a RHEL compatible userland, but most of the server
+> software stacks and the kernel were replaced with their own builds.
+> They wanted access for the maintenance of that stuff, which is very
+> reasonable.
+>
+> Rocky/CIQ has not demonstrated a similar need from my point of view.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+You could take the hardened glibc version of the before mentioned SIG for this
 
-The WebKitGTK and WPE WebKit team,
-February 15, 2023
+https://rockylinux.org/news/security-sig-update/
+
+Note, this is a different story than the backport of the fix for CVE-2023-4911.
+
+> Fedora is not a member because there is no mechanism in the project to
+> hide anything from the community. For this reason, I have not
+> considered joining as a representative of CentOS Hyperscale, Mageia,
+> or Fedora (all distributions that I do participate in security
+> response for).
+
+Well, assuming there was a security team in these projects able to obey
+the embargo regulations, wouldn't they have tried to join? 
+But, nevertheless, what is the relation of the organizational structure 
+of these projects with the current application of CIQ/Rocky, after all?
+
+> While I certainly recognize you and value your contributions
+> over the years, I do not feel that you alone is sufficient for
+> Rocky/CIQ to be accepted onto linux-distros@.
+
+The membership on the list is always by person, and it is always 
+on behalf of a distro. The fact that Alexander is already engaged in
+the Security SIG @Rocky already makes it a reasonable next step
+to represent them on the linux-distros list.
+
+Furthermore, I would like to express my deep admiration for his 
+very professional way of working. Especially in this case, when it 
+is about his own person, he handles the application process transparently
+as if it was any other distro's. Sure, that's one would expect in 
+this position, but it's just another proof in a long list that he is 
+the right person to do this job of running, maintaining, and moderating
+these lists.
+
+Not being member of any distribution, but a long-time subscriber to
+oss-sec, fd, and others, I give my vote for Alexander as a representative
+of CIQ Rocky Linux Security Team on linux-distros list.  
+
+Best regards,
+Martin
