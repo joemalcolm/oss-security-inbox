@@ -1,38 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/8
-Message-ID: <20230418012942.GL1655348@millbarge>
-Date: Tue, 18 Apr 2023 01:29:42 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Daniel Gaspar <dpgaspar@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-25504: Apache Superset: Possible SSRF on import datasets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/2
+Message-ID: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
+Date: Sat, 14 Oct 2023 18:39:49 +1100
+From: Matthew Fernandez <matthew.fernandez@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 17, 2023 at 09:57:11AM +0000, Daniel Gaspar wrote:
-> https://superset.apache.org
-> https://www.cve.org/CVERecord?id=CVE-2023-25504
+Hi all,
 
-Hello Daniel, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+I asked Alexander about this off-list in relation to his thread 
+“linux-distros list membership application - CIQ Rocky Linux Security 
+Team” but he suggested I bring it on-list instead.
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
+Is there interest/solutions within the Rock Security SIG or other 
+distro’s security teams for sandboxing that package upstreams can opt into?
 
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
+To step this out a bit… we have a large, old code base that was written 
+decades prior to current best practices. It has numerous known memory 
+safety issues and ever-dwindling maintainer capacity. It is also a 
+dependency, either directly or indirectly, of a significant fraction of 
+the world’s software. I am guessing this scenario sounds uncomfortably 
+familiar/common to many on this list.
 
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
+We (the maintainers) have discussed sandboxing as a way of mitigating 
+the risk of known bugs. However, one of the problems is that we don’t 
+know the complete set of required privileges of our dependencies. The 
+software can be configured with or without various libraries and also 
+has a plugin mechanism for dynamic code loading. Basically if a 
+sandboxing solution like seccomp wants to know our full set of system 
+calls, we ourselves don’t know it.
 
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
+The downstream maintainer packaging the software for, e.g. Rocky, does 
+though. They have a complete picture of which libraries/features are 
+enabled and how locked down the plugin stuff is.
 
-Thanks
+So, where I’m going with this, is that if the various packaging 
+ecosystems could (or do) offer sandboxing to upstream, people like us 
+would gladly opt in to it. Of course, these downstream maintainers can 
+already seccomp our software today. But expecting them to reverse 
+engineer our exact needs seems a bit much.
 
+I’d be interested to hear any thoughts on this.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Thanks,
+Matt
