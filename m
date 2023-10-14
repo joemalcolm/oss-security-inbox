@@ -1,39 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/3
-Message-ID: <ZLndwziGSn83SBUM@itl-email>
-Date: Thu, 20 Jul 2023 21:22:08 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/1
+Message-ID: <f7fe3602-156f-4d7a-94f9-bc66bd61cd1b@oracle.com>
+Date: Fri, 13 Oct 2023 17:11:55 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Announce: OpenSSH 9.3p2 released
+Subject: Samba 4.19.1, 4.18.8 and 4.17.12 Security Releases are available for Download
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 21, 2023 at 11:04:49AM +1000, Matthew Fernandez wrote:
-> 
-> 
-> On 7/20/23 23:41, Sevan Janiyan wrote:
-> > On 20/07/2023 14:24, Demi Marie Obenour wrote:
-> > > Should there be a system-wide configuration file containing a list
-> > > of known-good PKCS#11 libraries? ssh-agent having to guess if
-> > > something is a PKCS#11 library is less than awesome.
-> > 
-> > There's a compile time setting for paths from which you are able to load
-> > libraries from.
-> 
-> I don’t think this helps much though, right? The Qualys research that
-> motivated this found an exploit chain using only libs present in /usr/lib in
-> a default Ubuntu install. If you want to lock down loading to a specific
-> non-/usr/lib path that you have control over, this suggests you know and are
-> in control of the PKCS#11 providers you’re going to support. In which case,
-> why not avoid dynamic loading to begin with? I guess the allowlist and new
-> defaults are the answer to this conundrum though.
+Forwarding from https://lists.samba.org/archive/samba-announce/2023/000651.html
 
-IMO the root cause of this problem is that PKCS#11 libraries are installed
-in /usr/lib, rather than in /usr/lib/pkcs11 or another subdirectory.
-There should be an automated way to check if a library is a PKCS#11
-library without having to load it.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+> Release Announcements
+> ---------------------
+> 
+> This is a security release in order to address the following defects:
+> 
+> 
+> o CVE-2023-3961:  Unsanitized pipe names allow SMB clients to connect as 
+> root to
+>                    existing unix domain sockets on the file system.
+> https://www.samba.org/samba/security/CVE-2023-3961.html
+> 
+> o CVE-2023-4091:  SMB client can truncate files to 0 bytes by opening 
+> files with
+>                    OVERWRITE disposition when using the acl_xattr Samba VFS
+>                    module with the smb.conf setting
+>                    "acl_xattr:ignore system acls = yes"
+> https://www.samba.org/samba/security/CVE-2023-4091.html
+> 
+> o CVE-2023-4154:  An RODC and a user with the GET_CHANGES right can view all
+>                    attributes, including secrets and passwords. 
+> Additionally,
+>                    the access check fails open on error conditions.
+> https://www.samba.org/samba/security/CVE-2023-4154.html
+> 
+> o CVE-2023-42669: Calls to the rpcecho server on the AD DC can request 
+> that the
+>                    server block for a user-defined amount of time, denying
+>                    service.
+> https://www.samba.org/samba/security/CVE-2023-42669.html
+> 
+> o CVE-2023-42670: Samba can be made to start multiple incompatible RPC
+>                    listeners, disrupting service on the AD DC.
+> https://www.samba.org/samba/security/CVE-2023-42670.html
+> 
+> 
+> Changes
+> -------
+> 
+> o  Jeremy Allison <jra at samba.org>
+>     * BUG 15422: CVE-2023-3961.
+> 
+> o  Andrew Bartlett <abartlet at samba.org>
+>     * BUG 15424: CVE-2023-4154.
+>     * BUG 15473: CVE-2023-42670.
+>     * BUG 15474: CVE-2023-42669.
+> 
+> o  Ralph Boehme <slow at samba.org>
+>     * BUG 15439: CVE-2023-4091.
+> 
+> 
+> #######################################
+> Reporting bugs & Development Discussion
+> #######################################
+> 
+> Please discuss this release on the samba-technical mailing list or by
+> joining the #samba-technical:matrix.org matrix room, or
+> #samba-technical IRC channel on irc.libera.chat.
+> 
+> If you do report problems then please try to send high quality
+> feedback. If you don't provide vital information to help us track down
+> the problem then you will probably be ignored.  All bug reports should
+> be filed under the Samba 4.1 and newer product in the project's Bugzilla
+> database (https://bugzilla.samba.org/).
+> 
+> 
+> ======================================================================
+> == Our Code, Our Bugs, Our Responsibility.
+> == The Samba Team
+> ======================================================================
+> 
+> 
+> 
+> ================
+> Download Details
+> ================
+> 
+> The uncompressed tarballs and patch files have been signed
+> using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
+> from:
+> 
+>          https://download.samba.org/pub/samba/stable/
+> 
+> The release notes are available online at:
+> 
+>          https://www.samba.org/samba/history/samba-4.19.1.html
+>          https://www.samba.org/samba/history/samba-4.18.8.html
+>          https://www.samba.org/samba/history/samba-4.17.12.html
+> 
+> Our Code, Our Bugs, Our Responsibility.
+> (https://bugzilla.samba.org/)
+> 
+>                          --Enjoy
+>                          The Samba Team
