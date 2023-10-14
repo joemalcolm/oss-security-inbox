@@ -1,101 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/07/2
-Message-ID: <e93b159a-f165-8ab6-e9ea-ab636c26b9ef@gmail.com>
-Date: Wed, 7 Jun 2023 18:41:34 +0800
-From: Hangyu Hua <hbh25y@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/6
+Message-ID: <20231014164334.GA19096@openwall.com>
+Date: Sat, 14 Oct 2023 18:43:34 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: off-by-one in fl_set_geneve_opt
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-On 7/6/2023 11:32, Hangyu Hua wrote:
-> Hi guys,
+On Fri, Oct 13, 2023 at 11:19:18PM -0400, Neal Gompa wrote:
+> On Fri, Oct 13, 2023 at 8:07???PM Martin Hecht <martin.hecht@...s.de> wrote:
+> > I'd like to give an example against this. With the recent glibc issue
+> > (CVE-2023-4911) we were closely following the upcoming fixed packages.
+> > While we were installing the Rocky packages in the late evening of Thu Oct 5,
+> > I had the impression that the Redhat packages became available later on Friday.
+> > It might be attributed to some hours of delay between arriving on the repo
+> > servers vs. being announced via advisory. But, anyhow, accusing Rocky being
+> > late in providing packages at least is not valid in general imho. At least
+> > important ones, like this one, seem to arrive rather quickly. Without mentioning
+> > the distros, I have seen quite some announcements even around a week later.
 > 
-> I find a off-by-one bug in linux kernel's Flower
-> classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege 
-> escalation.
+> The fix for Rocky 8 and Rocky 9 are purely imports from RHEL:
 > 
-> # Details:
-> 
-> static int fl_set_geneve_opt(const struct nlattr *nla, struct 
-> fl_flow_key *key,
->       int depth, int option_len,
->       struct netlink_ext_ack *extack)
-> {
-> struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
-> struct nlattr *class = NULL, *type = NULL, *data = NULL;
-> struct geneve_opt *opt;
-> int err, data_len = 0;
-> 
-> if (option_len > sizeof(struct geneve_opt))
-> data_len = option_len - sizeof(struct geneve_opt);
-> 
-> opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
-> memset(opt, 0xff, option_len);
-> opt->length = data_len / 4;
-> opt->r1 = 0;
-> opt->r2 = 0;
-> opt->r3 = 0;
-> 
-> ...
-> if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
-> int new_len = key->enc_opts.len;
-> 
-> data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
-> data_len = nla_len(data);
-> if (data_len < 4) {
-> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
-> bytes long");
-> return -ERANGE;
-> }
-> if (data_len % 4) {
-> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
-> multiple of 4 bytes long");
-> return -ERANGE;
-> }
-> 
-> new_len += sizeof(struct geneve_opt) + data_len;
-> BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
-> if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
-> NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
-> return -ERANGE;
-> }
-> opt->length = data_len / 4;
-> memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
-> }
-> ...
-> }
-> 
-> We can see that opt use key->enc_opts.len to get its pointer from
-> key->enc_opts.data[] in [1]. Then length will be set to "data_len /
-> 4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
-> packets and their total size is 252 bytes(key->enc_opts.len = 252)
-> then key->enc_opts.len = opt->length = data_len / 4 when the third
-> TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
-> can bypass the check in [2] and cause out of bound write in
-> [3](opt->opt_data = key->enc_opts.data[257]).
-> 
-> # Patch
-> 
-> I already contacted the linux security team and made a patch:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
-> 
-> # CVE
-> 
-> Pending
-> 
-> # EXP
-> 
-> In order to avoid confusion i will publish it after I get CVE.
+> * R8: https://git.rockylinux.org/staging/rpms/glibc/-/commit/6433675bfaab392b362993d8ff8d576335e6bcd4
+> * R9: https://git.rockylinux.org/staging/rpms/glibc/-/commit/610a8a6829e1e604ff018daccf6bf63620edd19d
 
-Hi guys,
+Right, but we also had an effective mitigation for R9 pushed publicly in
+Security SIG on Oct 3, same day as the vulnerability was made public:
 
-I decide not to publish the exp for ethical reasons. Please email me if 
-any distribution's maintainers need the code.
+https://sig-security.rocky.page/packages/glibc/
 
-Thanks,
-Hangyu
+This was possible due to explicit permission I requested/obtained from
+Qualys in a thread on linux-distros.  The rules do mention that things
+like that can be done "with the reporter's explicit approval".  (This
+option also came up in the recent discussion around illumos distros.)
 
-> 
-> Thanks,
-> Hangyu
+> I did see that Louis Abel attempted to do something for Rocky 8, but
+> it was not shipped.
+
+Yes, I noticed this one too and asked him about it, and yes it was just
+a test that was not shipped.
+
+I would be pushing a Security SIG package addressing the issue for R8 as
+well if we didn't get upstream's update for a day more (after Oct 5).
+
+> I have also not seen much in terms of upstream
+> engagement indicating the bidirectional relationship expected for
+> members of linux-distros@.
+
+I agree this is something to improve, and I intend to be contributing to
+that with my CIQ or Rocky Linux hat on, as well as encourage others with
+Rocky Linux to contribute to upstreams more.
+
+I did contribute to the linux-distros discussion on this glibc issue, to
+an extent greater than I would have without intent to push a mitigation
+or fix into Rocky Linux Security SIG.
+
+> > I think the point here is "*not only* being a rebuild of another distro".
+> > So, their engagement with SIG should already be a valid add-on to be honored.
+> > Anyhow, the fact that CIQ offers LTS branches and professional support,
+> > as well as their promise to provide backports of upstream fixes independent
+> > of RHEL clearly distinguishes them from a "pure distro rebuild".
+> >
+> > https://ciq.com/products/rocky-linux/benefits/enterprise-level-support/
+
+Quoting from the above web page:
+
+"CIQ offers an additional paid service for customers: Rocky Linux Long
+Term Support ("LTS"). This is designed for organizations who want to
+remain on a previous minor release of Rocky Linux (like 8.6), which is
+no longer supported by the public project. CIQ staff will continue
+backporting security and bug fixes into the supported minor releases for
+a period of time, after the public project has retired that minor
+release.
+
+Subscribed customers who value stability can remain on their desired
+release longer, while still enjoying minor security and bugfix updates
+to their packages. As of this writing, CIQ is supporting non-zero,
+even-numbered point releases (8.6, 8.8, 9.2, 9.4, etc.) with its LTS
+offerings. LTS support lasts for 18 months after the release is retired
+from the public project. For example, Rocky 8.6 was retired in November
+2022. CIQ's LTS-8.6 support will last 18 months from that, or May 2024."
+
+> The point I'm making is that SIGs do not count because they cannot
+> obey embargo regulations. No open project or community project can do
+> that without having some mechanism for private controls, which is
+> antithetical to the community process. They fundamentally are
+> ineligible to join because they cannot keep anything secret.
+
+SIGs are ineligible to join on their own.  A distro's security team that
+would only push to SIGs on the coordinated release date can.
+
+Alexander
