@@ -1,54 +1,252 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/2
-Message-ID: <CAP9KPhDg3kpmsAyL74B5LuMmTq55pYoA+5LpJR0WkH0HO3Xw8g@mail.gmail.com>
-Date: Fri, 20 Oct 2023 12:58:21 +1100
-From: David Leadbeater <dgl@....cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/5
+Message-ID: <20231014160744.GA18959@openwall.com>
+Date: Sat, 14 Oct 2023 18:07:44 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 20 Oct 2023 at 09:55, Turistu <turistu@...il.com> wrote:
-[...]
-> It pretty much **is** mitigated at that layer. If xterm itself weren't
-> filtering out the ESC (ascii 0x1b) character in the pasted data, then
-> the bracketed-paste feature of bash or zsh could've been easily bypassed
-> by inserting a "\x1b[201~" escape (= end of pasted data) in the payload.
-> (As already mentioned in the report too).
+Hi Neal,
 
-I haven't tested all terminal and shell combinations, but the
-implementations of bracketed paste mode vary in their correctness,
-some do not filter all non-whitespace control characters, so for
-example you can add ^C into the exploit HTML:
+Thank you for bringing up your objections and rationale.
 
-writeXPrimary('\u0003;touch ~/LOL-' + Date.now() / 1000 +'\r')
+I find some of your arguments valid (but insufficient to block this
+application), some others not.  Anyhow, this is an opportunity for us to
+discuss how the various projects (distros, SIGs) handle things and
+whether they're represented or eligible for (linux-)distros membership.
 
-Then you get a command being run with no interaction; this appears to
-work with xterm (384) + fish for example.
+A recurring theme in both of your messages is whether an "open project
+or community project" can be represented on (linux-)distros.  Your
+answer is no because "there is no mechanism in the project to hide
+anything from the community."  My answer is yes if there is such a
+mechanism despite of the project being open/community in other ways.
 
-> But there are a thousand more ways for an attacker to leverage that hole
-> in Firefox. Many programs (including Firefox itself!) could be easily
-> crashed by garbage data from the clipboard. Attacker-controlled data
-> could find its way into shell scripts via `var=$(xsel)`, etc.
+For example, Debian is an open community project, yet Debian is
+explicitly listed as a linux-distros member and indeed representatives
+from Debian's security team are subscribed and the team manages to
+prepare security updates without breaking embargoes.  How exactly they
+do it I don't know, but I assume they have a mechanism.
 
-This isn't just limited to Firefox, one example is terminals that
-support OSC 52 (clipboard write), a remote SSH session can be hijacked
-and an attacker can inject OSC 52 into the stream in the background (I
-looked into this as part of my terminal security research, see [1]).
+You say that "Fedora is not a member".  While we do not specifically
+list Fedora as a member, we do list Red Hat, and my understanding is
+that this includes representation for Fedora - not from the open
+community side of it, but from Red Hat's side of it.  Using the glibc
+CVE-2023-4911 example and Red Hat Bugzilla entries:
 
-As you point out there are many ways for untrusted data to end up on
-the clipboard, the attack vector here is via the terminal so my
-opinion is the terminal is what should protect against it. (Although I
-think Firefox could help with some defense-in-depth here, shame they
-don't want to.)
+https://bugzilla.redhat.com/show_bug.cgi?id=2238352
+https://bugzilla.redhat.com/show_bug.cgi?id=2241966
 
-For example two terminals that get this right are:
+we can see that Zack Miele at Red Hat both participated in handling of
+the incoming embargoed issue report (in this case, presumably Red Hat
+was directly notified by Qualys a couple of weeks before the issue was
+brought to linux-distros, which is fine) and created the public entry
+for Fedora at 2023-10-03 17:12 UTC, which is almost exactly at the
+pre-agreed public disclosure date/time of 2023-10-03 17:00 UTC.  The
+first Fedora glibc package update listed in there is glibc-2.38-6.fc39
+at 20:05 UTC, a mere 3 hours later, or a mere 2 hours after Qualys'
+actual public disclosure of the issue (the oss-security posting was at
+17:50 UTC).  That's great.  Looking at the package change log:
 
-- rxvt-unicode: The confirm-paste extension (loaded in the default
-set) pops up a confirmation when pasting control characters (not just
-newlines), "y" will strip controls, "p" will paste controls as is.
-- Windows Terminal: Strips non-whitespace control characters, asks for
-confirmation when pasting newlines, if bracketed paste mode is off.
+https://packages.fedoraproject.org/pkgs/glibc/glibc/fedora-39.html
 
-David
+We see the relevant change was made by "Arjun Shankar <arjun at redhat
+dot com>", so also by someone at Red Hat.  I doubt we'd see such quick
+handling of the issue without preparedness from Red Hat's side, and thus
+without Red Hat having advance knowledge of the issue.  While for this
+specific issue they had knowledge before linux-distros, I think it's the
+same in cases where the issue first gets to Red Hat via linux-distros -
+they don't forget about preparedness also for Fedora.
 
-[1]: https://dgl.cx/2023/09/ansi-terminal-security#xterm-osc-52-clipboard
+What I am proposing for CIQ and Rocky Linux is similar - only "CIQ Rocky
+Linux Security Team" would receive the embargoed information, and (at
+least for issues above an overall severity threshold, like this glibc
+one was) would help ensure preparedness for both CIQ LTS branches and
+Rocky Linux, without leaking the information to CIQ customers nor to the
+entire Rocky Linux community prematurely.
+
+Some further comments inline:
+
+On Fri, Oct 13, 2023 at 03:50:13AM -0700, Neal Gompa wrote:
+> On Wed, Oct 11, 2023 at 10:00 AM Solar Designer <solar@...nwall.com> wrote:
+> > > The publicly verifiable track record currently consists of timely
+> > > rebuild and re-release of RHEL security update packages and security
+> > > advisories, as published here:
+> > >
+> > > https://errata.rockylinux.org
+> > >
+> > > Not currently verifiable publicly, but Gregory further tells me:
+> > >
+> > > "We've been doing LTS privately to our customers for over a year now.
+> > > This means we maintain security fixes for customers who need long term
+> > > support for point releases."
+> 
+> From my point of view, this does not count. Rocky's public track record
+> of rebuilding RHEL updates and shipping them in a timely fashion does
+> not indicate that Rocky/CIQ can respond effectively when you have a craft
+> updates from scratch.
+
+Fair enough.  Ideally, we'd also have public track record showing CIQ's
+LTS branch updates, but unfortunately this is not currently public.  So
+we have this combination of publicly verifiable track record of rebuilds
+and republishing (which shows that the project cares and is long-term),
+statement that own updates were also being made for LTS branches, and
+public information on recent own updates via the SIG (no track record,
+but demonstrates capability, infrastructure setup, and intent).
+
+The timely rebuilds alone satisfy the criterion's current wording.  Not
+being a rebuild-only distro or having additional justification is a
+separate criterion, which does not require a long-term track record.
+
+I think this combination (barely) clears the bar for the two criteria.
+
+> Furthermore, there are public posts and articles
+> indicating that Rocky Linux/CIQ has trouble with shipping updates in a
+> timely fashion at all.
+> 
+> Examples on updates:
+> https://forums.rockylinux.org/t/some-errata-missing-in-comparison-with-rhel-and-almalinux/3843
+> https://forums.rockylinux.org/t/rocky-linux-9-errata-missing-late-8-errata/6890
+> https://forums.rockylinux.org/t/errata-rockylinux-org-not-updated-since-sep-02-2022/7676
+
+There are occasional hiccups with receiving the upstream distro's errata
+publications.  In fact, I am aware of a missing recent security
+advisory, even though the actual update packages are there - I'm told
+this one Red Hat advisory is mysteriously missing from the specific
+upstream API we use, which will hopefully be corrected by switching to
+another available API for these.  So yes, there are such examples.
+
+However, the criterion isn't that 100% of updates and publications must
+be quick.  Things do go wrong sometimes, and updates for lower severity
+issues are often reasonably delayed, including by current linux-distros
+members and especially for issues that were not even handled via the
+list.  Rather, the criterion should be that updates are typically quick,
+especially for high severity issues handled via linux-distros, so that
+membership could make these even quicker.
+
+I see that the current wording mentions specific delays, but does not
+mention issue severity - perhaps that's something to add, as it's
+unreasonable to insist on quick fixes for low severity issues (they're
+nice to have and provide extra justification, but not a requirement).
+
+> Example on releases: https://www.theregister.com/2022/07/18/rocky_linux_9/
+
+Rocky Linux 8 remained fully supported (and still is), so the delay in
+releasing Rocky Linux 9 is of no direct relevance to this application.
+
+It's great that AlmaLinux was much quicker, and this may (or may not)
+indirectly compare the teams' capabilities (or maybe focus areas), but
+for the purpose of this membership application it's not a competition.
+
+> > > > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+> > >
+> > > Besides being a "downstream or a rebuild of another distro", CIQ has its
+> > > LTS branches and Rocky Linux has its additional and replacement packages
+> > > via the SIGs.  Security maintenance for these should be provided by CIQ
+> > > and Rocky Linux.
+> 
+> Special interest groups cannot count because they are intended to be
+> public community projects. Unless you're saying that all Rocky Linux
+> SIGs are shadows of CIQ work that can be held back for public consumption,
+> that is effectively out of scope for consideration.
+
+I note that you're not arguing against CIQ LTS branches being relevant.
+Great.  As to the SIGs, no, I am not "saying that all Rocky Linux SIGs
+are shadows of CIQ work", but there is overlap in people involved and
+occasionally CIQ can help prepare important security updates "that can
+be held back for public consumption" until the coordinated release date.
+
+> Otherwise, Fedora and CentOS SIGs would be eligible for linux-distros@
+> (and my understanding is that they are not).
+
+Current membership criteria start with "Be an actively maintained
+Unix-like operating system distro with substantial use of Open Source
+components", so a SIG like these isn't eligible because of not being a
+complete "operating system distro".  However, if Red Hat would manage to
+contribute to their related SIGs' preparedness without breaking list
+rules, that would be allowed.  Specifically, the rules allow to share
+information "with others within your distro's team based on their
+need-to-know" as long as they also accepted the rules.  So if a person
+directly with the distro takes a SIG's package, prepares an update, and
+only makes it available to the SIG on the CRD, that's fine.  Ditto if
+it's the same person wearing two hats.
+
+Similarly, Rocky Linux SIGs are not eligible on their own, but the
+distro's security team can contribute to them as the rules permit.
+
+> I will also note that CIQ/RESF/Rocky have made public statements about
+> maintaining the pure-rebuild nature of the distribution, which I
+> believe summarily disqualifies it.
+> 
+> https://ciq.com/blog/rhel-changes-what-it-means-for-ciq/
+> https://rockylinux.org/news/2023-06-22-press-release/
+> https://rockylinux.org/news/brave-new-world-path-forward/
+> https://rockylinux.org/news/keeping-open-source-open/
+
+This applies to the main Rocky Linux distribution.  Yes, with only that
+one distribution we'd not have "convincing additional justification of
+how the list membership would enable you to release fixes sooner" and
+thus be disqualified.  However, the existence of CIQ LTS branches and of
+Rocky Linux SIGs changes that, as the team to be subscribed(*) is to
+provide security maintenance for these, and via the Security SIG also
+optional mitigations and early fixes for Rocky Linux.
+
+(*) or who I'd initially be relaying specific bits of info to, based on
+their need-to-know and indeed understanding and acceptance of the terms
+
+> CloudLinux's membership was based on the fact that they replaced and
+> maintained a very large chunk of the distribution for their own
+> purpose. They used a RHEL compatible userland, but most of the server
+> software stacks and the kernel were replaced with their own builds.
+> They wanted access for the maintenance of that stuff, which is very
+> reasonable.
+> 
+> Rocky/CIQ has not demonstrated a similar need from my point of view.
+
+Fair enough.  I wish more about CIQ's offerings were available publicly.
+
+However, I feel that what I described above is sufficient for the
+purpose of linux-distros membership.
+
+> > > Also, CentOS was once a member.
+> 
+> CentOS was a very strange project in that it operated in a very closed
+> fashion and it was difficult for volunteers to join the effort. I do
+> not pretend to know if the current rules existed when CentOS was a
+> member, but I would not accept them today on the basis that it's
+> effectively a RHEL build.
+
+Yes, CentOS' membership pre-dates the current specific criteria, and I
+don't know if CentOS would be accepted today.  As a rebuild only, it
+would not be, but if they offered to provide security maintenance for
+extras from their SIGs, maybe.
+
+Anyway, the current CentOS Stream is a project of Red Hat, and it's up
+to Red Hat to provide security maintenance for it or not, including
+using information obtained via linux-distros as the rules permit.
+
+> Fedora is not a member because there is no mechanism in the project to
+> hide anything from the community. For this reason, I have not
+> considered joining as a representative of CentOS Hyperscale, Mageia,
+> or Fedora (all distributions that I do participate in security
+> response for).
+
+Thank you for sharing your perspective on this.  Makes sense.  From my
+perspective, Fedora isn't explicitly a member because it does not need
+to be, with that kind of preparedness provided by Red Hat.
+
+We could go into hair-splitting and require that RHEL, Fedora, and
+CentOS Stream be individually listed as member distros.  Maybe this
+would actually help some issue reporters understand which distros
+they're notifying, so it isn't necessarily unreasonable.  However, in
+terms of people subscribed I think it'd be just Red Hat folks wearing a
+variety of project hats anyway, so is easier to manage as one member.
+
+> While I certainly recognize you and value your contributions
+> over the years, I do not feel that you alone is sufficient for
+> Rocky/CIQ to be accepted onto linux-distros@.
+
+Of course not - the new member also needs to meet the criteria, and I
+think it does (even if barely so for the not-only-rebuild one).
+
+Alexander
