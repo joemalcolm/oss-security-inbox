@@ -1,24 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/8
-Message-ID: <a901d6be-4e2f-bc3f-c817-79fc362b142e@canonical.com>
-Date: Wed, 1 Mar 2023 10:55:05 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/8
+Message-ID: <5492404f-bfed-d812-85b5-a871d46e1a79@gmail.com>
+Date: Sun, 15 Oct 2023 07:52:07 +1100
+From: Matthew Fernandez <matthew.fernandez@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: sudo: double free with per-command chroot sudoers rules
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-On 2023-03-01 10:11, Todd C. Miller wrote:
-> On Tue, 28 Feb 2023 19:55:43 -0600, John Helmert III wrote:
-> 
->> Has a CVE been requeested?
-> 
-> No, and I don't plan on requesting one.  As far as I can tell, this
-> doesn't actually affect any users.
-> 
->   - todd
 
-Well, it looks like CVE-2023-27320 already got assigned to this issue.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-27320
+On 10/15/23 04:07, Demi Marie Obenour wrote:
+> 
+> Which software is this?  Are there plans to at least fix the known
+> memory safety problems?  If not, I think it would be best to disable the
+> known-vulnerable features by default.  If the entire software package is
+> vulnerable, I recommend deprecating it and recommending that downstream
+> users migrate to a more secure alternative.
 
-Marc.
+I deliberately did not name it to avoid getting into a discussion like 
+this. The short answer is that we’re doing our best but the history of 
+the project includes 10+ year old bugs that no one has had the time or 
+resources to address. “fix all the bugs” simply is not a strategy that 
+survives contact with the real world.
+
+> You have to be willing to break compatibility to at least some degree.
+> If you try to support everything, you wind up with something like Qubes
+> OS’s “convert to trusted image”, which creates and destroys an entire
+> virtual machine for every operation.  Even then, you will still break
+> a (hypothetical) plugin that accesses the Internet, because that VM
+> should not have network access.
+> 
+> What I would do is compile a list of system calls that are reasonable to
+> make after startup.  Once all plugins have been loaded and all
+> configuration files have been read, no plugin should be opening files or
+> making network connections.  If it does, that plugin is broken and needs
+> to be fixed.  You can have these system calls fail rather than killing
+> the entire process, but you cannot try to support arbitrary plugins.
+> That said, I expect most existing plugins will work fine with
+> sandboxing.
+
+Sure, but you’re answering a different question than the one I asked.
