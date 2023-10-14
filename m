@@ -1,102 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/6
-Message-ID: <20231001191303.GA8910@openwall.com>
-Date: Sun, 1 Oct 2023 21:13:03 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/14/3
+Message-ID: <CAEg-Je-uxMbiYDADX=+eyTQF+xnjAYA0u1HoygqDa+G=Y=4f-Q@mail.gmail.com>
+Date: Fri, 13 Oct 2023 23:19:18 -0400
+From: Neal Gompa <ngompa13@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: "Linux Kernel security demistified"
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Oct 13, 2023 at 8:07 PM Martin Hecht <martin.hecht@...s.de> wrote:
+>
+> Hi,
+>
+> On Fri, Oct 13, 2023 at 12:50 "Neal Gompa" <ngompa13@...il.com> wrote:
+> > > The publicly verifiable track record currently consists of timely
+> > > rebuild and re-release of RHEL security update packages and security
+> > > advisories, as published here:
+> > >
+> > > https://errata.rockylinux.org
+> > >
+> > > Not currently verifiable publicly, but Gregory further tells me:
+> > >
+> > > "We've been doing LTS privately to our customers for over a year now.
+> > > This means we maintain security fixes for customers who need long term
+> > > support for point releases."
+> > >
+> > From my point of view, this does not count. Rocky's public track record
+> > of rebuilding RHEL updates and shipping them in a timely fashion does
+> > not indicate that Rocky/CIQ can respond effectively when you have a craft
+> > updates from scratch. Furthermore, there are public posts and articles
+> > indicating that Rocky Linux/CIQ has trouble with shipping updates in a
+> > timely fashion at all.
+>
+> I'd like to give an example against this. With the recent glibc issue
+> (CVE-2023-4911) we were closely following the upcoming fixed packages.
+> While we were installing the Rocky packages in the late evening of Thu Oct 5,
+> I had the impression that the Redhat packages became available later on Friday.
+> It might be attributed to some hours of delay between arriving on the repo
+> servers vs. being announced via advisory. But, anyhow, accusing Rocky being
+> late in providing packages at least is not valid in general imho. At least
+> important ones, like this one, seem to arrive rather quickly. Without mentioning
+> the distros, I have seen quite some announcements even around a week later.
+>
 
-Greg KH gave a talk entitled "Linux Kernel security demistified" at
-Kernel Recipes 2023 (10th Edition) on September 26 in Paris, France.
+The fix for Rocky 8 and Rocky 9 are purely imports from RHEL:
 
-Thank you, Greg!
+* R8: https://git.rockylinux.org/staging/rpms/glibc/-/commit/6433675bfaab392b362993d8ff8d576335e6bcd4
+* R9: https://git.rockylinux.org/staging/rpms/glibc/-/commit/610a8a6829e1e604ff018daccf6bf63620edd19d
 
-Here are the slides:
+I did see that Louis Abel attempted to do something for Rocky 8, but
+it was not shipped. I have also not seen much in terms of upstream
+engagement indicating the bidirectional relationship expected for
+members of linux-distros@.
 
-https://git.sr.ht/~gregkh/presentation-security
-https://git.sr.ht/~gregkh/presentation-security/blob/3547183843399d693c35b502cf4a313e256d0dd8/security-stuff.pdf
+> > > > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
+> > >
+> > > Besides being a "downstream or a rebuild of another distro", CIQ has its
+> > > LTS branches and Rocky Linux has its additional and replacement packages
+> > > via the SIGs.  Security maintenance for these should be provided by CIQ
+> > > and Rocky Linux.
+> >
+> > Special interest groups cannot count because they are intended to be
+> > public community projects. Unless you're saying that all Rocky Linux
+> > SIGs are shadows of CIQ work that can be held back for public consumption,
+> > that is effectively out of scope for consideration.
+>
+> I think the point here is "*not only* being a rebuild of another distro".
+> So, their engagement with SIG should already be a valid add-on to be honored.
+> Anyhow, the fact that CIQ offers LTS branches and professional support,
+> as well as their promise to provide backports of upstream fixes independent
+> of RHEL clearly distinguishes them from a "pure distro rebuild".
+>
+> https://ciq.com/products/rocky-linux/benefits/enterprise-level-support/
+>
+>
+> > > Some security issues in upstream packages may be mitigated or fixed by
+> > > pushing "security override" packages via CIQ's customer-facing repos and
+> > > the Security SIG repos, without waiting on upstream distro's fixes and
+> > > for issues or point releases where no upstream fixes are expected.
+> > >
+> > > Related previously accepted membership application (precedent) is
+> > > CloudLinux's, which is now perhaps best known for AlmaLinux, another
+> > > prominent EL distribution:
+> > >
+> > > http://www.openwall.com/lists/oss-security/2017/07/02/2
+> >
+> > CloudLinux's membership was based on the fact that they replaced and
+> > maintained a very large chunk of the distribution for their own
+> > purpose. They used a RHEL compatible userland, but most of the server
+> > software stacks and the kernel were replaced with their own builds.
+> > They wanted access for the maintenance of that stuff, which is very
+> > reasonable.
+> >
+> > Rocky/CIQ has not demonstrated a similar need from my point of view.
+>
+> You could take the hardened glibc version of the before mentioned SIG for this
+>
+> https://rockylinux.org/news/security-sig-update/
+>
+> Note, this is a different story than the backport of the fix for CVE-2023-4911.
+>
+> > Fedora is not a member because there is no mechanism in the project to
+> > hide anything from the community. For this reason, I have not
+> > considered joining as a representative of CentOS Hyperscale, Mageia,
+> > or Fedora (all distributions that I do participate in security
+> > response for).
+>
+> Well, assuming there was a security team in these projects able to obey
+> the embargo regulations, wouldn't they have tried to join?
+> But, nevertheless, what is the relation of the organizational structure
+> of these projects with the current application of CIQ/Rocky, after all?
+>
 
-Video:
+The point I'm making is that SIGs do not count because they cannot
+obey embargo regulations. No open project or community project can do
+that without having some mechanism for private controls, which is
+antithetical to the community process. They fundamentally are
+ineligible to join because they cannot keep anything secret.
 
-https://www.youtube.com/watch?v=xDHTn0auo2w&t=14975s (4:09:30 to 5:00:40)
 
-My summary and thoughts:
 
-The talk is primarily about the Linux kernel security process.  It
-starts with a mention of the European Union Cyber Resiliance Act (CRA)
-and how it is problematic for Open Source, a topic we haven't yet
-touched here on oss-security, but many relevant organizations have, e.g.
-here's Apache Foundation's summary from July:
 
-https://news.apache.org/foundation/entry/save-open-source-the-impending-tragedy-of-the-cyber-resilience-act
-
-(If we want to discuss in here, which I'm not sure of, please start a
-separate thread for this sub-topic, do not just reply to this one.)
-
-A relevant point is that governments and companies want "early security
-notices".  Another is that "early notice lists are leaks and should be
-considered public."  A way out of this mess is not to play the game.
-This adds to the many technical reasons also given in the talk not to
-document security fixes as such, not to assign CVEs, and to recommend
-usage of upstream stable kernel trees over "enterprise" distro kernels.
-
-There are relevant questions and answers after the talk, including on
-(not) notifying the linux-distros list.  I can see how this fits in with
-not playing the game to avoid the slippery slope.  As usual, it remains
-up to issue reporters to choose who or what lists they notify.
-
-I wonder whether the kernel documentation could, however, be encouraging
-rather than discouraging (as it currently is) about issue reporters
-themselves contacting linux-distros after a fix is ready.  I wonder if a
-patch like that would be accepted?
-
-In an answer, Greg blames linux-distros for "blackmailing" the kernel
-security team by our requirement to make everything including exploits
-(if posted to the list) public, a requirement we had already lifted:
-
-https://www.openwall.com/lists/oss-security/2023/09/08/4
-
-and by having a (low) maximum embargo time (14 days).  Google P0's 90
-days is mentioned as adequate maximum (with typical times until a Linux
-kernel fix is ready being way shorter than that).  Yet a slide says "No
-embargoes longer than 7 days" without a mention this is 7 days after fix
-is ready (I assume an inadvertent omission).
-
-I was/am of course thinking whether we should possibly make the
-linux-distros embargo times consistent with s@...'s as an exception.
-We had already granted the Linux kernel and curl exceptions allowing
-semi-public fixes, then relaxed the rules on exploit posting, and now
-this remains the final inconsistency.  We could address it, too.
-
-However, if a reason to stop notifying linux-distros is avoiding a
-precedent of s@k.o providing early security notices to any other group,
-then us adjusting the rules would be counter-productive as it'd remove
-the needed excuse.  Of course, I don't expect any reply to this - it's
-just an impression/insight I got from the talk, and it's kind of fine.
-I understand the kernel security team works under pressure as-is and I
-don't want to add to that.
-
-There's also an upcoming Webinar:
-
-https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
-
-> Demystifying the Linux Kernel Security Process
-> October 3, 2023 | 07:00 AM PDT (UTC-7)
-> 
-> Join an interactive, complimentary Mentorship Session exploring
-> Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
-> Kernel Maintainer & Fellow, The Linux Foundation
-> 
-> There is a lot of misunderstanding about how the Linux kernel deals with
-> security vulnerabilities.  This talk will go into how the Linux kernel
-> security team works, how changes are propagated out to the public, and
-> how users must take advantage of these changes in order to have a secure
-> system.
-
-(Announcements of upcoming events generally don't fit oss-security, but
-including this along with material from the prior event is acceptable.)
-
-Alexander
+--
+真実はいつも一つ！/ Always, there's only one truth!
