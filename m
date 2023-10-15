@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/09/1
-Message-ID: <udifco$gpb$1@ciao.gmane.io>
-Date: Sat, 9 Sep 2023 19:00:40 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/15/3
+Message-ID: <20231015234559.GA29323@openwall.com>
+Date: Mon, 16 Oct 2023 01:45:59 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: mutt 2.2.12 security update
+Subject: Re: distros list archive
 Content-Type: text/plain; charset=utf-8
 
-FYI, a mutt update that fixes a crash on header parsing:
+On Thu, Jun 15, 2023 at 08:38:39PM +0200, Solar Designer wrote:
+> I've just made a further update of these, until May 31, 2023.
 
-http://lists.mutt.org/pipermail/mutt-announce/Week-of-Mon-20230904/000056.html
+I've just updated these headers-only archives once again, now up to
+September 30, 2023.
 
-Tavis.
+https://www.openwall.com/lists/linux-distros/
+https://www.openwall.com/lists/distros/
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+Like before, I did not decrypt the actual messages, but the traffic
+statistics and the message headers should provide some visibility into
+how much and roughly what was discussed and when.
 
+The messages appearing on distros should be strictly a subset of those
+appearing on linux-distros, as per the description of the lists here:
+
+https://oss-security.openwall.org/wiki/mailing-lists/distros
+
+As you may notice, the Subject lines sometimes contain [vs] and other
+times [vs-plain].  This reflects whether the messages traveled to the
+list exploder in encrypted or plaintext form, respectively.  They
+traveled to the list members in re-encrypted form either way.
+
+Alexander
+
+P.S. I am also working on an update of the distros list statistics on
+the wiki, to be announced separately.
