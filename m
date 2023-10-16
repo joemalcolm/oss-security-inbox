@@ -1,40 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/12/2
-Message-ID: <a1749667-3d73-4fdf-805c-5fedbf5d2745@oracle.com>
-Date: Thu, 12 Oct 2023 21:43:09 +0200
-From: Vegard Nossum <vegard.nossum@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/2
+Message-ID: <20231016014814.GA31197@openwall.com>
+Date: Mon, 16 Oct 2023 03:48:14 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
+Cc: VMware Security Response Center <security@...are.com>
+Subject: CVE-2023-20867: open-vm-tools: Authentication Bypass vulnerability in the vgauth module
 Content-Type: text/plain; charset=utf-8
-
-
-On 11/10/2023 15:59, Solar Designer wrote:
-> I'd appreciate others in here (especially "someone already on the
-> private list, or at least someone else who has been active on
-> oss-security for years but is not affiliated") helping review the
-> application below.  Normally, I'd just accept an application like this
-> based on it fitting the criteria (per my review) and lack of objections,
-> however for my own application it would be best to hear from others.
-
-[...]
-
-> On Sun, Oct 01, 2023 at 03:02:23PM +0200, Solar Designer wrote:
->>> Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
->>
->> I suppose someone in here can vouch for me.  Please do - ideally, if you
->> also have something else to say on this application in the same message,
->> not to spam list members with messages solely to meet this formality.
->>
->> I may then get additional CIQ and/or Rocky Linux people subscribed,
->> effectively vouching for them, after making sure they understand and
->> accept the list policy.
 
 Hi,
 
-As a current distros member, I see no problem with this whatsoever and I
-appreciate the transparency.
+This was brought to linux-distros on June 6 with "scheduled public
+disclosure on June 13th, 2023."  There's a VMware security advisory that
+says it was published on that date:
 
-Thanks,
+https://www.vmware.com/security/advisories/VMSA-2023-0013.html
 
+and patches are available at:
 
-Vegard
+https://github.com/vmware/open-vm-tools/tree/CVE-2023-20867.patch
+
+but the issue was wrongly never brought to oss-security (or at least I
+couldn't find it) - so I am correcting this now.
+
+Quoting from the linux-distros message:
+
+> Description
+> ==============================================================
+> CVE-2023-20867: VMware Tools contains an Authentication Bypass
+> vulnerability in the vgauth module. VMware has evaluated the severity
+> of this issue to be in the Low severity range with a maximum CVSSv3.1
+> base score of 3.9 - CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N.
+> 
+> Known Attack Vectors
+> ==============================================================
+> A fully compromised ESXi host can force VMware Tools to fail to
+> authenticate host-to-guest operations, impacting the confidentiality
+> and integrity of the virtual machine.
+
+Quoting from the GitHub URL above:
+
+> The issue has been fixed in the open-vm-tools version 12.2.5 released on
+> June 13, 2023.
+> 
+> The following patch provided to the open-vm-tools community can be used
+> to apply the security fix to previous open-vm-tools releases.
+> 
+> For releases 12.2.0, 12.1.5, 12.1.0, 12.0.5, 12.0.0, 11.3.5, 11.3.0
+> 
+>     2023-20867-Remove-some-dead-code.patch
+> 
+> For releases 11.1.0, 11.1.5, 11.2.0, 11.2.5
+> 
+>     2023-20867-Remove-some-dead-code-1110-1125.patch
+> 
+> For releases 11.0.0, 11.0.5
+> 
+>     2023-20867-Remove-some-dead-code-1100-1105.patch
+> 
+> For releases 10.3.0, 10.3.5, 10.3.10
+> 
+>     2023-20867-Remove-some-dead-code-1030-10310.patch
+> 
+> The patches have been tested against the above open-vm-tools releases.
+> Each applies cleanly with:
+> 
+> git am        for a git repository.
+> patch -p2     in the top directory of an open-vm-tools source tree.
+
+Alexander
