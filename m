@@ -1,32 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/11
-Message-ID: <59d6f796-3db7-4d56-881d-07866c73328f@wichmann.us>
-Date: Wed, 8 Nov 2023 15:38:37 -0700
-From: Mats Wichmann <mats@...hmann.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/11
+Message-ID: <ZS1CommxbnxkvLaK@itl-email>
+Date: Mon, 16 Oct 2023 10:03:13 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
+Cc: VMware Security Response Center <security@...are.com>
+Subject: Re: CVE-2023-20867: open-vm-tools: Authentication Bypass vulnerability in the vgauth module
 Content-Type: text/plain; charset=utf-8
 
-On 11/8/23 13:33, David A. Wheeler wrote:
+On Mon, Oct 16, 2023 at 03:48:14AM +0200, Solar Designer wrote:
+> Hi,
+> 
+> This was brought to linux-distros on June 6 with "scheduled public
+> disclosure on June 13th, 2023."  There's a VMware security advisory that
+> says it was published on that date:
+> 
+> https://www.vmware.com/security/advisories/VMSA-2023-0013.html
+> 
+> and patches are available at:
+> 
+> https://github.com/vmware/open-vm-tools/tree/CVE-2023-20867.patch
+> 
+> but the issue was wrongly never brought to oss-security (or at least I
+> couldn't find it) - so I am correcting this now.
+> 
+> Quoting from the linux-distros message:
+> 
+> > Description
+> > ==============================================================
+> > CVE-2023-20867: VMware Tools contains an Authentication Bypass
+> > vulnerability in the vgauth module. VMware has evaluated the severity
+> > of this issue to be in the Low severity range with a maximum CVSSv3.1
+> > base score of 3.9 - CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N.
+> > 
+> > Known Attack Vectors
+> > ==============================================================
+> > A fully compromised ESXi host can force VMware Tools to fail to
+> > authenticate host-to-guest operations, impacting the confidentiality
+> > and integrity of the virtual machine.
+> 
+> Quoting from the GitHub URL above:
+> 
+> > The issue has been fixed in the open-vm-tools version 12.2.5 released on
+> > June 13, 2023.
+> > 
+> > The following patch provided to the open-vm-tools community can be used
+> > to apply the security fix to previous open-vm-tools releases.
+> > 
+> > For releases 12.2.0, 12.1.5, 12.1.0, 12.0.5, 12.0.0, 11.3.5, 11.3.0
+> > 
+> >     2023-20867-Remove-some-dead-code.patch
+> > 
+> > For releases 11.1.0, 11.1.5, 11.2.0, 11.2.5
+> > 
+> >     2023-20867-Remove-some-dead-code-1110-1125.patch
+> > 
+> > For releases 11.0.0, 11.0.5
+> > 
+> >     2023-20867-Remove-some-dead-code-1100-1105.patch
+> > 
+> > For releases 10.3.0, 10.3.5, 10.3.10
+> > 
+> >     2023-20867-Remove-some-dead-code-1030-10310.patch
+> > 
+> > The patches have been tested against the above open-vm-tools releases.
+> > Each applies cleanly with:
+> > 
+> > git am        for a git repository.
+> > patch -p2     in the top directory of an open-vm-tools source tree.
+> 
+> Alexander
 
-> The "!CVE" group isn't using "CVE", they're using "!CVE". The question is,
-> is that distinct enough, or will typical users be confused by it?
-> I don't know the answer to that. However, I do worry that perhaps
-> "!CVE" is not distinct enough.
+How is this a vulnerability at all?  A compromised ESXi host can
+compromise the guest already, unless confidential computing technologies
+are in use.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-I'd say it's pretty clear it's confusing, given that non-alpha 
-characters have mysterious behaviors in non-human situations, and this 
-particular character is probably confusing to humans too, depending on 
-how clear/large the font is.  ICVE? 1CV? lCVE?  On the computer side of 
-the equation,  I just put  !CVE  into the search bar of my browser. It 
-didn't even bring up a page of results, it just sent me directly to:
-
-https://cve.mitre.org/
-
-Don't do this.
-
-> I would *strongly* recommend that this group use "NotCVE" or "NCVE" instead of "!CVE".
-> That would be more clearly distinct, and they already call themselves that.
-> I'll also note that searching for "!CVE" and storing that prefix will also cause some problems.
-+1
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
