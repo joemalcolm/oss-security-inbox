@@ -1,71 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/4
-Message-ID: <alpine.GSO.2.20.2310220847390.6992@scrappy.simplesystems.org>
-Date: Sun, 22 Oct 2023 09:19:59 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/4
+Message-ID: <77cb8757-3c90-b60c-0eab-99870e4c7da4@apache.org>
+Date: Mon, 16 Oct 2023 01:51:39 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sandboxing,of upstream programs by distros
+Subject: CVE-2023-43667: Apache InLong: Log Injection in Global functions 
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 21 Oct 2023, Demi Marie Obenour wrote:
->>
->> For Rocky Linux Security SIG, the only relevant thing mentioned so far
->> was possibly offering an OpenBSD pledge()-alike that other packages
->> could use.  However, I am skeptical any actually would, unless we also
->> introduce such uses ourselves and maintain own "override" packages
->> (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
->> software.  Initially, we are going to only create "override' packages
->> for core or very commonly used/exposed components, and to do so only for
->> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
->> coming from EPEL and with most of its dependency libraries coming from
->> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
->> make the cut, at least not initially.
->
-> Has deprecating ImageMagick and/or GraphicsMagick outright been
-> considered?  I don’t just mean the downstream packages, but the entire
-> upstream projects, or at least the libraries.
+Severity: moderate
 
-RHEL already deprecated ImageMagick several years ago and advised 
-users to use GraphicsMagick 
-(https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/7.7_release_notes/deprecated_functionality). 
-Those users were confused given that many of the recipes they were 
-using for ImageMagick did not work with GraphicsMagick. The solution 
-for those users was to find a different way to install ImageMagick.
+Affected versions:
 
-> One option would be to instead make an IPC call to a persistent daemon
-> running in the background.  That said, has wasm2c been considered?  The
-> best fix would be something that can make C code memory-safe, even if it
-> comes at a performance hit of 4x or more (like SoftBound+CETS did).
-> Stuff that cares about performance should be migrating to something like
-> libvips or ImageFlow.
->
-> If neither of these are options, I think the entire library will need to
-> be deprecated for eventual removal.  The command-line tools can remain,
-> but they can be much more strongly sandboxed than a library can, because
-> they have the entire process to themselves.
+- Apache InLong 1.4.0 through 1.8.0
 
-Any deprecations or sandboxing approaches which fail to understand and 
-address the needs of the "user" will fail.  Replacing package 'A' with 
-package 'B', where package 'B' works totally differently, or performs 
-different functions than package 'A' will fail because the users will 
-not use it.
+Description:
 
-Unfortunately, most Linux IPC mechanisms are not very secure since 
-they rely on historical Unix privilege models to control access. 
-Common ways to assure security such as TLS usually result in a 
-considerable reduction of performance. Solutions like Landlock seem 
-useful for very restricted usage applications.  Sandboxing solutions 
-which work for any use of a program seem better than requiring a 
-client/server model.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.8.0, the attacker can create misleading or false records, making it harder to audit
+and trace malicious activities. Users are advised to upgrade to Apache InLong's 1.8.0 or cherry-pick [1] to solve it.
 
-As the developer/maintainer of a complex C program (GraphicsMagick), I 
-appreciate any advice on improvements which make it more suitable for 
-sandboxing, or less likely to appear as a hazard on the security 
-radar.
+[1]  https://github.com/apache/inlong/pull/8628
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-43667
+
