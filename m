@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/18/1
-Message-ID: <Y8enFHfWv5LQ8Whx@eldamar.lan>
-Date: Wed, 18 Jan 2023 09:00:20 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/5
+Message-ID: <632a3fb2-1f92-0ef5-6f1d-fbb04edb95dd@apache.org>
+Date: Mon, 16 Oct 2023 01:51:45 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
+Subject: CVE-2023-43668: Apache InLong: Jdbc Connection Security Bypass in InLong 
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Severity: important
 
-On Fri, Jan 13, 2023 at 11:17:00AM +0100, Greg KH wrote:
-> On Thu, Jan 12, 2023 at 01:24:38PM -0600, John Helmert III wrote:
-> > On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
-> > > On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
-> > > > Hi all,
-> > > > 
-> > > > # Description
-> > > > A NULL Pointer Dereference bug in nvmet_setup_auth
-> > > > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
-> > > > Since the bug occurs in the authentication feature, it can be easily
-> > > > triggered by an unauthorized client in the pre-auth stage.
-> > > > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
-> > > 
-> > > Meta-comment, why are CVE's being assigned for issues found, and then
-> > > fixed, in development kernel releases?  Who assigned this CVE, MITRE or
-> > > someone else?
-> > 
-> > This information used to be available for "reserved" CVEs in the JSON
-> > data in [1], but now that that's retired I'm not sure this is made
-> > public anywhere.
-> > 
-> > [1] https://github.com/CVEProject/cvelistV5
-> 
-> So if we don't know who allocated it, we can't know who to ask to get it
-> revoked?
+Affected versions:
 
-According to the CVE entry now published, the assignerShortName is
-"redhat" so the contact to discuss to possibly reject the CVE would be
-https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat
-(see CNA contact email).
+- Apache InLong 1.4.0 through 1.8.0
 
-Hope this helps,
+Description:
 
-Regards,
-Salvatore
+Authorization Bypass Through User-Controlled Key vulnerability in Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.8.0, 
+
+some sensitive params  checks will be bypassed, like "autoDeserizalize","allowLoadLocalInfile"....
+
+.  
+
+Users are advised to upgrade to Apache InLong's 1.9.0 or cherry-pick [1] to solve it.
+
+[1]  https://github.com/apache/inlong/pull/8604
+
+Credit:
+
+nbxiglk (finder)
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-43668
+
