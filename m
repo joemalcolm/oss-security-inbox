@@ -1,248 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/9
-Message-Id: <EC7CFAAF-40C7-4B69-82DD-84AACEB879A7@beckweb.net>
-Date: Wed, 6 Sep 2023 13:16:13 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/19
+Message-ID: <CA+-XxSFnokvdHyhHxjeQMjKt6CLNR7MO3wxncZ035zrMCoeMQw@mail.gmail.com>
+Date: Mon, 16 Oct 2023 09:51:10 -0700
+From: Igor Seletskiy <i@...udlinux.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Azure AD Plugin 397.v907382dd9b_98 and 378.380.v545b_1154b_3fb_
-* Bitbucket Push and Pull Request Plugin 2.8.4
-* Google Login Plugin 1.8
-* Job Configuration History Plugin 1229.v3039470161a_d
-* Pipeline Maven Integration Plugin 1331.v003efa_fd6e81
-* Qualys Container Scanning Connector Plugin 1.6.2.7
-* SSH2 Easy Plugin 1.6
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Assembla Auth Plugin
-* AWS CodeCommit Trigger Plugin
-* Frugal Testing Plugin
-* Ivy Plugin
-* TAP Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-09-06/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3233 / CVE-2023-41930 (path traversal) & CVE-2023-41931 (XSS)
-Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
-restrict a `name` query parameter when rendering a history entry. This
-allows attackers to have Jenkins render a manipulated configuration history
-that was not created by the plugin.
-
-The history view does not property sanitize or escape the timestamp value
-from history entries when rendering a history entry. This typically isn't a
-problem, as the value is numeric in genuine history entries. Combined with
-the path traversal vulnerability, this results in a stored cross-site
-scripting (XSS) vulnerability exploitable by attackers with the ability to
-create a file on the controller (e.g., archived artifacts).
-
-
-SECURITY-3235 / CVE-2023-41932 (path traversal) & CVE-2023-41933 (XXE)
-Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
-restrict `timestamp` query parameters in multiple endpoints. This allows
-attackers with Job Config History/DeleteEntry permission to delete
-attacker-specified directories on the Jenkins controller file system as
-long as they contain a file called `history.xml`.
-
-Additionally, Job Configuration History Plugin 1227.v7a_79fc4dc01f and
-earlier does not configure its XML parser to prevent XML external entity
-(XXE) attacks. This allows attackers with Item/Configure permission to have
-Jenkins parse a crafted XML document that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-
-SECURITY-3257 / CVE-2023-41934
-Pipeline Maven Integration Plugin integrates with Config File Provider
-Plugin to specify custom Maven settings, including credentials for
-authentication.
-
-Pipeline Maven Integration Plugin 1330.v18e473854496 and earlier does not
-properly mask (i.e., replace with asterisks) usernames of credentials
-specified in custom Maven settings in Pipeline build logs if "Treat
-username as secret" is checked.
-
-
-SECURITY-3227 / CVE-2023-41935
-Azure AD Plugin 396.v86ce29279947 and earlier, except
-378.380.v545b_1154b_3fb_, does not use a constant-time comparison when
-checking whether the provided and expected CSRF protection nonce are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid nonce.
-
-
-SECURITY-3228 / CVE-2023-41936
-Google Login Plugin 1.7 and earlier does not use a constant-time comparison
-when checking whether the provided and expected token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid token.
-
-
-SECURITY-3165 / CVE-2023-41937
-Bitbucket Push and Pull Request Plugin provides a webhook endpoint at
-`/bitbucket-hook/` to receive webhook notifications.
-
-When acting on these notifications, Bitbucket Push and Pull Request Plugin
-2.4.0 through 2.8.3 (both inclusive) trusts values provided in the webhook
-payload, including certain URLs, and uses configured Bitbucket credentials
-to connect to those URLs. This allows attackers to capture Bitbucket
-credentials stored in Jenkins by sending a crafted webhook payload.
-
-NOTE: Successful exploitation requires that a build is triggered. This is
-the case when the repository has changed since the previous build, or the
-option "Trigger also if nothing has changed in the repo" is checked.
-
-
-SECURITY-3018 / CVE pending
-Qualys Container Scanning Connector Plugin 1.6.2.6 and earlier does not
-correctly perform a permission check in multiple HTTP endpoints.
-
-This allows attackers with global Item/Configure permission (while lacking
-Item/Configure permission on any particular job) to do the following:
-
-* Enumerate credentials IDs of credentials stored in Jenkins.
-  Those can be used as part of an attack to capture the credentials using
-  another vulnerability.
-* Connect to an attacker-specified webserver using attacker-specified
-credentials IDs obtained through another method, capturing credentials
-stored in Jenkins.
-
-
-SECURITY-2924 / CVE-2022-46751
-Ivy Plugin 2.5 and earlier bundles versions of Apache Ivy vulnerable to
-CVE-2022-46751.
-
-This allows attackers able to control the input file for the "Trigger the
-build of other projects based on the Ivy dependency management system"
-post-build step to have Jenkins parse a crafted XML document that uses
-external entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3093 / CVE-2023-41938
-Ivy Plugin 2.5 and earlier does not require POST requests for an HTTP
-endpoint, resulting in a cross-site request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to delete disabled modules.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3064 / CVE-2023-41939
-SSH2 Easy Plugin 1.4 and earlier does not verify that permissions
-configured to be granted are enabled. This may allow users formerly granted
-(typically optional permissions, like Overall/Manage) to access
-functionality they're no longer entitled to.
-
-NOTE: As a workaround, administrators can save the permission configuration
-after disabling a permission, as that will overwrite any permission
-assignments of disabled permissions.
-
-
-SECURITY-3190 / CVE-2023-41940
-TAP Plugin 2.3 and earlier does not escape TAP file contents.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control TAP file contents.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3101 (1) / CVE-2023-41941
-AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of AWS credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3101 (2) / CVE-2023-41942 (CSRF) & CVE-2023-41943 (permission check)
-AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to clear the SQS queue.
-
-Additionally, this endpoint does not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3102 / CVE-2023-41944
-AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not escape the queue
-name parameter passed to a form validation URL, when rendering an error
-message.
-
-This results in an HTML injection vulnerability.
-
-NOTE: Since Jenkins 2.275 and LTS 2.263.2, a
-link:/doc/upgrade-guide/2.263/#formvalidation[security hardening] for form
-validation responses prevents JavaScript execution, so no scripts can be
-injected.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3065 / CVE-2023-41945
-Assembla Auth Plugin provides an authorization strategy that defines four
-levels of access to Jenkins, based on the corresponding permissions in
-Assembla spaces: ALL, EDIT, VIEW, and NONE.
-
-Assembla Auth Plugin 1.14 and earlier does not verify that the permissions
-it grants are enabled. This results in users with EDIT permissions to be
-granted Overall/Manage and Overall/SystemRead permissions, even if those
-permissions are disabled and should not be granted.
-
-NOTE: Additionally, the plugin also grants the deprecated permissions
-Overall/RunScripts, Overall/UploadPlugins and Overall/ConfigureUpdateCenter
-to users with EDIT access. These permissions allow arbitrary code execution
-through various means in Jenkins before 2.222. Additionally, plugins not
-yet adapted to the changes in Jenkins 2.222 may also provide access to
-sensitive features to users with these permissions.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3082 / CVE-2023-41946 (CSRF) & CVE-2023-41947 (permission check)
-Frugal Testing Plugin 1.1 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to do the following:
-
-* Connect to Frugal Testing using attacker-specified username and password.
-* Retrieve test IDs and names from Frugal Testing, if a valid credential
-  corresponds to the attacker-specified username.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
+Given that we are discussing early disclosure, I am unsure how open source
+relates to it.
+This is "pre" open-sourcing the code, so all the open source-related things
+might not help at all.
+
+I would second the call to "talk to your lawyers," especially when entities
+like Huawei are involved.
+I am singling out Huawei specifically because it is considered a treat to
+US national security and is on the embargo list.
+
+
+Regards,
+Igor Seletskiy |  CEO
+CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+<https://kernelcare.com>   |   Imunify360 <http://imunify360.com/> |
+AlmaLinux <https://almalinux.org>
+
+
+
+On Mon, Oct 16, 2023 at 9:37 AM Aron Xu <happyaron.xu@...il.com> wrote:
+
+> Hi,
+>
+> On Mon, Oct 16, 2023 at 11:34 PM Demi Marie Obenour
+> <demi@...isiblethingslab.com> wrote:
+> >
+> > On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
+> > > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
+> > > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
+> > > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> > > > > > Hi,
+> > > > > >
+> > > > > > Regardless of your viability of subscription status I think we
+> also
+> > > > > > (sadly) have to consider current geopolitical issues here.
+> > > > > >
+> > > > > > As far as I understand, US companies and US citizens are not
+> permitted
+> > > > > > to work with Chinese organizations and/or Chinese nationals.
+> > > > >
+> > > > > They can when working in the open on public projects and other
+> > > > > open-source-like things.  For "closed" lists and groups, please
+> consult
+> > > > > a lawyer as the rules there are quite varied and depends on the
+> > > > > countries and companies involved.
+> > > > >
+> > > > > But to be sure, again, consult your corporate lawyers, they know
+> the
+> > > > > rules and the issues involved better than I do.
+> > > > >
+> > > > > good luck!
+> > > > >
+> > > > > greg k-h
+> > > >
+> > > > The question is _who_ should consult their lawyers.
+> > >
+> > > The people deciding if this group can be added to the closed list as
+> > > they are the ones responsible for it, AND then if the group is added,
+> > > the members of the list need to talk to their lawyers to see if their
+> > > country laws allow them to participate in a closed group with such
+> > > members.  Many countries might be fine, many might not be, it all
+> > > depends on the participants and what country laws they must abide by.
+> > >
+> > > So in short, everyone involved in the list!  :(
+> > >
+> > > good luck!
+> > >
+> > > greg "I talk to too many lawyers" k-h
+> >
+> > The result of this is simply that those who do not have access to
+> > lawyers on staff will not participate, which will reduce the value of
+> > the list substantially.  I suspect that most people who report
+> > vulnerabilities via distros@ fall into this category.  I know I do.
+> >
+> > Therefore, I recommend rejecting the application as too risky from a
+> > legal perspective.
+> >
+>
+> Not matter what would be the outcome, I'd like recommend an article
+> from Linux Foundation which I think is a good read:
+>
+> https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
+>
+> I'm not a lawyer though, but here are a few cents:
+>
+> 1) There is no general restrictions against Chinese organizations and
+> nationals;
+> 2) Open source software (which is publicly available) is not subject
+> to EAR (Export Administration Regulation of the US);
+> 3) According to § 734.7[1] of EAR, "knowledge with the intention that
+> such information will be made publicly available if accepted" is
+> treated as "Published" and is considered publicly available.
+>
+> If I understand correctly, distros list is targeted to open source
+> software issues with a policy[2] of "Please only use these lists to
+> report and discuss security issues that are not yet public (but that
+> are to be made public very soon)", then everyone could retain their
+> peace of mind.
+>
+> Regards,
+> Aron
+>
+> [1]
+> https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.7
+> [2]https://oss-security.openwall.org/wiki/mailing-lists/distros
+>
 
