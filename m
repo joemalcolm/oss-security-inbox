@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3481" "Thursday" "22" "October" "2020" "15:14:10" "+0300" "Dimitrios Glynos" "dimitris@census-labs.com" "<cd7ed043-0298-8903-e821-c61656d107b4@census-labs.com>" "88" "[oss-security] CVE-2019-16127, CVE-2019-16128 and CVE-2019-16129 for Microchip code" "^Date:" nil nil "10" "2020102212:14:10" "[oss-security] CVE-2019-16127, CVE-2019-16128 and CVE-2019-16129 for Microchip code" (number mark "U       dimitris@cen Oct 22   88/3481  " thread-indent "\"[oss-security] CVE-2019-16127, CVE-2019-16128 and CVE-2019-16129 for Microchip code\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-16127, CVE-2019-16128 and CVE-2019-16129 for Microchip code" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1546 invoked by uid 550); 22 Oct 2020 12:39:29 -0000
+Received: (qmail 1760 invoked by uid 550); 16 Oct 2023 08:09:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,148 +6,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22158 invoked from network); 22 Oct 2020 12:14:29 -0000
-Autocrypt: addr=dimitris@census-labs.com; prefer-encrypt=mutual; keydata=
- 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
- q3gV49DRvNEbTzaxSENyPVEW
-Organization: CENSUS S.A.
-Message-ID: <cd7ed043-0298-8903-e821-c61656d107b4@census-labs.com>
-User-Agent: Thunderbird
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="d90GcJQW8TvQ22g3QURRmNd2sMVxJxC5I"
-Date: Thu, 22 Oct 2020 15:14:10 +0300
-From: Dimitrios Glynos <dimitris@census-labs.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-16127, CVE-2019-16128 and CVE-2019-16129 for Microchip code
+Received: (qmail 1739 invoked from network); 16 Oct 2023 08:09:03 -0000
+Date: Mon, 16 Oct 2023 10:08:50 +0200
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
-
---d90GcJQW8TvQ22g3QURRmNd2sMVxJxC5I
-Content-Type: multipart/mixed; boundary="7uGGiucduZD7nDtIPkS2vsaFReOLVjUuo"
-
---7uGGiucduZD7nDtIPkS2vsaFReOLVjUuo
+Message-ID: <20231016080850.GF10758@suse.de>
+References: <ZSyUUSF_-3YbT14k@workstation>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZSyUUSF_-3YbT14k@workstation>
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
+ =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
+ =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Authentication-Results: smtp-out2.suse.de;
+	dkim=none;
+	dmarc=none;
+	spf=softfail (smtp-out2.suse.de: 149.44.160.134 is neither permitted nor denied by domain of meissner@suse.de) smtp.mailfrom=meissner@suse.de
+Subject: Re: [oss-security] linux-distros membership application of openEuler
 
-Hello,
+Hi,
 
-we've published a set of advisories for three vulnerabilities affecting
-open source code offered by Microchip. This code is part of SDKs
-used to build firmware for Microchip's microcontrollers.
-All three of these issues were identified last year
-by George Poulios of CENSUS.
+Regardless of your viability of subscription status I think we also
+(sadly) have to consider current geopolitical issues here.
 
-1. CVE-2019-16127:
-https://census-labs.com/news/2020/10/21/microchip-asf4-integer-overflows-in=
--flash_read-flash_write-and-flash_append/
+As far as I understand, US companies and US citizens are not permitted
+to work with Chinese organizations and/or Chinese nationals.
 
-This is an integer overflow that may occur while calculating
-the desired range in flash memory to read / write. It may allow
-an adversary to bypass any checks made by the firmware regarding
-readable/writable ranges in flash memory. The vulnerable code
-is part of the Hardware Abstraction Layer of the "ASF4" SDK
-and so it can be found on many different devices with
-different flash memory hardware.
-
-Microchip/Atmel still distributes the vulnerable version of the
-code through the start.atmel.com "web configurator" service.
-
-2. CVE-2019-16128:
-https://census-labs.com/news/2020/10/21/microchip-cryptoauthlib-atcab_sign_=
-base-buffer-overflow/
-
-This is a buffer overflow that may occur when a microcontroller
-processes the response of a Microchip cryptographic co-processor
-like ATECC608A. To drive the co-processor the "cryptoauthlib"
-library is used. The library performs a memcpy() operation
-to copy a crypto co-processor generated signature into a
-firmware buffer. However, the number (and content) of bytes copied
-is fully controllable by someone meddling with the data
-arriving at the microcontroller.
-
-Version "20191122" of cryptoauthlib addresses this issue.
-
-3. CVE-2019-16129:
-https://census-labs.com/news/2020/10/21/microchip-cryptoauthlib-atcab_genke=
-y_base-buffer-overflow/
-
-This is similar to CVE-2019-16128. On devices using cryptoauthlib
-to control a Microchip cryptographic co-processor, it is possible
-to cause a buffer overflow on the MCU by meddling with the data
-returned by the co-processor to the MCU during the generation of a
-public / private key-pair on the co-processor.
-
-Version "20191122" of cryptoauthlib addresses this issue.
-
-Kind regards,
-
-Dimitris
+Due to US companies subscribed on the lists this would then likely lead to
+conflicts of interest.
 
 
---7uGGiucduZD7nDtIPkS2vsaFReOLVjUuo--
+I have no good idea on how to approach this, perhaps someone else has.
 
---d90GcJQW8TvQ22g3QURRmNd2sMVxJxC5I
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+Ciao, Marcus
 
-iQIzBAEBCgAdFiEEdoZJZFGTtQ76EuHLFYI42pP8OkgFAl+Rd5cACgkQFYI42pP8
-Okj2VxAArdD6XVcbfaFrVqUSb+wWSSskLRrDv7CYmSAHzcKXyRzPaSucAOYGv0Kv
-aJ7TTYG6FrJa9x4zTSYvs3C6sHt1RuIHPUE4G3212sRTN12uipNVSsi89P6Mmiuq
-xOMjTyW1qI+fqUmDGNDzh/dIr8pCiRWA5z1ASJEJbA5QfWvIkvEcC+1QQ67u9vkg
-VV74MFWd5Rrud0CX7lX9ssArWhLVo0QZO6FXXlYQPqlRKWxta+gwbPdB9zRW9sQb
-VaMgnfcwkfn7UJVWxGxt08J2YCNzvoRqXuq8EaDy6+KCQOEacJv4v+A7DCzb0cgT
-DekgaAd8fwOZHITp78k1inl7Q017aiBHw02lTw66I0dxEwgCAAyxKVGDsjQSbS0z
-0vR3UlbwL4FyaVg3mBR7E+LeHaKuMwMzn4pOsxm2Gm08cW6fSXuh/Vo6Fp53bfAp
-oj2hCD0qCD15TSZzIdGPHsBe8zBD85i6pzHxRgnEiE42e6Hv3iSEfPo7x9f5SWPW
-8J+L0OitO+P51JLzlYfzwrPGs8SFZUJ97fJjBmrjr3cDa5C8xH7waP6u/AXXxvIO
-vzLiIqxb+yXq+CmxCam+vLaM45vnNpQpMKiZ7Hs+6OHVNU5AAemJRCDjyXluJhCj
-2OfyrdV9jr8XGjD4U7QiQ12OSlYA+etVXkfBGPi7px8FOX5ywBQ=
-=MBsq
------END PGP SIGNATURE-----
+On Mon, Oct 16, 2023 at 09:39:29AM +0800, Aron Xu wrote:
+> Hi,
+> 
+> I'm requesting linux-distros mailing list membership on behalf of
+> openEuler[1], a Linux distro that's actively maintained since 2020. It is
+> hosted by OpenAtom Foundation[2] with many forms of support available from
+> Huawei, Kylin, UnionTech, etc. It is publicly available, free to use and open
+> to contribution.
+> 
+> Here are the responses to the membership criteria:
+> 
+> > 1. Be an actively maintained Unix-like operating system distro with
+> >    substantial use of Open Source components
+> > 2. Have a userbase not limited to your own organization
+> 
+> The distro and its commercial derivatives have more than 4.5 million accumulated
+> deployments on bare metal (since 2020), and even more if considering public and
+> private cloud instances. Joining linux-distros will make a real difference for
+> patching important issues for users.
+> 
+> > 3. Have a publicly verifiable track record, dating back at least 1 year
+> >    and continuing to present day, of fixing security issues (including
+> >    some that had been handled on (linux-)distros, meaning that membership
+> >    would have been relevant to you) and releasing the fixes within 10 days
+> >    (and preferably much less than that) of the issues being made public
+> >    (if it takes you ages to fix an issue, your users wouldn't
+> >    substantially benefit from the additional time, often around 7 days and
+> >    sometimes up to 14 days, that list membership could give you)
+> 
+> The distribution has a complete public record of security fixes[3]. Although
+> there is no defined policy on enforcing release time of security patches
+> (yet), the actual timeline in execution is 7 days for high impact issues and
+> 14 days for medium ones.
+> 
+> > 4. Not be (only) downstream or a rebuild of another distro (or else we
+> >    need convincing additional justification of how the list membership
+> >    would enable you to release fixes sooner, presumably not relying on the
+> >    upstream distro having released their fixes first?)
+> 
+> The distribution is not a downstream or a rebuild of another distro. There
+> are confusions on this question (especially Wikipedia pages) because before
+> the project existed, there is an internal-only distro named "Euler OS" which
+> is RHEL-based. When openEuler project is found the distribution is rebuilt and
+> maintained from scratch, and there are also a few flavors of kernel packages
+> with different patchsets. There are also a few commercial and/or community
+> downstream distros of openEuler, too.
+> 
+> > 5. Be a participant and preferably an active contributor in relevant
+> >    public communities (most notably, if you're not watching for issues
+> >    being made public on oss-security, which are a superset of those that
+> >    had been handled on (linux-)distros, then there's no valid reason for
+> >    you to be on (linux-)distros)
+> 
+> openEuler has been actively working on patching upstream issues and there is a
+> complete tracking and triaging of all issues with a CVE number[4]. The team
+> is following oss-security's information closely, although weren't actively
+> participating in discussions.
+> 
+> > 6. Accept the list policy (see above)
+> > 7. Be able and willing to contribute back (see above), preferably in
+> >    specific ways announced in advance (so that you're responsible for a
+> >    specific area and so that we know what to expect from which member),
+> >    and demonstrate actual contributions once you've been a member for a
+> >    while
+> 
+> Yes we accept the list policy and are willing to contribute back in ways we
+> are able to.
+> 
+> > 8. Be able and willing to handle PGP-encrypted e-mail
+> > 9. Have someone already on the private list, or at least someone else who
+> >    has been active on oss-security for years but is not affiliated with
+> >    your distro nor your organization, vouch for at least one of the people
+> >    requesting membership on behalf of your distro (then that one
+> >    vouched-for person will be able to vouch for others on your team, in
+> >    case you'd like multiple people subscribed)
+> 
+> Besides my role at openEuler, I’m also a part of the Debian Security Team,
+> though I’m not subscribed to linux-distros since there are already people
+> representing. If this application is accepted, I would like to step up to be
+> the representative of openEuler.
+> 
+> 
+> Regards,
+> Aron
+> 
+> [1]https://www.openeuler.org/
+> [2]https://www.openatom.org/
+> [3]https://www.openeuler.org/en/security/security-bulletins/
+> [4]https://www.openeuler.org/en/security/cve
 
---d90GcJQW8TvQ22g3QURRmNd2sMVxJxC5I--
