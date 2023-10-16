@@ -1,89 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/1
-Message-ID: <on2p28n5-r290-p375-6012-s05rr4s84so2@unkk.fr>
-Date: Mon, 20 Mar 2023 08:26:02 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-27533: TELNET option IAC injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/14
+Message-ID: <ZS1UPsZo1VyHDAkV@itl-email>
+Date: Mon, 16 Oct 2023 11:18:19 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-27533: TELNET option IAC injection
-============================================
+On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
+> On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
+> > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
+> > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> > > > Hi,
+> > > > 
+> > > > Regardless of your viability of subscription status I think we also
+> > > > (sadly) have to consider current geopolitical issues here.
+> > > > 
+> > > > As far as I understand, US companies and US citizens are not permitted
+> > > > to work with Chinese organizations and/or Chinese nationals.
+> > > 
+> > > They can when working in the open on public projects and other
+> > > open-source-like things.  For "closed" lists and groups, please consult
+> > > a lawyer as the rules there are quite varied and depends on the
+> > > countries and companies involved.
+> > > 
+> > > But to be sure, again, consult your corporate lawyers, they know the
+> > > rules and the issues involved better than I do.
+> > > 
+> > > good luck!
+> > > 
+> > > greg k-h
+> > 
+> > The question is _who_ should consult their lawyers.
+> 
+> The people deciding if this group can be added to the closed list as
+> they are the ones responsible for it, AND then if the group is added,
+> the members of the list need to talk to their lawyers to see if their
+> country laws allow them to participate in a closed group with such
+> members.  Many countries might be fine, many might not be, it all
+> depends on the participants and what country laws they must abide by.
+> 
+> So in short, everyone involved in the list!  :(
+> 
+> good luck!
+> 
+> greg "I talk to too many lawyers" k-h
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27533.html)
+The result of this is simply that those who do not have access to
+lawyers on staff will not participate, which will reduce the value of
+the list substantially.  I suspect that most people who report
+vulnerabilities via distros@ fall into this category.  I know I do.
 
-VULNERABILITY
--------------
-
-curl supports communicating using the TELNET protocol and as a part of this it
-offers users to pass on user name and "telnet options" for the server
-negotiation.
-
-Due to lack of proper input scrubbing and without it being the documented
-functionality, curl would pass on user name and telnet options to the server
-as provided. This could allow users to pass in carefully crafted content that
-pass on content or do option negotiation without the application intending to
-do so. In particular if an application for example allows users to provide the
-data or parts of the data.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-CVE-2023-27533 was introduced in [commit
-a1d6ad26100bc493c7](https://github.com/curl/curl/commit/a1d6ad26100bc493c7),
-shipped in curl 7.7.
-
-CWE-75: Failure to Sanitize Special Elements into a Different Plane
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.7 to and including 7.88.1
-- Not affected versions: curl < 7.7 and curl >= 8.0.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-Only accept ASCII user name and telnet options.
-
-A [fix for CVE-2023-27533](https://github.com/curl/curl/commit/538b1e79a6e7b)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.0.0
-
-  B - Apply the patch to your local version
-
-  C - Do your own TELNET user name or option input filtering
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 3, 2023. We contacted
-distros@...nwall on March 13, 2023.
-
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
+Therefore, I recommend rejecting the application as too risky from a
+legal perspective.
 -- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
