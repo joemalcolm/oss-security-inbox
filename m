@@ -1,22 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/14
-Message-ID: <20231003214424.prarc3aboi3ar7zk@yuggoth.org>
-Date: Tue, 3 Oct 2023 21:44:24 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/23
+Message-ID: <20231016230841.639Di%steffen@sdaoden.eu>
+Date: Tue, 17 Oct 2023 01:08:41 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
-[...]
-> If you have a proposal for how you'd prefer it to be done, I'll see what
-> I can do.  Perhaps BCC oss-security, or just send out a second mail?
+Heiko Schlittermann wrote in
+ <ZSzx4s49HaeHFd/e@...per.schlittermann.de>:
+ |Marcus Meissner <meissner@...e.de> (Mo 16 Okt 2023 10:08:50 CEST):
+ |> Regardless of your viability of subscription status I think we also
+ |> (sadly) have to consider current geopolitical issues here.
+ |
+ |No, we should not consider anything else than technical/security
+ |restrictions here.
 
-When I send advisories, I prepare two basically identical E-mail
-messages: one to the project's announcement list and one to
-oss-security (signing both of them). It seems like this is the most
-common approach to avoiding cross-posting between lists.
--- 
-Jeremy Stanley
+I fully support this.  It is more than just desirable, but
+a question of survival, that people try to act and live together,
+no matter what time aka period it is.
+If it is not ME and YOU who try to get over, noone will.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+ |And adhere the spirit of Free and Open Source (as far as I understand it),
+ |that there is no instance that can judge about political, ethical,
+ |religious issues. Free means free. Open means open.
+
+Mutual respect and welcomeness.
+
+ |> As far as I understand, US companies and US citizens are not permitted
+ |> to work with Chinese organizations and/or Chinese nationals.
+ |
+ |Any member of the list is free to unsubscribe for whatever reasons.
+
+If the american list members have to live in fear of being
+imprisoned or otherwise punished because of the usual suppression,
+they could temporarily unsubscribe *LOUD*, and give their place to
+members of the second world, like France or Germany, Italy .. or
+you name it, each project surely has honourable, trustworthy and
+responsible such, until the wind has changed.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
