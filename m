@@ -1,81 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/7
-Message-ID: <20230725123152.GG19212@suse.de>
-Date: Tue, 25 Jul 2023 14:31:55 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/9
+Message-ID: <ZSzx4s49HaeHFd/e@jumper.schlittermann.de>
+Date: Mon, 16 Oct 2023 10:18:42 +0200
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Cc: Tamas Koczka <poprdi@...omium.org>
-Subject: Re: Our learnings from 42 Linux kernel exploits, we are limiting io_uring
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Marcus Meissner <meissner@...e.de> (Mo 16 Okt 2023 10:08:50 CEST):
+> Regardless of your viability of subscription status I think we also
+> (sadly) have to consider current geopolitical issues here.
 
-https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
+No, we should not consider anything else than technical/security
+restrictions here.
 
-has been updated with exploit information.
+And adhere the spirit of Free and Open Source (as far as I understand it),
+that there is no instance that can judge about political, ethical,
+religious issues. Free means free. Open means open.
 
-I tried to backtrack through kernel git to find the exact commit where
-this locking problem got fixed, but I gave up after a while after multiple
-refactoring (and a filemove) in the io_uring codel.
+> As far as I understand, US companies and US citizens are not permitted
+> to work with Chinese organizations and/or Chinese nationals.
 
-Cia, Marcus
+Any member of the list is free to unsubscribe for whatever reasons.
 
-On Wed, Jul 19, 2023 at 09:47:15AM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> On Fri, Jul 14, 2023 at 08:06:56PM +0200, Solar Designer wrote:
-> > Hi,
-> > 
-> > Thank you for bringing this to oss-security back then.  I have a few
-> > questions below that I think you could clarify for everyone.  I'll quote
-> > more of your message than I normally do since it's been a while.
-> 
-> ...
-> 
-> > There's a recent write-up on an exploitation technique that also
-> > partially describes CVE-2023-21400, "a double free vulnerability in
-> > io_uring [...] found by Ye Zhang and [Nicolas Wu] last year, affecting
-> > kernel 5.10. [...] we exploit CVE-2023-21400 with Dirty Pagetable on
-> > Google Pixel 7."
-> > 
-> > Dirty Pagetable: A Novel Exploitation Technique To Rule Linux Kernel
-> > https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
-> > 
-> > I wish this vulnerability and exploitation technique were properly
-> > brought to oss-security on its own, and in a context not limited to
-> > Google Pixel.  Maybe it will be once the full description is made
-> > public, as right now the write-up above omits vulnerability detail.
-> > 
-> > It appears that this got patched in the July 5 update for Google Pixel:
-> > 
-> > Pixel Update Bulletin - July 2023
-> > Published July 5, 2023
-> > https://source.android.com/docs/security/bulletin/pixel/2023-07-01
-> > 
-> > "For Google devices, security patch levels of 2023-07-05 or later
-> > address all issues in this bulletin and all issues in the July 2023
-> > Android Security Bulletin."
-> > 
-> > "CVE-2023-21400	A-264663832 *	EoP	Moderate	Kernel io_uring"
-> > 
-> > Nothing is mentioned about seccomp-bpf on either of the above web pages,
-> > although maybe it's factored into the Moderate severity rating?
-> > 
-> > I understand that with vulnerability detail still not public you might
-> > not be able to tell much, but I am wondering whether there's any
-> > inconsistency here (seccomp-bpf on Android was meant to prevent this,
-> > but did not?) or just a misunderstanding or something else.  I wonder
-> > if a vulnerability in io_uring could be such that it's exploitable
-> > without io_uring access directly from the attacking app.
-> 
-> FWIW we reached out to the Android CNA team, but their statement back
-> to us was that they pulled quite a number of backport commits into their 5.5
-> and 5.10 based trees, but did either not specify nor identify specific commits
-> fixing the issue (or further details) so far.
-> 
-> Ciao, Marcus
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
--- 
-Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
-SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
