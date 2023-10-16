@@ -1,121 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/12/1
-Message-Id: <E1rD1SM-0007am-TM@xenbits.xenproject.org>
-Date: Tue, 12 Dec 2023 12:01:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 447 v2 (CVE-2023-46837) - arm32: The cache may not be properly cleaned/invalidated (take two)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/17
+Message-ID: <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
+Date: Tue, 17 Oct 2023 00:15:30 +0800
+From: Aron Xu <happyaron.xu@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2023-46837 / XSA-447
-                               version 2
+On Mon, Oct 16, 2023 at 11:34 PM Demi Marie Obenour
+<demi@...isiblethingslab.com> wrote:
+>
+> On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
+> > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
+> > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
+> > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> > > > > Hi,
+> > > > >
+> > > > > Regardless of your viability of subscription status I think we also
+> > > > > (sadly) have to consider current geopolitical issues here.
+> > > > >
+> > > > > As far as I understand, US companies and US citizens are not permitted
+> > > > > to work with Chinese organizations and/or Chinese nationals.
+> > > >
+> > > > They can when working in the open on public projects and other
+> > > > open-source-like things.  For "closed" lists and groups, please consult
+> > > > a lawyer as the rules there are quite varied and depends on the
+> > > > countries and companies involved.
+> > > >
+> > > > But to be sure, again, consult your corporate lawyers, they know the
+> > > > rules and the issues involved better than I do.
+> > > >
+> > > > good luck!
+> > > >
+> > > > greg k-h
+> > >
+> > > The question is _who_ should consult their lawyers.
+> >
+> > The people deciding if this group can be added to the closed list as
+> > they are the ones responsible for it, AND then if the group is added,
+> > the members of the list need to talk to their lawyers to see if their
+> > country laws allow them to participate in a closed group with such
+> > members.  Many countries might be fine, many might not be, it all
+> > depends on the participants and what country laws they must abide by.
+> >
+> > So in short, everyone involved in the list!  :(
+> >
+> > good luck!
+> >
+> > greg "I talk to too many lawyers" k-h
+>
+> The result of this is simply that those who do not have access to
+> lawyers on staff will not participate, which will reduce the value of
+> the list substantially.  I suspect that most people who report
+> vulnerabilities via distros@ fall into this category.  I know I do.
+>
+> Therefore, I recommend rejecting the application as too risky from a
+> legal perspective.
+>
 
-  arm32: The cache may not be properly cleaned/invalidated (take two)
+Not matter what would be the outcome, I'd like recommend an article
+from Linux Foundation which I think is a good read:
+https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
 
-UPDATES IN VERSION 2
-====================
+I'm not a lawyer though, but here are a few cents:
 
-Public release.
+1) There is no general restrictions against Chinese organizations and nationals;
+2) Open source software (which is publicly available) is not subject
+to EAR (Export Administration Regulation of the US);
+3) According to § 734.7[1] of EAR, "knowledge with the intention that
+such information will be made publicly available if accepted" is
+treated as "Published" and is considered publicly available.
 
-ISSUE DESCRIPTION
-=================
+If I understand correctly, distros list is targeted to open source
+software issues with a policy[2] of "Please only use these lists to
+report and discuss security issues that are not yet public (but that
+are to be made public very soon)", then everyone could retain their
+peace of mind.
 
-Arm provides multiple helpers to clean & invalidate the cache
-for a given region.  This is, for instance, used when allocating
-guest memory to ensure any writes (such as the ones during scrubbing)
-have reached memory before handing over the page to a guest.
+Regards,
+Aron
 
-Unfortunately, the arithmetics in the helpers can overflow and would
-then result to skip the cache cleaning/invalidation.  Therefore there
-is no guarantee when all the writes will reach the memory.
-
-This undefined behavior was meant to be addressed by XSA-437, but the
-approach was not sufficient.
-
-IMPACT
-======
-
-A malicious guest may be able to read sensitive data from memory that
-previously belonged to another guest.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all version of Xen are affected.
-
-Only systems running Xen on Arm 32-bit are vulnerable.  Xen on Arm 64-bit
-is not affected.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Michal Orzel from AMD.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa447/xsa447.patch           xen-unstable - Xen 4.17.x
-xsa447/xsa447-4.16.patch      Xen 4.16.x - Xen 4.15.x
-
-$ sha256sum xsa447* xsa447*/*
-639f3a30124fd0f45b6b68768c02a5b5aa2e78c6c1f28bbf1ea5fb9be1f874af  xsa447.meta
-0816717ab6e9c2250975ed1100bb2943830dc10e9a52aed7dd5cbe1884a15918  xsa447/xsa447.patch
-f325543852b28af3fb2a2ca501a70fc59d3b35432334d52f734b2071c8a9667f  xsa447/xsa447-4.16.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmV4SxMMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZvnUIAIG4NNqHQCeBV0VOLtdZLNgaBDt9Vguc4FLUYlI5
-aBc4/IWrsGYYRuBzLAPGoKYP9/F+OjiHcE0ClFnxkQJ+bFKl4SQLxmSksHkvPtpo
-6yL53IbyraIbA+TulYquTr27v7ZnTI9LQA3VurD6sMgiWIo8+C/kSb6g/1TAsm4R
-qzHDRLhTd4H+yU7KV327qIUk1D4S0eGP1yWpudpd0A/05RBgI9m4gp01VFeJn8w+
-UbYba/4LpcAKG/iyvxqk5o3fyO60zhZEc5BBHhcz7DJ+UvLrLf7TDLrkaI6lorye
-m6etZ+kWU9ESL1Qy+lHEk9HqUOg25xQb5gPDrIP3TOMSsUU=
-=mrfT
------END PGP SIGNATURE-----
-
-Download attachment "xsa447.meta" of type "application/octet-stream" (1347 bytes)
-
-Download attachment "xsa447/xsa447.patch" of type "application/octet-stream" (5052 bytes)
-
-Download attachment "xsa447/xsa447-4.16.patch" of type "application/octet-stream" (5029 bytes)
+[1]https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.7
+[2]https://oss-security.openwall.org/wiki/mailing-lists/distros
