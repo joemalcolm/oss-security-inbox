@@ -1,88 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/9
-Message-ID: <20230922172755.GA18909@openwall.com>
-Date: Fri, 22 Sep 2023 19:27:55 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/6
+Message-ID: <20231016080850.GF10758@suse.de>
+Date: Mon, 16 Oct 2023 10:08:50 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 18, 2023 at 05:36:13PM +0000, Dan McDonald wrote:
-> On Sep 15, 2023, at 5:09 PM, Solar Designer <solar@...nwall.com> wrote:
-> > Can you show illumos fixing non-illumos-only security issues within days
-> > after public disclosure, so that a few days of advance notice would have
-> > made those fixes even quicker?
+Hi,
+
+Regardless of your viability of subscription status I think we also
+(sadly) have to consider current geopolitical issues here.
+
+As far as I understand, US companies and US citizens are not permitted
+to work with Chinese organizations and/or Chinese nationals.
+
+Due to US companies subscribed on the lists this would then likely lead to
+conflicts of interest.
+
+
+I have no good idea on how to approach this, perhaps someone else has.
+
+
+Ciao, Marcus
+
+On Mon, Oct 16, 2023 at 09:39:29AM +0800, Aron Xu wrote:
+> Hi,
 > 
-> It's a per-illumos-distro property.  OmniOS has Stable & LTS releases.   Here's the current-stable
-> release notes, dynamically updated every time they update:
+> I'm requesting linux-distros mailing list membership on behalf of
+> openEuler[1], a Linux distro that's actively maintained since 2020. It is
+> hosted by OpenAtom Foundation[2] with many forms of support available from
+> Huawei, Kylin, UnionTech, etc. It is publicly available, free to use and open
+> to contribution.
 > 
-> 	https://github.com/omniosorg/omnios-build/blob/r151046/doc/ReleaseNotes.md
+> Here are the responses to the membership criteria:
 > 
-> So I'm not sure if a few days of advance notice would make those quicker,
-> but I do know that other distros have biweekly scheduled releases, and advance
-> notice there would keep those wheels spinning faster.  Esp. since "patch tuesday"
-> is a mere one-day before the release branch is forked off on release weeks.
+> > 1. Be an actively maintained Unix-like operating system distro with
+> >    substantial use of Open Source components
+> > 2. Have a userbase not limited to your own organization
+> 
+> The distro and its commercial derivatives have more than 4.5 million accumulated
+> deployments on bare metal (since 2020), and even more if considering public and
+> private cloud instances. Joining linux-distros will make a real difference for
+> patching important issues for users.
+> 
+> > 3. Have a publicly verifiable track record, dating back at least 1 year
+> >    and continuing to present day, of fixing security issues (including
+> >    some that had been handled on (linux-)distros, meaning that membership
+> >    would have been relevant to you) and releasing the fixes within 10 days
+> >    (and preferably much less than that) of the issues being made public
+> >    (if it takes you ages to fix an issue, your users wouldn't
+> >    substantially benefit from the additional time, often around 7 days and
+> >    sometimes up to 14 days, that list membership could give you)
+> 
+> The distribution has a complete public record of security fixes[3]. Although
+> there is no defined policy on enforcing release time of security patches
+> (yet), the actual timeline in execution is 7 days for high impact issues and
+> 14 days for medium ones.
+> 
+> > 4. Not be (only) downstream or a rebuild of another distro (or else we
+> >    need convincing additional justification of how the list membership
+> >    would enable you to release fixes sooner, presumably not relying on the
+> >    upstream distro having released their fixes first?)
+> 
+> The distribution is not a downstream or a rebuild of another distro. There
+> are confusions on this question (especially Wikipedia pages) because before
+> the project existed, there is an internal-only distro named "Euler OS" which
+> is RHEL-based. When openEuler project is found the distribution is rebuilt and
+> maintained from scratch, and there are also a few flavors of kernel packages
+> with different patchsets. There are also a few commercial and/or community
+> downstream distros of openEuler, too.
+> 
+> > 5. Be a participant and preferably an active contributor in relevant
+> >    public communities (most notably, if you're not watching for issues
+> >    being made public on oss-security, which are a superset of those that
+> >    had been handled on (linux-)distros, then there's no valid reason for
+> >    you to be on (linux-)distros)
+> 
+> openEuler has been actively working on patching upstream issues and there is a
+> complete tracking and triaging of all issues with a CVE number[4]. The team
+> is following oss-security's information closely, although weren't actively
+> participating in discussions.
+> 
+> > 6. Accept the list policy (see above)
+> > 7. Be able and willing to contribute back (see above), preferably in
+> >    specific ways announced in advance (so that you're responsible for a
+> >    specific area and so that we know what to expect from which member),
+> >    and demonstrate actual contributions once you've been a member for a
+> >    while
+> 
+> Yes we accept the list policy and are willing to contribute back in ways we
+> are able to.
+> 
+> > 8. Be able and willing to handle PGP-encrypted e-mail
+> > 9. Have someone already on the private list, or at least someone else who
+> >    has been active on oss-security for years but is not affiliated with
+> >    your distro nor your organization, vouch for at least one of the people
+> >    requesting membership on behalf of your distro (then that one
+> >    vouched-for person will be able to vouch for others on your team, in
+> >    case you'd like multiple people subscribed)
+> 
+> Besides my role at openEuler, I’m also a part of the Debian Security Team,
+> though I’m not subscribed to linux-distros since there are already people
+> representing. If this application is accepted, I would like to step up to be
+> the representative of openEuler.
+> 
+> 
+> Regards,
+> Aron
+> 
+> [1]https://www.openeuler.org/
+> [2]https://www.openatom.org/
+> [3]https://www.openeuler.org/en/security/security-bulletins/
+> [4]https://www.openeuler.org/en/security/cve
 
-This looks pretty good for OmniOS, e.g. for OpenSSL CVE-2023-3817 it
-appears to be 4 days from OpenSSL advisory on "31st July 2023" to OmniOS
-"r151046n (2023-08-03)", and even something like 1 day for OpenSSH
-update to "9.3p2, fixing CVE-2023-38408" and for "AMD CPU microcode
-updated to 20230719, mitigating CVE-2023-20593 on some Zen2 processors"
-in "r151046m (2023-07-25)" (it was brought to oss-security on July 24).
-
-That page above goes back to May 2023.  Were there separate ones for
-older releases?  For "a publicly verifiable track record, dating back at
-least 1 year and continuing to present day".
-
-> Our security coordination in illumos is to warn distro-runners, and they make their own
-> decisions based on that data. None have ever violated embargos.
-
-This sounds very different from how the existing distros list members
-operate.  In fact, it may be inconsistent with our current policy for
-list members, which says:
-
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
-
-"Aside from your participation in discussions with the reporter and on
-the (linux-)distros lists (including possibly continuing to CC other
-prior recipients of the information), the information you receive
-through the (linux-)distros lists must not be made public, shared, nor
-even hinted at anywhere beyond the need-to-know within your distro's
-team except with the reporter's explicit approval, until the agreed upon
-public disclosure date/time or substantially complete publication by
-others.  Neither you nor others you inform may use the information for
-anything other than getting the issue fixed for your distro's users and,
-only in rare extreme cases, for deployment of maximally non-revealing
-changes to maintain security of your distro's infrastructure most
-essential to the distro users' security in face of the security issue
-being dealt with.  The need-to-know condition is met only if the person
-needs to participate in one of these two activities."
-
-Note the words "within your distro's team".  However, now you say you'll
-"warn distro-runners", and in your first message you wrote:
-
-> Like Linux, we have downstream distros.  Unlike Linux, illumos is more
-> than what Linux would call, "kernel".
-
-So you'd be joining as upstream for multiple other distros, who you'd be
-sharing the info with.  I'd say that per the current criteria and policy
-for members, those individual distros would need to qualify and join (or
-not) one by one.  I actually doubt all of them would meet our current
-criteria, so your warning all of them would be a bypass.
-
-Now, given good enough reasons, the criteria could be changed or an
-exception could be made.  I think illumos is a great project, it's great
-that you have a distro ecosystem, and several people I recognize have
-spoken in favor (including off-list).  However, I am not convinced we
-have a case here where we'd want to accept indirect sharing of info with
-distros some of which might not qualify on their own.  If we were to do
-that, then why would we be subjecting other distros (non-illumos)
-applying on their own to these same criteria, or would we relax for all?
-
-Please correct me if I misunderstood something, or/and suggest a way
-forward (either fully consistent with the constraints above or with
-specific changes you'd propose and the community would find reasonable).
-
-Thanks,
-
-Alexander
