@@ -1,36 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/26/1
-Message-ID: <ZTrDMV48/Zg/5ose@256bit.org>
-Date: Thu, 26 Oct 2023 21:51:13 +0200
-From: Christian Brabandt <cb@...bit.org>
-To: Christian Brabandt <cb@...bit.org>
-Cc: oss-security@...ts.openwall.com
-Subject: [vim-security] integer overflow in :history command in Vim < 9.0.2068
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/18
+Message-ID: <2023101605-outshoot-undying-fb27@gregkh>
+Date: Mon, 16 Oct 2023 18:49:38 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Integer overflow in :history Ex-Command in Vim < 9.0.2068
-=========================================================
+On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
+> Hi,
+> 
+> On Mon, Oct 16, 2023 at 11:34 PM Demi Marie Obenour
+> <demi@...isiblethingslab.com> wrote:
+> >
+> > On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
+> > > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
+> > > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
+> > > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> > > > > > Hi,
+> > > > > >
+> > > > > > Regardless of your viability of subscription status I think we also
+> > > > > > (sadly) have to consider current geopolitical issues here.
+> > > > > >
+> > > > > > As far as I understand, US companies and US citizens are not permitted
+> > > > > > to work with Chinese organizations and/or Chinese nationals.
+> > > > >
+> > > > > They can when working in the open on public projects and other
+> > > > > open-source-like things.  For "closed" lists and groups, please consult
+> > > > > a lawyer as the rules there are quite varied and depends on the
+> > > > > countries and companies involved.
+> > > > >
+> > > > > But to be sure, again, consult your corporate lawyers, they know the
+> > > > > rules and the issues involved better than I do.
+> > > > >
+> > > > > good luck!
+> > > > >
+> > > > > greg k-h
+> > > >
+> > > > The question is _who_ should consult their lawyers.
+> > >
+> > > The people deciding if this group can be added to the closed list as
+> > > they are the ones responsible for it, AND then if the group is added,
+> > > the members of the list need to talk to their lawyers to see if their
+> > > country laws allow them to participate in a closed group with such
+> > > members.  Many countries might be fine, many might not be, it all
+> > > depends on the participants and what country laws they must abide by.
+> > >
+> > > So in short, everyone involved in the list!  :(
+> > >
+> > > good luck!
+> > >
+> > > greg "I talk to too many lawyers" k-h
+> >
+> > The result of this is simply that those who do not have access to
+> > lawyers on staff will not participate, which will reduce the value of
+> > the list substantially.  I suspect that most people who report
+> > vulnerabilities via distros@ fall into this category.  I know I do.
+> >
+> > Therefore, I recommend rejecting the application as too risky from a
+> > legal perspective.
+> >
+> 
+> Not matter what would be the outcome, I'd like recommend an article
+> from Linux Foundation which I think is a good read:
+> https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
+> 
+> I'm not a lawyer though, but here are a few cents:
+> 
+> 1) There is no general restrictions against Chinese organizations and nationals;
+> 2) Open source software (which is publicly available) is not subject
+> to EAR (Export Administration Regulation of the US);
+> 3) According to § 734.7[1] of EAR, "knowledge with the intention that
+> such information will be made publicly available if accepted" is
+> treated as "Published" and is considered publicly available.
+> 
+> If I understand correctly, distros list is targeted to open source
+> software issues with a policy[2] of "Please only use these lists to
+> report and discuss security issues that are not yet public (but that
+> are to be made public very soon)", then everyone could retain their
+> peace of mind.
 
-Severity: Low
+But note, the information is _not_ public for a period of time, and so,
+might fall outside of the information described above in the lf article.
 
-When using the :history ex-command, it's possible that the
-provided argument overflows the accepted value. Causing an
-Integer Overflow and potentially later an use-after-free.
+Especially given the content of the information as well, this isn't just
+"here's a patch to add a new feature for foo-baz" type of stuff.
 
-This is not a major issue as most users probably won't use
-intentionally large values for the :history command
+Again, if you have questions, please talk to a lawyer from your company
+as only they can answer it properly for your situation.
 
-The issue is fixed in Vim version 9.0.2068.
+thanks,
 
-This issue was reported on October 26th, 2023 by Cole
-Dilorenzo to the vim-security mailing list.
-
-https://github.com/vim/vim/security/advisories/GHSA-q22m-h7m2-9mgm
-https://github.com/vim/vim/commit/9198c1f2b1ddecde22af918541e0de2a32f0f45a
-
-Thanks,
-Christian
--- 
-Wer den Sirenengesang der Werbung widersteht, ist mündiger Bürger. Und
-gefährdet Arbeitskräfte.
-		-- Oliver Hassencamp
+greg k-h
