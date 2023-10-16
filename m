@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/09/1
-Message-ID: <4796f6ee-fab4-b33f-e179-774ea70477aa@apache.org>
-Date: Thu, 09 Feb 2023 23:12:45 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/13
+Message-ID: <2023101639-setback-dullness-d185@gregkh>
+Date: Mon, 16 Oct 2023 16:54:35 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22832: Apache NiFi: Improper Restriction of XML External Entity References in ExtractCCDAAttributes 
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Mon, Oct 16, 2023 at 10:18:42AM +0200, Heiko Schlittermann wrote:
+> Marcus Meissner <meissner@...e.de> (Mo 16 Okt 2023 10:08:50 CEST):
+> > Regardless of your viability of subscription status I think we also
+> > (sadly) have to consider current geopolitical issues here.
+> 
+> No, we should not consider anything else than technical/security
+> restrictions here.
 
-Description:
+No one is outside of the laws of the countries they reside in, sorry.
 
-The ExtractCCDAAttributes Processor in Apache NiFi 1.2.0 through 1.19.1 does not restrict XML External Entity references.
+> And adhere the spirit of Free and Open Source (as far as I understand it),
+> that there is no instance that can judge about political, ethical,
+> religious issues. Free means free. Open means open.
 
-Flow configurations that include the ExtractCCDAAttributes Processor are vulnerable to malicious XML documents that contain Document Type Declarations with XML External Entity references.
+And laws mean laws.  Remember, this is not an "open" issue, it is
+"participating in a closed list issue" here.
 
-The resolution disables Document Type Declarations and disallows XML External Entity resolution in the ExtractCCDAAttributes Processor.
+good luck!
 
-This issue is being tracked as NIFI-11029 
-
-Credit:
-
-Yi Cai of Chaitin Tech (finder)
-
-References:
-
-https://nifi.apache.org/security.html#CVE-2023-22832
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22832
-https://issues.apache.org/jira/browse/NIFI-11029
-
-Timeline:
-
-2023-01-03: reported
-
+greg k-h
