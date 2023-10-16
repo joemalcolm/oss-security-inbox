@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/01/1
-Message-ID: <f04d5222-231d-4428-aa03-92266fb5113e@leventepolyak.net>
-Date: Fri, 1 Sep 2023 00:23:32 +0200
-From: Levente Polyak <levente@...entepolyak.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/7
+Message-ID: <2023101612-snare-dart-c7cf@gregkh>
+Date: Mon, 16 Oct 2023 10:23:50 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Frederik Schwan <freswa@...hlinux.org>
-Subject: Replacement of Allan McRae on linux-distros for Arch Linux
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> Hi,
+> 
+> Regardless of your viability of subscription status I think we also
+> (sadly) have to consider current geopolitical issues here.
+> 
+> As far as I understand, US companies and US citizens are not permitted
+> to work with Chinese organizations and/or Chinese nationals.
 
-I'd like to request to replace one of our representatives on the 
-linux-distros list for Arch Linux.
+They can when working in the open on public projects and other
+open-source-like things.  For "closed" lists and groups, please consult
+a lawyer as the rules there are quite varied and depends on the
+countries and companies involved.
 
-Please replace:
-- Allan McRae <allan@...hlinux.org> [0]
+But to be sure, again, consult your corporate lawyers, they know the
+rules and the issues involved better than I do.
 
-With:
-- Frederik Schwan <freswa@...hlinux.org> [1]
-   GPG: 05C7775A9E8B977407FE08E69D4C5AA15426DA0A
+good luck!
 
-
-The reason for this is that Allan has stepped down from most of his 
-current duties and will focus solely on Pacman development, so we'd like 
-to subscribe Frederik as his replacement. Frederik's GPG key can also be 
-found as part of the Arch Linux keyring, visualized here [2].
-
-This request is signed using my key, which is subscribed on 
-linux-distros, but can also be checked here [3].
-
-Thanks a lot,
-Levente Polyak
-Arch Linux
-
-[0]: https://archlinux.org/people/developers/#allan
-[1]: https://archlinux.org/people/developers/#freswa
-[2]: https://archlinux.org/master-keys/
-[3]: https://archlinux.org/people/developers/#anthraxx
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
+greg k-h
