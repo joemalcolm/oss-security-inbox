@@ -1,23 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/2
-Message-ID: <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
-Date: Fri, 22 Dec 2023 11:09:49 +0000
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/12
+Message-ID: <2023101622-imply-tidal-b6cf@gregkh>
+Date: Mon, 16 Oct 2023 16:52:32 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-On 2023/12/22 11:46, Marcus Meissner wrote:
-> Hi,
+On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
+> On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
+> > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> > > Hi,
+> > > 
+> > > Regardless of your viability of subscription status I think we also
+> > > (sadly) have to consider current geopolitical issues here.
+> > > 
+> > > As far as I understand, US companies and US citizens are not permitted
+> > > to work with Chinese organizations and/or Chinese nationals.
+> > 
+> > They can when working in the open on public projects and other
+> > open-source-like things.  For "closed" lists and groups, please consult
+> > a lawyer as the rules there are quite varied and depends on the
+> > countries and companies involved.
+> > 
+> > But to be sure, again, consult your corporate lawyers, they know the
+> > rules and the issues involved better than I do.
+> > 
+> > good luck!
+> > 
+> > greg k-h
 > 
-> FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
-> 
-> Not sure if we need it for others like sendmail too, as that is also
-> referenced by the security researchers.
+> The question is _who_ should consult their lawyers.
 
-I'm a little confused by sec-consult's process here. They identify a
-problem affecting various pieces of software including some very widely
-deployed open source software, go to the trouble of doing a coordinated
-disclosure, but only do that with...looking at their timeline... gmx,
-microsoft and cisco?
+The people deciding if this group can be added to the closed list as
+they are the ones responsible for it, AND then if the group is added,
+the members of the list need to talk to their lawyers to see if their
+country laws allow them to participate in a closed group with such
+members.  Many countries might be fine, many might not be, it all
+depends on the participants and what country laws they must abide by.
 
+So in short, everyone involved in the list!  :(
+
+good luck!
+
+greg "I talk to too many lawyers" k-h
