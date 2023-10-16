@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2069" "Monday" "9" "October" "2017" "19:51:02" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<8fa0ac92-c2b4-a981-d828-b0ea189ab4f0@chbi.eu>" "56" "Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5" nil nil nil "10" "2017100917:51:02" "[oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5" (number mark "U       chbi@chbi.eu Oct  9   56/2069  " thread-indent "\"Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5\"\n") "<2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>" ("<fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>" "<2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21893 invoked by uid 550); 9 Oct 2017 17:51:15 -0000
+Received: (qmail 20296 invoked by uid 550); 16 Oct 2023 01:49:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,75 +7,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21872 invoked from network); 9 Oct 2017 17:51:14 -0000
+Received: (qmail 19613 invoked from network); 16 Oct 2023 01:48:59 -0000
+Date: Mon, 16 Oct 2023 03:48:14 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-References: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
- <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
-From: chbi@chbi.eu
-Message-ID: <8fa0ac92-c2b4-a981-d828-b0ea189ab4f0@chbi.eu>
-Date: Mon, 9 Oct 2017 19:51:02 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="jU1JnCb4N3n14MiRq9MHA0MUbi204ce10"
-Subject: Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5
+Cc: VMware Security Response Center <security@vmware.com>
+Message-ID: <20231016014814.GA31197@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2023-20867: open-vm-tools: Authentication Bypass vulnerability in the vgauth module
 
---jU1JnCb4N3n14MiRq9MHA0MUbi204ce10
-Content-Type: multipart/mixed; boundary="Kc7mjeUH83WTFxwMD1XK07pBXvRMHRVvU";
- protected-headers="v1"
-From: chbi@chbi.eu
-To: oss-security@lists.openwall.com
-Message-ID: <8fa0ac92-c2b4-a981-d828-b0ea189ab4f0@chbi.eu>
-Subject: Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5
-References: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
- <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
-In-Reply-To: <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
+Hi,
 
---Kc7mjeUH83WTFxwMD1XK07pBXvRMHRVvU
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+This was brought to linux-distros on June 6 with "scheduled public
+disclosure on June 13th, 2023."  There's a VMware security advisory that
+says it was published on that date:
 
-FYI
+https://www.vmware.com/security/advisories/VMSA-2023-0013.html
 
-After further investigation, I've discovered that with this XSS
-vulnerability it is also possible, for an unauthenticated user, to
-upload a simple php web shell to execute code on the server.
+and patches are available at:
 
+https://github.com/vmware/open-vm-tools/tree/CVE-2023-20867.patch
 
---=20
-chbi
-https://chbi.eu
+but the issue was wrongly never brought to oss-security (or at least I
+couldn't find it) - so I am correcting this now.
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
+Quoting from the linux-distros message:
 
+> Description
+> ==============================================================
+> CVE-2023-20867: VMware Tools contains an Authentication Bypass
+> vulnerability in the vgauth module. VMware has evaluated the severity
+> of this issue to be in the Low severity range with a maximum CVSSv3.1
+> base score of 3.9 - CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N.
+> 
+> Known Attack Vectors
+> ==============================================================
+> A fully compromised ESXi host can force VMware Tools to fail to
+> authenticate host-to-guest operations, impacting the confidentiality
+> and integrity of the virtual machine.
 
---Kc7mjeUH83WTFxwMD1XK07pBXvRMHRVvU--
+Quoting from the GitHub URL above:
 
---jU1JnCb4N3n14MiRq9MHA0MUbi204ce10
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+> The issue has been fixed in the open-vm-tools version 12.2.5 released on
+> June 13, 2023.
+> 
+> The following patch provided to the open-vm-tools community can be used
+> to apply the security fix to previous open-vm-tools releases.
+> 
+> For releases 12.2.0, 12.1.5, 12.1.0, 12.0.5, 12.0.0, 11.3.5, 11.3.0
+> 
+>     2023-20867-Remove-some-dead-code.patch
+> 
+> For releases 11.1.0, 11.1.5, 11.2.0, 11.2.5
+> 
+>     2023-20867-Remove-some-dead-code-1110-1125.patch
+> 
+> For releases 11.0.0, 11.0.5
+> 
+>     2023-20867-Remove-some-dead-code-1100-1105.patch
+> 
+> For releases 10.3.0, 10.3.5, 10.3.10
+> 
+>     2023-20867-Remove-some-dead-code-1030-10310.patch
+> 
+> The patches have been tested against the above open-vm-tools releases.
+> Each applies cleanly with:
+> 
+> git am        for a git repository.
+> patch -p2     in the top directory of an open-vm-tools source tree.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnbtwYACgkQunuT+ZA3
-rn556A/9G2YAl78fZikh24SJwxvT5XBp0uOgMvWh/rs2uoeyJXYGVzY+uimvdM7o
-8SJJxhzspswm04mhP0uERlm8sZGRGRXFedvaYmEAzbyTbzuWWh9TAcFVNokolG05
-n5GSxDplIFHIg4u+NS8BqgTClwIEYVKcXbHOvmYrW+66R5xzSlgbW2oeJN6bD23J
-qbW0B5EphMla2NtIzXhvP8/DRR5rTHCy/g5vQ3CQYlLXCTRzpGME1E5B2/SNAe7d
-xSKOxPM9gIG2kPnhftJnaP0DH4kl+T191CK08f4pO+RML/GgN+cIbm+W9cl3/KDR
-/aWkqJdrRlCHejQmxKokzVsi1L8+QKVZqx5ajuBgEBguGUeVm6LE6N0TpwBHk3+U
-B/A7KhfVn4OL8+bVm+WOJ+J34fULbQ4rigOga+ZgrBMD+l5pIVr9L1Oi7JRPy1Vf
-qeL3yJneIBglaGXuEECuFee1Ud/EfaC8de4ayhvqT5fzL5RxyxjoMRNuTPWaVhVz
-WUFRQmEgBtm0Rdfh+BztJzytdio+bIMLLQlOyToH4aQ31o3yAOYsTy+zmSFE0laP
-9YyLnwV+uiM/K1eYZ2SC10+ZW4pWm/1DbE/Uk0EREiNn7R147iak887o1yWnZgFK
-VbBl2E8zC1oQ7/YEuBFXayWjCoswsfmSekSeLcozhgbMZHLSoxc=
-=jcaT
------END PGP SIGNATURE-----
-
---jU1JnCb4N3n14MiRq9MHA0MUbi204ce10--
+Alexander
