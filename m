@@ -1,133 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/21/3
-Message-Id: <E1peafW-0000G3-UU@xenbits.xenproject.org>
-Date: Tue, 21 Mar 2023 12:00:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 429 v3 (CVE-2022-42331) - x86: speculative vulnerability in 32bit SYSCALL path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/1
+Message-ID: <ZSyUUSF_-3YbT14k@workstation>
+Date: Mon, 16 Oct 2023 09:39:29 +0800
+From: Aron Xu <happyaron.xu@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2022-42331 / XSA-429
-                               version 3
+I'm requesting linux-distros mailing list membership on behalf of
+openEuler[1], a Linux distro that's actively maintained since 2020. It is
+hosted by OpenAtom Foundation[2] with many forms of support available from
+Huawei, Kylin, UnionTech, etc. It is publicly available, free to use and open
+to contribution.
 
-          x86: speculative vulnerability in 32bit SYSCALL path
+Here are the responses to the membership criteria:
 
-UPDATES IN VERSION 3
-====================
+> 1. Be an actively maintained Unix-like operating system distro with
+>    substantial use of Open Source components
+> 2. Have a userbase not limited to your own organization
 
-Public release.
+The distro and its commercial derivatives have more than 4.5 million accumulated
+deployments on bare metal (since 2020), and even more if considering public and
+private cloud instances. Joining linux-distros will make a real difference for
+patching important issues for users.
 
-ISSUE DESCRIPTION
-=================
+> 3. Have a publicly verifiable track record, dating back at least 1 year
+>    and continuing to present day, of fixing security issues (including
+>    some that had been handled on (linux-)distros, meaning that membership
+>    would have been relevant to you) and releasing the fixes within 10 days
+>    (and preferably much less than that) of the issues being made public
+>    (if it takes you ages to fix an issue, your users wouldn't
+>    substantially benefit from the additional time, often around 7 days and
+>    sometimes up to 14 days, that list membership could give you)
 
-Due to an oversight in the very original Spectre/Meltdown security work
-(XSA-254), one entrypath performs its speculation-safety actions too
-late.
+The distribution has a complete public record of security fixes[3]. Although
+there is no defined policy on enforcing release time of security patches
+(yet), the actual timeline in execution is 7 days for high impact issues and
+14 days for medium ones.
 
-In some configurations, there is an unprotected RET instruction which
-can be attacked with a variety of speculative attacks.
+> 4. Not be (only) downstream or a rebuild of another distro (or else we
+>    need convincing additional justification of how the list membership
+>    would enable you to release fixes sooner, presumably not relying on the
+>    upstream distro having released their fixes first?)
 
-IMPACT
-======
+The distribution is not a downstream or a rebuild of another distro. There
+are confusions on this question (especially Wikipedia pages) because before
+the project existed, there is an internal-only distro named "Euler OS" which
+is RHEL-based. When openEuler project is found the distribution is rebuilt and
+maintained from scratch, and there are also a few flavors of kernel packages
+with different patchsets. There are also a few commercial and/or community
+downstream distros of openEuler, too.
 
-An attacker might be able to infer the contents of arbitrary host
-memory, including memory assigned to other guests.
+> 5. Be a participant and preferably an active contributor in relevant
+>    public communities (most notably, if you're not watching for issues
+>    being made public on oss-security, which are a superset of those that
+>    had been handled on (linux-)distros, then there's no valid reason for
+>    you to be on (linux-)distros)
 
-VULNERABLE SYSTEMS
-==================
+openEuler has been actively working on patching upstream issues and there is a
+complete tracking and triaging of all issues with a CVE number[4]. The team
+is following oss-security's information closely, although weren't actively
+participating in discussions.
 
-Xen versions 4.5 through 4.17 are vulnerable.  Older versions are not
-vulnerable.
+> 6. Accept the list policy (see above)
+> 7. Be able and willing to contribute back (see above), preferably in
+>    specific ways announced in advance (so that you're responsible for a
+>    specific area and so that we know what to expect from which member),
+>    and demonstrate actual contributions once you've been a member for a
+>    while
 
-Only x86 CPUs are potentially vulnerable.  CPUs of other architectures
-are not vulnerable.
+Yes we accept the list policy and are willing to contribute back in ways we
+are able to.
 
-The problematic codepath is only reachable on x86 CPUs which follow
-AMD's behaviour with respect to SYSCALL instructions from compatibility
-mode segments.  This means that AMD and Hygon CPUs are potentially
-vulnerable, whereas Intel CPUs are not.  Other vendors have not been
-checked.
+> 8. Be able and willing to handle PGP-encrypted e-mail
+> 9. Have someone already on the private list, or at least someone else who
+>    has been active on oss-security for years but is not affiliated with
+>    your distro nor your organization, vouch for at least one of the people
+>    requesting membership on behalf of your distro (then that one
+>    vouched-for person will be able to vouch for others on your team, in
+>    case you'd like multiple people subscribed)
 
-Only PV guests can leverage the vulnerability.
+Besides my role at openEuler, I’m also a part of the Debian Security Team,
+though I’m not subscribed to linux-distros since there are already people
+representing. If this application is accepted, I would like to step up to be
+the representative of openEuler.
 
-On Xen 4.16 and later, the vulnerability is only present if 32bit PV
-guest support is compiled in - i.e. CONFIG_PV32=y.  On Xen 4.15 and
-older, all supported build configurations are vulnerable.
 
-The vulnerability is only present when booting on hardware that supports
-SMEP or SMAP (Supervisor Mode Execution/Access Prevention).  This is
-believed to be some Family 0x16 models, and all later CPUs.
+Regards,
+Aron
 
-MITIGATION
-==========
+[1]https://www.openeuler.org/
+[2]https://www.openatom.org/
+[3]https://www.openeuler.org/en/security/security-bulletins/
+[4]https://www.openeuler.org/en/security/cve
 
-Not running untrusted PV guests will avoid the issue.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of XenServer.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa429.patch           xen-unstable - Xen 4.16
-xsa429-4.15.patch      Xen 4.15 - Xen 4.14
-
-$ sha256sum xsa429*
-2d7be90d917c475ab5217e657d2b44f5d8b107d9023dca034fcfb7feab07b2f0  xsa429.meta
-36ed36dbfaad9e5df5fa87b9a3d9e9c531f476f97eeb2afe280aa238032a0540  xsa429.patch
-7ac3d4182585e5d2d39231f10e7c0c9fcb972c82cf81cb884e95b628187de3a7  xsa429-4.15.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmQZlWMMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZil4H/2b1DkLLz4RQqAgvaB8+SBeVLPqoZ7QxGLl8QXWT
-AMjFdy+M5T1OtbrMvEYCZNYhZnGOJgmVagERUvg/yZbPYx28NIHjG4+u90Ot6OId
-AQPqdrJ0wjEzN/ppNpnu1ALofAGbjsnAypEouGPh12gh5fcpcLQdT0rvpl2ff5f6
-Qi4ShtUXhBiduBQcJ0TSneSCf5s7cq1+sMenntenK5Nrsvg7gu51YR45FyKyXdZc
-raonkGDny9kmDAjdKkywS2Au2763ph9nHbW5TbD17s65AKUDTupzk+QlFPhJLIP+
-/gxDoUjKFiD/eY0AABWMAFGGvHFRNvdhTfUd6ImmWhqdEeE=
-=HxUJ
------END PGP SIGNATURE-----
-
-Download attachment "xsa429.meta" of type "application/octet-stream" (1531 bytes)
-
-Download attachment "xsa429.patch" of type "application/octet-stream" (1842 bytes)
-
-Download attachment "xsa429-4.15.patch" of type "application/octet-stream" (1929 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
