@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/10
-Message-ID: <e4e38e9c-370a-4b4e-a525-101d1f68e9e7@oracle.com>
-Date: Tue, 3 Oct 2023 13:16:44 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/3
+Message-ID: <7722f9c4-59ab-8666-a51d-0897c64f5dee@apache.org>
+Date: Mon, 16 Oct 2023 01:51:32 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: Fwd: X.Org Security Advisory: Issues in libX11 prior to 1.8.7 & libXpm prior to 3.5.17
+Subject: CVE-2023-43666: Apache InLong: General user Unauthorized access User Management 
 Content-Type: text/plain; charset=utf-8
 
-On 10/3/23 09:31, Alan Coopersmith wrote:
-> X.Org Security Advisory:  October 3, 2023
-> 
-> Issues in libX11 prior to 1.8.7 & libXpm prior to 3.5.17
-> ========================================================
+Severity: important
 
-Two additional things we shared with the distros list pre-disclosure:
+Affected versions:
 
-1) Test cases for 3 of the XPM bugs - instead of attaching them to the emails
-    to test which of your mail readers are still vulnerable to these bugs,
-    we've checked them in to the libXpm git repo - see the commits starting
-    with "test" listed on:
-    https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commits/libXpm-3.5.17?ref_type=tags
-    (The test case for CVE-2023-43788 was already in the repo from
-     CVE-2022-46285 from earlier this year).
+- Apache InLong 1.4.0 through 1.8.0
 
-2) When Dr. Duck reported the libX11 issue included in this set as
-    CVE-2023-43785 he also reported several other bugs as potential
-    security issues.  We determined they did not meet our vulnerability
-    criteria but fixed them as general bugs and improved hardening.
-    If you are backporting individual patches instead of upgrading to
-    the new releases, you may want to consider if they meet your criteria
-    for backporting as well:
+Description:
 
-    https://gitlab.freedesktop.org/xorg/lib/libx11/-/merge_requests/233
-    https://gitlab.freedesktop.org/xorg/lib/libxrandr/-/merge_requests/6
-    https://gitlab.freedesktop.org/xorg/app/xrandr/-/merge_requests/12
+Insufficient Verification of Data Authenticity vulnerability in Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.8.0, 
 
-    Each merge request contains a comment with our reasoning.
+General user can view all user data like Admin account.
 
-    Of course, our releases also contain other bug fixes & hardening besides
-    those listed here.
+Users are advised to upgrade to Apache InLong's 1.9.0 or cherry-pick [1] to solve it.
 
--- 
-      -Alan Coopersmith-              alan.coopersmith@...cle.com
-        X.Org Security Response Team - xorg-security@...ts.x.org
+[1]  https://github.com/apache/inlong/pull/8623
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-43666
+
