@@ -1,81 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/15/5
-Message-ID: <CAFzhf4q5uSF6PawxyD6BtRgLTWdXroPVhppEFnfp4v+QjWBFxQ@mail.gmail.com>
-Date: Mon, 15 May 2023 20:13:55 +0100
-From: Piotr Krysiuk <piotras@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/10
+Message-ID: <ZS1CSkbTjDYdGq8F@itl-email>
+Date: Mon, 16 Oct 2023 10:01:44 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Cc: Patryk Sondej <patryk.sondej@...il.com>
-Subject: Re: [CVE-2023-32233] Linux kernel use-after-free in Netfilter nf_tables when processing batch requests can be abused to perform arbitrary reads and writes in kernel memory
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 8, 2023 at 4:58 PM Piotr Krysiuk <piotras@...il.com> wrote:
-> Therefore, according to the linux-distros list policy, the exploit must
-> be published within 7 days from this advisory. In order to comply with
-> that policy, I intend to publish both the description of exploitation
-> techniques and also the exploit source code on Monday 15th by email to
-> this list.
+On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
+> On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > Regardless of your viability of subscription status I think we also
+> > (sadly) have to consider current geopolitical issues here.
+> > 
+> > As far as I understand, US companies and US citizens are not permitted
+> > to work with Chinese organizations and/or Chinese nationals.
+> 
+> They can when working in the open on public projects and other
+> open-source-like things.  For "closed" lists and groups, please consult
+> a lawyer as the rules there are quite varied and depends on the
+> countries and companies involved.
+> 
+> But to be sure, again, consult your corporate lawyers, they know the
+> rules and the issues involved better than I do.
+> 
+> good luck!
+> 
+> greg k-h
 
-Per the announcement above, we are publishing the description of
-exploitation techniques and also the exploit source code as attachments
-to this email.
+The question is _who_ should consult their lawyers.  Many security
+researchers are operating on their own time or work with small
+companies.  These researchers may not have access to corporate lawyers
+trained in the relevant areas of law, and expecting them to retain a
+lawyer at their own expense before posting is not reasonable.
+Therefore, if openEuler joining linux-distros would require them to do
+this, the request should (unfortunately) be denied.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-The attached instructions have been tested against Ubuntu 23.04 Desktop
-for amd64. However, the vulnerability is not limited to Ubuntu. The
-affected code originates from the upstream Linux kernel from
-https://kernel.org/ and we confirmed that exploitation is possible
-against some other popular distributions.
-
-
-# Affected Configurations
-
-The following describes minimum set of configurations where the bug is
-exploitable. The attached exploit adds a few additional dependencies.
-However, an alternative exploitation method could be developed that
-avoids those additional dependencies.
-
-The capability CAP_NET_ADMIN over the network namespace is required in
-order to exploit the vulnerability.
-
-A well-known technique to obtain that capability is by creating a new
-user/network namespace. In case of the current stable and longterm
-Linux kernels from https://kernel.org/ an unprivileged local user can
-create such namespace when the following configuration option is
-enabled explicitly on top of `x86_64_defconfig`:
-
-    CONFIG_USER_NS
-
-For these kernels, Netfilter nf_tables is also disabled by default and
-the following configuration option must be set explicitly to compile
-it:
-
-    CONFIG_NF_TABLES
-
-And then at least one of the families must also be enabled:
-
-    CONFIG_NF_TABLES_INET
-    CONFIG_NF_TABLES_IPV4
-    CONFIG_NF_TABLES_ARP
-    CONFIG_NF_TABLES_NETDEV
-    CONFIG_NF_TABLES_BRIDGE
-    CONFIG_NF_TABLES_IPV6
-
-For certain older kernels, `nft_set` functionality is disabled by
-default and one of the following configuration option must be set
-explicitly for any such system to be affected (depending on release):
-
-    CONFIG_NF_TABLES_SET
-    CONFIG_NFT_SET_RBTREE
-    CONFIG_NFT_SET_HASH
-    CONFIG_NFT_SET_BITMAP
-
-
-Kind regards,
-
-Patryk Sondej
-Piotr Krysiuk
-
-View attachment "README.md" of type "text/markdown" (10101 bytes)
-
-View attachment "EXPLOIT.md" of type "text/markdown" (4022 bytes)
-
-View attachment "exploit.c" of type "text/x-csrc" (62791 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
