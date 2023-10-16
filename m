@@ -1,4 +1,4 @@
-Received: (qmail 22139 invoked by uid 550); 25 Jul 2022 06:53:26 -0000
+Received: (qmail 13813 invoked by uid 550); 16 Oct 2023 15:01:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9958 invoked from network); 25 Jul 2022 05:15:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:from
-         :references:to:subject:in-reply-to:content-transfer-encoding;
-        bh=1yNg+4ATdW+J/EPcauc9ZaVGT+rwTHBqIlJw3SppxjE=;
-        b=gqeKiwCFd+mxj29hcI1+DfuAby6j3zz7+5Dk7XAm1af8OAGRD5xJCMbnfmLECxX7Ei
-         l8bqWSrjD02ehxihRAR2C1rNhx4hKsjKjEkHYAgHjzCmwAkCq4WXxGCYNZxBjyyNnjGI
-         f1yeJ776cCuoLtIL7VGhvY4EFiRpw+EaVj+rLXC3jSgrI32sFtD9cbATXbiY8WC6LTp/
-         gsek3toAJRlRmUGwIAcq4r7h8i3dnfJaUV6qZ2qC9cPi68uNffnIDREhCgO7qzZ66MMy
-         LsIJqPq3+xWNgOOrxPCxDBNV/TkP8HHJxwv87qO7Hb74JuolEARNu/ydIN/biYm8hION
-         Y6mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:from:references:to:subject:in-reply-to
-         :content-transfer-encoding;
-        bh=1yNg+4ATdW+J/EPcauc9ZaVGT+rwTHBqIlJw3SppxjE=;
-        b=YAsfNbhZ2+Dp9n8kKV8RQ4WTklzwQ+fbpQpXzbnDd+ts6jLwA3OXyHB1G+CFsT6GWz
-         lgG6jTTATkd380olSmrC+KUA/bHdPBNuCvhINKKDj664oR1pqnPl7gaR78Ci5S/BHh+2
-         /4UYm36cbbv2lkE3ZNHJNNkkA4rX88BkjL0+Zb0vts49oA3DVRaryG75E+Tmd9qWrn0B
-         Yg5YiHY0iZE6gyfdtBHLptfrXOvVSGF9r5GeNi+hdEQGYT4FXfQTm7oAaVrBgxdN0wYa
-         xtT4vfA0qsemviAyzA4RMwDRpAVmgWG3TQJJ0yBonNQvwC6yK/I9X/GM0XF555o7Jykd
-         5KBA==
-X-Gm-Message-State: AJIora9pe6fRvAFsFVFnkrx3TUehJcCbq6SzSRmuMxU5feZydIF/fbOE
-	cZmRNFo3BD9rdREknqjkQDYJF9U0LHutKg==
-X-Google-Smtp-Source: AGRyM1t4BZP5xcKezQJs2iIDNcVza2UU4HmLQDcMkATFau4tJSP/1ZIJjP3/sdelFHUffEPjghO5sA==
-X-Received: by 2002:a17:90a:728f:b0:1f2:4a4c:6c39 with SMTP id e15-20020a17090a728f00b001f24a4c6c39mr16641117pjg.43.1658726144148;
-        Sun, 24 Jul 2022 22:15:44 -0700 (PDT)
-Message-ID: <174ef5a4-523e-ab75-5f4a-d1ef38e2410c@gmail.com>
-Date: Mon, 25 Jul 2022 12:15:40 +0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Content-Language: en-GB
-From: Pedro Ribeiro <pedrib@gmail.com>
-References: <YtwnKUHaS9nL/F/F@gentoo.org>
- <08DDF362-C8B0-4D35-8A56-6E504F376019@gmail.com>
+Received: (qmail 13789 invoked from network); 16 Oct 2023 15:01:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1697468446; x=1697554846; bh=Qq
+	8mAFE2V0mXC5uNWzmr0SCZqUsZFL/kKqepYMEtOhs=; b=YfukqgdHROOUdoBzSY
+	dvlyuw7rLkapCKWMgMKz9YFusOX9TiPgw3PElB0H0YB1d58aR58kbwSi3vNNKr/1
+	yj5f7+8YJL8feFJ/L5a802yOoNoZ/r5pWZnIP9EzSadLxL8i4/aEcLTdDshBgwvL
+	qM9HCdU4lEwq2oHZ3mUupMSG2r4U9vd9SYWrms6ZDYwsY3YB1tqnDpqM9AROJvkc
+	cYF/Z6L4g+Hq239kRuuO/4eghbrYa37O6K3WE5UrPIaJdYwhSKQH31pvFx9kmVRb
+	C+9hlykgNsdps6qbChT7bN6L6e0GGmmLvTinQLsqK9+XQCmqApoSUUKh8Sy1gx6v
+	mEeg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1697468446; x=1697554846; bh=Qq8mAFE2V0mXC
+	5uNWzmr0SCZqUsZFL/kKqepYMEtOhs=; b=kOefyVsR/uGTmT5Gq0zua7MsneVLG
+	FAmLFavWWPz/zNEEUu9V4XXHJOme+3VdoQavw7rxKhLt6Ksefbhh9l/82h4jlPij
+	hReR11b2dOCD6YAg3uWUFW5oWeQgIo97ecZVp7f5oyQSHGn9lCwPN15WGUGu4fAK
+	GbKV9GSm3qTFFc4m4ZYHIc79pYm3vkG4CdUk/IfjsHrSkqE+9WFKOcPWs0q1Rof/
+	licQRQ1CkU2qAQZ6PaRW2vfiOYsMfWT/XEl/qX27Jrub7/5zwgEg6oiE9yXTGoOJ
+	qSgDapTs0vIprWfSVTy+2tY612kLz7sJYdN8CLPvUvg8Jg9ZJXzwABouQ==
+X-ME-Sender: <xms:HlAtZVES6QCmEGyGdfZOTfnaXjkb0AHZRv8CSXWNeKnMSCJdMVkfsg>
+    <xme:HlAtZaWuUzJXblE_h4PVvMMY9aCRoPFpHeSAtMMK9uF66NTjE5Hl-3F6TOhXW2uEa
+    -0VxOASxDUaEg>
+X-ME-Received: <xmr:HlAtZXLyBap2K7PiGxbuf5iV-uwvAnzDAZG_Kkrv1tb4r4oKxlooNXRkUW0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjedtgdektdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
+    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
+    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:HlAtZbESVl7I4TDhMqWxMJaiKWqHH3ziTcsqA9fl4_rc-CWJRn9TYw>
+    <xmx:HlAtZbW_4HRgZU-ClWXo_-l5eGbkLXFWxE3juMKERE6iGpBM2N_PXw>
+    <xmx:HlAtZWPasOGWnboosELBMD4TYBHjOeEq-p4Lp3znvsT4RzCyhM8ZGQ>
+    <xmx:HlAtZccrIJ1g2Xz6EPY03lHizwYhMNRBK9NsEGHfH6anBxqEUneoWA>
+Feedback-ID: i787e41f1:Fastmail
+Date: Mon, 16 Oct 2023 16:52:32 +0200
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <08DDF362-C8B0-4D35-8A56-6E504F376019@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] CVE Request: heap buffer overflow in gdk-pixbuf
+Message-ID: <2023101622-imply-tidal-b6cf@gregkh>
+References: <ZSyUUSF_-3YbT14k@workstation>
+ <20231016080850.GF10758@suse.de>
+ <2023101612-snare-dart-c7cf@gregkh>
+ <ZS1CSkbTjDYdGq8F@itl-email>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZS1CSkbTjDYdGq8F@itl-email>
+Subject: Re: [oss-security] linux-distros membership application of openEuler
 
+On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
+> On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
+> > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
+> > > Hi,
+> > > 
+> > > Regardless of your viability of subscription status I think we also
+> > > (sadly) have to consider current geopolitical issues here.
+> > > 
+> > > As far as I understand, US companies and US citizens are not permitted
+> > > to work with Chinese organizations and/or Chinese nationals.
+> > 
+> > They can when working in the open on public projects and other
+> > open-source-like things.  For "closed" lists and groups, please consult
+> > a lawyer as the rules there are quite varied and depends on the
+> > countries and companies involved.
+> > 
+> > But to be sure, again, consult your corporate lawyers, they know the
+> > rules and the issues involved better than I do.
+> > 
+> > good luck!
+> > 
+> > greg k-h
+> 
+> The question is _who_ should consult their lawyers.
 
+The people deciding if this group can be added to the closed list as
+they are the ones responsible for it, AND then if the group is added,
+the members of the list need to talk to their lawyers to see if their
+country laws allow them to participate in a closed group with such
+members.  Many countries might be fine, many might not be, it all
+depends on the participants and what country laws they must abide by.
 
-On 24/07/2022 10:35, Pedro Ribeiro wrote:
-> 
->> On 24 Jul 2022, at 01:08, John Helmert III <ajak@gentoo.org> wrote:
->>
->> ﻿On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
->>> Hi,
->>>
->>> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
->>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
->>>
->>> It's a heap buffer overflow using a crafted GIF, which is likely
->>> exploitable in 32 bit systems. Full details are in the link above in the
->>> bug tracker.
->>>
->>> This was patched and the fix was merged 8 months ago as seen here:
->>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
->>>
->>> The issue is now public, but since no CVE was attributed, it probably is
->>> not being considered as a problem for downstream users of the package.
->>>
->>> As of today, the latest Debian stable package is affected by this
->>> vulnerability. Using a GNOME file system browser and browsing to that
->>> folder will cause a crash, as will opening it up in a GNOME image viewer
->>> and even attempting to load it in Chromium (should have submitted to
->>> them for a bounty :D).
->>>
->>> Hence I'd like to get a CVE to raise awareness for this issue, so that
->>> downstream users of the package can get patched.
->>>
->>> Thanks and regards,
->>> Pedro Ribeiro
->>
->> Hi, according to the oss-security Openwall wiki page [1], CVEs need to
->> be requested via MITRE's web form [2].
->>
->> [1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
->> [2] https://cveform.mitre.org/
-> 
-> Hi John,
-> 
-> Thanks for the info, will request via the form and post here again once I have a CVE number. In any case I hope this post is useful to raise awareness of the issue to distro maintainers.
-> 
-> Regards
-> Pedro
-> 
-> 
+So in short, everyone involved in the list!  :(
 
-Actually I was wrong, this doesn't crash Chromium! But it still crashes 
-with a heap buffer overflow in GNOME file explorer and GNOME image 
-viewers (anything using gdk-pixbuf really) as said in the previous email 
-though.
+good luck!
 
-Here's the CVE number that was attributed by MITRE: CVE-2021-46829.
-I've put a copy of the PoC and bug report at 
-https://github.com/pedrib/PoC/blob/master/fuzzing/CVE-2021-46829/CVE-2021-46829.md
-
-Regards,
-Pedro
+greg "I talk to too many lawyers" k-h
