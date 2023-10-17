@@ -1,91 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/19
-Message-ID: <20230420205915.JzlCB%steffen@sdaoden.eu>
-Date: Thu, 20 Apr 2023 22:59:15 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/17/2
+Message-ID: <gmqx5z67cuzsknj5rp4qxtkaqfhpsnxzzr36dzmwk2b5r6hqoz@wtbvfm5sj2qg>
+Date: Tue, 17 Oct 2023 08:00:36 +0200
+From: Morten Linderud <foxboron@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-David A. Wheeler wrote in
- <A35F9CEA-C1F9-4D2B-8771-ED4EBA113B17@...eeler.com>:
- |>|Steffen Nurpmeso <steffen@...oden.eu> wrote:
- |>|> IMO it is no vulnerability at all since it has "always" been _very
- |>|> clearly_ (even very lengthily) documented in the manual page.
- |
- |> Hanno Böck replied:
- |>|A vulnerability does not go away if it's documented, and I find that a
- |>|rather strange take.
- |
- |> On Apr 20, 2023, at 8:56 AM, Steffen Nurpmeso <steffen@...oden.eu> wrote:
- |> Hm no, i do not, the latter not at all.  You can bundle a OpenPGP
- |> / signify / even OpenSSL signature with something and can get
- |> secure download even over non-encrypted channels.
- |
- |That's true, but irrelevant. The problem is that this function fails to
- |perform the security function implied by its name. If
+On Fri, Oct 13, 2023 at 11:19:18PM -0400, Neal Gompa wrote:
+> On Fri, Oct 13, 2023 at 8:07 PM Martin Hecht <martin.hecht@...s.de> wrote:
+>
+> > Well, assuming there was a security team in these projects able to obey
+> > the embargo regulations, wouldn't they have tried to join?
+> > But, nevertheless, what is the relation of the organizational structure
+> > of these projects with the current application of CIQ/Rocky, after all?
+> >
+> 
+> The point I'm making is that SIGs do not count because they cannot
+> obey embargo regulations. No open project or community project can do
+> that without having some mechanism for private controls, which is
+> antithetical to the community process. They fundamentally are
+> ineligible to join because they cannot keep anything secret.
 
-In danger of becoming a nitpicker, HTTP::Tiny is a tiny
-implementation of something that supports retrieval via HTTP.
-I am thankful it exists, i use it!  (Thanks!)
-It does even support retrieval via HTTPS if so configured!!
-And i use that if it is available and i can / need it.
+This just seems like a personal opinion projected onto the relevant projects
+though. There is nothing preventing you from getting access to patches and
+distributing them to relevant package maintainers for preperation under an
+embargo.
 
-This is camel land, maybe a bit like that unforgotten "A Camel
-walked through the Eye of a Needle" (translation of German name)
-by unforgotten Ephraim Kishon (he spoke fluent German).
-Not to mention that all distros i personally use download perl
-modules via their package system not cpan.
-And a bit polemically even it could be that downloading something
-via perl / HTTP::Tiny requires less CPU cycles than a simple
-python script startup.
+Evidently there are three atleast 3 community distros already participating on
+the linux-distros list, namely Debian, Arch and Gentoo. So while Fedora might
+not have any way to distribute patches, please don't infer that this applies to
+all community distros.
 
- |HTTP::Tiny supports TLS (instead of rejecting it), it needs to verify \
- |TLS certs by default.
- |
- |If there's function named "isodd()" where "isodd(4) === true", that's \
- |a bug,
- |even if the documentation said that's what it did. The function/method name
- |implies functionality. You could call it a naming bug. Papering over \
- |bugs helps no one.
+We do this in Arch Linux, and I've personally handeled several embargos as a
+community project.
 
-That is also polemic, so i guess i am fine.
+https://oss-security.openwall.org/wiki/mailing-lists/distros
 
- |The *default* of an externally-called function needs to be secure.
+A relevant piece of information is also the well-written Gentoo Pre-Release
+Disclosure Agreement they have with their package maintainers.
 
-Well, if you use HTTPS then you will surely get a properly
-encrypted connection.  The only possible question is, maximally,
-to whom.  DNS could be spoofed, right.  But then again this can
-happen to you on any government or larger company box, which
-install CAs that allow decryption of the entire communication for
-whatever purpose, a dedicated and permanent MITM.  But wait.  Now
-it becomes political.
-
- |I'm sympathetic to the problem of loading in the *right* certs, but \
- |systems generally
- |already have mechanisms for configuring certs. That seems like a solved \
- |problem.
-
-I am not sympathetic to "solved problem" paradigm or phrase.
-I do not think history knows about "solved problems".
-You may be temporarily right, however.  This is getting too far,
-you know, i personally *do* have a CA, plus the one that
-firefox-bin as compiled by Mozilla uses (never looked what *that*
-is actually, i simply presume they do not use the global one), and
-i also have $SSL_CERT_FILE set in the environment.
-
-Hasta la victoria siempre!
-
-P.S.:
-  Aquí se queda la clara
-  La entrañable transparencia
-  De tu querida presencia
-  OpenSSL.
+https://wiki.gentoo.org/wiki/Project:Security/Pre-Release-Disclosure
 
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Personally my impression of Fedora after trying to pay attention to their
+security meetings and general security planning, all of this seems to be
+handeled by Red Hat. So Fedora might not have any need to join the Linux distros
+list themselves.
+
+-- 
+Morten Linderud
+PGP: 9C02FF419FECBE16
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
