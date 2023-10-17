@@ -1,43 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/3
-Message-ID: <20230922105410.GA15143@openwall.com>
-Date: Fri, 22 Sep 2023 12:54:11 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/17/4
+Message-ID: <20231017175321.GA9014@openwall.com>
+Date: Tue, 17 Oct 2023 19:53:21 +0200
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Vincent Rabaud <vrabaud@...gle.com>
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 22, 2023 at 07:28:17AM +0200, Hanno B??ck wrote:
-> On Thu, 21 Sep 2023 22:52:50 +0200 Solar Designer <solar@...nwall.com> wrote:
-> 
-> > However, another maybe-important one also made it into 1.3.2:
-> > 
-> > commit 95ea5226c870449522240ccff26f0b006037c520
-> > Author: Vincent Rabaud <vrabaud@...gle.com>
-> > Date:   Mon Sep 11 16:06:08 2023 +0200
-> > 
-> >     Fix invalid incremental decoding check.
-> 
-> It does not look to me that this fix is in 1.3.2:
-> https://github.com/webmproject/libwebp/commits/v1.3.2
-> 
-> I've seen this commit as well and have been wondering for a few days if
-> we'll hear about abother libwebp issue soon.
+Hi,
 
-Oh, you're correct - this commit is _not_ in 1.3.2.
+Thank you all for helping review this application and for commenting on
+other related issues.
 
-I was looking at the main branch and wrongly assumed that all I see in
-there before:
+I'll proceed to list CIQ Rocky Linux Security Team as a linux-distros
+member, and will assume that my own subscription is not only as list
+admin, but also as a representative of this team.
 
-commit ca332209cb5567c9b249c86788cb2dbf8847e760 (tag: v1.3.2, origin/1.3.2)
+All messages posted to this thread so far were accepted by moderators -
+nothing was rejected.  My summary is as follows, in order first messages
+were posted by each person:
 
-is in 1.3.2.  However, that commit tagged 1.3.2 got into main as part of
-a merge commit, by which point main already had other commits including
-95ea5226c870449522240ccff26f0b006037c520 that were not in 1.3.2 branch/tag.
+Solar Designer (on linux-distros as list admin):
 
-So there may be 1 to 3 commits fixing more security issues after 1.3.2.
+Submitted the application, implying that it passes own assessment of it
+meeting the criteria, but affiliated with the proposed new member.
 
-Thank you for correcting me!
+Then addressed Neal Gompa's criticism below.
+
+Vegard Nossum (on linux-distros for Oracle Linux):
+
+"As a current distros member, I see no problem with this whatsoever and
+I appreciate the transparency."
+
+I assume this satisfies the criterion that "someone already on the
+private list, or at least someone else who has been active on
+oss-security for years but is not affiliated" "vouch for at least one of
+the people requesting membership".
+
+Neal Gompa ("doing work in Fedora, Mageia, and openSUSE"):
+
+"I do not believe that Rocky Linux qualifies for it."
+
+Rationale given was:
+1. Timely rebuilds don't "indicate that Rocky/CIQ can respond
+effectively when you have a craft updates from scratch".
+2. Rebuilds or errata republishing were not always timely over 2 years.
+3. SIGs "cannot count because they are intended to be public community
+projects" and "cannot obey embargo regulations."
+4. Distro is pure-rebuild, "which I believe summarily disqualifies it."
+5. CloudLinux and CentOS precedents were different.
+6. "I do not feel that you alone is sufficient"
+
+I addressed it as follows:
+1. Timely rebuilds show "that the project cares and is long-term" and
+"alone satisfy the criterion's current wording."  Statement that own
+updates were also being made for LTS branches and public information on
+recent own updates via the SIG demonstrate "capability, infrastructure
+setup, and intent".  This is a separate criterion, which does not
+require a long-term track record.  So both criteria are satisfied.
+2. There's no requirement "that 100% of updates and publications must
+be quick.  Things do go wrong sometimes, and updates for lower severity
+issues are often reasonably delayed".  (With further clarifications.)
+3. CIQ LTS branches alone would have been sufficient.  SIGs also do
+count as the team "is to provide security maintenance for these, and via
+the Security SIG also optional mitigations and early fixes for Rocky
+Linux."  And yes, this can be done within list rules despite of SIGs
+"intended to be public community projects".  (With explanation of how.)
+4. The existence of CIQ LTS branches and Rocky Linux SIGs changes that.
+5. Fair enough.  "what I described above is sufficient for the purpose
+of linux-distros membership."
+6. Of course not - the new member also meets the criteria.
+
+Martin Hecht ("Not being member of any distribution, but a long-time
+subscriber"):
+
+"I give my vote for Alexander as a representative of CIQ Rocky Linux
+Security Team on linux-distros list."
+
+Addressed Neal Gompa's criticism:
+1. 2. Provided examples using the recent glibc updates.  "accusing Rocky
+being late in providing packages at least is not valid in general imho.
+At least important ones, like this one, seem to arrive rather quickly."
+3, 4. "the point here is "*not only* being a rebuild of another distro".
+So, their engagement with SIG should already be a valid add-on to be
+honored."  "CIQ offers LTS branches [...] clearly distinguishes them
+from a "pure distro rebuild"."
+
+Jeremy Stanley (OpenStack, long-term oss-security contributor) and
+Morten Linderud (Arch Linux):
+
+3. Provided additional examples of "public community projects" that do
+"obey embargo", further refuting Neal Gompa's point.
 
 Alexander
