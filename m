@@ -1,51 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/6
-Message-ID: <CAJMnc16px2pgN9qmH6iw=by+DLu4cXBmZZpDGe3Lf_QWPEW0bg@mail.gmail.com>
-Date: Fri, 22 Sep 2023 16:50:44 +0200
-From: Vincent Rabaud <vrabaud@...gle.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/17/5
+Message-ID: <20231017180600.GA10598@openwall.com>
+Date: Tue, 17 Oct 2023 20:06:00 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Matt Caswell <matt@...nssl.org>
+Subject: upcoming release of OpenSSL 3.1.4 and 3.0.12
 Content-Type: text/plain; charset=utf-8
 
-Hi, we have commented on that here:
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62136#c7
+Matt, I'd appreciate it if you (or your team) would also be posting
+these to oss-security going forward, roughly at the same time with
+posting them to your project's public lists.  Also, more specific
+Subject lines on these and on the eventual security advisories would be
+helpful.  Thank you!
 
-On Fri, Sep 22, 2023 at 12:54 PM Solar Designer <solar@...nwall.com> wrote:
+----- Forwarded message from Matt Caswell <matt@...nssl.org> -----
 
-> On Fri, Sep 22, 2023 at 07:28:17AM +0200, Hanno B??ck wrote:
-> > On Thu, 21 Sep 2023 22:52:50 +0200 Solar Designer <solar@...nwall.com>
-> wrote:
-> >
-> > > However, another maybe-important one also made it into 1.3.2:
-> > >
-> > > commit 95ea5226c870449522240ccff26f0b006037c520
-> > > Author: Vincent Rabaud <vrabaud@...gle.com>
-> > > Date:   Mon Sep 11 16:06:08 2023 +0200
-> > >
-> > >     Fix invalid incremental decoding check.
-> >
-> > It does not look to me that this fix is in 1.3.2:
-> > https://github.com/webmproject/libwebp/commits/v1.3.2
-> >
-> > I've seen this commit as well and have been wondering for a few days if
-> > we'll hear about abother libwebp issue soon.
->
-> Oh, you're correct - this commit is _not_ in 1.3.2.
->
-> I was looking at the main branch and wrongly assumed that all I see in
-> there before:
->
-> commit ca332209cb5567c9b249c86788cb2dbf8847e760 (tag: v1.3.2, origin/1.3.2)
->
-> is in 1.3.2.  However, that commit tagged 1.3.2 got into main as part of
-> a merge commit, by which point main already had other commits including
-> 95ea5226c870449522240ccff26f0b006037c520 that were not in 1.3.2 branch/tag.
->
-> So there may be 1 to 3 commits fixing more security issues after 1.3.2.
->
-> Thank you for correcting me!
->
-> Alexander
->
+Date: Tue, 17 Oct 2023 18:48:26 +0100
+To: openssl-announce@...nssl.org,
+ "openssl-users@...nssl.org" <openssl-users@...nssl.org>,
+ "openssl-project@...nssl.org" <openssl-project@...nssl.org>
+From: Matt Caswell <matt@...nssl.org>
+Subject: New OpenSSL Releases
 
+The OpenSSL project team would like to announce the upcoming release of
+OpenSSL versions 3.1.4 and 3.0.12.
+
+These releases will be made available on Tuesday 24th October 2023
+between 1300-1700 UTC.
+
+These are security-fix releases. The highest severity issue fixed in
+each of these two releases is Moderate:
+
+https://www.openssl.org/policies/secpolicy.html
+
+Yours
+The OpenSSL Project Team
+
+----- End forwarded message -----
