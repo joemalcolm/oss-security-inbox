@@ -1,4 +1,4 @@
-Received: (qmail 9908 invoked by uid 550); 22 Jan 2025 15:04:31 -0000
+Received: (qmail 3475 invoked by uid 550); 17 Oct 2023 17:54:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,141 +7,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5515 invoked from network); 22 Jan 2025 14:26:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737555977;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Je6McKvisigFiUCWwrHmbpQXgi0nsUfW0xB/HWXSxSI=;
-	b=ikRbdVUfQhuiz3EW2tzJlfS+JNeOaB0afbx4ts1/q2aMZV0K+udwn3mc/DdL2sDHXSFtm0
-	6aGOeoiJCLwH8d+ppuYtIHUIzkBXza3OAdxM7twvjGy/4EG9Nmd2YS5pZ9SMaLGCFXSnMU
-	O21z4pfB0KU66QpiVeKvmfh18aATDKY=
-X-MC-Unique: ZrDC-1a0NwqdSH2j7H-dbA-1
-X-Mimecast-MFC-AGG-ID: ZrDC-1a0NwqdSH2j7H-dbA
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737555975; x=1738160775;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Je6McKvisigFiUCWwrHmbpQXgi0nsUfW0xB/HWXSxSI=;
-        b=SburdZnGUq77SAWr5fOMWbyrA1uiuDPwVlvbqye1UcmNiR50qlr0nr2p0lZ34sE3Nd
-         HZ2LBRlgJjp4xZ3Eq6tPXdYjSvGhgqBS4YRWxUj0OdXrUD3rSk5277QhFaLGp6ksc5k5
-         4mKOs6sKmD88OB0jro6o3B05ZaLbcflEjkrW6Kl0f887JXNp8ypGwWow0jfUEHT/qjCq
-         xFHahptYYqPvl9fgzCozYeSu+IbELur2xwlq64q7AqZnsvIqq8Lipoi5SlGgSRrwHV73
-         bRUXpgTKm2EH3BbMBHVxZfN+dbBfTTSE9S/zbu2VJobzgNOfydDF5H+QJGl1kJQ95kO8
-         /H6g==
-X-Gm-Message-State: AOJu0YwPYFTsEe0S1eZC4SVFEpnaO2fxuQzliuSUZHxKmNIXu1i/mutJ
-	TqolNZsYOdP83srNqInPW/cGU4fbdIKa+mzxe1Q+lqFmdwm5/2kjzREJb2hipy03HXxNQHk2FX1
-	uzEZN3XmU//SELBMJ1gmlwb5Wqh2QfeXWhsI+N2Q3HJtGdZNUua0yH8T3oJmNroK3YLubrYaYj9
-	ijv3xW8BR8UbGzRd0sTXuvj+Sc99TUrVHWiSjuTYt3aHs0MXlWtbs=
-X-Gm-Gg: ASbGncs9Ciu6OKZ1lo6BoESeXWMBAbkmpsjmsd3zHDH8t872Eq/5Zwx+SEq6hXpkA8D
-	etM3ueM4O0ck2gOUUWGcmrG9sPg7jW2miMkWAGiQ3z9IF120TiPChdv6fuCsokOm3nA==
-X-Received: by 2002:a05:6122:4892:b0:518:7ab7:afa9 with SMTP id 71dfb90a1353d-51d5b39ad76mr17095444e0c.10.1737555975139;
-        Wed, 22 Jan 2025 06:26:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGq+Y9JdduIUOA3AC7om70dJl+vJK8qO7g0znw1k2hQq1ZaOg9fTme96FpZBzALZNosnAdpDVJwPRkKPuumzKE=
-X-Received: by 2002:a05:6122:4892:b0:518:7ab7:afa9 with SMTP id
- 71dfb90a1353d-51d5b39ad76mr17095402e0c.10.1737555974693; Wed, 22 Jan 2025
- 06:26:14 -0800 (PST)
-MIME-Version: 1.0
-References: <Z5DF00lM-3Q36mhh@kasco.suse.de> <2025012206-remember-glare-da7d@gregkh>
-In-Reply-To: <2025012206-remember-glare-da7d@gregkh>
-From: Pedro Sampaio <psampaio@redhat.com>
-Date: Wed, 22 Jan 2025 11:25:58 -0300
-X-Gm-Features: AbW1kvZO0T2kgJuS6uTSBNNKaxmEwYhmlijudm48znbNaKryZNi80YxbvpD9_8c
-Message-ID: <CAEFhzs-QmA0K7t65ssvPeK8qgifwnoETAtbNuE1mOUhnRbR+=Q@mail.gmail.com>
+Received: (qmail 3345 invoked from network); 17 Oct 2023 17:54:47 -0000
+Date: Tue, 17 Oct 2023 19:53:21 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 8dYulSjM5aTIQh891dCsjJU0jwWhVX_5mVYEZu36_a8_1737555975
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] issue with stuck Mitre CVE requests
+Message-ID: <20231017175321.GA9014@openwall.com>
+References: <652920e5.c80a0220.3bcf7.2251@mx.google.com> <956475122.7707678.1697228495449.JavaMail.zimbra@hlrs.de> <CAEg-Je-uxMbiYDADX=+eyTQF+xnjAYA0u1HoygqDa+G=Y=4f-Q@mail.gmail.com> <gmqx5z67cuzsknj5rp4qxtkaqfhpsnxzzr36dzmwk2b5r6hqoz@wtbvfm5sj2qg>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <gmqx5z67cuzsknj5rp4qxtkaqfhpsnxzzr36dzmwk2b5r6hqoz@wtbvfm5sj2qg>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros list membership application - CIQ Rocky Linux Security Team
 
-Hello,
+Hi,
 
-For CVE assignments there is no need for a Root CNA. You can request a
-CVE ID from any CNA which has a valid scope for the affected
-component/product.
+Thank you all for helping review this application and for commenting on
+other related issues.
 
-Root CNAs work only with other CNAs to onboard them, provide support,
-and mediate disputes. Red Hat works in both roles, but only the CNA is
-needed in this case.
+I'll proceed to list CIQ Rocky Linux Security Team as a linux-distros
+member, and will assume that my own subscription is not only as list
+admin, but also as a representative of this team.
 
-To request a CVE ID from us, you can use our contact listed at Mitre's
-Partners List[1] (secalert@redhat.com). No need to have prior
-relations or communications.
+All messages posted to this thread so far were accepted by moderators -
+nothing was rejected.  My summary is as follows, in order first messages
+were posted by each person:
 
-If a project wants to become a CNA themselves, the Root CNA contact
-(or both) may be used (rootcna-coordination@redhat.com).
+Solar Designer (on linux-distros as list admin):
 
-Mitre is CNA of Last Resort and can assign CVE IDs for anything.
-However, relying solely on them may overwhelm their request channels.
-And although we want to avoid duplicate assignments, If you get no
-response for a long time, you can request a CVE ID from another CNA.
-As it is also possible to request CVE Rejection for duplicate CVEs
-later.
+Submitted the application, implying that it passes own assessment of it
+meeting the criteria, but affiliated with the proposed new member.
 
-[1] https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat
+Then addressed Neal Gompa's criticism below.
 
-On Wed, Jan 22, 2025 at 8:51=E2=80=AFAM Greg KH <greg@kroah.com> wrote:
->
-> On Wed, Jan 22, 2025 at 11:17:54AM +0100, Matthias Gerstner wrote:
-> > Hello list,
-> >
-> > I am currently experiencing for the second time that a CVE request
-> > submitted via the Mitre web form [1] is not receiving a response. A
-> > similar topic was already shortly discussed in the past [2].
-> >
-> > I requested two CVEs on Jan 13. One got assigned within 24 hours, for
-> > the other one I still didn't receive a reply. The same happened to me in
-> > April 2024. Back then, after not receiving a reply for over two weeks,
-> > the CVE has been assigned by Red Hat instead, since Red Hat developers
-> > have been involved in the affected project.
-> >
-> > In this instance upstream is not a CNA and it is also not closely
-> > involved with Red Hat. Replying to the automatic CVE request mail from
-> > Mitre does not seem to reach any human being. I don't know of any other
-> > way to get attention from Mitre for this request.
-> >
-> > I wonder what is the best way to recover from such a situation without
-> > risking duplicate CVE assignments, or not assigning a CVE at all.
-> >
-> > I have a hunch that the issue might have to do with filling out the "PGP
-> > Key" field in the CVE request form, which I did for the one request that
-> > has not been answered, but not for the other, which got assigned right
-> > away.
->
-> I can't answer the "what magic do I do to make the web form work" as I
-> never got that thing to work so we had to end up being our own CNA just
-> to handle issues :)
->
-> But this topic has come up recently in talking with other open source
-> CNA groups.  The "real" solution for it is to talk to a different root
-> CNA (i.e. anyone other than MITRE).  For open source projects, that
-> _should_ be Red Hat, but I don't know if they yet have a simple way to
-> ask for stuff like this, other than the back-channel you probably used
-> last time.  I think RH is working to codify this somehow, but I can't
-> speak for them.
->
-> Or, better yet, as SUSE is a CNA, why not just assign CVE ids yourself,
-> as part of the "open source projects affected in a SUSE product that are
-> not covered by any other CNA" rules.  Doesn't your CNA charter allow you
-> to do this now?
->
-> Anyway, I just recommend avoiding the MITRE web form as much as
-> possible, as it's a total black box and no one knows what is on the
-> backend or where the information there goes to :(
->
-> thanks,
->
-> greg k-h
->
+Vegard Nossum (on linux-distros for Oracle Linux):
 
+"As a current distros member, I see no problem with this whatsoever and
+I appreciate the transparency."
 
---=20
-Pedro Sampaio | Red Hat Product Security
-851525C5A98E9DEB7E650ABDFAC8296FBC674B8F
+I assume this satisfies the criterion that "someone already on the
+private list, or at least someone else who has been active on
+oss-security for years but is not affiliated" "vouch for at least one of
+the people requesting membership".
 
+Neal Gompa ("doing work in Fedora, Mageia, and openSUSE"):
+
+"I do not believe that Rocky Linux qualifies for it."
+
+Rationale given was:
+1. Timely rebuilds don't "indicate that Rocky/CIQ can respond
+effectively when you have a craft updates from scratch".
+2. Rebuilds or errata republishing were not always timely over 2 years.
+3. SIGs "cannot count because they are intended to be public community
+projects" and "cannot obey embargo regulations."
+4. Distro is pure-rebuild, "which I believe summarily disqualifies it."
+5. CloudLinux and CentOS precedents were different.
+6. "I do not feel that you alone is sufficient"
+
+I addressed it as follows:
+1. Timely rebuilds show "that the project cares and is long-term" and
+"alone satisfy the criterion's current wording."  Statement that own
+updates were also being made for LTS branches and public information on
+recent own updates via the SIG demonstrate "capability, infrastructure
+setup, and intent".  This is a separate criterion, which does not
+require a long-term track record.  So both criteria are satisfied.
+2. There's no requirement "that 100% of updates and publications must
+be quick.  Things do go wrong sometimes, and updates for lower severity
+issues are often reasonably delayed".  (With further clarifications.)
+3. CIQ LTS branches alone would have been sufficient.  SIGs also do
+count as the team "is to provide security maintenance for these, and via
+the Security SIG also optional mitigations and early fixes for Rocky
+Linux."  And yes, this can be done within list rules despite of SIGs
+"intended to be public community projects".  (With explanation of how.)
+4. The existence of CIQ LTS branches and Rocky Linux SIGs changes that.
+5. Fair enough.  "what I described above is sufficient for the purpose
+of linux-distros membership."
+6. Of course not - the new member also meets the criteria.
+
+Martin Hecht ("Not being member of any distribution, but a long-time
+subscriber"):
+
+"I give my vote for Alexander as a representative of CIQ Rocky Linux
+Security Team on linux-distros list."
+
+Addressed Neal Gompa's criticism:
+1. 2. Provided examples using the recent glibc updates.  "accusing Rocky
+being late in providing packages at least is not valid in general imho.
+At least important ones, like this one, seem to arrive rather quickly."
+3, 4. "the point here is "*not only* being a rebuild of another distro".
+So, their engagement with SIG should already be a valid add-on to be
+honored."  "CIQ offers LTS branches [...] clearly distinguishes them
+from a "pure distro rebuild"."
+
+Jeremy Stanley (OpenStack, long-term oss-security contributor) and
+Morten Linderud (Arch Linux):
+
+3. Provided additional examples of "public community projects" that do
+"obey embargo", further refuting Neal Gompa's point.
+
+Alexander
