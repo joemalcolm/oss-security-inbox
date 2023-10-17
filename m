@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/5
-Message-ID: <20230721121019.GB25354@localhost.localdomain>
-Date: Fri, 21 Jul 2023 12:10:31 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: Demi Marie Obenour <demi@...isiblethingslab.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Announce: OpenSSH 9.3p2 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/17/3
+Message-ID: <235eb56c-4f49-b803-fb0a-4765e08b79fd@posteo.de>
+Date: Tue, 17 Oct 2023 11:44:55 +0000
+From: "W. Wadepohl" <w.wadepohl@...teo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Heiko Schlittermann wrote in
+>   |And adhere the spirit of Free and Open Source (as far as I understand it),
+>   |that there is no instance that can judge about political, ethical,
+>   |religious issues. Free means free. Open means open.
+I acknowledge that linux-distros list is not free as in freedom. The 
+members of linux-distros mostly do business in the U.S. and therfore 
+they have to comply to the rules of the U.S. This rules does not honor 
+the freedom of the open source community. They exclude parts of the free 
+community.
 
-On Thu, Jul 20, 2023 at 09:22:08PM -0400, Demi Marie Obenour wrote:
-> IMO the root cause of this problem is that PKCS#11 libraries are installed
-> in /usr/lib, rather than in /usr/lib/pkcs11 or another subdirectory.
-> There should be an automated way to check if a library is a PKCS#11
-> library without having to load it.
+That's sad and they do not support the concept of freedom on whose 
+foundation the open source community is built.
 
-Wednesday's release was a security-only release, the two patches it
-contains are very simple, unlikely to break any existing installation,
-and one of these patches at least (the s/error/fatal/ one) is very easy
-to backport.
+BTW: As I exlained some times ago, the most instances of GNU/Linux are 
+NOT distros, but embedded systems. The embargo of security information 
+to these developers makes the internet more insecure. Maybe the European 
+CRA will change something in the future.
 
-But the OpenSSH developers have done an amazing job and have not only
-prepared these security-only patches, they have also prepared two more
-defense-in-depth patches (which are more intrusive and therefore need
-testing by the community first):
-
-https://github.com/openssh/openssh-portable/commit/29ef8a04866ca14688d5b7fed7b8b9deab851f77
-https://github.com/openssh/openssh-portable/commit/099cdf59ce1e72f55d421c8445bf6321b3004755
-
-The first one of these patches is probably what you are looking for
-("check if a library is a PKCS#11 library without having to load it").
-
-Thanks again to the OpenSSH developers for their incredible work! With
-best regards,
+I'm not happy to get information about security vulnerabilities/fixes 
+with a time lag where my tenthousends of IoT devices are vulnerable.
 
 -- 
-the Qualys Security Advisory team
+Wolfram Wadepohl
