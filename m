@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["933" "Sunday" "5" "February" "2017" "21:54:34" "+0100" "Ailin Nemui" "ailin.nemui@gmail.com" "<1486328074.8813.2.camel@gmail.com>" "23" "[oss-security] Irssi 1.0.0 minor remote memory leak" nil nil nil "2" "2017020520:54:34" "[oss-security] Irssi 1.0.0 minor remote memory leak" (number mark "U       ailin.nemui@ Feb  5   23/933   " thread-indent "\"[oss-security] Irssi 1.0.0 minor remote memory leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21532 invoked by uid 550); 5 Feb 2017 21:13:55 -0000
+Received: (qmail 21852 invoked by uid 550); 17 Oct 2023 11:58:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,205 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7836 invoked from network); 5 Feb 2017 20:54:49 -0000
+Received: (qmail 9714 invoked from network); 17 Oct 2023 00:17:50 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=XZquBCrQDalfGr3EW5yVWg14FFIxTUWPvCrG/G46srI=;
-        b=lsezeVEBzUSwBB0+YjRC+MqcUzQyX1yxh822cwOVdJzTVJJeIFau/WRNyD0Yn/N14P
-         mm4I9V0z8DzXIMMncEhGnfaqCONzlXvglaUJUjjlmWJHTOtcJTxEEevGYPfdFzSP+LYP
-         SfhUqlyuJz/a+nSk9MpKDOq7KLbsW8z9pRQRbwIVyrJitWuYI3zuz3NlrYgX2ttUpX7M
-         EttS6l4RhoS4hVEg9GIAQphq3GkSqLC2fgLhLiTuB0q6JzhVUcusU2AnJIJUaW3btZMc
-         acoVfB6Z6AFQ6vRNOM2/98+O3ABM56ie+cDpE12WeDF+dPqegy0ew08oZHKKb7IGOLkX
-         yK9A==
+        d=gmail.com; s=20230601; t=1697501858; x=1698106658; darn=lists.openwall.com;
+        h=content-disposition:mime-version:subject:to:from:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HJJ2D6NF42uaq59/poLvf9jTMn/5cSL8V5Qostnkt+s=;
+        b=lQ2LqjKzox7sZQhXrj2+8tr6yKK6zefbiG0XFurw787qw00TafpI/AITPxMGgRFESv
+         WtLF6z/c3APGSzmVxKveBz68fl6JL5+exVKo4HCsy1EGEre/EgfpHsxu9eEm7Wi/Gatm
+         TPwEtDztLfeIvOL2ENJp+qm60fb+k5SgvGGVISp7KhuKfDcDlIXsL29e82uUNKMiOD3I
+         YLcuCBueSB1DVRnpS2qYRUT4ydKztYA1W8it5T2SeTGy9dkBNuFLEdZYPgDEaJN6n0D7
+         Q7m5mEFRjch6R3f0YUZWQ2d1kvcO6WANckN+3pPWIvfxtQM4igshee+0jNQOvhRuajzJ
+         fYvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=XZquBCrQDalfGr3EW5yVWg14FFIxTUWPvCrG/G46srI=;
-        b=T06MVP/pcVM10VyZzMrOyfl4CYSHZ/6Fq7t6fD4B5HlWkxWepLTqmdQ32qN4luic0h
-         69IXcgwK7b18haVkNinKEhr3tZrmiG5eC8MhLTGmrOhVAH9jllVTx5vl0xpVeoMRC39v
-         BKLzkoS/ii/zCgrd20G9wirtsk8lpPBg630T6lN19DmFpS1IoUeFAln+S5HIJFPShJCK
-         9bqSTOL0f29I/U4nhiXrECX+aq5qQx1eDICEPVkYfvzAIPWqewFf1Yg6WGJ1YIUZVmnV
-         Qx3Eyv+cGD4FoVHFzY0o93GQhIe7S3Dw2VvG1tJDFj+lUo2X4iaX836N+t15JYaSNuWA
-         NBpw==
-X-Gm-Message-State: AIkVDXJXNWIAsOgv8OuY+PDK2MH5W8cpH8lWp9XpWtTI7l78KIltHtxl7AraE6xxHnH7CA==
-X-Received: by 10.223.176.175 with SMTP id i44mr6548560wra.3.1486328077794;
-        Sun, 05 Feb 2017 12:54:37 -0800 (PST)
-Message-ID: <1486328074.8813.2.camel@gmail.com>
-From: Ailin Nemui <ailin.nemui@gmail.com>
+        d=1e100.net; s=20230601; t=1697501858; x=1698106658;
+        h=content-disposition:mime-version:subject:to:from:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HJJ2D6NF42uaq59/poLvf9jTMn/5cSL8V5Qostnkt+s=;
+        b=WxaTlMA8k7k1XLaxjWwYo25InaGv2ceUhhZygxynC7COjE6Nig5eyjIiwdYq4ChIxp
+         xUjgWThVN8154op38SEtWP46Fl7JE77wXI/YM/DQVUJyCgfBitcgjifxLVLyOIxHXCRK
+         gbfEjP7cacf3nOBwt2UdhxzzPjMxbAU73UMhE68Tfrt2vs+3amgnKzHdRYFI3/BXnAlj
+         xkUjAhK7xtmcvd1qXmNMSsQtA+KqX179sHMidIf1Q3QRoGKdVDaGTuMVvGthZa9957HD
+         TlQyEwqZEDGG1Hh7VxTShWbZifvmguLnAsck17iKLpi0xHCREEJpKT2rw0WrlT7aHz2J
+         P98g==
+X-Gm-Message-State: AOJu0YzB75kR4Qp9WOaC3IBpLmJRsfO+y/CIEObHwfcNIpogDiBXBzzv
+	PMrJZ3tggijoszShu2X27ttM02Kx0oI=
+X-Google-Smtp-Source: AGHT+IHAhhuxzagbPGjWNWCH80w2CRqEe91JFj2AKcTD7vuFTBIN8b8BV8RtCxCnqbl/3Q4AKgkNOg==
+X-Received: by 2002:a17:907:1ca4:b0:9bd:a029:1a10 with SMTP id nb36-20020a1709071ca400b009bda0291a10mr321571ejc.32.1697501858105;
+        Mon, 16 Oct 2023 17:17:38 -0700 (PDT)
+Message-ID: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+Date: Tue, 17 Oct 2023 03:17:36 +0300
+From: turistu <turistu@gmail.com>
 To: oss-security@lists.openwall.com
-Date: Sun, 05 Feb 2017 21:54:34 +0100
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.4 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Irssi 1.0.0 minor remote memory leak
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] with firefox on X11, any page can pastejack you anytime
 
-Hi,
+Note to the moderator: I have already submitted this to the firefox people
+three weeks ago, and according to them, this is not a real security issue,
+or at least not worse than those pesky scripts which you cannot kill without
+killing firefox itself; if you think the same, just ignore this without
+replying.
 
-Joseph Bisch has detected a remote memory leak in some cases where a
-hostile server would send certain incomplete SASL replies. According to
-his calculations, the server would need to send 13 times the amount of
-memory it wants to leak. The issue is a missing free of the base64
-data. Please advise whether that issue needs a CVE?  
+I would however appreciate if you let this through and so give it some
+visibility so that the other 2 or 3 people who may be affected by this
+could learn about it.
 
-Patch: https://github.com/irssi/irssi/commit/19c51789967a2f63da033e60f6
-ef08848b9cd144
+Thank you very much.
 
-Furthermore, Hanno Böck found the issue of a missing NULL sentinel when
-initialising Perl, which crashes under ASan. Since this happens only on
-boot and is not exposed to the net, we have no reason to believe that
-there is any issue here. Also, that bug has been around since the
-inception of Perl scripting module.
+====
 
-Patch: https://github.com/irssi/irssi/pull/619/commits/677fb1f55ca52d0e
-43c93f7d8361d333ff5bffd6
+In firefox running on X11, any script from any page can freely write to the
+primary selection, and that can be easily exploited to run arbitrary code
+on the user's machine.
 
-In any case, those issues have been addressed in Irssi 1.0.1
+No user interaction is necessary -- any page able to run javascript can do it,
+including e.g. a page from a background tab of a minimized window, an iframe
+inside such a window, an error page, a sandboxed iframe, a page that has
+reloaded itself via `meta http-equiv=refresh`, etc.
 
-Thanks for your attention,
+This applies to all the versions of mozilla/firefox and their derivatives
+(seamonkey, etc) that I was able to test, including the latest nightly.
+
+### Example
+
+The simplest example, which works in the default configurations of systems
+like OpenBSD or Alpine Linux (= any Unix/Linux system where Wayland is not
+the default and the default *shell* does not implement bracketed-paste),
+would go like this:
+
+Load the following snippet in firefox:
+
+	<pre id=pre style=font-size:0></pre>
+	intentionally left blank
+	<script>
+	function writeXPrimary(s){
+		pre.textContent = s; getSelection().selectAllChildren(pre);
+	}
+	setInterval(function(){
+		writeXPrimary('touch ~/LOL-' + Date.now() / 1000 +'\r')
+	}, 500)
+	</script>
+
+Then pretend to forget about it, and go about your work. Sooner or later,
+when trying to paste something in the terminal with shift-Insert or middle
+click, you will end up running the command `writeXPrimary()` has injected
+just between your copy and paste.
+
+live example of that snippet: https://turistu.github.io/firefox/pastejack.html
+
+### Short technical explanation
+
+Browsers like firefox have the concepts of "secure context" (e.g. `https://`)
+and "transient user activation"; the javascript from the page gets some
+temporary powers as soon as you have interacted *even so little* with the
+page, like clicked, touched, etc.
+
+For instance, writing with `Clipboard.writeText()` to the windows-style
+Ctrl-C Ctrl-V *clipboard* selection is only possible from secure contexts
+and only in the short while after the user has clicked a button, etc on the page.
+As this bug demonstrates, those prerequisites are not needed for writing to the
+*primary* selection, which on X11 is much more used and much more valuable.
+
+### Workaround
+
+Without patching firefox, the only workaround I can think about is
+disabling the `Clipboard.selectAllChildren()` function from an addon's
+content script, e.g. like this:
+
+	let block = function(){ throw Error('blocked') };
+	exportFunction(block, Selection.prototype, { defineAs: 'selectAllChildren' });
+
+Complete extension here at https://github.com/turistu/odds-n-ends/raw/main/firefox/no-sel.xpi.
+
+I tried to submit it to addons.mozilla.org but they didn't accept it. If
+you're running firefox-esr, the development edition or nightly, you can just
+`set xpinstall.signatures.required` to true in `about:config` and install
+it with `firefox no-sel.xpi`.
+
+### Firefox Patch
+```
+diff -r 9b362770f30b layout/generic/nsFrameSelection.cpp
+--- a/layout/generic/nsFrameSelection.cpp	Fri Oct 06 12:03:17 2023 +0000
++++ b/layout/generic/nsFrameSelection.cpp	Sun Oct 08 11:04:41 2023 +0300
+@@ -3345,6 +3345,10 @@
+     return;  // Don't care if we are still dragging.
+   }
+ 
++  if (aReason & nsISelectionListener::JS_REASON) {
++    return;
++  }
++
+   if (!aDocument || aSelection.IsCollapsed()) {
+ #ifdef DEBUG_CLIPBOARD
+     fprintf(stderr, "CLIPBOARD: no selection/collapsed selection\n");
+```
+
+The idea of this patch was to *always* prevent javascript from indirectly
+messing with the primary selection via the Selection API. However, it turned
+out that the `JS_REASON` flag was not reliable; if javascript calls some
+function like `addRange()` or `selectAllChildren()` while the user has started
+dragging but hasn't released the mouse button yet, that code will be called
+*without* that flag but with the text set by javascript, not the text
+selected by the user. However, I think that this patch is still enough
+to fill the glaring hole opened by `selectAllChildren()`.
+
+### About the example and bracketed-paste
+
+The bracketed paste feature of bash/readline and zsh means that you
+cannot just append a CR or LF to the payload and be done, it's the
+user who has to press ENTER for it to run.
+
+However, workarounds exist.  For instance, some terminals like mlterm
+don't filter out the pasted data, and you can terminate the pasting
+mode early by inserting a `\e[201~` in the payload.
+
+For bash, you can take advantage of some quirks in the readline library
+to turn off the highlighting and make the payload invisible to the user.
+E.g.:
+
+	let payload = 'touch ~/LOL-' + Date.now() / 1000;
+	writeXPrimary('\n' + payload + '\n'.repeat(100) + ' '.repeat(30)
+		+ '\n'.repeat(100))
+
+which will confuse the user with the same screen as when some stray background job
+had written something to the terminal:
+
+	user@host:~$ : previous unrelated command
+	user@host:~$	<-- paste here
+	#   <-- cursor here, most users will just hit Enter to get a new prompt
+
+live example of that snippet:	https://turistu.github.io/firefox/bash-pastejack.html
+
+Just to be clear, I don't think that either mlterm, bash, nor the shells that
+don't do have that bracketed-paste feature are at fault here in any way
+(and I personally always turn off that misfeature as it badly interferes
+with my workflow): It's firefox which should get all the blame for letting
+random javascript evade its pretended "sandbox" in this way.
+
+### About Wayland
+
+For firefox running in Wayland, `writeXPrimary()` will only succeed
+when the firefox window (the main window, not necessarily the tab the code
+runs in) has the focus. Otherwise the selection will be cleared. At first I
+assumed that this is something specific to the Wayland protocol, but that
+turned out to be utterly false; it's just some quirk, bug or "feature"
+specific to either firefox itself or GTK.
+
+But I think that's still bad enough, even if the page should take care to
+only set the selection when the main window has gained focus.
+
+And of course, all this doesn't affect the situation where you're copying
+and pasting in another firefox tab with a different context, origin, etc;
+and all the other situations where you don't appreciate having random
+javascript you don't even know about messing with your copy & paste.
+
+===
+
+This is a slightly edited version of
+https://github.com/turistu/odds-n-ends/blob/main/firefox/pastejack.md.
+
+I will correct any errors or omissions and also add more info there.
