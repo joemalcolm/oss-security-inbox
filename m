@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/6
-Message-ID: <20230711153603.GA12449@openwall.com>
-Date: Tue, 11 Jul 2023 17:36:03 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/4
+Message-Id: <92629B27-C51A-42A0-997F-81DFD527CA94@beckweb.net>
+Date: Wed, 18 Oct 2023 19:00:45 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: Brandon Perry <bperry.volatile@...il.com>, Brahma Reddy Battula <brahma@...che.org>, Jecki Go <jecgo@...a.com>
-Subject: Re: CVE-2022-42009: Apache Ambari: A malicious authenticated user can remotely execute arbitrary code in the context of the application.
+Subject: Vulnerability in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 10, 2023 at 10:08:22AM -0500, Brandon Perry wrote:
-> Do you have an example proof of concept or a bug link for this?
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Added CC's.
-Brahma or Jecki, can you address Brandon's question above, please?
+The following releases contain fixes for security vulnerabilities:
 
-Alexander
+* Jenkins 2.428
+* Jenkins LTS 2.414.3
 
-> On Mon, Jul 10, 2023 at 10:06???AM Brahma Reddy Battula <brahma@...che.org> wrote:
-> > Affected versions:
-> >
-> > - Apache Ambari 2.7.0 through 2.7.6
-> >
-> > Description:
-> >
-> > SpringEL injection in the server agent in Apache Ambari version 2.7.0 to
-> > 2.7.6 allows a malicious authenticated user to execute arbitrary code
-> > remotely. Users are recommended to upgrade to 2.7.7.
-> >
-> > Credit:
-> >
-> > Jecki Go (jecgo@...a.com) (finder)
-> >
-> > References:
-> >
-> > https://ambari.apache.org/
-> > https://www.cve.org/CVERecord?id=CVE-2022-42009
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-10-18/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3291 / CVE-2023-36478 & CVE-2023-44487
+Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
+servlet server when started using `java -jar jenkins.war`. This is how
+Jenkins is run when using any of the installers or packages, but not when
+run using servlet containers such as Tomcat.
+
+Jenkins 2.427 and earlier, LTS 2.414.2 and earlier bundles versions of
+Jetty affected by the security vulnerabilities CVE-2023-36478 and
+CVE-2023-44487. These vulnerabilities allow unauthenticated attackers to
+cause a denial of service.
+
+NOTE: This only affects instances that enable HTTP/2, typically using the
+`--http2Port` argument to `java -jar jenkins.war` or corresponding options
+in service configuration files. It is disabled by default in all native
+installers and the Docker images provided by the Jenkins project.
+
+
+
