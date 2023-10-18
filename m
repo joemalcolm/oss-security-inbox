@@ -1,33 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/4
-Message-ID: <0c264da3-b6db-d2a0-5a59-ffdffc19dd7b@apache.org>
-Date: Thu, 19 Oct 2023 09:40:10 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/8
+Message-ID: <f6d49f57-22d4-48d4-9142-497f9c89ba8d@oracle.com>
+Date: Wed, 18 Oct 2023 16:10:50 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31122: Apache HTTP Server: mod_macro buffer over-read 
+Subject: Re: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On 10/10/23 11:40, Alan Coopersmith wrote:
+> Information I've found so far on open source implementations (most via the
+> current listings in the CVE) include:
 
-Affected versions:
+Some more updates since last week:
 
-- Apache HTTP Server through 2.4.57
+> - Apache httpd:
+>    https://chaos.social/@icing/111210915918780532
 
-Description:
+The discussion in https://github.com/apache/httpd-site/pull/10 makes the
+situation a little murkier.
 
-Out-of-bounds Read vulnerability in mod_macro of Apache HTTP Server.This issue affects Apache HTTP Server: through 2.4.57.
+- contour:
+   https://github.com/projectcontour/contour/pull/5850
 
-Credit:
+- grpc-go:
+   https://github.com/grpc/grpc-go/pull/6703
 
-David Shoon (github/davidshoon) (finder)
+> - haproxy:
+>   https://github.com/haproxy/haproxy/issues/2312   https://www.haproxy.com/blog/haproxy-is-not-affected-by-the-http-2-rapid-reset-attack-cve-2023-44487
 
-References:
+- http2 [Haskell]:
+   https://github.com/kazu-yamamoto/http2/issues/93
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-31122
+- IETF:
+   https://lists.w3.org/Archives/Public/ietf-http-wg/2023OctDec/0025.html
 
-Timeline:
+- kubernetes:
+   https://github.com/kubernetes/kubernetes/pull/121120
 
-2023-04-04: Reported to security team
+- linkerd:
+   https://linkerd.io/2023/10/12/linkerd-cve-2023-44487/
+
+> - netty:
+>   https://github.com/netty/netty/commit/58f75f665aa81a8cbcf6ffa74820042a285c5e61
+   https://github.com/advisories/GHSA-xpw8-rcwv-8f8p
+   https://netty.io/news/2023/10/10/4-1-100-Final.html
+
+- varnish
+   https://github.com/varnishcache/varnish-cache/issues/3996
+
+
+Also,https://mstdn.social/@jschauma/111252863550361935 points out that the
+Rust h2 crate seems to have announced a very similar issue under a
+different CVE id back in April:
+
+https://rustsec.org/advisories/RUSTSEC-2023-0034.html
+https://github.com/advisories/GHSA-f8vr-r385-rh5r
+
+and a followup post notes further similarities to Netflix's CVE-2019-9514
+“Reset Flood” from
+https://github.com/Netflix/security-bulletins/blob/master/advisories/third-party/2019-002.md
+except in that case the RST_STREAM seem to have been sent from the server,
+not the client side.
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
