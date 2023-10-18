@@ -1,56 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/3
-Message-ID: <63fc7caa-6f5c-d45b-9cb6-aa9d56a3a243@oracle.com>
-Date: Tue, 7 Feb 2023 09:25:00 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Peter Hutterer <peter.hutterer@...hat.com>
-Subject: Re: X.Org Security Advisory: Security issue in the X server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/7
+Message-ID: <02db51d7-974a-53cf-d018-8982bed87da3@tnetconsulting.net>
+Date: Wed, 18 Oct 2023 17:31:07 -0500
+From: Grant Taylor <gtaylor@...tconsulting.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Fixes have been released now in:
+On 10/18/23 2:30 PM, Michael Orlitzky wrote:
+> That's the crux of it but I don't think it frees Firefox from 
+> responsibility.
 
-xorg-server 21.1.7:
-https://lists.x.org/archives/xorg-announce/2023-February/003321.html
+Please elaborate on what Firefox's responsibility is here?
 
-xwayland 22.1.8:
-https://lists.x.org/archives/xorg-announce/2023-February/003322.html
+> Despite the premise being contrary to common sense and fifty years 
+> of evidence, Firefox promises to sandbox all of the bad things that 
+> untrusted third-party code might do to you.
 
-      -Alan Coopersmith-              alan.coopersmith@...cle.com
-        X.Org Security Response Team - xorg-security@...ts.x.org
+So perhaps Firefox needs to change their statement / stance.  Much like 
+Google Chrome got sued over private browsing mode not preventing web 
+servers of pages your visiting retaining logs.
 
-On 2/6/23 17:36, Peter Hutterer wrote:
-> X.Org Security Advisory: February 07, 2023
-> 
-> Security issue in the X server
-> ==============================
-> 
-> This issue can lead to local privileges elevation on systems
-> where the X server is running privileged and remote code execution for
-> ssh X forwarding sessions.
-> 
-> * CVE-2023-0494/ZDI-CAN-19596: X.Org Server DeepCopyPointerClasses
-> use-after-free
-> 
-> A dangling pointer in DeepCopyPointerClasses can be exploited by
-> ProcXkbSetDeviceInfo() and ProcXkbGetDeviceInfo() to read/write into
-> freed memory.
-> 
-> Patches
-> -------
-> A patch for this issue has been committed to the xorg server git
-> repository. xorg-server 21.1.7 will be released shortly and will include
-> this patch.
-> 
-> - commit 0ba6d8c37071131a49790243cdac55392ecf71ec
-> 
->    Xi: fix potential use-after-free in DeepCopyPointerClasses
-> 
->    CVE-2023-0494, ZDI-CAN 19596
-> 
-> 
-> Thanks
-> ======
-> 
-> The vulnerabilities have been discovered by Jan-Niklas Sohn working with
-> Trend Micro Zero Day Initiative.
-> 
+> Are there any other programs that run third-party code by default 
+> and are not considered vulnerabilities?
+
+I'm sure there are many things that run third-party code that people are 
+not aware are vulnerable.  Email clients like Evolution come to mind.  I 
+would be shocked if OpenOffice / LibreOffice probably also qualify as 
+programs on *nix systems that have the possibility of unexpectedly 
+modifying the clipboard / selection buffers*.
+
+I saw an interesting thread -- I think on the Zsh mailing list -- 
+talking about protecting end users from unexpected things that make 
+sense in hindsight.  E.g. shell globing expanding `*` into all files in 
+the directory, including files with `-` at the start of their name and 
+potentially if not likely altering the behavior of the command, probably 
+in an undesirable way.
+
+I have to wonder how far programs / their programmers must go to protect 
+users from themself.
+
+Where does the program's / programmer's responsibility stop and the 
+users responsibility start?
+
+Aside:  The thread in question brought up some interesting idea, 
+including altering how things that start with unsafe characters -- 
+though I wonder why not all files -- with `./` so the `-bob` file 
+becomes `./-bob` when expanded.  --  I wondered about prefixing globing 
+with `--` which is the de-facto don't process anything after this as a 
+command line flag.
+
+*To those who would complain about my use of the term "buffer" ... I 
+agree that the primary and secondary selection $TERM doesn't contain the 
+selected data, rather pointer to the program containing the data.  But 
+there is $SOMETHING that holds that information about where the 
+selection is, a pointer of sorts.  I'm taking the liberty of using the 
+term "buffer" to refer to this location holding the pointer to the 
+information.  --  The clipboard is different and will retain data after 
+the program that is the source of the data terminates, unlike the 
+primary / secondary selection.
+
+
+
+-- 
+Grant. . . .
+unix || die
+
