@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2243" "Thursday" "8" "December" "2016" "13:57:19" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<13b3cbe365324cd9a9d6ba909477fe95@imshyb02.MITRE.ORG>" "55" "[oss-security] Re: roundcube code execution via mail()" nil nil nil "12" "2016120818:57:19" "[oss-security] Re: roundcube code execution via mail()" (number mark "U       cve-assign@m Dec  8   55/2243  " thread-indent "\"[oss-security] Re: roundcube code execution via mail()\"\n") "<20161208105040.0f2ae557@pc1>" ("<20161208105040.0f2ae557@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25833 invoked by uid 550); 8 Dec 2016 18:57:33 -0000
+Received: (qmail 27702 invoked by uid 550); 18 Oct 2023 22:36:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25794 invoked from network); 8 Dec 2016 18:57:31 -0000
-From: <cve-assign@mitre.org>
-To: <hanno@hboeck.de>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161208105040.0f2ae557@pc1>
-Message-ID: <13b3cbe365324cd9a9d6ba909477fe95@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 13:57:19 -0500
+Received: (qmail 21971 invoked from network); 18 Oct 2023 22:31:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tnetconsulting.net;
+	s=2019; t=1697668268;
+	bh=sntesYltJPKbkGGmkxAw8guMVQnG8G75Q14nCrPXvIM=;
+	h=Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
+	 To:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:Cc:Content-Disposition:Content-Language:
+	 Content-Transfer-Encoding:Content-Type:Date:From:In-Reply-To:
+	 Message-ID:MIME-Version:References:Reply-To:Resent-Date:
+	 Resent-From:Resent-To:Resent-Cc:Sender:Subject:To:User-Agent;
+	b=fl1GCFCQl0R8B4OT85Ank7V9fTY/eJJRmOdsEy7/ht9SKXpCmitoE3SeF0AziJd+S
+	 EUMuf4Q7oso9r9WApyU7AYONtE6hnaJRFX02Cd2zB7+hJlqsoClFog0xEWxH0LdjoS
+	 Ub//NIx+gwXZCWLZ/8aQBFubpGPQyUkE/45LKHhg=
+Message-ID: <02db51d7-974a-53cf-d018-8982bed87da3@tnetconsulting.net>
+Date: Wed, 18 Oct 2023 17:31:07 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: roundcube code execution via mail()
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+ <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+ <693e917eaca0983293396d084c7cf2f44525a7a5.camel@orlitzky.com>
+From: Grant Taylor <gtaylor@tnetconsulting.net>
+In-Reply-To: <693e917eaca0983293396d084c7cf2f44525a7a5.camel@orlitzky.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
+ anytime
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 10/18/23 2:30 PM, Michael Orlitzky wrote:
+> That's the crux of it but I don't think it frees Firefox from 
+> responsibility.
 
-> https://roundcube.net/news/2016/11/28/updates-1.2.3-and-1.1.7-released
-> https://blog.ripstech.com/2016/roundcube-command-execution-via-email/
+Please elaborate on what Firefox's responsibility is here?
 
-> https://github.com/roundcube/roundcubemail/commit/aa6bf38843f51a0fc7205acc98a7b84f3c4c9c4f
-> https://github.com/roundcube/roundcubemail/commit/45a3e81653eb6ad3685d1a9ab817a61df78178eb
+> Despite the premise being contrary to common sense and fifty years 
+> of evidence, Firefox promises to sandbox all of the bad things that 
+> untrusted third-party code might do to you.
 
-> highly critical because all default installations are affected
+So perhaps Firefox needs to change their statement / stance.  Much like 
+Google Chrome got sued over private browsing mode not preventing web 
+servers of pages your visiting retaining logs.
 
-> When an email is sent with Roundcube, the HTTP request can be
-> intercepted and altered. Here, the _from parameter can be modified in
-> order to place a malicious PHP file on the file system.
+> Are there any other programs that run third-party code by default 
+> and are not considered vulnerabilities?
 
-Use CVE-2016-9920.
+I'm sure there are many things that run third-party code that people are 
+not aware are vulnerable.  Email clients like Evolution come to mind.  I 
+would be shocked if OpenOffice / LibreOffice probably also qualify as 
+programs on *nix systems that have the possibility of unexpectedly 
+modifying the clipboard / selection buffers*.
+
+I saw an interesting thread -- I think on the Zsh mailing list -- 
+talking about protecting end users from unexpected things that make 
+sense in hindsight.  E.g. shell globing expanding `*` into all files in 
+the directory, including files with `-` at the start of their name and 
+potentially if not likely altering the behavior of the command, probably 
+in an undesirable way.
+
+I have to wonder how far programs / their programmers must go to protect 
+users from themself.
+
+Where does the program's / programmer's responsibility stop and the 
+users responsibility start?
+
+Aside:  The thread in question brought up some interesting idea, 
+including altering how things that start with unsafe characters -- 
+though I wonder why not all files -- with `./` so the `-bob` file 
+becomes `./-bob` when expanded.  --  I wondered about prefixing globing 
+with `--` which is the de-facto don't process anything after this as a 
+command line flag.
+
+*To those who would complain about my use of the term "buffer" ... I 
+agree that the primary and secondary selection $TERM doesn't contain the 
+selected data, rather pointer to the program containing the data.  But 
+there is $SOMETHING that holds that information about where the 
+selection is, a pointer of sorts.  I'm taking the liberty of using the 
+term "buffer" to refer to this location holding the pointer to the 
+information.  --  The clipboard is different and will retain data after 
+the program that is the source of the data terminates, unlike the 
+primary / secondary selection.
 
 
-> a logical flaw in the application that causes the sanitization to fail
 
-> the $from parameter is expected to have no whitespaces
+-- 
+Grant. . . .
+unix || die
 
-> preg_match('/(\S+@\S+)/',
-
-> another regular expression in line 863 which requires that the line
-> ends ($) right after the email match. A payload used by an attacker
-> does not have to match this regex
-
-We do not feel that this regex discussion requires a second CVE. The
-essence of the CVE-2016-9920 issue is that sendmail.inc detects
-certain invalid envelope-from fields but does not do anything (such as
-executing $from = null) about them.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYSayXAAoJEHb/MwWLVhi2nvYP/jiR1J75kiydrXhB8Wr7amTP
-UMqG290QFlhfz+6kCVEtIe6G7gPLPbLiOFWLC/G3lFHCqeAW7jkYf+pqXurOcruM
-5FcasVgBG0rWXQrcJV1Do/ZVz2ECmTnMohKXaYTxSy72V4Nqf+E75T63sksOyb8D
-daaECedrpTtn1LXk/xPOYRzvCytWIqHax4Ak8aGWXKv5hh/jTqV6LiPVO3EJhM7F
-5CxCBGW0ApABWmxMdJcAoDKRnROnSedNyDoMpHVMiOiQzAJypivfcCk00kHeXJzi
-Ny87XnyeO4SsXHgB1eHMpLMNwLpZ7N88hLE8QLh/Eigh1KJlaIIBxGbK7/IgHj1o
-RDnWWHELPBou38Neo/tAuR/8I+z32mGnjDSwbuG0WlUta5toksf2g54c+GPwR615
-6iSwV4PaEwFygYiTkawIidiaVJ3BvL2AhsFtZs159xcwX7AjbG7+kCpv+KixacHx
-1ecpbI8TDCGLLN0DAX7JWwX/BM4XGc56SNG4Bbvfv5GKfNGRecupEse+NT7BOIzu
-odmcrxh4XDuxgeaP8lbbbSUgyJA1W3AtcZrL/8uUeD5Xd1OMbrcc8IIoXITPewJv
-4RXcJDEO2MF7+ghtMSwU5yjyZP3TioDr1aBSpx91LdyGDmhm8S25g01jdmyJFVIz
-bMXdDvcTXsOE5vepGh0h
-=q5Jb
------END PGP SIGNATURE-----
