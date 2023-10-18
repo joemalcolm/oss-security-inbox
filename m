@@ -1,68 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/27/1
-Message-ID: <658c0eaf.45f2b459.bm000@oddnet.de>
-Date: Wed, 27 Dec 2023 12:46:54 +0100
-From: Ingo Brückl <ib@...net.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/5
+Message-ID: <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+Date: Wed, 18 Oct 2023 13:25:21 -0500
+From: Grant Taylor <gtaylor@...tconsulting.net>
 To: oss-security@...ts.openwall.com
-Cc: Markus Koschany <apo@...ian.org>
-Subject: xarchiver: Path traversal with crafted cpio archives
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I have some misgivings about this.
 
-I was alerted by febinrev on GitHub to a vulnerability in xarchiver that
-stems from a vulnerability in cpio, which is called by xarchiver to extract
-cpio and rpm archives.
+On 10/16/23 7:17 PM, turistu wrote:
+> In firefox running on X11, any script from any page can freely write 
+> to the primary selection,
 
-It is a path traversal vulnerability with maliciously crafted cpio archives
-that affects all cpio versions up to and including 2.12 (see CVE-2015-1197).
-The vulnerability has been fixed in cpio 2.13.
+I'm largely inclined to say "so what is the problem here?" but I'm 
+trying to keep an open mind and understand ~> maybe learn something.
 
-However, due to two bug reports (#946267 and #946469), Debian has patched
-cpio 2.13 which re-enables the path traversal vulnerability, thus affecting
-all distributions that use Debian cpio 2.13 directly or have applied their
-"revert-CVE-2015-1197-handling" patch. Debian has been informed and is
-working on a security fix.
+The *primary* /selection/ /buffer/ is updated by simply selecting text 
+on the screen.
 
-Instructions from febinrev to craft a cpio archive to demonstrate the
-vulnerability:
+About the only thing that I can see being a problem is if something 
+updates the chosen selection buffer without my knowledge while I'm in 
+the middle of doing something using the selection buffer.
 
-  mkdir test_cpio
-  ln -sf /tmp/ test_cpio/tmp
-  echo "TEST Traversal" > test_cpio/tmpYtrav.txt
-  cd test_cpio/
-  ls | cpio -ov > ../trav.cpio
-  cd ../
-  sed -i s/"tmpY"/"tmp\/"/g trav.cpio
+*Selection* /buffer/ being a buffer referencing something that is selected.
 
-Even
+Remember, the selection buffers; primary and / or secondary, are 
+completely independent of the clipboard.
 
-  cpio -id --no-absolute-filenames -I trav.cpio
+> and that can be easily exploited to run arbitrary code on the user's 
+> machine.
 
-doesn't prevent path traversal with affected cpio versions, and such an
-archive can be further obfuscated with file extensions such as .rar or
-.tar.gz.
+I'm not convinced of that.
 
-Malicious cpio archives that exploit this vulnerability can overwrite files
-in locations such as ~/.ssh, ~/.bashrc, ~/.config/autostart/, etc.
+1st, simply updating the selection buffer doesn't mean that what's in it 
+will be used for anything,
+2nd, the updated selection buffer must be used in a way that tries to 
+execute a command or maliciously alters contents, e.g. swapping 
+something of value for something else malicious, say an address to send 
+something.
 
-In addition to xarchiver, all other GUI front-ends for archive management
-that call cpio as a command-line program are most likely also affected!
+> No user interaction is necessary -- any page able to run javascript 
+> can do it ....
 
-Ingo
+The ability to update the selection buffer doesn't extend into the 
+ability to cause what's in the selection buffer to be executed.
+
+> This applies to all the versions of mozilla/firefox and their 
+> derivatives (seamonkey, etc) ....
+
+It probably applies to a lot more than that.  I suspect that anything 
+that can run 3rd party code can do the same thing.
+
+> Sooner or later, when trying to paste something in the terminal with 
+> shift-Insert or middle click, you will end up running the command 
+> `writeXPrimary()` has injected just between your copy and paste.
+
+I can do the same thing with most shells that you're claiming is a 
+Mozilla / Firefox bug:
+
+    while sleep 1; do echo "yes LOL" | xsel -ip; done
+
+Change your sleep duration, what goes into the primary selection buffer, 
+tool used to modify the selection buffer, which selection buffer / 
+clipboard you monkey with, etc.
+
+I think that this is more a problem with X11 security than it is a 
+problem specific to Mozilla / Firefox.
+
+This X11 security issue is well known and has been well known for 
+decades.  Anybody / anything that can read / write to your DISPLAY can 
+do this.
+
+Maybe the fact that malicious JavaScript can do this is a surprise.  But 
+I don't see this as a new issue.
+
+As I said earlier, I'm unconvinced that this is a Mozilla / Firefox 
+specific bug, but I'm trying to keep an open mind and understand ~> 
+maybe learn something.
+
+As for patching Firefox, that's sort of like closing one vector out of 
+the undetermined / infinite number that exist on the system.
+
+Yes, what you're talking about is a problem.  It's also a known problem. 
+  What's more is I believe the root of the problem is outside of where 
+you have targeted your scrutiny.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+-- 
+Grant. . . .
+unix || die
 
