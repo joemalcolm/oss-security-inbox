@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/2
-Message-ID: <CAH8yC8noq14ANkUfn9VVD0ESLey1uv_2yZCV6DX4vgmE4FUatg@mail.gmail.com>
-Date: Wed, 21 Jun 2023 02:45:29 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/7
+Message-ID: <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
+Date: Thu, 19 Oct 2023 17:04:10 +0100
+From: Sam Bull <9m199i@...bull.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
-<alan.coopersmith@...cle.com> wrote:
->
-> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
-> since it claims this bug has a CVSS of 9.8.
->
->  From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
-> see any CVSS higher than 0.0 being relevant here and think the CVE should
-> be withdrawn.  Am I missing something here?  All I see is 2 objects of
-> 16 bytes each not being freed in the fraction of a second before the
-> command exits and automatically frees the memory - in a command the user
-> deliberately chooses to run, which runs as themselves with no raised
-> privileges, on an input file they provide, and which exits after processing
-> the file and doesn't hang around keeping that memory allocated - not a bit
-> of security risk at all there.  (Yes, it's a small bug and is good to fix,
-> but not to raise security alarms for.)
+On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
+> I think that this is more a problem with X11 security than it is a 
+> problem specific to Mozilla / Firefox.
 
-Memory leaks on exit are par for the course in GNU software per
-https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
+Also a problem with shell security. If you paste something with line breaks into bash, it
+executes them. If you paste the same into fish, it doesn't (it'll display the multi-line
+input and expect you to hit the enter key to execute it as a command).
 
-Nothing to see here, just move on.
-
-Jeff
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
