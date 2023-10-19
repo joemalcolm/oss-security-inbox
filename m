@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/10/2
-Message-Id: <ab9626a5-56c5-48e7-8422-323fb09cb276n@googlegroups.com>
-Date: Wed, 9 Aug 2023 11:15:06 -0700 (PDT)
-From: Rafael Silva <rafael.silva@...rform.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Fwd: Node.js security updates for all active release lines, August 2023
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/9
+Message-ID: <20231019165354.kkjoxdbedeodyfik@yuggoth.org>
+Date: Thu, 19 Oct 2023 16:53:55 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
+On 2023-10-19 17:04:10 +0100 (+0100), Sam Bull wrote:
+[...]
+> Also a problem with shell security. If you paste something with
+> line breaks into bash, it executes them. If you paste the same
+> into fish, it doesn't (it'll display the multi-line input and
+> expect you to hit the enter key to execute it as a command).
 
+That observation may be outdated. At least my bash 5.2.15 on Debian
+does not execute pasted newlines, it treats it as a multi-line
+command and waits for an actual enter keypress (tested inside a few
+different terminal emulators including vanilla xterm, so pretty sure
+it's not being mitigated at that layer).
+-- 
+Jeremy Stanley
 
----------- Forwarded message ---------
-From: Rafael Silva <rafael.silva@...rform.com>
-Date: Wednesday, August 9, 2023 at 3:14:35 PM UTC-3
-Subject: Re: Node.js security updates for all active release lines, August 
-2023
-To: nodejs-sec <nodejs-sec@...glegroups.com>
-
-
-The planned security releases are now available. You can read more about 
-the details in 
-https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/.
-
-On Monday, July 31, 2023 at 11:48:26 AM UTC-3 Rafael Silva wrote:
-
-The Node.js project will release new versions of all supported release 
-lines on or shortly after Tuesday, August 8th, 2023.
-
-For more information see: 
-https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
-
-
-Content of type "text/html" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
