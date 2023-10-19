@@ -1,107 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/10/2
-Message-ID: <467f3587-9a66-41c5-9ba1-6cb2a9871d08@notcve.org>
-Date: Fri, 10 Nov 2023 13:31:56 +0100
-From: !CVE Team <contact@...cve.org>
-To: Mike O'Connor <mjo@...o.mi.org>, oss-security@...ts.openwall.com
-Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/13
+Message-ID: <7039466aa03ec8a90e1ce3a2ae983421.a13627b7@limousine.hussar>
+Date: Fri, 20 Oct 2023 01:44:10 +0300
+From: Turistu <turistu@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Hello Mike,
+On Thu, Oct 19, 2023 at 04:53:55PM +0000, Jeremy Stanley wrote:
+> On 2023-10-19 17:04:10 +0100 (+0100), Sam Bull wrote:
+> [...]
+> > Also a problem with shell security. If you paste something with
 
-Thank you for sharing you views.
+That's not a problem with "shell security". Paste is just a form of
+**trusted user input** (just as keyboard input). The bracketed-paste
+and other features are for convenience, they're not supposed to
+help against a rogue X11 app (who could just as well simulate keyboard
+input with the XTest X11 extension instead of complicating itself
+with setting up selections that the user has to paste).
 
-On 09/11/2023 18:44, Mike O'Connor wrote:
-> !CVE Team,
+> > line breaks into bash, it executes them. If you paste the same
+> > into fish, it doesn't (it'll display the multi-line input and
+> > expect you to hit the enter key to execute it as a command).
 > 
->  From an open source perspective, the CNA(s) who might be assigning
-> CVEs might not be a "vendor".  
+> That observation may be outdated. At least my bash 5.2.15 on Debian
+> does not execute pasted newlines, it treats it as a multi-line
+> command and waits for an actual enter keypress
 
+Indeed, as already described in my report. Bracketed-paste is the default
+in bash on all recent systems.
 
-The !CVE project is not a static project where everything is defined the 
-very first day but an evolving project where all feedback is considered 
-to move towards improving the cybersecurity community.
+> (tested inside a few
+> different terminal emulators including vanilla xterm, so pretty sure
+> it's not being mitigated at that layer).
 
-We don't want to repeat what is already published in the 
-https://notcve.org site, just would like to share with you that as you 
-can read in the FAQ https://notcve.org/faq.html the !CVE is not only 
-considering "vendors" but other situations. Those are examples but we 
-plan to adapt according to the needs that arise, so in the future 
-different situations could qualify for a NotCVE.
+It pretty much **is** mitigated at that layer. If xterm itself weren't
+filtering out the ESC (ascii 0x1b) character in the pasted data, then
+the bracketed-paste feature of bash or zsh could've been easily bypassed
+by inserting a "\x1b[201~" escape (= end of pasted data) in the payload.
+(As already mentioned in the report too).
 
+Anyways, the examples were meant just as ... examples, as like for
+illustration. I've just chosen them because they were the simplest
+and cutest.
 
-As just one example, the GitHub CNA
-> assigns tons of CVEs for open source software using GitHub's Security
-> Advisories, but I wouldn't think of GitHub as a "vendor" for all the
-> projects they host.  How do you deal with CNAs who might be fine with
-> assigning a CVE, but tagging it as DISPUTED?  
-
-This is easy, if there is a CVE assigned to an issue, no NotCVE will be 
-assigned, independently of the status/tagging. If finally a CVE is not 
-assigned then it may qualify for a NotCVE.
-
-> Perhaps they don't want
-> to build deprecated decades-old code to scope out the severity of a
-> buffer overflow some random fuzzbot found.  How would !CVE work for
-> the Linux kernel, where most security fixes have git commit hashes but
-> not CVEs?  You don't seem resourced for that.
-
-!CVE project is not looking after security issues but it is a platform 
-for unacknowledged security issues. We are processing NotCVE requests 
-following a procedure and assigning NotCVEs if they qualify, and for 
-that we don't have any resource problem.
-
-> 
-> Overall, it seems like the prbolem you're trying to solve is "I'm not
-> getting my unique tag from CVEs CNAs for my vulnerability".  Your fix
-> is "some other unique tag mechanism for vulnerabilities".  I think I
-> see where this might be going:
-> 
-> https://xkcd.com/927/
-> 
-
-At first glance it may seem like that, but if you look closer you would 
-realize that the case is different. !CVE project is tracking, 
-identifying and sharing security issues that otherwise would be randomly 
-published in blog posts, Twitter, etc, (in the best case) or just lost. 
-To obtain a NotCVE is not relevant whether someone is getting 
-difficulties to obtain a CVE for their vulnerability or not. To get a 
-NotCVE the issue must qualify. Please read the FAQ and if you find 
-something needs to be clarified or areas that overlaps, we will be happy 
-to update the project scope to clearly differentiate it from CVE.
-
-> Have you considered, I dunno, working with the CVE folks, addressing
-> what CNA rules you think may be broken?  Not all vulnerabilties are
-> created equal, and it may make sense to create more alternate systems
-> to deal with that.  But, forking off on your own should be done with
-> some due diligence.  The last thing the security community needsi are
-> even more fractured efforts, as they deal with enough fractured stuff.
-> 
-> 
-> My $0.02, FWIW...
-> -Mike
-> 
-
-This is not something new or unknown by MITRE or vendors. In some cases 
-MITRE is in favor of assigning a CVE but the vendor is against. In those 
-cases MITRE can do nothing and by experience we can tell you that at the 
-end CVE will not be assigned. Note that "the security issue" cannot be 
-even named ""vulnerability" because it is not (vendor is the only one 
-with this authority) according to MITRE rules[1]. If something is not a 
-"vulnerability" there is nothing to patch, nothing to track, etc. Since 
-those issues go unnoticed, they should be looked at even more cautiously 
-since they are probably not going to be fixed. Therefore !CVE platform 
-is far from a fork but it divulges security issues that otherwise will 
-remain hidden for most of us while recognizing the security researchers 
-effort by giving to them the deserved credit.
-
-
-Again, thank you all for raising those questions, they help us improve 
-and better share the mission of the !CVE project.
-
-
-Kind Regards,
-!CVE Team
-
-
-[1] https://cve.mitre.org/cve/cna/CNA_Rules_v3.0.pdf
+But there are a thousand more ways for an attacker to leverage that hole
+in Firefox. Many programs (including Firefox itself!) could be easily
+crashed by garbage data from the clipboard. Attacker-controlled data
+could find its way into shell scripts via `var=$(xsel)`, etc.
