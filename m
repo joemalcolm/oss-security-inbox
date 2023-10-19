@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/15/2
-Message-ID: <0f893b63-0431-2fbb-37bc-9d63a174ef88@apache.org>
-Date: Mon, 15 May 2023 08:34:46 +0000
-From: Robert Munteanu <rombert@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/1
+Message-ID: <q8994647-p2o4-241s-5qso-74r84r19399r@inai.de>
+Date: Thu, 19 Oct 2023 02:42:01 +0200 (CEST)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-47937: Multiple parsing problems in the Apache Sling Commons JSON module 
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
 
-Affected versions:
+On Thursday 2023-10-19 00:31, Grant Taylor wrote:
+>
+> Aside:  The thread in question brought up some interesting idea, including
+> altering how things that start with unsafe characters -- though I wonder why
+> not all files -- with `./` so the `-bob` file becomes `./-bob` when expanded.
+> --  I wondered about prefixing globing with `--` which is the de-facto don't
+> process anything after this as a command line flag.
 
-- org.apache.sling.commons.json through 2.0.20
+Humans have a habit of specifying the most important thing first, not
+only in natural language, but also commands. This reflects in
+command, e.g. `ls -l *z --color=never`. Forgot something? `!ls
+--human-readable`, there, more stuff appended to the end. Nobody
+likes to do cursor movement, and nobody likes retyping the command
+from the start to meet the POSIX pedantism that requires all options
+before the first non-option (operand).
 
-Description:
+For this reason, POSIXLY_CORRECT=1 is unpopluar, and so would,
+unfortunately, be your suggestion to stop option processing at a
+wildcard with an implicit "--" (which would become explicit "--" for
+the program's argv).
 
-** UNSUPPORTED WHEN ASSIGNED ** 
-
-
-
-
-
-Improper input validation in the Apache Sling Commons JSON bundle allows an attacker to trigger unexpected errors by supplying specially-crafted input.
-
-
-
-
-NOTE: This vulnerability 
-only affects products that are no longer supported by the maintainer
-
-
-
-
-The org.apache.sling.commons.json bundle has been deprecated as of March
- 2017 and should not be used anymore. Consumers are encouraged to 
-consider the Apache Sling Commons Johnzon OSGi bundle provided by the 
-Apache Sling project, but may of course use other JSON libraries.
-
-Credit:
-
-The vulnerability was discovered and reported by BIngDiAn. (finder)
-
-References:
-
-https://issues.apache.org/jira/browse/SLING-6536
-https://github.com/apache/sling-org-apache-sling-commons-johnzon
-https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-47937
+The ./ suggestion has some merit, though this leads to programs
+acting differently, e.g. `tar --strip=N` .
 
