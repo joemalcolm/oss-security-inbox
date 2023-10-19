@@ -1,4 +1,4 @@
-Received: (qmail 13846 invoked by uid 550); 26 Apr 2022 23:18:40 -0000
+Received: (qmail 15866 invoked by uid 550); 19 Oct 2023 16:54:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,127 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13828 invoked from network); 26 Apr 2022 23:18:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1651015107;
-	bh=2UT6ebEPpq1YUdf7Of2Abft9kB7BxT0s7OxeQqMjWOI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type;
-	b=uq9qJ2ntfw8dsjLiHw7i2XNl13F1MTvOlYtWkYE5R2PvD+RWb8dDybucQtFgI1Ndz
-	 A8cmWswAN5CPCsC4VvvxdeGbhneEbvsnRYC+BWU7JHoOsGveKVlVDodOS7jsKQo2NF
-	 7YoRPc9QFWMjD6G1TQw813BpMIqyFOSxGodZNiDfnXmY41GPXrRE/vu6RPAdfVgWwU
-	 OCmhRVX1rt6rwmQOe+n2r8vN0t94jiliFSypSLkkngsxiCA43XcAtZKOoCU5W3Vu2q
-	 YTqtbYKo7Uz/ZidkjWldb5KVFP8973RmJmN66N+d9NHKbLZ/kZU+fwSaGjJuvLDyYD
-	 4tM/+ZfQAxHhw==
-Date: Tue, 26 Apr 2022 23:18:25 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
-To: dev@kylin.apache.org
-Cc: oss-security@lists.openwall.com
-Message-ID: <20220426231825.GA484258@millbarge>
-Mail-Followup-To: dev@kylin.apache.org, oss-security@lists.openwall.com
+Received: (qmail 13936 invoked from network); 19 Oct 2023 16:54:08 -0000
+Date: Thu, 19 Oct 2023 16:53:55 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20231019165354.kkjoxdbedeodyfik@yuggoth.org>
+References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+ <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+ <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yrj/dFKFPuw6o+aM"
+	protocol="application/pgp-signature"; boundary="e3jkjgjlyyt6afkv"
 Content-Disposition: inline
-Subject: [oss-security] [morningman@163.com: [oss-security] CVE-2022-23942: Apache
- Doris(incubating) hardcoded cryptography initialization]
+In-Reply-To: <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
+ anytime
 
---yrj/dFKFPuw6o+aM
-Content-Type: text/plain; charset=utf-8
+--e3jkjgjlyyt6afkv
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello, the Apache Doris project recently switched away from using
-hard-coded credentials; they apaprently copy-and-pasted code from the
-Kylin project:
+On 2023-10-19 17:04:10 +0100 (+0100), Sam Bull wrote:
+[...]
+> Also a problem with shell security. If you paste something with
+> line breaks into bash, it executes them. If you paste the same
+> into fish, it doesn't (it'll display the multi-line input and
+> expect you to hit the enter key to execute it as a command).
 
-https://www.openwall.com/lists/oss-security/2022/04/26/2
-https://github.com/apache/incubator-doris/pull/7862/files
+That observation may be outdated. At least my bash 5.2.15 on Debian
+does not execute pasted newlines, it treats it as a multi-line
+command and waits for an actual enter keypress (tested inside a few
+different terminal emulators including vanilla xterm, so pretty sure
+it's not being mitigated at that layer).
+--=20
+Jeremy Stanley
 
-https://github.com/apache/kylin/blob/0fa41762ec0fc69c0b8029fc8a81b273388bbf=
-1d/core-common/src/main/java/org/apache/kylin/common/util/EncryptUtil.java#=
-L39
-
-public class EncryptUtil {
-    /**
-     * thisIsAsecretKey
-     */
-    private static byte[] key =3D { 0x74, 0x68, 0x69, 0x73, 0x49, 0x73, 0x4=
-1, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x4b,
-            0x65, 0x79 };
-
-    private static final Cipher getCipher(int cipherMode) throws InvalidAlg=
-orithmParameterException,
-            InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmExc=
-eption, UnsupportedEncodingException {
-        Cipher cipher =3D Cipher.getInstance("AES/CFB/PKCS5Padding");
-        final SecretKeySpec secretKey =3D new SecretKeySpec(key, "AES");
-        IvParameterSpec ivSpec =3D new IvParameterSpec(KylinConfig.getInsta=
-nceFromEnv().getEncryptCipherIvSpec().getBytes("UTF-8"));
-        cipher.init(cipherMode, secretKey, ivSpec);
-        return cipher;
-    }
-
-
-Kylin may need a similar fix.
-
-Thanks
-
------ Forwarded message from =E9=99=88=E6=98=8E=E9=9B=A8 <morningman@163.co=
-m> -----
-
-Date: Tue, 26 Apr 2022 22:33:47 +0800 (CST)
-From: =E9=99=88=E6=98=8E=E9=9B=A8 <morningman@163.com>
-To: general <general@incubator.apache.org>, me@dw1.io, security@apache.org,=
- oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2022-23942: Apache Doris(incubating) hardcoded =
-cryptography initialization
-Message-ID: <3f9af332.69b6.180664aec3f.Coremail.morningman@163.com>
-
-Severity: moderate
-
-Description:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Doris use hardcoded key and IV to initialize the cipher used for ldap passw=
-ord, which may lead to information disclosure.
-
-Mitigation:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Upgrade to 1.0.0[1] or higher will resolve this problem.
-
-Credit:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-We would like to thanks to Dwi Siswanto for the report of this issue
-
-References:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-https://lists.apache.org/thread/com2dyzp3bn2rdrotry90q2zzord4tvt[1] http://=
-doris.incubator.apache.org/downloads/downloads.html
-
-
-
---
-
-=E6=AD=A4=E8=87=B4=EF=BC=81Best Regards
-=E9=99=88=E6=98=8E=E9=9B=A8 Mingyu Chen
-
-Email:
-chenmingyu@apache.org
-
------ End forwarded message -----
-
---yrj/dFKFPuw6o+aM
+--e3jkjgjlyyt6afkv
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmJofbkACgkQ8yFyWZ2N
-Lpes1AgAnpgDN8Un14ehJPfoNXJSt+16NgjmJ/8Yy7+/iFENPfjLt2qy/uwvzliA
-QIkimJY7wrOVBA2bb2J+njoYZCYuROrrk2Nr/cCGGF8YQ75Gu/LALQ0Io/HwjShA
-lbBFMXCg+8JAkTEVwOIZaGpa7HHE6p8aIIp8Qn7kTKt0YD5qlihG1eCDo+w1wX7L
-y1JCs1sYXnr2+lfLnMUZ29S7Qj/LUZgQpOtBvzNnzkLmZCxq76XslD6AiQctjWPd
-4jHIF4965YdaNxTMbz5asFxiXpEGyW9acWg4qK9ijY3FUyIHo+PYn7GdMYDe4oH/
-e1LZ5zvTVxfQCicBLB21R7pyM4H7yg==
-=r3/s
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmUxXx1fFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WClvZw//RPIG9yjwKkBJRX8DHp/XElXJPx+mWQCrDxeDzqRt9Y1KeCCLWTwdnfv0
+BQpaaIQHGF+zU1fhdKF/FA/q9V5tJVRR2XAdMmcPKma40pxhGknNReylh0ILRMHA
+wrjAHjtDkmhSAlZ0WbPAbmpyX7LwTmv8rvmdaXgzaN0QiqTSlVSVtP2l96tmXnjc
+y/vohyWuDmt4xYFA0HmgHVc0pQ4R3oJQ2tYzGUxiL+/7n8sQjRACPMh4KTGhY9xQ
+sOHOmq24ctN3gCyt+/qfXKlocmt3c7odOPhZm8ud1sBI9UXq6uZ6o/XBH8OERtKD
+tXW86idtQVlWiEtr5ym3gXXVq3x+jSRsbrdUD2Rpj8HsI80qPXYhHUEsXPUwz8mV
+kG55UjPK19/7BcOXPDJVVzYvj4p03xP8QRp05KoVf2lxq3urvPQuuG0U4U9U05jg
+Ap1vx88FMZh12Yf14ycqChpvTOWb/UCBwrYJNs4mL5JrCKDLtat2y5Wocy2MwluM
+G3pdkPQiThfw/UhWp+m/urWM8wSE+UV502wF3hcrCw8wYG4DsIsBPr8V4JbWyNek
+vZlaLvIe302lErOdSegFZlEYIyd4KLKcP3ntIGHSzZ5OyZFE7HWwYm/LUP4Chf0H
+zwr0HylCcUkuc8g1+mhUZI3KGlGUoh70ZS5skKGtyRNSNQdk1uU=
+=DMR1
 -----END PGP SIGNATURE-----
 
---yrj/dFKFPuw6o+aM--
+--e3jkjgjlyyt6afkv--
