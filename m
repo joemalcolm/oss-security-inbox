@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4648" "Tuesday" "17" "August" "2021" "14:31:35" "+0200" "Solar Designer" "solar@openwall.com" nil "95" "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil "8" nil nil (number mark "U       solar@openwa Aug 17   95/4648  " thread-indent "\"Re: [oss-security] Pop!_OS Membership to linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9245 invoked by uid 550); 17 Aug 2021 12:33:29 -0000
+Received: (qmail 15684 invoked by uid 550); 19 Oct 2023 05:23:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7658 invoked from network); 17 Aug 2021 12:31:39 -0000
-Date: Tue, 17 Aug 2021 14:31:35 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 1600 invoked from network); 19 Oct 2023 02:35:14 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Charles Zhang <dockerzhang@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20210817123135.GA15072@openwall.com>
-References: <cf53fe7b-371e-48dd-90d7-fa2719747d9d@www.fastmail.com> <20210727175924.GA16557@openwall.com> <26f2884d-ddb7-498a-8a73-ad02e0242ed6@www.fastmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <26f2884d-ddb7-498a-8a73-ad02e0242ed6@www.fastmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Pop!_OS Membership to linux-distros list
+Message-ID: <d1fbf10c-8c1e-f187-b1fa-96d24dcdedc7@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 19 Oct 2023 02:34:06 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-46227: Apache inlong has an Arbitrary File Read
+ Vulnerability 
 
-Hi Jeremy,
+Severity: important
 
-I'm sorry about the delay.  I was hoping someone else would chime in.
+Affected versions:
 
-On Wed, Aug 04, 2021 at 09:59:02AM -0600, Jeremy Soller wrote:
-> On Tue, Jul 27, 2021, at 11:59 AM, Solar Designer wrote:
-> > On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
-> > > Over the history of Pop!_OS, dating back to 2017, we have maintained critical
-> > > packages and applied security patches soon after they are made public. Our
-> > > membership to this list would significantly help our users stay secure by
-> > > allowing us to prepare and test security updates ahead of public disclosure.
-> > > Please see our GitHub organization for more evidence: https://github.com/pop-os
-> > 
-> > I think it'd be most convincing for us all to see specific examples of
-> > you having "applied security patches soon after they are made public",
-> > with dates public vs. fixed in Pop!_OS.
-> 
-> How many examples should I provide? The last security patch I did was for
-> systemd. We have patches on systemd which means we cannot use the Ubuntu
-> version directly, so when, for example, CVE-2020-13529 and CVE-2021-33910
-> patches arrived in Ubuntu 21.04 on July 20, 2021, I applied them to our own
-> fork of systemd for Pop!_OS 21.04 that same day:
-> 
-> - https://launchpad.net/ubuntu/+source/systemd/247.3-3ubuntu3.4
-> - https://github.com/pop-os/systemd/commit/bf008f836b8740f6634d02526d1f38c98fa6699a
-> 
-> Pop!_OS needs to participate in linux-distros to ensure we have patches ready
-> for our forks of packages that do not come straight from Ubuntu. I listed the
-> relevant packages in my original email, many of which we have had to do
-> security updates for after some embargo lifts, with very little time to prepare.
+- Apache InLong 1.4.0 through 1.8.0
 
-There's no specific requirement on the number of examples.  The above
-looks reasonable to me.
+Description:
 
-> > > 7. Be able and willing to contribute back (see above), preferably in specific
-> > > ways announced in advance (so that you're responsible for a specific area and
-> > > so that we know what to expect from which member), and demonstrate actual
-> > > contributions once you've been a member for a while
-> > > 
-> > > I am able and willing to contribute back.
-> > 
-> > Please choose a specific task (or several).
-> > 
-> > I suggest the statistics task:
-> > 
-> > "13. Keep track of per-report and per-issue handling and disclosure
-> > timelines (at least times of notification of the private list and of
-> > actual public disclosure), at regular intervals produce and share
-> > statistics (most notably, the average embargo duration) as well as the
-> > raw data (except on issues that are still under embargo) by posting to
-> > oss-security - primary: Amazon, backup: Gentoo"
-> > 
-> > As you can see, it is currently assigned to Amazon and Gentoo, but as
-> > far as I can see neither is actually handling it now, so I'd like to
-> > formally unassign it from them and have another distro handle it.
-> 
-> That would be fine, but I would be curious if there is some reason they have
-> not been fulfilling this task.
+Deserialization of Untrusted Data Vulnerability in Apache Software Foundati=
+on Apache InLong.
 
-I cannot speak for them, but the task does require some effort on every
-issue, and perhaps the specific people are just not putting the effort.
-As you can see, this was different in 2017-2019 when Gentoo had a person
-actually working on this task.
+This issue affects Apache InLong: from 1.4.0 through 1.8.0, the attacker ca=
+n use \t to bypass.=C2=A0Users are advised to upgrade to Apache InLong's 1.=
+9.0 or cherry-pick [1] to solve it.
 
-Besides statistics per se, an important desirable side-effect of working
-on this task is that you'd end up double-checking that every issue does
-in fact get reported to oss-security.
- 
-> > > 9. Have someone already on the private list, or at least someone else who has
-> > > been active on oss-security for years but is not affiliated with your distro
-> > > nor your organization, vouch for at least one of the people requesting
-> > > membership on behalf of your distro (then that one vouched-for person will be
-> > > able to vouch for others on your team, in case you'd like multiple people
-> > > subscribed)
-> > > 
-> > > I do not know if I have contacts that are already on the linux-distros list.
-> > 
-> > It can also be "someone else who has been active on oss-security for
-> > years but is not affiliated".  Anyone?
-> 
-> I believe Tyler Hicks is willing to do this.
+[1]  https://github.com/apache/inlong/pull/8814
 
-Like he says, he'd "be a lot more comfortable if someone could provide a
-stronger vouch."
+Credit:
 
-However, overall I think Pop!_OS and you personally (also considering
-your work on Redox OS) do meet the requirements.  So let's proceed with
-the subscription.  Please e-mail me off-list with your e-mail address
-and PGP key to use.  Please also confirm in this thread that we're
-getting the statistics task assigned to you, and we can discuss some
-specifics on what's to be done on it.
+zhiwei (finder)
+s3gundo (finder)
 
-Thanks,
+References:
 
-Alexander
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-46227
+
