@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/9
-Message-ID: <34d122dc-0540-d4f8-5b66-a7c437bc541c@apache.org>
-Date: Sun, 21 May 2023 08:21:19 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/1
+Message-ID: <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
+Date: Fri, 20 Oct 2023 02:10:06 +0300
+From: Turistu <turistu@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31206: Apache InLong: Attackers can change the immutable name and type of nodes 
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
+> In firefox running on X11, any script from any page can freely write to the
+> primary selection, and that can be easily exploited to run arbitrary code
+> on the user's machine.
 
-Affected versions:
+OK this was probably too technical and terse for people not familiar
+with X11 programming and terminology, so thing goes like this:
 
-- Apache InLong 1.4.0 through 1.6.0
+1. If you're a user who has first learned to use a GUI on e.g. Windows,
+and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
+choose Copy from the menu, and then again left-click, choose Paste),
+then congratulations! this DOES NOT AFFECT YOU.
 
-Description:
+(Unless you're using some clipboard tools which merges the primary and
+clipboard selection, but I guess you don't ;-))
 
-Exposure of Resource to Wrong Sphere Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. Attackers can change the immutable name and type of nodes of InLong. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+2. But if you're a *native* X11 user who is used to just select the text and
+then paste it with a middle-click or shift-Insert, then this means you're
+pretty much done, and you should immediately either stop using firefox or
+try the workaround and patch described in my report. This also includes
+Wayland users.
 
- [1]  https://cveprocess.apache.org/cve5/[1]%C2%A0https://github.com/apache/inlong/pull/7891  https://github.com/apache/inlong/pull/7891 https://github.com/apache/inlong/pull/7891
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31206
-
+I have no idea (nor do I really care) how many of us are in 2. According
+to their telemetry, probably none at all. According to their prejudices,
+probably just a couple of insignificant trolls.
