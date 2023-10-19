@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6696" "Monday" "26" "September" "2016" "07:54:24" "+0000" "=?gb2312?B?cHdjaGVuKLPCxeXOxCk=?=" "pwchen@tencent.com" "<2A704EDCB5C64F40AF988060A961492BBB3B0E@EXMBX-TJ007.tencent.com>" "113" "[oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read Vulnerability" "^Date:" nil nil "9" "2016092607:54:24" "[oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read Vulnerability" (number mark "U       pwchen@tence Sep 26  113/6696  " thread-indent "\"[oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13755 invoked by uid 550); 26 Sep 2016 15:25:17 -0000
+Received: (qmail 17746 invoked by uid 550); 19 Oct 2023 16:15:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,136 +6,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15501 invoked from network); 26 Sep 2016 07:54:44 -0000
-Thread-Topic: CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read
- Vulnerability
-Thread-Index: AdIXyzKppeNj7CILSIiaqcu1zqPlpQ==
-Message-ID: <2A704EDCB5C64F40AF988060A961492BBB3B0E@EXMBX-TJ007.tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.6]
-Content-Type: multipart/alternative;
-	boundary="_000_2A704EDCB5C64F40AF988060A961492BBB3B0EEXMBXTJ007tencent_"
-MIME-Version: 1.0
-Date: Mon, 26 Sep 2016 07:54:24 +0000
-From: =?gb2312?B?cHdjaGVuKLPCxeXOxCk=?= <pwchen@tencent.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read
- Vulnerability
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 7904 invoked from network); 19 Oct 2023 16:04:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sambull.org; h=
+	cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1697731461; x=1697817861; bh=W6
+	Gb3+1gLyGzYnAzxROQCQhHc4n8CGuqC6pBrhKBWRc=; b=VhmKDbv97iOJk8F89v
+	wsTC87v347wGAHflPEQskM0WHwNVU9QZqwRFssOKIXu27d8r5zJtr4BQ6ckbLrS6
+	1bcxAWiJnzvbP220OvmumOCvtWGQf6COOauC2LrVZFB4v3uW6BRgyfzb8sUVPlbi
+	yMCyxwxCTlXit3P8ahDrTOpn1Wj3fMHwEfWReb/pQehcfOWF/mxKO92WVEOyYaRY
+	tc/ZfjH4hl8uabHpamzsEbk0KaLzaSY3NdDZ6IvxjcZfvgWE8ZR+QVBL9G0Msj48
+	cWglRL/OvUZDidzAJuJPF+eWv3ihLOML2icTKtetjP3tyJD0Ne5zXx1N0yluzbnO
+	PAeA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1697731461; x=1697817861; bh=W6Gb3+1gLyGzY
+	nAzxROQCQhHc4n8CGuqC6pBrhKBWRc=; b=FwplmrOpSA+TykhLHQYd+m6UPO/KJ
+	kVELYgS+YcoMRRKYYN2ysclsZcWqrUA2jKlV8SyzJva2yay81CWfDvK52tDpqN1b
+	fLHYhj/+sspXhr0sT/Vxp9ez6leCm78e9yPa27wNPXhXKU/bKU+nHx6yBEvO+9a6
+	P70jzFMUOWsgLqtZwOzrziM3EALlZ2Iz+fPeF/1yApnw5b0vqG+yichKhB67S/G/
+	kWLyp13NaG00gN69uaPNhcW60HdhmuwXUT6UP6A+15ahqXPZVhZVbyRGVNlWgjAL
+	nA2/LW2qoqjz2jAEeVu1L2t3ubnAjYVB5EYbOrt/nKvfE4Ufk18znYTYw==
+X-ME-Sender: <xms:hFMxZcVbt21Sjk2MRP9mY2em2EwVQeRCd5f7QYNBVNjZ5j5rm6ueGg>
+    <xme:hFMxZQktFyvzM7-8-lV04M1KOGrDNgx2aOCq9SG8QSKIKMaLsHjxY3uCZNDvDHS8U
+    aGnOrYXdeEXJA>
+X-ME-Received: <xmr:hFMxZQabAHVse2e77nvgwzzGWZhjdTVgHT2Q8y5SwP35BaCm2OPHWx-_j18k39BmWV5KGuGJPnKNH92Bs4kpvuB0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeeigdeliecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfgggsehgtderre
+    dtreejnecuhfhrohhmpefurghmuceuuhhllhcuoeelmhduleelihesshgrmhgsuhhllhdr
+    ohhrgheqnecuggftrfgrthhtvghrnhepkeeftefhjeeghefhgeeifffgudfgvdfgudejtd
+    ehfefhgfduieevjeejhefguddvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomheplehmudellehisehsrghmsghulhhlrdhorhhg
+X-ME-Proxy: <xmx:hFMxZbXR9L4Ku763cz62Q4iCuvN4dSswgqetxiPTQIO0ipdgkQBf4A>
+    <xmx:hFMxZWmsxceh84k3VBAhUKqHSocglYtIZrm-4-ODIk93_P49tZ09mQ>
+    <xmx:hFMxZQdbwyceN16E4hzVhIu2BXyA_DI-s80wS6_pw9F2CcqOLhco3g>
+    <xmx:hVMxZdvSh78lbRSl-cpHbWX9tbiV9uXD6nd7gU7NiigkO61josLHSQ>
+Feedback-ID: ie6294588:Fastmail
+Message-ID: <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
+From: Sam Bull <9m199i@sambull.org>
+To: oss-security@lists.openwall.com
+Date: Thu, 19 Oct 2023 17:04:10 +0100
+In-Reply-To: <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+	 <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-NzY2J6fZk1SJGTq3vEsX"
+User-Agent: Evolution 3.36.5-0ubuntu1 
+MIME-Version: 1.0
+Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
+ anytime
 
---_000_2A704EDCB5C64F40AF988060A961492BBB3B0EEXMBXTJ007tencent_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+--=-NzY2J6fZk1SJGTq3vEsX
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SGkuDQoNClRoaXMgaXMgUGVpd2VuQ2hlbiBvZiBUZW5jZW50J3MgWHVhbnd1
-IExhYiAmIFJheVpob25nIG9mIFRlbmNlbnQncyBLZWVuIExhYi4NCkR1cmlu
-ZyBvdXIgcmVzZWFyY2gsIHdlIGZvdW5kIGFuIE91dC1PZi1Cb3VuZHMgd3Jp
-dGUgdnVsbmVyYWJpbGl0eSBpbg0KIEltYWdlTWFnaWNrJ3MgU0dJIGNvZGVy
-Lg0KDQpXaGVuIEltYWdlTWFnaWNrIGlzIGlkZW50aWZ5aW5nIFNHSSBmb3Jt
-YXQgaW1hZ2UsIHdlIGNhbiBjcmFmdCBhIHNnaSBmaWxlDQp3aXRoIGJpZyB2
-YWx1ZSBvZiByb3cuIEl0IHdpbGwgcmVhZCBhIGNlcnRhaW4gbnVtYmVyIG9m
-IHRpbWVzIHdoaWNoIGlzDQpjb250cm9sbGFibGUgYnkgdmFsdWUgb2Ygcm93
-LCBJdCBjYXVzZSBhbiBPdXQtT2YtQm91bmRzIFJlYWQuDQoNClRoZSBJbWFn
-ZU1hZ2ljayB0ZWFtIGhhcyBmaXhlZCB0aGUgdnVsbmVyYWJpbGl0eSB3ZSBy
-ZXBvcnRlZC4NCg0KDQpVcHN0cmVhbSBmaXg6DQpodHRwczovL2dpdGh1Yi5j
-b20vSW1hZ2VNYWdpY2svSW1hZ2VNYWdpY2svY29tbWl0LzdhZmNmOWY3MTA0
-M2RmMTU1MDhlNDZmMDc5Mzg3YmQ0Njg5YTczOGQNCmh0dHBzOi8vZ2l0aHVi
-LmNvbS9JbWFnZU1hZ2ljay9JbWFnZU1hZ2ljay9jb21taXQvOGY4OTU5MDMz
-ZTRlNTk0MThkNjUwNmIzNDU4MjlhZjFmN2E3MTEyNw0KDQpEZWJpYW4gQnVn
-IHJlcG9ydDoNCmh0dHBzOi8vYnVncy5kZWJpYW4ub3JnL2NnaS1iaW4vYnVn
-cmVwb3J0LmNnaT9idWc9ODM2Nzc2DQoNCg0KQXR0YWNoZWQgaXMgYSBwcm9v
-ZiBvZiBjb25jZXB0IGFuZCBiYWNrdHJhY2UuDQoNCiQgaGV4ZHVtcCBQb0Mu
-c2dpDQowMDAwMDAwIGRhMDEgMDEwMCAwMDAwIGZmZmUgMDIwMCAwNDAwDQow
-MDAwMDBjDQoNCiQgY29udmVydCBQb0Muc2dpDQoNCg0KUHJvZ3JhbSByZWNl
-aXZlZCBzaWduYWwgU0lHU0VHViwgU2VnbWVudGF0aW9uIGZhdWx0Lg0KWy0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLXJlZ2lzdGVycy0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLV0NClJBWDogMHgwDQpSQlg6IDB4MQ0KUkNYOiAweGY5MzkN
-ClJEWDogMHg2MDMxYjAgLS0+IDB4MA0KUlNJOiAweDdmZmZmN2ZlODA5MCAt
-LT4gMHgxDQpSREk6IDB4N2ZmZmY3ZGNlZjk4IC0tPiAweDENClJCUDogMHhk
-ZmJjDQpSU1A6IDB4N2ZmZmZmZmY1ZTYwIC0tPiAweGZmZmZmZmZmNTQ1MzUy
-NTQNClJJUDogMHg3ZmZmZjc0ZWFlOGIgKDxJZGVudGlmeUltYWdlR3JheSs3
-OTU+OiBtb3ZzcyAgeG1tMCxEV09SRCBQVFIgW3IxNStyYXgqNF0pDQpSOCA6
-IDB4NzQ0ODUwIC0tPiAweDANClI5IDogMHgxDQpSMTA6IDB4NjlhMDAwIC0t
-PiAweDANClIxMTogMHgxDQpSMTI6IDB4NjQxNjAwIC0tPiAweDYwMDAwMDAw
-MA0KUjEzOiAweDY1MzVmMCAtLT4gMHgxNzAwMDAwMDAxDQpSMTQ6IDB4NjAz
-MTc4IC0tPiAweDYwMzFiMCAtLT4gMHgwDQoNClIxNTogMHg3NjUwMDAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIDw9PSBlbmQgYWRkcmVzcyBvZiBoZWFw
-DQoNClstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1jb2RlLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tXQ0KICAgMHg3ZmZmZjc0ZWFlN2QgPElkZW50
-aWZ5SW1hZ2VHcmF5Kzc4MT46IGluYyAgICBCWVRFIFBUUiBbcmR4K3JjeCox
-XQ0KICAgMHg3ZmZmZjc0ZWFlODAgPElkZW50aWZ5SW1hZ2VHcmF5Kzc4ND46
-IG1vdiAgICBEV09SRCBQVFIgW3JheF0sMHg1MTc3DQogICAweDdmZmZmNzRl
-YWU4NiA8SWRlbnRpZnlJbWFnZUdyYXkrNzkwPjogbW92ICAgIHJheCxRV09S
-RCBQVFIgW3JzcCsweDMwXQ0KPT4gMHg3ZmZmZjc0ZWFlOGIgPElkZW50aWZ5
-SW1hZ2VHcmF5Kzc5NT46IG1vdnNzICB4bW0wLERXT1JEIFBUUiBbcjE1K3Jh
-eCo0XQ0KICAgMHg3ZmZmZjc0ZWFlOTEgPElkZW50aWZ5SW1hZ2VHcmF5Kzgw
-MT46IG1vdmFwcyBYTU1XT1JEIFBUUiBbcnNwKzB4NDBdLHhtbTANCiAgIDB4
-N2ZmZmY3NGVhZTk2IDxJZGVudGlmeUltYWdlR3JheSs4MDY+OiBtb3YgICAg
-cmF4LFFXT1JEIFBUUiBbcnNwKzB4MjhdDQogICAweDdmZmZmNzRlYWU5YiA8
-SWRlbnRpZnlJbWFnZUdyYXkrODExPjogbW92c3MgIHhtbTQsRFdPUkQgUFRS
-IFtyMTUrcmF4KjRdDQogICAweDdmZmZmNzRlYWVhMSA8SWRlbnRpZnlJbWFn
-ZUdyYXkrODE3Pjogc3Vic3MgIHhtbTAseG1tNA0KWy0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLXN0YWNrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-XQ0KMDA6MDAwMHwgcnNwIDB4N2ZmZmZmZmY1ZTYwIC0tPiAweGZmZmZmZmZm
-NTQ1MzUyNTQNCjAxOjAwMDh8ICAgICAweDdmZmZmZmZmNWU2OCAtLT4gMHgw
-DQowMjowMDE2fCAgICAgMHg3ZmZmZmZmZjVlNzAgLS0+IDB4NjNkNjAwIC0t
-PiAweDY1MzVmMCAtLT4gMHgxNzAwMDAwMDAxDQowMzowMDI0fCAgICAgMHg3
-ZmZmZmZmZjVlNzggLS0+IDB4NjE0MTYwIC0tPiAweDFhOQ0KMDQ6MDAzMnwg
-ICAgIDB4N2ZmZmZmZmY1ZTgwIC0tPiAweDANCjA1OjAwNDB8ICAgICAweDdm
-ZmZmZmZmNWU4OCAtLT4gMHgxDQowNjowMDQ4fCAgICAgMHg3ZmZmZmZmZjVl
-OTAgLS0+IDB4MA0KMDc6MDA1NnwgICAgIDB4N2ZmZmZmZmY1ZTk4IC0tPiAw
-eGZlZmYNClstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0NCkxlZ2VuZDogc3RhY2ssIGNvZGUs
-IGRhdGEsIGhlYXAsIHJvZGF0YSwgdmFsdWUNClN0b3BwZWQgcmVhc29uOiBT
-SUdTRUdWDQoweDAwMDA3ZmZmZjc0ZWFlOGIgaW4gSXNQaXhlbE1vbm9jaHJv
-bWUgKGltYWdlPTxvcHRpbWl6ZWQgb3V0PiwgcGl4ZWw9PG9wdGltaXplZCBv
-dXQ+KSBhdCAuL01hZ2lja0NvcmUvcGl4ZWwtYWNjZXNzb3IuaDo1NjENCjU2
-MSAgIHJlZF9ncmVlbj0oTWFnaWNrUmVhbFR5cGUpIHBpeGVsW2ltYWdlLT5j
-aGFubmVsX21hcFtSZWRQaXhlbENoYW5uZWxdLm9mZnNldF0tDQoNCmdkYi1w
-ZWRhJCBidA0KIzAgIDB4MDAwMDdmZmZmNzRlYWU4YiBpbiBJc1BpeGVsTW9u
-b2Nocm9tZSAoaW1hZ2U9PG9wdGltaXplZCBvdXQ+LCBwaXhlbD08b3B0aW1p
-emVkIG91dD4pIGF0IC4vTWFnaWNrQ29yZS9waXhlbC1hY2Nlc3Nvci5oOjU2
-MQ0KIzEgIElkZW50aWZ5SW1hZ2VHcmF5IChpbWFnZT08b3B0aW1pemVkIG91
-dD4sIGV4Y2VwdGlvbj08b3B0aW1pemVkIG91dD4pIGF0IE1hZ2lja0NvcmUv
-YXR0cmlidXRlLmM6NjgzDQojMiAgMHgwMDAwN2ZmZmY3NGViYjdhIGluIElk
-ZW50aWZ5SW1hZ2VUeXBlIChpbWFnZT0weDY1MzVmMCwgZXhjZXB0aW9uPTB4
-NjE0MTYwKSBhdCBNYWdpY2tDb3JlL2F0dHJpYnV0ZS5jOjgyMQ0KIzMgIDB4
-MDAwMDdmZmZmNzY0N2QzOSBpbiBJZGVudGlmeUltYWdlIChpbWFnZT0weDY1
-MzVmMCwgZmlsZT08b3B0aW1pemVkIG91dD4sIHZlcmJvc2U9PG9wdGltaXpl
-ZCBvdXQ+LCBleGNlcHRpb249MHg2MTQxNjApIGF0IE1hZ2lja0NvcmUvaWRl
-bnRpZnkuYzo0OTQNCiM0ICAweDAwMDA3ZmZmZjcxMDI0YTYgaW4gSWRlbnRp
-ZnlJbWFnZUNvbW1hbmQgKGltYWdlX2luZm89PG9wdGltaXplZCBvdXQ+LCBh
-cmdjPTxvcHRpbWl6ZWQgb3V0PiwgYXJndj08b3B0aW1pemVkIG91dD4sIG1l
-dGFkYXRhPTxvcHRpbWl6ZWQgb3V0PiwgZXhjZXB0aW9uPTxvcHRpbWl6ZWQg
-b3V0PikgYXQgTWFnaWNrV2FuZC9pZGVudGlmeS5jOjMzNg0KIzUgIDB4MDAw
-MDdmZmZmNzE1M2U1MyBpbiBNYWdpY2tDb21tYW5kR2VuZXNpcyAoaW1hZ2Vf
-aW5mbz08b3B0aW1pemVkIG91dD4sIGNvbW1hbmQ9PG9wdGltaXplZCBvdXQ+
-LCBhcmdjPTxvcHRpbWl6ZWQgb3V0PiwgYXJndj08b3B0aW1pemVkIG91dD4s
-IG1ldGFkYXRhPTxvcHRpbWl6ZWQgb3V0PiwgZXhjZXB0aW9uPTxvcHRpbWl6
-ZWQgb3V0PikgYXQgTWFnaWNrV2FuZC9tb2dyaWZ5LmM6MTgzDQojNiAgMHgw
-MDAwMDAwMDAwNDAxY2FlIGluIE1hZ2lja01haW4gKGFyZ2M9PG9wdGltaXpl
-ZCBvdXQ+LCBhcmd2PTxvcHRpbWl6ZWQgb3V0PikgYXQgdXRpbGl0aWVzL21h
-Z2ljay5jOjE0NQ0KIzcgIG1haW4gKGFyZ2M9PG9wdGltaXplZCBvdXQ+LCBh
-cmd2PTxvcHRpbWl6ZWQgb3V0PiwgYXJndkBlbnRyeT0weDdmZmZmZmZmZWI0
-OCkgYXQgdXRpbGl0aWVzL21hZ2ljay5jOjE3Ng0KIzggIDB4MDAwMDdmZmZm
-NWEzYjgzMCBpbiBfX2xpYmNfc3RhcnRfbWFpbiAobWFpbj0weDQwMTVmMCA8
-bWFpbj4sIGFyZ2M9MHgyLCBhcmd2PTB4N2ZmZmZmZmZlYjQ4LCBpbml0PTxv
-cHRpbWl6ZWQgb3V0PiwgZmluaT08b3B0aW1pemVkIG91dD4sIHJ0bGRfZmlu
-aT08b3B0aW1pemVkIG91dD4sIHN0YWNrX2VuZD0weDdmZmZmZmZmZWIzOCkg
-YXQgLi4vY3N1L2xpYmMtc3RhcnQuYzoyOTENCiM5ICAweDAwMDAwMDAwMDA0
-MDE1MTkgaW4gX3N0YXJ0ICgpDQoNCg0KZ2RiLXBlZGEkIHZtbWFwDQpTdGFy
-dCAgICAgICAgICAgICAgRW5kICAgICAgICAgICAgICAgIFBlcm0gTmFtZQ0K
-MHgwMDQwMDAwMCAgICAgICAgIDB4MDA0MDMwMDAgICAgICAgICByLXhwIC91
-c3IvbG9jYWwvYmluL21hZ2ljaw0KMHgwMDYwMjAwMCAgICAgICAgIDB4MDA2
-MDMwMDAgICAgICAgICByLS1wIC91c3IvbG9jYWwvYmluL21hZ2ljaw0KMHgw
-MDYwMzAwMCAgICAgICAgIDB4MDA2MDQwMDAgICAgICAgICBydy1wIC91c3Iv
-bG9jYWwvYmluL21hZ2ljaw0KMHgwMDYwNDAwMCAgICAgICAgIDB4MDA3NjUw
-MDAgICAgICAgICBydy1wIFtoZWFwXQ0KMHgwMDAwN2ZmZmY1NTNmMDAwIDB4
-MDAwMDdmZmZmNTgxNzAwMCByLS1wIC91c3IvbGliL2xvY2FsZS9sb2NhbGUt
-YXJjaGl2ZQ0KDQoNClJlZ2FyZHMsDQpQZWl3ZW4gQ2hlbg0KVGVuY2VudCdz
-IFh1YW53dSBMYWINCg0K
+On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
+> I think that this is more a problem with X11 security than it is a=20
+> problem specific to Mozilla / Firefox.
 
---_000_2A704EDCB5C64F40AF988060A961492BBB3B0EEXMBXTJ007tencent_--
+Also a problem with shell security. If you paste something with line breaks=
+ into bash, it
+executes them. If you paste the same into fish, it doesn't (it'll display t=
+he multi-line
+input and expect you to hit the enter key to execute it as a command).
+
+--=-NzY2J6fZk1SJGTq3vEsX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQS7LDpjuw7VQ6ct5tdf6SjNlibOKwUCZTFTegAKCRBf6SjNlibO
+K1QmAKCd4fNF24gRvWJK2x2/rOh4eKsKhgCgiIBctmweL45E10MUhpdLzFg7tdQ=
+=mUC0
+-----END PGP SIGNATURE-----
+
+--=-NzY2J6fZk1SJGTq3vEsX--
+
