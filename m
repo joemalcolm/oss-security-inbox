@@ -1,80 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/02/1
-Message-ID: <61b9aeb9.70ae6.1869fd253e9.Coremail.duoming@zju.edu.cn>
-Date: Thu, 2 Mar 2023 08:56:46 +0800 (GMT+08:00)
-From: duoming@....edu.cn
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/6
+Message-ID: <a0276903-ad5c-7dfb-250e-9c812502a56c@apache.org>
+Date: Thu, 19 Oct 2023 09:41:13 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: CVE-2023-1118: UAF vulnerabilities in "drivers/media/rc" directory
+Subject: CVE-2023-45802: Apache HTTP Server: HTTP/2 stream memory not reclaimed right away on RST 
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+Severity: moderate
 
-There are use-after-free vulnerabilities in drivers/media/rc/ene_ir.c of linux that
-allow attacker to crash linux kernel without any privilege by detaching rc device.
+Affected versions:
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+- Apache HTTP Server 2.4.17 through 2.4.57
 
-When the rc device is detaching, function ene_remove() will be called.
-But the synchronizations in ene_remove() are bad. The situations that 
-may lead to race conditions are shown below.
+Description:
 
-Firstly, the rx receiver is disabled with ene_rx_disable()
-before rc_unregister_device() in ene_remove(), which means it
-can be enabled again if a process opens /dev/lirc0 between
-ene_rx_disable() and rc_unregister_device().
+When a HTTP/2 stream was reset (RST frame) by a client, there was a time window were the request's memory resources were not reclaimed immediately. Instead, de-allocation was deferred to connection close. A client could send new requests and resets, keeping the connection busy and open and causing the memory footprint to keep on growing. On connection close, all resources were reclaimed, but the process might run out of memory before that.
 
-    (cleanup routine)      |        (open routine)
-ene_remove()               | 
-  ene_rx_disable(dev);     | ene_open()
-                           |   ene_rx_enable(dev); //re-enable!
+This was found by the reporter during testing of CVE-2023-44487 (HTTP/2 Rapid Reset Exploit) with their own test client. During "normal" HTTP/2 use, the probability to hit this bug is very low. The kept memory would not become noticeable before the connection closes or times out.
 
-Secondly, the irqaction descriptor is freed by free_irq()
-before the rc device is unregistered, which means irqaction
-descriptor may be accessed again after it is deallocated.
+Users are recommended to upgrade to version 2.4.58, which fixes the issue.
 
-    (free routine)                |        (use routine)
-ene_remove()                      | ene_rx_enable()
-  free_irq(dev->irq, ...); //FREE |   ene_rx_enable_hw()
-                                  |     ene_write_reg(..., dev->irq << 1) //USE
-                                  | 
+Credit:
 
-Thirdly, the timer can call ene_tx_sample() that can write
-to the io ports, which means the io ports could be accessed
-again after they are deallocated by release_region().
+Will Dormann of Vul Labs (finder)
+David Warren of Vul Labs (finder)
 
-    (free routine)                        |        (use routine)
-ene_remove()                              | ene_tx_sample()
-  release_region(dev->hw_io, ...); //FREE |   ene_write_reg()
-                                          |     outb(..., dev->hw_io + ENE_IO) //USE
+References:
 
-Fourthly, there is no function to cancel tx_sim_timer in ene_remove(),
-the timer handler ene_tx_irqsim() could race with ene_remove(). 
-As a result, the UAF bugs could happen, the process is shown below.
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-45802
 
-    (free routine)             |        (use routine)
-                               | mod_timer(&dev->tx_sim_timer, ..)
-ene_remove()                   | (wait a time)
-  kfree(dev) //FREE            | ene_tx_irqsim()
-                               |   dev->hw_lock //USE
-                               |   ene_tx_sample(dev) //USE
+Timeline:
 
-=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
+2023-10-12: reported
 
-The vulnerabilities could crash the kernel and cause denial-of-service by detaching rc device.
-
-=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=*=*=
-
-The patch that have been applied to mainline Linux kernel is shown below.
-https://github.com/torvalds/linux/commit/29b0589a865b6f66d141d79b2dd1373e4e50fe17
-
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=*=
-
-2023-02-08: commit 29b0589a865b was accepted to mainline kernel
-2023-03-01: CVE-2023-1118 was assigned by redhat.
-
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-
-Duoming Zhou <duoming@....edu.cn>
-
-Best Regards,
-Duoming Zhou
