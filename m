@@ -1,62 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/27/2
-Message-ID: <AEBE0F32-EAA7-4BC5-ABDB-2EBA7B3046C9@vmware.com>
-Date: Fri, 27 Oct 2023 03:43:46 +0000
-From: VMware Security Response Center <security@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2023-34059 - File Descriptor Hijack vulnerability in open-vm-tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/11
+Message-ID: <20231019203554.GA11867@test>
+Date: Thu, 19 Oct 2023 22:35:54 +0200
+From: niekt0 <niekt0@...eria.cz>
+To: oss-security@...ts.openwall.com
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Description
+Hi,
 
-==============================================================
+On Thu, Oct 19, 2023 at 05:04:10PM +0100, Sam Bull wrote:
+> On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
+> > I think that this is more a problem with X11 security than it is a 
+> > problem specific to Mozilla / Firefox.
+> 
+> Also a problem with shell security. If you paste something with line breaks into bash, it
+> executes them. If you paste the same into fish, it doesn't (it'll display the multi-line
+> input and expect you to hit the enter key to execute it as a command).
 
-CVE-2023-34059: open-vm-tools contains a file descriptor hijack vulnerability in the vmware-user-suid-wrapper. VMware has evaluated the severity of this issue to be in the Important severity range with a maximum CVSSv3 base score of 7.4. - CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H
+the problem with modification of "clipboard" is unfortunately much broader, than just command execution in the shell. Imagine situation like pasting a bank account number for money transfer into internetbankig web page, and some browser tab in background silently replaces the number. Or replaces the bitcoin address, to make situation more dramatic. The direct command execution is probably the most straight-forward approach, but with bit of a creativity you can come with many various attack scenarios. 
 
+While I agree that application isolation in X11 is a security problem, this bug/feature is bit of a new pokemon, it also breaks tab isolation within a browser itself, when used under X11.
 
-
-Known Attack Vectors
-
-==============================================================
-
-A malicious actor with non-root privileges may be able to hijack the /dev/uinput file descriptor allowing them to simulate user inputs.
-
-
-
-Acknowledgement
-
-==============================================================
-
-VMware would like to thank Matthias Gerstner of the SUSE Linux Security Team for reporting this vulnerability to us.
-
-
-
-Remediation
-
-==============================================================
-
-The following patch is provided for all open-vm-tools releases 11.0.0 through 12.3.0
-
-
-
-https://github.com/vmware/open-vm-tools/blob/CVE-2023-34059.patch/CVE-2023-34059.patch
-
-
-The patches have been tested against the above open-vm-tools releases.  Each applies cleanly with:
-
-
-
-git am for a git repository.
-
-patch -p2 in the top directory of an open-vm-tools source tree.
-
-
-
---------------
-
-Edward Hawkins
-
-Staff-2 Technical Program Manager
-
-security@...are.com<mailto:security@...are.com>
-
+n.
