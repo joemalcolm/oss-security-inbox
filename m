@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/8
-Message-ID: <d98ab3d26a1aeffb7542ba96b4bb73a5761b052e.camel@orlitzky.com>
-Date: Wed, 03 May 2023 17:55:13 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/5
+Message-ID: <5930e90b-0d47-b061-5ed5-aa3662ef7dea@apache.org>
+Date: Thu, 19 Oct 2023 09:40:49 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: CVE-2023-43622: Apache HTTP Server: DoS in HTTP/2 with initial windows size 0 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2023-05-03 at 22:40 +0200, Moritz Bechler wrote:
-> 
-> while one may criticize that CVEs have been assigned both for the 
-> insecure default and (some of the) insecure usages, at least one of 
-> these is a legitimate case, in terms of CVEs likely the latter. And when 
-> it comes to defaming projects, at least in my book, choosing, keeping 
-> and defending bad defaults speaks to much more than a CVE being assigned.
+Severity: low
 
-They're both bad defaults. One explicitly does no authentication, while
-the other uses a corrupt and misunderstood process that can create a
-false sense of security. We disagree on which is worse, but neither
-viewpoint is ludicrous.
+Affected versions:
+
+- Apache HTTP Server 2.4.55 through 2.4.57
+
+Description:
+
+An attacker, opening a HTTP/2 connection with an initial window size of 0, was able to block handling of that connection indefinitely in Apache HTTP Server. This could be used to exhaust worker resources in the server, similar to the well known "slow loris" attack pattern.
+This has been fixed in version 2.4.58, so that such connection are terminated properly after the configured connection timeout.
+
+This issue affects Apache HTTP Server: from 2.4.55 through 2.4.57.
+
+Users are recommended to upgrade to version 2.4.58, which fixes the issue.
+
+Credit:
+
+Prof. Sven Dietrich (City University of New York) (finder)
+Isa Jafarov (City University of New York) (finder)
+Prof. Heejo Lee (Korea University) (finder)
+Choongin Lee (Korea University) (finder)
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-43622
+
+Timeline:
+
+2023-09-15: reported
 
