@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/10
-Message-ID: <a7ece13f-db08-4379-8733-6bf7d14a2c89@oracle.com>
-Date: Wed, 6 Sep 2023 13:00:05 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/8
+Message-ID: <20231019164504.3Q5r4%steffen@sdaoden.eu>
+Date: Thu, 19 Oct 2023 18:45:04 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-38633 in librsvg: Arbitrary file read when xinclude href has special characters
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-On 7/27/23 13:36, Alan Coopersmith wrote:
-> I haven't seen this go by yet, so for those who haven't seen it:
-> 
-> https://gitlab.gnome.org/GNOME/librsvg/-/issues/996 reports:
-> 
-> CVE-2023-38633: Arbitrary file read when xinclude href has special characters
-> 
-> This was reported by Zac Sims.
+Sam Bull wrote in
+ <d85658c838a1338c829cee30fb9c344688a2a470.camel@...bull.org>:
+ |On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
+ |> I think that this is more a problem with X11 security than it is a 
+ |> problem specific to Mozilla / Firefox.
+ |
+ |Also a problem with shell security. If you paste something with line \
+ |breaks into bash, it
+ |executes them. If you paste the same into fish, it doesn't (it'll display \
+ |the multi-line
+ |input and expect you to hit the enter key to execute it as a command).
 
-Zac's writeup on how the bug was found is now available at:
-https://www.canva.dev/blog/engineering/when-url-parsers-disagree-cve-2023-38633/
+That is plain not true, but depends on the "bracketed paste" mode
+of readline which in turn depends on the terminal (emulator) and
+likely even upon the ncurses library.
+See bash(1) (Readline Variables, enable-bracketed-paste, default
+on).  Btw Mr. Dickey (ncurses, xterm, vile, etc) has an
+informative page on this:
 
-It points to a root cause of mixing two different URL parsers, with one used to
-validate the URL and a different one used to load the content from it.
+  https://invisible-island.net/xterm/xterm-paste64.html
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+ --End of <d85658c838a1338c829cee30fb9c344688a2a470.camel@...bull.org>
 
+(Not that it matters, but the MUA i maintain does not yet support
+bracketed paste mode, its own yanking mechanism works only like
+that though.  I will implement it for v14.10, it is in TODO.)
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
