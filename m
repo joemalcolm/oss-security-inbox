@@ -1,41 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/13/2
-Message-ID: <64f0e35f-4579-c9a6-5820-693c1b5f8395@apache.org>
-Date: Wed, 13 Sep 2023 10:31:03 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/10
+Message-ID: <7c9b118c6c5280ae9331628449449f0ac1a32b17.camel@sambull.org>
+Date: Thu, 19 Oct 2023 18:17:00 +0100
+From: Sam Bull <9m199i@...bull.org>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2023-41081 Apache Tomcat Connectors (mod_jk) Information Disclosure
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-41081 Apache Tomcat Connectors (mod_jk) Information Disclosure
+On Thu, 2023-10-19 at 18:45 +0200, Steffen Nurpmeso wrote:
+> Sam Bull wrote in
+>  <d85658c838a1338c829cee30fb9c344688a2a470.camel@...bull.org>:
+>  |On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
+>  |> I think that this is more a problem with X11 security than it is a 
+>  |> problem specific to Mozilla / Firefox.
+>  |
+>  |Also a problem with shell security. If you paste something with line \
+>  |breaks into bash, it
+>  |executes them. If you paste the same into fish, it doesn't (it'll display \
+>  |the multi-line
+>  |input and expect you to hit the enter key to execute it as a command).
+> 
+> That is plain not true
 
-Severity: Important
+OK, the behaviour on my terminal is completely different depending solely on which shell I
+use:
 
-Vendor: The Apache Software Foundation
+   s@...aptop ~> bash
+   s@...aptop:~$ That is plain not true, but depends on the "bracketed paste" mode
 
-Versions Affected:
-- Apache Tomcat Connectors mod_jk Connector 1.2.0 to 1.2.48
+   Command 'That' not found, did you mean:
 
-Description:
-In some circumstances, such as when a configuration included
-"JkOptions +ForwardDirectories" but the configuration did not provide 
-explicit mounts for all possible proxied requests, mod_jk would use an 
-implicit mapping and map the request to the first defined worker. Such 
-an implicit mapping could result in the unintended exposure of the 
-status worker and/or bypass security constraints configured in httpd. As 
-of JK 1.2.49, the implicit mapping functionality has been removed and 
-all mappings must now be via explicit configuration.
-Only mod_jk is affected by this issue. The ISAPI redirector is not affected.
+     command 'phat' from deb phat-utils (1.5-3build2)
+     command 'chat' from deb ppp (2.4.7-2+4.1ubuntu5.1)
+     command 'jhat' from deb openjdk-8-jdk-headless (8u382-ga-1~20.04.1)
 
-Mitigation:
-Users of affected versions should apply one of the following mitigations:
-- Upgrade to Apache Tomcat Connector (mod_jk) 1.2.49 or later.
-- Ensure explicit mounts are configured for all possible proxied
-   requests
+   Try: sudo apt install <deb name>
 
-Credit:
-This vulnerability was reported responsibly to the Tomcat security team 
-by Karl von Randow.
+   s@...aptop:~$ of readline which in turn depends on the terminal (emulator) and
+   bash: syntax error near unexpected token `('
+   s@...aptop:~$ likely even upon the ncurses library.
+   likely: command not found
+   s@...aptop:~$ See bash(1) (Readline Variables, enable-bracketed-paste, default
+   bash: syntax error near unexpected token `('
+   s@...aptop:~$ on).  Btw Mr. Dickey (ncurses, xterm, vile, etc) has an
+   bash: syntax error near unexpected token `)'
 
-References:
-[1] http://tomcat.apache.org/security-jk.html
+   s@...aptop:~$ fish
+   s@...aptop ~> That is plain not true, but depends on the "bracketed paste" mode
+                 of readline which in turn depends on the terminal (emulator) and
+                 likely even upon the ncurses library.
+                 See bash(1) (Readline Variables, enable-bracketed-paste, default
+                 on).  Btw Mr. Dickey (ncurses, xterm, vile, etc) has an
+                 informative page on this:
+
+
+> That observation may be outdated. At least my bash 5.2.15 on Debian
+
+Yes, I'm on an older release still, so maybe it has been fixed in the past 3 or so years.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
