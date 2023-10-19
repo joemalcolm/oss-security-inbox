@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/07/3
-Message-ID: <8a1b0d74-3dc0-1228-1bf1-d086ad7d84e1@apache.org>
-Date: Fri, 07 Jul 2023 12:34:46 +0000
-From: Guillaume Nodet <gnodet@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/4
+Message-ID: <0c264da3-b6db-d2a0-5a59-ffdffc19dd7b@apache.org>
+Date: Thu, 19 Oct 2023 09:40:10 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-35887: Apache MINA SSHD: Information disclosure bugs with RootedFilesystem 
+Subject: CVE-2023-31122: Apache HTTP Server: mod_macro buffer over-read 
 Content-Type: text/plain; charset=utf-8
+
+Severity: low
 
 Affected versions:
 
-- Apache MINA SSHD 1.0 before 2.10
+- Apache HTTP Server through 2.4.57
 
 Description:
 
-Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Software Foundation Apache MINA.
+Out-of-bounds Read vulnerability in mod_macro of Apache HTTP Server.This issue affects Apache HTTP Server: through 2.4.57.
 
-In SFTP servers implemented using Apache MINA SSHD that use a RootedFileSystem, logged users may be able to discover "exists/does not exist" information about items outside the rooted tree via paths including parent navigation ("..") beyond the root, or involving symlinks.
+Credit:
 
-This issue affects Apache MINA: from 1.0 before 2.10.
-
-Thanks to Andrew Pikler for discovering the issue and helping to fix it.
-
-This issue is being tracked as SSHD-1324 
+David Shoon (github/davidshoon) (finder)
 
 References:
 
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-35887
-https://issues.apache.org/jira/browse/SSHD-1324
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-31122
+
+Timeline:
+
+2023-04-04: Reported to security team
 
