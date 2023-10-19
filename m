@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/19/3
-Message-ID: <20230319135946.GA20983@openwall.com>
-Date: Sun, 19 Mar 2023 14:59:46 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Georgi Guninski <gguninski@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: First result on google promotes insecure coding (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/2
+Message-ID: <d1fbf10c-8c1e-f187-b1fa-96d24dcdedc7@apache.org>
+Date: Thu, 19 Oct 2023 02:34:06 +0000
+From: Charles Zhang <dockerzhang@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-46227: Apache inlong has an Arbitrary File Read Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 19, 2023 at 03:05:24PM +0200, Georgi Guninski wrote:
-> Does the so called security "community" plan to reduce teaching
-> insecure code?
+Severity: important
 
-Georgi, are you part of the community?  Do you have a plan you're going
-to follow yourself or/and recommend to others?  If so, please share it.
+Affected versions:
 
-It's easy to distance yourself from the community and criticize it, or
-to claim there isn't a community like you seem to imply by the quotes.
+- Apache InLong 1.4.0 through 1.8.0
 
-It's more effort to be part of the community and actually do things.
+Description:
 
-Sometimes this involves figuring out the author's contact address (not
-always straightforward or reasonably possible at all) and asking them to
-make an edit.  Other times the content is on a forum where you can add a
-comment, e.g. StackOverflow.
+Deserialization of Untrusted Data Vulnerability in Apache Software Foundation Apache InLong.
 
-Have you contacted the site in question and suggested an edit to them?
+This issue affects Apache InLong: from 1.4.0 through 1.8.0, the attacker can use \t to bypass. Users are advised to upgrade to Apache InLong's 1.9.0 or cherry-pick [1] to solve it.
 
-There's no systematic effort like this that I'm aware of - maybe there
-should be.  Maybe it should be funded.  Maybe it should focus on top
-search engine hits for a curated list of relevant search queries.
+[1]  https://github.com/apache/inlong/pull/8814
 
-Another approach is to write higher-quality tutorials that may become
-the new top hits.  For example, I wasn't into PHP at all, but I wrote
-and submitted "How to manage a PHP application's users and passwords" to
-Stefan Esser's Month of PHP Security in 2010 and it's been up on the
-Openwall website since.  While it's quite dated now, I think it helped
-at the time and for a while.
+Credit:
 
-Alexander
+zhiwei (finder)
+s3gundo (finder)
+
+References:
+
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-46227
+
