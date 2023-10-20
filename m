@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1700" "Wednesday" "17" "June" "2015" "01:09:26" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPHOxSadiPW+crbpJUD5qq=W_t6u+0yekVc026Dxg4eEpw@mail.gmail.com>" "46" "Re: [oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7" nil nil nil "6" "2015061706:09:26" "[oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7" (number mark "        fernando@nul Jun 17   46/1700  " thread-indent "\"Re: [oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7\"\n") "<20150603131043.558df5e8@redhat.com>" ("<CAEr-gPFc1eriF6FA4vHq2quDsLr6L2ZPEL6yPDjNazR84iNkCw@mail.gmail.com>" "<20150603131043.558df5e8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9823 invoked by uid 550); 17 Jun 2015 06:09:38 -0000
+Received: (qmail 28218 invoked by uid 550); 20 Oct 2023 13:04:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +6,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9803 invoked from network); 17 Jun 2015 06:09:38 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=WUct6bJc0dmkg1hI+xIhfb1VWCHuDizc8LIuBxKtVCo=;
-        b=fb2EDNL87CM4tjTq4sDSIbTQAc6mxzl9CCYJgNia6q2DIykUyVoBS4+gdPOGf2Rksc
-         AUafYpWPlqNiHrwcNXIku8Kz1C257XN0WBL0XmrY5jpIQuz4EDUXXiq0NqPzoPWR+VYz
-         S35sjL/HMVUzO54j6/Png8MfFssFjYk2KqhmDaf6ctAMZSob9T8eE5+jd/fYSjiuIB8c
-         wBgGDTeUtsyAtPXtKUlAlDFfrsAP0YJ9SdS+HXw/uDDiGyjkIPPFrSbXTB8Wnw6TjeDu
-         hssvi0UU06OeTLEP+x26B4CUCwKBLcSG41gBhRYIO584LXvgfAczDWO8IobzGGLjEkgU
-         ym+w==
-X-Gm-Message-State: ALoCoQkGHZjohPLb1FdqbW5TxXa7mmUr1x7wKhiM9cVRWO+CbD9u/1JU13o38t5DGumdrQXJTQyQ
-MIME-Version: 1.0
-X-Received: by 10.50.136.134 with SMTP id qa6mr32431821igb.26.1434521366373;
- Tue, 16 Jun 2015 23:09:26 -0700 (PDT)
-X-Originating-IP: [186.29.86.239]
-In-Reply-To: <20150603131043.558df5e8@redhat.com>
-References: <CAEr-gPFc1eriF6FA4vHq2quDsLr6L2ZPEL6yPDjNazR84iNkCw@mail.gmail.com>
-	<20150603131043.558df5e8@redhat.com>
-Message-ID: <CAEr-gPHOxSadiPW+crbpJUD5qq=W_t6u+0yekVc026Dxg4eEpw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 17 Jun 2015 01:09:26 -0500
-From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7
-To: oss-security@lists.openwall.com, scorneli@redhat.com
+Received: (qmail 30321 invoked from network); 20 Oct 2023 07:04:19 -0000
+To: oss-security@lists.openwall.com
+References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+ <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+From: Donald Buczek <buczek@molgen.mpg.de>
+Message-ID: <beb602e2-feb1-582d-91b9-00df2bc4760b@molgen.mpg.de>
+Date: Fri, 20 Oct 2023 09:04:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
+MIME-Version: 1.0
+In-Reply-To: <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
+ anytime
 
-Stefan,
+On 10/18/23 8:25 PM, Grant Taylor wrote:
+> I have some misgivings about this.
+> 
+> On 10/16/23 7:17 PM, turistu wrote:
+>> In firefox running on X11, any script from any page can freely write to the primary selection,
+> 
+> I'm largely inclined to say "so what is the problem here?" but I'm trying to keep an open mind and understand ~> maybe learn something.
+> 
+> The *primary* /selection/ /buffer/ is updated by simply selecting text on the screen.
+> 
+> About the only thing that I can see being a problem is if something updates the chosen selection buffer without my knowledge while I'm in the middle of doing something using the selection buffer.
+> 
+> *Selection* /buffer/ being a buffer referencing something that is selected.
+> 
+> Remember, the selection buffers; primary and / or secondary, are completely independent of the clipboard.
+> 
+>> and that can be easily exploited to run arbitrary code on the user's machine.
+> 
+> I'm not convinced of that.
+> 
+> 1st, simply updating the selection buffer doesn't mean that what's in it will be used for anything,
+> 2nd, the updated selection buffer must be used in a way that tries to execute a command or maliciously alters contents, e.g. swapping something of value for something else malicious, say an address to send something.
+> 
+>> No user interaction is necessary -- any page able to run javascript can do it ....
+> 
+> The ability to update the selection buffer doesn't extend into the ability to cause what's in the selection buffer to be executed.
+> 
+>> This applies to all the versions of mozilla/firefox and their derivatives (seamonkey, etc) ....
+> 
+> It probably applies to a lot more than that.  I suspect that anything that can run 3rd party code can do the same thing.
+> 
+>> Sooner or later, when trying to paste something in the terminal with shift-Insert or middle click, you will end up running the command `writeXPrimary()` has injected just between your copy and paste.
+> 
+> I can do the same thing with most shells that you're claiming is a Mozilla / Firefox bug:
+> 
+>    while sleep 1; do echo "yes LOL" | xsel -ip; done
 
-There are two additionals invalid read issues inside libwmf, I
-submitted both to Debian a while ago, I don't know if they are worth
-to fix on a security update. One of them has a patch by me (not
-heavily tested though)
+Yes, and "rm" can delete all my files, but a piece of Javascript on random website, I visit with Firefox, is not supposed to be able to do that.
 
-invalid read on meta_pen_create player/meta.h (+ patch)
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D784205
+A Javascript program from a website is not in the same security domain as the user and the commands and application he invokes explicitly.
 
-wmf2gd/wmf2eps invalid read
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D784192
+> Change your sleep duration, what goes into the primary selection buffer, tool used to modify the selection buffer, which selection buffer / clipboard you monkey with, etc.
+> 
+> I think that this is more a problem with X11 security than it is a problem specific to Mozilla / Firefox.
+> 
+> This X11 security issue is well known and has been well known for decades.  Anybody / anything that can read / write to your DISPLAY can do this.
 
-Thanks.
+libX11 API is not exposed to Javascript, is it? Javascript is not able to communicate with your DISPLAY socket, is it?
+
+> Maybe the fact that malicious JavaScript can do this is a surprise.  But I don't see this as a new issue.
+> As I said earlier, I'm unconvinced that this is a Mozilla / Firefox specific bug, but I'm trying to keep an open mind and understand ~> maybe learn something.
+
+To me it looks like a big issue.
+
+It is a serious bug when Javascript, which is untrusted, is able to do sneak commands into your shell session. 
+
+If I'd work my usual way and had the example site open in my browser, I would have many LOL-* Files in my home. I select and paste into terminal windows all day and my terminal doesn't protect me and wait for a confirming keystroke. And a bad script could do worse things in a more subtle way, of course.
+
+> As for patching Firefox, that's sort of like closing one vector out of the undetermined / infinite number that exist on the system.
+
+I'd be grateful for the patch that requires secure context for writing to the primary selection and would add it to the Firefox build of our (in-house) distribution.
+
+Best
+
+  Donald
 
 
-On Wed, Jun 3, 2015 at 6:10 AM, Stefan Cornelius <scorneli@redhat.com> wrot=
-e:
-> On Mon, 1 Jun 2015 03:06:57 -0500
-> Fernando Mu=C3=B1oz <fernando@null-life.com> wrote:
->
->> libwmf is affected by a heap overflow on the function that decodes
->> BMP images.
->>
->> WMF files may contain both vector graphics and bitmap components. With
->> the attached WMF file, the issue can be reproduced, an overflow
->> happens because image_size gets a value of 32, that space is used to
->> allocate data->image
->>
->
-> There's another issue related to the RLE decoding. DecodeImage() does
-> not check that the run-length "count" fits into the total size of the
-> image, which can lead to a heap-based buffer overflow. I've not
-> assigned a CVE ID to this (mainly because I'm not sure if this
-> warrants a new CVE or should be bundled with CVE-2015-0848, so I leave
-> that up to the CVE experts on the list).
->
-> We have some possible fixes in our bug [1], but be cautious - these are
-> not fully vetted yet. So far, however, they look fine to me.
->
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=3D1227243
-> --
-> Stefan Cornelius / Red Hat Product Security
->
-> Come talk to Red Hat Product Security at the Summit!
-> Red Hat Summit 2015 - https://www.redhat.com/summit/
+> Yes, what you're talking about is a problem.  It's also a known problem.  What's more is I believe the root of the problem is outside of where you have targeted your scrutiny.
+
+
+-- 
+Donald Buczek
+buczek@molgen.mpg.de
+Tel: +49 30 8413 1433
