@@ -1,62 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/1
-Message-ID: <4b386d20-6b24-427b-ac3f-2098cf402329@citrix.com>
-Date: Wed, 4 Oct 2023 02:10:59 +0100
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/10
+Message-ID: <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@deg2z7j4ztug>
+Date: Fri, 20 Oct 2023 12:27:27 -0700
+From: nightmare.yeah27@...ecat.org
+To: oss-security@...ts.openwall.com
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-On 03/10/2023 9:58 pm, Solar Designer wrote:
-> However, this may be another reason to actually look into whether the
-> remainder also leaked, and whether the byte-sized form prevents that
-> leak despite of it not touching the architectural register where the
-> remainder would be stored by a preceding larger DIV.  I expect that
-> we're fine here - it's the divider unit's internal register and not the
-> architectural register that should matter - but worth making sure.  It
-> could also theoretically be e.g. some buffer registers in the middle,
-> where the byte-sized form wouldn't overwrite the full contents.
+What about people like me who don't use the graphical emulator's
+paste directly at all but interact via a tmux layer in between?
 
-I've spent a while trying to reason about this...  I'm not sure I'm any
-the wiser, but here goes.
-
-In order for values to be forwarded to dependent operations, the
-register file entries allocated to the answer(s) of the DIV must have
-been marked as ready.  (i.e. it's not sufficient for it to "just" be
-left on the output of the divider because there won't be a special path
-sideways to other execute units.)
-
-Furthermore in this case, a real answer from the divider must have
-written back, as we're concerned here about the last DIV to have
-completed, and not some other stale content which happened to live in
-the register file.  (The Gather Data Sampling vulnerability from the
-same deadline is an example of a vector register being marked as good
-before it has been completely overwritten, hence the leaking of stale
-content.)
-
-There are two sources of #DE.  A divide by 0, or result out of range.
-
-A sane implementation of a hardware divider isn't going to multiply the
-numerator and denominator to evaluate result out of range, when it can
-just look for a carry/overflow on the final iteration.  On the other
-hand, checking for 0 has to be done first because the result of the
-operation is nonsensical otherwise.  Indeed, this is exactly how the
-8086 did it[1].
-
-So the practical results of the divider are either a failure at the
-start (which is div0) or a result at the end (which is either success,
-or out-of-range).
-
-Viewed from this perspective, it's perhaps easy to see why the div0 case
-passes the prior result (i.e. nothing mutated the buffer), whereas all
-other cases have put a result (correct or otherwise) into buffer before
-signalling a completion of the instruction.
-
-Either way, it's just speculation for now, and we all know how dangerous
-that can be...
-
-~Andrew
-
-[1]
-https://www.righto.com/2023/04/reverse-engineering-8086-divide-microcode.html
+-- 
+Ian
