@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/2
-Message-ID: <ZRKpbYtTL0OYpzKy@kroah.com>
-Date: Tue, 26 Sep 2023 11:50:37 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/9
+Message-ID: <fc3a5306-5009-425d-bea7-b1b0ceb3288b@oracle.com>
+Date: Fri, 20 Oct 2023 11:42:10 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2023-42755] Linux kernel wild pointer access <= v6.2
+Subject: CVE-2023-45853: overflows in MiniZip in zlib through 1.3
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 25, 2023 at 01:13:19PM -0700, Kyle Zeng wrote:
-> [Patch]
-> The patch is to follow the upstream and retire the rsvp classifier in
-> all the stable trees.
-> And it is queued in all the stable trees, but not merged yet.
-> For example, the patch for v6.1 can be found here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
+CVE-2023-45853 was published last week for:
 
-This change is in released kernels already, specifically all of the
-following ones:
-	4.14.326 4.19.295 5.4.257 5.10.197 5.15.133 6.1.55 6.3
+    MiniZip in zlib through 1.3 has an integer overflow and resultant heap-based
+    buffer overflow in zipOpenNewFileInZip4_64 via a long filename, comment, or
+    extra field. NOTE: MiniZip is not a supported part of the zlib product.
 
-Perhaps this advisory was written before those kernels were released?
+where "long" means "longer than can be stored in the 16-bit length value used
+for the length of these fields".
 
-> [Affected Version]
-> I confirmed that this bug affects v6.2, v6.1, v5.15, v5.10, v5.4,
-> v4.19, and v4.14.
+minizip is part of the contrib directory in zlib, which doesn't seem to be built
+by default as far as I can tell, yet NVD has assigned a CVSS of 9.8 to make CVE
+scanners scream at full volume, while Red Hat went with a CVSS of 5.3 instead:
 
-v6.2 is long end-of-life, sorry, that's not going to be fixed.  But for
-all of the other versions you quote above, it should now be resolved.
+https://access.redhat.com/security/cve/CVE-2023-45853#cve-cvss-v3
 
-thanks,
+A fix has been checked into the upstream git repo:
+https://github.com/madler/zlib/pull/843
+but a release has not yet been made including it.
 
-greg k-h
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
