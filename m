@@ -1,22 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/20/2
-Message-ID: <64c644b1-9c98-406c-b947-689faf39efd0@oracle.com>
-Date: Mon, 20 Nov 2023 11:48:11 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/2
+Message-ID: <CAP9KPhDg3kpmsAyL74B5LuMmTq55pYoA+5LpJR0WkH0HO3Xw8g@mail.gmail.com>
+Date: Fri, 20 Oct 2023 12:58:21 +1100
+From: David Leadbeater <dgl@....cx>
 To: oss-security@...ts.openwall.com
-Subject: GNUTLS-SA-2023-10-23, CVE-2023-5981: timing sidechannel in RSA-PSK key exchange
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-https://gnutls.org/security-new.html#GNUTLS-SA-2023-10-23 reports:
+On Fri, 20 Oct 2023 at 09:55, Turistu <turistu@...il.com> wrote:
+[...]
+> It pretty much **is** mitigated at that layer. If xterm itself weren't
+> filtering out the ESC (ascii 0x1b) character in the pasted data, then
+> the bracketed-paste feature of bash or zsh could've been easily bypassed
+> by inserting a "\x1b[201~" escape (= end of pasted data) in the payload.
+> (As already mentioned in the report too).
 
-A vulnerability was found that the response times to malformed ciphertexts in
-RSA-PSK ClientKeyExchange differ from response times of ciphertexts with correct
-PKCS#1 v1.5 padding. Only TLS ciphertext processing is affected. The issue was
-reported in the issue tracker as https://gitlab.com/gnutls/gnutls/-/issues/1511
+I haven't tested all terminal and shell combinations, but the
+implementations of bracketed paste mode vary in their correctness,
+some do not filter all non-whitespace control characters, so for
+example you can add ^C into the exploit HTML:
 
-https://lists.gnupg.org/pipermail/gnutls-help/2023-November/004837.html
-announced the release of version 3.8.2 with a fix for this vulnerability.
+writeXPrimary('\u0003;touch ~/LOL-' + Date.now() / 1000 +'\r')
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Then you get a command being run with no interaction; this appears to
+work with xterm (384) + fish for example.
+
+> But there are a thousand more ways for an attacker to leverage that hole
+> in Firefox. Many programs (including Firefox itself!) could be easily
+> crashed by garbage data from the clipboard. Attacker-controlled data
+> could find its way into shell scripts via `var=$(xsel)`, etc.
+
+This isn't just limited to Firefox, one example is terminals that
+support OSC 52 (clipboard write), a remote SSH session can be hijacked
+and an attacker can inject OSC 52 into the stream in the background (I
+looked into this as part of my terminal security research, see [1]).
+
+As you point out there are many ways for untrusted data to end up on
+the clipboard, the attack vector here is via the terminal so my
+opinion is the terminal is what should protect against it. (Although I
+think Firefox could help with some defense-in-depth here, shame they
+don't want to.)
+
+For example two terminals that get this right are:
+
+- rxvt-unicode: The confirm-paste extension (loaded in the default
+set) pops up a confirmation when pasting control characters (not just
+newlines), "y" will strip controls, "p" will paste controls as is.
+- Windows Terminal: Strips non-whitespace control characters, asks for
+confirmation when pasting newlines, if bracketed paste mode is off.
+
+David
+
+[1]: https://dgl.cx/2023/09/ansi-terminal-security#xterm-osc-52-clipboard
