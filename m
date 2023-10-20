@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1330" "Monday" "27" "April" "2015" "10:43:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150427144315.AEA486C0037@smtpvmsrv1.mitre.org>" "35" "[oss-security] Re: CVE request: incomplete fix for CVE-2013-4422" nil nil nil "4" "2015042714:43:15" "[oss-security] Re: CVE request: incomplete fix for CVE-2013-4422" (number mark "        cve-assign@m Apr 27   35/1330  " thread-indent "\"[oss-security] Re: CVE request: incomplete fix for CVE-2013-4422\"\n") "<553DFE56.3030102@reactos.org>" ("<553DFE56.3030102@reactos.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 8001 invoked by uid 550); 27 Apr 2015 14:43:28 -0000
+Received: (qmail 5126 invoked by uid 550); 20 Oct 2023 13:28:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7983 invoked from network); 27 Apr 2015 14:43:27 -0000
-In-Reply-To: <553DFE56.3030102@reactos.org>
-Message-Id: <20150427144315.AEA486C0037@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 27 Apr 2015 10:43:15 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: incomplete fix for CVE-2013-4422
-To: pierre@reactos.org
+Received: (qmail 3347 invoked from network); 20 Oct 2023 13:27:44 -0000
+Date: Fri, 20 Oct 2023 15:27:41 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20231020132741.GA4951@openwall.com>
+References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed> <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] with firefox on X11, any page can pastejack you anytime
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
+> In firefox running on X11, any script from any page can freely write to the
+> primary selection, and that can be easily exploited to run arbitrary code
+> on the user's machine.
 
-> It's been found that in Quassel, the CVE-2013-4422 was incorrectly
-> fixed and that core was still vulnerable to SQL injection on reconnection.
+What about other web browsers running on X11, most notably Chrome and
+Chromium?  If the issue is unique to Firefox or at least not universal
+across browsers, that's an extra reason for Firefox to make a change.
 
-> Since the initDbSession() code in PostgreSQL is
-> used to fix the CVE-2013-4422 SQL Injection bug, this means that
-> Quassel was still vulnerable ... if the PostgreSQL server
-> is restarted or the connection is lost at any point
+On Fri, Oct 20, 2023 at 02:10:06AM +0300, Turistu wrote:
+> OK this was probably too technical and terse for people not familiar
+> with X11 programming and terminology, so thing goes like this:
+> 
+> 1. If you're a user who has first learned to use a GUI on e.g. Windows,
+> and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
+> choose Copy from the menu, and then again left-click, choose Paste),
+> then congratulations! this DOES NOT AFFECT YOU.
+> 
+> (Unless you're using some clipboard tools which merges the primary and
+> clipboard selection, but I guess you don't ;-))
+> 
+> 2. But if you're a *native* X11 user who is used to just select the text and
+> then paste it with a middle-click or shift-Insert, then this means you're
+> pretty much done, and you should immediately either stop using firefox or
+> try the workaround and patch described in my report. This also includes
+> Wayland users.
 
-> This has been fixed with commit:
-> https://github.com/quassel/quassel/commit/6605882f41331c80f7ac3a6992650a702ec71283
+Or isolate Firefox to its own X server (or at least a separate one from
+where you run terminal emulators managing important stuff), like it
+happens when you run it in its own VM (or perhaps many instances of it
+in many VMs) on Qubes OS.  Indeed this also removes the convenience of
+being able to paste stuff from Firefox with middle-click to outside of
+its VM - you have to be explicit by using Qubes' Ctrl-Shift-C and
+Ctrl-Shift-V - but that's currently the price for having control.  The
+remaining security issue is that some JavaScript running in Firefox can
+still race you when you do explicitly copy/paste stuff from Firefox.
 
-> The incomplete bugfix had been released with Quassel 0.9.1:
-> http://quassel-irc.org/node/120
-
-Use CVE-2015-3427.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVPkoSAAoJEKllVAevmvmsk7kH/3ssydZtfI2+IiDKhv7BZvcT
-tH3X9Df9kR3WK5caEHRsLwyn2e9szeAd1LBca01kXdVnaFEfceufpbtkBfm4kJNI
-4bi4GFW18JU4jmjaef+R9gz83fRCBvebK6pKzzwBec6B9tTdW3P51otdDZpYIqVX
-pN9pZ/0mAv9mIjol9SEXhyWSJMv4FmNF9qOHFHMcIK5HhAVIyr1e+khc2/YBFIA9
-SETuAPA+tRAmEzg0O/tnjhnkqBSk2azoFaMQ+zijsqbSBa6HDvZadxRxZuN3+GT0
-gl0sySciqRokxx6T42sd7iTiP/vFFiHEXtczeY2YT8WBUQo9kahxwV082I8+WmM=
-=wueW
------END PGP SIGNATURE-----
+Alexander
