@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/03/4
-Message-Id: <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
-Date: Wed, 3 May 2023 15:54:38 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/6
+Message-ID: <20231020132741.GA4951@openwall.com>
+Date: Fri, 20 Oct 2023 15:27:41 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
+> In firefox running on X11, any script from any page can freely write to the
+> primary selection, and that can be easily exploited to run arbitrary code
+> on the user's machine.
 
+What about other web browsers running on X11, most notably Chrome and
+Chromium?  If the issue is unique to Firefox or at least not universal
+across browsers, that's an extra reason for Firefox to make a change.
 
-> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
+On Fri, Oct 20, 2023 at 02:10:06AM +0300, Turistu wrote:
+> OK this was probably too technical and terse for people not familiar
+> with X11 programming and terminology, so thing goes like this:
 > 
-> Who actually decides when something receives a CVE?
+> 1. If you're a user who has first learned to use a GUI on e.g. Windows,
+> and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
+> choose Copy from the menu, and then again left-click, choose Paste),
+> then congratulations! this DOES NOT AFFECT YOU.
+> 
+> (Unless you're using some clipboard tools which merges the primary and
+> clipboard selection, but I guess you don't ;-))
+> 
+> 2. But if you're a *native* X11 user who is used to just select the text and
+> then paste it with a middle-click or shift-Insert, then this means you're
+> pretty much done, and you should immediately either stop using firefox or
+> try the workaround and patch described in my report. This also includes
+> Wayland users.
 
-There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that is, to become a CVE Numbering Authority (CNA) - has to follow various processes. I'm sure it can be improved, like all things. I'm not directly involved in this. You might find more information here:
-https://www.cve.org/ProgramOrganization/CNAs
+Or isolate Firefox to its own X server (or at least a separate one from
+where you run terminal emulators managing important stuff), like it
+happens when you run it in its own VM (or perhaps many instances of it
+in many VMs) on Qubes OS.  Indeed this also removes the convenience of
+being able to paste stuff from Firefox with middle-click to outside of
+its VM - you have to be explicit by using Qubes' Ctrl-Shift-C and
+Ctrl-Shift-V - but that's currently the price for having control.  The
+remaining security issue is that some JavaScript running in Firefox can
+still race you when you do explicitly copy/paste stuff from Firefox.
 
->  This can be used to defame projects and products as in this case.
-
-
-Identifying a vulnerability does not defame a project. If a library has the functionality to retrieve an https URLs, and fails to verify the server certificates by default, then I (and many others) would call that a vulnerability. After all, the default is what happens. If you request data from <https://google.com>, you wouldn't expect it to use the data from <https://godzilla.com>. There's a general expectation that https://FPP provides a secure connection to FOO (with confidentiality, integrity, and server authentication), unless you specially disable it.
-
---- David A. Wheeler
-
+Alexander
