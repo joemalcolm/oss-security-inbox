@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2892" "Thursday" "15" "October" "2020" "17:33:53" "+0000" "Karp, Samuel" "skarp@amazon.com" "<5b9cad3b63470a24da85f7eb36fb46d91894be4d.camel@amazon.com>" "48" "[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull" nil nil nil "10" "2020101517:33:53" "[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull" (number mark "U       skarp@amazon Oct 15   48/2892  " thread-indent "\"[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking credentials during image pull" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9507 invoked by uid 550); 15 Oct 2020 17:43:45 -0000
+Received: (qmail 32525 invoked by uid 550); 20 Oct 2023 21:59:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,85 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5789 invoked from network); 15 Oct 2020 17:34:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1602783253; x=1634319253;
-  h=from:to:subject:date:message-id:content-id:
-   content-transfer-encoding:mime-version;
-  bh=EsgU7a0PeR/LCPQm7eO8ie1wY794qK8/GlelwWh11Ow=;
-  b=S9Ow82d2Lrj3KAUIlEZlJFIM0mp7Rgj63Z30CGNutflCOCOldqWrBk51
-   zq3goEqYU2O5VbTKyBuJH3ZUnaW/IrM9964CUCtem2J+cgGAqzVxYQ7gW
-   4uTUqR6Bk6nKzcZqWW8GsPjhhtF8ovIAcW39CRE1BEBd5tiPoQAVdtm4A
-   4=;
-X-IronPort-AV: E=Sophos;i="5.77,379,1596499200"; 
-   d="scan'208";a="59985021"
-From: "Karp, Samuel" <skarp@amazon.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2020-15157: containerd v1.2.x can be coerced into leaking
- credentials during image pull
-Thread-Index: AQHWoxlZPy19u+tdo0WqeZLhB6ga6w==
-Date: Thu, 15 Oct 2020 17:33:53 +0000
-Message-ID: <5b9cad3b63470a24da85f7eb36fb46d91894be4d.camel@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.43.162.73]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <DFFFDC18956C404EA94922FF12C4C03A@amazon.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2020-15157: containerd v1.2.x can be coerced into leaking
- credentials during image pull
+Received: (qmail 19754 invoked from network); 20 Oct 2023 20:30:37 -0000
+Date: Fri, 20 Oct 2023 22:30:23 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20231020203023.7p2bZ%steffen@sdaoden.eu>
+In-Reply-To: <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@deg2z7j4ztug>
+References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+ <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
+ <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
+ <20231019165354.kkjoxdbedeodyfik@yuggoth.org>
+ <7039466aa03ec8a90e1ce3a2ae983421.a13627b7@limousine.hussar>
+ <CAP9KPhDg3kpmsAyL74B5LuMmTq55pYoA+5LpJR0WkH0HO3Xw8g@mail.gmail.com>
+ <CAP9KPhBoy-ES2LxZi1Ax7BaAHwF5B2--ZqWtYUVEBbQ4P66XiQ@mail.gmail.com>
+ <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@deg2z7j4ztug>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-537-gf0b6803016
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] Re: with firefox on X11, any page can
+ pastejack you anytime
 
-SW1wYWN0DQoNCklmIGEgY29udGFpbmVyIGltYWdlIG1hbmlmZXN0IGluIHRo
-ZSBPQ0kgSW1hZ2UgZm9ybWF0IG9yIERvY2tlciBJbWFnZQ0KVjIgU2NoZW1h
-IDIgZm9ybWF0IGluY2x1ZGVzIGEgVVJMIGZvciB0aGUgbG9jYXRpb24gb2Yg
-YSBzcGVjaWZpYyBpbWFnZQ0KbGF5ZXIgKG90aGVyd2lzZSBrbm93biBhcyBh
-IOKAnGZvcmVpZ24gbGF5ZXLigJ0pLCB0aGUgZGVmYXVsdCBjb250YWluZXJk
-DQpyZXNvbHZlciB3aWxsIGZvbGxvdyB0aGF0IFVSTCB0byBhdHRlbXB0IHRv
-IGRvd25sb2FkIGl0LiBJbiB2MS4yLnggYnV0DQpub3QgMS4zLjAgb3IgbGF0
-ZXIsIHRoZSBkZWZhdWx0IGNvbnRhaW5lcmQgcmVzb2x2ZXIgd2lsbCBwcm92
-aWRlIGl0cw0KYXV0aGVudGljYXRpb24gY3JlZGVudGlhbHMgaWYgdGhlIHNl
-cnZlciB3aGVyZSB0aGUgVVJMIGlzIGxvY2F0ZWQNCnByZXNlbnRzIGFuIEhU
-VFAgNDAxIHN0YXR1cyBjb2RlIGFsb25nIHdpdGggcmVnaXN0cnktc3BlY2lm
-aWMgSFRUUA0KaGVhZGVycy4NCg0KSWYgYW4gYXR0YWNrZXIgcHVibGlzaGVz
-IGEgcHVibGljIGltYWdlIHdpdGggYSBtYW5pZmVzdCB0aGF0IGRpcmVjdHMN
-Cm9uZSBvZiB0aGUgbGF5ZXJzIHRvIGJlIGZldGNoZWQgZnJvbSBhIHdlYiBz
-ZXJ2ZXIgdGhleSBjb250cm9sIGFuZCB0aGV5DQp0cmljayBhIHVzZXIgb3Ig
-c3lzdGVtIGludG8gcHVsbGluZyB0aGUgaW1hZ2UsIHRoZXkgY2FuIG9idGFp
-biB0aGUNCmNyZWRlbnRpYWxzIHVzZWQgZm9yIHB1bGxpbmcgdGhhdCBpbWFn
-ZS4gSW4gc29tZSBjYXNlcywgdGhpcyBtYXkgYmUgdGhlDQp1c2VyJ3MgdXNl
-cm5hbWUgYW5kIHBhc3N3b3JkIGZvciB0aGUgcmVnaXN0cnkuIEluIG90aGVy
-IGNhc2VzLCB0aGlzIG1heQ0KYmUgdGhlIGNyZWRlbnRpYWxzIGF0dGFjaGVk
-IHRvIHRoZSBjbG91ZCB2aXJ0dWFsIGluc3RhbmNlIHdoaWNoIGNhbg0KZ3Jh
-bnQgYWNjZXNzIHRvIG90aGVyIGNsb3VkIHJlc291cmNlcyBpbiB0aGUgYWNj
-b3VudC4NCg0KVGhlIGRlZmF1bHQgY29udGFpbmVyZCByZXNvbHZlciBpcyB1
-c2VkIGJ5IHRoZSBjcmktY29udGFpbmVyZCBwbHVnaW4NCih3aGljaCBjYW4g
-YmUgdXNlZCBieSBLdWJlcm5ldGVzKSwgdGhlIGN0ciBkZXZlbG9wbWVudCB0
-b29sLCBhbmQgb3RoZXINCmNsaWVudCBwcm9ncmFtcyB0aGF0IGhhdmUgZXhw
-bGljaXRseSBsaW5rZWQgYWdhaW5zdCBpdC4NCg0KDQpQYXRjaGVzDQoNClRo
-aXMgdnVsbmVyYWJpbGl0eSBoYXMgYmVlbiBmaXhlZCBpbiBjb250YWluZXJk
-IDEuMi4xNCBbMV0uIGNvbnRhaW5lcmQNCjEuMyBhbmQgbGF0ZXIgYXJlIG5v
-dCBhZmZlY3RlZC4NCg0KDQpXb3JrYXJvdW5kcw0KDQpJZiB5b3UgYXJlIHVz
-aW5nIGNvbnRhaW5lcmQgMS4zIG9yIGxhdGVyLCB5b3UgYXJlIG5vdCBhZmZl
-Y3RlZC4gSWYgeW91DQphcmUgdXNpbmcgY3JpLWNvbnRhaW5lcmQgaW4gdGhl
-IDEuMiBzZXJpZXMgb3IgcHJpb3IsIHlvdSBzaG91bGQgZW5zdXJlDQp5b3Ug
-b25seSBwdWxsIGltYWdlcyBmcm9tIHRydXN0ZWQgc291cmNlcy4gT3RoZXIg
-Y29udGFpbmVyIHJ1bnRpbWVzDQpidWlsdCBvbiB0b3Agb2YgY29udGFpbmVy
-ZCBidXQgbm90IHVzaW5nIHRoZSBkZWZhdWx0IHJlc29sdmVyIChzdWNoIGFz
-DQpEb2NrZXIpIGFyZSBub3QgYWZmZWN0ZWQuDQoNCg0KQ3JlZGl0cw0KDQpU
-aGUgY29udGFpbmVyZCBtYWludGFpbmVycyB3b3VsZCBsaWtlIHRvIHRoYW5r
-IEJyYWQgR2Vlc2FtYW4sIEpvc2gNCkxhcnNlbiwgSWFuIENvbGR3YXRlciwg
-RHVmZmllIENvb2xleSwgYW5kIFJvcnkgTWNDdW5lIGZvciByZXNwb25zaWJs
-eQ0KZGlzY2xvc2luZyB0aGlzIGlzc3VlIGluIGFjY29yZGFuY2Ugd2l0aCB0
-aGUgY29udGFpbmVyZCBzZWN1cml0eSBwb2xpY3kNClsyXS4NCg0KRm9yIGZ1
-cnRoZXIgZGV0YWlscywgc2VlIA0KaHR0cHM6Ly9naXRodWIuY29tL2NvbnRh
-aW5lcmQvY29udGFpbmVyZC9zZWN1cml0eS9hZHZpc29yaWVzL0dIU0EtNzQy
-dy04OWdjLThtOWMNCg0KWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9jb250YWlu
-ZXJkL2NvbnRhaW5lcmQvcmVsZWFzZXMvdGFnL3YxLjIuMTQNClsyXSBodHRw
-czovL2dpdGh1Yi5jb20vY29udGFpbmVyZC9wcm9qZWN0L2Jsb2IvbWFzdGVy
-L1NFQ1VSSVRZLm1kDQoNCg==
+nightmare.yeah27@aceecat.org wrote in
+ <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@deg2z7j4ztug>:
+ |What about people like me who don't use the graphical emulator's
+ |paste directly at all but interact via a tmux layer in between?
+
+tmux:
+
+   Dsbp, Enbp
+           Disable and enable bracketed paste.  These are set automatically
+           if the XT capability is present.
+
+I was curious what happens if i embed the user-proram bracketed-paste end
+marker (\x1B[201~) in the X selection, as the terminal i use does
+not protect itself from doing anything on the selection data
+except changing any \n to \r.  Actually 
+
+  printf 'a\x03\x1b[201~echo du' > .T1
+  printf 'a\x1b[201~\x03echo du' > .T2
+
+and then xclip .T[12] and then .. whatever.  bash cannot be
+"fooled", but the "a" is then invisible here
+
+  printf 'a\x1b[201~\x03echo du' > .T2
+  xclip .T2
+  echo du~
+^pasted
+  -bash: cho: command not found
+
+Dunno since when i can no longer copy-selection etc via tmux
+without it actively changing what i want to copy!  'Thus that
+printf stuff above.  If that is what you meant :-(
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
