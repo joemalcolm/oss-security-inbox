@@ -1,24 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/16/5
-Message-ID: <6c44abe1-2c71-b6c7-db9d-af0f00e8be09@apache.org>
-Date: Mon, 16 Jan 2023 09:25:56 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/11
+Message-ID: <20231020203023.7p2bZ%steffen@sdaoden.eu>
+Date: Fri, 20 Oct 2023 22:30:23 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43721: Apache Superset: Open Redirect Vulnerability 
+Subject: Re: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+nightmare.yeah27@...ecat.org wrote in
+ <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@...2z7j4ztug>:
+ |What about people like me who don't use the graphical emulator's
+ |paste directly at all but interact via a tmux layer in between?
 
-Description:
+tmux:
 
-An authenticated attacker with update datasets permission could change a dataset link to an untrusted site, users could be redirected to this site when clicking on that specific dataset. This issue affects Apache Superset version 1.5.2 and prior versions and version 2.0.0.
+   Dsbp, Enbp
+           Disable and enable bracketed paste.  These are set automatically
+           if the XT capability is present.
 
-Credit:
+I was curious what happens if i embed the user-proram bracketed-paste end
+marker (\x1B[201~) in the X selection, as the terminal i use does
+not protect itself from doing anything on the selection data
+except changing any \n to \r.  Actually 
 
-Positive Technologies (finder)
+  printf 'a\x03\x1b[201~echo du' > .T1
+  printf 'a\x1b[201~\x03echo du' > .T2
 
-References:
+and then xclip .T[12] and then .. whatever.  bash cannot be
+"fooled", but the "a" is then invisible here
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-43721
+  printf 'a\x1b[201~\x03echo du' > .T2
+  xclip .T2
+  echo du~
+^pasted
+  -bash: cho: command not found
 
+Dunno since when i can no longer copy-selection etc via tmux
+without it actively changing what i want to copy!  'Thus that
+printf stuff above.  If that is what you meant :-(
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
