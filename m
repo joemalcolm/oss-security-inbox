@@ -1,4 +1,4 @@
-Received: (qmail 7284 invoked by uid 550); 15 May 2026 01:17:28 -0000
+Received: (qmail 29836 invoked by uid 550); 20 Oct 2023 13:04:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +7,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5517 invoked from network); 15 May 2026 01:16:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1778807767;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=enMZ9WzpEo9aTnQAH/j35hqIBvm8adcr4yDqX0xE/8g=;
-	b=lpRLC9/FyHSubPeRdEWOsM5cgeMjRCKhGauc9DTD3a/U423469BFZAXu0xVZ8yAwtuuI58
-	9s9gaBue0tldn5uyIKW2khdlL6cnmXNKGFtbI4DbYRB0ITxQaguNdNo51r4L0B9I3Tg1gk
-	YHAa+L+x6J6XYon6iajMddugrB933qr2UQabWS689umB037joVAPyPbUtK0i2/aZSCIWfA
-	4LgitbT7HOoFQrsL+uuoWixBzwpxXIO+eH1d5X5kFCHQ2vEo9on8N+MFUI2wvJauq3oLKF
-	ILlcJPXrJRECt34WLFKmbR6+VUDCYgFs4pVnFzCwEpiQm2t3BlalbJHLw4DWnA==
-From: Stig Palmquist <stig@stig.io>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Message-Id: <334FB9C3-E9EA-414B-8F67-5C28DFCE3CA2@stig.io>
-Date: Fri, 15 May 2026 03:15:50 +0200
-To: cve-announce@security.metacpan.org,
- oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2026-8612: WWW::Mechanize::Cached versions before 2.00 for Perl
- deserialize cached HTTP responses from a world-writable on-disk cache,
- enabling local response forgery and code execution
+Received: (qmail 10059 invoked from network); 20 Oct 2023 09:09:58 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AOJu0Ywy08Yd6oHIfn1xuwOHmHhiJKucR+jwdBxl5ZNnroqnrVVrLtkE
+	8AG6/kP0amBuasrxe61iR0PjjnHrb+x9Z42aLXE=
+X-Google-Smtp-Source: AGHT+IHLp7myTrzYUnOgVqmF6lf0K31Z5i3LNJtvxkoKMavWk1gNoSO3ePvA9cmcbR1VzUYj8Sc6RyTAgwsM+KWcC+c=
+X-Received: by 2002:a17:907:9808:b0:9bd:f4b8:b0bd with SMTP id
+ ji8-20020a170907980800b009bdf4b8b0bdmr819023ejc.6.1697792968707; Fri, 20 Oct
+ 2023 02:09:28 -0700 (PDT)
+MIME-Version: 1.0
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Fri, 20 Oct 2023 10:09:16 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGA58wd-CUqd+wW+6V6PVrz2kimSq74TsYJdizDZaT3=hQ@mail.gmail.com>
+Message-ID: <CAB8XdGA58wd-CUqd+wW+6V6PVrz2kimSq74TsYJdizDZaT3=hQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2023-44483: Apache Santuario: Private Key disclosure in debug-log output
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-CVE-2026-8612                                        CPAN Security Group
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity: moderate
 
-        CVE ID:  CVE-2026-8612
-  Distribution:  WWW-Mechanize-Cached
-      Versions:  before 2.00
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/WWW-Mechanize-Cached
-      VCS Repo:  https://github.com/libwww-perl/WWW-Mechanize-Cached
+- Apache Santuario  before < 2.2.6
+- Apache Santuario  before < 2.3.4
+- Apache Santuario  before < 3.0.3
 
+Description:
 
-WWW::Mechanize::Cached versions before 2.00 for Perl deserialize cached
-HTTP responses from a world-writable on-disk cache, enabling local
-response forgery and code execution
+All versions of Apache Santuario - XML Security for Java prior to
+2.2.6, 2.3.4, and 3.0.3, when using the JSR 105 API, are vulnerable to
+an issue where a private key may be disclosed in log files when
+generating an XML Signature and logging with debug level is enabled.
+Users are recommended to upgrade to version 2.2.6, 2.3.4, or 3.0.3,
+which fixes this issue.
 
-Description
------------
-WWW::Mechanize::Cached versions before 2.00 for Perl deserialize cached
-HTTP responses from a world-writable on-disk cache, enabling local
-response forgery and code execution.
+Credit:
 
-With no explicit cache backend, WWW::Mechanize::Cached constructs a
-default Cache::FileCache under /tmp/FileCache without overriding the
-backend's documented directory_umask of 000, so the cache root and its
-subdirectories are created mode 0777 with no sticky bit. Cache entries
-are named by sha1_hex of the request and read back through
-Storable::thaw on the next cache hit.
+Apache Santuario would like to thank Max Fichtelmann for reporting
+this issue. (finder)
 
-A local attacker with write access to the cache tree can replace a
-victim's cache entry for a known URL with an arbitrary frozen
-HTTP::Response blob, causing the victim's next get() of that URL to
-return attacker controlled response bytes. Because the bytes are passed
-to Storable::thaw, a victim process that has loaded any class with a
-side-effectful STORABLE_thaw, DESTROY, or overload hook can be
-escalated to arbitrary code execution.
+References:
 
-Problem types
--------------
-- CWE-732 Incorrect Permission Assignment for Critical Resource
-- CWE-502 Deserialization of Untrusted Data
-
-Solutions
----------
-Upgrade to WWW-Mechanize-Cached 2.00 or later.
-
-
-References
-----------
-https://github.com/libwww-perl/WWW-Mechanize-Cached/pull/36
-https://github.com/libwww-perl/WWW-Mechanize-Cached/commit/b821647deeedf834=
-90ebc1db91d959d942300ce0.patch
-https://metacpan.org/release/OALDERS/WWW-Mechanize-Cached-2.00/changes
-
-Timeline
---------
-- 2026-05-13: Issue reported.
-- 2026-05-14: WWW-Mechanize-Cached 2.00 released with fix.
-
-
+https://santuario.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-44483
