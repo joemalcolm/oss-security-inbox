@@ -1,104 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/3
-Message-ID: <r59op275-8q67-40q0-n912-8sq39s6o742q@unkk.fr>
-Date: Wed, 15 Feb 2023 08:28:58 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: curl: CVE-2023-23916: HTTP multi-header compression denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/7
+Message-ID: <d4af64a958768b48cc98670741c1f8e4.da8a7fea@penurious.financings>
+Date: Fri, 20 Oct 2023 18:21:18 +0300
+From: Turistu <turistu@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-23916: HTTP multi-header compression denial of service
-===============================================================
+On Fri, Oct 20, 2023 at 03:27:41PM +0200, Solar Designer wrote:
+> On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
+> > In firefox running on X11, any script from any page can freely write to the
+> > primary selection, and that can be easily exploited to run arbitrary code
+> > on the user's machine.
+> 
+> What about other web browsers running on X11, most notably Chrome and
+> Chromium?
 
-Project curl Security Advisory, February 15th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-23916.html)
+They're safe from *this* particular issue, which is caused by a simple bug
+deep inside mozilla's C++ code, not by some explicit design decision.
 
-VULNERABILITY
--------------
+> If the issue is unique to Firefox or at least not universal
+> across browsers, that's an extra reason for Firefox to make a change.
+> 
+> On Fri, Oct 20, 2023 at 02:10:06AM +0300, Turistu wrote:
+> > OK this was probably too technical and terse for people not familiar
+> > with X11 programming and terminology, so thing goes like this:
+> > 
+> > 1. If you're a user who has first learned to use a GUI on e.g. Windows,
+> > and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
+> > choose Copy from the menu, and then again left-click, choose Paste),
+> > then congratulations! this DOES NOT AFFECT YOU.
+> > 
+> > (Unless you're using some clipboard tools which merges the primary and
+> > clipboard selection, but I guess you don't ;-))
+> > 
+> > 2. But if you're a *native* X11 user who is used to just select the text and
+> > then paste it with a middle-click or shift-Insert, then this means you're
+> > pretty much done, and you should immediately either stop using firefox or
+> > try the workaround and patch described in my report. This also includes
+> > Wayland users.
+> 
+> Or isolate Firefox to its own X server (or at least a separate one from
+> where you run terminal emulators managing important stuff), like it
+> happens when you run it in its own VM (or perhaps many instances of it
+> in many VMs) on Qubes OS.  Indeed this also removes the convenience of
 
-curl supports "chained" HTTP compression algorithms, meaning that a server
-response can be compressed multiple times and potentially with different
-algorithms. The number of acceptable "links" in this "decompression chain" was
-capped, but the cap was implemented on a per-header basis allowing a malicious
-server to insert a virtually unlimited number of compression steps simply by
-using many headers.
-
-The use of such a decompression chain could result in a "malloc bomb", making
-curl end up spending enormous amounts of allocated heap memory, or trying to
-and returning out of memory errors.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-CVE-2023-23916 was introduced in [commit
-dbcced8e32b50c06](https://github.com/curl/curl/commit/dbcced8e32b50c06),
-shipped in curl 7.57.0.
-
-Automatic decompression of content needs to be enabled per transfer. It is
-disabled by default and then nothing bad happens.
-
-This flaw exists with one or more of the compression algorithms built-in
-(gzip, brotli or zstd), but the individual algorithms have different
-"exploding" powers.
-
-Both `Content-Encoding:` and `Transfer-Encoding:` are affected over all HTTP
-versions.
-
-This flaw is almost identical to the previous [CVE-2022-32206: HTTP
-compression denial of service](https://curl.se/docs/CVE-2022-32206.html), as
-the fix for that earlier flaw was incomplete.
-
-CWE-770: Allocation of Resources Without Limits or Throttling
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.57.0 to and including 7.87.0
-- Not affected versions: curl < 7.57.0 and curl >= 7.87.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-The amount of accepted "chained" algorithms is now capped to 5 in total,
-independently of the number of headers.
-
-A [fix for CVE-2023-23916](https://github.com/curl/curl/commit/119fb187192a9ea13dc)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.88.0
-
-  B - Apply the patch to your local version
-
-  C - Do not enable automatic decompression
-
-TIMELINE
---------
-
-This issue was reported to the curl project on January 8, 2023. We contacted
-distros@...nwall on February 7, 2023.
-
-libcurl 7.88.0 was released on February 15 2023, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Patrick Monnerat
-- Patched-by: Patrick Monnerat
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+If you do that, notice that you will also have to run a window manager
+inside that separate X server, because firefox (which never implemented
+the X11 and icccm protocols correctly) needs a wm in order to function
+properly (more precisely a point-to-focus wm or one that simulates
+point-to-focus just to keep firefox and some other horrors like old atk
+java apps happy).
