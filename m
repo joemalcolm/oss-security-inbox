@@ -1,83 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/3
-Message-ID: <beb602e2-feb1-582d-91b9-00df2bc4760b@molgen.mpg.de>
-Date: Fri, 20 Oct 2023 09:04:07 +0200
-From: Donald Buczek <buczek@...gen.mpg.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/21/1
+Message-ID: <CA+17n5sr6yGrWws73FYSSrMyfQy+m-JjiGZ9KrEf9OyYunY1Vw@mail.gmail.com>
+Date: Sat, 21 Oct 2023 21:24:58 +0200
+From: Joshua Rogers <megamansec@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Re: Squid Caching Proxy Security Audit: 55 Vulnerabilities, 35 0days.
 Content-Type: text/plain; charset=utf-8
 
-On 10/18/23 8:25 PM, Grant Taylor wrote:
-> I have some misgivings about this.
-> 
-> On 10/16/23 7:17 PM, turistu wrote:
->> In firefox running on X11, any script from any page can freely write to the primary selection,
-> 
-> I'm largely inclined to say "so what is the problem here?" but I'm trying to keep an open mind and understand ~> maybe learn something.
-> 
-> The *primary* /selection/ /buffer/ is updated by simply selecting text on the screen.
-> 
-> About the only thing that I can see being a problem is if something updates the chosen selection buffer without my knowledge while I'm in the middle of doing something using the selection buffer.
-> 
-> *Selection* /buffer/ being a buffer referencing something that is selected.
-> 
-> Remember, the selection buffers; primary and / or secondary, are completely independent of the clipboard.
-> 
->> and that can be easily exploited to run arbitrary code on the user's machine.
-> 
-> I'm not convinced of that.
-> 
-> 1st, simply updating the selection buffer doesn't mean that what's in it will be used for anything,
-> 2nd, the updated selection buffer must be used in a way that tries to execute a command or maliciously alters contents, e.g. swapping something of value for something else malicious, say an address to send something.
-> 
->> No user interaction is necessary -- any page able to run javascript can do it ....
-> 
-> The ability to update the selection buffer doesn't extend into the ability to cause what's in the selection buffer to be executed.
-> 
->> This applies to all the versions of mozilla/firefox and their derivatives (seamonkey, etc) ....
-> 
-> It probably applies to a lot more than that.  I suspect that anything that can run 3rd party code can do the same thing.
-> 
->> Sooner or later, when trying to paste something in the terminal with shift-Insert or middle click, you will end up running the command `writeXPrimary()` has injected just between your copy and paste.
-> 
-> I can do the same thing with most shells that you're claiming is a Mozilla / Firefox bug:
-> 
->    while sleep 1; do echo "yes LOL" | xsel -ip; done
+Hi all,
 
-Yes, and "rm" can delete all my files, but a piece of Javascript on random website, I visit with Firefox, is not supposed to be able to do that.
+I've updated the page with the following IDs which may be used for tracking:
 
-A Javascript program from a website is not in the same security domain as the user and the commands and application he invokes explicitly.
+strlen(NULL) Crash Using Digest Authentication
+        GHSA-254c-93q9-cp53
 
-> Change your sleep duration, what goes into the primary selection buffer, tool used to modify the selection buffer, which selection buffer / clipboard you monkey with, etc.
-> 
-> I think that this is more a problem with X11 security than it is a problem specific to Mozilla / Firefox.
-> 
-> This X11 security issue is well known and has been well known for decades.  Anybody / anything that can read / write to your DISPLAY can do this.
+Assertion Due to 0 ESI 'when' Checking
+        GHSA-4g88-277m-q89r
 
-libX11 API is not exposed to Javascript, is it? Javascript is not able to communicate with your DISPLAY socket, is it?
+Assertion Using ESI's When Directive
+        GHSA-4g88-277m-q89r
 
-> Maybe the fact that malicious JavaScript can do this is a surprise.  But I don't see this as a new issue.
-> As I said earlier, I'm unconvinced that this is a Mozilla / Firefox specific bug, but I'm trying to keep an open mind and understand ~> maybe learn something.
+Stack Buffer Overflow in Digest Authentication
+        GHSA-phqj-m8gv-cq4g
 
-To me it looks like a big issue.
+Buffer Underflow in ESI
+        GHSA-wgvf-q977-9xjg
 
-It is a serious bug when Javascript, which is untrusted, is able to do sneak commands into your shell session. 
+Cheers,
+Josh
 
-If I'd work my usual way and had the example site open in my browser, I would have many LOL-* Files in my home. I select and paste into terminal windows all day and my terminal doesn't protect me and wait for a confirming keystroke. And a bad script could do worse things in a more subtle way, of course.
+On Fri, Oct 13, 2023 at 8:23 PM Joshua Rogers <megamansec@...il.com> wrote:
 
-> As for patching Firefox, that's sort of like closing one vector out of the undetermined / infinite number that exist on the system.
+> Hi Amos, oss-security,
+>
+> I've added GHSA-543m-w2m2-g255 and CVE-2021-46784 for 'Cache Poisoning by
+> Large Stored Response Headers (With Bonus XSS)' and 'Assertion in Gopher
+> Response Handling' respectively: GHSA-543m-w2m2-g255 and CVE-2021-46784
+>
+> However, for "Gopher Assertion Crash", GHSA-f5cp-6rh3-284w does not apply.
+> "Gopher Assertion Crash" concerns an assertion "assertion failed:
+> store.cc:832: "store_status == STORE_PENDING"" while GHSA-f5cp-6rh3-284w
+> concerns an assertion: "assertion failed: String.cc:172: "canGrowBy(len)""
+>
+> To the best of my knowledge the former (without a current GHSA or CVE) is
+> unfixed.
+>
+> Cheers,
+> Josh
+>
+> On Fri, Oct 13, 2023 at 3:54 AM Amos Jeffries <squid3@...enet.co.nz>
+> wrote:
+>
+>> Some reference updates.
+>>
+>>
+>> On 11/10/23 20:55, Joshua Rogers wrote:
+>> >
+>> > The issues are listed below. Due to the sheer size of issues discovered,
+>> > technical details are not included in this email. However, breakdowns of
+>> > the code and proof-of-concepts can be found on GitHub:
+>> > https://megamansec.github.io/Squid-Security-Audit/
+>> >
+>>
+>> > Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
+>>
+>>   ... GHSA-543m-w2m2-g255
+>>
+>> > Gopher Assertion Crash
+>>
+>>   ... GHSA-f5cp-6rh3-284w
+>>
+>> > Assertion in Gopher Response Handling
+>>
+>>   ... CVE-2021-46784 / GHSA-f5cp-6rh3-284w
+>>
+>>
+>>
+>> AYJ
+>>
+>
 
-I'd be grateful for the patch that requires secure context for writing to the primary selection and would add it to the Firefox build of our (in-house) distribution.
-
-Best
-
-  Donald
-
-
-> Yes, what you're talking about is a problem.  It's also a known problem.  What's more is I believe the root of the problem is outside of where you have targeted your scrutiny.
-
-
--- 
-Donald Buczek
-buczek@...gen.mpg.de
-Tel: +49 30 8413 1433
