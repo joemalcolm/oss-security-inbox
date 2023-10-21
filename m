@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6985" "Monday" "3" "August" "2015" "12:39:38" "+0000" "Xen.org security team" "security@xen.org" "<E1ZMF1m-0004B9-Qj@xenbits.xen.org>" "176" "[oss-security] Xen Security Advisory 139 (CVE-2015-5166) - Use after free in QEMU/Xen block unplug protocol" nil nil nil "8" "2015080312:39:38" "[oss-security] Xen Security Advisory 139 (CVE-2015-5166) - Use after free in QEMU/Xen block unplug protocol" (number mark "        security@xen Aug  3  176/6985  " thread-indent "\"[oss-security] Xen Security Advisory 139 (CVE-2015-5166) - Use after free in QEMU/Xen block unplug protocol\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3887 invoked by uid 550); 3 Aug 2015 12:40:16 -0000
+Received: (qmail 28409 invoked by uid 550); 21 Oct 2023 21:43:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,194 +6,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3743 invoked from network); 3 Aug 2015 12:40:00 -0000
-Message-Id: <E1ZMF1m-0004B9-Qj@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-CC: Xen.org security team <security@xen.org>
-Date: Mon, 03 Aug 2015 12:39:38 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 139 (CVE-2015-5166) - Use after free in
- QEMU/Xen block unplug protocol
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Received: (qmail 32302 invoked from network); 21 Oct 2023 19:25:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697916310; x=1698521110; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VCdUkxYK6V6NKWWKOjya1qbh3KQVpOINvIfzlXZ69P0=;
+        b=dnqXBUGc1iuRSDP0NBE9/iFpEtvWA1Zcd3oT08VXClGPZuO+mIqD2xhC4xEx+NQ3Fe
+         XVxhxC07yFCGcfBajEWvDreum9v8ojEwagPsp9MIo0Ibrk9+Hz/9FIDQAklNiphzuOcb
+         7YIafJH41z9QJ81N2cGKmM2ePrlsMMm9T/WQdNwIEOrTAj5600rKrkB0ac0YLXT7A8yy
+         XZsrk8W6acH8bRDHl5h1KjHphSdBuhMWAczonjSOPw8wg4HssYAczjOcDMvnX8tb15CO
+         23l8ByCDvAyvzsIOqDKLkXsLRBK12Oh5M3FLSIRoWA6fjzqf38rF9/OLK0bUrbhpmbkM
+         fbLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697916310; x=1698521110;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VCdUkxYK6V6NKWWKOjya1qbh3KQVpOINvIfzlXZ69P0=;
+        b=Fp1uW/ouHBt3fjODyjv4jDQTbiu4HrNrsmr+99Ixx6J+rbsXs6rheYGtVivoYtCfzP
+         pCRNY5lqEdoeWjTy7aqv8Ixd7Cl8Yfnz0T9A41kgeq4PsK3LR5avJDwQNncTOT+wVXSr
+         WhZfPl5/fK72KtypiMzlpRpwU0sZsowKgCXSQgVa4iX2AKCaYuVKj7p8SS5izMDpB5j3
+         8eFr40rPBpCCRv2K5Lb3Z3zgxrG1J64aUXXjUDopZBSrLuaZIlPRdoPdqgvaSvkxNvQH
+         dD9BjTDElJT/+WHj9PS4+hBsOFEJqQR2qa32SBAVfhxVkz3I5KIYpRQc0ztb4HeJ6HGN
+         WADA==
+X-Gm-Message-State: AOJu0YyGPz7ssVaNk4cwVvFcvXVr7bDtJRVjolYoIHoKt8NOD0skDIHp
+	Hohh/kE/Bls8SwxOCFOo+3j2YEmpnrytzoVMj4ZjA/H65VURkg==
+X-Google-Smtp-Source: AGHT+IHYGvnSJ8dMvKV+FFjSs1THHQ4r5f9Gpju+OwZAEJmG5PrQCZVR2rMncap2DCwMc/2fxaRUOS0aj6wxbHxM4eA=
+X-Received: by 2002:a05:6122:16a8:b0:499:696c:7810 with SMTP id
+ 40-20020a05612216a800b00499696c7810mr5561963vkl.0.1697916309736; Sat, 21 Oct
+ 2023 12:25:09 -0700 (PDT)
+MIME-Version: 1.0
+References: <CA+17n5uwjXBDzGGpepNtQSOFQaifnuyodd2EUQxEcCOLH+UUuw@mail.gmail.com>
+ <fc7f78ee-8322-4d6b-b07b-923954016c05@treenet.co.nz> <CA+17n5sRt+SzQv+3-W0JugU4S3VV-C7n6a26D4PdQoOciuwwiQ@mail.gmail.com>
+In-Reply-To: <CA+17n5sRt+SzQv+3-W0JugU4S3VV-C7n6a26D4PdQoOciuwwiQ@mail.gmail.com>
+From: Joshua Rogers <megamansec@gmail.com>
+Date: Sat, 21 Oct 2023 21:24:58 +0200
+Message-ID: <CA+17n5sr6yGrWws73FYSSrMyfQy+m-JjiGZ9KrEf9OyYunY1Vw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000008016a806083ef2a8"
+Subject: Re: [oss-security] Squid Caching Proxy Security Audit: 55
+ Vulnerabilities, 35 0days.
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--0000000000008016a806083ef2a8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-            Xen Security Advisory CVE-2015-5166 / XSA-139
-                              version 2
+I've updated the page with the following IDs which may be used for tracking:
 
-           Use after free in QEMU/Xen block unplug protocol
+strlen(NULL) Crash Using Digest Authentication
+        GHSA-254c-93q9-cp53
 
-UPDATES IN VERSION 2
-====================
+Assertion Due to 0 ESI 'when' Checking
+        GHSA-4g88-277m-q89r
 
-CVE assigned.
+Assertion Using ESI's When Directive
+        GHSA-4g88-277m-q89r
 
-Public release.
+Stack Buffer Overflow in Digest Authentication
+        GHSA-phqj-m8gv-cq4g
 
-Updated status of the patches.
+Buffer Underflow in ESI
+        GHSA-wgvf-q977-9xjg
 
-ISSUE DESCRIPTION
-=================
+Cheers,
+Josh
 
-When unplugging an emulated block device the device was not fully
-unplugged, meaning a second unplug attempt would attempt to unplug the
-device a second time using a previously freed pointer.
+On Fri, Oct 13, 2023 at 8:23=E2=80=AFPM Joshua Rogers <megamansec@gmail.com=
+> wrote:
 
-IMPACT
-======
+> Hi Amos, oss-security,
+>
+> I've added GHSA-543m-w2m2-g255 and CVE-2021-46784 for 'Cache Poisoning by
+> Large Stored Response Headers (With Bonus XSS)' and 'Assertion in Gopher
+> Response Handling' respectively: GHSA-543m-w2m2-g255 and CVE-2021-46784
+>
+> However, for "Gopher Assertion Crash", GHSA-f5cp-6rh3-284w does not apply.
+> "Gopher Assertion Crash" concerns an assertion "assertion failed:
+> store.cc:832: "store_status =3D=3D STORE_PENDING"" while GHSA-f5cp-6rh3-2=
+84w
+> concerns an assertion: "assertion failed: String.cc:172: "canGrowBy(len)""
+>
+> To the best of my knowledge the former (without a current GHSA or CVE) is
+> unfixed.
+>
+> Cheers,
+> Josh
+>
+> On Fri, Oct 13, 2023 at 3:54=E2=80=AFAM Amos Jeffries <squid3@treenet.co.=
+nz>
+> wrote:
+>
+>> Some reference updates.
+>>
+>>
+>> On 11/10/23 20:55, Joshua Rogers wrote:
+>> >
+>> > The issues are listed below. Due to the sheer size of issues discovere=
+d,
+>> > technical details are not included in this email. However, breakdowns =
+of
+>> > the code and proof-of-concepts can be found on GitHub:
+>> > https://megamansec.github.io/Squid-Security-Audit/
+>> >
+>>
+>> > Cache Poisoning by Large Stored Response Headers (With Bonus XSS)
+>>
+>>   ... GHSA-543m-w2m2-g255
+>>
+>> > Gopher Assertion Crash
+>>
+>>   ... GHSA-f5cp-6rh3-284w
+>>
+>> > Assertion in Gopher Response Handling
+>>
+>>   ... CVE-2021-46784 / GHSA-f5cp-6rh3-284w
+>>
+>>
+>>
+>> AYJ
+>>
+>
 
-An HVM guest which has access to an emulated IDE disk device may be
-able to exploit this vulnerability in order to take over the qemu
-process elevating its privilege to that of the qemu process.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen systems running x86 HVM guests using the upstream based
-"qemu-xen" are vulnerable.
-
-Systems using the "qemu-xen-traditional" version of the qemu device
-model, either in a stubdomain or as a domain 0 process, are not vulnerable.
-
-Systems running only PV guests are NOT vulnerable.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation for this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Donghai Zhu of Alibaba.
-
-RESOLUTION
-==========
-
-The attached patches have been proposed as fixes for the issue.
-However they have not been finalised by upstream.  A revised advisory
-will be issued in the event that the final patches differ from those
-included here.
-
-xsa139-qemuu-unstable.patch        qemu-upstream, xen-unstable
-xsa139-qemuu-4.5.patch             qemu-upstream, Xen 4.5.x, Xen
-                                   4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa139*.patch
-dead84667dd4868d0688dc4e62a54a14883e6f0352cf3318b277aa37e27c9261  xsa139-qemuu-unstable.patch
-3aa775255053d1d14a3e383998240eb3520aea7de137cdb7624b169db8b06d85  xsa139-qemuu-4.5.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJVv2B2AAoJEIP+FMlX6CvZyOIIAJyuhk8W+BkgL8eejTfV0dlH
-38QKpakRSIRXOB3Px3pyyssmk/3Qa/5HiYK3jn4/5JmKnCbXUcevBSnxBPJqbugc
-iNhQC7e6um8Ah6V9YkoixdjNrRs7TAyHhR43xK4WBZ89XlbFEI8eGnG8pf/zRLp5
-S5eRfqcJRo5T4uZLABN2K2Vko/sLvzeCzikDQoBIgYoIqpyC6X4svzcJre6GsEfp
-gZtR+TXvcMXpbndmlEGqhLznlC8iQYA6bpI0PQ22n2ANDzmnzR3u6+nrHCmzCmoY
-PNykUGi3+8OIkwoyosoZv6//L9Bx2U2iKFWqhDdqAi6p8krqhVQCxMZ18IbsyVI=
-=iCoi
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa139-qemuu-unstable.patch"
-Content-Disposition: attachment; filename="xsa139-qemuu-unstable.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogU3RlZmFubyBTdGFiZWxsaW5pIDxzdGVmYW5vLnN0YWJlbGxpbmlA
-ZXUuY2l0cml4LmNvbT4KCkZpeCByZWxlYXNlX2RyaXZlIG9uIHVucGx1Z2dl
-ZCBkZXZpY2VzIChwY2lfcGlpeDNfeGVuX2lkZV91bnBsdWcpCgpwY2lfcGlp
-eDNfeGVuX2lkZV91bnBsdWcgc2hvdWxkIGNvbXBsZXRlbHkgdW5ob29rIHRo
-ZSB1bnBsdWdnZWQKSURFRGV2aWNlIGZyb20gdGhlIGNvcnJlc3BvbmRpbmcg
-QmxvY2tCYWNrZW5kLCBvdGhlcndpc2UgdGhlIG5leHQgY2FsbAp0byByZWxl
-YXNlX2RyaXZlIHdpbGwgdHJ5IHRvIGRldGFjaCB0aGUgZHJpdmUgYWdhaW4u
-CgpTdWdnZXN0ZWQtYnk6IEtldmluIFdvbGYgPGt3b2xmQHJlZGhhdC5jb20+
-IApTaWduZWQtb2ZmLWJ5OiBTdGVmYW5vIFN0YWJlbGxpbmkgPHN0ZWZhbm8u
-c3RhYmVsbGluaUBldS5jaXRyaXguY29tPgoKZGlmZiAtLWdpdCBhL2h3L2lk
-ZS9waWl4LmMgYi9ody9pZGUvcGlpeC5jCmluZGV4IGFkYjY2NDkuLjVhMjZj
-ODYgMTAwNjQ0Ci0tLSBhL2h3L2lkZS9waWl4LmMKKysrIGIvaHcvaWRlL3Bp
-aXguYwpAQCAtMTY5LDYgKzE2OSw3IEBAIGludCBwY2lfcGlpeDNfeGVuX2lk
-ZV91bnBsdWcoRGV2aWNlU3RhdGUgKmRldikKICAgICBQQ0lJREVTdGF0ZSAq
-cGNpX2lkZTsKICAgICBEcml2ZUluZm8gKmRpOwogICAgIGludCBpOworICAg
-IElERURldmljZSAqaWRlZGV2OwogCiAgICAgcGNpX2lkZSA9IFBDSV9JREUo
-ZGV2KTsKIApAQCAtMTgxLDYgKzE4MiwxMiBAQCBpbnQgcGNpX3BpaXgzX3hl
-bl9pZGVfdW5wbHVnKERldmljZVN0YXRlICpkZXYpCiAgICAgICAgICAgICAg
-ICAgYmxrX2RldGFjaF9kZXYoYmxrLCBkcyk7CiAgICAgICAgICAgICB9CiAg
-ICAgICAgICAgICBwY2lfaWRlLT5idXNbZGktPmJ1c10uaWZzW2RpLT51bml0
-XS5ibGsgPSBOVUxMOworICAgICAgICAgICAgaWYgKCEoaSAlIDIpKSB7Cisg
-ICAgICAgICAgICAgICAgaWRlZGV2ID0gcGNpX2lkZS0+YnVzW2RpLT5idXNd
-Lm1hc3RlcjsKKyAgICAgICAgICAgIH0gZWxzZSB7CisgICAgICAgICAgICAg
-ICAgaWRlZGV2ID0gcGNpX2lkZS0+YnVzW2RpLT5idXNdLnNsYXZlOworICAg
-ICAgICAgICAgfQorICAgICAgICAgICAgaWRlZGV2LT5jb25mLmJsayA9IE5V
-TEw7CiAgICAgICAgICAgICBibGtfdW5yZWYoYmxrKTsKICAgICAgICAgfQog
-ICAgIH0K
-
---=separator
-Content-Type: application/octet-stream; name="xsa139-qemuu-4.5.patch"
-Content-Disposition: attachment; filename="xsa139-qemuu-4.5.patch"
-Content-Transfer-Encoding: base64
-
-cGNpX3BpaXgzX3hlbl9pZGVfdW5wbHVnIHNob3VsZCBjb21wbGV0ZWx5IHVu
-aG9vayB0aGUgdW5wbHVnZ2VkCklERURldmljZSBmcm9tIHRoZSBjb3JyZXNw
-b25kaW5nIEJsb2NrQmFja2VuZCwgb3RoZXJ3aXNlIHRoZSBuZXh0IGNhbGwK
-dG8gcmVsZWFzZV9kcml2ZSB3aWxsIHRyeSB0byBkZXRhY2ggdGhlIGRyaXZl
-IGFnYWluLgoKU3VnZ2VzdGVkLWJ5OiBLZXZpbiBXb2xmIDxrd29sZkByZWRo
-YXQuY29tPgpTaWduZWQtb2ZmLWJ5OiBTdGVmYW5vIFN0YWJlbGxpbmkgPHN0
-ZWZhbm8uc3RhYmVsbGluaUBldS5jaXRyaXguY29tPgotLS0KIGh3L2lkZS9w
-aWl4LmMgfCA3ICsrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCA3IGluc2VydGlv
-bnMoKykKCmRpZmYgLS1naXQgYS9ody9pZGUvcGlpeC5jIGIvaHcvaWRlL3Bp
-aXguYwppbmRleCA0MDc1N2ViLi4wNTI0ZGNlIDEwMDY0NAotLS0gYS9ody9p
-ZGUvcGlpeC5jCisrKyBiL2h3L2lkZS9waWl4LmMKQEAgLTE3Miw2ICsxNzIs
-NyBAQCBpbnQgcGNpX3BpaXgzX3hlbl9pZGVfdW5wbHVnKERldmljZVN0YXRl
-ICpkZXYpCiAgICAgUENJSURFU3RhdGUgKnBjaV9pZGU7CiAgICAgRHJpdmVJ
-bmZvICpkaTsKICAgICBpbnQgaSA9IDA7CisgICAgSURFRGV2aWNlICppZGVk
-ZXY7CiAKICAgICBwY2lfaWRlID0gUENJX0lERShkZXYpOwogCkBAIC0xODQs
-NiArMTg1LDEyIEBAIGludCBwY2lfcGlpeDNfeGVuX2lkZV91bnBsdWcoRGV2
-aWNlU3RhdGUgKmRldikKICAgICAgICAgICAgIH0KICAgICAgICAgICAgIGJk
-cnZfY2xvc2UoZGktPmJkcnYpOwogICAgICAgICAgICAgcGNpX2lkZS0+YnVz
-W2RpLT5idXNdLmlmc1tkaS0+dW5pdF0uYnMgPSBOVUxMOworICAgICAgICAg
-ICAgaWYgKCEoaSAlIDIpKSB7CisgICAgICAgICAgICAgICAgaWRlZGV2ID0g
-cGNpX2lkZS0+YnVzW2RpLT5idXNdLm1hc3RlcjsKKyAgICAgICAgICAgIH0g
-ZWxzZSB7CisgICAgICAgICAgICAgICAgaWRlZGV2ID0gcGNpX2lkZS0+YnVz
-W2RpLT5idXNdLnNsYXZlOworICAgICAgICAgICAgfQorICAgICAgICAgICAg
-aWRlZGV2LT5jb25mLmJzID0gTlVMTDsKICAgICAgICAgICAgIGRyaXZlX3B1
-dF9yZWYoZGkpOwogICAgICAgICB9CiAgICAgfQotLSAKMi4xLjQKCg==
-
---=separator--
+--0000000000008016a806083ef2a8--
