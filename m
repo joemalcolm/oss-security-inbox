@@ -1,56 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/11/1
-Message-ID: <20230511015644.GA30987@openwall.com>
-Date: Thu, 11 May 2023 03:56:44 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Piotr Krysiuk <piotras@...il.com>
-Cc: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>, oss-security@...ts.openwall.com, ceo@...-en-ming-corp.com
-Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/3
+Message-ID: <20231022.bahM3beighah@digikod.net>
+Date: Sun, 22 Oct 2023 11:50:12 +0200
+From: Mickaël Salaün <mic@...ikod.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 10, 2023 at 08:02:49PM +0100, Piotr Krysiuk wrote:
-> On Wed, May 10, 2023 at 5:55???PM Solar Designer <solar@...nwall.com> wrote:
-> > Is the netfilter issue really worse than the io_uring issue?  I doubt
-> > it.  So _maybe_ it was something in the wording that tripped someone
-> > writing for one of those tech news websites, then others picked it up?
-
-When writing the above, I didn't recall that the io_uring issue is
-6.3-only, which does make it relatively less important.
-
-Brad Spengler reminded me of this aspect on Twitter.  Thanks.
-
-> I suspect that what triggered the media is the following fragment:
+On Sun, Oct 22, 2023 at 02:06:49AM +0200, Solar Designer wrote:
+> Hi Matt,
 > 
-> > Somebody from the Linux kernel team then emailed the proposed fix to
-> > <linux-distros@...openwall.org> and that email also included a link to
-> > download our description of exploitation techniques and our exploit
-> > source code.
-> >
-> > Therefore, according to the linux-distros list policy, the exploit must
-> > be published within 7 days from this advisory.
-
-Oh, that could have looked like drama.  Yes, that could be it.
-
-> So in the advisory I wanted to explain the reason why the exploit must
-> be posted, given that was not my original plan.
-
-Sure.  I think this is good for transparency.
-
-> > As expected.  Now, from a typical distro user's standpoint,
-> > "unprivileged local users" may be just right.  However, not all distros
-> > have unprivileged user namespaces enabled by default.
+> I'm sorry I didn't follow up on this sooner.
 > 
-> You are right, I should have explained the dependencies. Do you think
-> it would be OK to include the correction on Monday? Or is it better to
-> send today (it may catch even more media)? I will make sure to review
-> the wording with you before posting.
+> On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
+> > Is there interest/solutions within the Rock Security SIG or other 
+> > distro's security teams for sandboxing that package upstreams can opt 
+> > into?
+> 
+> For Rocky Linux Security SIG, the only relevant thing mentioned so far
+> was possibly offering an OpenBSD pledge()-alike that other packages
+> could use.  However, I am skeptical any actually would, unless we also
+> introduce such uses ourselves and maintain own "override" packages
+> (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
+> software.  Initially, we are going to only create "override' packages
+> for core or very commonly used/exposed components, and to do so only for
+> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
+> coming from EPEL and with most of its dependency libraries coming from
+> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
+> make the cut, at least not initially.
+> 
+> Also, continuing these examples, it's probably more realistic to sandbox
+> their command-line tools, whereas the underlying libraries are probably
+> more exposed via language bindings.  Would we be introducing creation of
+> child processes into the libraries?  That's tricky as it could violate
+> expectations of programs using such libraries.  (Yet at Openwall we did
+> a similar thing in pam_tcb, albeit limiting this maybe-unexpected
+> behavior to setups that opted-in to it with the "fork" option in the PAM
+> configuration file.  So it's not completely out of consideration.)
 
-We're already having this very discussion on the list, just not in the
-same thread... and I just realized that maybe you didn't realize that.
+The Sandboxed API may be used to transform libraries into sandboxed
+services, but this might not be the best choice because it would indeed
+change the set of processes (with the related additional complexity),
+and it might not be as fine-grained as a CLI sandboxing (because CLI
+gets the full semantic).
+See https://github.com/google/sandboxed-api
 
-When you post the exploitation techniques and the exploit code on
-Monday, please do explain the dependencies in that same message.
+> 
+> Speaking of pledge() for Linux, there's this project by Justine Tunney:
+> 
+> https://justine.lol/pledge/
+> https://github.com/jart/cosmopolitan/blob/master/libc/calls/pledge-linux.c
+> 
+> This is part of Justine's libc implementation, but a comment says:
+> 
+>  * This file contains only the minimum amount of Linux-specific code
+>  * that's necessary to get a pledge() policy installed. This file is
+>  * designed to not use static or tls memory or libc depnedencies, so
+>  * it can be transplanted into codebases and injected into programs.
+> 
+> Are there already other projects using this?  Any distros offering it?
 
-Thanks,
+This Pledge implementation is useful to quickly leverage OpenBSD's
+patched software, but for a Linux fine-grained sandboxing it would be
+wiser to use the underlying kernel sandboxing feature: Landlock
+See https://landlock.io/
 
-Alexander
+AFAIK one of the most widely used sandboxing C library leveraging
+Landlock is Minijail:
+https://chromium.googlesource.com/chromiumos/platform/minijail
+
+Libraries are available for other languages as well:
+* Rust: https://crates.io/crates/landlock
+* Go: https://pkg.go.dev/github.com/landlock-lsm/go-landlock/landlock
+* Haskell: https://hackage.haskell.org/package/landlock
+* Python: https://github.com/Edward-Knight/landlock
+
+> 
+> > To step this out a bit... we have a large, old code base that was written 
+> > decades prior to current best practices. It has numerous known memory 
+> > safety issues and ever-dwindling maintainer capacity. It is also a 
+> > dependency, either directly or indirectly, of a significant fraction of 
+> > the world's software. I am guessing this scenario sounds uncomfortably 
+> > familiar/common to many on this list.
+> > 
+> > We (the maintainers) have discussed sandboxing as a way of mitigating 
+> > the risk of known bugs. However, one of the problems is that we don't 
+> > know the complete set of required privileges of our dependencies. The 
+> > software can be configured with or without various libraries and also 
+> > has a plugin mechanism for dynamic code loading. Basically if a 
+> > sandboxing solution like seccomp wants to know our full set of system 
+> > calls, we ourselves don't know it.
+> 
+> With pledge(), you could provide coarse-grained "promises" rather than
+> constrain yourself to individual syscalls.  Maybe that would work for
+> you?  However, it'd only be reliably used by packages if those introduce
+> a build-time dependency on whatever package provides pledge().  So e.g.
+> if we add a package providing pledge() in Rocky Linux Security SIG repo,
+> that won't be picked up by my example packages above built as part of
+> EPEL (not part of Rocky Linux project) or AppStream (part of the
+> project, but currently unlikely to be overridden in the SIG).
+> 
+> OTOH, you could even integrate the pledge-linux.c file in your project,
+> in which case it could become a standard feature used by many Linux
+> distros and extra package repos once they update to your newer version.
+
+FYI, Landlock is gaining new sandboxing features with new kernel
+versions, so we should be careful to make it easy to update to new
+features and then avoid (too much) harcoded constants/files but rely on
+a library instead.
+
+> 
+> > The downstream maintainer packaging the software for, e.g. Rocky, does 
+> > though. They have a complete picture of which libraries/features are 
+> > enabled and how locked down the plugin stuff is.
+> > 
+> > So, where I'm going with this, is that if the various packaging 
+> > ecosystems could (or do) offer sandboxing to upstream, people like us 
+> > would gladly opt in to it. Of course, these downstream maintainers can 
+> > already seccomp our software today. But expecting them to reverse 
+> > engineer our exact needs seems a bit much.
+> 
+> I find the above two paragraphs somewhat contradictory - the downstream
+> maintainer packaging the software does have technical ability to figure
+> out the exact set of syscalls the software will use on their distro with
+> current versions of other packages, but OTOH "expecting them to reverse
+> engineer our exact needs seems a bit much."  I'd say that figuring out
+> that exact set _is_ this kind of reverse-engineering, and is too much to
+> expect from a typical package maintainer, who is not focusing on just
+> this one package.  Besides, the exact set of syscalls may also change as
+> other packages get updated; this is not something guaranteed to stay
+> stable within what's normally considered a stable ABI.  So that person
+> would also need to identify and introduce extra explicit package version
+> dependencies, and to do extra package rebuilds to keep those satisfied.
+
+Proper sandboxing features such as Landlock are not tied to syscalls
+(which might change with library and dependency updates).
+
+Being able to integrate some security policy with the packaging would
+definitely help to widespread sandboxing (but cannot be as fine-grained
+as built-in sandboxing).
+
+> 
+> Maybe a coarse-grained pledge() would make this more realistic, or not.
+
+Pledge, and especially the Linux implementation, is already coarse-grained.
+
+ Mickaël
