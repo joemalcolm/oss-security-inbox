@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/18/3
-Message-ID: <wDR-6EJXGD6-bxaq2W-kI1jLku16_YuQtd-b0xX_bdYFJxXswSPpw6AU2G_U-CMxENlwx8-d9B7v5geNxaWaWAN8MoblHQMuqNIMm_BYhiQ=@ab-data.us>
-Date: Sat, 18 Mar 2023 13:33:01 +0000
-From: Eric Ashley <eric@...data.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/6
+Message-ID: <alpine.GSO.2.20.2310221118590.6992@scrappy.simplesystems.org>
+Date: Sun, 22 Oct 2023 11:26:25 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-According to a note from kernel maintenance (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v6.3-rc2&id=1e641743f055f075ed9a4edd75f1fb1e05669ddc), as of 2008 only Heirloom mailx (a.k.a. nail) used it for ~h interactive header editing.
+On Sun, 22 Oct 2023, Demi Marie Obenour wrote:
 
-Best regards,
+>> Unfortunately, most Linux IPC mechanisms are not very secure since they rely
+>> on historical Unix privilege models to control access.
+>
+> If one can bypass access control on IPC, one can easily get root by
+> sending malicious commands to systemd, so I don't think this is
+> something to worry about.
 
-Eric
+Looking at the 5 rules you posted, my concern is addressed by rule #2 
+(I/O resources opened in advance).
 
+> 2. All I/O resources (such as file descriptors) must be acquired before
+>   processing untrusted input.  It must not be possible to use these
+>   resources to access additional resources the program should not have
+>   access to.
 
+This request seems the most challenging to satisfy.
 
+> A command-line tool can probably meet all of these requirements but the
+> last one quite easily.  For a library, the difficulty of meeting these
+> requirements will depend significantly on the library API.  I am not
+> familiar with the GraphicsMagick API and so am not sure how difficult it
+> will be for the GraphicsMagick API to support sandboxing.
 
-Sent with Proton Mail secure email.
+A different I/O interface module would need to be developed to support 
+the possibility of opening an output descriptor in advance.
 
-------- Original Message -------
-On Friday, March 17th, 2023 at 7:13 PM, Lyndon Nerenberg (VE7TFX/VE6BBM) <lyndon@...hanc.ca> wrote:
+If one looks at ImageMagick, VIPS, GraphicsMagick, etc., one will 
+quickly see that those implementations optionally depend on tens of 
+other implementations.  For example, VIPS normally links with 
+ImageMagick or GraphicsMagick.  So many important programs have 
+complex dependencies.
 
+It is common for temporary files to be created and so this issue would 
+need to be addressed.
 
-> Does anyone even remember why TIOCSTI was added in the
-> first place? I remember stumbling across it decades
-> ago (SVR?), but I've ever seen a use case for it.
-> It puzzled me back then why it even existed.
-> 
-
-> --lyndon
-Download attachment "publickey - eric@...data.us - 0x43A549FB.asc" of type "application/pgp-keys" (1710 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (510 bytes)
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
