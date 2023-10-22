@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1169" "Monday" "19" "June" "2017" "15:15:26" "-0700" "Jacob Champion" "jchampion@apache.org" "<63607fd4-70b6-dc8f-6aae-82148d38880b@apache.org>" "35" "[oss-security] CVE-2017-3167: Apache httpd 2.x ap_get_basic_auth_pw authentication bypass" nil nil nil "6" "2017061922:15:26" "[oss-security] CVE-2017-3167: Apache httpd 2.x ap_get_basic_auth_pw authentication bypass" (number mark "U       jchampion@ap Jun 19   35/1169  " thread-indent "\"[oss-security] CVE-2017-3167: Apache httpd 2.x ap_get_basic_auth_pw authentication bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12029 invoked by uid 550); 19 Jun 2017 22:55:35 -0000
+Received: (qmail 1368 invoked by uid 550); 22 Oct 2023 16:26:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5569 invoked from network); 19 Jun 2017 22:15:42 -0000
-From: Jacob Champion <jchampion@apache.org>
+Received: (qmail 1350 invoked from network); 22 Oct 2023 16:26:37 -0000
+Date: Sun, 22 Oct 2023 11:26:25 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@scrappy.simplesystems.org
 To: oss-security@lists.openwall.com
-Message-ID: <63607fd4-70b6-dc8f-6aae-82148d38880b@apache.org>
-Date: Mon, 19 Jun 2017 15:15:26 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+In-Reply-To: <ZTVFrvd2h+70PhaV@itl-email>
+Message-ID: <alpine.GSO.2.20.2310221118590.6992@scrappy.simplesystems.org>
+References: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com> <20231022000649.GA14340@openwall.com> <ZTRwxHaoUqTPyf+b@itl-email> <alpine.GSO.2.20.2310220847390.6992@scrappy.simplesystems.org> <ZTVFrvd2h+70PhaV@itl-email>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2017-3167: Apache httpd 2.x ap_get_basic_auth_pw authentication
- bypass
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Sun, 22 Oct 2023 11:26:25 -0500 (CDT)
+Subject: Re: [oss-security] sandboxing,of upstream programs by distros
 
-CVE-2017-3167: ap_get_basic_auth_pw authentication bypass
+On Sun, 22 Oct 2023, Demi Marie Obenour wrote:
 
-Severity: Important
+>> Unfortunately, most Linux IPC mechanisms are not very secure since they rely
+>> on historical Unix privilege models to control access.
+>
+> If one can bypass access control on IPC, one can easily get root by
+> sending malicious commands to systemd, so I don't think this is
+> something to worry about.
 
-Vendor: The Apache Software Foundation
+Looking at the 5 rules you posted, my concern is addressed by rule #2 
+(I/O resources opened in advance).
 
-Versions Affected:
-httpd 2.2.0 to 2.2.32
-httpd 2.4.0 to 2.4.25
+> 2. All I/O resources (such as file descriptors) must be acquired before
+>   processing untrusted input.  It must not be possible to use these
+>   resources to access additional resources the program should not have
+>   access to.
 
-Description:
-Use of the ap_get_basic_auth_pw() by third-party modules outside of the
-authentication phase may lead to authentication requirements being
-bypassed.
+This request seems the most challenging to satisfy.
 
-Mitigation:
-2.2.x users should either apply the patch available at
-https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-3167.patch
-or upgrade in the future to 2.2.33, which is currently unreleased.
+> A command-line tool can probably meet all of these requirements but the
+> last one quite easily.  For a library, the difficulty of meeting these
+> requirements will depend significantly on the library API.  I am not
+> familiar with the GraphicsMagick API and so am not sure how difficult it
+> will be for the GraphicsMagick API to support sandboxing.
 
-2.4.x users should upgrade to 2.4.26.
+A different I/O interface module would need to be developed to support 
+the possibility of opening an output descriptor in advance.
 
-Third-party module writers SHOULD use ap_get_basic_auth_components(),
-available in 2.2.33 and 2.4.26, instead of ap_get_basic_auth_pw().
-Modules which call the legacy ap_get_basic_auth_pw() during the
-authentication phase MUST either immediately authenticate the user after
-the call, or else stop the request immediately with an error response,
-to avoid incorrectly authenticating the current request.
+If one looks at ImageMagick, VIPS, GraphicsMagick, etc., one will 
+quickly see that those implementations optionally depend on tens of 
+other implementations.  For example, VIPS normally links with 
+ImageMagick or GraphicsMagick.  So many important programs have 
+complex dependencies.
 
-Credit:
-The Apache HTTP Server security team would like to thank Emmanuel
-Dreyfus for reporting this issue.
+It is common for temporary files to be created and so this issue would 
+need to be addressed.
 
-References:
-https://httpd.apache.org/security_report.html
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
