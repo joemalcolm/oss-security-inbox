@@ -1,71 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/11
-Message-ID: <20230922214006.GA20989@openwall.com>
-Date: Fri, 22 Sep 2023 23:40:06 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/5
+Message-ID: <ZTVFrvd2h+70PhaV@itl-email>
+Date: Sun, 22 Oct 2023 11:54:03 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 22, 2023 at 07:27:55PM +0200, Solar Designer wrote:
-> On Mon, Sep 18, 2023 at 05:36:13PM +0000, Dan McDonald wrote:
-> > On Sep 15, 2023, at 5:09 PM, Solar Designer <solar@...nwall.com> wrote:
-> > > Can you show illumos fixing non-illumos-only security issues within days
-> > > after public disclosure, so that a few days of advance notice would have
-> > > made those fixes even quicker?
+On Sun, Oct 22, 2023 at 09:19:59AM -0500, Bob Friesenhahn wrote:
+> On Sat, 21 Oct 2023, Demi Marie Obenour wrote:
+> > > 
+> > > For Rocky Linux Security SIG, the only relevant thing mentioned so far
+> > > was possibly offering an OpenBSD pledge()-alike that other packages
+> > > could use.  However, I am skeptical any actually would, unless we also
+> > > introduce such uses ourselves and maintain own "override" packages
+> > > (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
+> > > software.  Initially, we are going to only create "override' packages
+> > > for core or very commonly used/exposed components, and to do so only for
+> > > specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
+> > > coming from EPEL and with most of its dependency libraries coming from
+> > > AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
+> > > make the cut, at least not initially.
 > > 
-> > It's a per-illumos-distro property.  OmniOS has Stable & LTS releases.   Here's the current-stable
-> > release notes, dynamically updated every time they update:
-> > 
-> > 	https://github.com/omniosorg/omnios-build/blob/r151046/doc/ReleaseNotes.md
-> > 
-> > So I'm not sure if a few days of advance notice would make those quicker,
-> > but I do know that other distros have biweekly scheduled releases, and advance
-> > notice there would keep those wheels spinning faster.  Esp. since "patch tuesday"
-> > is a mere one-day before the release branch is forked off on release weeks.
+> > Has deprecating ImageMagick and/or GraphicsMagick outright been
+> > considered?  I don’t just mean the downstream packages, but the entire
+> > upstream projects, or at least the libraries.
 > 
-> This looks pretty good for OmniOS, e.g. for OpenSSL CVE-2023-3817 it
-> appears to be 4 days from OpenSSL advisory on "31st July 2023" to OmniOS
-> "r151046n (2023-08-03)", and even something like 1 day for OpenSSH
-> update to "9.3p2, fixing CVE-2023-38408" and for "AMD CPU microcode
-> updated to 20230719, mitigating CVE-2023-20593 on some Zen2 processors"
-> in "r151046m (2023-07-25)" (it was brought to oss-security on July 24).
+> RHEL already deprecated ImageMagick several years ago and advised users to
+> use GraphicsMagick (https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/7.7_release_notes/deprecated_functionality).
+> Those users were confused given that many of the recipes they were using for
+> ImageMagick did not work with GraphicsMagick. The solution for those users
+> was to find a different way to install ImageMagick.
 > 
-> That page above goes back to May 2023.  Were there separate ones for
-> older releases?  For "a publicly verifiable track record, dating back at
-> least 1 year and continuing to present day".
+> > One option would be to instead make an IPC call to a persistent daemon
+> > running in the background.  That said, has wasm2c been considered?  The
+> > best fix would be something that can make C code memory-safe, even if it
+> > comes at a performance hit of 4x or more (like SoftBound+CETS did).
+> > Stuff that cares about performance should be migrating to something like
+> > libvips or ImageFlow.
+> > 
+> > If neither of these are options, I think the entire library will need to
+> > be deprecated for eventual removal.  The command-line tools can remain,
+> > but they can be much more strongly sandboxed than a library can, because
+> > they have the entire process to themselves.
+> 
+> Any deprecations or sandboxing approaches which fail to understand and
+> address the needs of the "user" will fail.  Replacing package 'A' with
+> package 'B', where package 'B' works totally differently, or performs
+> different functions than package 'A' will fail because the users will not
+> use it.
 
-I see this one goes from December 2022 to present:
+That is true.
 
-https://github.com/omniosorg/omnios-build/blob/r151044/doc/ReleaseNotes.md
+> Unfortunately, most Linux IPC mechanisms are not very secure since they rely
+> on historical Unix privilege models to control access.
 
-and this one from May 2022 to April 2023:
+If one can bypass access control on IPC, one can easily get root by
+sending malicious commands to systemd, so I don't think this is
+something to worry about.
 
-https://github.com/omniosorg/omnios-build/blob/r151042/doc/ReleaseNotes.md
+> Common ways to assure
+> security such as TLS usually result in a considerable reduction of
+> performance. Solutions like Landlock seem useful for very restricted usage
+> applications.  Sandboxing solutions which work for any use of a program seem
+> better than requiring a client/server model.
 
-So that's already more than a year, and I don't need to look further.
+The advantage of a client/server model is that it avoids a library
+having to spawn child processes, which was mentioned as a concern
+earlier.  I agree that it is more effort than desirable.
 
-Also, I note this reply by Bob Friesenhahn:
+> As the developer/maintainer of a complex C program (GraphicsMagick), I
+> appreciate any advice on improvements which make it more suitable for
+> sandboxing, or less likely to appear as a hazard on the security radar.
 
-https://www.openwall.com/lists/oss-security/2023/09/14/1
+To make a program suitable for sandboxing, several requirements must be
+met:
 
-On Thu, Sep 14, 2023 at 08:36:17AM -0500, Bob Friesenhahn wrote:
-> I am not a member of the 'distros' list, but can vouch for Dan
-> McDonald's dedication and capabilities, as observed over several
-> years.  Dan did not mention it, but he previously became the primary
-> maintainer of an Illumos distribution known as "OmniOS", which I use.
-> As a maintainer, Dan did pay close attention to security issues.
+1. The program must run in a separate address space.  This can either be
+   a OS process, a software fault isolation (SFI) container, or a SFI
+   container inside an OS process.  If an SFI container is used without
+   a separate OS process, additional care must be taken to prevent
+   side-channel attacks, so I do not recommend this solution without
+   significant additional research.
 
-So I think we can accept OmniOS as new distros list member, if that's
-desired and Dan would represent OmniOS on the list.  This subscription
-on its own would not allow sharing of info with other illumos distros.
+2. All I/O resources (such as file descriptors) must be acquired before
+   processing untrusted input.  It must not be possible to use these
+   resources to access additional resources the program should not have
+   access to.
 
-In special cases, Dan would be able to ask the issue reporters their
-explicit permission to share with other illumos distros.
+3. Before processing untrusted input, the program must lose the ability
+   to acquire additional I/O resources.
 
-If those distros do typically need the info, they may request direct
-list membership.
+4. The address space (whether an OS process or an SFI container) must
+   not be reused once processing has completed, unless it can be
+   forcibly and verifiably reset to its initial state.
 
-How does this sound to you, Dan?
+5. If the inputs to the processing were untrusted, the results must also
+   be considered untrusted.
 
-Alexander
+A command-line tool can probably meet all of these requirements but the
+last one quite easily.  For a library, the difficulty of meeting these
+requirements will depend significantly on the library API.  I am not
+familiar with the GraphicsMagick API and so am not sure how difficult it
+will be for the GraphicsMagick API to support sandboxing.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
