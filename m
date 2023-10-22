@@ -1,36 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/9
-Message-ID: <6ced3d94-54c0-3b5d-2582-25dc94110b03@apache.org>
-Date: Tue, 11 Jul 2023 15:50:17 +0000
-From: Dave Fisher <wave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/4
+Message-ID: <alpine.GSO.2.20.2310220847390.6992@scrappy.simplesystems.org>
+Date: Sun, 22 Oct 2023 09:19:59 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31007: Apache Pulsar: Broker does not always disconnect client when authentication data expires 
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+On Sat, 21 Oct 2023, Demi Marie Obenour wrote:
+>>
+>> For Rocky Linux Security SIG, the only relevant thing mentioned so far
+>> was possibly offering an OpenBSD pledge()-alike that other packages
+>> could use.  However, I am skeptical any actually would, unless we also
+>> introduce such uses ourselves and maintain own "override" packages
+>> (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
+>> software.  Initially, we are going to only create "override' packages
+>> for core or very commonly used/exposed components, and to do so only for
+>> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
+>> coming from EPEL and with most of its dependency libraries coming from
+>> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
+>> make the cut, at least not initially.
+>
+> Has deprecating ImageMagick and/or GraphicsMagick outright been
+> considered?  I don’t just mean the downstream packages, but the entire
+> upstream projects, or at least the libraries.
 
-- Apache Pulsar before 2.9.5
-- Apache Pulsar 2.10.0 through 2.10.3
-- Apache Pulsar 2.11.0
+RHEL already deprecated ImageMagick several years ago and advised 
+users to use GraphicsMagick 
+(https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/7.7_release_notes/deprecated_functionality). 
+Those users were confused given that many of the recipes they were 
+using for ImageMagick did not work with GraphicsMagick. The solution 
+for those users was to find a different way to install ImageMagick.
 
-Description:
+> One option would be to instead make an IPC call to a persistent daemon
+> running in the background.  That said, has wasm2c been considered?  The
+> best fix would be something that can make C code memory-safe, even if it
+> comes at a performance hit of 4x or more (like SoftBound+CETS did).
+> Stuff that cares about performance should be migrating to something like
+> libvips or ImageFlow.
+>
+> If neither of these are options, I think the entire library will need to
+> be deprecated for eventual removal.  The command-line tools can remain,
+> but they can be much more strongly sandboxed than a library can, because
+> they have the entire process to themselves.
 
-Improper Authentication vulnerability in Apache Software Foundation Apache Pulsar Broker allows a client to stay connected to a broker after authentication data expires if the client connected through the Pulsar Proxy when the broker is configured with authenticateOriginalAuthData=false or if a client connects directly to a broker with a specially crafted connect command when the broker is configured with authenticateOriginalAuthData=false.
+Any deprecations or sandboxing approaches which fail to understand and 
+address the needs of the "user" will fail.  Replacing package 'A' with 
+package 'B', where package 'B' works totally differently, or performs 
+different functions than package 'A' will fail because the users will 
+not use it.
 
-This issue affects Apache Pulsar: through 2.9.4, from 2.10.0 through 2.10.3, 2.11.0.
+Unfortunately, most Linux IPC mechanisms are not very secure since 
+they rely on historical Unix privilege models to control access. 
+Common ways to assure security such as TLS usually result in a 
+considerable reduction of performance. Solutions like Landlock seem 
+useful for very restricted usage applications.  Sandboxing solutions 
+which work for any use of a program seem better than requiring a 
+client/server model.
 
-2.9 Pulsar Broker users should upgrade to at least 2.9.5.
-2.10 Pulsar Broker users should upgrade to at least 2.10.4.
-2.11 Pulsar Broker users should upgrade to at least 2.11.1.
-3.0 Pulsar Broker users are unaffected.
-Any users running the Pulsar Broker for 2.8.* and earlier should upgrade to one of the above patched versions.
+As the developer/maintainer of a complex C program (GraphicsMagick), I 
+appreciate any advice on improvements which make it more suitable for 
+sandboxing, or less likely to appear as a hazard on the security 
+radar.
 
-Credit:
-
-Michael Marshall of DataStax (finder)
-
-References:
-
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-31007
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
