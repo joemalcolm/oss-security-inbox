@@ -1,124 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/20/5
-Message-Id: <26FA0F7F-3AA3-467E-BBC5-142319CD6C28@beckweb.net>
-Date: Wed, 20 Sep 2023 17:46:40 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/1
+Message-ID: <20231022000649.GA14340@openwall.com>
+Date: Sun, 22 Oct 2023 02:06:49 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hi Matt,
 
-The following releases contain fixes for security vulnerabilities:
+I'm sorry I didn't follow up on this sooner.
 
-* Jenkins 2.424
-* Jenkins LTS 2.414.2
-* Build Failure Analyzer Plugin 2.4.2
+On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
+> Is there interest/solutions within the Rock Security SIG or other 
+> distro's security teams for sandboxing that package upstreams can opt 
+> into?
 
+For Rocky Linux Security SIG, the only relevant thing mentioned so far
+was possibly offering an OpenBSD pledge()-alike that other packages
+could use.  However, I am skeptical any actually would, unless we also
+introduce such uses ourselves and maintain own "override" packages
+(replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
+software.  Initially, we are going to only create "override' packages
+for core or very commonly used/exposed components, and to do so only for
+specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
+coming from EPEL and with most of its dependency libraries coming from
+AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
+make the cut, at least not initially.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-09-20/
+Also, continuing these examples, it's probably more realistic to sandbox
+their command-line tools, whereas the underlying libraries are probably
+more exposed via language bindings.  Would we be introducing creation of
+child processes into the libraries?  That's tricky as it could violate
+expectations of programs using such libraries.  (Yet at Openwall we did
+a similar thing in pam_tcb, albeit limiting this maybe-unexpected
+behavior to setups that opted-in to it with the "fork" option in the PAM
+configuration file.  So it's not completely out of consideration.)
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Speaking of pledge() for Linux, there's this project by Justine Tunney:
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+https://justine.lol/pledge/
+https://github.com/jart/cosmopolitan/blob/master/libc/calls/pledge-linux.c
 
----
+This is part of Justine's libc implementation, but a comment says:
 
-SECURITY-3261 / CVE-2023-43494
-Jenkins allows filtering builds in the build history widget by specifying
-an expression that searches for matching builds by name, description,
-parameter values, etc.
+ * This file contains only the minimum amount of Linux-specific code
+ * that's necessary to get a pledge() policy installed. This file is
+ * designed to not use static or tls memory or libc depnedencies, so
+ * it can be transplanted into codebases and injected into programs.
 
-Jenkins 2.50 through 2.423 (both inclusive), LTS 2.60.1 through 2.414.1
-(both inclusive) does not exclude sensitive build variables (e.g., password
-parameter values) from this search.
+Are there already other projects using this?  Any distros offering it?
 
-This allows attackers with Item/Read permission to obtain values of
-sensitive variables used in builds by iteratively testing different
-characters until the correct sequence is discovered.
+> To step this out a bit... we have a large, old code base that was written 
+> decades prior to current best practices. It has numerous known memory 
+> safety issues and ever-dwindling maintainer capacity. It is also a 
+> dependency, either directly or indirectly, of a significant fraction of 
+> the world's software. I am guessing this scenario sounds uncomfortably 
+> familiar/common to many on this list.
+> 
+> We (the maintainers) have discussed sandboxing as a way of mitigating 
+> the risk of known bugs. However, one of the problems is that we don't 
+> know the complete set of required privileges of our dependencies. The 
+> software can be configured with or without various libraries and also 
+> has a plugin mechanism for dynamic code loading. Basically if a 
+> sandboxing solution like seccomp wants to know our full set of system 
+> calls, we ourselves don't know it.
 
+With pledge(), you could provide coarse-grained "promises" rather than
+constrain yourself to individual syscalls.  Maybe that would work for
+you?  However, it'd only be reliably used by packages if those introduce
+a build-time dependency on whatever package provides pledge().  So e.g.
+if we add a package providing pledge() in Rocky Linux Security SIG repo,
+that won't be picked up by my example packages above built as part of
+EPEL (not part of Rocky Linux project) or AppStream (part of the
+project, but currently unlikely to be overridden in the SIG).
 
-SECURITY-3245 / CVE-2023-43495
-`ExpandableDetailsNote` allows annotating build log content with additional
-information that can be revealed when interacted with.
+OTOH, you could even integrate the pledge-linux.c file in your project,
+in which case it could become a standard feature used by many Linux
+distros and extra package repos once they update to your newer version.
 
-Jenkins 2.423 and earlier, LTS 2.414.1 and earlier does not escape the
-value of the `caption` constructor parameter of `ExpandableDetailsNote`.
+> The downstream maintainer packaging the software for, e.g. Rocky, does 
+> though. They have a complete picture of which libraries/features are 
+> enabled and how locked down the plugin stuff is.
+> 
+> So, where I'm going with this, is that if the various packaging 
+> ecosystems could (or do) offer sandboxing to upstream, people like us 
+> would gladly opt in to it. Of course, these downstream maintainers can 
+> already seccomp our software today. But expecting them to reverse 
+> engineer our exact needs seems a bit much.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to provide `caption` parameter values.
+I find the above two paragraphs somewhat contradictory - the downstream
+maintainer packaging the software does have technical ability to figure
+out the exact set of syscalls the software will use on their distro with
+current versions of other packages, but OTOH "expecting them to reverse
+engineer our exact needs seems a bit much."  I'd say that figuring out
+that exact set _is_ this kind of reverse-engineering, and is too much to
+expect from a typical package maintainer, who is not focusing on just
+this one package.  Besides, the exact set of syscalls may also change as
+other packages get updated; this is not something guaranteed to stay
+stable within what's normally considered a stable ABI.  So that person
+would also need to identify and introduce extra explicit package version
+dependencies, and to do extra package rebuilds to keep those satisfied.
 
-NOTE: As of publication, the related API is not used within Jenkins (core),
-and the Jenkins security team is not aware of any affected plugins.
+Maybe a coarse-grained pledge() would make this more realistic, or not.
 
-
-SECURITY-3072 / CVE-2023-43496
-Jenkins creates a temporary file when a plugin is deployed directly from a
-URL.
-
-Jenkins 2.423 and earlier, LTS 2.414.1 and earlier creates this temporary
-file in the system temporary directory with the default permissions for
-newly created files.
-
-If these permissions are overly permissive, they may allow attackers with
-access to the Jenkins controller file system to read and write the file
-before it is installed in Jenkins, potentially resulting in arbitrary code
-execution.
-
-IMPORTANT: This vulnerability only affects operating systems using a shared
-temporary directory for all users (typically Linux). Additionally, the
-default permissions for newly created files generally only allow attackers
-to read the temporary file, but not write to it.
-
-
-SECURITY-3073 / CVE-2023-43497 (Stapler) & CVE-2023-43498 (MultipartFormDataParser)
-In Jenkins 2.423 and earlier, LTS 2.414.1 and earlier, uploaded files
-processed via the Stapler web framework and the Jenkins API
-`MultipartFormDataParser` create temporary files in the system temporary
-directory with the default permissions for newly created files.
-
-If these permissions are overly permissive, attackers with access to the
-system temporary directory may be able to read and write the file before it
-is used.
-
-IMPORTANT: This vulnerability only affects operating systems using a shared
-temporary directory for all users (typically Linux). Additionally, the
-default permissions for newly created files generally only allow attackers
-to read the temporary file, but not write to it.
-
-
-SECURITY-3244 / CVE-2023-43499
-Build Failure Analyzer Plugin 2.4.1 and earlier does not escape Failure
-Cause names in build logs.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to create or update Failure Causes.
-
-
-SECURITY-3226 / CVE-2023-43500 (CSRF) & CVE-2023-43501 (missing permission check)
-Build Failure Analyzer Plugin 2.4.1 and earlier does not perform a
-permission check in a connection test HTTP endpoint.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified hostname and port using attacker-specified username and
-password.
-
-Additionally, this HTTP endpoint does not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3239 / CVE-2023-43502
-Build Failure Analyzer Plugin 2.4.1 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to delete Failure Causes.
-
-
-
+Alexander
