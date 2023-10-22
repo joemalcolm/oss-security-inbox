@@ -1,30 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/01/1
-Message-ID: <ZRkAokgUEw9cD7yG@itl-email>
-Date: Sun, 1 Oct 2023 01:16:01 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/22/2
+Message-ID: <ZTRwxHaoUqTPyf+b@itl-email>
+Date: Sat, 21 Oct 2023 20:45:40 -0400
 From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 30, 2023 at 07:28:46PM -0400, Michael Orlitzky wrote:
-> On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
-> > It is also worth noting that Rust-the-language supports dynamic linking.
-> > Once Cargo supports this and downstreams (like Fedora) obtain sufficient
-> > build capacity, it will be possible to use dynamic linking by performing
-> > automatic cascading rebuilds whenever a package is upgraded.  Arch
-> > already does this for Haskell IIUC.
+On Sun, Oct 22, 2023 at 02:06:49AM +0200, Solar Designer wrote:
+> Hi Matt,
 > 
-> We do it for Haskell in Gentoo, too, but we have a dark secret: it only
-> works because Haskell became unpopular. There are basically only two
-> Haskell programs, and everything works for n = 2.
+> I'm sorry I didn't follow up on this sooner.
+> 
+> On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
+> > Is there interest/solutions within the Rock Security SIG or other 
+> > distro's security teams for sandboxing that package upstreams can opt 
+> > into?
+> 
+> For Rocky Linux Security SIG, the only relevant thing mentioned so far
+> was possibly offering an OpenBSD pledge()-alike that other packages
+> could use.  However, I am skeptical any actually would, unless we also
+> introduce such uses ourselves and maintain own "override" packages
+> (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
+> software.  Initially, we are going to only create "override' packages
+> for core or very commonly used/exposed components, and to do so only for
+> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
+> coming from EPEL and with most of its dependency libraries coming from
+> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
+> make the cut, at least not initially.
 
-Why would this not work for a more popular language like Rust?  I know
-that Gentoo is limited by the compute resources of a single machine, but
-cascading rebuilds should not be a problem for modern distributed build
-infrastructure, provided that the build clusters are sufficiently large.
+Has deprecating ImageMagick and/or GraphicsMagick outright been
+considered?  I don’t just mean the downstream packages, but the entire
+upstream projects, or at least the libraries.
 
-Also, are the two programs GHC and Pandoc?
+> Also, continuing these examples, it's probably more realistic to sandbox
+> their command-line tools, whereas the underlying libraries are probably
+> more exposed via language bindings.  Would we be introducing creation of
+> child processes into the libraries?  That's tricky as it could violate
+> expectations of programs using such libraries.  (Yet at Openwall we did
+> a similar thing in pam_tcb, albeit limiting this maybe-unexpected
+> behavior to setups that opted-in to it with the "fork" option in the PAM
+> configuration file.  So it's not completely out of consideration.)
+
+One option would be to instead make an IPC call to a persistent daemon
+running in the background.  That said, has wasm2c been considered?  The
+best fix would be something that can make C code memory-safe, even if it
+comes at a performance hit of 4x or more (like SoftBound+CETS did).
+Stuff that cares about performance should be migrating to something like
+libvips or ImageFlow.
+
+If neither of these are options, I think the entire library will need to
+be deprecated for eventual removal.  The command-line tools can remain,
+but they can be much more strongly sandboxed than a library can, because
+they have the entire process to themselves.
 -- 
 Sincerely,
 Demi Marie Obenour (she/her/hers)
