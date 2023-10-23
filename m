@@ -1,96 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/24/3
-Message-ID: <43f83e16-e492-4540-b34d-d2b51da2bb74@canonical.com>
-Date: Mon, 24 Jul 2023 13:41:36 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/23/1
+Message-ID: <c15f3a69-2ded-7343-4f6c-51fc5d83a956@gmail.com>
+Date: Mon, 23 Oct 2023 17:33:31 +1100
+From: Matthew Fernandez <matthew.fernandez@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
+Subject: Re: sandboxing,of upstream programs by distros
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> On 10/22/23 11:06, Solar Designer wrote:
+>> For Rocky Linux Security SIG, the only relevant thing mentioned so far
+>> was possibly offering an OpenBSD pledge()-alike that other packages
+>> could use.
 
-There seems to be confusion regarding which is the correct commit:
+Thanks for bringing up pledge(). That was partly what spurred this line 
+of thinking – pledge() is our probable solution on OpenBSD, and it 
+wasn’t clear what the equivalent approach on Linux would be.
 
-Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which is for 
-family 17h.
+>> Initially, we are going to only create "override' packages
+>> for core or very commonly used/exposed components, and to do so only for
+>> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
+>> coming from EPEL and with most of its dependency libraries coming from
+>> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
+>> make the cut, at least not initially.
 
-This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is for family 
-19h.
+I see. Thanks for letting me know.
 
-I assume the 17h family one is the correct one?
+>> I find the above two paragraphs somewhat contradictory…
 
-Thanks,
+Yes, I see what you’re saying, and I take your point. Perhaps this was a 
+bit “have my cake and eat it too” on my side.
 
-Marc.
+> On 10/22/23 11:45, Demi Marie Obenour wrote:
+>> That said, has wasm2c been considered?  The
+>> best fix would be something that can make C code memory-safe, even if it
+>> comes at a performance hit
 
+Funny you should mention this, it’s what we presently suggest to 
+security-concerned users. There’s a kind downstream contributor who has 
+done the necessary gymnastics to produce a WASM-ised version of our 
+program. I have not looked into how they achieve this, but I would not 
+be surprised if it involves something like this.
 
+> On 10/23/23 01:19, Bob Friesenhahn wrote:
+>> On Sat, 21 Oct 2023, Demi Marie Obenour wrote:
+>>>
+>>> If neither of these are options, I think the entire library will need to
+>>> be deprecated for eventual removal.  The command-line tools can remain,
+>>> but they can be much more strongly sandboxed than a library can, because
+>>> they have the entire process to themselves.
+>> 
+>> Any deprecations or sandboxing approaches which fail to understand and 
+>> address the needs of the "user" will fail.  Replacing package 'A' with 
+>> package 'B', where package 'B' works totally differently, or performs 
+>> different functions than package 'A' will fail because the users will 
+>> not use it.
 
-On 2023-07-24 10:28, Tavis Ormandy wrote:
-> Hello, this is CVE-2023-20593, a use-after-free in AMD Zen2 processors.
-> 
-> Yes, you read that right :)
-> 
-> This includes at least the following products:
-> 
-> - AMD Ryzen 3000 Series Processors
-> - AMD Ryzen PRO 3000 Series Processors
-> - AMD Ryzen Threadripper 3000 Series Processors
-> - AMD Ryzen 4000 Series Processors with Radeon Graphics
-> - AMD Ryzen PRO 4000 Series Processors
-> - AMD Ryzen 5000 Series Processors with Radeon Graphics
-> - AMD Ryzen 7020 Series Processors with Radeon Graphics
-> - AMD EPYC 7002 Series Processors
-> 
-> I've written a blog post with a detailed description of this bug,
-> it's available here:
-> 
-> https://lock.cmpxchg8b.com/zenbleed.html
-> 
-> # Background
-> 
-> The vector register file (RF) is a resource shared among all tasks on
-> the same physical core. The register allocation table (RAT) keeps track
-> of how RF resources are assigned and mapped to named registers. However,
-> no RF space is needed to store a register with a zero value - a flag
-> called the z-bit can simply be set in the RAT.
-> 
-> # Vulnerability
-> 
-> If the z-bit is set speculatively, then it would not be sufficient to
-> unset it again on branch misprediction. That's because the previously
-> allocated RF space could have been reallocated between those two events.
-> That would effectively be a UaF.
-> 
-> We have discovered that this really can happen under certain specific
-> conditions. Specifically, an instruction that uses merge optimization, a
-> register rename, and a mispredicted VZEROUPPER instruction must enter
-> the FP backend simultaneously.
-> 
-> # Impact
-> 
-> The practical result here is that you can spy on the registers of other
-> processes. No system calls or privileges are required.
-> 
-> It works across virtual machines and affects all operating systems.
-> 
-> I have written a poc for this issue that's fast enough to reconstruct
-> keys and passwords as users log in.
-> 
-> # Solution
-> 
-> AMD have released a patch for this issue available here:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=b250b32ab1d044953af2dc5e790819a7703b7ee6
-> 
-> There is a software workaround, you can set the chicken bit DE_CFG[9].
-> This may have some performance cost, and the microcode update is
-> preferred.
-> 
-> It is not sufficient to disable SMT.
-> 
-> # Credit
-> 
-> This bug was discovered by Tavis Ormandy of Google Information Security.
-> 
-> 
+I think here Bob has really nailed what makes deprecation an unworkable 
+strategy for these kind of situations. Unless you can stand up an 
+absolutely 1-for-1 drop-in replacement, the ecosystem won’t move. And 
+we’re talking about pieces of software that took many person-years of 
+effort to create. We’re had numerous contributors propose a rewrite in a 
+memory safe language and I have (sincerely) wished each of them the best 
+of luck, and then never heard from them again. I think we’re all roughly 
+on the same page about the desirable end state, but I don’t see this 
+kind of deprecation as a strategy that will get us there.
 
+> On 10/23/23 02:54, Demi Marie Obenour wrote:
+>> A command-line tool can probably meet all of these requirements but the
+>> last one quite easily.  For a library, the difficulty of meeting these
+>> requirements will depend significantly on the library API.
+
+Library vs cli is an interesting dimension to this I had not really 
+teased out. I agree with you, that sandboxing a library is in some ways 
+trickier because you’re doing work on behalf of a caller whose needs you 
+don’t statically know.
+
+> On 10/22/23 20:50, Mickaël Salaün wrote:
+>> for a Linux fine-grained sandboxing it would be
+>> wiser to use the underlying kernel sandboxing feature: Landlock
+>> See https://landlock.io/
+
+Thanks for the reminder. I was aware of Landlock, but hadn’t immediately 
+connected it with my current task. I’ll go take a look and see what I 
+can learn.
+
+Thanks everyone for the comments so far in this thread. Already giving 
+me much to think about :)
