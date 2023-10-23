@@ -1,64 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/11
-Message-ID: <20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
-Date: Tue, 14 Mar 2023 16:57:25 -0400
-From: Shawn Webb <shawn.webb@...denedbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/23/2
+Message-ID: <bd530d8e-f453-71e6-6645-029ae552fa3d@apache.org>
+Date: Mon, 23 Oct 2023 15:38:43 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+Subject: CVE-2023-46288: Apache Airflow: Sensitive parameters exposed in API when "non-sensitive-only" configuration is set 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno Böck wrote:
-> Hi,
-> 
-> This blogpost highlights TTY Pushback vulnerabilities enabled via the
-> TIOCSTI kernel functionality available in the Linux kernel:
-> https://www.errno.fr/TTYPushback.html
-> 
-> This has been discussed here previously:
-> https://www.openwall.com/lists/oss-security/2017/06/03/9
-> 
-> Though I think there are some noteworthy updates. In the 2017 post
-> solar designer mentioned that the Linux kernel developers have multiple
-> times rejected changes in the kernel. However this has now changed:
-> Starting with Kernel 6.2 it is possible to disable TIOCSTI
-> (unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
-> applications practically use TIOCSTI.
-> 
-> This seems to be the only real mitigation for this issue. It appears
-> su has a parameter, and in sudo one can configure the creation of a new
-> pty in the sudoers file. I don't consider these as satisfying fixes, as
-> they are optinal, and thus rely on the expectation that users are aware
-> of this risk and manually use these mitigations. That does not seem
-> realistic to me.
-> 
-> This also affects such a large number of tools, not just
-> su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
-> affected by this by default.
-> 
-> Thus I strongly recommend that people disable this in the kernel.
-> 
-> [1] https://github.com/containers/bubblewrap/issues/555
+Severity: low
 
-With commit c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5[0], I've added a
-toggle in HardenedBSD to disable TIOCSTI. The toggle is set to
-prohibit TIOCSTI by default. Now attempts to use TIOCSTI will be met
-with EPERM.
+Affected versions:
 
-I've verified the toggle in a real-world scenario with the doas issue
-PoC found at [1].
+- Apache Airflow 2.4.0 before 2.7.0
 
-[0]:
-https://git.hardenedbsd.org/hardenedbsd/HardenedBSD/-/commit/c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5
-[1]:
-https://github.com/Duncaen/OpenDoas/issues/106#issuecomment-1467202981
+Description:
 
-Thanks,
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Airflow.This issue affects Apache Airflow from 2.4.0 to 2.7.0.
 
--- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
+Sensitive configuration information has been exposed to authenticated users with the ability to read configuration via Airflow REST API for configuration even when the expose_config option is set to non-sensitive-only. The expose_config option is False by default. It is recommended to upgrade to a version that is not affected if you set expose_config to non-sensitive-only configuration. This is a different error than CVE-2023-45348 which allows authenticated user to retrieve individual configuration values in 2.7.* by specially crafting their request (solved in 2.7.2).
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+Users are recommended to upgrade to version 2.7.2, which fixes the issue and additionally fixes CVE-2023-45348.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Credit:
+
+id_No2015429 of 3H Secruity Team (finder)
+Lee, Wei (finder)
+Lee, Wei (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/32261
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46288
+
