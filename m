@@ -1,4 +1,4 @@
-Received: (qmail 10003 invoked by uid 550); 14 Mar 2023 20:19:30 -0000
+Received: (qmail 16264 invoked by uid 550); 24 Oct 2023 17:51:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,149 +7,215 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8167 invoked from network); 14 Mar 2023 20:17:04 -0000
-Date: Tue, 14 Mar 2023 21:16:52 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: Helmut Grohne <helmut@subdivi.de>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230314201652.RlbWr%steffen@sdaoden.eu>
-In-Reply-To: <20230314191132.qDz3u%steffen@sdaoden.eu>
-References: <Y91yP6mYIZ+UXmgf@alf.mars> <20230314110138.GA1192267@subdivi.de>
- <20230314191132.qDz3u%steffen@sdaoden.eu>
-Mail-Followup-To: Helmut Grohne <helmut@subdivi.de>,
- oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-438-g5e0fdbd9f9
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
+Received: (qmail 11300 invoked from network); 24 Oct 2023 16:56:40 -0000
+X-Virus-Scanned: amavis at mail.hlrs.de
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.hlrs.de E65005EA20B4
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hlrs.de;
+	s=1806FB76-797D-11E5-BCE5-7B280A126CD4; t=1698166588;
+	bh=Q0Mq5m/9K++D+FqX6jimRcmgzmxI7QrhRkZEG/BLgO8=;
+	h=Message-ID:Date:MIME-Version:To:From;
+	b=LKZEacSdxow3AfIZCaFtFlQwohS1taNf9+CFxPfOZlIcY105+Hv2YcgV+SkI2waLM
+	 dyUAkhbIE2tQmfevyQXNPQYa7Ob7v0nUCj735DTfQV18aAMUAUG5XI5qVKASK+yFFF
+	 nNZ8K6k3RukNHcxgiXGR3GyxJMojyQhezp8X2LLU=
+Message-ID: <3cba653e-efec-4264-89df-f88caa37d84d@hlrs.de>
+Date: Tue, 24 Oct 2023 18:56:27 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-="
-Subject: Re: [oss-security] Re: sox: patches for old vulnerabilities
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+ <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
+ <20231020132741.GA4951@openwall.com>
+ <d4af64a958768b48cc98670741c1f8e4.da8a7fea@penurious.financings>
+From: Martin Hecht <martin.hecht@hlrs.de>
+In-Reply-To: <d4af64a958768b48cc98670741c1f8e4.da8a7fea@penurious.financings>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms090907050703000203040508"
+Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
+ anytime
 
---=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-=
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-ID: <20230314201652.NaPry%steffen@sdaoden.eu>
+--------------ms090907050703000203040508
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello Helmut, list, and special greetings to the happy moderator,
+On 20/10/2023 17:21, Turistu wrote:
+> On Fri, Oct 20, 2023 at 03:27:41PM +0200, Solar Designer wrote:
+>>
+>> Or isolate Firefox to its own X server (or at least a separate one from
+>> where you run terminal emulators managing important stuff), like it
+>> happens when you run it in its own VM (or perhaps many instances of it
+>> in many VMs) on Qubes OS.  Indeed this also removes the convenience of
+> 
+> If you do that, notice that you will also have to run a window manager
+> inside that separate X server, because firefox (which never implemented
+> the X11 and icccm protocols correctly) needs a wm in order to function
+> properly (more precisely a point-to-focus wm or one that simulates
+> point-to-focus just to keep firefox and some other horrors like old atk
+> java apps happy).
 
-Steffen Nurpmeso wrote in
- <20230314191132.qDz3u%steffen@sdaoden.eu>:
- ...
- |Helmut Grohne wrote in
- | <20230314110138.GA1192267@subdivi.de>:
- ||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
- ||>  * CVE-2021-33844
- ||
- ||The original fix for this issue would cause a regression. After applying
- ||it, sox would be unable to decode WAV GSM files. This has been reported
- ...
- |You have chosen not to update to latest possible git(?).
- ...
- ||From: Helmut Grohne <helmut@subdivi.de>
- ||Subject: wav: reject 0 bits per sample to avoid division by zero
- ||Bug: https://sourceforge.net/p/sox/bugs/349/
- ||Bug-Debian: https://bugs.debian.org/1021135
- | ...
- ||--- a/src/wav.c
- ||+++ b/src/wav.c
- ...
+there was a recommendation to run firefox as a different user, e.g. 
+firefox, some time ago:
+https://seclists.org/fulldisclosure/2014/Jun/84
 
-So then my take for the git variant would be as attached.
-It compiles, but no GSM here.
-(It seems our dear sox developer was out of dynamic tension when
-he did that, overall.)
+this firefox user doesn't have access to the primary and secondary 
+selection buffer. Some details have changed, but basically I'm using 
+this approach since then. It's a bit uncomfortable in daily use (like 
+most security measures), because copy&paste out of firefox doesn't work 
+anymore. But there is also this addon as a workaround, which lets me 
+save text selected within firefox to a well-defined file, from where I 
+can pick it up after careful inspection under my regular user:
+https://addons.mozilla.org/en-US/firefox/addon/save-text-to-file/
 
-Ciao,
+But still, we are left with the problem that within firefox scripts can 
+do all kind of bad things. NoScript addon can help here to some extend:
+https://addons.mozilla.org/en-US/firefox/addon/noscript/
 
-P.S.: on OpenBSD they committed additional code hunks; i still
-have not looked into this, but have it on that stairway to over
-the clowds to work through.
+But unfortunately more and more web pages refuse to display anything if 
+no scripts are allowed at all by default, which forces me to either 
+admit tons of javascript on those pages or just leave them without 
+reading... Ok, using separate browser profiles for different kinds of 
+web pages is another approach (separate profiles for online banking, 
+admin guis, regular browsing, another one for pages you trust less...)
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+best regards, Martin
 
---=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-=
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="sox-git.patch"
-Content-ID: <20230314201652.R6SUn%steffen@sdaoden.eu>
 
-diff --git a/src/wav.c b/src/wav.c
-index eb2ba03962..380796c0f0 100644
---- a/src/wav.c
-+++ b/src/wav.c
-@@ -654,8 +654,11 @@ static int wav_read_fmt(sox_format_t *ft, uint32_t len)
-     if (err)
-         return SOX_EOF;
- 
--    if (wav->bitsPerSample == 0)
--    {
-+    if (wav->bitsPerSample == 0
-+#ifdef HAVE_LIBGSM
-+            && wav->formatTag != WAVE_FORMAT_GSM610
-+#endif
-+    ){
-         lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample is zero");
-         return SOX_EOF;
-     }
-@@ -1354,8 +1357,10 @@ static int wavwritehdr(sox_format_t * ft, int second_header)
-         (dwSamplesWritten + wSamplesPerBlock - 1) / wSamplesPerBlock;
-     dwDataLength = blocksWritten * wBlockAlign;
- 
-+#ifdef HAVE_LIBGSM
-     if (wFormatTag == WAVE_FORMAT_GSM610)
-         dwDataLength = (dwDataLength+1) & ~1u; /* round up to even */
-+#endif
- 
-     if (wFormatTag == WAVE_FORMAT_PCM && (wBitsPerSample > 16 || wChannels > 2)
-         && strcmp(ft->filetype, "wavpcm")) {
-@@ -1450,9 +1455,11 @@ static int wavwritehdr(sox_format_t * ft, int second_header)
-             lsx_writew(ft, (uint16_t)(lsx_ms_adpcm_i_coef[i][1]));
-         }
-         break;
-+#ifdef HAVE_LIBGSM
-         case WAVE_FORMAT_GSM610:
-         lsx_writew(ft, wSamplesPerBlock);
-         break;
-+#endif
-         default:
-         break;
-     }
-@@ -1560,7 +1567,9 @@ static int stopwrite(sox_format_t * ft)
- 
-         /* Add a pad byte if the number of data bytes is odd.
-            See wavwritehdr() above for the calculation. */
-+#ifdef HAVE_LIBGSM
-         if (wav->formatTag != WAVE_FORMAT_GSM610)
-+#endif
-           lsx_padbytes(ft, (size_t)((wav->numSamples + wav->samplesPerBlock - 1)/wav->samplesPerBlock*wav->blockAlign) % 2);
- 
-         free(wav->packet);
-@@ -1600,6 +1609,7 @@ static int seek(sox_format_t * ft, uint64_t offset)
- 
-   if (ft->encoding.bits_per_sample & 7)
-     lsx_fail_errno(ft, SOX_ENOTSUP, "seeking not supported with this encoding");
-+#ifdef HAVE_LIBGSM
-   else if (wav->formatTag == WAVE_FORMAT_GSM610) {
-     int alignment;
-     size_t gsmoff;
-@@ -1619,7 +1629,9 @@ static int seek(sox_format_t * ft, uint64_t offset)
-           new_offset += (wav->samplesPerBlock - alignment);
-       wav->numSamples = ft->signal.length - (new_offset / ft->signal.channels);
-     }
--  } else {
-+  }
-+#endif /* HAVE_LIBGSM */
-+  else {
-     double wide_sample = offset - (offset % ft->signal.channels);
-     double to_d = wide_sample * ft->encoding.bits_per_sample / 8;
-     off_t to = to_d;
+--------------ms090907050703000203040508
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
---=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-=--
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG
+9w0BBwEAAKCCEbcwggUSMIID+qADAgECAgkA4wvV+K8l2YEwDQYJKoZIhvcN
+AQELBQAwgYIxCzAJBgNVBAYTAkRFMSswKQYDVQQKDCJULVN5c3RlbXMgRW50
+ZXJwcmlzZSBTZXJ2aWNlcyBHbWJIMR8wHQYDVQQLDBZULVN5c3RlbXMgVHJ1
+c3QgQ2VudGVyMSUwIwYDVQQDDBxULVRlbGVTZWMgR2xvYmFsUm9vdCBDbGFz
+cyAyMB4XDTE2MDIyMjEzMzgyMloXDTMxMDIyMjIzNTk1OVowgZUxCzAJBgNV
+BAYTAkRFMUUwQwYDVQQKEzxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMg
+RGV1dHNjaGVuIEZvcnNjaHVuZ3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsTB0RG
+Ti1QS0kxLTArBgNVBAMTJERGTi1WZXJlaW4gQ2VydGlmaWNhdGlvbiBBdXRo
+b3JpdHkgMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtg1/9m
+oUHN0vqHl4pzq5lN6mc5WqFggEcVToyVsuXPztNXS43O+FZsFVV2B+pG/cgD
+RWM+cNSrVICxI5y+NyipCf8FXRgPxJiZN7Mg9mZ4F4fCnQ7MSjLnFp2uDo0p
+eQcAIFTcFV9Kltd4tjTTwXS1nem/wHdN6r1ZB+BaL2w8pQDcNb1lDY9/Mm3y
+WmpLYgHurDg0WUU2SQXaeMpqbVvAgWsRzNI8qIv4cRrKO+KA3Ra0Z3qLNupO
+kSk9s1FcragMvp0049ENF4N1xDkesJQLEvHVaY4l9Lg9K7/AjsMeO6W/VRCr
+Kq4Xl14zzsjz9AkH4wKGMUZrAcUQDBHHWekCAwEAAaOCAXQwggFwMA4GA1Ud
+DwEB/wQEAwIBBjAdBgNVHQ4EFgQUk+PYMiba1fFKpZFK4OpL4qIMz+EwHwYD
+VR0jBBgwFoAUv1kgNgB5oKAia4zV8mHSuCzLgkowEgYDVR0TAQH/BAgwBgEB
+/wIBAjAzBgNVHSAELDAqMA8GDSsGAQQBga0hgiwBAQQwDQYLKwYBBAGBrSGC
+LB4wCAYGZ4EMAQICMEwGA1UdHwRFMEMwQaA/oD2GO2h0dHA6Ly9wa2kwMzM2
+LnRlbGVzZWMuZGUvcmwvVGVsZVNlY19HbG9iYWxSb290X0NsYXNzXzIuY3Js
+MIGGBggrBgEFBQcBAQR6MHgwLAYIKwYBBQUHMAGGIGh0dHA6Ly9vY3NwMDMz
+Ni50ZWxlc2VjLmRlL29jc3ByMEgGCCsGAQUFBzAChjxodHRwOi8vcGtpMDMz
+Ni50ZWxlc2VjLmRlL2NydC9UZWxlU2VjX0dsb2JhbFJvb3RfQ2xhc3NfMi5j
+ZXIwDQYJKoZIhvcNAQELBQADggEBAIcL/z4Cm2XIVi3WO5qYi3FP2ropqiH5
+Ri71sqQPrhE4eTizDnS6dl2e6BiClmLbTDPo3flq3zK9LExHYFV/53RrtCyD
+2HlrtrdNUAtmB7Xts5et6u5/MOaZ/SLick0+hFvu+c+Z6n/XUjkurJgARH5p
+O7917tALOxrN5fcPImxHhPalR6D90Bo0fa3SPXez7vTXTf/D6OWST1k+kEcQ
+SrCFWMBvf/iu7QhCnh7U3xQuTY+8npTD5+32GPg8SecmqKc22CzeIs2LgtjZ
+eOJVEqM7h0S2EQvVDFKvaYwPBt/QolOLV5h7z/0HJPT8vcP9SpIClxvyt7bP
+ZYoaorVyGTkwggWsMIIElKADAgECAgcbY7rQHiw9MA0GCSqGSIb3DQEBCwUA
+MIGVMQswCQYDVQQGEwJERTFFMEMGA1UEChM8VmVyZWluIHp1ciBGb2VyZGVy
+dW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVzIGUuIFYuMRAw
+DgYDVQQLEwdERk4tUEtJMS0wKwYDVQQDEyRERk4tVmVyZWluIENlcnRpZmlj
+YXRpb24gQXV0aG9yaXR5IDIwHhcNMTYwNTI0MTEzODQwWhcNMzEwMjIyMjM1
+OTU5WjCBjTELMAkGA1UEBhMCREUxRTBDBgNVBAoMPFZlcmVpbiB6dXIgRm9l
+cmRlcnVuZyBlaW5lcyBEZXV0c2NoZW4gRm9yc2NodW5nc25ldHplcyBlLiBW
+LjEQMA4GA1UECwwHREZOLVBLSTElMCMGA1UEAwwcREZOLVZlcmVpbiBHbG9i
+YWwgSXNzdWluZyBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AJ07eRxH3h+Gy8Zp1xCeOdfZojDbchwFfylfS2jxrRnWTOFrG7ELf6Gr4HuL
+i9gtzm6IOhDuV+UefwRRNuu6cG1joL6WLkDh0YNMZj0cZGnlm6Stcq5oOVGH
+ecwX064vXWNxSzl660Knl5BpBb+Q/6RAcL0D57+eGIgfn5mITQ5HjUhfZZkQ
+0tkqSe3BuS0dnxLLFdM/fx5ULzquk1enfnjK1UriGuXtQX1TX8izKvWKMKzt
+FwUkP7agCwf9TRqaA1KgNpzeJIdl5Of6x5ZzJBTN0OgbaJ4YWa52fvfRCng8
+h0uwN89Tyjo4EPPLR22MZD08WkVKusqAfLjz56dMTM0CAwEAAaOCAgUwggIB
+MBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0PAQH/BAQDAgEGMCkGA1UdIAQi
+MCAwDQYLKwYBBAGBrSGCLB4wDwYNKwYBBAGBrSGCLAEBBDAdBgNVHQ4EFgQU
+azqYi/nyU4na4K2yMh4JH+iqO3QwHwYDVR0jBBgwFoAUk+PYMiba1fFKpZFK
+4OpL4qIMz+EwgY8GA1UdHwSBhzCBhDBAoD6gPIY6aHR0cDovL2NkcDEucGNh
+LmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1jYS9wdWIvY3JsL2NhY3JsLmNybDBA
+oD6gPIY6aHR0cDovL2NkcDIucGNhLmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1j
+YS9wdWIvY3JsL2NhY3JsLmNybDCB3QYIKwYBBQUHAQEEgdAwgc0wMwYIKwYB
+BQUHMAGGJ2h0dHA6Ly9vY3NwLnBjYS5kZm4uZGUvT0NTUC1TZXJ2ZXIvT0NT
+UDBKBggrBgEFBQcwAoY+aHR0cDovL2NkcDEucGNhLmRmbi5kZS9nbG9iYWwt
+cm9vdC1nMi1jYS9wdWIvY2FjZXJ0L2NhY2VydC5jcnQwSgYIKwYBBQUHMAKG
+Pmh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFsLXJvb3QtZzItY2EvcHVi
+L2NhY2VydC9jYWNlcnQuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQCBeEWkTqR/
+DlXwCbFqPnjMaDWpHPOVnj/z+N9rOHeJLI21rT7H8pTNoAauusyosa0zCLYk
+hmI2THhuUPDVbmCNT1IxQ5dGdfBi5G5mUcFCMWdQ5UnnOR7Ln8qGSN4IFP8V
+Sytmm6A4nwDO/afr0X9XLchMX9wQEZc+lgQCXISoKTlslPwQkgZ7nu7YRrQb
+tQMMONncsKk/cQYLsgMHM8KNSGMlJTx6e1du94oFOO+4oK4v9NsH1VuEGMGp
+uEvObJAaguS5Pfp38dIfMwK/U+d2+dwmJUFvL6Yb+qQTkPp8ftkLYF3sv8pB
+oGH7EUkp2KgtdRXYShjqFu9VNCIaE40GMIIG7TCCBdWgAwIBAgIMJpJUZsyv
+EKPfVDGNMA0GCSqGSIb3DQEBCwUAMIGNMQswCQYDVQQGEwJERTFFMEMGA1UE
+Cgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3Jz
+Y2h1bmdzbmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQD
+DBxERk4tVmVyZWluIEdsb2JhbCBJc3N1aW5nIENBMB4XDTIyMDUwNDE5NDEx
+M1oXDTI1MDUwMzE5NDExM1owgYkxCzAJBgNVBAYTAkRFMRIwEAYDVQQHDAlT
+dHV0dGdhcnQxHzAdBgNVBAoMFlVuaXZlcnNpdGFldCBTdHV0dGdhcnQxDTAL
+BgNVBAsMBEhMUlMxDjAMBgNVBAQMBUhlY2h0MQ8wDQYDVQQqDAZNYXJ0aW4x
+FTATBgNVBAMMDE1hcnRpbiBIZWNodDCCAiIwDQYJKoZIhvcNAQEBBQADggIP
+ADCCAgoCggIBAMWrI/1N3VQ1d8xUhk0rBiPopJ/A/1fte0tnKkpeFYpt+iI9
+l/emZiUUT5a+y79mF2rLZj6vGgXl5lGqE8pPV/XP/W2/9TvHpNw7BlDqIl5U
+64tLKu7VVgQ0DfwPufcRpa+EbXwBB8J8KpIi6nzjY2npgylob8XlZicJ3D6L
+oDJdVH+2U3X2Oh4d6PrU1UnXwB53w68F9XlXlTVyFILkwvc8ReV9RoSyYpj8
+Mg0DrZMgOvv1+ASlSBwlSv7N+nCLNdjbwkXFqrFU3CCzY5+lWjnzmPBSSF3d
+k/b6akX2RrYA0Qyp9lVCt5l/bV55zOQ90vY7zPxqsyp87YnxvXeW1rPqL9Wk
+0mLleTLoMiSPQRoY5ndZN8OI6U7rjVivtL2kKuCb/CyVp4ji1h33Z6Vu9sPU
+HXYAZNmbW7FGkrVuXbvYisD9IOFtGsLxlnWtdeuDBr/Ag71viq44OST61bGX
+M4YNi2IH4z24oKnhwZEibDwAM/ELC8b4N4njRzjNnVjGJA2SyZ3CP8DztHsf
+CmlthUrPaUkAcdw3bkzrsybEZVooHkEntCxX85E65wXu1JZlms/MYKffJl7g
+RObPSAZbDk7sRD4lVFuMJm/LL3JPXXLjAKViCNqPHbIN5t8T/DK72UxTCtio
+h7iSq/vnadZ94Kg8pztyU9BFgTsyeVZV95qfAgMBAAGjggJNMIICSTA+BgNV
+HSAENzA1MA8GDSsGAQQBga0hgiwBAQQwEAYOKwYBBAGBrSGCLAEBBAowEAYO
+KwYBBAGBrSGCLAIBBAowCQYDVR0TBAIwADAOBgNVHQ8BAf8EBAMCBeAwHQYD
+VR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMB0GA1UdDgQWBBTLgAsVkQuv
+G/7Nc4nJCq5vS4cBujAfBgNVHSMEGDAWgBRrOpiL+fJTidrgrbIyHgkf6Ko7
+dDAfBgNVHREEGDAWgRRtYXJ0aW4uaGVjaHRAaGxycy5kZTCBjQYDVR0fBIGF
+MIGCMD+gPaA7hjlodHRwOi8vY2RwMS5wY2EuZGZuLmRlL2Rmbi1jYS1nbG9i
+YWwtZzIvcHViL2NybC9jYWNybC5jcmwwP6A9oDuGOWh0dHA6Ly9jZHAyLnBj
+YS5kZm4uZGUvZGZuLWNhLWdsb2JhbC1nMi9wdWIvY3JsL2NhY3JsLmNybDCB
+2wYIKwYBBQUHAQEEgc4wgcswMwYIKwYBBQUHMAGGJ2h0dHA6Ly9vY3NwLnBj
+YS5kZm4uZGUvT0NTUC1TZXJ2ZXIvT0NTUDBJBggrBgEFBQcwAoY9aHR0cDov
+L2NkcDEucGNhLmRmbi5kZS9kZm4tY2EtZ2xvYmFsLWcyL3B1Yi9jYWNlcnQv
+Y2FjZXJ0LmNydDBJBggrBgEFBQcwAoY9aHR0cDovL2NkcDIucGNhLmRmbi5k
+ZS9kZm4tY2EtZ2xvYmFsLWcyL3B1Yi9jYWNlcnQvY2FjZXJ0LmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAK/Y+QHQD5lDheFJ3xtFxcNinPDjvGVtNRoG13ufC
+JCg5PMegelx6oE9mdtTLGvabOd/QlNyqkBIAApkT+gVLemtQccq+79TxP9L4
+U247hBiLodQXgCBi71qhiI3aXOU91DAVSkNOLtxP0s4ixYrWLlzIwtIM4fVM
+A07889Bz++XebQ9XxyMiB7GDbblUiSdT5ycf1xC8NrKc9ayAPZhLsAemJcF/
+03xu1GrEPVwLv7gCqQAbpsDRZBbF+LHOBlN/1lIZs6kGmgO+eNYymZmLJ204
+A8VrbAkW8Vb9Ndk911j/Ihr1F/FgcBy/eaw+5DlyFMUq38yLgo+pVY1520Z5
+IzGCBSswggUnAgEBMIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVy
+ZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdz
+bmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4t
+VmVyZWluIEdsb2JhbCBJc3N1aW5nIENBAgwmklRmzK8Qo99UMY0wDQYJYIZI
+AWUDBAIDBQCgggJdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZI
+hvcNAQkFMQ8XDTIzMTAyNDE2NTYyOFowTwYJKoZIhvcNAQkEMUIEQLuLGhN0
+LrpOvv7yEQz+QknDvKjArwnrz3x5BpUKPYZz11LvP2qHhUvFNyaoGzKdD7wN
+Bs04mFaP/8xmFmV78rUwbAYJKoZIhvcNAQkPMV8wXTALBglghkgBZQMEASow
+CwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDANBggq
+hkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG9w0DAgIBKDCBrwYJKwYBBAGC
+NxAEMYGhMIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVyZWluIHp1
+ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVz
+IGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWlu
+IEdsb2JhbCBJc3N1aW5nIENBAgwmklRmzK8Qo99UMY0wgbEGCyqGSIb3DQEJ
+EAILMYGhoIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVyZWluIHp1
+ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVz
+IGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWlu
+IEdsb2JhbCBJc3N1aW5nIENBAgwmklRmzK8Qo99UMY0wDQYJKoZIhvcNAQEB
+BQAEggIAq59f2jn67YZEdCCg+7wK2gkuoMT3x/vNEx/nECZHteePFao7iqBG
+K9OK1PPXJwJXsoJ966uXGdqOBC3RQ6jHkS7a9seDuzBUZRL953/WRMwEojTy
+14WDAEHow1eZ7rZvRnNW61G1iuSYYcpd4vqZBGKORHF0x7eYK2378JaH46Ip
+O4yownK0AaPJkvDrknTZ4oIU26TA5KRkLHI0RHoVTAwJaNVQ14OIb3hNPEbM
+Az5OagcilSwSw6dgmzidXFugwbQmMpQDxbe7m6AUR5v2jM5m4uKd+FrnLNrj
+9a0fjS6T6FZWA+cpcUqPer+oYHRNXSnMeZiLEtDYN0VwlbsW8JGGuB+Xk2RA
+Z2LjjzshSxXFN3/IAjNvgt0Q9Piv5zLsPAbXfHNDUr20O1QPlCNQV/qGU0ym
+esEYm9OVV/gyIcr2jyhYDeUgZg0uGn72LtpsGTQUgTo8RVPerdwUxbEgvZtH
+y2a/838PgPTTd+OastpbPdx+GmTgdrsad7WP8pKmSEW5AUsBJ32c80maXACF
+PtVtv56EYZJlej+WSdxUG2EAsrdi/gEyYsLSCUPndha0mYam7M0xyNxPkzoy
+M0fjpmo1EckII8Lx3CbILtwhmZCDvtLd8ORREou8Uw5tzWGPpxOya5ooq/DI
+9Qp5obQiq1TlLssp1EvbheiI/qGXtCsAAAAAAAA=
+
+--------------ms090907050703000203040508--
