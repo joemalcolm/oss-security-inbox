@@ -1,52 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/6
-Message-ID: <20230808180009.GA20736@openwall.com>
-Date: Tue, 8 Aug 2023 20:00:09 +0200
-From: Solar Designer <solar@...nwall.com>
-To: "Xen. org security team" <security@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/24/2
+Message-ID: <3cba653e-efec-4264-89df-f88caa37d84d@hlrs.de>
+Date: Tue, 24 Oct 2023 18:56:27 +0200
+From: Martin Hecht <martin.hecht@...s.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 31, 2023 at 05:00:35PM +0000, Xen. org security team wrote:
-> The patch provided with earlier versions was buggy.  It unintentionally
-> disable more bits than expected in the control register.  The contents of this
-> register is not generally known, so the effects on the system are unknown.
+On 20/10/2023 17:21, Turistu wrote:
+> On Fri, Oct 20, 2023 at 03:27:41PM +0200, Solar Designer wrote:
+>>
+>> Or isolate Firefox to its own X server (or at least a separate one from
+>> where you run terminal emulators managing important stuff), like it
+>> happens when you run it in its own VM (or perhaps many instances of it
+>> in many VMs) on Qubes OS.  Indeed this also removes the convenience of
 > 
-> A patch correcting this error has been committed and backported to all stable
-> trees which got the XSA-433 fix originally.  Additionally, it is attached to
-> this advisory as xsa433-bugfix.patch, and applicable to all branches in this
-> form.
+> If you do that, notice that you will also have to run a window manager
+> inside that separate X server, because firefox (which never implemented
+> the X11 and icccm protocols correctly) needs a wm in order to function
+> properly (more precisely a point-to-focus wm or one that simulates
+> point-to-focus just to keep firefox and some other horrors like old atk
+> java apps happy).
 
-where xsa433-bugfix.patch includes this description:
+there was a recommendation to run firefox as a different user, e.g. 
+firefox, some time ago:
+https://seclists.org/fulldisclosure/2014/Jun/84
 
-> This line:
-> 
-> 	val &= ~chickenbit;
-> 
-> ends up truncating val to 32 bits, and turning off various errata workarounds
-> in Zen2 systems.
+this firefox user doesn't have access to the primary and secondary 
+selection buffer. Some details have changed, but basically I'm using 
+this approach since then. It's a bit uncomfortable in daily use (like 
+most security measures), because copy&paste out of firefox doesn't work 
+anymore. But there is also this addon as a workaround, which lets me 
+save text selected within firefox to a well-defined file, from where I 
+can pick it up after careful inspection under my regular user:
+https://addons.mozilla.org/en-US/firefox/addon/save-text-to-file/
 
-and that patch then corrects the truncation by changing the type of the
-chickenbit variable to 64-bit.  The context is:
+But still, we are left with the problem that within firefox scripts can 
+do all kind of bad things. NoScript addon can help here to some extend:
+https://addons.mozilla.org/en-US/firefox/addon/noscript/
 
-+	/*
-+	 * Microcode is the preferred mitigation, in terms of performance.
-+	 * However, without microcode, this chickenbit (specific to the Zen2
-+	 * uarch) disables Floating Point Mov-Elimination to mitigate the
-+	 * issue.
-+	 */
-+	val &= ~chickenbit;
-+	if (sig->rev < good_rev)
-+		val |= chickenbit;
+But unfortunately more and more web pages refuse to display anything if 
+no scripts are allowed at all by default, which forces me to either 
+admit tons of javascript on those pages or just leave them without 
+reading... Ok, using separate browser profiles for different kinds of 
+web pages is another approach (separate profiles for online banking, 
+admin guis, regular browsing, another one for pages you trust less...)
 
-This leaves me wondering: why have this line at all?  I understand Xen
-wanting to enable the chicken bit on vulnerable CPUs, but why disable it
-on other AMD CPUs?  If someone or something had enabled the bit, that's
-probably intentional, and even if not it probably shouldn't be Xen's
-business to alter CPU behavior beyond what's necessary for Xen itself to
-work reliably and securely.
+best regards, Martin
 
-Am I missing something?
 
-Alexander
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (5924 bytes)
