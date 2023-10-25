@@ -1,96 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/01/1
-Message-Id: <E1qQqc6-0003DF-Fl@xenbits.xenproject.org>
-Date: Tue, 01 Aug 2023 14:44:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 436 v1 (CVE-2023-34320) - arm: Guests can trigger a deadlock on Cortex-A77
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/2
+Message-Id: <CC31A878-887C-4C58-9C78-947CB2279BAF@beckweb.net>
+Date: Wed, 25 Oct 2023 15:27:24 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-            Xen Security Advisory CVE-2023-34320 / XSA-436
+The following releases contain fixes for security vulnerabilities:
 
-           arm: Guests can trigger a deadlock on Cortex-A77
+* CloudBees CD Plugin 1.1.33
+* GitHub Plugin 1.37.3.1
+* lambdatest-automation Plugin 1.20.10 and 1.21.0
+* Warnings Plugin 10.5.1
 
-ISSUE DESCRIPTION
-=================
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Cortex-A77 cores (r0p0 and r1p0) are affected by erratum 1508412
-where software, under certain circumstances, could deadlock a core
-due to the execution of either a load to device or non-cacheable memory,
-and either a store exclusive or register read of the Physical
-Address Register (PAR_EL1) in close proximity.
+* Edgewall Trac Plugin
+* Gogs Plugin
+* MSTeams Webhook Trigger Plugin
+* Multibranch Scan Webhook Trigger Plugin
+* Zanata Plugin
 
-IMPACT
-======
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-10-25/
 
-A (malicious) guest that doesn't include the workaround for erratum
-1508412 could deadlock the core.  This will ultimately result to
-a deadlock of the system.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-VULNERABLE SYSTEMS
-==================
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Systems running all version of Xen are affected.
+---
 
-This bug is specific to Arm Cortex-A77 cores r0p0 and r1p0.
+SECURITY-3246 / CVE-2023-46650
+GitHub Plugin 1.37.3 and earlier does not escape the GitHub project URL on
+the build page when showing changes.
 
-MITIGATION
-==========
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
 
-There are no known mitigations.
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+SECURITY-3265 / CVE-2023-46651
+Warnings Plugin 10.5.0 and earlier does not set the appropriate context for
+credentials lookup, allowing the use of system-scoped credentials otherwise
+reserved for the global configuration.
 
-This issue has been publicly documented.
+This allows attackers with Item/Configure permission to access and capture
+credentials they are not entitled to.
 
-RESOLUTION
-==========
 
-To handle properly the erratum, it is necessary to have an updated
-firmware and that both the hypervisor and guest OSes have the workaround.
-This means it is not possible to security support Xen on the Cortex-A77,
-even on systems which have the workaround enabled.
+SECURITY-3222 / CVE-2023-46652
+lambdatest-automation Plugin 1.20.9 and earlier does not perform a
+permission check in an HTTP endpoint.
 
-Applying the attached patches will document the situation and also
-add the workaround in Xen if someone wish to run on Cortex-A77 with
-only trusted guests.
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of LAMBDATEST credentials stored in Jenkins. Those can be used as part
+of an attack to capture the credentials using another vulnerability.
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
 
-xsa436/xsa436.patch           xen-unstable - Xen 4.17.x
-xsa436/xsa436-4.16.patch      Xen 4.16.x
-xsa436/xsa436-4.15.patch      Xen 4.15.x
+SECURITY-3202 / CVE-2023-46653
+lambdatest-automation Plugin 1.20.10 and earlier logs LAMBDATEST
+Credentials access token at the INFO level.
 
-$ sha256sum xsa436* xsa436*/*
-64d34753cdbbcfec2c80db2daad98529bf900935419d0214057e962098b38160  xsa436.meta
-cc0f1303d4ad4c4750bd555622b87a9721e0253759b07915e6ba5216c24e8f8d  xsa436/xsa436.patch
-97d1bd7716637efce1fa5d7f608d7f26b2b396fa20b966c8c0cd22ef61dc07d4  xsa436/xsa436-4.15.patch
-e1264a44df39d56a2c6246d8f9f511d0371a5f416c364ef766ea5a59e7b46f92  xsa436/xsa436-4.16.patch
-$
------BEGIN PGP SIGNATURE-----
+This can result in accidental exposure of the token through the default
+system log.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTJGVoMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZIpMIAJJ/58V/2+aEQfc0Fd+UDegr+69PsgRVRKofbX5o
-M8r0hCLoowsEvI8vxloaOCTtgEwzFq2zCYsUED1nn0iLk0MqK6t9njkuVD3cmuqt
-WaVXiW7uJU8ph2pwscv2tVPBBYblT7+Y3fuHsbXEjEW40yQkStkD5NMgwH5Z0bhq
-61zCZm+/xK66VBKnrWFdlTaueOLT11/lGPskISquWrYjz7Vr873k89fXdGURn6+9
-N7gdl3eIDqkpGTXvUPFdPwwE+z1ESxGig24RYNQmt3UpLbIQO2wGp0HXbsJ8e1cj
-r4KNhSFm/h6tsjOYxm5Jmi4an4gAOlVxCSNds2/+oZQVHpQ=
-=GNOw
------END PGP SIGNATURE-----
 
-Download attachment "xsa436.meta" of type "application/octet-stream" (1098 bytes)
+SECURITY-3237 / CVE-2023-46654
+In CloudBees CD Plugin, artifacts that were previously copied from an agent
+to the controller are deleted after publishing by the 'CloudBees CD -
+Publish Artifact' post-build step.
 
-Download attachment "xsa436/xsa436.patch" of type "application/octet-stream" (10609 bytes)
+CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
+outside of the expected directory during this cleanup process.
 
-Download attachment "xsa436/xsa436-4.15.patch" of type "application/octet-stream" (10522 bytes)
+This allows attackers able to configure jobs to delete arbitrary files on
+the Jenkins controller file system.
 
-Download attachment "xsa436/xsa436-4.16.patch" of type "application/octet-stream" (10520 bytes)
+
+SECURITY-3238 / CVE-2023-46655
+CloudBees CD Plugin temporarily copies files from an agent workspace to the
+controller in preparation for publishing them in the 'CloudBees CD -
+Publish Artifact' post-build step.
+
+CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
+outside of the temporary directory on the controller when collecting the
+list of files to publish.
+
+This allows attackers able to configure jobs to publish arbitrary files
+from the Jenkins controller file system to the previously configured
+CloudBees CD server.
+
+
+SECURITY-2875 / CVE-2023-46656
+Multibranch Scan Webhook Trigger Plugin 1.0.9 and earlier does not use a
+constant-time comparison when checking whether the provided and expected
+webhook token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2896 / CVE-2023-46657
+Gogs Plugin 1.0.15 and earlier does not use a constant-time comparison when
+checking whether the provided and expected webhook token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2876 / CVE-2023-46658
+MSTeams Webhook Trigger Plugin 0.1.1 and earlier does not use a
+constant-time comparison when checking whether the provided and expected
+webhook token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3247 / CVE-2023-46659
+Edgewall Trac Plugin 1.13 and earlier does not escape the Trac website URL
+on the build page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2879 / CVE-2023-46660
+Zanata Plugin 0.6 and earlier does not use a constant-time comparison when
+checking whether the provided and expected webhook token hashes are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+
