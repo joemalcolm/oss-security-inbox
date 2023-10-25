@@ -1,98 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/9
-Message-ID: <20230925192334.GA8663@openwall.com>
-Date: Mon, 25 Sep 2023 21:23:34 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/4
+Message-ID: <CABdrxGCJk1x_5zs1Ja-NmyGRdL6q+ss5t2NyJ3dBtekcoV66Zg@mail.gmail.com>
+Date: Wed, 25 Oct 2023 09:32:11 -0700
+From: CJ Cullen <cjcullen@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+Subject: [kubernetes] CVE-2023-5043: Ingress nginx annotation injection causes arbitrary command execution
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 25, 2023 at 02:48:45PM +0000, Dan McDonald wrote:
-> On Sep 22, 2023, at 5:40 PM, Solar Designer <solar@...nwall.com> wrote:
-> > 
-> > So I think we can accept OmniOS as new distros list member, if that's
-> > desired and Dan would represent OmniOS on the list.  This subscription
-> > on its own would not allow sharing of info with other illumos distros.
-> 
-> I've just consulted with one of the OmniOS leaders, and OmniOS is okay with me
-> being able to join the list on their behalf.
-> 
-> > In special cases, Dan would be able to ask the issue reporters their
-> > explicit permission to share with other illumos distros.
-> 
-> I will be judicious here.
-> 
-> > If those distros do typically need the info, they may request direct
-> > list membership.
-> > 
-> > How does this sound to you, Dan?
-> 
-> I accept.
+Issue Details
 
-Great.  I've just subscribed Dan to the distros list (Dan provided the
-key to me off-list).
+A security issue was identified in ingress-nginx
+<https://github.com/kubernetes/ingress-nginx> where the
+nginx.ingress.kubernetes.io/configuration-snippet annotation on an Ingress
+object (in the `networking.k8s.io` or `extensions` API group) can be used
+to inject arbitrary commands, and obtain the credentials of the
+ingress-nginx controller. In the default configuration, that credential has
+access to all secrets in the cluster.
 
-Dan, although not strictly required, are there any contributing-back
-task(s) you'd help with? -
+This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
+and assigned CVE-2023-5043.
+Affected Components and Configurations
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+This bug affects ingress-nginx. If you do not have ingress-nginx installed
+on your cluster, you are not affected. You can check this by running
+`kubectl get po -n ingress-nginx`.
 
-Most tasks requiring list membership are best handled by someone on
-linux-distros (so that the member distro sees all issues, including
-Linux-only ones), but I've recently added some to:
+If you are running the “chrooted” ingress-nginx controller introduced in
+v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), command
+execution is possible but credential extraction is not, so the High
+severity does not apply.
 
-Administrative tasks mostly unrelated to (linux-)distros lists (but
-relevant to the wider community)
+Multi-tenant environments where non-admin users have permissions to create
+Ingress objects are most affected by this issue.
+Affected Versions
 
-1. Help ensure that each message posted to oss-security contains the
-most essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or by
-creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a "reply" posting when necessary
-- primary: Oracle Solaris, backup: Container-Optimized OS
+   -
 
-2. Develop tools to help with the above (crawl URLs in messages and
-produce draft follow-ups for manual editing+posting)
+   <v1.9.0
 
-3. Monitor for Open Source security issues/topics published elsewhere,
-identify which of these would fit, and bring them to oss-security
+Versions allowing mitigation
 
-4. Develop tools to help with the above (automatically monitor Open
-Source projects' and other relevant third-party mailing lists, websites,
-social media, source code repositories, releases for likely Open Source
-security issues/topics)
+   -
 
-5. Directly encourage upstreams, researchers, umbrella organizations,
-packagers, distros, etc. to report to the lists
+   v1.9.0
 
-6. Suggest and provide examples of quality improvements for such reports
-(beyond them containing the most essential information)
+Mitigation
 
-7. Set up and maintain more reliable oss-security Twitter/Mastodon
-feed(s) (the existing Twitter feed occasionally misses messages)
+Ingress Administrators should set the --enable-annotation-validation flag
+to enforce restrictions on the contents of ingress-nginx annotation fields.
+Detection
 
-8. Set up and maintain new curated "best of oss-security"
-Twitter/Mastodon feed(s)
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
 
-Out of these, items 1 and 3 existed before, and I see Alan Coopersmith
-from Oracle Solaris help with item 3 (thank you, Alan!), e.g.:
+See ingress-nginx Issue #10571
+<https://github.com/kubernetes/ingress-nginx/issues/10571> for more details.
+Acknowledgements
 
-https://www.openwall.com/lists/oss-security/2023/07/27/1
-https://www.openwall.com/lists/oss-security/2023/06/20/6
-https://www.openwall.com/lists/oss-security/2023/04/12/4
+This vulnerability was reported by suanve
 
-but somehow not with item 1 - maybe it's some confusion, which we should
-correct?  I don't recall Container-Optimized OS actually doing anything
-on item 1, where they're backup.  Please correct me if I'm wrong (just
-didn't notice/recall something).  Maybe we should free item 1 up for new
-volunteers now.
+Thank You,
 
-For many of these, the primary/backup notion doesn't fully apply -
-there's simply enough work for more than one volunteer person/team.
+CJ Cullen on behalf of the Kubernetes Security Response Committee
 
-If anyone wants to help with any of these, please reply.
-
-Alexander
