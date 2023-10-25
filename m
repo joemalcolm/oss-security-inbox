@@ -1,4 +1,4 @@
-Received: (qmail 9714 invoked by uid 550); 17 Aug 2024 21:53:29 -0000
+Received: (qmail 28101 invoked by uid 550); 25 Oct 2023 13:27:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,118 +7,162 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9890 invoked from network); 17 Aug 2024 20:32:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723926762; x=1724531562; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kakMWravPfOZfx29CX+b00F4ALP7+7fpWbQB6VE3w6Q=;
-        b=Ko8xZI67J8UN7tmYzaCsvfehBU2OQE8YXzqsVEJ22vXO+RHzVyE1xGKv0vSNNjNey8
-         sgN2LnB6xkdnsn1vJjSdzsoPb/mU3eTSEVYqCgiIRC7yYCFO8AqC/WGMdtvMegVpMIgA
-         Wx/6N4etb9+LjbNDMo+wrGmlPq/KwB9p9ah/AhoiK9Gv+oLVs12rtisPCCCR0sgelV4G
-         W6VyoR71HN1FICfntEYtwkGP/c/bghdBpFtCxSzl6TPQK2k7nyoKw0Va8OMLr1jTkzpX
-         APiJdHguocY3OGsOEnOqxui5bgxNU9hpxfK8NGjON2eApaLLxTNDVSt4/VlLtt6TbU5J
-         rJlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723926762; x=1724531562;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kakMWravPfOZfx29CX+b00F4ALP7+7fpWbQB6VE3w6Q=;
-        b=Kdw63FaWRRm9g+lCWdEPwl0yfCWYzPFVkN7D5Z9auJmXvgZyTuyf8UbuiHQRFaePNU
-         aCZtdKNDugAE0aRmSfI7i1DLWi1qOyGAbc8uDWHHpXzjChbVy+Ifkxsws5fECD+7rUjQ
-         KWaqFrAKakYyfcakrtZx7uo33mw00HDi1DK2XNI72R4AgdVIf6cnyzX+hIpzcd53ZTYx
-         /VNc13xnmIpqfHlfkOWr67Dt2LlI5ExJnzV8Dka+O1X/JaI92J1+XEGkAVezpKq53EcV
-         1nVIMDwF32gdsFQuo4iqTc7howl/fql9NvOeOXHIePRlxU4lHQ2rO97TPMNVDG6/87yR
-         0/zw==
-X-Gm-Message-State: AOJu0YwBz+MhgSltC1N33q23NxJYmDr8Qsj1KYmx01uhaYwkV5ohzP6D
-	L1ETgDHnC8GF8tYOFVigII3Y4c8QGNT7WrbaEIMwydfaJUlkm9bZ0oi6jueogajlGdzUOMmw6kM
-	o65pd/LkL4xNK/mG1eI23WDglFnVwBwSG
-X-Google-Smtp-Source: AGHT+IFoQhDvJ9Y3qKpkC5W1tK5gpB8qpJGB39A1Dyt9tPV+d0isMERsOwSb7wgHrfThwxS6geo445XwNRWQ4HUsarA=
-X-Received: by 2002:a05:6902:e05:b0:e0b:d6aa:43e3 with SMTP id
- 3f1490d57ef6-e13d0c7a3famr3795356276.17.1723926761813; Sat, 17 Aug 2024
- 13:32:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <E0230074-77BD-4A07-9838-92BB263C598E@linuxfoundation.org> <24243143-1A4D-4B71-A6C4-C8140C09A1CE@dwheeler.com>
-In-Reply-To: <24243143-1A4D-4B71-A6C4-C8140C09A1CE@dwheeler.com>
-From: Alfredo Ortega <ortegaalfredo@gmail.com>
-Date: Sat, 17 Aug 2024 17:32:30 -0300
-Message-ID: <CAKfVa+kDOncGMgh+otnTQoToBtT2bqH3paTWD6ie9wZ6DLfRYw@mail.gmail.com>
+Received: (qmail 28062 invoked from network); 25 Oct 2023 13:27:45 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
+Message-Id: <CC31A878-887C-4C58-9C78-947CB2279BAF@beckweb.net>
+Date: Wed, 25 Oct 2023 15:27:24 +0200
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] AI Cyber Challenge (AIxCC) semi-final results from
- DEF CON 32 (2024)
+X-Mailer: Apple Mail (2.3731.700.6)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1698240465;2fae6814;
+X-HE-SMSGID: 1qvdv4-0003gd-5d
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-I found a real bug (OpenBSD IPv6 Multicast Forwarding Cache sysctl
-kernel heap overflow) using Mistral-Medium almost 6 months ago:
-https://github.com/ortegaalfredo/vulns-ai/blob/main/openbsd_mfc6_sysctl_ove=
-rflow.txt
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-The simple tool that did it is also released as open-source here:
+The following releases contain fixes for security vulnerabilities:
 
-https://github.com/ortegaalfredo/autokaker
+* CloudBees CD Plugin 1.1.33
+* GitHub Plugin 1.37.3.1
+* lambdatest-automation Plugin 1.20.10 and 1.21.0
+* Warnings Plugin 10.5.1
 
-About to release the second version, and a vscode plugin, next week.
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Edgewall Trac Plugin
+* Gogs Plugin
+* MSTeams Webhook Trigger Plugin
+* Multibranch Scan Webhook Trigger Plugin
+* Zanata Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-10-25/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3246 / CVE-2023-46650
+GitHub Plugin 1.37.3 and earlier does not escape the GitHub project URL on
+the build page when showing changes.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
 
 
-El vie, 16 ago 2024 a las 18:05, David A. Wheeler
-(<dwheeler@dwheeler.com>) escribi=C3=B3:
->
-> All, FYI:
->
-> DARPA and ARPA-H are running a research competition called the "AI Cyber =
-Challenge" (AIxCC).
-> Its goal is to create automated tools that find and *fix* vulnerabilities=
- in software.
-> General information is here: <https://aicyberchallenge.com/>
->
-> The AIxCC semifinal competition was last week at DEF CON 32 (2024).
-> All competitors were given an identical set of Challenge Projects, which =
-were
-> real-world OSS projects seeded with synthetic vulnerabilities.
-> The projects were Jenkins, Linux kernel, Nginx, SQLite3, and Apache Tika.
-> There were 7 winners; each winner received $2 million US as a reward, and=
- those
-> teams will be allowed to compete in the finals at next year's DEF CON.
->
-> An official summary is here: <https://www.darpa.mil/news-events/2024-08-1=
-1>.
-> Some other interesting links related to the semifinals include:
-> <https://blog.trailofbits.com/2024/08/09/trail-of-bits-buttercup-heads-to=
--darpas-aixcc/>
-> <https://www.youtube.com/watch?v=3DsQKGWZvuLko>
->
-> One of the competing teams, Team Atlanta, even found a real-world bug in =
-SQLite3.
-> This was reported to SQLite through their usual process; it's fixed in tr=
-unk. More info
-> about that specifically is here:
-> - <https://x.com/TeamAtlanta24/status/1822739301463130271>
-> - <https://sqlite.org/forum/forumpost/81670d1056>
->
-> The tools must be released by next year as open source software, with an =
-OSI-approved license,
-> as a condition for accepting prize money or competing in the final compet=
-ition. Exact text is in the
-> "Open-Source Requirement" section in its rules <https://aicyberchallenge.=
-com/rules/>.
-> The challenge problems were all based on real-world OSS, and the
-> hope is that in the long term such tools can automatically find & fix vul=
-nerabilities in all
-> software including OSS.
->
-> Full disclosure: I work for the Open Source Security Foundation (OpenSSF)=
- and I
-> have been working with DARPA & ARPA-H supporting this. That said, I thoug=
-ht others in this mailing
-> list would want to know about it. No research is *guaranteed* to produce =
-something
-> leading to useful results, but I think this is a promising approach. We d=
-efinitely could *use*
-> tools that automatically find & fix vulnerabilities, if they're good enou=
-gh!!
->
-> --- David A. Wheeler
->
+SECURITY-3265 / CVE-2023-46651
+Warnings Plugin 10.5.0 and earlier does not set the appropriate context for
+credentials lookup, allowing the use of system-scoped credentials otherwise
+reserved for the global configuration.
+
+This allows attackers with Item/Configure permission to access and capture
+credentials they are not entitled to.
+
+
+SECURITY-3222 / CVE-2023-46652
+lambdatest-automation Plugin 1.20.9 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of LAMBDATEST credentials stored in Jenkins. Those can be used as part
+of an attack to capture the credentials using another vulnerability.
+
+
+SECURITY-3202 / CVE-2023-46653
+lambdatest-automation Plugin 1.20.10 and earlier logs LAMBDATEST
+Credentials access token at the INFO level.
+
+This can result in accidental exposure of the token through the default
+system log.
+
+
+SECURITY-3237 / CVE-2023-46654
+In CloudBees CD Plugin, artifacts that were previously copied from an agent
+to the controller are deleted after publishing by the 'CloudBees CD -
+Publish Artifact' post-build step.
+
+CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
+outside of the expected directory during this cleanup process.
+
+This allows attackers able to configure jobs to delete arbitrary files on
+the Jenkins controller file system.
+
+
+SECURITY-3238 / CVE-2023-46655
+CloudBees CD Plugin temporarily copies files from an agent workspace to the
+controller in preparation for publishing them in the 'CloudBees CD -
+Publish Artifact' post-build step.
+
+CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
+outside of the temporary directory on the controller when collecting the
+list of files to publish.
+
+This allows attackers able to configure jobs to publish arbitrary files
+from the Jenkins controller file system to the previously configured
+CloudBees CD server.
+
+
+SECURITY-2875 / CVE-2023-46656
+Multibranch Scan Webhook Trigger Plugin 1.0.9 and earlier does not use a
+constant-time comparison when checking whether the provided and expected
+webhook token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2896 / CVE-2023-46657
+Gogs Plugin 1.0.15 and earlier does not use a constant-time comparison when
+checking whether the provided and expected webhook token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2876 / CVE-2023-46658
+MSTeams Webhook Trigger Plugin 0.1.1 and earlier does not use a
+constant-time comparison when checking whether the provided and expected
+webhook token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3247 / CVE-2023-46659
+Edgewall Trac Plugin 1.13 and earlier does not escape the Trac website URL
+on the build page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2879 / CVE-2023-46660
+Zanata Plugin 0.6 and earlier does not use a constant-time comparison when
+checking whether the provided and expected webhook token hashes are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+As of publication of this advisory, there is no fix.
+
+
+
