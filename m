@@ -1,49 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/22/1
-Message-ID: <39593cc9-e019-a735-c17f-1b5cb25e280c@apache.org>
-Date: Mon, 22 May 2023 11:10:05 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/1
+Message-ID: <20231025023856.GA687776@quokka>
+Date: Wed, 25 Oct 2023 12:38:56 +1000
+From: Peter Hutterer <peter.hutterer@...-t.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28709 Apache Tomcat - Fix for CVE-2023-24998 was incomplete
+Subject: FW: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.9 and Xwayland prior to 23.2.2
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-28709 Apache Tomcat - Fix for CVE-2023-24998 was incomplete
+----- Forwarded message from Peter Hutterer <peter.hutterer@...> -----
 
-Severity: Moderate
+Subject: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.9 and
+	Xwayland prior to 23.2.2
+From: Peter Hutterer <peter.hutterer@...>
+Date: Wed, 25 Oct 2023 11:53:55 +1000
+To: xorg-announce@...ts.x.org
+Cc: xorg@...ts.x.org
 
-Vendor: The Apache Software Foundation
+X.Org Security Advisory: October 25, 2023
 
-Versions Affected:
-Apache Tomcat 11.0.0-M2 to 11.0.0-M4
-Apache Tomcat 10.1.5 to 10.1.7
-Apache Tomcat 9.0.71 to 9.0.73
-Apache Tomcat 8.5.85 to 8.5.87
+Issues in X.Org X server prior to 21.1.9 and Xwayland prior to 23.2.2
+=====================================================================
 
-Description:
-The fix for CVE-2023-24998 was incomplete. If non-default HTTP connector 
-settings were used such that the maxParameterCount could be reached 
-using query string parameters and a request was submitted that supplied 
-exactly maxParameterCount parameters in the query string, the limit for 
-uploaded request parts could be bypassed with the potential for a denial 
-of service to occur.
+Multiple issues have been found in the X.Org X server implementation published
+by X.Org for which we are releasing security fixes for in xorg-server-21.1.9
+and xwayland-23.2.2.
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 11.0.0-M5 or later
-- Upgrade to Apache Tomcat 10.1.8 or later
-- Upgrade to Apache Tomcat 9.0.74 or later
-- Upgrade to Apache Tomcat 8.5.88 or later
+The first issue (CVE-2023-5367) can be triggered by prepending to an input
+device property or randr property.
 
-Credit:
-This issue was identified by Chenwei Jiang, Chenfeng Nie and Yue Yang 
-from the Huawei Nebula Security Lab
+The second issue (CVE-2023-5380) can be triggered by warping a pointer across
+screens in legacy multi-head setups and destroying specific client windows.
+Note that Xwayland is not affected by this issue.
 
-History:
-2023-05-22 Original advisory
+The third issue (CVE-2023-5574) can be triggered in Xvfb during cleanup of the
+ScreenRec, either at server shutdown or when the last client disconnects.
+Note that this issue has not been fixed in a release yet due to some
+issues with the proposed fixes.
 
-References:
-[1] https://tomcat.apache.org/security-11.html
-[2] https://tomcat.apache.org/security-10.html
-[3] https://tomcat.apache.org/security-9.html
-[4] https://tomcat.apache.org/security-8.html
+----------------------------------------------------------------------------
+
+1) CVE-2023-5367 X.Org server: OOB write in XIChangeDeviceProperty/RRChangeOutputProperty
+
+Introduced in: xorg-server-1.7.0 (2009) and xorg-server-1.4.0 (2007), respectively
+Fixed in: xorg-server-21.1.9 and xwayland-23.2.2
+Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/541ab2ecd41d4d8689e71855d93e492bc554719a
+
+When prepending values to an existing property an invalid offset calculation
+causes the existing values to be appended at the wrong offset. The resulting
+memcpy() would write into memory outside the heap-allocated array.
+
+For example, prepending 3 values to an existing 5 value property results in
+an allocated array of size 8, but the existing 5 values would be written at
+indices 5 through to 10. Indices 3 and 4 were left uninitialized, but due to a
+separate bug the resulting property only had a client-visible length of 3
+values and the uninitialized memory data was never visibile to the client.
+
+xorg-server-21.1.9 and xwayland-23.2.2 have been patched to fix the offset
+calculation and the length calculation of the property.
+
+2) CVE-2023-5380: Use-after-free bug in DestroyWindow
+
+Introduced in: xorg-server-1.7.0 (2009)
+Fixed in: xorg-server-21.1.9
+Found by: Sri working with Trend Micro Zero Day Initiative
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/564ccf2ce9616620456102727acb8b0256b7bbd7
+
+This vulnerability requires a legacy multi-screen setup with multiple protocol
+screens ("Zaphod"). If the pointer is warped from one screen to the root window
+of the other screen, the enter/leave code may retain a reference to the
+previous pointer window. Destroying this window leaves that reference in place,
+other windows may then trigger a use-after-free bug when they are destroyed.
+
+This bug can be triggered only under very specific conditions, in particular it
+requires an XWarpPointer call and that the pointer never enters a client window
+on the other screen.
+
+xorg-server-21.1.9 has been patched fix the offset calculation. Xwayland is not
+affected as it does not support multiple protocol screens.
+
+3) CVE-2023-5574: Use-after-free bug in DamageDestroy
+
+Introduced in: xorg-server-1.13.0 (2012)
+Found by: Sri working with Trend Micro Zero Day Initiative
+Merge request tracking the fixes: https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/1189
+
+This issue only affects Xvfb and requires a legacy multi-screen setup
+with multiple protocol screens ("Zaphod").
+
+Screen cleanup is handled via stackable "modules", but the fb module hardcoded
+the cleanup path for the screen pixmap instead of calling into the next layer
+of the stack. This caused a minor memory leak that was fixed with a patch to
+Xvfb introduced in server 1.13. However, that patch did not remove all
+references to the freed pixmap, causing a use-after-free during screen cleanup
+in a lower module.
+
+This issue has not yet been fixed, please see the above merge request to
+track future fixes to this issue.
+
+----------------------------------------------------------------------------
+
+X.Org thanks all of those who reported and fixed these issues, and those
+who helped with the review and release of this advisory and these fixes.
+
+
+
+----- End forwarded message -----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
