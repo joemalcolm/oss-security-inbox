@@ -1,36 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/3
-Message-ID: <20231005055957.GB12482@1wt.eu>
-Date: Thu, 5 Oct 2023 07:59:57 +0200
-From: Willy Tarreau <w@....eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/26/2
+Message-ID: <841313aeae2c595e9ed3cf2f7197a7c3.939be4cb@humanizers.horsehide>
+Date: Thu, 26 Oct 2023 23:11:32 +0300
+From: Turistu <turistu@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: "Linux Kernel security demistified"
+Subject: Re: with firefox on X11, any page can pastejack you anytime
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
+> ### Firefox Patch
+> ```
+> diff -r 9b362770f30b layout/generic/nsFrameSelection.cpp
+> --- a/layout/generic/nsFrameSelection.cpp	Fri Oct 06 12:03:17 2023 +0000
+> +++ b/layout/generic/nsFrameSelection.cpp	Sun Oct 08 11:04:41 2023 +0300
+> @@ -3345,6 +3345,10 @@
+>      return;  // Don't care if we are still dragging.
+>    }
+>  
+> +  if (aReason & nsISelectionListener::JS_REASON) {
+> +    return;
+> +  }
+> +
+>    if (!aDocument || aSelection.IsCollapsed()) {
+>  #ifdef DEBUG_CLIPBOARD
+>      fprintf(stderr, "CLIPBOARD: no selection/collapsed selection\n");
+> ```
+> 
+> The idea of this patch was to *always* prevent javascript from indirectly
+> messing with the primary selection via the Selection API. However, it turned
+> out that the `JS_REASON` flag was not reliable; if javascript calls some
+> function like `addRange()` or `selectAllChildren()` while the user has started
+> dragging but hasn't released the mouse button yet, that code will be called
+> *without* that flag but with the text set by javascript, not the text
+> selected by the user. However, I think that this patch is still enough
 
-On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
-> I wonder whether the kernel documentation could, however, be encouraging
-> rather than discouraging (as it currently is) about issue reporters
-> themselves contacting linux-distros after a fix is ready.  I wonder if a
-> patch like that would be accepted?
+They have recently added a (functionally identical) patch to mozilla-central:
+https://hg.mozilla.org/mozilla-central/rev/88e0043c5aa4234dada941ac2fd0ded875210508
 
-Just as a quick heads up on this, I discussed with Greg there and proposed
-to send a patch proposal to rework that part to take into account your now
-relaxed rules. My goal is to let the reporter decide on their own, and let
-them decide what they want to do after checking the linux-distros rules.
-There could be a good motivation for some reporters to go there because a
-number of them are first-timers who are seeking a Curriculum Vitae Enhancer
-(CVE) ID that s@k.o doesn't deal with. But I also want to remind (I know I
-may sound like a scratched record) that it's not because some may report
-there that distros will magically be aware of all security issues, given
-that those arriving on s@k.o are really a tiny portion and many more bugs
-are fixed without anyone having a security look on them.
+So the most egregious issue should be fixed in their "nighly" pre-release
+version of firefox soon.
 
-I'm just too short of time for now, having to catch up with what I left
-for the 3 days of KR2023, but it's on my todo list to propose a patch to
-Greg. I'm having reasonable hopes that we can end up with something
-smoother in the near future.
-
-Cheers,
-Willy
+I have updated my write-up with that and more info at:
+https://github.com/turistu/odds-n-ends/blob/main/firefox/pastejack.md
