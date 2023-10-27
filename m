@@ -1,102 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/3
-Message-ID: <20231003183018.GA22672@openwall.com>
-Date: Tue, 3 Oct 2023 20:30:18 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4911: Local Privilege Escalation in the glibc's ld.so
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/27/1
+Message-ID: <82C70BE4-B22A-45C5-A80A-ECD7F934D93D@vmware.com>
+Date: Fri, 27 Oct 2023 03:43:27 +0000
+From: VMware Security Response Center <security@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2023-34058 - SAML Token Signature Bypass in open-vm-tools
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description
 
-Thanks Qualys for the impressive research on this, as is usual for you.
-Also thank you to the upstream maintainer Siddhesh Poyarekar for staying
-on top of this issue.
+==============================================================
 
-This is now fixed in upstream glibc:
+CVE-2023-34058: open-vm-tools contains a SAML token signature bypass vulnerability. VMware has evaluated the severity of this issue to be in the Important severity range with a maximum CVSSv3 base score of 7.5 - CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-https://sourceware.org/git/?p=glibc.git;a=commit;h=1056e5b4c3f2d90ed2b4a55f96add28da2f4c8fa
 
-> commit 1056e5b4c3f2d90ed2b4a55f96add28da2f4c8fa (HEAD -> master, origin/master, origin/HEAD)
-> Author: Siddhesh Poyarekar <siddhesh@...rceware.org>
-> Date:   Tue Sep 19 18:39:32 2023 -0400
-> 
->     tunables: Terminate if end of input is reached (CVE-2023-4911)
->     
->     The string parsing routine may end up writing beyond bounds of tunestr
->     if the input tunable string is malformed, of the form name=name=val.
->     This gets processed twice, first as name=name=val and next as name=val,
->     resulting in tunestr being name=name=val:name=val, thus overflowing
->     tunestr.
->     
->     Terminate the parsing loop at the first instance itself so that tunestr
->     does not overflow.
->     
->     This also fixes up tst-env-setuid-tunables to actually handle failures
->     correct and add new tests to validate the fix for this CVE.
->     
->     Signed-off-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
->     Reviewed-by: Carlos O'Donell <carlos@...hat.com>
 
-For those wondering, the preceding related commit is _not_ part of the
-security fix, as we discussed privately:
+Known Attack Vectors
 
-> commit 0d5f9ea97f1b39f2a855756078771673a68497e1
-> Author: Siddhesh Poyarekar <siddhesh@...rceware.org>
-> Date:   Tue Sep 19 13:25:40 2023 -0400
-> 
->     Propagate GLIBC_TUNABLES in setxid binaries
->     
->     GLIBC_TUNABLES scrubbing happens earlier than envvar scrubbing and some
->     tunables are required to propagate past setxid boundary, like their
->     env_alias.  Rely on tunable scrubbing to clean out GLIBC_TUNABLES like
->     before, restoring behaviour in glibc 2.37 and earlier.
->     
->     Signed-off-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
->     Reviewed-by: Carlos O'Donell <carlos@...hat.com>
+==============================================================
 
-(It actually re-exposes the risky functionality somewhat more.)
+A malicious actor that has been granted Guest Operation Privileges in a target virtual machine may be able to elevate their privileges if that target virtual machine has been assigned a more privileged Guest Alias.
 
-On Tue, Oct 03, 2023 at 05:50:36PM +0000, Qualys Security Advisory wrote:
-> Recently, we discovered a vulnerability (a buffer overflow) in the
-> dynamic loader's processing of the GLIBC_TUNABLES environment variable
-> (https://www.gnu.org/software/libc/manual/html_node/Tunables.html). This
-> vulnerability was introduced in April 2021 (glibc 2.34) by commit 2ed18c
-> ("Fix SXID_ERASE behavior in setuid programs (BZ #27471)").
 
-> Last-minute note: although glibc 2.34 is vulnerable to this buffer
-> overflow, its tunables_strdup() uses __sbrk(), not __minimal_malloc()
-> (which was introduced in glibc 2.35 by commit b05fae, "elf: Use the
-> minimal malloc on tunables_strdup"); we have not yet investigated
-> whether glibc 2.34 is exploitable or not.
 
-RHEL 8 includes a backport of the problematic commit 2ed18c5b534d in
-glibc-rh1934155-6.patch starting with:
+Notes
 
-* Wed Apr 14 2021 Siddhesh Poyarekar <siddhesh@...hat.com> - 2.28-157
-- Consistently SXID_ERASE tunables in sxid binaries (#1934155)
+==============================================================
 
-So RHEL (rebuild) distros of both RHEL 8 and RHEL 9 contain the bug.
-However, Qualys' specific exploitation method shouldn't work against
-them.  It is not currently known whether another exploitation method
-exists that would work on pre-2.35 glibc such as RHEL's backports.
+Please note that while the description and known attack vectors are very similar to CVE-2023-20900, CVE-2023-34058 has a different root cause that must be addressed.
 
-The one-line reproducer from Qualys:
 
-> $ env -i "GLIBC_TUNABLES=glibc.malloc.mxfast=glibc.malloc.mxfast=A" "Z=`printf '%08192x' 1`" /usr/bin/su --help
 
-does cause a segfault on (rebuilds of) both RHEL 8 and 9 that I tested.
+Remediation
 
-Besides the proper upstream fix, a mitigation is to exclude tunables
-support for SUID/SGID programs, which ALT Linux did in:
+==============================================================
 
-https://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=5d1686416ab766f3dd0780ab730650c4c0f76ca9
+The following patch is provided for all open-vm-tools releases 11.0.0 through 12.3.0
 
-I briefly tested my port of this (along with the rest of ALT Linux's
-glibc environment sanitization changes) to a RHEL 9 rebuild modified
-glibc package today (as now pushed to Rocky Linux Security SIG repo),
-and it seems to work as intended (the reproducer does not segfault
-anymore, but another tunable still has effect in my test on an
-unprivileged program).
 
-Alexander
+
+https://github.com/vmware/open-vm-tools/blob/CVE-2023-34058.patch/CVE-2023-34058.patch
+
+
+The patches have been tested against the above open-vm-tools releases.  Each applies cleanly with:
+
+
+
+git am for a git repository.
+
+patch -p2 in the top directory of an open-vm-tools source tree.
+
+
+
+--------------
+
+Edward Hawkins
+
+Staff-2 Technical Program Manager
+
+security@...are.com<mailto:security@...are.com>
+
