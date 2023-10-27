@@ -1,51 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/10/1
-Message-ID: <CADW8OBsT3Lhc2GrgQQThG_-sUz5SyExn-XvbLm7q+wGjuHxPqA@mail.gmail.com>
-Date: Mon, 9 Jan 2023 15:09:22 -0700
-From: Kyle Zeng <zengyhkyle@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Type Confusion in Linux Kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/27/2
+Message-ID: <AEBE0F32-EAA7-4BC5-ABDB-2EBA7B3046C9@vmware.com>
+Date: Fri, 27 Oct 2023 03:43:46 +0000
+From: VMware Security Response Center <security@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2023-34059 - File Descriptor Hijack vulnerability in open-vm-tools
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Description
 
-I recently found a type-confusion vulnerability in the Linux kernel.
-Since it interprets random data as pointers, it is potentially
-exploitable. According to the fix commit, this bug was introduced in
-Linux-2.6.12-rc2 in 2005. I already contacted security@...nel.org and
-helped them patch the vulnerability.
+==============================================================
 
-# Vulnerability
-The vulnerability is caused by accessing classification results before
-checking the classification return code in the network scheduler's
-code. For example, in the following snippet from `cbq_classify`:
-~~~
-struct cbq_class *cl;
-......
-result = tcf_classify(skb, fl, &res, true);
-if (!fl || result < 0)
-goto fallback;
+CVE-2023-34059: open-vm-tools contains a file descriptor hijack vulnerability in the vmware-user-suid-wrapper. VMware has evaluated the severity of this issue to be in the Important severity range with a maximum CVSSv3 base score of 7.4. - CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-cl = (void *)res.class;
-~~~
-It checks `result < 0` before casting `res.class` to `struct cbq_class
-*`. However, `result >= 0` does not ensure `res.class` contains valid
-results. Specifically, it is possible `result` itself says the packet
-is invalid and should be dropped (`TC_ACT_SHOT`) while at the same
-time res.class contains invalid data because res.class is a huge union
-attribute and can be used for other purposes before it is marked as
-`TC_ACT_SHOT`. As a result, it is a type confusion between `struct
-cbq_class` and whatever struct that res.class was used as before it is
-returned.
 
-# Patch
-Two schedulers have the same vulnerable code patterns and the fixes
-can be found https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12
-and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a2965c7be0522eaa18808684b7b82b248515511b
 
-This vulnerability does not have a CVE assigned. I'll appreciate it if
-anyone on the mailing list can give it a CVE to signify its security
-implications.
+Known Attack Vectors
 
-Best,
-Kyle Zeng
+==============================================================
+
+A malicious actor with non-root privileges may be able to hijack the /dev/uinput file descriptor allowing them to simulate user inputs.
+
+
+
+Acknowledgement
+
+==============================================================
+
+VMware would like to thank Matthias Gerstner of the SUSE Linux Security Team for reporting this vulnerability to us.
+
+
+
+Remediation
+
+==============================================================
+
+The following patch is provided for all open-vm-tools releases 11.0.0 through 12.3.0
+
+
+
+https://github.com/vmware/open-vm-tools/blob/CVE-2023-34059.patch/CVE-2023-34059.patch
+
+
+The patches have been tested against the above open-vm-tools releases.  Each applies cleanly with:
+
+
+
+git am for a git repository.
+
+patch -p2 in the top directory of an open-vm-tools source tree.
+
+
+
+--------------
+
+Edward Hawkins
+
+Staff-2 Technical Program Manager
+
+security@...are.com<mailto:security@...are.com>
+
