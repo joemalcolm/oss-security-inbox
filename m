@@ -1,52 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/4
-Message-ID: <CAFRnB2ULCAXn6y0b5jGKqf+G11iX+CYCrH8DfraPRQfRAfCtxA@mail.gmail.com>
-Date: Fri, 29 Sep 2023 10:35:02 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/28/2
+Message-ID: <ZT0t-5HDT_cAcgC2@eldamar.lan>
+Date: Sat, 28 Oct 2023 17:51:23 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple Exim4 Zero Days
+Cc: pdp@...s.io
+Subject: Re: NATS: 2023-01: Adding accounts for just the system account adds auth bypass
 Content-Type: text/plain; charset=utf-8
 
-Do I understand correctly that none of these are fixed upstream?
+Hi,
 
-Alex
+On Thu, Oct 12, 2023 at 10:39:53PM -0400, Phil Pennock wrote:
+> [ CVE has been requested, still waiting for assignment, so we're just
+>   inventing our own in-house numbering for advisories; we'll make sure
+>   this one continues to work after the CVE is issued ]
+> 
+> NATS-advisory-ID: 2023-01
+> CVE: pending
+> Date: 2023-10-12
+> Fixed in: 2.9.23, 2.10.2
 
-PS: I'd be remiss if I did not note that it appears that 5/6 of these
-vulnerabilities have "C is not a memory safe language" as a proximate
-cause.
+While I see the later NATS-advisory-ID 2023-02 has a CVE assigned, for
+the 2023-01 was above with CVE pending. has one been assigned in
+meanwhile?
 
-On Fri, Sep 29, 2023 at 10:27 AM Markus Gschwendt
-<office+osssecurity@...out.at> wrote:
->
-> I bring this up as I have not yet seen any information here about
-> several CVEs related to Exim Mailserver which were published by ZDI on
-> 2023-09-27 [1]:
->
-> * CVE-2023-42114 [CVSS 3.7]
-> * CVE-2023-42115 [CVSS 9.8]
-> * CVE-2023-42116 [CVSS 8.1]
-> * CVE-2023-42117 [CVSS 8.1]
-> * CVE-2023-42118 [CVSS 7.5]
-> * CVE-2023-42119 [CVSS 3.1]
->
-> There also seem to be issues in Exim's bug tracker related to those:
-> https://bugs.exim.org/show_bug.cgi?id=2999
-> https://bugs.exim.org/show_bug.cgi?id=3000
-> https://bugs.exim.org/show_bug.cgi?id=3001
-> https://bugs.exim.org/show_bug.cgi?id=3002
-> https://bugs.exim.org/show_bug.cgi?id=3003
->
-> According to ZDI the original reports were sent in June 2022.
->
-> I'm wondering if somebody knows anything about mitigations and/or why
-> there are still no fixes for these issues after more than a year.
->
-> Markus
->
-> [1] https://www.zerodayinitiative.com/advisories/published/
->     search for exim
->
-
-
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
+Regards,
+Salvatore
