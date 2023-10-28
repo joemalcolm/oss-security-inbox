@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/12/5
-Message-ID:  <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
-Date: Wed, 12 Apr 2023 20:40:37 +0000
-From: "Jonathan Bar Or (JBO)" <jobaror@...rosoft.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ncurses fixes upstream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/28/1
+Message-ID: <e4c0830d-754a-2b9f-4379-cd13dd3c69d9@apache.org>
+Date: Sat, 28 Oct 2023 06:30:28 +0000
+From: Elad Kalif <eladkal@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-46215: Apache Airflow Celery provider, Apache Airflow: Sensitive information logged as clear text when rediss, amqp, rpc protocols are used as Celery result backend 
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+Severity: moderate
 
-Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
-They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
-A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
+Affected versions:
 
-How can we ensure those fixes get deployed upstream, in major Linux distributions?
-We've reached out to Arch, RedHat, Canonical and other popular distros independently.
+- Apache Airflow Celery provider 3.3.0 through 3.4.0
+- Apache Airflow 1.10.0 before 2.7.0
 
-Thanks!
-                             JBO
+Description:
 
+Insertion of Sensitive Information into Log File vulnerability in Apache Airflow Celery provider, Apache Airflow.
+
+Sensitive information logged as clear text when rediss, amqp, rpc protocols are used as Celery result backend
+Note: the vulnerability is about the information exposed in the logs not about accessing the logs.
+
+This issue affects Apache Airflow Celery provider: from 3.3.0 through 3.4.0; Apache Airflow: from 1.10.0 through 2.6.3.
+
+Users are recommended to upgrade Airflow Celery provider to version 3.4.1 and Apache Airlfow to version 2.7.0 which fixes the issue.
+
+Credit:
+
+husseinawala (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/34954
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46215
 
