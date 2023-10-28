@@ -1,4 +1,4 @@
-Received: (qmail 28101 invoked by uid 550); 25 Oct 2023 13:27:46 -0000
+Received: (qmail 32653 invoked by uid 550); 28 Oct 2023 15:51:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,162 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28062 invoked from network); 25 Oct 2023 13:27:45 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Message-Id: <CC31A878-887C-4C58-9C78-947CB2279BAF@beckweb.net>
-Date: Wed, 25 Oct 2023 15:27:24 +0200
+Received: (qmail 32632 invoked from network); 28 Oct 2023 15:51:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698508285; x=1699113085; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S1kc6dv5JraOhNgrSt40knRqone/Z4Yjh1eCXPTSlRE=;
+        b=K0dWVOx8X/A6rS+fIEV2XnPKkNrJKeiemQ6MyAjATrscQwuHHtlNgNCrl952VYGPe7
+         ALFTqYpQUAFVDuR2Eh2gn+8L2Do0InJeYHouzySyNv+EwWBNcXSeX/IYwrlpU+I6+Pt0
+         ktfQ5ARHJnfpY9y5Gew/qy0kfSKr7wpaSw0XT2232fmF1sEI5JKd9ODw6pVKesCPLKxU
+         6DSmGVtFx49h+xyhh8orHUzsmEhdqncY/QG0zDjLEba3WufeXuqemWZcAmuSPsudkGIj
+         Hybe+Cr6tU7lIuMM0DMCRsNAi3f5SN3wg/mI3YXQfhpRe37pUXZepSh/mVZ5THGZ6uyH
+         ZYug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698508285; x=1699113085;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S1kc6dv5JraOhNgrSt40knRqone/Z4Yjh1eCXPTSlRE=;
+        b=JAIKSrEmnPvV+yV1RwOdMoo/NP3WGI1Ky/v0pQB+7kS67IFvquzMsiAYL8/bwcP1Eo
+         ef3qeXKWSrHLvPCwAcEjmFhZX5apfsT6uoRGpCwe70A94X2//UBt9cmslp+BTjkZ7LHL
+         LiAYj4rMzc3/amTOxkkppdqp04jRrrj7OexrUHyYMxv+CsKW5yueDshEtMTV9znR4c+D
+         TSKBNf6PiGaR0tbV7Oa8m4BQM1PtnzNQwycrNOgvPMRH2a4eH74IfLE42yh2r/Be6ZZT
+         wyqOuajthwcQZGWAxOFrcmJIYsbBG72KlLOGAV/JmLVAUK/TzsthSiyvZY128qMboKkb
+         870A==
+X-Gm-Message-State: AOJu0Yxv12C6g/rJR+dOvtAQeUPF8Tpxn+SgZ68vsU116Ech/fiwda15
+	6vZaLdkEdX3i8sTlWhdBzj//ncUswpRGUA==
+X-Google-Smtp-Source: AGHT+IFjZ5fQgvum90SS3SOgJUGxfUMF2DiNccYFbVYnhcOS0GkYV9WbOD9yS8/b/SAfTINMW9tmKg==
+X-Received: by 2002:a17:906:641:b0:9d1:73da:e4fc with SMTP id t1-20020a170906064100b009d173dae4fcmr1142570ejb.73.1698508284696;
+        Sat, 28 Oct 2023 08:51:24 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 28 Oct 2023 17:51:23 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1698240465;2fae6814;
-X-HE-SMSGID: 1qvdv4-0003gd-5d
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Cc: pdp@nats.io
+Message-ID: <ZT0t-5HDT_cAcgC2@eldamar.lan>
+References: <ZSit-X8iB2gx54hq@fullerene.field.pennock-tech.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZSit-X8iB2gx54hq@fullerene.field.pennock-tech.net>
+Subject: Re: [oss-security] NATS: 2023-01: Adding accounts for just the
+ system account adds auth bypass
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hi,
 
-The following releases contain fixes for security vulnerabilities:
+On Thu, Oct 12, 2023 at 10:39:53PM -0400, Phil Pennock wrote:
+> [ CVE has been requested, still waiting for assignment, so we're just
+>   inventing our own in-house numbering for advisories; we'll make sure
+>   this one continues to work after the CVE is issued ]
+> 
+> NATS-advisory-ID: 2023-01
+> CVE: pending
+> Date: 2023-10-12
+> Fixed in: 2.9.23, 2.10.2
 
-* CloudBees CD Plugin 1.1.33
-* GitHub Plugin 1.37.3.1
-* lambdatest-automation Plugin 1.20.10 and 1.21.0
-* Warnings Plugin 10.5.1
+While I see the later NATS-advisory-ID 2023-02 has a CVE assigned, for
+the 2023-01 was above with CVE pending. has one been assigned in
+meanwhile?
 
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Edgewall Trac Plugin
-* Gogs Plugin
-* MSTeams Webhook Trigger Plugin
-* Multibranch Scan Webhook Trigger Plugin
-* Zanata Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-10-25/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3246 / CVE-2023-46650
-GitHub Plugin 1.37.3 and earlier does not escape the GitHub project URL on
-the build page when showing changes.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-
-SECURITY-3265 / CVE-2023-46651
-Warnings Plugin 10.5.0 and earlier does not set the appropriate context for
-credentials lookup, allowing the use of system-scoped credentials otherwise
-reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to.
-
-
-SECURITY-3222 / CVE-2023-46652
-lambdatest-automation Plugin 1.20.9 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of LAMBDATEST credentials stored in Jenkins. Those can be used as part
-of an attack to capture the credentials using another vulnerability.
-
-
-SECURITY-3202 / CVE-2023-46653
-lambdatest-automation Plugin 1.20.10 and earlier logs LAMBDATEST
-Credentials access token at the INFO level.
-
-This can result in accidental exposure of the token through the default
-system log.
-
-
-SECURITY-3237 / CVE-2023-46654
-In CloudBees CD Plugin, artifacts that were previously copied from an agent
-to the controller are deleted after publishing by the 'CloudBees CD -
-Publish Artifact' post-build step.
-
-CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
-outside of the expected directory during this cleanup process.
-
-This allows attackers able to configure jobs to delete arbitrary files on
-the Jenkins controller file system.
-
-
-SECURITY-3238 / CVE-2023-46655
-CloudBees CD Plugin temporarily copies files from an agent workspace to the
-controller in preparation for publishing them in the 'CloudBees CD -
-Publish Artifact' post-build step.
-
-CloudBees CD Plugin 1.1.32 and earlier follows symbolic links to locations
-outside of the temporary directory on the controller when collecting the
-list of files to publish.
-
-This allows attackers able to configure jobs to publish arbitrary files
-from the Jenkins controller file system to the previously configured
-CloudBees CD server.
-
-
-SECURITY-2875 / CVE-2023-46656
-Multibranch Scan Webhook Trigger Plugin 1.0.9 and earlier does not use a
-constant-time comparison when checking whether the provided and expected
-webhook token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2896 / CVE-2023-46657
-Gogs Plugin 1.0.15 and earlier does not use a constant-time comparison when
-checking whether the provided and expected webhook token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2876 / CVE-2023-46658
-MSTeams Webhook Trigger Plugin 0.1.1 and earlier does not use a
-constant-time comparison when checking whether the provided and expected
-webhook token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3247 / CVE-2023-46659
-Edgewall Trac Plugin 1.13 and earlier does not escape the Trac website URL
-on the build page.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2879 / CVE-2023-46660
-Zanata Plugin 0.6 and earlier does not use a constant-time comparison when
-checking whether the provided and expected webhook token hashes are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Regards,
+Salvatore
