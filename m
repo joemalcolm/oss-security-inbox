@@ -1,27 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/1
-Message-ID: <20231222104647.GH14101@suse.de>
-Date: Fri, 22 Dec 2023 11:46:48 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/31/1
+Message-ID: <CAPS+KmmW-6ar9R-8g93sUs2j4FTr6j9Euff1h-Bp=G9=Wd6Evw@mail.gmail.com>
+Date: Tue, 31 Oct 2023 10:51:55 -0400
+From: Byron Ruth <byron@...adia.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: NATS: 2023-02: nkeys: xkeys Seal encryption used fixed key for all encryption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+NATS-advisory-ID: 2023-02
+Aliases: CVE-2023-46129, GHSA-mr45-rx8q-wcm9
+Date: 2023-10-26
+Fixed-In: nkeys 0.4.6; nats-server 2.10.4
 
-FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
+Background:
 
-Not sure if we need it for others like sendmail too, as that is also
-referenced by the security researchers.
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
 
-Ciao, Marcus
-On Thu, Dec 21, 2023 at 02:46:56PM +0000, Claus Assmann wrote:
-> Just for completeness:
-> sendmail 8.18.0.2 has options to handle this too, e.g.,
-> 	Accept only CR LF . CR LF as end of an SMTP message as
-> 		required by the RFCs when the new srv_features
-> 		option 'o' is used.
-> 
-> And for those who read the source code there's also an FFR:
-> 	/* enable checking for "bare LF" in message */
-> 	"_FFR_BARE_LF",
+The cryptographic key handling library, nkeys, recently gained support
+for encryption, not just for signing/authentication.  This is used
+in nats-server 2.10 (Sep 2023) and newer for authentication callouts.
+
+Problem Description:
+
+The nkeys library's "xkeys" encryption handling logic mistakenly
+passed an array by value into an internal function, where the function
+mutated that buffer to populate the encryption key to use.  As a result,
+all encryption was actually to an all-zeros key.
+
+This affects encryption only, not signing.
+All usage of nkeys prior to the January 2023 0.4.0 release was
+signing-only.
+
+Within the nats-server, the encryption is used for the Auth
+Callouts feature, introduced with 2.10.0 (September 2023).
+The Auth Callout request includes the supplied user password.
+These messages are sent within NATS, and should typically be in a
+dedicated NATS Account used for callouts, but this is not required.
+Thus in scenarios where the Callouts are in an account shared with
+untrusted users or where the callout responders connect without TLS,
+this may lead to user credential exposure.
+
+Affected versions:
+
+nkeys Go library:
+ * 0.4.0 up to and including 0.4.5
+ * Fixed with nats-io/nkeys: 0.4.6
+NATS Server:
+ * 2.10.0 up to and including 2.10.3
+ * Fixed with nats-io/nats-server: 2.10.4
+
+Workarounds:
+
+None available.
+
+Solution:
+
+Upgrade the nats-server.
+For any application handling auth callouts in Go, if using the nkeys
+library, update the dependency, recompile and deploy that in lockstep.
+
+Credits:
+
+Problem reported by Quentin Matillat (GitHub @tinou98).
+
+References:
+
+ * GitHub Security Advisory for nkeys & nats-server:
+   <https://github.com/nats-io/nkeys/security/advisories/GHSA-mr45-rx8q-wcm9>
