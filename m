@@ -1,31 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/24/3
-Message-ID: <08abeba7-4ea5-a8d0-9146-14ecb5acf181@oracle.com>
-Date: Tue, 24 Jan 2023 15:09:08 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: Directory traversal in sharutils/uudecode and python uu module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/01/2
+Message-ID: <ba36d013-359f-4a0c-be68-793370be38de@gmail.com>
+Date: Wed, 1 Nov 2023 08:04:37 +0100
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Django: CVE-2023-46695: Potential denial of service vulnerability in UsernameField on Windows
 Content-Type: text/plain; charset=utf-8
 
-On 12/21/22 10:42, Hanno Böck wrote:
-> If one can convince someone with root privileges to decode such a file
-> this may thus compromise a system.
+https://www.djangoproject.com/weblog/2023/nov/01/security-releases/
 
-Fortunately, the easiest exploit path was mostly removed decades ago:
-https://exchange.xforce.ibmcloud.com/vulnerabilities/126
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.2.7 <https://docs.djangoproject.com/en/dev/releases/4.2.7/>`_,
+`Django 4.1.13 
+<https://docs.djangoproject.com/en/dev/releases/4.1.13/>`_, and
+`Django 3.2.23 <https://docs.djangoproject.com/en/dev/releases/3.2.23/>`_.
+These releases addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-> I got a reply confirming the report from the sharutils developers,
-> pointing out that this can be interpreted as expected behavior
-> according to the posix standard. I don't expect a fix any time soon,
-> their latest release is from 2015.
+CVE-2023-46695: Potential denial of service vulnerability in 
+``UsernameField`` on Windows
+=========================================================================================
 
-I started a discussion on the Austin Group mailing list to see if the
-standard should be updated, but the argument has mostly leaned towards
-"users should either use -o to specify output or look at files before
-  uudecoding them" (along with suggestions to drop these utilities from
-the standard now in favor of base64 encoding utilities).
+The NFKC normalization is slow on Windows. As a consequence,
+``django.contrib.auth.forms.UsernameField`` was subject to a potential 
+denial
+of service attack via certain inputs with a very large number of Unicode
+characters.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+In order to avoid the vulnerability, invalid values longer than
+``UsernameField.max_length`` are no longer normalized, since they cannot 
+pass
+validation anyway.
+
+Thanks `MProgrammer <https://hackerone.com/mprogrammer>`_ for the report.
+
+This issue has severity "moderate" according to the Django security policy.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 5.0 (currently at beta status)
+* Django 4.2
+* Django 4.1
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch 
+and the
+5.0, 4.2, 4.1, and 3.2 release branches. The patches may be obtained 
+from the
+following changesets:
+
+* On the `main branch 
+<https://github.com/django/django/commit/05ba4130ee878c4f520b5d34bb11eaad794623be>`__
+* On the `5.0 release branch 
+<https://github.com/django/django/commit/bb71d34551207b2472c493655d0d7f3b2975d686>`__
+* On the `4.2 release branch 
+<https://github.com/django/django/commit/048a9ebb6ea468426cb4e57c71572cbbd975517f>`__
+* On the `4.1 release branch 
+<https://github.com/django/django/commit/4965bfdde2e5a5c883685019e57d123a3368a75e>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/f9a7fb8466a7ba4857eaf930099b5258f3eafb2b>`__
+
+The following releases have been issued:
+
+* Django 4.2.7 (`download Django 4.2.7 
+<https://www.djangoproject.com/m/releases/4.2/Django-4.2.7.tar.gz>`_ | 
+`4.2.7 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.2.7.checksum.txt>`_)
+* Django 4.1.13 (`download Django 4.1.13 
+<https://www.djangoproject.com/m/releases/4.1/Django-4.1.13.tar.gz>`_ | 
+`4.1.13 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.1.13.checksum.txt>`_)
+* Django 3.2.23 (`download Django 3.2.23 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.23.tar.gz>`_ | 
+`3.2.23 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.23.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
