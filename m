@@ -1,4 +1,4 @@
-Received: (qmail 14060 invoked by uid 550); 17 Nov 2025 10:25:40 -0000
+Received: (qmail 28389 invoked by uid 550); 1 Nov 2023 11:51:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,146 +7,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5682 invoked from network); 17 Nov 2025 07:31:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763364654; x=1763969454; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=10lGkEoXiFssMEulZemoW4SpcJFg3UaF/Tz7tT3rElE=;
-        b=kBSRSVby7FnAtQPbjuv+HW3TEmc6LlyUXn8O+tfz4psRxnHUw4fEQAhWBQgpfk616w
-         Z158VaWrF+KYrFqkWjFPwdzYblV3Zx/HKQJMReMROMoaK9SwzNbjwfUuGuAdbhBjfRUo
-         k9l1243DTvJqOHYBaiah/imN94L6ub+WIfDYvsABnPzdD19iaFUsCyLCB5jOVaBzYuAQ
-         3jm3Vkzcckr2J4SYORDOFg1qQmNzlflWimQy3zA3pBMJDDJWzdJnZjYxEEGEWbbAfhRP
-         JRnRjMd5k5JmQN1+getNNbR7ZYjHc+gh5Lu+j9XWenbfPlAXdm4ekR7R9HSxWe7XwoS+
-         yY7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763364654; x=1763969454;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=10lGkEoXiFssMEulZemoW4SpcJFg3UaF/Tz7tT3rElE=;
-        b=ZYwNr1KL/iJHfhW0CvG8M7Lbt6UAvk54SaiHm7YLuGQ9YXh9nazXXkTbaK2uqjuox2
-         5qgAHEBKJpNC1fuk4IGF3qGJ+TWSEihTJ/ErFl9XqV9PyXEL9HHIjjce1De5tEqbCjyp
-         6/8JTICd2BqON3qsSDUVXLNDHcrMiBF8mxATbiNIi40k7BQiX9qUzQ/fsBTnow1CJHUG
-         pq/MN42aYf86qxKL7IvfCnRAK1glV8dMmKro55OSG5A0AZOJu6y1KZPpOsDy5e16qGOI
-         ChEguO2GqkfC3dcfO8QUndQnDH4i9JrpYWeoP8QmrUs95qupXoxjzYN/H0VDYsz4m0hp
-         Mqbw==
-X-Gm-Message-State: AOJu0YxLqv4QowoA2u4s+2gvz1Q5FTzAuNAeShqY6/OOKx86tFBsloix
-	fdRo0os2e1ahc54U+FmcHlxJNPFCGweJIZl0XdsjVVVZPPcBM7P9ROP0Lqb91BoxB41c8NysWUI
-	olCcxkFvun/vnXy29xkwXcIP0qyisbh/EIuQyLaI=
-X-Gm-Gg: ASbGncuQP+YkT3cWS8eqtwcD+BsXF9KKqYCc2epAgAsq5q5ElR11auxS8OY4L0TYcTD
-	YGz6420s11iGGwE8Z5QHpiSVFAln3Nb2pAbU7G7WloxUSNK6LDEhP/0h/RHcMqd2sRwygR4T34g
-	ko3NOMJB3e4TCRfIJcFR+9SkHUDADSAxgq38sV6218sMzMSnrT1Mf0ZwlXI1KVLpW7tJzYYmleS
-	srDFt5oeTObLjADA6ZMPvYvi/6IJ13Fn2vkvOEEeZGXY/qaK3O26QlRrSg6O6JHf5mRIkVHdvhT
-	/tKw8fMwYsceQFA520PYdCZ7wq6hMwXXEsaLN7jHlrkCcW+bmXhpnedbw4U=
-X-Google-Smtp-Source: AGHT+IHgeTg2mvF1mPZqW6doPb5KHA0frgIBKfFkiBrP+5tGWIuhkbqQ6BhZ1FodXPRE71UunoIZv335KrQMsPPnMNo=
-X-Received: by 2002:a05:690e:1609:b0:640:cfa4:e8ce with SMTP id
- 956f58d0204a3-641e769b265mr7492038d50.68.1763364653785; Sun, 16 Nov 2025
- 23:30:53 -0800 (PST)
+Received: (qmail 5831 invoked from network); 1 Nov 2023 11:35:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=edu.physics.uoc.gr;
+	s=edu; t=1698838516;
+	bh=/0RM3nZw7Bw5ojQ8al1eLUa1ACJghpb84in7OJlU9/g=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=cbtPViNQWikcgovzP2T5wlIi7FFN4Pg0zgLmIhe7CbeOEBE5ZW1G7g1VjwGKpVL8B
+	 Kh5ePYqlSPmhiFenUcD8n7mj4GveL1AE9hOjqN5XVfBH+rPQ0qJ6qzmtUR1lrX4viz
+	 wF6cOAIGg+DKhc2rwCFjEWloVbi66wuZk+9jD0tc=
+Message-ID: <6aff6798-3331-45c9-86fe-b433c6273624@edu.physics.uoc.gr>
+Date: Wed, 1 Nov 2023 13:35:16 +0200
 MIME-Version: 1.0
-From: tanish saxena <tanish.saxena26@gmail.com>
-Date: Mon, 17 Nov 2025 13:00:42 +0530
-X-Gm-Features: AWmQ_blMfpY-yCLSXpLrgV6cSrRQpsOPzcOpy__IGiw5GNn8S0zPJACmpKBnaEU
-Message-ID: <CA+p5cO4ATn-ZDp0GvrokrQkJW1D4AJ54qm5X-Lxyn_w0YzRcfg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: el-en
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000cc67400643c55341"
-Subject: [oss-security] GitGuardian GGShield SSL/TLS Verification Bypass (No CVE)
+References: <mehcc45ulnpbayvi4alil52gazey6mybvc2ugvmvxj25kqn7bf@23o2kg6ldvdr>
+From: Kapetanakis Giannis <bilias@edu.physics.uoc.gr>
+Autocrypt: addr=bilias@edu.physics.uoc.gr; keydata=
+ xsFNBF/8L08BEADUPkc8nIHBqQEenPBGAouAVja6jJYWk4pedWFjMKSZGREmn13EsXj4xvHA
+ F3r4rCVSx6aEYXLRSUuMtvXyFeEHHCcH0leTISGFMLghr9ZHBVmfjnK6SyQf7xcRpUGVhj35
+ 0kDlpKMa0+tc3IpJrJGNwZ+fNCVw6GhPfg+t0GcFSfr4ZRhy9QVJDuzQj6jbr3txI5JKsNU4
+ lA8rqmmIhl8kPt/BT22wUWA9fjdoPAvQbaqVgtf3OAqB9XeKQ8AWJSU+2quQqiJo3tuDU9T1
+ 0RkJxA0PuItKrmH5jLXSG0xTlvZtAs3+Rzsf6/k71NpXBDzfFMrG/OfnPJNIH48q+fLG69Bq
+ dBemgjh6jpVcwcpNn8497XAZPmgzfOXLNnVXniYdeaJP0bvqUZ3o4y0NtIOkfdBkY/aiQkFT
+ awyVQHTNBybmEtdA4nVYuzsUx4YACT28r+RGbUX4B1kTBHhgfNsrkpxvkqZmLcBM1C00WZDO
+ oQbrvpYITcowZTP4axmWqXS0VTq98iy1sgjlzqn/jeW7cx3KPQGUL3pLE1MKBvDtS46sryEQ
+ Yy2gTtQADCYXxeUy3XKQuTFyyzqWQWjvY0A+n6Br/Khkov7zdYtPDy4+BtsdAemvg5iVYbUb
+ uQrYhtzmr32p6YXNmXs8iCfTiqvEi1oaS8pMCot7N1xZBjrInwARAQABzS9LYXBldGFuYWtp
+ cyBHaWFubmlzIDxiaWxpYXNAZWR1LnBoeXNpY3MudW9jLmdyPsLBjwQTAQgAORYhBIkr5IO4
+ gudt6FBYYSzxKk1kTBviBQJf/C9QBQkHhM4AAhsDBQsJCAcCBhUICQoLAgUWAgMBAAAKCRAs
+ 8SpNZEwb4qwyD/9tPNjrsyjDJWWIkdMELkwgOyB2EpTbpkawAEemIib6EDFj0CW9Kjwj7T5P
+ CdZ4EHUT8fpe3FjSJ2Uh3S/MqqHkLpnYtfVf7YEXhegr8fuioYHLFaAxgDh7rssKiA/LURjE
+ pzqUY5gkhbTFf0M95SyJ1qahGhQO5BuAo3UoCiOwakN8WRyuFLgaXcpMpDzheQIakds9Cick
+ QEVusVIIL1yGaTFXP3ZQzTWKZiZUNpSAWwF4r0LVC02TpWxE2XCxhZsBG5GIXrnoxRuq2PVL
+ cWNLc4TPrf+u+ZaKDvsAE6FH0WJcH9IA1S6YSaJBrx7eD71R7t1wxDujPsmBbH5ZFz8yuGDs
+ mXMURyjrKgIEBGxno5lYtKXmuQEQ/ZX7c9yE2RhlAzmWRc/SsLzWZ5eLhgdnL3lB09sjLUbl
+ gfEkOIeuzX8ZZcF8jqRYVwaUML+j2E9YMuWKLjDg0f+ZFdgvw0PT4GTvmvB0aB3HMk7eD7sv
+ Wyp/FT5mlX5cL0LDmEG2M7qvQMUC1LRCfrq6A8IjzTN8F1+jKSndlS8Dmjov2NjbHzQ4sa2T
+ EGvrjkCdybL00kIuzS7Bo/l6SQE2yAFkAYGTCN087EGoX96JsPOaftKlZZXDn6/uJxDPRupv
+ 3JXYsnQchaX0NsvfhC5TCcrvNiDVr+ZkaNIGmZqs+NPu7ikRns7BTQRf/C9RARAA1Q4AJ+NL
+ iSW1S0J974zNmB4GNVi9dFfasrRdTCtbEN4ggCEOrBwTjTenNsmEIhlkm4oRYo+fuigH+GBq
+ PfG7V3roBWUK6Kh4Mz9jHkvlMYqkyKxaD3br0wwwXgpMs6/T6yEoNJDYwZ52M9tv5hn/Hiw5
+ rBAF6Vc4G4HQ6VfsxyfC6olGJTBN+qTOuOSvLtBOkTxJwc88+cjgAX7SuPZLExf1OIhcfQe/
+ h7Tm8hYrNn35caHkDGLgR9jYXgplrqHjd3NlBA9+iC7NEPODBwhQ9lkjKcVz4LXah0n0Dehs
+ PIVqtH1XT8A8qTxVblsOhvMZeRNvv3OZOeAFwpkqP3imPWWGGvyRmYcgxBgSe7Dz0Yf0Clgx
+ x09UmjcqjXlGGAYI0lhvNRSBwDCauPjwSjqvulKfZAphqJwmaiZSm1uXOhYY4ZLOGe9ujQ39
+ g73oezDG8a1YIhpS4nAMkn1v1chh6zLlq3l4kXzob0rvdzAX1GCKyZ6bMBrz0IN0owabXZ/s
+ MajTRtjlzKnSpq8V970vjcjNtZvsgy6OUPtquevKE/Sa67642bHklK+9KokOhxcSYPrxhe6Y
+ ekBPE/0HVyOGjg95RcOeJ/BnWY+gNk2GJWS0oevwYvJg2Q/bZf+lwjhNCHNwXuVf7FWO1fqX
+ inuuQAdW1k+htfiIP1dBPYkURN0AEQEAAcLBfAQYAQgAJhYhBIkr5IO4gudt6FBYYSzxKk1k
+ TBviBQJf/C9TBQkHhM4AAhsMAAoJECzxKk1kTBvi2IwP/jc7/IuISEgcJSThE75wb7srnlXD
+ GDTi7vH26kotrgkKNN55hTD/tfu5ZmzfgwJ/ys6RVpusDvLT/kIOuCWrHxRFS5Onhm7vHynX
+ wKCI0WEWpjH4MiV7QkaoILCJV1hGAq7Qq95J1DkvnZ1iEbp1bVGkGxHTFKu0BvPgSFj78WVT
+ sAHv700ijQXSoj7WqLyMMSIc4fcul0VedB5z6HRfa5DXrlGow+Uu6FOMRGEHaLZ1Pt1e9rXu
+ UT8/zXg4H8LucMiiRlY4EmOaIfC6G5j8jXHLxAX+QUuYcfPzt03Bl2zk6vo8eA/3+iUhYT1j
+ F4pWBdrlxR7A1wcZYU5m936Z2Wk7BY5mCDPbdZN056242UQIG1NETvssxBjSAdg602VFTHEX
+ uPHolkEjof85gej2l5Re4XEkEoZqVXprDAqbzldwmOwrjI27drg+hG4AkGMYEY3gK6aDRtCs
+ WLmpycDQ2B2MeeEwB7CM2B31V+4FcHaYg5Fo+QcbNr6huVtYAc7YBSll0MjnI/0SlcXjMW1B
+ eCjgu16reITlcwAo8sg5FMPsdlEG4OLBmB2moYYLPxnzWHHyMEYlsQ1O/lBAHtIfUs/CPmiT
+ gBpKAnoGALkXYSzeDZDKucG6LmiCZjbHSJVJhO4qkyNbTKxwUlQqSFStPMzWniJub/guXUE2
+ DhjxPbcg
+Organization: Computer Center - UOC
+In-Reply-To: <mehcc45ulnpbayvi4alil52gazey6mybvc2ugvmvxj25kqn7bf@23o2kg6ldvdr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-2023-5631: XSS vulnerability in Roundcube
+ webmail
 
---000000000000cc67400643c55341
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Versions up to 1.6.3 - not 1.6.4 - are vulnerable.
 
-Hello,
+https://www.cve.org/CVERecord?id=CVE-2023-5631
 
-This is a public disclosure of a security issue identified in GitGuardian's
-GGShield CLI tool: an SSL/TLS certificate verification bypass triggered
-through
-the `--allow-self-signed` flag and related configuration.
+Roundcube before 1.4.15, 1.5.x before 1.5.5, and 1.6.x before 1.6.4 allows stored XSS via an HTML e-mail message with a crafted SVG document because of program/lib/Roundcube/rcube_washtml.php behavior. This could allow a remote attacker to load arbitrary JavaScript code.
 
-Although this issue did not receive a CVE assignment, it was escalated
-through
-proper coordinated disclosure channels, including CERT/CC. Vendor has since
-implemented mitigations in GGShield v1.44.1.
+G
 
----
-
-Summary
--------
-Product: GGShield (GitGuardian secrets scanning CLI)
-Affected Versions: =E2=89=A4 v1.43.0
-Type: SSL/TLS Verification Disablement (CWE-295)
-Impact: Man-in-the-middle risk on all API communications
-Disclosure Status: Public, vendor updated behavior in v1.44.1
-
----
-
-Technical Details
------------------
-
-GGShield provides an option called `--allow-self-signed` which internally
-disables *all* SSL/TLS certificate verification, not only self-signed
-certificate checks.
-
-Code:
-
-    def create_session(allow_self_signed: bool =3D False) -> Session:
-        session =3D Session()
-        if allow_self_signed:
-            urllib3.disable_warnings()
-            session.verify =3D False  # All certificate validation disabled
-        return session
-
-This effectively makes all GGShield API calls vulnerable to interception via
-Man-in-the-Middle (MitM) attacks, leakage of scanned content, credential
-theft,
-and manipulation of scan results.
-
----
-
-Attack Scenarios
-----------------
-1. Developer on untrusted WiFi using `--allow-self-signed`
-2. CI/CD pipelines where troubleshooting instructions suggest bypassing SSL
-3. Enterprise networks with transparent proxies abusing disabled validation
-4. Internal threat actor with network access
-
----
-
-Vendor Response & Mitigations
------------------------------
-
-In GGShield v1.44.1, GitGuardian introduced several improvements:
-
-- Added a new `--insecure` flag to clearly indicate total SSL bypass
-- Added prominent warnings when SSL verification is disabled
-- Deprecated the misleading `--allow-self-signed` flag
-- Recommended using system certificate trust stores instead
-
-These changes mitigate user confusion and reduce accidental insecure usage.
-
----
-
-Timeline
---------
-2025-09-20 =E2=80=93 Initial report to vendor
-2025-10-13 =E2=80=93 Vendor responds, considers behavior =E2=80=9Cintention=
-al=E2=80=9D
-2025-10-20 =E2=80=93 Vendor declines changes at that time
-2025-11-13 =E2=80=93 CERT/CC advises researcher to proceed with public disc=
-losure
-2025-11-16 =E2=80=93 Vendor releases v1.44.1 with mitigations (1week)
-2025-11-17 =E2=80=93 Public disclosure
-
----
-
-Author
-------
-Tanish Saxena
-Independent Security Researcher
-
-This disclosure is provided in good faith for user protection and awareness.
-
-Regards,
-Tanish
-
---000000000000cc67400643c55341--
+On 31/10/2023 23:26, Valtteri Vuorikoski wrote:
+> Not associated with the project or ESET, but didn't see anything here about
+> this yet.
+>
+> Roundcube is an open-source webmail client. Versions up to 1.6.4 are
+> vulnerable (including the 1.4.x and 1.5.x series) to an XSS exploit
+> caused by an issue in the sanitization of SVG image elements in HTML
+> emails. ESET describes CVE-2023-5631 as follows in their press release
+> at <https://www.eset.com/us/about/newsroom/press-releases/eset-research-winter-vivern-attacks-roundcube-webmail-servers-of-governments-in-europe-through-zero-1/>:
+>
+>   By sending a specially crafted email message, attackers are able to
+>   load arbitrary JavaScript code in the context of the Roundcube user’s
+>   browser window. No manual interaction other than viewing the message
+>   in a web browser is required. The final JavaScript payload can
+>   exfiltrate email messages to the command and control server of the
+>   group.
+>
+> The Roundcube project has released new versions for each of the abovementioned
+> release series. The official release notification is at
+> <https://roundcube.net/news/2023/10/16/security-update-1.6.4-released>.
+>
+> According to ESET, the vulnerability is being actively exploited to
+> target "governmental entities in Europe".
+>
+>  -Valtteri
+>
+>
