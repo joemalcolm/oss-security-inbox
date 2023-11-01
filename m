@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/4
-Message-ID: <f95ff094-ddc0-46b7-8fb3-2bcbd06efacc@census-labs.com>
-Date: Wed, 8 Nov 2023 17:51:24 +0200
-From: Harry Maraziaris <cmaraziaris@...sus-labs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/01/3
+Message-ID: <6aff6798-3331-45c9-86fe-b433c6273624@edu.physics.uoc.gr>
+Date: Wed, 1 Nov 2023 13:35:16 +0200
+From: Kapetanakis Giannis <bilias@....physics.uoc.gr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46857 - Weak SVG asset filtering mechanism in Squidex leads to XSS
+Subject: Re: CVE-2023-5631: XSS vulnerability in Roundcube webmail
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Versions up to 1.6.3 - not 1.6.4 - are vulnerable.
 
-Squidex, a "headless" open source CMS framework was found to have a 
-stored XSS vulnerability in the "Upload Assets" functionality due to 
-insufficient SVG element filtering. The vulnerability affects all 
-versions of the framework prior to 7.9.0.
+https://www.cve.org/CVERecord?id=CVE-2023-5631
 
-CVE-2023-46857 was assigned to this vulnerability by MITRE.
+Roundcube before 1.4.15, 1.5.x before 1.5.5, and 1.6.x before 1.6.4 allows stored XSS via an HTML e-mail message with a crafted SVG document because of program/lib/Roundcube/rcube_washtml.php behavior. This could allow a remote attacker to load arbitrary JavaScript code.
 
-The vulnerability affects authenticated users of the Squidex CMS Web 
-application and allows for malicious JavaScript to be executed within 
-victim user browsers. Moreover, the vulnerability enables an attacker to 
-collect the CMS authentication token from browser local storage and it 
-is therefore possible for the attacker to gain unauthorized access to a 
-victim user's session.
+G
 
-More information about this issue is available here:
-https://census-labs.com/news/2023/11/08/weak-svg-asset-filtering-mechanism-in-squidex-cms/
-
-Best regards,
-
-Charalampos Maraziaris
-
--- 
-Charalampos Maraziaris
-IT Security Engineer
-CENSUS S.A. - https://census-labs.com
-
-
-Download attachment "OpenPGP_0xD2A107C04EE32300.asc" of type "application/pgp-keys" (3164 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+On 31/10/2023 23:26, Valtteri Vuorikoski wrote:
+> Not associated with the project or ESET, but didn't see anything here about
+> this yet.
+>
+> Roundcube is an open-source webmail client. Versions up to 1.6.4 are
+> vulnerable (including the 1.4.x and 1.5.x series) to an XSS exploit
+> caused by an issue in the sanitization of SVG image elements in HTML
+> emails. ESET describes CVE-2023-5631 as follows in their press release
+> at <https://www.eset.com/us/about/newsroom/press-releases/eset-research-winter-vivern-attacks-roundcube-webmail-servers-of-governments-in-europe-through-zero-1/>:
+>
+>   By sending a specially crafted email message, attackers are able to
+>   load arbitrary JavaScript code in the context of the Roundcube user’s
+>   browser window. No manual interaction other than viewing the message
+>   in a web browser is required. The final JavaScript payload can
+>   exfiltrate email messages to the command and control server of the
+>   group.
+>
+> The Roundcube project has released new versions for each of the abovementioned
+> release series. The official release notification is at
+> <https://roundcube.net/news/2023/10/16/security-update-1.6.4-released>.
+>
+> According to ESET, the vulnerability is being actively exploited to
+> target "governmental entities in Europe".
+>
+>  -Valtteri
+>
+>
