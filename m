@@ -1,424 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/24/1
-Message-Id: <E26A8338-E55F-429C-A9C8-6D35F92C9200@beckweb.net>
-Date: Tue, 24 Jan 2023 17:07:07 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/02/2
+Message-ID: <20231102225434.GA13082@openwall.com>
+Date: Thu, 2 Nov 2023 23:54:34 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Cc: David Schögler <david.schoegler@...il.com>, security@...ez.org
+Subject: Bluez, Intel wireless devices: Bluetooth Low Energy stuck in unresponsive state after repeated out of order transmission of packets
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hi,
+
+The below was brought to linux-distros back in March.  Due to the nature
+of the not-yet-researched issue, it was not actionable for distros,
+especially not within a 14 days embargo.  So was not a suitable thing to
+bring to linux-distros.  A linux-distros member promptly replied with:
+
+> Have you already notified the BlueZ Security group (security@...ez.org)? If not, please do so.
+
+and then we did not track this, so it was not noticed again until I
+started retroactively producing distros list statistics for 2023.  When
+I did, we tried asking David about it, and he provided this additional
+detail on October 24:
+
+> I redirected this problem to intel directly as it effects all distros and
+> windows as the problem is the network card reseting(which should not) which
+> is not handled correctly by the bluetooth stack under linux therefore the
+> weird behavior.
+
+We also tried contacting security@...ez.org on October 19 (and keeping
+them CC'ed later) and security@...el.com on October 24 (after David's
+reply above), but we haven't heard back from either.  I also got a
+couple of bounces for a specific person on security@...ez.org, where
+e-mail forwarding was failing authentication checks; I resent those
+messages to the forwarding target address directly, but also haven't
+heard back.  This makes me wonder if security@...ez.org works at all.
+
+David's message below included PNG images and pcap network capture files
+attached.  I do not re-attach them here because the PNGs are too large
+and I guess the pcaps could reveal David's internal network properties
+(e.g., MAC addresses), which he might not have intended to be public.
+David, please feel free to add tiny files (up to ~100 KiB _total_) in a
+reply if you feel any are relevant and suitable for this public posting.
+
+Thanks,
+
+Alexander
+
+----- Forwarded message from David Schögler <david.schoegler@...il.com> -----
+
+From: David Schögler <david.schoegler@...il.com>
+To: linux-distros
+Subject: [vs-plain] Bluetooth Low Energy stuck in unresponsive state after
+ repeated out of order transmission of packets
+Date: Fri, 10 Mar 2023 19:07:51 +0100
+
+
+Hello, I would like to report a flaw in the implementation I found.
+
+I have seen the problem with the following cards:
+
+- Intel Wireless-AC 8265
+- Intel AX200
+Bluez 5.64 and Bluez 5.65 on arch Linux and kali Linux (keeping them
+at the newest state since finding) in both virtual machines on windows
+and native Linux.
+
+With the prerequisite:
+
+- We have an active advertising connectable Bluetooth Low Energy
+Service (Simple BLE UART from Bluez examples)
+
+Information about the attacker's hardware and intentions:
+- Used Nrf52840
+- Firmware is completely self-written
+- Goal of my research was to use automata learning to learn the state
+machine used in BLE implementations of different manufacturers and use
+this to find flaws/fingerprint hardware.
+
+
+I managed to bring the device to a state where nothing, but packets
+defined in the link layer of BLE will receive a response.
+Shown in the Wireshark pcaps(marked with "_attack") we can observe
+that the same input sequence of packets on the
+device will respond differently before and after we brought the device
+in this state. In the "before.png" and "after.png".
+We can observe that the system still sends the packets to the device
+but never receives any Number of Completed Packets Events.
+
+I was not able to pin point the problem inside the Linux kernel.
+
+To reproduce this behavior a repeated out-of-order transmission of
+packets is required:
+
+We had 2 types of queries consisting of:
+
+1) A secure pairing out of order:
+- CON_REQUEST() always with a unique mac address.
+- SM_Pairing_REQ with authentication=0x9,iocap=0x0
+- ATT_EXCHANGE_MTU_REQ()
+- SM_Public_Key()
+- FEAT_RSP()
+- LENGTH_REQ()
+- TERM_INDICATION()
+2) A just works pairing request out of order
+- CON_REQUEST() always with a unique mac address.
+- SM_Pairing_REQ with authentication=0x0,iocap=0x0
+- ATT_EXCHANGE_MTU_REQ()
+- FEAT_RSP()
+- LENGTH_REQ()
+- TERM_INDICATION()
 
-The following releases contain fixes for security vulnerabilities:
+The behavior is reached by repeatedly mixing the 2 queries (maybe even
+in other situations but this process has brought me there).
+After a few tries, I could 100% reach this state where the card would
+not send any packets beyond BLE link layer packets.
+And it was only after resetting the controller that I got the correct
+behavior again.
 
-* Azure AD Plugin 306.va_7083923fd50
-* Bitbucket OAuth Plugin 0.13
-* Gerrit Trigger Plugin 2.38.1
-* Kubernetes Credentials Provider Plugin 1.209.v862c6e5fb_1ef
-* OpenId Connect Authentication Plugin 2.5
-* Orka by MacStadium Plugin 1.32
-* Script Security Plugin 1229.v4880b_b_e905a_6
-* Semantic Versioning Plugin 1.15
+I hope I explained it clearly if there is any question I am happy to elaborate.
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+Best Regards,
+David Sch??gler
 
-* BearyChat Plugin
-* Cisco Spark Notifier Plugin
-* GitHub Pull Request Builder Plugin
-* GitHub Pull Request Coverage Status Plugin
-* JIRA Pipeline Steps Plugin
-* Keycloak Authentication Plugin
-* MSTest Plugin
-* OpenID Plugin
-* PWauth Security Realm Plugin
-* RabbitMQ Consumer Plugin
-* TestComplete support Plugin
-* TestQuality Updater Plugin
-* view-cloner Plugin
-* visualexpert Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-01-24/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3016 / CVE-2023-24422
-Script Security Plugin provides a sandbox feature that allows low
-privileged users to define scripts, including Pipelines, that are generally
-safe to execute. Calls to code defined inside a sandboxed script are
-intercepted, and various allowlists are checked to determine whether the
-call is to be allowed.
-
-In Script Security Plugin 1228.vd93135a_2fb_25 and earlier, property
-assignments performed implicitly by the Groovy language runtime when
-invoking map constructors were not intercepted by the sandbox.
-
-This vulnerability allows attackers with permission to define and run
-sandboxed scripts, including Pipelines, to bypass the sandbox protection
-and execute arbitrary code in the context of the Jenkins controller JVM.
-
-
-SECURITY-2137 / CVE-2023-24423
-Gerrit Trigger Plugin 2.38.0 and earlier does not require POST requests for
-several HTTP endpoints, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to rebuild previous builds triggered by
-Gerrit.
-
-
-SECURITY-2978 / CVE-2023-24424
-OpenId Connect Authentication Plugin 2.4 and earlier does not invalidate
-the existing session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-
-SECURITY-3022 / CVE-2023-24425
-Kubernetes Credentials Provider Plugin 1.208.v128ee9800c04 and earlier does
-not set the appropriate context for Kubernetes credentials lookup, allowing
-the use of System-scoped credentials otherwise reserved for the global
-configuration.
-
-This allows attackers with Item/Configure permission to access and
-potentially capture Kubernetes credentials they are not entitled to.
-
-
-SECURITY-2980 / CVE-2023-24426
-Azure AD Plugin 303.va_91ef20ee49f and earlier does not invalidate the
-existing session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-
-SECURITY-2982 / CVE-2023-24427
-Bitbucket OAuth Plugin 0.12 and earlier does not invalidate the existing
-session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-
-SECURITY-2981 / CVE-2023-24428
-Bitbucket OAuth Plugin 0.12 and earlier does not implement a state
-parameter in its OAuth flow, a unique and non-guessable value associated
-with each authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-
-SECURITY-2973 (1) / CVE-2023-24429
-Semantic Versioning Plugin defines a controller/agent message that
-processes a given file as XML and its XML parser is not configured to
-prevent XML external entity (XXE) attacks.
-
-Semantic Versioning Plugin 1.14 and earlier does not restrict execution of
-the controller/agent message to agents, and implements no limitations about
-the file path that can be parsed. This allows attackers able to control
-agent processes to have Jenkins parse a crafted file that uses external
-entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
-This is due to an incomplete fix of
-link:/security/advisory/2022-03-15/#SECURITY-2124[SECURITY-2124].
-
-NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
-LTS 2.303.2 and earlier. See the
-link:/doc/upgrade-guide/2.303/#upgrading-to-jenkins-lts-2-303-3[LTS upgrade
-guide].
-
-
-SECURITY-2973 (2) / CVE-2023-24430
-Semantic Versioning Plugin 1.14 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the contents of the version file for
-the 'Determine Semantic Version' build step to have agent processes parse a
-crafted file that uses external entities for extraction of secrets from the
-Jenkins agent or server-side request forgery.
-
-NOTE: Because Jenkins agent processes usually execute build tools whose
-input (source code, build scripts, etc.) is controlled externally, this
-vulnerability only has a real impact in very narrow circumstances: when
-attackers can control XML files, but are unable to change build steps,
-Jenkinsfiles, test code that gets executed on the agents, or similar.
-
-
-SECURITY-2772 (1) / CVE-2023-24431
-Orka by MacStadium Plugin 1.31 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2772 (2) / CVE-2023-24432 (CSRF) & CVE-2023-24433 (missing permission check)
-Orka by MacStadium Plugin 1.31 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP server using attacker-specified credentials IDs
-obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2789 (1) / CVE-2023-24436
-GitHub Pull Request Builder Plugin 1.42.2 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2789 (2) / CVE-2023-24434 (CSRF) & CVE-2023-24435 (missing permission check)
-GitHub Pull Request Builder Plugin 1.42.2 and earlier does not perform
-permission checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2786 / CVE-2023-24437 (CSRF) & CVE-2023-24438 (missing permission check)
-JIRA Pipeline Steps Plugin 2.0.165.v8846cf59f3db and earlier does not
-perform permission checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2774 / CVE-2023-24439 (storage) & CVE-2023-24440 (masking)
-JIRA Pipeline Steps Plugin 2.0.165.v8846cf59f3db and earlier stores the
-private key unencrypted in its global configuration file
-`org.thoughtslive.jenkins.plugins.jira.JiraStepsConfig.xml` on the Jenkins
-controller as part of its configuration.
-
-This key can be viewed by users with access to the Jenkins controller file
-system.
-
-Additionally, the global configuration form does not mask the API key,
-increasing the potential for attackers to observe and capture it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2292 / CVE-2023-24441
-MSTest Plugin 1.0.0 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the contents of the report file for
-the 'Publish MSTest test result report' post-build step to have agent
-processes parse a crafted file that uses external entities for extraction
-of secrets from the Jenkins agent or server-side request forgery.
-
-NOTE: Because Jenkins agent processes usually execute build tools whose
-input (source code, build scripts, etc.) is controlled externally, this
-vulnerability only has a real impact in very narrow circumstances: when
-attackers can control XML files, but are unable to change build steps,
-Jenkinsfiles, test code that gets executed on the agents, or similar.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2767 / CVE-2023-24442
-GitHub Pull Request Coverage Status Plugin 2.2.0 and earlier stores the
-GitHub Personal Access Token, Sonar access token and Sonar password
-unencrypted in its global configuration file
-`com.github.terma.jenkins.githubprcoveragestatus.Configuration.xml` on the
-Jenkins controller as part of its configuration.
-
-These credentials can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2987 / CVE-2023-24456
-Keycloak Authentication Plugin 2.3.0 and earlier does not invalidate the
-existing session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2986 / CVE-2023-24457
-Keycloak Authentication Plugin 2.3.0 and earlier does not implement a state
-parameter in its OAuth flow, a unique and non-guessable value associated
-with each authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2741 / CVE-2023-24443
-TestComplete support Plugin 2.8.1 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the zip archive input file for the
-'TestComplete Test' build step to have Jenkins parse a crafted file that
-uses external entities for extraction of secrets from the Jenkins
-controller or server-side request forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2996 / CVE-2023-24444
-OpenID Plugin 2.4 and earlier does not invalidate the existing session on
-login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2997 / CVE-2023-24445
-OpenID Plugin 2.4 and earlier improperly determines that a redirect URL
-after login is legitimately pointing to Jenkins.
-
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2995 / CVE-2023-24446
-OpenID Plugin 2.4 and earlier does not implement a state parameter in its
-OAuth flow, a unique and non-guessable value associated with each
-authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2778 / CVE-2023-24447 (CSRF) & CVE-2023-24448 (missing permission check)
-RabbitMQ Consumer Plugin 2.8 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified AMQP server using attacker-specified username and
-password.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2985 / CVE-2023-24449
-PWauth Security Realm Plugin 0.4 and earlier does not restrict the names of
-files in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to check for the
-existence of an attacker-specified file path on the Jenkins controller file
-system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2787 / CVE-2023-24450
-view-cloner Plugin 1.1 and earlier stores passwords unencrypted in job
-`config.xml` files on the Jenkins controller as part of its configuration.
-
-These passwords can be viewed by users with Item/Extended Read permission
-or access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2803 / CVE-2023-24451
-Cisco Spark Notifier Plugin 1.1.1 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2745 / CVE-2023-24458 (CSRF) & CVE-2023-24459 (missing permission check)
-BearyChat Plugin 3.0.2 and earlier does not perform a permission check in a
-method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2800 / CVE-2023-24452 (CSRF) & CVE-2023-24453 (missing permission check)
-TestQuality Updater Plugin 1.3 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified username and password.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2091 / CVE-2023-24454
-TestQuality Updater Plugin 1.3 and earlier stores the TestQuality Updater
-password unencrypted in its global configuration file
-`com.testquality.jenkins.TestQualityNotifier.xml` on the Jenkins controller
-as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2709 / CVE-2023-24455
-visualexpert Plugin 1.3 and earlier does not restrict the names of files in
-methods implementing form validation.
-
-This allows attackers with Item/Configure permission to check for the
-existence of an attacker-specified file path on the Jenkins controller file
-system.
-
-As of publication of this advisory, there is no fix.
-
+----- End forwarded message -----
