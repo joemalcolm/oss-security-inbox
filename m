@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/8
-Message-ID: <700225b5-c214-4f34-bf09-1c25703957b5@oracle.com>
-Date: Fri, 20 Oct 2023 10:39:01 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/02/1
+Message-ID: <9db1110b-7dbb-4e32-b174-b62672181c8e@oracle.com>
+Date: Thu, 2 Nov 2023 11:40:04 -0700
 From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
+Subject: Session File Relative Path Traversal in sudo-rs
 Content-Type: text/plain; charset=utf-8
 
-On 10/18/23 16:10, Alan Coopersmith wrote:
-> On 10/10/23 11:40, Alan Coopersmith wrote:
->> Information I've found so far on open source implementations (most via the
->> current listings in the CVE) include:
-> 
-> Some more updates since last week:
-> 
->> - Apache httpd:
->>    https://chaos.social/@icing/111210915918780532
-> 
-> The discussion in https://github.com/apache/httpd-site/pull/10 makes the
-> situation a little murkier.
+[I'm not involved with this project or disclosure, but saw it go by and
+  thought it worth mentioning here.]
 
-https://github.com/icing/blog/blob/main/h2-rapid-reset.md clears that up
-and explains why Apache issued a fix under a different CVE id for the
-problem identified in that discussion, as we saw on this list yesterday.
+https://github.com/memorysafety/sudo-rs/security/advisories/GHSA-2r3c-m6v7-9354
+discloses CVE-2023-42456 in versions 0.2.0 & older of the Rust rewrite of sudo.
+
+This vulnerability requires two pre-conditions:
+
+1) Your OS allows usernames containing both '.' and '/' characters.
+
+2) Your site allows users to create usernames containing both '.' and '/'
+    characters, with no process or manual review that denies such things.
+
+If both are true, when sudo-rs created a filename containing the username,
+it failed to escape the characters, letting them be interpreted by the
+filesystem as references to higher level directories ('/../..' etc.)
+
+I don't know how many OS'es meet requirement 1, nor how many sites meet
+requirement 2, but it appears the sudo-rs security auditors were able to
+convince the developers that the numbers were not provably zero for both.
+
+If those numbers are non-zero, then I have to imagine there's also a non-zero
+number of other programs with similar bugs when creating files with usernames
+in.
 
 -- 
          -Alan Coopersmith-                 alan.coopersmith@...cle.com
           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
-
