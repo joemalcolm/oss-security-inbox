@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1110" "Friday" "15" "June" "2018" "15:25:07" "+0200" "Marcus Meissner" "meissner@suse.de" "<20180615132506.m2ks4ptiky4byayq@suse.de>" "29" "Re: [oss-security] Re: Intel FP security issue" "^Date:" nil nil "6" "2018061513:25:07" "[oss-security] Re: Intel FP security issue" (number mark "        meissner@sus Jun 15   29/1110  " thread-indent "\"Re: [oss-security] Re: Intel FP security issue\"\n") "<CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>" ("<CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>" "<CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24027 invoked by uid 550); 15 Jun 2018 13:25:19 -0000
+Received: (qmail 26099 invoked by uid 550); 2 Nov 2023 22:55:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24009 invoked from network); 15 Jun 2018 13:25:19 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20180615132506.m2ks4ptiky4byayq@suse.de>
-References: <CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>
- <CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: NeoMutt/20170421 (1.8.2)
-Date: Fri, 15 Jun 2018 15:25:07 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Intel FP security issue
+Received: (qmail 25831 invoked from network); 2 Nov 2023 22:54:42 -0000
+Date: Thu, 2 Nov 2023 23:54:34 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: David =?iso-8859-1?Q?Sch=F6gler?= <david.schoegler@gmail.com>,
+	security@bluez.org
+Message-ID: <20231102225434.GA13082@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Bluez, Intel wireless devices: Bluetooth Low Energy stuck in unresponsive state after repeated out of order transmission of packets
 
 Hi,
 
-On Wed, Jun 13, 2018 at 11:07:18PM +0400, Loganaden Velvindron wrote:
-> On Wed, Jun 13, 2018 at 7:34 PM, Loganaden Velvindron
-> <loganaden@gmail.com> wrote:
-> > Hi All,
-> >
-> > Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
-> > the rumored Intel FP issue:
-> >
-> > OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
-> > DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
-> >
-> > I think that the cat is already out of the bag, and releasing details
-> > of this security problem makes sense. Since this has gone public, Is
-> > there a reason to keep this under embargo ?
-> >
-> 
-> FreeBSD appears to be moving in this direction too:
-> https://svnweb.freebsd.org/base?view=revision&revision=335072
+The below was brought to linux-distros back in March.  Due to the nature
+of the not-yet-researched issue, it was not actionable for distros,
+especially not within a 14 days embargo.  So was not a suitable thing to
+bring to linux-distros.  A linux-distros member promptly replied with:
 
-For the record, this is https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00145.html
-aka CVE-2018-3665 with codename "Lazy FPU Save/Restore".
+> Have you already notified the BlueZ Security group (security@bluez.org)? If not, please do so.
 
-XEN advisory https://xenbits.xen.org/xsa/advisory-267.html was posted here too, describing it a bit better.
+and then we did not track this, so it was not noticed again until I
+started retroactively producing distros list statistics for 2023.  When
+I did, we tried asking David about it, and he provided this additional
+detail on October 24:
 
-Full details are planned to be released June 27th.
+> I redirected this problem to intel directly as it effects all distros and
+> windows as the problem is the network card reseting(which should not) which
+> is not handled correctly by the bluetooth stack under linux therefore the
+> weird behavior.
 
-Ciao, Marcus
+We also tried contacting security@bluez.org on October 19 (and keeping
+them CC'ed later) and security@intel.com on October 24 (after David's
+reply above), but we haven't heard back from either.  I also got a
+couple of bounces for a specific person on security@bluez.org, where
+e-mail forwarding was failing authentication checks; I resent those
+messages to the forwarding target address directly, but also haven't
+heard back.  This makes me wonder if security@bluez.org works at all.
+
+David's message below included PNG images and pcap network capture files
+attached.  I do not re-attach them here because the PNGs are too large
+and I guess the pcaps could reveal David's internal network properties
+(e.g., MAC addresses), which he might not have intended to be public.
+David, please feel free to add tiny files (up to ~100 KiB _total_) in a
+reply if you feel any are relevant and suitable for this public posting.
+
+Thanks,
+
+Alexander
+
+----- Forwarded message from David Schögler <david.schoegler@gmail.com> -----
+
+From: David Schögler <david.schoegler@gmail.com>
+To: linux-distros
+Subject: [vs-plain] Bluetooth Low Energy stuck in unresponsive state after
+ repeated out of order transmission of packets
+Date: Fri, 10 Mar 2023 19:07:51 +0100
+
+
+Hello, I would like to report a flaw in the implementation I found.
+
+I have seen the problem with the following cards:
+
+- Intel Wireless-AC 8265
+- Intel AX200
+Bluez 5.64 and Bluez 5.65 on arch Linux and kali Linux (keeping them
+at the newest state since finding) in both virtual machines on windows
+and native Linux.
+
+With the prerequisite:
+
+- We have an active advertising connectable Bluetooth Low Energy
+Service (Simple BLE UART from Bluez examples)
+
+Information about the attacker's hardware and intentions:
+- Used Nrf52840
+- Firmware is completely self-written
+- Goal of my research was to use automata learning to learn the state
+machine used in BLE implementations of different manufacturers and use
+this to find flaws/fingerprint hardware.
+
+
+I managed to bring the device to a state where nothing, but packets
+defined in the link layer of BLE will receive a response.
+Shown in the Wireshark pcaps(marked with "_attack") we can observe
+that the same input sequence of packets on the
+device will respond differently before and after we brought the device
+in this state. In the "before.png" and "after.png".
+We can observe that the system still sends the packets to the device
+but never receives any Number of Completed Packets Events.
+
+I was not able to pin point the problem inside the Linux kernel.
+
+To reproduce this behavior a repeated out-of-order transmission of
+packets is required:
+
+We had 2 types of queries consisting of:
+
+1) A secure pairing out of order:
+- CON_REQUEST() always with a unique mac address.
+- SM_Pairing_REQ with authentication=0x9,iocap=0x0
+- ATT_EXCHANGE_MTU_REQ()
+- SM_Public_Key()
+- FEAT_RSP()
+- LENGTH_REQ()
+- TERM_INDICATION()
+2) A just works pairing request out of order
+- CON_REQUEST() always with a unique mac address.
+- SM_Pairing_REQ with authentication=0x0,iocap=0x0
+- ATT_EXCHANGE_MTU_REQ()
+- FEAT_RSP()
+- LENGTH_REQ()
+- TERM_INDICATION()
+
+The behavior is reached by repeatedly mixing the 2 queries (maybe even
+in other situations but this process has brought me there).
+After a few tries, I could 100% reach this state where the card would
+not send any packets beyond BLE link layer packets.
+And it was only after resetting the controller that I got the correct
+behavior again.
+
+I hope I explained it clearly if there is any question I am happy to elaborate.
+
+Best Regards,
+David Sch??gler
+
+----- End forwarded message -----
