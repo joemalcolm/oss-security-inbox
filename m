@@ -1,44 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/1
-Message-ID: <ZL8lFPN2e+6jX5HH@largo.jsg.id.au>
-Date: Tue, 25 Jul 2023 11:27:48 +1000
-From: Jonathan Gray <jsg@....id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/05/6
+Message-ID: <20231105230810.GA26924@openwall.com>
+Date: Mon, 6 Nov 2023 00:08:10 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
+Cc: Pietro Albini <pietro@...troalbini.org>
+Subject: Re: CVE-2022-46176: Cargo does not check SSH host keys
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 24, 2023 at 01:41:36PM -0400, Marc Deslauriers wrote:
-> Hi,
-> 
-> There seems to be confusion regarding which is the correct commit:
-> 
-> Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which is
-> for family 17h.
-> 
-> This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is for
-> family 19h.
-> 
-> I assume the 17h family one is the correct one?
-> 
-> Thanks,
-> 
-> Marc.
+Hi,
 
-Yes, but it by no means covers all zen 2 models.  See amd-ucode/README
+On Tue, Jan 10, 2023 at 05:45:06PM +0100, Pietro Albini wrote:
+> The Rust Security Response WG was notified that Cargo did not perform SSH host
+> key verification when cloning indexes and dependencies via SSH. An attacker
+> could exploit this to perform man-in-the-middle (MITM) attacks.
+> 
+> This vulnerability has been assigned CVE-2022-46176.
 
-  Family=0x17 Model=0x31 Stepping=0x00: Patch=0x0830107a Length=3200 bytes
-  Family=0x17 Model=0xa0 Stepping=0x00: Patch=0x08a00008 Length=3200 bytes
+In the distros thread leading to the above oss-security posting, Pietro
+Albini also wrote:
 
-17-31-00 Rome/Castle Peak	0x0830107a
-17-a0-00 Mendocino		0x08a00008
+> Note that while investigating this we discovered that the underlying library
+> Cargo uses for git operations, libgit2, does not perform SSH host key checking
+> either. We've been coordinating with them, and they'll also release a fix on
+> 2023-01-10.
 
-Models missing include:
+I think the libgit2 issue was never brought to oss-security, so I am
+passing its mention to here now.  Also per that thread, CVE-2022-46176
+is only for the Cargo issue.  libgit2 was supposed to get its own CVE,
+but no one in the thread knew whether they actually did.
 
-17-60-01 Renoir			0x0860010b
-17-68-01 Lucienne		0x08608105
-17-71-00 Matisse		0x08701032
-17-90-02 Van Gogh
+I don't know whether libgit2 was actually fixed on that date as planned.
 
-The known good patch levels are used by xen and linux.  But the
-microcode for Renoir, Lucienne and Matisse is not available as far as
-I can tell.
+Alexander
+
+P.S. I'm quoting the rest of the oss-security posting I'm "replying" to
+below, for context since it's been a while.
+
+On Tue, Jan 10, 2023 at 05:45:06PM +0100, Pietro Albini wrote:
+> The Rust Security Response WG was notified that Cargo did not perform SSH host
+> key verification when cloning indexes and dependencies via SSH. An attacker
+> could exploit this to perform man-in-the-middle (MITM) attacks.
+> 
+> This vulnerability has been assigned CVE-2022-46176.
+> 
+> ## Overview
+> 
+> When an SSH client establishes communication with a server, to prevent MITM
+> attacks the client should check whether it already communicated with that
+> server in the past and what the server's public key was back then. If the key
+> changed since the last connection, the connection must be aborted as a MITM
+> attack is likely taking place.
+> 
+> It was discovered that Cargo never implemented such checks, and performed no
+> validation on the server's public key, leaving Cargo users vulnerable to MITM
+> attacks.
+> 
+> ## Affected Versions
+> 
+> All Rust versions containing Cargo before 1.66.1 are vulnerable.
+> 
+> Note that even if you don't explicitly use SSH for alternate registry indexes
+> or crate dependencies, you might be affected by this vulnerability if you have
+> configured git to replace HTTPS connections to GitHub with SSH (through git's
+> [`url.<base>.insteadOf`][1] setting), as that'd cause you to clone the
+> crates.io index through SSH.
+> 
+> ## Mitigations
+> 
+> We will be releasing Rust 1.66.1 today, 2023-01-10, changing Cargo to check the
+> SSH host key and abort the connection if the server's public key is not already
+> trusted. We recommend everyone to upgrade as soon as possible.
+> 
+> Patch files for Rust 1.66.0 are also available [here][2] for custom-built
+> toolchains.
+> 
+> For the time being Cargo will not ask the user whether to trust a server's
+> public key during the first connection. Instead, Cargo will show an error
+> message detailing how to add that public key to the list of trusted keys. Note
+> that this might break your automated builds if the hosts you clone dependencies
+> or indexes from are not already trusted.
+> 
+> ## Acknowledgments
+> 
+> Thanks to the Julia Security Team for disclosing this to us according to our
+> [security policy][1]!
+> 
+> We also want to thank the members of the Rust project who contributed to fixing
+> this issue. Thanks to Eric Huss and Weihang Lo for writing and reviewing the
+> patch, Pietro Albini for coordinating the disclosure and writing this advisory,
+> and Josh Stone, Josh Triplett and Jacob Finkelman for advising during the
+> disclosure.
+> 
+> [1]: https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf
+> [2]: https://github.com/rust-lang/wg-security-response/tree/main/patches/CVE-2022-46176
+> [3]: https://www.rust-lang.org/policies/security
