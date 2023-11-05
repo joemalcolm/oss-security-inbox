@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1120" "Friday" "8" "April" "2016" "13:28:35" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<57081473.7000604@oracle.com>" "38" "Re: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool" "^Date:" nil nil "4" "2016040820:28:35" "[oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool" (number mark "        alan.coopers Apr  8   38/1120  " thread-indent "\"Re: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool\"\n") "<D0A51038-C8D7-4538-8FBE-5C4BB9BAD81C@360.cn>" ("<865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>" "<570748E3.2090203@oracle.com>" "<D0A51038-C8D7-4538-8FBE-5C4BB9BAD81C@360.cn>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15390 invoked by uid 550); 8 Apr 2016 20:28:52 -0000
+Received: (qmail 15364 invoked by uid 550); 5 Nov 2023 17:41:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15363 invoked from network); 8 Apr 2016 20:28:50 -0000
-References: <865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>
- <570748E3.2090203@oracle.com> <D0A51038-C8D7-4538-8FBE-5C4BB9BAD81C@360.cn>
-Message-ID: <57081473.7000604@oracle.com>
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-In-Reply-To: <D0A51038-C8D7-4538-8FBE-5C4BB9BAD81C@360.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Source-IP: aserv0021.oracle.com [141.146.126.233]
-Date: Fri, 8 Apr 2016 13:28:35 -0700
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the
- bmp2tiff tool
-To: oss-security@lists.openwall.com
+Received: (qmail 10100 invoked from network); 5 Nov 2023 17:38:19 -0000
+Date: Sun, 5 Nov 2023 18:38:18 +0100
+From: Solar Designer <solar@openwall.com>
+To: Pietro Borrello <borrello@diag.uniroma1.it>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20231105173818.GB23224@openwall.com>
+References: <CAEih1qWG=Ww18e6j-07RKND47_xAbwvPyoyMyiiP8GgeE+fEJw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAEih1qWG=Ww18e6j-07RKND47_xAbwvPyoyMyiiP8GgeE+fEJw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux Kernel: hid: NULL pointer dereference in hid_betopff_play()
 
-That's a bug against Red Hat's distro - not the upstream libtiff project.
-Did you not report these to libtiff upstream yet?
+On Wed, Jan 18, 2023 at 04:20:51PM +0100, Pietro Borrello wrote:
+> I'm disclosing a possible DoS when plugging in a malicious USB device,
+> which advertises itself as a betop USB device.
+> 
+> A device driver must check that the device correctly registered the
+> expected inputs and reports.
+> Otherwise, a malicious USB device may violate assumptions throughout
+> the driver's code.
+> 
+> betopff_init() in the betop driver's code only checks that the device advertises
+> at least 4 report values among all its fields, but hid_betopff_play() expects
+> at least 4 report fields with a value each.
+> A device advertising an output report with one field and 4 report values
+> would pass the check but crash the kernel with a NULL pointer dereference
+> in hid_betopff_play(), when accessing `betopff->report->field[2]->value[0]`.
 
-	-alan-
+This was assigned CVE-2023-1073, which also covers two bugs mentioned in
+another oss-security posting below:
 
-On 04/ 8/16 12:00 AM, 王梅 wrote:
-> Thanks for pointing out the mistake.
->
-> CVE-2016-3619: https://bugzilla.redhat.com/show_bug.cgi?id=1316569
->
->
->> 在 2016年4月8日，下午2:00，Alan Coopersmith <alan.coopersmith@oracle.com> 写道：
->>
->> On 04/ 7/16 12:32 AM, 王梅 wrote:
->>> Details
->>> =======
->>>
->>> Product: libtiff
->>> Affected Versions: <= 4.0.6
->>> Vulnerability Type: Out-of-bounds Read
->>> Vendor URL: http://www.libtiff.org/
->>> CVE ID: CVE-2016-3619
->>> Credit: Mei Wang of the Cloud Security Team, Qihoo 360
->>
->>> References:
->>> [1] http://www.remotesensing.org/libtiff/
->>> [2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
->>
->> Instead of pointing to a list of 305 bugs, please just provide a link to the bug
->> you filed for each issue so it's easier for distros to check the progress of the
->> fix.
->>
->> --
->> 	-Alan Coopersmith-              alan.coopersmith@oracle.com
->> 	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
->
+CVE-2023-1073 - NULL Ptr Deref in betopff_init()
+patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=3782c0d6edf658b71354a64d60aa7a296188fc90
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/18/3
 
+CVE-2023-1073 - Type Confusion in hid_validate_values()
+patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b12fece4c64857e5fab4290bf01b2e0317a88456
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
 
+CVE-2023-1073 - Type Confusion in bigben_probe()
+patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
+
+Alexander
