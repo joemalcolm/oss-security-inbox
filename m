@@ -1,129 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/8
-Message-ID: <488129326b383c39@cvs.openbsd.org>
-Date: Wed, 15 Mar 2023 17:18:38 -0600 (MDT)
-From: Damien Miller <djm@....openbsd.org>
-To: oss-security@...ts.openwall.com
-Subject: Announce: OpenSSH 9.3 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/05/3
+Message-ID: <20231105173818.GB23224@openwall.com>
+Date: Sun, 5 Nov 2023 18:38:18 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Pietro Borrello <borrello@...g.uniroma1.it>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel: hid: NULL pointer dereference in hid_betopff_play()
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH 9.3 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+On Wed, Jan 18, 2023 at 04:20:51PM +0100, Pietro Borrello wrote:
+> I'm disclosing a possible DoS when plugging in a malicious USB device,
+> which advertises itself as a betop USB device.
+> 
+> A device driver must check that the device correctly registered the
+> expected inputs and reports.
+> Otherwise, a malicious USB device may violate assumptions throughout
+> the driver's code.
+> 
+> betopff_init() in the betop driver's code only checks that the device advertises
+> at least 4 report values among all its fields, but hid_betopff_play() expects
+> at least 4 report fields with a value each.
+> A device advertising an output report with one field and 4 report values
+> would pass the check but crash the kernel with a NULL pointer dereference
+> in hid_betopff_play(), when accessing `betopff->report->field[2]->value[0]`.
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+This was assigned CVE-2023-1073, which also covers two bugs mentioned in
+another oss-security posting below:
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+CVE-2023-1073 - NULL Ptr Deref in betopff_init()
+patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=3782c0d6edf658b71354a64d60aa7a296188fc90
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/18/3
 
-Changes since OpenSSH 9.2
-=========================
+CVE-2023-1073 - Type Confusion in hid_validate_values()
+patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b12fece4c64857e5fab4290bf01b2e0317a88456
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
 
-This release fixes a number of security bugs.
+CVE-2023-1073 - Type Confusion in bigben_probe()
+patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
 
-Security
-========
-
-This release contains fixes for a security problem and a memory
-safety problem. The memory safety problem is not believed to be
-exploitable, but we report most network-reachable memory faults as
-security bugs.
-
- * ssh-add(1): when adding smartcard keys to ssh-agent(1) with the
-   per-hop desination constraints (ssh-add -h ...) added in OpenSSH
-   8.9, a logic error prevented the constraints from being
-   communicated to the agent. This resulted in the keys being added
-   without constraints. The common cases of non-smartcard keys and
-   keys without destination constraints are unaffected. This problem
-   was reported by Luci Stanescu.
-
- * ssh(1): Portable OpenSSH provides an implementation of the
-   getrrsetbyname(3) function if the standard library does not
-   provide it, for use by the VerifyHostKeyDNS feature. A
-   specifically crafted DNS response could cause this function to
-   perform an out-of-bounds read of adjacent stack data, but this
-   condition does not appear to be exploitable beyond denial-of-
-   service to the ssh(1) client.
-
-   The getrrsetbyname(3) replacement is only included if the system's
-   standard library lacks this function and portable OpenSSH was not
-   compiled with the ldns library (--with-ldns). getrrsetbyname(3) is
-   only invoked if using VerifyHostKeyDNS to fetch SSHFP records. This
-   problem was found by the Coverity static analyzer.
-
-New features
-------------
-
- * ssh-keygen(1), ssh-keyscan(1): accept -Ohashalg=sha1|sha256 when
-   outputting SSHFP fingerprints to allow algorithm selection. bz3493
-    
- * sshd(8): add a `sshd -G` option that parses and prints the
-   effective configuration without attempting to load private keys
-   and perform other checks. This allows usage of the option before
-   keys have been generated and for configuration evaluation and
-   verification by unprivileged users.
-
-Bugfixes
---------
-
- * scp(1), sftp(1): fix progressmeter corruption on wide displays;
-   bz3534
-
- * ssh-add(1), ssh-keygen(1): use RSA/SHA256 when testing usability
-   of private keys as some systems are starting to disable RSA/SHA1
-   in libcrypto.
-
- * sftp-server(8): fix a memory leak. GHPR363
-
- * ssh(1), sshd(8), ssh-keyscan(1): remove vestigal protocol
-   compatibility code and simplify what's left.
-
- * Fix a number of low-impact Coverity static analysis findings.
-   These include several reported via bz2687
-
- * ssh_config(5), sshd_config(5): mention that some options are not
-   first-match-wins.
-
- * Rework logging for the regression tests. Regression tests will now
-   capture separate logs for each ssh and sshd invocation in a test.
-
- * ssh(1): make `ssh -Q CASignatureAlgorithms` work as the manpage
-   says it should; bz3532.
-
- * ssh(1): ensure that there is a terminating newline when adding a
-   new entry to known_hosts; bz3529
-
-Portability
------------
-
- * sshd(8): harden Linux seccomp sandbox. Move to an allowlist of
-   mmap(2), madvise(2) and futex(2) flags, removing some concerning
-   kernel attack surface.
-
- * sshd(8): improve Linux seccomp-bpf sandbox for older systems;
-   bz3537
-
-Checksums:
-==========
-
-- SHA1 (openssh-9.3.tar.gz) = 5f9d2f73ddfe94f3f0a78bdf46704b6ad7b66ec7
-- SHA256 (openssh-9.3.tar.gz) = eRcXkFZByz70DUBUcyIdvU0pVxP2X280FrmV8pyUdrk=
-
-- SHA1 (openssh-9.3p1.tar.gz) = 610959871bf8d6baafc3525811948f85b5dd84ab
-- SHA256 (openssh-9.3p1.tar.gz) = 6bq6dwGnalHz2Fpiw4OjydzZf6kAuFm8fbEUwYaK+Kg=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
-
-
+Alexander
