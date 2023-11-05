@@ -1,4 +1,4 @@
-Received: (qmail 19866 invoked by uid 550); 9 Apr 2024 17:00:39 -0000
+Received: (qmail 19825 invoked by uid 550); 5 Nov 2023 17:32:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,218 +7,198 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19810 invoked from network); 9 Apr 2024 17:00:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=CcBlvz101lK1NIoWtOiS8wZEyRsmzX7G5kSbkqvufOI=; b=GYDA/NTabsZfDbN+1Obr3GaUxu
-	HjO7TplQr+D/4HLHotZJN9F4i7CQg4jUW7PMQWqvcl0VTxq9Mnty2oR7rr4Q9BTyHNg/K8MIE5HRT
-	SKPZBApHq5UM9z1xJmogqucGWeA2UUtxBZXng2Kg2UTF7kBg+8vfd3hOUMcChub4ew5M=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1ruEpb-0000jN-81@xenbits.xenproject.org>
-Date: Tue, 09 Apr 2024 17:00:23 +0000
-Subject: [oss-security] Xen Security Advisory 455 v4 (CVE-2024-31142) - x86: Incorrect
- logic for BTC/SRSO mitigations
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Received: (qmail 15563 invoked from network); 5 Nov 2023 17:28:10 -0000
+Date: Sun, 5 Nov 2023 18:27:13 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Pietro Borrello <borrello@diag.uniroma1.it>
+Message-ID: <20231105172713.GA21489@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2023-1078: Linux: rds_rm_zerocopy_callback() bugs
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-             Xen Security Advisory CVE-2024-31142 / XSA-455
-                                version 4
+There was a thread on linux-distros in February, where Pietro brought up
+multiple Linux kernel issues at once.  Some of these were already on
+oss-security by the time (as indicated below), four others were brought
+to oss-security on March 1st:
 
-	     x86: Incorrect logic for BTC/SRSO mitigations
+https://www.openwall.com/lists/oss-security/2023/03/01/
 
-UPDATES IN VERSION 4
-====================
+However, it looks like one CVE corresponding to two bugs was not, so I
+am correcting this now.  The missed CVE was assigned as follows:
 
-Public release.
+> CVE-2023-1078 - Heap OOB Write in rds_rm_zerocopy_callback()
+> patch:
+> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=f753a68980cf4b59a80fe677619da2b1804f526d
+> 
+> CVE-2023-1078 - Resource leak (leading to memory exhaustion) in rds_rm_zerocopy_callback()
+> patch:
+> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=68762148d1b011d47bc2ceed7321739b5aea1e63
 
-Correct references to prior XSAs.  The XSA fixing Branch Type Confusion
-was XSA-407, not XSA-422 as previously stated.
+Ubuntu security advisories describe it as:
 
-ISSUE DESCRIPTION
-=================
+> It was discovered that the Reliable Datagram Sockets (RDS) protocol
+> implementation in the Linux kernel contained a type confusion vulnerability
+> in some situations. An attacker could use this to cause a denial of service
+> (system crash). (CVE-2023-1078)
 
-Because of a logical error in XSA-407 (Branch Type Confusion), the
-mitigation is not applied properly when it is intended to be used.
-XSA-434 (Speculative Return Stack Overflow) uses the same
-infrastructure, so is equally impacted.
+You can see Pietro's own more detailed descriptions of the two bugs by
+searching the message below for mentions of rds_rm_zerocopy_callback().
 
-For more details, see:
-  https://xenbits.xen.org/xsa/advisory-407.html
-  https://xenbits.xen.org/xsa/advisory-434.html
+Alexander
 
-IMPACT
-======
+----- Forwarded message from Pietro Borrello <borrello@diag.uniroma1.it> -----
 
-XSAs 407 and 434 are unmitigated, even when the patches are in place.
+From: Pietro Borrello <borrello@diag.uniroma1.it>
+Subject: Re: [vs-plain] CVE Request
+CC: linux-distros
+Date: Wed, 22 Feb 2023 20:13:29 +0100
 
-VULNERABLE SYSTEMS
-==================
+Attached the more detailed report.
 
-All versions of Xen containing the XSA-407 fixes are vulnerable.
+- Type Confusion in hid_validate_values()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b12fece4c64857e5fab4290bf01b2e0317a88456
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
+attack-type: physical
+impact: memory corruption -> privilege escalation
+details: hid_validate_values fails to properly check the shape of USB
+reports, causing type confusion if a malicious device advertises
+invalid reports. On default configuration the type confusion results
+in the function failing due to field alignment, but any non-default
+configuration including structure layout randomization or having
+different struct field layout would incur in memory corruption.
 
-See XSAs 407 and 434 for details on which hardware is susceptible to
-BTC/SRSO.
+- Type Confusion in bigben_probe()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
+attack-type: physical
+impact: memory corruption -> privilege escalation
+details: bigben_probe() fails to properly check the shape of USB
+reports, causing type confusion if a malicious device advertises
+invalid reports. On default configuration the type confusion results
+in the function failing due to field alignment, but any non-default
+configuration including structure layout randomization or having
+different struct field layout would incur in memory corruption.
 
-MITIGATION
-==========
+- NULL Ptr Deref in hid_betopff_play()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=3782c0d6edf658b71354a64d60aa7a296188fc90
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/18/3
+attack-type: physical
+impact: DOS/privilege escalation
+details: betopff_init does not properly check the shape of USB report,
+causing a NULL ptr dereference in hid_betopff_play() on default
+configuration. NULL pointer dereferences may be exploited to achieve
+LPE (e.g., see https://googleprojectzero.blogspot.com/2023/01/exploiting-null-dereferences-in-linux.html).
+On non default configuration, as the NULL deref is caused by a type
+confusion, a different field layout may cause further memory
+corruption.
 
-There are no mitigations.
+- KASLR Leak in inet_diag_msg_sctpasoc_fill()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=458e279f861d3f61796894cd158b780765a1569f
+oss-security: https://www.openwall.com/lists/oss-security/2023/01/23/1
+attack-type: local
+impact: information disclosure
+details: a type confusion in inet_diag_msg_sctpasoc_fill() in
+net/sctp/diag.c, uses a type confused pointer to return information to
+userspace when issuing a list_entry() on
+asoc->base.bind_addr.address_list.next when the list is empty.
+The impact of the type confusion is a KASLR leak since the
+`laddr.v6.sin6_addr` is returned from the type confused pointer, which
+overlaps with `struct sctp_endpoint *ep` of the `struct
+sctp_association`.
 
-CREDITS
-=======
+- Type Confusion in tls_is_tx_ready()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=ffe2a22562444720b05bdfeb999c03e810d84cbb
+attack-type: local
+impact: information disclosure
+details: tls_is_tx_ready() incorrectly checks for list emptyness,
+potentially accessing a type confused entry to the list_head, leaking
+the last byte of the confused field that overlaps with rec->tx_ready.
 
-This issue was discovered by Andrew Cooper of XenServer.
+- Incorrect UID assigned to tun/tap sockets
+patch (tap): https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=66b2c338adce580dfce2199591e65e2bab889cff
+patch (tun): https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=a096ccca6e503a5c575717ff8a36ace27510ab0a
+attack-type: local
+impact: filtering/routing bypass for virtual sockets
+details: tun/tap sockets have their socket UID hardcoded to 0 due to a
+type confusion in their initialization function.
+While it will be often correct, as tuntap devices require
+CAP_NET_ADMIN, it may not always be the case, e.g., a non-root user
+only having that capability. This would make tun/tap sockets being
+incorrectly treated in filtering/routing decisions, possibly bypassing
+network filters.
 
-RESOLUTION
-==========
+- Type confusion in pick_next_rt_entity()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7c4a5b89a0b5a57a64b601775b296abf77a9fe97
+attack-type: local
+impact: memory corruption -> privilege escalation
+details: pick_next_rt_entity() may return a type confused entry, not
+detected by the BUG_ON condition, as the confused entry will not be
+NULL, but list_head.
+The buggy error condition would lead to a type confused entry with the
+list head, which would then be used as a type confused
+sched_rt_entity, causing memory corruption.
 
-Applying the appropriate attached patch resolves this issue.
+- Heap OOB Write in rds_rm_zerocopy_callback()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=f753a68980cf4b59a80fe677619da2b1804f526d
+attack-type: local
+impact: memory corruption -> privilege escalation
+details: The rds_rm_zerocopy_callback() issues a list_entry() on the
+actual head of a list, instead of calling list_first_entry(). This
+causes a type confusion and the `struct rds_msg_zcopy_info *info`
+actually points to `&q->zcookie_head`.
+In rds_zcookie_add(), `info->zcookies` is used, which if type confused
+overlaps with `spinlock_t lock` in `struct rds_msg_zcopy_queue`. The
+function writes `cookie`, which is completely controlled by userspace,
+to `ck->cookies[ncookies]`.
+`ncookies` is read from `ck->num` which overlaps with the `lock`
+counter, and is then incremented, also corrupting the `lock`.
+This effectively results in a controlled OOB write from `struct
+rds_msg_zcopy_queue` embedded at the end of `struct rds_sock`.
+The value is completely controlled, while the index depends on the
+`lock` state, being 1 by default, which I suspect can be controlled
+too.
 
-Note that the Xen Security Team is intending to produce releases on all
-stable trees, on the public embargo.  Therefore, this fix is expected to
-be contained in the following release tags:
+- Type Confusion in sctp_sock_filter()
+*removed from the request as not security relevant in default configurations*
 
-  RELEASE-4.18.2
-  RELEASE-4.17.4
-  RELEASE-4.16.6
-  RELEASE-4.15.6
+- Resource leak (leading to memory exhaustion) in rds_rm_zerocopy_callback()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=68762148d1b011d47bc2ceed7321739b5aea1e63
+attack-type: local
+impact: DOS
+details: rds_rm_zerocopy_callback() uses list_add_tail() with swapped
+arguments. This links the list head with the new entry, losing the
+references to the remaining part of the list, and causing the resource
+leak of the allocated entries. Repeating the leak may cause resource
+exhaustion.
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
 
-xsa455.patch           xen-unstable - Xen 4.17.x
-xsa455-4.16.patch      Xen 4.16.x - Xen 4.15.x
+- Use After Free in asus_remove()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=4ab3a086d10eeec1424f2e8a968827a6336203df
+attack-type: physical
+impact: memory corruption -> privilege escalation
+details: Similarly to CVE-2023-25012 , in asus devices, the
+work_struct may be scheduled by the LED controller while the device is
+disconnecting, triggering a use-after-free on the struct asus_kbd_leds
+*led structure. A malicious USB device may exploit the issue to cause
+memory corruption with controlled data.
 
-$ sha256sum xsa455*
-96bcfcc0ce1afcc54f637c728ab5250c65f0a5a1d8ccfc59ac5d496baf1a53a4  xsa455.patch
-02e3fe13ac68f665534fabae1520254d5d1832fef7c95fceb190be3b9944a5e1  xsa455-4.16.patch
-$
+- Heap OOB Write in bigben_worker()
+patch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b94335f899542a0da5fafc38af8edcaf90195843
+attack-type: local
+impact: memory corruption -> privilege escalation
+details: bigben_probe() does not validate that the output report has
+the needed report values in the first field. A malicious device
+registering a report with one field and a single value causes an heap
+OOB write in bigben_worker() when accessing report_field->value[1] to
+report_field->value[7], with partially user-controlled values.
 
-DEPLOYMENT DURING EMBARGO
-=========================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+Best regards,
+Pietro Borrello
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmYVbQcMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZsY4IAJnYJTEEzhdG9+Qy/gcgwiKFB6lA5D6hQ1kAD739
-fOh4GyA0ZYRLpfw8J4sVgYmPKl+S0Rx1qdt9X2GHVNIq5FqtFytx3lQt1VF4BTW6
-kRHqqccHLKIo0MCRcNBw9wtn5BSQXpmJO9jpsazrBwxMPZpf2Z4mQhMO0aRxq2k7
-Oyxz2O1ElNXzItuXM4ZT4OSR2pISjLC5mhKcauH3m/ecAbUwqEf6CjpvLXt7iI/0
-OUqnZ7gO4m8fPoIaA0iT51o5Pb/EXTLnvyIrnlOL5C+xyNB8pQETP+cJZSnYYYWX
-eNwQ+LwEgSHptPP09cbNFOnf+r1eJR22haPL2sMPveGbKRY=
-=LR1k
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa455.patch"
-Content-Disposition: attachment; filename="xsa455.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1YmM1NjEwMjRmODEzNzFmZjI2N2VkYWU3M2FlNGE3NjhiMmY3YTkx
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
-IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUdWUsIDI2IE1h
-ciAyMDI0IDIyOjQ3OjI1ICswMDAwClN1YmplY3Q6IHg4Ni9zcGVjLWN0cmw6
-IEZpeCBCVEMvU1JTTyBtaXRpZ2F0aW9ucwoKV2Ugd2VyZSBsb29raW5nIGZv
-ciBTQ0ZfZW50cnlfaWJwYiBpbiB0aGUgd3JvbmcgdmFyaWFibGUgaW4gdGhl
-IHRvcC1vZi1zdGFjawpibG9jaywgYW5kIHhlbl9zcGVjX2N0cmwgd29uJ3Qg
-aGF2ZSBoYWQgYml0IDUgc2V0IGJlY2F1c2UgWGVuIGRvZXNuJ3QKdW5kZXJz
-dGFuZCBTUEVDX0NUUkxfUlJTQkFfRElTX1UgeWV0LgoKVGhpcyBpcyBYU0Et
-NDU1IC8gQ1ZFLTIwMjQtMzExNDIuCgpGaXhlczogNTNhNTcwYjI4NTY5ICgi
-eDg2L3NwZWMtY3RybDogU3VwcG9ydCBJQlBCLW9uLWVudHJ5IikKU2lnbmVk
-LW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4
-LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNl
-LmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvaHZtL3N2bS9lbnRy
-eS5TIGIveGVuL2FyY2gveDg2L2h2bS9zdm0vZW50cnkuUwppbmRleCA2MGIw
-YjAwZWQwYWYuLjA3MWIzOTk3YjFjMCAxMDA2NDQKLS0tIGEveGVuL2FyY2gv
-eDg2L2h2bS9zdm0vZW50cnkuUworKysgYi94ZW4vYXJjaC94ODYvaHZtL3N2
-bS9lbnRyeS5TCkBAIC0xMDEsNyArMTAxLDcgQEAgX19VTkxJS0VMWV9FTkQo
-bnN2bV9oYXApCiAgICAgICAgIC8qIFNQRUNfQ1RSTF9FTlRSWV9GUk9NX1NW
-TSAgICBSZXE6ICVyc3A9cmVncy9jcHVpbmZvLCAlcmR4PTAgQ2xvYjogYWNk
-ICovCiAKICAgICAgICAgLm1hY3JvIHN2bV92bWV4aXRfY29uZF9pYnBiCi0g
-ICAgICAgICAgICB0ZXN0YiAgJFNDRl9lbnRyeV9pYnBiLCBDUFVJTkZPX3hl
-bl9zcGVjX2N0cmwoJXJzcCkKKyAgICAgICAgICAgIHRlc3RiICAkU0NGX2Vu
-dHJ5X2licGIsIENQVUlORk9fc3BlY19jdHJsX2ZsYWdzKCVyc3ApCiAgICAg
-ICAgICAgICBqeiAgICAgLkxfc2tpcF9pYnBiCiAKICAgICAgICAgICAgIG1v
-diAgICAkTVNSX1BSRURfQ01ELCAlZWN4CmRpZmYgLS1naXQgYS94ZW4vYXJj
-aC94ODYvaW5jbHVkZS9hc20vc3BlY19jdHJsX2FzbS5oIGIveGVuL2FyY2gv
-eDg2L2luY2x1ZGUvYXNtL3NwZWNfY3RybF9hc20uaAppbmRleCA2Mjk1MThj
-YzY5MjUuLmMxOWIzOWQ4YzIwMCAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2
-L2luY2x1ZGUvYXNtL3NwZWNfY3RybF9hc20uaAorKysgYi94ZW4vYXJjaC94
-ODYvaW5jbHVkZS9hc20vc3BlY19jdHJsX2FzbS5oCkBAIC05MCw3ICs5MCw3
-IEBACiAgICAgICAgIGp6ICAgICAuTFxAX3NraXAKICAgICAgICAgdGVzdGIg
-ICQzLCBVUkVHU19jcyglcnNwKQogICAgIC5lbHNlCi0gICAgICAgIHRlc3Ri
-ICAkU0NGX2VudHJ5X2licGIsIENQVUlORk9feGVuX3NwZWNfY3RybCglcnNw
-KQorICAgICAgICB0ZXN0YiAgJFNDRl9lbnRyeV9pYnBiLCBDUFVJTkZPX3Nw
-ZWNfY3RybF9mbGFncyglcnNwKQogICAgIC5lbmRpZgogICAgIGp6ICAgICAu
-TFxAX3NraXAKIAo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa455-4.16.patch"
-Content-Disposition: attachment; filename="xsa455-4.16.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA5MDljZGRlOWYxMjZiZWFjOTg4OGU2YTFmZjIxZjA0MTRlZjg2ZmRi
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
-IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUdWUsIDI2IE1h
-ciAyMDI0IDIyOjQ3OjI1ICswMDAwClN1YmplY3Q6IHg4Ni9zcGVjLWN0cmw6
-IEZpeCBCVEMvU1JTTyBtaXRpZ2F0aW9ucwoKV2Ugd2VyZSBsb29raW5nIGZv
-ciBTQ0ZfZW50cnlfaWJwYiBpbiB0aGUgd3JvbmcgdmFyaWFibGUgaW4gdGhl
-IHRvcC1vZi1zdGFjawpibG9jaywgYW5kIHhlbl9zcGVjX2N0cmwgd29uJ3Qg
-aGF2ZSBoYWQgYml0IDUgc2V0IGJlY2F1c2UgWGVuIGRvZXNuJ3QKdW5kZXJz
-dGFuZCBTUEVDX0NUUkxfUlJTQkFfRElTX1UgeWV0LgoKVGhpcyBpcyBYU0Et
-NDU1IC8gQ1ZFLTIwMjQtMzExNDIuCgpGaXhlczogNTNhNTcwYjI4NTY5ICgi
-eDg2L3NwZWMtY3RybDogU3VwcG9ydCBJQlBCLW9uLWVudHJ5IikKU2lnbmVk
-LW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4
-LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNl
-LmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvaHZtL3N2bS9lbnRy
-eS5TIGIveGVuL2FyY2gveDg2L2h2bS9zdm0vZW50cnkuUwppbmRleCBhZDVj
-YTUwYzEyZTIuLmQxY2E1MzAzMTVmZSAxMDA2NDQKLS0tIGEveGVuL2FyY2gv
-eDg2L2h2bS9zdm0vZW50cnkuUworKysgYi94ZW4vYXJjaC94ODYvaHZtL3N2
-bS9lbnRyeS5TCkBAIC0xMDEsNyArMTAxLDcgQEAgX19VTkxJS0VMWV9FTkQo
-bnN2bV9oYXApCiAgICAgICAgIC8qIFNQRUNfQ1RSTF9FTlRSWV9GUk9NX1NW
-TSAgICBSZXE6ICVyc3A9cmVncy9jcHVpbmZvLCAlcmR4PTAgQ2xvYjogYWNk
-ICovCiAKICAgICAgICAgLm1hY3JvIHN2bV92bWV4aXRfY29uZF9pYnBiCi0g
-ICAgICAgICAgICB0ZXN0YiAgJFNDRl9lbnRyeV9pYnBiLCBDUFVJTkZPX3hl
-bl9zcGVjX2N0cmwoJXJzcCkKKyAgICAgICAgICAgIHRlc3RiICAkU0NGX2Vu
-dHJ5X2licGIsIENQVUlORk9fc3BlY19jdHJsX2ZsYWdzKCVyc3ApCiAgICAg
-ICAgICAgICBqeiAgICAgLkxfc2tpcF9pYnBiCiAKICAgICAgICAgICAgIG1v
-diAgICAkTVNSX1BSRURfQ01ELCAlZWN4CmRpZmYgLS1naXQgYS94ZW4vaW5j
-bHVkZS9hc20teDg2L3NwZWNfY3RybF9hc20uaCBiL3hlbi9pbmNsdWRlL2Fz
-bS14ODYvc3BlY19jdHJsX2FzbS5oCmluZGV4IDZlNzcyNWMxMWYzYS4uOTQx
-NjQ4M2MwYjI2IDEwMDY0NAotLS0gYS94ZW4vaW5jbHVkZS9hc20teDg2L3Nw
-ZWNfY3RybF9hc20uaAorKysgYi94ZW4vaW5jbHVkZS9hc20teDg2L3NwZWNf
-Y3RybF9hc20uaApAQCAtMTAyLDcgKzEwMiw3IEBACiAgICAgICAgIGp6ICAg
-ICAuTFxAX3NraXAKICAgICAgICAgdGVzdGIgICQzLCBVUkVHU19jcyglcnNw
-KQogICAgIC5lbHNlCi0gICAgICAgIHRlc3RiICAkU0NGX2VudHJ5X2licGIs
-IENQVUlORk9feGVuX3NwZWNfY3RybCglcnNwKQorICAgICAgICB0ZXN0YiAg
-JFNDRl9lbnRyeV9pYnBiLCBDUFVJTkZPX3NwZWNfY3RybF9mbGFncyglcnNw
-KQogICAgIC5lbmRpZgogICAgIGp6ICAgICAuTFxAX3NraXAKIAo=
-
---=separator--
+----- End forwarded message -----
