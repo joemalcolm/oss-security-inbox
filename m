@@ -1,97 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/19/1
-Message-ID: <4de172a2-afc4-24b8-572a-24390fc1a74c@googlemail.com>
-Date: Tue, 19 Sep 2023 09:47:55 +0200
-From: Mathias Krause <minipli@...glemail.com>
-To: Steve Thompson <susurrus.of.qualia@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Possible AMD Zen2 CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/1
+Message-ID: <20231106155327.vekxv4lvtal44aaw@jwilk.net>
+Date: Mon, 6 Nov 2023 16:53:27 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Session File Relative Path Traversal in sudo-rs
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+* Alan Coopersmith <alan.coopersmith@...cle.com>, 2023-11-02 11:40:
+>This vulnerability requires two pre-conditions:
+>
+>1) Your OS allows usernames containing both '.' and '/' characters.
+>
+>2) Your site allows users to create usernames containing both '.' and 
+>'/' characters, with no process or manual review that denies such 
+>things.
+>
+>If both are true, when sudo-rs created a filename containing the 
+>username, it failed to escape the characters, letting them be 
+>interpreted by the filesystem as references to higher level directories 
+>('/../..' etc.)
 
-On 18.09.23 22:37, Steve Thompson wrote:
-> [snip]  In a loop, the following code is found:
-> 
->           nr_spin = t1lock_acquire(&obj.lock);
->     #if defined BROKEN
->           temp = ++obj.value;
->     #else
->           ++obj.value;
->     #endif
->           t1lock_release(&obj.lock);
-> 
-> If "BROKEN" is defined, you can see that an additional cache-line write
-> is made with the assignment to 'temp'.  When this code path is enabled,
-> the underlying cmpxchg operation in t1lock_acquire() occasionally
-> succeeds when it shouldn't...
+The original sudo implementation is affected too:
+https://github.com/sudo-project/sudo/commit/7363ad7b3230b7b0
 
-I think you're misinterpreting the generated binary. Looking only at the
-difference in the core loop give us the following diff between good and bad:
+https://ferrous-systems.com/blog/sudo-rs-audit/ says it's "a lower 
+security severity due to [sudo's] use of the openat function", but I 
+can't see how openat() would help.
 
-$ objdump -wdr --no-show-raw-insn good
-[...]
-0000000000001580 <wr_thread>:
-     ::
-    1653:       incq   0x2a4e(%rip)        # 40a8 <obj+0x8>
-    165a:       incw   (%rbx)
-
-In 'good' the increment of obj.value at 1653 is followed by the
-increment of obj.lock.ticket. Everything looking good so far.
-
-$ objdump -wdr --no-show-raw-insn bad
-[...]
-0000000000001580 <wr_thread>:
-     ::
-    1653:       mov    0x2a4e(%rip),%rax        # 40a8 <obj+0x8>
-    165a:       incw   (%rbx)
-    165d:       inc    %rax
-    1660:       mov    %rax,0x2a41(%rip)        # 40a8 <obj+0x8>
-    1667:       mov    %rax,0x2a5a(%rip)        # 40c8 <temp>
-
-In 'bad', however, obj.value is incremented only *after* obj.lock.ticket
-was incremented and the lock thereby released, allowing further threads
-to take it. This allows the data race between the read of obj.value in
-1653, its increment in 165d (after the lock was released again) and
-writing back the possibly out-of-date value to obj.value at 1660.
-
-What's clear from the above code dump that the code is missing a memory
-barrier. Adding it, like the patch at the end of the email does, gives
-me the following:
-
-$ objdump -wdr --no-show-raw-insn not_bad
-[...]
-0000000000001580 <wr_thread>:
-     ::
-    1653:       mov    0x2a4e(%rip),%rax        # 40a8 <obj+0x8>
-    165a:       inc    %rax
-    165d:       mov    %rax,0x2a44(%rip)        # 40a8 <obj+0x8>
-    1664:       mov    %rax,0x2a5d(%rip)        # 40c8 <temp>
-    166b:       incw   (%rbx)
-
-It's basically the same instructions as for 'bad' but the lock release,
-i.e. obj.lock.ticket++, was moved after the write operations to 166b,
-preventing the data race of 'bad'.
-
-Here's the fix:
-
---- a/bug_src.c
-+++ b/bug_src.c
-@@ -91,6 +91,7 @@ typedef struct {
-
- __inline__ void   t1lock_release(t1lock * oo)
- {
-+   __asm__ ("" ::: "memory");
-    oo->ticket++;
-
-    return;
-
-The code probably needs more memory barriers to prevent making the
-compiler moving reads and writes outside of the critical section. But, I
-guess, there are good online resources to read up the requirements, e.g.
-what's written for the Linux kernel should be a good start:
-
- https://www.kernel.org/doc/Documentation/memory-barriers.txt
-
-Cheers,
-Mathias
+-- 
+Jakub Wilk
