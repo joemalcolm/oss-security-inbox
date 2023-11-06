@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/6
-Message-ID: <CAH8yC8kBFkWL1MRGv+z1wJ4Vj2KOmuK1xm63XGgQMJW+OB=Q9Q@mail.gmail.com>
-Date: Wed, 17 May 2023 10:02:31 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/3
+Message-ID: <cc507107186fdcc6@millert.dev>
+Date: Mon, 06 Nov 2023 10:59:06 -0700
+From: "Todd C. Miller" <Todd.Miller@...o.ws>
 To: oss-security@...ts.openwall.com
-Subject: IPv6 and Route of Death
+Subject: Re: Session File Relative Path Traversal in sudo-rs
 Content-Type: text/plain; charset=utf-8
 
-Hi Everyone,
+On Mon, 06 Nov 2023 16:53:27 +0100, Jakub Wilk wrote:
 
-This seems to have been dropped as a 0-day. I have not seen a CVE
-assigned to it.
+> The original sudo implementation is affected too:
+> https://github.com/sudo-project/sudo/commit/7363ad7b3230b7b0
+>
+> https://ferrous-systems.com/blog/sudo-rs-audit/ says it's "a lower 
+> security severity due to [sudo's] use of the openat function", but I 
+> can't see how openat() would help.
 
-IPv6 and Route of Death:
+That is correct, openat() does not prevent opening a relative (or
+absolute) pathname.  Sudo 1.9.15, released today, includes the
+commit you reference above.
 
-  * https://www.reddit.com/r/linux/comments/13jfehf/linux_ipv6_route_of_death_0day_no_patch/
-  * https://news.ycombinator.com/item?id=35950379
+I consider this to be very low impact as it requires the ability
+to create a user with a name that would be treated as an absolute
+or relative pathname.
 
-I _think_ this is the original writeup:
-
-  * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
-
-Jeff
+ - todd
