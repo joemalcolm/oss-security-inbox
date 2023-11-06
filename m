@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2711" "Monday" "27" "July" "2015" "15:28:33" "+0300" "Henri Salo" "henri@nerv.fi" "<20150727122833.GA15328@lakka.kapsi.fi>" "69" "[oss-security] CVE request: Easy!Appointments 1.0 cross-site scripting vulnerability" nil nil nil "7" "2015072712:28:33" "[oss-security] CVE request: Easy!Appointments 1.0 cross-site scripting vulnerability" (number mark "U       henri@nerv.f Jul 27   69/2711  " thread-indent "\"[oss-security] CVE request: Easy!Appointments 1.0 cross-site scripting vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27764 invoked by uid 550); 27 Jul 2015 12:28:46 -0000
+Received: (qmail 6094 invoked by uid 550); 6 Nov 2023 20:27:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +7,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27737 invoked from network); 27 Jul 2015 12:28:45 -0000
-Date: Mon, 27 Jul 2015 15:28:33 +0300
-From: Henri Salo <henri@nerv.fi>
+Received: (qmail 5703 invoked from network); 6 Nov 2023 20:26:36 -0000
+Date: Mon, 6 Nov 2023 21:26:21 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org, Alex Tselegidis <alextselegidis@gmail.com>
-Message-ID: <20150727122833.GA15328@lakka.kapsi.fi>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
-X-SA-Exim-Mail-From: fgeek@kapsi.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
-Subject: [oss-security] CVE request: Easy!Appointments 1.0 cross-site scripting vulnerability
+Message-ID: <20231106202621.GA31244@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] announcing sponsorship; distros list statistics for 2023
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Product: Easy!Appointments Open Source Appointment Scheduler
-Product URL: http://easyappointments.org/
-Vendor: Alex Tselegidis
-Vulnerability Type: Cross Site Scripting (CWE-79)
-Vulnerable Versions: 1.0
-Fixed Version: next release
-Vendor Notification: 2015-04-03
-Solution Status: Fixed by vendor
-Solution Date: 2015-05-27
-Public Disclosure: 2015-07-27
+After 15+ years of being a 100% volunteer effort, Openwall's maintenance
+of oss-security and (linux-)distros is finally sponsored by the OpenSSF,
+a project of the Linux Foundation.  This sponsorship does not provide
+the Linux Foundation with the ability to set policies for community
+resources managed by Openwall.  I am grateful for the support, which
+will help ensure continued operation of these resources on a new level
+while retaining independence.
 
-Vulnerability Details:
+As part of the sponsored effort, Openwall (currently me) took
+responsibility for the "statistics" contributing-back task:
 
-Easy!Appointments contains a flaw that allows a stored cross-site scripting
-(XSS) attack. This flaw exists because the appointment registration
-functionality does not validate input to the 'first-name', 'last-name' or
-'phone-number' parameters before returning it to authenticated users. This
-allows a context-dependent attacker to create a specially crafted request that
-would execute arbitrary script code in a user's browser session within the trust
-relationship between their browser and the server.
+"Keep track of per-report and per-issue handling and disclosure timelines
+(at least times of notification of (linux-)distros and of public
+disclosure on oss-security), at regular intervals produce and share
+statistics (most notably, the average embargo duration) as well as the
+input data (except on issues that are still under embargo) by posting to
+oss-security - primary: Openwall, backup: vacant"
 
-Root cause:
+At different times, this time-consuming task was handled by Gentoo and
+later by Amazon (thanks!) but was lately left unhandled.  Due to the
+sponsorship, I've now retroactively produced statistics for 2023 so far:
 
-The software does not neutralize user-controllable input before it is placed in
-output that is used as a web page that is served to authenticated users.
+https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
 
-Proof-of-concept:
+As expected, this uncovered a few mishandled issues, which I've recently
+pushed out to oss-security.  That's why there are several reports (out
+of a total of 86) with embargo duration way in excess of the allowed
+maximum.  This inflated the average duration accordingly, but the median
+stayed sane at 7 days.  This is also why we need to, and now will, take
+care of the statistics task in real time, not only retroactively, so
+that any mishandling is identified and corrected promptly.
 
-1. Select service and a provider
-2. Select date and time
-3. Fill in your information using payload as First name:
-    Henri"><img src='#' onerror=alert(document.cookie) />
-4. Log-in as administrator or as provider/secretary
-5. Go to "Calendar"
-6. Open up the appointment
-7. Malicious code is executed
+Also for the first time (something I haven't seen Gentoo and Amazon do)
+included are the source files I manually created based on review of the
+e-mail threads and external resources referenced from there.  These
+files were processed with the also included (and permissively licensed)
+Perl script I wrote, so that others can reproduce the calculations or
+easily process the data differently.
 
-Fixed in following commit:
-    https://github.com/alextselegidis/easyappointments/commit/914d3af8c2e513b49bd27955b32b4ce1d50b7325
+Stay tuned for further updates.
 
-References:
-    http://cwe.mitre.org/data/definitions/79.html
-    https://en.wikipedia.org/wiki/Cross-site_scripting
-    https://scapsync.com/cwe/CWE-79
-    https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29
-    https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVtiPxAAoJECet96ROqnV0rbcQAKHk/0l1Z20OQYRD+cDSHDlM
-dYZQ8ueAhNrIluD9X+KrL5Y0qYcnsliQBwkZS0xeswqS4jIvRtLJuyjJP72aabDA
-h6JAUnGUIEFn6laKprEebMgexrs1gQ8uI8R2EP00lKipf7S1zfIWfITsjy6rW0oL
-utBU7jeE9SG0SaUfOj+h5oOaa+yeA0k7kapkl2nmynG7MtWbWxgWwIZkO47+3tI5
-q0atLvpOLeh8V2KipTkGsdxsZFeDt778zedL59GqLFFDSUfXBJoIclTM9v4lRvbs
-Kapgtq9M55KjgSwKMDwCFrQ+uY1xCdswi0RgBiUyDe8REvQYlS7Xf2Pv0WTcrYvm
-ogNdoPqAK2vSO7MlH9KKXaycQcG3HzblsPEg9BrfdSmNASt7vgongwW6D5yh9nlk
-U4VBWBrcWRwwQBaIh7BW+0vg0p2Q4pNEjBFA2eAHibTk9hlexbNusyY05ehDLgWI
-0EBbaj1pqCydUjK4feYNFMk975S/uPcSW3K+BliGk4fgBkPUsk9XX0zfcTm46QKK
-AXmEEqlg7DO5AVUKP8bTipwJi4ZjYPEH+fA3DNbdl/OH/eBJXy5ImRxvey31DG54
-Bbxabh/gOWlhSRmhT93cEKnBGi9GMUx7oNcpRqglNHd/rSsU4yfySNR4bUf1HzD4
-wGK5beno2YAwGfu/INkQ
-=+FHU
------END PGP SIGNATURE-----
+Alexander
