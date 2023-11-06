@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/02/1
-Message-ID: <ce735930-fed4-b1b2-b4a0-6bdc027ca190@apache.org>
-Date: Tue, 02 May 2023 08:36:01 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/6
+Message-ID: <9893eb17-906c-4bc1-8e13-a3d46fa43954@brondsema.net>
+Date: Mon, 6 Nov 2023 17:25:37 -0500
+From: Dave Brondsema <dave@...ndsema.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-32007: Apache Spark: Shell command injection via Spark UI 
+Subject: CVE-2023-46851: Apache Allura: sensitive information exposure via import
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: critical
 
 Affected versions:
 
-- Apache Spark 3.1.1 before 3.2.2
+- Apache Allura 1.0.1 through 1.15.0
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** The Apache Spark UI offers the possibility to enable ACLs via the configuration option spark.acls.enable. With an authentication filter, this checks whether a user has access permissions to view or modify the application. If ACLs are enabled, a code path in HttpSecurityFilter can allow someone to perform impersonation by providing an arbitrary user name. A malicious user might then be able to reach a permission check function that will ultimately build a Unix shell command based on their input, and execute it. This will result in arbitrary shell command execution as the user Spark is currently running as. This issue was disclosed earlier as CVE-2022-33891, but incorrectly claimed version 3.1.3 (which has since gone EOL) would not be affected.
+Allura Discussion and Allura Forum importing does not restrict URL values 
+specified in attachments. Project administrators can run these imports, which 
+could cause Allura to read local files and expose them.  Exposing internal files 
+then can lead to other exploits, like session hijacking, or remote code execution.
 
-NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+This issue affects Apache Allura from 1.0.1 through 1.15.0.
 
-Users are recommended to upgrade to a supported version of Apache Spark, such as version 3.4.0.
+Users are recommended to upgrade to version 1.16.0, which fixes the issue.  If 
+you are unable to upgrade, set "disable_entry_points.allura.importers = 
+forge-tracker, forge-discussion" in your .ini config file.
 
 Credit:
 
-Sven Krewitt, Flashpoint (reporter)
+Stefan Schiller (Sonar) (finder)
 
 References:
 
-https://www.cve.org/CVERecord?id=CVE-2022-33891
-https://spark.apache.org/security.html
-https://spark.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-32007
+https://allura.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46851
 
