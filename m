@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["701" "Friday" "5" "October" "2018" "16:10:49" "+0200" "Andreas Lehmkuehler" "lehmi@apache.org" "<61f3f180-f1a2-40d6-db4f-bd50d5e48789@apache.org>" "29" "[oss-security] [CVE-2018-11797] DoS vulnerability in Apache PDFBox parser" "^Date:" nil nil "10" "2018100514:10:49" "[oss-security] [CVE-2018-11797] DoS vulnerability in Apache PDFBox parser" (number mark "U       lehmi@apache Oct  5   29/701   " thread-indent "\"[oss-security] [CVE-2018-11797] DoS vulnerability in Apache PDFBox parser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21550 invoked by uid 550); 5 Oct 2018 14:24:56 -0000
+Received: (qmail 13894 invoked by uid 550); 6 Nov 2023 15:53:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13775 invoked from network); 5 Oct 2018 14:11:03 -0000
-Organization: Apache Software Foundation
-Message-ID: <61f3f180-f1a2-40d6-db4f-bd50d5e48789@apache.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-MW
-Content-Transfer-Encoding: 7bit
-Date: Fri, 5 Oct 2018 16:10:49 +0200
-From: Andreas Lehmkuehler <lehmi@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
-To: announce@apache.org, security@apache.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Received: (qmail 13869 invoked from network); 6 Nov 2023 15:53:41 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-110S00424ffb5f2-bc93-4e88-aaab-3d5e6bb71c44,
+                    7469ECB41B307C9EA952388331F2B84A6BBAA60D) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 5.172.255.13
+Date: Mon, 6 Nov 2023 16:53:27 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20231106155327.vekxv4lvtal44aaw@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <9db1110b-7dbb-4e32-b174-b62672181c8e@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <9db1110b-7dbb-4e32-b174-b62672181c8e@oracle.com>
+X-Originating-IP: [37.59.142.110]
+X-ClientProxiedBy: DAG5EX2.mxp6.local (172.16.2.42) To DAG4EX1.mxp6.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 332b1021-c8fd-4125-8346-ba21b77932c4
+X-Ovh-Tracer-Id: 863002279813961495
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvkedruddugedgkedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujghisehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpedvueeukedugffhgeevffdvveeviedvveevhfetteffhfelleegfeefueehvdeigfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhfvghrrhhouhhsqdhshihsthgvmhhsrdgtohhmnecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrdduuddtpdehrddujedvrddvheehrddufeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepoehjfihilhhksehjfihilhhkrdhnvghtqedpnhgspghrtghpthhtohepuddprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdfovfetjfhoshhtpehmohehvdelpdhmohguvgepshhmthhpohhuth
+Subject: Re: [oss-security] Session File Relative Path Traversal in sudo-rs
 
-[CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
+* Alan Coopersmith <alan.coopersmith@oracle.com>, 2023-11-02 11:40:
+>This vulnerability requires two pre-conditions:
+>
+>1) Your OS allows usernames containing both '.' and '/' characters.
+>
+>2) Your site allows users to create usernames containing both '.' and 
+>'/' characters, with no process or manual review that denies such 
+>things.
+>
+>If both are true, when sudo-rs created a filename containing the 
+>username, it failed to escape the characters, letting them be 
+>interpreted by the filesystem as references to higher level directories 
+>('/../..' etc.)
 
-Severity: Important
+The original sudo implementation is affected too:
+https://github.com/sudo-project/sudo/commit/7363ad7b3230b7b0
 
-Vendor:
-The Apache Software Foundation
+https://ferrous-systems.com/blog/sudo-rs-audit/ says it's "a lower 
+security severity due to [sudo's] use of the openat function", but I 
+can't see how openat() would help.
 
-Versions Affected:
-Apache PDFBox <= 1.8.15
-Apache PDFBox <= 2.0.11
-Earlier, unsupported Apache PDFBox versions may be affected as well
-
-Description:
-A carefully crafted PDF file can trigger an extremely long
-running computation when parsing the page tree.
-
-Mitigation:
-Upgrade to Apache PDFBox 1.8.16 respectively 2.0.12
-
-Credit:
-This issue was discovered by Shawn Rasheed
-
-Website:
-https://pdfbox.apache.org/
-
-Download:
-https://pdfbox.apache.org/download.cgi
-https://www.apache.org/dist/pdfbox/2.0.12/RELEASE-NOTES.txt
-https://www.apache.org/dist/pdfbox/1.8.16/RELEASE-NOTES.txt
+-- 
+Jakub Wilk
