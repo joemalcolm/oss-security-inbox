@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["997" "Friday" "16" "December" "2016" "21:31:34" "+0000" "Arpit Agarwal" "aagarwal@hortonworks.com" "<3614C781-5B82-4968-973E-44E5345973D9@hortonworks.com>" "17" "[oss-security] [SECURITY] CVE-2016-5001: Apache Hadoop Information Disclosure" nil nil nil "12" "2016121621:31:34" "[oss-security] [SECURITY] CVE-2016-5001: Apache Hadoop Information Disclosure" (number mark "U       aagarwal@hor Dec 16   17/997   " thread-indent "\"[oss-security] [SECURITY] CVE-2016-5001: Apache Hadoop Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22036 invoked by uid 550); 16 Dec 2016 21:43:17 -0000
+Received: (qmail 7722 invoked by uid 550); 6 Nov 2023 22:56:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28404 invoked from network); 16 Dec 2016 21:31:49 -0000
+Received: (qmail 1239 invoked from network); 6 Nov 2023 22:25:50 -0000
+Message-ID: <9893eb17-906c-4bc1-8e13-a3d46fa43954@brondsema.net>
+Date: Mon, 6 Nov 2023 17:25:37 -0500
 MIME-Version: 1.0
-x-echoworx-msg-id: 737d8443-b09f-43d9-9fc3-ce3ab5142755
-x-echoworx-emg-received: Fri, 16 Dec 2016 13:31:37.098 -0800
-x-echoworx-message-code-hashed: a56be3abd961c5a77632dc85b6e3cf300ea8acaf6dde98c2344c61199c0e43c9
-x-echoworx-action: delivered
-From: Arpit Agarwal <aagarwal@hortonworks.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [SECURITY] CVE-2016-5001: Apache Hadoop Information Disclosure
-Thread-Index: AQHSV+PG4RnBZgBQrU+A8XvKV7gXHQ==
-Date: Fri, 16 Dec 2016 21:31:34 +0000
-Message-ID: <3614C781-5B82-4968-973E-44E5345973D9@hortonworks.com>
-Accept-Language: en-US
 Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Microsoft-MacOutlook/f.1d.0.161209
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [192.175.27.10]
-x-source-routing-agent: Processed
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5986BD8B1B6BAD4B99656BA455216E46@exch080.serverpod.net>
-Content-Transfer-Encoding: base64
-Subject: [oss-security] [SECURITY] CVE-2016-5001: Apache Hadoop Information Disclosure
+To: oss-security@lists.openwall.com
+From: Dave Brondsema <dave@brondsema.net>
+Autocrypt: addr=dave@brondsema.net; keydata=
+ xsDiBD56h8wRBADxnJ7DHRZMhPxuBbJCWVnk1fE/mzxPDN8nwVHw8rq7v5PIY5CpXlPyaLKn
+ Y+Ohdij+2xfcjNNC9BAc065na9haFsPG0bw8oMWn69dbB3gXVmZsXYHHd2l0HZ0IVkWB2Fo3
+ MU3/DNlhGoPZbuScwJMKRgYce05gosoFj2lsCfjbcwCg3bdizUs5OeZtXoD/EUOstWMLtDcD
+ /0xMFNLkw4LdggBNydntzBWGiun2uAtXN7MzwrCXnTIbJDjfp0ZTxt99uzIzMu9Nd03Lr9qK
+ +1ujQFOTzkDVbFbtpzevFpWbsp2CkqCUOd9iShnekUuAw0z9JhN+77JngCuXLCiIDq0mEJ5Z
+ gxIZZM700SpzU2jmb3m51eOlHfrKBADvxTXxWPFwavr6NWfpNn/pnvgkpHtHhy711yWoT28q
+ p5k5TWltfVyUqGI7BlsNDyUEbNo+U2OsxkZ9gwvNuRgaw4y65xR1/HVWhroNCzSO093x3vTC
+ I9n/dELd2uRrI+VBPTJzMiCk1A+Ppjo+Zy6/G63O5vbHiFsMx3WF+OCKYM0jRGF2ZSBCcm9u
+ ZHNlbWEgPGRhdmVAYnJvbmRzZW1hLm5ldD7CXAQTEQIAHAQLBwMCAxUCAwMWAgECHgECF4AF
+ Aj+4Ai4CGQEACgkQVvBSb5uzznCjvQCfXtqZpjHgi8Qv1mQZI7Y/qijl8asAn2YhUSgb3/xf
+ WrotXCewWQmZ+2hNzsFNBD56iEgQCADj/7YfrcqpgO/d76J/wrdYh18MtPVIdYKrMYih9tvy
+ GqV/G2Ce6jlz7KCqKe6GIvpBY5UDX8zLf6SDrjUrHKMvg4lBzRSaHKJ929pDiyLTaku5IepM
+ UtAZxpPui/ci+8otXuFucj2jAh7xUec65rdUUGS505RQcP18Zr2FbhxF0mqD/CcbnpIDVNDQ
+ LGebcuWb9Trhelmues3NYwTxHfGnRUg3whkaWC+XW2sZylB9FEM5wsWWtsCo4xDwv+P0gi3n
+ RKVhV2OU9Vl0o8HwBCYc4w3Wlrg1QuaC6oDhVDS0WamXOhrc5wZmUAw+Avd0guVPkfpvRpjy
+ U5TIWnGpigznAAMFB/9ndwJSLyYShQIgLG2z9bMOPqf0tvIMFTLjA7N0kJdOuZRkVdJrIswM
+ mc+gdZFvnnKLLJVmzb4i8LskRPA8TX7Hp/ZX10xin+Oe0R2pG6JAXWov+p/PXSD2cUP/9t5d
+ VMoKzUcvmqvW0h6tjubmrXJz0oG2Gfnye84MUNkroFVNq9vFPnpmgEM78suC6IMdO/nElyJP
+ 1s8UXTkn9qsywjnbTIpF9uKCovkwkUzWETPMoiYBZu2ceG20UpZoqJxUSkwwT6ZZ3Z213PTA
+ 6jJ9BS4qApcqS/q2ghe6Y0OB+bXYxTfYITsg+hb0eV4GOCOEanpfoUDFlI0xlDWIj+5DtLpJ
+ wkYEGBECAAYFAj56iEgACgkQVvBSb5uzznAThgCg0v8Qek9088O/pe3n+oY6gEvPAdoAnjn1
+ g5/sZ8UFenW7N4G+tv72zPbV
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2023-46851: Apache Allura: sensitive information exposure via
+ import
 
-Q1ZFLTIwMTYtNTAwMTogQXBhY2hlIEhhZG9vcCBJbmZvcm1hdGlvbiBEaXNj
-bG9zdXJlDQoNClNldmVyaXR5OiBDcml0aWNhbA0KDQpWZW5kb3I6IFRoZSBB
-cGFjaGUgU29mdHdhcmUgRm91bmRhdGlvbg0KDQpWZXJzaW9ucyBBZmZlY3Rl
-ZDogQXBhY2hlIEhhZG9vcCAyLjcuMSwgMi42LjMgYW5kIGVhcmxpZXIuDQoN
-CkRlc2NyaXB0aW9uOg0KVGhpcyBpcyBhbiBpbmZvcm1hdGlvbiBkaXNjbG9z
-dXJlIHZ1bG5lcmFiaWxpdHkgaW4gdGhlIHNob3J0LWNpcmN1aXQgcmVhZHMg
-ZmVhdHVyZSBvZiBIREZTLiBBIGxvY2FsIHVzZXIgb24gYW4gSERGUyBEYXRh
-Tm9kZSBtYXkgYmUgYWJsZSB0byBjcmFmdCBhIGJsb2NrIHRva2VuIHRoYXQg
-Z3JhbnRzIHVuYXV0aG9yaXplZCByZWFkIGFjY2VzcyB0byByYW5kb20gZmls
-ZXMgYnkgZ3Vlc3NpbmcgY2VydGFpbiBmaWVsZHMgaW4gdGhlIHRva2VuLg0K
-DQpNaXRpZ2F0aW9uOg0KVXNlcnMgb24gMi43Lnggc2hvdWxkIHVwZ3JhZGUg
-dG8gMi43LjIgb3IgbGF0ZXIuDQpVc2VycyBvbiAyLjYueCBvciBlYXJsaWVy
-IHJlbGVhc2VzIHNob3VsZCB1cGdyYWRlIHRvIDIuNi40IG9yIGxhdGVyLg0K
-DQpJbXBhY3Q6DQpBIGxvY2FsIHVzZXIgbWF5IGJlIGFibGUgdG8gZ2FpbiB1
-bmF1dGhvcml6ZWQgcmVhZCBhY2Nlc3MgdG8gZmlsZXMuDQoNCkNyZWRpdDoN
-ClRoaXMgaXNzdWUgd2FzIHJlcG9ydGVkIGJ5IEtpaHdhbCBMZWUgb2YgWWFo
-b28gSW5jLg0KDQoNCg==
+Severity: critical
+
+Affected versions:
+
+- Apache Allura 1.0.1 through 1.15.0
+
+Description:
+
+Allura Discussion and Allura Forum importing does not restrict URL values 
+specified in attachments. Project administrators can run these imports, which 
+could cause Allura to read local files and expose them.  Exposing internal files 
+then can lead to other exploits, like session hijacking, or remote code execution.
+
+This issue affects Apache Allura from 1.0.1 through 1.15.0.
+
+Users are recommended to upgrade to version 1.16.0, which fixes the issue.  If 
+you are unable to upgrade, set "disable_entry_points.allura.importers = 
+forge-tracker, forge-discussion" in your .ini config file.
+
+Credit:
+
+Stefan Schiller (Sonar) (finder)
+
+References:
+
+https://allura.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46851
+
