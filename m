@@ -1,4 +1,4 @@
-Received: (qmail 1048 invoked by uid 550); 7 Jul 2022 13:41:33 -0000
+Received: (qmail 17748 invoked by uid 550); 7 Nov 2023 10:23:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,30 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32049 invoked from network); 7 Jul 2022 13:38:57 -0000
+Received: (qmail 19725 invoked from network); 7 Nov 2023 09:53:49 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Abhishek Agarwal <abhishek@apache.org>
+From: Jacques Le Roux <jleroux@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <780f3eb8-92fe-12c3-9e4f-d385ff6dd10d@apache.org>
+Message-ID: <ab5131d7-9e35-8e4b-1e13-48504f3eb9b2@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 07 Jul 2022 13:38:43 +0000
+Date: Tue, 07 Nov 2023 09:53:35 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-44791: Apache Druid: Reflected XSS on certain HTTP
- endpoints 
+Subject: [oss-security] CVE-2023-46819: Apache OFBiz: Execution of Solr plugin queries
+ without authentication 
 
-Severity: low
+Severity: moderate
+
+Affected versions:
+
+- Apache OFBiz before 18.12.09
 
 Description:
 
-In Apache Druid 0.22.1 and earlier, certain specially-crafted links result =
-in unescaped URL parameters being sent back in HTML responses. This makes i=
-t possible to execute reflected XSS attacks.
+Missing Authentication in Apache Software Foundation Apache OFBiz when usin=
+g the Solr plugin.
+This issue affects Apache OFBiz: before 18.12.09.=C2=A0
 
-Mitigation:
-
-Upgrade to Druid 0.23.0 or later.
+Users are recommended to upgrade to version 18.12.09
 
 Credit:
 
-This issue was discovered by DangKhai from Viettel Cyber Security
+Anonymous by demand (finder)
+
+References:
+
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-18.12.09.html
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-46819
 
