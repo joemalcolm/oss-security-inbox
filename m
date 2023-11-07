@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/20/2
-Message-ID: <b9d6de6b-abff-33d5-2ced-a085a1ca54a6@apache.org>
-Date: Mon, 20 Feb 2023 15:58:05 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/07/2
+Message-ID: <ab5131d7-9e35-8e4b-1e13-48504f3eb9b2@apache.org>
+Date: Tue, 07 Nov 2023 09:53:35 +0000
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24998: Apache Commons FileUpload: FileUpload DoS with excessive parts
+Subject: CVE-2023-46819: Apache OFBiz: Execution of Solr plugin queries without authentication 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: moderate
+
+Affected versions:
+
+- Apache OFBiz before 18.12.09
 
 Description:
 
-Apache Commons FileUpload before 1.5 does not limit the number of 
-request parts to be processed resulting in the possibility of an 
-attacker triggering a DoS with a malicious upload or series of uploads.
+Missing Authentication in Apache Software Foundation Apache OFBiz when using the Solr plugin.
+This issue affects Apache OFBiz: before 18.12.09. 
+
+Users are recommended to upgrade to version 18.12.09
 
 Credit:
 
-Jakob Ackermann (finder)
+Anonymous by demand (finder)
 
 References:
 
-https://lists.apache.org/thread/4xl4l09mhwg4vgsk7dxqogcjrobrrdoy
-https://commons.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-24998
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-18.12.09.html
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46819
+
