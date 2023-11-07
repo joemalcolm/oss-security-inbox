@@ -1,90 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/2
-Message-ID: <Y9o5fXKqZDxOHbNe@kasco.suse.de>
-Date: Wed, 1 Feb 2023 11:05:49 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/07/1
+Message-ID: <CAM+3YVqUYBAwOB+P5qjEKiniqABCDUTK6mpZOw8jENm=tSGskg@mail.gmail.com>
+Date: Tue, 7 Nov 2023 08:54:08 +0100
+From: Marco Ivaldi <raptor@...eadbeef.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: pesign: Local privilege escalation on pesign systemd service
+Subject: HNS-2023-03 - HN Security Advisory - Multiple vulnerabilities in Zephyr RTOS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-On Tue, Jan 31, 2023 at 12:59:19PM -0300, Marco Benatto wrote:
-> a local privilege escalation vulnerability was found in pesign. This
-> vulnerability has been identified by CVE-2022-3560.
+Find attached a security advisory that details multiple
+vulnerabilities we discovered in the Zephyr real-time operating
+system.
 
-I would like to add some more details about the vulnerability:
+* Title: Multiple vulnerabilities in Zephyr RTOS
+* OS: Zephyr <= 3.4.0, except for:
+  * CVE-2023-4265 that affects Zephyr <= 3.3.0
+  * CVE-2023-4261 that affects Zephyr <= 3.5.0
+* Author: Marco Ivaldi <marco.ivaldi@...ecurity.it>
+* Date: 2023-11-07
+* CVE IDs and severity:
+  * CVE-2023-3725 - High - 7.6
+  * CVE-2023-4257 - Moderate - 6.8
+  * CVE-2023-4259 - High - 7.1
+  * CVE-2023-4260 - Moderate - 6.3
+  * CVE-2023-4261 - (unreleased)
+  * CVE-2023-4262 - Moderate - 5.1
+  * CVE-2023-4263 - High - 7.6
+  * CVE-2023-4264 - High - 7.1
+  * CVE-2023-4265 - Moderate - 6.4
+  * CVE-2023-5139 - Moderate - 4.4
+  * CVE-2023-5184 - High - 7.0
+  * CVE-2023-5753 - Moderate - 6.3
+* Vendor URL: https://www.zephyrproject.org/
+* Advisory URLs:
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-2g3m-p6c7-8rr3
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-853q-q69w-gf5j
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-gghm-c696-f4j4
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-gj27-862r-55wh
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-5954-jcv4-7rvm
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-56p9-5p3v-hhrc
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-rf6q-rhhp-pqhf
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-rgx6-3w4j-gf5j
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-4vgv-5r6q-r6xh
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-rhrc-pcxp-4453
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-8x3p-q3r5-xh9g
+  * https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-hmpr-px56-rvww
 
-The project ships a systemd service file that starts a pesign daemon
-instance but also runs a StartPost script:
+For additional information, please refer to our vulnerability writeup:
+https://security.humanativaspa.it/ost2-zephyr-rtos-and-a-bunch-of-cves
 
-```
-ExecStart=/usr/bin/pesign --daemonize
-ExecStartPost=/usr/libexec/pesign/pesign-authorize
-```
-
-This pesign-authorize script is run with root privileges and grants a
-dynamic list of users and groups recursively full access to
-/etc/pki/pesign*/ and /run/pesign via POSIX access control lists.
-
-The list of users is found in the root controlled files
-/etc/pesign/users and /etc/pesign/groups. By default only pesign:pesign
-are configured.
-
-# The Vulnerability
-
-Since the pesign-authorize script is run at every start of the pesign
-service unit, the directory trees /etc/pki/pesign* and /run/pesign will
-already be controlled by the unprivileged pesign:pesign user and group.
-The script does not take precautions to prevent symlink attacks being
-staged by a compromised unprivileged user account.
-
-A simple demonstration of the attack would be this:
-
-```
-root# sudo -u pesign -g pesign ln -s /root /etc/pki/pesign/attack
-root# systemctl restart pesign
-root# getfactl /root
-# file: root/
-# owner: root
-# group: root
-user::rwx
-user:pesign:rwx
-group::---
-group:pesign:rwx
-mask::rwx
-other::---
-```
-
-Therefore in a default configuration of pesign there is a local pesign
-user or pesign group to root escalation that can be achieved at every
-pesign.service unit start.
-
-I reproduced this on Fedora 35 using pesign version 113 release 18.fc35.
-
-# Timeline
-
-- 2022-10-11: I reported this to secalert@...hat.com  offering
-  coordinated disclosure.
-- 2022-10-18: RedHat security assigned the CVE for the issue
-- 2022-12-21: RedHat security communicated a coordinated release date
-  for 2023-01-31.
-- 2023-01-27: RedHat security shared the patch with us and informed the
-  distros mailing list about issue and the upcoming release
-- 2023-01-31: the issue has been published
-
-Cheers
-
-Matthias
+Regards,
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+Marco Ivaldi
+https://0xdeadbeef.info/
+"When cryptography is outlawed, bayl bhgynjf jvyy unir cevinpl."
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+View attachment "HNS-2023-03-zephyr.txt" of type "text/plain" (34217 bytes)
