@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9670" "Tuesday" "7" "April" "2015" "21:19:29" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1YfeeP-0000uQ-Ef@rmm6prod02.runbox.com>" "217" "Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!" nil nil nil "4" "2015040801:19:29" "[oss-security] Hanno Boeck found Heartbleed using afl + ASan!" (number mark "    f   dwheeler@dwh Apr  7  217/9670  " thread-indent "\"Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!\"\n") "<CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>" ("<CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29814 invoked by uid 550); 8 Apr 2015 01:19:41 -0000
+Received: (qmail 7913 invoked by uid 550); 8 Nov 2023 22:50:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,234 +6,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29791 invoked from network); 8 Apr 2015 01:19:41 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-Mailer: RMM6
-In-Reply-To: <CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>
-Message-Id: <E1YfeeP-0000uQ-Ef@rmm6prod02.runbox.com>
-Date: Tue, 07 Apr 2015 21:19:29 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!
-To: "oss-security" <oss-security@lists.openwall.com>
+Received: (qmail 27713 invoked from network); 8 Nov 2023 20:56:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699476965; x=1700081765; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ifu6vblA6TTsm9g4Nc30TL/m0YQPzXKuF2uMFQ8Dt5s=;
+        b=iehIuevOC9CcEufFS0luvOOc/qx0+Wxci6Js0o8zEXz2eQywTqRK/w6acVkhPToTZz
+         usvWZ9uCo8GMJFSSrO/r7C3v971qRsPICbaz1GNAnFrpKmYiKlKovZrve3cpdJVTS8P/
+         SiomK6U40ch/skgcQOrtTV6a5clIJvwicQJzwUe7itJeQ5WV4gHWgUo3Q+D6vf5jlWVc
+         aQUVdBpli473eRyMzh9HcqixLKpdCUB7IPuxzpLobtmliaZdskeURtjwRT6gNYLPwVE9
+         5psI+nfuHMzg4gWjnhvu6nZy3pGFO4KCprf7QQoVnag/R33Bdx6ZfhRj1vVxfGjA17KV
+         bX4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699476965; x=1700081765;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ifu6vblA6TTsm9g4Nc30TL/m0YQPzXKuF2uMFQ8Dt5s=;
+        b=aYhTCMvd0bWewsoGWZfN9ORkGjZrCNtc1UMNyWN8kS00x8J/pqNP15EyUhGFbqa6zc
+         GeozByErRFXNC6iansh/t4Aykw3xbi2WeRFDa/KtG54QCOQHAsl6aGEh6G6ADNxB6reg
+         cwKIl0xejiiCjYA6jqEilsUb00XMc/d+JU1kOj2/SGA4zWXOPJiQQXC4242ppbl1lOxO
+         +P3jy8vmXSV4WxMXvQxBUINGoIrNKOqqEYs+7dEZw2ugSvPVvm+0WThjY7qdUgKqZ4MB
+         3FR+hPq/OwiSkizmv6uKVnagDqZtWIbB57IEBHJ8enH61g6cEJ3aobg4h8QzfFJ04eQj
+         xaYQ==
+X-Gm-Message-State: AOJu0Yy4z3RMxGmmrzQIJLbm1PozvGPDjH0rMN9UtQS4SR39A7ILGFaZ
+	D+MEvN2QfFo2GL7BkEtU/kKiV7NBHbxfX8ets80Wa7YHBYfLAg==
+X-Google-Smtp-Source: AGHT+IHXU7men0xPneryb45UvcjmMxo8CeV6Rg9W0D+35Q0ehIAFCzyYslKJApLKZQiJEOPq5odlySuxFnN3hvWRjbA=
+X-Received: by 2002:a17:907:97c4:b0:9c2:a072:78c4 with SMTP id
+ js4-20020a17090797c400b009c2a07278c4mr2781932ejc.25.1699476964618; Wed, 08
+ Nov 2023 12:56:04 -0800 (PST)
+MIME-Version: 1.0
+References: <c01c1617-641d-4ec2-847f-2e85ea4676f7@notcve.org> <720a3438-0411-4f13-8531-7e6bcac83e77@oracle.com>
+In-Reply-To: <720a3438-0411-4f13-8531-7e6bcac83e77@oracle.com>
+From: Brian Peters <brianrpeters@gmail.com>
+Date: Wed, 8 Nov 2023 15:55:53 -0500
+Message-ID: <CAK_vis6udRU5MRodhseyqVdPVXD2iv0cU7uXqpAGxpGVh_fKAQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000c7b7c10609aa5088"
+Subject: Re: [oss-security] !CVE: A new platform to track security issues not
+ acknowledged by vendors
 
-On Tue, 7 Apr 2015 13:27:40 -0700, Michal Zalewski <lcamtuf@coredump.cx> wr=
-ote:
-> You know... on some level, I'm happy - but on another, I'm always
-> trying to be skeptical when such claims are made for other projects.
-> It's only fair not to treat this case differently.
+--000000000000c7b7c10609aa5088
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fair enough!
+> I somehow doubt the presence of the ! makes much of a difference.
 
-> It's worth remembering that the authors of several static analysis or
-> symbolic execution frameworks have also claimed that their products
-> would have found Heartbleed.
+What about NVID? NVID-2023-0001
+Not (A) Vulnerability ID
 
-To be fair, the (reputable) posts I've seen don't make such claims.
-Instead, the static analysis tool creators generally acknowledge that they
-could *not* have found Heartbleed at the time, and then discuss changes
-they're making so that they can find similar problems in the future.
+On Wed, Nov 8, 2023 at 2:39=E2=80=AFPM Vegard Nossum <vegard.nossum@oracle.=
+com>
+wrote:
 
-For example, Andy Chou (Coverity) stated,
-"Many of our customers have asked whether Coverity can detect Heartbleed.
-The answer is Not Yet - but we've put together a new analysis heuristic
-that works remarkably well and does detect it."
-http://security.coverity.com/blog/2014/Apr/on-detecting-heartbleed-with-sta=
-tic-analysis.html
+>
+> On 08/11/2023 14:22, !CVE Team wrote:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > What is a !CVE
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> >     - A common place for !vulnerabilities (read not vulnerabilities)
+> >
+> >     - Security issues not covered by the traditional CVE.
+> >
+> >     - An identifier following common naming starting with an exclamation
+> >       mark(!) Example: !CVE-2023-0001
+>
+> I am not a lawyer, but I'd assume you would run into some issues with
+> the naming of all this -- wasn't that the exact issue that somebody else
+> ran into when they tried to assign identifiers to bugs that MITRE
+> wouldn't acknowledge? Here's what they said back then:
+>
+> <
+> https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_to=
+_DWF_from_the_CVE_Board
+> >
+>
+> I somehow doubt the presence of the ! makes much of a difference.
+>
+>
+> Vegard
+>
 
-Similarly, Paul Anderson (GrammaTech) said,
-"The minute I heard about Heartbleed... I downloaded the source code and ra=
-n CodeSonar
-to see if it would find the defect. Unfortunately it didn=E2=80=99t...."
-http://www.grammatech.com/blog/finding-heartbleed-with-codesonar
-
-You *do* have to read a little between the lines in the post by Roy Sarkar =
-(Klockwork),
-but his post does clearly state that you have to create specialized overrid=
-es for their
-tool to detect Heartbleed.  That admits that it CANNOT find Heartbleed with=
-out significant help.
-http://blog.klocwork.com/software-security/saving-you-from-heartbleed/
-
-
-> IIRC, their experiments were far more
-> convoluted than Hanno's, but the bottom line is that when you're
-> trying to "discover" a bug you already know about, it's almost
-> impossible to avoid subconsciously optimizing for the expected outcome.
-
-That's a fair critique.
-
-> So, I always urge people to ask a simple question: would someone think
-> of running the tool this particular way and on this particular code
-> before we knew about the bug? And if yes, why haven't they?=3D)
-
-A few answers below.  Sorry, it got long :-).
-
-> The answer I've always heard from commercial software vendors is that
-> "they had no time to work on open source projects", but that's about
-> as unconvincing as it gets. I bet they would love to be credited for
-> this or any comparably serious find.
-
-Nit: Let me change "commercial" to "proprietary", since there is
-lots of commercially-supported OSS.
-
-Those are weird comments you're being told.
-Many companies who develop proprietary software absolutely *do* examine
-open source software, and they ask for credit if their tool finds things.
-They get that credit, too.
-
-The most obvious example for Heartbleed is Codenomicon, who were
-one of the two organizations to find and report Heartbleed in the first pla=
-ce.
-(Google also found it, through source code examination.)
-Codenomicon found Heartbleed using their generation ("smart") fuzzing appro=
-ach
-as implemented in their proprietary tools.
-They had programmed in what the protocol was supposed to do (the typical
-generation approach), and also developed an additional mechanism called =E2=
-=80=9CSafeguard=E2=80=9D to
-analyze the response (output). Safeguard doesn't check if the result is *ex=
-actly*
-as expected; it checks if the result meets certain expectations.
-Safeguard was the key in finding Heartbleed;
-since Heartbleed was an out-of-bounds read, and out-of-bounds reads don't n=
-ormally
-cause crashes, fuzzing processes that only detect native crashes can't find=
- Heartbleed.
-Some details, and links to more, are here:
-http://www.dwheeler.com/essays/heartbleed.html#fuzzer-examine-output
-
-Codenomicon's approach took some effort (you need to describe the protocol
-and the required postconditions), but their approach unquestionably worked.
-It works even if you don't have access to the binaries, so you can use it o=
-n systems
-where you only have I/O access to the system... something that is *NOT* pra=
-ctical today with afl.
-
-Codenomicon absolutely *did* ask for (and got) credit.  Credit they rightly=
- deserved, too.
-They even created the Heartbleed logo (which I happen to like, BTW; sue me).
-
-They aren't the only ones to look for vulnerabilities in OSS, find them, an=
-d get credit.
-Coverity has an entire program for examining open source software:
-  https://scan.coverity.com/
-HP/Fortify has the "Fortify Open Source Review" project:
-  https://hpfod.com/open-source-review-project
-These programs absolutely *do* find vulnerabilities, and many OSS projects
-happily give credit to the tools for finding vulnerabilities or other probl=
-ems
-(just like they would give credit for any reporter).
-
-Indeed, my understanding is that proprietary tool makers are heavy users
-of OSS as sample programs.   Tools can be created that
-detect vulnerabilities in trivial programs, but fail as the complexity goes=
- up.
-Proprietary static analysis tools are often applied to custom or proprietar=
-y software
-where the user is NOT willing to send the code to the toolmaker, and this c=
-reates
-a problem - how can a toolmaker improve his tool without this feedback?
-One solution: The toolmakers can use OSS to help them detect cases where co=
-mplexity is
-causing their tool to fail, and then help them determine what to do about i=
-t.
-
-All toolmakers are trying to improve their tools.
-So the real question is, are these improvements so general that they will
-improve catching a large swath of related problems, or are they fairly limi=
-ted
-and only help re-find Heartbleed?
-
-For static analyzers in many cases the answer is unfortunately mixed.
-Andy Chou (Coverity) came up with a clever heuristic -
-detect byte swaps (e.g., ntohs), and presume they are tainted because they
-"constitute fairly strong evidence that the data is from the outside networ=
-k and therefore tainted".
-http://security.coverity.com/blog/2014/Apr/on-detecting-heartbleed-with-sta=
-tic-analysis.html
-This approach has been duplicated in clang, and shown to work for its purpo=
-se:
-http://blog.trailofbits.com/2014/04/27/using-static-analysis-and-clang-to-f=
-ind-heartbleed/
-
-However, this clever heuristic is pretty limited; it helps find Heartbleed,=
- and a few
-extremely similar problems, but it's hardly a general solution for finding =
-vulnerabilities.
-So I'll commend this heuristic as a tool improvement, while simultaneously =
-noting
-that this particular improvement will have limited utility.
-Other toolmakers have done other things, but I think this demos the point.
-
-
-> Today, I'm asking myself the same
-> question about AFL. Was it too counterintuitive to set this up? Were
-> there other barriers to entry? Can I fix this now?
-
-I think there are a couple issues, some of which aren't really "tool" techn=
-ology issues.
-
-One is that until recently, fuzzers generally have been much more limited in
-their ability to actually find and report vulnerabilities:
-1. Fuzzers (particuarly ones that are not generational)
-are notorious for doing only "shallow" examinations.  Fuzzers
-that just generate random data, and have no feedback loop like afl's, don't=
- go deep.
-Generational fuzzers get much deeper, but they require more work to give th=
-em that info.
-Reports like "Pulling JPEGs out of thin air"
-http://lcamtuf.blogspot.com/2014/11/pulling-jpegs-out-of-thin-air.html
-show that perhaps some fuzzers are becoming better at diving in.
-2. Fuzzers historically don't detect problems like this.
-Out-of-bound reads do not normally cause crashes, so fuzzers historically w=
-on't detect them.
-Reports like this one show that when combined ASan, fuzzers are more likely=
- to
-detect whole classes of problems.
-
-So one "barrier to entry" is simply the time it takes for people to
-discover that something has gotten better, including tutorials that show ho=
-w to use ASan
-simultaneously with fuzzers like afl.  Making it *easier* to use them toget=
-her helps too.
-So there need to be better tutorials and easier ways to combine ASan with f=
-uzzers
-(as you know, I co-created one solution that works today on Linux).
-
-Also, if you want to test a network protocol (like SSL/TLS),
-you have to actually run the code for the protocol.  That's hardly a big in=
-sight :-).
-Currently afl is *only* a file fuzzer.  Hanno simply created some stub code=
- so that
-it could use the file fuzzing to run the network code.  This is hardly new;=
- other people
-have done this before.  What's more, I think that is a *much* more general
-technique than the "detect byte swap" heuristic I described above.
-That's why I think this blog post is valuable; it shows that by simply wrap=
-ping a
-network protocol, a really *general* approach that's not hard to emulate,
-you can use an advanced file-fuzzing tool combined with ASan to find vulner=
-abilities.
-
-That means that another "barrier to entry" to be solved is that it should be
-easier to fuzz network protocols using tools like afl.
-That's been discussed in the afl-users mailing list,
-but perhaps this gives it more urgency.  If anyone has ideas on how to solv=
-e this
-in a general and easy-to-use way, I'd love to hear about it.
-
-So while it's right to be skeptical of reports that say, "I found the probl=
-em I
-already knew was there", I think this has a lot of merit.
-If you want to fuzz a network protocol, and you have a fuzzer that only
-generates files, then to use it (today) you need to wrap it in something
-that does a conversion between files and (quasi) network activity.
-That is unsurprising and very general.
-
-Anyway, I hope this helps.
-
---- David A. Wheeler
+--000000000000c7b7c10609aa5088--
