@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/01/1
-Message-ID: <mehcc45ulnpbayvi4alil52gazey6mybvc2ugvmvxj25kqn7bf@23o2kg6ldvdr>
-Date: Tue, 31 Oct 2023 23:26:12 +0200
-From: Valtteri Vuorikoski <vuori@...com.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/4
+Message-ID: <f95ff094-ddc0-46b7-8fb3-2bcbd06efacc@census-labs.com>
+Date: Wed, 8 Nov 2023 17:51:24 +0200
+From: Harry Maraziaris <cmaraziaris@...sus-labs.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-5631: XSS vulnerability in Roundcube webmail
+Subject: CVE-2023-46857 - Weak SVG asset filtering mechanism in Squidex leads to XSS
 Content-Type: text/plain; charset=utf-8
 
-Not associated with the project or ESET, but didn't see anything here about
-this yet.
+Hello all,
 
-Roundcube is an open-source webmail client. Versions up to 1.6.4 are
-vulnerable (including the 1.4.x and 1.5.x series) to an XSS exploit
-caused by an issue in the sanitization of SVG image elements in HTML
-emails. ESET describes CVE-2023-5631 as follows in their press release
-at <https://www.eset.com/us/about/newsroom/press-releases/eset-research-winter-vivern-attacks-roundcube-webmail-servers-of-governments-in-europe-through-zero-1/>:
+Squidex, a "headless" open source CMS framework was found to have a 
+stored XSS vulnerability in the "Upload Assets" functionality due to 
+insufficient SVG element filtering. The vulnerability affects all 
+versions of the framework prior to 7.9.0.
 
-  By sending a specially crafted email message, attackers are able to
-  load arbitrary JavaScript code in the context of the Roundcube user’s
-  browser window. No manual interaction other than viewing the message
-  in a web browser is required. The final JavaScript payload can
-  exfiltrate email messages to the command and control server of the
-  group.
+CVE-2023-46857 was assigned to this vulnerability by MITRE.
 
-The Roundcube project has released new versions for each of the abovementioned
-release series. The official release notification is at
-<https://roundcube.net/news/2023/10/16/security-update-1.6.4-released>.
+The vulnerability affects authenticated users of the Squidex CMS Web 
+application and allows for malicious JavaScript to be executed within 
+victim user browsers. Moreover, the vulnerability enables an attacker to 
+collect the CMS authentication token from browser local storage and it 
+is therefore possible for the attacker to gain unauthorized access to a 
+victim user's session.
 
-According to ESET, the vulnerability is being actively exploited to
-target "governmental entities in Europe".
+More information about this issue is available here:
+https://census-labs.com/news/2023/11/08/weak-svg-asset-filtering-mechanism-in-squidex-cms/
 
- -Valtteri
+Best regards,
+
+Charalampos Maraziaris
+
+-- 
+Charalampos Maraziaris
+IT Security Engineer
+CENSUS S.A. - https://census-labs.com
+
+
+Download attachment "OpenPGP_0xD2A107C04EE32300.asc" of type "application/pgp-keys" (3164 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
