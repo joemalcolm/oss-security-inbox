@@ -1,101 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/3
-Message-ID: <CAHXwHVwMqiEU0cP0Zjjrjnb-7uyNXqR3i9BZzBV=-j1NKUEz3A@mail.gmail.com>
-Date: Tue, 14 Nov 2023 12:14:53 -0500
-From: Craig Ingram <cjingram@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/10
+Message-ID: <CAK_vis6udRU5MRodhseyqVdPVXD2iv0cU7uXqpAGxpGVh_fKAQ@mail.gmail.com>
+Date: Wed, 8 Nov 2023 15:55:53 -0500
+From: Brian Peters <brianrpeters@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2023-5528: Insufficient input sanitization in in-tree storage plugin leads to privilege escalation on Windows nodes
+Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+> I somehow doubt the presence of the ! makes much of a difference.
 
-A security issue was discovered in Kubernetes where a user that can create
-pods and persistent volumes on Windows nodes may be able to escalate to
-admin privileges on those nodes. Kubernetes clusters are only affected if
-they are using an in-tree storage plugin for Windows nodes.
+What about NVID? NVID-2023-0001
+Not (A) Vulnerability ID
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H>),
-and assigned CVE-2023-5528.
+On Wed, Nov 8, 2023 at 2:39 PM Vegard Nossum <vegard.nossum@...cle.com>
+wrote:
 
-Am I vulnerable?
-
-Any kubernetes environment with Windows nodes is impacted.  Run kubectl get
-nodes -l kubernetes.io/os=windows to see if any Windows nodes are in use.
-
-Affected Versions
-
-- kubelet >= v1.8.0 (including all later minor versions)
-
-How do I mitigate this vulnerability?
-
-The provided patch fully mitigates the vulnerability.
-
-Outside of applying the patch, there are no known mitigations to this
-vulnerability.
-
-Fixed Versions
-
-- kubelet v1.28.4
-
-- kubelet v1.27.8
-
-- kubelet v1.26.11
-
-- kubelet v1.25.16
-
-These releases will be published over the course of today, November 14,
-2023.
-
-To upgrade, refer to the documentation:
-
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
-
-Detection
-
-Kubernetes audit logs can be used to detect if this vulnerability is being
-exploited. Persistent Volume create events with local path fields
-containing special characters are a strong indication of exploitation.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/121879
-
-Acknowledgements
-
-This vulnerability was reported by Tomer Peled @tomerpeled92
-
-The issue was fixed and coordinated by the fix team:
-
-James Sturtevant @jsturtevant
-
-Mark Rossetti @marosset
-
-Michelle Au @msau42
-
-Jan Šafránek @jsafrane
-
-Mo Khan @enj
-
-Rita Zhang @ritazh
-
-Micah Hausler @micahhausler
-
-Sri Saran Balaji @SaranBalaji90
-
-Craig Ingram @cji
-
-and release managers:
-
-Jeremy Rickard @jeremyrickard
-
-Marko Mudrinić @xmudrii
-
-Thank You,
-
-Craig Ingram on behalf of the Kubernetes Security Response Committee
+>
+> On 08/11/2023 14:22, !CVE Team wrote:
+> > ==============
+> > What is a !CVE
+> > ==============
+> >
+> >     - A common place for !vulnerabilities (read not vulnerabilities)
+> >
+> >     - Security issues not covered by the traditional CVE.
+> >
+> >     - An identifier following common naming starting with an exclamation
+> >       mark(!) Example: !CVE-2023-0001
+>
+> I am not a lawyer, but I'd assume you would run into some issues with
+> the naming of all this -- wasn't that the exact issue that somebody else
+> ran into when they tried to assign identifiers to bugs that MITRE
+> wouldn't acknowledge? Here's what they said back then:
+>
+> <
+> https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_to_DWF_from_the_CVE_Board
+> >
+>
+> I somehow doubt the presence of the ! makes much of a difference.
+>
+>
+> Vegard
+>
 
