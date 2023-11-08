@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/24/1
-Message-ID: <20231224093335.GM14101@suse.de>
-Date: Sun, 24 Dec 2023 10:33:37 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/7
+Message-ID: <8bd7dfdd-1a33-1b6c-11d5-c65ebb736eb8@apache.org>
+Date: Wed, 08 Nov 2023 18:05:51 +0000
+From: Antoine Pitrou <apitrou@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: CVE-2023-47248: PyArrow, PyArrow: Arbitrary code execution when loading a malicious data file 
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Dec 23, 2023 at 02:29:34PM +0200, Valtteri Vuorikoski wrote:
-> On Fri, Dec 22, 2023 at 11:46:48AM +0100, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
-> > 
-> > Not sure if we need it for others like sendmail too, as that is also
-> > referenced by the security researchers.
-> 
-> Looks like exim opened a bug on this yesterday too, no sign of CVE yet:
-> <https://bugs.exim.org/show_bug.cgi?id=3063>
+Severity: critical
 
-CVEs are assigned now for:
+Affected versions:
 
-- CVE-2023-51764 postfix
-- CVE-2023-51765 sendmail
-- CVE-2023-51766 exim
+- PyArrow 0.14.0 through 14.0.0
+- PyArrow 0.14.0 through 14.0.0
 
-Ciao, Marcus
+Description:
+
+Deserialization of untrusted data in IPC and Parquet readers in PyArrow versions 0.14.0 to 14.0.0 allows arbitrary code execution. An application is vulnerable if it reads Arrow IPC, Feather or Parquet data from untrusted sources (for example user-supplied input files).
+
+This vulnerability only affects PyArrow, not other Apache Arrow implementations or bindings.
+
+It is recommended that users of PyArrow upgrade to 14.0.1. Similarly, it is recommended that downstream libraries upgrade their dependency requirements to PyArrow 14.0.1 or later. PyPI packages are already available, and we hope that conda-forge packages will be available soon.
+
+If it is not possible to upgrade, we provide a separate package `pyarrow-hotfix` that disables the vulnerability on older PyArrow versions. See  https://pypi.org/project/pyarrow-hotfix/  for instructions.
+
+References:
+
+https://arrow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-47248
+
