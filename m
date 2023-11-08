@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/5
-Message-ID: <CA+ZBtZ6UjvTNKgO6K6Auqxfoue+WzS41BGzN=i6KGuiVurvS+g@mail.gmail.com>
-Date: Wed, 15 Feb 2023 11:19:22 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/5
+Message-ID: <720a3438-0411-4f13-8531-7e6bcac83e77@oracle.com>
+Date: Wed, 8 Nov 2023 18:52:03 +0100
+From: Vegard Nossum <vegard.nossum@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: dev@...nyu.apache.org
-Subject: CVE-2022-42735: Apache ShenYu Admin ultra vires
+Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
 
-Description:
+On 08/11/2023 14:22, !CVE Team wrote:
+> ==============
+> What is a !CVE
+> ==============
+> 
+>     - A common place for !vulnerabilities (read not vulnerabilities)
+> 
+>     - Security issues not covered by the traditional CVE.
+> 
+>     - An identifier following common naming starting with an exclamation
+>       mark(!) Example: !CVE-2023-0001
 
-Improper Privilege Management vulnerability in Apache Software
-Foundation Apache ShenYu.
+I am not a lawyer, but I'd assume you would run into some issues with
+the naming of all this -- wasn't that the exact issue that somebody else
+ran into when they tried to assign identifiers to bugs that MITRE
+wouldn't acknowledge? Here's what they said back then:
 
-ShenYu Admin allows low-privilege low-level administrators create
-users with higher privileges than their own.
+<https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_to_DWF_from_the_CVE_Board>
 
-This issue affects Apache ShenYu: 2.5.0.
+I somehow doubt the presence of the ! makes much of a difference.
 
-Work Arounds:
 
-Upgrade to Apache ShenYu 2.5.1 or apply patch
-https://github.com/apache/shenyu/pull/3958.
-
-Credit:
-
-xxhzz (finder)
-
-References:
-
-https://shenyu.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-42735
-
---
-
-Zhang Yonglun
-Apache ShenYu & ShardingSphere
+Vegard
