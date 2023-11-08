@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/24/2
-Message-ID: <f91aa07f-0bb2-1e5f-8ba7-952fec3a1758@apache.org>
-Date: Mon, 24 Apr 2023 14:37:44 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/11
+Message-ID: <59d6f796-3db7-4d56-881d-07866c73328f@wichmann.us>
+Date: Wed, 8 Nov 2023 15:38:37 -0700
+From: Mats Wichmann <mats@...hmann.us>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-27524: Apache Superset: Session validation vulnerability when using provided default SECRET_KEY 
+Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On 11/8/23 13:33, David A. Wheeler wrote:
 
-Session Validation attacks in Apache Superset versions up to and including 2.0.1. Installations that have not altered the default configured SECRET_KEY according to installation instructions allow for an attacker to authenticate and access unauthorized resources. This does not affect Superset administrators who have changed the default value for SECRET_KEY config.
+> The "!CVE" group isn't using "CVE", they're using "!CVE". The question is,
+> is that distinct enough, or will typical users be confused by it?
+> I don't know the answer to that. However, I do worry that perhaps
+> "!CVE" is not distinct enough.
 
-Credit:
+I'd say it's pretty clear it's confusing, given that non-alpha 
+characters have mysterious behaviors in non-human situations, and this 
+particular character is probably confusing to humans too, depending on 
+how clear/large the font is.  ICVE? 1CV? lCVE?  On the computer side of 
+the equation,  I just put  !CVE  into the search bar of my browser. It 
+didn't even bring up a page of results, it just sent me directly to:
 
-Naveen Sunkavally (Horizon3.ai) (finder)
+https://cve.mitre.org/
 
-References:
+Don't do this.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-27524
+> I would *strongly* recommend that this group use "NotCVE" or "NCVE" instead of "!CVE".
+> That would be more clearly distinct, and they already call themselves that.
+> I'll also note that searching for "!CVE" and storing that prefix will also cause some problems.
++1
 
