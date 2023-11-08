@@ -1,22 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/17/3
-Message-ID: <924ee784-a22c-0317-10bf-1cf40789cf80@apache.org>
-Date: Mon, 17 Apr 2023 10:04:21 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-27525: Apache Superset: Incorrect default permissions for Gamma role 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/8
+Message-Id: <B2EE9540-85EA-4866-85A4-D4A23979995A@dwheeler.com>
+Date: Wed, 8 Nov 2023 15:33:35 -0500
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com, contact@...cve.org
+Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
 Content-Type: text/plain; charset=utf-8
 
-Description:
 
-An authenticated user with Gamma role authorization could have access to metadata information using non trivial methods in Apache Superset up to and including 2.0.1
+> On Nov 8, 2023, at 12:52 PM, Vegard Nossum <vegard.nossum@...cle.com> wrote:
+> 
+> I am not a lawyer, but I'd assume you would run into some issues with
+> the naming of all this -- wasn't that the exact issue that somebody else
+> ran into when they tried to assign identifiers to bugs that MITRE
+> wouldn't acknowledge? Here's what they said back then:
+> 
+> <https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_to_DWF_from_the_CVE_Board>
+> 
+> I somehow doubt the presence of the ! makes much of a difference.
 
-Credit:
+The problem in that case wasn't that someone else used "XYZ-" format ID. Bugtraq did that before,
+and many others do it today. The problem was that the group labeled some non-CVEs as "CVE-...", which
+is confusing and probably violates trademarks.
 
-NTT DATA (finder)
+The "!CVE" group isn't using "CVE", they're using "!CVE". The question is,
+is that distinct enough, or will typical users be confused by it?
+I don't know the answer to that. However, I do worry that perhaps
+"!CVE" is not distinct enough.
 
-References:
+I would *strongly* recommend that this group use "NotCVE" or "NCVE" instead of "!CVE".
+That would be more clearly distinct, and they already call themselves that.
+I'll also note that searching for "!CVE" and storing that prefix will also cause some problems.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-27525
+This gets into trademark law. I'm not a lawyer. However, I do talk to them :-). Trademark law doesn't
+prevent you from *doing* an action, it just prevents certain kinds of confusing *names* because
+it's helpful when names mean things. As long as the name/image/whatever is clearly distinct
+there's no problem. So where possible, please use clearly distinct names for distinct things.
+I think that's a good practice even when it's *not* legally required.
+
+--- David A. Wheeler
 
