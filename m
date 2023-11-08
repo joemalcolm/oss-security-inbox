@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2221" "Sunday" "25" "December" "2016" "11:44:10" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20161225104410.GU5082@jumper.schlittermann.de>" "61" "[oss-security] CVE-2016-9963 | Exim 4.87.1 released (Was: CVE Request - Exim 4.69-4.87) - disclosure of private information)" nil nil nil "12" "2016122510:44:10" "[oss-security] CVE-2016-9963 | Exim 4.87.1 released (Was: CVE Request - Exim 4.69-4.87) - disclosure of private information)" (number mark "U       hs@schlitter Dec 25   61/2221  " thread-indent "\"[oss-security] CVE-2016-9963 | Exim 4.87.1 released (Was: CVE Request - Exim 4.69-4.87) - disclosure of private information)\"\n") "<20161223105906.GO5082@jumper.schlittermann.de>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<20161223105906.GO5082@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22433 invoked by uid 550); 25 Dec 2016 10:48:44 -0000
+Received: (qmail 23859 invoked by uid 550); 8 Nov 2023 20:34:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16273 invoked from network); 25 Dec 2016 10:44:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-To;
-	bh=ZFdeHquwcYeWGeyq+eUXDWFIwWDrZZyhggY/+vL9rmA=; b=q9FgEg/1zRJ4k6J4OrqLUeSKhd
-	Je4mgvEzdTWM2OS9KCEy7LaJNI/emAdhyfQ942uXgDiPLNp5oh1e1ppfNoe4eneWmb2CyG5696Kem
-	GQg/n7CS49bOqIjHs5MbR7g/NElgiSlqHAKKIgtB0lMJUcPzyEaF3doJ4N8phRQhBRY8=;
-Date: Sun, 25 Dec 2016 11:44:10 +0100
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20161225104410.GU5082@jumper.schlittermann.de>
-References: <20161215233645.GJ29010@jumper.schlittermann.de>
- <20161223105906.GO5082@jumper.schlittermann.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="twKjCw1/F6C/WBH6"
-Content-Disposition: inline
-In-Reply-To: <20161223105906.GO5082@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE-2016-9963 | Exim 4.87.1 released (Was: CVE
- Request - Exim 4.69-4.87) - disclosure of private information)
-
---twKjCw1/F6C/WBH6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Received: (qmail 23838 invoked from network); 8 Nov 2023 20:34:08 -0000
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
+Date: Wed, 8 Nov 2023 15:33:35 -0500
+References: <c01c1617-641d-4ec2-847f-2e85ea4676f7@notcve.org>
+ <720a3438-0411-4f13-8531-7e6bcac83e77@oracle.com>
+To: oss-security@lists.openwall.com,
+ contact@notcve.org
+In-Reply-To: <720a3438-0411-4f13-8531-7e6bcac83e77@oracle.com>
+Message-Id: <B2EE9540-85EA-4866-85A4-D4A23979995A@dwheeler.com>
+X-Mailer: Apple Mail (2.3731.700.6)
+Subject: Re: [oss-security] !CVE: A new platform to track security issues not
+ acknowledged by vendors
 
-I've uploaded Exim 4.87.1 to:
 
-    ftp://ftp.exim.org/pub/exim/exim4/old/
-    git://git.exim.org/exim.git (tag exim-4_87_1)
+> On Nov 8, 2023, at 12:52 PM, Vegard Nossum <vegard.nossum@oracle.com> wro=
+te:
+>=20
+> I am not a lawyer, but I'd assume you would run into some issues with
+> the naming of all this -- wasn't that the exact issue that somebody else
+> ran into when they tried to assign identifiers to bugs that MITRE
+> wouldn't acknowledge? Here's what they said back then:
+>=20
+> <https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_t=
+o_DWF_from_the_CVE_Board>
+>=20
+> I somehow doubt the presence of the ! makes much of a difference.
 
-Whilst this release is superseeded by 4.88 already, you're urged
-to upgrade to 4.87.1, if 4.88 isn't an option for you yet.
+The problem in that case wasn't that someone else used "XYZ-" format ID. Bu=
+gtraq did that before,
+and many others do it today. The problem was that the group labeled some no=
+n-CVEs as "CVE-...", which
+is confusing and probably violates trademarks.
 
-No features are added or removed. This release contains
-just a fix for CVE-2016-9963
+The "!CVE" group isn't using "CVE", they're using "!CVE". The question is,
+is that distinct enough, or will typical users be confused by it?
+I don't know the answer to that. However, I do worry that perhaps
+"!CVE" is not distinct enough.
 
-    - Fix CVE-2016-9963 - Info leak from DKIM.  When signing DKIM, if
-      either LMTP or PRDR was used for delivery, the key could appear in
-      logs.  Additionally, if the experimental feature "DSN_INFO" was used,
-      it could appear in DSN messages (and be sent offsite).
+I would *strongly* recommend that this group use "NotCVE" or "NCVE" instead=
+ of "!CVE".
+That would be more clearly distinct, and they already call themselves that.
+I'll also note that searching for "!CVE" and storing that prefix will also =
+cause some problems.
 
-For details about the CVE please see
+This gets into trademark law. I'm not a lawyer. However, I do talk to them =
+:-). Trademark law doesn't
+prevent you from *doing* an action, it just prevents certain kinds of confu=
+sing *names* because
+it's helpful when names mean things. As long as the name/image/whatever is =
+clearly distinct
+there's no problem. So where possible, please use clearly distinct names fo=
+r distinct things.
+I think that's a good practice even when it's *not* legally required.
 
-    https://exim.org/static/doc/CVE-2016-9963.txt
+--- David A. Wheeler
 
-The release files for 4.87.1 are signed with the PGP key 0xF69376CE,
-which has a uid "Heiko Schlittermann (HS12-RIPE) <hs@schlittermann.de>".
-Please use your own discretion in assessing what trust paths you might
-have to this uid.
-
-In case on any problems please contact us on exim-users@exim.org
-or on the IRC channel #exim at freenode.
-
-Sorry for the release date.
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
---twKjCw1/F6C/WBH6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCgAGBQJYX6L5AAoJEGoXY4qgRQz1l24IAIVvLJeu5zjvdlMsRMev/FCt
-5/C0W5guxfGgGdZjeme2oeQKmwTiX6cxBKvosck5G6AAltmkod/9Ih8MmT9t2MZl
-moOsJ3lih6RzvZH4L/TSojj6tIx250yDeK6y9lP7PwlKvA6oTQsLP0I3spR2EBYP
-qV4TYKxSW8BW6o3ZEkZ1fLCUlW3G1EgBsX9BIE3ubTox4WK5DVR638oG2RSFr7N3
-2hBsTQQB3B7H9a6k1jb5R5Hj3X3wOQMh1xbYkfhtw8YBCzhJ102kzde/Ey0hDSO5
-82MsphIOp22WUWrmSZgjLJlXPss9/jea7HaSpB94vFZrO2+4zIsK86MYkT+r8Y0=
-=mcg4
------END PGP SIGNATURE-----
-
---twKjCw1/F6C/WBH6--
