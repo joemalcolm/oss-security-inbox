@@ -1,128 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/16/3
-Message-ID: <dcb190ea-fb0f-3459-f420-9575f198a1b0@canonical.com>
-Date: Tue, 16 May 2023 09:04:01 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Clarification on embargoed testing in a partner cloud
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/6
+Message-ID: <CAADnVQKaqKJA_PPLNggzt=BY6jqsCbgpA4MM9ikkP+qY4f8zSQ@mail.gmail.com>
+Date: Wed, 8 Nov 2023 10:04:51 -0800
+From: Alexei Starovoitov <alexei.starovoitov@...il.com>
+To: Solar Designer <solar@...nwall.com>, Daniel Borkmann <daniel@...earbox.net>
+Cc: oss-security@...ts.openwall.com, Hsin-Wei Hung <hsinweih@....edu>,  Alexei Starovoitov <ast@...nel.org>
+Subject: Re: Linux: BPF: issues with copy_from_user_nofault()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, Nov 5, 2023 at 2:43 PM Solar Designer <solar@...nwall.com> wrote:
+>
+> Hi,
+>
+> Looks like the below wasn't brought to oss-security yet.
+>
+> As I understand from what was posted to the linux-distros thread, the
+> issue was being fixed in:
+>
+> https://lore.kernel.org/bpf/20230118051443.78988-1-alexei.starovoitov@gmail.com/
+>
+> and actually fixed in:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?id=d319f344561d
+>
+> and it should have been merged to stable "tomorrow or so" after June 27,
+> at which point Hsin-Wei Hung was supposed to finally make the
+> oss-security posting, but apparently that never happened.
+>
+> Of course, the delay from January 2 to June 28 was way in excess of the
+> supposed maximum, and it is even more ridiculous we didn't post in here
+> for even longer.
+>
+> This is what happens when no one in particular keeps tracking issues
+> after they fall out of the attention span.  This is also why we need to
+> take care of the distros list statistics task in real time, not only
+> retroactively like I'm doing for 2023 now.
 
-On 2023-05-14 16:24, Solar Designer wrote:
-> Hi Marc,
-> 
-> Thank you for bringing this up.  I'll share my current thoughts below.
-> I do not have a conclusion nor a decision yet, but I hope we'll arrive
-> at one in further discussion.
-> 
-> On Thu, May 11, 2023 at 07:36:44AM -0400, Marc Deslauriers wrote:
->> The Ubuntu security team shares and obtains information about embargoed
->> issues from the distros and linux-distros mailing lists.
->>
->> One of our large cloud partners has asked the Ubuntu security team to do
->> automated testing of embargoed security updates on their public cloud
->> before the CRD. While technically we would not be directly sharing details
->> of embargoed issues with them as the tests will be run under accounts owned
->> by the Ubuntu security team, they will be run on their infrastructure. As
->> such, this may hinder our ability to conduct a comprehensive internal
->> investigation of any leak that may occur.
->>
->> I'm not exactly sure how this scenario fits within the policy of these
->> lists, and would like to validate before we go ahead. ( Policy can be found
->> here: https://oss-security.openwall.org/wiki/mailing-lists/distros )
->>
->> Would testing embargoed updates obtained from the distros and linux-distros
->> lists on an external cloud infrastructure violate the terms of those
->> mailing lists?
-> 
-> I think this is a gray area.  The policy talks about not sharing beyond
-> the need-to-know for getting the issue fixed for your distro's users.
-> It also talks about not delivering or deploying.  However, usage of
-> cloud resources under the distro's accounts is not exactly sharing, and
-> testing in the target environment is relevant to getting the issue fixed
-> for the distro's users.
+As I tried to explain, the fix addresses two things:
+- the WARN. By itself it's harmless and the severity is low.
+- lockup with CONFIG_HARDENED_USERCOPY from bpf. That is a real bug
+and backports are necessary.
 
-Yes, this is the unclear area, and is the reason for me asking for 
-clarification. Is using a public cloud under a private account considered 
-sharing with the cloud provider?
+But the 2nd part of the fix:
+https://lore.kernel.org/bpf/20230118051443.78988-2-alexei.starovoitov@gmail.com/
 
-While they claim they have mechanisms in place to prevent their employees from 
-accessing private customer data, I am skeptical that a bad employee wouldn't be 
-able to leak sensitive embargoed information, and I wouldn't be able to find 
-out, or investigate thoroughly.
-
-Ideally, I would like this clarified in policy once a decision has been made.
-
-> 
-> Sure this adds risks.  However, realistically we probably already do
-> have distros on the list that use a public cloud for some processing of
-> embargoed information.  At least Amazon Linux probably uses AWS -
-> probably dedicated instances with no other concurrent VMs on the same
-> hardware, but still.  (I am just guessing here.  Maybe it's more
-> separated from the public cloud.)
-> 
-> Also, some use third-party e-mail servers, e.g. domains pointing to
-> Gmail MX'es.  While mail relayed by (linux-)distros arrives encrypted
-> (except for headers), I doubt all other e-mail communication within the
-> distros' teams is - and if it is not, then they rely on a similar
-> security and legal boundary already (the distro's accounts with a
-> third-party provider).  If we don't consider sending e-mail through
-> Google servers as sharing with Google, then I guess usage of Google's
-> cloud is not sharing either.
-
-The Ubuntu security team is still using a self-hosted email server for this 
-exact reason. We were uncomfortable moving along with the rest of the company to 
-a hosted email setup while handling embargoed information.
-
-> 
-> Thus, it could be inconsistent to say that, no, Ubuntu cannot test in
-> the cloud while some other distros might be exposing the information to
-> similar cloud risks.  It would be wrong to penalize Ubuntu for asking.
-> 
-> Another angle is: what's the motivation for testing in the cloud?
-> I guess it's about compatibility with the cloud environment
-> (hypervisor?), so it is perhaps most relevant to testing of updates to
-> low-level components - especially the Linux kernel?  Well, we've granted
-> an exception allowing public commits of Linux kernel security fixes.
-> Can we at the same time reasonably object to testing of a distro's Linux
-> kernel updates under a public cloud account (thus, with more limited
-> exposure than the public commits have)?  Well, kind of yes since updates
-> can be more revealing than the public fixes - updates typically do
-> mention security relevance in change logs.  Also, this exception is made
-> use of only for a subset of Linux kernel issues handled on
-> linux-distros, not for all.
-> 
-> That said, maybe exposure of testing in the public cloud can be reduced
-> by only doing such testing for low-level packages, not for typical
-> userland packages that are not expected to be affected by whether they
-> run on Ubuntu's own servers and VMs vs. the cloud?
-
-They were requesting we test the default package set that is shipped in cloud 
-images, including userland packages that don't have anything specific to their 
-cloud.
-
-> 
-> Yet another angle is where linux-distros itself is to be hosted.  So
-> far, I insist on non-cloud hosting.  Arguably, allowing for processing
-> of embargoed information in the cloud by the member distros is a reason
-> for me to give in and accept a cloud hosting offer.  OTOH, a distro's
-> usage of the cloud exposes somewhat different information to the risks
-> than the list's hosting would.  Only issues being handled by that distro
-> rather than all, sometimes only in processed form rather than original
-> (e.g., binary update packages vs. list messages), with some delay rather
-> than immediately, and no exposure of the list's long-term private key.
-> 
->> Would testing embargoed updates on an external cloud
->> infrastructure be contrary to the expectations of the vendors posting
->> embargoed issues to those lists?
-> 
-> Not only "vendors" post embargoed issues to those lists.  I think we
-> shouldn't violate any sender's reasonable expectations.  That said,
-> vendor postings are an interesting subset.  Maybe other distro vendors
-> can comment on this, please?  Marcus from SUSE has already commented
-> (thanks!), but I think not yet on this specific aspect.
-Yes, that's a bad choice of wording on my part. I did mean the expectations of 
-anyone posting to the list.
-
-Marc.
+was never merged.
+Essentially perf (without any bpf) is broken on arm64 and others.
+arch_perf_out_copy_user() might deadlock with CONFIG_HARDENED_USERCOPY.
