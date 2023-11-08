@@ -1,31 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/7
-Message-ID: <20231005135411.dw3mfr2zigmx2h5e@mutt-hbsd>
-Date: Thu, 5 Oct 2023 09:54:11 -0400
-From: Shawn Webb <shawn.webb@...denedbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/9
+Message-ID: <CADxcaYWdf5tUAdLLMeBVm9pa64_LyWKZ-+GSFpx3DYyWYf3R9g@mail.gmail.com>
+Date: Wed, 8 Nov 2023 12:46:13 -0800
+From: Jean Luc Picard <atari2600a@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: There is a curl "severity HIGH security problem" pre-announcement on GitHub
+Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 05, 2023 at 10:14:49AM +0200, Erik Auerswald wrote:
-> Hi,
-> 
-> there is a pre-announcement of a curl security problem with high severity
-> that can be found on GitHub:
-> 
->  - https://github.com/curl/curl/discussions
->  - https://github.com/curl/curl/discussions/12026
+I have a number of natsec-ey google reports that went nowhere didnt't get
+credit or a dime out of it.  Most are nullified by the current state of
+affairs struck by xAI (ie how to cook crack) but others I still feel should
+be looked at by the greater community.  Is this the apprapriate aggregate
+platform now?
 
-I wonder if this could also be coordinated through CERT VINCE since
-there will be a wider impact than those on the distros mailing list.
+On Wed, Nov 8, 2023, 12:35 David A. Wheeler <dwheeler@...eeler.com> wrote:
 
-Thanks,
+>
+> > On Nov 8, 2023, at 12:52 PM, Vegard Nossum <vegard.nossum@...cle.com>
+> wrote:
+> >
+> > I am not a lawyer, but I'd assume you would run into some issues with
+> > the naming of all this -- wasn't that the exact issue that somebody else
+> > ran into when they tried to assign identifiers to bugs that MITRE
+> > wouldn't acknowledge? Here's what they said back then:
+> >
+> > <
+> https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_to_DWF_from_the_CVE_Board
+> >
+> >
+> > I somehow doubt the presence of the ! makes much of a difference.
+>
+> The problem in that case wasn't that someone else used "XYZ-" format ID.
+> Bugtraq did that before,
+> and many others do it today. The problem was that the group labeled some
+> non-CVEs as "CVE-...", which
+> is confusing and probably violates trademarks.
+>
+> The "!CVE" group isn't using "CVE", they're using "!CVE". The question is,
+> is that distinct enough, or will typical users be confused by it?
+> I don't know the answer to that. However, I do worry that perhaps
+> "!CVE" is not distinct enough.
+>
+> I would *strongly* recommend that this group use "NotCVE" or "NCVE"
+> instead of "!CVE".
+> That would be more clearly distinct, and they already call themselves that.
+> I'll also note that searching for "!CVE" and storing that prefix will also
+> cause some problems.
+>
+> This gets into trademark law. I'm not a lawyer. However, I do talk to them
+> :-). Trademark law doesn't
+> prevent you from *doing* an action, it just prevents certain kinds of
+> confusing *names* because
+> it's helpful when names mean things. As long as the name/image/whatever is
+> clearly distinct
+> there's no problem. So where possible, please use clearly distinct names
+> for distinct things.
+> I think that's a good practice even when it's *not* legally required.
+>
+> --- David A. Wheeler
+>
+>
 
--- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
-
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
