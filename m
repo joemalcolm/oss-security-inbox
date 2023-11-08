@@ -1,32 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/4
-Message-ID: <CAKe4=-L2udnhRQ7EVOMihrExiYUVoor3E0+FbNxvZ8iB=pyQ1w@mail.gmail.com>
-Date: Fri, 13 Oct 2023 09:01:36 -0500
-From: Jonathan Wright <jonathan@...alinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/12
+Message-ID: <20231108231309.GA10833@openwall.com>
+Date: Thu, 9 Nov 2023 00:13:09 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
+Cc: !CVE Team <contact@...cve.org>
+Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
 Content-Type: text/plain; charset=utf-8
 
-OpenLitespeed is not impacted:
-https://blog.litespeedtech.com/2023/10/11/rapid-reset-http-2-vulnerablilty/
+Hi,
 
-On Tue, Oct 10, 2023 at 2:23 PM Moritz Muehlenhoff <jmm@...til.org> wrote:
+I don't like to reject messages (and so far haven't rejected any in this
+thread), but let's please only post when we have something valuable to
+add, which also fits the topic of this list.  In this thread, when
+you're not CC'ing the OP (which I've re-added here), they probably won't
+even see your comments.
 
-> On Tue, Oct 10, 2023 at 11:40:06AM -0700, Alan Coopersmith wrote:
-> > Information I've found so far on open source implementations (most via
-> the
-> > current listings in the CVE) include:
->
-> Apache Trafficserver is also affected:
-> https://lists.apache.org/thread/5py8h42mxfsn8l1wy6o41xwhsjlsd87q
->
-> Cheers,
->         Moritz
->
+On Wed, Nov 08, 2023 at 12:46:13PM -0800, Jean Luc Picard wrote:
+> I have a number of natsec-ey google reports that went nowhere didnt't get
+> credit or a dime out of it.  Most are nullified by the current state of
+> affairs struck by xAI (ie how to cook crack) but others I still feel should
+> be looked at by the greater community.  Is this the apprapriate aggregate
+> platform now?
 
+You write "natsec-ey".  That feels off-topic here.  So is your message
+actually off-topic and should have been rejected?   No need to reply,
+just please apply the "is my message on-topic" filter before you post.
 
--- 
-Jonathan Wright
-AlmaLinux Foundation
-Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
+In general, if you've found something valuable, just share it where
+appropriate - if it's a vulnerability in Open Source software, please
+post in here.  You don't need a CVE for this, nor any CVE alternative.
 
+On Wed, Nov 08, 2023 at 03:55:53PM -0500, Brian Peters wrote:
+> What about NVID? NVID-2023-0001
+> Not (A) Vulnerability ID
+
+Now that reads like pun on NIST's NVD.
+
+We can come up with lots of other suggested names (and I had made some
+suggestions too), but I think we don't need to continue much further.
+
+So let's wind this thread down unless there's something truly new and
+on-topic to add.  I'll start rejecting messages if I have to.
+
+Alexander
