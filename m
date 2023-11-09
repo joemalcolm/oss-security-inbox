@@ -1,95 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/17/4
-Message-ID: <20231017175321.GA9014@openwall.com>
-Date: Tue, 17 Oct 2023 19:53:21 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/09/2
+Message-ID: <20231109133417.GA12926@openwall.com>
+Date: Thu, 9 Nov 2023 14:34:17 +0100
 From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
+To: Hsin-Wei Hung <hsinweih@....edu>
+Cc: Alexei Starovoitov <alexei.starovoitov@...il.com>, Daniel Borkmann <daniel@...earbox.net>, oss-security@...ts.openwall.com, Alexei Starovoitov <ast@...nel.org>
+Subject: Re: Linux: BPF: issues with copy_from_user_nofault()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Nov 08, 2023 at 08:06:49PM -0800, Hsin-Wei Hung wrote:
+> On Wed, Nov 8, 2023 at 10:05???AM Alexei Starovoitov <alexei.starovoitov@...il.com> wrote:
+> > Essentially perf (without any bpf) is broken on arm64 and others.
+> > arch_perf_out_copy_user() might deadlock with CONFIG_HARDENED_USERCOPY.
+> 
+> Hey,
+> 
+> 
+> Sorry to put everyone in a tough situation. I can post it to
+> oss-security if Alexei agrees. I can also try to pick up the 2nd part
+> of the patch from where it is next week.
+> https://lore.kernel.org/bpf/CAADnVQJRd3r84yLcqH1Z-BYU76SRYuDMOCWRcvBfapsXs_w-rg@mail.gmail.com/
 
-Thank you all for helping review this application and for commenting on
-other related issues.
+Thank you Alexei and Hsin-Wei for the replies.
 
-I'll proceed to list CIQ Rocky Linux Security Team as a linux-distros
-member, and will assume that my own subscription is not only as list
-admin, but also as a representative of this team.
+This very thread is already on oss-security since I brought it here on
+Nov 5.  I'm confused as to what was (not) merged to where yet, but my
+suggestion is that this be taken care of on the proper Linux lists and
+then a summary brought to oss-security again (e.g., saying that the
+issue is finally fully fixed, and where exactly).
 
-All messages posted to this thread so far were accepted by moderators -
-nothing was rejected.  My summary is as follows, in order first messages
-were posted by each person:
-
-Solar Designer (on linux-distros as list admin):
-
-Submitted the application, implying that it passes own assessment of it
-meeting the criteria, but affiliated with the proposed new member.
-
-Then addressed Neal Gompa's criticism below.
-
-Vegard Nossum (on linux-distros for Oracle Linux):
-
-"As a current distros member, I see no problem with this whatsoever and
-I appreciate the transparency."
-
-I assume this satisfies the criterion that "someone already on the
-private list, or at least someone else who has been active on
-oss-security for years but is not affiliated" "vouch for at least one of
-the people requesting membership".
-
-Neal Gompa ("doing work in Fedora, Mageia, and openSUSE"):
-
-"I do not believe that Rocky Linux qualifies for it."
-
-Rationale given was:
-1. Timely rebuilds don't "indicate that Rocky/CIQ can respond
-effectively when you have a craft updates from scratch".
-2. Rebuilds or errata republishing were not always timely over 2 years.
-3. SIGs "cannot count because they are intended to be public community
-projects" and "cannot obey embargo regulations."
-4. Distro is pure-rebuild, "which I believe summarily disqualifies it."
-5. CloudLinux and CentOS precedents were different.
-6. "I do not feel that you alone is sufficient"
-
-I addressed it as follows:
-1. Timely rebuilds show "that the project cares and is long-term" and
-"alone satisfy the criterion's current wording."  Statement that own
-updates were also being made for LTS branches and public information on
-recent own updates via the SIG demonstrate "capability, infrastructure
-setup, and intent".  This is a separate criterion, which does not
-require a long-term track record.  So both criteria are satisfied.
-2. There's no requirement "that 100% of updates and publications must
-be quick.  Things do go wrong sometimes, and updates for lower severity
-issues are often reasonably delayed".  (With further clarifications.)
-3. CIQ LTS branches alone would have been sufficient.  SIGs also do
-count as the team "is to provide security maintenance for these, and via
-the Security SIG also optional mitigations and early fixes for Rocky
-Linux."  And yes, this can be done within list rules despite of SIGs
-"intended to be public community projects".  (With explanation of how.)
-4. The existence of CIQ LTS branches and Rocky Linux SIGs changes that.
-5. Fair enough.  "what I described above is sufficient for the purpose
-of linux-distros membership."
-6. Of course not - the new member also meets the criteria.
-
-Martin Hecht ("Not being member of any distribution, but a long-time
-subscriber"):
-
-"I give my vote for Alexander as a representative of CIQ Rocky Linux
-Security Team on linux-distros list."
-
-Addressed Neal Gompa's criticism:
-1. 2. Provided examples using the recent glibc updates.  "accusing Rocky
-being late in providing packages at least is not valid in general imho.
-At least important ones, like this one, seem to arrive rather quickly."
-3, 4. "the point here is "*not only* being a rebuild of another distro".
-So, their engagement with SIG should already be a valid add-on to be
-honored."  "CIQ offers LTS branches [...] clearly distinguishes them
-from a "pure distro rebuild"."
-
-Jeremy Stanley (OpenStack, long-term oss-security contributor) and
-Morten Linderud (Arch Linux):
-
-3. Provided additional examples of "public community projects" that do
-"obey embargo", further refuting Neal Gompa's point.
+Thanks again,
 
 Alexander
