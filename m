@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/7
-Message-ID: <201c4d4e-a734-4642-f0b3-74ee7d0d87c5@oracle.com>
-Date: Wed, 21 Jun 2023 10:19:58 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/09/4
+Message-ID: <ZU0aglk9Rt60nIQ-@dojo.mi.org>
+Date: Thu, 9 Nov 2023 12:44:34 -0500
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Cc: !CVE Team <contact@...cve.org>
+Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
 Content-Type: text/plain; charset=utf-8
 
-On 6/20/23 23:45, Jeffrey Walton wrote:
-> On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
-> <alan.coopersmith@...cle.com> wrote:
->>
->> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
->> since it claims this bug has a CVSS of 9.8.
->>
->>   From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
->> see any CVSS higher than 0.0 being relevant here and think the CVE should
->> be withdrawn.  Am I missing something here?  All I see is 2 objects of
->> 16 bytes each not being freed in the fraction of a second before the
->> command exits and automatically frees the memory - in a command the user
->> deliberately chooses to run, which runs as themselves with no raised
->> privileges, on an input file they provide, and which exits after processing
->> the file and doesn't hang around keeping that memory allocated - not a bit
->> of security risk at all there.  (Yes, it's a small bug and is good to fix,
->> but not to raise security alarms for.)
-> 
-> Memory leaks on exit are par for the course in GNU software per
-> https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
-> 
-> Nothing to see here, just move on.
+!CVE Team,
 
-This isn't a GNU program, but that doesn't matter here.  My argument
-is still that this CVE should be revoked, and that this class of bug
-shouldn't have CVEs issued.
+>From an open source perspective, the CNA(s) who might be assigning
+CVEs might not be a "vendor".  As just one example, the GitHub CNA
+assigns tons of CVEs for open source software using GitHub's Security
+Advisories, but I wouldn't think of GitHub as a "vendor" for all the
+projects they host.  How do you deal with CNAs who might be fine with
+assigning a CVE, but tagging it as DISPUTED?  Perhaps they don't want
+to build deprecated decades-old code to scope out the severity of a
+buffer overflow some random fuzzbot found.  How would !CVE work for
+the Linux kernel, where most security fixes have git commit hashes but
+not CVEs?  You don't seem resourced for that.
+
+Overall, it seems like the prbolem you're trying to solve is "I'm not
+getting my unique tag from CVEs CNAs for my vulnerability".  Your fix
+is "some other unique tag mechanism for vulnerabilities".  I think I
+see where this might be going:
+
+https://xkcd.com/927/
+
+Have you considered, I dunno, working with the CVE folks, addressing
+what CNA rules you think may be broken?  Not all vulnerabilties are
+created equal, and it may make sense to create more alternate systems
+to deal with that.  But, forking off on your own should be done with
+some due diligence.  The last thing the security community needsi are
+even more fractured efforts, as they deal with enough fractured stuff.
+
+
+My $0.02, FWIW...
+-Mike
 
 -- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
-
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"But we decide which is right...  and which is an illusion."     -Moody Blues
