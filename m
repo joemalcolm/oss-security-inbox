@@ -1,76 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/10/3
-Message-ID: <20230510165545.GA25380@openwall.com>
-Date: Wed, 10 May 2023 18:55:46 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Turritopsis Dohrnii Teo En Ming <tdtemccnp@...il.com>
-Cc: oss-security@...ts.openwall.com, ceo@...-en-ming-corp.com, Piotr Krysiuk <piotras@...il.com>
-Subject: Re: New Linux kernel NetFilter flaw gives attackers root privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/09/1
+Message-ID: <CABcoxUYuVw4TC8WiiBWmt+22NmVj_TVuskSWP5Fj3NWBkvDrfA@mail.gmail.com>
+Date: Wed, 8 Nov 2023 20:06:49 -0800
+From: Hsin-Wei Hung <hsinweih@....edu>
+To: Alexei Starovoitov <alexei.starovoitov@...il.com>
+Cc: Solar Designer <solar@...nwall.com>, Daniel Borkmann <daniel@...earbox.net>,  oss-security@...ts.openwall.com, Alexei Starovoitov <ast@...nel.org>
+Subject: Re: Linux: BPF: issues with copy_from_user_nofault()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Nov 8, 2023 at 10:05 AM Alexei Starovoitov
+<alexei.starovoitov@...il.com> wrote:
+>
+> On Sun, Nov 5, 2023 at 2:43 PM Solar Designer <solar@...nwall.com> wrote:
+> >
+> > Hi,
+> >
+> > Looks like the below wasn't brought to oss-security yet.
+> >
+> > As I understand from what was posted to the linux-distros thread, the
+> > issue was being fixed in:
+> >
+> > https://urldefense.com/v3/__https://lore.kernel.org/bpf/20230118051443.78988-1-alexei.starovoitov@gmail.com/__;!!CzAuKJ42GuquVTTmVmPViYEvSg!LwWVuruWiTdoRoQltcxHLiuP59L6twXiH9K5vSXHjQAJ4Kt_PY4ZrsFacExuGA2KxoT2yqmwlLOpBauWKwhXcD6QvQ$
+> >
+> > and actually fixed in:
+> >
+> > https://urldefense.com/v3/__https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?id=d319f344561d__;!!CzAuKJ42GuquVTTmVmPViYEvSg!LwWVuruWiTdoRoQltcxHLiuP59L6twXiH9K5vSXHjQAJ4Kt_PY4ZrsFacExuGA2KxoT2yqmwlLOpBauWKwj2mNm1bQ$
+> >
+> > and it should have been merged to stable "tomorrow or so" after June 27,
+> > at which point Hsin-Wei Hung was supposed to finally make the
+> > oss-security posting, but apparently that never happened.
+> >
+> > Of course, the delay from January 2 to June 28 was way in excess of the
+> > supposed maximum, and it is even more ridiculous we didn't post in here
+> > for even longer.
+> >
+> > This is what happens when no one in particular keeps tracking issues
+> > after they fall out of the attention span.  This is also why we need to
+> > take care of the distros list statistics task in real time, not only
+> > retroactively like I'm doing for 2023 now.
+>
+> As I tried to explain, the fix addresses two things:
+> - the WARN. By itself it's harmless and the severity is low.
+> - lockup with CONFIG_HARDENED_USERCOPY from bpf. That is a real bug
+> and backports are necessary.
+>
+> But the 2nd part of the fix:
+> https://urldefense.com/v3/__https://lore.kernel.org/bpf/20230118051443.78988-2-alexei.starovoitov@gmail.com/__;!!CzAuKJ42GuquVTTmVmPViYEvSg!LwWVuruWiTdoRoQltcxHLiuP59L6twXiH9K5vSXHjQAJ4Kt_PY4ZrsFacExuGA2KxoT2yqmwlLOpBauWKwiOE1xn7Q$
+>
+> was never merged.
+> Essentially perf (without any bpf) is broken on arm64 and others.
+> arch_perf_out_copy_user() might deadlock with CONFIG_HARDENED_USERCOPY.
 
-On Wed, May 10, 2023 at 11:52:58PM +0800, Turritopsis Dohrnii Teo En Ming wrote:
-> I have just come across this article. Thought of sharing it.
-> 
-> Article: New Linux kernel NetFilter flaw gives attackers root privileges
-> Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
 
-We don't normally want in here links to news articles on something that
-was already brought up in here in more detail.  However, as a moderator,
-I reluctantly approved this posting so that we can use the resulting
-thread to discuss whether this issue got blown out of proportion and if
-so what we can do to avoid that going forward.  Here's the original
-posting this refers to:
+Hey,
 
-https://www.openwall.com/lists/oss-security/2023/05/08/4
+Sorry to put everyone in a tough situation. I can post it to
+oss-security if Alexei agrees. I can also try to pick up the 2nd part
+of the patch from where it is next week.
+https://lore.kernel.org/bpf/CAADnVQJRd3r84yLcqH1Z-BYU76SRYuDMOCWRcvBfapsXs_w-rg@mail.gmail.com/
 
-Another Linux kernel issue, in io_uring subsystem, was also disclosed in
-here on the same day, but I think didn't gain such tech media attention:
-
-https://www.openwall.com/lists/oss-security/2023/05/08/3
-
-Is the netfilter issue really worse than the io_uring issue?  I doubt
-it.  So _maybe_ it was something in the wording that tripped someone
-writing for one of those tech news websites, then others picked it up?
-
-Piotr's posting about the netfilter issue mentions intent to disclose an
-exploit later (like it should have, thank you Piotr!)
-
-Tobias' posting directly links to an exploit (which is also fine).
-
-Is intent to disclose an exploit later more newsworthy than having done
-so right away?  I doubt it.
-
-So maybe it's just random, and there's nothing to see here, after all.
-
-Now as to the actual issue and its description, I think we should
-clarify what exactly is meant by "unprivileged local users."  Piotr, I
-guess you actually meant not literally unprivileged, but users with
-CAP_NET_ADMIN, which can be had via unprivileged user/net namespaces if
-enabled in the distro / on the system, or when already in a container
-with such capability granted to container root.  Correct?  I think going
-forward we should always make this clear right away.  Here's a former
-netfilter core team leader also bringing this up:
-
-https://twitter.com/LaF0rge/status/1655867494152667140
-
-LaForge - @LaF0rge@...os.social @LaF0rge:
-> Really curious to see how CVS-223-32233 for #linux #netfilter nf_tables
-> https://seclists.org/oss-sec/2023/q2/133 can be exploted fom
-> "unprivileged local users".  AFAICT, nf_tables_api  goes through
-> nfnetlink, and nfnetlink_rcv() checks for CAP_NET_ADMIN way  before the
-> code in nf_tables_api.
-
-and a reply:
-
-Alex Plaskett @alexjplaskett:
-> Didn't look in depth at this one but you can trigger nf_tables_api
-> operations from a user / network namespace and distros such as Ubuntu
-> have unpriv user namespaces enabled.
-
-As expected.  Now, from a typical distro user's standpoint,
-"unprivileged local users" may be just right.  However, not all distros
-have unprivileged user namespaces enabled by default.
-
-Alexander
+-Hsin-Wei
