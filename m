@@ -1,227 +1,262 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/30/1
-Message-ID: <20230830152633.GA6199@openwall.com>
-Date: Wed, 30 Aug 2023 17:26:33 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Willy Tarreau <w@....eu>
-Cc: oss-security@...ts.openwall.com, Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>, Donald Buczek <buczek@...gen.mpg.de>, Greg KH <gregkh@...uxfoundation.org>
-Subject: Re: linux-distros list policy and Linux kernel, again
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/09/3
+Message-Id: <E1r16oW-0002Ya-8S@xenbits.xenproject.org>
+Date: Thu, 09 Nov 2023 15:19:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 443 v4 (CVE-2023-34325,CVE-2022-4949) - Multiple vulnerabilities in libfsimage disk handling
 Content-Type: text/plain; charset=utf-8
 
-Hi Willy,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Mon, Aug 28, 2023 at 09:17:56PM +0200, Willy Tarreau wrote:
-> what I suspect instead
-> is that reporting security issues is so stressful for anyone (constantly
-> making sure not to do a mistake nor to send to the wrong people) that once
-> they see the fix merged, they just relax and consider the job done, so
-> most likely linux-distros isn't even contacted at this point. And it's
-> very possible that some having experienced a friendly process on s@k.o
-> and felt some unneeded pressure on l-d just don't want to go there again.
-> I personally see this a bit like projects asking to sign a CLA: you come
-> there saying "hey, you had a bug there, I fixed it, look" and in return
-> you feel like you're swamped by some heavy process so you just give up,
-> swearing you'll never go there again. That might be exagerated but I
-> can understand how it could be felt that way. I'm having periods where
-> it's very difficult for me to find even one extra hour a day, and I would
-> certainly not appreciate at all being pressured like this to tidy my stuff
-> and prepare for it to be published when I have other things to do, after
-> having made the effort to report a bug. So that's something to keep in
-> mind, not everyone deals with it the same way.
+        Xen Security Advisory CVE-2023-34325,CVE-2022-4949 / XSA-443
+                               version 4
 
-Of course, I understand this.  (linux-)distros isn't a send-and-forget
-list, and this does exclude its usage by people who are aware of this
-fact and only want or have time to send one message without staying on
-top of the issue afterwards.  The obvious alternative would be
-vendor-sec alike, without specific rules, which had its other problems.
+	   Multiple vulnerabilities in libfsimage disk handling
 
-In practice, no matter what we say in the policy, sometimes the reporter
-just won't communicate further.  In those cases, (specific) list members
-should take over, including making the eventual public disclosure.  What
-we could possibly do, if we want to and have the resources, is make this
-a pre-allowed option for reporters, instead of an undesirable exception,
-which it currently is.
+UPDATES IN VERSION 4
+====================
 
-> I couldn't blame a bug reporter for
-> wanting to have their week-ends and nights again and think everything's
-> behind them and in someone else's hands now.
+Added reference to CVE for upstream grub project.
 
-Right.  This is in part a matter of resources - are we providing only
-the lists infrastructure and list members' best-effort volunteer
-contributions to issue handling, or are we providing any guaranteed
-service?  For the latter, perhaps list admin(s) (me) should always take
-over whenever the member distros don't handle that sort of
-contributing-back tasks on time.  Then we'll be able to provide a
-guarantee that all issues will be handled without the reporter having to
-stay on top of them.
+ISSUE DESCRIPTION
+=================
 
-A drawback is that this may encourage lower-quality or lower-relevance
-reports, including of issues that are not worth handling in private.  So
-it could end up wasting those extra resources allocated to this effort.
+libfsimage contains parsing code for several filesystems, most of them based on
+grub-legacy code.  libfsimage is used by pygrub to inspect guest disks.
 
-> On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
-> > That said, can you share more detail on the specific issue you referred
-> > to above and its handling/disclosure timeline?  Was it ever brought to
-> > oss-security, and if not then why not?
-> 
-> I just checked and I'm not seeing any traces of it there. I don't even
-> know who normally notifies about such issues there.
+Pygrub runs as the same user as the toolstack (root in a priviledged domain).
 
-If you worked on the issue, then perhaps you were the most appropriate
-person to notify oss-security about it?
+At least one issue has been reported to the Xen Security Team that allows an
+attacker to trigger a stack buffer overflow in libfsimage.  After further
+analisys the Xen Security Team is no longer confident in the suitability of
+libfsimage when run against guest controlled input with super user priviledges.
 
-Note: this is unrelated to disclosure timelines, policy, etc. - I am
-talking about public notification for the already-public issue.
+In order to not affect current deployments that rely on pygrub patches are
+provided in the resolution section of the advisory that allow running pygrub in
+deprivileged mode.
 
-> > I am guessing this is related to your work on random32 in 2020:
-> > 
-> > https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
-> 
-> Ah yes indeed it's that one! How painful memories suddently come back!
-> 
-> > If so, it looks like the original issue became public via your commit in
-> > July 2020, but further issues with that fix commit were discovered and
-> > fixes for them prepared in public in August and only merged in October.
-> > 
-> > So I guess some lengthy private discussion occurred before July 2020,
-> 
-> Yeah it started in early March, and Eric, Amit and I basically spent all
-> our week-ends and numerous evenings experimenting with different methods
-> to deliver good enough randoms without breaking the principle of not
-> reusing the same IDs too fast (still have a long minimal period), and
-> running tests on real traffic, counting failures. At some point in July
-> I gave up and concluded we couldn't fix it alone between us and needed
-> some public help, hence the posting.
+CVE-2023-4949 refers to the original issue in the upstream grub
+project ("An attacker with local access to a system (either through a
+disk or external drive) can present a modified XFS partition to
+grub-legacy in such a way to exploit a memory corruption in grub’s XFS
+file system implementation.")  CVE-2023-34325 refers specifically to
+the vulnerabilities in Xen's copy of libfsimage, which is decended
+from a very old version of grub.
 
-After I posted the above, Brad Spengler pointed me at another related
-issue that you worked on in 2022:
+IMPACT
+======
 
-https://lore.kernel.org/all/20220502084614.24123-1-w@1wt.eu/
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef562489818723ea0a66c57bfdfbf151ad568c42
+A guest using pygrub can escalate its privilege to that of the domain
+construction tools (i.e., normally, to control of the host).
 
-In fact, your description above sounds like it could be (in part?) for
-that newer issue.
+VULNERABLE SYSTEMS
+==================
 
-Anyway, perhaps both of these should have been brought to oss-security
-at some point, but they were not?  As to handling them in private on
-linux-distros, I see little value in that, so they're not a reason for
-us to have allowed longer embargoes.
+All Xen versions are affected.
 
-> > but it wasn't enough anyway, which makes me question the value of having
-> > the initial handling in private.  Maybe the issue wasn't critical enough
-> > and privately-fixable enough for that.  Maybe this actually illustrates
-> > that such issues are best handled entirely in public... if it were not
-> > for the researchers' incentive you mentioned (plan to publish a paper).
-> 
-> It's always the same for random attacks: the reporter sees a very high
-> success rate in a lab while those dealing with production know for sure
-> that the success rate is so close to zero in field that it cannoot be
-> represented on a float. But there's a wide spectrum between the two,
-> such as mostly idle routers serving as route reflectors, or monitoring
-> devices etc. Thus you start from "it could theoretically be damaging in
-> certain environments, let's be careful", with the researchers initially
-> willing to be discrete since working to prepare a paper. As we made
-> progress and saw the risks of attack significantly fade away but never
-> close enough to zero, we concluded that in the worst case we had something
-> better than the original and it wasn't that much of a problem anymore to
-> make it public. But I think the researchers also progressed on their side
-> seeing the hopes to get a quick fix fade away and the reality hit the
-> theory, thus being more willing to disclose more of their work. It's a
-> bit of everything.
+MITIGATION
+==========
 
-OK.  None of this feels like good material for linux-distros (except
-maybe very close to its publication, if there was a known date), but it
-does feel like good material for eventual summary on oss-security.
+Ensuring that guests do not use the pygrub bootloader will avoid this
+vulnerability.
 
-> > Alternatively, we may need to relax the policy.
-> 
-> I personally think it does have a flaw that is emphasized by the linux
-> kernel handling but can actually affect other projects. Some sole
-> developers might just not have enough resources to do everything in
-> 14 days, from diagnosing the problem at night or only during a few work
-> hours, setting up a lab on the week-end to test a fix, to contacting
-> whoever needs to be contacted and making releases. Some even make the
-> mistake of developing new stuff in maintenance branches and feel like
-> they need to finish before releasing (already seen)! I remember having
-> had to search in my boxes of hardware to re-assemble a working PC with
-> a floppy drive just to be able to validate a fix in the floppy driver.
-> You can be sure I only did that the week-end after the report, but
-> that's possibly 5 days lost already!
+For cases where the PV guest is known to be 64bit, and uses grub2 as a
+bootloader, pvgrub is a suitable alternative pygrub.
 
-This is partially addressed in our current instructions, which say:
+Running only HVM guests will avoid the vulnerability.
 
-"Please notify upstream projects/developers of the affected software,
-other affected distro vendors, and/or affected Open Source projects
-before notifying one of these mailing lists in order to ensure that
-these other parties are OK with the maximum embargo period that would
-apply (and if not, then you may have to delay your notification to the
-mailing list)"
+CREDITS
+=======
 
-Incidentally, this is consistent with the Linux kernel documentation
-edit that prompted this thread.
+This issue was discovered by Ferdinand Nölscher of Google.
 
-> I understand the rationale behind your policy. I, too, was on vendor-sec
-> where we saw some vendors say "just FYI we're trying to fix this, we'll
-> keep you updated" and one year later, no news. But all those doing a
-> serious work (and there are, and the linux security team is doing that
-> serious work) can be heavily penalized by that policy when they're not
-> quick enough to obtain a fix. The linux people are known for being vocal,
-> so you hear about them. But other developers might just feel completely
-> crushed by this and it could really be harmful to them, especially when
-> they're new to this and haven't been dealing with security reports for
-> 25 years like many of us.
-> 
-> That's why I tend to think that what would better address what you want
-> to prevent, is ensuring the discussion doesn't come to a stall. This
-> could remove a lot of frustration. And if something has to be published
-> before the end because the developers or vendor stay silent, it's much
-> more powerful to say "they didn't dare responding for 14 days" than
-> "they couldn't figure a working fix for this complex issue in 14 days".
+RESOLUTION
+==========
 
-I had similar thoughts too, but OTOH allowing arbitrarily long even if
-non-stalled discussions means not only longer embargoes and higher risk
-and impact of leaks, but also a greater number of simultaneous
-discussions on the list.  When issues take a long time to handle and
-many are tracked at once, this increases/wastes the effort per issue.
+Applying patches 1-4 resolves the libfsimage XFS stack overflow.  Applying
+patches 5-11 add additional functionality to pygrub and libxl in order to run
+pygrub in a restricted environment using a specific UID.  Check xl.cfg man page
+for information on the bootloader_restrict option.
 
-> > So the real problem
-> > may be that (linux-)distros is misunderstood as permanently-private
-> > rather than temporarily-private.  Unfortunately, I don't know how to
-> > address that reliably.  Even with automated delayed publication, some
-> > people would initially have the wrong idea... maybe unless they have to
-> > pass through a web page with the public archives before finding the
-> > posting address?
-> 
-> Just a stupid idea, it could possibly be addressed by a confirmation
-> e-mail on an opening thread. Something like "we need you to confirm that
-> what you posted will be made public by YY/MM/DD, if that's really what
-> you want, please visit this link within 24h otherwise all your materials
-> will be destroyed".
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-We already use a somewhat obscure posting address and a required Subject
-prefix, although the latter is currently not enforced strictly (is
-mostly an anti-spam measure, so is bypassed by some other keywords
-contained in the headers and/or message).  I think part of the problem
-was that the kernel documentation gave these away directly, without
-people having to see our policy and instructions first.
+xsa443/xsa443-??.patch          xen-unstable
+xsa443/xsa443-4.17-??.patch     Xen 4.17.x
+xsa443/xsa443-4.16-??.patch     Xen 4.16.x
+xsa443/xsa443-4.15-??.patch     Xen 4.15.x
 
-> I'm not sure, that's just an idea. But yes, it needs
-> to be understood as public so that confidential stuff is not shared
-> there, and it must be possible to ask for some materials to be erased
-> early if the reporter wasn't aware of this or made a mistake (e.g. send
-> a pcap just before the security team says "never ever share a pcap!").
+$ sha256sum xsa443*/*
+d2b306efd35b1e207904f4142be724c4b70bacafae73f8efd5ee12570eb235a1  xsa443/xsa443-01.patch
+3af33399c9966465ef65461c344fe0c3184a21a59830de8e3701122cda4f5483  xsa443/xsa443-02.patch
+a260be66f02307143d9e776cac2b95735011056bebd718f175680f879563ea21  xsa443/xsa443-03.patch
+170d511df3a3898ab0302f7e85bc63127cb0b75f73fdcd83104d3f358365f648  xsa443/xsa443-4.15-01.patch
+16c942da8929ab240a8807da05d9b39bbabfb34adc4f5a63bc3d2d99568973b1  xsa443/xsa443-4.15-02.patch
+13fd27948f5a5e21e1a8e0ddf218ec79b44f1fca55fdc371c932ad2dfa5c23ea  xsa443/xsa443-4.15-03.patch
+1c865b8f0048483ea76e8cfbeba1536ca6cbde04c58a7e0d485d46c063046cf4  xsa443/xsa443-4.15-04.patch
+115b9561c0ea8f155d60049a1e60a26e5261147b1d2672d8a96313aef5dd95e6  xsa443/xsa443-4.15-05.patch
+5e54fe8fcd56de43e9035e57ed964cc677aca853b6f205f8576f56aa8f968bf0  xsa443/xsa443-4.15-06.patch
+a0bd7681bd541b21d069cd025cfb97c798c35041300d5cc86f59941471b88b3c  xsa443/xsa443-4.15-07.patch
+165795217669df7fa2f6bcb3eb820f93391c7d46422eb941ae359b43ce5c510f  xsa443/xsa443-4.15-08.patch
+fe8be8c39f83567597ec5077bd6fe8b57324d5f6bed7f5cfbed7df43008f7835  xsa443/xsa443-4.15-09.patch
+48936926848af29786490dd6db3dcfaf8ed8443f1d6ae896dcb95c930e2f4c21  xsa443/xsa443-4.15-10.patch
+213b6a45198869869248b2e3c096fd327f7b0cccbd68faa12335134172c7c908  xsa443/xsa443-4.15-11.patch
+170d511df3a3898ab0302f7e85bc63127cb0b75f73fdcd83104d3f358365f648  xsa443/xsa443-4.16-01.patch
+16c942da8929ab240a8807da05d9b39bbabfb34adc4f5a63bc3d2d99568973b1  xsa443/xsa443-4.16-02.patch
+13fd27948f5a5e21e1a8e0ddf218ec79b44f1fca55fdc371c932ad2dfa5c23ea  xsa443/xsa443-4.16-03.patch
+1c865b8f0048483ea76e8cfbeba1536ca6cbde04c58a7e0d485d46c063046cf4  xsa443/xsa443-4.16-04.patch
+115b9561c0ea8f155d60049a1e60a26e5261147b1d2672d8a96313aef5dd95e6  xsa443/xsa443-4.16-05.patch
+5e54fe8fcd56de43e9035e57ed964cc677aca853b6f205f8576f56aa8f968bf0  xsa443/xsa443-4.16-06.patch
+a0bd7681bd541b21d069cd025cfb97c798c35041300d5cc86f59941471b88b3c  xsa443/xsa443-4.16-07.patch
+165795217669df7fa2f6bcb3eb820f93391c7d46422eb941ae359b43ce5c510f  xsa443/xsa443-4.16-08.patch
+fe8be8c39f83567597ec5077bd6fe8b57324d5f6bed7f5cfbed7df43008f7835  xsa443/xsa443-4.16-09.patch
+c9538238f4b636b7d093a59610b0eab2e7fd409a7cc9e988d006bee4c9b944f7  xsa443/xsa443-4.16-10.patch
+62147de7a6b8a0073c7abe204da25e94871a32c4e3851f9feccf065976dc0267  xsa443/xsa443-4.16-11.patch
+3322213303481fea964cf18e09b172d42caf21fe662c947ae6ddc0d8a1789fa1  xsa443/xsa443-4.17-01.patch
+02cf94559407d693ef2dcfc47671b63f5f27019dd759bae3b5eaaa922fb4ea74  xsa443/xsa443-4.17-02.patch
+189bef69380d6fbd7f571b2fe11908bac26a650e2b0d040e12b8c1266373f8c8  xsa443/xsa443-4.17-03.patch
+cdb4f0dd47a6c8a759ae4ffd400f2ce72675b8779ca5576dea74e372ca77a021  xsa443/xsa443-4.17-04.patch
+2147dcf95b1ad36da0961e2c084072fa9eb59486e9c0ed43444d268a17d01ee1  xsa443/xsa443-4.17-05.patch
+a523273792a77fa55a7ab8925369edcb9d9ae50e8e9236be43f23e66aaa0f5e2  xsa443/xsa443-4.17-06.patch
+54f97e027c80bfed8e3559ba8d89a69d2f4c48e1017c2090af029a01efe49741  xsa443/xsa443-4.17-07.patch
+79667e7b8fbfa43f9135ba14ca364c63e1e7e7c3a68ae12513fe0204e57fa2bd  xsa443/xsa443-4.17-08.patch
+11125e8da5f9e8313d943e6cbba2ff160478681c290b1413c88113292cca91c4  xsa443/xsa443-4.17-09.patch
+113bbc294e10be4e8bf9855536114f875add033f790504f5c744b38da85d1b11  xsa443/xsa443-4.17-10.patch
+7e5c7d4ef0b148ce9421c1856ced8b023bae22abc8e13956fe2832628c9d4189  xsa443/xsa443-4.17-11.patch
+eb81bcbaf1016bce77696c1f2f5cd90b22e11eaa02d15c36c4c704b02981c50d  xsa443/xsa443-04.patch
+5a099d8bf6a06e318f9ff92491ae4191fd2a3f8637a3c9616173bd2c7d56dbb6  xsa443/xsa443-05.patch
+32733ee7dd1baf81338d50532876f211660dd65eb44f3ea121604b4c897ba30f  xsa443/xsa443-06.patch
+9dfe8e70ed3007dbe46de75d6790baa770d91ac42d6abf642ca0f11b8b2d6b6d  xsa443/xsa443-07.patch
+b8040da4d2ef22ed9f96e1648fa8c4682f82bce2d17bbdd9f2250c48f8858d10  xsa443/xsa443-08.patch
+4b0fa7efd271de010943a2974e178d6e9c44c5181a94fc58ddd3f9ecd953d572  xsa443/xsa443-09.patch
+f1b97a6ee5dc15a2b85ffde12242eb65d885b244419f34d737eb4489769f7224  xsa443/xsa443-10.patch
+eafccd01a5458baf2a7f39b3e533fd3638d6f728078c437247dc712856422706  xsa443/xsa443-11.patch
+$
 
-There's no reliable way to erase stuff from all subscribers' mailboxes.
-At "best", we could exclude it from delayed publication.
+DEPLOYMENT DURING EMBARGO
+=========================
 
-> You're welcome. I don't want to interfere with the lists you operate
-> nor with those working on them, but I observe that there has been some
-> frictions multiple times for reasons that are probably not too hard to
-> address if respective participants discuss just a bit, which is why I'm
-> sharing some observations ;-)
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-I appreciate this.
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-Thanks,
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-Alexander
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmVM+FMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZU7AIALBwYs4RFK+Q3YhyXBdKCFybnRJmj6qVgeJXZr7m
+lk1SFdickZpnWrV7UL/BlLbR/PuYSqbkICYVoyVqMTOP/O5UHTxpZEP1q9SqAW0z
+Jm/7oi1YNkBc/XKYUoEW2Z/k6S3dTzG+iNTB5Xn25DKZtzTb3YtaNCuMGqWYHDfz
+Q/NHc3uLtxnXKjq/YMSs9ig2VEjRTphkiTe37mN0hFmnXDBlxtZHj1h5iw1DwO/o
+W64C4H+3DlI5SA7yTY1EEVPWfNr+t/GqvafgAVMcy1WGutHTZVaMp814ctxXvAex
+grTDK/k+jmEa12zCWodkf85EZNCisVnyBfoo5W9DJ2w2Udo=
+=eeA0
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa443/xsa443-01.patch" of type "application/octet-stream" (1907 bytes)
+
+Download attachment "xsa443/xsa443-02.patch" of type "application/octet-stream" (1174 bytes)
+
+Download attachment "xsa443/xsa443-03.patch" of type "application/octet-stream" (4970 bytes)
+
+Download attachment "xsa443/xsa443-4.15-01.patch" of type "application/octet-stream" (1907 bytes)
+
+Download attachment "xsa443/xsa443-4.15-02.patch" of type "application/octet-stream" (1174 bytes)
+
+Download attachment "xsa443/xsa443-4.15-03.patch" of type "application/octet-stream" (5023 bytes)
+
+Download attachment "xsa443/xsa443-4.15-04.patch" of type "application/octet-stream" (2138 bytes)
+
+Download attachment "xsa443/xsa443-4.15-05.patch" of type "application/octet-stream" (2019 bytes)
+
+Download attachment "xsa443/xsa443-4.15-06.patch" of type "application/octet-stream" (2036 bytes)
+
+Download attachment "xsa443/xsa443-4.15-07.patch" of type "application/octet-stream" (4265 bytes)
+
+Download attachment "xsa443/xsa443-4.15-08.patch" of type "application/octet-stream" (4477 bytes)
+
+Download attachment "xsa443/xsa443-4.15-09.patch" of type "application/octet-stream" (12166 bytes)
+
+Download attachment "xsa443/xsa443-4.15-10.patch" of type "application/octet-stream" (9005 bytes)
+
+Download attachment "xsa443/xsa443-4.15-11.patch" of type "application/octet-stream" (6491 bytes)
+
+Download attachment "xsa443/xsa443-4.16-01.patch" of type "application/octet-stream" (1907 bytes)
+
+Download attachment "xsa443/xsa443-4.16-02.patch" of type "application/octet-stream" (1174 bytes)
+
+Download attachment "xsa443/xsa443-4.16-03.patch" of type "application/octet-stream" (5023 bytes)
+
+Download attachment "xsa443/xsa443-4.16-04.patch" of type "application/octet-stream" (2138 bytes)
+
+Download attachment "xsa443/xsa443-4.16-05.patch" of type "application/octet-stream" (2019 bytes)
+
+Download attachment "xsa443/xsa443-4.16-06.patch" of type "application/octet-stream" (2036 bytes)
+
+Download attachment "xsa443/xsa443-4.16-07.patch" of type "application/octet-stream" (4265 bytes)
+
+Download attachment "xsa443/xsa443-4.16-08.patch" of type "application/octet-stream" (4477 bytes)
+
+Download attachment "xsa443/xsa443-4.16-09.patch" of type "application/octet-stream" (12166 bytes)
+
+Download attachment "xsa443/xsa443-4.16-10.patch" of type "application/octet-stream" (9005 bytes)
+
+Download attachment "xsa443/xsa443-4.16-11.patch" of type "application/octet-stream" (6491 bytes)
+
+Download attachment "xsa443/xsa443-4.17-01.patch" of type "application/octet-stream" (1907 bytes)
+
+Download attachment "xsa443/xsa443-4.17-02.patch" of type "application/octet-stream" (1174 bytes)
+
+Download attachment "xsa443/xsa443-4.17-03.patch" of type "application/octet-stream" (5023 bytes)
+
+Download attachment "xsa443/xsa443-4.17-04.patch" of type "application/octet-stream" (2165 bytes)
+
+Download attachment "xsa443/xsa443-4.17-05.patch" of type "application/octet-stream" (2019 bytes)
+
+Download attachment "xsa443/xsa443-4.17-06.patch" of type "application/octet-stream" (2036 bytes)
+
+Download attachment "xsa443/xsa443-4.17-07.patch" of type "application/octet-stream" (4265 bytes)
+
+Download attachment "xsa443/xsa443-4.17-08.patch" of type "application/octet-stream" (4477 bytes)
+
+Download attachment "xsa443/xsa443-4.17-09.patch" of type "application/octet-stream" (12166 bytes)
+
+Download attachment "xsa443/xsa443-4.17-10.patch" of type "application/octet-stream" (9005 bytes)
+
+Download attachment "xsa443/xsa443-4.17-11.patch" of type "application/octet-stream" (6491 bytes)
+
+Download attachment "xsa443/xsa443-04.patch" of type "application/octet-stream" (2193 bytes)
+
+Download attachment "xsa443/xsa443-05.patch" of type "application/octet-stream" (2019 bytes)
+
+Download attachment "xsa443/xsa443-06.patch" of type "application/octet-stream" (2036 bytes)
+
+Download attachment "xsa443/xsa443-07.patch" of type "application/octet-stream" (4265 bytes)
+
+Download attachment "xsa443/xsa443-08.patch" of type "application/octet-stream" (4477 bytes)
+
+Download attachment "xsa443/xsa443-09.patch" of type "application/octet-stream" (12161 bytes)
+
+Download attachment "xsa443/xsa443-10.patch" of type "application/octet-stream" (15952 bytes)
+
+Download attachment "xsa443/xsa443-11.patch" of type "application/octet-stream" (6527 bytes)
