@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["781" "Tuesday" "15" "November" "2016" "12:25:35" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhRq0gS+0H-iFUm9kr2kDGoGXa01=ZakM=FwraBdAZoSCQ@mail.gmail.com>" "31" "[oss-security] CVE-2016-8646: linux kernel - oops in shash_async_export()" nil nil nil "11" "2016111502:25:35" "[oss-security] CVE-2016-8646: linux kernel - oops in shash_async_export()" (number mark "U       wmealing@red Nov 15   31/781   " thread-indent "\"[oss-security] CVE-2016-8646: linux kernel - oops in shash_async_export()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21806 invoked by uid 550); 15 Nov 2016 02:25:48 -0000
+Received: (qmail 28476 invoked by uid 550); 10 Nov 2023 12:41:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21779 invoked from network); 15 Nov 2016 02:25:47 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ZovOOsKXxq4CFGMtCRCz/sL7sUV0Gi+UJOfK7WV6pQ0=;
-        b=OoKK6UdR1h4DUDwhke2rNebdJDlobmR3TBKtDGLCfYF5Iv/kkxQh5JYpGLkOdjwUiC
-         6C2yjqd5WLP4FAhJTEoBKJyWodBnlv70+2mUaxakDcmkw5IBRZ1LVhpVX6tuSy0Ojtpu
-         r3M/68R9rUKf7ARLVN4eqf3S7pykXC1LEUdRvgkM7qzMkO5ZsaD7vlkpoT4fsmjLDkaj
-         rjeDJIubVW6pROMraHrFqudMFJ1ZywT3ZuWXCvxxYf5Xhq5mvzVByIpVz1SfArCz3g0+
-         ZqrhRV8Ssyb/lixP4Wn11v962QD1ijwNtloyUt/jY3xAm82kfCMaeySILMZTShNlEwjB
-         3jYA==
-X-Gm-Message-State: ABUngvcIqDSkB+2Gjqnl/Z2ljSIICSW8pE50oQLmaQNt5JOCruWclG/vGKZvjisMfDl5mxYsBtJmRFffmxNaYWxk
-X-Received: by 10.107.139.74 with SMTP id n71mr31305346iod.166.1479176735684;
- Mon, 14 Nov 2016 18:25:35 -0800 (PST)
+Received: (qmail 22055 invoked from network); 10 Nov 2023 12:32:08 -0000
+Message-ID: <467f3587-9a66-41c5-9ba1-6cb2a9871d08@notcve.org>
+Date: Fri, 10 Nov 2023 13:31:56 +0100
 MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Tue, 15 Nov 2016 12:25:35 +1000
-Message-ID: <CALJHwhRq0gS+0H-iFUm9kr2kDGoGXa01=ZakM=FwraBdAZoSCQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c05be08e412e705414dabc9
-Subject: [oss-security] CVE-2016-8646: linux kernel - oops in shash_async_export()
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Mike O'Connor <mjo@dojo.mi.org>, oss-security@lists.openwall.com
+References: <c01c1617-641d-4ec2-847f-2e85ea4676f7@notcve.org>
+ <720a3438-0411-4f13-8531-7e6bcac83e77@oracle.com>
+ <B2EE9540-85EA-4866-85A4-D4A23979995A@dwheeler.com>
+ <CADxcaYWdf5tUAdLLMeBVm9pa64_LyWKZ-+GSFpx3DYyWYf3R9g@mail.gmail.com>
+ <20231108231309.GA10833@openwall.com> <ZU0aglk9Rt60nIQ-@dojo.mi.org>
+From: !CVE Team <contact@notcve.org>
+In-Reply-To: <ZU0aglk9Rt60nIQ-@dojo.mi.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] !CVE: A new platform to track security issues not
+ acknowledged by vendors
 
---94eb2c05be08e412e705414dabc9
-Content-Type: text/plain; charset=UTF-8
+Hello Mike,
 
-Gday,
+Thank you for sharing you views.
 
-Igor Redko from Virtuozzo found a vulnerability was found in the Linux
-kernel. An unprivileged local user could triger oops in
-shash_async_export() by attempting to force the in-kernel hashing
-algorithms into decrypting an empty data set.  Not all in kernel algorithms
-are affected.
-
-Upstream has already fixed this issue (See upstream patch) in 4.4rc1.
-
-Thanks,
-
-Wade Mealing
-Red Hat Product Security
+On 09/11/2023 18:44, Mike O'Connor wrote:
+> !CVE Team,
+> 
+>  From an open source perspective, the CNA(s) who might be assigning
+> CVEs might not be a "vendor".  
 
 
-Upstream discussion:
+The !CVE project is not a static project where everything is defined the 
+very first day but an evolving project where all feedback is considered 
+to move towards improving the cybersecurity community.
 
-https://lkml.org/lkml/2016/10/12/198
+We don't want to repeat what is already published in the 
+https://notcve.org site, just would like to share with you that as you 
+can read in the FAQ https://notcve.org/faq.html the !CVE is not only 
+considering "vendors" but other situations. Those are examples but we 
+plan to adapt according to the needs that arise, so in the future 
+different situations could qualify for a NotCVE.
 
-Upstream patch:
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4afa5f9617927453ac04b24b584f6c718dfb4f45
+As just one example, the GitHub CNA
+> assigns tons of CVEs for open source software using GitHub's Security
+> Advisories, but I wouldn't think of GitHub as a "vendor" for all the
+> projects they host.  How do you deal with CNAs who might be fine with
+> assigning a CVE, but tagging it as DISPUTED?  
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1388821
+This is easy, if there is a CVE assigned to an issue, no NotCVE will be 
+assigned, independently of the status/tagging. If finally a CVE is not 
+assigned then it may qualify for a NotCVE.
 
---94eb2c05be08e412e705414dabc9--
+> Perhaps they don't want
+> to build deprecated decades-old code to scope out the severity of a
+> buffer overflow some random fuzzbot found.  How would !CVE work for
+> the Linux kernel, where most security fixes have git commit hashes but
+> not CVEs?  You don't seem resourced for that.
+
+!CVE project is not looking after security issues but it is a platform 
+for unacknowledged security issues. We are processing NotCVE requests 
+following a procedure and assigning NotCVEs if they qualify, and for 
+that we don't have any resource problem.
+
+> 
+> Overall, it seems like the prbolem you're trying to solve is "I'm not
+> getting my unique tag from CVEs CNAs for my vulnerability".  Your fix
+> is "some other unique tag mechanism for vulnerabilities".  I think I
+> see where this might be going:
+> 
+> https://xkcd.com/927/
+> 
+
+At first glance it may seem like that, but if you look closer you would 
+realize that the case is different. !CVE project is tracking, 
+identifying and sharing security issues that otherwise would be randomly 
+published in blog posts, Twitter, etc, (in the best case) or just lost. 
+To obtain a NotCVE is not relevant whether someone is getting 
+difficulties to obtain a CVE for their vulnerability or not. To get a 
+NotCVE the issue must qualify. Please read the FAQ and if you find 
+something needs to be clarified or areas that overlaps, we will be happy 
+to update the project scope to clearly differentiate it from CVE.
+
+> Have you considered, I dunno, working with the CVE folks, addressing
+> what CNA rules you think may be broken?  Not all vulnerabilties are
+> created equal, and it may make sense to create more alternate systems
+> to deal with that.  But, forking off on your own should be done with
+> some due diligence.  The last thing the security community needsi are
+> even more fractured efforts, as they deal with enough fractured stuff.
+> 
+> 
+> My $0.02, FWIW...
+> -Mike
+> 
+
+This is not something new or unknown by MITRE or vendors. In some cases 
+MITRE is in favor of assigning a CVE but the vendor is against. In those 
+cases MITRE can do nothing and by experience we can tell you that at the 
+end CVE will not be assigned. Note that "the security issue" cannot be 
+even named ""vulnerability" because it is not (vendor is the only one 
+with this authority) according to MITRE rules[1]. If something is not a 
+"vulnerability" there is nothing to patch, nothing to track, etc. Since 
+those issues go unnoticed, they should be looked at even more cautiously 
+since they are probably not going to be fixed. Therefore !CVE platform 
+is far from a fork but it divulges security issues that otherwise will 
+remain hidden for most of us while recognizing the security researchers 
+effort by giving to them the deserved credit.
+
+
+Again, thank you all for raising those questions, they help us improve 
+and better share the mission of the !CVE project.
+
+
+Kind Regards,
+!CVE Team
+
+
+[1] https://cve.mitre.org/cve/cna/CNA_Rules_v3.0.pdf
