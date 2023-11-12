@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/12
-Message-ID: <043b82cc304acacf@millert.dev>
-Date: Tue, 18 Apr 2023 08:27:16 -0600
-From: "Todd C. Miller" <Todd.Miller@...o.ws>
-To: Ruihan Li <lrh2000@....edu.cn>
-cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/12/1
+Message-ID: <8ad24599-cecf-33c5-6e5c-c592a786e2cc@apache.org>
+Date: Sun, 12 Nov 2023 11:11:07 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-47037: Apache Airflow missing fix for CVE-2023-40611 in 2.7.1 (DAG run broken access) 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 18 Apr 2023 20:41:35 +0800, Ruihan Li wrote:
+Severity: low
 
-> I just noticed that sudo added the isatty check a day ago (April 17th)
-> [1]. I think this change was inspired by this vulnerability, wasn't it?
-> However, as Jakub Wilk pointed out, isatty is still implemented by an
-> ioctl call, so the addition of this check has nothing to do with this
-> vulnerability. Nevertheless, it is still a good idea to make sure isatty
-> succeeds before using ioctl calls with other (perhaps more complex and
-> arbitrary) tty commands.
->
-> [1]: https://github.com/sudo-project/sudo/commit/5650b436e6ba20807758a4154e70
-> 9c10c1c87be8 
+Affected versions:
 
-That is correct.  There are further changes to use TIOCGWINSZ on
-/dev/tty instead of stderr.  Using an open fd of /dev/tty makes the
-isatty() call superfluous but it doesn't hurt to have it.
+- Apache Airflow before 2.7.3
 
- - todd
+Description:
+
+We failed to apply CVE-2023-40611 in 2.7.1 and this vulnerability was marked as fixed then. 
+
+Apache Airflow, versions before 2.7.3, is affected by a vulnerability that allows authenticated and DAG-view authorized Users to modify some DAG run detail values when submitting notes. This could have them alter details such as configuration parameters, start date, etc. 
+
+Users should upgrade to version 2.7.3 or later which has removed the vulnerability.
+
+Credit:
+
+Tareq Ahamed from Hackerone (reporter)
+ Augusto Hidalgo (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/33413
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-47037
+
