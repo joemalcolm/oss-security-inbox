@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/6
-Message-ID: <CAADnVQKaqKJA_PPLNggzt=BY6jqsCbgpA4MM9ikkP+qY4f8zSQ@mail.gmail.com>
-Date: Wed, 8 Nov 2023 10:04:51 -0800
-From: Alexei Starovoitov <alexei.starovoitov@...il.com>
-To: Solar Designer <solar@...nwall.com>, Daniel Borkmann <daniel@...earbox.net>
-Cc: oss-security@...ts.openwall.com, Hsin-Wei Hung <hsinweih@....edu>,  Alexei Starovoitov <ast@...nel.org>
-Subject: Re: Linux: BPF: issues with copy_from_user_nofault()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/5
+Message-ID: <ZVPDUJndrHVBadOt@itl-email>
+Date: Tue, 14 Nov 2023 13:58:21 -0500
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-23583: Intel - Denial of Service - Privilege Escalation (Reptar)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 5, 2023 at 2:43 PM Solar Designer <solar@...nwall.com> wrote:
->
-> Hi,
->
-> Looks like the below wasn't brought to oss-security yet.
->
-> As I understand from what was posted to the linux-distros thread, the
-> issue was being fixed in:
->
-> https://lore.kernel.org/bpf/20230118051443.78988-1-alexei.starovoitov@gmail.com/
->
-> and actually fixed in:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?id=d319f344561d
->
-> and it should have been merged to stable "tomorrow or so" after June 27,
-> at which point Hsin-Wei Hung was supposed to finally make the
-> oss-security posting, but apparently that never happened.
->
-> Of course, the delay from January 2 to June 28 was way in excess of the
-> supposed maximum, and it is even more ridiculous we didn't post in here
-> for even longer.
->
-> This is what happens when no one in particular keeps tracking issues
-> after they fall out of the attention span.  This is also why we need to
-> take care of the distros list statistics task in real time, not only
-> retroactively like I'm doing for 2023 now.
+On Tue, Nov 14, 2023 at 10:31:51AM -0800, Antonio Gomez Iglesias wrote:
+> Name of the issue: Redundant Prefix Issue
+> 
+> 
+> Description of the issue
+> Under certain microarchitectural conditions, Intel has identified cases
+> where execution of an instruction (REP MOVSB) encoded with a redundant
+> REX prefix may result in unpredictable system behavior resulting in a
+> system crash/hang, or, in some limited scenarios, may allow escalation
+> of privilege from CPL3 to CPL0.
+> This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
+> Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
+> 
+> 
+> Mitigation
+> Intel is providing a microcode update to mitigate this issue: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20231114
 
-As I tried to explain, the fix addresses two things:
-- the WARN. By itself it's harmless and the severity is low.
-- lockup with CONFIG_HARDENED_USERCOPY from bpf. That is a real bug
-and backports are necessary.
+Does this also allow privilege escalation from a VM guest to the host?
+What are the limited scenarios?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-But the 2nd part of the fix:
-https://lore.kernel.org/bpf/20230118051443.78988-2-alexei.starovoitov@gmail.com/
-
-was never merged.
-Essentially perf (without any bpf) is broken on arm64 and others.
-arch_perf_out_copy_user() might deadlock with CONFIG_HARDENED_USERCOPY.
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
