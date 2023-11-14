@@ -1,95 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/19/4
-Message-ID: <ZLfKifcpS49KPOWy@openssl.org>
-Date: Wed, 19 Jul 2023 11:35:37 +0000
-From: Tomas Mraz <tomas@...nssl.org>
-To: oss-security@...ts.openwall.com
-Subject: OpenSSL Security Advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/9
+Message-ID: <3b58a85a-ecda-4d22-8794-f81db4d2c6aa@intel.com>
+Date: Tue, 14 Nov 2023 11:24:30 -0800
+From: Antonio Gomez Iglesias <antonio.gomez.iglesias@...el.com>
+To: HW42 <hw42@...umj.de>, <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
+CC: Tavis Ormandy <taviso@...il.com>
+Subject: Re: CVE-2023-23583: Intel - Denial of Service - Privilege Escalation (Reptar)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 11/14/23 11:19 AM, HW42 wrote:
+> Solar Designer:
+>> On Tue, Nov 14, 2023 at 10:31:51AM -0800, Antonio Gomez Iglesias wrote:
+>>> Name of the issue: Redundant Prefix Issue
+>>>
+>>> Description of the issue
+>>> Under certain microarchitectural conditions, Intel has identified cases
+>>> where execution of an instruction (REP MOVSB) encoded with a redundant
+>>> REX prefix may result in unpredictable system behavior resulting in a
+>>> system crash/hang, or, in some limited scenarios, may allow escalation
+>>> of privilege from CPL3 to CPL0.
+>>> This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
+>>> Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
+>>>
+>>> Mitigation
+>>> Intel is providing a microcode update to mitigate this issue: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20231114
+>> Thank you, Antonio!
+>>
+>> Here's a writeup and reproducer tool by Tavis Ormandy:
+>>
+>> https://lock.cmpxchg8b.com/reptar.html
+>>
+>> The GitHub release page above links to Intel security advisory:
+>>
+>> https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00950.html
+>>
+>> which specifies what CPU generations are affected (from 10th generation
+>> Intel Core or 3rd generation Xeon Scalable to current), and links to a
+>> table with "an exhaustive list of processors" matched against this issue
+>> and previously disclosed issues:
+>>
+>> https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
+>>
+>> It also says "Please refer to the technical paper here for additional
+>> information", where "here" is a link supposedly to "the technical
+>> paper", but it's a non-existent page currently, so I'm not posting the
+>> URL yet (not sure if it'll stay the same when the page is published).
+> I think that link should point to 
+>
+> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/redundant-prefix-issue.html
+>
+> This one can be found in the affected processors table.
+The SA
+https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00950.html
+should now link to the correct page. Thanks for the feedback!
 
-OpenSSL Security Advisory [19th July 2023]
-==========================================
 
-Excessive time spent checking DH keys and parameters (CVE-2023-3446)
-====================================================================
-
-Severity: Low
-
-Issue summary: Checking excessively long DH keys or parameters may be very slow.
-
-Impact summary: Applications that use the functions DH_check(), DH_check_ex()
-or EVP_PKEY_param_check() to check a DH key or DH parameters may experience long
-delays. Where the key or parameters that are being checked have been obtained
-from an untrusted source this may lead to a Denial of Service.
-
-The function DH_check() performs various checks on DH parameters. One of those
-checks confirms that the modulus ("p" parameter) is not too large. Trying to use
-a very large modulus is slow and OpenSSL will not normally use a modulus which
-is over 10,000 bits in length.
-
-However the DH_check() function checks numerous aspects of the key or parameters
-that have been supplied. Some of those checks use the supplied modulus value
-even if it has already been found to be too large.
-
-An application that calls DH_check() and supplies a key or parameters obtained
-from an untrusted source could be vulernable to a Denial of Service attack.
-
-The function DH_check() is itself called by a number of other OpenSSL functions.
-An application calling any of those other functions may similarly be affected.
-The other functions affected by this are DH_check_ex() and
-EVP_PKEY_param_check().
-
-Also vulnerable are the OpenSSL dhparam and pkeyparam command line applications
-when using the "-check" option.
-
-The OpenSSL SSL/TLS implementation is not affected by this issue.
-
-The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
-
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit fc9867c1 (for 3.1),
-commit 1fa20cf2 (for 3.0) and commit 8780a896 (for 1.1.1) in the OpenSSL git
-repository. It is available to premium support customer in commit 9a0a4d3c (for
-1.0.2).
-
-OSSfuzz first detected and automatically reported this issue on 25th June
-2023 using a fuzzer recently added to OpenSSL written by Kurt Roeckx. The fix
-was developed by Matt Caswell.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230714.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
-
-iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmS3yhISHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55tn1MP/3rGGOFg5XqhMW5hjzdH/u7wbZSQIBGr
-PwGCCYm8McrgHsmqvE5efo5QIxjNj09xS/6+h+WsWeXkAvuL37idzQ5FC8oAlop2
-XvjI0bJfCNQA8NcEFecWROHv9G7XEX7g+yV/yBUkT1CnuzqNjdnNeqBCIYafTE/x
-X4mZKaj/dJZTB/c8XI5foGZ9RklsO3QqrPt2DGhusP/u57ayghWLqv/7EyogDyeS
-2FfB1yYsM0pmO7TjzrSlVhwPqAmsNGwOYVH8ggHGr9pRIbRQhrfKKVqn+o/5JLeR
-XXIXQGTiXhs0eDcO3N+kgWf0PXpuA5x03EZlrGOJoJLf0Gw6Mds8mjMD8s1RWJbD
-pogwwfGEavedW5WUH1f1W1cpoHqmSNwGrFIJJfZ0t1X4/z8/U6CipF6bCCjfEiFS
-ROzOkj44O8rXNwU4+ACxBx/E+PLpP0zhn9uJNTzBfMTonFNyWxuFwpVv3EIHrrq+
-YB/ccvbWXapejxIRHhrI41eA7tflZAPBNw8CwBfBRfQbJ+BOveKjGhaGfe3JUDiO
-Ry97AGuRGlSCkhUrW9Iy5qrNTnT6AFbdUDpip77UUQDn1eYusW5YtHsLiJpouFq+
-MPMn0B7mJypHjvDm4QeaUuJMaYHvcJtpRN684MXfBkcMsAldeYuwO0dl3E3HB5Dr
-uP4KAxS6q91M
-=sghT
------END PGP SIGNATURE-----
