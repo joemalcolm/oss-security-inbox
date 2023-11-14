@@ -1,43 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/22/5
-Message-ID: <27c254dd-41da-7326-f49f-5eb6aeeac5ae@eenterphace.org>
-Date: Tue, 22 Aug 2023 23:21:47 +0200
-From: Moritz Bechler <mbechler@...terphace.org>
-To: oss-security@...ts.openwall.com, Simon Steiner <simonsteiner1984@...il.com>, fibr3s@...il.com
-Cc: security@...che.org
-Subject: Re: [CVE-2022-44730] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/4
+Message-ID: <ae728a21-91d5-463d-9f54-44186a01253d@intel.com>
+Date: Tue, 14 Nov 2023 10:31:51 -0800
+From: Antonio Gomez Iglesias <antonio.gomez.iglesias@...el.com>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE-2023-23583: Intel - Denial of Service - Privilege Escalation (Reptar)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-> CVE-2022-44730:
->          Apache Batik information disclosure vulnerability
-> 
-> Severity:
->          Medium
-> 
-> Vendor:
->          The Apache Software Foundation
-> 
-> Versions Affected:
->          Batik 1.0 - 1.16
-> 
-> Description:
->          Switch to empty whitelist for rhino
-
-And here the liked bug does not reference the appropriate commit, but 
-one in which the whitelist wasn't actually empty 
-(<https://svn.apache.org/viewvc?view=revision&revision=1905011> would be 
-the more recent update). Putting java.lang.System on that list would 
-have been a pretty bad choice, so, good that that did not make it into 
-the release.
+Name of the issue: Redundant Prefix Issue
 
 
-  I have the feeling that maybe Apache has a mail template that has 
-"information disclosure vulnerability" in the subject as an example, as 
-I have noticed in other cases that the subjects indicate information 
-disclosure when the issue really is something else.
+Description of the issue
+Under certain microarchitectural conditions, Intel has identified cases
+where execution of an instruction (REP MOVSB) encoded with a redundant
+REX prefix may result in unpredictable system behavior resulting in a
+system crash/hang, or, in some limited scenarios, may allow escalation
+of privilege from CPL3 to CPL0.
+This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
+Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
 
 
-Moritz
+Mitigation
+Intel is providing a microcode update to mitigate this issue: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20231114
 
