@@ -1,63 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/9
-Message-ID: <CADxcaYWdf5tUAdLLMeBVm9pa64_LyWKZ-+GSFpx3DYyWYf3R9g@mail.gmail.com>
-Date: Wed, 8 Nov 2023 12:46:13 -0800
-From: Jean Luc Picard <atari2600a@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: !CVE: A new platform to track security issues not acknowledged by vendors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/6
+Message-ID: <20231114190713.GA11191@openwall.com>
+Date: Tue, 14 Nov 2023 20:07:13 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Antonio Gomez Iglesias <antonio.gomez.iglesias@...el.com>
+Cc: oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...il.com>
+Subject: Re: CVE-2023-23583: Intel - Denial of Service - Privilege Escalation (Reptar)
 Content-Type: text/plain; charset=utf-8
 
-I have a number of natsec-ey google reports that went nowhere didnt't get
-credit or a dime out of it.  Most are nullified by the current state of
-affairs struck by xAI (ie how to cook crack) but others I still feel should
-be looked at by the greater community.  Is this the apprapriate aggregate
-platform now?
+On Tue, Nov 14, 2023 at 10:31:51AM -0800, Antonio Gomez Iglesias wrote:
+> Name of the issue: Redundant Prefix Issue
+> 
+> Description of the issue
+> Under certain microarchitectural conditions, Intel has identified cases
+> where execution of an instruction (REP MOVSB) encoded with a redundant
+> REX prefix may result in unpredictable system behavior resulting in a
+> system crash/hang, or, in some limited scenarios, may allow escalation
+> of privilege from CPL3 to CPL0.
+> This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
+> Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
+> 
+> Mitigation
+> Intel is providing a microcode update to mitigate this issue: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20231114
 
-On Wed, Nov 8, 2023, 12:35 David A. Wheeler <dwheeler@...eeler.com> wrote:
+Thank you, Antonio!
 
->
-> > On Nov 8, 2023, at 12:52 PM, Vegard Nossum <vegard.nossum@...cle.com>
-> wrote:
-> >
-> > I am not a lawyer, but I'd assume you would run into some issues with
-> > the naming of all this -- wasn't that the exact issue that somebody else
-> > ran into when they tried to assign identifiers to bugs that MITRE
-> > wouldn't acknowledge? Here's what they said back then:
-> >
-> > <
-> https://cve.mitre.org/news/archives/2021/news.html#April022021_Message_to_DWF_from_the_CVE_Board
-> >
-> >
-> > I somehow doubt the presence of the ! makes much of a difference.
->
-> The problem in that case wasn't that someone else used "XYZ-" format ID.
-> Bugtraq did that before,
-> and many others do it today. The problem was that the group labeled some
-> non-CVEs as "CVE-...", which
-> is confusing and probably violates trademarks.
->
-> The "!CVE" group isn't using "CVE", they're using "!CVE". The question is,
-> is that distinct enough, or will typical users be confused by it?
-> I don't know the answer to that. However, I do worry that perhaps
-> "!CVE" is not distinct enough.
->
-> I would *strongly* recommend that this group use "NotCVE" or "NCVE"
-> instead of "!CVE".
-> That would be more clearly distinct, and they already call themselves that.
-> I'll also note that searching for "!CVE" and storing that prefix will also
-> cause some problems.
->
-> This gets into trademark law. I'm not a lawyer. However, I do talk to them
-> :-). Trademark law doesn't
-> prevent you from *doing* an action, it just prevents certain kinds of
-> confusing *names* because
-> it's helpful when names mean things. As long as the name/image/whatever is
-> clearly distinct
-> there's no problem. So where possible, please use clearly distinct names
-> for distinct things.
-> I think that's a good practice even when it's *not* legally required.
->
-> --- David A. Wheeler
->
->
+Here's a writeup and reproducer tool by Tavis Ormandy:
 
+https://lock.cmpxchg8b.com/reptar.html
+
+The GitHub release page above links to Intel security advisory:
+
+https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00950.html
+
+which specifies what CPU generations are affected (from 10th generation
+Intel Core or 3rd generation Xeon Scalable to current), and links to a
+table with "an exhaustive list of processors" matched against this issue
+and previously disclosed issues:
+
+https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
+
+It also says "Please refer to the technical paper here for additional
+information", where "here" is a link supposedly to "the technical
+paper", but it's a non-existent page currently, so I'm not posting the
+URL yet (not sure if it'll stay the same when the page is published).
+
+Meanwhile, Tavis' writeup is great!
+
+Alexander
