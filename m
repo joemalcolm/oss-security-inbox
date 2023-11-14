@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/1
-Message-ID: <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
-Date: Fri, 20 Oct 2023 02:10:06 +0300
-From: Turistu <turistu@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/7
+Message-ID: <7a2b4406-6f0e-4e4f-be43-a0ec27404063@ipsumj.de>
+Date: Tue, 14 Nov 2023 20:19:05 +0100
+From: HW42 <hw42@...umj.de>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Antonio Gomez Iglesias <antonio.gomez.iglesias@...el.com>
+Cc: Tavis Ormandy <taviso@...il.com>
+Subject: Re: CVE-2023-23583: Intel - Denial of Service - Privilege Escalation (Reptar)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
-> In firefox running on X11, any script from any page can freely write to the
-> primary selection, and that can be easily exploited to run arbitrary code
-> on the user's machine.
+Solar Designer:
+> On Tue, Nov 14, 2023 at 10:31:51AM -0800, Antonio Gomez Iglesias wrote:
+>> Name of the issue: Redundant Prefix Issue
+>>
+>> Description of the issue
+>> Under certain microarchitectural conditions, Intel has identified cases
+>> where execution of an instruction (REP MOVSB) encoded with a redundant
+>> REX prefix may result in unpredictable system behavior resulting in a
+>> system crash/hang, or, in some limited scenarios, may allow escalation
+>> of privilege from CPL3 to CPL0.
+>> This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
+>> Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
+>>
+>> Mitigation
+>> Intel is providing a microcode update to mitigate this issue: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20231114
+> 
+> Thank you, Antonio!
+> 
+> Here's a writeup and reproducer tool by Tavis Ormandy:
+> 
+> https://lock.cmpxchg8b.com/reptar.html
+> 
+> The GitHub release page above links to Intel security advisory:
+> 
+> https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00950.html
+> 
+> which specifies what CPU generations are affected (from 10th generation
+> Intel Core or 3rd generation Xeon Scalable to current), and links to a
+> table with "an exhaustive list of processors" matched against this issue
+> and previously disclosed issues:
+> 
+> https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
+> 
+> It also says "Please refer to the technical paper here for additional
+> information", where "here" is a link supposedly to "the technical
+> paper", but it's a non-existent page currently, so I'm not posting the
+> URL yet (not sure if it'll stay the same when the page is published).
 
-OK this was probably too technical and terse for people not familiar
-with X11 programming and terminology, so thing goes like this:
+I think that link should point to 
 
-1. If you're a user who has first learned to use a GUI on e.g. Windows,
-and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
-choose Copy from the menu, and then again left-click, choose Paste),
-then congratulations! this DOES NOT AFFECT YOU.
+https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/redundant-prefix-issue.html
 
-(Unless you're using some clipboard tools which merges the primary and
-clipboard selection, but I guess you don't ;-))
+This one can be found in the affected processors table.
 
-2. But if you're a *native* X11 user who is used to just select the text and
-then paste it with a middle-click or shift-Insert, then this means you're
-pretty much done, and you should immediately either stop using firefox or
-try the workaround and patch described in my report. This also includes
-Wayland users.
+Simon
 
-I have no idea (nor do I really care) how many of us are in 2. According
-to their telemetry, probably none at all. According to their prejudices,
-probably just a couple of insignificant trolls.
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
