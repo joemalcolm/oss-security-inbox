@@ -1,69 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/30/2
-Message-ID: <20231230162600.GA14382@openwall.com>
-Date: Sat, 30 Dec 2023 17:26:00 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Simon Josefsson <simon@...efsson.org>, Jeffrey Bencteux <jeffbencteux@...il.com>
-Subject: inetutils ftpd, rcp, rlogin, rsh, rshd, uucpd: Avoid potential privilege escalations by checking set*id() return values
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/14/2
+Message-Id: <E1r2tyQ-0002ID-NV@xenbits.xenproject.org>
+Date: Tue, 14 Nov 2023 14:01:02 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 446 v2 (CVE-2023-46836) - x86: BTC/SRSO fixes not fully effective
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Simon Josefsson has released inetutils 2.5 (a thankless job to take over
-maintenance of legacy code like that):
+            Xen Security Advisory CVE-2023-46836 / XSA-446
+                               version 2
 
-https://www.mail-archive.com/info-gnu@gnu.org/msg03239.html
+                x86: BTC/SRSO fixes not fully effective
 
-> This is to announce inetutils-2.5, a stable release.
-> 
-> GNU Networking Utilities (inetutils) contain traditional networking
-> utilities, clients and servers, including ftp, telnet, inetd,
-> rsh/rlogin, tftp, talk, syslogd, ping, traceroute, whois, hostname,
-> dnsdomainname, ifconfig, and logger.
+UPDATES IN VERSION 2
+====================
 
-> * Noteworthy changes in release 2.5 (2023-12-29) [stable]
-> 
-> ** ftpd, rcp, rlogin, rsh, rshd, uucpd
-> 
-> *** Avoid potential privilege escalations by checking set*id() return values.
-> Reported by Jeffrey Bencteux in
-> <https://lists.gnu.org/archive/html/bug-inetutils/2023-07/msg00000.html>.
+Grammar fixes.
 
-At the latter URL, there's a thread started by Jeffrey, which includes
-revisions of a then-proposed patch.  My skimming of the latest patch in
-there shows it still misses return value checks of initgroups() calls,
-and additionally those are within "#ifdef HAVE_INITGROUPS", which means
-they might not always be compiled in.  That's in rshd and uucpd.  ftpd's
-patch context does not mention supplementary groups at all, so maybe
-ftpd misses setting/clearing them entirely.  If so, that's even worse.
+Public release.
 
-Distros generally get this kind of programs from other packages if at
-all, which is a reason why the versions in inetutils haven't received
-much scrutiny.  As an exception, notably Debian (and Ubuntu) does
-package inetutils (and has already updated to 2.5 in unstable), but
-doesn't install it by default and has some programs excluded.  It looks
-like out of the affected ones above, only ftpd is included.
+ISSUE DESCRIPTION
+=================
 
-https://tracker.debian.org/pkg/inetutils
+The fixes for XSA-422 (Branch Type Confusion) and XSA-434 (Speculative
+Return Stack Overflow) are not IRQ-safe.  It was believed that the
+mitigations always operated in contexts with IRQs disabled.
 
-Jeffrey's initial message also says:
+However, the original XSA-254 fix for Meltdown (XPTI) deliberately left
+interrupts enabled on two entry paths; one unconditionally, and one
+conditionally on whether XPTI was active.
 
-> There are cases where set*id() functions can fail, for example multiple
-> calls to the clone() function can cause setuid() to fail when the user
-> process limit is reached.
+As BTC/SRSO and Meltdown affect different CPU vendors, the mitigations
+are not active together by default.  Therefore, there is a race
+condition whereby a malicious PV guest can bypass BTC/SRSO protections
+and launch a BTC/SRSO attack against Xen.
 
-Linux kernel hardening patches have been mitigating this for some years,
-and a mitigation (postponing RLIMIT_NPROC enforcement to execve(2) time,
-if ever) got into upstream Linux, as I recall after this thread in 2011:
+IMPACT
+======
 
-https://www.openwall.com/lists/kernel-hardening/2011/06/12/9
+An attacker in a PV guest might be able to infer the contents of memory
+belonging to other guests.
 
-I hope on current Linux this dangerous failure mode is not triggerable,
-but indeed programs must not rely on that, and I think inetutils isn't
-Linux-only.
+VULNERABLE SYSTEMS
+==================
 
-Also, initgroups() may still fail, and omitting it or setgroups() will
-leave supplementary groups potentially inherited by a service intact.
+All versions of Xen are vulnerable.
 
-Alexander
+Xen is only vulnerable in default configurations on AMD and Hygon CPUs.
+
+Xen is not believed to be vulnerable in default configurations on CPUs
+from other hardware vendors.
+
+Only PV guests can leverage the vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM or PVH VMs will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of XenServer.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa446.patch           xen-unstable - Xen 4.15.x
+
+$ sha256sum xsa446*
+ed27ad5f36af31233e25c80daefb8b0078eeb18cacbc1923fdd6f10f0b394201  xsa446.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmVTfRgMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZfLoH/iZJzkNK4d6vUrx8F5Srm8mAIDMGL4fPvJz00IsO
+7h7+/wz0+FdnaWgT/12kHjIJv7p38rNkyJ3UC3p55NFFGUXKQxaKjJ6YU70IdHmY
+zbQDdYd2eB9dGbAq2NEkZibtg5mhhThBsQw9Sf+YZuSzOV5xRWiEhnBGz7l4+Dym
+bM7vuusZo3/iUc0WgE+p+j85QmzgTFdt7VEUYY2mSTFud+hDYtvx62Ej3AkwCRdu
+I0JbGYcRaDR9RPDae2d9yvz0+E473rFgOSX6DqZLjnQ+UQivZ7eo8soJD87qY4Jh
+OrEDMQWysSNiT90NYWZ+HxsRRZVjPVPoxX6EWEkwC7+CffI=
+=2Xtx
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa446.patch" of type "application/octet-stream" (4424 bytes)
