@@ -1,38 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/8
-Message-ID: <3701072d-3473-d682-a769-43a8c65deaf3@apache.org>
-Date: Tue, 11 Jul 2023 15:49:33 +0000
-From: Dave Fisher <wave@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-30429: Apache Pulsar: Incorrect Authorization for Function Worker when using mTLS Authentication through Pulsar Proxy 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/15/1
+Message-ID: <0c888152-705e-e0cf-9184-82e6ba7d1c6a@igalia.com>
+Date: Wed, 15 Nov 2023 21:31:10 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0010
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0010
+------------------------------------------------------------------------
 
-- Apache Pulsar before 2.10.4
-- Apache Pulsar 2.11.0
+Date reported           : November 15, 2023
+Advisory ID             : WSA-2023-0010
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0010.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0010.html
+CVE identifiers         : CVE-2022-32919, CVE-2022-32933,
+                          CVE-2022-46705, CVE-2022-46725,
+                          CVE-2023-32359, CVE-2023-41983,
+                          CVE-2023-42852.
 
-Description:
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Incorrect Authorization vulnerability in Apache Software Foundation Apache Pulsar.
+CVE-2022-32919
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
+    Credit to @real_as3617.
+    Impact: Visiting a website that frames malicious content may lead to
+    UI spoofing. Description: The issue was addressed with improved UI
+    handling.
+    WebKit Bugzilla: 247461
 
-This issue affects Apache Pulsar: before 2.10.4, and 2.11.0.
+CVE-2022-32933
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
+    Credit to Binoy Chitale, MS student, Stony Brook University, Nick
+    Nikiforakis, Associate Professor, Stony Brook University, Jason
+    Polakis, Associate Professor, University of Illinois at Chicago, Mir
+    Masood Ali, PhD student, University of Illinois at Chicago, Chris
+    Kanich, Associate Professor, University of Illinois at Chicago, and
+    Mohammad Ghasemisharif, PhD Candidate, University of Illinois at
+    Chicago.
+    Impact: A website may be able to track the websites a user visited
+    in private browsing mode. Description: An information disclosure
+    issue was addressed by removing the vulnerable code.
+    WebKit Bugzilla: 239547
 
-When a client connects to the Pulsar Function Worker via the Pulsar Proxy where the Pulsar Proxy uses mTLS authentication to authenticate with the Pulsar Function Worker, the Pulsar Function Worker incorrectly performs authorization by using the Proxy's role for authorization instead of the client's role, which can lead to privilege escalation, especially if the proxy is configured with a superuser role.
+CVE-2022-46705
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
+    Credit to Hyeon Park (@tree_segment) of Team ApplePIE.
+    Impact: Visiting a malicious website may lead to address bar
+    spoofing. Description: A spoofing issue existed in the handling of
+    URLs. This issue was addressed with improved input validation.
+    WebKit Bugzilla: 247287
 
-The recommended mitigation for impacted users is to upgrade the Pulsar Function Worker to a patched version.
+CVE-2022-46725
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
+    Credit to Hyeon Park (@tree_segment) of Team ApplePIE.
+    Impact: Visiting a malicious website may lead to address bar
+    spoofing. Description: A spoofing issue existed in the handling of
+    URLs. This issue was addressed with improved input validation.
+    WebKit Bugzilla: 247289
 
-2.10 Pulsar Function Worker users should upgrade to at least 2.10.4.
-2.11 Pulsar Function Worker users should upgrade to at least 2.11.1.
-3.0 Pulsar Function Worker users are unaffected.
-Any users running the Pulsar Function Worker for 2.9.* and earlier should upgrade to one of the above patched versions.
+CVE-2023-32359
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
+    Credit to Claire Houston.
+    Impact: A user's password may be read aloud by a text-to-speech
+    accessibility feature. Description: This issue was addressed with
+    improved redaction of sensitive information.
+    WebKit Bugzilla: 248717
 
-Credit:
+CVE-2023-41983
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.2.
+    Credit to 이준성(Junsung Lee).
+    Impact: Processing web content may lead to a denial-of-service.
+    Description: The issue was addressed with improved memory handling.
+    WebKit Bugzilla: 260757
 
-Michael Marshall of DataStax (finder)
+CVE-2023-42852
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.2.
+    Credit to an anonymous researcher.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: A logic issue was addressed with improved checks.
+    WebKit Bugzilla: 260173
 
-References:
 
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-30429
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+November 15, 2023
