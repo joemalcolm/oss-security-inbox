@@ -1,4 +1,4 @@
-Received: (qmail 28295 invoked by uid 550); 19 May 2026 15:32:06 -0000
+Received: (qmail 19740 invoked by uid 550); 16 Nov 2023 22:17:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,240 +7,170 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17790 invoked from network); 19 May 2026 14:10:39 -0000
-From: SBA Research Security Advisory <advisory@sba-research.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [SBA-ADV-20260126-04] CVE-2026-42539: DFIR-IRIS before 2.4.28
- Excessive Data Exposure
-Thread-Index: AdznmQ5GBoNBFk2cTB6mweYrT0P3Ag==
-Date: Tue, 19 May 2026 14:10:29 +0000
-Message-ID: <ae5371431cc84d1ea7b830d179ef4cfa@sba-research.org>
-Accept-Language: de-AT, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Received: (qmail 19699 invoked from network); 16 Nov 2023 22:17:25 -0000
+Date: Thu, 16 Nov 2023 23:17:11 +0100
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZVaU5z45gNgRiY1s@256bit.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=sba-research.org; s=_dkimgw1; c=relaxed/relaxed;
- h=from:to:subject:date:message-id:content-type:mime-version;
- bh=Lz5+2CpKWUbIBjDnhYP65B9PzP0+Sk+lMcjOegKj/nE=;
- b=JGGPl0SBD+KCKRw2TxSI0YQjN5vz59orjtOouNyQrWfrKTR+PP+jjny4QsywnUY7b+8ughJv0CoK
-	7oejao3D8msx7UtLz9jFuFgTGy+ZSMu1XopYHmIGMhZCThTGnI0Vf/WFNX39ObrBO/q4qwnw5nAx
-	Fi20MVov2vjg0EWTaQD2HthxOG5/ywdeqOXfjcO3RNhO9vGEkFqXX3aOEySUx/1uAGqgxs92cRP1
-	Sl5Uj0/FqiZpD+rAFaznQQvzhaiPY0MJPLhQDZCL4bg+wTjnWBhVV2tjSXzLJkoqzm7BgeOOMwcJ
-	IQlngk8d3AMEqOb2ESVXavV5dUSHEeK58BJ5fw==
-Subject: [oss-security] [SBA-ADV-20260126-04] CVE-2026-42539: DFIR-IRIS before 2.4.28
- Excessive Data Exposure
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] several minor security issues in Vim
+ v9.0.2106-v9.0.2112
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hBMjU2DQoNCiMgREZJ
-Ui1JUklTIEV4Y2Vzc2l2ZSBEYXRhIEV4cG9zdXJlICMNCg0KTGluazogaHR0cHM6Ly9naXRodWIu
-Y29tL3NiYXJlc2VhcmNoL2Fkdmlzb3JpZXMvdHJlZS9wdWJsaWMvMjAyNi9TQkEtQURWLTIwMjYw
-MTI2LTA0X0RGSVItSVJJU19FeGNlc3NpdmVfRGF0YV9FeHBvc3VyZQ0KDQojIyBWdWxuZXJhYmls
-aXR5IE92ZXJ2aWV3ICMjDQoNClRoZSBJUklTIHdlYiBhcHBsaWNhdGlvbiByZXR1cm5zIHNlbnNp
-dGl2ZSBkYXRhIHRvIHRoZSB1c2VyIHdoaWNoIGFyZSBub3QNCnJlcXVpcmVkIGZvciB0aGUgY2xp
-ZW504oCZcyBvcGVyYXRpb24uDQoNCiogKipJZGVudGlmaWVyKiogICAgICAgICAgICA6IFNCQS1B
-RFYtMjAyNjAxMjYtMDQNCiogKipUeXBlIG9mIFZ1bG5lcmFiaWxpdHkqKiA6IEV4Y2Vzc2l2ZSBE
-YXRhIEV4cG9zdXJlDQoqICoqU29mdHdhcmUvUHJvZHVjdCBOYW1lKiogOiBbSVJJU10oaHR0cHM6
-Ly93d3cuZGZpci1pcmlzLm9yZy8pDQoqICoqVmVuZG9yKiogICAgICAgICAgICAgICAgOiBbREZJ
-Ui1JUklTXShodHRwczovL2dpdGh1Yi5jb20vZGZpci1pcmlzKQ0KKiAqKkFmZmVjdGVkIFZlcnNp
-b25zKiogICAgIDogPD0gMi40LjI3DQoqICoqRml4ZWQgaW4gVmVyc2lvbioqICAgICAgOiB2Mi40
-LjI4DQoqICoqQ1ZFIElEKiogICAgICAgICAgICAgICAgOiBDVkUtMjAyNi00MjUzOQ0KKiAqKkNW
-U1MgVmVjdG9yKiogICAgICAgICAgIDogQ1ZTUzozLjEvQVY6Ti9BQzpML1BSOkwvVUk6Ti9TOlUv
-QzpIL0k6Ti9BOk4NCiogKipDVlNTIEJhc2UgU2NvcmUqKiAgICAgICA6IDYuNSAoTWVkaXVtKQ0K
-DQojIyBWZW5kb3IgRGVzY3JpcHRpb24gIyMNCg0KPiBJUklTIGlzIGEgY29sbGFib3JhdGl2ZSBk
-aWdpdGFsIHBsYXRmb3JtIGRlc2lnbmVkIGZvciBpbmNpZGVudCByZXNwb25zZQ0KPiBhbmFseXN0
-cyB0byBzaGFyZSBjb21wbGV4IGludmVzdGlnYXRpb25zIGF0IGEgdGVjaG5pY2FsIGxldmVsLiBJ
-dCBjYW4gYmUNCj4gaW5zdGFsbGVkIG9uIGEgZGVkaWNhdGVkIHNlcnZlciBvciBhcyBhIHBvcnRh
-YmxlIGFwcGxpY2F0aW9uIGZvciByb2FtaW5nDQo+IGludmVzdGlnYXRpb25zIHdoZXJlIGludGVy
-bmV0IGFjY2VzcyBtaWdodCBub3QgYmUgYXZhaWxhYmxlLg0KDQpTb3VyY2U6IDxodHRwczovL2Rv
-Y3MuZGZpci1pcmlzLm9yZy8yLjQuMjQvPg0KDQojIyBJbXBhY3QgIyMNCg0KVGhlIGZvbGxvd2lu
-ZyBkYXRhIHBvaW50cyBhcmUgcmV0dXJuZWQgYnkgdGhlIGFwcGxpY2F0aW9uIHdpdGhvdXQgbmVj
-ZXNzaXR5Og0KDQoqIFBhc3N3b3JkIGhhc2hlcw0KKiAqTXVsdGktRmFjdG9yIEF1dGhlbnRpY2F0
-aW9uIChNRkEpKiBzZWNyZXRzDQoqIExvY2FsIHN0b3JhZ2UgcGF0aHMgb24gdGhlIHNlcnZlcg0K
-DQojIyBWdWxuZXJhYmlsaXR5IERlc2NyaXB0aW9uICMjDQoNCldoZW4gYWNjZXNzaW5nIGNlcnRh
-aW4gb2JqZWN0cyBmcm9tIHRoZSBBUEksIHRoZSByZXNwb25zZSBjb250YWlucyBtb3JlDQpmaWVs
-ZHMgdGhhbiBuZWNlc3NhcnkgZm9yIHRoZSBhcHBsaWNhdGlvbi4gQW1vbmcgdGhlc2UgYWRkaXRp
-b25hbCBmaWVsZHMsDQp0aGVyZSBhcmUgc2Vuc2l0aXZlIG9uZXMgdGhhdCBtaWdodCBiZSBtaXN1
-c2VkIGJ5IGFuIGF0dGFja2VyLiBUaGlzIG1pZ2h0DQpzZXZlcmVseSBpbmNyZWFzZSB0aGUgaW1w
-YWN0IG9mIG90aGVyIHZ1bG5lcmFiaWxpdGllcywgc3VjaCBhcyBhY2Nlc3MgY29udHJvbA0KaXNz
-dWVzLg0KDQojIyBQcm9vZiBvZiBDb25jZXB0ICMjDQoNCiMjIyBVc2VyIERldGFpbHMgIyMjDQoN
-CklmIGFuIGFkbWluaXN0cmF0b3IgdXBkYXRlcyBpbmZvcm1hdGlvbiBhYm91dCBhbiBhY2NvdW50
-LCBzZXZlcmFsIHNlbnNpdGl2ZQ0KZGF0YSB3aGljaCBpcyBub3QgcmVxdWlyZWQgZm9yIHRoZSBh
-cHBsaWNhdGlvbuKAmXMgb3BlcmF0aW9ucyBhcmUgcmV0dXJuZWQgYnkNCnRoZSBzZXJ2ZXI6DQoN
-CiogVGhlIGhhc2ggb2YgdGhlIHVzZXLigJlzIHBhc3N3b3JkDQoqIFRoZSAqTXVsdGktRmFjdG9y
-IEF1dGhlbnRpY2F0aW9uIChNRkEpKiBzZWNyZXQgY29uZmlndXJlZCBmb3IgdGhlIHVzZXINCg0K
-YGBgaHR0cA0KUE9TVCAvbWFuYWdlL3VzZXJzL3VwZGF0ZS8yP2NpZD0xIEhUVFAvMS4xDQpIb3N0
-OiBteWlyaXMubG9jYWwNCkNvb2tpZTogc2Vzc2lvbj0uZUp3dFsuLi5dDQpVc2VyLUFnZW50OiBN
-b3ppbGxhLzUuMCAoWDExOyBMaW51eCB4ODZfNjQ7IHJ2OjE0MC4wKSBHZWNrby8yMDEwMDEwMSBG
-aXJlZm94LzE0MC4wDQpBY2NlcHQ6IGFwcGxpY2F0aW9uL2pzb24sIHRleHQvamF2YXNjcmlwdCwg
-Ki8qOyBxPTAuMDENCkFjY2VwdC1MYW5ndWFnZTogZW4tVVMsZW47cT0wLjUNCkFjY2VwdC1FbmNv
-ZGluZzogZ3ppcCwgZGVmbGF0ZSwgYnINCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbjtj
-aGFyc2V0PVVURi04DQpYLVJlcXVlc3RlZC1XaXRoOiBYTUxIdHRwUmVxdWVzdA0KQ29udGVudC1M
-ZW5ndGg6IDIzMw0KT3JpZ2luOiBodHRwczovL215aXJpcy5sb2NhbA0KUmVmZXJlcjogaHR0cHM6
-Ly9teWlyaXMubG9jYWwvbWFuYWdlL2FjY2Vzcy1jb250cm9sP2NpZD0xDQpTZWMtRmV0Y2gtRGVz
-dDogZW1wdHkNClNlYy1GZXRjaC1Nb2RlOiBjb3JzDQpTZWMtRmV0Y2gtU2l0ZTogc2FtZS1vcmln
-aW4NClByaW9yaXR5OiB1PTANClRlOiB0cmFpbGVycw0KQ29ubmVjdGlvbjoga2VlcC1hbGl2ZQ0K
-DQp7ImNzcmZfdG9rZW4iOiJJamd5TkRsbE1EaGhaakpoTVdZd1ptVmtNbUZrWVRkak56VTBPRFps
-TkRNMVkySmxaR1kxWVRZaS5hV1RTOVEuTnB4Wk1EN01pXzNWdENROFRUakJERzltdnZvIiwidXNl
-cl9uYW1lIjoiUGVuIFRlc3RlciBJIiwidXNlcl9sb2dpbiI6InB0MSIsInVzZXJfZW1haWwiOiJw
-dDFAc2JhLnpvbmUiLCJ1dWlkIjogICAiMDAwMDAwMDAtMDAwMC00OGEzLWJmNWUtODg0NTVjZTZj
-MjA3Ig0KfQ0KDQpIVFRQLzEuMSAyMDAgT0sNClNlcnZlcjogbmdpbngNCkRhdGU6IE1vbiwgMjYg
-SmFuIDIwMjYgMTE6MDI6MDAgR01UDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24NCkNv
-bnRlbnQtTGVuZ3RoOiA1MjQNCkNvbm5lY3Rpb246IGtlZXAtYWxpdmUNClZhcnk6IENvb2tpZQ0K
-Q29udGVudC1TZWN1cml0eS1Qb2xpY3k6IGRlZmF1bHQtc3JjICdzZWxmJyBodHRwczovL2FuYWx5
-dGljcy5kZmlyLWlyaXMub3JnOyBzY3JpcHQtc3JjICdzZWxmJyAndW5zYWZlLWlubGluZScgaHR0
-cHM6Ly9hbmFseXRpY3MuZGZpci1pcmlzLm9yZzsgc3R5bGUtc3JjICdzZWxmJyAndW5zYWZlLWlu
-bGluZSc7IGltZy1zcmMgJ3NlbGYnIGRhdGE6Ow0KWC1YU1MtUHJvdGVjdGlvbjogMTsgbW9kZT1i
-bG9jaw0KWC1GcmFtZS1PcHRpb25zOiBERU5ZDQpYLUNvbnRlbnQtVHlwZS1PcHRpb25zOiBub3Nu
-aWZmDQpTdHJpY3QtVHJhbnNwb3J0LVNlY3VyaXR5OiBtYXgtYWdlPTMxNTM2MDAwOiBpbmNsdWRl
-U3ViRG9tYWlucw0KRnJvbnQtRW5kLUh0dHBzOiBvbg0KDQp7InN0YXR1cyI6ICJzdWNjZXNzIiwg
-Im1lc3NhZ2UiOiAiVXNlciB1cGRhdGVkIiwgImRhdGEiOiB7InVzZXJfbmFtZSI6ICJQZW4gVGVz
-dGVyIEkiLCAidXNlcl9sb2dpbiI6ICJwdDEiLCAidXNlcl9lbWFpbCI6ICJwdDFAc2JhLnpvbmUi
-LCAidXNlcl9wYXNzd29yZCI6ICIkMmIkMTIkYlllVUxXWmhTQy95ZzYyY08vMHRVdUI5UmpBMlVB
-Q0VXVEk2RWJQZS9IWEgySWlJUy9hT20iLCAidXNlcl9pZCI6IDIsICJ1c2VyX2lzX3NlcnZpY2Vf
-YWNjb3VudCI6IGZhbHNlLCAiaWQiOiAyLCAidXVpZCI6ICIwMDAwMDAwMC0wMDAwLTQ4YTMtYmY1
-ZS04ODQ1NWNlNmMyMDciLCAiYWN0aXZlIjogdHJ1ZSwgImV4dGVybmFsX2lkIjogbnVsbCwgImlu
-X2RhcmtfbW9kZSI6IHRydWUsICJoYXNfbWluaV9zaWRlYmFyIjogZmFsc2UsICJoYXNfZGVsZXRp
-b25fY29uZmlybWF0aW9uIjogZmFsc2UsICJtZmFfc2VjcmV0cyI6IDNWSk1HTzNLN0pZUlY1U1FV
-SjJOMzNVUTVJWTRVSFZELCAid2ViYXV0aG5fY3JlZGVudGlhbHMiOiBbXSwgIm1mYV9zZXR1cF9j
-b21wbGV0ZSI6IHRydWV9fQ0KYGBgDQoNClRoZSBzYW1lIGluZm9ybWF0aW9uIGlzIHJldHVybmVk
-IGlmIGEgdXNlciBjaGFuZ2VzIHRoZWlyIG93biBwYXNzd29yZDoNCg0KYGBgaHR0cA0KUE9TVCAv
-dXNlci91cGRhdGU/Y2lkPTEgSFRUUC8xLjENCkhvc3Q6IG15aXJpcy5sb2NhbA0KQ29va2llOiBz
-ZXNzaW9uPS5lSnd0Wy4uLl0NClVzZXItQWdlbnQ6IE1vemlsbGEvNS4wIChYMTE7IExpbnV4IHg4
-Nl82NDsgcnY6MTQwLjApIEdlY2tvLzIwMTAwMTAxIEZpcmVmb3gvMTQwLjANCkFjY2VwdDogYXBw
-bGljYXRpb24vanNvbiwgdGV4dC9qYXZhc2NyaXB0LCAqLyo7IHE9MC4wMQ0KQWNjZXB0LUxhbmd1
-YWdlOiBlbi1VUyxlbjtxPTAuNQ0KQWNjZXB0LUVuY29kaW5nOiBnemlwLCBkZWZsYXRlLCBicg0K
-Q29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qc29uO2NoYXJzZXQ9VVRGLTgNClgtUmVxdWVzdGVk
-LVdpdGg6IFhNTEh0dHBSZXF1ZXN0DQpDb250ZW50LUxlbmd0aDogMTM5DQpPcmlnaW46IGh0dHBz
-Oi8vbXlpcmlzLmxvY2FsDQpSZWZlcmVyOiBodHRwczovL215aXJpcy5sb2NhbC91c2VyL3NldHRp
-bmdzP2NpZD0xDQpTZWMtRmV0Y2gtRGVzdDogZW1wdHkNClNlYy1GZXRjaC1Nb2RlOiBjb3JzDQpT
-ZWMtRmV0Y2gtU2l0ZTogc2FtZS1vcmlnaW4NClgtUHduZm94LUNvbG9yOiBjeWFuDQpQcmlvcml0
-eTogdT0wDQpUZTogdHJhaWxlcnMNCkNvbm5lY3Rpb246IGtlZXAtYWxpdmUNCg0KeyJjc3JmX3Rv
-a2VuIjoiSW1VME9UWm1Nall5WXpCak9UZzBNbUZoTW1NMU9UUTVZbVJpTXpaaU9EZGxNMlEwTjJK
-ak1EY2kuYVdlNUdBLmNFSmJIdUE0TmlPa1JQTEYzTk13M3B6eVZVNCIsInVzZXJfcGFzc3dvcmQi
-OiJQYXNzd29yZDEyMy4ifQ0KDQpIVFRQLzEuMSAyMDAgT0sNClNlcnZlcjogbmdpbngNCkRhdGU6
-IE1vbiwgMjYgSmFuIDIwMjYgMTU6NDE6NDMgR01UDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9u
-L2pzb24NCkNvbnRlbnQtTGVuZ3RoOiA1ODgNCkNvbm5lY3Rpb246IGtlZXAtYWxpdmUNClZhcnk6
-IENvb2tpZQ0KQ29udGVudC1TZWN1cml0eS1Qb2xpY3k6IGRlZmF1bHQtc3JjICdzZWxmJyBodHRw
-czovL2FuYWx5dGljcy5kZmlyLWlyaXMub3JnOyBzY3JpcHQtc3JjICdzZWxmJyAndW5zYWZlLWlu
-bGluZScgaHR0cHM6Ly9hbmFseXRpY3MuZGZpci1pcmlzLm9yZzsgc3R5bGUtc3JjICdzZWxmJyAn
-dW5zYWZlLWlubGluZSc7IGltZy1zcmMgJ3NlbGYnIGRhdGE6Ow0KWC1YU1MtUHJvdGVjdGlvbjog
-MTsgbW9kZT1ibG9jaw0KWC1GcmFtZS1PcHRpb25zOiBERU5ZDQpYLUNvbnRlbnQtVHlwZS1PcHRp
-b25zOiBub3NuaWZmDQpTdHJpY3QtVHJhbnNwb3J0LVNlY3VyaXR5OiBtYXgtYWdlPTMxNTM2MDAw
-OiBpbmNsdWRlU3ViRG9tYWlucw0KRnJvbnQtRW5kLUh0dHBzOiBvbg0KDQp7InN0YXR1cyI6ICJz
-dWNjZXNzIiwgIm1lc3NhZ2UiOiAiVXNlciB1cGRhdGVkIiwgImRhdGEiOiB7InVzZXJfbmFtZSI6
-ICJQZW4gVGVzdGVyIEkiLCAidXNlcl9sb2dpbiI6ICJwdDEiLCAidXNlcl9lbWFpbCI6ICJwdDFA
-c2JhLnpvbmUiLCAidXNlcl9wYXNzd29yZCI6ICIkMmIkMTIkSmxFaS9LaWx6cllIUDQyUER0ZTgz
-LnZML3NvV1BzM2t0b295L2VZYlRDUTJpTk02SDU4MEsiLCAidXNlcl9pZCI6IDIsICJ1c2VyX3By
-aW1hcnlfb3JnYW5pc2F0aW9uX2lkIjogMSwgInVzZXJfaXNfc2VydmljZV9hY2NvdW50IjogZmFs
-c2UsICJpZCI6IDIsICJ1dWlkIjogIjAwMDAwMDAwLTAwMDAtNDhhMy1iZjVlLTg4NDU1Y2U2YzIw
-NyIsICJhY3RpdmUiOiB0cnVlLCAiZXh0ZXJuYWxfaWQiOiBudWxsLCAiaW5fZGFya19tb2RlIjog
-dHJ1ZSwgImhhc19taW5pX3NpZGViYXIiOiBmYWxzZSwgImhhc19kZWxldGlvbl9jb25maXJtYXRp
-b24iOiBmYWxzZSwgIm1mYV9zZWNyZXRzIjogIjNWSk1HTzNLN0pZUlY1U1FVSjJOMzNVUTVJWTRV
-SFZEIiwgIndlYmF1dGhuX2NyZWRlbnRpYWxzIjogW10sICJtZmFfc2V0dXBfY29tcGxldGUiOiB0
-cnVlfX0NCmBgYA0KDQojIyMgRGF0YXN0b3JlICMjIw0KDQpJZiBhIGZpbGUgZ2V0cyB1cGxvYWRl
-ZCB0byB0aGUgKkRhdGFzdG9yZSosIHRoZSBmdWxsIHBhdGggd2hlcmUgaXQgaXMgc3RvcmVkDQpv
-biB0aGUgc2VydmVyIGdldHMgc2VudCB0byB0aGUgY2xpZW50LiBUaGlzIGluZm9ybWF0aW9uIGNh
-biBoZWxwIHRvDQpmYWNpbGl0YXRlIGFuIGF0dGFjayBhbmQgaXMgbmV2ZXIgdXNlZCBieSB0aGUg
-Y2xpZW50Lg0KDQpgYGBodHRwDQpQT1NUIC9kYXRhc3RvcmUvZmlsZS91cGRhdGUvMT9jaWQ9MSBI
-VFRQLzEuMQ0KSG9zdDogbXlpcmlzLmxvY2FsDQpDb29raWU6IHNlc3Npb249LmVKd3RbLi4uXQ0K
-VXNlci1BZ2VudDogTW96aWxsYS81LjAgKFgxMTsgTGludXggeDg2XzY0OyBydjoxNDAuMCkgR2Vj
-a28vMjAxMDAxMDEgRmlyZWZveC8xNDAuMA0KQWNjZXB0OiBhcHBsaWNhdGlvbi9qc29uLCB0ZXh0
-L2phdmFzY3JpcHQsICovKjsgcT0wLjAxDQpBY2NlcHQtTGFuZ3VhZ2U6IGVuLVVTLGVuO3E9MC41
-DQpBY2NlcHQtRW5jb2Rpbmc6IGd6aXAsIGRlZmxhdGUsIGJyDQpYLVJlcXVlc3RlZC1XaXRoOiBY
-TUxIdHRwUmVxdWVzdA0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvZm9ybS1kYXRhOyBib3VuZGFy
-eT0tLS0tZ2Vja29mb3JtYm91bmRhcnlkMjFjMzUzNmQ1M2M5YzRjY2RhMDVmODY0ZmRmZjA5YQ0K
-Q29udGVudC1MZW5ndGg6IDg4Ng0KT3JpZ2luOiBodHRwczovL215aXJpcy5sb2NhbA0KUmVmZXJl
-cjogaHR0cHM6Ly9teWlyaXMubG9jYWwvY2FzZT9jaWQ9MQ0KU2VjLUZldGNoLURlc3Q6IGVtcHR5
-DQpTZWMtRmV0Y2gtTW9kZTogY29ycw0KU2VjLUZldGNoLVNpdGU6IHNhbWUtb3JpZ2luDQpQcmlv
-cml0eTogdT0wDQpUZTogdHJhaWxlcnMNCkNvbm5lY3Rpb246IGtlZXAtYWxpdmUNCg0KLSAtLS0t
-LS1nZWNrb2Zvcm1ib3VuZGFyeWQyMWMzNTM2ZDUzYzljNGNjZGEwNWY4NjRmZGZmMDlhDQpDb250
-ZW50LURpc3Bvc2l0aW9uOiBmb3JtLWRhdGE7IG5hbWU9ImNzcmZfdG9rZW4iDQoNCkltUm1NVE16
-WlRjell6QXdaRFJqTURrNVpqaGlaV1EzTURWaVlUazBZbUU0TURkaVpEWmpPVEFpLmFXanFuUS5U
-U2xGdWZMOGRkdTlZdjRwNnJnYm8xZFduOTANCi0gLS0tLS0tZ2Vja29mb3JtYm91bmRhcnlkMjFj
-MzUzNmQ1M2M5YzRjY2RhMDVmODY0ZmRmZjA5YQ0KQ29udGVudC1EaXNwb3NpdGlvbjogZm9ybS1k
-YXRhOyBuYW1lPSJmaWxlX29yaWdpbmFsX25hbWUiDQoNCnhzcy5zdmcNCi0gLS0tLS0tZ2Vja29m
-b3JtYm91bmRhcnlkMjFjMzUzNmQ1M2M5YzRjY2RhMDVmODY0ZmRmZjA5YQ0KQ29udGVudC1EaXNw
-b3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJmaWxlX2Rlc2NyaXB0aW9uIg0KDQo8c2NyaXB0PmFs
-ZXJ0KDE5KTwvc2NyaXB0Pg0KLSAtLS0tLS1nZWNrb2Zvcm1ib3VuZGFyeWQyMWMzNTM2ZDUzYzlj
-NGNjZGEwNWY4NjRmZGZmMDlhDQpDb250ZW50LURpc3Bvc2l0aW9uOiBmb3JtLWRhdGE7IG5hbWU9
-ImZpbGVfdGFncyINCg0KDQotIC0tLS0tLWdlY2tvZm9ybWJvdW5kYXJ5ZDIxYzM1MzZkNTNjOWM0
-Y2NkYTA1Zjg2NGZkZmYwOWENCkNvbnRlbnQtRGlzcG9zaXRpb246IGZvcm0tZGF0YTsgbmFtZT0i
-ZmlsZV9pc19ldmlkZW5jZSINCg0KeQ0KLSAtLS0tLS1nZWNrb2Zvcm1ib3VuZGFyeWQyMWMzNTM2
-ZDUzYzljNGNjZGEwNWY4NjRmZGZmMDlhDQpDb250ZW50LURpc3Bvc2l0aW9uOiBmb3JtLWRhdGE7
-IG5hbWU9ImZpbGVfY29udGVudCINCg0KdW5kZWZpbmVkDQotIC0tLS0tLWdlY2tvZm9ybWJvdW5k
-YXJ5ZDIxYzM1MzZkNTNjOWM0Y2NkYTA1Zjg2NGZkZmYwOWEtLQ0KDQpIVFRQLzEuMSAyMDAgT0sN
-ClNlcnZlcjogbmdpbngNCkRhdGU6IFRodSwgMjIgSmFuIDIwMjYgMTM6MjU6MDggR01UDQpDb250
-ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24NCkNvbnRlbnQtTGVuZ3RoOiA4MTINCkNvbm5lY3Rp
-b246IGtlZXAtYWxpdmUNClZhcnk6IENvb2tpZQ0KQ29udGVudC1TZWN1cml0eS1Qb2xpY3k6IGRl
-ZmF1bHQtc3JjICdzZWxmJyBodHRwczovL2FuYWx5dGljcy5kZmlyLWlyaXMub3JnOyBzY3JpcHQt
-c3JjICdzZWxmJyAndW5zYWZlLWlubGluZScgaHR0cHM6Ly9hbmFseXRpY3MuZGZpci1pcmlzLm9y
-Zzsgc3R5bGUtc3JjICdzZWxmJyAndW5zYWZlLWlubGluZSc7IGltZy1zcmMgJ3NlbGYnIGRhdGE6
-Ow0KWC1YU1MtUHJvdGVjdGlvbjogMTsgbW9kZT1ibG9jaw0KWC1GcmFtZS1PcHRpb25zOiBERU5Z
-DQpYLUNvbnRlbnQtVHlwZS1PcHRpb25zOiBub3NuaWZmDQpTdHJpY3QtVHJhbnNwb3J0LVNlY3Vy
-aXR5OiBtYXgtYWdlPTMxNTM2MDAwOiBpbmNsdWRlU3ViRG9tYWlucw0KRnJvbnQtRW5kLUh0dHBz
-OiBvbg0KDQp7InN0YXR1cyI6ICJzdWNjZXNzIiwgIm1lc3NhZ2UiOiAiRmlsZSB1cGRhdGVkIGlu
-IGRhdGFzdG9yZSIsICJkYXRhIjogeyJmaWxlX29yaWdpbmFsX25hbWUiOiAieHNzLnN2ZyIsICJm
-aWxlX2Rlc2NyaXB0aW9uIjogIjxzY3JpcHQ+YWxlcnQoMTkpPC9zY3JpcHQ+IiwgImZpbGVfaWQi
-OiAxLCAiZmlsZV91dWlkIjogImMxNjJlYTZiLTQxMzMtNGRjNi1iNjQ4LWY0NjdlMGNmYTA4ZSIs
-ICJmaWxlX2xvY2FsX25hbWUiOiAiL2hvbWUvaXJpcy9zZXJ2ZXJfZGF0YS9kYXRhc3RvcmUvUmVn
-dWxhcnMvY2FzZS0xL2RzZi1jMTYyZWE2Yi00MTMzLTRkYzYtYjY0OC1mNDY3ZTBjZmEwOGUuemlw
-IiwgImZpbGVfZGF0ZV9hZGRlZCI6ICIyMDI2LTAxLTIyVDEzOjE3OjQyLjExODUxNyIsICJmaWxl
-X3RhZ3MiOiAiIiwgImZpbGVfc2l6ZSI6IDM3OSwgImZpbGVfaXNfaW9jIjogZmFsc2UsICJmaWxl
-X2lzX2V2aWRlbmNlIjogdHJ1ZSwgImZpbGVfcGFzc3dvcmQiOiAiMTIzNCIsICJmaWxlX3BhcmVu
-dF9pZCI6IDIsICJmaWxlX3NoYTI1NiI6ICIyMDZENzg2NDQ4N0M4QjM1MTU1QkQyMDY1NzczOEYz
-ODk4NTc4NTE4MkZBNjIwNDM5MjQ5NUVGNUNERDJCMTlDIiwgImFkZGVkX2J5X3VzZXJfaWQiOiAz
-LCAibW9kaWZpY2F0aW9uX2hpc3RvcnkiOiB7IjE3Njg0ODMwNjIuMTE4NTQ1IjogeyJ1c2VyIjog
-InB0MiIsICJ1c2VyX2lkIjogMywgImFjdGlvbiI6ICJjcmVhdGVkIn0sICIxNzY4NDgzNTA4LjU0
-NDk1NiI6IHsidXNlciI6ICJwdDIiLCAidXNlcl9pZCI6IDMsICJhY3Rpb24iOiAidXBkYXRlZCJ9
-fSwgImZpbGVfY2FzZV9pZCI6IDF9fQ0KYGBgDQoNCiMjIFJlY29tbWVuZGVkIENvdW50ZXJtZWFz
-dXJlcyAjIw0KDQpXZSByZWNvbW1lbmQgdXBkYXRpbmcgdG8gSVJJUyB2ZXJzaW9uIDIuNC4yOCBv
-ciBsYXRlci4NCg0KV2Ugc3Ryb25nbHkgcmVjb21tZW5kIHRha2luZyBhbiBhbGxvd2xpc3QgYXBw
-cm9hY2ggd2hlbiBpdCBjb21lcyB0bw0Kc2VyaWFsaXppbmcgb2JqZWN0IHByb3BlcnRpZXMgZm9y
-IEFQSSByZXNwb25zZXMuIERvIG5vdCBhcHByb2FjaCB0aGUNCnZ1bG5lcmFiaWxpdHkgYnkgYmxv
-Y2tsaXN0aW5nIHNlbnNpdGl2ZSBhbmQgdW5uZWNlc3NhcnkgZmllbGRzLCBhcyB0aGlzIGlzDQp2
-ZXJ5IGVycm9yLXByb25lLiBTZW5zaXRpdmUgZmllbGRzIGFkZGVkIHRvIGVudGl0aWVzIGxhdGVy
-IG9uIG1pZ2h0IGJlDQpmb3Jnb3R0ZW4gdG8gcHV0IG9uIHRoZSBibG9ja2xpc3QuDQoNCkFub3Ro
-ZXIgYXBwcm9hY2ggd291bGQgYmUgdGhlIHVzYWdlIG9mICpEYXRhIFRyYW5zZmVyIE9iamVjdHMg
-KERUT3MpKi4gVGhvc2UNCmFyZSBjbGFzc2VzIHdoaWNoIG9ubHkgaG9sZCB0aG9zZSBhdHRyaWJ1
-dGVzIHRoYXQgYXJlIHJlcXVpcmVkIGluIHRoZSBjb250ZXh0DQphdCBoYW5kLg0KDQojIyBUaW1l
-bGluZSAjIw0KDQoqIGAyMDI2LTAxLTI2YCBJZGVudGlmaWVkIHRoZSB2dWxuZXJhYmlsaXR5IGlu
-IHZlcnNpb24gMi40LjI2DQoqIGAyMDI2LTAxLTMwYCBJbml0aWFsIHZlbmRvciBjb250YWN0IHZp
-YSBlLW1haWwNCiogYDIwMjYtMDItMjdgIFNlY29uZCB2ZW5kb3IgY29udGFjdCB2aWEgZS1tYWls
-DQoqIGAyMDI2LTAzLTMwYCBSZXBvcnQgb24gR2l0SHViIGR1ZSB0byBhIG1pc3NpbmcgcmVzcG9u
-c2UgZnJvbSB0aGUgdmVuZG9yDQoqIGAyMDI2LTA0LTI3YCBWZXJzaW9uIGNvbnRhaW5pbmcgZml4
-ICh2Mi40LjI4KSB0YWdnZWQgYnkgdmVuZG9yDQoqIGAyMDI2LTA0LTI4YCBHaXRIdWIgYXNzaWdu
-ZWQgQ1ZFLTIwMjYtNDI1MzkNCiogYDIwMjYtMDUtMDRgIENvbmZpcm0gZml4IGZvciB2Mi40LjI4
-DQoqIGAyMDI2LTA1LTE5YCBQdWJsaWMgZGlzY2xvc3VyZQ0KDQojIyBSZWZlcmVuY2VzICMjDQoN
-CiogT1dBU1AgQVBJIFNlY3VyaXR5IFRvcCAxMC4gQVBJMzoyMDIzIEJyb2tlbiBPYmplY3QgUHJv
-cGVydHkgTGV2ZWwNCiAgQXV0aG9yaXphdGlvbjoNCiAgPGh0dHBzOi8vb3dhc3Aub3JnL0FQSS1T
-ZWN1cml0eS9lZGl0aW9ucy8yMDIzL2VuLzB4YTMtYnJva2VuLW9iamVjdC1wcm9wZXJ0eS1sZXZl
-bC1hdXRob3JpemF0aW9uLz4NCiogQmFlbGR1bmcuIFRoZSBEVE8gUGF0dGVybiAoRGF0YSBUcmFu
-c2ZlciBPYmplY3QpOg0KICA8aHR0cHM6Ly93d3cuYmFlbGR1bmcuY29tL2phdmEtZHRvLXBhdHRl
-cm4+DQoqIENvbW1vbiBXZWFrbmVzcyBFbnVtZXJhdGlvbi4gQ1dFLTIwMSBJbnNlcnRpb24gb2Yg
-U2Vuc2l0aXZlIEluZm9ybWF0aW9uIEludG8NCiAgU2VudCBEYXRhOiA8aHR0cHM6Ly9jd2UubWl0
-cmUub3JnL2RhdGEvZGVmaW5pdGlvbnMvMjAxLmh0bWw+DQoNCiMjIENyZWRpdHMgIyMNCg0KKiBN
-aWNoYWVsIEtvcHBtYW5uIChbU0JBIFJlc2VhcmNoXShodHRwczovL3d3dy5zYmEtcmVzZWFyY2gu
-b3JnLykpDQoqIE1hdGhpYXMgVGF1c2lnIChbU0JBIFJlc2VhcmNoXShodHRwczovL3d3dy5zYmEt
-cmVzZWFyY2gub3JnLykpDQoNClRoZSBkaXNjb3Zlcnkgb2YgdGhpcyB2dWxuZXJhYmlsaXR5IHdh
-cyBtYWRlIHBvc3NpYmxlIHRocm91Z2ggc3VwcG9ydCBmcm9tDQpbQ1lTU0RFXShodHRwczovL2N5
-c3NkZS5ldS8pIGFuZCB0aGUgRXVyb3BlYW4gVW5pb24uDQoNCiFbQ1lTU0RFXShpbWFnZXMvY3lz
-c2RlLnBuZykNCi0tLS0tQkVHSU4gUEdQIFNJR05BVFVSRS0tLS0tDQoNCmlRSlBCQUVCQ0FBNUZp
-RUVMOVdwL3laV0ZEOU9wSXQ2KzdpR0wxajNkYklGQW1vTWIxSWJGSUFBQUFBQUJBQU8NCmJXRnVk
-VElzTWk0MUt6RXVNVElzTWl3eEFBb0pFUHU0aGk5WTkzV3l1SjBRQU1adWw5RGRLWkdBZWQyVUs0
-amoNCmxqWDhrZ0luQ0dESk5ES3dNQUk4L2JLWTB1Y3F2Zm1VbXpKK3R5eU9RcjJURFVNLzg5dGkw
-bXFmSzBodHlDUlkNCmxZdm5KMkxrWURJRFNCNGdicVRDSHluTW1wK3J0blRXNm5tTjBVSFpZelhu
-bHNJQmRtcmp6eENFMUlPUmVIVjMNCklYMGtJRFNDS0ovMDRyRFV1OWJKQlA2OHRnVUdiM0VVRktV
-dVhFa3F5NVdDZEpYTGpHanV4ZVlOc1plaFoxMTINClBNdzU5V3ZOVmw3dDY2YzlGUWQ3MGdoSTlp
-ZXAwQ002d3IvellUYTh2MldVK0FQUmg0OU14TWtjUVcxMlZyVTENClNJekJJTHlTcmszeGZXRDNL
-c3NTbkFIMmlTRnhVNWRydHlxWGQwVmZyQ0p0M1dSaG02TDNxVjAvQitJRGEyNi8NCnNoVWNHditO
-c1Q3ZlF1Q24wYWNvYUFYOUhkWElKS2tDVVNNSWliQlRydWZ4aTNyb2Q4aUZRZVZlaVpYb29iYm0N
-CkpMdUpKYmpwUjEwRFZBdnFod3Z0K3IrMldtS0JaaHgzSEJyMThhTDIwZGdHZmx6RVdhYVFsMURO
-UHpGdGJNVysNCmdxaXhpeVRQTVhJR3NOK1FTVUZuNW8xUWFlRXVYeGZBMXNzTVZzOXZQTzhwekhZ
-aWZZK3JBTDhIWDZ0NlVUWHANClp3MTgvTTBTZFZYZGtjcSs1TU1TOWRpTDMyWDlETnp5UFlLaDhY
-VXFRZkNQRWtHU1FESktNQlhFb1l5dXlYUEQNCmpRZkVGMHhVaHU0cUdGSWViNHhvQWs2WTlTaENJ
-L21DSWg3bkhVZDMxVTlaRWNqN09lV1cvZHNYV1o1Z2VSeWUNCjZyK21OaWdoUCtaRnBXU3c5RnBP
-emZ1Qg0KPW8zZnINCi0tLS0tRU5EIFBHUCBTSUdOQVRVUkUtLS0tLQ0K
+CVE-2023-48231: Use-After-Free in win_close()
+=============================================
+Date: 16.11.2023
+Severity: Low
+
+When closing a window, vim may try to access already freed window
+structure. So before trying to access any window related variable
+verify that the window to be closed is still valid and if not, return.
+
+Impact is low, since it is not very easy to make use of this
+and execute some payload (in particular not, without the
+user noticing).
+
+The Vim project would like to thank Fabian Toepfer for reporting this issue
+which is now fixed in Vim patch 9.0.2106.
+
+URLs: https://github.com/vim/vim/commit/25aabc2b8ee1e19ced6f4da9d866cf9378fc4c5a
+      https://github.com/vim/vim/security/advisories/GHSA-8g46-v9ff-c765
+
+--------------------------------------------------------------------------------
+
+CVE-2023-48232: Floating point Exception in adjust_plines_for_skipcol()
+=======================================================================
+Date: 16.11.2023
+Severity: Low
+
+A floating point exception may occur when calculating the line offset for overlong
+lines and smooth scrolling is enabled and the cpo-settings include the 'n' flag.
+
+This may happen when a window border is present and when the wrapped line continues
+on the next physical line directly in the window border because the 'cpo' setting includes
+the 'n' flag.
+
+Impact is rather low, since we do not expect many users to have those non-default setting
+set.
+
+The Vim project would like to thank Fabian Toepfer for reporting this issue
+which is now fixed in Vim patch 9.0.2107.
+
+URLs: https://github.com/vim/vim/commit/cb0b99f0672d8446585d26e998343dceca17d1ce
+      https://github.com/vim/vim/security/advisories/GHSA-f6cx-x634-hqpw
+
+
+--------------------------------------------------------------------------------
+
+CVE-2023-48233: overflow with count for :s command
+==================================================
+Date: 16.11.2023
+Severity: Low
+
+If the count after the :s command is larger than what fits into a
+(signed) long variable, abort with e_value_too_large.
+
+Impact is low, user interaction is required and a crash may not even happen.
+
+The Vim project would like to thank Fabian Toepfer for reporting this issue
+which is now fixed in Vim patch 9.0.2108.
+
+URLs: https://github.com/vim/vim/commit/ac63787734fda2e294e477af52b3bd601517fa78
+      https://github.com/vim/vim/security/advisories/GHSA-3xx4-hcq6-r2vj
+
+
+--------------------------------------------------------------------------------
+
+CVE-2023-48234: overflow in nv_z_get_count
+==========================================
+Date: 16.11.2023
+Severity: Low
+
+When getting the count for a normal mode z command, it may overflow for large
+counts given. So let's verify that the result can be safely stored, else abort
+the z command.
+
+Impact is low, user interaction is required and a crash may not even happen.
+
+The Vim project would like to thank Fabian Toepfer for reporting this issue
+which is now fixed in Vim patch 9.0.2109.
+
+URLs: https://github.com/vim/vim/commit/58f9befca1fa172068effad7f2ea5a9d6a7b0cca
+      https://github.com/vim/vim/security/advisories/GHSA-59gw-c949-6phq
+
+-------------------------------------------------------------------------------
+
+CVE-2023-48235: overflow in ex address parsing
+==============================================
+Date: 16.11.2023
+Severity: Low
+
+When parsing relative ex addresses one may unintentionally cause an
+overflow. Ironacially this happens in the existing overflow check, because
+the line number becomes negative and LONG_MAX - lnum will cause the overflow.
+
+So verify that lnum is actually positive before doing the actual overflow
+check.
+
+Impact is low, user interaction is required and a crash may not even happen.
+
+The Vim project would like to thank Fabian Toepfer for reporting this issue
+which is now fixed in Vim patch 9.0.2110.
+
+URLs: https://github.com/vim/vim/commit/060623e4a3bc72b011e7cd92bedb3bfb64e06200
+      https://github.com/vim/vim/security/advisories/GHSA-6g74-hr6q-pr8g
+
+-------------------------------------------------------------------------------
+
+CVE-2023-48236: overflow in get_number
+======================================
+Date: 16.11.2023
+Severity: Low
+
+When using the z= command, we may overflow the count with values larger
+than MAX_INT. So verify that we do not overflow and in case when an
+overflow is detected, simply return 0
+
+Impact is low, user interaction is required and a crash may not even happen.
+
+The Vim project would like to thank Fabian Toepfer for reporting this issue
+which is now fixed in Vim patch 9.0.2111.
+
+URLs: https://github.com/vim/vim/commit/73b2d3790cad5694fc0ed0db2926e4220c48d968
+      https://github.com/vim/vim/security/advisories/GHSA-pr4c-932v-8hx5
+
+
+
+-------------------------------------------------------------------------------
+
+CVE-2023-48237: overflow in shift_line
+======================================
+Date: 16.11.2023
+Severity: Low
+
+When shifting lines in operator pending mode and using a very large
+value, we may overflow the size of integer. Fix this by using a long long
+variable, testing if the result would be larger than INT_MAX and if so,
+indent by INT_MAX value.
+
+Impact is low, user interaction is required and a crash may not even happen.
+
+The Vim project would like to thank Fabian Toepfer for reporting this issue
+which is now fixed in Vim patch 9.0.2112.
+
+URLs: https://github.com/vim/vim/commit/6bf131888a3d1de62bbfa8a7ea03c0ddccfd496e
+      https://github.com/vim/vim/security/advisories/GHSA-f2m2-v387-gv87
+
+
+
+Thanks,
+Christian
+-- 
+Es gibt Augenblicke, in denen man nicht nur sehen, sondern ein Auge
+zudrücken muß.
+		-- Benjamin Franklin
