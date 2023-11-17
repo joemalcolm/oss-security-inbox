@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1793" "Thursday" "23" "August" "2018" "11:38:32" "-0500" "=?UTF-8?B?U2VyZ2lvIFBlw7Fh?=" "spena82@gmail.com" "<CAFbRtroTd0NqpWrCUunEBNgL6WGiTyz+eyBvDquy9oxa3zki=Q@mail.gmail.com>" "54" "[oss-security] [SECURITY] CVE-2018-8028: Bypass ALTER TABLE EXCHANGE PARTITIONS authorization for Hive" "^Cc:" nil nil "8" "2018082316:38:32" "[oss-security] [SECURITY] CVE-2018-8028: Bypass ALTER TABLE EXCHANGE PARTITIONS authorization for Hive" (number mark "        spena82@gmai Aug 23   54/1793  " thread-indent "\"[oss-security] [SECURITY] CVE-2018-8028: Bypass ALTER TABLE EXCHANGE PARTITIONS authorization for Hive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3825 invoked by uid 550); 23 Aug 2018 21:51:51 -0000
+Received: (qmail 26180 invoked by uid 550); 17 Nov 2023 09:37:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +6,429 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30316 invoked from network); 23 Aug 2018 16:38:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=rnBcaWepTyDnqyotwlHHNSxobkB0bX78h3m5OQ60GdU=;
-        b=tu13+RoOoBu0uetmEpr7KXzUzqheJoWwQQDWxXVBQuM+paku7pusWpXHIl6VmKzGgA
-         G4uYFAw7oQsYDkHwoNv08Cbp/f4sWWaQL16O4IX0FM5sAxxMOY5WpBrkiiz6ftUraHKJ
-         nNkyfFOd+eJIc6Q6Cos1UIiaxyvwljoyqSrjRj3A1Uhz+CGeZce1hSRvBIotET4J+ngp
-         tZ4PtRMhsRlwlj7nMLBQCwgTQ1s/1it7u0FZPQzU70VIiP80OnH7iG4k1IIYV3CK1lne
-         CrxZ7ctxlKWsevbXoOgnTC3xFp+iIoKF/2MO2Ulej9xSL1Y3BH/T7F5arbF+G1gZAxZZ
-         +rVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=rnBcaWepTyDnqyotwlHHNSxobkB0bX78h3m5OQ60GdU=;
-        b=LNfAsD03c1uDoqN+E0MWkTNdK5qr406EyskuEeUu85++4BjItXslWgg2UQ+TyD6/2q
-         05yinnpONtC4yhyW1R5+PYvvq7UBbFqjU6Uglcnwe/3mNrUg00wVOT95PicI8NhoyHN7
-         KLFhZ6MYFI+npMdsYZM8g682bHM4vpxOE5q1AyPKTuVttDaqDzxhf13Nn+kuBf/o4+hg
-         9VnFXYTObx1DJX0E25/cLt8hV8q+2x7ehz4fdcN9+JOfTDsTmVypLc9Sj60EYDDY3kXR
-         buBmXMi/Zq+vnRMzHLhxX+3VFAq6FGZ5Kqx7edX3Zl+Hvgr+e0WR4MVUQ4sldjRP07Um
-         ennw==
-X-Gm-Message-State: APzg51Cq1R5oXo8uZJd++Y+lXUijoU6//JhoHbUsK1k3/TwKcJm55Cwb
-	gWrmbXuikSUU/0B69CRL2oKndIr736o051O+tiE=
-X-Google-Smtp-Source: ANB0Vdb9k+TDhuzG1U+HjyH3JH6AGtMFMJYumux1KzgqIN4hp4NB48MpAZjeB3b5rd+1rIrz1FuGKOcE+sXm4LSDuuE=
-X-Received: by 2002:aca:7513:: with SMTP id q19-v6mr8612643oic.13.1535042324066;
- Thu, 23 Aug 2018 09:38:44 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAFbRtroTd0NqpWrCUunEBNgL6WGiTyz+eyBvDquy9oxa3zki=Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000070f55505741ce443"
-Cc: dev@sentry.apache.org
-Date: Thu, 23 Aug 2018 11:38:32 -0500
-From: =?UTF-8?B?U2VyZ2lvIFBlw7Fh?= <spena82@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY] CVE-2018-8028: Bypass ALTER TABLE EXCHANGE PARTITIONS
- authorization for Hive
-To: security@sentry.apache.org, biglauer@cloudera.com, 
-	oss-security@lists.openwall.com
+Received: (qmail 26147 invoked from network); 17 Nov 2023 09:37:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1700213825; h=from:from:sender:sender:reply-to:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:list-id;
+	bh=rocrvKZFmccA4DC0A67fsGVhDAuqLIPA8ToAJwHoNUw=;
+	b=jumq77wxq4xqJbld9BcDNepKyuLITJYHAr+JQm/DaVL9h0IVqimCC6hVr7QEyNfyWfQ4VE
+	5vn2txi8lJOAGD2dVLV/vmW67HU2gQ8VOfpXBW0p6OS+PaW9Gnpxe0b0CMocSM7Oe7GwJz
+	9+HCAQMr5lkKD67fs5rXXHf+iTObDD4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1700213825;
+	h=from:from:sender:sender:reply-to:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:list-id;
+	bh=rocrvKZFmccA4DC0A67fsGVhDAuqLIPA8ToAJwHoNUw=;
+	b=EyjVByulQKYqVP/2er/WR9TGghJUvqtEEnbskj1pn/mg28nzOiKEFVDOibZ+I1SrTYEHkf
+	lObEL9AitlRt6YDQ==
+Date: Fri, 17 Nov 2023 10:37:04 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+Sender: security-team <security-team-bounces+mgerstner=suse.de@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <ZVc0QDRY04pR81cs@kasco.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="V1iZDCyLZxPEeOgc"
+Content-Disposition: inline
+Authentication-Results: smtp-out1.suse.de;
+	none
+Subject: [oss-security] hplip: security issues in `hpps` program due to fixed /tmp path
+ usage in prnt/hpps/hppsfilter.c
 
---00000000000070f55505741ce443
-Content-Type: text/plain; charset="UTF-8"
+--V1iZDCyLZxPEeOgc
+Content-Type: multipart/mixed; protected-headers=v1;
+	boundary="HVnuWQJYgEri8zeM"
+Content-Disposition: inline
+Date: Fri, 17 Nov 2023 10:37:04 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: hplip: security issues in `hpps` program due to fixed /tmp path
+ usage in prnt/hpps/hppsfilter.c
 
-[SECURITY] CVE-2018-8028: Bypass ALTER TABLE EXCHANGE PARTITIONS
-authorization for Hive
 
-Severity:
-Major
+--HVnuWQJYgEri8zeM
+Content-Type: text/plain; charset=iso-8859-1; protected-headers=v1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Vendor:
-The Apache Software Foundation
+Hello list,
 
-Versions Affected:
-This vulnerability affects only the version of Apache Sentry 2.0.0 due to
-the introduction of
-Hive 2.x.
+this report is about the problematic use of fixed temporary paths in the
+`hpps` program from the hplip [1] project. Hplip is a collection of
+utilities for HP printer and scanner devices.
 
-Description:
-An authenticated user can execute ALTER TABLE EXCHANGE PARTITIONS without
-being authorized by Sentry.
-This can allow an attacker unauthorized access to the partitioned data of a
-Sentry protected table and can allow
-an attacker to remove data from a Sentry protected table.
+There is currently no upstream fix available for this issue and this
+publication happens after 90 days of attempted coordinated disclosure,
+but upstream did not react to my report.
 
-Mitigation:
-Apache Sentry users using 2.0.0 should upgrade to 2.0.1 or later.
+This report is based on the latest upstream release 3.23.8 [2] of hplip.
 
-Example:
-The admin has created the following table in a database that the attacker
-doesn't have access to:
-> CREATE TABLE target_database1.aliens (name string) PARTITIONED BY
-(home_planet string, diet string);
-> ALTER TABLE target_database1.aliens ADD PARTITION (home_planet='earth',
-diet='milk shakes');
-> ALTER TABLE target_database1.aliens ADD PARTITION
-(home_planet='trapis-4', diet='sentient lifeforms with cheese');
+The Issue
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-The attacker has a database attacker_database, created as follows:
-> CREATE TABLE attacker_database.data_stealer (name string) PARTITIONED BY
-(home_planet string, diet string);
-> ALTER TABLE attacker_database.data_stealer EXCHANGE PARTITION
-(home_planet='earth', diet='milk shakes')
-   WITH TABLE target_database1.aliens;
+The program /usr/lib/cups/filter/hpps uses a number of insecure fixed
+temporary files that can be found in prnt/hpps/hppsfilter.c:
 
-The attacker now has access to all of the data in the target partitions
-with the privileges available to them on attacker_database.
+    prnt/hpps/hppsfilter.c:1027:        sprintf(booklet_filename, "/tmp/%s.=
+ps","booklet");
+    prnt/hpps/hppsfilter.c:1028:        sprintf(temp_filename, "/tmp/%s.ps"=
+,"temp");
+    prnt/hpps/hppsfilter.c:1029:        sprintf(Nup_filename, "/tmp/%s.ps",=
+"NUP");
 
-Credit:
-This issue was discovered by Benjamin Iglauer of Cloudera.
+These paths are only used if "booklet printing" is enabled. For testing, the
+logic can be forced by invoking the program similar to this:
 
-References:
-https://cwiki.apache.org/confluence/display/SENTRY/Vulnerabilities+found+in+Apache+Sentry
+    $ export PPD=3D/usr/share/cups/model/manufacturer-PPDs/hplip-plugin/hp-=
+laserjet_1020.ppd.gz
+    $ /usr/lib/cups/filter/hpps some-job some-user some-title 10 HPBookletF=
+ilter=3D10,fitplot,Duplex=3DDuplexTumble,number-up=3D1
 
---00000000000070f55505741ce443--
+The program will expect data to print on stdin this way. Just typing in
+some random data and pressing Ctrl-d will make it continue. There is a
+chance that it will crash, tough, since error returns from parsing
+errors are largely not checked in this program.
+
+The three paths are created and opened using `fopen()`, so no special
+open flags are in effect that would prevent following symlinks, also the
+`O_EXCL` flag is missing to prevent opening existing files. The
+resulting system calls look like this (for creation / opening for
+reading):
+
+    openat(AT_FDCWD, "/tmp/temp.ps", O_WRONLY|O_CREAT|O_TRUNC, 0666) =3D 3
+    openat(AT_FDCWD, "/tmp/temp.ps", O_RDONLY)
+
+Furthermode there is a `chmod()` on the /tmp/temp.ps file:
+
+    hppsfilter.c:110 chmod(temp_filename, S_IRUSR | S_IWUSR | S_IRGRP | S_I=
+ROTH);
+
+The data to print (from stdin) is written to this file, and the file is
+also made world readable explicitly via this `chmod()`. The issues with
+these paths are multifold:
+
+- There is a local information leak, since the print job data will
+  become visible to everybody in the system.
+- There is violated data integrity, since other users can pre-create these
+  files and manipulate e.g. the data to print.
+- This may allow to create files in unexpected places, by placing symbolic
+  links, if the Linux kernel's symlink protection is not active.
+- Similarly it may allow to grant world read privileges to arbitrary
+  files by following symlinks during the `chmod()`.
+- It may allow further unspecified impact if crafted data is placed into
+  /tmp/temp.ps which is processed by the complex `PS_Booklet()` function.
+
+I did not research the impact of the issue further to see whether this
+could lead to local code execution in the context of the user that is
+invoking `hpps`.
+
+Suggested Patch
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+To fix this issue all three fixed temporary paths need to be replaced by
+unpredictably named temporary files that are safely created. Attached to
+this email is a patch that I authored that accomplishes this. This patch
+also drops the `chmod()`. The purpose of it is unclear, so it is
+possible that this breaks something, if other processes with different
+privileges need to access this file.
+
+There is no patch or any other information available from upstream.
+
+Affectedness
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Since, to my knowledge, there is no public version control system for
+hplip, it is difficult to determine when this issue has been introduced.
+By taking some samples from older SUSE distributions I found the issue
+to be present at least since upstream release 3.19.12 from 2019-12-12.
+
+CVE Assignment
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Since HP is a CVE CNA, it is itself responsible for assigning a CVE.
+Since there is no reaction from upstream I don't know if or when CVEs
+will be available.
+
+Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+2023-08-21: I reported the finding privately to upstream via Launchpad [3],
+            offering coordinated disclosure. No other means of contact are
+            documented for hplip.
+2023-09-05: Since I did not get any feedback yet I urged upstream via
+            Launchpad to provide a response.
+2023-10-04: I shared the suggested patch with upstream, still no response.
+2023-11-17: The 90 days maximum embargo time we offer approached and we
+            published the finding.
+
+References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[1]: https://sourceforge.net/projects/hplip
+[2]: https://sourceforge.net/projects/hplip/files/hplip/3.23.8
+[3]: https://bugs.launchpad.net/hplip/+bug/2032375
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+
+--HVnuWQJYgEri8zeM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment;
+	filename="0001-hppsfilter-booklet-printing-change-insecure-fixed-tm.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 5875d32ce071e591461e404bdd8aae849ccdcab1 Mon Sep 17 00:00:00 2001
+From: Matthias Gerstner <matthias.gerstner@suse.de>
+Date: Fri, 8 Sep 2023 10:17:04 +0200
+Subject: [PATCH] hppsfilter: booklet printing: change insecure fixed /tmp f=
+ile
+ paths
+
+Using the fixed /tmp file paths in booklet printing /tmp/booklet.ps,
+/tmp/temp.ps and /tmp/NUP.ps is a local security issue and also prevents
+potential parallel operation of hplip.
+
+Use proper `mkstemp()` for these files. Functions like `PS_Booklet()`
+and `cupsFileOpen()` don't use the open file descriptor but open the
+path by name again. This is safe, since the files have already been
+safely created and have safe modes. I wanted to avoid changing a whole
+series of function signatures for this.
+
+The purpose of the `chmod()` in `open_tempbookletfile()` is unclear, the
+data should only be processed by our own process. Making the file world
+readable is an information leak, though. Thus drop this line.
+---
+ prnt/hpps/hppsfilter.c | 124 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 98 insertions(+), 26 deletions(-)
+
+diff --git a/prnt/hpps/hppsfilter.c b/prnt/hpps/hppsfilter.c
+index d6721b1..711b8d8 100644
+--- a/prnt/hpps/hppsfilter.c
++++ b/prnt/hpps/hppsfilter.c
+@@ -43,7 +43,9 @@ static FILE *g_fp_outdbgps =3D NULL;
+ static FILE *ptempbooklet_file =3D NULL;
+ static char temp_filename[FILE_NAME_SIZE] =3D {0};
+ static char booklet_filename[FILE_NAME_SIZE] =3D {0};
++static int booklet_fd =3D -1;
+ static char Nup_filename[FILE_NAME_SIZE] =3D {0};
++static int Nup_fd =3D -1;
+ extern void PS_Booklet(char *tempfile, char *bookletfile, char *nupfile,in=
+t order, int nup, char* pagesize, int bookletMaker);
+ static const char *GetOptionValue(const char *iOptionValue);
+=20
+@@ -99,16 +101,78 @@ static int hpwrite (void *pBuffer, size_t size)
+     return ndata_written;
+ }
+=20
+-static void open_tempbookletfile(char *mode)
++static int open_tempbookletfile(char *mode)
+ {
+-    ptempbooklet_file=3D fopen(temp_filename, mode);
++    snprintf(temp_filename, FILE_NAME_SIZE, "/tmp/hppsfilter-temp.XXXXXX");
++    int fd =3D mkstemp(temp_filename);
++    if (fd < 0) {
++        temp_filename[0] =3D '\0';
++        fprintf(stderr, "ERROR: Unable to open temp file %s\n", temp_filen=
+ame);
++        return 1;
++    }
++
++    ptempbooklet_file =3D fdopen(fd, mode);
+     if(ptempbooklet_file =3D=3D NULL)
+     {
+-            fprintf(stderr, "ERROR: Unable to open temp file %s\n", temp_f=
+ilename);
+-            return 1;
++        close(fd);
++        fprintf(stderr, "ERROR: Unable to open temp file %s\n", temp_filen=
+ame);
++        return 1;
+     }=20=20
+-    chmod(temp_filename, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
++    return 0;
++}
++
++static void clean_tempfiles()
++{
++    if (booklet_fd !=3D -1)
++    {
++        close(booklet_fd);
++        booklet_fd =3D -1;
++    }
++
++    if (Nup_fd !=3D -1)
++    {
++        close(Nup_fd);
++        Nup_fd =3D -1;
++    }
++
++    if (ptempbooklet_file !=3D NULL)
++    {
++        fclose(ptempbooklet_file);
++        ptempbooklet_file =3D NULL;
++    }
++
++    if( booklet_filename[0] !=3D '\0' )
++    {
++        if ((unlink(booklet_filename)) =3D=3D -1)
++        {
++            fprintf(stderr, "ERROR: Unable to remove temporary files in /t=
+mp dir \"%s\" ",booklet_filename);
++            return 1;
++        }
++
++        booklet_filename[0] =3D '\0';
++    }
++
++    if( temp_filename[0] !=3D '\0' )
++    {
++        if ((unlink(temp_filename)) =3D=3D -1)
++        {
++            fprintf(stderr, "ERROR: Unable to remove temporary files in /t=
+mp dir \"%s\"  ",temp_filename);
++            return 1;
++        }
++
++        temp_filename[0] =3D '\0';
++    }
+=20
++    if( Nup_filename[0] !=3D '\0' )
++    {
++        if ((unlink(Nup_filename)) =3D=3D -1)
++        {
++            fprintf(stderr, "ERROR: Unable to remove temporary files in /t=
+mp dir \"%s\" ",Nup_filename);
++            return 1;
++        }
++
++        Nup_filename[0] =3D '\0';
++    }
+ }
+=20
+ static int Dump_tempbookletfile (void *pBuffer, size_t size)
+@@ -921,6 +985,8 @@ int main (int argc, char **argv)
+    char buffer[MAX_BUFFER]     =3D {0};
+    int LfpSecurePin =3D 0;
+=20
++   atexit(clean_tempfiles);
++
+     get_LogLevel();
+     setbuf (stderr, NULL);
+=20
+@@ -1024,13 +1090,32 @@ int main (int argc, char **argv)
+     if(booklet_enabled)
+     {
+         /* 1. dump  the contents of the input file into temp file */
+-        sprintf(booklet_filename, "/tmp/%s.ps","booklet");
+-        sprintf(temp_filename, "/tmp/%s.ps","temp");
+-        sprintf(Nup_filename, "/tmp/%s.ps","NUP");
+-        open_tempbookletfile("w");
+-	while( (numBytes =3D cupsFileGetLine(fp_input, line, sizeof(line))) > 0)
++        snprintf(booklet_filename, FILE_NAME_SIZE, "/tmp/hppsfilter-bookle=
+t.XXXXXX");
++        booklet_fd =3D mkstemp(booklet_filename);
++        if( booklet_fd < 0 )
++        {
++            booklet_filename[0] =3D '\0';
++            fprintf(stderr, "ERROR: Unable to create booklet temporary fil=
+e \"%s\"", booklet_filename);
++            return 1;
++        }
++
++        snprintf(Nup_filename, FILE_NAME_SIZE, "/tmp/hppsfilter-nup.XXXXXX=
+");
++        Nup_fd =3D mkstemp(Nup_filename);
++        if( Nup_fd < 0 )
++        {
++            Nup_filename[0] =3D '\0';
++            clean_tempfiles();
++            fprintf(stderr, "ERROR: Unable to create nup temporary file \"=
+%s\"", Nup_filename);
++            return 1;
++        }
++
++        if( open_tempbookletfile("w") !=3D 0 )
++        {
++            clean_tempfiles();
++            return 1;
++        }
++        while( (numBytes =3D cupsFileGetLine(fp_input, line, sizeof(line))=
+) > 0)
+             Dump_tempbookletfile (line, numBytes);
+-        fclose(ptempbooklet_file);
+=20
+         /* 2. Perform the booklet operation on the PS file */
+         PS_Booklet(temp_filename,booklet_filename,Nup_filename,order,nup,s=
+ubString,bookletMaker);
+@@ -1040,6 +1125,7 @@ int main (int argc, char **argv)
+         if ((fp_bookletinput =3D cupsFileOpen(Nup_filename, "r")) =3D=3D N=
+ULL)
+         {
+             fprintf(stderr, "ERROR: Unable to open Nup_filename print file=
+ \"%s\"", Nup_filename);
++            clean_tempfiles();
+             return 1;
+         }
+         while ( (numBytes =3D cupsFileGetLine(fp_bookletinput, line, sizeo=
+f(line))) > 0)
+@@ -1047,21 +1133,7 @@ int main (int argc, char **argv)
+         cupsFileClose (fp_bookletinput);
+=20
+         /* 4. Unlink function to remove the temp temporary files created */
+-        if( (unlink(booklet_filename)) =3D=3D -1)
+-        {
+-            fprintf(stderr, "ERROR: Unable to remove temporary files in /t=
+mp dir \"%s\" ",booklet_filename);
+-            return 1;
+-        }
+-        if( (unlink(temp_filename)) =3D=3D -1)
+-        {
+-            fprintf(stderr, "ERROR: Unable to remove temporary files in /t=
+mp dir \"%s\"  ",temp_filename);
+-            return 1;
+-        }
+-        if( (unlink(Nup_filename)) =3D=3D -1)
+-        {
+-            fprintf(stderr, "ERROR: Unable to remove temporary files in /t=
+mp dir \"%s\" ",Nup_filename);
+-            return 1;
+-        }
++        clean_tempfiles();
+         booklet_enabled =3D 0;
+         bookletMaker=3D0;
+     }
+--=20
+2.41.0
+
+
+--HVnuWQJYgEri8zeM--
+
+--V1iZDCyLZxPEeOgc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmVXNEAACgkQFMQFyXGS
+NVO3mxAAooVxOl/hjuKDWxigcy0zLfwb4Wxb09p38xuB6zHRONMI2a7s/J4zmEgy
+4Nake1DTjcSUdqJx9DiDNfv50fKBpTOzAa49bxBuPizEBSvItH4pK07R0/mlmtmV
+r7OIcQW9ZrH6ueS5E05wpsPmMDouqunD4dWeaMT6AOda9K+4AfTS2zAZR6581uSL
+LvV3uPghrLpChCEjOoNEZtfEittnOv2ryQANzLjIUc/tGJ1P6A98zmjHLdqKFreh
+dNJCaZVqvKI26pP3YUM1BawCb3lMGy23ZTivO5wqo440fHfyF3vsu+vqEIsH2GQS
+GzdRC/ECVuf01IHq96F1mcf59t0NdBFJqSUUJQ5aLqBkrro7nqLW5lYommnduBNU
+/PE3BsYsbpRt+awlJTF0BkopDS6uOaOw/R50IP0jXLNyHyjU4JeihypNpoAgghdQ
+ArE8LdsDpJbafQM7ZTgXftEnOMlp/LHhb6NPH9qq3X4uVq9WsGbJ65vrvUj97a89
+pH6WWgS70TjmFcmgSccBTI89b4YGqkTZDAC5yO6zNZWlSkxyojm5ho0bxAGxaOvU
+GBCMKLF3b5r9qmEvQg8y1dQqvKYOzJN7js17lgD/4DLgr/C4KTK0bGcTigpJNf+/
+Qo5oxTJ9mUiTdYMFT0GsSjC+gp16Cy1gsJAUKytuZYNS1jAld1U=
+=sAXz
+-----END PGP SIGNATURE-----
+
+--V1iZDCyLZxPEeOgc--
