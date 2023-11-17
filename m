@@ -1,74 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/9
-Message-ID: <20230314191132.qDz3u%steffen@sdaoden.eu>
-Date: Tue, 14 Mar 2023 20:11:32 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
-To: Helmut Grohne <helmut@...divi.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: sox: patches for old vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/17/1
+Message-ID: <ZVc0QDRY04pR81cs@kasco.suse.de>
+Date: Fri, 17 Nov 2023 10:37:04 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
 Content-Type: text/plain; charset=utf-8
 
-Hello and greetings.
+Hello list,
 
-Helmut Grohne wrote in
- <20230314110138.GA1192267@...divi.de>:
- |On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
- |>  * CVE-2021-33844
- |
- |The original fix for this issue would cause a regression. After applying
- |it, sox would be unable to decode WAV GSM files. This has been reported
- ...
- |I see that most distributions (e.g. RedHat, SUSE, Gentoo, etc.) have not
- |picked up the faulty patch. Ubuntu inherited it from Debian and will
- |likely inherit the fix as it gets fixed in Debian releases.
+this report is about the problematic use of fixed temporary paths in the
+`hpps` program from the hplip [1] project. Hplip is a collection of
+utilities for HP printer and scanner devices.
 
-You have chosen not to update to latest possible git(?).
+There is currently no upstream fix available for this issue and this
+publication happens after 90 days of attempted coordinated disclosure,
+but upstream did not react to my report.
 
-  ...
- |From: Helmut Grohne <helmut@...divi.de>
- |Subject: wav: reject 0 bits per sample to avoid division by zero
- |Bug: https://sourceforge.net/p/sox/bugs/349/
- |Bug-Debian: https://bugs.debian.org/1021135
- ...
- |--- a/src/wav.c
- |+++ b/src/wav.c
- ...
- |     default:
- |+        if (ft->encoding.bits_per_sample == 0)
- |+        {
- |+            lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample \
- |is zero");
- |+            return SOX_EOF;
- |+        }
+This report is based on the latest upstream release 3.23.8 [2] of hplip.
 
+The Issue
+=========
 
-Now, latest git removed support for built-in GSM, and i am too
-lazy and angry (do not get me started on Microsoft and OAuth for
-a normal "app" that is to read mail, they now no longer accept
-simple token refresh but with re-authenticating a 1024 or so bit
-password after 3600 seconds, and then fail to accept SMTP even
-though it is included, POP3 is not there anyway even though
-announced, but IMAP is right -- is anybody here??  But that is
-off-topic; just like my single-line graylister fix to support
-verbose logs in non-development code, sic) to check it.
+The program /usr/lib/cups/filter/hpps uses a number of insecure fixed
+temporary files that can be found in prnt/hpps/hppsfilter.c:
 
-_But_ .. "default" is mysterious, there is WAVE_FORMAT_GSM610
-right above, and it is optional in latest git, which does not even
-support the "default:" label.
-How can you reach "default:", thus?
+    prnt/hpps/hppsfilter.c:1027:        sprintf(booklet_filename, "/tmp/%s.ps","booklet");
+    prnt/hpps/hppsfilter.c:1028:        sprintf(temp_filename, "/tmp/%s.ps","temp");
+    prnt/hpps/hppsfilter.c:1029:        sprintf(Nup_filename, "/tmp/%s.ps","NUP");
 
- |         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sam\
- |         ple) / ft->signal.channels;
- |         ft->signal.length = wav->numSamples * ft->signal.channels;
- |}
+These paths are only used if "booklet printing" is enabled. For testing, the
+logic can be forced by invoking the program similar to this:
 
- --End of <20230314110138.GA1192267@...divi.de>
+    $ export PPD=/usr/share/cups/model/manufacturer-PPDs/hplip-plugin/hp-laserjet_1020.ppd.gz
+    $ /usr/lib/cups/filter/hpps some-job some-user some-title 10 HPBookletFilter=10,fitplot,Duplex=DuplexTumble,number-up=1
 
-Subdivision is a top-modern song of Rush, no?
+The program will expect data to print on stdin this way. Just typing in
+some random data and pressing Ctrl-d will make it continue. There is a
+chance that it will crash, tough, since error returns from parsing
+errors are largely not checked in this program.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+The three paths are created and opened using `fopen()`, so no special
+open flags are in effect that would prevent following symlinks, also the
+`O_EXCL` flag is missing to prevent opening existing files. The
+resulting system calls look like this (for creation / opening for
+reading):
+
+    openat(AT_FDCWD, "/tmp/temp.ps", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+    openat(AT_FDCWD, "/tmp/temp.ps", O_RDONLY)
+
+Furthermode there is a `chmod()` on the /tmp/temp.ps file:
+
+    hppsfilter.c:110 chmod(temp_filename, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+
+The data to print (from stdin) is written to this file, and the file is
+also made world readable explicitly via this `chmod()`. The issues with
+these paths are multifold:
+
+- There is a local information leak, since the print job data will
+  become visible to everybody in the system.
+- There is violated data integrity, since other users can pre-create these
+  files and manipulate e.g. the data to print.
+- This may allow to create files in unexpected places, by placing symbolic
+  links, if the Linux kernel's symlink protection is not active.
+- Similarly it may allow to grant world read privileges to arbitrary
+  files by following symlinks during the `chmod()`.
+- It may allow further unspecified impact if crafted data is placed into
+  /tmp/temp.ps which is processed by the complex `PS_Booklet()` function.
+
+I did not research the impact of the issue further to see whether this
+could lead to local code execution in the context of the user that is
+invoking `hpps`.
+
+Suggested Patch
+===============
+
+To fix this issue all three fixed temporary paths need to be replaced by
+unpredictably named temporary files that are safely created. Attached to
+this email is a patch that I authored that accomplishes this. This patch
+also drops the `chmod()`. The purpose of it is unclear, so it is
+possible that this breaks something, if other processes with different
+privileges need to access this file.
+
+There is no patch or any other information available from upstream.
+
+Affectedness
+============
+
+Since, to my knowledge, there is no public version control system for
+hplip, it is difficult to determine when this issue has been introduced.
+By taking some samples from older SUSE distributions I found the issue
+to be present at least since upstream release 3.19.12 from 2019-12-12.
+
+CVE Assignment
+==============
+
+Since HP is a CVE CNA, it is itself responsible for assigning a CVE.
+Since there is no reaction from upstream I don't know if or when CVEs
+will be available.
+
+Timeline
+========
+
+2023-08-21: I reported the finding privately to upstream via Launchpad [3],
+            offering coordinated disclosure. No other means of contact are
+            documented for hplip.
+2023-09-05: Since I did not get any feedback yet I urged upstream via
+            Launchpad to provide a response.
+2023-10-04: I shared the suggested patch with upstream, still no response.
+2023-11-17: The 90 days maximum embargo time we offer approached and we
+            published the finding.
+
+References
+==========
+
+[1]: https://sourceforge.net/projects/hplip
+[2]: https://sourceforge.net/projects/hplip/files/hplip/3.23.8
+[3]: https://bugs.launchpad.net/hplip/+bug/2032375
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Ivo Totev, Andrew McDonald, Werner Knoblich
+
+View attachment "0001-hppsfilter-booklet-printing-change-insecure-fixed-tm.patch" of type "text/plain" (6996 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
