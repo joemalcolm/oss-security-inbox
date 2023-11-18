@@ -1,4 +1,4 @@
-Received: (qmail 24363 invoked by uid 550); 8 Aug 2023 13:13:54 -0000
+Received: (qmail 31760 invoked by uid 550); 18 Nov 2023 14:14:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +7,185 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24138 invoked from network); 8 Aug 2023 13:13:29 -0000
-Date: Tue, 8 Aug 2023 15:13:24 +0200
-From: Solar Designer <solar@openwall.com>
-To: Rafael Silva <rafael.silva@nearform.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230808131324.GA18709@openwall.com>
-References: <f3d796bc-e2ff-4d61-8820-e10ca8068ad4n@googlegroups.com> <69edd0e8-5d29-43ab-b18a-524bbb517944n@googlegroups.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <69edd0e8-5d29-43ab-b18a-524bbb517944n@googlegroups.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Fwd: Node.js security updates for all active release lines, August 2023
+Received: (qmail 17650 invoked from network); 18 Nov 2023 02:09:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1700273358; x=1700878158; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KsfSi4TMT1zaMrEReFU2TFWPtoF+bmH1F5mepWAQAmc=;
+        b=TTWDk/Nam2pB7+OpsVa2dy+n2+DWX8zXthDUJ2idpQyEVyqk6aNU5mwUuNI/i7B9aZ
+         8gTySoZcb5DyQyWTHlURw49nZZNyn8Gbk1xLfaxaJQ3FpsDRyZ4QUhQUsbWAdwFURAQ6
+         RUqqyMOR8s2rNtkBSJEVAkwUArN6QfDDDFd3w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700273358; x=1700878158;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KsfSi4TMT1zaMrEReFU2TFWPtoF+bmH1F5mepWAQAmc=;
+        b=q0FU7ZFtlKszOQxU1ZoUO0yPwMlwiIUwlnMkFUaje+7ZZ5qzgIg5bxwVK8PHPztSzB
+         eDTPQAvrn7xL7O6U9tkFJ6VfsuFWOtZPEQPhNpucVVSAtKCGSamdF9raiCC0dhcTJ2oR
+         d3/8Jz5BBpUeInUzGu1M+RpfawhfDtwHQC2OuS1qURUo9m1g168COK71KfjBeSwZ8v0o
+         omY0IkcKGxGiZ+4BYig4puoYo8J2l9mcOlvo/FLCbdptsslXkBPVF2Lbow/yyEIohFKy
+         APW0krcnqw/9IeVY74nN43CzfKb1Yiq5Vrc+EjgfoRBUvfnXbjVMhQ2+NplR1oXGVE3M
+         /YiA==
+X-Gm-Message-State: AOJu0YxENpq2n74Gmy4u4IDz87Vw68UvCMLPNQTMpZET8yDVU/DfSlBw
+	63gBy1CaIkLGN/9u/sT1qV33/Yj2kWQlN3d8Q8p89ElBQcBTSvzV
+X-Google-Smtp-Source: AGHT+IGMpA5/o74AjNDEKx7CTGTnBAnYkSgb2AeRweCs3Xm+UQFJ4gWnL+qjocz0Kse3tPHMkb2r59dY1kZgtDGRhDA=
+X-Received: by 2002:ac2:457c:0:b0:500:daf6:3898 with SMTP id
+ k28-20020ac2457c000000b00500daf63898mr1001507lfm.26.1700273357638; Fri, 17
+ Nov 2023 18:09:17 -0800 (PST)
+MIME-Version: 1.0
+References: <ZVc0QDRY04pR81cs@kasco.suse.de>
+In-Reply-To: <ZVc0QDRY04pR81cs@kasco.suse.de>
+From: Roxana Bradescu <roxabee@chromium.org>
+Date: Fri, 17 Nov 2023 18:09:06 -0800
+Message-ID: <CAB=ivF-hcDEN3_tXk+4rUUwXpVAKYcmt+efkUpGgedPiA4CDyg@mail.gmail.com>
+To: oss-security@lists.openwall.com, security@hpe.com
+Content-Type: multipart/alternative; boundary="00000000000080ea5b060a63bdd7"
+Subject: Re: [oss-security] hplip: security issues in `hpps` program due to
+ fixed /tmp path usage in prnt/hpps/hppsfilter.c
 
-Hi,
+--00000000000080ea5b060a63bdd7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Something weird has happened with the below message.  Per the headers,
-it looks like it was resent to oss-security by a third-party(?) still on
-July 31, but it actually only hit our mail server today.  I also wonder
-why it wasn't(?) sent directly by Rafael, as the previous one was:
+Thanks for making the community aware of this issue.
 
-https://www.openwall.com/lists/oss-security/2023/06/14/4
+Perhaps security@hpe.com can help to route internally to get a CVE issued
+and find the appropriate owners to fix.
 
-Anyway, Rafael, let me also use this opportunity to ask you to please
-include actual detail (such as text/plain copy-paste of the blog posts)
-directly in your messages going forward, if you can.  Please also do
-include the blog links, but ideally not only links.
 
-Thanks,
+On Fri, Nov 17, 2023 at 1:38=E2=80=AFAM Matthias Gerstner <mgerstner@suse.d=
+e> wrote:
 
-Alexander
+> Hello list,
+>
+> this report is about the problematic use of fixed temporary paths in the
+> `hpps` program from the hplip [1] project. Hplip is a collection of
+> utilities for HP printer and scanner devices.
+>
+> There is currently no upstream fix available for this issue and this
+> publication happens after 90 days of attempted coordinated disclosure,
+> but upstream did not react to my report.
+>
+> This report is based on the latest upstream release 3.23.8 [2] of hplip.
+>
+> The Issue
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> The program /usr/lib/cups/filter/hpps uses a number of insecure fixed
+> temporary files that can be found in prnt/hpps/hppsfilter.c:
+>
+>     prnt/hpps/hppsfilter.c:1027:        sprintf(booklet_filename, "/tmp/%
+> s.ps","booklet");
+>     prnt/hpps/hppsfilter.c:1028:        sprintf(temp_filename, "/tmp/%s.ps
+> ","temp");
+>     prnt/hpps/hppsfilter.c:1029:        sprintf(Nup_filename, "/tmp/%s.ps
+> ","NUP");
+>
+> These paths are only used if "booklet printing" is enabled. For testing,
+> the
+> logic can be forced by invoking the program similar to this:
+>
+>     $ export
+> PPD=3D/usr/share/cups/model/manufacturer-PPDs/hplip-plugin/hp-laserjet_10=
+20.ppd.gz
+>     $ /usr/lib/cups/filter/hpps some-job some-user some-title 10
+> HPBookletFilter=3D10,fitplot,Duplex=3DDuplexTumble,number-up=3D1
+>
+> The program will expect data to print on stdin this way. Just typing in
+> some random data and pressing Ctrl-d will make it continue. There is a
+> chance that it will crash, tough, since error returns from parsing
+> errors are largely not checked in this program.
+>
+> The three paths are created and opened using `fopen()`, so no special
+> open flags are in effect that would prevent following symlinks, also the
+> `O_EXCL` flag is missing to prevent opening existing files. The
+> resulting system calls look like this (for creation / opening for
+> reading):
+>
+>     openat(AT_FDCWD, "/tmp/temp.ps", O_WRONLY|O_CREAT|O_TRUNC, 0666) =3D 3
+>     openat(AT_FDCWD, "/tmp/temp.ps", O_RDONLY)
+>
+> Furthermode there is a `chmod()` on the /tmp/temp.ps file:
+>
+>     hppsfilter.c:110 chmod(temp_filename, S_IRUSR | S_IWUSR | S_IRGRP |
+> S_IROTH);
+>
+> The data to print (from stdin) is written to this file, and the file is
+> also made world readable explicitly via this `chmod()`. The issues with
+> these paths are multifold:
+>
+> - There is a local information leak, since the print job data will
+>   become visible to everybody in the system.
+> - There is violated data integrity, since other users can pre-create these
+>   files and manipulate e.g. the data to print.
+> - This may allow to create files in unexpected places, by placing symbolic
+>   links, if the Linux kernel's symlink protection is not active.
+> - Similarly it may allow to grant world read privileges to arbitrary
+>   files by following symlinks during the `chmod()`.
+> - It may allow further unspecified impact if crafted data is placed into
+>   /tmp/temp.ps which is processed by the complex `PS_Booklet()` function.
+>
+> I did not research the impact of the issue further to see whether this
+> could lead to local code execution in the context of the user that is
+> invoking `hpps`.
+>
+> Suggested Patch
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> To fix this issue all three fixed temporary paths need to be replaced by
+> unpredictably named temporary files that are safely created. Attached to
+> this email is a patch that I authored that accomplishes this. This patch
+> also drops the `chmod()`. The purpose of it is unclear, so it is
+> possible that this breaks something, if other processes with different
+> privileges need to access this file.
+>
+> There is no patch or any other information available from upstream.
+>
+> Affectedness
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Since, to my knowledge, there is no public version control system for
+> hplip, it is difficult to determine when this issue has been introduced.
+> By taking some samples from older SUSE distributions I found the issue
+> to be present at least since upstream release 3.19.12 from 2019-12-12.
+>
+> CVE Assignment
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Since HP is a CVE CNA, it is itself responsible for assigning a CVE.
+> Since there is no reaction from upstream I don't know if or when CVEs
+> will be available.
+>
+> Timeline
+> =3D=3D=3D=3D=3D=3D=3D=3D
+>
+> 2023-08-21: I reported the finding privately to upstream via Launchpad [3=
+],
+>             offering coordinated disclosure. No other means of contact are
+>             documented for hplip.
+> 2023-09-05: Since I did not get any feedback yet I urged upstream via
+>             Launchpad to provide a response.
+> 2023-10-04: I shared the suggested patch with upstream, still no response.
+> 2023-11-17: The 90 days maximum embargo time we offer approached and we
+>             published the finding.
+>
+> References
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> [1]: https://sourceforge.net/projects/hplip
+> [2]: https://sourceforge.net/projects/hplip/files/hplip/3.23.8
+> [3]: https://bugs.launchpad.net/hplip/+bug/2032375
+>
+> --
+> Matthias Gerstner <matthias.gerstner@suse.de>
+> Security Engineer
+> https://www.suse.com/security
+> GPG Key ID: 0x14C405C971923553
+>
+> SUSE Software Solutions Germany GmbH
+> HRB 36809, AG N=C3=BCrnberg
+> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+>
 
-On Mon, Jul 31, 2023 at 07:49:27AM -0700, Rafael Silva wrote:
-> 
-> 
-> 
-> 
-> ---------- Forwarded message ---------
-> From: Rafael Silva <rafael.silva@nearform.com>
-> Date: Monday, July 31, 2023 at 11:48:26???AM UTC-3
-> Subject: Node.js security updates for all active release lines, August 2023
-> To: nodejs-sec <nodejs-sec@googlegroups.com>
-> 
-> 
-> 
-> 
-> The Node.js project will release new versions of all supported release 
-> lines on or shortly after Tuesday, August 8th, 2023.
-> 
-> 
-> For more information see: 
-> https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
+--00000000000080ea5b060a63bdd7--
