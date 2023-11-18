@@ -1,87 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/7
-Message-ID: <20230926153454.GA12511@openwall.com>
-Date: Tue, 26 Sep 2023 17:34:54 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/18/1
+Message-ID: <CAB=ivF-hcDEN3_tXk+4rUUwXpVAKYcmt+efkUpGgedPiA4CDyg@mail.gmail.com>
+Date: Fri, 17 Nov 2023 18:09:06 -0800
+From: Roxana Bradescu <roxabee@...omium.org>
+To: oss-security@...ts.openwall.com, security@....com
+Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Thanks for making the community aware of this issue.
 
-It was great to hear from Vincent that the newer libwebp changes are
-just "Clean-ups, no security issues there."  Yet I think it would also
-be great if someone in here double-checks that.
+Perhaps security@....com can help to route internally to get a CVE issued
+and find the appropriate owners to fix.
 
-Regarding the assert failure detected by oss-fuzz, "A release build
-would not be negatively affected."  libwebp does specify -DNDEBUG by
-default in:
 
-$ fgrep -rl DNDEBUG .
-./Makefile.vc
-./xcframeworkbuild.sh
-./iosbuild.sh
-./configure.ac
-./makefile.unix
+On Fri, Nov 17, 2023 at 1:38 AM Matthias Gerstner <mgerstner@...e.de> wrote:
 
-and there's also cmake support, but apparently cmake sets -DNDEBUG for
-release builds by default.  So at least this statement does appear to be
-true for libwebp itself as built via the above means.
-
-However, there's also Gradle support, and the gradle* files do not
-mention NDEBUG.
-
-Also, I wonder if there are other projects building code from libwebp
-via different build environments.
-
-So there might be (a small minority of) uses of libwebp where the assert
-exists in a release build of some project.
-
-On Tue, Sep 26, 2023 at 11:43:45AM +0200, Salvatore Bonaccorso wrote:
-> Maybe related to this question in todays CVEs updates there appeared 
-> 
-> https://www.cve.org/CVERecord?id=CVE-2023-5129
-> 
-> vs.
-> 
-> https://www.cve.org/CVERecord?id=CVE-2023-4863
-> 
-> FWIW, I contacted the assigning CNAs so this can be clarified (e.g. if
-> one of those needs to be rejected).
-
-CVE-2023-5129 description looks like what the original's should have been:
-
-> Assigner: Google LLC
-> Published: 2023-09-25Updated: 2023-09-25
-> 
-> With a specially crafted WebP lossless file, libwebp may write data out
-> of bounds to the heap. The ReadHuffmanCodes() function allocates the
-> HuffmanCode buffer with a size that comes from an array of precomputed
-> sizes: kTableSize. The color_cache_bits value defines which size to use.
-> The kTableSize array only takes into account sizes for 8-bit first-level
-> table lookups but not second-level table lookups. libwebp allows codes
-> that are up to 15-bit (MAX_ALLOWED_CODE_LENGTH). When
-> BuildHuffmanTable() attempts to fill the second-level tables it may
-> write data out-of-bounds. The OOB write to the undersized array happens
-> in ReplicateValue.
-> 
-> Vendor
-> libwebp
-> 
-> Product
-> libwebp
-> 
-> Versions
-> affected from 0.5.0 before 1.3.2
-> 
-> Credits
-> 
->     Apple Security Engineering and Architecture (SEAR) finder
->     The Citizen Lab at The University of Toronto's Munk School finder
-> 
+> Hello list,
+>
+> this report is about the problematic use of fixed temporary paths in the
+> `hpps` program from the hplip [1] project. Hplip is a collection of
+> utilities for HP printer and scanner devices.
+>
+> There is currently no upstream fix available for this issue and this
+> publication happens after 90 days of attempted coordinated disclosure,
+> but upstream did not react to my report.
+>
+> This report is based on the latest upstream release 3.23.8 [2] of hplip.
+>
+> The Issue
+> =========
+>
+> The program /usr/lib/cups/filter/hpps uses a number of insecure fixed
+> temporary files that can be found in prnt/hpps/hppsfilter.c:
+>
+>     prnt/hpps/hppsfilter.c:1027:        sprintf(booklet_filename, "/tmp/%
+> s.ps","booklet");
+>     prnt/hpps/hppsfilter.c:1028:        sprintf(temp_filename, "/tmp/%s.ps
+> ","temp");
+>     prnt/hpps/hppsfilter.c:1029:        sprintf(Nup_filename, "/tmp/%s.ps
+> ","NUP");
+>
+> These paths are only used if "booklet printing" is enabled. For testing,
+> the
+> logic can be forced by invoking the program similar to this:
+>
+>     $ export
+> PPD=/usr/share/cups/model/manufacturer-PPDs/hplip-plugin/hp-laserjet_1020.ppd.gz
+>     $ /usr/lib/cups/filter/hpps some-job some-user some-title 10
+> HPBookletFilter=10,fitplot,Duplex=DuplexTumble,number-up=1
+>
+> The program will expect data to print on stdin this way. Just typing in
+> some random data and pressing Ctrl-d will make it continue. There is a
+> chance that it will crash, tough, since error returns from parsing
+> errors are largely not checked in this program.
+>
+> The three paths are created and opened using `fopen()`, so no special
+> open flags are in effect that would prevent following symlinks, also the
+> `O_EXCL` flag is missing to prevent opening existing files. The
+> resulting system calls look like this (for creation / opening for
+> reading):
+>
+>     openat(AT_FDCWD, "/tmp/temp.ps", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+>     openat(AT_FDCWD, "/tmp/temp.ps", O_RDONLY)
+>
+> Furthermode there is a `chmod()` on the /tmp/temp.ps file:
+>
+>     hppsfilter.c:110 chmod(temp_filename, S_IRUSR | S_IWUSR | S_IRGRP |
+> S_IROTH);
+>
+> The data to print (from stdin) is written to this file, and the file is
+> also made world readable explicitly via this `chmod()`. The issues with
+> these paths are multifold:
+>
+> - There is a local information leak, since the print job data will
+>   become visible to everybody in the system.
+> - There is violated data integrity, since other users can pre-create these
+>   files and manipulate e.g. the data to print.
+> - This may allow to create files in unexpected places, by placing symbolic
+>   links, if the Linux kernel's symlink protection is not active.
+> - Similarly it may allow to grant world read privileges to arbitrary
+>   files by following symlinks during the `chmod()`.
+> - It may allow further unspecified impact if crafted data is placed into
+>   /tmp/temp.ps which is processed by the complex `PS_Booklet()` function.
+>
+> I did not research the impact of the issue further to see whether this
+> could lead to local code execution in the context of the user that is
+> invoking `hpps`.
+>
+> Suggested Patch
+> ===============
+>
+> To fix this issue all three fixed temporary paths need to be replaced by
+> unpredictably named temporary files that are safely created. Attached to
+> this email is a patch that I authored that accomplishes this. This patch
+> also drops the `chmod()`. The purpose of it is unclear, so it is
+> possible that this breaks something, if other processes with different
+> privileges need to access this file.
+>
+> There is no patch or any other information available from upstream.
+>
+> Affectedness
+> ============
+>
+> Since, to my knowledge, there is no public version control system for
+> hplip, it is difficult to determine when this issue has been introduced.
+> By taking some samples from older SUSE distributions I found the issue
+> to be present at least since upstream release 3.19.12 from 2019-12-12.
+>
+> CVE Assignment
+> ==============
+>
+> Since HP is a CVE CNA, it is itself responsible for assigning a CVE.
+> Since there is no reaction from upstream I don't know if or when CVEs
+> will be available.
+>
+> Timeline
+> ========
+>
+> 2023-08-21: I reported the finding privately to upstream via Launchpad [3],
+>             offering coordinated disclosure. No other means of contact are
+>             documented for hplip.
+> 2023-09-05: Since I did not get any feedback yet I urged upstream via
+>             Launchpad to provide a response.
+> 2023-10-04: I shared the suggested patch with upstream, still no response.
+> 2023-11-17: The 90 days maximum embargo time we offer approached and we
+>             published the finding.
+>
 > References
-> 
->     https://chromium.googlesource.com/webm/libwebp/+/902bc9190331343b2017211debcec8d2ab87e17a
->     https://chromium.googlesource.com/webm/libwebp/+/2af26267cdfcb63a88e5c74a85927a12d6ca1d76
+> ==========
+>
+> [1]: https://sourceforge.net/projects/hplip
+> [2]: https://sourceforge.net/projects/hplip/files/hplip/3.23.8
+> [3]: https://bugs.launchpad.net/hplip/+bug/2032375
+>
+> --
+> Matthias Gerstner <matthias.gerstner@...e.de>
+> Security Engineer
+> https://www.suse.com/security
+> GPG Key ID: 0x14C405C971923553
+>
+> SUSE Software Solutions Germany GmbH
+> HRB 36809, AG Nürnberg
+> Geschäftsführer: Ivo Totev, Andrew McDonald, Werner Knoblich
+>
 
-Alexander
