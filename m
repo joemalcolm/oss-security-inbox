@@ -1,84 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/29/1
-Message-Id: <8100C957-0EFB-4A6F-98B2-5DB4544CA6F1@beckweb.net>
-Date: Wed, 29 Nov 2023 14:33:15 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/19/1
+Message-ID: <9d46de17-2d89-2795-3096-6e2e46687e9a@apache.org>
+Date: Sun, 19 Nov 2023 07:59:35 +0000
+From: Xiang Chen <cdmikechen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: CVE-2023-46302: Apache Submarine: Fix CVE-2022-1471 SnakeYaml unsafe deserialization 
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Severity: critical
 
-The following releases contain fixes for security vulnerabilities:
+Affected versions:
 
-* Google Compute Engine Plugin 4.551.v5a_4dc98f6962
-* Jira Plugin 3.12
-* MATLAB Plugin 2.11.1
-* NeuVector Vulnerability Scanner Plugin 2.2
+- Apache Submarine 0.7.0 before 0.8.0
 
+Description:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-11-29/
+Apache Software Foundation Apache Submarine has a bug when serializing against yaml. The bug is caused by snakeyaml  https://nvd.nist.gov/vuln/detail/CVE-2022-1471 .
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Apache Submarine uses JAXRS to define REST endpoints.  In order to
+handle YAML requests (using application/yaml content-type), it defines
+a YamlEntityProvider entity provider that will process all incoming
+YAML requests.  In order to unmarshal the request, the readFrom method
+is invoked, passing the entityStream containing the user-supplied data in `submarine-server/server-core/src/main/java/org/apache/submarine/server/utils/YamlUtils.java`.
+ 
+We have now fixed this issue in the new version by replacing to `jackson-dataformat-yaml`.
+This issue affects Apache Submarine: from 0.7.0 before 0.8.0. Users are recommended to upgrade to version 0.8.0, which fixes this issue.
+If using the version smaller than 0.8.0  and not want to upgrade, you can try cherry-pick PR  https://github.com/apache/submarine/pull/1054  and rebuild the submart-server image to fix this.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+This issue is being tracked as SUBMARINE-1371 
 
----
+Credit:
 
-SECURITY-3225 / CVE-2023-49653
-Jira Plugin 3.11 and earlier does not set the appropriate context for
-credentials lookup, allowing the use of system-scoped credentials otherwise
-reserved for the global configuration.
+GHSL team member @jorgectf (Jorge Rosillo) (reporter)
 
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to.
+References:
 
-
-SECURITY-2835 / CVE-2023-49652
-Google Compute Engine Plugin 4.550.vb_327fca_3db_11 and earlier does not
-correctly perform permission checks in multiple HTTP endpoints. This allows
-attackers with global Item/Configure permission (while lacking
-Item/Configure permission on any particular job) to do the following:
-
-* Enumerate system-scoped credentials IDs of credentials stored in Jenkins.
-  Those can be used as part of an attack to capture the credentials using
-  another vulnerability.
-* Connect to Google Cloud Platform using attacker-specified credentials IDs
-  obtained through another method, to obtain information about existing
-  projects.
-
-
-SECURITY-3193 / CVE-2023-49654 (permission checks) & CVE-2023-49655 (CSRF) & CVE-2023-49656 (XXE)
-MATLAB Plugin determines whether a user-specified directory on the Jenkins
-controller is the location of a MATLAB installation by parsing an XML file
-in that directory.
-
-MATLAB Plugin 2.11.0 and earlier does not perform permission checks in
-several HTTP endpoints implementing related form validation.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-Additionally, the plugin does not configure its XML parser to prevent XML
-external entity (XXE) attacks. This allows attackers able to create files
-on the Jenkins controller file system to have Jenkins parse a crafted XML
-document that uses external entities for extraction of secrets from the
-Jenkins controller or server-side request forgery.
-
-
-SECURITY-3256 / CVE-2023-49673 (CSRF) & CVE-2023-49674 (missing permission check)
-NeuVector Vulnerability Scanner Plugin 1.22 and earlier does not perform a
-permission check in a connection test HTTP endpoint. This allows attackers
-with Overall/Read permission to connect to an attacker-specified hostname
-and port using attacker-specified username and password. Additionally, this
-HTTP endpoint does not require POST requests, resulting in a cross-site
-request forgery (CSRF) vulnerability.
-
-
+https://issues.apache.org/jira/browse/SUBMARINE-1371
+https://github.com/apache/submarine/pull/1054
+https://submarine.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46302
+https://issues.apache.org/jira/browse/SUBMARINE-1371
 
