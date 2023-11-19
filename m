@@ -1,139 +1,166 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/16/4
-Message-ID: <20230416205727.0XQJ2%steffen@sdaoden.eu>
-Date: Sun, 16 Apr 2023 22:57:27 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/19/2
+Message-ID: <ZVn7eWAIy-zhDFJ0@dojo.mi.org>
+Date: Sun, 19 Nov 2023 07:11:37 -0500
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
 Content-Type: text/plain; charset=utf-8
 
-Ruihan Li wrote in
- <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@...tbccffxgv>:
- ...
- |be privileged, such as a setuid program. Moreover, if the socket is used as
- |stdout or stderr, an ioctl call is made to obtain tty parameters, which \
- |can be
- |verified through the strace command.
- |```
- |# strace -e trace=ioctl sudo > /dev/null
- |ioctl(3, TIOCGPGRP, [30305])            = 0
- |ioctl(2, TIOCGWINSZ, {ws_row=45, ws_col=190, ws_xpixel=0, ws_ypixel=0}) = 0
- |```
- ...
- |# find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl \
- |{} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n \
- |'V ' || echo -n 'S '; echo {};" \; | sort
- |S ./chage
- |S ./expiry
- |S ./fusermount
- |S ./fusermount3
- |S ./gpasswd
- |S ./ksu
- |S ./mount.cifs
- |S ./sg
- |S ./umount
- |V ./chfn
- |V ./chsh
- |V ./mount
- |V ./newgrp
- |V ./passwd
- |V ./pkexec
- |V ./screen-4.9.0
- |V ./su
- |V ./sudo
- |V ./unix_chkpwd
- |```
- |After manually checking the strace output, it is found that all of \
- |these ioctl
- |users are using ioctl calls on stdin, stdout, or stderr to get or set \
- |some tty
- |parameters. Note that exactly no arguments are passed to these setuid
+[removing security@....com from the Cc:]
 
-Your discovered bluetooth bug totally aside.
+This is for hp.com product security, not hpe.com.  HP and HPE are two
+separate companies, and HPE isn't the printer company.  
 
-I wonder -- have you verified that they do not use isatty(3) aka
-some tc*() series *first*?  The above with sudo does for example
-not reveal anything as shown, roght?  FD 2 seems to be a terminal,
-.. and whereas i do not have sudo src here, i am sure it uses
-isatty(3) and tcgetattr(3).
+To report a potential security vulnerability with a HP product,
+contact: hp-security-alert@...com
 
-I find it hard to believe that people simply use terminal ioctl(2)
-etc on file descriptors without verifying that they are, well,
-indeed terminal file descriptors?  For example, su(1), as above,
-of Linux shadow-utils works a bit, i read for example
-
-       * Be more paranoid, like su from SimplePAMApps.  --marekm
-
-So this general beating onto SETUID or super capable programs
-smells like bad fish Hollywood boom-boom again, no?
-You have to do some things, and if you give up privileges
-thereafter, extended capabilities are gone.
-Here locally Xorg now is
-
-  #!/bin/sh
-  #
-  # Execute Xorg.wrap if it exists otherwise execute Xorg directly.
-  # This allows distros to put the suid wrapper in a separate package.
-
-  basedir="/usr/lib/xorg-server"
-  if [ -x "$basedir"/Xorg.wrap ]; then
-          exec "$basedir"/Xorg.wrap "$@"
-  else
-          exec "$basedir"/Xorg "$@"
-  fi
+Both HPE and HP are CVE CNAs.  Here's HP's CVE CNA information:
+https://www.cve.org/PartnerInformation/ListofPartners/partner/hp
 
 
-  $ ll /usr/lib/xorg-server|grep Xorg
-  -r-sr-xr-x 1 root root   14632 Mar 31 21:24 Xorg.wrap*
-  -rwxr-xr-x 1 root root 2482224 Mar 31 21:24 Xorg*
+HTH,
+-Mike
 
-and so i had to adjust my startx.sh
 
-  X=
-  if [ -x /usr/lib/xorg-server/Xorg ]; then
-     g=`groups`
-     if { echo ${g} | grep -q video; } >/dev/null 2>&1 &&
-           { echo ${g} | grep -q input; } >/dev/null 2>&1; then
-        X=/usr/lib/xorg-server/Xorg
-     fi
-     unset g
-  fi
+:Thanks for making the community aware of this issue.
+:
+:Perhaps security@....com can help to route internally to get a CVE issued
+:and find the appropriate owners to fix.
+:
+:
+:On Fri, Nov 17, 2023 at 1:38 AM Matthias Gerstner <mgerstner@...e.de> wrote:
+:
+:> Hello list,
+:>
+:> this report is about the problematic use of fixed temporary paths in the
+:> `hpps` program from the hplip [1] project. Hplip is a collection of
+:> utilities for HP printer and scanner devices.
+:>
+:> There is currently no upstream fix available for this issue and this
+:> publication happens after 90 days of attempted coordinated disclosure,
+:> but upstream did not react to my report.
+:>
+:> This report is based on the latest upstream release 3.23.8 [2] of hplip.
+:>
+:> The Issue
+:> =========
+:>
+:> The program /usr/lib/cups/filter/hpps uses a number of insecure fixed
+:> temporary files that can be found in prnt/hpps/hppsfilter.c:
+:>
+:>     prnt/hpps/hppsfilter.c:1027:        sprintf(booklet_filename, "/tmp/%
+:> s.ps","booklet");
+:>     prnt/hpps/hppsfilter.c:1028:        sprintf(temp_filename, "/tmp/%s.ps
+:> ","temp");
+:>     prnt/hpps/hppsfilter.c:1029:        sprintf(Nup_filename, "/tmp/%s.ps
+:> ","NUP");
+:>
+:> These paths are only used if "booklet printing" is enabled. For testing,
+:> the
+:> logic can be forced by invoking the program similar to this:
+:>
+:>     $ export
+:> PPD=/usr/share/cups/model/manufacturer-PPDs/hplip-plugin/hp-laserjet_1020.ppd.gz
+:>     $ /usr/lib/cups/filter/hpps some-job some-user some-title 10
+:> HPBookletFilter=10,fitplot,Duplex=DuplexTumble,number-up=1
+:>
+:> The program will expect data to print on stdin this way. Just typing in
+:> some random data and pressing Ctrl-d will make it continue. There is a
+:> chance that it will crash, tough, since error returns from parsing
+:> errors are largely not checked in this program.
+:>
+:> The three paths are created and opened using `fopen()`, so no special
+:> open flags are in effect that would prevent following symlinks, also the
+:> `O_EXCL` flag is missing to prevent opening existing files. The
+:> resulting system calls look like this (for creation / opening for
+:> reading):
+:>
+:>     openat(AT_FDCWD, "/tmp/temp.ps", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+:>     openat(AT_FDCWD, "/tmp/temp.ps", O_RDONLY)
+:>
+:> Furthermode there is a `chmod()` on the /tmp/temp.ps file:
+:>
+:>     hppsfilter.c:110 chmod(temp_filename, S_IRUSR | S_IWUSR | S_IRGRP |
+:> S_IROTH);
+:>
+:> The data to print (from stdin) is written to this file, and the file is
+:> also made world readable explicitly via this `chmod()`. The issues with
+:> these paths are multifold:
+:>
+:> - There is a local information leak, since the print job data will
+:>   become visible to everybody in the system.
+:> - There is violated data integrity, since other users can pre-create these
+:>   files and manipulate e.g. the data to print.
+:> - This may allow to create files in unexpected places, by placing symbolic
+:>   links, if the Linux kernel's symlink protection is not active.
+:> - Similarly it may allow to grant world read privileges to arbitrary
+:>   files by following symlinks during the `chmod()`.
+:> - It may allow further unspecified impact if crafted data is placed into
+:>   /tmp/temp.ps which is processed by the complex `PS_Booklet()` function.
+:>
+:> I did not research the impact of the issue further to see whether this
+:> could lead to local code execution in the context of the user that is
+:> invoking `hpps`.
+:>
+:> Suggested Patch
+:> ===============
+:>
+:> To fix this issue all three fixed temporary paths need to be replaced by
+:> unpredictably named temporary files that are safely created. Attached to
+:> this email is a patch that I authored that accomplishes this. This patch
+:> also drops the `chmod()`. The purpose of it is unclear, so it is
+:> possible that this breaks something, if other processes with different
+:> privileges need to access this file.
+:>
+:> There is no patch or any other information available from upstream.
+:>
+:> Affectedness
+:> ============
+:>
+:> Since, to my knowledge, there is no public version control system for
+:> hplip, it is difficult to determine when this issue has been introduced.
+:> By taking some samples from older SUSE distributions I found the issue
+:> to be present at least since upstream release 3.19.12 from 2019-12-12.
+:>
+:> CVE Assignment
+:> ==============
+:>
+:> Since HP is a CVE CNA, it is itself responsible for assigning a CVE.
+:> Since there is no reaction from upstream I don't know if or when CVEs
+:> will be available.
+:>
+:> Timeline
+:> ========
+:>
+:> 2023-08-21: I reported the finding privately to upstream via Launchpad [3],
+:>             offering coordinated disclosure. No other means of contact are
+:>             documented for hplip.
+:> 2023-09-05: Since I did not get any feedback yet I urged upstream via
+:>             Launchpad to provide a response.
+:> 2023-10-04: I shared the suggested patch with upstream, still no response.
+:> 2023-11-17: The 90 days maximum embargo time we offer approached and we
+:>             published the finding.
+:>
+:> References
+:> ==========
+:>
+:> [1]: https://sourceforge.net/projects/hplip
+:> [2]: https://sourceforge.net/projects/hplip/files/hplip/3.23.8
+:> [3]: https://bugs.launchpad.net/hplip/+bug/2032375
+:>
+:> --
+:> Matthias Gerstner <matthias.gerstner@...e.de>
+:> Security Engineer
+:> https://www.suse.com/security
+:> GPG Key ID: 0x14C405C971923553
+:>
+:> SUSE Software Solutions Germany GmbH
+:> HRB 36809, AG Nürnberg
+:> Geschäftsführer: Ivo Totev, Andrew McDonald, Werner Knoblich
+:>
 
-  if [ -n "${X}" ]; then
-     :
-  elif [ -x /usr/lib/xorg-server/Xorg.wrap ]; then
-     X=/usr/lib/xorg-server/Xorg.wrap
-  elif command -v Xorg; then
-     X=Xorg
-  else
-     X=X
-  fi
-
-and furthermore i indeed find myself now in video, input (and
-audio) on this box.  What a maintance mess.
-(Maintenance is a real thing, i for example have ssh access to
-servers where in (/var)?/tmp/ you will find stale temporary files
-older than one and a half decade!  Isn't that sheer grazy:
-
-  l#?0|...$ ll /var/tmp/
-  Gesamt 874514
-  -rw-------   1 dam      ...         8192 Nov 22  2008 Rx_2ay14
-  ...
-  -rw-------   1 schwarze ...        25232 Aug  6  2016 aaaJTaazJ
-  ...
-
-Then something capable that is nicely programmed, saw many eyes,
-and looses privileges as soon as possible i prefer.  Hey -- or
-make it message passing aware, use TLS connections, marshal via
-normalized Unicode and XML, and ask question over an otherwise
-under-documented message protocol, that uses totally
-under-documented cryptical XML configuration files, and that
-somehow gives you resources via a passed-back file descriptor, or
-something like this.
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Why make trillions when we could make... billions?"                -Dr. Evil
