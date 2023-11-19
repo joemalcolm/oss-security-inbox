@@ -1,67 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/7
-Message-ID: <20231003194604.GA23320@openwall.com>
-Date: Tue, 3 Oct 2023 21:46:04 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: administrative tasks (was: illumos (or at least danmcd) membership in the distros list)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/19/3
+Message-ID: <1a27eef3-717e-5c99-b40f-5165d33a59ec@apache.org>
+Date: Sun, 19 Nov 2023 18:42:36 +0000
+From: "Richard N. Hillegas" <rhillegas@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-46337: Apache Derby: LDAP injection vulnerability in authenticator 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2023 at 04:04:28PM -0700, Alan Coopersmith wrote:
-> On 9/25/23 12:23, Solar Designer wrote:
-> >Administrative tasks mostly unrelated to (linux-)distros lists (but
-> >relevant to the wider community)
-> >
-> >1. Help ensure that each message posted to oss-security contains the
-> >most essential information (e.g., vulnerability detail and/or exploit)
-> >directly in the message itself (and in plain text) rather than only by
-> >reference to an external resource, and add the missing information
-> >(e.g., in your own words, by quoting with proper attribution, and/or by
-> >creating and attaching a properly attributed text/plain export of a
-> >previously referenced web page) and remind the original sender of this
-> >requirement (for further occasions) in a "reply" posting when necessary
-> >- primary: Oracle Solaris, backup: Container-Optimized OS
+Severity: low
 
-> >3. Monitor for Open Source security issues/topics published elsewhere,
-> >identify which of these would fit, and bring them to oss-security
+Affected versions:
 
-> >6. Suggest and provide examples of quality improvements for such reports
-> >(beyond them containing the most essential information)
+- Apache Derby 10.1.1.0 through 10.16.1.1
 
-> Apologies, I may have misremembered exactly what I supposed to be doing at 
-> some
-> point, and in hindsight, much of what I have done was closer to #6 than #1:
-> 
-> https://www.openwall.com/lists/oss-security/2022/01/25/15
-> https://www.openwall.com/lists/oss-security/2022/10/12/2
-> https://www.openwall.com/lists/oss-security/2023/01/31/7
-> 
-> but I at least did some of #1 if you look far enough back:
-> 
-> https://www.openwall.com/lists/oss-security/2022/08/09/1
-> 
-> I've also tried to set a good example in the messages I post on behalf of 
-> X.Org.
+Description:
 
-Yes, I appreciate all of this!
+A cleverly devised username might bypass LDAP authentication checks. In 
+LDAP-authenticated Derby installations, this could let an attacker fill 
+up the disk by creating junk Derby databases. In LDAP-authenticated 
+Derby installations, this could also allow the attacker to execute 
+malware which was visible to and executable by the account which booted 
+the Derby server. In LDAP-protected databases which weren't also 
+protected by SQL GRANT/REVOKE authorization, this vulnerability could 
+also let an attacker view and corrupt sensitive data and run sensitive 
+database functions and procedures.
 
-> I'd be happy to pass on #1 to someone else and continue doing #3.  I don't 
-> have
-> the bandwidth to write tools to automate it though (#4) - I mostly monitor
-> chatter on twitter & mastodon, watch the newly published CVE list, and 
-> monitor updates to 
-> https://salsa.debian.org/security-tracker-team/security-tracker.git.
+Mitigation:
 
-That's pretty good.  I've just made you primary for #3, and consequently
-upgraded Container-Optimized OS to primary for #1 - although I expect
-I'll also need to ping them off-list for things to actually be happening.
+Users should upgrade to Java 21 and Derby 10.17.1.0.
 
-Container-Optimized OS folks, please let me know if you see this and
-think you don't need further pings. ;-)
+Alternatively, users who wish to remain on older Java versions should 
+build their own Derby distribution from one of the release families to 
+which the fix was backported: 10.16, 10.15, and 10.14. Those are the 
+releases which correspond, respectively, with Java LTS versions 17, 11, 
+and 8.
 
-I'd also appreciate others helping with all of these tasks.  For #3,
-there are simply too many relevant "Open Source security issues/topics
-published elsewhere" for Alan to notice and handle them all alone.
+This issue is being tracked as DERBY-7147 
 
-Alexander
+Credit:
+
+This issue was discovered by ﻿4ra1n and Y4tacker, who also proposed the fix. (finder)
+
+References:
+
+https://db.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-46337
+https://issues.apache.org/jira/browse/DERBY-7147
+
