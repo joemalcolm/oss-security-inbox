@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/27/4
-Message-ID: <919ca824-7bfc-76a6-3d94-88b2c5bfea62@apache.org>
-Date: Mon, 27 Mar 2023 16:21:18 +0000
-From: James Dailey <jdailey@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/20/1
+Message-ID: <ZVthevPKLmczR1-B@kasco.suse.de>
+Date: Mon, 20 Nov 2023 14:39:02 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25197: apache fineract: SQL injection vulnerability in certain procedure calls  
+Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi,
 
-Description:
+thank you both for your suggestions. I just reached out to
+hp-security-alert@...com about this.
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation apache fineract.
-Authorized users may be able to exploit this for limited impact on components.  
+There are a couple of other hplip issues I know of that have also been
+left unattended for a long time that I mentioned there as well.
 
-This issue affects apache fineract: from 1.4 through 1.8.2.
+Best Regards
 
-Credit:
+Matthias
 
-Eugene Lim at Cyber Security Group (CSG) Government Technology Agency GOVTECH.sg (reporter)
-aleks@...che.org (remediation developer)
+On Sun, Nov 19, 2023 at 07:11:37AM -0500, Mike O'Connor wrote:
+> [removing security@....com from the Cc:]
+> 
+> This is for hp.com product security, not hpe.com.  HP and HPE are two
+> separate companies, and HPE isn't the printer company.  
+> 
+> To report a potential security vulnerability with a HP product,
+> contact: hp-security-alert@...com
+> 
+> Both HPE and HP are CVE CNAs.  Here's HP's CVE CNA information:
+> https://www.cve.org/PartnerInformation/ListofPartners/partner/hp
+> 
+> 
+> HTH,
+> -Mike
+> 
+> 
+> :Thanks for making the community aware of this issue.
+> :
+> :Perhaps security@....com can help to route internally to get a CVE issued
+> :and find the appropriate owners to fix.
 
-References:
-
-https://fineract.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25197
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
