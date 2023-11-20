@@ -1,103 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/18/2
-Message-ID: <CAA0MYJUHngYsTR0miEO31PpMp+TyCgj6ebt9F4b2289SFwy5TQ@mail.gmail.com>
-Date: Mon, 18 Sep 2023 13:37:20 -0700
-From: Steve Thompson <susurrus.of.qualia@...il.com>
-To: Steve Thompson <susurrus.of.qualia@...il.com>, oss-security@...ts.openwall.com
-Subject: Possible AMD Zen2 CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/20/3
+Message-ID: <ca835ded-9dcd-4345-a096-ddd9ddcb05e9@oracle.com>
+Date: Mon, 20 Nov 2023 12:05:36 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: GIMP 2.10.36 fixed multiple image format parser vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-I've been beating my head against a wall for a while on this.  I'm not a
-security researcher, or even currently employed in the industry so my
-ability to analyze the problem I've seemingly discovered here is somewhat
-limited.
+https://www.gimp.org/news/2023/11/07/gimp-2-10-36-released/#fixed-vulnerabilities
+reported:
 
-I have a laptop with an AMD Ryzen 5700U.  I've been fooling around with
-spinlocks for a while and for various reasons.  Back in late March I
-basically finished a R/W ticket spinlock that I instrumented for testing
-purposes.  A short test program was written and I found I was getting
-deadlocks and other odd symptoms.  I was unsure of the implementation of
-the algorithm and so I looked and looked at the code until my eyes started
-bleeding.  The errors were occurring within a few thousand iterations with
-moderate parallelism.
+> Four vulnerabilities were reported by the Zero Day Initiative in code for the following formats and fixed immediately:
+> 
+>     DDS: ZDI-CAN-22093
+>     PSD: ZDI-CAN-22094
+>     PSP: ZDI-CAN-22096 and ZDI-CAN-22097
+> 
+> Additionally dependencies have been updated in our binary packages, and with them, some vulnerabilities recently reported in these libraries were fixed.
 
-I eventually wrote several alternate implementations of naive spinlocks,
-ticket spinlocks, and MCS spinlocks.   Many of them were problematic.   I
-eventually developed a much simplified test program implementing a very
-basic ticket spinlock that can be made to fail with a trivial code change
-that should not affect the operation of the algorithm.
+These vulnerabilities also had advisories released by ZDI which gave
+the corresponding CVE ids:
 
-The code is included as an attachment; it is relatively short at ~300 LOC,
-and most of those lines are boilerplate or initialization code.  The
-business end is the wr_thread() function which is the vector passed to
-pthread_create(),   In a loop, the following code is found:
+ZDI-CAN-22093: CVE-2023-44441
+  GIMP DDS File Parsing Heap-based Buffer Overflow Remote Code Execution Vulnerability
+  https://www.zerodayinitiative.com/advisories/ZDI-23-1592/
 
-      nr_spin = t1lock_acquire(&obj.lock);
-#if defined BROKEN
-      temp = ++obj.value;
-#else
-      ++obj.value;
-#endif
-      t1lock_release(&obj.lock);
+ZDI-CAN-22094: CVE-2023-44442
+  GIMP PSD File Parsing Heap-based Buffer Overflow Remote Code Execution Vulnerability
+  https://www.zerodayinitiative.com/advisories/ZDI-23-1594/
 
-If "BROKEN" is defined, you can see that an additional cache-line write is
-made with the assignment to 'temp'.  When this code path is enabled, the
-underlying cmpxchg operation in t1lock_acquire() occasionally succeeds when
-it shouldn't, with a probability on the order of 1:5*10^6 when the CPU
-frequency is allowed to climb to 4.3GHz. or thereabouts.  I should, but
-have not yet investigated whether using an attached 4K, 60Hz monitor
-notably affects this problem.
+ZDI-CAN-22096: CVE-2023-44443
+  GIMP PSP File Parsing Integer Overflow Remote Code Execution Vulnerability
+  https://www.zerodayinitiative.com/advisories/ZDI-23-1593/
 
-The test program is essentially a bank-account simulator that adds $.01 to
-'obj.value' each iteration for N threads.  If the cmpxchg operation in
-t1lock_acquire() functions correctly, the final "balance" in obj.value will
-be the number of threads multiplied by the number of iterations each thread
-performs.  When the "-DBROKEN" codepath is enabled, the final result may be
-less than expected, indicating data loss from colliding threads.  Very
-occasionally, a deadlock of all threads is observed.
+ZDI-CAN-22097: CVE-2023-44444
+  GIMP PSP File Parsing Off-By-One Remote Code Execution Vulnerability
+  https://www.zerodayinitiative.com/advisories/ZDI-23-1591/
 
-As the probability of this error occurring is relatively low in a test
-program that really hammers on a single shared resource, I would expect
-this bug to manifest relatively rarely under typical usage patterns for
-code that is found to be vulnerable.  However, different test programs,
-such as with the previously mentioned R/W ticket lock show much higher
-error-rates.  In that case, the lock structure is five fields in a 32 or
-64-bit word.  One bit is used for mutual-exclusion between threads and the
-other fields track queue depth and/or the number of instantaneous active
-read-only threads.  It appears that the act of using a cmpxchg operation
-followed by non-atomic field updates and a release operation on a single
-machine word vastly increases the probability of an error occurring in
-comparison to the included test code.
-
-I have not yet found the underlying microarchitectural features responsible
-for the manifestiation of this apparent CPU bug, which implies that
-individual spinlock algorithms must be tested in-situ to identify code
-arrangements that trigger the bug. It is my impression thus far that most
-spinlock implementations do not do this testing, which suggests that the
-number of spinlocks in the wild that are vulnerable to this bug is
-currently unknown.  This bug might be exploitable to cause scheduler
-malfunctions, database corruption, etc. in a deterministic fashion,
-although i have yet to generate an exploit to this end -- that is beyond my
-expertise at this stage.
-
-Currently, I lack access to a lab where this can be tested on other CPUs,
-Intel or otherwise to determine the scope of affected processors.  (I have,
-however, detected the problem on a Core 2 Duo Macbook Pro from the Jurassic
-period, which is interesting.)
-
-The bug has not been verified yet.  I have been dealing with HP as the
-laptop is under warranty, but in approximately two months they have been
-unable to find a technician able to understand the source code or who is
-able to interpret the results.  It is still possible I have made some sort
-of stupid error, but at this point I am reasonably confident I am using
-atomic operations correctly as per the x86-64 architecture specification
-documents.
-
-I've posted this here to acquire feedback, and I would greatly appreciate
-advice on how to better characterize what is going on here, etc.   Calling
-the test program with four threads and 10^7 for the number of loop
-iterations will usually trigger the bug.
-
-Content of type "text/html" skipped
-
-View attachment "bug_src.c" of type "text/x-csrc" (8213 bytes)
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
