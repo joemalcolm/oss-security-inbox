@@ -1,49 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/05/4
-Message-ID: <20231105174029.GC23224@openwall.com>
-Date: Sun, 5 Nov 2023 18:40:29 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Pietro Borrello <borrello@...g.uniroma1.it>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: sctp: KASLR leak in inet_diag_msg_sctpasoc_fill()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/20/2
+Message-ID: <64c644b1-9c98-406c-b947-689faf39efd0@oracle.com>
+Date: Mon, 20 Nov 2023 11:48:11 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: GNUTLS-SA-2023-10-23, CVE-2023-5981: timing sidechannel in RSA-PSK key exchange
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 23, 2023 at 07:39:41PM +0100, Pietro Borrello wrote:
-> We reported a type confusion in inet_diag_msg_sctpasoc_fill() in
-> net/sctp/diag.c, which uses a type confused pointer to return
-> information to userspace when issuing a list_entry() on
-> asoc->base.bind_addr.address_list.next when the list is empty.
-> 
-> The list, in theory, should never be empty, but it can be when binding
-> an SCTP socket with something like:
-> ```
-> servaddr.sin6_family = AF_INET6;
-> servaddr.sin6_port = htons(0);
-> servaddr.sin6_scope_id = 0;
-> inet_pton(AF_INET6, "::1", &servaddr.sin6_addr);
-> ```
-> 
-> And then request a connection to:
-> ```
-> connaddr.sin6_family = AF_INET6;
-> connaddr.sin6_port = htons(20000);
-> connaddr.sin6_scope_id = if_nametoindex("lo");
-> inet_pton(AF_INET6, "fe88::1", &connaddr.sin6_addr);
-> ```
-> 
-> The impact of the type confusion is a KASLR leak since the `laddr.v6.sin6_addr`
-> is returned from the type confused pointer, which overlaps with `struct
-> sctp_endpoint *ep` of the `struct sctp_association`.
-> 
-> The fix from the maintainer prevents the connection to the socket with
-> unmatched scopes and will be merged soon:
-> https://lore.kernel.org/linux-sctp/9fcd182f1099f86c6661f3717f63712ddd1c676c.1674496737.git.marcelo.leitner%40gmail.com/T/
+https://gnutls.org/security-new.html#GNUTLS-SA-2023-10-23 reports:
 
-This was assigned CVE-2023-1074:
+A vulnerability was found that the response times to malformed ciphertexts in
+RSA-PSK ClientKeyExchange differ from response times of ciphertexts with correct
+PKCS#1 v1.5 padding. Only TLS ciphertext processing is affected. The issue was
+reported in the issue tracker as https://gitlab.com/gnutls/gnutls/-/issues/1511
 
-CVE-2023-1074 - KASLR Leak in inet_diag_msg_sctpasoc_fill()
-patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=458e279f861d3f61796894cd158b780765a1569f
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/23/1
+https://lists.gnupg.org/pipermail/gnutls-help/2023-November/004837.html
+announced the release of version 3.8.2 with a fix for this vulnerability.
 
-Alexander
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
