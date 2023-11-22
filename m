@@ -1,4 +1,4 @@
-Received: (qmail 28531 invoked by uid 550); 24 Jun 2024 09:13:32 -0000
+Received: (qmail 7983 invoked by uid 550); 22 Nov 2023 00:16:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28513 invoked from network); 24 Jun 2024 09:13:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1719220402;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cyS+UX7oQ/KwD1W6xuKnmxXYGKUJ8mzFI8/fXQu0zHw=;
-	b=evOtPm7frJOvbdSMniCECqr5T+rnU1ELxB0shLXg+lETPmzYyhjQHJJC9RqaDd2Z4n+q9L
-	OdqFML39wiXoni1/2HpBhPdRrbjifhU2Ab/Rh72O1nLt6CCwQaepFzUSO0lxh/Gps+11AI
-	WL2XqQqsOOvy3ulHyk0jAPV9uIMVQf0=
-X-MC-Unique: CQoeqZWqPziWllhpfZ7U0g-1
-From: Florian Weimer <fweimer@redhat.com>
-To: Russ Allbery <eagle@eyrie.org>
-Cc: Ihor Radchenko <yantar92@posteo.net>,  oss-security@lists.openwall.com
-In-Reply-To: <87h6djh2dv.fsf@hope.eyrie.org> (Russ Allbery's message of "Sun,
-	23 Jun 2024 12:42:36 -0700")
-References: <87wmmguk44.fsf@localhost> <87h6djh2dv.fsf@hope.eyrie.org>
-Date: Mon, 24 Jun 2024 11:13:13 +0200
-Message-ID: <87wmmehffa.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
+Received: (qmail 6116 invoked from network); 22 Nov 2023 00:15:38 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
+From: Xiang Chen <cdmikechen@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <85222bd6-c08d-1e2f-69da-102f42610736@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Arbitrary shell command evaluation in Org mode
- (GNU Emacs)
+Date: Wed, 22 Nov 2023 00:15:24 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-37924: Apache Submarine: SQL injection from unauthorized
+ login 
 
-* Russ Allbery:
+Severity: critical
 
-> In order to disable automatic previewing of org-mode attachments, you need
-> to customize mm-automatic-display to remove text/x-org from the list of
-> MIME types that are automatically previewed.  (This part I have not
-> tested.)
+Affected versions:
 
-As far as I understand it, this only controls inline vs attachment
-rendering.  Content-Disposition: inline MIME parts are still displayed
-automatically, even if corresponding entries have been removed from
-mm-automatic-display.
+- Apache Submarine 0.7.0 before 0.8.0
 
-I looked at this and as far as I can tell, to disable rendering, you
-have to remove entries from mm-inline-media-tests.  I don't think this
-is possible through customization because the variable has bytecode
-objects in it.
+Description:
 
-I think it should be possible to filter it down, with something like the
-code below.  Some comments on the choices: Patch rendering is just too
-useful to skip.  HTML rendering is necessary (and obviously quite risky)
-because Jira and other tools do not generate useful plaintext mail.
+Apache Software Foundation Apache Submarine has an SQL injection vulnerabil=
+ity when a user logs in. This issue can result in unauthorized login.
+Now we have fixed this issue and now user must have the correct login to ac=
+cess workbench.
+This issue affects Apache Submarine: from 0.7.0 before 0.8.0.=C2=A0We recom=
+mend that all submarine users with 0.7.0 upgrade to 0.8.0, which not only f=
+ixes the issue, supports the oidc authentication mode, but also removes the=
+ case of unauthenticated logins.
+If using the version lower than 0.8.0 and not want to upgrade, you can try =
+cherry-pick PR  https://github.com/apache/submarine/pull/1037 https://githu=
+b.com/apache/submarine/pull/1054  and rebuild the submarine-server image to=
+ fix this.
 
-It seems necessery to add explicit ignore entries for text/enriched and
-text/richtext because mm-inline-text handles those internally.  The
-regexp may be required because it's possible that text/enriched/=E2=80=A6 c=
-ould
-be used to bypass the subtype extraction in mm-handle-media-subtype.
-I haven't tested any of this.
+This issue is being tracked as SUBMARINE-1361=20
 
-(require 'mm-decode)
-(let ((result nil)
-      (tail mm-inline-media-tests))
-  (while tail
-    (let ((type-selector (caar tail))
-	  (handler (cadar tail)))
-      (when (or (eq handler 'ignore)
-		(and (eq handler 'mm-inline-text)
-		     (not (member type-selector
-				  '("text/enriched" "text/richtext"))))
-		(member type-selector
-			'("image/p?jpeg"
-			  "image/png"
-			  "image/gif"
-			  "text/plain"
-			  "text/x-diff"
-			  "application/x-patch"
-			  "text/html")))
-	(push (car tail) result)))
-    (setq tail (cdr tail)))
-  (setq result (nreverse result))
-  (push '("text/enriched.*" ignore ignore) result)
-  (push '("text/richtext.*" ignore ignore) result)
-  (setq mm-inline-media-tests result))
+Credit:
 
-I've put these into ~/.gnus.el for now, but having them in ~/.emacs
-might be a better option for other uses of Emacs MIME rendering.
+lengjingqicai(=E6=A3=B1=E9=95=9C=E4=B8=83=E5=BD=A9=E5=BC=80=E6=BA=90=E5=AE=
+=89=E5=85=A8=E7=A0=94=E7=A9=B6=E9=99=A2) (reporter)
 
-Thanks,
-Florian
+References:
+
+https://issues.apache.org/jira/browse/SUBMARINE-1361
+https://github.com/apache/submarine/pull/1037
+https://submarine.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-37924
+https://issues.apache.org/jira/browse/SUBMARINE-1361
 
