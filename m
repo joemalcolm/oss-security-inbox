@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/6
-Message-ID: <0400b167-9673-ae6f-19d4-379b0f40f0d5@behlendorf.com>
-Date: Wed, 24 May 2023 11:40:18 -0700 (PDT)
-From: Brian Behlendorf <brian@...lendorf.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/22/2
+Message-ID: <375127d6-abc0-16b3-af1f-858e248d9657@apache.org>
+Date: Wed, 22 Nov 2023 04:31:28 +0000
+From: Wenjun Ruan <wenjun@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Clarification on embargoed testing in a partner cloud
+Subject: CVE-2022-45875: Apache DolphinScheduler: Remote command execution Vulnerability in script alert plugin 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 24 May 2023, Anthony Liguori wrote:
-> I think the right policy for list members is that they are responsible for
-> understanding the third-party infrastructure they use and if they aren't
-> confident that they can maintain the rules of the list, they shouldn't use
-> it.
+Severity: low
 
-We've known since "On Trusting Trust" that every variable consumed during 
-the SDLC is a vector for compromise, even in very subtle and difficult 
-(impossible? halting problem?) ways to defeat. Inevitably we need to rely 
-on self-attestation, paired with certification processes when called for 
-(e.g. FedRamp). There is emerging regulatory action, at least in the US 
-(see the new White House Cybersecurity Policy) and the EU's CRA, calling 
-for the establishment of clear processes for demonstrating provenance and 
-attestation to at least the build environment and likely eventually the 
-full SDLC.
+Affected versions:
 
-A clear and more formal way of understanding the different levels of 
-attestation of one's build environment can be found in the SLSA 
-specification. Here's a story about how Google Cloud incorporates it into 
-build service:
+- Apache DolphinScheduler 3.0 through 3.0.1
+- Apache DolphinScheduler 3.1 through 3.1.0
 
-https://slsa.dev/blog/2022/12/gcb-slsa-verification
+Description:
 
-Of course attestation is not proof, and even human certification can only 
-go so far. Reproducible builds offer a path there but that goal seems just 
-as far away as it was 20 years ago, when Java was going to solve that for 
-us.
+Improper validation of script alert plugin parameters in Apache DolphinScheduler to avoid remote command execution vulnerability.  This issue affects Apache DolphinScheduler version 3.0.1 and prior versions; version 3.1.0 and prior versions.
+This attack can be performed only by authenticated users which can login to DS.
 
-I have no recommendation on if or how to use SLSA or something like it in 
-this policy, just that it may be something to consider.
+Credit:
 
-Brian
+4ra1n of Chaitin Tech (finder)
+
+References:
+
+https://lists.apache.org/thread/r0wqzkjsoq17j6ww381kmpx3jjp9hb6r
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2022-45875
+
