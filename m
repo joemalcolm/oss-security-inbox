@@ -1,4 +1,4 @@
-Received: (qmail 22281 invoked by uid 550); 21 Jul 2025 12:51:05 -0000
+Received: (qmail 1976 invoked by uid 550); 22 Nov 2023 21:13:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,37 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3819 invoked from network); 21 Jul 2025 07:24:56 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Andy Seaborne <andy@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <27ef3844-0825-d242-803f-cdd000a57fe2@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 21 Jul 2025 07:23:02 +0000
+Received: (qmail 1946 invoked from network); 22 Nov 2023 21:13:02 -0000
+Date: Wed, 22 Nov 2023 22:12:49 +0100
+From: Christian Brabandt <cb@256bit.org>
+To: oss-sec <oss-security@lists.openwall.com>
+Message-ID: <ZV5u0W1aT9xFCSTK@256bit.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-50151: Apache Jena: Configuration files uploaded by
- administrative users are not check properly 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] use-after-free in ex_substitute in Vim < v9.0.2121
 
-Severity: important=20
+CVE-2023-48706: Use-After-Free in ex_substitute()
+=================================================
+Date: 22.11.2023
+Severity: Low
 
-Affected versions:
+When executing a :s command for the very first time and using a 
+sub-replace-special atom inside the substitution part, it is possible 
+that the recursive :s call causes freeing of memory which may later then 
+be accessed by the initial :s command.
 
-- Apache Jena through <=3D 5.4.0
+Impact is low since the user must intentionally execute the payload and
+the whole process is a bit tricky to do (since it seems to work only
+reliably for the very first :s command). It may also cause a crash of 
+Vim.
 
-Description:
+The Vim project would like to thank github user gandalf4a for reporting 
+this issue which is now fixed in Vim patch 9.0.2121.
 
-File access paths in configuration files uploaded by users with administrat=
-or access are not validated.
+URLs: https://github.com/vim/vim/commit/26c11c56888d01e298cd8044caf8
+      https://github.com/vim/vim/security/advisories/GHSA-c8qm-x72m-q53q
 
-This issue affects Apache Jena version up to 5.4.0.
 
-Users are recommended to upgrade to version 5.5.0, which does not allow arb=
-itrary configuration upload.
-
-References:
-
-https://jena.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-50151
-
+Thanks,
+Christian
+-- 
+Wie man sein Kind nicht nennen sollte: 
+  Jupp Heidi 
