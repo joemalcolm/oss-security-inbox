@@ -1,59 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/08/4
-Message-ID: <CAFzhf4oH6POgqz3r_VSuVc1ZGOZmkKG4cJ0ZuFPm-pwmfLj0yw@mail.gmail.com>
-Date: Mon, 8 May 2023 16:58:20 +0100
-From: Piotr Krysiuk <piotras@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2023-32233] Linux kernel use-after-free in Netfilter nf_tables when processing batch requests can be abused to perform arbitrary reads and writes in kernel memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/22/3
+Message-ID: <ZV5u0W1aT9xFCSTK@256bit.org>
+Date: Wed, 22 Nov 2023 22:12:49 +0100
+From: Christian Brabandt <cb@...bit.org>
+To: oss-sec <oss-security@...ts.openwall.com>
+Subject: [vim-security] use-after-free in ex_substitute in Vim < v9.0.2121
 Content-Type: text/plain; charset=utf-8
 
-An issue has been discovered in the Linux kernel that can be abused by
-unprivileged local users to escalate privileges.
+CVE-2023-48706: Use-After-Free in ex_substitute()
+=================================================
+Date: 22.11.2023
+Severity: Low
 
-The issue is about Netfilter nf_tables accepting some invalid updates
-to its configuration.
+When executing a :s command for the very first time and using a 
+sub-replace-special atom inside the substitution part, it is possible 
+that the recursive :s call causes freeing of memory which may later then 
+be accessed by the initial :s command.
 
-Netfilter nf_tables allows updating its configuration with batch
-requests that group multiple basic operations into atomic transactions.
-In a specific scenario, an invalid batch request may contain an
-operation that implicitly deletes an existing nft anonymous set
-followed by another operation that attempts to act on the same nft
-anonymous set after it is deleted. In the above scenario, one example
-of the former operation is to delete an existing nft rule that uses an
-nft anonymous set. And an example of the latter operation is an attempt
-to delete an element from that nft anonymous set after the set gets
-deleted. Alternatively, the latter operation could even attempt to
-explicitly delete that nft anonymous set again. In the discussed
-scenario, Netfilter nf_tables fails to reject invalid batch request and
-then it corrupts its own internal state when committing the latter
-operation.
+Impact is low since the user must intentionally execute the payload and
+the whole process is a bit tricky to do (since it seems to work only
+reliably for the very first :s command). It may also cause a crash of 
+Vim.
 
-The issue has been reproduced against multiple Linux kernel releases,
-including Linux 6.3.1 (current stable).
+The Vim project would like to thank github user gandalf4a for reporting 
+this issue which is now fixed in Vim patch 9.0.2121.
 
-We developed an exploit that allows unprivileged local users to start a
-root shell by abusing the above issue. That exploit was shared
-privately with <security@...nel.org> to assist with fix development.
-Somebody from the Linux kernel team then emailed the proposed fix to
-<linux-distros@...openwall.org> and that email also included a link to
-download our description of exploitation techniques and our exploit
-source code.
+URLs: https://github.com/vim/vim/commit/26c11c56888d01e298cd8044caf8
+      https://github.com/vim/vim/security/advisories/GHSA-c8qm-x72m-q53q
 
-Therefore, according to the linux-distros list policy, the exploit must
-be published within 7 days from this advisory. In order to comply with
-that policy, I intend to publish both the description of exploitation
-techniques and also the exploit source code on Monday 15th by email to
-this list.
 
-The fix is available from mainline kernel git repository:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=c1592a89942e9678f7d9c8030efa777c0d57edab
-
-# Discoverers
-
-Patryk Sondej <patryk.sondej@...il.com>
-Piotr Krysiuk <piotras@...il.com>
-
-# References
-
-CVE-2023-32233 (reserved via https://cveform.mitre.org/)
+Thanks,
+Christian
+-- 
+Wie man sein Kind nicht nennen sollte: 
+  Jupp Heidi 
