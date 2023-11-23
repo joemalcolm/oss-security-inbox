@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["812" "Thursday" "19" "November" "2020" "18:15:28" "-0800" "Ian Zimmerman" "itz@very.loosely.org" "<20201120021528.pduwcibewbab47he@moyka>" "24" "[oss-security] Re: libass ass_outline.c signed integer overflow" nil nil nil "11" "2020112002:15:28" "[oss-security] Re: libass ass_outline.c signed integer overflow" (number mark "U       itz@very.loo Nov 19   24/812   " thread-indent "\"[oss-security] Re: libass ass_outline.c signed integer overflow\"\n") "<861A949F-D5C8-4AE0-829D-E7C2B4F74137@dwheeler.com>" ("<CAEFBov0z-zr4q=_srb3q7gq1-f1P6GBf78p8GYUj0DvsXVKLTw@mail.gmail.com>" "<20201119053416.vfvkqvgsmbmp2wnd@moyka>" "<861A949F-D5C8-4AE0-829D-E7C2B4F74137@dwheeler.com>") nil nil nil nil nil nil nil "[oss-security] Re: libass ass_outline.c signed integer overflow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10097 invoked by uid 550); 20 Nov 2020 02:15:41 -0000
+Received: (qmail 24278 invoked by uid 550); 23 Nov 2023 12:07:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10078 invoked from network); 20 Nov 2020 02:15:41 -0000
-Date: Thu, 19 Nov 2020 18:15:28 -0800
-From: Ian Zimmerman <itz@very.loosely.org>
+Received: (qmail 9797 invoked from network); 23 Nov 2023 09:06:01 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Julien Nioche <jnioche@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20201120021528.pduwcibewbab47he@moyka>
-References: <CAEFBov0z-zr4q=_srb3q7gq1-f1P6GBf78p8GYUj0DvsXVKLTw@mail.gmail.com>
- <20201119053416.vfvkqvgsmbmp2wnd@moyka>
- <861A949F-D5C8-4AE0-829D-E7C2B4F74137@dwheeler.com>
+Message-ID: <9e1a2baf-0e3f-19a7-eade-e70137be1f53@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 23 Nov 2023 09:05:48 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <861A949F-D5C8-4AE0-829D-E7C2B4F74137@dwheeler.com>
-Subject: [oss-security] Re: libass ass_outline.c signed integer overflow
+Subject: [oss-security] CVE-2023-43123: Apache Storm: Local Information Disclosure
+ Vulnerability in Storm-core on Unix-Like systems due temporary files 
 
-On 2020-11-19 11:54, David A. Wheeler wrote:
+Severity: low
 
-> I read through the issue discussion. As best as I can tell, no one
-> filed for a CVE, so there was no CVE.  Did I misunderstand something?
-> 
-> If my understanding is correct, that is *NOT* a failure of the CVE
-> process.
+Affected versions:
 
-As it often happens to me, what I wrote was too brief to be clear to
-everyone.
+- Apache Storm 2.0.0 before 2.6.0
 
-The longer version would be something like:
+Description:
 
-  This is an example of a situation where no one filed for a CVE because
-  of perceived hurdles in the process, even if the facts didn't justify
-  the perception.
+On unix-like systems, the temporary directory is shared between all user. A=
+s such, writing to this directory using APIs that do not explicitly set the=
+ file/directory permissions can lead to information disclosure. Of note, th=
+is does not impact modern MacOS Operating Systems.
 
-Now of course Moritz tells us there is in fact a CVE and indeed I can
-locate the issue in Debian's security tracker. I guess it has been
-judged not serious enough to need fixing in buster. I disagree but
-clearly that is up to the maintainers.
+The method File.createTempFile on unix-like systems creates a file with pre=
+defined name (so easily identifiable) and by default will create this file =
+with the permissions -rw-r--r--. Thus, if sensitive information is written =
+to this file, other local users can read this information.
 
--- 
-Ian
+File.createTempFile(String, String) will create a temporary file in the sys=
+tem temporary directory if the 'java.io.tmpdir' system property is not expl=
+icitly set.=20
+
+This affects the class=C2=A0 https://github.com/apache/storm/blob/master/st=
+orm-core/src/jvm/org/apache/storm/utils/TopologySpoutLag.java#L99 =C2=A0and=
+ was introduced by=C2=A0 https://issues.apache.org/jira/browse/STORM-3123=20
+
+In practice, this has a very limited impact as this class is used only if=
+=C2=A0ui.disable.spout.lag.monitoring
+
+ is set to false, but its value is true by default.
+Moreover, the temporary file gets deleted soon after its creation.
+
+The solution is to use=C2=A0 Files.createTempFile https://docs.oracle.com/e=
+n/java/javase/11/docs/api/java.base/java/nio/file/Files.html#createTempFile=
+(java.lang.String,java.lang.String,java.nio.file.attribute.FileAttribute...=
+) =C2=A0instead.
+
+We recommend that all users upgrade to the latest version of Apache Storm.
+
+Credit:
+
+Andrea Cosentino from Apache Software Foundation (finder)
+
+References:
+
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-43123
+
