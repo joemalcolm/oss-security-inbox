@@ -1,18 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/2
-Message-ID: <20231005071555.16bfd8b1@fabiankeil.de>
-Date: Thu, 5 Oct 2023 07:15:55 +0200
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/23/1
+Message-ID: <9e1a2baf-0e3f-19a7-eade-e70137be1f53@apache.org>
+Date: Thu, 23 Nov 2023 09:05:48 +0000
+From: Julien Nioche <jnioche@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim4 MTA CVEs assigned from ZDI
+Subject: CVE-2023-43123: Apache Storm: Local Information Disclosure Vulnerability in Storm-core on Unix-Like systems due temporary files 
 Content-Type: text/plain; charset=utf-8
 
-"zdi@...ndmicro.com" <zdi@...ndmicro.com> wrote on 2023-10-04 at 21:01:37:
+Severity: low
 
-> We have received a notification from the developers that these
-> issues have been patched. We will be happy to update our advisories once they do so.
+Affected versions:
 
-Are you saying "the developers" were lying to you and did
-not actually patch anything yet?
+- Apache Storm 2.0.0 before 2.6.0
 
-Fabian
+Description:
+
+On unix-like systems, the temporary directory is shared between all user. As such, writing to this directory using APIs that do not explicitly set the file/directory permissions can lead to information disclosure. Of note, this does not impact modern MacOS Operating Systems.
+
+The method File.createTempFile on unix-like systems creates a file with predefined name (so easily identifiable) and by default will create this file with the permissions -rw-r--r--. Thus, if sensitive information is written to this file, other local users can read this information.
+
+File.createTempFile(String, String) will create a temporary file in the system temporary directory if the 'java.io.tmpdir' system property is not explicitly set. 
+
+This affects the class  https://github.com/apache/storm/blob/master/storm-core/src/jvm/org/apache/storm/utils/TopologySpoutLag.java#L99  and was introduced by  https://issues.apache.org/jira/browse/STORM-3123 
+
+In practice, this has a very limited impact as this class is used only if ui.disable.spout.lag.monitoring
+
+ is set to false, but its value is true by default.
+Moreover, the temporary file gets deleted soon after its creation.
+
+The solution is to use  Files.createTempFile https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Files.html#createTempFile(java.lang.String,java.lang.String,java.nio.file.attribute.FileAttribute...)  instead.
+
+We recommend that all users upgrade to the latest version of Apache Storm.
+
+Credit:
+
+Andrea Cosentino from Apache Software Foundation (finder)
+
+References:
+
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-43123
+
