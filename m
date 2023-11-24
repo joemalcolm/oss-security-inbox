@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/5
-Message-ID: <CAHjsZGaZcrGn-cuv9yiXpPR81pebRd=AimOeR2xPiQR-GMiZkQ@mail.gmail.com>
-Date: Tue, 3 Oct 2023 16:26:42 -0300
-From: Rodrigo Freire <rfreire@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/24/2
+Message-ID: <9a5af39c-4833-7369-6f78-6bcc3f1d9687@apache.org>
+Date: Fri, 24 Nov 2023 05:29:43 +0000
+From: Zihao Xiang <zihaoxiang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4806, CVE-2023-5156: glibc: potential use-after-free in getaddrinfo()
+Subject: CVE-2023-49068: Apache DolphinScheduler: Information Leakage Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 3, 2023 at 4:18 PM Solar Designer <solar@...nwall.com> wrote:
-> Hi,
+Severity: important
 
-Hello,
+Affected versions:
 
-<snip>
+- Apache DolphinScheduler before 3.2.1
 
-> https://access.redhat.com/security/cve/CVE-2023-5156
-> Puzzlingly, the latter URL lists RHEL 9 as affected, even though I think
-> the original buggy fix hasn't yet made it into a RHEL 9 glibc update.
-> Maybe that's part of Red Hat's tracking of what's in their pipeline.
+Description:
 
-The affected code was backported into RHEL9's glibc and it is affected.
-The fix is traversing our productization pipeline and we will ship
-when it's done.
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache DolphinScheduler.This issue affects Apache DolphinScheduler: 3.2.1.
+
+Users are recommended to upgrade to version [FIXED_VERSION], which fixes the issue.
+
+References:
+
+https://github.com/apache/dolphinscheduler/pull/15192
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-49068
 
