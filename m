@@ -1,82 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/13
-Message-ID: <ZEFiwzjloB3ZkZ9r@openssl.org>
-Date: Thu, 20 Apr 2023 16:05:23 +0000
-From: Tomas Mraz <tomas@...nssl.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/24/1
+Message-ID: <7ea4f846-3772-1ef3-853a-c45972a9a3d2@apache.org>
+Date: Fri, 24 Nov 2023 04:50:00 +0000
+From: Zhenxu Ke <kezhenxu94@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL Security Advisory
+Subject: CVE-2023-48796: Apache dolphinscheduler sensitive information disclosure 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important
 
-OpenSSL Security Advisory [20th April 2023]
-===========================================
+Affected versions:
 
-Input buffer over-read in AES-XTS implementation on 64 bit ARM (CVE-2023-1255)
-==============================================================================
+- Apache DolphinScheduler 3.0.0 before 3.0.2
 
-Severity: Low
+Description:
 
-Issue summary: The AES-XTS cipher decryption implementation for 64 bit ARM
-platform contains a bug that could cause it to read past the input buffer,
-leading to a crash.
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache DolphinScheduler.
 
-Impact summary: Applications that use the AES-XTS algorithm on the 64 bit ARM
-platform can crash in rare circumstances. The AES-XTS algorithm is usually
-used for disk encryption.
+The information exposed to unauthorized actors may include sensitive data such as database credentials.
 
-The AES-XTS cipher decryption implementation for 64 bit ARM platform will read
-past the end of the ciphertext buffer if the ciphertext size is 4 mod 5, e.g.
-144 bytes or 1024 bytes. If the memory after the ciphertext buffer is
-unmapped, this will trigger a crash which results in a denial of service.
+Users who can't upgrade to the fixed version can also set environment variable `MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,metrics,prometheus` to workaround this, or add the following section in the `application.yaml` file
 
-If an attacker can control the size and location of the ciphertext buffer
-being decrypted by an application using AES-XTS on 64 bit ARM, the
-application is affected. This is fairly unlikely making this issue
-a Low severity one.
+```
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+```
 
-OpenSSL versions 3.0.0 to 3.0.8, and 3.1.0 are vulnerable to this issue,
-including the FIPS provider in those versions.
+This issue affects Apache DolphinScheduler: from 3.0.0 before 3.0.2.
 
-OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
+Users are recommended to upgrade to version 3.0.2, which fixes the issue.
 
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit bc2f61ad (for 3.1) and
-commit 02ac9c94 (for 3.0) in the OpenSSL git repository.
+References:
 
-This issue was reported on 27th February 2023 by Anton Romanov (Amazon).
-The fix was developed by Nevine Ebeid (Amazon).
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-48796
 
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230420.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
-
-iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmRBYoMSHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55tRl4P/3pRFLUviJ+dgVd0DV25ViBRI2qEOF9O
-FrcpB2buCF6JA2MQBKFV4x6kMjgzjFkj3LyP9eqUCfw6VhRtR6cnVXgUNi+XX3OL
-x8fxMY6OmEy67Oq/w7FL7mth1Rz5trDJWhCoAoKvaBYOWzLhPQVqIXaJ7MY8HPGv
-qoLt2ODYbm0D44LCXiigTIO13HIF5MRRxex1C2+c2ZO7XV3pq0Sr4xcVyBAcneHW
-/dyYNeEsLBaa39QrFoz/h/C96pCHwc10DKRVFUC8q3o10Bs+D46sueoe666cLfeN
-pm2Y/AYaXKLCCFRT3IDJwXgBtcLt+PrZr3C3iyVrCWOcoHzfNS5BzTKOQMv/CSkW
-KEK7ezqOBWvvzeEcFeg6mUcILVRanUEKS+u4tZQ6JzJAck1CHjpcRQVNbxhayjzM
-dTASVeLzb4xrXVVMYLqKeVBACGcOo69oyssnORDg7/iBW/Gm5toUraS/8uKft51W
-NsBUV4A4eagE4VNwCT9mFH7uAXjQgWggivdA6PtaUf/S69wy5Dh1cWc+XWd3suj8
-QgPTU3H0E86BTbIAkBQUatWmMnFc1gxhUpEo+rcGZY00Zkrz42PoCP/pFDsszUt6
-JAlFPS7xQNYAgaUAnkyMTbkSDqFbm8nppAY6l6HpYEVywagoXtSPEgn+miSOJn6S
-7I/fm11VSkjm
-=SU46
------END PGP SIGNATURE-----
