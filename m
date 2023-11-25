@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/5
-Message-ID: <20230418012752.GI1655348@millbarge>
-Date: Tue, 18 Apr 2023 01:27:52 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Jacques Le Roux <jleroux@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/25/1
+Message-ID: <ZWJUDWTquSuqfmSk@gentoo.org>
+Date: Sat, 25 Nov 2023 12:07:41 -0800
+From: John Helmert III <ajak@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: zihaoxiang@...che.org
+Subject: Re: CVE-2023-49068: Apache DolphinScheduler: Information Leakage Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 10, 2023 at 09:21:11AM +0000, Jacques Le Roux wrote:
-> https://lists.apache.org/list.html?announce@apache.org
-> https://ofbiz.apache.org/download.html
-> https://ofbiz.apache.org/security.html
-> https://ofbiz.apache.org/
-> https://www.cve.org/CVERecord?id=CVE-2022-47501
+On Fri, Nov 24, 2023 at 05:29:43AM +0000, Zihao Xiang wrote:
+> Severity: important
+> 
+> Affected versions:
+> 
+> - Apache DolphinScheduler before 3.2.1
+> 
+> Description:
+> 
+> Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache DolphinScheduler.This issue affects Apache DolphinScheduler: 3.2.1.
+> 
+> Users are recommended to upgrade to version [FIXED_VERSION], which fixes the issue.
 
-Hello Jacques, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+So <3.2.1 is affected, but also =3.2.1, and "[FIXED_VERSION]" was
+seemingly not replaced in the template. What are the correct affected
+and unaffected versions? I tried to dig into what releases the fix
+commit is in, but I found that that commit doesn't seem to be in any
+tags yet, either?
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
+~/git/dolphinscheduler $ git tag --contains 7308888c703fbe227887d2426273100582096134
+~/git/dolphinscheduler $
 
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
+> References:
+> 
+> https://github.com/apache/dolphinscheduler/pull/15192
+> https://dolphinscheduler.apache.org
+> https://www.cve.org/CVERecord?id=CVE-2023-49068
+> 
 
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
-
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
-
-Thanks
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
