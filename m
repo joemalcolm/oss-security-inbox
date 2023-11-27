@@ -1,67 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/4
-Message-ID: <CABdrxGCJk1x_5zs1Ja-NmyGRdL6q+ss5t2NyJ3dBtekcoV66Zg@mail.gmail.com>
-Date: Wed, 25 Oct 2023 09:32:11 -0700
-From: CJ Cullen <cjcullen@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/3
+Message-ID: <aae46329-1847-01a5-95f0-6fa1d5672c0c@apache.org>
+Date: Mon, 27 Nov 2023 09:39:08 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2023-5043: Ingress nginx annotation injection causes arbitrary command execution
+Subject: CVE-2023-42501: Apache Superset: Unnecessary read permissions within the Gamma role 
 Content-Type: text/plain; charset=utf-8
 
-Issue Details
+Affected versions:
 
-A security issue was identified in ingress-nginx
-<https://github.com/kubernetes/ingress-nginx> where the
-nginx.ingress.kubernetes.io/configuration-snippet annotation on an Ingress
-object (in the `networking.k8s.io` or `extensions` API group) can be used
-to inject arbitrary commands, and obtain the credentials of the
-ingress-nginx controller. In the default configuration, that credential has
-access to all secrets in the cluster.
+- Apache Superset before 2.1.2
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
-and assigned CVE-2023-5043.
-Affected Components and Configurations
+Description:
 
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -n ingress-nginx`.
+Unnecessary read permissions within the Gamma role would allow authenticated users to read configured CSS templates and annotations.
+This issue affects Apache Superset: before 2.1.2.
+Users should upgrade to version or above 2.1.2 and run `superset init` to reconstruct the Gamma role or remove `can_read` permission from the mentioned resources.
 
-If you are running the “chrooted” ingress-nginx controller introduced in
-v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), command
-execution is possible but credential extraction is not, so the High
-severity does not apply.
+Credit:
 
-Multi-tenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions
+Miguel Segovia Gil (finder)
 
-   -
+References:
 
-   <v1.9.0
-
-Versions allowing mitigation
-
-   -
-
-   v1.9.0
-
-Mitigation
-
-Ingress Administrators should set the --enable-annotation-validation flag
-to enforce restrictions on the contents of ingress-nginx annotation fields.
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See ingress-nginx Issue #10571
-<https://github.com/kubernetes/ingress-nginx/issues/10571> for more details.
-Acknowledgements
-
-This vulnerability was reported by suanve
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-42501
 
