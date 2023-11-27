@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/10
-Message-ID: <CAH8yC8k=-aVSwDXTOq0dSe7Ojw3Fy3M6ug6YVBb=bj4ZQYmq=A@mail.gmail.com>
-Date: Wed, 21 Jun 2023 13:26:32 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/4
+Message-ID: <add56994-a1d9-5545-dbb9-6a37ba4ea926@apache.org>
+Date: Mon, 27 Nov 2023 09:44:33 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Subject: CVE-2023-43701: Apache Superset: Stored XSS on API endpoint 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 21, 2023 at 1:22 PM Alan Coopersmith
-<alan.coopersmith@...cle.com> wrote:
->
-> On 6/20/23 23:45, Jeffrey Walton wrote:
-> > On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
-> > <alan.coopersmith@...cle.com> wrote:
-> >>
-> >> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
-> >> since it claims this bug has a CVSS of 9.8.
-> >>
-> >>   From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
-> >> see any CVSS higher than 0.0 being relevant here and think the CVE should
-> >> be withdrawn.  Am I missing something here?  All I see is 2 objects of
-> >> 16 bytes each not being freed in the fraction of a second before the
-> >> command exits and automatically frees the memory - in a command the user
-> >> deliberately chooses to run, which runs as themselves with no raised
-> >> privileges, on an input file they provide, and which exits after processing
-> >> the file and doesn't hang around keeping that memory allocated - not a bit
-> >> of security risk at all there.  (Yes, it's a small bug and is good to fix,
-> >> but not to raise security alarms for.)
-> >
-> > Memory leaks on exit are par for the course in GNU software per
-> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
-> >
-> > Nothing to see here, just move on.
->
-> This isn't a GNU program, but that doesn't matter here.  My argument
-> is still that this CVE should be revoked, and that this class of bug
-> shouldn't have CVEs issued.
+Affected versions:
 
-Agreed. I'm not sure how that got a CVE given its par for the course.
+- Apache Superset before 2.1.2
 
-Jeff
+Description:
+
+Improper payload validation and an improper REST API response type, made it possible for an authenticated malicious actor to store malicious code into Chart's metadata, this code could get executed if a user specifically accesses a specific deprecated API endpoint. This issue affects Apache Superset versions prior to 2.1.2. 
+Users are recommended to upgrade to version 2.1.2, which fixes this issue.
+
+Credit:
+
+Nick Barnes, Praetorian Security Inc. (reporter)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-43701
+
