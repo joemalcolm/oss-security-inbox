@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/10
-Message-ID: <20231221212410.GA800@openwall.com>
-Date: Thu, 21 Dec 2023 22:24:10 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Jonathan Wright <jonathan@...alinux.org>
-Cc: oss-security@...ts.openwall.com, Andrew Lukoshko <alukoshko@...alinux.org>, benny Vasquez <benny@...alinux.org>, Igor Seletskiy <iseletsk@...alinux.org>, Darya Malyavkina <dmalyavkina@...udlinux.com>, Jack Aboutboul <jack@...alinux.org>
-Subject: Re: AlmaLinux Distros List Application
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/2
+Message-ID: <ec83c66b-4748-f48b-7396-e9fd654ffdff@apache.org>
+Date: Mon, 27 Nov 2023 09:31:05 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-40610: Apache Superset: Privilege escalation with default examples database 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Affected versions:
 
-I think this application does meet the bar for linux-distros membership,
-and everyone had enough opportunity to comment by now.  So I'll proceed
-to subscribe Jonathan and Andrew, and list AlmaLinux OS Foundation as a
-member.  I'll take this off-list for the PGP keys, etc.
+- Apache Superset before 2.1.2
 
-On Tue, Dec 19, 2023 at 04:49:16PM -0600, Jonathan Wright wrote:
-> On Sun, Dec 17, 2023 at 2:56???PM Solar Designer <solar@...nwall.com> wrote:
-> > maybe you'd volunteer for some of the tasks from the
-> > "Administrative tasks mostly unrelated to (linux-)distros lists (but
-> > relevant to the wider community)" category?  This category is
-> > essentially about expanding and improving the public oss-security
-> > content and its visibility.
-> 
-> We very likely would be happy to help in this regard, especially if much of
-> it can be done without necessarily being on the private side of the list.
-> The folks on our side that would be great at this type of work are not the
-> same as those of us (myself and Andrew) that would be on the embargoed list.
+Description:
 
-Great.  It doesn't have to be the same folks who are on linux-distros.
-So please take a look and choose specific task(s).
+Improper authorization check and possible privilege escalation on Apache Superset up to but excluding 2.1.2. Using the default examples database connection that allows access to both the examples schema and Apache Superset's metadata database, an attacker using a specially crafted CTE SQL statement could change data on the metadata database. This weakness could result on tampering with the authentication/authorization data.
 
-Thanks,
+Credit:
 
-Alexander
+LEXFO for Orange Innovation and Orange CERT-CC  at Orange group (finder)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-40610
+
