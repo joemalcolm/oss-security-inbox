@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/20/1
-Message-ID: <CAGUWgD--HN6u3k6ofV07UPo3Bh=HyNRngUV2yz9OkzD5t9m3=A@mail.gmail.com>
-Date: Tue, 20 Jun 2023 19:22:25 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/5
+Message-ID: <e9bc0330-6574-e4e4-711e-c47450c53e53@apache.org>
+Date: Mon, 27 Nov 2023 21:58:37 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: The AI chatgpt writes insecure code
+Subject: CVE-2023-49145: Apache NiFi: Improper Neutralization of Input in Advanced User Interface for Jolt 
 Content-Type: text/plain; charset=utf-8
 
-chatgpt is an AI language model and it can write code.
+Affected versions:
 
-As expected, it was trained on insecure code and it writes
-insecure code.
+- Apache NiFi 0.7.0 through 1.23.2
 
-https://chat.openai.com/chat
+Description:
 
-Here is a textbook example of XSS.
+Apache NiFi 0.7.0 through 1.23.2 include the JoltTransformJSON Processor, which provides an advanced configuration user interface that is vulnerable to DOM-based cross-site scripting. If an authenticated user, who is authorized to configure a JoltTransformJSON Processor, visits a crafted URL, then arbitrary
+JavaScript code can be executed within the session context of the authenticated user. Upgrading to Apache NiFi 1.24.0 or 2.0.0-M1 is the recommended mitigation.
 
-GG:
-Hi bot :)
-Write a python cgi script which takes as input text field NAME and
-return html "Hello NAME"
+This issue is being tracked as NIFI-12403 
 
-Slightly skipped:
+Credit:
 
-AI:
+Dr. Oliver Matula, DB Systel GmbH (finder)
 
-import cgi
+References:
 
-# Create instance of FieldStorage
-form = cgi.FieldStorage()
+https://nifi.apache.org/security.html#CVE-2023-49145
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-49145
+https://issues.apache.org/jira/browse/NIFI-12403
 
-# Get value from the 'NAME' field
-name = form.getvalue('NAME')
+Timeline:
 
-# Start the HTML response
-print("Content-type: text/html\n")
-print("<h1>Hello, {}</h1>".format(name))
+2023-11-22: reported
+2023-11-22: confirmed
+2023-11-22: resolved
 
-end of session.
-
-When the robots take over the real world, hacking the robots will
-be powerful :)
-
--- 
-guninski:  https://j.ludost.net/resumegg.pdf
