@@ -1,65 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/4
-Message-ID: <20230925163652.GA6750@openwall.com>
-Date: Mon, 25 Sep 2023 18:36:52 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/28/2
+Message-ID: <33d63ef9-833d-4878-97c0-d4b9bcaad077@apache.org>
+Date: Tue, 28 Nov 2023 15:32:50 +0000
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: "Xen. org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Subject: CVE-2023-46589: Apache Tomcat: HTTP request smuggling via malformed trailer headers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: important
 
-Thank you Xen security team for indirectly bringing the various CPU
-issues in here.  This is very helpful, as your messages on them serve
-two purposes at once - informing the community about issues fixed in Xen
-(so directly on-topic here, with Xen being Open Source) and about the
-CPU issues that typically also need to be mitigated by other projects.
+Affected versions:
 
-On Mon, Sep 25, 2023 at 04:05:37PM +0000, Xen. org security team wrote:
->             Xen Security Advisory CVE-2023-20588 / XSA-439
-> 
->              x86/AMD: Divide speculative information leak
-> 
-> ISSUE DESCRIPTION
-> =================
-> 
-> In the Zen1 microarchitecure, there is one divider in the pipeline which
-> services uops from both threads.  In the case of #DE, the latched result
-> from the previous DIV to execute will be forwarded speculatively.
-> 
-> This is a covert channel that allows two threads to communicate without
-> any system calls.  In also allows userspace to obtain the result of the
-> most recent DIV instruction executed (even speculatively) in the core,
-> which can be from a higher privilege context.
-> 
-> For more information, see:
->  * https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
+- Apache Tomcat 11.0.0-M1 through 11.0.0-M10
+- Apache Tomcat 10.1.0-M1 through 10.1.15
+- Apache Tomcat 9.0.0-M1 through 9.0.82
+- Apache Tomcat 8.5.0 through 8.5.95
 
-The above link is wrong - it's for CVE-2023-20593 Zenbleed in Zen2.
+Description:
 
-The correct link for CVE-2023-20588, the DIV bug in Zen1, appears to be:
+Improper Input Validation vulnerability in Apache Tomcat.Tomcat from 
+11.0.0-M1 through 11.0.0-M10, from 10.1.0-M1 through 10.1.15, from 
+9.0.0-M1 through 9.0.82 and from 8.5.0 through 8.5.95 did not correctly 
+parse HTTP trailer headers. A trailer header that exceeded the header 
+size limit could cause Tomcat to treat a single
+request as multiple requests leading to the possibility of request
+smuggling when behind a reverse proxy.
 
-https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
+Users are recommended to upgrade to version 11.0.0-M11 onwards, 10.1.16 
+onwards, 9.0.83 onwards or 8.5.96 onwards, which fix the issue.
 
-While I am at it, here's the corresponding mitigation in Linux kernel:
+Credit:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
+Norihito Aimoto (OSSTech Corporation)  (finder)
 
-> author	Borislav Petkov (AMD) <bp@...en8.de>	2023-08-05 00:06:43 +0200
-> committer	Linus Torvalds <torvalds@...ux-foundation.org>	2023-08-09 07:55:00 -0700
-> 
-> x86/CPU/AMD: Do not leak quotient data after a division by 0
-> 
-> Under certain circumstances, an integer division by 0 which faults, can
-> leave stale quotient data from a previous division operation on Zen1
-> microarchitectures.
-> 
-> Do a dummy division 0/1 before returning from the #DE exception handler
-> in order to avoid any leaks of potentially sensitive data.
-> 
-> Signed-off-by: Borislav Petkov (AMD) <bp@...en8.de>
-> Cc: <stable@...nel.org>
-> Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+References:
 
-Alexander
+https://lists.apache.org/thread/0rqq6ktozqc42ro8hhxdmmdjm1k1tpxr
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46589
