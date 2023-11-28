@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3615" "Monday" "21" "January" "2019" "09:05:35" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20190121090535.227a1db9@computer>" "108" "[oss-security] Apache web server use after free bugs (unfixed)" "^Date:" nil nil "1" "2019012108:05:35" "[oss-security] Apache web server use after free bugs (unfixed)" (number mark "        hanno@hboeck Jan 21  108/3615  " thread-indent "\"[oss-security] Apache web server use after free bugs (unfixed)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5646 invoked by uid 550); 21 Jan 2019 08:05:53 -0000
+Received: (qmail 4090 invoked by uid 550); 28 Nov 2023 14:56:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5596 invoked from network); 21 Jan 2019 08:05:51 -0000
-Message-ID: <20190121090535.227a1db9@computer>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 21 Jan 2019 09:05:35 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Apache web server use after free bugs (unfixed)
+Received: (qmail 3701 invoked from network); 28 Nov 2023 14:55:30 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: =?UTF-8?Q?Jean-Baptiste_Onofr=C3=A9?= <jbonofre@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <1dac33e6-1e9c-fc1d-3eb8-6bb771dba5bb@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 28 Nov 2023 14:54:23 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-41678: Apache ActiveMQ: Deserialization vulnerability on
+ Jolokia that allows authenticated users to perform RCE 
 
-Apache use after free bugs
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
+Severity: Medium
 
-While doing some fuzz testing on the apache httpd server
-with address sanitizer we regularly observed use after free
-bugs. We originally observed these issues in the http2
-module, but we were also able to reproduce them without
-http2 enabled, so either we're facing multiple bugs or
-there's an underlying bug in the core apache code.
+Affected versions:
 
-Originally we used fuzzing payloads to trigger this bug,
-but we later observed that sending random garbage in
-parallel is enough to trigger the bug.
+- Apache ActiveMQ before 5.16.6
+- Apache ActiveMQ 5.17.0 before 5.17.4
+- Apache ActiveMQ 5.18.0 unaffected
+- Apache ActiveMQ 6.0.0 unaffected
 
-We reported this behavior to the apache security team for the first
-time in June 2018. The apache developers did not seem to take the=20
-issue as seriously as we had expected.=20
+Description:
 
-It was pointed out to us that some fixes already in their code may
-fix the issue, however we are still able to reproduce these bugs in
-the latest version (2.4.37).
+Once an user is authenticated on Jolokia, he can potentially trigger arbitr=
+ary code execution.=C2=A0
 
-The apache developers indicated to us that they'd not consider
-these security issues unless we can show a practical exploit.
-Due to the complexity of the apache code base and our lack
-of specialization in binary memory exploitation we feel unable
-to do this. It is, however, our belief that use after free bugs=20
-should generally be seen as potential security bugs.
+In details, in ActiveMQ configurations, jetty allows
+org.jolokia.http.AgentServlet to handler request to /api/jolokia
 
-For this reason, we have chosen to share this information with the
-community and hope others will continue the analysis.
+org.jolokia.http.HttpRequestHandler#handlePostRequest is able to
+create JmxRequest through JSONObject. And calls to
+org.jolokia.http.HttpRequestHandler#executeRequest.
 
-apr pool allocator
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Into deeper calling stacks,
+org.jolokia.handler.ExecHandler#doHandleRequest is able to invoke
+through refection.
 
-For memory allocations apache http uses the apr library's
-pool allocator that allows reserving a larger chunk of
-memory as a pool and do memory allocations within that pool.
-This can, and in our case does, hide memory safety issues.
+And then, RCE is able to be achieved via
+jdk.management.jfr.FlightRecorderMXBeanImpl which exists on Java version ab=
+ove 11.
 
-apr has an option --enable-pool-debug=3Dyes that will cause
-a single malloc call for each memory allocation, allowing
-the use of memory safety checkers like ASAN.
+1 Call newRecording.
 
-The apache developers suggested that our ASAN reports may stem
-from an incompatibility between the pool debugger and the http2
-module. However we were later able to reproduce these issues
-without the http2 module.
+2 Call setConfiguration. And a webshell data hides in it.
 
-We were also able to reproduce these issues with valgrind and
-without the pool allocator.
+3 Call startRecording.
 
+4 Call copyTo method. The webshell will be written to a .jsp file.
 
-threading related error
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+The mitigation is to restrict (by default) the actions authorized on Joloki=
+a, or disable Jolokia.
+A more restrictive Jolokia configuration has been defined in default Active=
+MQ distribution. We encourage users to upgrade to ActiveMQ distributions ve=
+rsion including updated Jolokia configuration: 5.16.6, 5.17.4, 5.18.0, 6.0.=
+0.
 
-In addition to the ASAN use after free reports, httpd logs threading
-related errors:
+This issue is being tracked as AMQ-9201=20
 
-AH00052: child pid [pid] exit signal Aborted (6)
-apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
-=3D=3D -1 || (new_prio >=3D fifo_min_prio && new_prio <=3D fifo_max_prio)'
-failed.
+Credit:
 
-We found a ten year old bug in the Apache bug tracker
-mentioning such errors:
-https://bz.apache.org/bugzilla/show_bug.cgi?id=3D46185
+wangxin@threatbook.cn (finder)
+wangzhendong@threatbook.cn (finder)
+honglonglong@threatbook.cn (finder)
 
-It was closed as "INVALID".
+References:
 
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2022-41678
+https://issues.apache.org/jira/browse/AMQ-9201
 
-asan stack traces
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-We share asan stack traces from these bugs at
-  https://github.com/hannob/apache-uaf/tree/master/asan
-
-
-reproduction
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-To reproduce the issue:
-
-1. Compile apr with the pool debugger and address sanitizer.
-
-2. Compile apache with address sanitizer.
-
-3. Run a command like this to send random garbage to the server:
-for x in $(seq 1 50); do for i in $(seq 1 1000); do head -n
-10 /dev/urandom | nc 127.0.0.1 80 & done; sleep 5; done
-
-The bugs appear very irregularly, you may need to
-"attack" it for a while.
-
-
-Hanno B=C3=B6ck
-Craig Young (Tripwire VERT)
-
-Thanks to Markus Vervier and Luis Merino of X41 D-SEC GmbH for double
-checking.
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
