@@ -1,88 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/19/6
-Message-ID: <2849a749-83c1-68ab-3e8f-50cc667a6cf8@les7arts.com>
-Date: Wed, 19 Apr 2023 08:25:36 +0200
-From: Jacques Le Roux <jacques.le.roux@...7arts.com>
-To: oss-security@...ts.openwall.com, Arnout Engelen <engelen@...che.org>, "security@...che.org" <security@...che.org>, "security@...iz.apache.org" <security@...iz.apache.org>
-Subject: Re: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/29/1
+Message-Id: <8100C957-0EFB-4A6F-98B2-5DB4544CA6F1@beckweb.net>
+Date: Wed, 29 Nov 2023 14:33:15 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi Seth,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-As I guess you know, the ASF has many (350+) projects: https://projects.apache.org/
-OFBiz is only one of these projects. An "old" one, IIRW it was the 26th to get in.
+The following releases contain fixes for security vulnerabilities:
 
-I say that because we have our own security team.
-Yet, all projects are overseen and especially helped by the ASF security team for security matter.
-In other words we (projects) all share the experience and expertise of the ASF security team.
+* Google Compute Engine Plugin 4.551.v5a_4dc98f6962
+* Jira Plugin 3.12
+* MATLAB Plugin 2.11.1
+* NeuVector Vulnerability Scanner Plugin 2.2
 
-So I must add that the ASF CVE tool has an optional REVIEW status.
-This status allows the ASF security team to review and suggest improvements to the CVE announcement.
-As I did not use this tool before this CVE, I was sure of what I did (my old way) and did not pass by this status.
-If I had did so, the 2 points that you find "nice, and friendly" would have been amended by Arnout's review, lesson learned.
 
-For the rest I guess your suggestions will be taken seriously by the ASF security team which maintain the CVE tool, especially for the OSS email part.
-I'll also take care of your suggestions for URLS, and will better use the tool that has 16 references types for URLS. Though they maybe need a bit of 
-explanation we are not all security experts :)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-11-29/
 
-For the list of CVEs you gave, I'm not sure they used the CVE tool but If they did I guess next time it will be better thanks to our improving CVE 
-tool, hopefully by using the REVIEW status
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Thanks again for your suggestions
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Jacques
+---
 
-Le 19/04/2023 à 03:29, Seth Arnold a écrit :
-> On Tue, Apr 18, 2023 at 11:15:52AM +0200, Jacques Le Roux wrote:
->> I used to give more information. For this one, using our "new" internal
->> process* (need an ASF credential) and  following step 11 of**, notably
->>
->>     <<Generally, reports should contain enough information to enable
->>     people to assess the risk the vulnerability poses for their own
->>     system, and no more.>>
->>
->> I restricted the information to a minimum.
-> Hello Jacques, thanks for the reply. I'd like to suggest that this policy
-> should receive a review, as other list members have found the Apache
-> defaults a bit wanting:
->
-> https://www.openwall.com/lists/oss-security/2023/01/31/7
-> https://www.openwall.com/lists/oss-security/2022/10/12/2
-> https://www.openwall.com/lists/oss-security/2022/08/26/4
-> https://www.openwall.com/lists/oss-security/2022/01/25/15
->
->> When sending to Mitre we replaced
->> https://lists.apache.org/list.html?announce@apache.org
->> by
->> https://lists.apache.org/thread/k8s76l0whydy45bfm4b69vq0mf94p3wc
->>
->> You can see the result at https://www.cve.org/CVERecord?id=CVE-2022-47501
-> This is nice, and friendly.
->
->> We also changed the "problem type" to be more specific. Following the CWE
->> classification, we used "CWE-22 Improper Limitation of a Pathname to a
->> Restricted Directory ('Path Traversal')" rather than "Arbitrary file reading
->> vulnerability" used by the finder who stayed as the CVE title. You can see
->> it at https://cveawg.mitre.org/api/cve/CVE-2022-47501 which is the json
->> version of the report.
-> This is also nice and friendly.
->
->> Regarding your points:
->>
->>   * the vulnerability was introduced long ago (years) when the plugin was
->>   created. It was around 2013.
-> This information is gold!
->
->>   * https://ofbiz.apache.org/security.html gives indirect information
->>   about the fix. Do you suggest that we need to put a direct link like
->>   https://github.com/apache/ofbiz-plugins/commit/582add7d3 ?
-> The link to the security page is a good start; it's even one of the better
-> security.html pages I've seen. (Thanks!) But we've all spent too much time
-> trying to figure out what exactly might have been "the intended content"
-> on a page five or ten years later. Having more specific information (such
-> as the "582add7d3" here) directly available in the list archives will
-> simplify future searches for information.
->
->> Thanks for the links. We will certainly consider what can be done to
->> ease the work of downstream distributors and consumers.
-> Thank you :)
+SECURITY-3225 / CVE-2023-49653
+Jira Plugin 3.11 and earlier does not set the appropriate context for
+credentials lookup, allowing the use of system-scoped credentials otherwise
+reserved for the global configuration.
+
+This allows attackers with Item/Configure permission to access and capture
+credentials they are not entitled to.
+
+
+SECURITY-2835 / CVE-2023-49652
+Google Compute Engine Plugin 4.550.vb_327fca_3db_11 and earlier does not
+correctly perform permission checks in multiple HTTP endpoints. This allows
+attackers with global Item/Configure permission (while lacking
+Item/Configure permission on any particular job) to do the following:
+
+* Enumerate system-scoped credentials IDs of credentials stored in Jenkins.
+  Those can be used as part of an attack to capture the credentials using
+  another vulnerability.
+* Connect to Google Cloud Platform using attacker-specified credentials IDs
+  obtained through another method, to obtain information about existing
+  projects.
+
+
+SECURITY-3193 / CVE-2023-49654 (permission checks) & CVE-2023-49655 (CSRF) & CVE-2023-49656 (XXE)
+MATLAB Plugin determines whether a user-specified directory on the Jenkins
+controller is the location of a MATLAB installation by parsing an XML file
+in that directory.
+
+MATLAB Plugin 2.11.0 and earlier does not perform permission checks in
+several HTTP endpoints implementing related form validation.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+Additionally, the plugin does not configure its XML parser to prevent XML
+external entity (XXE) attacks. This allows attackers able to create files
+on the Jenkins controller file system to have Jenkins parse a crafted XML
+document that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+
+SECURITY-3256 / CVE-2023-49673 (CSRF) & CVE-2023-49674 (missing permission check)
+NeuVector Vulnerability Scanner Plugin 1.22 and earlier does not perform a
+permission check in a connection test HTTP endpoint. This allows attackers
+with Overall/Read permission to connect to an attacker-specified hostname
+and port using attacker-specified username and password. Additionally, this
+HTTP endpoint does not require POST requests, resulting in a cross-site
+request forgery (CSRF) vulnerability.
+
+
+
