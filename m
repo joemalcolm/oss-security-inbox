@@ -1,25 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/13/3
-Message-ID: <73d1e766-20ed-6907-d8c1-781c015a2359@apache.org>
-Date: Fri, 13 Jan 2023 17:18:24 +0000
-From: Brian Demers <bdemers@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22602: Apache Shiro before 1.11.0, when used with Spring Boot 2.6+, may allow authentication bypass through a specially crafted HTTP request 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/2
+Message-ID: <874jh4dscg.fsf@canonical.com>
+Date: Thu, 30 Nov 2023 10:28:55 +1030
+From: Alex Murray <alex.murray@...onical.com>
+To: Matthias Gerstner <mgerstner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi Matthias
 
-When using Apache Shiro before 1.11.0 together with Spring Boot 2.6+, a specially crafted HTTP request may cause an authentication bypass.
+I just wanted to follow-up on this to see if a CVE was ever assigned?
 
-The authentication bypass occurs when Shiro and Spring Boot are using different pattern-matching techniques. Both Shiro and Spring Boot < 2.6 default to Ant style pattern matching.
-Mitigation: Update to Apache Shiro 1.11.0, or set the following Spring Boot configuration value:  `spring.mvc.pathmatch.matching-strategy = ant_path_matcher`
+Thanks,
+Alex
 
-Credit:
+On Mon, 2023-11-20 at 14:39:02 +0100, Matthias Gerstner wrote:
 
-v3ged0ge and Adamytd (finder)
-
-References:
-
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22602
-
+> Hi,
+>
+> thank you both for your suggestions. I just reached out to
+> hp-security-alert@...com about this.
+>
+> There are a couple of other hplip issues I know of that have also been
+> left unattended for a long time that I mentioned there as well.
+>
+> Best Regards
+>
+> Matthias
+>
+> On Sun, Nov 19, 2023 at 07:11:37AM -0500, Mike O'Connor wrote:
+>> [removing security@....com from the Cc:]
+>> 
+>> This is for hp.com product security, not hpe.com.  HP and HPE are two
+>> separate companies, and HPE isn't the printer company.  
+>> 
+>> To report a potential security vulnerability with a HP product,
+>> contact: hp-security-alert@...com
+>> 
+>> Both HPE and HP are CVE CNAs.  Here's HP's CVE CNA information:
+>> https://www.cve.org/PartnerInformation/ListofPartners/partner/hp
+>> 
+>> 
+>> HTH,
+>> -Mike
+>> 
+>> 
+>> :Thanks for making the community aware of this issue.
+>> :
+>> :Perhaps security@....com can help to route internally to get a CVE issued
+>> :and find the appropriate owners to fix.
