@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1202" "Friday" "22" "January" "2016" "09:33:19" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160122143319.A768273C204@smtpvmsrv1.mitre.org>" "34" "[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11" "^Cc:" nil nil "1" "2016012214:33:19" "[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11" (number mark "        cve-assign@m Jan 22   34/1202  " thread-indent "\"[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11\"\n") "<CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>" ("<CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1632 invoked by uid 550); 22 Jan 2016 14:33:33 -0000
+Received: (qmail 15968 invoked by uid 550); 30 Nov 2023 11:04:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1599 invoked from network); 22 Jan 2016 14:33:31 -0000
-In-Reply-To: <CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>
-Message-Id: <20160122143319.A768273C204@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 22 Jan 2016 09:33:19 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: out-of-bounds write with cpio 2.11
-To: gustavo.grieco@gmail.com
+Received: (qmail 24149 invoked from network); 30 Nov 2023 03:03:20 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jiajie Zhong <zhongjiajie@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <72789292-eb17-d220-4364-db1051ef6ad1@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 30 Nov 2023 03:02:05 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-49620: Apache DolphinScheduler: Authenticated users could
+ delete UDFs in resouece center they were not authorized 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate
 
-> in the parsing of cpio files
-> 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 2
-> 
-> util.c:1392 cpio_safer_name_suffix
+Affected versions:
 
-Use CVE-2016-2037.
+- Apache DolphinScheduler 2.0.0 before 3.1.0
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Description:
 
-iQIcBAEBCAAGBQJWoj0bAAoJEL54rhJi8gl5AHUP/RkKp+uneF867005iGi48jaF
-VpkwLC6mGHB/xFRvMCi1JQIHbtWY2sjaCxhNeBtLrQ2T6rp+ob+L2OORnbT3lyJe
-5qPSgp5mxFhlyWOJESoT8Hvla3AYpbkzb2vN1IrHvFgyFstRUjwvTdFv/Pup7En7
-B8jbbLNUsgFlAO7orTd9jLi4CrZTVyy1qOb9E7cs7hwPyyvWRaxQWOmR27gjr9Vx
-1MWh5L7v8VFvE4zP9AvVH+o3jId3LKoQyiwPc9+mHJcEDk6a1O+me/bXaDufcMN1
-k5orCuAq1GJ71MAbCFYbO7A/xZic8gUZ6nOzeLcSAWZALP9XJrX93ZF74ldcl165
-MrX6js5WXAE81jXCCWDlBj+ee7A5OazgCRTrSxSIjYfQU94oSKBch56fXwC1yS+M
-htjPXgs2ILv/HmFDWgxZpipdFuFSBqboHc8kjq0dA+6a3C7iRqsXzLHU9MGJsGiH
-lfBfDYMcBbb7rE9ryBAomV7jq9BD6xoaKTYXIjQ4ynrJxOY1jfn0mITPltikEF8/
-iOkgg3s9oZbY5DPwVfae7n6gPvpcQPJl9guEpGdmRrgW85NNUf6goDrgTIokwdoZ
-HCnTSwjv8i1Wg3tqvt6kvy0ssWAe0GwGCbgJyBmp/sq/LXb2TZ/XTG/a94scX40D
-p67V2HPHK+2GL8/v32B/
-=Vsja
------END PGP SIGNATURE-----
+Before DolphinScheduler version 3.1.0, the login user could delete UDF func=
+tion in the resource center unauthorized(which almost used in sql task), wi=
+th=C2=A0unauthorized=C2=A0access vulnerability(IDOR), but after version 3.1=
+.0 we fixed this issue. We mark this cve as moderate level because it still=
+ requires user login to operate, please upgrade to version 3.1.0 to avoid t=
+his=C2=A0vulnerability
+
+Credit:
+
+Yuanheng Lab of zhongfu (finder)
+
+References:
+
+https://github.com/apache/dolphinscheduler/pull/10307
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-49620
+
