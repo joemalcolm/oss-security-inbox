@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/29/1
-Message-ID: <caf72d56-b63f-61d3-1d4d-7f3fee472b9f@apache.org>
-Date: Sat, 29 Jul 2023 02:25:39 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/6
+Message-ID: <700bdff0-d154-6b42-7c7e-ae22ef0ace6f@apache.org>
+Date: Thu, 30 Nov 2023 16:34:09 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-36542: Apache NiFi: Potential Code Injection with Properties Referencing Remote Resources 
+Subject: CVE-2023-49735: Apache Tiles: Unvalidated input may lead to path traversal and XXE 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: low
 
 Affected versions:
 
-- Apache NiFi 0.0.2 through 1.22.0
+- Apache Tiles 2.0.0 before *
 
 Description:
 
-Apache NiFi 0.0.2 through 1.22.0 include Processors and Controller Services that support HTTP URL references for retrieving drivers, which allows an authenticated and authorized user to configure a location that enables custom code execution. The resolution introduces a new Required Permission for referencing remote resources, restricting configuration of these components to privileged users. The permission prevents unprivileged users from configuring Processors and Controller Services annotated with the new Reference Remote Resources restriction. Upgrading to Apache NiFi 1.23.0 is the recommended mitigation.
+** UNSUPPORTED WHEN ASSIGNED **
 
-This issue is being tracked as NIFI-11744 
+The value set as the DefaultLocaleResolver.LOCALE_KEY attribute on the session was not validated while resolving XML definition files, leading to possible path traversal and eventually SSRF/XXE when passing user-controlled data to this key. Passing user-controlled data to this key may be relatively common, as it was also used like that to set the language in the 'tiles-test' application shipped with Tiles.
+
+This issue affects Apache Tiles from version 2 onwards.
+
+NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
 
 Credit:
 
-nbxiglk (finder)
+Joseph Beeton of Contrast Security (finder)
 
 References:
 
-https://nifi.apache.org/security.html#CVE-2023-36542
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-36542
-https://issues.apache.org/jira/browse/NIFI-11744
-
-Timeline:
-
-2023-06-19: reported
-2023-06-21: confirmed
-2023-06-21: resolved
+https://attic.apache.org/projects/tiles.html
+https://www.cve.org/CVERecord?id=CVE-2023-49735
 
