@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/11
-Message-ID: <fefc8687-7f62-7ca4-361a-be7f0a3b0c74@apache.org>
-Date: Tue, 11 Jul 2023 16:44:10 +0000
-From: Andy Seaborne <andy@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-32200: Apache Jena: Exposure of execution in script engine expressions. 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/1
+Message-ID: <ZWhZaaGx_OalvQYM@kasco.suse.de>
+Date: Thu, 30 Nov 2023 10:44:08 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: Alex Murray <alex.murray@...onical.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Hello Alex,
 
-Affected versions:
+On Thu, Nov 30, 2023 at 10:28:55AM +1030, Alex Murray wrote:
+> I just wanted to follow-up on this to see if a CVE was ever assigned?
 
-- Apache Jena 3.7.0 through 4.8.0
+I did not get any news neither in the private Launchpad issue for the
+hplip project, nor after contacting hp-security-alert@...com, as was
+suggested by others in this thread.
 
-Description:
+Best Regards
 
-There is insufficient restrictions of called script functions in Apache Jena
- versions 4.8.0 and earlier. It allows a 
-remote user to execute javascript via a SPARQL query.
-This issue affects Apache Jena: from 3.7.0 through 4.8.0.
+Matthias
 
-Credit:
-
-s3gundo of Alibaba (reporter)
-
-References:
-
-https://www.cve.org/CVERecord?id=CVE-2023-22665
-https://jena.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-32200
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
