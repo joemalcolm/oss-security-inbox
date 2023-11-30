@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3386" "Sunday" "12" "January" "2020" "18:47:26" "+0100" "Solar Designer" "solar@openwall.com" "<20200112174726.GA8750@openwall.com>" "65" "Re: [oss-security] linux-distros membership adjustment/vouching" "^Cc:" nil nil "1" "2020011217:47:26" "[oss-security] linux-distros membership adjustment/vouching" (number mark "        solar@openwa Jan 12   65/3386  " thread-indent "\"Re: [oss-security] linux-distros membership adjustment/vouching\"\n") "<20200110205241.GF6272@outflux.net>" ("<20200110205241.GF6272@outflux.net>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership adjustment/vouching" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21952 invoked by uid 550); 12 Jan 2020 17:47:58 -0000
+Received: (qmail 30230 invoked by uid 550); 30 Nov 2023 11:18:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +6,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21764 invoked from network); 12 Jan 2020 17:47:32 -0000
-Message-ID: <20200112174726.GA8750@openwall.com>
-References: <20200110205241.GF6272@outflux.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200110205241.GF6272@outflux.net>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com,
-	Jorge Lucangeli Obes <jorgelo@google.com>
-Date: Sun, 12 Jan 2020 18:47:26 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership adjustment/vouching
-To: Kees Cook <kees@ubuntu.com>
+Received: (qmail 26578 invoked from network); 30 Nov 2023 11:16:49 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: =?UTF-8?Q?C=C3=A9dric_Damioli?= <cdamioli@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <16acad3f-b909-c85f-bc41-2d81b5054ba8@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 30 Nov 2023 11:16:38 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-49733: Apache Cocoon's StreamGenerator is vulnerable to
+ XXE injection 
 
-Hi,
+Severity: important
 
-On Fri, Jan 10, 2020 at 12:52:41PM -0800, Kees Cook wrote:
-> I've been a member of linux-distros for a long while, and my hat has
-> slowly changed over that time. I'm subscribed there (and here) as
-> kees@ubuntu.com.  When I my responsibilities shifted from the Ubuntu
-> Security Team to the Chrome OS Security Team, I just kept the email
-> address (since it's a community address and I'm still part of the Ubuntu
-> community).
-> 
-> However, as my responsibilities have shifted, I'm much less involved
-> with the Chrome OS Security Team, and it was recently pointed out that
-> no one else from the Chrome OS Security Team is (to our knowledge)
-> a member right now.
-> 
-> So, attempting to solve things in a backwards order, I'd like to first
-> vouch for a Chrome OS Security Team member who is already on oss-security,
-> with the goal of having them added to the linux-distros list:
-> 
->     Jorge Lucangeli Obes <jorgelo@google.com>
+Affected versions:
 
-Given the above, I'd be happy to subscribe Jorge for Chrome OS.  I just
-need Jorge's PGP key.  I also suggest using an e-mail address not on
-Google's MX'es, because those reject messages sent from domains with
-strict DMARC policy (most notably, when another Googler posts).
+- Apache Cocoon 2.2.0 before 2.3.0
 
-Normally such subscription changes for an already subscribed distro are
-handled off-list.  However, what you bring up below deserves being
-discussed on oss-security:
+Description:
 
-> Then I'd like to figure out what to do with my own membership. I'm
-> still associated with Ubuntu, Chrome OS, and Android but I don't have
-> "official" responsibilities as a representative of their respective
-> security teams. I am, however, an upstream Linux kernel security contact
-> (but that doesn't qualify as a "Unix-like operating system distro", from
-> item "1" in the membership criteria[1]). I am still involved in fixing,
-> notifying, negotiating, delegating, etc, in these various distros. Should
-> I stay on linux-distros? I would prefer to (it makes that work simpler),
-> but since there isn't any "criteria for continuing membership" on the
-> Wiki, I'm not entirely sure what the right course of action should be.
+Improper Restriction of XML External Entity Reference vulnerability in Apac=
+he Cocoon.This issue affects Apache Cocoon: from 2.2.0 before 2.3.0.
 
-I think it'd be most consistent with our criteria so far if (at least)
-one of those distros' security teams does state that you'd represent
-them.  Without that, you staying on linux-distros would be weird and
-inconsistent with requirements we set for others.
+Users are recommended to upgrade to version 2.3.0, which fixes the issue.
 
-> (And if I stay, perhaps it would be more accurate to use kees@kernel.org?)
+References:
 
-It'd be up to you to choose an e-mail address that's convenient for
-you.  Messages are encrypted anyway, so this choice sort of does not
-matter for security.  In practice, though, it does matter a little bit:
-if you choose an e-mail address in a specific distro's domain name, then
-if you ever leave their team and they disable that e-mail account you
-wouldn't be getting the messages anymore (and they wouldn't be able to
-read messages intended for you as well, due to the encryption to your
-key), even if they forget to promptly ask for your address to be removed
-from the list.  Despite of this minor security advantage, I don't insist
-on use of such e-mail addresses so far, as I realize it's often far more
-convenient to use an external e-mail address.
+https://cocoon.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-49733
 
-As to kernel.org, it isn't particularly relevant here since the Linux
-kernel is not a Linux distro.  It's just an address you can use, just
-like any other address.
-
-Alexander
