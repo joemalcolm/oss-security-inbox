@@ -1,62 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/1
-Message-ID: <Y/6wnzgxs4K7zeYp@gentoo.org>
-Date: Tue, 28 Feb 2023 19:55:43 -0600
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/5
+Message-ID: <16acad3f-b909-c85f-bc41-2d81b5054ba8@apache.org>
+Date: Thu, 30 Nov 2023 11:16:38 +0000
+From: Cédric Damioli <cdamioli@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sudo: double free with per-command chroot sudoers rules
+Subject: CVE-2023-49733: Apache Cocoon's StreamGenerator is vulnerable to XXE injection 
 Content-Type: text/plain; charset=utf-8
 
-Has a CVE been requeested?
+Severity: important
 
-On Tue, Feb 28, 2023 at 07:31:11AM -0700, Todd C. Miller wrote:
-> A flaw exists in sudo's per-command chroot feature that could result
-> in the variable that stores the command being freed more than once.
-> 
-> I believe this is a fairly low-impact bug as the per-command chroot
-> feature is not widely used.  The bug was caught by glibc's double-free
-> detection while I was performing some chroot-related testing.  No
-> one else has reported the bug which leads me to believe it probably
-> has not been encountered in the wild.
-> 
-> Sudo versions affected:
-> 
->     Sudo versions 1.9.8 through 1.9.13p1 inclusive are affected.
->     Versions of sudo prior to 1.9.8 are not affected.
-> 
-> Details:
-> 
->     Starting with Sudo 1.9.3, it is possible to specify an alternate
->     root directory that sudo will change to before executing the
->     command.  For example:
-> 
-> 	someuser ALL = CHROOT=/var/www /bin/sh
-> 
->     will result in /bin/sh being run inside the chroot jail /var/www
->     when the specific user runs "sudo sh".
-> 
->     Sudo 1.9.8 included a fix for a memory leak in the set_cmnd_path()
->     function which can result in the "user_cmnd" variable being
->     freed twice, but only when processing a sudoers rule that
->     contains a "CHROOT" setting.  This does not affect the "chroot"
->     Defaults setting.  Only a per-rule "CHROOT" setting will trigger
->     the bug.
-> 
-> Impact:
-> 
->     The bug can only be triggered by a user that has been granted
->     sudo privileges using a sudoers rule that contain a "CHROOT"
->     setting and the rule must match the current host.  If no users
->     have sudoers rules containing "CHROOT" there is no impact.  This
->     feature is not commonly used.
-> 
-> Workaround:
-> 
->     Remove rules from the sudoers file than contain a "CHROOT"
->     setting if using an affected version of sudo.
-> 
-> Fix:
-> 
->     The bug is fixed in sudo 1.9.13p2.
+Affected versions:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+- Apache Cocoon 2.2.0 before 2.3.0
+
+Description:
+
+Improper Restriction of XML External Entity Reference vulnerability in Apache Cocoon.This issue affects Apache Cocoon: from 2.2.0 before 2.3.0.
+
+Users are recommended to upgrade to version 2.3.0, which fixes the issue.
+
+References:
+
+https://cocoon.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-49733
+
