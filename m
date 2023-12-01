@@ -1,100 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/03/2
-Message-Id: <af14cd93-8173-47f9-b1eb-540e87dbf270@app.fastmail.com>
-Date: Thu, 03 Aug 2023 14:03:20 +0200
-From: "Pietro Albini" <pietro@...troalbini.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/01/1
+Message-ID: <9bf069f5-9476-45b0-a89b-6b5dbf1235ee@oracle.com>
+Date: Thu, 30 Nov 2023 16:42:04 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-38497: Cargo does not respect umask when extracting packages
+Subject: New CVEs and security fix releases for perl
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+[While https://github.com/Perl/perl5/blob/blead/pod/perlsecpolicy.pod states
+  they will send security advisories to this list, I haven't seen any come
+  through yet for these issues.  -alan-]
 
-The Rust Security Response WG was notified that Cargo did not respect the umask
-when extracting crate archives on UNIX-like systems. If the user downloaded a
-crate containing files writeable by any local user, another local user could
-exploit this to change the source code compiled and executed by the current
-user.
+https://metacpan.org/release/PEVANS/perl-5.38.1/view/pod/perldelta.pod lists
+two new CVE's:
 
-This vulnerability has been assigned CVE-2023-38497.
+--------------------------------------------------------------------------------
+CVE-2023-47038 - Write past buffer end via illegal user-defined Unicode property
 
-## Overview
+This vulnerability was reported directly to the Perl security team by
+Nathan Mills the.true.nathan.mills@...il.com.
 
-In UNIX-like systems, each file has three sets of permissions: for the user
-owning the file, for the group owning the file, and for all other local users.
-The "[umask][1]" is configured on most systems to limit those permissions
-during file creation, removing dangerous ones. For example, the default umask
-on macOS and most Linux distributions only allow the user owning a file to
-write to it, preventing the group owning it or other local users from doing the
-same.
+A crafted regular expression when compiled by perl 5.30.0 through 5.38.0 can
+cause a one-byte attacker controlled buffer overflow in a heap allocated buffer.
+--------------------------------------------------------------------------------
+CVE-2023-47039 - Perl for Windows binary hijacking vulnerability
 
-When a dependency is downloaded by Cargo, its source code has to be extracted
-on disk to allow the Rust compiler to read as part of the build. To improve
-performance, this extraction only happens the first time a dependency is used,
-caching the pre-extracted files for future invocations.
+This vulnerability was reported to the Intel Product Security Incident Response
+Team (PSIRT) by GitHub user ycdxsb
+https://github.com/ycdxsb/WindowsPrivilegeEscalation.
+PSIRT then reported it to the Perl security team.
 
-Unfortunately, it was discovered that Cargo did not respect the umask during
-extraction, and propagated the permissions stored in the crate archive as-is.
-If an archive contained files writeable by any user on the system (and the
-system configuration didn't prevent writes through other security measures),
-another local user on the system could replace or tweak the source code of a
-dependency, potentially achieving code execution the next time the project is
-compiled.
+Perl for Windows relies on the system path environment variable to find the
+shell (cmd.exe). When running an executable which uses Windows Perl interpreter,
+Perl attempts to find and execute cmd.exe within the operating system. However,
+due to path search order issues, Perl initially looks for cmd.exe in the current
+working directory.
 
-## Affected Versions
+An attacker with limited privileges can exploit this behavior by placing cmd.exe
+in locations with weak permissions, such as C:\ProgramData. By doing so, when an
+administrator attempts to use this executable from these compromised locations,
+arbitrary code can be executed.
+--------------------------------------------------------------------------------
 
-All Rust versions before 1.71.1 on UNIX-like systems (like macOS and Linux) are
-affected. Note that additional system-dependent security measures configured on
-the local system might prevent the vulnerability from being exploited.
+The 5.34.2, 5.36.2 and 5.38.1 releases were issued with fixes for these issues.
+However, there were issues with those releases, as noted in the email at
+https://www.nntp.perl.org/group/perl.perl5.porters/2023/11/msg267365.html
+and thus versions 5.34.3, 5.36.3 and 5.38.2 were released to fix those issues:
+https://www.nntp.perl.org/group/perl.perl5.porters/2023/11/msg267400.html
 
-Users on Windows and other non-UNIX-like systems are not affected.
-
-## Mitigations
-
-We recommend all users to update to Rust 1.71.1, which will be released later
-today, as it fixes the vulnerability by respecting the umask when extracting
-crate archives. If you build your own toolchain, patches for 1.71.0 source
-tarballs are [available here][2].
-
-To prevent existing cached extractions from being exploitable, the Cargo binary
-included in Rust 1.71.1 or later will purge the caches it tries to access if
-they were generated by older Cargo versions.
-
-If you cannot update to Rust 1.71.1, we recommend configuring your system to
-prevent other local users from accessing the Cargo directory, usually located
-in `~/.cargo`:
-
-```
-chmod go= ~/.cargo
-```
-
-## Acknowledgments
-
-We want to thank Addison Crump for responsibly disclosing this to us according
-to the [Rust security policy][3].
-
-We also want to thank the members of the Rust project who helped us disclose
-the vulnerability: Weihang Lo for developing the fix; Eric Huss for reviewing
-the fix; Pietro Albini for writing this advisory; Pietro Albini, Manish
-Goregaokar and Josh Stone for coordinating this disclosure; Josh Triplett, Arlo
-Siemen, Scott Schafer, and Jacob Finkelman for advising during the disclosure.
-
-[1]: https://en.wikipedia.org/wiki/Umask
-[2]: https://github.com/rust-lang/wg-security-response/tree/main/patches/CVE-2023-38497
-[3]: https://www.rust-lang.org/policies/security
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAmTLX38ACgkQ77mGCudS
-Daxn7Q/+Oid260WnVd1sH9njTJt/+zBImTjbfNaMge6PzFteKat/D15YPgpaFEmy
-WM+gH9ejz+oOgjw2DTdeMHzh9i137kchNfzgEY6Cl0SMxc5NymA47Q2zrSt+TBK6
-L362q5dw/Ic1Sf5GRt7J4xeLjY4Vj8FFve1Jnd3VW+QQkATBJn01SLyTD4uXE5tJ
-1UX9IkG1n2y9wXgvkmMYInAnOux8mAb5Sx5JYAtPBO7jV2xfg5ffME6BIzH4F7xw
-wL5k7epvHbtwt2eHVetbHf8UjTiuZxDK8GWbMPqe59AheoLRfgmw06qxVwxI8lEJ
-cWTnZDZEdSXgpy9OphoTYAonQp7qdzoQdXpc4dQxpWkTa3+kvB9SD9H+OVTiYYEv
-EctRt7CQGeTFmpotwq3wwpv8XjWvpjdRie1TIMA5WejZecHiL/iiZxkn00DxW3RP
-dp6Qvqb/jxl7dfRTSm3mH+iqVkv8GtEWwbfK0LE3i9O1ezmQ0m7kjKbgv+NP8p8v
-mtGM1K/IDGYIUgOXha46wqXv9/1f6tCeOcuC9C1j24Jbl7ScmwanQ0VmZWZBfhFD
-EBrLaSlHl45GwSyEaIe7REtOrCR4UCAvHMe1Rxw0KdWe//8Qrtq4agqVg4DYr0/h
-WzDXqlbVAQqKWehaQtJfhQ8xW3XYQBmYLZOsWmBKUKVMnUsTkFQ=
-=XCFS
------END PGP SIGNATURE-----
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
