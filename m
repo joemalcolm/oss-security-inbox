@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/6
-Message-ID: <CAAHN_R1ATfyJD=QikN=crfRgX-YzO9zw3hdQbXoipiTb1k1uVQ@mail.gmail.com>
-Date: Tue, 3 Oct 2023 15:39:44 -0400
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4806, CVE-2023-5156: glibc: potential use-after-free in getaddrinfo()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/04/1
+Message-ID: <CAM+3YVqkFqtQ2ZBLFgPg6+=SxV_bcZb_3ZgLQ0V5H-JOqRZ--w@mail.gmail.com>
+Date: Mon, 4 Dec 2023 11:50:59 +0100
+From: Marco Ivaldi <raptor@...eadbeef.info>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com,  submissions@...ketstormsecurity.com
+Subject: HNS-2023-04 - HN Security Advisory - Buffer overflow vulnerabilities with long path names in TinyDir
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 3, 2023 at 3:31 PM Rodrigo Freire <rfreire@...hat.com> wrote:
->
-> On Tue, Oct 3, 2023 at 4:18 PM Solar Designer <solar@...nwall.com> wrote:
-> > Hi,
->
-> Hello,
->
-> <snip>
->
-> > https://access.redhat.com/security/cve/CVE-2023-5156
-> > Puzzlingly, the latter URL lists RHEL 9 as affected, even though I think
-> > the original buggy fix hasn't yet made it into a RHEL 9 glibc update.
-> > Maybe that's part of Red Hat's tracking of what's in their pipeline.
->
-> The affected code was backported into RHEL9's glibc and it is affected.
-> The fix is traversing our productization pipeline and we will ship
-> when it's done.
+Hi,
 
-To elaborate, none of the *released* versions of rhel-9 are affected
-by it, but the RHEL process is using it to coordinate things in the
-release pipeline.
+Please find attached a security advisory that describes some buffer
+overflow vulnerabilities we discovered in TinyDir.
 
-Thanks,
-Sid
+* Title: Buffer overflow vulnerabilities with long path names in TinyDir
+* Product: TinyDir <= 1.2.5
+* Author: Marco Ivaldi <marco.ivaldi@...ecurity.it>
+* Date: 2023-12-04
+* CVE ID: CVE-2023-49287
+* Severity: High - 7.7 - CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H
+* Vendor URL: https://github.com/cxong/tinydir
+* Advisory URL:
+https://github.com/cxong/tinydir/security/advisories/GHSA-jf5r-wgf4-qhxf
+
+The advisory is also available at:
+https://github.com/hnsecurity/vulns/blob/main/HNS-2023-04-tinydir.txt
+
+Regards,
 
 -- 
-https://gotplt.org
+Marco Ivaldi
+https://0xdeadbeef.info/
+"When cryptography is outlawed, bayl bhgynjf jvyy unir cevinpl."
+
+View attachment "HNS-2023-04-tinydir.txt" of type "text/plain" (11249 bytes)
