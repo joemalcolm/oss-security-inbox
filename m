@@ -1,14 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/10
-Message-ID: <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@deg2z7j4ztug>
-Date: Fri, 20 Oct 2023 12:27:27 -0700
-From: nightmare.yeah27@...ecat.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/04/2
+Message-ID: <67c898ae-6e2b-c959-8115-24663fa01305@apache.org>
+Date: Mon, 04 Dec 2023 21:04:50 +0000
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: CVE-2023-49070: Pre-auth RCE in Apache Ofbiz 18.12.09 due to XML-RPC still present 
 Content-Type: text/plain; charset=utf-8
 
-What about people like me who don't use the graphical emulator's
-paste directly at all but interact via a tmux layer in between?
+Severity: moderate
 
--- 
-Ian
+Affected versions:
+
+- Apache OFBiz before 18.12.10
+
+Description:
+
+Pre-auth RCE in Apache Ofbiz 18.12.09.
+
+It's due to XML-RPC no longer maintained still present.
+This issue affects Apache OFBiz: before 18.12.10. 
+Users are recommended to upgrade to version 18.12.10
+
+This issue is being tracked as OFBIZ-12812 
+
+Credit:
+
+Siebene@ (finder)
+
+References:
+
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-18.12.10.html
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-49070
+https://issues.apache.org/jira/browse/OFBIZ-12812
+
