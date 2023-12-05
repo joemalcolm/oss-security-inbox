@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/07/1
-Message-ID: <9cb8f8f7-e532-c9df-3e6b-511067d921a9@apache.org>
-Date: Sun, 07 May 2023 17:02:53 +0000
-From: Pierre Jeambrun <pierrejeambrun@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/05/3
+Message-ID: <824d0fa7-8068-4a06-9185-58b25eb4c678@oracle.com>
+Date: Tue, 5 Dec 2023 12:59:57 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-29247: Stored XSS on Apache Airflow 
+Subject: SLAM: Spectre based on Linear Address Masking
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+A vulnerability in closed source CPUs which open source OSes may need
+to mitigate was disclosed today:
 
-Affected versions:
+https://www.vusec.net/projects/slam/
+https://github.com/vusec/slam
+https://www.youtube.com/watch?v=y4wZ-tREaNk
+https://x.com/vu5ec/status/1732099516621521003
 
-- Apache Airflow before 2.6.0
+The first page lists these processors as affected:
 
-Description:
+    - Existing AMD CPUs vulnerable to CVE-2020-12965;
+    - Future Intel CPUs supporting LAM (both 4- and 5-level paging);
+    - Future AMD CPUs supporting UAI and 5-level paging;
+    - Future Arm CPUs supporting TBI and 5-level paging.
 
-Task instance details page in the UI is vulnerable to a stored XSS.This issue affects Apache Airflow: before 2.6.0.
+as it takes advantage of CPU features which allow masking off some bits of
+pointer addresses to store additional data in, such as Intel’s Linear Address
+Masking (LAM), AMD’s Upper Address Ignore (UAI), or ARM's Top-byte Ignore (TBI).
 
-Credit:
-
-taidh from VNPT - VCI (finder)
-kuteminh11 (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/30447
-https://github.com/apache/airflow/pull/30779
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-29247
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
