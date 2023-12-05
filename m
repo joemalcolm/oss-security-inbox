@@ -1,28 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/21/1
-Message-ID: <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
-Date: Fri, 21 Jul 2023 11:04:49 +1000
-From: Matthew Fernandez <matthew.fernandez@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/05/2
+Message-ID: <db3f8160-c5f9-438a-9cbe-e227b5d8fd76@oracle.com>
+Date: Tue, 5 Dec 2023 12:51:07 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Announce: OpenSSH 9.3p2 released
+Subject: Security fixes in Go 1.21.5 and Go 1.20.12 releases
 Content-Type: text/plain; charset=utf-8
 
+https://groups.google.com/g/golang-announce/c/iLGK3x6yuNo reports:
 
+Hello gophers,
 
-On 7/20/23 23:41, Sevan Janiyan wrote:
-> On 20/07/2023 14:24, Demi Marie Obenour wrote:
->> Should there be a system-wide configuration file containing a list of 
->> known-good PKCS#11 libraries? ssh-agent having to guess if something 
->> is a PKCS#11 library is less than awesome.
-> 
-> There's a compile time setting for paths from which you are able to load 
-> libraries from.
+We have just released Go versions 1.21.5 and 1.20.12, minor point releases.
 
-I don’t think this helps much though, right? The Qualys research that 
-motivated this found an exploit chain using only libs present in 
-/usr/lib in a default Ubuntu install. If you want to lock down loading 
-to a specific non-/usr/lib path that you have control over, this 
-suggests you know and are in control of the PKCS#11 providers you’re 
-going to support. In which case, why not avoid dynamic loading to begin 
-with? I guess the allowlist and new defaults are the answer to this 
-conundrum though.
+These minor releases include 3 security fixes following the security policy:
+
+   - net/http: limit chunked data overhead
+
+     A malicious HTTP sender can use chunk extensions to cause a receiver reading
+     from a request or response body to read many more bytes from the network
+     than are in the body.
+
+     A malicious HTTP client can further exploit this to cause a server to
+     automatically read a large amount of data (up to about 1GiB) when a handler
+     fails to read the entire body of a request.
+
+     Chunk extensions are a little-used HTTP feature which permit including
+     additional metadata in a request or response body sent using the chunked
+     encoding. The net/http chunked encoding reader discards this metadata.
+     A sender can exploit this by inserting a large metadata segment with each
+     byte transferred. The chunk reader now produces an error if the ratio of
+     real body to encoded bytes grows too small.
+
+     Thanks to Bartek Nowotarski for reporting this issue.
+
+     This is CVE-2023-39326 and Go issue https://go.dev/issue/64433.
+
+   - cmd/go: go get may unexpectedly fallback to insecure git
+
+     Using go get to fetch a module with the ".git" suffix may unexpectedly
+     fallback to the insecure "git://" protocol if the module is unavailable via
+     the secure "https://" and "git+ssh://" protocols, even if GOINSECURE is not
+     set for said module. This only affects users who are not using the module
+     proxy and are fetching modules directly (i.e. GOPROXY=off).
+
+     Thanks to David Leadbeater for reporting this issue.
+
+     This is CVE-2023-45285 and Go issue https://go.dev/issue/63845.
+
+   - path/filepath: retain trailing \ when cleaning paths like \\?\c:\
+
+     Go 1.20.11 and Go 1.21.4 inadvertently changed the definition of the volume
+     name in Windows paths starting with \\?\, resulting in
+     filepath.Clean(\\?\c:\) returning \\?\c: rather than \\?\c:\ (among other
+     effects). The previous behavior has been restored.
+
+     This is an update to CVE-2023-45283 and Go issue https://go.dev/issue/64028.
+
+View the release notes for more information:
+https://go.dev/doc/devel/release#go1.21.5
+
+You can download binary and source distributions from the Go website:
+https://go.dev/dl/
+
+To compile from source using a Git clone, update to the release with
+git checkout go1.21.5 and build as usual.
+
+Thanks to everyone who contributed to the releases.
+
+Cheers,
+Carlos and Dmitri for the Go team
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
