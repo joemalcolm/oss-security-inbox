@@ -1,37 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/05/1
-Message-ID: <CAF1aazB_eBVHv75fjPKHQXvuq7jqZhz_9JOhqMhbpPPA+cVRFg@mail.gmail.com>
-Date: Sat, 5 Aug 2023 16:12:10 -0400
-From: Dave <snoopdave@...il.com>
-To: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  srivani.reddy@...urelayer7.net, dev@...ler.apache.org,  Roller User <user@...ler.apache.org>
-Subject: CVE-2023-37581: Apache Roller: XSS vulnerability for site with untrusted users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/05/1
+Message-ID: <a4993da7-a79b-c22b-b25c-337537a8f4b3@igalia.com>
+Date: Tue, 5 Dec 2023 14:57:21 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0011
 Content-Type: text/plain; charset=utf-8
 
-The Apache Roller project would like to announce a vulnerability that may
-impact Roller installations that allow group blogging with untrusted users.
 
-Severity:
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0011
+------------------------------------------------------------------------
 
-Medium (only impacts group blogging sites with untrusted users)
+Date reported           : December 05, 2023
+Advisory ID             : WSA-2023-0011
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0011.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0011.html
+CVE identifiers         : CVE-2023-42916, CVE-2023-42917.
 
-Description:
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Insufficient input validation and sanitation in Weblog Category name,
-Website About and File Upload features in all versions of Apache Roller on
-all platforms allows an authenticated user to perform an XSS attack.
+CVE-2023-42916
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.3.
+    Credit to Clément Lecigne of Google's Threat Analysis Group.
+    Impact: Processing web content may disclose sensitive information.
+    Apple is aware of a report that this issue may have been actively
+    exploited. Description: An out-of-bounds read was addressed with
+    improved input validation.
+    WebKit Bugzilla: 265041
 
-Mitigation:
+CVE-2023-42917
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.3.
+    Credit to Clément Lecigne of Google's Threat Analysis Group.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Apple is aware of a report that this issue may have been actively
+    exploited. Description: A memory corruption vulnerability was
+    addressed with improved locking.
+    WebKit Bugzilla: 265067
 
-If you are not running a group blog, then no mitigation is needed. If you
-are running a group blog and you do not have Roller configured for
-untrusted users, then you need to do nothing because you trust your users
-to author raw HTML and other web content.
 
-But, if you are running a group blog and you do not trust your users to
-author HTML, CSS and JavaScript then you should upgrade to Roller 6.1.2 and
-you should disable Roller's File Upload feature. Roller 6.1.2 is available
-for download here: https://roller.apache.org/downloads/downloads.html
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-Apache Roller would like to thank Srivani Reddy for reporting this
-vulnerability.
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
+The WebKitGTK and WPE WebKit team,
+December 05, 2023
