@@ -1,26 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/07/1
-Message-ID: <6bdc8ff7-0627-2515-7653-3b60ea38538b@apache.org>
-Date: Sat, 07 Jan 2023 15:52:42 +0000
-From: Dan Klco <dklco@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46769: Apache Sling App CMS: XSS in CMS Site Group Detail 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/06/2
+Message-ID: <15454126-8o30-6q3n-8r56-22n65qr61n8@unkk.fr>
+Date: Wed, 6 Dec 2023 08:29:50 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: HSTS long file name clears contents
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+HSTS long file name clears contents
+===================================
 
-Description:
+Project curl Security Advisory, December 6 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-46219.html)
 
-An improper neutralization of input during web page generation ('Cross-site Scripting') [CWE-79] vulnerability in Sling App CMS version 1.1.2 and prior may allow an authenticated remote attacker to perform a reflected cross-site scripting (XSS) attack in the site group feature.
+VULNERABILITY
+-------------
 
-Upgrade to Apache Sling App CMS >= 1.1.4
+When saving HSTS data to an excessively long file name, curl could end up
+removing all contents, making subsequent requests using that file unaware of
+the HSTS status they should otherwise use.
 
-Credit:
+INFO
+----
 
-Apache Sling would like to thank Sam Bagheri for reporting this issue (finder)
+The reason for this bug is that save function appended a suffix to the file
+name, created a temporary file and then in the last step renamed that to the
+final name. When the file name length was close to the limit of what is
+allowed on the file system, adding the extension would make it too long and
+then trigger this bug.
 
-References:
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-46219 to this issue.
 
-https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-46769
+CWE-311: Missing Encryption of Sensitive Data
 
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.84.0 to and including 8.4.0
+- Not affected versions: curl < 7.84.0 and >= 8.5.0
+- Introduced-in: https://github.com/curl/curl/commit/20f9dd6bae50b722
+
+libcurl is used by many applications, but not always advertised as such!
+
+This flaw is also accessible using the curl command line tool.
+
+SOLUTION
+------------
+
+Starting in curl 8.5.0, the temporary file name made done using a pure random
+sequence of letters instead of being based on the original.
+
+- Fixed-in: https://github.com/curl/curl/commit/73b65e94f3531179de45
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.5.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use HSTS
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on November 2, 2023. We contacted
+distros@...nwall on November 28, 2023.
+
+curl 8.5.0 was released on December 6 2023, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Maksymilian Arciemowicz
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
