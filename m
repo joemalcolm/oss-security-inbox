@@ -1,63 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/14/2
-Message-ID: <8820f35d-5786-d799-b6c0-8800f148829b@gmail.com>
-Date: Mon, 13 Feb 2023 23:47:38 -0500
-From: Dave Wallace <dwallacelf@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/07/1
+Message-ID: <0de3c6b5-0b22-ffee-d3c8-2cefbcdf6e80@apache.org>
+Date: Thu, 07 Dec 2023 07:38:54 +0000
+From: Lukasz Lenart <lukaszlenart@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46397: FD.io VPP (Vector Packet Processor) IPSec generates a predictable IV with AES-CBC mode
+Subject: CVE-2023-50164: Apache Struts: File upload component had a directory traversal vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Folks,
+Severity: critical
 
-A vulnerability in the VPP IPSec plugin was identified by Benoit Ganne 
-who has also provided a fix that has been committed to master and 
-cherry-picked to all affected VPP Release branches.
+Affected versions:
 
-
-Here is the Security Advisory report for CVE-2022-46397 [0]:
+- Apache Struts 2.0.0 through 2.5.32
+- Apache Struts 6.0.0 through 6.3.0.1
 
 Description:
-FP.io VPP (Vector Packet Processor) 22.10, 22.06, 22.02, 21.10, 21.06, 
-21.01, 20.09, 20.05, 20.01, 19.08, and 19.04 Generates a Predictable IV 
-with CBC Mode.
 
-Vulnerability Type Other:
-CWE-329: Generation of Predictable IV with CBC Mode
-
-Severity:
-Moderate
-
-Vendor of Product:
-https://fd.io
-
-Affected Product Code Base:
-vpp - v22.10, v22.06, v22.02, v21.10, v21.06, v21.01, v20.09, v20.05, 
-v20.01, v19.08, v19.04
+An attacker can manipulate file upload params to enable paths traversal and under some circumstances this can lead to uploading a malicious file which can be used to perform Remote Code Execution.
+Users are recommended to upgrade to versions Struts 2.5.33 or  Struts 6.3.0.1 or greater to fix this issue.
 
 Credit:
-This issue was reported by Benoit Ganne of Cisco Systems, Inc per the 
-FD.io Security Policy [1].
 
-Resolution:
-The fix for the vulnerability was committed to the VPP repository's main 
-development branch and cherry-picked to all affected release branches on 
-2023-02-07. See FD.io VPP Jira ticket VPP-2037 [2] for details.
+Steven Seeley (reporter)
 
-Maintenance releases were performed on 2023-02-10 for the currently 
-supported releases (VPP 22.06, VPP 22.10) and release artifacts for VPP 
-22.06.1 and VPP 22.10.1 uploaded to the FD.io packagecloud.io release 
-repository [3].  All release branches prior to 2206 are UNSUPPORTED and 
-will NOT undergo maintenance releases.  Packages for each VPP release 
-version prior to VPP-22.06.1 SHOULD NOT BE INSTALLED from 
-https://packagecloud.io/fdio/release, but should be built from the 
-latest source code in the release branch.
+References:
 
-Reference:
-[0] https://www.cve.org/CVERecord?id=CVE-2022-46397
-[1] https://wiki.fd.io/view/TSC:Vulnerability_Management
-[2] https://jira.fd.io/browse/VPP-2037
-[3] https://packagecloud.io/fdio/release
+https://lists.apache.org/thread/yh09b3fkf6vz5d6jdgrlvmg60lfwtqhj
+https://struts.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-50164
 
-
-Thanks,
-FD.io Security Response Team
