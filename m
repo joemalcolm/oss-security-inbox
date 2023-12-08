@@ -1,42 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/4
-Message-ID:  <DS7PR10MB5358E5511783501575C5C133FDBF9@DS7PR10MB5358.namprd10.prod.outlook.com>
-Date: Wed, 15 Mar 2023 09:26:24 +0000
-From: Casper Dik <casper.dik@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/08/1
+Message-ID: <a6c3f418-bb63-4591-b0c1-fc3e90eb0c1d@oracle.com>
+Date: Fri, 8 Dec 2023 10:54:02 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-49284: fish command substitution output can trigger shell expansion
 Content-Type: text/plain; charset=utf-8
 
->On Wed, 15 Mar 2023, Fabian Keil wrote:
+https://github.com/fish-shell/fish-shell/security/advisories/GHSA-2j9r-pm96-wp4f
+reports:
 
->> In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't noticed
->> any problems.
+Package: fish-shell
+Affected versions: < 3.6.2
+Patched versions: 3.6.2
+CVSS: 3.9 (CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:L)
+CVE ID: CVE-2023-49284
 
->I hate tossing out functionality; would you not make it a privileged
->operation instead?
+Impact:
 
->-- Dave
+fish shell uses certain Unicode non-characters internally for marking wildcards 
+and expansions. It will incorrectly allow these markers to be read on command 
+substitution output, rather than transforming them into a safe internal 
+representation.
 
+While this may cause unexpected behavior with direct input (for example, echo 
+\UFDD2HOME has the same output as echo $HOME), this may become a minor security 
+problem if the output is being fed from an external program into a command 
+substitution where this output may not be expected.
 
-I think it makes it mostly useless.
+Consider the following:
 
-In Solaris we've changed how TIOCSTI works; when a process reads the
-packet with the stuffed input, it then checks the credential of the
-sender.   So while the stuffed input is still echoed but ignored:
+In foo.py:
 
-# su nobody -c tiocsti
-exit
-echo Payload as `whoami`
-#
+print("\ufdd2HOME") # Perhaps this value is retrieved from a database or 
+external source
 
-But when having root calling tciosti, you get:
+At the shell:
 
-# su root -c tiocsti
-exit
-echo Payload as `whoami`
-# exit
-Payload as root
+ > echo $(python3 foo.py)
+/home/fishuser
 
-(The exit here is not needed)
+This design flaw was introduced in very early versions of fish, predating the 
+version control system, and is thought to be present in every version of fish 
+released in the last 15 years or more, although with different characters.
 
-Casper
+Code execution does not appear to be possible, but denial of service (through 
+large brace expansion) or information disclosure (such as variable expansion) is 
+potentially possible under certain circumstances.
+
+Patches:
+
+fish shell 3.6.2 has been released to correct this issue.
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
