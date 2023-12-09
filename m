@@ -1,49 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/19/3
-Message-ID: <1a27eef3-717e-5c99-b40f-5165d33a59ec@apache.org>
-Date: Sun, 19 Nov 2023 18:42:36 +0000
-From: "Richard N. Hillegas" <rhillegas@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/09/1
+Message-ID: <a82d6fd8-190f-8920-81ff-b063da186927@apache.org>
+Date: Sat, 09 Dec 2023 06:55:17 +0000
+From: Lukasz Lenart <lukaszlenart@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46337: Apache Derby: LDAP injection vulnerability in authenticator 
+Subject: CVE-2023-41835: Apache Struts: excessive disk usage 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: moderate
 
 Affected versions:
 
-- Apache Derby 10.1.1.0 through 10.16.1.1
+- Apache Struts 2.0.0 through 2.5.31
+- Apache Struts 6.1.2.1 through 6.3.0
 
 Description:
 
-A cleverly devised username might bypass LDAP authentication checks. In 
-LDAP-authenticated Derby installations, this could let an attacker fill 
-up the disk by creating junk Derby databases. In LDAP-authenticated 
-Derby installations, this could also allow the attacker to execute 
-malware which was visible to and executable by the account which booted 
-the Derby server. In LDAP-protected databases which weren't also 
-protected by SQL GRANT/REVOKE authorization, this vulnerability could 
-also let an attacker view and corrupt sensitive data and run sensitive 
-database functions and procedures.
-
-Mitigation:
-
-Users should upgrade to Java 21 and Derby 10.17.1.0.
-
-Alternatively, users who wish to remain on older Java versions should 
-build their own Derby distribution from one of the release families to 
-which the fix was backported: 10.16, 10.15, and 10.14. Those are the 
-releases which correspond, respectively, with Java LTS versions 17, 11, 
-and 8.
-
-This issue is being tracked as DERBY-7147 
-
-Credit:
-
-This issue was discovered by ﻿4ra1n and Y4tacker, who also proposed the fix. (finder)
+When a Multipart request is performed but some of the fields exceed the maxStringLength  limit, the upload files will remain in struts.multipart.saveDir  even if the request has been denied.
+Users are recommended to upgrade to versions Struts 2.5.32 or 6.1.2.2 or Struts 6.3.0.1 or greater, which fixe this issue.
 
 References:
 
-https://db.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-46337
-https://issues.apache.org/jira/browse/DERBY-7147
+https://lists.apache.org/thread/6wj530kh3ono8phr642y9sqkl67ys2ft
+https://struts.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-41835
 
