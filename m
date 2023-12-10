@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2375" "Thursday" "30" "May" "2019" "14:57:25" "-0700" "Brandon Philips" "bphilips@redhat.com" "<CAHHNuYcXG6rqgA+y3efW8yb5Kbd9CgJq_MfgKz8cUgp4AqbXRg@mail.gmail.com>" "81" "[oss-security] [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245" nil nil nil "5" "2019053021:57:25" "[oss-security] [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245" (number mark "U       bphilips@red May 30   81/2375  " thread-indent "\"[oss-security] [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32424 invoked by uid 550); 31 May 2019 08:49:05 -0000
+Received: (qmail 31909 invoked by uid 550); 11 Dec 2023 00:43:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,113 +7,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29996 invoked from network); 30 May 2019 21:57:50 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=M6qvgQxvc2NoNs51A/vCpNawu3/h1Z74Ej3zfAZdVqg=;
-        b=BIxaJaFkI2tzNa3bhvecEjWwwp6NldRms7zegzaWQ8//RjCV0FnP25Cnvz7zugFB0w
-         ulnTzth+75OIdvIpx/COzDn294sC6zB58P1iQUetrXYE0ffbY2shFavcdMty/B7/Qm3H
-         OA3voB3Gi/r0dKENDAzmOsjd8zOKEuvGdOpRE5I6vRt+ANMtmlLMCk1xGEt62wjS9DJr
-         URsQuGvhNavDfG0dF/rd0AAhmac1PakINSgdBMHJFqFqRbME/fllLcqKlnaD+BqoGnpr
-         W/T2pVbsa72qKZ8oJ4pTtORmog37mGUN8BdT9bzh5NWwCHqBVVQq5jZFGL+KMxru8vf/
-         sNSA==
-X-Gm-Message-State: APjAAAX5kIodOHAGsgd/yB9BUDkgt8zrVaXUjpmgNYJHk6HQRT6Gt4cr
-	6VLWf6daeQPqcGCGlTsoKMBUDDSmQ77UmXZi/gUlcw==
-X-Google-Smtp-Source: APXvYqw+KagddfOZYKXPF7cTVa0U7FemPkZoYPusHKE9VYwyK3ecPMzE84EkOXWKgAPMNs/sfWcD1o71ybSc9wfixn8=
-X-Received: by 2002:a02:2e52:: with SMTP id u18mr4372119jae.84.1559253458440;
- Thu, 30 May 2019 14:57:38 -0700 (PDT)
+Received: (qmail 30215 invoked from network); 10 Dec 2023 22:59:43 -0000
+From: Peter Korsgaard <peter@korsgaard.com>
+To: oss-security@lists.openwall.com
+Date: Sun, 10 Dec 2023 23:59:47 +0100
+Message-ID: <87edftoe8s.fsf@48ers.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-From: Brandon Philips <bphilips@redhat.com>
-Date: Thu, 30 May 2019 14:57:25 -0700
-Message-ID: <CAHHNuYcXG6rqgA+y3efW8yb5Kbd9CgJq_MfgKz8cUgp4AqbXRg@mail.gmail.com>
-To: "Kubernetes developer/contributor discussion" <kubernetes-dev@googlegroups.com>, 
-	kubernetes-security-announce@googlegroups.com, 
-	kubernetes-security-discuss <kubernetes-security-discuss@googlegroups.com>, 
-	oss-security@lists.openwall.com, 
-	kubernetes-distributors-announce@googlegroups.com
-Content-Type: multipart/alternative; boundary="000000000000817840058a21fc9e"
-Subject: [oss-security] [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and
- v1.14.2 only - CVE-2019-11245
+Content-Type: text/plain
+X-GND-Sasl: peter@korsgaard.com
+Subject: [oss-security] Buildroot: Talos download hash verification vulnerabilities
 
---000000000000817840058a21fc9e
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Hello Kubernetes Community-
+Talos recently published two vulnerability reports related to the hash
+verification of sources downloaded by Buildroot. These issues are fixed
+in Buildroot 2023.02.8 / 2023.08.4 / 2023.11.
 
-A security-related issue was discovered in kubelet versions v1.13.6 and
-v1.14.2. The issue is medium severity and can be mitigated with a pod spec
-configuration change OR by *****downgrading*** kubelets to v1.13.5 or
-v1.14.1.
+The reports are:
 
-***Vulnerability Details***
+https://talosintelligence.com/vulnerability_reports/TALOS-2023-1844
 
-When a container runs for the first time on a node, it correctly respects
-the UID set by the container image (e.g. USER in a Dockerfile). However, on
-the second run, the container will run as UID 0 (aka root) which can be an
-undesired escalated privilege.
+CVE-2023-45841,CVE-2023-45842,CVE-2023-45838,CVE-2023-45839,CVE-2023-45840
 
-Pods that specify an explicit runAsUser are unaffected and continue to work
-properly.
+Multiple data integrity vulnerabilities exist in the package hash
+checking functionality of Buildroot 2023.08.1 and Buildroot dev commit
+622698d7847. A specially crafted man-in-the-middle attack can lead to
+arbitrary command execution in the builder.
 
-PodSecurityPolicies that force a runAsUser setting are also unaffected and
-continue to work properly.
+And:
 
-Pods that specify mustRunAsNonRoot:true will refuse to start the container
-as uid 0, which can affect availability.
+https://talosintelligence.com/vulnerability_reports/TALOS-2023-1845
 
-This issue is filed as CVE-2019-11245. See
-https://github.com/kubernetes/kubernetes/issues/78308 for more details.
+CVE-2023-43608
 
-***Am I vulnerable?***
-
-Run this to print out all nodes and their kubelet version:
+A data integrity vulnerability exists in the BR_NO_CHECK_HASH_FOR
+functionality of Buildroot 2023.08.1 and dev commit 622698d7847. A
+specially crafted man-in-the-middle attack can lead to arbitrary command
+execution in the builder.
 
 
-kubectl get nodes -o=jsonpath='{range
-.items[*]}{.status.nodeInfo.machineID}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'
+A summary describing the fixes and new features for handling download
+hashes for custom package locations and versions has been posted to the
+mailing list:
 
-If the output lists Kubelet versions listed below you are running a
-vulnerable version:
+https://lore.kernel.org/buildroot/87y1e7sq4u.fsf@48ers.dk/T/#u
 
-   -
+(Included here in full):
 
-   v1.13.6
-   -
+Talos recently reported a number of security vulnerabilities in the
+package download hash checking in Buildroot, and these are now public
+at:
 
-   v1.14.2
+https://talosintelligence.com/vulnerability_reports/TALOS-2023-1844
+https://talosintelligence.com/vulnerability_reports/TALOS-2023-1845
+
+A small number of packages did not have a .hash file, meaning that the
+downloaded sources were not verified - And for aufs + aufs-util they
+were downloaded from a http:// site, so conceptually vulnerable to a man
+in the middle attack.
+
+aufs/aufs-utils were changed to fetch from https by:
+
+https://gitlab.com/buildroot.org/buildroot/-/commit/f2a590750f5bedcee48ce7beb8f35356b42eda11
+https://gitlab.com/buildroot.org/buildroot/-/commit/99d525028f969220719a4e6bcd694f7d9cfd5b67
+
+The fallback download location on source.buildroot.net was changed to
+use https:// by:
+
+https://gitlab.com/buildroot.org/buildroot/-/commit/05296ced369bab8877efa624f3d9b4d201ba5b38
+
+Hash files for riscv64-elf-toolchain and mxsldr were added by:
+
+https://gitlab.com/buildroot.org/buildroot/-/commit/cf2dcaa1ecede670a0bc54841652a0e3bea5c744
+https://gitlab.com/buildroot.org/buildroot/-/commit/fefcfddc5e6a265c66adbdff615558f99133f148
+
+Which are all included in 2023.02.7 / 2023.08.3 / 2023.11.
 
 
-***How do I mitigate the vulnerability?***
+Some packages allow a custom version or even a custom upstream location
+(E.G. Linux, U-Boot, versal-firmware, ..). For those custom versions
+Buildroot naturally cannot provide the expected hash, so instead we have
+added support for providing hashes for those files in the
+BR2_GLOBAL_PATCH_DIR location and added a
+BR2_DOWNLOAD_FORCE_CHECK_HASHES option to enforce hash checking (and
+fail if missing/invalid) for all downloads. This was added by:
 
-There are two potential mitigations to this issue:
+https://gitlab.com/buildroot.org/buildroot/-/commit/5d36710e36fc4698c8fae71675bcff7395246006
+https://gitlab.com/buildroot.org/buildroot/-/commit/e091e31831122b60b084bd755e94df4dfe7188d2
+
+To make it easier to manage these custom hash files a
+utils/add-custom-hashes helper script has been added by:
+
+https://gitlab.com/buildroot.org/buildroot/-/commit/4984d0f230d0962270beb195966603f1d5a56300
+
+Which are all included in 2023.02.7 / 2023.08.3 / 2023.11.
+
+See the documentation for further details about this feature:
+
+https://buildroot.org/downloads/manual/manual.html#_adding_project_specific_patches_and_hashes
+
+Notice that it is up to the user of Buildroot to use this feature to
+protect their custom downloads!
 
 
-   -
+Finally the toradex_apalis_imx6_defconfig fetched Linux and U-Boot from
+a git:// URL, so custom hashes were added in the BR2_GLOBAL_PATCH_DIR
+for those by:
 
-   Downgrade to kubelet v1.13.5 or v1.14.1 as instructed by your Kubernetes
-   distribution.
-   -
+https://gitlab.com/buildroot.org/buildroot/-/commit/cdc9b8a3a75c4c39f23feb4e3b0e296786e0132c
 
-   Set RunAsUser on all pods in the cluster that should not run as root.
-   This is a Security Context feature; the docs are at
-   https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+Which is included in 2023.02.8 / 2023.08.4 / 2023.11.
 
 
-***How do I upgrade?***
+Thanks to Talos for discovering and reporting these issues to us and to
+Yann E. MORIN for implementing the custom hash logic.
 
-An upgrade addressing this issue is not yet available. But, will appear in
-v1.13.7 and v1.14.3 ASAP and will be announced here.
-
-***Thank you***
-
-Thank you to the <https://github.com/kubernetes/kubernetes/pull/78178> many
-<https://github.com/kubernetes/kubernetes/issues/78308> reporters
-<https://github.com/rancher/k3s/issues/511>, and Tim Pepper as release
-manager for the coordination in making this announcement.
-
-Thank You,
-
-Brandon on behalf of the Kubernetes Product Security Committee
-
---000000000000817840058a21fc9e--
+-- 
+Bye, Peter Korsgaard
