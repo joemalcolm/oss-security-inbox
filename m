@@ -1,100 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/1
-Message-ID: <3o509q6-7pr8-op1q-770-998791361on6@unkk.fr>
-Date: Wed, 15 Feb 2023 08:28:50 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: curl: CVE-2023-23914: HSTS ignored on multiple requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/12/3
+Message-ID: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com>
+Date: Tue, 12 Dec 2023 14:35:35 -0600
+From: Jonathan Wright <jonathan@...alinux.org>
+To: oss-security@...ts.openwall.com
+Cc: Andrew Lukoshko <alukoshko@...alinux.org>, benny Vasquez <benny@...alinux.org>,  Igor Seletskiy <iseletsk@...alinux.org>, Darya Malyavkina <dmalyavkina@...udlinux.com>,  Jack Aboutboul <jack@...alinux.org>
+Subject: AlmaLinux Distros List Application
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-23914: HSTS ignored on multiple requests
-=================================================
+I’m submitting this application on behalf of the AlmaLinux OS Foundation.
 
-Project curl Security Advisory, February 15 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-23914.html)
 
-VULNERABILITY
--------------
+Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would be
+joining if approved.
 
-curl's HSTS functionality fail when multiple URLs are requested serially.
 
-Using its HSTS support, curl can be instructed to use HTTPS instead of using
-an insecure clear-text HTTP step even when HTTP is provided in the URL. This
-HSTS mechanism would however suprisingly be ignored by subsequent transfers
-when done on the same command line because the state would not be properly
-carried on.
+   1.
 
-Reproducible like this:
+   Be an actively maintained Unix-like operating system distro with
+   substantial use of Open Source components
+   1.
 
-     curl --hsts "" https://curl.se http://curl.se
+      We are actively maintained and have released 4 minor versions this
+      year (8.8, 8.9, 9.2, and 9.3) along with small updates within the minor
+      versions, generally at least a few updates per week.
+      2.
 
-The first URL returns HSTS information that the second URL fails to take
-advantage of.
+   Have a userbase not limited to your own organization
+   1.
 
-We are not aware of any exploit of this flaw.
+      Our public mirror system alone serves 750k unique systems weekly, and
+      is used worldwide for a variety of things.
+      3.
 
-INFO
-----
+   Have a publicly verifiable track record, dating back at least 1 year and
+   continuing to present day, of fixing security issues (including some that
+   had been handled on (linux-)distros, meaning that membership would have
+   been relevant to you) and releasing the fixes within 10 days (and
+   preferably much less than that) of the issues being made public (if it
+   takes you ages to fix an issue, your users wouldn't substantially benefit
+   from the additional time, often around 7 days and sometimes up to 14 days,
+   that list membership could give you)
+   1.
 
-This is a curl command line issue and does not affect libcurl.
+      Historically we have been following Red Hat releases within 1-2 days,
+      and since our shift in June away from following Red Hat we have been able
+      to release some security updates ahead of Red Hat (Iperf3 patch and AMD
+      microcode/kernel patches specifically). We would not be beholden
+to CentOS
+      Stream updates for our patch releases.
+      4.
 
-This flaw was introduced in [commit
-7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
-shipped enabled by default from [commit
-d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
-curl 7.77.0.
+   Not be (only) downstream or a rebuild of another distro (or else we need
+   convincing additional justification of how the list membership would enable
+   you to release fixes sooner, presumably not relying on the upstream distro
+   having released their fixes first?)
+   1.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-23914 to this issue.
+      While we've historically done that (which is why it didn’t make sense
+      to join earlier), we shifted in June to our own OS that is ABI-compatible
+      with RHEL.
+      5.
 
-CWE-319: Cleartext Transmission of Sensitive Information
+   Be a participant and preferably an active contributor in relevant public
+   communities (most notably, if you're not watching for issues being made
+   public on oss-security, which are a superset of those that had been handled
+   on (linux-)distros, then there's no valid reason for you to be on
+   (linux-)distros)
+   1.
 
-Severity: Low
+      we have many participants on the oss-security list.
+      6.
 
-AFFECTED VERSIONS
------------------
+   Accept the list policy (see above)
+   1.
 
-- Affected versions: curl 7.77.0 to and including 7.87.0
-- Not affected versions: curl < 7.77.0 and curl >= 7.88.0
+      accepted
+      7.
 
-curl is used by many applications, but not always advertised as such!
+   Be able and willing to contribute back (see above), preferably in
+   specific ways announced in advance (so that you're responsible for a
+   specific area and so that we know what to expect from which member), and
+   demonstrate actual contributions once you've been a member for a while
+   1.
 
-THE SOLUTION
-------------
+      Immediately we can begin to help reporters ensure their reports are
+      following the requirements and are confirmed/replied to. As we
+advance our
+      understanding of how things operate, and the need arises, we can
+expand our
+      work into contributing more deeply.
+      8.
 
-7.88.0 will share the HSTS state properly between transfers.
+   Be able and willing to handle PGP-encrypted e-mail
+   1.
 
-A [fix for CVE-2023-23914](https://github.com/curl/curl/pull/10138)
+      done.
+      9.
 
-RECOMMENDATIONS
---------------
+   Have someone already on the private list, or at least someone else who
+   has been active on oss-security for years but is not affiliated with your
+   distro nor your organization, vouch for at least one of the people
+   requesting membership on behalf of your distro (then that one vouched-for
+   person will be able to vouch for others on your team, in case you'd like
+   multiple people subscribed)
+   1.
 
-  A - Upgrade curl to version 7.88.0
+      Darya Malyavkina from CloudLinux will vouch for us.
 
-  B - Apply the patch to your local version
-
-  C - Specify all URLs with `HTTPS://` and not `HTTP://`
-
-TIMELINE
---------
-
-This issue was reported to the curl project on December 21, 2022. We contacted
-distros@...nwall on February 7, 2022.
-
-curl 7.88.0 was released on February 15 2023, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
 
 -- 
+Jonathan Wright
+AlmaLinux Foundation
+Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
