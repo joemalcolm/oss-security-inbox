@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["177" "Wednesday" "22" "August" "2018" "23:25:54" "+0200" "Antonio Diaz Diaz" "antonio@gnu.org" "<5B7DD4E2.7060707@gnu.org>" "9" "[oss-security] Re: Heap-based buffer overflow in zutils zcat" "^CC:" nil nil "8" "2018082221:25:54" "[oss-security] Re: Heap-based buffer overflow in zutils zcat" (number mark "        antonio@gnu. Aug 22    9/177   " thread-indent "\"[oss-security] Re: Heap-based buffer overflow in zutils zcat\"\n") "<713d7e651cd8e9eda903f26392d30c8cb45afc38.camel@decadent.org.uk>" ("<e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk>" "<713d7e651cd8e9eda903f26392d30c8cb45afc38.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29713 invoked by uid 550); 23 Aug 2018 09:06:36 -0000
+Received: (qmail 28605 invoked by uid 550); 12 Dec 2023 20:10:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +6,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24176 invoked from network); 22 Aug 2018 21:27:51 -0000
-Message-ID: <5B7DD4E2.7060707@gnu.org>
-User-Agent: Mozilla/5.0 (X11; U; Linux i586; en-US; rv:1.9.1.19) Gecko/20110420 SeaMonkey/2.0.14
-MIME-Version: 1.0
-References: <e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk> <713d7e651cd8e9eda903f26392d30c8cb45afc38.camel@decadent.org.uk>
-In-Reply-To: <713d7e651cd8e9eda903f26392d30c8cb45afc38.camel@decadent.org.uk>
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.2.x-3.x [generic]
-X-Received-From: 2001:4830:134:3::e
-CC: oss-security <oss-security@lists.openwall.com>, 
- Antonio Diaz Diaz <antonio@gnu.org>
-Date: Wed, 22 Aug 2018 23:25:54 +0200
-From: Antonio Diaz Diaz <antonio@gnu.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Heap-based buffer overflow in zutils zcat
-To: Ben Hutchings <ben@decadent.org.uk>
+Received: (qmail 28074 invoked from network); 12 Dec 2023 20:09:40 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Nick Vatamaniuc <vatamane@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <9112e483-7262-06ac-9211-2dbdca45c7e9@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 12 Dec 2023 20:09:47 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-45725: Apache CouchDB, IBM Cloudant: Privilege Escalation
+ Using _design Documents 
 
-Ben Hutchings wrote:
-> This has been designated as CVE-2018-1000637.
+Severity: moderate
 
-Thank you. I'll use it in the announcement of the next stable release of 
-zutils.
+Affected versions:
 
+- Apache CouchDB through 3.3.2
+- IBM Cloudant before 8413
 
-Best regards,
-Antonio.
+Description:
+
+Design document functions which receive a user http request object may expo=
+se authorization or session cookie headers of the user who accesses the doc=
+ument.
+
+These design document functions are:
+  *  =C2=A0 list
+  *  =C2=A0 show
+  *  =C2=A0 rewrite
+  *  =C2=A0 update
+
+An attacker can leak the session component using an HTML-like output, inser=
+t the session as an external resource (such as an image), or store the cred=
+ential in a _local document with an "update" function.
+
+For the attack to succeed the attacker has to be able to insert the design =
+documents into the database, then manipulate a user to access a function fr=
+om that design document.
+
+Workaround: Avoid using design documents from untrusted sources which may a=
+ttempt to access or manipulate request object's headers
+
+Credit:
+
+Natan Nehorai from the JFrog Vulnerability Research Team (finder)
+Or Peles from the JFrog Vulnerability Research Team (reporter)
+Richard Ellis from IBM/Cloudant Team (finder)
+Mike Rhodes from IBM/Cloudant Team (finder)
+
+References:
+
+https://docs.couchdb.org/en/stable/cve/2023-45725.html
+https://couchdb.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-45725
+
