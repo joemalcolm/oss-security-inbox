@@ -1,80 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/20/1
-Message-ID: <1295588158.7348.1674217183817@appsuite-guard.open-xchange.com>
-Date: Fri, 20 Jan 2023 13:19:43 +0100 (CET)
-From: Otto Moerbeek <otto.moerbeek@...erdns.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Security Advisory 2023-01 for PowerDNS Recursor 4.8.0 (CVE-2023-22617)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/12/1
+Message-Id: <E1rD1SM-0007am-TM@xenbits.xenproject.org>
+Date: Tue, 12 Dec 2023 12:01:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 447 v2 (CVE-2023-46837) - arm32: The cache may not be properly cleaned/invalidated (take two)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-   Today we have released PowerDNS Recursor 4.8.1 due to a high severity
-   issue found.
+            Xen Security Advisory CVE-2023-46837 / XSA-447
+                               version 2
 
-   Please find the full text of the advisory below.
+  arm32: The cache may not be properly cleaned/invalidated (take two)
 
-   The [1]changelog is available.
+UPDATES IN VERSION 2
+====================
 
-   The [2]tarball ([3]signature) is available from our download [4]server.
-   Patches are available at [5]patches. Packages for various distributions
-   are available from our [6]repository.
+Public release.
 
-   Note that PowerDNS Recursor 4.5.x and older releases are End of Life.
-   Consult the [7]EOL policy for more details.
-     __________________________________________________________________
+ISSUE DESCRIPTION
+=================
 
-PowerDNS Security Advisory 2023-01: unbounded recursion results in program
-termination
+Arm provides multiple helpers to clean & invalidate the cache
+for a given region.  This is, for instance, used when allocating
+guest memory to ensure any writes (such as the ones during scrubbing)
+have reached memory before handing over the page to a guest.
 
-     * CVE: CVE-2023-22617
-     * Date: 20th of January 2023
-     * Affects: PowerDNS Recursor 4.8.0
-     * Not affected: PowerDNS Recursor < 4.8.0, PowerDNS Recursor 4.8.1
-     * Severity: High
-     * Impact: Denial of service
-     * Exploit: This problem can be triggered by a remote attacker with
-       access to the recursor by querying names from specific
-       mis-configured domains
-     * Risk of system compromise: None
-     * Solution: Upgrade to patched version
+Unfortunately, the arithmetics in the helpers can overflow and would
+then result to skip the cache cleaning/invalidation.  Therefore there
+is no guarantee when all the writes will reach the memory.
 
-   CVSS 3.0 score: 8.2 (High)
-   https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/
-   S:U/C:N/I:L/A:H/E:H/RL:U/RC:C
+This undefined behavior was meant to be addressed by XSA-437, but the
+approach was not sufficient.
 
-   Thanks to applied-privacy.net for reporting this issue and their assistance in diagnosing it.
+IMPACT
+======
 
-References
+A malicious guest may be able to read sensitive data from memory that
+previously belonged to another guest.
 
-   1. https://docs.powerdns.com/recursor/changelog/4.8.html#change-4.8.1
-   2. https://downloads.powerdns.com/releases/pdns-recursor-4.8.1.tar.bz2
-   3. https://downloads.powerdns.com/releases/pdns-recursor-4.8.1.tar.bz2.sig
-   4. https://downloads.powerdns.com/releases/
-   5. https://downloads.powerdns.com/patches/2023-01/
-   6. https://repo.powerdns.com/
-   7. https://docs.powerdns.com/recursor/appendices/EOL.html
+VULNERABLE SYSTEMS
+==================
 
+Systems running all version of Xen are affected.
 
+Only systems running Xen on Arm 32-bit are vulnerable.  Xen on Arm 64-bit
+is not affected.
 
--- 
+MITIGATION
+==========
 
-kind regards,
-Otto Moerbeek
-PowerDNS Developer 
+There is no known mitigation.
 
+CREDITS
+=======
 
- 
-Email: otto.moerbeek@...n-xchange.com
+This issue was discovered by Michal Orzel from AMD.
 
+RESOLUTION
+==========
 
--------------------------------------------------------------------------------------
-Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366 
-Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin 
-Chairman of the Board: Richard Seibt 
- 
-PowerDNS.COM BV, Koninginnegracht 14L, 2514 AA Den Haag, The Netherlands
-Managing Director: Robert Brandt, Maxim Letski
--------------------------------------------------------------------------------------
+Applying the appropriate attached patch resolves this issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa447/xsa447.patch           xen-unstable - Xen 4.17.x
+xsa447/xsa447-4.16.patch      Xen 4.16.x - Xen 4.15.x
+
+$ sha256sum xsa447* xsa447*/*
+639f3a30124fd0f45b6b68768c02a5b5aa2e78c6c1f28bbf1ea5fb9be1f874af  xsa447.meta
+0816717ab6e9c2250975ed1100bb2943830dc10e9a52aed7dd5cbe1884a15918  xsa447/xsa447.patch
+f325543852b28af3fb2a2ca501a70fc59d3b35432334d52f734b2071c8a9667f  xsa447/xsa447-4.16.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmV4SxMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZvnUIAIG4NNqHQCeBV0VOLtdZLNgaBDt9Vguc4FLUYlI5
+aBc4/IWrsGYYRuBzLAPGoKYP9/F+OjiHcE0ClFnxkQJ+bFKl4SQLxmSksHkvPtpo
+6yL53IbyraIbA+TulYquTr27v7ZnTI9LQA3VurD6sMgiWIo8+C/kSb6g/1TAsm4R
+qzHDRLhTd4H+yU7KV327qIUk1D4S0eGP1yWpudpd0A/05RBgI9m4gp01VFeJn8w+
+UbYba/4LpcAKG/iyvxqk5o3fyO60zhZEc5BBHhcz7DJ+UvLrLf7TDLrkaI6lorye
+m6etZ+kWU9ESL1Qy+lHEk9HqUOg25xQb5gPDrIP3TOMSsUU=
+=mrfT
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa447.meta" of type "application/octet-stream" (1347 bytes)
+
+Download attachment "xsa447/xsa447.patch" of type "application/octet-stream" (5052 bytes)
+
+Download attachment "xsa447/xsa447-4.16.patch" of type "application/octet-stream" (5029 bytes)
