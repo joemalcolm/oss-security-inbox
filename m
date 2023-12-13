@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/6
-Message-ID: <20230914151403.GA15124@openwall.com>
-Date: Thu, 14 Sep 2023 17:14:03 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/6
+Message-ID: <03657eca-b6ef-5e25-15f9-832df4274f3d@apache.org>
+Date: Wed, 13 Dec 2023 21:24:22 +0000
+From: Brian Demers <bdemers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+Subject: CVE-2023-46750: Apache Shiro: URL Redirection to Untrusted Site ('Open Redirect') vulnerability in FORM authentication feature Apache Shiro. 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 14, 2023 at 10:42:19AM -0400, Demi Marie Obenour wrote:
-> On Wed, Sep 13, 2023 at 08:21:22PM +0000, Dan McDonald wrote:
-> > For now, I would like to add myself:  danmcd@....io.
-> 
-> Would security@...umos.org be a better choice?
+Severity: moderate
 
-No.  One of the differences of (linux-)distros from its predecessor
-vendor-sec is that we don't subscribe any exploder addresses - we only
-subscribe individuals.  Some distro security teams can be rather large,
-with not everyone in there needing direct (linux-)distros subscription.
-Also, by far not every issue is relevant to every distro.  So the
-distro's individual representatives on (linux-)distros are supposed to
-share only relevant information with others on their teams.
+Affected versions:
 
-That said, the membership is for the distro, not for the individuals.
-The Subject line here is confused about that.  The difference is in what
-uses of information are allowed (only for the distro's security) and in
-conditions for staying subscribed (only while requested by the distro's
-leadership and only as needed for the distro's security).
+- Apache Shiro before 1.13.0
+- Apache Shiro 2.0.0-alpha-1 before 2.0.0-alpha-4
 
-Alexander
+Description:
+
+URL Redirection to Untrusted Site ('Open Redirect') vulnerability when "form" authentication is used in Apache Shiro.
+Mitigation: Update to Apache Shiro 1.13.0+ or 2.0.0-alpha-4+.
+
+Credit:
+
+Claudio Villella (finder)
+
+References:
+
+https://shiro.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46750
+
