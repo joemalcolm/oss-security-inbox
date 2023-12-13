@@ -1,108 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/3
-Message-ID: <11327r71-8651-6825-46n1-97r1s9n6731o@unkk.fr>
-Date: Wed, 17 May 2023 08:41:08 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: curl: CVE-2023-28321: IDN wildcard match
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/1
+Message-ID: <20231213022220.GA541253@quokka>
+Date: Wed, 13 Dec 2023 12:22:20 +1000
+From: Peter Hutterer <peter.hutterer@...-t.net>
+To: oss-security@...ts.openwall.com
+Subject: FW: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.10 and Xwayland prior to 23.2.3
 Content-Type: text/plain; charset=utf-8
 
-IDN wildcard match
-==================
+----- Forwarded message from Peter Hutterer <peter.hutterer@...> -----
 
-Project curl Security Advisory, May 17th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-28321.html)
+From: Peter Hutterer <peter.hutterer@...>
+Subject: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.10 and
+	Xwayland prior to 23.2.3
+Date: Wed, 13 Dec 2023 12:02:10 +1000
+To: xorg-announce@...ts.x.org, xorg@...ts.x.org
 
-VULNERABILITY
--------------
+X.Org Security Advisory: December 13, 2023
 
-curl supports matching of wildcard patterns when listed as "Subject
-Alternative Name" in TLS server certificates. curl can be built to use its own
-name matching function for TLS rather than one provided by a TLS library. This
-private wildcard matching function would match IDN (International Domain Name)
-hosts incorrectly and could as a result accept patterns that otherwise should
-mismatch.
+Issues in X.Org X server prior to 21.1.10 and Xwayland prior to 23.2.3
+========================================================================
 
-IDN hostnames are converted to puny code before used for certificate
-checks. Puny coded names always start with `xn--` and should not be allowed to
-pattern match, but the wildcard check in curl could still check for `x*`,
-which would match even though the IDN name most likely contained nothing even
-resembling an `x`.
+Multiple issues have been found in the X server and Xwayland implementations 
+published by X.Org for which we are releasing security fixes for in
+xorg-server-21.1.10 and xwayland-23.2.3.
 
-INFO
-----
+1) CVE-2023-6377 can be triggered by forcing a logical device change on a device
+with buttons which will result in an out-of-bounds memory write.
 
-curl's wildcard matching function is used only when curl was built to use
-OpenSSL, Schannel or Gskit. All other backends use the matching functions of
-the corresponding TLS library and are thus not vulnerable to this flaw.
+2) CVE-2023-6478 can be triggered by sending a specially crafted
+request RRChangeProviderProperty or RRChangeOutputProperty. This will trigger
+an integer overflow and lead to disclosure of information.
 
-This flaw is lessened somewhat by two factors:
+------------------------------------------------------------------------
 
-  - Certificates issued by Certificate Authorities for the public Internet are
-    not allowed to use "partial" wildcards, thus completely avoiding this
-    issue.
+1) CVE-2023-6377: X.Org server: Out-of-bounds memory write in XKB button actions
 
-  - In many circumstances, the control of host names used and the wildcards
-    used in issued certificates are controlled by the same entity, making this
-    unlikely to actually become a problem.
+Introduced in: xorg-server-1.6.0 (2009)
+Fixed in: xorg-server-21.1.10 and xwayland-23.2.3
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/0c1a93d319558fe3ab2d94f51d174b4f93810afd
+Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
 
-curl does not need to be built with IDN support to be vulnerable, as a user
-can pass in a puny coded version of the host name directly in the URL and can
-then trigger this flaw.
+A device has XKB button actions for each button on the device. When a logical
+device switch happens (e.g. moving from a touchpad to a mouse), the server 
+re-calculates the information available on the respective master device
+(typically the Virtual Core Pointer). This re-calculation only allocated enough
+memory for a single XKB action rather instead of enough for the newly active
+physical device's number of button. As a result, querying or changing the XKB
+button actions results in out-of-bounds memory reads and writes.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-28321 to this issue.
+This may lead to local privilege escalation if the server is run as root or
+remote code execution (e.g. x11 over ssh).
 
-CWE-295: Improper Certificate Validation
+xorg-server-21.1.10 and xwayland-23.2.3 have been patched to fix this issue.
 
-Severity: Low
 
-AFFECTED VERSIONS
------------------
+2) CVE-2023-6478: X.Org server: Out-of-bounds memory read in RRChangeOutputProperty and RRChangeProviderProperty
 
-This bug was introduced in curl when IDN support was first introduced, in curl
-7.12.0 - June 2004. The wildcard function was subsequently updated for this
-case in 2012 (the IDN problem is mentioned in RFC 6125 in a far from obvious
-way) but was done wrongly, so the flaw remained.
+Introduced in: xorg-server-1.4.0 (2007) and xorg-server-1.13.0 (2012), respectively
+Fixed in: xorg-server-21.1.10 and xwayland-23.2.3
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/14f480010a93ff962fef66a16412fafff81ad632
+Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
 
-- Affected versions: curl 7.12.0 to and including 8.0.1
-- Not affected versions: curl < 7.12.0 and curl >= 8.1.0
-- Introduced-in: https://github.com/curl/curl/commit/9631fa740708b1890197fad
+This fixes an OOB read and the resulting information disclosure.
 
-libcurl is used by many applications, but not always advertised as such!
+Length calculation for the request was clipped to a 32-bit integer. With
+the correct stuff->nUnits value the expected request size was
+truncated, passing the REQUEST_FIXED_SIZE check.
 
-SOLUTION
-------------
+The server then proceeded with reading at least stuff->nUnits bytes
+(depending on stuff->format) from the request and stuffing whatever it
+finds into the property. In the process it would also allocate at least
+stuff->nUnits bytes, i.e. 4GB.
 
-curl 8.1.0 completely removes the support for "partial" patches and now only
-supports `*.`. No `a*`, `a*b` or `*b` matches. For all host names, IDN or not.
+See also CVE-2022-46344 where this issue was fixed for other requests.
 
-- Fixed-in: https://github.com/curl/curl/commit/199f2d440d8659b42
+xorg-server-21.1.10 and xwayland-23.2.3 have been patched to fix this issue.
 
-RECOMMENDATIONS
---------------
+------------------------------------------------------------------------
 
-  A - Upgrade curl to version 8.1.0
+X.Org thanks all of those who reported and fixed these issues, and those
+who helped with the review and release of this advisory and these fixes.
 
-  B - Apply the patch to your local version
 
-TIMELINE
---------
 
-This issue was reported to the curl project on April 17 2023. We contacted
-distros@...nwall on May 9, 2023.
+----- End forwarded message -----
 
-curl 8.1.0 was released on May 17 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
