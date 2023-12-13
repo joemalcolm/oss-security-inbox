@@ -1,36 +1,181 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/04/3
-Message-ID: <8e472345-672c-faca-1a76-e77d9a0992d3@apache.org>
-Date: Fri, 03 Feb 2023 23:28:16 +0000
-From: John Gemignani <jgemignani@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/4
+Message-Id: <381C59E7-FFD1-4ED5-B567-40E6D98E13B0@beckweb.net>
+Date: Wed, 13 Dec 2023 18:22:37 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45786: Apache AGE: Python and Golang drivers allow data manipulation and exposure due to SQL injection 
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Description:
+The following releases contain fixes for security vulnerabilities:
 
-There are issues with the AGE drivers for Golang and Python that enable SQL injections to occur. This impacts AGE for PostgreSQL 11 & AGE for PostgreSQL 12, all versions up-to-and-including 1.1.0, when using those drivers.
+* Analysis Model API Plugin 11.13.0
+* Nexus Platform Plugin 3.18.1-01
+* Scriptler Plugin 344.v5a_ddb_5f9e685
 
-The fix is to update to the latest Golang and Python drivers in addition to the latest version of AGE that is used for PostgreSQL 11 or  PostgreSQL 12.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-The update of AGE will add a new function to enable parameterization of the cypher() function, which, in conjunction with the driver updates, will resolve this issue.
+* Deployment Dashboard Plugin
+* Dingding JSON Pusher Plugin
+* HTMLResource Plugin
+* OpenId Connect Authentication Plugin
+* PaaSLane Estimate Plugin
 
-Background (for those who want more information):
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-12-13/
 
-After thoroughly researching this issue, we found that due to the nature of the cypher() function, it was not easy to parameterize the values passed into it. This enabled SQL injections, if the developer of the driver wasn't careful. The developer of the Golang and Pyton drivers didn't fully utilize parameterization, likely because of this, thus enabling SQL injections.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-The obvious fix to this issue is to use parameterization in the drivers for all PG SQL queries. However, parameterizing all PG queries is complicated by the fact that the cypher() function call itself cannot be parameterized directly, as it isn't a real function. At least, not the parameters that would take the graph name and cypher query.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-The reason the cypher() function cannot have those values parameterized is because the function is a placeholder and never actually runs. The cypher() function node, created by PG in the query tree, is transformed and replaced with a query tree for the actual cypher query during the analyze phase. The problem is that parameters - that would be passed in and that the cypher() function transform needs to be resolved - are only resolved in the execution phase, which is much later. Since the transform of the cypher() function needs to know the graph name and cypher query prior to execution, they can't be passed as parameters.
+---
 
-The fix that we are testing right now, and are proposing to use, is to create a function that will be called prior to the execution of the cypher() function transform. This new function will allow values to be passed as parameters for the graph name and cypher query. As this command will be executed prior to the cypher() function transform, its values will be resolved. These values can then be cached for the immediately following cypher() function transform to use. As added features, the cached values will store the calling session's pid, for validation. And, the cypher() function transform will clear this cached information after function invocation, regardless of whether it was used.
+SECURITY-3327 / CVE-2023-5072
+Analysis Model API Plugin 11.11.0 and earlier bundles versions of JSON-Java
+vulnerable to CVE-2023-5072.
 
-This method will allow the parameterizing of the cypher() function indirectly and provide a way to lock out SQL injection attacks.
+This may allow attackers able to control input to cause a Denial of Service
+(DoS) by parsing a crafted JSON document.
 
-References:
 
-https://age.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-45786
+SECURITY-3205 / CVE-2023-50764
+Scriptler Plugin 342.v6a_89fd40f466 and earlier does not restrict a file
+name query parameter in an HTTP endpoint.
+
+This allows attackers with Scriptler/Configure permission to delete
+arbitrary files on the Jenkins controller file system.
+
+
+SECURITY-3206 / CVE-2023-50765
+Scriptler Plugin 342.v6a_89fd40f466 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to read the contents of
+a Groovy script by knowing its ID.
+
+
+SECURITY-3204 / CVE-2023-50766 (CSRF) & CVE-2023-50767 (missing permission check)
+Nexus Platform Plugin 3.18.0-03 and earlier does not perform permission
+checks in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to send an HTTP request
+to an attacker-specified URL and parse the response as XML.
+
+Additionally, the plugin does not configure its XML parser to prevent XML
+external entity (XXE) attacks, so attackers can have Jenkins parse a
+crafted XML response that uses external entities for extraction of secrets
+from the Jenkins controller or server-side request forgery.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-3203 / CVE-2023-50768 (CSRF) & CVE-2023-50769 (missing permission check)
+Nexus Platform Plugin 3.18.0-03 and earlier does not perform permission
+checks in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP server using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-3168 / CVE-2023-50770
+OpenId Connect Authentication Plugin provides an anti-lockout feature,
+which allows administrators to define a local user account that can be used
+to recover access to Jenkins.
+
+In OpenId Connect Authentication Plugin 2.6 and earlier the password to
+that account is stored in a recoverable format.
+
+This allows attackers with access to the Jenkins controller file system to
+recover the plain text password of that account, likely gaining
+administrator access to Jenkins.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2979 / CVE-2023-50771
+OpenId Connect Authentication Plugin 2.6 and earlier improperly determines
+that a redirect URL after login is legitimately pointing to Jenkins.
+
+This allows attackers to perform phishing attacks by having users go to a
+Jenkins URL that will forward them to a different site after successful
+authentication.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3184 / CVE-2023-50772 (storage) & CVE-2023-50773 (masking)
+Dingding JSON Pusher Plugin 2.0 and earlier stores access tokens
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These tokens can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+Additionally, the job configuration form does not mask these tokens,
+increasing the potential for attackers to observe and capture them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3183 / CVE-2023-50774
+HTMLResource Plugin 1.02 and earlier does not require POST requests for an
+HTTP endpoint, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+This vulnerability allows attackers to delete arbitrary files on the
+Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3092 / CVE-2023-50775
+Deployment Dashboard Plugin 1.0.10 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to copy jobs.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3182 / CVE-2023-50776 (storage) & CVE-2023-50777 (masking)
+PaaSLane Estimate Plugin 1.0.4 and earlier stores PaaSLane authentication
+tokens unencrypted in job `config.xml` files on the Jenkins controller as
+part of its configuration.
+
+These tokens can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+Additionally, the job configuration form does not mask these tokens,
+increasing the potential for attackers to observe and capture them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3179 / CVE-2023-50778 (CSRF) & CVE-2023-50779 (missing permission check)
+PaaSLane Estimate Plugin 1.0.4 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using an attacker-specified token.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
 
