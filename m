@@ -1,146 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/10/1
-Message-ID: <bb9a7bc.103221.189dd38cdc8.Coremail.linma@zju.edu.cn>
-Date: Thu, 10 Aug 2023 10:13:54 +0800 (GMT+08:00)
-From: "Lin Ma" <linma@....edu.cn>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-3772: Linux kernel: xfrm_update_ae_params NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/5
+Message-ID: <CAL5rf4waYZe2bA6Vse7uWj_Gf_geha_Of3re-Cwc-BGe-XstkQ@mail.gmail.com>
+Date: Wed, 13 Dec 2023 19:44:57 +0100
+From: Darya Malyavkina <dmalyavkina@...udlinux.com>
+To: Jonathan Wright <jonathan@...alinux.org>
+Cc: oss-security@...ts.openwall.com, Andrew Lukoshko <alukoshko@...alinux.org>,  benny Vasquez <benny@...alinux.org>, Igor Seletskiy <iseletsk@...alinux.org>,  Jack Aboutboul <jack@...alinux.org>
+Subject: Re: AlmaLinux Distros List Application
 Content-Type: text/plain; charset=utf-8
 
-Hello there, we found a NPD bug in Linux kernel XFRM submodule.
+Hello,
 
-[require privilege]: CAP_NET_ADMIN (namespace)
+I'm Darya Malyavkina, Director of Release Engineering at CloudLinux. I
+vouch for Jonathan Wright and Andrew Lukoshko
 
-[effects]: local DoS
+On Tue, Dec 12, 2023 at 9:35 PM Jonathan Wright <jonathan@...alinux.org>
+wrote:
 
-[crash stack]:
-[   47.933119] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[   47.933119] #PF: supervisor write access in kernel mode
-[   47.933119] #PF: error_code(0x0002) - not-present page
-[   47.933119] PGD 8253067 P4D 8253067 PUD 8e0e067 PMD 0
-[   47.933119] Oops: 0002 [#1] PREEMPT SMP KASAN NOPTI
-[   47.933119] CPU: 0 PID: 98 Comm: poc.npd Not tainted 6.4.0-rc7-00072-gdad9774deaf1 #8
-[   47.933119] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.o4
-[   47.933119] RIP: 0010:memcpy_orig+0xad/0x140
-[   47.933119] Code: e8 4c 89 5f e0 48 8d 7f e0 73 d2 83 c2 20 48 29 d6 48 29 d7 83 fa 10 72 34 4c 8b 06 4c 8b 4e 08 c
-[   47.933119] RSP: 0018:ffff888008f57658 EFLAGS: 00000202
-[   47.933119] RAX: 0000000000000000 RBX: ffff888008bd0000 RCX: ffffffff8238e571
-[   47.933119] RDX: 0000000000000018 RSI: ffff888007f64844 RDI: 0000000000000000
-[   47.933119] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-[   47.933119] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888008f57818
-[   47.933119] R13: ffff888007f64aa4 R14: 0000000000000000 R15: 0000000000000000
-[   47.933119] FS:  00000000014013c0(0000) GS:ffff88806d600000(0000) knlGS:0000000000000000
-[   47.933119] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   47.933119] CR2: 0000000000000000 CR3: 00000000054d8000 CR4: 00000000000006f0
-[   47.933119] Call Trace:
-[   47.933119]  <TASK>
-[   47.933119]  ? __die+0x1f/0x70
-[   47.933119]  ? page_fault_oops+0x1e8/0x500
-[   47.933119]  ? __pfx_is_prefetch.constprop.0+0x10/0x10
-[   47.933119]  ? __pfx_page_fault_oops+0x10/0x10
-[   47.933119]  ? _raw_spin_unlock_irqrestore+0x11/0x40
-[   47.933119]  ? fixup_exception+0x36/0x460
-[   47.933119]  ? _raw_spin_unlock_irqrestore+0x11/0x40
-[   47.933119]  ? exc_page_fault+0x5e/0xc0
-[   47.933119]  ? asm_exc_page_fault+0x26/0x30
-[   47.933119]  ? xfrm_update_ae_params+0xd1/0x260
-[   47.933119]  ? memcpy_orig+0xad/0x140
-[   47.933119]  ? __pfx__raw_spin_lock_bh+0x10/0x10
-[   47.933119]  xfrm_update_ae_params+0xe7/0x260
-[   47.933119]  xfrm_new_ae+0x298/0x4e0
-[   47.933119]  ? __pfx_xfrm_new_ae+0x10/0x10
-[   47.933119]  xfrm_user_rcv_msg+0x25a/0x410
-[   47.933119]  ? __pfx_xfrm_user_rcv_msg+0x10/0x10
-[   47.933119]  ? __alloc_skb+0xcf/0x210
-[   47.933119]  ? stack_trace_save+0x90/0xd0
-[   47.933119]  ? filter_irq_stacks+0x1c/0x70
-[   47.933119]  ? __stack_depot_save+0x39/0x4e0
-[   47.933119]  ? __kasan_slab_free+0x10a/0x190
-[   47.933119]  ? kmem_cache_free+0x9c/0x340
-[   47.933119]  ? netlink_recvmsg+0x23c/0x660
-[   47.933119]  ? sock_recvmsg+0xeb/0xf0
-[   47.933119]  ? __sys_recvfrom+0x13c/0x1f0
-[   47.933119]  ? __x64_sys_recvfrom+0x71/0x90
-[   47.933119]  ? do_syscall_64+0x3f/0x90
-[   47.933119]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   47.933119]  ? copyout+0x3e/0x50
-[   47.933119]  netlink_rcv_skb+0xd6/0x210
-[   47.933119]  ? __pfx_xfrm_user_rcv_msg+0x10/0x10
-[   47.933119]  ? __pfx_netlink_rcv_skb+0x10/0x10
-[   47.933119]  ? __pfx_sock_has_perm+0x10/0x10
-[   47.933119]  ? mutex_lock+0x8d/0xe0
-[   47.933119]  ? __pfx_mutex_lock+0x10/0x10
-[   47.933119]  xfrm_netlink_rcv+0x44/0x50
-[   47.933119]  netlink_unicast+0x36f/0x4c0
-[   47.933119]  ? __pfx_netlink_unicast+0x10/0x10
-[   47.933119]  ? netlink_recvmsg+0x500/0x660
-[   47.933119]  netlink_sendmsg+0x3b7/0x700
-[   47.933119]  ? __pfx_netlink_sendmsg+0x10/0x10
-[   47.933119]  ? update_load_avg+0x591/0xab0
-[   47.933119]  ? __pfx_netlink_sendmsg+0x10/0x10
-[   47.933119]  sock_sendmsg+0xde/0xe0
-[   47.933119]  __sys_sendto+0x18d/0x230
-[   47.933119]  ? __pfx___sys_sendto+0x10/0x10
-[   47.933119]  ? rb_insert_color+0x1c0/0x280
-[   47.933119]  ? timerqueue_add+0x128/0x150
-[   47.933119]  ? ktime_get+0x49/0xb0
-[   47.933119]  ? __pfx_native_apic_mem_write+0x10/0x10
-[   47.933119]  ? lapic_next_event+0x35/0x40
-[   47.933119]  ? clockevents_program_event+0xdf/0x140
-[   47.933119]  ? hrtimer_interrupt+0x321/0x360
-[   47.933119]  __x64_sys_sendto+0x71/0x90
-[   47.933119]  do_syscall_64+0x3f/0x90
-[   47.933119]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   47.933119] RIP: 0033:0x44b8aa
-[   47.933119] Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 9
-[   47.933119] RSP: 002b:00007fff7ded8258 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-[   47.933119] RAX: ffffffffffffffda RBX: 00007fff7ded9688 RCX: 000000000044b8aa
-[   47.933119] RDX: 00000000000002a8 RSI: 00007fff7ded8480 RDI: 0000000000000003
-[   47.933119] RBP: 00007fff7ded82c0 R08: 00007fff7ded829c R09: 000000000000000c
-[   47.933119] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-[   47.933119] R13: 00007fff7ded9678 R14: 00000000004c37d0 R15: 0000000000000001
-[   47.933119]  </TASK>
-[   47.933119] Modules linked in:
-[   47.933119] CR2: 0000000000000000
-[   47.933119] ---[ end trace 0000000000000000 ]---
-[   47.933119] RIP: 0010:memcpy_orig+0xad/0x140
-[   47.933119] Code: e8 4c 89 5f e0 48 8d 7f e0 73 d2 83 c2 20 48 29 d6 48 29 d7 83 fa 10 72 34 4c 8b 06 4c 8b 4e 08 c
-[   47.933119] RSP: 0018:ffff888008f57658 EFLAGS: 00000202
-[   47.933119] RAX: 0000000000000000 RBX: ffff888008bd0000 RCX: ffffffff8238e571
-[   47.933119] RDX: 0000000000000018 RSI: ffff888007f64844 RDI: 0000000000000000
-[   47.933119] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-[   47.933119] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888008f57818
-[   47.933119] R13: ffff888007f64aa4 R14: 0000000000000000 R15: 0000000000000000
-[   47.933119] FS:  00000000014013c0(0000) GS:ffff88806d600000(0000) knlGS:0000000000000000
-[   47.933119] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   47.933119] CR2: 0000000000000000 CR3: 00000000054d8000 CR4: 00000000000006f0
-[   47.933119] Kernel panic - not syncing: Fatal exception in interrupt
-[   47.933119] Kernel Offset: disabled
-[   47.933119] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
+> I’m submitting this application on behalf of the AlmaLinux OS Foundation.
+>
+>
+> Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would be
+> joining if approved.
+>
+>
+>    1.
+>
+>    Be an actively maintained Unix-like operating system distro with
+>    substantial use of Open Source components
+>    1.
+>
+>       We are actively maintained and have released 4 minor versions this
+>       year (8.8, 8.9, 9.2, and 9.3) along with small updates within the minor
+>       versions, generally at least a few updates per week.
+>       2.
+>
+>    Have a userbase not limited to your own organization
+>    1.
+>
+>       Our public mirror system alone serves 750k unique systems weekly,
+>       and is used worldwide for a variety of things.
+>       3.
+>
+>    Have a publicly verifiable track record, dating back at least 1 year
+>    and continuing to present day, of fixing security issues (including some
+>    that had been handled on (linux-)distros, meaning that membership would
+>    have been relevant to you) and releasing the fixes within 10 days (and
+>    preferably much less than that) of the issues being made public (if it
+>    takes you ages to fix an issue, your users wouldn't substantially benefit
+>    from the additional time, often around 7 days and sometimes up to 14 days,
+>    that list membership could give you)
+>    1.
+>
+>       Historically we have been following Red Hat releases within 1-2
+>       days, and since our shift in June away from following Red Hat we have been
+>       able to release some security updates ahead of Red Hat (Iperf3 patch and
+>       AMD microcode/kernel patches specifically). We would not be beholden to
+>       CentOS Stream updates for our patch releases.
+>       4.
+>
+>    Not be (only) downstream or a rebuild of another distro (or else we
+>    need convincing additional justification of how the list membership would
+>    enable you to release fixes sooner, presumably not relying on the upstream
+>    distro having released their fixes first?)
+>    1.
+>
+>       While we've historically done that (which is why it didn’t make
+>       sense to join earlier), we shifted in June to our own OS that is
+>       ABI-compatible with RHEL.
+>       5.
+>
+>    Be a participant and preferably an active contributor in relevant
+>    public communities (most notably, if you're not watching for issues being
+>    made public on oss-security, which are a superset of those that had been
+>    handled on (linux-)distros, then there's no valid reason for you to be on
+>    (linux-)distros)
+>    1.
+>
+>       we have many participants on the oss-security list.
+>       6.
+>
+>    Accept the list policy (see above)
+>    1.
+>
+>       accepted
+>       7.
+>
+>    Be able and willing to contribute back (see above), preferably in
+>    specific ways announced in advance (so that you're responsible for a
+>    specific area and so that we know what to expect from which member), and
+>    demonstrate actual contributions once you've been a member for a while
+>    1.
+>
+>       Immediately we can begin to help reporters ensure their reports are
+>       following the requirements and are confirmed/replied to. As we advance our
+>       understanding of how things operate, and the need arises, we can expand our
+>       work into contributing more deeply.
+>       8.
+>
+>    Be able and willing to handle PGP-encrypted e-mail
+>    1.
+>
+>       done.
+>       9.
+>
+>    Have someone already on the private list, or at least someone else who
+>    has been active on oss-security for years but is not affiliated with your
+>    distro nor your organization, vouch for at least one of the people
+>    requesting membership on behalf of your distro (then that one vouched-for
+>    person will be able to vouch for others on your team, in case you'd like
+>    multiple people subscribed)
+>    1.
+>
+>       Darya Malyavkina from CloudLinux will vouch for us.
+>
+>
+> --
+> Jonathan Wright
+> AlmaLinux Foundation
+> Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
+>
 
-[buggy commit]: 
-d8647b79c3b7 ("xfrm: Add user interface for esn and big anti-replay windows")
 
-[root cause]:
-x->replay_esn and x->preplay_esn should be allocated at xfrm_alloc_replay_state_esn(...) in xfrm_state_construct(..), and then the xfrm_update_ae_params(...) is okay to update them. However, the current implementation allows a malicious user to directly dereference the pointer and crash the kernel like above.
+-- 
+Best regards,
+Darya Malyavkina
+Director of Release Engineering at CloudLinux
 
-[PoC code]:
-see attachment poc1.c. I have tested it in ubuntu 22.04 and latest Linux with QEMU.
+CloudLinux.com <http://cloudlinux.com/>  |  KernelCare.com
+<http://kernelcare.com/>  |  Imunify360 <http://imunify360.com/>  |
+AlmaLinux <https://almalinux.org/>
 
-[suggest fix]:
-Add NULL check in xfrm_update_ae_params() like below:
+helpdesk.cloudlinux.com: 24/7 Free, exceptionally good support
+Follow twitter.com/CloudLinuxOS for technical updates
 
-@@ -628,7 +628,7 @@ static void xfrm_update_ae_params(struct xfrm_state *x, struct nlattr **attrs,
-        struct nlattr *rt = attrs[XFRMA_REPLAY_THRESH];
-        struct nlattr *mt = attrs[XFRMA_MTIMER_THRESH];
-
--       if (re) {
-+       if (re && x->replay_esn && x->preplay_esn) {
-                struct xfrm_replay_state_esn *replay_esn;
-
-[fix status]:
-to ipsec tree now but not yet upstream, see https://kernel.googlesource.com/pub/scm/linux/kernel/git/klassert/ipsec/
-
-[credit]
-Lin Ma from ZJU & Ant Security Light-Year Lab
-Download attachment "attachment-npd.zip" of type "application/zip" (38607 bytes)
