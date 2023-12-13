@@ -1,4 +1,4 @@
-Received: (qmail 20477 invoked by uid 550); 16 Apr 2024 21:50:08 -0000
+Received: (qmail 21668 invoked by uid 550); 13 Dec 2023 18:46:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,164 +7,197 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17745 invoked from network); 16 Apr 2024 21:48:36 -0000
+Received: (qmail 19526 invoked from network); 13 Dec 2023 18:44:58 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713304108; x=1713908908; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LpW1v9qLQszBiVrQLfQCIddvf3yGXc/RLYgwhjQq1uw=;
-        b=G/4ZxNyZus5g+yVeYXedmVimpGJvD+/E00AXj/IETSg3LvuGaKKLbMHnCP/QatR+TH
-         jC48k8mX/9SJOWlfpdZLl2k5DXK56YO25gsKn6BIN8GdtIdgrUV7iquTMfIWRmIj9cRi
-         6i/iInhD9aPE3qQaFLFYWD2Oc5J5j6wDV7L9SrdTqUpU5wvY3ZThlftynCshvY0hBANp
-         zvn7EY5gGOYYCQKaI35mFvR304Bkxnu6DsnIj76AZYLSA06y8DlXI2V56yKeYDONKUSt
-         3vbAIAY9HyPt3xV94rdrJ1kEn/zQC0ISIrwpRnhbHnkVRu/08bQQvp1wH3CVVSmvPfUw
-         eePg==
+        d=cloudlinux.com; s=google; t=1702493109; x=1703097909; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=YvSIbcTKCa+HOF+5gEL0ejwNuop3uKu41gDtJyMoLWY=;
+        b=GYMFnRMheL84Ke9CBe8Pr+elwrfdwKSOPNzCC1SM1ZY9OoMloodRBe7SbhwzVIzIEj
+         Y0yu1gD1JrSFDLk5FAARYt4Dz9tCcbbWg1xnM9mOzBpEcIDS89LhyCor5ZouUKUYtoxL
+         EED7c4u14K9PCgVFDrecOxPS96uzK2QQuHRpZoCHYaUh/kBoDUxTO+bal7JtThg+/gKz
+         F6XJGaNHn5QyqTlggehoXUHEv34weeFv793TSRayGCLCi1C3d+Xq6z0DQeZin0DLzw60
+         NLUQjQaObp1fnU0/KTE7Fzo9yxwDSCtDn/OPAloNip5oqqAqFBNmJ35D+mHodBhVY3JP
+         fqbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713304108; x=1713908908;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LpW1v9qLQszBiVrQLfQCIddvf3yGXc/RLYgwhjQq1uw=;
-        b=X2fN5KEiWOI+DoMnsy88/j3b3yK3/aDXX+wPzOwLn8KY0RWgQkkdRFnMT0pIlHG2qj
-         Xkz7PnOnyCnDDY1I3zxdxtChxv/4RuUre+6njPaXHU2X8b4qVykdtH69B5UOHWKzzkJT
-         q1RLZxOMHXnbCtreiAm1L0ig8HWHcFlvEGqNokWrrE1Dsc3tCFAWGZFv3cAttvMYp+3y
-         vg0Dg4+CGbFBNS3M8ry+owHJ2CgRbqVi0Chx9dL1iuf+U7VorqVRJ19Rr3Xv3xMsgAX6
-         U23j4PkjMUDs60w+ux6XH8v5yN/MojmZrsrqrCVHGKBEoFUjka/39e1mD2cvuIqC+VIj
-         u/Jw==
-X-Gm-Message-State: AOJu0YxoVlJxAGMSxWqBgoU5Af34hYPN/RSChMGl5XMRsLZLdv5xr7gK
-	SM8hXDKOwuBGj4CPkKKUOm8H1LUdcUGg1jRbz2Ko2Thc2LNR1ShINg5HVOQGxNUDkP4CI3Z+dCw
-	S+0xXLmECuXpKBzpoIGW48PO7RkhdbXAG
-X-Google-Smtp-Source: AGHT+IFo+Z2yYC7rg/rEg44eWax8MWHBUyHXBwquIH+oDU0hNja8VwKPK/7wfUyOwfKjxcNE8k6ZENtu3y6ce2CbFAw=
-X-Received: by 2002:a25:848d:0:b0:dc2:4397:6ad3 with SMTP id
- v13-20020a25848d000000b00dc243976ad3mr15961575ybk.44.1713304107561; Tue, 16
- Apr 2024 14:48:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1702493109; x=1703097909;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YvSIbcTKCa+HOF+5gEL0ejwNuop3uKu41gDtJyMoLWY=;
+        b=uH76UXHyG07AAtEtnVy0/YM47WcJlBdIy+y5BkkE2zUJwwRWd9z6MGy6xEe0AUjzV/
+         yA2ReYeCL3GGoWVX8MA8SM8eZswSL/t/h2QqECJ3WWzizRpRpfV8UtaiHmrG/lqAxl6v
+         QrSzb/AMXPjFZ5bS4kq2yTPNkq7enPQ11oNBev/MjwFj0FswmBHipNINcGV6c6w09sOE
+         tF+8vMkXTfLSBHEatptOR7aQmcQx3y/LtGSuw2dGcHkYN7uzGfQn914YcPBw+zeWvLwD
+         z483P+etl1xZxs0QlSc1cB4oXZsququwlLJfGiuI96nk5TrKz3gN0AoJxowIrnN75xyu
+         AeZw==
+X-Gm-Message-State: AOJu0YziNs4CeStCC6x5+UabiKBvpZrQmVdtU7aAVH8Der8Ivlg0wgze
+	Para6Qk9U+bI22IhaReweR0/jlkwr2pZrSbXgSEc+g==
+X-Google-Smtp-Source: AGHT+IFoI0zfvLuoltPptCdaRPvoV7NuXclk2irupdGlohRi2IXvX9/CULCiDpd6a1ZHvgEPeV7DwlGx/IfEMDDgNCY=
+X-Received: by 2002:a05:690c:1e:b0:5df:c224:fb44 with SMTP id
+ bc30-20020a05690c001e00b005dfc224fb44mr5501305ywb.23.1702493108413; Wed, 13
+ Dec 2023 10:45:08 -0800 (PST)
 MIME-Version: 1.0
-From: Rita Zhang <rita.z.zhang@gmail.com>
-Date: Tue, 16 Apr 2024 14:48:15 -0700
-Message-ID: <CAL7+V1yx4TBm7LviPgBKCMhaVDSggTqgXpJtowdAwpiFkJfJ6Q@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000b93c0106163db220"
-Subject: [oss-security] [kubernetes] CVE-2024-3177: Bypassing mountable secrets policy
- imposed by the ServiceAccount admission plugin
+References: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com>
+In-Reply-To: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com>
+From: Darya Malyavkina <dmalyavkina@cloudlinux.com>
+Date: Wed, 13 Dec 2023 19:44:57 +0100
+Message-ID: <CAL5rf4waYZe2bA6Vse7uWj_Gf_geha_Of3re-Cwc-BGe-XstkQ@mail.gmail.com>
+To: Jonathan Wright <jonathan@almalinux.org>
+Cc: oss-security@lists.openwall.com, Andrew Lukoshko <alukoshko@almalinux.org>, 
+	benny Vasquez <benny@almalinux.org>, Igor Seletskiy <iseletsk@almalinux.org>, 
+	Jack Aboutboul <jack@almalinux.org>
+Content-Type: multipart/alternative; boundary="000000000000f5c889060c689016"
+Subject: [oss-security] Re: AlmaLinux Distros List Application
 
---000000000000b93c0106163db220
+--000000000000f5c889060c689016
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello Kubernetes Community,
+Hello,
 
-A security issue was discovered in Kubernetes where users may be able to
-launch containers that bypass the mountable secrets policy enforced by the
-ServiceAccount admission plugin when using containers, init containers, and
-ephemeral containers with the envFrom field populated. The policy ensures
-pods running with a service account may only reference secrets specified in
-the service account=E2=80=99s secrets field. Kubernetes clusters are only a=
-ffected
-if the ServiceAccount admission plugin and the
-kubernetes.io/enforce-mountable-secrets annotation are used together with
-containers, init containers, and ephemeral containers with the envFrom
-field populated.
+I'm Darya Malyavkina, Director of Release Engineering at CloudLinux. I
+vouch for Jonathan Wright and Andrew Lukoshko
 
-This issue has been rated Low CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U=
-/C:L/I:N/A:N>,
-and assigned CVE-2024-3177
+On Tue, Dec 12, 2023 at 9:35=E2=80=AFPM Jonathan Wright <jonathan@almalinux=
+.org>
+wrote:
 
-Am I vulnerable?
+> I=E2=80=99m submitting this application on behalf of the AlmaLinux OS Fou=
+ndation.
+>
+>
+> Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would be
+> joining if approved.
+>
+>
+>    1.
+>
+>    Be an actively maintained Unix-like operating system distro with
+>    substantial use of Open Source components
+>    1.
+>
+>       We are actively maintained and have released 4 minor versions this
+>       year (8.8, 8.9, 9.2, and 9.3) along with small updates within the m=
+inor
+>       versions, generally at least a few updates per week.
+>       2.
+>
+>    Have a userbase not limited to your own organization
+>    1.
+>
+>       Our public mirror system alone serves 750k unique systems weekly,
+>       and is used worldwide for a variety of things.
+>       3.
+>
+>    Have a publicly verifiable track record, dating back at least 1 year
+>    and continuing to present day, of fixing security issues (including so=
+me
+>    that had been handled on (linux-)distros, meaning that membership would
+>    have been relevant to you) and releasing the fixes within 10 days (and
+>    preferably much less than that) of the issues being made public (if it
+>    takes you ages to fix an issue, your users wouldn't substantially bene=
+fit
+>    from the additional time, often around 7 days and sometimes up to 14 d=
+ays,
+>    that list membership could give you)
+>    1.
+>
+>       Historically we have been following Red Hat releases within 1-2
+>       days, and since our shift in June away from following Red Hat we ha=
+ve been
+>       able to release some security updates ahead of Red Hat (Iperf3 patc=
+h and
+>       AMD microcode/kernel patches specifically). We would not be beholde=
+n to
+>       CentOS Stream updates for our patch releases.
+>       4.
+>
+>    Not be (only) downstream or a rebuild of another distro (or else we
+>    need convincing additional justification of how the list membership wo=
+uld
+>    enable you to release fixes sooner, presumably not relying on the upst=
+ream
+>    distro having released their fixes first?)
+>    1.
+>
+>       While we've historically done that (which is why it didn=E2=80=99t =
+make
+>       sense to join earlier), we shifted in June to our own OS that is
+>       ABI-compatible with RHEL.
+>       5.
+>
+>    Be a participant and preferably an active contributor in relevant
+>    public communities (most notably, if you're not watching for issues be=
+ing
+>    made public on oss-security, which are a superset of those that had be=
+en
+>    handled on (linux-)distros, then there's no valid reason for you to be=
+ on
+>    (linux-)distros)
+>    1.
+>
+>       we have many participants on the oss-security list.
+>       6.
+>
+>    Accept the list policy (see above)
+>    1.
+>
+>       accepted
+>       7.
+>
+>    Be able and willing to contribute back (see above), preferably in
+>    specific ways announced in advance (so that you're responsible for a
+>    specific area and so that we know what to expect from which member), a=
+nd
+>    demonstrate actual contributions once you've been a member for a while
+>    1.
+>
+>       Immediately we can begin to help reporters ensure their reports are
+>       following the requirements and are confirmed/replied to. As we adva=
+nce our
+>       understanding of how things operate, and the need arises, we can ex=
+pand our
+>       work into contributing more deeply.
+>       8.
+>
+>    Be able and willing to handle PGP-encrypted e-mail
+>    1.
+>
+>       done.
+>       9.
+>
+>    Have someone already on the private list, or at least someone else who
+>    has been active on oss-security for years but is not affiliated with y=
+our
+>    distro nor your organization, vouch for at least one of the people
+>    requesting membership on behalf of your distro (then that one vouched-=
+for
+>    person will be able to vouch for others on your team, in case you'd li=
+ke
+>    multiple people subscribed)
+>    1.
+>
+>       Darya Malyavkina from CloudLinux will vouch for us.
+>
+>
+> --
+> Jonathan Wright
+> AlmaLinux Foundation
+> Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
+>
 
-Clusters are impacted by this vulnerability if all of the following are
-true:
 
-   1.
+--=20
+Best regards,
+Darya Malyavkina
+Director of Release Engineering at CloudLinux
 
-   The ServiceAccount admission plugin is used. Most cluster should have
-   this on by default as recommended in
-   https://kubernetes.io/docs/reference/access-authn-authz/admission-contro=
-llers/#serviceaccount
-   2.
+CloudLinux.com <http://cloudlinux.com/>  |  KernelCare.com
+<http://kernelcare.com/>  |  Imunify360 <http://imunify360.com/>  |
+AlmaLinux <https://almalinux.org/>
 
-   The kubernetes.io/enforce-mountable-secrets annotation is used by a
-   service account. This annotation is not added by default.
-   3.
+helpdesk.cloudlinux.com: 24/7 Free, exceptionally good support
+Follow twitter.com/CloudLinuxOS for technical updates
 
-   Pods using containers, init containers, and ephemeral containers with
-   the envFrom field populated.
-
-
-Affected Versions
-
-   -
-
-   kube-apiserver v1.29.0 - v1.29.3
-   -
-
-   kube-apiserver v1.28.0 - v1.28.8
-   -
-
-   kube-apiserver <=3D v1.27.12
-
-How do I mitigate this vulnerability?
-
-This issue can be mitigated by applying the patch provided for the
-kube-apiserver component. The patch prevents containers, init containers,
-and ephemeral containers with the envFrom field populated from bypassing
-the mountable secrets policy enforced by the ServiceAccount admission
-plugin.
-
-Fixed Versions
-
-   -
-
-   kube-apiserver v1.29.4
-   -
-
-   kube-apiserver v1.28.9
-   -
-
-   kube-apiserver v1.27.13
-
-These releases have been published today, April 16th, 2024.
-
-Detection
-
-Pod update requests using a container, init container, or ephemeral
-container with the envFrom field populated that exploits this vulnerability
-with unintended secret will be captured in API audit logs. You can also use
-the following kubectl command to find active pods using the
-kubernetes.io/enforce-mountable-secrets annotation.
-
-
-`kubectl get serviceaccounts --all-namespaces -o jsonpath=3D"{range
-.items[?(@.metadata.annotations['kubernetes\.io/enforce-mountable-secrets']=
-=3D=3D'true')]}{.metadata.namespace}{'\t'}{.
-metadata.name}{'\n'}{end}"`
-
-Additional Details
-
-See the GitHub issue for more details:
-<https://github.com/kubernetes/kubernetes/issues/118640>
-https://github.com/kubernetes/kubernetes/issues/124336
-
-
-Acknowledgements
-
-This vulnerability was reported by tha3e1vl.
-
-The issue was fixed and coordinated by the fix team:
-
-Rita Zhang @ritazh
-
-Joel Smith @joelsmith
-
-Mo Khan @enj
-
-and release managers:
-
-Sascha Grunert @saschagrunert
-
-Jeremy Rickard @jeremyrickard
-
-Thank You,
-
-Rita Zhang on behalf of the Kubernetes Security Response Committee
-
---000000000000b93c0106163db220--
+--000000000000f5c889060c689016--
