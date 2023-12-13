@@ -1,45 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/22/1
-Message-ID: <32ab10c5-fecd-438f-1371-5fa77d5f957a@apache.org>
-Date: Wed, 22 Mar 2023 10:12:50 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/3
+Message-ID: <CAHrFiA_XB=rFrdC8+8KTwbi9-Jwf6fiGwNEEngmApg-v_VzZWg@mail.gmail.com>
+Date: Wed, 13 Dec 2023 15:11:35 +0100
+From: Jakub Jelen <jjelen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28708: Apache Tomcat: JSESSIONID Cookie missing secure attribute in some configurations
+Subject: CVE-2023-40661: Dynamic analyzers reports in pkcs15-init in OpenSC before 0.24.0
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-28708 Apache Tomcat - Information Disclosure
+This advisory summarizes automatically reported issues that are
+security relevant that were reported since the release of OpenSC
+0.23.0 and that are relevant to the handling the card enrollment
+process using pkcs15-init.
 
-Severity: Important
+All of these require physical access to the computer at the time user
+or administrator would be enrolling the cards (generating keys and
+loading certificates, other card/token management) operations. The
+attack requires crafted USB device or smart card that would present
+the system with specially crafted responses to the APDUs so they are
+considered a high-complexity and low-severity. This issue is not
+exploitable just by using a PKCS#11 module as done in most of the
+end-user deployments.
 
-Vendor: The Apache Software Foundation
+Security-related oss-fuzz issues
 
-Versions Affected:
-Apache Tomcat 11.0.0-M1 to 11.0.0-M2
-Apache Tomcat 10.1.0-M1 to 10.1.5
-Apache Tomcat 9.0.0-M1 to 9.0.71
-Apache Tomcat 8.5.0 to 8.5.85
+Stack buffer overflow in sc_pkcs15_get_lastupdate in pkcs15init
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60769
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60527
+fixed with 245efe608d083fd4e4ec96793fdefd218e26fde7
 
-Description:
-When using the RemoteIpFilter with requests received from a reverse 
-proxy via HTTP that include the X-Forwarded-Proto header set to https, 
-session cookies created by Tomcat did not include the secure attribute. 
-This could result in the user agent transmitting the session cookie over 
-an insecure channel.
+Heap buffer overflow in setcos_create_key in pkcs15init
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60672
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=64181
+fixed with
+440ca666eff10cc7011901252d20f3fc4ea23651
+4013a807492568bf9907cfb3df41f130ac83c7b9
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 11.0.0-M3 or later
-- Upgrade to Apache Tomcat 10.1.6 or later
-- Upgrade to Apache Tomcat 9.0.72 or later
-- Upgrade to Apache Tomcat 8.5.86 or later
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60650 Heap
+buffer overflow in cosm_new_file in pkcs15init
+fixed with 41d61da8481582e12710b5858f8b635e0a71ab5e
 
-History:
-2023-03-22 Original advisory
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60616 Heap
+double free in sc_pkcs15_free_object_content
+fixed with 638a5007a5d240d6fa901aa822cfeef94fe36e85
 
-References:
-[1] https://tomcat.apache.org/security-11.html
-[2] https://tomcat.apache.org/security-10.html
-[3] https://tomcat.apache.org/security-9.html
-[4] https://tomcat.apache.org/security-8.html
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=58932 Stack
+buffer overflow in cflex_delete_file in pkcs15init
+fixed with c449a181a6988cc1e8dc8764d23574e48cdc3fa6
+
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=56213 Heap
+buffer overflow in sc_hsm_write_ef in pkcs15init
+not in any released version, fixed with dd138d0600a1acd7991989127f36827e5836b24e
+
+Stack buffer overflow while parsing pkcs15 profile files
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=55998
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=55851
+fixed with 5631e9843c832a99769def85b7b9b68b4e3e3959
+
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=54312 Stack
+buffer overflow in muscle driver in pkcs15init
+fixed with df5a176bfdf8c52ba89c7fef1f82f6f3b9312bc1
+
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=53927 Stack
+buffer overflow in cardos driver in pkcs15init
+fixed with 578aed8391ef117ca64a9e0cba8e5c264368a0ec
+
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=64215 Heap
+buffer overflow in epass2003 driver in pkcs15init
+fixed with 609164045facaeae193feb48d9c2fc5cc4321e8a
+
+Heap buffer overflow in iasecc driver in pkcs15init
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63949
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63587
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63163
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=61797
+fixed with
+8fc2c20c3f895569eeb58328bb882aec07325d3b
+fbda61d0d276dc98b9d1d1e6810bbd21d19e3859
+83b9129bd3cfc6ac57d5554e015c3df85f5076dc
+2a4921ab23fd0853f327517636c50de947548161
+
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63104 Stack
+buffer overflow in entersafe driver in pkcs15init
+fixed with 50f0985f6343eeac4044661d56807ee9286db42c
+
+Heap buffer overflow in oberthur driver in pkcs15init
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60650
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62613
+fixed with 41d61da8481582e12710b5858f8b635e0a71ab5e
+
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=61750 Stack
+buffer overflow in idprime driver in pkcs15init
+fixed with fa8ad362852dbefad5b6796c32f2a33859b8a8e0
+
+https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60971 Heap
+buffer overflow in test_verify
+fixed with ffbff25ec6c6d0ad3f8df76f57210698f7947fc3
+
+Originally reported by OSS-fuzz automated service
+
+
+
+The full release notes for the 0.24.0 is available in announce list:
+
+https://sourceforge.net/p/opensc/mailman/message/58712583/
+
+and on github:
+
+https://github.com/OpenSC/OpenSC/releases/tag/0.24.0
 
