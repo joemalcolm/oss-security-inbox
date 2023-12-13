@@ -1,40 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/24/1
-Message-ID: <7ea4f846-3772-1ef3-853a-c45972a9a3d2@apache.org>
-Date: Fri, 24 Nov 2023 04:50:00 +0000
-From: Zhenxu Ke <kezhenxu94@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/2
+Message-ID: <CAHrFiA8AHe6mk3cVSubH3b0CH1A=vSqqtmFvcoPwiK2zTQ8RUg@mail.gmail.com>
+Date: Wed, 13 Dec 2023 15:11:32 +0100
+From: Jakub Jelen <jjelen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-48796: Apache dolphinscheduler sensitive information disclosure 
+Subject: CVE-2023-40660: Potential PIN bypass with empty PIN in OpenSC before 0.24.0
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+When the token/card was plugged into the computer and authenticated
+from one process, it could be used to provide cryptographic operations
+from different process when the empty, zero-length PIN was provided
+and the token could track the login status using some of its
+internals. This is dangerous for OS logon/screen unlock and small
+tokens that are plugged permanently to the computer. The bypass was
+removed and OpenSC implemented explicit logout for most of the card
+drivers to prevent leaving unattended logged-in tokens.
 
-Affected versions:
+The PoC is available for MacOS screen unlock bypass with Yubikey. The
+issue can be reproduced also with a PKCS#11 module and Minidriver if
+the calling applications does not bail out on empty pin (For example
+with Firefox. The SSSD does not allow empty PIN under Linux even
+before reaching out to the PKCS#11 module).
 
-- Apache DolphinScheduler 3.0.0 before 3.0.2
+Note, that the login tracking is still useful on the pkcs15init layer
+so the second commit restores the similar code block in more
+appropriate place which could not be misused to bypass authentication
+on PKCS#11 layer.
 
-Description:
+Affected versions: OpenSC 0.17.0 - 0.23.0
 
-Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache DolphinScheduler.
+Fixed with:
 
-The information exposed to unauthorized actors may include sensitive data such as database credentials.
+868f76fb31255fd3fdacfc3e476452efeb61c3e7
+80cc5d30635f0d2c92b5099c0f9dc680d0ffce2f
 
-Users who can't upgrade to the fixed version can also set environment variable `MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,metrics,prometheus` to workaround this, or add the following section in the `application.yaml` file
+Originally reported by Deepanjan Pal (Oracle Corporation)
 
-```
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,metrics,prometheus
-```
+CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H (7.3)
 
-This issue affects Apache DolphinScheduler: from 3.0.0 before 3.0.2.
 
-Users are recommended to upgrade to version 3.0.2, which fixes the issue.
 
-References:
+The full release notes for the 0.24.0 is available in announce list:
 
-https://dolphinscheduler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-48796
+https://sourceforge.net/p/opensc/mailman/message/58712583/
+
+and on github:
+
+https://github.com/OpenSC/OpenSC/releases/tag/0.24.0
 
