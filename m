@@ -1,122 +1,441 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/13/11
-Message-ID: <956475122.7707678.1697228495449.JavaMail.zimbra@hlrs.de>
-Date: Fri, 13 Oct 2023 22:21:35 +0200 (CEST)
-From: Martin Hecht <martin.hecht@...s.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/14/1
+Message-ID: <ZXr2P6zT-PLtWShn@kasco.suse.de>
+Date: Thu, 14 Dec 2023 13:34:05 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
+Subject: budgie-extras: multiple predictable /tmp path issues in various applications
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello list,
 
-On Fri, Oct 13, 2023 at 12:50 "Neal Gompa" <ngompa13@...il.com> wrote:
-> > The publicly verifiable track record currently consists of timely
-> > rebuild and re-release of RHEL security update packages and security
-> > advisories, as published here:
-> >
-> > https://errata.rockylinux.org
-> >
-> > Not currently verifiable publicly, but Gregory further tells me:
-> >
-> > "We've been doing LTS privately to our customers for over a year now.
-> > This means we maintain security fixes for customers who need long term
-> > support for point releases."
-> >
-> From my point of view, this does not count. Rocky's public track record
-> of rebuilding RHEL updates and shipping them in a timely fashion does
-> not indicate that Rocky/CIQ can respond effectively when you have a craft
-> updates from scratch. Furthermore, there are public posts and articles
-> indicating that Rocky Linux/CIQ has trouble with shipping updates in a
-> timely fashion at all.
+this report is about a range of predictable /tmp path issues in various
+applications in the budgie-extras [1] repository. This repository
+contains a range of helper applications for the Budgie desktop
+environment.
 
-I'd like to give an example against this. With the recent glibc issue 
-(CVE-2023-4911) we were closely following the upcoming fixed packages. 
-While we were installing the Rocky packages in the late evening of Thu Oct 5, 
-I had the impression that the Redhat packages became available later on Friday.
-It might be attributed to some hours of delay between arriving on the repo 
-servers vs. being announced via advisory. But, anyhow, accusing Rocky being
-late in providing packages at least is not valid in general imho. At least 
-important ones, like this one, seem to arrive rather quickly. Without mentioning 
-the distros, I have seen quite some announcements even around a week later.
+During a routine review of applications that are autostarted in X11
+environments I found the issues 1) to 4) outlined below. Upstream found
+two additional cases of predictable /tmp path uses that they addressed,
+as outlined in items 5) and 6). Upstream released version 1.7.1 today
+which fixes all the issues.
 
-> > > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
-> >
-> > Besides being a "downstream or a rebuild of another distro", CIQ has its
-> > LTS branches and Rocky Linux has its additional and replacement packages
-> > via the SIGs.  Security maintenance for these should be provided by CIQ
-> > and Rocky Linux.
-> 
-> Special interest groups cannot count because they are intended to be
-> public community projects. Unless you're saying that all Rocky Linux
-> SIGs are shadows of CIQ work that can be held back for public consumption,
-> that is effectively out of scope for consideration.
+Introduction
+============
 
-I think the point here is "*not only* being a rebuild of another distro". 
-So, their engagement with SIG should already be a valid add-on to be honored.
-Anyhow, the fact that CIQ offers LTS branches and professional support, 
-as well as their promise to provide backports of upstream fixes independent 
-of RHEL clearly distinguishes them from a "pure distro rebuild".
+The affected programs are mostly written in the Vala programming
+language, some are also scripted in Python. In all cases predictable
+paths in /tmp containing only the username or no variable components at
+all are used. In these paths regular files or directories are created.
+The paths are often used as a kind of inter-process-communication
+between two or more budgie-extras components.
 
-https://ciq.com/products/rocky-linux/benefits/enterprise-level-support/
+The impact of the issues differs a lot depending on the actual affected
+program and ranges from denial-of-service to information leaks to
+integrity issues through manipulation of the data which is used e.g. for
+displaying images on the desktop. All the issues are restricted to local
+attackers, naturally.
 
+Without the Linux kernel's protect symlink sysctl setting the severity
+of the issues will in some cases be worse. Even with this protection
+enabled it is often possible to pre-create the files or directories as
+another local user, granting world read and write access, which will
+cause the budgie-extras applications to use them even though they are
+attacker controlled.
 
-> > Some security issues in upstream packages may be mitigated or fixed by
-> > pushing "security override" packages via CIQ's customer-facing repos and
-> > the Security SIG repos, without waiting on upstream distro's fixes and
-> > for issues or point releases where no upstream fixes are expected.
-> >
-> > Related previously accepted membership application (precedent) is
-> > CloudLinux's, which is now perhaps best known for AlmaLinux, another
-> > prominent EL distribution:
-> >
-> > http://www.openwall.com/lists/oss-security/2017/07/02/2
-> 
-> CloudLinux's membership was based on the fact that they replaced and
-> maintained a very large chunk of the distribution for their own
-> purpose. They used a RHEL compatible userland, but most of the server
-> software stacks and the kernel were replaced with their own builds.
-> They wanted access for the maintenance of that stuff, which is very
-> reasonable.
->
-> Rocky/CIQ has not demonstrated a similar need from my point of view.
+Without the Linux kernel's symlink protection many of these findings
+where files are created look like they might allow symlink attacks to
+have files created in arbitrary locations. The Vala file creation calls
+I looked into are mostly translated into the following system call,
+though:
 
-You could take the hardened glibc version of the before mentioned SIG for this
+    openat(AT_FDCWD, <path>, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, 0666)
 
-https://rockylinux.org/news/security-sig-update/
+Even tough this is missing the `O_NOFOLLOW` flag, symlinks would not be
+followed, due to the combination of O_CREAT and O_EXCL. I will point
+out cases where symlink attacks might still be possible in spite of
+this.
 
-Note, this is a different story than the backport of the fix for CVE-2023-4911.
+As a quick fix for all of these issues I suggested to use
+`$XDG_RUNTIME_DIR` instead of /tmp. This directory is private to the
+logged in user and cannot be manipulated by other users in the system.
+In the instances where these files are used as a simple communication
+mechanism ("trigger" logic) it could be considered using sockets,
+D-Bus session bus or named FIFOs instead - also placed in safe
+locations, of course.
 
-> Fedora is not a member because there is no mechanism in the project to
-> hide anything from the community. For this reason, I have not
-> considered joining as a representative of CentOS Hyperscale, Mageia,
-> or Fedora (all distributions that I do participate in security
-> response for).
+Following is a detailed listing of all individual issues based on the
+budgie-extras Git repository tag for version 1.7.0.
 
-Well, assuming there was a security team in these projects able to obey
-the embargo regulations, wouldn't they have tried to join? 
-But, nevertheless, what is the relation of the organizational structure 
-of these projects with the current application of CIQ/Rocky, after all?
+1) budgie-window-shuffler (CVE-2023-49344)
+==========================================
 
-> While I certainly recognize you and value your contributions
-> over the years, I do not feel that you alone is sufficient for
-> Rocky/CIQ to be accepted onto linux-distros@.
+1.1) /tmp/shufflerapplettrigger_<user>
+--------------------------------------
 
-The membership on the list is always by person, and it is always 
-on behalf of a distro. The fact that Alexander is already engaged in
-the Security SIG @Rocky already makes it a reasonable next step
-to represent them on the linux-distros list.
+In "src/shuffler_control.vala" line 1740 first an attempt is made to
+delete this path. Then it starts monitoring the path, reacting to its
+creation, by automatically selecting (popping up) the "Applet" listbox
+GUI entry.
 
-Furthermore, I would like to express my deep admiration for his 
-very professional way of working. Especially in this case, when it 
-is about his own person, he handles the application process transparently
-as if it was any other distro's. Sure, that's one would expect in 
-this position, but it's just another proof in a long list that he is 
-the right person to do this job of running, maintaining, and moderating
-these lists.
+The counterpart to this is found in "applet/src/ShufflerApplet.vala"
+line 91, where this file is created to let the settings dialog open.
 
-Not being member of any distribution, but a long-time subscriber to
-oss-sec, fd, and others, I give my vote for Alexander as a representative
-of CIQ Rocky Linux Security Team on linux-distros list.  
+The worst that can happen here is likely confusing the victims GUI so it
+is low severity.
 
-Best regards,
-Martin
+1.2) /tmp/<user>_shufflertriggers/layoutspopup
+----------------------------------------------
+
+In "src/toggle_layouts_popup.vala" line 62 first an attempt is made to
+create the directory, ignoring any potential errors - considering it to
+already exist. Then the "layoutspopup" file is created within the
+directory. Depending on program evaluation logic the string
+"fromcontrol" is written to the file, otherwise the file remains empty.
+
+In "src/layouts_popup.vala" line 1384 monitoring for this file is setup,
+its content is read (it is checked whether it contains "fromcontrol")
+and then a popup window is either created or destroyed, depending on the
+current program state.
+
+Another user in the system can pre-create this directory and then
+control the creation and destruction of the popup dialog, thereby
+confusing the victim's GUI. By placing a FIFO instead of a regular file
+at "layoutspopup", the layout popup will be subject to denial-of-service
+(either by blocking it indefinitely or by feeding it large amounts of
+data, leading to an out-of-memory situation).
+
+Without the Linux kernel's symlink protection the issue can be used to
+make the `layouts_popup` program read from arbitrary files, or to
+operate in arbitrary directories.
+
+1.3) /tmp/<user>_running_layout
+-------------------------------
+
+In "src/run_layout.vala" line 203 this file is created to "temporarily
+disable possibly set windowrules". In line 379 this path is (needlessly)
+constructed again and passed to function `create_busyfile()`, although
+this parameter remains unused by the function. In line 478 `stat()` and
+`unlink()` are attempted on the file.
+
+In "src/windowshufflerdaemon.vala" line 831 an existence check for this
+file is made. If it exists then the `run_rule` program will not be
+executed for any windows.
+
+This path allows a local attacker to prevent the victim's `run_rule`
+ever to be executed.
+
+1.4) /tmp/<user>_gridtrigger
+----------------------------
+
+In "src/togglegui.vala" line 33 an existence check is made for this path
+and depending on the outcome it is either created as an empty file, or
+deleted.
+
+In "src/windowshufflerdaemon.vala" line 992 in function `actonfile()`
+there is a reaction on the creation and deletion of this path. Depending
+on this the `gridguiruns` boolean is set to true or false respectively.
+If it is set to `false` then a window will be destroyed in line 1148.
+
+In "src/gridwindow.vala" line 637 a monitor is setup for this file and
+depending on it being created or being deleted the `gridwindow` is being
+displayed or destroyed.
+
+This path basically allows a local attacker to make the "grid window"
+managed by the `gridwindow` program appear, thereby confusing the
+victim's GUI. The other way around `windowshufflerdaemon` can be
+caused to destroy its "preview window" if this state file is under a
+local attacker's control.
+
+1.5) /tmp/shuffler-warning.png
+------------------------------
+
+In "src/windowshufflerdaemon.vala" line 1017 in function
+`create_warningbg()` this path is used to write a programmatically
+created PNG image into. In function `show_awarning()` in line 338 the
+program `sizeexceeds_warning` is executed which in turn in
+"src/sizeexceeds_warning.vala" line 68 displays the generated PNG image
+on the desktop.
+
+A local attacker can attempt to place arbitrary PNG data in this path
+and have it displayed on the victim's desktop. Placing crafted PNG data
+could allow to exploit further security issues in image processing
+libraries.
+
+1.6) /tmp/<user>_istestingtask
+------------------------------
+
+This path is potentially created in "src/layouts_popup.vala" line 492.
+The file receives data from the GUI interface. In "src/run_layout.vala"
+line 407 this path is picked up again and its content is interpreted in
+`extractlayout_fromfile()`.
+
+Since this file's content is evaluated and used for further program
+logic there is a chance for a local attacker to massively break the
+`run_layout` program's logic or maybe even achieve code execution. The
+Linux kernel's protected_regular sysctl setting comes to the rescue
+here, though. The `open()` with `O_CREAT` will fail. It can then
+still present a denial-of-service vector, though.
+
+Upstream Fix
+------------
+
+This is fixed in upstream commit 11b0201 [2]. The public /tmp directory
+has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
+to the user's HOME directory.
+
+2) budgie-wpreviews (CVE-2023-49347)
+====================================
+
+2.1) /tmp/<user>_window-previews
+--------------------------------
+
+This path is used for a directory. In "src/separate_shot.vala" line 43
+it is created, errors are ignored. In line 105 screenshots of certain
+X11 windows are placed in the directory following the name scheme
+"<window-id>.<workspace-name>.png".
+
+In "src/previews_creator.vala" line 74 an attempt to create the
+directory the same way is found. In line 241 the directory is iterated
+over and each file found there, independently of its name, will be
+assembled in a file list. This file list is luckily only used for
+removing files of non-existent windows in this program.
+
+In "src/previews_daemon.vala" line 719 there is another attempt to
+create the directory the same way as in the other two locations. In line
+523 the directory is again iterated over and a list of the contained
+filenames is assembled, independently of their names. In line 404 the
+filenames are interpreted and split into X11 window IDs and workspace
+names again. It seems the code expects all filenames to match the
+pattern, if this is not the case then the program will likely crash. The
+resulting file list is (luckily) matched against the existing X11 window
+IDs in line 421.
+
+Even without exploiting the fixed temporary directory path this
+directory has security issues, since it is created world-readable. Any
+other users in the system can access the window screenshots that are
+created there and thus this is an information leak.
+
+Since all errors trying to create the directory are ignored, another
+local user can pre-create this directory world-writable, and the
+wpreviews applications will still use the directory which is now under
+attacker control. The attacker can place additional PNG image files
+there, trying to confuse the victim's GUI experience. A local DoS
+against the `previews_daemon` seems also possible by placing
+non-conforming files into the directory. Since the `previews_daemon`
+only uses files from the directory for which an existing X11 window is
+found, the complexity for a local attacker to inject arbitrary PNG files
+into the preview logic is raised. It can still be possible by observing
+the PNG files created by e.g. the `separate_shot` program and replacing
+them with crafted data.
+
+Without the Linux kernel's symlink protection a local attacker can place
+a symlink there instead of a directory, causing the programs to operate
+in arbitrary other directory locations.
+
+2.2) /tmp/<user>_prvtrigger_*, /tmp/<user>_previoustrigger, /tmp/<user>_nexttrigger
+-----------------------------------------------------------------------------------
+
+This long list of trigger files:
+
+    /tmp/<user>_prvtrigger_all
+    /tmp/<user>_prvtrigger_current
+    /tmp/<user>_prvtrigger_all_hotcorner
+    /tmp/<user>_prvtrigger_curr_hotcorner
+    /tmp/<user>_previoustrigger
+    /tmp/<user>_prvtrigger_all
+    /tmp/<user>_nexttrigger
+
+is used both in "src/previews_triggers.vala" line 43 and
+"src/previews_daemon.vala" line 664.
+
+The `previews_triggers` program selects one of these trigger paths
+depending on command line arguments, various logical evaluations and
+depending on whether some of the paths already exist. The selected path
+is then simply created with empty content.
+
+In `previews_daemon` these paths are monitored and their existence is
+evaluated in a complex fashion to display previews of existing windows.
+
+In conjunction with the issues in 2.1) this can be used to display
+attacker controlled images on the victim's screen at arbitrary times,
+provided that the victim user is running the `previews_daemon`.
+
+Apart from the security related problems this group of files for
+controlling a daemons behaviour seems ill devised. Instead proper IPC
+mechanisms should be used.
+
+Upstream Fix
+------------
+
+This is fixed in upstream commit 588cbe6 [3]. The public /tmp directory
+has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
+to the user's HOME directory.
+
+3) budgie-takeabreak (CVE-2023-49345)
+=====================================
+
+3.1) /tmp/nextbreak_<user>
+--------------------------
+
+This file is read in "budgie_takeabreak.py" line 245 and the resulting
+string is split on ".", the first element resulting from this is used as
+the new "time" displayed in the GUI.
+
+In "takeabreak_run" line 80 this path is created and the next "break
+time" is written to it.
+
+A local attacker can pre-create this file and have arbitrary string
+content displayed instead of the actual "next time". A denial-of-service
+will also be possible e.g. by placing a FIFO there.
+
+Upstream Fix
+------------
+
+This is fixed in upstream commit 588cbe6 [3]. The public /tmp directory
+has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
+to the user's HOME directory.
+
+4) budgie-weathershow (CVE-2023-49346)
+======================================
+
+4.1) /tmp/<username>_weatherdata
+--------------------------------
+
+In "src/weathershow/WeatherShow.vala" line 354 the current "weather
+data" is written to this location. Before this an attempt is made to
+delete an already existing file. Errors for both, deletion and creation
+of the file, are ignored unconditionally.
+
+In "src/weathershow/WeatherShow.vala" line 236 the content from this
+file is read and interpreted for updating GUI window data.
+
+A local attacker can pre-create this file and thus manipulate the data
+displayed by the weather applet. Also a denial-of-service will be
+possible e.g. by placing a FIFO there.
+
+Upstream Fix
+------------
+
+This is fixed in upstream commit 0092025 [5]. The public /tmp directory
+has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
+to the user's HOME directory.
+
+5) budgie-clockworks (CVE-2023-49342)
+=====================================
+
+This issue was not discovered by me but by upstream while working on the
+fixes for the other issues I reported. For completeness I mention it in
+this report as well.
+
+5.1) /tmp/<user>_clockworks
+---------------------------
+
+This path is used as a directory in the Python script "cwtools.py". It
+is reused if it already exists. The scripts generates SVG vector
+graphics in there, converts them to the PNG image format and saves them
+in the users home directory in "~/.config/budgie-extras/clockworks".
+
+Here, again, the image data can be manipulated by a local attacker by
+pre-creating this directory. In this case the data will even be
+persisted in the user's home directory. Crafted SVG of PNG data could be
+placed in the directory to try attacking the image processing libraries
+used.
+
+Upstream Fix
+------------
+
+This is fixed in upstream commit d030837 [6]. The public /tmp directory
+has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
+to the user's HOME directory.
+
+6) budgie-dropby (CVE-2023-49343)
+=================================
+
+Like issue 5), this issue was not discovered by me but by upstream while
+working on the other issues I reported. For completeness I mention it in
+this report as well.
+
+6.1) /tmp/<user>_keepdropbywin
+------------------------------
+
+This path is used as a "timer" file in the "checkonwin" and "dropover"
+Python scripts. The file's content is not evaluated, but the
+"checkonwin" script runs "wmctrl -c dropby_popup" if the file doesn't
+exist for more than six seconds.
+
+The Python `openat()` call uses "O_CREAT | O_EXCL" flags so symlink
+attacks are not a problem even without kernel symlink protection. Other
+users in the system can shorten the "timer" logic of the "checkonwin"
+script, though, by creating the file path at an arbitrary time.
+
+6.2) /tmp/<user>_call_dropby
+----------------------------
+
+The script "budgie_dropby.py" creates this file as a trigger for the
+"dropover" script which reacts to the creation of this path by scanning
+the current list of USB block devices and their mount points in the
+system. A GUI dialog is displayed or updated as a reaction to this.
+
+A local attacker can cause this dialog to be displayed by creating this
+file. It can also be used as a kind of local DoS vector to keep the
+"dropover" script busy all the time, iterating over block devices.
+
+6.3) /tmp/<user>_dropby_icon_copy
+---------------------------------
+
+This is used as a trigger file in "budgie_dropby.py". If the file is
+created then a GUI dialog is changed and updated. In the `copy_flash`
+Python script this trigger is created to signal that some files have
+been copied.
+
+A local attacker can cause this dialog to be displayed by creating this
+file at arbitrary times.
+
+Upstream Fix
+------------
+
+This is fixed in upstream commit e75c94a [7]. The public /tmp directory
+has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
+to the user's HOME directory.
+
+7) Timeline
+===========
+
+2023-10-16: I reported the issues 1) - 4) to fossfreedom@...ntu.com,
+            offering coordinated disclosure.
+2023-10-17: Upstream accepted coordinated disclosure aiming at a
+            publication date towards the end of the year.
+2023-11-28: Upstream communicated to us the CVEs they assigned for the
+            issues plus for the two additional items 5) - 6) they
+	    discovered. They communicated that an upcoming version 1.7.1
+	    will contain the fixes.
+2023-12-03: Upstream communicated a preliminary publication date
+	    of 2023-12-14 for version 1.7.1 containing the fixes. They
+	    shared the individual patches for issues 1) - 6) with us.
+2023-11-14: The publication date has been reached, the upstream version
+            1.7.1 as well as GitHub security advisories have been
+	    published.
+
+8) References
+=============
+
+[1]: https://github.com/UbuntuBudgie/budgie-extras
+[2]: https://github.com/UbuntuBudgie/budgie-extras/commit/11b02011ad2f6d46485b292713af09f7314843a5
+[3]: https://github.com/UbuntuBudgie/budgie-extras/commit/588cbe6ffa72df904213d77728a3fd5bfae7195e
+[4]: https://github.com/UbuntuBudgie/budgie-extras/commit/ffa29d4bfe880217e28d99de99026760ae6fe1d4
+[5]: https://github.com/UbuntuBudgie/budgie-extras/commit/0092025ef25b48c287a75946c0ee797d3c142760
+[6]: https://github.com/UbuntuBudgie/budgie-extras/commit/d03083732569126d2f21c8810d5a69554ccc5900
+[7]: https://github.com/UbuntuBudgie/budgie-extras/commit/e75c94af249191bdbd33eebf7a62d4234a0d8be5
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Ivo Totev, Andrew McDonald, Werner Knoblich
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
