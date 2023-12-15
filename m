@@ -1,113 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/26/2
-Message-Id: <369A681F-5EC7-4399-A428-66ECAC1BF4F5@beckweb.net>
-Date: Wed, 26 Jul 2023 15:25:47 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/10
+Message-ID: <be1b1e24-dd0c-4296-b7e0-5c6a77601ee4@oracle.com>
+Date: Fri, 15 Dec 2023 14:44:43 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: jq 1.7.1 fixes CVE-2023-50246 & CVE-2023-50268
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+https://github.com/jqlang/jq/releases/tag/jq-1.7.1 lists these two fixes
+among the changes in this week's release of jq 1.7.1:
 
-The following releases contain fixes for security vulnerabilities:
+     CVE-2023-50246: Fix heap buffer overflow in jvp_literal_number_literal
+     CVE-2023-50268: fix stack-buffer-overflow if comparing nan with payload
 
-* Jenkins 2.416
-* Jenkins LTS 2.401.3
-* GitLab Authentication Plugin 1.18
-* Gradle Plugin 2.8.1
-* Qualys Web App Scanning Connector Plugin 2.0.11
-* ServiceNow DevOps Plugin 1.38.1
+They've also published advisories on github for each:
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+[oss-fuzz] Issue 64771: jq:jq_fuzz_execute: Stack-buffer-overflow in decNaNs
+https://github.com/jqlang/jq/security/advisories/GHSA-7hmr-442f-qc8j
 
-* Bazaar Plugin
-* Chef Identity Plugin
+heap-buffer-overflow exists in the function decToString in decNumber.c
+https://github.com/jqlang/jq/security/advisories/GHSA-686w-5m7m-54vc
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-07-26/
+The fixes appear to be in:
+https://github.com/jqlang/jq/commit/c9a51565214eece8f1053089739aea73145bfd6b
+https://github.com/jqlang/jq/commit/71c2ab509a8628dbbad4bc7b3f98a64aa90d3297
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3188 / CVE-2023-39151
-Jenkins applies formatting to the console output of builds, transforming
-plain URLs into hyperlinks.
-
-Jenkins 2.415 and earlier, LTS 2.401.2 and earlier does not sanitize or
-properly encode URLs of these hyperlinks in build logs.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control build log contents.
-
-
-SECURITY-3208 / CVE-2023-39152
-Gradle Plugin 2.8 improperly invokes APIs available only on the controller
-from an agent when setting up build log annotations, causing an exception.
-
-As a result, credentials may not be masked (i.e., replaced with asterisks)
-in the build log in some circumstances.
-
-
-SECURITY-2696 / CVE-2023-39153
-GitLab Authentication Plugin 1.17.1 and earlier does not implement a state
-parameter in its OAuth flow, a unique and non-guessable value associated
-with each authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-
-SECURITY-3129 / CVE-2023-3414 (CSRF) & CVE-2023-3442 (missing permission check)
-ServiceNow DevOps Plugin 1.38.0 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3012 / CVE-2023-39154
-Qualys Web App Scanning Connector Plugin 2.0.10 and earlier does not
-correctly perform permission checks in several HTTP endpoints.
-
-This allows attackers with global Item/Configure permission to connect to
-an attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-
-SECURITY-3192 / CVE-2023-39155
-Chef Identity Plugin stores the user.pem key in its global configuration
-file `io.chef.jenkins.ChefIdentityBuildWrapper.xml` on the Jenkins
-controller as part of its configuration.
-
-While this key is stored encrypted on disk, in Chef Identity Plugin 2.0.3
-and earlier the global configuration form does not mask the user.pem key
-form field, increasing the potential for attackers to observe and capture
-it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3095 / CVE-2023-39156
-Bazaar Plugin 1.22 and earlier does not require POST requests for an HTTP
-endpoint, resulting in a cross-site request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to delete previously created Bazaar SCM
-tags.
-
-As of publication of this advisory, there is no fix.
-
-
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
