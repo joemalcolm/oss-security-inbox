@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/4
-Message-Id: <92629B27-C51A-42A0-997F-81DFD527CA94@beckweb.net>
-Date: Wed, 18 Oct 2023 19:00:45 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/6
+Message-ID: <ZXw5wvknxlxHfRkI@kasco.suse.de>
+Date: Fri, 15 Dec 2023 12:34:24 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerability in Jenkins
+Subject: Re: XDG_RUNTIME_DIR "misuse" as $TMPDIR (was: Re: budgie-extras: multiple predictable /tmp path issues in various applications)
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hi Steffen,
 
-The following releases contain fixes for security vulnerabilities:
+On Thu, Dec 14, 2023 at 11:15:02PM +0100, Steffen Nurpmeso wrote:
+> All that makes me think whether XDG_RUNTIME_DIR is such a good
+> target for temporary files, generally speaking.
 
-* Jenkins 2.428
-* Jenkins LTS 2.414.3
+in general I would also not recommend using it for temporary files. At
+least in this concrete case of the budgie-extras applications the files
+placed in there can be considered small enough for a desktop environment.
 
+I recommended using XDG_RUNTIME_DIR as a quick fix for these issues, but
+as I also tried to point out, I don't believe the way temporary files
+are used here is a good design.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-10-18/
+At least the immediate dangers for security should be addressed by these
+quick fixes applied, so sacrificing a bit of the cleanliness of the
+filesystem seems justified.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Cheers
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Matthias
 
----
-
-SECURITY-3291 / CVE-2023-36478 & CVE-2023-44487
-Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
-servlet server when started using `java -jar jenkins.war`. This is how
-Jenkins is run when using any of the installers or packages, but not when
-run using servlet containers such as Tomcat.
-
-Jenkins 2.427 and earlier, LTS 2.414.2 and earlier bundles versions of
-Jetty affected by the security vulnerabilities CVE-2023-36478 and
-CVE-2023-44487. These vulnerabilities allow unauthenticated attackers to
-cause a denial of service.
-
-NOTE: This only affects instances that enable HTTP/2, typically using the
-`--http2Port` argument to `java -jar jenkins.war` or corresponding options
-in service configuration files. It is disabled by default in all native
-installers and the Docker images provided by the Jenkins project.
-
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
