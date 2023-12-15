@@ -1,55 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/12/1
-Message-ID: <CAO15rPk6Uh6ZqZ=c8yjz0=53DqXQKF=fSXqDo9dLdMAy7-YS3g@mail.gmail.com>
-Date: Thu, 12 Jan 2023 16:12:30 +0200
-From: Tal Lossos <tallossos@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/4
+Message-ID: <a177ab3b-4b58-c2a5-bccc-f3d549bd09e0@apache.org>
+Date: Fri, 15 Dec 2023 10:59:40 +0000
+From: Huajie Wang <benjobs@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
+Subject: CVE-2023-30867: Apache StreamPark (incubating): Authenticated system users could trigger SQL injection vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Severity: low
 
-# Description
-A NULL Pointer Dereference bug in nvmet_setup_auth
-(drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
-Since the bug occurs in the authentication feature, it can be easily
-triggered by an unauthorized client in the pre-auth stage.
-Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
+Affected versions:
 
-# Vulnerability
-The vulnerability is caused by a missing goto statement after
-assigning ctrl->ctrl_key to NULL, thus causing a NULL Pointer
-Dereference afterward:
----
-ctrl->ctrl_key = nvme_auth_extract_key(host->dhchap_ctrl_secret + 10,
-    host->dhchap_ctrl_key_hash);
-if (IS_ERR(ctrl->ctrl_key)) {
-    ret = PTR_ERR(ctrl->ctrl_key);
-    ctrl->ctrl_key = NULL;   <--- Assigning NULL
-}
+- Apache StreamPark (incubating) 2.0.0 before 2.1.2
 
-pr_debug("%s: using ctrl hash %s key %*ph\n", func,
-    ctrl->ctrl_key->hash > 0 ?   <--- NULL pointer dereference
-    nvme_auth_hmac_name(ctrl->ctrl_key->hash) : "none",
-    (int)ctrl->ctrl_key->len, ctrl->ctrl_key->key);
----
+Description:
 
-# Exploitation
-If an invalid dhchap_ctrl_key (e.g., ‘DHHC-1:00:AAAA:’) is configured
-in the NVMe target under a host object, when a remote client tries to
-connect to the NVMe subsystem (e.g., NVMe-TCP), the NULL Pointer
-Dereference would be triggered thus causing a DoS on the target
-machine.
-Running ‘nvme connect’ from a client to the remote subsystem would
-cause a DoS on the remote target.
-To bypass the authentication feature, we can pass the allowed client’s
-NQN to the ‘nvme connect’ command, which can be obtained by network
-sniffing.
+In the Streampark platform, when users log in to the system and use certain features, some pages provide a name-based fuzzy search, such as job names, role names, etc. The sql syntax :select * from table where jobName like '%jobName%'. However, the jobName field may receive illegal parameters, leading to SQL injection. This could potentially result in information leakage.
 
-# Patch
-Bug report - https://lore.kernel.org/linux-nvme/20220823161255.GA21462@lst.de/T/#t
-Fix patch - https://lore.kernel.org/linux-nvme/20220831045908.GC18042@lst.de/T/#u
+Mitigation:
 
+Users are recommended to upgrade to version 2.1.2, which fixes the issue.
 
-Regards,
-Tal Lossos
+References:
+
+https://streampark.incubator.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-30867
+
