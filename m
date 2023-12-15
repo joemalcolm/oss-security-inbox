@@ -1,61 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/4
-Message-ID: <20230330204300.jYitb%steffen@sdaoden.eu>
-Date: Thu, 30 Mar 2023 22:43:00 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/3
+Message-ID: <a1e90a56-7cb7-9898-06e1-7a89d79a0435@apache.org>
+Date: Fri, 15 Dec 2023 05:49:54 +0000
+From: Albumen Kevin <albumenj@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: sox: patches for old vulnerabilities
+Subject: CVE-2023-46279: Apache Dubbo: Bypass deny serialize list check in Apache Dubbo 
 Content-Type: text/plain; charset=utf-8
 
-Steffen Nurpmeso wrote in
- <20230314201652.RlbWr%steffen@...oden.eu>:
- ...
- ||Helmut Grohne wrote in
- || <20230314110138.GA1192267@...divi.de>:
- |||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
- |||>  * CVE-2021-33844
- |||
- |||The original fix for this issue would cause a regression. After applying
- |||it, sox would be unable to decode WAV GSM files. This has been reported
- ...
+Severity: important
 
-Today i got a nice email from Nam Nguyen who pointed out that my
-last patch to this topic (also) introduced a bug.  So i downloaded
-libGSM and yes he was right.  So on top of them all a partial undo
-of the last is necessary; i will attach the full diff, too.
+Affected versions:
 
-Thank you Nam Nguyen!
-Ciao already here,
+- Apache Dubbo 3.1.5
 
-    wav_read_fmt(): fix previous! (Nam Nguyen (namn AT berkeley DOT edu))
----
- src/wav.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+Description:
 
-diff --git a/src/wav.c b/src/wav.c
-index 380796c0f0..b93ee37667 100644
---- a/src/wav.c
-+++ b/src/wav.c
-@@ -654,11 +654,7 @@ static int wav_read_fmt(sox_format_t *ft, uint32_t len)
-     if (err)
-         return SOX_EOF;
- 
--    if (wav->bitsPerSample == 0
--#ifdef HAVE_LIBGSM
--            && wav->formatTag != WAVE_FORMAT_GSM610
--#endif
--    ){
-+    if (wav->bitsPerSample == 0){
-         lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample is zero");
-         return SOX_EOF;
-     }
+Deserialization of Untrusted Data vulnerability in Apache Dubbo.This issue only affects Apache Dubbo 3.1.5.
 
+Users are recommended to upgrade to the latest version, which fixes the issue.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+References:
 
-View attachment "sox-git.patch" of type "text/x-diff" (8021 bytes)
+https://dubbo.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-46279
+
