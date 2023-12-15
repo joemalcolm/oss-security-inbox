@@ -1,26 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/10/2
-Message-ID: <ddecd987-beac-94f8-ad9d-bac236faa4dc@apache.org>
-Date: Mon, 10 Jul 2023 14:02:27 +0000
-From: Brahma Reddy Battula <brahma@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/9
+Message-ID: <20231215204820.fMhEka3U@steffen%sdaoden.eu>
+Date: Fri, 15 Dec 2023 21:48:20 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45855: Apache Ambari: Allows authenticated metrics consumers to perform RCE 
+Subject: Re: XDG_RUNTIME_DIR "misuse" as $TMPDIR (was: Re: budgie-extras: multiple predictable /tmp path issues in various applications)
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Hello Matthias.
 
-- Apache Ambari 2.7.0 through 2.7.6
+Matthias Gerstner wrote in
+ <ZXw5wvknxlxHfRkI@...co.suse.de>:
+ |On Thu, Dec 14, 2023 at 11:15:02PM +0100, Steffen Nurpmeso wrote:
+ |> All that makes me think whether XDG_RUNTIME_DIR is such a good
+ |> target for temporary files, generally speaking.
+ |
+ |in general I would also not recommend using it for temporary files. At
+ |least in this concrete case of the budgie-extras applications the files
+ |placed in there can be considered small enough for a desktop environment.
+ |
+ |I recommended using XDG_RUNTIME_DIR as a quick fix for these issues, but
+ |as I also tried to point out, I don't believe the way temporary files
+ |are used here is a good design.
+ |
+ |At least the immediate dangers for security should be addressed by these
+ |quick fixes applied, so sacrificing a bit of the cleanliness of the
+ |filesystem seems justified.
 
-Description:
+It was nothing against you personally, indeed.  But i have
+encountered the same advice fly by several times, and, by sheer
+accident, in a thread on openbsd-misc, cwm on wayland, just today.
+Ie that big composer problem i also have with Wayland was then
+addressed with a link to a "hikari" composer, which seems to be
+something "acceptible to me" in the Wayland future that we have to
+deal with (unfortunately), and in its README(.md that is) you read
 
-SpringEL injection in the metrics source in Apache Ambari version 2.7.0 to 2.7.6 allows a malicious authenticated user to execute arbitrary code remotely. Users are recommended to upgrade to 2.7.7.
+  This section describes how to use `/tmp` as your
+  `XDG_RUNTIME_DIR`. Some Wayland clients (e.g. native Wayland
+  `firefox`) require `posix_fallocate` to work in that
+  directory.[.]
 
-Credit:
+  Additionally set `XDG_RUNTIME_DIR` to `/tmp` in your
+  environment.
 
-rg <18993610179@....com> (finder)
+I see this contradicts my statement somewhat, but the link
+XDG_RUNTIME_DIR and "temporary directory" tends to settle in the
+back of minds, which is all my lengthy mail was about.
 
-References:
-
-https://ambari.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-45855
-
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
+|
+| Only in December: lightful Dubai COP28 Narendra Modi quote:
+|  A small part of humanity has ruthlessly exploited nature.
+|  But the entire humanity is bearing the cost of it,
+|  especially the inhabitants of the Global South.
+|  The selfishness of a few will lead the world into darkness,
+|  not just for themselves but for the entire world.
+|  [Christians might think of Revelation 11:18
+|    The nations were angry, and your wrath has come[.]
+|    [.]for destroying those who destroy the earth.
+|   But i find the above more kind, and much friendlier]
