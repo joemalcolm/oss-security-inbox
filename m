@@ -1,64 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/1
-Message-ID: <20230315094018.27d65aae@fabiankeil.de>
-Date: Wed, 15 Mar 2023 09:40:18 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/16/1
+Message-ID: <f757bf6c-8194-4bbe-bc5d-1bd5dd9d6280@apache.org>
+Date: Sat, 16 Dec 2023 16:01:55 +0000
+From: Mingyu Chen <morningman@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: TTY pushback vulnerabilities / TIOCSTI
+Subject: CVE-2023-41314: Apache Doris: Missing API authentication allowed DoS 
 Content-Type: text/plain; charset=utf-8
 
-Shawn Webb <shawn.webb@...denedbsd.org> wrote on 2023-03-14 at 16:57:25:
+Severity: important
 
-> On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno Böck wrote:
-> > Hi,
-> > 
-> > This blogpost highlights TTY Pushback vulnerabilities enabled via the
-> > TIOCSTI kernel functionality available in the Linux kernel:
-> > https://www.errno.fr/TTYPushback.html
-> > 
-> > This has been discussed here previously:
-> > https://www.openwall.com/lists/oss-security/2017/06/03/9
-> > 
-> > Though I think there are some noteworthy updates. In the 2017 post
-> > solar designer mentioned that the Linux kernel developers have multiple
-> > times rejected changes in the kernel. However this has now changed:
-> > Starting with Kernel 6.2 it is possible to disable TIOCSTI
-> > (unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
-> > applications practically use TIOCSTI.
-> > 
-> > This seems to be the only real mitigation for this issue. It appears
-> > su has a parameter, and in sudo one can configure the creation of a new
-> > pty in the sudoers file. I don't consider these as satisfying fixes, as
-> > they are optinal, and thus rely on the expectation that users are aware
-> > of this risk and manually use these mitigations. That does not seem
-> > realistic to me.
-> > 
-> > This also affects such a large number of tools, not just
-> > su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
-> > affected by this by default.
-> > 
-> > Thus I strongly recommend that people disable this in the kernel.
-> > 
-> > [1] https://github.com/containers/bubblewrap/issues/555
-> 
-> With commit c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5[0], I've added a
-> toggle in HardenedBSD to disable TIOCSTI. The toggle is set to
-> prohibit TIOCSTI by default. Now attempts to use TIOCSTI will be met
-> with EPERM.
+Affected versions:
 
-In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't
-noticed any problems.
+- Apache Doris 1.2.0 through 2.0.3
 
-According to the commit message "TIOCSTI is still used in tcsh,
-but as tcsh isn't compiled on ElectroBSD we don't care".
+Description:
 
-> I've verified the toggle in a real-world scenario with the doas issue
-> PoC found at [1].
+The api /api/snapshot and /api/get_log_file would allow unauthenticated access.
+It could allow a DoS attack or get arbitrary files from FE node.
+Please upgrade to 2.0.3 to fix these issues.
 
-I should probably do the same.
+References:
 
-Fabian
+https://doris.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-41314
 
-[0]: <https://www.fabiankeil.de/sourcecode/electrobsd/ElectroBSD-20220822-d9391cfeef5b/0157-sys-kern-Follow-OpenBSD-s-lead-and-remove-TIOCSTI-sup.diff>
-
-Content of type "application/pgp-signature" skipped
