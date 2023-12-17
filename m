@@ -1,34 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/6
-Message-ID: <933f5586e2b664ab5fe6a7ce40c741bb92e2e412.camel@markhack.com>
-Date: Mon, 30 Jan 2023 13:58:34 -0600
-From: Mark Hack <markhack@...khack.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: Data operand dependent timing on Intel and Arm CPUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/17/2
+Message-ID: <20231217205642.GA7164@openwall.com>
+Date: Sun, 17 Dec 2023 21:56:42 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Jonathan Wright <jonathan@...alinux.org>, Andrew Lukoshko <alukoshko@...alinux.org>, benny Vasquez <benny@...alinux.org>, Igor Seletskiy <iseletsk@...alinux.org>, Darya Malyavkina <dmalyavkina@...udlinux.com>, Jack Aboutboul <jack@...alinux.org>
+Subject: Re: AlmaLinux Distros List Application
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-The blinding I have seen was for RSA 
-https://www.openssl.org/docs/man1.1.1/man3/RSA_blinding_on.html and at
-least for ECDSA signatures
-
-For symmetric keys such as AES which are mostly table lookup and XOR
-based, I have not seen any blinding.
-
-
-
-Regards
-
-Mark Hack
-
-On Mon, 2023-01-30 at 14:13 -0500, Demi Marie Obenour wrote:
-> On Mon, Jan 30, 2023 at 10:43:16AM -0600, Mark Hack wrote:
-> > This is a concern, but if you look into the crypto implementations,
-> > data blinding is applied to mitigate both instruction and power
-> > side
-> > channel attacks
+On Tue, Dec 12, 2023 at 02:35:35PM -0600, Jonathan Wright wrote:
+> I'm submitting this application on behalf of the AlmaLinux OS Foundation.
 > 
-> Can you provide examples?  I have never seen blinding used for
-> symmetric
-> cryptography outside of embedded systems.
+> Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would be
+> joining if approved.
 
+This looks reasonable to me.
+
+>       Historically we have been following Red Hat releases within 1-2 days,
+>       and since our shift in June away from following Red Hat we have been able
+>       to release some security updates ahead of Red Hat (Iperf3 patch and AMD
+>       microcode/kernel patches specifically). We would not be beholden to CentOS
+>       Stream updates for our patch releases.
+
+This isn't a lot yet.  I suppose linux-distros membership would enable
+you to do ahead of Red Hat updates more often?
+
+>       Immediately we can begin to help reporters ensure their reports are
+>       following the requirements and are confirmed/replied to. As we
+> advance our
+>       understanding of how things operate, and the need arises, we can
+> expand our
+>       work into contributing more deeply.
+
+These tasks are already accepted by some distros.  We can indeed
+re-assign, so that those older members handle more complex tasks
+instead, or maybe you'd volunteer for some of the tasks from the
+"Administrative tasks mostly unrelated to (linux-)distros lists (but
+relevant to the wider community)" category?  This category is
+essentially about expanding and improving the public oss-security
+content and its visibility.
+
+>       Darya Malyavkina from CloudLinux will vouch for us.
+
+For others reading this - Darya has been on linux-distros for CloudLinux
+for a long while, so this satisfies the requirement as written.
+
+Alexander
