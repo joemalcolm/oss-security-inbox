@@ -1,31 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/04/1
-Message-ID: <4af9d0e4-e025-9422-b141-48618eb311a9@apache.org>
-Date: Fri, 04 Aug 2023 15:24:38 +0000
-From: Jarek Potiuk <potiuk@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-39508: Apache Airflow: Airflow "Run task" feature allows execution with unnecessary priviledges 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/18/1
+Message-ID: <8eba63df-b543-10af-8f29-4c4c8ab3a5dc@igalia.com>
+Date: Mon, 18 Dec 2023 01:04:46 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0012
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0012
+------------------------------------------------------------------------
 
-Affected versions:
+Date reported           : December 18, 2023
+Advisory ID             : WSA-2023-0012
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0012.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0012.html
+CVE identifiers         : CVE-2023-42883, CVE-2023-42890.
 
-- Apache Airflow before 2.6.0
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Description:
+CVE-2023-42883
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.4.
+    Credit to Zoom Offensive Security Team.
+    Impact: Processing a SVG image may lead to a denial-of-service.
+    Description: The issue was addressed with improved memory handling.
+    WebKit Bugzilla: 263349
 
-Execution with Unnecessary Privileges, : Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Software Foundation Apache Airflow.The "Run Task" feature enables authenticated user to bypass some of the restrictions put in place. It allows to execute code in the webserver context as well as allows to bypas limitation of access the user has to certain DAGs. The "Run Task" feature is considered dangerous and it has been removed entirely in Airflow 2.6.0
+CVE-2023-42890
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
+    Credit to Pwn2car.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved memory handling.
+    WebKit Bugzilla: 259830
 
-This issue affects Apache Airflow: before 2.6.0.
 
-Credit:
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-balis0ng (finder)
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-References:
-
-https://github.com/apache/airflow/pull/29706
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-39508
-
+The WebKitGTK and WPE WebKit team,
+December 18, 2023
