@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2090" "Friday" "29" "July" "2016" "16:43:37" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160729204337.9530672E027@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: paps: heap overflow when processing crafted file" "^Cc:" nil nil "7" "2016072920:43:37" "[oss-security] Re: paps: heap overflow when processing crafted file" (number mark "        cve-assign@m Jul 29   46/2090  " thread-indent "\"[oss-security] Re: paps: heap overflow when processing crafted file\"\n") "<5345031.MCQBvQ03yp@willoughby>" ("<5345031.MCQBvQ03yp@willoughby>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11273 invoked by uid 550); 29 Jul 2016 20:43:50 -0000
+Received: (qmail 16274 invoked by uid 550); 18 Dec 2023 00:04:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10222 invoked from network); 29 Jul 2016 20:43:49 -0000
-In-Reply-To: <5345031.MCQBvQ03yp@willoughby>
-Message-Id: <20160729204337.9530672E027@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 29 Jul 2016 16:43:37 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: paps: heap overflow when processing crafted file
-To: ago@gentoo.org
+Received: (qmail 16244 invoked from network); 18 Dec 2023 00:04:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:Subject:Cc:To:From:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=+BxCCi61UUEkT+cHwLvNWnlvvclCHhcyhHGE1YUZlQo=; b=rUf4zB+IW/JfS/G1Dv6Ubn/Uka
+	ByxH7K+IQ63Cz39hFxbYVoPm1BCg0ZdDpUSHOfgEdnmCKbW6pvWIIYqN8FlLuffR8TbvVRWbjRqif
+	17bAp4vlzThATOAqqw048FVjAg9t/APd90g+S2/BtIewNhYbE1/CEb4mepuFGMhnkiC5lPf9l5jQe
+	U3Uq2DUkYOhU+HPa1IUBO8E7rqv1QQkJbg/aReMsRVnbdegwa0dyhc/umUO/HQIp7jLs56gjLuuMB
+	lMdv+XVAkM3nf2fk5KqFg5jBkvptUM0vhzE94cJaKkUWTsVWam3CcLz1HSbuyeycXbgrsbqWD5Qac
+	yA0B/MNw==;
+Message-ID: <8eba63df-b543-10af-8f29-4c4c8ab3a5dc@igalia.com>
+Date: Mon, 18 Dec 2023 01:04:46 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-GB
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0012
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0012
+------------------------------------------------------------------------
 
-> The bug comes from the fuzzer, which did not pass an empty file.
-> Later, I discovered that an empty file has the same behaviour of 
-> the crafted.
-> 
-> In other words:
-> - The same crash happen for the empty and crafted file.
-> - The patch covers both cases (when the file is empty and when 
-> contains random data).
+Date reported           : December 18, 2023
+Advisory ID             : WSA-2023-0012
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0012.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0012.html
+CVE identifiers         : CVE-2023-42883, CVE-2023-42890.
 
-Right, the file does not need to be empty (file length of zero), but
-inbuf->len needs to end up being zero, which means that the g_iconv
-calls produce zero output bytes for every line of the input file.
-After the buffer under-read, if there isn't a crash, the return value
-of read_file can be the empty string, which wasn't intended to be a
-possible return value. However, we haven't seen information indicating
-that this causes a security problem in later code. This is a
-command-line program, and the available information is that there is
-sometimes a non-exploitable crash when operating on an invalid file.
-For now, we are categorizing this as an inconvenience to the user, not
-a vulnerability: there is no CVE ID.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE-2023-42883
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.4.
+    Credit to Zoom Offensive Security Team.
+    Impact: Processing a SVG image may lead to a denial-of-service.
+    Description: The issue was addressed with improved memory handling.
+    WebKit Bugzilla: 263349
 
-iQIcBAEBCAAGBQJXm79CAAoJEHb/MwWLVhi2N+UP+wePxHygX5ysWdiPbuqKjS8h
-whEFNT7IOmFKBcZOEF1DGZs8Avwet2qbeFOvEU3HymEQEzyepLCn4vP5iPQHzqiT
-ZFHD/cH/mKdr4IBwvFY6ipItanLSPd7kwXriFxwGJwwOzTWqT/2JwOxt4zUDL1xK
-lFjRI2tpqPMkDFRRwogaculT/vx3c72K5tj0CgJHyXAkz+xJL4ZfKVTVnEyybJsf
-1ihnu2uXQUUy9cwMb15X/a/3Zp9SwaSPmOq7U12aZMxYE1HdirFYhbfIbhQvhpvi
-DZyLvu/h6T0z465Yguq+ru7Q9eArWEu3JDjr4H2uIjWnOIlcc5tifidnz+nYWS3S
-8yfZnvLUf3gziwKYBPJTz+SyyEK0fba3zq+aifNpjU82jHsFSQ5jG+099QDA+ABM
-GEoM++3Avi6wCwPafSi/zJgh/HV0gxsQbqw4dJ2V3PdXcU9Gd5kqEiwEabXecX7q
-hbNx+Xkagip07CBLpdEdYSkaw6jbqXWjjzeYcy66GxVv1bI93VLDLfmC7vsKUY17
-stgbEQEt89J+bWcVC1HpBp1zWNT42bn06JhAeYU4iAhYcuvWitUCo6qJwunuqknr
-17NZqaTaG0AsWXnQIGLHpCQNlAmfXKHBph097Lj/SUxE9NpxECTY3ewQT+JKdylG
-Qk0Mx1+5uqMRiN8yKRhP
-=979d
------END PGP SIGNATURE-----
+CVE-2023-42890
+    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
+    Credit to Pwn2car.
+    Impact: Processing web content may lead to arbitrary code execution.
+    Description: The issue was addressed with improved memory handling.
+    WebKit Bugzilla: 259830
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+December 18, 2023
