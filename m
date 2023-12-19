@@ -1,50 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/13
-Message-ID: <7039466aa03ec8a90e1ce3a2ae983421.a13627b7@limousine.hussar>
-Date: Fri, 20 Oct 2023 01:44:10 +0300
-From: Turistu <turistu@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/20/1
+Message-ID: <CAKe4=-KBsSnPfCDKApdOq9uksfv=AenjWtKPZorRcKo3F+_SEA@mail.gmail.com>
+Date: Tue, 19 Dec 2023 16:49:16 -0600
+From: Jonathan Wright <jonathan@...alinux.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Andrew Lukoshko <alukoshko@...alinux.org>,  benny Vasquez <benny@...alinux.org>, Igor Seletskiy <iseletsk@...alinux.org>,  Darya Malyavkina <dmalyavkina@...udlinux.com>, Jack Aboutboul <jack@...alinux.org>
+Subject: Re: AlmaLinux Distros List Application
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 19, 2023 at 04:53:55PM +0000, Jeremy Stanley wrote:
-> On 2023-10-19 17:04:10 +0100 (+0100), Sam Bull wrote:
-> [...]
-> > Also a problem with shell security. If you paste something with
+On Sun, Dec 17, 2023 at 2:56 PM Solar Designer <solar@...nwall.com> wrote:
 
-That's not a problem with "shell security". Paste is just a form of
-**trusted user input** (just as keyboard input). The bracketed-paste
-and other features are for convenience, they're not supposed to
-help against a rogue X11 app (who could just as well simulate keyboard
-input with the XTest X11 extension instead of complicating itself
-with setting up selections that the user has to paste).
+> Hi,
+>
+> On Tue, Dec 12, 2023 at 02:35:35PM -0600, Jonathan Wright wrote:
+> > I'm submitting this application on behalf of the AlmaLinux OS Foundation.
+> >
+> > Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would
+> be
+> > joining if approved.
+>
+> This looks reasonable to me.
+>
+> >       Historically we have been following Red Hat releases within 1-2
+> days,
+> >       and since our shift in June away from following Red Hat we have
+> been able
+> >       to release some security updates ahead of Red Hat (Iperf3 patch
+> and AMD
+> >       microcode/kernel patches specifically). We would not be beholden
+> to CentOS
+> >       Stream updates for our patch releases.
+>
+> This isn't a lot yet.  I suppose linux-distros membership would enable
+> you to do ahead of Red Hat updates more often?
+>
 
-> > line breaks into bash, it executes them. If you paste the same
-> > into fish, it doesn't (it'll display the multi-line input and
-> > expect you to hit the enter key to execute it as a command).
-> 
-> That observation may be outdated. At least my bash 5.2.15 on Debian
-> does not execute pasted newlines, it treats it as a multi-line
-> command and waits for an actual enter keypress
+It's not so much about competing with or doing things before RedHat as it
+is about taking care of our users.  Since June of this year we are no
+longer beholden to RedHat for patches.  Being on the distro list could mean
+getting patches out sooner but that's more or less a side effect, not
+necessarily the goal - though the goal IS getting patches to users as
+quickly as possible, especially those shared on the private list, for
+obvious reasons.
 
-Indeed, as already described in my report. Bracketed-paste is the default
-in bash on all recent systems.
+We didn't apply for the distros list before June as there was really no
+point since we were tied to being a clone of RH, but that has now changed
+since we are no longer just a clone, but a compatible downstream OS where
+we can (and have been) make our own changes.
 
-> (tested inside a few
-> different terminal emulators including vanilla xterm, so pretty sure
-> it's not being mitigated at that layer).
 
-It pretty much **is** mitigated at that layer. If xterm itself weren't
-filtering out the ESC (ascii 0x1b) character in the pasted data, then
-the bracketed-paste feature of bash or zsh could've been easily bypassed
-by inserting a "\x1b[201~" escape (= end of pasted data) in the payload.
-(As already mentioned in the report too).
+>
+> >       Immediately we can begin to help reporters ensure their reports are
+> >       following the requirements and are confirmed/replied to. As we
+> > advance our
+> >       understanding of how things operate, and the need arises, we can
+> > expand our
+> >       work into contributing more deeply.
+>
+> These tasks are already accepted by some distros.  We can indeed
+> re-assign, so that those older members handle more complex tasks
+> instead, or maybe you'd volunteer for some of the tasks from the
+> "Administrative tasks mostly unrelated to (linux-)distros lists (but
+> relevant to the wider community)" category?  This category is
+> essentially about expanding and improving the public oss-security
+> content and its visibility.
+>
 
-Anyways, the examples were meant just as ... examples, as like for
-illustration. I've just chosen them because they were the simplest
-and cutest.
+We very likely would be happy to help in this regard, especially if much of
+it can be done without necessarily being on the private side of the list.
+The folks on our side that would be great at this type of work are not the
+same as those of us (myself and Andrew) that would be on the embargoed list.
 
-But there are a thousand more ways for an attacker to leverage that hole
-in Firefox. Many programs (including Firefox itself!) could be easily
-crashed by garbage data from the clipboard. Attacker-controlled data
-could find its way into shell scripts via `var=$(xsel)`, etc.
+
+>
+> >       Darya Malyavkina from CloudLinux will vouch for us.
+>
+> For others reading this - Darya has been on linux-distros for CloudLinux
+> for a long while, so this satisfies the requirement as written.
+>
+> Alexander
+>
+
+
+-- 
+Jonathan Wright
+AlmaLinux Foundation
+Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
+
