@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1417" "Sunday" "1" "May" "2016" "07:43:04" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160501054304.GA31390@eldamar.local>" "51" "[oss-security] CVE Request: libpam-sshauth: local root privilege escalation" nil nil nil "5" "2016050105:43:04" "[oss-security] CVE Request: libpam-sshauth: local root privilege escalation" (number mark "U       carnil@debia May  1   51/1417  " thread-indent "\"[oss-security] CVE Request: libpam-sshauth: local root privilege escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32041 invoked by uid 550); 1 May 2016 05:43:19 -0000
+Received: (qmail 17628 invoked by uid 550); 20 Dec 2023 07:41:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +7,134 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32019 invoked from network); 1 May 2016 05:43:18 -0000
+Received: (qmail 5991 invoked from network); 19 Dec 2023 22:49:06 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=F37JQrixMWZ8bcm9DacCMv/sBDrdLh2LdRl6+UFczJU=;
-        b=JBSN4Kn9AUqLMVXaJdSv1Obo3HOEZPMwH8bJyorpgXXtfvIgyh2NxNB2fiP6FyKxV/
-         tqkbA7oI9+LE7DYSiaObejODmA5dFRqiabNXTg+yKgr/0Dh8wxFh4Zm3AhEXwqMR8i3M
-         md4S8lfXJVRB/HrmlUfRQYaRY66D9IxOqDwdHFGEARGStRdM04C9A86B9z+d+83IN1E5
-         O1UknMuBJdKx0F2uwuEIw0zKpOXFFgrQNmYJwBMQIYvkJ5UQdwtH6uXBNLn98xqj9PAw
-         gB+Gi9Nd4+dekKjaG8CO2BhdG4CQpT9xnmxbX03cNl8X7JrWLQb5puxeRbtYdDokr98J
-         WTXg==
+        d=almalinux.org; s=google; t=1703026173; x=1703630973; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BAF0K1jd/h71jvJHtkx1PzEM8WRYu+62bDSVG2dloDQ=;
+        b=XytDLmfu0NbKk+1LQeqXiZQp3UXo81sS7n0pk4IeWvKmVubbnOJ7jwF5IDgwZgUA3F
+         CJ806EjdfKo74AIOzDV+RR0YkKf8kpWetXYhu0L+yqJZF1D2zX7DQHtjo8ChXB6xrYdR
+         iJXzgAFb3rkNSphR1+Hqyu3X6G3/PI8+YiFI33LobpXBTSDeqskpPD+DePfNjYd8G0Pp
+         HDadFBUBH0mR8C/B/hN7wpiyCgnSPYgdT/ufSXmo3z73GocYJFpAeQR+hOipyoNpBtWJ
+         EfH+A+BQGgHKzgNcWtc7vDd89hNqXyPKW0aZfHNi8DdF0+OvYBdYkv4XPpwCjfNM+fi+
+         YH2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=F37JQrixMWZ8bcm9DacCMv/sBDrdLh2LdRl6+UFczJU=;
-        b=Qjv+1TMUh30vtgy1Rl9d6+VdIIbM3v6MJFqRKli76wOIM1PI3ZMs2MROIGWa9EyFRw
-         qh9jgdXBi1gQyv5jZ6aPMWMe66zy+fphQfnlyzssl26HXXdLt3l45cc0Vh9PzkRCH1Jf
-         mJY5XZebKjKu/h/CTD84+roo96TPCYT5Wg5RsgwzNnohQwv/5zb7g1oK2FKabb3PBauJ
-         x84zVM1eh5fnxF4zQiQs07V7UuAHbNV4nLbbO8Ih3NWF6F8mpY5vyt8sDjNdMcn4BGzK
-         bR1nC4cxzUrKEfBFeoBuTg2LNlgUHwgUVkM9CbpxYvHpL76jplFIHoc+ORRKI5sFDFFC
-         tS4A==
-X-Gm-Message-State: AOPr4FWM9/mdDQ3h82sXEBiXGXwgrILvKEWLn3r1O1URMIfjMJQWItWI/fgu4V/Efq7bKg==
-X-Received: by 10.194.58.114 with SMTP id p18mr28521583wjq.84.1462081387268;
-        Sat, 30 Apr 2016 22:43:07 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 1 May 2016 07:43:04 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160501054304.GA31390@eldamar.local>
+        d=1e100.net; s=20230601; t=1703026173; x=1703630973;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BAF0K1jd/h71jvJHtkx1PzEM8WRYu+62bDSVG2dloDQ=;
+        b=N9Mv+UIZbcf1rSDhA1JgjeogBe2oMtTmMTyH/YQ9ezEQkqv26ye7dVrY/UfIfAdshM
+         0IG+UJ8XVUzAN1MFgXDLd/6NjyoRt/X3Iq8k5fVVUWp+xpMV8MZ1X87lOz1l6aexzEA8
+         5IPB6ZrLqCYqpz5pXbcU89S1untAPQMEh5P15cHZVBqnn6ayBbgLbXSc24yR/A+h4ffA
+         nVRnPXLIzd7/0H/YGOzzwfOhkIKiV2jvo+au4MfiS4pIdiFKx/26s2TPmJeRF/OxJcdD
+         svpo5J6YShDK2k+j8Oms49ZCIScSUtWZSoFx5WuCAHsF1NxlfZRtkmF7rZKVh1NV5ktj
+         b9OA==
+X-Gm-Message-State: AOJu0Yx3ZS5kzjzfJAj19lqmtYBZtWj3mQXpuHbzVmh83q61YQGFn1MB
+	3BDAJ8DRsAoHAY6GHHYIlnwys5RwLXeQBnAgxYs7qA==
+X-Google-Smtp-Source: AGHT+IGedEtkB+ALal1ut1Ung2pM6ru0486pRmXpLu49a2uLVau0xErocPBlqk5kiLqlI/4xM5lLOdcb1V68mQOfs24=
+X-Received: by 2002:a05:651c:168c:b0:2cc:5f1f:b7d8 with SMTP id
+ bd12-20020a05651c168c00b002cc5f1fb7d8mr2603588ljb.31.1703026173127; Tue, 19
+ Dec 2023 14:49:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="PNTmBPCT7hxwcZjr"
-Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Subject: [oss-security] CVE Request: libpam-sshauth: local root privilege escalation
+References: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com>
+ <20231217205642.GA7164@openwall.com>
+In-Reply-To: <20231217205642.GA7164@openwall.com>
+From: Jonathan Wright <jonathan@almalinux.org>
+Date: Tue, 19 Dec 2023 16:49:16 -0600
+Message-ID: <CAKe4=-KBsSnPfCDKApdOq9uksfv=AenjWtKPZorRcKo3F+_SEA@mail.gmail.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com, Andrew Lukoshko <alukoshko@almalinux.org>, 
+	benny Vasquez <benny@almalinux.org>, Igor Seletskiy <iseletsk@almalinux.org>, 
+	Darya Malyavkina <dmalyavkina@cloudlinux.com>, Jack Aboutboul <jack@almalinux.org>
+Content-Type: multipart/alternative; boundary="00000000000017c62d060ce4aea0"
+Subject: Re: [oss-security] AlmaLinux Distros List Application
 
---PNTmBPCT7hxwcZjr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--00000000000017c62d060ce4aea0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi
+On Sun, Dec 17, 2023 at 2:56=E2=80=AFPM Solar Designer <solar@openwall.com>=
+ wrote:
 
-Due to a programming error, libpam-sshauth returned PAM_SUCCESS where
-it should fail with PAM_AUTH_ERR. This was fixed in Debian in the last
-upload to unstable with the attached patch.
+> Hi,
+>
+> On Tue, Dec 12, 2023 at 02:35:35PM -0600, Jonathan Wright wrote:
+> > I'm submitting this application on behalf of the AlmaLinux OS Foundatio=
+n.
+> >
+> > Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would
+> be
+> > joining if approved.
+>
+> This looks reasonable to me.
+>
+> >       Historically we have been following Red Hat releases within 1-2
+> days,
+> >       and since our shift in June away from following Red Hat we have
+> been able
+> >       to release some security updates ahead of Red Hat (Iperf3 patch
+> and AMD
+> >       microcode/kernel patches specifically). We would not be beholden
+> to CentOS
+> >       Stream updates for our patch releases.
+>
+> This isn't a lot yet.  I suppose linux-distros membership would enable
+> you to do ahead of Red Hat updates more often?
+>
 
-Introduced with:
-https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/93/src/pam_sshauth.c
-Fixed by:
-https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/114
+It's not so much about competing with or doing things before RedHat as it
+is about taking care of our users.  Since June of this year we are no
+longer beholden to RedHat for patches.  Being on the distro list could mean
+getting patches out sooner but that's more or less a side effect, not
+necessarily the goal - though the goal IS getting patches to users as
+quickly as possible, especially those shared on the private list, for
+obvious reasons.
 
-Could you assign a CVE for this issue?
+We didn't apply for the distros list before June as there was really no
+point since we were tied to being a clone of RH, but that has now changed
+since we are no longer just a clone, but a compatible downstream OS where
+we can (and have been) make our own changes.
 
-Regards,
-Salvatore
 
---PNTmBPCT7hxwcZjr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=return-pam-auth-err-with-system-user
+>
+> >       Immediately we can begin to help reporters ensure their reports a=
+re
+> >       following the requirements and are confirmed/replied to. As we
+> > advance our
+> >       understanding of how things operate, and the need arises, we can
+> > expand our
+> >       work into contributing more deeply.
+>
+> These tasks are already accepted by some distros.  We can indeed
+> re-assign, so that those older members handle more complex tasks
+> instead, or maybe you'd volunteer for some of the tasks from the
+> "Administrative tasks mostly unrelated to (linux-)distros lists (but
+> relevant to the wider community)" category?  This category is
+> essentially about expanding and improving the public oss-security
+> content and its visibility.
+>
 
-Return PAM_AUTH_ERR when a system user. This prevents the pam module
-from returning success without asking for authentication credentials!
+We very likely would be happy to help in this regard, especially if much of
+it can be done without necessarily being on the private side of the list.
+The folks on our side that would be great at this type of work are not the
+same as those of us (myself and Andrew) that would be on the embargoed list.
 
-diff --git a/src/pam_sshauth.c b/src/pam_sshauth.c
-index 939ea79..879c9e5 100644
---- a/src/pam_sshauth.c
-+++ b/src/pam_sshauth.c
-@@ -101,7 +100,7 @@ pam_sm_authenticate (pam_handle_t * pamh, int flags, int argc,
-     }
- 
-   /*
--   * Is it a system user?  Succeed.
-+   * Is it a system user?  Fail.
-    */
- 
-   pam_debug (pamh, "username %s", username);
-@@ -110,7 +109,7 @@ pam_sm_authenticate (pam_handle_t * pamh, int flags, int argc,
-     {
-       if (pwent->pw_uid < UID_MIN)
-         {
--          return PAM_SUCCESS;
-+          return PAM_AUTH_ERR;
-         }
-     }
- 
 
---PNTmBPCT7hxwcZjr--
+>
+> >       Darya Malyavkina from CloudLinux will vouch for us.
+>
+> For others reading this - Darya has been on linux-distros for CloudLinux
+> for a long while, so this satisfies the requirement as written.
+>
+> Alexander
+>
+
+
+--=20
+Jonathan Wright
+AlmaLinux Foundation
+Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
+
+--00000000000017c62d060ce4aea0--
