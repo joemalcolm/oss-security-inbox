@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/5
-Message-ID: <5930e90b-0d47-b061-5ed5-aa3662ef7dea@apache.org>
-Date: Thu, 19 Oct 2023 09:40:49 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/19/2
+Message-ID: <8ebe75bf-ab27-3937-4290-2415abcfadf0@apache.org>
+Date: Tue, 19 Dec 2023 09:31:15 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-43622: Apache HTTP Server: DoS in HTTP/2 with initial windows size 0 
+Subject: CVE-2023-49736: Apache Superset: SQL Injection on where_in JINJA macro 
 Content-Type: text/plain; charset=utf-8
-
-Severity: low
 
 Affected versions:
 
-- Apache HTTP Server 2.4.55 through 2.4.57
+- Apache Superset before 2.1.2
+- Apache Superset 3.0.0 before 3.0.2
 
 Description:
 
-An attacker, opening a HTTP/2 connection with an initial window size of 0, was able to block handling of that connection indefinitely in Apache HTTP Server. This could be used to exhaust worker resources in the server, similar to the well known "slow loris" attack pattern.
-This has been fixed in version 2.4.58, so that such connection are terminated properly after the configured connection timeout.
+A where_in JINJA macro allows users to specify a quote, which combined with a carefully crafted statement would allow for SQL injection in Apache Superset.This issue affects Apache Superset: before 2.1.2, from 3.0.0 before 3.0.2.
 
-This issue affects Apache HTTP Server: from 2.4.55 through 2.4.57.
-
-Users are recommended to upgrade to version 2.4.58, which fixes the issue.
+Users are recommended to upgrade to version 3.0.2, which fixes the issue.
 
 Credit:
 
-Prof. Sven Dietrich (City University of New York) (finder)
-Isa Jafarov (City University of New York) (finder)
-Prof. Heejo Lee (Korea University) (finder)
-Choongin Lee (Korea University) (finder)
+Jack Prince-Fulls ( jf@...yan.com ) (finder)
 
 References:
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-43622
-
-Timeline:
-
-2023-09-15: reported
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-49736
 
