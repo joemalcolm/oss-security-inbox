@@ -1,64 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/03/3
-Message-ID: <Y91yP6mYIZ+UXmgf@alf.mars>
-Date: Fri, 3 Feb 2023 21:44:47 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/19/5
+Message-ID: <6c354ad9-7d17-4b37-8e54-73cc4088f2b0@oracle.com>
+Date: Tue, 19 Dec 2023 13:31:03 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: sox: patches for old vulnerabilities
+Subject: Re: CVE-2023-48795: Prefix Truncation Attacks in SSH Specification (Terrapin Attack)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/18/23 08:08, Fabian Bäumer wrote:
+> ### Mitigations
+> 
+> To mitigate this protocol vulnerability, OpenSSH suggested a so-called "strict 
+> kex" which alters the SSH handshake to ensure a Man-in-the-Middle attacker 
+> cannot introduce unauthenticated messages as well as convey sequence number 
+> manipulation across handshakes. Support for strict key exchange has been added 
+> to a variety of SSH implementations, including OpenSSH itself, PuTTY, libssh, 
+> and more.
+> 
+> **Warning: To take effect, both the client and server must support this 
+> countermeasure.**
 
-I am working on fixing known vulnerabilities in sox and since upstream
-seems mostly dead (no commits in more than a year, no replies to bug
-reports), I am posting my results here. My work on sox is compensated by
-Freexian SARL.
+Open source projects I see have implemented this already are:
 
-I located two distinct memory leaks.
+- AsyncSSH 2.14.2:
+   https://asyncssh.readthedocs.io/en/latest/changes.html#release-2-14-2-18-dec-2023
 
-The fix for CVE-2017-11358 introduced a regression. Reading any hcom
-file would result in an error. This made the test suite fail, but since
-nobody seems to run the test suite, this ended up being shipped in e.g.
-multiple Debian releases.
+- Dropbear git:
+   https://github.com/mkj/dropbear/commit/6e43be5c7b99dbee49dc72b6f989f29fdd7e9356
 
-On 64bit big endian systems, a 64bit integer is incorrectly truncated to
-the upper 32bits. This subsequently causes an assertion failure or a
-stack overflow in a -DNDEBUG build. This issue also breaks the test
-suite. I do not think that this is exploitable and do not intend to
-request a CVE.
+- Erlang ssh 5.1.1:
+   https://www.erlang.org/doc/apps/ssh/notes
 
-I'm attaching patches for these as well as patches for the following
-vulnerabilities:
- * CVE-2021-3643 and CVE-2021-23210
- * CVE-2021-23159 and CVE-2021-23172
- * CVE-2021-33844
- * CVE-2021-40426
- * CVE-2022-31650
- * CVE-2022-31651
+- golang.org/x/crypto 0.17.0:
+   https://groups.google.com/g/golang-announce/c/qA3XtxvMUyg
 
-I welcome reviews and propose adding these patches to distributions that
-ship sox. I will upload these patches to Debian.
+- libssh 0.10.6 and 0.9.8:
+   https://www.libssh.org/2023/12/18/libssh-0-10-6-and-libssh-0-9-8-security-releases/
 
-Please Cc me in replies.
+- libssh2 git:
+   https://github.com/libssh2/libssh2/issues/1290
+   https://github.com/libssh2/libssh2/pull/1291
 
-Helmut
+- OpenSSH 9.6:
+   https://www.openssh.com/txt/release-9.6
 
-View attachment "fix-resource-leak-comments.patch" of type "text/x-diff" (314 bytes)
+- Paramiko 3.4.0:
+   https://www.paramiko.org/changelog.html#3.4.0
 
-View attachment "fix-resource-leak-hcom.patch" of type "text/x-diff" (1445 bytes)
+- PuTTY 0.80:
+   https://lists.tartarus.org/pipermail/putty-announce/2023/000037.html
 
-View attachment "fix-regression-in-CVE-2017-11358.patch" of type "text/x-diff" (1833 bytes)
+- russh 0.40.2:
+   https://github.com/warp-tech/russh/releases/tag/v0.40.2
 
-View attachment "fix-hcom-big-endian.patch" of type "text/x-diff" (1023 bytes)
+- SFTPGo 2.5.6:
+   https://github.com/drakkan/sftpgo/releases/tag/v2.5.6
 
-View attachment "CVE-2021-23159.patch" of type "text/x-diff" (737 bytes)
+- ssh2 [node.js/npm] 1.15.0:
+   https://github.com/mscdex/ssh2/commits/v1.15.0
 
-View attachment "CVE-2021-33844.patch" of type "text/x-diff" (1102 bytes)
+- Tera Term 5.1:
+   https://github.com/TeraTermProject/teraterm/releases/tag/v5.1
 
-View attachment "CVE-2021-3643.patch" of type "text/x-diff" (652 bytes)
+- Thrussh 0.35.1:
+   https://pijul.org/posts/2023-12-18-thrussh-cve/
 
-View attachment "CVE-2021-40426.patch" of type "text/x-diff" (822 bytes)
+There's also some open bugs against these open source projects that are not yet handled:
 
-View attachment "CVE-2022-31650.patch" of type "text/x-diff" (1642 bytes)
+- Apache Mina:
+   https://github.com/apache/mina-sshd/issues/445
 
-View attachment "CVE-2022-31651.patch" of type "text/x-diff" (859 bytes)
+- ProFTPD (mod_sftp):
+   https://github.com/proftpd/proftpd/issues/1760
+
+- SSHJ:
+   https://github.com/hierynomus/sshj/issues/916
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+
