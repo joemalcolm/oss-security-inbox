@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/12/2
-Message-ID: <03c4e506-c64e-c997-2607-a8502a6d097e@apache.org>
-Date: Mon, 12 Jun 2023 14:26:41 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/19/3
+Message-ID: <03fcd35e-e2f6-820a-6f8c-0a32c689243a@apache.org>
+Date: Tue, 19 Dec 2023 09:44:03 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34212: Apache NiFi: Potential Deserialization of Untrusted Data with JNDI in JMS Components 
+Subject: CVE-2023-49734: Apache Superset: Privilege Escalation Vulnerability 
 Content-Type: text/plain; charset=utf-8
-
-Severity: important
 
 Affected versions:
 
-- Apache NiFi 1.8.0 through 1.21.0
+- Apache Superset before 2.1.2
+- Apache Superset 3.0.0 before 3.0.2
 
 Description:
 
-The JndiJmsConnectionFactoryProvider Controller Service, along with the ConsumeJMS and PublishJMS Processors, in Apache NiFi 1.8.0 through 1.21.0 allow an authenticated and authorized user to configure URL and library properties that enable deserialization of untrusted data from a remote location.
+An authenticated Gamma user has the ability to create a dashboard and add charts to it, this user would automatically become one of the owners of the charts allowing him to incorrectly have write permissions to these charts.This issue affects Apache Superset: before 2.1.2, from 3.0.0 before 3.0.2.
 
-The resolution validates the JNDI URL and restricts locations to a set of allowed schemes.
-
-This issue is being tracked as NIFI-11614 
+Users are recommended to upgrade to version 3.0.2 or 2.1.3, which fixes the issue.
 
 Credit:
 
-Veraxy00 of Qianxin TI Center (finder)
-Matei "Mal" Badanoiu (reporter)
+Jordan Velich (finder)
 
 References:
 
-https://nifi.apache.org/security.html#CVE-2023-34212
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-34212
-https://issues.apache.org/jira/browse/NIFI-11614
-
-Timeline:
-
-2023-05-28: reported
-2023-05-29: confirmed
-2023-06-01: resolved
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-49734
 
