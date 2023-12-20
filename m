@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/2
-Message-ID: <58d8d5e1-bb9d-afb1-7606-593067da71fb@apache.org>
-Date: Tue, 26 Dec 2023 10:17:25 +0000
-From: Nicolas Malin <nmalin@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/20/2
+Message-ID: <18193dfc-fdc7-566c-ff72-f2543331de43@apache.org>
+Date: Wed, 20 Dec 2023 03:25:55 +0000
+From: Michael Marshall <mmarshall@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-50968: Apache OFBiz: Arbitrary file properties reading and SSRF attack 
+Subject: CVE-2023-37544: Apache Pulsar WebSocket Proxy: Improper Authentication for WebSocket Proxy Endpoint Allows DoS 
 Content-Type: text/plain; charset=utf-8
-
-Severity: important
 
 Affected versions:
 
-- Apache OFBiz through 18.12.10
+- Apache Pulsar WebSocket Proxy 2.8.0 through 2.8.*
+- Apache Pulsar WebSocket Proxy 2.9.0 through 2.9.*
+- Apache Pulsar WebSocket Proxy 2.10.0 through 2.10.4
+- Apache Pulsar WebSocket Proxy 2.11.0 through 2.11.1
+- Apache Pulsar WebSocket Proxy 3.0.0
 
 Description:
 
-Arbitrary file properties reading vulnerability in Apache Software Foundation Apache OFBiz when user operates an uri call without authorizations.
+Improper Authentication vulnerability in Apache Pulsar WebSocket Proxy allows an attacker to connect to the /pingpong endpoint without authentication.
 
-The same uri can be operated to realize a SSRF attack also  without  authorizations.
+This issue affects Apache Pulsar WebSocket Proxy: from 2.8.0 through 2.8.*, from 2.9.0 through 2.9.*, from 2.10.0 through 2.10.4, from 2.11.0 through 2.11.1, 3.0.0.
 
-Users are recommended to upgrade to version 18.12.11, which fixes this issue.
+The known risks include a denial of service due to the WebSocket Proxy accepting any connections, and excessive data transfer due to misuse of the WebSocket ping/pong feature.
+
+2.10 Pulsar WebSocket Proxy users should upgrade to at least 2.10.5.
+2.11 Pulsar WebSocket Proxy users should upgrade to at least 2.11.2.
+3.0 Pulsar WebSocket Proxy users should upgrade to at least 3.0.1.
+3.1 Pulsar WebSocket Proxy users are unaffected.
+Any users running the Pulsar WebSocket Proxy for 2.8, 2.9, and earlier should upgrade to one of the above patched versions.
 
 Credit:
 
-Yun Peng - 郭 运鹏 <puata123@...look.com> (finder)
+Michael Marshall of DataStax (finder)
 
 References:
 
-https://ofbiz.apache.org/download.html
-https://ofbiz.apache.org/security.html
-https://ofbiz.apache.org/release-notes-18.12.11.html
-https://issues.apache.org/jira/browse/OFBIZ-12875
-https://ofbiz.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-50968
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-37544
 
