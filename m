@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/13/1
-Message-ID: <Y8EvnDtwz6Hlq/Qs@kroah.com>
-Date: Fri, 13 Jan 2023 11:17:00 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/6
+Message-ID: <20231221143630.GD14101@suse.de>
+Date: Thu, 21 Dec 2023 15:36:33 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 12, 2023 at 01:24:38PM -0600, John Helmert III wrote:
-> On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
-> > On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
-> > > Hi all,
-> > > 
-> > > # Description
-> > > A NULL Pointer Dereference bug in nvmet_setup_auth
-> > > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
-> > > Since the bug occurs in the authentication feature, it can be easily
-> > > triggered by an unauthorized client in the pre-auth stage.
-> > > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
-> > 
-> > Meta-comment, why are CVE's being assigned for issues found, and then
-> > fixed, in development kernel releases?  Who assigned this CVE, MITRE or
-> > someone else?
-> 
-> This information used to be available for "reserved" CVEs in the JSON
-> data in [1], but now that that's retired I'm not sure this is made
-> public anywhere.
-> 
-> [1] https://github.com/CVEProject/cvelistV5
+Hi,
 
-So if we don't know who allocated it, we can't know who to ask to get it
-revoked?
+As if we did not have sufficient protocol vulnerability work short before
+Christmas break this year, here is one more:
 
-{sigh}
+	https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/
 
-Yet-another reason why I hate CVEs...
+While it looks like "old stuff", this is new quality.
 
-greg k-h
+tldr: The end of "SMTP data phase" with "<CR><LF>.<CR><LF>" is not
+consistently implemented everywhere (e.g. when leaving out <CR> or
+inserting \0 or so) and could lead to one server passing it through and
+the other processing it, leading to mail spoofing.
+
+The security report it for some custom email servers, but at least
+Postfix announced mitigation work already:
+
+	https://www.mail-archive.com/postfix-users@postfix.org/msg100901.html
+
+Ciao, Marcus
