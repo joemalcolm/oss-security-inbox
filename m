@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3587" "Wednesday" "4" "May" "2016" "06:46:11" "+0000" "limingxing" "limingxing@360.cn" "<3626D6E697A150459C44C0E5D8D8D00E0DBDC360@EX02.corp.qihoo.net>" "59" "[oss-security] Dotclear 2.9.1 XSS vulnerability by SVG" "^Date:" nil nil "5" "2016050406:46:11" "[oss-security] Dotclear 2.9.1 XSS vulnerability by SVG" (number mark "U       limingxing@3 May  4   59/3587  " thread-indent "\"[oss-security] Dotclear 2.9.1 XSS vulnerability by SVG\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7350 invoked by uid 550); 4 May 2016 06:54:47 -0000
+Received: (qmail 18246 invoked by uid 550); 21 Dec 2023 14:55:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +6,26 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1666 invoked from network); 4 May 2016 06:46:32 -0000
-Thread-Topic: Dotclear 2.9.1 XSS vulnerability by SVG
-Thread-Index: AQHRpdCjULQ4ycBX3UOrUYauzPfv3g==
-Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBDC360@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.199.1.12]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-Date: Wed, 4 May 2016 06:46:11 +0000
-From: limingxing <limingxing@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Dotclear 2.9.1 XSS vulnerability by SVG
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 9328 invoked from network); 21 Dec 2023 14:46:26 -0000
+Date: Thu, 21 Dec 2023 14:46:56 +0000
+From: Claus Assmann <ml+oss@esmtp.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20231221144656.GA40693@veps.esmtp.org>
+References: <20231221143630.GD14101@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231221143630.GD14101@suse.de>
+Subject: [oss-security] Re: New SMTP smuggling attack
 
-DQpIZWxsbywNCldlIGZpbmQgYW4gdnVsbmVyYWJpbGl0eSBhYm91dCBEb3Rj
-bGVhciAyLjkuMSBYU1MgdnVsbmVyYWJpbGl0eSBieSBTVkcNCg0KaW5jL2Nv
-cmUvY2xhc3MuZGMuY29yZS5waHANCmFycmF5KCdtZWRpYV9leGNsdXNpb24n
-LCdzdHJpbmcnLCcvXC4ocGhwcz98cGh0KG1sKT98cGhsKVswLTldKiQvaScs
-DQoNCkF0dGFja2VycyBjYW4gdXBsb2FkIGEgc3BlY2lhbCBTVkcgcGljdHVy
-ZSwgZm9yIGV4YW1wbGUsIGFkZCB0aGUgb3JpZ2luIFNWRyBwaWN0dXJlIHdp
-dGgNCjxzY3JpcHQ+YWxlcnQobG9jYXRpb24pPC9zY3JpcHQ+DQo8Zm9yZWln
-bk9iamVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwIg0KcmVxdWlyZWRFeHRl
-bnNpb25zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj4NCiA8ZW1i
-ZWQgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiDQpzcmM9
-ImphdmFzY3JpcHQ6YWxlcnQobG9jYXRpb24pIiAvPg0KIDwvZm9yZWlnbk9i
-amVjdD4NCkFmdGVyIHVwbG9hZCB0aGUgc3BlY2lhbCBTVkcsIGF0dGFja2Vy
-cyBjYW4gcHVibGlzaCBhbiBhcnRpY2xlIHdpdGggdGhpcyBwaWN0dXJlIHdp
-dGggdGhlIGhlcmYgbGluayB0byB0aGlzIHBpY3R1cmUuIElmIHNvbWVvbmUg
-Y2xpY2sgdGhlIHBpY3R1cmUsIGl0IHdpbGwganVtcCB0byB0aGUgdXJsIG9m
-IHRoZSBwaWN0dXJlLCBhbmQgdGhpcyB3aWxsIGNhdXNlIFhTUy4NClRlc3Qg
-b24gRmlyZWZveCA0NS4wLjIgo6gyMDE2MDQwNzE2NDkzOKOpd2l0aCB0d28g
-YWxlcnRzLg0KVGVzdCBvbiBDaHJvbWUgNTAuMC4yNjYxLjk0bSBhbmQgSUUg
-MTAuMC4xMDI0MC4xNjc2NiB3aXRoIG9ubHkgb25lIGFsZXJ0ICg8c2NyaXB0
-PmFsZXJ0IChsb2NhdGlvbik8L3NjcmlwdD4pDQogDQogDQpUaGUgcGljdHVy
-ZSB1c2VkIGZvciB0ZXN0IGlzDQogDQo8P3htbCB2ZXJzaW9uPSIxLjAiIGVu
-Y29kaW5nPSJpc28tODg1OS0xIj8+DQo8IS0tIEdlbmVyYXRvcjogQWRvYmUg
-SWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcg
-VmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+DQo8IURPQ1RZUEUgc3ZnIFBV
-QkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3Lncz
-Lm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB2
-ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3Lncz
-Lm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3Jn
-LzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KICAgICAgICAgdmlld0Jv
-eD0iMCAwIDIyIDIwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAg
-MCAyMiAyMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQogICAgICAg
-ICA8cGF0aCBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2
-ZW5vZGQ7IiBkPSJNMCwxMC4wMTRjMCwxLjk4NSwxLjQ4NiwzLjYzMiwzLjQz
-OCwzLjk1bDAuNjg4LDAuMDU1aDMuODMydi0xLjk5M0g0LjE3Mw0KICAgICAg
-ICAgICAgICAgICAgTDMuNzE3LDExLjk5QzIuMzk5LDExLjc4LDIsMTAuOTgy
-LDEuOTQzLDkuOTM5QzEuODg4LDguOTQyLDIuODMxLDguMDUzLDQuNDc1LDcu
-NDg2YzAsMC0xLjIxNC0xLjYxNywwLTIuNjMzDQogICAgICAgICAgICAgICAg
-ICBjMS4yMTQtMS4wMTYsMi45NjcsMC44ODQsMi45NjcsMC44ODRzMi4xOTct
-NC4xNzYsNS40NjMtMy44N2M0LjkyOSwwLjQ2Myw0LjU0MSw1LjkxNyw0LjU0
-MSw1LjkxN3MyLjU2NiwwLjQzOSwyLjU2NiwyLjE1NQ0KICAgICAgICAgICAg
-ICAgICAgYzAsMS45MTUtMi4xODUsMi4wODctMi4xODUsMi4wODdoLTMuNzU4
-djEuOTkzaDMuODA2bDAuNjg4LTAuMDU1QzIwLjUxNCwxMy42NDYsMjIsMTEu
-OTk5LDIyLDEwLjAxNA0KICAgICAgICAgICAgICAgICAgYzAtMS43NDQtMS4x
-NDgtMy4yMjktMi43NTEtMy43NzhDMTkuMTkxLDIuNzgyLDE2LjI4OSwwLDEy
-LjcxOSwwYy0yLjU3NSwwLTQuODAyLDEuNDQ3LTUuODY2LDMuNTUNCiAgICAg
-ICAgICAgICAgICAgIEM2LjM1LDMuMDEsNS42MjIsMi42Nyw0LjgxMiwyLjY3
-Yy0xLjUxOSwwLTIuNzUsMS4xOTYtMi43NSwyLjY3YzAsMC4zODUsMC4wODQs
-MC43NTEsMC4yMzQsMS4wODFDMC45MzYsNy4wNzYsMCw4LjQzOSwwLDEwLjAx
-NHoiDQogICAgICAgICAgICAgICAgICAvPg0KICAgICAgICAgPHBvbHlnb24g
-c3R5bGU9ImZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkOyIg
-cG9pbnRzPSIxMiwyMCAxMiw4LjU4MSAxNiwxMSAxNiw5IDExLDYgNiw5IDYs
-MTEgMTAsOC41ODEgMTAsMjAgICAgICAgICIvPg0KPC9nPg0KPHNjcmlwdD5h
-bGVydChsb2NhdGlvbik8L3NjcmlwdD4NCjxmb3JlaWduT2JqZWN0IHdpZHRo
-PSIxMDAiIGhlaWdodD0iNTAiDQpyZXF1aXJlZEV4dGVuc2lvbnM9Imh0dHA6
-Ly93d3cudzMub3JnLzE5OTkveGh0bWwiPg0KIA0KPGVtYmVkIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIg0Kc3JjPSJqYXZhc2NyaXB0
-OmFsZXJ0KGxvY2F0aW9uKSIgLz4NCiANCjwvZm9yZWlnbk9iamVjdD4NCiAN
-Cjwvc3ZnPg0KDQpUaGlzIHZ1bG5lcmFiaWxpdHkgd2FzIGZvdW5kIGJ5IGNo
-ZW5ydWlxaSBvZiBRaWhvbyAzNjAgQ29kZXNhZmUgVGVhbQ==
+Just for completeness:
+sendmail 8.18.0.2 has options to handle this too, e.g.,
+	Accept only CR LF . CR LF as end of an SMTP message as
+		required by the RFCs when the new srv_features
+		option 'o' is used.
+
+And for those who read the source code there's also an FFR:
+	/* enable checking for "bare LF" in message */
+	"_FFR_BARE_LF",
+
