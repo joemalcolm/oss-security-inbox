@@ -1,85 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/15/1
-Message-ID: <ZLHFcUb95IUuBQ6p@openssl.org>
-Date: Fri, 14 Jul 2023 22:00:17 +0000
-From: Tomas Mraz <tomas@...nssl.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/4
+Message-ID: <168cd715-c39b-aadc-0bb0-9bda2b06da0a@apache.org>
+Date: Thu, 21 Dec 2023 07:05:17 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL Security Advisory
+Subject: CVE-2023-50783: Apache Airflow: Improper access control vulnerability on the "varimport" endpoint 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: low
 
-OpenSSL Security Advisory [14th July 2023]
-==========================================
+Affected versions:
 
-AES-SIV implementation ignores empty associated data entries (CVE-2023-2975)
-============================================================================
+- Apache Airflow before 2.8.0
 
-Severity: Low
+Description:
 
-Issue summary: The AES-SIV cipher implementation contains a bug that causes
-it to ignore empty associated data entries which are unauthenticated as
-a consequence.
+Apache Airflow, versions before 2.8.0, is affected by a vulnerability that allows an authenticated user without the variable edit permission, to update a variable.
+This flaw compromises the integrity of variable management, potentially leading to unauthorized data modification.
+Users are recommended to upgrade to 2.8.0, which fixes this issue
 
-Impact summary: Applications that use the AES-SIV algorithm and want to
-authenticate empty data entries as associated data can be misled by removing,
-adding or reordering such empty entries as these are ignored by the OpenSSL
-implementation. We are currently unaware of any such applications.
+Credit:
 
-The AES-SIV algorithm allows for authentication of multiple associated
-data entries along with the encryption. To authenticate empty data the
-application has to call EVP_EncryptUpdate() (or EVP_CipherUpdate()) with
-NULL pointer as the output buffer and 0 as the input buffer length.
-The AES-SIV implementation in OpenSSL just returns success for such a call
-instead of performing the associated data authentication operation.
-The empty data thus will not be authenticated.
+balis0ng (finder)
+Ephraim Anierobi (remediation developer)
 
-As this issue does not affect non-empty associated data authentication and
-we expect it to be rare for an application to use empty associated data
-entries this is qualified as Low severity issue.
+References:
 
-OpenSSL versions 3.0.0 to 3.0.9, and 3.1.0 to 3.1.1 are vulnerable to this
-issue. The FIPS provider is not affected as the AES-SIV algorithm is not
-FIPS approved and FIPS provider does not implement it.
+https://github.com/apache/airflow/pull/33932
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-50783
 
-OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 6a83f0c9 (for 3.1) and
-commit 00e2f5ee (for 3.0) in the OpenSSL git repository.
-
-This issue was reported on 16th May 2023 by Juerg Wullschleger (Google).
-The fix was developed by Tomas Mraz.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230714.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmSxxSgACgkQUnRmohyn
-nm3ogw//Zqnff7kHNFaqXQB7plwif+utEBi6/siMNC+/bTn8RSRWsuIJp0vgGTB/
-EEkiD2vK5Twrf1mYpKgOiCdQq2AaneHbjqcLtkmBS2apeXcGsBB6ZQgJKe1kRhaL
-nC87QJKuUdlQojS4+SBD+MIz/ET1uQNsjjvKfANpKK0L4TgUs2tHNskZG3H6p4az
-Kt0uhKaAFBp7jGb+wt3zYIgoyLvnZvx51mIwrf/vv3VAJl8OgEgG+hIk+8AtAVEa
-ZCWmkDRuuJxEHuwCjX0iSncwqIViph1JnpqnrXARNcdfZCMdAIfEmVdSTfXmmlQr
-TmQPDiBDIlk5ZjHlOGbVCEkUnPQAwiKEQ5bi0x4zI1e/yN64RTARjjaXn5nQsyTf
-XHHqFQNSCZ9Fpc4JVuJsSzzxnALKuzIC6uUwzPZxfDQ844e7EBim/V42kcbKizbZ
-N073hrxkm54nGRdfXkDguGPGK82GwHJnxPo7COBiBnROswWK++o2eW9PJwD2Vkt3
-dQ7t58YXDc+76+yE+L4mYuF6ml6wmUPx9kBzhzBxjgINZod5O8YyuTRrqnRbtsFU
-yasNBspjAaVdS5zRFewn4ghQTKIv6OfBn2fTIUNVCfXeAR9Dzd5Ts5zAcYJTaT3o
-NNLUBwvP+Fcm2rE2RZ3p6n6YmQLiY8URjtxGGPxJsLDaCTw6IiY=
-=eZhV
------END PGP SIGNATURE-----
