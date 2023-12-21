@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3635" "Wednesday" "12" "October" "2016" "15:12:47" "+0200" "Sebastian Krahmer" "krahmer@suse.com" "<20161012131247.GB14056@suse.de>" "114" "[oss-security] bubblewrap LPE" nil nil nil "10" "2016101213:12:47" "[oss-security] bubblewrap LPE" (number mark "U       krahmer@suse Oct 12  114/3635  " thread-indent "\"[oss-security] bubblewrap LPE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9694 invoked by uid 550); 12 Oct 2016 13:13:00 -0000
+Received: (qmail 1128 invoked by uid 550); 21 Dec 2023 21:23:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,132 +7,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9665 invoked from network); 12 Oct 2016 13:12:58 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 12 Oct 2016 15:12:47 +0200
-From: Sebastian Krahmer <krahmer@suse.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20161012131247.GB14056@suse.de>
-MIME-Version: 1.0
+Received: (qmail 32617 invoked from network); 21 Dec 2023 21:23:29 -0000
+Date: Thu, 21 Dec 2023 22:24:10 +0100
+From: Solar Designer <solar@openwall.com>
+To: Jonathan Wright <jonathan@almalinux.org>
+Cc: oss-security@lists.openwall.com,
+	Andrew Lukoshko <alukoshko@almalinux.org>,
+	benny Vasquez <benny@almalinux.org>,
+	Igor Seletskiy <iseletsk@almalinux.org>,
+	Darya Malyavkina <dmalyavkina@cloudlinux.com>,
+	Jack Aboutboul <jack@almalinux.org>
+Message-ID: <20231221212410.GA800@openwall.com>
+References: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com> <20231217205642.GA7164@openwall.com> <CAKe4=-KBsSnPfCDKApdOq9uksfv=AenjWtKPZorRcKo3F+_SEA@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Subject: [oss-security] bubblewrap LPE
+In-Reply-To: <CAKe4=-KBsSnPfCDKApdOq9uksfv=AenjWtKPZorRcKo3F+_SEA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] AlmaLinux Distros List Application
 
+Hi,
 
-Hi
+I think this application does meet the bar for linux-distros membership,
+and everyone had enough opportunity to comment by now.  So I'll proceed
+to subscribe Jonathan and Andrew, and list AlmaLinux OS Foundation as a
+member.  I'll take this off-list for the PGP keys, etc.
 
-There is a beautiful, easy to exploit, logical bug within the
-bubblewrap program, thats part of the flatpak container-app framework,
-but also used with other container solutions.
+On Tue, Dec 19, 2023 at 04:49:16PM -0600, Jonathan Wright wrote:
+> On Sun, Dec 17, 2023 at 2:56???PM Solar Designer <solar@openwall.com> wrote:
+> > maybe you'd volunteer for some of the tasks from the
+> > "Administrative tasks mostly unrelated to (linux-)distros lists (but
+> > relevant to the wider community)" category?  This category is
+> > essentially about expanding and improving the public oss-security
+> > content and its visibility.
+> 
+> We very likely would be happy to help in this regard, especially if much of
+> it can be done without necessarily being on the private side of the list.
+> The folks on our side that would be great at this type of work are not the
+> same as those of us (myself and Andrew) that would be on the embargoed list.
 
-/usr/bin/bwrap may be installed mode 04755 or with cap_sys_admin and other
-file caps. I dont know if there are any dists already shipping it that way,
-but the Makefile and some RedHat spec files contain file caps for it.
+Great.  It doesn't have to be the same folks who are on linux-distros.
+So please take a look and choose specific task(s).
 
-bubblewrap's aim is to setup a container and seccomp sandbox for programs to be run
-as user.
+Thanks,
 
-For some reason it sets the PR_SET_DUMPABLE flag, as seen below. The comment about
-it looks strange to me. If thats really true, suid programs shouldn't
-be forced to play with the dumpable flag to achieve their goal.
-
-Once the dumpable flag is set, there is a chance we could attach to the process,
-once the remaining caps are dropped and the whole process runs as user.
-
-Luckily, that happens at line 1707, right after a PrivSep socket has been opened!
-
-Once attached to the (now running as unprived user) process, we can inject
-commands into that socket. We could do arbitrary mounts, but won't achieve much, since
-the bwrap process is running in its own mount namespace. However, there is
-a sethostname() OP, that we can use to affect the hostname of the entire system
-(not restricted to UTS namespace). Now, just wait for root or other users to
-login and execute bash to use one of the PS expansion bugs to execute code.
-
-(I wonder that has been re-discovered recently, it was already part of the
-CVE-2011-0966 attack vector.)
-
-
- 383 acquire_caps (void)
- 384 {
-
-[...]
-
- 422   /* We need the process to be dumpable, or we can't access /proc/self/uid_map */
- 423   if (prctl (PR_SET_DUMPABLE, 1, 0, 0, 0) < 0)
- 424     die_with_error ("prctl(PR_SET_DUMPABLE) failed");
- 425 }
-
-
-[...]
-
-
-1422 int
-1423 main (int    argc,
-1424       char **argv)
-1425 {
-
-[...]
-
-1440   /* Get the (optional) capabilities we need, drop root */
-1441   acquire_caps ();
-
-[...]
-
-1692   if (is_privileged)
-1693     {
-1694       pid_t child;
-1695       int privsep_sockets[2];
-1696
-1697       if (socketpair (AF_UNIX, SOCK_SEQPACKET | SOCK_CLOEXEC, 0, privsep_sockets) != 0)
-1698         die_with_error ("Can't create privsep socket");
-1699
-1700       child = fork ();
-1701       if (child == -1)
-1702         die_with_error ("Can't fork unprivileged helper");
-1703
-1704       if (child == 0)
-1705         {
-1706           /* Unprivileged setup process */
-1707           drop_caps ();                                                            // BOOM
-1708           close (privsep_sockets[0]);
-1709           setup_newroot (opt_unshare_pid, privsep_sockets[1]);
-1710           exit (0);
-1711         }
-1712       else
-1713         {
-1714           uint32_t buffer[2048];  /* 8k, but is int32 to guarantee nice alignment */
-1715           uint32_t op, flags;
-1716           const char *arg1, *arg2;
-1717           cleanup_fd int unpriv_socket = -1;
-1718
-1719           unpriv_socket = privsep_sockets[0];
-1720           close (privsep_sockets[1]);
-1721
-1722           do
-1723             {
-1724               op = read_priv_sec_op (unpriv_socket, buffer, sizeof (buffer),
-1725                                      &flags, &arg1, &arg2);
-1726               privileged_op (-1, op, flags, arg1, arg2);
-1727               if (write (unpriv_socket, buffer, 1) != 1)
-1728                 die ("Can't write to op_socket");
-1729             }
-1730           while (op != PRIV_SEP_OP_DONE);
-1731
-1732           /* Continue post setup */
-1733         }
-1734     }
-
-
-
--s
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
-
+Alexander
