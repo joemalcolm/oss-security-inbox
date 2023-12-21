@@ -1,50 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/4
-Message-ID: <CAOp4FwSbzz9EgZoCjPG_0=-in3y7RpWaLmvQgFzAPGk7K8M48A@mail.gmail.com>
-Date: Mon, 2 Oct 2023 11:48:15 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: "Linux Kernel security demistified"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/10
+Message-ID: <20231221212410.GA800@openwall.com>
+Date: Thu, 21 Dec 2023 22:24:10 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Jonathan Wright <jonathan@...alinux.org>
+Cc: oss-security@...ts.openwall.com, Andrew Lukoshko <alukoshko@...alinux.org>, benny Vasquez <benny@...alinux.org>, Igor Seletskiy <iseletsk@...alinux.org>, Darya Malyavkina <dmalyavkina@...udlinux.com>, Jack Aboutboul <jack@...alinux.org>
+Subject: Re: AlmaLinux Distros List Application
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2 Oct 2023 at 11:10, Greg KH <greg@...ah.com> wrote:
->
-> On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
-> > There's also an upcoming Webinar:
-> >
-> > https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
-> >
-> > > Demystifying the Linux Kernel Security Process
-> > > October 3, 2023 | 07:00 AM PDT (UTC-7)
-> > >
-> > > Join an interactive, complimentary Mentorship Session exploring
-> > > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
-> > > Kernel Maintainer & Fellow, The Linux Foundation
-> > >
-> > > There is a lot of misunderstanding about how the Linux kernel deals with
-> > > security vulnerabilities.  This talk will go into how the Linux kernel
-> > > security team works, how changes are propagated out to the public, and
-> > > how users must take advantage of these changes in order to have a secure
-> > > system.
->
-> It's going to be much the same talk, with only minor tweaks as I forgot
-> some points I wanted to make in the first one.
->
-> Thanks for the link to my slides and presentation, glad to see that
-> information get spread wider!
->
-It was a very insightful talk. However, I'm not sure whether companies
-would even be willing to start a conversation with an open source
-community without
-an NDA being signed.
+Hi,
 
-Coming from a developing country in Africa, we are building cloud
-services in our new data centers for local businesses.
-We wish we could offer the same level of security as large cloud
-services if the large hardware companies
-were willing to open a channel to us despite us being still at the
-early stage ...
+I think this application does meet the bar for linux-distros membership,
+and everyone had enough opportunity to comment by now.  So I'll proceed
+to subscribe Jonathan and Andrew, and list AlmaLinux OS Foundation as a
+member.  I'll take this off-list for the PGP keys, etc.
 
+On Tue, Dec 19, 2023 at 04:49:16PM -0600, Jonathan Wright wrote:
+> On Sun, Dec 17, 2023 at 2:56???PM Solar Designer <solar@...nwall.com> wrote:
+> > maybe you'd volunteer for some of the tasks from the
+> > "Administrative tasks mostly unrelated to (linux-)distros lists (but
+> > relevant to the wider community)" category?  This category is
+> > essentially about expanding and improving the public oss-security
+> > content and its visibility.
+> 
+> We very likely would be happy to help in this regard, especially if much of
+> it can be done without necessarily being on the private side of the list.
+> The folks on our side that would be great at this type of work are not the
+> same as those of us (myself and Andrew) that would be on the embargoed list.
 
+Great.  It doesn't have to be the same folks who are on linux-distros.
+So please take a look and choose specific task(s).
 
-> greg k-h
+Thanks,
+
+Alexander
