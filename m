@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/1
-Message-ID: <alpine.GSO.2.20.2309140824140.3888@scrappy.simplesystems.org>
-Date: Thu, 14 Sep 2023 08:36:17 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: illumos (or at least danmcd) membership in the distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/2
+Message-ID: <f229a045-e964-c47f-8f69-9d6178032408@apache.org>
+Date: Thu, 21 Dec 2023 07:04:46 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-47265: Apache Airflow: DAG Params alllow to embed unchecked Javascript 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 13 Sep 2023, Dan McDonald wrote:
+Severity: low
 
-> I'm requesting membership (for danmcd@....io <mailto:danmcd@....io> ) on the "distros" mailing list on behalf of illumos ( https://illumos.org ). We would join non-Linux participants such as those from Oracle Solaris, FreeBSD, NetBSD, and pkgsrc.
+Affected versions:
 
-I am not a member of the 'distros' list, but can vouch for Dan 
-McDonald's dedication and capabilities, as observed over several 
-years.  Dan did not mention it, but he previously became the primary 
-maintainer of an Illumos distribution known as "OmniOS", which I use. 
-As a maintainer, Dan did pay close attention to security issues.
+- Apache Airflow 2.6.0 before 2.8.0
 
-In terms of capabilites, Illumos-based distributions are similar in 
-capabilty to major Linux distributions, or the major BSD 
-distributions.  Illumos has a long heritage derived from Solaris, 
-which emerged from SunOS/SVR4, but includes many unique capabilities, 
-some of which were developed under Illumos after 2010. Each 
-Illumos-based distribution seems to target a different usage model.
+Description:
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+Apache Airflow, versions 2.6.0 through 2.7.3 has a stored XSS vulnerability that allows a DAG author to add an unbounded and not-sanitized javascript in the parameter description field of the DAG. This Javascript can be executed on the client side of any of the user who looks at the tasks in the browser sandbox. While this issue does not allow to exit the browser sandbox or manipulation of the server-side data - more than the DAG author already has, it allows to modify what the user looking at the DAG details sees in the browser - which opens up all kinds of possibilities of misleading other users.
+
+Users of Apache Airflow are recommended to upgrade to version 2.8.0 or newer to mitigate the risk associated with this vulnerability
+
+Credit:
+
+Jens Scheffler (finder)
+Andrey Anshin (finder)
+Jens Scheffler (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/35460
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-47265
+
