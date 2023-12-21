@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["412" "Monday" "20" "December" "2021" "10:36:28" "+0000" "Stefan Eissing" "icing@apache.org" nil "16" "[oss-security] CVE-2021-44790: Apache HTTP Server: Possible buffer overflow when parsing multipart content in mod_lua of Apache HTTP Server 2.4.51 and earlier " nil nil nil "12" nil nil (number mark "U       icing@apache Dec 20   16/412   " thread-indent "\"[oss-security] CVE-2021-44790: Apache HTTP Server: Possible buffer overflow when parsing multipart content in mod_lua of Apache HTTP Server 2.4.51 and earlier \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-44790: Apache HTTP Server: Possible buffer overflow when parsing multipart content in mod_lua of Apache HTTP Server 2.4.51 and earlier " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11680 invoked by uid 550); 20 Dec 2021 14:16:26 -0000
+Received: (qmail 28494 invoked by uid 550); 21 Dec 2023 14:30:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,30 +7,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10187 invoked from network); 20 Dec 2021 10:37:39 -0000
+Received: (qmail 32183 invoked from network); 21 Dec 2023 07:04:23 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Stefan Eissing <icing@apache.org>
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <30b33714-e372-c864-5111-94b8bf062b80@apache.org>
+Message-ID: <f229a045-e964-c47f-8f69-9d6178032408@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 20 Dec 2021 10:36:28 +0000
+Date: Thu, 21 Dec 2023 07:04:46 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-44790: Apache HTTP Server: Possible buffer overflow when parsing multipart
- content in mod_lua of Apache HTTP Server 2.4.51 and earlier 
+Subject: [oss-security] CVE-2023-47265: Apache Airflow: DAG Params alllow to embed
+ unchecked Javascript 
 
-Severity: high
+Severity: low
+
+Affected versions:
+
+- Apache Airflow 2.6.0 before 2.8.0
 
 Description:
 
-A carefully crafted request body can cause a buffer overflow in the mod_lua=
- multipart parser (r:parsebody() called from Lua scripts).
-The Apache httpd team is not aware of an exploit for the vulnerabilty thoug=
-h it might be possible to craft one.
+Apache Airflow, versions 2.6.0 through 2.7.3 has a stored XSS vulnerability=
+ that allows a DAG author to add an unbounded and not-sanitized javascript =
+in the parameter description field of the DAG.=C2=A0This Javascript can be =
+executed on the client side of any of the user who looks at the tasks in th=
+e browser sandbox. While this issue does not allow to exit the browser sand=
+box or manipulation of the server-side data - more than the DAG author alre=
+ady has, it allows to modify what the user looking at the DAG details sees =
+in the browser - which opens up all kinds of possibilities of misleading ot=
+her users.
 
-This issue affects Apache HTTP Server 2.4.51 and earlier.
+Users of Apache Airflow are recommended to upgrade to version 2.8.0 or newe=
+r to mitigate the risk associated with this vulnerability
 
 Credit:
 
-Chamal
-Anonymous working with Trend Micro Zero Day Initiative
+Jens Scheffler (finder)
+Andrey Anshin (finder)
+Jens Scheffler (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/35460
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-47265
 
