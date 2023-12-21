@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/6
-Message-ID: <20231006221824.GA14376@openwall.com>
-Date: Sat, 7 Oct 2023 00:18:24 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Daniel Weber <daniel.weber@...pa.de>
-Cc: oss-security@...ts.openwall.com, fabian.thomas@...pa.de, lukas.gerlach@...pa.de, ruiyi.zhang@...pa.de, Michael Schwarz <michael.schwarz@...pa.de>
-Subject: Re: Meltdown-US / Meltdown 3a Remaining Leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/5
+Message-ID: <5627ee07-06b9-69d4-0556-a1e65699008e@apache.org>
+Date: Thu, 21 Dec 2023 10:57:26 +0000
+From: Haonan Hou <haonan@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-51656: Apache IoTDB: Unsafe deserialize map in Sync Tool 
 Content-Type: text/plain; charset=utf-8
 
-Hello Daniel et al.,
+Severity: low
 
-Thank you very much for your research and for posting about it in here!
+Affected versions:
 
-On Fri, Oct 06, 2023 at 12:07:17PM +0200, Daniel Weber wrote:
-> we analyzed the remaining leakage of the "original" Meltdown attack 
-> (Meltdown-US) (1) and the variant Meltdown 3a (2). We discovered that 
-> the "original" Meltdown attack can be abused to infer the cache state of 
-> memory pages that remain mapped despite KPTI. This allows an attacker to 
-> monitor interrupt activity.
+- Apache IoTDB 0.13.0 through 0.13.4
 
-I assume you're talking specifically about Linux's KPTI.  Let's be
-naming Linux explicitly, as this list isn't only about Linux.
+Description:
 
-In Linux, /proc/interrupts is generally world-readable.  So perhaps
-that's something to fix first, since yes it's known to allow for
-keystroke timing attacks.  Should be fixed in the kernel or/and chmod'ed
-by the userland.  And then:
+Deserialization of Untrusted Data vulnerability in Apache IoTDB.This issue affects Apache IoTDB: from 0.13.0 through 0.13.4.
 
-> 1) Preventing the Meltdown attack from leaking information about the 
-> cache state can be achieved by marking the remaining memory pages, e.g., 
-> the IDT, as uncacheable. This can be achieved by using a memory-type 
-> range register (MTRR) or by modifying the corresponding page-table entries.
+Users are recommended to upgrade to version 1.2.2, which fixes the issue.
 
-Alexander
+References:
+
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-51656
+
