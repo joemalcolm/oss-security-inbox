@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/7
-Message-ID: <d4af64a958768b48cc98670741c1f8e4.da8a7fea@penurious.financings>
-Date: Fri, 20 Oct 2023 18:21:18 +0300
-From: Turistu <turistu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/3
+Message-ID: <12f5129a-e222-69df-3760-456569ef1880@apache.org>
+Date: Thu, 21 Dec 2023 07:05:04 +0000
+From: Ephraim Anierobi <ephraimanierobi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: CVE-2023-49920: Apache Airflow: Missing CSRF protection on DAG/trigger 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 20, 2023 at 03:27:41PM +0200, Solar Designer wrote:
-> On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
-> > In firefox running on X11, any script from any page can freely write to the
-> > primary selection, and that can be easily exploited to run arbitrary code
-> > on the user's machine.
-> 
-> What about other web browsers running on X11, most notably Chrome and
-> Chromium?
+Severity: moderate
 
-They're safe from *this* particular issue, which is caused by a simple bug
-deep inside mozilla's C++ code, not by some explicit design decision.
+Affected versions:
 
-> If the issue is unique to Firefox or at least not universal
-> across browsers, that's an extra reason for Firefox to make a change.
-> 
-> On Fri, Oct 20, 2023 at 02:10:06AM +0300, Turistu wrote:
-> > OK this was probably too technical and terse for people not familiar
-> > with X11 programming and terminology, so thing goes like this:
-> > 
-> > 1. If you're a user who has first learned to use a GUI on e.g. Windows,
-> > and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
-> > choose Copy from the menu, and then again left-click, choose Paste),
-> > then congratulations! this DOES NOT AFFECT YOU.
-> > 
-> > (Unless you're using some clipboard tools which merges the primary and
-> > clipboard selection, but I guess you don't ;-))
-> > 
-> > 2. But if you're a *native* X11 user who is used to just select the text and
-> > then paste it with a middle-click or shift-Insert, then this means you're
-> > pretty much done, and you should immediately either stop using firefox or
-> > try the workaround and patch described in my report. This also includes
-> > Wayland users.
-> 
-> Or isolate Firefox to its own X server (or at least a separate one from
-> where you run terminal emulators managing important stuff), like it
-> happens when you run it in its own VM (or perhaps many instances of it
-> in many VMs) on Qubes OS.  Indeed this also removes the convenience of
+- Apache Airflow 2.7.0 before 2.8.0
 
-If you do that, notice that you will also have to run a window manager
-inside that separate X server, because firefox (which never implemented
-the X11 and icccm protocols correctly) needs a wm in order to function
-properly (more precisely a point-to-focus wm or one that simulates
-point-to-focus just to keep firefox and some other horrors like old atk
-java apps happy).
+Description:
+
+Apache Airflow, version 2.7.0 through 2.7.3, has a vulnerability that allows an attacker to trigger a DAG in a GET request without CSRF validation. As a result, it was possible for a malicious website opened in the same browser - by the user who also had Airflow UI opened - to trigger the execution of DAGs without the user's consent.
+Users are advised to upgrade to version 2.8.0 or later which is not affected
+
+Credit:
+
+Tareq Ahamed ( 0xt4req) (finder)
+Jens Scheffler (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/36026
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-49920
+
