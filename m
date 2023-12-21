@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7138" "Wednesday" "4" "October" "2017" "15:44:15" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<756455.838537903-sendEmail@localhost>" "119" "[oss-security] binutils: heap-based buffer overflow in bfd_get_debug_link_info_1 (opncls.c)" nil nil nil "10" "2017100415:44:15" "[oss-security] binutils: heap-based buffer overflow in bfd_get_debug_link_info_1 (opncls.c)" (number mark "U       ago@gentoo.o Oct  4  119/7138  " thread-indent "\"[oss-security] binutils: heap-based buffer overflow in bfd_get_debug_link_info_1 (opncls.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30354 invoked by uid 550); 4 Oct 2017 15:44:33 -0000
+Received: (qmail 29714 invoked by uid 550); 21 Dec 2023 14:30:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,131 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30256 invoked from network); 4 Oct 2017 15:44:31 -0000
-Message-ID: <756455.838537903-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Wed, 4 Oct 2017 15:44:15 +0000
+Received: (qmail 32330 invoked from network); 21 Dec 2023 07:04:41 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <12f5129a-e222-69df-3760-456569ef1880@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 21 Dec 2023 07:05:04 +0000
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-768991.325589926"
-Subject: [oss-security] binutils: heap-based buffer overflow in bfd_get_debug_link_info_1 (opncls.c)
+Subject: [oss-security] CVE-2023-49920: Apache Airflow: Missing CSRF protection on
+ DAG/trigger 
 
-------MIME delimiter for sendEmail-768991.325589926
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Severity: moderate
+
+Affected versions:
+
+- Apache Airflow 2.7.0 before 2.8.0
 
 Description:
-binutils is a set of tools necessary to build programs.
 
-The complete ASan output of the issue:
-
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==11994==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000029e at pc 0x7f800af7095d bp 0x7ffeab0e5c90 sp 0x7ffeab0e5c88            
-READ of size 1 at 0x60200000029e thread T0                                                                                                           
-    #0 0x7f800af7095c in bfd_getl32 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:559:24                                       
-    #1 0x7f800af91323 in bfd_get_debug_link_info_1 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:1206:12                       
-    #2 0x7f800af91b8a in find_separate_debug_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:1423:10                        
-    #3 0x7f800af91a0f in bfd_follow_gnu_debuglink /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:1582:10                        
-    #4 0x7f800b110614 in _bfd_dwarf2_slurp_debug_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4345:19                    
-    #5 0x7f800b11bc67 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4538:9                    
-    #6 0x7f800b05e38b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10                                 
-    #7 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9                                          
-    #8 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7                                         
-    #9 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200                                        
-    #10 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7                                         
-    #11 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12                                                
-    #12 0x7f8009fa3680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                      
-    #13 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)                                                                    
-
-0x60200000029e is located 0 bytes to the right of 14-byte region [0x602000000290,0x60200000029e)
-allocated by thread T0 here:
-    #0 0x4d8e08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67
-    #1 0x7f800af6f3fc in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
-    #2 0x7f800af64b9f in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21
-    #3 0x7f800af91230 in bfd_get_debug_link_info_1 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:1191:8
-    #4 0x7f800af91b8a in find_separate_debug_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:1423:10
-    #5 0x7f800af91a0f in bfd_follow_gnu_debuglink /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:1582:10
-    #6 0x7f800b110614 in _bfd_dwarf2_slurp_debug_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4345:19
-    #7 0x7f800b11bc67 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4538:9
-    #8 0x7f800b05e38b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
-    #9 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #10 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #11 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #12 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #13 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #14 0x7f8009fa3680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:559:24 in bfd_getl32
-Shadow bytes around the buggy address:
-  0x0c047fff8000: fa fa 00 01 fa fa 00 06 fa fa fd fa fa fa fd fa
-  0x0c047fff8010: fa fa fd fd fa fa fd fa fa fa fd fa fa fa fd fa
-  0x0c047fff8020: fa fa fd fa fa fa fd fd fa fa fd fa fa fa fd fa
-  0x0c047fff8030: fa fa fd fa fa fa fd fd fa fa fd fa fa fa fd fa
-  0x0c047fff8040: fa fa fd fa fa fa fd fd fa fa fd fa fa fa 00 fa
-=>0x0c047fff8050: fa fa 00[06]fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8070: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8090: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==11994==ABORTING
-
-Affected version:
-2.29.51.20170924 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=52b36c51e5bf6d7600fdc6ba115b170b0e78e31d
+Apache Airflow, version 2.7.0 through 2.7.3, has a vulnerability that allow=
+s an attacker to trigger a DAG in a GET request without CSRF validation.=C2=
+=A0As a result, it was possible for a malicious website opened in the same =
+browser - by the user who also had Airflow UI opened - to trigger the execu=
+tion of DAGs without the user's consent.
+Users are advised to upgrade to version 2.8.0 or later which is not affected
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-CVE-2017-15021
+Tareq Ahamed ( 0xt4req) (finder)
+Jens Scheffler (remediation developer)
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00373-binutils-heapoverflow-bfd_getl32
+References:
 
-Timeline:
-2017-09-24: bug discovered and reported to upstream
-2017-09-24: upstream released a patch
-2017-10-03: blog post about the issue
-2017-10-04: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
-Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/03/binutils-heap-based-buffer-overflow-in-bfd_getl32-opncls-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-768991.325589926--
+https://github.com/apache/airflow/pull/36026
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-49920
 
