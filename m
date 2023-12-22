@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2080" "Sunday" "29" "January" "2017" "17:50:41" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<9288234.IgCNv62ja1@arcadia>" "64" "[oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)" nil nil nil "1" "2017012916:50:41" "[oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)" (number mark "U       ago@gentoo.o Jan 29   64/2080  " thread-indent "\"[oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 18008 invoked by uid 550); 29 Jan 2017 16:50:59 -0000
+Received: (qmail 31756 invoked by uid 550); 22 Dec 2023 22:33:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17972 invoked from network); 29 Jan 2017 16:50:58 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 30413 invoked from network); 22 Dec 2023 18:43:08 -0000
+Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::1010" (mail.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
+ i=@gathman.org; q=dns/txt; s=default; t=1703270580; 
+ h=date : from : to : subject : in-reply-to : message-id : 
+ references : mime-version : content-type : date : from : 
+ subject; bh=ReP1aSWk20XysLeGfrDQzu1GC9TPnO9TASe7dS9TLj8=; 
+ b=HWf6D+4oQ6GDEZMAAn3zhUradXH2s+islc6vil9A+WpLK8OZJUcQdtLp
+ unLiLn+BWK8nraLt+8f4wFl+tYraypbOx80ZZU5Tsl9c0hWAr6WcXnPYU3
+ qZJAq740b1hVplnWqQgSRvAO1uxv6QYvZzkZqOmTwuxzUoEC9tl0/KGq4=
+Date: Fri, 22 Dec 2023 13:42:49 -0500 (EST)
+From: Stuart D Gathman <stuart@gathman.org>
 To: oss-security@lists.openwall.com
-Date: Sun, 29 Jan 2017 17:50:41 +0100
-Message-ID: <9288234.IgCNv62ja1@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
+Message-ID: <72b7513c-c471-1c8f-cbdb-574536d18ec4@gathman.org>
+References: <20231221143630.GD14101@suse.de> <20231221144656.GA40693@veps.esmtp.org> <20231222104647.GH14101@suse.de> <ZYVufT0sq16Z-M43@symphytum.spacehopper.org> <20231222121134.GI14101@suse.de> <20231222150438.GA13989@unix-ag.uni-kl.de>
+ <CAHjsZGbiZYGug2L04iZ+VEmMg-pdfKyKOGdcSeCLnsZYd0Vm2Q@mail.gmail.com> <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: Re: [oss-security] Re: New SMTP smuggling attack
 
-Description:
-mp3splt is a command line utility to split mp3 and ogg files without decoding.
+On Sat, 23 Dec 2023, Alexander E. Patrakov wrote:
 
-A fuzz on it discovered a NULL pointer access.
+>> I'm trying to make sense of it - where's the compromise of the
+>> Confidentiality, Integrity or Availability of the affected mail
+>> servers?
+>>
+>
+> The integrity of the sender's identity, as a minimum, is compromised
+> here. Normally, when relaying mail, servers add a "Received:" header
+> that specifies where they received the connection from. This allows
+> tracking down the true origin of the message. The smuggled message
+> does not have such a header and thus misrepresents the vulnerable
+> relay as the ultimate sender. Additionally, if the relay has
+> destination-based deny lists that deny some but not all addresses on
+> the destination domain, they are sidestepped.
 
-The complete ASan output:
+This is certainly a bug, but the currently reality is that
+authentication involves SPF, DKIM, and other schemes - and does not
+solely rely on headers.  So can this "delete some headers" attack
+compromise these authentication schemes?
 
-# mp3splt -P -f -t 0.1 -a $FILE
-==2581==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x7f36fb0a159a bp 0x7ffdc2708cb0 sp 0x7ffdc2708438 T0)
-==2581==The signal is caused by a READ memory access.
-==2581==Hint: address points to the zero page.
-    #0 0x7f36fb0a1599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
-    #1 0x47a571 in __interceptor_fopen64 /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:5167
-    #2 0x7f36fbf0d27e in splt_cue_export_to_file /tmp/portage/media-
-libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/cue.c:725
-    #3 0x7f36fbf0911b in mp3splt_export /tmp/portage/media-
-libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/mp3splt.c:1665
-    #4 0x51d5f0 in main /tmp/portage/media-
-sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:901:13
-    #5 0x7f36fb04061f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
+I don't have a PoC, but I think so.  If the original sender can indeed
+convince the victim to relay their message, the victim will sign it
+using their DKIM key - missing header fields and all.  Relays will
+typically alter the MAIL FROM so that SPF authentication passes.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
-==2581==ABORTING
-
-Affected version:
-0.9.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00129-mp3splt-nullptr-splt_cue_export_to_file
-
-Timeline:
-2017-01-01: private report to upstream via mail
-2017-01-29: public upstream report on sourceforge
-2017-01-29: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-splt_cue_export_to_file-cue-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+But, that first "If" is the kicker.  Any mail admin these days is very
+careful about who can relay through their server.  If they are relaying
+at all, it is for a customer, partner, or buddy.
