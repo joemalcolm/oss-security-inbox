@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7566" "Thursday" "12" "September" "2019" "17:39:27" "+0200" "Solar Designer" "solar@openwall.com" "<20190912153927.GA27634@openwall.com>" "115" "Re: [oss-security] Telegram privacy fails again." "^Date:" nil nil "9" "2019091215:39:27" "[oss-security] Telegram privacy fails again." (number mark "U       solar@openwa Sep 12  115/7566  " thread-indent "\"Re: [oss-security] Telegram privacy fails again.\"\n") "<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>" ("<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Telegram privacy fails again." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14311 invoked by uid 550); 12 Sep 2019 15:42:39 -0000
+Received: (qmail 5462 invoked by uid 550); 23 Dec 2023 01:00:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,132 +6,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13560 invoked from network); 12 Sep 2019 15:39:55 -0000
-Message-ID: <20190912153927.GA27634@openwall.com>
-References: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 12 Sep 2019 17:39:27 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Telegram privacy fails again.
+Received: (qmail 13644 invoked from network); 22 Dec 2023 23:32:39 -0000
+Date: Sat, 23 Dec 2023 01:33:13 +0200 (EET)
+From: Harry Sintonen <sintonen@iki.fi>
 To: oss-security@lists.openwall.com
+In-Reply-To: <72b7513c-c471-1c8f-cbdb-574536d18ec4@gathman.org>
+Message-ID: <d23e7dd0-eb16-046d-b418-ef130a2ccd4f@iki.fi>
+References: <20231221143630.GD14101@suse.de> <20231221144656.GA40693@veps.esmtp.org> <20231222104647.GH14101@suse.de> <ZYVufT0sq16Z-M43@symphytum.spacehopper.org> <20231222121134.GI14101@suse.de> <20231222150438.GA13989@unix-ag.uni-kl.de>
+ <CAHjsZGbiZYGug2L04iZ+VEmMg-pdfKyKOGdcSeCLnsZYd0Vm2Q@mail.gmail.com> <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com> <72b7513c-c471-1c8f-cbdb-574536d18ec4@gathman.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: Re: [oss-security] Re: New SMTP smuggling attack
 
-On Mon, Sep 09, 2019 at 11:16:37PM +0400, Dhiraj Mishra wrote:
-> well-known feature of deleting messages, which allows users to delete
-> messages sent by mistake or genuinely to any recipient. It was observed
-> that once the message (image) is sent to the recipient, it still remains in
-> the internal storage of the user which is located at `/Telegram/Telegram
-> Images/`path.
-[...]
-> Assume a scenario where Bob sends a message which is a confidential image
-> and was mistakenly sent to Alice, Bob proceeds to utilize a feature of
-> Telegram known as "*Also delete for Alice*" which would essentially delete
-> the message for Alice. Apparently, this feature does not work as intended,
-> as Alice would still be able to see the image stored under `*/Telegram/Telegram
-> Images/` *folder, concluding that the feature only deletes the image from
-> the chat window.
-[...]
-> You're relying on a functionality that is broken since your file would
-> still be present in storage for all users. Aside from this, I found that
-> since Telegram takes `read/write/modify` permission of the USB storage
-> which technically means the confidential photo should have been deleted
-> from Alice's device or storage.
-> 
-> A compete, app for Telegram which is WhatsApp also has the same
-> feature to "*Delete
-> for everyone*". If you perform the following steps mentioned above in
-> WhatsApp it deletes the confidential photo from Alice's `*/Whatsapp/Whatsapp
-> Media/Whatsapp Images/*` folder and maintains the privacy however Telegram
-> fails. WhatsApp takes the same permission when it comes to storage which is
-> `read/write/modify`.
+On Fri, 22 Dec 2023, Stuart D Gathman wrote:
 
-A question here is what the intended behavior is.  Another question is
-what the users' reasonable expectations are.
+> On Sat, 23 Dec 2023, Alexander E. Patrakov wrote:
+>
+>>> I'm trying to make sense of it - where's the compromise of the
+>>> Confidentiality, Integrity or Availability of the affected mail
+>>> servers?
+>>> 
+>> 
+>> The integrity of the sender's identity, as a minimum, is compromised
+>> here. Normally, when relaying mail, servers add a "Received:" header
+>> that specifies where they received the connection from. This allows
+>> tracking down the true origin of the message. The smuggled message
+>> does not have such a header and thus misrepresents the vulnerable
+>> relay as the ultimate sender. Additionally, if the relay has
+>> destination-based deny lists that deny some but not all addresses on
+>> the destination domain, they are sidestepped.
+>
+> This is certainly a bug, but the currently reality is that
+> authentication involves SPF, DKIM, and other schemes - and does not
+> solely rely on headers.  So can this "delete some headers" attack
+> compromise these authentication schemes?
 
-Sender-imposed message deletion or expiry is necessarily unreliable: the
-recipient might have taken a copy of the message prior to deletion e.g.
-by taking a picture of the device's screen.  This should be clearly
-communicated to users of such features.
+This is the key here: These validation schemes will act on other data 
+(which the attacker provides, and is valid). Hence the email passes these 
+validations and continues in the delivery chain.
 
-However, it gets worse.  Sure, a reasonably informed sender knows they
-effectively trust the recipient not to bypass the message deletion
-or/and knowingly accepts the risk.  But do they also realize the deleted
-message can possibly be extracted from the device(s) by a third-party
-later?  This, too, should be clearly communicated.
+Now comes the actual smuggling bug: Since the parsing of <CR><LF> is 
+buggy, a forged message (will different details) will actually get 
+delivered.
 
-And, speaking of intended behavior, a question is: to what extent should
-the messenger app protect deleted messages from possible recovery?
-Another question is: to what extent such protection is even possible?
+This is all described in detail in the excellent SEC Consult advisory.
 
-Dhiraj's message implies WhatsApp does what it should while Telegram
-does not.  This might be so.  However, without clearly stated security
-(or privacy) properties the apps are supposed to have, we can't tell.
 
-Sure, by common sense Telegram should also delete the file since it's so
-easy to do and defeats such an easy bypass, but I doubt the expected
-behavior is clearly stated anywhere for either app.
-
-Quite likely, WhatsApp merely deletes (aka unlinks) the file from the
-filesystem.  If so, that does not actually wipe the file's content,
-likely allowing for its recovery by a more advanced user (or attacker).
-
-Even if it did wipe the file's content, it is almost certainly unable to
-reasonably achieve that at a physical level through portable Android
-APIs due to how modern flash memories work.  For wear leveling, the
-flash memory controller would likely allocate new physical blocks for
-the new writes, and leave the blocks with the deleted file's content
-untouched until a lot later (such as until the total writes from that
-point on exceed the device's free capacity, which might be never).
-Again, an even more advanced user (or attacker) would possibly be able
-to recover the deleted and wiped file through vendor-specific low-level
-access to the flash memory chip.
-
-What can we do to make data deletion more reliable?  One thing we can do
-is only store the data encrypted, and to use per-datum encryption keys.
-Then if we can reliably delete the key, the data is lost for good.
-
-Can we reliably delete a key?  That's similarly tricky.  Some devices
-provide a hardware key store separate from the main flash memory, and
-maybe by reusing key slots we can in fact delete old keys.  Or maybe
-not.  I'd like more research on this.
-
-Besides, use of (only) a hardware key store with a low number of key
-slots is incompatible with the need to have per-datum keys (rather than
-per-app).  You wouldn't comfortably reinstall the messaging app each
-time you want to have greater assurance the deleted messages are gone.
-(And you wouldn't impose this on recipients of your messages.)
-
-So I welcome research on use of (large) per-datum keys and their
-deletion from flash memory, like I had suggested in this tweet thread in
-May 2018:
-
-https://twitter.com/solardiz/status/1002264067887763456
-
-<solardiz> Use case for >256-bit symmetric keys: temporary storage on flash media (e.g., extra key material, on top of OS key store, for messaging apps' DBs on Android) with key bits spread across files numerous/large enough that unknown order of known bits provides security after deletion.
-
-<mik235> I think that's already what LUKS does.  If it changes a lot, you end up with atomicity/integrity issues.
-
-<ryancdotorg> Yes, LUKS uses something it calls "anti-forensic information splitting".  I'm not sure what the default size is. Here's a paper describing the scheme (TKS1): http://clemens.endorphin.org/TKS1-draft.pdf
-
-<solardiz> Thanks! I just read this paper. It's related, but different: it talks about blocks (not) surviving whereas I talk about the ordering of blocks not sufficiently surviving (it'll take some research to figure out the probability and how to improve it for real-world flash media).
-
-<ryancdotorg> If I'm understanding correctly then, your unstated assumption is that a large enough key will not be stored in a predictable sequence of blocks on the physical flash, and that erasure of the file will cause the bookkeeping data containing the sequence to be lost?
-
-<solardiz> Sort of. But I realize this assumption might not hold true, or not on its own, which is why I say "it'll take some research [...] to improve it for real-world flash media". Not storing in a predictable sequence feels easier, ensuring the bookkeeping is lost feels hard/unreliable.
-
-<ryancdotorg> I'd be very interested in seeing some research on how this works out on real-world flash media. WRT Signal specifically, are you aware that it (at least on Android) stores the db key in the secure element? You won't be able to read it from a filesystem or flash dump.
-
-<solardiz> Per the tweet thread below, this is a relatively recent change (compared to Signal on iOS) and the actual behavior is at best device-specific - I asked whether any (only Google's own latest?) Android devices do it already and got no reply yet. Do you know?
-Quote Tweet
-<solardiz> @moxie @CopperheadOS Per Signal-Android commit "Migrate from SQLite and ciphertext blobs to SQLCipher + KeyStore" from Jan 2018, it looks like that's when Signal for Android also started to use OS native key store.  Does that also use a secure enclave on any Android devices?
-
-<ryancdotorg> My understanding is that it uses the secure enclave if available, but I might be wrong. I don't know what's needed to support it device and os wise. From the API docs, it sounds like the KeyStore API decides how to store it. There's a ".isInsideSecurityHardware()" call.
-
-(There were more branches of these Twitter threads at the time; I quoted
-the one I found most relevant.)
-
-Alexander
+   Regards,
+-- 
+l=2001;main(i){float o,O,_,I,D;for(;O=I=l/571.-1.75,l;)for(putchar(--l%80?
+i:10),o=D=l%80*.05-2,i=31;_=O*O,O=2*o*O+I,o=o*o-_+D,o+_+_<4+D&i++<87;);puts
+("  Harry 'Piru' Sintonen <sintonen@iki.fi> https://www.iki.fi/sintonen");}
