@@ -1,59 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/23/1
-Message-ID: <f016f44efad2279da0c832dcef82f02491c9f889.camel@dino.im>
-Date: Thu, 23 Mar 2023 12:35:59 -0600
-From: Dino Team <team@...o.im>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/10
+Message-ID: <20231222164156.GA6189@openwall.com>
+Date: Fri, 22 Dec 2023 17:41:56 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2023-28686] Insufficient message sender validation in Dino
+Subject: Fwd: [pfx-ann] Postfix stable release 3.8.4
 Content-Type: text/plain; charset=utf-8
 
-### Affected software
+----- Forwarded message from Wietse Venema via Postfix-announce <postfix-announce@...tfix.org> -----
 
-Dino (Instant Messenger) - https://dino.im/
+To: Postfix announce <postfix-announce@...tfix.org>
+Date: Fri, 22 Dec 2023 11:30:21 -0500 (EST)
+CC: Postfix users <postfix-users@...tfix.org>
+Subject: [pfx-ann] Postfix stable release 3.8.4
+From: Wietse Venema via Postfix-announce <postfix-announce@...tfix.org>
+Reply-To: Wietse Venema <wietse@...cupine.org>
 
-### Severity
+[An on-line version of this announcement will be available at https://www.postfix.org/announcements/postfix-3.8.4.html]
 
-Medium (5.3): AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Fixed with Postfix 3.8.4:
 
-### Affected versions
-- Release version 0.4.0 and 0.4.1
-- Release version 0.3.0 and 0.3.1
-- Release version 0.2.2 and earlier
-- Nightly version 0.4.1-13-g6690d8e4 and earlier
+  * Security: this release adds support to defend
+    against an email spoofing attack (SMTP smuggling) on
+    recipients at a Postfix server. For background, see
+    https://www.postfix.org/smtp-smuggling.html.
 
-### Fixed versions
-- Release version 0.4.2
-- Release version 0.3.2
-- Release version 0.2.3
-- Nightly version 0.4.1-14-gef8fb0e9
+    Sites concerned about SMTP smuggling attacks should enable this
+    feature on Internet-facing Postfix servers. For compatibility
+    with non-standard clients, Postfix by default excludes clients
+    in mynetworks from this countermeasure.
 
-### Description
+    The recommended settings are:
 
-It was discovered that when a Dino client receives a specifically
-crafted message from an unauthorized sender, it would use information
-from that message to add, update or remove entries in the user's
-personal bookmark store without requiring further user interaction.
+	# Optionally disconnect remote SMTP clients that send bare newlines,
+	# but allow local clients with non-standard SMTP implementations
+	# such as netcat, fax machines, or load balancer health checks.
+	#
+	smtpd_forbid_bare_newline = yes
+	smtpd_forbid_bare_newline_exclusions = $mynetworks
 
-This vulnerability allows the attacker to change how group chats are
-displayed or to force a user to join or leave an attacker-selected
-groupchat. This can be used to trick the user to reveal sensitive
-information to the attacker.
+    The smtpd_forbid_bare_newline feature is disabled by default.
 
-### Advice
+You can find the updated Postfix source code at the mirrors listed at
+https://www.postfix.org/.
 
-All deployments should upgrade to a fixed version or apply the patch
-from commit ef8fb0e94ce79d5fde2943e433ad0422eb7f70ec.
+	Wietse
+_______________________________________________
+Postfix-announce mailing list -- postfix-announce@...tfix.org
+To unsubscribe send an email to postfix-announce-leave@...tfix.org
 
-### Credits
-
-Many thanks to Kim Alvefur for discovering and reporting this issue.
-
-### Links
-
-- https://dino.im/security/cve-2023-28686/
-- https://github.com/dino/dino/commit/ef8fb0e
-- https://github.com/dino/dino/releases/tag/v0.4.2
-- https://github.com/dino/dino/releases/tag/v0.3.2
-- https://github.com/dino/dino/releases/tag/v0.2.3
-- https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28686
-
+----- End forwarded message -----
