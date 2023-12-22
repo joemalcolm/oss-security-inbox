@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1110" "Friday" "18" "November" "2016" "14:58:26" "+0000" "Jason Cooper" "osssecurity@lakedaemon.net" "<20161118145826.GA2799@io.lakedaemon.net>" "27" "[oss-security] Linux encrypted boot security, was: CVE-2016-4484: - Cryptsetup Initrd root Shell" nil nil nil "11" "2016111814:58:26" "[oss-security] Linux encrypted boot security, was: CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "U       osssecurity@ Nov 18   27/1110  " thread-indent "\"[oss-security] Linux encrypted boot security, was: CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" "<20161116155529.GJ5329@io.lakedaemon.net>" "<c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>" "<20161117163922.GL5329@io.lakedaemon.net>" "<6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>" "<20161117175017.GM5329@io.lakedaemon.net>" "<8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>" "<cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15366 invoked by uid 550); 18 Nov 2016 14:59:49 -0000
+Received: (qmail 28216 invoked by uid 550); 22 Dec 2023 22:33:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13520 invoked from network); 18 Nov 2016 14:58:42 -0000
-X-MHO-User: 7929688f-ad9f-11e6-94b7-cbe6054a74b1
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Originating-IP: 173.50.81.193
-X-Mail-Handler: DuoCircle Outbound SMTP
-X-DKIM: OpenDKIM Filter v2.6.8 io A76EE8005C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
-	s=mail; t=1479481106;
-	bh=wt7myZ4jFj9HYCFVhxJBLTpxqo/yoN2ywAhycOkggg0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BKph/Oe2pGRRDM9Mm2z0OYPEz41xnRkqNXLneI6rnVmqqCDTBwZJNB59CvzkANzNk
-	 dwvCpk2RDueDerOEEOCV9L+/K9hN1o/ZZ2hq099ITopmiaXK8BN8sIP3PiahoZfJDz
-	 oNVSO/k5OO/6oT9cmYfBuDadX0DAr3G/HQejweOTRMoHv4zvbPqhuv39E24PvI/9sC
-	 qT7lzp/TwH7bNjNwWe2vZRBmHDWT9YuxDhhBjz7zw72riqLARgVdaabKV/YAarNrU8
-	 EshitC5wiCci892+ZuEAqGKDLdCArg/lOir++kDXXov/C1RIuJrvuN/AfntHjIqSAA
-	 giTYEiEDe6qpQ==
-Date: Fri, 18 Nov 2016 14:58:26 +0000
-From: Jason Cooper <osssecurity@lakedaemon.net>
+Received: (qmail 21996 invoked from network); 22 Dec 2023 17:51:48 -0000
+Date: Fri, 22 Dec 2023 18:52:21 +0100
+From: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
 To: oss-security@lists.openwall.com
-Cc: john.haxby@oracle.com
-Message-ID: <20161118145826.GA2799@io.lakedaemon.net>
-References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
- <20161116155529.GJ5329@io.lakedaemon.net>
- <c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>
- <20161117163922.GL5329@io.lakedaemon.net>
- <6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>
- <20161117175017.GM5329@io.lakedaemon.net>
- <8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>
- <cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>
+Message-ID: <20231222175221.GA7191@unix-ag.uni-kl.de>
+References: <20231221143630.GD14101@suse.de>
+ <20231221144656.GA40693@veps.esmtp.org>
+ <20231222104647.GH14101@suse.de>
+ <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
+ <20231222121134.GI14101@suse.de>
+ <20231222150438.GA13989@unix-ag.uni-kl.de>
+ <CAHjsZGbiZYGug2L04iZ+VEmMg-pdfKyKOGdcSeCLnsZYd0Vm2Q@mail.gmail.com>
+ <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] Linux encrypted boot security, was: CVE-2016-4484: - Cryptsetup
- Initrd root Shell
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
+Author: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+Subject: Re: [oss-security] Re: New SMTP smuggling attack
 
-Hi Jacobo,
+Hi all,
 
-On Thu, Nov 17, 2016 at 07:54:20PM -0500, Jacobo Avariento wrote:
-> Actually when using full disk encryption, to lock the BIOS and GRUB must
-> be mandatory, otherwise you are protecting your confidentiality but not
-> your integrity. Even with a password in GRUB with an unprotected BIOS
-> you can also boot from a USB device and access encrypted partitions,
-> delete them, etc.
+On Sat, Dec 23, 2023 at 12:40:06AM +0800, Alexander E. Patrakov wrote:
+> On Fri, Dec 22, 2023 at 11:57 PM Rodrigo Freire <rfreire@redhat.com> wrote:
+> > On Fri, Dec 22, 2023 at 12:10 PM Erik Auerswald
+> > <auerswal@unix-ag.uni-kl.de> wrote:
+> > 
+> > >   * The CERT/CC and VINCE involvement resulted in "there is no
+> > >     vulnerability".
+> >
+> > I'm trying to make sense of it - where's the compromise of the
+> > Confidentiality, Integrity or Availability of the affected mail
+> > servers?
+> 
+> The integrity of the sender's identity, as a minimum, is compromised
+> here. Normally, when relaying mail, servers add a "Received:" header
+> that specifies where they received the connection from. This allows
+> tracking down the true origin of the message. The smuggled message
+> does not have such a header and thus misrepresents the vulnerable
+> relay as the ultimate sender. Additionally, if the relay has
+> destination-based deny lists that deny some but not all addresses on
+> the destination domain, they are sidestepped.
 
-As long as the user in conscious of the threat model and makes the
-deliberate decision, this is fine.  But please always advise folks,
-"Physical access trumps everything.  Period."
+Indeed, this is an integrity attack.  It breaks the integrity of an email
+system, as opposed to the integrity of a single product.  This might
+make it a bit harder to understand, although the SEC Consult blog post[1]
+provides an in-depth description of the issue.
 
-I can't count the number of hard drives I've pulled and cmos' I've
-reset.  That why I always advise moving all of the unencrypted boot
-material (bootloader, /boot, LUKS header) to a separate thumbdrive and
-to boot via USB.
+[1]: https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/
 
-Maintaining physical custody of the boot material keeps it more secure
-and is easier for the user because there are fewer passwords involved.
-And, with UEFI, you can update/configure it from within the OS, which
-means the password for that can be kept in a password manager on the
-encrypted volume.
+Any user of an affected outbound server can spoof email from any user of
+the same outbound server despite SPF and DKIM (DMARC+DKIM can prevent this
+in some cases, also more senders can be spoofed in specific cases, for
+details see the blog post[1]).  But for this to work, the inbound server
+must act as a confused deputy.  Both outbound and inbound servers need to
+be differently vulnerable to enable the attack.  This specific attack can
+be prevented unilaterally on either the outbound or the inbound server.
 
-thx,
+According to the blog post[1], GMX immediatly understood the threat to
+their system and fixed it on their side (at least as an outbound server).
+Microsoft also understood the threat, they just took longer to implement
+a fix (at least as an outbound server).
 
-Jason.
+[The Cisco Secure Email [Cloud] Gateway's default enabled feature to act
+as a facilitator of the attack is a bit perplexing.  I would expect an
+email security product to thwart attacks, not enable them.]
+
+For email server open source projects, relevant for the oss-security
+list, the primary vulnerability is to act as a confused deputy inbound
+server, because users of such email servers usually have a much smaller
+number of accounts than the big freemail providers.  But, in general,
+they could also possibly act as a vulnerable outbound server, e.g.,
+after a legitimite user account has been compromised.
+
+Cheers,
+Erik
