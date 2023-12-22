@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/27/5
-Message-ID: <02573012-9cb8-a624-f621-982539a936ef@apache.org>
-Date: Fri, 27 Oct 2023 14:44:26 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/23/1
+Message-ID: <d23e7dd0-eb16-046d-b418-ef130a2ccd4f@iki.fi>
+Date: Sat, 23 Dec 2023 01:33:13 +0200 (EET)
+From: Harry Sintonen <sintonen@....fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46604: Apache ActiveMQ, Apache ActiveMQ Legacy OpenWire Module: Unbounded deserialization causes ActiveMQ to be vulnerable to a remote code execution (RCE) attack 
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+On Fri, 22 Dec 2023, Stuart D Gathman wrote:
 
-- Apache ActiveMQ 5.18.0 before 5.18.3
-- Apache ActiveMQ 5.17.0 before 5.17.6
-- Apache ActiveMQ 5.16.0 before 5.16.7
-- Apache ActiveMQ before 5.15.16
-- Apache ActiveMQ Legacy OpenWire Module 5.18.0 before 5.18.3
-- Apache ActiveMQ Legacy OpenWire Module 5.17.0 before 5.17.6
-- Apache ActiveMQ Legacy OpenWire Module 5.16.0 before 5.16.7
-- Apache ActiveMQ Legacy OpenWire Module 5.8.0 before 5.15.16
+> On Sat, 23 Dec 2023, Alexander E. Patrakov wrote:
+>
+>>> I'm trying to make sense of it - where's the compromise of the
+>>> Confidentiality, Integrity or Availability of the affected mail
+>>> servers?
+>>> 
+>> 
+>> The integrity of the sender's identity, as a minimum, is compromised
+>> here. Normally, when relaying mail, servers add a "Received:" header
+>> that specifies where they received the connection from. This allows
+>> tracking down the true origin of the message. The smuggled message
+>> does not have such a header and thus misrepresents the vulnerable
+>> relay as the ultimate sender. Additionally, if the relay has
+>> destination-based deny lists that deny some but not all addresses on
+>> the destination domain, they are sidestepped.
+>
+> This is certainly a bug, but the currently reality is that
+> authentication involves SPF, DKIM, and other schemes - and does not
+> solely rely on headers.  So can this "delete some headers" attack
+> compromise these authentication schemes?
 
-Description:
+This is the key here: These validation schemes will act on other data 
+(which the attacker provides, and is valid). Hence the email passes these 
+validations and continues in the delivery chain.
 
-Apache ActiveMQ is vulnerable to Remote Code Execution.The vulnerability may allow a remote attacker with network access to a broker to run arbitrary shell commands by manipulating serialized class types in the OpenWire protocol to cause the broker to instantiate any class on the classpath. 
+Now comes the actual smuggling bug: Since the parsing of <CR><LF> is 
+buggy, a forged message (will different details) will actually get 
+delivered.
 
-Users are recommended to upgrade to version 5.15.16, 5.16.7, 5.17.6, or 5.18.3, which fixes this issue.
+This is all described in detail in the excellent SEC Consult advisory.
 
-This issue is being tracked as AMQ-9370 
 
-References:
-
-https://activemq.apache.org/security-advisories.data/CVE-2023-46604
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46604
-https://issues.apache.org/jira/browse/AMQ-9370
-
+   Regards,
+-- 
+l=2001;main(i){float o,O,_,I,D;for(;O=I=l/571.-1.75,l;)for(putchar(--l%80?
+i:10),o=D=l%80*.05-2,i=31;_=O*O,O=2*o*O+I,o=o*o-_+D,o+_+_<4+D&i++<87;);puts
+("  Harry 'Piru' Sintonen <sintonen@....fi> https://www.iki.fi/sintonen");}
