@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1276" "Monday" "28" "March" "2016" "13:37:56" "-0400" "Velmurugan Periasamy" "vel@apache.org" "<D31EE434.14B879%vel@apache.org>" "35" "[oss-security] CVE update (CVE-2016-0735) - Fixed in Ranger 0.5.2" nil nil nil "3" "2016032817:37:56" "[oss-security] CVE update (CVE-2016-0735) - Fixed in Ranger 0.5.2" (number mark "U       vel@apache.o Mar 28   35/1276  " thread-indent "\"[oss-security] CVE update (CVE-2016-0735) - Fixed in Ranger 0.5.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19600 invoked by uid 550); 28 Mar 2016 18:06:51 -0000
+Received: (qmail 24385 invoked by uid 550); 22 Dec 2023 12:21:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32638 invoked from network); 28 Mar 2016 17:38:15 -0000
-User-Agent: Microsoft-MacOutlook/14.5.4.150722
-Date: Mon, 28 Mar 2016 13:37:56 -0400
-From: Velmurugan Periasamy <vel@apache.org>
-To: "dev@ranger.incubator.apache.org" <dev@ranger.incubator.apache.org>,
-	"user@ranger.incubator.apache.org" <user@ranger.incubator.apache.org>,
-	<security@apache.org>,
-	<oss-security@lists.openwall.com>,
-	<bugtraq@securityfocus.com>
-CC: Velmurugan Periasamy <vel@apache.org>,
-	<private@ranger.incubator.apache.org>
-Message-ID: <D31EE434.14B879%vel@apache.org>
-Thread-Topic: CVE update (CVE-2016-0735) - Fixed in Ranger 0.5.2
-Mime-version: 1.0
-Content-type: multipart/alternative;
-	boundary="B_3542017083_52007087"
-Subject: [oss-security] CVE update (CVE-2016-0735) - Fixed in Ranger 0.5.2
+Received: (qmail 9321 invoked from network); 22 Dec 2023 11:23:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=schafweide.org;
+	s=2007; t=1703244224;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XhuHS0O54C2cpdcdwpIODj9LR6CrUSKSulocKIA1LQY=;
+	b=eqgHatCAyVsNe89gNlrMuw47ho0DDA8/qELEM/6kzIJBNjWepb4U0sOh5d/7HMqRv2SYNe
+	WKV9r25o/bJL2NsjHJu35t4YlRI67SIbTztUvJK7eiaKdzUYbp+w7NLw8IeqKIpkodCqaH
+	XEZyFH6f5wE5NQejXzdb2XWhlxE+KBo=
+Message-ID: <d0ca7096-045c-407f-9f48-c8e3855448b9@schafweide.org>
+Date: Fri, 22 Dec 2023 12:23:43 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: de-DE, en-GB
+To: oss-security@lists.openwall.com
+References: <20231221143630.GD14101@suse.de>
+ <20231221144656.GA40693@veps.esmtp.org> <20231222104647.GH14101@suse.de>
+ <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
+From: Bjoern Franke <bjo@schafweide.org>
+In-Reply-To: <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: New SMTP smuggling attack
 
---B_3542017083_52007087
-Content-type: text/plain;
-	charset="ISO-8859-1"
-Content-transfer-encoding: quoted-printable
+Hi,
 
-Hello:
+> 
+> I'm a little confused by sec-consult's process here. They identify a
+> problem affecting various pieces of software including some very widely
+> deployed open source software, go to the trouble of doing a coordinated
+> disclosure, but only do that with...looking at their timeline... gmx,
+> microsoft and cisco?
+> 
 
-Here=B9s a CVE update for Ranger 0.5.2 release. Please see below details.
+they already got some criticism regarding this behaviour:
 
-Thank you,
-Velmurugan Periasamy
+https://zombofant.net/@jssfr/111618969359339789
 
---------------------------------------------------------------------------
-CVE-2016-0735: Ranger policy excludes flags processing
---------------------------------------------------------------------------
-Severity: Important
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.0/0.5.1 versions of Apache Ranger
-Users affected: All users that use Ranger to authorize HBase, Hive, and
-Knox.
-Description: In some cases, presence of an exclude policy at a
-resource-level can give the user access at its parent resource-level. For
-example, if a hive policy excludes access for a user to a particular column,
-then such a user would be able to alter the name of that table. Only a user
-who has access at the table level should be able to do so. Due to this bug
-however, the user is able to do the operation when an exclude policy is
-present at the column-level for that table.
-Mitigation: Users should upgrade to Ranger 0.5.2 version
---------------------------------------------------------------------------
+https://gay-pirate-assassins.de/@moanos/statuses/01HJ8D8XQ7ZJ89HN4TZFZZ9AS8
 
-
-
---B_3542017083_52007087--
-
+Regards
 
