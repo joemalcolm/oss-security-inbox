@@ -1,44 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/05/3
-Message-ID: <cf934b1c-e776-33a1-1e53-b8a0ea6a1840@free.fr>
-Date: Thu, 5 Jan 2023 18:29:34 +0100
-From: Gabriel Corona <gabriel.corona@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/14
+Message-ID: <20231222224527.GA6513@openwall.com>
+Date: Fri, 22 Dec 2023 23:45:27 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Code execution through MIME-type association of Mono interpreter and security expectations of MIME type associations
+Subject: Re: Fwd: [pfx-ann] Postfix stable release 3.8.4
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Dec 22, 2023 at 05:41:56PM +0100, Solar Designer wrote:
+> Subject: [pfx-ann] Postfix stable release 3.8.4
 
->> * Firefox and Thunderbird accept "special" MIME types (inode/* and
->>    x-scheme-handler/*) from remote servers;
+This was followed by almost identical announcements for 3 other stable
+branches of Postfix, with the fix included in 3.7.9, 3.6.13, and 3.5.23.
+I'm not forwarding those individual messages in here, but I thought it's
+relevant to mention that these 4 branches/releases got the fix now.
 
-> Not sure what you mean by “accept”.  Do you mean that download should be
-> aborted?
+> [An on-line version of this announcement will be available at https://www.postfix.org/announcements/postfix-3.8.4.html]
+> 
+> Fixed with Postfix 3.8.4:
+> 
+>   * Security: this release adds support to defend
+>     against an email spoofing attack (SMTP smuggling) on
+>     recipients at a Postfix server. For background, see
+>     https://www.postfix.org/smtp-smuggling.html.
+> 
+>     Sites concerned about SMTP smuggling attacks should enable this
+>     feature on Internet-facing Postfix servers. For compatibility
+>     with non-standard clients, Postfix by default excludes clients
+>     in mynetworks from this countermeasure.
+> 
+>     The recommended settings are:
+> 
+> 	# Optionally disconnect remote SMTP clients that send bare newlines,
+> 	# but allow local clients with non-standard SMTP implementations
+> 	# such as netcat, fax machines, or load balancer health checks.
+> 	#
+> 	smtpd_forbid_bare_newline = yes
+> 	smtpd_forbid_bare_newline_exclusions = $mynetworks
+> 
+>     The smtpd_forbid_bare_newline feature is disabled by default.
+> 
+> You can find the updated Postfix source code at the mirrors listed at
+> https://www.postfix.org/.
+> 
+> 	Wietse
+> _______________________________________________
+> Postfix-announce mailing list -- postfix-announce@...tfix.org
+> To unsubscribe send an email to postfix-announce-leave@...tfix.org
+> 
+> ----- End forwarded message -----
 
-No I mean that Firefox should ignore the Content-Type header for 
-choosing an application to handle the file when such a special MIME type 
-value is sent by the HTTP server.
-
-Currently when using inode/directory or x-scheme-handler/trash, 
-Firefox/Thunderbird proposes to use a file manager to handle the file. 
-If the file manager tries to spawn another program to handle the file, 
-this might be used to trick the user into thinking he is opening the 
-file with a safe program.
-
-A similar exploit might be possible if some application:
-
-* is registered to handle a custom URI scheme (eg. "foo:");
-* is not registered to handle regular files;
-* can trigger arbitrary code execution when called with a regular file.
-
-This might be expected to be safe. However an attacker might exploit 
-this by serving a malicious file with x-scheme-handler/foo: Firefox will 
-open the file using the application which will trigger the arbitrary 
-code execution.
-
-Regards,
-
-Gabriel
-
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+Alexander
