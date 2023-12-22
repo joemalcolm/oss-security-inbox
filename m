@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/18/2
-Message-ID: <7c583366-9388-6d73-bafe-aba03be24df9@apache.org>
-Date: Fri, 18 Aug 2023 20:50:18 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/2
+Message-ID: <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
+Date: Fri, 22 Dec 2023 11:09:49 +0000
+From: Stuart Henderson <stu@...cehopper.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-40037: Apache NiFi: Incomplete Validation of JDBC and JNDI Connection URLs 
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On 2023/12/22 11:46, Marcus Meissner wrote:
+> Hi,
+> 
+> FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
+> 
+> Not sure if we need it for others like sendmail too, as that is also
+> referenced by the security researchers.
 
-Affected versions:
-
-- Apache NiFi 1.21.0 through 1.23.0
-
-Description:
-
-Apache NiFi 1.21.0 through 1.23.0 support JDBC and JNDI JMS access in several Processors and Controller Services with connection URL validation that does not provide sufficient protection against crafted inputs. An authenticated and authorized user can bypass connection URL validation using custom input formatting. The resolution enhances connection URL validation and introduces validation for additional related properties. Upgrading to Apache NiFi 1.23.1 is the recommended mitigation.
-
-This issue is being tracked as NIFI-11920 
-
-Credit:
-
-Matei "Mal" Badanoiu (finder)
-
-References:
-
-https://nifi.apache.org/security.html#CVE-2023-40037
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-40037
-https://issues.apache.org/jira/browse/NIFI-11920
-
-Timeline:
-
-2023-08-06: reported
+I'm a little confused by sec-consult's process here. They identify a
+problem affecting various pieces of software including some very widely
+deployed open source software, go to the trouble of doing a coordinated
+disclosure, but only do that with...looking at their timeline... gmx,
+microsoft and cisco?
 
