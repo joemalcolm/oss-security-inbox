@@ -1,145 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/29/3
-Message-ID: <5992983.lOV4Wx5bFT@portable-bastien>
-Date: Mon, 29 May 2023 17:15:31 +0000
-From: Bastien Roucariès <rouca@...ian.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Stack overflow in imagemagick coders/tiff.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/12
+Message-ID: <72b7513c-c471-1c8f-cbdb-574536d18ec4@gathman.org>
+Date: Fri, 22 Dec 2023 13:42:49 -0500 (EST)
+From: Stuart D Gathman <stuart@...hman.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-Le lundi 29 mai 2023, 08:11:18 UTC Bastien Roucariès a écrit :
-Hi following this bug I will also ask a few other CVE for imagemagick tiff coder (BTW cc me I am not subscribed)
+On Sat, 23 Dec 2023, Alexander E. Patrakov wrote:
 
-> Hi,
+>> I'm trying to make sense of it - where's the compromise of the
+>> Confidentiality, Integrity or Availability of the affected mail
+>> servers?
+>>
+>
+> The integrity of the sender's identity, as a minimum, is compromised
+> here. Normally, when relaying mail, servers add a "Received:" header
+> that specifies where they received the connection from. This allows
+> tracking down the true origin of the message. The smuggled message
+> does not have such a header and thus misrepresents the vulnerable
+> relay as the ultimate sender. Additionally, if the relay has
+> destination-based deny lists that deny some but not all addresses on
+> the destination domain, they are sidestepped.
 
-CVE#0
-> 
-> Reading changelog and code of imagemagick, I want to report a stack overflow with crafted tiff file in imagemagick
-> 
-> Fixed (after 6.9.12-26) by:
-> https://github.com/ImageMagick/ImageMagick6/commit/85a370c79afeb45a97842b0959366af5236e9023
-> 
-> Original reporter was Muhammad Aldo Firmansyah
-> 
-> Thanks 
-> 
-> Bastien (rouca)
+This is certainly a bug, but the currently reality is that
+authentication involves SPF, DKIM, and other schemes - and does not
+solely rely on headers.  So can this "delete some headers" attack
+compromise these authentication schemes?
 
-CVE #1
+I don't have a PoC, but I think so.  If the original sender can indeed
+convince the victim to relay their message, the victim will sign it
+using their DKIM key - missing header fields and all.  Relays will
+typically alter the MAIL FROM so that SPF authentication passes.
 
-commit 7dbefda1c14e32d7bc4d3762a3a54f3ddaa85dd1
-Author: Dirk Lemstra <dirk@...stra.org>
-Date:   Sat Feb 19 07:46:46 2022 +0100
-
-    Raise exception when image could not be read but no exception was raised.
-    
-    Bail out in case of corrupted image
-    
-    https://github.com/ImageMagick/ImageMagick6/commit/3e15c68efcb1e6383c93e7dfe38ba6c37e614d1b
-    (cherry picked from commit 3e15c68efcb1e6383c93e7dfe38ba6c37e614d1b)
-
-
-CVE#2
-
-commit 08f1e56a006d939dc85ddfab29e85579a65f4943
-Author: Cristy <urban-warrior@...gemagick.org>
-Date:   Fri Feb 11 10:46:49 2022 -0500
-
-    Fix unintialised value
-    
-    bug: https://github.com/ImageMagick/ImageMagick/issues/4830
-    origin:  https://github.com/ImageMagick/ImageMagick6/commit/409d42205927c98cbb852ca96e109716f38f04ab
-
-CVE#3
-
-commit fb2beb87936fc0155431f655a937e869a86edf16
-Author: Cristy <urban-warrior@...gemagick.org>
-Date:   Thu Mar 17 15:02:49 2022 -0400
-
-    Fix buffer overrun in TIFF coder
-    
-    bug: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=42549
-    origin: https://github.com/ImageMagick/ImageMagick6/commit/de6ada9a068b01494bfb848024ed46942da9d238
-
-commit 4e1a165888a6aa7230dbdd7c87f59aadd5dbedec
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Fri Dec 17 14:05:04 2021 -0500
-
-    Fix buffer overrun in TIFF coder
-    
-    origin: https://github.com/ImageMagick/ImageMagick6/commit/add9cb14e14eef02806715d97abcf5d04a3e55dd
-
-commit 1b899a81bfdfec4cbe1ec7458825c50f00144fdb
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Sun Mar 14 07:44:52 2021 -0400
-
-    Fix buffer overrun in TIFF coder
-    
-    origin: https://github.com/ImageMagick/ImageMagick6/commit/2204eb57ae00b005b39165a47b8984eac01600a5
-
-CVE#4
-
-commit 01669597f665868cf1e4ccf27ab6fcd52aadaa43
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Sat Nov 6 09:01:26 2021 -0400
-
-    early exit on exception
-    
-    In case of malformed tiff image bail early
-    
-    origin: https://github.com/ImageMagick/ImageMagick6/commit/b272acab91444f2115099fe51ee6c91bb4db5d50
-    (cherry picked from commit b272acab91444f2115099fe51ee6c91bb4db5d50)
-
-
-CVE#5
-commit 506cdfbc6d246301be4b12ccdfc6d493c643deca
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Sat Sep 4 07:45:17 2021 -0400
-
-    initialize buffer before calling TIFFGetField()
-    
-    bug-oss-fuzz: https://oss-fuzz.com/testcase-detail/6502669439598592
-    bug: https://github.com/ImageMagick/ImageMagick6/issues/246
-    origin: https://github.com/ImageMagick/ImageMagick6/commit/995de330310dd35531165d9471fe4d31e0fa79ae
-
-commit f4ac98518241b8074735314f27b7eb47ee823e57
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Fri Sep 3 19:45:32 2021 -0400
-
-    Fix a non initialized value passed to TIFFGetField()
-    
-    bug-oss-fuzz: https://oss-fuzz.com/testcase-detail/6502669439598592
-    bug: https://github.com/ImageMagick/ImageMagick6/issues/246
-    origin: https://github.com/ImageMagick/ImageMagick6/commit/995de330310dd35531165d9471fe4d31e0fa79ae
-
-CVE#6
-
-commit 0c1a7d649cfc31ec53f0f5c20c0e793df2512ac5
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Mon Jul 26 13:38:45 2021 -0400
-
-    heap-based buffer overflow in TIFF coder (alert from Hunter Mitchell)
-    
-    bug: https://github.com/ImageMagick/ImageMagick6/issues/245
-    origin: https://github.com/ImageMagick/ImageMagick6/commit/f90a091c7dd12cc53b0999bf49d1c80651534eea
-
-commit b0c59a56625aaa3a9c13bfe4f88e287c38e062c9
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Mon Jul 26 13:26:21 2021 -0400
-
-    heap-based buffer overflow in TIFF coder (alert from Hunter Mitchell)
-    
-    origin:  https://github.com/ImageMagick/ImageMagick6/commit/35b88c9166bc1b3ce8893f52217bae00d8e2c532
-    bug: https://github.com/ImageMagick/ImageMagick6/issues/245
-
-commit b7882f2795db4e4e8f578cbe712dc4b81a47113f
-Author: Cristy <mikayla-grace@...an-warrior.org>
-Date:   Mon Jul 26 13:08:57 2021 -0400
-
-    heap-based buffer overflow in TIFF coder (alert from Hunter Mitchell)
-    
-    origin:  https://github.com/ImageMagick/ImageMagick6/commit/e1fbcdf3aad96d51db65c1601117396eac665a6d
-    bug: https://github.com/ImageMagick/ImageMagick6/issues/245
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+But, that first "If" is the kicker.  Any mail admin these days is very
+careful about who can relay through their server.  If they are relaying
+at all, it is for a customer, partner, or buddy.
