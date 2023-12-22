@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/06/6
-Message-ID: <9893eb17-906c-4bc1-8e13-a3d46fa43954@brondsema.net>
-Date: Mon, 6 Nov 2023 17:25:37 -0500
-From: Dave Brondsema <dave@...ndsema.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/5
+Message-ID: <d0ca7096-045c-407f-9f48-c8e3855448b9@schafweide.org>
+Date: Fri, 22 Dec 2023 12:23:43 +0100
+From: Bjoern Franke <bjo@...afweide.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46851: Apache Allura: sensitive information exposure via import
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Hi,
 
-Affected versions:
+> 
+> I'm a little confused by sec-consult's process here. They identify a
+> problem affecting various pieces of software including some very widely
+> deployed open source software, go to the trouble of doing a coordinated
+> disclosure, but only do that with...looking at their timeline... gmx,
+> microsoft and cisco?
+> 
 
-- Apache Allura 1.0.1 through 1.15.0
+they already got some criticism regarding this behaviour:
 
-Description:
+https://zombofant.net/@jssfr/111618969359339789
 
-Allura Discussion and Allura Forum importing does not restrict URL values 
-specified in attachments. Project administrators can run these imports, which 
-could cause Allura to read local files and expose them.  Exposing internal files 
-then can lead to other exploits, like session hijacking, or remote code execution.
+https://gay-pirate-assassins.de/@moanos/statuses/01HJ8D8XQ7ZJ89HN4TZFZZ9AS8
 
-This issue affects Apache Allura from 1.0.1 through 1.15.0.
-
-Users are recommended to upgrade to version 1.16.0, which fixes the issue.  If 
-you are unable to upgrade, set "disable_entry_points.allura.importers = 
-forge-tracker, forge-discussion" in your .ini config file.
-
-Credit:
-
-Stefan Schiller (Sonar) (finder)
-
-References:
-
-https://allura.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46851
+Regards
 
