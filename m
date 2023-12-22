@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/7
-Message-ID: <8e637dad-3c59-7108-064b-148c61ab3177@apache.org>
-Date: Thu, 22 Jun 2023 20:12:03 +0000
-From: Dominik Riemer <riemer@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/4
+Message-ID: <20231222121134.GI14101@suse.de>
+Date: Fri, 22 Dec 2023 13:11:37 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31469: Apache StreamPipes: Privilege escalation through non-admin user 
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Fri, Dec 22, 2023 at 11:09:49AM +0000, Stuart Henderson wrote:
+> On 2023/12/22 11:46, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
+> > 
+> > Not sure if we need it for others like sendmail too, as that is also
+> > referenced by the security researchers.
+> 
+> I'm a little confused by sec-consult's process here. They identify a
+> problem affecting various pieces of software including some very widely
+> deployed open source software, go to the trouble of doing a coordinated
+> disclosure, but only do that with...looking at their timeline... gmx,
+> microsoft and cisco?
 
-Affected versions:
+Yes its weird.
 
-- Apache StreamPipes 0.69.0 through 0.91.0
+I was also confused and actually only spotted the OSS software being
+affected on third read over their page.
 
-Description:
+They also reference CERT and VINCE, but at least SUSE was not pulled
+into the VINCE issue if there was any. (as CERT has not published
+anything I am not sure there was any besides the Cisco disclosure).
 
-A REST interface in Apache StreamPipes (versions 0.69.0 to 0.91.0) was not properly restricted to admin-only access. This allowed a non-admin user with valid login credentials to elevate privileges beyond the initially assigned roles.
-The issue is resolved by upgrading to StreamPipes 0.92.0.
+Also postfix timeline starts 4 days ago only.
+https://www.mail-archive.com/postfix-announce@postfix.org/msg00090.html
 
-Credit:
-
-Xun Bai, LJQC Open Source Security Institute (finder)
-
-References:
-
-https://streampipes.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31469
-
+Ciao, Marcus
