@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/9
-Message-ID: <20231019165354.kkjoxdbedeodyfik@yuggoth.org>
-Date: Thu, 19 Oct 2023 16:53:55 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/1
+Message-ID: <20231222104647.GH14101@suse.de>
+Date: Fri, 22 Dec 2023 11:46:48 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-On 2023-10-19 17:04:10 +0100 (+0100), Sam Bull wrote:
-[...]
-> Also a problem with shell security. If you paste something with
-> line breaks into bash, it executes them. If you paste the same
-> into fish, it doesn't (it'll display the multi-line input and
-> expect you to hit the enter key to execute it as a command).
+Hi,
 
-That observation may be outdated. At least my bash 5.2.15 on Debian
-does not execute pasted newlines, it treats it as a multi-line
-command and waits for an actual enter keypress (tested inside a few
-different terminal emulators including vanilla xterm, so pretty sure
-it's not being mitigated at that layer).
--- 
-Jeremy Stanley
+FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Not sure if we need it for others like sendmail too, as that is also
+referenced by the security researchers.
+
+Ciao, Marcus
+On Thu, Dec 21, 2023 at 02:46:56PM +0000, Claus Assmann wrote:
+> Just for completeness:
+> sendmail 8.18.0.2 has options to handle this too, e.g.,
+> 	Accept only CR LF . CR LF as end of an SMTP message as
+> 		required by the RFCs when the new srv_features
+> 		option 'o' is used.
+> 
+> And for those who read the source code there's also an FFR:
+> 	/* enable checking for "bare LF" in message */
+> 	"_FFR_BARE_LF",
