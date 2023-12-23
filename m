@@ -1,144 +1,227 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/02/1
-Message-ID: <49483cca.b2ec2.18914ae1e88.Coremail.linma@zju.edu.cn>
-Date: Sun, 2 Jul 2023 11:38:22 +0800 (GMT+08:00)
-From: "Lin Ma" <linma@....edu.cn>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/23/5
+Message-ID: <CA+-XxSE0v4B32UjrVZgu5WUpTb+78W3zpupnoJq4FeR3omPGSg@mail.gmail.com>
+Date: Sat, 23 Dec 2023 10:45:51 -0800
+From: Igor Seletskiy <i@...udlinux.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-3439: Linux MCTP use-after-free in mctp_sendmsg
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Alexander,
 
-We have found a concurrency use-after-free case in Linux kernel and assigned with CVE-2023-3439 by Red Hat Team.
+Thank you very much for doing the research and the summary.
+There is another point that I am concerned about.
+Based on what I know, in 2021, China passed a legislature that requires
+people to disclose vulnerabilities to the Chinese government within 2 days.
+I don't have a good grasp on the actual terms/conditions, but based on this:
+https://www.chinalawtranslate.com/en/product-security-vulnerabilites/
 
-Below is the details about this issue.
+*(2) Infomation on the relevant vulnerabilities shall be reported to the
+Ministry of Industry and Information Technology's network security threat
+and vulnerability information-sharing platform within 2 days; The content
+sent shall include the name, model number, and version of the products in
+which network product security vulnerabilities exist, as well as the
+vulnerability's technical characteristics, threat, scope of impact, and so
+forth.*
 
-=*=*=*=*=*=*=*=*=  Details  =*=*=*=*=*=*=*=*=
-
-bug fix patch (upstream): 
-https://github.com/torvalds/linux/commit/b561275d633b
-
-bug introduce commit:
-https://github.com/torvalds/linux/commit/583be982d934
-
-required privilege:
-CAP_NET_ADMIN
-
-crash stack:
-[   86.051955] ==================================================================
-    [   86.051955] BUG: KASAN: use-after-free in mctp_local_output+0x4e9/0xb7d
-    [   86.051955] Read of size 1 at addr ffff888005f298c0 by task poc/295
-    [   86.051955]
-    [   86.051955] Call Trace:
-    [   86.051955]  <TASK>
-    [   86.051955]  dump_stack_lvl+0x33/0x42
-    [   86.051955]  print_report.cold.13+0xb2/0x6b3
-    [   86.051955]  ? preempt_schedule_irq+0x57/0x80
-    [   86.051955]  ? mctp_local_output+0x4e9/0xb7d
-    [   86.051955]  kasan_report+0xa5/0x120
-    [   86.051955]  ? mctp_local_output+0x4e9/0xb7d
-    [   86.051955]  mctp_local_output+0x4e9/0xb7d
-    [   86.051955]  ? mctp_dev_set_key+0x79/0x79
-    [   86.051955]  ? copyin+0x38/0x50
-    [   86.051955]  ? _copy_from_iter+0x1b6/0xf20
-    [   86.051955]  ? sysvec_apic_timer_interrupt+0x97/0xb0
-    [   86.051955]  ? asm_sysvec_apic_timer_interrupt+0x12/0x20
-    [   86.051955]  ? mctp_local_output+0x1/0xb7d
-    [   86.051955]  mctp_sendmsg+0x64d/0xdb0
-    [   86.051955]  ? mctp_sk_close+0x20/0x20
-    [   86.051955]  ? __fget_light+0x2fd/0x4f0
-    [   86.051955]  ? mctp_sk_close+0x20/0x20
-    [   86.051955]  sock_sendmsg+0xdd/0x110
-    [   86.051955]  __sys_sendto+0x1cc/0x2a0
-    [   86.051955]  ? __ia32_sys_getpeername+0xa0/0xa0
-    [   86.051955]  ? new_sync_write+0x335/0x550
-    [   86.051955]  ? alloc_file+0x22f/0x500
-    [   86.051955]  ? __ip_do_redirect+0x820/0x1820
-    [   86.051955]  ? vfs_write+0x44d/0x7b0
-    [   86.051955]  ? vfs_write+0x44d/0x7b0
-    [   86.051955]  ? fput_many+0x15/0x120
-    [   86.051955]  ? ksys_write+0x155/0x1b0
-    [   86.051955]  ? __ia32_sys_read+0xa0/0xa0
-    [   86.051955]  __x64_sys_sendto+0xd8/0x1b0
-    [   86.051955]  ? exit_to_user_mode_prepare+0x2f/0x120
-    [   86.051955]  ? syscall_exit_to_user_mode+0x12/0x20
-    [   86.051955]  do_syscall_64+0x3a/0x80
-    [   86.051955]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-    [   86.051955] RIP: 0033:0x7f82118a56b3
-    [   86.051955] RSP: 002b:00007ffdb154b110 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
-    [   86.051955] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f82118a56b3
-    [   86.051955] RDX: 0000000000000010 RSI: 00007f8211cd4000 RDI: 0000000000000007
-    [   86.051955] RBP: 00007ffdb154c1d0 R08: 00007ffdb154b164 R09: 000000000000000c
-    [   86.051955] R10: 0000000000000000 R11: 0000000000000293 R12: 000055d779800db0
-    [   86.051955] R13: 00007ffdb154c2b0 R14: 0000000000000000 R15: 0000000000000000
-    [   86.051955]  </TASK>
-    [   86.051955]
-    [   86.051955] Allocated by task 295:
-    [   86.051955]  kasan_save_stack+0x1c/0x40
-    [   86.051955]  __kasan_kmalloc+0x84/0xa0
-    [   86.051955]  mctp_rtm_newaddr+0x242/0x610
-    [   86.051955]  rtnetlink_rcv_msg+0x2fd/0x8b0
-    [   86.051955]  netlink_rcv_skb+0x11c/0x340
-    [   86.051955]  netlink_unicast+0x439/0x630
-    [   86.051955]  netlink_sendmsg+0x752/0xc00
-    [   86.051955]  sock_sendmsg+0xdd/0x110
-    [   86.051955]  __sys_sendto+0x1cc/0x2a0
-    [   86.051955]  __x64_sys_sendto+0xd8/0x1b0
-    [   86.051955]  do_syscall_64+0x3a/0x80
-    [   86.051955]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-    [   86.051955]
-    [   86.051955] Freed by task 301:
-    [   86.051955]  kasan_save_stack+0x1c/0x40
-    [   86.051955]  kasan_set_track+0x21/0x30
-    [   86.051955]  kasan_set_free_info+0x20/0x30
-    [   86.051955]  __kasan_slab_free+0x104/0x170
-    [   86.051955]  kfree+0x8c/0x290
-    [   86.051955]  mctp_dev_notify+0x161/0x2c0
-    [   86.051955]  raw_notifier_call_chain+0x8b/0xc0
-    [   86.051955]  unregister_netdevice_many+0x299/0x1180
-    [   86.051955]  unregister_netdevice_queue+0x210/0x2f0
-    [   86.051955]  unregister_netdev+0x13/0x20
-    [   86.051955]  mctp_serial_close+0x6d/0xa0
-    [   86.051955]  tty_ldisc_kill+0x31/0xa0
-    [   86.051955]  tty_ldisc_hangup+0x24f/0x560
-    [   86.051955]  __tty_hangup.part.28+0x2ce/0x6b0
-    [   86.051955]  tty_release+0x327/0xc70
-    [   86.051955]  __fput+0x1df/0x8b0
-    [   86.051955]  task_work_run+0xca/0x150
-    [   86.051955]  exit_to_user_mode_prepare+0x114/0x120
-    [   86.051955]  syscall_exit_to_user_mode+0x12/0x20
-    [   86.051955]  do_syscall_64+0x46/0x80
-    [   86.051955]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-    [   86.051955]
-    [   86.051955] The buggy address belongs to the object at ffff888005f298c0
-    [   86.051955]  which belongs to the cache kmalloc-8 of size 8
-    [   86.051955] The buggy address is located 0 bytes inside of
-    [   86.051955]  8-byte region [ffff888005f298c0, ffff888005f298c8)
-    [   86.051955]
-    [   86.051955] The buggy address belongs to the physical page:
-    [   86.051955] flags: 0x100000000000200(slab|node=0|zone=1)
-    [   86.051955] raw: 0100000000000200 dead000000000100 dead000000000122 ffff888005c42280
-    [   86.051955] raw: 0000000000000000 0000000080660066 00000001ffffffff 0000000000000000
-    [   86.051955] page dumped because: kasan: bad access detected
-    [   86.051955]
-    [   86.051955] Memory state around the buggy address:
-    [   86.051955]  ffff888005f29780: 00 fc fc fc fc 00 fc fc fc fc 00 fc fc fc fc 00
-    [   86.051955]  ffff888005f29800: fc fc fc fc 00 fc fc fc fc 00 fc fc fc fc 00 fc
-    [   86.051955] >ffff888005f29880: fc fc fc fb fc fc fc fc fa fc fc fc fc fa fc fc
-    [   86.051955]                                            ^
-    [   86.051955]  ffff888005f29900: fc fc 00 fc fc fc fc 00 fc fc fc fc 00 fc fc fc
-    [   86.051955]  ffff888005f29980: fc 00 fc fc fc fc 00 fc fc fc fc 00 fc fc fc fc
-    [   86.051955] ==================================================================
-
-root cause:
-Just like the CVE-2021-3573, this bug occurs when a malicious user fakes a MCTP device and issues 
-sendmsg syscall when closing the device. By using userfaultfd, this bug can be stably triggered.
-As the bug fix possibly self-explantory, please to refer to the above link for more details.
+I read it as adding Chinese entities or residents to the list would force
+them to disclose a subset of security vulnerabilities to the Chinese
+government before public disclosure.
 
 
-PoC code:
-please see attachment.
+Regards,
+Igor Seletskiy |  CEO
+CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+<https://kernelcare.com>   |   Imunify360 <http://imunify360.com/> |
+AlmaLinux <https://almalinux.org>
 
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-Lin Ma (@f0rm2l1n) from ZheJiang University & Ant Group Light-Year Security Lab
-Download attachment "attachment.zip" of type "application/zip" (7318 bytes)
+
+
+On Sat, Dec 23, 2023 at 10:24 AM Solar Designer <solar@...nwall.com> wrote:
+
+> Hi,
+>
+> First of all, thank you to everyone who contributed to this thread (I
+> include a summary at the end of this message, so please check that I got
+> it right), and I'm sorry I did not publicly comment on this application
+> for so long.
+>
+> I did not ignore it - there were a few off-list messages between Aron
+> and me, and I've been thinking of how to approach the problem best.
+>
+> I think the application (almost) meets our 9 criteria (once someone
+> vouches for Aron), and if we judge solely by those then we'd need to
+> accept openEuler.  However, as several people said, there are legal
+> concerns, and even if the concerns are maybe unfounded, this would
+> likely reduce usage of the linux-distros list.
+>
+> Overall, given these concerns and us having an isolated one application
+> like that so far, I think it's best if openEuler does not join
+> linux-distros now.  However, I understand this might not work long-term,
+> as similar concerns could arise in context of another application later.
+> One approach is to wait and see, and revisit these concerns in a more
+> general manner if and when that issue does come up.  Another approach is
+> to bite the bullet and proceed with accepting openEuler now, then
+> revisit and possibly generalize if related concerns arise in context of
+> another application.
+>
+> Here are some things to (re)consider if and when we are about to accept
+> a controversial member like this:
+>
+> 1. As suggested by others, we could seek statements by lawyers and/or
+> relevant organizations such as the Linux Foundation.  We actually have
+> much of this already, see below.
+>
+> 2. We could setup a sub-list with only non-controversial members, or a
+> super-list with extra members on it, technically in the same way we
+> currently have distros (which includes non-Linux) vs. linux-distros.
+> Given that existing separation, we'd end up with four lists/addresses,
+> which would unfortunately be complicated and could be distracting and
+> discouraging for issue reporters.
+>
+> 3. We could enforce delayed publication of the full private list
+> content, not just vulnerability disclosures, to more obviously meet
+> export regulations due to literally everything getting published.  Per
+> other recent discussions, we already know this would discourage some
+> people/projects from contributing/participating, but would at the same
+> time be a welcome change for some others.
+>
+> 4. Alternatively to the above, we could state that it's the senders'
+> choice to publish everything they send to the list in case they're
+> concerned about (otherwise possibly not) meeting the regulations (in
+> their jurisdiction).  Being extra burden, this would discourage some
+> people from contributing.
+>
+> On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
+> > Not matter what would be the outcome, I'd like recommend an article
+> > from Linux Foundation which I think is a good read:
+> >
+> https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
+>
+> Yes, it is, and specifically the "Be open and be public" section in it.
+>
+> Even more specific is the statement Linux Foundation made on Huawei:
+>
+>
+> https://www.linuxfoundation.org/blog/blog/linux-foundation-statement-on-huawei-entity-list-ruling
+>
+> > I'm not a lawyer though, but here are a few cents:
+> >
+> > 1) There is no general restrictions against Chinese organizations and
+> nationals;
+> > 2) Open source software (which is publicly available) is not subject
+> > to EAR (Export Administration Regulation of the US);
+> > 3) According to ?? 734.7[1] of EAR, "knowledge with the intention that
+> > such information will be made publicly available if accepted" is
+> > treated as "Published" and is considered publicly available.
+> >
+> > If I understand correctly, distros list is targeted to open source
+> > software issues with a policy[2] of "Please only use these lists to
+> > report and discuss security issues that are not yet public (but that
+> > are to be made public very soon)", then everyone could retain their
+> > peace of mind.
+>
+> I am also not a lawyer.  As I'm aware, many countries, including the US,
+> Canada, EU countries, and even e.g. Russia and India and many others,
+> accepted the Wassenaar Arrangement.  My understanding is that the
+> individual countries' export regulations are thus implementations of the
+> Wassenaar Arrangement, perhaps with some local tweaks.  (Indeed, the
+> classification codes mentioned in the EAR section you reference above
+> match Wassenaar's.)
+>
+> So the focus on US vs. China seen in this thread here looks unjustified
+> from a legal perspective.  However, it may be justified from a practical
+> concern perspective.
+>
+> Then there's the issue of "Huawei and its non-U.S. affiliates" being on
+> the US sanctions "Entity List".  Reading the FAQ here:
+>
+>
+> https://www.bis.doc.gov/index.php/documents/pdfs/2447-huawei-entity-listing-faqs
+>
+> I don't see relevance to what we're doing.  Per my reading, this says
+> that for items already subject to EAR, a specific license for exporting
+> to Huawei is required and would likely be denied.  We assume (and LF
+> agrees) that what we're doing is not subject to EAR (and if it were,
+> we'd have problems with most international communication like this, not
+> just with US vs. China or Huawei).  So again, the legal concern looks
+> unjustified, but I understand that people are concerned in practice, and
+> that's a problem on its own.
+>
+> Here are specific quotes from the two LF publications referenced above:
+>
+> > Be open and be public
+> >
+> > First, communities should strive to keep their technical conversations
+> open and public. If private technical conversations happen within
+> communities, that's normal, but it is recommended to make the community
+> decisions and outcomes publicly available. It is important for our projects
+> to make information available transparently and publicly as the private
+> exchange of technology or technical information may not meet the "publicly
+> available" standard according to the EAR.
+> >
+> > One question that has come up has to do with exchanges of information
+> related to security issues under a security disclosure process. As a best
+> practice, projects may want to consider making exchanges like this public
+> upon the availability of fixes, and not limit this information to only a
+> confidential disclosure list.
+>
+> > Security Vulnerability Pre-Disclosure Lists
+> >
+> > A few of the Linux Foundation's project communities use security
+> vulnerability pre-disclosure lists to alert known implementers of the
+> project's open source software about vulnerability fixes that will be
+> disclosed by the developers and published publicly in the near future
+> (typically within 2 weeks). In these situations, LF project communities are
+> conveying knowledge, information and written software patches that will be
+> made publicly available when accepted for publication by the committers on
+> the project and such disclosures are permitted under 15 CFR 734.7(a)(5). [2]
+> >
+> > [2]
+> https://www.ecfr.gov/cgi-bin/text-idx?SID=fcba36d2f267c2fdecc5694c1e754aa7&mc=true&node=se15.2.734_17&rgn=div8
+>
+> Here's my summary of what was said in this thread so far:
+>
+> Marcus Meissner brought up the US vs. China concern.  Greg KH said
+> things were not that bad, but kept suggesting to talk to lawyers, which
+> Demi Marie Obenour found very discouraging.
+>
+> Demi Marie Obenour and Igor Seletskiy are concerned about the legal
+> risks.  Demi Marie wants that "a trusted entity (such as the Linux
+> Foundation) made a public, broadly applicable, and easily interpretable
+> (by non-lawyers) statement stating that it would be okay for me to make
+> such a post."  I think we have that above.  However, she also adds "And
+> maybe not even then."  Igor brings up the Huawei concern.  I think LF's
+> statement above addresses it.
+>
+> This reads like 2 to 4 votes against accepting openEuler now.
+>
+> Heiko Schlittermann and Steffen Nurpmeso are for us not considering
+> "anything else than technical/security restrictions here."  In other
+> words, for accepting openEuler now if it meets our usual criteria.
+>
+> Tianyu Chen brought up that there could already be subscribers from
+> other sanctioned countries.
+>
+> W. Wadepohl expressed general unhappiness with linux-distros being
+> non-free and not addressing IoT device security.
+>
+> This reads like 2 to 4 votes for accepting openEuler now.
+>
+> Alan Coopersmith commented on who typically posts to the distros list,
+> and thus who would (not) be concerned about the legal risks.
+>
+> Per the above, there doesn't appear to be an obvious majority or
+> obviously better reasoned opinion for or against accepting openEuler.
+>
+> If any of the people who commented previously have something different
+> or more specific to say now (e.g., "my concerns are now sufficiently
+> addressed" and/or "my preference is such-and-such"), please do.
+>
+> If anyone else has anything valuable to add, please do.
+>
+> Sorry for the lengthy message, and thanks again.
+>
+> Alexander
+>
+
