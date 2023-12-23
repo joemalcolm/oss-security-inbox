@@ -1,4 +1,4 @@
-Received: (qmail 19758 invoked by uid 550); 17 Apr 2024 12:40:11 -0000
+Received: (qmail 1067 invoked by uid 550); 23 Dec 2023 18:23:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,72 +7,178 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15671 invoked from network); 17 Apr 2024 08:47:58 -0000
-Authentication-Results: mail.absynth.de;
-	auth=pass smtp.auth=info@christopher-kunz.de smtp.mailfrom=info@christopher-kunz.de
-Content-Type: multipart/alternative;
- boundary="------------O2w6g93SH5nIxaAw1eYey0G4"
-Message-ID: <c652582f-f18d-4c70-953d-366c5a721771@christopher-kunz.de>
-Date: Wed, 17 Apr 2024 10:47:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 32693 invoked from network); 23 Dec 2023 18:23:07 -0000
+Date: Sat, 23 Dec 2023 19:16:36 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-References: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
- <20240410211457.GA20881@openwall.com> <20240416201602.GA21501@openwall.com>
-From: "Dr. Christopher Kunz" <info@christopher-kunz.de>
-Autocrypt: addr=info@christopher-kunz.de; keydata=
- xsDiBD3U55kRBADKaqmPY/RBZ0luAFvOsa2lqQN8qXEimlCrbe0+WWywWDYNO/0c5B1FhUt2
- heF12OV9u1ldDdynB/awdV3NYaoizce86XQzQGcPpIOlEgI9iTTc1FSP9zDkkljLMrMB8WGK
- Q8WH6yLT+BOTIoK/rMs9DEN0hcsxOZY1wTEzhOfewwCg/7fHkook6P1/O/iOG3k/r90Um98D
- /AvzlFtPaRn5qiCWjeopDW1RAJNLvWwKs1HHv8m1UOtMNisqObD3SuHn9lp4FfGAu7gaJoqI
- /l6Rk02dgmBq+gyV+qg8PYXMlhh0xEfEO/TPPjx+nZnDRvO59tOj0pg2GLpIvQtdlwow1Iq4
- r2XfHUk1b827GZGAg1+ckkkNSG24A/9l238stiojp+GYwpuYkGrxROSYX+0slzRc40DHjtrb
- Jidz2Usmilyvt5WA1iBmAKw3L2TLQKpLtxAkGWSrDfdnl38VrYGMEM6WVctY6TxrqzrQLhaw
- W+17goNN73S3uP3C0YrdVjZc5jl0xlfli4zP7HmxL1YyRlLQ22aVcdDmS80rQ2hyaXN0b3Bo
- ZXIgS3VueiA8aW5mb0BjaHJpc3RvcGhlci1rdW56LmRlPsJ4BBMRAgA4AhsDBgsJCAcDAgMV
- AgMDFgIBAh4BAheAFiEEyIKO0X3RkBHAiOpQXPou6zl6ysEFAmWdKLICGQEACgkQXPou6zl6
- ysEHsQCfeqMRH0HyzVzl6XyNrxXdi0kSacYAnjXCcViWthCxB04fgluoiFw7b02TzsFNBD3U
- 55kQCAD2Qle3CH8IF3KiutapQvMF6PlTETlPtvFuuUs4INoBp1ajFOmPQFXz0AfGy0OplK33
- TGSGSfgMg71l6RfUodNQ+PVZX9x2Uk89PY3bzpnhV5JZzf24rnRPxfx2vIPFRzBhznzJZv8V
- +bv9kV7HAarTW56NoKVyOtQa8L9GAFgr5fSI/VhOSdvNILSd5JEHNmszbDgNRR0PfIizHHxb
- LY7288kjwEPwpVsYjY67VYy4XTjTNP18F1dDox0YbN4zISy1Kv884bEpQBgRjXyEpwpy1obE
- AxnIByl6ypUM2Zafq9AKUJsCRtMIPWakXUGfnHy9iUsiGSa6q6Jew1XpMgs7AAICB/97dSwj
- NNOvwX1CYynQFaXrajIBF9fSZcOJNZ5vh/+ejkl2nobkQicbI97dKYttanBaF4O//lPjNcbO
- iXkiqEI8FQPyp5I+KIkVy6MiNM09zd0qHVwlihok2JG5wSGXfUsXjk3iPsxIVhWZSrB2q0By
- Av95xcvUtxQl5cCGGqTxBIsGjiN4wkDS0FNXFH2hOuH5pCl+cbDdZmYTc1O+aeSygvLN76gs
- tBgDODp8p2Fiu7RL99SRLTIHdniSvOr/bm4BDRYY0D6P/MoZQydZPMmZAOv3qnOkPox/9e5/
- zP8cmLm08gbez8wjfl6Rl5OjngTIatupEWXZK022C2+LJBeFwkwEGBECAAwFAj3U55kFGwwA
- AAAACgkQXPou6zl6ysHXxgCgw8C3Y9WTlhK6j3KgyciAF6X+odsAnja8RhnAa3HRM8YZbeaW
- DC6HBdDe
-In-Reply-To: <20240416201602.GA21501@openwall.com>
-Subject: Re: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
+Message-ID: <20231223181636.GA8305@openwall.com>
+References: <ZSyUUSF_-3YbT14k@workstation> <20231016080850.GF10758@suse.de> <2023101612-snare-dart-c7cf@gregkh> <ZS1CSkbTjDYdGq8F@itl-email> <2023101622-imply-tidal-b6cf@gregkh> <ZS1UPsZo1VyHDAkV@itl-email> <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros membership application of openEuler
 
---------------O2w6g93SH5nIxaAw1eYey0G4
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi,
 
-Am 16.04.24 um 22:16 schrieb Solar Designer:
-> I'm puzzled by the lack of follow-ups on this, but anyway @FFFVR_
-> tweeted they also found (more) vulnerabilities in the n_gsm driver:
->
-FWIW, YuriiCrimson's bug for 5.15 - 6.1 seems to be patched on current 
-Debian:
+First of all, thank you to everyone who contributed to this thread (I
+include a summary at the end of this message, so please check that I got
+it right), and I'm sorry I did not publicly comment on this application
+for so long.
 
-debianexploitgsm:/tmp/ExploitGSM/ExploitGSM_5_15_to_6_1$ ./ExploitGSM debian
-kallsyms restricted, begin retvial kallsyms table
-detected kernel path-> /boot/vmlinuz-6.1.0-20-amd64
-detected compressed format -> xz
-Uncompressed kernel size -> 65900116
-successfully taken kernel!
-begin try leak startup_xen!
-startup_xen leaked address  -> ffffffff8546f1c0
-text leaked address         -> ffffffff83400000
-lockdep_map_size     -> 32
-spinlock_t_size      -> 4
-mutex_size           -> 32
-gsm_mux_event_offset -> 56
-Error set line discipline N_GSM, Operation not permitted
+I did not ignore it - there were a few off-list messages between Aron
+and me, and I've been thinking of how to approach the problem best.
 
---cku
+I think the application (almost) meets our 9 criteria (once someone
+vouches for Aron), and if we judge solely by those then we'd need to
+accept openEuler.  However, as several people said, there are legal
+concerns, and even if the concerns are maybe unfounded, this would
+likely reduce usage of the linux-distros list.
 
---------------O2w6g93SH5nIxaAw1eYey0G4--
+Overall, given these concerns and us having an isolated one application
+like that so far, I think it's best if openEuler does not join
+linux-distros now.  However, I understand this might not work long-term,
+as similar concerns could arise in context of another application later.
+One approach is to wait and see, and revisit these concerns in a more
+general manner if and when that issue does come up.  Another approach is
+to bite the bullet and proceed with accepting openEuler now, then
+revisit and possibly generalize if related concerns arise in context of
+another application.
+
+Here are some things to (re)consider if and when we are about to accept
+a controversial member like this:
+
+1. As suggested by others, we could seek statements by lawyers and/or
+relevant organizations such as the Linux Foundation.  We actually have
+much of this already, see below.
+
+2. We could setup a sub-list with only non-controversial members, or a
+super-list with extra members on it, technically in the same way we
+currently have distros (which includes non-Linux) vs. linux-distros.
+Given that existing separation, we'd end up with four lists/addresses,
+which would unfortunately be complicated and could be distracting and
+discouraging for issue reporters.
+
+3. We could enforce delayed publication of the full private list
+content, not just vulnerability disclosures, to more obviously meet
+export regulations due to literally everything getting published.  Per
+other recent discussions, we already know this would discourage some
+people/projects from contributing/participating, but would at the same
+time be a welcome change for some others.
+
+4. Alternatively to the above, we could state that it's the senders'
+choice to publish everything they send to the list in case they're
+concerned about (otherwise possibly not) meeting the regulations (in
+their jurisdiction).  Being extra burden, this would discourage some
+people from contributing.
+
+On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
+> Not matter what would be the outcome, I'd like recommend an article
+> from Linux Foundation which I think is a good read:
+> https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
+
+Yes, it is, and specifically the "Be open and be public" section in it.
+
+Even more specific is the statement Linux Foundation made on Huawei:
+
+https://www.linuxfoundation.org/blog/blog/linux-foundation-statement-on-huawei-entity-list-ruling
+
+> I'm not a lawyer though, but here are a few cents:
+> 
+> 1) There is no general restrictions against Chinese organizations and nationals;
+> 2) Open source software (which is publicly available) is not subject
+> to EAR (Export Administration Regulation of the US);
+> 3) According to ?? 734.7[1] of EAR, "knowledge with the intention that
+> such information will be made publicly available if accepted" is
+> treated as "Published" and is considered publicly available.
+> 
+> If I understand correctly, distros list is targeted to open source
+> software issues with a policy[2] of "Please only use these lists to
+> report and discuss security issues that are not yet public (but that
+> are to be made public very soon)", then everyone could retain their
+> peace of mind.
+
+I am also not a lawyer.  As I'm aware, many countries, including the US,
+Canada, EU countries, and even e.g. Russia and India and many others,
+accepted the Wassenaar Arrangement.  My understanding is that the
+individual countries' export regulations are thus implementations of the
+Wassenaar Arrangement, perhaps with some local tweaks.  (Indeed, the
+classification codes mentioned in the EAR section you reference above
+match Wassenaar's.)
+
+So the focus on US vs. China seen in this thread here looks unjustified
+from a legal perspective.  However, it may be justified from a practical
+concern perspective.
+
+Then there's the issue of "Huawei and its non-U.S. affiliates" being on
+the US sanctions "Entity List".  Reading the FAQ here:
+
+https://www.bis.doc.gov/index.php/documents/pdfs/2447-huawei-entity-listing-faqs
+
+I don't see relevance to what we're doing.  Per my reading, this says
+that for items already subject to EAR, a specific license for exporting
+to Huawei is required and would likely be denied.  We assume (and LF
+agrees) that what we're doing is not subject to EAR (and if it were,
+we'd have problems with most international communication like this, not
+just with US vs. China or Huawei).  So again, the legal concern looks
+unjustified, but I understand that people are concerned in practice, and
+that's a problem on its own.
+
+Here are specific quotes from the two LF publications referenced above:
+
+> Be open and be public
+> 
+> First, communities should strive to keep their technical conversations open and public. If private technical conversations happen within communities, that's normal, but it is recommended to make the community decisions and outcomes publicly available. It is important for our projects to make information available transparently and publicly as the private exchange of technology or technical information may not meet the "publicly available" standard according to the EAR.
+> 
+> One question that has come up has to do with exchanges of information related to security issues under a security disclosure process. As a best practice, projects may want to consider making exchanges like this public upon the availability of fixes, and not limit this information to only a confidential disclosure list.
+
+> Security Vulnerability Pre-Disclosure Lists
+> 
+> A few of the Linux Foundation's project communities use security vulnerability pre-disclosure lists to alert known implementers of the project's open source software about vulnerability fixes that will be disclosed by the developers and published publicly in the near future (typically within 2 weeks). In these situations, LF project communities are conveying knowledge, information and written software patches that will be made publicly available when accepted for publication by the committers on the project and such disclosures are permitted under 15 CFR 734.7(a)(5). [2]
+> 
+> [2] https://www.ecfr.gov/cgi-bin/text-idx?SID=fcba36d2f267c2fdecc5694c1e754aa7&mc=true&node=se15.2.734_17&rgn=div8
+
+Here's my summary of what was said in this thread so far:
+
+Marcus Meissner brought up the US vs. China concern.  Greg KH said
+things were not that bad, but kept suggesting to talk to lawyers, which
+Demi Marie Obenour found very discouraging.
+
+Demi Marie Obenour and Igor Seletskiy are concerned about the legal
+risks.  Demi Marie wants that "a trusted entity (such as the Linux
+Foundation) made a public, broadly applicable, and easily interpretable
+(by non-lawyers) statement stating that it would be okay for me to make
+such a post."  I think we have that above.  However, she also adds "And
+maybe not even then."  Igor brings up the Huawei concern.  I think LF's
+statement above addresses it.
+
+This reads like 2 to 4 votes against accepting openEuler now.
+
+Heiko Schlittermann and Steffen Nurpmeso are for us not considering
+"anything else than technical/security restrictions here."  In other
+words, for accepting openEuler now if it meets our usual criteria.
+
+Tianyu Chen brought up that there could already be subscribers from
+other sanctioned countries.
+
+W. Wadepohl expressed general unhappiness with linux-distros being
+non-free and not addressing IoT device security.
+
+This reads like 2 to 4 votes for accepting openEuler now.
+
+Alan Coopersmith commented on who typically posts to the distros list,
+and thus who would (not) be concerned about the legal risks.
+
+Per the above, there doesn't appear to be an obvious majority or
+obviously better reasoned opinion for or against accepting openEuler.
+
+If any of the people who commented previously have something different
+or more specific to say now (e.g., "my concerns are now sufficiently
+addressed" and/or "my preference is such-and-such"), please do.
+
+If anyone else has anything valuable to add, please do.
+
+Sorry for the lengthy message, and thanks again.
+
+Alexander
