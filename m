@@ -1,24 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/07/1
-Message-ID: <u8857u$14pa$1@ciao.gmane.io>
-Date: Fri, 7 Jul 2023 04:44:46 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/23/2
+Message-ID: <croalohbjdjf2cb6e5ol2l7rsdoxd6mr4mw55lyzzf7ljkkx5a@czm7be4dpjj4>
+Date: Sat, 23 Dec 2023 14:29:34 +0200
+From: Valtteri Vuorikoski <vuori@...com.org>
 To: oss-security@...ts.openwall.com
-Subject: manjaro pamac vulnerability
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-FYI, I noticed a blog post about this:
+On Fri, Dec 22, 2023 at 11:46:48AM +0100, Marcus Meissner wrote:
+> Hi,
+> 
+> FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
+> 
+> Not sure if we need it for others like sendmail too, as that is also
+> referenced by the security researchers.
 
-https://github.com/c-skills/vala-vala-hey/blob/master/vala-vala-hey
+Looks like exim opened a bug on this yesterday too, no sign of CVE yet:
+<https://bugs.exim.org/show_bug.cgi?id=3063>
 
-I didn't test it, but if you can't trust stealth who can you trust? :)
-
-I'm not familiar with manjaro, I dunno if it's the polkit config for their dbus service.
-
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+ -Valtteri
 
