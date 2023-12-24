@@ -1,89 +1,253 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/9
-Message-ID: <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
-Date: Tue, 26 Sep 2023 18:16:22 +0100
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/24/2
+Message-ID: <CAN_LGv2C4DNFaK2TRA5upQuwaP=SY3K6zzOzp7zT8J-k1HaM0Q@mail.gmail.com>
+Date: Sun, 24 Dec 2023 21:43:06 +0800
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-On 26/09/2023 5:09 pm, Solar Designer wrote:
-> On Tue, Sep 26, 2023 at 01:15:55AM +0100, Andrew Cooper wrote:
->> On 25/09/2023 7:28 pm, Solar Designer wrote:
->>> Maybe directly probing for the bug is an option?  Perhaps can be done
->>> within one thread (where the bug doesn't have security impact, but is
->>> detectable anyway, no)?
->> Unfortunately, direct probing is usually the wrong thing to rely on.
->>
->> Under virt, one common scenario is that you boot on one system, then get
->> migrated to a different one.  Obviously, it's up to the hypervisor to
->> ensure that the architectural feature still match, but the
->> microarchitecture really does change.
->>
->> If you probe at boot and positively identify an issue to work around,
->> great.  But as a VM you may not get a heads up that you changed
->> microarchitecture, and even if you do, you don't rescan for everything
->> you ran at boot.
->>
->> The CPUID bits allow microarchitectural details to be expressed as
->> architectural, and allow a hypervisor to state "here or someone you
->> might move to, the following safety property does not hold."
-> I was thinking re-probing after possible VM migration, just like you
-> would presumably retest a CPUID bit.
+Hello Alexander,
 
-I did enquire about this, but the Linux maintainers and Microsoft were
-distinctly unreceptive to the idea.  Not that I blame them - it's hard
-enough to do late microcode loading, livepatching and activation of new
-safety properties when the uarch isn't moving underfoot.
+Thanks for the summary that you posted. I have read it carefully and
+found a phrase, "an isolated one application like that so far", that
+effectively says that this legal issue regarding communications to
+sanctioned entities is *new*. Could you please recheck that it is
+indeed the case? The question formally arises because there are Alt
+Linux representatives on the list already, and I do not know if there
+are US sanctions against them. To any Russian lawyers that might want
+to jail me because of this question: go away, this question is not to
+be interpreted as my endorsement of any sanctions.
 
-> However, in this case probing can
-> lead to false negatives if the other thread issues a DIV too or an
-> unexpected context switch occurs.
+Also, Igor has communicated an important note about the mandatory
+disclosure of vulnerabilities to the Chinese government. Therefore, a
+question arises: is the Chinese government the only one that requires
+this? Can existing list members certify that they do not have any
+requirement placed upon them by the applicable laws to disclose the
+postings beyond what is permitted by the list policy - i.e., "at
+anywhere beyond the need-to-know within your distro's team"?
 
-Yes, many things become racy under virt, hence why we try our best to
-stick to architecturally enumerated properties.
-
->>> Do you know if only the quotient leaks, or also the remainder?  In the
->>> below, I assume the remainder leaks as well.
->> I'm afraid I don't know.  The original paper says just the quotient, but
->> it also says there are no leaks across privilege boundaries.
-> Is the original paper public?
-
-https://www.usenix.org/system/files/usenixsecurity23-hofmann.pdf
-
-Section 8.2.1 for the results specific to divides.
-
-> Meanwhile, I observe a difference between Linux and Xen fixes - Linux
-> uses native-sized DIV and you use byte-sized, as a clever way not to
-> clobber RDX and maybe achieve lower latency.  Speaking of which:
+On Sun, Dec 24, 2023 at 2:50 AM Igor Seletskiy <i@...udlinux.com> wrote:
 >
-> $ git clone https://github.com/InstLatx64/InstLatx64
-> $ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
-> InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
+> Alexander,
 >
-> Looks like maybe not that much difference, after all, if this data applies.
+> Thank you very much for doing the research and the summary.
+> There is another point that I am concerned about.
+> Based on what I know, in 2021, China passed a legislature that requires
+> people to disclose vulnerabilities to the Chinese government within 2 days.
+> I don't have a good grasp on the actual terms/conditions, but based on this:
+> https://www.chinalawtranslate.com/en/product-security-vulnerabilites/
+>
+> *(2) Infomation on the relevant vulnerabilities shall be reported to the
+> Ministry of Industry and Information Technology's network security threat
+> and vulnerability information-sharing platform within 2 days; The content
+> sent shall include the name, model number, and version of the products in
+> which network product security vulnerabilities exist, as well as the
+> vulnerability's technical characteristics, threat, scope of impact, and so
+> forth.*
+>
+> I read it as adding Chinese entities or residents to the list would force
+> them to disclose a subset of security vulnerabilities to the Chinese
+> government before public disclosure.
+>
+>
+> Regards,
+> Igor Seletskiy |  CEO
+> CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+> <https://kernelcare.com>   |   Imunify360 <http://imunify360.com/> |
+> AlmaLinux <https://almalinux.org>
+>
+>
+>
+> On Sat, Dec 23, 2023 at 10:24 AM Solar Designer <solar@...nwall.com> wrote:
+>
+> > Hi,
+> >
+> > First of all, thank you to everyone who contributed to this thread (I
+> > include a summary at the end of this message, so please check that I got
+> > it right), and I'm sorry I did not publicly comment on this application
+> > for so long.
+> >
+> > I did not ignore it - there were a few off-list messages between Aron
+> > and me, and I've been thinking of how to approach the problem best.
+> >
+> > I think the application (almost) meets our 9 criteria (once someone
+> > vouches for Aron), and if we judge solely by those then we'd need to
+> > accept openEuler.  However, as several people said, there are legal
+> > concerns, and even if the concerns are maybe unfounded, this would
+> > likely reduce usage of the linux-distros list.
+> >
+> > Overall, given these concerns and us having an isolated one application
+> > like that so far, I think it's best if openEuler does not join
+> > linux-distros now.  However, I understand this might not work long-term,
+> > as similar concerns could arise in context of another application later.
+> > One approach is to wait and see, and revisit these concerns in a more
+> > general manner if and when that issue does come up.  Another approach is
+> > to bite the bullet and proceed with accepting openEuler now, then
+> > revisit and possibly generalize if related concerns arise in context of
+> > another application.
+> >
+> > Here are some things to (re)consider if and when we are about to accept
+> > a controversial member like this:
+> >
+> > 1. As suggested by others, we could seek statements by lawyers and/or
+> > relevant organizations such as the Linux Foundation.  We actually have
+> > much of this already, see below.
+> >
+> > 2. We could setup a sub-list with only non-controversial members, or a
+> > super-list with extra members on it, technically in the same way we
+> > currently have distros (which includes non-Linux) vs. linux-distros.
+> > Given that existing separation, we'd end up with four lists/addresses,
+> > which would unfortunately be complicated and could be distracting and
+> > discouraging for issue reporters.
+> >
+> > 3. We could enforce delayed publication of the full private list
+> > content, not just vulnerability disclosures, to more obviously meet
+> > export regulations due to literally everything getting published.  Per
+> > other recent discussions, we already know this would discourage some
+> > people/projects from contributing/participating, but would at the same
+> > time be a welcome change for some others.
+> >
+> > 4. Alternatively to the above, we could state that it's the senders'
+> > choice to publish everything they send to the list in case they're
+> > concerned about (otherwise possibly not) meeting the regulations (in
+> > their jurisdiction).  Being extra burden, this would discourage some
+> > people from contributing.
+> >
+> > On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
+> > > Not matter what would be the outcome, I'd like recommend an article
+> > > from Linux Foundation which I think is a good read:
+> > >
+> > https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
+> >
+> > Yes, it is, and specifically the "Be open and be public" section in it.
+> >
+> > Even more specific is the statement Linux Foundation made on Huawei:
+> >
+> >
+> > https://www.linuxfoundation.org/blog/blog/linux-foundation-statement-on-huawei-entity-list-ruling
+> >
+> > > I'm not a lawyer though, but here are a few cents:
+> > >
+> > > 1) There is no general restrictions against Chinese organizations and
+> > nationals;
+> > > 2) Open source software (which is publicly available) is not subject
+> > > to EAR (Export Administration Regulation of the US);
+> > > 3) According to ?? 734.7[1] of EAR, "knowledge with the intention that
+> > > such information will be made publicly available if accepted" is
+> > > treated as "Published" and is considered publicly available.
+> > >
+> > > If I understand correctly, distros list is targeted to open source
+> > > software issues with a policy[2] of "Please only use these lists to
+> > > report and discuss security issues that are not yet public (but that
+> > > are to be made public very soon)", then everyone could retain their
+> > > peace of mind.
+> >
+> > I am also not a lawyer.  As I'm aware, many countries, including the US,
+> > Canada, EU countries, and even e.g. Russia and India and many others,
+> > accepted the Wassenaar Arrangement.  My understanding is that the
+> > individual countries' export regulations are thus implementations of the
+> > Wassenaar Arrangement, perhaps with some local tweaks.  (Indeed, the
+> > classification codes mentioned in the EAR section you reference above
+> > match Wassenaar's.)
+> >
+> > So the focus on US vs. China seen in this thread here looks unjustified
+> > from a legal perspective.  However, it may be justified from a practical
+> > concern perspective.
+> >
+> > Then there's the issue of "Huawei and its non-U.S. affiliates" being on
+> > the US sanctions "Entity List".  Reading the FAQ here:
+> >
+> >
+> > https://www.bis.doc.gov/index.php/documents/pdfs/2447-huawei-entity-listing-faqs
+> >
+> > I don't see relevance to what we're doing.  Per my reading, this says
+> > that for items already subject to EAR, a specific license for exporting
+> > to Huawei is required and would likely be denied.  We assume (and LF
+> > agrees) that what we're doing is not subject to EAR (and if it were,
+> > we'd have problems with most international communication like this, not
+> > just with US vs. China or Huawei).  So again, the legal concern looks
+> > unjustified, but I understand that people are concerned in practice, and
+> > that's a problem on its own.
+> >
+> > Here are specific quotes from the two LF publications referenced above:
+> >
+> > > Be open and be public
+> > >
+> > > First, communities should strive to keep their technical conversations
+> > open and public. If private technical conversations happen within
+> > communities, that's normal, but it is recommended to make the community
+> > decisions and outcomes publicly available. It is important for our projects
+> > to make information available transparently and publicly as the private
+> > exchange of technology or technical information may not meet the "publicly
+> > available" standard according to the EAR.
+> > >
+> > > One question that has come up has to do with exchanges of information
+> > related to security issues under a security disclosure process. As a best
+> > practice, projects may want to consider making exchanges like this public
+> > upon the availability of fixes, and not limit this information to only a
+> > confidential disclosure list.
+> >
+> > > Security Vulnerability Pre-Disclosure Lists
+> > >
+> > > A few of the Linux Foundation's project communities use security
+> > vulnerability pre-disclosure lists to alert known implementers of the
+> > project's open source software about vulnerability fixes that will be
+> > disclosed by the developers and published publicly in the near future
+> > (typically within 2 weeks). In these situations, LF project communities are
+> > conveying knowledge, information and written software patches that will be
+> > made publicly available when accepted for publication by the committers on
+> > the project and such disclosures are permitted under 15 CFR 734.7(a)(5). [2]
+> > >
+> > > [2]
+> > https://www.ecfr.gov/cgi-bin/text-idx?SID=fcba36d2f267c2fdecc5694c1e754aa7&mc=true&node=se15.2.734_17&rgn=div8
+> >
+> > Here's my summary of what was said in this thread so far:
+> >
+> > Marcus Meissner brought up the US vs. China concern.  Greg KH said
+> > things were not that bad, but kept suggesting to talk to lawyers, which
+> > Demi Marie Obenour found very discouraging.
+> >
+> > Demi Marie Obenour and Igor Seletskiy are concerned about the legal
+> > risks.  Demi Marie wants that "a trusted entity (such as the Linux
+> > Foundation) made a public, broadly applicable, and easily interpretable
+> > (by non-lawyers) statement stating that it would be okay for me to make
+> > such a post."  I think we have that above.  However, she also adds "And
+> > maybe not even then."  Igor brings up the Huawei concern.  I think LF's
+> > statement above addresses it.
+> >
+> > This reads like 2 to 4 votes against accepting openEuler now.
+> >
+> > Heiko Schlittermann and Steffen Nurpmeso are for us not considering
+> > "anything else than technical/security restrictions here."  In other
+> > words, for accepting openEuler now if it meets our usual criteria.
+> >
+> > Tianyu Chen brought up that there could already be subscribers from
+> > other sanctioned countries.
+> >
+> > W. Wadepohl expressed general unhappiness with linux-distros being
+> > non-free and not addressing IoT device security.
+> >
+> > This reads like 2 to 4 votes for accepting openEuler now.
+> >
+> > Alan Coopersmith commented on who typically posts to the distros list,
+> > and thus who would (not) be concerned about the legal risks.
+> >
+> > Per the above, there doesn't appear to be an obvious majority or
+> > obviously better reasoned opinion for or against accepting openEuler.
+> >
+> > If any of the people who commented previously have something different
+> > or more specific to say now (e.g., "my concerns are now sufficiently
+> > addressed" and/or "my preference is such-and-such"), please do.
+> >
+> > If anyone else has anything valuable to add, please do.
+> >
+> > Sorry for the lengthy message, and thanks again.
+> >
+> > Alexander
+> >
 
-Agner Fogh's manuals have a little more information, and importantly
-give the upper bound which tops out at 47 cycles.
 
-There is at least a 1 cycle change in latency between the byte and
-non-byte forms, which I suspect is down to the non-byte forms needing to
-consume an extra input register before starting.
 
-But the main reason for choosing the byte form is indeed fewer moving
-parts to worry about in the critical sections, where one wrong
-instruction can render all protections moot.
-
-> Thank you for sharing so much detail and thoughts on this, Andrew!
-
-You're welcome.
-
-~Andrew
+-- 
+Alexander E. Patrakov
