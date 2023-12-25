@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8117" "Wednesday" "15" "August" "2018" "16:09:51" "+0000" "Xen.org security team" "security@xen.org" "<E1fpyMp-0006mM-Vn@xenbits.xenproject.org>" "185" "[oss-security] Xen Security Advisory 274 v3 (CVE-2018-14678) - Linux: Uninitialized state in x86 PV failsafe callback path" nil nil nil "8" "2018081516:09:51" "[oss-security] Xen Security Advisory 274 v3 (CVE-2018-14678) - Linux: Uninitialized state in x86 PV failsafe callback path" (number mark "U       security@xen Aug 15  185/8117  " thread-indent "\"[oss-security] Xen Security Advisory 274 v3 (CVE-2018-14678) - Linux: Uninitialized state in x86 PV failsafe callback path\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11772 invoked by uid 550); 15 Aug 2018 16:10:12 -0000
+Received: (qmail 29709 invoked by uid 550); 25 Dec 2023 23:50:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,202 +7,219 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11752 invoked from network); 15 Aug 2018 16:10:11 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fpyMp-0006mM-Vn@xenbits.xenproject.org>
-Date: Wed, 15 Aug 2018 16:09:51 +0000
-Subject: [oss-security] Xen Security Advisory 274 v3 (CVE-2018-14678) - Linux:
- Uninitialized state in x86 PV failsafe callback path
+Received: (qmail 1290 invoked from network); 25 Dec 2023 23:37:55 -0000
+Date: Tue, 26 Dec 2023 00:38:36 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20231225233836.R7BLTwQ-@steffen%sdaoden.eu>
+In-Reply-To: <20231225220925.GA17188@openwall.com>
+References: <ZSyUUSF_-3YbT14k@workstation> <20231016080850.GF10758@suse.de>
+ <2023101612-snare-dart-c7cf@gregkh> <ZS1CSkbTjDYdGq8F@itl-email>
+ <2023101622-imply-tidal-b6cf@gregkh> <ZS1UPsZo1VyHDAkV@itl-email>
+ <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
+ <20231223181636.GA8305@openwall.com>
+ <CA+-XxSE0v4B32UjrVZgu5WUpTb+78W3zpupnoJq4FeR3omPGSg@mail.gmail.com>
+ <CAN_LGv2C4DNFaK2TRA5upQuwaP=SY3K6zzOzp7zT8J-k1HaM0Q@mail.gmail.com>
+ <20231225220925.GA17188@openwall.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-580-g219950db8c
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] linux-distros membership application of
+ openEuler
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hello.  Please allow me a little opinion.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Solar Designer wrote in
+ <20231225220925.GA17188@openwall.com>:
+ |On Sun, Dec 24, 2023 at 09:43:06PM +0800, Alexander E. Patrakov wrote:
+ ...
+ |Also, as I pointed out, even the US sanctions against Huawei don't seem
+ |to apply to what we're doing, per LF's public statement and per my own
+ |reading (but I am not a lawyer).
 
-            Xen Security Advisory CVE-2018-14678 / XSA-274
-                               version 3
+I want to point out that Huawei employees play an important role
+in creating solutions in the (public and open to anyone) IETF.
+Also financially.
+I personally think it is a friendly move to give back and support
+creating the infrastructure that we all build upon.
+Which can easily be compared to many non-China companies and their
+attitude of take but no give.
 
-      Linux: Uninitialized state in x86 PV failsafe callback path
+(Read also: in the ever-more over-engineering that goes on.)
 
-UPDATES IN VERSION 3
-====================
+ |However, that might not be enough to prevent people from being concerned
+ |and discouraged from participating if openEuler joins.  This is why I
+ |suggested that it's best if openEuler does not join now, and that people
+ |who had commented before could want to say whether their concerns are
+ |now sufficiently addressed or maybe not.
 
-Fix spelling in CREDITS.
+Me personally no, but for one i am noone regarding vivid members
+of this list, and second i have no political pressure against me.
 
-ISSUE DESCRIPTION
-=================
+ |> Also, Igor has communicated an important note about the mandatory
+ |> disclosure of vulnerabilities to the Chinese government. Therefore, a
+ |> question arises: is the Chinese government the only one that requires
+ |> this?
+ |
+ |These are valid concerns.
 
-Linux has a `failsafe` callback, invoked by Xen under certain
-conditions.  Normally in this failsafe callback, error_entry is paired
-with error_exit; and error_entry uses %ebx to communicate to
-error_exit whether to use the user or kernel return path.
+Now -- by sheer accident i today (while clearing out my mbox for
+the yearly archiving) read your email from October 1st from this list
+(20231001191303.GA8910@openwall.com>, Subject: [oss-security]
+"Linux Kernel security demistified"), where you have posted
 
-Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
-error_entry being called first, leaving %ebx with an invalid value.
+  Greg KH gave a talk entitled "Linux Kernel security demistified" at
+  Kernel Recipes 2023 (10th Edition) on September 26 in Paris, France.
 
-IMPACT
-======
+  Thank you, Greg!
 
-A rogue user-space program could crash a guest kernel.  Privilege
-escalation cannot be ruled out.
+  Here are the slides:
 
-VULNERABLE SYSTEMS
-==================
+  https://git.sr.ht/~gregkh/presentation-security/blob/3547183843399d693c35b502cf4a313e256d0dd8/security-stuff.pdf
+  ...
 
-Only 64-bit x86 PV Linux systems are vulnerable.
+and i really today stumbled over his funny opinion
 
-All versions of Linux are vulnerable.
+  . All "early notice" lists are leaks and should be considered
+    public.
+  . Unless your project is not used by anyone.
+  . Otherwise, why would your government allow it to exist?
 
-MITIGATION
-==========
+Also this year we seem to have had the 10th anniversary of the NSA
+leaks (with nice to read stories of world-hoppers like Bruce
+Schneier), we have the (pretty biased in my opinion, also
+referring to lots of decade-old pre-NSA leak data) RFC 9505 "A
+Survey of Worldwide Censorship Techniques" that happened to happen
+around that anniversary.
 
-Switching to HVM or PVH guests will mitigate this issue.
+  ...
+ |Per my reading, the EU CRA (which isn't final yet and isn't in effect
+ |yet) is going to require something related, but different.  The proposal
 
-CREDITS
-=======
+We hopefully scrape past that backdoor-to-everything (after court
+rules, (((.. or for security agencies ..)))) that at leat the now
+deselected polish government pushed for, *if* i understood that
+correctly (which i think i did).
 
-This issue was discovered by M. Vefa Bicakci, and recognized as a
-security issue by Andy Lutomirski.
+ |from 2022:
 
-RESOLUTION
-==========
+We also saw
 
-Applying the appropriate attached patch resolves this issue.
+  https://epicenter.works/fileadmin/user_upload/eIDAS_Open_Letter-2023-11-01-Academics_NGOs.pdf
 
-NB this patch has not been accepted into Linux upstream yet.  An
-updated advisory will be sent if the fix upstreamed looks
-significantly different.
+("live update" aka current version here:
 
-xsa274-linux-4.17.patch           Linux 4.17
+  https://nce.mpi-sp.org/index.php/s/cG88cptFdaDNyRr)
 
-$ sha256sum xsa274*
-0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
-$
+in November this year.
 
-NOTE ON THE LACK OF EMBARGO
-===========================
+  1. Undermining website authentication undermines communications security
+  The current text of Article 45 mandates that browsers must
+  accept any root certificates provided by any Member State (and
+  any third party country approved by the EU) and will have severe
+  consequences for the privacy of European citizens, the security
+  of European commerce, and the Internet as a whole
 
-The patch for this issue was published on linux-kernel without being
-first reported to the XenProject Security Team.
+By the way i was silenced on the IH mailing-list after responding
+to an email which included
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  https://www.msn.com/en-us/news/world/polarized-world-threatens-open-internet-icann/ar-AA1kjXU2
 
-iQEcBAEBCAAGBQJbdFA5AAoJEIP+FMlX6CvZWQQIAIxMK2w6CsH2aNQRDiDrgcBc
-2FkBbroS5I1XHEhWVyO19aPhp1R3mYNU+pTUUFOevQuKvTP0nuZ0csgk5LUj9UP7
-EE/3vM3jkAfmIIuXCAegOcznnEl6Wi9aMKGVXcxMkRu9qjKStGr4We5qvmdPncUj
-DkTdD6VbmM/Q665b0jU4j2aZPDMsH63qrsbz1rsnPAlYUi1R+yKw56Q5UdRJK17j
-Jc74v+elyqOkFq7QwH1usfnko+DQziLyLqEBQOztTSps2qYM+VwHLAZkhxNyuLsu
-2x9/1D8XoZ+BHvVsVe50QmoNcJViMMunnHNhWYHmtXLYFErwUOt48N1vl+3xFpo=
-=k4Ak
------END PGP SIGNATURE-----
+The headline as such is terribly opinionated then when, if ever
+but in the earliest days when (military) academics talked with
+each other alone, was this ever true.  I for one will never kill
+a russian or had such a desire, yet this was ok to write (to say
+the least), but on the other hand the legendary David Peel and the
+Lower East Side Band concert in Central Park ("Have a Marijuna")
+from i think 1969 could by no means be found by Google in the
+past.
+OF COURSE -- was this by law?  Maybe not.  Yet it is everywhere.
 
---=separator
-Content-Type: application/octet-stream; name="xsa274-linux-4.17.patch"
-Content-Disposition: attachment; filename="xsa274-linux-4.17.patch"
-Content-Transfer-Encoding: base64
+As long as the root servers are not spread all over the place
+there is no "open internet".  Never was.
 
-RnJvbSA4ZGY2MzUwMDdlMDczNzg4NzUyMmVlYmVlODg2MTU1NjAyYjg4MDli
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmR5IEx1dG9taXJz
-a2kgPGx1dG9Aa2VybmVsLm9yZz4KRGF0ZTogU3VuLCAyMiBKdWwgMjAxOCAx
-MTowNTowOSAtMDcwMApTdWJqZWN0OiBbUEFUQ0hdIHg4Ni9lbnRyeS82NDog
-UmVtb3ZlICVlYnggaGFuZGxpbmcgZnJvbSBlcnJvcl9lbnRyeS9leGl0Cgpl
-cnJvcl9lbnRyeSBhbmQgZXJyb3JfZXhpdCBjb21tdW5pY2F0ZSB0aGUgdXNl
-ciB2cyBrZXJuZWwgc3RhdHVzIG9mCnRoZSBmcmFtZSB1c2luZyAlZWJ4LiAg
-VGhpcyBpcyB1bm5lY2Vzc2FyeSAtLSB0aGUgaW5mb3JtYXRpb24gaXMgaW4K
-cmVncy0+Y3MuICBKdXN0IHVzZSByZWdzLT5jcy4KClRoaXMgbWFrZXMgZXJy
-b3JfZW50cnkgc2ltcGxlciBhbmQgbWFrZXMgZXJyb3JfZXhpdCBtb3JlIHJv
-YnVzdC4KCkl0IGFsc28gZml4ZXMgYSBuYXN0eSBidWcuICBCZWZvcmUgYWxs
-IHRoZSBTcGVjdHJlIG5vbnNlbnNlLCBUaGUKeGVuX2ZhaWxzYWZlX2NhbGxi
-YWNrIGVudHJ5IHBvaW50IHJldHVybmVkIGxpa2UgdGhpczoKCiAgICAgICAg
-QUxMT0NfUFRfR1BSRUdTX09OX1NUQUNLCiAgICAgICAgU0FWRV9DX1JFR1MK
-ICAgICAgICBTQVZFX0VYVFJBX1JFR1MKICAgICAgICBFTkNPREVfRlJBTUVf
-UE9JTlRFUgogICAgICAgIGptcCAgICAgZXJyb3JfZXhpdAoKQW5kIGl0IGRp
-ZCBub3QgZ28gdGhyb3VnaCBlcnJvcl9lbnRyeS4gIFRoaXMgd2FzIGJvZ3Vz
-OiBSQlgKY29udGFpbmVkIGdhcmJhZ2UsIGFuZCBlcnJvcl9leGl0IGV4cGVj
-dGVkIGEgZmxhZyBpbiBSQlguCkZvcnR1bmF0ZWx5LCBpdCBnZW5lcmFsbHkg
-Y29udGFpbmVkICpub256ZXJvKiBnYXJiYWdlLCBzbyB0aGUKY29ycmVjdCBj
-b2RlIHBhdGggd2FzIHVzZWQuICBBcyBwYXJ0IG9mIHRoZSBTcGVjdHJlIGZp
-eGVzLCBjb2RlIHdhcwphZGRlZCB0byBjbGVhciBSQlggdG8gbWl0aWdhdGUg
-Y2VydGFpbiBzcGVjdWxhdGlvbiBhdHRhY2tzLiAgTm93LApkZXBlbmRpbmcg
-b24ga2VybmVsIGNvbmZpZ3VyYXRpb24sIFJCWCBnb3QgemVyb2VkIGFuZCwg
-d2hlbiBydW5uaW5nCnNvbWUgV2luZSB3b3JrbG9hZHMsIHRoZSBrZXJuZWwg
-Y3Jhc2hlcy4gIFRoaXMgd2FzIGludHJvZHVjZWQgYnk6CgogICAgY29tbWl0
-IDNhYzZkOGM3ODdiOCAoIng4Ni9lbnRyeS82NDogQ2xlYXIgcmVnaXN0ZXJz
-IGZvcgogICAgZXhjZXB0aW9ucy9pbnRlcnJ1cHRzLCB0byByZWR1Y2Ugc3Bl
-Y3VsYXRpb24gYXR0YWNrIHN1cmZhY2UiKQoKV2l0aCB0aGlzIHBhdGNoIGFw
-cGxpZWQsIFJCWCBpcyBubyBsb25nZXIgbmVlZGVkIGFzIGEgZmxhZywgYW5k
-IHRoZQpwcm9ibGVtIGdvZXMgYXdheS4KCkkgc3VzcGVjdCB0aGF0IG1hbGlj
-aW91cyB1c2Vyc3BhY2UgY291bGQgdXNlIHRoaXMgYnVnIHRvIGNyYXNoIHRo
-ZQprZXJuZWwgZXZlbiB3aXRob3V0IHRoZSBvZmZlbmRpbmcgcGF0Y2ggYXBw
-bGllZCwgdGhvdWdoLgoKW0hpc3RvcmljYWwgbm90ZTogSSB3cm90ZSB0aGlz
-IHBhdGNoIGFzIGEgY2xlYW51cCBiZWZvcmUgSSB3YXMgYXdhcmUKIG9mIHRo
-ZSBidWcgaXQgZml4ZWQuXQoKW05vdGUgdG8gc3RhYmxlIG1haW50YWluZXJz
-OiB0aGlzIHNob3VsZCBwcm9iYWJseSBnZXQgYXBwbGllZCB0byBhbGwKIGtl
-cm5lbHMuICBJZiB5b3UncmUgbmVydm91cyBhYm91dCB0aGF0LCBhIG1vcmUg
-Y29uc2VydmF0aXZlIGZpeCB0bwogYWRkIHhvcmwgJWVieCwlZWJ4OyBpbmNs
-ICVlYnggYmVmb3JlIHRoZSBqdW1wIHRvIGVycm9yX2V4aXQgc2hvdWxkCiBh
-bHNvIGZpeCB0aGUgcHJvYmxlbS5dCgpDYzogQnJpYW4gR2Vyc3QgPGJyZ2Vy
-c3RAZ21haWwuY29tPgpDYzogQm9yaXNsYXYgUGV0a292IDxicEBhbGllbjgu
-ZGU+CkNjOiBEb21pbmlrIEJyb2Rvd3NraSA8bGludXhAZG9taW5pa2Jyb2Rv
-d3NraS5uZXQ+CkNjOiBJbmdvIE1vbG5hciA8bWluZ29AcmVkaGF0LmNvbT4K
-Q2M6ICJILiBQZXRlciBBbnZpbiIgPGhwYUB6eXRvci5jb20+CkNjOiBUaG9t
-YXMgR2xlaXhuZXIgPHRnbHhAbGludXRyb25peC5kZT4KQ2M6IEJvcmlzIE9z
-dHJvdnNreSA8Ym9yaXMub3N0cm92c2t5QG9yYWNsZS5jb20+CkNjOiBKdWVy
-Z2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkNjOiB4ZW4tZGV2ZWxAbGlz
-dHMueGVucHJvamVjdC5vcmcKQ2M6IHg4NkBrZXJuZWwub3JnCkNjOiBzdGFi
-bGVAdmdlci5rZXJuZWwub3JnCkZpeGVzOiAzYWM2ZDhjNzg3YjggKCJ4ODYv
-ZW50cnkvNjQ6IENsZWFyIHJlZ2lzdGVycyBmb3IgZXhjZXB0aW9ucy9pbnRl
-cnJ1cHRzLCB0byByZWR1Y2Ugc3BlY3VsYXRpb24gYXR0YWNrIHN1cmZhY2Ui
-KQpSZXBvcnRlZC1hbmQtdGVzdGVkLWJ5OiAiTS4gVmVmYSBCaWNha2NpIiA8
-bS52LmJAcnVuYm94LmNvbT4KU2lnbmVkLW9mZi1ieTogQW5keSBMdXRvbWly
-c2tpIDxsdXRvQGtlcm5lbC5vcmc+Ci0tLQogYXJjaC94ODYvZW50cnkvZW50
-cnlfNjQuUyB8IDE4ICsrKystLS0tLS0tLS0tLS0tLQogMSBmaWxlIGNoYW5n
-ZWQsIDQgaW5zZXJ0aW9ucygrKSwgMTQgZGVsZXRpb25zKC0pCgpkaWZmIC0t
-Z2l0IGEvYXJjaC94ODYvZW50cnkvZW50cnlfNjQuUyBiL2FyY2gveDg2L2Vu
-dHJ5L2VudHJ5XzY0LlMKaW5kZXggNzNhNTIyZDUzYjUzLi44YWU3ZmZkYThm
-OTggMTAwNjQ0Ci0tLSBhL2FyY2gveDg2L2VudHJ5L2VudHJ5XzY0LlMKKysr
-IGIvYXJjaC94ODYvZW50cnkvZW50cnlfNjQuUwpAQCAtOTgxLDcgKzk4MSw3
-IEBAIEVOVFJZKFxzeW0pCiAKIAljYWxsCVxkb19zeW0KIAotCWptcAllcnJv
-cl9leGl0CQkJLyogJWVieDogbm8gc3dhcGdzIGZsYWcgKi8KKwlqbXAJZXJy
-b3JfZXhpdAogCS5lbmRpZgogRU5EKFxzeW0pCiAuZW5kbQpAQCAtMTIyMiw3
-ICsxMjIyLDYgQEAgRU5EKHBhcmFub2lkX2V4aXQpCiAKIC8qCiAgKiBTYXZl
-IGFsbCByZWdpc3RlcnMgaW4gcHRfcmVncywgYW5kIHN3aXRjaCBHUyBpZiBu
-ZWVkZWQuCi0gKiBSZXR1cm46IEVCWD0wOiBjYW1lIGZyb20gdXNlciBtb2Rl
-OyBFQlg9MTogb3RoZXJ3aXNlCiAgKi8KIEVOVFJZKGVycm9yX2VudHJ5KQog
-CVVOV0lORF9ISU5UX0ZVTkMKQEAgLTEyNjksNyArMTI2OCw2IEBAIEVOVFJZ
-KGVycm9yX2VudHJ5KQogCSAqIGZvciB0aGVzZSBoZXJlIHRvby4KIAkgKi8K
-IC5MZXJyb3Jfa2VybmVsc3BhY2U6Ci0JaW5jbAklZWJ4CiAJbGVhcQluYXRp
-dmVfaXJxX3JldHVybl9pcmV0KCVyaXApLCAlcmN4CiAJY21wcQklcmN4LCBS
-SVArOCglcnNwKQogCWplCS5MZXJyb3JfYmFkX2lyZXQKQEAgLTEzMDMsMjgg
-KzEzMDEsMjAgQEAgRU5UUlkoZXJyb3JfZW50cnkpCiAKIAkvKgogCSAqIFBy
-ZXRlbmQgdGhhdCB0aGUgZXhjZXB0aW9uIGNhbWUgZnJvbSB1c2VyIG1vZGU6
-IHNldCB1cCBwdF9yZWdzCi0JICogYXMgaWYgd2UgZmF1bHRlZCBpbW1lZGlh
-dGVseSBhZnRlciBJUkVUIGFuZCBjbGVhciBFQlggc28gdGhhdAotCSAqIGVy
-cm9yX2V4aXQga25vd3MgdGhhdCB3ZSB3aWxsIGJlIHJldHVybmluZyB0byB1
-c2VyIG1vZGUuCisJICogYXMgaWYgd2UgZmF1bHRlZCBpbW1lZGlhdGVseSBh
-ZnRlciBJUkVULgogCSAqLwogCW1vdgklcnNwLCAlcmRpCiAJY2FsbAlmaXh1
-cF9iYWRfaXJldAogCW1vdgklcmF4LCAlcnNwCi0JZGVjbAklZWJ4CiAJam1w
-CS5MZXJyb3JfZW50cnlfZnJvbV91c2VybW9kZV9hZnRlcl9zd2FwZ3MKIEVO
-RChlcnJvcl9lbnRyeSkKIAotCi0vKgotICogT24gZW50cnksIEVCWCBpcyBh
-ICJyZXR1cm4gdG8ga2VybmVsIG1vZGUiIGZsYWc6Ci0gKiAgIDE6IGFscmVh
-ZHkgaW4ga2VybmVsIG1vZGUsIGRvbid0IG5lZWQgU1dBUEdTCi0gKiAgIDA6
-IHVzZXIgZ3NiYXNlIGlzIGxvYWRlZCwgd2UgbmVlZCBTV0FQR1MgYW5kIHN0
-YW5kYXJkIHByZXBhcmF0aW9uIGZvciByZXR1cm4gdG8gdXNlcm1vZGUKLSAq
-LwogRU5UUlkoZXJyb3JfZXhpdCkKIAlVTldJTkRfSElOVF9SRUdTCiAJRElT
-QUJMRV9JTlRFUlJVUFRTKENMQlJfQU5ZKQogCVRSQUNFX0lSUVNfT0ZGCi0J
-dGVzdGwJJWVieCwgJWVieAotCWpueglyZXRpbnRfa2VybmVsCisJdGVzdGIJ
-JDMsIENTKCVyc3ApCisJanoJcmV0aW50X2tlcm5lbAogCWptcAlyZXRpbnRf
-dXNlcgogRU5EKGVycm9yX2V4aXQpCiAKLS0gCjIuMTguMAoK
+By the way you can see things on Wikipedia that every little child
+can look at, but -- in my opinion -- should not.
+That system failed.  How can it be made better?  I do not know.
 
---=separator--
+ ...
+ |includes the below:
+ |
+ |"The manufacturer shall, without undue delay and in any event within 24
+ |hours of becoming aware of it, notify to ENISA any actively exploited
+ |vulnerability contained in the product with digital elements."
+
+At least this is now a public law.
+Noone will ever convince me that a company like Microsoft, Apple,
+but also for example Software AG and other German companies,
+remain silent against their own government --- especially after
+they did not do that the first time, and even more especially so
+if the government uses that software itself.
+Come on, i really want to know: how realistic is that?
+And i tell you what: despite the terrible politics that Germany
+performs except for some things (for example yesterday 70 percent
+of electricity came from wind, and i am hoping for hydrogen), and
+i am deeply run down from German politics, that you can trust me,
+you know: i would do that if i would maintain such a thing.
+_Of_course_.
+
+(Disclaimer: i apologise to all those countries that are misused
+economically, which' people have a shorter painful life span
+because of substances or working conditions 'caused by us, or
+fooled with faked crypto and other secret service ashole shit we
+fooled you with for half a century and longer.  All my heart.)
+
+  ...
+  etc
+  ...
+ |I'm not currently aware of related legislation elsewhere, but I would be
+ |unsurprised if it exists.
+ |
+ |Overall, I am concerned about this trend towards more government
+ |oversight.  While we also have our policies, we do not have a monopoly,
+ ...
+
+Well at least it will now become an open law.
+And "freedom is a state of mind" was true 3500 years ago,
+currently is, and will be as long as people live.
+The brain chips surely will be as selective and opinionated in
+what they serve except for maybe complete latin vocabularies and
+historical data points (and that already is a problem).
+
+In the companies root certificates, and hey, if even for virus
+filtering, and such, etc, everywhere, if you drive Tesla or likely
+any other modern car (i refer to Mozilla's car privacy and
+security) then data is collected, and even if that data is not
+capable to, maybe in ten years it is.  The psychological bandwidth
+of the human being is quite small, effectively, and if you are
+permanently traced including temperature, in-seat-movement, eye
+movement, (even sexual activities, if there is camera, and
+microphone, and humidity sensor, etc), then at least in the future
+you are psychologically transparent.  And data inter-connection
+with buying behaviour and such.
+By the way: please protect me from terrorism!
+
+This is of course all a person's free will in a free world.
+So off-topic.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
+|
+| Only in December: lightful Dubai COP28 Narendra Modi quote:
+|  A small part of humanity has ruthlessly exploited nature.
+|  But the entire humanity is bearing the cost of it,
+|  especially the inhabitants of the Global South.
+|  The selfishness of a few will lead the world into darkness,
+|  not just for themselves but for the entire world.
+|  [Christians might think of Revelation 11:18
+|    The nations were angry, and your wrath has come[.]
+|    [.]for destroying those who destroy the earth.
+|   But i find the above more kind, and much friendlier]
