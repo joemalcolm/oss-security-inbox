@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/15/3
-Message-ID: <a1e90a56-7cb7-9898-06e1-7a89d79a0435@apache.org>
-Date: Fri, 15 Dec 2023 05:49:54 +0000
-From: Albumen Kevin <albumenj@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/25/1
+Message-ID: <32345105-4692-465c-9a1d-e668c23df18d@hostland.ru>
+Date: Mon, 25 Dec 2023 21:27:37 +0300
+From: kai <kai@...tland.ru>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46279: Apache Dubbo: Bypass deny serialize list check in Apache Dubbo 
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Happy christmas list!
 
-Affected versions:
+If anyone needs patch for postfix's 3.3.0-1ubuntu0.4 
+smtpd_forbid_bare_newline feature it has been attached to this message
 
-- Apache Dubbo 3.1.5
-
-Description:
-
-Deserialization of Untrusted Data vulnerability in Apache Dubbo.This issue only affects Apache Dubbo 3.1.5.
-
-Users are recommended to upgrade to the latest version, which fixes the issue.
-
-References:
-
-https://dubbo.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46279
-
+On 24/12/2023 12.33, Marcus Meissner wrote:
+> On Sat, Dec 23, 2023 at 02:29:34PM +0200, Valtteri Vuorikoski wrote:
+>> On Fri, Dec 22, 2023 at 11:46:48AM +0100, Marcus Meissner wrote:
+>>> Hi,
+>>>
+>>> FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
+>>>
+>>> Not sure if we need it for others like sendmail too, as that is also
+>>> referenced by the security researchers.
+>> Looks like exim opened a bug on this yesterday too, no sign of CVE yet:
+>> <https://bugs.exim.org/show_bug.cgi?id=3063>
+> CVEs are assigned now for:
+>
+> - CVE-2023-51764 postfix
+> - CVE-2023-51765 sendmail
+> - CVE-2023-51766 exim
+>
+> Ciao, Marcus
+View attachment "smtp-smuggling33.patch" of type "text/x-patch" (6395 bytes)
