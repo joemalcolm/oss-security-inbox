@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2183" "Thursday" "4" "August" "2016" "10:16:53" "+0100" "Cory Benfield" "cory@lukasa.co.uk" "<AE6B099E-CAAC-4258-9640-F024447258D7@lukasa.co.uk>" "72" "[oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion" nil nil nil "8" "2016080409:16:53" "[oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion" (number mark "U       cory@lukasa. Aug  4   72/2183  " thread-indent "\"[oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21560 invoked by uid 550); 4 Aug 2016 09:17:07 -0000
+Received: (qmail 1226 invoked by uid 550); 25 Dec 2023 20:02:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +7,204 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21537 invoked from network); 4 Aug 2016 09:17:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lukasa-co-uk.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=+CRDv3fJ7fN4eSTZQD3g7MnglEZgOFkADhQv+Ec5FqQ=;
-        b=mTBUPGSon749gUPRWoDu/QG2QCWznGv8u1INI/cbqlweIBiLlJgBB6+fHr7OYyOtCX
-         VuCGX/87LGO+Zs3oJ2wLKT3XpRyJnIaOY7ig1G8Q6wvXJ8lJhlH6erx+1eacXhwhS8mA
-         SW+oRm378b3rIIAyhfNXdKvk6XYi/3l570gj5Hh2pP1zU4EUz6UI7W0LYrHsqf2/DOFR
-         wC6XIoq8RB8++h97/lM2jiYo9AvPNHilb8gJBQqhdBkPjye0kq/BGQMUlgoDN7OPgESr
-         1wpYQ2ei5QPoKzFMOxhRnuAitl7jDtgYxH6ED4qXCmgXt8SKnrmOEzvinY8fkr7kzRGA
-         sU/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=+CRDv3fJ7fN4eSTZQD3g7MnglEZgOFkADhQv+Ec5FqQ=;
-        b=flob4u+H5O0U+gTMybdL6rwActsj+g8iy1SYC6eVjhGXvl1ncMTeoDw8tVEZSCXniR
-         MxkpIgmx+OVWwQ4zHe0slivSWlqhHYYGEZHCRSvb4f5BA/mDfjm9X+NvC50RSL8EK5Q6
-         xjFEeKuHmfkRlviOEgsz9TFC30t1kgaTsNQRvLmhM9CStEfxoDJ3YYgvweVX/K5LE/eD
-         qkAjNDweGyeuPXeFaT+5IqUOP3FAHLjQBuK269k/o+6YBeaM4/oJqobiQ3ih6SOhott6
-         m2PU3CRJgs+uhgpZ4CPBV05K/H4vfi5AqtoeyV+8rJhuE21b6B1ZRUs5GQ/zczz414Tx
-         +05A==
-X-Gm-Message-State: AEkoouvWxU7ZLlIVdcu+qRJzARFjVdziHxfxKFVK4C3dRsoypQNy7jG3h14JJ5KXLF9wuw==
-X-Received: by 10.28.146.211 with SMTP id u202mr73237243wmd.54.1470302215511;
-        Thu, 04 Aug 2016 02:16:55 -0700 (PDT)
-From: Cory Benfield <cory@lukasa.co.uk>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.0 \(3204\))
-Message-Id: <AE6B099E-CAAC-4258-9640-F024447258D7@lukasa.co.uk>
-Date: Thu, 4 Aug 2016 10:16:53 +0100
+Received: (qmail 23847 invoked from network); 25 Dec 2023 18:26:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hostland.ru; s=dkim;
+	t=1703528857;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Wg17HW/RyCh1MMPX2imMl5wAO/ieQGyb6hukAoeSwS8=;
+	b=ZGOHscmnLYvocJadqNMAOKJe6XB/vcx82vBqdCwMyulgBayH1VtnJeSesaC5gaWwq0WMoq
+	2/QqCcaUbLcc/m8OSHlJIQTu31OghnP0zb6p1DP5CUCbfx25zYzPykK8fNMVjdvmhWzQVz
+	MfLzFATtHunVBDX7QU5iwMkzW2V3I1I=
+Content-Type: multipart/mixed; boundary="------------xlRQA0icVemJDmj1wLzogmfY"
+Message-ID: <32345105-4692-465c-9a1d-e668c23df18d@hostland.ru>
+Date: Mon, 25 Dec 2023 21:27:37 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3204)
-Subject: [oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion
+References: <20231221143630.GD14101@suse.de>
+ <20231221144656.GA40693@veps.esmtp.org> <20231222104647.GH14101@suse.de>
+ <croalohbjdjf2cb6e5ol2l7rsdoxd6mr4mw55lyzzf7ljkkx5a@czm7be4dpjj4>
+ <20231224093335.GM14101@suse.de>
+From: kai <kai@hostland.ru>
+In-Reply-To: <20231224093335.GM14101@suse.de>
+Subject: Re: [oss-security] Re: New SMTP smuggling attack
 
-DoS via Unlimited Stream Insertion
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--------------xlRQA0icVemJDmj1wLzogmfY
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hyper Project security advisory, August 4th 2016.
+Happy christmas list!
 
-Vulnerability
--------------
+If anyone needs patch for postfix's 3.3.0-1ubuntu0.4 
+smtpd_forbid_bare_newline feature it has been attached to this message
 
-A HTTP/2 implementation built using the priority library could be targetted=
- by
-a malicious peer by having that peer assign priority information for every
-possible HTTP/2 stream ID. The priority tree would happily continue to store
-the priority information for each stream, and would therefore allocate
-unbounded amounts of memory. Attempting to actually *use* a tree like this
-would also cause extremely high CPU usage to maintain the tree.
+On 24/12/2023 12.33, Marcus Meissner wrote:
+> On Sat, Dec 23, 2023 at 02:29:34PM +0200, Valtteri Vuorikoski wrote:
+>> On Fri, Dec 22, 2023 at 11:46:48AM +0100, Marcus Meissner wrote:
+>>> Hi,
+>>>
+>>> FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
+>>>
+>>> Not sure if we need it for others like sendmail too, as that is also
+>>> referenced by the security researchers.
+>> Looks like exim opened a bug on this yesterday too, no sign of CVE yet:
+>> <https://bugs.exim.org/show_bug.cgi?id=3063>
+> CVEs are assigned now for:
+>
+> - CVE-2023-51764 postfix
+> - CVE-2023-51765 sendmail
+> - CVE-2023-51766 exim
+>
+> Ciao, Marcus
+--------------xlRQA0icVemJDmj1wLzogmfY
+Content-Type: text/x-patch; charset=UTF-8; name="smtp-smuggling33.patch"
+Content-Disposition: attachment; filename="smtp-smuggling33.patch"
+Content-Transfer-Encoding: base64
 
-We are not aware of any active exploits of this vulnerability, but as this
-class of attack was publicly described in this report[1], users should assu=
-me
-that they are at imminent risk of this kind of attack.
+RGVzY3JpcHRpb246IFNlY3VyaXR5CiBzbXRwZF9mb3JiaWRfYmFyZV9uZXds
+aW5lCkF1dGhvcjogZ2VuaWUgPG1haWxAcG9zdGZpeC5vcmc+Ck9yaWdpbjog
+aHR0cHM6Ly93d3cucG9zdGZpeC5vcmcvc210cC1zbXVnZ2xpbmcuaHRtbAot
+LS0KVGhpcyBwYXRjaCBoZWFkZXIgZm9sbG93cyBERVAtMzogaHR0cDovL2Rl
+cC5kZWJpYW4ubmV0L2RlcHMvZGVwMy8KSW5kZXg6IHBvc3RmaXgtMy4zLjAv
+c3JjL2dsb2JhbC9tYWlsX3BhcmFtcy5oCj09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT0KLS0tIHBvc3RmaXgtMy4zLjAub3JpZy9zcmMvZ2xvYmFsL21haWxfcGFy
+YW1zLmgKKysrIHBvc3RmaXgtMy4zLjAvc3JjL2dsb2JhbC9tYWlsX3BhcmFt
+cy5oCkBAIC00MDA5LDYgKzQwMDksMTUgQEAgZXh0ZXJuIGNoYXIgKnZhcl9z
+bXRwX2Ruc19yZV9maWx0ZXI7CiBleHRlcm4gY2hhciAqdmFyX3NtdHBkX2Ru
+c19yZV9maWx0ZXI7CiAKICAvKgorICAqIEJhY2t3YXJkcyBjb21wYXRpYmls
+aXR5LgorICAqLworI2RlZmluZSBWQVJfU01UUERfRk9SQklEX0JBUkVfTEYJ
+InNtdHBkX2ZvcmJpZF9iYXJlX25ld2xpbmUiCisjZGVmaW5lIERFRl9TTVRQ
+RF9GT1JCSURfQkFSRV9MRgkwCisKKyNkZWZpbmUgVkFSX1NNVFBEX0ZPUkJJ
+RF9CQVJFX0xGX0VYQ0wJInNtdHBkX2ZvcmJpZF9iYXJlX25ld2xpbmVfZXhj
+bHVzaW9ucyIKKyNkZWZpbmUgREVGX1NNVFBEX0ZPUkJJRF9CQVJFX0xGX0VY
+Q0wJIiQiIFZBUl9NWU5FVFdPUktTCisKKyAvKgogICAqIExvY2F0aW9uIG9m
+IHNoYXJlZC1saWJyYXJ5IGZpbGVzLgogICAqIAogICAqIElmIHRoZSBmaWxl
+cyB3aWxsIGJlIGluc3RhbGxlZCBpbnRvIGEga25vd24gZGlyZWN0b3J5LCBz
+dWNoIGFzIGEgZGlyZWN0b3J5CkluZGV4OiBwb3N0Zml4LTMuMy4wL3NyYy9n
+bG9iYWwvc210cF9zdHJlYW0uYwo9PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Ci0t
+LSBwb3N0Zml4LTMuMy4wLm9yaWcvc3JjL2dsb2JhbC9zbXRwX3N0cmVhbS5j
+CisrKyBwb3N0Zml4LTMuMy4wL3NyYy9nbG9iYWwvc210cF9zdHJlYW0uYwpA
+QCAtMTY5LDYgKzE2OSw4IEBACiAKICNpbmNsdWRlICJzbXRwX3N0cmVhbS5o
+IgogCitpbnQgICAgIHNtdHBfZm9yYmlkX2JhcmVfbGY7CisKIC8qIHNtdHBf
+dGltZW91dF9yZXNldCAtIHJlc2V0IHBlci1zdHJlYW0gZXJyb3IgZmxhZ3Ms
+IHJlc3RhcnQgZGVhZGxpbmUgdGltZXIgKi8KIAogc3RhdGljIHZvaWQgc210
+cF90aW1lb3V0X3Jlc2V0KFZTVFJFQU0gKnN0cmVhbSkKQEAgLTM0NSw2ICsz
+NDcsOSBAQCBpbnQgICAgIHNtdHBfZ2V0KFZTVFJJTkcgKnZwLCBWU1RSRUFN
+ICpzCiAJICovCiAgICAgY2FzZSAnXG4nOgogCXZzdHJpbmdfdHJ1bmNhdGUo
+dnAsIFZTVFJJTkdfTEVOKHZwKSAtIDEpOworICAgICAgICBpZiAoc210cF9m
+b3JiaWRfYmFyZV9sZgorICAgICAgICAgICAgJiYgKFZTVFJJTkdfTEVOKHZw
+KSA9PSAwIHx8IHZzdHJpbmdfZW5kKHZwKVstMV0gIT0gJ1xyJykpCisgICAg
+ICAgICAgICB2c3RyZWFtX2xvbmdqbXAoc3RyZWFtLCBTTVRQX0VSUl9MRik7
+CiAJd2hpbGUgKFZTVFJJTkdfTEVOKHZwKSA+IDAgJiYgdnN0cmluZ19lbmQo
+dnApWy0xXSA9PSAnXHInKQogCSAgICB2c3RyaW5nX3RydW5jYXRlKHZwLCBW
+U1RSSU5HX0xFTih2cCkgLSAxKTsKIAlWU1RSSU5HX1RFUk1JTkFURSh2cCk7
+CkluZGV4OiBwb3N0Zml4LTMuMy4wL3NyYy9nbG9iYWwvc210cF9zdHJlYW0u
+aAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09Ci0tLSBwb3N0Zml4LTMuMy4wLm9y
+aWcvc3JjL2dsb2JhbC9zbXRwX3N0cmVhbS5oCisrKyBwb3N0Zml4LTMuMy4w
+L3NyYy9nbG9iYWwvc210cF9zdHJlYW0uaApAQCAtMzIsNiArMzIsNyBAQAog
+I2RlZmluZSBTTVRQX0VSUl9RVUlFVAkzCQkvKiBzaWxlbnQgY2xlYW51cCAo
+YXBwbGljYXRpb24pICovCiAjZGVmaW5lIFNNVFBfRVJSX05PTkUJNAkJLyog
+bm9uLWVycm9yIGNhc2UgKi8KICNkZWZpbmUgU01UUF9FUlJfREFUQQk1CQkv
+KiBhcHBsaWNhdGlvbiBkYXRhIGVycm9yICovCisjZGVmaW5lIFNNVFBfRVJS
+X0xGCTYJCS8qIGJhcmUgPExGPiBwcm90b2NvbCBlcnJvciAqLwogCiBleHRl
+cm4gdm9pZCBzbXRwX3N0cmVhbV9zZXR1cChWU1RSRUFNICosIGludCwgaW50
+KTsKIGV4dGVybiB2b2lkIFBSSU5URkxJS0UoMiwgMykgc210cF9wcmludGYo
+VlNUUkVBTSAqLCBjb25zdCBjaGFyICosLi4uKTsKQEAgLTQxLDYgKzQyLDcg
+QEAgZXh0ZXJuIGludCBzbXRwX2dldChWU1RSSU5HICosIFZTVFJFQU0gKgog
+ZXh0ZXJuIHZvaWQgc210cF9mcHV0cyhjb25zdCBjaGFyICosIHNzaXplX3Qg
+bGVuLCBWU1RSRUFNICopOwogZXh0ZXJuIHZvaWQgc210cF9md3JpdGUoY29u
+c3QgY2hhciAqLCBzc2l6ZV90IGxlbiwgVlNUUkVBTSAqKTsKIGV4dGVybiB2
+b2lkIHNtdHBfZnB1dGMoaW50LCBWU1RSRUFNICopOworZXh0ZXJuIGludCBz
+bXRwX2ZvcmJpZF9iYXJlX2xmOwogCiBleHRlcm4gdm9pZCBzbXRwX3Zwcmlu
+dGYoVlNUUkVBTSAqLCBjb25zdCBjaGFyICosIHZhX2xpc3QpOwogCkluZGV4
+OiBwb3N0Zml4LTMuMy4wL3NyYy9zbXRwZC9zbXRwZC5jCj09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT0KLS0tIHBvc3RmaXgtMy4zLjAub3JpZy9zcmMvc210cGQv
+c210cGQuYworKysgcG9zdGZpeC0zLjMuMC9zcmMvc210cGQvc210cGQuYwpA
+QCAtMTQxNiw2ICsxNDE2LDEwIEBAIGNoYXIgICAqdmFyX3Rsc3Byb3h5X3Nl
+cnZpY2U7CiBjaGFyICAgKnZhcl9zbXRwZF91cHJveHlfcHJvdG87CiBpbnQg
+ICAgIHZhcl9zbXRwZF91cHJveHlfdG1vdXQ7CiAKK2Jvb2wgICAgdmFyX3Nt
+dHBkX2ZvcmJpZF9iYXJlX2xmOworY2hhciAgICp2YXJfc210cGRfZm9yYmlk
+X2JhcmVfbGZfZXhjbDsKK3N0YXRpYyBOQU1BRFJfTElTVCAqYmFyZV9sZl9l
+eGNsOworCiAgLyoKICAgKiBTaWxseSBsaXR0bGUgbWFjcm9zLgogICAqLwpA
+QCAtMTQ5MCw2ICsxNDk0LDcgQEAgc3RhdGljIHZvaWQgdGxzX3Jlc2V0KFNN
+VFBEX1NUQVRFICopOwogI2RlZmluZSBSRUFTT05fVElNRU9VVAkJInRpbWVv
+dXQiCiAjZGVmaW5lIFJFQVNPTl9MT1NUX0NPTk5FQ1RJT04JImxvc3QgY29u
+bmVjdGlvbiIKICNkZWZpbmUgUkVBU09OX0VSUk9SX0xJTUlUCSJ0b28gbWFu
+eSBlcnJvcnMiCisjZGVmaW5lIFJFQVNPTl9CQVJFX0xGCQkiYmFyZSA8TEY+
+IHJlY2VpdmVkIgogCiAjaWZkZWYgVVNFX1RMUwogCkBAIC00MTU2LDYgKzQx
+NjEsOSBAQCBzdGF0aWMgaW50IHhjbGllbnRfY21kKFNNVFBEX1NUQVRFICpz
+dGF0CiAgICAgICovCiAgICAgeGNsaWVudF9hbGxvd2VkID0KIAluYW1hZHJf
+bGlzdF9tYXRjaCh4Y2xpZW50X2hvc3RzLCBzdGF0ZS0+bmFtZSwgc3RhdGUt
+PmFkZHIpOworICAgIHNtdHBfZm9yYmlkX2JhcmVfbGYgPSBTTVRQRF9TVEFO
+RF9BTE9ORSgoc3RhdGUpKSA9PSAwCisgICAgICAgICYmIHZhcl9zbXRwZF9m
+b3JiaWRfYmFyZV9sZgorICAgICAgICAmJiAhbmFtYWRyX2xpc3RfbWF0Y2go
+YmFyZV9sZl9leGNsLCBzdGF0ZS0+bmFtZSwgc3RhdGUtPmFkZHIpOwogICAg
+IC8qIE5PVDogdGxzX3Jlc2V0KCkgKi8KICAgICBpZiAoZ290X2hlbG8gPT0g
+MCkKIAloZWxvX3Jlc2V0KHN0YXRlKTsKQEAgLTQ5MzYsNiArNDk0NCwxMyBA
+QCBzdGF0aWMgdm9pZCBzbXRwZF9wcm90byhTTVRQRF9TVEFURSAqc3RhCiAJ
+CQkgICAgIHZhcl9teWhvc3RuYW1lKTsKIAlicmVhazsKIAorICAgIGNhc2Ug
+U01UUF9FUlJfTEY6CisgICAgICAgIHN0YXRlLT5yZWFzb24gPSBSRUFTT05f
+QkFSRV9MRjsKKyAgICAgICAgaWYgKHZzdHJlYW1fc2V0am1wKHN0YXRlLT5j
+bGllbnQpID09IDApCisgICAgICAgICAgICBzbXRwZF9jaGF0X3JlcGx5KHN0
+YXRlLCAiNTIxIDUuNS4yICVzIEVycm9yOiBiYXJlIDxMRj4gcmVjZWl2ZWQi
+LAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YXJfbXlob3N0bmFt
+ZSk7CisgICAgICAgIGJyZWFrOworCiAgICAgY2FzZSAwOgogCiAJLyoKQEAg
+LTU0NjEsNiArNTQ3NiwxMyBAQCBzdGF0aWMgdm9pZCBzbXRwZF9zZXJ2aWNl
+KFZTVFJFQU0gKnN0cmVhCiAJbmFtYWRyX2xpc3RfbWF0Y2goeGZvcndhcmRf
+aG9zdHMsIHN0YXRlLm5hbWUsIHN0YXRlLmFkZHIpOwogCiAgICAgLyoKKyAg
+ICAgKiBFbmZvcmNlIHN0cmljdCBTTVRQIGxpbmUgZW5kaW5ncywgd2l0aCBj
+b21wYXRpYmlsaXR5IGV4Y2x1c2lvbnMuCisgICAgICovCisgICAgc210cF9m
+b3JiaWRfYmFyZV9sZiA9IFNNVFBEX1NUQU5EX0FMT05FKCgmc3RhdGUpKSA9
+PSAwCisgICAgICAgICYmIHZhcl9zbXRwZF9mb3JiaWRfYmFyZV9sZgorICAg
+ICAgICAmJiAhbmFtYWRyX2xpc3RfbWF0Y2goYmFyZV9sZl9leGNsLCBzdGF0
+ZS5uYW1lLCBzdGF0ZS5hZGRyKTsKKworICAgIC8qCiAgICAgICogU2VlIGlm
+IHdlIG5lZWQgdG8gdHVybiBvbiB2ZXJib3NlIGxvZ2dpbmcgZm9yIHRoaXMg
+Y2xpZW50LgogICAgICAqLwogICAgIGRlYnVnX3BlZXJfY2hlY2soc3RhdGUu
+bmFtZSwgc3RhdGUuYWRkcik7CkBAIC01NTIyLDEwICs1NTQ0LDE0IEBAIHN0
+YXRpYyB2b2lkIHByZV9qYWlsX2luaXQoY2hhciAqdW51c2VkX24KICAgICBo
+b2dnZXJfbGlzdCA9IG5hbWFkcl9saXN0X2luaXQoVkFSX1NNVFBEX0hPR0dF
+UlMsIE1BVENIX0ZMQUdfUkVUVVJOCiAJCQkJICAgfCBtYXRjaF9wYXJlbnRf
+c3R5bGUoVkFSX1NNVFBEX0hPR0dFUlMpLAogCQkJCSAgIHZhcl9zbXRwZF9o
+b2dnZXJzKTsKKyAgICBiYXJlX2xmX2V4Y2wgPSBuYW1hZHJfbGlzdF9pbml0
+KFZBUl9TTVRQRF9GT1JCSURfQkFSRV9MRl9FWENMLAorICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgTUFUQ0hfRkxBR19SRVRVUk4KKyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgbWF0Y2hfcGFy
+ZW50X3N0eWxlKFZBUl9NWU5FVFdPUktTKSwKKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIHZhcl9zbXRwZF9mb3JiaWRfYmFyZV9sZl9l
+eGNsKTsKIAogICAgIC8qCiAgICAgICogT3BlbiBtYXBzIGJlZm9yZSBkcm9w
+cGluZyBwcml2aWxlZ2VzIHNvIHdlIGNhbiByZWFkIHBhc3N3b3JkcyBldGMu
+Ci0gICAgICogCisgICAgICoKICAgICAgKiBYWFggV2Ugc2hvdWxkIG5vdCBk
+byB0aGlzIGluIHN0YW5kLWFsb25lIChzZW5kbWFpbCAtYnMpIG1vZGUsIGJ1
+dCB3ZQogICAgICAqIGNhbid0IHVzZSBTTVRQRF9TVEFORF9BTE9ORShzdGF0
+ZSkgaGVyZS4gVGhpcyBtZWFucyAic2VuZG1haWwgLWJzIgogICAgICAqIHdp
+bGwgdHJ5IHRvIGNvbm5lY3QgdG8gcHJveHltYXAgd2hlbiBpbnZva2VkIGJ5
+IHJvb3QgZm9yIG1haWwKQEAgLTU4NTAsNiArNTg3Niw3IEBAIGludCAgICAg
+bWFpbihpbnQgYXJnYywgY2hhciAqKmFyZ3YpCiAJVkFSX1NNVFBEX1BFRVJO
+QU1FX0xPT0tVUCwgREVGX1NNVFBEX1BFRVJOQU1FX0xPT0tVUCwgJnZhcl9z
+bXRwZF9wZWVybmFtZV9sb29rdXAsCiAJVkFSX1NNVFBEX0RFTEFZX09QRU4s
+IERFRl9TTVRQRF9ERUxBWV9PUEVOLCAmdmFyX3NtdHBkX2RlbGF5X29wZW4s
+CiAJVkFSX1NNVFBEX0NMSUVOVF9QT1JUX0xPRywgREVGX1NNVFBEX0NMSUVO
+VF9QT1JUX0xPRywgJnZhcl9zbXRwZF9jbGllbnRfcG9ydF9sb2csCisJVkFS
+X1NNVFBEX0ZPUkJJRF9CQVJFX0xGLCBERUZfU01UUERfRk9SQklEX0JBUkVf
+TEYsICZ2YXJfc210cGRfZm9yYmlkX2JhcmVfbGYsCiAJMCwKICAgICB9Owog
+ICAgIHN0YXRpYyBjb25zdCBDT05GSUdfTkJPT0xfVEFCTEUgbmJvb2xfdGFi
+bGVbXSA9IHsKQEAgLTU5NjAsNiArNTk4Nyw3IEBAIGludCAgICAgbWFpbihp
+bnQgYXJnYywgY2hhciAqKmFyZ3YpCiAJVkFSX1NNVFBEX1BPTElDWV9ERUZf
+QUNUSU9OLCBERUZfU01UUERfUE9MSUNZX0RFRl9BQ1RJT04sICZ2YXJfc210
+cGRfcG9saWN5X2RlZl9hY3Rpb24sIDEsIDAsCiAJVkFSX1NNVFBEX1BPTElD
+WV9DT05URVhULCBERUZfU01UUERfUE9MSUNZX0NPTlRFWFQsICZ2YXJfc210
+cGRfcG9saWN5X2NvbnRleHQsIDAsIDAsCiAJVkFSX1NNVFBEX0ROU19SRV9G
+SUxURVIsIERFRl9TTVRQRF9ETlNfUkVfRklMVEVSLCAmdmFyX3NtdHBkX2Ru
+c19yZV9maWx0ZXIsIDAsIDAsCisJVkFSX1NNVFBEX0ZPUkJJRF9CQVJFX0xG
+X0VYQ0wsIERFRl9TTVRQRF9GT1JCSURfQkFSRV9MRl9FWENMLCAmdmFyX3Nt
+dHBkX2ZvcmJpZF9iYXJlX2xmX2V4Y2wsIDAsIDAsCiAJMCwKICAgICB9Owog
+ICAgIHN0YXRpYyBjb25zdCBDT05GSUdfUkFXX1RBQkxFIHJhd190YWJsZVtd
+ID0gewo=
 
-Info
-----
-
-This issue has been given the name CVE-2016-6580.
-
-Affected Versions
------------------
-
-This issue affects all versions of the priority library prior to 1.2.0.
-
-The Solution
-------------
-
-In version 1.2.0, the priority library limits the maximum number of streams
-that can be inserted into the tree. By default this limit is 1000, but it is
-user-configurable.
-
-If it is necessary to backport a patch, the patch can be found in
-this GitHub pull request[2].
-
-Recommendations
----------------
-
-We suggest you take the following actions immediately, in order of preferen=
-ce:
-
-1. Update priority to 1.2.0 immediately, and consider revising the maximum
-   number of streams downward to a suitable value for your application.
-2. Backport the patch made available on GitHub.
-3. Manually enforce a limit on the number of priority settings you'll allow=
- at
-   once.
-
-Timeline
---------
-
-This class of vulnerability was publicly reported in this report[1] on the
-3rd of August. We requested a CVE ID from Mitre the same day.
-
-Priority 1.2.0 was released on the 4th of August, at the same time as the
-publication of this advisory.
-
-
-Thanks,
-
-Cory Benfield, on behalf of the Python Hyper project.
-
-
-[1]: http://www.imperva.com/docs/Imperva_HII_HTTP2.pdf
-[2]: https://github.com/python-hyper/priority/pull/23=
+--------------xlRQA0icVemJDmj1wLzogmfY--
