@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1506" "Sunday" "24" "January" "2016" "03:21:31" "+0000" "Zemn mez" "zemnmez@gmail.com" "<CAJCHTFX--F249k4kdfrWv5iHDu33SwBwZqWkhL+_v=2knRQgew@mail.gmail.com>" "37" "[oss-security] CVE Request: Host based account hijack attack on php-openid" "^Date:" nil nil "1" "2016012403:21:31" "[oss-security] CVE Request: Host based account hijack attack on php-openid" (number mark "        zemnmez@gmai Jan 24   37/1506  " thread-indent "\"[oss-security] CVE Request: Host based account hijack attack on php-openid\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 6130 invoked by uid 550); 24 Jan 2016 08:16:11 -0000
+Received: (qmail 5907 invoked by uid 550); 25 Dec 2023 22:09:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +6,124 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17661 invoked from network); 24 Jan 2016 03:21:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=yAv4FAVzUfEnrVuj7tLxGUq4z5t2oM3fw++0GqS5eEE=;
-        b=v0SRpzgIyqbssVSSE79CJmLnmWOslKWU0UyUAEf3doG7Z95wPhRqELAU2HGWoKtJSd
-         gpg14Irto51F1fSYd2vC6ArJBjG3pb3EOaODZ6SoOtPGHvTBK0uQaRANRARd3AmOaWDA
-         l3nVMv8V/VohoIjLCiI8dvAbahjsjKN4uxN+NUNEtQzm9mcqahb1Jb4FhRNlM0DaZb/F
-         qfbuZ3chUhf7LP0jSh4GTxcXiJhR2DB7ucWlL6m0vLWqjFb1VELDlm+M2NaGa8DuTIV1
-         cshMVEIhW1pKEDuBvt0u0645hx1gRErWfRwZuA2h/X/xQeZqrSkEVdDhDqR6y0k5kxD3
-         bIQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=yAv4FAVzUfEnrVuj7tLxGUq4z5t2oM3fw++0GqS5eEE=;
-        b=cCD2WW1nhfutralhXc0lOjfLk26bOkD92i0T64KBPV46/Bg77DsS0Zr6OXRGvEtd+u
-         eF+yDa+G7gAhqS5xFMPFvZcQC627PG5R5iDjeVyvVask8ANlE3cZ8UQPqqJ8VUj6vf5e
-         T4UvxDVWDbH0ow021PoXVkGlve5qn3x0+9YjUXxQkfyQ/I/wQ0H7b4Xz+G3n4cxjtv7u
-         hHUNaWMYki8esqgAWPSUSyrKrfaT4miI3oErey1FJQvq6H8Ny8UuNh9bnkkVMN3pytwy
-         4K/l06Lxp9THVvkguncG7LuYEBZtis14jFZksr/nOip0VAsRClev74QNZ4OBnBB6nkqr
-         ibhA==
-X-Gm-Message-State: AG10YORvcjggqXUWdzo6TeNwNphSPixvlK2wSE+vWTmaWGg8bOp+e5LriWI3QVNnFtNyEw/xyWu1MdOSUpwWpg==
-MIME-Version: 1.0
-X-Received: by 10.112.144.226 with SMTP id sp2mr1741249lbb.70.1453605691619;
- Sat, 23 Jan 2016 19:21:31 -0800 (PST)
-Message-ID: <CAJCHTFX--F249k4kdfrWv5iHDu33SwBwZqWkhL+_v=2knRQgew@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=047d7b342fd4e48073052a0bf295
-Date: Sun, 24 Jan 2016 03:21:31 +0000
-From: Zemn mez <zemnmez@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Host based account hijack attack on php-openid
+Received: (qmail 5423 invoked from network); 25 Dec 2023 22:08:44 -0000
+Date: Mon, 25 Dec 2023 23:09:25 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20231225220925.GA17188@openwall.com>
+References: <ZSyUUSF_-3YbT14k@workstation> <20231016080850.GF10758@suse.de> <2023101612-snare-dart-c7cf@gregkh> <ZS1CSkbTjDYdGq8F@itl-email> <2023101622-imply-tidal-b6cf@gregkh> <ZS1UPsZo1VyHDAkV@itl-email> <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com> <20231223181636.GA8305@openwall.com> <CA+-XxSE0v4B32UjrVZgu5WUpTb+78W3zpupnoJq4FeR3omPGSg@mail.gmail.com> <CAN_LGv2C4DNFaK2TRA5upQuwaP=SY3K6zzOzp7zT8J-k1HaM0Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAN_LGv2C4DNFaK2TRA5upQuwaP=SY3K6zzOzp7zT8J-k1HaM0Q@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros membership application of openEuler
 
---047d7b342fd4e48073052a0bf295
-Content-Type: text/plain; charset=UTF-8
+Hi Alexander, Igor, and all -
 
-An authorization hijacking attack can be carried out on a webserver using
-php-openid for authentication.
+On Sun, Dec 24, 2023 at 09:43:06PM +0800, Alexander E. Patrakov wrote:
+> Thanks for the summary that you posted. I have read it carefully and
+> found a phrase, "an isolated one application like that so far", that
+> effectively says that this legal issue regarding communications to
+> sanctioned entities is *new*.
 
-In example usage (which the vast majority of sites use verbatim),
-php-openid checks the `openid.realm` parameter against the PHP variable
-`$SERVER['SERVER_NAME']`. (
-https://github.com/openid/php-openid/blob/fb4cdfcaa578436c451f8e8687dfb61165074488/examples/consumer/common.php#L109
-)
+What I meant is that it's the first time this was brought up as a
+concern about a new member application.
 
-Apache after 1.3 and many other webservers derive SERVER_NAME from the HOST
-header.
+> Could you please recheck that it is indeed the case?
 
-The attacker coerces the victim into logging into his server with OpenID
-provider P. The victim has an account on a website S that also uses P for
-authentication.
+I (or anyone) could check oss-security list archives to see if a similar
+concern was possibly brought up before, but I think I'd have remembered
+if this were the case.
 
-When the victim logs into the attacker's site, the attacker captures the
-request made to it via the victim's browser upon successful login.
+> The question formally arises because there are Alt
+> Linux representatives on the list already, and I do not know if there
+> are US sanctions against them.
 
-The attacker makes a login request to S with the request made to it by the
-victim to log into their website, changing the `Host` HTTP header to
-reflect the attacker's server.
+As far as I'm aware, there are currently no US sanctions against them.
 
-The captured request represents an authorization destined for the
-attacker's evil.com that the victim has allowed a login to evil.com through
-the OpenID provider P. By changing the Host header and making the request
-to the vulnerable website S, S thinks the openid.realm through SERVER_NAME
-should be evil.com, and accepts the OpenID login, allowing the attacker
-access to the victim's account on S.
+Also, as I pointed out, even the US sanctions against Huawei don't seem
+to apply to what we're doing, per LF's public statement and per my own
+reading (but I am not a lawyer).
 
+However, that might not be enough to prevent people from being concerned
+and discouraged from participating if openEuler joins.  This is why I
+suggested that it's best if openEuler does not join now, and that people
+who had commented before could want to say whether their concerns are
+now sufficiently addressed or maybe not.
 
-Zemnmez and Nathaniel "XMPPwocky" Theis
+> Also, Igor has communicated an important note about the mandatory
+> disclosure of vulnerabilities to the Chinese government. Therefore, a
+> question arises: is the Chinese government the only one that requires
+> this?
 
---047d7b342fd4e48073052a0bf295--
+These are valid concerns.
+
+Per my reading, the EU CRA (which isn't final yet and isn't in effect
+yet) is going to require something related, but different.  The proposal
+from 2022:
+
+https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454
+
+includes the below:
+
+"The manufacturer shall, without undue delay and in any event within 24
+hours of becoming aware of it, notify to ENISA any actively exploited
+vulnerability contained in the product with digital elements."
+
+"The manufacturer shall, without undue delay and in any event within 24
+hours of becoming aware of it, notify to ENISA any incident having
+impact on the security of the product with digital elements."
+
+"Manufacturers shall, upon identifying a vulnerability in a component,
+including in an open source component, which is integrated in the
+product with digital elements, report the vulnerability to the person or
+entity maintaining the component."
+
+As you can see, this separates "actively exploited vulnerability" and
+"incident" requiring timely reporting to a government agency vs. "a
+vulnerability" requiring (not so timely) reporting to upstream.  When a
+vulnerability is actively exploited, we'll generally want to publish it
+within 24 hours anyway, and we generally want to notify upstream anyway,
+so EU list members would probably be able to comply with these while
+meeting our usual policy as well.
+
+I'm not currently aware of related legislation elsewhere, but I would be
+unsurprised if it exists.
+
+Overall, I am concerned about this trend towards more government
+oversight.  While we also have our policies, we do not have a monopoly,
+so if folks disagree they can choose not to participate or set up
+something different, whereas with laws opting-out is much harder.
+
+> Can existing list members certify that they do not have any
+> requirement placed upon them by the applicable laws to disclose the
+> postings beyond what is permitted by the list policy - i.e., "at
+> anywhere beyond the need-to-know within your distro's team"?
+
+We might not want to require that.  It may be sufficient that they
+certify they don't violate the list policy, so that if they take a legal
+risk it's on them and it's not increased by us having made that request.
+
+> On Sun, Dec 24, 2023 at 2:50 AM Igor Seletskiy <i@cloudlinux.com> wrote:
+> > Based on what I know, in 2021, China passed a legislature that requires
+> > people to disclose vulnerabilities to the Chinese government within 2 days.
+> > I don't have a good grasp on the actual terms/conditions, but based on this:
+> > https://www.chinalawtranslate.com/en/product-security-vulnerabilites/
+> >
+> > *(2) Infomation on the relevant vulnerabilities shall be reported to the
+> > Ministry of Industry and Information Technology's network security threat
+> > and vulnerability information-sharing platform within 2 days; The content
+> > sent shall include the name, model number, and version of the products in
+> > which network product security vulnerabilities exist, as well as the
+> > vulnerability's technical characteristics, threat, scope of impact, and so
+> > forth.*
+> >
+> > I read it as adding Chinese entities or residents to the list would force
+> > them to disclose a subset of security vulnerabilities to the Chinese
+> > government before public disclosure.
+
+Ouch.  This does look more problematic than the proposed EU CRA wording.
+
+Alexander
