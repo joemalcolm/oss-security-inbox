@@ -1,164 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/18/4
-Message-ID: <CAKx+4-pUdYEKivbsm6WyxDyQ0W4fAiOxRFmBqPxVXhwvicaaYA@mail.gmail.com>
-Date: Thu, 19 Jan 2023 01:56:46 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/25/2
+Message-ID: <20231225220925.GA17188@openwall.com>
+Date: Mon, 25 Dec 2023 23:09:25 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: null pointer dereference in Linux kernel
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+Hi Alexander, Igor, and all -
 
-CVE-2023-0394 assigned.
+On Sun, Dec 24, 2023 at 09:43:06PM +0800, Alexander E. Patrakov wrote:
+> Thanks for the summary that you posted. I have read it carefully and
+> found a phrase, "an isolated one application like that so far", that
+> effectively says that this legal issue regarding communications to
+> sanctioned entities is *new*.
 
-On Wed, Jan 18, 2023 at 2:02 PM Kyle Zeng <zengyhkyle@...il.com> wrote:
+What I meant is that it's the first time this was brought up as a
+concern about a new member application.
 
-> Hi there,
->
-> I recently found a null pointer dereference in Linux kernel that
-> affects multiple kernel versions. According to the versions that got
-> patched, the vulnerability affects 6.1, 5.15, 5.10, 5.4, and 4.19.
->
-> [Root Cause Analysis]
-> The bug is in "rawv6_push_pending_frames" function in net/ipv6/raw.c.
-> According to Herbert Xu, who fixed the bug, the root cause is that
-> "total_len = inet_sk(sk)->cork.base.length" in this function also
-> counts the length of the extension header (+ the amount of valid data
-> in the socket cork queue). In the vulnerable version of the function,
-> it directly uses the length as the amount of data in the cork queue.
-> In the following code:
->
->     struct sk_buff *csum_skb = NULL;
->     ...
->     skb_queue_walk(&sk->sk_write_queue, skb) {
->         ...
->         if (offset >= len) {
->             offset -= len;
->             continue;
->         }
->         csum_skb = skb;
->     }
->     skb = csum_skb;
->
-> If the `offset` is larger than the amount of data in the socket cork
-> queue but smaller than valid data length + extension header length,
-> then the loop shown above will always enter the "if (offset >= len)"
-> branch. As a result, csum_skb will never be set. Consequently, the
-> final skb variable will be set to NULL.
->
-> Null dereference happens in the following "skb_transport_offset(skb);"
-> call.
->
-> [Patch]
-> I have contacted Linux kernel team and helped them prepare a patch.
-> The patch to this bug has been merged into the mainline and stable
-> trees:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cb3e9864cdbe35ff6378966660edbcbac955fe17
->
-> This bug does not have a CVE number assigned yet. I'll appreciate it
-> if someone from the list can give it a CVE number to notify other
-> vendors about its security implication.
->
-> A crash report is attached to the email. And a poc that triggers oops
-> can be found here:
-> https://lore.kernel.org/netdev/Y7s%2FFofVXLwoVgWt@westworld/
->
-> Best,
-> Kyle Zeng
->
->
-> =====================================
-> general protection fault, probably for non-canonical address
-> 0xdffffc0000000018: 0000 [#1] SMP KASAN PTI
-> KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
-> CPU: 0 PID: 619 Comm: syz-executor390 Not tainted 5.10.140+ #1
-> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1
-> 04/01/2014
-> RIP: 0010:skb_transport_header include/linux/skbuff.h:2500 [inline]
-> RIP: 0010:skb_transport_offset include/linux/skbuff.h:2606 [inline]
-> RIP: 0010:rawv6_push_pending_frames net/ipv6/raw.c:593 [inline]
-> RIP: 0010:rawv6_sendmsg+0x4368/0x5db0 net/ipv6/raw.c:956
-> Code: e8 cd ca e0 fb e9 51 fe ff ff e8 c3 7b 61 fb 49 89 dd 48 bd 00
-> 00 00 00 00 fc ff df 49 8d bd c0 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c
-> 28 00 74 05 e8 bd ca e0 fb 49 8b 9d c0 00 00 00 49 8d bd b2
-> RSP: 0018:ffff888013ddf7e8 EFLAGS: 00010206
-> RAX: 0000000000000018 RBX: 0000000000000000 RCX: ffff888011f05500
-> RDX: 0000000000000000 RSI: 0000000000000004 RDI: 00000000000000c0
-> RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed10027a9afc
-> R10: 0000000000000000 R11: 0000000000000000 R12: 00000000479c45b8
-> R13: 0000000000000000 R14: ffff888013d4d800 R15: 00000000000000d8
-> FS:  00005555560ca3c0(0000) GS:ffff88806b800000(0000)
-> knlGS:0000000000000000
-> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> CR2: 0000000020001000 CR3: 000000000eb5a002 CR4: 0000000000170ef0
-> Call Trace:
->  sock_sendmsg_nosec net/socket.c:651 [inline]
->  sock_sendmsg net/socket.c:671 [inline]
->  kernel_sendmsg+0x20a/0x230 net/socket.c:691
->  sock_no_sendpage+0xde/0x130 net/core/sock.c:2852
->  kernel_sendpage+0x4c8/0x530 net/socket.c:3514
->  sock_sendpage+0x83/0xb0 net/socket.c:944
->  pipe_to_sendpage+0x4c0/0x630 fs/splice.c:364
->  splice_from_pipe_feed fs/splice.c:418 [inline]
->  __splice_from_pipe+0x655/0xf60 fs/splice.c:562
->  splice_from_pipe fs/splice.c:597 [inline]
->  generic_splice_sendpage+0x132/0x1a0 fs/splice.c:743
->  do_splice_from fs/splice.c:764 [inline]
->  do_splice+0x1ea8/0x2da0 fs/splice.c:1057
->  __do_splice fs/splice.c:1135 [inline]
->  __do_sys_splice fs/splice.c:1341 [inline]
->  __se_sys_splice+0x935/0xdc0 fs/splice.c:1323
->  do_syscall_64+0x13a/0x160 arch/x86/entry/common.c:46
->  entry_SYSCALL_64_after_hwframe+0x61/0xc6
-> RIP: 0033:0x7f111d8c47dd
-> Code: c3 e8 e7 22 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
-> 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d
-> 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-> RSP: 002b:00007fff0105cb48 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
-> RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f111d8c47dd
-> RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000003
-> RBP: 00007fff0105cb80 R08: 000000000804ffe2 R09: 0000000000000000
-> R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-> R13: 000000000000bbd1 R14: 00007fff0105cb64 R15: 00007fff0105cb70
-> Modules linked in:
-> ---[ end trace 66de936c85813c54 ]---
-> RIP: 0010:skb_transport_header include/linux/skbuff.h:2500 [inline]
-> RIP: 0010:skb_transport_offset include/linux/skbuff.h:2606 [inline]
-> RIP: 0010:rawv6_push_pending_frames net/ipv6/raw.c:593 [inline]
-> RIP: 0010:rawv6_sendmsg+0x4368/0x5db0 net/ipv6/raw.c:956
-> Code: e8 cd ca e0 fb e9 51 fe ff ff e8 c3 7b 61 fb 49 89 dd 48 bd 00
-> 00 00 00 00 fc ff df 49 8d bd c0 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c
-> 28 00 74 05 e8 bd ca e0 fb 49 8b 9d c0 00 00 00 49 8d bd b2
-> RSP: 0018:ffff888013ddf7e8 EFLAGS: 00010206
-> RAX: 0000000000000018 RBX: 0000000000000000 RCX: ffff888011f05500
-> RDX: 0000000000000000 RSI: 0000000000000004 RDI: 00000000000000c0
-> RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed10027a9afc
-> R10: 0000000000000000 R11: 0000000000000000 R12: 00000000479c45b8
-> R13: 0000000000000000 R14: ffff888013d4d800 R15: 00000000000000d8
-> FS:  00005555560ca3c0(0000) GS:ffff88806b800000(0000)
-> knlGS:0000000000000000
-> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> CR2: 0000000020001000 CR3: 000000000eb5a002 CR4: 0000000000170ef0
-> ----------------
-> Code disassembly (best guess):
->    0: e8 cd ca e0 fb        call   0xfbe0cad2
->    5: e9 51 fe ff ff        jmp    0xfffffe5b
->    a: e8 c3 7b 61 fb        call   0xfb617bd2
->    f: 49 89 dd              mov    %rbx,%r13
->   12: 48 bd 00 00 00 00 00 movabs $0xdffffc0000000000,%rbp
->   19: fc ff df
->   1c: 49 8d bd c0 00 00 00 lea    0xc0(%r13),%rdi
->   23: 48 89 f8              mov    %rdi,%rax
->   26: 48 c1 e8 03          shr    $0x3,%rax
-> * 2a: 80 3c 28 00          cmpb   $0x0,(%rax,%rbp,1) <-- trapping
-> instruction
->   2e: 74 05                je     0x35
->   30: e8 bd ca e0 fb        call   0xfbe0caf2
->   35: 49 8b 9d c0 00 00 00 mov    0xc0(%r13),%rbx
->   3c: 49                    rex.WB
->   3d: 8d                    .byte 0x8d
->   3e: bd                    .byte 0xbd
->   3f: b2                    .byte 0xb2
->
->
+> Could you please recheck that it is indeed the case?
 
+I (or anyone) could check oss-security list archives to see if a similar
+concern was possibly brought up before, but I think I'd have remembered
+if this were the case.
+
+> The question formally arises because there are Alt
+> Linux representatives on the list already, and I do not know if there
+> are US sanctions against them.
+
+As far as I'm aware, there are currently no US sanctions against them.
+
+Also, as I pointed out, even the US sanctions against Huawei don't seem
+to apply to what we're doing, per LF's public statement and per my own
+reading (but I am not a lawyer).
+
+However, that might not be enough to prevent people from being concerned
+and discouraged from participating if openEuler joins.  This is why I
+suggested that it's best if openEuler does not join now, and that people
+who had commented before could want to say whether their concerns are
+now sufficiently addressed or maybe not.
+
+> Also, Igor has communicated an important note about the mandatory
+> disclosure of vulnerabilities to the Chinese government. Therefore, a
+> question arises: is the Chinese government the only one that requires
+> this?
+
+These are valid concerns.
+
+Per my reading, the EU CRA (which isn't final yet and isn't in effect
+yet) is going to require something related, but different.  The proposal
+from 2022:
+
+https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454
+
+includes the below:
+
+"The manufacturer shall, without undue delay and in any event within 24
+hours of becoming aware of it, notify to ENISA any actively exploited
+vulnerability contained in the product with digital elements."
+
+"The manufacturer shall, without undue delay and in any event within 24
+hours of becoming aware of it, notify to ENISA any incident having
+impact on the security of the product with digital elements."
+
+"Manufacturers shall, upon identifying a vulnerability in a component,
+including in an open source component, which is integrated in the
+product with digital elements, report the vulnerability to the person or
+entity maintaining the component."
+
+As you can see, this separates "actively exploited vulnerability" and
+"incident" requiring timely reporting to a government agency vs. "a
+vulnerability" requiring (not so timely) reporting to upstream.  When a
+vulnerability is actively exploited, we'll generally want to publish it
+within 24 hours anyway, and we generally want to notify upstream anyway,
+so EU list members would probably be able to comply with these while
+meeting our usual policy as well.
+
+I'm not currently aware of related legislation elsewhere, but I would be
+unsurprised if it exists.
+
+Overall, I am concerned about this trend towards more government
+oversight.  While we also have our policies, we do not have a monopoly,
+so if folks disagree they can choose not to participate or set up
+something different, whereas with laws opting-out is much harder.
+
+> Can existing list members certify that they do not have any
+> requirement placed upon them by the applicable laws to disclose the
+> postings beyond what is permitted by the list policy - i.e., "at
+> anywhere beyond the need-to-know within your distro's team"?
+
+We might not want to require that.  It may be sufficient that they
+certify they don't violate the list policy, so that if they take a legal
+risk it's on them and it's not increased by us having made that request.
+
+> On Sun, Dec 24, 2023 at 2:50 AM Igor Seletskiy <i@...udlinux.com> wrote:
+> > Based on what I know, in 2021, China passed a legislature that requires
+> > people to disclose vulnerabilities to the Chinese government within 2 days.
+> > I don't have a good grasp on the actual terms/conditions, but based on this:
+> > https://www.chinalawtranslate.com/en/product-security-vulnerabilites/
+> >
+> > *(2) Infomation on the relevant vulnerabilities shall be reported to the
+> > Ministry of Industry and Information Technology's network security threat
+> > and vulnerability information-sharing platform within 2 days; The content
+> > sent shall include the name, model number, and version of the products in
+> > which network product security vulnerabilities exist, as well as the
+> > vulnerability's technical characteristics, threat, scope of impact, and so
+> > forth.*
+> >
+> > I read it as adding Chinese entities or residents to the list would force
+> > them to disclose a subset of security vulnerabilities to the Chinese
+> > government before public disclosure.
+
+Ouch.  This does look more problematic than the proposed EU CRA wording.
+
+Alexander
