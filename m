@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/6
-Message-ID: <700bdff0-d154-6b42-7c7e-ae22ef0ace6f@apache.org>
-Date: Thu, 30 Nov 2023 16:34:09 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/3
+Message-ID: <983f05b5-33be-d71b-6798-41a39faa971b@apache.org>
+Date: Tue, 26 Dec 2023 12:02:12 +0000
+From: Deepak Dixit <deepak@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49735: Apache Tiles: Unvalidated input may lead to path traversal and XXE 
+Subject: CVE-2023-51467: Apache OFBiz: Pre-authentication Remote Code Execution (RCE) vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: critical
 
 Affected versions:
 
-- Apache Tiles 2.0.0 before *
+- Apache OFBiz before 18.12.11
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED **
+The vulnerability allows attackers to bypass authentication to achieve a simple Server-Side Request Forgery (SSRF)
 
-The value set as the DefaultLocaleResolver.LOCALE_KEY attribute on the session was not validated while resolving XML definition files, leading to possible path traversal and eventually SSRF/XXE when passing user-controlled data to this key. Passing user-controlled data to this key may be relatively common, as it was also used like that to set the language in the 'tiles-test' application shipped with Tiles.
-
-This issue affects Apache Tiles from version 2 onwards.
-
-NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+This issue is being tracked as OFBIZ-12873 
 
 Credit:
 
-Joseph Beeton of Contrast Security (finder)
+Hasib Vhora, Senior Threat Researcher, SonicWall  (finder)
+Gao Tian (finder)
+L0ne1y (finder)
 
 References:
 
-https://attic.apache.org/projects/tiles.html
-https://www.cve.org/CVERecord?id=CVE-2023-49735
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-18.12.11.html
+https://issues.apache.org/jira/browse/OFBIZ-12873
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-51467
+https://issues.apache.org/jira/browse/OFBIZ-12873
 
