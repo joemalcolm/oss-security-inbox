@@ -1,18 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/24/3
-Message-ID: <ead27614-dd19-1c40-1954-da3bf9197bf8@apache.org>
-Date: Mon, 24 Apr 2023 14:51:36 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/1
+Message-ID: <20231226003555.GA19071@openwall.com>
+Date: Tue, 26 Dec 2023 01:35:55 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-30776: Apache Superset: Database connection password leak 
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Tue, Dec 26, 2023 at 12:38:36AM +0100, Steffen Nurpmeso wrote:
+> Hello.  Please allow me a little opinion.
 
-An authenticated user with specific data permissions could access database connections stored passwords by requesting a specific REST API. This issue affects Apache Superset version 1.3.0 up to 2.0.1.
+Please keep your postings more focused on the thread's topic.
 
-References:
+> I want to point out that Huawei employees play an important role
+> in creating solutions in the (public and open to anyone) IETF.
+> Also financially.
+> I personally think it is a friendly move to give back and support
+> creating the infrastructure that we all build upon.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-30776
+Fair enough.
 
+> Which can easily be compared to many non-China companies and their
+> attitude of take but no give.
+
+To me, that's not an easy comparison at all.  Most large companies or
+their employees do give something these days, and without actual metrics
+I cannot tell if e.g. Huawei or Microsoft contributes more.
+
+>  |However, that might not be enough to prevent people from being concerned
+>  |and discouraged from participating if openEuler joins.  This is why I
+>  |suggested that it's best if openEuler does not join now, and that people
+>  |who had commented before could want to say whether their concerns are
+>  |now sufficiently addressed or maybe not.
+> 
+> Me personally no, but for one i am noone regarding vivid members
+> of this list, and second i have no political pressure against me.
+
+OK.
+
+> and i really today stumbled over his funny opinion
+> 
+>   . All "early notice" lists are leaks and should be considered
+>     public.
+>   . Unless your project is not used by anyone.
+>   . Otherwise, why would your government allow it to exist?
+
+I think Greg's stance on this is inconsistent, if we also recall his
+preference against full public disclosure of issues discussed on private
+lists and his running of private lists on CPU microarchitectural issues.
+
+However, the concern about leaks is valid.  I think the most effective
+defense we have is the 14 days maximum embargo time, which removes the
+data's long-term value for potential use in attacks.
+
+Alexander
