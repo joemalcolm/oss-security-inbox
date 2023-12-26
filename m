@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["438" "Thursday" "5" "December" "2019" "12:04:45" "+0100" "Arrigo Triulzi" "arrigo@alchemistowl.org" "<4BEB436C-9471-446E-9795-6B3AACEDDAB4@alchemistowl.org>" "18" "Re: [oss-security] Authentication vulnerabilities in OpenBSD" "^Date:" nil nil "12" "2019120511:04:45" "[oss-security] Authentication vulnerabilities in OpenBSD" (number mark "        arrigo@alche Dec  5   18/438   " thread-indent "\"Re: [oss-security] Authentication vulnerabilities in OpenBSD\"\n") "<CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>" ("<20191204204020.GB7012@localhost.localdomain>" "<CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Authentication vulnerabilities in OpenBSD" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11539 invoked by uid 550); 5 Dec 2019 12:17:29 -0000
+Received: (qmail 15677 invoked by uid 550); 26 Dec 2023 16:16:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23624 invoked from network); 5 Dec 2019 11:05:05 -0000
-X-Virus-Scanned: amavisd-new at bagheera.alchemistowl.org
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-References: <20191204204020.GB7012@localhost.localdomain>
- <CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>
-In-Reply-To: <CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>
-Message-Id: <4BEB436C-9471-446E-9795-6B3AACEDDAB4@alchemistowl.org>
-X-Mailer: Apple Mail (2.3445.104.11)
-Date: Thu, 5 Dec 2019 12:04:45 +0100
-From: Arrigo Triulzi <arrigo@alchemistowl.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Authentication vulnerabilities in OpenBSD
+Received: (qmail 14237 invoked from network); 26 Dec 2023 16:15:38 -0000
+Date: Tue, 26 Dec 2023 17:16:24 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20231226161624.GA21138@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2023-51385, CVE-2023-6004: OpenSSH, libssh: Security weakness in ProxyCommand handling
 
-On 5 Dec 2019, at 11:44, Georgi Guninski <gguninski@gmail.com> wrote:
->=20
-> On Wed, Dec 4, 2019 at 10:51 PM Qualys Security Advisory <qsa@qualys.com>=
- wrote:
->>=20
->>=20
->> Qualys Security Advisory
->>=20
->> Authentication vulnerabilities in OpenBSD
->>=20
->=20
-> openbsd doesn't count these as remote holes in default install, right?
+Hi,
 
-By default OpenSMTPd listens only on localhost:25 and is not configured to =
-offer SMTP AUTH
+This was previously announced as mitigated in OpenSSH 9.6:
 
-Arrigo
+https://www.openwall.com/lists/oss-security/2023/12/18/2
 
+and is now known as CVE-2023-51385 described as follows:
+
+> In ssh in OpenSSH before 9.6, OS command injection might occur if a user
+> name or host name has shell metacharacters, and this name is referenced
+> by an expansion token in certain situations.  For example, an untrusted
+> Git repository can have a submodule with shell metacharacters in a user
+> name or host name.
+
+The corresponding libssh issue got assigned CVE-2023-6004, with their
+advisory here:
+
+https://www.libssh.org/security/advisories/CVE-2023-6004.txt
+
+and quoted below:
+
+> ===========================================================
+> == Subject:     Security weakness in ProxyCommand handling
+> ==
+> == CVE ID#:     CVE-2023-6004
+> ==
+> == Versions:    0.10.x, 0.9.x, 0.8.x
+> ==
+> == Summary:     ProxyCommand/ProxyJump features enable to inject
+>                 malicious code through hostname
+> ==
+> ===========================================================
+> 
+> ===========
+> Description
+> ===========
+> 
+> Using the ProxyCommand or the ProxyJump feature enables users to exploit
+> unchecked hostname syntax on the client, which enables to inject malicious code
+> into the command of the above-mentioned features through the hostname parameter.
+> 
+> User interaction is required to exploit this issue.
+> 
+> ==================
+> Patch Availability
+> ==================
+> 
+> Patches addressing the issues have been posted to:
+> https://www.libssh.org/security/
+> Additionally, libssh 0.10, 0.9 have been issued
+> as security releases to correct the defect.  SSH administrators are
+> advised to upgrade to these releases or apply the patch as soon
+> as possible.
+> 
+> ==================
+> CVSSv3 calculation
+> ==================
+> CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N (3.9)
+> 
+> ==========
+> Workaround
+> ==========
+> 
+> Sanitize hostname input
+> 
+> =======
+> Credits
+> =======
+> 
+> Originally reported by Vinci (https://github.com/vin01).
+> Patches provided by Norbert Pocs of the libssh team.
+> 
+> ==========================================================
+> == The libssh team
+> ==========================================================
+
+Incidentally, NIST NVD's current CVSS 3.1 score for OpenSSH's
+CVE-2023-51385 is a ridiculous 9.8.  Quite usual for CVSS and NVD.
+
+There's a blog post on exploitation via git submodules and on
+"Vulnerable usage out in the wild" here:
+
+https://vin01.github.io/piptagole/ssh/security/openssh/libssh/remote-code-execution/2023/12/20/openssh-proxycommand-libssh-rce.html
+
+Alexander
