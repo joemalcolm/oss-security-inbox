@@ -1,19 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/19/4
-Message-ID: <CAGUWgD9EKiV7QxeYzH78S7RkzByR_mK+gtZiO-boo9qa6_mw7Q@mail.gmail.com>
-Date: Sun, 19 Mar 2023 18:24:03 +0200
-From: Georgi Guninski <gguninski@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: First result on google promotes insecure coding (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/5
+Message-ID: <20231226191528.GA6930@veps.esmtp.org>
+Date: Tue, 26 Dec 2023 19:15:28 +0000
+From: Claus Assmann <ml+oss@...tp.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 19, 2023 at 3:59 PM Solar Designer <solar@...nwall.com> wrote:
+On Sun, Dec 24, 2023, Marcus Meissner wrote:
 
->
-> Have you contacted the site in question and suggested an edit to them?
->
+> - CVE-2023-51765 sendmail
 
-No. Since this issue is already public, lol, let me see who from
-the community contacts them first. btw, I strongly suspect there are
-many more buggy tutorials.
+Can you update the text for this (or point me to the proper way/persons
+to do this)?
+
+1.
+"sendmail through at least 8.14.7"
+->
+sendmail up to and including 8.17.2
+
+2.
+remove the seemingly unrelated reference to
+"Merge sendmail 8.14.8 to HEAD  freebsd/freebsd-src@...76dd"
+
+3.
+Mention that 8.18 fixes the problem:
+	Accept only CR LF . CR LF as end of an SMTP message as
+		required by the RFCs when the new srv_features
+		option 'o' is used.
+
+sendmail 8.18.0.2 is available at
+https://ftp.sendmail.org/snapshots/sendmail.8.18.0.2.tar.gz
+https://ftp.sendmail.org/snapshots/sendmail.8.18.0.2.tar.gz.sig
+
