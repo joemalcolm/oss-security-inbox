@@ -1,175 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/08/4
-Message-ID: <20230908173321.GA17366@openwall.com>
-Date: Fri, 8 Sep 2023 19:33:21 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Willy Tarreau <w@....eu>
-Cc: oss-security@...ts.openwall.com, Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>, Donald Buczek <buczek@...gen.mpg.de>, Greg KH <gregkh@...uxfoundation.org>
-Subject: Re: linux-distros list policy and Linux kernel, again
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/2
+Message-ID: <58d8d5e1-bb9d-afb1-7606-593067da71fb@apache.org>
+Date: Tue, 26 Dec 2023 10:17:25 +0000
+From: Nicolas Malin <nmalin@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-50968: Apache OFBiz: Arbitrary file properties reading and SSRF attack 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: important
 
-I've just relaxed the policy on posting exploits.  It used to say:
+Affected versions:
 
-"If you shared exploit(s) that are not an essential part of the issue
-description, then at your option you may slightly delay posting them to
-oss-security but you must post the exploits to oss-security within at
-most 7 days of making the mandatory posting above."
+- Apache OFBiz through 18.12.10
 
-Now it says:
+Description:
 
-"If you shared exploit(s) that are not an essential part of the issue
-description, then at your option you may delay or withhold posting them
-to oss-security, and you're encouraged to post the exploits to
-oss-security in 1 to 30 days of making the mandatory posting above. The
-delay may reasonably match your estimate for independent development of
-such exploits."
+Arbitrary file properties reading vulnerability in Apache Software Foundation Apache OFBiz when user operates an uri call without authorizations.
 
-So it's no longer a requirement ("or withhold" is now an option), and
-the recommended delay is now 1 to 30 days (which covers the real-world
-range from the old Exim bug to the recent Linux StackRot bug).  I also
-added a sentence suggesting how to choose the delay.
+The same uri can be operated to realize a SSRF attack also  without  authorizations.
 
-I made this change mainly because we cannot reasonably force a person to
-post exploits when they're threatened by their employer, an affected
-vendor, government officials, etc. - even if they originally intended to
-post.  Actually, the same issue can occur for the issue description as
-well, in which case we'll have to take over and make that posting
-ourselves.  We could also be doing that for exploits in such cases, but
-that's not so obviously the right thing to do.
+Users are recommended to upgrade to version 18.12.11, which fixes this issue.
 
-On Mon, Sep 04, 2023 at 10:14:26PM +0200, Willy Tarreau wrote:
-> On Wed, Aug 30, 2023 at 05:26:33PM +0200, Solar Designer wrote:
-> > This is in part a matter of resources - are we providing only
-> > the lists infrastructure and list members' best-effort volunteer
-> > contributions to issue handling, or are we providing any guaranteed
-> > service?  For the latter, perhaps list admin(s) (me) should always take
-> > over whenever the member distros don't handle that sort of
-> > contributing-back tasks on time.  Then we'll be able to provide a
-> > guarantee that all issues will be handled without the reporter having to
-> > stay on top of them.
-> > 
-> > A drawback is that this may encourage lower-quality or lower-relevance
-> > reports, including of issues that are not worth handling in private.  So
-> > it could end up wasting those extra resources allocated to this effort.
-> 
-> Absolutely. But I'm sensing something in the way you're presenting these
-> possibilities, it is that there is a perceived (by some?) guarantee of
-> service that implies that someone (possibly you) has to do the job for
-> others to consume the result of this work. If that's the case it can
-> mean the relation is significantly skewed and the person(s) willing to
-> make the efforts are indeed likely to get overwhelmed. At least on s@k.o
-> we're sufficient to share the effort depending on skills and availability,
-> and we can rely on maintainers' support.
+Credit:
 
-I think there isn't currently a perceived guarantee of service, but
-there would be under (your previously implied) suggestion that we (in my
-words) support the send-and-forget use case for reporters.  If we do
-that, I actually expect that the member distros would take care of it
-most of the time, but to have a guarantee that this is done every time
-and on time, someone specific would need to track all issues and take
-care of any that would fall through the cracks.  I may start doing that
-under the potential LF sponsorship, if it does materialize, at which
-point whether to announce this as a guaranteed service or not would be a
-matter of preference.
+Yun Peng - 郭 运鹏 <puata123@...look.com> (finder)
 
-> > > On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
-> > > > That said, can you share more detail on the specific issue you referred
-> > > > to above and its handling/disclosure timeline?  Was it ever brought to
-> > > > oss-security, and if not then why not?
-> > > 
-> > > I just checked and I'm not seeing any traces of it there. I don't even
-> > > know who normally notifies about such issues there.
-> > 
-> > If you worked on the issue, then perhaps you were the most appropriate
-> > person to notify oss-security about it?
-> 
-> Honestly, no, for multiple reasons: The first one being that I'm terrible
-> at dealing with processes and this becomes a big effort. The second one is
-> that it's already not easy to have participants available with enough time
-> to work on reports, to if we add to them as a punishment to have to do that
-> extra work, that's not going to be motivating to work on reports.
+References:
 
-What reports are you referring to, and if they exist anyway then can't
-they be posted to oss-security as-is?
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-18.12.11.html
+https://issues.apache.org/jira/browse/OFBIZ-12875
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-50968
 
-> The third
-> one is more related to some of my personal convictions: I'm personally not
-> convinced of the interest of encouraging distros to focus on a tiny subset
-> of all the fixes, because for one that passes via s@k.o, maybe 50-100 are
-> regularly merged and might be of similar or even higher importance. And it
-> is my belief that all fixes are needed, not just the ones that are reported
-> via discrete channels because the reporter is uncertain about the impacts
-> a public report could have. I know that some do not share this opinion (and
-> I don't want to debate this here). Finally my feeling is that if the person
-> that sent a first report was interested in reporting their findings, it's
-> probably up to the same person to advertise it everywhere they want (after
-> understanding the consequences, of course).
-
-> For me when a fix is merged I can flush
-> my mind on an issue (this makes it very hard for me to write changelogs
-> after series of bugfixes in other projects BTW).
-
-This is reasonable.  However, for certain other projects we're seeing
-their upstreams consistently disclose security vulnerabilities in here.
-
-> > Anyway, perhaps both of these should have been brought to oss-security
-> > at some point, but they were not?
-> 
-> But one could actually ask why just these ones and none of the numerous
-> other ones merged in the same stable kernels.
-
-I'd actually prefer all, and if there are ever too many for oss-security
-we could setup a sub-list for the Linux kernel.
-
-However, I think these two do stand out in that they're in designs and
-algorithms rather than code, and could thus be relevant beyond Linux,
-kernel, and TCP/IP stacks (e.g., randomness and non-repetitiveness
-preferences for TCP and UDP ports are very similar to those for DNS
-query IDs).  So we could potentially have fruitful discussions of the
-wider context (what other projects did when, and what is yet to do).
-
-> Actually I'm really wondering what the value of l-d is now,
-> if long embargoes are too much of a problem, short ones are too short for
-> developers to produce a fix, and bug reporters are progressively encouraged
-> to first contact projects then directly oss-sec, I feel like the value of
-> l-d becomes pretty low at this point in the process, but I could be
-> mistaken, of course. Maybe that's also why we're discussing here after all,
-> to find how to make it more useful to all parties.
-
-I think the value of (linux-)distros is similar to what it was at its
-inception - it's not declining.  Short embargoes are generally either
-after an initial upstream fix is ready (but before it's public, except
-for Linux kernel and curl) or are in fact sufficient to produce a fix.
-I never encouraged over-use of (linux-)distros even for issues that are
-best brought to oss-security right away - this isn't a new thing.
-
-> > We already use a somewhat obscure posting address and a required Subject
-> > prefix, although the latter is currently not enforced strictly (is
-> > mostly an anti-spam measure, so is bypassed by some other keywords
-> > contained in the headers and/or message).  I think part of the problem
-> > was that the kernel documentation gave these away directly, without
-> > people having to see our policy and instructions first.
-> 
-> I hadn't thought about this but it would be possible that some are lost
-> due to this. I've often wondered how people manage never to forget to
-> prepend "VS" there ;-)
-
-I did think of this when I first added the [vs] check because of spam,
-and indeed am worried that desirable messages may occasionally be lost.
-
-We're not dropping the messages silently, nor producing bounce messages.
-We're rejecting in response to SMTP DATA command, so there isn't a later
-bounce message that may itself be caught by the sender's spam filter,
-unless the sender is using a forwarding address.  So in most cases the
-sender would be aware.  Another mitigation is those additional keywords.
-
-> I do think that there's definitely something that needs to be worked
-> on regarding this specific point affecting what has to be published.
-
-OK, I hope today's policy change looks good to you.
-
-Thanks,
-
-Alexander
