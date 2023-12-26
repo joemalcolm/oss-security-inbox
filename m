@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["687" "Wednesday" "15" "September" "2021" "18:57:33" "+0100" "Mark Thomas" "markt@apache.org" nil "19" "[oss-security] CVE-2021-41079: Apache Tomcat DoS with unexpected TLS packet" nil nil nil "9" nil nil (number mark "U       markt@apache Sep 15   19/687   " thread-indent "\"[oss-security] CVE-2021-41079: Apache Tomcat DoS with unexpected TLS packet\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-41079: Apache Tomcat DoS with unexpected TLS packet" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13954 invoked by uid 550); 15 Sep 2021 18:03:13 -0000
+Received: (qmail 28379 invoked by uid 550); 26 Dec 2023 13:10:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +7,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11716 invoked from network); 15 Sep 2021 17:57:49 -0000
+Received: (qmail 14204 invoked from network); 26 Dec 2023 10:16:43 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Nicolas Malin <nmalin@apache.org>
 To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Message-ID: <a144491b-8efb-dff2-cda5-e0d5be744359@apache.org>
-Date: Wed, 15 Sep 2021 18:57:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+Message-ID: <58d8d5e1-bb9d-afb1-7606-593067da71fb@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 26 Dec 2023 10:17:25 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2021-41079: Apache Tomcat DoS with unexpected TLS packet
+Subject: [oss-security] CVE-2023-50968: Apache OFBiz: Arbitrary file properties reading
+ and SSRF attack 
 
-Severity: high
+Severity: important
+
+Affected versions:
+
+- Apache OFBiz through 18.12.10
 
 Description:
 
-Apache Tomcat 8.5.0 to 8.5.63, 9.0.0-M1 to 9.0.43 and 10.0.0-M1 to 
-10.0.2 did not properly validate incoming TLS packets. When Tomcat was 
-configured to use NIO+OpenSSL or NIO2+OpenSSL for TLS, a specially 
-crafted packet could be used to trigger an infinite loop resulting in a 
-denial of service.
+Arbitrary file properties reading vulnerability in Apache Software Foundati=
+on Apache OFBiz when user operates an uri call without authorizations.
+
+The same uri can be operated to realize a SSRF attack also  without  author=
+izations.
+
+Users are recommended to upgrade to version 18.12.11, which fixes this issu=
+e.
 
 Credit:
 
-The Apache Tomcat security team would like to thank Thomas Wozenilek for 
-originally reporting this issue and David Frankson of Infinite Campus 
-for also providing a test case that reproduced the issue.
+Yun Peng - =E9=83=AD =E8=BF=90=E9=B9=8F <puata123@outlook.com> (finder)
 
 References:
 
-https://lists.apache.org/thread.html/rccdef0349fdf4fb73a4e4403095446d7fe6264e0a58e2df5c6799434%40%3Cannounce.tomcat.apache.org%3E
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-18.12.11.html
+https://issues.apache.org/jira/browse/OFBIZ-12875
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-50968
+
