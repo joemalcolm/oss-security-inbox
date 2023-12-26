@@ -1,114 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/08/1
-Message-ID: <Y+M28iuYG2lxmLG/@alf.mars>
-Date: Wed, 8 Feb 2023 06:45:22 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/26/4
+Message-ID: <20231226161624.GA21138@openwall.com>
+Date: Tue, 26 Dec 2023 17:16:24 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [vs] heimdal: CVE-2022-45142: signature validation failure
+Subject: CVE-2023-51385, CVE-2023-6004: OpenSSH, libssh: Security weakness in ProxyCommand handling
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I am hereby publishing a vulnerability in heimdal backports by attaching
-the exact mail sent to distros@...openwall.org last week.
+This was previously announced as mitigated in OpenSSH 9.6:
 
------ Forwarded message from Helmut Grohne <helmut@...divi.de> -----
+https://www.openwall.com/lists/oss-security/2023/12/18/2
 
-Date: Tue, 31 Jan 2023 15:52:58 +0100
-From: Helmut Grohne <helmut@...divi.de>
-To: distros@...openwall.org
-Cc: heimdal-security@...mdal.team, Andrew Bartlett <abartlet@...ba.org>, Jeffrey Altman <jaltman@...ure-endpoints.com>, Joseph Sutton <josephsutton@...alyst.net.nz>, Nicolas Williams
-	<nico@...sigma.com>, "Roberto C. Sánchez" <roberto@...exian.com>, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: [vs] heimdal: CVE-2022-45142: signature validation failure
+and is now known as CVE-2023-51385 described as follows:
 
-(Resent with proper subject tag)
+> In ssh in OpenSSH before 9.6, OS command injection might occur if a user
+> name or host name has shell metacharacters, and this name is referenced
+> by an expansion token in certain situations.  For example, an untrusted
+> Git repository can have a submodule with shell metacharacters in a user
+> name or host name.
 
-CVE-2022-3437 was a vulnerability affecting heimdal and samba. It was
-fixed in both places. The fix included changing memcmp to be constant
-time and a workaround for a compiler bug by adding "!= 0" comparisons to
-the result of memcmp. When these patches were backported to the
-heimdal-7.7.1 and heimdal-7.8.0 branches (and possibly other branches) a
-logic inversion sneaked in causing the validation of message integrity
-codes in gssapi/arcfour to be inverted.
+The corresponding libssh issue got assigned CVE-2023-6004, with their
+advisory here:
 
-This vulnerability does not affect samba nor the main heimdal branch and
-only applies to backports. At least the 7.7.1 and 7.8.0 branches are
-affected. CVE-2022-45142 has been assigned. All releases of Debian are
-affected. At least one release of Fedora and Ubuntu are affected.
+https://www.libssh.org/security/advisories/CVE-2023-6004.txt
 
-Timeline of events
+and quoted below:
 
-2022-12-09 Issue discovered by me during backporting of patches
-2022-12-09 Notified Debian security team
-2022-12-09 Notified heimdal and samba
-2022-12-09 Jeffrey Altman (heimdal) confirmed the problem
-2022-12-10 Andrew Bartlett (samba) replied as not affected
-2022-12-13 Patch v1
-2022-12-13 Jeffrey Altman (heimdal) reviewed the patch
-2022-12-13 Patch v2 (updated commit message)
-2022-12-22 Last reply from heimdal (Jeffrey Altman) asking for more time
-2022-12-25 Ping
-2023-01-04 Ping
-2023-01-13 Ping
-2023-01-20 Ping and notified Ubuntu security team
-2023-01-30 CVE-2022-45142 assigned
-2023-01-31 Unilateral disclosure to distros mailinglist
-2023-02-08 Proposed public disclosure to oss-sec
+> ===========================================================
+> == Subject:     Security weakness in ProxyCommand handling
+> ==
+> == CVE ID#:     CVE-2023-6004
+> ==
+> == Versions:    0.10.x, 0.9.x, 0.8.x
+> ==
+> == Summary:     ProxyCommand/ProxyJump features enable to inject
+>                 malicious code through hostname
+> ==
+> ===========================================================
+> 
+> ===========
+> Description
+> ===========
+> 
+> Using the ProxyCommand or the ProxyJump feature enables users to exploit
+> unchecked hostname syntax on the client, which enables to inject malicious code
+> into the command of the above-mentioned features through the hostname parameter.
+> 
+> User interaction is required to exploit this issue.
+> 
+> ==================
+> Patch Availability
+> ==================
+> 
+> Patches addressing the issues have been posted to:
+> https://www.libssh.org/security/
+> Additionally, libssh 0.10, 0.9 have been issued
+> as security releases to correct the defect.  SSH administrators are
+> advised to upgrade to these releases or apply the patch as soon
+> as possible.
+> 
+> ==================
+> CVSSv3 calculation
+> ==================
+> CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N (3.9)
+> 
+> ==========
+> Workaround
+> ==========
+> 
+> Sanitize hostname input
+> 
+> =======
+> Credits
+> =======
+> 
+> Originally reported by Vinci (https://github.com/vin01).
+> Patches provided by Norbert Pocs of the libssh team.
+> 
+> ==========================================================
+> == The libssh team
+> ==========================================================
 
-I would like to thank Salvatore Bonaccorso for handling most of the
-coordination. Thanks also to go Jeffrey Altman and Andrew Bartlett for
-their timely replies. My work on this issue is paid by Freexian SARL.
+Incidentally, NIST NVD's current CVSS 3.1 score for OpenSSH's
+CVE-2023-51385 is a ridiculous 9.8.  Quite usual for CVSS and NVD.
 
-Patch below
+There's a blog post on exploitation via git submodules and on
+"Vulnerable usage out in the wild" here:
 
-Helmut
+https://vin01.github.io/piptagole/ssh/security/openssh/libssh/remote-code-execution/2023/12/20/openssh-proxycommand-libssh-rce.html
 
-From: Helmut Grohne <helmut@...divi.de>
-Subject: [PATCH v3] CVE-2022-45142: gsskrb5: fix accidental logic inversions
-
-The referenced commit attempted to fix miscompilations with gcc-9 and
-gcc-10 by changing `memcmp(...)` to `memcmp(...) != 0`. Unfortunately,
-it also inverted the result of the comparison in two occasions. This
-inversion happened during backporting the patch to 7.7.1 and 7.8.0.
-
-Fixes: f6edaafcfefd ("gsskrb5: CVE-2022-3437 Use constant-time memcmp()
- for arcfour unwrap")
-Signed-off-by: Helmut Grohne <helmut@...divi.de>
----
- lib/gssapi/krb5/arcfour.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-Changes since v1:
- * Fix typo in commit message.
- * Mention 7.8.0 in commit message. Thanks to Jeffrey Altman.
-
-Changes since v2:
- * Add CVE identifier.
-
-diff --git a/lib/gssapi/krb5/arcfour.c b/lib/gssapi/krb5/arcfour.c
-index e838d007a..eee6ad72f 100644
---- a/lib/gssapi/krb5/arcfour.c
-+++ b/lib/gssapi/krb5/arcfour.c
-@@ -365,7 +365,7 @@ _gssapi_verify_mic_arcfour(OM_uint32 * minor_status,
- 	return GSS_S_FAILURE;
-     }
-
--    cmp = (ct_memcmp(cksum_data, p + 8, 8) == 0);
-+    cmp = (ct_memcmp(cksum_data, p + 8, 8) != 0);
-     if (cmp) {
- 	*minor_status = 0;
- 	return GSS_S_BAD_MIC;
-@@ -730,7 +730,7 @@ OM_uint32 _gssapi_unwrap_arcfour(OM_uint32 *minor_status,
- 	return GSS_S_FAILURE;
-     }
-
--    cmp = (ct_memcmp(cksum_data, p0 + 16, 8) == 0); /* SGN_CKSUM */
-+    cmp = (ct_memcmp(cksum_data, p0 + 16, 8) != 0); /* SGN_CKSUM */
-     if (cmp) {
- 	_gsskrb5_release_buffer(minor_status, output_message_buffer);
- 	*minor_status = 0;
---
-2.38.1
-
------ End forwarded message -----
-
+Alexander
