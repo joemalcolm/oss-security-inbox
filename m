@@ -1,68 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/8
-Message-ID: <f6d49f57-22d4-48d4-9142-497f9c89ba8d@oracle.com>
-Date: Wed, 18 Oct 2023 16:10:50 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/27/1
+Message-ID: <658c0eaf.45f2b459.bm000@oddnet.de>
+Date: Wed, 27 Dec 2023 12:46:54 +0100
+From: Ingo Brückl <ib@...net.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
+Cc: Markus Koschany <apo@...ian.org>
+Subject: xarchiver: Path traversal with crafted cpio archives
 Content-Type: text/plain; charset=utf-8
 
-On 10/10/23 11:40, Alan Coopersmith wrote:
-> Information I've found so far on open source implementations (most via the
-> current listings in the CVE) include:
+Hi,
 
-Some more updates since last week:
+I was alerted by febinrev on GitHub to a vulnerability in xarchiver that
+stems from a vulnerability in cpio, which is called by xarchiver to extract
+cpio and rpm archives.
 
-> - Apache httpd:
->    https://chaos.social/@icing/111210915918780532
+It is a path traversal vulnerability with maliciously crafted cpio archives
+that affects all cpio versions up to and including 2.12 (see CVE-2015-1197).
+The vulnerability has been fixed in cpio 2.13.
 
-The discussion in https://github.com/apache/httpd-site/pull/10 makes the
-situation a little murkier.
+However, due to two bug reports (#946267 and #946469), Debian has patched
+cpio 2.13 which re-enables the path traversal vulnerability, thus affecting
+all distributions that use Debian cpio 2.13 directly or have applied their
+"revert-CVE-2015-1197-handling" patch. Debian has been informed and is
+working on a security fix.
 
-- contour:
-   https://github.com/projectcontour/contour/pull/5850
+Instructions from febinrev to craft a cpio archive to demonstrate the
+vulnerability:
 
-- grpc-go:
-   https://github.com/grpc/grpc-go/pull/6703
+  mkdir test_cpio
+  ln -sf /tmp/ test_cpio/tmp
+  echo "TEST Traversal" > test_cpio/tmpYtrav.txt
+  cd test_cpio/
+  ls | cpio -ov > ../trav.cpio
+  cd ../
+  sed -i s/"tmpY"/"tmp\/"/g trav.cpio
 
-> - haproxy:
->   https://github.com/haproxy/haproxy/issues/2312   https://www.haproxy.com/blog/haproxy-is-not-affected-by-the-http-2-rapid-reset-attack-cve-2023-44487
+Even
 
-- http2 [Haskell]:
-   https://github.com/kazu-yamamoto/http2/issues/93
+  cpio -id --no-absolute-filenames -I trav.cpio
 
-- IETF:
-   https://lists.w3.org/Archives/Public/ietf-http-wg/2023OctDec/0025.html
+doesn't prevent path traversal with affected cpio versions, and such an
+archive can be further obfuscated with file extensions such as .rar or
+.tar.gz.
 
-- kubernetes:
-   https://github.com/kubernetes/kubernetes/pull/121120
+Malicious cpio archives that exploit this vulnerability can overwrite files
+in locations such as ~/.ssh, ~/.bashrc, ~/.config/autostart/, etc.
 
-- linkerd:
-   https://linkerd.io/2023/10/12/linkerd-cve-2023-44487/
+In addition to xarchiver, all other GUI front-ends for archive management
+that call cpio as a command-line program are most likely also affected!
 
-> - netty:
->   https://github.com/netty/netty/commit/58f75f665aa81a8cbcf6ffa74820042a285c5e61
-   https://github.com/advisories/GHSA-xpw8-rcwv-8f8p
-   https://netty.io/news/2023/10/10/4-1-100-Final.html
-
-- varnish
-   https://github.com/varnishcache/varnish-cache/issues/3996
+Ingo
 
 
-Also,https://mstdn.social/@jschauma/111252863550361935 points out that the
-Rust h2 crate seems to have announced a very similar issue under a
-different CVE id back in April:
 
-https://rustsec.org/advisories/RUSTSEC-2023-0034.html
-https://github.com/advisories/GHSA-f8vr-r385-rh5r
 
-and a followup post notes further similarities to Netflix's CVE-2019-9514
-“Reset Flood” from
-https://github.com/Netflix/security-bulletins/blob/master/advisories/third-party/2019-002.md
-except in that case the RST_STREAM seem to have been sent from the server,
-not the client side.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+
+
+
+
+
+
+
+
+
+
 
