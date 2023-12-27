@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2763" "Sunday" "22" "October" "2017" "16:35:59" "+0200" "Ailin Nemui" "ailin.nemui@gmail.com" "<1508682959.3197.1.camel@gmail.com>" "103" "[oss-security] Irssi 1.0.5: CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15722, CVE-2017-15723" nil nil nil "10" "2017102214:35:59" "[oss-security] Irssi 1.0.5: CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15722, CVE-2017-15723" (number mark "U       ailin.nemui@ Oct 22  103/2763  " thread-indent "\"[oss-security] Irssi 1.0.5: CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15722, CVE-2017-15723\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20395 invoked by uid 550); 22 Oct 2017 14:47:54 -0000
+Received: (qmail 13506 invoked by uid 550); 27 Dec 2023 13:42:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,145 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3616 invoked from network); 22 Oct 2017 14:36:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=DS6LAxOrh1iXxzvLNhenZ7mIGrI3jNyRX+5s+tFDJ1Q=;
-        b=tU/L4rj5I2ICLSF/BBxdFBcqLPoJUVn68YPJYbZPnRfiHo8Vwk8c7ifpJTIUw1VN56
-         GgCT6FS/OZgFUBbWjC7JoZ1coKpFaqbPONqzxZB+HH/fS3gQTRTFlIjKso3wFQZgienq
-         RIexFBAi5OC4qDObPtn696rc3ptPMiCvxZtOsLeHce5KCwI2/7gjs1blLw2dFzoYp8HR
-         LRZaXt7DY2008Stcb0cIDTgmNZaRCWFnrK+ak2EWh+jD5vfB5fVqPEceZIAGYsKTdKD5
-         go9qnXERbD9KRm+e/GNo/kd+f2XIr3B/5ev2LBOYWgImc6a8zT8y06fgnSPKgcUU+6ht
-         pTaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=DS6LAxOrh1iXxzvLNhenZ7mIGrI3jNyRX+5s+tFDJ1Q=;
-        b=grLugCKiMXiQfmfShS4Sc54BYNX9aDc6XIEgVu1VgpL9UYIEgbWDmVlUZqDR1N3H6v
-         wehMWWKIfMEdi04t4XreaiLUGqehM22CzDsJt0hOG5KATPLrAc6D3gYu+ActlVmAXOPo
-         BhBNtL2wx20nXNwpa0BqEnsEF/zBeQ3eaHSEiWI39hSfDQnCBkYri9mFvnPyK5u3YKBE
-         5PoWb8AnvpZKGA1hITZ8E5S2ksKEZ737mMAw9Mnmy+A3Su8MUabKhouz1ByWEu+DKvEc
-         1LNL4U6v33tthTVc+euOx5mZoCpvxVmz/WTdJ2B5co8pykvTlflpx2iO+D5KnnEwcoPr
-         OEDQ==
-X-Gm-Message-State: AMCzsaXSvJRcSLVuDMhL6j3pYssG1MO7ZPCtjhr0B86szAlqLL8ftIbM
-	jTo6PTPq5YqhOkJtg/rvOUmA0g==
-X-Google-Smtp-Source: ABhQp+QRQxjvUzFfvOWPyFcPOOaqfk1wbvp96y+Psqa1IdiLOCsZjznsS2tbBifDPRljSNIxd2+o0g==
-X-Received: by 10.223.195.110 with SMTP id e43mr8599753wrg.219.1508682962825;
-        Sun, 22 Oct 2017 07:36:02 -0700 (PDT)
-Message-ID: <1508682959.3197.1.camel@gmail.com>
-From: Ailin Nemui <ailin.nemui@gmail.com>
+Received: (qmail 3412 invoked from network); 27 Dec 2023 11:49:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oddnet.de; s=DKIM001;
+	t=1703677794;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=nKOwSofCXP3rEZtA8pDZJ5MGa8g6zEiOOVQkxvbmoBU=;
+	b=FhGPD91l296TMX6zby8o0LaVIfZtxFLzSr+sl3LC/rj86Px1Qyja4HAw4fVY8wuWNPI86C
+	fGCf5McBeSvjktMUYpexaUfFyMkgsa5nnEN+jliPcZdKBp3I5Vd/NJRBn90AP3LTP/bqkL
+	K5H2kHIIF0SpWUDLxI8hgrtSDeGdZwxHNgPj+qEuPa6fABDrsKPDw1YZdwDdKGYyOMwl+S
+	dd9dpkGVqM+msT/6KBgWZ7kIGlCnt9qobn5pEgKZ4Gn7iMuV/yMIEFYNgWvef41x1aQfAY
+	ysxx/PgEkoRYo7o9gpFZDOlKSfLiOFe3YO8c21vR76baTZzSxvMGuBjo9Y0YLw==
+Message-ID: <658c0eaf.45f2b459.bm000@oddnet.de>
+From: =?ISO-8859-1?Q?Ingo=20Br=FCckl?= <ib@oddnet.de>
 To: oss-security@lists.openwall.com
-Date: Sun, 22 Oct 2017 16:35:59 +0200
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.0 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Irssi 1.0.5: CVE-2017-15228, CVE-2017-15227, CVE-2017-15721,
- CVE-2017-15722, CVE-2017-15723
+Date: Wed, 27 Dec 2023 12:46:54 +0100
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+X-Mailer: blueMail/Linux 1.5
+Cc: Markus Koschany <apo@debian.org>
+Subject: [oss-security] xarchiver: Path traversal with crafted cpio archives
 
-> Irssi 1.0.5 has been released. This release fixes a few security 
-> issues in Irssi as well as a few bugs. There are no new features. 
-> All Irssi users should upgrade to this version. See the NEWS for 
-> details.
+Hi,
 
-> Most issues have been identified using fuzzing, thanks to Hanno Böck 
-> and Joseph Bisch. We expect Joseph will be able to tell you more 
-> about his newest fuzzer at freenode.live on the weekend!
+I was alerted by febinrev on GitHub to a vulnerability in xarchiver that
+stems from a vulnerability in cpio, which is called by xarchiver to extract
+cpio and rpm archives.
 
-IRSSI-SA-2017-10 Irssi Security Advisory [1]
-============================================
-CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15723,
-CVE-2017-15722
+It is a path traversal vulnerability with maliciously crafted cpio archives
+that affects all cpio versions up to and including 2.12 (see CVE-2015-1197).
+The vulnerability has been fixed in cpio 2.13.
 
-Description
------------
+However, due to two bug reports (#946267 and #946469), Debian has patched
+cpio 2.13 which re-enables the path traversal vulnerability, thus affecting
+all distributions that use Debian cpio 2.13 directly or have applied their
+"revert-CVE-2015-1197-handling" patch. Debian has been informed and is
+working on a security fix.
 
-Multiple vulnerabilities have been located in Irssi.
+Instructions from febinrev to craft a cpio archive to demonstrate the
+vulnerability:
 
-(a) When installing themes with unterminated colour formatting
-    sequences, Irssi may access data beyond the end of the
-    string. (CWE-126) Found by Hanno Böck.
+  mkdir test_cpio
+  ln -sf /tmp/ test_cpio/tmp
+  echo "TEST Traversal" > test_cpio/tmpYtrav.txt
+  cd test_cpio/
+  ls | cpio -ov > ../trav.cpio
+  cd ../
+  sed -i s/"tmpY"/"tmp\/"/g trav.cpio
 
-    CVE-2017-15228 was assigned to this issue.
+Even
 
-(b) While waiting for the channel synchronisation, Irssi may
-    incorrectly fail to remove destroyed channels from the query list,
-    resulting in use after free conditions when updating the state
-    later on. Found by Joseph Bisch. (CWE-416 caused by CWE-672)
+  cpio -id --no-absolute-filenames -I trav.cpio
 
-    CVE-2017-15227 was assigned to this issue.
+doesn't prevent path traversal with affected cpio versions, and such an
+archive can be further obfuscated with file extensions such as .rar or
+.tar.gz.
 
-(c) Certain incorrectly formatted DCC CTCP messages could cause NULL
-    pointer dereference. Found by Joseph Bisch. This is a separate,
-    but similar issue to CVE-2017-9468. (CWE-690)
+Malicious cpio archives that exploit this vulnerability can overwrite files
+in locations such as ~/.ssh, ~/.bashrc, ~/.config/autostart/, etc.
 
-    CVE-2017-15721 was assigned to this issue.
+In addition to xarchiver, all other GUI front-ends for archive management
+that call cpio as a command-line program are most likely also affected!
 
-(d) Overlong nicks or targets may result in a NULL pointer dereference
-    while splitting the message. Found by Joseph Bisch. (CWE-690)
-
-    CVE-2017-15723 was assigned to this issue.
-
-(e) In certain cases Irssi may fail to verify that a Safe channel ID
-    is long enough, causing reads beyond the end of the string. Found
-    by Joseph Bisch. (CWE-126)
-
-    CVE-2017-15722 was assigned to this issue.
+Ingo
 
 
-Impact
-------
-
-(a,b,c,d) May result in denial of service (remote crash).
-
-(e) May affect the stability of Irssi.
 
 
-Affected versions
------------------
-
-(a,b,c,e) All Irssi versions that we observed.
-
-(d) Starting from 0.8.17.
 
 
-Fixed in
---------
-
-Irssi 1.0.5
 
 
-Recommended action
-------------------
-
-Upgrade to Irssi 1.0.5. Irssi 1.0.5 is a maintenance release in the
-1.0 series, without any new features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
 
 
-Mitigating facts
-----------------
-
-(a) requires user to install malicious or broken theme file
-
-(b,c,e) requires a broken ircd or control over the ircd
-
-(d) irc servers typically have length limits in place
 
 
-Patch
------
-
-https://github.com/irssi/irssi/commit/43e44d553d44e313003cee87e6ea5e24d68b84a1
 
 
-References
-----------
 
-[1] https://irssi.org/security/irssi_sa_2017_10.txt
+
