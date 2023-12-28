@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/11/5
-Message-ID: <8fdef484-31c0-fb48-0c7d-f318688b5e7d@apache.org>
-Date: Tue, 11 Jul 2023 15:28:03 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/6
+Message-ID: <ZY3jsgyKFEVWZJW4@nuvolo>
+Date: Thu, 28 Dec 2023 22:08:02 +0100
+From: Arrigo Marchiori <ardovm@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22888: Apache Airflow: Scheduler remote DoS 
+Subject: CVE-2012-5639: Apache OpenOffice: Loading internal / external resources without warning
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: Moderate
 
 Affected versions:
 
-- Apache Airflow before 2.6.3
+- Apache OpenOffice through 4.1.15
 
 Description:
 
-Apache Airflow, versions before 2.6.3, is affected by a vulnerability that allows an attacker to cause a service disruption by manipulating the run_id parameter. This vulnerability is considered low since it requires an authenticated user to exploit it. It is recommended to upgrade to a version that is not affected
+In Apache OpenOffice and LibreOffice embedded content will be opened
+automatically without that a warning is shown.
 
 Credit:
 
-Zhipeng Zhang (@timon8) (finder)
+The Apache OpenOffice Security Team would like to thank Timo Warns and
+Joachim Mammele for discovering and reporting this attack vector.
 
 References:
-
-https://github.com/apache/airflow/pull/32293
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22888
-
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2012-5639
+-- 
+Arrigo
