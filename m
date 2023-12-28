@@ -1,28 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/14
-Message-ID: <ZMANYXG61AR/oTGa@itl-email>
-Date: Tue, 25 Jul 2023 13:58:54 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/2
+Message-ID: <ZY2_KYCRMCjlL9ED@itl-email>
+Date: Thu, 28 Dec 2023 13:32:07 -0500
 From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 25, 2023 at 06:12:44PM +0100, Eddie Chapman wrote:
-> alice wrote:
-> > this is a disaster of a security announcement from AMD. nothing is fixed
-> > except for epyc. the only workaround anyone really has is the chicken bit,
-> > thankfully.
+On Thu, Dec 28, 2023 at 10:31:42AM +0000, Greg KH wrote:
+> On Tue, Dec 26, 2023 at 01:35:55AM +0100, Solar Designer wrote:
+> > On Tue, Dec 26, 2023 at 12:38:36AM +0100, Steffen Nurpmeso wrote:
+> > > and i really today stumbled over his funny opinion
+> > > 
+> > >   . All "early notice" lists are leaks and should be considered
+> > >     public.
+> > >   . Unless your project is not used by anyone.
+> > >   . Otherwise, why would your government allow it to exist?
+> > 
+> > I think Greg's stance on this is inconsistent, if we also recall his
+> > preference against full public disclosure of issues discussed on private
+> > lists and his running of private lists on CPU microarchitectural issues.
 > 
-> Yes, very disappointing. Pure speculation; perhaps they were planning on
-> disclosing at the end of the year with full set of Microcode ready but
-> something we don't know (yet) forced them to disclose early. Who knows.
+> As you are referring to my talk here, I figured I would point out that
+> later on in it I do talk explicitly about the private lists that we run
+> for these CPU issues and how much we hate them.  Companies who are
+> currently not on these lists are actively trying to circumvent them to
+> get access to the information on them, despite all of the lawyers and
+> governments involved agreeing that this is the best and only way we know
+> how to handle these types of issues at the moment.
+> 
+> In other words, I hate them, companies hate them, and governments hate
+> them, but no one involved has solid ideas of what to do instead.
 
-Does AMD make OS-loadable μcode patches available for client platforms,
-or must all μcode loading on clients be done by the firmware?  If the
-latter, then it will take a very long time for clients to get patched,
-even if AMD released the updates promptly.  Also, server platforms can
-usually reflash the firmware via the BMC, but client platforms do not
-have this option.
+Change the incentives so that CPU vendors decide to produce CPUs that
+don't have bugs, and therefore the lists aren't needed?
+
+I'm not sure if this is practical, but if it is, it would solve the
+problem.  I also am not sure what the unintended consequences would be.
+Mandating Speculative Taint Tracking would get rid of the speculative
+execution vulnerabilities, assuming that it is implemented correctly.
+
+> "Luckily" I think that laws like the CRA are going to make them obsolete
+> in a few years time so maybe that will cause them to go away as I don't
+> see any end of CPU bugs happening before then.
+> 
+> > However, the concern about leaks is valid.  I think the most effective
+> > defense we have is the 14 days maximum embargo time, which removes the
+> > data's long-term value for potential use in attacks.
+> 
+> Again, I still consider this a form of blackmail against open source
+> projects when you do this, but hey, you do you :)
+
 -- 
 Sincerely,
 Demi Marie Obenour (she/her/hers)
