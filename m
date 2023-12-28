@@ -1,27 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/6
-Message-ID: <CAEih1qWzJSX8z4dx958nqFH=FX3Z2A2jgAwd0kBv0gGpidSeuw@mail.gmail.com>
-Date: Wed, 1 Mar 2023 16:23:54 +0100
-From: Pietro Borrello <borrello@...g.uniroma1.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/1
+Message-ID: <2023122830-stopwatch-sierra-7cf0@gregkh>
+Date: Thu, 28 Dec 2023 10:31:42 +0000
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-1075 - Linux Kernel: Type Confusion in tls_is_tx_ready()
+Subject: Re: linux-distros membership application of openEuler
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Dec 26, 2023 at 01:35:55AM +0100, Solar Designer wrote:
+> On Tue, Dec 26, 2023 at 12:38:36AM +0100, Steffen Nurpmeso wrote:
+> > and i really today stumbled over his funny opinion
+> > 
+> >   . All "early notice" lists are leaks and should be considered
+> >     public.
+> >   . Unless your project is not used by anyone.
+> >   . Otherwise, why would your government allow it to exist?
+> 
+> I think Greg's stance on this is inconsistent, if we also recall his
+> preference against full public disclosure of issues discussed on private
+> lists and his running of private lists on CPU microarchitectural issues.
 
-I am disclosing a type confusion in the net/tls stack of the Linux Kernel.
-tls_is_tx_ready() checks that list_first_entry() does not return NULL.
-However, this condition can never happen.
-For an empty `tx_list`, list_first_entry() returns the list_entry() of the head,
-which, when used, is a type confusion.
-Thus, tls_is_tx_ready() may potentially use a type-confused entry
-to the list_head, leaking the last byte of the type confused field
-that overlaps with rec->tx_ready.
+As you are referring to my talk here, I figured I would point out that
+later on in it I do talk explicitly about the private lists that we run
+for these CPU issues and how much we hate them.  Companies who are
+currently not on these lists are actively trying to circumvent them to
+get access to the information on them, despite all of the lawyers and
+governments involved agreeing that this is the best and only way we know
+how to handle these types of issues at the moment.
 
-The patch has been merged in the Linux tree:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=ffe2a22562444720b05bdfeb999c03e810d84cbb
+In other words, I hate them, companies hate them, and governments hate
+them, but no one involved has solid ideas of what to do instead.
 
-The issue has been assigned CVE-2023-1075.
+"Luckily" I think that laws like the CRA are going to make them obsolete
+in a few years time so maybe that will cause them to go away as I don't
+see any end of CPU bugs happening before then.
 
-Best regards,
-Pietro Borrello
+> However, the concern about leaks is valid.  I think the most effective
+> defense we have is the 14 days maximum embargo time, which removes the
+> data's long-term value for potential use in attacks.
+
+Again, I still consider this a form of blackmail against open source
+projects when you do this, but hey, you do you :)
+
+thanks,
+
+greg k-h
