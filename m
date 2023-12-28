@@ -1,80 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/8
-Message-ID: <CAAHN_R2jD-CdpMauH+L_pz1mYBiKSD03jh8Azhw8KUFG=f+ytw@mail.gmail.com>
-Date: Tue, 3 Oct 2023 15:47:06 -0400
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/4
+Message-ID: <ZY3gyvwqE8oxamz3@nuvolo>
+Date: Thu, 28 Dec 2023 21:55:38 +0100
+From: Arrigo Marchiori <ardovm@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4806, CVE-2023-5156: glibc: potential use-after-free in getaddrinfo()
+Subject: CVE-2023-1183: Apache OpenOffice: Arbitrary file write in Apache OpenOffice Base
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 3, 2023 at 3:18 PM Solar Designer <solar@...nwall.com> wrote:
-> I wish someone more knowledgeable about this specific issue would post
-> this, but since no one did, let me do it.
->
-> Current upstream glibc NEWS contains these entries:
+Severity: Moderate
 
-We're in the process of setting up a glibc CNA, so we will hopefully
-send out upstream advisories more regularly once we've got that in
-place.
+Affected versions:
 
->
-> > CVE-2023-4806: When an NSS plugin only implements the
-> > _gethostbyname2_r and _getcanonname_r callbacks, getaddrinfo could use
-> > memory that was freed during buffer resizing, potentially causing a
-> > crash or read or write to arbitrary memory.
-> >
-> > CVE-2023-5156: The fix for CVE-2023-4806 introduced a memory leak when
-> > an application calls getaddrinfo for AF_INET6 with AI_CANONNAME,
-> > AI_ALL and AI_V4MAPPED flags set.
->
-> Apparently, CVE-2023-4806 has existed for ages, whereas CVE-2023-5156
-> only existed for ~10 days last month.
+- Apache OpenOffice through 4.1.15
 
-CVE-2023-5156 was a regression from the fix to CVE-2023-4806; we
-requested a separate CVE for the benefit of distributions that may
-have already released the fix for the first CVE.
+Description:
 
->
-> Bug 30843 (CVE-2023-4806) - potential use-after-free in getcanonname:
->
-> https://sourceware.org/bugzilla/show_bug.cgi?id=30843
-> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=973fe93a5675c42798b2161c6f29c01b0e243994
->
-> Main upstream commit:
->
-> > commit 973fe93a5675c42798b2161c6f29c01b0e243994
-> > Author: Siddhesh Poyarekar <siddhesh@...rceware.org>
-> > Date:   Fri Sep 15 13:51:12 2023 -0400
-> >
-> >     getaddrinfo: Fix use after free in getcanonname (CVE-2023-4806)
-> >
-> >     When an NSS plugin only implements the _gethostbyname2_r and
-> >     _getcanonname_r callbacks, getaddrinfo could use memory that was freed
-> >     during tmpbuf resizing, through h_name in a previous query response.
-> >
-> >     The backing store for res->at->name when doing a query with
-> >     gethostbyname3_r or gethostbyname2_r is tmpbuf, which is reallocated in
-> >     gethosts during the query.  For AF_INET6 lookup with AI_ALL |
-> >     AI_V4MAPPED, gethosts gets called twice, once for a v6 lookup and second
-> >     for a v4 lookup.  In this case, if the first call reallocates tmpbuf
-> >     enough number of times, resulting in a malloc, th->h_name (that
-> >     res->at->name refers to) ends up on a heap allocated storage in tmpbuf.
-> >     Now if the second call to gethosts also causes the plugin callback to
-> >     return NSS_STATUS_TRYAGAIN, tmpbuf will get freed, resulting in a UAF
-> >     reference in res->at->name.  This then gets dereferenced in the
-> >     getcanonname_r plugin call, resulting in the use after free.
-> >
-> >     Fix this by copying h_name over and freeing it at the end.  This
-> >     resolves BZ #30843, which is assigned CVE-2023-4806.
-> >
-> >     Signed-off-by: Siddhesh Poyarekar <siddhesh@...rceware.org>
->
-> also backported by upstream to branches all the way back to 2.34, but
-> apparently even older are affected.
+An attacker can craft an OBD containing a "database/script" file with
+a SCRIPT command where the contents of the file could be written to a
+new file whose location was determined by the attacker.
 
-Yes, I've checked back to 2.28 for rhel-8; in fact that was where I
-discovered the bug first and had hoped that my refactor had fixed it
-like in case of CVE-2023-4813, but unfortunately it wasn't :/
+There are no known exploits of this vulnerability.
+A proof-of-concept demonstration exists.
 
-Thanks,
-Sid
+Thanks to the reporter for discovering this issue.
+
+Credit:
+
+The Apache OpenOffice Security Team would like to thank Gregor Kopf of Secfault Security GmbH (Germany) for discovering and reporting this attack vector and Fred Toussi for kindly providing a solution to this issue within HSQLDB.
+
+References:
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-1183
+-- 
+Arrigo
