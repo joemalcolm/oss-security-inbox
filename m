@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/8
-Message-ID: <a720f68e-5a14-2264-f8c2-70e9acba4374@apache.org>
-Date: Thu, 04 May 2023 21:37:03 +0000
-From: Ramesh Mani <rmani@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/3
+Message-ID: <658ed932.4d58967e.bm000@oddnet.de>
+Date: Fri, 29 Dec 2023 15:34:07 +0100
+From: Ingo Brückl <ib@...net.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-40331: Apache Ranger Hive Plugin: Any user with SELECT privilege on a database can alter the ownership of the table in Hive when Apache Ranger Hive Plugin is enabled 
+Cc: Markus Koschany <apo@...ian.org>
+Subject: xarchiver: Path traversal with crafted cpio archives
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+With
 
-Affected versions:
+https://github.com/ib/xarchiver/commit/85dcd9058a528181c786da1899b68110301d1aa1
 
-- Apache Ranger Hive Plugin 2.0.0 through 2.3.0
+xarchiver rejects all unmodified cpio versions affected by path traversal
+vulnerability.
 
-Description:
+It is recommended that all users upgrade to xarchiver 0.5.4.22.
 
-Incorrect Permission Assignment for Critical Resource vulnerability in Apache Software Foundation Apache Ranger Hive Plugin.This issue affects Apache Ranger Hive Plugin: from 2.0.0 through 2.3.0.
-
-This issue is being tracked as RANGER-3474 RANGER-3357 
-
-References:
-
-https://ranger.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2021-40331
-https://issues.apache.org/jira/browse/RANGER-3474
-https://issues.apache.org/jira/browse/RANGER-3357
-
+Ingo
