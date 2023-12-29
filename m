@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/11/2
-Message-ID: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
-Date: Thu, 11 May 2023 07:36:44 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Clarification on embargoed testing in a partner cloud
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/5
+Message-ID: <f3008fbc-4dbc-49ae-ba0a-1badbad2466f@oracle.com>
+Date: Fri, 29 Dec 2023 12:50:55 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Claus Assmann <ml+oss@...tp.org>
+Subject: Re: Re: New SMTP smuggling attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/26/23 11:15, Claus Assmann wrote:
+> On Sun, Dec 24, 2023, Marcus Meissner wrote:
+> 
+>> - CVE-2023-51765 sendmail
+> 
+> Can you update the text for this (or point me to the proper way/persons
+> to do this)?
 
-The Ubuntu security team shares and obtains information about embargoed issues 
-from the distros and linux-distros mailing lists.
+https://www.cve.org/CVERecord?id=CVE-2023-51765 shows:
+   Assigner: MITRE Corporation
 
-One of our large cloud partners has asked the Ubuntu security team to do 
-automated testing of embargoed security updates on their public cloud before the 
-CRD. While technically we would not be directly sharing details of embargoed 
-issues with them as the tests will be run under accounts owned by the Ubuntu 
-security team, they will be run on their infrastructure. As such, this may 
-hinder our ability to conduct a comprehensive internal investigation of any leak 
-that may occur.
-
-I’m not exactly sure how this scenario fits within the policy of these lists, 
-and would like to validate before we go ahead. ( Policy can be found here: 
-https://oss-security.openwall.org/wiki/mailing-lists/distros )
-
-Would testing embargoed updates obtained from the distros and linux-distros 
-lists on an external cloud infrastructure violate the terms of those mailing 
-lists? Would testing embargoed updates on an external cloud infrastructure be 
-contrary to the expectations of the vendors posting embargoed issues to those lists?
-
-Thanks,
-
-Marc.
+so you can submit updates/corrections via the web form at:
+   https://cveform.mitre.org/
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
