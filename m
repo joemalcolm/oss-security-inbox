@@ -1,35 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/1
-Message-ID: <dab7c670-5833-518d-a77d-73493cb2714f@apache.org>
-Date: Sun, 21 May 2023 08:10:52 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/2
+Message-ID: <20231229130718.GA6740@openwall.com>
+Date: Fri, 29 Dec 2023 14:07:18 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31058: Apache InLong: JDBC URL bypassing by adding blanks 
+Subject: CVE-2023-51766: Exim: SMTP smuggling
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi,
 
-Affected versions:
+Exim was also susceptible to SMTP smuggling, and version 4.97.1 is now
+released to address this.  Included below is doc/doc-txt/cve-2023-51766
+from the exim-4.97.1 branch (with erroneous Date: line omitted).
 
-- Apache InLong 1.4.0 through 1.6.0
+Alexander
 
-Description:
+---
+CVE ID:     CVE-2023-51766
+Credits:    https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/
+Version(s): all up to 4.97 inclusive
+Issue:      Given a buggy relay, Exim can be induced to accept a second message embedded
+            as part of the body of a first message
 
-Deserialization of Untrusted Data Vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. Attackers would bypass the
-'autoDeserialize' option filtering by adding blanks.  Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
+Conditions
+==========
+
+If *all* the following conditions are met
+
+    Runtime options
+    ---------------
+
+    * Exim offers PIPELINING on incoming connections
+
+    * Exim offers CHUNKING on incoming connections
+
+    Operation
+    ---------
+
+    * DATA (as opposed to BDAT) is used for a message reception
+
+    * The relay host sends to the Exim MTA message data including
+      one of "LF . LF" or "CR LF . LF" or "LF . CR LF".
+
+    * Exim interprets the sequence as signalling the end of data for
+      the SMTP DATA command, and hence a first message.
+
+    * Exim interprets further input which the relay had as message body
+      data, as SMTP commands and data. This could include a MAIL, RCPT,
+      BDAT (etc) sequence, resulting in a further message acceptance.
+
+Impact
+======
+
+One or more messages can be accepted by Exim that have not been
+properly validated by the buggy relay.
+
+Fix
+===
+
+Install a fixed Exim version:
+
+    4.98 (once available)
+    4.97.1
+
+If you can't install one of the above versions, ask your package
+maintainer for a version containing the backported fix. On request and
+depending on our resources we will support you in backporting the fix.
+(Please note, that Exim project officially doesn't support versions
+prior the current stable version.)
 
 
+Workaround
+==========
 
-[1] 
+  Disable CHUNKING advertisement for incoming connections.
 
- https://github.com/apache/inlong/pull/7674 https://github.com/apache/inlong/pull/7674
+  An attempt to "smuggle" a DATA command will trip a syncronisation
+  check.
 
-Credit:
+*or*
 
-H Ming (finder)
+  Disable PIPELINING advertisement for incoming connections.
 
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31058
-
+  The "smuggled" MAIL FROM command will then trip a syncronisation
+  check.
