@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/23
-Message-ID: <20231016230841.639Di%steffen@sdaoden.eu>
-Date: Tue, 17 Oct 2023 01:08:41 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/1
+Message-ID: <c0001c7d-bee4-9512-e8c7-4c5e6a5cf61d@apache.org>
+Date: Fri, 29 Dec 2023 02:54:22 +0000
+From: Jiajie Zhong <zhongjiajie@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: CVE-2023-49299: Apache DolphinScheduler: Arbitrary js execute as root for authenticated users 
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann wrote in
- <ZSzx4s49HaeHFd/e@...per.schlittermann.de>:
- |Marcus Meissner <meissner@...e.de> (Mo 16 Okt 2023 10:08:50 CEST):
- |> Regardless of your viability of subscription status I think we also
- |> (sadly) have to consider current geopolitical issues here.
- |
- |No, we should not consider anything else than technical/security
- |restrictions here.
+Severity: important
 
-I fully support this.  It is more than just desirable, but
-a question of survival, that people try to act and live together,
-no matter what time aka period it is.
-If it is not ME and YOU who try to get over, noone will.
+Affected versions:
 
- |And adhere the spirit of Free and Open Source (as far as I understand it),
- |that there is no instance that can judge about political, ethical,
- |religious issues. Free means free. Open means open.
+- Apache DolphinScheduler through 3.1.9
 
-Mutual respect and welcomeness.
+Description:
 
- |> As far as I understand, US companies and US citizens are not permitted
- |> to work with Chinese organizations and/or Chinese nationals.
- |
- |Any member of the list is free to unsubscribe for whatever reasons.
+Improper Input Validation vulnerability in Apache DolphinScheduler. An authenticated user can cause arbitrary, unsandboxed javascript to be executed on the server.This issue affects Apache DolphinScheduler: through 3.1.9.
 
-If the american list members have to live in fear of being
-imprisoned or otherwise punished because of the usual suppression,
-they could temporarily unsubscribe *LOUD*, and give their place to
-members of the second world, like France or Germany, Italy .. or
-you name it, each project surely has honourable, trustworthy and
-responsible such, until the wind has changed.
+Users are recommended to upgrade to version 3.1.9, which fixes the issue.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Credit:
+
+Eluen Siebene (finder)
+
+References:
+
+https://github.com/apache/dolphinscheduler/pull/15228
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-49299
+
