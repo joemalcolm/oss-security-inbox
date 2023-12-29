@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/6
-Message-ID: <03657eca-b6ef-5e25-15f9-832df4274f3d@apache.org>
-Date: Wed, 13 Dec 2023 21:24:22 +0000
-From: Brian Demers <bdemers@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46750: Apache Shiro: URL Redirection to Untrusted Site ('Open Redirect') vulnerability in FORM authentication feature Apache Shiro. 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/4
+Message-ID: <u_37zo4-c8MMB7MsMhIWnl6UEq-x6XthS05w8OvrztTMgixZQWX1nf2zdsHsobnpojkG2ya44HMch-biNuT4sRGWS16EGd0EKWerHgtgmZA=@stig.io>
+Date: Fri, 29 Dec 2023 15:57:51 +0000
+From: Stig Palmquist <stig@...g.io>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "cpan-security@...l.org" <cpan-security@...l.org>
+Subject: CVE-2023-7101: Spreadsheet::ParseExcel for Perl is vulnerable to arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi,
 
-Affected versions:
+The CPAN Security WG was recently informed that the Perl module Spreadsheet::ParseExcel 0.65 (and earlier) is vulnerable to arbitrary code execution.
 
-- Apache Shiro before 1.13.0
-- Apache Shiro 2.0.0-alpha-1 before 2.0.0-alpha-4
+Users should upgrade to version 0.66 as soon as possible.
 
-Description:
+Updated Version:
+https://metacpan.org/release/JMCNAMARA/Spreadsheet-ParseExcel-0.66
 
-URL Redirection to Untrusted Site ('Open Redirect') vulnerability when "form" authentication is used in Apache Shiro.
-Mitigation: Update to Apache Shiro 1.13.0+ or 2.0.0-alpha-4+.
-
-Credit:
-
-Claudio Villella (finder)
+Patch:
+https://github.com/jmcnamara/spreadsheet-parseexcel/commit/bd3159277e745468e2c553417b35d5d7dc7405bc.patch
 
 References:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-7101
+https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2023/MNDT-2023-0019.md
 
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-46750
-
+Best,
+Stig
