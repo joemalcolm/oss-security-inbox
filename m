@@ -1,101 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/06/2
-Message-ID: <5b2cd538-d2ec-539f-1b31-fe159f3460d2@ovn.org>
-Date: Thu, 6 Apr 2023 19:55:29 +0200
-From: Ilya Maximets <i.maximets@....org>
-To: oss-security@...ts.openwall.com, ovs-announce@...nvswitch.org, ovs-discuss <ovs-discuss@...nvswitch.org>
-Cc: i.maximets@....org, Aaron Conole <aconole@...hat.com>, Flavio Leitner <fbl@...hat.com>, David Marchand <david.marchand@...hat.com>
-Subject: Re: [ADVISORY] CVE-2023-1668: Open vSwitch: Remote traffic denial of service via crafted packets with IP proto 0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/30/2
+Message-ID: <20231230162600.GA14382@openwall.com>
+Date: Sat, 30 Dec 2023 17:26:00 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Simon Josefsson <simon@...efsson.org>, Jeffrey Bencteux <jeffbencteux@...il.com>
+Subject: inetutils ftpd, rcp, rlogin, rsh, rshd, uucpd: Avoid potential privilege escalations by checking set*id() return values
 Content-Type: text/plain; charset=utf-8
 
-On 4/6/23 19:37, Ilya Maximets wrote:
-> Description
-> ===========
-> 
-> Multiple versions of Open vSwitch are vulnerable to crafted IP packets
-> with ip proto set to 0 causing a potential denial of service.
-> Triggering the vulnerability will require an attacker to send a crafted
-> IP packet with protocol field set to 0 and the flow rules to contain
-> 'set' actions on other fields in the IP protocol header.  The resulting
-> flows will omit required actions, and fail to mask the IP protocol field,
-> resulting in a large bucket which captures all IP packets.
-> 
-> All versions of Open vSwitch at least as early as 1.5.0 are affected.
-> 
-> The Common Vulnerabilities and Exposures project (cve.mitre.org) has
-> assigned the identifier CVE-2023-1668 to this issue.
-> 
-> 
-> Mitigation
-> ==========
-> 
-> For any version of Open vSwitch, preventing packets with network
-> protocol number '0' from reaching Open vSwitch will prevent the issue.
-> This is difficult to achieve because Open vSwitch obtains packets before
-> the iptables or nftables host firewall, so iptables or nftables on the
-> Open vSwitch host cannot ordinarily block the vulnerability.
-> 
-> Another method would be to add a high priority rule to the flow table
-> explicitly matching on nw protocol '0' and handling that traffic
-> separately:
-> 
->     table=0 priority=32768,ip,nw_proto=0,actions=drop
->     table=0 priority=32768,ipv6,nw_proto=0,actions=drop
->     table=0 priority=32768,arp,arp_op=0,actions=drop
+Hi,
 
-Correction:
+Simon Josefsson has released inetutils 2.5 (a thankless job to take over
+maintenance of legacy code like that):
 
-  Priorities for these flows should be set to 65535 instead.
-  i.e. The maximum priority that can be set with OpenFlow.
+https://www.mail-archive.com/info-gnu@gnu.org/msg03239.html
 
+> This is to announce inetutils-2.5, a stable release.
 > 
-> All 3 OpenFlow rules should be added to every OVS bridge.  This can
-> be difficult to maintain during the service restart.
-> 
-> 
-> Fix
-> ===
-> 
-> Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer:
-> 
-> * 3.1.x:
->   https://github.com/openvswitch/ovs/commit/61b39d8c4797f1b668e4d5e5350d639fca6082a9
-> * 3.0.x:
->   https://github.com/openvswitch/ovs/commit/0ec9af260ad84225e758d249fa32151ddf8a6520
-> * 2.17.x:
->   https://github.com/openvswitch/ovs/commit/27fb5db7f727ffc056f024f9ba4936facccb5f40
-> * 2.16.x:
->   https://github.com/openvswitch/ovs/commit/42f2b4b9b9a3c11d38f180bf1e35c47b77cd4ce8
-> * 2.15.x:
->   https://github.com/openvswitch/ovs/commit/f36509fd64e339ffd33593451099be6baa12ffe6
-> * 2.14.x:
->   https://github.com/openvswitch/ovs/commit/b46505f4d26cd4612a533687e7884efcb7a74111
-> * 2.13.x:
->   https://github.com/openvswitch/ovs/commit/7fa0106e8594c34f9e16efd87a58e38a947c6c5b
-> 
-> 
-> Recommendation
-> ==============
-> 
-> We recommend that users of Open vSwitch apply the linked patches, or
-> upgrade to a known patched version of Open vSwitch.  These include:
-> 
-> * 3.1.1
-> * 3.0.4
-> * 2.17.6
-> * 2.16.7
-> * 2.15.8
-> * 2.14.9
-> * 2.13.11
-> 
-> 
-> Acknowledgements
-> ================
-> 
-> The Open vSwitch team wishes to thank the reporter:
-> 
->       David Marchand <dmarchan@...hat.com>
+> GNU Networking Utilities (inetutils) contain traditional networking
+> utilities, clients and servers, including ftp, telnet, inetd,
+> rsh/rlogin, tftp, talk, syslogd, ping, traceroute, whois, hostname,
+> dnsdomainname, ifconfig, and logger.
 
-Download attachment "OpenPGP_0xB9F7EC77C829BF96.asc" of type "application/pgp-keys" (4740 bytes)
+> * Noteworthy changes in release 2.5 (2023-12-29) [stable]
+> 
+> ** ftpd, rcp, rlogin, rsh, rshd, uucpd
+> 
+> *** Avoid potential privilege escalations by checking set*id() return values.
+> Reported by Jeffrey Bencteux in
+> <https://lists.gnu.org/archive/html/bug-inetutils/2023-07/msg00000.html>.
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+At the latter URL, there's a thread started by Jeffrey, which includes
+revisions of a then-proposed patch.  My skimming of the latest patch in
+there shows it still misses return value checks of initgroups() calls,
+and additionally those are within "#ifdef HAVE_INITGROUPS", which means
+they might not always be compiled in.  That's in rshd and uucpd.  ftpd's
+patch context does not mention supplementary groups at all, so maybe
+ftpd misses setting/clearing them entirely.  If so, that's even worse.
+
+Distros generally get this kind of programs from other packages if at
+all, which is a reason why the versions in inetutils haven't received
+much scrutiny.  As an exception, notably Debian (and Ubuntu) does
+package inetutils (and has already updated to 2.5 in unstable), but
+doesn't install it by default and has some programs excluded.  It looks
+like out of the affected ones above, only ftpd is included.
+
+https://tracker.debian.org/pkg/inetutils
+
+Jeffrey's initial message also says:
+
+> There are cases where set*id() functions can fail, for example multiple
+> calls to the clone() function can cause setuid() to fail when the user
+> process limit is reached.
+
+Linux kernel hardening patches have been mitigating this for some years,
+and a mitigation (postponing RLIMIT_NPROC enforcement to execve(2) time,
+if ever) got into upstream Linux, as I recall after this thread in 2011:
+
+https://www.openwall.com/lists/kernel-hardening/2011/06/12/9
+
+I hope on current Linux this dangerous failure mode is not triggerable,
+but indeed programs must not rely on that, and I think inetutils isn't
+Linux-only.
+
+Also, initgroups() may still fail, and omitting it or setgroups() will
+leave supplementary groups potentially inherited by a service intact.
+
+Alexander
