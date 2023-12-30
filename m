@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/12/1
-Message-ID: <9d930de3-d919-ab47-71cd-a6701acc46b9@apache.org>
-Date: Fri, 12 May 2023 01:14:09 +0000
-From: Maxim Solodovnik <solomax@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/30/4
+Message-ID: <20231230211549.GA18597@openwall.com>
+Date: Sat, 30 Dec 2023 22:15:49 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28936: Apache OpenMeetings: insufficient check of invitation hash 
+Cc: Simon Josefsson <simon@...efsson.org>, Jeffrey Bencteux <jeffbencteux@...il.com>
+Subject: Re: inetutils ftpd, rcp, rlogin, rsh, rshd, uucpd: Avoid potential privilege escalations by checking set*id() return values
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+On Sat, Dec 30, 2023 at 05:26:00PM +0100, Solar Designer wrote:
+> > * Noteworthy changes in release 2.5 (2023-12-29) [stable]
+> > 
+> > ** ftpd, rcp, rlogin, rsh, rshd, uucpd
+> > 
+> > *** Avoid potential privilege escalations by checking set*id() return values.
+> > Reported by Jeffrey Bencteux in
+> > <https://lists.gnu.org/archive/html/bug-inetutils/2023-07/msg00000.html>.
 
-Affected versions:
+This is CVE-2023-40303.
 
-- Apache OpenMeetings 2.0.0 before 7.1.0
+> notably Debian (and Ubuntu) does
+> package inetutils (and has already updated to 2.5 in unstable)
 
-Description:
+Debian also patched the issues in LTS:
 
-Attacker can access arbitrary recording/room
+https://lists.debian.org/debian-lts-announce/2023/10/msg00013.html
 
-Vendor: The Apache Software Foundation
+> Jeffrey's initial message also says:
+> 
+> > There are cases where set*id() functions can fail, for example multiple
+> > calls to the clone() function can cause setuid() to fail when the user
+> > process limit is reached.
+> 
+> Linux kernel hardening patches have been mitigating this for some years,
+> and a mitigation (postponing RLIMIT_NPROC enforcement to execve(2) time,
+> if ever) got into upstream Linux, as I recall after this thread in 2011:
+> 
+> https://www.openwall.com/lists/kernel-hardening/2011/06/12/9
+> 
+> I hope on current Linux this dangerous failure mode is not triggerable,
+> but indeed programs must not rely on that, and I think inetutils isn't
+> Linux-only.
 
-Versions Affected: Apache OpenMeetings from 2.0.0 before 7.1.0
+There's still the supposedly-cannot-fail memory allocation on setuid(),
+where it contains a supposedly-unreachable error return code.  Back
+then, I failed to convince the maintainers to replace that code with
+crashing the process, which would be a safer action to take on such
+supposedly-impossible conditions if they ever do become possible.
 
-This issue is being tracked as OPENMEETINGS-2762 
+Also, LSMs can alter the behavior of setuid(), including adding new
+reasons why it can fail.
 
-Credit:
+> Also, initgroups() may still fail, and omitting it or setgroups() will
+> leave supplementary groups potentially inherited by a service intact.
 
-Stefan Schiller (reporter)
-
-References:
-
-https://openmeetings.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-28936
-https://issues.apache.org/jira/browse/OPENMEETINGS-2762
-
+Alexander
