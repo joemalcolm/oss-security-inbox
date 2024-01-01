@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5324" "Saturday" "27" "January" "2018" "10:02:03" "-0500" "Stiepan" "stie@itk.swiss" "<9-jL1EFZob81hdKZAE8646fR5VeNxFQIxfAtnfzyRYZpvcVvb52EgIzPiJrAZ9gnM88j8xNjQK5eirL1bslyzdywhfGdEHDJcLmdR6Zx3DE=@itk.swiss>" "92" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018012715:02:03" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        stie@itk.swi Jan 27   92/5324  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<20180124030215.ugiofq23lmyurwsa@dojo.mi.org>" "<BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>" "<20180126171624.GA9007@openwall.com>" "<BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19951 invoked by uid 550); 27 Jan 2018 16:23:56 -0000
+Received: (qmail 17970 invoked by uid 550); 1 Jan 2024 23:26:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +6,123 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3264 invoked from network); 27 Jan 2018 15:02:27 -0000
-Authentication-Results: mail2.protonmail.ch; dkim=none
-Message-ID: <9-jL1EFZob81hdKZAE8646fR5VeNxFQIxfAtnfzyRYZpvcVvb52EgIzPiJrAZ9gnM88j8xNjQK5eirL1bslyzdywhfGdEHDJcLmdR6Zx3DE=@itk.swiss>
-In-Reply-To: <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
-References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
- <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
- <BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>,<20180126171624.GA9007@openwall.com>
- <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_835573ad6d99e27accc353c3bcab074e"
-Date: Sat, 27 Jan 2018 10:02:03 -0500
-From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
+Received: (qmail 1194 invoked from network); 1 Jan 2024 22:59:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704150023; x=1704754823; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gc5QnJf9r/5G0HS/RFU79W1qT04jk0O15b902Yl5UwM=;
+        b=ODfnawVHwSxztbXzf5ugBrBbDHRLQFKal5Y3oKiHaPgSh86tqBDyg83yysntGfjLvq
+         ib5Ux09YwyHa8ixHUwRTW9CIsSDqxfwXMnwqSwBTef3MI+R6szXpqifXjwyTY32p0XNf
+         zvqQyr2WjZh2cq3savXTWEM3z9nFp47U9Sr9XjJOXWKc+tb/lUe6KF3/1s2JmQPBEQlf
+         zLKD8NOE/3UtgaW/pxJ+XubI349+nEAvYsAtsZH3WowzKv92jlN6+FKJYr0jQ8btl1D5
+         OAPIhGZNRtmi+sN/E/Eg3NMya0h/FYZJti3mkQnzW9sY2Uu1UG1qhsNIm8PZoCiIrIhX
+         v09A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704150023; x=1704754823;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Gc5QnJf9r/5G0HS/RFU79W1qT04jk0O15b902Yl5UwM=;
+        b=UBLHDVA3Q7ArZOUGCbIXGhDiCXbx1HsOvMFdq9kJvZg3qOjestvSABGOiukJPk9Hvc
+         d6EgoNh5oqi0VJCaM6IeIGODvfpnCdUjpbTYVP9PDlc5jcTpjqjIltar2XdtdvpyeBR5
+         HuJlgzZHtq64hnr8RfvuBt45kRMx+4H9N8wG5SIkCJGjGtRXoOYr3G4zuz0vCLc1s6OA
+         oKYlYJmBSosJ6GJxaXxwUrnzcQVUZLvQW8GmEuiNKvmlFN25YKmw4lEj+jq+v2kfAjPz
+         hyigOp44vhtpnLqosgOkeBhjp6qxG7/V1UY8Yt3S/zkETXhaPH35r350s8K4+El18R2s
+         qrfw==
+X-Gm-Message-State: AOJu0YwGQ0mKcqSUR3zfSN8NIozWF0D3oUzNgJR6l6BF20a0dYfcA0m9
+	VIS6Yyj/3hfEl4AWWGkzegkMwKR9kOVQivx4sL5/QJaj
+X-Google-Smtp-Source: AGHT+IFlnh7n+kI4rMz+YKETWdLxT7beYXj6LxR2EfpkNdmxNy3kghIJutTsrcJrRMepYL0sVgM2IwO8cbQA7TXW7k0=
+X-Received: by 2002:a05:6808:1b25:b0:3bc:171d:4539 with SMTP id
+ bx37-20020a0568081b2500b003bc171d4539mr297369oib.81.1704150022939; Mon, 01
+ Jan 2024 15:00:22 -0800 (PST)
+MIME-Version: 1.0
+References: <20231229130718.GA6740@openwall.com> <2537-1704125446.658888@yYwZ.TdlG.pmeQ>
+ <ZZMMi8DQbVuIvZPH@itl-email>
+In-Reply-To: <ZZMMi8DQbVuIvZPH@itl-email>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Mon, 1 Jan 2024 18:00:11 -0500
+Message-ID: <CAH8yC8kAsB9Kp-14iNPaft5H6XGDpM0hN7rE5y=5qZrmSoeDSQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2023-51766: Exim: SMTP smuggling
 
---b1_835573ad6d99e27accc353c3bcab074e
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+On Mon, Jan 1, 2024 at 2:06=E2=80=AFPM Demi Marie Obenour
+<demi@invisiblethingslab.com> wrote:
+>
+> On Mon, Jan 01, 2024 at 04:10:46PM +0000, halfdog wrote:
+> > Solar Designer writes:
+> > > Hi,
+> > >
+> > > Exim was also susceptible to SMTP smuggling, and version 4.97.1 is now
+> > > released to address this.  Included below is doc/doc-txt/cve-2023-517=
+66
+> > > from the exim-4.97.1 branch (with erroneous Date: line omitted).
+> > > ---
+> > > CVE ID:     CVE-2023-51766
+> > > Credits:    https://sec-consult.com/blog/detail/smtp-smuggling-spoofi=
+ng-e-mai
+> > > ls-worldwide/
+> > > Version(s): all up to 4.97 inclusive
+> > > Issue:      Given a buggy relay, Exim can be induced to accept a seco=
+nd messa
+> > > ge embedded
+> > >             as part of the body of a first message
+> > >
+> > > Conditions
+> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >
+> > > If *all* the following conditions are met
+> > >
+> > >     Runtime options
+> > >     ---------------
+> > >
+> > >     * Exim offers PIPELINING on incoming connections
+> > >
+> > >     * Exim offers CHUNKING on incoming connections
+> > >
+> > >     Operation
+> > >     ---------
+> > >
+> > >     * DATA (as opposed to BDAT) is used for a message reception
+> > >
+> > >     * The relay host sends to the Exim MTA message data including
+> > >       one of "LF . LF" or "CR LF . LF" or "LF . CR LF".
+> >
+> > Interesting, that also LF . LF is causing the effect. As there
+> > might be some aggressive mail server testing for that issue in
+> > near future anyway, could it be, that this was exactly the issue
+> > affecting Debian mailing lists at least 2018-2023? If not so,
+> > and there is a second bug, the increased testing and also public
+> > bug report from below will give them some interesting times ahead
+> > anyway.
+> >
+> > But if so, any automated mailing list forwarding might be quite
+> > likely (due to trigger probabilities) to have left truncated
+> > and non-truncated messages online, so that finding those pairs
+> > automatically, e.g.  using more unique text parts from list A
+> > messages to search for messages on any other list B and check,
+> > if one of them seems truncated.
+> >
+> > Here are some message examples from 2018 showing the trunction:
+> >
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D849754#60
+> > https://lists.debian.org/debian-mentors/2018/01/msg00331.html
+> >
+> > Then there was also a public bug report on those
+> >
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D922652
+> >
+> > or the ones from below.
+>
+> I think the only reasonable thing for an SMTP server to do is to reject
+> all LFs and CRs in DATA that are not part of a proper CRLF outright.
 
-SSB3aWxsIHRyeSByZXNwb25kaW5nIHRvIGJvdGggaGVyZTogd2VsbCwgaG93
-ZXZlciBmbGF3ZWQgaXQgbWlnaHQgYmUgYW5kIG9mdGVudGltZXMgaXMgaW4g
-cHJhY3RpY2UsIHRoZXJlIGlzIHRoZSB1bml2ZXJzYWwgSHlwcG9jcmF0ZSdz
-IG9hdGggaW4gdGhlIGNhc2Ugb2YgbWVkaWNpbmUgYW5kIGl0IHNvcnQgb2Yg
-d29ya3MuIFRoYXQgaXMgd2hhdCBJIG1lYW50LCB1c2luZyBwb3NzaWJseSBp
-bmFkZXF1YXRlIHdvcmRzLgoKSWYgYm9pbGVycGxhdGUgYWdyZWVtZW50IHNv
-dW5kcyBiZXR0ZXIgdGhhbiBhbiB1bml2ZXJzYWwgY29kZSBvZiBldGhpY3Mg
-Zm9yIG91ciBwcm9mZXNzaW9uIChhbmQgSSB0aGluayB0aGlzIGlzIGF0dGFp
-bmFibGUsIG5vdCAidW5pdmVyc2FsIGV0aGljcyIgdGFrZW4gb3V0IG9mIGNv
-bnRleHQsIG1ha2luZyBpdCBhbiBveHltb3JvbiksIGFzIGxvbmcgYXMgdGhl
-IGVmZmVjdHMgYXJlIHdpdGggaXQsIEkgZG9uJ3QgdGhpbmsgdGhhdCB3b3Jk
-aW5nIHNob3VsZCBiZSB0aGUgbWFpbiBpc3N1ZSBhdCBoYW5kLgoKQXMgZm9y
-IHRoZSByZWdpc3RlcidzIGFydGljbGUsIGl0IGdpdmVzIHRoaXMgaW1hZ2Ug
-LQpodHRwczovL3d3dy50aGVyZWdpc3Rlci5jby51ay9EZXNpZ24vZ3JhcGhp
-Y3MvaWNvbnMvNDA0X2ltZy5qcGcgLSBpbiBndWlzZSBvZiBhIDQwNCBlcnJv
-ciwgc28gSSBjYW5ub3QgbWFrZSBhIHByb3BlciBvcGluaW9uIGZvciB0aGUg
-bW9tZW50LiBXaXRob3V0IHJlYWRpbmcgaXQgdGhvdWdoLCBJIGNhbm5vdCBi
-dXQgc2VlIHRoZSBwYXJhbGxlbCBiZXR3ZWVuIEludGVsIGRlYWN0aXZhdGlu
-ZyBzb21lIENQVSBmZWF0dXJlIHRvIG1ha2UgaXQgc2VjdXJlIGFuZCBzdXJn
-aWNhbCBhYmxhdGlvbiEgVGhlcmUgYXJlIChsZXNzIG1lZGlhdGl6ZWQpIHBy
-ZWNlZGVudHMgb2YgdGhlIGxpa2U6IHNlZSBmb3IgaW5zdGFuY2UgaG93IEFw
-cGxlIGhhZCB0byByZW1vdmUgQXBwbGUgUGF5IGhpc3RvcnkgaW4gYSBydXNo
-IGJlY2F1c2UgaXQgZXhwb3NlZCBhbiBvdGhlcndpc2UgKHByb3ZhYmx5Pykg
-c2VjdXJlIGVuY2xhdmUuIFdoYXQgSSBkbyBzZWUgaW4gY29tbW9uIGhlcmUg
-aXMgdGhhdCB0aGUgZW5kIHVzZXIncyBpbnRlcmVzdHMgd2VyZSBzYWNyaWZp
-Y2VkIGFuZCBzb21lIHNvbGQgZmVhdHVyZSByZW1vdmVkLCB0byByZW1lZHkg
-YSBkZXNpZ24gZmxhdyBhZmZlY3RpbmcgdGhlIHNlY3VyaXR5IG9mIHRoZWly
-IGluZm9ybWF0aW9uLiBJZiB5b3UgcmVtb3ZlIHRoZSBJQ1QgU2VjdXJpdHkg
-cHJvZmVzc2lvbmFsIGdsYXNzZXMgYW5kIHRha2UgdGhlIG1vcmUgZ2VuZXJp
-YyBjb250ZXh0IG9mIHBsYW5uZWQgb2Jzb2xlc2NlbmNlIGludG8gYWNjb3Vu
-dCwgdGhpcyBiZWNvbWVzIHZlcnkgaW50ZXJlc3RpbmcsIGFuZCB0aGVyZSBh
-cmUgcXVpdGUgYSBmZXcgb3RoZXIgZXhhbXBsZXMgb2YgdGhlIGxpa2UuCkhl
-bmNlLCBhIG5lZWQgcHJvYmFibHkgYXJpc2VzIHRvIGhhdmUgYW4gb2F0aCBm
-b3IgSUNUIGluIGdlbmVyYWwgYW5kIG5vdCBzZWN1cml0eSBpbiBwYXJ0aWN1
-bGFyLCBzZWMuIGJlaW5nIHdoYXQgc3VyZ2VyeSBpcyB0byBnZW5lcmFsIG1l
-ZGljaW5lLCB3aGVuIG5vdCBkb25lIHByZXZlbnRpdmVseSAvIGJ5IGRlc2ln
-biwgYXMgd2UgKENFdW5pWC53b3JsZCkgYW5kIGhvcGVmdWxseSBvdGhlcnMg
-YXJlIG1ha2luZyBldmVyeSBlZmZvcnQgdG8gZG8sIGluc3RlYWQgb2YgdGhl
-ICJhY2NlcHQgZGVmZWF0IiBhcHByb2FjaCB3ZSBoZWFyIHNvIG9mdGVuIGZy
-b20gbWFueSB2ZW5kb3JzIGFuZCBldmVuIGNlcnRpZmljYXRpb24gYm9kaWVz
-LCB3aGljaCBpcyBpdHNlbGYgYSByZWFzb24gdG8gYmVnaW4gd29ycnlpbmcg
-YWJvdXQgdGhlIHN0YXR1cyBxdW8uCgotLS0tLS0tLSBNZW5zYWplIG9yaWdp
-bmFsIC0tLS0tLS0tCk9uIDI2IGVuZS4gMjAxOCAxODo0OCwgTWlraGFpbCBV
-dGluIGVzY3JpYmnDszoKCj4gSSAxMDAlIGFncmVlIHdpdGggU29sYXIncyBy
-ZXNwb25zZS4gV2Ugc2hvdWxkIG5vdCBsaW1pdCBvdXIgZnJlZWRvbSB0byBj
-aG9vc2UgaG93IHdlIHdpbGwgaGFuZGxlIG91ciBpbnRlbGxlY3R1YWwgcHJv
-cGVydHkuIFRoYXQgaXMgaG93IEkgcmVhZCB0aGUgb3JpZ2luYWwgc3RhdGVt
-ZW50cyBiZWxvdy4KPgo+IE5vdCB0byBjYXVzZSBtb3JlIGRpc2N1c3Npb24s
-IGJ1dCBoZXJlIGlzIHRoZSBleGFtcGxlIG9mIGhvdyAidW5pdmVyc2FsIGV0
-aGljcyIgd29yazoKPgo+IGh0dHBzOi8vd3d3LnRoZXJlZ2lzdGVyLmNvLnVr
-LzIwMTgvMDEvMjUvaW50ZWxfc3BlY3RyZV9kaXNjbG9zZWRfZmxhd3Nfbm92
-ZW1iZXIvCj4KPiBNaWtoYWlsIFV0aW4sIENJU1NQCj4KPiBfX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fXwo+IEZyb206IFNvbGFyIERlc2lnbmVy
-Cj4gU2VudDogRnJpZGF5LCBKYW51YXJ5IDI2LCAyMDE4IDEyOjE2Cj4gVG86
-IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20KPiBTdWJqZWN0OiBS
-ZTogW29zcy1zZWN1cml0eV0gSG93IHRvIGRlYWwgd2l0aCByZXBvcnRlcnMg
-d2hvIGRvbid0IHdhbnQgdGhlaXIgYnVncyBmaXhlZD8KPgo+IE9uIEZyaSwg
-SmFuIDI2LCAyMDE4IGF0IDEwOjIzOjQ5QU0gLTA1MDAsIFN0aWVwYW4gd3Jv
-dGU6Cj4+IEkgdGhpbmsgdGhhdCBjbGVhciBydWxlcyBtaWdodCBiZSB3ZWxj
-b21lOgo+Cj4gSSBhZ3JlZSAoc3BlY2lmaWNhbGx5LCBJIGhhZCBzdWdnZXN0
-ZWQgZXhwbGljaXQgbWF4aW11bSBlbWJhcmdvIHRpbWVzKSwKPiBidXQgc3Vj
-aCBydWxlcyBtdXN0IG5vdCBiZSBvbmUgYW5kIG9ubHkgaW5kdXN0cnkgc3Rh
-bmRhcmQuIEFueW9uZSBvcgo+IGFueSBwcm9qZWN0IG1heSBwcm9wb3NlIHJ1
-bGVzLCBhbmQgb3RoZXIgcHJvamVjdHMgYXJlIHdlbGNvbWUgdG8gcmV1c2UK
-PiB0aG9zZSBydWxlcywgYnV0IHRoZXkgbXVzdCBub3QgaGF2ZSB0byAtIHRo
-ZXkgY291bGQgYXMgd2VsbCB1c2UKPiBkaWZmZXJlbnQgcnVsZXMsIG9yIG5v
-bmUuIEF0IGJlc3QsIGEgcmVsYXRpdmVseSBub24tY29udHJvdmVyc2lhbAo+
-IGFuZCBicmllZiBib2lsZXJwbGF0ZSBjb3VsZCBlbmQgdXAgYmVpbmcgcmV1
-c2VkIGJ5IG1hbnkgcHJvamVjdHMuCj4KPj4gV2UgYXMgYSBwcm9mZXNzaW9u
-IHNob3VsZCBoYXZlIGEgY2xlYXIgY29kZSBvZiBldGhpY3MKPgo+IE5vLiBM
-ZXQncyBub3QgdXNlIHRoZSB3b3JkIGV0aGljcy4gVGhhdCB3b3JkLCBleGNl
-cHQgd2hlbiBleHBsaWNpdGx5Cj4gcmVmZXJyaW5nIHRvIGEgcGFydGljdWxh
-ciBwZXJzb24ncyBvciBncm91cCdzIGV0aGljcywgaW1wbGllcyB0aGF0IHdo
-ZW4KPiB3ZSAoZGlzKWFncmVlIG9yIGFyZSBqdWRnaW5nIG90aGVycywgd2Ug
-Y2xhaW0gdG8gYmUgbmVjZXNzYXJpbHkgcmlnaHQgLQo+IGJ1dCBpbiByZWFs
-aXR5IHdlJ3JlIG5lY2Vzc2FyaWx5IHN1YmplY3RpdmUuCj4KPiBUaGlzIHdv
-dWxkIGJlIGp1c3QgYXMgZmxhd2VkIGEgY29uY2VwdC90ZXJtIGFzICJyZXNw
-b25zaWJsZSBkaXNjbG9zdXJlIi4KPiAoSSByZWZyYWluIGZyb20gdXNpbmcg
-dGhhdCB0ZXJtIGFzIHdlbGwsIGV4Y2VwdCB3aGVuIHBvaW50aW5nIG91dCBq
-dXN0Cj4gaG93IHVubmVjZXNzYXJpbHkganVkZ2VtZW50YWwgaXQgaXMgLSBp
-bXBseWluZyB0aGF0IG90aGVyIGtpbmRzIG9mCj4gZGlzY2xvc3VyZSB3b3Vs
-ZCBoYXZlIGJlZW4gImlycmVzcG9uc2libGUiIC0gYnV0IHdlJ3JlIHN1Ympl
-Y3RpdmUuKQo+Cj4+IHVuaXZlcnNhbCBldGhpY3MnIGNvZGUKPgo+IFRoYXQn
-cyBhbiBveHltb3Jvbi4gTm8gc3VjaCB0aGluZyBjYW4gcG9zc2libHkgZXhp
-c3QuCj4KPiBBbGV4YW5kZXIgQG9wZW53YWxsLmNvbT4=
++1.
 
---b1_835573ad6d99e27accc353c3bcab074e--
+Postel's Law strikes again.
 
+Jeff
