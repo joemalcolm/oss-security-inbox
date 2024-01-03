@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1353" "Wednesday" "13" "May" "2015" "11:16:45" "-0400" "Wade Mealing" "wmealing@redhat.com" "<866799444.15964228.1431530205711.JavaMail.zimbra@redhat.com>" "41" "[oss-security] CVE request for vhost/scsi possible memory corruption." nil nil nil "5" "2015051315:16:45" "[oss-security] CVE request for vhost/scsi possible memory corruption." (number mark "        wmealing@red May 13   41/1353  " thread-indent "\"[oss-security] CVE request for vhost/scsi possible memory corruption.\"\n") "<913152120.15817224.1431506103005.JavaMail.zimbra@redhat.com>" ("<913152120.15817224.1431506103005.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15624 invoked by uid 550); 13 May 2015 15:16:59 -0000
+Received: (qmail 17502 invoked by uid 550); 3 Jan 2024 10:54:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15597 invoked from network); 13 May 2015 15:16:58 -0000
-Message-ID: <866799444.15964228.1431530205711.JavaMail.zimbra@redhat.com>
-In-Reply-To: <913152120.15817224.1431506103005.JavaMail.zimbra@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 32209 invoked from network); 3 Jan 2024 08:59:25 -0000
+Authentication-Results: apache.org; auth=none
+Date: Wed, 3 Jan 2024 10:00:12 +0100
+From: Arrigo Marchiori <ardovm@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZZUiHKyFw0WUBc_F@nuvolo>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.64.51.174]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC42 (Mac)/8.0.6_GA_5922)
-Thread-Topic: CVE request for vhost/scsi possible memory corruption.
-Thread-Index: KZcx+u2wsEpvIVQn35PXAKEVhOT0Sg==
-Cc: cve-assign@mitre.org
-Date: Wed, 13 May 2015 11:16:45 -0400 (EDT)
-From: Wade Mealing <wmealing@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for vhost/scsi possible memory corruption.
-To: OSS Security List <oss-security@lists.openwall.com>
+Content-Disposition: inline
+Subject: [oss-security] CVE-2023-47804: Apache OpenOffice: Macro URL arbitrary script
+ execution
 
-Gday,
+*** This announcement is a correction to the one sent on 28 December 2023.
+*** The "Affected versions" information was wrong.
 
-I'd like to ask for a CVE number for this the issue fixed in [1], as per their description:
+Severity: important
 
--- vhost/scsi: potential memory corruption
-This code in vhost_scsi_make_tpg() is confusing because we limit "tpgt"
-to UINT_MAX but the data type of "tpg->tport_tpgt" and that is a u16.
+Affected versions:
 
-I looked at the context and it turns out that in
-vhost_scsi_set_endpoint(), "tpg->tport_tpgt" is used as an offset into
-the vs_tpg[] array which has VHOST_SCSI_MAX_TARGET (256) elements so
-anything higher than 255 then it is invalid.  I have made that the limit
-now.
+- Apache OpenOffice through 4.1.14
 
-In vhost_scsi_send_evt() we mask away values higher than 255, but now
-that the limit has changed, we don't need the mask.
---
-The first check that slips past is here:
+Description:
 
--- drivers/vhost/scsi.c - vhost_scsi_make_tpg()
+Apache OpenOffice documents can contain links that call internal macros with arbitrary arguments. Several URI Schemes are defined for this purpose.
 
- if (vs->vs_tpg && vs->vs_tpg[tpg->tport_tpgt]) 
+Links can be activated by clicks, or by automatic document events.
 
-My theory is that the possible memory corruption happens later:
+The execution of such links must be subject to user approval.
 
--- drivers/vhost/scsi.c - vhost_scsi_make_tpg()
+In the affected versions of OpenOffice, approval for certain links is not requested; when activated, such links could therefore result in arbitrary script execution.
 
-  // sets this null pointer, to "tpg" value.
-  vs_tpg[tpg->tport_tpgt] = tpg;
+This is a corner case of CVE-2022-47502.
 
-When vs_tpg[tpg->tport_tpgt] = 0 
+Credit:
 
-It appears that no Red Hat Enter Linux versions are affected as the config
-directive CONFIG_VHOST_SCSI is not enabled in Red Hat Products.
+Amel BOUZIANE-LEBLOND aka Icare Bug Bounty Hunter (reporter)
 
-Thanks
+References:
 
-Wade Mealing
-Red Hat Product Security
-
-1] http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=59c816c1f24df0204e01851431d3bab3eb76719c
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-47804
+-- 
+Arrigo
