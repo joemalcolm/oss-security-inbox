@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1905" "Friday" "16" "June" "2017" "02:40:08" "+0200" "Solar Designer" "solar@openwall.com" "<20170616004008.GA31031@openwall.com>" "47" "Re: [oss-security] Do I have to inform someone about CVE?" "^Cc:" nil nil "6" "2017061600:40:08" "[oss-security] Do I have to inform someone about CVE?" (number mark "        solar@openwa Jun 16   47/1905  " thread-indent "\"Re: [oss-security] Do I have to inform someone about CVE?\"\n") "<q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>" ("<q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3885 invoked by uid 550); 16 Jun 2017 00:40:57 -0000
+Received: (qmail 3961 invoked by uid 550); 4 Jan 2024 10:23:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +6,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3720 invoked from network); 16 Jun 2017 00:40:27 -0000
-Message-ID: <20170616004008.GA31031@openwall.com>
-References: <q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Fri, 16 Jun 2017 02:40:08 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Do I have to inform someone about CVE?
-To: Qhdwns123 <qhdwns123@protonmail.com>
+Received: (qmail 3943 invoked from network); 4 Jan 2024 10:23:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1704363888; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=on29loicd+1e3cI9H0PokuziOc2PQO2HRqeIF2gUwfY=;
+	b=wtXRDNeknns03yA4xIJG5al/vCeb1ZrUQYSR4CJQyMUcS9ZJ11yWTN8x+xpUQlbKZGUuEb
+	/9fMpLYtXZHAgBHjt1/I0CNzeEIPd28FjZgenDXrzXiuIuo5M8fbmnI4aAASRzynL5oQWG
+	TwXHR4bvkSOV6BRlkB0rDQfgk0ttmRo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1704363888;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=on29loicd+1e3cI9H0PokuziOc2PQO2HRqeIF2gUwfY=;
+	b=nxx13qfF+mSgM+DrjZAA2t2n1eKNYpkRvsV//Q3+wjPjnY83/pbzezOD0+g0nxO/l/YVQR
+	kMHxo7U6qVH6YuAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1704363888; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=on29loicd+1e3cI9H0PokuziOc2PQO2HRqeIF2gUwfY=;
+	b=wtXRDNeknns03yA4xIJG5al/vCeb1ZrUQYSR4CJQyMUcS9ZJ11yWTN8x+xpUQlbKZGUuEb
+	/9fMpLYtXZHAgBHjt1/I0CNzeEIPd28FjZgenDXrzXiuIuo5M8fbmnI4aAASRzynL5oQWG
+	TwXHR4bvkSOV6BRlkB0rDQfgk0ttmRo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1704363888;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=on29loicd+1e3cI9H0PokuziOc2PQO2HRqeIF2gUwfY=;
+	b=nxx13qfF+mSgM+DrjZAA2t2n1eKNYpkRvsV//Q3+wjPjnY83/pbzezOD0+g0nxO/l/YVQR
+	kMHxo7U6qVH6YuAA==
+Date: Thu, 4 Jan 2024 11:24:46 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <ZZaHb6VD8pBjxDLr@kasco.suse.de>
+References: <ZVc0QDRY04pR81cs@kasco.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="QdVGnym2pqf/esA+"
+Content-Disposition: inline
+In-Reply-To: <ZVc0QDRY04pR81cs@kasco.suse.de>
+Authentication-Results: smtp-out1.suse.de;
+	none
+Subject: Re: [oss-security] hplip: security issues in `hpps` program due to
+ fixed /tmp path usage in prnt/hpps/hppsfilter.c
 
-Hi Qhdwns123,
+--QdVGnym2pqf/esA+
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Date: Thu, 4 Jan 2024 11:24:46 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] hplip: security issues in `hpps` program due to
+ fixed /tmp path usage in prnt/hpps/hppsfilter.c
 
-As a list moderator, this is most likely the very last message I've
-accepted from you, until and unless you finally report a security issue
-in here.  So maybe now is the time. ;-)
+On Fri, Nov 17, 2023 at 10:37:04AM +0100, Matthias Gerstner wrote:
+> There is currently no upstream fix available for this issue and this
+> publication happens after 90 days of attempted coordinated disclosure,
+> but upstream did not react to my report.
 
-On Thu, Jun 15, 2017 at 08:02:53PM -0400, Qhdwns123 wrote:
-> I received a CVE.
-> 
-> Do I have to inform someone about CVE?
+I was just informed that upstream release 3.23.12 released on 2023-11-30
+silently fixes this issue. The fix is based on the patch that I posted
+on this list.
 
-Please inform this very mailing list about actual security issues you
-find, whether you have CVE IDs for them or not.  Now that you say you do
-have a CVE ID, please include it in your notification indeed.  But not
-having a CVE ID was never a reason to delay notifying us of the issue.
+Best Regards
 
-Of course, the issue must be in Open Source software.  (If not, then
-post it to the full-disclosure mailing list instead.)
+Matthias
 
-Also, let me repeat publicly what I wrote to you off-list last week:
+--QdVGnym2pqf/esA+
+Content-Type: application/pgp-signature; name="signature.asc"
 
-| Your use of the oss-security list is weird:
-|  
-| You don't appear to be subscribed, yet you ask questions.  Are you
-| possibly subscribed via some other address?  If not, you'd only learn of
-| possible answers via a web archive of the list, but you would not be
-| able to easily reply to the same thread.
-|  
-| We do not appreciate it when you start new threads for each minor
-| re-wording or detail of your question(s) or development in your issue
-| reporting.  You have posted several messages on the process already, but
-| you're yet to bring a single actual security issue to the list.
-|  
-| Personally, I would rather see you post the actual security issue(s)
-| right to the list, instead of you asking where/how to report them and
-| how to obtain CVE IDs.  Who cares about the IDs when there might not be
-| an actual issue in the first place?
-|  
-| Would you please join the list, then participate in discussion(s) that
-| might result from your postings?
+-----BEGIN PGP SIGNATURE-----
 
-You're still not subscribed.  Apparently, you tried to, but you never
-confirmed the subscription.  Please correct that.
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmWWh28ACgkQFMQFyXGS
+NVPEAhAAgs0cdhHI/ou6816qPMfcPuDstTZdZ7OMSwskQrCpcGaoQfEswtnUXMTI
+Ifbkh0boNyEK5PkQ2WQRC/ap783Om/XvH3sFVkf/sYj+stposAPY2LdX7ojJIif0
+lafVju4w1XhL08ywNVBa+0hRueg9zWoe/NkogfM3yzBpuFkEWmINdldh5gOYJMLh
+qdtQIxqvYt6P5okjKZFD2CkJH/Zz1w/GYCoOEvlof1CMt/dfbaQUrHWdiHNBK8CU
+UkKVQgCxhv+ohYqs5cRzz4ALcBStIkcbo0IY98viAN9WQjYXSvI5azgHNo5oVe7R
+hQmhHNvQxqLxoc26+W2xYfVLghYuFzlD3rfPkw2fsb4uTawEucWe6WF5Kfpf6MDL
+HNl/5D3H6XJciANMBMfsPydLGGH+RTH0MaNQJrFacfqAIlihqgn/XYezGhkBa7Uz
+kzFlbxpce1xLerCzvNsCim7YXkggKD8NqDInvoshqsRCgtTx0Z9krwGk2N/rO+ZG
+GLj/i87yruLQvEo3LsyhT2hQEDjBDrSR5mRAta7d58rwRUDTR3um5+bhKfUQ7ynI
+JyN2nJzcqSb36a9D7URqRd8zKEJhaH9KvzKIagjFZl4HRoOBbxWzzqAxjGT4SsYo
+V5mO+Xusl7K2WP5vj8+ObTlfbysbkZoUiulrWQbdQHtUa0eZDSc=
+=hFuN
+-----END PGP SIGNATURE-----
 
-Thanks,
-
-Alexander
+--QdVGnym2pqf/esA+--
