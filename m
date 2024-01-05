@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1060" "Tuesday" "16" "June" "2015" "15:50:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616195019.3F005132E1D2@smtpvbsrv1.mitre.org>" "31" "[oss-security] Re: Cross-Site Request Forgery in Spina CMS" nil nil nil "6" "2015061619:50:19" "[oss-security] Re: Cross-Site Request Forgery in Spina CMS" (number mark "U       cve-assign@m Jun 16   31/1060  " thread-indent "\"[oss-security] Re: Cross-Site Request Forgery in Spina CMS\"\n") "<AD3411DA-2668-4BF5-AD45-798DC686D806@matasano.com>" ("<AD3411DA-2668-4BF5-AD45-798DC686D806@matasano.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15628 invoked by uid 550); 16 Jun 2015 19:50:51 -0000
+Received: (qmail 13643 invoked by uid 550); 5 Jan 2024 15:20:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15593 invoked from network); 16 Jun 2015 19:50:47 -0000
-From: cve-assign@mitre.org
-To: tomek@matasano.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <AD3411DA-2668-4BF5-AD45-798DC686D806@matasano.com>
-Message-Id: <20150616195019.3F005132E1D2@smtpvbsrv1.mitre.org>
-Date: Tue, 16 Jun 2015 15:50:19 -0400 (EDT)
-Subject: [oss-security] Re: Cross-Site Request Forgery in Spina CMS
+Received: (qmail 13353 invoked from network); 5 Jan 2024 15:19:44 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Arnout Engelen <engelen@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <0eae5314-95a5-fb4d-5e5a-4b1ddc8c384e@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 05 Jan 2024 15:20:43 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-51441: Apache Axis 1.x (EOL) may allow SSRF when
+ untrusted input is passed to the service admin HTTP API 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Severity: low
 
-> CSRF vulnerability across the entire engine
-> which includes administrative functionality such as creating users, changing
-> passwords, and media management
-> 
-> https://github.com/denkGroot/Spina/commit/bfe44f289e336f80b6593032679300c493735e75
+Affected versions:
 
-> app/controllers/spina/application_controller.rb
-> 
-> + protect_from_forgery
+- Apache Axis through 1.3
 
-Use CVE-2015-4619.
+Description:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+** UNSUPPORTED WHEN ASSIGNED ** Improper Input Validation vulnerability in =
+Apache Axis allowed users with access to the admin service to perform possi=
+ble SSRF
+This issue affects Apache Axis: through 1.3.
 
-iQEcBAEBAgAGBQJVgH1wAAoJEKllVAevmvmsmXEIAJrugn4wE5hSp5pLPpk0cWaM
-Vn0s3Yp+Nw6bHntxDNBTjfjyfwGfaXPGjcllHKtH6DdRgAjaHKOd6vBFWxW/sG2C
-oo9uSvA16Jaae7PdSP1jcWcFqNxIQelMmsVhVMAtwt/hhkSBZ/znBzLdoaM6euMI
-6JLHcTbi+XGsWOSlTTQmLYY4iwOOBLsCuTR4M2A0SqG6cx7LzdhmTCTpjOA9N8Gs
-0h+Rrv5P5E5WOc+NgRLfMo9Z5uNDp3BvPVA9kULsh44i43mj6SIk7Z8b5PzFhL1+
-DTPb5HvCmp9cimdsIssPxWA/yvupaUsAJ4FWAz+/zWTBT51yCbAh6opk+XWoa1s=
-=I+/h
------END PGP SIGNATURE-----
+As Axis 1 has been EOL we recommend you migrate to a different SOAP engine,=
+ such as Apache Axis 2/Java. Alternatively you could use a build of Axis wi=
+th the patch from  https://github.com/apache/axis-axis1-java/commit/685c309=
+febc64aa393b2d64a05f90e7eb9f73e06  applied. The Apache Axis project does no=
+t expect to create an Axis 1.x release=20
+fixing this problem, though contributors that would like to work towards
+ this are welcome.
+
+Credit:
+
+thiscodecc of MoyunSec Vlab and Bing (finder)
+
+References:
+
+https://github.com/apache/axis-axis1-java/commit/685c309febc64aa393b2d64a05=
+f90e7eb9f73e06
+https://axis.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-51441
+
