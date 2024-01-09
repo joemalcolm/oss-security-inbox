@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4728" "Monday" "10" "July" "2017" "20:21:03" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<33a37df8-c4db-0e1c-862a-2ee2d42afb17@redhat.com>" "98" "Re: [oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" "^Date:" nil nil "7" "2017071102:21:03" "[oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" (number mark "        kseifried@re Jul 10   98/4728  " thread-indent "\"Re: [oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)\"\n") "<20170711012837.GE2012@hunt>" ("<801547.452199401-sendEmail@localhost>" "<20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>" "<20170711012837.GE2012@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13781 invoked by uid 550); 11 Jul 2017 02:21:18 -0000
+Received: (qmail 15900 invoked by uid 550); 9 Jan 2024 16:40:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,135 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13753 invoked from network); 11 Jul 2017 02:21:17 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to;
-        bh=Pj0eiG40V5ttLs2zNfL3KTH8Rh+Dd1r7aQcPBtU5IJo=;
-        b=p+r/hl/5Ylbx9hT+TQxRB587HnSjECgeL7JfNTZ6Px69V5YS2VxrVF2UgHRHiE4hUR
-         kva565966a4tdCnuIDpgT6QzvciD3fD4KVasTqHlRsTw0iOrISuwUS2APd0qM+DAz8yO
-         mril1LHnRjXNCra5GzVWRq6flZ5UMzG4mrI8grSSUM7j7ZoSno6zKJAsBWwE1B49nTHd
-         JFiMLpuIxotbWKqw9Bvz35t3qyQBhEVY4ofKluidnZVUeWxKe67A/u4g5L/nJUDDfpZ1
-         9nL9MplA8cc9CEESugVUthVqQ5iRDVb2G6WvRncgTKEZ84/z5wRpOw4NiYrZ89DHYjHQ
-         iHTA==
-X-Gm-Message-State: AIVw111Hlt3mwb0r3JNhXhS2t/SvKWPwFecswflWFOuXCRavsU4qflqF
-	IbEdpNT7tQy5NlqMkPDljA==
-X-Received: by 10.36.237.12 with SMTP id r12mr1310108ith.45.1499739665681;
-        Mon, 10 Jul 2017 19:21:05 -0700 (PDT)
-References: <801547.452199401-sendEmail@localhost>
- <20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>
- <20170711012837.GE2012@hunt>
-Message-ID: <33a37df8-c4db-0e1c-862a-2ee2d42afb17@redhat.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <20170711012837.GE2012@hunt>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="CFCPUdf4F1hlNbbWuhBQg67QiVnok9ibP"
-Date: Mon, 10 Jul 2017 20:21:03 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] mpg123: global buffer overflow in III_i_stereo
- (layer3.c)
+Received: (qmail 11517 invoked from network); 9 Jan 2024 16:38:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1704818380; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=UuikfIdknSIb7u7GRLh0jJBJP+BkYhtnXnjDlgCNW54=;
+	b=m0xfPvRai1H6kZ2DMzlQf1aqo34nNvKE+K+/Ky4tP7CZ5Cp8aCXvutQPYE0kP4YUAAOPZi
+	H/Tsyq+M4giyCiY8O2J7idSBDBEbcTOm9VExyOWFFbZDSDbSnRm/A3N4lCqGuev0lpOlZ8
+	Lf3ScK3tKmS7h6Mp1Wppwv9cJ2G2PAOuFukqfx4uDK5qyY0Ai09lEg5tNPepHsIxtssi7O
+	ZD1tjSoJGfeBzOKjPsmtjzHX1wFBbuXJ02015M/aRByodCsUWop6uhs+oKxPM0OpepogdK
+	JJKGXZ1Lix252DXGNFVbyx8aw6STIiMtdO6GdjXpQ4giE3CVzijLw207mJLtUQ==
+Date: Tue, 9 Jan 2024 16:39:40 +0000
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
+Message-ID: <ZZ12zJ/s2udpuPw7@openssl.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
---CFCPUdf4F1hlNbbWuhBQg67QiVnok9ibP
-Content-Type: multipart/mixed; boundary="W9sSiXsT8TAVlrcfOtWVAIqd8dEiJGoi5";
- protected-headers="v1"
-From: Kurt Seifried <kseifried@redhat.com>
-Reply-To: kseifried@redhat.com
-To: oss-security@lists.openwall.com
-Message-ID: <33a37df8-c4db-0e1c-862a-2ee2d42afb17@redhat.com>
-Subject: Re: [oss-security] mpg123: global buffer overflow in III_i_stereo
- (layer3.c)
-References: <801547.452199401-sendEmail@localhost>
- <20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>
- <20170711012837.GE2012@hunt>
-In-Reply-To: <20170711012837.GE2012@hunt>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---W9sSiXsT8TAVlrcfOtWVAIqd8dEiJGoi5
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-GB
+OpenSSL Security Advisory [9th January 2024]
+============================================
 
-On 2017-07-10 7:28 PM, Seth Arnold wrote:
-> On Mon, Jul 10, 2017 at 11:42:53AM +0200, Dr. Thomas Orgis wrote:
->> Is this really worth a CVE, though? So far I was only able to see a
->> crash triggered by the AddressSanitizer. Never from a normal build. So
-> It is common to assign CVEs for issues discovered via fuzzers and
-> sanitizers even if the consequences aren't visible without them: perhaps
-> the consequences aren't visible to users only by accident.
-To expand on this: some fuzzing results are largely "who cares", e.g. a
-locally executed file converter for office files that crashes, no code
-execution largely devolves to "well don't open that file again", but a
-web browser/email client, or libraries they depend upon that cause a
-crash, yeah, that's a problem (I really hate waiting for all my tabs to
-reload, and hopefully I didn't lose any data/progress).
-> Some people only accept a vulnerability report if there's an exploit that
-> goes along with it but developing even a proof of concept is difficult
-> and error-prone. Lack of an exploit doesn't prove that an issue can safely
-> be ignored. (There's always someone more dedicated to writing an exploit.)
+POLY1305 MAC implementation corrupts vector registers on PowerPC (CVE-2023-6129)
+================================================================================
 
-The beauty is that CVE is now a claims based system, obviously the
-stronger the claim (e.g. working exploit code, or a professional
-reputation helps) the better the case for a CVE, and conversely there is
-also a DISPUTE process, again the stronger the claim, the closer you'll
-get to REJECT =3D). Of course proving a negative can be tricky. On the
-flip side we do have historical data (e.g. Null pointer deref in Linux
-kernel, that's usually a CVE!).
->
-> Assigning a CVE number makes downstream consumers aware of the issue and
-> each can prioritize a fix as they see fit based on their own threat model=
-s.
-It also simply creates an entry in the taxonomy so we can discuss it.
-The result of that can be "we need to fix this" or "we need to stop
-using this" (e.g. some pieces of software have over 1000 CVE's and are
-well known to be vectors for infection in web drive by attacks). It lets
-us move away from qualitative data to quantitative data (facts yo!) or
-any numbr of other responses ("the risk is acceptable").
->> every build of mpg123 in the wild, except for extremely hardened
->> distros that build everything with GCC's sanitizers enabled for daily
->> use, is not affected. Are people running binaries in production with
->> the sanitizers on?
-> I believe the general consensus is that only the UBSAN sanitizer is safe
-> for 'daily use'; the others aren't themselves security hardened and in
-> fact have lead to exploits. This thread has more discussion:
-> http://www.openwall.com/lists/oss-security/2016/02/18/1
->
-> Thanks
+Severity: Low
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+Issue summary: The POLY1305 MAC (message authentication code) implementation
+contains a bug that might corrupt the internal state of applications running
+on PowerPC CPU based platforms if the CPU provides vector instructions.
 
+Impact summary: If an attacker can influence whether the POLY1305 MAC
+algorithm is used, the application state might be corrupted with various
+application dependent consequences.
 
+The POLY1305 MAC (message authentication code) implementation in OpenSSL for
+PowerPC CPUs restores the contents of vector registers in a different order
+than they are saved. Thus the contents of some of these vector registers
+are corrupted when returning to the caller. The vulnerable code is used only
+on newer PowerPC processors supporting the PowerISA 2.07 instructions.
 
---W9sSiXsT8TAVlrcfOtWVAIqd8dEiJGoi5--
+The consequences of this kind of internal application state corruption can
+be various - from no consequences, if the calling application does not
+depend on the contents of non-volatile XMM registers at all, to the worst
+consequences, where the attacker could get complete control of the application
+process. However unless the compiler uses the vector registers for storing
+pointers, the most likely consequence, if any, would be an incorrect result
+of some application dependent calculations or a crash leading to a denial of
+service.
 
---CFCPUdf4F1hlNbbWuhBQg67QiVnok9ibP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+The POLY1305 MAC algorithm is most frequently used as part of the
+CHACHA20-POLY1305 AEAD (authenticated encryption with associated data)
+algorithm. The most common usage of this AEAD cipher is with TLS protocol
+versions 1.2 and 1.3. If this cipher is enabled on the server a malicious
+client can influence whether this AEAD cipher is used. This implies that
+TLS server applications using OpenSSL can be potentially impacted. However
+we are currently not aware of any concrete application that would be affected
+by this issue therefore we consider this a Low severity security issue.
 
+OpenSSL versions 3.0.0 to 3.0.12, 3.1.0 to 3.1.4 and 3.2.0 are vulnerable to
+this issue. The FIPS provider is not affected because the POLY1305 MAC
+algorithm is not FIPS approved and the FIPS provider does not implement it.
+
+OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 5b139f95 (for 3.2),
+commit f3fc5808 (for 3.1) and commit 050d263 (for 3.0) in the OpenSSL git
+repository.
+
+This issue was reported on 9th October 2023 by Sverker Eriksson (Ericsson).
+The fix was developed by Rohan McLure (IBM).
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20240109.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
 -----BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
 
-iQIcBAEBCgAGBQJZZDYQAAoJEBYNRVNeJnmTWEIQANfQJEWnisO/Z+2zo5alZt5U
-+wNa4Wjh6tNMxep8fi/gdBNRBGABJunw1+yFX8e1XfPismIJb5da2GSXIetYaXuO
-pZK5RMAwv0kxPZd4y4nboEgfnj4SpHuB9aq8CwVFd+sUZMl2aA8xA7U4zYDXF4br
-PJgr88kPT3Tb4AfCPioiDjKKLH3AktX5uWiKlUglLU3m5BOwM4xNSnI0cSgcdzHD
-jjeC01DMPyEr3ly8wMUKmsiqWcWBj3wIc4EJLvAweKIORdvCa5azDdl2tTdPnXqN
-wp1220J8ZONixbv1N1ZdrkXhl3/T7tUHLAkwwakE1Ky+pPO82M5xIaHkXLWgwfG6
-pMOpjvLSygiRgmQQfTUQELhKoFASFrim021OZD7KqmZbtuOv8IWix9jXO8CLVLG7
-3SgzWZx2ROFhuoRpLRprPTjAXgVOZjmAgg4boZmQTS9T5nYrxgFkc0CJ7J3NNXgT
-Tsz+BSnb37w41nkpnaasqDG3b+Rxj3wf5v5i51MTvuCYO3TLl+Dycd1T1VPzE7Zs
-x9gZV0Xu73zSWuLTc4V0cpE61ARYPy90egpKWeNoPk/uY757wP0A/LrG3K/x1RJS
-ufaqtqVnC7q9g2Ub3VE/McG+Qd5jSit3uaknKPWPyh/EHgWjxGapGt5+4FyzoIb4
-u+sZVI35ibptT6I6t6Ep
-=uuzf
+iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmWddmsACgkQUnRmohyn
+nm3nyBAAokn+TaX6ctAfk5TddGFSLabmBWOieIt52qAEqVxOnOn3IK/Ezuv6x3Gk
+SrXzuTY9w8mAezME2ZUrDULuixji0u/n84RRXCqJaAo0s4bPl5BY9munrG+2dBsh
+rusDdd8bzYdeDtRLjVeYjqMreVrpDSVx8JKto/nKcxK1w/yrzCXwpTe+n6pDu8PI
+OXQAcnDvFXWN7I7x23XQrv/Gx2crwNo3GuV1Seoih+595dAjjeyTsxChQCAwAooV
+MoCrHjdur6l9ALlQBj3Y4zZkBcyuUV4ngiNiptBVcBQB+ktcaVzMp2C6AVz3xARJ
+eiVXBAflL/UVkYcskgBeZfuDxS/NBcImpyKyjrfp5HQPh7ahqeyLdQraQBh82VjJ
+ArpKzLP/Ngl6QsCikkJZKEGAP7hTlaXShmNyKy7qIGmMNadMV4epL+lNxEEXk9aP
+f65obbiumGsBypY/4BzIEv2Kr9EXXeVJiHibscAaWch5e3q9e0eQuLXO/TOHpxLf
+NEhOXVSpBt6sp4C6hgztRTIX3/2H/xTH4ZqVwJezhra2x9ytrIDhiQVzOvE5tDdH
+Kzr+ydZhp7H/3NrhO2LgIHC67McU3MQNv44xUx9UTm1WaspZiZtqgP+vrgEfffs4
+Vx9Uv06OxZmTD/X2OHzgNhkqN5FwHaRUhnWmRzt63XThHO1Rxm4=
+=8de2
 -----END PGP SIGNATURE-----
-
---CFCPUdf4F1hlNbbWuhBQg67QiVnok9ibP--
