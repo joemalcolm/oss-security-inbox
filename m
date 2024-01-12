@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["964" "Saturday" "16" "April" "2016" "10:07:03" "+0200" "=?UTF-8?B?UsOpZ2lzIExlcm95?=" "regis.leroy@gmail.com" "<CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>" "21" "[oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" nil nil nil "4" "2016041608:07:03" "[oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" (number mark "U       regis.leroy@ Apr 16   21/964   " thread-indent "\"[oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14050 invoked by uid 550); 16 Apr 2016 08:09:16 -0000
+Received: (qmail 3267 invoked by uid 550); 12 Jan 2024 01:09:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +7,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12193 invoked from network); 16 Apr 2016 08:07:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=NvxeIDf5/0xqJuaLuFLTN0xXfsp3MhPyPN5kCE01syU=;
-        b=n0PSL6FZT2L7T+JI4HaKMimRcXeIM6fE5xAQ4tX9pLJvNjNIiZgeLb0wxkmw4/LoTj
-         6kursTp3jrRU+FgsXg/QYhCn9jJtV0HVjPMRHiu4l9lbr44qXls+ONK3pTBC+8Mql1It
-         uUwrxHUFjM0DPIrODKpbA+D68WHIwmi2UjdbNB+hCq9Z3NIYlPqYOtOHANZtbHdEJVrx
-         vIvrzvGQo3k98jpfUQZJsVKfJi/jtOPAqJx8+nhW19Ds91HXXUT88kGQ/rPeVQkBGyHK
-         msc3Ms9TDnPzxSENW2dScG+jdJARAjDrW2xO70RZ8n1z86qsCjnBimIyV7QgWdYK+aK7
-         NHBw==
+Received: (qmail 26194 invoked from network); 12 Jan 2024 00:52:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1705020837;
+	bh=Kp2J8kxN3DywaTGl46lfxurb3ypMBB8RyW/Qff0sq2I=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version;
+	b=mIjsrsvqj2BflhIFYU3anajaWN1sBpk5Yl+hVCk8tJHpHtNFbyi6gEQnHvNPorgQc
+	 V3HL2WD/yllBqFdTqgBf4F/yjUPwhIvxyNM3EKc7adKTFH0bAqAGLm6s0Z0ytP/urX
+	 wXlQrUEOyTbnZTFPwNcKB3HaYhTqDm0aM1jhF3mBLgI/Z4O6xiqniVEcxc5IHYA9bq
+	 jiGP2jvttC8Y2CDgoipmD2Q1dIaYofDEqxCh0di5XUVbMI8XiM/yj38h0bhxh5DAYN
+	 CFslCZEWdynu1VPVtsF7p4J6T17UGqPINoXOeWzo7iO8cGuXZb9XzSxz0ehxtvmA9x
+	 SnLUxZJw0iwZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=NvxeIDf5/0xqJuaLuFLTN0xXfsp3MhPyPN5kCE01syU=;
-        b=gM5Pk7FJsAxH+SHHJqQIi0O5cP/haKRVxqV0yyN9oKm+xlFoAyKHJkdahna3iDdLtX
-         iwTVggoTkTiTEl4P880cGhFYfIsEPueOyAv1oJeTd8+eB4GjF0DELZYfT4uYUIZ3nIWZ
-         pq+oj4nXwU5CrvBBflvEEwyLw32we6RhTGYhlfwFilWPY8XKKxgog8M/A3YINO3/8jpM
-         +tRTmBT4ZF9/2b30jXLfxG2NwqbgzYR/1r95UoYrpQWwUkp2F+UV9m1GL7seAuIjPJmm
-         F33/WCku9btuoYHPtUE8Zj5LieTZklq3XAvGCDJ4tXO6w4Om3IusluH1iLvNPHkmSKMM
-         DYag==
-X-Gm-Message-State: AOPr4FVzomDtrsiMd+J/VrinjCJ5P5Hx3xFxd7Bfn4i6HWXQ4Qqqph75GX43NghHN2PJLt4JCHsX6B+BN95FjQ==
-MIME-Version: 1.0
-X-Received: by 10.157.33.161 with SMTP id s30mr13086551otb.27.1460794023507;
- Sat, 16 Apr 2016 01:07:03 -0700 (PDT)
-Date: Sat, 16 Apr 2016 10:07:03 +0200
-Message-ID: <CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>
-From: =?UTF-8?B?UsOpZ2lzIExlcm95?= <regis.leroy@gmail.com>
+        d=1e100.net; s=20230601; t=1705020836; x=1705625636;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt:date:to
+         :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Kp2J8kxN3DywaTGl46lfxurb3ypMBB8RyW/Qff0sq2I=;
+        b=t+vJ9F1Qhp3X+V/QK2cPoknobjP9zapI0P5ffIZXapxco2HtP7PBJDoLs+KQQa6S13
+         /haeHbAVW9izQS2t8jUikIdPKhB63vuGSWYPUt2C9sMq9RyyprHwAO6YpBCzuc+2mv0P
+         UHJmbUjvtUlzLTNicaZs7XJpHa14w1EMnvvB2iadmj8aoxw326bKYgJ4FuzSby2OkqE3
+         Wzqr95l0qZSKNvrT90BKVGF6UGlAZVPBG7JYIDx6okcuv16Es6CyIn38nokH6SRt8Xd+
+         aMoTeZKP44FYpm4JD6x7VJP+MocaGvdzmN3+Ysi7WpJcYBC7fBP0QaC2ndLPlORiuTwV
+         ifdg==
+X-Gm-Message-State: AOJu0YwcsHRwPH/HyEf9WJCC7FmZqBP0h2jnd/ScHhLH/BixSrlA1tz9
+	I3hFLR08fTdgElViCUPstFPSrXRg1UT7rGJX0QQ5hqAVwvy/s4VHEIdEQvcdatNd1B4XwI3QX6M
+	+z+ght1y9XoXdh0YZoWHeC+ljpx0FsKcVdKmQJafuVBmJcyEpnGaoiBkioJ9QQklzQKP/
+X-Received: by 2002:a05:6214:130b:b0:681:2cf:ba5c with SMTP id pn11-20020a056214130b00b0068102cfba5cmr132042qvb.90.1705020836437;
+        Thu, 11 Jan 2024 16:53:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGw1d978CuEXXnIdbL38WVvOAdAkyAlWUTqRpekX9sY+W2VPga6O1RSi8pVEYiYHcQHQKCP+Q==
+X-Received: by 2002:a05:6214:130b:b0:681:2cf:ba5c with SMTP id pn11-20020a056214130b00b0068102cfba5cmr132024qvb.90.1705020835741;
+        Thu, 11 Jan 2024 16:53:55 -0800 (PST)
+Message-ID: <01094e83c9ef15489c2668dc64a3b23407410919.camel@canonical.com>
+From: Cengiz Can <cengiz.can@canonical.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling
- issues: Double Content Length and bad EOL
+Date: Fri, 12 Jan 2024 03:53:53 +0300
+Autocrypt: addr=cengiz.can@canonical.com; prefer-encrypt=mutual; keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.0-1 
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-6040: Linux Kernel netfilter out-of-bounds access
 
-Varnish 4.x serie is not impacted. Flaws Fixed in version 3.0.7 in march 2015.
+An out-of-bounds access vulnerability involving netfilter was reported
+and fixed as:
 
-Changelog is:
- * Requests with multiple Content-Length headers will now fail.
- * Stop recognizing a single CR (r) as a HTTP line separator. This
-opened up a possible cache poisoning attack in stacked installations
-where sslterminator/varnish/backend had different CR handling.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?=
+id=3Df1082dd31fe461d482d69da2a8eccfeb7bf07ac2
 
-https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
-https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
+While creating a new netfilter table, lack of a safeguard against
+invalid nf_tables family (pf) values within `nf_tables_newtable`
+function enables an attacker to achieve out-of-bounds access.
 
-Combinations of theses two flaws in HTTP protocol handling allows for
-"HTTP Response Splitting" attacks
-when another actor in front of Varnish3 can transmit headers in this
-form (for example):
+This out-of-bounds access can occur in two locations:
 
-    Dummy: header\rContent-Length: 0\r\n
+1) `xt_find_target` function in `x_tables.c` can dereference the `xt`
+array without a boundary check. This allows an attacker to fake an
+`xt_af` data and achieve further ends.
 
-This is a one year old issue, on the old last release of this serie.
-But we still find some installations. A CVE would maybe help removal
-of 3.x installations, or at least upgrades to 3.0.7.
+2) `nf_logger_find_get` function in `nf_log.c` uses `pf` as an index on
+`loggers` global which consists of `struct nf_logger` members. An
+attacker can find a suitable global data to fake as `struct nf_logger`
+and use the invalid `pf` to dereference adjacent global data.
+
+Disabling unprivileged user namespaces mitigates the issue.
+
+This issue was reported to Ubuntu Security directly by Lin Ma from Ant
+Security Light-Year Lab and has been assigned CVE-2023-6040.
+
+It affects upstream stable 5.4.y, 5.10.y, 5.15.y. Those require the fix
+to be applied. Any upstream kernel newer than 5.18-rc1 should be safe.
+
+Cengiz Can
