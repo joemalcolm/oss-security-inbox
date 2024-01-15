@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2325" "Wednesday" "22" "April" "2015" "23:22:33" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<55388FA9.2090401@redhat.com>" "60" "Re: [oss-security] USBCreator D-Bus service" nil nil nil "4" "2015042306:22:33" "[oss-security] USBCreator D-Bus service" (number mark "        kseifried@re Apr 22   60/2325  " thread-indent "\"Re: [oss-security] USBCreator D-Bus service\"\n") "<20150423024947.GA753@openwall.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" "<20150423000423.GA31439@openwall.com>" "<20150423002746.GD3854@hunt>" "<CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com>" "<20150423024947.GA753@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14191 invoked by uid 550); 23 Apr 2015 06:23:05 -0000
+Received: (qmail 17589 invoked by uid 550); 15 Jan 2024 13:32:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +6,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14164 invoked from network); 23 Apr 2015 06:23:04 -0000
-Message-ID: <55388FA9.2090401@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com> <20150423000423.GA31439@openwall.com> <20150423002746.GD3854@hunt> <CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com> <20150423024947.GA753@openwall.com>
-In-Reply-To: <20150423024947.GA753@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Wed, 22 Apr 2015 23:22:33 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] USBCreator D-Bus service
+Received: (qmail 1401 invoked from network); 15 Jan 2024 12:31:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1705321960; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=O8dalUh9xfnYUuwaGUMaHuzU1F4z+1JOgHxNMOCYoyM=;
+	b=prnobKe2tUkQThgqLua6FNeW5EuhbCHWeDzlEy1kPp9c1SQIyGYogJpVM48onKTG7JHDY7
+	0eIFa3Lr/0oM74IwIiGwI9dPYcotklohMBiEx0TWLHF8hDIuGxg8EUFp3bf0R5NYTA9IKj
+	/anZh2fQQd20TOz3mxKb/Cxyyk/ULmyl0XSIeonr0sKsGNaLYZbZMyTleXwW0ygl5Yusts
+	s91jeyKw5rJVSt788WO+JDRC2Ruz/Z/loIxbmh7H65AHGn0KgpITnfbd3zkLjXiIGpOKWk
+	p/hTPCC0wxB4v0kKDugATpiOeYIgwUT5mMVwL2qHkQiR34vNdnrctHr+cKbFIw==
+Date: Mon, 15 Jan 2024 12:32:40 +0000
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
+Message-ID: <ZaUl6BUti/D6QUSw@openssl.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
---oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 04/22/2015 07:49 PM, Solar Designer wrote:
-> On Wed, Apr 22, 2015 at 05:50:35PM -0700, Tavis Ormandy wrote:
->> On Wednesday, April 22, 2015, Seth Arnold <seth.arnold@canonical.com> wr=
-ote:
->>> We treat local root escalation vulnerabilities with a high priority[1].
->>
->> I wish you had spoken up during the previous discussion. It was my
->> impression that embargoes for local privilege escalations were universal=
-ly
->> considered deprecated.
->=20
-> I think Kurt's comment (in the linux-distros discussion) on not needing
-> further vulnerability reports embargoed applied solely to ABRT.
->=20
-> I can see how this can appear as extending to any local root issues, for
-> users who have ABRT installed and enabled.
->=20
-> Kurt might want to clarify this.
->=20
-> Alexander
+OpenSSL Security Advisory [15th January 2024]
+=============================================
 
-Clarification won't be possible for a bit, I'm actually meeting with
-Tavis tomorrow to discuss this and other things (this was scheduled some
-time ago, it seems I was right in assuming this would become a bigger
-issue =3D).
+Excessive time spent checking invalid RSA public keys (CVE-2023-6237)
+=====================================================================
 
+Severity: Low
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Issue summary: Checking excessively long invalid RSA public keys may take
+a long time.
 
+Impact summary: Applications that use the function EVP_PKEY_public_check()
+to check RSA public keys may experience long delays. Where the key that
+is being checked has been obtained from an untrusted source this may lead
+to a Denial of Service.
 
---oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+When function EVP_PKEY_public_check() is called on RSA public keys,
+a computation is done to confirm that the RSA modulus, n, is composite.
+For valid RSA keys, n is a product of two or more large primes and this
+computation completes quickly. However, if n is an overly large prime,
+then this computation would take a long time.
 
+An application that calls EVP_PKEY_public_check() and supplies an RSA key
+obtained from an untrusted source could be vulnerable to a Denial of Service
+attack.
+
+The function EVP_PKEY_public_check() is not called from other OpenSSL
+functions however it is called from the OpenSSL pkey command line
+application. For that reason that application is also vulnerable if used
+with the "-pubin" and "-check" options on untrusted data.
+
+The OpenSSL SSL/TLS implementation is not affected by this issue.
+
+The OpenSSL 3.0 and 3.1 FIPS providers are affected by this issue.
+
+OpenSSL versions 3.0.0 to 3.0.12, 3.1.0 to 3.1.4 and 3.2.0 are vulnerable to
+this issue.
+
+OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 0b0f7abf (for 3.2),
+commit a830f551 (for 3.1) and commit 18c02492 (for 3.0) in the OpenSSL git
+repository.
+
+This issue was reported on 2nd November 2023 by OSS-Fuzz. The fix was
+developed by Tomas Mraz.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20240115.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBAgAGBQJVOI+pAAoJEBYNRVNeJnmT0JkP/0F4eRtjXK3+ekXWMXfV4cdN
-FmI3pIsIniCFuw+Hro43Mi4Fj2yQ4iVGcTYvKk4qCI6ppzo9vg3TgvJhMWidRcBv
-TdjEGllN+76tPxS7KIgK01tJd/CSAxXLzqT2XHdft10OLMbopOhdKXyTEDzs8S0q
-7wQeqrDu0v5xUaekD4+CRxblATM4cw5n+10DB56Bqxx7fDiXBVmyTmN3+kSOtSj4
-rnhtsid4jOYOv7I41H00EB+6Ya4zYdB9CEYQrj+2i1TMOApkJEACoYeq8xVrUBjX
-5WHRsGkHw0L0DdDLP3MsKvaRg3f+/B4cX/tfsjva9Gsq/wGMhyHVdWZomt82fZF/
-zp5YZQQzirYGDU2PvYo1Ifes7mkXlQXqUoQvkYVT1sZ7b5L0UM2QHjOk+UUxMRLg
-5CmhFk91F1/34hNdSK/PBQEG0z53IdA5tgTm52pWHBJvqS5nEs+ZXyWt6fCedbx5
-3+k+WgYve4wsaeNOz0xcHEprcJZPpfHmdCciG3Zl8UYuwa/Vm/CCSYyUVyqrOTN0
-AlaakrXURB60q95dXiune+A9fioguk6Kltub7uCoumZyNtL96hB7ghN7swQlgNTw
-MZ+xeeNpUJnqfxn5T08l3HPe3FOI3QkvSmgrOwM/8y2a+HZ56xmGSELFAO9+AmAo
-YCWucw9LfKrgr/3PXqCw
-=I/H6
+iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmWlJXsACgkQUnRmohyn
+nm067Q//X41VgBUcS9YWimbkD7Pj1nWIhgOUOTaXcBTkroNOjgiJOBuqnOKJorj6
+N0KuAA9d+Jq3xVFbwFNiZZDl2O3Az8nmW9Yg63xyoZNXeB/80ZhUCcxX+mrnKeSt
+XUJ8y5bSLuFrDsSp1Ew+xnfAo8DXn3DhRwHKi9Ww0kwdAN5+j84mtnGC3MfTAdLN
+2WAnRY/AJGL4dACB2HEMz0zv6wU8QtV0hQUOwsDus8zw+6jkdOWpnadmqzA884MS
+qJsKFLUN+ca64E0VsjLzHipJK464Qdyp1QIm7QG6hZtb3IDjb6oK4zo1M7bGvR+O
+Wt6NKUMUovVYX6h3/e+Qpki0RS2rdxqbjTcXms2ijq/70iNrhP5p7nMfQWUkQM9G
+QDwV0E+5OvOh1t1eHnn7MjGhUGEhTGeGXJ/oACt96i47lzYtobovi2y+B0fRhsuf
+L8CPrArteBsFcPDyS/1Z/88HmOtDa9QhCawvAv9j8pwZgBxR0BV9fqsG4i+Mshdl
+h88J/Xbd5+Gzp1Zt8F2eQlYk8xL3aPrIOmuYym3wbiXXXSRI894jyae7+AV2WItK
+1FBVXw4wlh+ZPOaAOMEirxYMZ5+6c2wYyd9XEHlw+J6vjU+/CtM0Z2SYg/b56dkJ
+ko/9Dor3UF6JjWdfOZqZXEOk8Rk20VHF9lDllJk8Xu2GAO5Wuug=
+=UUwr
 -----END PGP SIGNATURE-----
-
---oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J--
