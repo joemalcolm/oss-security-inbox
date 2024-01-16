@@ -1,4 +1,4 @@
-Received: (qmail 7335 invoked by uid 550); 6 Sep 2023 09:58:41 -0000
+Received: (qmail 26425 invoked by uid 550); 16 Jan 2024 20:35:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,33 +7,128 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9532 invoked from network); 6 Sep 2023 09:26:24 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
+Received: (qmail 26215 invoked from network); 16 Jan 2024 20:35:48 -0000
+Date: Tue, 16 Jan 2024 21:37:24 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <06c7e092-7ce4-3857-e43e-38c3bda87580@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 Sep 2023 09:26:10 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-39264: Apache Superset: Stack traces enabled by default 
+Cc: Marco Benatto <mbenatto@redhat.com>,
+	Pavel Raiskup <praiskup@redhat.com>, Zack Miele <zmiele@redhat.com>
+Message-ID: <20240116203724.GA6491@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Mock, Snap, LXC expose(d) chroot, container trees with unsafe permissions and contents to host users, pose risk to host
 
-Affected versions:
+Hi,
 
-- Apache Superset through 2.1.0
+When Marco / Red Hat kindly brought the CVE-2023-6395 Mock issue:
 
-Description:
+https://www.openwall.com/lists/oss-security/2024/01/16/1
 
-By default, stack traces for errors were enabled, which resulted in the exp=
-osure of internal traces on REST API endpoints to users.=C2=A0This vulnerab=
-ility exists in Apache Superset versions up to and including 2.1.0.
+to linux-distros on January 8, this reminded me about another concern I
+had also having to do with Mock, so I shared it with Marco and
+linux-distros members on that same day and planned to post about it to
+oss-security on the same day that CVE-2023-6395 was to be disclosed
+publicly, which is today.  Included below is the essence of what was
+said in the linux-distros thread, starting with my message:
 
-Credit:
+Thank you Marco (and Red Hat) for bringing this to linux-distros.
 
-Miguel Segovia Gil (finder)
+While we're on the topic of Mock and its security updates, here's a
+different concern I have:
 
-References:
+The chroot trees that mock creates tend to be accessible by any system
+user, not only those in the mock group.  This means that vulnerabilities
+in SUID/SGID/setcap programs in current and leftover mock root trees may
+be exploitable by any system user - an unnecessary and maybe unexpected
+security exposure.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-39264
+$ id
+uid=1001(user) gid=1001(user) groups=1001(user) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+$ ls -ld /var/lib/mock
+drwxrwxr-x. 6 root mock 4096 Nov 22 23:07 /var/lib/mock
+$ ls -l /var/lib/mock/rocky-9-x86_64/root/sbin/unix_chkpwd
+-rwsr-xr-x. 1 root root 23832 Oct 28 11:26 /var/lib/mock/rocky-9-x86_64/root/sbin/unix_chkpwd
+$ /var/lib/mock/rocky-9-x86_64/root/sbin/unix_chkpwd
+This binary is not designed for running in this way
+-- the system administrator has been informed
 
+This shows that a user not in group mock could indeed run a SUID root
+program from a mock root tree.  If that program contains a vulnerability
+on its own (such as if it's an outdated copy) or when run from such
+unexpected (by itself and its package) location, that is then exposed
+for attacks by the user.
+
+A further issue is that any world-writable directories in mock trees:
+
+$ ls -ld /var/lib/mock/rocky-9-x86_64/root/tmp
+drwxrwxrwt. 4 root root 20480 Nov 22 23:44 /var/lib/mock/rocky-9-x86_64/root/tmp
+
+are in fact writable by all system users, including not in group mock,
+and can be used for (symlink or such) attacks on a current or future
+mock build (if a package's build uses temporary files unsafely).
+
+They can also be used for disk space exhaustion on /var (perhaps to
+prevent logs from being written), although this is only a new issue if
+the host's /var/tmp isn't on the same device.
+
+I suggest that /var/lib/mock permissions be hardened to 770 or 1770.
+Optionally also permissions on /var/lib/mock/* and /var/lib/mock/*/root.
+
+This change would not prevent users in group mock from performing such
+attacks, but that can be considered a justified risk, to be documented.
+
+I'll plan on mentioning this concern on oss-security also on January 16,
+or/and you may.
+
+On Mon, Jan 08, 2024 at 10:47:31PM +0100, Vegard Nossum wrote:
+> I'm wondering if this isn't an even wider class of issues --
+
+Yes, I think it's part of a wider class of issues.
+
+> here's an example of setuid-root binaries from snaps on an Ubuntu system:
+> 
+> $ ls -l $(find /snap/ -type f -executable -perm -4000 -name su 2>/dev/null)
+> -rwsr-xr-x 1 root root 44664 nov.  29  2022 /snap/core18/2796/bin/su
+> -rwsr-xr-x 1 root root 44664 nov.  29  2022 /snap/core18/2812/bin/su
+> -rwsr-xr-x 1 root root 67816 mai   30  2023 /snap/core20/2015/usr/bin/su
+> -rwsr-xr-x 1 root root 67816 mai   30  2023 /snap/core20/2105/usr/bin/su
+> -rwsr-xr-x 1 root root 55672 f??vr. 21  2022 /snap/core22/1033/usr/bin/su
+> -rwsr-xr-x 1 root root 55672 f??vr. 21  2022 /snap/core22/864/usr/bin/su
+> 
+> (I count 64 such binaries on this particular system when not restricting
+> to "su" -- if there are older versions, as indeed there seems to be at a
+> glance, it's not unthinkable to find something buggy there that maybe
+> shouldn't be runnable.)
+> 
+> I could be completely wrong, I haven't looked into it. At a glance, many
+> of these binaries will not run directly because they are trying to load
+> older versions of shared libraries that don't exist in the default
+> search paths.
+
+That's a very good point about incompatible shared libraries - things
+can be much worse if the libraries do exist, but are just sufficiently
+different to expose or create a vulnerability - potentially one that
+didn't exist with binary+libraries versions in either the chroot or the
+host system on its own.
+
+On Tue, Jan 09, 2024 at 03:52:27AM +0000, Seth Arnold wrote:
+> On Mon, Jan 08, 2024 at 10:47:31PM +0100, Vegard Nossum wrote:
+> > I don't want to derail the thread too much, but I'm wondering if this
+> > isn't an even wider class of issues -- here's an example of setuid-root
+> > binaries from snaps on an Ubuntu system:
+> 
+> Hello Vegard. Yes, this is a familiar old friend; here's an instance
+> from LXC in 2013: https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1244635
+> 
+> Several years ago, when we were preparing fixes for a snapd issue,
+> I believe we issued *two* snapd updates -- the first to fix the bug,
+> the second to force snapd to garbage collect the old and vulnerable
+> version. (Which sort of defeats the point of snapd storing multiple
+> versions for roll-back.)
+> 
+> I suspect few application authors distributing snaps themselves would
+> think of it.
+
+Alexander
