@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["420" "Friday" "22" "May" "2020" "18:45:00" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>" "16" "Re: [oss-security] Short notes on qmail security guarantee" "^Date:" nil nil "5" "2020052215:45:00" "[oss-security] Short notes on qmail security guarantee" (number mark "        gguninski@gm May 22   16/420   " thread-indent "\"Re: [oss-security] Short notes on qmail security guarantee\"\n") "<20200522121750.GA24868@openwall.com>" ("<CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>" "<20200522121750.GA24868@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Short notes on qmail security guarantee" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30222 invoked by uid 550); 22 May 2020 15:55:23 -0000
+Received: (qmail 24105 invoked by uid 550); 16 Jan 2024 21:05:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +6,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24463 invoked from network); 22 May 2020 15:45:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=MoT55WVO4r4ukipGehixPOPzkNHpf/aAKTUhW0DzRBQ=;
-        b=gt/bPIf4J0S8aNtBWALh/IirIKVR7eaqSs4iR5QsPhXo8b1I+ll0DhQS2je9ez3m3I
-         xNBdhVWLLN2/P+f2JCDQ/RxIaJ8B2+8tSHMPC9NRRkaGICRW1Y3iceClTNngvO2E6HA3
-         vXs8yxk0NI0ejBItURzCMpgT3+0mIuvGGl8ct124Hn3YYC9/nhwkD8lh8VryE4OOpJog
-         KQew7XU6NkXBOObPJCO+mWsqttnlPxkrJmpGyaGAo7J3SoEMHhEtzYaZuxE/3az2Rlsh
-         lvHBHIXfo50+fPq+HyZwKw3GZ+Dol4o7QjeYsvhbe81LPuvEkpHt/TDnRCtUnAlmiqpi
-         bRsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=MoT55WVO4r4ukipGehixPOPzkNHpf/aAKTUhW0DzRBQ=;
-        b=cFv0/TYdbP5sqX9uBGxdVuypSYaRObzmndnrbEMiJeeu7p2aFMgnRa07KMzOplYbEL
-         df+LSZ/yfnyZX6G+1hYtAZ5ruvMUwPRCKVeyq5YAlpvWJRRz0d16LFDHkpEfNL+5761F
-         0DnxMFVs1+ZYRlREX3Qe2jC58M1naSvXD9yf21Km/Mm4/vbQUxveDhAVZYq7xNMd61AR
-         DN0iAb36Od+dNzIEBHUScK8ah77bR/BnGVTjYbxmmbkynaomHRhv+JDyz6IC5HYw6DVw
-         eeLt5FCTgjQufp7Bo6kIQUt125JSQx8f4dTeGVrnbh8Hq8MV5Z+hvHO8YWa1UbxRjegl
-         MTLw==
-X-Gm-Message-State: AOAM532UnAzvxnQfxmrkgMrV3q2Qp3+WmOrYC4LNBbE7JTlMCrWicsOL
-	fKvvSy2X7aPAc95cUEc7BobGYHbjgVPRiyWDNsPygJjB
-X-Google-Smtp-Source: ABdhPJxGZpA4UzqO6iY9DJcfQJfuV7r+iJP3UB5mqYC7baMYu/xXP23KL/P5ev5HHD/QiNSRPcVvFVq6YpwYoW8901s=
-X-Received: by 2002:a5d:674f:: with SMTP id l15mr3977833wrw.339.1590162312639;
- Fri, 22 May 2020 08:45:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>
- <20200522121750.GA24868@openwall.com>
-In-Reply-To: <20200522121750.GA24868@openwall.com>
-Message-ID: <CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Fri, 22 May 2020 18:45:00 +0300
-From: Georgi Guninski <gguninski@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Short notes on qmail security guarantee
+Received: (qmail 24084 invoked from network); 16 Jan 2024 21:05:42 -0000
+Date: Tue, 16 Jan 2024 22:07:19 +0100
+From: Willy Tarreau <w@1wt.eu>
 To: oss-security@lists.openwall.com
+Cc: Marco Benatto <mbenatto@redhat.com>, Pavel Raiskup <praiskup@redhat.com>,
+        Zack Miele <zmiele@redhat.com>
+Message-ID: <20240116210719.GA5615@1wt.eu>
+References: <20240116203724.GA6491@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240116203724.GA6491@openwall.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Mock, Snap, LXC expose(d) chroot, container trees
+ with unsafe permissions and contents to host users, pose risk to host
 
 Hi,
 
-Thanks for the info.
+On Tue, Jan 16, 2024 at 09:37:24PM +0100, Solar Designer wrote:
+> On Mon, Jan 08, 2024 at 10:47:31PM +0100, Vegard Nossum wrote:
+> > here's an example of setuid-root binaries from snaps on an Ubuntu system:
+> > 
+> > $ ls -l $(find /snap/ -type f -executable -perm -4000 -name su 2>/dev/null)
+> > -rwsr-xr-x 1 root root 44664 nov.  29  2022 /snap/core18/2796/bin/su
+> > -rwsr-xr-x 1 root root 44664 nov.  29  2022 /snap/core18/2812/bin/su
+> > -rwsr-xr-x 1 root root 67816 mai   30  2023 /snap/core20/2015/usr/bin/su
+> > -rwsr-xr-x 1 root root 67816 mai   30  2023 /snap/core20/2105/usr/bin/su
+> > -rwsr-xr-x 1 root root 55672 f??vr. 21  2022 /snap/core22/1033/usr/bin/su
+> > -rwsr-xr-x 1 root root 55672 f??vr. 21  2022 /snap/core22/864/usr/bin/su
+> > 
+> > (I count 64 such binaries on this particular system when not restricting
+> > to "su" -- if there are older versions, as indeed there seems to be at a
+> > glance, it's not unthinkable to find something buggy there that maybe
+> > shouldn't be runnable.)
 
-I am not professional admin, but does postfix require limits?
+I mentioned this to various people in the past already, being shocked to
+find 4 *different* versions of sudo in snap subdirs and rootfs. IMHO,
+surely if there are 4 versions, at least 3 of them were considered to
+have at least one flaw, yet are still present. That the good old well
+known issue with chroots that tend to age without anybody caring about
+them, except that they're full of interesting stuff :-/
 
-Do many widely used daemons need limits?
+I don't know what are the rules that govern updates of such directories
+as I don't understand how the mechanism works, but I find that is does
+significantly increase the attack surface and it reminds two decades
+ago when I was regularly reminding users to be extremely cautious about
+chroots :-/
 
-AFAIK most RFCs try to avoid DoS attacks, not sure.
+> > I could be completely wrong, I haven't looked into it. At a glance, many
+> > of these binaries will not run directly because they are trying to load
+> > older versions of shared libraries that don't exist in the default
+> > search paths.
+>
+> That's a very good point about incompatible shared libraries - things
+> can be much worse if the libraries do exist, but are just sufficiently
+> different to expose or create a vulnerability - potentially one that
+> didn't exist with binary+libraries versions in either the chroot or the
+> host system on its own.
 
-You are right about the DoS impact, but I conjecture
-that if you DoS vanilla qmail long enough it will crash from
-memory corruption, lol.
+That's not always the case regarding libs. Just an example right now
+on just a local machine:
 
-Re mobile phone RAM: Looks like I was wrong, Samsung
-currently sells phones with only 12GB RAM.
+  $ ls -l /snap/core*/current/usr/bin/mount
+  -rwsr-xr-x 1 root root 55528 May 30  2023 /snap/core20/current/usr/bin/mount
+  -rwsr-xr-x 1 root root 47480 Feb 21  2022 /snap/core22/current/usr/bin/mount
+  $ /snap/core20/current/usr/bin/mount --version
+  mount from util-linux 2.34 (libmount 2.37.2: selinux, smack, btrfs, verity, namespaces, assert, debug)
+  $ /snap/core22/current/usr/bin/mount --version
+  mount from util-linux 2.37.2 (libmount 2.37.2: selinux, smack, btrfs, verity, namespaces, assert, debug)
+
+Here there's only one install per major version so the impact is more
+limited, however both are clearly executable. and if one of them is
+vulnerable, I don't know since I didn't expect to find setuids all over
+the machine. For me it's almost always a fault to put a setuid inside a
+chroot, as it suggests you'll need to let untrusted users run some
+privileged commands and there's something a bit fishy in doing this,
+it's a bit like telling your kids "we're out this evening, you can
+invite your friends but only those you trust, have a nice evening".
+
+The machine where I had 4 different versions was a lab machine shared
+with multiple users, which has long been decomissioned, so I don't even
+know how those were supposed to be maintained in parallel or updated
+or whatever, but that looked a bit gross to me.
+
+I continue to find this mechanism concerning and I try hard to completely
+remove it from machines I set up because I feel like it can leave open
+holes in my back for stuff I didn't ask for and don't understand. I've
+heard that the mechanism might be going to be enforced a bit more on
+users in future versions, I don't know if that's true but if so I find
+it a bit scary to multiply setuid exposure like this.
+
+Just my two cents,
+Willy
