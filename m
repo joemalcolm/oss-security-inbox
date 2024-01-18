@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6788" "Wednesday" "19" "October" "2016" "16:27:37" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>" "112" "Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "10" "2016101916:27:37" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       cseaman@akam Oct 19  112/6788  " thread-indent "\"Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>" ("<CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>" "<20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>" "<CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5477 invoked by uid 550); 19 Oct 2016 16:27:51 -0000
+Received: (qmail 3204 invoked by uid 550); 18 Jan 2024 09:21:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,150 +7,233 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5457 invoked from network); 19 Oct 2016 16:27:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; s=a1;
-	t=1476894458; bh=0ZR4PuPObjLHyON4MGxg/3o1CYVUjKWc0FukKK3k3yE=;
-	l=6852; h=From:To:CC:Date:References:In-Reply-To:From;
-	b=rb7Gfqht6t38JSqdpMrcv8IxTAmxIeB2vdZm4DUdkLtPlpu0cFNFESzcGskdl8ygP
-	 DyHwf4Rncr3WV8dkmh/zjhZEjZPpqH8xY6F4gWFMaLl6tbMZisD+uYx+JIqnN09UoX
-	 yk3ZijtApXYrcE1P0TVe+lmL86Z+JAMh5E+q1CvI=
-From: "Seaman, Chad" <cseaman@akamai.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "CVE
- ID Requests" <cve-assign@mitre.org>
-CC: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Thread-Topic: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to
- DoS amplification attack
-Thread-Index: AQHSKXTAAXVb6GT6MEa3Bd6CqDW/pqCvSHMAgAAhwoCAAJ8PgA==
-Date: Wed, 19 Oct 2016 16:27:37 +0000
-Message-ID: <6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>
-References: <CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>
- <20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>
- <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
-In-Reply-To: <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Microsoft-MacOutlook/f.18.0.160709
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.19.133.57]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <91A4ECC3921DAA418F586EDC53AE3A39@akamai.com>
-Content-Transfer-Encoding: base64
+Received: (qmail 11600 invoked from network); 18 Jan 2024 08:34:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1705566970;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DfH0iINOKzc6FgWio5JdhQRB8N6o4J5U4uSbEX5Y9BU=;
+	b=fiCiWuh68pMbHHTtiEwTNABiYfQtxvoapJBmFvhYRf5MznfxBlQphsTiJ+cawztchbYPog
+	MFT76WpgjV2MQfMD6yH0yhV8/B5rfcO825xWaX8mmoBnPXnes8g68S3jtXHsbMhvJIcudL
+	/6zqM9xhaSDeT6bF6m0TTWH5N+hrJzA=
+X-MC-Unique: 9m_Ak9zdPae9qNVhOMDcXg-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705566966; x=1706171766;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DfH0iINOKzc6FgWio5JdhQRB8N6o4J5U4uSbEX5Y9BU=;
+        b=GtdqWAdcdwl5pbxKB3PzZWxvnyevk7GEaohLcwT4ehik7pnxO8GPHYzYvnY0xSR7BP
+         BeTza2MMwtt1gEj3R1J00bnjjGHusLuvAi/y0NCR17TOeaL0OWgqYd3KiUCv4bwK58HC
+         5YacE10S6Xg/LyzXlWDJU/qGlDMa3gPuMREYUXS5MQ4sz6Tbiov2VaNNZvlK8wQ7mk5m
+         dKTP71NJJcisrEPLvFYL8/AbQJyfPHYo/KCAe5FKc1gCZEonUZKKaPt2qxYCPHFhxJ2s
+         usM0oh4urWZpcELdYX5JFbm3qUccfRz7PCN15gYYwl+NqjULRpzs2VDdlvTynJn+Bi2e
+         Oa1g==
+X-Gm-Message-State: AOJu0YwyjWFCCNsRn3O0WPMh/B9X/mB/bqnvwcOi0UVq43s5NGc2WAQl
+	pEHmPyb/7baPySe+BdF3IXJKMmxuzoBM7DTQtV7V3uJcZIrXQjJXjEsIP2rmXt5zk5LqEKTkPZA
+	zAn7Ixj5hp5XDXI4mpXn86FOI4g4sqYIa7X8GBSIZv3Zc/obIJtpSAEQitEIKlauw2A59+l+8Gd
+	pQWDbKGSqsL2fx28DxNhGx8dMHmSXS9fiR94p4+hO/xS+yRTFc
+X-Received: by 2002:a17:90b:30c5:b0:290:f52:a045 with SMTP id hi5-20020a17090b30c500b002900f52a045mr366070pjb.82.1705566964863;
+        Thu, 18 Jan 2024 00:36:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFaWKyAeYIUYFMLWeMhVsNxLNS08LyHkw1p0aRk93EQ4PgasSv4nn/7JucM+v015zEAZMucLeCiKp8jvUmJPwc=
+X-Received: by 2002:a17:90b:30c5:b0:290:f52:a045 with SMTP id
+ hi5-20020a17090b30c500b002900f52a045mr366046pjb.82.1705566963279; Thu, 18 Jan
+ 2024 00:36:03 -0800 (PST)
 MIME-Version: 1.0
-Subject: Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to
- DoS amplification attack
+References: <CAFkFYGjNzVsj4koCKi=sx0TPiskNnB0d7=xJ64H1JbRUW5gq+g@mail.gmail.com>
+In-Reply-To: <CAFkFYGjNzVsj4koCKi=sx0TPiskNnB0d7=xJ64H1JbRUW5gq+g@mail.gmail.com>
+From: Jose Exposito Quintana <jexposit@redhat.com>
+Date: Thu, 18 Jan 2024 09:35:52 +0100
+Message-ID: <CAFkFYGgBu7efQ+OG0W=d8P7reio=iuBJ=zwM3o6wqkK8uAbQvw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000fcbae3060f344089"
+Subject: [oss-security] Fwd: X.Org Security Advisory: Issues in X.Org X server prior to
+ 21.1.11 and Xwayland prior to 23.2.4
 
-SGkgQWxsLA0KDQpJ4oCZbSBhIGxpdHRsZSBsYXRlIHRvIHRoZSBjb252ZXJz
-YXRpb24gYnV0IEkgZGlkIHNvbWUgZmFpcmx5IGV4dGVuc2l2ZSByZXNlYXJj
-aCBvbiB0aGlzIHRvcGljIGFib3V0IDkgbW9udGhzIGFnbywgd2hpdGUgcGFw
-ZXIgaGVyZS4NCg0KaHR0cHM6Ly9jb21tdW5pdHkuYWthbWFpLmNvbS9kb2Nz
-L0RPQy01Mjg5DQoNClJlZ2FyZHMsDQpDaGFkDQoNCk9uIDEwLzE4LzE2LCAx
-MDo1OCBQTSwgIkt1cnQgU2VpZnJpZWQiIDxrc2VpZnJpZWRAcmVkaGF0LmNv
-bT4gd3JvdGU6DQoNCiAgICBPbiBUdWUsIE9jdCAxOCwgMjAxNiBhdCA2OjU3
-IFBNLCA8Y3ZlLWFzc2lnbkBtaXRyZS5vcmc+IHdyb3RlOg0KICAgID4NCiAg
-ICA+IFRoZXJlIGFyZSBhdCBsZWFzdCB0aHJlZSBkaWZmZXJlbnQgc2NlbmFy
-aW9zOg0KICAgID4NCiAgICA+ICAxLiBBbXBsaWZpY2F0aW9uIG9ubHkgZXhp
-c3RzIGJlY2F1c2Ugb2YgYSBzZXJ2ZXItc2lkZSBjb2RpbmcgZXJyb3IsDQog
-ICAgPiAgICAgYW5kIGZpeGluZyB0aGF0IGVycm9yIGhhcyBubyBhZHZlcnNl
-IGltcGFjdCBvbiBjbGllbnRzIGFuZA0KICAgID4gICAgIHJlcXVpcmVzIG5v
-IGNsaWVudC1zaWRlIGNoYW5nZXMuIEZvciBleGFtcGxlOiBmb3IgdGhlIHBy
-b3RvY29sIGluDQogICAgPiAgICAgcXVlc3Rpb24sIHRoZSBjbGllbnQgc2lt
-cGx5IG5ldmVyIG5lZWRzIGFuIHVuYXV0aGVudGljYXRlZCBVRFANCiAgICA+
-ICAgICByZXF1ZXN0IHRvIHJlc3VsdCBpbiBhIGxhcmdlciBVRFAgcmVwbHku
-DQogICAgPg0KICAgID4gIDIuIEFtcGxpZmljYXRpb24gaXMgbm90IGNhdXNl
-ZCBieSBhIGNvZGluZyBlcnJvciwgYnV0IGl0IGlzIHBvc3NpYmxlDQogICAg
-PiAgICAgdG8gcmVkdWNlIHRoZSBhbXBsaWZpY2F0aW9uIHJhdGlvIHdpdGhv
-dXQgY29tcGxldGVseSBicmVha2luZyB0aGUNCiAgICA+ICAgICBhYmlsaXR5
-IG9mIGNsaWVudHMgdG8gY29tbXVuaWNhdGUgd2l0aCBzZXJ2ZXJzLg0KICAg
-ID4NCiAgICA+ICAzLiBBbXBsaWZpY2F0aW9uIGlzIG5vdCBjYXVzZWQgYnkg
-YSBjb2RpbmcgZXJyb3IsIGFuZCBpdCBpcyBub3QNCiAgICA+ICAgICBwb3Nz
-aWJsZSB0byByZWR1Y2UgdGhlIGFtcGxpZmljYXRpb24gcmF0aW8gd2l0aG91
-dCBjb21wbGV0ZWx5DQogICAgPiAgICAgYnJlYWtpbmcgdGhlIGFiaWxpdHkg
-b2YgY2xpZW50cyB0byBjb21tdW5pY2F0ZSB3aXRoIHNlcnZlcnMuIFRoZQ0K
-ICAgID4gICAgIG9ubHkgb3B0aW9ucyBhcmUgdG8gbWl0aWdhdGUgYXR0YWNr
-cyAoYXMgaW4NCiAgICA+ICAgICBodHRwczovL2NhcGVjLm1pdHJlLm9yZy9k
-YXRhL2RlZmluaXRpb25zLzQ5MC5odG1sKSBvciB0byBjaGFuZ2UNCiAgICA+
-ICAgICB0aGUgcHJvdG9jb2wuDQogICAgPg0KICAgID4gSWYgc29tZW9uZSBj
-YW4gcmVxdWVzdCBhIENWRSBJRCBmb3IgYW55IG9mIHRoZXNlIHRocmVlIHNj
-ZW5hcmlvcywNCiAgICA+IHNob3VsZCB3ZSBlbmNvdXJhZ2UgdGhlbSB0byBi
-ZSBtb3N0IGxpYmVyYWwgd2l0aCBDVkUgSUQgcmVxdWVzdHMgaW4NCiAgICA+
-IHNjZW5hcmlvIDEsIGFuZCBtb3N0IGNvbnNlcnZhdGl2ZSB3aXRoIENWRSBJ
-RCByZXF1ZXN0cyBpbiBzY2VuYXJpbyAzPw0KICAgID4gT3IgZG8gd2UgaWRl
-YWxseSB3YW50IHRvIGVudW1lcmF0ZSBldmVyeXRoaW5nLCBldmVuIGEgMTox
-LjEgcmF0aW8NCiAgICA+IHRoYXQncyBiYWtlZCBpbnRvIGEgcHJvdG9jb2wg
-ZGVzaWduLCBhbmQgY2FuJ3QgYmUgZml4ZWQgd2l0aG91dA0KICAgID4gY2hh
-bmdpbmcgZXZlcnkgY2xpZW50IGFuZCBzZXJ2ZXI/DQogICAgPg0KICAgID4g
-RmluYWxseSwgZG8gd2Ugd2FudCBDVkVzIGZvciBhbGwgdHlwZXMgb2YgYW1w
-bGlmaWNhdGlvbiwgb3Igb25seQ0KICAgID4gYW1wbGlmaWNhdGlvbiB0aGF0
-IGNhbiBiZSB1c2VkIGZvciBEb1MgYXR0YWNrcyBhZ2FpbnN0IHVucmVsYXRl
-ZCB0aGlyZA0KICAgID4gcGFydGllcz8gRm9yIGV4YW1wbGUsIHRoZXJlJ3Mg
-YSBjbGFzcyBvZiBhbXBsaWZpY2F0aW9uIGlzc3Vlcw0KICAgID4gYWZmZWN0
-aW5nIGF1dG9tYXRlZCBlcnJvciByZXBvcnRpbmcuIFRoaXMgY2FuIGV4aXN0
-IGluIHNlcnZlci1zaWRlDQogICAgPiBjb2RlIGluIHdoaWNoIGV4Y2VwdGlv
-biBoYW5kbGVycyAoc29tZXRoaW5nIGxpa2UgImNvbnN0cmFpbnQNCiAgICA+
-IHZpb2xhdGlvbjogbGVuZ3RoX2EgPiBsZW5ndGhfYiIpIGFyZSBhYmxlIHRv
-IHNlbmQgb3V0Ym91bmQgbmV0d29yaw0KICAgID4gdHJhZmZpYyB0byBhIHZl
-bmRvcidzIHNlcnZlci4gSGVyZSwgdGhlcmUgY2FuIGJlIGNhc2VzIHdoZXJl
-IGFuDQogICAgPiBhdHRhY2tlciBzZW5kcyBhbiB1bmF1dGhlbnRpY2F0ZWQg
-aHVuZHJlZC1ieXRlIHBhY2tldCB0byBhIGN1c3RvbWVyJ3MNCiAgICA+IHNl
-cnZlciwgYW5kIHRoZSBjdXN0b21lcidzIHNlcnZlciB0aGVuIGltbWVkaWF0
-ZWx5IHNlbmRzIGENCiAgICA+IG1pbGxpb24tYnl0ZSBzeXN0ZW0taGVhbHRo
-IHJlcG9ydCB0byB0aGUgdmVuZG9yLiBUaGUgYXR0YWNrZXINCiAgICA+IGdl
-bmVyYWxseSBjYW4gcmVwZWF0IHRoaXMsIGFsdGhvdWdoIHRoZXJlIG1pZ2h0
-IGJlIGEgcmF0ZSBsaW1pdC4NCiAgICA+IFN1cHBvc2UgdGhhdCB0aGUgY3Vz
-dG9tZXIgd2FudHMgdG8gc2VuZCB0aGVzZSByZXBvcnRzLCBhbmQgdGhlIHZl
-bmRvcg0KICAgID4gd2FudHMgdG8gcmVjZWl2ZSB0aGVzZSByZXBvcnRzLCBh
-bmQgKG1heWJlPykgdGhlIGludGVydmVuaW5nIElTUHMgY2FuDQogICAgPiBo
-YW5kbGUgdGhlIGxvYWQuIFdvdWxkIHRoaXMgYmUgYSBDVkUgYmVjYXVzZSBv
-ZiB0aGUgaHVnZSBhbXBsaWZpY2F0aW9uDQogICAgPiByYXRpbywgb3IgaXMg
-YW1wbGlmaWNhdGlvbiBhIENWRSBvbmx5IGluIGNlcnRhaW4gc3BlY2lhbCBj
-YXNlcz8NCiAgICA+DQogICAgDQogICAgU28gc29tZSBhZGRpdGlvbmFsIGNv
-bW1lbnRzL2NyaXRlcmlhOg0KICAgIA0KICAgIDEpIGNhbiB0aGlzIGFjdHVh
-bGx5IGJlIGV4cGxvaXRlZCBpbiBwcmFjdGljZSBpbiBhIHJlYXNvbmFibGUg
-bWFubmVyIChlLmcuDQogICAgYSAxOjEwMDAgYW1wbGlmaWNhdGlvbiBJIHRo
-aW5rIHdlJ2QgYWxsIGFncmVlIGlzIGEgcmVhbGlzdGljIHByb2JsZW0pDQog
-ICAgMikgaXMgdGhpcyBiZWluZyBhY3RpdmVseSB1c2VkIGluIHRoZSB3aWxk
-IHRvIGV4cGxvaXQgc3lzdGVtcyBvciBjYXVzZSBEb1MNCiAgICBzaXR1YXRp
-b25zPyBJbiB0aGUgY2FzZSBvZiB0aGlzIElLRXYxIGlzc3VlIGl0IHNvdW5k
-cyBsaWtlIHllcw0KICAgIA0KICAgIGFuZCBteSBmYXZvcml0ZSAic2hvdWxk
-IHRoaXMgZ2V0IGEgQ1ZFIHRlc3QiIHF1ZXN0aW9uOg0KICAgIA0KICAgIDMp
-IGNhbiBpdCBiZSBmaXhlZCBpbiBhIHdheSB0aGF0IHN0aWxsIGxldHMgdGhl
-IHNlcnZpY2UvY2xpZW50cyB3b3JrPw0KICAgIA0KICAgIElmIGl0IGNhbiBi
-ZSBmaXhlZCBpbiBhIHdheSB0aGF0IGxlYXZlcyB0aGUgc2VydmljZS9jbGll
-bnRzIHdvcmtpbmcgb2sgdGhlbg0KICAgIGNoYW5jZXMgYXJlIHRoZSBvbGQg
-YmVoYXZpb3IgaXMgbm90IHNvbWV0aGluZyB3ZSB3YW50IHRvIGxpdmUgd2l0
-aCBhbnltb3JlDQogICAgYW5kIHdlIG5lZWQgdG8gZ2V0IHJpZCBvZiBpdC4N
-CiAgICANCiAgICANCiAgICA+DQogICAgPiAtIC0tDQogICAgPiBDVkUgQXNz
-aWdubWVudCBUZWFtDQogICAgPiBNL1MgTTMwMCwgMjAyIEJ1cmxpbmd0b24g
-Um9hZCwgQmVkZm9yZCwgTUEgMDE3MzAgVVNBDQogICAgPiBbIEEgUEdQIGtl
-eSBpcyBhdmFpbGFibGUgZm9yIGVuY3J5cHRlZCBjb21tdW5pY2F0aW9ucyBh
-dA0KICAgID4gICBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jdmUvcmVxdWVzdF9p
-ZC5odG1sIF0NCiAgICA+IC0tLS0tQkVHSU4gUEdQIFNJR05BVFVSRS0tLS0t
-DQogICAgPiBWZXJzaW9uOiBHbnVQRyB2MQ0KICAgID4NCiAgICA+IGlRSWNC
-QUVCQ0FBR0JRSllCc1FBQUFvSkVMNTRyaEppOGdsNTZXMFAvanRyOGJnMTlD
-Z2l0cXRXdjhHd1lkS3oNCiAgICA+IEtpVklzQXFWWnF1M0lZbm5CSXB3eUZR
-RHZTbyt1dHFBbjcvaGVVVTdWMThKTXhzVXR0UE5KVkFyd0xwWlo1N3MNCiAg
-ICA+IDcxSFlEdXFsaER0cUxMMkhrd1U3YlUyWHRDYlVpTy9MQUFsbkZ1S3hz
-YkhNb1lsa3orRGdmY2Q1Z3RkYkpoY0cNCiAgICA+IFdtTGNSUmdEU1pWM3c3
-eVdnaEJUaENHQWdqUldVM1B3MHFxbzFwL2ErYWJSOEJ5M05HSTF5Uml3aGo1
-SnhjL3UNCiAgICA+IE5ZUlFMd3FiUUl1MXFIOU9KWGNPZjhUbkIxbHl0VEN3
-S2swdTNoWFh5SVdOU0RkUkFZUXY0NzEyQWY3c1N1VmgNCiAgICA+ICtqWU9H
-dTNtaHJPQmphbXRaTkRNcko5cmlGVFJub0liT1NFK21DTC9LcCtyVHEyMk5Y
-K3JZM3BraC9WZnZDQzINCiAgICA+IC9qRjRhTzFIVWp4SEtFbUthdVZvVEFP
-MTB3NkZQemxSbU9NajdrTTIyb3k1NjhNRDZMeWdXc3BOYzljL0x2SlgNCiAg
-ICA+IE4vaEVhenUyTmlVWDN3TnNMc0E0ejFtTFVlYnRqakJvTC9CZ0FBa0ox
-UzFhb0sySkVuOXk1cks0d2YxdkNiaWENCiAgICA+IFhrd0h4b0x1MEJNem5U
-SU9IaVA3MkcxWVpzMkZKZC9wTnc5aUZ2aTZHUnhQZExSUjhUcjlGQ1JqdjRW
-N212UmcNCiAgICA+IEU4cmdZZTNWbHo4WTlBMVNZd21MTFRLcXFOZ0IvR25R
-TlUzcUtsVWptQWZHaUsyVkdqdkhhaDNCY09ZNEd1dHENCiAgICA+IHhjeWI0
-SGR5L2t5dnhPUW82aUhwYWJaUHhZSEdLVklNK0NSVENsbkVxUU0yT1dpTXht
-di9wZlZ2OHNMNzF1VEoNCiAgICA+IFZNeDJvQUlZQm9FeG92SnJiMnBHDQog
-ICAgPiA9eE5JSg0KICAgID4gLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0tLS0t
-DQogICAgPg0KICAgIA0KICAgIA0KICAgIA0KICAgIC0tIA0KICAgIA0KICAg
-IC0tDQogICAgS3VydCBTZWlmcmllZCAtLSBSZWQgSGF0IC0tIFByb2R1Y3Qg
-U2VjdXJpdHkgLS0gQ2xvdWQNCiAgICBQR1AgQTkwQiBGOTk1IDczNTAgMTQ4
-RiA2NkJGIDc1NTQgMTYwRCA0NTUzIDVFMjYgNzk5Mw0KICAgIFJlZCBIYXQg
-UHJvZHVjdCBTZWN1cml0eSBjb250YWN0OiBzZWNhbGVydEByZWRoYXQuY29t
-DQogICAgDQoNCg==
+--000000000000fcbae3060f344089
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+---------- Forwarded message ---------
+From: Jose Exposito Quintana <jexposit@redhat.com>
+Date: Tue, Jan 16, 2024 at 3:24=E2=80=AFPM
+Subject: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.11
+and Xwayland prior to 23.2.4
+To: <xorg-announce@lists.x.org>
+
+
+X.Org Security Advisory: January 16, 2024
+
+Issues in X.Org X server prior to 21.1.11 and Xwayland prior to 23.2.4
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Multiple issues have been found in the X server and Xwayland implementations
+published by X.Org for which we are releasing security fixes for in
+xorg-server-21.1.11 and xwayland-23.2.4.
+
+1) CVE-2023-6816 can be triggered by passing an invalid array index to
+DeviceFocusEvent or ProcXIQueryPointer.
+
+2) CVE-2024-0229 can be triggered if a device has both a button and a
+key class and zero buttons.
+
+3) CVE-2024-21885 can be triggered if a device with a given ID was
+removed and a new device with the same ID added both in the same
+operation.
+
+4) CVE-2024-21886 can be triggered by disabling a master device with
+disabled slave devices.
+
+5) CVE-2024-0409 can be triggered by enabling SELinux
+xserver_object_manager and running a client.
+
+6) CVE-2024-0408 can be triggered by enabling SELinux
+xserver_object_manager and creating a GLX PBuffer.
+
+------------------------------------------------------------------------
+
+1) CVE-2023-6816: Heap buffer overflow in DeviceFocusEvent and
+ProcXIQueryPointer
+
+Introduced in: xorg-server-1.13.0 (2012)
+Fixed in: xorg-server-21.1.11 and xwayland-23.2.4
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/9e2ecb2af8302dedc=
+49cb6a63ebe063c58a9e7e3
+Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+Both DeviceFocusEvent and the XIQueryPointer reply contain a bit for
+each logical button currently down. Buttons can be arbitrarily mapped to
+any value up to 255 but the X.Org Server was only allocating space for the
+device's number of buttons, leading to a heap overflow if a bigger value
+was used.
+
+xorg-server-21.1.11 and xwayland-23.2.4 have been patched to fix this issue.
+
+
+2) CVE-2024-0229: Reattaching to different master device may lead to
+out-of-bounds memory access
+
+Introduced in: xorg-server-1.1.1 (2006)
+Fixed in: xorg-server-21.1.11 and xwayland-23.2.4
+Fixes:
+  - https://gitlab.freedesktop.org/xorg/xserver/-/commit/ece23be888a93b741a=
+a1209d1dbf64636109d6a5
+  - https://gitlab.freedesktop.org/xorg/xserver/-/commit/219c54b8a3337456ce=
+5270ded6a67bcde53553d5
+  - https://gitlab.freedesktop.org/xorg/xserver/-/commit/df3c65706eb169d593=
+8df0052059f3e0d5981b74
+Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+If a device has both a button class and a key class and numButtons is
+zero, we can get an out-of-bounds write due to event under-allocation in
+the DeliverStateNotifyEvent function.
+
+xorg-server-21.1.11 and xwayland-23.2.4 have been patched to fix this issue.
+
+
+3) CVE-2024-21885: Heap buffer overflow in XISendDeviceHierarchyEvent
+
+Introduced in: xorg-server-1.10.0 (2011)
+Fixed in: xorg-server-21.1.11 and xwayland-23.2.4
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/4a5e9b1895627d40d=
+26045bd0b7ef3dce503cbd1
+Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+The XISendDeviceHierarchyEvent() function allocates space to store up
+to MAXDEVICES (256) xXIHierarchyInfo structures in info.
+
+If a device with a given ID was removed and a new device with the same
+ID added both in the same operation, the single device ID will lead to
+two info structures being written to info.
+
+Since this case can occur for every device ID at once, a total of two
+times MAXDEVICES info structures might be written to the allocation,
+leading to a heap buffer overflow.
+
+xorg-server-21.1.11 and xwayland-23.2.4 have been patched to fix this issue.
+
+
+4) CVE-2024-21886: Heap buffer overflow in DisableDevice
+
+Introduced in: xorg-server-1.13.0 (2012)
+Fixed in: xorg-server-21.1.11 and xwayland-23.2.4
+Fixes:
+  - https://gitlab.freedesktop.org/xorg/xserver/-/commit/bc1fdbe46559dd9476=
+74375946bbef54dd0ce36b
+  - https://gitlab.freedesktop.org/xorg/xserver/-/commit/26769aa71fcbe0a840=
+3b7fb13b7c9010cc07c3a8
+Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+The DisableDevice() function is called whenever an enabled device
+is disabled and it moves the device from the inputInfo.devices linked
+list to the inputInfo.off_devices linked list.
+
+However, its link/unlink operation has an issue during the recursive
+call to DisableDevice() due to the prev pointer pointing to a
+removed device.
+
+This issue leads to a length mismatch between the total number of
+devices and the number of device in the list, leading to a heap
+overflow and, possibly, to local privilege escalation.
+
+xorg-server-21.1.11 and xwayland-23.2.4 have been patched to fix this issue.
+
+
+5) CVE-2024-0409: SELinux context corruption
+
+Introduced in: xorg-server-1.16.0 (2014)
+Fixed in: xorg-server-21.1.11 and xwayland-23.2.4
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/2ef0f1116c65d5cb0=
+6d7b6d83f8a1aea702c94f7
+Found by: Olivier Fourdan
+
+The Xserver uses the mechanism of "privates" to store additional data to its
+own objects, each private has an associate "type". Each private is allocated
+for the relevant size of memory that is declared at creation.
+
+The cursor structure in the Xserver goes as far as having two keys, one for
+the cursor itself and another one for the bits that make the cursor shape.
+
+XSELINUX also uses privates but it's a bit of a special case because it uses
+the same privates keys for all different objects.
+
+What happens here is that the cursor code in both Xephyr and Xwayland uses =
+the
+wrong type of private at creation, using the cursor bits type with the curs=
+or
+private and when initiating the cursor, the overwrites the XSELINUX context.
+
+xorg-server-21.1.11 and xwayland-23.2.4 have been patched to fix this issue.
+
+
+6) CVE-2024-0408: SELinux unlabeled GLX PBuffer
+
+Introduced in: xorg-server-1.10.0 (2011)
+Fixed in: xorg-server-21.1.11 and xwayland-23.2.4
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/e5e8586a12a3ec915=
+673edffa10dc8fe5e15dac3
+Found by: Olivier Fourdan and Donn Seeley
+
+The XSELINUX code in the Xserver labels the X resources based on a hook. Wh=
+at
+happens here is that the GLX PBuffer code does not call that XACE hook when
+creating the buffer, so it remains unlabeled, and when the client issues
+another request to access that resource (as here with a GetGeometry) or even
+when it creates another resource which needs to access that buffer (such as=
+ a
+GC), the XSELINUX code will try to use an object that was never labeled and
+crash because the SID is NULL.
+
+xorg-server-21.1.11 and xwayland-23.2.4 have been patched to fix this issue.
+
+------------------------------------------------------------------------
+
+X.Org thanks all of those who reported and fixed these issues, and those
+who helped with the review and release of this advisory and these fixes.
+
+--000000000000fcbae3060f344089--
+
