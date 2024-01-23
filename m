@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1472" "Tuesday" "17" "January" "2017" "11:30:36" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2831124.Ha61dFcUh2@blackgate>" "55" "Re: [oss-security] Re: jasper: multiple crashes with UBSAN" "^Date:" nil nil "1" "2017011710:30:36" "[oss-security] Re: jasper: multiple crashes with UBSAN" (number mark "U       ago@gentoo.o Jan 17   55/1472  " thread-indent "\"Re: [oss-security] Re: jasper: multiple crashes with UBSAN\"\n") "<8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>" ("<8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5919 invoked by uid 550); 17 Jan 2017 10:30:54 -0000
+Received: (qmail 28559 invoked by uid 550); 23 Jan 2024 00:40:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5884 invoked from network); 17 Jan 2017 10:30:53 -0000
-Message-ID: <2831124.Ha61dFcUh2@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
-In-Reply-To: <8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>
-References: <8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart2229848.xZi9YBWM69"
-Content-Transfer-Encoding: 7Bit
-Date: Tue, 17 Jan 2017 11:30:36 +0100
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: jasper: multiple crashes with UBSAN
+Received: (qmail 28272 invoked from network); 23 Jan 2024 00:40:08 -0000
+Date: Tue, 23 Jan 2024 01:42:05 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20240123004205.GA10273@openwall.com>
+References: <20231106202621.GA31244@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231106202621.GA31244@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] announcing sponsorship; distros list statistics for 2023
 
---nextPart2229848.xZi9YBWM69
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Hi,
 
-On Monday 16 January 2017 19:06:47 cve-assign@mitre.org wrote:
-> > http://blogs.gentoo.org/ago/2017/01/16/jasper-multiple-crashes-with-ubsan/
-> > 
-> > [] jasper-1.900.17/src/libjasper/include/jasper/jas_math.h:156:11
-> > runtime error: left shift of negative value -185
-> 
-> Use CVE-2017-5498.
-> 
-> > [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1838:9
-> > runtime error: signed integer overflow: -64356352 * 
-6359082673847140352
-> > cannot be represented in type 'long'
-> 
-> Use CVE-2017-5499.
-> 
-> > [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1819:40
-> > runtime error: shift exponent 117 is too large for 64-bit type 'jpc_fix_t'
-> > (aka 'long')
-> 
-> Use CVE-2017-5500.
-> 
-> > [] jasper-1.900.17/src/libjasper/jpc/jpc_tsfb.c:233:35
-> > runtime error: signed integer overflow: 2013306369 + 251691968 
-cannot be
-> > represented in type 'int'
-> 
-> Use CVE-2017-5501.
-> 
-> > [] jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:485:49
-> > runtime error: left shift of negative value -26
-> 
-> Use CVE-2017-5502.
-> 
-> 
-> --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
+Here's an update:
 
-The previous mail clearly state:
-> Timeline:
-> 2016-10-28: bug discovered and reported to upstream
+All components of the oss-security and (linux-)distros infrastructure,
+including not only the mailing lists but also the web archive and wiki,
+have recently been migrated to new hosting location in the Netherlands.
+Due to this location and the proximity to AMS-IX, the websites should
+now feel a bit faster from many parts of the world.
 
-Why CVE-2017-* ?
+This migration was done in several stages, and (due to low DNS RR TTLs
+and old resources staying up for a while) should have been transparent.
+I anticipate some further transparent, behind-the-scenes changes this
+year, such as for better preparedness to restore resources onto backup
+infrastructure within a day if we ever have to.
 
---
-Agostino
+Some further updates inline:
 
---nextPart2229848.xZi9YBWM69--
+On Mon, Nov 06, 2023 at 09:26:21PM +0100, Solar Designer wrote:
+> After 15+ years of being a 100% volunteer effort, Openwall's maintenance
+> of oss-security and (linux-)distros is finally sponsored by the OpenSSF,
+> a project of the Linux Foundation.  This sponsorship does not provide
+> the Linux Foundation with the ability to set policies for community
+> resources managed by Openwall.  I am grateful for the support, which
+> will help ensure continued operation of these resources on a new level
+> while retaining independence.
+> 
+> As part of the sponsored effort, Openwall (currently me) took
+> responsibility for the "statistics" contributing-back task:
+> 
+> "Keep track of per-report and per-issue handling and disclosure timelines
+> (at least times of notification of (linux-)distros and of public
+> disclosure on oss-security), at regular intervals produce and share
+> statistics (most notably, the average embargo duration) as well as the
+> input data (except on issues that are still under embargo) by posting to
+> oss-security - primary: Openwall, backup: vacant"
+> 
+> At different times, this time-consuming task was handled by Gentoo and
+> later by Amazon (thanks!) but was lately left unhandled.  Due to the
+> sponsorship, I've now retroactively produced statistics for 2023 so far:
+> 
+> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
 
+The statistics above now cover all of 2023, with 93 total reports.
+
+> As expected, this uncovered a few mishandled issues, which I've recently
+> pushed out to oss-security.  That's why there are several reports (out
+> of a total of 86) with embargo duration way in excess of the allowed
+> maximum.  This inflated the average duration accordingly, but the median
+> stayed sane at 7 days.  This is also why we need to, and now will, take
+> care of the statistics task in real time, not only retroactively, so
+> that any mishandling is identified and corrected promptly.
+
+No further issues were mishandled like that.
+
+> Also for the first time (something I haven't seen Gentoo and Amazon do)
+> included are the source files I manually created based on review of the
+> e-mail threads and external resources referenced from there.  These
+> files were processed with the also included (and permissively licensed)
+> Perl script I wrote, so that others can reproduce the calculations or
+> easily process the data differently.
+
+I continued to add these, so we now have all 12 of these for 2023.
+
+Also, the headers-only archives of the private lists last announced in:
+
+https://www.openwall.com/lists/oss-security/2023/10/15/3
+
+have since been updated to cover the period through the end of 2023.
+
+Alexander
