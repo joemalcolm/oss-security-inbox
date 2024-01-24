@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4626" "Sunday" "1" "January" "2017" "16:50:28" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2034231.emHkJOHN5z@arcadia>" "110" "[oss-security] libtiff: invalid memory READ in t2p_writeproc (tiff2pdf.c)" nil nil nil "1" "2017010115:50:28" "[oss-security] libtiff: invalid memory READ in t2p_writeproc (tiff2pdf.c)" (number mark "U       ago@gentoo.o Jan  1  110/4626  " thread-indent "\"[oss-security] libtiff: invalid memory READ in t2p_writeproc (tiff2pdf.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13569 invoked by uid 550); 1 Jan 2017 15:48:59 -0000
+Received: (qmail 1282 invoked by uid 550); 24 Jan 2024 17:50:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,124 +7,25 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13538 invoked from network); 1 Jan 2017 15:48:57 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 19527 invoked from network); 24 Jan 2024 17:37:41 -0000
+Date: Wed, 24 Jan 2024 09:39:38 -0800
+From: nightmare.yeah27@aceecat.org
 To: oss-security@lists.openwall.com
-Date: Sun, 01 Jan 2017 16:50:28 +0100
-Message-ID: <2034231.emHkJOHN5z@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Message-ID: <jnc745riho5bck4f24gfjhz755zedqma77hbpdcwn7hchttluu@n6ajzobn5ukx>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <Za-XWUEPml2pcATt@kasco.suse.de>
+ <20240124084235.360eb42b.hanno@hboeck.de>
+ <ZbDH9FfiyKDUFv64@suse.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libtiff: invalid memory READ in t2p_writeproc (tiff2pdf.c)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZbDH9FfiyKDUFv64@suse.com>
+Subject: [oss-security] Re: darkhttpd: timing attack and local leak of HTTP basic auth
+ credentials
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
-
-A crafted tiff file revealed an invalid memory read.
-
-The complete ASan output:
-
-# tiff2pdf $FILE -o foo
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-TIFFAdvanceDirectory: Error fetching directory count.
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-tiff2pdf: Warning, RGB image 111.crashes has 4 samples per pixel, assuming 
-RGBA.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 0; got 0 
-bytes, expected 23297.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 1; got 0 
-bytes, expected 513.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 2; got 512 
-bytes, expected 65285.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 3; got 512 
-bytes, expected 1535.
-ASAN:DEADLYSIGNAL
-=================================================================
-==19864==ERROR: AddressSanitizer: SEGV on unknown address 0x61b000020000 (pc 
-0x7fc86d4a320b bp 0x000000000efc sp 0x7fff06650bf8 T0)
-==19864==The signal is caused by a READ memory access.
-    #0 0x7fc86d4a320a  /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/memcpy.S:270
-    #1 0x7fc86d491f79 in _IO_file_xsputn /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/libio/fileops.c:1319
-    #2 0x7fc86d487828 in fwrite /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/libio/iofwrite.c:43
-    #3 0x50cdff in t2p_writeproc /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:405:21
-    #4 0x52baea in t2pWriteFile /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:379:10
-    #5 0x52baea in t2p_readwrite_pdf_image_tile /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:2924
-    #6 0x50f1dc in t2p_write_pdf /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
-    #7 0x50bfee in main /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
-    #8 0x7fc86d43e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #9 0x41a298 in _init (/usr/bin/tiff2pdf+0x41a298)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/memcpy.S:270 
-==19864==ABORTING
-
-Affected version:
-4.0.7
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/vadz/libtiff/commit/891b1b908eb92a0e91e9012a8d32ade7088b5a3f
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00111-libtiff-invalidread-t2p_writeproc
-
-Timeline:
-2016-12-20: bug discovered and reported to upstream
-2016-12-20: upstream released a patch
-2017-01-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-invalid-memory-read-in-t2p_writeproc-tiff2pdf-c
+Do not the various implementations of the *ident* protocol (example: oidentd)
+rely on this interface? They are often, or always, intentionally configured
+to run as nobody or a dedicated UID.
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Ian
