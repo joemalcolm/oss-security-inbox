@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6256" "Wednesday" "21" "September" "2016" "10:08:21" "+0800" "=?utf-8?B?RE1f?=" "contact@x0day.me" "<tencent_4B081AB504A3C52B508F84E3@qq.com>" "110" "[oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?==?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?==?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?==?utf-8?B?cmFiaWxpdHk=?=" nil nil nil "9" "2016092102:08:21" "[oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?==?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?==?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?==?utf-8?B?cmFiaWxpdHk=?=" (number mark "U       contact@x0da Sep 21  110/6256  " thread-indent "\"[oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?==?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?==?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?==?utf-8?B?cmFiaWxpdHk=?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19575 invoked by uid 550); 21 Sep 2016 02:29:36 -0000
+Received: (qmail 7295 invoked by uid 550); 24 Jan 2024 14:56:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,144 +7,267 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11793 invoked from network); 21 Sep 2016 02:08:39 -0000
-X-QQ-GoodBg: 0
-X-QQ-SSF: 00100000000000F0
-X-QQ-FEAT: nSUdqPGu3ttVKwDtalJGOu1sJL/UlkA9riBSN+pxEFMiVLoA4RD1VPOH8w4xX
-	VNocRsiIlKcAjseDg1CY1rJUPB3qqJ4eWSy3lCH4KZ+xVQhXLAW2D+IDaFq26GtR6onv34w
-	I9nAUVnBb0/dlR0/RoZgmZw1gImUBAYD1It87cIEnhOuU4mQAV3TZouzJlhjELqeebw4PaI
-	8UE4LUfD45yBHqrfayE+rxYPNDMc9nuFdtonwD+G+RoRy4ozmKnAChMokPLURMijbr72JxV
-	A7rQ==
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 171.217.241.57
-X-QQ-STYLE: 
-X-QQ-mid: bizmailfree82t1474423701t7188
-From: "=?utf-8?B?RE1f?=" <contact@x0day.me>
-To: "=?utf-8?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_57E1EB95_09DDB090_5B11CC35"
-Content-Transfer-Encoding: 8Bit
-Date: Wed, 21 Sep 2016 10:08:21 +0800
-X-Priority: 3
-Message-ID: <tencent_4B081AB504A3C52B508F84E3@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-X-QQ-Bgrelay: 1
-Subject: [oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?=
- =?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?=
- =?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?=
- =?utf-8?B?cmFiaWxpdHk=?=
-
-------=_NextPart_57E1EB95_09DDB090_5B11CC35
+Received: (qmail 7262 invoked from network); 24 Jan 2024 14:56:02 -0000
+From: Daniel Beck <ml@beckweb.net>
 Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Message-Id: <3E104BB5-6336-49DD-9C5D-4B0F6DB7D403@beckweb.net>
+Date: Wed, 24 Jan 2024 15:57:49 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1706108291;8cfda064;
+X-HE-SMSGID: 1rSehU-0007bN-K0
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-SGksDQoNCg0KVGhpcyBpcyBZb25nWGlhbyBNYSBvZiBTaWxlbmNlJ3MgUEtB
-ViBUZWFtLiBJIHJlcG9ydGVkIHNvbWUgc2VjdXJpdHkgaXNzdWVzIHRvIEV4
-cG9uZW50Q01TIHNvbWUgZGF5cyBhZ28uIA0KDQoNCiMgVGVzdCBlbnZpcm9u
-bWVudA0KZXhwb25lbnQgdmVyc2lvbjogbGF0ZXN0IDIuMy45DQpwaHA6IDUu
-NS54DQpzZXJ2ZXI6IGFwYWNoZSAyLjIueA0KDQoNCiMgRGV0YWlscw0KDQoN
-CjEuIFVucmVzdHJpY3RlZCBGaWxlIFVwbG9hZA0KdGhlcmUgaXMgYSB1bnJl
-c3RyaWN0ZWQgZmlsZSB1cGxvYWQgaXNzdWUgYXQgZnJhbWV3b3JrL21vZHVs
-ZXMvZm9ybXMvY29udHJvbGxlcnMvZm9ybXNDb250cm9sbGVyLnBocCBhbmQg
-dGhlIHVwbG9hZCBmaWxlIGlzIGxvY2F0ZWQgYXQgL3RtcC8sIHdoZXJlIHBo
-cCBzY3JpcHQgY2FuIGJlIGV4ZWN1dGVkLg0KDQoNCmFsdGhvdWdoIHdlIGRv
-bnQga25vdyBmaWxlIG5hbWUsIGJ1dCB3ZSBjYW4gYnJ1dGUgaXQgc2ltcGx5
-LCBzdWNoIGFzIHRpbWUoKSArICJfIiArIHVwbG9hZCBuYW1lLg0KDQoNCiAg
-ICBwdWJsaWMgZnVuY3Rpb24gaW1wb3J0X2Nzdl9tYXBwZXIoKSB7DQogICAg
-ICAgIC8vQ2hlY2sgdG8gbWFrZSBzdXJlIHRoZSB1c2VyIGZpbGxlZCBvdXQg
-dGhlIHJlcXVpcmVkIGlucHV0Lg0KICAgICAgICBpZiAoIWlzX251bWVyaWMo
-JHRoaXMtPnBhcmFtc1sicm93c3RhcnQiXSkpIHsNCiAgICAgICAgICAgIHVu
-c2V0KCR0aGlzLT5wYXJhbXNbInJvd3N0YXJ0Il0pOw0KICAgICAgICAgICAg
-JHRoaXMtPnBhcmFtc1snX2Zvcm1FcnJvciddID0gZ3QoJ1RoZSBzdGFydGlu
-ZyByb3cgbXVzdCBiZSBhIG51bWJlci4nKTsNCiAgICAgICAgICAgIGV4cFNl
-c3Npb246OnNldCgibGFzdF9QT1NUIiwgJHRoaXMtPnBhcmFtcyk7DQogICAg
-ICAgICAgICBoZWFkZXIoIkxvY2F0aW9uOiAiIC4gJF9TRVJWRVJbJ0hUVFBf
-UkVGRVJFUiddKTsNCiAgICAgICAgICAgIGV4aXQoJ1JlZGlyZWN0aW5nLi4u
-Jyk7DQogICAgICAgIH0NCg0KDQogICAgICAgIGlmICghZW1wdHkoJHRoaXMt
-PnBhcmFtc1snZm9ybXNfaWQnXSkpIHsNCiAgICAgICAgICAgIC8vIGlmIHdl
-IGFyZSBpbXBvcnRpbmcgdG8gYW4gZXhpc3RpbmcgZm9ybSwganVtcCB0byB0
-aGF0IHN0ZXANCiAgICAgICAgICAgICR0aGlzLT5pbXBvcnRfY3N2X2RhdGFf
-bWFwcGVyKCk7DQogICAgICAgIH0gZWxzZSB7DQogICAgICAgICAgICAvL0dl
-dCB0aGUgdGVtcCBkaXJlY3RvcnkgdG8gcHV0IHRoZSB1cGxvYWRlZCBmaWxl
-DQogICAgICAgICAgICAkZGlyZWN0b3J5ID0gInRtcCI7DQoNCg0KICAgICAg
-ICAgICAgLy9HZXQgdGhlIGZpbGUgc2F2ZSBpdCB0byB0aGUgdGVtcCBkaXJl
-Y3RvcnkNCiAgICAgICAgICAgIGlmICgkX0ZJTEVTWyJ1cGxvYWQiXVsiZXJy
-b3IiXSA9PSBVUExPQURfRVJSX09LKSB7DQogICAgICAgICAgICAgICAgLy8J
-JGZpbGUgPSBmaWxlOjp1cGRhdGUoInVwbG9hZCIsJGRpcmVjdG9yeSxudWxs
-LHRpbWUoKS4iXyIuJF9GSUxFU1sndXBsb2FkJ11bJ25hbWUnXSk7DQogICAg
-ICAgICAgICAgICAgJGZpbGUgPSBleHBGaWxlOjpmaWxlVXBsb2FkKCJ1cGxv
-YWQiLCBmYWxzZSwgZmFsc2UsIHRpbWUoKSAuICJfIiAuICRfRklMRVNbJ3Vw
-bG9hZCddWyduYW1lJ10sICRkaXJlY3RvcnkuJy8nKTsgLy9GSVhNRSBxdWlj
-ayBoYWNrIHRvIHJlbW92ZSBmaWxlIG1vZGVsDQoJLi4uLg0KDQoNClBPQzog
-DQoNCg0KCTwhRE9DVFlQRSBodG1sPg0KCTxodG1sPg0KCTxmb3JtIGFjdGlv
-bj0iaHR0cDovL2xvY2FsaG9zdC9leHBvbmVudC0yLjMuOS9pbmRleC5waHA/
-Y29udHJvbGxlcj1mb3JtcyZhY3Rpb249aW1wb3J0X2Nzdl9tYXBwZXImZm9y
-bXNfaWQ9MSZyb3dzdGFydD0wIiBtZXRob2Q9IlBPU1QiIGVuY3R5cGUgPSJt
-dWx0aXBhcnQvZm9ybS1kYXRhIj4NCgk8aW5wdXQgdHlwZT0iZmlsZSIgbmFt
-ZT0idXBsb2FkIj4JDQoJPGlucHV0IHR5cGU9InN1Ym1pdCIgbmFtZT0ic3Vi
-bWl0Ij4NCg0KDQoJPC9mb3JtPg0KCTwvaHRtbD4NCg0KDQoyLiBMRkkNCg0K
-DQp0aGVuIExGSSBjb21lcywgYXQgZXhwb25lbnQtMi4zLjkvaW5zdGFsbC9w
-b3B1cC5waHAuDQoNCg0KICAgIDw/cGhwDQogICAgJHBhZ2UgPSAoaXNzZXQo
-JF9SRVFVRVNUWydwYWdlJ10pID8gZXhwU3RyaW5nOjpzYW5pdGl6ZSgkX1JF
-UVVFU1RbJ3BhZ2UnXSkgOiAnJyk7DQogICAgaWYgKGlzX3JlYWRhYmxlKCdw
-b3B1cHMvJyAuICRwYWdlIC4gJy5waHAnKSkgew0KICAgICAgICBpbmNsdWRl
-KCdwb3B1cHMvJyAuICRwYWdlIC4gJy5waHAnKTsNCiAgICB9DQogICAgPz4N
-Cg0KDQpzbyB3ZSBjYW4gdXBsb2FkIGEgcGhwIGZpbGUsIHRoZW4gaW5jbHVk
-ZSBpdCB0byBtYWtlIGEgUkNFIGFnYWluLg0KDQoNClBPQzogDQoJaHR0cDov
-LzEyNy4wLjAuMS9leHBvbmVudC0yLjMuOS9pbnN0YWxsL3BvcHVwLnBocD9w
-YWdlPS4uLy4uL2ZpbGVzL3Rlc3QNCg0KDQoNCg0KMy4gVW5yZXN0cmljdGVk
-IEZpbGUgVXBsb2FkIGFuZCBSQ0UNCg0KDQp0aGVyZSBpcyBhIHVucmVzdHJp
-Y3RlZCBmaWxlIHVwbG9hZCBpc3N1ZSBhdCBmcmFtZXdvcmsvbW9kdWxlcy9m
-b3Jtcy9jb250cm9sbGVycy9mb3Jtc0NvbnRyb2xsZXIucGhwIGFuZCB0aGUg
-dXBsb2FkIGZpbGUgaXMgbG9jYXRlZCBhdCAvdG1wLywgd2hlcmUgcGhwIHNj
-cmlwdCBjYW4gYmUgZXhlY3V0ZWQuDQoNCg0KYWx0aG91Z2ggd2UgZG9udCBr
-bm93IGZpbGUgbmFtZSwgYnV0IHdlIGNhbiBicnV0ZSBpdCBzaW1wbHksIHN1
-Y2ggYXMgdGltZSgpICsgIl8iICsgbmFtZS4NCg0KDQogICAgcHVibGljIGZ1
-bmN0aW9uIGltcG9ydF9jc3ZfbWFwcGVyKCkgew0KICAgICAgICAvL0NoZWNr
-IHRvIG1ha2Ugc3VyZSB0aGUgdXNlciBmaWxsZWQgb3V0IHRoZSByZXF1aXJl
-ZCBpbnB1dC4NCiAgICAgICAgaWYgKCFpc19udW1lcmljKCR0aGlzLT5wYXJh
-bXNbInJvd3N0YXJ0Il0pKSB7DQogICAgICAgICAgICB1bnNldCgkdGhpcy0+
-cGFyYW1zWyJyb3dzdGFydCJdKTsNCiAgICAgICAgICAgICR0aGlzLT5wYXJh
-bXNbJ19mb3JtRXJyb3InXSA9IGd0KCdUaGUgc3RhcnRpbmcgcm93IG11c3Qg
-YmUgYSBudW1iZXIuJyk7DQogICAgICAgICAgICBleHBTZXNzaW9uOjpzZXQo
-Imxhc3RfUE9TVCIsICR0aGlzLT5wYXJhbXMpOw0KICAgICAgICAgICAgaGVh
-ZGVyKCJMb2NhdGlvbjogIiAuICRfU0VSVkVSWydIVFRQX1JFRkVSRVInXSk7
-DQogICAgICAgICAgICBleGl0KCdSZWRpcmVjdGluZy4uLicpOw0KICAgICAg
-ICB9DQoNCg0KICAgICAgICBpZiAoIWVtcHR5KCR0aGlzLT5wYXJhbXNbJ2Zv
-cm1zX2lkJ10pKSB7DQogICAgICAgICAgICAvLyBpZiB3ZSBhcmUgaW1wb3J0
-aW5nIHRvIGFuIGV4aXN0aW5nIGZvcm0sIGp1bXAgdG8gdGhhdCBzdGVwDQog
-ICAgICAgICAgICAkdGhpcy0+aW1wb3J0X2Nzdl9kYXRhX21hcHBlcigpOw0K
-ICAgICAgICB9IGVsc2Ugew0KICAgICAgICAgICAgLy9HZXQgdGhlIHRlbXAg
-ZGlyZWN0b3J5IHRvIHB1dCB0aGUgdXBsb2FkZWQgZmlsZQ0KICAgICAgICAg
-ICAgJGRpcmVjdG9yeSA9ICJ0bXAiOw0KDQoNCiAgICAgICAgICAgIC8vR2V0
-IHRoZSBmaWxlIHNhdmUgaXQgdG8gdGhlIHRlbXAgZGlyZWN0b3J5DQogICAg
-ICAgICAgICBpZiAoJF9GSUxFU1sidXBsb2FkIl1bImVycm9yIl0gPT0gVVBM
-T0FEX0VSUl9PSykgew0KICAgICAgICAgICAgICAgIC8vCSRmaWxlID0gZmls
-ZTo6dXBkYXRlKCJ1cGxvYWQiLCRkaXJlY3RvcnksbnVsbCx0aW1lKCkuIl8i
-LiRfRklMRVNbJ3VwbG9hZCddWyduYW1lJ10pOw0KICAgICAgICAgICAgICAg
-ICRmaWxlID0gZXhwRmlsZTo6ZmlsZVVwbG9hZCgidXBsb2FkIiwgZmFsc2Us
-IGZhbHNlLCB0aW1lKCkgLiAiXyIgLiAkX0ZJTEVTWyd1cGxvYWQnXVsnbmFt
-ZSddLCAkZGlyZWN0b3J5LicvJyk7IC8vRklYTUUgcXVpY2sgaGFjayB0byBy
-ZW1vdmUgZmlsZSBtb2RlbA0KCS4uLi4NCg0KDQpQT0M6IA0KDQoNCgk8IURP
-Q1RZUEUgaHRtbD4NCgk8aHRtbD4NCgk8Zm9ybSBhY3Rpb249Imh0dHA6Ly9s
-b2NhbGhvc3QvZXhwb25lbnQtMi4zLjkvaW5kZXgucGhwP2NvbnRyb2xsZXI9
-Zm9ybXMmYWN0aW9uPWltcG9ydF9jc3ZfbWFwcGVyJmZvcm1zX2lkPTEmcm93
-c3RhcnQ9MCIgbWV0aG9kPSJQT1NUIiBlbmN0eXBlID0ibXVsdGlwYXJ0L2Zv
-cm0tZGF0YSI+DQoJPGlucHV0IHR5cGU9ImZpbGUiIG5hbWU9InVwbG9hZCI+
-CQ0KCTxpbnB1dCB0eXBlPSJzdWJtaXQiIG5hbWU9InN1Ym1pdCI+DQoNCg0K
-CTwvZm9ybT4NCgk8L2h0bWw+DQoNCg0KDQoNCg0KDQojIFBhdGNoZXMNCg0K
-DQpodHRwczovL2V4cG9uZW50Y21zLmxpZ2h0aG91c2VhcHAuY29tL3Byb2pl
-Y3RzLzYxNzgzL2NoYW5nZXNldHMvMzU1NzAyYTk4MzVjZjUyNzc5NmM5ZDQ2
-OWE4MjI1OGI3NjM5MTQ4YQ0KaHR0cHM6Ly9leHBvbmVudGNtcy5saWdodGhv
-dXNlYXBwLmNvbS9wcm9qZWN0cy82MTc4My9jaGFuZ2VzZXRzLzYyOGVhNjE4
-MzRkOTI2MTE2NDRhMWRmYzFiYTI0MjE2ZWU2NDdjNTk=
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-------=_NextPart_57E1EB95_09DDB090_5B11CC35--
+The following releases contain fixes for security vulnerabilities:
+
+* Jenkins 2.442
+* Jenkins LTS 2.426.3
+* Git server Plugin 99.101.v720e86326c09
+* GitLab Branch Source Plugin 688.v5fa_356ee8520
+* Matrix Project Plugin 822.824.v14451b_c0fd42
+* Qualys Policy Compliance Scanning Connector Plugin 1.0.6
+* Red Hat Dependency Analytics Plugin 0.9.0
+
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Log Command Plugin
+
+Summaries of the vulnerabilities are below. More details, workarounds,
+severity, and attribution can be found here:
+https://www.jenkins.io/security/advisory/2024-01-24/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3314 / CVE-2024-23897
+Jenkins has a built-in command line interface (CLI) to access Jenkins from
+a script or shell environment.
+
+Jenkins uses the args4j library to parse command arguments and options on
+the Jenkins controller when processing CLI commands. This command parser
+has a feature that replaces an `@` character followed by a file path in an
+argument with the file's contents (`expandAtFiles`). This feature is
+enabled by default and Jenkins 2.441 and earlier, LTS 2.426.2 and earlier
+does not disable it.
+
+This allows attackers to read arbitrary files on the Jenkins controller
+file system using the default character encoding of the Jenkins controller
+process.
+
+* Attackers with Overall/Read permission can read entire files.
+* Attackers _without_ Overall/Read permission can read the first few lines
+  of files. The number of lines that can be read depends on available CLI
+  commands. As of publication of this advisory, the Jenkins security team
+  has found ways to read the first three lines of files in recent releases
+  of Jenkins without having any plugins installed, and has not identified
+  any plugins that would increase this line count.
+
+Binary files containing cryptographic keys used for various Jenkins
+features can also be read, with some limitations. As of publication,
+the Jenkins security team has confirmed the following possible attacks in
+addition to reading contents of all files with a known file path. All of
+them leverage attackers' ability to obtain cryptographic keys from binary
+files, and are therefore only applicable to instances where that is
+feasible.
+
+WARNING: This list is not definitive. Further attacks likely exist,
+including ones that do not need attackers to obtain cryptographic keys from
+binary files.
+
+* Remote code execution via Resource Root URLs (Variant 1)
+* Remote code execution via Resource Root URLs (Variant 2)
+* Remote code execution via "Remember me" cookie
+* Remote code execution via stored cross-site scripting (XSS) attacks
+  through build logs
+* Remote code execution via CSRF protection bypass
+* Decrypt secrets stored in Jenkins
+* Delete any item in Jenkins
+* Download a Java heap dump
+
+Limitations for reading binary files:
+While files containing binary data can be read, the affected feature
+attempts to read them as strings using the controller process's default
+character encoding. This is likely to result in some bytes not being read
+successfully and being replaced with a placeholder value. Which bytes can
+or cannot be read depends on this character encoding. For example,
+attempting to read random binary data using UTF-8, roughly half of all
+bytes will be replaced with a placeholder for an illegal value. For 32 byte
+random binary secrets, as commonly used in Jenkins for HMAC-SHA256, this
+would require attackers to correctly guess on average 16 bytes, which is
+infeasible. In contrast, with the encoding Windows-1252, only 5 out of 256
+possible values are illegal and would be replaced with a placeholder. This
+is a significantly lower number of bytes to guess in a binary secret on
+average, as well as fewer possible options for each byte.
+
+IMPORTANT: While it is _unlikely_ that randomly generated keys use
+significantly fewer than average of the byte values that cannot be read
+using a character encoding like UTF-8, it isn't _impossible_. Therefore
+administrators should update Jenkins in a timely manner, regardless of the
+value of `file.encoding`.
+
+
+SECURITY-3315 / CVE-2024-23898
+Jenkins has a built-in command line interface (CLI) to access Jenkins from
+a script or shell environment. Since Jenkins 2.217 and LTS 2.222.1, one of
+the ways to communicate with the CLI is through a WebSocket endpoint. This
+endpoint relies on the default Jenkins web request authentication
+functionality, like HTTP Basic authentication with API tokens, or session
+cookies. This endpoint is enabled when running on a version of Jetty for
+which Jenkins supports WebSockets. This is the case when using the provided
+native installers, packages, or the Docker containers, as well as when
+running Jenkins with the command `java -jar jenkins.war`.
+
+Jenkins 2.217 through 2.441 (both inclusive), LTS 2.222.1 through 2.426.2
+(both inclusive) does not perform origin validation of requests made
+through the CLI WebSocket endpoint, resulting in a cross-site WebSocket
+hijacking (CSWSH) vulnerability.
+
+Additionally, Jenkins does not set an explicit `SameSite` attribute for
+session cookies. This can allow cross-site requests to make use of the
+session cookie, i.e., those requests are sent with the logged-in user's
+authentication.
+
+This vulnerability allows attackers to execute CLI commands on the Jenkins
+controller. The impact depends on the permissions of the anonymous user
+and/or the browser(s) used by the victim(s) of the CSWSH attack.
+
+Additionally, this vulnerability allows exploiting SECURITY-3314 to read
+the first few lines of files on the Jenkins controller. See that issue for
+more information about the potential impact.
+
+
+SECURITY-3319 / CVE-2024-23899
+Git server Plugin uses the args4j library to parse command arguments and
+options on the Jenkins controller when processing Git commands received via
+SSH. This command parser has a feature that replaces an `@` character
+followed by a file path in an argument with the file's contents
+(`expandAtFiles`). This feature is enabled by default and Git server Plugin
+99.va_0826a_b_cdfa_d and earlier does not disable it.
+
+This allows attackers with Overall/Read permission to read the first two
+lines of arbitrary files on the Jenkins controller file system using the
+default character encoding of the Jenkins controller process.
+
+See SECURITY-3314 for further information about the potential impact of bei=
+ng
+able to read files on the Jenkins controller, as well as the limitations for
+reading binary files. Note that for this issue, unlike SECURITY-3314, attac=
+kers
+need Overall/Read permission.
+
+
+SECURITY-3289 / CVE-2024-23900
+Matrix Project Plugin 822.v01b_8c85d16d2 and earlier does not sanitize
+user-defined axis names of multi-configuration projects submitted through
+the `config.xml` REST API endpoint.
+
+This allows attackers with Item/Configure permission to create or replace
+any `config.xml` file on the Jenkins controller file system with content
+not controllable by the attackers.
+
+
+SECURITY-3040 / CVE-2024-23901
+GitLab allows sharing a project with another group.
+
+GitLab Branch Source Plugin 684.vea_fa_7c1e2fe3 and earlier unconditionally
+discovers projects that are shared with the configured owner group.
+
+This allows attackers to configure and share a project, resulting in a
+crafted Pipeline being built by Jenkins after the next scan of the group's
+projects.
+
+
+SECURITY-3251 / CVE-2024-23902
+GitLab Branch Source Plugin 684.vea_fa_7c1e2fe3 and earlier does not
+require POST requests for a form validation endpoint, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to connect to an attacker-specified
+URL.
+
+
+SECURITY-2871 / CVE-2024-23903
+GitLab Branch Source Plugin 684.vea_fa_7c1e2fe3 and earlier does not use a
+constant-time comparison function when checking whether the provided and
+expected webhook token are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
+
+
+SECURITY-3006 / CVE-2023-6148
+Qualys Policy Compliance Scanning Connector Plugin 1.0.5 and earlier does
+not escape Qualys API responses displayed on the job configuration page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure jobs.
+
+
+SECURITY-3005 / CVE-2023-6147
+Qualys Policy Compliance Scanning Connector Plugin 1.0.5 and earlier does
+not configure its XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to configure jobs to have Jenkins parse a
+crafted HTTP response with XML data that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+
+SECURITY-3007 / CVE pending
+Qualys Policy Compliance Scanning Connector Plugin 1.0.5 and earlier does
+not correctly perform permission checks in several HTTP endpoints.
+
+This allows attackers with global Item/Configure permission (while lacking
+Item/Configure permission on any particular job) to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+
+SECURITY-3322 / CVE-2024-23905
+Jenkins sets the `Content-Security-Policy` header to static files served by
+Jenkins (specifically `DirectoryBrowserSupport`), such as workspaces,
+`/userContent`, or archived artifacts, unless a Resource Root URL is
+specified.
+
+Red Hat Dependency Analytics Plugin 0.7.1 and earlier globally disables the
+`Content-Security-Policy` header for static files served by Jenkins
+whenever the 'Invoke Red Hat Dependency Analytics (RHDA)' build step is
+executed. This allows cross-site scripting (XSS) attacks by users with the
+ability to control files in workspaces, archived artifacts, etc.
+
+
+SECURITY-3334 / CVE-2024-23904
+Log Command Plugin uses the args4j library to parse command arguments and
+options on the Jenkins controller when processing commands received via
+instant messaging platforms such as IRC or Jabber. This command parser has
+a feature that replaces an `@` character followed by a file path in an
+argument with the file's contents (`expandAtFiles`). This feature is
+enabled by default and Log Command Plugin 1.0.2 and earlier does not
+disable it.
+
+This allows unauthenticated attackers to read the first line of arbitrary
+files on the Jenkins controller file system using the default character
+encoding of the Jenkins controller process.
+
+See SECURITY-3314 for further information about the potential impact of bei=
+ng
+able to read files on the Jenkins controller, as well as the limitations for
+reading binary files.
+
+As of publication of this advisory, there is no fix.
 
 
 
