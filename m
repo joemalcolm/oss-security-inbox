@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1549" "Tuesday" "15" "March" "2016" "13:02:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160315170216.6AB906C445F@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request: ipv4: Don't do expensive useless work during inetdev destroy" "^Cc:" nil nil "3" "2016031517:02:16" "[oss-security] Re: CVE request: ipv4: Don't do expensive useless work during inetdev destroy" (number mark "        cve-assign@m Mar 15   39/1549  " thread-indent "\"[oss-security] Re: CVE request: ipv4: Don't do expensive useless work during inetdev destroy\"\n") "<56E80973.80606@virtuozzo.com>" ("<56E80973.80606@virtuozzo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32062 invoked by uid 550); 15 Mar 2016 17:02:28 -0000
+Received: (qmail 15723 invoked by uid 550); 24 Jan 2024 18:15:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32034 invoked from network); 15 Mar 2016 17:02:27 -0000
-In-Reply-To: <56E80973.80606@virtuozzo.com>
-Message-Id: <20160315170216.6AB906C445F@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, solar@openwall.com, gorcunov@virtuozzo.com, davem@davemloft.net, khorenko@virtuozzo.com
-Date: Tue, 15 Mar 2016 13:02:16 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: ipv4: Don't do expensive useless work during inetdev destroy
-To: vvs@virtuozzo.com
+Received: (qmail 12177 invoked from network); 24 Jan 2024 18:13:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sijanec.eu; s=mail;
+	t=1706120149; bh=olo9706kzXfJH30RNZnjB8qTtquk2EDUn/cylgbjF1I=;
+	h=Date:From:To:Subject:In-Reply-To:References;
+	b=dJ5bg0wTq6wSvPaONLBWTQAhpkgACyQeuODdqsRi3BMv01wRZCX0/J5L4zIUWQF10
+	 8RBbnQ3rCSzPKCVraOkUtlkGlpMrsdPazUDbyB1KbF2Vb/VW5KeNitoXyLOtIZAZ7M
+	 YNjhMT2Pc+P03v8gwWsyou1b+2cmhAfjFj7ylduslmNDXxau3Pz4IeqbXyJgIfSY2D
+	 NXh96mviBUWyYut7863hG7IuR04ilAFvT93jY8+r2RJQzN9dAPSKW+zu26sENN3ljf
+	 B3j5CLC38Q+6B4O9uKyfyF86mSDytNRB6TD0nyXE7xa+80JwANwjJ9Z+x0IQQT/Y5g
+	 N7oSzV4v6AMcw==
+Date: Wed, 24 Jan 2024 19:15:49 +0100
+From: =?UTF-8?Q?Anton_Luka_=C5=A0ijanec?= <anton@sijanec.eu>
+To: oss-security@lists.openwall.com
+User-Agent: K-9 Mail for Android
+In-Reply-To: <jnc745riho5bck4f24gfjhz755zedqma77hbpdcwn7hchttluu@n6ajzobn5ukx>
+References: <Za-XWUEPml2pcATt@kasco.suse.de> <20240124084235.360eb42b.hanno@hboeck.de> <ZbDH9FfiyKDUFv64@suse.com> <jnc745riho5bck4f24gfjhz755zedqma77hbpdcwn7hchttluu@n6ajzobn5ukx>
+Message-ID: <99053B65-6161-46F7-A5B2-BB13B2BD6503@sijanec.eu>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary=----AOO8O5ACMI89THOSE7MBAR0S8TUXT0
+Content-Transfer-Encoding: 7bit
+Subject: =?US-ASCII?Q?Re=3A_=5Boss-security=5D_Re=3A_darkhttpd=3A_timing_attac?= =?US-ASCII?Q?k_and_local_leak_of_HTTP_basic_auth_credentials?=
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------AOO8O5ACMI89THOSE7MBAR0S8TUXT0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Destroy of network interface with huge number of ipv4 addresses
-> keeps rtnl_lock for a very long time (up to hour).
-> It blocks many network related operations,
+Hello,
 
->> in this scenerio we do two pointless things which can
->> be very expensive
+I can see UID numbers in /proc/net/tcp6 as a non-root user even though my p=
+rocfs is mounted with hidepid=3Dinvisible (ps aux only shows my processes).=
+ My system is Gentoo Linux with kernel 6.1.69. Peeking at the source, it lo=
+oks like oidentd indeed reads from /proc/net/tcp6. I run oidentd on a syste=
+m with hidepid=3Dinvisible and oidentd runs as a separate oidentd user and =
+does work (tested by trying to connect to an IrcNet server).
 
-> The problem is especially important for containers,
-> container owner have enough permission to enable this trigger
+regards
 
-> http://git.kernel.org/cgit/linux/kernel/git/davem/net-next.git/patch/?id=fbd40ea0180a2d328c5adc61414dc8bab9335ce2
+On 24 January 2024 18:39:38 CET, nightmare.yeah27@aceecat.org wrote:
+>Do not the various implementations of the *ident* protocol (example: oiden=
+td)
+>rely on this interface? They are often, or always, intentionally configured
+>to run as nobody or a dedicated UID.
+>
+>--=20
+>Ian
 
-Use CVE-2016-3156.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6D2BAAoJEL54rhJi8gl5aPcQAI4vToE8HwKoXoPHrBvLzjkC
-d9CewviuH6iRvsAy7hsZ4XqYTVUe+aP9F+jZU9s+X77Sx2M4OcS3NMm7Q9a0MfKC
-+ns7JxOPw2T/Lb+fEykx5W+RSLF/gF+UK/CGlEdxP3dQ1jpDwVYEUHYMC3fXxipa
-95caC/UkdeK/pm5mIPZx0LaGPuSsGk2R+/sIdwKglcOY0nHEOHfzkWFAwisSStN2
-WUerlquTggA7qX+5vX0Q5COKIzmJOpHnzsdJRk1XeJpCKRGacdWmd41rVeNX+yjc
-jMYc2dXeTwm5pUhb86eX4aeK9hWOq55Fa+STwZRLZ/XreUxovoRat9ClMGujwHpI
-DatEqVuoX6fWzLNgZk+6DVP615WPlKKrbEGiyQ0n6ffBGsrEoUK4eKhqy9LiSsVF
-cdvrpbJZsB8Uu2zTvqYY9Qg8JV49UcdfZRnfzFOVNZtjy9Y7m/OLl0f+8VYVW++r
-yRxEyEHeIA4pOUprA+YrOHrYLqhbddUo/ESLd4MhCJQK3TldsNJ5yoEHb5pGCtxN
-EF2RYDnChUCBzV9tWKXU4sp39wqDJMJwEoUPAC73aCppmnaqWB76ARs2QEe8PejS
-hIqiJACuLIEkeCH/tgQ98kiQyPceLDJm7Vp1G0FAg5Qtj/nQlg3ajTdg0J5Jgm4p
-/q/uXiSvBR9uhsC28/tT
-=lo4r
------END PGP SIGNATURE-----
+------AOO8O5ACMI89THOSE7MBAR0S8TUXT0--
