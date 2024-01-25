@@ -1,4 +1,4 @@
-Received: (qmail 18058 invoked by uid 550); 1 Apr 2024 12:58:39 -0000
+Received: (qmail 24298 invoked by uid 550); 25 Jan 2024 10:31:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +7,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18019 invoked from network); 1 Apr 2024 12:58:39 -0000
-Date: Mon, 1 Apr 2024 14:58:30 +0200 (CEST)
-From: Jan Engelhardt <jengelh@inai.de>
+Received: (qmail 24280 invoked from network); 25 Jan 2024 10:31:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1706178818; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=P371//R/K8JcYv/suhKqLvH0IqPcdBhCk/Rs0BC32k0=;
+	b=tPLifZKsU9pLAsdRoq5Hn7fZ5RHEOhXwRwaeIT5FcOWyMYMSJdRX9hKP5lo+n/bFz/si5c
+	WbxQceWwNIvvHpmJ6hYhdfXo9eYkHhh3lGlmhrSZLVd44KCCmWLreD8Tb9BmfTHwcpnr45
+	0ss2sd4oByenpXKqtmWr7bGXr+6a+m0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1706178818;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=P371//R/K8JcYv/suhKqLvH0IqPcdBhCk/Rs0BC32k0=;
+	b=lpR0qYX700eGV5I2NcdRY2y5Zo4sUpcRY1vegaEVenJT5s2fLQIdCrs/dy1gX0g+lQI805
+	Cy13E3c2W8K8BPDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1706178817; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=P371//R/K8JcYv/suhKqLvH0IqPcdBhCk/Rs0BC32k0=;
+	b=19Tfi+E0CW4JEuV5G80ce9lOgwfBIE1gtiaFLdVER97UWDCY6YGupl4nK3BBeKHJkusl2q
+	tQy5Mi6Lnz7RxT8NexB8ZVm+ttabelHAHHzZya3S7BbMKmIBJTU66U5VB+nky00MbVcccl
+	Jawtq/kQRlR54ZSM7RuUgp3eoNHMS3w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1706178817;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=P371//R/K8JcYv/suhKqLvH0IqPcdBhCk/Rs0BC32k0=;
+	b=T8BOWDF/rTvq2Yp5G39OAI+43v0jJ7FQeAJQtJYWBk9j4Uf6MD9KkVzKAtpcWQaniAyh9/
+	awZE8sJJ4lLtkKBA==
+Date: Thu, 25 Jan 2024 11:33:33 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-cc: takao.fujiwara1@gmail.com
-Message-ID: <r57psoo4-64q4-4nnr-qp6s-q4n32584698o@vanv.qr>
-User-Agent: Alpine 2.26 (LSU 649 2022-06-02)
+Message-ID: <ZbI4_WWhLwsuoOKq@kasco.suse.de>
+References: <Za-XWUEPml2pcATt@kasco.suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Subject: [oss-security] From xz to ibus: more questionable tarballs
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="0pZi+PViFSzq7TbA"
+Content-Disposition: inline
+In-Reply-To: <Za-XWUEPml2pcATt@kasco.suse.de>
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=19Tfi+E0;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="T8BOWDF/"
+Subject: Re: [oss-security] darkhttpd: timing attack and local leak of HTTP
+ basic auth credentials
 
+--0pZi+PViFSzq7TbA
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Date: Thu, 25 Jan 2024 11:33:33 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] darkhttpd: timing attack and local leak of HTTP
+ basic auth credentials
 
-In the ibus repository at https://github.com/ibus/ibus ,
-commit 0ad8e77bd36545974ad8acd0a5283cf72bc7c8ad
-was tagged as refs/tags/1.5.29-rc2 (+signed) on 2023-11-09,
-and a disted tarball was made available (but unsigned), and Linux distros have
-imported it (file checksums all line up).
+On Tue, Jan 23, 2024 at 11:39:19AM +0100, Matthias Gerstner wrote:
+> I requested CVEs from Mitre for the two issues found during this
+> review. They have not been assigned yet, though. I will give an update
+> once I know them.
 
-https://github.com/ibus/ibus/releases/download/1.5.29/ibus-1.5.29-rc2.tar.gz
+Mitre assigned the CVEs by now as follows:
 
-Comparing this disttar to the git repository and favorably
-*discounting* autotools-related files and (what appears to be)
-vala-to-c transpiling, I'm left with benign, but unexplicable
-changes. It seems the git is "older", as e.g. one still finds "beta3"
-in the diff, but also the disttar's ibuscodegen.h has an older
-copyright line and an incomplete cherry-pick from
-8f00d67b809036b0b76ae257cfe7e102bc8f1dec.
+> Basic Auth Timing Attack
+> ========================
 
-*runs away screaming*
+CVE-2024-23771
 
-In light of the xz revelations, I thought it's worth pointing out 
-this class of problems.
+> Local Leak of Authentication Parameter in Process List
+> ======================================================
 
+CVE-2024-23770
 
-$ tar -xf ibus-1.5.29-rc2.tar.gz
-$ git clone -b 1.5.29-rc2 https://github.com/ibus/ibus ibus-git
-$ diff -dprux .git ibus-git ibus-1.5.29-rc2
-diff -dpru ibus-git/engine/simple.xml.in ibus-1.5.29-rc2/engine/simple.xml.in
---- ibus-git/engine/simple.xml.in       2024-04-01 14:08:16.541903956 +0200
-+++ ibus-1.5.29-rc2/engine/simple.xml.in        2023-11-09 07:10:15.000000000 +0100
-@@ -3,781 +3,596 @@
-     <name>org.freedesktop.IBus.Simple</name>
-     <description>A table based simple engine</description>
-     <exec>@libexecdir@/ibus-engine-simple</exec>
--    <version>1.5.29-beta3.20230822</version>
-+    <version>1.5.29-rc2.20231109</version>
-     <author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
-     <license>GPL</license>
-...
---- ibus-git/po/de.po   2024-04-01 14:08:16.555237247 +0200
-+++ ibus-1.5.29-rc2/po/de.po    2023-11-09 07:10:08.000000000 +0100
-@@ -22,7 +22,7 @@ msgid ""
- msgstr ""
- "Project-Id-Version: IBus\n"
- "Report-Msgid-Bugs-To: https://github.com/ibus/ibus/issues\n"
--"POT-Creation-Date: 2023-08-02 00:14+0900\n"
-+"POT-Creation-Date: 2023-11-09 15:10+0900\n"
- "PO-Revision-Date: 2023-08-04 17:21+0000\n"
- "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
- "Language-Team: German <https://translate.fedoraproject.org/projects/ibus/"
-diff -dpru ibus-git/src/ibusunicodegen.h ibus-1.5.29-rc2/src/ibusunicodegen.h
---- ibus-git/src/ibusunicodegen.h       2024-04-01 14:08:16.568570535 +0200
-+++ ibus-1.5.29-rc2/src/ibusunicodegen.h        2023-11-09 07:09:53.000000000 +0100
-@@ -1,8 +1,8 @@
- /* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
- /* vim:set et sts=4: */
- /* ibus - The Input Bus
-- * Copyright (C) 2018-2023 Takao Fujiwara <takao.fujiwara1@gmail.com>
-- * Copyright (C) 2018-2023 Red Hat, Inc.
-+ * Copyright (C) 2018-2021 Takao Fujiwara <takao.fujiwara1@gmail.com>
-+ * Copyright (C) 2018-2021 Red Hat, Inc.
-  *
-  * This library is free software; you can redistribute it and/or
-  * modify it under the terms of the GNU Lesser General Public
-@@ -1310,6 +1310,10 @@ const static char *unicode_blocks[] = {
-     /* TRANSLATORS: You might refer the translations from gucharmap with
-                     the following command:
-        msgmerge -C gucharmap.po ibus.po ibus.pot */
-+    N_("CJK Unified Ideographs Extension I"),
-+    /* TRANSLATORS: You might refer the translations from gucharmap with
-+                    the following command:
-+       msgmerge -C gucharmap.po ibus.po ibus.pot */
-     N_("CJK Compatibility Ideographs Supplement"),
-     /* TRANSLATORS: You might refer the translations from gucharmap with
-                     the following command:
+Cheers
+
+Matthias
+
+--0pZi+PViFSzq7TbA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmWyOP0ACgkQFMQFyXGS
+NVMFIQ//fooXdtGps/G0UL96ToriaQ705QX2WwP1H366+Nygba3hRSRP1XI/6Nz4
+ZcFW+Cvf6LNO6hXsnhBp3wv5D60ge71mID4KSBWKuqtRIW2DL6ucBD1kC3FMJQJM
+LTlH7cMm1DbupAhD/xQ8OFONMHE7uWjPNqMry1G+KHCeYUP/t5YQwcSr/qt2PO5W
+0fveg88sPGeqJzWWCRlv64kDsr5cx79Qg1qgJuB7G42d+d4c3J2IlE80GPalMjiS
+Y7tXCmpPMTDinPBnMdSWQybW/6wk9JFQMOMBHWs+9d5YKz0old83aj5Xw4D0C+gr
+XVPwTf5Pfck9+y4ucuJiGZA5Z33y05S5f53fPy4xQkZD+rJhCDyVH2k4lOAzl2ae
+OAD3xbk4ZhlQie3JVoFn9VRLB9Ld1mlwQt74nwb+HTdh/sxiLPGYdBqlUA5gsi2L
+Gm7Ksk72qHNfgeppM3MgR++uj1CeQO2UqShE1sBkCrZSP6LCpinlpy3jfvR/ADAP
+eTnsxnqE56+qk8AC+x1KgJUwbMhkEt+uGQF8uAnPARa8gCXONaFMshrJObfBh5mE
+5nBTzXBjZ4DOdLyNKtq1FWKVznpqcM3fPh82D2R4Pp561mP8ulSGFYAjJ/YCCI62
+YTNQb3JGvEw9vRALbyHdSKL6Iq9qkS9U47N33MrteVwJ8rR2CtQ=
+=YzWQ
+-----END PGP SIGNATURE-----
+
+--0pZi+PViFSzq7TbA--
