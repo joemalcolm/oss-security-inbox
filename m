@@ -1,4 +1,4 @@
-Received: (qmail 5989 invoked by uid 550); 6 Sep 2023 09:58:38 -0000
+Received: (qmail 30383 invoked by uid 550); 30 Jan 2024 21:43:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,33 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5191 invoked from network); 6 Sep 2023 09:21:26 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
+Received: (qmail 29940 invoked from network); 30 Jan 2024 21:42:43 -0000
+Date: Tue, 30 Jan 2024 22:45:00 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <9a2c2f90-582b-dfb7-058e-70f58acbae7d@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 Sep 2023 09:21:13 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-27526: Apache Superset: Improper Authorization check on
- import charts 
+Message-ID: <20240130214500.GA24892@openwall.com>
+References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com> <20240130142524.GA21216@openwall.com> <2024013010-jockey-kindred-c6cd@gregkh>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2024013010-jockey-kindred-c6cd@gregkh>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 & CVE-2021-33631
 
-Affected versions:
+Thank you Greg for looking into these issues.  It's great that most
+longterm kernel trees appear already fixed.
 
-- Apache Superset through 2.1.0
+On Tue, Jan 30, 2024 at 08:34:03AM -0800, Greg KH wrote:
+> Yeah, that looks really high but who knows how CVSS scores really are
+> calculated :)
 
-Description:
+Actually, we do - this is transparent.  NVD publishes not only the
+scores, but also all the inputs, and the formula is public and they have
+a calculator on their website:
 
-A non Admin authenticated user could incorrectly create resources using the=
- import charts feature, on Apache Superset up to and including 2.1.0.
+https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator
 
-Credit:
+Vulnerability scoring is genuinely difficult.  I think CVSS is a pretty
+good attempt at standardizing it, but it cannot capture all the nuance,
+especially not in the Base Score.
 
-NTT DATA (finder)
+For CVE-2021-33631 (the ext4 BUG), both the distro vendor's and NVD's
+CVSS input vectors specify AV:L/AC:L/PR:L/UI:N, which means the
+vulnerability can be triggered by a local system user at will and
+without additional privileges.  I'd say that deliberately getting the
+kernel to work on a corrupted filesystem requires at least one of:
+physical access (AV:P) or privileges on the system (PR:H) or user
+interaction (UI:R).  However, there's no way to encode this in one CVSS
+vector.  Also, in the physical access case, at least the availability
+impact typically does not apply (would be A:N).
 
-References:
+Maybe having multiple CVSS vectors per vulnerability (and then taking
+the average score?) could be a solution, but it'd require that someone
+very familiar with the affected component and its usage actually spend
+time thinking of all relevant combinations.  Not likely to happen.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-27526
-
+Alexander
