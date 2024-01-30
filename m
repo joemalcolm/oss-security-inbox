@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3021" "Thursday" "17" "November" "2016" "19:21:07" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<10d2a3813cbd44d29450eed87119277b@imshyb02.MITRE.ORG>" "64" "[oss-security] Re: CVE request: MyBB multiple vulnerabilities" nil nil nil "11" "2016111800:21:07" "[oss-security] Re: CVE request: MyBB multiple vulnerabilities" (number mark "U       cve-assign@m Nov 17   64/3021  " thread-indent "\"[oss-security] Re: CVE request: MyBB multiple vulnerabilities\"\n") "<20161110171551.GB22569@tunkki>" ("<20161110171551.GB22569@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13959 invoked by uid 550); 18 Nov 2016 00:21:20 -0000
+Received: (qmail 17685 invoked by uid 550); 30 Jan 2024 22:59:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13932 invoked from network); 18 Nov 2016 00:21:19 -0000
-From: <cve-assign@mitre.org>
-To: <henri@nerv.fi>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161110171551.GB22569@tunkki>
-Message-ID: <10d2a3813cbd44d29450eed87119277b@imshyb02.MITRE.ORG>
-Date: Thu, 17 Nov 2016 19:21:07 -0500
+Received: (qmail 17661 invoked from network); 30 Jan 2024 22:59:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1706655686; x=1706742086; bh=XG37WM9WvS
+	+iX3MGo3eqnCDLtJOhk9jv1RoYoZg7dyQ=; b=w5YJ+lbm5iK7GAIe6/w7U1mPrN
+	tgGZhHH02rPxdq3dewJ32aOmn7h3Fb/o+39u/f2F681l+1D3vITF8ZZBpTyQnomC
+	WXQqGz2B2QeVQpqwFtX8umoqlcFW9touey3boX1mWxq76mTZrLI/MyHRlyZAGjMN
+	q3h4RGwcV1JvRWPXMxK5mahbw3MhSCEWs+J9aFHLCuGLxmy8RCfzWo4Txk8HLxlP
+	PI3VHi3WNNsa82mzNZd+HEt0+43zTzpoIL4nbS+HLCYDBP8houmYtYZY7Fhk4yuo
+	weHWJMM4bumAQ8po1AOJanUeyfBugiz1eckOQ9UaXc5dRrU8KJhVuokSr9mQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706655686; x=1706742086; bh=XG37WM9WvS+iX3MGo3eqnCDLtJOh
+	k9jv1RoYoZg7dyQ=; b=Phbe11zJlDZUk8pNO8kK2ccaJ5uI4KU+ga5mGVT6QmNY
+	qhaeUaSBMyVifKYUG92tIHD8pVgAVsV5cYe1zEtEpoT8DNglM6cKojqMv+q+UWvM
+	9YsqmbSOLe+8SUt2TUAphMtzJoGPPdDN0pPelJfGiEEXOPDMB6/D7wShlOfGtUqL
+	Zc/0p+1tx5RZtIaEt2N3B+SzZQIEvvsjcoHohDXrR4o16A2IfuGNCwFBPAh/7+iB
+	Lpa/Mq5nUcdx0UhE4Tvx+n3f5YTVKyScJgAK0yv+uT0JGp/I+zKmSxaXDCh08H83
+	IYNV9Q/tShIwW2UUC+AKtm7bwonryNk1UvoR6ULauQ==
+X-ME-Sender: <xms:xX-5ZdPOuZ1yVwuJ5YbAZ3GXzxjGfrbwwc6IKwJ5rl5f5zP9erwTPw>
+    <xme:xX-5Zf-9aAQYJgMGMAUXH_koH8cksW_5jGNaNwve8th0VByQRhzl_nLjtxN6eYdlB
+    e_IDnGoPst1Cg>
+X-ME-Received: <xmr:xX-5ZcRXwDshghNTIkBykZEohh-houhg6kI9kOrSz1LsHPC4zJAWbqx7bYFf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtkedgtdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
+    eggeevueduudekvdetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:xn-5ZZviUmUiQ6T3UTgxI32B1HE2dKFEYqUSAAI8-gW241YolwXiag>
+    <xmx:xn-5ZVeCCSk7y8qj63LPuIcGhmOPqZD5xVVDyAINPnxaDLaRsh6R_Q>
+    <xmx:xn-5ZV1FQR8wUn5-JYbmkzIMybDkMdrFm_hvPjQWofVf4v1GxlEZRQ>
+    <xmx:xn-5ZVGGK6sJfDTmS0JLqBKRQAF-86LzabiUrCJo16QIx-gFjxxuNg>
+Feedback-ID: i787e41f1:Fastmail
+Date: Tue, 30 Jan 2024 15:01:24 -0800
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <2024013003-clubhouse-mauve-222b@gregkh>
+References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
+ <20240130142524.GA21216@openwall.com>
+ <2024013010-jockey-kindred-c6cd@gregkh>
+ <20240130214500.GA24892@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: MyBB multiple vulnerabilities
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240130214500.GA24892@openwall.com>
+Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 &
+ CVE-2021-33631
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Jan 30, 2024 at 10:45:00PM +0100, Solar Designer wrote:
+> Thank you Greg for looking into these issues.  It's great that most
+> longterm kernel trees appear already fixed.
 
-> Fixed in 1.8.6
-> https://blog.mybb.com/2015/09/07/mybb-1-8-6-1-6-18-merge-system-1-8-6-release/
+I've taken the one remaining missing fix into the next round of kernel
+releases, so all should be good now.
 
-CVE-2015-8973 Medium Risk: Forum password bypass in xmlhttp.php
-CVE-2015-8974 Low Risk: SQL Injection in Grouppromotions module (ACP)
-CVE-2015-8975 Low Risk: Possible XSS Injection in the error handler
-CVE-2015-8976 Low Risk: Possible XSS issues in old upgrade files
-CVE-2015-8977 Low Risk: Possible Full Path Disclosure in publicly accessible error log files
+> For CVE-2021-33631 (the ext4 BUG), both the distro vendor's and NVD's
+> CVSS input vectors specify AV:L/AC:L/PR:L/UI:N, which means the
+> vulnerability can be triggered by a local system user at will and
+> without additional privileges.  I'd say that deliberately getting the
+> kernel to work on a corrupted filesystem requires at least one of:
+> physical access (AV:P) or privileges on the system (PR:H) or user
+> interaction (UI:R).  However, there's no way to encode this in one CVSS
+> vector.  Also, in the physical access case, at least the availability
+> impact typically does not apply (would be A:N).
 
+The "interesting" thing here is that the project in question (the
+kernel) does not consider "mounting a corrupted filesystem" as a real
+attack vector at all.  There's been long discussions about it, the most
+recent being last year on the kernel summit discuss mailing list, and at
+the kernel summit itself.
 
-> Fixed in 1.8.7
-> https://blog.mybb.com/2016/03/11/mybb-1-8-7-merge-system-1-8-7-release/
+So while CVSS might consider this a real issue, the developers of the
+project itself do not.  The disconnect is one that drives people who use
+sysbot tools to create fancy corrupted filesystem images with the goal
+of getting a CVE for their CV, crazy on a weekly basis when the issues
+they report get constantly ignored.
 
-CVE-2016-9402 Medium risk: Possible SQL Injection in moderation tool
-CVE-2016-9403 Low risk: Missing permission check in newreply.php
-CVE-2016-9404 Low risk: Possible XSS Injection on login
-CVE-2016-9405 Low risk: Possible XSS Injection in member validation
-CVE-2016-9406 Low risk: Possible XSS Injection in User CP
-CVE-2016-9407 Low risk: Possible XSS Injection in Mod CP logs
-CVE-2016-9408 Low risk: Possible XSS Injection when editing users in Mod CP
-CVE-2016-9409 Low risk: Possible XSS Injection when pruning logs in ACP
-CVE-2016-9410 Low risk: Possibility of retrieving database details through templates
-CVE-2016-9411 Low risk: Disclosure of ACP path when sending mails from ACP
-CVE-2016-9412 Low risk: Low adminsid & sid entropy
-CVE-2016-9413 Low risk: Clickjacking in ACP
-CVE-2016-9414 Low risk: Missing directory listing protection in upload directories
+Good times :)
 
+thanks,
 
-> Fixed in 1.8.8
-> https://blog.mybb.com/2016/10/17/mybb-1-8-8-merge-system-1-8-8-release/
-
-CVE-2016-9415 Medium risk: Style import CSS overwrite on Windows servers
-CVE-2016-9416 Medium risk: SQL Injection in the users data handler
-CVE-2016-9417 Medium risk: SSRF attack in fetch_remote_file()
-CVE-2016-9418 Medium risk: Possible short name access to ACP backups on Windows servers
-CVE-2016-9419 Low risk: Stored XSS in the ACP
-CVE-2016-9420 Low risk: Loose comparison false positives
-CVE-2016-9421 Low risk: Possible XSS injection in ACP users module
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYLkkZAAoJEHb/MwWLVhi2lXYP/30k+COm7wVbzUrRw6eEQ780
-osNfSo7+y6m8Xq/wn9NsdaAkPfq8ReAFm+fJXyPFH3Go/PWgzF/JNDmS5F58IMyT
-JtkbLLDvZTjaIHMnMD5gWUVhxPX6CgxY5ISgTjraTKqGULlYALv08DRKbsLKVaCp
-LOVO7mE46wIGk4BIhhOaLOGrn5a+zDsLy24EHzFAUkqm98RscOoGLSf4j4IHiZ5/
-pREAbb1xDBibBEFG9d/9jXMOLYPQVwhBhANAISmBd0wePYQFitto17ZjIA4bWoEN
-OuK/CG3o+wZr6p+wdfpKZ10Rep5C37Hts6T0leXYqVecerF5KkKwhPyGsF5jp6My
-TgyLB84jepVWRwtSHvgpbL1Z6uCy38f16u6rhXdOMAcOKTrJDu8jnJzzb8RCs0oW
-IUTGIIFeO7RGbTKqNcz1ALNYpmmrEJvF3BYQw+l5d/Xko0k2pYrjFwJU9EMk0kyk
-Z0QrAOfXIkPDfDtGrrgwgMdZ7u3QpipadnZqsRRXSf2x5xOCxMMe+Ys5JUiHvfW2
-d9VftjQeCiWcn5m5Tx8KzvkEKZjDq2rr6Zq3kplva4mHWGXV1UJlX6lTwbLIHjd7
-H9WTdklCNLe3H95dTgoO41vlV6hDruGHAq3TwZgfYJHUE4vikFO7eroS8XyYzuOP
-WPLCAtP/smMfqPIgmSPh
-=RfoI
------END PGP SIGNATURE-----
+greg k-h
