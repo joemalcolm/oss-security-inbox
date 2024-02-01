@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["912" "Monday" "28" "November" "2016" "16:04:45" "-0800" "Yongjun Zhang" "yjzhangal@apache.org" "<CAA0W1bTbUmUUSF1rjRpX-2DvWutcrPt7TJSWUcSLg1F0gyHG1Q@mail.gmail.com>" "62" "[oss-security] CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability" nil nil nil "11" "2016112900:04:45" "[oss-security] CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability" (number mark "U       yjzhangal@ap Nov 28   62/912   " thread-indent "\"[oss-security] CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23784 invoked by uid 550); 29 Nov 2016 00:40:47 -0000
+Received: (qmail 20457 invoked by uid 550); 1 Feb 2024 10:34:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +7,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7208 invoked from network); 29 Nov 2016 00:05:00 -0000
-X-Gm-Message-State: AKaTC010zkgch6hXmh8KONSSacSyLkj1yUIRSqBacf5Kqu6mzCAlM4cM2+LUdNNMDTapevYsnmoZgqjKe/EikOcO
-X-Received: by 10.157.44.185 with SMTP id p54mr14578176otb.3.1480377885814;
- Mon, 28 Nov 2016 16:04:45 -0800 (PST)
+Received: (qmail 20438 invoked from network); 1 Feb 2024 10:34:40 -0000
+Date: Thu, 1 Feb 2024 11:36:57 +0100
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Zbt0Sazt6BkZqS6H@256bit.org>
+References: <aa1585dd-d109-463e-9639-9b6f576a3f1e@oracle.com>
+ <47f2f72f-302d-2bdc-447d-0d970d9f8b15@gmail.com>
+ <8cbdda76-dcfc-41b3-b613-b88a80784328@treenet.co.nz>
+ <ce4e335d-2492-ff63-7529-61b862fec800@gmail.com>
 MIME-Version: 1.0
-From: Yongjun Zhang <yjzhangal@apache.org>
-Date: Mon, 28 Nov 2016 16:04:45 -0800
-X-Gmail-Original-Message-ID: <CAA0W1bTbUmUUSF1rjRpX-2DvWutcrPt7TJSWUcSLg1F0gyHG1Q@mail.gmail.com>
-Message-ID: <CAA0W1bTbUmUUSF1rjRpX-2DvWutcrPt7TJSWUcSLg1F0gyHG1Q@mail.gmail.com>
-To: security@apache.org, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com, general@hadoop.apache.org
-Content-Type: multipart/alternative; boundary=001a113ed16c04913805426556e2
-Subject: [oss-security] CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
-
---001a113ed16c04913805426556e2
-Content-Type: text/plain; charset=UTF-8
-
-Hi,
-
-Please see below the official announcement of a critical security
-vulnerability that's discovered and subsequently fixed in Apache Hadoop
-releases.
-
-Thanks and best regards,
-
---Yongjun
-
-----------
-
-CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
-
-Severity: Critical
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ce4e335d-2492-ff63-7529-61b862fec800@gmail.com>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] Numerous unconfirmed FOSS CVEs disclosed on FD
+ mailing list
 
 
+On Do, 01 Feb 2024, Matthew Fernandez wrote:
+> > Please *DO* contest CVE issued for non-security bugs. It helps
+> > discourage this kind of bad behaviour if their CVEs get removed. May
+> > also help CNA to identify repeat offenders for closer inspection of
+> > reports.
 
-Vendor:
+I was planning to do this for Vim. However the relevant CVE-2023-45921 
+has already been classified as rejected without me doing anything yet.
 
-The Apache Software Foundation
+And interestingly, as soon as the CVE was public, it generated some 
+attention and users have directly asked questions when we will fix it.
 
-
-
-Versions Affected:
-
-Hadoop 2.6.x, 2.7.x
-
-
-
-Description:
-
-A remote user who can authenticate with the HDFS NameNode can possibly run
-arbitrary commands as the hdfs user.
-
-
-
-Mitigation:
-
-2.7.x users should upgrade to 2.7.3
-
-2.6.x users should upgrade to 2.6.5
-
-
-
-Impact:
-
-A remote user who can authenticate with the HDFS NameNode can possibly run
-arbitrary commands with the same privileges as HDFS service.
-
-
-
-Credit:
-
-This issue was discovered by Freddie Rice.
-
-----------
-
---001a113ed16c04913805426556e2--
+Best,
+Christian
+-- 
+Was man nicht in den Beinen hat, muß man im Kopf haben.
