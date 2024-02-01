@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["923" "Tuesday" "25" "July" "2017" "16:46:19" "+0100" "John Haxby" "john.haxby@oracle.com" "<430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>" "20" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017072515:46:19" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        john.haxby@o Jul 25   20/923   " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>" ("<20170628200239.GA25525@openwall.com>" "<CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>" "<20170702224421.GA19376@openwall.com>" "<7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>" "<20170703181857.GA24978@openwall.com>" "<9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21649 invoked by uid 550); 25 Jul 2017 15:46:37 -0000
+Received: (qmail 19539 invoked by uid 550); 1 Feb 2024 00:47:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +6,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21629 invoked from network); 25 Jul 2017 15:46:36 -0000
-References: <20170628200239.GA25525@openwall.com>
- <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>
- <20170702224421.GA19376@openwall.com>
- <7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>
- <20170703181857.GA24978@openwall.com>
- <9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>
-Message-ID: <430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Source-IP: aserv0021.oracle.com [141.146.126.233]
-Date: Tue, 25 Jul 2017 16:46:19 +0100
-From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
-To: oss-security@lists.openwall.com
+Received: (qmail 18402 invoked from network); 1 Feb 2024 00:47:35 -0000
+Date: Thu, 1 Feb 2024 01:49:52 +0100
+From: Solar Designer <solar@openwall.com>
+To: Aleksa Sarai <cyphar@cyphar.com>
+Cc: oss-security@lists.openwall.com, dev@opencontainers.org
+Message-ID: <20240201004952.GA670@openwall.com>
+References: <20240131.201014-manual.rungs.vicious.preface-640Q4W5TLTW7@cyphar.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240131.201014-manual.rungs.vicious.preface-640Q4W5TLTW7@cyphar.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] runc: CVE-2024-21626: high severity container breakout attack
 
-On 03/07/17 19:55, John Haxby wrote:
->> On 3 Jul 2017, at 19:18, Solar Designer <solar@openwall.com> wrote:
->>
->>> PS For contributing back I have given myself a "must try harder" mark.
->> Thanks.  Please let us know at which specific tasks you'll try harder.
-> 
-> Will do.   I’m in the middle of a house move at the moment so everything is a little chaotic so I’ll get back to you next week when, hopefully, the dust has settled somewhat.
+Hello Aleksa,
 
-Still in the middle of the house move and it's all generally chaos and
-sorry for not getting back sooner.
+Thank you and others you credit for doing much more than fixing the
+immediate issue, and for disclosing this in so much detail.
 
-However, put me down as backup for "1. Promptly review new issue reports
-for meeting the list's requirements and confirm receipt..."
+On Thu, Feb 01, 2024 at 07:33:01AM +1100, Aleksa Sarai wrote:
+> This is a notification to vendors that use runc about a high-severity
+> vulnerability (CVE-2024-21626) with several exploit methods which allow
+> for full container breakouts due to an internal file descriptor leak.
 
-I do expect that we (I) will become more active on linux-distros as
-well.   Speaking of which, has it been unusually quiet or do I need to
-beat up the mail admin people again?   I haven't seen anything since
-Bastille Day (14 July).
+> The core issue is a file descriptor leak, and while we do O_CLOEXEC all
+> file descriptors before executing the container code, the file
+> descriptor is open when doing setcwd(2) which means that the reference
+> can be kept alive into the container by configuring the working
+> directory to be a path resolved through the file descriptor (and the
+> non-dumpable bit is unset after execve(2) meaning that there are
+> multiple ways to attack this other than bad configurations).
 
-jch
+What's setcwd(2)?  Perhaps you meant something else?
+
+> There is also an execve(2)-based attack that makes simple verification
+> unworkable and was particularly hairy to fix (the patch involves doing
+> //go:linkname to access Go runtime internals, because the only way to
+> defend against it entirely is to close all unneeded file descriptors --
+> for the same reason that #!-based tricks meant that CVE-2019-5736
+> required drastic measures).
+
+For reference, here are the threads you started on CVE-2019-5736 and its
+exploit back in 2019:
+
+https://www.openwall.com/lists/oss-security/2019/02/11/2
+https://www.openwall.com/lists/oss-security/2019/02/13/3
+
+In one of the messages:
+
+https://www.openwall.com/lists/oss-security/2019/02/13/1
+
+you mentioned having sent your "AT_THIS_ROOT patchset to LKML -- which
+allows userspace processes to block resolution of magic links."  What's
+the current status of this effort, and does/would it help against this
+new issue?
+
+Alexander
