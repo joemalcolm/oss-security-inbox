@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6316" "Sunday" "27" "March" "2022" "15:10:41" "+0300" "ariel.byd@gmail.com" "ariel.byd@gmail.com" nil "153" "Re: [oss-security] zlib memory corruption on deflate (i.e. compress)" "^Date:" nil nil "3" nil nil (number mark "        ariel.byd@gm Mar 27  153/6316  " thread-indent "\"Re: [oss-security] zlib memory corruption on deflate (i.e. compress)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] zlib memory corruption on deflate (i.e. compress)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1052 invoked by uid 550); 27 Mar 2022 12:13:16 -0000
+Received: (qmail 7403 invoked by uid 550); 3 Feb 2024 00:00:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,197 +6,181 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32264 invoked from network); 27 Mar 2022 12:10:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:from:mime-version:subject:date:message-id
-         :references:in-reply-to:to;
-        bh=1D5IzKL9l4Upj0NiKO/uIHEgOaYbPuJVBS7ZZlUPP5s=;
-        b=OiXoyBmVJrw82/+peGVjX2wN1iXbgUBKn3o9zYPnouBjrJ43tvOhecMl0wcZNvVTKa
-         GjATpqaPKb9qLQFp0UbE7ddXYtDK+Lnd0wlveo/2uBsLXhyqDeEhmovGqdaOzp6JaWcM
-         96/ghyJDXE7Lz4+CU57D8A619qFxEGeFJbdfT5npUAVW12QMeLwffuilqh5HX74AoS7X
-         3eOXtVJu47qkU61K7lm6y0BkFclM3CzXj8sK0hpQV4XAo7dyMLc5uXOhscvI2FkQoCit
-         LO3t/cqFSNlwC/xBmGoGvOpsr9V7Ap6ODjvDmESMr9XkNLT6zDvg4acFwv6lSubTONeZ
-         Yf4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:content-transfer-encoding:from:mime-version
-         :subject:date:message-id:references:in-reply-to:to;
-        bh=1D5IzKL9l4Upj0NiKO/uIHEgOaYbPuJVBS7ZZlUPP5s=;
-        b=yFbyXBqKu1vZs8z/qR4D7gDjTfK3miaUoCULAtU1Ec2vRPlTCTfAq5C86p3s3pYjJF
-         +bsgXoGTmDMbuXyVrKs6+76r/llQz235enOFCOsbuRM+oHfLbwZv+jEBKckwrl4S8hhi
-         HdcopgJadC+7HfYUg721V6gkSEMWsI5YtouZZHwNq9DyKKLfBzPCTqBSbCbhntWJScH+
-         z1cXNrJIWHC1NmxWrs+wSozJKVyfnqPtDSYmq043G4Pw87Vik5gBnk1R4MJvgnkV9qU4
-         rv+B7/OwDddQG7NrCYF1oIV++HryiGZ/XmRvPXX0rEHrrgxowUy8Ap1LhYYBRqb3uMh2
-         N5DQ==
-X-Gm-Message-State: AOAM532Ye2dofSjg9tw2eEku6BDEzgE7Ss5b77PeHIOkzSDAHo/sw3Tx
-	J6s/+sjJsvAs8YT92I9lSuJk+4WIvSg=
-X-Google-Smtp-Source: ABdhPJx3LQ/dSS526zMBaSX3OO9sPH4NEGO2Oo6siq6nsDofRN7sJLUlv2HhjgYxp7UAsGvh3U9gcw==
-X-Received: by 2002:a5d:64c4:0:b0:205:8280:73f6 with SMTP id f4-20020a5d64c4000000b00205828073f6mr17007110wri.358.1648383043556;
-        Sun, 27 Mar 2022 05:10:43 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (1.0)
-Message-Id: <FC8967CA-B0AE-4315-92C8-16CB941FDF1B@gmail.com>
-References: <Yj/HK64AGxncpsFp@sol.localdomain>
-In-Reply-To: <Yj/HK64AGxncpsFp@sol.localdomain>
-X-Mailer: iPhone Mail (19D52)
-Date: Sun, 27 Mar 2022 15:10:41 +0300
-From: ariel.byd@gmail.com
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] zlib memory corruption on deflate (i.e. compress)
+Received: (qmail 31958 invoked from network); 2 Feb 2024 23:17:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1706915961;
+	 x=1707002361; bh=YkaToJU5RpkGuoNlAeKjZr09li26Zv9Tg+eyfWO6pH8=; b=
+	P2a6DEjISPDKc9DLEoDa/27FuMiEXlxjYPEfTPB+h1ygd+UyJd0uRm54SwFAK6Hq
+	7xiI7GYxInMOffqPZuu6xSV/OKfaj2i35fNEM2z6G2m4bmNkeh05skPxv5++goMY
+	EsIVG0HkzdFBqJNjEfd+t+XukTGCJOLPODNN0B5Ql6eJW75ZdO5Y0o/oOdtyvKFj
+	Uk+6vWYXcoWC/yiLmtiVDJRVnkyD8zyea3bES9faNFLjIeFQRaMTWPTbfk/eD7er
+	cwLG1KAXoEWT0FFknPXHoP8ThGjR1Ev7BjR40ThzhDLMsDbYBiWHR9UsQM3KEIlH
+	UOsbpzSgfFIwkzh4gS8y7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706915961; x=1707002361; bh=YkaToJU5RpkGuoNlAeKjZr09li26
+	Zv9Tg+eyfWO6pH8=; b=NxSX8LhcHcI/qbM8FfkdAWAgUsoiCqKyp8Yvo0Evp7X8
+	BsxnmyoovPZMhZBmfapKCE87Q7j5lDPfGrrv9jp1gpUdQphsN7O6B2/9zd78Zf8q
+	wY4ivKYvx7O2eu6P326oteqPV+FWJRXD0w34jXKWOIvIiKTqDvE3Tc7eIc/71wOB
+	7aWYY+zxDbUeibk75Xy8/c65ec1Rxmrt86aotAfY8vVLKOmM8Kj0QaDuX8nWoAHk
+	W3KbjJGl89DHQxteWBWXf3oiPPll9H3TxUz2eHrdu26PA1yQk56RndzPJ2p+TYF4
+	b3IqUG2fXDTzQvSbRz3f5mZWWhhk1P7zP7w62jUlrw==
+X-ME-Sender: <xms:eXi9ZRHgDRw0TiQ3dSoH91n3DfSFwfK19gIW7WhGxr5dBWZylZ49TQ>
+    <xme:eXi9ZWXJ2f5zxcvuY-7vzR18QDDzXamZm_7zyCI4r6pWg4vyxaOcLug6VWDFHLA8n
+    Rl2fEYjw-W7WQw>
+X-ME-Received: <xmr:eXi9ZTLWJ2Tn4u8qqzrKU_tI_ay3GXl9MIsBOdG0GwXhrXOPsP7jx0nEicTtI81VpW0rPNZ_7UmY2f5U-pPQ0LwGHFDnu5-JssiBFniDo2t8IZ3F>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfeduhedgtdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
+    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
+    epgeefjeeitedvgefhtefhfeevffffgffgvdfhgefhhefhhedutdefjeefleekuedunecu
+    ffhomhgrihhnpehgohhoghhlvgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhl
+    rggsrdgtohhm
+X-ME-Proxy: <xmx:eXi9ZXGLYoZXOpcOwMZ2-OfohQESlPlRtvRYVy4cuagueWWl9aABhg>
+    <xmx:eXi9ZXWprIfZOZrr6n-pQOtdUyJAhaCPjmmSV4tnWXq_nS4UyqdT2Q>
+    <xmx:eXi9ZSPhhRN4V47w4daRii23wSa-B4PvTMnH1-jOY73k_6_DXKBCgg>
+    <xmx:eXi9ZeDjhWTqfVO89HfI81hj9H7XINclagnuP32wjhM2TKVoA4i5mg>
+Feedback-ID: iac594737:Fastmail
+Date: Fri, 2 Feb 2024 18:19:18 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
+Message-ID: <Zb14d12OhsridZ3o@itl-email>
+References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
+ <20240130142524.GA21216@openwall.com>
+ <2024013010-jockey-kindred-c6cd@gregkh>
+ <20240130214500.GA24892@openwall.com>
+ <2024013003-clubhouse-mauve-222b@gregkh>
+ <Zbmav6mcBVq0zGGy@itl-email>
+ <36C1AFC4-7142-4557-9127-658BABE0AAF5@chromium.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="StJez3LCs9toPSQ1"
+Content-Disposition: inline
+In-Reply-To: <36C1AFC4-7142-4557-9127-658BABE0AAF5@chromium.org>
+Subject: Re: [oss-security] Kernel vulnerabilities CVE-2021-33630 &
+ CVE-2021-33631
 
-If the match lengths are uniformly distributed between 3 and 258, you=E2=80=
-=99ll get exactly 8 bits per length - not less due to entropy consideration=
-s, not more since N-3 is a valid Huffman encoding with 8 bits per character.
+--StJez3LCs9toPSQ1
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 2 Feb 2024 18:19:18 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Kernel vulnerabilities CVE-2021-33630 &
+ CVE-2021-33631
 
-Actually, maybe not. I think 258 can be encoded as either =E2=80=9C284 31=
-=E2=80=9D or =E2=80=9C285=E2=80=9D, and if the encoder always chooses the =
-=E2=80=9C285=E2=80=9D encoding (leaving =E2=80=9C284 31=E2=80=9D useless) y=
-ou might have 257 characters, you might need some 9-bit characters. I think=
- it=E2=80=99s possible to bound that by 1/64 bit per character but I have n=
-ot proven it.
+On Fri, Feb 02, 2024 at 01:24:58PM -0800, Roxana Bradescu wrote:
+>=20
+>=20
+> > On Jan 30, 2024, at 4:56=E2=80=AFPM, Demi Marie Obenour <demi@invisible=
+thingslab.com> wrote:
+> >=20
+> > On Tue, Jan 30, 2024 at 03:01:24PM -0800, Greg KH wrote:
+> >> On Tue, Jan 30, 2024 at 10:45:00PM +0100, Solar Designer wrote:
+> >>> Thank you Greg for looking into these issues.  It's great that most
+> >>> longterm kernel trees appear already fixed.
+> >>=20
+> >> I've taken the one remaining missing fix into the next round of kernel
+> >> releases, so all should be good now.
+> >>=20
+> >>> For CVE-2021-33631 (the ext4 BUG), both the distro vendor's and NVD's
+> >>> CVSS input vectors specify AV:L/AC:L/PR:L/UI:N, which means the
+> >>> vulnerability can be triggered by a local system user at will and
+> >>> without additional privileges.  I'd say that deliberately getting the
+> >>> kernel to work on a corrupted filesystem requires at least one of:
+> >>> physical access (AV:P) or privileges on the system (PR:H) or user
+> >>> interaction (UI:R).  However, there's no way to encode this in one CV=
+SS
+> >>> vector.  Also, in the physical access case, at least the availability
+> >>> impact typically does not apply (would be A:N).
+> >>=20
+> >> The "interesting" thing here is that the project in question (the
+> >> kernel) does not consider "mounting a corrupted filesystem" as a real
+> >> attack vector at all.  There's been long discussions about it, the most
+> >> recent being last year on the kernel summit discuss mailing list, and =
+at
+> >> the kernel summit itself.
+> >=20
+> > The kernel itself does not, but there are downstreams of the kernel that
+> > do for at least a subset of filesystems.  These include Android and
+> > Chromium OS.
+>=20
+> ChromeOS Security here, and this is correct.
 
-Similarly for distances uniformly distributed between 1 and 32768.
+Good to know, thanks!
 
-That=E2=80=99s a total of 23 bits per code.
+> >> project itself do not.  The disconnect is one that drives people who u=
+se
+> >> sysbot tools to create fancy corrupted filesystem images with the goal
+> >> of getting a CVE for their CV, crazy on a weekly basis when the issues
+> >> they report get constantly ignored.
+> >=20
+> > If someone finds a vulnerability in F2FS or ext4 that can be used to
+> > compromise the kernel by crafting a malicious filesystem, they should
+> > report it to the Android or Chromium OS security teams, respectively.
+> > It=E2=80=99s a verified boot bypass and I expect that it would be in sc=
+ope for
+> > the respective bounty programs.  If Android mounts FAT and exFAT in the
+> > kernel, then vulnerabilities in these filesystems should be reported to
+> > the Android security team.
+> >=20
+> > Google requires that F2FS and ext4 are secure against malicious
+> > filesystem images, so they should be the ones responsible for fixing any
+> > vulnerabilities that require a malicious filesystem image to trigger.
+> > Fortunately, they have the resources to do that, so this should not be a
+> > problem for them.
+>=20
+> Vulnerabilities can be reported to ChromeOS and Android via https://bughu=
+nters.google.com
+> If any questions, can reach out to chromeos-security@chromium.org=20
 
+Thank you!  I don=E2=80=99t have any to report right now, but I will report=
+ any
+I do come across.
 
-> On 27 Mar 2022, at 12:31, Eric Biggers <ebiggers@kernel.org> wrote:
+> > Could this be documented somehow, so that people know to send reports
+> > against f2fs and ext4 to those who will actually fix them?
 >=20
-> =EF=BB=BFOn Sat, Mar 26, 2022 at 09:52:17AM -0700, Tavis Ormandy wrote:
->> One question remains - does this *only* affect Z_FIXED, or also
->> Z_DEFAULT_STRATEGY? It seems plausible this also affects
->> Z_DEFAULT_STRATEGY, because of this condition:
->>=20
->> https://github.com/madler/zlib/blob/master/trees.c#L976
->>=20
->>    } else if (s->strategy =3D=3D Z_FIXED || static_lenb =3D=3D opt_lenb)=
- {
->>=20
->> That is, if the optimal and static trees are the same size, then zlib
->> *chooses* the Z_FIXED strategy anyway. I don't know if this is
->> practically possible yet, I'm investigating but if someone smarter than
->> me already knows the answer please let me know!
->>=20
->> IMHO, this is a pretty bad bug - but if it is impossible to reach with
->> Z_DEFAULT_STRATEGY, then at least there's no need to panic, as Z_FIXED
->> is usually only used in special circumstances...
->>=20
->> If it possible, well... uh-oh.
->>=20
->=20
-> I think it's not possible, at least with the default memLevel (which is o=
-ne of
-> the parameters to deflateInit2()), though it gets uncomfortably close.
->=20
-> Let's assume that given a sequence of "items" (matches and literals), it's
-> possible to craft an input that makes the compressor choose those items f=
-or one
-> of its blocks.  It may require getting creative with de Bruijn sequences,=
- etc.,
-> like Tavis did in his reproducer, but generally speaking I'd consider it =
-to be
-> possible.  Then, I'd phrase the question of reachability of this bug as:
->=20
-> "Does there exist a sequence of items with length at most 1<<(memLevel+6)
-> [i.e.  16384 by default] that, when encoded into a block, takes up more t=
-han
-> 3*(1<<(memLevel+6)) bytes [i.e. 49152 by default]?"
->=20
-> Using less than the maximum allowed number of items isn't going to help. =
- Also,
-> the block header won't take up significant space compared to 16384 items.=
-  So
-> this is basically asking "do items ever cost more than 24 bits on average=
-"?
->=20
-> This can "obviously" happen when the use of the static Huffman codes is f=
-orced
-> with Z_FIXED, as items can cost up to 31 bits with the static codes, and =
-all
-> items can have this worst-case cost.  That's what Tavis's reproducer does.
->=20
-> But with Z_DEFAULT_STRATEGY, zlib uses the cheaper of the static and dyna=
-mic
-> codes.  For the bug to happen then, both the static and dynamic codes wou=
-ld have
-> to use more than 24 bits per item on average, for the same sequence of it=
-ems.
->=20
-> So can the dynamic codes ever use more than 24 bits per item on average?
->=20
-> It gets pretty close, but I don't think it's possible.
->=20
-> The worst case must involve all matches and zero literals, unless every s=
-ingle
-> length symbol is used which seems unlikely to help (see later analysis). =
- And
-> all else being equal, the most costly matches will be the ones with the m=
-ost
-> extra length and extra offset bits.
->=20
-> However, the more often a symbol is used, the shorter its Huffman codewor=
-d gets.
-> If we use only matches that have the most extra bits, we end up using the=
- same
-> length and offset symbols a lot.  There are only 4 length symbols with the
-> maximum extra bits of 5, so if we use those evenly we get 2-bit length
-> codewords, for 7 bits per length.  Likewise, there are only 2 offset symb=
-ols
-> with the maximum extra bits of 13, so if we use those evenly we get 1-bit=
- offset
-> codewords, for 14 bits per offset.  That's 7 + 14 =3D 21 bits per match.
->=20
-> Roughly speaking, to add 1 bit to a Huffman codeword length, we need to h=
-alve
-> the symbol's frequency.  So roughly speaking, to add one bit to the length
-> codewords we'd need to add 4, 8, 16, ..., length symbols, using each one =
-roughly
-> equally often.  However, the number of extra bits decreases by 1 for each=
- 4
-> length symbols.  Therefore we gain roughly 0.5 bits by adding the 4 length
-> symbols with 4 extra bits, resulting in 7.5 bits per length on average.  =
-But if
-> we go further, the average cost per length starts getting cheaper.
->=20
-> Similarly, the number of extra bits decreases by 1 for each 2 offset symb=
-ols.
-> So offsets get about 0.5 bits more expensive if we also use the 2 offset =
-symbols
-> with 12 extra bits, resulting in 14.5 bits per offset on average.  But an=
-ything
-> further decreases the cost.
->=20
-> That's 7.5+14.5 =3D 22.0 bits per match on average.
->=20
-> We can do a bit "better" by considering that Huffman codewords can only b=
-e a
-> whole number of bits.  E.g., if we're using four offset symbols, we can u=
-se the
-> ones with num_extra_bits=3D13 'n' times each and the ones with num_extra_=
-bits=3D12
-> n/2+1 times each, and still get 2-bit codewords for all four symbols.  Ho=
-wever,
-> it doesn't seem that we can gain more than 1 bit on average per match fro=
-m this.
->=20
-> So it looks like the worst case is somewhere around 22.5 bits per item.  =
-That's
-> less than the required 24.  It's definitely getting uncomfortably close t=
-hough,
-> so this could use a more formal treatment.
->=20
-> Also, memLevel can be as low as 1; it's a parameter to deflateInit2().  W=
-ith
-> memLevel=3D1, zlib will flush blocks after just 128 items.  The block hea=
-der
-> containing the Huffman codeword lengths would be more significant in that=
- case.
-> Though, the block header would still be pretty short, given that there wo=
-uldn't
-> be too many codewords in the codes, given the 128 item limit as well the
-> constraints of having to generate one of these worst-case sequences.
->=20
-> - Eric
+> We will document something on the ChromeOS side. Thanks for flagging this!
+
+You=E2=80=99re welcome!  Would it be possible for ChromeOS Security to take
+responsibility for triaging (and, if the problem is security related,
+fixing) ext4 syzbot reports?  My understanding is that this would
+address the main complaint of the ext4 maintainers, which is work
+required to deal with bug reports that are not from end users.  The
+same applies with f2fs and Android Security.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+--StJez3LCs9toPSQ1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmW9eHcACgkQsoi1X/+c
+IsHqHA/8CCFXz3QpS7hoZBYq0cEu1TRjURXyY5psdc5YGW67Cgj1slIF98GR/DZf
+oHXlNrQIcDkNRDnKLiBZ4Ob7bvInpbOGEIU3b9FISOwuxTlDUVX+0T6+PydJnwnT
+5Bxm+T5Sck0tpx4QJneEE/kS4FlpJ/KtVqj+syi/H4AtCKP6ACnW2SpjFq1dhdl1
+FGdTnvvmtwrowUM6dHkkmEYE/+Ng53SI+ZV/ZZeMniVvSkvNe1dgx30YL6gmKOmB
+C8BsqMSznTaorTdHdsE5AFC/NGFmxnD9OZs22Uv0lWOr33hpy0NB9j0wocio/on1
+sFvzgqEX9fxtdPe83oxTCSHng8jSXzt9NRXISNtEikPEMu59jcLXmOVwQUX5E/0G
+wRknz3IAbfu3bqUmq0xEDn8Z00lKEj58Q1FIgps4sshZzWpPXgp4yXA9TxvOVrVH
+PUHa6GY5PW2Wud096qi1rPMsCYdjWUuX9sj5hO6uoC6btv1yhCAezmvBq9wFSi2c
+pGEeu9VXMJSqHtHBiMSFnHeJYuEA5t3juY1+mo4s5MCSfEzUcPjGnbK1ryALgd0R
+ZeehSL5fS12rjlhcqawauFUz40bBedI0OhzsAwp9uZnIDF5vdNpJpzoG7Z0onJsv
+kX5gNOrb2D26CPGF5lk49Y1efaoRtaQPxZ3UlMtDuIlCdOFwIXU=
+=+5Lo
+-----END PGP SIGNATURE-----
+
+--StJez3LCs9toPSQ1--
