@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["550" "Tuesday" "28" "August" "2018" "15:39:46" "-0700" "Bryan Call" "bcall@apache.org" "<DE6B4C1E-5C1C-49FB-903D-9013F433AAEB@apache.org>" "30" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with an invalid TLS handshake - CVE-2018-8022" nil nil nil "8" "2018082822:39:46" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with an invalid TLS handshake - CVE-2018-8022" (number mark "U       bcall@apache Aug 28   30/550   " thread-indent "\"[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with an invalid TLS handshake - CVE-2018-8022\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16073 invoked by uid 550); 29 Aug 2018 07:53:08 -0000
+Received: (qmail 17517 invoked by uid 550); 2 Feb 2024 18:11:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,133 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23939 invoked from network); 28 Aug 2018 22:40:05 -0000
-From: Bryan Call <bcall@apache.org>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <DE6B4C1E-5C1C-49FB-903D-9013F433AAEB@apache.org>
-Date: Tue, 28 Aug 2018 15:39:46 -0700
-To: announce@trafficserver.apache.org,
- dev <dev@trafficserver.apache.org>,
- users <users@trafficserver.apache.org>,
- security@trafficserver.apache.org,
- oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.9.1)
-Subject: [oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with an invalid TLS
- handshake - CVE-2018-8022
+Received: (qmail 15601 invoked from network); 2 Feb 2024 18:10:22 -0000
+Date: Fri, 2 Feb 2024 19:12:44 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: lennart@poettering.net
+Message-ID: <20240202181244.GA10788@openwall.com>
+References: <Za-XWUEPml2pcATt@kasco.suse.de> <20240124084235.360eb42b.hanno@hboeck.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240124084235.360eb42b.hanno@hboeck.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] systemd and other system services (in)compatibility with Linux procfs hidepid (was: darkhttpd: timing attack and local leak of HTTP basic auth credentials)
 
-CVE-2018-8022: Apache Traffic Server vulnerability with an invalid TLS hand=
-shake
+Hi,
 
-Reported By:
-Shigeki Otsu
+Since I'm adding to a thread started with Matthias' security review of
+darkhttpd, I'd like to say that I'm impressed by his consistent effort
+to review code that few others look at and the consistently high quality
+of his findings and write-ups.  Thank you, Matthias!  Also, thank you
+SUSE for (apparently) enabling Matthias to spend time on this.
 
-Vendor:
-The Apache Software Foundation
+On Wed, Jan 24, 2024 at 08:42:35AM +0100, Hanno Bock wrote:
+> On Tue, 23 Jan 2024 11:39:19 +0100 Matthias Gerstner <mgerstner@suse.de> wrote:
+> 
+> > The only way to configure the HTTP basic auth string in darkhttpd is
+> > to pass it via the `--auth` command line parameter. On Linux all local
+> > users can view the parameters of other programs running on the system.
+> 
+> I'd like to comment on that.
+> While "on Linux" *in most distros default settings* this is true, the
+> Linux Kernel actually has a mitigation for this since quite a while.
+> 
+> This is a feature that I believe was initially introduced by
+> grsecurity, but was lated ported as an option to the mainline kernel.
 
-Version Affected:
-ATS 6.2.2
+In mid to late 1990s, there were several patches floating around that
+restricted /proc permissions, such as one by route here:
 
-Description:
-An carefully crafted invalid TLS handshake can cause ATS to segfault.
+https://phrack.org/issues/52/6.html#article
 
-Mitigation:
-6.x users should upgrade to 6.2.3 or later versions
+However, as I recall at the time Linux wouldn't handle gid=
+automatically, so I had to add code for supporting that in procfs in my
+patches, apparently later in 1998.  There wasn't the name Openwall yet,
+so it took until 1999 for these patches to be named -ow.  Then this got
+into grsecurity.  Finally upstreaming this, in revised form, was one of
+the tasks Vasiliy Kulikov completed in his GSoC 2011 project with us:
 
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/2147
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=3D2018-8022
+https://www.openwall.com/lists/kernel-hardening/2011/06/
 
--Bryan
+> /proc can be mounted with the hidepid option (ideally set to hidepid=2)
+> [1], with it enabled users cannot see processes of other users.
 
+Right.
 
+> Unfortunately, this has not been widely applied by linux distributions.
+> There is a website by redhat that explicitly discourages its use [2].
+> 
+> it hints to some problems that could show up because daemons could not
+> access information about the clients accessing them. But that sounds
+> very nonspecific and they don't reference any examples, so it's hard to
+> tell what exactly these problems would be.
+> 
+> Furthermore, they point out that the same information can be queried
+> via systemd without any access control. That sounds more like a weakness
+> in systemd that should be fixed than an issue with hidepid.
+> 
+> I think it would be desirable that Linux distributions start using
+> hidepid and mitigate the whole class of bugs like the one mentioned
+> above.
+> 
+> [1] https://www.kernel.org/doc/html/latest/filesystems/proc.html
+> [2] https://access.redhat.com/solutions/6704531
 
+I agree.
+
+Per my reading, the Red Hat "solution" above points out two problems:
+
+1. Some system services need permissions to access more of /proc.
+
+2. systemd exposes the information anyway.
+
+It ends in:
+
+> This guidance may change in future as we work on improvements to
+> kernel's proc filesystem implementation as well as on systemd and other
+> system services (e.g. PolicyKit and D-Bus) that are negatively affected
+> by enabling hidepid= mount option.
+
+Here's the closed systemd issue, where Lennart didn't agree to fix this:
+
+https://github.com/systemd/systemd/issues/29893
+
+poettering commented on Nov 7, 2023:
+
+> I am sorry, but no. global "hidepid" doesn't really work on a general
+> purpose Linux system, because tons of tools need to check /proc/, for
+> example pid1, journald, polkit and similar. We do not support it, full
+> stop.
+> 
+> use per-service ProtectProc= and ProcSubset=, which use it per-service,
+> but the global switch is simply not supported.
+
+I disagree with Lennart here.  This functionality used to work just
+fine before systemd and polkit, so we need to fix this as a regression.
+
+Perhaps for systemd a good start would be to enumerate the exposures and
+the needs for them.  Then think of ways to address them.  Then come up
+with pull request(s).  Maybe prevent the exposure at some acceptable
+loss of functionality, only when hidepid is enabled?  Maybe that will
+have a better chance of being accepted than a mere issue with no fix?
+
+For other services, perhaps setup and grant them the special group if
+needed.  This may be best done at distro level.
+
+On Wed, Jan 24, 2024 at 09:39:38AM -0800, nightmare.yeah27@aceecat.org wrote:
+> Do not the various implementations of the *ident* protocol (example: oidentd)
+> rely on this interface? They are often, or always, intentionally configured
+> to run as nobody or a dedicated UID.
+
+On Wed, Jan 24, 2024 at 07:15:49PM +0100, Anton Luka Sijanec wrote:
+> I can see UID numbers in /proc/net/tcp6 as a non-root user even though my procfs is mounted with hidepid=invisible (ps aux only shows my processes). My system is Gentoo Linux with kernel 6.1.69. Peeking at the source, it looks like oidentd indeed reads from /proc/net/tcp6. I run oidentd on a system with hidepid=invisible and oidentd runs as a separate oidentd user and does work (tested by trying to connect to an IrcNet server).
+
+So apparently oidentd on current kernels is fine as-is, but whatever
+identd I was using with -ow patches before did need to be in the special
+group in order for it to access whatever parts of /proc it needed.
+Still it was just a trivial configuration issue (documented in README
+for -ow patches), not a show-stopper.
+
+Alexander
