@@ -1,4 +1,4 @@
-Received: (qmail 3882 invoked by uid 550); 12 Jul 2024 09:38:36 -0000
+Received: (qmail 21751 invoked by uid 550); 4 Feb 2024 16:33:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,158 +7,228 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3837 invoked from network); 12 Jul 2024 09:38:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720777106; x=1721381906; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MdV++oyif8qff5g9LyXF/W+m0MZt6jm1CucSx0yuKzs=;
-        b=j2A1VBGXZ0xKTJfk6onYBfz0wWraJ2l5oVY5Mr7jV3cG92i0RUm4I0U0ZU5GjNvD/v
-         UbDdOYu8RlvW0aZyawCwsJwIYL6LuV79o2bRXzsitHdC5VAWMRW1qEhA+/OM4FcZ1/GC
-         jcKlO4o1OQZnxaz5UC99IWr9HX5mRwa2hYkErGQ4KhFRi0KFlmz7nwLpNejn+/YJPvsv
-         W3sh8Dr6j2KNN60k/79CyV5N2n1Zd3w7fcUle8jAA/GTqVwi8rHfVM0sz6+ZqjtMeJsz
-         QRNm+kHKqS1LjlyfUWoLh+9hchL86n7pjKc6GExtTtJMEllUJTplm/qmT7iynQvaQaaK
-         aDwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720777106; x=1721381906;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MdV++oyif8qff5g9LyXF/W+m0MZt6jm1CucSx0yuKzs=;
-        b=bWGRTQ/cuXa/maJjRwTb+9xW+1yYDEjkoaQl2FvIzz5jXzgDwd2KNvBRuS1lnh6MGS
-         GEL2A39uu+jopXTAwTYd79D+mPXpK+LiAFXTiCYLTuXoVNVwVrP0gZ6snXoZ+9KNVE7v
-         Il54kmxaQNOwvaO38IeUW1b9bWxriMJ9xaIgjI6US10qpvRWwEx/4Mb9QquFTAcjEW0s
-         BWVhjxRXlZIOKFMn0ITNSmU+YLm63YCGPy9ybzt07lp9biLMMEzjoQLMyKvR3c4gPPgm
-         OuY0SpvsZu48F3qGCBFpywaeGlSvkILaz/H9N1k9ZDJimFm+gmMvAA68QevvhmlKvl+7
-         OMCQ==
-X-Gm-Message-State: AOJu0YzQGiLUV89D4eCj4JWvgPJ4nDIjmMK7swl+SfoQzSIf7u0dwj4G
-	goYu81iKimA7n4kLpIis+/8AxzwG40JNE3aPbbO9lRf8I4I8r4qryjlhkzFvM4OP1j47W34Gt/C
-	lEyRzXk/hon/hNsMQfAs+8UGlcUqiqE5/tn+G6Q==
-X-Google-Smtp-Source: AGHT+IF4IcBGoQrOSrGLWxS2WpEWHfKngAjsKUVEc3v+vOaULbS9VVEg/JaUTdM63ZKHMASsifnHe+Md/p5G9ZOGC0s=
-X-Received: by 2002:a05:6214:485:b0:6b4:f853:3855 with SMTP id
- 6a1803df08f44-6b61bccb53amr140166536d6.24.1720777105682; Fri, 12 Jul 2024
- 02:38:25 -0700 (PDT)
-MIME-Version: 1.0
-From: Alexander Patrakov <patrakov@gmail.com>
-Date: Fri, 12 Jul 2024 17:37:59 +0800
-Message-ID: <CAN_LGv0tC7ef+0BV=m7i_9caO2g+B-SkqENT=w-=uif7ntsqjw@mail.gmail.com>
+Received: (qmail 21620 invoked from network); 4 Feb 2024 16:32:54 -0000
+Date: Sun, 4 Feb 2024 17:35:20 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] backtrace_symbols() misuse by Ceph and its supposedly-safe use
+Cc: Qualys Security Advisory <qsa@qualys.com>,
+	Adhemerval Zanella <adhemerval.zanella@linaro.org>
+Message-ID: <20240204163520.GA20987@openwall.com>
+References: <20240130183915.GB16546@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="FL5UXtIhxfXey3p5"
+Content-Disposition: inline
+In-Reply-To: <20240130183915.GB16546@localhost.localdomain>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Out-of-bounds read & write in the glibc's qsort()
+
+--FL5UXtIhxfXey3p5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
 Hi,
 
-Given the recent discussions regarding the calls to
-non-async-signal-safe functions from signal handlers, let me add my
-two pesos to the discussion, even though I don't think there is
-anything security-related in this email.
+Great findings and excellent quality write-up from Qualys, as usual.
 
-A few months ago, I handled a customer report about a deadlock in Ceph
-RADOS Gateway. The Ceph version is 17.2.7. In that case, I attached
-gdb to the deadlocked process and applied the backtrace to all
-threads. One of the threads had this backtrace:
+On Tue, Jan 30, 2024 at 06:39:37PM +0000, Qualys Security Advisory wrote:
+> We therefore decided to assess the robustness of the glibc's qsort()
+> implementation, by calling it with a nontransitive comparison function:
+> 
+> ------------------------------------------------------------------------
+>   1 #include <limits.h>
+>   2 #include <stdlib.h>
+>   3 #include <sys/time.h>
+>   4 
+>   5 static int
+>   6 cmp(const void * const pa, const void * const pb)
+>   7 {
+>   8     const int a = *(const int *)pa;
+>   9     const int b = *(const int *)pb;
+>  10     return (a - b);
+>  11 }
+>  12 
+>  13 int
+>  14 main(const int argc, const char * const argv[])
+>  15 {
+>  16     if (argc != 2) return __LINE__;
+>  17     const size_t nmemb = strtoul(argv[1], NULL, 0);
+>  18     if (nmemb <= 0 || nmemb >= (1<<28)) return __LINE__;
+>  19 
+>  20     int * const pcanary1 = calloc(1 + nmemb + 1, sizeof(int));
+>  21     if (!pcanary1) return __LINE__;
+>  22     int * const array = pcanary1 + 1;
+>  23     int * const pcanary2 = array + nmemb;
+>  24 
+>  25     struct timeval tv;
+>  26     if (gettimeofday(&tv, NULL)) return __LINE__;
+>  27     srandom((tv.tv_sec << 16) ^ tv.tv_usec);
+>  28 
+>  29     const int canary1 = *pcanary1 = (random() << 16) ^ random();
+>  30     const int canary2 = *pcanary2 = (random() << 16) ^ random();
+>  31     array[random() % nmemb] = INT_MIN;
+>  32 
+>  33     qsort(array, nmemb, sizeof(int), cmp);
+>  34     if (*pcanary1 != canary1) abort();
+>  35     if (*pcanary2 != canary2) abort();
+>  36     return 0;
+>  37 }
 
-```
-Thread 594 (Thread 0x7f41ac610700 (LWP 870073) "radosgw"):
-#0  0x00007f43ca050d0e in __lll_lock_wait_private () from
-target:/lib64/libc.so.6
-#1  0x00007f43ca0568fa in malloc () from target:/lib64/libc.so.6
-#2  0x00007f43ca0df884 in backtrace_symbols () from target:/lib64/libc.so.6
-#3  0x00007f43cb24485a in handle_oneshot_fatal_signal(int) () from
-target:/usr/lib64/libradosgw.so.2
-#4  <signal handler called>
-#5  0x00007f43ca003d2b in raise () from target:/lib64/libc.so.6
-#6  0x00007f43ca0053e5 in abort () from target:/lib64/libc.so.6
-#7  0x00007f43ca049c87 in __libc_message () from target:/lib64/libc.so.6
-#8  0x00007f43ca051d2a in malloc_printerr () from target:/lib64/libc.so.6
-#9  0x00007f43ca0525f6 in unlink_chunk.isra () from target:/lib64/libc.so.6
-#10 0x00007f43ca0555c0 in _int_malloc () from target:/lib64/libc.so.6
-#11 0x00007f43ca0567d8 in malloc () from target:/lib64/libc.so.6
-#12 0x00007f43ca28e3fc in operator new(unsigned long) () from
-target:/usr/lib64/libstdc++.so.6
-#13 0x00007f43cae3b42f in std::map<rgw_obj, RGWObjState,
-std::less<rgw_obj>, std::allocator<std::pair<rgw_obj const,
-RGWObjState> > >::operator[](rgw_obj const&) () from
-target:/usr/lib64/libradosgw.so.2
-#14 0x00007f43caddb5a5 in RGWObjectCtx::set_atomic(rgw_obj const&) ()
-from target:/usr/lib64/libradosgw.so.2
-#15 0x00007f43caf189c0 in
-rgw::sal::RadosObject::set_atomic(RGWObjectCtx*) const () from
-target:/usr/lib64/libradosgw.so.2
-#16 0x00007f43cad8319b in
-RGWDeleteMultiObj::handle_individual_object(rgw_obj_key const&,
-optional_yield,
-boost::asio::basic_deadline_timer<boost::posix_time::ptime,
-boost::asio::time_traits<boost::posix_time::ptime>,
-boost::asio::executor>*) () from target:/usr/lib64/libradosgw.so.2
-#17 0x00007f43cad83b99 in void
-boost::context::detail::context_entry<boost::context::detail::record<boost::context::continuation,
-boost::context::basic_fixedsize_stack<boost::context::stack_traits>,
-spawn::detail::spawn_helper<boost::asio::executor_binder<void (*)(),
-boost::asio::strand<boost::asio::io_context::basic_executor_type<std::allocator<void>,
-0u> > >, RGWDeleteMultiObj::execute(optional_yield)::{lambda(spawn::basic_yield_context<boost::asio::executor_binder<void
-(*)(), boost::asio::strand<boost::asio::io_context::basic_executor_type<std::allocator<void>,
-0u> > > >)#3}, boost::context::basic_fixedsize_stack<boost::context::stack_traits>
->::operator()()::{lambda(boost::context::continuation&&)#1}>
->(boost::context::detail::transfer_t) () from
-target:/usr/lib64/libradosgw.so.2
-#18 0x00007f43cb293c1f in make_fcontext () from
-target:/usr/lib64/libradosgw.so.2
-```
+I've attached an enhanced version of the above program to this message.
 
-Here is my attempt to make sense of it from the bottom up.
+> We therefore decided to assess the robustness of the glibc's quick sort
+> (instead of its merge sort, which was clearly not crashing), by forcing
+> qsort() to call _quicksort(). Locally, forcing the malloc() at line 221
+> to fail is very easy: we simply execute our program with a low RLIMIT_AS
+> ("The maximum size of the process's virtual memory", man setrlimit); and
+> this works even when executing a SUID-root program. So we executed our
+> program in the following loop instead:
+> 
+> 
+> ------------------------------------------------------------------------
+> $ while true; do n=$((RANDOM*64+RANDOM+1)); prlimit --as=$((n*4/2*3)) ./qsort $n; done
+> Aborted (core dumped)
 
-In frame #13, something was written into a C++ std::map; this has led
-to a memory allocation via malloc() in frame #11. However, the
-internal logic of the glibc implementation of malloc() detected some
-corruption, and there was, indeed this message in the log:
+While we have to do it externally with "prlimit" or such when attacking
+an existing program, for our own testing we can instead set RLIMIT_AS
+right from the test program.  This eliminates the need for choosing a
+value for RLIMIT_AS that's barely sufficient for the program to work,
+but not sufficient for glibc to choose merge sort.  In the attached
+program, I simply set RLIMIT_AS to 0 right before the call to qsort(),
+which lets the program continue running (even though it's already beyond
+limit) but makes any further memory allocations from the kernel fail.
 
-Jun 21 04:52:35 abc-osd08 radosgw[868945]: corrupted size vs. prev_size
-Jun 21 04:52:36 abc-osd08 radosgw[868945]: *** Caught signal (Aborted) **
-Jun 21 04:52:36 abc-osd08 radosgw[868945]:  in thread 7f41ac610700
-thread_name:radosgw
+I also added a test that the sort order is correct when qsort() is
+called with a proper, transitive comparison function.
 
-After printing this message, glibc tried to safely abort the process
-to prevent further damage/exploitation, see frame #6.
+This makes me wonder whether/how glibc upstream tests quick sort, given
+that without the RLIMIT_AS trick or such that code is not reached.  If
+glibc tests do not include this yet (I didn't see it), then maybe they
+should make use of the "set RLIMIT_AS to 0" trick in a bundled test?
+Searching the glibc tree for RLIMIT_AS now, I see some tests do set it
+for similar reasons, but none of them are for qsort() and they use
+various non-zero values.
 
-Ceph daemons, however, have a signal handler that catches SIGABRT and
-SIGSEGV and tries to format and log a backtrace. Their systemd units
-are also set to automatically restart the daemons. Without the
-handler, this is what would have happened. However, within the
-handler, radosgw calls backtrace_symbols(), which, in turn, calls
-malloc() in frame #1, which is not async-signal-safe. So, here is a
-usage bug by definition, and it converted a restartable crash into a
-classical A-A deadlock because the outer malloc() call from frame #11
-already holds a lock.
+> To patch these out-of-bounds memory accesses in _quicksort(), a simple
+> check "tmp_ptr > base_ptr &&" can be added in front of the cmp() call at
+> line 227 (of course this does not magically result in a correctly sorted
+> array if cmp() is nontransitive, but at least it does not result in a
+> memory corruption anymore).
 
-In Ceph public bug tracker, there is also a similar report with MDS
-instead of the RADOS gateway: https://tracker.ceph.com/issues/65039
+I confirmed (with the attached test program) that this one-line change
+indeed makes qsort() robust also when applied on top of RHEL9's patched
+glibc 2.34, as found in Rocky Linux 9 (patch attached).  We now use this
+in Rocky Linux SIG/Security package of glibc for EL9:
 
-The question here is whether this is only a Ceph bug or whether
-backtrace_symbols() is an unusable piece of API a-la gets() because it
-is calling malloc() and is documented to do so.
+https://sig-security.rocky.page/packages/glibc/
 
-The same manual page documents backtrace_symbols_fd(), but, as-is, it
-is not good enough because Ceph also wants to demangle C++ symbols, to
-log the result, and to post the crash information into the designated
-directory.
+> In fact, while drafting this advisory, we discovered that such a check
+> ("tmp_ptr != base_ptr &&") has already been added to the glibc's master
+> branch (which will become glibc 2.39 in February 2024), by the following
+> commit ("stdlib: Fix array bounds protection in insertion sort phase of
+> qsort"):
+> 
+>   https://sourceware.org/git?p=glibc.git;a=commit;h=b9390ba93676c4b1e87e218af5e7e4bb596312ac
 
-I acknowledge that there is a todo comment in src/global/signal_handler.cc:
+This commit also adds a test, but I don't see how that test would
+possibly detect the issue.  It sorts a tiny array and does not set
+RLIMIT_AS, so it probably does not reach quick sort, does it?  Well,
+maybe it did briefly while glibc experimented with introsort, but
+perhaps currently it does not:
 
-  // TODO: don't use an ostringstream here. It could call malloc(), which we
-  // don't want inside a signal handler.
-  // Also fix the backtrace code not to allocate memory.
-  ClibBackTrace bt(1);
-  ostringstream oss;
-  bt.print(oss);
-  dout_emergency(oss.str());
+As you've identified in the "last-minute note", a later commit ("stdlib:
+Reinstate stable mergesort implementation on qsort") made/reverted lots
+of other changes:
 
-Apparently, the authors don't realize that the use of ostringstream is
-not the only cause of possible malloc() calls.
+https://sourceware.org/git/?p=glibc.git;a=commit;h=709fbd3ec3595f2d1076b4fec09a739327459288
 
-What would be a good solution (as in: something that does not convert
-crashes into deadlocks) here? I understand that, after memory
-corruption, we are already in the UB territory, but is there anything
-better possible than what is implemented?
+It's so invasive I cannot easily tell whether qsort() remained robust
+after it or not.  There's no longer a "tmp_ptr != base_ptr &&" check.
+So, lacking known-working tests in glibc tree, we don't know about glibc
+2.39's status with respect to this issue.
 
--- 
-Alexander Patrakov
+I don't have a glibc 2.39 build handy.  Perhaps someone on a distro that
+has already updated can run the attached test program and let us know?
+
+Alexander
+
+--FL5UXtIhxfXey3p5
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="glibc-qualys-rocky-qsort-test.c"
+
+/* glibc quick sort test originally by Qualys, enhanced for Rocky Linux */
+
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+
+static int
+cmp(const void * const pa, const void * const pb)
+{
+    const int a = *(const int *)pa;
+    const int b = *(const int *)pb;
+    return (a - b);
+}
+
+int
+main(const int argc, const char * const argv[])
+{
+    if (argc != 2) return __LINE__;
+    const size_t nmemb = strtoul(argv[1], NULL, 0);
+    if (nmemb <= 0 || nmemb >= (1<<28)) return __LINE__;
+
+    int * const pcanary1 = calloc(1 + nmemb + 1, sizeof(int));
+    if (!pcanary1) return __LINE__;
+    int * const array = pcanary1 + 1;
+    int * const pcanary2 = array + nmemb;
+
+    struct timeval tv;
+    if (gettimeofday(&tv, NULL)) return __LINE__;
+    srandom((tv.tv_sec << 16) ^ tv.tv_usec);
+
+    const int canary1 = *pcanary1 = (random() << 16) ^ random();
+    const int canary2 = *pcanary2 = (random() << 16) ^ random();
+    array[random() % nmemb] = INT_MIN;
+
+    /* Force fallback from merge to quick sort */
+    const struct rlimit rlim = {};
+    setrlimit(RLIMIT_AS, &rlim);
+
+    qsort(array, nmemb, sizeof(int), cmp);
+    if (*pcanary1 != canary1) abort();
+    if (*pcanary2 != canary2) abort();
+
+    for (size_t i = 0; i < nmemb; i++)
+        array[i] = random();
+
+    qsort(array, nmemb, sizeof(int), cmp);
+    if (*pcanary1 != canary1) abort();
+    if (*pcanary2 != canary2) abort();
+
+    for (size_t i = 1; i < nmemb; i++)
+        if (array[i - 1] > array[i]) abort();
+
+    puts("PASSED");
+
+    return 0;
+}
+
+--FL5UXtIhxfXey3p5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="glibc-2.34-qualys-rocky-qsort.patch"
+
+diff -urpN glibc-2.34-sanitize-env/stdlib/qsort.c glibc-2.34-qsort/stdlib/qsort.c
+--- glibc-2.34-sanitize-env/stdlib/qsort.c	2021-08-02 03:33:43.000000000 +0200
++++ glibc-2.34-qsort/stdlib/qsort.c	2024-01-31 17:21:15.061418442 +0100
+@@ -225,7 +225,7 @@ _quicksort (void *const pbase, size_t to
+     while ((run_ptr += size) <= end_ptr)
+       {
+ 	tmp_ptr = run_ptr - size;
+-	while ((*cmp) ((void *) run_ptr, (void *) tmp_ptr, arg) < 0)
++	while (tmp_ptr > base_ptr && (*cmp) ((void *) run_ptr, (void *) tmp_ptr, arg) < 0)
+ 	  tmp_ptr -= size;
+ 
+ 	tmp_ptr += size;
+
+--FL5UXtIhxfXey3p5--
