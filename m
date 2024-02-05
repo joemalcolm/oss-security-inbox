@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2051" "Friday" "16" "February" "2018" "17:40:17" "+0100" "chbi@chbi.eu" "chbi@chbi.eu" "<c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>" "65" "[oss-security] XSS vulnerability in Tiki < 18" nil nil nil "2" "2018021616:40:17" "[oss-security] XSS vulnerability in Tiki < 18" (number mark "U       chbi@chbi.eu Feb 16   65/2051  " thread-indent "\"[oss-security] XSS vulnerability in Tiki < 18\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30531 invoked by uid 550); 16 Feb 2018 16:40:42 -0000
+Received: (qmail 3793 invoked by uid 550); 5 Feb 2024 23:12:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +7,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30511 invoked from network); 16 Feb 2018 16:40:41 -0000
-To: oss-security@lists.openwall.com
-From: chbi@chbi.eu
-Message-ID: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
-Date: Fri, 16 Feb 2018 17:40:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+Received: (qmail 32337 invoked from network); 5 Feb 2024 23:09:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=5EFLRAp8ncOdmz4W4Fsk3y+Cl9Y5j+uy0TUUvWL52NI=; b=K65yqLqKOsweDbXehFdG5pHMGB
+	kTs35QuNQqiQQZCbn/OGna1OcXkUyFcPkGtX2toQa4mjUICs4Zad8iwSUjO+YW76UR64FfbRLiRJp
+	TDwDfUMRf/FRHOZNWxubSFt9v4gSdTTFDuRS2/JMex5wSLNxfnuMMVV1imAlA29fzl/vFG4ZuuC4/
+	s5OseFQc0RQxH6HDR2pVLM6w9Ui5yi+9JjSTgaZHXok6CZe/R7NJKlMd8t2WT7Wn1O1GhBgAZztJv
+	mSW1TcBw+giF1phTxhzIxBtd6Fd77TiVlOt/28TvcHf7BxNm6u0ZferptkdIjgunne8CwhQv3jQ1F
+	fAV3RkgA==;
+Date: Tue, 6 Feb 2024 01:11:55 +0200
+Message-ID: <20240206011155.GD1388820@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="kIziaHrcRDCnqII5yFf0HUqdsLsCBeH99"
-Subject: [oss-security] XSS vulnerability in Tiki < 18
+Content-Type: multipart/signed; boundary="6nokjjE42/timFGZ"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0001
 
---kIziaHrcRDCnqII5yFf0HUqdsLsCBeH99
-Content-Type: multipart/mixed; boundary="ap4lzEQUyaZrH2A5luVpQElO7Jak5h9UH";
- protected-headers="v1"
-From: chbi@chbi.eu
-To: oss-security@lists.openwall.com
-Message-ID: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
-Subject: XSS vulnerability in Tiki < 18
-
---ap4lzEQUyaZrH2A5luVpQElO7Jak5h9UH
+--6nokjjE42/timFGZ
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-Hi,
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBTZWN1cml0eSBBZHZpc29yeSAgICAgICAgICAgICAgICAgV1NB
+LTIwMjQtMDAwMQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUg
+cmVwb3J0ZWQgICAgICAgICAgIDogRmVicnVhcnkgMDUsIDIwMjQKQWR2aXNv
+cnkgSUQgICAgICAgICAgICAgOiBXU0EtMjAyNC0wMDAxCldlYktpdEdUSyBB
+ZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5
+L1dTQS0yMDI0LTAwMDEuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5IFVSTCA6
+IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDAx
+Lmh0bWwKQ1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC0yMzIy
+MiwgQ1ZFLTIwMjQtMjMyMDYsCiAgICAgICAgICAgICAgICAgICAgICAgICAg
+Q1ZFLTIwMjQtMjMyMTMsIENWRS0yMDIzLTQwNDE0LAogICAgICAgICAgICAg
+ICAgICAgICAgICAgIENWRS0yMDIzLTQyODMzLCBDVkUtMjAxNC0xNzQ1LgoK
+U2V2ZXJhbCB2dWxuZXJhYmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdl
+YktpdEdUSyBhbmQgV1BFIFdlYktpdC4KCkNWRS0yMDI0LTIzMjIyCiAgICBW
+ZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJl
+Zm9yZSAyLjQyLjUuCiAgICBDcmVkaXQgdG8gQXBwbGUuCiAgICBJbXBhY3Q6
+IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBt
+YXkgbGVhZCB0bwogICAgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBBcHBs
+ZSBpcyBhd2FyZSBvZiBhIHJlcG9ydCB0aGF0IHRoaXMgaXNzdWUKICAgIG1h
+eSBoYXZlIGJlZW4gZXhwbG9pdGVkLiBEZXNjcmlwdGlvbjogQSB0eXBlIGNv
+bmZ1c2lvbiBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVk
+IGNoZWNrcy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjY3MTM0CgpDVkUtMjAy
+NC0yMzIwNgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBiZWZvcmUgMi40Mi41LgogICAgQ3JlZGl0IHRvIEFuIGFu
+b255bW91cyByZXNlYXJjaGVyLgogICAgSW1wYWN0OiBBIG1hbGljaW91c2x5
+IGNyYWZ0ZWQgd2VicGFnZSBtYXkgYmUgYWJsZSB0byBmaW5nZXJwcmludCB0
+aGUKICAgIHVzZXIuIERlc2NyaXB0aW9uOiBBbiBhY2Nlc3MgaXNzdWUgd2Fz
+IGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkCiAgICBhY2Nlc3MgcmVzdHJpY3Rp
+b25zLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjI2OTkKCkNWRS0yMDI0LTIz
+MjEzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUg
+V2ViS2l0IGJlZm9yZSAyLjQyLjUuCiAgICBDcmVkaXQgdG8gV2FuZ3RhaXl1
+IG9mIFpob25nZnUgaW5mby4KICAgIEltcGFjdDogUHJvY2Vzc2luZyB3ZWIg
+Y29udGVudCBtYXkgbGVhZCB0byBhcmJpdHJhcnkgY29kZSBleGVjdXRpb24u
+CiAgICBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0
+aCBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemls
+bGE6IDI2NjYxOQoKQ1ZFLTIwMjMtNDA0MTQKICAgIFZlcnNpb25zIGFmZmVj
+dGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDIuMS4K
+ICAgIENyZWRpdCB0byBGcmFuY2lzY28gQWxvbnNvIChAcmV2c2tpbGxzKS4K
+ICAgIEltcGFjdDogUHJvY2Vzc2luZyB3ZWIgY29udGVudCBtYXkgbGVhZCB0
+byBhcmJpdHJhcnkgY29kZSBleGVjdXRpb24uCiAgICBEZXNjcmlwdGlvbjog
+QSB1c2UtYWZ0ZXItZnJlZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1w
+cm92ZWQKICAgIG1lbW9yeSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3pp
+bGxhOiAyNTg5OTIKCkNWRS0yMDIzLTQyODMzCiAgICBWZXJzaW9ucyBhZmZl
+Y3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjM4LjAu
+CiAgICBDcmVkaXQgdG8gRG9uZyBKdW4gS2ltIChAc21saWp1bikgYW5kIEpv
+bmcgU2VvbmcgS2ltIChAbmV2dWwzNykgb2YKICAgIEFieXNzTGFiLgogICAg
+SW1wYWN0OiBQcm9jZXNzaW5nIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFy
+Yml0cmFyeSBjb2RlIGV4ZWN1dGlvbi4KICAgIERlc2NyaXB0aW9uOiBBIGNv
+cnJlY3RuZXNzIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBj
+aGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI1ODU5MgoKQ1ZFLTIwMTQt
+MTc0NQogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBiZWZvcmUgMi40Mi4wLgogICAgQ3JlZGl0IHRvIEFuIGFub255
+bW91cyByZXNlYXJjaGVyLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIGEgZmls
+ZSBtYXkgbGVhZCB0byBhIGRlbmlhbC1vZi1zZXJ2aWNlIG9yCiAgICBwb3Rl
+bnRpYWxseSBkaXNjbG9zZSBtZW1vcnkgY29udGVudHMuIERlc2NyaXB0aW9u
+OiBUaGUgaXNzdWUgd2FzCiAgICBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBj
+aGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI0OTQzNAoKCldlIHJlY29t
+bWVuZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBv
+ZiBXZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0IHdh
+eSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2ZXJzaW9u
+cwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMgZm9yIGlu
+Zm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVhc2VzLgoK
+RnVydGhlciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQRSBX
+ZWJLaXQgc2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUgZm91bmQgYXQ6IGh0
+dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1sIG9yCmh0dHBzOi8v
+d3Bld2Via2l0Lm9yZy9zZWN1cml0eS8uCgpUaGUgV2ViS2l0R1RLIGFuZCBX
+UEUgV2ViS2l0IHRlYW0sCkZlYnJ1YXJ5IDA1LCAyMDI0Cg==
 
-I've discovered a security issue in Tiki < 18 (https://tiki.org)
-
-
-A XSS vulnerability via SVG image allows an authenticated user to gain
-administrator privileges if an administrator opens a wiki page with a
-malicious SVG image, related to filegallib.php.
-
-
-Fix:
-https://sourceforge.net/p/tikiwiki/code/65327
-
-
-The issue is fixed in Tiki 18.
-
-
-I've requested a CVE ID (MITRE).
-
---=20
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
---ap4lzEQUyaZrH2A5luVpQElO7Jak5h9UH--
-
---kIziaHrcRDCnqII5yFf0HUqdsLsCBeH99
+--6nokjjE42/timFGZ
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlqHCXwACgkQunuT+ZA3
-rn55mxAAlIMVrGu+fHQ1NuDglOq4Zq2uvxQT7vUZ51O8s3jzyvwrdLhdzLAlpMoL
-CNwQVo2DANbU9VkGIgt+5GChRn6Cw86VYyupokOhbTcpv9/iSMk+FVhkuT55UGfW
-dmHMAOb0jW4WDoYbWsxvsWDa3D62A3ijaK2Z38czpIFDovBZ7wcx4SVFu/POb8sT
-LdqRLVDNTZa7n8mGm8BBdC8LBsBZvzdt0m3alUQuvC9d+scD7nWfZqv1vAP4o4Ps
-yTtgyj3oVQosYAYQIQHHz69cJ+LdvbzhFQYCJD5cXyQ96HVGpeh1XriT2EwBcA+X
-gnvlDKgtTNTsN0I35P74m+Z+qAKJ3DsvgQyvD8xlH36ZKMkPYKt05207xLLpSFLc
-ZCRwfC9vgFNsZE8y6FvSaLfw5/hyVr6KQW9NU/V7KxSFKc2EDoHlYZQMWUAZlv4q
-M6T+KygkAbHQoU2wlN3LNLqhHmxaPXljt6ysWuaOXErtasVfYBtrcoUoysBzIngM
-vZK9Cs1VajsV+NT866GQU0beocmHc8vswR4I+GU8aFtUYrV6eO/Y2/8+XADXWxxl
-rlM9M9vWFAL5iBuyRh3ijmx26ZWtLqTFmRCMy+eUegH/Eq/VmuTMvRCXNjP2G1Vw
-F9VGyI/aMpQOGFstThWzLdCHME4gqeWVyPJ7KU57mAYdBGWntKM=
-=+sl5
+iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZcFrOwAKCRCRxVnb5MkS
+OyYOAJ9zQx/s5qxjTW3pBs4nGuLofq/UqwCfXe3k6ZBb6YvUWvczBuMOILyw6Qs=
+=rIhq
 -----END PGP SIGNATURE-----
 
---kIziaHrcRDCnqII5yFf0HUqdsLsCBeH99--
+--6nokjjE42/timFGZ--
