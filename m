@@ -1,4 +1,4 @@
-Received: (qmail 22270 invoked by uid 550); 29 Oct 2022 20:44:27 -0000
+Received: (qmail 1884 invoked by uid 550); 5 Feb 2024 08:43:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,113 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24396 invoked from network); 29 Oct 2022 19:40:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm3; t=1667072447; x=
-	1667158847; bh=GcQWky/hebzZ86Lbvd8u+O9QlouGeWiQPZRBq6CUpmw=; b=D
-	SwRnSEw222FZv1hnNH54EQmhwxqCRNbidt2+nDmlaTrfHcZyAz6bITwagZBDB4Od
-	QXUiS4fTLEmOb6JaedN/45HXc9fXXzkYwJMQWwHgJxoyzidGje9j7mQ0jIzvXQkk
-	afKzvLOGF63/l32hDs7FWrTusHN02qXsN4I4MnSAC3b9NMhZvUb3pWMcWF4SUwi4
-	YNPZIaFLlOKrxAZHpdjxWRF1JnrGY0Q04MwRafnvXNDL2Bbul/JTyqX3dNvkrVxk
-	tP01HSnAMW0C+C+Rd5ZkDT/aeRr+YqCeKopBWVRRxGp+aEbFXT8Y/WuzIYFqcZ9O
-	5tqcE/nkCGp49ZOBFXZ1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1667072447; x=1667158847; bh=GcQWky/hebzZ86Lbvd8u+O9QlouG
-	eWiQPZRBq6CUpmw=; b=fSo7LA/o2GmdC1xyckPDB38Q3EWuyXDGRnuXIbGXoyhc
-	tDucDHFDd+lOqo//s16hbGgMyUIjEDg0pzlIM4p3GUbFhvPhSp/hCjSIIDV1pRqe
-	3DpEkBfYUBQOP+M2x4SFtdioeN0Xsp+EAa0beM/dYrBkivyZpfZgbRcqg8T43L+K
-	1P5PT/y4ceGyopQRjqKZyHp5DFSzUftrDbO9Q+SdNpMxIICaEpIMmDiyTWuL8LKI
-	PtRMCGt1RBdLp0QPGGZK2X85+HYJ2zt4dvBZqb+hBfuxALUIHjAfueZJsJAx1lb3
-	nLu00iaXiDreij+nJkZ2ck7shofvs9VYrtPaWyTU1A==
-X-ME-Sender: <xms:vYFdYxOw2pkDQxkABk4u4UdymuJfmilxpgFZPjRVgGlOaT8NA1-m9g>
-    <xme:vYFdYz8myA_CvwnnmHp5pTu0uV2BpHKV_qY6IkHQhD1y-OWsgz5KAxI4AFsi0OMa4
-    -WZ2dN7OvXZ7Fc>
-X-ME-Received: <xmr:vYFdYwQ7CWaD8F6Czr3EJBe1WJayO24qsnz_YgzTHQ6F5G8hi2_JrAZps2JP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdekgddugeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepffgvmhhi
-    ucforghrihgvucfqsggvnhhouhhruceouggvmhhisehinhhvihhsihgslhgvthhhihhngh
-    hslhgrsgdrtghomheqnecuggftrfgrthhtvghrnhepudeileefueetvdelheeuteffjeeg
-    jeegffekleevueelueekjeejudffteejkeetnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhs
-    lhgrsgdrtghomh
-X-ME-Proxy: <xmx:vYFdY9skh-Engveo6pucUQzyzPU8f5ZFPEgR203F4ctomzNl1aTg4g>
-    <xmx:vYFdY5c3z5H8agasyOQRRpRXo1auT1-wzrJFHEf-SpYn_-djBY_p2w>
-    <xmx:vYFdY53xRvMbbZj3DoXYSFYAoNXUflvysPoqBW4W6FVgs_Se2Tk2ag>
-    <xmx:v4FdY5k0uQ4RzI7Q2N-EkBnfZB5kM-cvjQCsOnvqPdNiZALc-GZlzA>
-Feedback-ID: iac594737:Fastmail
-Date: Sat, 29 Oct 2022 15:40:42 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Cc: Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Message-ID: <Y12Bu2dSDbwtLoB3@itl-email>
-References: <CAM5P+QTzZEywndb2H1=hce+ahtz1TsrsJZEM6ZuKEmFM4ozL8Q@mail.gmail.com>
+Received: (qmail 1866 invoked from network); 5 Feb 2024 08:43:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707122781; x=1707727581; darn=lists.openwall.com;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PbQQGnelB+cCiEzBg37+laSiOjinK5W8/IRrzutbCzI=;
+        b=NxMPbK/c00VaK6AEX0A2UYbuQ6Dlth4oBfEuDdW1PwLOeKFB9ZL5XslsU5M/WZ2U9i
+         njIYZzcwZICfrwCeana/fyXhRORJ8wIsOiq2DbbrhwoR9mjUjNIUYwMmHxlBmw1vRcwb
+         HCzATeRz5mJnklDmiLfIvcMXinCyH/QjM8IlzUhvyH0XKEm0xp+236rP6zG73jq7GTsf
+         6/iXRd/kc4hWuKnPbq8g9GcQHUGDRSxklCexgnPW+EWhb8I1gRmkSvUCpnXmjBdmNiaU
+         NDf3d7e8V6S12ftDC8S5KeZLgBJq55/kclzdtkILp0x5ycML5mfznSNqxhdxaWiXBV1v
+         weig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707122781; x=1707727581;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PbQQGnelB+cCiEzBg37+laSiOjinK5W8/IRrzutbCzI=;
+        b=g7zDSkyQJnEkLs75paNBaUCbUpnG4YmEalDoUjIEJT59IxO4wV7+HDTeT8OlPFoPWV
+         mbTd+BCV1NP2nB9ZTFzrKHsQKgjsZcwcEItALSuDvjBYC1QPxNWrNSkdbyzbThEpJdUA
+         Oq+164spYeC+OwBsF4+Rlmxfzww9/ryMRP1cStFuLFIPaNq3jYXVao+t+O+LjFw1WERx
+         WcWqLvllAOjrU7FV8GLXgMqAHwfjv/lxE57P+1HRt+E8gpLWeg8vfE8WOtJ/0B8qdL3+
+         vvnsnzuWmaCrHr7ESxMXLF+mgUJjmsJZF19/5Q3TE57qYJ8YLxnMrl6oFg6+BSpo5I0j
+         PhfA==
+X-Gm-Message-State: AOJu0Ywo3BZlQlcLxPTEsIuHeF0xS7rNbUubXL0fpp9kfo0WOMeGV2xO
+	CNEydMWn/aIZPmJx7+MsSH+RufAIEmLEXH+QsA92aelV24iCSdrwehxwLQBXAybleHmbp33xoMz
+	01+H4N8Wos0o1YXwOn2g7MEShgku1wkyULIS00Q==
+X-Google-Smtp-Source: AGHT+IEknbLqHMih9XiExeoYseK0sgPXHpHIslWBAhY6qaEN6imupbgU/f5h8RO7wJHG5liv6kN+RZmEgY1O5T4ixJ4=
+X-Received: by 2002:a05:6122:369b:b0:4c0:2cff:9d7a with SMTP id
+ ec27-20020a056122369b00b004c02cff9d7amr1375687vkb.5.1707122781434; Mon, 05
+ Feb 2024 00:46:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FdJ/88N4CvtxposF"
-Content-Disposition: inline
-In-Reply-To: <CAM5P+QTzZEywndb2H1=hce+ahtz1TsrsJZEM6ZuKEmFM4ozL8Q@mail.gmail.com>
-Subject: Re: [oss-security] CVE-2022-3628: A USB-accessible buffer overflow
- in Linux kernel driver
-
---FdJ/88N4CvtxposF
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 29 Oct 2022 15:40:42 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+References: <20240130183915.GB16546@localhost.localdomain> <20240204163520.GA20987@openwall.com>
+ <CAN_LGv2Ej_YgbW=1_Ne9_rAEXR93rcM904dVWrCRCv-mPseuBg@mail.gmail.com>
+In-Reply-To: <CAN_LGv2Ej_YgbW=1_Ne9_rAEXR93rcM904dVWrCRCv-mPseuBg@mail.gmail.com>
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Date: Mon, 5 Feb 2024 16:45:55 +0800
+Message-ID: <CAN_LGv2MKS7C5JZA-PxKhc1M7VA-UTt2ZP05sk3eWKY6YOjo5Q@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Subject: Re: [oss-security] CVE-2022-3628: A USB-accessible buffer overflow
- in Linux kernel driver
+Cc: Qualys Security Advisory <qsa@qualys.com>, Adhemerval Zanella <adhemerval.zanella@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Out-of-bounds read & write in the glibc's qsort()
 
-On Sat, Oct 29, 2022 at 05:33:21PM +0900, Dokyung Song wrote:
-> =3D=3D=3D Description =3D=3D=3D
->=20
-> An intra-object buffer overflow was found in brcmfmac (an upstream
-> Broadcom's USB Wi-Fi driver), which can be triggered by a malicious USB
-> device.
->=20
-> As the object where the overflow could occur contains multiple function
-> pointers (e.g., bus_reset.func), with knowledge of the code layout (i.e.,
-> KASLR needs bypassing) the vulnerability could potentially be exploited by
-> an attacker who controls USB messages. Without knowledge of the code
-> layout, the consequence is a DoS.
+On Mon, Feb 5, 2024 at 4:40=E2=80=AFPM Alexander E. Patrakov <patrakov@gmai=
+l.com> wrote:
+>
+> On Mon, Feb 5, 2024 at 12:36=E2=80=AFAM Solar Designer <solar@openwall.co=
+m> wrote:
+>
+> > It's so invasive I cannot easily tell whether qsort() remained robust
+> > after it or not.  There's no longer a "tmp_ptr !=3D base_ptr &&" check.
+> > So, lacking known-working tests in glibc tree, we don't know about glibc
+> > 2.39's status with respect to this issue.
+> >
+> > I don't have a glibc 2.39 build handy.  Perhaps someone on a distro that
+> > has already updated can run the attached test program and let us know?
+>
+> Here you go: no output on Arch Linux.
+>
+> [aep@aep-haswell tmp]$ gcc ./glibc-qualys-rocky-qsort-test.c
+> [aep@aep-haswell tmp]$ ./a.out
+> [aep@aep-haswell tmp]$ /lib64/libc.so.6
+> GNU C Library (GNU libc) stable release version 2.39.
+> Copyright (C) 2024 Free Software Foundation, Inc.
+> This is free software; see the source for copying conditions.
+> There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+> PARTICULAR PURPOSE.
+> Compiled by GNU CC version 13.2.1 20230801.
+> libc ABIs: UNIQUE IFUNC ABSOLUTE
+> Minimum supported kernel: 4.4.0
+> For bug reporting instructions, please see:
+> <https://gitlab.archlinux.org/archlinux/packaging/packages/glibc/-/issues=
+>.
+>
+> --
+> Alexander E. Patrakov
 
-Can this be exploited by means of e.g. partial function pointer
-overwrites without having to bypass KASLR?
+Sorry, I should have followed the instructions.
+
+[aep@aep-haswell tmp]$ while true; do n=3D$((RANDOM*64+RANDOM+1));
+prlimit --as=3D$((n*4/2*3)) ./a.out $n; done
+
+This results in a mix of these outputs:
+
+PASSED
+./a.out: error while loading shared libraries: libc.so.6: failed to
+map segment from shared object
+Segmentation fault
+
 --=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
---FdJ/88N4CvtxposF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmNdgbsACgkQsoi1X/+c
-IsH5Aw/9Ee98O8Nk/joStw4hY2HyI1nyL+COcybuFGZjeOEPkoQTn4PXOoVFOLyj
-Gs7dY0dI7To376dWVczQfVyrz0+nvbyuLhhr51I2USh5Eunshk62jeUYb+LTkUcc
-zEWXvTCdcUgctWJDATQJDHnzEEMP2vQuhgS3pK5zsCnOL05pFK8kXLx82302lIkd
-0Kov4+nVU3GgwQRxH5rM/chBJkbP9LSYG/69AP8T4D6GuCYcE4QGGUyP+IXJQdl/
-KFyhBtOPOeYr8mSZDoCDkjl9/LEZtSMBf1m3lCnRo7cHrPxhpe4hbA3dTyi7Pp2y
-X3icS78hZdcVkWK2pACK2yxpJBZofOZhna432FGjQ2IrM6giEUdvEp2wnDdmguFk
-EAcFEqeTW5JbnEp7M8sWnRj86OEHzRhV+ID2k45Un0eQq9TPmvVdDC1zHTVJJQh4
-63z8nuiZi37pDRp0K+fR3xtTdPrlZO8hSpDTeX0+rMJLJB9OAKwYaT6UQU0cXB+3
-cza7BRhm6o9oCv4HdISvX5wWf/5Tr7dZAXuDjH/C4cvNKrGJ8h5Uy7pqpjmWDQnW
-VTd7Q9TUMxU/lv3686o6swt2KHld4BemB8MQGZzyfTPQuqCubHOAgLaWI5bjEHYn
-Zh7JU15lzMiQEAAIzDFi5USNp+kV7Gct+b8f5ZNzn3SE6jEOHrw=
-=vQzd
------END PGP SIGNATURE-----
-
---FdJ/88N4CvtxposF--
+Alexander E. Patrakov
