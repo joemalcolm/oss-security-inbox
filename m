@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2471" "Tuesday" "27" "October" "2015" "13:35:40" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3PUvtG2gJPOKaq72JA=M=u==uPAEXRh_=hJOb0wfPkgsw@mail.gmail.com>" "73" "[oss-security] CVE Request: Multiple XSS in NextGEN Gallery by Photocrati Version 2.1.7" nil nil nil "10" "2015102708:05:40" "[oss-security] CVE Request: Multiple XSS in NextGEN Gallery by Photocrati Version 2.1.7" (number mark "U       disclose@cyb Oct 27   73/2471  " thread-indent "\"[oss-security] CVE Request: Multiple XSS in NextGEN Gallery by Photocrati Version 2.1.7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24559 invoked by uid 550); 27 Oct 2015 08:08:21 -0000
+Received: (qmail 9898 invoked by uid 550); 5 Feb 2024 13:06:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,110 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23734 invoked from network); 27 Oct 2015 08:05:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cybersecurityworks_com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=v7kAbQWZbJ5SzaHnEcmNq5vgeWQLKVTzwcoyB5xUXOo=;
-        b=mmlT8NiK1hEC/hLNES8/xkX07z3tG0VrwzH7HbzdVIX3LZNvITPjPUuI2paaRc3p4H
-         DHKqV4wf9al9l8/+LwCiwvwieFHbwd6BrPl7Gjr8xaA4Afd3YzjIREMPM8nW8D7l52fk
-         clm1V0llawPhDA0zW4aMywT0RWqh2xyTSKV1vB0bmPHQbGfF49SIlWm4EnVBJWVmIlxa
-         iP9Zs7sS6ybeIxcmn2bjXufP0wT76K958ofs2LwF2B1RGg/94KvNvGln0aakX7v3mwAN
-         wpTzSul3fORwpHVfNv7dT+58aUyD7Kgwjfry0kldqxoPXcdXRy7WS0ZEfAdQTd2V8kb4
-         trEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=v7kAbQWZbJ5SzaHnEcmNq5vgeWQLKVTzwcoyB5xUXOo=;
-        b=Hr88HnK6uYMXWR9pgOY5taiOX/bdqz0f0TJmK+eai1zcXeJB9GPblMWjuQiVEc4FMT
-         exhQyiw5+EjuFMVDCKSVB+9VX02KQxFP1SpcL7Aw+kldOqoIDB/dEX56GSNnY5Xl7IgJ
-         0aLEGIhwczTvsUbFRLsq6sLLmst9pbW0dXgMCUO8tfWXR/yRyU7WFgsXYtOAGDcpyA3G
-         J+OYw93M43nvsmyIb//NOeafZvIaAqnOHGf3G3CqqYEBpik7JBQml/bybIhlxRjDWMH+
-         To6PLuM3wy9p08p2P99XV7xH45YdK6kHff5AAZySmgb2ylKjx45aoCvGUJSLtlNH18Pk
-         bCgQ==
-X-Gm-Message-State: ALoCoQkyqr4V80eyJNkrUdl9flXc3FXP3bFtNZMZ6BNXh9sttw8zjLgJa9AY0wNmSDTF3lj+MbHM
+Received: (qmail 9880 invoked from network); 5 Feb 2024 13:06:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1707138542; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
+	b=qszdP0jnCZA0ORm58WldFEjE9xbblmLskYalkvkaXIEclHeE912r1N2Pxl3+kPXqyCe6Ph
+	VnY3BBzilsVZTfwgiQWxsHYMiIUF007vly9jbM2kKH442Hh/dyjHJSeGlrlExuIgZs8L6s
+	kvjlKPbCqR150QPW6e69FmtiCed4QEo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1707138542;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
+	b=RGkzaiM18zritxtx7wRhb8VTeOJ3wWlWLaswf2yeOg8c211RCYUa5vFR7A/wNouf3VCXGL
+	SdBFQQunDnewsRDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1707138542; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
+	b=qszdP0jnCZA0ORm58WldFEjE9xbblmLskYalkvkaXIEclHeE912r1N2Pxl3+kPXqyCe6Ph
+	VnY3BBzilsVZTfwgiQWxsHYMiIUF007vly9jbM2kKH442Hh/dyjHJSeGlrlExuIgZs8L6s
+	kvjlKPbCqR150QPW6e69FmtiCed4QEo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1707138542;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
+	b=RGkzaiM18zritxtx7wRhb8VTeOJ3wWlWLaswf2yeOg8c211RCYUa5vFR7A/wNouf3VCXGL
+	SdBFQQunDnewsRDg==
+Date: Mon, 5 Feb 2024 14:08:59 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <ZcDd7XcP6h_P8JRj@kasco.suse.de>
+References: <Za-XWUEPml2pcATt@kasco.suse.de>
+ <20240124084235.360eb42b.hanno@hboeck.de>
+ <20240202181244.GA10788@openwall.com>
 MIME-Version: 1.0
-X-Received: by 10.107.138.84 with SMTP id m81mr21213177iod.40.1445933140058;
- Tue, 27 Oct 2015 01:05:40 -0700 (PDT)
-Date: Tue, 27 Oct 2015 13:35:40 +0530
-Message-ID: <CAMWaY3PUvtG2gJPOKaq72JA=M=u==uPAEXRh_=hJOb0wfPkgsw@mail.gmail.com>
-From: Dis close <disclose@cybersecurityworks.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a113fe7642f50b50523118b12
-Subject: [oss-security] CVE Request: Multiple XSS in NextGEN Gallery by Photocrati Version 2.1.7
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ZLR+80zZltx7aZ1C"
+Content-Disposition: inline
+In-Reply-To: <20240202181244.GA10788@openwall.com>
+Authentication-Results: smtp-out1.suse.de;
+	none
+Subject: Re: [oss-security] systemd and other system services
+ (in)compatibility with Linux procfs hidepid (was: darkhttpd: timing attack
+ and local leak of HTTP basic auth credentials)
 
---001a113fe7642f50b50523118b12
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--ZLR+80zZltx7aZ1C
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Date: Mon, 5 Feb 2024 14:08:59 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] systemd and other system services
+ (in)compatibility with Linux procfs hidepid (was: darkhttpd: timing attack
+ and local leak of HTTP basic auth credentials)
 
-Hi,
+Hello,
 
-Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-# Title : Multiple XSS in NextGEN Gallery by Photocrati Version 2.1.7
-# Affected Product  : NextGEN Gallery by Photocrati Version 2.1.7
-# Vendor Homepage : https://wordpress.org/plugins/nextgen-gallery/download/
-# Vulnerability Type  : Cross Site Scripting (XSS)
-# Risk : High
-# POC URL              :
-https://github.com/cybersecurityworks/Disclosed/issues/1
-# Status : Fixed
+On Fri, Feb 02, 2024 at 07:12:44PM +0100, Solar Designer wrote:
+> Since I'm adding to a thread started with Matthias' security review of
+> darkhttpd, I'd like to say that I'm impressed by his consistent effort
+> to review code that few others look at and the consistently high quality
+> of his findings and write-ups.  Thank you, Matthias!  Also, thank you
+> SUSE for (apparently) enabling Matthias to spend time on this.
 
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-By exploiting a Cross-site scripting vulnerability the attacker can hijack
-a logged in user=E2=80=99s session by stealing cookies. This means that the
-malicious hacker can change the logged in user=E2=80=99s password and inval=
-idate
-the session of the victim while the hacker maintains access.
+thanks a lot for the recognition!
 
-Technical Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+In the face of the codebase of a complete Linux distribution there are
+limits to what our team can do, but we try to invest our resources
+efficiently and hope to contribute back to the community this way.
+Getting feedback like this for sure motivates us to continue on this
+path.
 
-   1. Logon into any wordpress application (localhost or public host)
-   2. Modifying the above mentioned variables in NextGEN Gallery Photocrati
-   Version 2.1.7
-   3. Fill all the variables with* =E2=80=9C><img src=3Dx onerror=3Dprompt(=
-1)>* payload
-   and save it to view further.
-   4. Now, the added XSS payload will be executed whenever we review it.
+Best Regards
 
+Matthias
 
-Advisory Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--ZLR+80zZltx7aZ1C
+Content-Type: application/pgp-signature; name="signature.asc"
 
-31-08-2015 =E2=80=93 Discovered in NextGen Gallery 2.1.7 version
-31-08-2015 =E2=80=93 Reported to WP Plugin (plugins@wordpress.org)
-31-08-2015 =E2=80=93 Advance CVE Requested
-01-09-2015 =E2=80=93 Vendor Responded.
-01-09-2015 =E2=80=93 Fixed in 2.1.10 version of NextGen Gallery
+-----BEGIN PGP SIGNATURE-----
 
-Fix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmXA3ewACgkQFMQFyXGS
+NVMGDA/9G48LX1n8eatbkWJlTR8bofdkd0eR4aS0pa0qPFINtaXJ+iL3Fg4peHWr
+O+LXHLZVmDSpsJaZgiqAI2KrrTtb1Dj+9/q9euzrq21PpOD5ZXLvevIbkEzBcD/C
+vfX4V7blgF06bavEpnSzrMoikuUQY7SlzsRlKllelfNzNupUH0jNEuIPW/T3H1ie
+PtAkOH8A2qkG+2ZLn878ucqVLbvGUMhll1RbGHYzVjU8QNvOTZWzbdqxOH9qxcTD
+mgN2x2pyES5cC5ezWT6pMf85XNzhOb4a5TWmkAEltE7m4KyJ8CUhyQAN/utOmfx3
+Mm7xqi+2Iypq1FGRxIMAP5py+BIDPNBrl2N72/GIx+UigaNHMquM1ksnMFvGB7dD
+BKaDh7vixMArRXf/4ndS1hG0eqRj0pik0G0dNXtahd3797OdHjTEpkL0XcnVY3Ud
+aJj8mHtLDMeQosttMxsZiY92xgOApNSkvxrcFc2kesNY7JfrwxxiCPAnpEKSQJNR
+cYlAX4KHbKHsF23UC1sbrAL291dnuwf+CGjLi+Ai8FD4Gs5bf574U/DO0MZxb/RM
+8Bk/ODzjhXhaBDJic/WM0QTgNwqjTw5pjF8DI+OVrMAikUilJwM/vfS7+YXarLYY
+HBdjtuSIvwWTlYrcPPWL82u9QPpQMcZlY7zfqtca2OZ0sowijAA=
+=Gvij
+-----END PGP SIGNATURE-----
 
-
-Credits & Authors
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-sathish@cybersecurityworks.com from cybersecurityworks Pvt Ltd
-
-About Cybersecurityworks
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Cybersecurity Works is basically an auditing company passionate working on
-findings & reporting security flaws & vulnerabilities on web application
-and network. As professionals, we handle each client differently based on
-their unique requirements. Visit our website
-http://www.cybersecurityworks.com/ for more information.
-
-Please assign CVE as appropriate. Thanks for your valuable time & effort
-taken.
-
---
-
-Cheers !!!
-
-Team CSW
-
---001a113fe7642f50b50523118b12--
+--ZLR+80zZltx7aZ1C--
