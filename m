@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10209" "Tuesday" "22" "September" "2020" "13:37:16" "+0000" "Xen.org security team" "security@xen.org" nil "231" nil nil nil nil "9" nil nil (number mark "U       security@xen Sep 22  231/10209 " thread-indent "\"[oss-security] Xen Security Advisory 338 v4 (CVE-2020-25597) - once valid event channels may not turn invalid\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 338 v4 (CVE-2020-25597) - once valid event channels may not turn invalid" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9959 invoked by uid 550); 22 Sep 2020 13:37:39 -0000
+Received: (qmail 26398 invoked by uid 550); 6 Feb 2024 17:01:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,254 +7,620 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9734 invoked from network); 22 Sep 2020 13:37:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=+isba2oHNxAWLTpZElUcuF2o8dNqyf/0jqJsIMihQxY=; b=tsEwmKd10jaIOU41xIXoOT+L2c
-	M9WfC9LIqco/Hd+RGv5X7Y6OV9Q2dhyEoI7elXcNbW/Zpm8Xcrz+PGQtc630Hb8REhaP7QW0XRjGO
-	S3x/bW7vJUwzAQnrcBJiMxpNmYbC1Hes0XPkwYtqKzOnrbDA5w0s26qlxgKCylLY4JpU=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1kKiTs-0002Kw-UN@xenbits.xenproject.org>
-Date: Tue, 22 Sep 2020 13:37:16 +0000
-Subject: [oss-security] Xen Security Advisory 338 v4 (CVE-2020-25597) - once valid event
- channels may not turn invalid
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Received: (qmail 24246 invoked from network); 6 Feb 2024 17:00:18 -0000
+Date: Tue, 6 Feb 2024 18:01:42 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240206170142.GA2656@openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="sm4nu43k4a2Rpi4c"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2024-1048: grub2-set-bootflag may be abused to fill up /boot, bypass RLIMIT_NPROC
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--sm4nu43k4a2Rpi4c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-            Xen Security Advisory CVE-2020-25597 / XSA-338
-                               version 4
+Hi,
 
-            once valid event channels may not turn invalid
+Summary:
 
-UPDATES IN VERSION 4
-====================
+This message is about issues in grub-set-bootflag.c commonly installed
+as grub2-set-bootflag, which is Red Hat's addition (not part of upstream
+GRUB project) used at least in Fedora and RHEL and its downstreams.  It
+is a SUID root program.  I think its latest development source code is
+currently located in this branch:
 
-Public release.
+https://github.com/rhboot/grub2/tree/fedora-40
 
-ISSUE DESCRIPTION
-=================
+On non-OSTree distros, this program's purpose appears to be purely
+cosmetic - hide the boot menu if the system had already successfully
+booted up with its current kernel and a user had successfully logged in.
 
-Logic in the handling of event channel operations in Xen assumes that an
-event channel, once valid, will not become invalid over the life time of
-a guest.  However, operations like the resetting of all event channels
-may involve decreasing one of the bounds checked when determining
-validity.  This may lead to bug checks triggering, crashing the host.
+Impact of the issues I identified (through my work at CIQ on Rocky
+Linux) is rather limited - denial of service and resource limit bypass.
 
-IMPACT
-======
+I pre-notified Red Hat grub2 package maintainers about upcoming issues
+in this program in late December, and reported them in detail via Red
+Hat Bugzilla on January 3:
 
-An unprivileged guest may be able to crash Xen, leading to a Denial of
-Service (DoS) for the entire system.
+https://bugzilla.redhat.com/show_bug.cgi?id=2256678
 
-VULNERABLE SYSTEMS
-==================
+(This is currently a private "bug", hopefully it will be opened soon.)
 
-All Xen versions from 4.4 onwards are vulnerable.  Xen versions 4.3 and
-earlier are not vulnerable.
+I also reported this to linux-distros on January 24, and today February 6
+is the coordinated public disclosure.
 
-Only systems with untrusted guests permitted to create more than the
-default number of event channels are vulnerable.  This number depends
-on the architecture and type of guest.  For 32-bit x86 PV guests, this
-is 1023; for 64-bit x86 PV guests, and for all ARM guests, this number
-is 4095.  Systems where untrusted guests are limited to fewer than
-this number are not vulnerable.
+Attached are my currently proposed patches (two revisions, see below),
+tested by me on Rocky Linux 9.3, and (for the later revision) also by
+people at Red Hat.
 
-Note that xl and libxl limit max_event_channels to 1023 by default, so
-systems using exlusively xl, libvirt+libxl, or their own toolstack
-based on libxl, and not explicitly setting max_event_channels, are not
-vulnerable.
+Red Hat assigned this issue CVE-2024-1048 and rated it as CVSSv3.1 Base
+Score 3.3 and Moderate severity, which I agree with:
 
-MITIGATION
-==========
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L - 3.3
 
-The problem can be avoided by reducing the number of event channels
-available to the guest to no more than 1023.  For example, setting
-"max_event_channels=1023" in the xl domain configuration, or deleting
-any existing setting (since 1023 is the default for xl/libxl).
+Technically, the RLIMIT_NPROC bypass could mean S:C A:H, resulting in a
+score of 6.5, however in practice for this to matter the resource limits
+would need to be set up, which by default and on most systems they are
+not anyway.  That is, by default almost the same kind and extent of DoS
+is possible by a simple "fork bomb" from the user's account, so there's
+no additional vulnerability.
 
-For ARM systems, any limit no more than 4095 is safe.
+I'd like to thank Red Hat, and especially Marta Lewandowska for her help
+in coordinating this disclosure and testing the patches.
 
-For 64-bit x86 PV guests, any limit no more than 4095 is likewise safe
-if the host configuration prevents the guest administrator from
-substituting and running a 32-bit kernel (and thereby putting the
-guest into 32-bit PV mode).
+Overall, I think that at least on Enterprise Linux distros unprivileged
+setting of boot flags should be disabled by default.  It is of
+questionable value and isn't worth the risk.  That said, I understand
+that for now it may be easier for distros to patch than to re-think it.
 
-CREDITS
-=======
+Detail:
 
-This issue was discovered by Jan Beulich of SUSE.
+In 2019, Tavis Ormandy reported that the original implementation of
+grub2-set-bootflag could be abused to truncate the grubenv file.  This
+is CVE-2019-14865 and was fixed back then:
 
-RESOLUTION
-==========
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-14865
+https://access.redhat.com/errata/RHSA-2020:0335
 
-Applying the attached patch resolves this issue.
+Taking a fresh look at grub2-set-bootflag, I saw some other ways in
+which users could still abuse this little program:
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+1. After CVE-2019-14865 fix, grub2-set-bootflag no longer rewrites the
+grubenv file in-place, but writes into a temporary file and renames it
+over the original, checking for error returns from each call first.
+This prevents the original file truncation vulnerability, but it can
+leave the temporary file around if the program is killed before it can
+rename or remove the file.  There are still many ways to get the program
+killed, such as through RLIMIT_FSIZE triggering SIGXFSZ (tested,
+reliable) or by careful timing (tricky) of signals sent by process group
+leader, pty, pre-scheduled timers, SIGXCPU (probably not an exhaustive
+list).  Invoking the program multiple times fills up /boot (or if /boot
+is not separate, then it can fill up the root filesystem).  Since the
+files are tiny, the filesystem is likely to run out of free inodes
+before it'd run out of blocks, but the effect is similar - can't create
+new files after this point (but still can add data to existing files,
+such as logs).
 
-xsa338.patch           Xen 4.10 - xen-unstable
+2. After CVE-2019-14865 fix, grub2-set-bootflag naively tries to protect
+itself from signals by becoming full root.  (This does protect it from
+signals sent by the user directly to the PID, but e.g. "kill -9 -1" by
+the user still works.)  A side effect of such "protection" is that it's
+possible to invoke more concurrent instances of grub2-set-bootflag than
+the user's RLIMIT_NPROC would normally permit (as specified e.g. in
+/etc/security/limits.conf, or say in Apache httpd's RLimitNPROC if
+grub2-set-bootflag would be abused by a website script), thereby
+exhausting system resources (e.g., bypassing RAM usage limit if
+RLIMIT_AS was also set).
 
-$ sha256sum xsa338*
-56c322b89a96db6be40cf15fdb9303e24ff692aa5a6274b2d7718bfc05acf309  xsa338.meta
-7345eac1cbad23b082523e9cbd0331f8a9f16c6e459fb2a686606253f5514c9b  xsa338.patch
-$
+3. umask is inherited.  Again, due to how the CVE-2019-14865 fix creates
+a new file, and due to how mkstemp() works, this affects grubenv's new
+file permissions.  Luckily, mkstemp() forces them to be no more relaxed
+than 0600, but the user ends up being able to set them e.g. to 0.
+Luckily, at least in my testing GRUB still works fine even when the file
+has such (lack of) permissions.
 
-DEPLOYMENT DURING EMBARGO
-=========================
+The attached -1 patch deals with my example abuses above as follows:
 
-Deployment of the *patch* described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
+1. RLIMIT_FSIZE is pre-checked, so this specific way to get the process
+killed should no longer work.  However, this isn't a complete fix
+because there are other ways to get the process killed after it has
+created the temporary file.
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+The patch also fixes bug 1975892 ("RFE: grub2-set-bootflag should not
+write the grubenv when the flag being written is already set") and
+similar for "menu_show_once", which further reduces the abuse potential.
 
-And: deployment of the event channel limit reduction mitigation is NOT
-permitted (except where all the affected systems and VMs are
-administered and used only by organisations which are members of the
-Xen Project Security Issues Predisclosure List).  Specifically,
-deployment on public cloud systems is NOT permitted.
+2. RLIMIT_NPROC bypass should be avoided by not becoming full root (aka
+dropping the partial "kill protection").
 
-This is because such a change can be visible to the guest, so it would
-leak the preconditions for the vulnerability and maybe lead to
-rediscovery.
+3. A safe umask is set.
 
-Deployment of this, or similar mitigations, is permitted only AFTER
-the embargo ends.
+The -1 patch is a partial fix (temporary files can still accumulate, but
+this is harder to trigger).  It should be safe to use.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+The attached -7 patch additionally switches to usage of per-user fixed
+temporary filenames along with a weird locking mechanism, which is
+explained in source code comments.  This is a more complete fix
+(temporary files can't accumulate).  Unfortunately, it introduces new
+risks (by working on a temporary file shared between the user's
+invocations), which are _hopefully_ avoided by the patch's elaborate
+logic.  I actually got it wrong at first, which suggests that this logic
+is hard to reason about, and more errors or omissions are possible.  It
+also relies on the kernel's primitives' exact semantics to a greater
+extent (nothing out of the ordinary, though).
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Both patches also fix potential 1- or 2-byte over-read of env[] if its
+content is malformed - this was not a security issue since the grubenv
+file is trusted input, and the fix is just for robustness.
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+Also attached is a program I wrote and used to test the unusual approach
+to locking implemented in the -7 patch here.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl9p/ecMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZlToIAMY5ZvKvqVmLzy/UEZrq3lgf8DA2+n9BFnec+XlI
-gDz7ssJNgwnkrrt7BF/XGeaAwly/pRACLapYd7hP8KNM3qPz/DG++S2FS/O44AkQ
-7yjYRoEJRxFK1RnG3UeVw9S8aDrUrsTIoh7WFsX7rvEw6zg6o4kii4YSjvUSV5ug
-uYh0p3i56CWqjlKd94ZQlESfacrl1wZd/AemdDbAzj/FMF0ZyQujQ3PHBAcLjbPR
-jzE/EJRjpEPe9kMWKDWX06VlWja6cUDFIlaqZM9nlgiyI643y2iRSuilQbansMPA
-zG6SXQOqzSWc+OQ3wUaf972mjNfiKiBSFo/hB95HdS5I2Pk=
-=EzUa
------END PGP SIGNATURE-----
+Remaining issues that I think cannot reasonably be fixed without a
+redesign (e.g., having per-flag files with nothing else in them) and
+without introducing new issues:
 
---=separator
-Content-Type: application/octet-stream; name="xsa338.meta"
-Content-Disposition: attachment; filename="xsa338.meta"
-Content-Transfer-Encoding: base64
+A. A user can still revert a concurrent user's attempt of setting the
+other flag - or of making other changes to grubenv by means other than
+this program.
 
-ewogICJYU0EiOiAzMzgsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
-CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
-ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICI5M2JlOTQzZTdkNzU5MDE1YmQ1ZGI0MWE0OGY2ZGNlNThl
-NTgwZDVhIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
-MzYsCiAgICAgICAgICAgIDMzNwogICAgICAgICAgXSwKICAgICAgICAgICJQ
-YXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzM4LnBhdGNoIgogICAgICAg
-ICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjExIjogewog
-ICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAg
-IlN0YWJsZVJlZiI6ICJkZGFhY2NiYmFiNmIxOWJmMjFlZDJjMDk3ZjMwNTVh
-M2MyNTQ0YzhkIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAg
-ICAzMzMsCiAgICAgICAgICAgIDMzNiwKICAgICAgICAgICAgMzM3CiAgICAg
-ICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4
-c2EzMzgucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAg
-ICB9LAogICAgIjQuMTIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAg
-ICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjEzMzZjYTE3NzQy
-NDcxZmM0YTU5ODc5YWUyZjYzN2E1OTUzMGE5MzMiLAogICAgICAgICAgIlBy
-ZXJlcXMiOiBbCiAgICAgICAgICAgIDMzMywKICAgICAgICAgICAgMzM0LAog
-ICAgICAgICAgICAzMzYsCiAgICAgICAgICAgIDMzNwogICAgICAgICAgXSwK
-ICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzM4LnBh
-dGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAg
-ICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjog
-ewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5YjM2N2IyYjBiNzE0ZjNmZmI2
-OWVkNmJlMGExMThlOGQzZWFjMDdmIiwKICAgICAgICAgICJQcmVyZXFzIjog
-WwogICAgICAgICAgICAzMzMsCiAgICAgICAgICAgIDMzNCwKICAgICAgICAg
-ICAgMzM2LAogICAgICAgICAgICAzMzcKICAgICAgICAgIF0sCiAgICAgICAg
-ICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTMzOC5wYXRjaCIKICAg
-ICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xNCI6
-IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAg
-ICAgICJTdGFibGVSZWYiOiAiYzNhMGZjMjJhZjkwZWYyOGU2OGIxMTZjNmE0
-OWQ5Y2VjNTdmNzFjZiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAg
-ICAgICAgMzMzLAogICAgICAgICAgICAzMzQsCiAgICAgICAgICAgIDMzNiwK
-ICAgICAgICAgICAgMzM3CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNo
-ZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMzgucGF0Y2giCiAgICAgICAgICBd
-CiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIm1hc3RlciI6IHsKICAg
-ICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJT
-dGFibGVSZWYiOiAiYjExOTEwMDgyZDkwYmIxNTk3ZjY2Nzk1MjRlYjcyNmEz
-MzMwNjY3MiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAg
-MzMzLAogICAgICAgICAgICAzMzQsCiAgICAgICAgICAgIDMzNiwKICAgICAg
-ICAgICAgMzM3CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBb
-CiAgICAgICAgICAgICJ4c2EzMzgucGF0Y2giCiAgICAgICAgICBdCiAgICAg
-ICAgfQogICAgICB9CiAgICB9CiAgfQp9
+B. One leftover temporary file per user is still possible.
 
---=separator
-Content-Type: application/octet-stream; name="xsa338.patch"
-Content-Disposition: attachment; filename="xsa338.patch"
-Content-Transfer-Encoding: base64
+Needs comments by people more familiar with GRUB and its configurations
+in use:
 
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBldnRjaG46IHJlbGF4IHBvcnRfaXNfdmFsaWQoKQoKVG8gYXZvaWQgcG9y
-dHMgcG90ZW50aWFsbHkgYmVjb21pbmcgaW52YWxpZCBiZWhpbmQgdGhlIGJh
-Y2sgb2YgY2VydGFpbgpvdGhlciBmdW5jdGlvbnMgKGR1ZSB0byAtPm1heF9l
-dnRjaG4gc2hyaW5raW5nKSBiZWNhdXNlIG9mCi0gYSBndWVzdCBpbnZva2lu
-ZyBldnRjaG5fcmVzZXQoKSBhbmQgZnJvbSBhIDJuZCB2Q1BVIG9wZW5pbmcg
-bmV3CiAgY2hhbm5lbHMgaW4gcGFyYWxsZWwgKHNlZSBhbHNvIFhTQS0zNDMp
-LAotIGFsbG9jX3VuYm91bmRfeGVuX2V2ZW50X2NoYW5uZWwoKSBwcm9kdWNl
-ZCBjaGFubmVscyBsaXZpbmcgYWJvdmUgdGhlCiAgMi1sZXZlbCByYW5nZSAo
-c2VlIGFsc28gWFNBLTM0MiksCmRyb3AgdGhlIG1heF9ldnRjaG5zIGNoZWNr
-IGZyb20gcG9ydF9pc192YWxpZCgpLiBGb3IgYSBwb3J0IGZvciB3aGljaAp0
-aGUgZnVuY3Rpb24gb25jZSByZXR1cm5lZCAidHJ1ZSIsIHRoZSByZXR1cm5l
-ZCB2YWx1ZSBtYXkgbm90IHR1cm4gaW50bwoiZmFsc2UiIGxhdGVyIG9uLiBU
-aGUgZnVuY3Rpb24ncyByZXN1bHQgbWF5IG9ubHkgZGVwZW5kIG9uIGJvdW5k
-cyB3aGljaApjYW4gb25seSBldmVyIGdyb3cgKHdoaWNoIGlzIHRoZSBjYXNl
-IGZvciBkLT52YWxpZF9ldnRjaG5zKS4KClRoaXMgYWxzbyBlbGltaW5hdGVz
-IGEgZmFsc2Ugc2Vuc2Ugb2Ygc2FmZXR5LCB1dGlsaXplZCBieSBzb21lIG9m
-IHRoZQp1c2VycyAoc2VlIGFnYWluIFhTQS0zNDMpOiBXaXRob3V0IGEgc3Vp
-dGFibGUgbG9jayBoZWxkLCBkLT5tYXhfZXZ0Y2hucwptYXkgY2hhbmdlIGF0
-IGFueSB0aW1lLCBhbmQgaGVuY2UgZGVkdWNpbmcgdGhhdCBjZXJ0YWluIG90
-aGVyIG9wZXJhdGlvbnMKYXJlIHNhZmUgd2hlbiBwb3J0X2lzX3ZhbGlkKCkg
-cmV0dXJuZWQgdHJ1ZSBpcyBub3QgbGVnaXRpbWF0ZS4gVGhlCm9wcG9ydHVu
-aXRpZXMgdG8gYWJ1c2UgdGhpcyBtYXkgZ2V0IHdpZGVuZWQgYnkgdGhlIGNo
-YW5nZSBoZXJlCihkZXBlbmRpbmcgb24gZ3Vlc3QgYW5kIGhvc3QgY29uZmln
-dXJhdGlvbiksIGJ1dCB3aWxsIGJlIHRha2VuIGNhcmUgb2YKYnkgdGhlIG90
-aGVyIFhTQS4KClRoaXMgaXMgWFNBLTMzOC4KCkZpeGVzOiA0ODk3NGU2Y2U1
-MmUgKCJldnRjaG46IHVzZSBhIHBlci1kb21haW4gdmFyaWFibGUgZm9yIHRo
-ZSBtYXggbnVtYmVyIG9mIGV2ZW50IGNoYW5uZWxzIikKU2lnbmVkLW9mZi1i
-eTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdlZC1i
-eTogU3RlZmFubyBTdGFiZWxsaW5pIDxzc3RhYmVsbGluaUBrZXJuZWwub3Jn
-PgpSZXZpZXdlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9uLmNv
-bT4KLS0tCnY1OiBOZXcsIHNwbGl0IGZyb20gbGFyZ2VyIHBhdGNoLgoKLS0t
-IGEveGVuL2luY2x1ZGUveGVuL2V2ZW50LmgKKysrIGIveGVuL2luY2x1ZGUv
-eGVuL2V2ZW50LmgKQEAgLTEwNyw4ICsxMDcsNiBAQCB2b2lkIG5vdGlmeV92
-aWFfeGVuX2V2ZW50X2NoYW5uZWwoc3RydWN0CiAKIHN0YXRpYyBpbmxpbmUg
-Ym9vbF90IHBvcnRfaXNfdmFsaWQoc3RydWN0IGRvbWFpbiAqZCwgdW5zaWdu
-ZWQgaW50IHApCiB7Ci0gICAgaWYgKCBwID49IGQtPm1heF9ldnRjaG5zICkK
-LSAgICAgICAgcmV0dXJuIDA7CiAgICAgcmV0dXJuIHAgPCByZWFkX2F0b21p
-YygmZC0+dmFsaWRfZXZ0Y2hucyk7CiB9CiAK
+C. One hopefully non-issue (but I am not sure): can "menu_show_once"
+possibly make the system stuck at next boot?  Apparently, not with
+defaults, but maybe along with other GRUB settings in place?  If so, it
+could be unsafe to expose setting this flag to users.  A misfeature?
 
---=separator--
+Security hardening not yet implemented (would require changes or at
+least decisions outside of this program's code):
+
+D. If this program's functionality is really desirable anywhere at all,
+perhaps its availability should vary by distro - e.g., have it on (some
+builds of) Fedora, but not on Enterprise Linux distros - and then don't
+make this program SUID root where that is not needed.
+
+E. The program could refuse to work (exit early) if invoked by an
+unexpected system pseudo-user.  Apparently, it's expected to be invoked
+by all normal users, but we can nevertheless disallow uid < 1000, so the
+program couldn't be abused by a compromised system pseudo-user account
+in a multi-vulnerability multi-step attack.
+
+F. grubenv could be made a symlink into a subdirectory writable by a
+group, then SGID to that group could be used, mostly to reduce impact of
+some other (yet unidentified) vulnerabilities/attacks on the program.
+
+Regarding remaining issue/idea D above, even RHEL installs
+/usr/lib/systemd/user/grub-boot-success.service, which then fails to run
+upon user login when the program is not user-accessible.  The impact
+from this failure, however, appears to be very limited - just some noise
+in the logs.  The -7 patch includes a piece to reduce such noise if the
+program is installed e.g. mode 755.
+
+Overall, my understanding is that the program (and other related parts
+using the boot success flag) is most useful on systems with OSTree,
+which means some builds of Fedora, right?  Per Wikipedia it's "Fedora's
+atomic spins (Silverblue, Kinoite, and Sericea)".
+https://en.wikipedia.org/wiki/OSTree
+
+Should we get rid of it on other distros?  Or on the contrary, should we
+make real, non-cosmetic use of the boot flag?  If not setting the flag
+would trigger automatic fallback to the previous kernel, that could be a
+valuable enough feature to justify some risks, but on the other hand
+such fallback would also be unexpected by many and it'd be a security
+concern on its own.  A server could successfully boot into the new
+kernel and be in use without any Unix user logins to it occurring until
+next reboot.  It shouldn't then revert to the old kernel just because no
+one had logged in.  So the feature would need to be opt-in by the
+sysadmin or/and the criteria for fallback would need to be different.
+
+Alexander
+
+--sm4nu43k4a2Rpi4c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="grub-set-bootflag-rocky-1.patch"
+
+diff --git a/util/grub-set-bootflag.c b/util/grub-set-bootflag.c
+index 3b4c25ca2..5bbbef804 100644
+--- a/util/grub-set-bootflag.c
++++ b/util/grub-set-bootflag.c
+@@ -33,6 +33,8 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <sys/stat.h>
++#include <sys/resource.h>
+ 
+ #include "progname.h"
+ 
+@@ -57,12 +59,17 @@ static void usage(FILE *out)
+ int main(int argc, char *argv[])
+ {
+   /* NOTE buf must be at least the longest bootflag length + 4 bytes */
+-  char env[GRUBENV_SIZE + 1], buf[64], *s;
++  char env[GRUBENV_SIZE + 1 + 2], buf[64], *s;
+   /* +1 for 0 termination, +6 for "XXXXXX" in tmp filename */
+   char env_filename[PATH_MAX + 1], tmp_filename[PATH_MAX + 6 + 1];
+   const char *bootflag;
+   int i, fd, len, ret;
+   FILE *f;
++  struct rlimit rlim;
++
++  if (getrlimit(RLIMIT_FSIZE, &rlim) || rlim.rlim_cur < GRUBENV_SIZE || rlim.rlim_max < GRUBENV_SIZE)
++    return 1;
++  umask(077);
+ 
+   if (argc != 2)
+     {
+@@ -94,20 +101,11 @@ int main(int argc, char *argv[])
+   len = strlen (bootflag);
+ 
+   /*
+-   * Really become root. setuid avoids an user killing us, possibly leaking
+-   * the tmpfile. setgid avoids the new grubenv's gid being that of the user.
++   * setegid avoids the new grubenv's gid being that of the user.
+    */
+-  ret = setuid(0);
+-  if (ret)
+-    {
+-      perror ("Error setuid(0) failed");
+-      return 1;
+-    }
+-
+-  ret = setgid(0);
+-  if (ret)
++  if (setegid(0))
+     {
+-      perror ("Error setgid(0) failed");
++      perror ("Error setegid(0) failed");
+       return 1;
+     }
+ 
+@@ -136,6 +134,9 @@ int main(int argc, char *argv[])
+ 
+   /* 0 terminate env */
+   env[GRUBENV_SIZE] = 0;
++  /* not a valid flag value */
++  env[GRUBENV_SIZE + 1] = 0;
++  env[GRUBENV_SIZE + 2] = 0;
+ 
+   if (strncmp (env, GRUB_ENVBLK_SIGNATURE, strlen (GRUB_ENVBLK_SIGNATURE)))
+     {
+@@ -171,6 +172,8 @@ int main(int argc, char *argv[])
+ 
+   /* The grubenv is not 0 terminated, so memcpy the name + '=' , '1', '\n' */
+   snprintf(buf, sizeof(buf), "%s=1\n", bootflag);
++  if (!memcmp(s, buf, len + 3))
++    return 0; /* nothing to do */
+   memcpy(s, buf, len + 3);
+ 
+ 
+
+--sm4nu43k4a2Rpi4c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="grub-set-bootflag-rocky-7.patch"
+
+diff --git a/util/grub-set-bootflag.c b/util/grub-set-bootflag.c
+index 3b4c25ca2..31a868aec 100644
+--- a/util/grub-set-bootflag.c
++++ b/util/grub-set-bootflag.c
+@@ -33,6 +33,9 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <sys/file.h>
++#include <sys/stat.h>
++#include <sys/resource.h>
+ 
+ #include "progname.h"
+ 
+@@ -57,13 +60,15 @@ static void usage(FILE *out)
+ int main(int argc, char *argv[])
+ {
+   /* NOTE buf must be at least the longest bootflag length + 4 bytes */
+-  char env[GRUBENV_SIZE + 1], buf[64], *s;
+-  /* +1 for 0 termination, +6 for "XXXXXX" in tmp filename */
+-  char env_filename[PATH_MAX + 1], tmp_filename[PATH_MAX + 6 + 1];
++  char env[GRUBENV_SIZE + 1 + 2], buf[64], *s;
++  /* +1 for 0 termination, +11 for ".%u" in tmp filename */
++  char env_filename[PATH_MAX + 1], tmp_filename[PATH_MAX + 11 + 1];
+   const char *bootflag;
+   int i, fd, len, ret;
+   FILE *f;
+ 
++  umask(077);
++
+   if (argc != 2)
+     {
+       usage (stderr);
+@@ -94,20 +99,22 @@ int main(int argc, char *argv[])
+   len = strlen (bootflag);
+ 
+   /*
+-   * Really become root. setuid avoids an user killing us, possibly leaking
+-   * the tmpfile. setgid avoids the new grubenv's gid being that of the user.
++   * Exit calmly when not installed SUID root and invoked by non-root.  This
++   * allows installing user/grub-boot-success.service unconditionally while
++   * supporting non-SUID installation of the program for some limited usage.
+    */
+-  ret = setuid(0);
+-  if (ret)
++  if (geteuid())
+     {
+-      perror ("Error setuid(0) failed");
+-      return 1;
++      printf ("grub-set-bootflag not running as root, no action taken\n");
++      return 0;
+     }
+ 
+-  ret = setgid(0);
+-  if (ret)
++  /*
++   * setegid avoids the new grubenv's gid being that of the user.
++   */
++  if (setegid(0))
+     {
+-      perror ("Error setgid(0) failed");
++      perror ("setegid(0) failed");
+       return 1;
+     }
+ 
+@@ -136,6 +143,9 @@ int main(int argc, char *argv[])
+ 
+   /* 0 terminate env */
+   env[GRUBENV_SIZE] = 0;
++  /* not a valid flag value */
++  env[GRUBENV_SIZE + 1] = 0;
++  env[GRUBENV_SIZE + 2] = 0;
+ 
+   if (strncmp (env, GRUB_ENVBLK_SIGNATURE, strlen (GRUB_ENVBLK_SIGNATURE)))
+     {
+@@ -171,21 +181,86 @@ int main(int argc, char *argv[])
+ 
+   /* The grubenv is not 0 terminated, so memcpy the name + '=' , '1', '\n' */
+   snprintf(buf, sizeof(buf), "%s=1\n", bootflag);
++  if (!memcmp(s, buf, len + 3))
++    return 0; /* nothing to do */
+   memcpy(s, buf, len + 3);
+ 
++  struct rlimit rlim;
++  if (getrlimit(RLIMIT_FSIZE, &rlim) || rlim.rlim_cur < GRUBENV_SIZE || rlim.rlim_max < GRUBENV_SIZE)
++    {
++      fprintf (stderr, "Resource limits undetermined or too low\n");
++      return 1;
++    }
++
++  /*
++   * Here we work under the premise that we shouldn't write into the target
++   * file directly because we might not be able to have all of our changes
++   * written completely and atomically.  That was CVE-2019-14865, known to
++   * have been triggerable via RLIMIT_FSIZE.  While we've dealt with that
++   * specific attack via the check above, there may be other possibilities.
++   */
+ 
+   /*
+    * Create a tempfile for writing the new env.  Use the canonicalized filename
+    * for the template so that the tmpfile is in the same dir / on same fs.
++   *
++   * We now use per-user fixed temporary filenames, so that a user cannot cause
++   * multiple files to accumulate.
++   *
++   * We don't use O_EXCL so that a stale temporary file doesn't prevent further
++   * usage of the program by the user.
+    */
+-  snprintf(tmp_filename, sizeof(tmp_filename), "%sXXXXXX", env_filename);
+-  fd = mkstemp(tmp_filename);
++  snprintf(tmp_filename, sizeof(tmp_filename), "%s.%u", env_filename, getuid());
++  fd = open(tmp_filename, O_CREAT | O_WRONLY, 0600);
+   if (fd == -1)
+     {
+       perror ("Creating tmpfile failed");
+       return 1;
+     }
+ 
++  /*
++   * The lock prevents the same user from reaching further steps ending in
++   * rename() concurrently, in which case the temporary file only partially
++   * written by one invocation could be renamed to the target file by another.
++   *
++   * The lock also guards the slow fsync() from concurrent calls.  After the
++   * first time that and the rename() complete, further invocations for the
++   * same flag become no-ops.
++   *
++   * We lock the temporary file rather than the target file because locking the
++   * latter would allow any user having SIGSTOP'ed their process to make all
++   * other users' invocations fail (or lock up if we'd use blocking mode).
++   *
++   * We use non-blocking mode (LOCK_NB) because the lock having been taken by
++   * another process implies that the other process would normally have already
++   * renamed the file to target by the time it releases the lock (and we could
++   * acquire it), so we'd be working directly on the target if we proceeded,
++   * which is undesirable, and we'd kind of fail on the already-done rename.
++   */
++  if (flock(fd, LOCK_EX | LOCK_NB))
++    {
++      perror ("Locking tmpfile failed");
++      return 1;
++    }
++
++  /*
++   * Deal with the potential that another invocation proceeded all the way to
++   * rename() and process exit while we were between open() and flock().
++   */
++  {
++    struct stat st1, st2;
++    if (fstat(fd, &st1) || stat(tmp_filename, &st2))
++      {
++        perror ("stat of tmpfile failed");
++        return 1;
++      }
++    if (st1.st_dev != st2.st_dev || st1.st_ino != st2.st_ino)
++      {
++        fprintf (stderr, "Another invocation won race\n");
++        return 1;
++      }
++  }
++
+   f = fdopen (fd, "w");
+   if (!f)
+     {
+@@ -210,23 +285,25 @@ int main(int argc, char *argv[])
+       return 1;     
+     }
+ 
+-  ret = fsync (fileno (f));
++  ret = ftruncate (fileno (f), GRUBENV_SIZE);
+   if (ret)
+     {
+-      perror ("Error syncing tmpfile");
++      perror ("Error truncating tmpfile");
+       unlink(tmp_filename);
+       return 1;
+     }
+ 
+-  ret = fclose (f);
++  ret = fsync (fileno (f));
+   if (ret)
+     {
+-      perror ("Error closing tmpfile");
++      perror ("Error syncing tmpfile");
+       unlink(tmp_filename);
+       return 1;
+     }
+ 
+   /*
++   * We must not close the file before rename() as that would remove the lock.
++   *
+    * And finally rename the tmpfile with the new env over the old env, the
+    * linux kernel guarantees that this is atomic (from a syscall pov).
+    */
+
+--sm4nu43k4a2Rpi4c
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="locktest.c"
+
+/*
+ * Example usage in 3 terminals:
+ * while :; do ./locktest; done
+ * while :; do ./locktest; done
+ * cd /dev/shm/locktest && while :; do od -tx1 target | grep 78; done
+ * The latter command shouldn't detect any 78's, but it does with any of:
+ * - flock() removed
+ * - fstat() vs. stat() comparison removed
+ * - close(fd); before the rename()
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/fcntl.h>
+#include <sys/file.h>
+#include <sys/stat.h>
+
+#define PATH "/dev/shm/locktest"
+#define TARGET_FILE PATH "/target"
+#define TMP_FILE PATH "/tmp"
+
+int main(int argc, char **argv)
+{
+	char tmp_filename[1024];
+	int uid = argc > 1 ? atoi(argv[1]) : 0;
+	snprintf(tmp_filename, sizeof(tmp_filename), "%s.%u", TMP_FILE, uid);
+
+	srandom(getpid());
+
+	if (mkdir(PATH, 0700) && errno != EEXIST) {
+		perror("mkdir");
+		return 1;
+	}
+
+	int fd = open(tmp_filename, O_CREAT | O_WRONLY, 0600);
+	if (fd == -1) {
+		perror("open");
+		return 1;
+	}
+
+	usleep(random() & 0x3fff);
+
+	if (flock(fd, LOCK_EX | LOCK_NB)) {
+		perror("flock");
+		return 1;
+	}
+
+	struct stat st1, st2;
+	if (fstat(fd, &st1) || stat(tmp_filename, &st2)) {
+		perror("[f]stat");
+		/* unlink(tmp_filename); Probably already gone, but may have been recreated just now */
+		return 1;
+	}
+	if (st1.st_dev != st2.st_dev || st1.st_ino != st2.st_ino) {
+		fprintf(stderr, "Another invocation won race\n");
+		return 1;
+	}
+
+	usleep(random() & 0x3fff);
+
+	char buf[1024];
+	memset(buf, 'x', sizeof(buf));
+	if (write(fd, buf, sizeof(buf)) != sizeof(buf)) {
+		fprintf(stderr, "Partial write\n");
+		unlink(tmp_filename);
+		return 1;
+	}
+
+	if (fsync(fd)) {
+		perror("fsync");
+		unlink(tmp_filename);
+		return 1;
+	}
+
+	if ((random() & 0x1f) == 0) {
+		fprintf(stderr, "Fault injection\n");
+		unlink(tmp_filename);
+		return 1;
+	}
+
+	usleep(random() & 0x3fff);
+
+	if (lseek(fd, 0, SEEK_SET)) {
+		perror("lseek");
+		unlink(tmp_filename);
+		return 1;
+	}
+
+	memset(buf, 'a', sizeof(buf));
+	if (write(fd, buf, sizeof(buf)) != sizeof(buf)) {
+		fprintf(stderr, "Partial write\n");
+		unlink(tmp_filename);
+		return 1;
+	}
+
+	if (fsync(fd)) {
+		perror("fsync");
+		unlink(tmp_filename);
+		return 1;
+	}
+
+/* Don't!
+	close(fd);
+*/
+
+	usleep(random() & 0x3fff);
+
+	if (rename(tmp_filename, TARGET_FILE)) {
+		perror("rename");
+		unlink(tmp_filename);
+		return 1;
+	}
+
+	return 0;
+}
+
+--sm4nu43k4a2Rpi4c--
