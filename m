@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2445" "Sunday" "29" "March" "2015" "02:24:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150329062423.4DEDC13A6DD@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE request (Debian specific): slapd: dangerous access rule in default config" nil nil nil "3" "2015032906:24:23" "[oss-security] Re: CVE request (Debian specific): slapd: dangerous access rule in default config" (number mark "        cve-assign@m Mar 29   62/2445  " thread-indent "\"[oss-security] Re: CVE request (Debian specific): slapd: dangerous access rule in default config\"\n") "<1427583132.25801.79.camel@debian.org>" ("<1427583132.25801.79.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17865 invoked by uid 550); 29 Mar 2015 06:24:35 -0000
+Received: (qmail 7988 invoked by uid 550); 7 Feb 2024 10:58:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +6,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17843 invoked from network); 29 Mar 2015 06:24:34 -0000
-In-Reply-To: <1427583132.25801.79.camel@debian.org>
-Message-Id: <20150329062423.4DEDC13A6DD@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, team@security.debian.org
-Date: Sun, 29 Mar 2015 02:24:23 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request (Debian specific): slapd: dangerous access rule in default config
-To: corsac@debian.org
+Received: (qmail 18180 invoked from network); 7 Feb 2024 06:40:57 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Michael Marshall <mmarshall@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <7b3190de-1e90-3539-9d60-55b1045d62ee@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 07 Feb 2024 06:43:26 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-51437: Apache Pulsar: Timing attack in SASL token
+ signature verification 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Affected versions:
 
-> Debian bug #761406 was fixed in Debian sid some time ago, but no CVE was
-> assigned. In order to raise some exposure, and make sure admins
-> check/fix their config, we'll issue a DSA, so I'm requesting a CVE for
-> this.
-> 
-> The problem is that by default LDAP users have write access to their own
-> attributes. If LDAP is used to grant permissions, and those permissions
-> are stored as user attributes (for example by using the ou), then an
-> user can modify its own permissions, which is usually not wanted.
-> 
-> It's a Debian specific issue,
+- Apache Pulsar through 2.10.5
+- Apache Pulsar 2.11.0 through 2.11.2
+- Apache Pulsar 3.0.0 through 3.0.1
+- Apache Pulsar 3.1.0
 
-> [1]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=761406
+Description:
 
-Use CVE-2014-9713 for this Debian specific issue.
+Observable timing discrepancy vulnerability in Apache Pulsar SASL Authentic=
+ation Provider can allow an attacker to forge a SASL Role Token that will p=
+ass signature verification.
+Users are recommended to upgrade to version 2.11.3, 3.0.2, or 3.1.1 which f=
+ixes the issue. Users should also consider updating the configured secret i=
+n the `saslJaasServerRoleTokenSignerSecretPath` file.
 
+Any component matching an above version running the SASL Authentication Pro=
+vider is affected. That includes the Pulsar Broker, Proxy, Websocket Proxy,=
+ or Function Worker.
 
-> but the OpenLDAP documentation [2]
-> actually recommends something like that.
+2.11 Pulsar users should upgrade to at least 2.11.3.
+3.0 Pulsar users should upgrade to at least 3.0.2.
+3.1 Pulsar users should upgrade to at least 3.1.1.
+Any users running Pulsar 2.8, 2.9, 2.10, and earlier should upgrade to one =
+of the above patched versions.
 
-> [2]: http://www.openldap.org/doc/admin24/guide.html#Basic%20ACLs
+For additional details on this attack vector, please refer to  https://coda=
+hale.com/a-lesson-in-timing-attacks/ .
 
-We think there might be a need for a second CVE related to this
-upstream issue, because the recommendation is contained in a file
-bundled with the upstream software distribution, i.e.,
-doc/guide/admin/access-control.sdf in the
-ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.4.40.tgz
-file.
+Credit:
 
-(Admittedly, CVEs for documentation are infrequent. CVE-2010-4179 is
-one example.)
+Yiheng Cao (finder)
+Chenhao Lu  (finder)
+Kaifeng Huang (finder)
 
-The essence of the issue is that it's easy for documentation readers
-to infer that the Basic ACLs section, as well as essentially all of
-the access-control.sdf file, is suggesting that "access to * by self
-write" (with no earlier write restrictions) is a typically correct or
-recommended design. It seems very unlikely that only Debian is facing
-a related security impact.
+References:
 
-On the other hand, if upstream believes that its existing
-documentation is completely reasonable, then having a CVE for it could
-be counterproductive.
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-51437
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVF5mJAAoJEKllVAevmvmsyjcH/RZ8v3D+WSZvt++b4PJTea5p
-sRXkRRnJizcak2idk+nEunQdlxutnNtSmZW6CvC/JI2CWUkY0jKbzPi9vpOqrZKg
-H6spjx9+WK3EixlUjm0CaOWeanjl0KAqItbkpYOPKAZofKSWUsCmDNjKHaI9/zJ2
-WvPyhfxyEurPSUaf/u0tcZ3QNEo9Hmz4EVS2YmuFBFBFUgRHxzq1V1OhhT9+mFmP
-ZNFBdF/HOCSLC/c2M0mvvDWo1scRl41vTsNp/JO8X1lmG/OAcaDjYoYgfQcg2GiU
-GxGC5G95iOS77Mx/QBeZfGqBdeQpyiVU32s9shACr8fvLasvJ4I7/UGakyeq7qM=
-=/YQE
------END PGP SIGNATURE-----
