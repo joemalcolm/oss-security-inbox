@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1083" "Monday" "18" "December" "2017" "15:04:14" "-0700" "Leonid Isaev" "leonid.isaev@jila.colorado.edu" "<20171218220414.GA10960@takahe.colorado.edu>" "23" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121822:04:14" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        leonid.isaev Dec 18   23/1083  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<814-1513628516.856754@MaI1.D5wz.7Roo>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<87tvwoowng.fsf@fifthhorseman.net>" "<814-1513628516.856754@MaI1.D5wz.7Roo>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28615 invoked by uid 550); 18 Dec 2017 22:18:58 -0000
+Received: (qmail 21680 invoked by uid 550); 7 Feb 2024 13:00:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15707 invoked from network); 18 Dec 2017 22:04:31 -0000
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.99.2 at jilau1.colorado.edu
-Message-ID: <20171218220414.GA10960@takahe.colorado.edu>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20171207210134.GA7079@openwall.com>
- <2172-1513501568.968862@pLoG.Le7g.f3CQ>
- <87tvwoowng.fsf@fifthhorseman.net>
- <814-1513628516.856754@MaI1.D5wz.7Roo>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <814-1513628516.856754@MaI1.D5wz.7Roo>
-User-Agent: Mutt/1.9.1 (2017-09-22)
-Date: Mon, 18 Dec 2017 15:04:14 -0700
-From: Leonid Isaev <leonid.isaev@jila.colorado.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+Received: (qmail 1181 invoked from network); 7 Feb 2024 12:46:46 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: =?UTF-8?Q?Istv=C3=A1n_Fajth?= <pifta@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <dfb97456-33c7-be39-5288-c341a34fef0a@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 07 Feb 2024 12:49:17 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-39196: Apache Ozone: Missing mutual TLS authentication in
+ one of the service internal Ozone Storage Container Manager endpoints 
 
-On Mon, Dec 18, 2017 at 08:21:56PM +0000, halfdog wrote:
-> The point in starting this thread was, that GnuPG does NOT conveniently
-> cover usecases for headless or scripting operation. Thus it seems
-> that the time has come to look for replacement, as GnuPG is moving
-> more in the "desktop" direction, as also your comments indicate.
+Severity: moderate
 
-You are talking about policies here, not technical issues. Gnupg is perfectly
-scriptable, see pacman-key(1) tool in Arch Linux. Moreover, gpg-agent is easily
-usable on a headless machine. At least, I mostly use it this way when checking
-email... You will lose nothing if you just pkill(1) gpg-agent though. So I
-don't understand why you claim that gpg is moving towards desktop.
+Affected versions:
 
-> That's really a strange argument. You fear PTRACING for key extraction
-> of a short-lived, per-key instance of gpg1 process and solve that
-> by putting all the key material into a single long-lived gpg-agent
-> process, not even providing convenient commands to flush the keys
-> from there?
+- Apache Ozone 1.2.0 through 1.3.0
 
-pkill -hup gpg-agent. Please read the manpages.
+Description:
 
-Cheers,
--- 
-Leonid Isaev
+Improper Authentication vulnerability in Apache Ozone.
+
+The vulnerability allows an attacker to download metadata internal to the S=
+torage Container Manager service without proper authentication.
+The attacker is not allowed to do any modification within the Ozone Storage=
+ Container Manager service using this vulnerability.
+The accessible metadata does not contain sensitive information that can be =
+used to exploit the system later on, and the accessible data does not make =
+it possible to gain access to actual user data within Ozone.
+This issue affects Apache Ozone: 1.2.0 and subsequent releases up until 1.3=
+.0.
+
+Users are recommended to upgrade to version 1.4.0, which fixes the issue.
+
+References:
+
+https://ozone.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-39196
+
