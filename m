@@ -1,4 +1,4 @@
-Received: (qmail 9540 invoked by uid 550); 11 May 2026 21:35:16 -0000
+Received: (qmail 15414 invoked by uid 550); 9 Feb 2024 17:33:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15968 invoked from network); 11 May 2026 21:18:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1778534314;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=TWDBMKcIzlK5a4kekOhD0H6qMlz2dJ6DcPYDRSLjWR4=;
-	b=yq6HOaimrQAxPfKmb6BAKIzHEY9/quC51Rb283yxIfSk3epxmW+RYC67lDk9bkHQ/MjJDX
-	lTaUCcsnSopeEKjpoX6gMB68Yb16RE96cMEsRYv43Vap6e5rGQROOePCOdNQ/ARD4vUhW8
-	qQ5xd0NgaGGSElbbUMv27mcoEtr07mMEW8O5d6OX1bpEATu+6aLT9ucS6iu/kyXYnhBYds
-	NI+CySN216BFoXluoI9xWVgHpZbj3VK8eFeHL6fI/q4rjtvkeyqLxVbjNF9+t2BJKWkyCg
-	hVtSPr/6R+5PKYcA71kVgw6mFeSCj/5aOQrh1uVCH0nMHAniVr13MwSBwzEX4A==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of stig@stig.io designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=stig@stig.io
-From: Stig Palmquist <stig@stig.io>
-Content-Type: text/plain;
-	charset=us-ascii
+Received: (qmail 16219 invoked from network); 9 Feb 2024 17:15:32 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Houston Putman <houston@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <eab45884-5bcc-fd09-58f6-0b0679d650eb@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Message-Id: <37024799-4603-4042-9296-3DAD7442C146@stig.io>
-Date: Mon, 11 May 2026 23:18:22 +0200
-To: cve-announce@security.metacpan.org,
- oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2026-7010: HTTP::Tiny versions before 0.093 for Perl do not
- validate CRLF in HTTP request lines or control field header values
+Date: Fri, 09 Feb 2024 17:17:45 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-50386: Apache Solr: Backup/Restore APIs allow for
+ deployment of executables in malicious ConfigSets 
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-CVE-2026-7010                                        CPAN Security Group
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity: moderate
 
-        CVE ID:  CVE-2026-7010
-  Distribution:  HTTP-Tiny
-      Versions:  before 0.093
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/HTTP-Tiny
-      VCS Repo:  https://github.com/Perl-Toolchain-Gang/HTTP-Tiny
+- Apache Solr 6.0.0 through 8.11.2
+- Apache Solr 9.0.0 before 9.4.1
 
+Description:
 
-HTTP::Tiny versions before 0.093 for Perl do not validate CRLF in HTTP
-request lines or control field header values
+Improper Control of Dynamically-Managed Code Resources, Unrestricted Upload=
+ of File with Dangerous Type, Inclusion of Functionality from Untrusted Con=
+trol Sphere vulnerability in Apache Solr.This issue affects Apache Solr: fr=
+om 6.0.0 through 8.11.2, from 9.0.0 before 9.4.1.
 
-Description
------------
-HTTP::Tiny versions before 0.093 for Perl do not validate CRLF in HTTP
-request lines or control field header values.
+In the affected versions, Solr ConfigSets accepted Java jar and class files=
+ to be uploaded through the ConfigSets API.
+When backing up Solr Collections, these configSet files would be saved to d=
+isk when using the LocalFileSystemRepository (the default for backups).
+If the backup was saved to a directory that Solr uses in its ClassPath/Clas=
+sLoaders, then the jar and class files would be available to use with any C=
+onfigSet, trusted or untrusted.
 
-The unvalidated inputs are the method and URI in the request line, the
-URL host that becomes the `Host:` header, and HTTP/1.1 control data
-field values.
+When Solr is run in a secure way (Authorization enabled), as is strongly su=
+ggested, this vulnerability is limited to extending the Backup permissions =
+with the ability to add libraries.
+Users are recommended to upgrade to version 8.11.3 or 9.4.1, which fix the =
+issue.
+In these versions, the following protections have been added:
 
-An attacker who controls one of these inputs, for example a user
-supplied URL passed to a webhook or URL fetch endpoint, can inject
-additional headers and smuggle requests to the upstream server.
+  *  Users are no longer able to upload files to a configSet that could be =
+executed via a Java ClassLoader.
+  *  The Backup API restricts saving backups to directories that are used i=
+n the ClassLoader.
 
-Problem types
--------------
-- CWE-113 Improper Neutralization of CRLF Sequences in HTTP Headers
-  ('HTTP Request/Response Splitting')
+This issue is being tracked as SOLR-16949=20
 
-Solutions
----------
-Upgrade to HTTP-Tiny 0.093-TRIAL or later.
+Credit:
 
+L3yx (reporter)
 
-References
-----------
-https://github.com/Perl-Toolchain-Gang/HTTP-Tiny/commit/d73c7651e82ace02693=
-842df55928b6c3ae7c38d.patch
-https://metacpan.org/release/HAARG/HTTP-Tiny-0.093-TRIAL/changes
+References:
 
-Timeline
---------
-- 2026-04-25: Issue discovered.
-- 2026-05-11: HTTP-Tiny 0.093-TRIAL published with fix.
-
+https://solr.staged.apache.org/security.html#cve-2023-50386-apache-solr-bac=
+kuprestore-apis-allow-for-deployment-of-executables-in-malicious-configsets
+https://solr.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-50386
+https://issues.apache.org/jira/browse/SOLR-16949
 
