@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3765" "Tuesday" "26" "July" "2016" "15:22:45" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160726192245.12A9C72E005@smtpvbsrv1.mitre.org>" "92" "[oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD" "^Cc:" nil nil "7" "2016072619:22:45" "[oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD" (number mark "U       cve-assign@m Jul 26   92/3765  " thread-indent "\"[oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD\"\n") "<4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>" ("<4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32079 invoked by uid 550); 26 Jul 2016 19:22:57 -0000
+Received: (qmail 16209 invoked by uid 550); 9 Feb 2024 17:34:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +6,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32055 invoked from network); 26 Jul 2016 19:22:56 -0000
-In-Reply-To: <4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>
-Message-Id: <20160726192245.12A9C72E005@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, Tim.Newsham@nccgroup.trust
-Date: Tue, 26 Jul 2016 15:22:45 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD
-To: jesse.hertz@nccgroup.trust
+Received: (qmail 22404 invoked from network); 9 Feb 2024 17:18:27 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Houston Putman <houston@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <7d5d3a96-7f33-e282-06b1-3bc28b8da908@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 09 Feb 2024 17:20:43 +0000
+MIME-Version: 1.0
+Subject: [oss-security] =?UTF-8?Q?CVE-2023-50292=3A_Apache_Solr=3A_Solr_Sc?=
+ =?UTF-8?Q?hema_Designer_blindly_=22trusts=22_all_c?=
+ =?UTF-8?Q?onfigsets=2C_possibly_leading_to_RCE_by_?=
+ =?UTF-8?Q?unauthenticated_users=20?=
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: critical
 
-> Any user can panic the kernel by using the sysctl call. If a
-> user can manage to map a page at address zero, they may be able
-> to gain kernel code execution and escalate privileges (OpenBSD fortunately prevents this by default).
-> 
-> Description:
-> When processing sysctl calls, OpenBSD dispatches through a number
-> of intermediate helper functions. For example, if the first integer
-> in the path is 10, sys_sysctl() will call through vfs_sysctl() for
-> further processing. vfs_sysctl() performs a table lookup based on
-> the second byte, and if the byte is 19, it selects the tmpfs_vfsops
-> table and dispatches further processing through the vfs_sysctl method:
-> 
->     if (name[0] != VFS_GENERIC) {
->         for (vfsp = vfsconf; vfsp; vfsp = vfsp->vfc_next)
->             if (vfsp->vfc_typenum == name[0])
->                 break;
-> 
->         if (vfsp == NULL)
->             return (EOPNOTSUPP);
-> 
->         return ((*vfsp->vfc_vfsops->vfs_sysctl)(&name[1], namelen - 1,
->             oldp, oldlenp, newp, newlen, p));
->     }
-> 
-> Unfortunately, the definition for tmpfs_vfsops leaves this method NULL:
+Affected versions:
 
-> struct vfsops tmpfs_vfsops = {
-> 
->     NULL,               /* vfs_sysctl */
+- Apache Solr 8.10.0 through 8.11.2
+- Apache Solr 9.0.0 before 9.3.0
 
-> Trying to read or write a sysctl path starting with (10,19) results
-> in a NULL pointer access and a panic of
-> "attempt to execute user address 0x0 in supervisor mode".
-> Since any user can perform a sysctl read, this issue can be abused
-> by any logged in user to panic the system.
-> 
-> Fortunately, OpenBSD intentionally prevents users from attempting to map a page
-> at the NULL address. If an attacker is able to get such a mapping,
-> they may be able to cause the kernel to jump to code mapped at this
-> address (if other security protections such as SMAP/SMEP aren't in place).
-> This would allow an attacker to gain kernel code execution and
-> escalate their privileges.
-> 
-> Reproduction:
-> Run the PoC sysctl_tmpfs_panic.c program. It will pccess
-> the (10,19,0) sysctl path and trigger a panic of
-> "attempt to execute user address 0x0 in supervisor mode".
-> NCC Group was able to reproduce this issue on OpenBSD 5.9 release
-> running amd64.
-> 
-> Recommendation:
-> Include a NULL-pointer check in vfs_sysctl() before dispatching to
-> the vfs_sysctl method. Alternately, include a vfs_sysctl method
-> in the tmpfs_vfsops table.
-> 
-> Fixed: http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_subr.c.diff?r1=1.248&r2=1.249
->        http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.9&r2=1.10
+Description:
 
->     int name[] = { 10, 19, 0 }; // vfs.tmpfs.0
->     char buf[16];
->     size_t sz = sizeof buf;
->     int x;
-> 
->     x = sysctl(name, 3, buf, &sz, 0, 0);
+Incorrect Permission Assignment for Critical Resource, Improper Control of =
+Dynamically-Managed Code Resources vulnerability in Apache Solr.
 
-Use CVE-2016-6350.
+This issue affects Apache Solr: from 8.10.0 through 8.11.2, from 9.0.0 befo=
+re 9.3.0.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The Schema Designer was introduced to allow users to more easily configure =
+and test new Schemas and configSets.
+However, when the feature was created, the "trust" (authentication) of thes=
+e configSets was not considered.
+External library loading is only available to configSets that are "trusted"=
+ (created by authenticated users), thus non-authenticated users are unable =
+to perform Remote Code Execution.
+Since the Schema Designer loaded configSets without taking their "trust" in=
+to account, configSets that were created by unauthenticated users were allo=
+wed to load external libraries when used in the Schema Designer.
 
-iQIcBAEBCAAGBQJXl7ebAAoJEHb/MwWLVhi2RRUQAKkrnjJ8NqE2b7z29QMk+jdI
-nM1jbtV5seUvzxvVkk83jHCE4icLl3rDH23QAc9zRuMsVH6uXnIx7Cx37xlk9a54
-YwNjnVZk8zIior3yQOY5/JzXkr/AaK2Pb5SQVRyHiJRD9ApA97DvWxJGGWFhCxLc
-M/S2BeiB15L05dC0wKEJFKx4OV4ScpB2uy/T+gORpqRkWHhI1h/xCYeG2wNTSGaI
-DBQTvtR1MYwqz7jax1jFPyaUAW4Jg21qCP9L20Ds+G9Yw3DzVP+k3c06l2PMcuM+
-zr9ajStH3NDSMkqYkfhYXFGDzUo5z8BFnRdJmAkFTcYQGJz2PkwNeRGw4put5/lB
-sVzYCnP8SXM2LVjOYzwxI6LyNvtnK5HhqE7PD5hf81rNDQHqDb01g0l2EE1psyNs
-/cSMhJzQL9ioZTbjTDtvpWpopZVeIt9BUWQGXFb7QviQpNcFPXsvT2A4wwimm3HE
-dXlfMzARDBlkU/2qRfXJAfqtTM5MI5KlPLIREEwOjUMbwgnynENeHdLjob2EJLE7
-7ofXZE+azTK03wx4e/3aJwWfy5Ff+lXXb50AJOutS74oRii8gSHywMIZLV+0k6nN
-Klkk1UYBdgkBc6HW42yK/veQ/tEc1Vwm3edpD+WWlo1y3kju6vig5fB7jhpD+vQc
-dfRSQioVwzON5g8m+tx+
-=DboK
------END PGP SIGNATURE-----
+Users are recommended to upgrade to version 9.3.0, which fixes the issue.
+
+This issue is being tracked as SOLR-16777=20
+
+Credit:
+
+Skay (reporter)
+
+References:
+
+https://solr.staged.apache.org/security.html#cve-2023-50298-apache-solr-can=
+-expose-zookeeper-credentials-via-streaming-expressions
+https://solr.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-50292
+https://issues.apache.org/jira/browse/SOLR-16777
+
