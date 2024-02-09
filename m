@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["317" "Tuesday" "25" "January" "2022" "19:53:03" "+0800" "Zhang Yonglun" "zhangyonglun@apache.org" nil "15" "[oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache ShenYu 2.4.1" nil nil nil "1" nil nil (number mark "U       zhangyonglun Jan 25   15/317   " thread-indent "\"[oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache ShenYu 2.4.1\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache ShenYu 2.4.1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5451 invoked by uid 550); 25 Jan 2022 14:56:11 -0000
+Received: (qmail 19711 invoked by uid 550); 9 Feb 2024 17:34:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5493 invoked from network); 25 Jan 2022 11:53:27 -0000
-X-Gm-Message-State: AOAM5326M7Rk7aEwoYnfHhmcoOYeywxuJIJ0iF/dsh1lV9TKsZuxL1fs
-	G9DRvhyF9Xvzsz7QJAfknZmMrZ+zRERAHndxmf8=
-X-Google-Smtp-Source: ABdhPJwdbeiLsoJcE4fUmHXRvRYij0x5LRIt5KFUBfJlnYyMXivXEXCU7gY/3Wp2Zt9+nkIBKqC9ZLg4MB6fONo3KTE=
-X-Received: by 2002:a05:6512:3a85:: with SMTP id q5mr15593930lfu.555.1643111594751;
- Tue, 25 Jan 2022 03:53:14 -0800 (PST)
+Received: (qmail 28486 invoked from network); 9 Feb 2024 17:21:21 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Houston Putman <houston@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <3d12c623-01c5-79be-9809-64a818d67a53@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 09 Feb 2024 17:23:52 +0000
 MIME-Version: 1.0
-From: Zhang Yonglun <zhangyonglun@apache.org>
-Date: Tue, 25 Jan 2022 19:53:03 +0800
-X-Gmail-Original-Message-ID: <CA+ZBtZ5dRpp15h_OExLFuaPR=dEBeB-VYRCjA+omzNq23p=9cQ@mail.gmail.com>
-Message-ID: <CA+ZBtZ5dRpp15h_OExLFuaPR=dEBeB-VYRCjA+omzNq23p=9cQ@mail.gmail.com>
-To: oss-security@lists.openwall.com, dev@shenyu.apache.org
-Content-Type: multipart/alternative; boundary="000000000000ee7bbc05d666ba32"
-Subject: [oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache
- ShenYu 2.4.1
+Subject: [oss-security] CVE-2023-50291: Apache Solr: System Property redaction logic
+ inconsistency can lead to leaked passwords 
 
---000000000000ee7bbc05d666ba32
-Content-Type: text/plain; charset="UTF-8"
+Severity: moderate
+
+Affected versions:
+
+- Apache Solr 6.0.0 through 8.11.2
+- Apache Solr 9.0.0 before 9.3.0
 
 Description:
 
-Groovy Code Injection & SpEL Injection which lead to Remote Code
-Execution. This issue affected Apache ShenYu 2.4.0 and 2.4.1.
+Insufficiently Protected Credentials vulnerability in Apache Solr.
 
---
+This issue affects Apache Solr: from 6.0.0 through 8.11.2, from 9.0.0 befor=
+e 9.3.0.
+One of the two endpoints that publishes the Solr process' Java system prope=
+rties, /admin/info/properties, was only setup to hide system properties tha=
+t had "password" contained in the name.
+There are a number of sensitive system properties, such as "basicauth" and =
+"aws.secretKey" do not contain "password", thus their values were published=
+ via the "/admin/info/properties" endpoint.
+This endpoint populates the list of System Properties on the home screen of=
+ the Solr Admin page, making the exposed credentials visible in the UI.
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+This /admin/info/properties endpoint is protected under the "config-read" p=
+ermission.
+Therefore, Solr Clouds with Authorization enabled will only be vulnerable t=
+hrough logged-in users that have the "config-read" permission.
+Users are recommended to upgrade to version 9.3.0 or 8.11.3, which fixes th=
+e issue.
+A single option now controls hiding Java system property for all endpoints,=
+ "-Dsolr.hiddenSysProps".
+By default all known sensitive properties are hidden (including "-Dbasicaut=
+h"), as well as any property with a name containing "secret" or "password".
 
---000000000000ee7bbc05d666ba32--
+Users who cannot upgrade can also use the following Java system property to=
+ fix the issue:
+=C2=A0 '-Dsolr.redaction.system.pattern=3D.*(password|secret|basicauth).*'
+
+This issue is being tracked as SOLR-16809=20
+
+Credit:
+
+Michael Taggart (reporter)
+
+References:
+
+https://solr.apache.org/security.html#cve-2023-50291-apache-solr-can-leak-c=
+ertain-passwords-due-to-system-property-redaction-logic-inconsistencies
+https://solr.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-50291
+https://issues.apache.org/jira/browse/SOLR-16809
+
