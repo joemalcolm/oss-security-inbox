@@ -1,4 +1,4 @@
-Received: (qmail 21982 invoked by uid 550); 28 Aug 2023 19:18:09 -0000
+Received: (qmail 23790 invoked by uid 550); 13 Feb 2024 14:23:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,244 +7,150 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21956 invoked from network); 28 Aug 2023 19:18:08 -0000
-Date: Mon, 28 Aug 2023 21:17:56 +0200
-From: Willy Tarreau <w@1wt.eu>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com, Vegard Nossum <vegard.nossum@oracle.com>,
-        Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
-        Greg KH <gregkh@linuxfoundation.org>
-Message-ID: <ZOzy5H/9go9KPfm3@1wt.eu>
-References: <20230825222359.GA10424@openwall.com>
- <ZOuqk2+3EMBV3pPy@1wt.eu>
- <20230828180518.GA29293@openwall.com>
+Received: (qmail 24549 invoked from network); 13 Feb 2024 14:04:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nlnetlabs.nl;
+	s=MBO0001; t=1707833263;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	to:to:cc:mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
+	bh=VvwJmSOiUQiICgHn77cBH1hcO4SCCrpoXghTKgSu5Wg=;
+	b=MlG6h5xm+nTXfQ73dbeu1BcNGFobngN3wu0WkOh3HuxJOjM2k+290Yunn+Sjp0nek8RjMi
+	bhjjV3qA+EfbkCzN1gvqB6dmD1WR2DN532HfG8/+7MQxEbCEwjYnvURJXpnEZr9+gYUCZ0
+	mrZk/k3gjcidLgYo1I8ZsbZBTdwiPX5vW5qOh02KSj8E1useKsCwer6t1rbtkP5iNuWuL6
+	ebpXc1eDfLoLfXaUGwCMJrgImawuZoIqfiFWyUgl0kNyP7auz8X+xAUOIbkDdevTBPSDTo
+	hokl+U0CitZGiWmEWPNEwybTGdAD/ZXr01snpDYVfbO+9XYm5ftHcwGVdXA4vQ==
+Message-ID: <8f2901ed-401d-441a-bcf5-f23eda0d9e88@nlnetlabs.nl>
+Date: Tue, 13 Feb 2024 15:07:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230828180518.GA29293@openwall.com>
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
+Content-Language: en-GB
+From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
+Autocrypt: addr=yorgos@nlnetlabs.nl; keydata=
+ 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
+ 3B8+NrtIAE8F4VHNKaM70rYX
+To: oss-security@lists.openwall.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------7zam4qnb9JNp5uY0kxtO8DKS"
+Subject: [oss-security] Unbound: disclosure of CVE-2023-50387 and CVE-2023-50868 DNSSEC
+ validation vulnerabilities
 
-Hi Alexander,
+--------------7zam4qnb9JNp5uY0kxtO8DKS
+Content-Type: multipart/mixed; boundary="------------cKQR6G1pq8s80W1VcmhGPv80";
+ protected-headers="v1"
+From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
+To: oss-security@lists.openwall.com
+Message-ID: <8f2901ed-401d-441a-bcf5-f23eda0d9e88@nlnetlabs.nl>
+Subject: Unbound: disclosure of CVE-2023-50387 and CVE-2023-50868 DNSSEC
+ validation vulnerabilities
 
-On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
-> Hi Willy,
-> 
-> Thank you for your helpful feedback and criticism.
-> 
-> I just noticed the recent ksummit list thread is also summarized by LWN:
-> 
-> https://lwn.net/Articles/941745/
+--------------cKQR6G1pq8s80W1VcmhGPv80
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-I didn't notice.
+SGkgdGhlcmUsDQoNCihUaGUgb2ZmaWNpYWwgYW5ub3VuY2VtZW50IGFuZCBt
+b3JlIGluZm9ybWF0aW9uIGNhbiBiZSBmb3VuZCBhdDoNCmh0dHBzOi8vbmxu
+ZXRsYWJzLm5sL25ld3MvMjAyNC9GZWIvMTMvdW5ib3VuZC0xLjE5LjEtcmVs
+ZWFzZWQvKQ0KDQpETlNTRUMgcHJvdG9jb2wgdnVsbmVyYWJpbGl0aWVzIGhh
+dmUgYmVlbiBkaXNjb3ZlcmVkIHRoYXQgcmVuZGVyIHZhcmlvdXMNCkROU1NF
+QyB2YWxpZGF0b3JzIHZpY3RpbXMgb2YgRGVuaWFsIE9mIFNlcnZpY2Ugd2hp
+bGUgdHJ5aW5nIHRvIHZhbGlkYXRlDQpzcGVjaWFsbHkgY3JhZnRlZCBETlNT
+RUMgcmVzcG9uc2VzLg0KDQpUaGVyZSBhcmUgdHdvIGtub3duIHZ1bG5lcmFi
+aWxpdGllczogQ1ZFLTIwMjMtNTAzODcgKHJlZmVycmVkIGhlcmUgYXMNCnRo
+ZSBLZXlUcmFwIHZ1bG5lcmFiaWxpdHkpIGFuZCBDVkUtMjAyMy01MDg2OCAo
+cmVmZXJyZWQgaGVyZSBhcyB0aGUNCk5TRUMzIHZ1bG5lcmFiaWxpdHkpLg0K
+DQpXZSBhcmUgY2F0ZWdvcml6aW5nIHRoZSB2dWxuZXJhYmlsaXRpZXMgd2l0
+aCBhIEhJR0ggc2V2ZXJpdHkgZm9yDQpVbmJvdW5kLg0KV2UgYXJlIHJlbGVh
+c2luZyAxLjE5LjEgb24gdGhlIDEzdGggb2YgRmVicnVhcnkgaW5jbHVkaW5n
+IHRoZSByZWxldmFudA0KZml4ZXMuDQoNCg0KPT0gU3VtbWFyeQ0KQm90aCB2
+dWxuZXJhYmlsaXRpZXMsIHZpYSBzcGVjaWFsbHkgY3JhZnRlZCBETlNTRUMg
+YW5zd2VycywgY2FuIGxlYWQNCkROU1NFQyB2YWxpZGF0b3JzIGRvd24gYSB2
+ZXJ5IENQVSBpbnRlbnNpdmUgYW5kIHRpbWUgY29zdGx5DQp2YWxpZGF0aW9u
+L05TRUMzIGhhc2ggY2FsY3VsYXRpb24gcGF0aC4NClRoaXMgcmVzdWx0cyBp
+biBkZWdyYWRlZCBwZXJmb3JtYW5jZSBhbmQgZGVuaWFsIG9mIHNlcnZpY2Ug
+aW4gdHJpdmlhbGx5DQpvcmNoZXN0cmF0ZWQgYXR0YWNrcy4NCg0KVW5ib3Vu
+ZCAxLjE5LjEgaW5jbHVkZXMgZml4ZXMgZm9yIGJldHRlciBwZXJmb3JtYW5j
+ZSB1bmRlciBzdWNoIEROU1NFQw0KdmFsaWRhdGlvbiBhdHRhY2tzLg0KDQoN
+Cj09IEFmZmVjdGVkIHByb2R1Y3RzDQpVbmJvdW5kIHVwIHRvIGFuZCBpbmNs
+dWRpbmcgMS4xOS4wLg0KDQoNCj09IFNvbHV0aW9uDQpJbnN0YWxsIFVuYm91
+bmQgMS4xOS4xLg0KT3IgYXBwbHkgdGhlIGZvbGxvd2luZyBwYXRjaCB0byB0
+aGUgbGF0ZXN0IFVuYm91bmQgdmVyc2lvbnMgKDEuMTguMCAtIA0KMS4xOS4w
+KToNCmh0dHBzOi8vbmxuZXRsYWJzLm5sL2Rvd25sb2Fkcy91bmJvdW5kL3Bh
+dGNoX0NWRS0yMDIzLTUwMzg3X0NWRS0yMDIzLTUwODY4LmRpZmYNCg0KQXBw
+bHkgdGhlIHBhdGNoIHVzaW5nOg0KDQogICAgIHBhdGNoIC1wMSA8IHBhdGNo
+X0NWRS0yMDIzLTUwMzg3X0NWRS0yMDIzLTUwODY4LmRpZmYNCg0KDQo9PSBB
+Y2tub3dsZWRnbWVudHMNCldlIHdvdWxkIGxpa2UgdG8gdGhhbmsgRWxpYXMg
+SGVmdHJpZywgSGF5YSBTY2h1bG1hbm4sIE5pa2xhcyBWb2dlbCwgYW5kIA0K
+TWljaGFlbCBXYWlkbmVyIGZyb20gdGhlIEdlcm1hbiBOYXRpb25hbCBSZXNl
+YXJjaCBDZW50ZXIgZm9yIEFwcGxpZWQgDQpDeWJlcnNlY3VyaXR5IEFUSEVO
+RSBmb3IgZGlzY292ZXJpbmcgYW5kIHJlc3BvbnNpYmx5IGRpc2Nsb3Npbmcg
+dGhlIA0KS2V5VHJhcCB2dWxuZXJhYmlsaXR5Lg0KV2Ugd291bGQgbGlrZSB0
+byB0aGFuayBQZXRyIMWgcGHEjWVrIGZyb20gSVNDIGZvciBkaXNjb3Zlcmlu
+ZyBhbmQNCnJlc3BvbnNpYmx5IGRpc2Nsb3NpbmcgdGhlIE5TRUMzIHZ1bG5l
+cmFiaWxpdHkuDQoNCg0KKiBUaGlzIGVtYWlsIGlzIHNpZ25lZC4gS2V5cyBv
+ZiB0aGUgTkxuZXQgTGFicyBwZW9wbGUgYXJlIHB1Ymxpc2hlZCBvbg0KaHR0
+cHM6Ly93d3cubmxuZXRsYWJzLm5sL3Blb3BsZS8gKg0KDQpCZXN0IHJlZ2Fy
+ZHMsDQotLSBZb3Jnb3MNCg==
 
-> In there, Johannes Segitz (SUSE, and a former linux-distros subscriber)
-> made a comment saying (among other things):
-> 
-> "I see the 14 day requirement by distros as the major problem in the way
-> it is currently run. I understand why solar designer insists on this (it
-> is really tricky to keep information private for any extended time), but
-> this then leads to people working around distros and distributing the
-> information up front, only to notify distros when it's basically already
-> solved and widely known."
+--------------cKQR6G1pq8s80W1VcmhGPv80--
 
-It's possible, but I don't have data to back this, what I suspect instead
-is that reporting security issues is so stressful for anyone (constantly
-making sure not to do a mistake nor to send to the wrong people) that once
-they see the fix merged, they just relax and consider the job done, so
-most likely linux-distros isn't even contacted at this point. And it's
-very possible that some having experienced a friendly process on s@k.o
-and felt some unneeded pressure on l-d just don't want to go there again.
-I personally see this a bit like projects asking to sign a CLA: you come
-there saying "hey, you had a bug there, I fixed it, look" and in return
-you feel like you're swamped by some heavy process so you just give up,
-swearing you'll never go there again. That might be exagerated but I
-can understand how it could be felt that way. I'm having periods where
-it's very difficult for me to find even one extra hour a day, and I would
-certainly not appreciate at all being pressured like this to tidy my stuff
-and prepare for it to be published when I have other things to do, after
-having made the effort to report a bug. So that's something to keep in
-mind, not everyone deals with it the same way.
+--------------7zam4qnb9JNp5uY0kxtO8DKS
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-> I think people handling a complex issue more privately at first and only
-> notifying distros when no more than 14 days is left until planned public
-> disclosure is actually fine.  I doubt all distros need to be involved in
-> early analysis and fixing of a complex issue e.g. in the kernel.
+-----BEGIN PGP SIGNATURE-----
 
-I generally agree, though see above. Also some reporters systematically
-copy some distros' security teams, probably because they were in contact
-with them previously and found that it made the process smoother for them,
-and it's possible that they consider that this part of the job is already
-done.
+wsF5BAABCAAjFiEElI60IyLF0At5NA9dz/M0TZCHpJAFAmXLd6oFAwAAAAAACgkQz/M0TZCHpJDn
+Jw//TVOXNziZdR4BzZdkF2ZW3HXdpkF5fhNjJd6czt+ChW+X5kaS93LpX0+nPRee52mo4+WmWJlk
+iSnA5g9n8vMePseC/FVIqbvIJeVnlvCkO+F6sn0QcbgXt4uXsZeTuaz2UM8nDwr3kpXye3uNZkx2
+Psm4k+PYJijzQWP8eyOUjyLaAhwv5sdNw4Sh7riXYgLdt+bruc5eN5t8J8Mj7ustwVBK8qsTgMTE
+9c6kHyTTSK3NuEvh2uKq2g/mRgPQm9rwnzefsXs+Ad+VFy9VrBLtrsgIOx2cPhqlJqyLilnmljX3
+G75SOBbGL7BCFmlsndpOxrhYVNwl6k/+GHxv2rKQTDzo8Z9XNtvBoPDQvI87EEuZH4dtQf/iGssw
+k/EbwM4h79pAGGZSuDvug08eMTlYSy3KDN3xejj4RQ9/niMqeNr60VNumZ5+7K/bEkoun9uU8xSo
+i6oLp3hB0NHixKRWefBXyFnm60MWtRx9DMDe0OCy8dawxUuiNEi9j02hrK9wJDwfzXzXGQxiygWh
+jyru/Q2zyRy3CqJLb7ADcSTJXvsuecU1wdpJ/lbAHNrVByi8Ye3KWyG1Rztb8n4xj3DKNXntKMOo
+pdXJ5FnIrSdaVNP1WDP6aqXA3/ZgVSBIF09nUsXqDE2sRyYSBDhzXZ+HqD7zOP15+ovIPEg4CMoC
+3ek=
+=IcFs
+-----END PGP SIGNATURE-----
 
-> > Please note that delays are not specific to hardware issues. We've had
-> > to work maybe 3 months with a reporter on a randomness problem that
-> > allowed to some extents to guess TCP ports and sequence numbers, and it
-> > required us to imagine various approaches that shouldn't break TCP, and
-> > iterate with the researchers who studied them, tested them before getting
-> > back to us with "it still isn't sufficient". It was a long and painful
-> > one, nobody remained idle, yet it was really needed to get to the end of
-> > it before publishing anything. Further, the researchers asked us to keep
-> > some details on hold for a while because they were preparing a paper, and
-> > this is also something to keep in mind (some of them depened on this,
-> > though we must not accept that it drags for too long).
-> 
-> Yes, I understand that such cases and such incentives exist.  In those
-> cases, the issue should only be brought to (linux-)distros when it's
-> almost ready for publication.
-
-Yes, but again, please see above, I couldn't blame a bug reporter for
-wanting to have their week-ends and nights again and think everything's
-behind them and in someone else's hands now.
-
-> That said, can you share more detail on the specific issue you referred
-> to above and its handling/disclosure timeline?  Was it ever brought to
-> oss-security, and if not then why not?
-
-I just checked and I'm not seeing any traces of it there. I don't even
-know who normally notifies about such issues there.
-
-> I am guessing this is related to your work on random32 in 2020:
-> 
-> https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
-
-Ah yes indeed it's that one! How painful memories suddently come back!
-
-> If so, it looks like the original issue became public via your commit in
-> July 2020, but further issues with that fix commit were discovered and
-> fixes for them prepared in public in August and only merged in October.
-> 
-> So I guess some lengthy private discussion occurred before July 2020,
-
-Yeah it started in early March, and Eric, Amit and I basically spent all
-our week-ends and numerous evenings experimenting with different methods
-to deliver good enough randoms without breaking the principle of not
-reusing the same IDs too fast (still have a long minimal period), and
-running tests on real traffic, counting failures. At some point in July
-I gave up and concluded we couldn't fix it alone between us and needed
-some public help, hence the posting.
-
-> but it wasn't enough anyway, which makes me question the value of having
-> the initial handling in private.  Maybe the issue wasn't critical enough
-> and privately-fixable enough for that.  Maybe this actually illustrates
-> that such issues are best handled entirely in public... if it were not
-> for the researchers' incentive you mentioned (plan to publish a paper).
-
-It's always the same for random attacks: the reporter sees a very high
-success rate in a lab while those dealing with production know for sure
-that the success rate is so close to zero in field that it cannoot be
-represented on a float. But there's a wide spectrum between the two,
-such as mostly idle routers serving as route reflectors, or monitoring
-devices etc. Thus you start from "it could theoretically be damaging in
-certain environments, let's be careful", with the researchers initially
-willing to be discrete since working to prepare a paper. As we made
-progress and saw the risks of attack significantly fade away but never
-close enough to zero, we concluded that in the worst case we had something
-better than the original and it wasn't that much of a problem anymore to
-make it public. But I think the researchers also progressed on their side
-seeing the hopes to get a quick fix fade away and the reality hit the
-theory, thus being more willing to disclose more of their work. It's a
-bit of everything.
-
-> > As such I think that it's not a good solution to anything to require a
-> > disclosure before a fix is ready. Actually there can be one exception:
-> > when no more progress is being made. I don't think I would personally be
-> > shocked by saying that a discussion that remained inactive for 7 days
-> > leads to publication, it would sufficiently put the pressure on all parties
-> > not to let it cool rot. And difficult issues generally don't stay inactive
-> > for more than a few days.
-> 
-> Makes sense.  The current kernel documentation edit should take care of
-> this (no linux-distros notification until fix is ready) for cases where
-> the reporter learns of linux-distros from there.  Maybe we should even
-> duplicate this information on the linux-distros wiki page?
-
-Maybe. I'm not good at adopting processes, so I'm not the best one to
-suggest either way :-/
-
-> Alternatively, we may need to relax the policy.
-
-I personally think it does have a flaw that is emphasized by the linux
-kernel handling but can actually affect other projects. Some sole
-developers might just not have enough resources to do everything in
-14 days, from diagnosing the problem at night or only during a few work
-hours, setting up a lab on the week-end to test a fix, to contacting
-whoever needs to be contacted and making releases. Some even make the
-mistake of developing new stuff in maintenance branches and feel like
-they need to finish before releasing (already seen)! I remember having
-had to search in my boxes of hardware to re-assemble a working PC with
-a floppy drive just to be able to validate a fix in the floppy driver.
-You can be sure I only did that the week-end after the report, but
-that's possibly 5 days lost already!
-
-I understand the rationale behind your policy. I, too, was on vendor-sec
-where we saw some vendors say "just FYI we're trying to fix this, we'll
-keep you updated" and one year later, no news. But all those doing a
-serious work (and there are, and the linux security team is doing that
-serious work) can be heavily penalized by that policy when they're not
-quick enough to obtain a fix. The linux people are known for being vocal,
-so you hear about them. But other developers might just feel completely
-crushed by this and it could really be harmful to them, especially when
-they're new to this and haven't been dealing with security reports for
-25 years like many of us.
-
-That's why I tend to think that what would better address what you want
-to prevent, is ensuring the discussion doesn't come to a stall. This
-could remove a lot of frustration. And if something has to be published
-before the end because the developers or vendor stay silent, it's much
-more powerful to say "they didn't dare responding for 14 days" than
-"they couldn't figure a working fix for this complex issue in 14 days".
-
-> Via links from the new LWN story, I also found your similar comments
-> from 2022:
-> 
-> https://lwn.net/Articles/897065/
-
-Ah I didn't remember :-)  At least it seems I'm consistent on this topic.
-
-> Here's a thought experiment: what if the list were not private at all,
-> e.g. like oss-security is not?  Sure someone can ask to "please keep
-> this confidential", but if it's posted to the list that would be
-> ineffective.  So what people sometimes do on public lists, Bugzillas,
-> GitHub issues, etc. is share private reproducers with individual
-> maintainers out-of-band, such as via direct e-mail, while keeping the
-> main discussion on the list, etc.
-
-Mistakes are made all the time on these. I just had one two weeks ago on
-haproxy via github that saved me an embargo :-)  Having a private list to
-estimate if the risk is real and to forward to the skilled people is more
-effective IMHO. We see this a lot on s@k.o. I think that about 1/3 of the
-issues end up as "do not worry, just post this publicly". That encourages
-those not really in the security business to seek help without taking the
-risk to be blamed for disclosing something dangerous.
-
-> I see no good reason why the same
-> can't be happening on a temporarily-private list.  So the real problem
-> may be that (linux-)distros is misunderstood as permanently-private
-> rather than temporarily-private.  Unfortunately, I don't know how to
-> address that reliably.  Even with automated delayed publication, some
-> people would initially have the wrong idea... maybe unless they have to
-> pass through a web page with the public archives before finding the
-> posting address?
-
-Just a stupid idea, it could possibly be addressed by a confirmation
-e-mail on an opening thread. Something like "we need you to confirm that
-what you posted will be made public by YY/MM/DD, if that's really what
-you want, please visit this link within 24h otherwise all your materials
-will be destroyed". I'm not sure, that's just an idea. But yes, it needs
-to be understood as public so that confidential stuff is not shared
-there, and it must be possible to ask for some materials to be erased
-early if the reporter wasn't aware of this or made a mistake (e.g. send
-a pcap just before the security team says "never ever share a pcap!").
-
-> Alternatively, we may need to relax the policy.
-> 
-> Just thinking out loud.
-
-You're welcome. I don't want to interfere with the lists you operate
-nor with those working on them, but I observe that there has been some
-frictions multiple times for reasons that are probably not too hard to
-address if respective participants discuss just a bit, which is why I'm
-sharing some observations ;-)
-
-Regards,
-Willy
+--------------7zam4qnb9JNp5uY0kxtO8DKS--
