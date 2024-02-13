@@ -1,4 +1,4 @@
-Received: (qmail 27742 invoked by uid 550); 4 Nov 2022 13:00:04 -0000
+Received: (qmail 9305 invoked by uid 550); 13 Feb 2024 21:49:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +7,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7757 invoked from network); 4 Nov 2022 11:10:14 -0000
-Authentication-Results: apache.org; auth=none
-From: Stefan Bodewig <bodewig@apache.org>
+Received: (qmail 7821 invoked from network); 13 Feb 2024 21:49:16 -0000
+Date: Tue, 13 Feb 2024 22:52:09 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Date: Fri, 04 Nov 2022 12:09:52 +0100
-Message-ID: <87wn8bm0vz.fsf@v45346.1blu.de>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] CVE-2022-37866: Apache Ivy: Ivy Path traversal
+Message-ID: <20240213215209.GA4099@openwall.com>
+References: <8f2901ed-401d-441a-bcf5-f23eda0d9e88@nlnetlabs.nl> <bf47ae9d-4a0f-4446-b224-c8c7f08e44e2@oracle.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bf47ae9d-4a0f-4446-b224-c8c7f08e44e2@oracle.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Unbound: disclosure of CVE-2023-50387 and CVE-2023-50868 DNSSEC validation vulnerabilities
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Feb 13, 2024 at 12:06:42PM -0800, Alan Coopersmith wrote:
+> On 2/13/24 06:07, Yorgos Thessalonikefs wrote:
+> >DNSSEC protocol vulnerabilities have been discovered that render various
+> >DNSSEC validators victims of Denial Of Service while trying to validate
+> >specially crafted DNSSEC responses.
+> >
+> >There are two known vulnerabilities: CVE-2023-50387 (referred here as
+> >the KeyTrap vulnerability) and CVE-2023-50868 (referred here as the
+> >NSEC3 vulnerability).
+> 
+> Similarly, dnsmasq 2.90 was published today to address these:
+> https://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2024q1/017430.html
 
-Severity: medium
+And fixes for these two CVEs were merged into PowerDNS today:
 
-Description:
+https://github.com/PowerDNS/pdns/pull/13781
 
-When Apache Ivy downloads artifacts from a repository it stores them in
-the local file system based on a user-supplied "pattern" that may
-include placeholders for artifacts coordinates like the organisation,
-module or version.
+I hope PowerDNS will also be sending a proper advisory in here.
 
-If said coordinates contain "../" sequences - which are valid characters
-for Ivy coordinates in general - it is possible the artifacts are stored
-outside of Ivy's local cache or repository or can overwrite different
-artifacts inside of the local cache.
-
-In order to exploit this vulnerability an attacker needs collaboration
-by the remote repository as Ivy will issue http requests containing ".."
-sequences and a "normal" repository will not interpret them as part of
-the artifact coordinates.
-
-Mitigation:
-
-Users of Apache Ivy 2.0.0 to 2.5.1 should upgrade to Ivy 2.5.1.
-
-Credit:
-
-This issue was discovered by Kostya Kortchinsky of the Databricks Security Team.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAmNk8wAACgkQohFa4V9ri3IUCgCeNrT2fqxtV4aAJf/RhpmQLeDK
-VkAAoLmKEXe0H6Oe6cgWiyxvOM7HpZYd
-=mSlx
------END PGP SIGNATURE-----
+Alexander
