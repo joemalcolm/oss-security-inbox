@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1314" "Monday" "30" "March" "2015" "14:40:19" "+0200" "Vasyl Kaigorodov" "vkaigoro@redhat.com" "<20150330124019.GD29777@mail.corp.redhat.com>" "43" "[oss-security] CVE Request: ikiwiki: cross-site scripting via openid_identifier" nil nil nil "3" "2015033012:40:19" "[oss-security] CVE Request: ikiwiki: cross-site scripting via openid_identifier" (number mark "        vkaigoro@red Mar 30   43/1314  " thread-indent "\"[oss-security] CVE Request: ikiwiki: cross-site scripting via openid_identifier\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9433 invoked by uid 550); 30 Mar 2015 12:40:33 -0000
+Received: (qmail 3955 invoked by uid 550); 13 Feb 2024 22:31:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +6,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9412 invoked from network); 30 Mar 2015 12:40:32 -0000
-Message-ID: <20150330124019.GD29777@mail.corp.redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="EP0wieDxd4TSJjHq"
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Mon, 30 Mar 2015 14:40:19 +0200
-From: Vasyl Kaigorodov <vkaigoro@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: ikiwiki: cross-site scripting via openid_identifier
+Received: (qmail 3626 invoked from network); 13 Feb 2024 22:31:42 -0000
+Date: Tue, 13 Feb 2024 23:34:36 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-
---EP0wieDxd4TSJjHq
-Content-Type: text/plain; charset=utf-8
+Cc: Otto Moerbeek <otto.moerbeek@powerdns.com>
+Message-ID: <20240213223436.GA4355@openwall.com>
+References: <8f2901ed-401d-441a-bcf5-f23eda0d9e88@nlnetlabs.nl> <bf47ae9d-4a0f-4446-b224-c8c7f08e44e2@oracle.com> <20240213215209.GA4099@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240213215209.GA4099@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Unbound: disclosure of CVE-2023-50387 and CVE-2023-50868 DNSSEC validation vulnerabilities
 
-Hello,
+It's not great that we're adding to a thread on Unbound, but since we
+already started...
 
-Cross-site scripting flaw in the handling of the openid_identifier
-parameterhas been fixed in ikiwiki:
+On Tue, Feb 13, 2024 at 10:52:09PM +0100, Solar Designer wrote:
+> On Tue, Feb 13, 2024 at 12:06:42PM -0800, Alan Coopersmith wrote:
+> > On 2/13/24 06:07, Yorgos Thessalonikefs wrote:
+> > >DNSSEC protocol vulnerabilities have been discovered that render various
+> > >DNSSEC validators victims of Denial Of Service while trying to validate
+> > >specially crafted DNSSEC responses.
+> > >
+> > >There are two known vulnerabilities: CVE-2023-50387 (referred here as
+> > >the KeyTrap vulnerability) and CVE-2023-50868 (referred here as the
+> > >NSEC3 vulnerability).
+> > 
+> > Similarly, dnsmasq 2.90 was published today to address these:
+> > https://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2024q1/017430.html
+> 
+> And fixes for these two CVEs were merged into PowerDNS today:
+> 
+> https://github.com/PowerDNS/pdns/pull/13781
 
-http://source.ikiwiki.branchable.com/?p=3Dsource.git;a=3Dcommit;h=3D18dfba8=
-68fe2fb9c64706b2123eb0b3a3ce66a77
+There are also three PRs (13782, 13783, 13784) with back-ports to other
+supported branches.
 
-References:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D781483
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1207210
+> I hope PowerDNS will also be sending a proper advisory in here.
 
-Can we have a CVE assigned to this please?
+Turns out there is a PowerDNS advisory here:
 
-Thanks.
---=20
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+https://blog.powerdns.com/2024/02/13/powerdns-recursor-4-8-6-4-9-3-5-0-2-released
 
-Come talk to Red Hat Product Security at the Summit!
-Red Hat Summit 2015 - https://www.redhat.com/summit/
+but really it should be posted to oss-security as well.
 
---EP0wieDxd4TSJjHq
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJVGUQzAAoJECF7+fyrtugoGL4IAM2VuDzKPvFggPjjQ7F8YT8J
-4Hp8MfHZMyUFFaoEgXF796x8OpnGPmQ6agxBIU+XzrNLdAs7ZX1X9kJ9a2xkqCEp
-RBTx52n4pjeBDMYYkMImjVhZB2WQB4MOYl6WdOEBc1YJq5yfp+BLY7hT9ZwkaCww
-+vlGVlKaikoAApqWxDjUHFZbb5PEZMLxfMiQSpOaJEJ6pJuz+t7prvdY6qKp1W+3
-jXr8bIhuSRZHzZ91XeYdV8EWs/pt/ncm26bPeioulXw1v3mH6mOVp9euaZ2lzayc
-/Ojan+QX7yWcCB6clcGaTKuD45crnjY+qAXh6lPEekGI2DB7oIHffhaKU7MDL9M=
-=quDS
------END PGP SIGNATURE-----
-
---EP0wieDxd4TSJjHq--
+Alexander
