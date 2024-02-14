@@ -1,4 +1,4 @@
-Received: (qmail 16073 invoked by uid 550); 8 Feb 2026 16:45:30 -0000
+Received: (qmail 30250 invoked by uid 550); 14 Feb 2024 11:18:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,53 +7,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15608 invoked from network); 8 Feb 2026 16:29:45 -0000
+Received: (qmail 3386 invoked from network); 14 Feb 2024 11:00:18 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Lenny Primak <lprimak@apache.org>
+From: Daniel Gaspar <dpgaspar@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <9695b630-d6fd-e1f8-0cf8-b3b23aaabbfe@apache.org>
+Message-ID: <a9ae2b3b-4219-353d-9498-df65663cf774@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 08 Feb 2026 16:29:35 +0000
+Date: Wed, 14 Feb 2024 11:03:06 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-23903: Apache Shiro: Auth bypass when accessing static
- files only on case-insensitive filesystems 
-
-Severity: low=20
+Subject: [oss-security] CVE-2024-23952: Apache Superset: Allows for uncontrolled resource
+ consumption via a ZIP bomb (version range fix for CVE-2023-46104) 
 
 Affected versions:
 
-- Apache Shiro (org.apache.shiro:shiro-web) before 2.0.7
+- Apache Superset before 2.1.3
+- Apache Superset 3.0.0 before 3.0.2
 
 Description:
 
-Authentication Bypass by Alternate Name vulnerability in Apache Shiro.
-
-This issue affects Apache Shiro: before 2.0.7.
-
-Users are recommended to upgrade to version 2.0.7, which fixes the issue.
-
-The issue only effects static files. If static files are served from a case=
--insensitive filesystem,
-such as default macOS setup, static files may be accessed by varying the ca=
-se of the filename in the request.
-If only lower-case (common default) filters are present in Shiro, they may =
-be bypassed this way.
-
-Shiro 2.0.7 and later has a new parameters to remediate this issue
-shiro.ini: filterChainResolver.caseInsensitive =3D true
-application.propertie: shiro.caseInsensitive=3Dtrue
-
-Shiro 3.0.0 and later (upcoming) makes this the default.
+This is a duplicate for CVE-2023-46104. With correct CVE version ranges for=
+ affected Apache Superset.
+=20
+Uncontrolled resource consumption can be triggered by authenticated attacke=
+r that uploads a malicious ZIP to import database, dashboards or datasets. =
+=C2=A0
+This vulnerability exists in Apache Superset versions up to and including 2=
+.1.2 and versions 3.0.0, 3.0.1.
 
 Credit:
 
-Jesse Yang (finder)
-Lenny Pimak (remediation developer)
+Dor Konis =E2=80=93 GE Vernova (finder)
 
 References:
 
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-23903
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2024-23952
 
