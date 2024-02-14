@@ -1,4 +1,4 @@
-Received: (qmail 12055 invoked by uid 550); 23 Sep 2024 15:10:11 -0000
+Received: (qmail 12025 invoked by uid 550); 14 Feb 2024 13:03:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,51 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31963 invoked from network); 23 Sep 2024 13:01:30 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <73fe1723-9772-41ed-8320-28c577f5b84e@apache.org>
-Date: Mon, 23 Sep 2024 13:59:43 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2024-38286: Apache Tomcat: Denial of Service
+Received: (qmail 11798 invoked from network); 14 Feb 2024 13:02:54 -0000
+Date: Wed, 14 Feb 2024 14:05:51 +0100
+From: Solar Designer <solar@openwall.com>
+To: Daniel Gaspar <dpgaspar@apache.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20240214130551.GA6234@openwall.com>
+References: <a9ae2b3b-4219-353d-9498-df65663cf774@apache.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a9ae2b3b-4219-353d-9498-df65663cf774@apache.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-23952: Apache Superset: Allows for uncontrolled resource consumption via a ZIP bomb (version range fix for CVE-2023-46104)
 
-Affected versions:
+Hi Daniel,
 
-- Apache Tomcat 11.0.0-M1 through 11.0.0-M20
-- Apache Tomcat 10.1.0-M1 through 10.1.24
-- Apache Tomcat 9.0.13 through 9.0.89
+On Wed, Feb 14, 2024 at 11:03:06AM +0000, Daniel Gaspar wrote:
+> Affected versions:
+> 
+> - Apache Superset before 2.1.3
+> - Apache Superset 3.0.0 before 3.0.2
+> 
+> Description:
+> 
+> This is a duplicate for CVE-2023-46104. With correct CVE version ranges for affected Apache Superset.
 
-Description:
+This looks like misuse of CVE, and it only made things worse.  Now you
+need not only to update the original CVE's description, but also get
+this new CVE formally REJECT'ed as duplicate.  You might need assistance
+from others at Apache to get this right.
 
-Allocation of Resources Without Limits or Throttling vulnerability in 
-Apache Tomcat.
+> Uncontrolled resource consumption can be triggered by authenticated attacker that uploads a malicious ZIP to import database, dashboards or datasets.
+> This vulnerability exists in Apache Superset versions up to and including 2.1.2 and versions 3.0.0, 3.0.1.
+> 
+> Credit:
+> 
+> Dor Konis ??? GE Vernova (finder)
+> 
+> References:
+> 
+> https://superset.apache.org
+> https://www.cve.org/CVERecord?id=CVE-2024-23952
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.0-M20, 
-from 10.1.0-M1 through 10.1.24, from 9.0.13 through 9.0.89. Older, 
-unsupported versions may also be affected.
+Here's the previous report with CVE-2023-46104:
 
-Users are recommended to upgrade to version 11.0.0-M21, 10.1.25, or 
-9.0.90, which fixes the issue.
+https://www.openwall.com/lists/oss-security/2023/12/19/1
 
-Apache Tomcat, under certain configurations on any platform, allows an 
-attacker to cause an OutOfMemoryError by abusing the TLS handshake process.
+Looks like the only thing that changed is "before 3.0.1" corrected to
+"before 3.0.2".
 
-Credit:
-
-Ozaki, North Grid Corporation (reporter)
-
-References:
-
-https://lists.apache.org/thread/wms60cvbsz3fpbz9psxtfx8r41jl6d4s
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2024-38286
-
-Timeline:
-
-2024-06-04: Issue reported to Apache Tomcat Security Team
+Alexander
