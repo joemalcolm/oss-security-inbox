@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3412" "Saturday" "19" "December" "2015" "08:47:01" "+0000" "CSW Research Lab" "disclose@cybersecurityworks.com" "<CAMWaY3ODBO6FAWzz21nDrc4x9+kMboe+RSGjWHyoxLWizoO+6A@mail.gmail.com>" "68" "[oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20" "^Date:" nil nil "12" "2015121908:47:01" "[oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20" (number mark "U       disclose@cyb Dec 19   68/3412  " thread-indent "\"[oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30578 invoked by uid 550); 19 Dec 2015 10:01:09 -0000
+Received: (qmail 18035 invoked by uid 550); 14 Feb 2024 14:48:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +6,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5769 invoked from network); 19 Dec 2015 08:47:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cybersecurityworks-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=KnyenOtItG9baRC8HQEaopWvPCcaaUBvb4X5ixd4pRg=;
-        b=FbzuRD8qe9TVpv30GvtKz8QYZu6e8XJvmnhEwR0madar0RQwojRj0kJkVP01VudCgi
-         JUq7+Mn4cFjY5KV/QXQn2VaIz8NmGHkkt+UAmTAEhXv4z3Ehr1kvylrRweT/Cb7md/N0
-         X5Gj6rgqqpyWAsmy4Gm+5q0ac0uK5A+F/M6vR+gbfb1KzEsb6wHM9nb/ZNetTQFg1ms1
-         FW+7DoeFhMaYRvgRpVsbiJIunaM19is2UKjG3OFIoGFVa1PJ7oBIcct1zJZ1Bx4nKQOm
-         Vd+rIK91RciXP08N2h1rPOOL1siWXrs9Xr/i/NB4EnjSLSHyjUTbO49vm5TcsPQzqsyY
-         aM7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=KnyenOtItG9baRC8HQEaopWvPCcaaUBvb4X5ixd4pRg=;
-        b=h/wpFvK4iNSQUeyImOQSRdzGDxA98abFu1Rq5Xcqd/0mj6puigqhaz+T4cCJqfaMNN
-         RheERCoIWODiEaKm+j9zqF3Icyay+3E1lgcfye9i08ql+r/6ASkDNtcStUoacJN6/LPv
-         UyONecWe30Ual0wuChexSffq7lYiB+HKv1Iznm7NG/mNSwghlu83pJyb5F3lTp8mujET
-         01BaEq8JPmgrm0Jc/YxUHNuSyK7fdWSJKzjgpEvts4zO2Ks+FquZvByAZfi0+1Rns1Wg
-         X+4sUEXAwca2+L6uVsJRKDNSOuWnJjiHNFfv0YAOVtb8lagtXOUcfjbSRFnyDOvfUDOy
-         2+ZQ==
-X-Gm-Message-State: ALoCoQnIXyK40ENNBHyVA/r6B9Rgfqkiz9OPvZJ3/AFo1qdenN/J/etf+c4ZgYq/Wf+OCLcn/rfRa+1bll3EHmh11FtxELIFoA==
-X-Received: by 10.107.34.199 with SMTP id i190mr9946838ioi.150.1450514830866;
- Sat, 19 Dec 2015 00:47:10 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAMWaY3ODBO6FAWzz21nDrc4x9+kMboe+RSGjWHyoxLWizoO+6A@mail.gmail.com>
-Content-Type: multipart/related; boundary=001a1140d9443d98ae05273c4d70
-Date: Sat, 19 Dec 2015 08:47:01 +0000
-From: CSW Research Lab <disclose@cybersecurityworks.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20
-To: "cve-assign@mitre.org" <cve-assign@mitre.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 1467 invoked from network); 14 Feb 2024 14:38:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1707921655;
+	bh=nUMrKzdCBjMrk/WjxoYPqTtsXrG9xbIf0saYYla3RJQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
+	b=UQamtnPQJCrUTcKhZX35hz6Kdr+eMv8t57Jfcgk4nzjWaWx0jc6pdEp5qbuiUvFzl
+	 1c7sGxN007iaa0d3PLJ97s00wjLaqtkmWElbj656ctqSzzzfT0xEYhyAy/A2r2eAiZ
+	 YowDzFA2UTefN+BxA9ZIdZMAGAIHzUN21X0ECOSFNNnrIRqRbcvCZWlTcYRMIT7FDu
+	 U3W4nzRsFjutjRBwFx01u6KvyWTRDaUHMfjfFBFHL2he11++vqhSRKhFsFlCcqEurD
+	 jTwGoJAQ2j7I0Uofdm3BaZ46fYLs1txNZk57q94wuBuUGFGIaPClmu5C9rVe7TCuyl
+	 iwdrhGsEC9zgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707921654; x=1708526454;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nUMrKzdCBjMrk/WjxoYPqTtsXrG9xbIf0saYYla3RJQ=;
+        b=bjwwoAfFvNVb0WdAiOlFXk+DXX+WuS4xX2QSmluW+2XCOdOdfubkYDuMG4BCE9NOxQ
+         jpPlx/PdOogsuBVmrD/uBtmsM5tF7Dv/BwYy8oyO9ZCoxaltm5AqbgHSr/zf0HBB37aZ
+         EVOatXmGk/62eFQ+EA6Q7s69cbvbLdyhpOKPIUKskVd6gubhWKnGft7tlKXWO0X0Pg6m
+         Wof5aoEo/TBwAdoo7ogWnfG1b8/dQe7oK4nRHdIKSv4PnSgHN6G7OTF577GcL67zHLFT
+         S+KQ4U99Y3enyREy6PRMTk1Oesf7x8aRdsaDPRmNRJmajJlOcbp+f27SJEQNvfCBN2NX
+         6+yg==
+X-Gm-Message-State: AOJu0YxHwC/Uyc30b+Rwqf1wUqjht79ugFoSYUzQKxDOTk5RXSoKjJBZ
+	ThdKeNywXJR7s7FIPjW+8EdeSwlHjCnCsT/MEkuKE2FmpyW1zONhKIp5AVb7Ip4MIkgDrrjuof7
+	HcjXqQ4LxCqx9uGtJ8B/DB6e6aMirjCrR03OZfv/AlC8A/ePudFBxl+FzwdKg9onbxNjhufTMlb
+	M2MFGZ+StPGEhmcAW3jEdrBOLeQghMPLdB7FgvK/IWdbukthVC6uOV0QzqxZ2utY8B4tM=
+X-Received: by 2002:a4a:7618:0:b0:59a:e669:a37c with SMTP id t24-20020a4a7618000000b0059ae669a37cmr3543094ooc.1.1707921654007;
+        Wed, 14 Feb 2024 06:40:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEOha6ijSi5Hg5HtbwBiWrB4MRk7V/M4twUkxs4bhyyzl/6DK4BMbADZASl+CPF5F+0WdsHG+QzLWgxbVwYLoE=
+X-Received: by 2002:a4a:7618:0:b0:59a:e669:a37c with SMTP id
+ t24-20020a4a7618000000b0059ae669a37cmr3543063ooc.1.1707921653638; Wed, 14 Feb
+ 2024 06:40:53 -0800 (PST)
+MIME-Version: 1.0
+From: Mate Kukri <mate.kukri@canonical.com>
+Date: Wed, 14 Feb 2024 14:40:43 +0000
+Message-ID: <CAAfJHtpMWco6y_wRRzrgQfJZmwzsMG6P8D5FFWLMAOihuc2dZw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Secure Boot bypass in EDK2 based Virtual Machine firmware
 
---001a1140d9443d98ae05273c4d70
-Content-Type: multipart/alternative; boundary=001a1140d9443d98ab05273c4d6f
+Hello,
 
---001a1140d9443d98ab05273c4d6f
-Content-Type: text/plain; charset=UTF-8
+We have identified a vulnerability resulting from an insecure default
+configuration of OVMF/AAVMF
+and similar firmware as used in Ubuntu's edk2 package, the firmware
+used by LXD, and potentially other similar software.
 
-Hi all
+Said EDK2 based firmwares implement UEFI Secure Boot functionality but
+also contain a copy of the UEFI Shell,
+this gives an OS resident attacker (without physical access or
+pseudo-physical access) the ability to execute arbitrary
+code at system level, and thus the ability bypass UEFI Secure Boot.
 
-can you please assign CVE for this issue ?
-http://ocportal.com/site/news/view/security_issues/security-patch-for-xss.htm?filter=1%2C2%2C3%2C29%2C30
+While no proof of concept was developed, the above conclusion was
+drawn from a theoretical attack along the lines of:
+1. The UEFI Shell has built-in functionality for unattended scripting,
+and a command (`mm`) for writing directly to physical memory, PCI
+config space, etc.
+2. An OS resident attacker can manipulate the boot order to execute an
+arbitrary UEFI Shell script containing any Shell commands upon reboot.
+3. These commands can then write an arbitrary unsigned executable
+payload to physical memory, and take control of the instruction
+pointer by overwriting a return address or some other pointer
+resulting in unsigned code execution.
 
-Proof of Concept URL
-***************************
-[+] http://localhost/ocportal
-/data/emoticons.php?field_name=post&keep_session=1
-840048647&utheme=default&overlay=1/
-[image: XSS on Data_emotions_browser.PNG]
+We have developed a patch to disable the UEFI Shell
+when Secure Boot is active, and in future, we plan on removing the
+UEFI Shell from such firmware images.
 
-Vulnerable Parameter(s):
-******************************
-[+]  Field_Name
+The Ubuntu edk2 and LXD issue are also known as CVE-2023-48733 and
+CVE-2023-49721.
 
-Credits & Authors
---------------------
-Arjun Basnet from Cyber Security Works Pvt. Ltd. (
-http://cybersecurityworks.com)
+The issue is tracked on Launchpad as
+https://bugs.launchpad.net/ubuntu/+source/edk2/+bug/2040137 and
+https://bugs.launchpad.net/ubuntu/+source/lxd/+bug/2040139.
 
---001a1140d9443d98ab05273c4d6f
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The TianoCore project does not consider this a vulnerability in edk2
+as the configuration option to disable the UEFI Shell is available, and
+deciding this policy is up to downstream vendors and distributors.
 
-<div dir=3D"ltr">Hi all=C2=A0<div><br></div><div>can you please assign CVE =
-for this=C2=A0issue ?</div><div><a href=3D"http://ocportal.com/site/news/vi=
-ew/security_issues/security-patch-for-xss.htm?filter=3D1%2C2%2C3%2C29%2C30"=
- target=3D"_blank">http://ocportal.com/site/news/view/security_issues/secur=
-ity-patch-for-xss.htm?filter=3D1%2C2%2C3%2C29%2C30</a><br></div><div><br></=
-div><div><div style=3D"font-size:12.8px"><span style=3D"font-size:12.8px">P=
-roof of Concept URL</span><br style=3D"font-size:12.8px"><span style=3D"fon=
-t-size:12.8px">***************************</span></div><div style=3D"font-s=
-ize:12.8px"><div><span style=3D"font-size:12.8px">[+]=C2=A0</span><font col=
-or=3D"#1155cc"><span style=3D"font-size:12.8px"><a href=3D"http://localhost=
-/ocportal/data/emoticons.php?field_name=3Dpost&amp;keep_session=3D1" target=
-=3D"_blank">http://localhost/<span>ocportal</span>/data/emoticons.php?field=
-_name=3Dpost&amp;keep_session=3D1</a></span></font><span style=3D"font-size=
-:12.8px;color:rgb(17,85,204)">840048647&amp;utheme=3Ddefault&amp;overlay=3D=
-1/</span></div><div><span style=3D"font-size:12.8px;color:rgb(17,85,204)"><=
-img src=3D"cid:151b96a6892346304b84" alt=3D"XSS on Data_emotions_browser.PN=
-G" class=3D"kr" style=3D"max-width: 100%; opacity: 1;"><br></span></div><br=
- style=3D"font-size:12.8px"><span style=3D"font-size:12.8px">Vulnerable Par=
-ameter(s):</span><br></div></div><div style=3D"font-size:12.8px"><span styl=
-e=3D"font-size:12.8px">******************************</span></div><div styl=
-e=3D"font-size:12.8px"><div style=3D"font-size:12.8px"><span style=3D"font-=
-size:12.8px">[+] =C2=A0Field_Name</span></div><div style=3D"font-size:12.8p=
-x"><span style=3D"font-size:12.8px"><br></span></div><div style=3D"font-siz=
-e:12.8px"><span style=3D"font-size:12.8px;line-height:19.2px">Credits &amp;=
- Authors</span><br style=3D"font-size:12.8px;line-height:19.2px"><span styl=
-e=3D"font-size:12.8px;line-height:19.2px">--------------------</span><br st=
-yle=3D"font-size:12.8px;line-height:19.2px"><span style=3D"font-size:12.8px=
-;line-height:19.2px">Arjun Basnet from Cyber Security Works Pvt. Ltd. (<a h=
-ref=3D"http://cybersecurityworks.com/" target=3D"_blank">http://cybersecuri=
-tyworks.com</a>)</span><span style=3D"font-size:12.8px"><br></span></div><d=
-iv style=3D"font-size:12.8px"><span style=3D"font-size:12.8px"><br></span><=
-/div><div style=3D"font-size:12.8px"><span style=3D"font-size:12.8px"><br><=
-/span></div></div></div>
-
---001a1140d9443d98ab05273c4d6f--
-
---001a1140d9443d98ae05273c4d70--
+Best regards,
+Mate Kukri
