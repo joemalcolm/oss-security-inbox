@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["754" "Thursday" "18" "August" "2016" "10:47:56" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<73591310.lZD5iXrPXu@willoughby>" "27" "[oss-security] potrace: multiple crashes" nil nil nil "8" "2016081808:47:56" "[oss-security] potrace: multiple crashes" (number mark "U       ago@gentoo.o Aug 18   27/754   " thread-indent "\"[oss-security] potrace: multiple crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13596 invoked by uid 550); 18 Aug 2016 08:48:17 -0000
+Received: (qmail 11505 invoked by uid 550); 19 Feb 2024 09:44:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +7,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13546 invoked from network); 18 Aug 2016 08:48:14 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 5722 invoked from network); 19 Feb 2024 01:22:46 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: "Gary D. Gregory" <ggregory@apache.org>
 To: oss-security@lists.openwall.com
-Date: Thu, 18 Aug 2016 10:47:56 +0200
-Message-ID: <73591310.lZD5iXrPXu@willoughby>
-User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.20; x86_64; ; )
+Message-ID: <5a3f56e3-a001-9cd5-5432-32e44cea78c8@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 19 Feb 2024 01:25:47 +0000
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart113208889.ordN2cS08U"
-Content-Transfer-Encoding: 7Bit
-Subject: [oss-security] potrace: multiple crashes
+Subject: [oss-security] CVE-2024-25710: Apache Commons Compress: Denial of service caused
+ by an infinite loop for a corrupted DUMP file 
 
---nextPart113208889.ordN2cS08U
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Severity: important
 
-Hello,
+Affected versions:
 
-the past year I discovered and documented multiple crashes in potrace:
+- Apache Commons Compress 1.3 through 1.25.0
 
-https://blogs.gentoo.org/ago/2016/08/08/potrace-multiple-three-null-pointer-dereference-in-bm_readbody_bmp-bitmap_io-c/
+Description:
 
-https://blogs.gentoo.org/ago/2016/08/08/potrace-divide-by-zero-in-bm_new-bitmap-h/
+Loop with Unreachable Exit Condition ('Infinite Loop') vulnerability in Apa=
+che Commons Compress.This issue affects Apache Commons Compress: from 1.3 t=
+hrough 1.25.0.
 
-https://blogs.gentoo.org/ago/2016/08/08/potrace-multiplesix-heap-based-buffer-overflow-in-bm_readbody_bmp-bitmap_io-c/
+Users are recommended to upgrade to version 1.26.0 which fixes the issue.
 
-It could be obvious but each crash comes up from a different crafted 
-image.
+Credit:
 
+Yakov Shafranovich, Amazon Web Services (reporter)
 
-If you think that something is suitable for an identifier, please assign it.
-Thanks
+References:
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
-
---nextPart113208889.ordN2cS08U--
+https://commons.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-25710
 
