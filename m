@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["786" "Tuesday" "14" "July" "2015" "22:46:03" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1996622.WfZip9OtJo@arcadia>" "25" "Re: [oss-security] siege: off-by-one in load_conf()" nil nil nil "7" "2015071420:46:03" "[oss-security] siege: off-by-one in load_conf()" (number mark "        ago@gentoo.o Jul 14   25/786   " thread-indent "\"Re: [oss-security] siege: off-by-one in load_conf()\"\n") "<20150714201152.GG19574@hunt>" ("<6439170.QNVfc3SXO1@arcadia>" "<20150714201152.GG19574@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9709 invoked by uid 550); 14 Jul 2015 20:46:23 -0000
+Received: (qmail 26354 invoked by uid 550); 19 Feb 2024 14:44:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9687 invoked from network); 14 Jul 2015 20:46:22 -0000
-Message-ID: <1996622.WfZip9OtJo@arcadia>
-User-Agent: KMail/4.14.3 (Linux/3.18.9-gentoo; KDE/4.14.3; x86_64; ; )
-In-Reply-To: <20150714201152.GG19574@hunt>
-References: <6439170.QNVfc3SXO1@arcadia> <20150714201152.GG19574@hunt>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart68433331.SWMiAovpaH"
-Content-Transfer-Encoding: 7Bit
-Cc: Seth Arnold <seth.arnold@canonical.com>, cve-assign@mitre.org
-Date: Tue, 14 Jul 2015 22:46:03 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] siege: off-by-one in load_conf()
+Received: (qmail 9826 invoked from network); 19 Feb 2024 13:32:49 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Andrea Cosentino <acosentino@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <b7999538-59ee-3fb4-ccda-a1ad2f127616@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 19 Feb 2024 13:34:45 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-23114: Apache Camel: Camel-CassandraQL: Unsafe Deserialization from CassandraAggregationRepository
 
---nextPart68433331.SWMiAovpaH
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Severity: important
 
-On Tuesday 14 July 2015 13:11:52 Seth Arnold wrote:
-> Does load_conf() process any information from any untrusted sources? 
-Has
-> Siege processed any data from the network at this point? 
-I don't know exactly, ask upstream.
+Affected versions:
 
-> This sounds like a regular bug rather than a security boundary, unless 
-I've > misunderstood the application.
+- Apache Camel 3.0.0 before 3.21.4
+- Apache Camel 3.22.0 before 3.22.1
+- Apache Camel 4.0.0 before 4.0.4
+- Apache Camel 4.1.0 before 4.4.0
 
-Everyone has a security concept of the off-by-one. This is the reason 
-because I mentioned to assign a cve if for mitre is a valid request.
+Description:
 
-I filed the bug because it is the case of CWE-193.
-Feel free to see it as a non-security impact major than a DoS/segfault.
+Deserialization of Untrusted Data vulnerability in Apache Camel CassandraQL=
+ Component AggregationRepository which is vulnerable to unsafe deserializat=
+ion. Under specific conditions it is possible to deserialize malicious payl=
+oad.This issue affects Apache Camel: from 3.0.0 before 3.21.4, from 3.22.0 =
+before 3.22.1, from 4.0.0 before 4.0.4, from 4.1.0 before 4.4.0.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Users are recommended to upgrade to version 4.4.0, which fixes the issue.=
+=C2=A0If users are on the 4.0.x LTS releases stream, then they are suggeste=
+d to upgrade to 4.0.4. If users are on 3.x, they are suggested to move to 3=
+.21.4 or 3.22.1
 
---nextPart68433331.SWMiAovpaH--
+This issue is being tracked as CAMEL-20306=20
+
+Credit:
+
+Federico Mariani From Apache Software Foundation (finder)
+Andrea Cosentino from Apache Software Foundation (finder)
+
+References:
+
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-23114
+https://issues.apache.org/jira/browse/CAMEL-20306
 
