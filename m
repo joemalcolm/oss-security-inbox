@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1497" "Sunday" "10" "April" "2016" "10:25:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160410142541.E5CD63AE190@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE request: imlib2 - GIF loader: OOB read" nil nil nil "4" "2016041014:25:41" "[oss-security] Re: CVE request: imlib2 - GIF loader: OOB read" (number mark "U       cve-assign@m Apr 10   40/1497  " thread-indent "\"[oss-security] Re: CVE request: imlib2 - GIF loader: OOB read\"\n") "<57099244.2010504@vorlons.info>" ("<57099244.2010504@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19663 invoked by uid 550); 10 Apr 2016 14:25:54 -0000
+Received: (qmail 12018 invoked by uid 550); 20 Feb 2024 12:08:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19643 invoked from network); 10 Apr 2016 14:25:53 -0000
-From: cve-assign@mitre.org
-To: matthias@vorlons.info
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <57099244.2010504@vorlons.info>
-Message-Id: <20160410142541.E5CD63AE190@smtpvbsrv1.mitre.org>
-Date: Sun, 10 Apr 2016 10:25:41 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: imlib2 - GIF loader: OOB read
+Received: (qmail 20340 invoked from network); 20 Feb 2024 05:52:02 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jiajie Zhong <zhongjiajie@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <18b78b1e-4d7f-48d6-0746-d27140257b67@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 20 Feb 2024 05:55:06 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-49109: Remote Code Execution in Apache Dolphinscheduler 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important
 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=37a96801663b7b4cd3fbe56cc0eb8b6a17e766a8
-> GIF loader: Fix out-of-bound reads from colormap
+Affected versions:
 
+- Apache DolphinScheduler 3.0.0 before 3.2.1
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=785369
-> libimlib2: GIF loader: out-of-bounds read
+Description:
 
-> Invalid read of size 1
-> 
-> cmap->Colors gets accessed on index 8, but just 0 to 3 would be valid
-> 
-> security implications (DoS and potential host memory exposure)
+Exposure of Remote Code Execution in Apache Dolphinscheduler.
 
-Use CVE-2016-3994.
+This issue affects Apache DolphinScheduler: before 3.2.1.=20
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+We recommend users to upgrade Apache DolphinScheduler to version 3.2.1, whi=
+ch fixes the issue.
 
-iQIcBAEBCAAGBQJXCl7MAAoJEL54rhJi8gl5qXoP/0ixra6R9i1HUALR2iOJEtnk
-vTfbn05noKq8NqhXJzqn49tK9OFDsWwufGGL5I/3lr0mzJmeQcp780LR182wcBd7
-Mgdp7haeNTMCtNTuLglV0Z5umbfxCiAO0vMcpv8aDsGccm6o2cvc1q6iAivHgVmi
-rmH22yPtjktiazNdTBfoiDgKfrW7KZ0vEawIdaQmL7dbt4YYriMVmAfKc2izAFUk
-lL/SYhPNU3IuGwXzzFFWA1xq3wTWUVVf9bYg2/Tsq2BZsfI1ryVfjqK1GCAwHBX8
-+d+V38D9PbI7sYQ0SvmsJQAS71ZYEyPadc9D+Kzf1I8d8fRFa/4ftog4auZbpvWj
-QnLGs1ezV0hPeZA602gOMe9+ts2N+dW3nF2+rz/n0BwBsZ0yHZ2kf6OrbeqdUEcb
-d3br+E2l9OsJ7EpJeSzG/lmJ1InCz50/pYjIU0Ig3UgZqkVpAHX7cQurLZeJq2ws
-0SLKufxR8mVio+KId3csyBGtRBIBpYDBO6dNTR0A+5jdwoyoWn/b63z8cqL4+3oJ
-11f0PlZZBZjjCY5ESg/oyFqvdS6c23UKirzab3SGF7tEvZUx90FC/alsD3uEa0Eq
-eWp5wvsGd6U20qta4bku5QkFxZ8DgTtQv8loKwRiUp8218d5IjzL60D9hFAJ4Hcv
-DnHFzuNitwKiQx8vjCbw
-=lelm
------END PGP SIGNATURE-----
+Credit:
+
+Y4tacker and 4ra1n from Y4secTeam (finder)
+
+References:
+
+https://github.com/apache/dolphinscheduler/pull/14991
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-49109
+
