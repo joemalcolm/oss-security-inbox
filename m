@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["392" "Tuesday" "15" "August" "2017" "22:31:01" "+0300" "Henri Salo" "henri@nerv.fi" "<20170815193101.unvd2iexsbnilpy3@tunkki>" "11" "Re: [oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file." nil nil nil "8" "2017081519:31:01" "[oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file." (number mark "U       henri@nerv.f Aug 15   11/392   " thread-indent "\"Re: [oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file.\"\n") "<A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>" ("<A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24489 invoked by uid 550); 15 Aug 2017 19:31:43 -0000
+Received: (qmail 10093 invoked by uid 550); 20 Feb 2024 12:08:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,31 +7,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24461 invoked from network); 15 Aug 2017 19:31:42 -0000
-X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
-Date: Tue, 15 Aug 2017 22:31:01 +0300
-From: Henri Salo <henri@nerv.fi>
-To: =?utf-8?B?6L+e5LiA5rGJ?= <lianyihan@360.cn>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20170815193101.unvd2iexsbnilpy3@tunkki>
-References: <A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>
-MIME-Version: 1.0
+Received: (qmail 18166 invoked from network); 20 Feb 2024 05:49:37 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] [CVE-2017-9608] null-point-exception happened
- when ffmpeg using dnxhd decoder to parsing a crafted mv file.
+From: Jiajie Zhong <zhongjiajie@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <d43fb009-c3b7-208b-166b-2eba279d485c@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 20 Feb 2024 05:51:45 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-49250: Apache DolphinScheduler: Insecure TLS TrustManager
+ used in HttpUtil 
 
-On Mon, Aug 14, 2017 at 09:52:51AM +0000, 连一汉 wrote:
-> I found a vulnerability of ffmpeg-3.3.2.
-> FFmpeg could be crashed when it is parsing a crafted mov file.
-> ffmpeg -c:v dnxhd -i poc.mov -y output.ts
-> Use CVE-2017-9608.
+Severity: low
 
-Have you reported this issue to the upstream? Did you test this case against
-latest development branch? https://www.ffmpeg.org/bugreports.html
+Affected versions:
 
--- 
-Henri Salo
+- Apache DolphinScheduler through 3.2.0
+
+Description:
+
+Because the HttpUtils class did not verify certificates, an attacker that c=
+ould perform a Man-in-the-Middle (MITM) attack on outgoing https connection=
+s could impersonate the server.
+
+This issue affects Apache DolphinScheduler: before 3.2.0.
+
+Users are recommended to upgrade to version 3.2.1, which fixes the issue.
+
+References:
+
+https://github.com/apache/dolphinscheduler/pull/15288
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-49250
+
