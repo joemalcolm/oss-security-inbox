@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3246" "Thursday" "24" "February" "2022" "12:52:00" "-0800" "Eric Biggers" "ebiggers@kernel.org" nil "66" "Re: [oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)" nil nil nil "2" nil nil (number mark "U       ebiggers@ker Feb 24   66/3246  " thread-indent "\"Re: [oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1295 invoked by uid 550); 24 Feb 2022 20:54:14 -0000
+Received: (qmail 2002 invoked by uid 550); 22 Feb 2024 20:02:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,92 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29772 invoked from network); 24 Feb 2022 20:52:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1645735922;
-	bh=eNe2Uytz1MH/yeG8QLDN1rNyVFxrLOOoDyIVT76lGOw=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=ErJzNT+x7FgS2yt1VmoeTUszrX/wP8Ir1GCsgMtWOpqJfc7gtuREH8muHtdumrWtI
-	 IsizNt+PAHv8uSVoVOirzWk+gtEfv3ybStsdrllRyH+U3giGVTxPgxNvI6QCJGij7r
-	 iuUggKI+FqSAfhgwlqRN3w+iKQgsRc+fSLspMgmEewrCp62eW6W2rfokDDbRIn/dZ2
-	 7datNJ6IxGkwl8ytwSqWpx8fG+q6RjJUDp3blVnJm1tLhFOXb80wTKssRJmzTkqnWY
-	 u6bMuxGt75I52lbh7xUmszyzXg3nTX0rg5cQPxu2pi1aHGFB37+shZyK58kXRr6apg
-	 cF5Exci6sHYlg==
-Date: Thu, 24 Feb 2022 12:52:00 -0800
-From: Eric Biggers <ebiggers@kernel.org>
+Received: (qmail 1814 invoked from network); 22 Feb 2024 20:02:26 -0000
+Date: Thu, 22 Feb 2024 21:05:42 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <Yhfv8GPdgFbbiGXk@sol.localdomain>
-References: <Yhds/v3yH6YV/gKQ@f195.suse.de>
-MIME-Version: 1.0
+Message-ID: <20240222200542.GA14535@openwall.com>
+References: <7e78b8d8-860c-47f5-bbec-a967c277d539@oracle.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Yhds/v3yH6YV/gKQ@f195.suse.de>
-Subject: Re: [oss-security] fscrypt: Multiple File System Related Security
- Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)
+In-Reply-To: <7e78b8d8-860c-47f5-bbec-a967c277d539@oracle.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVEs issued by the Linux kernel CNA
 
-On Thu, Feb 24, 2022 at 12:33:18PM +0100, Matthias Gerstner wrote:
-> Hello list,
-> 
-> in the context of a request to include Fscrypt [1] into openSUSE Tumbleweed
-> a routine review of the package was required, as it contains a PAM module.
-> In the course of the review I discovered a number of file system management
-> related security issues.
-> 
-> I have been reviewing Fscrypt version 0.3.1. Shortly later 0.3.2 got
-> released, with minor changes in the PAM module but some more changes in
-> other areas. All issues and source code locations mentioned in this report
-> relate to the upstream version tag v0.3.1. Most of the findings are also
-> valid for 0.3.2, however.
-> 
-> All acknowledged issues mentioned in this report have been addressed in the
-> new Fscrypt upstream release version v0.3.3.
+On Tue, Feb 20, 2024 at 03:30:28PM -0800, Alan Coopersmith wrote:
+> As recently announced [1], kernel.org is now a CNA for the Linux kernel, and
 
-Thanks for doing a security review and reporting all of these!
+See also discussion here:
 
-To provide some extra context for readers: "fscrypt" here refers to the
-userspace tool https://github.com/google/fscrypt, not to the kernel side of
-Linux native filesystem encryption which is also sometimes called fscrypt
-(https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html).  These
-vulnerabilities only affected the userspace tool.  Also, these are not
-cryptographic vulnerabilities.
+https://lwn.net/Articles/961961/
 
-One correction below:
+> today issued its first 8 CVEs, as seen in the archives of their mailing list
+> at https://lore.kernel.org/linux-cve-announce/ .
 
-> 5.i) Another User can Cause a Foreign Key to be Applied to its own File System
-> ------------------------------------------------------------------------------
-> 
-> Let's consider a malicious local user that has control over the root directory
-> of some mounted file system e.g. let's consider its own home directory is a
-> separate mount. Then this malicious user can do this:
-> 
->     $ ln -s /.fscrypt /home/$USER/.fscrypt
-> 
-> Actually a copy of all the files should also suffice. That Fscrypt is
-> following symlinks is an extra degree of freedom that is exploited here. The
-> `filesystem/CheckSetup()` function does only check the mode bits of the
-> involved directories, but not the actual *owners*, therefore a plain copy of
-> the directories and files would also be working.
-> 
-> Now when another user unlocks its Protector via the PAM module, the module
-> will also look into other file systems and since a matching policy will be
-> found for /home/$USER, the following (strace) happens (with $USER = attacker):
-> 
->     openat(AT_FDCWD, "/home/attacker", O_RDONLY|O_CLOEXEC) = 4
->     ioctl(4, FS_IOC_ADD_ENCRYPTION_KEY, 0x7f2738d29000) = 0
-> 
-> So the encryption key is added to a completely unrelated file system. The
-> attacking user does not seem to have the ability to take advantage of this,
-> because the key cannot be retrieved back and the ciphertext of the
-> originally encrypted data can also not easily be duplicated on the other file
-> system to have the kernel decrypt it.
-> 
-> Upstream acknowledges this issue but doesn't see an attack vector in it,
-> because the attacker cannot take any advantage of it.
+There are many more already, all of them also archived at:
 
-I believe this one did get addressed by
-https://github.com/google/fscrypt/commit/85a747493ff368a72f511619ecd391016ecb933c
-("Extend ownership validation to entire directory structure").  With that, by
-default pam_fscrypt will only consider filesystems whose root directory is owned
-by root or by the user logging in.
+https://lists.openwall.net/linux-cve-announce/
 
-- Eric
+> Their documentation [2] warns that we should expect a "seemingly large 
+> number of CVEs that are issued by the Linux kernel team".
+> 
+> Since there's already an archived mailing list covering the CVE assignments,
+> I don't think it makes sense to mirror that large amount of traffic here, 
+> but to only bring to oss-security those that are especially interesting or 
+> useful to discuss further.  What do others think?
+> 
+> [1] http://www.kroah.com/log/blog/2024/02/13/linux-is-a-cna/
+> [2] https://docs.kernel.org/process/cve.html
+
+Yes, I agree.  Besides "especially interesting or useful to discuss
+further", another exception will be for issues that were brought to
+linux-distros, for transparency.
+
+Speaking of which, we allow for CVEs to be requested via linux-distros,
+to be assigned by one of the CNAs in there.  The current Linux kernel
+CVE documentation is very strict about rejecting such third-party
+assignments if they're "for an actively supported kernel":
+
+"Any CVE that is assigned against the Linux kernel for an actively
+supported kernel version, by any group other than the kernel assignment
+CVE team should not be treated as a valid CVE. Please notify the kernel
+CVE assignment team at <cve@kernel.org> so that they can work to
+invalidate such entries through the CNA remediation process."
+
+So I guess we should now exclude upstream actively supported kernels
+from this offer/practice.  Distro CNAs can still assign CVEs for issues
+limited to downstream/distro kernels and for issues in upstream kernels
+that are not currently supported upstream.  I guess they can also assign
+CVEs against downstream/distro kernels even if the code is the same as
+in an upstream actively supported kernel, but the threat model is
+different (e.g., untrusted filesystem images are brought into the threat
+model in a distro).  Sounds right?
+
+Alexander
