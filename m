@@ -1,4 +1,4 @@
-Received: (qmail 18357 invoked by uid 550); 9 Jun 2024 21:00:41 -0000
+Received: (qmail 30564 invoked by uid 550); 27 Feb 2024 17:17:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,51 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16179 invoked from network); 9 Jun 2024 21:00:19 -0000
-Date: Sun, 9 Jun 2024 23:00:19 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 27913 invoked from network); 27 Feb 2024 16:40:02 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Brahma Reddy Battula <brahma@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20240609210019.GA25286@openwall.com>
-References: <730060b6-e92f-437e-aa44-fbb1d47431f3@oracle.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <730060b6-e92f-437e-aa44-fbb1d47431f3@oracle.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] vte 0.76.3 released with fix for CVE-2024-37535
+Message-ID: <0cc3cf0e-4b5c-287d-c157-f606d7f15cb2@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 27 Feb 2024 16:42:32 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-50380: Apache Ambari: authenticated users could perform
+ XXE to read arbitrary files on the server 
 
-On Sun, Jun 09, 2024 at 11:26:33AM -0700, Alan Coopersmith wrote:
-> https://www.cve.org/CVERecord?id=CVE-2024-37535 states:
-> 
-> >GNOME VTE before 0.76.3 allows an attacker to cause a denial of service 
-> >(memory consumption) via a window resize escape sequence, a related issue
-> >to CVE-2000-0476.
-> 
-> https://gitlab.gnome.org/GNOME/vte/-/issues/2786 explains further:
-> 
-> >The ANSI escape sequence "e[4;;t" can be used to resize the terminal
-> >window, where "" is the height and ""is the width. By providing a
-> >large number such as 65535 for both values will lead to a local denial
-> >of service, where the whole machine can be frozen.
-> >
-> >This same vulnerability found was in XTerm back in 2000. The CVE for
-> >the vulnerability in XTerm is CVE-2000-0476
-> >
-> >Steps to reproduce:
-> >
-> >    Open gnome-terminal
-> >    Execute printf "e[4;65535;65535t" in the terminal
+Severity: important
 
-The above command is missing its backslash.  This triggers a crash:
+Affected versions:
 
-printf '\e[4;65535;65535t'
+- Apache Ambari 2.7.0 through 2.7.7
 
-and so does this:
+Description:
 
-printf '\e[8;65535;65535t'
+XML External Entity injection in apache ambari versions <=3D 2.7.7,=C2=A0Us=
+ers are recommended to upgrade to version 2.7.8, which fixes this issue.
 
-The latter is a different escape sequence that accepts the sizes in
-different units.  I hope the fix covers both, but I didn't review nor
-test it - I hope someone does and posts in here.
+More Details:
 
-Alexander
+Oozie Workflow Scheduler had a vulnerability that allowed for root-level fi=
+le reading and privilege escalation from low-privilege users. The vulnerabi=
+lity was caused through lack of proper user input validation.
+
+This vulnerability is known as an XML External Entity (XXE) injection attac=
+k. Attackers can exploit XXE vulnerabilities to read arbitrary files on the=
+ server, including sensitive system files. In theory, it might be possible =
+to use this to escalate privileges.
+
+References:
+
+https://ambari.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-50380
+
