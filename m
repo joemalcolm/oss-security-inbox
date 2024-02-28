@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2797" "Sunday" "22" "October" "2017" "01:41:29" "+0300" "Henri Salo" "henri@nerv.fi" "<20171021224129.34you4kzttvgnbj7@tunkki.bugs.fi>" "77" "[oss-security] LAME 3.100 released with security fixes" nil nil nil "10" "2017102122:41:29" "[oss-security] LAME 3.100 released with security fixes" (number mark "U       henri@nerv.f Oct 22   77/2797  " thread-indent "\"[oss-security] LAME 3.100 released with security fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28268 invoked by uid 550); 21 Oct 2017 22:41:52 -0000
+Received: (qmail 17786 invoked by uid 550); 28 Feb 2024 15:03:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +7,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28234 invoked from network); 21 Oct 2017 22:41:52 -0000
-X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
-Date: Sun, 22 Oct 2017 01:41:29 +0300
-From: Henri Salo <henri@nerv.fi>
+Received: (qmail 9319 invoked from network); 28 Feb 2024 14:50:46 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jacques Le Roux <jleroux@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20171021224129.34you4kzttvgnbj7@tunkki.bugs.fi>
+Message-ID: <c7fa7619-3dea-f582-8779-a88e1105af65@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 28 Feb 2024 14:52:32 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] LAME 3.100 released with security fixes
+Subject: [oss-security] CVE-2024-25065: Apache OFBiz: Path traversal allowing
+ authentication bypass. 
 
-Hello,
+Severity: critical
 
-LAME 3.100 has been released including fixes to security vulnerabilities.
-Coy-paste from history:
+Affected versions:
 
-Rogério Brito
+- Apache OFBiz before 18.12.12
 
-- Don't include the debian directory as one that is needed during builds. Patch
-taken from Debian's packaging of lame.
+Description:
 
-- Resurrect Owen Taylor's code dated from 97-11-3 to properly deal with GTK1.
-This was transplanted back from aclocal.m4 with a patch provided by Andres
-Mejia. This change makes it easy to regenerate autotools' files with a simple
-invocation of autoconf -vfi.
+Possible path traversal in Apache OFBiz allowing authentication bypass.
+Users are recommended to upgrade to version 18.12.12, that fixes the issue.
 
-- Fix possible race condition causing build failures in libmp3lame. Discovered
-in automated builds by the Debian project with patch provided by Andres Mejia.
+Credit:
 
-Robert Hegemann
+YunPeng - =E9=83=AD =E8=BF=90=E9=B9=8F <puata123@outlook.com> (finder)
 
-- Improved detection of MPEG audio data in RIFF WAVE files. Tracker item [
-3545112 ] Invalid sampling detection
+References:
 
-- New switch --gain <decibel>, range -20.0 to +12.0, a more convenient way to
-apply Gain adjustment in decibels, than the use of --scale <factor>.
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-18.12.12.html
+https://issues.apache.org/jira/browse/OFBIZ-12887
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-25065
 
-- Fix for tracker item [ 3558466 ] Bug in path handling
-
-- Fix for tracker item [ 3567844 ] problem with Tag genre
-
-- Fix for tracker item [ 3565659 ] no progress indication with pipe input
-
-- Fix for tracker item [ 3544957 ] scale (empty) silent encode without warning
-
-- Fix for tracker item [ 3580176 ] environment variable LAMEOPT doesn't work
-anymore
-
-- Fix for tracker item [ 3608583 ] input file name displayed with wrong
-character encoding (on windows console with CP_UTF8)
-
-- Fix for bug ticket [ #447 ] Fix dereference NULL and Buffer not NULL
-terminated issues. Thanks to Surabhi Mishra
-
-- Fix for bug ticket [ #445 ] dereference of a null pointer possible in loop.
-Thanks to Renu Tyagi
-
-- Fix for bug ticket [ #449 ] Make sure functions with SSE instructions
-maintain their own properly aligned stack. Thanks to Fabian Greffrath
-
-- Fix for bug ticket [ #458 ] Multiple Stack and Heap Corruptions from
-Malicious File. Thanks to Gareth Evans and Elio Blanca
-
-- Fix for bug ticket [ #460 ] A division by zero vulnerability. Thanks to Wang
-Shiyang, Liu Bingchang
-
-- Fix for bug ticket [ #461 ] CVE-2017-9410 fill_buffer_resample function in
-libmp3lame/util.c heap-based buffer over-read and ap
-
-- Fix for bug ticket [ #462 ] CVE-2017-9411 fill_buffer_resample function in
-libmp3lame/util.c invalid memory read and application crash
-
-- Fix for bug ticket [ #463 ] CVE-2017-9412 unpack_read_samples function in
-frontend/get_audio.c invalid memory read and application crash
-
-- Fix for bug ticket [ #434 ] clip detect scale suggestion unaware of scale
-input value
-
-- HIP decoder bug fixed: decoding mixed blocks of lower sample frequency Layer3
-data resulted in internal buffer overflow (write). Thanks to Henri Salo
-
-Alexander Leidinger
-
-- Feature request, patch ticket [ #27 ] Add
-lame_encode_buffer_interleaved_int() by Michael Fink
-
--- 
-Henri Salo
