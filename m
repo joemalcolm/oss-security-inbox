@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1692" "Thursday" "1" "December" "2016" "14:15:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<7f592892df564803a9af7dea4b4ece8a@imshyb02.MITRE.ORG>" "46" "[oss-security] Re: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6" "^CC:" nil nil "12" "2016120119:15:46" "[oss-security] Re: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6" (number mark "U       cve-assign@m Dec  1   46/1692  " thread-indent "\"[oss-security] Re: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6\"\n") "<CAAeHK+yya7cNPsY97wiss_G9ZCS3sOVbrTSZwxjqXPg7FzyF1A@mail.gmail.com>" ("<CAAeHK+yya7cNPsY97wiss_G9ZCS3sOVbrTSZwxjqXPg7FzyF1A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16091 invoked by uid 550); 1 Dec 2016 19:15:59 -0000
+Received: (qmail 13798 invoked by uid 550); 28 Feb 2024 14:06:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +6,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16072 invoked from network); 1 Dec 2016 19:15:59 -0000
-In-Reply-To: <CAAeHK+yya7cNPsY97wiss_G9ZCS3sOVbrTSZwxjqXPg7FzyF1A@mail.gmail.com>
-Message-ID: <7f592892df564803a9af7dea4b4ece8a@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<dvyukov@google.com>, <kcc@google.com>
-Date: Thu, 1 Dec 2016 14:15:46 -0500
-From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6
-To: <andreyknvl@google.com>
+Received: (qmail 6004 invoked from network); 28 Feb 2024 10:22:35 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Daniel Gaspar <dpgaspar@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <19cb61d5-b177-1543-73ae-735c292f1407@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 28 Feb 2024 10:23:39 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-24772: Apache Superset: Improper Neutralisation of custom
+ SQL on embedded context 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Affected versions:
 
-> A fix was sent upstream:
-> https://www.spinics.net/lists/netdev/msg407525.html
-> 
-> More details here:
-> https://groups.google.com/forum/#!topic/syzkaller/GFbGpX7nTEo
+- Apache Superset before 3.0.4
+- Apache Superset 3.1.0 before 3.1.1
 
->> Problem is that all network headers before fragment header are pulled.
->> Normal ipv6 reassembly will drop the skb when errors occur further down
->> the line.
->> 
->> netfilter doesn't do this
+Description:
 
-Use CVE-2016-9755.
+A guest user could exploit a chart data REST API and send arbitrary SQL sta=
+tements that on error could leak information from the underlying analytics =
+database.This issue affects Apache Superset: before 3.0.4, from 3.1.0 befor=
+e 3.1.1.
 
-The scope of this CVE does not include the GFbGpX7nTEo discussion of
+Users are recommended to upgrade to version 3.1.1 or 3.0.4, which fixes the=
+ issue.
 
-  https://groups.google.com/forum/#!original/syzkaller/GFbGpX7nTEo/XIKCs1NwAwAJ
+Credit:
 
-  "A quick grep shows that the same issue can potentially happen in
-  multiple places across the kernel"
+Beto Ferreira De Almeida (remediation developer)
+Linden Haynes (finder)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+References:
 
-iQIcBAEBCAAGBQJYQHVxAAoJEHb/MwWLVhi2ivwQAK972EbLLzsDaSmHZyK/hlEG
-08kbLjW7Fmvs4GjSEb3XWMYI7IZzuZOURbCwyZQ9jcXDdAk371trf7OIX/aImXxM
-L6vFWqU2KZE+p/BkK9BbEJvkExUDPEO2mF10kHVrGBFvmM5u6zGPKynwaWWHZXwo
-j52JVuGvJUxvFOSUVJBKwxhjEgEx4TYnc5M7r0aO9mfAs9/ZbJZmJ33ZXHwS+UAu
-feIwdIZk2dEzY6CUg8vJ+IGxh5O6m/9KECend3yA47GQRprYqIWMkfqg2RUcPjsH
-BX78nJQmZWpahDbbst3PD+VUvLh617hOlipZnBLujoe3ts4dyFbv6QRvVfCMQy/8
-ua1s0su0PpnJNFXuS+MydirJB2VhpLFka7fIjYrmwLdIMHWw90GW7rpTRvrUAW/A
-tKcTL9zPeU75M2VIT4/zonUXK9Gb5nDvdsvSQxWDe4fptlJe8OfmzXbf3KpSaHRd
-8RxqX4VeHiHA/rQCxpMlnq1RK5IIth9YusbK52LBqf5q14WBQsUTIMkUlo0lJ1Qa
-x5Pr3AkVRcOlqCeMmg6IILPHdNfOgoEVYgtlDzh0OZNXk6T6PvK6c3GnMCo8JcFt
-HNuCdLMG4NMr7iX4W0Ptu31IwQC5bBmL7dn07OwJkVDJ5OLYe2QYUBKfofjMgEKg
-GvcQC04f5qGYKWPU14/C
-=YbPe
------END PGP SIGNATURE-----
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2024-24772
+
