@@ -1,4 +1,4 @@
-Received: (qmail 5873 invoked by uid 550); 27 Oct 2025 18:48:32 -0000
+Received: (qmail 32612 invoked by uid 550); 6 Mar 2024 15:45:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,113 +7,219 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10005 invoked from network); 27 Oct 2025 17:33:43 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1761586412; bh=4YUPln5UHDqT5QWNiTrIjpRgyLgVrJF6/qeuFJPzfwY=;
-	h=Date:To:From:Subject:From;
-	b=ilOQMLHGQNziO3c4DkffAItpOxIfc2+8U3yRDzfuuEPFIH0dtOA3rJjM+vT7K0Mod
-	 Zl7C6snxX8v/YBbyXB8WxEcV5omLK66EeJvj6l7y+w5+ODBwjmveDi4/SZ0xPc5/Af
-	 6oxZY0jtLJB8Zmr6TN6dnRw/FAFaxLLLcQ9t1CjIoeIqDzDQ731AGQZMD/OzMrD1bT
-	 yGKgq1RilZST69ROdGZmshiEKlIXABKENHEBuof3z4g13cTn3THk7MP5sWuwurAX0q
-	 H35iZuGG9yq+T2l63YgX6+NLUN0zp0trL77WV2mIlbMjwzNhdtPvTFjT/MvKQR4vc7
-	 fz7pAYQR0UpCg==
-Message-ID: <8f593e39-f74c-44c9-bc09-b470ce5e0a68@apache.org>
-Date: Mon, 27 Oct 2025 17:33:31 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Autocrypt: addr=markt@apache.org; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Received: (qmail 32576 invoked from network); 6 Mar 2024 15:45:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
+	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
+	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
+	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=XeG0vVxvzPoS1VGFAoIN7ka19LgDRT0bHqn2aiOrmQU=; t=1709740139; x=1710172139;
+	 b=XX2ETJ4Nsjp8AhlI1rV7Lh56nabud9BeSckbuuo4e/uVAT/O4WUfca9UwZ0imPaO6DvGJ1zEOc
+	VI+BioYzJ8NlEVN4rUzN6FaM6EpYx1/X/UZYKOVOanSVfYgy5aooxnLIK/OvwTlP8lwyckTgLY3Ze
+	WKg5H2dRTNNMsQ6v5pj/hmPPEOG4BPUci4u6fqy6JjF0qf2IPViNreS1DAo8fsqwkLKDrI7fTw3TF
+	cAN3nm5Igyoj723cgt3pOU1C5POfheSvtcj2JPn2rCp8Wd2Q3l0GxDZacKowyFolPUpDdiX20lS7q
+	6ibOHlyEQHEibN4Gpw319kn+90oDAELwvlhVg==;
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-55752: Apache Tomcat: Directory traversal via rewrite with
- possible RCE if PUT is enabled
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Message-Id: <84F86108-C0D3-4CAA-A9A7-C989788C78C1@beckweb.net>
+Date: Wed, 6 Mar 2024 16:48:37 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1709740139;da7fcf97;
+X-HE-SMSGID: 1rhtVf-0001MM-VX
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Severity: important
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Affected versions:
+The following releases contain fixes for security vulnerabilities:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.10
-- Apache Tomcat 10.1.0-M1 through 10.1.44
-- Apache Tomcat 9.0.0.M11 through 9.0.108
-- Apache Tomcat 8.5.6 through 8.5.100
-- Apache Tomcat 3 before 8.5.0 unknown
+* AppSpider Plugin 1.0.17
+* Bitbucket Branch Source Plugin 871.v28d74e8b_4226
+* Delphix Plugin 3.0.2 and 3.1.1
+* HTML Publisher Plugin 1.32.1
+* MQ Notifier Plugin 1.4.1
+* OWASP Dependency-Check Plugin 5.4.6
+* Trilead API Plugin 2.141.v284120fd0c46
 
-Description:
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Relative Path Traversal vulnerability in Apache Tomcat.
+* Build Monitor View Plugin
+* docker-build-step Plugin
+* GitBucket Plugin
+* iceScrum Plugin
+* Subversion Partial Release Manager Plugin
 
-The fix for bug 60013 introduced a regression where the       rewritten 
-URL was normalized before it was decoded. This introduced the 
-possibility that, for rewrite rules that rewrite query parameters to the 
-       URL, an attacker could manipulate the request URI to bypass 
-security       constraints including the protection for /WEB-INF/ and 
-/META-INF/. If PUT requests were also enabled then malicious files could 
-be uploaded leading to remote code execution. PUT requests are normally 
-limited to trusted users and it is considered unlikely that PUT requests 
-would be enabled in conjunction with a rewrite that manipulated the URI.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2024-03-06/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3333 / CVE-2023-48795
+Trilead API Plugin bundles the Jenkins project's fork of the Trilead SSH2
+library for use by other plugins.
+
+Trilead API Plugin 2.133.vfb_8a_7b_9c5dd1 and earlier, except
+2.84.86.vf9c960e9b_458, bundles versions of Jenkins/Trilead SSH2 that are
+susceptible to CVE-2023-48795 (Terrapin). This vulnerability allows a
+machine-in-the-middle attacker to reduce the security of an SSH connection.
+
+
+SECURITY-3301 / CVE-2024-28149
+SECURITY-784 / CVE-20218-1000175 is a path traversal vulnerability in
+HTML Publisher Plugin 1.15 and earlier. The fix for it retained
+compatibility for older reports as a fallback.
+
+In HTML Publisher Plugin 1.16 through 1.32 (both inclusive) this fallback
+for reports created in HTML Publisher Plugin 1.15 and earlier does not
+properly sanitize input. This allows attackers with Item/Configure
+permission to do the following:
+
+* Implement stored cross-site scripting (XSS) attacks.
+* Determine whether a path on the Jenkins controller file system exists,
+  without being able to access it.
+
+
+SECURITY-3302 / CVE-2024-28150
+HTML Publisher Plugin 1.32 and earlier does not escape job names, report
+names, and index page titles shown as part of the report frame.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+
+SECURITY-3303 / CVE-2024-28151
+HTML Publisher Plugin 1.32 and earlier archives invalid symbolic links in
+report directories on agents and recreates them on the controller.
+Attackers with Item/Configure permission can use them to determine whether
+a path on the Jenkins controller file system exists, without being able to
+access it.
+
+
+SECURITY-3300 / CVE-2024-28152
+Multibranch Pipelines with Bitbucket branch source can be configured to
+discover pull requests from forks. The trust policy is set to "Forks in the
+same account" by default.
+
+In Bitbucket Branch Source Plugin 866.vdea_7dcd3008e and earlier, except
+848.850.v6a_a_2a_234a_c81, this trust policy allows changes to Jenkinsfiles
+from users without write access to the project when using Bitbucket Server.
+This allows attackers able to submit pull requests from forks to change the
+Pipeline behavior.
+
+
+SECURITY-3344 / CVE-2024-28153
+OWASP Dependency-Check Plugin 5.4.5 and earlier does not escape
+vulnerability metadata from Dependency-Check reports on the Jenkins UI.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control workspace contents or CVE
+metadata.
+
+
+SECURITY-3180 / CVE-2024-28154
+MQ Notifier Plugin has a global option to log the JSON payload it sends to
+RabbitMQ in the build log. This includes the build parameters, some of
+which may be sensitive, and they are not masked.
+
+In MQ Notifier Plugin 1.4.0 and earlier, this option is enabled by default.
+This results in unwanted exposure of sensitive information in build logs.
+
+
+SECURITY-3144 / CVE-2024-28155
+AppSpider Plugin 1.0.16 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to obtain information
+about available scan config names, engine group names, and client names.
+
+
+SECURITY-3215 / CVE-2024-28161
+Delphix Plugin provides a global option for administrators to enable or
+disable SSL/TLS certificate validation for Data Control Tower (DCT)
+connections.
+
+In Delphix Plugin 3.0.1 this option is set to disable SSL/TLS certificate
+validation by default.
+
+
+SECURITY-3330 / CVE-2024-28162
+Delphix Plugin provides a global option for administrators to enable or
+disable SSL/TLS certificate validation for Data Control Tower (DCT)
+connections.
+
+In Delphix Plugin 3.0.1 through 3.1.0 (both inclusive) an option change
+from disabled validation to enabled validation fails to take effect until
+Jenkins is restarted.
+
+
+SECURITY-3200 / CVE-2024-2215 (CSRF) & CVE-2024-2216 (permission check)
+docker-build-step Plugin 2.11 and earlier does not perform a permission
+check in an HTTP endpoint implementing a connection test.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified TCP or Unix socket URL. Additionally, the plugin
+reconfigures itself using the provided connection test parameters,
+affecting future build step executions.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3280 / CVE-2024-28156
+Build Monitor View Plugin 1.14-860.vd06ef2568b_3f and earlier does not
+escape Build Monitor View names.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure Build Monitor Views.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3249 / CVE-2024-28157
+GitBucket Plugin 0.8 and earlier does not sanitize Gitbucket URLs on build
+views.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure jobs.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3325 / CVE-2024-28158 (CSRF) & CVE-2024-28159 (permission check)
+Subversion Partial Release Manager Plugin 1.0.1 and earlier does not
+perform a permission check in an HTTP endpoint.
+
+This allows attackers with Item/Read permission to trigger a build.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3248 / CVE-2024-28160
+iceScrum Plugin 1.1.6 and earlier does not sanitize iceScrum project URLs
+on build views.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure jobs.
+
+As of publication of this advisory, there is no fix.
 
 
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.10, from 
-10.1.0-M1 through 10.1.44, from 9.0.0.M11 through 9.0.108.
-
-The following versions were EOL at the time the CVE was created but are
-known to be affected: 8.5.6 though 8.5.100. Other, older, EOL versions 
-may also be affected.
-Users are recommended to upgrade to version 11.0.11 or later, 10.1.45 or 
-later or 9.0.109 or later, which fix the issue.
-
-Credit:
-
-Chumy Tsai (github.com/Jimmy01240397) @ CyCraft Technology Intern (finder)
-
-References:
-
-https://lists.apache.org/thread/n05kjcwyj1s45ovs8ll1qrrojhfb1tog
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-55752
