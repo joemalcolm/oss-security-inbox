@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1827" "Tuesday" "9" "May" "2017" "14:49:56" "+0100" "Simon MacDonald" "macdonst@apache.org" "<CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>" "50" "[oss-security] CVE-2016-6799: Internal system information leak" nil nil nil "5" "2017050913:49:56" "[oss-security] CVE-2016-6799: Internal system information leak" (number mark "U       macdonst@apa May  9   50/1827  " thread-indent "\"[oss-security] CVE-2016-6799: Internal system information leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32709 invoked by uid 550); 9 May 2017 14:52:47 -0000
+Received: (qmail 11942 invoked by uid 550); 7 Mar 2024 22:41:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26384 invoked from network); 9 May 2017 13:50:30 -0000
-X-Gm-Message-State: AODbwcCMaOn1LsU52Znkp1gGnp9xF4RcYOWWIJGl5rfQ4eMsr6G4lAQy
-	LuGCVYJmGRr6cbj/qW+6FybHWdq5fg==
-X-Received: by 10.36.36.193 with SMTP id f184mr1251270ita.111.1494337817130;
- Tue, 09 May 2017 06:50:17 -0700 (PDT)
+Received: (qmail 11912 invoked from network); 7 Mar 2024 22:41:15 -0000
+Date: Thu, 7 Mar 2024 22:45:01 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20240307224501.c7jr2xfefbgo2olv@yuggoth.org>
 MIME-Version: 1.0
-From: Simon MacDonald <macdonst@apache.org>
-Date: Tue, 9 May 2017 14:49:56 +0100
-X-Gmail-Original-Message-ID: <CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>
-Message-ID: <CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>
-To: "dev@cordova.apache.org" <dev@cordova.apache.org>, 
-	"private@cordova.apache.org" <private@cordova.apache.org>, security <security@apache.org>, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
-	Mark Ward <mark.ward@mind-click.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nhkjqn33tpullsyh"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] OSSN-0093: Unresolved Vulnerability in OpenStack Murano
+
+--nhkjqn33tpullsyh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE-2016-6799: Internal system information leak
 
-CVE-2016-6799: Internal system information leak
+OSSN-0093
+Unresolved Vulnerability in OpenStack Murano
 
-Severity: High
+### Summary ###
+A severe security vulnerability in all versions of the Murano
+service will be disclosed at a later date. Murano is an inactive
+project[*], so no fix is currently under development for this
+vulnerability. It is strongly recommended that any OpenStack
+deployments disable or fully remove Murano, if installed, at the
+earliest opportunity. This security note will be amended at the time
+of public disclosure to include further details and context, but
+action should be taken as soon as possible in order to minimize the
+risk it poses.
 
-Vendor: The Apache Software Foundation
+[*] https://governance.openstack.org/tc/reference/emerging-technology-and-i=
+nactive-projects.html#current-inactive-projects
 
-Versions Affected: Cordova Android (5.2.2 and below)
+### Affected Services / Software ###
+- murano: all versions
 
-Description: The application calls methods of the Log class. Messages
-passed to these methods (Log.v(), Log.d(), Log.i(), Log.w(), and
-Log.e()) are stored in a series of circular buffers on the device. By
-default, a maximum of four 16 KB rotated logs are kept in addition to
-the current log. The logged data can be read using Logcat on the
-device. When using platforms prior to Android 4.1 (Jelly Bean), the
-log data is not sandboxed per application=CD=BE any application installed
-on the device has the capability to read data logged by other
-applications.
+### Discussion ###
+This security note is a redacted placeholder, and will be amended
+with complete details once the associated bug report becomes public.
 
-Upgrade path: Developers who are concerned about this issue should
-upgrade to 6.0.0 or later and install cordova plugins whose versions
-are equal to or greater than:
+### Recommended Actions ###
+Disable the Murano service in, or fully remove it from, all
+OpenStack deployments at the earliest opportunity.
 
-cordova-plugin-battery-status: 1.2.0
-cordova-plugin-camera: 2.3.0
-cordova-plugin-console: 1.0.4
-cordova-plugin-contacts: 2.2.0
-cordova-plugin-device: 1.1.3
-cordova-plugin-device-motion: 1.2.2
-cordova-plugin-device-orientation: 1.0.4
-cordova-plugin-dialogs: 1.3.0
-cordova-plugin-file: 4.3.0
-cordova-plugin-file-transfer: 1.6.0
-cordova-plugin-geolocation: 2.3.0
-cordova-plugin-globalization: 1.0.4
-cordova-plugin-inappbrowser: 1.5.0
-cordova-plugin-media: 2.4.0
-cordova-plugin-media-capture: 1.4.0
-cordova-plugin-network-information: 1.3.0
-cordova-plugin-splashscreen: 4.0.0
-cordova-plugin-statusbar: 2.2.0
-cordova-plugin-test-framework: 1.1.3
-cordova-plugin-vibration: 2.1.2
-cordova-plugin-whitelist: 1.3.0
-cordova-plugin-wkwebview-engine: 1.1.0
+### Credits ###
+Not yet disclosed.
 
-Mitigation Steps: If developers are unable to install the latest versions,
-this vulnerability can easily be mitigated by not putting sensitive
-information in the log statements.
+### Contacts / References ###
+Authors:
+- Jeremy Stanley, OpenStack Vulnerability Coordinator
 
-Credit: Mark Ward
+This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0093
+
+Original bug: https://launchpad.net/bugs/2048114 (not yet public)
+
+Mailing List : [security-sig] openstack-discuss@lists.openstack.org
+
+--=20
+Jeremy Stanley, OpenStack Vulnerability Coordinator
+
+--nhkjqn33tpullsyh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmXqQ21fFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCkVQg/9EOF+R3Peb9y0mD5fXP9mi5ju5UdvxwUzOFsMiJsNnb3tLUtAXq7uPBum
+Tov3/JyZdW8TCa5p6QHJ/0eqSGS0nXGPal7uUnVGMI4Hwq2Gr8vxm/9HopLvgE1L
+J1J7SM+lFO1fzkii9IxEAoZwdDMncu9Z6VSp/z7oPrO8hocWeJSXISfCamrysrDx
+hgFaHG5rrTB8E4bHRqU8t+LhDuj/ipBScK7kaMkCxeJuzx/QTlotx9ohYZyRDTt7
+Tajta8VGCvjJCO8HjUcYt4BDXzgWxlpNx1sK2toqkJtEtFbpcq6XSIIA34E15wsJ
+DY1VnQ14x0vYiMAY3fDR7wjHTOQeZaKOLxxqMSmRL/SpQQkIEQJdI+/TkA1rypG9
+lDi+xEPsumRi9pNzUz7RvtWNGSVhbuqbzt2VwOsj6vcoQh8I1IvdTek/tkWyQDs+
+8GsfNDzfTq7pOmwri+57GY8hHJasTSfo1OAjtoW8ySYpxTeCsSGENd6iKkQrlHE0
+m6Ls/l54GKpUZhoXhyMexaQY7Us8za64x1/2ybDG/YpT2MIT6xS+Omq59X0J5yuR
+KbuNm1pdwGglWETIrpkzKHJ+mpGPXKigZX222UlOFOJuf3yH0oedq+kWs9DwumQl
+mca9J74xANkMp4Pzu2cSpVIFsb+LFsgOO50WUJl63ojGDWqfI9g=
+=RMBX
+-----END PGP SIGNATURE-----
+
+--nhkjqn33tpullsyh--
