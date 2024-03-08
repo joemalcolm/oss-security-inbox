@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["786" "Wednesday" "15" "November" "2017" "21:30:40" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>" "23" "[oss-security] collectd: CVE-2017-16820: snmp-plugin: double free of request PDU" nil nil nil "11" "2017111520:30:40" "[oss-security] collectd: CVE-2017-16820: snmp-plugin: double free of request PDU" (number mark "U       carnil@debia Nov 15   23/786   " thread-indent "\"[oss-security] collectd: CVE-2017-16820: snmp-plugin: double free of request PDU\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11563 invoked by uid 550); 15 Nov 2017 20:30:54 -0000
+Received: (qmail 3226 invoked by uid 550); 8 Mar 2024 20:50:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11539 invoked from network); 15 Nov 2017 20:30:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=pbeDl7CIYKzPMReczzCRoZxi5Utc3Z072bPutnemxsI=;
-        b=hXZtzZMpJjuQaf7vzd1dBtyb5rP3JFeTLJwK098PaxvYI8O2pjk/RhcMp/eeNth2j8
-         oTqagFYHQb4IrEdZtI290QLe/AHpqLLLhLdz0b0DSZ1sP3ng+jywXMIqEFyFGmAr6UIJ
-         cz99WcUednUhcYhYEVNXJ3wCx0L/kmKLOLE2aFWcPUPojAfHZody0IcqQqhTVcZ0XJ3M
-         6XScQYeXXGIhydh09nBeiehqCgqdgPPMVsGJJ0lkMIe2PUSVkMlUqV3z9RyxjD7bJhFu
-         HCCCxkWdo3FCB9WNWHTZhzVjUo5PkwT3rh30pjyKyBvznKeug2Y8+EcBLQogKI9Mqcwh
-         9UTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=pbeDl7CIYKzPMReczzCRoZxi5Utc3Z072bPutnemxsI=;
-        b=dmCUbF//+zEWGU8W9lvLip2b3o0it/IB15SDwSnEKDdc1ev7hGQOCjOCXUhjO88x9w
-         d6E2zeDeWb2x2ek8h6hF1ulGmA9tK4mCaKhvuz5UuVmTRx6IZAjKIsPhkMVhXyN46iHr
-         ucBnGBvMdRJsDCT3fC6gdJYuVBD2Wpez+0/8XqU9W2z9OKI7idBb/R1qGCtolUK211p+
-         Z/zm6Tnm3iftCx7vU4kYtoCeAL+WF9T6emHYYgHJPU3ufiAYBH+pCoGG3UmFc8LfN8RR
-         XosBexkZkE94BiLi9Y+luoMK4ApSgJ8L4OJ5S8nwJqw70+wjWHhtB1+TtqBcGX0/WdAs
-         U89A==
-X-Gm-Message-State: AJaThX7jWFYq19fN7RTG6yvU5jgaS9ryzk2FkhvF0QK9OoQTEl1num+a
-	xum5Q8SLt3JK5w2NCAZPqkFhVw==
-X-Google-Smtp-Source: AGs4zMZ95I5quMJfv+NNk1TPgjKqEHeqDx2MzM42cK76itnGXQyHnKCZxz0971058K/ZCeZoBBwb1w==
-X-Received: by 10.28.12.75 with SMTP id 72mr12202600wmm.133.1510777842032;
-        Wed, 15 Nov 2017 12:30:42 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 15 Nov 2017 21:30:40 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>
-MIME-Version: 1.0
+Received: (qmail 1912 invoked from network); 8 Mar 2024 20:50:27 -0000
+Date: Fri, 8 Mar 2024 21:54:17 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240308205417.GA3048@openwall.com>
+References: <20240307215637.GA31298@openwall.com> <2a3792c1-0df2-4337-a1e5-6c1d60083112@oracle.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: NeoMutt/20170609 (1.8.3)
-Subject: [oss-security] collectd: CVE-2017-16820: snmp-plugin: double free of request PDU
+In-Reply-To: <2a3792c1-0df2-4337-a1e5-6c1d60083112@oracle.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] help wanted - bring more issues in here
 
-Hi
+Hi,
 
-Collectd's snmp-plugin is prone to a double free vulneability. This
-issue was made aware to the Debian security team, but turned out to be
-public already in. MITRE has assigned CVE-2017-16820 for it. The snmp
-plugin contains a double-free vulnerability in the
-snmp_sess_synch_response() function. Commit message:
+So far, I only heard from Katherine Mcmillan (and suggested a first task
+to her off-list).  Any other volunteers, please?
 
->  snmp plugin: Fix double free of request PDU
->
-> snmp_sess_synch_response() always frees request PDU, in both case of request
-> error and success. If error condition occurs inside of `while (status == 0)`
-> loop, double free of `req` happens.
+BTW, for quoting web page content, I use ELinks in a terminal window set
+to width 80 (and arbitrary height), and use "Save formatted document"
+from there.  Then in the resulting text file, review the list of links
+at the end and remove duplicate and irrelevant ones.  (Some of this can
+later be automated, if we do it a lot.)  The text file can then be
+either included in the message body (but you need to clearly distinguish
+it from your own writing) or attached (as text/plain, please).
 
-Upstream issue:
-https://github.com/collectd/collectd/issues/2291
+On Thu, Mar 07, 2024 at 05:17:03PM -0800, Alan Coopersmith wrote:
+> I also notice far more than I can send on myself, so tend to filter both
+> for those projects that are more likely to be distributed directly by
+> distros and more widely installed on systems, and for issues that seem
+> to have a higher level of impact.  So I'm not sending on notice of every
+> bug in every WordPress plugin, nor every npm module.
+> 
+> If people want to see different coverage here, speaking up can change that,
+> but helping out as described above will make an even bigger impact.
 
-Fix:
-https://github.com/collectd/collectd/commit/d16c24542b2f96a194d43a73c2e5778822b9cb47
-(might need the followup commits to clean up)
+I think we don't need a different coverage aka lower threshold (but yes,
+speaking up can change that).  I think there are still many issues and
+news above the current threshold that are not getting reported in here.
 
-Regards,
-Salvatore
+As to lower overall severity issues, such as those in some project's
+obscure third-party plugins, I think it'd be good to have regular
+digests on those, like it's already being done for Jenkins plugins, not
+per-issue messages.  So if anyone keeps track of e.g. WordPress plugin
+or npm module issues (Alan's examples above) and is willing to produce
+digests, please feel free.
+
+Thanks,
+
+Alexander
