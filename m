@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["710" "Monday" "13" "February" "2017" "17:53:49" "+0000" "Maier, Kurt H" "kurt.maier@pnnl.gov" "<D999895D83BF47489B7647E60E228B4702FE796D@EX10MBOX05.pnnl.gov>" "22" "RE: [oss-security] MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021317:53:49" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "U       kurt.maier@p Feb 13   22/710   " thread-indent "\"RE: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<FD3A509F-A961-430D-AB60-EFCC2E4185C3@lanl.gov>" ("<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" "<FD3A509F-A961-430D-AB60-EFCC2E4185C3@lanl.gov>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15773 invoked by uid 550); 13 Feb 2017 18:03:02 -0000
+Received: (qmail 18279 invoked by uid 550); 9 Mar 2024 07:46:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9959 invoked from network); 13 Feb 2017 17:54:02 -0000
-From: "Maier, Kurt H" <kurt.maier@pnnl.gov>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Thread-Topic: [oss-security] MITRE is adding data intake to its CVE ID
- process
-Thread-Index: AQHShhlkwdD8/iu9mEKOcnEZLUuXsqFnN33z
-Date: Mon, 13 Feb 2017 17:53:49 +0000
-Message-ID: <D999895D83BF47489B7647E60E228B4702FE796D@EX10MBOX05.pnnl.gov>
-References: <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>,<FD3A509F-A961-430D-AB60-EFCC2E4185C3@lanl.gov>
-In-Reply-To: <FD3A509F-A961-430D-AB60-EFCC2E4185C3@lanl.gov>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [130.20.128.10]
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 18261 invoked from network); 9 Mar 2024 07:46:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1709970625; bh=EThI9CjHFLKMqxNpcS0rzL3ztn8x6uiEya6r6J7gAdg=;
+	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=h0yjcDwK/085QHPApT3l5HCZYYsCUiogHQ/i8+Kar6DBhdxyXABmPqEEg/MZULy8s
+	 gjGyQoR+b1W5MVpWHfn4OxyqIx8X7oX8oI7R+a2LsPO/eBqnueDujrfzocBUeTMOxX
+	 /XANoDFuLusj/rjE83bKKWhCiHZGamCDBIzGarEILys2FEIh+yflsiJUZ9Ty33+n6o
+	 CrzBk2vFENADNfiUX8fxNjZxusUBz5igPS+W9GkeBbi1zEPm4nGtESvaNpX/1dK0kW
+	 PEsgZuUEELm1hSgTGqyoMKy/tOmtZPP7f1eUVWo82pgKHTvMBeIUlJspeUvbjH5a4O
+	 wfUpecKQL6K3w==
+Original-Subject: Re: [oss-security] Vulnerabilties in FontTools & FontForge
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date: Sat, 9 Mar 2024 08:50:24 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20240309085024.1e255337.hanno@hboeck.de>
+In-Reply-To: <927220f8-dc33-449a-80c6-6e1ab51b5594@oracle.com>
+References: <927220f8-dc33-449a-80c6-6e1ab51b5594@oracle.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Subject: RE: [oss-security] MITRE is adding data intake to its CVE ID process
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Vulnerabilties in FontTools & FontForge
 
+Hi,
 
-________________________________________
-> From: Priedhorsky, Reid [reidpr@lanl.gov], Monday, February 13, 2017 8:40=
- AM
+On Fri, 8 Mar 2024 11:06:35 -0800
+Alan Coopersmith <alan.coopersmith@oracle.com> wrote:
 
->The alternatives I=92ve seen raised would not be adequate for me. Specific=
-ally,=20
->depending on people to forward their stuff to the list is too brittle (peo=
-ple won=92t=20
->do it reliably), and watching an XML feed requires setting up and maintain=
-ing=20
->software for a new data feed.
+> - CVE-2023-45139 in FontTools versions >=3D4.28.2, <4.43.0, fixed in
+> 4.43.0
+>=20
+>     FontTools uses lxml to process SVG tables in OpenType fonts, and
+> had not disabled external entity expansion (which lmxl enables by
+> default), leading to an XML External Entity (XXE) vulnerability.
 
-I am in full agreement with Reid's message, with the added suggestion that =
-any
-such messages that don't wind up on the mailing list won't be available for=
- the
-insightful discussion that frequently occurs here, and replacing this list =
-with an
-XML feed torpedoes most hope for same.
+I was surprised that any library would do this by default in 2024.
+According to their webpage, lxml does *not* enable external entity
+expansion by default, but changed the default only very recently.
 
-khm
+https://lxml.de/FAQ.html#how-do-i-use-lxml-safely-as-a-web-service-endpoint
+says:
+" Since version 5.x, lxml disables the expansion of external entities
+(XXE) by default. If you really want to allow loading external files
+into XML documents using this functionality, you have to explicitly set
+resolve_entities=3DTrue."
+
+lxml 5.0.0 was released in December 2023.
+
+So it turns out that lxml did enable entity expansion by default up
+until very recently, but no longer does. So applications using lxml
+should likely still disable it manually for security reasons for a
+while, but it is a problem that will go away over time when people
+update to lxml 5 or above.
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
