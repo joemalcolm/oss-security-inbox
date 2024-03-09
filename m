@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4465" "Monday" "3" "June" "2019" "13:21:10" "+0200" "Carlton Gibson" "carlton.gibson@gmail.com" "<BCE707AC-83ED-4812-9759-3992110405AD@gmail.com>" "116" "[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)" nil nil nil "6" "2019060311:21:10" "[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)" (number mark "U       carlton.gibs Jun  3  116/4465  " thread-indent "\"[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled jQuery for CVE-2019-11358)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9294 invoked by uid 550); 3 Jun 2019 13:03:42 -0000
+Received: (qmail 13464 invoked by uid 550); 9 Mar 2024 18:22:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,159 +7,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5650 invoked from network); 3 Jun 2019 11:21:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=NC0HcTbDFkJKyLCvBAcM4n2mSlnjiVLD0f2lf5duR6k=;
-        b=Qg0Q3UN3Uil4pXvQ6bRu5RTbfvAIKAcCHfpz9NndiWOMyMVMdmIvqV0XYBN8oeoVuL
-         SYS3vg9nQMomVi70Y0QbUP0L4+hqmSbtAgcYj7verVpZiI5FSziLHuUfO2X44HYvdFsU
-         TWixEIM2LWyNiMrcUZzY6r5lI88Q6tGtdC3qSBR7odjI6nx8gNu5mDvhAGv3i1Bck5Jf
-         kP2IUZjK8atXHT/12chLInbWrPfYqITpEPAvsTXoUZgmpErshMbggIfQwf+hKy7QKP4u
-         mqBn6YUt8LWHVG7+jhdCu1gJ8ratuKPP1giRBgOjtV8qLFCGLNbwFfQV9qT7sNmFh791
-         pzkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=NC0HcTbDFkJKyLCvBAcM4n2mSlnjiVLD0f2lf5duR6k=;
-        b=mSZ3RA4OPChZrDM2pZAmWn5DHXoZDxXgqBQVfv0WcysDe1RyunCu8zV5rkAPQ6KzAw
-         Xp9xZq7rNxnZuyI7glLV++/hAA2S3cwOQ+Fdd/BajuMQ7u5/aqyJ/bAVSbsoaIsQAhZZ
-         zi6EAdZElQf/6l83QiZA5lM/HOzSYmeNkERrJxJV84/XPgL1h+/7UBaA6DeoyN/DWvcv
-         z26EBHhn1HgfloZKJ5bMT+yGBGgbjR7zUzApzlD2MGMlLWJz6nMPFvEs4AV/RUelgUsr
-         L0bjnfRvhDDhQwADOfUokfsB8nqIE4ynx7kpOEj7NSEJgjzYU2fmouszlOEPHOtlHR3m
-         N2xg==
-X-Gm-Message-State: APjAAAXYnnqYzkQEkGhgnGRvsnMz/UEt+x5m0bVYch75lxZBlK4RI6qC
-	RyN90xoo6KEq4Kj44kao6rVwiHDfFK4=
-X-Google-Smtp-Source: APXvYqyRHkXBCXj3Wsa0iVj9IrLYe7KEZv6ktFVg9UQz9pQv28MqBxj9kWO6bHbcAupPj54NHsruRw==
-X-Received: by 2002:adf:efcd:: with SMTP id i13mr2275224wrp.51.1559560873052;
-        Mon, 03 Jun 2019 04:21:13 -0700 (PDT)
-From: Carlton Gibson <carlton.gibson@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
+Received: (qmail 5986 invoked from network); 9 Mar 2024 18:18:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+	s=1a1hai; t=1710008530;
+	bh=m6XP/XzwUi7HMS391qoO/ikEqGvNHfdt30sAXyeZ1xo=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+	b=CyMZdB7cVhJBKSNiOd3e/fZR+IzBO1KQKC1HKHIer2zjvVqjG2lwT0/mGjeyBFTM0
+	 szSnHXITCD8Su3CGYxD7u8t912VfHmv5SEh5creJL087MJejIZVVbKt91MD6lbEALd
+	 DOd+U2Sj1y35UnaDf6XMprku1ozQc7b6aKX46TuWZbzx5kpfm6Ov717UtEh6+53j4h
+	 acEgyeOcvTy1Cmfs25HoPoxVlxWc0eN4IV7WilqvwpEKFvKjGwp4vksDw7mAJ9H4d3
+	 xvrNsjJl+taKqRvV5Dt1R65iOn5RkF+z/2GInIls/L9WSxw6b6rYoQyIGYqqfBxzfX
+	 NAQwr0hUkk1Qw==
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <BCE707AC-83ED-4812-9759-3992110405AD@gmail.com>
-Date: Mon, 3 Jun 2019 13:21:10 +0200
+From: Miguel Suarez <suarezmiguelc@icloud.com>
+Mime-Version: 1.0 (1.0)
+Date: Sat, 9 Mar 2024 19:21:55 +0100
+Message-Id: <4B120A46-E3BD-4B98-8A9C-BCD93661C1B5@icloud.com>
+In-Reply-To: <20240307215637.GA31298@openwall.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.11)
-Subject: [oss-security] Django: CVE-2019-12308 AdminURLFieldWidget XSS (plus patched bundled
- jQuery for CVE-2019-11358)
+X-Mailer: iPhone Mail (21D61)
+X-Proofpoint-GUID: 4g1Bvj5f03agPZdCavtl3thf-vIE5viL
+X-Proofpoint-ORIG-GUID: 4g1Bvj5f03agPZdCavtl3thf-vIE5viL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-09_02,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 bulkscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=567 adultscore=0 clxscore=1011 suspectscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2403090151
+Subject: Re: [oss-security] help wanted - bring more issues in here
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django t=
-eam
-is issuing `Django 1.11.21
-<https://docs.djangoproject.com/en/dev/releases/1.11.21/>`_, `Django 2.1.9
-<https://docs.djangoproject.com/en/dev/releases/2.1.9/>`_, and `Django 2.2.2
-<https://docs.djangoproject.com/en/dev/releases/2.2.2/>`_. These releases
-addresses the security issues detailed below. We encourage all users of Dja=
-ngo
-to upgrade as soon as possible.
+Hello oss-security community,
 
-CVE-2019-12308: AdminURLFieldWidget XSS
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+I have taken a look at the hep wanted mail threat, and became interested in=
+ it, so I wanted to ask for more details,=20
 
-The clickable "Current URL" link generated by ``AdminURLFieldWidget`` displ=
-ayed
-the provided value without validating it as a safe URL. Thus, an unvalidated
-value stored in the database, or a value provided as a URL query parameter
-payload, could result in an clickable JavaScript link.
+I=E2=80=99m interested in the third subtask, I wonder how much time would t=
+his take and, if possible, small details on the requirements,=20
 
-``AdminURLFieldWidget`` now validates the provided value using ``URLValidat=
-or``
-before displaying the clickable link. You may customise the validator by
-passing a ``validator_class`` kwarg to ``AdminURLFieldWidget.__init__()``, =
-e.g.
-when using ``ModelAdmin.formfield_overrides``.
-
-Affected versions
------------------
-
-* Django master development branch
-* Django 2.2 before version 2.2.2
-* Django 2.1 before version 2.1.9
-* Django 1.11 before version 1.11.21
-
-Patched bundled jQuery for CVE-2019-11358: Prototype pollution
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-jQuery before 3.4.0, mishandles ``jQuery.extend(true, {}, ...)`` because of
-``Object.prototype`` pollution. If an unsanitized source object contained an
-enumerable ``__proto__`` property, it could extend the native
-``Object.prototype``.
-
-The bundled version of jQuery used by the Django admin has been patched to
-allow for the ``select2`` library's use of ``jQuery.extend()``.
-
-Affected versions
------------------
-
-* Django master development branch
-* Django 2.2 before version 2.2.2
-* Django 2.1 before version 2.1.9
-
-Resolution
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Patches to resolve these issues have been applied to Django's master branch=
- and
-the 2.2, 2.1, and 1.11 release branches. The patches may be obtained from t=
-he
-following changesets:
-
-On the master branch:
-
-* `Admin XSS <https://github.com/django/django/commit/deeba6d92006999fee9ad=
-fbd8be79bf0a59e8008>`__
-* `jQuery prototype pollution <https://github.com/django/django/commit/34ec=
-52269ade54af31a021b12969913129571a3f>`__
-
-On the 2.2 release branch:
-
-* `Admin XSS <https://github.com/django/django/commit/afddabf8428ddc89a332f=
-7a78d0d21eaf2b5a673>`__
-* `jQuery prototype pollution <https://github.com/django/django/commit/baaf=
-187a4e354bf3976c51e2c83a0d2f8ee6e6ad>`__
-
-On the 2.1 release branch:
-
-* `Admin XSS <https://github.com/django/django/commit/09186a13d975de6d049f8=
-b3e05484f66b01ece62>`__
-* `jQuery prototype pollution <https://github.com/django/django/commit/9564=
-9bc08547a878cebfa1d019edec8cb1b80829>`__
-
-On the 1.11 release branch:
-
-* `Admin XSS <https://github.com/django/django/commit/c238701859a52d584f349=
-cce15d56c8e8137c52b>`__
-
-The following releases have been issued:
-
-* Django 1.11.21 (`download Django 1.11.21 <https://www.djangoproject.com/m=
-/releases/1.11/Django-1.11.21.tar.gz>`_ | `1.11.21 checksums <https://www.d=
-jangoproject.com/m/pgp/Django-1.11.21.checksum.txt>`_)
-* Django 2.1.9 (`download Django 2.1.9 <https://www.djangoproject.com/m/rel=
-eases/2.1/Django-2.1.9.tar.gz>`_ | `2.1.9 checksums <https://www.djangoproj=
-ect.com/m/pgp/Django-2.1.9.checksum.txt>`_)
-* Django 2.2.2 (`download Django 2.2.2 <https://www.djangoproject.com/m/rel=
-eases/2.1/Django-2.2.2.tar.gz>`_ | `2.2.2 checksums <https://www.djangoproj=
-ect.com/m/pgp/Django-2.2.2.checksum.txt>`_)
-
-
-The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
-
-General notes regarding security reporting
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+Thank you!,
+Miguel Su=C3=A1rez=20=
