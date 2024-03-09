@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["689" "Sunday" "11" "June" "2017" "00:06:13" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20170610220613.mfmmpjey2l4aptcj@jwilk.net>" "22" "[oss-security] Berkeley DB reads DB_CONFIG from cwd" "^Date:" nil nil "6" "2017061022:06:13" "[oss-security] Berkeley DB reads DB_CONFIG from cwd" (number mark "        jwilk@jwilk. Jun 11   22/689   " thread-indent "\"[oss-security] Berkeley DB reads DB_CONFIG from cwd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13584 invoked by uid 550); 10 Jun 2017 22:06:33 -0000
+Received: (qmail 17539 invoked by uid 550); 9 Mar 2024 18:15:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +6,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13541 invoked from network); 10 Jun 2017 22:06:31 -0000
-Message-ID: <20170610220613.mfmmpjey2l4aptcj@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-User-Agent: NeoMutt/20170306 (1.8.0)
-X-Ovh-Tracer-Id: 7880173450836498342
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeljedrieejgddujeefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Date: Sun, 11 Jun 2017 00:06:13 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Berkeley DB reads DB_CONFIG from cwd
+Received: (qmail 16013 invoked from network); 9 Mar 2024 18:15:05 -0000
+Date: Sat, 9 Mar 2024 19:19:08 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20240309181907.GA8313@openwall.com>
+References: <20240307215637.GA31298@openwall.com> <2a3792c1-0df2-4337-a1e5-6c1d60083112@oracle.com> <20240308205417.GA3048@openwall.com> <kexridpawqicr2uxngezengq7o5rivrjy74nelasga5mttzr7a@5gvndrylt7pz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <kexridpawqicr2uxngezengq7o5rivrjy74nelasga5mttzr7a@5gvndrylt7pz>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] help wanted - bring more issues in here
 
-Apparently Berkeley DB reads the DB_CONFIG configuration file from the current 
-working directory by default[*]. This is surprising and AFAICT undocumented.
+On Sat, Mar 09, 2024 at 10:02:38AM -0800, nightmare.yeah27@aceecat.org wrote:
+> On Fri, Mar 08, 2024 at 09:54:17PM +0100, Solar Designer wrote:
+> 
+> > So far, I only heard from Katherine Mcmillan (and suggested a first task
+> > to her off-list).  Any other volunteers, please?
+> 
+> I'll read the task descriptions closely first, and I'll write back in
+> a day or 2 if I can offer help.
 
-Here's how to exploit it against pam_ccreds:
+Thanks.  What I am doing now is suggest _one_ initial task per person
+off-list, with no overlap.  I'd appreciate a quicker response than "in a
+day or 2" on whether you accept the task or not (and why not, in which
+case I can then suggest a different task to you).  So far, I suggested
+one task to Katherine and one other task to another volunteer who
+contacted me off-list.  I'll e-mail Ian off-list with a third task now.
 
-    $ cat /etc/shadow
-    cat: /etc/shadow: Permission denied
-    $ ln -sf /etc/shadow DB_CONFIG
-    $ /sbin/ccreds_chkpwd moo < /dev/null
-    BDB1584 line 1: root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect name-value pair
-
-(The above was tested on Debian jessie.)
-
-In the past, nss_db was also exploitable:
-CVE-2010-0826
-
-
-[*] More precisely, this seem to happen when you call db_create() with 
-dbenv=NULL; or if you use the dbm_open() function.
-
--- 
-Jakub Wilk
+Alexander
