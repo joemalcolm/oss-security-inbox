@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1108" "Tuesday" "26" "January" "2016" "21:34:28" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160126203428.GA30775@eldamar.local>" "38" "Re: [oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" "^Cc:" nil nil "1" "2016012620:34:28" "[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" (number mark "        carnil@debia Jan 26   38/1108  " thread-indent "\"Re: [oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function\"\n") "<20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>" ("<3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>" "<20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29788 invoked by uid 550); 26 Jan 2016 20:34:43 -0000
+Received: (qmail 9541 invoked by uid 550); 10 Mar 2024 00:20:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29765 invoked from network); 26 Jan 2016 20:34:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=HNgRL0bBA7ZBToOeflMzcBAVm3slutTT5HnLBe1Pen0=;
-        b=fm63FQFc7fYxY662fobkdgf0xsm9gFYpgPfe6tG7uT/Q2elo57feJMiKS/c5Z4EtgY
-         ujwyRj3r35nYxnwk6FNj0DPtAn7PjjzHfPG6TeHw4842SH9mGN2WJdsj1+cSiPgl2wcs
-         VCiE7/jqd5y5lSifRRtT8+oCZ9X3gdPg81gqtgqRLbQlFhF+ZfYwzwt8CoaMoK2t+CDX
-         CKVwLllvtr3AWnnEx6YnMuu6pIEg0bwuWj+xCo9a2qPhZcTH7ZlpOBX/bbb2RuXeEn0U
-         tuhCh+DHrzmZNio2qPbvVXVGX4prGW/OIwEYbcQunNsQbN9flo94NBWr811jlOPYVLwF
-         89Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=HNgRL0bBA7ZBToOeflMzcBAVm3slutTT5HnLBe1Pen0=;
-        b=irbN8h6CmCIKk8+/qrpGxM+2rg2emyWRFCStc/L+lqlrJlZQyFZcmH0yOdhmW6XLif
-         wE1uSZgySh16n7WoxdPuor6emts8taQz8h7jJyQ7yoLJhBoRpx5RWq93VJA/DFUrYTdY
-         tRSYfKYvMQkoSdVT25dbkBpiewP8SG3q1gvrcYZchGckClKhVLPTg3rq2jt39FO9dvqf
-         asVFbTYIBngOf3QmtlEwARwX+LFe3eSThFN5op34P10R6HYd0pbIpt5W2SCigUZTOIO/
-         GQ8enMNsnuQwDy3/1VSGUfFYsb0WFw1YJ/XAjbOqpnf+mIeyr9wtfgSUB7AUPTTQhVKP
-         HBMQ==
-X-Gm-Message-State: AG10YOTCyU29RlCweFYQmPU9QyvUZmgoZcQY2/hVW3VAaunkV8V6kkFXa+j9Ygr1HvC7VA==
-X-Received: by 10.28.220.68 with SMTP id t65mr24655615wmg.92.1453840471612;
-        Tue, 26 Jan 2016 12:34:31 -0800 (PST)
-Message-ID: <20160126203428.GA30775@eldamar.local>
-References: <3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>
- <20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: limingxing@360.cn, cve-assign@mitre.org
-Date: Tue, 26 Jan 2016 21:34:28 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] Re: Out-of-bounds Read in the libxml2's
- htmlParseNameComplex() function
+Received: (qmail 21989 invoked from network); 9 Mar 2024 22:34:25 -0000
+Message-ID: <5d44b6375dde695754f2603faaf6b4f30a76b9f6.camel@bzed.de>
+From: Bernd Zeimetz <bernd@bzed.de>
 To: oss-security@lists.openwall.com
+Date: Sat, 09 Mar 2024 23:38:13 +0100
+In-Reply-To: <2a3792c1-0df2-4337-a1e5-6c1d60083112@oracle.com>
+References: <20240307215637.GA31298@openwall.com>
+	 <2a3792c1-0df2-4337-a1e5-6c1d60083112@oracle.com>
+Autocrypt: addr=bernd@bzed.de; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.3-1 
+MIME-Version: 1.0
+X-cloud-security-sender:bernd@bzed.de
+X-cloud-security-recipient:oss-security@lists.openwall.com
+X-cloud-security-Virusscan:CLEAN
+X-cloud-security-disclaimer: This E-Mail was scanned by E-Mailservice on relay01-mailcontrol.conova.com with 1B1D9160267E
+X-cloud-security-connect: mail.recluse.de[217.196.148.209], TLS=1, IP=217.196.148.209
+X-cloud-security-Digest:a6acbd7a8e9b8766321a99884f9202e3
+X-cloud-security:scantime:2.178
+Subject: Re: [oss-security] help wanted - bring more issues in here
 
-Hi,
+On Thu, 2024-03-07 at 17:17 -0800, Alan Coopersmith wrote:
+>=20
+> I also notice far more than I can send on myself, so tend to filter
+> both
+> for those projects that are more likely to be distributed directly by
+> distros and more widely installed on systems, and for issues that
+> seem
+> to have a higher level of impact.=C2=A0 So I'm not sending on notice of
+> every
+> bug in every WordPress plugin, nor every npm module.
 
-On Tue, Jan 26, 2016 at 12:49:12PM -0500, cve-assign@mitre.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > HTMLparser.c line:2517 :
-> > 
-> >        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
-> > 
-> > "ctxt->input->cur - len"  cause Out-of-bounds Read.
-> > 
-> > heap-buffer-overflow
-> > READ of size 1
-> 
-> Use CVE-2016-2073.
-> 
-> 
-> > From: Salvatore Bonaccorso
-> > 
-> > While checking upstream bugzilla to see if that was reported I noticed
-> > 
-> > https://bugzilla.gnome.org/show_bug.cgi?id=749115
-> > 
-> > Does this have the same root cause?
-> 
-> The CVE-2016-2073 PoC is an '&' followed by three characters, one of
-> which is a 0273 character. The PoC in 749115 has an unexpected
-> character immediately after a "<!DOCTYPE html" substring. We feel that
-> the CVE-2016-2073 report can have that unique ID on the basis of (at
-> least) a different attack methodology. CVE assignment for 749115 is
-> also possible unless 749115 already has a CVE ID.
 
-Thank you for the clarification. Can you assign an additional CVE for
-the 749115 issue?
+imho: For such things and "random" relevant findings it might make
+sense to have some simple feed of affected program/thing, short
+description and url(s), maybe as simple table and rss feed? adding new
+lines from the cli with a post request is all I need I guess. So the
+info doesn't get lost, but it also doesn't make a chaos on the list.
 
-Regards,
-Salvatore
+
+--=20
+ Bernd Zeimetz                            Debian GNU/Linux Developer
+ http://bzed.de                                http://www.debian.org
+ GPG Fingerprint: ECA1 E3F2 8E11 2432 D485  DD95 EB36 171A 6FF9 435F
+
