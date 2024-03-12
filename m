@@ -1,4 +1,4 @@
-Received: (qmail 32199 invoked by uid 550); 3 Jun 2025 01:13:46 -0000
+Received: (qmail 7745 invoked by uid 550); 12 Mar 2024 16:55:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,122 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9796 invoked from network); 3 Jun 2025 00:56:37 -0000
-Date: Tue, 3 Jun 2025 02:56:28 +0200
-From: Vincent Lefevre <vincent@vinc17.net>
-To: oss-security@lists.openwall.com, perl5-porters@perl.org
-Message-ID: <20250603005628.GD9396@qaa.vinc17.org>
-Mail-Followup-To: oss-security@lists.openwall.com, perl5-porters@perl.org
-References: <omnnpezilawlern5txh6xnng26fmenimxl7ijy6oykuxlurfbg@yo2pvsq3q6v6>
- <87y0uaeeod.fsf@oldenburg.str.redhat.com>
- <CAHhgV8hQR51pP=ioqw8Q2YFCcTZUOs7JaQv8Wq1gW=r2PyKP-A@mail.gmail.com>
- <87jz5uauhb.fsf@oldenburg.str.redhat.com>
-MIME-Version: 1.0
+Received: (qmail 3698 invoked from network); 12 Mar 2024 16:25:38 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87jz5uauhb.fsf@oldenburg.str.redhat.com>
-User-Agent: Mutt/2.2.13+86 (bb2064ae) vl-169878 (2025-02-08)
-Subject: Re: [oss-security] Re: CVE-2025-40909: Perl threads have a working
- directory race condition where file operations may target unintended paths
+From: Lari Hotari <lhotari@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <cecd6298-1f63-d54f-d3be-f4a360e0140b@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 12 Mar 2024 16:29:32 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-28098: Apache Pulsar: Improper Authorization For
+ Topic-Level Policy Management 
 
-[Resending, I had dropped perl5-porters by mistake, sorry.]
+Affected versions:
 
-On 2025-06-02 20:06:40 +0200, Florian Weimer wrote:
-> * Leon Timmermans:
-> 
-> > On Mon, Jun 2, 2025 at 10:22 AM Florian Weimer via perl5-porters
-> > <perl5-porters@perl.org> wrote:
-> >>
-> >> * Stig Palmquist:
-> >>
-> >> > References
-> >> > ----------
-> >> > https://github.com/Perl/perl5/commit/918bfff86ca8d6d4e4ec5b30994451e0bd74aba9.patch
-> >>
-> >> Is this fix really correct?
-> >>
-> >> +    ret = fdopendir(dup(my_dirfd(dp)));
-> >>
-> >> This does not create a separate open file description, only a second
-> >> descriptor that shares the read position of the directory stream with
-> >> the original directory stream.  I think you have to use something like
-> >> this:
-> >>
-> >>      ret = fdopendir(openat(my_dirfd(dp), ".", O_DIRECTORY | O_CLOEXEC));
-> >
-> > Our thread cloning in general is a terribly awkward business, where
-> > "what is the correct behavior" isn't always well defined or possible;
-> > I can see the arguments for both to be honest.
-> >
-> > For file descriptors we don't create new file descriptions either (we
-> > don't even create new file descriptors, we refcount them), so why
-> > should we do so for directory handles? I'm not sure that expectation
-> > makes sense in that context.
-> 
-> That's a fair point.  It's more like fork in this regard, which has
-> similar failure cases for DIR * objects (shared file description, but
-> unshared buffers and a separate descriptor).
-> 
-> > And if we did go the openat way, I don't think that seekdir on the new
-> > handle with the telldir of the old one is necessarily valid if the
-> > directory has been changed (I mean even a rewinddir can invalidate
-> > telldir's return value). I don't think we can do a fully correct copy
-> > here.
-> 
-> Ugh, I had not considered that.  Yes, glibc will have to switch to an
-> implementation where telldir offsets are specific to a DIR * for certain
-> file systems on 32-bit architectures (because telldir returns long, not
-> off_t).
+- Apache Pulsar 2.7.1 before 2.10.6
+- Apache Pulsar 2.11.0 before 2.11.4
+- Apache Pulsar 3.0.0 before 3.0.3
+- Apache Pulsar 3.1.0 before 3.1.3
+- Apache Pulsar 3.2.0 before 3.2.1
 
-Another issue with
+Description:
 
-  ret = fdopendir(openat(my_dirfd(dp), ".", O_DIRECTORY | O_CLOEXEC));
+The vulnerability allows authenticated users with only produce or consume p=
+ermissions to modify topic-level policies, such as retention, TTL, and offl=
+oading settings. These management operations should be restricted to users =
+with the tenant admin role or super user role.
 
-is that this can fail if the directory permissions have changed:
+This issue affects Apache Pulsar versions from 2.7.1 to 2.10.5, from 2.11.0=
+ to 2.11.3, from 3.0.0 to 3.0.2, from 3.1.0 to 3.1.2, and 3.2.0.=20
 
-------------------------------------------------------------------
-#include <stdio.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <dirent.h>
+2.10 Apache Pulsar users should upgrade to at least 2.10.6.
+2.11 Apache Pulsar users should upgrade to at least 2.11.4.
+3.0 Apache Pulsar users should upgrade to at least 3.0.3.
+3.1 Apache Pulsar users should upgrade to at least 3.1.3.
+3.2 Apache Pulsar users should upgrade to at least 3.2.1.
 
-int main (void)
-{
-  const char *dirname = "tstdir-dir";
-  DIR *dir;
-  int fd;
+Users operating versions prior to those listed above should upgrade to the =
+aforementioned patched versions or newer versions.
 
-  errno = 0;
-  if (mkdir (dirname, 0700) && errno != EEXIST)
-    return 1;
-  if (chmod (dirname, 0700))
-    return 2;
-  fd = open (dirname, O_DIRECTORY | O_CLOEXEC);
-  if (fd == -1)
-    return 3;
-  dir = fdopendir (fd);
-  if (!dir)
-    return 4;
-  if (chmod (dirname, 0))
-    return 5;
-  dir = fdopendir (openat (fd, ".", O_DIRECTORY | O_CLOEXEC));
-  printf ("dir = %p\n", (void *) dir);
-  dir = fdopendir (dup (fd));
-  printf ("dir = %p\n", (void *) dir);
-  return 0;
-}
-------------------------------------------------------------------
+References:
 
-outputs something like
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-28098
 
-dir = (nil)
-dir = 0x56269b6316f0
-
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
