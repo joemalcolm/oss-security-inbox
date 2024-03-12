@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["544" "Thursday" "17" "December" "2015" "03:38:04" "+0000" "CSW Research Lab" "disclose@cybersecurityworks.com" "<CAMWaY3PThcg=yKHWYDJ7hQW15rqRX=C9yK6MS7mNCWhUT016Ag@mail.gmail.com>" "26" "[oss-security] Cross site scripting vulnerability (XSS) in SilverStripe CMS & Framework v3.2.0" "^Date:" nil nil "12" "2015121703:38:04" "[oss-security] Cross site scripting vulnerability (XSS) in SilverStripe CMS & Framework v3.2.0" (number mark "        disclose@cyb Dec 17   26/544   " thread-indent "\"[oss-security] Cross site scripting vulnerability (XSS) in SilverStripe CMS & Framework v3.2.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24555 invoked by uid 550); 17 Dec 2015 03:40:43 -0000
+Received: (qmail 1217 invoked by uid 550); 12 Mar 2024 11:40:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +6,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23605 invoked from network); 17 Dec 2015 03:38:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cybersecurityworks-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=Fa6Y3hE04HraKJGUts0S/ZWoyCfHjgXrWZL+ztMmp8A=;
-        b=LpkA5nFfAlHpABm7F+ki4UypvO7ximgijrIZ8wynXZykcR0XPOiRUP06klZc4F8n5J
-         611HdrCWarhvk+VOgt7FxCe70L2KxlbKsmLHqGP2oMZamdXaSQRnCV249lXcmQgZKQ58
-         BAKP8dZrU7yCJx2csVb2ilitS2sMUME+mlhoa/fUsjyvMMC7LWopJdKK4UFmDUJrv02d
-         cx5KxqoCmaSnNhFB8vtvFpe17lLEJjxWlqFzs/Ngu02d5wP+LEwd+ETe/+9h+fq/pCCF
-         5O81PNCo0xZ5BdpPAvWvzreiUtWjY7VZFG6iffTnWGC80xghqrFUQSfQAGA3sQDTrKOl
-         92Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=Fa6Y3hE04HraKJGUts0S/ZWoyCfHjgXrWZL+ztMmp8A=;
-        b=JAd8tq0o/noH29kYtNOuOlBuCtpyDChVaKAe0IKx18s/1ZJy87Tn/oZ3fBCY1/ry57
-         nFOWdcaWQaxkQqZGC9WTOGDC1y8aqUgaFerqMgeneaDmDl4+iwiTTeLZT+ShwU9QYJl8
-         kA/AH6LHQWKU/ArD0RcnAwpIn/QAYczuHJIPCS9JslsZVADq2LaSBW8lllTBuIXCAiW7
-         tte+3PvCaTVtwSH+FGDDdsEuFzuPWG+Tq7ymXD83wHZHH3i2eEGiUl9NgFbddFI8Bxj6
-         /+BJhr4y4RNrHjy+U8np+K1go2n+B2S/6eySea5lCgea+q5os+OUmNch9446HDYTEHjU
-         Cvag==
-X-Gm-Message-State: ALoCoQlqH/hJBMLsFvo6OFPyXdoC5PVXfgGaJjAFEWtCbNuoRhl7OyYj5mR1f9y0zFpPxJDnVON6wQvjvBKwKdzhkitR/WNjeA==
-X-Received: by 10.50.88.6 with SMTP id bc6mr1275791igb.68.1450323493647; Wed,
- 16 Dec 2015 19:38:13 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAMWaY3PThcg=yKHWYDJ7hQW15rqRX=C9yK6MS7mNCWhUT016Ag@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e0111c0a4a6510c05270fc027
-Date: Thu, 17 Dec 2015 03:38:04 +0000
-From: CSW Research Lab <disclose@cybersecurityworks.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Cross site scripting vulnerability (XSS) in
- SilverStripe CMS & Framework v3.2.0
-To: "cve-assign@mitre.org" <cve-assign@mitre.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 13696 invoked from network); 12 Mar 2024 08:32:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=x17.eu; s=20140827;
+	t=1710232618; bh=R4WBzMJkR0lG+bOLydQBYYSk+oMqTrS7mhGsga0YU0o=;
+	h=Date:To:From:Subject;
+	b=F1qqH648ZqRGz9HhdynkpahLL6xrsmbspe7KcgJ+MflqF0Wlu1ubL21C70k5HSx2H
+	 E8Cq+er+/IRQohqDeYhX13esoU9SqzCt+nla86GGTJxxyEA0wEmtlh9k+SYXm8T6oC
+	 Jb5HWH/6kFKKId5lgRGJQakWNJGNdtTaApKou3PY=
+Message-ID: <32aa62ee-f364-45d2-a370-0e6963a31792@x17.eu>
+Date: Tue, 12 Mar 2024 09:36:57 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+Content-Language: de-DE, en-GB
+From: daniel <sd@x17.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2023-51786: Lustre: incorrect access control resulting in
+ potential data compromise or privilege escalation
 
---089e0111c0a4a6510c05270fc027
-Content-Type: text/plain; charset=UTF-8
+According to the post on the Lustre announce mailing list [1], a 
+vulnerability has been fixed which provides access to files and folders 
+for which a user has no permission for.
 
-Hi all
+<quote>
+Scope of Issue:
+Users can gain access to files/folders in the filesystem that they 
+should not have permission to access based on their user/group ID file 
+access permissions, leading to potential data compromise or privilege 
+escalation. This does not allow access to files that are outside a 
+subdirectory mountpoint/nodemap that are not visible in the client 
+mountpoint.
+</quote>
 
-can you please assign cve for this issue ?
+Only specific combinations of Server, Client and Kernel are vulnerable.
+The issue is mitigated by any of the following:
 
-http://www.silverstripe.org/download/security-releases/ss-2015-026
+   1.  Disable User Namespaces (see below)
+   2.  Upgrade all clients to a Lustre version including a fix (e.g.. 
+2.15.4)
+   3.  Upgrade servers to a Lustre version including a fix for this 
+issue (e.g. 2.15.4)
 
-Proof of Concept URL:
-=================
-[+]
-http://localhost/Silverstripe/admin/security/EditForm/field/Members/item/new/ItemEditForm/
+A detailed description of how to disable user Namespaces is included in 
+the original posting [1].
 
+I was unable to pinpoint the exact change which fixed the issue. It is 
+also noteworthy, that the issue was silently fixed.
+Date of the fixed version 23 Dec 2023 and date of the security 
+announcement 27 Feb 2024.
 
-Parameter
-==============
-[+] Locale
-[+] FailedLoginCount
+Affected versions:
+Lustre Server version: 2.14 – 2.15.3
+Lustre Client version: 2.12 – 2.15.3
 
-Credits & Authors
-======================
-Arjun Basnet from Cyber Security Works Pvt. Ltd. (
-http://cybersecurityworks.com)
-
---089e0111c0a4a6510c05270fc027--
+References:
+[1] 
+http://lists.lustre.org/pipermail/lustre-announce-lustre.org/2024/000270.html
+https://nvd.nist.gov/vuln/detail/CVE-2023-51786
