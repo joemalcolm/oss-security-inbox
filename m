@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1483" "Tuesday" "27" "September" "2016" "16:55:12" "-0400" "Leo Famulari" "leo@famulari.name" "<20160927205512.GA25156@jasmine>" "43" "Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" "^Cc:" nil nil "9" "2016092720:55:12" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "        leo@famulari Sep 27   43/1483  " thread-indent "\"Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<160916195601.AA66726.SM@caleb.ins.cwru.edu>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>" "<160916195601.AA66726.SM@caleb.ins.cwru.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3078 invoked by uid 550); 27 Sep 2016 21:50:06 -0000
+Received: (qmail 24025 invoked by uid 550); 12 Mar 2024 14:13:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +6,160 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11502 invoked from network); 27 Sep 2016 20:55:26 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=7D9tg
-	Fkfdanj818CetOvO4zYtms=; b=jKExyw1wKFNTW20lj8USRD38aWZJ5dZqO+1G1
-	CPhVuUY0+7fVmDEykYajcefJ++Qor6cALayTNdKmItAAYlhH9A0st4b8k9SCBCer
-	NaFbNzp1qZlLUAwSJamkMmhusz68+LGFyK8YEHBOC7yTlYqvBmCdg8Sikw3U66OJ
-	Vg5Itg=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=7D9tgFkfdanj818CetOvO4zYtms=; b=ASS+C
-	EjV5mpTnw4XWD3MgGJE/TuJ51JDp2PBhTzFsSHlRmj4pgvwUfFidjEN87EwJQlv/
-	ALjJ2sD1VAKz2Iurq6edsDYQwzQz16rvIGxTGMw6KpDvQNAX/HrqRPUI1UjB9Gnx
-	m9JQvc7O8k7+ff+CwRiZ5ebQgnAf5y2ey9K9JY=
-X-Sasl-enc: 6MzSoGh/DZ3xPUwsraFS7TRUX99QVD9FPsYgqk0zJ/wV 1475009713
-Message-ID: <20160927205512.GA25156@jasmine>
-References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
- <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
- <160916195601.AA66726.SM@caleb.ins.cwru.edu>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
-Content-Disposition: inline
-In-Reply-To: <160916195601.AA66726.SM@caleb.ins.cwru.edu>
-User-Agent: Mutt/1.7.0 (2016-08-17)
-Cc: john.haxby@oracle.com, chet.ramey@case.edu
-Date: Tue, 27 Sep 2016 16:55:12 -0400
-From: Leo Famulari <leo@famulari.name>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
- $HOSTNAME
-To: oss-security@lists.openwall.com
+Received: (qmail 27913 invoked from network); 12 Mar 2024 13:56:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1710252020;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=jEOo4jb0H1nggffRq+a7EsIK3zGKS7C7Si/d8pyxlpI=;
+	b=iERoeLfuJYY3wKymsNnoihHVkNNq1IhWGS5exLr+JG2W5LR7VeSK9Wka3KMDlqw+hTROog
+	5gQM6MXi2K5qgj3L6OlxhMKV9Vnywhh487LxOdZHxoEcuCe7nhTKHSOTjgQ3DyT/Apbog7
+	fBCmli+3WHLW08xyklQo/hGg0RvljVc=
+X-MC-Unique: eSokSov4MoKuzglaoW23bg-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710252011; x=1710856811;
+        h=content-transfer-encoding:subject:cc:to:from:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jEOo4jb0H1nggffRq+a7EsIK3zGKS7C7Si/d8pyxlpI=;
+        b=eOyv3FunN7y7mljaXx6JrH1+1+u2AI/CBKeCVLZ6D55Lgqb+ACDPw4CfS2slNTQEX/
+         s3m2MbXJ4hC+DWM/E5u4fxz3wST2YZCbprB/IHX98NqoChEUCYr7lCxpWKNq5ZeV8uYm
+         rLaOzFjueRGfZ8rGKyN3HF7ey1+Mb2LKUKgpHEP2Q/wt1fynUx4mXL4HsyImjakEM6bz
+         eYoFO1kCRp2JvGLf/TA262nQIdFCrg51UTkRxQzKt5+HEQqXlleszZbIAgJ+vDLc00uf
+         BslifozY7Sink8biNYsC1GKZVC7BTYzFFZYAbbgnyZsUiCNcvE7DOzyxoML0d3rYGDyt
+         vaow==
+X-Gm-Message-State: AOJu0YxlrCOv0LIlmJnOLfLCNE7hsBpZzZy1dCWhdI4beniV5yL6y5/u
+	b2ZNLEq3peMfBosZmb5x4NUZoAsycfEH1c/kTM6EepKn8jIfK78u3q9KesCINSyCr53kS4jLk7D
+	HMGGMxchtAk+F/o/xzI34bECSbyLh++BUhER2g3YYR2kHpTj5X89eXdiv+13ZihAz7YFpXTqYVL
+	idvC4yZFXsjmCQ0bZRkV+giquYTZTwTCjFPNSrvFnNQrFwU5o=
+X-Received: by 2002:a05:600c:4fce:b0:412:dda8:fbc2 with SMTP id o14-20020a05600c4fce00b00412dda8fbc2mr9074892wmq.16.1710252010823;
+        Tue, 12 Mar 2024 07:00:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdXrsn+ckuTskx5J7JEX5yrR2gfv4XI95niJ+SZZ2nI+nQ7P2felNOpqhUZ4hTClw8md0caQ==
+X-Received: by 2002:a05:600c:4fce:b0:412:dda8:fbc2 with SMTP id o14-20020a05600c4fce00b00412dda8fbc2mr9074860wmq.16.1710252010400;
+        Tue, 12 Mar 2024 07:00:10 -0700 (PDT)
+Message-ID: <e46d45e2-dfa7-4e25-bd2c-499495e813f3@redhat.com>
+Date: Tue, 12 Mar 2024 15:00:08 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Dumitru Ceara <dceara@redhat.com>
+To: oss-security@lists.openwall.com, ovs-announce@openvswitch.org,
+ ovs-discuss <ovs-discuss@openvswitch.org>
+Cc: Mark Michelson <mmichels@redhat.com>,
+ Frode Nordahl <frode.nordahl@canonical.com>,
+ Ilya Maximets <i.maximets@ovn.org>,
+ Lorenzo Bianconi <lorenzo.bianconi@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [ADVISORY] CVE-2024-2182: Open Virtual Network: Insufficient
+ validation of incoming BFD packets.
 
---UugvWAfsgieZRqgk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Description
+===========
 
-On Fri, Sep 16, 2016 at 03:56:01PM -0400, Chet Ramey wrote:
-> > > I believe the fix in parse.y is this (Chet, please correct me if I'm =
-wrong):
-> >=20
-> > Yes, that is the current fix for this.  There are other ways to do it.
->=20
-> Here's a patch to bash-4.3 that will fix this.
+Multiple versions of OVN (Open Virtual Network) are vulnerable to
+crafted BFD packets potentially causing denial of service.
 
-Hi Chet,
+OVN supports configuration of gateway chassis and high-availability
+chassis groups (via the Gateway_Chassis and HA_Chassis_Group tables in
+the OVN_Northbound database).  These group cluster nodes (chassis)
+together and provide high availability to them.  OVN logical switch and
+router ports can be configured to reference such groups.  In this case
+the traffic forwarding decision is influenced by the liveness of the
+chassis listed in the group.
 
-Thanks for the patch! Do you plan to add it to the bash-4.3-patches
-series [0]?
+In such scenarios OVN automatically enables the OVS Bidirectional
+Forwarding Detection (BFD) functionality to monitor the health of remote
+nodes and tunnels between them.
 
-[0]
-https://ftp.gnu.org/gnu/bash/bash-4.3-patches/
+BFD packets are transmitted in-band in tunnels that connect OVN chassis,
+along with other traffic.  And, by default, OVS will process any BFD
+packets received on a tunnel port with BFD enabled.  That makes it
+possible for a VM or container connected to an OVN logical switch port
+to send BFD packets that will be tunneled to another node and processed
+by OVS, potentially changing the BFD state and affecting the forwarding
+decisions.
 
---UugvWAfsgieZRqgk
-Content-Type: application/pgp-signature; name="signature.asc"
+The Common Vulnerabilities and Exposures project (cve.mitre.org) has
+assigned the CVE-2024-2182 identifier to this issue.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+A way to determine if BFD will be used is to issue the following
+commands on the node that runs the OVN central components:
 
-iQIcBAEBCAAGBQJX6tysAAoJECZG+jC6yn8IXkQQAOQTz7xo/vJRAEWgJqezaq8f
-/kUg5Y8wUcaWfEWEJ6iP2Jp4HrlksMrNMGat4Bp1in6f37wvFuwM3ynlfW1IksKm
-tEzskoB8sKM5ChX7aCMQDEkdqFBtP92YuZUUYfAGVFuG+aNIOe8VR/TuwBFZMG9M
-tc4XBX1x/KzCIyIDV7XkhYRhA6EYKvTh1DUyeI3whI0IKNZgsROC0u1AsuVtpX1P
-9FGS04u10hdUyQgt8FzGI/z4qyD1qkhgx/jM8P8zbnKbTMbR5wedKpqfl+afINFg
-gXYhKGSzAc9l9SUDvQXRsHUjSLoLa+8UouOeoUrZfPjS8Ot015vlAypTciYqvU0+
-+RaMkznhKffipwWfuEqPDKCqmdb3S9i8HHzjvIDE39gdEPIXQW/sjj0R8XHgx6gx
-xiiyILYKpJoQYuOQuIseWc+4JsjWSNrn+uvQ1iXbhufw9aS+dPydWFaBesPwYx+M
-1e9eHz2QvxwXRUBi+I2UVJPTCrR5T/jP7cLAE16AofxPqWBAHKyugYVQ04AF4wQ9
-56b2LepqwPfHSJ5nswA2zNlnpEyy0fJmjD0252saETLxfbwoAm2n6ifgy8lSJ1Lr
-iCEsnrBKUZf0m5rZm3H4ukM3l2UvkZ9rVKnahySE8vozLakWVg30yvZh8RXjC2QD
-Rz9u1AqLbcwPq/6Xmm44
-=TDwW
------END PGP SIGNATURE-----
+  $ ovn-nbctl --columns name,gateway_chassis list logical_router_port
 
---UugvWAfsgieZRqgk--
+If the above command returns more than a single gateway chassis
+reference for a given port that means OVS BFD has been automatically
+enabled.
+
+  $ ovn-nbctl --columns name,ha_chassis list ha_chassis_group
+
+The same applies if the above command returns groups that contain more
+than one chassis.
+
+Mitigation
+==========
+
+For any version of OVN, in order to prevent the issue, an ACL (Access
+Control List) rule can be added to drop BFD packets originated from
+logical ports.
+
+For example, the following shell script would configure ACLs on all
+existing OVN logical switches:
+
+  for sw in $(ovn-nbctl --bare --columns name list logical_switch); do
+      ovn-nbctl acl-add $sw from-lport 32767 'udp && udp.dst == 3784' drop
+  done
+
+If OVN is configured by a Cloud Management System (CMS, e.g., OpenStack)
+then it is the responsibility of the CMS to program ACLs.  Manual user
+configuration might otherwise be overwritten by the CMS.
+
+We do not recommend attempting to mitigate the vulnerability this way
+because this will also drop legitimate BFD traffic originated by the
+workloads connected to logical switch ports, e.g., BFD sessions
+established with external entities.
+
+Fix
+===
+
+Patches to fix this vulnerability in currently supported versions of
+OVN:
+
+ * 22.03.x:
+   https://github.com/ovn-org/ovn/commit/4fdfb2ba84dbc05492a4e37efc1e7af62185ed05
+ * 23.03.x:
+   https://github.com/ovn-org/ovn/commit/fec1ad85a29b714e42e2dac7e7290f3fb37895f7
+ * 23.06.x:
+   https://github.com/ovn-org/ovn/commit/adcd6be30098060bc4253d648b86946a63e6297b
+ * 23.09.x:
+   https://github.com/ovn-org/ovn/commit/c966c35f1b1cd8c5351ccac3051843fbf765c2ae
+ * 24.03.x:
+   https://github.com/ovn-org/ovn/commit/7852fccb60d0ae780163eac041b1457690c1e3f5
+
+Original patch is located at:
+  https://mail.openvswitch.org/pipermail/ovs-dev/2024-March/412425.html
+
+Recommendation
+==============
+
+We recommend that users of OVN apply the linked patches, or upgrade to
+a known patched version of OVN.  These include:
+
+ * v22.03.7
+ * v23.03.3
+ * v23.06.3
+ * v23.09.3
+ * v24.03.1
+
+Acknowledgments
+===============
+
+The OVN team wishes to thank the reporter:
+
+  Frode Nordahl <frode.nordahl@canonical.com>
+
