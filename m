@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1165" "Tuesday" "7" "July" "2015" "13:53:21" "+0200" "Stefan Castille" "stefan.castille@bonnierdigital.se" "<559BBDB1.1030906@bonnierdigital.se>" "45" "[oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)" nil nil nil "7" "2015070711:53:21" "[oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)" (number mark "U       stefan.casti Jul  7   45/1165  " thread-indent "\"[oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3333 invoked by uid 550); 7 Jul 2015 12:28:19 -0000
+Received: (qmail 3477 invoked by uid 550); 13 Mar 2024 14:36:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11477 invoked from network); 7 Jul 2015 11:53:34 -0000
-Message-ID: <559BBDB1.1030906@bonnierdigital.se>
-Date: Tue, 7 Jul 2015 13:53:21 +0200
-From: Stefan Castille <stefan.castille@bonnierdigital.se>
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.7.0
+Received: (qmail 17503 invoked from network); 13 Mar 2024 14:09:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=greenbone.net;
+	s=MBO0001; t=1710339230;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=lxxuWRwTLKQJkx+ItGF/EezzKT0HcCZLhBHo16qoks8=;
+	b=pky5CEikZlSvxXv006xu+p/DWrdkK90x0zKCAIIAK5BFLDWyvsEf0HihRnnrP87ya7nY+e
+	YHxtnxdwrpyLUsUWUc2fzjI2in44WiuuL7LJ41qtTZpp6deEWIOjxW8wAtXf75n4cCVHw4
+	HbTM5ckyaZxWng9MFUM8PfrdxmJd6VKh8WmkCXOdqHUwAt0SIY4VfN4YSkcI3XCkgHgqQ7
+	QKwkWhl+sCq+gLMQqSzvYtAol6Vp86rbEHineFwcX2OX5AqQDhLkkXkePztEF7MNHLCFRs
+	z08DfHiGR9N5xj+bgcoocWPSDqikfA7lJAflzsf6iLgdb3MfDTBNqWU7a0nfig==
+Message-ID: <985334e2-41f0-49e0-a522-924d708a41b8@greenbone.net>
+Date: Wed, 13 Mar 2024 15:13:48 +0100
 MIME-Version: 1.0
-To: <oss-security@lists.openwall.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.41.80.170]
-X-ClientProxiedBy: EX11.bondom.bonnier.se (172.29.192.31) To
- EX11.bondom.bonnier.se (172.29.192.31)
-Subject: [oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+References: <1622544226.KAPKHQKN@httpd.apache.org>
+ <YMIj1mZsQrmj6PBA@sol.nexus.lan>
+ <8feb8989-3b53-a97a-4421-ef8e47cce53d@wanadoo.fr>
+From: Christian Fischer <christian.fischer@greenbone.net>
+Autocrypt: addr=christian.fischer@greenbone.net; keydata=
+ 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
+ nSh/BvVF+Xp6Dow=
+In-Reply-To: <8feb8989-3b53-a97a-4421-ef8e47cce53d@wanadoo.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2021-31618: Apache httpd: NULL pointer
+ dereference on specially crafted HTTP/2 request
 
-Hej,
+Hello,
 
-I would like to request a CVE for a DoS in sogo. While it does not crash
-the system, it does make it very easy to conduct a DoS against the
-application.
+i'm usually not a fan of bumping such old threads but i'm recently 
+stumbled over this and it seems that this:
 
+On 10.06.21 7:18 PM, Christophe JAILLET wrote:
+> in fact it was fixed in 2.4.47
 
-Software: sogo
-Vendor: Inverse
-Site: www.sogo.nu
-Previously requested: No
-Type: DoS
-Description: Due to incorrect handling of certain PROPFIND requests, the
-site is vulnerable to a DoS.
+doesn't reflect what's currently getting stated on [1] which is:
 
------------------------------------
-PROPFIND /SOGo/dav/ HTTP/1.1
-Host: <hostname>
-Connection: keep-alive
-Content-Length: 0
+ > This issue affected *snip* Apache HTTP Server version 2.4.47 only
+ > *snip*
+ > Affects 2.4.47
 
+Regards,
 
-------------------------------------
-
-will return almost immediately
-
------------------------------------
-PROPFIND /SOGo/dav/ HTTP/1.1
-Host: myhost
-Connection: keep-alive
-
-
------------------------------------
-without the Content-Length will keep the child process occupied until it
-times out. Default value one minute. With only <#processes> requests per
-<timeout> the application can be rendered inaccessible.
-
-No authentication/valid account is required. The bug has been reported
-at www.sogo.nu/bugs as a private bugreport, but labelled won't fix as it
-is 'how servers work' and that tuning the timeout will help. I disagree
-and would like to get a CVE for it.
-
-
-with kind regards,
-Stefan
+[1] https://httpd.apache.org/security/vulnerabilities_24.html
