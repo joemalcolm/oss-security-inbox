@@ -1,4 +1,4 @@
-Received: (qmail 13474 invoked by uid 550); 6 Jul 2023 22:29:35 -0000
+Received: (qmail 1300 invoked by uid 550); 13 Mar 2024 15:54:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,52 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13395 invoked from network); 6 Jul 2023 22:29:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
-	s=2023; t=1688682563;
-	bh=0b7yAqEhcv5938gKqyEl09DYCC2aCCi/zAnIuR70kdw=;
-	h=From:To:Subject:Content-Type:From:To:Subject;
-	b=QgY7nqhBahJQ9w25GXheofdwvpvgxEABO9dFqLWPEYIANOuBmdmXyCYTKhC21cJ8b
-	 stRejtCB760d14/Nk61ENwcn8Iuzz/fXaVhxw90h05zSpWQnDJxBVjNnK8I29la9ob
-	 jdRkpq0OZSgBNTjAwajBFy2rlKCd3HXrA5uxr/jJDgrbyr77GnI2oTZ5aCMyxsoZe9
-	 EA3/AKvjgn8xcGNlYZUUQYB6BB6Ny+7iuKPp9c8pLau0iTXcB1eF8BQxhs+bnbQL6V
-	 HkG+n220XJKBEpx1LwiYvzUIAp1epQtW71QeAQYLOQzmUSn8bEWOdWxtJUKTkqZ5HA
-	 NAZg/fqvoi1cA==
-Date: Thu, 6 Jul 2023 18:29:23 -0400
-From: Jan Schaumann <jschauma@netmeister.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZKdAQ6UhSQTuX83d@netmeister.org>
+Received: (qmail 26148 invoked from network); 13 Mar 2024 15:45:09 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <88e2c5d1-f6fc-463b-ac5e-da6322bb29e3@apache.org>
+Date: Wed, 13 Mar 2024 15:47:54 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] CVE-2023-36461: mastodon: Denial of Service through slow HTTP
- responses
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2024-24549: Apache Tomcat: HTTP/2 header handling DoS
 
-(I have no affiliation with the project, but posting
-this here because it seems to me that increasingly
-non-packaged / GitHub distributed projects tend not to
-send out announcements here.)
+Severity: important
 
-https://github.com/mastodon/mastodon/security/advisories/GHSA-9pxv-6qvf-pjwc
+Affected versions:
 
-(This advisory describes an issue found by Cure53 as
-part of an audit performed at Mozilla's request)
+- Apache Tomcat 11.0.0-M1 through 11.0.0-M16
+- Apache Tomcat 10.1.0-M1 through 10.1.18
+- Apache Tomcat 9.0.0-M1 through 9.0.85
+- Apache Tomcat 8.5.0 through 8.5.98
 
-When performing outgoing HTTP queries, Mastodon sets a
-timeout on individual read operations, but a malicious
-server can indefinitely extend the duration of the
-response through slowloris-type attacks.
+Description:
 
-Impact
-This vulnerability can be used to keep all Mastodon
-workers busy for an extended duration of time, leading
-to the server becoming unresponsive.
+Denial of Service due to improper input validation vulnerability for 
+HTTP/2 requests in Apache Tomcat. When processing an HTTP/2 request, if 
+the request exceeded any of the configured limits for headers, the 
+associated HTTP/2 stream was not reset until after all of the headers 
+had been processed.This issue affects Apache Tomcat: from 11.0.0-M1 
+through 11.0.0-M16, from 10.1.0-M1 through 10.1.18, from 9.0.0-M1 
+through 9.0.85, from 8.5.0 through 8.5.98.
 
-CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+Users are recommended to upgrade to version 11.0.0-M17, 10.1.19, 9.0.86 
+or 8.5.99 which fix the issue.
 
-Severity: 7.5/10
+Credit:
 
-CVE-2023-36461
+Bartek Nowotarski (finder)
 
-Affected versions: all
-Patched versions:  4.1.3, 4.0.5, 3.5.9
+References:
+
+https://lists.apache.org/thread/4c50rmomhbbsdgfjsgwlb51xdwfjdcvg
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2024-24549
