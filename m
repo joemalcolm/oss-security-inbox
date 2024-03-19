@@ -1,4 +1,4 @@
-Received: (qmail 1899 invoked by uid 550); 28 Apr 2026 12:02:09 -0000
+Received: (qmail 30468 invoked by uid 550); 19 Mar 2024 03:27:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,161 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1853 invoked from network); 28 Apr 2026 12:02:09 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 30447 invoked from network); 19 Mar 2024 03:27:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710819076; x=1711423876; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gYWmUORLfrGq6ymupfDQ1TOCA4OFPSqjq4mLpgas/GU=;
+        b=C2fgZC1KbMD/f5Z2H6UpSfqQHuD+yILxHdg3Nsrk0a2Qs5KHqFDaDIlPzSwL69Cw/N
+         9XRRbMrO9UkoF953UZYhTOpU1nfgMmfhyOwkT6fvJCusAqPlnaJzMQ8roLPN4DretX42
+         C2MZb47om38qfid/EbqrPIW8Yq5VIQgdcsNt2yG/OpToKvh7EWgFfF7tmf6b4+lWwGkc
+         z6t2BUGA111Emqbsa0x8/bodyqPAVB/DsOhIrHkjvyODYXIjf0iD5ShfKtZ5J6hkwyY0
+         91TlJWQGgqS1qu+d3AetylUD0MB1FueONFiCATePdwJQLZqwSefr1IO1K6yApi4JK3yZ
+         qtlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710819076; x=1711423876;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gYWmUORLfrGq6ymupfDQ1TOCA4OFPSqjq4mLpgas/GU=;
+        b=iiKWZNkkzO7e3pGDAlUEhnXxEFPOFpkoTGm9p2JlUwO91JN/YSjH1VqvBL9dmuLOwJ
+         5HsH/J7YnI8BDmLXeDNtUBBDoVAvwK5OVWBDKTM9aoYgr7USl17g8blM8WLB+vSnQJWu
+         9NEgIWBYVfd1bfiLfF2IOGJ2HlQ+9+EyV8uFxK8Sdj+a80NBlp320SV6d3yYvSte4yJV
+         4vUBlW4vsqYJMD7phOC2sldqMP1C6mIx12KvGwGDgPtXVlMsDUlspZhxviuJyh+cS5QU
+         +tygAvW8BpueR1O7XMeM9IPkBMGEkyd4Y3pH8xfdQCZ8zC6dY/NQUbaayqZosb01c7yx
+         tycg==
+X-Gm-Message-State: AOJu0YzgjF+NxmnZnYV36/rDeGfV30EgoxxQcV0TCSCxeLcllSsTfjqP
+	Y/Wgc3P9YH4upzXWJuRfOzrMyC+XrOT7mwaZdipCT5heZQ0g9bBXUNW8T91RF6QDaevwg4XXOsZ
+	IMSYQc4qi6i2BmxPiMdROkq4nJl8E7eRg
+X-Google-Smtp-Source: AGHT+IFBOFA4yRH79vF89X39EZc08rfRxNSVHyATGX7yAbOS3ubAosKSbJBdGV4CqTGdVD8RFsWlb1U7vi+ZCCTJ8Zg=
+X-Received: by 2002:a0c:9c8c:0:b0:696:306f:7a54 with SMTP id
+ i12-20020a0c9c8c000000b00696306f7a54mr1067255qvf.48.1710819076299; Mon, 18
+ Mar 2024 20:31:16 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.510 (Entity 5.510)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1wHh8S-006n4i-17@xenbits.xenproject.org>
-Date: Tue, 28 Apr 2026 12:01:52 +0000
-Subject: [oss-security] Xen Security Advisory 487 v2 (CVE-2026-31787) - Linux kernel
- double free in Xen privcmd driver
+References: <425c87ae-3998-49f0-8403-fe953f7d08a5@x17.eu>
+In-Reply-To: <425c87ae-3998-49f0-8403-fe953f7d08a5@x17.eu>
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Date: Tue, 19 Mar 2024 11:30:50 +0800
+Message-ID: <CAN_LGv1HwD5t9PSDfy779voo6oOiUoBu+UmD+nJg0QhE1oAi+w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] 5 Linux kernel ksmbd vulnerabilities
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On Tue, Mar 19, 2024 at 6:11=E2=80=AFAM daniel <sd@x17.eu> wrote:
+>
+> Recently two batches of Linux kernel ksmbd vulnerabilities became public.
+>
+> Please find here an overview, the attached ZDI information and the
+> corresponding links to the Linux kernel cve announce messages with
+> further information.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I am personally worried about the situation with OpenWrt which would
+need a new stable release to address this. However, they use a manual
+backport of this to the 5.15.x kernel.
 
-            Xen Security Advisory CVE-2026-31787 / XSA-487
-                               version 2
-
-            Linux kernel double free in Xen privcmd driver
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The Linux kernel's privcmd driver can be abused to circumvent kernel
-lockdown (secure boot) by causing a double free of kernel memory.
-
-Note that this operation can be performed by root only, so any
-further impact on the system (like denial of service) is not security
-relevant.
-
-IMPACT
-======
-
-An administrator of a domain booted in secure mode is able to perform
-actions on the kernel which should not be possible in secure mode.
-
-VULNERABLE SYSTEMS
-==================
-
-Linux PVH or HVM domains (x86 or Arm) from kernel 3.8 onwards are
-vulnerable.
-
-PV domains or non-Linux domains are not vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation available.
-
-CREDITS
-=======
-
-This issue was discovered by Atharva Vartak (@0xAth4rv).
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa487-linux.patch           Linux
-
-$ sha256sum xsa487*
-fc7ccf9697203c14ced4364d70175b463b08a17a7559fd8654a12b623b54e5bb  xsa487-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of patches or mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because the patch needs to be applied to the guest.
-
-Deployment is permitted only AFTER the embargo ends.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmnwoQUMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZKRkH/A2DLI9IzMFrmuzksitp7G+MD/AWq3jJe93IAeU1
-/QguHV7pQXFyhb1zWR/+DB4zt5tAcGIs75enob8njm3HZ/e5Ht6aSlYq+Rl5ZO6w
-kK4aUljpRUxPTOg/PHPKn2sTkZccQxXGxmara5PwhZf0uXb0BBB33dhWbkxQoAR/
-FzHSFNHvJKZct/fmmavE38R4AVel0GC3Ufi1jQ44l85xBWtmWN4+ioEno4tDqKkk
-d9fmRfCoPta2zCL8DezC3y/LC7x8bbLeL1CMFchnVW+JjJOON22K2R/12dvBFUOF
-If+HuBOHviA02fDW86H+sKTn/KnCI1jNjgUto9tCIkdyvSI=
-=NY86
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa487-linux.patch"
-Content-Disposition: attachment; filename="xsa487-linux.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1NTc3YzAwMzAxOGFiYjFhZDkyZGM0MDMyY2M3MWIxNzE4YTgzZGZhIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6
-IEZyaSwgMTAgQXByIDIwMjYgMDk6MjA6MDQgKzAyMDAKU3ViamVjdDogW1BBVENIXSB4ZW4vcHJp
-dmNtZDogZml4IGRvdWJsZSBmcmVlIHZpYSBWTUEgc3BsaXR0aW5nCgpwcml2Y21kX3ZtX29wcyBk
-ZWZpbmVzIC5jbG9zZSAocHJpdmNtZF9jbG9zZSksIGJ1dCBuZWl0aGVyIC5tYXlfc3BsaXQKbm9y
-IC5vcGVuLiBXaGVuIHVzZXJzcGFjZSBkb2VzIGEgcGFydGlhbCBtdW5tYXAoKSBvbiBhIHByaXZj
-bWQgbWFwcGluZywKdGhlIGtlcm5lbCBzcGxpdHMgdGhlIFZNQSB2aWEgX19zcGxpdF92bWEoKS4g
-U2luY2UgbWF5X3NwbGl0IGlzIE5VTEwsCnRoZSBzcGxpdCBpcyBhbGxvd2VkLiB2bV9hcmVhX2R1
-cCgpIGNvcGllcyB2bV9wcml2YXRlX2RhdGEgKGEgcGFnZXMKYXJyYXkgYWxsb2NhdGVkIGluIGFs
-bG9jX2VtcHR5X3BhZ2VzKCkpIGludG8gdGhlIG5ldyBWTUEgd2l0aG91dCBhbnkKZml4dXAsIGJl
-Y2F1c2UgdGhlcmUgaXMgbm8gLm9wZW4gY2FsbGJhY2suCgpCb3RoIFZNQXMgbm93IHBvaW50IHRv
-IHRoZSBzYW1lIHBhZ2VzIGFycmF5LiBXaGVuIHRoZSB1bm1hcHBlZCBwb3J0aW9uCmlzIGNsb3Nl
-ZCwgcHJpdmNtZF9jbG9zZSgpIGNhbGxzOgogICAgLSB4ZW5fdW5tYXBfZG9tYWluX2dmbl9yYW5n
-ZSgpCiAgICAtIHhlbl9mcmVlX3VucG9wdWxhdGVkX3BhZ2VzKCkKICAgIC0ga3ZmcmVlKHBhZ2Vz
-KQoKVGhlIHN1cnZpdmluZyBWTUEgc3RpbGwgaG9sZHMgdGhlIGRhbmdsaW5nIHBvaW50ZXIuIFdo
-ZW4gaXQgaXMgbGF0ZXIKZGVzdHJveWVkLCB0aGUgc2FtZSBzZXF1ZW5jZSBydW5zIGFnYWluLCB3
-aGljaCBsZWFkcyB0byBhIGRvdWJsZSBmcmVlLgoKRml4IHRoaXMgaXNzdWUgYnkgYWRkaW5nIGEg
-Lm1heV9zcGxpdCBjYWxsYmFjayBkZW55aW5nIHRoZSBWTUEgc3BsaXQuCgpUaGlzIGlzIFhTQS00
-ODcgLyBDVkUtMjAyNi0zMTc4NwoKRml4ZXM6IGQ3MWY1MTM5ODVjMiAoInhlbjogcHJpdmNtZDog
-c3VwcG9ydCBhdXRvdHJhbnNsYXRlZCBwaHlzbWFwIGd1ZXN0cy4iKQpSZXBvcnRlZC1ieTogQXRo
-YXJ2YSBWYXJ0YWsgPGF0aGFydmEuYS52YXJ0YWtAZ21haWwuY29tPgpTdWdnZXN0ZWQtYnk6IEF0
-aGFydmEgVmFydGFrIDxhdGhhcnZhLmEudmFydGFrQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1ieTog
-SnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2UuY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2gg
-PGpiZXVsaWNoQHN1c2UuY29tPgotLS0KIGRyaXZlcnMveGVuL3ByaXZjbWQuYyB8IDcgKysrKysr
-KwogMSBmaWxlIGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMv
-eGVuL3ByaXZjbWQuYyBiL2RyaXZlcnMveGVuL3ByaXZjbWQuYwppbmRleCAxNWJhNTkyMjM2ZTgu
-LjcyNWE0OWEwZWVlNyAxMDA2NDQKLS0tIGEvZHJpdmVycy94ZW4vcHJpdmNtZC5jCisrKyBiL2Ry
-aXZlcnMveGVuL3ByaXZjbWQuYwpAQCAtMTYyMCw2ICsxNjIwLDEyIEBAIHN0YXRpYyB2b2lkIHBy
-aXZjbWRfY2xvc2Uoc3RydWN0IHZtX2FyZWFfc3RydWN0ICp2bWEpCiAJa3ZmcmVlKHBhZ2VzKTsK
-IH0KIAorc3RhdGljIGludCBwcml2Y21kX21heV9zcGxpdChzdHJ1Y3Qgdm1fYXJlYV9zdHJ1Y3Qg
-KmFyZWEsIHVuc2lnbmVkIGxvbmcgYWRkcikKK3sKKwkvKiBGb3JiaWQgc3BsaXR0aW5nLCBhdm9p
-ZHMgZG91YmxlIGZyZWUgdmlhIHByaXZjbWRfY2xvc2UoKS4gKi8KKwlyZXR1cm4gLUVJTlZBTDsK
-K30KKwogc3RhdGljIHZtX2ZhdWx0X3QgcHJpdmNtZF9mYXVsdChzdHJ1Y3Qgdm1fZmF1bHQgKnZt
-ZikKIHsKIAlwcmludGsoS0VSTl9ERUJVRyAicHJpdmNtZF9mYXVsdDogdm1hPSVwICVseC0lbHgs
-IHBnb2ZmPSVseCwgdXY9JXBcbiIsCkBAIC0xNjMxLDYgKzE2MzcsNyBAQCBzdGF0aWMgdm1fZmF1
-bHRfdCBwcml2Y21kX2ZhdWx0KHN0cnVjdCB2bV9mYXVsdCAqdm1mKQogCiBzdGF0aWMgY29uc3Qg
-c3RydWN0IHZtX29wZXJhdGlvbnNfc3RydWN0IHByaXZjbWRfdm1fb3BzID0gewogCS5jbG9zZSA9
-IHByaXZjbWRfY2xvc2UsCisJLm1heV9zcGxpdCA9IHByaXZjbWRfbWF5X3NwbGl0LAogCS5mYXVs
-dCA9IHByaXZjbWRfZmF1bHQKIH07CiAKLS0gCjIuNTMuMAoK
-
---=separator--
+--=20
+Alexander E. Patrakov
