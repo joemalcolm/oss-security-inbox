@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1429" "Tuesday" "27" "June" "2017" "11:33:20" "+0000" "Ari Kauppi" "Ari.Kauppi@synopsys.com" "<6D896033-5E5F-4F8B-A05E-771F0408BA66@synopsys.com>" "38" "[oss-security] CVE-2017-8797 Linux kernel: nfsd: remote DoS" nil nil nil "6" "2017062711:33:20" "[oss-security] CVE-2017-8797 Linux kernel: nfsd: remote DoS" (number mark "U       Ari.Kauppi@s Jun 27   38/1429  " thread-indent "\"[oss-security] CVE-2017-8797 Linux kernel: nfsd: remote DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20450 invoked by uid 550); 27 Jun 2017 12:43:13 -0000
+Received: (qmail 1689 invoked by uid 550); 20 Mar 2024 17:19:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +7,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17674 invoked from network); 27 Jun 2017 11:33:35 -0000
-From: Ari Kauppi <Ari.Kauppi@synopsys.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2017-8797 Linux kernel: nfsd: remote DoS
-Thread-Index: AQHS7zkt6fuEkEvhnEG8ymudjtVu1Q==
-Date: Tue, 27 Jun 2017 11:33:20 +0000
-Message-ID: <6D896033-5E5F-4F8B-A05E-771F0408BA66@synopsys.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.112.3.44]
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <8EBD50BC86489F408237F5CB652DD128@internal.synopsys.com>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2017-8797 Linux kernel: nfsd: remote DoS
+Received: (qmail 1652 invoked from network); 20 Mar 2024 17:19:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
+	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
+	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
+	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=hWWBiETmPb4WjoLzVOwQetKjDfuHOzQlAS7t/bftnYE=; t=1710955447; x=1711387447;
+	 b=ysARhqeOEP/wkleZh7ZPkOZOy2sbHELr8KNly2DYgRx24T3vd9pzBwrjGdGmvx4GdtJY+1SvwA
+	+od582mtv0PNCIOJfCeAX+z71qvzbX82SDQ6p+X26kOcKEbvC6NuspEJ9w20vya0q4IfNHzG7gXu/
+	0mS+m/6TiUMOI38rHPeavnEH7QTEyNwhwlwkTLQAELcnf54xcCtfsQAjRqUVi8BJ3IVpGWqrbtCrh
+	I4iNHmw1EVAL9Z13AnyRhz8O1AMATMdeX7qvE1TXIhzdtMnaM6pjg3mL7r+omoHcWqz3TeEapob+Z
+	a59hLi0Bgh3vx5DtMSvMViQsgFAZ6EB5czN/g==;
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Message-Id: <3A91075D-2407-4EB2-934C-3F04258301E9@beckweb.net>
+Date: Wed, 20 Mar 2024 18:23:45 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1710955448;0e81e87e;
+X-HE-SMSGID: 1rmzfQ-0001N0-MS
+Subject: [oss-security] Vulnerability in Jenkins
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Linux kernel NFSv4 server is vulnerable to a remote DoS attack.
+The following releases contain fixes for security vulnerabilities:
 
-The NFSv4 server in the Linux kernel does not properly validate layout type
-when processing NFSv4 pNFS LAYOUTGET operand. The provided input
-value is not properly validated and is used for array dereferencing. OOPS
-is triggered which leads to DoS of knfsd and eventually to soft-lockup of
-whole system.
+* Jenkins 2.444
+* Jenkins LTS 2.440.2
 
-In addition, on normal processing path there is a C undefined behavior
-weakness that can lead to out of bounds array dereferencing.
 
-The attack vector requires that the attack host is within host mask of expo=
-rted
-NFSv4 mount or source address spoofing is not properly mitigated in the net=
-work.
-The attack payload fits to single one-way UDP packet. The kernel must be
-compiled with CONFIG_NFSD_PNFS enabled, which seems to be the case
-with many vendor kernels.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2024-03-20/
 
-The issue has been verified to be reproducible at least with unpatched v4.4=
-, v4.8
-and v4.11 baselines.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Upstream patches in mainline: (available in stable releases, too)
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/f=
-s/nfsd?h=3Dv4.12-rc7&id=3Db550a32e60a4941994b437a8d662432a486235a5
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/f=
-s/nfsd?h=3Dv4.12-rc7&id=3Df961e3f2acae94b727380c0b74e2d3954d0edf79
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-The issue was found by Jani Tuovila from Synopsys Ltd with Synopsys Defensi=
-cs fuzzer.
+---
 
-Thanks,
+SECURITY-3379 / CVE-2024-22201
+Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
+servlet server when started using `java -jar jenkins.war`. This is how
+Jenkins is run when using any of the installers or packages, but not when
+run using servlet containers such as Tomcat.
 
---
-Ari Kauppi / Synopsys Ltd.=
+Jenkins 2.443 and earlier, LTS 2.440.1 and earlier bundles versions of
+Jetty affected by the security vulnerability CVE-2024-22201. This
+vulnerability allows unauthenticated attackers to cause a denial of
+service.
+
+NOTE: This only affects instances that enable HTTP/2, typically using the
+`--http2Port` argument to `java -jar jenkins.war` or corresponding options
+in service configuration files. It is disabled by default in all native
+installers and the Docker images provided by the Jenkins project.
+
+
+
