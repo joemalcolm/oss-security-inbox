@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6365" "Friday" "12" "May" "2017" "10:45:32" "+0000" "Xen.org security team" "security@xen.org" "<E1d984i-000765-Pi@xenbits.xenproject.org>" "160" "[oss-security] Xen Security Advisory 215 (CVE-2017-8905) - possible memory corruption via failsafe callback" nil nil nil "5" "2017051210:45:32" "[oss-security] Xen Security Advisory 215 (CVE-2017-8905) - possible memory corruption via failsafe callback" (number mark "U       security@xen May 12  160/6365  " thread-indent "\"[oss-security] Xen Security Advisory 215 (CVE-2017-8905) - possible memory corruption via failsafe callback\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23821 invoked by uid 550); 12 May 2017 10:45:50 -0000
+Received: (qmail 30266 invoked by uid 550); 20 Mar 2024 14:42:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,177 +7,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23799 invoked from network); 12 May 2017 10:45:49 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 9257 invoked from network); 20 Mar 2024 00:28:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hauke-m.de; s=MBO0001;
+	t=1710894746;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=T8X+BJP1l844ahPE8bVYYJx+YsFzMCU/N0F3Gv1ACOM=;
+	b=vDrH3pvteOKU+F3GVlpb9J5FnCeof4o/XGKq+rDTR14730nNyLoOWTjO5xFAFVJ8503BI8
+	5aeLlrTnepTikppSVj/HkhB0ZKLJ7oKxVaRLAyFbVzk3TcBhYs118Y+yz8k+ymNY7kLs2B
+	JOVDjxg7LYEkRQeT8WIplh9AGbmJeRMVAV2dI8P1Kvx4mW7IMhuV6SW0Hmo3BCXHfJ/oYl
+	E/XlPN0Pnx3ak+y73gv/lFGsID7ix3rxi45Yn5JdLDsRDcTdZfI/8qe2aiH+fsmd7oiGPl
+	3ZQ/xBfbrkNTr4wb+B3lYIgcbJBo4S2JQV6oSEMF7ib1zT7aHIVyFcAnxW6ZZQ==
+Message-ID: <8e716095-2a6c-4e39-bb3a-064a3c482f2a@hauke-m.de>
+Date: Wed, 20 Mar 2024 01:32:25 +0100
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Message-Id: <E1d984i-000765-Pi@xenbits.xenproject.org>
-Date: Fri, 12 May 2017 10:45:32 +0000
-Subject: [oss-security] Xen Security Advisory 215 (CVE-2017-8905) - possible memory
- corruption via failsafe callback
+Content-Language: en-US
+To: oss-security@lists.openwall.com,
+ "Alexander E. Patrakov" <patrakov@gmail.com>
+References: <425c87ae-3998-49f0-8403-fe953f7d08a5@x17.eu>
+ <CAN_LGv1HwD5t9PSDfy779voo6oOiUoBu+UmD+nJg0QhE1oAi+w@mail.gmail.com>
+From: Hauke Mehrtens <hauke@hauke-m.de>
+In-Reply-To: <CAN_LGv1HwD5t9PSDfy779voo6oOiUoBu+UmD+nJg0QhE1oAi+w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] 5 Linux kernel ksmbd vulnerabilities
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On 3/19/24 04:30, Alexander E. Patrakov wrote:
+> On Tue, Mar 19, 2024 at 6:11 AM daniel <sd@x17.eu> wrote:
+>>
+>> Recently two batches of Linux kernel ksmbd vulnerabilities became public.
+>>
+>> Please find here an overview, the attached ZDI information and the
+>> corresponding links to the Linux kernel cve announce messages with
+>> further information.
+> 
+> I am personally worried about the situation with OpenWrt which would
+> need a new stable release to address this. However, they use a manual
+> backport of this to the 5.15.x kernel.
+> 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+OpenWrt 23.05 uses kernel 5.15 and the ksmbd implementation found in 
+this upstream kernel version. OpenWrt plans to do a new service release 
+23.05.3 in the next days anyway with kernel 5.15.150. This should 
+contain all needed fixes.
 
-            Xen Security Advisory CVE-2017-8905 / XSA-215
-                              version 3
+OpenWrt 22.03 uses ksmbd from https://github.com/cifsd-team/ksmbd in 
+version 3.4.7. This is probably affected by these problems.
+Maybe we will update this to 3.4.9 or backport the patches fixing 
+security problems. OpenWrt 22.03 will be EoL in April 2024 anyway.
 
-           possible memory corruption via failsafe callback
-
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-Under certain special conditions Xen reports an exception resulting
-from returning to guest mode not via ordinary exception entry points,
-but via a so call failsafe callback.  This callback, unlike exception
-handlers, takes 4 extra arguments on the stack (the saved data
-selectors DS, ES, FS, and GS).  Prior to placing exception or failsafe
-callback frames on the guest kernel stack, Xen checks the linear
-address range to not overlap with hypervisor space.  The range spanned
-by that check was mistakenly not covering these extra 4 slots.
-
-IMPACT
-======
-
-A malicious or buggy 64-bit PV guest may be able to modify part of a
-physical memory page not belonging to it, potentially allowing for all
-of privilege escalation, host or other guest crashes, and information
-leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-64-bit Xen versions 4.6 and earlier are vulnerable.  Xen versions 4.7
-and later are not vulnerable.
-
-Only x86 systems are affected.  ARM systems are not vulnerable.
-
-Only x86 systems with physical memory extending to a configuration
-dependent boundary (5Tb or 3.5Tb) may be affected.  Whether they are
-actually affected depends on actual physical memory layout.
-
-The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
-32-bit PV guests can't exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM or 32-bit PV guests will avoid the vulnerability.
-
-The vulnerability can be avoided if the guest kernel is controlled by
-the host rather than guest administrator, provided that further steps
-are taken to prevent the guest administrator from loading code into
-the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa215.patch       Xen 4.6.x, Xen 4.5.x
-
-$ sha256sum xsa215*
-5be4ff661dd22890b0120f86beee3ec809e2a29f833db8c48bd70ce98e9691ee  xsa215.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZFZIqAAoJEIP+FMlX6CvZQUoIAMBeK3zz4qoOtlR92dLGyYkT
-PlITMMsz1PbkZapt/pdsuQFVRC0P7UXdJ/u1GjJLJqOBSsUOnlJ9m9uTjDW7KJTm
-5Dch1lYO0npQLAcpr32KvDGDFt5dp+Cqn0NiGFV4yFsdMLnhW8Wyugc8DhJgVcv9
-2PPZ5IlFFlrdCs4g6jMFy7rdM/r6d6wyPQukE6L0VObHv5MsqVgg+p01/yk/uDaz
-KHSlHdfAfuxpMbKPZ2cz/rWQYN2xwV6foZ2pn1WHQln9NxXzQWSR8J5KZj3BLXME
-+i1cg/aRm3jHM+SZDRXwton51SAkTpCYW5/n+QqbGJd7NN6+GMk14t8Y3wKSZVA=
-=skSs
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa215.patch"
-Content-Disposition: attachment; filename="xsa215.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ODY6IGNvcnJlY3QgY3JlYXRlX2JvdW5jZV9mcmFtZQoKV2UgbWF5IHB1
-c2ggdXAgdG8gOTYgYnl0ZXMgb24gdGhlIGd1ZXN0IChrZXJuZWwpIHN0YWNr
-LCBzbyB3ZSBzaG91bGQKYWxzbyBjb3ZlciBhcyBtdWNoIGluIHRoZSBlYXJs
-eSByYW5nZSBjaGVjay4gTm90ZSB0aGF0IHRoaXMgaXMgdGhlCnNpbXBsZXN0
-IHBvc3NpYmxlIHBhdGNoLCB3aGljaCBoYXMgdGhlIHRoZW9yZXRpY2FsIHBv
-dGVudGlhbCBvZgpicmVha2luZyBhIGd1ZXN0OiBXZSBvbmx5IHJlYWxseSBw
-dXNoIDk2IGJ5dGVzIHdoZW4gaW52b2tpbmcgdGhlCmZhaWxzYWZlIGNhbGxi
-YWNrLCBvcmRpbmFyeSBleGNlcHRpb25zIG9ubHkgaGF2ZSA1NiBvciA2NCBi
-eXRlcyBwdXNoZWQKKHdpdGhvdXQgLyB3aXRoIGVycm9yIGNvZGUgcmVzcGVj
-dGl2ZWx5KS4gVGhlcmUgaXMsIGhvd2V2ZXIsIG5vIFBWIE9TCmtub3duIHRv
-IHBsYWNlIGEga2VybmVsIHN0YWNrIHRoZXJlLgoKVGhpcyBpcyBYU0EtMjE1
-LgoKUmVwb3J0ZWQtYnk6IEphbm4gSG9ybiA8amFubmhAZ29vZ2xlLmNvbT4K
-U2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29t
-PgpSZXZpZXdlZC1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNA
-Y2l0cml4LmNvbT4KCi0tLSBhL3hlbi9hcmNoL3g4Ni94ODZfNjQvZW50cnku
-UworKysgYi94ZW4vYXJjaC94ODYveDg2XzY0L2VudHJ5LlMKQEAgLTM0Nyw3
-ICszNDcsNyBAQCBpbnQ4MF9zbG93X3BhdGg6CiAgICAgICAgIGptcCAgIGhh
-bmRsZV9leGNlcHRpb25fc2F2ZWQKIAogLyogQ1JFQVRFIEEgQkFTSUMgRVhD
-RVBUSU9OIEZSQU1FIE9OIEdVRVNUIE9TIFNUQUNLOiAgICAgICAgICAgICAg
-ICAgICAgICovCi0vKiAgIHsgUkNYLCBSMTEsIFtEUy1HUyxdIFtDUjIsXSBb
-RVJSQ09ERSxdIFJJUCwgQ1MsIFJGTEFHUywgUlNQLCBTUyB9ICAgKi8KKy8q
-ICAgeyBSQ1gsIFIxMSwgW0RTLUdTLF0gW0VSUkNPREUsXSBSSVAsIENTLCBS
-RkxBR1MsIFJTUCwgU1MgfSAgICAgICAgICAqLwogLyogJXJkeDogdHJhcF9i
-b3VuY2UsICVyYng6IHN0cnVjdCB2Y3B1ICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICovCiAvKiBPbiByZXR1cm4gb25seSAlcmJ4IGFuZCAl
-cmR4IGFyZSBndWFyYW50ZWVkIG5vbi1jbG9iYmVyZWQuICAgICAgICAgICAg
-Ki8KIGNyZWF0ZV9ib3VuY2VfZnJhbWU6CkBAIC0zNjcsNyArMzY3LDcgQEAg
-Y3JlYXRlX2JvdW5jZV9mcmFtZToKIDI6ICAgICAgYW5kcSAgJH4weGYsJXJz
-aSAgICAgICAgICAgICAgICAjIFN0YWNrIGZyYW1lcyBhcmUgMTYtYnl0ZSBh
-bGlnbmVkLgogICAgICAgICBtb3ZxICAkSFlQRVJWSVNPUl9WSVJUX1NUQVJU
-LCVyYXgKICAgICAgICAgY21wcSAgJXJheCwlcnNpCi0gICAgICAgIG1vdnEg
-ICRIWVBFUlZJU09SX1ZJUlRfRU5EKzYwLCVyYXgKKyAgICAgICAgbW92cSAg
-JEhZUEVSVklTT1JfVklSVF9FTkQrMTIqOCwlcmF4CiAgICAgICAgIHNiYiAg
-ICVlY3gsJWVjeCAgICAgICAgICAgICAgICAgIyBJbiArdmUgYWRkcmVzcyBz
-cGFjZT8gVGhlbiBva2F5LgogICAgICAgICBjbXBxICAlcmF4LCVyc2kKICAg
-ICAgICAgYWRjICAgJWVjeCwlZWN4ICAgICAgICAgICAgICAgICAjIEFib3Zl
-IFhlbiBwcml2YXRlIGFyZWE/IFRoZW4gb2theS4K
-
---=separator--
+Hauke
