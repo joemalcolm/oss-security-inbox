@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2916" "Tuesday" "6" "December" "2016" "10:26:14" "-0800" "Grant Murphy" "grantcmurphy@gmail.com" "<CAHXGaxAS6wW7s9oxeWqC=UNk2t=Lw7fT7=UmozsP5NpeL40Wbw@mail.gmail.com>" "88" "Re: [oss-security] Opensource Python whitebox code analysis tool recommendations" nil nil nil "12" "2016120618:26:14" "[oss-security] Opensource Python whitebox code analysis tool recommendations" (number mark "U       grantcmurphy Dec  6   88/2916  " thread-indent "\"Re: [oss-security] Opensource Python whitebox code analysis tool recommendations\"\n") "<2ECE9D9EEF1F524185270138AE232659550547C3@S0MSMAIL112.arc.local>" ("<2ECE9D9EEF1F524185270138AE232659550547C3@S0MSMAIL112.arc.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7988 invoked by uid 550); 6 Dec 2016 18:47:55 -0000
+Received: (qmail 24083 invoked by uid 550); 22 Mar 2024 19:12:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,126 +7,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30090 invoked from network); 6 Dec 2016 18:26:27 -0000
+Received: (qmail 24065 invoked from network); 22 Mar 2024 19:12:42 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=Hu6f1HMgKtkl3ULiq3xHc8mSi7YtFKw6g7H0rMaYHd0=;
-        b=ZZsdVpazqR7gvZN7KEP2nT2xmM9poSoZjSWKULc6gj7yLWbGfkgHy4I03MFoXE2qeU
-         LqsMRvsCGaCYDlz2835NhFf7Pa7dM63hbHJaAaANbkntlgEMvtRO+Imayj2tzeK5n4Zx
-         0YW0HNt3WN5r8Q4S27DmHVH1SPjb/En30Cvw7Iull3wSny2K0fcdbX1cl2hQ4mh1bHq3
-         H98yrhdGwZ724ooozt/S2z85ryYQVMZsbuYoc+vmKJk2IvW4R4107puUmmggG6GW6BcU
-         PXQw6j1ELnC6A3mSV9PM4Ub5C1xgJvfVk+PdKqcrSuNoGnUBi0HoXYUudU7Vppf0pUHA
-         IuWg==
+        d=gmail.com; s=20230601; t=1711135028; x=1711739828; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mvUL3W2zJTRaGz0/7GB1VGv32BPLzKb0uNLajUS/G4I=;
+        b=JRIUADx5+aEB492Asx365B6SrEpjOMQY9Nm4fN/L/+JcQ1yLGpEuXp4517V3ZF8E7Y
+         XugTcyrUG+470YdXS2Jv+DFE7h6QSG4bCuU5S7C6KUnyU/rBi8iXcBBqz9qVorem+6EH
+         y2aoj5eVV1yRuzJ6iNM121M3Gktd6feUj6fPwmC95yPazz1OjwdCRI9/0XpdgjogddbJ
+         q/hmt0F3VPTWmng56vMzconauk0mP+3tzh1s4NJmnIxBnxJD0HHOifPgv0u9voAa6gm3
+         27IIIxTUq+CIvMC6mz8zIGrAt3CH0NPkY2PTcbP1BqUchuf+TfMSeV1ffxEd5h6h+JXG
+         bWGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=Hu6f1HMgKtkl3ULiq3xHc8mSi7YtFKw6g7H0rMaYHd0=;
-        b=W7QSZxoIh4KUdWfPfV2Hi0iesuQyB8rsLkXBaeiiNzxL2cIczMntqnn3i+4wgp9oZ8
-         gXuFNLt8Uw7udl02hz7y0xKmWK6c++BFhj40zw9+w+r0eOyfp6rFhR6VYzRDXmYRbWbu
-         3dO3WFVES67OkTFOTfUA4Cdh5AKFTd+++NppIvHC2wpYhWN95CSAYuVuxQ8+2k4+BNjg
-         jvs88GECrBdsD9qkl/6eHZKfcU2yxz1fvbTNi9JqWGuXXqPgwGUZIld2DummEC5/QfOA
-         teX9gQgu4wlOTtuFPtxE8igvURbpiKlotdXT0Q7L9/TRGkoLeWiZ2cOPNfBmGuiAmHCs
-         s4dw==
-X-Gm-Message-State: AKaTC02OS3OViYYyesbpAyyjDPdntB+Dq3hE9/5O4cTQ/9lG29B07PhCQpAL6GJykt6wXeBdfW9ImwF+SdonGA==
-X-Received: by 10.31.48.85 with SMTP id w82mr14953266vkw.69.1481048775013;
- Tue, 06 Dec 2016 10:26:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1711135028; x=1711739828;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mvUL3W2zJTRaGz0/7GB1VGv32BPLzKb0uNLajUS/G4I=;
+        b=CW3V7q3RDd6Y1qv5ZTc0HZGMup+Tn4vQXkv2MvvffBuYdlESsEeJhc24YKJLDVjLpm
+         /AelVS5xDg8/124KzXTnOHKcyng8eIjDghoizsm4DUTGM/8Cf50NH2JR+KNZskgeZF45
+         8W3MRry4PAlgRAFYoCiOkCxIIxz78To0eiMdXmAcYtVGvWmx0Z7LgfDlAEL6xsHtXdbR
+         KDKKId+IgY0yN9RNAL5EDB7GG/EJx2Au9CDXVQ9tLfa/LPZfRYeQ9wsaMhJocodsgqlH
+         Hb2FfMxeglJBTkkY74oHAKXvp5YeuHGFuzyS2siGvAheL6LSStQsWytHcnGhQr0+geYR
+         JZ4g==
+X-Gm-Message-State: AOJu0YxKNw9KjIOeomTnRxnpRrDrWL57VkRT7G48spVXNT8rEfDBqGA/
+	K507a0YSjtD9GNFbieZ/VDgVIadWCDZqyDwss2G/nh6mJ64HSPg/5fjDfxfS2POvPRyQiEZA+sQ
+	GUjoOF0n4sAcdU7LZYo4zYnf3vJSlwHM4BG0=
+X-Google-Smtp-Source: AGHT+IFhNZ+oLOsonbd6uItLjf0rggBJWgnhkqa1dASrcP6reXYp3bdcsr1kQNKrHaQa/vm9zUv7kfiqV/fqJECDke8=
+X-Received: by 2002:a25:b004:0:b0:dcc:d5aa:af36 with SMTP id
+ q4-20020a25b004000000b00dccd5aaaf36mr315746ybf.44.1711135027665; Fri, 22 Mar
+ 2024 12:17:07 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <2ECE9D9EEF1F524185270138AE232659550547C3@S0MSMAIL112.arc.local>
-References: <2ECE9D9EEF1F524185270138AE232659550547C3@S0MSMAIL112.arc.local>
-From: Grant Murphy <grantcmurphy@gmail.com>
-Date: Tue, 6 Dec 2016 10:26:14 -0800
-Message-ID: <CAHXGaxAS6wW7s9oxeWqC=UNk2t=Lw7fT7=UmozsP5NpeL40Wbw@mail.gmail.com>
+References: <2c65862c-886c-435c-ac5c-0ad954a2b7cb@oracle.com>
+In-Reply-To: <2c65862c-886c-435c-ac5c-0ad954a2b7cb@oracle.com>
+From: Alex Gaynor <alex.gaynor@gmail.com>
+Date: Fri, 22 Mar 2024 15:16:56 -0400
+Message-ID: <CAFRnB2W+-G1XkSUk4NfmxPWcbgLgJ7-ASR-JDW1m67MvwDHmUA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1144023c213cee0543018a44
-Subject: Re: [oss-security] Opensource Python whitebox code analysis tool recommendations
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] GnuTLS 3.8.4 released, fixes CVE-2024-28834 & CVE-2024-28835
 
---001a1144023c213cee0543018a44
-Content-Type: text/plain; charset=UTF-8
+One thing that may be of interest to this group: Will found
+CVE-2024-28835 by running the x509-limbo test suite against gnutls.
+x509-limbo is a set of test cases that can be used to test x.509 path
+building implementations against a variety of edge cases (inspired by
+wycheproof). The tests are at https://github.com/C2SP/x509-limbo
 
-On Tue, Dec 6, 2016 at 9:02 AM, Fiedler Roman <Roman.Fiedler@ait.ac.at>
-wrote:
+Cheers,
+Alex
 
-> Hello list,
+On Fri, Mar 22, 2024 at 3:12=E2=80=AFPM Alan Coopersmith
+<alan.coopersmith@oracle.com> wrote:
 >
-> I just stubled over effects of following programming error due to unwanted
-> singleton in Python, bypassing intended process restrictions (allowed
-> number
-> of elements in my case) and of course data corruption:
+> https://lists.gnupg.org/pipermail/gnutls-help/2024-March/004845.html
+> announced the release of GnuTLS 3.8.4, including these fixes:
 >
-> class A:
->   def __init__(self, value=[]):
->     self.value=value
->     self.valueCloned=value[:]
->   def show(self):
->     print 'IDs value %x, cloned %x' % (id(self.value),
-> id(self.valueCloned))
->   def append(self, data):
->     self.value.append(data)
+> > ** libgnutls: Fix side-channel in the deterministic ECDSA. Reported by
+> > George Pantelakis (#1516). [GNUTLS-SA-2023-12-04, CVSS: medium]
+> > [CVE-2024-28834]
+> >
+> > ** libgnutls: Fixed a bug where certtool crashed when verifying a
+> > certificate chain with more than 16 certificates. Reported by William
+> > Woodruff (#1525) and yixiangzhike (#1527). [GNUTLS-SA-2024-01-23, CVSS:
+> > medium] [CVE-2024-28835]
 >
-> # Keep reference to avoid garbage collection interference.
-> objFirst=A()
-> objFirst.show()
-> objNext=A()
-> objNext.show()
-> # Check references to prohibit optimization.
-> if objFirst==objNext: raise Exception('Impossible')
+> https://gnutls.org/security-new.html#GNUTLS-SA-2023-12-04 says:
+>
+> > CVE-2024-28834  Severity Medium; timing sidechannel in deterministic EC=
+DSA
+> >
+> > A vulnerability was found that the deterministic ECDSA code leaks bit-l=
+ength
+> > of random nonce which allows for full recovery of the private key used =
+after
+> > observing a few hundreds to a few thousands of signatures on known mess=
+ages,
+> > due to the application of lattice techniques. The issue was reported in=
+ the
+> > issue tracker as #1516.
+> >
+> > https://gitlab.com/gnutls/gnutls/-/issues/1516
+> >
+> > Recommendation: To address the issue found upgrade to GnuTLS 3.8.4 or l=
+ater
+> > versions.
+>
+>
+> https://gnutls.org/security-new.html#GNUTLS-SA-2024-01-23 says:
+>
+> > CVE-2024-28835  Severity Medium; Denial of service
+> >
+> > When validating a certificate chain with more then 16 certificates GnuT=
+LS
+> > applications crash with an assertion failure. The issue was reported in=
+ the
+> > issue tracker as #1527 and #1525.
+> >
+> > https://gitlab.com/gnutls/gnutls/-/issues/1527
+> > https://gitlab.com/gnutls/gnutls/-/issues/1525
+> >
+> > Recommendation: To address the issue found upgrade to GnuTLS 3.8.4 or l=
+ater
+> > versions.
 >
 >
 >
-> As this type of error seems to be more common in code, at least according
-> to
-> grep, are there tool recommendations to do automatic analysis of code?
->
-> It should trace all non-trivial (not None, int, float, str, ...)
-> constructor
-> arguments assignments and catch at least problematic invocations like
-> "self.value.append". A problem is, that in many cases just existence of
-> constructor like the one before does not automatically lead to
-> corruption/concurrency issues. For example the tool should not trigger on
-> this
-> (older but still in use) version of django_common/http.py or at least, when
-> triggering, only at "json.dumps()".
->
-> class JsonResponse(HttpResponse):
->   def __init__(self, data={ }, errors=[ ], success=True):
->     """
->     data is a map, errors a list
->     """
->     json = json_response(data=data, errors=errors, success=success)
->     super(JsonResponse, self).__init__(json, content_type='application/
-> json')
->
-> def json_response(data={ }, errors=[ ], success=True):
->   data.update({
->     'errors': errors,
->     'success': len(errors) == 0 and success,
->   })
->   return json.dumps(data)
->
-> Due to weak typing, it might be too hard to catch all problematic
-> locations,
-> e.g. field modified in subclass. Without source code analysis tools
-> available
-> to do such checks, I would also try out any approaches where the argument
-> value is made immutable thus leading to crash in testbed.
->
-> It would be great, if the tool would do the whole analysis more from the
-> security than code quality perspective: it is more interesting to audit own
-> code and referenced/redistributed third party stuff for things that "are
-> very
-> likely to be problematic/vulnerable" than have a quality tool recommending
-> to
-> change all those lines, which is not quite realistic.
->
-> Kind regards,
-> Roman
->
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@oracle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-You could check out Bandit:
-https://security.openstack.org/#bandit-static-analysis-for-python
 
-I'm not sure it quite fits what you're after could be worth a look.
 
---001a1144023c213cee0543018a44--
+--=20
+All that is necessary for evil to succeed is for good people to do nothing.
