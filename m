@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["818" "Thursday" "3" "November" "2016" "12:44:32" "+0800" "Shawn" "citypw@gmail.com" "<CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>" "34" "[oss-security] kernel: fix minor infoleak in get_user_ex()" nil nil nil "11" "2016110304:44:32" "[oss-security] kernel: fix minor infoleak in get_user_ex()" (number mark "U       citypw@gmail Nov  3   34/818   " thread-indent "\"[oss-security] kernel: fix minor infoleak in get_user_ex()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7663 invoked by uid 550); 3 Nov 2016 07:31:18 -0000
+Received: (qmail 21950 invoked by uid 550); 23 Mar 2024 14:10:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +7,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3822 invoked from network); 3 Nov 2016 04:44:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=CzivndDAoq4mf/0iDcEqmuMxnCKMP9mcZQGtqcvBOIY=;
-        b=zD05nPXvPUU8OmfTWsFnN4f0NWVKmQeqv2oj4Lt/CnrIQsvu2Ma/HD+67NfPv6ZpFk
-         d8O2A3jvu20msdXuCKOFcH+fZXoea/QcXTdtjz8F7AoIsdSLr3LEI1uP1WZq1ZSxaYvs
-         Kk7AlvRnGtbd1zR777ug5UJGz0z9AWhUf4z/r8pzaEg50o+BaQW5mdcS7nPCSUqVU8Tl
-         /qqjjefgtBTbIxw7aPQDkbd/vUP9p/lBLYPomqrh0pQMcGm3n52IUDasLgNFq+WfmwsS
-         E91hR4X5fixlZ1YifMVazxzDI6V+BeGDNtf4+beieHF0YUvxT2keiWLFK0kEty/pR+uK
-         xaNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=CzivndDAoq4mf/0iDcEqmuMxnCKMP9mcZQGtqcvBOIY=;
-        b=KNdYp2SyIUQuGureUNjnunK5N/HCXt2iyWcWLBNLswcuOgxA2g44RoG76tT26BSJ76
-         R2REFOjun4vL+u5QtNyLi4CC/X69s1pbRKWD1MY1QH7qIVV0Jc+AG06Trz3NOUsRDdGp
-         /5GGQtOw7Ku0OMsmrrUG/+FPNFTzzHL1FD5+EFxnALcquVTpU3tVulSRKWBGzsfp5IuA
-         wGl7c1Tl+O8/7Ckh+lpt9nt+9+jHYJ1j/TcxM3b62CJQh0jKyxicIs7zq2ZGQXKS8bC1
-         s3mgdOkeGrMqu04TpwBx3a9C82NlUhGf1kn17v4jusmSkanGr7MfnWiCFkcB/4n092HD
-         0XYw==
-X-Gm-Message-State: ABUngvdSdXWbMXswhq1COFYPIPpfaSyN2UWCUIFqudNAag89dy8EVsGak4/UrdxWD9deO2JtOdAeeJHEYq4kTA==
-X-Received: by 10.25.217.82 with SMTP id q79mr3406519lfg.13.1478148273379;
- Wed, 02 Nov 2016 21:44:33 -0700 (PDT)
-MIME-Version: 1.0
-From: Shawn <citypw@gmail.com>
-Date: Thu, 3 Nov 2016 12:44:32 +0800
-Message-ID: <CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] kernel: fix minor infoleak in get_user_ex()
+Received: (qmail 21639 invoked from network); 23 Mar 2024 14:10:01 -0000
+Date: Sat, 23 Mar 2024 15:14:35 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240323141435.GA24889@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Firefox 124.0.1 fixes two critical JavaScript engine vulnerabilities
 
-Hi guys,
+Hi,
 
-I suppose this bug should get a CVE number.
+As successfully demonstrated by Manfred Paul at Pwn2Own:
 
-Info:
-get_user_ex(x, ptr) should zero x on failure. It's not a lot of a leak
-(at most we are leaking uninitialized 64bit value off the kernel
-stack, and in a fairly constrained situation, at that), but the fix is
-trivial, so... Cc: stable@vger.kernel.org Signed-off-by: Al Viro
-<viro@zeniv.linux.org.uk> [ This sat in different branch from the
-uaccess fixes since mid-August ] Signed-off-by: Linus Torvalds
-<torvalds@linux-foundation.org>
+https://www.mozilla.org/en-US/security/advisories/mfsa2024-15/
 
-Upstream fix:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1c109fabbd51863475cd12ac206bdd249aee35af
+> # CVE-2024-29943: Out-of-bounds access via Range Analysis bypass
+> 
+> Reporter	Manfred Paul via Trend Micro's Zero Day Initiative
+> Impact	critical
+> Description
+> An attacker was able to perform an out-of-bounds read or write on a
+> JavaScript object by fooling range-based bounds check elimination.
+> 
+> References	Bug 1886849
+> 
+> # CVE-2024-29944: Privileged JavaScript Execution via Event Handlers
+> 
+> Reporter	Manfred Paul via Trend Micro's Zero Day Initiative
+> Impact	critical
+> Description
+> An attacker was able to inject an event handler into a privileged object
+> that would allow arbitrary JavaScript execution in the parent process.
+> Note: This vulnerability affects Desktop Firefox only, it does not
+> affect mobile versions of Firefox.
+> 
+> References	Bug 1886852
 
-Impact:
+There's a third-party write-up by @maxpl0it on the first bug above here:
 
-According to Spender:
+https://twitter.com/maxpl0it/status/1771258714541978060
 
-https://lwn.net/Articles/705264/
+> @_manfp's Firefox renderer bug is a beauty that takes advantage of an
+> optimisation implemented just 3 months ago. Let's break it down!
+> 
+> In JavaScript, you can get a list of property names of an object using
+> Object.keys(o). A common pattern to count the number of properties an
+> object has is to use Object.keys(o).length.
+> 
+> Now, this can actually end up being quite slow for large objects, since
+> Object.keys(o) constructs a whole new array with the property names in it.
+> 
+> If we're just interested in the length of this array and not the array
+> itself, this means we're spending considerable time constructing arrays
+> when we don't need to.
+> 
+> Thankfully, 3 months ago, Mozilla added a nice optimisation that means
+> the pattern of Object.keys(o).length no longer creates this array,
+> saving us from wasting a LOT of memory.
+> https://github.com/mozilla/gecko-dev/commit/eec1c03d31ad59280f99e9eafcd0eeb10e6a1ed5
+> 
+> So where's the bug? In the Range Analysis part of the just-in-time
+> compiler! The range that was given to the new MObjectKeysLength JIT node
+> was between 0 and NativeObject::MAX_SLOTS_COUNT, which is (1 << 28) - 1.
+> However, the number of properties we can add is much larger.
+> 
+> Here is a test case that shows this behaviour. The returned value should
+> never be larger than (1 << 28) - 1, which is 268435455. The trigger
+> shows that we can in fact go larger than this, a value that is not taken
+> into account by the range analysis.
+> 
+> This can lead to an incorrect elimination of a bounds check for an array
+> access and therefore an out-of-bounds read and write primitive.
+> Definitely one of the neatest Firefox bugs I've seen in a while!
 
-Mitigation:
+The Twitter thread above includes some screenshots, which I did not
+include here.  They're helpful, but not essential for understanding.
 
-PaX/Grsecurity's KERNEXEC/UDEREF
-SMEP
-
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+Alexander
