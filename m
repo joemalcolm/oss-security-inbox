@@ -1,4 +1,4 @@
-Received: (qmail 27858 invoked by uid 550); 27 Dec 2022 10:25:49 -0000
+Received: (qmail 1537 invoked by uid 550); 25 Mar 2024 10:08:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,102 +7,129 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27837 invoked from network); 27 Dec 2022 10:25:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1672136737; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=avipjlmwjgSBv3LADLwDkEO/zXDoLrAlAMJ7fn+xA2A=;
-	b=Y3oX0lDrRARns4a+AyppMCor419pkVm2ykf0Ku449HuM4n/YH07IFFl3Js5GhGOFMT9FUV
-	PpC1lvkYpIKYkh+RWlGvZHm8ScuwS+hoTqiGVqEu7p9RfVA3QRt0NanB8KjqFWAVBdD0/2
-	2ZUpKcPq7uUVxm7NMmOqbIxsqYBvu3I=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1672136737;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=avipjlmwjgSBv3LADLwDkEO/zXDoLrAlAMJ7fn+xA2A=;
-	b=bNiZ6wXCjypP1rl1H1WpeWc3aiM+bxC/ZcpH2P2ZUMUcP3juNIFeB1nKs4Y3HqdG+iFYxG
-	sjtX230InVnkZSAA==
-Date: Tue, 27 Dec 2022 11:25:36 +0100
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 1518 invoked from network); 25 Mar 2024 10:08:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711361578; x=1711966378; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nyHTBzXknqRz5jOa5nZMS3jqwHSVRlSvHzgi+s35SsE=;
+        b=jo2BPfhOkwuplf77Tc2/wtyeYIUC2MIXFmp/UHkUT/JWT/pA/1t+WnYAhBmGxSq0WZ
+         mqWpOKbBzfgFh0uhZrskN8XDyeCx5rOVVRKmi7zhiP+IE1TL4gaWByRi0t8PTC0H/5fD
+         Xt5Z+tHPuXNgnLTGuo4u60JlykrLm4I6ISJ0AOm/ZZkhmuCuCgZLfYdWJ+0U/EoTpizR
+         YSedlRiUHSRsGa0boc0x7+xoh4F6WXwpJMW+9qygdfg/uj6KxhaRsqHaq1WO9Xq4Okv4
+         FSGCQzILbV/iVM4o+fXE7cxqPHcWPyNDqPifzT77gBOthQCGhLjsuy4mCuwEUr6bnnLJ
+         Wkmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711361578; x=1711966378;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nyHTBzXknqRz5jOa5nZMS3jqwHSVRlSvHzgi+s35SsE=;
+        b=eRswlTp419Dof8NpjwQo+X/SSjnF6k84gCf1pcxdO9BsaZ8ef5a1HVAqlfHEqWvvEm
+         tF028VpSbsSCUjYLMstbgwN/QVujkIlSL/mCzNeyUc7XfMsyCKqP6SQ+C58PLV4V+uR3
+         dCUzzmmLg92kGmsXNvCXslXh3SDlmQloA00NIr2gB/anfChLkmmhldu/+kH4RiMkZoXT
+         /h+TuejJVJmgLSEcTh4bt3CRtW5u9b2BDHPGhYdTy11muJqut4hPp5541XLJrQasKGZJ
+         A/PCdTKgcJXGnDHEzjAMCDYwyWKxHSL9kXVxwFbGMkyjdpWisi0qdI1BE8OeUpiIM0HM
+         u7nw==
+X-Gm-Message-State: AOJu0YxyM86n0TULf7BMIEzxJmBj4GBbE7fQHHrE04V9g0qlCjEk930K
+	ftnJNAG+W+CK2eymofng19QQVpzJkBeA3i37ojkBwtA7xDNr5rQIS2K3SVGJevc=
+X-Google-Smtp-Source: AGHT+IHCMt4sseIaKfus38ulayZmcQeuGGh9DQ5LBLszv9AManfyF3wpWe3X3Na19bfKH+kxM9rTZA==
+X-Received: by 2002:adf:ec48:0:b0:33e:1560:71a8 with SMTP id w8-20020adfec48000000b0033e156071a8mr4456936wrn.7.1711361578034;
+        Mon, 25 Mar 2024 03:12:58 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Mon, 25 Mar 2024 11:12:56 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20221227102535.GH4524@suse.de>
-References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
- <Y6TQ0HyCJOMkKSDn@netmeister.org>
- <Y6VTdO608VUE38Ke@kroah.com>
- <20221223081727.GB2404@suse.de>
- <Y6W1aSG2z5mBJDu8@sashalap>
- <Y6W5IcAzIUb5rD1F@kroah.com>
- <20221223161906.GC4524@suse.de>
- <Y6XcWDBY2uBellV3@gentoo.org>
+Message-ID: <ZgFOKFCJarJj1N4w@eldamar.lan>
+References: <cef0f6f4-ecb2-4ab6-bd5e-cac84b937125@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y6XcWDBY2uBellV3@gentoo.org>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
+In-Reply-To: <cef0f6f4-ecb2-4ab6-bd5e-cac84b937125@oracle.com>
+Subject: Re: [oss-security] GNU emacs 29.3 released to fix security issues
 
-On Fri, Dec 23, 2022 at 10:50:32AM -0600, John Helmert III wrote:
-> On Fri, Dec 23, 2022 at 05:19:06PM +0100, Marcus Meissner wrote:
-> > On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
-> > > On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
-> > > > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> > > > > Not sure why they do not like you, but to be very clear anyone else can
-> > > > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
-> > > > 
-> > > > For CVEs assigned (earlier this month) to issues in drivers/staging,
-> > > > what would be the process to remove the assignment or mark them as
-> > > > invalid?
-> > > 
-> > > And who is doing this "blacklisting" of staging drivers from CVEs?  Why
-> > > are they special when many distros do enable and rely on them?
-> > 
-> > This is just information I received when I tried to allocate a CVE for a
-> > staging driver.
-> > 
-> > It has been over a year ago, so perhaps the this changed meanwhile again.
+Hi,
+
+On Sun, Mar 24, 2024 at 09:05:20AM -0700, Alan Coopersmith wrote:
+> https://lists.gnu.org/archive/html/info-gnu/2024-03/msg00005.html reports:
 > 
-> SUSE is a CNA. Wouldn't you be able to oassign a CVE via the SUSE CNA
-> without going through MITRE?
-
-Every CNA has to follow its set CVE assignment rules.
-
-The SUSE CNA is only allowed to assign CVEs for issues in SUSE products
-/ SUSE specific code patches, preferably only non-public ones to avoid
-dups. See:
-
-	https://www.cve.org/PartnerInformation/ListofPartners/partner/suse
-
-There is one fallback OSS CNA, which is the Red Hat CNA.
-It is allowed to assign CVEs for OSS issues, and also is a root on its own:
-
-	https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat
-
-> > > In my talks with MITRE, they have said they don't want to make public
-> > > statments about the CVE issues and Linux, which is sad, but they never
-> > > mentioned anything about "we will ignore this portion of the kernel
-> > > source tree".  Is that in a public statement anywhere that I can point
-> > > to when people ask the kernel security team for CVEs?
+> > Version 29.3 of Emacs, the extensible text editor, should now
+> > be available from your nearest GNU mirror:
 > > 
-> > No, it was in a private email, I will search for it, but I cannot
-> > promise I will find it again.
+> >    https://ftpmirror.gnu.org/emacs/emacs-29.3.tar.xz
+> >    https://ftpmirror.gnu.org/emacs/emacs-29.3.tar.gz[...]
+> > Emacs 29.3 is an emergency bugfix release; it includes no new features
+> > except a small number of changes intended to resolve security
+> > vulnerabilities uncovered in Emacs 29.2.  See the file etc/NEWS in the
+> > tarball; you can view it from Emacs by typing 'C-h n', or by clicking
+> > Help->Emacs News from the menu bar.
 > > 
-> > Ciao, Marcus
+> > You can also browse NEWS on-line using this URL:
+> > 
+> >   https://git.savannah.gnu.org/cgit/emacs.git/tree/etc/NEWS?h=emacs-29
+> > 
+> > For the complete list of changes and the people who made them, see the
+> > various ChangeLog files in the source distribution.  For a summary of
+> > all the people who have contributed to Emacs, see the etc/AUTHORS
+> > file.
+> > 
+> > For more information about Emacs, see:
+> >   https://www.gnu.org/software/emacs
 > 
-> Relatedly, I find it very frustrating how little visibility there is
-> into the world's interactions with cveform.mitre.org. Your form inputs
-> aren't even sent back to you in the automated response, which makes it
-> quite hard to keep track of the state of changes you've asked for.
+> https://git.savannah.gnu.org/cgit/emacs.git/tree/etc/NEWS?h=emacs-29
+> lists these changes:
+> 
+> > * Changes in Emacs 29.3
+> > Emacs 29.3 is an emergency bugfix release intended to fix several
+> > security vulnerabilities described below.
+> > 
+> > ** Arbitrary Lisp code is no longer evaluated as part of turning on Org mode.
+> > This is for security reasons, to avoid evaluating malicious Lisp code.
+> > 
+> > ** New buffer-local variable 'untrusted-content'.
+> > When this is non-nil, Lisp programs should treat buffer contents with
+> > extra caution.
+> > 
+> > ** Gnus now treats inline MIME contents as untrusted.
+> > To get back previous insecure behavior, 'untrusted-content' should be
+> > reset to nil in the buffer.
+> > 
+> > ** LaTeX preview is now by default disabled for email attachments.
+> > To get back previous insecure behavior, set the variable
+> > 'org--latex-preview-when-risky' to a non-nil value.
+> > 
+> > ** Org mode now considers contents of remote files to be untrusted.
+> > Remote files are recognized by calling 'file-remote-p'.
+> 
+> The detailed changelogs are at:
+> https://git.savannah.gnu.org/cgit/emacs.git/tree/ChangeLog.4?h=emacs-29
 
-Yes, I agree, it is a bit intransparent.
+Related to this there is as well an org-mode update:
 
-Lets see how this all changes, as this manual CVE requesting
-should be done way less in the future, as most requests will be more via the CVE 
-automation APIs in the future (FWIW CNAs already submit via github pull requests).
+https://list.orgmode.org/87o7b3eczr.fsf@bzg.fr/T/#t
 
-Ciao, Marcus
+quoting that post:
+
+> I just released Org mode 9.6.23 that fixes several critical
+> vulnerabilities. The release is coordinated with emergency Emacs 29.3
+> release
+> (https://lists.gnu.org/archive/html/info-gnu/2024-03/msg00005.html).
+> 
+> Please upgrade your Org mode *and* Emacs ASAP.
+> 
+> The vulnerabilities involve arbitrary Elisp and LaTeX evaluation when
+> previewing attachments in Emacs or when opening third-party Org files.
+> 
+> The arbitrary Elisp evaluation is fixed by this release.
+> 
+> The fix for LaTeX evaluation requires Emacs 29.3 and will not work for
+> the earlier Emacs versions. If upgrading Emacs is not viable, as a
+> workaround, you can set `org-preview-latex-default-process' to 'verbatim
+> - this will disable LaTeX previews and avoid the vulnerability.
+
+I believe CVE assignments are yet missing. RedHat folks, can you
+assign CVEs as needed for the individual emacs and org-mode issues?
+
+Regards,
+Salvatore
