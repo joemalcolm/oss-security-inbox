@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3148" "Thursday" "20" "October" "2016" "09:43:48" "+0200" "Marcus Meissner" "meissner@suse.de" "<20161020074348.GC18803@suse.de>" "76" "Re: [oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)" nil nil nil "10" "2016102007:43:48" "[oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)" (number mark "U       meissner@sus Oct 20   76/3148  " thread-indent "\"Re: [oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)\"\n") "<5202386.CNWfkh1GhB@blackgate>" ("<5202386.CNWfkh1GhB@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28074 invoked by uid 550); 20 Oct 2016 07:44:02 -0000
+Received: (qmail 13917 invoked by uid 550); 26 Mar 2024 00:33:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,98 +7,127 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28053 invoked from network); 20 Oct 2016 07:44:02 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 20 Oct 2016 09:43:48 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20161020074348.GC18803@suse.de>
-References: <5202386.CNWfkh1GhB@blackgate>
+Received: (qmail 21580 invoked from network); 25 Mar 2024 23:31:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=LN+NTymopWCYSLghaUwao2XgjQ1owgd9F5D0VDU0YZs=; b=kmdVDrzePqrEiyoETZdnf4nH/0
+	8Wec2C2iJOIjyYS3dL6ohPGTuG4BttNsuvNU+oav9RtKrXcy738jvSolLXhT8sosgF3X7GTgxCnyF
+	Z55SVLy6sKbHoCxU96e/G642BqyCSTNZtb4BGsvd6hN84vsnqttJrrC7JsUHeqFvrqp+FPYQysWv3
+	czA4dvfWvdgZQwH9F9fas7GDmfKWngo1mcohzYsVzINz0PG/BzJWkWuC+j0nYQgb2KT01PxZSGTRZ
+	eOumqgnuzsBom7+RhA4QSps1RuuItjMFK5qPMVJKbQNmHtR4SD2AEzKY6+l+fMleUnbPjkJ50Td+X
+	UlAUIzmA==;
+Date: Tue, 26 Mar 2024 01:35:28 +0200
+Message-ID: <20240326013528.GD1018219@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="7emtdgs3NHvTmNrW"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0002
+
+--7emtdgs3NHvTmNrW
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5202386.CNWfkh1GhB@blackgate>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] imagemagick: memory allocation failure in
- AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)
+Content-Transfer-Encoding: base64
 
-Hi,
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBTZWN1cml0eSBBZHZpc29yeSAgICAgICAgICAgICAgICAgV1NB
+LTIwMjQtMDAwMgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUg
+cmVwb3J0ZWQgICAgICAgICAgIDogTWFyY2ggMjYsIDIwMjQKQWR2aXNvcnkg
+SUQgICAgICAgICAgICAgOiBXU0EtMjAyNC0wMDAyCldlYktpdEdUSyBBZHZp
+c29yeSBVUkwgIDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5L1dT
+QS0yMDI0LTAwMDIuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5IFVSTCA6IGh0
+dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDAyLmh0
+bWwKQ1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC0yMzI1Miwg
+Q1ZFLTIwMjQtMjMyNTQsCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZF
+LTIwMjQtMjMyNjMsIENWRS0yMDI0LTIzMjgwLAogICAgICAgICAgICAgICAg
+ICAgICAgICAgIENWRS0yMDI0LTIzMjg0LCBDVkUtMjAyMy00Mjk1MCwKICAg
+ICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyMy00Mjk1NiwgQ1ZFLTIw
+MjMtNDI4NDMuCgpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2Nv
+dmVyZWQgaW4gV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0LgoKQ1ZFLTIwMjQt
+MjMyNTIKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQ
+RSBXZWJLaXQgYmVmb3JlIDIuNDQuMC4KICAgIENyZWRpdCB0byBhbmJ1MTAy
+NCBvZiBTZWNBTlQuCiAgICBJbXBhY3Q6IFByb2Nlc3Npbmcgd2ViIGNvbnRl
+bnQgbWF5IGxlYWQgdG8gYSBkZW5pYWwtb2Ytc2VydmljZS4KICAgIERlc2Ny
+aXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVk
+IG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjYzNzU4
+CgpDVkUtMjAyNC0yMzI1NAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktp
+dEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40NC4wLgogICAgQ3JlZGl0
+IHRvIEphbWVzIExlZSAoQFdpbmRvd3NyY2VyKS4KICAgIEltcGFjdDogQSBt
+YWxpY2lvdXMgd2Vic2l0ZSBtYXkgZXhmaWx0cmF0ZSBhdWRpbyBkYXRhIGNy
+b3NzLW9yaWdpbi4KICAgIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFk
+ZHJlc3NlZCB3aXRoIGltcHJvdmVkIFVJIGhhbmRsaW5nLgogICAgV2ViS2l0
+IEJ1Z3ppbGxhOiAyNjM3OTUKCkNWRS0yMDI0LTIzMjYzCiAgICBWZXJzaW9u
+cyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAy
+LjQ0LjAuCiAgICBDcmVkaXQgdG8gSm9oYW4gQ2FybHNzb24gKGpvYXhjYXIp
+LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQg
+d2ViIGNvbnRlbnQgbWF5IHByZXZlbnQKICAgIENvbnRlbnQgU2VjdXJpdHkg
+UG9saWN5IGZyb20gYmVpbmcgZW5mb3JjZWQuIERlc2NyaXB0aW9uOiBBIGxv
+Z2ljCiAgICBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgdmFs
+aWRhdGlvbi4KICAgIFdlYktpdCBCdWd6aWxsYTogMjY0ODExCgpDVkUtMjAy
+NC0yMzI4MAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBiZWZvcmUgMi40NC4wLgogICAgQ3JlZGl0IHRvIEFuIGFu
+b255bW91cyByZXNlYXJjaGVyLgogICAgSW1wYWN0OiBBIG1hbGljaW91c2x5
+IGNyYWZ0ZWQgd2VicGFnZSBtYXkgYmUgYWJsZSB0byBmaW5nZXJwcmludCB0
+aGUKICAgIHVzZXIuIERlc2NyaXB0aW9uOiBBbiBpbmplY3Rpb24gaXNzdWUg
+d2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkCiAgICB2YWxpZGF0aW9uLgog
+ICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjY3MDMKCkNWRS0yMDI0LTIzMjg0CiAg
+ICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0
+IGJlZm9yZSAyLjQ0LjAuCiAgICBDcmVkaXQgdG8gR2VvcmcgRmVsYmVyIGFu
+ZCBNYXJjbyBTcXVhcmNpbmEuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFs
+aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgcHJldmVudAogICAg
+Q29udGVudCBTZWN1cml0eSBQb2xpY3kgZnJvbSBiZWluZyBlbmZvcmNlZC4g
+RGVzY3JpcHRpb246IEEgbG9naWMKICAgIGlzc3VlIHdhcyBhZGRyZXNzZWQg
+d2l0aCBpbXByb3ZlZCBzdGF0ZSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1
+Z3ppbGxhOiAyNjcyNDEKCkNWRS0yMDIzLTQyOTUwCiAgICBWZXJzaW9ucyBh
+ZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ0
+LjAuCiAgICBDcmVkaXQgdG8gTmFuIFdhbmcgKEBldGVybmFsc2FrdXJhMTMp
+IG9mIDM2MCBWdWxuZXJhYmlsaXR5IFJlc2VhcmNoCiAgICBJbnN0aXR1dGUg
+YW5kIHJ1c2hpa2VzaCBuYW5kZWRrYXIuCiAgICBJbXBhY3Q6IFByb2Nlc3Np
+bmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0
+bwogICAgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBEZXNjcmlwdGlvbjog
+QSB1c2UgYWZ0ZXIgZnJlZSBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRo
+IGltcHJvdmVkIG1lbW9yeSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3pp
+bGxhOiAyNjM2ODIKCkNWRS0yMDIzLTQyOTU2CiAgICBWZXJzaW9ucyBhZmZl
+Y3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ0LjAu
+CiAgICBDcmVkaXQgdG8gU3VuZ0t3b24gTGVlIChEZW1vbi5UZWFtKS4KICAg
+IEltcGFjdDogUHJvY2Vzc2luZyB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBh
+IGRlbmlhbC1vZi1zZXJ2aWNlLgogICAgRGVzY3JpcHRpb246IFRoZSBpc3N1
+ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5n
+LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjM5ODkKCkNWRS0yMDIzLTQyODQz
+CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
+S2l0IGJlZm9yZSAyLjQ0LjAuCiAgICBDcmVkaXQgdG8gS2FjcGVyIEt3YXBp
+c3ogKEBLS0thc18pLgogICAgSW1wYWN0OiBWaXNpdGluZyBhIG1hbGljaW91
+cyB3ZWJzaXRlIG1heSBsZWFkIHRvIGFkZHJlc3MgYmFyCiAgICBzcG9vZmlu
+Zy4gRGVzY3JpcHRpb246IEFuIGluY29uc2lzdGVudCB1c2VyIGludGVyZmFj
+ZSBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIHN0YXRl
+IG1hbmFnZW1lbnQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI2MDA0NgoKCldl
+IHJlY29tbWVuZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJz
+aW9ucyBvZiBXZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBi
+ZXN0IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2
+ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMg
+Zm9yIGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVh
+c2VzLgoKRnVydGhlciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5k
+IFdQRSBXZWJLaXQgc2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUgZm91bmQg
+YXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1sIG9yCmh0
+dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS8uCgpUaGUgV2ViS2l0R1RL
+IGFuZCBXUEUgV2ViS2l0IHRlYW0sCk1hcmNoIDI2LCAyMDI0Cg==
 
-A general comment on all you fuzzy security researchers.
+--7emtdgs3NHvTmNrW
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Please _always_ attach the testcase and/or make it available via easy accessible means.
+-----BEGIN PGP SIGNATURE-----
 
-(We are very happy that Hanno does this.)
+iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZgIKQAAKCRCRxVnb5MkS
+OwFUAJ9e3P9paf3x11X0ySZF/Fk5nP/rlQCeNkngBLST6uEgdlfpIwTRCRHo8gM=
+=YIes
+-----END PGP SIGNATURE-----
 
-Sincerely, your otherwise very unhappy security incident response engineers.
-
-On Thu, Oct 20, 2016 at 09:27:24AM +0200, Agostino Sarubbo wrote:
-> Description:
-> imagemagick is a software suite to create, edit, compose, or convert bitmap 
-> images.
-> 
-> Another round of fuzzing pointed out that the memory allocation failure I 
-> discovered is still reproducible in the 7.0.3.4 version.
-> As usual, the upstream security policy are enabled.
-> 
-> The interesting part of the ASan stacktrace(not full because is a copy past of 
-> the one in the provious post):
-> 
-> # identify $FILE
->    #9 0x7f467fd11c67 in AcquireMagickMemory /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:460:10
->     #10 0x7f467fd11c67 in AcquireQuantumMemory /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:533
->     #11 0x7f4673379018 in ReadRLEImage /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/coders/rle.c:267:36
->     #12 0x7f467faeca85 in ReadImage /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:496:13
->     #13 0x7f467fff4def in ReadStream /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/stream.c:1012:9
->     #14 0x7f467faeb69d in PingImage /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:226:9
->     #15 0x7f467faebeae in PingImages /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:326:10
->     #16 0x7f467f40f4da in IdentifyImageCommand /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/identify.c:319:18
->     #17 0x7f467f48a844 in MagickCommandGenesis /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/mogrify.c:183:14
->     #18 0x4f1fae in MagickMain /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:145:10
->     #19 0x4f1fae in main /tmp/portage/media-
-> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:176
->     #20 0x7f467e35d61f in __libc_start_main /var/tmp/portage/sys-
-> libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
->     #21 0x4192a8 in _init (/usr/bin/magick+0x4192a8)
-> Affected version:
-> 7.0.3.4
-> 
-> Fixed version:
-> N/A
-> 
-> Commit fix:
-> 
-> Credit:
-> This bug was discovered by Agostino Sarubbo of Gentoo.
-> 
-> CVE:
-> N/A
-> 
-> Timeline:
-> 2016-10-13: bug re-discovered
-> 2016-10-13: bug re-reported to upstream
-> 2016-10-20: blog post about the issue
-> 
-> Note:
-> This bug was found with American Fuzzy Lop.
-> 
-> Permalink:
-> https://blogs.gentoo.org/ago/2016/10/20/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862/
-> 
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+--7emtdgs3NHvTmNrW--
