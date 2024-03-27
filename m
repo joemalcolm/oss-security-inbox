@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["618" "Thursday" "25" "June" "2015" "16:53:03" "+0530" "Anirudh Anand" "anirudhanand722@gmail.com" "<CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>" "24" "[oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues" nil nil nil "6" "2015062511:23:03" "[oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues" (number mark "        anirudhanand Jun 25   24/618   " thread-indent "\"[oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19811 invoked by uid 550); 25 Jun 2015 11:30:50 -0000
+Received: (qmail 5524 invoked by uid 550); 27 Mar 2024 06:53:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +6,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15973 invoked from network); 25 Jun 2015 11:23:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=3pK1z3YNevxPXlKmLHSyOurcQJguzyPdjT2vaJv/36s=;
-        b=T+dnExZNwoWib3i/2coEbSLfD6SN5adXUBe7XeTIt9mEC7US0Pwx7Im59/WniJJpbp
-         iJKcjUOYRV15k9uvhV0ynXcMa74VmJJ0GXQD14WKEfUF6b5ZdC1+S9Rlm4dMSfDbe5Dn
-         QEQ3y7NAd/6oiaHpc+MTDAVIbFzYKQ2wOGCa/7L3O8R+zq2gdUyroWSG0xj0BvzXrfyV
-         ZHd8RwkgNkMtXUo/26JWhyn2SsM4x1nCdSIQxcRfokijuaeJpAuyjl9X59aATifd5AWH
-         rYQBbCPCXdVsV/vGE4Emzgioefn6RUxng10jbvT2EbPyMHAo80MnfekYL2XngNEenDhn
-         7djQ==
-MIME-Version: 1.0
-X-Received: by 10.55.18.158 with SMTP id 30mr52768918qks.17.1435231383709;
- Thu, 25 Jun 2015 04:23:03 -0700 (PDT)
-Message-ID: <CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1146f482cc1395051955d8e9
-Date: Thu, 25 Jun 2015 16:53:03 +0530
-From: Anirudh Anand <anirudhanand722@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 5506 invoked from network); 27 Mar 2024 06:53:23 -0000
+Date: Wed, 27 Mar 2024 07:58:00 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <p3977r70-o1oo-156p-4970-rr80638qo7s@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-2004: Usage of disabled
+ protocol
 
---001a1146f482cc1395051955d8e9
-Content-Type: text/plain; charset=UTF-8
+Usage of disabled protocol
+==========================
 
-Hello,
+Project curl Security Advisory, March 27 2024 -
+[Permalink](https://curl.se/docs/CVE-2024-2004.html)
 
-I would like to receive CVE identifier for the following Issues in the
-latest version of Anchor CMS:
+VULNERABILITY
+-------------
 
-*Reference: *
-https://github.com/anchorcms/anchor-cms/issues/876
+When a protocol selection parameter option disables all protocols without
+adding any then the default set of protocols would remain in the allowed set
+due to an error in the logic for removing protocols. The below command would
+perform a request to curl.se with a plaintext protocol which has been
+explicitly disabled.
 
-Anchor CMS is a very popular content Management System. There are multiple
-Stored and DOM based XSS issues in it as reported in the reference. These
-issues persists in all the latest Anchor CMS releases.
+     curl --proto -all,-http http://curl.se
+
+The flaw is only present if the set of selected protocols disables the entire
+set of available protocols, in itself a command with no practical use and
+therefore unlikely to be encountered in real situations. The curl security team
+has thus assessed this to be low severity bug.
+
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2024-2004 to this issue.
+
+CWE-115: Misinterpretation of Input
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.85.0 to and including 8.6.0
+- Not affected versions: curl < 7.85.0 and >= 8.7.0
+- Introduced-in: https://github.com/curl/curl/commit/e6f8445edef8e7996d1
+
+libcurl is used by many applications, but not always advertised as such!
+
+This flaw is also accessible using the curl command line tool.
+
+SOLUTION
+------------
+
+Starting in curl 8.7.0, the set of allowed protocols is cleared before the set
+of disabled protocols is inspected, leaving all protocols disabled even in the
+error path.
+
+- Fixed-in: https://github.com/curl/curl/commit/17d302e56221
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.7.0
+
+  B - Apply the patch to your local version
+
+  C - Inspect any scripts which constructs curl commands with `--proto` options
+      to make sure there is at least one allowed protocol
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on February 15, 2024. We contacted
+distros@openwall on March 19, 2024.
+
+curl 8.7.0 was released on March 27 2024 around 07:00 UTC, coordinated with
+the publication of this advisory.
+
+The curl security team is not aware of any active exploits using this
+vulnerability.
+
+CREDITS
+-------
+
+- Reported-by: Dan Fandrich
+- Patched-by: Daniel Gustafsson
+
+Thanks a lot!
+
 -- 
 
-Anirudh Anand
-bi0s@AMRITA
-www.securethelock.com
-
-*"Those who Say it cannot be done, should not interrupt the people doing
-it"*
-
---001a1146f482cc1395051955d8e9--
+  / daniel.haxx.se
