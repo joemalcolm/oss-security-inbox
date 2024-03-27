@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2438" "Wednesday" "6" "January" "2016" "03:25:13" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160106082513.E5702332074@smtpvbsrv1.mitre.org>" "71" "[oss-security] Re: CVE request for radicale" nil nil nil "1" "2016010608:25:13" "[oss-security] Re: CVE request for radicale" (number mark "U       cve-assign@m Jan  6   71/2438  " thread-indent "\"[oss-security] Re: CVE request for radicale\"\n") "<1451995511.3914.25.camel@debian.org>" ("<1451995511.3914.25.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21769 invoked by uid 550); 6 Jan 2016 08:25:26 -0000
+Received: (qmail 1890 invoked by uid 550); 27 Mar 2024 23:25:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,83 +7,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21749 invoked from network); 6 Jan 2016 08:25:25 -0000
-From: cve-assign@mitre.org
-To: corsac@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1451995511.3914.25.camel@debian.org>
-Message-Id: <20160106082513.E5702332074@smtpvbsrv1.mitre.org>
-Date: Wed,  6 Jan 2016 03:25:13 -0500 (EST)
-Subject: [oss-security] Re: CVE request for radicale
+Received: (qmail 1511 invoked from network); 27 Mar 2024 23:24:53 -0000
+Date: Thu, 28 Mar 2024 00:29:35 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Karel Zak <kzak@redhat.com>,
+	"Skyler Ferrante (RIT Student)" <sjf5462@rit.edu>
+Message-ID: <20240327232935.GA17111@openwall.com>
+References: <CAEOG19rkUU8Pam5N67xyE9upepp_MahcnY48nek-VBAwo_NyAg@mail.gmail.com> <20240327213041.qyr7sglmxgdmtcb4@jwilk.net> <ZgSlAmss1tT8M2vZ@itl-email>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZgSlAmss1tT8M2vZ@itl-email>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in util-linux wall
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://github.com/Kozea/Radicale/pull/343
-> http://radicale.org/news/#2015-12-31@11:54:03
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=809920
+CC's added for upstream and reporter of the original issue, neither of
+whom appears subscribed.
 
->> This fixes a number of issues with dodgy path handling
+On Wed, Mar 27, 2024 at 07:00:02PM -0400, Demi Marie Obenour wrote:
+> On Wed, Mar 27, 2024 at 10:30:41PM +0100, Jakub Wilk wrote:
+> > While looking through upstream git for a fix for this??, I stumbled upon
+> > another write(1)/wall(1) control character injection vulnerability,
+> > introduced last year in util-linux v2.39.
+> > 
+> > The offending commits are:
+> > 
+> > * https://github.com/util-linux/util-linux/commit/8a7b8456d1dc0e7c
+> >   ("write: correctly handle wide characters")
+> > * https://github.com/util-linux/util-linux/commit/aa13246a1bf1be9e
+> >   ("wall: use fputs_careful()")
+> > 
+> > The added comment says:
+> > 
+> > > The locale of the recipient is nominally unknown,
+> > > but it's a solid bet that the encoding is compatible with the author's.
+> > 
+> > Alas the bet is not that solid when writer's locale encoding is controlled
+> > by an attacker.
+> > 
+> > We can exploit this against terminal emulators that recognize C1 control
+> > characters, such as Linux VTs or screen(1):
+> > 
+> >    $ printf '\302\23331mMOO\302\2330m\n' | LC_ALL=kk_KZ wall
+> > 
+> > I don't see any good way to fix this on the util-linux's side. It should be
+> > fixed on the terminal emulators' side by disabling C1 support.
+> > 
+> > 
+> > ?? https://github.com/util-linux/util-linux/commit/404b0781f52f7c04
+> >   ("wall: fix escape sequence Injection [CVE-2024-28085]")
+> 
+> Would enforcing UTF-8 validity (regardless of user locale) be a
+> solution?
 
->> Many improvements in this release are related to security
+Not a complete solution.  I'm currently not aware of a safe way to allow
+multi-byte characters coming from concurrent writers, see:
 
-We do not see a straightforward way to determine the total number of
-independent vulnerabilities. For example:
+https://www.openwall.com/lists/oss-security/2015/09/20/1
 
-  Paths like .., ../.. or // are not sanitized correctly
+and the next message in that thread.
 
-  The program crashes if a path doesn't start with base_prefix instead of showing an error message
+In fact, even plain ASCII isn't entirely safe if it just happens to be
+injected into the middle of a control sequence that the target user's
+program was printing, thereby altering its effect.
 
-  On MS Windows the filesystem backend allows access to the first level of files on a drive.
+That said, perhaps write(1)/wall(1) just shouldn't allow bytes from both
+C0 and C1 ranges (except for TAB, LF, space) regardless of locale
+settings, at least when the programs are running SUID/SGID.  That is,
+unless the invoking user - which in this case is likely root - could
+have directly written to the target user's tty anyway.  In other words,
+mostly revert those offending commits.  Or just revert them completely.
 
-  Improve the regex used for well-known URIs
-
-  Decouple the daemon from its parent environment
-
-  Avoid race condition in PID file creation
-
-are missing information about the attacker and/or the impact.
-
-
-
-These might potentially be overlapping observations:
-
-  Paths like .., ../.. or // are not sanitized correctly
-
-  Improve the regex used for well-known URIs
-
-  Prevent crafted HTTP request from calling arbitrary functions
-
-  Improve URI sanitation and conversion to filesystem path
-
-  
-
-For now, we will start with two CVE IDs for the change information that
-seems somewhat more clear:
-
-CVE-2015-8747 - The multifilesystem backend allows access to arbitrary files on all platforms.
-
-CVE-2015-8748 - Prevent regex injection in rights management
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWjM5nAAoJEL54rhJi8gl5CT8P/3BdMvzOj6xjmM/jITW6Xabs
-F4KoH+xeoN8dABnJLMYoFxJSokjVlvNu2CbdQo4JIdE76iTLTG48s5BPOlga/6Nh
-fbEDGk+lrEsWro86FUDQh0oJYFcJCQdOS+GNSi3KW2I7DQVKvsvO5lTvG8zUNH8k
-ELJ67CVjFR2g1DeiTnJaXYIeGoDPf0YckjagpGnxZKR6ZFjKi0YOTSPThWNSqIVG
-I0NZxXpcno+MMylsSg7f9KObwkti8eFl6oFHzxOTuyugJjQbkpkdXBfY08ZiVBOq
-Ik44z97aIZqaGKpiDdYPZnLhSfeBAT8i0kDZn5SH5Am0Oacb5WF2774Vj1NOQtdT
-D4Z2q+KpydU9hMeIeaEz84IjF2JoZapZax32zY+vQI28jzrbWmJ2EFiMIHh29fHk
-h97+pz/nRlebbLcUcwvs9we6Bec0ZyA74+XCPH68UferVg5YUD85mbTl+elIB9x7
-VAD/9hKGzqEnuQNfaOEur6H+gfik6667qpcelYnpxa+ReidcUwtkq0MmkmZwaGBl
-Jw5mji3a77BhbakfMAc18OfJ16Xrd+bV5ffd/mFA0jegQDtd8HiY5+mMPDdKU5Sx
-kePOeaQxTM22mnFvYuyHekW/tZR8zWIajSbFpG/wQwM5E05Kr/KuIyozlU5oZWDj
-/Xvt2kqc2sHESQq+kDhG
-=HPXl
------END PGP SIGNATURE-----
+Alexander
