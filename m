@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6812" "Friday" "19" "March" "2021" "20:20:29" "+0000" "Eddie Chapman" "eddie@ehuk.net" nil "137" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       eddie@ehuk.n Mar 19  137/6812  " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24417 invoked by uid 550); 19 Mar 2021 20:35:51 -0000
+Received: (qmail 21916 invoked by uid 550); 27 Mar 2024 22:59:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,168 +7,132 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16366 invoked from network); 19 Mar 2021 20:20:41 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk ADD23BFBD4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1616185229; bh=lTEg8rUjMllRVdVtNQUL7MUrBx8+BfHThxqGFj787jk=;
-	h=Reply-To:Subject:To:References:From:Date:In-Reply-To:From;
-	b=ruwemYidbCoC31ZJcN8b5KdgahRoC7AjzHy9UplZqyo/xRqXO9BNUZjuiiXs+/cZ3
-	 Bg7Yis4YM6MBkJOO7nFaAfy0BrO7nY4MpbP+S9MCWSR25IqxpjV8sEnUcvKHMuP3J/
-	 /OeXkkRL58tJlUpNqanA9/yrJ6tvKPx1ur7weqq0=
+Received: (qmail 13458 invoked from network); 27 Mar 2024 22:55:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1711580420;
+	 x=1711666820; bh=ti6U56nA7hFTM9I3cQXMNC6hsZSFjc84BNPHWZxKS7Y=; b=
+	bYhtprS343ZTtzWw3UeGks7K8zT505zgOlDZPNnDCRtus4gjs4vjVo5qyR+zJghV
+	rlgqVj0LT/+g7uWyNQL54tDhjnPvJaAfJ6MGZ3gRyCeeSDUbgEbUjuKYgTRY6NZS
+	VrBDFu/jAMASsEVn1XXBA0kpvqroSqeYLrO8vzVy53u0bInLi2XzA8b3vsJWtuZj
+	P3kHFf/Asvoo6PAJWcqCSKpty+f26+prRTTaSxQUOKbxcpwmvXFlHDKFfX1/NnGE
+	BGRH8kidlzENk+arpodh24OHe16mQLoGQrrAV+9brfKBBO41Gn3pk0rpzMFZk5UD
+	iAdR7NP4lago623Wua687A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711580420; x=1711666820; bh=ti6U56nA7hFTM9I3cQXMNC6hsZSF
+	jc84BNPHWZxKS7Y=; b=kRWLxnr7Yxz4gUXpYfrpyfZKjFoCttF0r3+dHlc2YxCt
+	vrP9VvQI/rrYZPbGJ1qz5UevdVSNfjo7A67VV9K0NepvGgIJQss3nziXguM4W8GY
+	S534A2WSezYG/A5frRoGNCme7r2C4M40wtPTMcXfhELLhJv+oPvmOSCjGasqCtOa
+	WQJfq10XT6bSLOI6tAoe2QU6rpa6Tl1RL6kgMwzrkeVCO/nutqyCh3S71gB5arr+
+	iPiJmtF7uJ2eBtwu6NrIrm+j/vGsE6M9cTBxyNA/3h4HoZlvV7nUj4RrdCcmBJJ+
+	iG+IA2u3cHMwXvr/nXtTEb+oGPe0JVFoXFoIK78zfQ==
+X-ME-Sender: <xms:A6UEZgruLisSXBwTrzZCdMAR0iOCJJBfeBUh4jAiIRYwa1XY0eCskQ>
+    <xme:A6UEZmpyBvLSPnJytgD9M_t4O3YTP4M7guizWsmhWzfa0xL-kR5s-PU3TaDZfzF_u
+    GSrW44Ig_7Kexg>
+X-ME-Received: <xmr:A6UEZlNLojSIV5c6IC7KAjh3oTcUK4WWVFCFxqjfLGl2N5NcHkWmxA60HK63YWlkG_5C0YrHMdBikbWgHV3FN9Am9kHxvWx36ECfvy0oEn0G0t-N>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddukedgtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
+    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
+    epueekieetvdefffffheevleehiedtgfeitdeukeeiueehjeekhfettddtveffjeefnecu
+    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhl
+    rggsrdgtohhm
+X-ME-Proxy: <xmx:BKUEZn4QLujuZsuhwxrS9MDcC7jHLtrgofp351iCE1Z_9ODZAN2DEw>
+    <xmx:BKUEZv792fKrBCxVEvF6CTyqYdZImuZlFzj-WLIxasuTgF_XKgnFlg>
+    <xmx:BKUEZnj1ESyJrbmLgakHzX8zXE8mL2cFwnGo_eOvvY8Idn2KeR_HTw>
+    <xmx:BKUEZp7lbLNlxFA8TwKlclzhQMK3dNziBVBzwCWwBMaY697HfGDoUg>
+    <xmx:BKUEZpRtu0n2Uk6jA70hM-Us9loLsUT-_gUlBA_GpvGWsXHudir12Q>
+Feedback-ID: iac594737:Fastmail
+Date: Wed, 27 Mar 2024 19:00:02 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
- <YFNCtWmsYrtYQeEJ@kroah.com> <YFOLo/QrlgIrFotJ@wopr>
- <YFOc8bhUAKOgjfVS@sashalap> <20210318192136.GA6178@openwall.com>
- <YFSyTOoNtyrQvrH3@sashalap> <20210319144311.GA22152@grsecurity.net>
- <YFTlezXaxyIRxcKN@sashalap>
-From: Eddie Chapman <eddie@ehuk.net>
-Message-ID: <a904e396-d4e7-632c-e0f2-78021f8284ce@ehuk.net>
-Date: Fri, 19 Mar 2021 20:20:29 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+Message-ID: <ZgSlAmss1tT8M2vZ@itl-email>
+References: <CAEOG19rkUU8Pam5N67xyE9upepp_MahcnY48nek-VBAwo_NyAg@mail.gmail.com>
+ <20240327213041.qyr7sglmxgdmtcb4@jwilk.net>
 MIME-Version: 1.0
-In-Reply-To: <YFTlezXaxyIRxcKN@sashalap>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang
-Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper
- synchronization in flush_to_ldisc() can lead to DoS
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+91qtLFP3wKN2X26"
+Content-Disposition: inline
+In-Reply-To: <20240327213041.qyr7sglmxgdmtcb4@jwilk.net>
+Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in
+ util-linux wall
 
-On 19/03/2021 17:55, Sasha Levin wrote:
-> On Fri, Mar 19, 2021 at 10:43:11AM -0400, Brad Spengler wrote:
->> Hi Sasha,
->>
->> I'm sorry, but I can't let this email demonstrating a complete lack of
->> self-awareness go without comment.
->>
->>> I suppose we can't *require* them, but it's a matter of curtesy, right?
->>> They already have that information, and instead of making a bunch of
->>> other people do the same job they could just share the information to
->>> begin with.
->>
->> I'm seriously baffled that you could type those words out with a straight
->> face.  As we know happens often, including with the recent iSCSI
->> vulnerabilities, upstream has intentionally omitted CVE information
->> from kernel commit messages -- in other words:
->> "they already have the information, and instead of making a bunch of
->> other people do the same job they could just share the information to
->> begin with."
-> 
-> I'm really not sure how to respond to this. I don't own upstream, my
-> name isn't Linus, Greg, nor do I maintain a major subsystem. I don't
-> have any control over how upstream commits look like.
-> 
-> This isn't a claim that that process is perfect, this is just me saying
-> that you're barking up the wrong tree. I'd happily add that Linus's
-> "obfuscated" commit messages are making things more difficult for me,
-> but again - I can't control what he does.
-> 
-> Which is why I can type what I typed with a straight face: I'm trying to
-> improve the oss-sec process, I'm not in any way claiming the upstream is
-> superior or anything. I'm not sure why you're personally attacking me
-> here for the upstream process.
-> 
->> Do none of you understand at all that the problems that exist are 
->> entirely
->> of your own creation?  Neither you nor Greg ever come to this list with
->> announcements of your own.  That you have to endure a tiny fraction of 
->> what
-> 
-> I don't usually discover security vulnerabilities these days. I did in
-> the past and those were assigned CVE numbers.
-> 
-> Otherwise, I don't do analysis of a security impact of a fix.
-> 
->> the rest of the world is inflicted with from your intentional actions --
->> sorry, you are not the victims here, and it's completely ridiculous to
->> paint yourselves as one.
-> 
-> Could you specify what actions *I* did to hurt the world?
-> 
->> Greg started his tirade yesterday with a false assumption that the stable
->> kernels had already fixed the one issue August of last year.  That was 
->> not
->> true (stable kernels < 5.7 were all missing the fix).  Then he claimed 
->> SuSE
->> didn't bother to backport the fix.  That was not true:
->> https://github.com/SUSE/kernel/commit/b93bddd7ae24aa8ebe48d13dcff4011a34861482 
->>
->>
->> If you guys want to complain about bad information, leaving it out of 
->> useless
->> snarky replies would be a good start.
-> 
-> Can you please stop complaining about Greg's mails as if I was the one
-> who wrote them? I'm not his alter-ego, twin, or so on. If you have a
-> concern with what he writes take it up with him.
-> 
-> My concern with the notifications is that some of them don't even
-> include a commit id, I never claimed (nor will) claim that stable
-> already fixed them all. On the contrary, I want that commit id to make
-> sure we did.
-> 
->>> Exactly, they already must have this information, which is where some of
->>> the frustration around these notifications comes from: it reads as
->>> nothing more than a lip service.
->>
->> You're assuming too much -- it's quite clearly someone new at RH doing 
->> these
->> recent advisories.
-> 
-> Great, let's work together on making it better, but it's been following
-> the same pattern for quite a while now.
+--+91qtLFP3wKN2X26
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 27 Mar 2024 19:00:02 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in
+ util-linux wall
 
-I've been following this discussion with interest this week. This list 
-probably has lots of security researchers and kernel devs subscribed, 
-but I'd like to share a point of view as someone who is neither of 
-these, just a heavy user of open source professionally and personally 
-the past 20 years.
+On Wed, Mar 27, 2024 at 10:30:41PM +0100, Jakub Wilk wrote:
+> While looking through upstream git for a fix for this=C2=B9, I stumbled u=
+pon
+> another write(1)/wall(1) control character injection vulnerability,
+> introduced last year in util-linux v2.39.
+>=20
+> The offending commits are:
+>=20
+> * https://github.com/util-linux/util-linux/commit/8a7b8456d1dc0e7c
+>   ("write: correctly handle wide characters")
+> * https://github.com/util-linux/util-linux/commit/aa13246a1bf1be9e
+>   ("wall: use fputs_careful()")
+>=20
+> The added comment says:
+>=20
+> > The locale of the recipient is nominally unknown,
+> > but it's a solid bet that the encoding is compatible with the author's.
+>=20
+> Alas the bet is not that solid when writer's locale encoding is controlled
+> by an attacker.
+>=20
+> We can exploit this against terminal emulators that recognize C1 control
+> characters, such as Linux VTs or screen(1):
+>=20
+>    $ printf '\302\23331mMOO\302\2330m\n' | LC_ALL=3Dkk_KZ wall
+>=20
+> I don't see any good way to fix this on the util-linux's side. It should =
+be
+> fixed on the terminal emulators' side by disabling C1 support.
+>=20
+>=20
+> =C2=B9 https://github.com/util-linux/util-linux/commit/404b0781f52f7c04
+>   ("wall: fix escape sequence Injection [CVE-2024-28085]")
 
-I've always compiled my own kernels from upstream kernel.org stable 
-releases for all machines I look after. I know I'm in the minority and 
-stupid for making life harder for myself, but I prefer it that way. I 
-follow the upstream stable list as much as I can, read commit messages 
-of releases. I try to be as aware as I can about security issues so I 
-can keep my boxes secure, and this list has been an invaluable source of 
-info to me for many years. Thanks to the moderator who I'm sure has a 
-very difficult job at times.
+Would enforcing UTF-8 validity (regardless of user locale) be a
+solution?
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-It is certainly evident to me that the "quality" of security 
-announcements made by researchers, organisations, maintainers, in 
-general varies greatly. For someone in my shoes, when an announcement is 
-made that includes plenty of specific information, I appreciate it so 
-much. For most software, lack of info in a vulnerability announcement is 
-not a big deal and I often go hunting for info on a project's website or 
-git repo and can relatively easily find it. But the kernel is so 
-gigantic now that quality, specific info in an announcement, to someone 
-like me who builds their own kernels, makes all the difference.
+--+91qtLFP3wKN2X26
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This is OSS, there are many volunteers, nobody owes anyone anything, 
-that's fine, I'm grateful for anyone's efforts whatever they are. I'm 
-especially mindful of that when reading a security announcement from a 
-small project with 1 dev working in their spare time. But at the other 
-end of the scale are the giants who make a lot of money from the kernel 
-and have a lot of resources. None of them owe me anything, I'm not their 
-customer or partner. But I certainly look at them a lot differently than 
-the small project. I notice how they behave in this community, and I am 
-certainly much less generous when forming an opinion about them.
+-----BEGIN PGP SIGNATURE-----
 
-Red Hat contributes a lot, hires a lot of developers, I respect them and 
-what they do, Fedora is a great distro. The security write-ups on their 
-website about vulnerabilities are often excellent. But I'm sorry to say 
-that in my view, which I know is not worth a cent, the security 
-announcements they've made on this list this week have been very thin on 
-detail, and they have appeared completely uninterested in improving 
-them. I completely understand the frustrations expressed by Greg and 
-Sasha as a result. A company the size of Red Hat, with their resources, 
-involved in kernel development as much as they are, I'm sure would agree 
-themselves that they should be doing a lot better. But to the individual 
-sending the announcements, please know I don't believe you are at fault 
-here in any way, my criticism goes to Red Hat as an organisation which I 
-respect and wish to see do better in this particular aspect of their 
-involvement in the community.
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmYEpQEACgkQsoi1X/+c
+IsEAZxAAozgHZk/r3S3pF8Hen7+xBwpx3uyXfmAK6dmeOuFjtAObUgO4/KiWNrQP
+oqRL9nuXCeLdUp4dAz8JBWBXIX+kBifCBBlsNtVed71J0ZpCMfMMprA8g9JRHOLP
+p7jm0JkMyw3nEKEy7kyZRlAmzjAmZxYTLPmOOdFfKoqOhC+b6rTDjiDg2AGAVo8/
+dGc5q2gvhmJ9lBXlS65Q2KbHoIS2EtT6Yo8R3GipN0RJlF6z3qyxQyXaRnzOPg88
+aV5oSzCQDMupxIPeFOL2FCuhM63AWfX+MDEtWOlUnsdpOMmj1NH6l3OUvaSTCrNT
+/f8RlhK8RPiC/4R3J5SR3QnWszofwdSK9xiN8O4FMGcdwysy8vvTiai70NjgvXIq
+auy2UrsCPAZVh9LQYzOwQvjGF1iczVB+NmsWEj8nDFmUbWU0koycr1vlXd8KrEqA
+/nHQUv4kN8srWgKTeGBw4pdPlBSa7H8m91Mi9i8e2bEjZ7o4T7XOSRw/V34nkssW
+r3vljnRfIGEujlPfT4A6UUD3IQAMkfH7SGx5bMIZ5OhmB56p5sAgPGgT/ImlwC0n
+XU9DtHlVaRsSbVPn4P5jerLWmwf0XuTQOYN6Q/3XMzlLcDv0/7cyTYakoXbE88VM
+MEwz85Wauj6jW/ca5qioGsHfZiqN0ltz003i14sszoecWp6/eD0=
+=iMpM
+-----END PGP SIGNATURE-----
 
-Right, thanks for listening, back to lurking in the shadows ...
-
-Eddie
+--+91qtLFP3wKN2X26--
