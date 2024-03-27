@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["842" "Thursday" "24" "March" "2022" "06:43:07" "+0100" "Petr =?utf-8?B?xaB0ZXRpYXI=?=" "ynezz@true.cz" nil "27" "Re: [oss-security] zlib memory corruption on deflate (i.e. compress)" "^Cc:" nil nil "3" nil nil (number mark "        ynezz@true.c Mar 24   27/842   " thread-indent "\"Re: [oss-security] zlib memory corruption on deflate (i.e. compress)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] zlib memory corruption on deflate (i.e. compress)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5469 invoked by uid 550); 24 Mar 2022 08:46:56 -0000
+Received: (qmail 7782 invoked by uid 550); 27 Mar 2024 06:53:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22497 invoked from network); 24 Mar 2022 05:43:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=true.cz; s=xnet;
-	t=1648100612; bh=9Nhy6ICF5zzE3cav3zecvbExcz7ZK70fVp6i87NUomE=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To;
-	b=rNWJTX8DsCGkGEvLX7IvWqD1BgrGFP+5nHiM3pBjTpa73ws06jBWKPiJgDNNyPksD
-	 NUOfvwfbHQprddcLh1cIbJHEnfMiNz3Jg8uL1/EOmzPZe/n/8b/Fxt1Lr7UpxmM4oZ
-	 dAPcwU/n3MrG/OkuFP/Crz8c41ijri1JKvR1COno=
-Message-ID: <20220324054307.GA74811@meh.true.cz>
-References: <20220324034949.GA25415@thinkstation.cmpxchg8b.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220324034949.GA25415@thinkstation.cmpxchg8b.net>
-X-PGP-Key: https://gist.githubusercontent.com/ynezz/477f6d7a1623a591b0806699f9fc8a27/raw/a0878b8ed17e56f36ebf9e06a6b888a2cd66281b/pgp-key.pub
-Cc: madler@alumni.caltech.edu
-Date: Thu, 24 Mar 2022 06:43:07 +0100
-From: Petr =?utf-8?Q?=C5=A0tetiar?= <ynezz@true.cz>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] zlib memory corruption on deflate (i.e. compress)
-To: oss-security@lists.openwall.com
+Received: (qmail 7754 invoked from network); 27 Mar 2024 06:53:35 -0000
+Date: Wed, 27 Mar 2024 07:58:12 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <6n72s9s8-q3p4-72q-5q96-1rp804n33p7@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-2466: TLS certificate check bypass
+ with mbedTLS
 
-Tavis Ormandy <taviso@gmail.com> [2022-03-23 20:49:49]:
+TLS certificate check bypass with mbedTLS
+=========================================
 
-[ adding Mark to the Cc: loop ]
+Project curl Security Advisory, March 27th 2024 -
+[Permalink](https://curl.se/docs/CVE-2024-2466.html)
 
-Hi,
+VULNERABILITY
+-------------
 
-> Greetings list, I was recently trying to track down a reproducible crash
-> in a compressor. Believe it or not, it really was a bug in
-> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
+libcurl did not check the server certificate of TLS connections done to a host
+specified as an IP address, when built to use mbedTLS.
 
-thank you for letting us know!
+libcurl would wrongly avoid using the set hostname function when the specified
+hostname was given as an IP address, therefore completely skipping the
+certificate check. This affects all uses of TLS protocols (HTTPS, FTPS, IMAPS,
+POPS3, SMTPS, etc).
 
-> I reported it upstream, but it turns out the issue has been public since
-> 2018, but the patch never made it into a release. As far as I know,
-> nobody ever assigned it a CVE.
-> 
-> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
-> 
-> As far as I can tell, no distros have picked this up.
+INFO
+----
 
-It's mostly due to the fact, that AFAIK it has never hit the release. Mark,
-would it be please possible to do another point release with that security
-fix included? Thanks!
+Since the SNI field is not set when using a hostname set as an IP address,
+many requests will fail to communicate with the correct endpoint or get the
+correct data. Somewhat lessening the possible impact.
 
-Cheers,
+Not all versions of mbedTLS supports server certificate checks for IP
+addresses, so when this issue is fixed all attempts to connect directly to an
+IP address over TLS might fail.
 
-Petr
+This vulnerability is similar to a past curl vulnerability identified as
+CVE-2016-3739.
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2024-2466 to this issue.
+
+CWE-297: Improper Validation of Certificate with Host Mismatch
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for curl and libcurl built to use mbedTLS.
+
+- Affected versions: curl 8.5.0 to and including 8.6.0
+- Not affected versions: curl < 8.5.0 and >= 8.7.0
+- Introduced-in: https://github.com/curl/curl/commit/fa714830e92cba7b16b9d3f
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/3d0fd382a29b95561b90b7ea3e7e
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 8.7.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Build your libcurl with another TLS backend
+
+TIMELINE
+---------
+
+This issue was reported to the curl project on March 14, 2024. We contacted
+distros@openwall on March 19, 2024.
+
+curl 8.7.0 was released on March 27 2024 around 07:00 UTC, coordinated with
+the publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Frank Yueh
+- Patched-by: Stefan Eissing
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
