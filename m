@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["878" "Monday" "24" "April" "2017" "14:46:05" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170424124605.GG22557@suse.de>" "29" "Re: [oss-security] libcroco: heap overflow and undefined behavior" nil nil nil "4" "2017042412:46:05" "[oss-security] libcroco: heap overflow and undefined behavior" (number mark "U       meissner@sus Apr 24   29/878   " thread-indent "\"Re: [oss-security] libcroco: heap overflow and undefined behavior\"\n") "<2144211.BpqYkg82hc@arcadia>" ("<2144211.BpqYkg82hc@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28213 invoked by uid 550); 24 Apr 2017 12:46:17 -0000
+Received: (qmail 15866 invoked by uid 550); 28 Mar 2024 07:32:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28195 invoked from network); 24 Apr 2017 12:46:17 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 24 Apr 2017 14:46:05 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20170424124605.GG22557@suse.de>
-References: <2144211.BpqYkg82hc@arcadia>
+Received: (qmail 15845 invoked from network); 28 Mar 2024 07:32:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711611430; x=1712216230; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=etJaHsr7anF/UIiD99r29gV6adwKVSCfPjUuVUGbyjI=;
+        b=E8M0dpv20Bit3R0MqPMo9DEzpEG6H9c4kIVEvo61GpF7gS/RA3snKDnGtTaHqetJfu
+         v+RfNOUNOcaSWF7XnVO62ioLjJjiGXmj+Azdip4FfslBQIOUZo7o9YVhHrwYXEWmkOuX
+         cEw9YgQc4o9cDOR1tyyHostAUrDw/+iffCW6drECAd51oKDyvAn120OBuabzNj57n0aK
+         1DWgVa6637duc3ZlYjgFQVHH9UBjR8BdRFjVt9fkxVN1qhj2t0/xWYu2OwIug1XU7Yfz
+         8mLDA+olaet+WFfMI3an+PCZtUFbVPOg9cf7I/8PgDHdRQB2KoCUsnGy8CUCOWDCMA3i
+         Y+ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711611430; x=1712216230;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=etJaHsr7anF/UIiD99r29gV6adwKVSCfPjUuVUGbyjI=;
+        b=uaEt051pYgZ+Kpr5OfjZ7JKI0ehCKgX3sTRt3wfCxQARdUFjv2amaA6qHGlyPbMUx+
+         WJMvexoF8YkpVXM93a2LlaKxzvh3xTA6FT/pJaA8pMHxqwv8HcYnFpA3DTfsxS/3lq5q
+         XsJnPjSugnGXNb6WgpPO5ZA7ZomM9xGmyeuL/IKcDtsR1qXKbgCDGysLtnfqhB9r1wTA
+         OQ+7harO2qRI05x3Ff1bzJcN88wDUz7w8Y4A3/oMhJu5C3zTHXGf8Ap+GS+6Ri3p1o+t
+         WLSXSm+mxRv0jKsvJeDVVu9az6d4MlAvbsXi/zh9OSkmKXwGxyyBgkanBtt0z4wtvx01
+         LhLA==
+X-Gm-Message-State: AOJu0YwaHI3EfoWboX6Pz7aaGjv92r5C0aUJo8LeolbClsMIFANlhGFg
+	b7qAT8kt+akVIhFOIk7QMKJdxh28bkafWUBaBxhMhalXZJT4hGAENDpmJzOU2Bq6PJCp2s3KR8c
+	x60p8blGhrWyIZZQ46AhXbrQjTKw1jlzD32e40A==
+X-Google-Smtp-Source: AGHT+IFspVvuTgmNiYINtvJu/bSxGLHB9xmPY7r5cZn2Fn0TAjklVKE6ceJSg4aZ0kCgqwWbdacHCWln2osskWGEVvA=
+X-Received: by 2002:a25:dc0b:0:b0:dc7:46e7:7aea with SMTP id
+ y11-20020a25dc0b000000b00dc746e77aeamr2246665ybe.47.1711611430056; Thu, 28
+ Mar 2024 00:37:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2144211.BpqYkg82hc@arcadia>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] libcroco: heap overflow and undefined behavior
+References: <CAEOG19rkUU8Pam5N67xyE9upepp_MahcnY48nek-VBAwo_NyAg@mail.gmail.com>
+ <20240327213041.qyr7sglmxgdmtcb4@jwilk.net> <ZgSlAmss1tT8M2vZ@itl-email>
+In-Reply-To: <ZgSlAmss1tT8M2vZ@itl-email>
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Date: Thu, 28 Mar 2024 15:36:43 +0800
+Message-ID: <CAN_LGv21fn2e4wYEfuStomeDo7qfWXciw51J3MgsTu5J=1dHog@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in
+ util-linux wall
 
-On Sun, Apr 23, 2017 at 12:42:04PM +0200, Agostino Sarubbo wrote:
-> Description:
-> libcroco is a Generic Cascading Style Sheet (CSS) parsing and manipulation 
-> toolkit.
+On Thu, Mar 28, 2024 at 7:04=E2=80=AFAM Demi Marie Obenour
+<demi@invisiblethingslab.com> wrote:
+>
+> On Wed, Mar 27, 2024 at 10:30:41PM +0100, Jakub Wilk wrote:
+> > While looking through upstream git for a fix for this=C2=B9, I stumbled=
+ upon
+> > another write(1)/wall(1) control character injection vulnerability,
+> > introduced last year in util-linux v2.39.
+> >
+> > The offending commits are:
+> >
+> > * https://github.com/util-linux/util-linux/commit/8a7b8456d1dc0e7c
+> >   ("write: correctly handle wide characters")
+> > * https://github.com/util-linux/util-linux/commit/aa13246a1bf1be9e
+> >   ("wall: use fputs_careful()")
+> >
+> > The added comment says:
+> >
+> > > The locale of the recipient is nominally unknown,
+> > > but it's a solid bet that the encoding is compatible with the author'=
+s.
+> >
+> > Alas the bet is not that solid when writer's locale encoding is control=
+led
+> > by an attacker.
+> >
+> > We can exploit this against terminal emulators that recognize C1 control
+> > characters, such as Linux VTs or screen(1):
+> >
+> >    $ printf '\302\23331mMOO\302\2330m\n' | LC_ALL=3Dkk_KZ wall
+> >
+> > I don't see any good way to fix this on the util-linux's side. It shoul=
+d be
+> > fixed on the terminal emulators' side by disabling C1 support.
+> >
+> >
+> > =C2=B9 https://github.com/util-linux/util-linux/commit/404b0781f52f7c04
+> >   ("wall: fix escape sequence Injection [CVE-2024-28085]")
+>
+> Would enforcing UTF-8 validity (regardless of user locale) be a
+> solution?
 
-...
+No, as UTF-8 validation does not make sense in non-UTF-8 locales.
+Enforcing ASCII for non-UTF-8 locales and UTF-8 for UTF-8 locales
+would help.
 
-> # csslint-0.6 $FILE
-> /tmp/portage/dev-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-
-> tknzr.c:1283:15: runtime error: value 9.11111e+19 is outside the range of 
-> representable values of type 'long'
-> Commit fix:
-> https://git.gnome.org/browse/libcroco/commit/?id=9ad72875e9f08e4c519ef63d44cdbd94aa9504f7
-> Reproducer:
-> https://github.com/asarubbo/poc/blob/master/00268-libcroco-outside-long
-> CVE:
-> CVE-2017-7961
-> 
-> Affected version:
-> 0.6.11 and 0.6.12
-> 
-> Fixed version:
-> 0.6.13 (not released atm)
-
-This is not a security issue in my view. The conversion surely is
-truncating the double into a long value, but there is no impact as the
-value is one of the RGB components.
-
-Ciao, Marcus
+--=20
+Alexander E. Patrakov
