@@ -1,4 +1,4 @@
-Received: (qmail 1694 invoked by uid 550); 18 Apr 2023 19:07:52 -0000
+Received: (qmail 26178 invoked by uid 550); 29 Mar 2024 22:19:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +7,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21648 invoked from network); 18 Apr 2023 18:37:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
-	Message-ID:References:MIME-Version:Content-Type:
-	Content-Disposition:In-Reply-To; bh=zKwlY5cu7JSKF0HLctFcJoXNEeEa
-	Tw37jdze6yxS9lY=; b=KcKsxnbPL2w/dwx2x3GQ3tUxapzhFYoH81ANkJqUgsA4
-	NK+XwApG6msuparHOk1uB7dPWRm+GiRRXOnuLRkdF24KlL94pAM2aOS1zRJTnb/X
-	O9Dcw0LHXaHWjWzGjJDLD9iDAgTTY+9zyynOqRxXv92ewe2jDrCPYFpNyzgWBJ0=
-Date: Wed, 19 Apr 2023 02:37:35 +0800
-From: Ruihan Li <lrh2000@pku.edu.cn>
-To: 0xef967c36@gmail.com
-Cc: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>, 
-	Ruihan Li <lrh2000@pku.edu.cn>
-Message-ID: <e6gh3axpoalp7kw7j3v47f6jk7wnz5kcyitltpfijvgs2g6djv@ed3e7aarvaak>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
- <20230418154016.GA959@openwall.com>
- <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
+Received: (qmail 26108 invoked from network); 29 Mar 2024 22:19:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=anarazel.de; h=
+	cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711750779; x=1711837179; bh=GO8HQyQvsd
+	EOPxMK8XJJAQFGvCo4AvfTkMmJeJE72/0=; b=krsBNZHl/4KdG26brrdqADlWJ1
+	KyBhxBiJY93dPpLEv7czsJfZfeLp432m/uw99sa4luVPnDoPNibPo1Sd6bmPo6rY
+	g/R/ics5ki5gd8tGRqzMBdRBlvGJnHfZ8uHZLOJMIPEhRY/X9cNSf2JY3xZOsaEY
+	TBb+oEwHMTkPx+ZJU4Qe6htsqPMCx/01b9tkdFazsyG4b0SjQpu8ke5g4+ARD7Gl
+	jRDtNXbK2CCX0jdk0bLcgifpM//RcOF6Mk/JgROmvwIq7GOke1rYK2PJ3HXUg99k
+	C/uvYBpcDhymXVFec5hkkS2Ap8j+q+olnJAbp9uxF/c+72YHuAT1vQ8j2kBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711750779; x=1711837179; bh=GO8HQyQvsdEOPxMK8XJJAQFGvCo4
+	AvfTkMmJeJE72/0=; b=ZewWCU8FpmGjK8T2zaWU3utZv5MwZMO3liMUHcPu8tre
+	2FUHbmnVij8i21dHqBPwvNxCM+veRrPxP30VxLqzAkCZ6C+agPoatQTb11Yq5yDz
+	Q4ucg2CISRBXC5UZs6XWAAkp+NJWwStOHn6ohq8BQ/8fieDFkO+Uo+1Jd7pf5zGI
+	ZdQ62rFPpyVjY5d1EacnVcIzcNXzmKq9cYH3fMeITDNcFO0Anb0POdEZ8fRrB9zN
+	sMV9GPDXdT0Lex1CMD9TgmvK/j/NkLVMcGHfrKU8qjd+hkOeBHQaL8rPrcUb7P0K
+	MrPH73uTrGxA1AcGf4v43vUxUNDUlZCzRh3ZR50Zgg==
+X-ME-Sender: <xms:ez4HZl3AZC1QQMxIX1CIJ074Q1lrujait1rfp7Pe0saaM2qhwygHPw>
+    <xme:ez4HZsGRaxwsF9N8XgwyZ3oj3i-9GZbJGuFTnlIQOXCEgMGJXABfTZh522vUw_9Pn
+    yQjcR81N0SR57Gttw>
+X-ME-Received: <xmr:ez4HZl7NDHKhu1H_j5haf2V0GLaKbLtgszMscV3HeZhQBmsPK-EPTqwpUB33zUESEviTjPtny_NTyi7OgXCBpADxCTdcyYa637XP4TLjXrqiCb5UjWg04iCUhlxW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvvddgudeivdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
+    ertddttddvnecuhfhrohhmpeetnhgurhgvshcuhfhrvghunhguuceorghnughrvghssegr
+    nhgrrhgriigvlhdruggvqeenucggtffrrghtthgvrhhnpedukefhkeelueegveetheelff
+    ffjeegleeuudelfeefuedtleffueejfffhueffudenucevlhhushhtvghrufhiiigvpedt
+    necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvshesrghnrghrrgiivghlrdguvg
+X-ME-Proxy: <xmx:ez4HZi1RgStvT_Ov924L3lLWJ90CFpjB1HO05nj816uPTQwI9J3zlQ>
+    <xmx:ez4HZoHCvcxtA8SwTpplZ1r65R8fDUu7WzW0mO0RIRntdgzaxv4aZA>
+    <xmx:ez4HZj9TXlcfsu3LbIs747FU0I3HSPfdUS5hA23VBzAyBw0Ra-pDFA>
+    <xmx:ez4HZlmdpcRJDJ6lei2Fvf6IWiZBdVPnzBB29-_eHj3YsRWL7MyHJg>
+    <xmx:ez4HZjP4FuCZiZo9VwLhcW835r6S29lOLICEBM7w4TJltfIQaCLeiQ>
+Feedback-ID: id4a34324:Fastmail
+Date: Fri, 29 Mar 2024 15:19:38 -0700
+From: Andres Freund <andres@anarazel.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io>
+ <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a88cee5ff23401457a8b156ceb5a5553.854673b9@michele.blotching>
-X-CM-TRANSID:54FpogDn7Exv4z5ksXXLDw--.20812S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Zr1UWFW3KrWDtFWxKrW5GFg_yoW8CFWkpF
-	W7KF1DGr45WF4Ikrn3Xr10gFyFqr95tFWayF1Ygr98A34YqF9aq3Z2kFs0v3yUXFykZFyS
-	qFWY9r17Gan8Z3DanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvG1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
-	w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
-	IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2
-	jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr1j6rxdM2vYz4IE04k24V
-	AvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xf
-	McIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7
-	v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVCm-wCF
-	04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26w4UJr1UMxC20s026xCaFVCjc4AY6r
-	1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CE
-	b7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0x
-	vE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAI
-	cVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa
-	73UjIFyTuYvjfUOlksUUUUU
-X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEEBVPy77qNLwAJsd
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized
- management command execution
+In-Reply-To: <uu7da3$87n$1@ciao.gmane.io>
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
+ ssh server compromise
 
 Hi,
 
-On Tue, Apr 18, 2023 at 08:13:24PM +0300, 0xef967c36@gmail.com wrote:
-> No, there's no clash. That was a bug in strace (fortunately fixed in
-> newer versions).
-> 
-> Those values macros are different; and they were ALWAYS different.
-
-A quick search shows that it is fixed in df7aa2 ("ioctl: take all 32 bits of
-ioctl commands into account") [1]. The commit message says
-> Historically, only 16 bits (8-bit number and 8-bit type) of 32-bit ioctl
-> commands were used for decoding, which was the source for numerous
-> annoying collisions like this:
+On 2024-03-29 21:54:11 -0000, Tavis Ormandy wrote:
+> On 2024-03-29, Solar Designer wrote:
+> >> I have a minor procedural question for Solar though, shouldn't this
+> >> have been redirected to oss-security immediately from distros? What's
+> >> the rationale for an embargo here?
+> >
+> > We don't have a clear policy for such case.  Some distros list members
+> > have indeed suggested making this public ASAP.  We ended up delaying
+> > publication by one day per my suggestion (as a compromise between ASAP
+> > and having no specific CRD), and I think these are some reasons why:
 >
->	ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
->	ioctl(0, MGSL_IOCGPARAMS or MMTIMER_GETRES or MTIOCTOP or SNDCTL_MIDI_MPUMODE, 0x7fffd47f7338) = -1 ENOTTY (Inappropriate ioctl for device)
-Here the first example is exactly the case we are discussing.
+> Thanks, a compromise is better than nothing :) I think I would have
+> argued for immediately discussing this in the open.
 
-[1]: https://github.com/strace/strace/commit/df7aa2b19e6f69c19fbe09180bf1ec4fb52e2615
+FWIW, I don't know much of the tradeoffs in this space. With that caveat:
 
-It appears that SNDCTL_TMR_TIMEBASE and TCGETS do have the same command code,
-which sits in the lower 16 bits. But SNDCTL_TMR_TIMEBASE uses a newer command
-encoding scheme [2] that includes the direction and argument size in the
-higher 16 bits. TCGETS, on the other hand, contains only the command code, so
-its higher bits are set to zero (TCGETS should have a really long history,
-just longer than that of the new ioctl command encoding scheme).
+Personally I would have felt quite hesitant to post to distros@ if I knew that
+distros wouldn't get a reasonable, small, amount of time to prepare, so they
+have fixed packages available at the time of the public posting.
 
-[2]: https://elixir.bootlin.com/linux/v6.3-rc7/source/include/uapi/asm-generic/ioctl.h#L5 
 
-This means we haven't had any collisions yet. Also, since new ioctl commands
-will certainly be encoded using the new encoding scheme, which TCGETS does not
-use, it is very unlikely that new collisions will occur in the future, unless
-the command code is exactly the same and the higher bits under the new
-encoding scheme are also occasionally zeros.
+> > 2. We didn't know how the culprit (or group) would react when they
+> > learned of the full extent of the community's awareness.
+>
+> This is true with any vulnerability, there is always the possibility an
+> attacker is already aware of it. They could respond to a patch being
+> released by trying to extract as much value from their exploit before
+> it's worthless.
+>
+> I'm not convinced that's a good argument to delay making the patch
+> available?
 
-Thanks,
-Ruihan Li
+What patch? You mean going back to an older version?
 
+Greetings,
+
+Andres Freund
