@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2411" "Thursday" "17" "September" "2015" "10:25:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150917142530.46F9A52E1E7@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"" nil nil nil "9" "2015091714:25:30" "[oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"" (number mark "        cve-assign@m Sep 17   55/2411  " thread-indent "\"[oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"\"\n") "<C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>" ("<C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 31950 invoked by uid 550); 17 Sep 2015 14:25:42 -0000
+Received: (qmail 30047 invoked by uid 550); 29 Mar 2024 22:12:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31930 invoked from network); 17 Sep 2015 14:25:42 -0000
-In-Reply-To: <C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>
-Message-Id: <20150917142530.46F9A52E1E7@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 17 Sep 2015 10:25:30 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library "devise-two-factor"
-To: me@justinbull.ca
+Received: (qmail 27761 invoked from network); 29 Mar 2024 22:12:21 -0000
+Date: Fri, 29 Mar 2024 23:12:14 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240329221214.GA4133@openwall.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <ZgcL9VUx6CQ5Wx/W@weckbecker.name> <20240329191926.rvyvzgtdpfwc256c@awork3.anarazel.de> <20240329214615.GA2610@openwall.com> <Zgc5qW_Q6fXNiPmH@itl-email>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zgc5qW_Q6fXNiPmH@itl-email>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh server compromise
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Mar 29, 2024 at 05:58:49PM -0400, Demi Marie Obenour wrote:
+> On Fri, Mar 29, 2024 at 10:46:15PM +0100, Solar Designer wrote:
+> > For systemd notification, I patched it (half a year ago, so not in
+> > response to these new findings) to dlopen() libsystemd into a new sshd
+> > child process that's briefly spawned on sshd service startup or restart,
+> > notifies systemd, and exits.  I could probably also drop privileges in
+> > that child process, but so far I didn't bother.  I just didn't want
+> > those libraries to stay in the process address space after startup.
+> > 
+> > Luckily, RHEL is not affected by the xz backdoor anyway, but if it were
+> > I think these changes would just happen to have prevented the backdoor
+> > from working.  Indeed, it's still bad code that could run as root (and
+> > even if not in sshd, then in other services that use libsystemd), so it
+> > could have as well e.g. modified sshd on disk, but its current way of
+> > dynamically plugging into sshd authentication wouldn't work.
+> > 
+> > I've attached the patch, which applies on top of Red Hat's patches.  If
+> > using it in a package, explicit dependency on libsystemd (or the package
+> > that provides it) should be added to the (sub)package with sshd, e.g.:
+> > 
+> > Requires: systemd-libs
+> > 
+> > That's because the package manager would no longer automatically detect
+> > the dependency, which is now a soft one.
+> > 
+> > I took this approach back then in order not to drop functionality, but
+> > I'd re-think it now.  Perhaps systemd notification isn't worth even the
+> > reduced risk, and should be dropped completely.  For the latter, an edit
+> > to the systemd unit file is needed, changing "Type=notify" to
+> > "Type=simple", which should fit "sshd -D".
+> > 
+> > Not only Red Hat'ish distros, but also Debian and Ubuntu are similar in
+> > this respect, and I think should want to make similar changes.
 
-> Date: Sun, 6 Sep 2015 11:55:41 -0400
+> What about simply open-coding sd_notify()?  sd_notify() just sends a
+> message over a Unix socket, and the protocol it uses to do that is
+> both documented and very simple.  sshd could simply implement the
+> protocol itself.
 
-> Given an attacker already knows a victim's credentials, they could
-> "shoulder surf" the victim's second factor device, obtaining the OTP,
-> and login with the known credentials & OTP within the current
-> time-step (a default 30 second window). This defeats two-factor
-> authentication for the duration of the time-step.
+Thanks.  That may be a good idea if we have to support that feature, but
+I doubt we still do.  Some other distros that use systemd manage without
+such functionality.
 
-This 2015-09-06 message is directly related to a discussion of CVE
-assignment here on 2015-06-22, but doesn't mention that that
-discussion had occurred. Specifically:
+I dig up my e-mails from last August with a former Fedora OpenSSH
+maintainer, and here's the original RH bug that prompted this in there:
 
-  http://www.openwall.com/lists/oss-security/2015/06/22/2
+Bug 1381997 - Systemctl reload sshd caused inactive service even if the service is running
+https://bugzilla.redhat.com/show_bug.cgi?id=1381997
 
-  From: cve-assign@mitre.org
+So it was a reliability issue.  It was also brought upstream and some
+changes were made:
 
-  devise-two-factor can potentially have a CVE ID. As you mentioned, the
-  attack surface is somewhat narrow, and it might make more sense to see
-  how the devise-two-factor vendor announces the update. For example, if
-  the vendor makes a code change to prevent multiple submissions and
-  describes the code change as resolving a vulnerability, then there can
-  be a CVE ID.
+https://bugzilla.mindrot.org/show_bug.cgi?id=2641
 
-The vendor did all of that, so we're assigning CVE-2015-7225.
+and the patch actually originates from Debian, where they had seen a
+similar issue:
 
-[ relevant parts include 'to protect against "shoulder-surfing" attacks' in
-https://github.com/tinfoil/devise-two-factor/blob/master/UPGRADING.md and
-'While a valid security issue, this is a very narrow vulnerability' in
-https://github.com/tinfoil/devise-two-factor/issues/45#issuecomment-139335608 ]
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778913
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=809035
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+So maybe with newer upstream code, the combination of "Type=simple" and
+"sshd -D" just works reliably.
 
-iQIcBAEBCAAGBQJV+sz+AAoJEL54rhJi8gl5FkUQAIUNoqnHZHkc6ZY5OXkG1Si+
-UIiPAUEtxTXe067zoZjEzqlsjzexzh0ld96XzD0kmfrCR0O/4tddpyX6n5Q7ooqI
-VrVp+UDJO36/qDW/ODlxjbJoWD02TdHlWd5gZVb4h7uBSKbj4PItDAMx5VGZbJgP
-msCoSOVG48odcGdbOKXR+Bb0zQQURq0s9Qxqwi28MT3IAXlyz9jjSrgyd7W4J87m
-+SrS+dL8gH22BA0rNI7UUNeCRpBOmUt9i1QPRRi9nmPjTmBtGZ1AxUXQj/VFTe1c
-fcwyvTHBsAslavhVEwbN2IzO+8ycuP55NVW90e2v2k977kHSTjiEpdJ8b3Hl7BtR
-2Tu+uZjHIUvNoLznhag/+f9LL3yhxdpgPXlmYQNFeKcsaIxiXxaNF6zg8soRQDMi
-f0hMP8yfBkwzSVZY2xl1QeZyww00+RY45WvLPilH7fkoCZmsT3ftxfQkurNViFAU
-zCDyKmQIaHXIpcOrC9qLuWmSE02NB8Qod+XkBGOd1/tRDxzMBYoVSDabFfS3npBZ
-qDK13djTq8rZKhlXrzdeTrmW5RwDhZrZSrNcdAh140lIL9DwkD/6n/JAubfH68Gn
-uFGwgRSCUbNUP8nLJ97Rv81NHNP+XYcd+X3mHumJpPf/R94/dEwkAoi6ytQsE5pr
-s9eZT7jONl8mzpQL1Vzl
-=aeha
------END PGP SIGNATURE-----
+Alexander
