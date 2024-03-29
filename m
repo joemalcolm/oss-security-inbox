@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1516" "Friday" "22" "June" "2018" "14:08:03" "+1000" "Michael Ellerman" "mpe@ellerman.id.au" "<87vaabea58.fsf@concordia.ellerman.id.au>" "45" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062204:08:03" "[oss-security] Intel hyper-threading security issues" (number mark "        mpe@ellerman Jun 22   45/1516  " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<20180621125049.GA14978@openwall.com>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621093754.GY53290@symphytum.spacehopper.org>" "<CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>" "<CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>" "<718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>" "<20180621125049.GA14978@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27847 invoked by uid 550); 22 Jun 2018 10:20:03 -0000
+Received: (qmail 9380 invoked by uid 550); 29 Mar 2024 21:05:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26361 invoked from network); 22 Jun 2018 04:08:19 -0000
-Authentication-Results: ozlabs.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au
-In-Reply-To: <20180621125049.GA14978@openwall.com>
-References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com> <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$> <20180621093754.GY53290@symphytum.spacehopper.org> <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com> <CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com> <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at> <20180621125049.GA14978@openwall.com>
-Message-ID: <87vaabea58.fsf@concordia.ellerman.id.au>
-MIME-Version: 1.0
-Content-Type: text/plain
-Date: Fri, 22 Jun 2018 14:08:03 +1000
-From: Michael Ellerman <mpe@ellerman.id.au>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Intel hyper-threading security issues
-To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+Received: (qmail 31826 invoked from network); 29 Mar 2024 20:46:28 -0000
+DKIM-Signature: a=rsa-sha256; b=Eh2fZSYQPHMmRpzG3hBCwTv8un1zwDxDRzXFGgfvNPsU2NmiC7HS9XWIn28e7nTA2GbOZl1UInBkuNShsQ5PGoc5Kjz4GT4r2iNA5Bx/P1tBRjCYbPM2OT3mbfPDRAal+oHOYr7mbMW9Gr1gdOfqrULpzbqgdXmB6vFrtvMl8awG0H+YIMWKAgoprG8woC7HN1f1aJUWaW9S3UJQ+lil5rJB3sx2jy8RdEIscNhGYNslGp37WNz8hGPXjq4l2QKXLjgnUdYNT4FfggQ44eZC+zuakb+vtvTEQPCL3qtGfJgEgKhuKkkIhfUN2iq9GSZGNZek3yzxWPS6Ifd4BHJLBw==; s=purelymail2; d=levitati.ng; v=1; bh=Jerk5x/Ep5wd1n+q9nZjoP7xWisioy5oetPN0lnvOns=; h=Received:From:To:Subject;
+DKIM-Signature: a=rsa-sha256; b=GTWRab1v4ygbEyUKyOEO9ONPjVrU4jQ94KqyYqBSADNK3kereikMmgenxd7jGEoRSFIwtuzk/2htLWGCrJsxbhn5W48XqI0xIbVN2fH+0jAJQkXyC/HbsX/okiDj2j6O97AVdXvtx4t6eYRuPG1L6sIeXCUTwkt3Q7riHj5C8VSpoISXvDwpATcf5HcHdCdZ0jauGBg8iG16iFFkwSyL72oekOPimxGAhcoCEOgzJyax/cKfdyhPk+/EgNOnMKoQBRLorjvn/R842iXdsaN5yzJaordxAm1kys/9dr/h25SyjLzHsS26E+oI0RT21bSwJur93VK0oXT3rFTNtNq/8g==; s=purelymail2; d=purelymail.com; v=1; bh=Jerk5x/Ep5wd1n+q9nZjoP7xWisioy5oetPN0lnvOns=; h=Feedback-ID:Received:From:To:Subject;
+Feedback-ID: 25799:4744:null:purelymail
+X-Pm-Original-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Date: Fri, 29 Mar 2024 21:46:05 +0100
+From: "Rein Fernhout (Levitating)" <me@levitati.ng>
+To: oss-security@lists.openwall.com
+Cc: "Alexander E. Patrakov" <patrakov@gmail.com>
+In-Reply-To: <CAN_LGv3B4_K16osLRiinny7SbOsxvvtJHbU3Fgbu4ytnEPgoww@mail.gmail.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
+ <CAN_LGv3B4_K16osLRiinny7SbOsxvvtJHbU3Fgbu4ytnEPgoww@mail.gmail.com>
+User-Agent: Purely Mail via Roundcube/1.6.5
+Message-ID: <e134c4ab081dce2bba40540075585837@purelymail.com>
+X-Sender: me@levitati.ng
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-Solar Designer <solar@openwall.com> writes:
-> On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:
->> On 2018-06-21 12:28, Lukas Odzioba wrote:
->> > Or use cpu hotplug mechanism, which should be way more convenient:
->> > https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
->> 
->> Hotplug doesn't seem differentiate between HT threads and physical
->> cores,
->
-> This isn't exactly the question to ask: first vs. second thread in a
-> core aren't any different, neither of them is "the physical core" unless
-> you choose not to use the other.
->
-> And you can obtain the needed information from /proc/cpuinfo or
-> /sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
-> disable (so that you leave only one per physical core).
->
-> On a related note, attached is a generic Linux /proc/cpuinfo parser I
+> so I would appreciate it if somebody else confirms my conclusion.
 
-I guess by "generic" you mean Intel & AMD? :)
+I can confirm there is no difference in the disassembly of libzlma in=20
+Archlinux packages 5.6.1-1 and 5.6.1-2.
 
-It won't work on powerpc, or arm, or arm64 ...
+This is the difference of the hexdumps as created by xxd:
 
-You should be able to determine all of the info you need from the sysfs
-topology files, which work across arches.
+48,49c48,49
+< 000002f0: 0300 0000 474e 5500 71f9 a255 f686 4e44  ....GNU.q..U..ND
+< 00000300: c325 3a10 dc37 9c25 c8bf b302 0000 0000  .%:..7.%........
+---
+> 000002f0: 0300 0000 474e 5500 69df 3c77 1c62 8668  ....GNU.i.<w.b.h
+> 00000300: 86ef f245 d5b1 5834 540d f808 0000 0000  ...E..X4T.......
+12804c12804
+< 00032030: 2e36 2e31 2e64 6562 7567 0000 82fd 6f66  .6.1.debug....of
+---
+> 00032030: 2e36 2e31 2e64 6562 7567 0000 4ad1 cc28  .6.1.debug..J..(
 
-See the script below for example, which shows CPUs grouped by core.
+The commit that updated the pkgrel can be seen here:
 
-cheers
+https://gitlab.archlinux.org/archlinux/packaging/packages/xz/-/commit/88138=
+5757abdc39d3cfea1c3e34ec09f637424ad
 
+5.6.1-1 was build from the tarball found in releases but 5.6.1-2 is not.
 
-#!/usr/bin/python3
-
-import os
-import glob
-
-by_core = {}
-
-for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
-    num = int(path.split('/')[5].replace('cpu', ''))
-    core_id = int(open(path).read(), 10)
-    by_core.setdefault(core_id, []).append(num)
-
-for core in sorted(by_core.keys()):
-    print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[core])])))
+On 2024-03-29 21:18, Alexander E. Patrakov wrote:
+> On Sat, Mar 30, 2024 at 2:59=E2=80=AFAM Alexander E. Patrakov
+> <patrakov@gmail.com> wrote:
+>>=20
+>> On Sat, Mar 30, 2024 at 12:09=E2=80=AFAM Andres Freund <andres@anarazel.=
+de>=20
+>> wrote:
+>> > =3D=3D Affected Systems =3D=3D
+>> >
+>> > The attached de-obfuscated script is invoked first after configure, wh=
+ere it
+>> > decides whether to modify the build process to inject the code.
+>> >
+>> > These conditions include...
+>> <snip>
+>> > Running as part of a debian or RPM package build:
+>> >     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" =3D "xx86_6=
+4";then
+>>=20
+>> Could you please confirm that the Arch Linux binary package was never
+>> actually compromised?
+>=20
+> Answering my own question. Supposedly (as "confirmed" by
+> https://lists.archlinux.org/archives/list/arch-security@lists.archlinux.o=
+rg/thread/R3HBBSVYIRTXB4O64N2WZX55BF6IIPST/),
+> "package xz before version 5.6.1-2 is vulnerable". So, I downloaded
+> versions 5.6.1-1 (supposedly vulnerable) and 5.6.1-2 (supposedly
+> fixed) from Arch Linux Archive:
+> https://archive.archlinux.org/packages/x/xz/
+>=20
+> I extracted both binary packages and disassembled the liblzma.so.5.6.1
+> library contained therein using "objdump -d". The files are not
+> identical, however, their disassembly is. Therefore, either both are
+> trojaned, or none. Based on the "if test -f "$srcdir/debian/rules" ||
+> test "x$RPM_ARCH" =3D "xx86_64";then" line, I think that the correct
+> answer is "none", and therefore no advisory should have been created.
+> But it's 4:18am here, not the best time to think, so I would
+> appreciate it if somebody else confirms my conclusion.
+>=20
+> P.S. Kudos to the reproducible-builds project for making the analysis=20
+> that easy.
