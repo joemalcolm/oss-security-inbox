@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4194" "Thursday" "4" "January" "2018" "13:02:49" "+0000" "Xen.org security team" "security@xen.org" "<E1eX5AX-0003nj-R9@xenbits.xenproject.org>" "128" "[oss-security] Xen Security Advisory 253 - x86: memory leak with MSR emulation" nil nil nil "1" "2018010413:02:49" "[oss-security] Xen Security Advisory 253 - x86: memory leak with MSR emulation" (number mark "U       security@xen Jan  4  128/4194  " thread-indent "\"[oss-security] Xen Security Advisory 253 - x86: memory leak with MSR emulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17900 invoked by uid 550); 4 Jan 2018 13:03:14 -0000
+Received: (qmail 13951 invoked by uid 550); 29 Mar 2024 22:45:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,144 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17861 invoked from network); 4 Jan 2018 13:03:13 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1eX5AX-0003nj-R9@xenbits.xenproject.org>
-Date: Thu, 04 Jan 2018 13:02:49 +0000
-Subject: [oss-security] Xen Security Advisory 253 - x86: memory leak with MSR emulation
+Received: (qmail 28604 invoked from network); 29 Mar 2024 22:43:23 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+To: oss-security@lists.openwall.com
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Fri, 29 Mar 2024 22:43:07 -0000 (UTC)
+Message-ID: <uu7g5q$8hl$1@ciao.gmane.io>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
+ <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+User-Agent: slrn/1.0.3 (Linux)
+Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On 2024-03-29, Andres Freund wrote:
+> Hi,
+>
+> On 2024-03-29 21:54:11 -0000, Tavis Ormandy wrote:
+>> On 2024-03-29, Solar Designer wrote:
+>> >> I have a minor procedural question for Solar though, shouldn't this
+>> >> have been redirected to oss-security immediately from distros? What's
+>> >> the rationale for an embargo here?
+>> >
+>> > We don't have a clear policy for such case.  Some distros list members
+>> > have indeed suggested making this public ASAP.  We ended up delaying
+>> > publication by one day per my suggestion (as a compromise between ASAP
+>> > and having no specific CRD), and I think these are some reasons why:
+>>
+>> Thanks, a compromise is better than nothing :) I think I would have
+>> argued for immediately discussing this in the open.
+>
+> FWIW, I don't know much of the tradeoffs in this space. With that caveat:
+>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Sure, it's distros moderators job to determine if an embargo is
+necessary :)
 
-                    Xen Security Advisory XSA-253
-                              version 2
+> Personally I would have felt quite hesitant to post to distros@ if I knew that
+> distros wouldn't get a reasonable, small, amount of time to prepare, so they
+> have fixed packages available at the time of the public posting.
+>
 
-                  x86: memory leak with MSR emulation
+I guess I would hope you would trust the moderators to evaluate the
+necessity of an embargo.
 
-UPDATES IN VERSION 2
-====================
+>> > 2. We didn't know how the culprit (or group) would react when they
+>> > learned of the full extent of the community's awareness.
+>>
+>> This is true with any vulnerability, there is always the possibility an
+>> attacker is already aware of it. They could respond to a patch being
+>> released by trying to extract as much value from their exploit before
+>> it's worthless.
+>>
+>> I'm not convinced that's a good argument to delay making the patch
+>> available?
+>
+> What patch? You mean going back to an older version?
+>
 
-Public release.
+No, vulnerabilities usually require a patch, and we never know if bad
+guys already know about the bug (unfortunately they won't tell us). You
+could argue that if we release a patch, the attacker might respond by
+trying to compromise as many targets as possible before their exploit is
+worthless.
 
-ISSUE DESCRIPTION
-=================
+After all, if you're spending $1M to develop an exploit, why not keep an
+eye on git commits to monitor if your investment is about to be ruined?
 
-In Xen 4.10, new infrastructure was introduced as part of an overhaul to
-how MSR emulation happens for guests.  Unfortunately, one tracking
-structure isn't freed when a vcpu is destroyed.
+If someone said "it's better to let the attackers work slowly and
+stealthily than alert them and potentially incentivize them to
+compromise lots of people". I think most people would be strongly
+opposed, I know I am!
 
-IMPACT
-======
+I think this is not significanly different to Solars argument - If we
+discuss this in public, maybe the attackers will start compromising
+systems more aggressively.
 
-A memory allocation of 8 bytes is leaked each time a vcpu is destroyed.
+Tavis.
 
-A malicious guest may, by frequently rebooting over extended periods of
-time, run the system out of memory, resulting in a Denial of Service
-(DoS).
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
 
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.10 and later are affected.  Xen 4.9 and earlier are not
-affected.
-
-Only x86 systems are affected.  ARM systems are not.
-
-All guest kinds can exploit this vulnerability.
-
-MITIGATION
-==========
-
-Limiting the frequency with which a guest is able to reboot, will
-limit the memory leak.
-
-Rebooting each host (after migrating its guests) periodically will
-reclaim the leaked space.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa253.patch           Xen 4.10, xen-unstable
-
-$ sha256sum xsa253*
-bba1abb5e4368421de29385e37f8477bf3534d3ba3ff7e2aae9c9d3da53f1393  xsa253.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaTiXyAAoJEIP+FMlX6CvZ/CIH/3LEbyAmWUSs4C2Rt0EENDLO
-JnnAGXWIy3DsffGiG9zOhfYiItn2iD+J+EcO+WC5lGPBSkX1KiXdsWVla/dJuy0F
-frx5pdqJNSHFihK/6fGU0WnSBFz6o2gkn2hOnzWfpxNLiJMrHCI6GEOcdMx6xtOQ
-9QZAa7rCN1aRx0Lx1LjuvaqPwy4rJ294zLnwarMoN10KZ3oRVbQ8mf4kN+/X+hlK
-9MxUj99WYZWcJhcRLGiQALPdRQeabh72/ZTFsfIAwPxaEgT6YhwFrFDG526iNcM0
-MkruO8HeD+byrQrni/qgB5EAIyPsFuBfvzddHzPA+9sSrf4QDjQWPFihQ3ti+xg=
-=sQVC
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa253.patch"
-Content-Disposition: attachment; filename="xsa253.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L21zcjogRnJlZSBtc3JfdmNwdV9wb2xpY3kgZHVy
-aW5nIHZjcHUgZGVzdHJ1Y3Rpb24KCmMvcyA0MTg3Zjc5ZGM3ICJ4ODYvbXNy
-OiBpbnRyb2R1Y2Ugc3RydWN0IG1zcl92Y3B1X3BvbGljeSIgaW50cm9kdWNl
-ZCBhCnBlci12Y3B1IG1lbW9yeSBhbGxvY2F0aW9uLCBidXQgZmFpbGVkIHRv
-IGZyZWUgaXQgaW4gdGhlIGNsZWFuIHZjcHUKZGVzdHJ1Y3Rpb24gY2FzZS4K
-ClRoaXMgaXMgWFNBLTI1MwoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3Bl
-ciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEph
-biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94
-ZW4vYXJjaC94ODYvZG9tYWluLmMgYi94ZW4vYXJjaC94ODYvZG9tYWluLmMK
-aW5kZXggYjE3NDY4Yy4uMGFlNzE1ZCAxMDA2NDQKLS0tIGEveGVuL2FyY2gv
-eDg2L2RvbWFpbi5jCisrKyBiL3hlbi9hcmNoL3g4Ni9kb21haW4uYwpAQCAt
-MzgyLDYgKzM4Miw5IEBAIHZvaWQgdmNwdV9kZXN0cm95KHN0cnVjdCB2Y3B1
-ICp2KQogCiAgICAgdmNwdV9kZXN0cm95X2ZwdSh2KTsKIAorICAgIHhmcmVl
-KHYtPmFyY2gubXNyKTsKKyAgICB2LT5hcmNoLm1zciA9IE5VTEw7CisKICAg
-ICBpZiAoICFpc19pZGxlX2RvbWFpbih2LT5kb21haW4pICkKICAgICAgICAg
-dnBtdV9kZXN0cm95KHYpOwogCg==
-
---=separator--
