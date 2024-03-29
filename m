@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2386" "Sunday" "18" "April" "2021" "14:51:52" "+0200" "Solar Designer" "solar@openwall.com" nil "54" "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       solar@openwa Apr 18   54/2386  " thread-indent "\"Re: [oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 4036 invoked by uid 550); 18 Apr 2021 12:53:27 -0000
+Received: (qmail 15396 invoked by uid 550); 29 Mar 2024 23:57:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +7,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3767 invoked from network); 18 Apr 2021 12:52:29 -0000
-Date: Sun, 18 Apr 2021 14:51:52 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 16031 invoked from network); 29 Mar 2024 23:49:58 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
-Message-ID: <20210418125151.GA20535@openwall.com>
-References: <20210417143105.GB3276@thinkstation> <35f3ef89-12b5-5bbd-2ddb-88a9128dd849@disroot.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <35f3ef89-12b5-5bbd-2ddb-88a9128dd849@disroot.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] xscreensaver package caps gets raw socket
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Fri, 29 Mar 2024 23:49:42 -0000 (UTC)
+Message-ID: <uu7k2m$61a$1@ciao.gmane.io>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
+ <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+ <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+ <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
+User-Agent: slrn/1.0.3 (Linux)
+Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
 
-On Sat, Apr 17, 2021 at 09:51:38PM -0300, Érico Nogueira wrote:
-> Em 17/04/2021 11:31, Tavis Ormandy escreveu:
-> >Summary of discussion so far:
-> >
-> >- In theory, mesa support running in a privileged context, their
-> >   documentation says they disable dangerous features in setuid/setgid
-> >   binaries:
-> >
-> >     https://mesa-docs.readthedocs.io/en/latest/egl.html
-> >
-> >   In fact, this is broken because they only check if (geteuid() !=
-> >   getuid()) { ... }. That check doesn't even handle setgid, let alone file
-> >   caps. If mesa agree this is a bug, simply changing their checks to if
-> >   (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
-> >   file caps and setgid for free. I filed a bug for that, but there
-> >   hasn't been a response:
-> >   https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
-> 
-> The linked issue appears to be private... Not sure it makes sense, since 
-> the problem has been explained in this public email. FWIW, libglvnd has 
-> the same issue, though it at leasts (E)GID as well. Sending it here 
-> because I couldn't find a security contact.
-> 
-> https://github.com/NVIDIA/libglvnd/blob/acc654454867c7cdd681cc1f60f858bcd6e5e729/src/EGL/libeglvendor.c
-> 
->     if (getuid() == geteuid() && getgid() == getegid()) {
->         env = getenv("__EGL_VENDOR_LIBRARY_FILENAMES");
->     }
-> 
-> I will look into opening an issue with them and finding a fix.
+On 2024-03-29, Marc Deslauriers wrote:
+>> I think we should have a policy that if issues are suspected to be actively exploited, that the issue goes public immediately.  If even there is no patch or mitigation, there's not a lot of benefit to keeping it private.
+>
+> In this case, we had no reason to believe it was being actively exploited.
+>
 
-Related:
+Yeah... but you also have no reason to not believe that?
 
-https://www.openwall.com/lists/oss-security/2019/12/04/6
+What do you propose they were doing with their backdoor?
 
-"search for LIBGL_DRIVERS_PATH finds that Mesa appears to have the same
-issue, and it also finds that we should also search for GBM_DRIVERS_PATH
-(apparently, for older Mesa) and maybe EGL_DRIVERS_PATH and EGL_DRIVER,
-and LIBVA_DRIVERS_PATH and LIBVA_DRIVER_NAME.  There are probably more."
+> If you make it public before a patch or mitigation is available, it has now gone 
+> from a single entity being able to exploit it to the whole world being able to 
+> exploit it.
+>
+> That's a whole lot worse.
+>
 
-> Using `secure_getenv` in some of these cases would probably work as well 
-> as checking `getauxval(AT_SECURE)`, especially because it seems (from my 
-> quick search over at <https://man.bsd.lv>) that both are Linux specific 
-> anyway.
-> 
-> It would be nice to define a `is_privileged_context()` function that 
-> works on most platforms to be shared across projects or used as a 
-> library.
+Okay, but do we agree that if there is a mitigation available, it's better
+for it to be public?
 
-Historically, that's __libc_enable_secure on glibc (although if
-secure_getenv() does what's needed in a given context, then you don't
-need to use __libc_enable_secure directly) and issetugid(2) on OpenBSD.
+Isn't doing `dnf downgrade xxx` a mitigation, or `systemctl xxx stop`?
 
-Alexander
+>> 
+>> I think everyone was acting in good faith here and did great work, but there wasn't a clear policy for handling this type of issue.
+>
+>
+> I would argue against having a policy requiring something like this to be made 
+> public immediately. The important thing here is to do whatever it takes to make 
+> sure users are secure as fast as possible, not expose them to even bigger attack 
+> surface with no mitigation available.
+>
+> Marc.
+
+We all want users to be secure as fast as possible. The discussion is
+whether keeping backdoors embargoed helps achieve that.
+
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
+
