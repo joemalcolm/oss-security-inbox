@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1532" "Thursday" "3" "December" "2015" "22:24:47" "-0500" "Reinhard Tartler" "siretart@gmail.com" "<CAJ0cceZmWz=hN6je8tu+tFRj=zFtcwG0B8Vyq_iELDJQh+q_ug@mail.gmail.com>" "38" "Re: [oss-security] Re: CVE request for keepassx password database export" nil nil nil "12" "2015120403:24:47" "[oss-security] Re: CVE request for keepassx password database export" (number mark "U       siretart@gma Dec  3   38/1532  " thread-indent "\"Re: [oss-security] Re: CVE request for keepassx password database export\"\n") "<20151130220422.09CD46C0211@smtpvmsrv1.mitre.org>" ("<1448877939.5015.30.camel@debian.org>" "<20151130220422.09CD46C0211@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13468 invoked by uid 550); 4 Dec 2015 05:41:58 -0000
+Received: (qmail 30542 invoked by uid 550); 29 Mar 2024 16:17:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32134 invoked from network); 4 Dec 2015 03:24:59 -0000
+Received: (qmail 22505 invoked from network); 29 Mar 2024 16:15:28 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ei3zG0iX5honeU6/4ScMharKy2qx3jid/4MTgErccmE=;
-        b=vnzAB7JnscHz2dJmDLX1bFcCUsbnhR0v4XPKFc03yvE3KtivCr4+6+Wv/NU6WwqzLC
-         UHi/x9Nqz1Zo7BoRDPJo36nPkfKJBmhAgwju1GSTJstKYytYKpn7O3TeZbq0ljAd80lT
-         Q+epHwjLweShzVYCfSIaGbXoeE9HkHzRUpaV3ciwdOCEv2AE9eq1auoip0IzUJPDZi90
-         A2YdmWfOD9gliqBJ8V+rbxc1qiu8hXfqAa4Tg6oUDf5uxsZbszIOC7ccWhcowqPa4QsH
-         eY+6lGThdWgHusGI+q2Zu6PrJYVfsb7tNkTh7OpQoKPe1lTxFscyh4FaXYJhFwJGmJ2j
-         ANPA==
+        d=gmail.com; s=20230601; t=1711729211; x=1712334011; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+Z3Jxc0Uajw6pPa+l/upiwEqzqT+V5/Wb7WD1pNrIPk=;
+        b=ZXuI7/6A2KsNZufEjc/PN2Zw9AngRVG/bTf75juCgIkfRiItyIpAHubepc1B6q3Qk9
+         1zDplIHEUl1aFpJ8rd3NjrGikj+1vMVmmEuo7lng2QfPPbjsLhiGhCI+xU0U+FtT6EJZ
+         quFNKnTjbIz+SIDnuG4yNGCOGp7YTrjDHCikKvHEARdmu79bEYkQORlHWNqfz+RCF4Vl
+         TjR1y5hUIX8Rt6YLiAFT/rLyH1tYXl3dHjU4yRmk3vsb7z/jQ0Lm3ABln3vM9HaFZCIc
+         lvKGuqUKL3H+N3jWt7wG/ov7gBaXIinZY7jaA9GnM/umxuw40TIA8FLow9UfYyKRPswC
+         sLvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711729211; x=1712334011;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+Z3Jxc0Uajw6pPa+l/upiwEqzqT+V5/Wb7WD1pNrIPk=;
+        b=Av3S6odvF+D0CtN5Vaytc/NgFoT00WjqNuqxNI/4+mj1DER7aJZPsXQhYyifX1oECm
+         jV/W/XSCgRjOKc7k0Cjeifroi3ulTAHG/rXbtTs9eFeVkD5w/+LBjufFA/okMUk2RrzJ
+         Hyc3q6WjslWBTwq96F6CJ1kCMTiya2tmqY8qVFcP2Y37LrKWPbw9L+Yck7b/7TXzwADj
+         f7NUqGhpjCiKQsd3YMkjEmED0aWGBmfErasGMo7YLL7uVjkQ4FBHaoh812C6n87AOxSI
+         6IwPZyerocUwYDIiQPIfEg8lk0brBppxwoU9Fe8SEqhPKfLGh858tYDHwNwuL+1xPHc8
+         dvuQ==
+X-Gm-Message-State: AOJu0YwQspvA7YN+nEwBjEkNV4m3KYiOZJ4tt14/Tg0F7ARrHsJDfHcS
+	da5VnHWF6EJ11p1jAL7DLvMqygKFvq5fnU8OO855D/3pnQwuB6PRhmuMK+TDYaQ/1J429UmvVys
+	b60Jb+pyh7hNIpXlqr0LhnX3C2IRdgrCtSoY=
+X-Google-Smtp-Source: AGHT+IEoqtIgl6AbdfnL5+RcdnpUO8+suzkBpC/lSz/Mc7p477g6mBnhhcHmtQHVGpStuguz4BqeXFtRkvuR/DhHJ6g=
+X-Received: by 2002:a05:6820:308a:b0:5a5:21df:7eee with SMTP id
+ eu10-20020a056820308a00b005a521df7eeemr2824864oob.1.1711729211545; Fri, 29
+ Mar 2024 09:20:11 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.31.179.80 with SMTP id c77mr7595737vkf.50.1449199487911;
- Thu, 03 Dec 2015 19:24:47 -0800 (PST)
-In-Reply-To: <20151130220422.09CD46C0211@smtpvmsrv1.mitre.org>
-References: <1448877939.5015.30.camel@debian.org>
-	<20151130220422.09CD46C0211@smtpvmsrv1.mitre.org>
-Date: Thu, 3 Dec 2015 22:24:47 -0500
-Message-ID: <CAJ0cceZmWz=hN6je8tu+tFRj=zFtcwG0B8Vyq_iELDJQh+q_ug@mail.gmail.com>
-From: Reinhard Tartler <siretart@gmail.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+In-Reply-To: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Fri, 29 Mar 2024 12:20:00 -0400
+Message-ID: <CAH8yC8kz8r-asNauLXUL106UYERUXuDWAwF=Xq12T-w-Ev0CYQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Yves-Alexis Perez <corsac@debian.org>, cve-assign@mitre.org, dev@keepassx.org, 
-	Reinhard Tartler <siretart@tauware.de>, debfx-pkg@fobos.de
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] Re: CVE request for keepassx password database export
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-On Mon, Nov 30, 2015 at 5:04 PM,  <cve-assign@mitre.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+On Fri, Mar 29, 2024 at 12:10=E2=80=AFPM Andres Freund <andres@anarazel.de>=
+ wrote:
 >
->> it seems that keepassx 0.4.3 export function are a bit buggy. Starting an
->> export (using File / Export to / KeepassX XML file) and cancelling it leads to
->> KeepassX saving a cleartext XML file in ~/.xml without any warning.
->>
->> This was reported privately to the Debian security team today, but it was
->> actually reported publicly earlier in the Debian BTS. Unfortunately the
->> maintainer didn't acknowledge the bug or forwarded it upstream, apparently.
->>
->> It's not a terrible bug per se because leaking a user password file on purpose
->> would still require a lot of social engineering skills, but it still look like
->> it should get a CVE (an user explicitly cancelling the export surely doesn't
->> expect its passwords to be there in a hidden file.
+> After observing a few odd symptoms around liblzma (part of the xz package=
+) on
+> Debian sid installations over the last weeks (logins with ssh taking a lo=
+t of
+> CPU, valgrind errors) I figured out the answer:
 >
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=791858
+> The upstream xz repository and the xz tarballs have been backdoored.
 >
->>> canceling export operation creates cleartext copy of all of the user's
->>> KeePassX password database entries
+> At first I thought this was a compromise of debian's package, but it turn=
+s out
+> to be upstream.
 >
->>> with Debian's default umask, the file is even world-readable in
->>> multiuser machines
+> =3D=3D Compromised Release Tarball =3D=3D
 >
-> Use CVE-2015-8378.
+> One portion of the backdoor is *solely in the distributed tarballs*. For
+> easier reference, here's a link to debian's import of the tarball, but it=
+ is
+> also present in the tarballs for 5.6.0 and 5.6.1:
+>
+> https://salsa.debian.org/debian/xz-utils/-/blob/debian/unstable/m4/build-=
+to-host.m4?ref_type=3Dheads#L63
+>
+> That line is *not* in the upstream source of build-to-host, nor is
+> build-to-host used by xz in git.  However, it is present in the tarballs
+> released upstream, except for the "source code" links, which I think gith=
+ub
+> generates directly from the repository contents:
+>
+> https://github.com/tukaani-project/xz/releases/tag/v5.6.0
+> https://github.com/tukaani-project/xz/releases/tag/v5.6.1
+> [...]
 
+In the past I worked with the xz author on some undefined behavior in
+C. His name is Lasse Collin, <lasse.collin@tukaani.org>. He was
+responsive and helpful.
 
-http://anonscm.debian.org/cgit/collab-maint/keepassx.git/commit/?id=b3c9028db8ec3b8752ff47717ffc792d755c1294
-should fix the issue.
+However, I used the sources from <https://tukaani.org/xz>, not GitHub.
+And it was back in the v5.0 days, not v5.6 or v5.6.1.
 
-Felix, I've imported the package from bzr to git and put it to
-collab-maint. I have not checked whether this issue also affects the
-2.0 branch. Maybe this issue would make a good case for a 0.4.4
-release?
+I suppose it would be a good idea to give him the information.
 
-Best,
-Reinhard
+Jeff
