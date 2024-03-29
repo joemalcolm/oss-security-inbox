@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["953" "Tuesday" "12" "July" "2016" "14:33:54" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>" "30" "[oss-security] CVE-2016-5389: linux kernel - challange ack information leak." "^Date:" nil nil "7" "2016071204:33:54" "[oss-security] CVE-2016-5389: linux kernel - challange ack information leak." (number mark "        wmealing@red Jul 12   30/953   " thread-indent "\"[oss-security] CVE-2016-5389: linux kernel - challange ack information leak.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9394 invoked by uid 550); 12 Jul 2016 04:34:07 -0000
+Received: (qmail 5482 invoked by uid 550); 29 Mar 2024 19:19:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9373 invoked from network); 12 Jul 2016 04:34:06 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YVcgh6xWqG5KagbKSn8rr/Eg54bYUcbjPThV6CaA50g=;
-        b=Z/AQ0pR01/6/DRI5mnYxWGaWt3a1UqSO/mLqwtm6/cIpTw+54cQNnr4qiPGWDM2I4d
-         YD6ZuAtbcahhnSC+jJIyd+ViiGEhKwLsHMAv89Eo2IroCaCGsctbp5yMRfokzKeYcyCx
-         /lR1YpUED8rn20z3labzDE3wOLSaKlpL9Ke78J+B6habcbUBfygAauv1HFQH0KR//FXZ
-         z+P1R0wSjEBrdyMo/6qEoyu9ze6YhruDGhVg1ToDE2aFEBfYFjxYCPdIUPAU7qpvEVWI
-         MC38BQgsRt6v0zeRi1yL6OM8arGV5wrvRa8doa5rwRfbJ+PU+oOqZvpJY0NhhIkbqaHS
-         BfUQ==
-X-Gm-Message-State: ALyK8tKTpAw5pDSPqRueLcbwPCEDe0KiABND32DRkR4H2oCW9ZhiwbjVieFcdW67wF6Ic6vuZZWX2uYb9T4pIjEi
-X-Received: by 10.107.37.69 with SMTP id l66mr611211iol.117.1468298034855;
- Mon, 11 Jul 2016 21:33:54 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Jul 2016 14:33:54 +1000
-From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-5389: linux kernel - challange ack information leak.
+Received: (qmail 5430 invoked from network); 29 Mar 2024 19:19:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=anarazel.de; h=
+	cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711739967; x=1711826367; bh=UZ5ELUaXnQ
+	nY0QwsueFFwMA4KTr4ELm9fCLkRj9SNas=; b=CkgrXDCFw670Sq2KqkPckyXr7I
+	8oc5zggMPYHP23xCvL/JZLnPg4FBPyHswi27jLp+rNQLZ4npt/5lAbwEyvg3KhOv
+	Rg0RtdWHxKTic8CFJkKbQ+NjErTh/ND4HCJQhcR2fH7VafwuNe0cJSNaOpOzaaZ/
+	qF5APTk0mWZI5uul80gC8MGSvPgjF4CwwgAISzGtzWT55frIJ0pGh/AFWYk4z21p
+	rU4tfP7xNgvYrA1RFUh3VEod6IQqr9ZdOupdlHTPc2vbgdwUTMmyaBhfUdFBkjje
+	GMLdXXgORnveIClO+ZpDW6xPxFo3V/XPn7/v7gP59Uf4eGF6fhMmCeeFCAaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711739967; x=1711826367; bh=UZ5ELUaXnQnY0QwsueFFwMA4KTr4
+	ELm9fCLkRj9SNas=; b=v1z2QVV6XF9TpDIhxu76vQeZdnDxW93OCRXr+LNB76Ym
+	DJ5KeXApkHpQNktFQNImHoifHNINvtcdUii9+70m2cMXKLxer+RywEnuG5StnKdQ
+	e0Gph1RutwXdqQwBnVa+kDa7pp2GbGIqHO3/n6dH0HgEjUlwx+TgUX1p5LS/GdHE
+	i2xA+KMg2+7NqpdH0dgohxrdfMDeZK70V5Lbpp764d3A8JuMgK8H2umyPQOOEpD8
+	6VzoL3jh+K+2KBCMTQ4EqfgaVDL7+o/1/oBJ72XdOQlWVPwQQ3l4i0BM+jTSzRCX
+	Lc2/UePZyWjWrN5iy+iu9gK75zNi5kAg9b3gJvdCVA==
+X-ME-Sender: <xms:PxQHZmxEnlJCs_IfMN5cDGMybISLtBH_T7E2gUtl6fGYAS2Q0p0c4g>
+    <xme:PxQHZiRGYmL2U6qa23vAEIh23IrDHD0L-g3UF3N80M6zoYgua5dD2JHgwcZZqBKMj
+    jN9cHqry6NhYaq0KQ>
+X-ME-Received: <xmr:PxQHZoWNbAdBpuf8deh9PiTL5PvGhkgwX2LiVWDW581cNk1eYCgqI3oXVDbOTspyfUCwC80bowhtILIQyqmN5-b7onLBdDbtMob02XX5i4XEk8v9oKy-_rHCQtXr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvvddguddvgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
+    ertddttddvnecuhfhrohhmpeetnhgurhgvshcuhfhrvghunhguuceorghnughrvghssegr
+    nhgrrhgriigvlhdruggvqeenucggtffrrghtthgvrhhnpedukefhkeelueegveetheelff
+    ffjeegleeuudelfeefuedtleffueejfffhueffudenucevlhhushhtvghrufhiiigvpedt
+    necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvshesrghnrghrrgiivghlrdguvg
+X-ME-Proxy: <xmx:PxQHZsgr3cES5NErpOX5gPoWNzFEZEVEx0eKiuTf4f50H_Si3Jnsfg>
+    <xmx:PxQHZoAYJUnN0nxW4GtMIX83g1SHwS7vftXmZOE8bOMxRqeS8PncdA>
+    <xmx:PxQHZtIKtY80Gtg0iNlpM_5CzGdHjO7qtT0eGvkdnTZ0qXpNA5fx4Q>
+    <xmx:PxQHZvDYA2D_yZtSst2yXlyO69bad5H7ZBdX6ZYJBgQEBAUDhueQgA>
+    <xmx:PxQHZjr2aZgetax4m6gpCGzBFHzMz3sgVcTq99pyQhjD6P7KHf8BJg>
+Feedback-ID: id4a34324:Fastmail
+Date: Fri, 29 Mar 2024 12:19:26 -0700
+From: Andres Freund <andres@anarazel.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20240329191926.rvyvzgtdpfwc256c@awork3.anarazel.de>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <ZgcL9VUx6CQ5Wx/W@weckbecker.name>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZgcL9VUx6CQ5Wx/W@weckbecker.name>
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-Gday,
+Hi,
 
-Red Hat Product Security has been made aware of an important issue in
-the Linux kernel's implementation of challenge ACKS as specified in
-RFC 5961. An attacker which knows a connections client IP, server IP
-and server port can abuse the challenge ACK mechanism
-to determine the accuracy of a normally 'blind' attack on the client or server.
+On 2024-03-29 19:44:05 +0100, Matthias Weckbecker wrote:
+> I've attached a yara rule to detect the *.o droplet you attached in the
+> email (liblzma_la-crc64-fast.o.gz).
 
-Successful exploitation of this flaw could allow a remote attacker to
-inject or control a TCP stream contents in a connection between a
-Linux device and its connected client/server.
+Unfortunately xz 5.61 added further obfuscations, making it harder to
+detect. Should have made it clearer that the attached .o was from 5.60. Among
+others 5.61 removed the two symbols you're checking against here.  That's why
+Vegard's script looks for a specific instructions sequence, but obviously is
+also more obscure :/
 
-* This does NOT mean that cryptographic information is exposed.
-* This is not a Man in the Middle (MITM) attack.
+Regards,
 
-This was reported to Red Hat by Yue Cao, part of the Cyber Security
-Group in the University of California
-
-Thanks,
-
-Wade Mealing
-Red Hat Product Security Team
-
-Red Hat Bugzilla:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1354708
-
-Patch:
-
-https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
+Andres
