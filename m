@@ -1,4 +1,4 @@
-Received: (qmail 21882 invoked by uid 550); 1 Mar 2023 15:48:25 -0000
+Received: (qmail 7908 invoked by uid 550); 29 Mar 2024 20:19:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +7,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9532 invoked from network); 1 Mar 2023 15:33:04 -0000
+Received: (qmail 7877 invoked from network); 29 Mar 2024 20:19:20 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diag.uniroma1.it; s=google; t=1677684773;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=sco5904WRJQnaNnZSnxVcdsMP7cJhwnYcFIkvMnlnm0=;
-        b=Az0+eT6xRovg5AQLHUmAYR6FT3tmWEn5xyCDyIT7LKIA0lY5AqP4F+LlFkMO3sgJht
-         g+C+jTvQUMIsRgUsAARZ0x13dmLUj/512+e7u2M1rhGy7kYFxKg+nWtKfv6QQkoh1Y3O
-         HYTB20eYsZ7QXmo4WFeR4BwUZZzw1s2tQM7dY=
+        d=gmail.com; s=20230601; t=1711743550; x=1712348350; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OA4B/R2BE8nh7BeyyxwfcijWIK52xU8dFv7Uc8j2ILE=;
+        b=Rp39VIv09dUk1mMbLIGcYoaeklI/1NMUQzFss7lZwzRff/4+OahRzyv649HI6qjVzH
+         FywvvYwZ3KoGY4y++82TX2BKHg/qxBH/MTEjWAIAmLyGEN1+60EJMaM0Cvk1JC2Yyd3I
+         vlq9e2QlhYAjf7ylecZdYHdcPspjTeNRoqdExqZh+xqfOlHGnbO9cB9as4dclkeVS8kx
+         JNT2Aq1hyK4bjo1eVl9Vl1H/8oSbFSE/4qPFGTxf0jKUMkzL+beRc/qMbRJbhgcqs74U
+         tmepTt3sn342RqHImkd3e+yzakPZ5yO1V15OI3pMSh8e2aKjDKSALFoOPy43T92RXc87
+         S4vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677684773;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sco5904WRJQnaNnZSnxVcdsMP7cJhwnYcFIkvMnlnm0=;
-        b=4xDcHdT03Go4o0XANU5Gltc1SOS4DQ/fqyjuy2jGCEarRGFHYdMJNjGja9Yb2lECi7
-         FM7LUwxMGL3VQQWfuIsUZ85Pg87h7hcsp50QQ0FNmbqd5W+WopVoK7m1aPyfR8utnGz3
-         1dmRAGuU22uf+Dr1cDNBA2FhfaLUGxWUlraCz3Z/NCnLNqwM3JY5YRhS/ei6wGu1HVn7
-         KTS4kUeQpIFZ3hXZKf4iNmvlyb7LBNT9F86P9jb+xUMzHsgvjkD5stdnAufCpoKvkQEV
-         JlXtTyGf+krazm0BWeDMn9MMIEfHJbIGBjU7YcWAHPHMoGeNralN6cqQfO9BzZfGoOHG
-         7fZQ==
-X-Gm-Message-State: AO0yUKV8KBoDlfZ+9xy/zRrGZQyuSs09dBUswVK/bWTKlvd59ivaSQ6v
-	sg1mrKqA81JYw4lZ6/uSCVb4oDVBuuKLuPmrfKwHlHXoB9PLFqxm
-X-Google-Smtp-Source: AK7set9khWTtfXPGWgrKhotbzWDgg+nvQX52OADwrn/FV9OAz5/C9d4byU1Oy6+77+yZ4PcLxsIxiOQoQR2B6Tzn+pI=
-X-Received: by 2002:a50:ab12:0:b0:4bc:9aaa:8bc with SMTP id
- s18-20020a50ab12000000b004bc9aaa08bcmr1139977edc.4.1677684773075; Wed, 01 Mar
- 2023 07:32:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1711743550; x=1712348350;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OA4B/R2BE8nh7BeyyxwfcijWIK52xU8dFv7Uc8j2ILE=;
+        b=rvM06HuNI6nenniCeGRvQIRys/C5pvzIkCmF4uQOuYxU108uzdgcCHJWjLz9g81I3f
+         bQEzjt/Xc77t/wDOVmdjRRBeR3iJSRMpybf4S3JJihPKXsP/IsoGFRSVlpuHJf0tsQkJ
+         h4Srpr7xDyFwnVKqNORhrbU3fA/ZxQ6bEabiE09vBn98gj5KPUR8xFUy3RhVQBpynG/W
+         57jcX3414ggBXRWkMzBdP5n772mn7wVRzzw/4x6j+DICde0ZYGQq+INuXs5QPUZNlCEp
+         psstUvwXY+h6ncM5E9v+Fnoysz7QKwT4yHMct91lyqNhHK5tePFl5dSX20Z0A06Hs6/n
+         9cjg==
+X-Gm-Message-State: AOJu0Yx19pnLj57B9v2nYIH/ba7pkN70Emzzf81+A8r7FhctK68zkloP
+	rZW7+SXCNhAAWgCeUP/Zyl/xAhT6LtJY0bv0gbe2g8P9Y2F8BhdBEyHuegVkcfxQPs6Q14k0FQl
+	yu7ITxn5u2XuI6eSroij34P4DjGlCPCh3hk++gDbF
+X-Google-Smtp-Source: AGHT+IH62cAbep6LvYTeGiZ37qUquzTji0qKPw4qHD5uPs/lsZiRs+9iDSEYKz03Ct1Qr80GIhQ2VGBiAWr6BOWrst4=
+X-Received: by 2002:a05:6214:174a:b0:691:3cf5:b7ad with SMTP id
+ dc10-20020a056214174a00b006913cf5b7admr6164619qvb.12.1711743550291; Fri, 29
+ Mar 2024 13:19:10 -0700 (PDT)
 MIME-Version: 1.0
-From: Pietro Borrello <borrello@diag.uniroma1.it>
-Date: Wed, 1 Mar 2023 16:32:42 +0100
-Message-ID: <CAEih1qU_yvoQUjGK3c0ncD8yMbxQ6_9+SFpWthEpK9ppq=oOyQ@mail.gmail.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
+In-Reply-To: <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Date: Sat, 30 Mar 2024 04:18:43 +0800
+Message-ID: <CAN_LGv3B4_K16osLRiinny7SbOsxvvtJHbU3Fgbu4ytnEPgoww@mail.gmail.com>
 To: oss-security@lists.openwall.com
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2023-1077: Linux kernel: Type confusion in pick_next_rt_entity()
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-Hi all,
+On Sat, Mar 30, 2024 at 2:59=E2=80=AFAM Alexander E. Patrakov
+<patrakov@gmail.com> wrote:
+>
+> On Sat, Mar 30, 2024 at 12:09=E2=80=AFAM Andres Freund <andres@anarazel.d=
+e> wrote:
+> > =3D=3D Affected Systems =3D=3D
+> >
+> > The attached de-obfuscated script is invoked first after configure, whe=
+re it
+> > decides whether to modify the build process to inject the code.
+> >
+> > These conditions include...
+> <snip>
+> > Running as part of a debian or RPM package build:
+> >     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" =3D "xx86_64=
+";then
+>
+> Could you please confirm that the Arch Linux binary package was never
+> actually compromised?
 
-I am disclosing a type confusion in the RT scheduling stack of the Linux Kernel.
-pick_next_rt_entity() caller checks that list_entry() on the scheduler queue
-does not return NULL, using a BUG_ON.
-However, this condition can never happen.
-For an empty list, list_entry() returns a type confused view of the list_head.
-The buggy condition would lead to the use of a type confused sched_rt_entity,
-causing memory corruption.
+Answering my own question. Supposedly (as "confirmed" by
+https://lists.archlinux.org/archives/list/arch-security@lists.archlinux.org=
+/thread/R3HBBSVYIRTXB4O64N2WZX55BF6IIPST/),
+"package xz before version 5.6.1-2 is vulnerable". So, I downloaded
+versions 5.6.1-1 (supposedly vulnerable) and 5.6.1-2 (supposedly
+fixed) from Arch Linux Archive:
+https://archive.archlinux.org/packages/x/xz/
 
-The proposed patch has been merged in the Linux tree:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7c4a5b89a0b5a57a64b601775b296abf77a9fe97
+I extracted both binary packages and disassembled the liblzma.so.5.6.1
+library contained therein using "objdump -d". The files are not
+identical, however, their disassembly is. Therefore, either both are
+trojaned, or none. Based on the "if test -f "$srcdir/debian/rules" ||
+test "x$RPM_ARCH" =3D "xx86_64";then" line, I think that the correct
+answer is "none", and therefore no advisory should have been created.
+But it's 4:18am here, not the best time to think, so I would
+appreciate it if somebody else confirms my conclusion.
 
-The issue has been assigned CVE-2023-1077.
+P.S. Kudos to the reproducible-builds project for making the analysis that =
+easy.
 
-Best regards,
-Pietro Borrello
+--=20
+Alexander E. Patrakov
