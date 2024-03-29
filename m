@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1595" "Thursday" "13" "August" "2015" "18:05:07" "+0100" "David Meikle" "dmeikle@apache.org" "<B7848C4E-BC38-4477-832E-B1138B83195A@apache.org>" "45" "[oss-security] [CVE-2015-3271] Apache Tika information disclosure vulnerability" nil nil nil "8" "2015081317:05:07" "[oss-security] [CVE-2015-3271] Apache Tika information disclosure vulnerability" (number mark "        dmeikle@apac Aug 13   45/1595  " thread-indent "\"[oss-security] [CVE-2015-3271] Apache Tika information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1904 invoked by uid 550); 13 Aug 2015 17:06:38 -0000
+Received: (qmail 11418 invoked by uid 550); 29 Mar 2024 23:00:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +6,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31802 invoked from network); 13 Aug 2015 17:05:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:content-type:subject:date:to:message-id:mime-version;
-        bh=ggGrj1yxK8cr/8YqVkBZ1efgLvb8fegXkd+nmgeATcU=;
-        b=HFb/YiizFXvahzcHvE9I/ke61RCerWNDwC1weO/AS01eRwrvL9YsUddsW8TKgfCPdR
-         dioqOvjumMUOBX0Jcwmn+MIR1GpEsh3UUoEtc+xg64JlOUEciI5zbbewsuG187hF5BrY
-         6yM7w+Dw7lC2NRQfZ/cfPBVZv6yk/uBIjH8Gb+vPBrC1jqkMnzk4Qh3qg/qyj9AlXMYe
-         8xSK2VkYbYESYuCezWGgW+MlJ41ytaWp0wa6KooOUXEYfaIZdWsifeUBAf19FpN8rNYI
-         qklQOgXp3QM+aOaOnlIWjc6dSPSnj7DVcFiTdObixXaGIEh/EDMkrLJGx2htsnNGOg11
-         k+nQ==
-X-Received: by 10.180.90.65 with SMTP id bu1mr7298101wib.0.1439485510388;
-        Thu, 13 Aug 2015 10:05:10 -0700 (PDT)
-Content-Type: multipart/alternative; boundary="Apple-Mail=_5E879C4C-2651-481C-AB74-7136521BD217"
-X-Priority: 1
-Message-Id: <B7848C4E-BC38-4477-832E-B1138B83195A@apache.org>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2102\))
-X-Mailer: Apple Mail (2.2102)
-Date: Thu, 13 Aug 2015 18:05:07 +0100
-From: David Meikle <dmeikle@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: David Meikle <loompa@gmail.com>
-Subject: [oss-security] [CVE-2015-3271] Apache Tika information disclosure vulnerability
-To: user@tika.apache.org,
- dev@tika.apache.org,
- security@apache.org,
- oss-security@lists.openwall.com,
- bugtraq@securityfocus.com
-
---Apple-Mail=_5E879C4C-2651-481C-AB74-7136521BD217
+Received: (qmail 1178 invoked from network); 29 Mar 2024 22:59:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1711753164; x=1743289164;
+  h=from:to:subject:date:message-id:references:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=OIUc2CfPCS3ibdrQZM9CEs3YJB3h1CT4PT06Cki6d8M=;
+  b=pCLfF18zXxgOxrirpx182Y5bi6Ou1/7GhrZioPfdyQc8YOMoYPpAwmC4
+   Hu64zEWs+m1zDe3u0d6ARKmRCEDUNe0gtay3eNW0WGc8xyQKup6DdvWnZ
+   SnmtKfFdn/TJ0F7HpS3JjerbuwAg8tzEUz5DyKswXYz1reVT8ovq2b6zG
+   8=;
+X-IronPort-AV: E=Sophos;i="6.07,166,1708387200"; 
+   d="scan'208";a="77274090"
+X-Farcaster-Flow-ID: 306876f9-48f7-401e-a9e9-6619154c0d95
+From: "Liguori, Anthony" <aliguori@amazon.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [oss-security] Re: backdoor in upstream xz/liblzma leading to
+ ssh server compromise
+Thread-Index: AQHagiy2seKHLjTh7kGoaTfVwfCagA==
+Date: Fri, 29 Mar 2024 22:59:11 +0000
+Message-ID: <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
+ <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>,<uu7g5q$8hl$1@ciao.gmane.io>
+In-Reply-To: <uu7g5q$8hl$1@ciao.gmane.io>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.187.171.33]
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+MIME-Version: 1.0
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-CVE-2015-3271: Apache Tika information disclosure vulnerability=20
+On 2024-03-29, Andres Freund wrote:
+> Hi,
+>
+> On 2024-03-29 21:54:11 -0000, Tavis Ormandy wrote:
+>> On 2024-03-29, Solar Designer wrote:
+>> >> I have a minor procedural question for Solar though, shouldn't this
+>> >> have been redirected to oss-security immediately from distros? What's
+>> >> the rationale for an embargo here?
+>> >
+>> > We don't have a clear policy for such case.=A0 Some distros list membe=
+rs
+>> > have indeed suggested making this public ASAP.=A0 We ended up delaying
+>> > publication by one day per my suggestion (as a compromise between ASAP
+>> > and having no specific CRD), and I think these are some reasons why:
+>>
+>> Thanks, a compromise is better than nothing :) I think I would have
+>> argued for immediately discussing this in the open.
+>
+> FWIW, I don't know much of the tradeoffs in this space. With that caveat:
 
-Severity: Important
+I think we should have a policy that if issues are suspected to be actively=
+ exploited, that the issue goes public immediately.  If even there is no pa=
+tch or mitigation, there's not a lot of benefit to keeping it private.
 
-Vendor:
-The Apache Software Foundation
+I think everyone was acting in good faith here and did great work, but ther=
+e wasn't a clear policy for handling this type of issue.
 
-Versions Affected:
-Apache Tika 1.9
+I very much agree that there's very little benefit to limiting the number o=
+f folks that know what's going on when someone is actively taking advantage=
+ of an issue.
 
-Description:
+Regards,
 
-Apache Tika provides optional functionality to run itself as a web service =
-to allow remote use. When used in this manner,=20
-it's possible for a 3rd party to pass a 'fileUrl' header to the Apache Tika=
- Server (tika-server). This header lets a remote
-client request that the server fetches content from the URL provided, inclu=
-ding files from the server's local filesystem.
-Depending on the file permissions set on the local filesystem, this could b=
-e used to return sensitive content from=20
-the server machine.
-
-Note this vulnerability only exists if you are running the tika-server vers=
-ion 1.9, and you allow un-trusted access to the tika-server
-URL. Usage of Apache Tika as a standard library is not affected.
-
-Mitigation:
-Apache Tika 1.9 users should upgrade to Apache Tika 1.10
-
-Example:
-wget https://repo1.maven.org/maven2/org/apache/tika/tika-server/1.9/tika-se=
-rver-1.9.jar <https://repo1.maven.org/maven2/org/apache/tika/tika-server/1.=
-9/tika-server-1.9.jar> && java -jar tika-server-1.9.jar
-curl -i -H "fileUrl:file:///etc/passwd" -H "Accept: text/plain" -X PUT http=
-://localhost:9998/tika <http://localhost:9998/tika>
-
-Credit:
-This issue was discovered by Tim Allison from the Apache Tika Community.=
-
---Apple-Mail=_5E879C4C-2651-481C-AB74-7136521BD217--
+Anthony Liguori=
