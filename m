@@ -1,4 +1,4 @@
-Received: (qmail 22217 invoked by uid 550); 21 Sep 2022 09:37:48 -0000
+Received: (qmail 24185 invoked by uid 550); 29 Mar 2024 14:36:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,60 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11582 invoked from network); 21 Sep 2022 06:17:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=eZfxSAIuCPSNfeqixvrEZ+MMSt5IgzZka4dhHTPE+ws=;
-        b=cqx5SIpNDGmRBfJMRWkZQXWGN5H+4oCWSjMvI0zzwHBLkVN5a1ZkP0j3li7GxYb5NX
-         VuTcnXESGe67Ijb2wSIjarlGkwv5UeE6oEFhnWnEHYKKtjgSlRCt2hcTukQjPXrzIzqe
-         ZzDf0SdITg/jFpPAF8jCW9dsqEklV6Q3zyQHSZgG2UFEehagT2yWLalOmRNlQWxUbd/x
-         p+fxeZ61rOS/dkl0m/Ms/Yh9+lpIr8dG2ghmAbkgdZUW8dOXmb76PgVQLkpqxaLSnemu
-         gz6wrUy061Qo2M3I/iex4uJjmEXozNeDOEvBSwAjBsgwbgpFL5/c/s3a6abS7sJW8Sez
-         mPBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=eZfxSAIuCPSNfeqixvrEZ+MMSt5IgzZka4dhHTPE+ws=;
-        b=t02hNzh4tFyq+ME0ZuGiQnO1N7BkdpBI9FhpfmZgB+/MHBOdhzjJ5KDUIoHs3RhOFg
-         OxkxAUIjSYvefY9kKFmBNobW6VLd4gDCIWDKjxqOmbpi6DagRlKrE/E2JZ1lM09T2TXQ
-         njBpMonOJSfkGrU1ZE7ZABtyTfaJEy8JVn1pqme3ljKuTIH27rxrGV8kN6pcB/CIX8J/
-         4QkJfGCwvwzuCwXk1BWhysi4JFybrllGTSf2hj3htbJiQHCQ99Ewm9CEd+JVbbzOaxgi
-         bpfZk8pNV+MFkuLQ0ej5pWspuSzw4caND/toaIyazs134NDo2WdeYTaCaUzuKSe48G7b
-         hGOw==
-X-Gm-Message-State: ACrzQf2htmw82644MmxIKoWbiSACzXlcrIENsNu8M2a8cNFPVooMW00M
-	tj3B+nzVrHqjV8beMgHVP5y6Ea8f8un9CJlOxrtk3SC7rl8=
-X-Google-Smtp-Source: AMsMyM4lITON04wEay67q/XAgykRsqHSYdKEOqInCPQIHaikTL0dmGKchE6SLScXswUmktWilmaHrnJHvUXU+06aV5o=
-X-Received: by 2002:adf:eec3:0:b0:22a:d159:456c with SMTP id
- a3-20020adfeec3000000b0022ad159456cmr15517655wrp.463.1663741053850; Tue, 20
- Sep 2022 23:17:33 -0700 (PDT)
-MIME-Version: 1.0
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Wed, 21 Sep 2022 09:17:21 +0300
-Message-ID: <CAGUWgD8-9ST3-hxOTY+Xar6S88uuydz=ods4k1vBQq_GXXahKg@mail.gmail.com>
+Received: (qmail 26206 invoked from network); 29 Mar 2024 14:31:19 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Arnout Engelen <engelen@apache.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] big ints in python: CVE-2020-10735
+Message-ID: <c31a0654-b7d5-ba5f-1f0b-45ce8764d4e6@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 29 Mar 2024 14:34:53 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-23539: Apache Fineract: Under certain system
+ configurations, the sqlSearch parameter for specific endpoints was
+ vulnerable to SQL injection attacks, potentially allowing attackers to
+ manipulate database queries.  
 
-There was recent discussion of big ints in python and libgmp.
+Severity: critical
 
-https://docs.python.org/3.10/whatsnew/changelog.html#security
+Affected versions:
 
-===
-gh-95778: Converting between int and str in bases other than 2
-(binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base 10
-(decimal) now raises a ValueError if the number of digits in string
-form is above a limit to avoid potential denial of service attacks due
-to the algorithmic complexity. This is a mitigation for CVE-2020-10735
-====
+- Apache Fineract through 1.8.4
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-10735
-===
-In algorithms with quadratic time complexity using non-binary bases ...
-The highest threat from this vulnerability is to system availability.
-===
+Description:
 
-AFAICT the quadratic complexity is quadratic in the size of the int,
-that is its logarithm.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL In=
+jection') vulnerability in Apache Fineract.This issue affects Apache Finera=
+ct: <1.8.5.
+
+Users are recommended to upgrade to version 1.8.5 or 1.9.0, which fix the i=
+ssue.
+
+Credit:
+
+Yash Sancheti of GH Solutions Consultants (finder)
+
+References:
+
+https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+Securi=
+ty+Report
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-23539
+
