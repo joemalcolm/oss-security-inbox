@@ -1,4 +1,4 @@
-Received: (qmail 24173 invoked by uid 550); 30 Apr 2022 15:56:44 -0000
+Received: (qmail 5258 invoked by uid 550); 30 Mar 2024 16:40:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16218 invoked from network); 30 Apr 2022 15:38:42 -0000
-Date: Sat, 30 Apr 2022 10:38:27 -0500
-From: John Helmert III <ajak@gentoo.org>
+Received: (qmail 22510 invoked from network); 30 Mar 2024 16:30:40 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
-Message-ID: <Ym1X82gykRQqVzd7@gentoo.org>
-References: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
- <20220428201003.GA1260523@millbarge>
- <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
- <2D37FD38-B910-4D66-A5B3-0E58DA3B87C1@akamai.com>
- <ffd2934f-4e65-88ca-e3db-5204c2eb1127@greenbone.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="d3K5Efw3UoSrPMu3"
-Content-Disposition: inline
-In-Reply-To: <ffd2934f-4e65-88ca-e3db-5204c2eb1127@greenbone.net>
-Subject: Re: [oss-security] CVE-2022-21449 and version reporting
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Sat, 30 Mar 2024 16:30:25 -0000 (UTC)
+Message-ID: <uu9en0$oga$1@ciao.gmane.io>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
+ <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+ <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+ <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
+ <uu7k2m$61a$1@ciao.gmane.io>
+ <4f2d978b-e94d-44c1-b6d1-d4c18c9d9eb0@canonical.com>
+ <uu7uid$4ig$1@ciao.gmane.io>
+ <f5595730-197f-41ed-9c72-d92bd6eddd36@canonical.com>
+ <uu9bjm$52r$1@ciao.gmane.io>
+ <58b6eab8-3634-414a-a513-57e62b05a0b7@canonical.com>
+User-Agent: slrn/1.0.3 (Linux)
+Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
 
---d3K5Efw3UoSrPMu3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2024-03-30, Marc Deslauriers wrote:
+> On 2024-03-30 11:37, Tavis Ormandy wrote:
+>> On 2024-03-30, Marc Deslauriers wrote:
+>>> That is the problem, having more eyes on a 0-day also means more eyes from
+>>> malicious entities. Neither having an embargo nor immediately posting publicly
+>>> are ideal solutions. There needs to be a compromise, and while I understand and
+>>> respect your point of view, I don't think we'll ever see eye-to-eye on what the
+>>> acceptable compromise should be.
+>>>
+>> 
+>> Yeah, but your acceptable compromise *must* include Canonical having
+>> advance knowledge of backdoors, correct?
+>
+> Not necessarily. 
 
-On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
->  > It=E2=80=99s not that they didn=E2=80=99t/can=E2=80=99t verify, it=E2=
-=80=99s already verified,=20
-> they=E2=80=99re claiming those versions no longer being officially suppor=
-ted=20
-> means they can seemingly omit them from CVE reporting.
->  >
->  > Which is dangerous, misleading, and nonsensical.
->=20
-> While i fully agree with this be aware that CVE entries could generally=20
-> contain incomplete information:
->=20
-> After requesting an update of a CVE entry via the MITRE CVE forum in the=
-=20
-> past to add additional affected products for a different vendor (which=20
-> wasn't even the assigning CNA like it is the case for Oracle here) my=20
-> request was rejected by MITRE with the following rationale given:
+Okay, you could unsubscribe from distros to help make the embargo stronger? :)
 
-The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
-to to make changes to it. MITRE won't make changes to it as they're
-not the CNA behind that CVE.
+> For example, I don't have access to embargoed Chrome 0-days 
+> before the updates come out, and a lot of other folks don't either. Should all 
+> Chrome 0-days be public before the updates are available? Are you advocating for 
+> this?
 
->  > A CVE description does not necessarily contain all the affected=20
-> products or versions and is not part of CVE ID requirements. The=20
-> products are documented in the CVE references.
-> This is also matching my experiences with various other products /=20
-> vendors and related CVE entries for these.
+Yes! If you have knowledge of *any* software that is backdoored or
+compromised or is being actively exploited with a 0day, I'm advocating
+-- please -- for you to make that public.
 
-Right, this is documented in the CNA rules [1]:
+This applies to literally *any* software, hardware or other product.
 
-"8.2.1 MUST provide enough information for a reader to have a
-reasonable understanding of what products are affected. If the
-affected products are not explicitly listed in the description, then
-the CNA MUST provide a reference that points to the known affected
-products."
+>
+>> 
+>> There are a lot of other users and organizations out there, and I think
+>> most of them also like having some agency, I know I do. If our roles
+>> were reversed -- my organization was on distros and yours was not -- do
+>> you think you would still be arguing for embargoes on backdoors?
+>
+> I'm not necessarily arguing for embargoes on backdoors, I'm saying that posting 
+> publicly about it before even knowing what it was would have resulted in a worse 
+> outcome. That's my opinion, you may think it's a wrong.
 
-[1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_=
-cve_record_prose_description_requirements
+Yes, I think it's wrong.
 
---d3K5Efw3UoSrPMu3
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> Perhaps the question here is why isn't your organization on one of the multitude 
+> of places where this issue was discussed in private for a few hours, and where 
+> it was decided that this should be public?
 
------BEGIN PGP SIGNATURE-----
+I think maybe you're saying that if I was on the list, then I would like
+embargoes too!
 
-iQIzBAABCAAdFiEElFuPenBj6NvNLoABXP0dAeB+IzgFAmJtV/AACgkQXP0dAeB+
-IzjNkg/9GmgY5GoJM1VGhr7QeN39KIiCyFntmd6VlZcQKKvAj8/sz+uwqFgJhFGD
-bLNmdJR/qHQ6SBJTw4QMe2V7uexV4yOBqKk/rnqY0s67ahakffC7e9twqqWvr5ll
-VIAriUtlwW1JcFyuwihk94IRprDva4Ucgc70LvKdMBIRVaSa7171NPqMHlZD65ad
-n12elPZg4gX8M495dUe3KTH4mtUMfv5r9002M3XrEkdF7D6EJUeHcAsXrLi63KV5
-lkZlSVB5d41wyUf8ixZvcOKodWmtq2zNy3UAz+Qt+S6PUEUchOyPxWKCTIFzXdyq
-iVBO39/MyQAdbcMvSWUstymrvIttFZyzDQzKD0BKm/iCE4UaQPXKvq80gq00lUy0
-gZHRG4PhF2oOWb8fgYFqXNv+Ok0M+eYJBW87TLdTTY9oOvxDNZumUk/6zF3U9Jot
-j30L3g4/qVTpv1Q0tkiPxNyKjZD4fmnTB0+/uBcxoF4WYGC9WbpbScoyF+cqyMSs
-mi+ognPIGK54X3QZC+P44mbZtau80rRX4810OYIKFv8OdSvf0O8DaDa0hm+th5bu
-29lWSa/PquYBHh1BsKC87cmBEnPVflAJLUGqht74NZmYl4iZGRyoXRhXBrOVc5Yc
-OWELkVcrtRM/dR6dcbR3Jk6geOkCRflMQMX3bSue7g9Jf8yuEg0=
-=cVF1
------END PGP SIGNATURE-----
+It's definitely better for the organizations on the list, no question.
+As you know, I was a distros and vendor-sec member for years, so I do
+know how they work :)
 
---d3K5Efw3UoSrPMu3--
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
+
