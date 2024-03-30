@@ -1,4 +1,4 @@
-Received: (qmail 10088 invoked by uid 550); 13 Apr 2026 14:04:31 -0000
+Received: (qmail 32431 invoked by uid 550); 30 Mar 2024 15:41:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,40 +7,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7441 invoked from network); 13 Apr 2026 12:24:14 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Zhenxu Ke <kezhenxu94@apache.org>
+Received: (qmail 13662 invoked from network); 30 Mar 2024 15:37:43 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
-Message-ID: <d704a6ae-5cda-8c75-f17f-634707537a94@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 13 Apr 2026 12:24:02 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-54057: Apache SkyWalking: Stored XSS vulnerability 
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Sat, 30 Mar 2024 15:37:27 -0000 (UTC)
+Message-ID: <uu9bjm$52r$1@ciao.gmane.io>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
+ <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+ <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+ <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
+ <uu7k2m$61a$1@ciao.gmane.io>
+ <4f2d978b-e94d-44c1-b6d1-d4c18c9d9eb0@canonical.com>
+ <uu7uid$4ig$1@ciao.gmane.io>
+ <f5595730-197f-41ed-9c72-d92bd6eddd36@canonical.com>
+User-Agent: slrn/1.0.3 (Linux)
+Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
 
-Severity: important=20
+On 2024-03-30, Marc Deslauriers wrote:
+> That is the problem, having more eyes on a 0-day also means more eyes from 
+> malicious entities. Neither having an embargo nor immediately posting publicly 
+> are ideal solutions. There needs to be a compromise, and while I understand and 
+> respect your point of view, I don't think we'll ever see eye-to-eye on what the 
+> acceptable compromise should be.
+>
 
-Affected versions:
+Yeah, but your acceptable compromise *must* include Canonical having
+advance knowledge of backdoors, correct?
 
-- Apache SkyWalking through 10.2.0
+There are a lot of other users and organizations out there, and I think
+most of them also like having some agency, I know I do. If our roles
+were reversed -- my organization was on distros and yours was not -- do
+you think you would still be arguing for embargoes on backdoors?
 
-Description:
+Tavis.
 
-Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XS=
-S) vulnerability in Apache SkyWalking.
-
-This issue affects Apache SkyWalking: <=3D 10.2.0.
-
-Users are recommended to upgrade to version 10.3.0, which fixes the issue.
-
-Credit:
-
-Vinh Nguy=E1=BB=85n Quang (vinhnq4902@gmail.com) (reporter)
-
-References:
-
-https://lists.apache.org/thread/sl2x2tx8y007x0mo746yddx2lvnv9tcr
-https://skywalking.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-54057
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
 
