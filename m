@@ -1,4 +1,4 @@
-Received: (qmail 1033 invoked by uid 550); 10 Apr 2025 00:20:57 -0000
+Received: (qmail 13627 invoked by uid 550); 30 Mar 2024 12:09:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +7,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32754 invoked from network); 10 Apr 2025 00:20:57 -0000
-Message-ID: <6a68cc9b-1667-4afe-9400-070315bf7563@pipping.org>
-Date: Thu, 10 Apr 2025 02:20:48 +0200
+Received: (qmail 13609 invoked from network); 30 Mar 2024 12:09:18 -0000
+From: Florian Weimer <fw@deneb.enyo.de>
+To: "Liguori, Anthony" <aliguori@amazon.com>
+Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+	<uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+	<uu7da3$87n$1@ciao.gmane.io>
+	<20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+	<uu7g5q$8hl$1@ciao.gmane.io>
+	<01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+Date: Sat, 30 Mar 2024 13:09:08 +0100
+In-Reply-To: <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com> (Anthony Liguori's
+	message of "Fri, 29 Mar 2024 22:59:11 +0000")
+Message-ID: <87y19zx6or.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-To: oss-security@lists.openwall.com, =?UTF-8?Q?Bernhard_Rosenkr=C3=A4nzer?=
- <bero@lindev.ch>
-References: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
- <94ed5662-d24b-40e4-b832-6228a7e473df@pipping.org>
- <543-67f6e580-2d-5396a400@170623133>
-Content-Language: en-US
-From: Sebastian Pipping <sebastian@pipping.org>
-In-Reply-To: <543-67f6e580-2d-5396a400@170623133>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] CVE-2025-31344: giflib: The giflib open-source
- component has a buffer overflow vulnerability.
+Content-Type: text/plain
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
+ ssh server compromise
 
-Hello Bernhard,
+* Anthony Liguori:
 
+> I think we should have a policy that if issues are suspected to be
+> actively exploited, that the issue goes public immediately.  If even
+> there is no patch or mitigation, there's not a lot of benefit to
+> keeping it private.
 
-On 09.04.25 23:23, Bernhard Rosenkränzer wrote:
-> On Wednesday, April 09, 2025 23:11 CEST, Sebastian Pipping <sebastian@pipping.org> wrote:
->>     https://github.com/openwrt/packages/issues/26277
-> 
-> Except for https://sourceforge.net/p/giflib/bugs/179/, all the issues seem to be in gif2rgb, which is, according to the giflib maintainer, "old and crappy code", and TBH, other than as a no-dependency test tool for giflib, it is fairly useless (just use ImageMagick or a similar tool to do the gif to rgb conversion).
-> Simply removing the gif2rgb tool is probably an acceptable solution.
-
-I understand your take (and I believe Red Hat does just that: not 
-include it with packaging [1]).
-
-I would like to note that gif2rgb is currently shipped with e.g. Ubuntu
-[2] and so just dropping that tool will break something somewhere.
-
-On a side note ImageMagick (7.1.1.38) seems to ignore logical screen
-size (section "18. Logical Screen Descriptor" of the spec [3]) in GIF
-files:
-
-   # file max_size.gif
-   max_size.gif: GIF image data, version 89a, 65535 x 65535
-                                              ^^^^^^^^^^^^^
-   # magick max_size.gif max_size.png
-
-   # file max_size.png
-   max_size.png: PNG image data, 1 x 1, 8-bit gray+alpha, non-interlaced
-                                 ^^^^^
-Either I misunderstand the GIF spec or ImageMagick goes against
-the spec and mis-converts this image.  (I tried other sizes to
-be sure it's not an integer overflow issue but intention.)
-So ImageMagick so far would not be my goto for GIF.  Happy to learn what
-I'm missing.
-
-So far I'm personally in favor of collaborative repair rather than
-removal.  I'm probably biased because sibling tool gifbuild already
-proved useful to me.
-
-Best
-
-
-
-Sebastian
-
-
-[1] https://github.com/openela-main/giflib/blob/el9/SPECS/giflib.spec
-[2] https://packages.ubuntu.com/oracular/amd64/giflib-tools/filelist
-[3] https://www.w3.org/Graphics/GIF/spec-gif89a.txt
-
+I think we are heading in this direction anyway, given that more and
+more people are under reporting obligations for active exploitation.
+Untangling who has to be notified when isn't really a good use of our
+time.  I expect we'll have to tell reporters that if they tell us that
+a vulnerabilty is under active exploitation, we'll have to go public
+more or less immediately.
