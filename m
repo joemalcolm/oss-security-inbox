@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1356" "Monday" "20" "July" "2020" "11:39:09" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8mT3QMRFLm0qf6z96nezwj41k_zJ3Vkft0bZdLUXxCXpw@mail.gmail.com>" "30" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" "^Date:" nil nil "7" "2020072015:39:09" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" (number mark "        noloader@gma Jul 20   30/1356  " thread-indent "\"[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens\"\n") "<20200720145721.GA105966@fullerene.field.pennock-tech.net>" ("<CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>" "<CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>" "<20200720145721.GA105966@fullerene.field.pennock-tech.net>") nil nil nil nil nil nil nil "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13922 invoked by uid 550); 20 Jul 2020 15:39:48 -0000
+Received: (qmail 1434 invoked by uid 550); 30 Mar 2024 19:32:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +6,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13890 invoked from network); 20 Jul 2020 15:39:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to;
-        bh=I/Sc+6ke13jX7k1RgVLo9ROCPKDVxaqILrVY47iWVV8=;
-        b=QaJasjanwOKel5BZK3JQ1IyIpAfxme/uUVNs1+hiY37aWdlcDL8hr2fwfiW4Uy/Byv
-         Yo7ewbhhecAUPG+KIrFHR8S7eKWdpNwDtwE1UKzVb/KMzCGU4tMvVg8PLpHs7g8sqUqY
-         spjX0O2cUTcWe4z03/5zdbwfY232ME+uJnAb68Lhz67dzaQ4AhRxcc2vHgADOvLKqJs7
-         tb6mluC9hiBKi90J3z4Eq4a2Ak1TnQr1r72lrQG1uSjTeAyQVxowHhmNnvPg5c1E5THw
-         XobcocjcRgOvSHTzUUsZgNBeogIKH4o9ylyxnoIDAAuSXnRYTcRho2v2iTr52UOmu7RJ
-         vCbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to;
-        bh=I/Sc+6ke13jX7k1RgVLo9ROCPKDVxaqILrVY47iWVV8=;
-        b=IbVj/qsNzi2Em/EW5mw+tgaWY12PCqo4d5hM1j2G3VF/UIn848vt3LyjGl4fsAJn57
-         GKl66DYPvCti2+CIKogvIw/+2h19rszHk1Nz3VA+pBH9br46QnsodNQwSVX6JdkiYtAo
-         //61mUaNwU+gE/s0X+l4/ntUay4nMY8NOGMW3+n+0KSNop75MDd0aTe3a2L+j0GLf6BW
-         puY8YQiOG4R3Zazdlg34c57h+wyi5d8GNQa2tSMXPbHQS8aNRwpnP9HgcP/LYjQrlS/Q
-         ipA/ehnQpzpuIfyGMjKZ5/EwKrtshQAIMYHrm4oyNx57mUSJNQWM3JcRMQOb5+cgeZ73
-         2vpw==
-X-Gm-Message-State: AOAM530nEVOSnpmTUvgz7AUZxTnU3L9zMd9cQRyDvFYD40Of890m2lUi
-	qXAHLAWFPn2FgmmDBioCQqDDyZPKZnpi6kkloN45e6XF
-X-Google-Smtp-Source: ABdhPJwEz27QSHbMa9HkwUNCZ3EIFzo/WXO0olQ/jh2S7gqaAHYxzTnP7jRW76v8BdfvTyMXFTZuF8JBYVWSnXkwr2M=
-X-Received: by 2002:a92:8915:: with SMTP id n21mr24518633ild.166.1595259575241;
- Mon, 20 Jul 2020 08:39:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>
- <CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com> <20200720145721.GA105966@fullerene.field.pennock-tech.net>
-In-Reply-To: <20200720145721.GA105966@fullerene.field.pennock-tech.net>
-Message-ID: <CAH8yC8mT3QMRFLm0qf6z96nezwj41k_zJ3Vkft0bZdLUXxCXpw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Mon, 20 Jul 2020 11:39:09 -0400
-From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens
+Received: (qmail 1400 invoked from network); 30 Mar 2024 19:32:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=anarazel.de; h=
+	cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1711827161; x=1711913561; bh=wWbbLq83Xh
+	j6uAyJDFw914BR6NpqCLns44snlYKdXIs=; b=cSK+eeUdKlJOlhEd4rLnxQgLy3
+	uA4leUsBKkNO6UFmkOGoe4YEfN7MWZASb4+1KBxmEUAkNi5Zrh7QGNnxEsyrZmrr
+	1xRPZN0IAKKokA8t0YI/dUsg5oIoZp+AqbyRwV2jqpzNLTPy1uhr5UpqIhXUs/HK
+	k/BR9l50/zvMs/ZksnYuCZe2kKHYOfsnim4rEwS3DvALVcNdA1FPto/Z6BWN5lkz
+	C6znxeHCH2r2jluvwGV/Dq0bk3h9WapRyK1ioJK5p2QuTScq7kkrzmO3OGSIThOi
+	agRAQV5cZBoft7s3cc734vXiIiquGbhuBJ1ztAIEI5fIL6BAZxeZ6iYXvO9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1711827161; x=1711913561; bh=wWbbLq83Xhj6uAyJDFw914BR6Npq
+	CLns44snlYKdXIs=; b=vwJBaUZtGygVEgYDTEgruSroBm4xceT5NW5rqGAR680b
+	mrmCfQ8FDLdkDz/Fd0nQyrrCHt9FXypa0EVuoa0rp9hxuKn9VorM8+yuRmt8iemD
+	bbgQaxFlZ36wakYlUk5XG07DVBV2NKgk3ysQ6F87gsO5wNownLEPbMCl11ZW3YoH
+	otTaUukwzItJZ7YaRovebMKYXCfy0wW9lHbtsBmIa0Scu4ko5bHDe0FBK3AVhx9I
+	pRmIE6CaZ111utfOcxw9hJ0npobsgqyTozuQO88O4C5er37lJcA8S80ZoOwgp7rg
+	af8Zx7ECFtOyexWkNc787PztjTior3IoU+Coyqi7NA==
+X-ME-Sender: <xms:2WgIZvX97G-S67nv0yQP4IzMAmP3E_SbxbQ4eM1346fT7goTyQBelQ>
+    <xme:2WgIZnlb5G8X3POOuAeai-OHBrhMOzzO34839yr7hu6XFT9hoNrMzexpyEM2eNJWx
+    NAA5BsBIpXWy7uT8A>
+X-ME-Received: <xmr:2WgIZrYAVgeJUDWB4P72yxIo8-Q0lTqddvdJPj5t7-OzlhkzIpo_jjcA6TtRvw4nhTrfQyENRn_Lg-TSxTZJgZ65g1NQqYQwneKG7qb2Pqtft-dxnuMRrKALQEbp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvhedguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
+    ertddttddvnecuhfhrohhmpeetnhgurhgvshcuhfhrvghunhguuceorghnughrvghssegr
+    nhgrrhgriigvlhdruggvqeenucggtffrrghtthgvrhhnpedukefhkeelueegveetheelff
+    ffjeegleeuudelfeefuedtleffueejfffhueffudenucevlhhushhtvghrufhiiigvpedt
+    necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvshesrghnrghrrgiivghlrdguvg
+X-ME-Proxy: <xmx:2WgIZqU97SQDZ4H-EyuywInTJsHUbcqu-8d9Vz-QRqPeWiq_WO6ibQ>
+    <xmx:2WgIZplBxQRXAa2izzPm-yLUBq9l7cvHvtw0_znFVGUXOllZ1oNuCw>
+    <xmx:2WgIZncA3-jUYIChuei4onv04atAtCMCfS7q0oDPbOzrWnsBNBFFFg>
+    <xmx:2WgIZjGur5M11MqeVzDMI0BnOFpAtsoTvialFz1rFKpC_cLUm4PnGQ>
+    <xmx:2WgIZos-IqkONiLzFkSSYFh06Xqm3DaZX20FJEXm-k5tWy9Lxa9cAQ>
+Feedback-ID: id4a34324:Fastmail
+Date: Sat, 30 Mar 2024 12:32:39 -0700
+From: Andres Freund <andres@anarazel.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20240330193239.qrsjg44dufit7gnz@awork3.anarazel.de>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
 
-On Mon, Jul 20, 2020 at 10:57 AM Phil Pennock
-<oss-security-phil@spodhuis.org> wrote:
->
-> On 2020-07-20 at 04:33 -0400, Jeffrey Walton wrote:
-> > On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@gmail.com> wrote:
-> > >     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
-> >
-> > My bad... It does not matter how this $ORIGIN token is quoted. Perl
-> > always expands it.
->
-> I've encountered this in build systems before, where the quoting is
-> inconsistent and apparently can result in different levels of dequoting
-> for a target depending upon how it was reached.
->
-> What I've used for building those has been to specify %ORIGIN instead of
-> $ORIGIN and then binary-edit the resulting binary to switch that % back
-> to a $.  All quoting issues disappear and all binary offsets are stable.
-> Just make sure the binary-edit step is before any binary signing. :)
->
-> At some point, it's also worth considering static linking.
+Hi,
 
-Yeah, I was doing the alternate character for a while. Then Perl came
-along and I could not figure out all the places it needed to be
-changed. They spray the rpath in more places than just Makefiles, and
-they build Makefiles on the fly. I found it's not a simple task to sed
-the alternate character back out after, say, configure.
+On 2024-03-29 08:51:26 -0700, Andres Freund wrote:
+> To be able to resolve symbols in libraries that have not yet loaded, the
+> backdoor installs an audit hook into the dynamic linker, which can be observed
+> with gdb using
+>   watch _rtld_global_ro._dl_naudit
+> It looks like the audit hook is only installed for the main binary.
 
-Related, see https://sourceware.org/pipermail/binutils/2019-June/107108.html.
+This is one aspect I've, somewhat surprisingly, not seen discussed.  From what
+I can tell the rtld-audit infrastructure significantly weakens -z now -z
+relro, by making it fairly easy for something loaded earlier to redirect
+symbols in later libraries / the main binary.
 
-Jeff
+Purely anecdotaly, I've not seen much use of rtld-audit. It's not implemented
+in other linux libc implementations like musl, afaict.  Is it time to retire
+rtld-audit, or at least to allow applications to opt out of it?
+
+Greetings,
+
+Andres Freund
