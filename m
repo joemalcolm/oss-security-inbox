@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2604" "Monday" "10" "April" "2017" "07:43:59" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<312509.123326407-sendEmail@localhost>" "65" "[oss-security] elfutils: memory allocation failure in xcalloc (xmalloc.c)" nil nil nil "4" "2017041007:43:59" "[oss-security] elfutils: memory allocation failure in xcalloc (xmalloc.c)" (number mark "U       ago@gentoo.o Apr 10   65/2604  " thread-indent "\"[oss-security] elfutils: memory allocation failure in xcalloc (xmalloc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11498 invoked by uid 550); 10 Apr 2017 07:44:18 -0000
+Received: (qmail 27713 invoked by uid 550); 30 Mar 2024 13:36:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11460 invoked from network); 10 Apr 2017 07:44:16 -0000
-Message-ID: <312509.123326407-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:43:59 +0000
+Received: (qmail 11485 invoked from network); 30 Mar 2024 13:30:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Content-Type:MIME-Version:Message-ID:
+	In-reply-to:Date:Subject:To:From:References:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=cpkTKOaPzj6M4pG282vtIPlC+z3IihPDEwxrJcLNyMY=; b=Qu6IFWmrnqdDGsohGAi200FrSt
+	1r/pnL30bYJrYMvwOoNPP9Lm+vWTrO6RE+Jw9LCp6rrvIHaJh0jW+vYDDKWWmFYiderKE8w0sQyyW
+	emO6tRvySlAhum/GSedDW6HPGN+ibmon+9d2kgk1mO/7z0GBUehVWOAJWjlG8pYHMRrzltt9UQ7yH
+	ZWDnbONWcRxJGY130OkraFSlP1aAmCgEBXFRYMDjYSEpzmYHtw+eOMNEd8kFFR6RHh3eDGBCPa5t3
+	PSa7jFBV5sb4zonFHAAbcW69kHfDOHb1+XaaDXRQXXXDJ4xG7n7HNH2fRMntDZgRzGs8sVnN5zSgF
+	gzmAUM1Q==;
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
+ <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+ <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+ <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
+ <uu7k2m$61a$1@ciao.gmane.io>
+ <CAOp4FwT+kqoG1JRawFu6tkz0LUMgkT9RCVfh7vyaN3bbFkYx3Q@mail.gmail.com>
+ <72a9dfe5-a88d-4711-bc90-cd9269124f08@schafweide.org>
+User-agent: mu4e 1.10.8; emacs 29.3
+From: Pierre-Elliott =?utf-8?Q?B=C3=A9cue?= <peb@debian.org>
+To: oss-security@lists.openwall.com
+Date: Sat, 30 Mar 2024 14:29:06 +0100
+In-reply-to: <72a9dfe5-a88d-4711-bc90-cd9269124f08@schafweide.org>
+Message-ID: <87cyrbzw2z.fsf@daath.pimeys.fr>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-755114.63156818"
-Subject: [oss-security] elfutils: memory allocation failure in xcalloc (xmalloc.c)
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+X-Debian-User: peb
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
+ ssh server compromise
 
-------MIME delimiter for sendEmail-755114.63156818
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+Bjoern Franke <bjo@schafweide.org> wrote on 30/03/2024 at 14:06:38+0100:
 
-A fuzz on eu-elflint showed a memory allocation failure.
+> Am 30.03.24 um 04:50 schrieb Loganaden Velvindron:
+>> Github has suspended the repo:
+>> https://github.com/tukaani-project/xz
+>> Im wondering what is the next step for the xz project as a whole ?
+>>=20
+>
+> https://git.tukaani.org/?p=3Dxz.git;a=3Dsummary exists and Lasse said on
+> IRC he thinks he would make a clean 5.6.2 release.
+>
+> Regards
 
-The interesting ASan output:
+I honestly would like to extend my sympathy to Lasse.
 
-# eu-elflint -d $FILE
-==5053==AddressSanitizer CHECK failed: /tmp/portage/sys-devel/gcc-6.3.0/work/gcc-6.3.0/libsanitizer/sanitizer_common/sanitizer_common.cc:180 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
-    #0 0x7faa2335941d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xcb41d)
-    #1 0x7faa2335f063 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd1063)
-    #2 0x7faa2335f24d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd124d)
-    #3 0x7faa23368c52  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xdac52)
-    #4 0x7faa232ba0b9  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x2c0b9)
-    #5 0x7faa232b249b  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x2449b)
-    #6 0x7faa2335040a in calloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc240a)
-    #7 0x431b8d in xcalloc /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/lib/xmalloc.c:64
-    #8 0x41f0bb in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3680
-    #9 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #10 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #11 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #12 0x7faa21c6378f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #13 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
-Affected version:
-0.168
+This situation must clearly be a hell for him.
 
-Fixed version:
-0.169 (not released atm)
+Someone asked what would become of xz as a project. I do hope in light
+of this event, some people step in to help.
 
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00133.html
+--=20
+PEB
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-CVE:
-CVE-2017-7613
+-----BEGIN PGP SIGNATURE-----
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00236-elfutils-memallocfailure
-
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-memory-allocation-failure-in-xcalloc-xmalloc-c/
-
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-755114.63156818--
-
+iQJDBAEBCgAtFiEE5CQeth7uIW7ehIz87iFbn7jEWwsFAmYIE9QPHHBlYkBkZWJp
+YW4ub3JnAAoJEO4hW5+4xFsLy3EP/091VIBmUgCTYgHZdxsHqqtWKRMeld1Dgl0x
+MRsF8R9mmn4zwIBqquGr/9jkiJiIhET7IofTCfh6WUrjGmk0ebSGt5B1pDBklodk
+N+/YuZeipHxUjHyyiCUCTGwqSHJHyM9k6viulSsdqFNSNUHuLvgCCvAKG57hONPI
+TzC/gYZaODswCbofHHgPZwa5qIrwUAAJEvPr+4C/zTfND/8iIo6Bjx4g1vl4D35e
+d9od7W39Exarr1hNd3LPD5eKzaFDZKOcHBmnTjtiDYPBh9MENEZfn/dLAy1Gos11
+9v7w+n4UxmcRtWu7rTUrqPjRGBccsALSxv0BvjIiJOdVZHWNIaBdpwJV4rF8LmtB
+1apHKEhunbKBMKGGjt+XBtDFAXCPx/fdHQYlyvofd2GEdekYQQ3hflgY6LRR1+iK
+vK3MJXwGymXh9VoQOxupf/vdik/dQnpidL5meH9twgHnF/1gXFID0bpzJJJdFc3d
+PoTfiizQOLGnd0ChCcOQC4AhoZojt+Dkm8MxRbogT9fJqsnzU7cDvx04bMUOu+48
+yxoiT0cgnP4/TsdorvO42eIosnq8QdQXsCV4pyyD6315gzDbNHPdfTnm9fFqSjsZ
+gqPfc7Jku8wC6nRIs5Srm70m7dSS+d11F/efgSLQfHNplCGmQZN9i5i7IfSzem+U
+muyTyiGc
+=5M3+
+-----END PGP SIGNATURE-----
+--=-=-=--
