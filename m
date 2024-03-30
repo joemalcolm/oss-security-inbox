@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1315" "Friday" "20" "March" "2015" "09:05:13" "-0700" "Anthony Liguori" "anthony@codemonkey.ws" "<CA+aC4ksvOSSjAqMsXbzG__vpUbHoy3LyyLtdRnGmsjoDwWs=sg@mail.gmail.com>" "30" "Re: [oss-security] membership request to the closed linux-distros security mailing list" nil nil nil "3" "2015032016:05:13" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        anthony@code Mar 20   30/1315  " thread-indent "\"Re: [oss-security] membership request to the closed linux-distros security mailing list\"\n") "<20150320155553.GN15408@suse.de>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>" "<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>" "<20150320155026.GF3718@symphytum.spacehopper.org>" "<CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>" "<20150320155553.GN15408@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7916 invoked by uid 550); 20 Mar 2015 16:05:25 -0000
+Received: (qmail 19497 invoked by uid 550); 30 Mar 2024 01:58:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +6,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7895 invoked from network); 20 Mar 2015 16:05:24 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=+GjufUe3j16/oN/hhiepecKdv4uXNRO442fWsWNFWUU=;
-        b=E6MS/SS4zez4hKvDW+ObtGcPwmXu/JuwQzUDtvS4wXcLTpsJ0M2NydGbJa8qNOgHuM
-         7SaBFyHpQtQihaJcirHKduKc7OJcN2Cg+jDgv4EmtEAfGrbvLpWz1YeTMXMMc4D3Kici
-         cOewD+XZaBPpT61EjfSvFTXm+2ThiyZnJ0tP+cPKflInW584zuqKJ8zYjvQ6ursSm02s
-         x9JTGJDYEkEvR5GvSwPrwvhoFXa4+v9VL8KpqURIRq7F+5N7RX0FXBWKJnjpTiQMj60H
-         MWAZtZ7lfZSp4GsiER5ivZ0pKZ0ly2AftYV2fBi0Sf+V4skqSMrCgnwcUYwHZZodlmBg
-         qH/g==
-X-Gm-Message-State: ALoCoQl7NUFBZvhp+iuca8wOJ17GxVJP+3NOTS53qk2+gE44frjihj5XZwf5KDs5ALurHJtlJwzt
-MIME-Version: 1.0
-X-Received: by 10.140.108.201 with SMTP id j67mr98834623qgf.86.1426867513104;
- Fri, 20 Mar 2015 09:05:13 -0700 (PDT)
-In-Reply-To: <20150320155553.GN15408@suse.de>
-References: <550C19ED.9030901@enea.com>
-	<20150320145413.GA10416@openwall.com>
-	<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>
-	<20150320155026.GF3718@symphytum.spacehopper.org>
-	<CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>
-	<20150320155553.GN15408@suse.de>
-Message-ID: <CA+aC4ksvOSSjAqMsXbzG__vpUbHoy3LyyLtdRnGmsjoDwWs=sg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 20 Mar 2015 09:05:13 -0700
-From: Anthony Liguori <anthony@codemonkey.ws>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] membership request to the closed linux-distros
- security mailing list
+Received: (qmail 19478 invoked from network); 30 Mar 2024 01:58:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1711763913;
+	bh=nXB19KpraiaADMynW9A1zet+wxhAPDFhIlevwFHwl8M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type;
+	b=XpBCnYWBQn8CiLY/l9QU+l+DJZP98layp9YONw2BVsUakPaNDCbxTDvnDVjT4vcu8
+	 nPzzyLbCURoNt9XkiIcDfIw9rzKomZAW9C+zFKDk9mVpsYtslehj+wk/jhetSjXx+O
+	 fwKsTj8lvhshBeEaIdjUvktfdgIAuDe2pKeMq4oU7t19kSjw4KaApuLlMuQvJX9ynh
+	 R8xXlu7RGLI2Fg63DekZct9Ae3OxmMd0a1v6uweiC5mxMSo/wq6kNuGLJ1WIvULngc
+	 PhPZ0iP3TuCz8lQ434TieD5t9IUnjQMo9QPUkwWnC27VtVzUPpaHtzLq0SD8Tu0XRm
+	 uY0rYFYDkM5Vw==
+Message-ID: <4f2d978b-e94d-44c1-b6d1-d4c18c9d9eb0@canonical.com>
+Date: Fri, 29 Mar 2024 21:58:31 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io>
+ <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+ <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+ <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
+ <uu7k2m$61a$1@ciao.gmane.io>
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+Content-Language: en-CA
+Autocrypt: addr=marc.deslauriers@canonical.com; keydata=
+ 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
+ 8Dn5ROoNmabo
+In-Reply-To: <uu7k2m$61a$1@ciao.gmane.io>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-On Fri, Mar 20, 2015 at 8:55 AM, Marcus Meissner <meissner@suse.de> wrote:
-> On Fri, Mar 20, 2015 at 08:54:29AM -0700, Anthony Liguori wrote:
->> On Fri, Mar 20, 2015 at 8:50 AM, Stuart Henderson <stu@spacehopper.org> wrote:
->> > On 2015/03/20 08:16, Anthony Liguori wrote:
->> >>
->> >> I think the alternative is to formalize what already appears to be the
->> >> existing practice: disclose distros@ on the existence of a
->> >> vulnerability but require direct contact for the details of the
->> >> vulnerability if the submitter/upstream thinks the impact is high.
->> >
->> > Are private lists even needed if this policy is taken?
+On 2024-03-29 19:49, Tavis Ormandy wrote:
+> On 2024-03-29, Marc Deslauriers wrote:
+>>> I think we should have a policy that if issues are suspected to be actively exploited, that the issue goes public immediately.  If even there is no patch or mitigation, there's not a lot of benefit to keeping it private.
 >>
->> I think there's a lot of value in being able to just send a low-medium
->> impact issue to a single list of groups that have gone through some
->> level of vetting without needing to respond directly to individuals
->> and making value judgements.
+>> In this case, we had no reason to believe it was being actively exploited.
 >>
->> I also think it's helpful to have a single point of contact so that an
->> upstream isn't dealing with 10 different people from a single
->> organization asking for details.
->
-> Why not just publishing a low - medium impact vulnerability directly?
+> 
+> Yeah... but you also have no reason to not believe that?
+> 
+> What do you propose they were doing with their backdoor?
 
-Upstreams are already free to do this, no?  If an upstream reporter
-sends to distros@ or another forum, they have already made that
-risk/reward trade-off.
+They were still attempting to get it into distros,
 
-Regards,
+> 
+>> If you make it public before a patch or mitigation is available, it has now gone
+>> from a single entity being able to exploit it to the whole world being able to
+>> exploit it.
+>>
+>> That's a whole lot worse.
+>>
+> 
+> Okay, but do we agree that if there is a mitigation available, it's better
+> for it to be public?
+> 
+> Isn't doing `dnf downgrade xxx` a mitigation, or `systemctl xxx stop`?
 
-Anthony Liguori
+All we knew was that a payload was being attached to liblzma, it took a while to 
+get the other details. We wanted to make sure it wasn't propagating to packages 
+it compressed.
+
+It wasn't obvious at the time that simply reverting to the previous version 
+would be a complete solution, and I don't think telling everyone to stop ssh on 
+all their servers and cloud instances is a viable mitigation at all.
+
+> 
+>>>
+>>> I think everyone was acting in good faith here and did great work, but there wasn't a clear policy for handling this type of issue.
+>>
+>>
+>> I would argue against having a policy requiring something like this to be made
+>> public immediately. The important thing here is to do whatever it takes to make
+>> sure users are secure as fast as possible, not expose them to even bigger attack
+>> surface with no mitigation available.
+>>
+>> Marc.
+> 
+> We all want users to be secure as fast as possible. The discussion is
+> whether keeping backdoors embargoed helps achieve that.
+
+It took a day to figure out what it was, what the impact was, and how to get it 
+fixed, at which point there was agreement it shouldn't be keep embargoed. Nobody 
+was pushing for it to be embargoed any longer than it needed to be.
+
+Marc.
