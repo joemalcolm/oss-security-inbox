@@ -1,4 +1,4 @@
-Received: (qmail 27782 invoked by uid 550); 24 Mar 2023 18:57:04 -0000
+Received: (qmail 5603 invoked by uid 550); 30 Mar 2024 16:40:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27764 invoked from network); 24 Mar 2023 18:57:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1679684212; bh=fZYPqFUaXknZGPwlWCVhRsuQ2oDCq/QsL7di0IKmWWE=;
-	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=dnYJ3ipN7iGq0LgrO30Nabid/H4AGjEN7dGf9qa5L/ZxgRYcDJ5D7Hf/Xra33Fsm1
-	 s1U8IzeVq2FAD1o3ZUBxa5vXFCOo4rq5/grvx00r9wqFa41p93DoRockbi3KSrQV29
-	 r13Dng4sIxPEGrkJIYYrhLMQrfeq9asPtXq5rWYVWz3zwxHGa4vMrdmhPL6apKEeKU
-	 eYw624cRQQTa0tx5ds8JTIWJ8Dv7OsrqR87MbLwqXU1CwiRRnkSEULSeAvMUovwksi
-	 fl27cu/yIYoLG4H46dl8519VxtAQyPBnM+E4qYT6ez1Th94Vkd2Asx0MuvOjeMtgRc
-	 5hcDpfEk7fqqw==
-Original-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
-Author: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-Date: Fri, 24 Mar 2023 19:56:50 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Received: (qmail 25659 invoked from network); 30 Mar 2024 16:38:03 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
-Message-ID: <20230324195650.6785dd20.hanno@hboeck.de>
-In-Reply-To: <20230321154519.xoymfc2t6ixalgls@jwilk.net>
-References: <20230314095103.1ed76cc0.hanno@hboeck.de>
-	<20230314103626.3ucbt2rjdfhjbe6t@jwilk.net>
-	<20230317114844.21563d9a.hanno@hboeck.de>
-	<20230317194102.wvso2ex65fuwbukg@jwilk.net>
-	<20230319091821.6f2073fb.hanno@hboeck.de>
-	<20230321154519.xoymfc2t6ixalgls@jwilk.net>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Sat, 30 Mar 2024 16:37:48 -0000 (UTC)
+Message-ID: <uu9f4s$oga$2@ciao.gmane.io>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <ZgcOVnk5hCVkDUt/@ycc.fr>
+User-Agent: slrn/1.0.3 (Linux)
+Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
 
-Here's a proposed patch to restrict access to the dangerous
-functionality. Waiting a few days for feedback here and will then try
-to send it to the appropriate kernel lists.
+On 2024-03-29, Ivan Delalande wrote:
+> On Fri, Mar 29, 2024 at 08:51:26AM -0700, Andres Freund wrote:
+>> For which the exploit code was then adjusted:
+>> https://github.com/tukaani-project/xz/commit/6e636819e8f070330d835fce46289a3ff72a7b89
+>> 
+>> Given the activity over several weeks, the committer is either directly
+>> involved or there was some quite severe compromise of their
+>> system. Unfortunately the latter looks like the less likely explanation, given
+>> they communicated on various lists about the "fixes" mentioned above.
+>
+> Knowing this, I hope the recent kernel patch series involving the same
+> person to some degree will get extra scrutiny:
+> https://lore.kernel.org/lkml/20240320183846.19475-1-lasse.collin@tukaani.org/t/
+>
+> Thanks Andres, incredible find and write-up!
+>
 
-------------------
+It was also pointed out they submitted an odd PR to libarchive:
 
-Restrict access to TIOCLINUX selection functions
+https://github.com/libarchive/libarchive/pull/1609
 
-These functions can be used for privilege escalation when code is
-executed with tools like su/sudo.
+In summary, they replaced calls to safe_fprintf() with fprintf() --
+meaning control characters are no longer filtered from errors. That
+seems pretty minor, but now that we know they were in the business of
+obfuscating the presence of backdoors -- seems a bit suspicious.
 
-Signed-off-by: Hanno B=C3=B6ck <hanno@hboeck.de>
----
- drivers/tty/vt/vt.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Regardless, that change has now been reverted:
 
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index 3c2ea9c09..367117310 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -3146,10 +3146,14 @@ int tioclinux(struct tty_struct *tty, unsigned
-long arg) switch (type)
- 	{
- 		case TIOCL_SETSEL:
-+			if (!capable(CAP_SYS_ADMIN))
-+				return -EPERM;
- 			ret =3D set_selection_user((struct
-tiocl_selection __user *)(p+1), tty);
- 			break;
- 		case TIOCL_PASTESEL:
-+			if (!capable(CAP_SYS_ADMIN))
-+				return -EPERM;
- 			ret =3D paste_selection(tty);
- 			break;
- 		case TIOCL_UNBLANKSCREEN:
-@@ -3158,6 +3162,8 @@ int tioclinux(struct tty_struct *tty, unsigned
-long arg) console_unlock();
- 			break;
- 		case TIOCL_SELLOADLUT:
-+			if (!capable(CAP_SYS_ADMIN))
-+				return -EPERM;
- 			console_lock();
- 			ret =3D sel_loadlut(p);
- 			console_unlock();
---=20
-2.40.0
+https://github.com/libarchive/libarchive/pull/2101
 
+Tavis.
 
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
