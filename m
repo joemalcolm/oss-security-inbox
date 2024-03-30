@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3272" "Thursday" "8" "September" "2016" "07:33:43" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7066E5F15@EXMBX-TJ002.tencent.com>" "57" "[oss-security] Re: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue(Internet mail)" nil nil nil "9" "2016090807:33:43" "[oss-security] Re: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue(Internet mail)" (number mark "U       winsonliu@te Sep  8   57/3272  " thread-indent "\"[oss-security] Re: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue(Internet mail)\"\n") "<20160908065327.6DEBD6C1B17@smtpvmsrv1.mitre.org>" ("<20160908065327.6DEBD6C1B17@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11340 invoked by uid 550); 8 Sep 2016 07:34:32 -0000
+Received: (qmail 31783 invoked by uid 550); 30 Mar 2024 15:41:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11265 invoked from network); 8 Sep 2016 07:34:14 -0000
-From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
-To: cve-assign <cve-assign@mitre.org>
-CC: cve-assign <cve-assign@mitre.org>, oss-security
-	<oss-security@lists.openwall.com>
-Thread-Topic: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue(Internet
- mail)
-Thread-Index: AQHSCaNSwTCflmKdTkSJeXbmtTKvIw==
-Date: Thu, 8 Sep 2016 07:33:43 +0000
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5F15@EXMBX-TJ002.tencent.com>
-References: <20160908065327.6DEBD6C1B17@smtpvmsrv1.mitre.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.28]
-Content-Type: multipart/alternative;
-	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5F15EXMBXTJ002tence_"
+Received: (qmail 26185 invoked from network); 30 Mar 2024 15:33:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711812786; x=1712417586; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=by6SSDOGD9yLl8FNf82g67HiC3P3UgerhBl9k2js7oM=;
+        b=Bxd84Y0k+gptsRJkU/46b/4/uvl3FQdBGrxCS716nfIZUrMSBm/oB1SbTozDTINMpS
+         9F1+nYjqIxZvPjw81ebr8YV70s58OloVQZZkhik6KXEwpLRYMfGhYW6gCNgg2VHzfx3d
+         n7WhzeoGO1OipJQx+06uY8cLBUEqeVyz/27OWCiqYOyEgl9aMLfulyPXPgvD6xgfHkLh
+         2qWdZuKwmja15eltqFxEKnwVdhM0w7oT08TwfB1RT5TzJBZTbFX676UamqrCkuvSkEig
+         v4zfCTYHM+Ra694jFcT0i+925q4J839xDCNG7IIdtdXingPiUDSXP5/zVjmSmbq2APls
+         9aRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711812786; x=1712417586;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=by6SSDOGD9yLl8FNf82g67HiC3P3UgerhBl9k2js7oM=;
+        b=WnfChWbPVXi7xHCmSa17JcKn7Arg7FnoowJC/TlFLx29MgBOXxNNPM7qOWMjR6LmKz
+         aHrJ+Me8zSG04jErIGUcdoYku2pUB8+itOcNVVNDqCdY0BEzNCtsQp4TKIIIplrFDbSZ
+         IGsBDT5fa73HubN7yCp3+opz3WRuWyAhR2gs/QHNXGEQ6/hAJdq60+YsVsvzcsnOBixJ
+         flcdZhexXi9MOVO6U6PXbVy6cJiQuJdb/ihQyeD5CmUSWIiBweA583cUG1Cm+ZPshVW4
+         GC4Zi2XcEHSaGtJcvxESgSrQO99PWZ16yMmLr4VwHGH8yxhjuTqbQKC6mIjksNp+fNjL
+         cs8w==
+X-Gm-Message-State: AOJu0Yx+lRU53tJnvBqbyYnRCPViC08SKFE3YnG6tpZs8cZQN/roRKwK
+	5ft+EuMAcakRBLn5xCoRHlUeAwhjSKg1VG4WFMdm27+PNH0QevD/AQhaO9xTRpV0DjtnLBRELRl
+	IGNgPSAhYu4/DZV01FA87T6vKQ8uFAb77Yi4=
+X-Google-Smtp-Source: AGHT+IGy7PT7tWxZYxeEmx26wNqr/V3kfn7g41B7HTxoYS0Uwem09J0pQGTZlO+yvcZcZqoak+RVnbekNLwFMDRQVaQ=
+X-Received: by 2002:a05:6820:2707:b0:5a5:23fb:4493 with SMTP id
+ db7-20020a056820270700b005a523fb4493mr4054521oob.4.1711812785951; Sat, 30 Mar
+ 2024 08:33:05 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] Re: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue(Internet
- mail)
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io> <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+ <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+ <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com> <uu7k2m$61a$1@ciao.gmane.io>
+ <CAOp4FwT+kqoG1JRawFu6tkz0LUMgkT9RCVfh7vyaN3bbFkYx3Q@mail.gmail.com>
+ <72a9dfe5-a88d-4711-bc90-cd9269124f08@schafweide.org> <87cyrbzw2z.fsf@daath.pimeys.fr>
+In-Reply-To: <87cyrbzw2z.fsf@daath.pimeys.fr>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Sat, 30 Mar 2024 11:32:54 -0400
+Message-ID: <CAH8yC8nw_5rvGtemqZ3ojSaOCoLZnb+5q8m4NxTf5QTJ=5hoQg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5F15EXMBXTJ002tence_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+On Sat, Mar 30, 2024 at 9:38=E2=80=AFAM Pierre-Elliott B=C3=A9cue <peb@debi=
+an.org> wrote:
+>
+> Bjoern Franke <bjo@schafweide.org> wrote on 30/03/2024 at 14:06:38+0100:
+>
+> > Am 30.03.24 um 04:50 schrieb Loganaden Velvindron:
+> >> Github has suspended the repo:
+> >> https://github.com/tukaani-project/xz
+> >> Im wondering what is the next step for the xz project as a whole ?
+> >
+> > https://git.tukaani.org/?p=3Dxz.git;a=3Dsummary exists and Lasse said on
+> > IRC he thinks he would make a clean 5.6.2 release.
+> >
+> > Regards
+>
+> I honestly would like to extend my sympathy to Lasse.
+>
+> This situation must clearly be a hell for him.
 
-PiBlMDc4MTcyYjFjM2Y5OGQyMjE5YzM3MDc2YjIzOGZiNzU5Yzc1MWVhIG1v
-ZGlmaWVzIHRjZC5jIG5vdCBkd3QuYyAtIGlzIHRoaXMgc3RpbGwgdGhlIGNv
-cnJlY3QgY29tbWl0Pw0KWWVzLCB0aGUgaXNzdWUgd2FzIHRyaWdnZXJlZCBp
-biBkd3QuYyBidXQgY2FuIGJlIGZpeGVkIGluIHRjZC5jLg0KDQo+IElzIGl0
-IHRoZSBzYW1lIGFzIENocm9taXVtIGJ1ZyA2MzI2MjIgdGhhdCB3YXMgYWxy
-ZWFkeSBhc3NpZ25lZCBDVkUtMjAxNi01MTU3Pw0KSSB0aGluayBzby4NCg0K
-DQotLS0tLUJFR0lOIFBHUCBTSUdORUQgTUVTU0FHRS0tLS0tDQpIYXNoOiBT
-SEEyNTYNCg0KPiBJIHJlcG9ydGVkIGEgc2VjdXJpdHkgaXNzdWUgb2YgT3Bl
-bkpQRUcgc29tZSBkYXlzIGFnbyBhbmQgaXQgaGFzIGJlZW4NCj4gZml4ZWQg
-bm93LiBUaGUgZml4IGlzIGF2YWlsYWJsZSBhdA0KPiBodHRwczovL2dpdGh1
-Yi5jb20vdWNsb3V2YWluL29wZW5qcGVnL2NvbW1pdC9lMDc4MTcyYjFjM2Y5
-OGQyMjE5YzM3MDc2YjIzOGZiNzU5Yzc1MWVhDQo+DQo+IEEgSGVhcCBCdWZm
-ZXIgT3ZlcmZsb3cgKE91dC1vZi1Cb3VuZHMgV3JpdGUpIGlzc3VlIHdhcyBm
-b3VuZCBpbg0KPiBmdW5jdGlvbiBvcGpfZHd0X2ludGVybGVhdmVfdiBvZiBk
-d3QuYy4gVGhpcyB2dWxuZXJhYmlsaXR5IGFsbG93cw0KPiByZW1vdGUgYXR0
-YWNrZXJzIHRvIGV4ZWN1dGUgYXJiaXRyYXJ5IGNvZGUgb24gdnVsbmVyYWJs
-ZSBpbnN0YWxsYXRpb25zDQo+IG9mIE9wZW5KUEVHLg0KPg0KPiBBZGRyZXNz
-U2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVyZmxvdw0KPiBXUklURSBvZiBz
-aXplIDQNCg0KZTA3ODE3MmIxYzNmOThkMjIxOWMzNzA3NmIyMzhmYjc1OWM3
-NTFlYSBtb2RpZmllcyB0Y2QuYyBub3QgZHd0LmMgLSBpcyB0aGlzDQpzdGls
-bCB0aGUgY29ycmVjdCBjb21taXQ/DQoNCkFsc28sIGlzIHRoaXMgdGhlIHNh
-bWUgdnVsbmVyYWJpbGl0eSBhcyB0aGUNCmh0dHBzOi8vcGRmaXVtLmdvb2ds
-ZXNvdXJjZS5jb20vcGRmaXVtLysvYjZiZWZiMmVkMjQ4NWEzODA1Y2RkZWE4
-NmRjNzU3NDUxMDE3OGVhOQ0KKGFrYSBDaHJvbWl1bSBidWcgNjMyNjIyKSBp
-c3N1ZSB0aGF0IHdhcyBhbHJlYWR5IGFzc2lnbmVkIENWRS0yMDE2LTUxNTcg
-aW4gdGhlDQpodHRwczovL2dvb2dsZWNocm9tZXJlbGVhc2VzLmJsb2dzcG90
-LmNvbS8yMDE2LzA4L3N0YWJsZS1jaGFubmVsLXVwZGF0ZS1mb3ItZGVza3Rv
-cF8zMS5odG1sDQpwb3N0Pw0KDQotIC0tDQpDVkUgQXNzaWdubWVudCBUZWFt
-DQpNL1MgTTMwMCwgMjAyIEJ1cmxpbmd0b24gUm9hZCwgQmVkZm9yZCwgTUEg
-MDE3MzAgVVNBDQpbIEEgUEdQIGtleSBpcyBhdmFpbGFibGUgZm9yIGVuY3J5
-cHRlZCBjb21tdW5pY2F0aW9ucyBhdA0KICBodHRwOi8vY3ZlLm1pdHJlLm9y
-Zy9jdmUvcmVxdWVzdF9pZC5odG1sIF0NCi0tLS0tQkVHSU4gUEdQIFNJR05B
-VFVSRS0tLS0tDQpWZXJzaW9uOiBHbnVQRyB2MQ0KDQppUUljQkFFQkNBQUdC
-UUpYMFFtWUFBb0pFSGIvTXdXTFZoaTJKdUlRQUluWThCZWQvVzl3WndnbU80
-cGVlcGw3DQpsT0pwdE45dXRkTXdDZFlFdWc2TnpDRmpwY1VzbFNtckJRY05k
-WEVHTW9QdzVya3UvSHc3M3NITmJoZGZNNzFJDQpURFUyT0V3elNOUWVvKzRt
-LzNyWE1sWXlId09xSE1wM293SFFubDVKV0pSY3o2aGhtSS9KcG9rV3hLbmN0
-aHRiDQpycHl3d2FvODlWSlpKZjVHTEY3UlFGWHZId2xSRVArRDNYWXJXMGNi
-cUVmT3JVQVE3b3hLNU9hRkNhMzBOV3JoDQpJU0o0aURhbGZUZVdyN3g5OEJi
-M1g2djQwZEw3YmtVdHVXSG5xRk4rTHd1QkpMMk1sSjc0WG1zZElEclNYR09m
-DQpncnJwVTFzTUdaK3lKaGJjKzRuNkpjVHhYSTYvQVdPYUtxbi9wa0NHOFVr
-TkwvTHh6dWFHbUlZZ3VHZWNZaDdWDQoydGM1ZTdJWjRJekNZTmFSVUtLTEF0
-bGZFTk1iT244SXFMMHpGV1hSb1N6dzdZY1N3MjRzMUEwaHpFQmlQb25TDQpj
-UFdHaE1Zc3U0YkNtSm1aWmVudUtOSUt4L0N1T1pxK1lneUZwWGpvd1V4Rkdw
-WndPazllVlBucG1LOENSbDd6DQprR2FTMzNsOXlFbHN0RzFnc1BlR0R4WllI
-dEcwOXovVC9WckpXSUhOaWVUTVVPRU8wTFpmOCt4RzViZlhXQzFBDQp5NVM2
-R0NGT1NNKzhRcnZQSGd1YTRsOGg3dUF4YkNWS2xMcWFoT1ZoSUQ4M3NDS0tU
-V3l4TEdhKzFGdFBJc1JIDQp6VG1FTWVTMFE2Snl0WGM3ZjJEaXRJOXQvaEVF
-aDg3N3hRTFJXYWN0T0JtUDE5WGRDK3JDTGNCWmNva3NLOFVCDQoyb3NWYTFF
-a0FZRDlaVnJDT28waQ0KPUNWZ0cNCi0tLS0tRU5EIFBHUCBTSUdOQVRVUkUt
-LS0tLQ0KDQo=
+Lasse published a statement at <https://tukaani.org/xz-backdoor/>.
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5F15EXMBXTJ002tence_--
+> Someone asked what would become of xz as a project. I do hope in light
+> of this event, some people step in to help.
+
+Perhaps Lasse should turn over control of the project to an entity
+like the Linux Foundation. Xz is critical to Linux now, and it needs
+more oversight than Lasse can provide. (Not to impugn Lasse; he seems
+to be very busy. Extra [trusted] helping hands would probably be
+welcomed).
+
+Jeff
