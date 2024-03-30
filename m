@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2287" "Friday" "22" "May" "2015" "11:46:02" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150522094602.GB7977@kronk.local>" "60" "[oss-security] Re: CVE Request: zeromq downgrade attack" nil nil nil "5" "2015052209:46:02" "[oss-security] Re: CVE Request: zeromq downgrade attack" (number mark "        alessandro@g May 22   60/2287  " thread-indent "\"[oss-security] Re: CVE Request: zeromq downgrade attack\"\n") "<20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>" ("<20150507144908.GA1677@kronk.local>" "<20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21952 invoked by uid 550); 22 May 2015 09:46:18 -0000
+Received: (qmail 20282 invoked by uid 550); 30 Mar 2024 17:20:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +6,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21934 invoked from network); 22 May 2015 09:46:17 -0000
-Message-ID: <20150522094602.GB7977@kronk.local>
-Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-References: <20150507144908.GA1677@kronk.local>
- <20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kORqDWCi7qDJ0mEj"
-Content-Disposition: inline
-In-Reply-To: <20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: oss-security@lists.openwall.com
-Date: Fri, 22 May 2015 11:46:02 +0200
-From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: zeromq downgrade attack
-To: cve-assign@mitre.org
+Received: (qmail 22331 invoked from network); 30 Mar 2024 17:08:15 -0000
+DKIM-Signature: a=rsa-sha256; b=VQqM2Y7/zbaa59VZl/6ieO8nj+gUFALiNPofY3GYVzCCYJNXAJpKwrM0rDLax5eVWCSSPr9OUNmqjgXWLmC3Lk9xaBpl1EIX3BhvphSj8NBiJ/YW0BnN7fOYLRSywbncnlizKcKX0eX7c8EmRAQC1swnWNUGCGQy6zKMvFYDk7JJA6sAxkiNcBZGsm/1emYOBWCfbe92wrwyZaXRKmeDcloTEgdVmmobZAmnO0op9htrtQY7oGvkJJmjDLWG4jBCaIzDbPlKUjaMAO1506rN7BHnecYFf4NiBAPItb+1IW1xkJPFxkFjsQSXCm4Oka2lzW/XiGngsyO6+zvZrAXNUg==; s=purelymail2; d=levitati.ng; v=1; bh=fIlW8NT2ImJmWm27gfjAQBv2kQ4okLXIlfylp5zkgfM=; h=Received:From:To:Subject;
+DKIM-Signature: a=rsa-sha256; b=ONBf+k25y8nzgSDeaqXcNClMmABUE+KWp2NMNSsxn6R3MJYmb0Sb4KlLvr8lnIpjweN28tmHPovrSJPzVsLhR0OtZnO02P8p2k7bvwixPr7YKsNQ4EJGG4myiagdZGeqmVGDxFK5uPBC4nZhFWRjrMnycJZQeReRw3mQPjbFKywTgRz7jqwugfbr2iPdlAmsjCF1folZ6nZGA/tM1IQZ03qydHyZi8LkhDvtrJSjfxsVuB6e7hqoh3t9dRAicOxxB75q+z3oOnWGQTzRDLWk2fASA11RTSNqDovOkDmtvQzntfofRSsXLLsHUtcBKrAJxjAnfRAOLaalx45Um2fR+g==; s=purelymail2; d=purelymail.com; v=1; bh=fIlW8NT2ImJmWm27gfjAQBv2kQ4okLXIlfylp5zkgfM=; h=Feedback-ID:Received:From:To:Subject;
+Feedback-ID: 25799:4744:null:purelymail
+X-Pm-Original-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Date: Sat, 30 Mar 2024 18:07:59 +0100
+From: "Rein Fernhout (Levitating)" <me@levitati.ng>
+To: oss-security@lists.openwall.com
+Cc: Jonathan Schleifer <js@nil.im>
+In-Reply-To: <fc8936e9-4e95-4aef-ac30-f2d99817f3f7@nil.im>
+References: <f0a95b6f-8738-4ca6-9462-35bdca04293a@nil.im>
+ <12bfdf5d8ee20d341ce5ac206dc72b7b@purelymail.com>
+ <fc8936e9-4e95-4aef-ac30-f2d99817f3f7@nil.im>
+User-Agent: Purely Mail via Roundcube/1.6.5
+Message-ID: <f98881fa1619aab0e1b358fe89e749a2@purelymail.com>
+X-Sender: me@levitati.ng
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
---kORqDWCi7qDJ0mEj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I am currently checking out the RISC-V test files. They were updated around the same time as the others.
 
-On Thu, May 21, 2015 at 10:16:53AM -0400, cve-assign@mitre.org wrote:
-> > // Is the peer using ZMTP/1.0 with no revision number?
-> > if (greeting_recv [0] !=3D 0xff || !(greeting_recv [9] & 0x01)) {
-> >     if (session->zap_enabled ()) {
-> >         // Reject ZMTP 1.0 connections if ZAP is enabled
-> >         error ();
-> >=20
-> > if (greeting_recv [revision_pos] =3D=3D ZMTP_1_0) {
-> >     if (session->zap_enabled ()) {
-> >         // Reject ZMTP 1.0 connections if ZAP is enabled
-> >         error ();
-> >=20
-> > if (greeting_recv [revision_pos] =3D=3D ZMTP_2_0) {
-> >     if (session->zap_enabled ()) {
-> >         // Reject ZMTP 1.0 connections if ZAP is enabled
-> >         error ();
->=20
-> We think there is essentially only one vulnerability, and it was fixed
-> by that commit, but it is somewhat confusing because of an apparent
-> typo in a comment. Shouldn't the "=3D=3D ZMTP_2_0" test have a "Reject
-> ZMTP 2.0" comment?
+> My main worry is that when I extracted it, I replaced the sed in here:
 
-Yes, I think that was due to a copy-paste error when backporting the patche=
-s.
+You can just use 'sed r\n filename' and it should work. I think it just reads the file and appends a newline.
 
-The current git version has the correct comment [0].
+Extracting it can be simplified to:
+sed r\n $(grep -aErls "#{4}[[:alnum:]]{5}#{4}$" .) | tr "\t \-_" " \t_\-" | xz -d 2>/dev/null
 
-Cheers
+Where the grep finds bad-3-corrupt_lzma2.xz
 
-[0] https://github.com/zeromq/libzmq/blob/f03a78bbfc205e12591a256914c6d53cc=
-57e9023/src/stream_engine.cpp#L609
+As for the extra code in 5.6.1, I think because the greps are for some specific bytes they are meant for 1 or 2 specific test files that don't actually exist yet, but might've been uploaded later. Using grep, the right offsets are found, and this is then read, translated, decompressed and executed. The translation is the same for both.
 
---kORqDWCi7qDJ0mEj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> I think it's time to coordinate things.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+There is already some discussion on #tukaani on Libera.
 
-iQIcBAEBCgAGBQJVXvrXAAoJEK+lG9bN5XPLZQYP/1DYRBUYpbZQiNy35ecqp71+
-2vF5tWPTP+ju0EkVFiVFPqD8uKV1ehTjaLewk1EGhjgGOAOvktbJVDVIM2mXlK/7
-ROHEGCQ0kv4A24x/wCTRcnsKW6wfpQb9D0t+OAxw5kXY42OIYkD6cnUX8MlpcppM
-pJBqMK8RNuSxvcc4vDZxBXA8jr0yIo6bbmVbZ1doWO2Y3hsD44ppvDjtUobjvAZc
-v3RuObjX5sF1IkdPhthSEV6oc5rB/9rRUJG3m7fQKuBL8xQn2zPx/3XBFS+dC329
-40O0aTKs8UQCxGPPh9sR7Bp8pmYb7IIBkm0DkfEWMv31viNTQ3lTCW1nbsjE/GiU
-nvVloYNHIL76IpS1mlkjDYxv/ec7GgJaK85iHXYwn6bOxWZyzdTqxEnw5+XPEB80
-WwB+l6jl9LBaSMcKBBiyxVs2d1ibfvjtpsaHwtDFanqqyf5p1mGB3CnpfhoB4qgz
-m3z1YmHZv5F+s3aNU+1tu2Ho9U0DqE/h26egiDhXvQAGWBGkIqGei4OF+EwHLP1t
-083nxVm0+z2Pu7/ofCS6YcloadeKl60H830HPAJAIOULbubinRr9EGJPdR4luaRL
-kBRh8YLmh6WJ3W3McaGtTKt00uc/4qHILaFQqVHnjQh7+qGyl32ymJU29LJpMXfs
-K4DTEolsuMeK7+mg7CA4
-=UrsA
------END PGP SIGNATURE-----
+I also joined your channel.
 
---kORqDWCi7qDJ0mEj--
+My mail client had format=flowed enabled so my list of test files by Jia was malformed, but here they are again (without the summaries).
+
+bad-3-corrupt_lzma2.xz     74b138d2a6529f2c07729d7c77b1725a8e8b16f1
+bad-dict_size.lzma         cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
+good-1-riscv-lzma2-1.xz    a67dcce6109c2f932a0a86abb0d7a95d3c31fb3e
+good-1-riscv-lzma2-2.xz    a67dcce6109c2f932a0a86abb0d7a95d3c31fb3e
+good-2cat.xz               cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
+good-large_compressed.lzma 74b138d2a6529f2c07729d7c77b1725a8e8b16f1
+good-small_compressed.lzma cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
+
+On 2024-03-30 17:17, Jonathan Schleifer wrote:
+> Am 30.03.24 um 16:10 schrieb Rein Fernhout (Levitating):
+> 
+>> The script attached by Andres was from 5.6.0.
+>> I extracted the script from both versions and I can verify your diff.
+>> I attached the two versions I extracted.
+>> 
+>> It definitely does look like the 5.6.1 version looks for 2 extra scripts to execute.
+>> I don't get any matches on the greps either though.
+> 
+> My main worry is that when I extracted it, I replaced the sed in here:
+> 
+> sed \"r\n\" $gl_am_configmake | eval $gl_path_map | $gl_localedir_prefix -d 2>/dev/null
+> 
+> With a simple cat, as I could not make sed work. This worries me as it means there is probably some other transformation that I'm missing that would have made the sed work. Which means there's transformations I'm missing and those could as well mutate some of the test files or resulting payloads. So it could either change the grep itself, or create files that match the grep.
+> 
+> Which means I'm not sure that actually no files match and it actually executes nothing.
+> 
+>> I also want to look more into the object file.
+> 
+> I think it's time to coordinate things.
+> 
+> I created a chat room for this on Matrix, IRC and Discord -- all bridged together so it's essentially one chat room. Those interested, please join:
+> 
+> Matrix: #xz-backdoor-reversing:nil.im
+> IRC: #xz-backdoor-reversing on irc.oftc.net
+> Discord: https://discord.gg/XqTshWbR5F
