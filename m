@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9230" "Friday" "15" "December" "2017" "01:32:11" "+0000" "Hans Jerry Illikainen" "hji@dyntopia.com" "<20171215013211.GA4296@darpa.mil>" "312" "[oss-security] CVE-2017-17670: vlc: type conversion vulnerability" "^Date:" nil nil "12" "2017121501:32:11" "[oss-security] CVE-2017-17670: vlc: type conversion vulnerability" (number mark "        hji@dyntopia Dec 15  312/9230  " thread-indent "\"[oss-security] CVE-2017-17670: vlc: type conversion vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 10182 invoked by uid 550); 15 Dec 2017 01:33:03 -0000
+Received: (qmail 24332 invoked by uid 550); 31 Mar 2024 15:11:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,353 +6,124 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10157 invoked from network); 15 Dec 2017 01:33:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=CIXGWCVElSA7lhog+4VolnEQQ4POJRCXqoR1XZWtqoU=;
-        b=DTKysI4/asw1CTliMmDSqMcKq1luzKWoZOxrViF3T3jTixFSaVW2VmRfYjpCpLAoj1
-         EjJ4KKCkvJe9jgol4SL+m+p/RWP+FbDaNQqrdWapH4PfOgG7VGj+PjIksDd651eZrsYJ
-         imgjVvWteEboVZgnwReQ8XwVnIUEyFI34WXZqTZd89v0NAReQEEFj8ROCmjgE210GM6M
-         Re4xs2usaFm+C0gd7Y2s7i7warIEUXNLhn1RQbQH5DFG+kTYvUnBze6PbOtPtAvwbi5s
-         vg1DLhIaYG7H6wUyG9+SQ3nCfALN0Hcoau4+OygpGftEdSKmjT9NAOehgIN72UFvieL9
-         o5tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=CIXGWCVElSA7lhog+4VolnEQQ4POJRCXqoR1XZWtqoU=;
-        b=l9NCPfyXVKL3730mNgbxsyJypevOq6bZm6PhEHQE1C/hx6p2xyW7V+epdN+7zsMXg5
-         F+YKMTbWwCL9zVxEjcKljdzf4ar9/695V4LcWojOJ+AQpdtD5q3o8LX6tQmPDKGY3KXU
-         zWFrCJuS1B9+vCRK4dg1omGem8cq8joBUkN8mxx894mykg8tx0Oa/YFjJ+Y0HtBIUOPe
-         jL7pkByy93HYR7cJ7fyvGlqHZLGr444MLisF8qUxnfn4P1LkZ5Z4jA5eZBLMF3QwMNKB
-         yukom2RvvIfFSzAoJhYHMKPov89bSo04ZRh2xBAvrGrUIcDR+BUW6uBWu68vYpUGjeiy
-         FOQA==
-X-Gm-Message-State: AKGB3mJjcC2wx59ajeTKw6yIMue1vRs6XhGJ39NCxWRcdnRqn/Kc/3mY
-	K+g/wab6wu0SHULvNtk+PhLPFE0sJzM=
-X-Google-Smtp-Source: ACJfBoutcXh229GuXA8sFRkxwq60o6YvOPi9W2qzFLr4xTFC+f9qYJkxxiaQ+sgmiP3nNAoW/YlD8Q==
-X-Received: by 10.80.142.88 with SMTP id 24mr13622739edx.153.1513301570409;
-        Thu, 14 Dec 2017 17:32:50 -0800 (PST)
-Message-ID: <20171215013211.GA4296@darpa.mil>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Date: Fri, 15 Dec 2017 01:32:11 +0000
-From: Hans Jerry Illikainen <hji@dyntopia.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-17670: vlc: type conversion vulnerability
-To: oss-security@lists.openwall.com, bugtraq@securityfocus.com,
-	fulldisclosure@seclists.org
+Received: (qmail 12178 invoked from network); 31 Mar 2024 12:29:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711888156; x=1712492956; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aDm+mvYpRlUAwwBtuBQHht3xoKVq6azfs1L/LdDxUyk=;
+        b=bTa0Ancq4zbJIdHT/jfbxY5b6uPS3SYhZYkyeyHtIhuENA2z7OleeHlxUwmaym1ywE
+         L7bqAOCTxEos3MrJHQseXn+UkBMqq53Q8To1zqkd0jcec+yY8/+kpXKa0/0YRzyTpZ3m
+         EiPoNK32nnDBwsSMSqMmrMbbdDqDK/i/fgMfhtQwMCIIKfGOzDsNwyxD73Psram1tA0d
+         3QM5DadwPxoPXIBB5eBK53yUctu2wDn3yrhdBldQdYpR15Mqk0CH/7ibBZO+Gji8WBy3
+         r0eSS1PGpZI3GwsB40YaZQ4qF5d6b6KcdIGDk1dSGENozSi4CXGnD9wYGN1YkZ+ABWgo
+         k+6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711888156; x=1712492956;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aDm+mvYpRlUAwwBtuBQHht3xoKVq6azfs1L/LdDxUyk=;
+        b=JFSkUmRc2E0QSnx/0uLfsNR9R0pK1WgKmnY1TyRUgohUVq20esDeq/e/M6rWO109Ld
+         DbwGuPpJi5ECq+H8Jgj2HQSgYaeo++OlRS4k6NHZ/rlx6rCTmVx4+xwUAhy3xkj2A8zi
+         urXwMu4Qw5Akz5+ytrc9Lq9xpjxPzDn0M+tYiwpf3PACkzXfVrxJSeUzG/ukKZissL1/
+         3eWIXq1JxExwIdNBjJQA02cIFGauRCRphV+nBGwSjsxNM3nZ6SJ8HwjNmGFQC67tzFxi
+         8QjkMP0mSRwy0RGpE0SfzWXxDr7BQCqGlraHeu/LDH4wuIL6AH9U9gcvHulQEv1/CV+j
+         c8SA==
+X-Gm-Message-State: AOJu0YzA/PXOGrTlNxNzgCUk6PMpICeY5LZd1BU7oZqyQEojmUjmlJUi
+	8Ct8ubjbzvEftjG9LfR8KRG5gXtQJSb+N8OvXylf2T4ZESDF/Is2iogQPTrlYK7JWOtJjNNKRpo
+	4Wb9kuzaci3AFJbpxeQoaQNA5ZFDEwMzRdHuX/Q==
+X-Google-Smtp-Source: AGHT+IFyLG6EtSTRA4dAQGrRq9XTcq3n7DfLk61+Nqoj9JD12420YG6Gx2XB/at2/zwh3BuM1SSywV/bWcuphkW9wTc=
+X-Received: by 2002:a2e:7e12:0:b0:2d7:2ba:525 with SMTP id z18-20020a2e7e12000000b002d702ba0525mr4217846ljc.18.1711888155665;
+ Sun, 31 Mar 2024 05:29:15 -0700 (PDT)
+MIME-Version: 1.0
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
+ <uu7da3$87n$1@ciao.gmane.io> <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
+ <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
+ <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com> <uu7k2m$61a$1@ciao.gmane.io>
+ <CAOp4FwT+kqoG1JRawFu6tkz0LUMgkT9RCVfh7vyaN3bbFkYx3Q@mail.gmail.com>
+ <72a9dfe5-a88d-4711-bc90-cd9269124f08@schafweide.org> <87cyrbzw2z.fsf@daath.pimeys.fr>
+ <CAH8yC8nw_5rvGtemqZ3ojSaOCoLZnb+5q8m4NxTf5QTJ=5hoQg@mail.gmail.com>
+In-Reply-To: <CAH8yC8nw_5rvGtemqZ3ojSaOCoLZnb+5q8m4NxTf5QTJ=5hoQg@mail.gmail.com>
+From: Loganaden Velvindron <loganaden@gmail.com>
+Date: Sun, 31 Mar 2024 16:29:01 +0400
+Message-ID: <CAOp4FwT-F2H2dyqJoGM1d4G=-83LRDTk2GKcW56H-=9FUZ-EMQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-About
-=====
+Closer look at "Jia Tan" commits show that he/they disabled the Linux
+landlock sandbox. Lasse Collin is doing
+good work to audit the commits and I wish Github would reinstate his
+github account.
 
-A type conversion vulnerability exist in the MP4 demux module in VLC
-<=2.2.8.  This issue has been assigned CVE-2017-17670 and it could be
-used to cause an arbitrary free.
+commit f9cf4c05edd14dedfe63833f8ccbe41b55823b00 (HEAD -> master,
+origin/master, origin/HEAD)
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   Sat Mar 30 14:36:28 2024 +0200
 
+    CMake: Fix sabotaged Landlock sandbox check.
 
-Details
-=======
+    It never enabled it.
 
-MP4 is a container format for video, audio, subtitles and images.  The
-various parts of an .mp4 are organized as hierarchical boxes/atoms in
-big-endian byte ordering [1].
+After using git blame:
+328c52da8 (Jia Tan       2024-02-26 23:02:06 +0800 1004) .
 
-VLC processes these boxes by using a lookup table:
+Pulling out git show:
 
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 3297 static const struct
-| 3298 {
-| 3299     uint32_t i_type;
-| 3300     int  (*MP4_ReadBox_function )( stream_t *p_stream, MP4_Box_t *p_box );
-| 3301     void (*MP4_FreeBox_function )( MP4_Box_t *p_box );
-| 3302     uint32_t i_parent; /* set parent to restrict, duplicating if needed; 0 for any */
-| 3303 } MP4_Box_Function [] =
-| 3304 {
-| 3305     /* Containers */
-| 3306     { ATOM_moov,    MP4_ReadBoxContainer,     MP4_FreeBox_Common, 0 },
-| 3307     { ATOM_trak,    MP4_ReadBoxContainer,     MP4_FreeBox_Common, ATOM_moov },
-| ....
-| 3565     /* Last entry */
-| 3566     { 0,              MP4_ReadBox_default,      NULL, 0 }
-| 3567 };
-`----
+commit 328c52da8a2bbb81307644efdb58db2c422d9ba7
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   Mon Feb 26 23:02:06 2024 +0800
 
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 3574 static MP4_Box_t *MP4_ReadBox( stream_t *p_stream, MP4_Box_t *p_father )
-| 3575 {
-| 3576     MP4_Box_t *p_box = calloc( 1, sizeof( MP4_Box_t ) ); /* Needed to ensure simple on error handler */
-| 3577     unsigned int i_index;
-| ....
-| 3582     if( !MP4_ReadBoxCommon( p_stream, p_box ) )
-| 3583     {
-| ....
-| 3587     }
-| ....
-| 3605     /* Now search function to call */
-| 3606     for( i_index = 0; ; i_index++ )
-| 3607     {
-| ....
-| 3613         if( ( MP4_Box_Function[i_index].i_type == p_box->i_type )||
-| 3614             ( MP4_Box_Function[i_index].i_type == 0 ) )
-| 3615         {
-| 3616             break;
-| 3617         }
-| 3618     }
-| 3619
-| 3620     if( !(MP4_Box_Function[i_index].MP4_ReadBox_function)( p_stream, p_box ) )
-| 3621     {
-| 3622         MP4_BoxFree( p_stream, p_box );
-| 3623         return NULL;
-| 3624     }
-| 3625
-| 3626     return p_box;
-| 3627 }
-`----
+    Build: Fix Linux Landlock feature test in Autotools and CMake builds.
 
-
-MP4_ReadBox() allocates a MP4_Box_t structure and invokes
-MP4_ReadBoxCommon() to read the properties common to all mp4 boxes;
-`i_size' and `i_type' (and optionally an extended size).  Afterwards,
-MP4_Box_Function is used to dispatch further parsing to a suitable
-function based on its `i_type'.
-
-When VLC is done with the boxes, they are freed with MP4_BoxFree():
-
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 3633 void MP4_BoxFree( stream_t *s, MP4_Box_t *p_box )
-| 3634 {
-| 3635     unsigned int i_index;
-| ....
-| 3650     /* Now search function to call */
-| 3651     if( p_box->data.p_payload )
-| 3652     {
-| 3653         for( i_index = 0; ; i_index++ )
-| 3654         {
-| ....
-| 3660             if( ( MP4_Box_Function[i_index].i_type == p_box->i_type )||
-| 3661                 ( MP4_Box_Function[i_index].i_type == 0 ) )
-| 3662             {
-| 3663                 break;
-| 3664             }
-| 3665         }
-| 3666         if( MP4_Box_Function[i_index].MP4_FreeBox_function == NULL )
-| 3667         {
-| ....
-| 3677         }
-| 3678         else
-| 3679         {
-| 3680             MP4_Box_Function[i_index].MP4_FreeBox_function( p_box );
-| 3681         }
-| ....
-| 3685 }
-`----
-
-Again, `i_type' is used to find a suitable free-function.
-
-The reason this may be problematic is that `i_type' could be changed
-when VLC handles `sinf' and `frma' boxes in TrackCreateES() -- meaning
-that a box may be read as one type, and freed as another.
-
-`sinf' is the "Protection Scheme Information Box" and it's used for
-protected/encrypted media.  `frma' is the "Original Format Box" and it's
-used to declare the format of the unprotected media.
-
-If a sinf/frma is found underneath a sample box, the `i_type' of that
-sample is replaced with the original format declared in the `frma':
-
-vlc-2.2.8/modules/demux/mp4/mp4.c
-,----
-| 2180 static int TrackCreateES( demux_t *p_demux, mp4_track_t *p_track,
-| 2181                           unsigned int i_chunk, es_out_id_t **pp_es )
-| 2182 {
-| ....
-| 2208     p_sample = MP4_BoxGet(  p_track->p_stsd, "[%d]",
-| 2209                             i_sample_description_index - 1 );
-| ....
-| 2219     p_track->p_sample = p_sample;
-| 2220
-| 2221     if( ( p_frma = MP4_BoxGet( p_track->p_sample, "sinf/frma" ) ) && p_frma->data.p_frma )
-| 2222     {
-| 2223         msg_Warn( p_demux, "Original Format Box: %4.4s", (char *)&p_frma->data.p_frma->i_type );
-| 2224
-| 2225         p_sample->i_type = p_frma->data.p_frma->i_type;
-| 2226     }
-| ....
-`----
-
-No sanity check is done to make sure that the MP4_FreeBox_function
-associated with the new `i_type' is compatible with the old
-MP4_ReadBox_function.
+    The previous Linux Landlock feature test assumed that having the
+    linux/landlock.h header file was enough. The new feature tests also
+    requires that prctl() and the required Landlock system calls are
+    supported.
 
 
-Example
-=======
-
-One way to abuse the type change is to have a `soun' changed to a
-`vide'.  This results in a 72-byte allocation (x86-64) for the
-`p_sample_soun' member of the p_box->data union when the box is read:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 1614 static int MP4_ReadBox_sample_soun( stream_t *p_stream, MP4_Box_t *p_box )
-| 1615 {
-| 1616     p_box->i_handler = ATOM_soun;
-| 1617     MP4_READBOX_ENTER( MP4_Box_data_sample_soun_t );
-| ....
-`----
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 1351 #define MP4_READBOX_ENTER( MP4_Box_data_TYPE_t ) \
-| ....
-| 1369     if( !( p_box->data.p_payload = calloc( 1, sizeof( MP4_Box_data_TYPE_t ) ) ) ) \
-| 1370     { \
-| ....
-| 1373     }
-`----
-
-where `p_box' is MP4_Box_t:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 1284 typedef struct MP4_Box_s
-| 1285 {
-| ....
-| 1296     MP4_Box_data_t   data;   /* union of pointers on extended data depending
-| 1297                                 on i_type (or i_usertype) */
-| ....
-| 1306 } MP4_Box_t;
-`----
-
-and MP4_Box_data_t:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 1200 typedef union MP4_Box_data_s
-| 1201 {
-| ....
-| 1220     MP4_Box_data_sample_vide_t *p_sample_vide;
-| 1221     MP4_Box_data_sample_soun_t *p_sample_soun;
-| ....
-| 1278     void                *p_payload; /* for unknow type */
-| 1279 } MP4_Box_data_t;
-`----
-
-,----
-| (gdb) p sizeof(MP4_Box_data_sample_soun_t)
-| $1 = 72
-`----
-
-After the box has had its type changed to `vide' and it's later freed,
-the `p_sample_vide' member of the p_box->data union is used:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 1861 void MP4_FreeBox_sample_vide( MP4_Box_t *p_box )
-| 1862 {
-| 1863     FREENULL( p_box->data.p_sample_vide->p_qt_image_description );
-| 1864 }
-`----
-
-,----
-| (gdb) p sizeof(MP4_Box_data_sample_vide_t)
-| $2 = 96
-| (gdb)
-`----
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 529 typedef struct MP4_Box_data_sample_vide_s
-| 530 {
-| ...
-| 557     uint8_t *p_qt_image_description;
-| 558
-| 559 } MP4_Box_data_sample_vide_t;
-`----
-
-`p_sample_vide' is 24 bytes larger than `p_sample_soun', and
-`p_qt_image_description' is at the end of the vide struct; i.e. the
-pointer to be free()d is read out-of-bounds from potentially
-user-controlled memory.
-
-`mkmp4.py' at [2]
-
-,----
-| $ uname -imrs
-| FreeBSD 11.1-RELEASE-p4 amd64 GENERIC
-| $ ./mkmp4.py file.mp4
-| $ vlc --version
-| VLC media player 2.2.8 Weatherwax (revision 2.2.7-14-g3cc1d8cba9)
-| $ gdb -q --args vlc file.mp4
-| (gdb) set breakpoint pending on
-| (gdb) b libmp4.c:1618
-| No source file named libmp4.c.
-| Breakpoint 1 (libmp4.c:1618) pending.
-| (gdb) b libmp4.c:1863
-| No source file named libmp4.c.
-| Breakpoint 2 (libmp4.c:1863) pending.
-| (gdb) r
-| [...]
-| Breakpoint 3, MP4_ReadBox_sample_soun (p_stream=0x802ab2710, p_box=0x802a85000) at demux/mp4/libmp4.c:1618
-| 1618        p_box->data.p_sample_soun->p_qt_description = NULL;
-| (gdb) p p_box->data.p_sample_soun
-| $1 = (MP4_Box_data_sample_soun_t *) 0x802a79810
-| (gdb) c
-| Continuing.
-|
-| Breakpoint 4, MP4_FreeBox_sample_vide (p_box=0x802a85000) at demux/mp4/libmp4.c:1863
-| 1863        FREENULL( p_box->data.p_sample_vide->p_qt_image_description );
-| (gdb) p p_box->data.p_sample_vide
-| $2 = (MP4_Box_data_sample_vide_t *) 0x802a79810
-| (gdb) p p_box->data.p_sample_vide->p_qt_image_description
-| $3 = (uint8_t *) 0x1122334455667788 <Error reading address 0x1122334455667788: Bad address>
-| (gdb) b free
-| Breakpoint 5 at 0x8019d3ce4
-| (gdb) c
-| Continuing.
-|
-| Breakpoint 5, 0x00000008019d3ce4 in free () from /lib/libc.so.7
-| (gdb) p/x $rdi
-| $4 = 0x1122334455667788
-| (gdb) c
-| Continuing.
-|
-| Program received signal SIGBUS, Bus error.
-| 0x00000008019d36f3 in realloc () from /lib/libc.so.7
-| (gdb) x/i $rip
-| 0x8019d36f3 <realloc+3939>:     mov    rbx,QWORD PTR [rax+rcx*8+0x68]
-| (gdb) i r
-| rax            0x1122334455600000       1234605616436084736
-| rbx            0x1122334455667788       1234605616436508552
-| rcx            0x5a     90
-| [...]
-| (gdb) bt 4
-| #0  0x00000008019d36f3 in realloc () from /lib/libc.so.7
-| #1  0x00000008019d3d51 in free () from /lib/libc.so.7
-| #2  0x0000000806d7fafd in MP4_FreeBox_sample_vide (p_box=0x802a85000) at demux/mp4/libmp4.c:1863
-| #3  0x0000000806d7fcfd in MP4_BoxFree (s=0x802ab2710, p_box=0x802a85000) at demux/mp4/libmp4.c:3680
-`----
-
-
-Solution
-========
-
-This issue does not affect the HEAD of the VLC master branch.
+The code to weaken the sandbox was shipped in the 5.6.1 version.
 
 
 
-Footnotes
-_________
 
-[1] [http://xhelmboyx.tripod.com/formats/mp4-layout.txt]
-
-[2] [https://gist.github.com/dyntopia/194d912287656f66dd502158b0cd2e68]
-
-
--- 
-hji
+On Sat, Mar 30, 2024, 19:42 Jeffrey Walton <noloader@gmail.com> wrote:
+>
+> On Sat, Mar 30, 2024 at 9:38=E2=80=AFAM Pierre-Elliott B=C3=A9cue <peb@de=
+bian.org> wrote:
+> >
+> > Bjoern Franke <bjo@schafweide.org> wrote on 30/03/2024 at 14:06:38+0100:
+> >
+> > > Am 30.03.24 um 04:50 schrieb Loganaden Velvindron:
+> > >> Github has suspended the repo:
+> > >> https://github.com/tukaani-project/xz
+> > >> Im wondering what is the next step for the xz project as a whole ?
+> > >
+> > > https://git.tukaani.org/?p=3Dxz.git;a=3Dsummary exists and Lasse said=
+ on
+> > > IRC he thinks he would make a clean 5.6.2 release.
+> > >
+> > > Regards
+> >
+> > I honestly would like to extend my sympathy to Lasse.
+> >
+> > This situation must clearly be a hell for him.
+>
+> Lasse published a statement at <https://tukaani.org/xz-backdoor/>.
+>
+> > Someone asked what would become of xz as a project. I do hope in light
+> > of this event, some people step in to help.
+>
+> Perhaps Lasse should turn over control of the project to an entity
+> like the Linux Foundation. Xz is critical to Linux now, and it needs
+> more oversight than Lasse can provide. (Not to impugn Lasse; he seems
+> to be very busy. Extra [trusted] helping hands would probably be
+> welcomed).
+>
+> Jeff
