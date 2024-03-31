@@ -1,4 +1,4 @@
-Received: (qmail 5258 invoked by uid 550); 11 May 2022 06:42:23 -0000
+Received: (qmail 5808 invoked by uid 550); 31 Mar 2024 18:35:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +7,207 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5204 invoked from network); 11 May 2022 06:42:22 -0000
-Date: Wed, 11 May 2022 08:42:11 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <q8n331np-1qo6-o367-n636-o5q33o0o29@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 23727 invoked from network); 31 Mar 2024 18:14:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1711908840; bh=GhvS1aFPWhvorE8aCDTnOzr4+dtMHAzG7aA2R061rjg=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=uTRvhf38og6Zj3UIj9PXeUHKPDkdaIzEC9RzrSIl9W9DQxoGMwzBMG1zWdsTqs8LX
+	 HufRwAxfk/V3Zmbb80cHFYqhisNEIE4ddw75St7tszP3tdxyxrr6/DfT2AxkrBbWsJ
+	 +6ft02wtKf6NPwTOWRrZgty8pGXpvs4ovyZXOWlwko1QqczJTB3nH8jFXinm6KI5JQ
+	 povhClEkI8AS+7zUWZ28pHDKmlQCbLmGFSnP4gOwF5sM7O7uMZb4jVnA8H0frRHgNs
+	 wZD3kyl9si/XdxMZvSVHGMsmbpdSXARXxRLHkGS3oWf+yl8SwkN8SvUbyikJXk5zN2
+	 Xg2BLlyBKYuyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1711908840; bh=GhvS1aFPWhvorE8aCDTnOzr4+dtMHAzG7aA2R061rjg=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=uTRvhf38og6Zj3UIj9PXeUHKPDkdaIzEC9RzrSIl9W9DQxoGMwzBMG1zWdsTqs8LX
+	 HufRwAxfk/V3Zmbb80cHFYqhisNEIE4ddw75St7tszP3tdxyxrr6/DfT2AxkrBbWsJ
+	 +6ft02wtKf6NPwTOWRrZgty8pGXpvs4ovyZXOWlwko1QqczJTB3nH8jFXinm6KI5JQ
+	 povhClEkI8AS+7zUWZ28pHDKmlQCbLmGFSnP4gOwF5sM7O7uMZb4jVnA8H0frRHgNs
+	 wZD3kyl9si/XdxMZvSVHGMsmbpdSXARXxRLHkGS3oWf+yl8SwkN8SvUbyikJXk5zN2
+	 Xg2BLlyBKYuyg==
+Date: Mon, 1 Apr 2024 03:13:39 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Zgmn06K3C-nY83YH@codewreck.org>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+ <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: HSTS bypass via trailing dot
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de>
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-HSTS bypass via trailing dot
-============================
+Michael.Karcher wrote on Sun, Mar 31, 2024 at 07:13:35PM +0200:
+> > I am *not* a security researcher, nor a reverse engineer.  There's lots of
+> > stuff I have not analyzed and most of what I observed is purely from
+> > observation rather than exhaustively analyzing the backdoor code.
+> 
+> I am a reverse engineer, and tried some static analysis on that code. One
+> key feature is that the code does not contain any ASCII strings, neither in
+> clear text nor in obfuscated form. Instead, it recognizes all relevant
+> strings using one single deterministic finite automaton, a technique commonly
+> used to search for terms given by regular expressions.
+> 
+> I wrote a script that decodes the tables for the table-driven DFA and outputs
+> the strings recognized by it accompanied with the "ID" assigned to the terminal
+> accepting state that represents that string.
+> 
+> You can find this script (and possibly other stuff I found interesting later)
+> at https://github.com/karcherm/xz-malware .
 
-Project curl Security Advisory, May 11 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-30115.html)
+This list requires that the content is made available in messages
+themselves and not just links, so I've copied the README below (all the
+way to the end), which probably contains enough information for most
+people so I'm not going all the way to attach the script as well.
 
-VULNERABILITY
--------------
+This is really helpful, thanks a lot for the analysis!
 
-curl's HSTS check could be bypassed to trick it to keep using HTTP.
+-- Dominique Martinet | Asmadeus
 
-Using its HSTS support, curl can be instructed to use HTTPS directly instead
-of using an insecure clear-text HTTP step even when HTTP is provided in the
-URL. This mechanism could be bypassed if the host name in the given URL used a
-trailing dot while not using one when it built the HSTS cache. Or the other
-way around - by having the trailing dot in the HSTS cache and *not* using the
-trailing dot in the URL.
 
-Since trailing dots in host names are somewhat special, many sites work
-equally fine with or without a trailing dot present.
+README content below scissors:
+------------8<----------------------
+Information about the liblzma (xz-utils) backdoor
+=================================================
 
-We are not aware of any exploit of this flaw.
+Decoder for the string recognition automaton
+--------------------------------------------
 
-INFO
-----
+The backdoor code, in the version extracted by Florian Weimer, contains no readable ASCII strings.
+It also contains no obfuscated ASCII strings. Instead, it has a single state automaton to recognize
+the required strings. Searching for a string is performed by inputting all candidate start addresses
+into the string detection automaton, and checking whether the intended string is recognized. The
+string detection automaton returns a string ID.
 
-This flaw was introduced in [commit
-b27ad8e1d3e68e](https://github.com/curl/curl/commit/b27ad8e1d3e68e), shipped
-in curl 7.82.0 when the treatment of trailing dot host names was changed.
+The string detection automaton is implemented in the function `_Lsimple_coder_update_0`, which has
+this signature:
 
-Similar issues have been raised in the past for
-[Firefox](https://www.mozilla.org/en-US/security/advisories/mfsa2015-13/) and
-for [Chrome](https://bugs.chromium.org/p/chromium/issues/detail?id=461481).
+```
+int detect_string(const void* startptr, const void* optional_endptr);
+```
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-30115 to this issue.
+It returns 0 if no known string is detected at startptr (the search is aborted if endptr is encountered before
+a match is detected), otherwise it returns a "string ID".
 
-CWE-319: Cleartext Transmission of Sensitive Information
+This is the table that is generated by running the script in this repository:
 
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.82.0 to and including 7.83.0
-- Not affected versions: curl < 7.82.0 and curl >= 7.83.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-30115](https://github.com/curl/curl/commit/fae6fea209a2d4d)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.1
-
-  B - Apply the patch to your local version
-
-  C - Stick to always using `HTTPS://` in URLs
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 3, 2022. We contacted
-distros@openwall on May 5.
-
-libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Axel Chong. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+``` 
+ 810: ' from '
+ 678: ' ssh2'
+  d8: '%.48s:%.48s():%d (pid=%ld)\x00'
+ 708: '%s'
+ 108: '/usr/sbin/sshd\x00'
+ 870: 'Accepted password for '
+ 1a0: 'Accepted publickey for '
+ c40: 'BN_bin2bn\x00'
+ 6d0: 'BN_bn2bin\x00'
+ 958: 'BN_dup\x00'
+ 418: 'BN_free\x00'
+ 4e0: 'BN_num_bits\x00'
+ 790: 'Connection closed by '
+  18: 'Could not chdir to home directory %s: %s\n\x00'
+  b0: 'Could not get agent socket\x00'
+ 960: 'DISPLAY='
+ 9d0: 'DSA_get0_pqg\x00'
+ 468: 'DSA_get0_pub_key\x00'
+ 7e8: 'EC_KEY_get0_group\x00'
+ 268: 'EC_KEY_get0_public_key\x00'
+ 6e0: 'EC_POINT_point2oct\x00'
+ b28: 'EVP_CIPHER_CTX_free\x00'
+ 838: 'EVP_CIPHER_CTX_new\x00'
+ 2a8: 'EVP_DecryptFinal_ex\x00'
+ c08: 'EVP_DecryptInit_ex\x00'
+ 3f0: 'EVP_DecryptUpdate\x00'
+  f8: 'EVP_Digest\x00'
+ 408: 'EVP_DigestVerify\x00'
+ 118: 'EVP_DigestVerifyInit\x00'
+ d10: 'EVP_MD_CTX_free\x00'
+ af8: 'EVP_MD_CTX_new\x00'
+ 6f8: 'EVP_PKEY_free\x00'
+ 758: 'EVP_PKEY_new_raw_public_key\x00'
+ 510: 'EVP_PKEY_set1_RSA\x00'
+ c28: 'EVP_chacha20\x00'
+ c60: 'EVP_sha256\x00'
+ 188: 'EVP_sm'
+ 8c0: 'GLIBC_2.2.5\x00'
+ 6a8: 'GLRO(dl_naudit) <= naudit\x00'
+ 1e0: 'KRB5CCNAME\x00'
+ cf0: 'LD_AUDIT='
+ bc0: 'LD_BIND_NOT='
+ a90: 'LD_DEBUG='
+ b98: 'LD_PROFILE='
+ 3e0: 'LD_USE_LOAD_BIAS='
+ a88: 'LINES='
+ ac0: 'RSA_free\x00'
+ 798: 'RSA_get0_key\x00'
+ 918: 'RSA_new\x00'
+ 1d0: 'RSA_public_decrypt\x00'
+ 540: 'RSA_set0_key\x00'
+ 8f8: 'RSA_sign\x00'
+ 990: 'SSH-2.0'
+ 4a8: 'TERM='
+  e0: 'Unrecognized internal syslog level code %d\n\x00'
+ 158: 'WAYLAND_DISPLAY='
+ 878: '__errno_location\x00'
+ 2b0: '__libc_stack_end\x00'
+ 228: '__libc_start_main\x00'
+ a60: '_dl_audit_preinit\x00'
+ 9c8: '_dl_audit_symbind_alt\x00'
+ 8a8: '_exit\x00'
+ 5b0: '_r_debug\x00'
+ 5b8: '_rtld_global\x00'
+ a98: '_rtld_global_ro\x00'
+  b8: 'auth_root_allowed\x00'
+ 1d8: 'authenticating'
+  28: 'demote_sensitive_data\x00'
+ 348: 'getuid\x00'
+ a48: 'ld-linux-x86-64.so'
+ 7d0: 'libc.so'
+ 7c0: 'libcrypto.so'
+ 590: 'liblzma.so'
+ 938: 'libsystemd.so'
+  20: 'list_hostkey_types\x00'
+ 440: 'malloc_usable_size\x00'
+  c0: 'mm_answer_authpassword\x00'
+  c8: 'mm_answer_keyallowed\x00'
+  d0: 'mm_answer_keyverify\x00'
+ 948: 'mm_answer_pam_start\x00'
+  78: 'mm_choose_dh\x00'
+  40: 'mm_do_pam_account\x00'
+  50: 'mm_getpwnamallow\x00'
+  a8: 'mm_log_handler\x00'
+  38: 'mm_pty_allocate\x00'
+  a0: 'mm_request_send\x00'
+  48: 'mm_session_pty_cleanup2\x00'
+  70: 'mm_sshpam_free_ctx\x00'
+  58: 'mm_sshpam_init_ctx\x00'
+  60: 'mm_sshpam_query\x00'
+  68: 'mm_sshpam_respond\x00'
+  30: 'mm_terminate\x00'
+ c58: 'parse PAM\x00'
+ 400: 'password\x00'
+ 4f0: 'preauth'
+ 690: 'pselect\x00'
+ 7b8: 'publickey\x00'
+ 308: 'read\x00'
+ 710: 'rsa-sha2-256\x00'
+ 428: 'setlogmask\x00'
+ 5f0: 'setresgid\x00'
+ ab8: 'setresuid\x00'
+ 760: 'shutdown\x00'
+ d08: 'ssh-2.0'
+ 2c8: 'ssh-rsa-cert-v01@openssh.com\x00'
+  88: 'sshpam_auth_passwd\x00'
+  90: 'sshpam_query\x00'
+  80: 'sshpam_respond\x00'
+  98: 'start_pam\x00'
+ 9f8: 'system\x00'
+ 198: 'unknown\x00'
+ b10: 'user'
+ 380: 'write\x00'
+  10: 'xcalloc: zero size\x00'
+ b00: 'yolAbejyiejuvnup=Evjtgvsh5okmkAvj\x00'
+ 300: '\x7fELF'
+```
