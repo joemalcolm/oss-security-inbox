@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1220" "Tuesday" "22" "December" "2015" "15:36:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>" "33" "[oss-security] Re: CVE request for math/big.Exp" "^Cc:" nil nil "12" "2015122220:36:55" "[oss-security] Re: CVE request for math/big.Exp" (number mark "        cve-assign@m Dec 22   33/1220  " thread-indent "\"[oss-security] Re: CVE request for math/big.Exp\"\n") "<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>" ("<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17414 invoked by uid 550); 22 Dec 2015 20:37:08 -0000
+Received: (qmail 18058 invoked by uid 550); 1 Apr 2024 12:58:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +6,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16369 invoked from network); 22 Dec 2015 20:37:07 -0000
-In-Reply-To: <CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>
-Message-Id: <20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 22 Dec 2015 15:36:55 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for math/big.Exp
-To: jbuberel@google.com
+Received: (qmail 18019 invoked from network); 1 Apr 2024 12:58:39 -0000
+Date: Mon, 1 Apr 2024 14:58:30 +0200 (CEST)
+From: Jan Engelhardt <jengelh@inai.de>
+To: oss-security@lists.openwall.com
+cc: takao.fujiwara1@gmail.com
+Message-ID: <r57psoo4-64q4-4nnr-qp6s-q4n32584698o@vanv.qr>
+User-Agent: Alpine 2.26 (LSU 649 2022-06-02)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Subject: [oss-security] From xz to ibus: more questionable tarballs
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> The problem that was
-> identified is similar to CVE-2015-3193
+In the ibus repository at https://github.com/ibus/ibus ,
+commit 0ad8e77bd36545974ad8acd0a5283cf72bc7c8ad
+was tagged as refs/tags/1.5.29-rc2 (+signed) on 2023-11-09,
+and a disted tarball was made available (but unsigned), and Linux distros have
+imported it (file checksums all line up).
 
->> math/big: fix carry propagation in Int.Exp Montgomery code 
->> src/math/big/nat.go
+https://github.com/ibus/ibus/releases/download/1.5.29/ibus-1.5.29-rc2.tar.gz
 
-Use CVE-2015-8618.
+Comparing this disttar to the git repository and favorably
+*discounting* autotools-related files and (what appears to be)
+vala-to-c transpiling, I'm left with benign, but unexplicable
+changes. It seems the git is "older", as e.g. one still finds "beta3"
+in the diff, but also the disttar's ibuscodegen.h has an older
+copyright line and an incomplete cherry-pick from
+8f00d67b809036b0b76ae257cfe7e102bc8f1dec.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+*runs away screaming*
 
-iQIcBAEBCAAGBQJWebPbAAoJEL54rhJi8gl5LMsP/20/WzubhID16KKW84qnlMAo
-F6w3/kPkfTTBr+42W3bNZYSCY0ieVwQsvTN6uz8GrMxJ6H/Vko3H17ltXZAx0nxP
-Vc53H2QbAiyCaaUA6+vqAeosjBbBhvXNkw7Dj9utDu1hJ2rbBtf5ujddF48CxjoJ
-+Fsrr7TYHX3Su/4r7MNtBtcMjOeWfD3xB+h++Lp5CL/z4tRKXBS02OM+tlVvdGvq
-llQQ8dwGIYaJv8v3ZIIdXk1dzurws2B6gvF6uDeaseXtbFpMbRpXxgeFddLowjtZ
-th9I7oxQUvFASrraIQrobaKPpEOfDJrMjhVzFHPtEFtTvrR71qYqq58NXaoflGV1
-gEtSptbjm5sAwsjxOWhOVO+wA9JHA8upV2ZVxczdeFGlvyko2KBWdMorjEIWLQGI
-x2DbkL2+hXlCJfZZUfNy0BjyGpZPGlmT7ZAYguxz6VTT/EC67gJ6pkiv5mZKOeBY
-PHtH7UaYVBYwh6h5opdmvhkhTJ/a9lXhIez5s5HhX01P31DHmx6RLUMeTBikjwmz
-IFOEulqQhAH0Qtp2XvPAMKeICXpEv7iWmoP8yNAYQ0SzS4awc7ZjK1mcRka1hcY5
-Bc5nbQvbZGPag0QeyYPdKyYuNqugj6d3J81kIlcpNfjCT1lSVhxxwjQQzlpi0FCR
-YJqwm2p3NhpjW57fGRux
-=HP2t
------END PGP SIGNATURE-----
+In light of the xz revelations, I thought it's worth pointing out 
+this class of problems.
+
+
+$ tar -xf ibus-1.5.29-rc2.tar.gz
+$ git clone -b 1.5.29-rc2 https://github.com/ibus/ibus ibus-git
+$ diff -dprux .git ibus-git ibus-1.5.29-rc2
+diff -dpru ibus-git/engine/simple.xml.in ibus-1.5.29-rc2/engine/simple.xml.in
+--- ibus-git/engine/simple.xml.in       2024-04-01 14:08:16.541903956 +0200
++++ ibus-1.5.29-rc2/engine/simple.xml.in        2023-11-09 07:10:15.000000000 +0100
+@@ -3,781 +3,596 @@
+     <name>org.freedesktop.IBus.Simple</name>
+     <description>A table based simple engine</description>
+     <exec>@libexecdir@/ibus-engine-simple</exec>
+-    <version>1.5.29-beta3.20230822</version>
++    <version>1.5.29-rc2.20231109</version>
+     <author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
+     <license>GPL</license>
+...
+--- ibus-git/po/de.po   2024-04-01 14:08:16.555237247 +0200
++++ ibus-1.5.29-rc2/po/de.po    2023-11-09 07:10:08.000000000 +0100
+@@ -22,7 +22,7 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: IBus\n"
+ "Report-Msgid-Bugs-To: https://github.com/ibus/ibus/issues\n"
+-"POT-Creation-Date: 2023-08-02 00:14+0900\n"
++"POT-Creation-Date: 2023-11-09 15:10+0900\n"
+ "PO-Revision-Date: 2023-08-04 17:21+0000\n"
+ "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+ "Language-Team: German <https://translate.fedoraproject.org/projects/ibus/"
+diff -dpru ibus-git/src/ibusunicodegen.h ibus-1.5.29-rc2/src/ibusunicodegen.h
+--- ibus-git/src/ibusunicodegen.h       2024-04-01 14:08:16.568570535 +0200
++++ ibus-1.5.29-rc2/src/ibusunicodegen.h        2023-11-09 07:09:53.000000000 +0100
+@@ -1,8 +1,8 @@
+ /* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
+ /* vim:set et sts=4: */
+ /* ibus - The Input Bus
+- * Copyright (C) 2018-2023 Takao Fujiwara <takao.fujiwara1@gmail.com>
+- * Copyright (C) 2018-2023 Red Hat, Inc.
++ * Copyright (C) 2018-2021 Takao Fujiwara <takao.fujiwara1@gmail.com>
++ * Copyright (C) 2018-2021 Red Hat, Inc.
+  *
+  * This library is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU Lesser General Public
+@@ -1310,6 +1310,10 @@ const static char *unicode_blocks[] = {
+     /* TRANSLATORS: You might refer the translations from gucharmap with
+                     the following command:
+        msgmerge -C gucharmap.po ibus.po ibus.pot */
++    N_("CJK Unified Ideographs Extension I"),
++    /* TRANSLATORS: You might refer the translations from gucharmap with
++                    the following command:
++       msgmerge -C gucharmap.po ibus.po ibus.pot */
+     N_("CJK Compatibility Ideographs Supplement"),
+     /* TRANSLATORS: You might refer the translations from gucharmap with
+                     the following command:
