@@ -1,4 +1,4 @@
-Received: (qmail 26341 invoked by uid 550); 4 Oct 2023 14:12:19 -0000
+Received: (qmail 25889 invoked by uid 550); 2 Apr 2024 14:36:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20130 invoked from network); 4 Oct 2023 14:05:31 -0000
-Date: Wed, 4 Oct 2023 16:05:26 +0200
-From: Solar Designer <solar@openwall.com>
-To: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: oss-security@lists.openwall.com,
-	"Xen. org security team" <security-team-members@xen.org>,
-	t-jhofmann@microsoft.com, fournet@microsoft.com,
-	boris.koepf@microsoft.com, e.vannacci@vu.nl
-Message-ID: <20231004140526.GA27641@openwall.com>
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <20230925163652.GA6750@openwall.com> <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com> <20230925182834.GA8247@openwall.com> <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com> <20230926160943.GA12790@openwall.com> <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com> <20231003205825.GA24992@openwall.com> <4b386d20-6b24-427b-ac3f-2098cf402329@citrix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4b386d20-6b24-427b-ac3f-2098cf402329@citrix.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Received: (qmail 19561 invoked from network); 2 Apr 2024 13:52:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rafaelgss.dev; s=google; t=1712065940; x=1712670740; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LWOYuWStQh72tnu86a7B33OAFdfjYPrtMTrX9TI99Es=;
+        b=lsIBUezxMzw6+eWBXDztWXIsa44FCIQXunhxuV4jdHUrCOjD3zMGZoqG1qH3sYpQy6
+         ewZV6dKnxg9nA4fDZNiTA37MhNJqfR/dblPPvbpFz0VCSRBc/MQonO55faAHTVE1d4ZU
+         yJwnoGaw4vNZzdW8jqe80RUnR+IhwHvUdVGVqHZIdUxwXsIYSWajbEs4e9TzSt1Pyg6o
+         ak9AC3/wty3CQ3VTdaWJqRxWNUJjYe5IyPHnnQVY1fkehPJ+fbc1RsnY+qvFRmW3Jwzv
+         f2dBFBjPPrVkm2zsjsnnzrlnyHdijuc37REuBx6bXRPTBN2xuOU8aqk6xZFMzcCUls3P
+         Z90g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712065940; x=1712670740;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LWOYuWStQh72tnu86a7B33OAFdfjYPrtMTrX9TI99Es=;
+        b=ZSjZb7eeOTcdMbFYwxQ85ATabXZA9CvsXskaYepMkr5gcam6KMDq6/bzz4yqNgxz/6
+         XtZhAtQc+GshCPgctizg/G5Gz967/n6uHJrhTXEpsYVe8TksE0Ms+0TFVN9WVwHYW3yN
+         FclNTWunQoScX5kn2xrsijY+0k9ctMKMjZsr54vS1JwYLEHgyYoZEo3ItAGSRF+e6lZt
+         G6u9Ip6g5aAenhUaTWMSV7otGB6z9dyhJNtU2MkysS1Gt8FiSNk0OC647bmLrvpqQSoQ
+         Fk2MB51b1ATLWZ3axPKrwHfVWsw1vTDWP4y85zCrDf2wmihBvK5EV5vUfH0vhn+AxjSz
+         t+4A==
+X-Gm-Message-State: AOJu0Ywny/Wn8808ZEIFdQyfIiH4QpbUTT/LcPssb2Q+gJoMA8Z7jeT4
+	9d2Hk5PJKCKlKXMTkOxlFRKr/AQiz3468RbpjTWymQHdeShfbBsqjT58wrEEtFtgitSBvr3ACVq
+	8aTTa0VRdhx0XavBjSMvp22+l5+6/tTepGxayyBL3BWwGn8lN
+X-Google-Smtp-Source: AGHT+IEVAXUaN55ASCjwnS1w3Yr+Z4ZAnARwT2nHUucyeB68Yr61Bhndhc9Mmr+jB/pZgOecyE4DrtP35D4/XnkmaKY=
+X-Received: by 2002:a05:6512:3c9a:b0:513:d3a2:6350 with SMTP id
+ h26-20020a0565123c9a00b00513d3a26350mr9101617lfv.66.1712065939824; Tue, 02
+ Apr 2024 06:52:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com>
+In-Reply-To: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com>
+From: Rafael Gonzaga <work@rafaelgss.dev>
+Date: Tue, 2 Apr 2024 10:52:08 -0300
+Message-ID: <CAAWxexxWK_LqQjuMkKE5GrENvNCPRjDVJ9=42E4O7PazbPOq2A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000002d2ba806151d6a6d"
+Subject: [oss-security] Fwd: Node.js security update for all active release lines
 
-On Wed, Oct 04, 2023 at 02:10:59AM +0100, Andrew Cooper wrote:
-> On 03/10/2023 9:58 pm, Solar Designer wrote:
-> > However, this may be another reason to actually look into whether the
-> > remainder also leaked, and whether the byte-sized form prevents that
-> > leak despite of it not touching the architectural register where the
-> > remainder would be stored by a preceding larger DIV.  I expect that
-> > we're fine here - it's the divider unit's internal register and not the
-> > architectural register that should matter - but worth making sure.  It
-> > could also theoretically be e.g. some buffer registers in the middle,
-> > where the byte-sized form wouldn't overwrite the full contents.
-> 
-> I've spent a while trying to reason about this...  I'm not sure I'm any
-> the wiser, but here goes.
+--0000000000002d2ba806151d6a6d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you!  This is helpful, but unfortunately doesn't appear (or at
-least not to me) to address the case of the remainder in its own
-register being overwritten or not by a smaller DIV that doesn't produce
-it in that register.  Of course, under the hood it's at least a rename
-register rather than the RDX that programs see, and it's supposedly
-getting a value copied from a DIV unit's internal register.  So the
-question is probably about the latter register being overwritten or not.
+--------- Mensagem encaminhada ---------
+De: work <work@rafaelgss.dev>
+Data: ter., 2 de abr. de 2024 =C3=A0s 10:46
+Assunto: Node.js security update for all active release lines
+Para: nodejs-sec <nodejs-sec@googlegroups.com>
 
-The USENIX Security paper you referenced includes this:
 
-> The source code, experiments, and executable leakage models are
-> available at https://github.com/microsoft/sca-fuzzer
+The Node.js project will release new versions of all supported release
+lines on or shortly after Wednesday April 3rd 2024. For more information
+see:  https://nodejs.org/en/blog/vulnerability/april-2024-security-releases
 
-I think ideally one of us should come up with a single-process
-reproducer (using code from that repo or otherwise), see if it "leaks"
-the remainder, introduce a byte-sized DIV "mitigation" in it, and see if
-that mitigation fully works or maybe not.
+--=20
+You received this message because you are subscribed to the Google Groups
+"nodejs-sec" group.
+To unsubscribe from this group and stop receiving emails from it, send an
+email to nodejs-sec+unsubscribe@googlegroups.com.
+To view this discussion on the web visit
+https://groups.google.com/d/msgid/nodejs-sec/4323cf07-8f42-46f8-b075-c12e50=
+a917e7n%40googlegroups.com
+<https://groups.google.com/d/msgid/nodejs-sec/4323cf07-8f42-46f8-b075-c12e5=
+0a917e7n%40googlegroups.com?utm_medium=3Demail&utm_source=3Dfooter>
+=2E
 
-Alternatively, maybe the paper authors (CC'ed) have comments on this?
-
-Alexander
+--0000000000002d2ba806151d6a6d--
