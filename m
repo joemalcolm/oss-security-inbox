@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1060" "Thursday" "26" "March" "2015" "13:43:06" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<5513BF92.70406@redhat.com>" "35" "Re: [oss-security] Fwd: setroubleshoot root exploit (CVE-Request)" nil nil nil "3" "2015032608:13:06" "[oss-security] Fwd: setroubleshoot root exploit (CVE-Request)" (number mark "        huzaifas@red Mar 26   35/1060  " thread-indent "\"Re: [oss-security] Fwd: setroubleshoot root exploit (CVE-Request)\"\n") "<20150326070141.GA25037@suse.de>" ("<20150326070141.GA25037@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27779 invoked by uid 550); 26 Mar 2015 08:02:11 -0000
+Received: (qmail 16089 invoked by uid 550); 2 Apr 2024 12:46:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +6,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27755 invoked from network); 26 Mar 2015 08:02:11 -0000
-Message-ID: <5513BF92.70406@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-MIME-Version: 1.0
-References: <20150326070141.GA25037@suse.de>
-In-Reply-To: <20150326070141.GA25037@suse.de>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Date: Thu, 26 Mar 2015 13:43:06 +0530
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fwd: setroubleshoot root exploit (CVE-Request)
+Received: (qmail 25832 invoked from network); 2 Apr 2024 07:31:18 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Lari Hotari <lhotari@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <2570fd6b-672f-4da1-3453-0e7b28e87bbe@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 02 Apr 2024 07:31:07 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-29834: Apache Pulsar: Improper Authorization For
+ Namespace and Topic Management Endpoints 
 
-On 03/26/2015 12:31 PM, Sebastian Krahmer wrote:
-> 
-> As per list policy, here is the forward of the distros post. CRD was shifted
-> to today.
-> 
-> 
-> ----- Forwarded message from Sebastian Krahmer <krahmer@suse.de> -----
-> 
-> Date: Wed, 18 Mar 2015 09:46:10 +0100
-> From: Sebastian Krahmer <krahmer@suse.de>
-> To: distros@vs.openwall.org
-> subject: ***UNCHECKED*** [vs] setroubleshoot root exploit (CVE-Request)
-> X-Mailer: MIME-tools 5.501 (Entity 5.501)
-> 
-> Hi
-> 
-> I already sent this to upstream. Initially I thought this only
-> affects redhat, but it seems that ubuntu is also using setroubleshoot.
-> CRD is 24.3.
-> 
-> setroubleshoot tries to find out which rpm a particular
-> file belongs to when it finds SELinux access violation reports.
-> The idea is probably to have convenient reports for the admin
-> which type enforcement rules have to be relaxed. setroubleshoot
-> runs as root (although in its own domain). In util.py
-> we have:
-> 
-> 
-Previously CVE-2015-1815 as assigned on distros.
+Affected versions:
 
+- Apache Pulsar 2.7.1 through 2.10.6
+- Apache Pulsar 2.11.0 through 2.11.4
+- Apache Pulsar 3.0.0 before 3.0.4
+- Apache Pulsar 3.1.0 through 3.1.3
+- Apache Pulsar 3.2.0 before 3.2.2
 
+Description:
 
+This vulnerability allows authenticated users with produce or consume permi=
+ssions to perform unauthorized operations on partitioned topics, such as un=
+loading topics and triggering compaction. These management operations shoul=
+d be restricted to users with the tenant admin role or superuser role. An a=
+uthenticated user with produce permission can create subscriptions and upda=
+te subscription properties on partitioned topics, even though this should b=
+e limited to users with consume permissions. This impact analysis assumes t=
+hat Pulsar has been configured with the default authorization provider. For=
+ custom authorization providers, the impact could be slightly different. Ad=
+ditionally, the vulnerability allows an authenticated user to read, create,=
+ modify, and delete namespace properties in any namespace in any tenant. In=
+ Pulsar, namespace properties are reserved for user provided metadata about=
+ the namespace.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+This issue affects Apache Pulsar versions from 2.7.1 to 2.10.6, from 2.11.0=
+ to 2.11.4, from 3.0.0 to 3.0.3, from 3.1.0 to 3.1.3, and from 3.2.0 to 3.2=
+.1.=20
+
+3.0 Apache Pulsar users should upgrade to at least 3.0.4.
+3.1 and 3.2 Apache Pulsar users should upgrade to at least 3.2.2.
+
+Users operating versions prior to those listed above should upgrade to the =
+aforementioned patched versions or newer versions.
+
+References:
+
+https://pulsar.apache.org/security/CVE-2024-29834/
+https://pulsar.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-29834
+
