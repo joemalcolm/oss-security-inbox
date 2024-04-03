@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1256" "Wednesday" "10" "June" "2015" "10:19:54" "+0300" "Henri Salo" "henri@nerv.fi" "<20150610071954.GF31310@lakka.kapsi.fi>" "29" "Re: [oss-security] Possible XSS vulnerability on NIST NVD" nil nil nil "6" "2015061007:19:54" "[oss-security] Possible XSS vulnerability on NIST NVD" (number mark "        henri@nerv.f Jun 10   29/1256  " thread-indent "\"Re: [oss-security] Possible XSS vulnerability on NIST NVD\"\n") "<D5870053-3255-4E13-AC17-0F5C7D07DB3B@gmail.com>" ("<D5870053-3255-4E13-AC17-0F5C7D07DB3B@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27962 invoked by uid 550); 10 Jun 2015 07:20:06 -0000
+Received: (qmail 26039 invoked by uid 550); 3 Apr 2024 19:59:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +6,123 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27930 invoked from network); 10 Jun 2015 07:20:06 -0000
-Message-ID: <20150610071954.GF31310@lakka.kapsi.fi>
-References: <D5870053-3255-4E13-AC17-0F5C7D07DB3B@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-In-Reply-To: <D5870053-3255-4E13-AC17-0F5C7D07DB3B@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
-X-SA-Exim-Mail-From: fgeek@kapsi.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
-Cc: oss-security@lists.openwall.com
-Date: Wed, 10 Jun 2015 10:19:54 +0300
-From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Possible XSS vulnerability on NIST NVD
-To: Marek Sebera <marek.sebera@gmail.com>
+Received: (qmail 5279 invoked from network); 3 Apr 2024 19:51:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1712173904;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XYlhqVHRWUUajq9SoWDzIjK303Xb5Of9QVBBBJ4Tcyo=;
+	b=VF5FsNdpKuldurT+l3hE+FkDPPDRRkK1JaTYs8vMiSfS4elAD7/GBUDZSdX29W9Im1/tpk
+	C2iydCO1DzcMB5G4ybOD7ZhkN2z9sYfzmbcVVFgak2f2JPSXv60lnje/HkN2ReyDmGtVjw
+	dTM/otnxDkALNBxS59Xd9I6GhXSDi8g=
+X-MC-Unique: OyGTDXKPNQKI6TGmJAgUnA-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712173901; x=1712778701;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XYlhqVHRWUUajq9SoWDzIjK303Xb5Of9QVBBBJ4Tcyo=;
+        b=fnvhtOBRCaSRahZQDh7OKEe0PVzC+pCQY9a7lBaiXstF61tzWB3HCG1bVMJqsP2c4x
+         xP2YWJTgTyG/0KuOHajsgr7QNn+mgXUvXz1I20NtD+5vNliibCZ+904Bt9QL6dzpFYvB
+         gGZC5P5imG6Mj/HUA1IezBuXTplCnSJNDt10E9Pm03Sm52oMOQJIyzy29AXT/Kr3rc+W
+         HYn6aTQuXVDRZ31lHS6aWTquCujwsbDakDCtdX3Y4H+Ycg6fNPBb/FKEPe98sPnT6yWk
+         uUbboXo9T7C2LQ2gL09QglsW/+VDFP1jYXYpTBP+nCImj1OEujrIm8RKQ5MO06q6biEq
+         FZUQ==
+X-Gm-Message-State: AOJu0YyeWVtddOfclHtvkS0n4MzLjqlDpeXEWRczIrOMXUK5aGYo2vrO
+	eSa6tX7GLMaRYABkwat20nbDMbQPOaP15lPiQftlPj0FormVJNjdAhtKxcIgm8rMUQYWEdAzz3F
+	1CNPmphR/WDmPknrTrW4dUTpiARrneIjPVT0IvQeGHU8/T3fYFigek/uv1ysyZwWZylc4GW5GL6
+	jo95s02RrqYtfQSGzMh8qI1xztA1f4JHIDHB+XKitr
+X-Received: by 2002:a5d:660a:0:b0:341:a640:b516 with SMTP id n10-20020a5d660a000000b00341a640b516mr292121wru.70.1712173901189;
+        Wed, 03 Apr 2024 12:51:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1b7uHI7a5Z7ARmgipz5JT7l8XzF1JKu1P4G6mxKD50idjfd1Iqe58OVAzwkDpuCALmUd+6qd7+V2T4KUnvfs=
+X-Received: by 2002:a5d:660a:0:b0:341:a640:b516 with SMTP id
+ n10-20020a5d660a000000b00341a640b516mr292116wru.70.1712173900830; Wed, 03 Apr
+ 2024 12:51:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com>
+ <7e6a9e00-1caf-4523-b969-fdb410b240f7n@googlegroups.com> <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com>
+ <20240403164804.GA10525@openwall.com> <CAH0iFcZaZtAfhVwopR1vFgXuQJSvugL8Bz8OmQYS+kpq4VqGiA@mail.gmail.com>
+ <20240403194214.GA12525@openwall.com>
+In-Reply-To: <20240403194214.GA12525@openwall.com>
+From: Michael Dawson <midawson@redhat.com>
+Date: Wed, 3 Apr 2024 15:51:28 -0400
+Message-ID: <CAH0iFcYE5SrCZWWjoHx-iM1oHkzq0FXkAZ==4H26Cuw3rDyU3Q@mail.gmail.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000273af60615368d99"
+Subject: Re: [oss-security] Fwd: Node.js security update for all active
+ release lines
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--000000000000273af60615368d99
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 09, 2015 at 06:41:01PM +0200, Marek Sebera wrote:
-> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-1729
+The reason we post the link in the nodejs-sec posts is to reduce the work
+for the security stewards and avoid problems with cut/paste. Markdown does
+not paste into gmail and work is required to reformat etc.
 
-I do not think this issue deserves CVE identifier. I notified them via general
-questions address in https://nvd.nist.gov/contact.cfm and they fixed it already.
-Please contact them directly if you notice more issues, thank you.
+I can understand that you'd prefer that we do more work so that your
+organization can do less work but at this point that is not something I'd
+support. We don't do any extra steps for any other organization and
+explaining why a forward is needed versus somebody from openwall
+subscribing to the mailing list is something I already don't know how to
+explain.
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+I'm not going to rush to remove what we have been doing from the
+security release process, but trying to explain why I don't think asking
+for more makes sense.  You can always open an issue in the nodejs/node repo
+to discussion/make a case if you think it make sense.
 
-iQIcBAEBAgAGBQJVd+UaAAoJECet96ROqnV0G5cP/jpx0uDj3yAAFOzZU876NMiC
-VWhtMigcwGJdnxNZGCpPKoIBJPqJ8YNkitgzq7KI3Pryvg2jwu2htc8aGY95EljL
-M81uCYMZnTwqvcCk/NyygbeEpZgA44WHFOMs3I8xOzcqPCnItp8sBGv5vDJ1M9kh
-Xm8hsKlaJ1MccE2FTBJ1a/vOMST8gf7fwBj1IRyjF4zRSSzn2rg1yInJcDC8bSkM
-Xbzr0df/NPpU3rbKPOalumYoyVtChEoUw6PMcJTXldpt5LvFICTfCKb93389w9TB
-2H+zqMFOZif5nfkJph4BWAQC3DYxoYqiN3xWE0M877vkAb5avIwsfAuvKSRJpTWU
-ZzIeVW8JfHa4lvXlL5//WNH55UvwSybZoN51jyLtOzivFKC0arBSs76oKldD1f/C
-tKTQEOUD5gZsH2cn7aVM7R0Min2nu9jNO/CO8PUBJBCFQl3yqjQq3b3vqSC2WYqP
-LlaZ5Qf2pmA3Vz4o4GaTGJBbQOxUZU7rT7SYoMTVJ6rLl+V9htEUxPF7/hWCM257
-widmLALca0tw7FbIKUYoMVQCQWF0a8UfXDVMK2UvzSIdpqMkglkMeCRxKGr1X99N
-6h3d0Ug0t0Zlu1buH4uT+GpqGQD4gG84JKofUYe5sMCiIPAS+4LkBh4UIlafv8Z9
-Aql4/RCBkVqYCNIlZClE
-=S6/L
------END PGP SIGNATURE-----
+On Wed, Apr 3, 2024 at 3:42=E2=80=AFPM Solar Designer <solar@openwall.com> =
+wrote:
+
+> On Wed, Apr 03, 2024 at 02:01:11PM -0400, Michael Dawson wrote:
+> > Sorry I don't remember the context as to why we agreed to send this
+> forward
+> > in the first place.
+>
+> As I can find, these just started arriving in July 2021.  And that was
+> appreciated.  Now I merely suggested how to do it a bit better.
+>
+> > As opposed to expanding any work that's a one off for the community
+> > security stewards, since it sounds like it may not be meeting your need=
+s,
+> > I'd propose that we just remove it from our security release steps and
+> you
+> > can subscribe to the nodejs-sec mailing list like everybody else. From
+> that
+> > you could generate some automation to pull down the content from the
+> > original post.
+>
+> That's not the outcome I wanted, especially not knowing who would setup
+> and maintain said automation.  We do have an outstanding task to create
+> some tools for this sort of automation, but no one approached it yet and
+> it's meant to help prepare drafts for manual posting, so there would be
+> some per-message work anyway.
+>
+> So please continue these postings as-is for now, and we'll hopefully be
+> adding follow-ups with the actual content like I did.  You could also
+> want to start including the Markdown files in nodejs-sec postings, so
+> simply forwarding them in here would do what's desired, but that's your
+> call indeed.
+>
+> BTW, the previous update (for February) somehow wasn't sent in here.
+> Per my off-list suggestion, an oss-security contributor later sent a
+> detailed report:
+>
+> https://www.openwall.com/lists/oss-security/2024/03/11/1
+>
+> but we're not sure we'll do it each time.
+>
+> Thanks,
+>
+> Alexander
+>
+>
+
+--000000000000273af60615368d99--
+
