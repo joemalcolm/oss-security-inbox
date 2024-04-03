@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1876" "Wednesday" "2" "September" "2015" "22:52:30" "+0200" "ISC Security Officer" "security-officer@isc.org" "<55E7618E.1020301@isc.org>" "52" "[oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public" nil nil nil "9" "2015090220:52:30" "[oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public" (number mark "U       security-off Sep  2   52/1876  " thread-indent "\"[oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19844 invoked by uid 550); 3 Sep 2015 03:49:47 -0000
+Received: (qmail 5800 invoked by uid 550); 3 Apr 2024 13:40:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +7,219 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13909 invoked from network); 2 Sep 2015 20:52:48 -0000
+Received: (qmail 5782 invoked from network); 3 Apr 2024 13:40:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1712151636; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=Ld6dkV5aTUGpKCXFa45ZvsHwB5o2p5LS86aYSitoraA=;
+	b=dHvPNX/KSKEMveO3WhEr5gIoOOQykOjK4fQPmUJu08vpS3FbRjcgl5DlyKj+CI1O6y5t1h
+	lXkRkSXACUfb3cL3SwM2y+jTFNAMolDUfuoLBEwdexd7MEcpHrtlsgohwzqNfPG4OKlYKd
+	KF4oafmCq/dpk6/yUMt63eUuM+WhfD4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1712151636;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=Ld6dkV5aTUGpKCXFa45ZvsHwB5o2p5LS86aYSitoraA=;
+	b=N0ntWYInFEyZKjwYq0dIJv0rWlDe3alkSftT+mbKKeB4NvwzHYlWGmlyNsni5Dklvk/mzt
+	41+BRFp+Wgnq1HBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+Date: Wed, 3 Apr 2024 15:40:35 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-Cc: ISC Security Officer <security-officer@isc.org>
-From: ISC Security Officer <security-officer@isc.org>
-Message-ID: <55E7618E.1020301@isc.org>
-Date: Wed, 2 Sep 2015 22:52:30 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
- Gecko/20100101 Thunderbird/38.2.0
+Message-ID: <Zg1cU_523b77PveB@kasco.suse.de>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="mDKHen3cOXGJONbQAKIhgM0cu97eTgET9"
-Subject: [oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are
- now public
+	protocol="application/pgp-signature"; boundary="bK5m5smSsEl24Vm6"
+Content-Disposition: inline
+Subject: [oss-security] dnf5daemon-server: Incomplete fix of CVE-2024-1929 (CVE-2024-2746)
 
---mDKHen3cOXGJONbQAKIhgM0cu97eTgET9
-Content-Type: text/plain; charset=utf-8
+--bK5m5smSsEl24Vm6
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Wed, 3 Apr 2024 15:40:35 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: dnf5daemon-server: Incomplete fix of CVE-2024-1929 (CVE-2024-2746)
 
-Please be advised that ISC publicly announced two critical
-vulnerabilities in BIND:
+Hello list,
 
-+ CVE-2015-5722 is a denial-of-service vector which can be
-  exploited remotely against a BIND server that is performing
-  validation on DNSSEC-signed records. All versions of BIND since
-  9.0.0 are vulnerable.
-  https://kb.isc.org/article/AA-01287
+CVE-2024-1929 that we previously reported [1] for the dnf5 D-Bus component =
+has
+not been completely fixed. This post deals with the remaining issue we
+discovered.
 
-+ CVE-2015-5986 is a denial-of-service vector which can be used
-  against a BIND server that is performing recursion and (under
-  limited conditions) an authoritative-only nameserver.
-  Versions of BIND since 9.9.7 and 9.10.2 are vulnerable.
-  https://kb.isc.org/article/AA-01291
+We offer this report also as a rendered HTML version on our blog [8].
 
+Unsafe Configuration Item "reposdir" in Whitelist
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-New releases of BIND, including security fixes for these
-vulnerabilities, are available:
+The problem with CVE-2024-1929 was that the dnf5 D-Bus daemon accepted
+arbitrary configuration parameters from unprivileged users, which allowed a
+local root exploit by tricking the daemon into loading a user controlled
+"plugin". All of this happened before Polkit authentication was even starte=
+d.
 
-ftp://ftp.isc.org/isc/bind9/9.10.3rc1/RELEASE-NOTES.bind-9.10.3rc1.html
-ftp://ftp.isc.org/isc/bind9/9.9.8rc1/RELEASE-NOTES.bind-9.9.8rc1.html
-ftp://ftp.isc.org/isc/bind9/9.10.2-P4/RELEASE-NOTES.bind-9.10.2-P4.html
-ftp://ftp.isc.org/isc/bind9/9.9.7-P3/RELEASE-NOTES.bind-9.9.7-P3.html
+The original bugfix [2] consists of a whitelist of configuration items, that
+unprivileged users are allowed to override, when using the dnf5 D-Bus
+interface. While checking each of the whitelisted items, we found that the
+setting "reposdir" allows to specify the path to an arbitrary directory, in
+which repository configuration files (`*.repo`) will be processed [3] by the
+privileged dnf5 daemon.
 
-Marcin Siodelski
-(as ISC Security Officer)
+The dnf5 library code does not check whether non-root users control the
+directory in question. The code does check [4] for file type and filename
+extension of contained files; it follows symlinks and is subject to a race
+condition, however:
 
+```
+    std::filesystem::directory_iterator di(dir_path, ec);
+    std::vector<std::filesystem::path> paths;
 
+    for (auto & dentry : di) {
+        auto & path =3D dentry.path();
+        if (dentry.is_regular_file() && path.extension() =3D=3D ".repo") {
+            paths.push_back(path);
+        }
+    }
 
+    std::sort(paths.begin(), paths.end());
 
---mDKHen3cOXGJONbQAKIhgM0cu97eTgET9
+    for (auto & path : paths) {
+        create_repos_from_file(path);
+    }
+```
+
+By the time the (checked) path is passed to `create_repos_from_file()`, the
+user controlling the directory can replace it with an arbitrary other file =
+or
+symlink, thereby tricking the library to operate on arbitrary file types and
+file paths.
+
+On one hand, this poses a Denial-of-Service attack vector by making the dae=
+mon
+operate on a blocking file (e.g. named FIFO special file) or a very large f=
+ile
+that causes an out-of-memory situation (e.g. /dev/zero). On the other hand,
+this can be used to let the daemon process privileged files like /etc/shado=
+w.
+The file in question is parsed as an INI file. Error diagnostics resulting =
+from
+parsing privileged files could cause information leaks, if these diagnostics
+are accessible to unprivileged users. In the case of libdnf5, no such user
+accessible diagnostics should exist, though.
+
+Even more interestingly, a local attacker can place a valid repository
+configuration file in this directory. This configuration file allows to spe=
+cify
+a plethora of additional configuration options [5]. This makes various
+additional code paths in libdnf5 accessible to the attacker. This, and the
+possibility to configure arbitrary repositories, could very well allow furt=
+her
+privilege escalation, although we did not investigate more deeply if and how
+this would be possible.
+
+This follow-up issue confirms the sentiment expressed in our original repor=
+t,
+that one has to be extremely careful about feeding untrusted input into the
+libdnf5 library, which is not designed to run in mixed security scope setup=
+s.
+
+Bugfix and CVE Assignment
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The bugfix [6] simply consists of the removal of the "reposdir" entry from =
+the
+whitelist of configuration items. Upstream release 5.1.17 [7] contains the
+bugfix. The Red Hat security team assigned CVE-2024-2746 to track this
+incomplete fix of CVE-2024-1929.
+
+4) Discovery Process
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+We noticed the incomplete fix only at a late time, when our openSUSE dnf5
+package maintainer asked for the inclusion of the fixed package into openSU=
+SE
+Tumbleweed. It is unfortunate that this happened too late to prevent an
+incomplete fix for CVE-2024-1929, and thus made a follow-up CVE assignment =
+and
+coordinated release process necessary.
+
+Since the original issues had been handled as part of a coordinated disclos=
+ure
+process, there should have been a review of the proposed patches before
+publication. Due to the circumstances of an early publication of the fixes,
+outside of the coordinated release process, there never was a defined point=
+ in
+time for us to actually review them. We aim to avoid such situations in the
+future by being more careful about reviewing patches, especially when no
+straightforward coordinated release process can be established with upstrea=
+m.
+
+5) Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+|2024-03-11|We reported the issue to secalert@redhat.com.|
+|2024-03-13|The discussion for the issue was moved to a new group of contac=
+ts involving the dnf5 developers.|
+|2024-03-20|One of the dnf5 developers confirmed the issue and suggested dr=
+opping "reposdir" from the whitelist.|
+|2024-03-20|Red Hat security assigned CVE-2024-2746 for the follow-up issue=
+.|
+|2024-03-26|Discussions about the coordinated release date took place, 2024=
+-04-02 has been mentioned.|
+|2024-04-02|Red Hat security informed us that they actually had 2024-04-03 =
+in mind.|
+|2024-04-03|Upstream published release 5.1.17 containing the bugfix.|
+
+6) References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[1]: https://www.openwall.com/lists/oss-security/2024/03/04/2
+[2]: https://github.com/rpm-software-management/dnf5/commit/6e51bf2f0d585ab=
+661806076c1e428c6482ddf86
+[3]: https://github.com/rpm-software-management/dnf5/blob/5.1.16/libdnf5/re=
+po/repo_sack.cpp#L597
+[4]: https://github.com/rpm-software-management/dnf5/blob/5.1.16/libdnf5/re=
+po/repo_sack.cpp#L584
+[5]: https://github.com/rpm-software-management/dnf5/blob/5.1.16/libdnf5/re=
+po/config_repo.cpp#L96
+[6]: https://github.com/rpm-software-management/dnf5/commit/07c5770482605ca=
+78aaed41f7224d141c5980de4
+[7]: https://github.com/rpm-software-management/dnf5/releases/tag/5.1.17
+[8]: https://security.opensuse.org/2024/04/03/dnf5daemon-resposdir-followup=
+.html=20
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+
+--bK5m5smSsEl24Vm6
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQEbBAEBCAAGBQJV52GOAAoJEL2X3GOe6MR7rfkH+Lxe8AvYoSHySXGAhEzJ7cPv
-dVXaqyhBM1ZLPGjj1uE4JLEx6pTty5DTu0WlHREhCi/GSGCzUVe3k+1vKDDVkxib
-qFpsJQA/CCJPWt94vXGsKKcK/QPXFr9l4D4TO5lI1/AdWNTkayBSXI9xlC7fmqKB
-VquROmTFGvh7M1zGR/qqhDU/dOWG2iquM+xbZ0yPW5CiUN8jyEM2E4JEftZFnDhA
-hAoSxnhwA+airElSnUv7bkANoeUq41yvPggfcp8ajFpEoDSDnuq/hfX23xVBCFsD
-2EzNPn/3d8pKW5smXYUXrw90bKatEycS+lSLqa3jcGUda932WJExd74nzqQEvQ==
-=w7hv
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmYNXFMACgkQFMQFyXGS
+NVOSvBAAwih94UcYO5A3v1XSpwHTvsfJ1TeCYhJB+KELW79ygGvuWCmfdLR7sI6I
+/8iUX0yF7eKKdNcesKQZUucYS2Okl01HrLs02YEk5C9XGOQUVgr9Lme+/u3gmqca
+wGHZ2PIF4/PlNJs4phdHOqgzyuvfEIYlW0RC2fCg+9uWoXGoyVMjlDcCW6m4k6RE
+qYuztzZmpAD6YKuoyXzNKIazGMSzdgTTB+qVyTIVpJvmXxHIVda8Q113T5NZ3UUF
+5bnGjQPUFrbuEH1gUIo0W89OGsJafFg0PluGgQ1DcG2E4DYyZk6NfGI4L/tZdYRv
+Z3dZ6BxIAv1mpK1EM/dQ4r1Jq24ccf7QVhs6S1i7v+00WVTizfWZ2ooCyg5VgWkx
+KbZjvdeND47JXbjAG8JR5qvONamDwusiMySPuKbEBmRPg4Y55t97d2cjscoya2rC
+0bC6Flpeyyg0lAel302N19yGrFLJqEao5QuFkyGaeNDmgcA4x1eIA5yzBab9+jTG
+w4L1MnOp8MYMCxn82k/RqWaZcnM/3w9DUfx069us+ZYUaEQ2pfVK89a7gq9ur4a5
+kqpIGzhNN/UVIxCwNAQytqC7D+sfqkEg2/JapESdqKmFegY24qNrXeMfYJsjcViS
+4gDl16h8ApzpIQP127x2w/yQhOwzvOzMaMSet5pLxAWZMovFeQQ=
+=F4kL
 -----END PGP SIGNATURE-----
 
---mDKHen3cOXGJONbQAKIhgM0cu97eTgET9--
+--bK5m5smSsEl24Vm6--
