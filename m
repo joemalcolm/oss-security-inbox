@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3552" "Friday" "22" "September" "2017" "06:57:13" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<693071.669756563-sendEmail@localhost>" "90" "[oss-security] bladeenc: global buffer overflow in iteration_loop (loop.c)" nil nil nil "9" "2017092206:57:13" "[oss-security] bladeenc: global buffer overflow in iteration_loop (loop.c)" (number mark "U       ago@gentoo.o Sep 22   90/3552  " thread-indent "\"[oss-security] bladeenc: global buffer overflow in iteration_loop (loop.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22010 invoked by uid 550); 22 Sep 2017 06:57:31 -0000
+Received: (qmail 3507 invoked by uid 550); 3 Apr 2024 14:20:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +7,128 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21986 invoked from network); 22 Sep 2017 06:57:30 -0000
-Message-ID: <693071.669756563-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 22 Sep 2017 06:57:13 +0000
+Received: (qmail 5640 invoked from network); 3 Apr 2024 14:09:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Content-Type:MIME-Version:Message-ID:
+	In-reply-to:Date:Subject:To:From:References:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=0ZguPymMk0tIQEIpw9GT4wrQp7eOSO4Kyo9OYqsYVC8=; b=SX1t+BMmLi/PM/mpL1/675Etwq
+	sILG1xbYgDHxbfBpwJPbuyIHBHE0iiDIYQyQnP4wfkKlUuPGTqf9ag4kHZkdaLAkTijHxDnhs7cGd
+	xisBv89ZeWF4UyNiANdhXKG+RX94rTF5d7D0UvSHWRfNDiYU5Rgkpzjehq5VFVi7LR7wzeAFSGhbn
+	I6oPebiPHZHaFHXj8w+N6Xc/10Blr9iSLGM1KLsEVC6AyoVmYuxOws7GOnvlqsjuuSxVC+l7Uu+eK
+	gy0aOQlo/XaVpnZ/X/6EZB4xhgWOavny9dx0EyYQPiZNjp5s2PnT19wa4m/VCtgbi85xYLndOrHYG
+	4FL9SvGg==;
+References: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
+ <CANnLRdgMaDewcaKVq9OdiNBq-AsF-JchQsMLY0xuY033P6j=rw@mail.gmail.com>
+User-agent: mu4e 1.10.8; emacs 29.3
+From: Pierre-Elliott =?utf-8?Q?B=C3=A9cue?= <peb@debian.org>
+To: oss-security@lists.openwall.com
+Date: Wed, 03 Apr 2024 16:07:45 +0200
+In-reply-to: <CANnLRdgMaDewcaKVq9OdiNBq-AsF-JchQsMLY0xuY033P6j=rw@mail.gmail.com>
+Message-ID: <87cyr6tu5c.fsf@daath.pimeys.fr>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-208011.783267469"
-Subject: [oss-security] bladeenc: global buffer overflow in iteration_loop (loop.c)
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+X-Debian-User: peb
+Subject: Re: [oss-security] xz backdoor prevention using hosts.deny?
 
-------MIME delimiter for sendEmail-208011.783267469
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-bladeenc is an mp3 encoder.
+Stephen John Smoogen <smooge@gmail.com> wrote on 03/04/2024 at 15:38:08+020=
+0:
 
-There is a write overflow by default without a crafted file in the bladeenc command-line tool. The upstream website does not work anymore for me.
-The complete ASan output of the issue:
+> On Wed, 3 Apr 2024 at 09:07, Nick Sal <specialroumpa@proton.me> wrote:
+>
+>> Hi,
+>>
+>> Assume we filter SSH access only to a public domain subnet using the fil=
+es
+>> hosts.{deny,allow} as seen below.
+>> Would this prevent an attack if a malicious payload was *not* sent from
+>> the allowed subnet?
+>> Trying to figure out if an attack like this was still possible, for the
+>> few days in March the backdoor was active and undetected in rolling dist=
+ros
+>> (e.g. debian testing).
+>>
+>> /etc/hosts.deny:  sshd: ALL
+>> /etc/hosts.allow: sshd: "a_subnet"
+>>
+>>
+>
+> Does Debian still link hosts.allow/hosts.deny libwrapper with sshd? [or
+> does sshd pull it in from another source?] I know some distributions no
+> longer use this method to limit controls.
 
-# bladeenc $FILE
-==15358==ERROR: AddressSanitizer: global-buffer-overflow on address 0x00000141c3b4 at pc 0x00000052afc8 bp 0x7ffcb9e50bb0 sp 0x7ffcb9e50ba8
-WRITE of size 4 at 0x00000141c3b4 thread T0
-    #0 0x52afc7 in iteration_loop /var/tmp/portage/media-sound/bladeenc-0.94.2-r1/work/bladeenc-0.94.2/bladeenc/loop.c:728:20
-    #1 0x54fb91 in codecEncodeChunk /var/tmp/portage/media-sound/bladeenc-0.94.2-r1/work/bladeenc-0.94.2/bladeenc/codec.c:353:2
-    #2 0x519694 in main /var/tmp/portage/media-sound/bladeenc-0.94.2-r1/work/bladeenc-0.94.2/bladeenc/main.c:518:23
-    #3 0x7f3d35989680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x419dc8 in getenv (/usr/bin/bladeenc+0x419dc8)
+=E2=9D=AF lsb_release -a
+No LSB modules are available.
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 12 (bookworm)
+Release:	12
+Codename:	bookworm
 
-0x00000141c3b4 is located 44 bytes to the left of global variable 'lo_quant_s' defined in 'loop.c:372:17' (0x141c3e0) of size 156
-0x00000141c3b4 is located 0 bytes to the right of global variable 'hi_quant_l' defined in 'loop.c:370:17' (0x141c360) of size 84
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/bladeenc-0.94.2-r1/work/bladeenc-0.94.2/bladeenc/loop.c:728:20 in iteration_loop
-Shadow bytes around the buggy address:
-  0x00008027b820: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008027b830: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008027b840: 00 00 00 f9 f9 f9 f9 f9 f9 f9 f9 f9 04 f9 f9 f9
-  0x00008027b850: f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x00008027b860: 00 00 00 00 00 00 00 f9 f9 f9 f9 f9 00 00 00 00
-=>0x00008027b870: 00 00 00 00 00 00[04]f9 f9 f9 f9 f9 00 00 00 00
-  0x00008027b880: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04
-  0x00008027b890: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008027b8a0: 00 00 00 00 00 00 00 04 f9 f9 f9 f9 04 f9 f9 f9
-  0x00008027b8b0: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008027b8c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==15358==ABORTING
-Aborted
+=E2=9D=AF libtree /usr/sbin/sshd
+/usr/sbin/sshd=20
+=E2=94=9C=E2=94=80=E2=94=80 libcrypt.so.1 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libz.so.1 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libcrypto.so.3 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libcom_err.so.2 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libkrb5.so.3 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libk5crypto.so.3 [ld.so.conf]
+=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 libkrb5support.so.0 [ld=
+.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libresolv.so.2 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libkeyutils.so.1 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libkrb5support.so.0 [ld.so.conf]
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 libcom_err.so.2 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libgssapi_krb5.so.2 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libkrb5.so.3 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libkrb5support.so.0 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libcom_err.so.2 [ld.so.conf]
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 libk5crypto.so.3 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libselinux.so.1 [ld.so.conf]
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 libpcre2-8.so.0 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libsystemd.so.0 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libcap.so.2 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 liblz4.so.1 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 libzstd.so.1 [ld.so.conf]
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 liblzma.so.5 [ld.so.conf]
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 libgcrypt.so.20 [ld.so.conf]
+=E2=94=82       =E2=94=94=E2=94=80=E2=94=80 libgpg-error.so.0 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libpam.so.0 [ld.so.conf]
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 libaudit.so.1 [ld.so.conf]
+=E2=94=82       =E2=94=94=E2=94=80=E2=94=80 libcap-ng.so.0 [ld.so.conf]
+=E2=94=9C=E2=94=80=E2=94=80 libaudit.so.1 [ld.so.conf]
+=E2=94=94=E2=94=80=E2=94=80 libwrap.so.0 [ld.so.conf]    <------------------
+    =E2=94=94=E2=94=80=E2=94=80 libnsl.so.2 [ld.so.conf]
+        =E2=94=94=E2=94=80=E2=94=80 libtirpc.so.3 [ld.so.conf]
+            =E2=94=94=E2=94=80=E2=94=80 libgssapi_krb5.so.2 [ld.so.conf]
 
-Affected version:
-0.94.2
+Seems it does.
 
-Fixed version:
-N/A
+--=20
+PEB
 
-Commit fix:
-N/A
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+-----BEGIN PGP SIGNATURE-----
 
-CVE:
-CVE-2017-14648
-
-Timeline:
-2017-09-19: bug discovered
-2017-09-19: blog post about the issue
-2017-09-21: CVE assigned
-
-Note:
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/19/bladeenc-global-buffer-overflow-in-iteration_loop-loop-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-208011.783267469--
-
+iQJDBAEBCgAtFiEE5CQeth7uIW7ehIz87iFbn7jEWwsFAmYNYx8PHHBlYkBkZWJp
+YW4ub3JnAAoJEO4hW5+4xFsLk7gQALkrtNrpJR4KIVik7dGW3Gpqv6WawK/wufyA
+mejRCtBO03kOblPIy2Jo73ub4z5fhNk2J/Ibj2IwK0QQ9bVuMpO+GLrCxXfYfMJk
+1pU4sOJHNqjjhf6J2hcnEbBVfxtTU4QxlmMh06iVYrVmIDKnr/T4uqVnLVPaH8/v
+ExylyRs1Jr/yiCzhT4D1QiWEAu8VZdiULQB+V2z/8YPmtiCN5xhL2daSY0w4yBCf
+QBleaQEGlCxo8C/5FDS0H89uiphg6/iNFjqZhSL9AkSSpxy1cBByqR9nB8B0nCCL
+aBdQ/QrSf5b5fyBGpCqWYaqcNHA4a07Uev4RJAehXFGQkzLlQQ7fRUq1YqVq2IMb
+5F7P+1pDs8d7A+VbzGNMsegs1FkP/Gy4yHDiHRVSbE5rGPqqAlpa0eV934ssMp6U
+OduThPgdWsnUGj/T4DYWrgVYYCd75SCKGGDG7iRjFduXOGFPPyLk68Ck5eS8/pH9
+e8AThWrZnaxF9Sep+3fLZHo5MWKcnHQSfkNXxZjfB4mEBzHXwtGnp2FzCIZUoFtQ
+4Je4Xtu+wKocYyDgfOKydPOY7kR/lYongu90yqefzpcPQMY59JqBdvc5JMkdnxI/
+VmgTcdzoYIldW0miiGZ4DcnVWOCqMRecsTdACd7+VE4dg49WcYQcfS/ziMzglH2w
+0c5yEnRI
+=sVgr
+-----END PGP SIGNATURE-----
+--=-=-=--
