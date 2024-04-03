@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1700" "Thursday" "20" "August" "2015" "12:27:13" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150820162713.95EB26C0030@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability" nil nil nil "8" "2015082016:27:13" "[oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability" (number mark "U       cve-assign@m Aug 20   44/1700  " thread-indent "\"[oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability\"\n") "<CAOdP2ADNoNVvdXfGDbAPyqscpjDe=OGQQM-AO9fsr0pBUF8eAw@mail.gmail.com>" ("<CAOdP2ADNoNVvdXfGDbAPyqscpjDe=OGQQM-AO9fsr0pBUF8eAw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14331 invoked by uid 550); 20 Aug 2015 16:27:25 -0000
+Received: (qmail 8088 invoked by uid 550); 3 Apr 2024 17:19:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14306 invoked from network); 20 Aug 2015 16:27:25 -0000
-From: cve-assign@mitre.org
-To: fourny.d@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAOdP2ADNoNVvdXfGDbAPyqscpjDe=OGQQM-AO9fsr0pBUF8eAw@mail.gmail.com>
-Message-Id: <20150820162713.95EB26C0030@smtpvmsrv1.mitre.org>
-Date: Thu, 20 Aug 2015 12:27:13 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability
+Received: (qmail 5828 invoked from network); 3 Apr 2024 17:18:34 -0000
+Date: Wed, 3 Apr 2024 19:18:28 +0200
+From: Solar Designer <solar@openwall.com>
+To: Maysara Alhindi <maysara.alhindi@bristol.ac.uk>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20240403171828.GA10610@openwall.com>
+References: <HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2@HE1PR06MB4137.eurprd06.prod.outlook.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2@HE1PR06MB4137.eurprd06.prod.outlook.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Looking for developers who know how to use Seccomp for a paid study
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello Maysara,
 
->> From: Fourny Dimitri <fourny.d@gmail.com>
->> Date: Thu, 30 Jul 2015 13:16:38 +0200
->> 
->> An arbitrary code execution is possible in the function str_ireplace()
->> with PHP 7.
->> The vulnerability is in the function php_string_tolower().
->> 
->> http://git.php.net/?p=php-src.git;a=commit;h=6aeee47b2cd47915ccfa3b41433a3f57aea24dd5
->> https://bugs.php.net/bug.php?id=70140
+On Wed, Apr 03, 2024 at 02:24:20AM +0000, Maysara Alhindi wrote:
+> I am looking for C developers who have experience with Seccomp for a 1.5-hour study
 
-> From: cve-assign@mitre.org
-> Date: Thu, 30 Jul 2015 09:43:12 -0400 (EDT)
-> 
-> Unless there is other information, we feel that CVE can include the
-> 70140 issue, but that this doesn't mean that CVE should include every
-> bug fixed during 7.0 development
+Your message was borderline off-topic for the oss-security list, where
+we have explicit guidelines against posting conference CFPs and survey
+questionnaires.  A common pattern with those was that someone external
+(not normally participating on oss-security) tried to post them and then
+did not intend to post anything actually helpful - which could be e.g.
+relevant excerpts from the conference papers such as those disclosing
+new security issues in specific Open Source projects.  Now such
+attempted postings became rare, perhaps in part due to the published
+guidelines and past rejects.
 
-Use CVE-2015-6527.
+Invites to other kinds of studies are not explicitly discouraged, and
+yours sounds like it can potentially benefit Seccomp usability, so (as a
+list moderator) I let it through.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Now it's on you to also bring the results of this study to oss-security
+and in a way most beneficial to the community.  This may be e.g. a list
+of identified issues, how/where they were reported upstream, how you (or
+your team) contributed to addressing them, how they (or any of them)
+were actually addressed, and what remains to be done.
 
-iQIcBAEBCAAGBQJV1f6WAAoJEL54rhJi8gl5H5IP/2KTIVieITKTLjvoUGpz9Vug
-/4Cf5d0JN/UaPsV+jf5WeolmxkTaggdgwA/rkgLUh0WxEpEe73Z4pRaspIvD0cQz
-qXvYmQUA3PnpTHyYrosOQ+MgkQcNdwExNLxmOlKkpGL9xv0BfT+wD44Gwm2wWx0G
-jRBLXVO1f22V83otU+qBirDJkJZ3w56SYPSbY4XpFeP/YJ0Nvw5X4fN8TTYqODxl
-XcpuOwXPRJYFrni9DzY9ehywVOGa6L4hCZQi1YnEpH1xwz4p10VTGpmeRCMYtP4m
-9BzyoiN/mvFpPQUDPrwWgWuHNhcdObAvIwHVswLdURlNo7TWtkvaS9N3thyVVTP4
-zfTLpK44ILY+y0T5O8vBWjpfo3DcjsIIHTP9j611zOv51P5UBJlriDgQhnR/Em4P
-yDsG3wRj9sVaIN6ojArCGGqVlY5Py3/gb2WHmQSokqrYMN2dYlQORJzLOybaXT/h
-mdWMCbht4aFcO/2JPjnoLtU2EiPmg0pS7p9KJ0F6JyZ/V4ETXHbaUxFlQ6I/fzHy
-HMU2YFvGrvPHI9+J+kxK7Vqwi9nAS/P48oRsoV2yFR9hH2/mHMk3SRzV3tzZBnon
-5vZMiqHhNxwSrY2b7gFhE5snvioEah7TwfSPMIur1hscTTYbkPV07dzrw3rnFTH5
-E5NM+96stU4jbS3DmQSG
-=RUS7
------END PGP SIGNATURE-----
+I am posting this reply publicly to let list members know where we
+currently draw the line and that relevant excerpts from conference
+proceedings/slides and relevant study results are desirable to post.
+
+Thanks,
+
+Alexander
