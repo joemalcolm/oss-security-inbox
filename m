@@ -1,4 +1,4 @@
-Received: (qmail 11789 invoked by uid 550); 6 Jun 2023 23:58:42 -0000
+Received: (qmail 24152 invoked by uid 550); 3 Apr 2024 16:48:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25881 invoked from network); 6 Jun 2023 18:02:25 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <b8241525-7d3d-ada1-ee36-46d711722c53@apache.org>
-Date: Tue, 6 Jun 2023 11:01:30 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-From: Michael Jumper <mjumper@apache.org>
-To: Demi Marie Obenour <demi@invisiblethingslab.com>
-References: <ac30264b-daba-2c9f-95bd-224cdccee419@apache.org>
- <ZH9uHeiWrtK5oDz7@itl-email>
-Content-Language: en-US
-Cc: oss-security@lists.openwall.com, security@guacamole.apache.org
-In-Reply-To: <ZH9uHeiWrtK5oDz7@itl-email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] [SECURITY] CVE-2023-30576: Apache Guacamole:
- Use-after-free in handling of RDP audio input buffer
+Received: (qmail 23912 invoked from network); 3 Apr 2024 16:48:25 -0000
+Date: Wed, 3 Apr 2024 18:48:04 +0200
+From: Solar Designer <solar@openwall.com>
+To: midawson <midawson@redhat.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20240403164804.GA10525@openwall.com>
+References: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com> <7e6a9e00-1caf-4523-b969-fdb410b240f7n@googlegroups.com> <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="qDbXVdCdHGoSgWSk"
+Content-Disposition: inline
+In-Reply-To: <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Fwd: Node.js security update for all active release lines
 
-On 6/6/23 10:34, Demi Marie Obenour wrote:
-> On Tue, Jun 06, 2023 at 10:12:29AM -0700, Michael Jumper wrote:
->> Severity: moderate
->> Base CVSS Score: 6.8 (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N)
-> 
-> Why is this A:N ...
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-The issue in question has no impact on the availability of a deployed 
-instance of the service.
+On Wed, Apr 03, 2024 at 08:12:24AM -0700, midawson wrote:
+> The planned security releases are now available. You can read more about 
+> the details in - 
+> https://nodejs.org/en/blog/vulnerability/april-2024-security-releases/
 
-> ... and AC:H?
+Thank you for bringing these to oss-security.  Going forward, it'd be
+great if you post the actual detail - not only a title+link.
 
-A successful attack in this case would depend on a complex series of 
-factors and non-deterministic events outside the control of the attacker.
+I'm attaching to this message the Markdown content of the above blog
+post, as taken from
+https://github.com/nodejs/nodejs.org/blob/main/pages/en/blog/vulnerability/april-2024-security-releases.md
 
-- Mike
+Alexander
+
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="april-2024-security-releases.md"
+
+---
+date: 2024-04-03T03:00:00.000Z
+category: vulnerability
+title: Wednesday, April 3, 2024 Security Releases
+slug: april-2024-security-releases
+layout: blog-post
+author: The Node.js Project
+---
+
+## Security releases available
+
+Updates are now available for the v18.x, v20.x and 21.x Node.js release lines for the
+following issues.
+
+This security release includes the following dependency updates to address public vulnerabilities:
+
+- llhttp version 9.2.1 on 21.x, 20.x, and 18.x
+- undici version 6.11.1 on 21.x
+- undici version 5.28.4 on 18.x and 20.x
+
+## Assertion failed in node::http2::Http2Session::\~Http2Session() leads to HTTP/2 server crash (CVE-2024-27983) - (High)
+
+An attacker can make the Node.js HTTP/2 server completely unavailable by sending a small amount of HTTP/2 frames packets with a few HTTP/2 frames inside. It is possible to leave some data in nghttp2 memory after reset when headers with HTTP/2 CONTINUATION frame are sent to the server and then a TCP connection is abruptly closed by the client triggering the Http2Session destructor while header frames are still being processed (and stored in memory) causing a race condition.
+
+Impacts:
+
+- This vulnerability affects all users in all active release lines: 18.x, 20.x and, 21.x.
+
+Thank you, to bart for reporting this vulnerability and [Anna Henningsen](https://github.com/addaleax) for fixing it.
+
+## HTTP Request Smuggling via Content Length Obfuscation - (CVE-2024-27982) - (Medium)
+
+The team has identified a vulnerability in the http server of the most recent version of Node, where malformed headers can lead to HTTP request smuggling. Specifically, if a space is placed before a content-length header, it is not interpreted correctly, enabling attackers to smuggle in a second request within the body of the first.
+
+Impacts:
+
+- This vulnerability affects all users in all active release lines: 18.x, 20.x and, 21.x.
+
+Thank you, to bpingel for reporting this vulnerability and [Paolo Insogna](https://github.com/ShogunPanda) for fixing it.
+
+---
+
+# Summary
+
+The Node.js project will release new versions of the 18.x, 20.x, 21.x
+releases lines on or shortly after, Wednesday, April 3, 2024 in order to address:
+
+- 1 medium severity issue.
+- 1 high severity issue.
+
+## Impact
+
+The 18.x release line of Node.js is vulnerable to 1 medium severity issue, 1 high severity issue.
+The 20.x release line of Node.js is vulnerable to 1 medium severity issue, 1 high severity issue.
+The 21.x release line of Node.js is vulnerable to 1 medium severity issue, 1 high severity issue.
+
+## Release timing
+
+Releases will be available on, or shortly after, Wednesday, April 3, 2024.
+
+## Contact and future updates
+
+The current Node.js security policy can be found at [https://nodejs.org/en/security/](https://nodejs.org/en/security/). Please follow the process outlined in [https://github.com/nodejs/node/blob/master/SECURITY.md](https://github.com/nodejs/node/blob/master/SECURITY.md) if you wish to report a vulnerability in Node.js.
+
+Subscribe to the low-volume announcement-only nodejs-sec mailing list at [https://groups.google.com/forum/#!forum/nodejs-sec](https://groups.google.com/forum/#!forum/nodejs-sec) to stay up to date on security vulnerabilities and security-related releases of Node.js and the projects maintained in the nodejs GitHub organization.
+
+--qDbXVdCdHGoSgWSk--
