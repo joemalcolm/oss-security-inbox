@@ -1,4 +1,4 @@
-Received: (qmail 25943 invoked by uid 550); 7 May 2026 16:42:16 -0000
+Received: (qmail 31764 invoked by uid 550); 3 Apr 2024 19:44:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28418 invoked from network); 7 May 2026 07:54:23 -0000
-From: Sam James <sam@gentoo.org>
+Received: (qmail 26451 invoked from network); 3 Apr 2024 19:42:26 -0000
+Date: Wed, 3 Apr 2024 21:42:14 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: xw x <v3rdant.xiang@gmail.com>
-In-Reply-To: <20260507042708.GA2912@openwall.com>
-Organization: Gentoo
-References: <20260507042708.GA2912@openwall.com>
-User-Agent: mu4e 1.14.1; emacs 31.0.50
-Date: Thu, 07 May 2026 08:50:53 +0100
-Message-ID: <87bjerac9u.fsf@gentoo.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Linux kernel: KTLS + sockmap "Reverse Order"
- Use-After-Free / Data Corruption
+Cc: Michael Dawson <midawson@redhat.com>
+Message-ID: <20240403194214.GA12525@openwall.com>
+References: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com> <7e6a9e00-1caf-4523-b969-fdb410b240f7n@googlegroups.com> <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com> <20240403164804.GA10525@openwall.com> <CAH0iFcZaZtAfhVwopR1vFgXuQJSvugL8Bz8OmQYS+kpq4VqGiA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH0iFcZaZtAfhVwopR1vFgXuQJSvugL8Bz8OmQYS+kpq4VqGiA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Fwd: Node.js security update for all active release lines
 
---=-=-=
-Content-Type: text/plain
+On Wed, Apr 03, 2024 at 02:01:11PM -0400, Michael Dawson wrote:
+> Sorry I don't remember the context as to why we agreed to send this forward
+> in the first place.
 
-Solar Designer <solar@openwall.com> writes:
+As I can find, these just started arriving in July 2021.  And that was
+appreciated.  Now I merely suggested how to do it a bit better.
 
-> Hi,
->
-> V3rdant, CC'ed here, brought this Linux kernel issue to linux-distros on
-> March 18, and apparently also to s@k.o at about the same time, citing
-> the (outdated) syzkaller "Reporting Linux kernel bugs" instructions:
->
-> https://www.openwall.com/lists/oss-security/2026/05/03/2
->
-> So we immediately had a coordination problem, which V3rdant acknowledged:
->
-> On Wed, Mar 18, 2026 at 10:28:23PM +0000, x xw wrote:
-> [...]
-> It looks like literally everyone dropped the ball on this issue after
-> that point.  This includes two distros who had volunteered for:
->
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> 9. Stay on top of issues to ensure progress is being made, remind others
-> when there's no apparent progress, as well as when the public disclosure
-> date for an issue is approaching and when it's finally reached (unless
-> the reporter beats you to it by making their mandatory posting to
-> oss-security first) - primary: Gentoo, backup: Amazon
->
-> I since heard back from Gentoo on this, but no word from Amazon yet.
+> As opposed to expanding any work that's a one off for the community
+> security stewards, since it sounds like it may not be meeting your needs,
+> I'd propose that we just remove it from our security release steps and you
+> can subscribe to the nodejs-sec mailing list like everybody else. From that
+> you could generate some automation to pull down the content from the
+> original post.
 
-Indeed. I do think there's a circular element here, which does not
-excuse the ball being dropped, but I offer it as a partial explanation:
-the current kernel process makes it challenging to keep track of whether
-a fix is actually in-flight or whether it's related to a reported
-problem. But nonetheless, we should've stayed on top of it with the
-reporter.
+That's not the outcome I wanted, especially not knowing who would setup
+and maintain said automation.  We do have an outstanding task to create
+some tools for this sort of automation, but no one approached it yet and
+it's meant to help prepare drafts for manual posting, so there would be
+some per-message work anyway.
 
-We're also onboarding another member for the security team as it's just
-myself at the moment, and we unexpectedly lost another from illness
-recently.
+So please continue these postings as-is for now, and we'll hopefully be
+adding follow-ups with the actual content like I did.  You could also
+want to start including the Markdown files in nodejs-sec postings, so
+simply forwarding them in here would do what's desired, but that's your
+call indeed.
 
-> [...]
+BTW, the previous update (for February) somehow wasn't sent in here.
+Per my off-list suggestion, an oss-security contributor later sent a
+detailed report:
 
-sam
+https://www.openwall.com/lists/oss-security/2024/03/11/1
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+but we're not sure we'll do it each time.
 
------BEGIN PGP SIGNATURE-----
+Thanks,
 
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmn8RSAbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkPfD
-AP0SvbKdWuAymqldb5Se3j5JfRR52akUgdDLXEu4qp/s2wD9FZJ84c2GkUPsMXTU
-8pR1Yv9FkPTa/mR7j90y2fSZwgw=
-=I3UI
------END PGP SIGNATURE-----
---=-=-=--
+Alexander
