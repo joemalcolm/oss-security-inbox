@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3088" "Wednesday" "4" "September" "2019" "11:22:48" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "91" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep  4   91/3088  " thread-indent "\"[oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19563 invoked by uid 550); 4 Sep 2019 09:23:04 -0000
+Received: (qmail 28008 invoked by uid 550); 3 Apr 2024 13:03:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,130 +6,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19545 invoked from network); 4 Sep 2019 09:23:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
-	bh=Rek3pqLmWI7O3lFrY5npa2OBtGy6Mql56VJ8RCt4qQE=; b=Jb7+2tM3x+Z5dYzpwSXEzIXkZ+
-	NVbImpvwrBozp75ZnENvaaWh/piXLsWf0Sji5XgiKszKaieUMaRs8sbTCqloIb0EumGfuV6F9lvJq
-	gFptaDgMTfVe6+OoQip7ZM61yNe3UZkfcx/v0IAzSxO6DZG5/2834VsBltWkax8Pik/U=;
-Message-ID: <20190904092248.GQ3837@jumper.schlittermann.de>
-Mail-Followup-To: oss-security <oss-security@lists.openwall.com>,
-	Exim Users <exim-users@exim.org>,
-	Exim Announce <exim-announce@exim.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PEfPc/DjvCj+JzNg"
-Content-Disposition: inline
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Wed, 4 Sep 2019 11:22:48 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs
- with root privileges.
-To: oss-security <oss-security@lists.openwall.com>,
-	Exim Users <exim-users@exim.org>,
-	Exim Announce <exim-announce@exim.org>
-
---PEfPc/DjvCj+JzNg
+Received: (qmail 19471 invoked from network); 3 Apr 2024 07:33:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=notk.org; s=2;
+	t=1712129596; bh=4z2BtmNwob6Zb1fCjfmpw6GwmvEEnd7tyH3M/qiMxqw=;
+	h=Date:From:To:Subject:From;
+	b=AQ/wAxes+AEKR1METiEh/8mqrfdv21hcl0fwTfa3nBR0J1QwqvpShyawUmCTIqdVu
+	 TmNoMDhWvlAR7CQEeDLGk7/HjZ5Q0xAonOnG45ekBrZzz+erlIgLiP4CQPB4gDFYoA
+	 OYa9f5WnNuy0x9VdPfGu5mKCyQZPEtAIm6CtWNa5kZmbz+cISV8g8fGRbZ8NpKJDij
+	 APPkpkcwbImhri7CNPi44WzUDOuu+pt9Dfiv5ClzwnjqZq5V6amLTzKfmjk7Ai8dwO
+	 h980waePDmfzaO+QUY84ruIFO42muU7EZy2eDLxwIWelKnsM6MCjvS2ZpsslZTbX4M
+	 TjFRey5wfRejQ==
+Date: Wed, 3 Apr 2024 09:33:16 +0200
+From: Adrien Nader <adrien@notk.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20240403073316.akk3tx57c4idv7k4@notk.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Detecting code injections in packages through debug infos
 
-*** Note: EMBARGO is still in effect!       ***
-*** Distros must not publish any detail yet ***
+Hi,
 
-Head up! Security release ahead!
+Following the xz-utils backdoor, I realized that such backdoors have
+goals which are at odds with distributions: the code will be foreign,
+probably obfuscated, maybe compiled with a different toolchain or
+different settings, ...
 
-CVE ID:     CVE-2019-15846
-Version(s): up to and including 4.92.1
-Issue:      A local or remote attacker can execute programs with root
-            privileges.
-Details:    Will be made public at CRD. Currently there is no known
-            exploit, but a rudimentary POC exists.
+Can we take advantage of that for detection? Or at least for making it
+more difficult for attackers to go un-noticed? I believe "Jia Tan"
+actually had troubles carrying this out: managed to do it but it wasn't
+a walk in the park either. Additional small hindrances may prove useful
+to help others stumble and be noticed.
 
-Coordinated Release Date (CRD) for Exim 4.92.2:
-            2019-09-06 10:00 UTC
+Below is a short example. I've simply pulled packages of debug symbols
+from Debian or Ubuntu for this[1][2]. Below I will be using the files
+from [2].
 
-Contact:    security@exim.org
+Start by downloading and extracting the deb and ddeb for a relevant:
+  mkdir d
+  cd
+  wget/curl ...
+  dpkg -x foo.deb .
 
-Proposed Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+(Note that debuginfo servers could provide symbols but I think that not
+long ago, I think that I couldn't find an easy way to download the files
+outside of gdb or others)
 
-2019-09-03:
-    - initial notification to distros@openwall.org and
-      exim-maintainers@exim.org
+Then, run "eu-unstrip" as in
 
-2019-09-04: <-- NOW
-    - This Heads-up notice to oss-security@lists.openwall.com,
-      exim-users@exim.org, and exim-announce@exim.org
+  eu-unstrip -o d.zo d/usr/lib/x86_64-linux-gnu/liblzma.so.5 d/usr/lib/debug/.build-id/f6/f3a4b96c06ffaa26772f42297cfcc4f1cb4a32.debug
 
-2019-09-06 10:00 UTC:
-    - Coordinated relase date
-    - Notice to oss-security, exim-users, and exim-announce
-    - Publish the patches in our official and public Git repositories
-      and the packages on our FTP server.
+After that, use "nm -lU" to print symbols defined by the library and
+source file and line numbers:
 
-Downloads available starting at CRD (not yet)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+  nm -lU z.so
 
-The downloads are not yet available. They will be made available
-at the above mentioned CRD.
+Now, since I've already explored this, filter than with "grep -C 1
+stdin" (and prettify the output by hand):
 
-Release tarballs (exim-4.92.2):
+  t lzma_cputhreads_522 [SNIP]/../../../../src/liblzma/common/hardware_cputhreads.c:30
+  i lzma_crc32          [SNIP]/<stdin>:145
+  r lzma_crc32_table    [SNIP]/../../../../src/liblzma/check/crc32_table_le.h:5
+  i lzma_crc64          [SNIP]/<stdin>:108
+  r lzma_crc64_table    [SNIP]/../../../../src/liblzma/check/crc64_table_le.h:5
 
-    https://ftp.exim.org/pub/exim/exim4/
+Addresses have been removed and [SNIP] is
+"/usr/src/xz-utils-5.6.0-0.2/debian/normal-build/src/liblzma".
 
-The package files are signed with my GPG key.
+As you can see, filename is not really available for the two problematic
+symbols. Moreover, the directory path is different compared to other
+symbols.
 
-The full Git repo:
+Of course, this could be tampered but a) here it wasn't, b) there are
+many other potential checks (not all using debug infos actually), for
+instance:
+- toolchain and compilation options used,
+- availability of debug symbols,
+- a checksum of the object code if that exists,
+- symbolic matching of object code and debug infos,
+- historical data (5.5.2beta as provided by Jia Tan was basically
+  identical to 5.6, but had no backdoor),
+- cross-distro (anti-)correlation maybe,
+- expected variability with compiler changes (object code shall differ
+  between LLVM, GCC and across their various versions)
+- and I'm sure many others
 
-    https://git.exim.org/exim.git
-    https://github.com/Exim/exim    [mirror of the above]
-    - tag    exim-4.92.2
-    - branch exim-4.92.2+fixes
+Has that path already been explored? I can easily come up with ways
+around the ideas above but it's all about raising the bar with stuff
+that is cheap to implement (besides symbolic matching ;p ).
 
-The tagged commit is the officially released version. The tag is signed
-with my GPG key.  The +fixes branch isn't officially maintained, but
-contains useful patches *and* the security fix. The relevant commit is
-signed with my GPG key. The old exim-4.92.1+fixes branch is being functiona=
-lly
-replaced by the new exim-4.92.2+fixes branch.
+By the way, I started with llvm-dwarfdump and switched to dwarfdump but
+their output is unfortunately really a dump rather than some convenient
+serialization format like JSON. I think there are some libraries to go
+through dwarf infos but I wanted to stick to command-line tools in order
+not to spend most of my time deciding which library to use. A
+production-ready implementation will probably need to do proper walking
+of the various infos so Input about this is definitely welcome.
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+PS: I work at Canonical, as part of the Ubuntu Foundations team, but the
+above was revenge-driven hobby work and I doubt it would be considered
+on of my work duties or topics.
 
---PEfPc/DjvCj+JzNg
-Content-Type: application/pgp-signature; name="signature.asc"
+[1] https://launchpad.net/ubuntu/+source/xz-utils/5.6.0-0.2/+build/27848538
+[2] https://snapshot.debian.org/package/xz-utils/5.6.1-1/
 
------BEGIN PGP SIGNATURE-----
+-- 
+Adrien Nader
+Conned by Jia Tan in 2024
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1vgmgACgkQr0zGdqa2
-wULCmQf8COw+yp2fYQ7ZNNvkHhGFiQ9FPtURDLJ/Ysg3HpkcZxxAXRfB6IRfaE1W
-N3yS8YN781m+uCEiNCztEwgAULLouOQWy4asKa7K40cMphW+tJT3TQtsllqp/NtT
-5SE+Tht68GsjJt1iWiw+OPbEljRnx4wyCT7MLKWFgBinGCr/jN2jNLuJ7zkrZToW
-MjzOFHUgOT9kGo4UvbcdbGJ6mV4hV3uScVOaEfK0v3OEnO+4RJvB2e5Pt10SijFl
-ZINAizEKP5KhMnjSSgErlwVjeUfS1RXCDf7hbwV10qRalWtL6GdAJqOv6aRXiPJS
-SHkc0MfzudJZmMXEHRxt9HlRQMT2gQ==
-=kfZm
------END PGP SIGNATURE-----
-
---PEfPc/DjvCj+JzNg--
