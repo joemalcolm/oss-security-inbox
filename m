@@ -1,4 +1,4 @@
-Received: (qmail 9383 invoked by uid 550); 24 Jun 2024 23:57:04 -0000
+Received: (qmail 15964 invoked by uid 550); 3 Apr 2024 13:49:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,237 +7,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18119 invoked from network); 24 Jun 2024 23:50:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
-	s=default; t=1719272985;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eKEYnaIbuv9fABJnUgjDIKd6X7rWqgtXI38xndqMip0=;
-	b=LwK5q94R6YhURU+4vCBd27npvjbIpnaeVE7j8Oclv1JjdCm0z04LpGc21CtezV9psvcF4A
-	YNuWkclDyXOiCaMRfZpSRg4lrRYZ/s2GBsoT5HlMkIbhaovq1tgTKvEaXnHJpMQ57hs1Dn
-	880k8R7B8gEPgok5H05Fig6CvZoRwToxv02keAAigpRqbhi8t76IblpCEMYyqryPXRqdyO
-	HH02BnIR+PVHGdwKRpCTlQet4qr5QpaSXAHQg2/uIQkz270WOx8TnnM3D8ZyXTqa5Yi2kf
-	/c0bavsPhPQcGjzZfWFGorwkGqgiPkxWgc6v4xp9/1+JJBMejqpOW/NfhnqO3w==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=douglasb@catalyst.net.nz smtp.mailfrom=douglas.bagnall@catalyst.net.nz
-Message-ID: <6658f4b9-7b5b-4c1b-8fc7-e9f2801fe3b0@catalyst.net.nz>
-Date: Tue, 25 Jun 2024 11:49:40 +1200
+Received: (qmail 1204 invoked from network); 3 Apr 2024 13:38:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712151500; x=1712756300; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DVK+6r9Wr6DzWiaSd3XSabHBo4jHwac8RIubZBxkMzY=;
+        b=gVQNzVU7nr1Cj4Ti8/jPChucwZRUSPZaQ5F5gB1L0jUiiLhDaXJHrLlHeoOr5tDfmP
+         BlX2Dw/QH9ZnF654HPFEwEZkN6kcOfP2/M8qGE8rMdpOdfb6yfRlIAhEYyxQg6ek4ndH
+         P4ZPm5P0G5W1R3ruZXiCBSaI+P282b2DkX25Ri532+l/tBCctyG7We/EUTDRkahBl0BH
+         AupwbAzj63JkNcJN0i03HBNmtSMW55MwqoYgu6zJ1aAL7SYm4UlGZXQHjxFbg9qcCigv
+         2u/RFFOgGhg9joR2t4y0MTNUKTmhpTKxVEmAiY9V8Ts0cIDdV+qVWFwXp/tg5imKVzBs
+         Z3rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712151500; x=1712756300;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DVK+6r9Wr6DzWiaSd3XSabHBo4jHwac8RIubZBxkMzY=;
+        b=Nr6PyDJB2ERm8CyTJ1DU3YmQ0ZzgYZRhyHPSGulQzvRFPWX45OtAelqAsmH6y5TRJv
+         DiGIkF7pogZH5preMB6POR1nyvcCAbsbuPQyy/neM8Z7EU6/hfxrqkInjzE4voRRsfZ0
+         wieircVtmDsnbTYeQ4H7WC305dDUI2QujlToUYk6JdCUZlHh6NY9FOAwb8tzESlbb4ey
+         xSehDCgfRzzf7VToCADDxZR7L/95vt97hwAvEjzAU7geJFJ7nQME6SLdvXlwD63iWeXb
+         BI9N/JevdrcHGhVgmivEnUISu9iOxTNMWEdhaD6s9FlBOFuYnpZXQb9bpVTUNTqpUbHJ
+         YjBw==
+X-Gm-Message-State: AOJu0YyEM/e+NsTDkxwjHWl5rx4XmO5LSEQ/e1Yv1WipfyTDPOkmiauf
+	TOBmJHVt7MRsk+7C/PpdrmHCYwM2NqzIhfNTBt8Fik48fNaozy/rJZNovzBfsHlPFxXUisCU08t
+	QH0QMVBD5Wy+9Sveh3hErgZy9RhxfN52Ok0g=
+X-Google-Smtp-Source: AGHT+IFNpuv5pv4VZovtZuszn6StZgkSr4hTM8WxLbc/bCmRkPAX1RQl1sfnh74j43c2s2MIuwtsVcBTE7bsRLTzVKk=
+X-Received: by 2002:a17:90a:710b:b0:29f:cf88:c2d2 with SMTP id
+ h11-20020a17090a710b00b0029fcf88c2d2mr14131817pjk.12.1712151500323; Wed, 03
+ Apr 2024 06:38:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-To: oss-security@lists.openwall.com, Qualys Security Advisory <qsa@qualys.com>
-References: <20240130183915.GB16546@localhost.localdomain>
-Content-Language: en-NZ
-In-Reply-To: <20240130183915.GB16546@localhost.localdomain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Out-of-bounds read & write in the glibc's qsort()
+References: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
+In-Reply-To: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
+From: Stephen John Smoogen <smooge@gmail.com>
+Date: Wed, 3 Apr 2024 09:38:08 -0400
+Message-ID: <CANnLRdgMaDewcaKVq9OdiNBq-AsF-JchQsMLY0xuY033P6j=rw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000fa855a061531550c"
+Subject: Re: [oss-security] xz backdoor prevention using hosts.deny?
 
-[ For newer subscribers, I'll mention that this is in reply to
-  https://www.openwall.com/lists/oss-security/2024/01/30/7 ]
+--000000000000fa855a061531550c
+Content-Type: text/plain; charset="UTF-8"
 
-On 31/01/24 07:39, Qualys Security Advisory wrote:
-> We discovered a memory corruption in the glibc's qsort() function, due
-> to a missing bounds check. To be vulnerable, a program must call qsort()
-> with a nontransitive comparison function (a function cmp(int a, int b)
-> that returns (a - b), for example) and with a large number of attacker-
-> controlled elements (to cause a malloc() failure inside qsort()). We
-> have not tried to find such a vulnerable program in the real world.
+On Wed, 3 Apr 2024 at 09:07, Nick Sal <specialroumpa@proton.me> wrote:
+
+> Hi,
 >
-> All glibc versions from at least September 1992 (glibc 1.04) to the
-> current release (glibc 2.38) are affected, but the glibc's developers
-> have independently discovered and patched this memory corruption in the
-> master branch (commit b9390ba, "stdlib: Fix array bounds protection in
-> insertion sort phase of qsort") during a recent refactoring of qsort().
+> Assume we filter SSH access only to a public domain subnet using the files
+> hosts.{deny,allow} as seen below.
+> Would this prevent an attack if a malicious payload was *not* sent from
+> the allowed subnet?
+> Trying to figure out if an attack like this was still possible, for the
+> few days in March the backdoor was active and undetected in rolling distros
+> (e.g. debian testing).
+>
+> /etc/hosts.deny:  sshd: ALL
+> /etc/hosts.allow: sshd: "a_subnet"
+>
+>
 
-In or before 2006 [1], the Samba project forked and modified a copy of
-glibc _quicksort() to create the qsort_r-like ldb_qsort(). In those
-days qsort_r() was rare (glibc got it in 2008), and Samba wanted
-comparison semantics to follow changes in the LDAP schema, for which
-the qsort_r context blob was thought useful.
+Does Debian still link hosts.allow/hosts.deny libwrapper with sshd? [or
+does sshd pull it in from another source?] I know some distributions no
+longer use this method to limit controls.
 
-[1] https://gitlab.com/samba-team/samba/-/commit/de296b65136c3d7b6170db099b626d94fa190306
 
-The code we copied was not the try-mergesort-first qsort() glibc uses
-(and used then) -- it was the quicksort-of-last-resort that Qualys
-reports on. I guess we were aiming for simplicity. At times we have
-discussed switching to qsort_r(), but that always founders because
-each libc does it slightly differently (and qsort_s does not solve
-every problem).
+> Moreover, allowing only public-key authentication for SSH does not help,
+> isn't this right?
+>
+>
+Most likely not because the code is looking for a specific publickey to
+unlock its payload.
 
-So Samba was very susceptible to this bug. The good news is
-ldb_qsort() is not used in very many places, and some of those places
-already used transitive comparison functions. The other good news is
-that *now* it is patched with the "tmp_ptr > base_ptr &&" fix. And the
-third good news is that the comparison functions are fixed. That's in
-4.19.7 and 4.20.2.
 
-We also had quite a large number of non-transitive comparisons using
-the system qsort(). These are vulnerable with glibc under memory
-pressure, as described by Qualys, who also note:
 
-> Remotely, forcing this malloc() failure is harder: either allocate a
-> large amount of memory (e.g., a memory leak) in the network service that
-> is being targeted, or in another network service on the same machine.
+> Regards,
+> Nick
+>
+>
 
-Samba servers are quite complex, and it would be easy for the attacker
-to miss the right allocation and induce a different failure. There are
-almost certainly other more appealing and less noticeable attacks.
-Nevertheless we have been auditing and fixing all our compare
-functions. The lack of a clear attack helped us choose do that without
-an embargo shroud and the associated fuss. In any case, I fear there
-is greater danger for a project like Samba from a bad sort that
-*doesn't* crash the server (more on this later).
+-- 
+Stephen J Smoogen.
+Let us be kind to one another, for most of us are fighting a hard battle.
+-- Ian MacClaren
 
-The thing I found interesting, and which led me to write, is that we
-knew all the pieces of this, but never put them together.
-
-For a start, we were well aware that glibc qsort() uses mergesort by
-default, because (as the glibc people discovered when they tried to
-change it) we had inadvertently come to rely on it. This caused bugs
-on other platforms [2] and even led us to write our own stable sort
-for when we really need it.
-
-[2] https://lists.samba.org/archive/samba-technical/2018-March/126023.html
-
-We have also been fixing bugs in ldb_qsort() comparison functions
-without fully realising that we were dealing with a class of problem.
-For example, in the bug we called CVE-2019-14861 [3], we have comments
-like "This looks like a bug in ldb_qsort()" and "when I patch
-ldb_qsort() for qsort_r() the problem goes away". But when we find the
-problem in the compare function we say "I'm assuming that the issue is
-due to the unstable sort in dns_name_compare()", and sort of forget
-that ldb_qsort() is *also* the problem.
-
-[3] https://bugzilla.samba.org/show_bug.cgi?id=14138, fixed in
-    https://gitlab.com/samba-team/samba/-/commit/defb23732515e3c638d0081f5e4043fbb35d303c
-
-The problem we fixed in dns_name_compare() was this:
-
-        /* '@' record and the search_name record gets preference */
-        if (name1[0] == '@') {
-                return -1;
-        }
-        if (search_name && strcasecmp(name1, search_name) == 0) {
-                return -1;
-        }
-
-which tries to unconditionally squish names starting with "@" and
-whatever search_name is to the start of the array (which is the
-problem end for these buggy quicksorts). When the array has both
-search_name and an @-name, or multiple @-names, the comparison was
-non-transitive.
-
-Git says I reviewed the CVE-2019-14861 patches, though I don't
-remember anything (I mean, CVSS 5.3, authenticated client can crash
-the server, who cares). But mistrust of ldb_qsort() lingered, and I
-saw what the Qualys report meant for it.
-
-The CVE-2019-14861 patch fixed the explicit attempt to push multiple
-values into one spot, but it left this in the same function:
-
-        if (name1 == NULL || name2 == NULL) {
-                return 0;
-        }
-
-which is non-transitive, given we otherwise compare name1 and name2.
-For example, consider names {"a", NULL, "b"}. Then we have
-
-   "a" < "b"
-   "a" == NULL
-   "b" == NULL
-
-meaning the order in which we compare things will affect how they end
-up. Perhaps this was never enough to go out of bounds, and perhaps
-there was never going to be a NULL in this list. In any case, now we
-go:
-
-       if (name1 == name2) {
-               /* this includes the both NULL case */
-               return 0;
-       }
-       if (name1 == NULL) {
-               return -1;
-       }
-       if (name2 == NULL) {
-               return 1;
-       }
-
-which is transitive, sorting NULLs to the beginning of the list for
-easy discovery (we check in the next loop).
-
-I found a 2006 bug report [4] with the name "SEGV crash due to random
-libads/dns.c qsort() comparison function".
-
-[4] https://bugzilla.samba.org/show_bug.cgi?id=3959 fixed in
-    https://gitlab.com/samba-team/samba/-/commit/18feaab9d556c4bd41a19823b3982e2bc30a2055
-
-To quote from the bug:
-
-   The qsort() used in libads/dns.c is regularly trashing the list of
-   Domain Controllers. This is because the comparison function
-   dnssrvcmp() is using rand(). AFAIK, that's not recommended --
-   repeated calls to the qsort() comparison function with the same
-   args _must_ return the same, consistent results. [....]
-
-   Hence this:
-
-	int bad_compare(const void *l, const void *r) {
-		return (rand() % 3) - 1;
-	}
-
-   is a terrible function to use, and causes real qsort()s to run off
-   into the weeds.
-
-We weren't doing that, exactly, FWIW. It is good to be reminded that
-in 2006 it was normal for a qsort to "run off into the weeds". The
-problem for projects like Samba is it is easy for us to pick up little
-pieces of 2006 and carry them along with as we go.
-
-We also have several commits like this one from 2009 [5]:
-
-    librpc: fixed the GUID_compare() function
-
-    When comparing two unsigned values you can't just subtract
-    them.
-
-    Imagine you are comparing: "uint32_t u1" and "uint32_t u2". If you use
-    "u1 - u2" and u2 is zero, then the signed integer result will depend
-    on the top bit of u1.
-
-    This error occurs in a few places in Samba. For DRS replication it
-    resulted in corrupt uptodateness vectors.
-
-[5] https://gitlab.com/samba-team/samba/-/commit/a106fefcfb0cb60ce439884d8cd0c920d2fb193a
-
-What I am getting at is we have been all over this class of bug, but
-in a shamefully ad-hoc and folkloric way -- "you can't use rand()",
-"you can't subtract unsigned values", "you can't push two things into
-the same place", "you can't subtract" -- all of which are incomplete
-(and/or overreaching; you can safely subtract char, for example).
-Somehow we never got to the obvious position that all comparisons have
-to be transitive. Thanks to Qualys for the clarity.
-
-Thanks I guess also to C for being so unsafe and report-worthy. What
-worries me more about a bad sort in Samba AD is the ability to hide
-things without crashing. Attackers are likely to prefer a persistent
-unseen presence over bringing down a server process. Being in the
-wrong place in a sorted list might not seem like great hiding, but we
-do more complicated things with the sorted arrays, including binary
-search. The comparison in the binary search will visit a subset of
-values in a different order that the sort, so will likely step over or
-be thrown awry by the missorted element. That means the bad comparison
-could make something appear to vanish in some circumstances and not
-others. (I didn't look for actual instances of this, I just fixed the
-comparison functions).
-
-As I mentioned, ldb_qsort() and most comparison functions are fixed in
-4.19.7 and 4.20.2 (both released earlier this month). One particularly
-complicated comparison function required an API change in the public
-libldb, so it will appear in 4.21 (probably September). That one isn't
-used with ldb_qsort(), so it is likely safe or safe-ish, depending on
-your libc.
-
-Douglas
+--000000000000fa855a061531550c--
