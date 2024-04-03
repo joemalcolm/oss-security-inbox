@@ -1,4 +1,4 @@
-Received: (qmail 5630 invoked by uid 550); 25 Oct 2022 10:28:35 -0000
+Received: (qmail 28525 invoked by uid 550); 3 Apr 2024 20:59:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5286 invoked from network); 25 Oct 2022 10:28:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=cBuzqYQEhJpnXWYg7KO+GuDqwx4pGX2PQyeHgy+yz6Y=;
-        b=cVuH5NwmMDNFA+sEBxqZJc1jt2bjlV+X8h5Px68orpFSk3qrrR1BhFlZnQar5ULjg+
-         mzKdSsGCoeSFKTK0+sMd+RbGQXg5ah9HXdlnpjmniewR88wleTdBN9nlCgjrCrSbKVYG
-         NXmwaGzHeuQ7ozi06TfBicij9hECBKDiYxyBKV53Ub8lCunHqITRwFgZMlOF6fJ9dWqj
-         R34PQqmy0oODWDXOJaqOozudOhWCtrwL4f0qXFihCK8WRQV6qajeMm+BZxjNvnl1d16h
-         Ugn3yyIFWPjuENK6y+qk0iVguVmPqfByMLpy+5qpXmizGWS9fwQSaOJF7UvDAdg4MGqd
-         lVqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cBuzqYQEhJpnXWYg7KO+GuDqwx4pGX2PQyeHgy+yz6Y=;
-        b=MxrviNpFlsoo8fWNRlSKY1ez16yZdez2hthNGNL1o51ZzjBm7ESvWIE/c+MiqYREZQ
-         kExvlBRt8KcKCC/vrkLrku+6OW/2v9SB7N7bPGz53jEd2uzQ4V66lBys5TD3s3rppEr1
-         PTi8eUXDRXLqTbq6WVYU6FW3VuSandJASJHUgW9QKhxNPdovmcZ0IyEZ8UD7wUjYul4/
-         0Y22g63ct6DTwxsIelq91EU0xXE5RwvcWIrE9bpv4b4UghcJHmdQVK6QxK5JVVZGfDfU
-         EwXNMEz3/Tv98O8l2CvOf/4iFJl/5Z0YjrO+wzR0awLp8J/Ge449VdLE67Nz5GHqDe8p
-         hNPQ==
-X-Gm-Message-State: ACrzQf32jANLKZVp8GiEJ/rsiqLjDIZ0O5QSoX3YNuZc2uPSKcgEZ4bI
-	Ua1h7aaRfxfM5pdMOPvdDs0=
-X-Google-Smtp-Source: AMsMyM7CH/a30HCkr+FmXEsAArlF9336vXbNWh7UyPpkH5ahw0VP1uf96gfqThwtOfmn1x/WQ0VFZw==
-X-Received: by 2002:a05:600c:4fc9:b0:3c7:12ab:d66 with SMTP id o9-20020a05600c4fc900b003c712ab0d66mr16963911wmq.62.1666693668501;
-        Tue, 25 Oct 2022 03:27:48 -0700 (PDT)
-From: "Simon Steiner" <simonsteiner1984@gmail.com>
-To: <general@xmlgraphics.apache.org>,
-	<batik-dev@xmlgraphics.apache.org>,
-	<batik-users@xmlgraphics.apache.org>,
-	"'Apache Security Team'" <security@apache.org>,
-	<oss-security@lists.openwall.com>
-Date: Tue, 25 Oct 2022 11:27:47 +0100
-Message-ID: <007201d8e85c$6da62570$48f27050$@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdjoW8EGBEXebOnmRmyvZkzQ0W9sBw==
-Content-Language: en-gb
-Subject: [oss-security] [CVE-2022-41704] Apache Batik information disclosure vulnerability
+Received: (qmail 27868 invoked from network); 3 Apr 2024 20:59:03 -0000
+Date: Wed, 3 Apr 2024 22:58:35 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240403205835.GA12974@openwall.com>
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <ZgcOVnk5hCVkDUt/@ycc.fr> <uu9f4s$oga$2@ciao.gmane.io> <20240331213023.GA22787@openwall.com> <cd985494-7e02-ab46-785d-78ba6eabae4d@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cd985494-7e02-ab46-785d-78ba6eabae4d@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] escaping terminal control characters (was Re: backdoor in upstream xz/liblzma leading to ssh server compromise)
 
-CVE-2022-41704:
-        Apache Batik information disclosure vulnerability
+On Wed, Apr 03, 2024 at 11:03:17AM +1100, Matthew Fernandez wrote:
+> On 4/1/24 08:30, Solar Designer wrote:
+> >On Sat, Mar 30, 2024 at 04:37:48PM -0000, Tavis Ormandy wrote:
+> >>It was also pointed out they submitted an odd PR to libarchive:
+> >>
+> >>https://github.com/libarchive/libarchive/pull/1609
+> >>
+> >>In summary, they replaced calls to safe_fprintf() with fprintf() --
+> >>meaning control characters are no longer filtered from errors. That
+> >>seems pretty minor, but now that we know they were in the business of
+> >>obfuscating the presence of backdoors -- seems a bit suspicious.
+> >>
+> >>Regardless, that change has now been reverted:
+> >>
+> >>https://github.com/libarchive/libarchive/pull/2101
+> >
+> >This does look minor indeed - not usable for large-scale attacks, and
+> >libarchive is quite unique in that it even bothered to filter control
+> >characters, whereas most command-line tools outputting filenames don't
+> >bother.  My guess is it could have been an early experiment to see
+> >whether the project would accept PRs degrading security.
+> >
+> >That said, here's an excellent write-up by David Leadbeater on specific
+> >ways that specific terminal emulators may be usefully attacked with
+> >control sequences:
+> >
+> >https://dgl.cx/2023/09/ansi-terminal-security#vulnerabilities-using-known-replies
+> 
+> Is the currently accepted wisdom that any application printing to 
+> stdout/stderr should take steps to avoid control characters in the 
+> output?
 
-Severity:
-        Medium
+First, let's limit this to cases where the control characters come from
+potentially untrusted input to the program.  Obviously, many programs
+generate terminal escapes on their own (usually via a library), for
+their intended functionality (colorized listings, TUIs, etc.)  Some
+programs pass potential control characters from their trusted input.
 
-Vendor:
-        The Apache Software Foundation
+Second, I think no, there isn't currently an established opinion on
+whether programs should perform such filtering of untrusted input.
 
-Versions Affected:
-        Batik 1.0 - 1.15
+On Linux systems, the status quo appears to be that this is done for
+process names by procps and for file names in the filesystem by GNU
+coreutils.  However, it is usually not done e.g. in (un)archivers and
+package managers.
 
-Description:
-        Block loading jars by default to avoid running untrusted code
+I think at least the package managers (by which I mean not only
+lower-level e.g. rpm/dpkg, but also higher-level e.g. dnf/apt) should
+catch up, especially for output they produce based on package contents
+prior to verification of the package signature.  The very fact they
+choose to verify a signature means they consider the input untrusted, so
+they shouldn't be trusting it for printing to a terminal either.
 
-Mitigation:
-        Users should upgrade to Batik 1.16+
+Some programs are commonly used non-interactively in scripts, but are
+also commonly used interactively.  For example, cat(1) must pass its
+input to output verbatim by default, or it'd break scripts.  But then
+GNU coreutils "cat -v" will encode control characters in a
+human-friendly notation.  There are many other programs like this, and
+most do not even have an option like that.
 
-Credit:
-        This issue was independently reported by Y4tacker and 4ra1n of
-Chaitin Tech and pwnull
+> This is one of those situations where, if my terminal is 
+> manipulated this way, I'm not quite sure who is to blame. Intuitively it 
+> does not seem to scale, to require every (even non-security minded) 
+> application to mitigate this. But on the other hand, maybe it's not 
+> possible for terminal emulators to solve without false positives.
 
-References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1338
+Terminal emulators should avoid/remove support for truly dangerous
+escape commands.  But as long as they allow basic control commands such
+as cursor movement, which they need to, they could still be manipulated
+into relatively benign yet misleading behavior such as replacing
+previously displayed messages with something else.
 
-The Apache XML Graphics team.
+I wouldn't blame anyone since we arrived at this for good technical and
+historical reasons.  But there are many things we can do to mitigate
+these issues - inside programs, in choice of which programs to use when
+(e.g., "cat" vs. "less"), and in how to use them.  On "less" options:
 
+https://www.openwall.com/lists/oss-security/2016/04/22/2
 
+Alexander
