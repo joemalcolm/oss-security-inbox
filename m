@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6279" "Monday" "5" "October" "2020" "22:48:20" "+0200" "Solar Designer" "solar@openwall.com" "<20201005204820.GA8410@openwall.com>" "129" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" "^Date:" nil nil "10" "2020100520:48:20" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       solar@openwa Oct  5  129/6279  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12082 invoked by uid 550); 5 Oct 2020 20:49:25 -0000
+Received: (qmail 16156 invoked by uid 550); 4 Apr 2024 15:09:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,146 +6,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11642 invoked from network); 5 Oct 2020 20:48:33 -0000
-Message-ID: <20201005204820.GA8410@openwall.com>
-References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 5 Oct 2020 22:48:20 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?
+Received: (qmail 16126 invoked from network); 4 Apr 2024 15:09:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712243373; x=1712848173; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=PuXRA6KlPB+w8EpqEQo0EoOMZm6ZB9KCotaWXwsJiXg=;
+        b=YKsbZNEEXIRi0z3AjFkVFYU1ecRIgOCRgM4D+qtNWlPzz5XbUDwYQRpPFg7HPBnLZx
+         yyAbr4uC1EzdawfBA6IynTZJ1oVP7iPrnWOagkLuLo1lIIysPMk8eettL0ZOWzmbTmGt
+         fG+dRqbE7LQalBLRZ1WzAwM5a1V+/BNT4RNDyrajuXWFUzZLPlb9503S9bc1mKuEtStg
+         a/+wWKj4muvSUtuzzJbHreTDEAw8xxfgWAB1aXhXO2dMKyrI2OXkSVf9FmZoDLo3fgxL
+         V7wAH1qQ/gA31drZWj616wCzn3tcyCCQENsQhzclXfuMZ7oJPgYmycPzReF1pzL+uf//
+         Q10A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712243373; x=1712848173;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PuXRA6KlPB+w8EpqEQo0EoOMZm6ZB9KCotaWXwsJiXg=;
+        b=VPZftfo85ZzV0LZg0OWw8Zy2qCNlwxNl8McgnEzAbF0PwWRN+KU2fMYiYHRJxxOXtn
+         zrstHnAgBIu7AGyjapj2Mz3Nd10RkGlZPm68fvxEEYTkrtVK6752cyehwIbmL0BeQUzA
+         wRi998s3XyaAVcOLXFQxDYV36jqDCFsULtNqqVgCgZMPbqzSkSItwlrnSCuqNL5UOGx3
+         RaJBShtBf6/mllYsxlWfMX/s7uSL7cUZBD+s6mBKjIMsZqI5A526+zRCosJYM7fdyEb0
+         dNlOV43SIro6qDGPgrlrgilMOp2wNJ3J4TnCFQO3kttdnLy4Dj7VGWkM7/WLozAeo6gY
+         6XWA==
+X-Gm-Message-State: AOJu0YzbQ2HiOtshUrb2pCgExz8MlzkQBmBWSRoYnmrTxNkpRgpMss+1
+	Vd+njCLCHEVEYgSrdT4MIy42Mho6gx5sRDx10ixdIuxXtjSVPUcoaOrN+ls2
+X-Google-Smtp-Source: AGHT+IFM3Wi1ys+xYf6+P/wOvJTKfnTd/zz2/6ilsABroyBdcgzRrhAibEepcv46E/Q5ZJTxp8VMow==
+X-Received: by 2002:a05:6a20:1019:b0:1a7:2437:386f with SMTP id gs25-20020a056a20101900b001a72437386fmr2402391pzc.61.1712243372926;
+        Thu, 04 Apr 2024 08:09:32 -0700 (PDT)
+Message-ID: <9f0f1c21-7f46-348e-eeb8-1bcd81de5116@gmail.com>
+Date: Fri, 5 Apr 2024 02:09:31 +1100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
 To: oss-security@lists.openwall.com
+References: <DB9P189MB20494D14F78BAC99FB599A5AC33C2@DB9P189MB2049.EURP189.PROD.OUTLOOK.COM>
+Content-Language: en-US
+From: Matthew Fernandez <matthew.fernandez@gmail.com>
+In-Reply-To: <DB9P189MB20494D14F78BAC99FB599A5AC33C2@DB9P189MB2049.EURP189.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Just a reminder to never run ldd or strings on
+ untrusted binaries
 
-Hi all,
 
-As a moderator I approved all messages in this thread so far, but I am
-unhappy about the quality of both Georgi's message and the replies.
 
-This is a valid topic, but there's no room in it for trolling (that's
-how Georgi's message came across, even if maybe unintentionally) nor for
-responding only about the presumed trolling.  Just assume good faith and
-post a response that's actually useful to others in here.  I'll try:
+On 4/4/24 12:16, Markus Klyver wrote:
+> I'm not sure if people are aware of the fact that ldd can run the executable under certain circumstances. Also running strings on a malicious file can be a bad idea:
+> 
+> https://jmmv.dev/2023/07/ldd-untrusted-binaries.html
+> 
+> https://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-files.html
+> 
+> This advice would extend to other common tools as well, like objdump and readelf.
 
-On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
-> Are there major security changes needed if
-> gnu/linux dominates the desktop and/or mobile phone
-> markets?
+Thankfully the strings behaviour seems to have been altered,
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=commit;h=7fac9594c41ab180979bdf5927ff7f7e1d13a9e9:
 
-I'd say yes, major security changes are needed.
-
-On the desktop, major Linux distributions (and by the way *BSDs and
-Solaris are not very different in this respect, I think) when used as
-single-user desktop systems lack security isolation between applications
-of the user.  (And also between the user and root, due to the typical
-recommended use of sudo from the user account.)
-
-This kind of security isolation is something we have on Android, but at
-the price of the user not having full access to (not entirely) their
-device.  The user cannot even have e.g. a file manager app with which
-they'd access all files of other apps.
-
-Then there's the trend towards having a desktop-like Linux system on
-mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
-we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
-aware, so far this means lack of isolation between the apps just like we
-have on the desktop.
-
-We need the best of both worlds - isolation, yet full control.  I guess
-this could be achieved by devices gaining a physical button that would
-need to be pressed at the time a newly installed app is to be granted
-privileges by a component in the system's TCB.  Said component would
-also need to assure the user that it's the only one in control at the
-moment (kind of after a SAK) and that the displayed privileges request
-is truthful and complete, e.g. by lighting a dedicated LED.  You want to
-install an all-powerful file manager?  Just wait for that LED to light
-up, review what privileges would be granted to where, and press that
-button to accept.  Perhaps too cumbersome for typical users.  Maybe an
-alternative approach could be developed where a portion of the
-touchscreen (or a secondary one) would be reserved for interacting with
-the OS TCB.  Perhaps something like MacBook Pro's Touch Bar could be
-used for that purpose - and having that is already a precedent, it's
-just not used for a security purpose yet (or I haven't heard of that).
-
-Then there's the issue of attack surface and of few layers of security.
-Linux kernel is quite poor in this respect when it comes to attacks by a
-locally running program.  Even Android doesn't change that.  One way to
-address this is to introduce a security layer between the (host) Linux
-kernel and the program, running programs in VMs.  This replaces the
-attack surface with that of the hypervisor (and of the UI and components
-needed to integrate the VMs back).  Another (poor man's) way to
-partially mitigate this is to have something watch and protect the Linux
-kernel (Samsung KNOX, LKRG).
-
-A desktop Linux distro that theoretically gets close to what's needed is
-Qubes OS.  It runs programs in VMs yet integrates them on a single
-desktop.  It effectively reserves a portion of the screen for control by
-not letting VMs access full screen mode by default.
-
-In practice though, there are severe security risks even with Qubes OS.
-The in-VM systems need to be updated, and each update is a risk of
-bringing in malicious code.  When most VMs are based off the same Fedora
-template, updating that means trusting all installed packages' Fedora
-maintainers.  Any package can gain full control through a malicious pre-
-or post-install script, even if the software it installs is never
-explicitly used in a given VM.  This means instant access to all VMs on
-next system restart.
-
-For typical desktop Linux users, realistically most security is provided
-by the web browser, which these days at least uses a sandbox, protecting
-the user's files and other apps from itself.  That's something the
-underlying systems tend to lack.
-
-> Remarks:
-> 1. there was android malware on google play
-
-Yet Android at least tries to limit apps to the permissions you approve
-them to have, and isolates them from other apps (except for shared
-storage of pictures and "SD card" if you agree to those permissions).
-
-Desktop distros and desktop-like mobile distros don't even have that in
-their typical usage.
-
-> 2. ad-free and free as in beer android games are hard to find for us
-
-I guess weird out-of-line things like that is part of why people think
-Georgi was trolling.
-
-> 3. we are pissed off by browsers accessing the microphone
-> or camera (seen in the wild)
-
-I don't know what this refers to, but I guess if unauthorized by the
-user that would be a browser vulnerability or a modified malicious copy
-of the browser (malware) or maybe active modification of a browser on
-the system (also by malware).
-
-Sure malware and social engineering are valid threats to keep in mind.
-
-It's also a good idea not to rely solely on the browser's built-in
-authorization checks, but to limit its access to system resources such
-as the microphone and camera.  Qubes OS does that.
-
-> 4. reading $HOME might reveal more interesting stuff than
-> root reading /etc/ (on debian 10 /home/loser is 755 and the
-> default umask is 0022)
-
-Now this is about the lack of security isolation between the users, if
-there's more than one actual user on a system.  I also do think this is
-very wrong and needs to change (and is an easy change, unlike others I
-pointed out above).
-
-Relaxed file permissions like that may also further weaken some partial
-sandboxes (when a service is running with its dedicated credentials, but
-with retained filesystem access - such as because it needs that).
-
-Then there are also plenty of other local security risks on typical
-Linux distros, starting with risky data processing by apport and abrt.
-Those would matter more if other issues I mentioned are addressed.
-
-I might be right or wrong or (most likely) both, but I hope this sets
-the tone for constructive further discussion.
-
-Alexander
+> commit 7fac9594c41ab180979bdf5927ff7f7e1d13a9e9
+> Author: Nick Clifton <nickc@redhat.com>
+> Date:   Fri Oct 31 10:10:37 2014 +0000
+> 
+>     In response to a public outcry the strings program now defaults to using the
+>     --all option which displays text from anywhere in the input file(s).  The
+>     default used to be --data, which only displays text from loadable data sections,
+>     but this requires the use of the BFD library.  Since the BFD library almost
+>     certainly still contains buffer overrun and/or memory corruption bugs, and
+>     since the strings program is often used to examine malicious code, it was
+>     decided that the --data option option represents a possible security risk.
+>     
+>             * strings.c: Add new command line option --data to only scan the
+>             initialized, loadable data secions of binaries.  Choose the
+>             default behaviour of --all or --data based upon a configure
+>             option.
+>             * doc/binutils.texi (strings): Update documentation.  Include
+>             description  of why the --data option might be unsafe.
+>             * configure.ac: Add new option --disable-default-strings-all which
+>             restores the old behaviour of strings using --data by default.  If
+>             the option is not used make strings use --all by default.
+>             * NEWS: Mention the new behaviour of strings.
+>             * configure: Regenerate.
+>             * config.in: Regenerate.
