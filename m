@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["994" "Wednesday" "29" "June" "2016" "14:08:14" "+0200" "Mathias Svensson" "idolf@google.com" "<CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>" "29" "[oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format" nil nil nil "6" "2016062912:08:14" "[oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format" (number mark "U       idolf@google Jun 29   29/994   " thread-indent "\"[oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17778 invoked by uid 550); 29 Jun 2016 12:12:27 -0000
+Received: (qmail 16194 invoked by uid 550); 4 Apr 2024 11:26:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15966 invoked from network); 29 Jun 2016 12:08:46 -0000
+Received: (qmail 13756 invoked from network); 4 Apr 2024 11:15:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=q+PuPJUA/DerG/ssM1+jG0Iy94c+A13dgu7Dd2/zS2g=;
-        b=ivHgIalRHpscJlmd/ek6Z7RB8gWkAWE/ZNvqDnMz6jbYjiczKV8JEC7b1BTxffHepL
-         uuXK1Ru0VaAi1iqNcoZzLTqZLbrZ7Fq4YJyzXI4vvPHj4cjxS3OzLcLbYFJgPv+Y9RBj
-         Ep65V8Bhw/kYbqB7YFmnuzkpPse8nPiYVhvbcFul51TdzJcUoi49sIgNSaI+VWSevjnG
-         STBfucI8B4tL7QO5af+4gf5z8NGvbd4yrgPJWQ+qr07IPHqA3uswW+zYh6brRndIqUfc
-         DjWHNqxntjHF1891WpWqXux7fGZ4thfSq6lqtezLU9c6/5IdTDyVhJZcqywg4lGUXJnS
-         HjvA==
+        d=gmail.com; s=20230601; t=1712229314; x=1712834114; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=66PaCkSx/JuXcECyvC3kTepLqFzzgZUgIQDXmm4KPxE=;
+        b=UzjI9Mu7GdMO1cIvrWF4iUG553mMPR7RiZUkjZNMZR054kzK8J8xMYkG5pn4X0ioGp
+         wgy5FbFFm4w+qiqgOaVuzxpV39y0S7l4if+0YX90Jhds9ZE9WwDTXGw7SXe1xXG+R/LB
+         qmgnJww5FqEkngkSp6hJyANNZgj1teZV6bL+dujXV1HqRd5gFzKZ3rRwS7EWj9w92DBp
+         dL8RiPHMmihNprxCVh9h8TdoQxri3DwZdjSw2bJR8Aq5y+h67DEGvFh7+8XUJM81k0It
+         WzfQKs/WluURkwMeF6G0M+nrLen30kap+Y1Z+myj6K/OAXuwCKpMWPNnJsBBV7XwoE/9
+         juNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=q+PuPJUA/DerG/ssM1+jG0Iy94c+A13dgu7Dd2/zS2g=;
-        b=QarpfXiYWfrGz6oRGSRGOAPTeLzhowysWBIVNEXOGuYL9eQkIYBKAikgeEp8/k/zCF
-         9XlWewzue3iJerqhQPN84VsV8jVTkuyvp3JIa0MK8k3u9ag1F8XTgBa/SiqQ5Ougq2xg
-         csnePerV8m24YkjSmqrAb7fRfzHomTLDWz5P6naEhtFbtEXNQEOm7zbXXt7BwVhllgU7
-         abUw5dp0LFtJrCOgvvftDwe0zr3P6ua6srsArMtbsHbvDTH61tpi03BjQbaDIYEnhhXj
-         isg3LDaru5edclKVFlqt+BN/krY6BC5okTY6U0KrJ8hYA9D9grJF6p9QAzyRz62sN9Ba
-         GAgA==
-X-Gm-Message-State: ALyK8tKmZge2jMYnQuUsnzTotmdZvPIXHPJG5tcwHAY7HVTxdF7GCIB1izOHd+Mg4tC9R5N/KbLKbzqOI9hXKLx3
-X-Received: by 10.28.55.72 with SMTP id e69mr8864943wma.28.1467202114250; Wed,
- 29 Jun 2016 05:08:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712229314; x=1712834114;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=66PaCkSx/JuXcECyvC3kTepLqFzzgZUgIQDXmm4KPxE=;
+        b=E70hMxV4DBURBZyrT/4N+ZxOUeCw1Gc7+bNv8UALmXsDTVSz6UWtHn1sTiGfIxKfLF
+         eTaUZjE/V95NMs4xCIHcWqkhTCT7zdFAFORI8ty6DPIyO9ADengOFT/Yvx2ZueaoikSq
+         RLcjgRUSGDuUJTSiLMY0nPpR/wVjpJJA3/oGX/nDNxQG1vBMIz2uMTUeBd8BmXMzdJ9U
+         nJyZxWKjBljDDf5ZLQpgzaHcsyueXw9UrOYFJgOnfmNy/xK/JI8DzBaUuS8KEuy/iG5H
+         CjMrfpv8IVd1RtwZtuwyDw+d0eWe6ZkKfskyQjNzTkxD7p0GnEAPpcKAgAiWM2EpIq4p
+         oC/A==
+X-Gm-Message-State: AOJu0YyaG4NKVxAWRRHzbFi8cmhsgqFKzMWoZAU//6EM8aVqAhBontBf
+	6m+6BWF7qcxX+srUPIplgVesyDt805R+7N0toZTrpr6sSS5p83q516nURHYBLKWdvKEnC6+ufv2
+	yTaD2+gIWDrpyJy795qaT0BOlv0WwsPZlirg=
+X-Google-Smtp-Source: AGHT+IHzjsweNiGZ+00fVKN9xQ6/evSC+omyyUDrAM2PgcJsqbkW0LFDMIlHCt0aEhSznoywYEepeoTLHBXEkxcNTGo=
+X-Received: by 2002:a05:6122:2b0:b0:4d4:1a1a:6db7 with SMTP id
+ 16-20020a05612202b000b004d41a1a6db7mr1706238vkq.2.1712229314435; Thu, 04 Apr
+ 2024 04:15:14 -0700 (PDT)
 MIME-Version: 1.0
-From: Mathias Svensson <idolf@google.com>
-Date: Wed, 29 Jun 2016 14:08:14 +0200
-Message-ID: <CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>
+From: Alex Sarum <rum.274.4@gmail.com>
+Date: Thu, 4 Apr 2024 15:14:58 +0400
+Message-ID: <CAF69u5qz-WPQq_-5_Mbybe9cDGcHOHJyjY1qLKOJzq+tfXnDQQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1143c52cd5df1b0536699c9b
-Subject: [oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the
- PixarLog compression format
+Content-Type: multipart/alternative; boundary="0000000000000fa5b4061543742c"
+Subject: [oss-security] opusfile by Xiph.Org Foundation, DoS vulnerability (SIGFPE)
 
---001a1143c52cd5df1b0536699c9b
-Content-Type: text/plain; charset=UTF-8
+--0000000000000fa5b4061543742c
+Content-Type: text/plain; charset="UTF-8"
 
-Hello oss-security,
+Hi,
 
-I would like to request a CVE number for a heap-based buffer overflow in
-LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
-attacker to control the size of the allocated heap-buffer while
-independently controlling the data to be written to the buffer with no
-restrictions on the size of the written data.
+I was doing vulnerability research on a project that uses the library as a
+dependency. During the research, I found a vulnerability that I have
+already informed the vendor about. It's been a long time, but the vendor
+hasn't passed the information on to Xiph.Org Foundation, so I decided to do
+it myself. I created an issue[1], but still have not received a comment
+about reproducibility or fixing the vulnerability.
 
-The bug seems to be at least superficially related to CVE-2012-4447,
-however this vulnerability seems to be a separate issue and not just a case
-of an insufficient fix.
+A copy of the vulnerability details below.
 
-The issue is fixed in CVS HEAD with the commit:
+One of the possible paths of execution:
 
-revision 1.44
-date: 2016-06-28 17:12:19 +0200;  author: erouault;  state: Exp;  lines: +9
--1;  commitid: 2SqWSFG5a8Ewffcz;
-* libtiff/tif_pixarlog.c: fix potential buffer write overrun in
-PixarLogDecode() on corrupted/unexpected images (reported by Mathias
-Svensson)
+./opusfile/opusfile.c: op_open_file -> op_open_close_on_failure ->
+op_open_callbacks -> op_open2 -> op_open_seekable2 ->
+op_open_seekable2_impl -> op_bisect_forward_serialno ->
+op_predict_link_start
 
+SIGFPE:
+https://github.com/xiph/opusfile/blob/9d718345ce03b2fad5d7d28e0bcd1cc69ab2b166/src/opusfile.c#L1089
 
-Kind regards,
-Mathias Svensson, Google Security Team
+Trigger: crash.zip[2]
 
---001a1143c52cd5df1b0536699c9b--
+[1]: https://github.com/xiph/opusfile/issues/48
+[2]: https://github.com/xiph/opusfile/files/14397558/crash.zip
+
+--0000000000000fa5b4061543742c--
