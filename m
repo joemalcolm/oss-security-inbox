@@ -1,4 +1,4 @@
-Received: (qmail 18076 invoked by uid 550); 31 Oct 2025 21:47:55 -0000
+Received: (qmail 3546 invoked by uid 550); 4 Apr 2024 10:28:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7533 invoked from network); 31 Oct 2025 21:06:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1761944772; x=1762203972;
-	bh=ghxdeBjb2Nwd2z7S3Sk+hqUNBoUS2o+Yr0xYMcBC3FM=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=QbD6MjMiN09diJb9sfNiYcVlt1fhIjtNR6xTO3Rb/Rt+PfPFDbTy34rwPNxrHgZoD
-	 h+qcmEqlnTEorTe5QgB+aFBKZcUvlt+rREXr2NPvZo60u8TtUODp2N+sBzuZB1hpqU
-	 nHd4yf4mUFqXyPwHmMRWcSn3Y8tCFt5VHCMSbSFDz799vni1BI4IPDl7ajsHE1gi0k
-	 bqGlKDKtWisx53uwi6E3Pf/ugmOZLh50mYx+6w3PIIuPd1y6u007TtW/TOT56Gs7Yr
-	 I0FHEQmIjyB+N6cQEfgPQEVGlqpohCu2NIwPeVSZzboEw40lrwCpVZGkmczzpe+hmc
-	 DNj7YBdsC8s9Q==
-Date: Fri, 31 Oct 2025 21:06:09 +0000
-To: oss-security@lists.openwall.com
-From: Art Manion <zmanion@protonmail.com>
-Message-ID: <76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
-In-Reply-To: <20251028014909.GA6430@openwall.com>
-References: <aP_msOoiyHJ_M4Yx@mertle> <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com> <20251028014909.GA6430@openwall.com>
-Feedback-ID: 39015149:user:proton
-X-Pm-Message-ID: cfc279aab31afc343cb2544706f829fb137e25d3
+Received: (qmail 26513 invoked from network); 4 Apr 2024 01:16:16 -0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fBR7AbwZ/iVqJLVbBhZywjgwriI+ByDXN+u0ncQ1dEJGVzU5teo48SorIYm1jfTS0QbZ+9V42gYrFS+hwujTQ3by0vWL5fWjduJ0nfVDjgjodme2r1mcyxFB2U1X5K5jMvCqDOprLbX+IbTsKyl+me4G8bBcMw22Q1EHeaziJDsWWd1z/cizcgKqzwHbg5eOPdazmwltCvurFP2lxnKTX+jGxlSSVFisV2ZakB4wkdLB7AkvLIdTvTcYruq2/hnQQNirLVEypsXBoPfkz+E7gpI9y0uw9si52k544GaCA3Aew9P3aU0ga/Yg1LhVaaE1mu7BhhsqNftMN8o1Z68GLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8D6MeZwTlxlqyWwpf0bKyLNbVdQLx3pZNeECxvPeFwY=;
+ b=kNXts/p+jbOzoooNDVR0YeysVLvHfaMoAm/cIgH8jF+VFnT2wO2z5xdq017UOzDSYbk64ygZ6W+Fjx9Z+S282DfCTX6N9IyjMKTbHNsXZhh/02P+YMxMJ7tzRRtwO1z2PCAEWrsPwnavszz70JL3vPNoK4UOQ3ZD3Q9tYcu0RV+YIL3N0rUle3R6fYdwwrIBrXmmwoGKDIHdwd5aNpuXHypSBomQYmcF8bf8MRYfDEOFuZc4YRZffvlTV/GWNZ6W1Sxf4DkyFkzodVhZ+ACkZYFaZ9ocPrP/cTTPs6W0u5irzKzDs+HRBpZgLtqCNeXYDtfSx+a+XQhd7EkZtM/rtA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8D6MeZwTlxlqyWwpf0bKyLNbVdQLx3pZNeECxvPeFwY=;
+ b=tzSJIAo+qO+2LuyCUqBINM8rx7p9B2GWycppq9wkuV3Q1op5tiSG61mjk3voMONLlQx4D2TFRc7xKJQVDoL7LLulTN3L+ndX8wyieTGk2Z3ZPM0hvMmiiMkCs0kjEnd4H/fe7m368+q1DXzwVpC3pi8THS7J0PGDnMXkXKbLftcerJz9pXuoNfo5gUmMLPrxXwosk3quP2+sS0aVqSzDW8v8w9eJz2I2frDUd5/Ni9TSsPNqgTW9mN1JrMH3XAJw/kMGz7KRGaLk9m4cfaWuVgcCtQ0iO5V6qFYluSp2saux6aQnhvYUeeagDHtSevJklKSUSDc9QcV2bQps8MBmRg==
+From: Markus Klyver <markusklyver@hotmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: Just a reminder to never run ldd or strings on untrusted
+ binaries 
+Thread-Index: AQHahiwdIf1qKQIAqEal7HEsmxs3mg==
+Date: Thu, 4 Apr 2024 01:16:07 +0000
+Message-ID:
+ <DB9P189MB20494D14F78BAC99FB599A5AC33C2@DB9P189MB2049.EURP189.PROD.OUTLOOK.COM>
+Accept-Language: sv-SE, en-US
+Content-Language: sv-SE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [psNnGKmx5FwnLncEidCad4GQ5ejy48EFJLoLkN8ikN4uxjJ8gtJM2c+2HpGfRxdq]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB9P189MB2049:EE_|PAWP189MB2527:EE_
+x-ms-office365-filtering-correlation-id: 8a72420a-c342-462a-15b7-08dc5444ce94
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ 1vUTYzDuELy+gij1KnIIwxQAM7qjQa0tVZzu5skeE4x3r5twg8JwS4vEc6hVW5KndUHYnbTb/8JuF2SHBAyXRC4pQpQ7GmwnikZJtUfn1qbET9ZQ5Lmdw58DXQ1y5Z4zEx5+OvlnpSlFd+BgtdNxtk3j775W+ujEq6dO2mJ5itP96h99eSuo7UagKh6MiWNuIbe7etYFRR+ODQuSeao4/zVnVAUx9BUzxPtbB6NeEhim2YYD5BxLnhg0wekguhtc7NaQkm1voNaM33ni+WZ8q3M4QnCS8RluU2UZJwdLPzu65kLtwNFFyr8sSXa0Lc6oTSpolBW7UwJpUQusasne6ISML0Vze03WKV5wgfa6nnKiDFAcB+3h52GkXo3DUG2nPt8/c/UfGMsZ75gB95czneaUIIKHS28ot3bbTWrXJDI5Ys187mRgzHI43nn6+gvXZtAPiLq7uPxmnZ78InR6PaPQ4cQ7ycYg+Hk8T2kGbf1dWAr2b2pyP2KnltR+TKu8CYKQ3WS2UPJJZIztUJ7/Tw3DIWybdlB8GorX89o3UtivrlIRw9D4INsJgsblTOL5I4q64VcuUMgQc8apz8Tyi1872utLcUh+VgoaH80g5qhbfaQ9AWlcV8F8bxmaA1Lr+X716K47kWGslY5WFyvkLVWEoI704UT0yWDfGwGgW+bfE/ySbLC8njRH+CUBKjy7qpFjUyX4G9BrdPGc+x+9C2sJrIMy+KmgQmI5xNpyd14=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?RbKXFb6C6cmeEWAeeoD3+p3ilYUkhMQe66SFat39FjdPKcVUZ7nMk4OkwZ?=
+ =?iso-8859-1?Q?5uI043/e95UVsaRftxVQHSKGV78SECmwJWYxSc+S+CCLMTcJLWt6j2Q1ap?=
+ =?iso-8859-1?Q?qIuLU8UDOHaQZ07iV5dCZhyxItrZdoim6rlmTLXjeValu/JS6CliOTterB?=
+ =?iso-8859-1?Q?X5nt5xivtmK4FfEzGTJ/xLo/BLGkaOCCYZyHIPCMr6OHa+AmpzJ+NkIJNR?=
+ =?iso-8859-1?Q?DG2G6WjpL8ntrel8NcZmQSEYYxs0+Fmz6TjzfDd9lxkx7s/IGPRdXWsmir?=
+ =?iso-8859-1?Q?bDzc/SxxvO5iJCiyL/+Xv6W6dv8TrmtFTZS3FT3kkp+pVkLvnVqKOGYz2/?=
+ =?iso-8859-1?Q?Fu8FTKuYOksEI1LE159NuWTMQPgnczNXLlNyEAbuSdB9lgcs3mvs1tk4yS?=
+ =?iso-8859-1?Q?eWYHaDCmpdxILYvgYESrnKodSVnzSLuuf4ZYDe4TN1EvGHXKuQlCbLT0mj?=
+ =?iso-8859-1?Q?ov7/WiPT7rnKGqpy+PgD1gS6P7b/kdPKQOAFP90AcGsPqSsBFDM5+HUxhV?=
+ =?iso-8859-1?Q?DwLIgeicOtFOayJMCTKJH4j/TAqYjQXtcEkpE3sAQ6X5w7Z5c9o98Eb6WF?=
+ =?iso-8859-1?Q?kb8vrFPM8J7OXLu2sQ15eMFlFnNCrqWtO73p2q+XBXwntnbRa6f+/TOQVR?=
+ =?iso-8859-1?Q?KTs9Z2qPLTmUKAEKUA8fo+Fnvo1cZd+ns42yXg20VBrjGdTpWwp05viTOj?=
+ =?iso-8859-1?Q?a8geNYx7o5P4zLTlhHjhZJVNCQC7Kq7NtzsNFzjVWUMvfxaAEJco+Oqg+z?=
+ =?iso-8859-1?Q?RJatcUVLH0GdRSxIvYiVqNCFzc6yO4eHfDLLiIvPxLnn67cvcLmrumuKMx?=
+ =?iso-8859-1?Q?EOKYcTIATro8rolfnPShUibgPJN1h9n/O2Hhdv4oWhG0aEz1gkCW5b/zfi?=
+ =?iso-8859-1?Q?LYFUci1rPXQsK5aB00s69WQAYBTdrXFoQmmM3MQ9a2VWcSkLXgIaAEJUy0?=
+ =?iso-8859-1?Q?ay9IA/+UN8SduMaieeu03Gm00FhoNpy1yAplBuXFGxYry2r4L/LHuIvlno?=
+ =?iso-8859-1?Q?2JDyXhRQxHJZx/ZayuUlsXji78zObdWMpcLUjS6DpIyUCPZggsMFcpLslX?=
+ =?iso-8859-1?Q?049kQkcyGEXVUQLd+vgjPl2hGQI1REHYSw7Co3tZwxwiDjWATF6NI4yF5P?=
+ =?iso-8859-1?Q?mFchAvLPdIfSDS2yHBISq0GXTfBpfPr3TFHv/1npgr7cRGZ9xUeITCJ2w4?=
+ =?iso-8859-1?Q?flJCGLurh288HcJSCDjKf5HQQns+bzS5Ep/Mu/mGIZq4Zy3lVODDZysB9b?=
+ =?iso-8859-1?Q?VmY1Ee/zZoAV4JeQ4Bq9PGy+8ti9F9r5ZSMNNNhNLjEMkpzAIXH4eW7Bay?=
+ =?iso-8859-1?Q?YQl68hadg1LFTZ4fncjOO+nGTcAm0T14ObJoQj1KNV9VSlg=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_DB9P189MB20494D14F78BAC99FB599A5AC33C2DB9P189MB2049EURP_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+X-OriginatorOrg: sct-15-20-4734-24-msonline-outlook-c54b5.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB9P189MB2049.EURP189.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8a72420a-c342-462a-15b7-08dc5444ce94
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Apr 2024 01:16:07.9966
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWP189MB2527
+Subject: [oss-security] Just a reminder to never run ldd or strings on untrusted binaries 
+
+--_000_DB9P189MB20494D14F78BAC99FB599A5AC33C2DB9P189MB2049EURP_
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
-On 2025-10-27 18:49, Solar Designer wrote:
+I'm not sure if people are aware of the fact that ldd can run the executabl=
+e under certain circumstances. Also running strings on a malicious file can=
+ be a bad idea:
 
-> What's common about the CVEs mentioned in this thread, including those
-> against GNU Bison (so not config file parsing, but just bogus CVEs), is
-> that all of them were assigned by VulDB as the CNA.  VulDB even went to
-> the effort (or automation?) to generate CVSS 2.0, 3.0, 3.1, and 4.0
-> vectors for all of these.  It's pretty ridiculous for a CNA not only to
-> assign bogus CVEs, but also have CVSS vectors and scores for them
-> without realizing the error.  This suggests a lack of proper process
-> and/or expertise.
->=20
-> At this point, I think we want to hear from VulDB on this, and from
-> MITRE on their requirements for CNAs in general and VulDB in particular
-> to review CVE requests before assignment.  Maybe VulDB is in violation.
+https://jmmv.dev/2023/07/ldd-untrusted-binaries.html
 
-Speaking as a CVE Board member, but not for MITRE, I suggest that somebody =
-dispute the dnsmasq (and Bison) CVE IDs.  I'll do this unless somebody else=
- wants to.  There is room for improvements to CVE assignment, but the curre=
-nt path is to file disputes.  Perhaps CNAs with "high" dispute counts or ra=
-tios warrant some sort of action.
+https://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-file=
+s.html
 
-Considering the CVE vulnerability determination rules, if there is no net s=
-ecurity impact or gain to the attacker, then:
+This advice would extend to other common tools as well, like objdump and re=
+adelf.
 
-"4.1.2 Conditions or behaviors that do not lead to a security impact SHOULD=
- NOT be determined to be Vulnerabilities. Examples of security impacts incl=
-ude an increase in access for an attacker, a decrease in availability of a =
-target, or another violation of security policy."
+Markus
 
-https://www.cve.org/resourcessupport/allresources/cnarules#section_4-1_Vuln=
-erability_Determination
-
-Does dnsmasq read the config file before dropping privileges?  I think so, =
-since dnsmasq needs to know what interfaces and ports to bind to?
-
-Does dnsmasq check that the config file is root-owned and not user-writable=
-?  In my brief testing, no.
-
-Can a regular user call dnsmasq with '-C dnsmasq_malicious.conf' and achiev=
-e memory corruption under root privileges?  Even if it's unlikely to result=
- in code execution, that privilege escalation may qualify as a CVE-worthy v=
-ulnerability.
-
-Regards,
-
- - Art
-
-
+--_000_DB9P189MB20494D14F78BAC99FB599A5AC33C2DB9P189MB2049EURP_--
