@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1934" "Tuesday" "3" "November" "2015" "13:40:30" "+0100" "Kristian Fiskerstrand" "kristian.fiskerstrand@sumptuouscapital.com" "<5638AB3E.30209@sumptuouscapital.com>" "56" "[oss-security] CVE Request: pycurl use after free fixed in version 7.19.5.2" nil nil nil "11" "2015110312:40:30" "[oss-security] CVE Request: pycurl use after free fixed in version 7.19.5.2" (number mark "        kristian.fis Nov  3   56/1934  " thread-indent "\"[oss-security] CVE Request: pycurl use after free fixed in version 7.19.5.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26614 invoked by uid 550); 3 Nov 2015 12:44:24 -0000
+Received: (qmail 5398 invoked by uid 550); 8 Apr 2024 12:33:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26592 invoked from network); 3 Nov 2015 12:44:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sumptuouscapital_com.20150623.gappssmtp.com; s=20150623;
-        h=to:from:subject:cc:message-id:date:user-agent:mime-version
-         :content-type;
-        bh=RG7E69gZXsBIHwy3U80kz9/10UgADpBr9bPVWRQw1EA=;
-        b=rTyP/jE43wxPCf37p3GpSBXwCnw7FaYK4ah9ecQ3J70I3WmihkTGKAcbUPZMINLQcj
-         YRKOo5027yt1ce6Ew+gLj7fpLc2Im8RdP82kOrQ1QsqQxf4oyPnR3WTpOmKby6u1yE+Y
-         7R+HZItYxMpV6ykoZFsOFRz+WJPvsFWH0T771yVYYl+vGzJkzopCMlJEyPi+a7Lqhz0d
-         fxCaWGyjoxI/Q4TdDrNRbkrBWFb9+08SyDEe7uiZi7tnl/ttmRInl0EfyjlWOx1OELsM
-         DnVq86YBStcxTQGc6IZhpeEUVs638rtHzgEAybJGz15SC9Yxyx9BVcxJLZZrceAAK5co
-         IRBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:from:subject:cc:message-id:date:user-agent
-         :mime-version:content-type;
-        bh=RG7E69gZXsBIHwy3U80kz9/10UgADpBr9bPVWRQw1EA=;
-        b=LPmzf3ijGTx5QcOujbEmcHKrisE2xGtz6tje1ML3Rn9GXsQzqozvm8Ek6HT30/cBVQ
-         rSQ3/CvuQkvSVpxs/9M6O4GZJYqcGCly0Oe8CAjjVS0xkm/SUi1o6f+jr34l93rCTIaE
-         3OONR3ULXcfxS8qdtYgkV7Nc/gP9Nt7Dhspb8MzJRMU9/wSNChsB959abQHSQrXSP1O5
-         5Rcxc9lfL2Oz7R2TPWfZ32J951aF6T4Tn0qUHSUTx2MjpmyuzMzwWUnCzmfGFEzQ9aqp
-         jwEUzW8RqqWSVSp0IDx5nSVR9vSge/uxXW5pDbKph0PBIrqlybkuLobxpNXZ0EIu6RYh
-         AmGg==
-X-Gm-Message-State: ALoCoQkppvyst3QieXlYGJDOcRQfu3LJww0brzNlFN5mA5eupMwFItLr8XZGF2cyg+lCGkhZrGyg
-X-Received: by 10.25.87.82 with SMTP id l79mr8372826lfb.64.1446554652091;
-        Tue, 03 Nov 2015 04:44:12 -0800 (PST)
-X-Enigmail-Draft-Status: N1110
-Message-ID: <5638AB3E.30209@sumptuouscapital.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="wbMK6r53kLPCSKnFQ1Gmaov1Mh2aurIA0"
-Cc: cve-assign@mitre.org
-Date: Tue, 3 Nov 2015 13:40:30 +0100
-From: Kristian Fiskerstrand <kristian.fiskerstrand@sumptuouscapital.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: pycurl use after free fixed in version 7.19.5.2
+Received: (qmail 19636 invoked from network); 8 Apr 2024 01:18:30 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sec.16bits.net;
+	s=ec2401; t=1712539101;
+	bh=RFq2Hvh+j0QUQidSMALIuDrOJqooV54luWabPNsRgiM=;
+	h=Subject:From:To:Date:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version;
+	b=JEyk6MWqNTVW3XsEakCJ2wu3fmXhlDpgw3fG5mijphBb4egOaSKyX9sGUZ+/6vwAs
+	 hGehjx6qLiw+oEIOTsFAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sec.16bits.net;
+	s=rsa2401; t=1712539101;
+	bh=RFq2Hvh+j0QUQidSMALIuDrOJqooV54luWabPNsRgiM=;
+	h=Subject:From:To:Date:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version;
+	b=bB1WjWrcr3KqDrCC8f96+53nl4KoeFsBxi2cWQLa1dSYnTYHDx0H2v1fFsio6yHOn
+	 4wMYlNSg12gfGv6dZDqrbn6vGM9QY+1z6In2fJ6PFRpWsPnN7EOcZd1IKTFxX1buAS
+	 ok4oJOL8t/N7QOYl4UIUzokUrvXX/Qwrz+dtqOv4ZYmtr0M9KY348NeOoKNgFlENk7
+	 BakRzD5acAXWh5Rw28RcF56W5hvFx+BFr9glIAZBA3mnTBc/SoTOgKon2pkS3pOfwp
+	 efX1jPhcLulsrN/hJrwd/lSFdN4bS9GeQLlRI5ia6AQhsl/BN9a1tTuiyxJsZyMf50
+	 I5lZ7D0e3MgdA==
+Message-ID: <fba3f0859b33de054413dbf01be985716a4609f1.camel@sec.16bits.net>
+From: =?ISO-8859-1?Q?=C1ngel?= <oss-security@sec.16bits.net>
 To: oss-security@lists.openwall.com
-
---wbMK6r53kLPCSKnFQ1Gmaov1Mh2aurIA0
-Content-Type: text/plain; charset=utf-8
+Date: Mon, 08 Apr 2024 03:18:21 +0200
+In-Reply-To: <uuhg0r$3dd$1@ciao.gmane.io>
+References: <r57psoo4-64q4-4nnr-qp6s-q4n32584698o@vanv.qr>
+	 <3561b05d-5ad0-41be-b50f-687e13d614e0@ipsumj.de>
+	 <uufob6$13tl$1@ciao.gmane.io> <uuhg0r$3dd$1@ciao.gmane.io>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Subject: Re: [oss-security] Re: finding similar compromises (was Re: From xz
+ to ibus: more questionable tarballs)
 
-Dear all,
+On 2024-04-02 at 17:41 +0000, Tavis Ormandy wrote:
+> FYI, of the 22,885,940 signature packets in my SKS dump, 1186 had the
+> same options as Jia's (algo, keylen, expiry, prefs).
+>=20
+(...)
+> There was a cluster from Warwick students, I'm thinking they use the
+> same distribution as Jia? e.g, these all look similar:
+>=20
+(...)
+> Anyway, I feel like my eyeballs did their part :)
+>=20
+> Tavis.
 
-pycurl reports fixing a use after free in version 7.19.5.2[0]
+Hi Tavis
 
-* Fixed a use after free in HTTPPOST when using FORM_BUFFERPTR with
-  a Unicode string (patch by Clint Clayton).
+The Hash algorithm (SHA512), key flags, list of preferred symmetric
+algorithms (AES256, AES192, AES128, 3DES), list of preferred hash
+algorithms (SHA512, SHA384, SHA256, SHA224, SHA1) and list of preferred
+compression (ZLIB, BZip2, ZIP) are all the default for gpg. It all
+looks like gpg-created.
+Only the 4096 bits of RSA and the 5y expiry are non-default.
 
-This seems to be in the file src/easy.c fixed in commit
-602f8e364634d386524f0396e962c2c9de0536a9[1]
+If Jia wanted to create a 5y expiry key, he would have needed to use=20
+--full-generate-key, which would then have requested the key size, and
+4096 would have been a pretty normal answer.
 
-I haven't looked into the code in any detail for exploitability, but
-my understanding is that use-after-free generally gets assigned a CVE
-based on CWE 416[2], if so may you please assign a CVE to this issue?
+Also relevant, the key seems to have been created with those options
+(signature creation time matches the public key creation time), not
+adjusted later.
 
-References:
-[0] https://github.com/pycurl/pycurl/blob/master/ChangeLog
-[1]
-https://github.com/pycurl/pycurl/commit/602f8e364634d386524f0396e962c2c9de0=
-536a9
-[2] http://cwe.mitre.org/data/definitions/416.html
+The key creation time 2022-12-28 15:23:29 UTC, under Asia/Shanghai
+timezone would be 2022-12-28 23:23:29 CST.
 
---=20
-----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-----------------------------
-"At 18 our convictions are hills from which we look; At 45 they are
-caves in which we hide."
-(F. Scott Fitzgerald)
+for... whatever the datetime may tell us
+https://rheaeve.substack.com/p/xz-backdoor-times-damned-times-and
 
 
---wbMK6r53kLPCSKnFQ1Gmaov1Mh2aurIA0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEcBAEBCgAGBQJWOKs+AAoJECULev7WN52F6OIIAKXzd0UAupt1ti1qapmh7S6A
-Y8T2Bax6p03FqUbviLj++2JlxPe5exbneGrs01FdV8DGfqR6vg/+ZEpsLj9t5TgM
-ZUErbFLOGi3XeJEU6CDvPA5w89/mZeXT/7+Y2ZvLnFy9Zu5BSvbjj+5iNYlLl2fb
-VHnKc0opOx2/wfl03ovDUkAPNCxjQnhqcOgbDwRdpDaWRbjrDREmsTseBH3EHy1N
-nJ9Rfek0bDvKUH6RTlh7WLP21h8tuZOjeOx//IHV1y10SbMEDkE1xdWeONnV2YG8
-7kVWqV/EzKOiY502GdIjEpT3ZQglVTHTbWQAY9EigrqH5qIK9hSfwwObv+590gQ=
-=pbtB
------END PGP SIGNATURE-----
-
---wbMK6r53kLPCSKnFQ1Gmaov1Mh2aurIA0--
