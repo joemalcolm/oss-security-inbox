@@ -1,4 +1,4 @@
-Received: (qmail 16079 invoked by uid 550); 3 May 2026 17:58:14 -0000
+Received: (qmail 5871 invoked by uid 550); 8 Apr 2024 14:00:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,72 +7,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7877 invoked from network); 3 May 2026 15:50:38 -0000
-Message-ID: <0610241d156806108139c9055b210bcfd4a7c554.camel@thirddimension.net>
-From: Reid Sutherland <reid@thirddimension.net>
+Received: (qmail 4036 invoked from network); 8 Apr 2024 13:59:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1712584773; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=NxtFnM1iMBlo1P1eM6aadTL4cZkTCUEWT+TX7jRgGes=;
+	b=IcahakCCHIRs4PDtG8quaUA/7C8npdcF0pSlwkbpJjbW8WQSKnzISFYO6+j+xGhIS5R+wq
+	7I120JflrADp0LgPvhMR9lxrTDg17dQrJFv4v61SFb2g/fQLNxqAuz84Egde6yPnnh8Z1z
+	r+u2NjrwDE7wwbhYuE8o0d+PlAXJE+ItksMScoBVS2Rmacaw+fM1q6gRiIcY1MFJNM+O83
+	J6mAny+oQVTqiRfej8dBBaFKTFOFZqC58+hizWAVBjoFbYCTzptGM0HuAZ9SvH6izDO+pp
+	8aLlGaPX+BmqCn7CpCwzcmamIMQoO5te4I5w3CkqzGhWjBIi0to/oZmbKtXoug==
+Date: Mon, 8 Apr 2024 13:59:33 +0000
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
-Date: Sun, 03 May 2026 11:50:27 -0400
-In-Reply-To: <87qzntmqqr.fsf@linuxpenguins.xyz>
-References: <afJorKIje4O6dXbH@netmeister.org>
-	 <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
-	 <afL-QhLfEKqHZqka@eldamar.lan> <2026043026-treat-devotion-23d7@gregkh>
-	 <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
-	 <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
-	 <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
-	 <20260501165221.27420-1-justin.swartz@risingedge.co.za>
-	 <56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
-	 <87qzntmqqr.fsf@linuxpenguins.xyz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+Message-ID: <ZhP4RYYtFxkcbP+w@openssl.org>
 MIME-Version: 1.0
-Subject: Re: [oss-security] Re: CVE-2026-31431: CopyFail: linux local
- privilege scalation
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
-On Sun, 2026-05-03 at 07:43 +1000, Brian May wrote:
-> Reid Sutherland <reid@thirddimension.net> writes:
->=20
-> > I'm assuming any thoroughly qualified platform engineer compiles
-> > the
-> > host kernel without module support.=C2=A0 At least, that needs to make a
-> > comeback, bring back applying grsec patches and make menuconfig..
->=20
-> Kernel modules here are good, not bad. If everything was compiled
-> into
-> the kernel it would be harder to solve this sort of security issue.
->=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Yeah but there's a series of problems here, like autoloading modules on
-a server that doesn't change.
+OpenSSL Security Advisory [8th April 2024]
+==========================================
 
-Thinking about the math functions, there's a good benefit in the kernel
-carrying common interfaces for functions they have already solved.  But
-we need a new unprivileged layer in the kernel, like a library layer,
-if this is desired.
+Unbounded memory growth with session handling in TLSv1.3 (CVE-2024-2511)
+========================================================================
 
-Microsoft had to rework the kernel security after Crowdstrike ruined
-everything with that ridiculous outage.
+Severity: Low
 
+Issue summary: Some non-default TLS server configurations can cause unbounded
+memory growth when processing TLSv1.3 sessions
 
-> In this case, it often just meant disabling the module that often
-> wasn't
-> even loaded.=C2=A0 The only exception was if I tested the vulnerabilty
-> before
-> hand :-). Even then, easy to unload the module and disable it.
->=20
-> But I heard some enterprise kernels came with the code compiled into
-> the
-> kernel, and these required a kernel command line option and a reboot
-> to
-> fix.
->=20
-> Of course, maybe there is the argument that only the things you need
-> should be enabled; but this would be a lot harder for distros to keep
-> everyone happy. Maybe an argument for building your own custom
-> kernels
-> not relying on distro kernels.
+Impact summary: An attacker may exploit certain server configurations to trigger
+unbounded memory growth that would lead to a Denial of Service
 
+This problem can occur in TLSv1.3 if the non-default SSL_OP_NO_TICKET option is
+being used (but not if early_data support is also configured and the default
+anti-replay protection is in use). In this case, under certain conditions, the
+session cache can get into an incorrect state and it will fail to flush properly
+as it fills. The session cache will continue to grow in an unbounded manner. A
+malicious client could deliberately create the scenario for this failure to
+force a Denial of Service. It may also happen by accident in normal operation.
 
-Yeah that would be it.  You boot with the default kernel and then build
-your system specific kernel.
+This issue only affects TLS servers supporting TLSv1.3. It does not affect TLS
+clients.
+
+The FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue. OpenSSL
+1.0.2 is also not affected by this issue.
+
+OpenSSL 3.2, 3.1, 3.0, 1.1.1 are vulnerable to this issue.
+
+OpenSSL 3.2 users should upgrade to OpenSSL 3.2.2 once it is released.
+
+OpenSSL 3.1 users should upgrade to OpenSSL 3.1.6 once it is released.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.14 once it is released.
+
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1y once it is released
+(premium support customers only).
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit e9d7083e (for 3.2),
+commit 7e4d731b (for 3.1) and commit b52867a9 (for 3.0) in the OpenSSL git
+repository. It is available to premium support customers in commit
+5f8d2577 (for 1.1.1).
+
+This issue was reported on 27th February 2024 by Manish Patidar (Hewlett Packard
+Enterprise). The fix was developed by Matt Caswell.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20240408.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmYT9+oACgkQUnRmohyn
+nm1jPRAAlvRaeTjSlW7PULpYxAfCrCfLlMzdC15ybP1mO12ixsbdBN4qRxcXWGFP
+TMqseW1pTCvcfQzEjSzswkio6kjBCh8iN3jSEPCJSIW7FWsZBpIZLwdqytp1pMaL
+D8Pe1B542dztrCQy+1pobHpxH8EbFVLX8X9VR0nbH2xx6a3cspGc+JwS7RRQzvK3
+a27fW+KM/dyjRE8SGbFzxcgparZTcKDhB2WsjW4Hm0Z62J4v/mkxeC30SOrgH4j2
+PBsjJW0XqxOdwM40aKqRPXfjnFwDWOaXVZDjARzT9+olnt01WJiXTpnuKKYQ9y1C
+4rmUJo+qbxDnsTg+cjBiZGgsEGqH6Fu/VCw6cJF4Wj0+dZDpvludwTtLh4IRaeCp
+FqO6HWkdPg+qe9yKBvvqvf84i2kOvmSu4bVrJ5Zh524G3tYj43Uq76IiTSoLxM61
+xmSVG3n0ri8H7aiavIjuq8U75uPhqmylwAIbL5wjEuIJayuprCINyBLAcV5VAprs
+avXD6D2XBXLFFDLZ4GEDuNIOWVxO3mGGxZ0kulpGWhESIGJaZk7Rvd+xr3jLtxwT
+dWdakCmOFtFIAcAdyYow4D5vCJr1p4iaLD3RCvle5bu3KIcThzWHo0ZnTygjyWt6
+EgE0LExGT/1RTdtsXQaFQxzKd+gy4gdGfgl0u8ycYbMENKJ/tpE=
+=rMVW
+-----END PGP SIGNATURE-----
