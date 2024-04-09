@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3201" "Thursday" "27" "February" "2020" "23:38:34" "+0200" "Jouni Malinen" "jkmalinen@gmail.com" nil "77" nil "^Date:" nil nil "2" nil nil (number mark "        jkmalinen@gm Feb 27   77/3201  " thread-indent "\"Re: [oss-security] Hostapd fails at seeding PRNGS, leading to insufficient entropy (CVE-2016-10743 and CVE-2019-10064)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Hostapd fails at seeding PRNGS, leading to insufficient entropy (CVE-2016-10743 and CVE-2019-10064)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22178 invoked by uid 550); 27 Feb 2020 21:39:37 -0000
+Received: (qmail 20064 invoked by uid 550); 10 Apr 2024 00:45:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,119 +6,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22157 invoked from network); 27 Feb 2020 21:39:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=4OOHJb9OcGiXQwMLiFAW0vZnhUh3eIplITwbkG9p9/k=;
-        b=OLRFI0q0v82bQDjmXTjaPAALZL6iuNIVU6uZ4WL8OiQBm0UNjhyVDU9gs2yRiG/XNl
-         4eJhtc9Ir0tn1boDEwXN+C+O7KGDu+uB6Hqjk3f2k6jVgaeP32L35L0qniTNYTGc/Y19
-         Wlpobmd4aD30I8svRXXl+Kmwy+JpILmlif8PEqUwAW4/AX+aAwWUjyZWjFkeJtZKF6+2
-         QAuXDiQPRUTbaZTeCTozVBe/pEu+JOMIN9qY8I+cqAS5DW0g72+tMMapZHJ5q1bnjiOA
-         8SVXtUCyZGFUDmRdoxsqfaeZ/Kys/93KNedcO42rGPUeJL0P7XnhwIpq6scHo+lVTaeU
-         yL7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=4OOHJb9OcGiXQwMLiFAW0vZnhUh3eIplITwbkG9p9/k=;
-        b=jU6vl4fv0YKhhIC0zQzlmS4Md0o8x8aZSpGwqrREy8YXFptvRyX4tdduFfz0LRoeTR
-         CKdn+56blPxYH4ssyxi++/iW/PLq0lg+7WEer+5Eq+g4z4i56y8DNJ3YDsRhtPqBD+kI
-         x6UMsWHDcKDDQ9+tbEW1DcLyW+xXUocnyjxzNlkCGfYSR3MAKXE6JRZujbgRxFxKl7Fo
-         kKOKn29fMA+NPZ/ZuhdlYKT65ojdBzHGTueTdG98+ybijARghPML5wtqAJXbucZM3Bs3
-         JszGoslLzZ8Rfs0wliSxO0hPwvS5cK/VJmxtg4DRfuStpLgL43R7OsyIXGbUTNn2Yvxo
-         Eg5g==
-X-Gm-Message-State: ANhLgQ2N4nCk46rK+RbTJhpllbCa2q0iSHwit/2KAcoUZWbrdb6b7Uf4
-	uW02tKtXepeNOrcN6IfRdrEInrzhHXL1+q4Bi1PMjDZu
-X-Google-Smtp-Source: ADFU+vtKg74c3fsmRS6bQcNuVoSx0wCY5Ug4U6gdbWJ6ysAePYeNpjSWupheaHFe81C4nADn55UcYe2cOOSkgigVjRE=
-X-Received: by 2002:a67:f6c8:: with SMTP id v8mr868642vso.147.1582839561984;
- Thu, 27 Feb 2020 13:39:21 -0800 (PST)
-MIME-Version: 1.0
-References: <4c04f877-a0e6-c536-7e2a-588728a0f63b@gmail.com>
-In-Reply-To: <4c04f877-a0e6-c536-7e2a-588728a0f63b@gmail.com>
-Message-ID: <CANe27jJkn2X0s0EL7QQL6xE5B=wEYJ=4aX0w5A-C-y+Fd_s+ow@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000d41e35059f958d51"
-Date: Thu, 27 Feb 2020 23:38:34 +0200
-From: Jouni Malinen <jkmalinen@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Hostapd fails at seeding PRNGS, leading to
- insufficient entropy (CVE-2016-10743 and CVE-2019-10064)
+Received: (qmail 14316 invoked from network); 9 Apr 2024 23:47:50 -0000
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1712706460; a=rsa-sha256;
+	cv=none;
+	b=Drr1cKkAuy61mcNP2B6eNwmdYiQfqKlxANSUFd+IeFIiVe6pW4M9juLWIQ4DZyeMeoArkh
+	QshgOyrr/l4OsjhsNWmzw0O86ZqpDt7Wa/6dVsavTqgRPedTV9ext5GKCf1bgJEkmSOChB
+	92HJ1ubJCkPkw9iNHgZ3wzP5+553WNOPIn/Cyy6LQZ9gyRXz3M7jp1Lt69+fc9IanZEyeN
+	DCswW6nZ3TWyAGwmrsOm2dGxcaE4tTQzAcDQoo7CsI2gGA4+iKGWJXFH+CwKKSVFZ0anFs
+	Mq5bvrXa0fENxYl4FUTrU1K94YLou4Jh57CdHcdAhwXJR5Q49TmyuTBLB0BbSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1712706460;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I7L4mPmt/xMrQWSMjueD8jXu/sdS6IP82qy2LS2n830=;
+	b=Ep6dI92GQgxn57Fg22tHtWO7xr2UlRJJvX2Fsr08YXBj6hpo1hQHpXifj08Cl/Dlmxcf8l
+	4W6S7BClihOhD9OxrnaJibNKLjxfJJQtfIowUfCw273tYZLLKTc09FnsWd9XlWUlHjvXet
+	20M6FC4/T72F/zTvH5QxzvoR30WTtN1z/27I7tfTnjhS+WDxC+WTFFe3fpCrRN/iAtLumG
+	FoJhglTXVof3JutNv5GWqUQWC9OHV+GYNzx4jpt2b/7Rj3mZzuPXO5CkK4RyyFuS4w6r56
+	zfLGTSrdTyP15omVM/1Z9284P5uKSJHiH/uUBeIWCrMJxqGsaprYgjPteHxFrQ==
+ARC-Authentication-Results: i=1;
+	rspamd-86f86f958-pvwlc;
+	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Scare-Hysterical: 25991f914c8366f2_1712706460706_52924243
+X-MC-Loop-Signature: 1712706460706:3200152174
+X-MC-Ingress-Time: 1712706460705
+Message-ID: <239062992cb042fc4c59356809ca1f32e9ea41ea.camel@scientia.org>
+From: Christoph Anton Mitterer <calestyo@scientia.org>
 To: oss-security@lists.openwall.com
-
---000000000000d41e35059f958d51
+Date: Wed, 10 Apr 2024 01:47:33 +0200
+In-Reply-To: <20240409233648.igiak63z7ep2nmco@awork3.anarazel.de>
+References: 
+	<loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
+	 <42bf95dbef6e44d416c030ff6dad7b6806f54cbf.camel@sec.16bits.net>
+	 <6614BD70.8090200@gmail.com>
+	 <20240409233648.igiak63z7ep2nmco@awork3.anarazel.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.3-1+b1 
+MIME-Version: 1.0
+X-AuthUser: calestyo@scientia.org
+Subject: Re: [oss-security] xz backdoor prevention using hosts.deny?
 
-On Thu, Feb 27, 2020 at 6:24 PM Jonathan Brossard <endrazine@gmail.com>
-wrote:
+On Tue, 2024-04-09 at 16:36 -0700, Andres Freund wrote:
+> See https://www.openwall.com/lists/oss-security/2024/03/30/37=C2=A0for the
+> path
+> leading to certification validation before certificate validity,
+> users, etc
+> are checked.
 
-> ----------------------------------------------------------------------
-> *               Hostapd fails at seeding PRNGS,                      *
-> *               leading to insufficient entropy                      *
-> ----------------------------------------------------------------------
-
-
-It should be noted that this is referring to an old release from 2016 and
-pointing to a repository that is an ancient snapshot of the actual project
-development repository, i.e., not discussing what is in the real
-development tree or recent releases.
-
---[ Vulnerabilities Summary:
->
-> Date Published: 27/02/2020
-> CVE Names: CVE-2016-10743 and CVE-2019-10064.
-> Title: Hostapd fails at seeding PRNGs
-> Class: CWE-331: Insufficient Entropy
-> Remotely Exploitable: Yes
-> Locally Exploitable: No
-> Impact: Remote network access, remote Denial of Service
-> Advisory URL: https://moabi.com/advisories/CVE-2019-10064.html
+And I assume "etc" includes access control via hosts.deny?
 
 
-IMHO, those claims for impact are highly questionable.
+  So in other words, people who had a backdored sshd running, that
+  was=C2=A0only protected via hosts.deny may have actually been compromised?
 
-It has been discovered that hostapd before version 2.6 wasn't seeding
-> PRNGs at all.
-> This vulnerability has been fixed silently around 2016, but never
-> attributed a CVE
-> number, leading to many distributions and IoT devices still shipping
-> this version of
-> the software. This vulnerability has been given id CVE-2016-10743.
-> In some configurations, when WPS is enabled and a /dev/urandom device
-> isn't available,
-> this leads to WPS PINS being predictable, allowing remote network access
-> from an attacker.
->
+  Unless[0] of course, access was blocked by netfilter, some
+  other=C2=A0firewall, router, etc. ... or sshd wasn't even running.
 
-This is very unlikely to be hit in any realistic system using WPS. hostapd
-used /dev/urandom to generate the WPS PIN if explicitly requested by upper
-layer management software to enable a random PIN. The insecure random() use
-would be reachable only if the device did not have a working /dev/urandom.
-Furthermore, use of a random WPS AP PIN is not common deployment model (PIN
-value from an upper layer software or manufacturing time configuration was
-used more commonly).
-
-Claiming this to result in remote network access is going pretty far. And
-that change of removing the fallback mechanism for the broken /dev/urandom
-case is a reasonable improvement in being more defensive in security
-related functionality, but claiming this to be a silent fix for a
-vulnerability is not accurate.
+Right?
 
 
-> In addition, it has been discovered that the Extensible Authentication
-> Protocol (EAP) mode,
-> which offers a protection against flooding attacks, also uses
-> predictable PRNGs. This
-> vulnerability has been assigned id CVE-2019-10064.
->
+Cheers,
+Chris
 
-This is referring to the EAP-pwd server functionality in hostapd. The
-particular value in question is the anti-clogging token value which is
-defined in RFC 5931 as "MUST be unpredictable and SHOULD NOT be from a
-source of random entropy" and the author of that implementation (and the
-protocol designer) was explicitly documenting the used LFSR to be
-sufficient for the particular use. That said, all recent releases of
-hostapd are using /dev/urandom -based values for this as well.
 
-- Jouni
-
---000000000000d41e35059f958d51--
+[0] And this assumes that no home calling (like automatic command/code
+    pulling from the adversary, or submission of e.g. found private
+    keys) and no further attack vectors (other than via sshd) or
+    infestations (like creating new users or authorized_keys entries)
+    are to be found...
+    ... which AFAIU is not yet definitely ruled out?
