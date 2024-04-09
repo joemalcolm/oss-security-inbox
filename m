@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2651" "Tuesday" "24" "November" "2015" "11:03:19" "+0100" "Florian Weimer" "fweimer@redhat.com" "<565435E7.3000007@redhat.com>" "57" "Re: [oss-security] Instruction encoding which prevents execution of a suffix" "^Date:" nil nil "11" "2015112410:03:19" "[oss-security] Instruction encoding which prevents execution of a suffix" (number mark "        fweimer@redh Nov 24   57/2651  " thread-indent "\"Re: [oss-security] Instruction encoding which prevents execution of a suffix\"\n") "<538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>" ("<564EF9B1.4050908@redhat.com>" "<538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 25949 invoked by uid 550); 24 Nov 2015 10:03:37 -0000
+Received: (qmail 14328 invoked by uid 550); 9 Apr 2024 17:11:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +6,187 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25903 invoked from network); 24 Nov 2015 10:03:34 -0000
-References: <564EF9B1.4050908@redhat.com>
- <538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>
-Message-ID: <565435E7.3000007@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Tue, 24 Nov 2015 11:03:19 +0100
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Instruction encoding which prevents execution of a
- suffix
-To: oss-security@lists.openwall.com
+Received: (qmail 14284 invoked from network); 9 Apr 2024 17:11:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=U1PG/nsPCwUqdMSdLQxGWBCZUtFoLKVsU0sovIo+LGo=; b=LueaI/8VcS18FHtsrwSn+PS31G
+	wBYtj8bh7XoxF9FhIT2KSM+jo5aEtUOHG5apb3sLSXaQSKREK59sVJ/fcr+hwLrMaYn1Eg8HjAtD8
+	ywUUw+EbDPe+rw0EcB5Db6vzaD5TZ5VBdFW2gweJ29nHxALM4HRoeaJqcHLFBjueqwE8=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1ruEzu-0003pl-M1@xenbits.xenproject.org>
+Date: Tue, 09 Apr 2024 17:11:02 +0000
+Subject: [oss-security] Xen Security Advisory 456 v2 (CVE-2024-2201) - x86: Native Branch
+ History Injection
 
-On 11/24/2015 03:11 AM, Josh Bressers wrote:
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-> If an attacker has full control (and in this case that should be the
-> assumption), there's nothing you can do short of some sort of processor
-> magic that doesn't exist today (that I'm aware of).
-> 
-> What if you did the checks inside the kernel operation. Some sort of
-> pre-shared secret of sorts to ensure the caller isn't new code.
-> 
-> Of course this would require a kernel patch that I imagine wouldn't be a
-> welcome change. Sometimes it's worth talking through problems like this
-> with silly ideas though.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Indeed.  The silly idea I came up covers the special case where the
-protected block ends in a system call.  It involves a pseudo-system call
-defined with seccomp, which returns the cookie using SECCOMP_RET_ERRNO
-and verifies it in the system call at the end of the block.  Or, in more
-detail:
+            Xen Security Advisory CVE-2024-2201 / XSA-456
+                              version 2
 
-A partial solution is known for the case where the code sequence that
-needs protection ends in a system call:
-\begin{itemize}
-\item At process startup, execute the following steps:
-  \begin{enumerate}
-  \item Generate a secret cookie.
-  \item Find an unused system call number.
-  \item Using seccomp, install a system call filter for the unused
-    system call which returns the secret cookie via the
-    \verb|SECCOMP_RET_ERRNO| filter return value, after validating the
-    the program counter has the appropriate value (that is, it belongs
-    to the code sequence below).
-  \item Install a seccomp filter for the actual target system call (at
-    the end of the protected block) which checks the secret cookie and
-    the program counter (the latter has to match the code sequence
-    below).
-  \item Wipe the secret cookie and the generated seccomp programs from
-    memory.
-  \end{enumerate}
-\item The protected block has to perform these steps:
-  \begin{enumerate}
-  \item Load the secret cookie using the special, originally unused
-    system call identified at process startup.  Make sure that this
-    value stays in a register and is not spilled to the stack.
-  \item Perform the desired pre-condition checks.
-  \item Perform the original target system call, passing the cookie as
-    an additional system call argument.
-  \item Clear the register in which the secret cookie value us start.
-  \end{enumerate}
-\end{itemize}
+                 x86: Native Branch History Injection
 
-However, this only works for system calls which have an unused
-argument slot available.  The critical \texttt{mmap} system takes six
-arguments, so this technique does not work there.  There is also a
-potential race condition where the cookie value leaks to signal
-handlers which interrupt the execution of the protected block or its
-following system call.
+UPDATES IN VERSION 2
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+In August 2022, researchers at VU Amsterdam disclosed Spectre-BHB.
+
+Spectre-BHB was discussed in XSA-398.  At the time, the susceptibility
+of Xen to Spectre-BHB was uncertain so no specific action was taken in
+XSA-398.  However, various changes were made thereafter in upstream Xen
+as a consequence; more on these later.
+
+VU Amsterdam have subsequently adjusted the attack to be pulled off
+entirely from userspace, without the aid of a managed runtime in the
+victim context.
+
+For more details, see:
+  https://vusec.net/projects/native-bhi
+  https://vusec.net/projects/bhi-spectre-bhb
+  https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/branch-history-injection.html
+  https://xenbits.xen.org/xsa/advisory-398.html
+
+IMPACT
+======
+
+An attacker might be able to infer the contents of arbitrary host
+memory, including memory assigned to other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+Only Intel x86 CPUs are potentially affected.  CPUs from other
+manufacturers are not known to be affected.
+
+A wide range of Intel CPUs employ Branch History prediction techniques.
+However for older CPUs existing Spectre-v2 mitigations (XSA-254) are
+believed to be sufficient to mitigate Native-BHI.
+
+Therefore, the rest of the discussion will be limited in scope to the
+CPUs for which a change in behaviour is expected.  These are believed to
+be all CPUs with eIBRS (Enhanced IBRS, a.k.a. IBRS_ALL or IBRS_ATT).
+eIBRS signifies a hardware adjustment (mode-tagged indirect predictions)
+designed to combat Spectre-v2, available in CPUs from 2019 onwards.
+
+To determine if a system has eIBRS, run `xen-cpuid -v` in dom0, looking for
+the string "eibrs" in the Dynamic Raw block of information.  e.g.
+
+  # xen-cpuid -v
+  ...
+  Dynamic sets:
+  Raw                             ...
+    ...
+    [16] MSR_ARCH_CAPS.lo         ... eibrs ...
+    ...
+  ...
+
+Be aware that the Static sets are compile time information so will include the
+string "eibrs" irrespective of hardware support.  If there is no row for "[16]
+MSR_ARCH_CAPS.lo" then the fixes for XSA-435 are missing.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+CREDITS
+=======
+
+This issue was discovered by VU Amsterdam.
+
+RESOLUTION
+==========
+
+In Xen 4.17, in response to the original Spectre-BHB, CET-IBT support was
+added to Xen to use on capable hardware.  It also came with work to remove
+unnecessary function pointers, and to de-virtualise function pointers at boot,
+as both a performance and hardening improvement.  This work has been steadily
+continuing since, and every removed/de-virtualised function pointer reduces
+the options available to an adversary trying to mount a Native-BHI attack.
+All of this work has been backported to 4.17 and later for this advisory.
+
+Beginning with the Intel Alder Lake (Client) and Sapphire Rapids (Server)
+CPUs, a hardware control called BHI_DIS_S is available, which restricts
+history-based predictions.  This control requires updated microcode on some
+CPUs.  Look for "bhi-ctrl" in `xen-cpuid -v`, similar to eibrs above.
+
+Xen has been updated to use this control when available, and to virtualise it
+for guests to use.
+
+For CPUs without BHI_DIS_S, BHB clearing sequences need using.  Out of an
+abundance of caution, all sequences in the Intel whitepaper have been
+implemented, although Xen will only use the "short" sequence by default.  The
+others are available to opt in to.
+
+The work to mitigate Native-BHI is extensive, and the backports are
+more-extensive still.
+
+Therefore, we have decided to produce new releases on all stable trees.
+Please find fixes in the respective branches under the following release
+tags:
+
+  RELEASE-4.18.2
+  RELEASE-4.17.4
+  RELEASE-4.16.6
+  RELEASE-4.15.6
+
+Other release activities (tarballs, announcements, etc) will happen in
+due course.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmYVdY4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZNk0IAMWbhl7mAn9QN5pG9rl36Vc/I3JKW5L0Tk4WAlMH
+edpuYbd6epNofksphsSmpEf2clYqtDs/7Rcy138YlyfEoE5JVTWcN/RgXqJ3/W84
+bzkLb1qY1U8muyQpa0jmo9DXM1Yb20ejVUSf2s290ninuhmy7HsZpl/Gnwj+zV0R
+zhR1dgGMvnqzj4b+7XAi5n9Y0vFWoAN+fsMCx4Ml0yPM8yIOJSswDfGmzgc/KKMV
+Wq+li52y+qpqACuODTDq7NQAZIE8biwkxrUC9kg9N9q2jsAJbEFwnNLrOHT8UA+9
+pDIcuR7aF4hTDaqK31mD2cdXosBkWprcPQgyM/4mpTKuu+I=
+=M1Pd
+-----END PGP SIGNATURE-----
+
+--=separator--
