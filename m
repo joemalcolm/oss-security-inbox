@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3828" "Friday" "10" "February" "2017" "11:59:59" "+0100" "pali@cpan.org" "pali@cpan.org" "<201702101200.00422@pali>" "88" "[oss-security] Re: Use after free in libmysqlclient.so" nil nil nil "2" "2017021010:59:59" "[oss-security] Re: Use after free in libmysqlclient.so" (number mark "U       pali@cpan.or Feb 10   88/3828  " thread-indent "\"[oss-security] Re: Use after free in libmysqlclient.so\"\n") "<201701272353.40452@pali>" ("<201701272353.40452@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7544 invoked by uid 550); 10 Feb 2017 13:28:56 -0000
+Received: (qmail 11493 invoked by uid 550); 9 Apr 2024 14:51:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,106 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26537 invoked from network); 10 Feb 2017 11:00:13 -0000
-X-Envelope-From: pali@cpan.org
-From: pali@cpan.org
+Received: (qmail 1763 invoked from network); 9 Apr 2024 14:47:08 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jongyoul Lee <jongyoul@apache.org>
 To: oss-security@lists.openwall.com
-Date: Fri, 10 Feb 2017 11:59:59 +0100
-User-Agent: KMail/1.13.7 (Linux/3.13.0-108-generic; KDE/4.14.2; x86_64; ; )
-References: <201701272353.40452@pali>
-In-Reply-To: <201701272353.40452@pali>
+Message-ID: <084e4d71-5aa3-af5b-f73f-d0aaf705947c@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 09 Apr 2024 14:46:58 +0000
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Message-Id: <201702101200.00422@pali>
-Subject: [oss-security] Re: Use after free in libmysqlclient.so
+Subject: [oss-security] CVE-2024-31868: Apache Zeppelin: XSS vulnerability in the helium
+ module 
 
-Hello, are you going to assign CVE for this particular defect?
+Severity: moderate
 
-On Friday 27 January 2017 23:53:29 pali@cpan.org wrote:
-> Hello, I would like to report problem related to MySQL/MariaDB and
-> possibly asking for assigning CVE if this list is the right place.
-> 
-> C client library for MySQL (libmysqlclient.so) has use-after-free
-> defect which can cause crash of applications using that MySQL
-> client.
-> 
-> Defect occurs by calling mysql_close() function from
-> libmysqlclient.so. If mysql_close() is called before calling all
-> mysql_stmt_close() (for all allocated stmts), then following
-> mysql_stmt_close() call try to write to already released memory.
-> mysql_close() let dangling pointer exist for prepared statements.
-> Real problem is in function
-> mysql_prune_stmt_list() which incorrectly iterate over elements.
-> Function list_add() overwrite ->next pointer of current element which
-> overwrite next element for iteration.
-> 
-> Basically it is just wrong usage of linked list structure.
-> 
-> Languages in which is not guaranteed order of executing destructor of
-> created objects have a big problem as such writing to memory pointed
-> by dangling can cause crash of whole application.
-> 
-> E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
-> whole perl process with simple script:
-> 
-> perl -MDBI -e '
-> $dbh = DBI->connect("dbi:mysql:", "root", undef,
->                     {RaiseError => 1, mysql_server_prepare => 1});
-> $sth1 = $dbh->prepare("SELECT 1");
-> $sth2 = $dbh->prepare("USE mysql");
-> $dbh->disconnect;
-> $dbh = undef;
-> '
-> Segmentation fault
-> 
-> Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce
-> change username, password and host where is running mysql server.
-> Valgrind can prove that memory corruption really occurs.
-> 
-> This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But
-> is present in all MySQL 5.5 versions (and also older) and
-> appropriate older 5.6 and 5.7 versions. MySQL 5.5 is still used,
-> supported and included in lot of linux distributions.
-> 
-> Moreover this defect is present also in MariaDB releases. I tested
-> all last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all
-> those are affected.
-> 
-> MySQL and MariaDB provides also standalone package with only C client
-> library libmysqlclient.so (without server) under name "Connector/C"
-> and so appropriate versions of it are affected too.
-> 
-> I found that this defected was fixed in MySQL git repository by
-> commit:
-> https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc5
-> 52424132806f46e93
-> 
-> That commit can be easily applied to last MySQL 5.5.54 version and
-> fixes this defect.
-> 
-> Looks like problem was already reported and is publically available
-> in MySQL bug tracker, see more details on links:
-> https://bugs.mysql.com/bug.php?id=70429
-> https://bugs.mysql.com/bug.php?id=63363
-> (tickets are closed despite fact that MySQL 5.5 and older are not
-> fixed)
-> 
-> ---
-> 
-> I reported this problem to Oracle secalert_us@oracle.com two months
-> ago, but they did absolutely nothing for fixing it in MySQL 5.5.
-> Instead they started resending this problem to some random people
-> with @cpan.org address for unknown reason. And told me to not
-> disclose information about this defect. Resending does not look like
-> normal handling of security related problem! Therefore I suggest
-> other people to not wasting time reporting problems to Oracle for
-> open source applications.
-> 
-> As two months is really long time to fix such problem which was
-> already fixed in new versions; it is already publically disclosed in
-> MySQL bug tracker; fix available in public git; problem is in major
-> MariaDB versions; fix is small; and this is open source product
-> included in many linux distributions I decided to send information
-> to oss-security.
+Affected versions:
+
+- Apache Zeppelin 0.8.2 before 0.11.1
+
+Description:
+
+Improper Encoding or Escaping of Output vulnerability in Apache Zeppelin.
+
+The attackers can modify helium.json and exposure XSS attacks to normal use=
+rs.
+This issue affects Apache Zeppelin: from 0.8.2 before 0.11.1.
+
+Users are recommended to upgrade to version 0.11.1, which fixes the issue.
+
+Credit:
+
+H Ming (finder)
+
+References:
+
+https://github.com/apache/zeppelin/pull/4728
+https://zeppelin.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-31868
+
