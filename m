@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["737" "Monday" "30" "May" "2016" "14:24:39" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605301422320.26205@wniryva>" "25" "[oss-security] CVE-2016-4454 Qemu: display: vmsvga: out-of-bounds read in vmsvga_fifo_read_raw() routine" nil nil nil "5" "2016053008:54:39" "[oss-security] CVE-2016-4454 Qemu: display: vmsvga: out-of-bounds read in vmsvga_fifo_read_raw() routine" (number mark "U       ppandit@redh May 30   25/737   " thread-indent "\"[oss-security] CVE-2016-4454 Qemu: display: vmsvga: out-of-bounds read in vmsvga_fifo_read_raw() routine\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14241 invoked by uid 550); 30 May 2016 08:55:00 -0000
+Received: (qmail 17559 invoked by uid 550); 9 Apr 2024 13:06:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +7,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14223 invoked from network); 30 May 2016 08:54:59 -0000
-Date: Mon, 30 May 2016 14:24:39 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1605301422320.26205@wniryva>
+Received: (qmail 1976 invoked from network); 9 Apr 2024 02:10:41 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jongyoul Lee <jongyoul@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <5ca00489-f6fa-26ac-3849-8055992e6955@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 09 Apr 2024 02:10:27 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Mon, 30 May 2016 08:54:47 +0000 (UTC)
-Subject: [oss-security] CVE-2016-4454 Qemu: display: vmsvga: out-of-bounds read in
- vmsvga_fifo_read_raw() routine
+Subject: [oss-security] CVE-2021-28656: Apache Zeppelin: CSRF vulnerability in the
+ Credentials page 
 
-   Hello,
+Severity: low
 
-Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
-vulnerable to an information disclosure issue. It could occur while processing 
-VGA commands via its FIFO buffer.
+Affected versions:
 
-A privileged user inside guest could use this flaw to leak host memory bytes 
-or crash the Qemu process resulting in DoS.
+- Apache Zeppelin through 0.9.0
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg05271.html
+Description:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336429
+Cross-Site Request Forgery (CSRF) vulnerability in Credential page of Apach=
+e Zeppelin allows an attacker to submit malicious request.  This issue affe=
+cts Apache Zeppelin Apache Zeppelin version 0.9.0 and prior versions.
 
+Credit:
 
-This issue was discovered and reported by Li Qiang of 360.cn Inc. 
-CVE-2016-4454 was assigned by Red Hat Inc.
+Jiang Qingzhi (finder)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+References:
+
+https://zeppelin.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2021-28656
+
