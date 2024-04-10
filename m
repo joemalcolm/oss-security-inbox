@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2642" "Wednesday" "5" "July" "2017" "15:33:41" "+0200" "Solar Designer" "solar@openwall.com" "<20170705133341.GA31268@openwall.com>" "55" "Re: [oss-security] CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)" "^Date:" nil nil "7" "2017070513:33:41" "[oss-security] CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)" (number mark "        solar@openwa Jul  5   55/2642  " thread-indent "\"Re: [oss-security] CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)\"\n") "<CAEsznC4xw6b9TOBJk0q1WFMpnd5EoYeSbka+hqYTaZbuz9k9FA@mail.gmail.com>" ("<CAEsznC6vAOzM9wmtcZwiLX1-k3uevMEEuxkksXCUMR8=hsq+Kg@mail.gmail.com>" "<20170705123427.mky43jbckj4quua2@lorien.valinor.li>" "<CAEsznC4xw6b9TOBJk0q1WFMpnd5EoYeSbka+hqYTaZbuz9k9FA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32002 invoked by uid 550); 5 Jul 2017 13:34:09 -0000
+Received: (qmail 32123 invoked by uid 550); 10 Apr 2024 16:24:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,347 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31836 invoked from network); 5 Jul 2017 13:33:55 -0000
-Message-ID: <20170705133341.GA31268@openwall.com>
-References: <CAEsznC6vAOzM9wmtcZwiLX1-k3uevMEEuxkksXCUMR8=hsq+Kg@mail.gmail.com> <20170705123427.mky43jbckj4quua2@lorien.valinor.li> <CAEsznC4xw6b9TOBJk0q1WFMpnd5EoYeSbka+hqYTaZbuz9k9FA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEsznC4xw6b9TOBJk0q1WFMpnd5EoYeSbka+hqYTaZbuz9k9FA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 5 Jul 2017 15:33:41 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
+Received: (qmail 7810 invoked from network); 10 Apr 2024 03:17:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712719016;
+	bh=lUheG7tJSP3Qhqz81RMD+2QtIpb5gDKOUCxBxyz66Kw=;
+	h=Date:From:To:Cc:Subject:From;
+	b=pCDtRA1wFWsOJ25pUbjiKGMyqtHqVmlIqhmCcu3hPj+NiqRi/xd2MlxPbmCYKGqJK
+	 Mf72qrtU07j8nAvF4MA5hgogVVPYwF+4fZReeDNd1TTn0To4wkHB+Mnzh/g3ErBRAm
+	 eb+gPhP84AD90X6sTFDWtks+CnsjKHbWhM+fntYB5GW0I9qfRAa1F/0HLh828zAHzR
+	 TAOyhKcQlWuT8IcY1ALtLtCc1Uq7O4IPljcjI1Japzg6gZ6yZ7ujwsoh6el0a9qP0m
+	 PJtq4h6SHYDceFkID3BcOnK5l32B/X9ygC3ZmKLd/vUI/fl2BTCHRWFR5gHVenn7ga
+	 lflt8Lu/HX71w==
+Date: Wed, 10 Apr 2024 05:16:52 +0200
+From: Alejandro Colomar <alx@kernel.org>
 To: oss-security@lists.openwall.com
+Cc: Sam James <sam@gentoo.org>, Joey Hess <id@joeyh.name>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andres Freund <andres@anarazel.de>,
+	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org,
+	secalert@redhat.com, team@security.debian.org
+Message-ID: <ZhYEpAFolwefRv7X@debian>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+MnSW5/9y6FjDDWV"
+Content-Disposition: inline
+Subject: [oss-security] Analysis on who is Jia Tan, and who he could work for, reading xz.git
 
-On Wed, Jul 05, 2017 at 03:50:58PM +0300, Lior Kaplan wrote:
-> AFAIK, when the issue is already public the list is just fine.
-> 
-> From the cve-assign auto reply:
-> 
-> "In the special case of communications involving a publicly known
-> vulnerability on the oss-security mailing list, please do not use
-> the https://cveform.mitre.org web site at this time, and instead
-> send new or followup messages directly to that mailing list."
+--+MnSW5/9y6FjDDWV
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 10 Apr 2024 05:16:52 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: oss-security@lists.openwall.com
+Cc: Sam James <sam@gentoo.org>, Joey Hess <id@joeyh.name>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andres Freund <andres@anarazel.de>,
+	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org,
+	secalert@redhat.com, team@security.debian.org
+Subject: Analysis on who is Jia Tan, and who he could work for, reading xz.git
 
-I think the above is about additional "communications involving" a
-vulnerability that already has a CVE ID, not about the CVE request.
+Hi!
 
-FWIW, on the distros list wiki page, we currently ask to avoid using the
-private lists if one's "sole purpose of their use is to obtain a CVE ID",
-and in a footnote we give this alternative procedure:
+Regarding <https://tukaani.org/xz-backdoor/>
 
-"In those "CVE only" cases, please start by posting about the (to be
-made) public issue to oss-security (without a CVE ID), request a CVE ID
-from MITRE directly, and finally "reply" to your own posting when you
-also have the CVE ID to add.  With the described approach you would only
-approach MITRE after the issue is already public, but if you choose to
-do things differently and contact MITRE about an issue that is not yet
-public, then please do not disclose to them more than the absolute
-minimum needed for them to assign a CVE ID."
+I've been researching xz.git to learn about this malicious actor, and
+who he might have worked for.
 
-"from MITRE directly" is a link to https://cveform.mitre.org and "the
-absolute minimum" is a link to
-http://www.openwall.com/lists/oss-security/2015/04/14/3
+This Jia Tan seems to work mostly with the +0800 timezone:
 
-I hope this procedure is consistent with everyone's expectations.
-Salvatore reply quoted below is consistent with it.  Thank you for
-helping run this list, Salvatore!
+	$ git log --all --author 'Jia Tan' \
+	| grep ^Date \
+	| grep -o '[+-][0-9][0-9][0-9]0' \
+	| sort \
+	| uniq -c;
+	      4 +0200
+	     10 +0300
+	    676 +0800
 
-I think that ideally we add to such boilerplate replies (the need for
-which will hopefully become infrequent) that we appreciate being
-notified of the vulnerabilities first (before the CVE IDs are requested
-from MITRE) and want it to stay this way going forward (just not in the
-form of CVE requests, but rather in the form of vulnerability
-notifications also stating that CVE IDs are being requested separately
-and will be posted in here later).
+According to <https://www.timeanddate.com/time/map/>, in the summer,
++0800 corresponds to China, or Taiwan, or Hong Kong, or Irkutsk (Russia),
+or Philippines or other small countries around it.  None of the regions
+in +0800 use DST.
 
-I don't care about CVEs much, but we need to know where to redirect
-those requests to, and we also need to make it likely that we'll receive
-the actual vulnerability detail on oss-security (the sooner, the better).
++0300 corresponds to, among others, Israel and Moscow, and then a bunch
+of other less relevant countries, including most of eastern Europe,
+Arabia, and some eastern Africa.  Of those, some have DST and some
+haven't.  Israel has DST (so it is +0200 in the winter), but Moscow has
+no DST.  It is very interesting that all of his commits that use a +0200
+timezone are all in the winter, which discards countries that have +0200
+in the summer due to DST (western Europe).  It also makes Israel a good
+candidate, since there are very few countries that have +0200 in the
+winter, and Israel is one of them.  And all of his +0300 commits are
+during summer, which confirms the same.  We can discard Russia.  And we
+can probably suspect of Israel (there are other powerful states that
+could have been that are also in +0300 with DST, but Israel has more
+antecedents in this matter).
 
-> On Wed, Jul 5, 2017 at 3:34 PM, Salvatore Bonaccorso <carnil@debian.org> wrote:
-> > CVE assignement requests are not handled anymore directly via the
-> > oss-security list, but need to be filled/requested at
-> > https://cveform.mitre.org/
-> >
-> > Once CVE are assigned, can you repost them here for benefit of other
-> > reader?
+I suspect those +0200 and +0300 correspond to a few times that this guy
+would have traveled to his intelligence agency for some special work; so
+a hypothesis could be that he works for Israel and he lives in China.
+Following that hypothesis, the commits made in the +0200 and +0300
+timezones could be special, perhaps done under some intensive planning
+in an intelligence agency with entire teams, and should get special
+atention.  Two of those commits are very recent, of this year (2024),
+and that travel might have had something to do with the fact that he
+rushed recently.
 
-Alexander
+	$ git log --all --author=3D'Jia Tan' \
+	| grep -B2 '^Date.*+0[23]00' \
+	| grep -v ^Author;
+	commit de5c5e417645ad8906ef914bc059d08c1462fc29
+	Date:   Mon Feb 12 17:09:10 2024 +0200
+	--
+	commit e446ab7a18abfde18f8d1cf02a914df72b1370e3
+	Date:   Mon Feb 12 17:09:10 2024 +0200
+	--
+	commit c972d44103c4edf88e73917ef08bde69db9d06cb
+	Date:   Tue Jul 18 13:27:46 2023 +0300
+	--
+	commit 3d1fdddf92321b516d55651888b9c669e254634e
+	Date:   Tue Jun 27 17:27:09 2023 +0300
+	--
+	commit d4674dfbb7d1df1feb841f5dbce6ae1f0b026879
+	Date:   Mon Nov 7 16:24:14 2022 +0200
+	--
+	commit 1fc6e7dd1fabdb60124d449b99273330ccab3ff1
+	Date:   Mon Nov 7 16:24:14 2022 +0200
+	--
+	commit 6a86e81cab202d0a812a7b2e9efacaf70c58ba38
+	Date:   Thu Oct 6 21:53:09 2022 +0300
+	--
+	commit e7a7ac744eb0f890ef52388de838596ef566c73f
+	Date:   Thu Sep 8 15:07:00 2022 +0300
+	--
+	commit ba3e4ba2de034ae93a513f9c3a0823b80cdb66dc
+	Date:   Thu Sep 8 15:07:00 2022 +0300
+	--
+	commit 76a5a752b8467ff591dd028deb61e9bf2c274c7e
+	Date:   Mon Jul 25 18:30:05 2022 +0300
+	--
+	commit 749b86c2c18ab61a07f19ec8fefc67325da97397
+	Date:   Mon Jul 25 18:20:01 2022 +0300
+	--
+	commit 61f8ec804abdb4c5dac01e8ae9b90c7be58a5c24
+	Date:   Mon Jul 25 18:30:05 2022 +0300
+	--
+	commit 4d80b463a1251aa22eabc87d2732fec13b1adda6
+	Date:   Mon Jul 25 18:20:01 2022 +0300
+	--
+	commit 86a30b0255d8064169fabfd213d907016d2f9f2a
+	Date:   Thu Jun 16 17:32:19 2022 +0300
+
+It is also interesting that the last commit in that timezone was
+especially large:
+
+	$ git log --all --author=3D'Jia Tan' \
+	| grep -B2 '^Date.*+0[23]00' \
+	| grep ^commit \
+	| awk '{print $2}' \
+	| xargs -L1 git log -1 --oneline --stat \
+	| grep -e '^[^ ]' -e '^ [1-9]';
+	de5c5e41 liblzma: Creates Non-resumable and Resumable modes for lzma_decod=
+er.
+	 2 files changed, 532 insertions(+), 224 deletions(-)
+	e446ab7a liblzma: Creates separate "safe" range decoder mode.
+	 2 files changed, 83 insertions(+), 104 deletions(-)
+	c972d441 xz: Fix typo in man page.
+	 1 file changed, 1 insertion(+), 1 deletion(-)
+	3d1fdddf Docs: Document the configure option --disable-ifunc in INSTALL.
+	 1 file changed, 8 insertions(+)
+	d4674dfb xz: Avoid a compiler warning in progress_speed() in message.c.
+	 1 file changed, 3 insertions(+), 6 deletions(-)
+	1fc6e7dd xz: Avoid a compiler warning in progress_speed() in message.c.
+	 1 file changed, 3 insertions(+), 6 deletions(-)
+	6a86e81c Tests: Refactor test_stream_flags.c.
+	 1 file changed, 441 insertions(+), 142 deletions(-)
+	e7a7ac74 CMake: Clarify a comment about Windows symlinks without file exte=
+nsion.
+	 1 file changed, 3 insertions(+), 4 deletions(-)
+	ba3e4ba2 CMake: Clarify a comment about Windows symlinks without file exte=
+nsion.
+	 1 file changed, 3 insertions(+), 4 deletions(-)
+	76a5a752 liblzma: Refactor lzma_mf_is_supported() to use a switch-statemen=
+t.
+	 1 file changed, 14 insertions(+), 18 deletions(-)
+	749b86c2 Build: Don't allow empty LIST in --enable-match-finders=3DLIST.
+	 1 file changed, 4 insertions(+)
+	61f8ec80 liblzma: Refactor lzma_mf_is_supported() to use a switch-statemen=
+t.
+	 1 file changed, 14 insertions(+), 18 deletions(-)
+	4d80b463 Build: Don't allow empty LIST in --enable-match-finders=3DLIST.
+	 1 file changed, 4 insertions(+)
+	86a30b02 Tests: Add more tests into test_check.
+	 2 files changed, 295 insertions(+), 7 deletions(-)
+
+Compare that to a random sample of the same size of his commits.  In the
++0800 timezone, his commits are on average quite small, as is usual in
+most open source projects.  These two last commits in +0300 so recent
+make me suspect he started working big in this attack around that time.
+Here's a random sample of commits written in +0800 (presumably China):
+
+	$ git log --all --author=3D'Jia Tan' \
+	| grep -B2 '^Date.*+0800' \
+	| grep ^commit \
+	| awk '{print $2}' \
+	| sort -R \
+	| head -n14 \
+	| sort \
+	| xargs -L1 git log -1 --oneline --stat \
+	| grep -e '^[^ ]' -e '^ [1-9]';
+	02ca4a7d Translations: Patch man pages to avoid fuzzy matches.
+	 4 files changed, 4 insertions(+), 4 deletions(-)
+	1f157d21 liblzma: Omit lzma_index_iter's internal field from Doxygen docs.
+	 1 file changed, 8 insertions(+), 1 deletion(-)
+	2a89670a liblzma: Cleans up old commented out code.
+	 1 file changed, 11 deletions(-)
+	5c9fdd3b Tests: Refactors existing filter flags tests.
+	 1 file changed, 483 insertions(+), 224 deletions(-)
+	6fcf4671 liblzma: Highlight liblzma API headers should not be included dir=
+ectly.
+	 14 files changed, 42 insertions(+), 28 deletions(-)
+	7f2293cd Translations: Update the Spanish translation.
+	 1 file changed, 253 insertions(+), 166 deletions(-)
+	898aad9f xzmore: Fix typo in xzmore.1.
+	 1 file changed, 1 insertion(+), 1 deletion(-)
+	a6234f67 Build: Update getopt.m4 from Gnulib.
+	 1 file changed, 39 insertions(+), 40 deletions(-)
+	afb2dbec xz: Validate --flush-timeout for all specified filter chains.
+	 1 file changed, 16 insertions(+), 8 deletions(-)
+	b2ba1a48 CI: Reorder 32-bit build first for Linux autotool builds.
+	 1 file changed, 12 insertions(+), 5 deletions(-)
+	ca9015f4 liblzma: Check HAVE_USABLE_CLMUL before omitting CRC64 table.
+	 1 file changed, 2 insertions(+), 2 deletions(-)
+	db176567 lib: Silence -Wsign-conversion in getopt.c.
+	 1 file changed, 3 insertions(+), 3 deletions(-)
+	e22d0b0f Translations: Update the Spanish translation.
+	 1 file changed, 158 insertions(+), 161 deletions(-)
+	e970c28a liblzma: Fix bug in lzma_str_from_filters() not checking filters[=
+] length.
+	 1 file changed, 7 insertions(+)
+
+After some time, I thought of also checking the committer dates:
+
+	$ git log --all --committer 'Jia Tan' --pretty=3Dfuller \
+	| grep ^CommitDate: \
+	| grep -o '+[0-9][0-9][0-9]0' \
+	| sort \
+	| uniq -c;
+	      4 +0200
+	    690 +0800
+
+Hmmm, let's see when those commits have ben done in +0200:
+
+	$ git log --all --committer 'Jia Tan' --pretty=3Dfuller \
+	| grep -B2 '^CommitDate:.*+0[23]00' \
+	| grep -v Author;
+	Commit:     Jia Tan <jiat0218@gmail.com>
+	CommitDate: Tue Mar 5 23:21:26 2024 +0200
+	--
+	Commit:     Jia Tan <jiat0218@gmail.com>
+	CommitDate: Mon Mar 4 19:23:18 2024 +0200
+	--
+	Commit:     Jia Tan <jiat0218@gmail.com>
+	CommitDate: Thu Feb 29 16:35:52 2024 +0200
+	--
+	Commit:     Jia Tan <jiat0218@gmail.com>
+	CommitDate: Thu Feb 29 16:35:52 2024 +0200
+
+All were very recent, probably coinciding with the rush for attacking.
+And they also match Israel (or nearby) winter +0200 timezones.  The last
+rush in this attack was probably the period that started around Feb 12,
+until it got caught in late March.
+
+If a nation-state wants to investigate this, it would be interesting to
+investigate flights between Israel and China in the dates where there
+are commits authored/committed in both timezones.  These could be the
+dates this spy probably had international flights between (presumably)
+China and Israel (possibly off by a few countries and hours/days, but
+these are the most likely ones, IMO).  This is assuming a single person
+had access to this account.
+
+	$ git log --all --date=3Diso --pretty=3Dfuller \
+	| grep -A1 ':     Jia Tan <jiat0218@gmail.com>' \
+	| grep Date \
+	| pcre2grep -M -e '\+0[23]00\n.*\+0800' -e '\+0800\n.*\+0[23]00';
+	CommitDate: 2024-03-09 09:20:57 +0800
+	CommitDate: 2024-03-05 23:21:26 +0200
+	CommitDate: 2024-03-05 00:27:31 +0800
+	CommitDate: 2024-03-04 19:23:18 +0200
+	CommitDate: 2024-02-29 16:35:52 +0200
+	AuthorDate: 2024-02-27 23:42:41 +0800
+	CommitDate: 2024-02-15 01:53:40 +0800
+	AuthorDate: 2024-02-12 17:09:10 +0200
+	AuthorDate: 2024-02-12 17:09:10 +0200
+	AuthorDate: 2024-02-13 22:38:58 +0800
+	AuthorDate: 2023-07-14 21:10:27 +0800
+	AuthorDate: 2023-07-18 13:27:46 +0300
+	CommitDate: 2023-06-27 23:56:06 +0800
+	AuthorDate: 2023-06-27 17:27:09 +0300
+	AuthorDate: 2022-11-19 23:18:04 +0800
+	AuthorDate: 2022-11-07 16:24:14 +0200
+	AuthorDate: 2022-11-07 16:24:14 +0200
+	AuthorDate: 2022-10-23 21:01:08 +0800
+	AuthorDate: 2022-10-06 21:53:09 +0300
+	AuthorDate: 2022-10-06 17:00:38 +0800
+	AuthorDate: 2022-09-02 20:18:55 +0800
+	AuthorDate: 2022-09-08 15:07:00 +0300
+	AuthorDate: 2022-09-02 20:18:55 +0800
+	AuthorDate: 2022-09-08 15:07:00 +0300
+	AuthorDate: 2022-07-25 18:20:01 +0300
+	AuthorDate: 2022-07-01 21:19:26 +0800
+	AuthorDate: 2022-06-16 17:32:19 +0300
+	AuthorDate: 2022-06-12 11:31:40 +0800
+
+But there are some dates that seem to say that at least two people had
+access to this account: It's not possible to travel from +0300 to +0800
+in 1.5 hours.  So they don't necessarily correspond to travel, but
+maybe just dates where there was collaboration with the mother country.
+
+	CommitDate: 2023-06-27 23:56:06 +0800
+	AuthorDate: 2023-06-27 17:27:09 +0300
+
+Considering these periods of (likely) extra malicious activity, I would
+especially suspect of anything from at least 2024-02-12:
+
+	$ git log --all --date=3Diso --pretty=3Dfuller --since=3D2024-02-11 \
+	| grep ':     Jia Tan <jiat0218@gmail.com>' -C1 \
+	| grep ^commit \
+	| awk '{print $2}' \
+	| tail -n1 \
+	| xargs git describe --contains;
+	v5.5.2beta~51
+
+And in general, put special attention on every commit made in
++0200/+0300 by them.
+
+Cheers,
+Alex
+
+--=20
+<https://www.alejandro-colomar.es/>
+
+--+MnSW5/9y6FjDDWV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmYWBKQACgkQnowa+77/
+2zIqXg/+KMVHCjrez4K6ccLVUYFrcCkQdKmtr3lYrLZ3QgX/FOnX2NcvGukUzhAL
+womHT/pUu9RQaMlGOZA3kFf1Wnh+2UM+O6/dB466Kdm8XhIxhvHmbCuTlSlXbUJe
+mLdX5VeV6xRVoX8+5hIp4qpc4sfuhd4nkj4h9OSStsveeeVHrw7yE2MVthIQXGWs
+BE5Ibmf12ZSWnBhdZ3es+stuP77Fwg29Ml043g8bdfSdUaY91nMeMjQtE1EUYIzO
+phbkJHha0GziPaLzsMyLMRQDLMq/v4cfmzdYPX8QBx+f2OILdecdyswm266ciMmK
+4mj8E2y6D5f5LKHLqj0WKz4bB5CdvxgxSAWCB78LqsEx89wQ0036gOGSCLR7OMqB
+I4vxlxlBmDt0PPP3oK43LMAD3GCca9w4WVD9SfxMXWh0HHQhHaBj2G7oC71oLif0
+Ma4j3Niqy0pT8LzjgkHjHHe9HjTSVQa0trGn3Mj76ausJuUqNafUFnLEXyODl4YC
+tHwnB/Z5cO48QNqiCKo9bIE9TbQ4tm0Gqv6b6onwI10GEOwEtgsI+Tk2nviSb5dI
+vwKm+/a5g++KOU1UWKqvHkgJYTnvAC+AswS+M+oiYmIpE7C0YxMdG4JsFX709FOC
+W+4ep8YpQ0q+wkZu+5/RYk9P0VHUV369VME06WghmDotDEzgRiQ=
+=pKSd
+-----END PGP SIGNATURE-----
+
+--+MnSW5/9y6FjDDWV--
