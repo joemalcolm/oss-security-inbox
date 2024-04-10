@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5794" "Wednesday" "28" "June" "2017" "12:05:32" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<886435.587515251-sendEmail@localhost>" "114" "[oss-security] lame: global-buffer-overflow in III_i_stereo (layer3.c)" nil nil nil "6" "2017062812:05:32" "[oss-security] lame: global-buffer-overflow in III_i_stereo (layer3.c)" (number mark "U       ago@gentoo.o Jun 28  114/5794  " thread-indent "\"[oss-security] lame: global-buffer-overflow in III_i_stereo (layer3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26019 invoked by uid 550); 28 Jun 2017 12:05:48 -0000
+Received: (qmail 15543 invoked by uid 550); 10 Apr 2024 12:11:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,126 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25959 invoked from network); 28 Jun 2017 12:05:47 -0000
-Message-ID: <886435.587515251-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Wed, 28 Jun 2017 12:05:32 +0000
+Received: (qmail 31839 invoked from network); 10 Apr 2024 12:03:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1712750622; bh=lTl84K3MG4opsaM5R8fAZK9h7hi1aGd6gIu208zTUsA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
+	 From;
+	b=OrubF5CknGLUNPgI5SH5s4AQygqQelFheL+R+kL60pBvx/yfkjeRdI3viKLuaRZkO
+	 +xNCIJxCxwMIQhVMDjN9mZP4X6NufCQF1NZSMjrnOSSL2Tp5w14cDcrX6umiLllY7M
+	 igik53y3BnKvNQqszoRf1fypqYlPeGR52NKvkC5+j9cUfSp1E9h3IMU9H9ou6YolCX
+	 g6/tqRkWMZDwBvsTHG0aZiX2FoltWVzU/UL4tJKmEOf9/OWONhTdfst8u4+tKEz6e7
+	 GPZFy2GyX1NqDWSOyWdAtQjkKFMbXshDbIk7ja9Ufq43nmUSwKG06hlnbQsPqaATCX
+	 U6c88J391WFNw==
+From: Ihor Radchenko <yantar92@posteo.net>
+To: Sean Whitton <spwhitton@spwhitton.name>
+Cc: emacs@packages.debian.org, emacs-devel@gnu.org,
+ oss-security@lists.openwall.com
+In-Reply-To: <87bk6he8h4.fsf_-_@melete.silentflame.com>
+References: <874jccjpvy.fsf@melete.silentflame.com>
+ <87y19nu22i.fsf@localhost> <87bk6he8h4.fsf_-_@melete.silentflame.com>
+Date: Wed, 10 Apr 2024 12:04:06 +0000
+Message-ID: <87o7ahe85l.fsf@localhost>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-246634.085037844"
-Subject: [oss-security] lame: global-buffer-overflow in III_i_stereo (layer3.c)
+Content-Type: text/plain
+Subject: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
 
-------MIME delimiter for sendEmail-246634.085037844
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Sean Whitton <spwhitton@spwhitton.name> writes:
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+> Hmm, thank you, but let me ask a follow-up question: do you agree with
+> me that there is only one security flaw covered by these two CVEs, and
+> CVE-2024-30203 is the superfluous one?
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+Yes, CVE-2024-30203 title is superfluous.
+And CVE-2024-30204 title is not accurate - it only applies to
+certain attachments with specific (text/x-org) mime type.
 
-The complete ASan output of the issue:
-
-# lame -f -V 9 $FILE out.wav
-==28403==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7fecc4b7eb6c at pc 0x7fecc489accc bp 0x7fff525972d0 sp 0x7fff525972c8
-READ of size 4 at 0x7fecc4b7eb6c thread T0
-    #0 0x7fecc489accb in III_i_stereo /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1149:26
-    #1 0x7fecc489accb in decode_layer3_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1753
-    #2 0x7fecc48543ca in decodeMP3_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:615:13
-    #3 0x7fecc4851c13 in decodeMP3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:696:12
-    #4 0x7fecc4812092 in decode1_headersB_clipchoice 
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:149:11
-    #5 0x7fecc481794a in hip_decode1_headersB 
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:436:16
-    #6 0x7fecc481794a in hip_decode1_headers /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:379
-    #7 0x51e984 in lame_decode_fromfile /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:2089:11
-    #8 0x51e984 in read_samples_mp3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:877
-    #9 0x51e984 in get_audio_common /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:785
-    #10 0x51e4fa in get_audio /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:688:16
-    #11 0x50f776 in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:456:17
-    #12 0x50f776 in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
-    #13 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
-    #14 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
-    #15 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
-    #16 0x7fecc340a680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #17 0x41c998 in _init (/usr/bin/lame+0x41c998)
-
-0x7fecc4b7eb6c is located 20 bytes to the left of global variable 'pow2_1' defined in 
-'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:128:28' (0x7fecc4b7eb80) of size 128
-0x7fecc4b7eb6c is located 12 bytes to the right of global variable 'pow1_1' defined in 
-'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:128:13' (0x7fecc4b7eae0) of size 128
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1149:26 in 
-III_i_stereo
-Shadow bytes around the buggy address:
-  0x0ffe18967d10: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-  0x0ffe18967d20: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x0ffe18967d30: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0ffe18967d40: f9 f9 f9 f9 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-  0x0ffe18967d50: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
-=>0x0ffe18967d60: 00 00 00 00 00 00 00 00 00 00 00 00 f9[f9]f9 f9
-  0x0ffe18967d70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ffe18967d80: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ffe18967d90: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0ffe18967da0: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
-  0x0ffe18967db0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==28403==ABORTING
-
-Affected version:
-3.99.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-9870
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00291-lame-globaloverflow-III_i_stereo
-
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
-2017-06-25: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-global-buffer-overflow-in-iii_i_stereo-layer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-246634.085037844--
-
+-- 
+Ihor Radchenko // yantar92,
+Org mode contributor,
+Learn more about Org mode at <https://orgmode.org/>.
+Support Org development at <https://liberapay.com/org-mode>,
+or support my work at <https://liberapay.com/yantar92>
