@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1261" "Tuesday" "22" "October" "2019" "09:15:06" "-0400" "Mike Dalessio" "mike.dalessio@gmail.com" "<CAGJbjKasPtcqfRSrsyg=Ae_oM6xknf9V4qyUoFW6aTsL3rLkaw@mail.gmail.com>" "49" "[oss-security] [CVE-2019-15587] Loofah XSS Vulnerability" nil nil nil "10" "2019102213:15:06" "[oss-security] [CVE-2019-15587] Loofah XSS Vulnerability" (number mark "U       mike.dalessi Oct 22   49/1261  " thread-indent "\"[oss-security] [CVE-2019-15587] Loofah XSS Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-15587] Loofah XSS Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22295 invoked by uid 550); 22 Oct 2019 14:06:01 -0000
+Received: (qmail 5162 invoked by uid 550); 10 Apr 2024 16:24:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25914 invoked from network); 22 Oct 2019 13:15:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Q21nk4CHi2JRX0GQbMmqKaYYD5vmz9CDSkqdhVVPPBk=;
-        b=K73Yj+UmShqaEjuQfhwlP/ozQB2Cy91RnY0VljCK3lw6zk+615z0AQZhIydVznjGn+
-         +IcUazgvmusDaDj9cUJSDqz3C/MkDUSj/ZjTt0Cuj1TkbIo2Mu8Ojpwk8qPxLiXRFKIY
-         vcVXfPVVCh8S0BqotGEY8ITDGKs79BwsYcKWHclcQWea7QBKXclmQ2kKrXCiNTVvjGnC
-         gkLZ2qZsxB15WxkfSTi1aK1PpUT7FZG7E7vm/uLhuO2x7Qals7ZxXep9FiAX42jDbfyU
-         Zx+BcEb2qt+Mw47LqG7+6DM/HrOC7yiy6Uh6k/9Uuy8v2i83EE2tXjMw45cIdKbRTxp1
-         XxzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Q21nk4CHi2JRX0GQbMmqKaYYD5vmz9CDSkqdhVVPPBk=;
-        b=rWAFOrqrGuaj9I7ovE1KcXmMGGHMj55EAV1517kqvuZzlK5sD+Hb6U9kNbQGee1/E2
-         v7GSQPQLPZy7MvKztZv5mM3jyU2lgvlKl+Rt9MHcZUpG1pY5GyLw4MWWGD3LFate2RNd
-         gL1LjbSHURTDWq6YPdQCbX2guSfIVhfHc/0+YRHndwWYwiXoyMMfJcwg5Q+ZGw4K0q1x
-         T3DyXW2FfTClY5urnPLJQkXVYTJmQIpC/5qAg5ZbCsyN4ffTKV/N/XebY5+dMYkmzv99
-         zNUr+U1+0/k7S844XwRnR553QyPXeOnA/jcaYVl+jHSqjgG4mmtcoIL9OQlN/VD39H7v
-         6zRg==
-X-Gm-Message-State: APjAAAWrSwQM8vBtFwK8slPEQ90N+cZuhjg9G6u9bgEM0GEH2zf7aAXc
-	SX9RCYNt9io5LupnI7xLOJYBJYmdxViXxMGn4v8=
-X-Google-Smtp-Source: APXvYqynYx6T2c2seZ40LMMKSSMOs04MmaYc9Fhg2JOX2JGTQJKQvMrWFc4jkx8spEkgsS/EMJGZGTMQ5wBw4Vx1z+U=
-X-Received: by 2002:aca:1814:: with SMTP id h20mr2960484oih.85.1571750117150;
- Tue, 22 Oct 2019 06:15:17 -0700 (PDT)
+Received: (qmail 28477 invoked from network); 10 Apr 2024 16:11:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=joeyh.name; s=mail;
+	t=1712765451; bh=y5Vu34TmHYM/ZaD49LIzh/9T+00heDINPokRdF3JOBw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O5ypqeN+6KZP/ZG0hv3mrLIih+OuuUYvMl9jmp7pHiqry/uxO/rzeTyq5yy7uPnMX
+	 sxNr+WTEEkjoQ8ENRjoy5QCu5afw2vB/rsHdxYiuumc+4o+pTxqrKYIDohwecJL35a
+	 uLYLxiZGGR1FXtabQa6N0SkGG4J5RTjwYwFCakTk=
+X-Question: 42
+Date: Wed, 10 Apr 2024 12:10:51 -0400
+From: Joey Hess <id@joeyh.name>
+To: Alejandro Colomar <alx@kernel.org>
+Cc: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andres Freund <andres@anarazel.de>,
+	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org,
+	secalert@redhat.com, team@security.debian.org
+Message-ID: <Zha6C3RExPyp8iBd@kitenet.net>
+References: <ZhYEpAFolwefRv7X@debian>
 MIME-Version: 1.0
-From: Mike Dalessio <mike.dalessio@gmail.com>
-Date: Tue, 22 Oct 2019 09:15:06 -0400
-Message-ID: <CAGJbjKasPtcqfRSrsyg=Ae_oM6xknf9V4qyUoFW6aTsL3rLkaw@mail.gmail.com>
-To: ruby-security-ann@googlegroups.com, rubyonrails-security@googlegroups.com, 
-	oss-security@lists.openwall.com, loofah-talk@googlegroups.com
-Content-Type: multipart/alternative; boundary="0000000000006896a305957f97ae"
-Subject: [oss-security] [CVE-2019-15587] Loofah XSS Vulnerability
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zUF/evWfume9zCfk"
+Content-Disposition: inline
+In-Reply-To: <ZhYEpAFolwefRv7X@debian>
+Subject: [oss-security] Re: Analysis on who is Jia Tan, and who he could work for, reading
+ xz.git
 
---0000000000006896a305957f97ae
-Content-Type: text/plain; charset="UTF-8"
+--zUF/evWfume9zCfk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hello all,
+Alejandro Colomar wrote:
+> I suspect those +0200 and +0300 correspond to a few times that this guy
+> would have traveled to his intelligence agency for some special work
 
-A *medium* severity vulnerability has been identified and patched in Loofah
-v2.3.1, which is a dependency of `rails-html-sanitizer`. This issue has
-been assigned CVE-2019-15587.
+That's a theory. But many of the commits with author Jia Tan in those
+time zones have committer Lasse Collin, and show signs of being eg,
+git-amed patch sets which may have also been rebased. In which case
+it would make sense that these have Lasse Collin's usual timezone.
 
-The public notice can be found here:
+I analized that here: https://hachyderm.io/@joeyh/112193146103113070
 
-  https://github.com/flavorjones/loofah/issues/171
+--=20
+see shy jo
 
-To save you a click, I've reproduced the contents of the announcement here.
+--zUF/evWfume9zCfk
+Content-Type: application/pgp-signature; name="signature.asc"
 
----
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmYWugkACgkQ2xLbD/Bf
+jzghIg//e9mSfotdHV4kQ8mvbkeDNMC6cywT+K/cuBmsMxhWbN5QGby6ZWF2AXn8
+AgR1blOx33s5rFv9i6NdBFzFO3C8lI5qqDtZH8RU4vHuuP8CQ5jHfinZgfUuSdGw
+GglTxhteMkyYzutsLUs5WU7F+0YJbw9/na5VfwZbUFZjLVxQMyPXJNfMmwd+1K6s
+vpCbdzuQp3QBNSnXnmdsF4BIOd2aAFmcMmk2YDbxKbKSlW5zzXvefmcijudqFsX+
+G6CAvUN76pFVy/KEbGDwFGr9XjQVml58iNV9nDxUU/+4U4dESzfKJPj8kGzjq0kr
+KKpWqesck9MIP0gau3X9G46Mh9On3xRQJ6XPJlrs+cu58SUFJqlRtpSLIh48Tyk9
+7zNZvjd1jH0ybaV3ObMshnMJqxJARkL2L5brdKGpHGMcEJ/tp0/XqhcI2omyVa1o
+KfLjLL1kkte2t+nJbmksTqMDS/9UNxToxGIIAx2AE24NnttTT9GZxvexNUatbSmM
+nOdDIOVuEunI6kYRmPm1VosHZWriVKAEaYyZ5wyOHAyQt1yhUzQf8PfhvRg97hjh
+bnBQLH5olLjo5PLfjtcQMWUZf4RVL7N3/0UCG0bM9dsAt1VbvTz0yiI1LGzUPHoa
+dX+v3XLKEXiFNMClpi6H2i1bJ8t216j4xgaeLrB2qBXgYUpoFEA=
+=CfPt
+-----END PGP SIGNATURE-----
 
-*# CVE-2019-15587 - Loofah XSS Vulnerability*
-This issue has been created for public disclosure of an XSS vulnerability
-that was responsibly reported by https://hackerone.com/vxhex
-
-I'd like to thank [HackerOne](https://hackerone.com/loofah) for providing a
-secure, responsible mechanism for reporting, and for providing their
-fantastic service to the Loofah maintainers.
-
-
-*## Severity*
-Loofah maintainers have evaluated this as [Medium (CVSS3 6.4)](
-https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
-).
-
-
-
-*## Description*
-In the Loofah gem, through v2.3.0, unsanitized JavaScript may occur in
-sanitized output when a crafted SVG element is republished.
-
-
-
-*## Affected Versions*
-Loofah < v2.3.0
-
-
-
-*## Mitigation*
-Upgrade to Loofah v2.3.1 or later.
-
---0000000000006896a305957f97ae--
+--zUF/evWfume9zCfk--
