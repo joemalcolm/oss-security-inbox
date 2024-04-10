@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5307" "Friday" "18" "February" "2022" "12:22:57" "+1030" "Alex Murray" "alex.murray@canonical.com" nil "116" "[oss-security] CVE-2021-4120: Insufficient validation of snap content interface and layout paths" nil nil nil "2" nil nil (number mark "U       alex.murray@ Feb 18  116/5307  " thread-indent "\"[oss-security] CVE-2021-4120: Insufficient validation of snap content interface and layout paths\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-4120: Insufficient validation of snap content interface and layout paths" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32646 invoked by uid 550); 18 Feb 2022 08:02:02 -0000
+Received: (qmail 15601 invoked by uid 550); 10 Apr 2024 11:58:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,139 +7,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11981 invoked from network); 18 Feb 2022 01:53:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1645149182;
-	bh=AEceV+S4bhhTPtogKn0JrSOx+Vf/YbiUEhQbGyw5QXE=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=Hbkdg+Qn6BH+OyZOfq9TpWSHo+B+WCi8OInuoUQLS30MVe5D+FeaKu3nUClFFbMrQ
-	 dhK9Utir6Qk5G6f0yk1ySS5ACxknh7WW0N6PAY0nMUcoP3VBBEjUuati7kAL4H/nch
-	 wvWhbD6wdwUaIuieUDTWZR3fpXgKZPJXLeHH1C7AbEQLOUzKoB5I1v8w4084LOWagc
-	 9y3MYIZ9Onhm1T+C+GMqQgwURshENZ4QPRvjUfcU/cJQDy+bW8Zx0/CApnuVwtII5U
-	 806mMCpNwGQpLY8e25Q8ZWbAEmCDg6RDbVqnJrachglnaA8rQ8ypOrHEMPWTCHdE6y
-	 jXcwVVvUHqDKg==
-From: Alex Murray <alex.murray@canonical.com>
-To: oss-security@lists.openwall.com
-Date: Fri, 18 Feb 2022 12:22:57 +1030
-Message-ID: <87fsohueiu.fsf@graphene.mail-host-address-is-not-set>
+Received: (qmail 5845 invoked from network); 10 Apr 2024 11:57:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spwhitton.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1712750234; x=
+	1712836634; bh=B63DFjaCgNNvHZZOHLQd+yZyw28l8z97xH+hlDrLEps=; b=X
+	xIq6NJKWB/1hVMmwY6HBXregyupK0pWrXcxn4J03hceVMr09nui4kwxyVCan3mTK
+	wnzo0m8J83r2i1kQpU88GTsPtzXLqf7Jx4Ec97LhRexJM1eTi6+DE9Q0DlMtiKZm
+	JT8e3+InuIo3ye9jPXphRD24FZb0T6kWM1PAriMb6wOoShv2WtiiyzCTeOOXgltM
+	7/+CZmG1RkDWjMYB9jVZrdRatK/TRfPhPLyKjM78e0kGs76wRrugCjgLisEV8eE9
+	BDjdNI3Cm0OF9Fn/7qSWZMejYDfcGSHibhJGyRjz5hVHSCoBvAyBfVpwQ/kOVnQK
+	TWUJIO/uOlXiOAq9D+RJA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1712750234; x=1712836634; bh=B63DFjaCgNNvHZZOHLQd+yZyw28l
+	8z97xH+hlDrLEps=; b=JGIhtCdzYOYMlDKcc/RBn/sVr/94CQycyRzmnpUmKRRj
+	4NvUs3kEyS+wrnMb3GZp55HZR9K5mtWaWYcOT5jRsMvoJ68AR++VP6xf9pqAtjtJ
+	soCM2LQLDPsJ134gMKXt2oap1z2mFRQJszVWsrGz5Qv6HRoPTuYr8hTHoo3lGbIt
+	xvt0LRHrRyqF7CHqjaXwGppJL6MYmgZUbDSWloUhrybUBbsnkQW0OUA2GnfIcnzN
+	Nti8okeBnmv1ZBV6HJsbCdZ168EK0ULYSZlzpSqqcEWSivSgMy/COlIpT8WT6/lL
+	TuK58VL5EIMzEXsrsPYlrNGhH0DByc9tboRQ9S4qOQ==
+X-ME-Sender: <xms:mn4WZg6sLCpQ2g_Z6LINWrn5OrhA374JhfQ6X11lRdYY4W-mwjzBtA>
+    <xme:mn4WZh7ydyBa9FMCyOU4EmET8jVOCNX3nVlzamwpeWT-I6qFHNA5JRpaDxLlP5J1G
+    vCPym9oUOT_Lpl4Hw>
+X-ME-Received: <xmr:mn4WZvdiocXOyMsxaZnVKTiOJLUx4yS9AGEthxOBTYyFWCjGQ-XIfmcJ8lAe59GtEsIbB0Ev2-vSiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehiedggeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhgffffkgggtsehttd
+    dttddtredtnecuhfhrohhmpefuvggrnhcuhghhihhtthhonhcuoehsphifhhhithhtohhn
+    sehsphifhhhithhtohhnrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdejtedtieetje
+    egjeekgffghedtkeeltdeftdetkefgueekfedtudfhteeljeeknecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepshhpfihhihhtthhonhesshhpfi
+    hhihhtthhonhdrnhgrmhgv
+X-ME-Proxy: <xmx:mn4WZlJ5ONe3k6Sh-Rq6c9haNvNF3xUHk8op5NlDJYqCGUmBCp5zLw>
+    <xmx:mn4WZkIY549VRWNBSMgk73FQ5cCOchcLrKLyZG_rABKGebeZoVXIwA>
+    <xmx:mn4WZmw87_7UlwrhAoW9yjrkA0kq7ApPPgFy5SVaXg2K0YRL2he1wg>
+    <xmx:mn4WZoJTU0qCs89S3B4eVjVWwnAAd-exU1NFUXLUvaUVNCRfwdPgdg>
+    <xmx:mn4WZpEQV3q7bGTM_JIlT6lPZjoTf0YolEKMOH_yLZwZ9XbkM7YXVHsN>
+Feedback-ID: i23c04076:Fastmail
+From: Sean Whitton <spwhitton@spwhitton.name>
+To: Ihor Radchenko <yantar92@posteo.net>
+Cc: emacs@packages.debian.org,  emacs-devel@gnu.org,
+  oss-security@lists.openwall.com
+In-Reply-To: <87y19nu22i.fsf@localhost> (Ihor Radchenko's message of "Mon, 08
+	Apr 2024 18:44:21 +0000")
+References: <874jccjpvy.fsf@melete.silentflame.com> <87y19nu22i.fsf@localhost>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Wed, 10 Apr 2024 19:57:11 +0800
+Message-ID: <87bk6he8h4.fsf_-_@melete.silentflame.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-Subject: [oss-security] CVE-2021-4120: Insufficient validation of snap content interface
- and layout paths
+Subject: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
 
-Hi,
+Hello,
 
-Earlier today, two security vulnerabilities (CVE-2021-44730,
-CVE-2021-44731) in the snap-confine component of snapd were disclosed by
-Qualys. These have been fixed in the snapd project by the 2.54.3 release
-earlier today.
+On Mon 08 Apr 2024 at 06:44pm GMT, Ihor Radchenko wrote:
 
-In addition to these two vulnerabilities in snap-confine, a third
-vulnerability in snapd was independently discovered by Ian Johnson from
-the snapd team, which was also resolved in the 2.54.3 release.
+> Sean Whitton <spwhitton@spwhitton.name> writes:
+>
+>> The description for CVE-2024-30203 is
+>>
+>>     In Emacs before 29.3, Gnus treats inline MIME contents as trusted.
+>
+> Before Emacs 29.3, there was no concept of trusted or untrusted content
+> in Emacs. We introduced it specifically to control whether we allow
+> running LaTeX on the contents of a given buffer. (And even in Emacs
+> 29.3, the concept of untrusted contents is not yet official) So, at least
+> the title is misleading.
 
+Right, it's a purely preliminary change, not fixing any holes in itself.
 
-CVE-2021-4120
--------------------------------------------------------------------
+>> and for CVE-2024-30204 is
+>>
+>>     In Emacs before 29.3, LaTeX preview is enabled by default for e-mail
+>>     attachments.
+>
+> This is closer to what was happening.
+> Note that LaTeX preview itself was not a problem. The problem was that we
+> executed actual latex program without user query with input taken from
+> buffer text to generate the previews (using the default settings). LaTeX
+> input can be specifically constructed to cause DOS when using LaTeX
+> compiler, which is especially dangerous when the input is coming from
+> emails.
+>
+> Also, only GNUS and MUA clients re-using gnus libs (at least, notmuch
+> and mu4e) were affected. Not rmail, AFAIK.
+>
+>> ...
+>> I think it's the first one -- can you confirm?
+>
+> I hope that the above clarified things.
 
-snapd fails to perform sufficient validation of snap content interface and
-layout paths, resulting in the ability for snaps to inject arbitrary
-AppArmor policy rules via malformed content interface and layout
-declarations and hence escape strict snap confinement.
+Hmm, thank you, but let me ask a follow-up question: do you agree with
+me that there is only one security flaw covered by these two CVEs, and
+CVE-2024-30203 is the superfluous one?
 
-CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H (8.2)
-
-This vulnerability was reported via Launchpad against the snapd project
-(https://bugs.launchpad.net/snapd/+bug/1949368) - quoting from this:
-
- Snapd does not properly or sufficiently validate the input strings used in
- content interface plugs/slots, meaning that snaps can be installed with
- strict confinement with malformed content interface slots which
- effectively grant any AppArmor rule to the plug side.
-
- To exploit this, create two snaps, one which provides the slot and one
- which has a plug connected to the slot. For the purposes of the exploit,
- these can just be local snaps, but note that a snap publisher could upload
- both of these snaps to the store and the two snaps will have their
- plug/slot auto-connected due to rules about auto-connection of matching
- content interface plugs/slots for snaps of the same publisher.
-
- The first snap has a content slot definition like this:
-
- slots:
-   content-plug:
-     interface: content
-     content: mycont
-     read:
-       - "$SNAP/ rw, /** rw, } profile foobar (attach_disconnected) { /foo"
-
- The embedded profile name does not really matter, but what is important is
- that this rule has arbitrary apparmor rules embedded inside it, abusing
- the "," character. For the plug side use a definition like this:
-
- plugs:
-  content-plug:
-   interface: content
-   content: mycont
-   target: $SNAP_DATA/mycont
-
- The plug side target does not matter at all, but the `content` attribute
- must match the slot definition in order for the plug and slot to be
- auto-connected.
-
- What we are effectively doing is taking advantage of the fact that snapd
- just validates that the read setting is a "clean" filepath, and does no
- further validation and effectively ends up just copy-pasting the string
- into various places inside an AppArmor profile without any quoting or
- further validation.
-
- There are really two profiles which get generated with this malicious
- string without validation, the one for snap-update-ns of the plugging snap
- in question, and the one for the snap itself. This actually presented
- something of a problem, as for snap-update-ns, the string appears as part
- of a mount rule source, which means that including other stuff here like
- we do makes apparmor_parser fail to compile the file for snap-update-ns,
- as it does not expect a mount rule to be formed like this. I still suspect
- it is possible to craft a string such that it somehow is valid both as a
- file source in a mount rule and as a file rule itself, but it turned out
- that actually it doesn't need to be a valid rule for both profiles in
- order to be exploited. This is because snapd just loads the profiles and
- if they fail to be loaded, snapd does nothing about it. This means we can
- craft a rule which is valid for just the profile for the app itself, (but
- not for the profile of snap-update-ns), and still be able to use our
- crafted rule. The one hiccup to this is that the mount namespace must
- already exist, so that snap run does not need to invoke snap-update-ns,
- otherwise presumably the exploit will not be exploitable since the app
- cannot be run. It might be possible to also avoid this by using a daemon
- and something like refresh-mode: endure, but I didn't take the time to
- figure out all those details.
-
- To be clear, with the above plug, for the plugging app snap we get this as
- the tail end of the apparmor profile:
-
- ```
- # In addition to the bind mount, add any AppArmor rules so that
- # snaps may directly access the slot implementation's files
- # read-only.
- /snap/test-content-interface-escape-slot/x15/ rw, /** rw, } profile
-snap-update-ns.test-content-interface-escape-plug2 (attach_disconnected) { /foo/** mrkix,
-
- }
- ```
-
- Which for the purposes of this bug just demonstrates that we can inject
- arbitrary apparmor rules into the profile through the snap.yaml plug/slot
- definition.
-
-As stated above, to remediate this and the two vulnerabilities reported
-by Qualys, the snapd team released snapd 2.54.3
-(https://github.com/snapcore/snapd/releases/tag/2.54.3) earlier
-today. In addition, Ubuntu published updates for snapd as detailed in
-USN-5292-1 (https://ubuntu.com/security/notices/USN-5292-1).
-
-The details of the fixes can be found in the following merge commit
-https://github.com/snapcore/snapd/commit/f3f669d720ed8b0bcb73da7789843bf43b5c16cf
-in the snapd project.
-
-The Ubuntu Security team would like to thank Qualys for their help in
-the disclosure and coordination of the snap-confine issues.
+-- 
+Sean Whitton
