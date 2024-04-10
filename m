@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["413" "Tuesday" "5" "October" "2021" "08:59:46" "-0700" "Matteo Collina" "matteo.collina@gmail.com" nil "12" "[oss-security] Fwd: Node.js security updates for all active release lines, October 2021" nil nil nil "10" nil nil (number mark "U       matteo.colli Oct  5   12/413   " thread-indent "\"[oss-security] Fwd: Node.js security updates for all active release lines, October 2021\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: Node.js security updates for all active release lines, October 2021" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9926 invoked by uid 550); 5 Oct 2021 16:40:47 -0000
+Received: (qmail 24471 invoked by uid 550); 10 Apr 2024 17:08:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4016 invoked from network); 5 Oct 2021 15:59:59 -0000
+Received: (qmail 22262 invoked from network); 10 Apr 2024 17:04:11 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:mime-version:date:message-id:subject:to;
-        bh=akbUh8r1rUEvaJbWJar1WUI158TBzMfDkdwl3S1g5Js=;
-        b=dQR+4IzfD/A253jOFIbp2vhCK9TB56l3Q/+1KBIubJaD8pimx4Km9PFzhiAKZMgA/T
-         Jg8jShOvMGs7NH25TbflISilH0tgo+YegCNNYNpDjxqIwbt2mHlBq/DA2CC80/73c3nY
-         vx8hMbTwjPSVOkP4oJtbEx6Mddsz3Bf4guAToK5zrh+mAMIzULU6xejAaCPU/vY3VsvW
-         KPNNr1WehhyiDhCqWyUJlPDiEBOR64TiQwfVegSXcJafkMEG14aOxCF+mN3he73x7QQg
-         5FgTdoLhornTnLJ7Gm+j1BH8vZOjWbxzR8RosbNR6ifSclhWRb5QNhNJxYgiA12vlTpT
-         ExYw==
+        d=rafaelgss.dev; s=google; t=1712768642; x=1713373442; darn=lists.openwall.com;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1zZFIH0mogTdQaYRhtx7arePf/lFhP0SOWP3DinGKLU=;
+        b=jphi2fMbYWCeH3q/BfeIyZI/8zn0ZQXTvEWYxpSYgD4Tw7vthDDdzoxoUwxm6cgBRt
+         BWk9o4dmT/nGRaoQl7oA14PcetQVcDO49WdxxssjbiiaEArGjSSHAOd3fg/92zrPFy8q
+         YT0vsYLLvxHl9UidEzkCRayxaJOyFJNZxe8tKz9Sik5rI0yary+tRg4deAGKu5lUiSYi
+         5am+dwu4CWznDSqTiKXeaM0eIHu6oTuJARIotliOsLZwJW2msBj9gSEmbjtNB9e07Wxx
+         R+YmDjFmNMZpTLhHzcBnQsnILXaPgSI1ceplmdt67jN2zoma85xXFdurpvFDYokn8IYw
+         UTHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:mime-version:date:message-id:subject:to;
-        bh=akbUh8r1rUEvaJbWJar1WUI158TBzMfDkdwl3S1g5Js=;
-        b=TS55rPAfBS31msiOlxEfMvJxvE1Zb/6nwXgPnonW95kQWUDXJ6tl7MMGIbIgMQIJ5Q
-         69JgylQi/2tPBKnYricHaZP8Sg7L8zpurb3WZXeA2ZHoBpfeNeNnQafq7BkqLl37uWoQ
-         OIt4qJ3iatc7O5Gc5euSzjK2QlxsaJlZL/48ilmwHHo+7lQ+xZGfCFq3kxYp8r9k3P7D
-         fu7CbrrFvp/js9XMpxlikorjv9mOSuiAU1MJldv936YrCa5RVqGFViLglRv50+7+2Hqq
-         wqkgiIkha/zKJbePTvKAGBAxZpFB2qxp7Bp7cl4p5x2BZ3+4Y4ogavhnSaYLJzSOHu+P
-         wpJg==
-X-Gm-Message-State: AOAM531EpRipm1xoljGBA4HWiURQrE/Owg/W0MyRXnyft8gI0flQcuai
-	JoO0MbfQ8LSGoCNUXrH8cE/Cx6tEjDn1eicIiqRw820ntIo=
-X-Google-Smtp-Source: ABdhPJyYvZ3Y0Y/2wvykyHqYgPN1KiR15De++1OispkV/A7QNo+YyyPirdapnVqfmZuk375j/+I8Me+/kS9UoBt/sbY=
-X-Received: by 2002:ac5:cfd0:: with SMTP id m16mr14689523vkf.7.1633449587091;
- Tue, 05 Oct 2021 08:59:47 -0700 (PDT)
-From: Matteo Collina <matteo.collina@gmail.com>
+        d=1e100.net; s=20230601; t=1712768642; x=1713373442;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1zZFIH0mogTdQaYRhtx7arePf/lFhP0SOWP3DinGKLU=;
+        b=mo875q4/BTG9eFEVSYtSDg92oorGhUGeqqGSqzYPznZM9PmM+M5BZTqWfmEF6JVygH
+         xpbAsWjGDLZ5E7TrkOCGcQ8SLttehk6SzUY8Y9pQF/syMeLtjI10FgvA5khgKSJWFSFX
+         aUAOuQxu7Ccj+kMNsEaEbnutMQtZW3ETMeH5LAgeXTlETl0Za2wTWBnInrrR8y/yGMK0
+         WQh0utGUnqJVDSiuGobqyswNyRh/Xq9vHj9rtkCrWyJQeKLwVYT9lr66uE9Er5AeAo2Q
+         U4E2LbnJBBl8GGd4b3kczGburv00HM6lDDO1Nun2FmPPOVr+Lnn6mcWRzbx2ZtyrxP8v
+         1EyA==
+X-Gm-Message-State: AOJu0Yzh5G0TtWsbgK6PnxD0SVe12metFKNV61G+xVpV+gtzFsq6LGOc
+	5FyIyTVYzS6f4RQGo6w2rq4i0wmBhsYj5WICioauNkpbU7zlrCNR4PTzqejCpsVph2J6SdBXWS7
+	zxHMr6jeeOZR45KFQgQ==
+X-Google-Smtp-Source: AGHT+IEN8EyAm6HiQOmkNzoBID3Iz7MfR/Y4bh9c/NvPj/mWUhtglKa6QcxXRCUxsSuVY8dqUvWTzCONPA==
+X-Received: by 2002:a05:6870:968c:b0:22e:ddcb:b525 with SMTP id o12-20020a056870968c00b0022eddcbb525mr11276oaq.6.1712768642334;
+        Wed, 10 Apr 2024 10:04:02 -0700 (PDT)
+Date: Wed, 10 Apr 2024 10:04:02 -0700 (PDT)
+From: Rafael Gonzaga <work@rafaelgss.dev>
+To:  <oss-security@lists.openwall.com>
+Message-Id: <8d8f6c32-47d7-4816-8c07-14ea8fb4f9a3n@googlegroups.com>
+In-Reply-To: <752adcda-5d87-4ef4-9227-059adfd11fd4n@googlegroups.com>
+References: <1e55fc75-1179-4654-befc-ce98eef2a754n@googlegroups.com>
+ <752adcda-5d87-4ef4-9227-059adfd11fd4n@googlegroups.com>
 MIME-Version: 1.0
-Date: Tue, 5 Oct 2021 08:59:46 -0700
-Message-ID: <CAANuz55qyDPvKWJ6ZAdx08DYV=HoZunx7tn9cdyKMfR=HUZ+UA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000065ac2705cd9d1ed2"
-Subject: [oss-security] Fwd: Node.js security updates for all active release lines, October 2021
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_7690_75083384.1712768642073"
+Subject: [oss-security] Fwd: Node.js security update for all active relesae lines, April 9
+ 2024
 
---00000000000065ac2705cd9d1ed2
-Content-Type: text/plain; charset="UTF-8"
+------=_Part_7690_75083384.1712768642073
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_7691_191240717.1712768642073"
 
-On 5 October 2021 at 17:57:46, Matteo Collina (matteo.collina@gmail.com)
-wrote:
+------=_Part_7691_191240717.1712768642073
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-The Node.js project will release new versions of all supported release
-lines on or shortly after Tuesday,  12th of October, 2021
-For more information see:
-https://nodejs.org/en/blog/vulnerability/oct-2021-security-releases/
 
---00000000000065ac2705cd9d1ed2--
+
+---------- Mensagem encaminhada ---------
+De: Rafael Gonzaga <work@rafaelgss.dev>
+Data: quarta-feira, 10 de abril de 2024 =C3=A0s 14:03:54 UTC-3
+Assunto: Re: Node.js security update for all active relesae lines, April 9=
+=20
+2024
+Para: nodejs-sec <nodejs-sec@googlegroups.com>
+
+
+The planned security releases are now available. You can read more about=20
+the details at=20
+https://nodejs.org/en/blog/vulnerability/april-2024-security-releases-2
+Em quinta-feira, 4 de abril de 2024 =C3=A0s 17:22:26 UTC-3, Rafael Gonzaga=
+=20
+escreveu:
+
+The Node.js project will release new versions of all supported release=20
+lines on or shortly after Tuesday April 9th 2024. For more information see:=
+=20
+https://nodejs.org/en/blog/vulnerability/april-2024-security-releases-2
+
+
+------=_Part_7691_191240717.1712768642073
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<br /><br /><div><div dir=3D"auto">---------- Mensagem encaminhada --------=
+-<br />De: <span dir=3D"auto">Rafael Gonzaga &lt;work@rafaelgss.dev&gt;</sp=
+an><br />Data: quarta-feira, 10 de abril de 2024 =C3=A0s 14:03:54 UTC-3<br =
+/>Assunto: Re: Node.js security update for all active relesae lines, April =
+9 2024<br />Para: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@googlegroups=
+.com&gt;</span><br /></div><br /><br />The planned security releases are no=
+w available. You can read more about the details at=C2=A0<a href=3D"https:/=
+/nodejs.org/en/blog/vulnerability/april-2024-security-releases-2" target=3D=
+"_blank" rel=3D"nofollow">https://nodejs.org/en/blog/vulnerability/april-20=
+24-security-releases-2</a><div><div dir=3D"auto">Em quinta-feira, 4 de abri=
+l de 2024 =C3=A0s 17:22:26 UTC-3, Rafael Gonzaga escreveu:<br /></div><bloc=
+kquote style=3D"margin: 0px 0px 0px 0.8ex; border-left: 1px solid rgb(204, =
+204, 204); padding-left: 1ex;">The Node.js project will release new version=
+s of all supported release lines on or shortly after Tuesday April 9th 2024=
+. For more information see: <a href=3D"https://nodejs.org/en/blog/vulnerabi=
+lity/april-2024-security-releases-2" rel=3D"nofollow" target=3D"_blank">htt=
+ps://nodejs.org/en/blog/vulnerability/april-2024-security-releases-2</a></b=
+lockquote></div></div>=
+
+------=_Part_7691_191240717.1712768642073--
+
+------=_Part_7690_75083384.1712768642073--
