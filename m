@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["638" "Friday" "13" "January" "2017" "17:09:40" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701131706000.25713@wniryva>" "22" "[oss-security] CVE-2017-2584 Kernel: kvm: use after free in complete_emulated_mmio" nil nil nil "1" "2017011311:39:40" "[oss-security] CVE-2017-2584 Kernel: kvm: use after free in complete_emulated_mmio" (number mark "U       ppandit@redh Jan 13   22/638   " thread-indent "\"[oss-security] CVE-2017-2584 Kernel: kvm: use after free in complete_emulated_mmio\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13445 invoked by uid 550); 13 Jan 2017 11:39:56 -0000
+Received: (qmail 19544 invoked by uid 550); 10 Apr 2024 16:23:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +7,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13416 invoked from network); 13 Jan 2017 11:39:55 -0000
-Date: Fri, 13 Jan 2017 17:09:40 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-Message-ID: <alpine.LFD.2.20.1701131706000.25713@wniryva>
+Received: (qmail 32242 invoked from network); 10 Apr 2024 16:19:08 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jongyoul Lee <jongyoul@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <8849144e-4b85-c36b-752a-9d56fa3982b2@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 10 Apr 2024 16:18:45 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 13 Jan 2017 11:39:44 +0000 (UTC)
-Subject: [oss-security] CVE-2017-2584 Kernel: kvm: use after free in
- complete_emulated_mmio
+Subject: [oss-security] CVE-2024-31861: Apache Zeppelin: Code injection by Shell
+ interpreter 
 
-   Hello,
+Severity: important
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable to a use after free flaw. It could occur on x86 platform, when 
-emulating instructions fxsave, fxrstor, sgdt, etc.
+Affected versions:
 
-A user/process could use this flaw to crash the host kernel resulting in DoS.
+- Apache Zeppelin 0.10.1 before 0.11.1
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kvm/msg143571.html
+Description:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1413001
+Improper Control of Generation of Code ('Code Injection') vulnerability in =
+Apache Zeppelin.
 
-'CVE-2017-2584' is assigned to this issue by Red Hat Inc.
+The attackers can use Shell interpreter as a code generation gateway, and e=
+xecute the generated code as a normal way.
+This issue affects Apache Zeppelin: from 0.10.1 before 0.11.1.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Users are recommended to upgrade to version 0.11.1, which doesn't have Shel=
+l interpreter by default.
+
+Credit:
+
+Esa Hiltunen (finder)
+https://teragrep.com (finder)
+
+References:
+
+https://github.com/apache/zeppelin/pull/4708
+https://zeppelin.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-31861
+
