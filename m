@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2302" "Wednesday" "27" "July" "2016" "20:30:01" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1607271946420.18244@wniryva>" "68" "[oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS" nil nil nil "7" "2016072715:00:01" "[oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS" (number mark "U       ppandit@redh Jul 27   68/2302  " thread-indent "\"[oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30128 invoked by uid 550); 27 Jul 2016 15:00:20 -0000
+Received: (qmail 11323 invoked by uid 550); 10 Apr 2024 20:44:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +7,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30104 invoked from network); 27 Jul 2016 15:00:19 -0000
-Date: Wed, 27 Jul 2016 20:30:01 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Stefan Hajnoczi <shajnocz@redhat.com>, sstabellini@kernel.org,
-        zhenhaohong@gmail.com
-Message-ID: <alpine.LFD.2.20.1607271946420.18244@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Wed, 27 Jul 2016 15:00:07 +0000 (UTC)
-Subject: [oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via
- guest leading to DoS
+Received: (qmail 14062 invoked from network); 10 Apr 2024 20:36:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1712781364; x=1713448030; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-date:resent-from:resent-to:
+  resent-cc:in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=z+zC/tZP4vA0a+TXZg3IEPBK5+KjQHBJMvJh/BjN1aM=;
+ b=h0gXvtBnIVTIKY5TMTaKzxBFvhJDENdhHEBfe3lS+ndCQH7pglcCzpyOxV5MjSoNtBQwho40
+  MD60wSexJCFEcRu/2wolwew/7CwoTo8PggjhOhx4540cn4T8EEwTciR0+WclmqfoaLFKUhRJeZ
+  3XH0bF5FlPUvllB7LGu9NEsRK+4gGYt3aDcK/2/uG0/95GaYOHWpDSHe7tzm6yc7+CSHiArNaZ
+  64jNmlLEdB1pPX39LBLoByGsn/aD+fvqqQ/akW/ybHpADnKEH88WhYxpsEHpiELUKeWkylI8TN
+  J7GS2F7LQIK5Pmm4vQCc327qYASfLbfCYAaJen6Yo7JHvl5g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1712781364; x=1713448030; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-date:resent-from:resent-to:
+  resent-cc:in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=z+zC/tZP4vA0a+TXZg3IEPBK5+KjQHBJMvJh/BjN1aM=;
+ b=XXznC7V4xsJGwz/FBBfLlCY+zfKX9j/CEHojiTcFeeihq0S8tBb3KPdGBEig4CDvfI5Z5dVz
+  g5hkrKKtw/4vDg==
+Date: Wed, 10 Apr 2024 22:36:02 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20240410203602.7d11csyn@steffen%sdaoden.eu>
+In-Reply-To: <20215e9a-c05f-4897-8e4c-ae617ebd0cd4@oracle.com>
+References: <20215e9a-c05f-4897-8e4c-ae617ebd0cd4@oracle.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-612-g7e3bfac540
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] CERT VU#123335: Multiple Programming
+ Languages Fail to Escape Arguments Properly in Microsoft Windows
 
-   Hello,
+I want to thank Mr. Coopersmith for all his efforts.
 
-Quick emulator(Qemu) built with the virtio framework is vulnerable to an 
-unbounded memory allocation issue. It was found that a malicious guest user 
-could submit more requests than the virtqueue size permits, without waiting 
-for their completion. This requires reusing vring descriptors in more than one 
-request, which is incorrect but possible. Processing a request allocates a 
-'VirtQueueElement' object and therefore causes unbounded memory allocation 
-controlled by the guest.
+I think this list was detoriated by some parties in the last
+years, possibly due to the (management or whatever imposed)
+requirement for more "formalized professionalism", instead of
+trusting the main drivers of this list, but it seems that,
+effectively, the situation detoriated to the absolute opposite.
 
-A privileged guest user could use this flaw to potentially crash the guest 
-resulting in DoS. Memory exhaustion would also affect other guests and 
-services running on the host.
+Alan Coopersmith wrote in
+ <20215e9a-c05f-4897-8e4c-ae617ebd0cd4@oracle.com>:
+ |https://www.kb.cert.org/vuls/id/123335 announces:
+ |
+ |> Vulnerability Note VU#123335
+ |> Original Release Date: 2024-04-10 | Last Revised: 2024-04-10
+ ...
+ |> Various programming languages lack proper validation mechanisms for
+ |> commands and in some cases also fail to escape arguments correctly
+ |> when invoking commands within a Microsoft Windows environment. The
+ ...
+ |> <https://learn.microsoft.com/en-us/archive/blogs/twistylittlepassagesall\
+ |> alike/everyone-quotes-command-line-arguments-the-wrong-way>.
+ ...
 
-This issue was discovered by Zhenhao Hong of the 360 Marvel Team.
+Searching around the internet all Microsoft document( translation)s
+contain big warning boxes on that.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1358359
+What i do not understand is why Microsoft does not fix its
+_spawn*() function series to convert the char**argv array to
+a properly quoted command line argument (or whatever way they
+could also take *internally* to get that done)?
 
-Given below is a proposed patch to fix this issue:
+They could internally even double-check that the
+array->string->array conversion results in the same data, and do
+perform auto-quoting if not?
+How likely it is that anyone really wants to turn a char**argv
+array into a string that does not convert back properly?
 
-===
-virtio: error out if guest exceeds virtqueue size
+I mean, it is Microsoft's C library that we are talking about[1]:
 
-A broken or malicious guest can submit more requests than the virtqueue
-size permits.
+  In principle, each program can parse the command line string
+  differently, but most use the convetion that CommandLineToArgvW
+  and the Microsoft C library understand. This convention is
+  a good one because it provides a way to encode any command line
+  argument as part of a command line string without losing
+  information.
 
-The guest can submit requests without bothering to wait for completion
-and is therefore not bound by virtqueue size.  This requires reusing
-vring descriptors in more than one request, which is incorrect but
-possible.  Processing a request allocates a VirtQueueElement and
-therefore causes unbounded memory allocation controlled by the guest.
+  The problem is that there is no ArgvToCommandLineW. How do we
+  construct an argument string understood by CommandLineToArgvW?
 
-Exit with an error if the guest provides more requests than the
-virtqueue size permits.  This bounds memory allocation and makes the
-buggy guest visible to the user.
+^ But *why* then?
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
-  hw/virtio/virtio.c | 5 +++++
-  1 file changed, 5 insertions(+)
+  The C runtime library is useless
+  --------------------------------
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 18153d5..398c03f 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -561,6 +561,11 @@ void *virtqueue_pop(VirtQueue *vq, size_t sz)
+  Our first instinct should be look for a library function that's
+  already solved the problem.
+  ...
+  That's not what we want!
 
-      max = vq->vring.num;
+^ Maybe make it better, then?  Why not?
 
-+    if (vq->inuse >= max) {
-+        error_report("Virtqueue size exceeded");
-+        exit(1);
-+    }
-+
-      i = head = virtqueue_get_head(vq, vq->last_avail_idx++);
-      if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
-          vring_set_avail_event(vq, vq->last_avail_idx);
--- 
-2.7.4
-===
+  The correct solution
 
+^ There it is!
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+  [1] https://learn.microsoft.com/en-us/archive/blogs/twistylittlepassagesallalike/everyone-quotes-command-line-arguments-the-wrong-way
+
+Shouldn't the real vulnerability be attributed to the Microsoft
+_spawn*() function series?  It takes an array of individual
+strings, if it internally munges that for whatever reason into
+a single string they could as well take that single string from
+the outside, surely the "blamed" language developers would have
+spend a thought.  The Microsoft interface is to blame!
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
