@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2335" "Monday" "6" "June" "2016" "00:24:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160606042429.EBD9D42E014@smtpvbsrv1.mitre.org>" "63" "[oss-security] Re: Requesting CVE for ImageMagick DoS" nil nil nil "6" "2016060604:24:29" "[oss-security] Re: Requesting CVE for ImageMagick DoS" (number mark "U       cve-assign@m Jun  6   63/2335  " thread-indent "\"[oss-security] Re: Requesting CVE for ImageMagick DoS\"\n") "<CABfY0L3cfjwEENQTXtyx6z9Sqy6kFPqFHmQPHe_a5yzveJ8Eng@mail.gmail.com>" ("<CABfY0L3cfjwEENQTXtyx6z9Sqy6kFPqFHmQPHe_a5yzveJ8Eng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 8025 invoked by uid 550); 6 Jun 2016 04:24:46 -0000
+Received: (qmail 22484 invoked by uid 550); 11 Apr 2024 18:15:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,75 +7,250 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7993 invoked from network); 6 Jun 2016 04:24:41 -0000
-From: cve-assign@mitre.org
-To: jodie.cunningham@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CABfY0L3cfjwEENQTXtyx6z9Sqy6kFPqFHmQPHe_a5yzveJ8Eng@mail.gmail.com>
-Message-Id: <20160606042429.EBD9D42E014@smtpvbsrv1.mitre.org>
-Date: Mon,  6 Jun 2016 00:24:29 -0400 (EDT)
-Subject: [oss-security] Re: Requesting CVE for ImageMagick DoS
+Received: (qmail 9765 invoked from network); 11 Apr 2024 17:25:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712856322;
+	bh=AAONnW18gk1aAXRRdvNlna/+62rrqboRb8RDaC+Tvpo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TSjgf3XDIXLh0zScQXNAKDs4Jq+Q7Si+vi40NsAcTc/+Ajuux8t/85vsLFDBCGpV+
+	 3Tni1GPUS9tgKAQtWPl9HqSqrq4E/VklupED+LxghayVUa5MBE7xSAHL4SKf3OWudh
+	 cc2QIY9gu+tyAVF9YvPqg8gGZaZEq4TSxBaKRq1Ja/245OIo21gPFz4+vBw0Tp4SLW
+	 rY2MGGKxYdmI4mM3wDnwVKwlZMpRRX8EBnXi5t/hTY9/n8Li9tCHTUFNVlN/C7yFHi
+	 UBOPwSxUjZsmRtKcfkld+PQusPC2G6TQy0vatLB6YcETKk05n+c1mNcfEkeLgAGaHU
+	 T6WLHSrBlRKpQ==
+Date: Thu, 11 Apr 2024 19:25:11 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Jacob Bachmeyer <jcb62281@gmail.com>
+Cc: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>,
+	Joey Hess <id@joeyh.name>, Jonathan Nieder <jrnieder@gmail.com>,
+	Andres Freund <andres@anarazel.de>,
+	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org
+Message-ID: <Zhgc_fyeFqnTc__t@debian>
+References: <ZhYEpAFolwefRv7X@debian>
+ <20240410162812.GA17059@openwall.com>
+ <66175855.2090805@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="g3h14OggsUOvJq77"
+Content-Disposition: inline
+In-Reply-To: <66175855.2090805@gmail.com>
+Subject: Re: [oss-security] Analysis on who is Jia Tan, and who he could work
+ for, reading xz.git
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--g3h14OggsUOvJq77
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 11 Apr 2024 19:25:11 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Jacob Bachmeyer <jcb62281@gmail.com>
+Cc: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>,
+	Joey Hess <id@joeyh.name>, Jonathan Nieder <jrnieder@gmail.com>,
+	Andres Freund <andres@anarazel.de>,
+	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org
+Subject: Re: [oss-security] Analysis on who is Jia Tan, and who he could work
+ for, reading xz.git
 
-> 1/24/2015 3c1c3e63 HDR file DoS, CPU
->  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26929
->  https://bugzilla.redhat.com/show_bug.cgi?id=1195260
->  http://trac.imagemagick.org/changeset/17845
->  http://trac.imagemagick.org/changeset/17846
+Hi Jacob,
 
-Use CVE-2015-8900.
+[reordered]
 
-There are currently no DNS records for trac.imagemagick.org. It
-appears that some or all of the code changes may be on GitHub,
-although we have not confirmed that. For example, this HDR issue might
-be
-https://github.com/ImageMagick/ImageMagick/commit/97aa7d7cfd2027f6ba7ce42caf8b798541b9cdc6
+> Lastly, I believe that if (a big "if") enough evidence can be found to ma=
+ke
+> attribution of the xz backdoor stick, the results are likely to be a
+> political scandal that will serve to deter others from similarly going
+> rogue, so pinning the "Jia" on the sockmaster might be a good step to red=
+uce
+> the overall threat to the community.
+
+Agree.
+
+On Wed, Apr 10, 2024 at 10:26:13PM -0500, Jacob Bachmeyer wrote:
+> > Note that other recent threads in here about search for code patterns
+> > similar to Jia Tan's and even for PGP keys similar to Jia Tan's are more
+> > relevant to oss-security, because they're aimed to uncover potential
+> > related backdoor code in other projects.  In contrast, identifying who
+> > Jia Tan is or what country/ies they're from doesn't obviously help.  At
+> > best, it may give us guesses on where the presumed targets are, but then
+> > what?  We need to protect the whole ecosystem regardless of who/where
+> > the current attackers are, and we need to develop means to detect such
+> > attacks everywhere, not only at currently likely targets.
+>=20
+> First, a factual correction:  The hypothesis that "Jia Tan" was actually =
+in
+> UTC+03 seems to have been backwards, since the peak activity overlaps only
+> partially with office hours in UTC+03, but does indeed start with 9AM in
+> *UTC-03* by my reckoning.  The only problem is that UTC-01 through UTC-03
+> cover various islands in the Atlantic Ocean and a few Eastern parts of So=
+uth
+> America.  All of these strike me as unlikely sockmaster bases.  The probl=
+em
+> with time zones east of UTC is the observed UTC 17:00 "quitting time" (mo=
+re
+> below) which only gets /later/ in the local day as you move east.
+>=20
+> Second, I think that we can probably put the "Israeli" hypothesis to bed:
+
+The timezone can be faked, but it still has implications.
+
+Why would 4 commits in the recent period be committed allegedly in
+(winter) +0200?  I can think of a few options.
+
+The person had something to do in a country of that timezone.  Maybe it
+worked for a country in that timezone.  Maybe it worked for a different
+country but was infiltrated in that country.  Maybe it was a false flag
+to implicate that country.  But I would discard the "it's just a random
+timezone that the person chose".
+
+For a random timezone, you use either UTC, or the one in a country that
+would be unsuspicious.  I used UTC in the past, but that might be
+suspicious in Spain where I live, so at some point I decided to use
+CET/CEST, which would be unsuspicious for a computer in Spain.
+
+Now, for the false flag.  This attack was very likely something that
+they didn't intend to be discovered, as it would be significantly more
+valuable if undiscovered.  So we can assume they didn't put those 4
+commits for us to find them.  Yet, that person could have participated
+in other false flag attacks, and have its computer set up for them, so
+there's some chance that the +0200 timezone was false on purpose.  If
+that would be the case, and clearly it wasn't careful because it leaked
+the timezone in the commit, it might have left a few other traces (for
+example, when git pushing; maybe the logs have an IP).
+
+If it was not a side effect of a false flag from the same computer, this
+timezone was probably because the person has some implication with a
+country of that timezone.  Either infiltrated (working against them) or
+working for them.  In either case, it was a big mistake to leak the
+timezone, and it would mean those commits have been likely done from an
+important computer.  It could be a computer of an intelligence agency,
+or maybe of a programmer infiltrated in a country of the timezone.  I
+tend to favor the former.  Programmers don't really need to infiltrate
+often, since we work remotely just fine (there are reasons to physically
+infiltrate, but it's less likely, I think); also, this kind of long-term
+work isn't the kind of work you'd use an infil for.
+
+In any of those cases, the timezone is useful information, I think, and
+shouldn't be discarded easily.
+
+> There seems to be no 24 hour period where "Jia" made no commits, and what=
+ I
+> think is Friday night into Saturday (therefore the Jewish Sabbath) is one=
+ of
+> the more frequent late-night periods, while "Jia" seemingly (mostly) took
+> Sundays off.  I have read reports where activities were attributed to Isr=
+ael
+> and two of the key arguments were that APT group did /nothing/ on Friday
+> evenings or Saturdays, and Sunday seemed to be an ordinary work day for
+> them.  These characteristics do /not/ describe the "Jia" crew.  Whoever
+> "Jia" is, an observant Jew he is not.
+
+That's a very interesting observation.
+
+> I have been looking at this from a different angle, assuming that all of =
+the
+> time zone information in the commits is bogus and looking for patterns in
+> the commit epoch timestamps, which are harder to convincingly fake.  The
+> attached "collect.sh" is intended to run in a directory next to a copy of
+> the repository as "xz-backdoored" and extracts the commit and author
+> timestamps in epoch time, further decomposing them into week/time-of-week
+> and day/time-of-day for analysis and plotting.  The week and day numbers =
+are
+> counted from 1 Jan 1970, which was a Thursday, so the time-of-week numbers
+> in the output of the attached script are seconds from midnight Thursday. =
+ An
+> epoch day number X can be converted back to a date with `date --date=3D'1=
+ Jan
+> 1970 UTC + X days'` and an analogous command converts week numbers to
+> Thursdays.  This is a work in progress and I am not yet fully confident t=
+hat
+> I have correct analysis, in part because my results are different from wh=
+at
+> others had found before I started, so I am presenting the data extraction
+> script for others to either find problems with or replicate my results.  =
+The
+> script was run on a repository clone with master checked out at commit
+> f9cf4c05edd14dedfe63833f8ccbe41b55823b00.
+
+How did you plot them?  Do you have a gnuplot script handy or something?
+
+> There is a noticeable cluster in the plot, and about 85% of "Jia Tan"'s
+> commits were in the five hours starting at UTC noon.  If we exclude 2024,
+> which seems to have been "crunch time" on getting the backdoor out, that
+> jumps to about 91%.  I believe that this pattern *might* be a good indica=
+tor
+> for the sock farm containing "Jia Tan" but there are likely to be false
+> positives, so it is probably a weak indicator.  Combining this pattern wi=
+th
+> a claimed timezone (like "Jia"'s UTC+08) where that period is into the ni=
+ght
+> might work better.  In UTC+08, that period is 8PM to 1AM, which are unlik=
+ely
+> office hours.  The peak also ends almost as abruptly as it begins,
+> suggesting that UTC 17:00 was "quitting time" at "Jia"'s office, but that
+> "Jia" did occasionally work late.  The five hour active period is consist=
+ent
+> with morning planning meetings, followed by general work keeping up "Jia"=
+'s
+> appearances, with a floating lunch break somewhere.  Think "rogue state
+> bureaucracy" here.
+
+Hmmm.
+
+> The percentages above were calculated with these Awk commands:
+>=20
+> awk '{ if ($5>(12*3600) && $5<(17*3600)) A++; else B++ } END {print "in:
+> "A"  out:  "B"  all:  "A+B"    %in:  "100*A/(A+B)}'
+> timedata-committer-JiaTan
+>=20
+> awk '$4 < 19723 { if ($5>(12*3600) && $5<(17*3600)) A++; else B++ } END
+> {print "in:  "A"  out:  "B"  all:  "A+B"    %in:  "100*A/(A+B)}'
+> timedata-committer-JiaTan
+>=20
+> Epoch day 19723 is 1 Jan 2024 by my reckoning, (`TZ=3DUTC date --date=3D'=
+1 jan
+> 1970 UTC + 19723 days'`) so the second command repeats the count, excludi=
+ng
+> 2024.
+>=20
+> This thread landed in my inbox as I was planning to start work on further
+> partitioning the "Jia Tan" commits, initially by keywords in the commit
+> message.  Do commits involving "ifunc" stand out in time from all others?
+> Alejandro's work raises another question:  Does time-of-commit correlate =
+to
+> diff size?  Alternately:  Was the more complex work seemingly done in a
+> different time zone?
+
+I'll try to investigate this.  Please update when you finish your study.
+I'm interested.
+
+>=20
+> -- Jacob
 
 
-> 1/25/2015 d595506c MIFF file DoS, CPU
->  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26931
->  https://bugzilla.redhat.com/show_bug.cgi?id=1195265
->  http://trac.imagemagick.org/changeset/17854
+Have a lovely day!
+Alex
 
-Use CVE-2015-8901.
+--=20
+<https://www.alejandro-colomar.es/>
 
+--g3h14OggsUOvJq77
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 1/25/2015 c8ad6aba PDB file DoS, CPU
->  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26932
->  https://bugzilla.redhat.com/show_bug.cgi?id=1195269
->  http://trac.imagemagick.org/changeset/17855
-
-Use CVE-2015-8902.
-
-
-> 1/25/2015 783d8806 VICAR file DoS, CPU
->  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26933
->  https://bugzilla.redhat.com/show_bug.cgi?id=1195271
->  http://trac.imagemagick.org/changeset/17856
-
-Use CVE-2015-8903.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXVPqDAAoJEHb/MwWLVhi2YnoP/j/OsaE0UGCCqQ9+i6ryS7Ye
-i4PWl9Wj+LR843eJDfjT5oi2HwZVFoVP0rOCKqN0P6gj1Qhm1LeaQduY7hBkroXT
-zzNA0VombvKRRBwB4+3Bj9RDe74QNos8OoNz6SRJJyu2C/l7qyar6chyE71WxFn9
-wOGKk/Hi530cWJ1Cj3ft42nMbdG6eGQmtnmg+/h6Afd9FjD4YSYq/llUD20gVass
-oK4nXEUx3CsxiX8YOlbtkuTCIxuKhqb1xSqU0YyNUhTIRMBsywdcxpAplyO0iK43
-27s40ay8fSVV0xLg1GOwZ0t+/Ouwbu0iArXfxuzQOcSBaKcguz5NhzONE5vKT0Y5
-JpWlc1EvoLzdp0oDawJnfLr4TmTsA90DXgqM9TJXNReUyVB0HJkBFSn2t27HCeUf
-Gyvrq7oTkyWJhpJFOLTM+LmkDsXIaw6SlzUn6GSTwsDdEGJ5+C7W4byTkkpGFu9Y
-wo0JKrtwMNZQm1pjsV7w+AihnDhdwTyTNdTYrqqTXuPk4luD2T+kyTbB5Z+mba87
-chVHoptvOXG96X17EKLjfGjguqjziDE0ddDwbhxI4Z1FD347bXsui4NO2QBHiZ5X
-UW8XbWIou2L5MOhxM5M8SIfkEzfROhYstes3C1UC/RIL3SpFCceKqZCl3n/DdIob
-kTjGO9x5OCa+DWyPMhnx
-=Wtlv
+iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmYYHPcACgkQnowa+77/
+2zLbhg/+MKEf/5q8LShsy3fDQvNcf8Kq4n/D26YKYr1DDiFSfC4tAC+5GtMmHA3R
+owAxaroSqbTt6g7lzSmvUVlGj4Qh4w6wj48RZ90V7fIS96gx5YgBHSvkYhfd4xCp
+5L2VwOEufUXtYPAE/gl9rEKmQbx6buRQnej+DBrnoA0+RcRza9TySDPiujMavTt0
+4FL5lVV8JSRYlxWzB/FKvK9GsOlkozdM3CUUJcr/7FDGff4oXQb9Q5otWCppF4fc
+rkc1kATXKH4z/qwGoO6B+pbozeI7GBMRv6aQkeUndFQsNEFO6Yxr7GGH0i4z+wrP
+qCSpSJA6n7WHFm+aSLkPvcN5r0D6NjFLYAZSzen6jLvEhDkxWcCAoHTW+W7rT61P
+B6n4P300qkGdy+B+dFXvL3Sd6TqBsCmYdoq8Kmo5llQFdoORtjZB5blp78uBCbLk
+jnvg0Onjv0wA1PxEL/coSgiifaiqS+A0wTEnX7pr7EF71108/gdBSJHtqR+Ln772
+HOVSwyY8uGg+G0Xx05epDSSrTzDaIvCQpZjMsJd+s4oWgRvCtGUGzhTqm4CCu9Zj
+AfL5g2tAAKj94GDkdPyQ4BlyijrpUOfTAKCoUPiQNYgJG7T0hJ8cgtrKe8LgDf1y
+hHx+5O4WFiRz8a4fYSBF5E3yTaVNy+XFXicVsQMfCw3SaHsID6k=
+=xGs+
 -----END PGP SIGNATURE-----
+
+--g3h14OggsUOvJq77--
