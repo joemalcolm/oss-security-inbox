@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2226" "Wednesday" "25" "November" "2015" "16:28:18" "+0100" "Jacob Vosmaer" "jacob@gitlab.com" "<CADMWQoN+5h8vzSt+DFKN1YTzma0V3TFgiH2o6d2P6Tu50xRmsg@mail.gmail.com>" "61" "[oss-security] CVE request: RCE in gitlab-shell 2.6.6-2.6.7" nil nil nil "11" "2015112515:28:18" "[oss-security] CVE request: RCE in gitlab-shell 2.6.6-2.6.7" (number mark "U       jacob@gitlab Nov 25   61/2226  " thread-indent "\"[oss-security] CVE request: RCE in gitlab-shell 2.6.6-2.6.7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23878 invoked by uid 550); 25 Nov 2015 15:28:30 -0000
+Received: (qmail 28546 invoked by uid 550); 11 Apr 2024 13:44:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,97 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23855 invoked from network); 25 Nov 2015 15:28:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=jhPHhNEyfOPtyipwpEHe4lYK3HFlfkVBQa4RATaapIU=;
-        b=yow8rCRidRtJDCLoZtUWvCPKrruW9Xjt9SyRwVgCwYOWoFJ7KJmnh9uHKEwezNOo42
-         bD+f9BgGTwUilJS5FwwgByghh1C24kWC9z+K0p50gESed2plsAZ/PQaj3/55qXhwhDfL
-         0DA6gg1jOUx+juAfI5m/D7ZYXaMBW+5Zyt1UW3sU3cHyz6wjWsFLgx8puxUIX7F6cvU3
-         KOJUwGHswLByuRXHeFvYDd9xswcY4x5w+6cgnx4IiUkfPW4wDh6GeToGJgUYywyTrzea
-         ld6u9VIaziGJus2ZUuX4r8Wjq2yim6P7Jf/XBHB8uT1zhaycMsNRvAHoMlYbSwMymV7F
-         2t+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=jhPHhNEyfOPtyipwpEHe4lYK3HFlfkVBQa4RATaapIU=;
-        b=cMbypuggt+/xcMshU5OdKvH4RM1WdmTfCtdz9xq1Al0GqKCGL+9R+XJBMBTQQmOIUQ
-         YdVfu2kU2yOM0ksPAbNzB3+UNe3IE7vTP5E4tqeEMKR8nVy/iT0w/mnqN3iDr5w7gNh7
-         3OyAoG4WVFO4VSYwTEtj1qyBa8lTntFCL4c5cKOK4by7zwnh1LFjieAktupKkYpCS4fM
-         KxDqJqsB8ii+QYJNdAmVn5TUkvxbfgYLbY4QH+myVy4DL0uri6d/73JDnHlenJryrC5Q
-         IHTySeaKt7UeSqQea7Bckl3NRehNWSQZcIKkR5Kz1toiciX7cX+WZchdnAqFIH+Ye6EN
-         IHWg==
-X-Gm-Message-State: ALoCoQlwHjnxPQxrsRCcRjF0bDJe0hQwlNmcioUQA5n5Qv9TNFrtX0W01ujNvSMPdg8khTeM7BhO
+Received: (qmail 26099 invoked from network); 11 Apr 2024 07:06:25 -0000
+Message-ID: <309df802-f365-47b2-87e1-d361437db76d@molgen.mpg.de>
+Date: Thu, 11 Apr 2024 09:06:13 +0200
 MIME-Version: 1.0
-X-Received: by 10.28.45.216 with SMTP id t207mr5475899wmt.89.1448465298724;
- Wed, 25 Nov 2015 07:28:18 -0800 (PST)
-Date: Wed, 25 Nov 2015 16:28:18 +0100
-Message-ID: <CADMWQoN+5h8vzSt+DFKN1YTzma0V3TFgiH2o6d2P6Tu50xRmsg@mail.gmail.com>
-From: Jacob Vosmaer <jacob@gitlab.com>
+User-Agent: Mozilla Thunderbird
+From: Donald Buczek <buczek@molgen.mpg.de>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1142312099c19905255f1b71
-Subject: [oss-security] CVE request: RCE in gitlab-shell 2.6.6-2.6.7
-
---001a1142312099c19905255f1b71
+References: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
+Content-Language: en-US
+In-Reply-To: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On 4/10/24 21:56, Dr. Christopher Kunz wrote:
+> Hello all,
+> 
+> it seems that a new LPE (or two) in the Linux kernel has been dropped. The situation is a bit confusing and after discussing with Alexander off-list, I decided to post the various versions of the bug and the corresponding PoCs.
+> 
+> Maybe we can clear this up together.
+> 
+> 1. YuriiCrimson's version (April 6-ish)
+> 
+> It seems to use GSMIOC_SETCONF_DLCI, PoC supposedly works on current Ubuntu and Debians, but is stopped by LKRG.
 
-Hi,
+Thanks!
 
-I would like to request one (1) CVE for the vulnerability in
-gitlab-shell described below. Thanks in advance.
+For other distros or self-rolled kernels: Depends on CONFIG_N_GSM.
 
-We have found a remote code execution vulnerability in gitlab-shell
-2.6.6 and 2.6.7. This affects GitLab Community Edition 8.2.0 and
-GitLab Enterprise Edition 8.2.0. GitLab 8.1.4 and earlier versions
-are not affected by this vulnerability.
+D.
 
-GitLab allows users to push and pull Git data over SSH. To prevent
-full system access via SSH we use gitlab-shell, a program that
-sanitizes and validates SSH commands that run on the GitLab server
-to send and receive Git data. Due to a change in gitlab-shell
-2.6.6-2.6.7, an attacker who has a user account on a GitLab server
-can bypass the sanitization in gitlab-shell and run arbitrary
-commands on the GitLab server.
+> PoC and writeup are here: https://github.com/YuriiCrimson/ExploitGSM/tree/main
+> 
+> 2. jmpeaux' version (March 21)
+> 
+> This seems similar, also using GSMIOC_SETCONF_DLCI. In the screen shots, even the working dir for the PoC is identical to 1). Yurii claims jmpeaux stole his work.
+> 
+> Writeup: https://jmpeax.dev/The-tale-of-a-GSM-Kernel-LPE.html
+> 
+> PoC: https://github.com/jmpe4x/GSM_Linux_Kernel_LPE_Nday_Exploit/tree/main
+> 
+> And then there's
+> 
+> 3. ZDI-24-020 / CVE-2023-6546 (January)
+> 
+> This also exploits a race condition resulting UAF in the gsm_dlci struct. It's a little older.
+> 
+> Writeup and PoC: https://github.com/Nassim-Asrir/ZDI-24-020/
+> 
+> What do you make of this?
+> 
+> Best regards,
+> 
+> --cku
+> 
 
-The only versions of GitLab that include a vulnerable version of
-gitlab-shell  are GitLab Community Edition 8.2.0 and GitLab Enterprise
-Edition 8.2.0. If you are still running GitLab 8.1 or earlier then
-you are not affected by this vulnerability.  As an administrator
-you can check your gitlab-shell version by going to
-gitlab.example.com/admin and looking in the upper right corner in
-the 'Components' section. Only gitlab-shell versions 2.6.6 and 2.6.7
-are affected.
-
-If you installed GitLab 8.2.0 on your server then you should  [upgrade
-immediately](https://about.gitlab.com/update/).
-
-This vulnerability was fixed by:
-https://gitlab.com/gitlab-org/gitlab-shell/commit/dacb8ec07645f254c3a2cf7d6f1d6c26b4f33dce
-
-Best regards,
-
-Jacob Vosmaer
-GitLab Inc.
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQEcBAEBCgAGBQJWVdMIAAoJEB2vXw0YK62WrOYH/3qJbQfKpEeRkKRobDQwjpXw
-85NHkoeTPmneHe41KEeUrgt5YdkrZs4kjTlaAq5CgbxRgVTQdo907q4Y4O3TgmBl
-gnO0qJ7qATTKkZoK3h5YQUckhDXeyRIC4xYxmADefBRBKrlyWQWgh61p2rN/5/1T
-v3YmdDa+2DqYYhxNIUhHeIL9sF7XVhD3fOwNSZ/2w6ShgP9Zc1i6fHO0vbkU0ZX0
-WpG5h8TGIuvp6BgaIBo0u0eFgC7Q3e9Wi3GWwr200GAwOqqfIQDJKpFAUbH/EVTp
-SGR/lwxbrspUkU8cMNEwJBs4eREBxH0cIyq1TtqZlyRYhJrqYzjhNHg1Npi7bPg=
-=hvt4
------END PGP SIGNATURE-----
-
-Best regards,
-
-Jacob Vosmaer
-GitLab B.V.
-
---001a1142312099c19905255f1b71--
+-- 
+Donald Buczek
+buczek@molgen.mpg.de
+Tel: +49 30 8413 1433
