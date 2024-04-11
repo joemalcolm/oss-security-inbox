@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5584" "Monday" "9" "November" "2020" "10:39:36" "+0000" "=?gb2312?B?a2l5aW4o?==?gb2312?B?0vw=?==?gb2312?B?wcEp?=" "kiyin@tencent.com" "<48969a763aaf4601b35d47f7208746eb@tencent.com>" "92" "[oss-security] [CVE-2020-25704] Linux kernel: perf_event_parse_addr_filter memory leak" nil nil nil "11" "2020110910:39:36" "[oss-security] [CVE-2020-25704] Linux kernel: perf_event_parse_addr_filter memory leak" (number mark "U       kiyin@tencen Nov  9   92/5584  " thread-indent "\"[oss-security] [CVE-2020-25704] Linux kernel: perf_event_parse_addr_filter memory leak\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-25704] Linux kernel: perf_event_parse_addr_filter memory leak" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28663 invoked by uid 550); 9 Nov 2020 10:58:07 -0000
+Received: (qmail 28084 invoked by uid 550); 11 Apr 2024 13:44:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,121 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19725 invoked from network); 9 Nov 2020 10:39:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
-	s=s202002; t=1604918377;
-	bh=VIV4x64QcRZGOADa2yERwVJGPa2iOHzyC1bftYgeQ/8=;
-	h=From:To:Subject:Date;
-	b=CIfStvigU5EBa2ZYL4gJpux2jDp5PCU/KrBFTg0g2MXNnQTqjeu6JEOSWsgmllB+/
-	 Do1sZpS3odgFHE60i1H27e3K8XxcncFwb3CcGi1q5Y+A6LEKkk9rewoHWl5lMexstX
-	 ogOxr9k/cknokEBWdAVr1SKAq7Khz/VRMH0sbrAA=
-From: =?gb2312?B?a2l5aW4o0vzBwSk=?= <kiyin@tencent.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [CVE-2020-25704]Linux kernel: perf_event_parse_addr_filter
- memory leak
-Thread-Index: Ada2g5b/JZlu8rkaQdSJHvnXVAjy5g==
-Date: Mon, 9 Nov 2020 10:39:36 +0000
-Message-ID: <48969a763aaf4601b35d47f7208746eb@tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.14.87.198]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Received: (qmail 29706 invoked from network); 11 Apr 2024 10:39:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712831931; x=1713436731; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=Spwb+Xa80oMp2lygGVi7vbURVNTX8+CsbJkj71AywgQ=;
+        b=NRWs4XnxSBlk4g/I8hKKBwRSJdDTDezn9/Lh7Pn6fMyVwYdi/mkHCbpzuopXi6T3MG
+         fuI1dXbtSAoE401vsvhTZZRpP9/9Dac39ZAIUZlo8+a03WQd5idgwRbMgTj/vWEi3R3J
+         b9faHgKe1Sj/4oxurOWRDSSDGVkgLfld8rwYH1R6+3+ZGVQzTDMY8THCfzFx03tgIKDN
+         kcN6yCGKdGIruTRT73w4D6QBzbpY77NlGmyCrfeMWVtGEbGI/MwEi+41pNRYO9oLJ1WT
+         y5YX3BqXWYl//5LNGSolGvzKMmQDtUllgWHg5jCbOoQ/FPsKiEeNkL4TuWUGoC5bHy0d
+         ZNsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712831931; x=1713436731;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Spwb+Xa80oMp2lygGVi7vbURVNTX8+CsbJkj71AywgQ=;
+        b=tb4M+nQFGUktxbtZYJfcf1EBiBuZrAB8Z3MjYTXd6GBCDY5C354AYLDoHdnR2yhfL2
+         EtOSO8znx2HkNwR+3wECftq+7S5p4gO3U83jljHN5eA0cytiOF1SYIPOQCZT+cK4OIrU
+         wv9i8BIlptkUrYVMx/kXfuR/padLOk8aDaDp4ZFpQe6DJH+WzytA5eXgrC5KqhH8F1qO
+         doYaLZCv/gZAu02voCTu3MfJc5KnWzd3RSUh1B9NSkZuckG5z7FIujsYwHwD4vXpI0f2
+         rd+4Fl76vkSOBcRHZRx1WL/U+S5WdT+UW9R6El00v/+Wq+3AY5T+6iqnMNBbxeGIhzIM
+         tSPw==
+X-Gm-Message-State: AOJu0Yw3V0sECpc4raJ/LvjcM+6I99X0IPqRduimhYTI/i3rxBXK1+X7
+	RVycZROmvDWlEd6Qk+bMV70uxBW1GzV7PWrnXHn1fN+PwovFduUaIaOK0t7v
+X-Google-Smtp-Source: AGHT+IF4dPbmdc67/ejK/aBxgiNFWzQCuRId5sihYqhAbFMCVS9dzT9+kd8rm2JpNK3tYUH5nIMj/A==
+X-Received: by 2002:ac2:42ca:0:b0:516:cd76:ee11 with SMTP id n10-20020ac242ca000000b00516cd76ee11mr3255617lfl.17.1712831930417;
+        Thu, 11 Apr 2024 03:38:50 -0700 (PDT)
+Sender: Maxim Nikulin <m.a.nikulin@gmail.com>
+Message-ID: <29c2fa7d-febb-4496-bac7-a963998d7bcb@gmail.com>
+Date: Thu, 11 Apr 2024 17:38:48 +0700
 MIME-Version: 1.0
-Subject: [oss-security] [CVE-2020-25704] Linux kernel: perf_event_parse_addr_filter memory
- leak
+User-Agent: Mozilla Thunderbird
+To: Sean Whitton <spwhitton@spwhitton.name>,
+ Salvatore Bonaccorso <carnil@debian.org>
+Cc: oss-security@lists.openwall.com, emacs@packages.debian.org,
+ emacs-devel@gnu.org, Ihor Radchenko <yantar92@posteo.net>
+References: <874jccjpvy.fsf@melete.silentflame.com> <87y19nu22i.fsf@localhost>
+ <87bk6he8h4.fsf_-_@melete.silentflame.com> <87o7ahe85l.fsf@localhost>
+ <Zhafa3wcZONJX-_k@eldamar.lan> <87y19kcle1.fsf@melete.silentflame.com>
+Content-Language: en-US, ru-RU
+From: Max Nikulin <manikulin@gmail.com>
+In-Reply-To: <87y19kcle1.fsf@melete.silentflame.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
 
-Q1ZFIGFzc2lnbmVkOg0KQ1ZFLTIwMjAtMjU3MDQNCg0KUGF0Y2g6DQpodHRw
-czovL2dpdC5rZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC90
-aXAvdGlwLmdpdC9jb21taXQvP2lkPTdiZGIxNTdjZGViYmY5NWExY2Q5NGVk
-MmUwMWIzMzg3MTQwNzVkMDANCg0KRGV0YWlsczoNCg0KSGksDQoNClRoZXJl
-IGlzIGEgbWVtb3J5IGxlYWsgaW4gcGVyZl9ldmVudF9wYXJzZV9hZGRyX2Zp
-bHRlci4gSGVyZSBpcyB0aGUgZGV0YWlsLg0KDQpodHRwczovL2dpdC5rZXJu
-ZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC9zdGFibGUvbGludXgu
-Z2l0L3RyZWUva2VybmVsL2V2ZW50cy9jb3JlLmM/aD12NS45LjMjbjk5OTEN
-Cjk5OTEgICAgICAgIHN0YXRpYyBpbnQNCjk5OTIgICAgICAgIHBlcmZfZXZl
-bnRfcGFyc2VfYWRkcl9maWx0ZXIoc3RydWN0IHBlcmZfZXZlbnQgKmV2ZW50
-LCBjaGFyICpmc3RyLA0KOTk5MyAgICAgICAgICAgICAgICAgICAgICAgICBz
-dHJ1Y3QgbGlzdF9oZWFkICpmaWx0ZXJzKQ0KOTk5NCAgICAgICAgew0KLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg0KMTAwNTggICAgICAg
-ICAgICAgICAgICAgIGlmICh0b2tlbiA9PSBJRl9TUkNfRklMRSB8fCB0b2tl
-biA9PSBJRl9TUkNfRklMRUFERFIpIHsNCjEwMDU5ICAgICAgICAgICAgICAg
-ICAgICAgICAgaW50IGZwb3MgPSB0b2tlbiA9PSBJRl9TUkNfRklMRSA/IDIg
-OiAxOw0KMTAwNjAgICAgICAgIA0KMTAwNjEgICAgICAgICAgICAgICAgICAg
-ICAgICBmaWxlbmFtZSA9IG1hdGNoX3N0cmR1cCgmYXJnc1tmcG9zXSk7ICAg
-ICAgICAgICAgICAgICAgICAgICA8LS0tLS0tLS0tLS0tLS0tIG1hdGNoX3N0
-cmR1cCBhbGxvY2F0ZXMgbWVtb3J5IGZvciBmaWxlbmFtZQ0KMTAwNjIgICAg
-ICAgICAgICAgICAgICAgICAgICBpZiAoIWZpbGVuYW1lKSB7DQoxMDA2MyAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICByZXQgPSAtRU5PTUVNOw0KMTAw
-NjQgICAgICAgICAgICAgICAgICAgICAgICAgICAgZ290byBmYWlsOw0KMTAw
-NjUgICAgICAgICAgICAgICAgICAgICAgICB9DQoxMDA2NiAgICAgICAgICAg
-ICAgICAgICAgfQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Lg0KMTAwODkgICAgICAgICAgICAgICAgICAgIGlmIChmaWx0ZXItPmFjdGlv
-biA9PSBQRVJGX0FERFJfRklMVEVSX0FDVElPTl9GSUxURVIgJiYgICAgICAg
-ICA8LS0tLS0tLS0tLS0tLS0tIGlmIGZpbHRlci0+YWN0aW9uID09IFBFUkZf
-QUREUl9GSUxURVJfQUNUSU9OX0ZJTFRFUiBhbmQgZmlsdGVyLT5zaXplIGlz
-IHplcm8sIGdvIHRvIGZhaWxlZCBicmFuY2gNCjEwMDkwICAgICAgICAgICAg
-ICAgICAgICAgICAgIWZpbHRlci0+c2l6ZSkNCjEwMDkxICAgICAgICAgICAg
-ICAgICAgICAgICAgZ290byBmYWlsOw0KMTAwOTIgICAgICAgIA0KLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg0KMTAxNDAgICAgICAgIGZh
-aWxfZnJlZV9uYW1lOg0KMTAxNDEgICAgICAgICAgICBrZnJlZShmaWxlbmFt
-ZSk7DQoxMDE0MiAgICAgICAgZmFpbDogICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIDwtLS0tLS0tLS0tLS0tLS0gZmlsZW5hbWUgaXMgbm90IGZyZWVkIGlu
-IHRoZSBmYWlsZWQgYnJhbmNoLiB0aGF0IGNhdXNlcyBhIG1lbW9yeSBsZWFr
-Lg0KMTAxNDMgICAgICAgICAgICBmcmVlX2ZpbHRlcnNfbGlzdChmaWx0ZXJz
-KTsNCjEwMTQ0ICAgICAgICAgICAga2ZyZWUob3JpZyk7DQoxMDE0NSAgICAg
-ICAgDQoxMDE0NiAgICAgICAgICAgIHJldHVybiByZXQ7DQoxMDE0NyAgICAg
-ICAgfSANCg0KDQp0aGUgbGVuZ3RoIG9mIGZpbGVuYW1lIGlzIG5vIGxpbWl0
-LiB1c2luZyB0aGUgZm9sbG93aW5nIHRlc3QgY29kZSwgaXQgd2lsbCB0YWtl
-IDQwIHNlY29uZHMgdG8gZXhoYXVzdCAxNkdCIG1lbW9yeSBpbiBteSBsYXB0
-b3A6IENQVSBpbnRlbCBpNSAxMDIxMFUsVWJ1bnR1IDIwLjA0LCBrZXJuZWwg
-dmVyc2lvbiA1LjQuMC00Mi1nZW5lcmljLiB0aGVuIEkgaGF2ZSB0byBwcmVz
-cyBwb3dlciBidXR0b24gdG8gcmVib290IHRoZSBzeXN0ZW0gbWFudWFsbHku
-DQoNCiNpbmNsdWRlIDxzeXMvaW9jdGwuaD4NCiNpbmNsdWRlIDxsaW51eC9w
-ZXJmX2V2ZW50Lmg+DQojaW5jbHVkZSA8dW5pc3RkLmg+DQojaW5jbHVkZSA8
-c3RyaW5nLmg+DQoNCiNkZWZpbmUgX19OUl9wZXJmX2V2ZW50X29wZW4gICAg
-Mjk4DQoNCnN0YXRpYyBsb25nIHBlcmZfZXZlbnRfb3Blbiggc3RydWN0IHBl
-cmZfZXZlbnRfYXR0ciAqaHdfZXZlbnQsIHBpZF90IHBpZCwgaW50IGNwdSwg
-aW50IGdyb3VwX2ZkLCB1bnNpZ25lZCBsb25nIGZsYWdzICkgew0KICAgIGlu
-dCByZXQ7DQoNCiAgICByZXQgPSBzeXNjYWxsKCBfX05SX3BlcmZfZXZlbnRf
-b3BlbiwgaHdfZXZlbnQsIHBpZCwgY3B1LCBncm91cF9mZCwgZmxhZ3MgKTsN
-CiAgICByZXR1cm4gcmV0Ow0KfQ0KDQpjaGFyIGJ1ZlsxMSArIDEwMjQgKiAx
-MDI0ICogMTYgKyAxXSA9IHsgMCB9Ow0KDQppbnQgbWFpbiggdm9pZCApDQp7
-DQogICAgaW50IGZkMSwgaTsNCiAgICBzdHJ1Y3QgcGVyZl9ldmVudF9hdHRy
-IHBlMSA9IHsgMCB9Ow0KDQogICAgcGUxLnR5cGUgPSA5OyAvLyBtYXkgYmUg
-ZGlmZmVyZW50IGluIG90aGVyIHN5c3RlbS4ganVzdCBydW4iIGNhdCAvc3lz
-L2J1cy9ldmVudF9zb3VyY2UvZGV2aWNlcy9pbnRlbF9wdC90eXBlIg0KICAg
-IHBlMS5leGNsdWRlX2tlcm5lbCA9IDE7DQogICAgcGUxLmV4Y2x1ZGVfaHYg
-PSAxOw0KICAgIHBlMS5leGNsdWRlX2lkbGUgPSAxOw0KDQogICAgZmQxID0g
-cGVyZl9ldmVudF9vcGVuKCAmcGUxLCBnZXRwaWQoKSwgLTEsIC0xLCAwICk7
-DQogICAgaWYgKCBmZDEgPiAwICkNCiAgICB7DQogICAgICAgIG1lbXNldCgg
-YnVmLCAnQScsIDExICsgMTAyNCAqIDEwMjQgKiAxNiApOyAvL2ZpbGVuYW1l
-IGxlbmd0aCBpcyAxNk1CDQogICAgICAgIG1lbWNweSggYnVmLCAiZmlsdGVy
-LDAvMEAiLCAxMSApOw0KDQogICAgICAgIGZvciAoIGkgPSAwOyBpIDwgMTAy
-NDsgaSsrICkNCiAgICAgICAgew0KICAgICAgICAgICAgaW9jdGwoIGZkMSwg
-UEVSRl9FVkVOVF9JT0NfU0VUX0ZJTFRFUiwgYnVmICk7IC8vbGVhayAxNk1C
-KjEwMjQ9MTZHQg0KICAgICAgICB9DQoNCiAgICAgICAgYnVmWzExICsgMTAy
-NCAqIDEwMjRdID0gJ1wwJzsgLy9maWxlbmFtZSBsZW5ndGggaXMgMU1CDQog
-ICAgICAgIGZvciAoIGkgPSAwOyBpIDwgMTY7IGkrKyApDQogICAgICAgIHsN
-CiAgICAgICAgICAgIGlvY3RsKCBmZDEsIFBFUkZfRVZFTlRfSU9DX1NFVF9G
-SUxURVIsIGJ1ZiApOyAvL2xlYWsgMU1CKjE2PTE2TUINCiAgICAgICAgfQ0K
-DQogICAgICAgIGJ1ZlsxMSArIDEwMjRdID0gJ1wwJzsgLy9maWxlbmFtZSBs
-ZW5ndGggaXMgMUtCDQogICAgICAgIHdoaWxlICggMSApDQogICAgICAgICAg
-ICBpb2N0bCggZmQxLCBQRVJGX0VWRU5UX0lPQ19TRVRfRklMVEVSLCBidWYg
-KTsgLy9sZWFrIHRoZSByZXN0DQogICAgfQ0KICAgIHJldHVybiAwOw0KfQ0K
-DQpSZWdhcmRzLA0Ka2l5aW4uDQoNCg==
+On 11/04/2024 16:13, Sean Whitton wrote:
+> On Wed 10 Apr 2024 at 04:17pm +02, Salvatore Bonaccorso wrote:
+> 
+>> Note that the CVE assignment (by MITRE as assigning CNA) for
+>> CVE-2024-30203 is explicitly as follows:
+>>
+>>> In Emacs before 29.3, Gnus treats inline MIME contents as trusted.
+>>
+>> https://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=937b9042ad7426acdcca33e3d931d8f495bdd804
+> 
+> This commit doesn't fix anything at all, just fyi.
+
+This Emacs commit
+
+     2024-02-20 12:44:30 +0300 Ihor Radchenko:
+     * lisp/gnus/mm-view.el (mm-display-inline-fontify): Mark contents 
+untrusted.)
+
+is not enough to fix the issue. More changes are required to make the
+fix effective, namely
+
+ccc188fcf98 2024-02-20 12:43:51 +0300 Ihor Radchenko: * lisp/files.el 
+(untrusted-content): New variable.
+6f9ea396f49 2024-02-20 12:47:24 +0300 Ihor Radchenko: org-latex-preview: 
+Add protection when `untrusted-content' is non-nil
+
+
+When external Org mode is loaded, that version should contain
+
+https://git.savannah.gnu.org/cgit/emacs/org-mode.git/commit/?id=03635a335
+2024-02-20 12:47:24 +0300 Ihor Radchenko: org-latex-preview: Add 
+protection when `untrusted-content' is non-nil
+
+besides Emacs commits ccc188fcf98 and 937b9042ad7
+
+Emacs commit 6f9ea396f49 (fix of built-in Org mode) is currently
+associated with CVE-2024-30203, however Org mode commit 03635a335
+is not.
