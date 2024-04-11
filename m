@@ -1,4 +1,4 @@
-Received: (qmail 11662 invoked by uid 550); 3 May 2026 17:57:50 -0000
+Received: (qmail 25700 invoked by uid 550); 12 Apr 2024 01:06:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,148 +7,309 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11997 invoked from network); 3 May 2026 06:30:52 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gSU19cVDpeFjoWBRqhm8++wKD8LtZqb7AnJ348KM6MM6Kow1fZ2NXXrj7I4IlyJitQspWKc3yosPyy5JUcPFezh/K/jHSoFjbIFHRafyRIM2szb6sYv6/Jk6P7RVzk53zk80xm1T1GaAhvyUva9tqgiZYoT1R5vo+6T/UKLDllkPmhD/wwc2KSUHIB+9C9F63kA3LVBYTJq09p6mo8zF04kRhkU6mDovp04LMUUMw3B3YNXkjbp/7H/TW3hw3MoBqOANJpaq1ijE6TraIBAeEOr5Hw63WR9CZkejcRIQ41W1ozfskDwqL/v+9tHjDgZNKQ8LZ13j68MPIbqRifvmHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IBsa/rwmC6LuFY7ris8D48GmRwfcT78pAvz+uE1oTXY=;
- b=bDeOsReqwiUpFVpobxU9c0fpiW5e2upGcQT0bqsYJR49QqoPa3NlWz+92iYQ67rQtcAn1XwBU3ZiV6av0EnN7elpYLdRO6tSxLug4JvAjobxaD38MmtxdJ5x22ZSTSALRgdnvrv9nbl3/ALWgwgahg5ELUDq13wpEYVrp1n57XEKtR5RM0+uC7XNVd7aSTZak4V/oxdMgs57Qv5Hl9lLQ5C8Eq04zZzT8mFkf4ym8Cjl6sWM55m0kYK+R/iUoubHa65Oa/dSp1X8m0edFXAT8AUkpLyFHLtznBgB1CywXoU3bOLlDrsK32ZCD1bHAVkiBSeUwvBET2VHH0/jsQeqWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cs.auckland.ac.nz; dmarc=pass action=none
- header.from=cs.auckland.ac.nz; dkim=pass header.d=cs.auckland.ac.nz; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.auckland.ac.nz;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IBsa/rwmC6LuFY7ris8D48GmRwfcT78pAvz+uE1oTXY=;
- b=ky5bHpJ4DevlmwEMG8YEdqR7+yiU9NcJ0aTtArMZynTk7+2kfd+F7pPXS637nWVnJTUo9W+SfYjEMEfUPaAh5k7TsWuj3rb/qQm0qxMo093SGThNYjD52zkQZV+aa5IA4GwBe4WOHLbB5hOaevrCvZdKuIQ4ygIU0Du1U4Byjcw+wfikp4mYSIGRpcMwQSmoloFJKJttlDTk5zTferDDSgudtYnGOvNLc3giaiKBQyFGY/OprCCjDoWW6icUm5pXEdVdK5OoE8fpo85O14nAjj3A0NbyxDAYQYvfKmbvGkiVyOaHH62lAoMemCF3kS8dcEFP96fJbuysdu3pcAhu8g==
-From: Peter Gutmann <pgut001@cs.auckland.ac.nz>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	Richard Kettlewell <rjk@terraraq.uk>, Eric Biggers <ebiggers@kernel.org>,
-	Linux kernel mailing list <linux-kernel@vger.kernel.org>,
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>
-Thread-Topic: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
-Thread-Index:
- AQHc2CxKmrioq2wZyE+CKBEWS2zjN7X3CfyAgAAj+QCAAAUBgIACG4SAgAHQyACAADd7AIAAhS5u
-Date: Sun, 3 May 2026 06:30:34 +0000
-Message-ID:
- <SYBPR01MB63364E7BD7FE724E2225875DEE302@SYBPR01MB6336.ausprd01.prod.outlook.com>
-References: <afJorKIje4O6dXbH@netmeister.org>
- <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan> <20260430071917.GB54208@sol>
- <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
- <cfe5a1f5-f7fe-44a5-8af9-8e4c8d68b3d7@terraraq.uk>
- <3a52a111-e961-4ac6-830c-31465a7d14de@gmail.com>
-In-Reply-To: <3a52a111-e961-4ac6-830c-31465a7d14de@gmail.com>
-Accept-Language: en-NZ, en-US
-Content-Language: en-NZ
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=cs.auckland.ac.nz;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SYBPR01MB6336:EE_|MEYPR01MB7869:EE_
-x-ms-office365-filtering-correlation-id: 104072c2-e3d4-45b1-f972-08dea8dd7b6a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|366016|376014|786006|10070799003|22082099003|18002099003|56012099003|38070700021;
-x-microsoft-antispam-message-info:
- KrsfLg/hlkcFsFI3S30VG6CGjew35tGwXWluFcrKlA0THWfSo8fC2FyCfWplHy5IFLHoDLO3R8UDCNGggp4ow+KQGPyQ4eWLgA7fZXO13u2aWW6d3gY2+fToV2SQrrpHITOeE+TAfipnrJH3VkyIjutSUpR45OKihnyMjY/YmlICGUHMaLNtxA00pG4YVrd4dCX9zAb+0tsKldiY2FjH2vy0GNX78vd/sFEJErMp+Ah8eA28bCAbDjgkiJs6N9gnEKfo9RblA83zJ6ErmDHp6nltTPZQ7SLh7bAYerXYDnvzqzTxJvVGLCgBQZxQEviH0N+oEGE5YxZAphIC4sNBNGH8D/5cDfCdl9nAKk9gTQhE5E5gltpJky8RkCKpPuKDeZqjW6MwsQGhJ802zEYnXRWSB3zZmnzL8VXHQIroYLWX9lO7+B6aJoWMFN+cvTxaHltGahF1y+8w2N3myN34u3U/On/rgvqY8fvNsWhuYSgWf8fPENoWalRDH3RqgtPuAH0pRs/TtQHMGBlo6jbZOIbR+H1lC0tI9xaSjs/+TyFhWRjwwajHHzTuzYr6Rj2v1hjtDkBumvnphqKLBo/xMER6uvtnhMI5XVW/w25lmHtdVdX02NDcoIRyn9CKuYD86WdSWSOVtTP5wUsNZ2ylKDR6ZfsEtvSx6WxmS70XRALczHL53L6HoJhkuxTLrixepRLoj0vswAY/G6G++KLLU2GrVRd5R4+sn6iomRTw9pRjE5JBVrXQGhZolKAR+hbL
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SYBPR01MB6336.ausprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(786006)(10070799003)(22082099003)(18002099003)(56012099003)(38070700021);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?7vOQZsA3ywDT9oyQXDgtchvhsgVUJXID93JjNMWsxnkJ4/hw9JEp5MelzP?=
- =?iso-8859-1?Q?OnPhGJKIuh/X2LqzQal7qVD9kutZN8L+iraO3OdoGIe7L6mJhBRCiu1Nnw?=
- =?iso-8859-1?Q?w/wC/jRJhof0YcHGOK8lhzBnRKPHzQHNER38RtEs2WrJlDdOZ3T27qjPBr?=
- =?iso-8859-1?Q?2HnGZs/YDBuz0DuCILV/VcM1qGGX7/tdRDSF7gboEMSd6yYI3PyBsedp8K?=
- =?iso-8859-1?Q?vdvWZrgZIfQH9oSkx8XccUk8N4PSEMPkoHo0gYOBA5ZLO2smGApu5qOHxY?=
- =?iso-8859-1?Q?a2Tzr9TykYI6AC2ffmANq6dR6/La3dIq29qkFAEemqXtqGqoeaXghA6InD?=
- =?iso-8859-1?Q?lODJDU/CBQY4QJdFMB4pjVIigCg/8ALOOkToQsxLzFqD2TTMlvJ1GJXcbi?=
- =?iso-8859-1?Q?ytrKXW65IY/42VXr7gQl495bu+BjqVqXb1KxBIz3oCcTsQi9HVM+dOERAE?=
- =?iso-8859-1?Q?eckiRchqQCrj03WKoKVLC/4BxNYTMp4EW+L2Z30U3apctVlyJIjYTqtedZ?=
- =?iso-8859-1?Q?5J7mE+QqE//bt4hjHK3Z1EkKOQO6zDaY27yuXusHUJn3Cf4BsfbvxH5KG5?=
- =?iso-8859-1?Q?rcU1qnUWexcMx0LqaOsQK7XQrGHioa1+BlUdc9PdqFBOpdJKOiYGXJykr3?=
- =?iso-8859-1?Q?hi0xvlDJ7lPUBHHgISe5nI+UTp8tBeX5OpM2eXkNfMh9wt5aGUXvGk14bb?=
- =?iso-8859-1?Q?0kSRAQHmwdohlS7tb8tnZq+1jdhEfT0wtyiYrwHsxDYUGhbQK+4t78RlOA?=
- =?iso-8859-1?Q?eLOWjzekYC5Ie+4zxwqDVArGw3kkuNKRHILZ/wte4UylOn5dXFnU3OADuX?=
- =?iso-8859-1?Q?qC83DGrQG79DXsuk2kV4T3PPgvQVZr8fwlUvTRndLKbH3QN7WSiYm1C714?=
- =?iso-8859-1?Q?6sPeq7g7YTv5v9OGyinf632OEthyGTn9PYAc1oM+OHJqzV+X48gMKzGhl7?=
- =?iso-8859-1?Q?kIb93Mimk84qsTcxIJsrGilErbKbV1mZS8JsaiNbKvf2vjDTQW/ei8kjjf?=
- =?iso-8859-1?Q?hCI/l5/TgDd6gwWrMCCSJtxIO8aA7CsNHnesRHheDkQDaVlAcuLZMdDj6r?=
- =?iso-8859-1?Q?UMaiLO3AXiOkAsjttAEeKhlvhXadzpQesPCh6E5ln3XQcVeeR70q5TQduM?=
- =?iso-8859-1?Q?crVqR31eV7WCtRi37Hb7y8XgSYDlDuh2cmxEhuy4TlqJxdI6iz8Syng6o6?=
- =?iso-8859-1?Q?vVEt2YcH2OJJ2ol7ibki9yFk/cNqmGJSJ8OIw80MGoCHNTYHBpbgTgM+9w?=
- =?iso-8859-1?Q?IM+x1hFICRDMH8J3QBgrr3tH1e03EqA7mLc1MttmFp9cDO6eLw+sldbrwN?=
- =?iso-8859-1?Q?Q5EBHUHf4l+alepvDDZQB7Zp3OwHLy2IUs9F9TCAkNXpaxBMO6uxdpxLFL?=
- =?iso-8859-1?Q?UhPz6Wag67Dz1LmHFB+/r3Q9MV9FX87cbgxxNcmgKeYLU+OxnnoFtDOQZU?=
- =?iso-8859-1?Q?aRv/aWlNOWaxDmEcH6iCTCNlq8zwLYmzSvAn67/FeQzuca4BvcHPmnwJ4p?=
- =?iso-8859-1?Q?DI7aduyyqzpU87JvmZn3fDSfM0E/HOFidgjmpZoSB85wViAKJ9feeazEln?=
- =?iso-8859-1?Q?MbKCDWJQl3on+TfIYLeJR21dLpHd/vMuCX+tk+G9aT0BeaFgSKmaOqbO8M?=
- =?iso-8859-1?Q?zkQnQl0NSckFD4vJCISPDIOWGugS/pPdzAvLWI692ppJoyiiYVvsZj507o?=
- =?iso-8859-1?Q?OT7rr3XpOk/2Uz5onsYJt45Kn6PnPMGSE6HuJ5CetDQvxW4T/8DWT9XifL?=
- =?iso-8859-1?Q?klqGCcqiAxU2j6YdOOPokoNC6I2NgEybO5/UlemOwFJ13+riz4FgjyxBxG?=
- =?iso-8859-1?Q?I0MArsGP5TWhX/709pDnufNH/y55VEgASw1HpkFZh1SX7rFLLGAflqCBQP?=
- =?iso-8859-1?Q?Rl?=
-x-ms-exchange-antispam-messagedata-1: aLItd6zhh9EBSQ==
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 32635 invoked from network); 11 Apr 2024 19:53:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712865214; x=1713470014; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qZDL7dNc+dJrT9aV/lPxFMGsr98Bu65heoRXjMz92Ps=;
+        b=kQGs0Ry+1+GRfaxt9L+r5rdXCGJ9njtBnh1eJcDaYCieR4R0C9X/bSagdtjaWcW/F0
+         /ATmNrBiSttrXPZzUZxK66wzEHQp0WmJ3C+dfQ7qplPj1TphXvqPH2dUG6MyaxqbckUM
+         IaQxmBFO+B2CwoaQIAXSwHBfc1zj1aU3FcCpelWOAMa1yZDVnEMSGHHbEx+au3dAxmW3
+         aw+uNRDeDK5VGi5j8zYNaWHFUvIsXOM1hptWf4xSU7jJ1ZpdFvi/SuBElsFuR50g9KQ9
+         wLv+41GywmN5P+0ZgwOSkbJZ/UjaNY9n86O7+KFaoG/RXf4QjjDMyQXIUJYxil4sZT+9
+         Q3LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712865214; x=1713470014;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qZDL7dNc+dJrT9aV/lPxFMGsr98Bu65heoRXjMz92Ps=;
+        b=KZxydNw4YLz2NH917GD9zwrOjL+ejIUzHWuz8CLhEbNBOi0pPxHYDMgW/Glw+ojeUV
+         JQeClDGNmTgEsSo25UIwpcIYF1b9VZVmDWUNzdbDO7vsGeE6Vb4MXfH3LOcPLrNFTUCM
+         L59Enf3tMildFbQo5WCD0Cs6xN4JhkLxFcWpW7tYXaznj86hsd+VC25GnvbWQDZTo4a6
+         0Mm7n6AW6Xz2V0Tm1/84uiB69rCe3xaXiPF7/pJH4Yu8pHWU8V4DQvTXZWBugH/FTdz2
+         hlGaLCjTc1qW3hR16U/6H+uUym3xStOhuyDH5oTxb2ppZGhGOhARLguCUXebEAEeuSrL
+         p7jg==
+X-Gm-Message-State: AOJu0YzWQ3FmXY2tf8T5OohOoZr5jl7Q8l3jfuL8icSHZf5HLf6xjLE9
+	jLkEsWWIcvoLP3v4PQUAgn3WnauUclTr8H86+RgX1+KXchT0oUWUyRXDklC7br6VYOOY0GzkwdK
+	fatH8eGZfuOZaYiZaIwAgXK36eQ7FZY0HFsCn/A==
+X-Google-Smtp-Source: AGHT+IFPp9z9qNTNlsO9GMIf0eb4AuiTCBalUHl4aC/aOGmsF2AmtD4WsEX06mTPVuD1qzkI4YLLtoNFltuinjhNU+E=
+X-Received: by 2002:a05:6214:4383:b0:69b:1dd6:f31c with SMTP id
+ oh3-20020a056214438300b0069b1dd6f31cmr892147qvb.56.1712865214238; Thu, 11 Apr
+ 2024 12:53:34 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: cs.auckland.ac.nz
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SYBPR01MB6336.ausprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 104072c2-e3d4-45b1-f972-08dea8dd7b6a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 May 2026 06:30:34.4407
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: d1b36e95-0d50-42e9-958f-b63fa906beaa
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: uFjGL9IyJoZkZb9oWwD2NgugIaX6vg5Ms7SLY3dKnvb1ovjKYpvIHHuTxyAHOmtZrbxsKT7iBE4Jm033eEk3702WCBoAyP3APfk3E1dk3Vo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEYPR01MB7869
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+References: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
+ <b701b525-0c42-4b3a-a1a3-0ea68e864fbe@christopher-kunz.de>
+ <20240411140654.GA24980@openwall.com> <052779d0-a3c3-4691-9491-08520952ca8e@christopher-kunz.de>
+ <CADW8OBuC4JhqZ1Aa-GSGsRRbEzR-yL=xzRmxT+UkG_h6KsX9-A@mail.gmail.com>
+In-Reply-To: <CADW8OBuC4JhqZ1Aa-GSGsRRbEzR-yL=xzRmxT+UkG_h6KsX9-A@mail.gmail.com>
+From: Kyle Zeng <zengyhkyle@gmail.com>
+Date: Thu, 11 Apr 2024 12:52:58 -0700
+Message-ID: <CADW8OBuTW4Mxpg_aqzZs=BeHw9V8syJr3xe=nWWY9C1B-zoA-w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/mixed; boundary="000000000000a4ce8e0615d78206"
+Subject: Re: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
 
-Demi Marie Obenour writes:
+--000000000000a4ce8e0615d78206
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->Can you provide benchmarks showing that the accelerator is faster than the
->CPU on realistic workloads?
+Notice that my previous analysis on YuriiCrimson's exploits is their
+ExploitGSM_6_5 version.
+I cannot make the ExploitGSM_5_15_to_6_1 version work in the latest
+kernel in my test environment. However, this does not rule out the
+possibility that it still works.
 
-That could be tricky.  The accelerator uses more hardware crypto than the C=
-PU
-on realistic workloads, would that do?
+And the splash of the ExploitGSM_6_5 exploit is attached to the email.
 
-The following is from playing around on a few bits of hardware that were to
-hand some years ago, so don't take it as gospel, but:
+Thanks,
+Kyle Zeng
 
-/* Check for the presence of crypto hardware support.  This is something of
-   an exercise in futility because the crypto hardware is anything from
-   slightly slower (large data blocks) to much, much slower (more standard
-   small data blocks) than software due to the overhead of getting the data
-   through the API to and from the cryptologic, the cryptologic startup/
-   shutdown overhead, and in the case of /dev/crypto, in and out of the
-   kernel.  The only place where it does matter is things like Cortex M3-
-   level SoCs, so a combination of lower-power CPUs, no instruction-level
-   assist for crypto, and direct hardware access from the RTOS with no
-   overhead where you just point the cryptologic at a block of memory and
-   say "process this".
+On Thu, Apr 11, 2024 at 12:25=E2=80=AFPM Kyle Zeng <zengyhkyle@gmail.com> w=
+rote:
+>
+> Hi there,
+>
+> I just did some preliminary analysis on this.
+> There are in fact three exploits involved in this.
+> CVE-2023-6546: https://github.com/Nassim-Asrir/ZDI-24-020/
+> jmpe4x's GSM exploit:
+> https://github.com/jmpe4x/GSM_Linux_Kernel_LPE_Nday_Exploit
+> YuriiCrimson's GSM exploit: https://github.com/YuriiCrimson/ExploitGSM
+>
+> I tested all of them. All of them targeted the same subsystem (GSM),
+> used the same KASLR leak method ("/sys/kernel/notes"). But there are
+> two vulnerabilities involved here.
+> In short. jmpe4x's and YuriiCrimson's exploits are the same, but the
+> vulnerability is not CVE-2023-6546.
+> !!!!!!!!!!!!
+> It is a 0day that is not patched in the main tree yet.
+> Not a patch gap.
+> !!!!!!!!!!!!
+>
+> My analysis is performed on the latest commit of Linus's tree:
+> ```
+> commit e8c39d0f57f358950356a8e44ee5159f57f86ec5 (HEAD -> master,
+> origin/master, origin/HEAD)
+> Merge: 03a55b63919 325f3fb551f
+> Author: Linus Torvalds <torvalds@linux-foundation.org>
+> Date:   Wed Apr 10 19:48:05 2024 -0700
+> ```
+>
+> And jmpe4x's and YuriiCrimson's are exactly the same. The difference
+> is mostly spaces. The diff is attached to this email.
+>
+> Thanks,
+> Kyle Zeng
+>
+>
+> On Thu, Apr 11, 2024 at 8:07=E2=80=AFAM Dr. Christopher Kunz
+> <info@christopher-kunz.de> wrote:
+> >
+> > Hi,
+> >
+> > > There are two exploits in Yurii's repo above, according to Yurii for =
+two
+> > > different bugs.  The above is one of them.  Perhaps also try the othe=
+r?
+> > The two exploit versions are for different kernels. The 6.5 exploit
+> > doesn't compile on the Debian 12 6.1 kernel, and no Debian version
+> > currently distributes a 6.5 kernel, AFAICT. I used
+> > ExploitGSM_5_15_to_6_1/ExploitGSM and it worked.
+> > > I don't know, and apparently it'd need to be two CVEs for two bugs th=
+at
+> > > Yurii exploits.
+> > Possibly. I'm definitely out of my depth trying to analyze which bugs
+> > are being exploited.
+> > > CVE-2023-52564: Revert "tty: n_gsm: fix UAF in gsm_cleanup_mux"
+> > > https://lists.openwall.net/linux-cve-announce/2024/03/02/54
+> > >
+> > > Maybe CVE-2023-52564 is one of the bugs Yurii exploits, or maybe not.
+> > > I didn't look into this closely enough to tell.
+> >
+> > Apparently not. Debian 12 "Bookworm" currently runs this kernel:
+> >
+> > Linux debianexploitgsm 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian
+> > 6.1.76-1 (2024-02-01) x86_64 GNU/Linux
+> >
+> > According to the changelog, this kernel has the fix for CVE-2023-52564
+> > included:
+> >      - Revert "tty: n_gsm: fix UAF in gsm_cleanup_mux"
+> > (from
+> > https://metadata.ftp-master.debian.org/changelogs//main/l/linux-signed-=
+amd64/linux-signed-amd64_6.1.76+1_changelog)
+> >
+> > Still, the exploit works, so it must exploit a different issue.
+> >
+> > Just my two cents,
+> >
+> > --cku
+> >
 
-   However, people really want to see the fancy crypto hardware used even if
-   it yields a net loss in performance so we try and enable it if possible
-   unless it really is pointless, just a software emulation (many
-   /dev/crypto instances) where, assuming the crypto is provided by OpenSSL,
-   you can end up in a situation where OpenSSL is calling into a kernel
-   interface that then provides access to another, older and possibly
-   unpatched, copy of OpenSSL code that's doing the crypto.
+--000000000000a4ce8e0615d78206
+Content-Type: text/plain; charset="US-ASCII"; name="splash.txt"
+Content-Disposition: attachment; filename="splash.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_luvnoy960>
+X-Attachment-Id: f_luvnoy960
 
-   [...]
+WyAgIDE5LjQ5NDIwOF0gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ClsgICAxOS40
+OTQ4NzZdIEJVRzogS0FTQU46IHNsYWItdXNlLWFmdGVyLWZyZWUgaW4gZ3Nt
+X2RsY2lfY29uZmlnKzB4ZjhlLzB4MTAzMApbICAgMTkuNDk1NTA5XSBSZWFk
+IG9mIHNpemUgNCBhdCBhZGRyIGZmZmY4ODgwMGJlMzgwMGMgYnkgdGFzayBF
+eHBsb2l0R1NNLzIxNQpbICAgMTkuNDk2MTAyXSAKWyAgIDE5LjQ5NjI1M10g
+Q1BVOiAzIFBJRDogMjE1IENvbW06IEV4cGxvaXRHU00gTm90IHRhaW50ZWQg
+Ni45LjAtcmMzKyAjNzYKWyAgIDE5LjQ5Njc4NV0gSGFyZHdhcmUgbmFtZTog
+UUVNVSBTdGFuZGFyZCBQQyAoaTQ0MEZYICsgUElJWCwgMTk5NiksIEJJT1Mg
+MS4xNS4wLTEgMDQvMDEvMjAxNApbICAgMTkuNDk3MjI4XSBDYWxsIFRyYWNl
+OgpbICAgMTkuNDk3MzY3XSAgPFRBU0s+ClsgICAxOS40OTc0ODNdICBkdW1w
+X3N0YWNrX2x2bCsweDFhYi8weDI2MApbICAgMTkuNDk3NzAyXSAgcHJpbnRf
+cmVwb3J0KzB4Y2UvMHg2MTAKWyAgIDE5LjQ5Nzg5OF0gID8gZ3NtX2RsY2lf
+Y29uZmlnKzB4ZjhlLzB4MTAzMApbICAgMTkuNDk4MTI0XSAgPyBrYXNhbl9j
+b21wbGV0ZV9tb2RlX3JlcG9ydF9pbmZvKzB4N2MvMHgyMDAKWyAgIDE5LjQ5
+ODQwN10gID8gZ3NtX2RsY2lfY29uZmlnKzB4ZjhlLzB4MTAzMApbICAgMTku
+NDk4NjM2XSAga2FzYW5fcmVwb3J0KzB4YjkvMHhmMApbICAgMTkuNDk4ODI2
+XSAgPyBnc21fZGxjaV9jb25maWcrMHhmOGUvMHgxMDMwClsgICAxOS40OTkw
+NTBdICBfX2FzYW5fcmVwb3J0X2xvYWQ0X25vYWJvcnQrMHgxNC8weDIwClsg
+ICAxOS40OTkzMTJdICBnc21fZGxjaV9jb25maWcrMHhmOGUvMHgxMDMwClsg
+ICAxOS40OTk1MzNdICA/IF9fcGZ4X2dzbV9kbGNpX2NvbmZpZysweDEwLzB4
+MTAKWyAgIDE5LjQ5OTc3MV0gID8gX19wZnhfYXV0b3JlbW92ZV93YWtlX2Z1
+bmN0aW9uKzB4MTAvMHgxMApbICAgMTkuNTAwMDUwXSAgPyBfX3Nhbml0aXpl
+cl9jb3ZfdHJhY2VfY29uc3RfY21wOCsweDE4LzB4MjAKWyAgIDE5LjUwMDMz
+NF0gIGdzbWxkX2lvY3RsKzB4MTAyZi8weDE3NDAKWyAgIDE5LjUwMDUzN10g
+ID8gX19wZnhfZ3NtbGRfaW9jdGwrMHgxMC8weDEwClsgICAxOS41MDA3NTZd
+ICA/IF9fc2FuaXRpemVyX2Nvdl90cmFjZV9jb25zdF9jbXA4KzB4MTgvMHgy
+MApbICAgMTkuNTAxMDM0XSAgPyBsZHNlbV9kb3duX3JlYWQrMHhjMS8weDZm
+MApbICAgMTkuNTAxMjUxXSAgPyBfX3Nhbml0aXplcl9jb3ZfdHJhY2Vfc3dp
+dGNoKzB4NTQvMHhhMApbICAgMTkuNTAxNTEzXSAgPyBfX3Nhbml0aXplcl9j
+b3ZfdHJhY2VfY29uc3RfY21wMisweDE4LzB4MjAKWyAgIDE5LjUwMTc5OF0g
+ID8gX19zYW5pdGl6ZXJfY292X3RyYWNlX3N3aXRjaCsweDU0LzB4YTAKWyAg
+IDE5LjUwMjA2MV0gIHR0eV9pb2N0bCsweDdhMi8weDE2MjAKWyAgIDE5LjUw
+MjI0OV0gID8gX19wZnhfZ3NtbGRfaW9jdGwrMHgxMC8weDEwClsgICAxOS41
+MDI0NjhdICA/IF9fcGZ4X3R0eV9pb2N0bCsweDEwLzB4MTAKWyAgIDE5LjUw
+MjY3Nl0gID8gX19zYW5pdGl6ZXJfY292X3RyYWNlX2NtcDQrMHgxNi8weDIw
+ClsgICAxOS41MDI5MzBdICA/IGZwcmVnc19hc3NlcnRfc3RhdGVfY29uc2lz
+dGVudCsweDhiLzB4ZjAKWyAgIDE5LjUwMzIwMF0gID8gc3lzY2FsbF9leGl0
+X3RvX3VzZXJfbW9kZSsweDkzLzB4MWYwClsgICAxOS41MDM0NTZdICA/IGRv
+X3N5c2NhbGxfNjQrMHg4Ny8weDEyMApbICAgMTkuNTAzNjYwXSAgPyBfX2Zn
+ZXRfbGlnaHQrMHgxOTgvMHg1NjAKWyAgIDE5LjUwMzg2Nl0gID8gc2VjdXJp
+dHlfZmlsZV9pb2N0bCsweDk5LzB4YzAKWyAgIDE5LjUwNDA5NV0gID8gX19w
+ZnhfdHR5X2lvY3RsKzB4MTAvMHgxMApbICAgMTkuNTA0MzA2XSAgX194NjRf
+c3lzX2lvY3RsKzB4MWI0LzB4MjMwClsgICAxOS41MDQ1MTBdICB4NjRfc3lz
+X2NhbGwrMHgxMjA2LzB4MjBiMApbICAgMTkuNTA0NzEwXSAgZG9fc3lzY2Fs
+bF82NCsweDdiLzB4MTIwClsgICAxOS41MDQ4OThdICA/IF9fa2FzYW5fY2hl
+Y2tfd3JpdGUrMHgxNC8weDIwClsgICAxOS41MDUxMThdICA/IF9yYXdfc3Bp
+bl9sb2NrX2lycSsweGIwLzB4MTYwClsgICAxOS41MDUzNTVdICA/IF9fa2Fz
+YW5fY2hlY2tfd3JpdGUrMHgxNC8weDIwClsgICAxOS41MDU1ODddICA/IHJl
+Y2FsY19zaWdwZW5kaW5nKzB4MWFjLzB4MjUwClsgICAxOS41MDU4MjVdICA/
+IF9fc2V0X3Rhc2tfYmxvY2tlZCsweGFmLzB4MjIwClsgICAxOS41MDYwNDld
+ICA/IF9yYXdfc3Bpbl91bmxvY2tfaXJxKzB4M2EvMHhhMApbICAgMTkuNTA2
+ODE5XSAgPyBzaWdwcm9jbWFzaysweDEwZS8weDM5MApbICAgMTkuNTA3MjY1
+XSAgPyBfX3BmeF9zaWdwcm9jbWFzaysweDEwLzB4MTAKWyAgIDE5LjUwNzU2
+Nl0gID8gX19zYW5pdGl6ZXJfY292X3RyYWNlX2NvbnN0X2NtcDgrMHgxOC8w
+eDIwClsgICAxOS41MDc5NDBdICA/IF9fc2FuaXRpemVyX2Nvdl90cmFjZV9j
+b25zdF9jbXA4KzB4MTgvMHgyMApbICAgMTkuNTA4Mjk2XSAgPyBfX3g2NF9z
+eXNfcnRfc2lncHJvY21hc2srMHgyMjQvMHgyZjAKWyAgIDE5LjUwODYxOF0g
+ID8gX19wZnhfX194NjRfc3lzX3J0X3NpZ3Byb2NtYXNrKzB4MTAvMHgxMApb
+ICAgMTkuNTA4OTcxXSAgPyBfX3Nhbml0aXplcl9jb3ZfdHJhY2VfY21wNCsw
+eDE2LzB4MjAKWyAgIDE5LjUwOTMwOV0gID8gZnByZWdzX2Fzc2VydF9zdGF0
+ZV9jb25zaXN0ZW50KzB4OGIvMHhmMApbICAgMTkuNTA5NjcxXSAgPyBzeXNj
+YWxsX2V4aXRfdG9fdXNlcl9tb2RlKzB4OTMvMHgxZjAKWyAgIDE5LjUwOTk5
+OF0gID8gZG9fc3lzY2FsbF82NCsweDg3LzB4MTIwClsgICAxOS41MTAyNzRd
+ICA/IGNsZWFyX2JoYl9sb29wKzB4MTUvMHg3MApbICAgMTkuNTEwNTQyXSAg
+PyBjbGVhcl9iaGJfbG9vcCsweDE1LzB4NzAKWyAgIDE5LjUxMDgwNF0gID8g
+Y2xlYXJfYmhiX2xvb3ArMHgxNS8weDcwClsgICAxOS41MTEwNjBdICA/IGNs
+ZWFyX2JoYl9sb29wKzB4MTUvMHg3MApbICAgMTkuNTExMzMzXSAgPyBjbGVh
+cl9iaGJfbG9vcCsweDE1LzB4NzAKWyAgIDE5LjUxMTU4N10gIGVudHJ5X1NZ
+U0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDc2LzB4N2UKWyAgIDE5LjUxMTkx
+MF0gUklQOiAwMDMzOjB4NDU3MjlmClsgICAxOS41MTIxMjldIENvZGU6IDAw
+IDQ4IDg5IDQ0IDI0IDE4IDMxIGMwIDQ4IDhkIDQ0IDI0IDYwIGM3IDA0IDI0
+IDEwIDAwIDAwIDAwIDQ4IDg5IDQ0IDI0IDA4IDQ4IDhkIDQ0IDI0IDIwIDQ4
+IDg5IDQ0IDI0IDEwIGI4IDEwIDAwIDAwIDAwIDBmIDA1IDw0MT4gODkgYzAg
+M2QgMDAgZjAgZmYgZmYgNzcgMWYgNDggOGIgNDQgMjQgMTggNjQgNDggMmIg
+MDQgMjUgMjggMDAKWyAgIDE5LjUxMzE5Ml0gUlNQOiAwMDJiOjAwMDA3ZjE3
+MTU2MDAxNTAgRUZMQUdTOiAwMDAwMDI0NiBPUklHX1JBWDogMDAwMDAwMDAw
+MDAwMDAxMApbICAgMTkuNTEzNjExXSBSQVg6IGZmZmZmZmZmZmZmZmZmZGEg
+UkJYOiAwMDAwN2YxNzE1NjAwNjQwIFJDWDogMDAwMDAwMDAwMDQ1NzI5Zgpb
+ICAgMTkuNTE0MDA4XSBSRFg6IDAwMDA3ZmZlYzJkOTUyM2MgUlNJOiAwMDAw
+MDAwMDQwMzg0NzA4IFJESTogMDAwMDAwMDAwMDAwMDAwNgpbICAgMTkuNTE0
+NDAxXSBSQlA6IDAwMDA3ZjE3MTU2MDAxZDAgUjA4OiAwMDAwMDAwMDAwMDAw
+MDAwIFIwOTogMDAwMDdmZmVjMmQ5NGU1ZgpbICAgMTkuNTE0Nzc2XSBSMTA6
+IDAwMDAwMDAwMDAwMDAwMDggUjExOiAwMDAwMDAwMDAwMDAwMjQ2IFIxMjog
+MDAwMDdmMTcxNTYwMDY0MApbICAgMTkuNTE1MTcwXSBSMTM6IDAwMDAwMDAw
+MDAwMDAwMTYgUjE0OiAwMDAwMDAwMDAwNDFlMGMwIFIxNTogMDAwMDdmMTcx
+NGUwMDAwMApbICAgMTkuNTE1NTY2XSAgPC9UQVNLPgpbICAgMTkuNTE1Njk4
+XSAKWyAgIDE5LjUxNTc5Nl0gQWxsb2NhdGVkIGJ5IHRhc2sgMjE0OgpbICAg
+MTkuNTE1OTkwXSAga2FzYW5fc2F2ZV9zdGFjaysweDI4LzB4NTAKWyAgIDE5
+LjUxNjIwN10gIGthc2FuX3NhdmVfdHJhY2srMHgxNC8weDQwClsgICAxOS41
+MTY0MjddICBrYXNhbl9zYXZlX2FsbG9jX2luZm8rMHgzOC8weDUwClsgICAx
+OS41MTY2NzJdICBfX2thc2FuX2ttYWxsb2MrMHhiMS8weGMwClsgICAxOS41
+MTY4OTBdICBrbWFsbG9jX3RyYWNlKzB4MTgwLzB4M2IwClsgICAxOS41MTcx
+MDBdICBnc21fZGxjaV9hbGxvYysweDUwLzB4ODEwClsgICAxOS41MTczMjFd
+ICBnc21sZF9pb2N0bCsweDE0MDQvMHgxNzQwClsgICAxOS41MTc1NDBdICB0
+dHlfaW9jdGwrMHg3YTIvMHgxNjIwClsgICAxOS41MTgwNjhdICBfX3g2NF9z
+eXNfaW9jdGwrMHgxYjQvMHgyMzAKWyAgIDE5LjUxODM0OV0gIHg2NF9zeXNf
+Y2FsbCsweDEyMDYvMHgyMGIwClsgICAxOS41MTg2MDldICBkb19zeXNjYWxs
+XzY0KzB4N2IvMHgxMjAKWyAgIDE5LjUxODg1OV0gIGVudHJ5X1NZU0NBTExf
+NjRfYWZ0ZXJfaHdmcmFtZSsweDc2LzB4N2UKWyAgIDE5LjUxOTE5NF0gClsg
+ICAxOS41MTkzMDJdIEZyZWVkIGJ5IHRhc2sgMjExOgpbICAgMTkuNTE5NTE2
+XSAga2FzYW5fc2F2ZV9zdGFjaysweDI4LzB4NTAKWyAgIDE5LjUxOTc4OV0g
+IGthc2FuX3NhdmVfdHJhY2srMHgxNC8weDQwClsgICAxOS41MjAwNDZdICBr
+YXNhbl9zYXZlX2ZyZWVfaW5mbysweDNiLzB4NjAKWyAgIDE5LjUyMDI3Nl0g
+IHBvaXNvbl9zbGFiX29iamVjdCsweDEwZS8weDE5MApbICAgMTkuNTIwNTEz
+XSAgX19rYXNhbl9zbGFiX2ZyZWUrMHgzNC8weDYwClsgICAxOS41MjA3MzRd
+ICBrZnJlZSsweGZhLzB4MmUwClsgICAxOS41MjA5MDldICBnc21fZGxjaV9m
+cmVlKzB4MTFkLzB4MTcwClsgICAxOS41MjExMzBdICB0dHlfcG9ydF9wdXQr
+MHgxNzIvMHgxZTAKWyAgIDE5LjUyMTM0MF0gIGdzbV9jbGVhbnVwX211eCsw
+eDMzYS8weDg2MApbICAgMTkuNTIxNTYyXSAgZ3NtbGRfaW9jdGwrMHg1NTgv
+MHgxNzQwClsgICAxOS41MjE4MDJdICB0dHlfaW9jdGwrMHg3YTIvMHgxNjIw
+ClsgICAxOS41MjIwMDddICBfX3g2NF9zeXNfaW9jdGwrMHgxYjQvMHgyMzAK
+WyAgIDE5LjUyMjI0MF0gIHg2NF9zeXNfY2FsbCsweDEyMDYvMHgyMGIwClsg
+ICAxOS41MjI0NThdICBkb19zeXNjYWxsXzY0KzB4N2IvMHgxMjAKWyAgIDE5
+LjUyMjY2MF0gIGVudHJ5X1NZU0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDc2
+LzB4N2UKWyAgIDE5LjUyMjk0Ml0gClsgICAxOS41MjMwMzFdIFRoZSBidWdn
+eSBhZGRyZXNzIGJlbG9uZ3MgdG8gdGhlIG9iamVjdCBhdCBmZmZmODg4MDBi
+ZTM4MDAwClsgICAxOS41MjMwMzFdICB3aGljaCBiZWxvbmdzIHRvIHRoZSBj
+YWNoZSBrbWFsbG9jLTFrIG9mIHNpemUgMTAyNApbICAgMTkuNTIzNzAyXSBU
+aGUgYnVnZ3kgYWRkcmVzcyBpcyBsb2NhdGVkIDEyIGJ5dGVzIGluc2lkZSBv
+ZgpbICAgMTkuNTIzNzAyXSAgZnJlZWQgMTAyNC1ieXRlIHJlZ2lvbiBbZmZm
+Zjg4ODAwYmUzODAwMCwgZmZmZjg4ODAwYmUzODQwMCkKWyAgIDE5LjUyNDM4
+NV0gClsgICAxOS41MjQ0NzNdIFRoZSBidWdneSBhZGRyZXNzIGJlbG9uZ3Mg
+dG8gdGhlIHBoeXNpY2FsIHBhZ2U6ClsgICAxOS41MjQ3ODBdIHBhZ2U6IHJl
+ZmNvdW50OjEgbWFwY291bnQ6MCBtYXBwaW5nOjAwMDAwMDAwMDAwMDAwMDAg
+aW5kZXg6MHgwIHBmbjoweGJlMzgKWyAgIDE5LjUyNTIyMV0gaGVhZDogb3Jk
+ZXI6MyBlbnRpcmVfbWFwY291bnQ6MCBucl9wYWdlc19tYXBwZWQ6MCBwaW5j
+b3VudDowClsgICAxOS41MjU2MTRdIGZsYWdzOiAweGZmZmZmZTAwMDA4NDAo
+c2xhYnxoZWFkfG5vZGU9MHx6b25lPTF8bGFzdGNwdXBpZD0weDNmZmZmZikK
+WyAgIDE5LjUyNjAzOF0gcGFnZV90eXBlOiAweGZmZmZmZmZmKCkKWyAgIDE5
+LjUyNjI0NF0gcmF3OiAwMDBmZmZmZmUwMDAwODQwIGZmZmY4ODgwMDEwNDJk
+YzAgZGVhZDAwMDAwMDAwMDEyMiAwMDAwMDAwMDAwMDAwMDAwClsgICAxOS41
+MjY2NjFdIHJhdzogMDAwMDAwMDAwMDAwMDAwMCAwMDAwMDAwMDAwMTAwMDEw
+IDAwMDAwMDAxZmZmZmZmZmYgMDAwMDAwMDAwMDAwMDAwMApbICAgMTkuNTI3
+MDg3XSBoZWFkOiAwMDBmZmZmZmUwMDAwODQwIGZmZmY4ODgwMDEwNDJkYzAg
+ZGVhZDAwMDAwMDAwMDEyMiAwMDAwMDAwMDAwMDAwMDAwClsgICAxOS41Mjc1
+MTJdIGhlYWQ6IDAwMDAwMDAwMDAwMDAwMDAgMDAwMDAwMDAwMDEwMDAxMCAw
+MDAwMDAwMWZmZmZmZmZmIDAwMDAwMDAwMDAwMDAwMDAKWyAgIDE5LjUyNzkx
+MF0gaGVhZDogMDAwZmZmZmZlMDAwMDAwMyBmZmZmZWEwMDAwMmY4ZTAxIGZm
+ZmZlYTAwMDAyZjhlNDggMDAwMDAwMDBmZmZmZmZmZgpbICAgMTkuNTI4MzQx
+XSBoZWFkOiAwMDAwMDAwODAwMDAwMDAwIDAwMDAwMDAwMDAwMDAwMDAgMDAw
+MDAwMDBmZmZmZmZmZiAwMDAwMDAwMDAwMDAwMDAwClsgICAxOS41Mjg5Mzld
+IHBhZ2UgZHVtcGVkIGJlY2F1c2U6IGthc2FuOiBiYWQgYWNjZXNzIGRldGVj
+dGVkClsgICAxOS41Mjk0MDldIApbICAgMTkuNTI5NTA5XSBNZW1vcnkgc3Rh
+dGUgYXJvdW5kIHRoZSBidWdneSBhZGRyZXNzOgpbICAgMTkuNTI5ODQwXSAg
+ZmZmZjg4ODAwYmUzN2YwMDogMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAg
+MDAgMDAgMDAgMDAgMDAgMDAgMDAKWyAgIDE5LjUzMDMxMF0gIGZmZmY4ODgw
+MGJlMzdmODA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
+IDAwIDAwIDAwIDAwClsgICAxOS41MzA3NzRdID5mZmZmODg4MDBiZTM4MDAw
+OiBmYSBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBm
+YiBmYgpbICAgMTkuNTMxMjE0XSAgICAgICAgICAgICAgICAgICAgICAgXgpb
+ICAgMTkuNTMxNDM2XSAgZmZmZjg4ODAwYmUzODA4MDogZmIgZmIgZmIgZmIg
+ZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIKWyAgIDE5LjUz
+MTg5MF0gIGZmZmY4ODgwMGJlMzgxMDA6IGZiIGZiIGZiIGZiIGZiIGZiIGZi
+IGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZiClsgICAxOS41MzIzMjRdID09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PQpbICAgMTkuNTMyNzk2XSBEaXNhYmxpbmcg
+bG9jayBkZWJ1Z2dpbmcgZHVlIHRvIGtlcm5lbCB0YWludAo=
 
-So one solution would be to get the fingers-of-one-hand applications still
-using the interface off it onto user-mode software-only and then make it
-kernel-only, closing the door on the entire attack surface from user space.
-
-Peter.=
+--000000000000a4ce8e0615d78206--
