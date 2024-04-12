@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1125" "Monday" "14" "December" "2015" "22:34:49" "+0100" "Hannes Frederic Sowa" "hannes@stressinduktion.org" "<566F35F9.4070106@stressinduktion.org>" "36" "Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" nil nil nil "12" "2015121421:34:49" "[oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" (number mark "U       hannes@stres Dec 14   36/1125  " thread-indent "\"Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service\"\n") "<20151211164118.344948BC165@smtpvmsrv1.mitre.org>" ("<20151211164118.344948BC165@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13762 invoked by uid 550); 14 Dec 2015 21:35:06 -0000
+Received: (qmail 7584 invoked by uid 550); 12 Apr 2024 16:37:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13661 invoked from network); 14 Dec 2015 21:35:04 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	stressinduktion.org; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=UmypfWhmjsfVd5CL
-	VwJMr/L6m1A=; b=jGrRQ9isHH+qb8mZ8wZDAK4TTem4xGB1oLXpRcDjOzwh5yMk
-	oYRN/eP/ST2gYGgk9ZIQntl8MmjMot1UHORbqnSkLHx/ACnlnG+HcJ68qsD7zlT7
-	LnRu6dwBDyYq8L9SMObh08cnxmk6YkcmXw4UNSNcdyjKufOGkJPpxFQMn1I=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=UmypfWhmjsfVd5C
-	LVwJMr/L6m1A=; b=NQWxu99ut/J89Txen8gnZSj+UMgMD9xTzyhJC5fZVjW2PRX
-	8L26YPAYTM2JEiIe1aGFaBDK1piF/Wv57+Fue5eQ/H/5mXGgefrq1pAmoFGt2x7+
-	LqkXTo6jJ9Ptuy8Jmgp31y5KRgbAtWwJYdCYepvj1HYIlHkvpJWcR2246EXY=
-X-Sasl-enc: 0Q3GlApUdtOIvzjBeqtlhtWH2/9xw2D7RQz7d6c1KUsF 1450128891
-To: oss-security@lists.openwall.com, guoyonggang@360.cn
-References: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-From: Hannes Frederic Sowa <hannes@stressinduktion.org>
-Message-ID: <566F35F9.4070106@stressinduktion.org>
-Date: Mon, 14 Dec 2015 22:34:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
+Received: (qmail 7560 invoked from network); 12 Apr 2024 16:37:56 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-106R0065c8b13b1-6745-47c8-a56f-65e0a252eb6d,
+                    85A3E892C6963C1368CED7EEBE9CFA9DF350C9AD) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 31.0.177.240
+Date: Fri, 12 Apr 2024 18:37:44 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20240412163744.6z5n5fhqdu27jybj@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <f0a95b6f-8738-4ca6-9462-35bdca04293a@nil.im>
+ <12bfdf5d8ee20d341ce5ac206dc72b7b@purelymail.com>
+ <fc8936e9-4e95-4aef-ac30-f2d99817f3f7@nil.im>
 MIME-Version: 1.0
-In-Reply-To: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect
- cause a denial of service
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <fc8936e9-4e95-4aef-ac30-f2d99817f3f7@nil.im>
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG4EX2.mxp6.local (172.16.2.32) To DAG4EX1.mxp6.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 310b8abb-e253-4598-956b-04b76c31854e
+X-Ovh-Tracer-Id: 7159316035437582103
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrudeiuddguddtgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvffukfhfgggtuggjihesthdtredttddtvdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepleffudeuleehvefhvdejjeefuddvhfeuvdejtddtheegudfgteeggfdugfejffdunecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdeipdefuddrtddrudejjedrvdegtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepjhifihhlkhesjhifihhlkhdrnhgvthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdfovfetjfhoshhtpehmohehvdelpdhmohguvgepshhmthhpohhuth
+Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
+ ssh server compromise
 
-On 11.12.2015 17:41, cve-assign@mitre.org wrote:
->> net/ipv4/af_inet.c
->> inet_autobind
-> 
->> if (sk->sk_prot->get_port(sk, 0)) {
-> 
->>> if the sk->sk_prot->get_port is NULL
-> 
->>> [ an unanticipated condition ]
-> 
->>> Solution:
->>> if (sk->sk_prot->get_port &&sk->sk_prot->get_port(sk, 0)) {
-> 
->>>> From: Hannes Frederic Sowa <hannes@stressinduktion.org>
->>>> Date: Wed, 9 Dec 2015 15:31:32 +0100
-> 
->>>> I fear your solution
->>>> just papers over the bug and will leave the port in a half initialized
->>>> state.
-> 
-> Use CVE-2015-8543 for the originally identified bug. We realize that,
-> for example,
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/ipv4/af_inet.c
-> has not yet been changed. If Linux kernel developers determine that
-> multiple independent bugs result in situations where
-> sk->sk_prot->get_port is NULL above, then it is possible that
-> additional CVE IDs will be assigned later.
+* Jonathan Schleifer <js@nil.im>, 2024-03-30 17:17:
+>I replaced the sed in here:
+>
+>sed \"r\n\" $gl_am_configmake | eval $gl_path_map | 
+>$gl_localedir_prefix -d 2>/dev/null
+>
+>With a simple cat, as I could not make sed work. This worries me as it 
+>means there is probably some other transformation that I'm missing that 
+>would have made the sed work.
 
-The following patch fixes this issue:
+It's confusing because there are two layers of eval involved. You 
+actually end up running:
 
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=79462ad02e861803b3840cc782248c7359451cd9
+   sed rn ...
 
-It is queued up for -stable.
+The "r" command means "read from file"; but there's no file named "n", 
+so this is no-op.
 
-Thanks,
-Hannes
+The sed command is not completely equivalent to cat though: it appends a 
+newline, because the original file didn't end with one. This trailing 
+garbage slightly upsets xz(1):
+
+     xz: (stdin): Unexpected end of input
+
+(You normally wouldn't see this warning, thanks to generous use of 
+"2>/dev/null" in build-to-host.m4.)
+
+-- 
+Jakub Wilk
