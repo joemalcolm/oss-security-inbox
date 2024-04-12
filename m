@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["353" "Thursday" "17" "September" "2015" "11:41:44" "-0500" "Mark Felder" "feld@feld.me" "<1442508104.707732.386478233.2DF9FB74@webmail.messagingengine.com>" "16" "Re: [oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015091716:41:44" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "        feld@feld.me Sep 17   16/353   " thread-indent "\"Re: [oss-security] Heap overflow and DoS in unzip 6.0\"\n") "<20150915183842.6e72c05b@pc1>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "<20150915180357.7a0097a4@redhat.com>" "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>" "<20150915183842.6e72c05b@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15436 invoked by uid 550); 17 Sep 2015 16:41:57 -0000
+Received: (qmail 21969 invoked by uid 550); 12 Apr 2024 15:46:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15411 invoked from network); 17 Sep 2015 16:41:56 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=7mxJDq+l5RU0FNOLtb7188q6AqY=; b=I+OrKP
-	tTQ82OxM+gk/fNNytYAp1eQz/TRvSM8oaxFUBHpYknJfaFAkoZIiY2rfEob/64MF
-	DNX6m6yD1R9iUK/venLeegJlDUYaYgxcZedeT9LaFgYtu46aKUawmJDq3HJkEzik
-	HFhQMkEABKeR+CrvqkCrSB5n+G6Jxvz4edER8=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=7mxJDq+l5RU0FNO
-	Ltb7188q6AqY=; b=GN6sCtxia+uYm9m7COdcUPFpGrq96TSDqpGsSUEjVoyI2Rt
-	4Tabr2TLkShKf641CsT5Xqa9xa8M92ez6jMdgA+sTbJxrgq7nP45Rzi5+GFjJMe/
-	Z59ZluB+N+SrW28FXf/fV6T2OabQOg6HvaMJf8xFeKinkEiBzG7dF2kRD7fY=
-Message-Id: <1442508104.707732.386478233.2DF9FB74@webmail.messagingengine.com>
-X-Sasl-Enc: NfNWaITLqEq/ytbVZqEK18QA4vNe8kC+27g4L0MHhKzo 1442508104
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="ISO-8859-1"
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-746d2121
-In-Reply-To: <20150915183842.6e72c05b@pc1>
-References: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
- <20150915180357.7a0097a4@redhat.com>
- <CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
- <20150915183842.6e72c05b@pc1>
-Date: Thu, 17 Sep 2015 11:41:44 -0500
-From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Heap overflow and DoS in unzip 6.0
-To: oss-security@lists.openwall.com
+Received: (qmail 3739 invoked from network); 12 Apr 2024 12:31:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712925066;
+	bh=l6UpdZDb/6XCReApL4aLVXCnu2V36bn4tsUkw+RluFk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Yz31Pt3iUbhGZ0lhpPdlRfh6l5FtPzDrNrD5KeFOM5HVW29U2ATr5dPN2se65AVuG
+	 ISYmSZ+UfyOmmgsU4dED7s9gKH6MM1v2udz+j1I6P5jgWVPg/j8dE29HkoNmXGupPJ
+	 qnSA140L8tOOreaWkz96RG+DDE2JvXtfu8jsVXJE3iQ88SxWvJv7+6GZFC6QUkkCb+
+	 +D/DozI4wRwbK1CVxxyv3yjTbu5TckDOx/2k8thwscahvlaKhKvFSGNdNIyB3pV/RG
+	 2uF05KFj/4QFlEDFBZFCG1TEPMniKH0nIceCQWcPokhk49qZAQv0GzGUY10Pn3Gwtn
+	 qfpMnObDYJKWw==
+Date: Fri, 12 Apr 2024 14:31:02 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Jacob Bachmeyer <jcb62281@gmail.com>
+Cc: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>,
+	Joey Hess <id@joeyh.name>, Jonathan Nieder <jrnieder@gmail.com>,
+	Andres Freund <andres@anarazel.de>,
+	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org
+Message-ID: <ZhkphiAdOcI-WWx4@debian>
+References: <ZhYEpAFolwefRv7X@debian>
+ <20240410162812.GA17059@openwall.com>
+ <66175855.2090805@gmail.com>
+ <Zhgc_fyeFqnTc__t@debian>
+ <6618AB04.5030707@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Z3N58QNAorCCBhI6"
+Content-Disposition: inline
+In-Reply-To: <6618AB04.5030707@gmail.com>
+Subject: Re: [oss-security] Analysis on who is Jia Tan, and who he could work
+ for, reading xz.git
+
+--Z3N58QNAorCCBhI6
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 12 Apr 2024 14:31:02 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Jacob Bachmeyer <jcb62281@gmail.com>
+Cc: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>,
+	Joey Hess <id@joeyh.name>, Jonathan Nieder <jrnieder@gmail.com>,
+	Andres Freund <andres@anarazel.de>,
+	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org
+Subject: Re: [oss-security] Analysis on who is Jia Tan, and who he could work
+ for, reading xz.git
+
+Hi Jacob,
+
+Thanks to your script, I've found a mistake in my analysis of the
+timestamps.
+
+The commit dates in +0200 recently seem to be because Jia Tan rebased
+some commits from Lasse, and used --committer-date-is-author-date.
+
+	commit 3007e74ef250f0ce95d97ffbdf2282284f93764d
+	Author:     Lasse Collin <lasse.collin@tukaani.org>
+	AuthorDate: Tue Mar 5 23:21:26 2024 +0200
+	Commit:     Lasse Collin <lasse.collin@tukaani.org>
+	CommitDate: Tue Mar 5 23:23:16 2024 +0200
+
+	commit 6e97b299f1b22e366ec42ba5dc5b9d0746e87b84
+	Author:     Lasse Collin <lasse.collin@tukaani.org>
+	AuthorDate: Tue Mar 5 23:21:26 2024 +0200
+	Commit:     Jia Tan <jiat0218@gmail.com>
+	CommitDate: Tue Mar 5 23:21:26 2024 +0200
+
+$ git describe --all --contains 3007e74ef250f0ce95d97ffbdf2282284f93764d
+master~37
+$ git describe --all --contains 6e97b299f1b22e366ec42ba5dc5b9d0746e87b84
+tags/v5.6.1~9
+
+The other three commits have a similar story.  So it was a red herring.
+Then, all of Jia's actions have consistently been in +0800.
 
 
+Now I'm using your scripts to collect data from several projects where I
+work, to compare with data points that I know well.
 
-On Tue, Sep 15, 2015, at 11:38, Hanno B=F6ck wrote:
->=20
-> There are issues from 2009(!) that haven't seen a fix yet, at least
-> not in a release:
-> http://www.info-zip.org/phpBB3/viewtopic.php?f=3D7&t=3D267
->=20
 
-Are any distros shipping patches to solve these issues? I'd import them
-into FreeBSD ports if so...
-
+Have a lovely day!
+Alex
 
 --=20
-  Mark Felder
-  feld@feld.me
+<https://www.alejandro-colomar.es/>
+
+--Z3N58QNAorCCBhI6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmYZKYYACgkQnowa+77/
+2zKB4g//R22pzRNdBxO7rv+NPm9Xc+nuSQlOzW4vJo62sOpPEn+z/rhuadjqdWCx
+r/tf/6wkZ7QrZayF9sZSP/GAkud8libOYCzakR4gix+Rc2XBNCefvS4WPXCgczKe
+nBMgO7jSNPCOQ2Cu4X2B0lBtmqOLj5ADL5ITIdEbBWc+WWSe0nQKCesyLww/9Cho
+DsYwaYuscwHltTIjbaf4xrIN4QbClribDfQA6/v+jwd9l0eNPbdk5C4UFYgpHJoB
+e5QU7Rax2G5cpQ6rCbL3/mjW5S2L27ZEk906bnKv610wDnd802qJT0d65ibcSV6C
+BdWizykPqVjaUekcFQgdAUlTHGckuO4SObxuvjV4jSeUnYlKZ/8Eo8vj6S565Bn/
+jA3PjIh9VLw1xmRhd35/fZOTfOpII6bxlxIbZaKB4qx48P5c/AxWtuOyVBkqVSW0
+btSM6qCcepWwv9G08LerxKLvAyGVRHfm84cjUE8OusWOzCYhwTKxVW6fxjn4SF2N
+flHtuFmU9uVZCj4DqK4iu9JIrbnXj6fmoGi73HrNu0vDPrn3hOa2xndOhKOfnXWo
+qoL/0WCM+67V3nwU0pp4RS//LPkqYfIgDPYN/ehIRHIoevyZEcgxhzdOeMcO+2FJ
+TQKLTUdzVOAamiAbRSMTjLXIm1v2vwkg0egRqyqxJL+uRVjIedE=
+=Npwq
+-----END PGP SIGNATURE-----
+
+--Z3N58QNAorCCBhI6--
