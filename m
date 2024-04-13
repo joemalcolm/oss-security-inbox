@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1695" "Tuesday" "1" "March" "2016" "09:55:03" "-0800" "Grant Ridder" "shortdudey123@gmail.com" "<CAPiURgVCtTu3h0TM=5QBKjTQ62g6GLdDve3pcg29PDtRC1O1FQ@mail.gmail.com>" "57" "Re: [oss-security] CVE's for SSLv2 support" "^Cc:" nil nil "3" "2016030117:55:03" "[oss-security] CVE's for SSLv2 support" (number mark "        shortdudey12 Mar  1   57/1695  " thread-indent "\"Re: [oss-security] CVE's for SSLv2 support\"\n") "<CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>" ("<CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>" "<CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20205 invoked by uid 550); 1 Mar 2016 17:57:11 -0000
+Received: (qmail 7453 invoked by uid 550); 13 Apr 2024 12:05:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +6,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18319 invoked from network); 1 Mar 2016 17:55:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=nA8nzOZpi8VewteFKq2/YIpdheyrkEK73gUZoue3oOM=;
-        b=SoKZhAjjOSKlnraFFyXIG6PItt+HcpnQcqpSLupcgx0YX6seY4Qdc9iGpf49V6Lcik
-         +dww77cr6W15vOjRhHED0rAodq9W7h5HbskI5+VAjaXl/M6uTfXy9Gd9X1PviO72c+NR
-         4QZBonZ5TVpGdqjku/V6KPtuxiQ+7VKUWJnHxcsnx5OkoayxpbVdSa95kaTLv+mXec6h
-         ABXhbDTBHHSn89LvJq3qGZl76EZdECmIX6pgeRV1ChyFCdNsAD4lO/iRwtswo/FZvfEb
-         XMR1ojf0w06qo1FAH7u5yM7UGWHbn9V/3B6jZDHj64lUhNghP4rtId8ieWVBr+A5bIGJ
-         364A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=nA8nzOZpi8VewteFKq2/YIpdheyrkEK73gUZoue3oOM=;
-        b=F1J+4HaSFF69FN5voBJkQp6qNockaQ/5vyrunRiaHGH0fhkMIWbe0VlLncmzttcuwz
-         7F7sg4f0JZughmVHQ1JL+A2z9lx7QE7qdoRbaZT5SkrVGe6268ohmY6MyHcNdBLo7CtD
-         WOlTcxf7/5aUXCMpDTTM1l8ZZFbEDsZhZ51q+R4MQfe7KgNM++ts+hmknWXlshqWjNlL
-         EaOoqDk8V4pMrit6YwtHEtAvvLP57MJ7bs1B3q5ZFIvkVNOuL0SgO3XdevXKDck6Wpbv
-         xpcmz+S+l8J0KOmKOLKKt4lKm7a4Yd6OJlK/PbJ8hAyMGcKDBl9xyM4sq0p+hN3/ztKP
-         XQ9g==
-X-Gm-Message-State: AD7BkJILLhCas2sSVSURDdukwBRFHBY0tCQtPRBv3eNiuQ6YYv5ElKfb9QrNv9AgQRP/9HHIPib90ZW9WqYXJA==
-MIME-Version: 1.0
-X-Received: by 10.50.155.37 with SMTP id vt5mr329389igb.30.1456854903083; Tue,
- 01 Mar 2016 09:55:03 -0800 (PST)
-In-Reply-To: <CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>
-References: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
-	<CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>
-Message-ID: <CAPiURgVCtTu3h0TM=5QBKjTQ62g6GLdDve3pcg29PDtRC1O1FQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11c3c7eefcdcfc052d007660
-Cc: CVE ID Requests <cve-assign@mitre.org>
-Date: Tue, 1 Mar 2016 09:55:03 -0800
-From: Grant Ridder <shortdudey123@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE's for SSLv2 support
-To: oss-security@lists.openwall.com
+Received: (qmail 32196 invoked from network); 13 Apr 2024 00:24:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712967839; x=1713572639; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
+         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/Pyp/dQofPQcqNo1/xuWTCnHpxdW/zHWzykwYdqrDAA=;
+        b=VZlPDpdQAPgGyeMwKXIkzRL4P/FM1yGzpE3y/ENivGRb6L+RPqkw7MLWmITROYiqbH
+         RA0X89XY738mI+/R24hmHhCJ1QyTUXUcurMTwb/a+lIcrB9ORjKF52nSxlte5DlDyISs
+         /9hmJhkWejadywpECpWjJ7YS3OmlcnmnxlAiWd0dbqEEBwTpEeDEeXNx/vaTblZ4kdt1
+         qvG/SJkD8NgI6yElPMMCezFG6EJBzIYhDGxb1MScPYOA4L/uAgbZVf/ZVs0L3HGwu0nN
+         3jmaL+0yirdU+nn9x/gs1NctBRGu2BhXTBCKVsqR4IeLyJjQgXMoZYP67otS7pbmIs4i
+         xmMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712967839; x=1713572639;
+        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
+         :mime-version:user-agent:reply-to:from:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/Pyp/dQofPQcqNo1/xuWTCnHpxdW/zHWzykwYdqrDAA=;
+        b=TCR7eIZww5ARqsTLVdJ1kV/K1494cnD26avmgY5RV5pAtPhutbG76RtArx4zXGhYB3
+         PgNwAdARAdpe6xvOIAdg6g4/Kx/+6btt3Y/PpfwngYvK9lgSxHmbmr0OE7UBvNCwXvyl
+         ZYRltF4ew4TOZovpTP8XJ0hN4qbUuxVi2fRtbhG1AmrJFoZkjOFsFSVn8HaoBQikRgrP
+         x82FhtFmX0X8cekybj19muakiiHRJyAI4lXwXwgR9a09qA6l18jUwn/AriA2A8k7doI2
+         be8j/i7Fi4lNdNLluR0W3yrFtbf4kv1arv71HrY+RBLcBlJrv7HBFsDf2bkzPL3JZD7S
+         jJ/g==
+X-Gm-Message-State: AOJu0YwUDNzUq+RW3NQJsR2MqWsiWb9he3oNuYbvA+MPhvWCbEzK9VOq
+	t4+N5TQ20o0Tg8cPFchbVZEGjc4HuMT6VYuVkGfAwDbx2be1QT/E
+X-Google-Smtp-Source: AGHT+IF9sA8MK2ACpztdUvhIyhqfSHlgP4tfbzVviUtKS0ik0rnKRXFa9WxaHEO+OQGZRG6MNJODsw==
+X-Received: by 2002:a05:6870:b52a:b0:233:5bf6:f154 with SMTP id v42-20020a056870b52a00b002335bf6f154mr4745208oap.50.1712967839311;
+        Fri, 12 Apr 2024 17:23:59 -0700 (PDT)
+Message-ID: <6619D09B.60202@gmail.com>
+Date: Fri, 12 Apr 2024 19:23:55 -0500
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+MIME-Version: 1.0
+To: Alejandro Colomar <alx@kernel.org>
+CC: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>, 
+ Joey Hess <id@joeyh.name>,
+ Jonathan Nieder <jrnieder@gmail.com>, Andres Freund <andres@anarazel.de>, 
+ Lasse Collin <lasse.collin@tukaani.org>,
+ xz@tukaani.org
+References: <ZhYEpAFolwefRv7X@debian> <20240410162812.GA17059@openwall.com> <66175855.2090805@gmail.com> <Zhgc_fyeFqnTc__t@debian> <6618AB04.5030707@gmail.com> <ZhkphiAdOcI-WWx4@debian>
+In-Reply-To: <ZhkphiAdOcI-WWx4@debian>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Analysis on who is Jia Tan, and who he could work
+ for, reading xz.git
 
---001a11c3c7eefcdcfc052d007660
-Content-Type: text/plain; charset=UTF-8
-
-Link to RedHat announcement:
-https://access.redhat.com/security/vulnerabilities/drown
-
-I am trying to follow the scope of this issue.  RedHat says "TLS servers
-which support SSLv2 are vulnerable".  Can't tell if this means that
-services with SSLv2 capabilities are vulnerable or only ones with it
-enabled.
-
--Grant
-
-On Tue, Mar 1, 2016 at 9:39 AM, Loganaden Velvindron <loganaden@gmail.com>
-wrote:
-
-> On Tue, Mar 1, 2016 at 5:33 PM, Kurt Seifried <kseifried@redhat.com>
-> wrote:
+Alejandro Colomar wrote:
+> Hi Jacob,
 >
-> > So there is this proposed RFC:
-> >
-> > https://tools.ietf.org/html/rfc6176
-> >
-> > TL;DR: SSLv2 needs to be shot.
-> >
-> > Now we have yet another significant SSLv2 problem, DROWN, bad enough in
-> > fact that Red Hat has now disabled SSLv2 in OpenSSL by default (already
-> > done in NSS/GnuTLS), so from my vendor perspective, we're treating SSLv2
-> > support as a security problem, the solution of which is to remove said
-> > support.
-> >
-> > But more generally, should we look at assigning CVE's for support of
-> SSLv2,
-> > much like we would for products supporting DES or other known insecure
-> > cryptographic algorithms, hashes, digests and protocols? My personal vote
-> > is for yes.
-> >
-> >
-> >
-> >
-> Btw, FreeBSD has done some work there:
->
-> https://wiki.freebsd.org/LibreSSL/PatchingPorts#SSLv2.2FSSLv3_method_failures
->
-> Linking with LibreSSL would help uncover those cases, and assign CVEs :)
->
->
-> >
-> >
-> > --
-> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > Red Hat Product Security contact: secalert@redhat.com
-> >
->
+> Thanks to your script, I've found a mistake in my analysis of the
+> timestamps.
+>   
 
---001a11c3c7eefcdcfc052d007660--
+Interesting.  I am very happy to have helped clear the air.
+
+> The commit dates in +0200 recently seem to be because Jia Tan rebased
+> some commits from Lasse, and used --committer-date-is-author-date.
+>
+> 	commit 3007e74ef250f0ce95d97ffbdf2282284f93764d
+> 	Author:     Lasse Collin <lasse.collin@tukaani.org>
+> 	AuthorDate: Tue Mar 5 23:21:26 2024 +0200
+> 	Commit:     Lasse Collin <lasse.collin@tukaani.org>
+> 	CommitDate: Tue Mar 5 23:23:16 2024 +0200
+>
+> 	commit 6e97b299f1b22e366ec42ba5dc5b9d0746e87b84
+> 	Author:     Lasse Collin <lasse.collin@tukaani.org>
+> 	AuthorDate: Tue Mar 5 23:21:26 2024 +0200
+> 	Commit:     Jia Tan <jiat0218@gmail.com>
+> 	CommitDate: Tue Mar 5 23:21:26 2024 +0200
+>
+> $ git describe --all --contains 3007e74ef250f0ce95d97ffbdf2282284f93764d
+> master~37
+> $ git describe --all --contains 6e97b299f1b22e366ec42ba5dc5b9d0746e87b84
+> tags/v5.6.1~9
+>
+> The other three commits have a similar story.  So it was a red herring.
+> Then, all of Jia's actions have consistently been in +0800.
+>   
+
+Very interesting---that red herring has gotten quite a bit of press.
+
+> Now I'm using your scripts to collect data from several projects where I
+> work, to compare with data points that I know well.
+
+Excellent!  Now we are likely to get somewhere.
+
+
+-- Jacob
+
