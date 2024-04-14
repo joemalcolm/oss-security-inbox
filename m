@@ -1,4 +1,4 @@
-Received: (qmail 3426 invoked by uid 550); 11 May 2024 11:22:14 -0000
+Received: (qmail 28159 invoked by uid 550); 14 Apr 2024 19:12:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +7,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1378 invoked from network); 11 May 2024 11:21:30 -0000
-Date: Sat, 11 May 2024 13:21:23 +0200
+Received: (qmail 26075 invoked from network); 14 Apr 2024 19:12:01 -0000
+Date: Sun, 14 Apr 2024 21:08:55 +0200
 From: Solar Designer <solar@openwall.com>
-To: Corey Lopez <Corey.lopez09160587@hotmail.com>
-Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-ID: <20240511112123.GA2064@openwall.com>
-References: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240414190855.GA12716@openwall.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
 User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Microsoft Device Firmware Configuration Interface (DFCI) in Linux efivars directory
+Subject: [oss-security] Linux: Disabling network namespaces
 
 Hi,
 
-Corey's message is confused and there's no indication in it whether the
-system was compromised, so that part doesn't need further discussion,
-but as a moderator I don't mind someone explaining Linux's (and other
-systems') exposure of the EFI variables and DFCI and what it means for
-security as well as what it does not.
+Many Linux kernel vulnerabilities including the recently exploited
+Netfilter CVE-2024-1086 require CAP_NET_ADMIN in a namespace, yet a
+typically recommended mitigation is to disable user namespaces (not just
+network namespaces).
 
-On Fri, May 10, 2024 at 01:19:35PM +0000, Corey Lopez wrote:
-> investigate other files on my system with the immutable attribute set by running this
-> command as root:
-> 
-> # find / -type f -exec lsattr {} + 2>/dev/null > immutable-list-find.txt
-> 
-> This led me the directory /sys/firmware/efi/efivars/ where I discovered efi variables
+Further, while on Debian/Ubuntu it is possible to disable just
+unprivileged user namespaces with the Debian-specific sysctl
+kernel.unprivileged_userns_clone=0, on other distros we'd have to use
+user.max_user_namespaces=0, which (unnecessarily) prevents starting of
+containers even by root.
 
-That's normal.
+Fredrik Nystrom on Rocky Linux Mattermost channel Security pointed out
+that it is reasonable to disable just network namespaces with
+user.max_net_namespaces=0 instead, and that the negative effects of
+doing so and how to cope with them are well-documented for Apptainer,
+with its documentation also covering Docker, Podman, and systemd:
 
-> Microsoft advertises DFCI as a defense mechanism against rootkits, however it seems that it
-> is being used as a UEFI bootkit.
+https://apptainer.org/docs/admin/latest/user_namespace.html#disabling-network-namespaces
 
-No reason to think so.
+I hope some of us in here find this useful, and maybe we (including
+distros) will start recommending this milder mitigation when sufficient.
 
-> I did discover loop devices on my system that I could not remove with the 
-> losetup command.
+I include this section of the Apptainer documentation below, as taken
+from its source at
+https://github.com/apptainer/apptainer-admindocs/blob/main/user_namespace.rst
 
-That's probably because they were in use.  That's normal.
+---
+******************************
+ Disabling network namespaces
+******************************
+
+There have been many Linux kernel exploits that have made use of
+unprivileged user namespaces as a point of entry, but almost all of them
+in the last few years have been in combination with network namespaces.
+Therefore even though the Apptainer project recommends enabling
+unprivileged user namespaces, it recommends disabling network namespaces
+when possible in order to substantially reduce the risk profile
+and need for urgent updates when vulnerabilities are announced.
+
+Network namespaces can be disabled on most Linux-based systems
+like this:
+
+.. code:: bash
+
+   echo "user.max_net_namespaces = 0" \
+        >/etc/sysctl.d/90-max_net_namespaces.conf
+   sysctl -p /etc/sysctl.d/90-max_net_namespaces.conf
+
+Apptainer does not by default make use of network namespaces, but it
+does have some little-used privileged options beginning with ``--net``
+that do.
+Those options will not work when network namespaces are disabled.
+Unfortunately it is not possible to disable only unprivileged
+network namespaces, so this will affect programs that use them
+even if run as root.
+
+Some other container runtimes such as Docker and Podman do make use
+of network namespaces by default.
+Those two runtimes can still work when network namespaces are disabled
+by adding the ``--net=host`` option.
+
+Disabling network namespaces also blocks the systemd PrivateNetwork
+feature.
+To find services that use it, look for ``PrivateNetwork=true``
+or ``PrivateNetwork=yes`` in ``/lib/systemd/system/*.service``.
+This can be turned off for each service through a
+``/etc/systemd/system/<service>.d/*.conf`` file, for example for
+``systemd-hostnamed``:
+
+.. code:: bash
+
+   cd /etc/systemd/system
+   mkdir -p systemd-hostnamed.service.d
+   (echo "[Service]"; echo "PrivateNetwork=no") \
+        >systemd-hostnamed.service.d/no-private-network.conf
+
+If the service is enabled (that is, actively used) then restart it
+and check its status:
+
+.. code:: bash
+
+   systemctl status systemd-hostnamed
+   systemctl daemon-reload
+   systemctl restart systemd-hostnamed
+   systemctl status systemd-hostnamed
+---
 
 Alexander
