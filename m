@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1155" "Saturday" "20" "June" "2015" "22:23:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150621022359.D769B72E0D1@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE request -- Linux kernel - kvm: x86: NULL pointer dereference in kvm_apic_has_events function" nil nil nil "6" "2015062102:23:59" "[oss-security] Re: CVE request -- Linux kernel - kvm: x86: NULL pointer dereference in kvm_apic_has_events function" (number mark "        cve-assign@m Jun 20   36/1155  " thread-indent "\"[oss-security] Re: CVE request -- Linux kernel - kvm: x86: NULL pointer dereference in kvm_apic_has_events function\"\n") "<20150610144114.GC19706@dhcp-25-225.brq.redhat.com>" ("<20150610144114.GC19706@dhcp-25-225.brq.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29720 invoked by uid 550); 21 Jun 2015 02:24:12 -0000
+Received: (qmail 27692 invoked by uid 550); 15 Apr 2024 15:13:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +6,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29702 invoked from network); 21 Jun 2015 02:24:11 -0000
-In-Reply-To: <20150610144114.GC19706@dhcp-25-225.brq.redhat.com>
-Message-Id: <20150621022359.D769B72E0D1@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat, 20 Jun 2015 22:23:59 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request -- Linux kernel - kvm: x86: NULL pointer dereference in kvm_apic_has_events function
-To: pmatouse@redhat.com
+Received: (qmail 26403 invoked from network); 15 Apr 2024 15:13:10 -0000
+Date: Mon, 15 Apr 2024 17:13:09 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240415151309.GA15253@openwall.com>
+References: <20240414190855.GA12716@openwall.com> <ZhxdDyIBazJYRDeR@itl-email>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZhxdDyIBazJYRDeR@itl-email>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> https://lkml.org/lkml/2015/6/4/163
-
-> A local user with access to /dev/kvm (usually unprivileged) can use this
-> flaw to crash the system.
-
-> arch/x86/kvm/lapic.h
+On Sun, Apr 14, 2024 at 06:47:26PM -0400, Demi Marie Obenour wrote:
+> On Sun, Apr 14, 2024 at 09:08:55PM +0200, Solar Designer wrote:
+> > Fredrik Nystrom on Rocky Linux Mattermost channel Security pointed out
+> > that it is reasonable to disable just network namespaces with
+> > user.max_net_namespaces=0 instead, and that the negative effects of
+> > doing so and how to cope with them are well-documented for Apptainer,
+> > with its documentation also covering Docker, Podman, and systemd:
+> > 
+> > https://apptainer.org/docs/admin/latest/user_namespace.html#disabling-network-namespaces
+> > 
+> > I hope some of us in here find this useful, and maybe we (including
+> > distros) will start recommending this milder mitigation when sufficient.
 > 
-> kvm_apic_has_events
+> Is this still compatible with Firefox?
+
+No.  Per my testing, setting user.max_net_namespaces=0 while keeping
+user.max_user_namespaces at greater than 0 is _not_ compatible with
+Firefox 124.0.2.  However, setting user.max_user_namespaces=0 is
+compatible with it, regardless of whether user.max_net_namespaces is 0
+or not.  I guess it only has fallbacks (perhaps weakening its sandbox)
+for the case when user namespaces can't be created, but not for this
+mixed case when user can be, but net can't.
+
+Breaking Firefox or weakening its sandbox is indeed not great.
+
+I primarily meant these settings for headless servers, which wouldn't
+commonly run Firefox.  However, even there I can see how weakening
+systemd service sandboxing is also not great.  Maybe we need to invent a
+kernel.unprivileged_netns_clone setting similar to Debian's
+kernel.unprivileged_userns_clone, so that systemd (running as root)
+would still be able to create network namespaces.  And/or make Debian's
+kernel.unprivileged_userns_clone official upstream and use that.  Why
+did Debian choose to deprecate (but not yet drop?) theirs and go with
+upstream's user.max_user_namespaces, which doesn't provide exactly the
+same functionality?  Was there an attempt at upstreaming?
+
+> IMO an ideal solution would be:
 > 
-> - return vcpu->arch.apic->pending_events;
-> + return kvm_vcpu_has_lapic(vcpu) && vcpu->arch.apic->pending_events;
+> 1. Provide a privileged helper daemon that sets up containers based on
+>    user requirements.
+> 
+> 2. Port programs that use containers to use this helper.
 
-(not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/x86/kvm/lapic.h)
+Not likely to happen universally and not good in terms of introducing a
+middle project and dependency that could dictate rules to others.
 
-Use CVE-2015-4692.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVhh/YAAoJEKllVAevmvmsp/8H/ilk6zFEDd0eldBYV2vjqiiN
-gygbpivWA6/zn93pbMDCHAGhLrqxpOWdnPKBiDmsk3zu2tO7dwgWD9gSwTbTd00I
-9Ecd8kIW1VtqDEGr/1xH478NipY4RAFJYaM/h8kpGw+XI7bvuvHD9ykr9ZRFNkaV
-rzfRbtq4JvwfqMX6eAIId62zOexlhvsbzqUxrRdTSlT7CMH8Th/BKYx+X7LTwJMy
-dvoZ3KneJyjCoYzd8LMCWNiuf5xQa8GuNObMA50FYGUWDhs5/Dy4uCnA52FooR9a
-79agu9zQowTupO+v3eENp0u2iid82vFdVrnSEeXLfT+sKOhpUvMify7VwstBPc8=
-=STEK
------END PGP SIGNATURE-----
+Alexander
