@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2987" "Monday" "4" "November" "2019" "15:03:42" "-0800" "Srivatsa S. Bhat" "srivatsa@csail.mit.edu" "<373864a3-0558-3b34-b012-9d4cd8ccce23@csail.mit.edu>" "77" "Re: [oss-security] Membership application for linux-distros - VMware" "^Cc:" nil nil "11" "2019110423:03:42" "[oss-security] Membership application for linux-distros - VMware" (number mark "        srivatsa@csa Nov  4   77/2987  " thread-indent "\"Re: [oss-security] Membership application for linux-distros - VMware\"\n") "<20191030162423.GA9147@openwall.com>" ("<4d3c224a-78b2-eae5-0258-c3382d4c3f0f@csail.mit.edu>" "<20191030162423.GA9147@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Membership application for linux-distros - VMware" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32488 invoked by uid 550); 4 Nov 2019 23:04:01 -0000
+Received: (qmail 24240 invoked by uid 550); 15 Apr 2024 19:43:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,127 +6,233 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32445 invoked from network); 4 Nov 2019 23:04:00 -0000
-References: <4d3c224a-78b2-eae5-0258-c3382d4c3f0f@csail.mit.edu>
- <20191030162423.GA9147@openwall.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=srivatsa@csail.mit.edu; keydata=
- mQENBF2vf3IBCADZ+UOAN1lbljU692ZGRZ4UtlZXFEM5SS0WM0ZkDb42xmt+laNM/OEFML/l
- fzvlAB/in8tTXSeaEkHsPmLyCJcvbWbk/TmfmiqpaSgkGF+0gwY2982Sq1iajTTIzfCFzLX6
- fv2Md8RYOr4kU26s/6sWL/Skfcue2v4R1e/3Qxozq+P4jRFUWOI7rx2e3aImwVpQqcF1bTdX
- bA1rwxoKBhZKHQ045FyXhjgnFgRiGSQHf+ZOnyJteRq5KZQK/Qe19ZAzfdB5FLs5JO00hu11
- jeeWVT640i4wEFVFiRPHJROeXbV5V0c+EXCCgUPElAzTXXtyRosL63IbGHrfDQ04/RAxABEB
- AAG0KVNyaXZhdHNhIFMuIEJoYXQgPHNyaXZhdHNhQGNzYWlsLm1pdC5lZHU+iQFUBBMBCAA+
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAFiEEkmNQ5f4Mz7tVSsyXkHmbPob4kZYFAl2w
- mzoFCQlnHUgACgkQkHmbPob4kZY6gAgAtT0tlJ4uUxqJsgUEbdyX1HrwmtFWzkYH1gaoSzyi
- 5tGY80wu9MGzJnxLgtfdpvukrRvLUkdxOFYOXrkdksQ5JKHKBQkDR1VHobJwjh9ild6dswix
- 3XFVEs+M5DARKcA1uYa8Wmn3VMXd3TabFQtyq6cg4BV4cieUUgLJ5nikFssyAug/xXIrwiCl
- y1vlJVDHmskzTNOXyq+pCEi5jNYIiUsSTs0hF+6/RhnKSPjMuU+XumFSDt1YxToL/8lXGTh3
- Kvcum1tCAnDF+nGrDd3YcNgUefRfUvjWA4ldqERcTSIBYNxOOh4gjnRU1vu9w+d1+E6Jvw7P
- cGo7RPzzQZiFybkBDQRdr39zAQgAz2vQoxZpMNDL2/rfRxJCgQsQna0D164qdbs3NDvwyZh3
- fqTZnszETeljoMjYRu1VmKcV7jTMJBOlN5cfinvxUPxExMMQk3lgdidnaLMUWY2JPaWLWZfy
- nUr8KcvAJb11phTcmiedYVeC9wTEaTEjEMHqxcNQezupUIOtaDL4WqKt+nqcuWcgUpLDu/ND
- yh8oL1EKZh85mzm343mmwKjsYDsBpv4zeXVM6SD0uomnmmi8vNmJkwIvYrJMTmEu+IYq/jo9
- +d6v7SCbObzV6WeRXzST61jjqMrW+/WACJcJ7cs67FGQRhKJl8gT+ZH4dL3RV3XZQjbq6HZg
- pa0j3ZjohwARAQABiQE7BBgBCAAmAhsMFiEEkmNQ5f4Mz7tVSsyXkHmbPob4kZYFAl2wmz8F
- CQlnHUwACgkQkHmbPob4kZbgGQf4vvbxhs9KIVaQTvEPMnfGYztM29Hpk6qqstpGHzVO0fI1
- 7E2FUpdrK+DL0hHdZGVgLjKft+15bxrxOhc/Yj4i78TPRSKejtzfpbS7R6qlKP70FQKH8fbe
- fIJG5jkzKH+RLChfgWKi1ZaFA2Xx7ADcU7h1QRkTt6CzxWPGertD7Beay84pw3dV5vaUGK9S
- uxy4cwI/qB1LSFKOAuptBCJfsM7QC72kVQ2XF37QcSdEAB2KEN6PTixqFq0iJBgqh3trocoJ
- S4ASUyYdnMNt2Tfn5Mm/X6aLQF6G1hR0m3aM2/apySscAKUlQ9fQsvr0juyNlxiDfkJJm2XS
- B+CmYiGl
-Message-ID: <373864a3-0558-3b34-b012-9d4cd8ccce23@csail.mit.edu>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20191030162423.GA9147@openwall.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Cc: Steven Rostedt <rostedt@goodmis.org>, sashal@kernel.org,
- amakhalov@vmware.com, anishs@vmware.com, Sharath George
- <sharathg@vmware.com>, mijzerman@vmware.com,
- Srivatsa Bhat <srivatsab@vmware.com>
-Date: Mon, 4 Nov 2019 15:03:42 -0800
-From: "Srivatsa S. Bhat" <srivatsa@csail.mit.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Membership application for linux-distros - VMware
-To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+Received: (qmail 26605 invoked from network); 15 Apr 2024 19:15:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rub.de; s=mail-2017;
+	t=1713208525; bh=3GTFIN0WIsMHcMacV49X+JWdtQZ01LlyAqQa5+L1YMo=;
+	h=Date:From:Subject:Cc:To:From;
+	b=ejZDNIOWNnFIuywLxxR8U9MDW0ccgBuFYDSUfv+ryq30+xWqlVt9rHhm+PI6va8XZ
+	 XrJN38zKHztue6EQD97tIFSoxw/POhLtHqIJcwsOA+6UgKb6iIbSpXkiQH/tahhadw
+	 kl462Ngk+tSbSV2lGhKUouscA3YXOzQnX591FwfA=
+X-RUB-Notes: Internal origin=134.147.42.236
+X-Envelope-Sender: <fabian.baeumer@rub.de>
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 1.0.5 at mx1.mail.ruhr-uni-bochum.de
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 1.2.1 at mail2.mail.ruhr-uni-bochum.de
+Message-ID: <bd463dda-8303-4713-8751-26372d299ea4@rub.de>
+Date: Mon, 15 Apr 2024 21:15:22 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Fabian_B=C3=A4umer?= <fabian.baeumer@rub.de>
+Cc: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
+Content-Language: en-GB, de-DE
+To: oss-security@lists.openwall.com
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms000702010302040403010508"
+Subject: [oss-security] CVE-2024-31497: Secret Key Recovery of NIST P-521 Private Keys
+ Through Biased ECDSA Nonces in PuTTY Client
 
+--------------ms000702010302040403010508
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Hi Alexander,
+IyMjIFN1bW1hcnkNCg0KVGhlIFB1VFRZIGNsaWVudCBhbmQgYWxsIHJlbGF0
+ZWQgY29tcG9uZW50cyBnZW5lcmF0ZSBoZWF2aWx5IGJpYXNlZCANCkVDRFNB
+IG5vbmNlcyBpbiB0aGUgY2FzZSBvZiBOSVNUIFAtNTIxLiBUbyBiZSBtb3Jl
+IHByZWNpc2UsIHRoZSBmaXJzdCA5IA0KYml0cyBvZiBlYWNoIEVDRFNBIG5v
+bmNlIGFyZSB6ZXJvLiBUaGlzIGFsbG93cyBmb3IgZnVsbCBzZWNyZXQga2V5
+IA0KcmVjb3ZlcnkgaW4gcm91Z2hseSA2MCBzaWduYXR1cmVzIGJ5IHVzaW5n
+IHN0YXRlLW9mLXRoZS1hcnQgdGVjaG5pcXVlcy4gDQpUaGVzZSBzaWduYXR1
+cmVzIGNhbiBlaXRoZXIgYmUgaGFydmVzdGVkIGJ5IGEgbWFsaWNpb3VzIHNl
+cnZlciANCihtYW4taW4tdGhlLW1pZGRsZSBhdHRhY2tzIGFyZSBub3QgcG9z
+c2libGUgZ2l2ZW4gdGhhdCBjbGllbnRzIGRvIG5vdCANCnRyYW5zbWl0IHRo
+ZWlyIHNpZ25hdHVyZSBpbiB0aGUgY2xlYXIpIG9yIGZyb20gYW55IG90aGVy
+IHNvdXJjZSwgZS5nLiANCnNpZ25lZCBnaXQgY29tbWl0cyB0aHJvdWdoIGZv
+cndhcmRlZCBhZ2VudHMuIFRoZSBub25jZSBnZW5lcmF0aW9uIGZvciANCm90
+aGVyIGN1cnZlcyBpcyBzbGlnaHRseSBiaWFzZWQgYXMgd2VsbC4gSG93ZXZl
+ciwgdGhlIGJpYXMgaXMgbmVnbGlnaWJsZSANCmFuZCBmYXIgZnJvbSBlbm91
+Z2ggdG8gcGVyZm9ybSBsYXR0aWNlLWJhc2VkIGtleSByZWNvdmVyeSBhdHRh
+Y2tzIChub3QgDQpjb25zaWRlcmluZyBjcnlwdGFuYWx5dGljYWwgYWR2YW5j
+ZW1lbnRzKS4NCg0KIyMjIEFmZmVjdGVkIFByb2R1Y3RzDQoNCi0gUHVUVFkg
+MC42OCAtIDAuODANCg0KVGhlIGZvbGxvd2luZyAobm90IG5lY2Vzc2FyaWx5
+IGNvbXBsZXRlKSBsaXN0IG9mIHByb2R1Y3RzIGJ1bmRsZSBhbiANCmFmZmVj
+dGVkIFB1VFRZIHZlcnNpb24gYW5kIGFyZSB0aGVyZWZvcmUgdnVsbmVyYWJs
+ZSBhcyB3ZWxsOg0KDQotIEZpbGVaaWxsYSAzLjI0LjEgLSAzLjY2LjUNCi0g
+V2luU0NQIDUuOS41IC0gNi4zLjINCi0gVG9ydG9pc2VHaXQgMi40LjAuMiAt
+IDIuMTUuMA0KLSBUb3J0b2lzZVNWTiAxLjEwLjAgLSAxLjE0LjYNCg0KIyMj
+IEltcGFjdA0KDQpUaGUgbm9uY2UgYmlhcyBhbGxvd3MgZm9yIGZ1bGwgc2Vj
+cmV0IGtleSByZWNvdmVyeSBvZiBOSVNUIFAtNTIxIGtleXMgDQphZnRlciBh
+IG1hbGljaW91cyBhY3RvciBoYXMgc2VlbiByb3VnaGx5IDYwIHZhbGlkIEVD
+RFNBIHNpZ25hdHVyZXMgDQpnZW5lcmF0ZWQgYnkgYW55IFB1VFRZIGNvbXBv
+bmVudCB1bmRlciB0aGUgc2FtZSBrZXkuIEx1Y2tpbHksIGNsaWVudCANCnNp
+Z25hdHVyZXMgYXJlIHRyYW5zbWl0dGVkIHdpdGhpbiB0aGUgc2VjdXJlIGNo
+YW5uZWwgb2YgU1NILCByZXF1aXJpbmcgYSANCm1hbGljaW91cyBzZXJ2ZXIg
+dG8gYWNxdWlyZSBzdWNoIHNpZ25hdHVyZXMuIElmIHRoZSBrZXkgaGFzIGJl
+ZW4gdXNlZCB0byANCnNpZ24gYXJiaXRyYXJ5IGRhdGEgKGUuZy4sIGdpdCBj
+b21taXRzIGJ5IGZvcndhcmRpbmcgUGFnZWFudCB0byBhIA0KZGV2ZWxvcG1l
+bnQgaG9zdCksIHRoZSBwdWJsaWNseSBhdmFpbGFibGUgc2lnbmF0dXJlcyAo
+ZS5nLiwgb24gR2l0SHViKSANCmNhbiBiZSB1c2VkIGFzIHdlbGwuDQoNCkFs
+bCBOSVNUIFAtNTIxIGNsaWVudCBrZXlzIHVzZWQgd2l0aCBQdVRUWSBtdXN0
+IGJlIGNvbnNpZGVyZWQgDQpjb21wcm9taXNlZCwgZ2l2ZW4gdGhhdCB0aGUg
+YXR0YWNrIGNhbiBiZSBjYXJyaWVkIG91dCBldmVuIGFmdGVyIHRoZSANCnJv
+b3QgY2F1c2UgaGFzIGJlZW4gZml4ZWQgaW4gdGhlIHNvdXJjZSBjb2RlIChh
+c3N1bWluZyB0aGF0IH42MCANCnByZS1wYXRjaCBzaWduYXR1cmVzIGFyZSBh
+dmFpbGFibGUgdG8gYW4gYWR2ZXJzYXJ5KS4NCg0KIyMjIE1pdGlnYXRpb25z
+DQoNClRoaXMgdnVsbmVyYWJpbGl0eSBoYXMgYmVlbiBmaXhlZCBpbiBQdVRU
+WSAwLjgxLCBGaWxlWmlsbGEgMy42Ny4wLCANCldpblNDUCA2LjMuMywgYW5k
+IFRvcnRvaXNlR2l0IDIuMTUuMC4xLiBVc2VycyBvZiBUb3J0b2lzZVNWTiBh
+cmUgYWR2aXNlZCANCnRvIGNvbmZpZ3VyZSBUb3J0b2lzZVNWTiB0byB1c2Ug
+UGxpbmsgZnJvbSB0aGUgbGF0ZXN0IFB1VFRZIDAuODEgcmVsZWFzZSANCndo
+ZW4gYWNjZXNzaW5nIGEgU1ZOIHJlcG9zaXRvcnkgdmlhIFNTSCB1bnRpbCBh
+IHBhdGNoIGJlY29tZXMgYXZhaWxhYmxlLg0KDQpFQ0RTQSBOSVNULVA1MjEg
+a2V5cyB1c2VkIHdpdGggYW55IHZ1bG5lcmFibGUgcHJvZHVjdCAvIGNvbXBv
+bmVudCBzaG91bGQgDQpiZSBjb25zaWRlcmVkIGNvbXByb21pc2VkIGFuZCBj
+b25zZXF1ZW50bHkgcmV2b2tlZCBieSByZW1vdmluZyB0aGVtIGZyb20gDQph
+dXRob3JpemVkX2tleXMsIEdpdEh1YiwgLi4uDQoNCiMjIyBDVkUNCg0KVGhp
+cyB2dWxuZXJhYmlsaXR5IGhhcyBiZWVuIGFzc2lnbmVkIENWRS0yMDI0LTMx
+NDk3Lg0KDQotLSANCk0uIFNjLiBGYWJpYW4gQsOkdW1lcg0KDQpDaGFpciBm
+b3IgTmV0d29yayBhbmQgRGF0YSBTZWN1cml0eQ0KUnVociBVbml2ZXJzaXR5
+IEJvY2h1bQ0KVW5pdmVyc2l0w6R0c3N0ci4gMTUwLCBCdWlsZGluZyBNQyA0
+LzE0NQ0KNDQ3ODAgQm9jaHVtDQpHZXJtYW55DQoNCg==
 
-On 10/30/19 9:24 AM, Solar Designer wrote:
-> Hello Srivatsa,
-> 
-> I've reviewed your request and the external resources you referenced,
-> and more, and I find the request very reasonable and satisfying our
-> stated requirements.  I also gave others on oss-security time to comment
-> if they wanted to, and we've only seen comments in favor.
-> 
-> Please send me your PGP key off-list and I'll add you to linux-distros.
-> 
+--------------ms000702010302040403010508
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: Kryptografische S/MIME-Signatur
 
-Thank you very much for adding VMware Photon OS to linux-distros!
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG
+9w0BBwEAAKCCEewwggUSMIID+qADAgECAgkA4wvV+K8l2YEwDQYJKoZIhvcN
+AQELBQAwgYIxCzAJBgNVBAYTAkRFMSswKQYDVQQKDCJULVN5c3RlbXMgRW50
+ZXJwcmlzZSBTZXJ2aWNlcyBHbWJIMR8wHQYDVQQLDBZULVN5c3RlbXMgVHJ1
+c3QgQ2VudGVyMSUwIwYDVQQDDBxULVRlbGVTZWMgR2xvYmFsUm9vdCBDbGFz
+cyAyMB4XDTE2MDIyMjEzMzgyMloXDTMxMDIyMjIzNTk1OVowgZUxCzAJBgNV
+BAYTAkRFMUUwQwYDVQQKEzxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMg
+RGV1dHNjaGVuIEZvcnNjaHVuZ3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsTB0RG
+Ti1QS0kxLTArBgNVBAMTJERGTi1WZXJlaW4gQ2VydGlmaWNhdGlvbiBBdXRo
+b3JpdHkgMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtg1/9m
+oUHN0vqHl4pzq5lN6mc5WqFggEcVToyVsuXPztNXS43O+FZsFVV2B+pG/cgD
+RWM+cNSrVICxI5y+NyipCf8FXRgPxJiZN7Mg9mZ4F4fCnQ7MSjLnFp2uDo0p
+eQcAIFTcFV9Kltd4tjTTwXS1nem/wHdN6r1ZB+BaL2w8pQDcNb1lDY9/Mm3y
+WmpLYgHurDg0WUU2SQXaeMpqbVvAgWsRzNI8qIv4cRrKO+KA3Ra0Z3qLNupO
+kSk9s1FcragMvp0049ENF4N1xDkesJQLEvHVaY4l9Lg9K7/AjsMeO6W/VRCr
+Kq4Xl14zzsjz9AkH4wKGMUZrAcUQDBHHWekCAwEAAaOCAXQwggFwMA4GA1Ud
+DwEB/wQEAwIBBjAdBgNVHQ4EFgQUk+PYMiba1fFKpZFK4OpL4qIMz+EwHwYD
+VR0jBBgwFoAUv1kgNgB5oKAia4zV8mHSuCzLgkowEgYDVR0TAQH/BAgwBgEB
+/wIBAjAzBgNVHSAELDAqMA8GDSsGAQQBga0hgiwBAQQwDQYLKwYBBAGBrSGC
+LB4wCAYGZ4EMAQICMEwGA1UdHwRFMEMwQaA/oD2GO2h0dHA6Ly9wa2kwMzM2
+LnRlbGVzZWMuZGUvcmwvVGVsZVNlY19HbG9iYWxSb290X0NsYXNzXzIuY3Js
+MIGGBggrBgEFBQcBAQR6MHgwLAYIKwYBBQUHMAGGIGh0dHA6Ly9vY3NwMDMz
+Ni50ZWxlc2VjLmRlL29jc3ByMEgGCCsGAQUFBzAChjxodHRwOi8vcGtpMDMz
+Ni50ZWxlc2VjLmRlL2NydC9UZWxlU2VjX0dsb2JhbFJvb3RfQ2xhc3NfMi5j
+ZXIwDQYJKoZIhvcNAQELBQADggEBAIcL/z4Cm2XIVi3WO5qYi3FP2ropqiH5
+Ri71sqQPrhE4eTizDnS6dl2e6BiClmLbTDPo3flq3zK9LExHYFV/53RrtCyD
+2HlrtrdNUAtmB7Xts5et6u5/MOaZ/SLick0+hFvu+c+Z6n/XUjkurJgARH5p
+O7917tALOxrN5fcPImxHhPalR6D90Bo0fa3SPXez7vTXTf/D6OWST1k+kEcQ
+SrCFWMBvf/iu7QhCnh7U3xQuTY+8npTD5+32GPg8SecmqKc22CzeIs2LgtjZ
+eOJVEqM7h0S2EQvVDFKvaYwPBt/QolOLV5h7z/0HJPT8vcP9SpIClxvyt7bP
+ZYoaorVyGTkwggWsMIIElKADAgECAgcbY7rQHiw9MA0GCSqGSIb3DQEBCwUA
+MIGVMQswCQYDVQQGEwJERTFFMEMGA1UEChM8VmVyZWluIHp1ciBGb2VyZGVy
+dW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVzIGUuIFYuMRAw
+DgYDVQQLEwdERk4tUEtJMS0wKwYDVQQDEyRERk4tVmVyZWluIENlcnRpZmlj
+YXRpb24gQXV0aG9yaXR5IDIwHhcNMTYwNTI0MTEzODQwWhcNMzEwMjIyMjM1
+OTU5WjCBjTELMAkGA1UEBhMCREUxRTBDBgNVBAoMPFZlcmVpbiB6dXIgRm9l
+cmRlcnVuZyBlaW5lcyBEZXV0c2NoZW4gRm9yc2NodW5nc25ldHplcyBlLiBW
+LjEQMA4GA1UECwwHREZOLVBLSTElMCMGA1UEAwwcREZOLVZlcmVpbiBHbG9i
+YWwgSXNzdWluZyBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AJ07eRxH3h+Gy8Zp1xCeOdfZojDbchwFfylfS2jxrRnWTOFrG7ELf6Gr4HuL
+i9gtzm6IOhDuV+UefwRRNuu6cG1joL6WLkDh0YNMZj0cZGnlm6Stcq5oOVGH
+ecwX064vXWNxSzl660Knl5BpBb+Q/6RAcL0D57+eGIgfn5mITQ5HjUhfZZkQ
+0tkqSe3BuS0dnxLLFdM/fx5ULzquk1enfnjK1UriGuXtQX1TX8izKvWKMKzt
+FwUkP7agCwf9TRqaA1KgNpzeJIdl5Of6x5ZzJBTN0OgbaJ4YWa52fvfRCng8
+h0uwN89Tyjo4EPPLR22MZD08WkVKusqAfLjz56dMTM0CAwEAAaOCAgUwggIB
+MBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0PAQH/BAQDAgEGMCkGA1UdIAQi
+MCAwDQYLKwYBBAGBrSGCLB4wDwYNKwYBBAGBrSGCLAEBBDAdBgNVHQ4EFgQU
+azqYi/nyU4na4K2yMh4JH+iqO3QwHwYDVR0jBBgwFoAUk+PYMiba1fFKpZFK
+4OpL4qIMz+EwgY8GA1UdHwSBhzCBhDBAoD6gPIY6aHR0cDovL2NkcDEucGNh
+LmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1jYS9wdWIvY3JsL2NhY3JsLmNybDBA
+oD6gPIY6aHR0cDovL2NkcDIucGNhLmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1j
+YS9wdWIvY3JsL2NhY3JsLmNybDCB3QYIKwYBBQUHAQEEgdAwgc0wMwYIKwYB
+BQUHMAGGJ2h0dHA6Ly9vY3NwLnBjYS5kZm4uZGUvT0NTUC1TZXJ2ZXIvT0NT
+UDBKBggrBgEFBQcwAoY+aHR0cDovL2NkcDEucGNhLmRmbi5kZS9nbG9iYWwt
+cm9vdC1nMi1jYS9wdWIvY2FjZXJ0L2NhY2VydC5jcnQwSgYIKwYBBQUHMAKG
+Pmh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFsLXJvb3QtZzItY2EvcHVi
+L2NhY2VydC9jYWNlcnQuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQCBeEWkTqR/
+DlXwCbFqPnjMaDWpHPOVnj/z+N9rOHeJLI21rT7H8pTNoAauusyosa0zCLYk
+hmI2THhuUPDVbmCNT1IxQ5dGdfBi5G5mUcFCMWdQ5UnnOR7Ln8qGSN4IFP8V
+Sytmm6A4nwDO/afr0X9XLchMX9wQEZc+lgQCXISoKTlslPwQkgZ7nu7YRrQb
+tQMMONncsKk/cQYLsgMHM8KNSGMlJTx6e1du94oFOO+4oK4v9NsH1VuEGMGp
+uEvObJAaguS5Pfp38dIfMwK/U+d2+dwmJUFvL6Yb+qQTkPp8ftkLYF3sv8pB
+oGH7EUkp2KgtdRXYShjqFu9VNCIaE40GMIIHIjCCBgqgAwIBAgIMKEY6FiZd
+yM744mtLMA0GCSqGSIb3DQEBCwUAMIGNMQswCQYDVQQGEwJERTFFMEMGA1UE
+Cgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3Jz
+Y2h1bmdzbmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQD
+DBxERk4tVmVyZWluIEdsb2JhbCBJc3N1aW5nIENBMB4XDTIzMDMzMTEwNTcx
+M1oXDTI2MDMzMDEwNTcxM1owgZoxCzAJBgNVBAYTAkRFMSEwHwYDVQQKDBhS
+dWhyLVVuaXZlcnNpdGFldCBCb2NodW0xLDAqBgNVBAsMI0NoYWlyIGZvciBO
+ZXR3b3JrIGFuZCBEYXRhIFNlY3VyaXR5MRAwDgYDVQQEDAdCYWV1bWVyMQ8w
+DQYDVQQqDAZGYWJpYW4xFzAVBgNVBAMMDkZhYmlhbiBCYWV1bWVyMIICIjAN
+BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAtUXof3QfwCyKSjiHcwXSMnDh
+FiuJW24OoEiy77FbR0TMr6oJHCiVMnr9j/tSQEktkoLWOSOziyC38nc8/Bdr
+5goeZ5XBCsp5PmgGN8s+i17vQVV/5e6sRu39wImM0AFZ/b0/rxJ4RVhqknnx
+ocxwDweMjGxWRolSy69wSh96kdW0UcBGXS3TTiA9p6xYUO9/VuF4uJIrzRrb
+wzhXqbDCIzTnthiOGnUzjQcALf/7omQy+A/x1OXSLi35gKXXALKWFbbHEJjW
+H4ION4bwGyHIw/MyqGbPeSf47X5M2Wu5jHqknhQogw+5oVYNmaoT7+Zw8KyN
+A4yeQ2wDTjwziiCgENpK21oY1n/8klBvHw/qVXccOzYrOZYoQkBO1GpThbyS
+bz1k0WCT/47bFfXupqPzBbKp5NqHdoxUucR7n8He0e9liWi2xVIg4x9QH/6z
+m4NPcDNmprVtozZQ2/WBZMn1ungqtVeiBp1NseBgjJXCW41aCUH9EDdR6fto
++5M5+SQWm6mGVWgaEXNudZ5b1Q5KnldMYFfwOciZJMPgDZYmP4cp3p++nYF8
+0AxvF7AK8lo2y8Z+/EgB1XAqn7H0V8v41p1H2nbHNJwnLga2OiLQZmys+RZQ
+wCuQNWFpV56X9mGD+NrFe9Z3i6PXAYQ8jb9Fw1P2mpyweHfT1liGw9pM8o8C
+AwEAAaOCAnEwggJtMD4GA1UdIAQ3MDUwDwYNKwYBBAGBrSGCLAEBBDAQBg4r
+BgEEAYGtIYIsAQEECzAQBg4rBgEEAYGtIYIsAgEECzAJBgNVHRMEAjAAMA4G
+A1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQw
+HQYDVR0OBBYEFNYVlkZ24IxVgUdDwzqJo3NFXWTfMB8GA1UdIwQYMBaAFGs6
+mIv58lOJ2uCtsjIeCR/oqjt0MEMGA1UdEQQ8MDqBFWZhYmlhbi5iYWV1bWVy
+QHJ1Yi5kZYEhZmFiaWFuLmJhZXVtZXJAcnVoci11bmktYm9jaHVtLmRlMIGN
+BgNVHR8EgYUwgYIwP6A9oDuGOWh0dHA6Ly9jZHAxLnBjYS5kZm4uZGUvZGZu
+LWNhLWdsb2JhbC1nMi9wdWIvY3JsL2NhY3JsLmNybDA/oD2gO4Y5aHR0cDov
+L2NkcDIucGNhLmRmbi5kZS9kZm4tY2EtZ2xvYmFsLWcyL3B1Yi9jcmwvY2Fj
+cmwuY3JsMIHbBggrBgEFBQcBAQSBzjCByzAzBggrBgEFBQcwAYYnaHR0cDov
+L29jc3AucGNhLmRmbi5kZS9PQ1NQLVNlcnZlci9PQ1NQMEkGCCsGAQUFBzAC
+hj1odHRwOi8vY2RwMS5wY2EuZGZuLmRlL2Rmbi1jYS1nbG9iYWwtZzIvcHVi
+L2NhY2VydC9jYWNlcnQuY3J0MEkGCCsGAQUFBzAChj1odHRwOi8vY2RwMi5w
+Y2EuZGZuLmRlL2Rmbi1jYS1nbG9iYWwtZzIvcHViL2NhY2VydC9jYWNlcnQu
+Y3J0MA0GCSqGSIb3DQEBCwUAA4IBAQA2TUR/4UBApxuFbGVWzAkFxAfnGjlY
+UhVRhCext7xKms1E6tf6umVjXcSmdry1ELR2j0+6lbwrunNUmNud5kC8Q8qh
+zCoY7iWMdh4eO/evWOCG0sWqhvKfCpSG2FZz6xsd6+VK0OGZAGcsoZwqMLKS
+6gzsG3R37PIPwqPmjL1J5GuPguDVO/HCIyN2/+PDP/WLoYPii5Z93EDpxFXx
+QK9kC76WL6S3qejPgWqpFbLT8ADBgMFT40/JVUW49pRdu5TFNLc3QF6LdWIO
+3HU5fm4x1AwK/U1vsJnStXH9Ogsk6GusC61E52ZAQpGDClMQWBnRJoO9mi8S
+WKWmmSgvLuqpMYIFKzCCBScCAQEwgZ4wgY0xCzAJBgNVBAYTAkRFMUUwQwYD
+VQQKDDxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVuIEZv
+cnNjaHVuZ3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsMB0RGTi1QS0kxJTAjBgNV
+BAMMHERGTi1WZXJlaW4gR2xvYmFsIElzc3VpbmcgQ0ECDChGOhYmXcjO+OJr
+SzANBglghkgBZQMEAgMFAKCCAl0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEH
+ATAcBgkqhkiG9w0BCQUxDxcNMjQwNDE1MTkxNTIyWjBPBgkqhkiG9w0BCQQx
+QgRA5fezP4IoSAEJ4veDux+Fvdp8oJ5FY3MzTEMAEA4ajDyMBK0jeIQDfF9X
+1qE4yXw8SNAeFWKy/P4GSPUbRyKZxTBsBgkqhkiG9w0BCQ8xXzBdMAsGCWCG
+SAFlAwQBKjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwDgYIKoZIhvcNAwIC
+AgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgEoMIGv
+BgkrBgEEAYI3EAQxgaEwgZ4wgY0xCzAJBgNVBAYTAkRFMUUwQwYDVQQKDDxW
+ZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVuIEZvcnNjaHVu
+Z3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsMB0RGTi1QS0kxJTAjBgNVBAMMHERG
+Ti1WZXJlaW4gR2xvYmFsIElzc3VpbmcgQ0ECDChGOhYmXcjO+OJrSzCBsQYL
+KoZIhvcNAQkQAgsxgaGggZ4wgY0xCzAJBgNVBAYTAkRFMUUwQwYDVQQKDDxW
+ZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVuIEZvcnNjaHVu
+Z3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsMB0RGTi1QS0kxJTAjBgNVBAMMHERG
+Ti1WZXJlaW4gR2xvYmFsIElzc3VpbmcgQ0ECDChGOhYmXcjO+OJrSzANBgkq
+hkiG9w0BAQEFAASCAgCw2G2Y3hBk6XZJpmXYHz1+DEZz5KL3gyDEp88dby+1
+wxZep28RBcylEeFmtXlFFqqkKfM0ejZtBP6D5QHAOFDRxxu5P8l5sKyuy5Et
+Am2ML9W5Q30EtpYfookohaskpId3dXdlZmi2sPeckQpRqVk1PoJKmUpqP7Ec
+3OJ0GZet9tYGzay/TBcRZyBTAVHZVP2ctwq79+gFJQK8aLOjAxbqvvmSY4YY
+nmcY+o5KUQA9uUd7qQdLGjC87LMaYzocF3WPuPf9Tww2L4Q+BgMNL95RxIsw
+NxjZvxXxGa0AHmc4LWNJsAjdarhZsuLknGuHO8UmiuredDfUNctP9/0hqd6E
+9+LzaEewN4BJqbntHfCdTwzNVB5qxjismzSGmLIUqG2XPEghTxTcLtYshBGZ
+nxlLB9gq6lXyW1ljR7NsgiEr3oijfmWNlMM4B7UcdnwzlHBIcB2FfEanw63O
+QX1zhHGJSQ8w32xv1YMde39Ao62qgwMnGQzFUA1lfzIr5XLmNYwPgqaHfwIu
+IyQKMluFOPBbpkR5K2SQbzuCw9s2lCQYwsD1lFkuhQVu1r1vN89gA4pzXsI0
+Zv6MQMYSkbwhp+MG1PVYhT6EMfJGaezU7KPZSy63iOtOT1ykf/xu+vKh5Wwq
++1bz25SPIhmTw6c8hwswjePgU5lFd+3EK5y1TbjhBAAAAAAAAA==
 
-> Please see below on contributing back:
-> 
-> On Wed, Oct 23, 2019 at 12:08:48PM -0700, Srivatsa S. Bhat wrote:
->> We would like to volunteer for the following tasks (but we would love
->> your suggestions on taking up other tasks instead, depending on the
->> current needs of the list).
->>
->> Technical:
->>
->> 4. Check if related issues exist in the same piece of software (e.g.,
->> same bug class common across the software, or other kinds of bugs
->> exist in its problematic component), and inform the list either way -
->> primary: Ubuntu, backup: vacant
->>
->> Administrative:
->>
->> 5. Determine if the reported issues are Linux-specific, and if so help
->> ensure that (further) private discussion goes on the linux-distros
->> sub-list only (thus, not spamming and unnecessarily disclosing to the
->> non-Linux distros) - primary: SUSE, backup: vacant
-> 
-> This is a good choice, thanks!
-> 
-> I'd like you to pick a primary role for some task.  As an option, we can
-> make you primary for "5. Determine if the reported issues are
-> Linux-specific ...", moving SUSE to backup.
-> 
-
-That sounds good to me!
-
-> Please let me know of your final choice, as well as where you'd like to
-> be primary and where to join as a backup.
-> 
-
-I'd like to sign up as primary for Administrative 5: "Determine if the
-reported issues are Linux-specific... ", and as backup for Technical 4.
-"Check if related issues exist in the same piece of software...".
-(I did consider the other task that you brought up, namely Technical
-6, but I think we'd need more experience on the list before we can
-sign up for that task).
-
-Also, is there a write-up somewhere that defines exactly what primary
-and backup means in this context? At the moment, I'm assuming that,
-for a given task, the primary distro will take up that task for every
-issue that gets posted onto linux-distros; and in case the primary is
-unavailable (due to vacation/travel etc), then the backup will step up
-for that task until the primary gets back. Is that how it works?  If
-so, will we get to know the contact details of other distros so that
-we can coordinate our schedules?
-
-On a related note, would it be okay for me to request another member
-of the Photon OS team (whom I can vouch for), to be added to the
-linux-distros list, so that we can have at least one person from our
-team always available to take action for our distro, in response to
-the issues disclosed on the list?
-
-Thank you very much!
-
-Regards,
-Srivatsa
-VMware Photon OS
+--------------ms000702010302040403010508--
