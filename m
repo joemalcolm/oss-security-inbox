@@ -1,4 +1,4 @@
-Received: (qmail 3951 invoked by uid 550); 28 Dec 2022 18:39:53 -0000
+Received: (qmail 24303 invoked by uid 550); 15 Apr 2024 07:41:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,91 +7,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1979 invoked from network); 28 Dec 2022 18:36:40 -0000
-Date: Wed, 28 Dec 2022 12:36:24 -0600
-From: John Helmert III <ajak@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Message-ID: <Y6yMqNRxwVuFnWJZ@gentoo.org>
-References: <Y6SJDbKBk471KE4k@p183>
- <Y6TUJcr/IHrsTE0W@codewreck.org>
- <1a1963aa1036ba07@orthanc.ca>
- <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
- <Y6xzIR9P+a6uaaEx@itl-email>
- <20221228172517.l7h3m7wjfpxr3dzw@mutt-hbsd>
- <Y6yEv+6iYQQNaqi9@itl-email>
+Received: (qmail 24270 invoked from network); 15 Apr 2024 07:41:02 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-97G002f922d1cc-52c9-434a-b59a-d273db8a126b,
+                    0EE83C13C92660C97940DEA184FC354BE13181F4) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 31.0.176.33
+Date: Mon, 15 Apr 2024 09:40:49 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20240415074049.f53my6ldxjplyt5z@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20240412122031.pt2sx6rasca3mgpu@jwilk.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CoFdSg65v6lCt4eN"
+Content-Type: text/plain; charset="us-ascii"; format=flowed
 Content-Disposition: inline
-In-Reply-To: <Y6yEv+6iYQQNaqi9@itl-email>
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+In-Reply-To: <20240412122031.pt2sx6rasca3mgpu@jwilk.net>
+X-Originating-IP: [37.59.142.97]
+X-ClientProxiedBy: DAG3EX1.mxp6.local (172.16.2.21) To DAG4EX1.mxp6.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: a85abb44-a89c-463c-a19f-a214313aaa60
+X-Ovh-Tracer-Id: 15709962878459434775
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrudejuddgjedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujghisehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpeelffduueelheevhfdvjeejfeduvdfhuedvjedttdehgedugfetgefgudfgjeffudenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrleejpdefuddrtddrudejiedrfeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhohedvledpmhhouggvpehsmhhtphhouhht
+Subject: [oss-security] Re: less(1) with LESSOPEN mishandles \n in paths
 
---CoFdSg65v6lCt4eN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* Jakub Wilk <jwilk@jwilk.net>, 2024-04-12 14:20:
+>less(1) does not correctly escape newlines in pathnames when 
+>constructing command line of the input preprocessor.
 
-On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
-> On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
-> > On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
-> > > On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> > > > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/=
-VE6BBM) wrote:
-> > > > > Dominique Martinet writes:
-> > > > >=20
-> > > > > > But, really, I just don't see how this can practically be said =
-to be parsable...
-> > > > >=20
-> > > > > In its current form it never will be.  The solution is to place
-> > > > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > > > > to get the command+args part (assuming I counted all those fields
-> > > > > correctly ...)
-> > > > >=20
-> > > > > Of course, this breaks backwards compatability.
-> > > >=20
-> > > > It would also break forwards compatibility in the case new fields
-> > > > needed to be added.
-> > > >=20
-> > > > The only solution would be a libxo-style feature wherein a
-> > > > machine-parseable format is exposed by virtue of a file extension.
-> > > >=20
-> > > > Examples:
-> > > >=20
-> > > > 1. /proc/pid/stats.json
-> > > > 2. /proc/pid/stats.xml
-> > > > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
-> > >=20
-> > > A binary format would be even better.  No risk of ambiguity.
-> >=20
-> > I think the argument I'm trying to make is to be flexible in
-> > implementation, allowing for future needs and wants--that is "future
-> > proofing".
->=20
-> Linux should not have an XML, JSON, or YAML serializer.  Linux already
-> does way too much; let=E2=80=99s not add one more thing to the list.
+CVE-2024-32487 was assigned to this bug.
 
-Handling a new binary format is not 'one more thing' added?
-
-> --=20
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
-
-
-
---CoFdSg65v6lCt4eN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY6yMpgAKCRCgXq2+aa/J
-tWoKAQCRkJHN0sL4FpQZJY3bEVntGJDGPha+T+AREOiCTkv5zgEAiC0DnVVwRiL6
-YXK06d3aRs3A6Ldg3QXXk1hNCncD7wM=
-=GEbr
------END PGP SIGNATURE-----
-
---CoFdSg65v6lCt4eN--
+-- 
+Jakub Wilk
