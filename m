@@ -1,4 +1,4 @@
-Received: (qmail 26206 invoked by uid 550); 14 Oct 2025 18:42:59 -0000
+Received: (qmail 30407 invoked by uid 550); 16 Apr 2024 20:16:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,60 +7,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26168 invoked from network); 14 Oct 2025 18:42:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1760467370; bh=LjTDMt/fhga/rbxYEKbPa7ZjLwfOMqbbJ1AEhWMEmzA=;
-	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=UzaAPOOu38AfM26Yt1tloz7EJJ8IpQR9K6wCy9QQAbS5ozWkPsz/7khUkfftjiCmD
-	 slmtse3ycZmbG/JQYeyrd2eILRgqaIcRgoFZ3pe8t/N/DgNFKfbErsJv1BLgI87hWm
-	 L7ln7S+c0DqljTWZOkKD6MG3m3QUWkf6mRHR2HOsUpgmwp56LRUf4LazMnhSPR1Lm7
-	 bhvmibtd2WXlfeaudXmEvoEnCo5JhPO/XW1yBawoZU+5cP5Vq6cY2DTttv2PQJeMZH
-	 rtTuF1ozKo4WbM8hp0jYDuUP72XnYqgWd8hY2yoRCCKPte9iC/bmwDiuinngGdIlFs
-	 iTc4Pdh+ziovQ==
-Original-Subject: Re: [oss-security] BoringSSL private key loading is not constant
- time
-Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-Date: Tue, 14 Oct 2025 20:42:48 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Received: (qmail 28505 invoked from network); 16 Apr 2024 20:16:14 -0000
+Date: Tue, 16 Apr 2024 22:16:02 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20251014204248.659865b9@hboeck.de>
-In-Reply-To: 
- <CAF8qwaB=b0EDUTckx-ZHdAHkj-_kN9xPmfVFJP8XxCUq-W9Q5Q@mail.gmail.com>
-References: <fd686bd9-d2a7-89f9-f438-7ed38e127591@iki.fi>
-	<CAH8yC8nZDxYF1NyGjHn8yOADBioNwPB4WTjUZGPmbRTvPLq2tw@mail.gmail.com>
-	<ME0P300MB0713AA2595680B38B28287AEEEEAA@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
-	<CAFRnB2XECXsKDSuvBCeWHwC9apboBdvhYCEFrUo2TuonHs1yFw@mail.gmail.com>
-	<CAF8qwaB=b0EDUTckx-ZHdAHkj-_kN9xPmfVFJP8XxCUq-W9Q5Q@mail.gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] BoringSSL private key loading is not constant
- time
+Message-ID: <20240416201602.GA21501@openwall.com>
+References: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de> <20240410211457.GA20881@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240410211457.GA20881@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
 
-Hi David,
+On Wed, Apr 10, 2024 at 11:14:57PM +0200, Solar Designer wrote:
+> On Wed, Apr 10, 2024 at 09:56:33PM +0200, Dr. Christopher Kunz wrote:
+> > 1. YuriiCrimson's version (April 6-ish)
+> > 
+> > It seems to use GSMIOC_SETCONF_DLCI, PoC supposedly works on current Ubuntu 
+> > and Debians, but is stopped by LKRG.
+> > 
+> > PoC and writeup are here: 
+> > https://github.com/YuriiCrimson/ExploitGSM/tree/main
+> 
+> According to YuriiCrimson:
+> 
+> https://twitter.com/YuriiCrimson/status/1778163455075217443
+> 
+> "Exploit 6.4 - 6.5 using race condition in gsm_dlci_config.
+> Exploit for 5.15 - 6.5. using race condition in
+> gsm_dlci_open->gsm_modem_update->gsm_modem_upd_via_msc->gsm_control_wait.
+> We just waiting on gsm_cobtrol_wait and restart config for make free
+> dlci)). So it two zero days."
+> 
+> > 3. ZDI-24-020 / CVE-2023-6546 (January)
+> > 
+> > This also exploits a race condition resulting UAF in the gsm_dlci struct. 
+> > It's a little older.
+> > 
+> > Writeup and PoC: https://github.com/Nassim-Asrir/ZDI-24-020/
+> > 
+> > What do you make of this?
+> 
+> So it sounds like there are 3 different bugs recently found in this same
+> subsystem.  Perhaps someone can follow up with links to relevant commits.
 
-Thanks for the explanation. At least for me, this is different from how
-I initially interpreted this issue.
+I'm puzzled by the lack of follow-ups on this, but anyway @FFFVR_
+tweeted they also found (more) vulnerabilities in the n_gsm driver:
 
-It would appear that the ideal solution would be to phaseout such
-malencoded EC keys. Do you have any idea how prevalent they are, and
-which implementations created them?
+https://twitter.com/FFFVR_/status/1778244738833080571
 
-I wonder if there are steps that can be done to get to a deprecation.
+> It seems there has been an interesting incident related to the n_gsm
+> vector of the Linux kernel.
+> 
+> While it's still unclear who is right and who is wrong, one thing can be
+> asserted: my bug will soon be patched, and I need more caffeine.
+> 
+> The person who first posted about this bug, jmpeax, claims to have run
+> syzkaller on n_gsm. I also used syzkaller to fuzz the same vector and
+> found several other vulnerabilities, not just the one in question.
+> 
+> I've reported the vulnerabilities that have been analyzed, and I plan to
+> report the remaining ones shortly. It's likely that I will soon make a
+> brief post about how I analyzed n_gsm, including the fuzzing process.
+> 
+> https://bugzilla.kernel.org/show_bug.cgi?id=218708
 
-Applications could emit warnings when loading such keys, and APIs could
-provide an optional flag that rejects them if application programmers
-want that. That could lead to a detection of existing such keys and
-ideally remaining implementations creating them would be recognized
-and fixed. Possibly, this could allow deprecation in a few years.
+> Bug 218708 - Off-by-one vulnerability when reading data from the n_gsm module
+> 
+> j51569436 2024-04-11 01:56:38 UTC
+> An off-by-one vulnerability occurs in gsm0_receive and gsm1_receive.
+> I'll focus on gsm0_receive for our discussion.
+> 
+> [1] : Write the value to gsm->buf, then increment gsm->count by 1.
+> [2] : If gsm->count == gsm->len is reached, stop reading.
+> 
+> Writing a value to a buffer and then checking its length is typical of
+> off-by-one vulnerabilities.
 
-Any thoughts on that? Any implementors of EC key using software that
-might want to go in that direction?
+Finally someone willing to report these bugs upstream, and there's now a
+lengthy thread of comments in the above Bugzilla entry.
 
+Also relevant is this mainline commit from August 2023:
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67c37756898a
+
+which is now being backported to stable/longterm kernels:
+
+Subject: Backport of 67c37756898a ("tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc") to older stable series? (at least 6.1.y)
+https://lore.kernel.org/stable/ZhbiWp9DexB_gJh_@eldamar.lan/
+
+Since there are multiple known unfixed bugs in this driver and since it
+poses unjustified risk on most systems anyway, here are some mitigations
+we can apply:
+
+1. At kernel build time, don't enable CONFIG_N_GSM.
+
+2. Unload and disallow auto-loading of the module:
+
+rmmod n_gsm
+echo blacklist n_gsm >> /etc/modprobe.d/blacklist.conf
+
+3. Disallow auto-loading of tty line discipline modules in general:
+
+sysctl dev.tty.ldisc_autoload = 0
+
+4. Disallow (unprivileged) user or/and network namespaces, however this
+is not expected to help on kernels without the commit referenced above!
+We recently discussed other related aspects in this thread:
+
+https://www.openwall.com/lists/oss-security/2024/04/14/1
+
+Any one of these mitigations should be sufficient where it works, but
+mitigations 2 and 3 assume the driver is built as a module (not built
+into the kernel) and mitigation 4 assumes a (very) recent kernel.
+
+Alexander
