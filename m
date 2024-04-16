@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["426" "Monday" "9" "January" "2017" "23:52:08" "+0100" "Albert Astals Cid" "aacid@kde.org" "<1493422.koq1c4PBay@xps>" "15" "[oss-security] ark vulnerability: need CVE" nil nil nil "1" "2017010922:52:08" "[oss-security] ark vulnerability: need CVE" (number mark "U       aacid@kde.or Jan  9   15/426   " thread-indent "\"[oss-security] ark vulnerability: need CVE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10146 invoked by uid 550); 10 Jan 2017 00:19:05 -0000
+Received: (qmail 20477 invoked by uid 550); 16 Apr 2024 21:50:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,164 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26411 invoked from network); 9 Jan 2017 23:52:00 -0000
+Received: (qmail 17745 invoked from network); 16 Apr 2024 21:48:36 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=sZpzBBoXYnrBIb/elazwaChVw25YXJlvn/FpU2eIqb8=;
-        b=QuJ5oaFrp2J9znss28sbteJVECLQSU3xD1fi/THKLbbL3o8ZcvUsn8/fuEQu4UWxXT
-         hYLWC5op+4TrAGNvcUs21U8Lx+HqOoutBk99ADsuToW7FXSjy0fHJmsf6t71gXWDE/jo
-         K4SKmR+NRS+fI454+3w8nVEHTMZ8lQaI2NjsaDCGHrSpbedQjTQAjrOp/FrVZ8DQs1J5
-         PoRJmvyB/NM8KG0WMdG/xg+vNYi2WSZ0MgRixAcqSk48zQHps324+3ZN9E9D/F5zdZkL
-         EcX33APR/cyn/OW86nuPGezw/bRIBF2rSQHqd5n4gts01ZeoubBCJ/F30w0cKi6S0qeT
-         Ft+Q==
+        d=gmail.com; s=20230601; t=1713304108; x=1713908908; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LpW1v9qLQszBiVrQLfQCIddvf3yGXc/RLYgwhjQq1uw=;
+        b=G/4ZxNyZus5g+yVeYXedmVimpGJvD+/E00AXj/IETSg3LvuGaKKLbMHnCP/QatR+TH
+         jC48k8mX/9SJOWlfpdZLl2k5DXK56YO25gsKn6BIN8GdtIdgrUV7iquTMfIWRmIj9cRi
+         6i/iInhD9aPE3qQaFLFYWD2Oc5J5j6wDV7L9SrdTqUpU5wvY3ZThlftynCshvY0hBANp
+         zvn7EY5gGOYYCQKaI35mFvR304Bkxnu6DsnIj76AZYLSA06y8DlXI2V56yKeYDONKUSt
+         3vbAIAY9HyPt3xV94rdrJ1kEn/zQC0ISIrwpRnhbHnkVRu/08bQQvp1wH3CVVSmvPfUw
+         eePg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:subject:date:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=sZpzBBoXYnrBIb/elazwaChVw25YXJlvn/FpU2eIqb8=;
-        b=JSNfjXf6vjqvGRXue5AerZjb9DfSGtqVF6hJ0r4beNIYTP3cHZ4oCrK+rDk5gpZlPe
-         G7MpZ7bXf0fOl1VlHWXd/lAdOWJ9YU+wirYsOAJWv+G1Rzn0As2ZRJ2RJqkKMwleQCgG
-         7KfJc/NGBjDod4x7S1ZRgK906gbu5AF1gzS6QjF9GMt+nimV5ueUF0CCF4y+nxEx++1p
-         yB+RKDiAuanH0og7m2IEzgQK4b88kTH97fo5Zf9I+Hmkpo6015Sk/uXeT94ne5LQHWRW
-         Ex3/xXK26/6IwuPN+330O+3Na+6OYKhxeCgan5ztfYDxXOzK5209lU2iBtt7vSdrIHUD
-         EDMQ==
-X-Gm-Message-State: AIkVDXLx696UzRWhcvodGpwu6dA3+RCnT3Hp/TjxhIXleXJ61sGLsG2NGKIHeXygXBc7ZA==
-X-Received: by 10.223.174.73 with SMTP id u9mr19223wrd.159.1484002330621;
-        Mon, 09 Jan 2017 14:52:10 -0800 (PST)
-Sender: Albert Astals Cid <tsdgeos@gmail.com>
-From: Albert Astals Cid <aacid@kde.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>, security@kde.org
-Date: Mon, 09 Jan 2017 23:52:08 +0100
-Message-ID: <1493422.koq1c4PBay@xps>
-User-Agent: KMail/5.2.3 (Linux/4.8.0-32-generic; KDE/5.26.0; x86_64; ; )
+        d=1e100.net; s=20230601; t=1713304108; x=1713908908;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LpW1v9qLQszBiVrQLfQCIddvf3yGXc/RLYgwhjQq1uw=;
+        b=X2fN5KEiWOI+DoMnsy88/j3b3yK3/aDXX+wPzOwLn8KY0RWgQkkdRFnMT0pIlHG2qj
+         Xkz7PnOnyCnDDY1I3zxdxtChxv/4RuUre+6njPaXHU2X8b4qVykdtH69B5UOHWKzzkJT
+         q1RLZxOMHXnbCtreiAm1L0ig8HWHcFlvEGqNokWrrE1Dsc3tCFAWGZFv3cAttvMYp+3y
+         vg0Dg4+CGbFBNS3M8ry+owHJ2CgRbqVi0Chx9dL1iuf+U7VorqVRJ19Rr3Xv3xMsgAX6
+         U23j4PkjMUDs60w+ux6XH8v5yN/MojmZrsrqrCVHGKBEoFUjka/39e1mD2cvuIqC+VIj
+         u/Jw==
+X-Gm-Message-State: AOJu0YxoVlJxAGMSxWqBgoU5Af34hYPN/RSChMGl5XMRsLZLdv5xr7gK
+	SM8hXDKOwuBGj4CPkKKUOm8H1LUdcUGg1jRbz2Ko2Thc2LNR1ShINg5HVOQGxNUDkP4CI3Z+dCw
+	S+0xXLmECuXpKBzpoIGW48PO7RkhdbXAG
+X-Google-Smtp-Source: AGHT+IFo+Z2yYC7rg/rEg44eWax8MWHBUyHXBwquIH+oDU0hNja8VwKPK/7wfUyOwfKjxcNE8k6ZENtu3y6ce2CbFAw=
+X-Received: by 2002:a25:848d:0:b0:dc2:4397:6ad3 with SMTP id
+ v13-20020a25848d000000b00dc243976ad3mr15961575ybk.44.1713304107561; Tue, 16
+ Apr 2024 14:48:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Subject: [oss-security] ark vulnerability: need CVE
+From: Rita Zhang <rita.z.zhang@gmail.com>
+Date: Tue, 16 Apr 2024 14:48:15 -0700
+Message-ID: <CAL7+V1yx4TBm7LviPgBKCMhaVDSggTqgXpJtowdAwpiFkJfJ6Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b93c0106163db220"
+Subject: [oss-security] [kubernetes] CVE-2024-3177: Bypassing mountable secrets policy
+ imposed by the ServiceAccount admission plugin
 
-Hi, Albert from KDE, can we get a CVE assigned for ark (archive handling 
-tool)?
+--000000000000b93c0106163db220
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The problem is that the "Open" functionality of ark would run shell scripts, 
-this is quite unexpected.
+Hello Kubernetes Community,
 
-The title for the advisory we're preparing is
-  Ark: unintended execution of scripts and executable files
+A security issue was discovered in Kubernetes where users may be able to
+launch containers that bypass the mountable secrets policy enforced by the
+ServiceAccount admission plugin when using containers, init containers, and
+ephemeral containers with the envFrom field populated. The policy ensures
+pods running with a service account may only reference secrets specified in
+the service account=E2=80=99s secrets field. Kubernetes clusters are only a=
+ffected
+if the ServiceAccount admission plugin and the
+kubernetes.io/enforce-mountable-secrets annotation are used together with
+containers, init containers, and ephemeral containers with the envFrom
+field populated.
 
-The fix is already available at
-https://cgit.kde.org/ark.git/commit/?
-id=82fdfd24d46966a117fa625b68784735a40f9065
+This issue has been rated Low CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U=
+/C:L/I:N/A:N>,
+and assigned CVE-2024-3177
 
-Thanks,
-  Albert
+Am I vulnerable?
+
+Clusters are impacted by this vulnerability if all of the following are
+true:
+
+   1.
+
+   The ServiceAccount admission plugin is used. Most cluster should have
+   this on by default as recommended in
+   https://kubernetes.io/docs/reference/access-authn-authz/admission-contro=
+llers/#serviceaccount
+   2.
+
+   The kubernetes.io/enforce-mountable-secrets annotation is used by a
+   service account. This annotation is not added by default.
+   3.
+
+   Pods using containers, init containers, and ephemeral containers with
+   the envFrom field populated.
+
+
+Affected Versions
+
+   -
+
+   kube-apiserver v1.29.0 - v1.29.3
+   -
+
+   kube-apiserver v1.28.0 - v1.28.8
+   -
+
+   kube-apiserver <=3D v1.27.12
+
+How do I mitigate this vulnerability?
+
+This issue can be mitigated by applying the patch provided for the
+kube-apiserver component. The patch prevents containers, init containers,
+and ephemeral containers with the envFrom field populated from bypassing
+the mountable secrets policy enforced by the ServiceAccount admission
+plugin.
+
+Fixed Versions
+
+   -
+
+   kube-apiserver v1.29.4
+   -
+
+   kube-apiserver v1.28.9
+   -
+
+   kube-apiserver v1.27.13
+
+These releases have been published today, April 16th, 2024.
+
+Detection
+
+Pod update requests using a container, init container, or ephemeral
+container with the envFrom field populated that exploits this vulnerability
+with unintended secret will be captured in API audit logs. You can also use
+the following kubectl command to find active pods using the
+kubernetes.io/enforce-mountable-secrets annotation.
+
+
+`kubectl get serviceaccounts --all-namespaces -o jsonpath=3D"{range
+.items[?(@.metadata.annotations['kubernetes\.io/enforce-mountable-secrets']=
+=3D=3D'true')]}{.metadata.namespace}{'\t'}{.
+metadata.name}{'\n'}{end}"`
+
+Additional Details
+
+See the GitHub issue for more details:
+<https://github.com/kubernetes/kubernetes/issues/118640>
+https://github.com/kubernetes/kubernetes/issues/124336
+
+
+Acknowledgements
+
+This vulnerability was reported by tha3e1vl.
+
+The issue was fixed and coordinated by the fix team:
+
+Rita Zhang @ritazh
+
+Joel Smith @joelsmith
+
+Mo Khan @enj
+
+and release managers:
+
+Sascha Grunert @saschagrunert
+
+Jeremy Rickard @jeremyrickard
+
+Thank You,
+
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
+--000000000000b93c0106163db220--
