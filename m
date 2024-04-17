@@ -1,4 +1,4 @@
-Received: (qmail 7259 invoked by uid 550); 2 Aug 2023 09:09:45 -0000
+Received: (qmail 19626 invoked by uid 550); 17 Apr 2024 16:35:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,119 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7229 invoked from network); 2 Aug 2023 09:09:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=cWA2hqlTh0ZnG7giP7DyxBHfdBHl0vAmPIJPlu2zXWA=; b=pKp20gNDuE3qHo7/hWYcLEqjW2
-	VBIrOruNKTqZIHbl5TC+30iaSYy5kIRx3cNcioFUXZykU33nGraRrzwIXrcEf9FLudBHIYgsXIAmI
-	zBxvOrYkVxy3jKUwnQrfVAocovgvYNCT3VOHOi5yNURv4Wz4NLH+dvquvpgknxwp8ZvECf+veaI7A
-	3rLZxJ+lHx7GZ+FITih04Or/1MyeEpv1TBoUDRuPEs3uvOLTxr/bmbftB0M0n/Rv/3ZlHid017WWG
-	aPf2q8ATjzQuCcG3UtoXSsDa88sGM21+TDhrgxAhHpfMlwviJ9ii3OPlURdVfVSp31itFJcuPIehu
-	I1qX9bvQ==;
-Message-ID: <2e988a57-9577-8ccc-7d0b-9e663f218431@igalia.com>
-Date: Wed, 2 Aug 2023 11:09:30 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0007
+Received: (qmail 19587 invoked from network); 17 Apr 2024 16:35:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
+	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
+	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
+	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=mcds4JfBvpe1ucoyUpOdCQ7RKKUB5cqonOO9Lamd8JQ=; t=1713371743; x=1713803743;
+	 b=IhnWiTUfT14ttp638MwLYQ6IProe5u2L8/XcJhRgFoxUvwz10kB6Y6RmgFtCKCIQrDSgSaXODc
+	E0MU0lQTVpZf3Qge54TrbafnxLnFfOv5DqVXkkTYyEndZXmfuOrqHQIltL4mC6SK/qOeaI5/9NCV2
+	By3cPe9d1eDRacWSQG2iKu51+JtHHKbhh6MEkX3mhAPiH9ZS+ytyo4L7oLWnCv6/pzHyb2tFLuq30
+	qQo4q7v26nnaiOA2E/IXlMDPPGS7GlbSF+bW72hcwU/xJQKA6mfHRYtWBRibGoNLswd/qkqaaywOK
+	eiqVfRpUT7sXBR6Ze9SIzmrockrsS4ZGdkYPg==;
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Message-Id: <30959175-87A8-4BE7-B7A8-15B8FFEB48AB@beckweb.net>
+Date: Wed, 17 Apr 2024 18:35:21 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1713371743;1f354701;
+X-HE-SMSGID: 1rx8Fv-0006JC-NZ
+Subject: [oss-security] Terrapin vulnerability in Jenkins CLI client
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0007
-------------------------------------------------------------------------
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Date reported           : August 02, 2023
-Advisory ID             : WSA-2023-0007
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0007.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0007.html
-CVE identifiers         : CVE-2023-38133, CVE-2023-38572,
-                          CVE-2023-38592, CVE-2023-38594,
-                          CVE-2023-38595, CVE-2023-38597,
-                          CVE-2023-38599, CVE-2023-38600,
-                          CVE-2023-38611.
+The following releases contain fixes for security vulnerabilities:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+* Jenkins 2.452
+* Jenkins LTS 2.440.3
 
-CVE-2023-38133
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to YeongHyeon Choi (@hyeon101010).
-    Impact: Processing web content may disclose sensitive information.
-    Description: The issue was addressed with improved checks.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2024-04-17/
 
-CVE-2023-38572
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
-    Pvt. Ltd, Pune - India.
-    Impact: A website may be able to bypass Same Origin Policy.
-    Description: The issue was addressed with improved checks.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-CVE-2023-38592
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
-    Pvt. Ltd, Pune - India, Valentino Dalla Valle, Pedro Bernardo, Marco
-    Squarcina, and Lorenzo Veronese of TU Wien.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: A logic issue was addressed with improved restrictions.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-CVE-2023-38594
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Yuhao Hu.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
+---
 
-CVE-2023-38595
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to an anonymous researcher, Jiming Wang, and Jikai Ren.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
+SECURITY-3386 / CVE-2023-48795
+The CLI client (`jenkins-cli.jar`) in Jenkins 2.451 and earlier, LTS
+2.440.2 and earlier bundles versions of the Apache MINA SSHD library that
+are susceptible to CVE-2023-48795 (Terrapin attack). This vulnerability
+allows a machine-in-the-middle attacker to reduce the security of an SSH
+connection.
 
-CVE-2023-38597
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to 이준성(Junsung Lee) of Cross Republic.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
-
-CVE-2023-38599
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Hritvik Taneja, Jason Kim, Jie Jeff Xu, Stephan van
-    Schaik, Daniel Genkin, and Yuval Yarom.
-    Impact: A website may be able to track sensitive user information.
-    Description: A logic issue was addressed with improved state
-    management.
-
-CVE-2023-38600
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Anonymous working with Trend Micro Zero Day Initiative.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
-
-CVE-2023-38611
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Francisco Alonso (@revskills).
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved memory handling.
+NOTE: This only affects the Jenkins CLI client when using the `-ssh`
+connection mode, which is not the default.
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-August 02, 2023
