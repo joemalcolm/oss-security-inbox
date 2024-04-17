@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3411" "Friday" "20" "November" "2015" "15:54:35" "+0100" "Curesec Research Team (CRT)" "crt@curesec.com" "<564F342B.7040105@curesec.com>" "139" "[oss-security] CVE Request: Various" nil nil nil "11" "2015112014:54:35" "[oss-security] CVE Request: Various" (number mark "U       crt@curesec. Nov 20  139/3411  " thread-indent "\"[oss-security] CVE Request: Various\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 29780 invoked by uid 550); 20 Nov 2015 14:55:40 -0000
+Received: (qmail 3503 invoked by uid 550); 17 Apr 2024 12:46:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,168 +7,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28260 invoked from network); 20 Nov 2015 14:54:16 -0000
-To: oss-security@lists.openwall.com
-From: "Curesec Research Team (CRT)" <crt@curesec.com>
-Message-ID: <564F342B.7040105@curesec.com>
-Date: Fri, 20 Nov 2015 15:54:35 +0100
+Received: (qmail 10207 invoked from network); 17 Apr 2024 02:26:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713320755; x=1713925555; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:references:subject:to
+         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BqLgO6uZWUOsoeBv815tKIcDppNKs8LTICi9QVvv0Qc=;
+        b=GjhashXtIjPbenWmZcbLcDkZtghwEhNRw6TiTicuplE4lbfAtl71LEi+lUIP7jv0Lu
+         nbCrReM4Q3LqC7Ig7mEt/JuFPpB3sPam0aRLBB87yADAP8Z4xs823MdrZAS4eFtLE4Ca
+         snFqbE7or9iBj09+5B/F6pakMYBoqFN1o12iqilVGckW83ePapqWpGlIWAZl243vGsGL
+         eqiodJbQPyY9ioBGONQ1HK+szaQCvVNwvQ1b88dmg/TYdbdurDjSOWl68OI8/F/Xvxxg
+         DomWWrqhPuiVxliSqMD7qFQ/6KjwxCiyFrT3O/H6vr0gRpXRuIl8NdzjMwMge3aWMa0z
+         a91g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713320755; x=1713925555;
+        h=content-transfer-encoding:in-reply-to:references:subject:to
+         :mime-version:user-agent:reply-to:from:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BqLgO6uZWUOsoeBv815tKIcDppNKs8LTICi9QVvv0Qc=;
+        b=GJ9A9N2h7mjX7cdf29YL3jqY50OAvmAtrdejgslBXEtHiAfj/Z8PFbXrrdIbWqbsBr
+         HWutpUrEm7120AvNK8sOmz6Wq9bb0tosm7Sww1ickHuDIK3e42jbfI48EXTHY61xWKQs
+         LKcLjKfQ0KQNWWH1ENshd8HGh4UCgVfbmFXSemJVYWGnMVRkOL33d+7jiLxcnDsUVJnx
+         GyAPW42qeO8CETmuS46L+1QOP2l/yYhCkri55TbFZM0jSIk0k0MoVof70Qmi6HzVlduB
+         7cYTpT0L0pFYgPu66PH8T5O5aTD587a185nG1qWCnOBm0kfFw7QuRysg2IW8uCWRNZUF
+         hw2g==
+X-Gm-Message-State: AOJu0Yw3U7A57HA6R3dGEmlextr1tldsbBsekXlYya8MHhYQ7wAApGq6
+	be/x0c7nR8V9z76u6DsrqtzWK39Pi7+OkSWOfSiquD0tdXoUE1N60nzAgQ==
+X-Google-Smtp-Source: AGHT+IEWFHNtcOWdxqeQc40LU/3wg11aYLqS5UJa03dKEqk7dgNqmO30EAQdSKQtO00i4EgyOH83Lg==
+X-Received: by 2002:a05:6870:b514:b0:22e:d20d:1274 with SMTP id v20-20020a056870b51400b0022ed20d1274mr18407558oap.9.1713320755399;
+        Tue, 16 Apr 2024 19:25:55 -0700 (PDT)
+Message-ID: <661F3331.3020408@gmail.com>
+Date: Tue, 16 Apr 2024 21:25:53 -0500
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+To: oss-security@lists.openwall.com
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de> <Zgmn06K3C-nY83YH@codewreck.org> <20240331202502.GA21116@openwall.com> <20240416225900.GA23474@openwall.com>
+In-Reply-To: <20240416225900.GA23474@openwall.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:em/fqGLk5K1ALrovxO+IJcX4VlY87eK2vIOKXY4XGRJ4U1LVber
- 4I38PBAVx8het3HR8sM2wPdol2pKAWMcrP/eajmIT5hS+QlAe8B1W08m9c3AVqseJ9nn0zR
- NCutxhbkl67HOiXRqpxracZ9BC/NcPoVX3HaD/qBNrxT5c6VJgnfilbZyRpq8j1wvJxbJ+8
- dptnNZG6xDqBxFmNFE3kg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:w6xi8Zg+s7A=:iKt1coKq4+2Fbimk9F7tou
- aFJpEJXEMXuBPfohNhmvVPaJKwbdCr2I8qn6d5D2FWzClBkSZEpLDnp2j0/OIKtUXntXstH+q
- 0/KdnhHfsqZQ0mvIrZE7ixjyDRnaw9PwQutuZIKHS1GREogRzCCo6yMBzHzIH37FwvtbPs/vq
- jWblEcl8sciFXkBtCWEIXbIQ4P/jDrGPMChkF/s729XBCTsKt99yY/kO+ZvwfJD4A1JLcLtEg
- 277Cj37aOoYyWCObZDG9h/UxE1U5sRsvtI81EupagY9iDtiUnx1XJhi+6KoUsOm6wFDnmzjXi
- j097SiI5V4SYfgoeypMolyj0VHSYIWb8I6ddqEyYWp3OylYzrjKr/Z1zmyI+7h8yVWnXaZdWs
- 9498y18J24eJo6i1BFOh8Bm8yvj8c2IJHF0g976+6k7Dk1qsjbjhDIbMHuik3tWqvS26HKhc9
- RU+SFBsFpBsbpZoxEvvB1J25q3zMccNQbnaQnGOL6L2YKyfm2MpRt9DveTPoGE2BaS9m/4MzK
- VXtBzAofTTQ81A+ZtPEkCE0npH895b1KP1HVKkhUY7Yqt16M9Y1IgfCcX2cyqHxNdyNVai/jO
- Y06dQT84hxi4dJbOF6xGfjV8PDzfzR5xnL3ZRUnehUFV1Gy9cT1JRP1RBQLYJHHkYNfbwya5z
- j8wGjP/aezHLEYCSg0mpyn6BZHhwfQ9/NyKsYEqIJ+zFJ24/WMm8xBNdVTmxBkbuMk9drUA2k
- iOsmLrekZcAGwoI7
-Subject: [oss-security] CVE Request: Various
+Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
+ server compromise
 
-CVE request: Various
+Solar Designer wrote:
+> [...]
+>
+> xz backdoor analysis
+> ====================
+>
+> More findings were made about the backdoor's functionality, notably as
+> published on April 6 by blasty, who discovered that besides triggering
+> system() the backdoor also allows interactive sessions:
+>
+> https://twitter.com/bl4sty/status/1776691497506623562
+>
+>   
+>> [...]
 
-I would like to request CVE Identifiers for the following issues which
-do not yet have an id assigned:
+There is almost certainly more yet to be uncovered:  Andres Freund's 
+original report included timing for SSH client connections requesting a 
+nonexistent account using publickey auth.  The backdoored SSH server was 
+found to require significantly longer to reject those requests than the 
+untampered sshd.  I do not believe that the currently known backdoor 
+hooks are reachable by that means, so why did Andres Freund see that 
+particular slowdown?  (Not the backdoor initialization making sshd take 
+longer to start up---a running sshd taking longer to reject a session 
+for a nonexistent account, unless Andres Freund forgot to tell us that 
+he was running sshd from inetd and thereby including sshd startup 
+latency in his measurements.)
 
-http://seclists.org/fulldisclosure/2015/Aug/28
-BigTree CMS 4.2.3 XSS
+> [...]
+>
+> OpenJS Foundation "Failed Credible Takeover Attempt"
+> ====================================================
+>
+> On April 15, the OpenJS and OpenSSF foundations released the following:
+>
+> https://openjsf.org/blog/openssf-openjs-alert-social-engineering-takeovers
+> https://openssf.org/blog/2024/04/15/open-source-security-openssf-and-openjs-foundations-issue-alert-for-social-engineering-takeovers-of-open-source-projects/
+>
+> I'll quote an excerpt:
+>
+>   
+>> The OpenJS Foundation Cross Project Council received a suspicious series
+>> of emails with similar messages, bearing different names and overlapping
+>> GitHub-associated emails. These emails implored OpenJS to take action to
+>> update one of its popular JavaScript projects to "address any critical
+>> vulnerabilities," yet cited no specifics. The email author(s) wanted
+>> OpenJS to designate them as a new maintainer of the project despite
+>> having little prior involvement. This approach bears strong resemblance
+>> to the manner in which "Jia Tan" positioned themselves in the XZ/liblzma
+>> backdoor.
+>>
+>> [...]
 
-http://seclists.org/fulldisclosure/2015/Aug/30
-BigTree CMS 4.2.3 SQL Injection
+Concerning, yes, but not quite the "Jia Tan" /modus operandi/---"Jia" 
+seems to have been contributing patches for some time (with sockpuppets 
+pushing their acceptance as needed) before making a move to be appointed 
+co-maintainer of xz.  This looks to me like the common cybercrooks have 
+seen the technique, decided that it sounds like a great idea, and are 
+now trying to use it, but do not have the patience that the "Jia Tan" 
+gang had.  In other words, now the "Nigerian Princes" want to help you 
+maintain your project, just give them write access to the source 
+repository up front.  :-P
 
-http://seclists.org/fulldisclosure/2015/Aug/31
-CodoForum 3.3.1 XSS
+I also want to call out a critical detail:  claims of vulnerabilities 
+with no specifics that would aid in actually fixing them.  This should 
+be a general red flag:  *anyone* who makes such claims is probably up to 
+no good.
 
-http://seclists.org/fulldisclosure/2015/Aug/32
-CodoForum 3.3.1 SQL Injection
+Lastly, thank you for making the summary.
 
-http://seclists.org/fulldisclosure/2015/Aug/67
-ModX Revolution 2.3.5-pl XSS
 
-http://seclists.org/fulldisclosure/2015/Aug/65
-Phorum 5.2.19 XSS
+-- Jacob
 
-http://seclists.org/fulldisclosure/2015/Sep/53
-Anchor CMS 0.9.2: XSS
-
-http://seclists.org/fulldisclosure/2015/Sep/54
-Zen Cart 1.5.4: Code Execution
-
-http://seclists.org/fulldisclosure/2015/Sep/55
-ZeusCart 4.0: XSS
-
-http://seclists.org/fulldisclosure/2015/Sep/60
-ZeusCart 4.0: SQL Injection
-
-http://seclists.org/fulldisclosure/2015/Sep/62
-ZeusCart 4.0: CSRF
-
-http://seclists.org/fulldisclosure/2015/Sep/61
-ZeusCart 4.0: Code Execution
-
-http://seclists.org/fulldisclosure/2015/Oct/107
-Pligg CMS 2.0.2 Code Execution & CSRF
-
-http://seclists.org/fulldisclosure/2015/Oct/108
-Pligg CMS 2.0.2 Directory Traversal
-
-http://seclists.org/fulldisclosure/2015/Oct/110
-Pligg CMS 2.0.2 Multiple SQL Injections
-
-http://seclists.org/fulldisclosure/2015/Nov/2
-SQL Buddy 1.3.3 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/1
-SQL Buddy 1.3.3 CSRF
-
-http://seclists.org/fulldisclosure/2015/Nov/5
-Chyrp CMS 2.5.2  XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/19
-MiniBB 3.1.1 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/20
-MyWebSQL 3.6 CSRF
-
-http://seclists.org/fulldisclosure/2015/Nov/24
-CubeCart 6.0.7 Code Execution
-
-http://seclists.org/fulldisclosure/2015/Nov/25
-CubeCart 6.0.7 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/26
-Quick.Cart 6.6 CSRF
-
-http://seclists.org/fulldisclosure/2015/Nov/27
-Quick.Cart 6.6 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/28
-TheHostingTool 1.2.6 Code Execution
-
-http://seclists.org/fulldisclosure/2015/Nov/29
-TheHostingTool 1.2.6 SQL Injection
-
-http://seclists.org/fulldisclosure/2015/Nov/30
-TheHostingTool 1.2.6 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/49
-XCart 5.2.6 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/50
-XCart 5.2.6 Path Traversal
-
-http://seclists.org/fulldisclosure/2015/Nov/51
-XCart 5.2.6 Code Execution
-
-http://seclists.org/fulldisclosure/2015/Nov/53
-TomatoCart v1.1.8.6.1 Code Execution
-
-http://seclists.org/fulldisclosure/2015/Nov/54
-TomatoCart v1.1.8.6.1 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/55
-Thelia 2.2.1 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/56
-Sitemagic CMS 4.1 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/57
-Open Source Social Network 3.5 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/58
-dotclear 2.8.1 Code Execution
-
-http://seclists.org/fulldisclosure/2015/Nov/60
-ClipperCMS 1.3.0 Code Execution
-
-http://seclists.org/fulldisclosure/2015/Nov/62
-ClipperCMS 1.3.0 CSRF
-
-http://seclists.org/fulldisclosure/2015/Nov/64
-ClipperCMS 1.3.0 Path Traversal
-
-http://seclists.org/fulldisclosure/2015/Nov/63
-ClipperCMS 1.3.0 SQL Injection
-
-http://seclists.org/fulldisclosure/2015/Nov/65
-ClipperCMS 1.3.0 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/66
-LiteCart 1.3.2 XSS
-
-http://seclists.org/fulldisclosure/2015/Nov/67
-AlegroCart 1.2.8 LFI/RFI
-
-http://seclists.org/fulldisclosure/2015/Nov/68
-AlegroCart 1.2.8 SQL Injection
-
-Thanks,
-Curesec Research Team
