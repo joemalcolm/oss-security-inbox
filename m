@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2276" "Monday" "1" "November" "2021" "17:51:08" "-0400" "Santiago Torres" "torresariass@gmail.com" nil "58" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       torresariass Nov  1   58/2276  " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1401 invoked by uid 550); 2 Nov 2021 06:22:02 -0000
+Received: (qmail 28269 invoked by uid 550); 17 Apr 2024 06:19:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +7,128 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3813 invoked from network); 1 Nov 2021 21:51:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=02uPk4gV+S7vbvf/2PGqD5SHulM+AXG2pheF+Ox9fZE=;
-        b=KW2neQl47m5L5b9h6AmAcpDoA9woxLheWIdC3HavpYO5Ff7/DrUlaPbdIVvalC7/O/
-         /fcwqAwLWVHPflglnDg3VpcrKtr+RtALy178hlrqweVLImI+V7kL2/iXNCTLUMuRkF24
-         7RwLsEawn6ZKPj+cKICKg04KCcs454IbqoI+iENFYFGPSJNEUIavbpHXIz7/GazqHwuP
-         Tq93e6DpRTQyuqXAXKeKiwuVEsQawO0Nu6o+8Pp2uHARgMJN0fjSOx3A2CFRxOVqInUU
-         bDbUPBTd/muLjBfkv/me4Lpq8l5yDB6lwYLF1rutx5RKMR9V/PJkfPcyCMSI9+mstuZK
-         aAHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=02uPk4gV+S7vbvf/2PGqD5SHulM+AXG2pheF+Ox9fZE=;
-        b=2DR9NtKss6qJ/ZNaw56Y4flmAnrptuG9+kh+VvsBJIZexkyuKsEAFNtQZL00EydNEE
-         tcg5scXC72NrUkSjANAPMeNzNi+s3cN6SSGD94UbZrhcS+51W2e3z7WK78qwRN+SR2oo
-         F6BcPfYVUyibQVug9k/cfJcv5KL5sJ/NZPL9bW319CFRDshPrZYIyaB7J/aboztPZkho
-         3VrPQ5lT78GII4TodGy/JcoIgz9n4KcVpwXqIKg8uMPNDs1UkehOrCSSS1sUOcJRz2Uy
-         cPd6ZvD7hagRUkUQ4PpDhDUuPX5uEi/plsUyQ+ES/rzrljmJ0T8gaKc39evOPtHw7XPm
-         djNA==
-X-Gm-Message-State: AOAM530jvB8npvUVITZ7lUjFr8PxrDBTooYMWmccYgcIUW65+uvdkRFf
-	zfCX+ZxoB9l1DHJroAGWdXWP2cq1rTpdLQ==
-X-Google-Smtp-Source: ABdhPJybdtROsj6F2GlN/sfAiMlepUVwnZy6FfcDJuc/12CFsRMq1myb4rw7ojhGnzUbW2LGRT9RgA==
-X-Received: by 2002:ac8:4702:: with SMTP id f2mr33258656qtp.50.1635803470722;
-        Mon, 01 Nov 2021 14:51:10 -0700 (PDT)
-Date: Mon, 1 Nov 2021 17:51:08 -0400
-From: Santiago Torres <torresariass@gmail.com>
+Received: (qmail 28248 invoked from network); 17 Apr 2024 06:19:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1713334759; x=1713421159; bh=ez/EQH1OLA
+	hZDK6aDbi6VfLyTzy43QpmkqENgD2jzyc=; b=uczl5ci+Nu9utWdrJfia+Nsarw
+	JDrDNC9ASeiiJOU4gcMuPb28l+zugMwJsqp2lzyikc5c8J7a2Egi8ZJCkkNH+1cP
+	1rh8nGJnMt4Dznub7gI1LUsGEsZsNM6CWCXRuhXDc9PYXmyxBbhFMXoLVOMfmWqY
+	4lzUngh70isS2UVcvaD50Y8B+HWa88D6gRKewJtA3oOHJcVTgG+4WSsJXd6X7Lf7
+	y7OHeWBvBtfRSIS0xaq86EiC5oRUObeCTQeyieFq+PJoNns+96rUwAt04GKG/78s
+	kULJhhjylLHTx8U9f5sHSloj5K2/FghIpsW5er46vVcur4HFRpQ1vdux9E+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1713334759; x=1713421159; bh=ez/EQH1OLAhZDK6aDbi6VfLyTzy4
+	3QpmkqENgD2jzyc=; b=XdCkMcFWrrmpcQ+b1dvUGw4v8BgWcQzZ1DjJuvAWaby1
+	Dnk0aMIa9ApF2B+Dc/o8PY2wrBzSO2ALuxwbgalZHH2LjGE+F2oUUwu9aeEM9h0O
+	d19H9fo/J6+TDQ8ODUC3xpdWtjkk6yUm2FSLww10Q5rTpdUbNeQA2K6qMiH7LyY5
+	BqPVLzthabw/6B4ORB3dE7ysW4SMj7ihezF5DmZWVc1hEg1WJsjlaJC3FDjHMDv+
+	5zviZxOTJGt6Wy5IJJGpRc8UrEACyrIOcBx+JAEDXB3lj19I5wPUD7Cq2GBHID+w
+	pMvinMcJG+2IubG8eYbxSESJXpVPQoBnaEncv8rSrw==
+X-ME-Sender: <xms:52kfZgkkbD7LGMdzbcq-EmiMwz0vOVvubIZ97KJ-_95LeFs0-f_8Nw>
+    <xme:52kfZv2JrQo1PBfxUqHOzbnxD-ryMI3utNbIjOBfm0iNmgHQeB0rrXoMgPcQI3zjU
+    CtRl2s0C57pkA>
+X-ME-Received: <xmr:52kfZupmeQjqVRwAfkkwt2K7YE00juEA4xuRJjVVGAAzkHDS1a_8XQmDwnMBhvoHmniZKJl4MIKDkauB96KIDQ1ysBC4Zc2OdPZ8xA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejjedgleehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnhepgeduudefudejleejffetgfefgeeivddtheevgeejhfefhf
+    dtleekiedtffeftdevnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpthifihhtthgv
+    rhdrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:52kfZsl5wr4AKmpugpjWY2U-LE-VBOdVPaXAimtMsVaVUTavGTAdbg>
+    <xmx:52kfZu00yMFqG3MSYswkUKUenrjA68xP9NYOMPiCFzqkjXDyaylrTQ>
+    <xmx:52kfZjsTLjOgPsoEN5q_gvni-R64yJrmOzgdsch29dfsWYPYBuqX6w>
+    <xmx:52kfZqXD5oatfHxztrEya_fWiig_Q57DOVcuf9LYyzcNth0e8mOB3g>
+    <xmx:52kfZsASuumLRdRNEzBL056qenA3CgqFN2_IRRs2OCdUx66ScE0ePZ32>
+Feedback-ID: i787e41f1:Fastmail
+Date: Wed, 17 Apr 2024 08:19:15 +0200
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Message-ID: <YYBhTMCXrf9TPicd@LykOS.localdomain>
-References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk>
- <3n67pqq3-9ro6-p138-npo0-n4314s77638n@vanv.qr>
+Message-ID: <2024041743-muskiness-agreeably-5d03@gregkh>
+References: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
+ <20240410211457.GA20881@openwall.com>
+ <20240416201602.GA21501@openwall.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="A+KLhKwJCEwqYxBl"
-Content-Disposition: inline
-In-Reply-To: <3n67pqq3-9ro6-p138-npo0-n4314s77638n@vanv.qr>
-Subject: Re: [oss-security] Trojan Source Attacks
-
---A+KLhKwJCEwqYxBl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240416201602.GA21501@openwall.com>
+Subject: Re: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
 
-On Mon, Nov 01, 2021 at 09:51:38PM +0100, Jan Engelhardt wrote:
->=20
-> On Monday 2021-11-01 18:27, Nicholas Boucher wrote:
-> >
-> >We have identified an issue affecting all compilers and interpreters tha=
-t support Unicode.
-> >[...]
-> >The attached paper describes an attack paradigm -- which we believe to b=
-e novel -- discovered by security researchers at the
-> >University of Cambridge.
->=20
-> Not so novel. At one time, this picture made the rounds
-> (https://twitter.com/acronis/status/1019152990022787072 - the pic is like=
-ly
-> older than this 2018 tweet), and anyone who knew that Unicode had zero-wi=
-dth
-> characters already made the connection.
+On Tue, Apr 16, 2024 at 10:16:02PM +0200, Solar Designer wrote:
+> On Wed, Apr 10, 2024 at 11:14:57PM +0200, Solar Designer wrote:
+> > On Wed, Apr 10, 2024 at 09:56:33PM +0200, Dr. Christopher Kunz wrote:
+> > > 1. YuriiCrimson's version (April 6-ish)
+> > > 
+> > > It seems to use GSMIOC_SETCONF_DLCI, PoC supposedly works on current Ubuntu 
+> > > and Debians, but is stopped by LKRG.
+> > > 
+> > > PoC and writeup are here: 
+> > > https://github.com/YuriiCrimson/ExploitGSM/tree/main
+> > 
+> > According to YuriiCrimson:
+> > 
+> > https://twitter.com/YuriiCrimson/status/1778163455075217443
+> > 
+> > "Exploit 6.4 - 6.5 using race condition in gsm_dlci_config.
+> > Exploit for 5.15 - 6.5. using race condition in
+> > gsm_dlci_open->gsm_modem_update->gsm_modem_upd_via_msc->gsm_control_wait.
+> > We just waiting on gsm_cobtrol_wait and restart config for make free
+> > dlci)). So it two zero days."
+> > 
+> > > 3. ZDI-24-020 / CVE-2023-6546 (January)
+> > > 
+> > > This also exploits a race condition resulting UAF in the gsm_dlci struct. 
+> > > It's a little older.
+> > > 
+> > > Writeup and PoC: https://github.com/Nassim-Asrir/ZDI-24-020/
+> > > 
+> > > What do you make of this?
+> > 
+> > So it sounds like there are 3 different bugs recently found in this same
+> > subsystem.  Perhaps someone can follow up with links to relevant commits.
+> 
+> I'm puzzled by the lack of follow-ups on this, but anyway @FFFVR_
+> tweeted they also found (more) vulnerabilities in the n_gsm driver:
+> 
+> https://twitter.com/FFFVR_/status/1778244738833080571
 
-Along the same lines, there were a myriad of attacks using bash-style
-sequences to obscure parts of patches inside of git show/git log/less/
-other pagers not too long ago (circa 2017, maybe?). We even discussed
-similar possibilities on this paper[1] (sec 4.3) when mentioning git
-commit signing of content displayed on collaborative coding platforms.
+There has been lots of bugs in this driver once people started running
+fuzzing on the code, which is why we applied the following patch last
+year as you mention:
 
-Overall there's a plethora of work around "punycode meets tool X" that
-I'm surprised this is called novel.
+> Also relevant is this mainline commit from August 2023:
+> 
+> tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67c37756898a
+> 
+> which is now being backported to stable/longterm kernels:
 
-Cheers!
--Santiago
+It's now in the following released kernels:
+	4.19.312 5.4.274 5.10.215 5.15.155 6.1.86 6.6
 
-[1] https://ssl.engineering.nyu.edu/papers/afzali_asiaccs_2018.pdf
+If people are curious in helping out, here's a good summary of the
+issues involved from the current maintainer of the driver:
+	https://lore.kernel.org/r/DB9PR10MB5881D2170678C169FB42A423E0082@DB9PR10MB5881.EURPRD10.PROD.OUTLOOK.COM
 
---A+KLhKwJCEwqYxBl
-Content-Type: application/pgp-signature; name="signature.asc"
+> Subject: Backport of 67c37756898a ("tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc") to older stable series? (at least 6.1.y)
+> https://lore.kernel.org/stable/ZhbiWp9DexB_gJh_@eldamar.lan/
+> 
+> Since there are multiple known unfixed bugs in this driver and since it
+> poses unjustified risk on most systems anyway, here are some mitigations
+> we can apply:
+> 
+> 1. At kernel build time, don't enable CONFIG_N_GSM.
 
------BEGIN PGP SIGNATURE-----
+I recommend this one, almost no one has this hardware, it is very
+specialized, so unless you have hardware that requires it, don't use it.
 
-iQIzBAABCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAmGAYUwACgkQRo8SLOgW
-IpXkZg//RBtFPU51e/o8HNJp4x5lrgXLoUrfNIJnk5V9pC6skQvYSpCN0APQZkwJ
-cT4xKB2TBw+thno62n3CiCsUa7gmRNafLlBQPlv13lBuu4VLl8eRPhJG3BEZX65v
-x9QPCA7+7HiJb7deiV9bj/xZfkFKSUr6WY4rWcOY8lYlyMkDvEVfBe2jF8wlquU9
-7q7ZD225ZVvgE8OZSdnam7PIuxukw0yx5fy2n67it5icGeoOH1IKcOjZZ15i+aWB
-EqomAKOdeyn90CjlCPiGagWHKfz6vWhjWLnffBmA3DH4gYV+r3gWnJUdVqxT8i1b
-czsIsDq6DLoEira53cMC05wLjoDSlCrJ2HczCjZyrXiqHKK8ZlJZHdAmJ7Vj4Zno
-1c0WSc+Bck0ostnH5CJsrB57nNccCE7PSqstQzaZNConvTxYs+qxS43LtIGNOgwv
-fSJnFMDRcdHc+D6/UOD4nT0cMSx+Ln8SnDxpT2qRKOn0I0Samzhk3gYknPYe00gn
-mGD+vNp2Nao6I5ViGRV4VRRtMC7mofGKvP/YfGC8c6oAZL4Ia/6aElSzz6UM1keW
-3TleO4zRM7MddV98WFT7E1zUEbjnSn5/CPXuQduzrOAmQE9qOrhCUNNApJS0AjyH
-4LrFONYTSDWlopW+evElIC7HyFqNSyJZy/pNOcEbKk3sJXUooDg=
-=dhh+
------END PGP SIGNATURE-----
+thanks,
 
---A+KLhKwJCEwqYxBl--
+greg k-h
