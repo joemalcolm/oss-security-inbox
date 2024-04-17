@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1391" "Thursday" "20" "August" "2020" "11:10:07" "-0800" "Michael McNally" "mcnally@isc.org" "<3801c44c-e32a-1607-4764-1be5effec959@isc.org>" "35" "[oss-security] Five vulnerabilities disclosed in BIND (CVE-2020-8620, CVE-2020-8621, CVE-2020-8622, CVE-2020-8623, and CVE-2020-8624)" nil nil nil "8" "2020082019:10:07" "[oss-security] Five vulnerabilities disclosed in BIND (CVE-2020-8620, CVE-2020-8621, CVE-2020-8622, CVE-2020-8623, and CVE-2020-8624)" (number mark "U       mcnally@isc. Aug 20   35/1391  " thread-indent "\"[oss-security] Five vulnerabilities disclosed in BIND (CVE-2020-8620, CVE-2020-8621, CVE-2020-8622, CVE-2020-8623, and CVE-2020-8624)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Five vulnerabilities disclosed in BIND (CVE-2020-8620, CVE-2020-8621, CVE-2020-8622, CVE-2020-8623, and CVE-2020-8624)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25888 invoked by uid 550); 20 Aug 2020 19:10:22 -0000
+Received: (qmail 3403 invoked by uid 550); 17 Apr 2024 13:06:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +7,159 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25870 invoked from network); 20 Aug 2020 19:10:21 -0000
-To: oss-security@lists.openwall.com,
- "security-officer@isc.org" <security-officer@isc.org>
-From: Michael McNally <mcnally@isc.org>
-Autocrypt: addr=mcnally@isc.org; keydata=
- mQENBE4I0bcBCACzmGY5YZuAL8eArSrHAIn2Y6Io7ZddCw5AKYLzCA+Ydcy4DEmBuQGVB8HY
- ZW8WQxkh9AYiCevuLtT9TOswtIrWquuTNkgG/ZfnD15feH4XDAK+l6FwqHP0MNBQHgxIFYNz
- Kheg3Y+X89e8DdEzkTGWKy9wEGH2/9p620ZD+7fT4Nh5m7MKEvP3glJdLMm/pU6X3LucJqnC
- ZdCkTnzZwhgPnUg8zw8ZhFruWcyCPA/+OJWZtAVJNKWyWIOselm3bG/mqSV9Py2ku3JlelBQ
- 9tGbzeW+li8gidp7lZdNvR3L/HvEwkxMw1/FdouXfvBNqKo84HlSQ5dR4NvGXPlMuMqTABEB
- AAG0IU1pY2hhZWwgTWNOYWxseSA8bWNuYWxseUBpc2Mub3JnPokBOAQTAQIAIgUCTgjRtwIb
- LwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQlumWUDlMmawMMAf/YWPFtyqpgUtrPlkT
- tA/j9DxI/0iD9zU5Xw7JwsO4A9Y3N1Es4+MGLkJdEcO/zq9fELmp+WFtR3GJ0xmg3Wd2vMRl
- Qz8nJnZpue0kK7CuSk3HaIuiTBqpp2SO/02fwQNfaIZb6TNzjGSYPdFx7Ws+Wo6acV6cvrtG
- jLBbcW/kRwwUB+Jx+E/swPNljBMGv3CSnLMxdqfOhrSAuZZZtylZcT33cTI+pCy3a4HPweXL
- C8p2vxI9lpU7ceDt6xJsv4dOC27jl5ZbC9CrhfkNl6UA7mZLtODy6t53VteOoUYPugUrOLr7
- MmCnOCQ87Djr0xLCON956d1lin2XwhAfQLmhtbkBDQROCNG3AQgAx2Yb/WoYxmtBoTp77U1L
- QbcGIJFIVDG59wWgR4pFhVQO/4bhR64VV05w6m4OpmkFBGxcjAy3mKy7b2J4OEyrwGImzX+C
- 9iXpuXBckW03Afp+F7N7gYjPzEENMeS/6bGU4OofUl2KbJZ0y5g0EDPN+ScTDisLqn1UWE3e
- dKW5Ua3i6LBVS0FrbjZmv1rrn4lX2bsbVGnO376akxYmmujPxJauiP3pVc6UZ4zKH/pt/kUs
- mh+y3aSmRSQCVNVh3PXWIoGyCowUEQPeufbtm6YG1DkI9foHlEsUEo+vS1XPSNovmahVU+4B
- ZmlLdk3PDLuvkJa2dvRCpdicdEKbOUYDsQARAQABiQI+BBgBAgAJBQJOCNG3AhsuASkJEJbp
- llA5TJmswF0gBBkBAgAGBQJOCNG3AAoJEDsbHdIEoEIy3WoH/RyMNtHL5jrCHMXY85YtaPH4
- DtA9bzuIRStPaoxxPtn7ar85pI/qvQ6gsPHfG3XifFoB1nhFC4b575+KMvFe+0HTdv8GoVNd
- y6y/tM8xV2zDas6f47uwq62EQE+VuOMx/0FqKHf1QiVv7qeIUxrouftho//iYSAYoiom44NB
- 8eNzzN3FUDYeEDZ/5it31TUFCAiYZV8qlB16fLetZ/w2Q5WM1GT8L5NRHHO89RTExNmn+7su
- S2aUJa/VcXbzZclyuvMv3jI/oYT1FL4ahYvV0P+QJn3vV5HjgptLoV0G5Q+JdtfsrmkI8Azz
- u3z1TeZ2Ud7bS5tDmEE5dwt/urRIYCKaeQgAoE0jUs6y5yXbITifkMAIApw/Su7Ez+vfS/al
- +58SmuR36zgpxBYRd0v3jXBqtofH/hwPkognm5suSUCjnBRxGS4mAx739eB1M+vQKWXvnKo/
- 3LU51Sybvz8VTMDuF50Vg7XhSQ0CBR652zn7A60owGgYQ0vy42veK4zyimg1WT034HNloxvq
- 886NBz0PpBbiaMMZquoOKbEt6w3iilFEbwDo6BeBit6zrox04tuKKHnCVnH0xJ2LPN34H+z0
- 2RZJUh91/QiwAeuc3Z+Dvk/FYgSzcCTZuMP7irBtH+mNEfsnDW48jCIfqzIlnh6lTPLqMdAW
- ORJz9bl+BiRdRg2YZg==
-Message-ID: <3801c44c-e32a-1607-4764-1be5effec959@isc.org>
-Date: Thu, 20 Aug 2020 11:10:07 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.11.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Received: (qmail 1938 invoked from network); 17 Apr 2024 12:52:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1713358338;
+	bh=/dizMEM9FsiGgjGspvjJTymir6G83eGOvlkoacjYlDI=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version;
+	b=wbrhzAXQFxCn72tHKJhgesu0SMFYM4K4w973lgLys5xclpbLfFuBJlSZASQV5cc1l
+	 IsZKZZbKijGpvjsGbe3J54GF9Agden8dR8NS1BdOfvnpZmSiF5xHAYbXSVNhVAw1+a
+	 MMEtrZZ7C5F2fbjNfw++3l+dN7wVfnsX2scVOG8leMf1kKmlj1qQO5SBzT88ULL9WO
+	 eCJxxUecS8PMHChNWV8lFsd12bzGMnQZFl58vQtjGPPzw3Z5QoitxvgkKLRSqB8XP3
+	 wOqj90KNJ3oJBnuJJUApCx50mAA6qsL9YNv1cK4efHvm97z5B+faJO1PSM4Eu90L1t
+	 yPKZ/lcmwrmgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713358337; x=1713963137;
+        h=mime-version:user-agent:content-transfer-encoding:organization
+         :references:in-reply-to:date:to:from:subject:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/dizMEM9FsiGgjGspvjJTymir6G83eGOvlkoacjYlDI=;
+        b=he2AWlxj5fhQ0+dOFZo4Ql80W06DQ1+1FIxRvXshSfpOYETMslfSE0U7sLH0R62dYG
+         sgudixNHdR/rM/lD5I3VZ2+dlUnoYqw/q2yyZEm+M4QOokZs1hqkQSm1hueU0K8tkhEd
+         M4XreFU6HIVZhWVuiqy5DjPCRrqcbJfhJgdmt0U8mx7/VkU8EPyY/DwUgGXU3+PfEWw2
+         owoON6E5jNbiUIwesUJoGM5obgdsI+rgl6vNeBwxfECDeteL8xNoGzc2d/lcxPqR88QW
+         kw5jdNVz7i0POl1cu+PWLvJ3rIeNMGk6PfxVJu/Sugw4151ace0qiXsxuGfQf628Up+O
+         QgKQ==
+X-Gm-Message-State: AOJu0Yy1E1it+9E0qu1w5VaXsl983r9jjBxtKvxRIodtZ9XJRYCyi9Ze
+	4mRQx2l7WA4YNEzhwZA+n5E5TQmDGbEsjhwJqP84QExSDWCFOw/j5iAETNgO3lHJePvn/QI6AmU
+	BXh6U0cJTRL/RyErppOM1C2d/JDqEbvYpY8ylPQ1XiG5iXSumOykl7FFkPq7hqilcOIaWO1SEd8
+	tXwmXc92BmQAMm0qf/GTs=
+X-Received: by 2002:a2e:94ce:0:b0:2db:153e:cebf with SMTP id r14-20020a2e94ce000000b002db153ecebfmr815077ljh.6.1713358336911;
+        Wed, 17 Apr 2024 05:52:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXS3kiAeXloD2mWOiwC/nzEpiCi+GDw/jZ8fMspsfhRh/8X+ynF6MvsYqU+RkVuW0yjCue0g==
+X-Received: by 2002:a2e:94ce:0:b0:2db:153e:cebf with SMTP id r14-20020a2e94ce000000b002db153ecebfmr815069ljh.6.1713358336382;
+        Wed, 17 Apr 2024 05:52:16 -0700 (PDT)
+Message-ID: <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+From: Georgia Garcia <georgia.garcia@canonical.com>
+To: oss-security@lists.openwall.com
+Date: Wed, 17 Apr 2024 09:52:10 -0300
+In-Reply-To: <20240414190855.GA12716@openwall.com>
+References: <20240414190855.GA12716@openwall.com>
+Organization: Canonical
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Five vulnerabilities disclosed in BIND (CVE-2020-8620, CVE-2020-8621,
- CVE-2020-8622, CVE-2020-8623, and CVE-2020-8624)
+User-Agent: Evolution 3.44.4-0ubuntu2 
+MIME-Version: 1.0
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
-On August 20, 2020, we (Internet Systems Consortium) have disclosed five
-vulnerabilities in our BIND 9 software:
+On Sun, 2024-04-14 at 21:08 +0200, Solar Designer wrote:
+> Hi,
+>=20
+> Many Linux kernel vulnerabilities including the recently exploited
+> Netfilter CVE-2024-1086 require CAP_NET_ADMIN in a namespace, yet a
+> typically recommended mitigation is to disable user namespaces (not just
+> network namespaces).
+>=20
+> Further, while on Debian/Ubuntu it is possible to disable just
+> unprivileged user namespaces with the Debian-specific sysctl
+> kernel.unprivileged_userns_clone=3D0, on other distros we'd have to use
+> user.max_user_namespaces=3D0, which (unnecessarily) prevents starting of
+> containers even by root.
 
-   CVE-2020-8620: A specially crafted large TCP payload can trigger
-   an assertion failure in tcpdns.c
-   https://kb.isc.org/docs/cve-2020-8620
+I just wanted to add that in the Ubuntu Noble Numbat release we are
+using AppArmor to restrict unprivileged user namespaces.=C2=A0
 
-   CVE-2020-8621: Attempting QNAME minimization after forwarding can
-   lead to an assertion failure in resolver.c
-   https://kb.isc.org/docs/cve-2020-8621
+Applications that don't have an AppArmor profile will use a default
+profile which denies the use of capabilities within the user namespace.
+Applications that need to use capabilities will have to be confined by
+a profile. Since we understand that creating an AppArmor profile might
+not be a trivial task for large programs, we introduced the
+"unconfined" flag which makes the profile act as if it were unconfined
+from the perspective of AppArmor, allowing all operations.
 
-   CVE-2020-8622: A truncated TSIG response can lead to an assertion failure
-   https://kb.isc.org/docs/cve-2020-8622
+There are more details here:
+https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890#unprivilege=
+d-user-namespace-restrictions-13
 
-   CVE-2020-8623: A flaw in native PKCS#11 code can lead to a remotely
-   triggerable assertion failure in pk11.c
-   https://kb.isc.org/docs/cve-2020-8623
+>=20
+> Fredrik Nystrom on Rocky Linux Mattermost channel Security pointed out
+> that it is reasonable to disable just network namespaces with
+> user.max_net_namespaces=3D0 instead, and that the negative effects of
+> doing so and how to cope with them are well-documented for Apptainer,
+> with its documentation also covering Docker, Podman, and systemd:
+>=20
+> https://apptainer.org/docs/admin/latest/user_namespace.html#disabling-net=
+work-namespaces
+>=20
+> I hope some of us in here find this useful, and maybe we (including
+> distros) will start recommending this milder mitigation when sufficient.
+>=20
+> I include this section of the Apptainer documentation below, as taken
+> from its source at
+> https://github.com/apptainer/apptainer-admindocs/blob/main/user_namespace=
+.rst
+>=20
+> ---
+> ******************************
+>  Disabling network namespaces
+> ******************************
+>=20
+> There have been many Linux kernel exploits that have made use of
+> unprivileged user namespaces as a point of entry, but almost all of them
+> in the last few years have been in combination with network namespaces.
+> Therefore even though the Apptainer project recommends enabling
+> unprivileged user namespaces, it recommends disabling network namespaces
+> when possible in order to substantially reduce the risk profile
+> and need for urgent updates when vulnerabilities are announced.
+>=20
+> Network namespaces can be disabled on most Linux-based systems
+> like this:
+>=20
+> .. code:: bash
+>=20
+>    echo "user.max_net_namespaces =3D 0" \
+>         >/etc/sysctl.d/90-max_net_namespaces.conf
+>    sysctl -p /etc/sysctl.d/90-max_net_namespaces.conf
+>=20
+> Apptainer does not by default make use of network namespaces, but it
+> does have some little-used privileged options beginning with ``--net``
+> that do.
+> Those options will not work when network namespaces are disabled.
+> Unfortunately it is not possible to disable only unprivileged
+> network namespaces, so this will affect programs that use them
+> even if run as root.
+>=20
+> Some other container runtimes such as Docker and Podman do make use
+> of network namespaces by default.
+> Those two runtimes can still work when network namespaces are disabled
+> by adding the ``--net=3Dhost`` option.
+>=20
+> Disabling network namespaces also blocks the systemd PrivateNetwork
+> feature.
+> To find services that use it, look for ``PrivateNetwork=3Dtrue``
+> or ``PrivateNetwork=3Dyes`` in ``/lib/systemd/system/*.service``.
+> This can be turned off for each service through a
+> ``/etc/systemd/system/<service>.d/*.conf`` file, for example for
+> ``systemd-hostnamed``:
+>=20
+> .. code:: bash
+>=20
+>    cd /etc/systemd/system
+>    mkdir -p systemd-hostnamed.service.d
+>    (echo "[Service]"; echo "PrivateNetwork=3Dno") \
+>         >systemd-hostnamed.service.d/no-private-network.conf
+>=20
+> If the service is enabled (that is, actively used) then restart it
+> and check its status:
+>=20
+> .. code:: bash
+>=20
+>    systemctl status systemd-hostnamed
+>    systemctl daemon-reload
+>    systemctl restart systemd-hostnamed
+>    systemctl status systemd-hostnamed
+> ---
+>=20
+> Alexander
 
-   CVE-2020-8624: update-policy rules of type "subdomain" are enforced inco=
-rrectly
-   https://kb.isc.org/docs/cve-2020-8624
-
-New versions of BIND are available from https://www.isc.org/downloads
-
-Operators and package maintainers who prefer to apply patches selectively c=
-an
-find individual vulnerability-specific patches in the "patches" subdirectory
-of the release directory for our two stable release branches (9.11 and 9.16)
-
-  https://downloads.isc.org/isc/bind9/9.11.22/patches
-  https://downloads.isc.org/isc/bind9/9.16.6/patches
-
-With the public announcement of these vulnerabilities, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
