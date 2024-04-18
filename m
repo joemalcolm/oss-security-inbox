@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["980" "Wednesday" "25" "April" "2018" "11:11:14" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<72b41311-ec4d-4336-eb84-931c88fae250@redhat.com>" "29" "Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" nil nil nil "4" "2018042505:41:14" "[oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" (number mark "U       huzaifas@red Apr 25   29/980   " thread-indent "\"Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths\"\n") "<CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>" ("<CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>" "<cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>" "<CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16295 invoked by uid 550); 25 Apr 2018 05:41:29 -0000
+Received: (qmail 13784 invoked by uid 550); 18 Apr 2024 16:42:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16269 invoked from network); 25 Apr 2018 05:41:28 -0000
+Received: (qmail 13634 invoked from network); 18 Apr 2024 16:42:46 -0000
+Date: Thu, 18 Apr 2024 18:42:42 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-References: <CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>
- <cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>
- <CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=huzaifas@redhat.com; keydata=
- xsDiBETun5sRBACOCWbRM5KLDngL46w371lRBMCCmBRpzQHXuxllk1dbku3GYQu5ApCYVvck
- 45GWqFAYqWVjXGjEOnATxg693FI3Mw8tv8E9JED1OMbyaI4bhUxP1H7Ia89BOEFHjHKR7VPY
- S9tSwvTr2AkjK1j+CrMcWmV2rL4KooRk/ykB/4joJwCgnoMEbrNCrnSIiZNGxS7Okxgknb8D
- /AxkMwysc39T68fp0AOAr4wNrwWzgBPqjyF0As5n9ewZie9Z+uqqGCnjn9XgMmMNkL1DsXXs
- 4dJXaFrAdlcArtWaiQX/d2nZaZj8kw9D7ADudBTA0YzAnVQGk4wf2zL9WT/YwYhV3Sb1TERa
- H6g4gg8b+KwsbmhJSrqsg06mWR3eA/9j86ollyU31Fq/qIjsbHR+tSManlv57wGiH9luburk
- bUSFgLo9t2h6bHZ4sTQyt6aJcxXzon2IuiTYVpDrnoAfYfvFvzSae0BPG7nP8moAL7X1nnW0
- xP8+ZATAqwds75yAQMpGRXuOntFl5ZL1xmzzeDS5aUfMg3gC9M0jIWK3zc0sSHV6YWlmYSBT
- LiBTaWRocHVyd2FsYSA8aHV6YWlmYXNAcmVkaGF0LmNvbT7CXgQTEQIAHgUCRO6fmwIbAwYL
- CQgHAwIDFQIDAxYCAQIeAQIXgAAKCRDMcNzy2lva5e+DAJ4hG6WLhJfmJ27UOKZLPRi3gVNx
- owCeP5f7Cp5aU4DXyK3X81poNLIW2i3OwE0ERO6fnRAEALle4LaG+djyt8slfQbwAPf06dgz
- bC6o1TcPg/ZRSE8TSE6d1fRkLSLJJZSW9gGpl5fphNYUSzarFKP4xLRol/fZCY4tupcAv+Vm
- jfzaLqdIiy+G6ei1UpQTP6uRHxLdtXmMmg6kWds0ZavEU2+y18HzAczCCPBQN30dd/1/5jUn
- AAMFBACOEdEjzZIQmK6ciB6TymIcD8nf6Jn0zz6+DjxrtdEnP7V/zyZgv/tD1GdneOBaGJTL
- FTqT5vNSsmMTtQ03tjg/e4+P1MX8YcbhObj186Js47moYoeWgfAGZlFd6mNl/aSITVSHsooF
- zVi9Xs6zKZNWsY2LcENMnE/xM7Qdpi5ChMJJBBgRAgAJBQJE7p+dAhsMAAoJEMxw3PLaW9rl
- XKEAnjySXTUlGFzWQ9BiLx5Fo91JziLYAJ4lQdBofA+Gf1Vewb/61ilmdq4Qqg==
-Message-ID: <72b41311-ec4d-4336-eb84-931c88fae250@redhat.com>
-Date: Wed, 25 Apr 2018 11:11:14 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
-MIME-Version: 1.0
-In-Reply-To: <CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.8]); Wed, 25 Apr 2018 05:41:16 +0000 (UTC)
-X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.8]); Wed, 25 Apr 2018 05:41:16 +0000 (UTC) for IP:'10.11.54.3' DOMAIN:'int-mx03.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'huzaifas@redhat.com' RCPT:''
-Subject: Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows
- several non constant time code paths
+Message-ID: <20240418164242.GA2468@openwall.com>
+References: <23c15272-d797-4c3c-bbfb-e462c900978f@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <23c15272-d797-4c3c-bbfb-e462c900978f@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] The GNU C Library security advisories update for 2024-04-17: GLIBC-SA-2024-0004/CVE-2024-2961: ISO-2022-CN-EXT: fix out-of-bound writes when writing escape sequence
 
-On 04/24/2018 09:18 PM, Billy Brumley wrote:
->>> Look for our preprint on http://eprint.iacr.org/ soon -- working title
->>> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
->>> Generation". We'll update the list with the full URL once it's posted.
->>>
->>
->>
->> Can you post a link to the draft here please?
+On Wed, Apr 17, 2024 at 02:36:02PM -0300, Adhemerval Zanella Netto wrote:
+> GLIBC-SA-2024-0004:
+> ===================
+> ISO-2022-CN-EXT: fix out-of-bound writes when writing escape sequence
 > 
-> The preprint is now up: https://eprint.iacr.org/2018/367
+> The iconv() function in the GNU C Library versions 2.39 and older may
+> overflow the output buffer passed to it by up to 4 bytes when converting
+> strings to the ISO-2022-CN-EXT character set, which may be used to
+> crash an application or overwrite a neighbouring variable.
 > 
->> The attack vector is not clear, does the attacker need to be on the same
->> physical machine or is this a cross-vm attack?
+> ISO-2022-CN-EXT uses escape sequences to indicate character set changes
+> (as specified by RFC 1922).  While the SOdesignation has the expected
+> bounds checks, neither SS2designation nor SS3designation have its;
+> allowing a write overflow of 1, 2, or 3 bytes with fixed values:
+> '$+I', '$+J', '$+K', '$+L', '$+M', or '$*H'.
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-0737
+> CVE-Id: CVE-2024-2961
+> Public-Date: 2024-04-17
+> Vulnerable-Commit: 755104edc75c53f4a0e7440334e944ad3c6b32fc (2.1.93-169)
+> Fix-Commit: f9dc609e06b1136bb0408be9605ce7973a767ada (2.40)
+> Fix-Commit: 31da30f23cddd36db29d5b6a1c7619361b271fb4 (2.39-31)
+> Fix-Commit: e1135387deded5d73924f6ca20c72a35dc8e1bda (2.38-66)
+> Fix-Commit: 89ce64b269a897a7780e4c73a7412016381c6ecf (2.37-89)
+> Fix-Commit: 4ed98540a7fd19f458287e783ae59c41e64df7b5 (2.36-164)
+> Fix-Commit: 36280d1ce5e245aabefb877fe4d3c6cff95dabfa (2.35-315)
+> Fix-Commit: a8b0561db4b9847ebfbfec20075697d5492a363c (2.34-459)
+> Fix-Commit: ed4f16ff6bed3037266f1fa682ebd32a18fce29c (2.33-263)
+> Fix-Commit: 682ad4c8623e611a971839990ceef00346289cc9 (2.32-140)
 > 
-> Your statement is pretty accurate. (Although I fail to see the
-> difference between physical machine and cross-vm.)
-> 
-Physical machine implies, the attacker and victim is on the same host
-(real computer or a vm). Cross-vm implies attacker and the victim can be
-on two different virtual machines, running on the same hypervisor.
+> Reported-By: Charles Fol
 
-> BBB
+I hope Charles will share further detail with oss-security in due time,
+but meanwhile his upcoming OffensiveCon talk abstract reveals a bit:
+
+https://www.offensivecon.org/speakers/2024/charles-fol.html
+
+> CHARLES FOL
+> ICONV, SET THE CHARSET TO RCE: EXPLOITING THE GLIBC TO HACK THE PHP ENGINE
 > 
+> Abstract
+> A few months ago, I stumbled upon a 24 years old buffer overflow in the
+> glibc. Despite being reachable in multiple well-known libraries or
+> programs, it proved rarely exploitable. Indeed, this was not a foos bug:
+> with hard-to-achieve preconditions, it did not even provide a nice
+> primitive. On PHP however, it lead to amazing results: a new
+> exploitation technique that affects the whole PHP ecosystem, and the
+> compromission of several applications.
+> 
+> This talk will first walk you through the discovery of the bug and its
+> limitations, before describing the conception of several remote binary
+> PHP exploits, and through them offer unique insight in the internal of
+> the engine of the web language, and the difficulties one faces when
+> exploiting it.
+> 
+> BIO
+> Charles Fol, also known as cfreal, is a security researcher at LEXFO /
+> AMBIONICS. He has discovered remote code execution vulnerabilities
+> targeting renowned CMS and frameworks such as Drupal, Magento, Symfony
+> or Laravel, but also enjoys binary exploitation, to escalate privileges
+> (Apache, PHP-FPM) or compromise security solutions (DataDog's Sqreen,
+> Fortinet SSL VPN, Watchguard). He is the creator for PHPGGC, the go-to
+> tool to exploit PHP deserialization, and an expert in PHP internals.
 
+The event is on May 10-11th, so in 3 weeks from now.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Alexander
