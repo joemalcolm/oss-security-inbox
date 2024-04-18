@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9344" "Thursday" "9" "February" "2017" "14:47:14" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<4817444.ggVtDkFeZg@blackgate>" "168" "[oss-security] zziplib: NULL pointer dereference in prescan_entry (fseeko.c)" nil nil nil "2" "2017020913:47:14" "[oss-security] zziplib: NULL pointer dereference in prescan_entry (fseeko.c)" (number mark "U       ago@gentoo.o Feb  9  168/9344  " thread-indent "\"[oss-security] zziplib: NULL pointer dereference in prescan_entry (fseeko.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27652 invoked by uid 550); 9 Feb 2017 13:48:17 -0000
+Received: (qmail 3183 invoked by uid 550); 18 Apr 2024 09:05:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,182 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21698 invoked from network); 9 Feb 2017 13:47:31 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 27893 invoked from network); 18 Apr 2024 08:01:57 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713427307; x=1714032107;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hAacAvf2PA4fba1Xj7YX1hv4D+WO8IQImTkoQRMl6uc=;
+        b=OZNsrXLekw+LuWtqSct7lTb1zdCqqyRShjOlmwEU3Bfv0mXq1be/ByV/jHXmmyeztN
+         e+565YBZmphbizVKMahZuh0NaIDc1aJTGd2FpkZgSFLtFn/jp7J0QiTs7eRggOWflhPx
+         ItXXx1LNtx7WPt8oiqRXjsGjskpYXJxt4a+9+odgfrbGFbBauuiX3cD7gEw/HxOyt1+r
+         jzJ74PLAWS4jAu6B6rk5U2TGyrcOSM2KRcZWP/Hji+HatoN9+MbvRuR7ESPNBWkrO4OD
+         UcUO06hKgRB24nZrGGQuEbUZer3VIkBYsrLyITrroWPA5h7SXxxUAC4NkgHYLrT4JJxT
+         hxOw==
+X-Gm-Message-State: AOJu0YxJ14GywehNdyoLaKF3dy9I92uecUU28j+AHhUJ7q8laMPVywcx
+	rAXipmlKTWT1XfH4Z0CHHTK/P/RsqmapSBE3dVhFvD0hLmHhIzWv8Iw7RGtO
+X-Google-Smtp-Source: AGHT+IFNZHk1K/mdYvyhY3Xhnpg4BspUsgUqgnnsqOFbL3St+XTT2dBq9rKxtRReG3iO49Rtwh88vQ==
+X-Received: by 2002:a05:600c:2246:b0:418:8df1:ca73 with SMTP id a6-20020a05600c224600b004188df1ca73mr1239473wmm.19.1713427307333;
+        Thu, 18 Apr 2024 01:01:47 -0700 (PDT)
+Date: Thu, 18 Apr 2024 10:01:41 +0200
+From: David Morel <david.morel@vates.tech>
 To: oss-security@lists.openwall.com
-Date: Thu, 09 Feb 2017 14:47:14 +0100
-Message-ID: <4817444.ggVtDkFeZg@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+Message-ID: <ZiDTZcjVnt-uqHRQ@raton>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] zziplib: NULL pointer dereference in prescan_entry (fseeko.c)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] libreswan: IKEv1 default AH/ESP responder can crash and restart
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to=
-=20
-easily extract data from files archived in a single zip file.
+Hello,
 
-The unzzipcat-seeko utility provided by the package, by default, without an=
-y=20
-crafted zip shows a NULL pointer access. For completeness I=E2=80=99m attac=
-hing my=20
-reproducer.
+I noticed I missed a few CVEs on libreswan recently as the project is
+not posting them here, I subscribed to their announce mailing-list to
+monitor that for work, and thought I could try to follow and post them
+here when there are new things. That being said, here is the latest one:
 
-The complete ASan output:
+Vulnerability information
+=========================
+The function compute_proto_keymat() did not handle unexpected proposals
+for which the keymat size is 0, such as AES-GMAC which can be used only
+with NULL encryption.  The function ends up calling an assertion failure
+routine. No Remote Code Execution is possible.
 
-# unzzipcat-seeko $FILE
-=3D=3D3376=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x00000000=
-0000 (pc=20
-0x00000041f8da bp 0xbebebebebebebeae sp 0x7ffe6020c2a0 T0)=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20
-=3D=3D3376=3D=3DThe signal is caused by a READ memory access.=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-=3D=3D3376=3D=3DHint: address points to the zero page.=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-    #0 0x41f8d9 in __asan::Allocator::Reallocate(void*, unsigned long,=20
-__sanitizer::BufferedStackTrace*) /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:550=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20
-    #1 0x41f8d9 in __asan::asan_realloc(void*, unsigned long,=20
-__sanitizer::BufferedStackTrace*) /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:748=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-    #2 0x4d29a1 in __interceptor_realloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:8=
-5=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-    #3 0x7f21bce0f146 in prescan_entry /tmp/portage/dev-libs/zziplib-0.13.6=
-2-
-r1/work/zziplib-0.13.62/zzip/fseeko.c:189:25=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-    #4 0x7f21bce0f146 in zzip_entry_findfirst /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/fseeko.c:324=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-    #5 0x509cb3 in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-seeko.c:79:22=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-    #6 0x7f21bbf5261f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-    #7 0x4197e8 in _init (/usr/bin/unzzipcat-seeko+0x4197e8)=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-AddressSanitizer can not provide additional info.=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:550 =
-in=20
-__asan::Allocator::Reallocate(void*, unsigned long,=20
-__sanitizer::BufferedStackTrace*)=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20
-=3D=3D3376=3D=3DABORTING
+- CVE-2024-3652
+- Advisory: https://libreswan.org/security/CVE-2024-3652/CVE-2024-3652.txt
+- Severity: Medium
+- Vulnerable versions: libreswan 3.22 - 4.14
+- Not vulnerable: libreswan 3.0 - 3.21, 4.15+, 5.0+
 
-Affected version:
-0.13.62
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00157-zziplib-nullptr-prescan_e=
-ntry
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with Address Sanitizer.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in=
--prescan_entry-fseeko-c
-
---=20
-Agostino Sarubbo
-Gentoo Linux Developer
+-- 
+David Morel
