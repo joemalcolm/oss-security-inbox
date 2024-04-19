@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1051" "Tuesday" "19" "November" "2019" "15:37:23" "+0100" "Tim Kuijsten" "info+oss-security@netsend.nl" "<2XW7E21KHVYC6.30SSXH9R06ZEM@seraph.netsend.nl>" "27" "Re: [oss-security] Mitigating malicious packages in gnu/linux" "^Date:" nil nil "11" "2019111914:37:23" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "        info+oss-sec Nov 19   27/1051  " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<20191119121910.g6tc5zwbmbdiuiuh@anathema>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" "<20191119121910.g6tc5zwbmbdiuiuh@anathema>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30156 invoked by uid 550); 19 Nov 2019 15:51:42 -0000
+Received: (qmail 9386 invoked by uid 550); 19 Apr 2024 15:45:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +6,157 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24486 invoked from network); 19 Nov 2019 14:37:37 -0000
-References: 
- <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
- <20191119121910.g6tc5zwbmbdiuiuh@anathema>
-In-Reply-To: <20191119121910.g6tc5zwbmbdiuiuh@anathema>
-Message-Id: <2XW7E21KHVYC6.30SSXH9R06ZEM@seraph.netsend.nl>
-User-Agent: mblaze/0.5.1 (2019-10-11)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 19 Nov 2019 15:37:23 +0100
-From: Tim Kuijsten <info+oss-security@netsend.nl>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
+Received: (qmail 7618 invoked from network); 19 Apr 2024 15:44:42 -0000
+Date: Fri, 19 Apr 2024 17:44:35 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20240419154435.GA7046@openwall.com>
+References: <20240414190855.GA12716@openwall.com> <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
-> There is not a definitive solution here. But there are multiple efforts a=
-nd
-> research going on. The most important one, in my opinion, is the reproduc=
-ible
-> builds project [1]. We need to ensure we are not inserting random or
-> non-deterministic data into our build artifacts. This stretches from upst=
-ream
-> developers providing tarballs, to pre-compiled sources and packages from
-> distributions. There is no distribution today that has full reproducible =
-builds,
-> but there are many projects that work towards this and work on reproducib=
-le
-> builds.
+On Wed, Apr 17, 2024 at 09:52:10AM -0300, Georgia Garcia wrote:
+> I just wanted to add that in the Ubuntu Noble Numbat release we are
+> using AppArmor to restrict unprivileged user namespaces.
 
-One attack that is not solved by reproducible builds is one on the toolchai=
-n.
-This can be solved with bootstrappable builds[1] which is about minimizing =
-the
-number of trusted binaries that are needed to produce the toolchain, that
-produced the toolchain, ... that was used to build your package.
+For those who like me are confused by release names, this is 24.04 LTS.
 
-There was a talk this year called "Bitcoin Build System Security" by Carl D=
-ong
-about this topic[2].
+> Applications that don't have an AppArmor profile will use a default
+> profile which denies the use of capabilities within the user namespace.
 
-[1] https://bootstrappable.org
-[2] https://www.youtube.com/watch?v=3DI2iShmUTEl8
+In other words, there's now precedent of allowing namespace creation
+while disallowing use of capabilities in the namespace.  I started
+thinking of doing the same, but in a lightweight distro-neutral way, by
+introducing a new sysctl.
+
+Possible logic could be to set the maximum namespace nesting depth where
+capabilities (or maybe specifically CAP_NET_ADMIN) still work.  We could
+have this apply to unprivileged user namespaces only or to all.  I guess
+systemd's PrivateNetwork services generally don't configure networking
+(they just give up network access), so would continue to work even with
+capabilities disallowed?
+
+A max depth setting of 1 could allow network configuration in top-level
+containers if needed, while reducing the kernel's attack surface exposed
+to further sandboxed programs, nested containers, and unintended
+namespaces created by exploits running as a user inside a top-level
+container.  My thinking is that if someone uses containers with custom
+network configuration, they probably mostly care about attacks by
+container users (and nested containers, if any) rather than by host
+users.  They could also care about attacks by top-level container root,
+but there's little we can do here while allowing container root to
+configure networking.
+
+Does this sound like it has a chance of getting accepted upstream?
+
+Meanwhile, this looks implementable via security_capable() LSM hook, and
+I am thinking of experimenting with it in LKRG:
+
+https://github.com/lkrg-org/lkrg/issues/331
+
+Limiting this new logic only to unprivileged user namespaces feels
+tricky or hackish as there doesn't appear to be an existing struct field
+to indicate parent's capabilities at namespace creation time.  There is
+parent_could_setfcap, which we maybe could abuse.  Any better ideas?
+
+Detailed discussion of implementation wouldn't belong on oss-security.
+We'll need to move to kernel-hardening or linux-hardening for that.  But
+initial feedback on the idea is fine to have in here, especially from
+perspective of required functionality.
+
+> Applications that need to use capabilities will have to be confined by
+> a profile. Since we understand that creating an AppArmor profile might
+> not be a trivial task for large programs, we introduced the
+> "unconfined" flag which makes the profile act as if it were unconfined
+> from the perspective of AppArmor, allowing all operations.
+
+Thank you, this is helpful.
+
+> There are more details here:
+> https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890#unprivileged-user-namespace-restrictions-13
+
+Looks like the direct link to this section of the release notes has
+since changed, now it is:
+
+https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890/1#unprivileged-user-namespace-restrictions-14
+
+I'll quote this section's content below, for archival:
+
+---
+Unprivileged user namespace restrictions
+
+In combination with the apparmor package, the Ubuntu kernel now
+restricts the use of unprivileged user namespaces. This affects all
+programs on the system that are unprivileged and unconfined. A default
+AppArmor profile is provided that allows the use of user namespaces for
+unprivileged and unconfined applications but will deny the subsequent
+use of any capabilities within the user namespace. A common use-case for
+unprivileged user namespaces is applications that construct their own
+sandboxes or work with styles of container workloads. As such, AppArmor
+profiles that allow the use of unprivileged user namespaces are also
+provided for common applications and frameworks that come from the
+Ubuntu archive, as well as popular third party applications like Google
+Chrome, Discord and others. This is a subsequent step towards trying to
+mitigate the larger attack surface presented by unprivileged user
+namespaces (the first being the introduction of this feature in Ubuntu
+23.10 where it was not enabled by default).
+
+Whilst significant effort has been expended to try and identify all
+applications that may require such profiles, it is expected that there
+may be cases where additional profiles are required.
+
+In this case, there are several options if you run into problems:
+
+- Confine your applications with an AppArmor profile. Because this can
+be potentially onerous, a new unconfined profile mode/flag has been
+added to AppArmor. This designates the profile to essentially act like
+the unconfined mode for AppArmor where an application is not restricted,
+and it allows additional permissions to be added, such as the userns,
+permission. Such profile for, e.g. Google Chrome, would look like the
+following, and it would be located within the /etc/apparmor.d/chrome
+file:
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+/opt/google/chrome/chrome flags=(unconfined) {
+  userns,
+
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists <local/chrome>
+}
+
+Alternatively, a complete AppArmor profile for the application can be
+created (see the AppArmor 1 documentation).
+
+- Launch your application in a way that doesn't use unprivileged user
+namespaces, e.g. google-chrome-stable --no-sandbox. However, since this
+disables the use of an internal security feature within the application,
+this is not recommended. Instead, use the unconfined profile mode
+described above instead.
+
+- Disable this restriction on the entire system for one boot by
+executing echo 0 | sudo tee
+/proc/sys/kernel/apparmor_restrict_unprivileged_userns. This setting is
+lost on reboot. This similar to the previous behaviour, but it does not
+mitigate against kernel exploits that abuse the unprivileged user
+namespaces feature.
+
+- Disable this restriction using a persistent setting by adding a new
+file (/etc/sysctl.d/60-apparmor-namespace.conf) with the following
+contents:
+
+kernel.apparmor_restrict_unprivileged_userns=0
+
+Reboot. This is similar to the previous behaviour, but it does not
+mitigate against kernel exploits that abuse the unprivileged user
+namespaces feature.
+---
+
+Alexander
