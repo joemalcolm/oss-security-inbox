@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4143" "Thursday" "21" "April" "2016" "02:29:26" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<57179246.30207@treenet.co.nz>" "107" "[oss-security] CVE Request: Squid HTTP Caching Proxy multiple issues" nil nil nil "4" "2016042014:29:26" "[oss-security] CVE Request: Squid HTTP Caching Proxy multiple issues" (number mark "U       squid3@treen Apr 21  107/4143  " thread-indent "\"[oss-security] CVE Request: Squid HTTP Caching Proxy multiple issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22027 invoked by uid 550); 20 Apr 2016 14:30:19 -0000
+Received: (qmail 22121 invoked by uid 550); 19 Apr 2024 17:25:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,123 +7,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22006 invoked from network); 20 Apr 2016 14:30:18 -0000
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Message-ID: <57179246.30207@treenet.co.nz>
-Date: Thu, 21 Apr 2016 02:29:26 +1200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+Received: (qmail 22093 invoked from network); 19 Apr 2024 17:25:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=X8A1+QiPlMeYsXF+lHrzDbS6CrKl1IWb001k2b4fLak=; b=wJE4i+dQo0S5aE5U5Nxb1sfpcN
+	XtVED/ofFMVBXtmxCXXgDI74T5h/TFH6NaboCWDNDGQpmjiCETV0nEd7h+4xlx6Zsu21CYgAQGNk5
+	b+mxVLKRhnORr5fF+NygCIY/hFLD5ZE9nCrb/2pNjE4995Hb7oaMZw07uz3oz0CZHlcVZnQdkEK+a
+	R5ztS5K3i/2gkTbixRYO7VC18+Dy5P9TLDWYchsVMHOpye8Ux3l1mWI0hXHMhiPNkmInanzr3rb+x
+	VtVcE76VlAMJLn4TJ3KPZ02QtYO1DAHj0f93DBI1CD48y8nO7W3/pWWHGlZ6/TR7gN+QmrKsoWs2M
+	KhiSK/Wg==;
+Date: Fri, 19 Apr 2024 18:25:02 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
+References: <20240414190855.GA12716@openwall.com>
+ <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+ <20240419154435.GA7046@openwall.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="IwAwhr1WLMen7urnSOSIWcRLCMjcLGtLc"
-Subject: [oss-security] CVE Request: Squid HTTP Caching Proxy multiple issues
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240419154435.GA7046@openwall.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
---IwAwhr1WLMen7urnSOSIWcRLCMjcLGtLc
-Content-Type: multipart/mixed; boundary="1jPaXmGeoLlAf6dgMBD2ewxs0PjHqsdcc"
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Message-ID: <57179246.30207@treenet.co.nz>
-Subject: CVE Request: Squid HTTP Caching Proxy multiple issues
+On Fri, 19 Apr 2024 at 17:44:35 +0200, Solar Designer wrote:
+> I guess
+> systemd's PrivateNetwork services generally don't configure networking
+> (they just give up network access), so would continue to work even with
+> capabilities disallowed?
 
---1jPaXmGeoLlAf6dgMBD2ewxs0PjHqsdcc
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+I can't speak for systemd's PrivateNetwork services, but for the
+bubblewrap use-cases that I described elsewhere in the thread (Flatpak,
+libgnome-desktop etc.), `bwrap --unshare-net` does bring up the "lo"
+interface with address 127.0.0.1 and a route to 127.0.0.0/8 before it
+relinquishes its capabilities and execs the sandboxed program.
 
-Hi,
- several vulnerabilities have been reported in Squid proxy.
+Presumably this is because it's common for ordinary user-space applications
+to assume that they can "talk to themselves" via loopback, even if there is
+no external connectivity.
 
-
-A buffer overflow in the cachemgr.cgi tool reported by CESG (CESG REF:
-56397140 / VULNERABILITY ID: 394201) allows remote clients to perform an
-indirect denial of service attack on the proxy administrator. It could
-be used trivially to hide other activities from inspection. Or be used
-to perform remote code execution on systems without overflow protection.
-
-This bug was also independently reported by Yuriy M. Kaminskiy.
-
-The cachemgr.cgi tool is vulnerable when built from;
-Squid-3.x up to and including 3.5.16,
-Squid-4.x up to and including 4.0.8, and
-Squid-2.x all versions.
-
-Upstream report will be at:
- <http://www.squid-cache.org/Advisories/SQUID-2016_5.txt>
-
-Patches at:
- <http://www.squid-cache.org/Versions/v4/changesets/squid-4-14643.patch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_5.patch>
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_5.patch>
- <http://www.squid-cache.org/Versions/v3/3.3/changesets/SQUID-2016_5.patch>
- <http://www.squid-cache.org/Versions/v3/3.2/changesets/SQUID-2016_5.patch>
-
-
-
-Multiple on-stack buffer overflow from incorrect bounds calculation in
-Squid ESI processing has been reported by CESG (CESG REF: 56284998 /
-VULNERABILITY ID: 393536) which allows remote code execution or denial
-of service if depending on the OS overflow protections which are active.
-
-Further investigation has found that when compiler optimization is
-applied incorrect use of assert() leads to information disclosure of
-stack contents to remote clients and a second buffer overflow leads to
-further remote code execution possibilities.
-
-Squid-2.x are not vulnerable.
-Squid-3.x up to and including 3.5.16,
-Squid-4.x up to and including 4.0.8,
- when built with --enable-esi and used for either CDN reverse-proxy or
-TLS MITM are vulnerable.
-
-Upstream report will be at:
- <http://www.squid-cache.org/Advisories/SQUID-2016_6.txt>
-
-Patches at:
- <http://www.squid-cache.org/Versions/v4/changesets/squid-4-14648.patch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14034.pat=
-ch>
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/squid-3.4-13235.pat=
-ch>
- <http://www.squid-cache.org/Versions/v3/3.3/changesets/squid-3.3-12697.pat=
-ch>
- <http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11841.pat=
-ch>
-
-
-
-PS. Some of our mirrors may not be updated for up to 24hrs. The "www."
-in URLs can be replaced with "west." to fetch from a more up to date
-mirror directly if one has trouble.
-
-
-Amos Jeffries
-Squid Software Foundation
-
-
---1jPaXmGeoLlAf6dgMBD2ewxs0PjHqsdcc--
-
---IwAwhr1WLMen7urnSOSIWcRLCMjcLGtLc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQIcBAEBAgAGBQJXF5JnAAoJEGvSOzfXE+nL2YwP/3qepFQFNzSJeIgtIqxgU5a9
-Pl82wqKzi7ITOmfU73iY6uBBaolwE17d3XK9Pw82SU41bgQSpAzjY7cg97CeGCjQ
-uk+mW2/5uyZFdyl6nprDrthb9a+WC6Hy/BUNzERS6L+7HrezQaqYtuJN5mDUiDZd
-j31E2jO1GhmugkKGvcjr7CoxSsIom29Rrruq+NhCQOqYCBOAeYJHqzPgleAk0JKZ
-HEbFAdz2ZlR7o/AuWlFs82HEtvXRHQpd+CNgSzXuOXffPzHnPuHnXnbMReUV2V5z
-SQp9HE4LFEwIRNJYukMnZE0qv50164NLnJzrC4z76YqM+WTlX9TjMioTfL2IjbIo
-HkEufBPnQHUqK5TeuQ3Vq/6nqpr0uj70XR2Yllnv4S/QL65DLDSZPdOYyV16v29j
-Qz/XVDYI5CqU+eY28gTXo8bl+RrF39PVszA1uJhM8SyVy32xhUDZYu2hKVP9AhRE
-rOmGjnv5eap8PK24RP+kXZgwDseS1GCbSBOMi9OGzH+1lWgY4sLvN7oVEGywWLaD
-kxkpJHOOMYBmUdDsu/7oYAr7b1lYiFOIo46gKB6uHXtOD8WHcB1ppUMXY4I+CJR+
-1hZfG4P+Vxi4qEorKxpzmoB5adLjhLBMM2FFMINPBrW/IBLJ3RFVFWR9LaC50W/l
-+GjXtO2gOB06Sz82oMLA
-=fMT3
------END PGP SIGNATURE-----
-
---IwAwhr1WLMen7urnSOSIWcRLCMjcLGtLc--
+    smcv
