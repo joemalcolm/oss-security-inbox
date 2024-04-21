@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1025" "Monday" "11" "September" "2017" "20:58:57" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170911185857.hfti4mrponqoddin@eldamar.local>" "27" "Re: [oss-security] GNU Emacs 25.2 enriched text remote code execution" "^Date:" nil nil "9" "2017091118:58:57" "[oss-security] GNU Emacs 25.2 enriched text remote code execution" (number mark "        carnil@debia Sep 11   27/1025  " thread-indent "\"Re: [oss-security] GNU Emacs 25.2 enriched text remote code execution\"\n") "<09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>" ("<09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14153 invoked by uid 550); 11 Sep 2017 18:59:10 -0000
+Received: (qmail 23757 invoked by uid 550); 21 Apr 2024 12:00:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14132 invoked from network); 11 Sep 2017 18:59:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1++bs9c3VKgDU885pXxR8GaqmVXorO8drFtOoCOhnBU=;
-        b=qE/MiNFUd2GvvElowWSinvednYGZHHxxPnSVhFnWVWg54V8z0xvQZVE0wGQZLEAgGa
-         B2Vs6aTGcAwJKNuJHU5O5/W+jfELARXc7LM6CYbCzM1rwUnHbRtAqhZW23JQ1XcPbLof
-         Fq4VFka+4K/6yVtWx4VWWfLgIpQ23JnE/EeZSSRGJ7Jss+wyNqG8aF2t6vf+bi1wKOzU
-         3O4yTum8Suow/erYrHiTfyIo4zmUbM9KGvcgUjs8rI2+oqUSeSf20yhfpoWvd7h8Rq9Z
-         nra6rjchFcVm9af1Y9tp5gqtiEsCLcd8Pjn/SKpyAgQF/jr2kq0Jf4AZ3pnwN4K8ZrFO
-         lLtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1++bs9c3VKgDU885pXxR8GaqmVXorO8drFtOoCOhnBU=;
-        b=EVmbF2CDvtDEvjOj52+22wPBnCHaWG5ZOLNaeq0CXws/md0DiFSv0wfwz6QwT28zUw
-         4zgrfl8GzBSj/rF+hptsDYF5sTDS9FRi3CZYgni9nfCZqLzJDkFlk0nsHrB3hG4cMAR4
-         3yDAdJMyINIF9qTqH4w+8brzbslbUNMVVpgQlll0AkihuFNVhSInPLUwTrSb4PY10FYX
-         ZBfdgEzjhgmF57dQ5T4AkBf35B730K8s8zg00KtFsF/BYlbFKtLqLjq739/Ykob0zOU5
-         bJrz0sGND4zEDzKunx8OYzZ6q94dyiewSORgEWFX64ta+6lLowcmppKkckA9UIdVwUhU
-         II5w==
-X-Gm-Message-State: AHPjjUh+AEsROa6D9ltiUNItJmsS7Oz4wpsoqATyYiKGUD3AZWLCK8JG
-	lsll/ogQjgG9q6/F6cz7tQkU7Q==
-X-Google-Smtp-Source: AOwi7QDEWpQxFfWWQdtnbA8fth35MVpRplCJuglzJjENDgYUMszd7UgQrM9W1DYyUkHUs0o5QFeE+w==
-X-Received: by 10.28.232.138 with SMTP id f10mr6824443wmi.130.1505156338580;
-        Mon, 11 Sep 2017 11:58:58 -0700 (PDT)
-Message-ID: <20170911185857.hfti4mrponqoddin@eldamar.local>
-References: <09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 23739 invoked from network); 21 Apr 2024 12:00:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=XcBg/NEYIVpzeUuHSCkI2KFQTxQymYKwbrd6VxYdb2U=; b=WKihNCLYSOq2NjSNMZ4FfHv6Ku
+	HdHkXf6kVuD4eVC3RoSW9vRINuW+8nBCfXpXs9eyy6dQCF4HCL73jBhqgm0UNDxk+e68jTZEFkfxc
+	UhX3Xdr7qC5kNkiDxjNXMvJLUiQ/ql3fZAZvDg4D4/DZXsT9mWGfz6I9aPlgmGiFKqBJ1s2byu2FX
+	9ekxspdwHa+DV3+rx5tPFTGXN7uh2tyOwtWuCtNNL089c+ytlhype1UsNqqxwCxC+je3Pc1PbH4/4
+	q0SuLrBtDB9wnW//h8Cm6r2GtneZcH7p3tRj1u7Eq7LLLy4L9zNMhN1QBhYs8oeafrqrrRXJUawNa
+	St5yvawg==;
+Date: Sun, 21 Apr 2024 13:00:18 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZiT_0pj-sgTHeCzs@remnant.pseudorandom.co.uk>
+References: <20240414190855.GA12716@openwall.com>
+ <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+ <20240419154435.GA7046@openwall.com>
+ <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
+ <20240420181211.GA12463@openwall.com>
+ <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Mon, 11 Sep 2017 20:58:57 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] GNU Emacs 25.2 enriched text remote code execution
-To: oss-security@lists.openwall.com
+In-Reply-To: <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
-Hi Paul,
+On Sat, 20 Apr 2024 at 21:33:07 +0000, Jordan Glover wrote:
+> On Saturday, April 20th, 2024 at 8:12 PM, Solar Designer <solar@openwall.com> wrote:
+> > Does bubblewrap maybe already relinquish also the ability to create
+> > nested namespaces, which it probably could do with seccomp?
 
-On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
-> GNU Emacs is an extensible, customizable, free/libre text editor and
-> software environment.  When Emacs renders MIME text/enriched data (Internet
-> RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
-> mail clients decode "Content-Type: text/enriched", this code is exploitable
-> remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
-> 
-> Although we know no efforts to exploit this in the wild, exploitation is easy.
-[...]
-> == Timeline ==
-> 
-> 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
-> 
-> 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
-> and Gnus (Reiner Steib <Reiner.Steib@gmx.de>, private mail).
-> 
-> 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@gnus.org>) to disable the
-> problematic code and mitigation (private mail).
-> 
-> 2017-09-09. Patch committed in main development repository.
+bubblewrap doesn't rely on seccomp itself, because linking to libseccomp
+and compiling seccomp programs would be a concerning amount of attack
+surface for a program that is optionally setuid root, but it has options
+that can be used to make it receive a precompiled seccomp program as a
+binary blob and submit it to the kernel. The intention is that a larger
+framework like Flatpak, WebKitGTK or similar, which isn't setuid, can
+supply a seccomp program if it wants to.
 
-Have you requested a CVE for this issue?
+The design of bubblewrap is that it's a toolkit for making sandboxes,
+but is not, itself, a ready-made sandboxing solution - so the sandbox can
+be secure but limited, insecure but versatile, or anywhere in between,
+and larger frameworks like Flatpak are responsible for designing their
+own security model and constructing a bubblewrap command-line that will
+implement it.
 
-Regards,
-Salvatore
+> bubblwrap has --disable-userns option
+...
+> Flatpak uses this (or seccomp filter) to block nested namespaces
+
+Development versions of Flatpak (1.15.6+) use both seccomp and
+--disable-userns: possibly redundant, but it's better to be safe,
+and Flatpak wants to disable some other syscalls with seccomp anyway
+(for example access to the kernel keyring).
+
+Older versions of Flatpak completely relied on seccomp, because
+--disable-userns is a recent addition to bubblewrap.
+
+bubblewrap also uses PR_SET_NO_NEW_PRIVS (this is hard-coded and not
+optional), but creating a new user namespace in which you have all
+capabilities is not considered to be a new privilege for the purposes
+of that prctl, so that doesn't help us here.
+
+> For this reason firefox own sandbox doesn't use namespaces in flatpak
+
+Flatpak does have a feature (the somewhat misleadingly named
+"sub-sandboxes") where a sandboxed program can ask Flatpak to create a
+new user namespace on its behalf, in parallel with the one it uses for
+the original program. This can either be done with the same restrictions
+as the original program and therefore no effective security boundary
+between the original program and the sub-sandbox (Steam does this, to
+run parts of itself with a different /usr), or with tighter restrictions
+(the original purpose of this feature).
+
+But, as noted on the Firefox bug, this implies some IPC, a new user
+namespace and an execve(), so it's higher-overhead than just fork()ing:
+if the original program wants to share state with the new program,
+it needs to do that explicitly, perhaps by using shared memory or an
+AF_UNIX-based protocol like D-Bus. A stronger security boundary means
+more effort needs to be put into crossing that boundary safely and with
+the desired performance characteristics, so t's a trade-off with no
+single correct answer.
+
+    smcv
