@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1629" "Tuesday" "12" "July" "2016" "22:46:04" "+0300" "Paul Wouters" "pwouters@redhat.com" "<e2b42449-584c-9d7f-070e-b65b3150d3bc@redhat.com>" "32" "Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "7" "2016071219:46:04" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       pwouters@red Jul 12   32/1629  " thread-indent "\"Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>" ("<20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>" "<f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 18224 invoked by uid 550); 12 Jul 2016 19:46:18 -0000
+Received: (qmail 9430 invoked by uid 550); 21 Apr 2024 20:44:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18206 invoked from network); 12 Jul 2016 19:46:17 -0000
-References: <20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>
- <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
-To: oss-security@lists.openwall.com, huzaifas@redhat.com
-Cc: cve-assign@mitre.org
-From: Paul Wouters <pwouters@redhat.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <e2b42449-584c-9d7f-070e-b65b3150d3bc@redhat.com>
-Date: Tue, 12 Jul 2016 22:46:04 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-MIME-Version: 1.0
-In-Reply-To: <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Tue, 12 Jul 2016 19:46:05 +0000 (UTC)
-Subject: Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to
- DoS amplification attack
+Received: (qmail 25759 invoked from network); 21 Apr 2024 20:06:33 -0000
+Date: Sun, 21 Apr 2024 22:06:25 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240421200625.GA16869@openwall.com>
+References: <20240414190855.GA12716@openwall.com> <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com> <20240419154435.GA7046@openwall.com> <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk> <20240420181211.GA12463@openwall.com> <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
-On 06/14/2016 05:34 PM, Paul Wouters wrote:
-> On 06/13/2016 10:40 AM, cve-assign@mitre.org wrote:
->>> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
->>
->>> which implement IKEv1 are flawed, since they follow this protocol
->>
->> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
->> CVE ID assignment.
+On Sat, Apr 20, 2024 at 09:33:07PM +0000, Jordan Glover wrote:
+> bubblwrap has --disable-userns option which prevents creation of nested namespaces (from manpage):
 > 
-> Then you should pull the CVE-2016-5361 which deals with retransmission amplification in IKEv1
+>        --disable-userns
+> Prevent the process in the sandbox from creating further user namespaces, so that it cannot rearrange the filesystem namespace or do other more complex namespace modification. This is currently implemented by setting the user.max_user_namespaces sysctl to 1, and then entering a nested user namespace which is unable to raise that limit in the outer namespace. This option requires --unshare-user, and doesn't work in the setuid version of bubblewrap.
 > 
->  We are maintaining the
->> CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
-> 
-> That statement on the libreswan website is clearly referring to CVE-2016-3071 not CVE-2016-5361.
-> 
->  and
->> accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
-> 
-> Which again clearly refers to CVE-2016-5361 and not CVE-2016-3071
-> 
-> So again, please fix CVE-2016-5361 or drop it.
+> Flatpak uses this (or seccomp filter) to block nested namespaces as this can bypass security its design. For this reason firefox own sandbox doesn't use namespaces in flatpak, see https://bugzilla.mozilla.org/show_bug.cgi?id=1756236
 
-I have tested openswan and strongswan and confirmed it contains the same amplification that is inherent in being IKEv1 compliant.
+Thanks, I didn't expect it was this advanced already.
 
-Neither implementation has applied the hardening that libreswan has applied for this that was the original information that caused
-CVE-2016-5361 to be issued for libreswan.
+In what exact way would nested namespaces bypass the security design of
+Flatpak?  Is this about the kernel's attack surface exposed by
+capabilities in a namespace or something else?  I guess capabilities are
+also dropped in the nested namespace?
 
-I believe MITRE needs to fix the inconsistency in the issuance of CVE-2016-5361, expand it to be about the IKEv1 protocol, and gather
-the other vendor information and patches, or issue additional vendor specific CVE's. I believe the first solution is better.
+After reviewing some kernel code, I have doubts as to how effective the
+dropping of capabilities in a namespace actually is.
 
-Paul
+security/commoncap.c: cap_capable() includes this:
+
+                /*
+                 * The owner of the user namespace in the parent of the
+                 * user namespace has all caps.
+                 */
+                if ((ns->parent == cred->user_ns) && uid_eq(ns->owner, cred->euid))
+                        return 0;
+
+this check is only reached when cap_capable() is called for a target
+namespace other than one the credentials are from.  However, such uses
+do exist, e.g. via Netlink, which would expose e.g. Netfilter:
+
+net/netlink/af_netlink.c:
+
+/**
+ * netlink_net_capable - Netlink network namespace message capability test
+ * @skb: socket buffer holding a netlink command from userspace
+ * @cap: The capability to use
+ *
+ * Test to see if the opener of the socket we received the message
+ * from had when the netlink socket was created and the sender of the
+ * message has the capability @cap over the network namespace of
+ * the socket we received the message from.
+ */
+bool netlink_net_capable(const struct sk_buff *skb, int cap)
+{
+        return netlink_ns_capable(skb, sock_net(skb->sk)->user_ns, cap);
+}
+
+So I worry whether even with all namespaces in a sandbox having dropped
+capabilities, an attack can still be arranged (with a pair of namespaces
+one nested in the other) where a task effectively "has all caps" for a
+dangerous operation like configuring Netfilter due to it hitting code
+paths like this, which bypass capability bit checks.
+
+The above finding may be a reason for us to prefer making capabilities
+in a namespace ineffective vs. dropping capabilities.  In context of my
+idea/proposal for a new sysctl, it could be better for it to work as I
+had described, overriding security_capable() return, instead of e.g.
+hooking return of create_user_ns() and dropping new cred's capabilities.
+
+I hope the Ubuntu/AppArmor solution is also safe in this respect, as it
+sounds like it similarly makes capabilities ineffective instead of
+dropping them.
+
+Alexander
