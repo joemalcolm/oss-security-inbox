@@ -1,4 +1,4 @@
-Received: (qmail 9565 invoked by uid 550); 8 Apr 2025 13:00:38 -0000
+Received: (qmail 32389 invoked by uid 550); 21 Apr 2024 12:31:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,102 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15633 invoked from network); 8 Apr 2025 12:36:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brad-house.com; s=google; t=1744115764; x=1744720564; darn=lists.openwall.com;
-        h=subject:from:to:content-language:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SK6LeEwYqI0v2Vw8ZARKnR4aA41DG5UgO9jVLZZ81Rc=;
-        b=WxA9qPvFLlkMlq+RLbtYD2jwk7k6PjoLNQIzS5LTrLG5CNlF1+P6Biq5UY9TVuaN+N
-         a/6T+20FcLXrmPCzD9i1YudE8fgW5bDcKTqM5OwV4jCxhiC0AOfnVigpcet2aUS9pMV7
-         MOtTEGCMv5kfMOqnD45KiVNL4buIc9oghSlNWWBGzSzF8/j7WdACSNf1fYiSV+9fJvGM
-         tK3XOSBqWfaSi6VLKXwOZBzE1gRPTY1bXeC2oSwvw8R9qAawzr8glMGmNziag9QjGxSb
-         XBYM6a74lkOBJQxBCwabYxne4KI8SH72/IKWbX3azW+s3ubJ07pP98r0pxP7BPTfApN8
-         856w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744115764; x=1744720564;
-        h=subject:from:to:content-language:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SK6LeEwYqI0v2Vw8ZARKnR4aA41DG5UgO9jVLZZ81Rc=;
-        b=WqEeRN/+hm3ovpuG/WESbnaxdY8rYViVBaC9r755e8HSG+yPwR7l7jYVeHqfIr0MbZ
-         lDOfLkR67+lv4jN8KCAVD+wXTPfIWNBCP+zqM82Z9A1JtxibE0TexOKwsV5Uy8sY2pco
-         3gHnL0fn6twGhtjb0NNB8XBtPmEn1HG+CAS+qPZLrMN90SmYZhIpxoAGepWs8dq2/FI1
-         7p9yk6/JZKNkr3voIMKJVZIrVCWpq9BZDu1rVQquXVP91pKKOtSSbnlQCfmxWSPeHDG3
-         qAiBGGxdCOaG8sE8Jp43slhguqjdA/syHMCzicv802RzUD3auW17sC0q8ObquDBHp/pk
-         7Y1Q==
-X-Gm-Message-State: AOJu0YxXWCxK+UFXL7JczF7qZfzVre1JmTX0+mQT+A495+A5vga8T6LE
-	uSM5jYWqU9fwqVzJEYvakc5ztLvBYccT+osRW0ahR6n9Tt/mfPHhcIs8o6a5CxVZRdeXgHyj72p
-	Isnc=
-X-Gm-Gg: ASbGncsIwFoZfCKHT7fwSbM7kLUE6rJcNdU5wX1gzZRFVgkLWvVKty6NpFj0rOvjVMc
-	mKDh46dzO+Xe4kj7sWL7OZ5k/ZRa+klf6Q/sQXZrDo31OQLPOwgAx1XI1dEOLsj7g87GD+VeqFH
-	NFPByezfgNdVQqquN+EZY7aRP2Ltd/7Z+j1HZrnTTcmLjv6EJVhmh9kkYGmIpNdMeLLiaIdFDQw
-	4Ik5Jb8YrKtB4kTdUTc//jwgp825nM15wXtWQb/nF0XFvZc1sV1XvpCiUBxTk73eiq9ANeCjynp
-	90Ylt47DARwzScxUrZzLSfN5t9fpdrhxtDbWWy6XJwnOcFs5TRZFeRr0Kt5nPvaiTFkuqtiMFxp
-	rUBXQEWyv8Lmt7jg4PoyGV254KKDAKDfJUvvO
-X-Google-Smtp-Source: AGHT+IH0YOtJ8BfbPBRYFu4Ygn7NBRIQmMxzmj4gB3B2jpfV1XRAXt3Pmzpd4J2amUoaOK4Cuoft6Q==
-X-Received: by 2002:a81:b2ca:0:b0:702:4643:8eca with SMTP id 00721157ae682-7042d41ec3fmr40964277b3.1.1744115764210;
-        Tue, 08 Apr 2025 05:36:04 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------A757U6wZifjAjOIKF23BY3By"
-Message-ID: <b9af7d69-9cab-4cfe-8570-7909466c5c0f@brad-house.com>
-Date: Tue, 8 Apr 2025 08:36:03 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Received: (qmail 32365 invoked from network); 21 Apr 2024 12:31:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=M60aLlnsCl9DpJScufvTgDSBWEUnyh+6BHVr132hxz4=; b=sLraIaukQ61Us6cxnNJe8+f176
+	+idkVuZFIsvWjV8Qojv4h7BT2EXDlsndrjlFqGpdS703VU2k3OLNH65eLWXtblTg86DLbfAybdoeV
+	nMV32A+URwQi85TGmN/DhgnNvIa6ET1LqSoeThcSawkt68rYAoV/s7WKyNFwkGL5L0m/sZp78AjpG
+	QiCvOCubbxPclM3ItpkLBrzkdvpsxS5ob2SgWf+jtkqG2lQGJXMYfxMa6R8eHry3zoypQGuqgtcLC
+	X0QvXtRuE6KEW/EVo3YLRSU0U+iOErKDOK2NoNSMbdhRJKqRpKhzdXM9svuOemz8RSscY9fqNJpGu
+	am8J51Kw==;
+Date: Sun, 21 Apr 2024 13:30:49 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
-From: Brad House <brad@brad-house.com>
-Subject: [oss-security] CVE-2025-31498: c-ares use-after-free
+Message-ID: <ZiUG-cMNJgFl-zCO@remnant.pseudorandom.co.uk>
+References: <20240414190855.GA12716@openwall.com>
+ <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+ <20240419154435.GA7046@openwall.com>
+ <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
+ <20240420181211.GA12463@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240420181211.GA12463@openwall.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
---------------A757U6wZifjAjOIKF23BY3By
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+On Sat, 20 Apr 2024 at 20:12:11 +0200, Solar Designer wrote:
+> So with my idea/proposal, someone using these tools on a
+> desktop system would need to set the max depth to 1.  That would leave
+> the kernel's full attack surface exposed on the host system, but not to
+> sandboxed programs because those would run with capabilities already
+> relinquished (per what you write above) and would not be able to regain
+> them by creating a nested namespace.
 
+I believe that's all correct. If someone prototypes this, a way to verify
+it would be, minimally:
 
-    CVE-2025-31498
+    $ ip addr ls
+    (should show all your IP addresses)
+    $ bwrap --dev-bind / / -- ip addr ls
+    (same output)
+    $ bwrap --dev-bind / / --unshare-net -- ip addr ls
+    (should show only lo with 127.0.0.1 and ::1)
 
+or for a "whole stack" version with Flatpak, install any random Flatpak
+app such as org.gnome.Recipes and do:
 
-      Impact
+    $ flatpak run --unshare=network org.gnome.Recipes
 
-Use after free() in read_answers() when process_answer() may re-enqueue 
-a query either due to a DNS Cookie Failure or when the upstream server 
-does not properly support EDNS, or possibly on TCP queries if the remote 
-closed the connection immediately after a response. If there was an 
-issue trying to put that new transaction on the wire, it would close the 
-connection handle, but read_answers() was still expecting the connection 
-handle to be available to possibly dequeue other responses.
+      # or to explore the sandbox environment interactively
+    $ flatpak run --command=bash --unshare=network org.gnome.Recipes
 
-In theory a remote attacker might be able to trigger this by flooding 
-the target with ICMP UNREACHABLE packets if they also control the 
-upstream nameserver and can return a result with one of those 
-conditions, this has been untested. Otherwise only a local attacker 
-might be able to change system behavior to make send()/write() return a 
-failure condition.
+For simplicity, the use of bwrap shown above is not a security boundary:
+it doesn't make any attempt to restrict access to the host filesystem
+like e.g. Flatpak does. bwrap command-lines that implement a meaningful
+security boundary, while still providing useful functionality, are much
+longer than that!
 
+> Sounds like a worthwhile feature?
 
-      Patches
+I'm not sure. As with most security designs, it depends on your security
+model.
 
-Versions 1.32.3 - 1.34.4 are affected. Patch in 1.34.5.
+To protect a trusted user from their own sandboxed apps, it should be
+unnecessary/redundant for Flatpak users, because Flatpak already doesn't
+let apps inherit CAP_NET_ADMIN or create new user namespaces - but it
+could be useful for other sandboxed app frameworks, or as a second line
+of defence against Flatpak not providing the boundary that it aims to.
 
+To protect the OS and other users from a malicious or compromised
+user account using kernel vulnerabilities to elevate privileges, it's
+insufficient - if that's your security model then there isn't going to be
+any substitute for either trusting the kernel to make CAP_NET_ADMIN in a
+non-init user namespace be safe, or trusting a component like bwrap to
+impose restrictions that its caller is not allowed to bypass.
 
-      Workarounds
+Of course, any time we say things like "trusting a component to impose
+restrictions that its caller is not allowed to bypass", we get into
+the same territory as setuid/setgid/setcap, in terms of needing to
+prevent LD_PRELOAD, LD_LIBRARY_PATH and similar ways to influence the
+trusted component's behaviour from the outside - which is likely to be
+impossible if the kernel isn't helping to defang those aspects of the
+execution environment by flagging the process as AT_SECURE, either in
+core kernel code or in an LSM like AppArmor.
 
-None
+I believe the kernel maintainers' position is that CAP_NET_ADMIN in
+a non-init userns is meant to be safe for untrusted code to have, so
+auditing and if necessary hardening the kernel's use of CAP_NET_ADMIN
+might well be better-received upstream than trying to limit which parts
+of user-space can obtain it.
 
-
-      References
-
-c-ares started handling UDP write failures in 1.32.3 in PR#821 
-<https://github.com/c-ares/c-ares/pull/821>whereas they were previously 
-ignored, thus uncovering this particular issue.
-
-https://github.com/c-ares/c-ares/releases/tag/v1.34.5
-
-
-      Credit
-
-
-Reported by Erik Lax
-
---------------A757U6wZifjAjOIKF23BY3By--
+    smcv
