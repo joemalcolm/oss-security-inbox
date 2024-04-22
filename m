@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3456" "Friday" "12" "February" "2016" "11:04:14" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdTz=fkOBg1O+kxrSjmK3Z9ALie7UrboKtEb5cSCrvPc5w@mail.gmail.com>" "86" "[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11" "^Date:" nil nil "2" "2016021214:04:14" "[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11" (number mark "        gustavo.grie Feb 12   86/3456  " thread-indent "\"[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11\"\n") "<CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>" ("<CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15757 invoked by uid 550); 12 Feb 2016 14:04:27 -0000
+Received: (qmail 22475 invoked by uid 550); 23 Apr 2024 09:36:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,126 +6,140 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15728 invoked from network); 12 Feb 2016 14:04:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=zvBNnu6SjrdBn5gz1Ngy8ZfA0IiBBGPx4kJudCNrXno=;
-        b=jzWKic4PnncfKp/yQB3JWw2o6d3sVynN9/EqsrVQoTKRqfUIyWygKW0nVbYUyq3lO/
-         RudgZC1idbzDja89zcKRawpG8jUxxpO4fFRXtUHCa3KT5OG8/9inX4g0xEf9mRGGdt5w
-         nr1kpX3p8+auwQSeiR2FJL7UpC72an3mqC/c3yeL44naINzlYtEq/WmWqQF1Pgi0QcDr
-         ohwg8axrXEI0WCe3bDnV78OnMMWMS2AyW5fBSNf3CXKWAm7mibG8o3e02v2zp1GVkFzj
-         h/IBC/26IQUgwZS8yhKOE5qWTfItIHeZ2g7rvG0Autu/vk8dcO2Sol6gPoJO07+mx1XU
-         e6jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=zvBNnu6SjrdBn5gz1Ngy8ZfA0IiBBGPx4kJudCNrXno=;
-        b=hWEoCmlY6MhsUU5HHPayhfe9ImikcptJkpvSuODkNRCeGyi7nhz8QbZh0qikqgRLcc
-         HpLUvoVG/0iIDpNtaGG4eX4yG/8YexV0jMs7mbQJnYKz6+PFxpp6PJtg3XKUXjZ4ECbb
-         mIt7i1fzlfjTV5nBB/FcNwQ477627ZIyyYqcM1f1Y7vyjk1eHLGjU15yrR2/wCAesfJp
-         1UBD20jckiyEOIrwym0jlZJgHG4l7FPaSzscak3Y6eVmvpP8aIbPNFtesYh5T18i/rIW
-         8ChZKMRYHPwYxUdSEq0jDO728jIw3EcGR9/5dKw0zPMYOEIiXXDDmka2QhHtEq3v+UZW
-         aUig==
-X-Gm-Message-State: AG10YOQPJIHhTgQiddAaaSUqOqeU4yFeTFFfCH86O6YDoc42wQn3FikLhhSDlT9AHluL+3JZbREvivQHImdBGQ==
-MIME-Version: 1.0
-X-Received: by 10.25.28.195 with SMTP id c186mr625755lfc.22.1455285854907;
- Fri, 12 Feb 2016 06:04:14 -0800 (PST)
-In-Reply-To: <CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>
-References: <CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>
-Message-ID: <CACn5sdTz=fkOBg1O+kxrSjmK3Z9ALie7UrboKtEb5cSCrvPc5w@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114023c06db5b8052b932496
-Date: Fri, 12 Feb 2016 11:04:14 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: out-of-bounds write with cpio 2.11
+Received: (qmail 30489 invoked from network); 22 Apr 2024 23:52:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1713829961;
+	bh=l5UL9v8I4meRW/87u2+HUK62fI5PnHiDSCN8v4LTvhM=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type;
+	b=nZZbdCcJsWgtGYb7XUDg7xRPeL3ocmBrYw4+hf67tJYK9xNY2tMQLBgJPDwiSbiHs
+	 8p6EHfPizTtzIT7diF8xwZhYwuyECbo9hCw4MosJEPn5KWJNLUKMqiBXMcgVw9eIN7
+	 gcMMVpgSDqm3iNjft6Yp+gt0PHXx1Vgpy77U246cSpS357B0MOHSdQrJ8norJenH2r
+	 e0dO9FeUJBc6TYSBUP0HvEhDh+tqm5P4LbNZsR/lvJT9x4PVVDiWp9ji3GlUwDDvbH
+	 e1DSJixuxXNcduF8jnBbUEz2md1C0DZjsOB4E7unVCZa9NSpbMcwjAswzJV92ppf4L
+	 tRT1q804chhOw==
+Message-ID: <9faeb4d3-8b70-4be8-947c-f8e27be2df9d@canonical.com>
+Date: Mon, 22 Apr 2024 18:52:39 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+Content-Language: en-US
+Cc: Yash Patel <yashpatelphd@gmail.com>,
+ "Dr. Parag H. Rughani" <parag.rughani@nfsu.ac.in>
+From: Mark Esler <mark.esler@canonical.com>
+Autocrypt: addr=mark.esler@canonical.com; keydata=
+ xsFNBGJo5iQBEADBDrePgICrxsoCWxlAiEKAgZgqeX1XhHxhDCkprNwOA9ZEU7G977BEHgYL
+ SrAh3LraWYK+piBXBuHdg8KCUppUmEC4GtiHg+KxtxRjgZn/tjLD6vgZkwZYs0KXQVCK2bhS
+ L0paEA78Xcx1B6xa8JArnjk87VoNl6RCjJESXkwlqGtQTEOpbNxBy5Pd0T33xYeKcOz0GWY5
+ ndkU1gD7NtMZdWZ8vcQclLquQO5OE33OhK78cU4Zk4xFL5I5R4rBhlrOsw002bbD0+QI6wUK
+ QByHfvcAz59eHS/wJOrAY/1p+IKql/4fsRQQSRPSc+3CqELdxzF2s+AG0PciQms3RVYT6czH
+ 28Ce9C9BDAENga28FvQDf5ZiSTUeXZm0XJ9g+dLg+6FBPHp9wX+ybfAmIRXQlV4D6DledQAW
+ joBy3j09JOGQGSH0S3EbQ68Qn2xyGBlYeFCZbMlKDN8NrpVCx9Jf6dDb3Qv2Do1yIIRu5x0v
+ wKlNsQG0NffMryLCQ0tVBNNiwqrHIbmZEhSUEmKf6u+zZsx1JMewe6fRw3hf3VOzENH5tGpZ
+ Z1Yg8m3E2yiXmPJ9cX3iZD0l7/L8CEiuMWt/q/NEDnKsGovi9N1r04Yxxo5lWoHr+4taaOnC
+ 2C7YEHICIWx3lEU0lm24PbNG4QBJCJ8ctwG2rV3AMILCVSzW0QARAQABzSVNYXJrIEVzbGVy
+ IDxtYXJrLmVzbGVyQGNhbm9uaWNhbC5jb20+wsGUBBMBCgA+FiEELTsQ/oZuJMqL99Qt1guD
+ yQUTvU8FAmJo5iQCGwMFCQPCZwAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQ1guDyQUT
+ vU/Gqw/9F5ko+KS9CRXXcp4SkdhHB6aGtD9rEJycEywPymmI+OwCJppmbQBzzwW7QGLHi8TT
+ iWnWMSeikhSh0p9pPCc9rhLttYDlGZwoxXPt7PwS0k9JjITNviTNZD6uHIoYmFMxS65qdh7s
+ 7OSQj4+nTij1b+dVqzaG4krGB/pav2D2adt4k02KfqIkPiLY0Jo+o8hKOx2HRh8xqEU/eySR
+ tVvIx55cD4Qh63KQv465Afz+QuKsbxuqA2iboUP/srYtMQtFi8TCF7/5gLwDbGDgOAYhIxyf
+ vgAH5dbBFB8lIMPjIeTbP0lE+xMHUmQsKhtYICnjhnGRJeT6vBlDFuUar5DYA3fIm9LEAf1T
+ 1eMK4FBUSCv+cULlT9+rsHDbG6tiZU/BDp/mkKFs2Ax9W68+fgXy7borixrgDhfSCsYWaxLs
+ XW/GEmyCbp30PZlLr6kvfQq7CMEjeE79FEsef7/ppRH/t+mv6p2xhb+DDbvqzcQZ7LQn3+PL
+ xkR37spQRvevPxpx000CqTO5gV19w/2ZSPydm2Zd44XSranzwDdD4o5ZsMXAPuCNlVAVzxAh
+ xNj2QQL7xh9bdDDmM9Z7qBPwFX42n7mwryjBHqMtrSCSI8hupSh2B/bQSRyWd3/KQ2vlJMoq
+ 7H5EJiJYpb3blvb4tfoSfEagPqYV1jJEcKImOGs988rOwU0EYmjmJAEQAL0wGwC8P1qj0fuL
+ aFpPKBAFtxBqnJJcc+63DjQ17/QJrYpKwGGkW6fz/Nn0nUDf88FdrHd7t6a9c3m82/gvsr8V
+ jAD4SISpDjPIpfCj5gWGAuhATWB0pwjWRsgFkIThaa0px6ZJFGdU9lJmi633Xsk4s9bws8kZ
+ pnwtk+StRueqcSElfLw1/gbu6EhcEH62iBb2qlRhgtntgy1dcnqDEQhcdccWSgna+ZlDIo3Z
+ 75RWoIXxrtzUe9PDdG4Ou+k/H96mS7pZdmU6elbQlcDGYegYGH6OTYjvZyl81ACN9Y3Fcmc+
+ luBMeuyQndHFnG6rjOwHr6iM9ZKRBq03QiAAp4vooPyLqG9nZmoeLH0Q7L2pVIwroVtsJvnj
+ ws5z3DujguZcLYCeA/WEXj8p0lYy9WVGrfJ7LyLp+Uj7AdXFB6msED51Swb6QkpWrcC7V2CO
+ KZmfYGXFy7PdIwWeqgYjJ0zqEldHGDTDV0yTuuER2bJ/T1WBVy9U46/KRUXYevgCZFGPbyO/
+ vKLwKVbrbkimULMFcPJpKinFPQs0ch7HA6PPog0wbux5Bm9O78lzYo/WFlvofFKTzfGEsnif
+ CVXkcsu0Qp8m6DQZyeFO8SH3DHaHFaPKc3JYEFTdmP0PdvH8aqb5TVTb8G+hvxktDkCuCrla
+ oFVSCNhIWfJ6rAxxYGuNABEBAAHCwXwEGAEKACYWIQQtOxD+hm4kyov31C3WC4PJBRO9TwUC
+ YmjmJAIbDAUJA8JnAAAKCRDWC4PJBRO9T3SnEACEprj9LsxvhbM6A/aLk3la8UD9MYtLSmbl
+ +KPGEvP0r7viPftolgV8O+tRG09Z7Wd/63WsHjA2Psgwdm49BziL8tCfONfVXCojPxR/uyL5
+ ykPHSE/yC+mz3DTPWcncGCdteil6Cw43MHNCm2oYJ38VXAwV9pikHeO5Pj5xukmc/bQr3v3N
+ rDQI+AQpNbWs2r4vw+y01IidmMh12RkuGi2UYOgajvfDeoSSEF7VJ6Qlij9UjatkbZpSHjn2
+ rf+B9DdlkRNr5Vfd9/xaSFQoazdgNS/QHqOeZ+9HqNrUlHTH9BUaTkmV6MDXtEjVGfROXxXP
+ w/q29QUzZUZE3agqmuxB3yarPjW24mNu5Kd22rb06blTfBO0o7DOX9UwOVLfFLejfWAYANuX
+ ilcju9/3dHRsv6o99tGfRxJIMOPVY6JgswYISB7CwdA+Uda6UvU+qwYCRi7B8L13H3uhDKzA
+ 5sgRZnz2oQw+bOB/ErZv78NVnhrdy9LAkLk0U8RVvH8sWPco4ZjQVou6wDMEsKaIlioU8x6n
+ YOi8LBpijWpaKEpCbU4nRdV/4d3eWr7tu1MWGcm70C6mrjypxI6TVCPg+gimjM4D7LOpJKZJ
+ VGQg9JYPUhccp27Nn/3L2/Y9F3tKUfCTPHanOzHg4KNRRUr8CQD8qi+8nWqztY9OeZjz0vag YA==
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] 83 bogus CVEs assigned to Robot Operating System (ROS)
 
---001a114023c06db5b8052b932496
-Content-Type: text/plain; charset=UTF-8
+Yash Patel and Dr. Parag Rughani are credited as the discoverers for 
+eighty-three recent CVEs affecting ROS 2 which the MITRE TL-Root CNA 
+assigned.
 
-A patch is available here:
+All CVE descriptions are written at a very high, vague, level. No 
+specifics or evidence has been provided to backup vulnerability claims.
 
-https://lists.gnu.org/archive/html/bug-cpio/2016-01/msg00005.html
+Three CVEs (CVE-2023-33565, CVE-2023-33566, and CVE-2023-33567) 
+reference the discoverer's 2022 ACM paper "Analyzing Security 
+Vulnerability and Forensic Investigation of ROS2: A Case Study" [0]. The 
+more technical portion of this paper was confirmed [1] to be based on a 
+ROS 2 beginner tutorial [2]. The paper does not attribute ROS 2 
+documentation.
 
-2016-01-19 13:45 GMT-03:00 Gustavo Grieco <gustavo.grieco@gmail.com>:
+Some CVEs claim that a security update will be forthcoming from the ROS 
+2 development team [3]. Privately [4], ROS 2 core developers stated that 
+they were not contacted and "came to the conclusion that [these CVEs] 
+were likely not real security vulnerabilities.".
 
-> Hello,
->
-> An out-of-bounds write in cpio 2.11 was found in the parsing of cpio files
-> (other version are probably affected).  Find attached a test case to
-> reproduce it. The ASAN report is here:
->
-> =================================================================
-> ==5480==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x60200000edd0 at pc 0x41f187 bp 0x7fffffffdc50 sp 0x7fffffffdc48
-> WRITE of size 2 at 0x60200000edd0 thread T0
->     #0 0x41f186 in cpio_safer_name_suffix
-> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392
->     #1 0x40b3d7 in process_copy_in
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1391
->     #2 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
->     #3 0x7ffff6b5eec4 in __libc_start_main
-> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
->     #4 0x403408 (/home/g/Codigo/cpio-2.11+dfsg/src/cpio+0x403408)
->
-> 0x60200000edd1 is located 0 bytes to the right of 1-byte region
-> [0x60200000edd0,0x60200000edd1)
-> allocated by thread T0 here:
->     #0 0x7ffff6f567ef in __interceptor_malloc
-> (/usr/lib/x86_64-linux-gnu/libasan.so.1+0x547ef)
->     #1 0x440f3e in xmalloc /home/g/Codigo/cpio-2.11+dfsg/gnu/xmalloc.c:47
->     #2 0x409c74 in read_in_new_ascii
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1166
->     #3 0x408a26 in read_in_header
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1043
->     #4 0x40b354 in process_copy_in
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1361
->     #5 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
->     #6 0x7ffff6b5eec4 in __libc_start_main
-> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
->
-> SUMMARY: AddressSanitizer: heap-buffer-overflow
-> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392 cpio_safer_name_suffix
-> Shadow bytes around the buggy address:
->   0x0c047fff9d60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9d70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9d80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9d90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> =>0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa[01]fa fa fa 06 fa
->   0x0c047fff9dc0: fa fa 05 fa fa fa 00 04 fa fa 00 04 fa fa 00 04
->   0x0c047fff9dd0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
->   0x0c047fff9de0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
->   0x0c047fff9df0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa fd fa
->   0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> Shadow byte legend (one shadow byte represents 8 application bytes):
->   Addressable:           00
->   Partially addressable: 01 02 03 04 05 06 07
->   Heap left redzone:       fa
->   Heap right redzone:      fb
->   Freed heap region:       fd
->   Stack left redzone:      f1
->   Stack mid redzone:       f2
->   Stack right redzone:     f3
->   Stack partial redzone:   f4
->   Stack after return:      f5
->   Stack use after scope:   f8
->   Global redzone:          f9
->   Global init order:       f6
->   Poisoned by user:        f7
->   Contiguous container OOB:fc
->   ASan internal:           fe
-> ==5480==ABORTING
->
->
-> This issue was found using QuickFuzz.
->
-> Regards,
-> Gus.
->
->
+Certain CVEs describe unlikely situations. For instance, CVE-2024-30737 
+claims: "A critical vulnerability has been identified in ROS Kinetic 
+Kame, particularly in configurations with ROS_VERSION=1 and 
+ROS_PYTHON_VERSION=3." [5]. ROS Kinetic Kame supports Python 2, not 
+Python 3.
 
---001a114023c06db5b8052b932496--
+Frankly, all descriptions appear to be copy-pasted or generated to 
+_sound_ like security issues. No evidence has been provided in the ACM 
+paper or the 83 CVEs to suggest that vulnerabilities actually exist.
+
+CVE revocation requests have been sent to MITRE and CVE descriptions 
+have been appended with: "NOTE: this is disputed by multiple third 
+parties who believe there was not reasonable evidence to determine the 
+existence of a vulnerability."
+
+The CVE IDs are: CVE-2023-33565, CVE-2023-33566, CVE-2023-33567, 
+CVE-2023-51197, CVE-2023-51198, CVE-2023-51199, CVE-2023-51200, 
+CVE-2023-51201, CVE-2023-51202, CVE-2023-51204, CVE-2023-51208, 
+CVE-2024-29439, CVE-2024-29440, CVE-2024-29441, CVE-2024-29442, 
+CVE-2024-29443, CVE-2024-29444, CVE-2024-29445, CVE-2024-29447, 
+CVE-2024-29448, CVE-2024-29449, CVE-2024-29450, CVE-2024-29452, 
+CVE-2024-29454, CVE-2024-29455, CVE-2024-30657, CVE-2024-30658, 
+CVE-2024-30659, CVE-2024-30661, CVE-2024-30662, CVE-2024-30663, 
+CVE-2024-30665, CVE-2024-30666, CVE-2024-30667, CVE-2024-30672, 
+CVE-2024-30674, CVE-2024-30675, CVE-2024-30676, CVE-2024-30678, 
+CVE-2024-30679, CVE-2024-30680, CVE-2024-30681, CVE-2024-30683, 
+CVE-2024-30684, CVE-2024-30686, CVE-2024-30687, CVE-2024-30688, 
+CVE-2024-30690, CVE-2024-30691, CVE-2024-30692, CVE-2024-30694, 
+CVE-2024-30695, CVE-2024-30696, CVE-2024-30697, CVE-2024-30699, 
+CVE-2024-30701, CVE-2024-30702, CVE-2024-30703, CVE-2024-30704, 
+CVE-2024-30706, CVE-2024-30707, CVE-2024-30708, CVE-2024-30710, 
+CVE-2024-30711, CVE-2024-30712, CVE-2024-30713, CVE-2024-30715, 
+CVE-2024-30716, CVE-2024-30718, CVE-2024-30719, CVE-2024-30721, 
+CVE-2024-30722, CVE-2024-30723, CVE-2024-30724, CVE-2024-30726, 
+CVE-2024-30727, CVE-2024-30728, CVE-2024-30729, CVE-2024-30730, 
+CVE-2024-30733, CVE-2024-30735, CVE-2024-30736, and CVE-2024-30737
+
+Many thanks to Florencia Cabral Berenfus for her analysis of these claims!
+
+Mark Esler
+
+[0] https://dl.acm.org/doi/abs/10.1145/3573910.3573912
+[1] https://github.com/yashpatelphd/CVE-2024-30737/issues/1
+[2] 
+https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html
+[3] https://github.com/yashpatelphd/CVE-2023-33565
+[4] message ID 
+<CAE6X0kjYCMS4qRYP9Bohx88ue9ReedbPr=FFh+hNs+2RkOGeLg@mail.gmail.com>
+[5] https://github.com/yashpatelphd/CVE-2024-30737
+
