@@ -1,4 +1,4 @@
-Received: (qmail 1164 invoked by uid 550); 22 Sep 2023 15:35:53 -0000
+Received: (qmail 25982 invoked by uid 550); 23 Apr 2024 16:14:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,74 +7,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32717 invoked from network); 22 Sep 2023 15:35:30 -0000
-Date: Fri, 22 Sep 2023 17:35:16 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 25958 invoked from network); 23 Apr 2024 16:14:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:Reply-To
+	:Cc:Content-ID:Content-Description;
+	bh=/i7LJwUjC/wBJFLaPZeCzZoJa+g+D2grjjzda66Pimk=; b=Ncpyo3GEKHnaiw4tTorU37jKfT
+	on6Aj7IsfzeGsXLQLr+h6aAJzsWeFzoME94s2YbRvxDL3ebZ/MUoUo9iEMmLrg5/3LOaDUkWk58Re
+	gUMnXTe0fPJ9wotwQ9vM6frLzxILFHaGLbjXc2rvlr9UQzE7Jfowj9kduM30kHvc1g+BS0HDmzIxE
+	uquse2K91ruQBiJh5fHsIPR0uhpqzzAiDsNTA6xMctTvdcxeXRWrfOWtCKVYSmhsDTojo2qYqvKzZ
+	/72UrtVhw9wPgknpHcvDYObKKIdbEPzJymFglUgUtRpglDWuxNbidBGJeb0su0RlH0zNnv9tnVp4p
+	3ESK9M/A==;
+Date: Tue, 23 Apr 2024 17:13:50 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
-Cc: Vincent Rabaud <vrabaud@google.com>
-Message-ID: <20230922153516.GA17264@openwall.com>
-References: <20230921205250.GA13106@openwall.com> <20230922072817.092917d2.hanno@hboeck.de> <20230922105410.GA15143@openwall.com> <CAJMnc16px2pgN9qmH6iw=by+DLu4cXBmZZpDGe3Lf_QWPEW0bg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <ZifePjN07o_wqYIC@remnant.pseudorandom.co.uk>
+References: <20240414190855.GA12716@openwall.com>
+ <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+ <20240419154435.GA7046@openwall.com>
+ <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
+ <20240420181211.GA12463@openwall.com>
+ <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
+ <20240421200625.GA16869@openwall.com>
+ <KN_TQotLatAri5wrOvD-713YsGUE_Slhytf8p8fywmPlELdOZhnceWk_tldcKnaBIBZoJUajwZNkGu6xzj38x6JsQtyMzBpcNwOeHe3fa9E=@protonmail.ch>
+ <ZibgVYyI4hQZl1xP@itl-email>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAJMnc16px2pgN9qmH6iw=by+DLu4cXBmZZpDGe3Lf_QWPEW0bg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZibgVYyI4hQZl1xP@itl-email>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
-On Fri, Sep 22, 2023 at 04:50:44PM +0200, Vincent Rabaud wrote:
-> Hi, we have commented on that here:
-> https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62136#c7
+On Mon, 22 Apr 2024 at 18:10:27 -0400, Demi Marie Obenour wrote:
+> Why is the appid read from /.flatpak-info, instead of having the flatpak
+> process that spawned the container pass the info to the dbus proxy along
+> with the FD used to communicate with the container?
 
-Thank you!  I include the relevant comments below:
+I didn't design this mechanism, so I can't say anything authoritative
+about the motivations of its initial designer.
 
-> Comment 6 by t...@ritter.vg on Mon, Sep 18, 2023, 4:58 PM GMT+2
-> 
-> Can I request a CVE assignment for this issue (so I can note it
-> correctly in Firefox advisories)?
-> 
-> Comment 7 by jz...@google.com on Tue, Sep 19, 2023, 3:22 AM GMT+2
-> 
-> This was an incorrect check in an assert(). A release build would not be
-> negatively affected. The conditions were updated, but previously the
-> file would not cause an issue in that mode. Vincent, please correct me
-> if I'm wrong.
-> 
-> Comment 8 by vrabaud@google.com on Tue, Sep 19, 2023, 11:08 AM GMT+2
-> 
-> Exactly. And instead of fixing the assert, the patch uses an early exit
-> to not reach the assert, which is also an optimization.
+(I would appreciate it if this thread can avoid being derailed into asking
+me "why can't you just?" about design decisions that were already made,
+by people who weren't me.)
 
-Vincent, what about these commits? -
+Some factors that may have been relevant:
 
-commit dce8397fec159c9edfeec7c6388cb81428c87ed8
-Author: Masahiro Hanada <hanada@atmark-techno.com>
-Date:   Thu Sep 14 19:37:24 2023 +0900
+D-Bus is not the only AF_UNIX-based protocol that can be used by sandboxed
+apps to communicate with peers outside the sandbox: some others (subject
+to suitable --socket and --filesystem permissions) include X11, Wayland,
+PulseAudio, Pipewire, or in principle anything that exposes an AF_UNIX
+socket in a well-known location. D-Bus is the only one of these that
+currently uses a proxy.
 
-    Fix next is invalid pointer when WebPSafeMalloc fails
+The fact that a D-Bus proxy is necessary is not ideal, and ideally the
+message bus would be able to do the firewall-like filtering of messages
+itself (subject to Someone™ having enough time to design and implement
+that, of course). If the design of Flatpak's interactions with portals
+via D-Bus "baked in" an assumption that there will always be a trusted
+proxy in the middle, which could be asked for more information about the
+connection, then that would prevent us from being able to replace the
+proxy with a suitably enhanced message bus at some point in the future.
 
-    When WebPSafeMalloc fails on VP8LHuffmanTablesAllocate,
-    next is not initialized to NULL.
-    VP8LHuffmanTablesDeallocate uses next to know the following nodes.
-    A patch fixes this issue.
+There is already no D-Bus proxy used if the app has been given direct
+access to the session bus - which makes that particular app effectively
+non-sandboxed and part of the trusted computing base, so it would be
+Very Bad for such an app to be compromised or malicious, but it's still
+desirable to be able to query the identity of those apps in the same
+way we would for an app that has been effectively sandboxed.
 
-    Change-Id: I144ae84cd97e5bca227018ef1afa95361267902c
+As discussed in this thread, creating new namespaces is a relatively
+scary attack surface to be giving to the sort of semi-trusted apps that
+you would typically want to sandbox with Flatpak, so even if the integrity
+of /.flatpak-info wasn't being used as a security property, we would
+probably still want to deny that ability to most Flatpak apps anyway
+(on the same basis that Flatpak already uses seccomp to prevent various
+more obscure or large-attack-surface syscalls by most sandboxed apps,
+for example denying ptrace unless the app has --allow=devel, even though
+in principle allowing ptrace "should" be safe).
 
-commit 433c7dca11bb5b001ce5ad36ac1afd2906a2f13e
-Author: Vincent Rabaud <vrabaud@google.com>
-Date:   Thu Sep 14 09:31:19 2023 +0200
-
-    Fix static analyzer warnings.
-
-    Change-Id: I45f0db2310b1188809963af93240e3d438f807b8
-
-The "next is not initialized to NULL" one sounds like it could mean
-stale memory contents (possibly deliberately sprayed) could be used as a
-pointer, so it could be a security issue.
-
-The warnings fixes could be just that, or some of those warnings could
-have been for real issues (perhaps also something used uninitialized).
-
-In other words, are the issues fixed there known to be benign, are not
-sufficiently researched, or researched and known to be vulnerabilities?
-
-Alexander
+    smcv
