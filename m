@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["596" "Wednesday" "27" "January" "2021" "16:54:21" "+0000" "Gary Tully" "gtully@apache.org" "<CAH+vQmOyG58Sa5CF=LACmsmfBBCY=FPoiYUXMnro5reDXhqDqg@mail.gmail.com>" "17" "[oss-security] CVE-2021-26117: ActiveMQ: LDAP-Authentication does not verify passwords on servers with anonymous bind" nil nil nil "1" "2021012716:54:21" "[oss-security] CVE-2021-26117: ActiveMQ: LDAP-Authentication does not verify passwords on servers with anonymous bind" (number mark "U       gtully@apach Jan 27   17/596   " thread-indent "\"[oss-security] CVE-2021-26117: ActiveMQ: LDAP-Authentication does not verify passwords on servers with anonymous bind\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-26117: ActiveMQ: LDAP-Authentication does not verify passwords on servers with anonymous bind" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22334 invoked by uid 550); 27 Jan 2021 17:11:34 -0000
+Received: (qmail 19494 invoked by uid 550); 24 Apr 2024 16:14:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +7,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11789 invoked from network); 27 Jan 2021 16:54:45 -0000
-X-Gm-Message-State: AOAM532tyus6xH9OIWmOTXnWeDOCk/XJxCzHxnpAzttI3rXAoCObdd7d
-	KKHYOXrntbOhwwhLnsG418P3P2LmE7Yp0Xbjf2Y=
-X-Google-Smtp-Source: ABdhPJyo4gpfCDShPCGgCqeaRfGZo/Q8bNrrViUoAWPD72CjbVxXrCxM5Qg39OSHVbzD7/84LdPYiriCz+ZFlaibS7g=
-X-Received: by 2002:a92:dc02:: with SMTP id t2mr9153461iln.293.1611766472612;
- Wed, 27 Jan 2021 08:54:32 -0800 (PST)
-MIME-Version: 1.0
-From: Gary Tully <gtully@apache.org>
-Date: Wed, 27 Jan 2021 16:54:21 +0000
-X-Gmail-Original-Message-ID: <CAH+vQmOyG58Sa5CF=LACmsmfBBCY=FPoiYUXMnro5reDXhqDqg@mail.gmail.com>
-Message-ID: <CAH+vQmOyG58Sa5CF=LACmsmfBBCY=FPoiYUXMnro5reDXhqDqg@mail.gmail.com>
+Received: (qmail 19473 invoked from network); 24 Apr 2024 16:14:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1713975241;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AYxG3a58USbEQv50AK9QHLm0dlZe4ako9GmLUcGnyPw=;
+	b=BFYgS1/P9ZKfcAY4oOEikQ+96sGtoEgD3uafiToXTPsaCRMSgaMqR8dDsJ/Eco/2Jb27MA
+	rg+Dv+FV0jchResgnXzWoQFaNp7boPhtC3bh9/lUARdClFCifrIcTYngl1m/ZkF+0pI8ZD
+	GZ+oMMRZ83KNHY+A5/DQQzgcMWAeuTw=
+X-MC-Unique: COj03rfhPQGhZI9z2fcpow-1
+From: Florian Weimer <fweimer@redhat.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2021-26117: ActiveMQ: LDAP-Authentication does not verify
- passwords on servers with anonymous bind
+In-Reply-To: <23c15272-d797-4c3c-bbfb-e462c900978f@gmail.com> (Adhemerval
+	Zanella Netto's message of "Wed, 17 Apr 2024 14:36:02 -0300")
+References: <23c15272-d797-4c3c-bbfb-e462c900978f@gmail.com>
+Date: Wed, 24 Apr 2024 18:13:56 +0200
+Message-ID: <871q6u91rv.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
+Subject: Re: [oss-security] The GNU C Library security advisories update for
+ 2024-04-17: GLIBC-SA-2024-0004/CVE-2024-2961: ISO-2022-CN-EXT: fix
+ out-of-bound writes when writing escape sequence
 
-Description:
+* Adhemerval Zanella Netto:
 
-The optional ActiveMQ LDAP login module can be configured to use
-anonymous access to the LDAP server. In this case, for Apache ActiveMQ
-Artemis prior to version 2.16.0 and Apache ActiveMQ prior to versions
-5.16.1 and 5.15.14, the anonymous context is used to verify a valid
-users password in error, resulting in no check on the password.
+> The following security advisories have been published:
+>
+> GLIBC-SA-2024-0004:
+> ===================
+> ISO-2022-CN-EXT: fix out-of-bound writes when writing escape sequence
 
+For those who haven't prepared/shipped updates yet: we've got a fix for
+a stack-based buffer overflow in nscd under review.
 
-This issue is being tracked as
-https://issues.apache.org/jira/browse/ARTEMIS-2895,
-https://issues.apache.org/jira/browse/AMQ-8035
+  [PATCH 0/4] Various nscd security fixes
+  <https://inbox.sourceware.org/libc-alpha/cover.1713974801.git.fweimer@redhat.com/>
 
-Credit:
+These are initial patches, still under review.  The glibc security team
+will send a separate notification once official patches are ready.
 
-Apache ActiveMQ would like to thank Gregor Tudan
-<gregor.tudan@cofinpro.de> for reporting this issue.
+The initial issue was reported in Bugzilla without an embargo period,
+hence the public patch development.  The other bugs concern the same
+code and are very minor compared to the initial finding, so a separate
+embargo for them doesn't make sense.
+
+Thanks,
+Florian
+
