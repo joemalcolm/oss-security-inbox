@@ -1,4 +1,4 @@
-Received: (qmail 25964 invoked by uid 550); 1 Nov 2024 00:53:04 -0000
+Received: (qmail 24160 invoked by uid 550); 24 Apr 2024 21:18:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,196 +7,141 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25946 invoked from network); 1 Nov 2024 00:53:03 -0000
+Received: (qmail 24126 invoked from network); 24 Apr 2024 21:18:08 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730422375; x=1731027175; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bO3vYmOilOsPBDwge7MHfHBsZg0k92eMuGiKAspa5RQ=;
-        b=S/qdxxXz8boZEY2nNTIsX1gPSNF+lmMc4O9xyhX1zEO5HGyZiyOLPBVoFQ3POPQMNJ
-         +kA011VRpHkDAgqrJedwsmzq5i1z1JQnjEmSi2+b0iDW3akf4wM/roXIZ3GYMfAd6WEO
-         vJ6mNEjK/bYWt2vPOaPJqnYdPkB6I5sy3HWBXz42tymdEJulAGxhv+Jqtv3xSROiArh9
-         d9KdYVNKQOaDLbYzDsJPtLh+Ov8e1bOf617SaSqAsbcqZc/+XZecPJ6ekX3hP0L16P6a
-         5MRXnssk2YNuLsn6KlYGlT2VI1CqLSxIsIJYqQjkeXHEvoOVTQbMv77BqSpYf+qLSnIe
-         /O+w==
+        d=paragonie-com.20230601.gappssmtp.com; s=20230601; t=1713993480; x=1714598280; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8HTNtOtMQlxZhgdI7Y357n+1AaTBlQRLAe1E2FlYGpM=;
+        b=O5WtPcwC2xVz7v4Z87ndG+BRbIkmpRx5A3I+1a9hgInn+B+z7igocvTDXisDMsInsa
+         BoDHbcdIPYl9dYLiLmdtTplBypGqzFfg0BLn8zCsbaYk1viIASVQs7xJ5HgEjfceCR+E
+         ZueIVtG00oHQVjLqvLZ4pcZ4QoEQuGP7xF+rknDg2RZ41ermSqQI5b8Xn6Ayt8YqvuIn
+         mPiA+ikMtvXsWlxRS1Ut07MEi2uMvDmvLw11HZW+ibJtbvLKZ6KZq7zNLtuCKE+arEei
+         a210KxQZ7GDh5dt5qofdQu/ON9ekw0FLClqh/I/9QtKRx9aD8hPHHzVkcpjfqn4eXHQa
+         2u2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730422375; x=1731027175;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bO3vYmOilOsPBDwge7MHfHBsZg0k92eMuGiKAspa5RQ=;
-        b=w+dhyLdkSjY8vzMPxBYzt5PHIwcUibftECXWz1nZwV8CT17j8fGPsgVcmrrY8ycCeZ
-         pX72KbefhbetxZtremyDk+pn9w1PFBG6gDXZZByMcraJv1+MY8Uwez2HNidYgyGc6gV7
-         pgev7eeDONxV6n4d6LtZvrJAXeCFSkWqDCvKyA3RAAacv7TJH6Psmf+arDmbnVbZK6XK
-         sZcOEc39/7j7FMRFBxKNXS3IORRmHPOoSU4KtjIYjrXiTUUnoxKPdnocWIYRNHEwe2K/
-         29Eu2Q/iGm1Lr0SnFTBeM8jAD+KJ9SXTPOFTT6RWkgXHgzq4r94tTwkobzGmVj53Cm2I
-         kHBQ==
-X-Gm-Message-State: AOJu0YwjXLnCE3xO2mQspQBRnGxTj4Mx1p60+aycy05XEvOBcqL9qhZg
-	rzzQ6dI/tvlTyDiEMQDFXKjvplYbddfbe2UEQQ+HGbrxyNJvyVwQDdoLIyH5KHe+0y60Ng5brms
-	2N8QiZFYB43xoT57bnQ9NDyXQwhhLCJbmA4k=
-X-Google-Smtp-Source: AGHT+IGgn2qCQ4yu2i54Vhdk6vA0kgpN0c8sT+H1t4nacj/taDA8NCpHlbY6qmL3iolEtqU9hrhgPsIUwK/SXACV/Yg=
-X-Received: by 2002:a05:6214:3990:b0:6cb:ef1f:d1ab with SMTP id
- 6a1803df08f44-6d1856fa3dfmr318428626d6.30.1730422375046; Thu, 31 Oct 2024
- 17:52:55 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713993480; x=1714598280;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8HTNtOtMQlxZhgdI7Y357n+1AaTBlQRLAe1E2FlYGpM=;
+        b=nlhRkopbdUzw7raL6SdRYEoGsGZF+79tavfXpnBch3sCatmezDX42wz0gZ7K6fNtKZ
+         Zrh3NJjHSvF94nFLvh7AuTr0WsSgFpNBFXTlOlix6+z9tBXYEvwNWHfFNgugz2hcEXCJ
+         5naTbQIAI0x7WkgQgq1pFIwx/GDrWU3Vsx1ICmZnkTUVXKB2old8ER22iHDlkofGuLnP
+         t7jhGNIKo1uAnLjk+aaTNbQFENTJcS/2xJ9OH+RX4BHDQUz8Bv02NnAtXG91uO3aVTkG
+         AOuv/jgHv6vd7mOEJ4gyxr23dWhR6Rc/K1NkZAzTFLppei4+H9+5kOJQNPQpn2l5hGz6
+         bmnA==
+X-Gm-Message-State: AOJu0YzzwcICo5nB5QLrN4MsliRt/Jz5BRRrmntl5JPse96GJZPv134i
+	JMNE1MOF7xxjw5vvnWCa25c/kwoRV9ngqTP5fjEsiOIU3reMFfd/3tof9psd1hnFrlRV/5QhI7d
+	bZIzlma2PPXm8q0kb6uyN5ssgSu+0x/DvYvPbH55h2Haf3cLU9Uw=
+X-Google-Smtp-Source: AGHT+IGvqZ96wW45XUKCvMuk8DSy2ntk3QFB/VAPfD0QkJ6y4gRiNd/EW9luP90oNq9z8p1jNUSlgcn60uKnI6wkylI=
+X-Received: by 2002:a17:907:6d16:b0:a55:63de:9aa9 with SMTP id
+ sa22-20020a1709076d1600b00a5563de9aa9mr2986564ejc.49.1713993479847; Wed, 24
+ Apr 2024 14:17:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241030183237.4e46db4f@plasteblaster> <CAOGQQ28MtkwOyqSZNw7pnTqD3chm9q7q6b9H_MFNE9zRHPoMsQ@mail.gmail.com>
- <CAOGQQ28MhqvZF9Jq8Hka-jyZzmhxey6riwAwn-4uxL8PKn6hWg@mail.gmail.com>
-In-Reply-To: <CAOGQQ28MhqvZF9Jq8Hka-jyZzmhxey6riwAwn-4uxL8PKn6hWg@mail.gmail.com>
-From: Alexander Patrakov <patrakov@gmail.com>
-Date: Fri, 1 Nov 2024 08:52:28 +0800
-Message-ID: <CAN_LGv0ruQFGn4R-VwRSm2Cj_=d5UEcHqKigKV3ciVaDqkPSJw@mail.gmail.com>
+From: Paragon Initiative Enterprises Security Team <security@paragonie.com>
+Date: Wed, 24 Apr 2024 17:17:47 -0400
+Message-ID: <CAKws9z1Rb7ELFB1qL_CJZXoP3R4UJEi4k8JQ+VPTz=r=xnAwZg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000839c590616de34c8"
+Subject: [oss-security] Security Issues and Abandonment of PHP ECC library (mdanter/ecc, phpecc/phpecc)
+
+--000000000000839c590616de34c8
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] mpg123 buffer overflow in versions before 1.32.8
- (Frankenstein's Monster)
 
-Hello,
+Good afternoon, OSS-Security Mailing List readers.
 
-Is there any way to check if any of my MP3 files contain the stuff
-that triggers the bug? Would, for example, Checkmate
-(https://github.com/Sjord/checkmate) flag them without also being
-exposed to security risks?
+We are troubled to report that the PHP elliptic curve cryptography library
+known by the packagist name "mdanter/ecc" and the GitHub URL
+https://github.com/phpecc/phpecc has not responded to our attempts to fix
+security issues from the year 2021.
 
-On Fri, Nov 1, 2024 at 1:42=E2=80=AFAM Marco Benatto <mbenatto@redhat.com> =
-wrote:
->
-> Hello,
->
-> I just filed the details for the CVE above.
->
-> Description:
-> There's a out-of-bounds write issue in mpg123, the vulnerability is
-> located when handling crafted streams. During the decoding of PCM the
-> libmpg123 may write past the end of a heap located buffer, as
-> consequence heap corruption may happen and arbitrary code execution is
-> not discarded. The complexity required to exploit this flaw is
-> considered high as the payload needs to be validated by the MPEG
-> decoder and by the PCM synth before being executed. Additionally to
-> successfully execute the attack,the user needs to scan through the
-> stream making web live stream content (such as web radios) a very
-> unlikely attack vector.
->
-> CVSS: 6.7 CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H
->
-> Severity (according to the Red Hat severity policy): Moderate
->
-> Please let me know if there's any concern or different opinion
-> regarding the scoring or description of this issue.
->
-> Thanks,
->
-> Marco Benatto
-> Red Hat Product Security
-> secalert@redhat.com for urgent response
->
-> On Wed, Oct 30, 2024 at 8:00=E2=80=AFPM Marco Benatto <mbenatto@redhat.co=
-m> wrote:
-> >
-> > Hello,
-> >
-> > I went ahead and assigned CVE-2024-10573 for this issue.
-> > I'll try to come up with the cvss and severity analysis by tomorrow.
-> >
-> > Please let me know if there's anything else I could help with.
-> >
-> > Thanks,
-> >
-> > Marco Benatto
-> > Red Hat Product Security
-> > secalert@redhat.com for urgent response
-> >
-> > On Wed, Oct 30, 2024 at 2:42=E2=80=AFPM Dr. Thomas Orgis
-> > <thomas.orgis@uni-hamburg.de> wrote:
-> > >
-> > > Dear list,
-> > >
-> > > as upstream of mpg123, I recently fixed a possibly serious issue that
-> > > resulted in writing past a buffer on the heap under certain use cases.
-> > > The fixed release is 1.32.8.
-> > >
-> > > There is no CVE for this (that I know of). If someone allocates one,
-> > > I'd be fine with that, but I am prioritizing my time in coordination
-> > > with demanding RL and focussed on getting the fix prepared. The bug
-> > > report
-> > >
-> > >         https://mpg123.org/bugs/322
-> > >
-> > > has always been public, so I got the fix out and decided that I do
-> > > spend a moment on this note here, seeing that distros still ship
-> > > vulnerable versions, notably Debian stable / oldstable =C2=AD=E2=80=
-=94 despite
-> > > the unstable repo duly having picked up my new release. I guess if
-> > > there is no CVE to grep in announcements people don't notice that it's
-> > > an important security fix? My bad, then =E2=80=A6
-> > >
-> > > Observing that versions 1.26.x and 1.31.x are still in the wild, I
-> > > ported the recent security fix to those release series. Please see
-> > > recent commits to
-> > >
-> > >         svn://scm.orgis.org/mpg123/branches/1.26-fixes and
-> > >         svn://scm.orgis.org/mpg123/branches/1.31-fixes
-> > >
-> > > Current code is also visible under
-> > >
-> > >         https://scm.orgis.org/mpg123/branches/1.26-fixes/ and
-> > >         https://scm.orgis.org/mpg123/branches/1.31-fixes/
-> > >
-> > > I am quoting the initial release announcement, also avaiable under
-> > >
-> > >         https://mpg123.org/cgi-bin/news.cgi#2024-10-26
-> > >
-> > > Releasing mpg123 version 1.32.8: Frankenstein's Monster
-> > >
-> > > This is an important security update! There is possible buffer overfl=
-ow
-> > > (writing of decoded PCM samples beyond allocated output buffer) for
-> > > streams that change output properties together with certain usage of
-> > > libmpg123. This needed seeking around in the stream (including scanni=
-ng
-> > > it before actual decoding) to trigger. So, your usual web radio stream
-> > > as obvious attack vector is unlikely, as you won't seek around in it.
-> > > If you do work with stream dumps, usage of MPG123_NO_FRANKENSTEIN or
-> > > the --no-frankenstein option to the mpg123 application is a workaround
-> > > to avoid the formerly dangerous situation in earlier mpg123 releases.
-> > > This also means that mpg123 will not decode streams of concatenated
-> > > files with either varying format or leading Info frames past the first
-> > > track anymore.
-> > >
-> > > With this release, the parser has been improved not to store certain
-> > > stream properties before actual MPEG frame data matching that property
-> > > has been stored. This avoids the inconsistency that triggered the
-> > > overflow. Also note that if you always use a fixed decoding buffer for
-> > > full stereo of the maximum of 1152 samples per frame, times two and
-> > > your choice of encoding, your application is also not susceptible.
-> > >
-> > > Exploitation of this is not trivial, but I cannot rule out the
-> > > possibility of gaining code execution. Your exploit payload needs to
-> > > pass through an MPEG decoder and PCM synth before possibly reaching t=
-he
-> > > CPU. Some heap corruption can follow at the least. So update or
-> > > mitigate. If you run 1.32.x, there is no excuse not to get the the
-> > > latest bugfix release now.
-> > >
-> > > Basically any version of mpg123 is affected by this, at least those
-> > > that explicitly support so-called Frankenstein streams.
-> > >
-> > > Thanks to kkkkk123 for bringing this heir to the initial bug 322 to my
-> > > attention.
-> > >
-> > >
-> > > Alrighty then,
-> > >
-> > > Thomas
-> > >
-> > > --
-> > > Dr. Thomas Orgis
-> > > HPC @ Universit=C3=A4t Hamburg
-> > >
->
+https://github.com/phpecc/phpecc/pull/280
+https://github.com/phpecc/phpecc/pull/281
 
+These pull requests fix a particular problem with generating an ECDSA
+signature: Calculating the modular inverse of your one-time secret, k, in
+constant-time.
 
---=20
-Alexander Patrakov
+*Put A Fork In It*
+
+After reviewing the situation and failing to get in contact with the
+maintainers (their websites are offline and emails are bouncing), we opted
+to fork this library. https://github.com/phpecc/phpecc/issues/289
+
+Our fork can be found at this URL: https://github.com/paragonie/phpecc
+
+Additionally, several more issues have been discovered as we review this
+code:
+
+1. *Signature malleability* (i.e., (R,S) and (R,n-S) are both accepted).
+This is particularly troubling since many of the projects that depend on
+mdanter/ecc <https://archive.is/Q3EkJ> (archive.today link) are
+cryptocurrency-adjacent. We fixed this in v2.0.0 of our fork
+<https://github.com/paragonie/phpecc/releases/tag/v2.0.0>.
+2. *ECDH Timing Leaks*. The way ECDH works is that it grabs the math
+adapter from the public point and uses that to compute a shared secret with
+the secret scalar. Despite the pains taken to implement a Montgomery Ladder
+for scalar*point multiplication, the underlying algorithms' use of GMP were
+timing-leaky. We fixed this in v2.0.0 of our fork
+<https://github.com/paragonie/phpecc/releases/tag/v2.0.0>.
+3. *Branch-based Timing Leaks in Point Addition*. Point addition contains
+slow code that runs if a condition is true, and fast code that runs if the
+condition is false. This exposes a branch-based timing leak that doesn't
+require advanced techniques (e.g., manipulating the CPU's branch predictor)
+to trigger. We fixed this in v2.0.1 of our fork
+<https://github.com/paragonie/phpecc/releases/tag/v2.0.1>.
+
+The incumbent library has nearly 5 million installs according to Packagist
+statistics <https://packagist.org/packages/mdanter/ecc/stats>. This
+includes historical installs that were replaced with newer versions, so the
+actual installed base is smaller, but probably only by 1 or 2 orders of
+magnitude.
+
+*Actions Taken to Proactively Mitigate Risk*
+
+After we announced our fork, and the motivation for it, the Packagist
+maintainers have marked the mdanter/ecc package as abandoned
+<https://github.com/phpecc/phpecc/issues/289#issuecomment-2075703542> and
+recommended our fork.
+
+Projects using the Roave/SecurityAdvisories
+<https://github.com/Roave/SecurityAdvisories> package to block vulnerable
+dependencies from being installed will begin receiving a version conflict
+with any version of mdanter/ecc as of 2 hours ago (from when we write this
+email).
+
+We opened GitHub issues with several dozen dependent projects to ensure
+community awareness of this issue. For example:
+https://github.com/Bit-Wasp/bitcoin-php/issues/919.
+
+Unfortunately, many of the dependents listed on Packagist are forks of
+other dependents, and some had no means to contact them. To that end, we're
+relying on public communication channels, such as this mailing list and
+/r/PHP
+<https://old.reddit.com/r/PHP/comments/1cbq3mj/pie_has_forked_phpecc_released_a_new_version_with>,
+to get the word out.
+
+*Miscellaneous*
+
+We have requested a CVE identifier from MITRE for the ECDSA weaknesses we
+reported and provided a patch for in 2021, but a CVE ID has not been
+assigned as of this writing.
+
+Our work is far from over. We expect to find and fix more bugs in the
+coming weeks. However, migrating off the abandoned package is a necessary
+first step to stop the bleeding.
+
+If you have a package that currently depends on mdanter/ecc, we provided a
+simple migration guide in our v2.0.0 release notes:
+https://github.com/paragonie/phpecc/blob/master/doc/release-notes-2.0.0.md#migration-guide
+
+We would also like to thank the following people for helping move this
+issue towards resolution in the absence of the original package's
+maintainers: Nils Alderman, Frederik Bosch, and Marco Pivetta.
+
+Happy hacking,
+
+Security Team
+Paragon Initiative Enterprises <https://paragonie.com/security>
+
+--000000000000839c590616de34c8--
