@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4375" "Thursday" "17" "August" "2017" "20:16:18" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<720560.061602981-sendEmail@localhost>" "81" "[oss-security] libfpx: NULL pointer dereference in wchar.c" nil nil nil "8" "2017081720:16:18" "[oss-security] libfpx: NULL pointer dereference in wchar.c" (number mark "U       ago@gentoo.o Aug 17   81/4375  " thread-indent "\"[oss-security] libfpx: NULL pointer dereference in wchar.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16311 invoked by uid 550); 17 Aug 2017 20:16:37 -0000
+Received: (qmail 32727 invoked by uid 550); 26 Apr 2024 20:59:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16120 invoked from network); 17 Aug 2017 20:16:35 -0000
-Message-ID: <720560.061602981-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 17 Aug 2017 20:16:18 +0000
+Received: (qmail 32709 invoked from network); 26 Apr 2024 20:59:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=qQKonZLy/G1nwlnZ5zl4/kBinlbpzE4q7hNIrmQqFxU=; b=UfPTeadVtwxeIaBBWVpDTuQ7Nc
+	sDqnNWswHQ/VXkOSfT7+W0ZUrOmZpDS2mNNSKR1NPgLHO/alv29kwsdlZi9X/3+ozaX9DNRaMUiDk
+	Ob6xllqk5u02ywyRHTzTwQXiagRd5bBR0nFZldCmykwR/agAdJAu3xn62zU06XBnvCONSPYOQnSzf
+	HBhqjmtQasEr1YdG5evP3iQvj5mfjn511oqkfeheopizCcvnMxHd1gWlfvsEWZcR+A6RmoXv/z61S
+	DCTHMqZk444OZ9Od68xPWugAayF7mX6P5Hnz4jLhhCA34B1mMI6KjhiN7Vz/katnA5xdV3dTePQQt
+	V6f0dqAQ==;
+Date: Fri, 26 Apr 2024 21:59:06 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZiwVmhV2muRhsAfy@remnant.pseudorandom.co.uk>
+References: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-537730.81635973"
-Subject: [oss-security] libfpx: NULL pointer dereference in wchar.c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Update on the distro-backdoor-scanner effort
 
-------MIME delimiter for sendEmail-537730.81635973
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+On Fri, 26 Apr 2024 at 14:06:16 -0600, Hank Leininger wrote:
+>   - Turns out serial numbers are made up and the points don't matter.
+>     But still, this author appears to have _thought_ they were
+>     important.
 
-Description:
-libfpx is a library for manipulating FlashPIX images.
+The serial number of a m4 file matters if the attacker wants their back
+door to remain in place when a distro runs autoreconf -fi or similar
+(as many Autoconf-built Debian packages do, for example); or, less
+maliciously, if the author of a legitimate set of Autoconf macros wants
+their bug fixes to remain in place when an older distro does the same.
 
-I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
-again.
-Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
-are only accepting patches and push new releases.
-This issue was found using the gm command line tool of graphicsmagick.
+The purpose of the serial number is so that autoreconf can upgrade bundled
+macros in the `make dist` tarball to the distro version if it happens
+to be newer (for example if I prepared a Flatpak release on Debian 12
+but you are building it on Arch), without downgrading to an older distro
+version that might be lacking newer features or bug fixes (for example
+when someone else builds that same Flatpak release on Debian 11).
 
-The complete ASan output of the issue:
+If a developer of Autoconf macros is following its documentation, the
+serial number should go up whenever the code changes. The observant
+will of course notice that this doesn't account for the possibility of
+non-linear development (macros being modified in a non-canonical location,
+forked, edited collaboratively, or otherwise not having a monotonically
+increasing version number) which I think is a reflection of what was
+and wasn't considered to be normal when it was designed - it's very much
+from the "cathedral" era.
 
-# gm identify $FILE
-==11400==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fdead094f30 bp 0x608000000fa0 sp 0x7fff5867d3a8 T0)
-==11400==The signal is caused by a READ memory access.
-==11400==Hint: address points to the zero page.
-    #0 0x7fdead094f2f  /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/wchar.c:140
-    #1 0x7fdead0765db in OLEStream::WriteVT_LPWSTR(unsigned short*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1538
-    #2 0x7fdead072e06 in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:477
-    #3 0x7fdead073101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
-    #4 0x7fdead049f16 in PFileFlashPixView::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:583
-    #5 0x7fdead049fbf in PFileFlashPixView::~PFileFlashPixView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:444
-    #6 0x7fdead04a0c8 in PFileFlashPixView::~PFileFlashPixView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:487
-    #7 0x7fdead05365c in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:524
-    #8 0x7fdead0536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
-    #9 0x7fdead05529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
-    #10 0x7fdead2c7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
-    #11 0x7fdeb2b5be2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #12 0x7fdeb2b58e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
-    #13 0x7fdeb2a24ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
-    #14 0x7fdeb2a2b065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #15 0x7fdeb2ad67fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #16 0x7fdeb2ad3931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #17 0x7fdeb133e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #18 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+(Many projects don't follow the documentation and do make changes without
+incrementing the serial number, which is a bug.)
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/wchar.c:140 
-==11400==ABORTING
+Beyond that single purpose, yes, the serial number is made up and doesn't
+matter.
 
-Affected version:
-1.3.1_p6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12922
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00310-libfpx-NULLptr-wchar_c
-
-Timeline:
-2017-08-01: bug discovered
-2017-08-09: blog post about the issue
-2017-08-17: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-wchar-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-537730.81635973--
-
+    smcv
