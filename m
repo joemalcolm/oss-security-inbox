@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1257" "Thursday" "5" "May" "2016" "21:07:29" "+0800" "Vinc3nt4H" "pengdawei521@163.com" "<6aa8b189.1329d.1548107c1d2.Coremail.pengdawei521@163.com>" "25" "[oss-security] CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS" nil nil nil "5" "2016050513:07:29" "[oss-security] CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS" (number mark "U       pengdawei521 May  5   25/1257  " thread-indent "\"[oss-security] CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7991 invoked by uid 550); 5 May 2016 14:05:16 -0000
+Received: (qmail 3506 invoked by uid 550); 27 Apr 2024 13:28:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3345 invoked from network); 5 May 2016 13:07:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=yv5h/
-	zixbukBp6Gq1StwQpTbf6URocBRlXf9hX2B8uI=; b=CXF95ZNzTd4ohUv0qqqzu
-	SM3BLBGpj+mJ+xYoNdugLE4q/hkZYwdKLg7pCRCYDeDtSCIx2UTkNrQtHaohuydk
-	xy22QSWuyxLx55DRPpVOMUykkbF0JEt1eIMhFBRk65X7KhHhrR5wxXsM2zxu9mpt
-	xLpDaRnkXrUIDN2yxU8xUA=
-X-Originating-IP: [42.120.74.92, 123.58.177.191]
-Date: Thu, 5 May 2016 21:07:29 +0800 (CST)
-From: Vinc3nt4H <pengdawei521@163.com>
+Received: (qmail 17683 invoked from network); 27 Apr 2024 11:51:26 -0000
+Date: Sat, 27 Apr 2024 13:51:10 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-rsa; t=1714218677;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PC+4uCPmN6dKRWKmPCNzB+oFFEwvh2bfF/qsdPolpFA=;
+	b=E7Cre0Z9IH5PH+eNw+dx2y2W8otQSkSVnNM9m7JzdJW2jwFJ1tg7N9Nx5xkxWpZSBNMsek
+	IaXVq47UNbSGig/JRcKGwwFk+5zxtfgscbz4JbMEUNQ7jaaGTB9czAJG/5ibRqZ1kIXYZv
+	agm66PrNDttR6/jv9BLSR642aeSgiXIJRZmBV5BfJi0kJotbki2+bJ5JkR2hdEetxbIdqq
+	21nMpAqTfMXVANtuKO4RPYJcv7fyI+Tmdu9Y1NXmJ7dAwYKq6v4bgpQtNQz1513C9jNTH+
+	HfvDWMfWQ2FXMKPAmLA+NrYVijLMV5WoeXyAfHlRUoGEgQSwMhL+7/xaGV8kR4arJD3PaD
+	+h66uhwTgfJHbRPzh9Yovja35J+UpQ2/TbFy8b715ypGSksRPQhNb5qNzhwxfVUeBafmsd
+	UjVkEMzdrh9ELSsfUFJAyzlKLOhnCkzrN+l20IK3xz1ohGLIDrgSAUtAqutYKU2M8/Pkem
+	WdZPvikfxdu8mFAJ/feaJ8NyoON8ZhDS3ZdEeepRrOoFXTAGrnIjfzZGCiiIeLMU6/VS18
+	WN70JTUOA/9zYATpzaEPYWQYGLwCxmAN2qZz5XzOeiEukbBKOOD1SRpFOuI9EfZ+tj9jE/
+	frjrqK0U1z92kSLfWV7SSVsV7WRyvR4RO3y64gxiRsWmQNAig4Swc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+	s=dkim-ed25519; t=1714218677;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PC+4uCPmN6dKRWKmPCNzB+oFFEwvh2bfF/qsdPolpFA=;
+	b=zAbaRu0U2BhKctew68zK0dj0pDPc79vscHOeiBv2PpNLAua0YEPSod8AJZc7aOD3oZzbS+
+	3HPDNEvwoHNraFCA==
+Authentication-Results: mail.archlinux.org;
+	auth=pass smtp.auth=foxboron smtp.mailfrom=foxboron@archlinux.org
+From: Morten Linderud <foxboron@archlinux.org>
 To: oss-security@lists.openwall.com
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20160223(81157.8522) Copyright (c) 2002-2016 www.mailtech.cn 163com
-X-CM-CTRLDATA: iTzvpGZvb3Rlcl9odG09MTM1Njo1Ng==
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_321072_1715740146.1462453649873"
+Message-ID: <htyn4vrm5ien7cq2ih7v32u4b4aiwnzj23hhuihw3mu7lutygp@q4prnbjdy4xt>
+References: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
 MIME-Version: 1.0
-Message-ID: <6aa8b189.1329d.1548107c1d2.Coremail.pengdawei521@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:hsGowABnqKmSRStXmOOrAA--.53982W
-X-CM-SenderInfo: pshqwv5dzhxkisr6il2tof0z/1tbiMwtgjlXlgGnPgwABsC
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] CVE request - samsumg android phone
- com.samsung.android.jam.IAndroidShm binder service DoS
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="o457n5odmthnoq2k"
+Content-Disposition: inline
+In-Reply-To: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
+Subject: Re: [oss-security] Update on the distro-backdoor-scanner effort
 
-------=_Part_321072_1715740146.1462453649873
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+--o457n5odmthnoq2k
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-SGksCkRlc2NyaXB0aW9uIG9mIHRoZSBwb3RlbnRpYWwgdnVsbmVyYWJpbGl0
-eToKV2hlbiBhIGFwcCBzZW5kIGEgZXZpbCBkYXRhIHRvIGNvbS5zYW1zdW5n
-LmFuZHJvaWQuamFtLklBbmRyb2lkU2htICBzZXJ2aWNlIGJ5IHNlcnZpY2Ug
-Y29tbWFuZCAoQW5kcm9pZCBzeXN0ZW0gY29tbWFuZCkgLCBjYW4gY2F1c2Ug
-dG8gSUFuZHJvaWRTaG0gc2VydmljZSBjcmFzaC4KCgpTdGVwcyB0byByZXBy
-b2R1Y2UgdGhlIGlzc3VlOgoxIEEgUEMgY29ubmVjdCBTNiBkZXZpY2U7CjIg
-SW5wdXQgY29tbWFuZDogYWRiIHNoZWxsOwozIEFuZHJvaWQgSW5wdXQgY29t
-bWFuZDoKc2VydmljZSBjYWxsIGNvbS5zYW1zdW5nLmFuZHJvaWQuamFtLklB
-bmRyb2lkU2htIDUgaTMyIDkxNzE1NDY1OCBpMzIgOTk4MzY5Mjc1IGkzMiAx
-NjUyMDYyODkzIGkzMiAyMTEzNDIwODcwIGkzMiAxMzgwMTc4NzQzIGkzMiA0
-NzM0MjcxOCBpMzIgNTQzODEwMjIyIGkzMiAxNDgxMDMwMjcxCgoKQWZmZWN0
-ZWQgdmVyc2lvbnM6IEtLKDQuNCksIEwoNS4wLzUuMSkgCgoKRml4OgpodHRw
-Oi8vc2VjdXJpdHkuc2Ftc3VuZ21vYmlsZS5jb20vc21ydXBkYXRlLmh0bWwj
-U01SLUpBTi0yMDE2ClNWRS0yMDE1LTUxMzM6IElBbmRyb2lkU2htIElBUEFT
-ZXJ2aWNlIHNlcnZpY2UgRG9TCgoKV2UgcmVwb3J0IHRoaXMgdG8gc2Ftc3Vu
-Zywgc2Ftc3VuZyByZXBseSB0byB1cyBpZiB3ZSB3YW50IHRvIGdldCBDVkUg
-cmVxdWVzdCBpdCBieSBvdXJzZWxmLgoKCkJlc3QgcmVnYXJkcywKVmluYzNu
-dDRIIG9mIEFsaWJhYmEgTW9iaWxlIFNlY3VyaXR5IFRlYW0KCg==
+On Fri, Apr 26, 2024 at 02:06:16PM -0600, Hank Leininger wrote:
+>
+>     - ~11k EndeavourOS/Arch packages
 
-------=_Part_321072_1715740146.1462453649873--
+Please just write Arch packages. There is no upstream collaboration from
+Endeavour on those 11k packages.
 
+--=20
+Morten Linderud
+PGP: 9C02FF419FECBE16
+
+--o457n5odmthnoq2k
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEwQA0ZnZjToDJQPuenAL/QZ/svhYFAmYs5pEACgkQnAL/QZ/s
+vhawBQ/8DSLUcIXJlCqFHd9hDK1mNj+uUmNemsgXPQTo0UqxnzryME7+slxnQhmq
+XtGuiIA/Rl+Dvv7C+qTNJlHVZMOQOL+5maCgiR48uyBG7D5u9GJ2eYYbeTrjbY/L
+d4XqcEhZsUkoSWlLw81++toEfpj8kE2oSIlWYdMJ7GkdPHZOTRL++i0u17FBfv9M
+5e5qppb2GZFfTuvhyNPfi/Ymp3CvLxkQ8yGSTPNAW0keqxkDPSsepou/lEXZjBsH
+KvDnEtA1lhszCzBqA8Qw/tbn942GaQP8n6L6i3KhNSLaBcEb1K3CgqFlzFFPH0N2
+coM0fZbKYXZYhNfU94tHLV2nLuKB0cy8AD7KOGPuZnZ/2NQepyzA4cxnJuohdDi9
+o0uV6zbOjbCab87Xu8hR/r+MgsK+79nNiMFjkez5UQwz5sxvqm0ELb7X1/5q/pVz
+IaNF5YREUcVIibVFDLwVbKe9viKycELgAcb3veYrUzTSaQDKlsJs2+6IXNoW5JY4
+UJq76MpVbvFLstG56gqeM0G9LiOqF/ewDS5ScgN8RF2GBxHPpYYRawqYvDoLKGA+
+GlSGHNAjT3b7X1qggQJPVKqA6hTYsjCFAIEAAfgNRDb+TYdP0sMn1ErPySHdZQ8W
+JoJiUXHfnTook+lFxJqkpWTU6ivzVz9MfsbuxEebIJ1t00hnXyo=
+=i12v
+-----END PGP SIGNATURE-----
+
+--o457n5odmthnoq2k--
