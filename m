@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3589" "Tuesday" "14" "December" "2021" "08:37:18" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" nil "102" "Re: [oss-security] Fwd: X.Org Security Advisory: December 14, 2021" nil nil nil "12" nil nil (number mark "U       alan.coopers Dec 14  102/3589  " thread-indent "\"Re: [oss-security] Fwd: X.Org Security Advisory: December 14, 2021\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Fwd: X.Org Security Advisory: December 14, 2021" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5471 invoked by uid 550); 14 Dec 2021 16:37:39 -0000
+Received: (qmail 31838 invoked by uid 550); 29 Apr 2024 18:58:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,220 +7,186 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5447 invoked from network); 14 Dec 2021 16:37:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : to :
- references : cc : from : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2021-07-09;
- bh=6I+CpsBq764yjoujA/itIV3rhxrtC/twNGqEimLBNIA=;
- b=iVNzo/heXeB8caeeofJ19GD1HGf199SsM9v4vnjjb6vRP6+O+6DDRBQy0dlp2nGGlo20
- vgoYheUSYUQzeuHimGZJdAvVBguH1gA4+YAyafCw3w612FHHZvnZhHyxw+J0g3iMNUMD
- QdYRgRFBsygr+b+1x83EDv7M2LM/dQFNOS/TyXrAUkOtm54I2dWi8eTsODrX/VenjRx0
- 27HItL28455+vUDaUEMBAw026gOpvbASPGoF0iS19e5yp5Uh6mF45gtf4WtxVXYA1Yc5
- iLf5Ay/UrRKfGWXa2Lnra/rMwtvMr8klkUe5CEHQtaUIfU4zAbF+EzNoFcBNonbuwpTy ig== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LYb28RiMrL7sIrfst0MB53SRfmG6enYNrhsQCF+ekE/s5kg6B49RjHNN4KjilRIy9hQJjA/DGTQ73hfHnilRsU9tz3aMGpm9hMgrTO5kFH2loCTKfZCsHpAvX9hvbmcvzB5HslLHevmMKA+l/gwMs93PfIrJnB03rOmoiZUnRaIVdvfGXwi3ALguHwLIbtELdjUEaat29KAIPeYYb+3AL+Zu2hOx0+6UdpdoI4SEzy7wxlidoJzii0nW3JSwgJCiJVvM8kBW5Ubum2ADWDlL7viOI6QUkmvy/5oI6nAiUylq+bAbQ2/FubUw7OgFIM60D0LhjIwUeUQB9cE/HKECHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6I+CpsBq764yjoujA/itIV3rhxrtC/twNGqEimLBNIA=;
- b=N3tCy8s8URgWnprai751pXoLxAqvxFxFDRGzd6vb3LVvDnys0qc/FzPUCguFYH+KodwwxUesCDppGLOhTd0HPzLR9VuBrCK1CwX2P8KlO/czhzNb6xuzQkKIgA7fiROcNGuw1hbjeThLPtBrw/OkTDXUxjrnY0JPsJjbaGjtc0jzE0IK6meAU1AWiXAp4LqE41kmOzPY2TQOyssiHurISJ7VO2GPUG89HrW1ISz8BOT/AnIV3R4YVq69Jiv22qM8s2wvJjSZn8b5fFq7vanV7sAA7zM6q7ZDCQn/1huLSbYWCl+sDCg2ug9+/oLDjS+66Wmwa8anvi+tuPsjAC20Dg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6I+CpsBq764yjoujA/itIV3rhxrtC/twNGqEimLBNIA=;
- b=uzmmnCZd3bcHbHvB+45zFV1InS8gFeYyhT4n83LH8gb6NGOvkWjVtUGgJWgwyqG1RsEtw9G2o2vmHGXBUz1Vhqltb+3sdEajjD+yO8jFcenDyEZLgIF6UNHySeVrCwUoYc6+yUI1BsQy4DOg+aKvEus9apjVkz9rrrqYWKiBZbI=
-To: oss-security@lists.openwall.com, Povilas Kanapickas <povilas@radix.lt>
-References: <f53b79cf-081d-b109-59bf-7fcf6412e822@radix.lt>
- <06bd0517-a955-881f-553b-c49b7a7a4ed2@radix.lt>
-Cc: "X.Org Security Team" <xorg-security@lists.x.org>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-Message-ID: <d7da9abe-5635-5062-bc9d-ef9038f2d678@oracle.com>
-Date: Tue, 14 Dec 2021 08:37:18 -0800
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-In-Reply-To: <06bd0517-a955-881f-553b-c49b7a7a4ed2@radix.lt>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA0PR11CA0019.namprd11.prod.outlook.com
- (2603:10b6:806:d3::24) To SJ0PR10MB4464.namprd10.prod.outlook.com
- (2603:10b6:a03:2d0::6)
+Received: (qmail 31817 invoked from network); 29 Apr 2024 18:58:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1714417106;
+	bh=oTUGeCUq7bWMZUr76PYQRl9c61IU2rP9VSjHuPTE9Q4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type;
+	b=PDT7K8FHu0Z1dsgej2UFj42e33P7Fs3KNV7JPKeSJZqPKnsPi+ytcup59woH4oPnP
+	 F7WnnPjvRYR9UFZMzbbfGEMNL+kIj0m8XqUIjlyJQ6sRf2ZGMRpK+8d80ReSpQSxuy
+	 ibtCLPBAHhCzkUQEQvNPUoMuBif+gkXcWL94sxH9ES7t+WcFCmh4d9Ha4daj3ZzX+2
+	 kL5PUuvhxPYI4Kq8LfWMm59ZlVXXjo8LoVsFPfFzsanT5xbrxVoBoYLx64vVoO75Ml
+	 gQqg0H8MDsBPUK4IJw8pGGtiaJ1keaYQO2EUud0WZ7Y/cM12OrLdW9xlA3KlQAhPYn
+	 noUm6EntoZKgg==
+Message-ID: <f60578e3-939c-49c9-b46e-de26261738d7@canonical.com>
+Date: Mon, 29 Apr 2024 11:58:22 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 6a48f15d-ffec-439b-4dd8-08d9bf200073
-X-MS-TrafficTypeDiagnostic: BYAPR10MB2566:EE_
-X-Microsoft-Antispam-PRVS: 
-	<BYAPR10MB25669B361E8201018C62FFEBE0759@BYAPR10MB2566.namprd10.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1303;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	vj+UkL7KOhV4/Ychd/QncLG3vLmm/djgfsGraEO0jpK+EufGK93MI6BlYgYQivRskumtSdAJsvnkilooYEJPujFumw8WIdbkAKgf4F5oSulP6XszArcaZj2VQmyI1M+B+P6n5iQwPsqX2BpEYARmt6SwjabWnCsE6D7rgSy5vpVMnOl/NKEDOWnvCSYnREK4BILLDJZyBEqt/yeqLli8tS/2ZWxOhD5QVBT/KsATCctQMuvLngkCV5fFkU/awnnLGa/sdid3YSDcMtho+SuG3AV9NnxRbio2FxXV/aX7OZpV0+IuKRdDzJN71whzo2kFm522liBpJj2Vx3qpmgs5H0B4U98asIXDarZCY6Dr2tOlwflLO5Te1hYsDA96f1H+nxhiow9HK4MSM3GvXKjAedJmc9lMC0UzXPE+fmsidUohTk0c38yNTD4RCv0MnC3jldp6IhdIbRp08ET4A/GuA1ifPIo55gsENYc+J//iyDhfNc7fNKHfaDwxuyJp+w+h1sQHIw0WxOW0vuIl2QP4RxLCv7R2mvMBaU0OPRlIYHylKDndwpXPsHxFbN3gQ1NT4YjLGz+gGKO2519wSaGBUjsfaP3aWasVi7XrQjmogw97i64zvqERQW+DnMlDNPGO3gMLtl292Gk2KMMin3tHntUZB438EpqKoDQit3sE/m8feaukwTFbR3O+5+PwkM00o++5l+A/1Xo5EjpeXTWueIgNqQbMuwghiWA1OQF0LGmq/cfSTRBg4+Vibo+Q+/g8MnDWoHWtbkIc5bj0+Cx3v0is7ezMdDXwW/3oMPBTh0JySyz0IM9OHsSMIUN7yMk0
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB4464.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(6512007)(26005)(508600001)(66946007)(66476007)(66556008)(83380400001)(6486002)(2616005)(38100700002)(53546011)(6506007)(4326008)(44832011)(8936002)(5660300002)(8676002)(6916009)(31686004)(36756003)(86362001)(966005)(2906002)(31696002)(6666004)(316002)(186003)(15650500001)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?ckMwN2ZLU0hLQXZ0bkZHNGszbisyemh2RWpzazVGamZIRjk4Z2MrMUN0dU9s?=
- =?utf-8?B?QTlpekNKTFc1NmJucGw4R01qbXp0ZVppWGpoVGQzMWdYc0JQeEs0MTQzL0Y2?=
- =?utf-8?B?OXljVmxtT1JWdGI3RXlYQTB5bm9yVmJjYUNkb2d0dk1IbFhHS3lrUDIrK09U?=
- =?utf-8?B?VDhxdHRVY0Q0T1V6Y25JV0RvcS9VcU1qRUVHNzlqMHFKU2VQWUZTR0ZlNUYy?=
- =?utf-8?B?dVB0eFdBK0d3VTBZRkpWYWxsK2J2Mnk3R28vY0p0Ujg0cFpqY2xaS3BJeVBn?=
- =?utf-8?B?cGpBcTNBZGpVN2wyY0FZQy9TNXVLL3lOa2pMUnZNWk9yTlhOVXhTdFFEcFBF?=
- =?utf-8?B?UjV3MEIzRWlCbnJYTmFSUkVSZXE5dzN6bXdTUzB2Z2RrcVlCcnVwOVJJaHJp?=
- =?utf-8?B?TlRyQmJKKzBUeTJvQlUvNGpqb0tpeXMxYlBKZC9YVE1FYkpzd3QxemlNRHdh?=
- =?utf-8?B?MjZEVUc4SGxRZkxDT1N5eElWbzk3VEJ2RG15emVoMnowallqZkJIbVFSc0tT?=
- =?utf-8?B?ZXlMUzcvaU03ejAyaHVoK3gzeE5lNzNDdlNGNmU1dFhKbnNQYkN6YUpIWi9R?=
- =?utf-8?B?ZDQxZWovUHhNZkNHSHFidGtyMlN6MXBKYWlkZlU3ZGRtUGg5aGNFOEtFaVRN?=
- =?utf-8?B?eDFGUjNYUmJUQ3Fqd0VoVXJ4ekVpTDkrSjdodjNvcGkzaEpia3hxamZSSnk1?=
- =?utf-8?B?eGw3WlYrTkJnUDE0UG1YVWtuR3JiWmgxSjVXckU0V3dGTUNYYjBOMFJSMmhK?=
- =?utf-8?B?dDNOTnUxRmFGWXlBcEJ1c2ZXSFlvY0tUaFhJYWx6Mm02aEtBZE1oVi83d2x1?=
- =?utf-8?B?QURUMXdTRmhhNUJRdnZOL0ZSek5RaFQzRHBvYWppVlloR3dEU1lsbmdPUlMv?=
- =?utf-8?B?WCs3Ym9sdWdPTUJqckQ5bHE1cGd6OVB6THAzTmpia1B3TWVlU0N6YnppTEl4?=
- =?utf-8?B?SVdrVjI0YkJ2eW1PWDhoWk9oZFlSQTJCL2xWakkxaTAwQzF0ckV2ZE9RU0pD?=
- =?utf-8?B?V05UWnh3Y21rRkg1OXhPMlU2Y0d4WmlmOVhCT3BJRTlsZWdhMklOU09UYWtl?=
- =?utf-8?B?SHRmeFNCdDF1Zzh0OVpxVUY1OGNNempMOVZ5SjQ0TzNWVlVUeDdwUHZHeHZj?=
- =?utf-8?B?M3c3U3BDbnAweE91UGdXcTFOVkNFb3RrL2RQWW1HNzBQWGQrcTBVR2ZMKyt1?=
- =?utf-8?B?TEdPMjlpTWRITUVOZWlaTmlucE0vYzNreTZFc24rM0NWQVJSRk5BMmxnQWxS?=
- =?utf-8?B?VEtIcG9NNlZ5OGxsUnliM09OOEM3R25GQjdLWGhQeWNES0JLb2lxQU1FWXJY?=
- =?utf-8?B?cUszZEFzcWRwNlZKb1BYQXNad1pUNG05SUZtNnZUclBFMHpmMXNXMi9HaXAy?=
- =?utf-8?B?a2tZWHJZVTFKRG9UQmVPRVRjdmxWTTczNWNjalZVZDk3RExPQmVaeDV3aGZE?=
- =?utf-8?B?aVlmOW9URnNsOGFIWkhqM2FrZEYrV2lUMGhqd0tNM3FkMVk3S1RwK20vS25I?=
- =?utf-8?B?MHhhdHY5eGNzUjdsaEd6TDNoRjlMYUJNQ1ZSN0cyVmVEeU50ajRRWDBVMStH?=
- =?utf-8?B?Y2RPMHEvVTU3bm5uQm0xL3c2TjB1VFdjSDJrYkc4Yk16Tzg0c2NYUGVoNVZ0?=
- =?utf-8?B?VVYxcU5YbUx3M21tbjhMekQyZ2tuMjBzME5qMGdLSXFmdVp6WnV5bFFMeEov?=
- =?utf-8?B?ZmFENnJSVEtqZ08xYzhvOVUvNW5sYzIxU0h0UjZJT3ZaclZhUGVDU09icXdK?=
- =?utf-8?B?MThlSmZsbWFkTGxTYjJub0kyMThqd0ZhREdaUFlZMmZJWUpkT0JaaDZoUUZh?=
- =?utf-8?B?N2kvK1hxV2VZazErZEtFVDJINHJqRzluOFYzM1ErKzZSWDF1LzBxampuQ1pk?=
- =?utf-8?B?MEtseUo0OG5UeWFMdXAwbkQxL3pQcEtlWUU3MlZTTkxCUXdyYmFIbEU3VTBZ?=
- =?utf-8?B?R0dEeTArTDV1RlBkczJYSGNDcHJUM3lVN2h3bytzYzB6dmJHcEdHRnZseDh2?=
- =?utf-8?B?bU1LRGs5bkY4Wkh0Zmhpa2s3VjRrL3dzWGVla1MvQ0hmeDdhdHNuTTBvQzFu?=
- =?utf-8?B?UTg3UkEvQXdUb2sreFIwQjVTY3NFS3NxZEhKcko0aG1DMW1WclJ0NWxtZmRr?=
- =?utf-8?B?MXFieTkzS3BsM3E4SzdPVkdHakh6eVI4NGlLR0RFVGRGdXFMTjlha2gxY0lL?=
- =?utf-8?B?Z1N3VXlBSTYyL3U0QmtTbzk0YTQ0RkpPUWZ2TjUzNzRwWjdpTHpiRGFuTFBZ?=
- =?utf-8?Q?ffJeYbaj+nJgzHHQvWqAGvbjb6xeQVax/3lf+jiAmA=3D?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6a48f15d-ffec-439b-4dd8-08d9bf200073
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB4464.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Dec 2021 16:37:21.9394
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: K6z7rScj9PK3qHWRh2HEa1k4473RUOVPHDY8oj7UBthfkv0uvxufCEPOwvHR/G3dFvRUythE9mQfIwrf1VJ3yFvAtRU9MN4sgRXlCLYUDB4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR10MB2566
-X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10198 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 bulkscore=0 spamscore=0
- mlxlogscore=999 suspectscore=0 adultscore=0 malwarescore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
- definitions=main-2112140092
-X-Proofpoint-ORIG-GUID: 2v197d-ck5GJLak2sdcfRqhPFu597C1O
-X-Proofpoint-GUID: 2v197d-ck5GJLak2sdcfRqhPFu597C1O
-Subject: Re: [oss-security] Fwd: X.Org Security Advisory: December 14, 2021
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <20240414190855.GA12716@openwall.com>
+ <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
+ <20240419154435.GA7046@openwall.com>
+ <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
+ <20240420181211.GA12463@openwall.com>
+ <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
+ <20240421200625.GA16869@openwall.com>
+Content-Language: en-US
+From: John Johansen <john.johansen@canonical.com>
+Autocrypt: addr=john.johansen@canonical.com; keydata=
+ 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 lT9Q
+Organization: Canonical
+In-Reply-To: <20240421200625.GA16869@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Linux: Disabling network namespaces
 
-The fixes are also provided for XWayland users in the XWayland 21.1.4 release:
-https://lists.x.org/archives/xorg-announce/2021-December/003123.html
+On 4/21/24 13:06, Solar Designer wrote:
+> On Sat, Apr 20, 2024 at 09:33:07PM +0000, Jordan Glover wrote:
+>> bubblwrap has --disable-userns option which prevents creation of nested namespaces (from manpage):
+>>
+>>         --disable-userns
+>> Prevent the process in the sandbox from creating further user namespaces, so that it cannot rearrange the filesystem namespace or do other more complex namespace modification. This is currently implemented by setting the user.max_user_namespaces sysctl to 1, and then entering a nested user namespace which is unable to raise that limit in the outer namespace. This option requires --unshare-user, and doesn't work in the setuid version of bubblewrap.
+>>
+>> Flatpak uses this (or seccomp filter) to block nested namespaces as this can bypass security its design. For this reason firefox own sandbox doesn't use namespaces in flatpak, see https://bugzilla.mozilla.org/show_bug.cgi?id=1756236
+> 
+> Thanks, I didn't expect it was this advanced already.
+> 
+> In what exact way would nested namespaces bypass the security design of
+> Flatpak?  Is this about the kernel's attack surface exposed by
+> capabilities in a namespace or something else?  I guess capabilities are
+> also dropped in the nested namespace?
+> 
+> After reviewing some kernel code, I have doubts as to how effective the
+> dropping of capabilities in a namespace actually is.
+> 
+> security/commoncap.c: cap_capable() includes this:
+> 
+>                  /*
+>                   * The owner of the user namespace in the parent of the
+>                   * user namespace has all caps.
+>                   */
+>                  if ((ns->parent == cred->user_ns) && uid_eq(ns->owner, cred->euid))
+>                          return 0;
+> 
+> this check is only reached when cap_capable() is called for a target
+> namespace other than one the credentials are from.  However, such uses
+> do exist, e.g. via Netlink, which would expose e.g. Netfilter:
+> 
+> net/netlink/af_netlink.c:
+> 
+> /**
+>   * netlink_net_capable - Netlink network namespace message capability test
+>   * @skb: socket buffer holding a netlink command from userspace
+>   * @cap: The capability to use
+>   *
+>   * Test to see if the opener of the socket we received the message
+>   * from had when the netlink socket was created and the sender of the
+>   * message has the capability @cap over the network namespace of
+>   * the socket we received the message from.
+>   */
+> bool netlink_net_capable(const struct sk_buff *skb, int cap)
+> {
+>          return netlink_ns_capable(skb, sock_net(skb->sk)->user_ns, cap);
+> }
+> 
+> So I worry whether even with all namespaces in a sandbox having dropped
+> capabilities, an attack can still be arranged (with a pair of namespaces
+> one nested in the other) where a task effectively "has all caps" for a
+> dangerous operation like configuring Netfilter due to it hitting code
+> paths like this, which bypass capability bit checks.
+> 
+> The above finding may be a reason for us to prefer making capabilities
+> in a namespace ineffective vs. dropping capabilities.  In context of my
+> idea/proposal for a new sysctl, it could be better for it to work as I
+> had described, overriding security_capable() return, instead of e.g.
+> hooking return of create_user_ns() and dropping new cred's capabilities.
+> 
+> I hope the Ubuntu/AppArmor solution is also safe in this respect, as it
+> sounds like it similarly makes capabilities ineffective instead of
+> dropping them.
+> 
+The AppArmor solution is flexible, allowing the policy author to decide
+what is done. The namespace creation can be allowed, denied or the profile
+can be transitioned on namespace creation. So the behavior can be tuned
+selectively per application, and based on whether it is in a user namespace
+or not.
 
-	-Alan Coopersmith-              alan.coopersmith@oracle.com
-	  X.Org Security Response Team - xorg-security@lists.x.org
+The 24.04 Ubuntu behavior is for "unconfined" applications to transition
+to a profile that denies further creation of user namespaces and denies
+capabilities within the user namespace.
 
-On 12/14/21 5:14 AM, Povilas Kanapickas wrote:
-> 
-> -------- Forwarded Message --------
-> Subject: X.Org Security Advisory: December 14, 2021
-> Date: Tue, 14 Dec 2021 15:11:35 +0200
-> From: Povilas Kanapickas <povilas@radix.lt>
-> To: xorg-announce@lists.x.org
-> CC: xorg-devel@lists.x.org <xorg-devel@lists.x.org>, xorg@lists.x.org
-> 
-> X.Org Security Advisory: December 14, 2021
-> 
-> Multiple input validation failures in X server extensions
-> =========================================================
-> 
-> All of the following issues can lead to local privileges elevation on
-> systems where the X server is running privileged and remote code
-> execution for ssh X forwarding sessions.
-> 
-> * CVE-2021-4008/ZDI-CAN-14192 SProcRenderCompositeGlyphs out-of-bounds
-> access
-> 
-> The handler for the CompositeGlyphs request of the Render extension does
-> not properly validate the request length leading to out of bounds memory
-> write.
-> 
-> * CVE-2021-4009/ZDI-CAN 14950 SProcXFixesCreatePointerBarrier
-> out-of-bounds access
-> 
-> The handler for the CreatePointerBarrier request of the XFixes extension
-> does not properly validate the request length leading to out of bounds
-> memory write.
-> 
-> * CVE-2021-4010/ZDI-CAN-14951 SProcScreenSaverSuspend out-of-bounds access
-> 
-> The handler for the Suspend request of the Screen Saver extension does
-> not properly validate the request length leading to out of bounds memory
-> write.
-> 
-> * CVE-2021-4011/ZDI-CAN-14952 SwapCreateRegister out-of-bounds access
-> 
-> The handlers for the RecordCreateContext and RecordRegisterClients
-> requests of the Record extension do not properly validate the request
-> length leading to out of bounds memory write.
-> 
-> Patches
-> -------
-> 
-> Patches for this issues have been commited to the xorg server git
-> repository (https://gitlab.freedesktop.org/xorg/xserver). xorg-server
-> 21.1.2 will be released shortly and will include these patches.
-> 
-> commit ebce7e2d80e7c80e1dda60f2f0bc886f1106ba60
-> 
->      render: Fix out of bounds access in SProcRenderCompositeGlyphs()
-> 
->      ZDI-CAN-14192, CVE-2021-4008
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> commit b5196750099ae6ae582e1f46bd0a6dad29550e02
-> 
->      xfixes: Fix out of bounds access in *ProcXFixesCreatePointerBarrier()
-> 
->      ZDI-CAN-14950, CVE-2021-4009
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> commit 6c4c53010772e3cb4cb8acd54950c8eec9c00d21
-> 
->      Xext: Fix out of bounds access in SProcScreenSaverSuspend()
-> 
->      ZDI-CAN-14951, CVE-2021-4010
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> commit e56f61c79fc3cee26d83cda0f84ae56d5979f768
-> 
->      record: Fix out of bounds access in SwapCreateRegister()
-> 
->      ZDI-CAN-14952, CVE-2021-4011
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> Thanks
-> ======
-> 
-> This vulnerability was discovered by Jan-Niklas Sohn working with
-> Trend Micro Zero Day Initiative.
-> 
-> --
-> Povilas Kanapickas
-> 
+There are profiles for known applications allowing them to use user
+namespaces. The behavior of most of these just allow the user namespace
+and maybe a specific capability, currently without transitioning the
+user namespace to tighter confinement, but ideally the policy would
+do more, and there are plans to improve the policy around the set of
+applications.
+
+Bubblewrap and unshare have additional behaviors around restricting what
+the applications can do as they also take advantage of the exec barrier.
+
+Applications that embedded bubblewrap to setup their sandbox, eg.
+steam's pressure vessel, can have their own profiles that can control
+bubblewrap separate from the system bubblewrap policy.
+
+Its still early days and policy the rollout/policy has been mostly to set
+a default of allowing user namespaces but with no capabilities. Then
+provide default very open policy for application that have been found to
+need them, with plans to tighten that policy on a per application basis
+in the future.
+
+appimages and containers that users expect to be able to run from their
+home or other user writable locations are the big issue atm. They are
+allowed the default behavior of allowed to create user namespaces without
+any capabilities but if they require more, we are requiring privileged
+user intervention to individually enable running these applications.
+
+We have found application behavior around restricting user namespaces
+to be very inconsistent. Eg. qtwebkit will crash if you deny creation
+of the user namespace, but will gracefully fallback to not using
+user namespaces in its sandbox if its denied capabilities within the
+user namespace during sandbox setup. Firefox on the other hand crashes
+when user namespaces or capabilities are denied.
+
+
