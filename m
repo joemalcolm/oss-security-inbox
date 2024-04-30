@@ -1,4 +1,4 @@
-Received: (qmail 13917 invoked by uid 550); 12 Jul 2022 18:06:21 -0000
+Received: (qmail 7584 invoked by uid 550); 30 Apr 2024 20:16:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,80 +7,143 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9919 invoked from network); 12 Jul 2022 17:59:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=p0dQCFE+Dh6+pBzBag0cC/2An7CmycX5f58YgEqo8jQ=;
-        b=B2lhzkeu9/WfglNzn+qOOmz3xx6j8r3gLpy3/CeUU6iKyHSrdG3w0GLQ7QkOb8+bNv
-         QqKJYK5EWwaXBxSS5Y76WKHASQgf+El0kD5fosffabhpIfpxqftgGOTZ8wmnON3BzyLM
-         EP/QekY3FmoLI/sT3gdsmBPsiFGyw27r9mNMxOz2NCthNV6z2G/b5n0PZQdLzz5rASDJ
-         MUkq1IfwMCy36yF2SprNFMLmrvEACl2/RV2dh4o69/MOvhjVQ0O/mfw5+AG3xdgxcECl
-         AdpCepwtuW1btsEOsjQwx/SFfmCzzOpTf//lbAQQLXfBZfuhO++fXwkpE8wbWVnwmxIX
-         2ezA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=p0dQCFE+Dh6+pBzBag0cC/2An7CmycX5f58YgEqo8jQ=;
-        b=rs4eMQjl28krjvMEl7M2SCYyroGbfUg1uJXpcRckFELn2rCyfAqLS5nVQ6U/4Iq9db
-         1A2ulXBA08rom6ZeLoQdWZjHo7NUqO6j2dWJuWEjxSHTSJFM0KN0TlBDr//lZ2oDA55e
-         YRrmAzxvcBazJIVroEiuJ/RnI2ZfHpn/9MspZy/4u3Oo8HEXRw4FTu69RnT+TfGMGnqY
-         CXz+PAarMsBMZfNMGVasRRaNsGYiQuRNSoXir0BdjUpB7j0Kslg2Sm+3oGhtZbG0i6ud
-         iE9WM2vDNcjiBLf5/IdZkxJKq6mgYjNgHKeiIPkoXsZoHGZOY7JaURn9E7Bg417WDluP
-         xu7w==
-X-Gm-Message-State: AJIora/S7cxRwZunJWbk5vRAcjxMzO92d5TQCvZUmq3c/Siikmn5MML3
-	CJ1IlODQVRPCZgC67Mo+yGJ6Y7jX+CBDLRC7ct4=
-X-Google-Smtp-Source: AGRyM1twq9LKiblBfaQlw65GHvexVBRYbcBtqBBkD4Y6fd/9wIHE85FZEZqPm+XGDVgymo0IGWOqdKItvG0mFmEMfUQ=
-X-Received: by 2002:a05:6808:1182:b0:32d:a9d3:4e0 with SMTP id
- j2-20020a056808118200b0032da9d304e0mr2496605oil.146.1657648739874; Tue, 12
- Jul 2022 10:58:59 -0700 (PDT)
+Received: (qmail 19726 invoked from network); 30 Apr 2024 19:43:07 -0000
+Date: Tue, 30 Apr 2024 21:42:43 +0200
+From: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+To: oss-security@lists.openwall.com
+Cc: Mark Esler <mark.esler@canonical.com>,
+        Bastien =?iso-8859-1?Q?Roucari=E8s?= <rouca@debian.org>
+Message-ID: <20240430194243.GA28076@unix-ag.uni-kl.de>
+References: <20231221143630.GD14101@suse.de>
+ <ZjBHOEHylGAaIo57@moon>
 MIME-Version: 1.0
-From: "Thiago H. de Paula Figueiredo" <thiagohp@gmail.com>
-Date: Tue, 12 Jul 2022 14:58:47 -0300
-Message-ID: <CAE_88GZRaZV=nRrOBD2_++u=LxUnX54RD8JY+ssRKWPhs8PW=g@mail.gmail.com>
-To: Tapestry users <users@tapestry.apache.org>
-Cc: Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2022-31781] Apache Tapestry denial of service vulnerability
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZjBHOEHylGAaIo57@moon>
+Author: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+Subject: Re: [oss-security] New SMTP smuggling attack
 
-Regular Expression Denial of Service (ReDoS) in ContentType.java.
-(GHSL-2022-022) (CVE-2022-31781)
+Hi Mark,
 
-PRODUCT AFFECTED:
+On Mon, Apr 29, 2024 at 08:19:52PM -0500, Mark Esler wrote:
+> 
+> To mitigate future end-of-data sequence attacks, like SMTP Smuggling,
+> MTAs should comply with RFC 5321 section 4.1.1.4 [0] to strip control
+> characters other than <SP>, <HT>, <CR>, and <LF> in the DATA section
+> of SMTP messages.
 
-This issue affects Apache Tapestry 5.8.1.
+This is an interesting interpretation of RFC 5321, but I do not think
+it follows the contents of said RFC.
 
-PROBLEM:
+> > 4.1.1.4.  DATA (DATA)
+> >
+> >    The receiver normally sends a 354 response to DATA, and then treats
+> >    the lines (strings ending in <CRLF> sequences, as described in
+> >    Section 2.3.7) following the command as mail data from the sender.
+> >    This command causes the mail data to be appended to the mail
+> >    data buffer.  The mail data may contain any of the 128 ASCII
+> >    character codes, although experience has indicated that use
+> >    of control characters other than SP, HT, CR, and LF may cause
+> >    problems and SHOULD be avoided when possible.
+> 
+> e.g., `\r\n\x00.\r\n` _SHOULD_ become `\r\n.\r\n` and then (as per
+> RFC 5321 section 4.5.2 [1]) dot-stuff the _forbidden_ sequences.
 
-Severity: low
+Well, my reading of the RFC does not forbid this sequence.  RFC 5321
+clearly does not require transforming this sequence into another sequence.
 
-Apache Tapestry up to version 5.8.1 is vulnerable to Regular
-Expression Denial of Service (ReDoS) in the way it handles Content
-Types. Specially crafted Content Types may cause catastrophic
-backtracking, taking exponential time to complete.
+> As per RFC 2119 section 3 [2], the word *SHOULD* implies *MUST*
+> unless you have a valid reason not to--which is never the case for
+> these _forbidden_ sequences in DATA. This is why RFC 5321 4.1.1.4's
+> _SHOULD avoid_ implies _needs to strip_.
 
-Specifically, this is about the regular expression used on the
-parameter of the org.apache.tapestry5.http.ContentType class.
+RFC 5321 section 4.1.1.4 (DATA (DATA)) states:
 
-Apache Tapestry 5.8.2 has a fix for this vulnerability.
+    "The mail data may contain any of the 128 ASCII character codes"
 
-Notice the vulnerability cannot be triggered by web requests in
-Tapestry code alone. It would only happen if there's some non-Tapestry
-codepath passing some outside input to the ContentType class
-constructor.
+RFC 5321 section 4.5.2 (Transparency) states:
 
-This issue has been assigned CVE-2022-31781.
+    "The mail data may contain any of the 128 ASCII characters."
 
-MODIFICATION HISTORY:
+One might think that there is some inconsistency with the "SHOULD"
+in section 4.1.1.4.
 
-: Initial Publication.
+One could also understand the text as allowing any ASCII character
+(including NUL), but advising against the use of known problematic ones
+(e.g., NUL) by cautious systems.
 
-RELATED LINKS:
+To put this differently: control characters are _not_ forbidden.
+They are _explicitly_ allowed.
 
-CVE-2022-31781 at cve.mitre.org
+> Also note that RFC 5321 section 3.6.3 [3] and section 6.4 [4] do not give
+> the OK to send along NUL or other control characters. These sections are
+> about _adding_ missing information, not preserving messages with
+> potentially damaging garbage.
 
-ACKNOWLEDGEMENTS:
+RFC 5321 section 3.6.3 does not pertain to DATA contents.  RFC
+5321 section 6.4 mentions the problem of inconsistent handling of
+"irregularities", i.e., shall malformed messages be rejected, "repaired",
+or delivered as-is insofar possible.
 
-CodeQL team members [@atorralba (Tony
-Torralba)](https://github.com/atorralba) and [@joefarebrother (Joseph
-Farebrother)](https://github.com/joefarebrother).
+You to seem to advocate for "repair".  The "repair" strategy makes Cisco's
+ESA vulnerable.  I would argue that rejecting messages is less insecure.
+
+> Cheers to Pete Resnick for this clarification and explanation of
+> RFC 5321.
+> 
+> This particular issue was first noted in SEC Consult's analysis of
+> SMTP Smuggling [5]:
+> > During the research we've also discovered some exotic
+> > inbound SMTP servers that interpret end-of-data sequences like
+> > <CR><LF>\x00.<CR><LF>, with "\x00" representing a null byte. With
+> > proprietary SMTP components and lots of different e-mail services
+> > intertwined it's hard to tell what is possible until an e-mail
+> > reaches its final destination.
+> >
+> > Even though SMTP smuggling might still be hiding in some places,
+> > we hopefully eliminated some big targets.
+> 
+> Stripping NUL and other control characters could have unforeseen
+> consequences. MTAs which errantly rely on non-compliant control
+> characters would break. Major MTAs are therefore sensibly resistant
+> to enforcing RFC 5321 section 4.1.1.4.
+
+Use of control characters is compliant, even though it may be problematic.
+
+> What is the real world HAM:SPAM ratio of emails which include NUL? Would
+> it be safe to configure sendmail to `O RejectNUL=True` (which would
+> break RFC 2822 section 4 [6] by rejecting email which include NUL)?
+> 
+> What are the benefits and risks of stripping ASCII NUL and other
+> control characters from SMTP DATA?
+
+Interesting questions.  Perhaps you could perform an experiment and
+report on the results?
+
+Perhaps email specifications can be improved to reject known problematic
+content elements, e.g., NUL bytes?
+
+Rejecting email for arbitrary reasons is common practice currently.
+Rejecting email for containing unwanted characters or character sequences
+might thus be acceptable.  Rewriting email contents seems to me to be
+more problematic, but even that is routinely done nowadays (e.g., to
+mark external messages).
+
+> Feedback appreciated,
+
+I would suggest to be rather careful when automatically rewriting
+messages in new and unsuspected ways.
+
+> Mark Esler and Bastien Roucariès
+> 
+> [0] https://datatracker.ietf.org/doc/html/rfc5321#section-4.1.1.4
+> [1] https://datatracker.ietf.org/doc/html/rfc5321#section-4.5.2
+> [2] https://datatracker.ietf.org/doc/html/rfc2119#section-3
+> [3] https://datatracker.ietf.org/doc/html/rfc5321#section-3.6.3
+> [4] https://datatracker.ietf.org/doc/html/rfc5321#section-6.4
+> [5] https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/
+> [6] https://datatracker.ietf.org/doc/html/rfc2822#section-4
+
+Best regards,
+Erik
