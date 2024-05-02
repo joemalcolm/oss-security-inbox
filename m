@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1503" "Monday" "16" "November" "2020" "20:10:20" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20201116201020.ta7nkdve2g4c5coq@yuggoth.org>" "39" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111620:10:20" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       fungi@yuggot Nov 16   39/1503  " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<87eekt9l5k.fsf@gnu.org>" ("<20201113133331.48185f9f@computer>" "<20201114115850.GB5193@suse.de>" "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>" "<87eekt9l5k.fsf@gnu.org>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 8128 invoked by uid 550); 16 Nov 2020 20:10:35 -0000
+Received: (qmail 23950 invoked by uid 550); 2 May 2024 21:36:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8110 invoked from network); 16 Nov 2020 20:10:35 -0000
-Date: Mon, 16 Nov 2020 20:10:20 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20201116201020.ta7nkdve2g4c5coq@yuggoth.org>
-References: <20201113133331.48185f9f@computer>
- <20201114115850.GB5193@suse.de>
- <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
- <87eekt9l5k.fsf@gnu.org>
+Received: (qmail 20019 invoked from network); 2 May 2024 21:35:20 -0000
+From: Sam James <sam@gentoo.org>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <20240403205835.GA12974@openwall.com> (Solar Designer's message
+	of "Wed, 3 Apr 2024 22:58:35 +0200")
+Organization: Gentoo
+References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
+	<ZgcOVnk5hCVkDUt/@ycc.fr> <uu9f4s$oga$2@ciao.gmane.io>
+	<20240331213023.GA22787@openwall.com>
+	<cd985494-7e02-ab46-785d-78ba6eabae4d@gmail.com>
+	<20240403205835.GA12974@openwall.com>
+User-Agent: mu4e 1.12.4; emacs 30.0.50
+Date: Thu, 02 May 2024 22:35:02 +0100
+Message-ID: <87o79nlwxl.fsf@gentoo.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lw55zbijaspf4tmr"
-Content-Disposition: inline
-In-Reply-To: <87eekt9l5k.fsf@gnu.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux
- distros
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] escaping terminal control characters (was Re:
+ backdoor in upstream xz/liblzma leading to ssh server compromise)
 
---lw55zbijaspf4tmr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-=-=
+Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
 
-On 2020-11-16 20:06:15 +0100 (+0100), Marius Bakke wrote:
-[...]
-> How do other distros keep up with new CVE assignments?
-[...]
+Solar Designer <solar@openwall.com> writes:
 
-While I can't speak from the distro side of things, the projects I
-work on have a policy that a copy of all security advisories are
-sent to this ML (and also possibly the private linux-distros ML
-first if the vulnerability is being fixed under embargo via
-coordinated disclosure).
---=20
-Jeremy Stanley
+> On Wed, Apr 03, 2024 at 11:03:17AM +1100, Matthew Fernandez wrote:
+>> On 4/1/24 08:30, Solar Designer wrote:
+>> >On Sat, Mar 30, 2024 at 04:37:48PM -0000, Tavis Ormandy wrote:
+>> >>It was also pointed out they submitted an odd PR to libarchive:
+>> >>
+>> >>https://github.com/libarchive/libarchive/pull/1609
+>> >>
+>> >>In summary, they replaced calls to safe_fprintf() with fprintf() --
+>> >>meaning control characters are no longer filtered from errors. That
+>> >>seems pretty minor, but now that we know they were in the business of
+>> >>obfuscating the presence of backdoors -- seems a bit suspicious.
+>> >>
+>> >>Regardless, that change has now been reverted:
+>> >>
+>> >>https://github.com/libarchive/libarchive/pull/2101
+>> >
+>> >This does look minor indeed - not usable for large-scale attacks, and
+>> >libarchive is quite unique in that it even bothered to filter control
+>> >characters, whereas most command-line tools outputting filenames don't
+>> >bother.  My guess is it could have been an early experiment to see
+>> >whether the project would accept PRs degrading security.
+>> >
+>> >That said, here's an excellent write-up by David Leadbeater on specific
+>> >ways that specific terminal emulators may be usefully attacked with
+>> >control sequences:
+>> >
+>> >https://dgl.cx/2023/09/ansi-terminal-security#vulnerabilities-using-kno=
+wn-replies
+>>=20
+>> Is the currently accepted wisdom that any application printing to=20
+>> stdout/stderr should take steps to avoid control characters in the=20
+>> output?
+>
+> First, let's limit this to cases where the control characters come from
+> potentially untrusted input to the program.  Obviously, many programs
+> generate terminal escapes on their own (usually via a library), for
+> their intended functionality (colorized listings, TUIs, etc.)  Some
+> programs pass potential control characters from their trusted input.
+>
+> Second, I think no, there isn't currently an established opinion on
+> whether programs should perform such filtering of untrusted input.
 
---lw55zbijaspf4tmr
+Lasse has put up an initial implementation for xz:
+https://github.com/tukaani-project/xz/pull/118.
+
+Comments are welcome. It was a TODO from a long time ago ;)
+
+We're not sure how much is overkill (or underkill) for this, especially
+given it gets harder when Unicode is involved.
+
+> [...]
+
+thanks,
+sam
+
+--=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl+y3KQACgkQSPmWEUNJ
-WCkhYxAA4UKmbhRXde0Mu/nqr1/FFrtXIabXAGf1U0qk5fP6wtcipURIuZJurh8t
-cu+yO8+lUniYxCw7Ukr11Er7f7ebxJB7/j4wg2RNGWLNStFiHgIa0npy3SS9AQUB
-44Z1dG0iWZKQ3OHmzM4X1dNQCD8HABQGjkynkAaTvme+zKgLT6Ty8Us0uCGhm7dL
-ozmabZ+ZhV7qLECpdt5jqKv8q83C6FE+1H8LIG2+1hdMG2lkOi7/zI0tLtpAppqf
-1gMXnq25zGTrul690CyqF07cNnAAnnCx4kKkauKyu4aO3qaxQ5l6TYH4ClNV9U7n
-E1qd7s7NVWbUIxoLTntVb9/5PUwcY70jsyYXpW48/ZHSozmQ6jsRDzy3WHZcPA0f
-kl0NDiZKffBtTATdMs/nfC8Vp/vtBqMht/pd4tHXSf4U9U8P52QmKbm9CeM/MYZ8
-Vo+lMYyto/cCmZxpIxhOYxh5qgxDGGkugJ64F7EIkriDU84BtdHGOS+xCpbHXvgL
-hvGDBRXvynX9+ML8tchaGDQRZzeAzWtqLckBbPQd2SJ8kw7oKDwwy53v9tXt3oKl
-HXQog/DshRssY1tQURgH8t+29OJBdjOBHdvVvlcf+oHHnu/WGO+o+PdAiVEZBOA/
-lD+wbdPU0OXaSsJvR6TE76c+2BQpdtnyKb8zMw1hdasx0N62oI8=
-=fDpl
+iOUEARYKAI0WIQQlpruI3Zt2TGtVQcJzhAn1IN+RkAUCZjQHBl8UgAAAAAAuAChp
+c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0MjVB
+NkJCODhERDlCNzY0QzZCNTU0MUMyNzM4NDA5RjUyMERGOTE5MA8cc2FtQGdlbnRv
+by5vcmcACgkQc4QJ9SDfkZCa7AEAsSKiopElCyfDYKHncB3DIJg4KWgJzCqZGOwP
+RqqdZ1IBAJg6o9fKNSHXQP5P7HC6pK2vhzuD1ujHsbJ2fzPtBAME
+=gKxB
 -----END PGP SIGNATURE-----
-
---lw55zbijaspf4tmr--
+--=-=-=--
