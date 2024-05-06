@@ -1,4 +1,4 @@
-Received: (qmail 19654 invoked by uid 550); 24 Jun 2025 20:25:27 -0000
+Received: (qmail 29895 invoked by uid 550); 6 May 2024 21:24:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +7,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3441 invoked from network); 24 Jun 2025 20:22:16 -0000
-Message-ID: <444d6a57-53cb-4391-9853-aaf71b2968bf@free.fr>
-Date: Tue, 24 Jun 2025 22:22:06 +0200
+Received: (qmail 11480 invoked from network); 6 May 2024 21:04:12 -0000
+From: Peter Korsgaard <peter@korsgaard.com>
+To: Ben Hutchings via buildroot <buildroot@buildroot.org>
+Cc: Ben Hutchings <ben.hutchings@mind.be>,  oss-security@lists.openwall.com
+References: <20240411152016.1185109-1-ben.hutchings@mind.be>
+Date: Mon, 06 May 2024 23:04:01 +0200
+In-Reply-To: <20240411152016.1185109-1-ben.hutchings@mind.be> (Ben Hutchings
+	via buildroot's message of "Thu, 11 Apr 2024 17:20:16 +0200")
+Message-ID: <87edaey7ni.fsf@dell.be.48ers.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
-Content-Language: fr, en-US
-From: Gabriel Corona <gabriel.corona@free.fr>
-In-Reply-To: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------060arbdM050G32UbvQ0zQMxd"
-Subject: Re: [oss-security] xdg-open bypassing SameSite=Strict
+Content-Type: text/plain
+X-GND-Sasl: peter@korsgaard.com
+Subject: [oss-security] Re: [PATCH] package/skeleton-init-sysv: Set sticky bit on /dev/shm
 
---------------060arbdM050G32UbvQ0zQMxd
-Content-Type: multipart/mixed; boundary="------------jWwf2jiQ3MyFRi67ms0X0rDA";
- protected-headers="v1"
-From: Gabriel Corona <gabriel.corona@free.fr>
-To: oss-security@lists.openwall.com
-Message-ID: <444d6a57-53cb-4391-9853-aaf71b2968bf@free.fr>
-Subject: Re: [oss-security] xdg-open bypassing SameSite=Strict
-References: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
-In-Reply-To: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+>>>>> "Ben" == Ben Hutchings via buildroot <buildroot@buildroot.org> writes:
 
---------------jWwf2jiQ3MyFRi67ms0X0rDA
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+ > /dev/shm is a world-writable directory, like /tmp, and should also
+ > have the sticky bit set.  Without this, any user can delete and
+ > replace another user's files in /dev/shm.
 
-SGksDQoNCiA+IDEuIEludHJvZHVjZSBhbiAidW50cnVzdGVkIiBtb2RlIG9yIGZsYWcgaW4gYnJv
-d3NlciBDTEkgdG9vbHMgZm9yDQogPiBvcGVuaW5nIGV4dGVybmFsIFVSTHMNCiA+IDIuIEV4dGVu
-ZCB4ZGctb3BlbiB0byBzdXBwb3J0IHBhc3NpbmcgdGhpcyAidW50cnVzdGVkIiBmbGFnIG9yIGNv
-bnRleHQNCiA+IHRvIHRoZSBicm93c2VyDQogPiAzLiBNb2RpZnkgZGVza3RvcCBlbnZpcm9ubWVu
-dHMgb3IgYXBwbGljYXRpb25zIHRvIGludm9rZSB4ZGctb3BlbiB3aXRoDQogPiB0aGUgInVudHJ1
-c3RlZCIgb3B0aW9uIHdoZW4gYXBwcm9wcmlhdGUNCg0KQXMgd2FzIHNhaWQgYnkgU29sYXIgRGVz
-aWduZXIsIGlmIGEgInNhZmUiIHZlcnNpb24gaXMgbmVlZGVkLA0KaXQgc2hvdWxkIHByb2JhYmx5
-IGJlIHRoZSBkZWZhdWx0IHdoZW4gZ29pbmcgdGhyb3VnaCBVUkkgc2NoZW1lDQpyZWdpc3RyYXRp
-b25zLiBUaGlzIGlzIGJlY2F1c2UsIGFzIHlvdSBzYWlkLCB0aGlzIGtpbmQgb2YgaXNzdWUNCmxp
-ZXMgaW4gdGhlIGludGVyYWN0aW9uIGJldHdlZW4gc2V2ZXJhbCBjb21wb25lbnRzIChVUkkgc291
-cmNlcywNClVSSSBzaW5rcyBhbmQgVVJJIGdvLWJldHdlZW5zIHN1Y2ggYXMgeGRnLW9wZW4pIGFu
-ZCBpdCB3b3VsZA0KY2VydGFpbmx5IGJlIHBvc3NpYmxlIHRvIGZpbmQgYSB3YXkgdG8gYnlwYXNz
-IHRoZSBiZWhhdmlvcg0Kb3RoZXJ3aXNlLg0KDQpGb3IgdGhlIHNha2Ugb2YgYXJndW1lbnQsIHdl
-IGNvdWxkIG1pdGlnYXRlIHJpZ2h0IG5vdyB3aXRoIGENCndyYXBwZXIgc2NyaXB0IHN1Y2ggYXMg
-KGh0dHAtb3Blbi13cmFwcGVyLnB5KToNCg0KICAgICAjIS91c3IvYmluL3B5dGhvbjMNCg0KICAg
-ICBpbXBvcnQgc3lzDQogICAgIGZyb20gaHRtbCBpbXBvcnQgZXNjYXBlDQogICAgIGltcG9ydCBv
-cw0KICAgICBmcm9tIHRlbXBmaWxlIGltcG9ydCBOYW1lZFRlbXBvcmFyeUZpbGUNCg0KICAgICBh
-cmd2ID0gc3lzLmFyZ3ZbMTpdDQogICAgIHVyaSA9IGFyZ3ZbLTFdDQoNCiAgICAgaWYgdXJpLnN0
-YXJ0c3dpdGgoImh0dHA6Ly8iKSBvciB1cmkuc3RhcnRzd2l0aCgiaHR0cHM6Ly8iKToNCiAgICAg
-ICAgIGJvZHkgPSBmJzxhIGhyZWY9Intlc2NhcGUodXJpKX0iPkZvbGxvdyBsaW5rPC9hPicNCiAg
-ICAgICAgIGJvZHkgKz0gJzxzY3JpcHQ+ZG9jdW1lbnQucXVlcnlTZWxlY3RvcigiYSIpLmNsaWNr
-KCk8L3NjcmlwdD4nDQogICAgICAgICBmID0gTmFtZWRUZW1wb3JhcnlGaWxlKGRlbGV0ZT1GYWxz
-ZSwgZGVsZXRlX29uX2Nsb3NlPUZhbHNlLCANCnN1ZmZpeD0iLmh0bWwiLCBtb2RlPSJ3dCIpDQog
-ICAgICAgICBmLndyaXRlKGJvZHkpDQogICAgICAgICBmLmZsdXNoKCkNCiAgICAgICAgIGFyZ3Zb
-LTFdID0gZi5uYW1lDQogICAgIG9zLmV4ZWN2cChhcmd2WzBdLCBhcmd2KQ0KICAgICBvcy5fZXhp
-dCgyNTUpDQoNCndpdGggdGhlIGNhdmVhdCB0aGF0IHlvdSBub3cgaGF2ZSBhIGRhbmdsaW5nIC5o
-dG1sIGZpbGUgaGFuZ2luZw0KYXJvdW5kLg0KDQpZb3Ugd291bGQgb3ZlcndyaXRlIHRoZSBleGlz
-dGluZyBNSU1FIHR5cGUgcmVnaXN0cmF0aW9uczoNCg0KICBbRGVza3RvcCBFbnRyeV0NCiAgQ29t
-bWVudD0NCi1FeGVjPS9ob21lL2pvaG4vZmlyZWZveC9maXJlZm94DQorRXhlYz0vaG9tZS9qb2hu
-L2h0dHAtb3Blbi13cmFwcGVyLnB5IC9ob21lL2pvaG4vZmlyZWZveC9maXJlZm94DQogIEljb249
-L2hvbWUvam9obi9maXJlZm94L2Jyb3dzZXIvY2hyb21lL2ljb25zL2RlZmF1bHQvZGVmYXVsdDEy
-OC5wbmcNCiAgTmFtZT1GaXJlZm94DQogIE5vRGlzcGxheT1mYWxzZQ0KICBQYXRoPQ0KICBTdGFy
-dHVwTm90aWZ5PXRydWUNCiAgVGVybWluYWw9ZmFsc2UNCiAgVGVybWluYWxPcHRpb25zPQ0KICBU
-eXBlPUFwcGxpY2F0aW9uDQogIFN0YXJ0dXBXTUNsYXNzPWZpcmVmb3gtbmlnaHRseQ0KICBYLUtE
-RS1TdWJzdGl0dXRlVUlEPWZhbHNlDQogIFgtS0RFLVVzZXJuYW1lPQ0KDQpIb3dldmVyIHRoaXMg
-a2luZCBvZiAic2FmZXIiIFVSSSBvcGVuaW5nIHdvdWxkIHdvdWxkIGJyZWFrICptYW55Kg0KbGVn
-aXRpbWF0ZSB1c2UgY2FzZXMsIHJpZ2h0PyBUaGlzIGlzIGV4ZW1wbGlmaWVkIGJ5Og0KDQouL2h0
-dHAtb3Blbi13cmFwcGVyLnB5IGh0dHBzOi8vc2V0Y29va2llLm5ldC8NCg0Kd2ljaCBkb2VzIG5v
-dCByZWNlaXZlIFNhbWVTaXRlPVN0cmljdCBjb29raWVzIChhcyBleHBlY3RlZCkuDQoNClNjZW5h
-cmlvOg0KDQoxLiB5b3UgcmVjZWl2ZSBhIGxlZ2l0aW1hdGUgZW1haWwgZnJvbSBhIHdlYmFwcCB3
-aXRoIGEgbGluaywNCiAgICBodHRwczovL215YXBwLmV4YW1wbGUuY29tL2ZvbzsNCjIuIHlvdSBj
-bGljayBvbiB0aGUgbGluazsNCjMuIHlvdSBvcGVucyAieGRnLW9wZW4gLS11bnRydXN0ZWQgaHR0
-cHM6Ly9teWFwcC5leGFtcGxlLmNvbS9mb28iOw0KNC4gdGhpcyAoc29tZWhvdykgdHJpZ2dlcnMg
-bm9uLXNhbWUtc2l0ZSBuYXZpZ2F0aW9uOw0KNS4gYmVjYXVzZSB5b3UgZGlkIG5vdCBzZW5kIHRo
-ZSBTYW1lU2l0ZT1TdHJpY3QgY29va2llLA0KICAgIHlvdSBhcHBlYXIgdG8gYmUgbG9nZ2VkIG91
-dCBvZiB0aGUgd2ViYXBwOw0KNi4gYmVjYXVzZSB5b3UgYXJlIG5vbi10ZWNoLXNhdnksIHlvdSBh
-cmUgbGVmdCB3b25kZXJpbmcgd2hhdCBpcw0KICAgIHRoZSBpc3N1ZS4NCg0KVGhpcyBhc3N1bWVz
-IHRoYXQgdGhlIHdlYmFwcCBpcyBub3QgY29tcGxldGVseSB3ZWxsLWJlaGF2ZWQNCmluIHJlZ2Fy
-ZCB0byBpdHMgY29va2llIGhhbmRsaW5nIGJ1dCB0aGlzIGlzIHRoZSBraW5kIG9mDQp3ZWJhcHAg
-U2FtZVNpdGUgcHJvdGVjdGlvbnMgYXJlIGludGVuZGVkIHRvIGNhdGVyIGZvci4NCg0KUmVnYXJk
-cywNCg0KR2FicmllbA0K
+ > This bug has been present since /dev/shm was added to the skeleton
+ > /etc/fstab, but appears to have been fixed for systems using systemd
+ > by commit 76fc9275f14e "system: separate sysv and systemd parts of the
+ > skeleton" which went into Buildroot 2017.08.
 
---------------jWwf2jiQ3MyFRi67ms0X0rDA--
+ > Signed-off-by: Ben Hutchings <ben.hutchings@mind.be>
+ > Fixes: 22fde22e35f98f7830c2f8955465532328348cd1
 
---------------060arbdM050G32UbvQ0zQMxd
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Committed to 2024.02.x, thanks.
 
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmhbCO8FAwAAAAAACgkQIWPS9KpGc+jQ
-7w/9Ed1hLOoPk5n8C6Lu+7hNoy9Y8BFPpBnQXQekHA5DmtaYDAhnoN/36/PYA2zExaI8yGuOk5K0
-3s21Beb0sY4IUlblovbSoj+d51PVlV9M+PcnrxEogLfj4vQHVz1Ch3f6s/vP9Pgfc9V7tvrulkWh
-+MhweTq+Tdem642dYlP5eiV5nUH8dl4EtsNW/RuaG05TE3ewaGIP4eZA/7jDQhktsvwnzzT141ZB
-o+pT+1KAHplJQNpR4oF0mtwDC4MgX9fffKM4C1pXouhEBCmTKMyawDwC3K2n8vgrLp6DlOF2nuGZ
-bpvjU4UkKNRXaUA/TY1ittNkN6QWtr34YPFHC/LrPkBK5uY/Y4TeWIGm34lIfUyh8IXhmuwysQZh
-7Y2SJbGjRpJ7YIkw6gB563jIxK76PBt9292SJ1Lwfwfg4yeK3IWiqG06vO3dtj5e/1O/Qo9/DGWi
-u/sMKKozQxKAKNFgZRdCIXKB4CukVdITWr3cdCpV/b7WZ+ClpyJalt3cPSz0NaT8ISD9phogCg2L
-/0Du+7c9IeDq7cVw7i53sfwP5x09qC5crTuPq1CpcCVQtJcw4sWtsc6XM4OFvq1kVx9loNVXfDLi
-b6NhXjss3um0hKsP0dK50m7Z47FzHHhsAWnJvE1kOaIlY0DfLgLBYAjMJyF3vO6kr+579vaShxwD
-C9c=
-=nbzQ
------END PGP SIGNATURE-----
-
---------------060arbdM050G32UbvQ0zQMxd--
+-- 
+Bye, Peter Korsgaard
