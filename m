@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10118" "Thursday" "4" "March" "2021" "10:58:11" "+0000" "Xen.org security team" "security@xen.org" nil "217" "[oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash when trying to map foreign pages" nil nil nil "3" nil nil (number mark "U       security@xen Mar  4  217/10118 " thread-indent "\"[oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash when trying to map foreign pages\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash when trying to map foreign pages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16366 invoked by uid 550); 4 Mar 2021 10:58:30 -0000
+Received: (qmail 32603 invoked by uid 550); 7 May 2024 16:55:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,240 +7,253 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16333 invoked from network); 4 Mar 2021 10:58:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=9//W9NVX0OPw4RURgTZOd9DdR5TW685wHuUJYEASpTA=; b=boeON9A0IU4UYFlMt57H2R5tPx
-	/zVYJKzXqEuKmYwn5g27xheTjrHiRO7YohfblG50cUIzgFMEWZuZ4C+TcI8gI7lVcyEgwEjqhABvD
-	/i3jb/HKsIJhHyIEyJYOs2bq1fkwoXwgEb6yw5fsoWM45/VARHeN7FfucR//kiIZ5nTs=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 30169 invoked from network); 7 May 2024 16:43:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=devco.re; s=google; t=1715100213; x=1715705013; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=K8lJBZVnHq0m8SkqfV4ljAs7MGGRaNWUwSi2k2qQPpY=;
+        b=VdiNF55//1PXNjyvFvDMyt5ze1ECX4tb8v9TEF6is+oll9XED5FCmTU9z1CFgAvTah
+         sWQs3IwNUWW1fHna3DTyukz5qGjy8Fv9ctMrAWK0ssDPW13+e5Ujp2BM9aIyn3FjwbBv
+         6P7Sxc2i/gklThYXlD6jYllhmRDb/1Wd9g2ojpqmRW1FqelOhKWpB2VSNB4BDHwpy1YR
+         cuhPm2/+ejQLtpdvYUBNmRzuwZtY1CoWqASVA7iD/rHi1TS3cO27aOTZM1kX5eyIwVMM
+         P5VURErVoJegPRHGPJ9M3zBq1wWDdvrvTf265DM63gMsLXNotPRTpdFFuY4Cy1QAKFGP
+         PQUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715100213; x=1715705013;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K8lJBZVnHq0m8SkqfV4ljAs7MGGRaNWUwSi2k2qQPpY=;
+        b=d7aXMuov/hLhbVRQZ47UNejEkuMxg95Sg3ElUPHZiYW5VRfAxt06s1VYJIxkTHFii/
+         iWovjHYSgolpjmDe09uYPQnD13kdUobIbtEVnAXSdx4GBWeg6th66YI8jccEJrtKJXnT
+         5/+drNWlYlFUWCdH8MuaGW6cnKvHvi7lKcKSnHZVREC0xo9mBaUZt1fNx2HGf/4PMAvN
+         wAhs3hrrsxjmdYRgydcbjd3rk3TuDDC+Hect2c2UoOZfvWCXWxLm7T4ggdtLMftbU12B
+         oKUZbBvAmS/IgLAe0oANjoDRcXZoyy9HOfrSqNd7IU2z5jgV5asPSSyWJe4iaMW/U+Q/
+         3FTw==
+X-Gm-Message-State: AOJu0Yz3VUP48/RbBNo+WZ40HeOlDW3FoEs0JdF+nYQwkh6SFxrey5BO
+	Kp/kxlGouXXAGcFx7NcfcFNopMPcVs8sYTu21rR4dQ1RJ5H71Iu2BSliIWF+4mwycrc9fnrGHDO
+	3iGzYCmUhk15BfqFnCwpaftB5hTYvCBC8oRLOA4oem6CChB+MToo=
+X-Google-Smtp-Source: AGHT+IFANJbguWoPicsPz+6RN0n49q1cJUQq/lLOChBuoKnD9xM/4uxdK5WRRkSYL46ysZrRfI0RxPDhVr8nKyskI34=
+X-Received: by 2002:a5b:2c3:0:b0:dc7:4671:8ae8 with SMTP id
+ 3f1490d57ef6-debb9dc664bmr173235276.65.1715100213233; Tue, 07 May 2024
+ 09:43:33 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1lHlgJ-0003KK-Ms@xenbits.xenproject.org>
-Date: Thu, 04 Mar 2021 10:58:11 +0000
-Subject: [oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash
- when trying to map foreign pages
+From: HexRabbit Chen <hexrabbit@devco.re>
+Date: Wed, 8 May 2024 00:42:57 +0800
+Message-ID: <CAAc67N2A1oS+wNkFT-t-xrF8PzSHfk5CekqDNggEhsbUj9WMNA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2024-26925: Linux: nf_tables: locking issue in the
+ nf_tables_abort() function
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hello,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I found a locking issue in nf_tables set element GC implementation and
+exploited it in kernelCTF. The bug breaks the sequence number assumption
+in set asynchronous GC, which can be used to cause double free, and
+leads to local privilege escalation.
 
-                    Xen Security Advisory XSA-369
+Introduced in v6.5:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=720344340fb9
 
-   Linux: special config may crash when trying to map foreign pages
+Fixed in v6.9-rc3:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=0d459e2ffb54
 
-ISSUE DESCRIPTION
-=================
+========================================================================
+Vulnerability Details
+========================================================================
 
-With CONFIG_XEN_BALLOON_MEMORY_HOTPLUG disabled and
-CONFIG_XEN_UNPOPULATED_ALLOC enabled the Linux kernel will use guest
-physical addresses allocated via the ZONE_DEVICE functionality for
-mapping foreign guest's pages.
+The asynchronous set GC (nft_rhash_gc for example) does not acquire
+commit lock while doing the work, instead, it uses GC sequence (gc_seq)
+mechanism to protect it from racing with the transaction.
 
-This will result in problems, as the p2m list will only cover the initial
-memory size of the domain plus some padding at the end. Most ZONE_DEVICE
-allocated addresses will be outside the p2m range and thus a mapping can't
-be established with those memory addresses, resulting in a crash.
+At the begin of nft_rhash_gc() it will save the current GC sequence[1]
+and allocate a GC transaction to store information, then traverse the
+set to record all expired set element into GC transaction, and finally
+call nft_trans_gc_queue_async_done(gc)[3].
 
-The attack involves doing I/O requiring large amounts of data to be
-mapped by the Dom0 or driver domain.  The amount of data needed to
-result in a crash can vary depending on the memory layout of the
-affected Dom0 or driver domain.
+------------------------------------------------------------------------
+static void nft_rhash_gc(struct work_struct *work)
+{
+    // ...
+    gc_seq = READ_ONCE(nft_net->gc_seq); // [1]
 
-IMPACT
-======
+    if (nft_set_gc_is_pending(set))
+        goto done;
 
-A Dom0 or driver domain based on a Linux kernel (configured as
-described above) can be crashed by a malicious guest administrator, or
-possibly malicious unprivileged guest processes.
+    gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
+    if (!gc)
+        goto done;
 
-VULNERABLE SYSTEMS
-==================
+    // ...
+    while ((he = rhashtable_walk_next(&hti))) {
+        // check if setelem expired
+        if (!nft_set_elem_expired(&he->ext))
+            continue;
 
-Only x86 paravirtualized (PV) Dom0 or driver domains are
-affected.
+        // ...
+        nft_trans_gc_elem_add(gc, he); // [2]
+    }
 
-Only Linux kernels configured *with* CONFIG_XEN_UNPOPULATED_ALLOC and
-*without* CONFIG_XEN_BALLOON_MEMORY_HOTPLUG are vulnerable.  Only
-kernels from kernel version 5.9 onwards are affected.
+    if (gc)
+        nft_trans_gc_queue_async_done(gc); // [3]
 
-CONFIG_XEN_BALLOON_MEMORY_HOTPLUG is enabled by default in upstream
-Linux when Xen support is enabled, so kernels using upstream default
-Kconfig are not affected.  Most distribution kernels supporting Xen
-dom0 use are likewise not vulnerable.
+    // ...
+}
+------------------------------------------------------------------------
 
-Arm systems or x86 PVH or x86 HVM driver domains are not affected.
+The function nft_trans_gc_queue_async_done() saves the GC transaction
+into a global list and eventually schedules nft_trans_gc_work() to run.
+nft_trans_gc_work() then retrieves the gc transaction and calls
+nft_trans_gc_work_done() to perform checks on GC sequence.
 
-MITIGATION
-==========
+------------------------------------------------------------------------
+static void nft_trans_gc_work(struct work_struct *work)
+{
+    // ...
+    list_for_each_entry_safe(trans, next, &trans_gc_list, list) {
+        list_del(&trans->list);
+        if (!nft_trans_gc_work_done(trans)) { // [4]
+            nft_trans_gc_destroy(trans);
+            continue;
+        }
+        call_rcu(&trans->rcu, nft_trans_gc_trans_free); // [5]
+    }
+}
+------------------------------------------------------------------------
 
-There is no mitigation available.
+The function nft_trans_gc_work_done() will first acquire the commit
+lock[6], and compare the saved GC sequence with current GC sequence[7],
+if they are different, which means we race with the transaction. Since
+all critical section which modify the control plane are surrounded by
+nft_gc_seq_begin() and nft_gc_seq_end() which both increase the current
+GC sequence (nft_net->gc_seq), so if it's the case, it means the state
+of the set may have been changed, and the function will return false to
+stop processing this GC transaction.
 
-RESOLUTION
-==========
+------------------------------------------------------------------------
+static bool nft_trans_gc_work_done(struct nft_trans_gc *trans)
+{
+    struct nftables_pernet *nft_net;
+    struct nft_ctx ctx = {};
 
-Applying the appropriate attached patch resolves this issue.
+    nft_net = nft_pernet(trans->net);
 
-xsa369-linux.patch           Linux 5.9-stable - 5.12-rc
+    mutex_lock(&nft_net->commit_mutex); // [6]
 
-$ sha256sum xsa369*
-937df4f078a070cf47bdd718c6b8a042ec6bee255eedc422d833c2ae3dd561c7  xsa369-linux.patch
-$
+    /* Check for race with transaction, otherwise this batch refers to
+     * stale objects that might not be there anymore. Skip transaction if
+     * set has been destroyed from control plane transaction in case gc
+     * worker loses race.
+     */
+    if (READ_ONCE(nft_net->gc_seq) != trans->seq || trans->set->dead) { // [7]
+        mutex_unlock(&nft_net->commit_mutex);
+        return false;
+    }
 
-CREDITS
-=======
+    ctx.net = trans->net;
+    ctx.table = trans->set->table;
 
-This issue was discovered by Marek Marczykowski-Górecki of Invisible
-Things Lab.
+    nft_trans_gc_setelem_remove(&ctx, trans);
+    mutex_unlock(&nft_net->commit_mutex);
 
-For patch:
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+    return true;
+}
+------------------------------------------------------------------------
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+However, the GC sequence mechanism only works under the assumption that
+the commit lock should not be released during the critical section
+between nft_gc_seq_begin() and nft_gc_seq_end(). Otherwise, a GC thread
+may record the expired object and obtain the released commit lock within
+the same gc_seq, thus bypassing the GC sequence check.
 
-This was reported publicly multiple times, before the XSA could be
-issued.
------BEGIN PGP SIGNATURE-----
+__nf_tables_abort() is the one does it wrong, the function is surrounded
+by nft_gc_seq_begin() and nft_gc_seq_end()[8], if it received the action
+NFNL_ABORT_AUTOLOAD, nf_tables_module_autoload()[9] will be called to
+process the module requests, however, the function releases the commit
+lock[10] before processing the module request, which breaks the
+assumption of GC sequence. As a result, it's now possible for a disabled
+set element object to bypass the check, leading to a double free.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBAvMQMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ5PoH/2EY28X1Fe+2RW5SrnAo2dZWLXeIrXQIXbsDCdlI
-GKhFChUhYHJP3wLhE4F7J5SAjl48ta/gtdpbpJWXsZSS+2KIdV/dDZ3ZA6cxWFAI
-DuVvqqt5O0xpF02bgTZrL1GUL8975L0O7cwtGmsIbPjVSF5UktuLS0Q1zRAiYvG9
-l5Xu32nekxz2fGebMYrJTIPYNc8LOg3d+MIAE4W1u3Wj46S8yRJhyNQmsPQXZTEk
-nlTp0ed8ScAt7pIZn7dbnLz8zUAQ64h2yar0UBih51kd3Bss5E4PXsS0zlXlVNfk
-046nBhbFfB3dgM49NlJ3oHhiZh6dN5LpMblmGK4Tb+FJqNE=
-=QwG+
------END PGP SIGNATURE-----
+------------------------------------------------------------------------
+static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+               enum nfnl_abort_action action)
+{
+    gc_seq = nft_gc_seq_begin(nft_net); // [8]
+    ret = __nf_tables_abort(net, action);
+    nft_gc_seq_end(nft_net, gc_seq); // [8]
+    mutex_unlock(&nft_net->commit_mutex);
 
---=separator
-Content-Type: application/octet-stream; name="xsa369-linux.patch"
-Content-Disposition: attachment; filename="xsa369-linux.patch"
-Content-Transfer-Encoding: base64
+    return ret;
+}
 
-RnJvbTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ZW46IGZpeCBwMm0gc2l6ZSBpbiBkb20wIGZvciBkaXNhYmxlZCBtZW1v
-cnkgaG90cGx1ZyBjYXNlCgpTaW5jZSBjb21taXQgOWUyMzY5YzA2YzhhMTgg
-KCJ4ZW46IGFkZCBoZWxwZXJzIHRvIGFsbG9jYXRlIHVucG9wdWxhdGVkCm1l
-bW9yeSIpIGZvcmVpZ24gbWFwcGluZ3MgYXJlIHVzaW5nIGd1ZXN0IHBoeXNp
-Y2FsIGFkZHJlc3NlcyBhbGxvY2F0ZWQKdmlhIFpPTkVfREVWSUNFIGZ1bmN0
-aW9uYWxpdHkuCgpUaGlzIHdpbGwgcmVzdWx0IGluIHByb2JsZW1zIGZvciB0
-aGUgY2FzZSBvZiBubyBiYWxsb29uIG1lbW9yeSBob3RwbHVnCmJlaW5nIGNv
-bmZpZ3VyZWQsIGFzIHRoZSBwMm0gbGlzdCB3aWxsIG9ubHkgY292ZXIgdGhl
-IGluaXRpYWwgbWVtb3J5CnNpemUgb2YgdGhlIGRvbWFpbi4gQW55IFpPTkVf
-REVWSUNFIGFsbG9jYXRlZCBhZGRyZXNzIHdpbGwgYmUgb3V0c2lkZQp0aGUg
-cDJtIHJhbmdlIGFuZCB0aHVzIGEgbWFwcGluZyBjYW4ndCBiZSBlc3RhYmxp
-c2hlZCB3aXRoIHRoYXQgbWVtb3J5CmFkZHJlc3MuCgpGaXggdGhhdCBieSBl
-eHRlbmRpbmcgdGhlIHAybSBzaXplIGZvciB0aGF0IGNhc2UuIEF0IHRoZSBz
-YW1lIHRpbWUgYWRkCmEgY2hlY2sgZm9yIGEgdG8gYmUgY3JlYXRlZCBtYXBw
-aW5nIHRvIGJlIHdpdGhpbiB0aGUgcDJtIGxpbWl0cyBpbgpvcmRlciB0byBk
-ZXRlY3QgZXJyb3JzIGVhcmx5LgoKV2hpbGUgY2hhbmdpbmcgYSBjb21tZW50
-LCByZW1vdmUgc29tZSAzMi1iaXQgbGVmdG92ZXJzLgoKVGhpcyBpcyBYU0Et
-MzY5LgoKRml4ZXM6IDllMjM2OWMwNmM4YTE4ICgieGVuOiBhZGQgaGVscGVy
-cyB0byBhbGxvY2F0ZSB1bnBvcHVsYXRlZCBtZW1vcnkiKQpDYzogPHN0YWJs
-ZUB2Z2VyLmtlcm5lbC5vcmc+ICMgNS45ClJlcG9ydGVkLWJ5OiBNYXJlayBN
-YXJjenlrb3dza2ktR8OzcmVja2kgPG1hcm1hcmVrQGludmlzaWJsZXRoaW5n
-c2xhYi5jb20+ClNpZ25lZC1vZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9z
-c0BzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGlj
-aEBzdXNlLmNvbT4KU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8amdy
-b3NzQHN1c2UuY29tPgotLS0KIGFyY2gveDg2L2luY2x1ZGUvYXNtL3hlbi9w
-YWdlLmggfCAxMiArKysrKysrKysrKysKIGFyY2gveDg2L3hlbi9wMm0uYyAg
-ICAgICAgICAgICAgfCAxMCArKysrKystLS0tCiBhcmNoL3g4Ni94ZW4vc2V0
-dXAuYyAgICAgICAgICAgIHwgMjUgKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQogMyBmaWxlcyBjaGFuZ2VkLCAyMSBpbnNlcnRpb25zKCspLCAyNiBkZWxl
-dGlvbnMoLSkKCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni9pbmNsdWRlL2FzbS94
-ZW4vcGFnZS5oIGIvYXJjaC94ODYvaW5jbHVkZS9hc20veGVuL3BhZ2UuaApp
-bmRleCAxYTE2MmU1NTk3NTMuLjcwNjhlNGJiMDU3ZCAxMDA2NDQKLS0tIGEv
-YXJjaC94ODYvaW5jbHVkZS9hc20veGVuL3BhZ2UuaAorKysgYi9hcmNoL3g4
-Ni9pbmNsdWRlL2FzbS94ZW4vcGFnZS5oCkBAIC04Niw2ICs4NiwxOCBAQCBj
-bGVhcl9mb3JlaWduX3AybV9tYXBwaW5nKHN0cnVjdCBnbnR0YWJfdW5tYXBf
-Z3JhbnRfcmVmICp1bm1hcF9vcHMsCiB9CiAjZW5kaWYKIAorLyoKKyAqIFRo
-ZSBtYXhpbXVtIGFtb3VudCBvZiBleHRyYSBtZW1vcnkgY29tcGFyZWQgdG8g
-dGhlIGJhc2Ugc2l6ZS4gIFRoZQorICogbWFpbiBzY2FsaW5nIGZhY3RvciBp
-cyB0aGUgc2l6ZSBvZiBzdHJ1Y3QgcGFnZS4gIEF0IGV4dHJlbWUgcmF0aW9z
-CisgKiBvZiBiYXNlOmV4dHJhLCBhbGwgdGhlIGJhc2UgbWVtb3J5IGNhbiBi
-ZSBmaWxsZWQgd2l0aCBwYWdlCisgKiBzdHJ1Y3R1cmVzIGZvciB0aGUgZXh0
-cmEgbWVtb3J5LCBsZWF2aW5nIG5vIHNwYWNlIGZvciBhbnl0aGluZworICog
-ZWxzZS4KKyAqCisgKiAxMHggc2VlbXMgbGlrZSBhIHJlYXNvbmFibGUgYmFs
-YW5jZSBiZXR3ZWVuIHNjYWxpbmcgZmxleGliaWxpdHkgYW5kCisgKiBsZWF2
-aW5nIGEgcHJhY3RpY2FsbHkgdXNhYmxlIHN5c3RlbS4KKyAqLworI2RlZmlu
-ZSBYRU5fRVhUUkFfTUVNX1JBVElPCSgxMCkKKwogLyoKICAqIEhlbHBlciBm
-dW5jdGlvbnMgdG8gd3JpdGUgb3IgcmVhZCB1bnNpZ25lZCBsb25nIHZhbHVl
-cyB0by9mcm9tCiAgKiBtZW1vcnksIHdoZW4gdGhlIGFjY2VzcyBtYXkgZmF1
-bHQuCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni94ZW4vcDJtLmMgYi9hcmNoL3g4
-Ni94ZW4vcDJtLmMKaW5kZXggOTU0NWI4ZGY1MzE1Li5lZDM1ODVlZWJjNGUg
-MTAwNjQ0Ci0tLSBhL2FyY2gveDg2L3hlbi9wMm0uYworKysgYi9hcmNoL3g4
-Ni94ZW4vcDJtLmMKQEAgLTQxNiw2ICs0MTYsOSBAQCB2b2lkIF9faW5pdCB4
-ZW5fdm1hbGxvY19wMm1fdHJlZSh2b2lkKQogCXhlbl9wMm1fbGFzdF9wZm4g
-PSB4ZW5fbWF4X3AybV9wZm47CiAKIAlwMm1fbGltaXQgPSAocGh5c19hZGRy
-X3QpUDJNX0xJTUlUICogMTAyNCAqIDEwMjQgKiAxMDI0IC8gUEFHRV9TSVpF
-OworCWlmICghcDJtX2xpbWl0ICYmIElTX0VOQUJMRUQoQ09ORklHX1hFTl9V
-TlBPUFVMQVRFRF9BTExPQykpCisJCXAybV9saW1pdCA9IHhlbl9zdGFydF9p
-bmZvLT5ucl9wYWdlcyAqIFhFTl9FWFRSQV9NRU1fUkFUSU87CisKIAl2bS5m
-bGFncyA9IFZNX0FMTE9DOwogCXZtLnNpemUgPSBBTElHTihzaXplb2YodW5z
-aWduZWQgbG9uZykgKiBtYXgoeGVuX21heF9wMm1fcGZuLCBwMm1fbGltaXQp
-LAogCQkJUE1EX1NJWkUgKiBQTURTX1BFUl9NSURfUEFHRSk7CkBAIC02NTIs
-MTAgKzY1NSw5IEBAIGJvb2wgX19zZXRfcGh5c190b19tYWNoaW5lKHVuc2ln
-bmVkIGxvbmcgcGZuLCB1bnNpZ25lZCBsb25nIG1mbikKIAlwdGVfdCAqcHRl
-cDsKIAl1bnNpZ25lZCBpbnQgbGV2ZWw7CiAKLQlpZiAodW5saWtlbHkocGZu
-ID49IHhlbl9wMm1fc2l6ZSkpIHsKLQkJQlVHX09OKG1mbiAhPSBJTlZBTElE
-X1AyTV9FTlRSWSk7Ci0JCXJldHVybiB0cnVlOwotCX0KKwkvKiBPbmx5IGlu
-dmFsaWQgZW50cmllcyBhbGxvd2VkIGFib3ZlIHRoZSBoaWdoZXN0IHAybSBj
-b3ZlcmVkIGZyYW1lLiAqLworCWlmICh1bmxpa2VseShwZm4gPj0geGVuX3Ay
-bV9zaXplKSkKKwkJcmV0dXJuIG1mbiA9PSBJTlZBTElEX1AyTV9FTlRSWTsK
-IAogCS8qCiAJICogVGhlIGludGVyZmFjZSByZXF1aXJlcyBhdG9taWMgdXBk
-YXRlcyBvbiBwMm0gZWxlbWVudHMuCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni94
-ZW4vc2V0dXAuYyBiL2FyY2gveDg2L3hlbi9zZXR1cC5jCmluZGV4IDdlYWIx
-NGQ1NjM2OS4uMWEzYjc1NjUyZmE0IDEwMDY0NAotLS0gYS9hcmNoL3g4Ni94
-ZW4vc2V0dXAuYworKysgYi9hcmNoL3g4Ni94ZW4vc2V0dXAuYwpAQCAtNTks
-MTggKzU5LDYgQEAgc3RhdGljIHN0cnVjdCB7CiB9IHhlbl9yZW1hcF9idWYg
-X19pbml0ZGF0YSBfX2FsaWduZWQoUEFHRV9TSVpFKTsKIHN0YXRpYyB1bnNp
-Z25lZCBsb25nIHhlbl9yZW1hcF9tZm4gX19pbml0ZGF0YSA9IElOVkFMSURf
-UDJNX0VOVFJZOwogCi0vKiAKLSAqIFRoZSBtYXhpbXVtIGFtb3VudCBvZiBl
-eHRyYSBtZW1vcnkgY29tcGFyZWQgdG8gdGhlIGJhc2Ugc2l6ZS4gIFRoZQot
-ICogbWFpbiBzY2FsaW5nIGZhY3RvciBpcyB0aGUgc2l6ZSBvZiBzdHJ1Y3Qg
-cGFnZS4gIEF0IGV4dHJlbWUgcmF0aW9zCi0gKiBvZiBiYXNlOmV4dHJhLCBh
-bGwgdGhlIGJhc2UgbWVtb3J5IGNhbiBiZSBmaWxsZWQgd2l0aCBwYWdlCi0g
-KiBzdHJ1Y3R1cmVzIGZvciB0aGUgZXh0cmEgbWVtb3J5LCBsZWF2aW5nIG5v
-IHNwYWNlIGZvciBhbnl0aGluZwotICogZWxzZS4KLSAqIAotICogMTB4IHNl
-ZW1zIGxpa2UgYSByZWFzb25hYmxlIGJhbGFuY2UgYmV0d2VlbiBzY2FsaW5n
-IGZsZXhpYmlsaXR5IGFuZAotICogbGVhdmluZyBhIHByYWN0aWNhbGx5IHVz
-YWJsZSBzeXN0ZW0uCi0gKi8KLSNkZWZpbmUgRVhUUkFfTUVNX1JBVElPCQko
-MTApCi0KIHN0YXRpYyBib29sIHhlbl81MTJnYl9saW1pdCBfX2luaXRkYXRh
-ID0gSVNfRU5BQkxFRChDT05GSUdfWEVOXzUxMkdCKTsKIAogc3RhdGljIHZv
-aWQgX19pbml0IHhlbl9wYXJzZV81MTJnYih2b2lkKQpAQCAtNzkwLDIwICs3
-NzgsMTMgQEAgY2hhciAqIF9faW5pdCB4ZW5fbWVtb3J5X3NldHVwKHZvaWQp
-CiAJCWV4dHJhX3BhZ2VzICs9IG1heF9wYWdlcyAtIG1heF9wZm47CiAKIAkv
-KgotCSAqIENsYW1wIHRoZSBhbW91bnQgb2YgZXh0cmEgbWVtb3J5IHRvIGEg
-RVhUUkFfTUVNX1JBVElPCi0JICogZmFjdG9yIHRoZSBiYXNlIHNpemUuICBP
-biBub24taGlnaG1lbSBzeXN0ZW1zLCB0aGUgYmFzZQotCSAqIHNpemUgaXMg
-dGhlIGZ1bGwgaW5pdGlhbCBtZW1vcnkgYWxsb2NhdGlvbjsgb24gaGlnaG1l
-bSBpdAotCSAqIGlzIGxpbWl0ZWQgdG8gdGhlIG1heCBzaXplIG9mIGxvd21l
-bSwgc28gdGhhdCBpdCBkb2Vzbid0Ci0JICogZ2V0IGNvbXBsZXRlbHkgZmls
-bGVkLgorCSAqIENsYW1wIHRoZSBhbW91bnQgb2YgZXh0cmEgbWVtb3J5IHRv
-IGEgWEVOX0VYVFJBX01FTV9SQVRJTworCSAqIGZhY3RvciB0aGUgYmFzZSBz
-aXplLgogCSAqCiAJICogTWFrZSBzdXJlIHdlIGhhdmUgbm8gbWVtb3J5IGFi
-b3ZlIG1heF9wYWdlcywgYXMgdGhpcyBhcmVhCiAJICogaXNuJ3QgaGFuZGxl
-ZCBieSB0aGUgcDJtIG1hbmFnZW1lbnQuCi0JICoKLQkgKiBJbiBwcmluY2lw
-bGUgdGhlcmUgY291bGQgYmUgYSBwcm9ibGVtIGluIGxvd21lbSBzeXN0ZW1z
-IGlmCi0JICogdGhlIGluaXRpYWwgbWVtb3J5IGlzIGFsc28gdmVyeSBsYXJn
-ZSB3aXRoIHJlc3BlY3QgdG8KLQkgKiBsb3dtZW0sIGJ1dCB3ZSB3b24ndCB0
-cnkgdG8gZGVhbCB3aXRoIHRoYXQgaGVyZS4KIAkgKi8KLQlleHRyYV9wYWdl
-cyA9IG1pbjMoRVhUUkFfTUVNX1JBVElPICogbWluKG1heF9wZm4sIFBGTl9E
-T1dOKE1BWE1FTSkpLAorCWV4dHJhX3BhZ2VzID0gbWluMyhYRU5fRVhUUkFf
-TUVNX1JBVElPICogbWluKG1heF9wZm4sIFBGTl9ET1dOKE1BWE1FTSkpLAog
-CQkJICAgZXh0cmFfcGFnZXMsIG1heF9wYWdlcyAtIG1heF9wZm4pOwogCWkg
-PSAwOwogCWFkZHIgPSB4ZW5fZTgyMF90YWJsZS5lbnRyaWVzWzBdLmFkZHI7
-Ci0tIAoyLjI2LjIKCg==
+static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+{
+    // ...
 
---=separator--
+    if (action == NFNL_ABORT_AUTOLOAD)
+        nf_tables_module_autoload(net); // [9]
+    else
+        nf_tables_module_autoload_cleanup(net);
+
+    return 0;
+}
+
+static void nf_tables_module_autoload(struct net *net)
+{
+    struct nftables_pernet *nft_net = nft_pernet(net);
+    struct nft_module_request *req, *next;
+    LIST_HEAD(module_list);
+
+    list_splice_init(&nft_net->module_list, &module_list);
+    mutex_unlock(&nft_net->commit_mutex); // [10]
+    list_for_each_entry_safe(req, next, &module_list, list) {
+        request_module("%s", req->module);
+        req->done = true;
+    }
+    mutex_lock(&nft_net->commit_mutex);
+    list_splice(&module_list, &nft_net->module_list);
+}
+------------------------------------------------------------------------
+
+The fix to this vulnerability is pretty simple:
+just move nf_tables_module_autoload() after the call to nft_gc_seq_end()
+
+------------------------------------------------------------------------
+static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+               enum nfnl_abort_action action)
+{
+    gc_seq = nft_gc_seq_begin(nft_net);
+    ret = __nf_tables_abort(net, action);
+    nft_gc_seq_end(nft_net, gc_seq);
+
+    WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
+
++   /* module autoload needs to happen after GC sequence update because it
++    * temporarily releases and grabs mutex again.
++    */
++   if (action == NFNL_ABORT_AUTOLOAD)
++       nf_tables_module_autoload(net);
++   else
++       nf_tables_module_autoload_cleanup(net);
+
+    mutex_unlock(&nft_net->commit_mutex);
+
+    return ret;
+}
+------------------------------------------------------------------------
+
+========================================================================
+Exploit Disclosure
+========================================================================
+I will publish the exploit for this vulnerability on Google's
+security-research GitHub repo 30 days after the CVE disclosure, in
+accordance with Google's disclosure policy. (approximately on 5/24)
+
+========================================================================
+Discoverer
+========================================================================
+Kuan-Ting Chen (@h3xr4bb1t) of DEVCORE Research Team
+
+Best,
+Kuan-Ting Chen
