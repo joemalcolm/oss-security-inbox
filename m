@@ -1,4 +1,4 @@
-Received: (qmail 1219 invoked by uid 550); 31 Mar 2026 18:33:54 -0000
+Received: (qmail 25934 invoked by uid 550); 7 May 2024 10:49:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,112 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14015 invoked from network); 31 Mar 2026 18:20:27 -0000
-From: Sam James <sam@gentoo.org>
+Received: (qmail 11706 invoked from network); 7 May 2024 07:38:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=Sender:Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:
+	Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=apFJ1Jmd5RvFghb95jeM8vHZJskUjevniB3NAl4SLkc=; t=1715067506; x=1715715506; 
+	b=bL1WVc+DroBF+yaTaUHcUaU63K05APS2AIuLC1lD487WA3jpxiLMXw30x9OxQUg7GjFNBQ0avzX
+	qVX9fDRahZZLzr6g10dltZv2DmlU9fFLRk9KS9isV6Me9/0Pq2LcBT7eFr+yfTmmUrpEvciFWRdIX
+	95766BsDqmMkK+OJNpg6an3DjPZN/+LJDENiZG/jEY2ojlRSoCHjL4gEnMWdG4eTjuEGNclRjM8X2
+	MbyspBZdk6sv8f5r5tEVK0x8klqC/JXNIg6mmX9Ha2s4hBkK8WEsnMdJ68zgmdtq5GUzY47M6xCNI
+	uah+0lG9U9ApAkbAW2nZo7HmN/1tuUva97Lg==;
+Date: Tue, 7 May 2024 10:38:08 +0300
+From: Valtteri Vuorikoski <vuori@notcom.org>
 To: oss-security@lists.openwall.com
-Cc: xz@tukaani.org
-Organization: Gentoo
-References: <20260331195829.5d023064.lasse.collin@tukaani.org>
-User-Agent: mu4e 1.12.15; emacs 31.0.50
-Date: Tue, 31 Mar 2026 19:20:13 +0100
-Message-ID: <87o6k3274y.fsf@gentoo.org>
+Message-ID: <2ib7foyctkfjgsicr3ucl7tqj6rld2w64so4hgth2jxboyeqe3@tgl57zzlwo7h>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: [oss-security] Fwd: XZ Utils 5.8.3 and a security fix
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20240323-4-c04f3b
+Sender: server-megadon@notcom.org
+Subject: [oss-security] CVE-2023-49606, CVE-2023-40533: memory safety vulnerabilities in
+ tinyproxy <=1.11.1
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Cisco Talos reports two memory safety vulnerabilities in tinyproxy, a small HTTP
+proxy server, in versions prior to 1.11.2 (not yet released). Quotes from the
+two advisories below.
 
-Hi,
+First advisory <https://talosintelligence.com/vulnerability_reports/TALOS-2023-1889>:
 
-We've released a new xz version with some minor security fixes. It's not
-believed that any application is actually vulnerable to the main one,
-nor the other. It requires an unusual use of a rarely called API.
+  CVE-2023-49606
 
--------------------- Start of forwarded message --------------------
-Date: Tue, 31 Mar 2026 19:58:29 +0300
-From: Lasse Collin <lasse.collin@tukaani.org>
-To: xz-announce@tukaani.org
-Subject: XZ Utils 5.8.3 and a security fix
+  A use-after-free vulnerability exists in the HTTP Connection Headers parsing
+  in Tinyproxy 1.11.1 and Tinyproxy 1.10.0. A specially crafted HTTP header can
+  trigger reuse of previously freed memory, which leads to memory corruption and
+  could lead to remote code execution. An attacker needs to make an
+  unauthenticated HTTP request to trigger this vulnerability.
 
-In XZ Utils 5.8.2 and older, a buffer overflow can occur in
-lzma_index_append() under conditions that likely don't exist in any
-real-world application (CVE-2026-34743). No new 5.2.x, 5.4.x, or 5.6.x
-releases will be made, but the fix is in the v5.2, v5.4, and v5.6
-branches in the xz Git repository. For details, see the NEWS entry
-below or the security advisory:
+  9.8 - CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:Hv
 
-    https://tukaani.org/xz/index-append-overflow.html
+Second advisory <https://talosintelligence.com/vulnerability_reports/TALOS-2023-1902>:
 
-XZ Utils 5.8.3 is available at <https://tukaani.org/xz/#_stable>.
+  CVE-2023-40533
 
-5.8.3 (2026-03-31)
+  An uninitialized memory use vulnerability exists in Tinyproxy 1.11.1 while
+  parsing HTTP requests. In certain configurations, a specially crafted HTTP
+  request can result in disclosure of data allocated on the heap, which could
+  contain sensitive information. An attacker can make an unauthenticated HTTP
+  request to trigger this vulnerability.
 
-    * liblzma:
+  5.9 - CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N
 
-        - Fix a buffer overflow in lzma_index_append(): If
-          lzma_index_decoder() was used to decode an Index that
-          contained no Records, the resulting lzma_index was left in
-          a state where where a subsequent lzma_index_append() would
-          allocate too little memory, and a buffer overflow would occur.
+Upstream has an issue open at
+<https://github.com/tinyproxy/tinyproxy/issues/533>.  Talos claims to have
+contacted them in December 2023, but according to the developer there was no
+contact before the above advisories were released. The developer also disputes
+the veracity of CVE-2023-40533. Whatever the case,
+<https://github.com/tinyproxy/tinyproxy/commit/12a8484265f7b00591293da492bb3c9987001956>
+is the official fix for CVE-2023-49606.
 
-          The lzma_index functions are rarely used by applications
-          directly. In the few applications that do use these functions,
-          the combination of function calls required to trigger this bug
-          are unlikely to exist, because there typically is no reason to
-          append Records to a decoded lzma_index. Thus, it's likely that
-          this bug cannot be triggered in any real-world application.
-
-          The bug was reported and discovered by Cantina using their
-          AppSec agent, Apex.
-
-        - Fix the build on Windows ARM64EC.
-
-        - Add "License: 0BSD" to liblzma.pc.
-
-    * xz:
-
-        - Fix invalid memory access in --files and --files0. All of
-          the following must be true to trigger it:
-
-            1. A string being read (which supposedly is a filename) is
-               at least SIZE_MAX / 2 bytes long. This size is plausible
-               on 32-bit platforms (2 GiB - 1 B).
-
-            2. realloc(ptr, SIZE_MAX / 2 + 1) must succeed.
-               On glibc >=3D 2.30 it shouldn't because the value
-               exceeds PTRDIFF_MAX.
-
-            3. An integer overflow results in a realloc(ptr, 0) call.
-               If it doesn't return NULL, then invalid memory access
-               will occur.
-
-        - On QNX, don't use fsync() on directories because it fails.
-
-    * Autotools: Enable 32-bit x86 assembler on Hurd by default.
-      It was already enabled in the CMake-based build.
-
-    * Translations: Add Arabic man page translations.
-
---=20
-Lasse Collin
-
--------------------- End of forwarded message --------------------
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmnMEF0bFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkM2Z
-AQCe2HZOXi25iTI0F91dsyCl5Grc7AFeKRv+UbiNiwuJAgD9F3LuFNewNcUFSZFb
-bbSQCFeGMcqhSMlr6Qxjp1oSQQ4=
-=4v45
------END PGP SIGNATURE-----
---=-=-=--
+ -Valtteri
+ 
