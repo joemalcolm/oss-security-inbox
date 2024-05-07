@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["358" "Monday" "1" "March" "2021" "22:59:39" "+0100" "Szabolcs Beki" "szabolcs.beki@gmail.com" nil "15" "[oss-security] CVE-2020-1936: Stored XSS in Apache Ambari" nil nil nil "3" nil nil (number mark "U       szabolcs.bek Mar  1   15/358   " thread-indent "\"[oss-security] CVE-2020-1936: Stored XSS in Apache Ambari\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1936: Stored XSS in Apache Ambari" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19866 invoked by uid 550); 2 Mar 2021 10:32:13 -0000
+Received: (qmail 9415 invoked by uid 550); 7 May 2024 15:10:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22169 invoked from network); 1 Mar 2021 22:00:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=YeBPKyqNDYVJRX0YYMMRqO+don5NOxpjc9s52XLZXYE=;
-        b=oMLMNxAppgaz4alTGmrJXto0pJ+LIh4/IUUB2MrUqCPiFJGhbEv/LsWXsWo9tttsXo
-         6/wf/lfe/WIf3oDfnJlU5+SByal0iMQUjlLqVpbelYgJW9pG95AJ7NyE9tSp5wQcLro8
-         YPgmRWN8yhF4idV7xIzd+OjcQKLa1zhg2Ja7ORPUQ1to5meHTw9E3luHkw2dbaLlZw2A
-         0vWdXRjrgM1yagBGC3Lx4RqCz758SB1okrZ+vlC7XbIt5CkSYy7B8ZFhTUHz5KAarunG
-         klhYLJiYehcry4NIPm1TYbzYLvmJg3NsRESrmNuYgOiZMn1toTJCckkfa175SQqjDNqU
-         nWQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YeBPKyqNDYVJRX0YYMMRqO+don5NOxpjc9s52XLZXYE=;
-        b=dL1edvsgriyfHmQtL/eh6mDu2PB8zs0e/+PxeyHfLndGxRPPBHJRilX7cs2mmjvuOK
-         l/aAl6Q6dpgT2BCjcws5napxNgp1ArTFAKSclQ/ieSmD3NQ60cAgUycL8c+oVJXPOJ58
-         aau38P0RyD6M5dbIbPwXmuAEri83dDgCXYgMR+vvW9KbksPfqL37iNokdUzagV+o4OZL
-         LMWbbuMyDrN4cIQxsmo5HMPnODme0Jlnpyy1MsKc9CYIkcGjwPz5lrvkVmOHByK5KRh/
-         vdqttKS6DyPncEZiEHA3EhFBOwR27o8RbdvoE/ORK5knnUYqByiWeK0IZvMXlLi0KC3t
-         6wag==
-X-Gm-Message-State: AOAM5338uKJyO8aJEHk7Lg1Myw6tYzFSYotvnb0+qma9/nWQEXY3BQ9g
-	7O2TD5TTAAm02GddO/X9YMGD2apHYFm13Jc4CNMCtVD+XpwvjA==
-X-Google-Smtp-Source: ABdhPJxY2rD7/Q3+k8HIYbZd1kOvpqffEV23Vj3oX88bBWOBAX98bxv3qL/5nRYrEn/5Zpy8aFsQ1YXh7GG210hKCdY=
-X-Received: by 2002:a2e:1558:: with SMTP id 24mr1430711ljv.502.1614635990700;
- Mon, 01 Mar 2021 13:59:50 -0800 (PST)
-MIME-Version: 1.0
-From: Szabolcs Beki <szabolcs.beki@gmail.com>
-Date: Mon, 1 Mar 2021 22:59:39 +0100
-Message-ID: <CAEJYuxHXFazta-hDx1223XR23pfkY8ahg6s00nDev7aaO7h52w@mail.gmail.com>
+Received: (qmail 27747 invoked from network); 7 May 2024 14:17:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tecnocode.co.uk;
+	 h=cc:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:reply-to:subject:subject:to
+	:to; s=fm1; t=1715091428; x=1715177828; bh=uZ4rzhUR+Ug2V1GDqPRyz
+	xvGOSytB8fTxGmy8VIiJjA=; b=iwHvYYhfAkaescsThiWe6jJ07BQHhxuvTfu/a
+	WlaKYN3TgjA1GzdoY9+I6SVO6pHqNlXacxODQHhLxJUjy2H2scbvtGtNegexxe0O
+	msqI7Rg1rKGUen2dyvwmLuMtkMlVU8F47Q7XH9RuoC1OM7EhV+LOGQ0sOqeKGU6c
+	4QtPuQvKDe7n5dMJ0ryCrIG1+FfJwku4Jioe8sCFqAcEqv4xEpx8shOrmGiNJrTn
+	Kn9ZiVVOyjAvzpu3rdHG1S+f/p5G8PecOKoA9PcmIledk300eO5Qn0TU7nVXX9lB
+	7en3I3BGEVkKOI0ULlobf45LHfbCkrwwhdb+SiYv603QQdHdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1715091428; x=1715177828; bh=uZ4rzhUR+Ug2V1GDqPRyzxvGOSytB8fTxGm
+	y8VIiJjA=; b=EOTdLfbpeAEKL0RylHLbVrH/eOAqt1QTz6R7nW1QiCul5ANuvZQ
+	dJIJd2BcwxbZpeBOmaaH3RidWpNwXtCuo5Dd2faMe8+2i+a4Vez/LO3JM9h0AV3U
+	p4mqpZe62K1hedZEKl93iZ4/Ai1BZTzjTcj2d+TaUNJk1obVJWMIvKDdXy6ZBeVr
+	VLMG6F7DOifm98oDC32ONQN/vdiD+Ev05At9wXnevtZWXhW2V2YBbMaSwBwVphqm
+	UoMK7/gCn3z04P4hMZ9ejgBo0YQLEakfwcg+iKFTxLqr+lhHJT4shEZ0d1gGhrhs
+	DKhZRm6miDD69u4ugWwO59wd6lY3l8AVquQ==
+X-ME-Sender: <xms:4zc6ZohYPoYH-0XEVJbYe95iUU4-VqnPn5VDlZ12iRuHYgE26DmJ_w>
+    <xme:4zc6ZhD-awEf23tkPeibn_R52yNH5U7jAfrgB4doyCWi312xqD5AdlYBjiJQe2CLg
+    AyugvkNzF-Q0PCEaA>
+X-ME-Received: <xmr:4zc6ZgHlXa9-WxUHtMKAdVldw4bQSbEtXCQQ5mCwasRV_OC3y3_eA_5gBr8phwo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvkedgjedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhrhfvffgtfgggsehgtderre
+    dtreejnecuhfhrohhmpefrhhhilhhiphcuhghithhhnhgrlhhluceophhhihhlihhpseht
+    vggtnhhotghouggvrdgtohdruhhkqeenucggtffrrghtthgvrhhnpeehtdehiedthfefve
+    eiffeuvdejtdfgheefgeeijedvgeehvddvieejhfetheelffenucffohhmrghinhepghhn
+    ohhmvgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehphhhilhhiphesthgvtghnohgtohguvgdrtghordhukh
+X-ME-Proxy: <xmx:5Dc6ZpTTiEYddC4yijc1sSUgGBU8c7nyFDQQPaTQW9KB9f2RNaTWnA>
+    <xmx:5Dc6ZlzSDJcFi0t-8m69nbzy7rRXCfPCaUE_VCvzPf5DHw29XeU06g>
+    <xmx:5Dc6Zn7VKgtavJFHl4QzdsAcztXKc5D0opE3xByMlSh4xss5qP6cZw>
+    <xmx:5Dc6Ziys0cP0fhKtoamr_nytVoXDlK8rCd3ssL00VoutfVtFw5pCVg>
+    <xmx:5Dc6Zmo9x66yIwcb2hoA9Fndrr5ciXPO_TulfPue7BzSFvfcrLUAC_8d>
+Feedback-ID: i683145e5:Fastmail
+Message-ID: <218de88c60d76aafebed0f50fa7d695132025836.camel@tecnocode.co.uk>
+From: Philip Withnall <philip@tecnocode.co.uk>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000aad53d05bc80bc05"
-Subject: [oss-security] CVE-2020-1936: Stored XSS in Apache Ambari
+Date: Tue, 07 May 2024 15:16:56 +0100
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-fPkkjTcm2uYI67WtZRRE"
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+MIME-Version: 1.0
+Subject: [oss-security] GLib (2.26.0+): GDBus signal subscriptions for well-known names are
+ vulnerable to unicast spoofing
 
---000000000000aad53d05bc80bc05
+--=-fPkkjTcm2uYI67WtZRRE
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Description:
+Hello,
 
-A cross-site scripting issue was found in Apache Ambari Views.  This
-was addressed in Apache Ambari 2.7.4.
+A series of related security fixes for how signal subscriptions are
+handled in GDBus have just landed in GLib. They have been assigned CVE-
+2024-34397:
 
-This issue is being tracked as AMBARI-25329
+ *=C2=A0https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4038 (changes
+on main)
+ *=C2=A0https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4039 (trivial
+backport to glib-2-80)
+ *=C2=A0https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4040 (non-
+trivial backport to glib-2-78)
 
-Credit:
+There is a related fix in gnome-shell which distributions should
+cherry-pick at the same time, to avoid a regression in screen recording
+support in gnome-shell 3.38 and newer:
 
-Apache Ambari would like to thank Krzysztof Przybylski from STM Solutions
+ *=C2=A0https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3303
+(changes on main)
+ * Backports to older versions of gnome-shell are not available yet
 
---000000000000aad53d05bc80bc05--
+When a GDBus-based client subscribes to signals from a trusted system
+service such as NetworkManager or logind on a shared computer, other
+users of the same computer can send spoofed D-Bus signals that the
+GDBus-based client will wrongly interpret as having been sent by the
+trusted system service. This could lead to the GDBus-based client
+behaving incorrectly, with an application-dependent impact.
+Distributors are advised to cherry-pick these changes into their GLib
+packages ASAP.
+
+This issue has likely existed since GDBus was first introduced in GLib
+2.26, although this lower bound has not been verified. The issue has
+been verified to exist in at least GLib 2.66, 2.74, 2.78 (<2.78.5) and
+2.80 (<2.80.1).
+
+Per GLib=E2=80=99s support policy, the fixes have not been backported to gl=
+ib-
+2-76 or earlier.
+
+Philip
+
+--=-fPkkjTcm2uYI67WtZRRE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEKgytxEoDTEz3qX0k3N9YhbHz7XMFAmY6N9gACgkQ3N9YhbHz
+7XMF9hAAhyAMutZyauexqZc1Xl1EznSflIeFfHxnvCml24gOmhllhTRQ61j1RWSx
+tlzgM8F33hoSmW2s9ajKcvVmcmPI4X8OrfqpoeAvl+k4XAxW0Ew1XUlYkByRTCbS
+2qKeSPSMSHFvamUNHCRr5rjMETVrCtA7MC0INITWXbGP6Rxyb4lU2/mTrpP9N4oe
+j8Jayp8lYOtHlzoq4G2idAfPqpMcFBWL6HxRBj1CCqkO1y0asFYA1ENSRUMrGoFq
+nr/aUY7CZhzgPBn6k8IuHnStij+i9DDweS9ye/g75eK6ovebKOdn5P3dTXEYkYqy
+K752xAqnaxHvYLUA5Wgnhkmt3gyUyAdJk6j3prJ657buqthJ6AqdUWIj+pHXJP7l
+2A90Sga7bcMfCD8w5EKVWlDujX0WpqtqCKC0ota7ddj24zNS5Nln2ly/24LRoPg4
+fOL/84V8yPJib9+EAUeJfbdWHXqYjqfTs9bcfz5YlMzqBukXJI+tGDPxgO4ONaG6
+GqAuPyyoa+hqFgIEVEIQzq1TkXkIEKrGdmfD4si7CHFOezU5ovHs+cLspHOQKyjB
+vBaRZQqFy5Z2FLS9rv2JFA/MMGPVoy2oVTFLagyQdvwORWK83i2vOZHsVRRkKqba
+GUszFjmLuM48iD2Y6j5BuoZSGzaA3e4J+RFgG6U0QvvvNWyj6mo=
+=2fqa
+-----END PGP SIGNATURE-----
+
+--=-fPkkjTcm2uYI67WtZRRE--
