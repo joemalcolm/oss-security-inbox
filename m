@@ -1,4 +1,4 @@
-Received: (qmail 32379 invoked by uid 550); 31 Mar 2023 12:03:18 -0000
+Received: (qmail 7424 invoked by uid 550); 8 May 2024 22:20:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,242 +7,148 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14316 invoked from network); 30 Mar 2023 23:22:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680218542;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=R3Dzyf0Ml56hd9pIdeQ4VxFx8I+uiTW/GAViETHxLR8=;
-        b=cNdD4L+fQwcowlLzMyzUJkNYbbsi09jDIFufkmG7BbcDdoKDd1dlHm8oEk9BC6+mbH
-         PZ9XdWT3w3qSWhd0H/WHgnYBbKvo/N34taAswpw3AXsmms3PybCm4VLqY2C0cW+Cq9ap
-         /Z4mVReYOguhtCeQxMx+IZ/DOgW43cUoKCtb8uhAd+rs5IEkxvlILigMLX5F18wVKFsa
-         8U60m8eiQGCwbBt3J2PWQFAVP1Knn5CdTqncedqehSj3jV4Ov6Pq/stVb9XN/9Py7LIQ
-         D/7cVltKbPoqDwCeKB1V8vpArH7Tt0XJ2xIZCCKmVLPnw4ZTDPHN6dZaExlNCwqZenxl
-         TSTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680218542;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=R3Dzyf0Ml56hd9pIdeQ4VxFx8I+uiTW/GAViETHxLR8=;
-        b=2bVqPg2GqreN4ieE0j81H4mTidH6TKeBp2lhEyPOvoQ14Ijk6jVeC1sQx5ffgzxz6y
-         2z3I+UbyhN4Ln8bqeZMxEV8yYGijXoluwpYV9WE4J4K8wshwJihJOPrwqZKLF4T2No4D
-         AEJlWcTHm2VlEq/4AxDygeZ8Ki8Avi8YBj/XEVjf4JmNlzHe9p3zNIq2/W5Pu1ZWiQpK
-         1rWPVW17hHJXuRcyKuIJhJsDcESk6iceMVarns/gvGbtJf9YztwJH3Aoo2vabbWxgZ2b
-         Vq6DOzgyKOVT5Wkp8Yq9EF98u9l9R09XC//xrnBKfKtBF9lhzU2fipz6awPtQAH43fRv
-         hTQQ==
-X-Gm-Message-State: AAQBX9dtpx3HtPt/hps76K2+p5y/40jBgF1bX96bo1GZQr6WDS+qdF3P
-	DupF3X3yhfqPbMGNTJDRzfHRKUMyiZ0=
-X-Google-Smtp-Source: AKy350bub7D+mFzt+PxbkJa5sfZ5JelaG6nWwRK93AnjqnOoVJETLWnpgEtcDXT93luO0gZuwCiyPg==
-X-Received: by 2002:a67:f8d4:0:b0:426:b2d8:17e9 with SMTP id c20-20020a67f8d4000000b00426b2d817e9mr5096205vsp.20.1680218542102;
-        Thu, 30 Mar 2023 16:22:22 -0700 (PDT)
-Sender: Nam Nguyen <namluunguyen@gmail.com>
-From: Nam Nguyen <namn@berkeley.edu>
-X-Google-Original-From: Nam Nguyen <n@m>
-To: oss-security@lists.openwall.com
-Cc: Steffen Nurpmeso <steffen@sdaoden.eu>
-References: <Y91yP6mYIZ+UXmgf@alf.mars> <20230314110138.GA1192267@subdivi.de>
-	<20230314191132.qDz3u%steffen@sdaoden.eu>
-	<20230314201652.RlbWr%steffen@sdaoden.eu>
-	<20230330204300.jYitb%steffen@sdaoden.eu>
-Date: Thu, 30 Mar 2023 16:22:20 -0700
-In-Reply-To: <20230330204300.jYitb%steffen@sdaoden.eu> (Steffen Nurpmeso's
-	message of "Thu, 30 Mar 2023 22:43:00 +0200")
-Message-ID: <87bkk9hljn.fsf@n.m>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (berkeley-unix)
+Received: (qmail 7406 invoked from network); 8 May 2024 22:20:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=9h/2wzU0Mvhn2MKrTpCI2QVVZK0bZHd1iD7FuzxTA8E=; b=tSR60kzSnRej3nVh6mY4MjCHPJ
+	KGGsGnSctV0d2rb8HT4jpEcnuRdfMKp9Z1J8A3DEjpqr7+0AZHEzOMNR/yZaapi9ERIyHckKxHtVl
+	bpoSB5FVw+pjsdaSv7X0r9BS/wvgTMXcB4vLp6ibDCckxRGSjANPfeFrtu1n/1onX6aU=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: sox: patches for old vulnerabilities
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1s4pdm-0005hR-0X@xenbits.xenproject.org>
+Date: Wed, 08 May 2024 22:19:58 +0000
+Subject: [oss-security] Xen Security Advisory 457 v3 (CVE-2024-27393) - Linux/xen-netfront:
+ Memory leak due to missing cleanup function
 
-Steffen Nurpmeso writes:
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-> Steffen Nurpmeso wrote in
->  <20230314201652.RlbWr%steffen@sdaoden.eu>:
->  ...
->  ||Helmut Grohne wrote in
->  || <20230314110138.GA1192267@subdivi.de>:
->  |||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
->  |||>  * CVE-2021-33844
->  |||
->  |||The original fix for this issue would cause a regression. After applying
->  |||it, sox would be unable to decode WAV GSM files. This has been reported
->  ...
->
-> Today i got a nice email from Nam Nguyen who pointed out that my
-> last patch to this topic (also) introduced a bug.  So i downloaded
-> libGSM and yes he was right.  So on top of them all a partial undo
-> of the last is necessary; i will attach the full diff, too.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I propose keeping that check in order to fix the regression of not
-opening wav gsm files.
+            Xen Security Advisory CVE-2024-27393 / XSA-457
+                              version 3
 
-Steffn Nurpmeso's patch with tweaks can be found inline at the end of
-this email. This patch retains the line 654 hunk and adds line 961 hunk
-to avoid dividing by 0 for wav gsm files. wav->numSamples is calculated
-similarly to debian's version of sox.
+    Linux/xen-netfront: Memory leak due to missing cleanup function
 
-Feedback is welcome as I am not familiar with the code base.
+UPDATES IN VERSION 3
+====================
 
-debian's sox:
---8<---------------cut here---------------start------------->8---
-    943     case WAVE_FORMAT_GSM610:
-    944         wav->numSamples = ((qwDataLength / wav->blockAlign) * wav->samplesPerBlock);
-    945         wavgsminit(ft);
-    946         ft->signal.length = wav->numSamples*ft->signal.channels;
-    947         break;
-    948
-    949     default:
-    950         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample) / ft->signal.channels;
-    951         ft->signal.length = wav->numSamples * ft->signal.channels;
-    952     }
---8<---------------cut here---------------end--------------->8---
+CVE assigned.
 
+ISSUE DESCRIPTION
+=================
 
-new 961 hunk:
---8<---------------cut here---------------start------------->8---
-    967 #ifdef HAVE_LIBGSM
-    968     case WAVE_FORMAT_GSM610:
-    969         wav->numSamples = qwDataLength / wav->blockAlign * wav->samplesPerBlock;
-    970         wavgsminit(ft);
-    971         break;
-    972 #endif
-    973
-    974     }
-    975
-    976     if ((!wav->numSamples)
-    977 #ifdef HAVE_LIBGSM
-    978         && wav->formatTag != WAVE_FORMAT_GSM610
-    979 #endif
-    980     )
-    981         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample)
-    982             / ft->signal.channels;
---8<---------------cut here---------------end--------------->8---
-    
-Test cases
-----------
-Test case 1: convert /dev/null to bug.wav (wav gsm) and then convert
-bug.wav to fail.wav.
+In netfront, xennet_alloc_one_rx_buffer() failed to call the
+appropriate clean-up function, resulting in a memory leak.
 
-This test case is expected to pass.
+IMPACT
+======
 
-failing output:
---8<---------------cut here---------------start------------->8---
-$ sox -t raw -r 44100 -e signed-integer -b 8 /dev/null -t wav -e gsm-full-rate bug.wav
-$ sox bug.wav fail.wav
-sox FAIL formats: can't open input file `bug.wav': WAV file bits per sample is zero
---8<---------------cut here---------------end--------------->8---
+A malicious guest userspace process can exhaust memory resources
+within the guest kernel, potentially leading to a guest crash (Denial
+of Service). It is not known whether it can be triggered remotely.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems with guests running Linux 5.9 and later with Xen PV network
+devices are affected.
+
+MITIGATION
+==========
+
+For HVM guests, using emulated network devices will avoid this issue.
+
+RESOLUTION
+==========
+
+The following patch in Linux resolves the issue:
+
+https://git.kernel.org/torvalds/c/037965402a010898d34f4e35327d22c0a95cd51f
+
+A copy of which is attached.
+
+xsa457.patch           Linux 5.9
+
+$ sha256sum xsa457*
+9d6ae3da27f1ff92f9f45c800822beecda603d6dea6726207cee6c768416114c  xsa457.patch
+$
 
 
-correct output (which this provides):
---8<---------------cut here---------------start------------->8---
-$ sox -t raw -r 44100 -e signed-integer -b 8 /dev/null -t wav -e gsm-full-rate bug.wav
-$ sox bug.wav fail.wav
-$ file fail.wav
-fail.wav: RIFF (little-endian) data, WAVE audio, GSM 6.10, mono 44100 Hz
---8<---------------cut here---------------end--------------->8---
+NOTE ON THE LACK OF EMBARGO
+===========================
 
-Test case 2: convert flac to wav gsm. then, convert wav gsm to wav gsm.
+The issue was reported initially on a public bug tracker and fixed in
+public before it was realized that there was a security aspect.
+-----BEGIN PGP SIGNATURE-----
 
-This test case is expected to pass.
---8<---------------cut here---------------start------------->8---
-$ sox -t flac -r 44100 -e signed-integer -b 16 song.flac -t wav -e gsm-full-rate ok.wav
-$ sox ok.wav ok2.wav
---8<---------------cut here---------------end--------------->8---
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmY7+mgMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZIygH/2qlkovJs5zZy4dTpsygoSnSiv6L31r2IGmMnR/c
+qdgtfedzctQ/ibw0iaz/37w/d0F3lo/lg3iWnVgCcIfV384MvvoArFsOZ4v/RRXL
+b0XiNCb0k5xLpw9R86f7oG7cDw59JU+sXVjBH6GcVo86yL+HKaeli7/FZb9zkz/D
+VRushpxeA353u3FFdqHJcFlD68wA5nhM2JdjkPk1rrgPVc0sBLjHwrcFOrHHHuuq
+epYSYzWEf5HGbOf+zg6NY9B0uD4Vb9J3xa+xcYaHfPlQ1Jexw5GA7vBMO82qcR57
+lRwAOav844fHw+lNxizfg8+4ayFpOCyGX2WEag6qjN92qJE=
+=mMwm
+-----END PGP SIGNATURE-----
 
-inline patch
-------------
+--=separator
+Content-Type: application/octet-stream; name="xsa457.patch"
+Content-Disposition: attachment; filename="xsa457.patch"
+Content-Transfer-Encoding: base64
 
-https://marc.info/?l=oss-security&m=167571683504082&w=2
+RnJvbSAwMzc5NjU0MDJhMDEwODk4ZDM0ZjRlMzUzMjdkMjJjMGE5NWNkNTFm
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKZXNwZXIgRGFuZ2Fh
+cmQgQnJvdWVyIDxoYXdrQGtlcm5lbC5vcmc+CkRhdGU6IFdlZCwgMjcgTWFy
+IDIwMjQgMTM6MTQ6NTYgKzAxMDAKU3ViamVjdDogeGVuLW5ldGZyb250OiBB
+ZGQgbWlzc2luZyBza2JfbWFya19mb3JfcmVjeWNsZQoKTm90aWNlIHRoYXQg
+c2tiX21hcmtfZm9yX3JlY3ljbGUoKSBpcyBpbnRyb2R1Y2VkIGxhdGVyIHRo
+YW4gZml4ZXMgdGFnIGluCmNvbW1pdCA2YTViY2Q4NGU4ODYgKCJwYWdlX3Bv
+b2w6IEFsbG93IGRyaXZlcnMgdG8gaGludCBvbiBTS0IgcmVjeWNsaW5nIiku
+CgpJdCBpcyBiZWxpZXZlZCB0aGF0IGZpeGVzIHRhZyB3ZXJlIG1pc3Npbmcg
+YSBjYWxsIHRvIHBhZ2VfcG9vbF9yZWxlYXNlX3BhZ2UoKQpiZXR3ZWVuIHY1
+LjkgdG8gdjUuMTQsIGFmdGVyIHdoaWNoIGlzIHNob3VsZCBoYXZlIHVzZWQg
+c2tiX21hcmtfZm9yX3JlY3ljbGUoKS4KU2luY2UgdjYuNiB0aGUgY2FsbCBw
+YWdlX3Bvb2xfcmVsZWFzZV9wYWdlKCkgd2VyZSByZW1vdmVkIChpbgpjb21t
+aXQgNTM1YjljNjFiZGVmICgibmV0OiBwYWdlX3Bvb2w6IGhpZGUgcGFnZV9w
+b29sX3JlbGVhc2VfcGFnZSgpIikKYW5kIHJlbWFpbmluZyBjYWxsZXJzIGNv
+bnZlcnRlZCAoaW4gY29tbWl0IDZiZmVmMmVjMDE3MiAoIk1lcmdlIGJyYW5j
+aAonbmV0LXBhZ2VfcG9vbC1yZW1vdmUtcGFnZV9wb29sX3JlbGVhc2VfcGFn
+ZSciKSkuCgpUaGlzIGxlYWsgYmVjYW1lIHZpc2libGUgaW4gdjYuOCB2aWEg
+Y29tbWl0IGRiYTFiOGE3YWI2OCAoIm1tL3BhZ2VfcG9vbDogY2F0Y2gKcGFn
+ZV9wb29sIG1lbW9yeSBsZWFrcyIpLgoKQ2M6IHN0YWJsZUB2Z2VyLmtlcm5l
+bC5vcmcKRml4ZXM6IDZjNWFhNmZjNGRlZiAoInhlbiBuZXR3b3JraW5nOiBh
+ZGQgYmFzaWMgWERQIHN1cHBvcnQgZm9yIHhlbi1uZXRmcm9udCIpClJlcG9y
+dGVkLWJ5OiBMZW9uaWRhcyBTcHlyb3BvdWxvcyA8YXJ0YWZpbmRlQGFyY2hs
+aW51eC5jb20+Ckxpbms6IGh0dHBzOi8vYnVnemlsbGEua2VybmVsLm9yZy9z
+aG93X2J1Zy5jZ2k/aWQ9MjE4NjU0ClJlcG9ydGVkLWJ5OiBBcnRodXIgQm9y
+c2Jvb20gPGFydGh1cmJvcnNib29tQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1i
+eTogSmVzcGVyIERhbmdhYXJkIEJyb3VlciA8aGF3a0BrZXJuZWwub3JnPgpM
+aW5rOiBodHRwczovL2xvcmUua2VybmVsLm9yZy9yLzE3MTE1NDE2NzQ0Ni4y
+NjcxMDYyLjkxMjcxMDUzODQ1OTEyMzczNjMuc3RnaXRAZmlyZXNvdWwKU2ln
+bmVkLW9mZi1ieTogSmFrdWIgS2ljaW5za2kgPGt1YmFAa2VybmVsLm9yZz4K
+LS0tCiBkcml2ZXJzL25ldC94ZW4tbmV0ZnJvbnQuYyB8IDEgKwogMSBmaWxl
+IGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
+cy9uZXQveGVuLW5ldGZyb250LmMgYi9kcml2ZXJzL25ldC94ZW4tbmV0ZnJv
+bnQuYwppbmRleCBhZDI5ZjM3MDAzNGU0Zi4uOGQyYWVlODg1MjZjNjkgMTAw
+NjQ0Ci0tLSBhL2RyaXZlcnMvbmV0L3hlbi1uZXRmcm9udC5jCisrKyBiL2Ry
+aXZlcnMvbmV0L3hlbi1uZXRmcm9udC5jCkBAIC0yODUsNiArMjg1LDcgQEAg
+c3RhdGljIHN0cnVjdCBza19idWZmICp4ZW5uZXRfYWxsb2Nfb25lX3J4X2J1
+ZmZlcihzdHJ1Y3QgbmV0ZnJvbnRfcXVldWUgKnF1ZXVlKQogCQlyZXR1cm4g
+TlVMTDsKIAl9CiAJc2tiX2FkZF9yeF9mcmFnKHNrYiwgMCwgcGFnZSwgMCwg
+MCwgUEFHRV9TSVpFKTsKKwlza2JfbWFya19mb3JfcmVjeWNsZShza2IpOwog
+CiAJLyogQWxpZ24gaXAgaGVhZGVyIHRvIGEgMTYgYnl0ZXMgYm91bmRhcnkg
+Ki8KIAlza2JfcmVzZXJ2ZShza2IsIE5FVF9JUF9BTElHTik7Ci0tIApjZ2l0
+IDEuMi4zLWtvcmcKCg==
 
-unbreak wav gsm
-https://marc.info/?l=oss-security&m=167882517702862&w=2
-
-Index: src/wav.c
---- src/wav.c.orig
-+++ src/wav.c
-@@ -654,6 +654,15 @@ static int wav_read_fmt(sox_format_t *ft, uint32_t len
-     if (err)
-         return SOX_EOF;
- 
-+    if (wav->bitsPerSample == 0
-+#ifdef HAVE_LIBGSM
-+            && wav->formatTag != WAVE_FORMAT_GSM610
-+#endif
-+    ){
-+        lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample is zero");
-+        return SOX_EOF;
-+    }
-+
-     /* non-PCM formats except alaw and mulaw formats have extended fmt chunk.
-      * Check for those cases.
-      */
-@@ -961,9 +970,14 @@ static int startread(sox_format_t *ft)
-         wavgsminit(ft);
-         break;
- #endif
-+
-     }
- 
--    if (!wav->numSamples)
-+    if ((!wav->numSamples)
-+#ifdef HAVE_LIBGSM
-+            && wav->formatTag != WAVE_FORMAT_GSM610
-+#endif
-+    )
-         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample)
-             / ft->signal.channels;
- 
-@@ -1348,8 +1362,10 @@ static int wavwritehdr(sox_format_t * ft, int second_h
-         (dwSamplesWritten + wSamplesPerBlock - 1) / wSamplesPerBlock;
-     dwDataLength = blocksWritten * wBlockAlign;
- 
-+#ifdef HAVE_LIBGSM
-     if (wFormatTag == WAVE_FORMAT_GSM610)
-         dwDataLength = (dwDataLength+1) & ~1u; /* round up to even */
-+#endif
- 
-     if (wFormatTag == WAVE_FORMAT_PCM && (wBitsPerSample > 16 || wChannels > 2)
-         && strcmp(ft->filetype, "wavpcm")) {
-@@ -1444,9 +1460,11 @@ static int wavwritehdr(sox_format_t * ft, int second_h
-             lsx_writew(ft, (uint16_t)(lsx_ms_adpcm_i_coef[i][1]));
-         }
-         break;
-+#ifdef HAVE_LIBGSM
-         case WAVE_FORMAT_GSM610:
-         lsx_writew(ft, wSamplesPerBlock);
-         break;
-+#endif
-         default:
-         break;
-     }
-@@ -1554,7 +1572,9 @@ static int stopwrite(sox_format_t * ft)
- 
-         /* Add a pad byte if the number of data bytes is odd.
-            See wavwritehdr() above for the calculation. */
-+#ifdef HAVE_LIBGSM
-         if (wav->formatTag != WAVE_FORMAT_GSM610)
-+#endif
-           lsx_padbytes(ft, (size_t)((wav->numSamples + wav->samplesPerBlock - 1)/wav->samplesPerBlock*wav->blockAlign) % 2);
- 
-         free(wav->packet);
-@@ -1594,6 +1614,7 @@ static int seek(sox_format_t * ft, uint64_t offset)
- 
-   if (ft->encoding.bits_per_sample & 7)
-     lsx_fail_errno(ft, SOX_ENOTSUP, "seeking not supported with this encoding");
-+#ifdef HAVE_LIBGSM
-   else if (wav->formatTag == WAVE_FORMAT_GSM610) {
-     int alignment;
-     size_t gsmoff;
-@@ -1613,7 +1634,9 @@ static int seek(sox_format_t * ft, uint64_t offset)
-           new_offset += (wav->samplesPerBlock - alignment);
-       wav->numSamples = ft->signal.length - (new_offset / ft->signal.channels);
-     }
--  } else {
-+  }
-+#endif /* HAVE_LIBGSM */
-+  else {
-     double wide_sample = offset - (offset % ft->signal.channels);
-     double to_d = wide_sample * ft->encoding.bits_per_sample / 8;
-     off_t to = to_d;
-
+--=separator--
