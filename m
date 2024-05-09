@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1217" "Thursday" "31" "March" "2016" "13:19:36" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160331201936.GA25397@hunt>" "40" "[oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152" nil nil nil "3" "2016033120:19:36" "[oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152" (number mark "U       seth.arnold@ Mar 31   40/1217  " thread-indent "\"[oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28100 invoked by uid 550); 31 Mar 2016 20:19:50 -0000
+Received: (qmail 3537 invoked by uid 550); 9 May 2024 21:38:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28082 invoked from network); 31 Mar 2016 20:19:50 -0000
-Date: Thu, 31 Mar 2016 13:19:36 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-Message-ID: <20160331201936.GA25397@hunt>
-Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
+Received: (qmail 1642 invoked from network); 9 May 2024 17:45:38 -0000
+Date: Thu, 9 May 2024 19:45:29 +0200
+From: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20240509174529.GA31480@unix-ag.uni-kl.de>
+References: <20231221143630.GD14101@suse.de>
+ <ZjBHOEHylGAaIo57@moon>
+ <20240430224823.uA8Nr1Cp@steffen%sdaoden.eu>
+ <20240502182146.ygWZjB-Z@steffen%sdaoden.eu>
+ <20240502195319.GA19209@openwall.com>
+ <ZjuTvJ5sifwGhs2q@moon>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152
-
---opJtzjQTFsWo+cga
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <ZjuTvJ5sifwGhs2q@moon>
+Author: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+Subject: Re: [oss-security] New SMTP smuggling attack
 
-Hello MITRE, all,
+Hi,
 
-Tomas Hoger asked if CVE-2015-3152 is appropriate for re-use with the php
-mysqlnd interface:
-https://marc.info/?l=oss-security&m=143750829604598
-http://www.openwall.com/lists/oss-security/2015/07/21/7
-Message-ID: <20150721215101.5b7c0a96@redhat.com>
+On Wed, May 08, 2024 at 10:01:16AM -0500, Mark Esler wrote:
+> [...]
+> On 4/30/24 14:42, Erik Auerswald wrote:
+> > 
+> > Well, my reading of the RFC does not forbid this sequence.  RFC 5321
+> > clearly does not require transforming this sequence into another
+> > sequence.
+> 
+> I should have initially clarified that _"forbidden" pattern_ refers
+> to RFC 5321 section 4.5.2:
+>    
+>    Without some provision for data transparency, the character sequence
+>    "<CRLF>.<CRLF>" ends the mail text and cannot be sent by the user.
+>    In general, users are not aware of such "forbidden" sequences.  To
+>    allow all user composed text to be transmitted transparently, the
+>    following procedures are used:
+>    
+>    o  Before sending a line of mail text, the SMTP client checks the
+>       first character of the line.  If it is a period, one additional
+>       period is inserted at the beginning of the line.
+>    
+>    o  When a line of mail text is received by the SMTP server, it checks
+>       the line.  If the line is composed of a single period, it is
+>       treated as the end of mail indicator.  If the first character is a
+>       period and there are other characters on the line, the first
+>       character is deleted.
+> 
+> I believe "<CRLF><NUL>.<CRLF>" is a forbidden sequence. Resnick's
+> response to this sequence is:
+>   "Yes, the sending MTA should strip the NUL (as per RFC 5321 section
+>   4.1.1.4) and then dot-stuff the dot on the line by itself (as per
+>   RFC 5321 section 4.5.2)."
 
-This association is already made at e.g.:
-https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1564388
+This section of the RFC explicitly states that any ASCII character is
+allowed (see the first sentence you omitted from your quote).  Any ASCII
+character includes NUL.  Stripping the NUL violates the standard.
+This is obvious.  The RFC text is clear.
 
-I never saw a response to his question.
+> > You to seem to advocate for "repair".  The "repair" strategy makes
+> > Cisco's ESA vulnerable.  I would argue that rejecting messages is
+> > less insecure.
+> 
+> By default, Cisco ESA is not RFC compliant.
 
-Can we re-use this CVE for the different codbase? If not, can one please
-be assigned?
+The Cisco ESA has been called out in the original SMTP smuggling report
+as facilitating SMTP smuggling attacks, thus it is useful as an example.
+It provides an example where a side-effect of rewriting email content is
+vulnerability to "SMTP smuggling".  The important part is that rewriting
+email content might have unintended side-effects, independent of RFC
+compliance.
 
-Thanks
+> Their "clean" option only replaces bare <CR> and <LF> characters with
+> <CRLF>. So that <CR>.<CR> becomes <CRLF>.<CRLF>. Both of these are
+> "forbidden" patterns and should be dot stuffed.
 
+The one and only "forbidden" sequence is "<CRLF>.<CRLF>".
+The one and only sequence to be "dot stuffed" is "<CRLF>.<CRLF>".
 
---opJtzjQTFsWo+cga
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+I think that "forbidden" is a bad choice of words.  It does not mean that
+some authority has "forbidden" sending this sequence inside an email,
+but that SMTP needs a way to transparently transport the "forbidden"
+sequence for the user who is explicitly *allowed* to send it:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+    "To allow all user composed text to be transmitted transparently"
 
-iQEcBAEBAgAGBQJW/YZYAAoJEPMhclmdjS6XPrkH/iPrVoj39VwIX0kxvF9mBPjW
-2kLAWKV84iOJmDfhcMre4LFssxZ1DQwQG717VzoBR48DlxkLZgOAV76QXm82eAJI
-ib8DNWD3XXLRJFKKJbYKn/k5/Tb3fjki3D0kNm6PeTWrh5lEevl9OPBXBB7vvobh
-c4987BFe/A1yh+7SS5vkW5DXs5c6vT8TqgluISK3X1biVprzZxdqkxw8EHxcJxpX
-HUb0peWwgs233hmYHeBlRTTyYcgCMLU8Qo3bCJoJXU7HVnosMuCiZl0KIBK3J3PF
-izKO1E4iLxjXP9ZYICMtiGnJe7lXtQCSBb3zFX0LQSg7W6tQmGrlM0ytmw42vrE=
-=y4ou
------END PGP SIGNATURE-----
+    "The mail data may contain any of the 128 ASCII characters."
 
---opJtzjQTFsWo+cga--
+Best regards,
+Erik
