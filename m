@@ -1,4 +1,4 @@
-Received: (qmail 9898 invoked by uid 550); 5 Feb 2024 13:06:34 -0000
+Received: (qmail 27680 invoked by uid 550); 10 May 2024 12:47:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,106 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9880 invoked from network); 5 Feb 2024 13:06:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1707138542; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
-	b=qszdP0jnCZA0ORm58WldFEjE9xbblmLskYalkvkaXIEclHeE912r1N2Pxl3+kPXqyCe6Ph
-	VnY3BBzilsVZTfwgiQWxsHYMiIUF007vly9jbM2kKH442Hh/dyjHJSeGlrlExuIgZs8L6s
-	kvjlKPbCqR150QPW6e69FmtiCed4QEo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1707138542;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
-	b=RGkzaiM18zritxtx7wRhb8VTeOJ3wWlWLaswf2yeOg8c211RCYUa5vFR7A/wNouf3VCXGL
-	SdBFQQunDnewsRDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1707138542; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
-	b=qszdP0jnCZA0ORm58WldFEjE9xbblmLskYalkvkaXIEclHeE912r1N2Pxl3+kPXqyCe6Ph
-	VnY3BBzilsVZTfwgiQWxsHYMiIUF007vly9jbM2kKH442Hh/dyjHJSeGlrlExuIgZs8L6s
-	kvjlKPbCqR150QPW6e69FmtiCed4QEo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1707138542;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4gb98hX1QxTpV/uf63iR/DaOr50I1SRvJJqS6PXnHy0=;
-	b=RGkzaiM18zritxtx7wRhb8VTeOJ3wWlWLaswf2yeOg8c211RCYUa5vFR7A/wNouf3VCXGL
-	SdBFQQunDnewsRDg==
-Date: Mon, 5 Feb 2024 14:08:59 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 26612 invoked from network); 10 May 2024 12:47:23 -0000
+Date: Fri, 10 May 2024 14:47:13 +0200
+From: Christian Brabandt <cb@256bit.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ZcDd7XcP6h_P8JRj@kasco.suse.de>
-References: <Za-XWUEPml2pcATt@kasco.suse.de>
- <20240124084235.360eb42b.hanno@hboeck.de>
- <20240202181244.GA10788@openwall.com>
+Cc: lennard.hofmann@web.de
+Message-ID: <Zj4XUd982lJXTh4u@256bit.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ZLR+80zZltx7aZ1C"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240202181244.GA10788@openwall.com>
-Authentication-Results: smtp-out1.suse.de;
-	none
-Subject: Re: [oss-security] systemd and other system services
- (in)compatibility with Linux procfs hidepid (was: darkhttpd: timing attack
- and local leak of HTTP basic auth credentials)
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] buffer-overlow in xxd with colored output < v9.1.0404
 
---ZLR+80zZltx7aZ1C
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Date: Mon, 5 Feb 2024 14:08:59 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd and other system services
- (in)compatibility with Linux procfs hidepid (was: darkhttpd: timing attack
- and local leak of HTTP basic auth credentials)
+buffer overflow when outputting colored output in xxd
+=====================================================
+Date: 10.05.2024
+Severity: Low
 
-Hello,
+When outputting colored hexdumps using the -R command line flag, 
+together with -g1 (group every byte), -c 256 (format 256 octets per 
+line), -d (show offsets in decimal) and -o <large_numer> (add offset to 
+the file position), the buffer used to write to may overflow.
 
-On Fri, Feb 02, 2024 at 07:12:44PM +0100, Solar Designer wrote:
-> Since I'm adding to a thread started with Matthias' security review of
-> darkhttpd, I'd like to say that I'm impressed by his consistent effort
-> to review code that few others look at and the consistently high quality
-> of his findings and write-ups.  Thank you, Matthias!  Also, thank you
-> SUSE for (apparently) enabling Matthias to spend time on this.
+Impact is low since the user must intentionally execute xxd with several 
+non-default flags, but it may cause a crash of xxd.
 
-thanks a lot for the recognition!
+The Vim project would like to thank github user Lennard Hofmann for 
+reporting and fixing this issue in Vim patch 9.1.0404.
 
-In the face of the codebase of a complete Linux distribution there are
-limits to what our team can do, but we try to invest our resources
-efficiently and hope to contribute back to the community this way.
-Getting feedback like this for sure motivates us to continue on this
-path.
+URLs: https://github.com/vim/vim/commit/67797191e039196128c69
 
-Best Regards
-
-Matthias
-
---ZLR+80zZltx7aZ1C
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmXA3ewACgkQFMQFyXGS
-NVMGDA/9G48LX1n8eatbkWJlTR8bofdkd0eR4aS0pa0qPFINtaXJ+iL3Fg4peHWr
-O+LXHLZVmDSpsJaZgiqAI2KrrTtb1Dj+9/q9euzrq21PpOD5ZXLvevIbkEzBcD/C
-vfX4V7blgF06bavEpnSzrMoikuUQY7SlzsRlKllelfNzNupUH0jNEuIPW/T3H1ie
-PtAkOH8A2qkG+2ZLn878ucqVLbvGUMhll1RbGHYzVjU8QNvOTZWzbdqxOH9qxcTD
-mgN2x2pyES5cC5ezWT6pMf85XNzhOb4a5TWmkAEltE7m4KyJ8CUhyQAN/utOmfx3
-Mm7xqi+2Iypq1FGRxIMAP5py+BIDPNBrl2N72/GIx+UigaNHMquM1ksnMFvGB7dD
-BKaDh7vixMArRXf/4ndS1hG0eqRj0pik0G0dNXtahd3797OdHjTEpkL0XcnVY3Ud
-aJj8mHtLDMeQosttMxsZiY92xgOApNSkvxrcFc2kesNY7JfrwxxiCPAnpEKSQJNR
-cYlAX4KHbKHsF23UC1sbrAL291dnuwf+CGjLi+Ai8FD4Gs5bf574U/DO0MZxb/RM
-8Bk/ODzjhXhaBDJic/WM0QTgNwqjTw5pjF8DI+OVrMAikUilJwM/vfS7+YXarLYY
-HBdjtuSIvwWTlYrcPPWL82u9QPpQMcZlY7zfqtca2OZ0sowijAA=
-=Gvij
------END PGP SIGNATURE-----
-
---ZLR+80zZltx7aZ1C--
+Thanks,
+Chris
+-- 
+Ein Torheit, über die viele Satiren gemacht worden und bei der jede
+neue Satire verliert, ist in der Wirklichkeit desto komischer.
+		-- Jean Paul
