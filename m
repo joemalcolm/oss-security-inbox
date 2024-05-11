@@ -1,4 +1,4 @@
-Received: (qmail 21871 invoked by uid 550); 7 Jan 2026 07:09:41 -0000
+Received: (qmail 3426 invoked by uid 550); 11 May 2024 11:22:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,115 +7,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21825 invoked from network); 7 Jan 2026 07:09:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1767769770; bh=c/KD3bawn/9V6+hOAfci7tSdoqaUan7wQ8GFWou4DhY=;
-	h=Date:From:To:Subject:From;
-	b=OH3i/b9Je/XKHo/pM6MTbHU9qNj6pV3BtKa32Qje3SJ8HBa6AoJola8ikBPZyAYQe
-	 BoatlemXnVzNT9FUuu8q+SriTuM3AuYMRAXWDEzvXyBJfhs78geSQuJ/4qmm/48/Yg
-	 JwhEbhwvWS4fLRskLUSPVbHcvR2ptrVzP1Dsr+6aPASb7dwjlROAOGAR942EYZyP10
-	 C2/LOi+joAsDJ4U+HbA4iGVqv3J7yQEma1F36d46g0Dt962jrlWXou5Hm1ZJpLNlhO
-	 9eRBjOcQv17UqSCoOYc3YJkBWk7JaiRVta534gTi50HI44UbyhE5zBmxqZFzh1Do69
-	 nJsyypWTCO22g==
-Date: Wed, 7 Jan 2026 08:09:30 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <s5rs5174-q08r-s115-qo65-7871rpp9s6n0@unkk.fr>
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [ADVISORY] curl CVE-2025-14524: bearer token leak on cross-protocol
- redirect
+Received: (qmail 1378 invoked from network); 11 May 2024 11:21:30 -0000
+Date: Sat, 11 May 2024 13:21:23 +0200
+From: Solar Designer <solar@openwall.com>
+To: Corey Lopez <Corey.lopez09160587@hotmail.com>
+Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <20240511112123.GA2064@openwall.com>
+References: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Microsoft Device Firmware Configuration Interface (DFCI) in Linux efivars directory
 
-bearer token leak on cross-protocol redirect
-============================================
+Hi,
 
-Project curl Security Advisory, January 7 2026 -
-[Permalink](https://curl.se/docs/CVE-2025-14524.html)
+Corey's message is confused and there's no indication in it whether the
+system was compromised, so that part doesn't need further discussion,
+but as a moderator I don't mind someone explaining Linux's (and other
+systems') exposure of the EFI variables and DFCI and what it means for
+security as well as what it does not.
 
-VULNERABILITY
--------------
+On Fri, May 10, 2024 at 01:19:35PM +0000, Corey Lopez wrote:
+> investigate other files on my system with the immutable attribute set by running this
+> command as root:
+> 
+> # find / -type f -exec lsattr {} + 2>/dev/null > immutable-list-find.txt
+> 
+> This led me the directory /sys/firmware/efi/efivars/ where I discovered efi variables
 
-When an oauth2 bearer token is used for an HTTP(S) transfer, and that transfer
-performs a cross-protocol redirect to a second URL that uses an IMAP, LDAP,
-POP3 or SMTP scheme, curl might wrongly pass on the bearer token to the new
-target host.
+That's normal.
 
-INFO
-----
+> Microsoft advertises DFCI as a defense mechanism against rootkits, however it seems that it
+> is being used as a UEFI bootkit.
 
-By default, curl only allows redirects to HTTP(S) and FTP(S), but can be asked
-to allow redirects to all protocols curl supports. This vulnerability only
-triggers for users who use OAUTH2 bearer and who actively enable redirects to
-one of the four protocols mentioned above and one of those schemes is used in
-the HTTP redirect. A highly unusual combination.
+No reason to think so.
 
-The redirect-to URL needs to have the user name component set (but not the
-password) to trigger this flaw.
+> I did discover loop devices on my system that I could not remove with the 
+> losetup command.
 
-This token leak also happens if the redirect is done to the same hostname,
-just a different protocol (and port).
+That's probably because they were in use.  That's normal.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2025-14524 to this issue.
-
-CWE-522: Insufficiently Protected Credentials
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.33.0 to and including 8.17.0
-- Not affected versions: curl < 7.33.0 and >= 8.18.0
-- Introduced-in: https://github.com/curl/curl/commit/06c1bea72faabb6fad4b7ef8
-
-libcurl is used by many applications, but not always advertised as such!
-
-This bug is not considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
-
-This flaw also affects the curl command line tool.
-
-SOLUTION
-------------
-
-Starting in curl 8.18.0, this mistake is fixed.
-
-- Fixed-in: https://github.com/curl/curl/commit/1a822275d333dc6da6043497160fd
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.18.0
-
-  B - Avoid allowing cross-protocol redirects
-
-  C - Avoid using oauth2 bearer tokens
-
-TIMELINE
---------
-
-This issue was reported to the curl project on December 9, 2025. We contacted
-distros@openwall on December 30, 2025.
-
-curl 8.18.0 was released on January 7 2026 around 07:00 UTC, coordinated
-with the publication of this advisory.
-
-The curl security team is not aware of any active exploits using this
-vulnerability.
-
-CREDITS
--------
-
-- Reported-by: anonymous237 on hackerone
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
+Alexander
