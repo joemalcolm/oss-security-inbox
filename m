@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3293" "Monday" "22" "May" "2017" "20:04:41" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<66f867c6-a0da-52da-657b-b7ca4a8ee07d@redhat.com>" "64" "Re: [oss-security] How to request a CVE for open source projects" "^Date:" nil nil "5" "2017052302:04:41" "[oss-security] How to request a CVE for open source projects" (number mark "        kseifried@re May 22   64/3293  " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<20170523011349.GA10335@wopr>" ("<1495476334.15944.2@mail.igalia.com>" "<20170522185720.GA13059@suse.de>" "<20170522194526.GC63527@wopr>" "<0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>" "<20170522234408.GA7465@wopr>" "<6c663f3b-985d-083e-8b00-d428e34b2e29@redhat.com>" "<20170523011349.GA10335@wopr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21730 invoked by uid 550); 23 May 2017 02:04:56 -0000
+Received: (qmail 5193 invoked by uid 550); 13 May 2024 15:44:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +6,513 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21711 invoked from network); 23 May 2017 02:04:55 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=bI2pWks7PP6Cnf+FJfGn+ZOKEL3qN2RrhUC5L/4TcX0=;
-        b=oss0kvd7bTTJpyObIopDNq61ypsILB92alNFe5ZCXBO8zVaTGf2njg9Pje0hthEsaM
-         ySQgQXJ2NoEjdMIUTjAxQdvUn99e8nMJCDwFMJSpojunAkm2KV9ACYNNzVt3QmE0VA8M
-         hc2w2dE8QyDonecjCymsVqp1Hnpo9Od8iTlnB4SYExn/U76Y3lASfIhJdtxV+OAF2VFf
-         PuIg5oJncL3/NMdZqvrHLAOtuj+pDtaYw730iu8OZinR8mSQAfuXtpvYayVXbXC/zmNl
-         8UkcgFZ8LYuHUDj95QKHHXEc0YXwV1b+Ck7RI8ME+CUFd4K5aZOpxs54x2mQpMFxaebx
-         EUCw==
-X-Gm-Message-State: AODbwcBkPZk2UWpaEcEYVifpF/M6i9Uhk1sbO9kl4Q2FXb+G4858rGeA
-	W0/AMzA7ubIDNjn1DBB2+A==
-X-Received: by 10.36.178.1 with SMTP id u1mr685461ite.12.1495505083477;
-        Mon, 22 May 2017 19:04:43 -0700 (PDT)
-References: <1495476334.15944.2@mail.igalia.com>
- <20170522185720.GA13059@suse.de> <20170522194526.GC63527@wopr>
- <0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
- <20170522234408.GA7465@wopr>
- <6c663f3b-985d-083e-8b00-d428e34b2e29@redhat.com>
- <20170523011349.GA10335@wopr>
-Message-ID: <66f867c6-a0da-52da-657b-b7ca4a8ee07d@redhat.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <20170523011349.GA10335@wopr>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-Date: Mon, 22 May 2017 20:04:41 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to request a CVE for open source projects
+Received: (qmail 9895 invoked from network); 12 May 2024 02:44:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715481862; x=1716086662; darn=lists.openwall.com;
+        h=in-reply-to:references:subject:to:mime-version:user-agent:reply-to
+         :from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=SPG78aNoour3oga7elBEM8O5dpDmCAWhLpx7pTmPUfE=;
+        b=H6zFMMixw2OKpjQ1l3mdvGCr7lAMWl3vFjo1YV0VzUPCT4Fv0KoxsJbAq16S8qxmlm
+         8lHISShZPwDEL6qQSR0H1yUum5mp09D3Ju3BPS2nwzqLPi7YV3slY8FLNmYO/wbpVAlx
+         BZ9cTVdLdoYEwgXN/KSTxB3QU3M9jhFBGzKS9GCklmXUW7Pw2aXjWpbfe4GdbFqyxcZf
+         NG56+FHVkKZqDwRAdhSAkrh/vjnbr/eREGaQkPCyeqyJaLfLU/leiDKwRgwr37W/QZ10
+         rB/WtsjZjw3kaWtgPDdvP1/HhMOa9S1UacBrZdZF05xeiR2IAyCgflFql+xJL5mghlGp
+         DP/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715481862; x=1716086662;
+        h=in-reply-to:references:subject:to:mime-version:user-agent:reply-to
+         :from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SPG78aNoour3oga7elBEM8O5dpDmCAWhLpx7pTmPUfE=;
+        b=AF/ZQOXXI7deUQ9ZFI2JVF+SQ3yRQqbeWc36q54eOxyhbMPnknRz1/9njza5wwPeL7
+         M3kz+2JfTjbW/bchEP2r5hmgySOl8G6/3E7BewsggQUGueJLpLXfsvfSLuWbtNuunm3d
+         8pHNfMb5NSslK4zOS5x0TT6tOXwqpMAUSWaBUcFp86kInuCakunJah5nqMRbSWNO7dAP
+         xuUA7H0uSW9rKm7VGJyMJLRAkU5w1OvLKSNCZtLDO8rOcyRp/kb87bDzzD2hiIwIxrdC
+         v3mQixfvCYY0vzvrLTjOjCKIsmEvwoVaZdpP9xcYw0PkBvemmg+gc3tl4MwRLQ9xa9RI
+         zSQw==
+X-Gm-Message-State: AOJu0YzocopFWU+1JViOuJbRORQdIfMhkfn0GUcAwLKNCbp8PqINxPos
+	vCQEI2oGtdOLngOGyvpoLSwCVKE6urMG0yDR+U198EVPqmTzhz/VzdDOyeFb
+X-Google-Smtp-Source: AGHT+IHyJgCHFel4C2pIu6Va5+3mOTN8oVdOIQkbu9hoaFRsMhYMtUxL/+Tp+rQJINEY6tld2HWWtQ==
+X-Received: by 2002:aca:1a13:0:b0:3c9:6c89:9a79 with SMTP id 5614622812f47-3c99704c359mr7264747b6e.21.1715481861494;
+        Sat, 11 May 2024 19:44:21 -0700 (PDT)
+Message-ID: <66402D01.8090200@gmail.com>
+Date: Sat, 11 May 2024 21:44:17 -0500
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+MIME-Version: 1.0
 To: oss-security@lists.openwall.com
+References: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
+In-Reply-To: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
+Content-Type: multipart/mixed;
+ boundary="------------000100080402000705020703"
+Subject: Re: [oss-security] Microsoft Device Firmware Configuration Interface
+ (DFCI) in Linux efivars directory
 
-On 2017-05-22 7:13 PM, Kurt H Maier wrote:
-> On Mon, May 22, 2017 at 06:53:42PM -0600, Kurt Seifried wrote:
->>
->> On 2017-05-22 5:44 PM, Kurt H Maier wrote:
->> Neither, that's part of what I'm figuring out. Most likely it'll look
->> like a trusted pool of people (aka CVE Mentors) that can either
->> contribute or more easily gatekeep). Also the doc are out of date and
->> the process is evolving rapidly so I haven't really bothered updating
->> them since things keep changing.
-> It might be worth noting that in the README file on the documentation
-> repo.  It wouldn't take long and may prevent confusion in the meantime.
+--------------000100080402000705020703
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Corey Lopez wrote:
+> I have dual boot Windows 11 Home Edition and Debian based setup on my laptop.
 >
->> Good question. What exactly is it you want to input? CVE requests? CVE
->> assignments? Modify existing CVE entries?
-> Primarily, freeform discussion of the sort that occurred on this list as
-> a natural outcropping of the CVE request process led to people linking
-> to verification code, temporary mitigations, highlighting of incomplete
-> fixes, and the sort of information that was requested earlier in this
-> thread.  This ability to easily chip in to ongoing situations wasn't
-> just useful for mitre staff doing CVE work, it was also useful for the
-> "community of practice" looking for the latest information regarding
-> self-defense.  I've prevented more than one attack thanks to a one-off
-> reply from someone in response to a CVE request.  
-
-You can still do this. oss-security is a list run by Solar Designer
-(openwall.com). I happen to be a long time poster/moderator, but I have
-no official control/etc (I don't even block posts, that's up to solar, I
-just allow stuff or ignore it when it's up for moderation).
-
-The DWF will not be taking CVE requests on oss-security (ditto for
-MITRE/etc.), why? They're way to messy. We need well structured requests
-i we want this to scale (I should know, I've done over 5000 CVE
-assignments). One goal is to get CVE assignments down to minutes with
-minimal latency (e.g. a large pool of assigners so timezones aren't a
-problem). This stuff can then be posted to oss-security WITH a CVE.
-
-Or you can post it to oss-security WITHOUT a CVE (like you did in past)
-and still have all the discussion. The only change is if you want a CVE
-you hav to fill out a simple form and wait a bit. You had to wait when
-you posted here so the waiting part hasn't changed much. (well ok, right
-now the DWF is slow, but again I'm working on that).
-
+> Distributor ID: Kali
+> Description:    Kali GNU/Linux Rolling
+> Release:        2024.1
+> Codename:       kali-rolling
 >
-> The CVE assignment process was more than just a collaborative
-> database-population effort.  With the shift to webforms and javascript
-> the natural environment which promoted that discourse is being removed.
-I disagree. If not assigning CVE's on the list kills this list, then...
-wow. Good to know I personally kept this list up and running for a few
-years.
+> After realizing a security breach on my Kali system I discovered /etc/network/interface
+> had the immutable attribute set while trying to restrict access using chmod. I decided to
+> investigate other files on my system with the immutable attribute set by running this
+> command as root:
 >
->> Not really. the docs are out of date and I'm more concerned about
->> evolving this right now then updating documentation.
-> Again, I strongly suggest you note on the README that this is the case.
-> As matters stand the documentation represents itself as accurate.
-Which README specifically (there's a bunch), feel free to reply offlist.
-
+> # find / -type f -exec lsattr {} + 2>/dev/null > immutable-list-find.txt
 >
-> khm
+> This led me the directory /sys/firmware/efi/efivars/ where I discovered efi variables
+> pertaining Microsoft's Device Firmware Configuration Interface (DFCI).
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+Were the EFI variables marked immutable or did you make a list of every 
+file on the system and notice them on that list?
 
+> Microsoft's
+> DFCI enables zero touch remote configuration of UEFI BIOS giving the ability to
+> manage BIOS settings and hardware. The DFCI allows for remote disabling or enabling
+> of cameras, microphones, radios, boot external media, bootstrapping an OS, cpu
+> virtualization, and I/O virtualization. According to Microsoft's github page, the zero
+> touch certificate is shared by all DFCI-enabled systems and does not need to be injected
+> at manufacturing.
+>
+> Microsoft advertises DFCI as a defense mechanism against rootkits, however it seems that it
+> is being used as a UEFI bootkit. According to Microsoft DFCI is not available for Windows 10
+> or 11 Home Edition. My Acer Aspire 3 15 has Windows 11 Home Edition, and was purchased
+> as a consumer product versus a commercial. This means that not only is there a capability that
+> DFCI can be implemented on a consumer product, but through a Linux based operating system.
+>   
+
+I will admit that this seems strange, but it appears that your laptop 
+has firmware support for DFCI even though, by Microsoft's claims, it 
+should not be eligible for that feature.
+
+> I will provide the ASCII output of each file that I found on my Kali Linux system from the
+> /sys/firmware/efi/efivars/ directory. I will not provide the entire hexdump output to save space.
+> However, I will provide more if requested after my initial posting. 
+>
+> [... snip ASCII columns from hex dump; reformatted below ...]
+
+For a first step, I note that those EFI variables appear to contain XML, 
+and have (using ` sed -e '/^|/{: L;/|$/N;s/|\n|//;t L}' | sed -e 
+'/|$/{N;N;s/\(.\{16\}\)|\n\*\n|/\1\1/}' -e 's/^|\.\.\.\.//' -e 
+'s/\.|\n/\n/' -e 's/\.|$//' | awk '/^<\?xml/ { print | "xml_pp"; 
+close("xml_pp"); next } 1' `) converted that back to readable ASCII, 
+with the XML nicely pretty-printed; attached in full, some possibly 
+interesting details inline below:
+
+> File Name: DfciPermissionCurrent-3a9777ea-0d9f-4b65-9ef3-7caa7c41994b
+>
+> ASCII Output:
+>
+> <?xml version="1.0" encoding="utf-8"?>
+> <CurrentPermissionsPacket Default="1" Delegated="128">
+>   <Date>2024-01-30T13:51:08</Date>
+>   [...]
+>   <LSV>0</LSV>
+> </CurrentPermissionsPacket>
+
+
+The "Date" field is potentially interesting if you had the laptop at 
+that time, but if the laptop is newer than that date, it and the other 
+dates are likely manufacturing-related timestamps.
+
+> File Name: DfciSettingsCurrent-d41c8c24-3f5e-4ef4-8fdd-073e1866cd01
+>
+> ASCII Output:
+>
+> <?xml version="1.0" encoding="utf-8"?>
+> <CurrentSettingsPacket>
+>   <Date>2024-01-30T13:51:34</Date>
+>   
+
+The dates are close together; did you have that laptop prior to January 
+30th, 2024?
+
+>   <Settings>
+>     [...]
+>     <SettingCurrent>
+>       <Id>Device.Password.Password</Id>
+>       <Value>No System Password</Value>
+>     </SettingCurrent>
+>   
+
+I could not pass up this apparent detail that it seems Microsoft may be 
+putting passwords in plaintext again, unless that field merely reports a 
+status.
+
+>     <SettingCurrent>
+>       <Id>Dfci.RecoveryUrl.String</Id>
+>       <Value/>
+>     </SettingCurrent>
+>   
+
+This and several following fields all have no value whatsoever, while 
+others seem to me to have neutral values; this looks like DFCI is 
+present but unconfigured.
+
+>     [...]
+>   </Settings>
+>   <LSV>0</LSV>
+> </CurrentSettingsPacket>
+>
+> File Name: UEFISettingsCurrent-d41c8c24-3f5e-4ef4-8fdd-073e1866cd01
+>
+> ASCII Output:
+>
+> <?xml version="1.0" encoding="utf-8"?>
+> <CurrentSettingsPacket>
+>   <Date>2024-01-30T13:51:34</Date>
+>   <Settings>
+>   [... snip apparent duplicate settings ...]
+>   </Settings>
+>   <LSV>0</LSV>
+> </CurrentSettingsPacket
+
+The date here matches the date on the DfciSettingsCurrent variable.
+
+> I did discover loop devices on my system that I could not remove with the 
+> losetup command. I had to manually remove them with the rm -f command from 
+> the /dev/disks directory.
+
+Using rm does not remove the devices at all:  they are still present in 
+the kernel, and you only removed the nodes from the filesystem.
+
+> Also, I ran the lsof command, which helped me discover 
+> the type of file systems that were being used. This prompted me to use apt purge 
+> to remove Gnome Virtual File System from my laptop. 
+>
+> # lsof /dev/loop*
+>
+> I received this in response:
+>
+> can't stat() fuse.gvfsd-fuse file system /run/user/1000/gvfs
+> can't stat() fuse.portal file system /run/user/1000/doc
+>   
+
+Others have explained this weirdness; it is actually normal 
+functionality, except possibly for loop devices having been in use.  
+Just to make sure, you did run lsof *before* using rm, right?
+
+> This should be enough to give others places to look to determine if they have been
+> infected, however I will be more than happy to provide more if needed.
+>   
+
+See if the mystery loop devices come back after a reboot, and if so, use 
+losetup to determine what files they are attached to; that information 
+is needed to distinguish between normal operation and a possible 
+persistent compromise.  Also, I vaguely remember that attempting to 
+detach a loop device that is not attached can also report an error.  
+They may not actually be in use after all.
+
+
+-- Jacob
+
+--------------000100080402000705020703
+Content-Type: text/plain;
+ name="dfcidump.txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="dfcidump.txt"
+
+File Name: DfciDeviceIdentifier-4123a1a9-6f50-4b58-9c3d-56fc24c6c89e
+
+ASCII output:
+
+<?xml version="1.0" encoding="utf-8"?>
+<UEFIDeviceIdentifierPacket>
+  <Identifiers>
+    <Identifier>
+      <Id>Manufacturer</Id>
+      <Value>Acer</Value>
+    </Identifier>
+    <Identifier>
+      <Id>Product Name</Id>
+      <Value>Aspire A315-44P</Value>
+    </Identifier>
+    <Identifier>
+      <Id>Serial Number</Id>
+      <Value>NXKSJAA0044050439E3400</Value>
+    </Identifier>
+  </Identifiers>
+  <DfciVersion>2</DfciVersion>
+</UEFIDeviceIdentifierPacket>
+
+File Name: DfciIdentityCurrent-de6a8726-05df-43ce-b600-92bd5d286cfd
+
+(NOTE: something that stood out to me is the 
+Zero Touch ID: 0989C5F7EA3379388F79990875B23E031A5DA554)
+
+ASCII Output:
+
+<?xml version="1.0" encoding="utf-8"?>
+<UEFIIdentityCurrentPacket>
+  <Certificates>
+    <Certificate>
+      <Id>User</Id>
+      <Value>Cert not installed</Value>
+    </Certificate>
+    <Certificate>
+      <Id>User1</Id>
+      <Value>Cert not installed</Value>
+    </Certificate>
+    <Certificate>
+      <Id>User2</Id>
+      <Value>Cert not installed</Value>
+    </Certificate>
+    <Certificate>
+      <Id>Owner</Id>
+      <Value>Cert not installed</Value>
+    </Certificate>
+    <Certificate>
+      <Id>ZeroTouch</Id>
+      <Value>0989C5F7EA3379388F79990875B23E031A5DA554</Value>
+    </Certificate>
+  </Certificates>
+</UEFIIdentityCurrentPacket>
+
+File Name: DfciPermissionCurrent-3a9777ea-0d9f-4b65-9ef3-7caa7c41994b
+
+ASCII Output:
+
+<?xml version="1.0" encoding="utf-8"?>
+<CurrentPermissionsPacket Default="1" Delegated="128">
+  <Date>2024-01-30T13:51:08</Date>
+  <Permissions>
+    <PermissionCurrent>
+      <Id>Dfci.OwnerKey.Enum</Id>
+      <PMask>9</PMask>
+      <DMask>128</DMask>
+    </PermissionCurrent>
+    <PermissionCurrent>
+      <Id>Dfci.ZtdKey.Enum</Id>
+      <PMask>1</PMask>
+    </PermissionCurrent>
+    <PermissionCurrent>
+      <Id>Dfci.ZtdUnenroll.Enable</Id>
+      <PMask>0</PMask>
+    </PermissionCurrent>
+    <PermissionCurrent>
+      <Id>Dfci.Ztd.Recovery.Enable</Id>
+      <PMask>0</PMask>
+    </PermissionCurrent>
+  </Permissions>
+  <LSV>0</LSV>
+</CurrentPermissionsPacket>
+
+File Name: DfciSettingsCurrent-d41c8c24-3f5e-4ef4-8fdd-073e1866cd01
+
+ASCII Output:
+
+<?xml version="1.0" encoding="utf-8"?>
+<CurrentSettingsPacket>
+  <Date>2024-01-30T13:51:34</Date>
+  <Settings>
+    <SettingCurrent>
+      <Id>Device.BootOrderLock.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.USBBoot.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.BootOnboardNetwork.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.Password.Password</Id>
+      <Value>No System Password</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.RecoveryUrl.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.RecoveryBootstrapUrl.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.HttpsCert.Binary</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.RegistrationId.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.TenantId.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>MDM.FriendlyName.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>MDM.TenantName.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.CpuAndIoVirtualization.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci3.OnboardWpbt.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci3.AssetTag.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.OnboardAudio.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.OnboardRadios.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.IRCamera.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.FrontCamera.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.RearCamera.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci3.ProcessorSMT.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.CpuAndIoVirtualization.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.BootExternalMedia.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.OnboardCameras.Enable</Id>
+      <Value>Unknown</Value>
+    </SettingCurrent>
+  </Settings>
+  <LSV>0</LSV>
+</CurrentSettingsPacket>
+
+File Name: UEFISettingsCurrent-d41c8c24-3f5e-4ef4-8fdd-073e1866cd01
+
+ASCII Output:
+
+<?xml version="1.0" encoding="utf-8"?>
+<CurrentSettingsPacket>
+  <Date>2024-01-30T13:51:34</Date>
+  <Settings>
+    <SettingCurrent>
+      <Id>Device.BootOrderLock.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.USBBoot.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.BootOnboardNetwork.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.Password.Password</Id>
+      <Value>No System Password</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.RecoveryUrl.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.RecoveryBootstrapUrl.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.HttpsCert.Binary</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.RegistrationId.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.TenantId.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>MDM.FriendlyName.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>MDM.TenantName.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.CpuAndIoVirtualization.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci3.OnboardWpbt.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci3.AssetTag.String</Id>
+      <Value/>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.OnboardAudio.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.OnboardRadios.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.IRCamera.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.FrontCamera.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Device.RearCamera.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci3.ProcessorSMT.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.CpuAndIoVirtualization.Enable</Id>
+      <Value>Disabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.BootExternalMedia.Enable</Id>
+      <Value>Enabled</Value>
+    </SettingCurrent>
+    <SettingCurrent>
+      <Id>Dfci.OnboardCameras.Enable</Id>
+      <Value>Unknown</Value>
+    </SettingCurrent>
+  </Settings>
+  <LSV>0</LSV>
+</CurrentSettingsPacket>
+
+
+--------------000100080402000705020703--
