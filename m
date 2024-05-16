@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3731" "Wednesday" "11" "July" "2018" "08:06:01" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1807110007350.29047@tvnag.unkk.fr>" "126" "[oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow" nil nil nil "7" "2018071106:06:01" "[oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow" (number mark "U       daniel@haxx. Jul 11  126/3731  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27682 invoked by uid 550); 11 Jul 2018 06:06:14 -0000
+Received: (qmail 12214 invoked by uid 550); 16 May 2024 16:11:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,145 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27664 invoked from network); 11 Jul 2018 06:06:13 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 11 Jul 2018 08:06:01 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1807110007350.29047@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 30318 invoked from network); 16 May 2024 16:02:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1715875341; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=Y2riKiuVDMx8ws1TWNKzyvSzN4RhhkBqYt+g1cSWzC8=;
+	b=tb7RpaDWvTDge70sd802hSF3X+2kivUJKY0eQGs8D41ndWObPW8KRwi8SEzjPGxaDxRmx6
+	6iTiCJ84SHNK1biKvMekHjBGWaOiJEEVr5WP+u2a11qoXjgUE6rsq5SkDrdy8Ru/uNczIZ
+	DXvpcZ5kQRIgdIZUeLT8V2PJUgms0cwp/acUpfSTilZuhst0V0ojevikQwXXr071jrpLCJ
+	yVjcjr9ltmxjX+Y4RMaafVI1sm5Aj0fb7KWmg/geqmneBM3UgsqM9X+REaVIv9CkXkAqBV
+	U+2Us9p/LWbbcgCD+bHegB2WUuIQdAoZg8p3sn/s6E5AgU+1oQ+BlSqiqBjdjg==
+Date: Thu, 16 May 2024 16:02:21 +0000
+From: Tomas Mraz <tomas@openssl.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZkYuDd4PG0e89Qfy@openssl.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory [corrected CVE id]
 
-SMTP send heap buffer overflow
-==============================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project curl Security Advisory, July 11th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-70a2.html)
+OpenSSL Security Advisory [16th May 2024]
+=========================================
 
-VULNERABILITY
--------------
+Excessive time spent checking DSA keys and parameters (CVE-2024-4603)
+=====================================================================
 
-curl might overflow a heap based memory buffer when sending data over SMTP and
-using a reduced read buffer.
+Severity: Low
 
-When sending data over SMTP, curl allocates a separate "scratch area" on the
-heap to be able to escape the uploaded data properly if the uploaded data
-contains data that requires it.
+Issue summary: Checking excessively long DSA keys or parameters may be very
+slow.
 
-The size of this temporary scratch area was mistakenly made to be `2 *
-sizeof(download_buffer)` when it should have been made `2 *
-sizeof(upload_buffer)`.
+Impact summary: Applications that use the functions EVP_PKEY_param_check()
+or EVP_PKEY_public_check() to check a DSA public key or DSA parameters may
+experience long delays. Where the key or parameters that are being checked
+have been obtained from an untrusted source this may lead to a Denial of
+Service.
 
-The upload and the download buffer sizes are identically sized by default
-(16KB) but since version 7.54.1, curl can resize the download buffer into a
-smaller buffer (as well as larger). If the download buffer size is set to a
-value smaller than 10923, the `Curl_smtp_escape_eob()` function might overflow
-the scratch buffer when sending contents of sufficient size and contents.
+The functions EVP_PKEY_param_check() or EVP_PKEY_public_check() perform
+various checks on DSA parameters. Some of those computations take a long time
+if the modulus ("p" parameter) is too large.
 
-The curl command line tool lowers the buffer size when `--limit-rate` is set
-to a value smaller than 16KB.
+Trying to use a very large modulus is slow and OpenSSL will not allow using
+public keys with a modulus which is over 10,000 bits in length for signature
+verification. However the key and parameter check functions do not limit
+the modulus size when performing the checks.
 
-We are not aware of any exploit of this flaw.
+An application that calls EVP_PKEY_param_check() or EVP_PKEY_public_check()
+and supplies a key or parameters obtained from an untrusted source could be
+vulnerable to a Denial of Service attack.
 
-TEST CASES
-----------
-Here's a shell script
+These functions are not called by OpenSSL itself on untrusted DSA keys so
+only applications that directly call these functions may be vulnerable.
 
-     # Setup an SMTP end-point, make file, run curl
-     $ printf '220 Hi\n250 SIZE 10000\n250 OK\n250 OK\n354 send data\n' | nc -l -p 2525 >/dev/null &
-     $ printf '%5000s' > mail.txt
-     $ curl -v smtp://localhost:2525 --mail-from me --mail-rcpt root@localhost --upload-file mail.txt --limit-rate 1024
+Also vulnerable are the OpenSSL pkey and pkeyparam command line applications
+when using the "-check" option.
 
-PHP code:
+The OpenSSL SSL/TLS implementation is not affected by this issue.
 
-     <?php
-     $ch = curl_init();
-     curl_setopt($ch, CURLOPT_URL, "smtp://localhost:2525");
-     curl_setopt($ch, CURLOPT_BUFFERSIZE, 1024);
-     curl_setopt($ch, CURLOPT_UPLOAD, 1);
-     curl_setopt($ch, CURLOPT_MAIL_FROM, "me");
-     curl_setopt($ch, CURLOPT_MAIL_RCPT, ["root@localhost"]);
-     curl_setopt($ch, CURLOPT_VERBOSE, 1);
-     $eof = false;
-     curl_setopt($ch, CURLOPT_READFUNCTION, function($ch, $stream, $maxSize) {
-         global $eof;
-         echo "Max Size: [$maxSize]\n";
-         if ($eof) {
-             return "";
-         }
-         $eof = true;
-         return str_repeat(" ", $maxSize);
-     });
-     curl_exec($ch);
-     curl_close($ch);
+The OpenSSL 3.0 and 3.1 FIPS providers are affected by this issue.
 
-INFO
-----
+OpenSSL 3.3, 3.2, 3.1 and 3.0 are vulnerable to this issue.
 
-This bug was introduced in April 2017 in [this
-commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
-introduced support for buffer resize. The scratch buffer was mistakenly made
-to use the dynamic size when it should kept using the fixed upload buffer
-size.
+OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-0500 to this issue.
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 53ea0648 (for 3.3),
+commit da343d06 (for 3.2), commit 9c39b385 (for 3.1) and commit 3559e868
+(for 3.0) in the OpenSSL git repository.
 
-CWE-122: Heap-based Buffer Overflow
+OSSfuzz first detected and automatically reported this issue on 13th February
+2024 using a fuzzer recently added to OpenSSL written by Kurt Roeckx. The fix
+was developed by Tomas Mraz.
 
-AFFECTED VERSIONS
------------------
+General Advisory Notes
+======================
 
-- Affected versions: curl 7.54.1 to and including curl 7.60.0
-- Not affected versions: curl < 7.54.1 and curl >= 7.61.0
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20240516.txt
 
-libcurl is used by many applications, but not always advertised as such.
+Note: the online version of the advisory may be updated with additional details
+over time.
 
-THE SOLUTION
-------------
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+-----BEGIN PGP SIGNATURE-----
 
-In curl version 7.61.0, curl will use the upload buffer size as base for the
-scratch area allocation.
-
-A [patch for CVE-2018-0500](https://github.com/curl/curl/commit/ba1dbd78e5f1e.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.61.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Avoid using SMTP uploads with CURLOPT_BUFFERSIZE set below 10923
-
-TIME LINE
----------
-
-It was reported to the curl project on June 11, 2018
-
-We contacted distros@openwall on July X, 2018.
-
-curl 7.61.0 was released on July 11 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Detected and researched by Peter Wu. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmZGLbUACgkQUnRmohyn
+nm27iRAAkvc/HNdfAY3l6kBJ2GVUbvPLODxFhzpei5DW1JxUojQwPXe3cXZlBs9D
+PDtw85WX4IPULvcrq7BeGxOs4hDR1xkUfzr/5b0t7a9olFy1oYE/and0qpQx3AzP
+eS7O9b001ssXtAs43aO6S4H0L5+3lRXPnLhyDfeh4odty4fbSIP8apLXtmaTKt6P
+hdm+JLJdrx92aKjraKBcc1YKl2HgCBNRsxBnimKJzZGZVokUZsF0mIZ/G1SZVs0J
+W4usEF1JuRD2vAUWcSDU92tZd0Bkz55SjVC7NVPqvqSUAo04f3LhZj1c7rMjSD5p
+zjbG6c4PiCC08LRCHRtZUu56Kp1tBYy+X7zZrzDiPF1R/TY9pYYA1JKS6EvbBb/d
+8IB3cxeeTzW0StnuxKmOchrMsGJtizh9hGIhy7yzjbQ8oMkhcRsUlbZDQwiHvCUk
+qgXP2v0pnqBmVEBfqCBvUOKAy19XMVOUH69JBsuMEPIKzx2k7Y5QvVKZNq3DtboA
+lOc0zkfLbtXrNZFDUDqpq2megmVbVlTw619NQE51jN/LPzo7b+fdw1cHTTnQE2Gt
+rSQYZnklb0fmfQQJOl4HpCK16SfVebPYU4hRDJ1Yqk6jcClFbit1F7Fz6Ypjv4nM
+iTOJAAoat2jQhmqg2VTpuUQGjRMAADvKlpABL4dTYCvJv6RMXTk=
+=Efz1
+-----END PGP SIGNATURE-----
