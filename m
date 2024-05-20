@@ -1,4 +1,4 @@
-Received: (qmail 20311 invoked by uid 550); 27 Sep 2024 16:42:30 -0000
+Received: (qmail 20244 invoked by uid 550); 20 May 2024 11:59:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,97 +7,107 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28157 invoked from network); 27 Sep 2024 15:48:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sambull.org; h=
-	cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1727452109; x=1727538509; bh=6qn8Gvci7b
-	9dm+JvcmqJmH/c5tiM409yVTYcc7z2agc=; b=T2O8ot7ldZ8+KOeYFHS+TZyQha
-	AWlcgpQVUfcJ6CyFoVc5lco3QMdeuEq8YN2uNzx4Cufv4UPhCW1wsHwp/Nf5NEYU
-	qJbXhD0K2yBJ7Fnc+VyBTQ/QuoQjxcrK1Q5XaMYVV0NRmG9Gn9TSW1j8mj0lxNBs
-	4M3uQ0T+3waYGs6rzYklz8k9TP85Fgj2y3nm1VxKC7mfllo28iCo3yUaDcXkVOrs
-	Ddcyh+NcIXDTPVFVqRNsI1h8JJpE3EwfpllBKE0zg/h1ou+BcbPeFJoYs4BGW8Ge
-	NLzZauZoO2Gkq7J1rgldCFtY4m7XT2SNXNu7bP29fhhbKiLT1pspz3TqLswg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727452109; x=1727538509; bh=6qn8Gvci7b9dm+JvcmqJmH/c5tiM
-	409yVTYcc7z2agc=; b=WIIiyHT9oxziwPwiZiBBrl5ZqLi8VQMzz7svVFkgWTk8
-	HZ5s3uDOTGvOoOKgz7tM5B8a7YLdt0L1RYRv1ZN1YDlF8m946iwZqVyX75NuVJBC
-	thZhR55BvjTIv8iM6hYkjX326hSnIrNmpYeA9LkutMdYgzKuva706jUCQJdexhkh
-	FqZc0M/WRxQbI/5W4IUFMNt0AzbeDUu2q48Kq2Qu3wWsKOJnbWrZkn8DTjbmh+te
-	Gm99MGUUYzq2Dwk79BWW6J/AoKBlhTRu0QuG2LUE0eu93OTA/hCEVDGt0oCqK9wT
-	ERHLjHKQRVOnPhkjCVg3UxrmMlJf524GC3QFCgZ70w==
-X-ME-Sender: <xms:zdP2ZiJ5BhJrbvEJ595ebpJHp1hkOb5h9EqRipCFi3zZrX7-uBNeLw>
-    <xme:zdP2ZqI75OyoqUG-TI4LpprnzeaZ2asaYFYqV8dZ9vJ1loFdKhL0DD-1JwC--QczN
-    FCvB_8bdU7OCw>
-X-ME-Received: <xmr:zdP2ZitIeVfF6Ste_T_v_koI5O3LEhXAI6VsYeLGNlQlR83kEK9bGnFaSsM7wBVzHpUiUaCciG996hz6oUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtledgleefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhvf
-    ffjghftggfggesghdtreertderjeenucfhrhhomhepufgrmhcuuehulhhluceolehmudel
-    lehisehsrghmsghulhhlrdhorhhgqeenucggtffrrghtthgvrhhnpeekfeethfejgeehhf
-    egieffgfdugfdvgfdujedtheefhffgudeiveejjeehgfduvdenucevlhhushhtvghrufhi
-    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeelmhduleelihesshgrmhgsuhhllh
-    drohhrghdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-X-ME-Proxy: <xmx:zdP2ZnbIAUzVCfNp2c6NqFXd0EAD1cQYBjvswgk73FozGDvMT7ULNw>
-    <xmx:zdP2ZpYi6FNdcryuFetK-hpbzszPlkwRCBoPn87l4ZThDH70kAuocQ>
-    <xmx:zdP2ZjAaGMDCZ36b-uxwRvvKza9vn8c8-OIgpeQZRxztLnR2pVd9HQ>
-    <xmx:zdP2ZvbXp6guNsrqpR9btirUpntlrBz8X_jeyvXL1X4Sas2GF8POtA>
-    <xmx:zdP2Zoms4OSz3E1o7ejl-xsZoBie00tK7ZF-27P8JTvHM2CPpFyVfHOY>
-Feedback-ID: ie6294588:Fastmail
-Message-ID: <c64de78736f4c74f1185db288e23fcf716b335a8.camel@sambull.org>
-From: Sam Bull <9m199i@sambull.org>
+Received: (qmail 30619 invoked from network); 20 May 2024 09:42:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hexsys.org;
+	s=protonmail; t=1716198162; x=1716457362;
+	bh=EZp+H4SW0wZoj4LEy+UeZli7yebRyjOJ6sQLxSGbbKY=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=dcd7RzhpYUzdeM27jr4tyClQE6PEsmncD/4IslvRnT9ohXmSmpiBg01SI5E498AvP
+	 78HJzWH7bE3F4es+D60rT5uQEVy+W4yn9YPpHzafXLB2DfW77nteqIHy4fUFUa/kdw
+	 QsjuYDHcVqSicYWGSParDyfsXazbK70X7vkjs0oKFwO4uDMpDpoqD4BioFsPgm+X96
+	 UZdvROQRSWZULxEyoKNbPjTaG7+CQBguIeZwVHZOgA2aE6xwqU4Zww8Y5ZHroOtEIm
+	 X4RNOGx4XfBkYAEsd16L/R2TgJ+6eGRGHjmBY30W7X9aOWV4gLJwiFAEJL9kGVAr62
+	 ArXzCICeXEOkA==
+Date: Mon, 20 May 2024 09:42:38 +0000
 To: oss-security@lists.openwall.com
-Date: Fri, 27 Sep 2024 16:48:25 +0100
-In-Reply-To: <dbf738ce-d236-4c8b-864d-900d4e7c3238@rub.de>
-References: <16a2094c-dfa6-a448-b9c7-76ba2dc86f66@apache.org>
-	 <ZvR8tR8v-6gpjLsP@itl-email>
-	 <CAN_LGv2QzuonfGdOsN88Qpe479xupfceCLYkv0yQFtRdf3CFNQ@mail.gmail.com>
-	 <dbf738ce-d236-4c8b-864d-900d4e7c3238@rub.de>
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-iP3ed/iCsm9eOehEEoo9"
-User-Agent: Evolution 3.36.5-0ubuntu1 
+From: Ali Polatel <alip@hexsys.org>
+Message-ID: <ykmy97joESH91bCHsZwXrM1OS3YcckmX8UcuxUQ6ogsxZjKI9lox0cTS-HuVaVUgn7fcmBdjRV4kdvZU3X5J6j8Ro1OJKzl1DHnka9f6g-M=@hexsys.org>
+Feedback-ID: 105281019:user:proton
+X-Pm-Message-ID: 25d4a1045fba5cd8b043867ab99ce5d3d783cb62
 MIME-Version: 1.0
-Subject: Re: [oss-security] CVE-2024-40761: Apache Answer: Avatar URL leaked
- user email addresses
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c"; charset=utf-8
+Subject: [oss-security] Article: State of Sandboxing in Linux
 
---=-iP3ed/iCsm9eOehEEoo9
-Content-Type: text/plain; charset="UTF-8"
+--------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c
+Content-Type: multipart/mixed;boundary=---------------------5c291565e01ddeb848052e4e8db936ae
+
+-----------------------5c291565e01ddeb848052e4e8db936ae
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-For WordPress websites that I host, I have code which caches the gravatar i=
-mages on the
-server and serves them directly.
+Hello list,
 
-My main goal was to disallow Gravatar tracking users across our websites (e=
-nforced with a
-Content-Security-Policy in addition to rewriting the image URLs). But, it d=
-oes also
-rewrite the hashes used when served to the client. So, this could be used t=
-o avoid leaking
-user addresses.
+I want to share an article I wrote on Linux Sandboxing:
+https://git.sr.ht/~alip/syd/tree/main/item/doc/toctou-or-gtfo.md
 
-Not sure if that can apply to this software as well, but thought it was wor=
-th noting.
+There's nothing new in there except something I discovered on Landlock whic=
+h may be a bug or a feature.
+TL;DR Landlock allows you to chdir into a directory that's not allowlisted.=
+ That's it though, you can
+not list/read anything in there so I'd not say this is anything more than a=
+ potential info leak (as in
+you discovered the dir existed). That said, I am not quite sure.
 
-Sam
+Very small PoC for those who do no want to read the article:
+(-plib turns all seccomp sandboxing off so we apply a very simple landlock =
+sandbox
+only allowing /usr, busybox is static linked)
 
---=-iP3ed/iCsm9eOehEEoo9
+=E2=87=92 syd -plib -msandbox/lock:on -m allow/lock/read+/lib -m allow/lock=
+/read+/usr busybox sh
+~/src/syd/syd-3 $ cd /tmp
+/tmp $ busybox ls
+ls: can't open '.': Permission denied
+/tmp $
+
+I could enter /tmp although that's not allowlisted by Landlock.
+
+Best regards,
+Ali Polatel
+
+PS: Initially I've sent this e-mail using the wrong e-mail address (was not=
+ subscribed
+to the list), so this is a resend. I apologize if you end up receiving it t=
+wice.=
+
+-----------------------5c291565e01ddeb848052e4e8db936ae
+Content-Type: application/pgp-keys; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWmdR
+SmRSWUpLd1lCQkFIYVJ3OEJBUWRBbjlaVnJMbi9tclpseThqTE9qVklwTmRW
+SXhTSVZ4WmUKL2ZDeDZpcTNPM1hOSVdGc2FYQkFhR1Y0YzNsekxtOXlaeUE4
+WVd4cGNFQm9aWGh6ZVhNdWIzSm5Qc0tNCkJCQVdDZ0ErQllKbUJBbDFCQXNK
+QndnSmtCY2phUTFHWTNTNkF4VUlDZ1FXQUFJQkFoa0JBcHNEQWg0QgpGaUVF
+d2kycDNrbUo2K2VhOUErdEZ5TnBEVVpqZExvQUFFaDlBUUNVRlB2YytPL1Fz
+YzdpVDF0STcvMTAKakJWaklPa2xyL01DU2lzZ2w0SzRqQUQvZkRaejVuVStq
+bzBmcjh3QXNLdFU0M1UrVWd5alVuNHhuczVQCnVzcFViZy9PT0FSbUJBbDFF
+Z29yQmdFRUFaZFZBUVVCQVFkQXFrait2ejdsbjQyNmhmQS9wSWZzelJKbQpW
+WHpLc1VJOWJQd3dqZEdQUlNRREFRZ0h3bmdFR0JZS0FDb0ZnbVlFQ1hVSmtC
+Y2phUTFHWTNTNkFwc00KRmlFRXdpMnAza21KNitlYTlBK3RGeU5wRFVaamRM
+b0FBTHNMQVAwWUVEUkw1OVdiUndSTFdpN0RlRjY2ClRCSzZtdmZGeG5maG9r
+M3JKSU1lWXdFQTZGNi85c1J6SzJqbExCRk9kbHluZGdZbEpxUFVpZk1CZGU5
+ego2QkZFY1FnPQo9NFhXSgotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9D
+Sy0tLS0tCg==
+
+-----------------------5c291565e01ddeb848052e4e8db936ae--
+
+--------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-iF0EABECAB0WIQS7LDpjuw7VQ6ct5tdf6SjNlibOKwUCZvbTyQAKCRBf6SjNlibO
-K5ClAKCl+T8/hO13Kem846avt67E5woEWQCeO5eh/5lmxp1xQh5m0ylVbSpBcbI=
-=MUHQ
+wnUEARYKACcFgmZLGvYJkBcjaQ1GY3S6FiEEwi2p3kmJ6+ea9A+tFyNpDUZj
+dLoAAFhkAP0QNXHfy/4ya33EtMkJ7ddUCdQcr0+7w0mnfchtBRAw7wD+MAeM
+xphEJtjpohf1VdT3kyaTKcvDK6QVh7niThdDpwM=
+=AuC+
 -----END PGP SIGNATURE-----
 
---=-iP3ed/iCsm9eOehEEoo9--
+
+--------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c--
 
