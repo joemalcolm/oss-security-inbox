@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2000" "Tuesday" "26" "July" "2016" "15:21:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160726192112.03BBD72E01E@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command" nil nil nil "7" "2016072619:21:12" "[oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command" (number mark "U       cve-assign@m Jul 26   46/2000  " thread-indent "\"[oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command\"\n") "<alpine.LFD.2.20.1607260055500.12460@wniryva>" ("<alpine.LFD.2.20.1607260055500.12460@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22083 invoked by uid 550); 26 Jul 2016 19:21:24 -0000
+Received: (qmail 13521 invoked by uid 550); 21 May 2024 14:00:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +7,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22065 invoked from network); 26 Jul 2016 19:21:24 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1607260055500.12460@wniryva>
-Message-Id: <20160726192112.03BBD72E01E@smtpvbsrv1.mitre.org>
-Date: Tue, 26 Jul 2016 15:21:12 -0400 (EDT)
-Subject: [oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command
+Received: (qmail 7476 invoked from network); 21 May 2024 13:56:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=cX1lt0Mrr49SC4lhODYL1+E2pzX58bw804mDhSawj7o=; b=JWSIGL/XSU11jT4ZI1zM8T0eKC
+	XGfmIPSXb8YtPDN/f8OKX3QIAHhUuLu1lkUKEVW81pzhM5R7c+lqtNwhXCFWeQAe4TVyOpteejsmW
+	s3i1kwQ49Zh2v/q1KeJR/QUNLAXhG+gpPn4toCAJ/xeHj0IK/yShEZ7LqH2fG+KI0jbdZx+1AoRlF
+	YhFgkOVh+gLnY/FCNSG1atjrVURl8McY1dRoDbwPp3olgDIh7r6YRAVmyaDaiwnTqiLkhqunfAtuE
+	cdridf+yh5/4p4EL4fNFuyWYLnzhju4NA689cu9aC3v9NF4ovfSS602cTQdCBi7M2XL7JqhBz8Eg3
+	pwRWzhLw==;
+Date: Tue, 21 May 2024 16:56:12 +0300
+Message-ID: <20240521165612.GD613527@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Fjc+e9so8vfBbiBq"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0003
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Fjc+e9so8vfBbiBq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
-> is vulnerable to an OOB write access issue. It could occur while doing DMA
-> read into ESP command buffer 's->cmdbuf'; It could write past the 's->cmdbuf'
-> area, if it was transferring more than 16 bytes in esp_do_dma().
->
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS OR potentially leverage it to execute arbitrary code with
-> privileges of the Qemu process on the host.
->
-> Upstream patches:
-> -----------------
->    -> http://git.qemu.org/?p=qemu.git;a=commit;h=926cde5f3e4d2504ed161ed0cb771ac7cad6fd11
->    -> http://git.qemu.org/?p=qemu.git;a=commit;h=cc96677469388bad3d66479379735cf75db069e3
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBTZWN1cml0eSBBZHZpc29yeSAgICAgICAgICAgICAgICAgV1NB
+LTIwMjQtMDAwMwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUg
+cmVwb3J0ZWQgICAgICAgICAgIDogTWF5IDIxLCAyMDI0CkFkdmlzb3J5IElE
+ICAgICAgICAgICAgIDogV1NBLTIwMjQtMDAwMwpXZWJLaXRHVEsgQWR2aXNv
+cnkgVVJMICA6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS9XU0Et
+MjAyNC0wMDAzLmh0bWwKV1BFIFdlYktpdCBBZHZpc29yeSBVUkwgOiBodHRw
+czovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMjQtMDAwMy5odG1s
+CkNWRSBpZGVudGlmaWVycyAgICAgICAgIDogQ1ZFLTIwMjQtMjc4MzQuCgpT
+ZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2NvdmVyZWQgaW4gV2Vi
+S2l0R1RLIGFuZCBXUEUgV2ViS2l0LgoKQ1ZFLTIwMjQtMjc4MzQKICAgIFZl
+cnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVm
+b3JlIDIuNDQuMi4KICAgIE1hbmZyZWQgUGF1bCB3b3JraW5nIHdpdGggVHJl
+bmQgTWljcm8ncyBaZXJvIERheSBJbml0aWF0aXZlLgogICAgSW1wYWN0OiBB
+biBhdHRhY2tlciB3aXRoIGFyYml0cmFyeSByZWFkIGFuZCB3cml0ZSBjYXBh
+YmlsaXR5IG1heSBiZQogICAgYWJsZSB0byBieXBhc3MgUG9pbnRlciBBdXRo
+ZW50aWNhdGlvbi4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMKICAgIGFk
+ZHJlc3NlZCB3aXRoIGltcHJvdmVkIGNoZWNrcy4KICAgIFdlYktpdCBCdWd6
+aWxsYTogMjcyNzUwCgpXZSByZWNvbW1lbmQgdXBkYXRpbmcgdG8gdGhlIGxh
+dGVzdCBzdGFibGUgdmVyc2lvbnMgb2YgV2ViS2l0R1RLIGFuZCBXUEUKV2Vi
+S2l0LiBJdCBpcyB0aGUgYmVzdCB3YXkgdG8gZW5zdXJlIHRoYXQgeW91IGFy
+ZSBydW5uaW5nIHNhZmUgdmVyc2lvbnMKb2YgV2ViS2l0LiBQbGVhc2UgY2hl
+Y2sgb3VyIHdlYnNpdGVzIGZvciBpbmZvcm1hdGlvbiBhYm91dCB0aGUgbGF0
+ZXN0CnN0YWJsZSByZWxlYXNlcy4KCkZ1cnRoZXIgaW5mb3JtYXRpb24gYWJv
+dXQgV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IHNlY3VyaXR5IGFkdmlzb3Jp
+ZXMKY2FuIGJlIGZvdW5kIGF0OiBodHRwczovL3dlYmtpdGd0ay5vcmcvc2Vj
+dXJpdHkuaHRtbCBvcgpodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHku
+CgpUaGUgV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IHRlYW0sCg==
 
->> scsi: esp: make cmdbuf big enough for maximum CDB size
->>
->> Increase the command buffer size to 32, which is maximum when
->> 's->do_cmd' is set, and add a check on 'len' to avoid OOB access.
+--Fjc+e9so8vfBbiBq
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Use CVE-2016-6351.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXl7ePAAoJEHb/MwWLVhi2DkcP/0Cve7oqMMMa06UgbrOLGj1S
-eXWNyPD1oL112rkjfYNjTQZwKVb4nmZoKGoibqcnlZLJkzH88Cvpl0tF1YVKPfoG
-TsvXjXfiABZTeFGUfKJfjQEp9YeIuosAMfp2Dj/Cpe5WK0NYF6ZakqG1A9gWzNvv
-dRqlB6eoaqjWKgycTGcRiqcHfIflaGnI8W+syumDQQ6y873ILk9WdLcA9AZnvDUs
-4/EITZCHaEBDNOoK8jP+FcctPNwYSGwfqcDxrT/h6bb7zpd5yT6JQWu0EZPetzVV
-RPFE8/Owf+OIwNJtqbz+lKRV6vi1G0gB824rEupY1ZUWTPRNTl/FNuuhfpVdIklu
-WhKZJKP76RIzC9HChsbpPfzxYbg7GxMr+XWp24X2EptIfZJmvVA4Y3C99+b2wvLb
-y8AMwTZzKLLuOunAQ+4/10n21u+3EZxeJvMgUD5BipoZnEwoPgkKD+2sHtKNnXaH
-imEZ0f789i1mrIx673rXowjoReXRGQUic/yhRAWnsbnz3Jz6xclbmrPN6W2XZScH
-XPV0e1/u3AqZJ7ZQgbospB8Co06mYWJfYfnPFQIniVSf8sf32Rs+wUKsT0+V8NzW
-o4qi7w/kX40Zy1K+DTNfCRa44nH7OFirt0CpQxrKuDo1mhn94nAWdJ5hMx1LfA0G
-bjCLFVM2rEcNXi7FM6Fi
-=Rrsy
+iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZkyn/AAKCRCRxVnb5MkS
+OwAfAJ4mTGng8T1r74qZwPjxevL+HPwCdwCfZSusqfqYNky+n3lMm3NWNkEF2+4=
+=+ORo
 -----END PGP SIGNATURE-----
+
+--Fjc+e9so8vfBbiBq--
