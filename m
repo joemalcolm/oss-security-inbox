@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3071" "Saturday" "30" "September" "2017" "17:02:40" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<991074.005930813-sendEmail@localhost>" "69" "[oss-security] binutils: NULL pointer dereference in scan_unit_for_symbols (dwarf2.c)" nil nil nil "9" "2017093017:02:40" "[oss-security] binutils: NULL pointer dereference in scan_unit_for_symbols (dwarf2.c)" (number mark "U       ago@gentoo.o Sep 30   69/3071  " thread-indent "\"[oss-security] binutils: NULL pointer dereference in scan_unit_for_symbols (dwarf2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32491 invoked by uid 550); 30 Sep 2017 17:02:59 -0000
+Received: (qmail 16359 invoked by uid 550); 24 May 2024 13:17:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +7,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32372 invoked from network); 30 Sep 2017 17:02:57 -0000
-Message-ID: <991074.005930813-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Sat, 30 Sep 2017 17:02:40 +0000
+Received: (qmail 14223 invoked from network); 24 May 2024 13:16:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudbees.com; s=google; t=1716556606; x=1717161406; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2Pub7hfPXb1a5kPegFz/HAAyA25rt0v6cJ256FZoVQ8=;
+        b=Ay3u7us7dBG3K7g413wT2GEYikENe52AZFQ4yIeef16F4+U9Mj2tyql/KFAw3Zd0ji
+         u2h1Wd1hV9Bb+NhKzwCWhv+1AOWCTclpMvvZSnA1tj20Pkyb7rmuYd1sIWbD6DjFrVbs
+         LxMVzIgyFYqTHKo3p9Wb104jsALVqr/Rv/LMs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716556606; x=1717161406;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2Pub7hfPXb1a5kPegFz/HAAyA25rt0v6cJ256FZoVQ8=;
+        b=f2EDg8A564Ur97u4VqtUxY2RCY2wOE4ssCXch1TT1H4rdjaqi5KfOdOx3YgbHRXmtY
+         S8PwADxf9ohvjkzqviqvZbNUnri6iM+ivqRAqHWmv4KNK5vKlTOFL5OqWSCJk8vQSQmm
+         ZbbBYx5F1CR1UQP7m9e3zEu0+LWhyXy+YUlbHpgXecgGm82W+OtmMgFz5e8M6gT6pSa4
+         0J/TGl7BdoXRPF5atrj6X9zhKxrzKiboWqoOUYLxUEWiXnFeUoZcVgc0OBfq+dzj289C
+         ner97c5TLfx3/5n4pNtqFrb7V9jZwn3a+Kmi5oNbY4BrlisHzcpYnXM8aPPPeSEGHMOn
+         QeGQ==
+X-Gm-Message-State: AOJu0YzbUH5Dp4rUoTcXllZIF5si10Pvd32nIjqt+p/UldFcO/iZbOrb
+	JQnnBzaPQjLnZLQAVenax/cGa6NNhEzLYK6HWLDyfGVPDv7GgltWwoIngz6L2J05hP6Ul6vSYDo
+	jAo0J6Vx9A6sXkvDYfSHHbpQuL6aiu3IST+kE0POEMlr+gIIQusgLkA==
+X-Google-Smtp-Source: AGHT+IFuSQ74v79fks2lYxr9YV+M+V7VU4eUyVvgiU8SddpiLTjA8EGBOKlcV2WzeK2sHRuxwq5TzGXe46r/JCVpmTs=
+X-Received: by 2002:ac2:5212:0:b0:51d:682d:c2ab with SMTP id
+ 2adb3069b0e04-52965199736mr1289891e87.32.1716556605598; Fri, 24 May 2024
+ 06:16:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-841124.560291977"
-Subject: [oss-security] binutils: NULL pointer dereference in scan_unit_for_symbols (dwarf2.c)
+From: Kevin Guerroudj <kguerroudj@cloudbees.com>
+Date: Fri, 24 May 2024 15:16:35 +0200
+Message-ID: <CAKG2iZgBc3fST=T3Lv3juL7=mfRoTRiOtdiNMvkE4D=B=-m9Gw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b6e91b061932fa3f"
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-------MIME delimiter for sendEmail-841124.560291977
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--000000000000b6e91b061932fa3f
+Content-Type: text/plain; charset="UTF-8"
 
-Description:
-binutils is a set of tools necessary to build programs.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-The complete ASan output of the issue:
+The following releases contain fixes for security vulnerabilities:
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==491==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f6e3316d573 bp 0x7ffda2ee9e50 sp 0x7ffda2ee9c60 T0)
-==491==The signal is caused by a READ memory access.
-==491==Hint: address points to the zero page.
-    #0 0x7f6e3316d572 in scan_unit_for_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3213:13
-    #1 0x7f6e331769e4 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3617:9
-    #2 0x7f6e331769e4 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
-    #3 0x7f6e331707c8 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4601:11
-    #4 0x7f6e330b120b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
-    #5 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #6 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #7 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #8 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #9 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #10 0x7f6e31ff6680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
+* OpenText Application Automation Tools Plugin 24.1.1-beta
+* Team Concert Git Plugin 2.0.5
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3213:13 in scan_unit_for_symbols
-==491==ABORTING
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Affected version:
-2.29.51.20170921 and maybe past releases
+* Report Info Plugin
 
-Fixed version:
-N/A
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2024-05-24/
 
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=0d76029f92182c3682d8be2c833d45bc9a2068fe
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-CVE:
-CVE-2017-14940
+---
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00369-binutils-NULLptr-scan_unit_for_symbols
+SECURITY-3250 / CVE-2024-28793
+Team Concert Git Plugin 2.0.4 and earlier does not escape the Rational Team
+Concert (RTC) server URI on the build page when showing changes.
 
-Timeline:
-2017-09-21: bug discovered and reported to upstream
-2017-09-24: upstream released a patch
-2017-09-26: blog post about the issue
-2017-09-29: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/26/binutils-null-pointer-dereference-in-scan_unit_for_symbols-dwarf2-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure jobs.
 
 
-------MIME delimiter for sendEmail-841124.560291977--
+SECURITY-3278 / CVE-2024-4189 (LrScriptResultsParser.java) & CVE-2024-4184
+(XpathReader.java) & CVE-2024-4690 (others)
+OpenText Application Automation Tools Plugin 24.1.0 and earlier does not
+configure its XML parsers to prevent XML external entity (XXE) attacks.
 
+This allows attackers able to control the input files for OpenText
+Application Automation Tools Plugin build steps and post-build steps to
+have Jenkins parse a crafted file that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+
+SECURITY-3277 / CVE-2024-4211 (ALM jobs configurations) & CVE-2024-4691
+(ALM Octane configurations) & CVE-2024-4692 (Service Virtualization
+configurations)
+OpenText Application Automation Tools Plugin 24.1.0 and earlier does not
+perform permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate ALM jobs
+configurations, ALM Octane configurations and Service Virtualization
+configurations.
+
+
+SECURITY-3070 / CVE-2024-5273
+Report Info Plugin 1.2 and earlier does not perform path validation of the
+workspace directory while serving report files.
+
+Additionally, Report Info Plugin does not support distributed builds.
+
+This results in a path traversal vulnerability, allowing attackers with
+Item/Configure permission to retrieve Surefire failures, PMD violations,
+Findbugs bugs, and Checkstyle errors on the controller file system by
+editing the workspace path.
+
+As of publication of this advisory, there is no fix.
+
+--000000000000b6e91b061932fa3f--
