@@ -1,4 +1,4 @@
-Received: (qmail 12100 invoked by uid 550); 17 May 2026 19:54:09 -0000
+Received: (qmail 23931 invoked by uid 550); 27 May 2024 11:34:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17731 invoked from network); 17 May 2026 18:44:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1779043479;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=AZ3946EqKg/1dioAKNX/Bcz0QhuKvHBOcKRfZZbS3o0=;
-	b=dV/bXSPSQcgK7pKnBs4Ep0lTuHceTBR7R3vs+8RSrqE8V1oNmyH0O3vYMVI+TCXHPmw15A
-	/cryTwOFGp4mThFXINYMK97THlz8seATD0Y23hdG74uM/WGxHZuKLB24AeQe9JPLQXlNEI
-	LwzZ6iluIK+R82F+XecnIULhqHG+y0xFq0KxvqMPjsgxS8IWyF5STotfcmw3LsOfYRRi/9
-	PQBd5uqkf24pw4U6e7bCRS9EgWS4CwW3fezRDKHztvNfa2rasUQnB2q+cjKdTMv2D9bO5I
-	TxVsKEpyBXkU9orQvqPg9LfmOPJGvk57hHRU6T/DZxUBF0BQsVnNzGKzR7D0Gg==
+Received: (qmail 29840 invoked from network); 27 May 2024 11:26:55 -0000
+Date: Mon, 27 May 2024 13:26:44 +0200
+From: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20240527112644.GA14080@unix-ag.uni-kl.de>
+References: <23c15272-d797-4c3c-bbfb-e462c900978f@gmail.com>
+ <20240418164242.GA2468@openwall.com>
+ <7789a6d5-92c9-4239-8a07-7b0131ed166b@lexfo.fr>
+ <87bk4r1r71.fsf@oldenburg.str.redhat.com>
 MIME-Version: 1.0
-Date: Sun, 17 May 2026 15:44:39 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
- <oss-security@lists.openwall.com>
-Message-ID: <755ef91e2e9d25d89cd37fc6879de83d@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: timlegge@cpansec.org
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: dmFkZTGq9qquRuL5PzA5JX02jaxAFnw3WHPevyxZFDWlya317mUXOW8kV2zTDk9XjMqPpv+Sht2WjWJdUcTTh4m+ZU2gRelVedIvWOG2PDNyk5hnvVPVjP1kZxRudrWi41QhjOnYY+xqCsawdOIOXCNQPXgg/nK6UWt8ac/MZD+6Tcl6LTDQ8QyevaWSGLLk6X2Aq0Mmws7UpbQ4wInkfdclZ+HUzvz6qQ+QDMCuxT9romOh5ty9AAdDvZTu3nONIug/HEhoZldQ3ZsuXuZjHiRfC8rixrm2ivsn+rNAYscjZiPE62jDImbH8v7IOOfU/LJFsOEq/y3RKr0B5rbNYpb6f5GFhAQCRH4vpS/+VfRC8MNsWZlOC3wOmSur4xItrzr0SA+K4eBAH5e+pogN/l2YKp0O1XYmXt457ZgyE5LY8rBn1LC9ceGSanvEkZ0tPrCHDHeHOBUL3eJYFF04bLY09EuMwoYiYMw8CsaxRiC72NV/MyxsLrBaFBTfMy3fG0D8rVFh2g6C+54JQLpGgaZ0sNgIlZsd1bgK9tXma5GDpSdr+3mz0cKjoC0iulSTktzM0LWc3WGb4GZZW4zVXMZHGlAgb15S5Ud143VnPT4m1t5sK3NO+4HyrUBuaPMY4RhKo03VKIMNmdBd5180619w9mojPypZZWB66Qcbboi4QaM+ww
-Subject: [oss-security] CVE-2026-8507: Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl
- have out of bound (OOB) write flaws
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87bk4r1r71.fsf@oldenburg.str.redhat.com>
+Author: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+Subject: Re: [oss-security] The GNU C Library security advisories update for
+ 2024-04-17: GLIBC-SA-2024-0004/CVE-2024-2961: ISO-2022-CN-EXT: fix
+ out-of-bound writes when writing escape sequence
 
-========================================================================
-CVE-2026-8507                                        CPAN Security Group
-========================================================================
+Hi,
 
-         CVE ID:  CVE-2026-8507
-   Distribution:  Crypt-OpenSSL-PKCS12
-       Versions:  through 1.94
+On Mon, May 27, 2024 at 12:31:46PM +0200, Florian Weimer wrote:
+> >
+> > Although very late, here is a follow up explaining the impact of the
+> > vulnerability.
+> >
+> > Provided that you can force an application to convert a partially
+> > controlled buffer to ISO-2022-CN-EXT, you get an
+> > overflow of 1 to 3 bytes whose value you don't control.
+> >
+> > This can be triggered in at least two ways in PHP:
+> >
+> > - Through direct calls to iconv()
+> > - Through the use of PHP filters (i.e. using a "file read" vulnerability)
+> >
+> > Due to the way PHP's heap is built, you can use such a memory
+> > corruption to alter part of a free list pointer,
+> > which can in turn give you an arbitrary write primitive in the
+> > program's memory.
+> >
+> > With this bug, any person that has a file read vulnerability with a
+> > controlled prefix on a PHP application has RCE.
+> 
+> Out of curiosity, why would PHP translate a file to ISO-2022-CN-EXT
+> while reading it?  It's not even an ASCII-transparent charset.
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-OpenSSL-PKCS12
-       VCS Repo:  https://github.com/dsully/perl-crypt-openssl-pkcs12
+According to <https://www.ambionics.io/blog/iconv-cve-2024-2961-p1>, PHP
+can be told to do so via "php://filter/…", a default behavior of PHP,
+it seems (I have just skimmed that page and do not know any details).
 
-
-Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl have out of bound
-(OOB) write flaws
-
-Description
------------
-Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl have out of bound
-(OOB) write flaws.
-
-When parsing a PKCS12 file, with a >= 1 GiB OCTET STRING (or BIT
-STRING) attribute on a SAFEBAG, via info() or info_as_hash(), a
-heap-OOB-WRITE would be triggered which could have Remote Code
-Execution (RCE) potential.
-
-Problem types
--------------
-- CWE-787 Out-of-bounds Write
-
-Workarounds
------------
-Do not parse untrusted PKCS12 files via info or info_as_hash.
-
-
-Solutions
----------
-Upgrade to 1.95 or later.
-
-
-References
-----------
-https://metacpan.org/release/JONASBN/Crypt-OpenSSL-PKCS12-1.95/view/Changes.md
-https://github.com/dsully/perl-crypt-openssl-pkcs12/issues/55
-https://github.com/dsully/perl-crypt-openssl-pkcs12/issues/56
-https://github.com/dsully/perl-crypt-openssl-pkcs12/commit/b9d0469c6d8f5b5c6c2a45a3d0647a532b749397.patch
-
-Timeline
---------
-- 2026-05-13: Issue discovered
-- 2026-05-16: Contacted maintainer with the details
-- 2026-05-17: Issue disclosed in Github incident
-- 2026-05-17: Patched version released by maintainer
+HTH,
+Erik
