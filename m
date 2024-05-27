@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1575" "Thursday" "8" "December" "2016" "01:34:10" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<da73f650466b4b789d5d46768478703d@imshyb02.MITRE.ORG>" "40" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset" nil nil nil "12" "2016120806:34:10" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset" (number mark "U       cve-assign@m Dec  8   40/1575  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset\"\n") "<alpine.LFD.2.20.1612061653090.2165@wniryva>" ("<alpine.LFD.2.20.1612061653090.2165@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28405 invoked by uid 550); 8 Dec 2016 06:34:23 -0000
+Received: (qmail 24223 invoked by uid 550); 27 May 2024 11:34:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28385 invoked from network); 8 Dec 2016 06:34:22 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liq3ea@gmail.com>
-In-Reply-To: <alpine.LFD.2.20.1612061653090.2165@wniryva>
-Message-ID: <da73f650466b4b789d5d46768478703d@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:34:10 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset
+Received: (qmail 22263 invoked from network); 27 May 2024 11:34:34 -0000
+Date: Mon, 27 May 2024 13:34:30 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240527113430.GA14378@openwall.com>
+References: <23c15272-d797-4c3c-bbfb-e462c900978f@gmail.com> <20240418164242.GA2468@openwall.com> <7789a6d5-92c9-4239-8a07-7b0131ed166b@lexfo.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7789a6d5-92c9-4239-8a07-7b0131ed166b@lexfo.fr>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] The GNU C Library security advisories update for 2024-04-17: GLIBC-SA-2024-0004/CVE-2024-2961: ISO-2022-CN-EXT: fix out-of-bound writes when writing escape sequence
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator built with the Virtio GPU Device emulator support is vulnerable
-> to an information leakage issue. It could occur while processing
-> 'VIRTIO_GPU_CMD_GET_CAPSET' command.
+On Mon, May 27, 2024 at 11:16:53AM +0200, Charles Fol wrote:
+> Although very late, here is a follow up explaining the impact of the 
+> vulnerability.
 > 
-> A guest user/process could use this flaw to leak contents of the host memory
-> bytes.
+> Provided that you can force an application to convert a partially 
+> controlled buffer to ISO-2022-CN-EXT, you get an
+> overflow of 1 to 3 bytes whose value you don't control.
 > 
-> http://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00059.html
+> This can be triggered in at least two ways in PHP:
+> 
+> - Through direct calls to iconv()
+> - Through the use of PHP filters (i.e. using a "file read" vulnerability)
+> 
+> Due to the way PHP's heap is built, you can use such a memory corruption 
+> to alter part of a free list pointer,
+> which can in turn give you an arbitrary write primitive in the program's 
+> memory.
+> 
+> With this bug, any person that has a file read vulnerability with a 
+> controlled prefix on a PHP application has RCE.
+> Any person that can force PHP into calling iconv() with controlled 
+> parameters has RCE.
+> 
+> We have provided more explanations on a blogpost of ours (I do not think 
+> that I can post it here, it shouldn't be too
+> hard to find if you're interested).
 
-Use CVE-2016-9908.
+Surely you can post a link to a blog post, although we strongly prefer
+that besides the link you also post a plain text copy of most content,
+for archival.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
-that may be an expected place for a later update.
+I assume you refer to:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://www.ambionics.io/blog/iconv-cve-2024-2961-p1
 
-iQIcBAEBCAAGBQJYSPv1AAoJEHb/MwWLVhi2qoIQAIk8ONXgNCxXa2Ikd9HOn88n
-h8NNQszbalHBui/MHF9vQhJGRGJ4iRZdu9mSnLgxJU+6huTkaWFYevul2Vwb7SEb
-HgS2SQx5d3hLwObCjSqHt/PfuT6lPDlH6h0Gjt4lViFUPAPPORc/5bI0jRAGWd2N
-pC9tsUNsq9dl00pdyox6KpqiklsvVVPKA7spkPMw5uAR2DK/B7HTyJeKuaKJ2XQq
-wVkgpCa6im86AW+zV14KRMwftNUO5H0zkXOkib/h/DuVUNzhClY2PStxePLTmqTi
-pnaSeZcTr5Ti/FMMhtOtS5LOlV35wkpah/dHzDFNZW5Fk54AAeoxVsPr6tKa3VdH
-a5izyLu05pk/B84cvOL2wl93Stt2NnZudI1JqUvPt5nfwDasVL8g/5XbHgmZhqcN
-74uZf5Zo9V9ae0dET73laQTcIXUy6vEk7nvV0mmA5uTrLVS4fGMdOJI9gQVAZkqW
-+NzWs1FJZpNRo4kQCszAC39agb2FXRseMNO8h2bON5CgyPtpa5pL+mVNJ00iPmri
-8X8RDM3h6VupDy1gF6eBFzVRVnhxgvxHf3g8P5qcoxLr0/U75XcPthy9943NDr6C
-FU6G897DnS9UkWhc1M+g3sLgj/wO1KrpSzf+ppshD5IOxsraAWg5AXRXvEPs6Du0
-vmgrb/UXnHL9UxJjy7Xo
-=/c0X
------END PGP SIGNATURE-----
+This ends with:
+
+> This concludes the first part of the series on CNEXT (CVE-2024-2961).
+> The exploit is now available on our GitHub. There is still much more to
+> explore: what about direct calls to iconv() ? What happens the file read
+> is blind?
+> 
+> In part 2, we'll dive deeper in the PHP engine to target an iconv() call
+> found in a very popular PHP webmail. I'll describe the impact of such
+> direct calls on the PHP ecosystem, and show you some unexpected sinks.
+> Finally, in part 3, we'll cover blind file read exploitation.
+
+The GitHub link is:
+
+https://github.com/ambionics/cnext-exploits/
+
+I understand it'd be difficult to convert a so nicely formatted blog
+post into a plain text posting, but perhaps you can now post the plain
+text description you had shared with the distros list?
+
+Are your OffensiveCon slides online or will be soon?  A link to them can
+also be shared.
+
+Thanks,
+
+Alexander
