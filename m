@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["203" "Thursday" "21" "June" "2018" "14:58:56" "+0300" "Georgi Guninski" "guninski@guninski.com" "<20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>" "8" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062111:58:56" "[oss-security] Intel hyper-threading security issues" (number mark "        guninski@gun Jun 21    8/203   " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22136 invoked by uid 550); 21 Jun 2018 12:28:54 -0000
+Received: (qmail 9528 invoked by uid 550); 28 May 2024 15:28:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,26 +6,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1561 invoked from network); 21 Jun 2018 11:59:09 -0000
-Message-ID: <20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>
-References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
- <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 4037 invoked from network); 28 May 2024 15:26:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1716909973; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=AboT7JT61PFgr8r8mTxdXFw/BxnuHRCChhAiYFjd6bM=;
+	b=QcSfFbSPQuTFoSxJtaJxsep9smg1ZinGsys3jWzKZ2WPmhId3dBKqvmwjDgEBqUEuvfhf1
+	qCHTAJl0ffziumjtKM4Nn+hbh8EoUf7j1C7uPuvuIJ/vnkJ8biV2LV3o8Ji7Umhqshtr1I
+	+8M+mOx5LSY4OdoPG+0WLspfFJq8NcbpfiZgKArOgbzCxX8Rm78lHQhxaC9lpdQH4q5UGH
+	0uUDM7EH/r7IiJodJqoJCzQQ5OwedpWGhHux3kdowCMs4qVqUI+rAGcqQB1Ur3D7xxsl7M
+	IH6gk4vQY+CwwE9j44qigrtIIqxX56o6wNQBm1MS1qeK+lZLhoP300NsJy6kKw==
+Date: Tue, 28 May 2024 15:26:13 +0000
+From: Matt Caswell <matt@openssl.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZlX3lfGufFqFOMMH@openssl.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>
-header: best read with a sniffer
-Date: Thu, 21 Jun 2018 14:58:56 +0300
-From: Georgi Guninski <guninski@guninski.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Intel hyper-threading security issues
-To: oss-security@lists.openwall.com
+Subject: [oss-security] OpenSSL Security Advisory
 
-On Thu, Jun 21, 2018 at 07:56:42AM +0300, Georgi Guninski wrote:
-> V.   Solution
-> 
-> Disable Hyper-Threading Technology on processors that support it.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Is Freebsd safe from this or requires patch?
-  
+OpenSSL Security Advisory [28th May 2024]
+=========================================
+
+Use After Free with SSL_free_buffers (CVE-2024-4741)
+====================================================
+
+Severity: Low
+
+Issue summary: Calling the OpenSSL API function SSL_free_buffers may cause
+memory to be accessed that was previously freed in some situations
+
+Impact summary: A use after free can have a range of potential consequences such
+as the corruption of valid data, crashes or execution of arbitrary code.
+However, only applications that directly call the SSL_free_buffers function are
+affected by this issue. Applications that do not call this function are not
+vulnerable. Our investigations indicate that this function is rarely used by
+applications.
+
+The SSL_free_buffers function is used to free the internal OpenSSL buffer used
+when processing an incoming record from the network. The call is only expected
+to succeed if the buffer is not currently in use. However, two scenarios have
+been identified where the buffer is freed even when still in use.
+
+The first scenario occurs where a record header has been received from the
+network and processed by OpenSSL, but the full record body has not yet arrived.
+In this case calling SSL_free_buffers will succeed even though a record has only
+been partially processed and the buffer is still in use.
+
+The second scenario occurs where a full record containing application data has
+been received and processed by OpenSSL but the application has only read part of
+this data. Again a call to SSL_free_buffers will succeed even though the buffer
+is still in use.
+
+While these scenarios could occur accidentally during normal operation a
+malicious attacker could attempt to engineer a stituation where this occurs.
+We are not aware of this issue being actively exploited.
+
+The FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue.
+
+OpenSSL 1.0.2 is also not affected by this issue.
+
+OpenSSL 3.3, 3.2, 3.1, 3.0 and 1.1.1 are vulnerable to this issue.
+
+OpenSSL 3.3 users should upgrade to OpenSSL 3.3.1 once it is released.
+
+OpenSSL 3.2 users should upgrade to OpenSSL 3.2.2 once it is released.
+
+OpenSSL 3.1 users should upgrade to OpenSSL 3.1.6 once it is released.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.14 once it is released.
+
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1y once it is released
+(premium support customers only).
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit e5093133c3 (for 3.3),
+commit c88c3de510 (for 3.2), commit 704f725b96 (for 3.1) and commit b3f0eb0a29
+(for 3.0) in the OpenSSL git repository. It is available to premium support
+customers in commit f7a045f314 (for 1.1.1).
+
+This issue was reported on 10th April 2024 by William Ahern (Akamai). The fix
+was developed by Matt Caswell and Watson Ladd (Akamai).
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20240528.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmZV9w0ACgkQ2cTSbQ5g
+RJFleggAunT15ijQEKk29rztc82qEl01c/mDCAKCNLD0WqCr/D00lIjYhOjAcj7W
+f4h9c7N8TqX4fkc1pBmV3KMM4qCzMkNdFE+lxYiDn2A/HAsZgSmh+WGpcMju7obI
+5TvaINrBZbndXTa3o+10Wo4QT7oVGji/WLwsc06QzofZRLWj7BxU1h7i2JDR9Gd/
+SYkg5ivgwixAgMzxpy7nQetQYKAfl6spKSUDHDymkYk0ATTvr9P14pQ5+Sr2T/gT
+V8V5uTOYcxjpJCRipUbUPDN5ZUy379thry3XmR9wd2GE0AeXoVOJQMpOVK7TDhzm
+TFookLZ04kCDtSU6gM0XXI8WAoEDUQ==
+=UFjh
+-----END PGP SIGNATURE-----
