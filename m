@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1796" "Monday" "16" "October" "2017" "05:09:05" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<690621455.20591654.1508144945361.JavaMail.zimbra@redhat.com>" "67" "[oss-security] CVE-2017-15299: Linux kernel: incorrect update of uninstantiated keys can crash a kernel" nil nil nil "10" "2017101609:09:05" "[oss-security] CVE-2017-15299: Linux kernel: incorrect update of uninstantiated keys can crash a kernel" (number mark "U       vdronov@redh Oct 16   67/1796  " thread-indent "\"[oss-security] CVE-2017-15299: Linux kernel: incorrect update of uninstantiated keys can crash a kernel\"\n") "<0dcf18f160fa4ff39ff2b4b873e9a720@imshyb02.MITRE.ORG>" ("<0dcf18f160fa4ff39ff2b4b873e9a720@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30603 invoked by uid 550); 16 Oct 2017 09:09:18 -0000
+Received: (qmail 8094 invoked by uid 550); 29 May 2024 19:34:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +7,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30578 invoked from network); 16 Oct 2017 09:09:17 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 737644E33D
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
-Date: Mon, 16 Oct 2017 05:09:05 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <690621455.20591654.1508144945361.JavaMail.zimbra@redhat.com>
-In-Reply-To: <0dcf18f160fa4ff39ff2b4b873e9a720@imshyb02.MITRE.ORG>
-References: <0dcf18f160fa4ff39ff2b4b873e9a720@imshyb02.MITRE.ORG>
+Received: (qmail 20208 invoked from network); 29 May 2024 19:23:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1717010625;
+	bh=d8Hmx8vQs0ebj/vAwDbPJQ8/fBeyRxUH2cbzl4KKdnc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uxmTr24twgeCG5soCNzfyLQg4+sgYNoZ/Pmvw8JXAer90w9TEPB8nlbPolNRwyK3N
+	 1nmC70FWDe0HmFCo0T+x8bgiuMOPe2C0zSXyq46Xe1Xvm+aEVmb233uTJraqRh03ZM
+	 iliyxWYJD4BOO4JFPB4AmAj02m/H3dUoRKyQSxrk=
+Date: Wed, 29 May 2024 21:23:50 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Dominique Martinet <asmadeus@codewreck.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <2024052926-moneyless-applause-a95b@gregkh>
+References: <ZlZ8nCsZUZxhKwCf@codewreck.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.227, 10.4.195.3]
-Thread-Topic: CVE-2017-15299: Linux kernel: incorrect update of uninstantiated keys can crash a kernel
-Thread-Index: l9+IWsqRIl8el7cWJHQ1lG4D5ex5Qw==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Mon, 16 Oct 2017 09:09:05 +0000 (UTC)
-Subject: [oss-security] CVE-2017-15299: Linux kernel: incorrect update of uninstantiated
- keys can crash a kernel
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZlZ8nCsZUZxhKwCf@codewreck.org>
+Subject: Re: [oss-security] List linux CVEs for a given stable release?
 
-Heololo,
+On Wed, May 29, 2024 at 09:53:48AM +0900, Dominique Martinet wrote:
+> 
+> With the new vulns[3] repo I thought I could do similar search there,
+> but while there are scripts to search by commit ID or by CVE I don't see
+> anything allowing search for issues affecting a given stable release.
+> 
+> [3] https://git.kernel.org/pub/scm/linux/security/vulns.git/
 
-> [Suggested description]
-> The KEYS subsystem in the Linux kernel through 4.13.7 mishandles use of
-> the add_key() for a key that already exists but is uninstantiated, which
-> allows local users to cause a denial of service (NULL pointer dereference
-> and a system crash) or possibly have unspecified other impact via a crafted
-> system call.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> CWE-476 NULL Pointer Dereference
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> kernel.org: Linux kernel
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> Linux kernel - upto v4.14
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> 'security/keys/keyring.c', 'security/keys/key.c' files, find_key_to_update(),
-> key_create_or_update() functions
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> to exploit a vulnerability an attacker should run a certain binary as unprivileged user
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://bugzilla.redhat.com/show_bug.cgi?id=1498016
-> https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1499828.html
-> https://marc.info/?t=150654188100001&r=1&w=2
-> https://marc.info/?t=150783958600011&r=1&w=2
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Eric Biggers <ebiggers@google.com>
->
-> Use CVE-2017-15299.
+True, we don't have that yet, but with the scripts in there, it should
+be easy to knock this up (hint, pass the id to scripts/cve_search) if
+you need it.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+> My motivation here is double:
+> - We notify our users of notable CVEs fixed on every update to encourage
+> them to upgrade every time (it's sad, but in the embedded world not
+> updating is still the norm despite our efforts to make upgrades as
+> painless as possible... New regulations are coming so hopefully that
+> will slowly improve, but as of now such motivations help)
+
+The issue is, CVEs are assigned usually long _AFTER_ the stable release
+has happened.  So if you want to do this type of report for the latest
+stable release, it will look like there are no CVEs.  But if you wait a
+few weeks, suddenly that old release will have many CVEs assigned to
+them.
+
+This is just due to the process we currently have where we review each
+commit in the stable releases to determine if a CVE should be assigned
+or not.  Obviously this takes time and we are running a few weeks behind
+the current releases.
+
+So you would have to run the script a lot, to keep it up to date, which
+is why a "how many CVEs are listed in the latest release" isn't really
+going to be all that valuable to your users.
+
+> - I'm currently not watching patches entering newer stable branches as
+> closely, so if there are any new CVEs not fixed in the latest 5.10 I'd
+> like to check if some impact us and will help with backports as possible
+> (we're a small company so my time is limited, but might as well give
+> back when I can)
+
+That would be great, for where we know, we list when a vulnerability was
+added to the tree, and where it was fixed.  That can leave many branches
+still vulnerable where we have not fixed the issue yet.  One example
+would be CVE-2024-26629.
+
+You can see these in our repo by just doing:
+	git grep "5\.10" | grep introduced | grep -v fixed
+
+But note that for some issues, we don't have the information for when
+they are introduced, so if they are not fixed in the 5.10 branch, does
+that mean the branch _is_ vulnerable, or is not?  One example of a "is
+not" might be CVE-2024-35867 as we think the code isn't present in 5.10,
+but we don't have an automated way of determining that.  So that would
+take more work than just a simple grep of the tree.
+
+> The information is there in the json files, so it's just a matter of
+> writing some scripts to check them, but I can't believe there's none so
+> I probably have missed something.
+> 
+> Does someone have such a script that'd list the latest CVEs for a given
+> tree?
+
+How about something as simple as the following to see what is in
+5.10.101:
+
+	for id in $(git log --format="%H" v5.10.100..v5.10.101); do
+		cve=$(cve_search ${id})
+		cve_found=$?
+		if [[ "${cve_found}" == "0" ]]; then
+			echo "${cve} is in range"
+		fi
+	done
+
+Note, typed in email client, not tested, use at your own risk...
+
+hope this helps,
+
+greg k-h
