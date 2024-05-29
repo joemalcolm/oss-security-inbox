@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1193" "Monday" "22" "August" "2016" "15:58:02" "+0300" "Jani Kenttala" "jkenttal@ee.oulu.fi" "<20160822125802.GA3826@ee.oulu.fi>" "32" "Re: [oss-security] TLS testing results - OS distro vulnerabilities" "^Cc:" nil nil "8" "2016082212:58:02" "[oss-security] TLS testing results - OS distro vulnerabilities" (number mark "        jkenttal@ee. Aug 22   32/1193  " thread-indent "\"Re: [oss-security] TLS testing results - OS distro vulnerabilities\"\n") "<20160822111911.GA4540@openwall.com>" ("<DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>" "<20160822084624.i4dbedj35qd3p22j@jwilk.net>" "<20160822111911.GA4540@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5627 invoked by uid 550); 22 Aug 2016 13:08:17 -0000
+Received: (qmail 1569 invoked by uid 550); 29 May 2024 02:12:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +6,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32097 invoked from network); 22 Aug 2016 12:58:27 -0000
-Message-ID: <20160822125802.GA3826@ee.oulu.fi>
-References: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
- <20160822084624.i4dbedj35qd3p22j@jwilk.net>
- <20160822111911.GA4540@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160822111911.GA4540@openwall.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: oss-security@lists.openwall.com,
-        Mauri Miettinen <Mauri.Miettinen@student.oulu.fi>, ouspg@ee.oulu.fi
-Date: Mon, 22 Aug 2016 15:58:02 +0300
-From: Jani Kenttala <jkenttal@ee.oulu.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] TLS testing results - OS distro vulnerabilities
-To: Solar Designer <solar@openwall.com>
+Received: (qmail 15573 invoked from network); 29 May 2024 00:54:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1716944050;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=N07IDJhhAu3rgfAONsLIvpZZF1MF0PjzVoDwWDZH2oM=;
+	b=RtqMwECKFqoCj6qxaY1KhHRu9h97+kvFbw4GouingJIZsKvCGfefjuQPV3SwpNffyIBr7r
+	45TwlYSodQupsMovxtgfLsEptyw8LCJpcYEweEoiyupT4PvXCLv8fNBkSYTQmzRZDEVi1F
+	QOYHOub3dfuWrlG4RylywFNkAokD6XFo7mVNF++6LSCJZiGyb32FRWU3awARK6tlf5X6La
+	NQWXM8OXdMk8n6r77WOYUPtf60LqsBOCP1PybN039nb65KNMa/pM9uoursF/zqOkhxChGF
+	SSZXIg8BJiz/3yZJJy6ORgxk3jBc6fjz5L07iAQt3cjh8vPF5LASRn/DfdOSrQ==
+Date: Wed, 29 May 2024 09:53:48 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <ZlZ8nCsZUZxhKwCf@codewreck.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Subject: [oss-security] List linux CVEs for a given stable release?
 
-On Mon, Aug 22, 2016 at 02:19:11PM +0300, Solar Designer wrote:
-> On Mon, Aug 22, 2016 at 10:46:24AM +0200, Jakub Wilk wrote:
-> > * Mauri Miettinen <Mauri.Miettinen@student.oulu.fi>, 2016-08-20, 16:50:
--snip-
-> > >Results are available from:
-> > >
-> > >https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
-> > 
-> > How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
-> > requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
-> 
-> I think Mauri isn't subscribed - CC'ing.
-> 
-> Alexander
+Hi Greg,
 
-Hi!
+(Cc-ing oss-security because I think more people there might be
+interested than people subscribed to cve@kernel.org and I didn't want to
+cross-post to multiple lists)
 
-We used self-compiled python to run the tests against the older python bundled with the OS 
-(see Dockerfile at https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/debian-7/Dockerfile).
 
-To elaborate a bit, we are actually looking two different set of requirements.
+Up until last month someone had been managing a linuxkernelcves[1][2]
+site, but it's somehow gone without a trace (DNS emptied, no message I
+could see announcing it anywhere)
 
-1) TryTLS runner itself requires 2.7.9 or 3.4.0
-2) However, it can call older python version (or what ever command) when executing the tests.
+[1] https://www.linuxkernelcves.com
+[2] https://github.com/nluedtke/linux_kernel_cves
 
-That being said, python2-urllib2 did not execute cleanly with 2.7.3. 
-There is a pull request about that <https://github.com/ouspg/trytls/pull/237>, 
-and the corresponding result has been marked as N/A in the summary table.
 
+With the new vulns[3] repo I thought I could do similar search there,
+but while there are scripts to search by commit ID or by CVE I don't see
+anything allowing search for issues affecting a given stable release.
+
+[3] https://git.kernel.org/pub/scm/linux/security/vulns.git/
+
+My motivation here is double:
+- We notify our users of notable CVEs fixed on every update to encourage
+them to upgrade every time (it's sad, but in the embedded world not
+updating is still the norm despite our efforts to make upgrades as
+painless as possible... New regulations are coming so hopefully that
+will slowly improve, but as of now such motivations help)
+- I'm currently not watching patches entering newer stable branches as
+closely, so if there are any new CVEs not fixed in the latest 5.10 I'd
+like to check if some impact us and will help with backports as possible
+(we're a small company so my time is limited, but might as well give
+back when I can)
+
+
+The information is there in the json files, so it's just a matter of
+writing some scripts to check them, but I can't believe there's none so
+I probably have missed something.
+
+Does someone have such a script that'd list the latest CVEs for a given
+tree?
+
+Thanks,
 -- 
--Jani
-
+Dominique Martinet | Asmadeus
