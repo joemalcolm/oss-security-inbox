@@ -1,4 +1,4 @@
-Received: (qmail 8101 invoked by uid 550); 30 Jan 2024 14:23:30 -0000
+Received: (qmail 22035 invoked by uid 550); 30 May 2024 11:44:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +7,184 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7929 invoked from network); 30 Jan 2024 14:23:16 -0000
-Date: Tue, 30 Jan 2024 15:25:24 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Armin Kuster <akuster@mvista.com>
-Message-ID: <20240130142524.GA21216@openwall.com>
-References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 23958 invoked from network); 30 May 2024 04:46:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1717044360;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oNYFnptrhHFc+E35DIpNV0Gef2d7lcueib81/cy4H/s=;
+	b=YzkFqjHdXcRsqjXTfevkAu5W2siNKYocyDfrR0OMm+NqioB8bXRMpKbKqzzs9gpKLKiSYR
+	sXLVsswpGw3abWtmkSyn51MrC+yBqJlh24RRbZFZJcYm+9Ou6JtHJzXyF8TCXlimPxDpdz
+	DSquStnLXvXnIHNF82a9RcE0qkm+2N90vSGiryrARLWYHY0XWR5DzWHH7mJN3Z9gtL7Kh+
+	fVTV3STLB8iFY/mGGVWinVUjqPn59yr6ShFbJ+JvVvhC4hNId5/kNZ2SU3Cj9B3IgDdDeY
+	EIr7QQ2ieYTqd9Vc/8Nu40pJgEWp31NWu2JpoJO6ATJe7heeMNmoi0A8XPuHzQ==
+Date: Thu, 30 May 2024 13:45:39 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <ZlgEcxzxXXqh2bVt@codewreck.org>
+References: <ZlZ8nCsZUZxhKwCf@codewreck.org>
+ <2024052926-moneyless-applause-a95b@gregkh>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 & CVE-2021-33631
+In-Reply-To: <2024052926-moneyless-applause-a95b@gregkh>
+Subject: Re: [oss-security] List linux CVEs for a given stable release?
 
-Hi,
-
-On Tue, Jan 30, 2024 at 08:46:56AM -0500, Armin Kuster wrote:
-> Not sure if this is the appropriate mailing list to share this information.
-
-Since the issues are not specific to one downstream distro, yes, it is
-appropriate and desirable to have this information in here.  Thank you!
-
-However, two things can be done better on further occasions: actual
-vulnerability information should be included in the message body (not
-only links) and the Subject line should explicitly say Linux when
-referring to the Linux kernel (since this list isn't only about Linux).
-
-> I noticed these two openEuler CVEs were assigned two weeks ago affecting
-> some K.O stable branches.
+Greg Kroah-Hartman wrote on Wed, May 29, 2024 at 09:23:50PM +0200:
+> > The information is there in the json files, so it's just a matter of
+> > writing some scripts to check them, but I can't believe there's none so
+> > I probably have missed something.
+> > 
+> > Does someone have such a script that'd list the latest CVEs for a given
+> > tree?
 > 
-> https://nvd.nist.gov/vuln/detail/CVE-2021-33630
+> How about something as simple as the following to see what is in
+> 5.10.101:
+> 
+> 	for id in $(git log --format="%H" v5.10.100..v5.10.101); do
+> 		cve=$(cve_search ${id})
+> 		cve_found=$?
+> 		if [[ "${cve_found}" == "0" ]]; then
+(pedantic: `if cve=$(cve_search "$id"); then` is a bit simpler/failproof)
+> 			echo "${cve} is in range"
+> 		fi
+> 	done
 
-This says:
+That's roughly what I had done earlier this week (handpicking the
+commits that could impact our users), but this doesn't address my second
+point as it won't catch any new CVE introduced before that tree that
+wasn't fixed.
+(also probably a bit more efficient to go by version tag since we have
+the info in the json, more below)
 
-"NULL Pointer Dereference vulnerability in openEuler kernel on Linux
-(network modules) allows Pointer Manipulation. This vulnerability is
-associated with program files net/sched/sch_cbs.C. This issue affects
-openEuler kernel: from 4.19.90 before 4.19.90-2401.3."
+> > My motivation here is double:
+> > - We notify our users of notable CVEs fixed on every update to encourage
+> > them to upgrade every time (it's sad, but in the embedded world not
+> > updating is still the norm despite our efforts to make upgrades as
+> > painless as possible... New regulations are coming so hopefully that
+> > will slowly improve, but as of now such motivations help)
+> 
+> The issue is, CVEs are assigned usually long _AFTER_ the stable release
+> has happened.  So if you want to do this type of report for the latest
+> stable release, it will look like there are no CVEs.  But if you wait a
+> few weeks, suddenly that old release will have many CVEs assigned to
+> them.
+> 
+> This is just due to the process we currently have where we review each
+> commit in the stable releases to determine if a CVE should be assigned
+> or not.  Obviously this takes time and we are running a few weeks behind
+> the current releases.
+> 
+> So you would have to run the script a lot, to keep it up to date, which
+> is why a "how many CVEs are listed in the latest release" isn't really
+> going to be all that valuable to your users.
 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3e8b9bfa110896f95d602d8c98d5f9d67e41d78c
+Right; I don't need this to be 100% complete -- as long as a couple of
+issues turn up it's probably good enough motivation.
 
-This mainline commit is from 2019, "net/sched: cbs: Fix not adding cbs
-instance to list".
+In practice just listing a bunch of numbers probably won't change the
+way people think, so I'm taking the time to briefly describe potential
+impacts (what component, very broad trigger conditions e.g. network
+packet or local access, likely risk if exploited e.g. RCE, memory
+leak...); so ultimately it requires looking at things in more details
+than I have time to check for all CVEs and will likely keep checking a
+few "juicy" ones...
+But it's a very good point, we should check again regularly and update
+that list if some new bad thing stands out.
 
-> https://nvd.nist.gov/vuln/detail/CVE-2021-33631
+> > - I'm currently not watching patches entering newer stable branches as
+> > closely, so if there are any new CVEs not fixed in the latest 5.10 I'd
+> > like to check if some impact us and will help with backports as possible
+> > (we're a small company so my time is limited, but might as well give
+> > back when I can)
+> 
+> That would be great, for where we know, we list when a vulnerability was
+> added to the tree, and where it was fixed.  That can leave many branches
+> still vulnerable where we have not fixed the issue yet.  One example
+> would be CVE-2024-26629.
+> 
+> You can see these in our repo by just doing:
+> 	git grep "5\.10" | grep introduced | grep -v fixed
 
-This says:
+I didn't think of checking the mails, that's certainly easier to grep
+than json as it's line-oriented.
+It's going to take a bit more of processing to check not just bugs that
+were backported in the stable trees, but things introduced in earlier
+kernels... Someting like this?
 
-"Integer Overflow or Wraparound vulnerability in openEuler kernel on
-Linux (filesystem modules) allows Forced Integer Overflow.This issue
-affects openEuler kernel: from 4.19.90 before 4.19.90-2401.3, from
-5.10.0-60.18.0 before 5.10.0-183.0.0."
+  rg -l 'Issue introduced in ([234]\.[0-9]* |5\.[0-9] |5\.10\.[0-9]* )' | sort > introduced_before_5.10
+  xargs rg -l 'fixed in 5\.10' < introduced_before_5.10 | sort > fixed_in_5.10
+  comm -3 introduced_before_5.10 fixed_in_5.10 |tail
+cve/published/2024/CVE-2024-35844.mbox
+cve/published/2024/CVE-2024-35904.mbox
+cve/published/2024/CVE-2024-35951.mbox
+cve/published/2024/CVE-2024-35971.mbox
+cve/published/2024/CVE-2024-36009.mbox
+cve/published/2024/CVE-2024-36013.mbox
+   grep 'Issue introdu' cve/published/2024/CVE-2024-35971.mbox
+Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.1.87 with commit 492337a4fbd1
+Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.6.28 with commit cba376eb036c
+Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.8.7 with commit 49d5d70538b6
+Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.9 with commit be0384bf599c
 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5c099c4fdc438014d5893629e70a8ba934433ee8
 
-2022, "ext4: fix kernel BUG in 'ext4_write_inline_data_end()'"
+The regex is a bit too manual to make a generic search script, and that
+feels very kludgy (at least mbox files do look like they get updated
+together with json), but that can be enough for my local needs for now.
 
-So the concern is that upstream longterm 4.19.y and 5.10.y (and perhaps
-some others) may still be affected.
+I was thinking something more along the line of parsing all the json
+files for containers.cna.affected by release version item (versionType
+!= git);
+It should be possible for a given stable tag to check if a given CVE
+applies or not immediately so it would be a matter of making this a bit
+more searchable -- probably make a reverse index with all the edges for
+faster search and keep appending new CVEs as they pop up.
 
-The above links don't say anything about attack vectors and required
-access - I guess CAP_NET_ADMIN and raw block device write (e.g., to a
-USB flash drive on another computer), respectively, are the
-prerequisites?  The CVSS scores look exaggerated, especially NVD's score
-of 7.8 for CVE-2021-33631.
+But it's a bit more work, so I'll gratefully take the grep mailboxes
+version for now :)
 
-Alexander
+> But note that for some issues, we don't have the information for when
+> they are introduced, so if they are not fixed in the 5.10 branch, does
+> that mean the branch _is_ vulnerable, or is not?  One example of a "is
+> not" might be CVE-2024-35867 as we think the code isn't present in 5.10,
+> but we don't have an automated way of determining that.  So that would
+> take more work than just a simple grep of the tree.
+
+Yes, these (basically patches without a Fixes:) will always be
+problematic; basically would need to also check all mails with "Fixed in
+[newer versions]" without the "Issue introduced in" text.
+
+Capitalization on Fixed can differentiate this so something like this?
+
+  rg -l 'Issue introduced in ([234]\.[0-9]* |5\.[0-9] |5\.10\.[0-9]* )|Fixed in' 
+
+This is bringing up the list of candidates from 101 to 543 so the
+initial check is going to be "fun"; I'll probably stick to the first
+variant for now...
+
+
+Also, in this case the json properly defaults to affected so a search by
+json as suggested above would also turn them up for further inspection.
+
+
+Well, either way we won't get around the problem that much manual work
+is still required; as said in my first mail my time is quite limited but
+I'll try to check a few from time to time.
+
+Ideally we'll want to limit duplicating this work for other
+downstreams... So:
+ - get more people to look at these
+   - if unaffected (e.g. CVE-2024-35867 you singled out above as not
+     affecting 5.10), report it so the reference files can be updated
+   - if affected backport patch, so it can be fixed and the refernece
+     file can also be updated.
+ - less work for everyone else!
+
+But finding volunteers for that kind of work might not be quite as easy
+as I make it sound like :)
+
+Cheers,
+-- 
+Dominique Martinet | Asmadeus
