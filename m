@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5271" "Tuesday" "26" "July" "2016" "14:32:03" "-0400" "Jesse Hertz" "jesse.hertz@nccgroup.trust" "<4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>" "145" "[oss-security] CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD" "^CC:" nil nil "7" "2016072618:32:03" "[oss-security] CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD" (number mark "        jesse.hertz@ Jul 26  145/5271  " thread-indent "\"[oss-security] CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22525 invoked by uid 550); 26 Jul 2016 18:32:23 -0000
+Received: (qmail 26197 invoked by uid 550); 4 Jun 2024 19:44:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,171 +6,191 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22507 invoked from network); 26 Jul 2016 18:32:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nccgroup.trust; s=dkim20160329; t=1469557930; bh=NAIm75L87ceL1wOn3eOaO+j+eB48FqN9WE9I7Upskjw=; h=From:Content-Type:Subject:Date:Message-ID:CC:To:MIME-Version; b=BD2RjDDi+l+OHBk4IINEo/MVyXQSWlne50OVNEcVTmxR5v1axeQY7lF2cOYVHGbtqWtAI0wMgMxC94XH+SmyiudoJCjMD5uqNKvUo9V8goJ/a+eyKTiyKAGZu4fR8ytg2crqLlCUl31Dq03vfJIM//mGMqXBq72bGd5/MYHMsoQ=
-X-MC-Unique: OAUBeZRRPP2dbac7RLWBgQ-1
-X-PGP-Universal: processed;
-	by man1srvpgp01p.nccgroup.local on Tue, 26 Jul 2016 19:32:06 +0100
-X-Pgp-Agent: GPGMail
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_944EBA58-0374-46ED-81C1-3585F5075B88";
-	protocol="application/pgp-signature"; micalg=pgp-sha512
-Message-ID: <4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>
-MIME-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-X-Mailer: Apple Mail (2.2104)
-X-Originating-IP: [172.20.1.120]
-X-ClientProxiedBy: MANCASEXCH01.nccgroup.local (10.1.120.101) To
- MANDBSEXCH03.nccgroup.local (10.1.120.104)
-signature: OK
-CC: <cve-assign@mitre.org>, Tim Newsham <Tim.Newsham@nccgroup.trust>
-Date: Tue, 26 Jul 2016 14:32:03 -0400
-From: Jesse Hertz <jesse.hertz@nccgroup.trust>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD
-To: <oss-security@lists.openwall.com>
-
---Apple-Mail=_944EBA58-0374-46ED-81C1-3585F5075B88
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-As part of NCC Group=E2=80=99s Project Triforce, a generic syscall fuzzing =
-effort by
-myself and Tim Newsham, a new vulnerability was discovered in the
-OpenBSD kernel. It has been fixed now. Please assign a CVE for this issue.
-
-Risk: Medium
-
-Impact:
-Any user can panic the kernel by using the sysctl call.  If a
-user can manage to map a page at address zero, they may be able
-to gain kernel code execution and escalate privileges (OpenBSD fortunately =
-prevents this by default).
-
-Description:
-When processing sysctl calls, OpenBSD dispatches through a number
-of intermediate helper functions.  For example, if the first integer
-in the path is 10, sys_sysctl() will call through vfs_sysctl() for
-further processing.  vfs_sysctl() performs a table lookup based on
-the second byte, and if the byte is 19, it selects the tmpfs_vfsops
-table and dispatches further processing through the vfs_sysctl method:
-
-    if (name[0] !=3D VFS_GENERIC) {
-        for (vfsp =3D vfsconf; vfsp; vfsp =3D vfsp->vfc_next)
-            if (vfsp->vfc_typenum =3D=3D name[0])
-                break;
-
-        if (vfsp =3D=3D NULL)
-            return (EOPNOTSUPP);
-
-        return ((*vfsp->vfc_vfsops->vfs_sysctl)(&name[1], namelen - 1,
-            oldp, oldlenp, newp, newlen, p));
-    }
-
-Unfortunately, the definition for tmpfs_vfsops leaves this method NULL:
-
-struct vfsops tmpfs_vfsops =3D {
-    tmpfs_mount,            /* vfs_mount */
-    tmpfs_start,            /* vfs_start */
-    tmpfs_unmount,          /* vfs_unmount */
-    tmpfs_root,         /* vfs_root */
-    (void *)eopnotsupp,     /* vfs_quotactl */
-    tmpfs_statfs,           /* vfs_statfs */
-    tmpfs_sync,         /* vfs_sync */
-    tmpfs_vget,         /* vfs_vget */
-    tmpfs_fhtovp,           /* vfs_fhtovp */
-    tmpfs_vptofh,           /* vfs_vptofh */
-    tmpfs_init,         /* vfs_init */
-    NULL,               /* vfs_sysctl */
-    (void *)eopnotsupp,
-};
-
-Trying to read or write a sysctl path starting with (10,19) results
-in a NULL pointer access and a panic of
-"attempt to execute user address 0x0 in supervisor mode".
-Since any user can perform a sysctl read, this issue can be abused
-by any logged in user to panic the system.
-
-Fortunately, OpenBSD intentionally prevents users from attempting to map a =
-page
-at the NULL address.  If an attacker is able to get such a mapping,
-they may be able to cause the kernel to jump to code mapped at this
-address (if other security protections such as SMAP/SMEP aren't in place).
-This would allow an attacker to gain kernel code execution and
-escalate their privileges.
-
-Reproduction:
-Run the PoC sysctl_tmpfs_panic.c program. It will pccess
-the (10,19,0) sysctl path and trigger a panic of
-"attempt to execute user address 0x0 in supervisor mode".
-NCC Group was able to reproduce this issue on OpenBSD 5.9 release
-running amd64.
-
-Recommendation:
-Include a NULL-pointer check in vfs_sysctl() before dispatching to
-the vfs_sysctl method.  Alternately, include a vfs_sysctl method
-in the tmpfs_vfsops table.
-
-Reported: 2016-07-21
-Fixed: http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_subr.c.dif=
-f?r1=3D1.248&r2=3D1.249
-          http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfso=
-ps.c.diff?r1=3D1.9&r2=3D1.10
-Assigned CVE: TBD
-
-PoC:
-
-// @author newsh
-
-#include <stdio.h>
-#include <sys/param.h>
-#include <sys/sysctl.h>
-
-int main(int argc, char **argv)
-{
-    int name[] =3D { 10, 19, 0 }; // vfs.tmpfs.0
-    char buf[16];
-    size_t sz =3D sizeof buf;
-    int x;
-
-    x =3D sysctl(name, 3, buf, &sz, 0, 0);
-    if(x =3D=3D -1) perror("sysctl");
-    printf("no crash!\n");
-    return 0;
-}
-
-
-########
-
-About NCC:
-NCC Group is a security consulting company that performs all manner of
-security testing and has a strong desire to help make the industry a
-better, more resilient place. Because of this, when NCC Group
-identifies vulnerabilities in a system they prefer to work closely with
-vendors to create more secure systems. NCC Group strongly believes in
-responsible disclosure, and has strict guidelines in place to ensure
-that proper disclosure procedure is followed at all times. This serves
-the dual purpose of allowing the vendor to safely secure the product or
-system in question as well as allowing NCC Group to share cutting edge
-research or advisories with the security community.
-
---Apple-Mail=_944EBA58-0374-46ED-81C1-3585F5075B88
+Received: (qmail 26152 invoked from network); 4 Jun 2024 19:44:48 -0000
+DKIM-Signature: =?UTF-8?Q?v=3D1;_a=3Drsa-sha256;_c=3Drelaxed/relaxed;_d=3Doracle.com;_h?=
+ =?UTF-8?Q?=3Dcontent-transfer-encoding:content-type:date:from:message-id:?=
+ =?UTF-8?Q?mime-version:subject:to;_s=3Dcorp-2023-11-20;_bh=3D6S9/v4hs6WPO?=
+ =?UTF-8?Q?1/zP6ODksooM9EQg9dkHF6nMJeaGZPA=3D;_b=3DCifA1pQM4igreKOGcku0XTg?=
+ =?UTF-8?Q?KT0zHkq6VfQWQqfGHWapQXvKABi2IEY/FgoskJJeBQARP_E9UxFl+dGE3psjRdP?=
+ =?UTF-8?Q?8lYiyQIaM6RHjphWJgn7jTSGMFECVTr9Fc/KpTE0hFmTUFKDfUG_DezdN0UZGTc?=
+ =?UTF-8?Q?XlAQl6AC4Vl4kY5cbPI/R6T9S4soioDoetQnYsdhWAQa7uhvlyVUHsnUQ_2Q4Kk?=
+ =?UTF-8?Q?8hlvSQmiGfWPU+qmkLxGtdV78hqzAYb+YB/ySRw6iqsKC8wGps+zkt2nGPZl1/q?=
+ =?UTF-8?Q?_PPPMr31Ihw470SjVB6guu7OorJlWQJmELq3P4sN2Z34Dx75DeD6m12rCqhU4HL?=
+ =?UTF-8?Q?vcIK35_Kg=3D=3D_?=
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OiTYI7XBZY6ye5snQpj36KLV9Y9I90Ll23NOwzvn+hRBj1hEVWnkI2yezSdTD/n4PN1uQ9r+4GLdDzhRdOD8mgr7u4F9zntPHramIA6qATr9+lx78nsHHVAy2+S575vLXxnOPUm89ZwRgfCuqjj3KkMvbfaNNNYMJdZ9nipCMlxqbhH2jkDCOsfJTOUE0LNeGtZ07tacvxN2sYskwA1zpTY/HhA9s7gVJiW6TBwyiZS4w/fraiOgZJbVHKyUTgjqzQ4xstLgMH6a2CczQYUNpaUCQ0pi4vDUVEDh4sdRsUfLFQk6ZGKKA+Ggd3dD/i41bM+GbiNxZ+cy410yfK7a9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6S9/v4hs6WPO1/zP6ODksooM9EQg9dkHF6nMJeaGZPA=;
+ b=ZjCxA9QXoaGhuPABBZwW1Nu2o7KDtafT+FYZjwifC1lM0uUmO3DjbNH/dcBhN3Y1aVsNFWs9UT6aNQm0ZRcTy3RBu+nzex8Fg9FeZYqXkbLA5axFeLjg77UTikiHoYt1Rz2JwJtY7KzD6durruvRBbjDYks+wll8eXu21GK1j+4cL3sEU7sob5Z+a/+JSJzGJasL1eQ7+ikIrvly6HW2VhQZkEFbm0b+mmD9E4IZap+HsjSmcSDn2u+grIztQ6Ju05KkrSsYAr7EEnq9IGKU+DpwD+7OwTn5a6TXzlyx5vgsZXH6+li1JIYu8qGjmMhMXE5Zt7DOFmeHtmRKSrC/mg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6S9/v4hs6WPO1/zP6ODksooM9EQg9dkHF6nMJeaGZPA=;
+ b=wJ1LAq8VruQ87LBTo9qVihCq7WhtcFn0scICDu4etaHLJYqPGv0Xz4nC4f1lECQ/9VCu/JbjalofdkxTiZ43VW4oZxbN3xt3T9QTBMQoci4JzUCCI6ctSRpSf18dWGH4pOns46HRCd0dviyUUv3LCI520yhH8i04JG3PdNfP/60=
+Message-ID: <d06cc1fc-aac0-4f33-8c6a-8b8e09b330e2@oracle.com>
+Date: Tue, 4 Jun 2024 12:44:28 -0700
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+To: oss-security@lists.openwall.com
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
+ q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
+ RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
+ /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
+ PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
+ vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
+ GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
+ ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
+ ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
+ AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
+ DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
+ bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
+ yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
+ Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
+ XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
+ R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
+ EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
+ 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
+ 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
+ 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
+ LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
+ AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
+ uoPzepWFbgvLuHIMvyjRog==
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Message signed with OpenPGP using GPGMail
+X-ClientProxiedBy: BYAPR07CA0093.namprd07.prod.outlook.com
+ (2603:10b6:a03:12b::34) To DS7PR10MB5005.namprd10.prod.outlook.com
+ (2603:10b6:5:3ac::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|MW5PR10MB5827:EE_
+X-MS-Office365-Filtering-Correlation-Id: 76cf0fbf-7898-4359-ea60-08dc84cec07a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|376005|366007;
+X-Microsoft-Antispam-Message-Info: 
+	=?utf-8?B?NVhkMndZV3g1aW9uMkNING04b2tQZlNtb2FOckNYcFFDVTVXMnZWdzdsY2Vk?=
+ =?utf-8?B?QWxyMTJjYnlUUnI2NGg2MjhvbVI1eklIY2tIeC9ZTkhNNGpmb2JUQ1YxcnZ2?=
+ =?utf-8?B?dEh6bmFaR2M3anptK2RyK1puOG9sYnlDVkdmVmdKaGNiSVlkUjA0TmxEMWRV?=
+ =?utf-8?B?SU5iWnFmN3ZyMDJGdVk2ZkkrNFdnUWhRMCs2ME5ZQ3craDMyR3NwUGMvRFNX?=
+ =?utf-8?B?Skw5c3pHdHJ6TmJFQkZZTEQ2SWEzeWp5N2xYTjJWVDRkZjNEU0RSMHdrbXhJ?=
+ =?utf-8?B?Tm9Db1RJNldjSDYrQ2dXWkRwZld3WHhsTHo4ZGlxbW1IY3oyNFk5OXBUdXVo?=
+ =?utf-8?B?NjRMTTYwc0lFSHFoYjhPbDZJVE5QWnROZVBSZWxHL2VtYWYyVlA0b0FoMncx?=
+ =?utf-8?B?Q2VXaHFtSzdnWktQWlBJY3NYNWdCMThWUlc3RmRqMTZkU3ZLbEtIRHNaZVFH?=
+ =?utf-8?B?dnRSZDE3SWN2NmcrU3lxWFV5R1lKNkhOVDZsMXcwL2dmRXQ3MzFyUUNkWExt?=
+ =?utf-8?B?UUtENFk0RC9zcnliZDlqUzR4a3p4andIcUhFdXRpcHpHZTVLVUVUZWdINnUr?=
+ =?utf-8?B?bEZMQWN4MUhYaWhXd2ZmcEcweTFDTGgwMWh3SWRVK1hhUHAxNTFXaEdlNHhn?=
+ =?utf-8?B?VnNGQjBEQnl5aCszcG1wckszcExEb3Jkb0QyaStHWlVuTDZrbjBoZXpWbFZk?=
+ =?utf-8?B?a2xHT284ZGxNdWtFRWVxVC9aTUlkY2ZhRElpaUp0L2JxYWRQaFdXL1M1VmMy?=
+ =?utf-8?B?emd5bmFoZ2hpajY4ZVpXdHhkZllvYTF2a0I5TVdQVFpXdVdYc2tjYWsrT0Jt?=
+ =?utf-8?B?NFBjalZQSFg2aXBhZDJ1M0ZpVVdid3l5VVBmL1RvTHlYTm1JYkpuWGp4ZXdD?=
+ =?utf-8?B?eldmczNsNEIwS00ycjZpdHNOb1dtNzUxQWdTWUMxZk1TY3g5Nno2cy8rbEYw?=
+ =?utf-8?B?R2llT0NoU1d6Y1VFSCtrcC91SnVHU1picjdWb0xuVnl0bWwwQ1F4U29PSXp1?=
+ =?utf-8?B?SEFRY0hIek9iQ1psR0U2Y2JYdFl0bk93UlF0cTA1TTVKOWQ4LzVUdnFuV2Zj?=
+ =?utf-8?B?WG5KcmZrbzFqQ2NFMTYwN0VSYXZRVzhtRVJpWVBuc05QQmxJa1ZjKzF6YmtC?=
+ =?utf-8?B?aWRjUnFsUGlXVGpIYUJuOTFUQmxDM2xmbld5Y0RrQkpqUWZ2enM3TU5hcE8w?=
+ =?utf-8?B?cGNlanAzUUlRSnBoZFBKc25ia3hoUzBnemUxbFlIVU80U0pGUHgzdzJZL2VD?=
+ =?utf-8?B?dDFpSk5YQmp3RXJERk1lRytBVkszMHpEVTVJVGM0WlJKZ1dSNmFQemg5LzZK?=
+ =?utf-8?B?Q3VaeVFCZVNlQy9SRkY3MjEwOWRoN3podGtsT0pkSWdiVEl6bCs4aHlncTRk?=
+ =?utf-8?B?M1VjdGtKajlQZXpBWWhMdjF5SmJsMEdtVHM2UzZaUzlNbWdHcXJCOENEN1Rr?=
+ =?utf-8?B?NFE4OEZ3R2FIZXhlVEIyelJoQm5nMUFYT3VER1MzWWtIbkxFditmS1oyTmRv?=
+ =?utf-8?B?cTRwemhsdmQ4S1FDNHJvYWh0QjJ3YzIvN1poUnJ2b2kzRTVqYm02Z1pRV0NH?=
+ =?utf-8?B?WUUwUjlLTjhaRzIwRzVDR2ZJbUt6VGY2WGJjQ0pJU2NDOWpwVEF0MjdTY2gv?=
+ =?utf-8?B?ZUZ1T3FBWDVUMDQ3OUxyVWd4Q294cmtkakJxcUNwYnZsbGMzL0RLd0twRWxn?=
+ =?utf-8?B?S1VNckxXYU41NWxDTFJUYmM5Nktqalk5N1pHMzE4cVZyU3RHY25GMkFBPT0=?=
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?bE5LNlArYloxQ2U2aEJBVkt6T0ViVUIzb3ZhK0gwNXpCcERKQ1RoQmxoUEVr?=
+ =?utf-8?B?Zmc5Z0hxT3VLcVFGZ3JpRWpXYnZWUWtBM2JmclhUeThZNHAyR09kUTRiczJI?=
+ =?utf-8?B?OUY0SGt5VUVFNytld2JqZW90c0tiTG5hVFNWbW90WU5KMnVNd1JlRnBzSC9V?=
+ =?utf-8?B?L0tMVTJScHkvZjlrbERLM2Uvd0l4QlV1d0cweDlCR2xnNDlMK0hKQUIwcVVP?=
+ =?utf-8?B?QTRjVkx5SHNlSms1R3FjRENJQzE1blBRNERkbW9uMmxNUzh2ek1TdjFmM0ZE?=
+ =?utf-8?B?OXNPL0VzRVY5YVJYT1UvY0JicnR3S2dvQVNOYWx3dWlBN0pyaEsyd2dXWmhO?=
+ =?utf-8?B?aCtzUUFCZ1JheVpUa1BmaS9lWElCaTdTbnpjZVdLZVpDZTNka0YxRmRSYkZX?=
+ =?utf-8?B?V3ZQb1lyYVV0TThhM3BNZkVVbllsVVNPMFYyNFFHc3hOMUlnbkttZC9IYUJ2?=
+ =?utf-8?B?SW1reHhnYWNmeDdwZGU2NlFKM3FFL2wwSWhyWWI5Q0dscG85c3pINFZDVE8y?=
+ =?utf-8?B?ME5qU0tQaUs4SHpaMGQrNkVnb2FEYlpmMGJtOU9BaFc1NTdLK2pLRkhSK2JN?=
+ =?utf-8?B?bVBqWHovYmxoWVA5UllibUZHYnFZV21CSWhlNWc3cWVTRWhHTWFDS3Y3bTBi?=
+ =?utf-8?B?bVhPZlVwWmVyRUNsekhsajYzSnpkNWFTdFR6TUdmQXZ1bW5LSUxGc1hvclZV?=
+ =?utf-8?B?SldCLzlYOTRrSktBaE1xMEcyOWVkWHNrSmg2TG5KaTA5TGxVak9aUXlwdGFo?=
+ =?utf-8?B?ME8yVkVKV2VFRXJFN2h2UlE3WndtVzRCb1R3by9kVU1Rb2ttTzREL0N4UmdM?=
+ =?utf-8?B?NUgvaTAyYnp0TjFTV2t3UFhWWW9tZXdoQUZRQW9OcFBSdi9FUURqbDZ0c3Jj?=
+ =?utf-8?B?WlErTm4wK0ZLdE5rMzMwa1M5L2s4OWV0Wk00STVhUjBzQ1kraDh4ZjhaUWFv?=
+ =?utf-8?B?T3M4anpkWmRHZTQrZXk0dkNuRWFTZFhEU0FicjFrL2tvcmM5a0h2UWltcnFm?=
+ =?utf-8?B?UUZiSkZQeGtOcUJIQlVrb3psdjVSVjNBQXdNSFBiWjBMRkFYUDJCS3loNkwv?=
+ =?utf-8?B?THdrQ1V6aXdzeFczbkVKT0c4R2dmNzF3VGVrcFo1NUIyN3lHRk9wd3M0Y1FH?=
+ =?utf-8?B?dGNwVTFIUXNNcENxSkNsclFyd1MyM1U0WlZ1TTltU0swUmVyZ09Bc25TN1dS?=
+ =?utf-8?B?bENJeHRkZjMvN3RwOEFTQ2xZbGFUVFBlYmJmTVZuU0FzWEF4eWxIR0xNeHR4?=
+ =?utf-8?B?MzN4dlVHdGtCZXk0VnlvSFcxSzU5Y3M3YkVRWndibUpRZ0hvaVpGMWFtQVFI?=
+ =?utf-8?B?MXJNU1hZTmtqUVhTSHlVbmhDZ1R2V3VlZy93N08wWVgwQmJWYjNvUms4a3Ni?=
+ =?utf-8?B?UXVoNlZCVEhmZXhldUtYdG9oTVFsZ3BCN1ZiR3FrMmIzZUlwT2dia0lnZGk5?=
+ =?utf-8?B?d2F6Ukh1bit0bUl6T3FsZlBRUE1icVU1RHdKRzQxUDlDY0U5WEZsODB1OHoy?=
+ =?utf-8?B?NHF6bVdMUjk2aW1TS0xsSmNsdnA3bDdoWlIyRnBMQ0ttTURnUHVrZWpsUldL?=
+ =?utf-8?B?aGdwRzF5YlVFanJ4VWsza0RzRjViSmJNbHU4TEtrY0plbmFBVGNwektPVHQ0?=
+ =?utf-8?B?UG1hYmZ5NldYbW5RUVJmTU9ycUUrc1dTTm0wQ0w5MENYU3NCSnZWNEE1S3ZY?=
+ =?utf-8?B?dE15TjFxM2ZNdkM3UFgwbHNNTVMzdFErUmFOTk5uNTVwazUzeXJzMFI4QUVO?=
+ =?utf-8?B?YWVyMk9hN3kyMEE1dkJyTHZocFdkVm11b1NpbDRpNG80NW42NTNRWUp0RWJF?=
+ =?utf-8?B?akQ4dUJnWFg1V1k3WEp4OVA2dzVmU1c3MU5CdElYOXlnLzBwd3dVMFp5c2xD?=
+ =?utf-8?B?OXZOeDMrQzZmdmJoVzlWQmtKSURIQm42Y3pIc2tEYjVhVUJPM3MrZ1RCNzJJ?=
+ =?utf-8?B?ZTFqd3kxejI2dlZWeFhiOHpxVVNwVGJ6U2E3M25adUF1ZnhBSWJORng1S1dB?=
+ =?utf-8?B?Y3BkR3R3ZHRvTVdFZ29uTmF4SUR2MmpraWRVQmtXOVd6KzU0aTM3djcxYjZi?=
+ =?utf-8?B?WVN0bGt5Uk9MS0pUd01hajhoM3pMUHEyRC8yaUFSNlR4STZBMjJQd2wvZWcx?=
+ =?utf-8?B?WmZ6Tml5U0dhY3hVc0NRUzB4QXY3TDJhVFVFTWhKVnhQcWc2U1dwWHM0aStU?=
+ =?utf-8?B?UHc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	Y4s2WXdlGFYQpbJQWDYz4S7t3G7NToAmjdvWZ8bxv3DMeK9Gp3AUWj5DCM6GVwrKaRTX1+QAEnXPszY5APNMT3OukerzdMGI2k9fcycqiSl7OPpEPEXOrZmNecjZ7j4HY9pOrsS07MY+NV8Ir+RSQHQad2GjS4WLQfjC9PQL9dv9q0aDxglQSu5/B5EdpO6g6EIzCscZRK1Oyi+6UJ8XeiFhEehGfaBQ8Bt1+mnxY3aAYr0jDpvH+ChBbP4QuInx4EjtRZepSLD/TZcfHIxcBn44SRXMnsKPsQhvTyx+fYsfxcq94r2WfC/3v0c8rIJQcykpHsmYUbTQBGIxeYHpCxqVZGi3eGte+gakuIA3tNWb3tb0r/iEBcL3Srv9S0foRcO54aOznqkS9hdGYKRDyFoVR0xnFbBZCdNHhCtRHuwBUBi+bgJnyET2AyQq2d40ifNYkxwRAAlmMuAnjfWnOBGz9YwF1Zm2bb7CLyGrE+2EhrMKogbSx/e8gxkbuwrqjS66j39YaQMJEXEJe6sTmrlqUChPZRiFGRyOvmtOdNhDnVFcraZEuSqn1XPWSxSvWddI3RyCLLLj1Ma2IyfSj3y6mne4TtvJPzn9RjTVZl4=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76cf0fbf-7898-4359-ea60-08dc84cec07a
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2024 19:44:30.8281
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RdP9Y6aJUK1Y4UCWTLpU+FTy19Pbvu8rXQMdu+Alwm2M9uKt74ayoYNWxWSlk4feDbMsbP/4GjExa7KLHCl0Qcu3qIdPYI+ZPNeYC1j9kPw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR10MB5827
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-04_09,2024-06-04_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 bulkscore=0 spamscore=0
+ adultscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
+ definitions=main-2406040159
+X-Proofpoint-ORIG-GUID: HDBDHtp23kSZPlpDUsNFTYPoGEWuD2ii
+X-Proofpoint-GUID: HDBDHtp23kSZPlpDUsNFTYPoGEWuD2ii
+Subject: [oss-security] libarchive 3.7.4 released with 2 security fixes
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+https://github.com/libarchive/libarchive/releases/tag/v3.7.4 announces
+the release on April 26 of libarchive 3.7.4 with 2 security fixes:
 
-iQEcBAEBCgAGBQJXl6yjAAoJEPhkPVYKhDWbSKAH/Agts25hwdbBz5U/FCn0bqvx
-RbC0DwzWZ8XxL16M7MTp6IDBcv8Tv6ld8X8puAUmYXe8EVSSF0qw71ba3WHmeT+Q
-XUowUCSye0DrQ162wKZnd1ZyrdfZpbb++lwLZonS2bnD1n+9t393ZqlTNox+pROG
-UinOPOKft0dbvhYeWBw1pr04NOUv7sgYL3ARWoisizuuyj9C7FVhE1X07Hq96XFq
-5UXq+b9o6FdC3BxEk9qVqP5GW1N6weSI4zQu1ztez2N00e3WPy7nT1VzdDATmBzh
-yN5OaLo9ENWVpEtORd4baqNceQQLugnX/tpvd+sy1qanjqpYE585CpnmhfvFY5k=
-=2oy2
------END PGP SIGNATURE-----
+- rar: Fix OOB in rar e8 filter (#2135) (CVE-2024-26256)
+   https://github.com/libarchive/libarchive/pull/2135 doesn't give details, but
+   a detailed writeup from Trend Micro / ZDI has been posted at:
+   https://www.zerodayinitiative.com/blog/2024/4/17/cve-2024-20697-windows-libarchive-remote-code-execution-vulnerability
 
---Apple-Mail=_944EBA58-0374-46ED-81C1-3585F5075B88--
+- zip: Fix out of boundary access (#2145)
+   https://github.com/libarchive/libarchive/pull/2145 states:
+   "If a ZIP file contains a file with an empty name and mac-ext option is set,
+    then a check accesses memory out of bound of name."
 
+As noted by Will Dormann on Mastodon [1], CVE-2024-26256 was issued by
+Microsoft's CNA for their bundled version of libarchive, so the CVE data
+currently doesn't reflect that the fix is available for other platforms
+from the open source upstream.
+
+[1] https://infosec.exchange/@wdormann/112559605548386109
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
