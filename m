@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1091" "Tuesday" "17" "May" "2016" "20:40:37" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do5JnkxQhd90yXCmkM_OXBKMxTZN9sYzGVRJL98q33v_TQ@mail.gmail.com>" "37" "[oss-security] RHSA-2016:1086 libndp: denial of service due to insufficient validation of source of NDP messages" nil nil nil "5" "2016051718:40:37" "[oss-security] RHSA-2016:1086 libndp: denial of service due to insufficient validation of source of NDP messages" (number mark "U       cbuissar@red May 17   37/1091  " thread-indent "\"[oss-security] RHSA-2016:1086 libndp: denial of service due to insufficient validation of source of NDP messages\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13993 invoked by uid 550); 17 May 2016 18:41:19 -0000
+Received: (qmail 5944 invoked by uid 550); 5 Jun 2024 23:54:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13800 invoked from network); 17 May 2016 18:40:49 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=Uj5/WlseUBAPuyt0Be0l01/epsxQILjcTMXh46pTh70=;
-        b=JfXngEu/DJHjLfnfWVI7eUcjbwXchFRmoFK/dcWaEMKd9H4hGKXIpzQNxwsAhrU/RP
-         uzImqHAsYHhgt4wfuEqxTCVZ7QjTM66CwXRfuSK6p1H2jpg+UDGkzl1cKU9EJq5JoLNX
-         CwSEaE8InOL6WzrPan3oJljLiC33ZmZg4gAWvOAMdow2M/LaFmH6xWrcGU7YNN0lIYdK
-         CeRWNVeShuLAiWldZQKCKGtzLTqVY8byFEN0Y/bsRL3iniqyb1H5PMm6TrG37DDL8jay
-         zeuY4F7u4OEoJxnWHQySCAptiIuTFGhTXfGJPYwVEjzadel6ghbG+j8he9duRmDECswj
-         fqLA==
-X-Gm-Message-State: AOPr4FWAuVlW9yLC2u6RPJI1WcdDEslDRS/wbUI9qFEq5QCg7Tjf+MtfmH0zZQEhdb/4n9t42hbG0728n4Tnqya/
-MIME-Version: 1.0
-X-Received: by 10.98.29.16 with SMTP id d16mr4253978pfd.142.1463510437325;
- Tue, 17 May 2016 11:40:37 -0700 (PDT)
-Date: Tue, 17 May 2016 20:40:37 +0200
-Message-ID: <CAKG8Do5JnkxQhd90yXCmkM_OXBKMxTZN9sYzGVRJL98q33v_TQ@mail.gmail.com>
-From: Cedric Buissart <cbuissar@redhat.com>
+Received: (qmail 11533 invoked from network); 5 Jun 2024 23:29:01 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c03b674beb8b605330e13f1
-Subject: [oss-security] RHSA-2016:1086 libndp: denial of service due to insufficient
- validation of source of NDP messages
+From: Tavis Ormandy <taviso@gmail.com>
+Date: Wed, 5 Jun 2024 23:28:46 -0000 (UTC)
+Message-ID: <v3qsbe$msq$1@ciao.gmane.io>
+References: <d06cc1fc-aac0-4f33-8c6a-8b8e09b330e2@oracle.com>
+User-Agent: slrn/1.0.3 (Linux)
+Subject: [oss-security] Re: libarchive 3.7.4 released with 2 security fixes
 
---94eb2c03b674beb8b605330e13f1
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 2024-06-04, Alan Coopersmith wrote:
+> https://github.com/libarchive/libarchive/releases/tag/v3.7.4 announces
+> the release on April 26 of libarchive 3.7.4 with 2 security fixes:
+>
+> - rar: Fix OOB in rar e8 filter (#2135) (CVE-2024-26256)
+>    https://github.com/libarchive/libarchive/pull/2135 doesn't give details, but
+>    a detailed writeup from Trend Micro / ZDI has been posted at:
+>    https://www.zerodayinitiative.com/blog/2024/4/17/cve-2024-20697-windows-libarchive-remote-code-execution-vulnerability
+>
 
-Dear all,
+The e8 thing is kinda interesting, but I think the ZDI description
+didn't give enough background.
 
-An improper input validation check, and improper origin check flaw during
-the reception of NDP message was discovered in libndp. An attacker in a
-non local network could use this flaw to advertise a node as a router, and
-cause a denial of service attack, or act as a man in the middle.
+Here is my attempt:
 
-The patches enforce that hop limit must be 255, to ensure that the NDP
-message
-has not been routed.
+    - A long time ago, WinRAR included a bytecode interpreting VM
+      called RarVM. In theory, users could preprocess the data they're
+      compressing to make it more compressible, and then embed "filters"
+      in the archive. Those filters were little bytecode programs that
+      reverse the preprocessing - and the decompressor would execute
+      them (!!!).
 
-Patches can be found upsteam:
+      Kinda crazy, but I guess you could argue it's not that different
+      to truetype hinting or postscript documents.
 
- -  libndp: validate the IPv6 hop limit
-https://github.com/jpirko/libndp/commit/a4892df306e0532487f1634ba6d4c6d4bb3=
-81c7f
+      I know about RarVM because I wrote an assembler for this format
+      once (lol!) https://github.com/taviso/rarvmtools
 
- -  libndb: reject redirect and router advertisements from non-link-local
-https://github.com/jpirko/libndp/commit/2af9a55b38b55abbf05fd116ec097d40291=
-15839
-  https://people.freedesktop.org/~lkundrak/.libndp/
+    - You can't really use rarvm anymore, it was disabled in mainline
+      rar a decade ago.
 
-Known affected packages : NetworkManager >=3D 1.0
+    - However...there were a few applications that were useful, like
+      e8 processing. E8 processing makes x86 code more redundant (and
+      therefore more compressible) by translating relative branches into
+      absolute ones (e8 is the x86 opcode for a relative call). The
+      decompressor can then reverse this process and get the original
+      binary back.
 
-Thanks to Julien Bernard (Viag=C3=A9nie) for discovering the issue
+    - So...libarchive checks if an archive is using once of those
+      well-known bytecode programs and then emulates it. It checks by
+      crc'ing the bytecode and checking if it recognizes the crc:
 
-Kind regards,
---
-Cedric Buissart
-Purkynova 99
-Brno 612 45
+https://github.com/libarchive/libarchive/blob/master/libarchive/archive_read_support_format_rar.c#L3820
 
---94eb2c03b674beb8b605330e13f1--
+      Seems a bit fragile, but okay.
+
+    - You could optionally pass these rarvm filters "initial registers",
+      effectively parameters to the bytecode programs. This is a bit
+      like regparm in gcc (this is the READ_REGISTERS flag the ZDI article
+      was talking about).
+
+    - The e8 filter didn't validate the length parameter correctly,
+      allowing the filter to effectively read and write the whole
+      address space during decompression - oops.
+
+I'm honestly not 100% sure it's correct now, it still looks fragile to
+me. The audio filter should probably also have the number of channels
+capped, to avoid DoS (I don't think it can corrupt memory though?).
+
+https://github.com/libarchive/libarchive/blob/master/libarchive/archive_read_support_format_rar.c#L3750
+
+In my opinion as a RarVM expert (haha), I think it's not worth
+supporting these old filters, were they really ever used in archives?
+
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
+
