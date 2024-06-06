@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2906" "Friday" "24" "March" "2017" "12:26:43" "+1100" "James Morris" "jmorris@namei.org" "<alpine.LRH.2.20.1703241217250.10825@namei.org>" "102" "[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" nil nil nil "3" "2017032401:26:43" "[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" (number mark "U       jmorris@name Mar 24  102/2906  " thread-indent "\"[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1987 invoked by uid 550); 24 Mar 2017 11:45:38 -0000
+Received: (qmail 1047 invoked by uid 550); 6 Jun 2024 16:19:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,124 +7,160 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5169 invoked from network); 24 Mar 2017 01:27:04 -0000
-Date: Fri, 24 Mar 2017 12:26:43 +1100 (AEDT)
-From: James Morris <jmorris@namei.org>
-To: linux-security-module@vger.kernel.org, linux-kernel@vger.kernel.org
-cc: lwn@lwn.net, fedora-selinux-list@redhat.com, selinux@tycho.nsa.gov,
-        Linux Security Summit Program Committee <lss-pc@lists.linuxfoundation.org>,
-        ubuntu-hardened@lists.ubuntu.com, netfilter-devel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, Audit-ML <linux-audit@redhat.com>,
-        gentoo-hardened@gentoo.org, keyrings@linux-nfs.org,
-        tpmdd-devel@lists.sourceforge.net, kernel-hardening@lists.openwall.com,
-        oss-security@lists.openwall.com, openxt@googlegroups.com,
-        tee-dev@lists.linaro.org
-Message-ID: <alpine.LRH.2.20.1703241217250.10825@namei.org>
-User-Agent: Alpine 2.20 (LRH 67 2015-01-07)
+Received: (qmail 18088 invoked from network); 6 Jun 2024 10:48:48 -0000
+From: SBA Research Security Advisory <advisory@sba-research.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [SBA-ADV-20240202-02] CVE-2024-5658: CraftCMS Plugin -
+ Two-Factor Authentication through 3.3.3 - TOTP Token Stays Valid After Use
+Thread-Index: Adq3/q5ZS8F2pwN1TNWk1vbyAwSx1A==
+Date: Thu, 6 Jun 2024 10:48:39 +0000
+Message-ID: <6984076cc45949b3a817bb9285cb3002@sba-research.org>
+Accept-Language: de-AT, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [192.168.25.3]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1665246916-1864586338-1490318299=:10825"
-Content-ID: <alpine.LRH.2.20.1703241220400.10825@namei.org>
-Subject: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP
+X-FE-Policy-ID: 5:6:0:SYSTEM
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=sba-research.org; s=_dkimgw1; c=relaxed/relaxed;
+ h=from:to:subject:date:message-id:content-type:mime-version;
+ bh=msweOuMmP9fHI16P+RCP2tj7O4h3RSCVY5MvhX+Om2s=;
+ b=DU7lOrw0UI0A9p2ZhOM5wFzo0dLCtvhsoPu4mYkY8RahdmdXYAvT9JEsZv1TN8rZ/4RG5rtv4jBt
+	dhGfEVKfFQDNXwRrlS/ofTV84opKPorfvYBEUzYEZjKqjP4jNv9V1nKYg8qz9jmLJujJOK+8Opcv
+	EC8BBC2YyqTP5jEvLeN4aKwcaMlc2k4zjGAN9re2EtVwHq1Z/AS1bBzcwp70IrdXEg4w36vWJOUn
+	+TK4d9VILx3bUjcjtvo2a20ZS0OHcGpzR/jQPdMRaoTUTEoDgBlAA/3AhqAj7/nd+vOf8vnUcHmt
+	3Qi9DlTugjIR2DfZlUfmgwJ8FCPE/ddsmHkBNw==
+Subject: [oss-security] [SBA-ADV-20240202-02] CVE-2024-5658: CraftCMS Plugin - Two-Factor
+ Authentication through 3.3.3 - TOTP Token Stays Valid After Use
 
---1665246916-1864586338-1490318299=:10825
-Content-Type: text/plain; CHARSET=ISO-8859-7
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.LRH.2.20.1703241220401.10825@namei.org>
-
-
-==============================================================================
-		   ANNOUNCEMENT AND CALL FOR PARTICIPATION
-
-			  LINUX SECURITY SUMMIT 2017
-                         
-			       14-15 September
-			       LOS ANGELES, USA
-==============================================================================
-
-
-DESCRIPTION
-
-  The Linux Security Summit (LSS) is a technical forum for collaboration
-  between Linux developers, researchers, and end users. Its primary aim is to
-  foster community efforts in analyzing and solving Linux security challenges.
-
-  LSS this year will be co-located with the Open Source Summit and the Linux
-  Plumbers Conference.
-
-  The program committee currently seeks proposals for:
-
-    * Refereed Presentations:
-      45 minutes in length, including at least 10 minutes of discussion.
-
-    * Discussion Topics:
-      30 minutes in length.
-
-  Topic areas include, but are not limited to:
-
-    * Kernel self-protection
-    * Access control
-    * Cryptography and key management
-    * Integrity control
-    * Hardware Security
-    * Iot and embedded security
-    * Virtualization and containers
-    * System-specific system hardening
-    * Case studies
-    * Security tools
-    * Security UX
-    * Emerging technologies, threats & techniques 
-
-  Proposals should be submitted via:
-    http://events.linuxfoundation.org/events/linux-security-summit/program/cfp
-
-
-DATES
-
-  * CFP Close: June 5, 2017
-  * CFP Notifications: June 12, 2017
-  * Schedule Announced: June 19, 2017
-  * Slide Submission: August 31, 2017
-
-
-WHO SHOULD ATTEND
-
-  We're seeking a diverse range of attendees, and welcome participation by
-  people involved in Linux security development, operations, and research.
-
-  The LSS is a unique global event which provides the opportunity to present
-  and discuss your work or research with key Linux security community members
-  and maintainers.  It¢s also useful for those who wish to keep up with the
-  latest in Linux security development, and to provide input to the
-  development process.
-
-
-WEB SITE
-
-  http://events.linuxfoundation.org/events/linux-security-summit
-
-
-TWITTER
-
-  For event updates and announcements, follow:
-
-    https://twitter.com/LinuxSecSummit
-  
-
-PROGRAM COMMITTEE
-
-  The program committee for LSS 2017 is:
-
-    * James Morris, Oracle
-    * Serge Hallyn, Canonical
-    * Paul Moore, Red Hat
-    * Stephen Smalley, NSA
-    * Elena Reshetova, Intel
-    * John Johansen, Canonical
-    * Kees Cook, Google
-    * Casey Schaufler, Intel
-    * Mimi Zohar, IBM
-    * David A. Wheeler, Institute for Defense Analyses
-
-  The program committee may be contacted as a group via email:
-    lss-pc () lists.linuxfoundation.org
---1665246916-1864586338-1490318299=:10825--
+LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hB
+MjU2DQoNCiMgQ3JhZnRDTVMgUGx1Z2luIC0gVHdvLUZhY3RvciBBdXRoZW50
+aWNhdGlvbiAtIFRPVFAgVG9rZW4gU3RheXMgVmFsaWQgQWZ0ZXIgVXNlICMN
+Cg0KTGluazogaHR0cHM6Ly9naXRodWIuY29tL3NiYXJlc2VhcmNoL2Fkdmlz
+b3JpZXMvdHJlZS9wdWJsaWMvMjAyNC9TQkEtQURWLTIwMjQwMjAyLTAyX0Ny
+YWZ0Q01TX1BsdWdpbl9Ud28tRmFjdG9yX0F1dGhlbnRpY2F0aW9uX1RPVFBf
+VmFsaWRfQWZ0ZXJfVXNlDQoNCiMjIFZ1bG5lcmFiaWxpdHkgT3ZlcnZpZXcg
+IyMNCg0KVGhlIENyYWZ0Q01TIHBsdWdpbiBUd28tRmFjdG9yIEF1dGhlbnRp
+Y2F0aW9uIHRocm91Z2ggMy4zLjMgYWxsb3dzIHJldXNlIG9mDQpUT1RQIHRv
+a2VucyBtdWx0aXBsZSB0aW1lcyB3aXRoaW4gdGhlIHZhbGlkaXR5IHBlcmlv
+ZC4NCg0KKiAqKklkZW50aWZpZXIqKiAgICAgICAgICAgIDogU0JBLUFEVi0y
+MDI0MDIwMi0wMg0KKiAqKlR5cGUgb2YgVnVsbmVyYWJpbGl0eSoqIDogSW1w
+cm9wZXIgQXV0aGVudGljYXRpb24NCiogKipTb2Z0d2FyZS9Qcm9kdWN0IE5h
+bWUqKiA6IFtUd28tRmFjdG9yIEF1dGhlbnRpY2F0aW9uXShodHRwczovL3Bs
+dWdpbnMuY3JhZnRjbXMuY29tL3R3by1mYWN0b3ItYXV0aGVudGljYXRpb24/
+Y3JhZnQ0KQ0KKiAqKlZlbmRvcioqICAgICAgICAgICAgICAgIDogW0Jvcm4w
+NV0oaHR0cHM6Ly93d3cuYm9ybjA1LmNvbS9lbi8pDQoqICoqQWZmZWN0ZWQg
+VmVyc2lvbnMqKiAgICAgOiA8PSAzLjMuMw0KKiAqKkZpeGVkIGluIFZlcnNp
+b24qKiAgICAgIDogMy4zLjQNCiogKipDVkUgSUQqKiAgICAgICAgICAgICAg
+ICA6IENWRS0yMDI0LTU2NTgNCiogKipDVlNTIFZlY3RvcioqICAgICAgICAg
+ICA6IENWU1M6My4xL0FWOk4vQUM6SC9QUjpML1VJOlIvUzpVL0M6Ti9JOkgv
+QTpODQoqICoqQ1ZTUyBCYXNlIFNjb3JlKiogICAgICAgOiA0LjggKE1lZGl1
+bSkNCg0KIyMgVmVuZG9yIERlc2NyaXB0aW9uICMjDQoNCj4gQ3JhZnQgNCBw
+bHVnaW4gZm9yIHR3by1mYWN0b3Igb3IgdHdvLXN0ZXAgbG9naW4gdXNpbmcg
+VGltZSBCYXNlZCBPVFAgKFRPVFAsDQo+IGxpa2UgR29vZ2xlIEF1dGhlbnRp
+Y2F0b3IpLg0KDQpTb3VyY2U6IDxodHRwczovL2dpdGh1Yi5jb20vYm9ybjA1
+L2NyYWZ0LXR3b2ZhY3RvcmF1dGhlbnRpY2F0aW9uPg0KDQojIyBJbXBhY3Qg
+IyMNCg0KQW4gYXR0YWNrZXIgd2hvIGlzIGluIHBvc3Nlc3Npb24gb2YgYW4g
+VE9UUCB0b2tlbiBpcyBhYmxlIHRvIGVzdGFibGlzaCBhbg0KYXV0aGVudGlj
+YXRlZCBzZXNzaW9uLiBUaGlzIHJlcXVpcmVzIHRoYXQgdGhlIGF0dGFja2Vy
+IGhhcyBrbm93bGVkZ2Ugb2YgdGhlDQp2aWN0aW0ncyBjcmVkZW50aWFscy4N
+Cg0KIyMgVnVsbmVyYWJpbGl0eSBEZXNjcmlwdGlvbiAjIw0KDQpBIFRPVFAg
+dG9rZW4gY2FuIGJlIHVzZWQgbXVsdGlwbGUgdGltZXMgdG8gZXN0YWJsaXNo
+IGFuIGF1dGhlbnRpY2F0ZWQgc2Vzc2lvbi4NClJGQyA2MjM4IGluc2lzdHMg
+dGhhdCBhbiBPVFAgbXVzdCBub3QgYmUgdXNlZCBtb3JlIHRoYW4gb25jZSBb
+MV0uDQoNCj4gVGhlIHZlcmlmaWVyIE1VU1QgTk9UIGFjY2VwdCB0aGUgc2Vj
+b25kIGF0dGVtcHQgb2YgdGhlIE9UUCBhZnRlciB0aGUNCj4gc3VjY2Vzc2Z1
+bCB2YWxpZGF0aW9uIGhhcyBiZWVuIGlzc3VlZCBmb3IgdGhlIGZpcnN0IE9U
+UCwgd2hpY2ggZW5zdXJlcw0KPiBvbmUtdGltZSBvbmx5IHVzZSBvZiBhbiBP
+VFAuDQoNClRoZSBPV0FTUCBBcHBsaWNhdGlvbiBTZWN1cml0eSBWZXJpZmlj
+YXRpb24gU3RhbmRhcmQgdjQuMC4zIChBU1ZTKSByZWl0ZXJhdGVzDQp0aGlz
+IHByb3BlcnR5IHdpdGggcmVxdWlyZW1lbnQgMi44LjQgWzJdLg0KDQo+IFZl
+cmlmeSB0aGF0IHRpbWUtYmFzZWQgT1RQIGNhbiBiZSB1c2VkIG9ubHkgb25j
+ZSB3aXRoaW4gdGhlIHZhbGlkaXR5IHBlcmlvZC4NCg0KIyMgUHJvb2Ygb2Yg
+Q29uY2VwdCAjIw0KDQpTdGFydCB0aGUgbG9naW4gcHJvY2VzcyBpbiB0d28g
+ZGlmZmVyZW50IGVudmlyb25tZW50cyBlLmcuIGluIHR3byBkaWZmZXJlbnQN
+CmJyb3dzZXJzLiBFbnRlciB0aGUgc2FtZSBUT1RQIGluIGJvdGggZW52aXJv
+bm1lbnRzIHdoaWxlIG1ha2luZyBzdXJlIHRoYXQNCmJvdGggc3VibWlzc2lv
+bnMgYXJlIG1hZGUgaW4gdGhlIHRpbWVzcGFuIHdoZXJlIHRoZSBUT1RQIGlz
+IHZhbGlkLiBCb3RoDQplbnZpcm9ubWVudHMgc2hvdWxkIGRpc3BsYXkgdGhl
+IGRhc2hib2FyZCwgc2lnbmFsaW5nIHRoYXQgdGhlIGF1dGhlbnRpY2F0aW9u
+DQpwcm9jZXNzIGhhcyBiZWVuIHN1Y2Nlc3NmdWwuDQoNClRoZSBmb2xsb3dp
+bmcgcmVxdWVzdCBhbmQgcmVzcG9uc2UgcGFpcnMgc2hvdyB0aGlzIGJlaGF2
+aW9yLiBUaGUgcmVxdWVzdHMgYXJlDQptYWRlIGZyb20gZGlmZmVyZW50IHNl
+c3Npb24gKGRpZmZlcmVudCBgQ3JhZnRTZXNzaW9uSWRgIGFuZCBgaWRlbnRp
+dHlgDQpjb29raWUpLCBidXQgeWllbGQgdGhlIHNhbWUgcmVzcG9uc2UuIFRo
+ZXJlZm9yZSwgdGhlIG9uZS10aW1lIHVzZSByZXF1aXJlbWVudA0Kb2YgVE9U
+UHMgaGFzIGJlZW4gc2hvd24gdG8gYmUgdmlvbGF0ZWQuDQoNClJlcXVlc3Qg
+YW5kIHJlc3BvbnNlIDE6DQoNCmBgYGh0dHANClBPU1QgL2luZGV4LnBocD9w
+PWFkbWluJTJGYWN0aW9ucyUyRnR3by1mYWN0b3ItYXV0aGVudGljYXRpb24l
+MkZ2ZXJpZnklMkZsb2dpbi1wcm9jZXNzIEhUVFAvMS4xDQpIb3N0OiBleGFt
+cGxlLm9yZw0KQ29va2llOiBkYzA2YzUzNGEwZWZiY2JlYzAwZDQ0ZWM4YjM2
+YWU3YV9pZGVudGl0eT03ZmFjZjU3ZmZbLi4uXTsgQ3JhZnRTZXNzaW9uSWQ9
+M2Y4MTIyZTQ1NlsuLi5dDQpbLi4uXQ0KDQp7ImF1dGhlbnRpY2F0aW9uQ29k
+ZSI6IjMxNzQxNSJ9DQoNCg0KSFRUUC8xLjEgMjAwIE9LDQpEYXRlOiBUdWUs
+IDA2IEZlYiAyMDI0IDExOjA5OjIzIEdNVA0KWy4uLl0NCg0Kew0KICAgICJy
+ZXR1cm5VcmwiOiJodHRwczovL2V4YW1wbGUub3JnL2FkbWluL2Rhc2hib2Fy
+ZCIsDQogICAgWy4uLl0NCn0NCmBgYA0KDQpSZXF1ZXN0IGFuZCByZXNwb25z
+ZSAyOg0KDQpgYGBodHRwDQpQT1NUIC9pbmRleC5waHA/cD1hZG1pbiUyRmFj
+dGlvbnMlMkZ0d28tZmFjdG9yLWF1dGhlbnRpY2F0aW9uJTJGdmVyaWZ5JTJG
+bG9naW4tcHJvY2VzcyBIVFRQLzEuMQ0KSG9zdDogZXhhbXBsZS5vcmcNCkNv
+b2tpZTogZGMwNmM1MzRhMGVmYmNiZWMwMGQ0NGVjOGIzNmFlN2FfaWRlbnRp
+dHk9ODMwZmNkNmM2MlsuLi5dOyBDcmFmdFNlc3Npb25JZD0zZmJmYmY5MDRj
+Wy4uLl0NCg0KeyJhdXRoZW50aWNhdGlvbkNvZGUiOiIzMTc0MTUifQ0KDQoN
+CkhUVFAvMS4xIDIwMCBPSw0KRGF0ZTogVHVlLCAwNiBGZWIgMjAyNCAxMTow
+OToyNSBHTVQNClsuLi5dDQoNCnsNCiAgICAicmV0dXJuVXJsIjoiaHR0cHM6
+Ly9leGFtcGxlLm9yZy9hZG1pbi9kYXNoYm9hcmQiLA0KICAgIFsuLi5dDQp9
+DQpgYGANCg0KIyMgUmVjb21tZW5kZWQgQ291bnRlcm1lYXN1cmVzICMjDQoN
+CldlIHJlY29tbWVuZCB0byB1cGRhdGUgdG8gdmVyc2lvbiAzLjMuNCBvciBs
+YXRlciwgd2hpY2ggYXBwbGllcyB0aGUgZm9sbG93aW5nDQpjb3VudGVybWVh
+c3VyZS4NCg0KV2Ugc3VnZ2VzdCB0aGF0IFRPVFBzIHNob3VsZCBsb29zZSB0
+aGVpciB2YWxpZGl0eSBhZnRlciB0aGV5IGhhdmUgYmVlbiB1c2VkLg0KSW4g
+b3JkZXIgdG8gYWNjb21wbGlzaCB0aGlzIGEgYmxvY2tsaXN0IGNvdWxkIGJl
+IGltcGxlbWVudGVkIHdoZXJlIFRPVFBzIHVzZWQNCmJ5IGEgcGFydGljdWxh
+ciB1c2VyIGFyZSBsb2dnZWQuIFRoaXMgbGlzdCBtdXN0IGJlIHBlcmlvZGlj
+YWxseSBjbGVhbmVkIHVwIHRvDQpwcmV2ZW50IGNvbGxpc2lvbnMuDQoNCiMj
+IFRpbWVsaW5lICMjDQoNCiogYDIwMjQtMDItMDJgOiBJZGVudGlmaWVkIHRo
+ZSB2dWxuZXJhYmlsaXR5IGluIHZlcnNpb24gMy4zLjINCiogYDIwMjQtMDIt
+MDRgOiBDb250YWN0ZWQgdGhlIE1haW50YWluZXINCiogYDIwMjQtMDItMDVg
+OiBWdWxuZXJhYmlsaXR5IGRpc2Nsb3NlZCB0byB0aGUgTWFpbnRhaW5lcg0K
+KiBgMjAyNC0wMi0wN2A6IFJlcXVlc3RlZCBDVkUgZnJvbSBNSVRSRQ0KKiBg
+MjAyNC0wMi0wOGA6IE1haW50YWluZXIgcmVsZWFzZWQgdmVyc2lvbiAzLjMu
+MyB3aGljaCBpcyBzdGlsbCB2dWxuZXJhYmxlDQoqIGAyMDI0LTAyLTA4YDog
+TWFpbnRhaW5lciBmaXhlZCB0aGUgdnVsbmVyYWJpbGl0eSBpbiB2ZXJzaW9u
+IDMuMy40DQoqIGAyMDI0LTA2LTA0YDogU0JBIFJlc2VhcmNoIGJlY29tZXMg
+YSBDTkENCiogYDIwMjQtMDYtMDVgOiBTQkEgUmVzZWFyY2ggYXNzaWduZWQg
+Q1ZFLTIwMjQtNTY1OA0KKiBgMjAyNC0wNi0wNmA6IFB1YmxpYyBkaXNjbG9z
+dXJlDQoNCiMjIFJlZmVyZW5jZXMgIyMNCg0KMS4gUkZDIDYyMzguIFRPVFAg
+VGltZS1CYXNlZCBPbmUtVGltZSBQYXNzd29yZCBBbGdvcml0aG06IDxodHRw
+czovL3d3dy5yZmMtZWRpdG9yLm9yZy9yZmMvcmZjNjIzOD4NCjIuIE9XQVNQ
+IEFwcGxpY2F0aW9uIFNlY3VyaXR5IFZlcmlmaWNhdGlvbiBTdGFuZGFyZCAo
+QVNWUykgdjQuMC4zLiBSZXF1aXJlbWVudCAyLjguNCBWZXJpZnkgdGhhdCB0
+aW1lLWJhc2VkIE9UUCBjYW4gYmUgdXNlZCBvbmx5IG9uY2Ugd2l0aGluIHRo
+ZSB2YWxpZGl0eSBwZXJpb2Q6IDxodHRwczovL2dpdGh1Yi5jb20vT1dBU1Av
+QVNWUy9ibG9iL3Y0LjAuMy80LjAvZW4vMHgxMS1WMi1BdXRoZW50aWNhdGlv
+bi5tZCN2Mjgtb25lLXRpbWUtdmVyaWZpZXI+DQoNCiMjIENyZWRpdHMgIyMN
+Cg0KKiBGYWJpYW4gRnVuZGVyIChbU0JBIFJlc2VhcmNoXShodHRwczovL3d3
+dy5zYmEtcmVzZWFyY2gub3JnLykpDQoqIEpha29iIFBhY2htYW5uIChbU0JB
+IFJlc2VhcmNoXShodHRwczovL3d3dy5zYmEtcmVzZWFyY2gub3JnLykpDQot
+LS0tLUJFR0lOIFBHUCBTSUdOQVRVUkUtLS0tLQ0KDQppUUl6QkFFQkNBQWRG
+aUVFTDlXcC95WldGRDlPcEl0Nis3aUdMMWozZGJJRkFtWmhsQVlBQ2drUSs3
+aUdMMWozDQpkYkxDWlEvL2VZazlRVFhNcEM2ejhpU1dUZDU5WGoyZXZpbjha
+U3lkbCtzZ2NHVk1oZGt3N2htVFNRTjVNc0lrDQovK3FKL2FTWGZhaW5EQW5P
+dG81WHA4QlY0VXVoSlpqS1h3eElTamVjWS9tREVScEpsazd4YnJQWStTbTFs
+VUtSDQpRTlJwUTM5cmVRVEV2MzlzeWluUHRzWUNkQXJOVjdZYktvTzhNT09n
+cTV5aVZndmNya1A5NTJjRTR5UWJEeG4xDQpZYzRpVFg1dWl5cC9hOG1oeTVD
+NzdtTmlOOFNVYzR0YW8xdDBnRnBlYzQxeFJqMWxlN0tkREVrZDVRV0VMMlBX
+DQpITmdsV09CZWh6c0hPbzJFdUx3SmFUdHBWTThRYkNVam1qNlJzcHNrQTR2
+TzlmZzM2ZE92YU90Z3lHZHhpOVcwDQozZitMa25SNHhMc2JkU3lNTlI3bUdo
+OE9kT0pUWmVJaWh4Z3Y5djljSmVzcEJhQU1iWXJKYWd0NC9iNmRqTzdwDQp1
+clhTdjlGNXVTQkFMd29yMDRQRWZDcVo3YmRpNXY3TjNvZ0hhNGZuMm5LV2Vh
+K2tvVjlPRnB0MHdXN2tYRXBrDQo5SlQzWCtNMm1xT2RwdDVtaU9POXhjdkFV
+VGNvRFppR2w5TnUwL3p4VzBJK0ZYeUY1N0hPLzJOT1FHMkxVaDFyDQovZ2xK
+WWpzQmVUNlpNSmNLZ0xGR0tveFh1TGxEUE5hcFF1cFlQNGpUemE0TjNnT1Z2
+ZFVNeFJYa0VxeUlzbXJUDQpPODNSZGNvUy9FL2pCaGdTTmY5aG94ZkIvekJw
+ZTI1bkZMOEhlZjRDR1V2ak13UkwxL2E3b0JSaU1IS1RtdG43DQplV2lxNmw2
+bzQvdndmZmNQTW5sRm53V0NHK01HRWlLWFUrUzF4aTNQMWRmUUoyVnYxREU9
+DQo9Y0hTUg0KLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0tLS0tDQo=
