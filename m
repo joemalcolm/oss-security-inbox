@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["445" "Monday" "2" "July" "2018" "16:10:24" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180702141024.iudvf2tx7fsf3q66@jwilk.net>" "12" "Re: [oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" "^Date:" nil nil "7" "2018070214:10:24" "[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" (number mark "        jwilk@jwilk. Jul  2   12/445   " thread-indent "\"Re: [oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()\"\n") "<20180702122122.GD8324@f195.suse.de>" ("<20180702122122.GD8324@f195.suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1460 invoked by uid 550); 2 Jul 2018 14:10:42 -0000
+Received: (qmail 24270 invoked by uid 550); 12 Jun 2024 15:50:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1433 invoked from network); 2 Jul 2018 14:10:41 -0000
-Message-ID: <20180702141024.iudvf2tx7fsf3q66@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20180702122122.GD8324@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20180702122122.GD8324@f195.suse.de>
-User-Agent: NeoMutt/20180512
-X-Ovh-Tracer-Id: 3626523600931903398
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtiedrvdejgdejfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
-Date: Mon, 2 Jul 2018 16:10:24 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accountsservice: insufficient path check in
- user_change_icon_file_authorized_cb()
+Received: (qmail 18232 invoked from network); 12 Jun 2024 14:03:42 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Arnout Engelen <engelen@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <58b27eb6-b696-f831-b78e-6e28bac5083e@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 12 Jun 2024 14:02:32 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-36263: Apache Submarine Server Core: SQL injection 
 
-* Matthias Gerstner <mgerstner@suse.de>, 2018-07-02, 14:21:
->I think the easiest way to fix this is to normalize the user supplied 
->filename e.g. using realpath()
+Severity: important
 
-Using realpath(3) for access control is almost always a mistake: this 
-function expands symlinks, including attacker-controlled symlinks.
+Affected versions:
 
-You patch uses g_file_get_path(), which AFIACT doesn't use any 
-filesystem I/O for canonicalisation, so that should be fine.
+- Apache Submarine Server Core: all versions
 
--- 
-Jakub Wilk
+Description:
+
+** UNSUPPORTED WHEN ASSIGNED ** Improper Neutralization of Special Elements=
+ used in an SQL Command ('SQL Injection') vulnerability in Apache Submarine=
+ Server Core.
+
+This issue affects Apache Submarine Server Core: all versions.
+
+As this project is retired, we do not plan to release a version that fixes =
+this issue. Users are recommended to find an alternative or restrict access=
+ to the instance to trusted users.
+
+NOTE: This vulnerability only affects products that are no longer supported=
+ by the maintainer.
+
+Credit:
+
+BaoChengZhang of LengJingQiCaiSecurityLab (finder)
+L0ne1y (finder)
+
+References:
+
+https://github.com/apache/submarine/pull/1121
+https://submarine.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-36263
+
