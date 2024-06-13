@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2383" "Wednesday" "8" "June" "2016" "11:54:31" "+0300" "Solar Designer" "solar@openwall.com" "<20160608085431.GA4278@openwall.com>" "39" "[oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" "^Date:" nil nil "6" "2016060808:54:31" "[oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" (number mark "        solar@openwa Jun  8   39/2383  " thread-indent "\"[oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13571 invoked by uid 550); 8 Jun 2016 08:54:36 -0000
+Received: (qmail 23952 invoked by uid 550); 13 Jun 2024 20:36:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,206 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13553 invoked from network); 8 Jun 2016 08:54:36 -0000
-Message-ID: <20160608085431.GA4278@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 8 Jun 2016 11:54:31 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
+Received: (qmail 7329 invoked from network); 13 Jun 2024 20:10:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1718309445;
+	bh=/tWlV6cYR40UfX4JbfBNBcl/NTY+ihl/nh9i2CmkZ/E=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=nAIRwWnZEXcJRZT9zDnYSjPYo4Yw8WuxS9C7oNRSn8Ftvg8IBIqQvOBKzg4psZK4E
+	 mOWv+P82a41kiLraJ1sYP62CfMg25gAdLoLWkzJB7Z/UD3Una3mEGmVcPYBacgDGtc
+	 8chKY3BaxOe1Nth/xHi5UCnxRhEZFas5SngnGxLDlkKg3RDIBDX+t8z4D47t+7zHso
+	 1/F21DR5118r/K1I2dXifjo9RMOFxCHYYmt73WerXh5lKi84wkcfF7jM2mnsHvTKOG
+	 K6owZf9g08cgFzL4dr1gxj1Jd0qlwdFLcUy43okgheatxTpZ6bVk+12tirXKW7Gpa5
+	 c697itdZlsSkg==
+Date: Thu, 13 Jun 2024 15:10:42 -0500
+From: Mark Esler <mark.esler@canonical.com>
 To: oss-security@lists.openwall.com
+Message-ID: <ZmtSQrfoGgEoqFZK@aeon>
+References: <CACVjhxUD21YUHf4ZMCqO_qzXT93p5ukSW6sKANvzDzxuXqaZCg@mail.gmail.com>
+ <70d2c42126ea78f0f5cd527c0fd16ccad772f523.camel@3v1n0.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yF2SNZjriTUhZNjZ"
+Content-Disposition: inline
+In-Reply-To: <70d2c42126ea78f0f5cd527c0fd16ccad772f523.camel@3v1n0.net>
+Subject: Re: [oss-security] Security vulnerability in fprintd
 
-Hi,
+--yF2SNZjriTUhZNjZ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Just off Twitter:
+At Marco's request, I am asking MITRE to either revoke CVE-2024-37408 or for
+MITRE to transfer CVE ownership to Canonical's CNA for revocation.
 
-<mjos_crypto> Out today: This is the OpenSSL side-channel vulnerability I mentioned last week; now on ePrint. Also CVE-2016-2178. http://eprint.iacr.org/2016/594
-<@mjos_crypto> @mjos_crypto Currently unfixed in essentially all distros.
-<mjos_crypto> Note that CVE-2016-2178 / http://eprint.iacr.org/2016/594.pdf most severely actually impacts OpenSSH, which uses the OpenSSL library.
-<mjos_crypto> Cesar's CVE-2016-2178 patch for the OpenSSL library from Monday. https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+On Thu, Jun 13, 2024 at 06:40:51PM +0200, Marco Trevisan wrote:
+> Hi Yaron,
+>=20
+> Thanks for taking time to look into this issue.=20
+>=20
+> We appreciate the analysis you did, although, as we already shared
+> privately, we don't think that this is a fprintd issue but rather an
+> architectural issue of how PAM modules interact with sudo that, by
+> design, does not permit an additional attention mechanism beyond
+> displaying a prompt in the terminal.
+>=20
+> It's important to note that no graphical PAM front-end (that we are
+> aware of) is affected by this problem. For example, the PolicyKit
+> dialog that gnome-shell integrates and also the GDM login and lock
+> screens will properly ensure user attention. Said differently, there
+> should be no user attention issue as long as fingerprint authentication
+> is restricted to properly implemented graphical front-ends. This is a
+> policy decision for administrators and distributors to ensure using the
+> PAM configuration.
+>=20
+> We would like to point out that similar behaviors may occur with any
+> PAM module that uses an out-of-band authentication mechanism (whether
+> using another device or not) that doesn't require the user to pay
+> attention to the main device (SSO, web authentication, hardware-token
+> based, =E2=80=A6).
+>=20
+> The discussed behavior completely depends on the PAM configuration
+> (which, in most cases, needs to be enabled by the user). If this is
+> considered an issue, then it cannot be resolved within fprintd (and
+> pam_fprintd.so in particular). Should this be considered an issue, then
+> it needs to be addressed by modifying the PAM configuration to restrict
+> pam_fprintd.so to front-ends that implement a proper attention
+> mechanism. This is out of scope for fprintd and must be done by
+> administrators and possibly distributions as part of a policy decision.
+> A policy decision that the reporter made when enabling fingerprint
+> authentication using pam-auth-update.
+>=20
+> As explained, this is not an fprintd issue, and it cannot be considered
+> a security flaw in fprintd, and therefore we believe that it should not
+> have been assigned a CVE number.
+>=20
+> Thank you again for caring about fingerprint security.
+>=20
+> The fprintd maintainers,
+>      Benjamin and Marco
+>=20
+>=20
+> Il giorno gio, 30/05/2024 alle 09.18 +0000, Yaron Shahrabani ha
+> scritto:
+> > Hi everyone, I'm writing to this mailing list since I've already
+> > shared the details with Benjamin Berg and Marco Trevisan privately,
+> > and we have yet to conclude about this vulnerability.
+> > This information was also disclosed to the fprintd mailing list:
+> > https://lists.freedesktop.org/archives/fprint/2024-May/001231.html
+> >=20
+> > My sudo is configured to approve access with pam_fprintd; this is the
+> > config file:
+> >=20
+> > #%PAM-1.0
+> >=20
+> > auth=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+sufficient=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pam_fprintd.so
+> > auth=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+include=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 system-auth
+> > account=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 include=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 system-auth
+> > session=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 include=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 system-auth
+> >=20
+> > So, unless I'm not already authenticated, running the following
+> > command:
+> > sudo whoami
+> > Replies with the following prompt:
+> > Place your finger on the fingerprint reader
+> >=20
+> > Placing my finger on the fingerprint reader leads to the following
+> > output:
+> > root
+> >=20
+> > The security concern is that this process can also happen behind the
+> > scenes, so if I'm running a script that has a sudo prompt to delete
+> > something I care about, I can accidentally place my fingerprint on
+> > the
+> > fingerprint reader for any other reasons, and my beloved files will
+> > be
+> > removed.
+> >=20
+> > How do we recreate the issue?
+> > You can open your favorite console app on Linux.
+> > If it supports tabs open two tabs, if not just open another window.
+> > On the first tab, type: sudo whoami
+> > Switch to the second tab and type: echo Place your finger on the
+> > fingerprint reader;cat
+> > Place your fingerprint on the fingerprint reader
+> > Return to the first tab (You should see that the command was approved
+> > and the output is root)
+> >=20
+> > Assume the user was running some background process and didn't see
+> > the
+> > fingerprint prompt from the other terminal. The second terminal may
+> > deceive the user into placing the finger on the fingerprint reader
+> > and
+> > elevating permissions without the user being fully aware.
+> >=20
+> > On Ubuntu, if I want to recreate the same configuration, all I have
+> > to
+> > do is enroll my fingerprints in System Settings,
+> > then install the pam-auth-update and select the Fingerprint
+> > authentication from the selection screen (apt specific) as described
+> > in the following SO thread:
+> > https://askubuntu.com/questions/1015416/use-fingerprint-authentication-=
+not-only-for-login
+> > .
+> >=20
+> > This problem was solved in macOS by simply displaying a window; if
+> > the
+> > window is out of focus, the fingerprint won't work.
+> > Since we can't rely on any graphical window on Linux since it can be
+> > terminal only, we need to ensure that the user fingerprint is used
+> > only for the sole purpose of the request and with full attention to
+> > the specific action the fingerprint was requested for. Otherwise, the
+> > fingerprint can be hijacked (just like clickjacking).
+> >=20
+> > Benjamin was kind enough to respond, and I allowed myself to
+> > summarize
+> > his reply:
+> > It can happen with fprintd as with any other external authentication
+> > method (aside from password, we have Bluetooth proximity, NFC Tag,
+> > Smart Card, etc.), so it is not unique to fprintd.
+> > Benjamin also offered mitigating ways, such as changing the
+> > configuration or using pkexec instead of sudo.
+> >=20
+> > I addressed this issue with the sudo maintainer, Todd C. Miller, and
+> > again, I allowed myself to summarize his response:
+> > Although I understand the concern, I need a security attention
+> > mechanism to fix it.
+> >=20
+> > CVSS 4.0 ranked this CVE as 7.3.
+> >=20
+> > Thank you,
+> > PS, I'm not a security researcher, and I'm not affiliated with any
+> > organization.
+> >=20
+> > Yaron Shahrabani - DevOps, Hebrew translator
+>=20
 
-http://eprint.iacr.org/2016/594
 
-| "Make Sure DSA Signing Exponentiations Really are Constant-Time''
-| 
-| Cesar Pereida Garca and Billy Bob Brumley and Yuval Yarom
-| 
-| Abstract: TLS and SSH are two of the most commonly used protocols for securing Internet traffic. Many of the implementations of these protocols rely on the cryptographic primitives provided in the OpenSSL library. In this work we disclose a vulnerability in OpenSSL, affecting all versions and forks (e.g. LibreSSL and BoringSSL) since roughly October 2005, which renders the implementation of the DSA signature scheme vulnerable to cache-based side-channel attacks. Exploiting the software defect, we demonstrate the first published cache-based key-recovery attack on these protocols: 260 SSH-2 handshakes to extract a 1024/160-bit DSA host key from an OpenSSH server, and 580 TLS 1.2 handshakes to extract a 2048/256-bit DSA key from an stunnel server. 
-| 
-| Category / Keywords: applied cryptography; digital signatures; side-channel analysis; timing attacks; cache-timing attacks; DSA; OpenSSL; CVE-2016-2178
-| 
-| Date: received 6 Jun 2016, last revised 7 Jun 2016
 
-https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+--yF2SNZjriTUhZNjZ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-| author	Cesar Pereida
-| 	Mon, 23 May 2016 12:45:25 +0300 (12:45 +0300)
-| committer	Matt Caswell
-| 	Mon, 6 Jun 2016 13:08:15 +0300 (11:08 +0100)
+-----BEGIN PGP SIGNATURE-----
 
-| Fix DSA, preserve BN_FLG_CONSTTIME
-| 
-| Operations in the DSA signing algorithm should run in constant time in
-| order to avoid side channel attacks. A flaw in the OpenSSL DSA
-| implementation means that a non-constant time codepath is followed for
-| certain operations. This has been demonstrated through a cache-timing
-| attack to be sufficient for an attacker to recover the private DSA key.
-| 
-| CVE-2016-2178
+iQIzBAABCgAdFiEE0ZC278nRi4l3b3GjszvZgG6FIMYFAmZrUkAACgkQszvZgG6F
+IMYjyRAAjGKd6W32TkQW+7B4sjqn8OM6b7Iwmy6/KJR1youry7g40mtFYK8Ji9B9
+pMPCjMzLwHFxKMSKcJxKsaX4NtuGCCW3Vr1EjsrLMKv4yrqCc4OClGLrfkeV7Gpn
+3zfDGR9VgxgrxB/vKttz+Xry5hF6smz5q0zf5LuesbxJlaKEnH4sBQAkrD34MfC1
+nil/u2iToesbArFm8LEpixFNnMQU07ci0JLyJH8OChvDAlm6TQv29Q0cKB3yM5np
+AKSmCkLuym0sCkY8IhFr30y7hhsQr/gJFdEHmJnnMmWqUa7pIJ6gaf2maNpVWcgf
+iHB+403X/pZftmyvPiWTnha5fTO4n/V71UFJ1ikypplIJ8BPQb8GHF1VaKpeNVFK
+vaeZWnw/GbbE9pTm82Ti+bh0A/UU99BvKFzvFZ5VE6lgF2tsHJelLk0uK7eEbEXS
+77EUN+yr7GvO+XR4ImlWVpJb/rNQiWGOO1aqXQbsWqWbKqNMh7pC9+jvqguVlEA1
+Zx17nUVGxPKWQcXjSQoWegTAF+EuFGanN9YxGrydo2H/+WcINu4+/3nSE1MwVi4i
+CbdNujX2DhEGau8Jsyj2+Nz9piBeNLuYtL/dv48dV1vKuxNs/v7UjUVwyvo0fG+A
+erTZ8bhH9N+nJ2H0SHsvIos+VvKzXZPaCJUYJ+n+fg/FMcq4+KA=
+=1AYC
+-----END PGP SIGNATURE-----
 
-Alexander
+--yF2SNZjriTUhZNjZ--
