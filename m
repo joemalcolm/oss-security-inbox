@@ -1,4 +1,4 @@
-Received: (qmail 21874 invoked by uid 550); 11 Feb 2025 17:01:47 -0000
+Received: (qmail 32718 invoked by uid 550); 14 Jun 2024 14:14:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,144 +7,235 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23614 invoked from network); 11 Feb 2025 15:56:56 -0000
+Received: (qmail 28001 invoked from network); 14 Jun 2024 14:11:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openssl.org; s=google; t=1739289408; x=1739894208; darn=lists.openwall.com;
-        h=mime-version:user-agent:date:to:from:subject:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yv2jdfQzqJalNhm2mndrNZ4beryaMLDunAkryVe99X4=;
-        b=NNjDkqMzHzJpFY9tIfYRdrpDhNhijXcp3nJMRSRSbVCsG0Z4J+XJE2ApH7j74RRtBn
-         /Nlqzy1qN1YwyA2NFVWlHVR4zKa9Rd385BzG//Xs2YYM0wXVybl/iFxySFZH4i3qDwEd
-         4EOggDKJC16KVimOzw4kDsMA9fe3doK4b5xmdaPVdL9iC5Nuoc6FIrqkbCOfpUPuBjcJ
-         Rj3IlFvUAcnjW1D5VUz+jJu7IQZLB0OectanMb56hrSaViZrjsPmCrmjakU6lD+pkDqC
-         Yg8MyNKb+WIYX14rOyczeStGN8R1xDT3hLajgcGOMa6vIyIDtK9r3D3MiLIIqG98/bz0
-         hnMw==
+        d=gmail.com; s=20230601; t=1718374276; x=1718979076; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rsiuUahl0bB+2Z2/tAgsL4ggpk2JRculuXG6VM/EGdE=;
+        b=MytrlYhCaHvC/y15T1ejkaMTimKXGGjHe/DJXIBoo4DhtKBliCGQjYxGhJlKQTF5Co
+         jgmNExq9l3mNeb49la2WS+pBCHOS02WWwPtWUZ0cX/HeGfStFD8Or99Zs4p7wDnvCy8G
+         cBWvqzmLMJclD88TMDQrJbIF0gnS6qv1FtE7dsBqJiCtA2hSlOwl0QueYCq77Zl9V0CS
+         sBGtLIEj+NonGyrxibogKYpfWNV5DOBu87FJTfS0C20/zc8Q0vQpTWAlBbmIgNqbwpSU
+         BNkbJWJYfZg2Idx0fZ42a10gIWKgYx8Nm53oRw5sbIbF8FEKs3QeEpzhRo4y89SBPXdu
+         7vJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739289408; x=1739894208;
-        h=mime-version:user-agent:date:to:from:subject:message-id
+        d=1e100.net; s=20230601; t=1718374276; x=1718979076;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yv2jdfQzqJalNhm2mndrNZ4beryaMLDunAkryVe99X4=;
-        b=T38m9Ser/Y21xSnFxjoWdt8P/lPWcYbqoN9GfNrFaGiwTdBVhEyxUme50qVAAqCMNi
-         IXPuo1xwtOKvt9i0NWi2uVMPoy7tosZFqLBkLtQuE9LsfVsWrNE3UbNejZ/9P/ziG/jj
-         EDBJEqTPyxloF05mE7TPcu4eunMbn3wFxuzSKPLxs1jDK8sbOxo+UOoDtpgNzzlNTH2u
-         kP0SEVKRqppr/usSNTi0NbGxVv87Ekmf4sAYOrvBZsCq0dFxgUV9udzz1PwPs9yPaTp/
-         k7u/Yo+nj67i9uIe3JVia/MNUWyphMo3Ydcms77Yas8bXyC7aVnaVITaVgK+booyTJyp
-         BUjg==
-X-Gm-Message-State: AOJu0Yz2ZHRA0VcqV3Wx5CWMmAVOk037F600s1NMxtOPNsxl+TNNsmdp
-	1V2KSkhAxvkaKarx7ucYaRkuvS7fuFliymPgyGZfX3+LazwoCfSdPFvKibEgBnDZ2IbSGZxiEA2
-	nJTY=
-X-Gm-Gg: ASbGncuZE0Rt1k0ceX2Cf2VDlly68BFaeK5zRtu8YVGq6Nq8XRSS2fA8MKMy0twQb7S
-	awjDRnV6BOpmz/E0ljqiksxMjshynmCLqIs5AhPuIz11lL8IhTM7MgnfGmyBhG0WYk4bug35Qtj
-	N+5KI/VWeWM2RjYDsmjJphLt4F5BxIWK0+9eHD4VLobaHmBg+dZ939jIB8R4yMaK9Q8uxYONrKS
-	5b/CQnUTEwPOA1GOjkedis8xcUkZTHnhYoSrOSMNqlWrsd87evqpMV1bBkD2X1upusWiZcBIUTt
-	Hwwmo4XFNX22hJJRFdO2zWKibMrcC9h85eq9DZw=
-X-Google-Smtp-Source: AGHT+IE922UEX+x8FrZrX9deUhvF0By9DTOtqePZ5eMzDMzBpSk4dN+UV0LEFJCFj5Pr9Nm+RsyZdg==
-X-Received: by 2002:a17:907:6ea4:b0:ab7:da96:df77 with SMTP id a640c23a62f3a-ab7daf7886dmr389900866b.12.1739289408157;
-        Tue, 11 Feb 2025 07:56:48 -0800 (PST)
-Message-ID: <b9b32441ba31a6eb8528337b0d81d57f6108a356.camel@openssl.org>
-From: Tomas Mraz <tomas@openssl.org>
-To: oss-security@lists.openwall.com
-Date: Tue, 11 Feb 2025 16:56:46 +0100
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-fezRcREWvPAS+zdZkgyP"
-User-Agent: Evolution 3.54.2 (3.54.2-1.fc41) 
+        bh=rsiuUahl0bB+2Z2/tAgsL4ggpk2JRculuXG6VM/EGdE=;
+        b=h+y7ytn7/JrIpz8+G/VCr9tLYy/o6xfveQ25MxF/VzY27KZNtsK4QpkKGwtWcuzh9X
+         vQsxjFbugU1X+Nz4XqOXkLnNFLViQUABpXQgQdhqjsj582zKdO5wQkaYcVfL5RGB7H3s
+         AEEUQVTOAijr3zB6uWGN2ozoObMqkBmjwRfylM0gykZ714zZJ6V3H2EdK0mQ6ishe+LO
+         T7IKPs3DPLjbbOVrgPjvQQ45sWB5pDqDKNsm2ofC3pKgQH/rqApvUJkZBCgI9cAhZktP
+         W7qje0OWw6BGphW7t3V6MJU7EelmT7jMynddoztYkadVGJJsGcfNtHA8v8EmOAdw2Lbq
+         2kOw==
+X-Gm-Message-State: AOJu0Yx+eco8zdNXKQXR0RSWrKXrkFeCH4N6l1VbCl3AmVLmquKZK9RH
+	diOKAoOJpgIFQ7uaU3YzKhvBdNOLSmmXI/EV8yZrHIoERa7w1aQf7QnZw34+/hndXMJVIyXrzMi
+	ah3KnqJaGKGiFhK1mE+/eT/0rLydNGw==
+X-Google-Smtp-Source: AGHT+IG1B05RrQfmfM5+1X0POcL5J/4cEAyQGBbawWvDP9Hs7Uzvd/gRErWq4u4WLqteo1J/Mbjg+mlucscXzK+ZOr0=
+X-Received: by 2002:a17:906:a44b:b0:a68:fb7e:f476 with SMTP id
+ a640c23a62f3a-a6f60d2bcfamr175102766b.30.1718374275726; Fri, 14 Jun 2024
+ 07:11:15 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-12797: OpenSSL: RFC7250 handshakes with unauthenticated servers don't abort as expected
+References: <CACVjhxUD21YUHf4ZMCqO_qzXT93p5ukSW6sKANvzDzxuXqaZCg@mail.gmail.com>
+ <70d2c42126ea78f0f5cd527c0fd16ccad772f523.camel@3v1n0.net>
+ <ZmtSQrfoGgEoqFZK@aeon> <CACVjhxWgQ8hLOx=z=QM8WiFODiqSHEuSGBqaUkPRcbAuV49dgQ@mail.gmail.com>
+In-Reply-To: <CACVjhxWgQ8hLOx=z=QM8WiFODiqSHEuSGBqaUkPRcbAuV49dgQ@mail.gmail.com>
+From: Benjamin Cance <wireless.insecurity@gmail.com>
+Date: Fri, 14 Jun 2024 10:11:04 -0400
+Message-ID: <CAL8O-xA1u1PY2Wy0HnKONi7T9JrCuf095bVBtPnr+Kkjaxto1A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000004bc5a8061ada3083"
+Subject: Re: [oss-security] Security vulnerability in fprintd
 
---=-fezRcREWvPAS+zdZkgyP
+--0000000000004bc5a8061ada3083
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-OpenSSL Security Advisory [11th February 2025]
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+This seems to be a system administration and configuration problem rather
+than a built in issue.
 
-RFC7250 handshakes with unauthenticated servers don't abort as expected (CV=
-E-2024-12797)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+On Fri, Jun 14, 2024 at 09:52 Yaron Shahrabani <sh.yaron@gmail.com> wrote:
 
-Severity: High
-
-Issue summary: Clients using RFC7250 Raw Public Keys (RPKs) to authenticate=
- a
-server may fail to notice that the server was not authenticated, because
-handshakes don't abort as expected when the SSL_VERIFY_PEER verification mo=
-de
-is set.
-
-Impact summary: TLS and DTLS connections using raw public keys may be
-vulnerable to man-in-middle attacks when server authentication failure is n=
-ot
-detected by clients.
-
-RPKs are disabled by default in both TLS clients and TLS servers.=C2=A0 The=
- issue
-only arises when TLS clients explicitly enable RPK use by the server, and t=
+> Thank you all for your response and care.
+>
+> I would like to point out that although I managed to demonstrate this
+> vulnerability with a virtual terminal in a graphical interface it also
+> applies to TTY, so even if I don't have any graphical interface I can sti=
+ll
+> exploit this vulnerability.
+>
+> Adding a graphical awareness mechanism will solve the vulnerability for
+> graphical interface but not entirely (unless there's a way to switch to t=
 he
-server, likewise, enables sending of an RPK instead of an X.509 certificate
-chain.=C2=A0 The affected clients are those that then rely on the handshake=
- to
-fail when the server's RPK fails to match one of the expected public keys,
-by setting the verification mode to SSL_VERIFY_PEER.
+> requesting TTY for approval).
+>
+>
+> Thank you!
+>
+> On Thu, 13 Jun 2024, 23:36 Mark Esler, <mark.esler@canonical.com> wrote:
+>
+> > At Marco's request, I am asking MITRE to either revoke CVE-2024-37408 or
+> > for
+> > MITRE to transfer CVE ownership to Canonical's CNA for revocation.
+> >
+> > On Thu, Jun 13, 2024 at 06:40:51PM +0200, Marco Trevisan wrote:
+> > > Hi Yaron,
+> > >
+> > > Thanks for taking time to look into this issue.
+> > >
+> > > We appreciate the analysis you did, although, as we already shared
+> > > privately, we don't think that this is a fprintd issue but rather an
+> > > architectural issue of how PAM modules interact with sudo that, by
+> > > design, does not permit an additional attention mechanism beyond
+> > > displaying a prompt in the terminal.
+> > >
+> > > It's important to note that no graphical PAM front-end (that we are
+> > > aware of) is affected by this problem. For example, the PolicyKit
+> > > dialog that gnome-shell integrates and also the GDM login and lock
+> > > screens will properly ensure user attention. Said differently, there
+> > > should be no user attention issue as long as fingerprint authenticati=
+on
+> > > is restricted to properly implemented graphical front-ends. This is a
+> > > policy decision for administrators and distributors to ensure using t=
+he
+> > > PAM configuration.
+> > >
+> > > We would like to point out that similar behaviors may occur with any
+> > > PAM module that uses an out-of-band authentication mechanism (whether
+> > > using another device or not) that doesn't require the user to pay
+> > > attention to the main device (SSO, web authentication, hardware-token
+> > > based, =E2=80=A6).
+> > >
+> > > The discussed behavior completely depends on the PAM configuration
+> > > (which, in most cases, needs to be enabled by the user). If this is
+> > > considered an issue, then it cannot be resolved within fprintd (and
+> > > pam_fprintd.so in particular). Should this be considered an issue, th=
+en
+> > > it needs to be addressed by modifying the PAM configuration to restri=
+ct
+> > > pam_fprintd.so to front-ends that implement a proper attention
+> > > mechanism. This is out of scope for fprintd and must be done by
+> > > administrators and possibly distributions as part of a policy decisio=
+n.
+> > > A policy decision that the reporter made when enabling fingerprint
+> > > authentication using pam-auth-update.
+> > >
+> > > As explained, this is not an fprintd issue, and it cannot be consider=
+ed
+> > > a security flaw in fprintd, and therefore we believe that it should n=
+ot
+> > > have been assigned a CVE number.
+> > >
+> > > Thank you again for caring about fingerprint security.
+> > >
+> > > The fprintd maintainers,
+> > >      Benjamin and Marco
+> > >
+> > >
+> > > Il giorno gio, 30/05/2024 alle 09.18 +0000, Yaron Shahrabani ha
+> > > scritto:
+> > > > Hi everyone, I'm writing to this mailing list since I've already
+> > > > shared the details with Benjamin Berg and Marco Trevisan privately,
+> > > > and we have yet to conclude about this vulnerability.
+> > > > This information was also disclosed to the fprintd mailing list:
+> > > > https://lists.freedesktop.org/archives/fprint/2024-May/001231.html
+> > > >
+> > > > My sudo is configured to approve access with pam_fprintd; this is t=
+he
+> > > > config file:
+> > > >
+> > > > #%PAM-1.0
+> > > >
+> > > > auth            sufficient      pam_fprintd.so
+> > > > auth            include         system-auth
+> > > > account         include         system-auth
+> > > > session         include         system-auth
+> > > >
+> > > > So, unless I'm not already authenticated, running the following
+> > > > command:
+> > > > sudo whoami
+> > > > Replies with the following prompt:
+> > > > Place your finger on the fingerprint reader
+> > > >
+> > > > Placing my finger on the fingerprint reader leads to the following
+> > > > output:
+> > > > root
+> > > >
+> > > > The security concern is that this process can also happen behind the
+> > > > scenes, so if I'm running a script that has a sudo prompt to delete
+> > > > something I care about, I can accidentally place my fingerprint on
+> > > > the
+> > > > fingerprint reader for any other reasons, and my beloved files will
+> > > > be
+> > > > removed.
+> > > >
+> > > > How do we recreate the issue?
+> > > > You can open your favorite console app on Linux.
+> > > > If it supports tabs open two tabs, if not just open another window.
+> > > > On the first tab, type: sudo whoami
+> > > > Switch to the second tab and type: echo Place your finger on the
+> > > > fingerprint reader;cat
+> > > > Place your fingerprint on the fingerprint reader
+> > > > Return to the first tab (You should see that the command was approv=
+ed
+> > > > and the output is root)
+> > > >
+> > > > Assume the user was running some background process and didn't see
+> > > > the
+> > > > fingerprint prompt from the other terminal. The second terminal may
+> > > > deceive the user into placing the finger on the fingerprint reader
+> > > > and
+> > > > elevating permissions without the user being fully aware.
+> > > >
+> > > > On Ubuntu, if I want to recreate the same configuration, all I have
+> > > > to
+> > > > do is enroll my fingerprints in System Settings,
+> > > > then install the pam-auth-update and select the Fingerprint
+> > > > authentication from the selection screen (apt specific) as described
+> > > > in the following SO thread:
+> > > >
+> >
+> https://askubuntu.com/questions/1015416/use-fingerprint-authentication-no=
+t-only-for-login
+> > > > .
+> > > >
+> > > > This problem was solved in macOS by simply displaying a window; if
+> > > > the
+> > > > window is out of focus, the fingerprint won't work.
+> > > > Since we can't rely on any graphical window on Linux since it can be
+> > > > terminal only, we need to ensure that the user fingerprint is used
+> > > > only for the sole purpose of the request and with full attention to
+> > > > the specific action the fingerprint was requested for. Otherwise, t=
+he
+> > > > fingerprint can be hijacked (just like clickjacking).
+> > > >
+> > > > Benjamin was kind enough to respond, and I allowed myself to
+> > > > summarize
+> > > > his reply:
+> > > > It can happen with fprintd as with any other external authentication
+> > > > method (aside from password, we have Bluetooth proximity, NFC Tag,
+> > > > Smart Card, etc.), so it is not unique to fprintd.
+> > > > Benjamin also offered mitigating ways, such as changing the
+> > > > configuration or using pkexec instead of sudo.
+> > > >
+> > > > I addressed this issue with the sudo maintainer, Todd C. Miller, and
+> > > > again, I allowed myself to summarize his response:
+> > > > Although I understand the concern, I need a security attention
+> > > > mechanism to fix it.
+> > > >
+> > > > CVSS 4.0 ranked this CVE as 7.3.
+> > > >
+> > > > Thank you,
+> > > > PS, I'm not a security researcher, and I'm not affiliated with any
+> > > > organization.
+> > > >
+> > > > Yaron Shahrabani - DevOps, Hebrew translator
+> > >
+> >
+> >
+> >
+>
 
-Clients that enable server-side raw public keys can still find out that raw
-public key verification failed by calling SSL_get_verify_result(), and those
-that do, and take appropriate action, are not affected.=C2=A0 This issue was
-introduced in the initial implementation of RPK support in OpenSSL 3.2.
-
-The FIPS modules in 3.4, 3.3, 3.2, 3.1 and 3.0 are not affected by this iss=
-ue.
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are also not affected by this issue.
-
-OpenSSL 3.4, 3.3 and 3.2 are vulnerable to this issue.
-
-OpenSSL 3.4 users should upgrade to OpenSSL 3.4.1.
-
-OpenSSL 3.3 users should upgrade to OpenSSL 3.3.2.
-
-OpenSSL 3.2 users should upgrade to OpenSSL 3.2.4.
-
-This issue was reported on 18th December 2024 by Apple Inc.
-The fix was developed by Viktor Dukhovni.
-
-General Advisory Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-URL for this Security Advisory:
-https://openssl-library.org/news/secadv/20250211.txt
-
-Note: the online version of the advisory may be updated with additional det=
-ails
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://openssl-library.org/policies/general/security-policy/
-
-
---=-fezRcREWvPAS+zdZkgyP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQJGBAABCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmercz4SHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55thywP/2H/cbouCkdPuzUz9TtPiqCNqCtPV4f9
-jTpo0JoCj5ttY/0+J1dOp8I1YwJxakxjTYz6o44AmClLep48FScZ9FRMpkxTLlCM
-p85yhqyzyax7uZ9qTNJUZ3Sf797GWeLH/bdBTPtCmQEUbI4ExcdRolU+RPwims7a
-8yOcF/ZWVapn6oqcyBqyNc4IjnPJcFLTIftklYeBJhMRICv1lzgg536fwceh/FuJ
-USuS936euU3JiDxBSB3ycNUNUKeHCafjgqGYVIVKYfONPxW6dyvQF6L238XKFp3I
-FJ1byJdmoYibIrcf1be7Zm1Kij+lNAtvExmbHG7pvK+E4ykkMceUkp8TamSHxiUX
-i1Tcz4CbYf8RZ5HeCvik77smpJhLhc25t7g/lSBSCuksSzCV2KlUjceomBWm717/
-gLYoDBK4Jw7GVHZd4Ismw0RR/HHAtMVfHD/598/F3QpY7URWY9oIHEHZW+tt1TTx
-+eE9b8UzC00AzrbdgjHzNIh1BbK7wJpebNMPnJeQ4uBrraG4ulGiBmx6W5+LhwBD
-PIfaRM7hVJtu0F10Dzfwp0+5t6jAx5N68PVUXOZjvGZux/93jwbJqjXg1YUtDk1h
-8N9/RJs2ckKGaAu+Rsob3dEYs+46AH+VeOW0l/2C9z/iKDiNlc2pczjhDlHcO1H6
-dSHdjKCCujgU
-=sH2A
------END PGP SIGNATURE-----
-
---=-fezRcREWvPAS+zdZkgyP--
+--0000000000004bc5a8061ada3083--
