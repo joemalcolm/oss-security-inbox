@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1118" "Wednesday" "6" "March" "2019" "22:41:37" "-0800" "Tomas Fernandez Lobbe" "tflobbe@apache.org" "<CAECwjAWWcYFtuxjHYXRkJ_w9Gz6__ObzTGOP+BGb6KiHFdgaBQ@mail.gmail.com>" "36" "[oss-security] CVE-2019-0192 Deserialization of untrusted data via jmx.serviceUrl in Apache Solr" "^Date:" nil nil "3" "2019030706:41:37" "[oss-security] CVE-2019-0192 Deserialization of untrusted data via jmx.serviceUrl in Apache Solr" (number mark "        tflobbe@apac Mar  6   36/1118  " thread-indent "\"[oss-security] CVE-2019-0192 Deserialization of untrusted data via jmx.serviceUrl in Apache Solr\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32172 invoked by uid 550); 7 Mar 2019 08:05:30 -0000
+Received: (qmail 17422 invoked by uid 550); 14 Jun 2024 19:16:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,295 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13629 invoked from network); 7 Mar 2019 06:42:10 -0000
-X-Gm-Message-State: APjAAAUYs1AfcHch41lMfM4ghpGf1x/8/4LYLVuxv1wHL9Y5RQg6Av/v
-	bNL7f1UvkywiDNhwrBnJEVV4MoqIYR7QvxxuNho=
-X-Google-Smtp-Source: APXvYqyMaItvGSLol+05KJRT1AtsKITU9dGkAXUVOdOSXgqDGH4cO/Q80+MGueGgBaXJYfcHa/1hjxhcjoA7myrIUi8=
-X-Received: by 2002:a17:902:3124:: with SMTP id w33mr11032397plb.43.1551940908556;
- Wed, 06 Mar 2019 22:41:48 -0800 (PST)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAECwjAWWcYFtuxjHYXRkJ_w9Gz6__ObzTGOP+BGb6KiHFdgaBQ@mail.gmail.com>
-Message-ID: <CAECwjAWWcYFtuxjHYXRkJ_w9Gz6__ObzTGOP+BGb6KiHFdgaBQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000009125df05837b66e3"
-Date: Wed, 6 Mar 2019 22:41:37 -0800
-From: Tomas Fernandez Lobbe <tflobbe@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-0192 Deserialization of untrusted data via jmx.serviceUrl in
- Apache Solr
+Received: (qmail 3270 invoked from network); 14 Jun 2024 18:43:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1718390573;
+	bh=0qaP4JF1F5qbCdMTWWGwFv0l0Ls9pKsenJbT/sokGBw=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=fiuMIyOxUzNktR9crt28aHRQKKbl+mFB+L5YPk5okO+HwH0fqfMRlXS3WY6hoYggq
+	 akwbJzGJrm1dIsB4nP4lD0AMcxYjschTWM2O+KC2TFbBniEYK467WS5dzCu+RhLrvz
+	 u/pRHcGe9utLz+j045De4BRCSdFa9AnsqqjTvjAOiG+AyShr5OrE17AwyNA2EDdQ0/
+	 6lwoW6znfG2vz8pKHZFrABKyWKYTA5VbgrYHkLlz/UgWSefNlA9IgbHgX4pY2p4Mki
+	 tKCL6+zssWag9eO1YUXv+T2d2O6oqNUcbN+2abJAtCFUgODotgxme2aqToSSptBR08
+	 VBNa8F1serjNw==
+Date: Fri, 14 Jun 2024 13:42:50 -0500
+From: Mark Esler <mark.esler@canonical.com>
 To: oss-security@lists.openwall.com
+Message-ID: <ZmyPKojVEYp5kqhn@aeon>
+References: <CACVjhxUD21YUHf4ZMCqO_qzXT93p5ukSW6sKANvzDzxuXqaZCg@mail.gmail.com>
+ <70d2c42126ea78f0f5cd527c0fd16ccad772f523.camel@3v1n0.net>
+ <ZmtSQrfoGgEoqFZK@aeon>
+ <CACVjhxWgQ8hLOx=z=QM8WiFODiqSHEuSGBqaUkPRcbAuV49dgQ@mail.gmail.com>
+ <CAL8O-xA1u1PY2Wy0HnKONi7T9JrCuf095bVBtPnr+Kkjaxto1A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jCkw1rK53OcsF+rH"
+Content-Disposition: inline
+In-Reply-To: <CAL8O-xA1u1PY2Wy0HnKONi7T9JrCuf095bVBtPnr+Kkjaxto1A@mail.gmail.com>
+Subject: Re: [oss-security] Security vulnerability in fprintd
 
---0000000000009125df05837b66e3
-Content-Type: text/plain; charset="UTF-8"
+--jCkw1rK53OcsF+rH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Severity: High
+MITRE responded:
+> Thank you for contacting us. The oss-security thread says:
+>
+>    The discussed behavior completely depends on the PAM configuration
+>    (which, in most cases, needs to be enabled by the user). If this is
+>    considered an issue, then it cannot be resolved within fprintd (and
+>    pam_fprintd.so in particular). Should this be considered an issue, then
+>    it needs to be addressed by modifying the PAM configuration to restrict
+>    pam_fprintd.so to front-ends that implement a proper attention
+>    mechanism. This is out of scope for fprintd and must be done by
+>    administrators and possibly distributions
+>
+> We understand that nothing within fprintd/pam_fprintd.so is going to
+> be changed in order to attempt to "fix" the reported concern. However,
+> CVE is not about fixes. CVE consumers may wish to discuss the reported
+> outcome of "unexpected actions might be authorized" regardless of
+> where any type of fix is ultimately implemented, or even if nobody
+> ever implements a fix.
+>
+> We have no plans to either reject or transfer CVE-2024-37408.
 
-Vendor: The Apache Software Foundation
+I asked in reply:
+> Please share your analysis of why you believe a vulnerability exists in
+> fprintd and not in downstreams [0].
+>
+> Please transfer CVE-2024-37408 to the Canonical CNA under the "right of
+> first refusal" as the appointed CNA of fprintd for this issue [1].
 
-Versions Affected:
-5.0.0 to 5.5.5
-6.0.0 to 6.6.5
+I'll share the outcome when this is sorted out.
 
-Description:
-ConfigAPI allows to configure Solr's JMX server via an HTTP POST request.
-By pointing it to a malicious RMI server, an attacker could take advantage
-of Solr's unsafe deserialization to trigger remote code execution on the
-Solr side.
+[0] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_4-1_=
+Vulnerability_Determination
+[1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_4-2_=
+CVE_ID_Assignment
 
-Mitigation:
-Any of the following are enough to prevent this vulnerability:
-* Upgrade to Apache Solr 7.0 or later.
-* Disable the ConfigAPI if not in use, by running Solr with the system
-property =E2=80=9Cdisable.configEdit=3Dtrue=E2=80=9D
-* If upgrading or disabling the Config API are not viable options, apply
-patch in [1] and re-compile Solr.
-* Ensure your network settings are configured so that only trusted traffic
-is allowed to ingress/egress your hosts running Solr.
+On Fri, Jun 14, 2024 at 10:11:04AM -0400, Benjamin Cance wrote:
+> This seems to be a system administration and configuration problem rather
+> than a built in issue.
+>=20
+> On Fri, Jun 14, 2024 at 09:52 Yaron Shahrabani <sh.yaron@gmail.com> wrote:
+>=20
+> > Thank you all for your response and care.
+> >
+> > I would like to point out that although I managed to demonstrate this
+> > vulnerability with a virtual terminal in a graphical interface it also
+> > applies to TTY, so even if I don't have any graphical interface I can s=
+till
+> > exploit this vulnerability.
+> >
+> > Adding a graphical awareness mechanism will solve the vulnerability for
+> > graphical interface but not entirely (unless there's a way to switch to=
+ the
+> > requesting TTY for approval).
+> >
+> >
+> > Thank you!
+> >
+> > On Thu, 13 Jun 2024, 23:36 Mark Esler, <mark.esler@canonical.com> wrote:
+> >
+> > > At Marco's request, I am asking MITRE to either revoke CVE-2024-37408=
+ or
+> > > for
+> > > MITRE to transfer CVE ownership to Canonical's CNA for revocation.
+> > >
+> > > On Thu, Jun 13, 2024 at 06:40:51PM +0200, Marco Trevisan wrote:
+> > > > Hi Yaron,
+> > > >
+> > > > Thanks for taking time to look into this issue.
+> > > >
+> > > > We appreciate the analysis you did, although, as we already shared
+> > > > privately, we don't think that this is a fprintd issue but rather an
+> > > > architectural issue of how PAM modules interact with sudo that, by
+> > > > design, does not permit an additional attention mechanism beyond
+> > > > displaying a prompt in the terminal.
+> > > >
+> > > > It's important to note that no graphical PAM front-end (that we are
+> > > > aware of) is affected by this problem. For example, the PolicyKit
+> > > > dialog that gnome-shell integrates and also the GDM login and lock
+> > > > screens will properly ensure user attention. Said differently, there
+> > > > should be no user attention issue as long as fingerprint authentica=
+tion
+> > > > is restricted to properly implemented graphical front-ends. This is=
+ a
+> > > > policy decision for administrators and distributors to ensure using=
+ the
+> > > > PAM configuration.
+> > > >
+> > > > We would like to point out that similar behaviors may occur with any
+> > > > PAM module that uses an out-of-band authentication mechanism (wheth=
+er
+> > > > using another device or not) that doesn't require the user to pay
+> > > > attention to the main device (SSO, web authentication, hardware-tok=
+en
+> > > > based, =E2=80=A6).
+> > > >
+> > > > The discussed behavior completely depends on the PAM configuration
+> > > > (which, in most cases, needs to be enabled by the user). If this is
+> > > > considered an issue, then it cannot be resolved within fprintd (and
+> > > > pam_fprintd.so in particular). Should this be considered an issue, =
+then
+> > > > it needs to be addressed by modifying the PAM configuration to rest=
+rict
+> > > > pam_fprintd.so to front-ends that implement a proper attention
+> > > > mechanism. This is out of scope for fprintd and must be done by
+> > > > administrators and possibly distributions as part of a policy decis=
+ion.
+> > > > A policy decision that the reporter made when enabling fingerprint
+> > > > authentication using pam-auth-update.
+> > > >
+> > > > As explained, this is not an fprintd issue, and it cannot be consid=
+ered
+> > > > a security flaw in fprintd, and therefore we believe that it should=
+ not
+> > > > have been assigned a CVE number.
+> > > >
+> > > > Thank you again for caring about fingerprint security.
+> > > >
+> > > > The fprintd maintainers,
+> > > >      Benjamin and Marco
+> > > >
+> > > >
+> > > > Il giorno gio, 30/05/2024 alle 09.18 +0000, Yaron Shahrabani ha
+> > > > scritto:
+> > > > > Hi everyone, I'm writing to this mailing list since I've already
+> > > > > shared the details with Benjamin Berg and Marco Trevisan privatel=
+y,
+> > > > > and we have yet to conclude about this vulnerability.
+> > > > > This information was also disclosed to the fprintd mailing list:
+> > > > > https://lists.freedesktop.org/archives/fprint/2024-May/001231.html
+> > > > >
+> > > > > My sudo is configured to approve access with pam_fprintd; this is=
+ the
+> > > > > config file:
+> > > > >
+> > > > > #%PAM-1.0
+> > > > >
+> > > > > auth            sufficient      pam_fprintd.so
+> > > > > auth            include         system-auth
+> > > > > account         include         system-auth
+> > > > > session         include         system-auth
+> > > > >
+> > > > > So, unless I'm not already authenticated, running the following
+> > > > > command:
+> > > > > sudo whoami
+> > > > > Replies with the following prompt:
+> > > > > Place your finger on the fingerprint reader
+> > > > >
+> > > > > Placing my finger on the fingerprint reader leads to the following
+> > > > > output:
+> > > > > root
+> > > > >
+> > > > > The security concern is that this process can also happen behind =
+the
+> > > > > scenes, so if I'm running a script that has a sudo prompt to dele=
+te
+> > > > > something I care about, I can accidentally place my fingerprint on
+> > > > > the
+> > > > > fingerprint reader for any other reasons, and my beloved files wi=
+ll
+> > > > > be
+> > > > > removed.
+> > > > >
+> > > > > How do we recreate the issue?
+> > > > > You can open your favorite console app on Linux.
+> > > > > If it supports tabs open two tabs, if not just open another windo=
+w.
+> > > > > On the first tab, type: sudo whoami
+> > > > > Switch to the second tab and type: echo Place your finger on the
+> > > > > fingerprint reader;cat
+> > > > > Place your fingerprint on the fingerprint reader
+> > > > > Return to the first tab (You should see that the command was appr=
+oved
+> > > > > and the output is root)
+> > > > >
+> > > > > Assume the user was running some background process and didn't see
+> > > > > the
+> > > > > fingerprint prompt from the other terminal. The second terminal m=
+ay
+> > > > > deceive the user into placing the finger on the fingerprint reader
+> > > > > and
+> > > > > elevating permissions without the user being fully aware.
+> > > > >
+> > > > > On Ubuntu, if I want to recreate the same configuration, all I ha=
+ve
+> > > > > to
+> > > > > do is enroll my fingerprints in System Settings,
+> > > > > then install the pam-auth-update and select the Fingerprint
+> > > > > authentication from the selection screen (apt specific) as descri=
+bed
+> > > > > in the following SO thread:
+> > > > >
+> > >
+> > https://askubuntu.com/questions/1015416/use-fingerprint-authentication-=
+not-only-for-login
+> > > > > .
+> > > > >
+> > > > > This problem was solved in macOS by simply displaying a window; if
+> > > > > the
+> > > > > window is out of focus, the fingerprint won't work.
+> > > > > Since we can't rely on any graphical window on Linux since it can=
+ be
+> > > > > terminal only, we need to ensure that the user fingerprint is used
+> > > > > only for the sole purpose of the request and with full attention =
+to
+> > > > > the specific action the fingerprint was requested for. Otherwise,=
+ the
+> > > > > fingerprint can be hijacked (just like clickjacking).
+> > > > >
+> > > > > Benjamin was kind enough to respond, and I allowed myself to
+> > > > > summarize
+> > > > > his reply:
+> > > > > It can happen with fprintd as with any other external authenticat=
+ion
+> > > > > method (aside from password, we have Bluetooth proximity, NFC Tag,
+> > > > > Smart Card, etc.), so it is not unique to fprintd.
+> > > > > Benjamin also offered mitigating ways, such as changing the
+> > > > > configuration or using pkexec instead of sudo.
+> > > > >
+> > > > > I addressed this issue with the sudo maintainer, Todd C. Miller, =
+and
+> > > > > again, I allowed myself to summarize his response:
+> > > > > Although I understand the concern, I need a security attention
+> > > > > mechanism to fix it.
+> > > > >
+> > > > > CVSS 4.0 ranked this CVE as 7.3.
+> > > > >
+> > > > > Thank you,
+> > > > > PS, I'm not a security researcher, and I'm not affiliated with any
+> > > > > organization.
+> > > > >
+> > > > > Yaron Shahrabani - DevOps, Hebrew translator
+> > > >
+> > >
+> > >
+> > >
+> >
 
-Credit:
-Michael Stepankin
+--jCkw1rK53OcsF+rH
+Content-Type: application/pgp-signature; name="signature.asc"
 
-References:
-[1] https://issues.apache.org/jira/browse/SOLR-13301
-[2] https://wiki.apache.org/solr/SolrSecurity
+-----BEGIN PGP SIGNATURE-----
 
---0000000000009125df05837b66e3--
+iQIzBAABCgAdFiEE0ZC278nRi4l3b3GjszvZgG6FIMYFAmZsjyEACgkQszvZgG6F
+IMbaHQ//TV7ECR09ihY/KitDs3b/KSixqXLpnbUNMrfElWsWI1TEJoVaoyRP4Vgz
+dOUD4b86eNEi7J6FaGR/lY6RypUtrBm0oIsFBX4gVpEY0BGF5hu3XEmvEzE7fZZU
+gYKJaqCLAocvFo3oz8fFqrokxH4tFJGHi+KCPeVn2uriX1a9XRk2n9S5doVngsdF
+Mx3KeXpoljT09L5PMbNMdK7AKDrsvf7nhj/Qe/coFqm74d1W7v6aVjCygTDzH/oI
+8MhKOLYLrEccVp3pR72zrkygyfgWLJ+l30pQnIO05v+dUoGLAovfoWYCs9pZ8h07
+3f1854TPlNEDBEF7Bs3uVa4PItAnjMVx49XyToRjoWfNnFVJopHmoT+Rxk/BhEeQ
+v68Ho0okBtMNpYQJNIi6r60vBvSMym3OLsgme8wNJHXFuZQ3ZnAdp1Fb0jFor47+
+T04/MTJLJGtBItTPMPGGdWfk1oILo0sNSeFr25Xy6N7zuTJxeuKByEh8d83omIZO
+N+mPDMGJM58G8mRrYGAYSak0NnxxoHSDTHjWNrXpp25MpblnQL8JRwL8tyzwjqNe
+sFpmL2Xfs6uE7Rq1yqIhRPD6oTsyOxkFyj9G6gfn3QPrz1DrNrE72C4QHyDUoMDz
+sCXO02NaiSR16etOyCx1g4bGasGW0qlfjgITW6rMT+nbmu1JTkw=
+=8h+I
+-----END PGP SIGNATURE-----
+
+--jCkw1rK53OcsF+rH--
