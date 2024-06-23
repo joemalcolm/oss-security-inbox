@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1381" "Tuesday" "7" "April" "2015" "13:35:48" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20150407203548.GA15003@hunt>" "39" "Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!" nil nil nil "4" "2015040720:35:48" "[oss-security] Hanno Boeck found Heartbleed using afl + ASan!" (number mark "        seth.arnold@ Apr  7   39/1381  " thread-indent "\"Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!\"\n") "<CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>" ("<E1YfZfw-0006NA-Md@rmm6prod02.runbox.com>" "<CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32145 invoked by uid 550); 7 Apr 2015 20:36:03 -0000
+Received: (qmail 9558 invoked by uid 550); 23 Jun 2024 09:04:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +6,134 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32127 invoked from network); 7 Apr 2015 20:36:03 -0000
-Message-ID: <20150407203548.GA15003@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <E1YfZfw-0006NA-Md@rmm6prod02.runbox.com>
- <CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="wac7ysb48OaltWcw"
-Content-Disposition: inline
-In-Reply-To: <CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Tue, 7 Apr 2015 13:35:48 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!
+Received: (qmail 28474 invoked from network); 23 Jun 2024 08:39:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1719131982; bh=Jh4fwpi6qRCoCsn0evSe4dfAjx3vClun0Ug9Mxp8YuQ=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+	b=eRSSJby7KfYT5kEtb9aU6dH9B2VqCslRyTHWdJfeA54RaBopa2YAz034s+FFhCqJA
+	 xNunbyEvzTEpgNVWcYXEy1spKXpuV0CQsfzpgvN8dcfMfZCPPxxhUwe7JjI0QCfh3j
+	 pxKkAOFwgEXE/OgRUX5Fl0wVftxthsSbLMPJVXLVn5jFHfiIHossi6hXH5U/4qFMgP
+	 PO+z/zI+4x2P321ywBikuSyWCJWJa1rVHxE53XU0RTunv7Q9yGq1nRtrmb6BSKkS9E
+	 GDApt6xDYO41JH7Y+BrjHqaKWtMT1KQLFJuIhS8oTXmagA78eUfEH/q2/eA3FYWbjj
+	 HSFWwQ4pdVlVg==
+From: Ihor Radchenko <yantar92@posteo.net>
 To: oss-security@lists.openwall.com
+Date: Sun, 23 Jun 2024 08:41:15 +0000
+Message-ID: <87wmmguk44.fsf@localhost>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-=-="
+Subject: [oss-security] Arbitrary shell command evaluation in Org mode (GNU Emacs)
 
---wac7ysb48OaltWcw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-=-=
+Content-Type: text/plain
 
-On Tue, Apr 07, 2015 at 01:27:40PM -0700, Michal Zalewski wrote:
-> this or any comparably serious find. Today, I'm asking myself the same
-> question about AFL. Was it too counterintuitive to set this up? Were
-> there other barriers to entry? Can I fix this now?
+Hi,
 
-Hanno's trick of storing TLS packets as files is clever, but doesn't
-scale far beyond testing handshakes of a handful of protocols, and that
-with some effort.
+Here is a vulnerability in Emacs Org mode.
 
-If AFL could grow the ability to mangle socket-based inputs, it would
-probably be more applicable to many more services, and beyond just
-handshaking.
+Reproducer is the following .org file:
 
-I realize it's asking for a unicorn when we've already been given a pony,
-but there it is.
+#+LINK: shell %(shell-command-to-string)
+[[shell:touch ~/hacked.txt]]
 
-Thanks
+When sent by email and previewed in Emacs or when opened in Emacs as a
+file, the above Org file will evaluate "touch ~/hacked.txt" without any
+prompts.
 
---wac7ysb48OaltWcw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+The fix is attached. It is against Org mode git repository.
+The fix can be applied to older versions of Org mode/Emacs if deemed
+necessary.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The fix has been included into Emacs 29.4 and Org 9.7.5 (released
+yesterday).
 
-iQEcBAEBAgAGBQJVJD+kAAoJEPMhclmdjS6X8uAIALmw14loLimop3ACKJWKYtdN
-MP4FniPbvKpHDHUSczKl0F7gaZesGXiPCFcdIfak0OyBkTo9qiVIpmxdxe/TQvEt
-cZnStaH08/jBDC4a8wNcJzxdXSBZDWfXJgw8rz+cYr6Dvm3J5ikOL9+0GyK7fknD
-CnPotsv4fxIwTTQG4zdh9q8Gl/nhfHkF5btUmFV9D9gIM/mJAW0E8epSMB0DvNp5
-QqOjaHR/u76U8mFGd9cmX++HdTEd0XX9THBhGtpcyWdKn64V66Y0BxNc20rJ8kCe
-Q3CeldMKoq6f2zF3enzHHixhM6PYvV6YYwATSylAQEYhEpJPdsY7AomdRUXYFtY=
-=6Uss
------END PGP SIGNATURE-----
 
---wac7ysb48OaltWcw--
+--=-=-=
+Content-Type: text/x-patch
+Content-Disposition: inline;
+ filename=v3-0001-org-link-expand-abbrev-Do-not-evaluate-arbitrary-.patch
+
+From d1f32835c875d79ec373cc27eb0fa2ef0dd61984 Mon Sep 17 00:00:00 2001
+Message-ID: <d1f32835c875d79ec373cc27eb0fa2ef0dd61984.1718785968.git.yantar92@posteo.net>
+From: Ihor Radchenko <yantar92@posteo.net>
+Date: Tue, 18 Jun 2024 13:06:44 +0200
+Subject: [PATCH v3] org-link-expand-abbrev: Do not evaluate arbitrary unsafe
+ Elisp code
+
+* lisp/ol.el (org-link-expand-abbrev): Refuse expanding %(...) link
+abbrevs that specify unsafe function.  Instead, display a warning, and
+do not expand the abbrev.  Clear all the text properties from the
+returned link, to avoid any potential vulnerabilities caused by
+properties that may contain arbitrary Elisp.
+---
+ lisp/ol.el | 40 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 11 deletions(-)
+
+diff --git a/lisp/ol.el b/lisp/ol.el
+index 7a7f4f558..8a556c7b9 100644
+--- a/lisp/ol.el
++++ b/lisp/ol.el
+@@ -1152,17 +1152,35 @@ (defun org-link-expand-abbrev (link)
+       (if (not as)
+ 	  link
+ 	(setq rpl (cdr as))
+-	(cond
+-	 ((symbolp rpl) (funcall rpl tag))
+-	 ((string-match "%(\\([^)]+\\))" rpl)
+-	  (replace-match
+-	   (save-match-data
+-	     (funcall (intern-soft (match-string 1 rpl)) tag))
+-	   t t rpl))
+-	 ((string-match "%s" rpl) (replace-match (or tag "") t t rpl))
+-	 ((string-match "%h" rpl)
+-	  (replace-match (url-hexify-string (or tag "")) t t rpl))
+-	 (t (concat rpl tag)))))))
++        ;; Drop any potentially dangerous text properties like
++        ;; `modification-hooks' that may be used as an attack vector.
++        (substring-no-properties
++	 (cond
++	  ((symbolp rpl) (funcall rpl tag))
++	  ((string-match "%(\\([^)]+\\))" rpl)
++           (let ((rpl-fun-symbol (intern-soft (match-string 1 rpl))))
++             ;; Using `unsafep-function' is not quite enough because
++             ;; Emacs considers functions like `genenv' safe, while
++             ;; they can potentially be used to expose private system
++             ;; data to attacker if abbreviated link is clicked.
++             (if (or (eq t (get rpl-fun-symbol 'org-link-abbrev-safe))
++                     (eq t (get rpl-fun-symbol 'pure)))
++                 (replace-match
++	          (save-match-data
++	            (funcall (intern-soft (match-string 1 rpl)) tag))
++	          t t rpl)
++               (org-display-warning
++                (format "Disabling unsafe link abbrev: %s
++You may mark function safe via (put '%s 'org-link-abbrev-safe t)"
++                        rpl (match-string 1 rpl)))
++               (setq org-link-abbrev-alist-local (delete as org-link-abbrev-alist-local)
++                     org-link-abbrev-alist (delete as org-link-abbrev-alist))
++               link
++	       )))
++	  ((string-match "%s" rpl) (replace-match (or tag "") t t rpl))
++	  ((string-match "%h" rpl)
++	   (replace-match (url-hexify-string (or tag "")) t t rpl))
++	  (t (concat rpl tag))))))))
+ 
+ (defun org-link-open (link &optional arg)
+   "Open a link object LINK.
+-- 
+2.45.1
+
+
+--=-=-=
+Content-Type: text/plain
+
+
+-- 
+Ihor Radchenko // yantar92,
+Org mode contributor,
+Learn more about Org mode at <https://orgmode.org/>.
+Support Org development at <https://liberapay.com/org-mode>,
+or support my work at <https://liberapay.com/yantar92>
+
+--=-=-=--
