@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["587" "Thursday" "6" "October" "2016" "12:09:05" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQxo7hS2_7m4_tMS2iK_b2YZSjmCL41yYof6J7qwWtN1w@mail.gmail.com>" "20" "[oss-security] CVE request: DoS loading a SVG in Firefox" nil nil nil "10" "2016100615:09:05" "[oss-security] CVE request: DoS loading a SVG in Firefox" (number mark "U       gustavo.grie Oct  6   20/587   " thread-indent "\"[oss-security] CVE request: DoS loading a SVG in Firefox\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 18193 invoked by uid 550); 6 Oct 2016 15:09:18 -0000
+Received: (qmail 1072 invoked by uid 550); 23 Jun 2024 19:42:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18172 invoked from network); 6 Oct 2016 15:09:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=nVrkjGNJd6MVZ18h4E8e9J0R0jby2o5DJO/sKL61ao4=;
-        b=gX62kt4r0Oe27QdWGNHnuJVHaOb/qk/Cp/wgWTqrK60lCiBRL17cMptgpWWfRnfXAG
-         woP+Gt+M4dkMbb8AXM8FtoGLABJ2SQw1uGEygUwHnF8RQ3XEp9YMM/pGJRnIMaR5E71g
-         T9lvd7KbCdS/lT2niNNurOxSJA8Z9c3LNzIz16pGlsc+7XiOjoazIzqAXRkyEWRgzyY3
-         hinSi+W1aGhKmBo+e40uwFoqwWRCzvHq6AWgzuKo99Cc4nNHXry3om48veeZyU0uZi02
-         VoreI3NZe+j92CKZQIa3yAnUmhN3utzV8yfRxTYswWJ6UPoY5ocFkQr+8kPqWQ1MIQwW
-         SXzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=nVrkjGNJd6MVZ18h4E8e9J0R0jby2o5DJO/sKL61ao4=;
-        b=JAod5RoocxDXi3dC4Li9ReE2X6eqH+nf3X8f5PXEJXSdCjiH3f0vsiknl5IYojfER7
-         UT+rdERgFU+HJvlGdviZCUkKmJtkS0POWFttyC6GUQC6UF+M4TcPcjj4mGK5xsWy/Y6c
-         thBaKUQJJRx8f9DeyAUXSwItwOCdVKsROx9PzJ6yiW2n9HvsL8fZkC12zGOjGl3js7QD
-         tGb+5eHAZoRep5qkDczKUp75F0RbI6grMZZxG9uANdaGNfI2WYzt9Jc3TaaD/cGjhGQP
-         h2jJJJ6M/aeUPebgrdDM+moE+mu9cAmWX6ISNZ1B/0l+9rAjTOvyYIsG2POPGGLh9mj0
-         07Vw==
-X-Gm-Message-State: AA6/9RmtvCveFtE8nrS4lr6PswMiTWjR0HVlB3w39LnRjdwffMEc8rtdlbT6WWl0Uloz1XVV0yxjfT/qeFLbRg==
-X-Received: by 10.107.58.10 with SMTP id h10mr8085726ioa.78.1475766545789;
- Thu, 06 Oct 2016 08:09:05 -0700 (PDT)
+Received: (qmail 1051 invoked from network); 23 Jun 2024 19:42:46 -0000
+From: Russ Allbery <eagle@eyrie.org>
+To: Ihor Radchenko <yantar92@posteo.net>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <87wmmguk44.fsf@localhost> (Ihor Radchenko's message of "Sun, 23
+	Jun 2024 08:41:15 +0000")
+Organization: The Eyrie
+References: <87wmmguk44.fsf@localhost>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Sun, 23 Jun 2024 12:42:36 -0700
+Message-ID: <87h6djh2dv.fsf@hope.eyrie.org>
 MIME-Version: 1.0
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Thu, 6 Oct 2016 12:09:05 -0300
-Message-ID: <CACn5sdQxo7hS2_7m4_tMS2iK_b2YZSjmCL41yYof6J7qwWtN1w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE request: DoS loading a SVG in Firefox
+Content-Type: text/plain
+Subject: Re: [oss-security] Arbitrary shell command evaluation in Org mode
+ (GNU Emacs)
 
-Hello,
+Ihor Radchenko <yantar92@posteo.net> writes:
 
-Some months ago, we found that just loading this image:
+> Here is a vulnerability in Emacs Org mode.
 
-https://dcc.fceia.unr.edu.ar/~ggrieco/oom.svg (518K)
+> Reproducer is the following .org file:
 
-will cause Firefox to consume all your memory. Once you click, you
-cannot stop the memory constant memory leak. It can take a few minutes
-(we tested in a desktop computer with 16GB). At the end, Firefox will
-abort or it will be terminated by the OS.
+> #+LINK: shell %(shell-command-to-string)
+> [[shell:touch ~/hacked.txt]]
 
-At least Firefox 49 and 51 in several platforms are affected. A report
-in the Mozilla bug tracker was filled:
+> When sent by email and previewed in Emacs or when opened in Emacs as a
+> file, the above Org file will evaluate "touch ~/hacked.txt" without any
+> prompts.
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1297206
+> The fix is attached. It is against Org mode git repository.
+> The fix can be applied to older versions of Org mode/Emacs if deemed
+> necessary.
 
-Please assign a CVE if suitable.
+For those who want to disable automatic parsing of Org files in incoming
+email messages with Emacs-based mail readers that use emacs-mime, I
+believe this needs to be done with two bits of configuration.
 
-Regards,
-Gustavo.
+The following (or the equivalent via customize) will disable autodetection
+of Org files inline in text/plain parts, such as in the message that I'm
+responding to:
+
+(custom-set-variables
+ '(mm-uu-configure-list
+   '((org-src-code-block . disabled)
+     (org-meta-line . disabled))))
+
+In order to disable automatic previewing of org-mode attachments, you need
+to customize mm-automatic-display to remove text/x-org from the list of
+MIME types that are automatically previewed.  (This part I have not
+tested.)
+
+There are probably other ways to do this; those are just the ones that I
+found.
+
+-- 
+Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
