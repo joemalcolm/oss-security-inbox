@@ -1,4 +1,4 @@
-Received: (qmail 27655 invoked by uid 550); 17 Jan 2023 18:11:20 -0000
+Received: (qmail 9383 invoked by uid 550); 24 Jun 2024 23:57:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,117 +7,237 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21886 invoked from network); 17 Jan 2023 18:06:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=zL/5g5tD/ITo1G86LLL5iEldtncPtnruhMS5tn83jTs=;
-        b=OM1MCGVf/AZfm4pZbCUZO61YPX2/7MHR3f230DN2/w9XQIpk1OCztyBaFgLrs/qwcm
-         siQ/jzu7y8dZu8ZP0yzxm9OcgZdPwB7ituAyg9W3xZq46tlInfBc3HTKy5cDsqEZUaj1
-         adqv9mkdx6e4xiGnJAPQrPRHRj46C4ZWEGoTwL6bjjUucMYx2suCVx3gGp3qPQUV2Igb
-         pgLcA0DSwetmjsN8KU3leDPbic8IpGRW+FG5RmkAtuiI4VvKSfX7njoh4N4dWazP427S
-         l4y0Cj+kigrmh0906tWAX4k4w91tKzXmA9rqdt/0ASjUwxvp5sx9bRMCvj+uqRwExqih
-         B3iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zL/5g5tD/ITo1G86LLL5iEldtncPtnruhMS5tn83jTs=;
-        b=Ob179h8Wkn94VBKECYrAzNfs+8vx0vqJz0voLxzv/HHePQcrL4W7J9wSaWV5c6bf/7
-         zvWWfi9Lb5LOtIeHlU46i6gXsXBI5JTkdrq7o9AiUsgkgqp2L9VXUedww+oH5u3+qd6o
-         H/TnPxLjYcem/r3NvLhvS4pdDI7kjSRlNAAdZWLlNOF5SS2UB3QIMQe1rrKa5kZ2Mhdb
-         aVkB6k/A+wgXkhTObalfAM0X4ydwDymOD2HLKf/N0L3Pkrxnv7yKUIhCP0LdT7an+7MZ
-         8PJLSzNkR9GBwf78Rdjw928fJpJq05nRyKz+KtPXI4BLkeh2UqOzI4bzfm6mZcitGJs6
-         N+6A==
-X-Gm-Message-State: AFqh2kpWxk/no69zz2Do9Bvg1bqMurnCuu1ic5DiDpz7rvAzDdZQODPE
-	bbCVsk9OQbVYNTDZe0NoRGx25X8Gi04=
-X-Google-Smtp-Source: AMrXdXt24+FmNZfIBR4KOkEsJ4tQLD4Fb12lilCgV1bwd58C8RI+Spfwvv46Qc3NjpSKURwUggFoQQ==
-X-Received: by 2002:a17:902:a5c6:b0:193:33d4:d509 with SMTP id t6-20020a170902a5c600b0019333d4d509mr26016776plq.30.1673978771180;
-        Tue, 17 Jan 2023 10:06:11 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <junio@pobox.com>
-To: oss-security@lists.openwall.com
-Cc: git-security@googlegroups.com
-References: <xmqqfscit2ct.fsf@gitster.g>
-Date: Tue, 17 Jan 2023 10:06:10 -0800
-Message-ID: <xmqqzgah8299.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+Received: (qmail 18119 invoked from network); 24 Jun 2024 23:50:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
+	s=default; t=1719272985;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eKEYnaIbuv9fABJnUgjDIKd6X7rWqgtXI38xndqMip0=;
+	b=LwK5q94R6YhURU+4vCBd27npvjbIpnaeVE7j8Oclv1JjdCm0z04LpGc21CtezV9psvcF4A
+	YNuWkclDyXOiCaMRfZpSRg4lrRYZ/s2GBsoT5HlMkIbhaovq1tgTKvEaXnHJpMQ57hs1Dn
+	880k8R7B8gEPgok5H05Fig6CvZoRwToxv02keAAigpRqbhi8t76IblpCEMYyqryPXRqdyO
+	HH02BnIR+PVHGdwKRpCTlQet4qr5QpaSXAHQg2/uIQkz270WOx8TnnM3D8ZyXTqa5Yi2kf
+	/c0bavsPhPQcGjzZfWFGorwkGqgiPkxWgc6v4xp9/1+JJBMejqpOW/NfhnqO3w==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=douglasb@catalyst.net.nz smtp.mailfrom=douglas.bagnall@catalyst.net.nz
+Message-ID: <6658f4b9-7b5b-4c1b-8fc7-e9f2801fe3b0@catalyst.net.nz>
+Date: Tue, 25 Jun 2024 11:49:40 +1200
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Git 2.39.1 and friends
+User-Agent: Mozilla Thunderbird
+From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+To: oss-security@lists.openwall.com, Qualys Security Advisory <qsa@qualys.com>
+References: <20240130183915.GB16546@localhost.localdomain>
+Content-Language: en-NZ
+In-Reply-To: <20240130183915.GB16546@localhost.localdomain>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Out-of-bounds read & write in the glibc's qsort()
 
-The Git project released versions v2.30.7, v2.31.6, v2.32.5,
-v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, v2.38.3, and v2.39.1
-today.  These maintenance releases are to address the security
-issues identified as CVE-2022-41903 and CVE-2022-23521.
+[ For newer subscribers, I'll mention that this is in reply to
+  https://www.openwall.com/lists/oss-security/2024/01/30/7 ]
 
-The tarballs are found at:
+On 31/01/24 07:39, Qualys Security Advisory wrote:
+> We discovered a memory corruption in the glibc's qsort() function, due
+> to a missing bounds check. To be vulnerable, a program must call qsort()
+> with a nontransitive comparison function (a function cmp(int a, int b)
+> that returns (a - b), for example) and with a large number of attacker-
+> controlled elements (to cause a malloc() failure inside qsort()). We
+> have not tried to find such a vulnerable program in the real world.
+>
+> All glibc versions from at least September 1992 (glibc 1.04) to the
+> current release (glibc 2.38) are affected, but the glibc's developers
+> have independently discovered and patched this memory corruption in the
+> master branch (commit b9390ba, "stdlib: Fix array bounds protection in
+> insertion sort phase of qsort") during a recent refactoring of qsort().
 
-    https://www.kernel.org/pub/software/scm/git/
+In or before 2006 [1], the Samba project forked and modified a copy of
+glibc _quicksort() to create the qsort_r-like ldb_qsort(). In those
+days qsort_r() was rare (glibc got it in 2008), and Samba wanted
+comparison semantics to follow changes in the LDAP schema, for which
+the qsort_r context blob was thought useful.
 
-The following public repositories all have a copy of the v2.39.1
-tag, as well as the tags for older maintenance tracks for v2.30.7,
-v2.31.6, v2.32.5, v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, and
-v2.38.3.
+[1] https://gitlab.com/samba-team/samba/-/commit/de296b65136c3d7b6170db099b626d94fa190306
 
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+The code we copied was not the try-mergesort-first qsort() glibc uses
+(and used then) -- it was the quicksort-of-last-resort that Qualys
+reports on. I guess we were aiming for simplicity. At times we have
+discussed switching to qsort_r(), but that always founders because
+each libc does it slightly differently (and qsort_s does not solve
+every problem).
 
-The addressed issues are:
+So Samba was very susceptible to this bug. The good news is
+ldb_qsort() is not used in very many places, and some of those places
+already used transitive comparison functions. The other good news is
+that *now* it is patched with the "tmp_ptr > base_ptr &&" fix. And the
+third good news is that the comparison functions are fixed. That's in
+4.19.7 and 4.20.2.
 
- * CVE-2022-41903:
+We also had quite a large number of non-transitive comparisons using
+the system qsort(). These are vulnerable with glibc under memory
+pressure, as described by Qualys, who also note:
 
-   git log has the ability to display commits using an arbitrary
-   format with its --format specifiers. This functionality is also
-   exposed to git archive via the export-subst gitattribute.
+> Remotely, forcing this malloc() failure is harder: either allocate a
+> large amount of memory (e.g., a memory leak) in the network service that
+> is being targeted, or in another network service on the same machine.
 
-   When processing the padding operators (e.g., %<(, %<|(, %>(,
-   %>>(, or %><( ), an integer overflow can occur in
-   pretty.c::format_and_pad_commit() where a size_t is improperly
-   stored as an int, and then added as an offset to a subsequent
-   memcpy() call.
+Samba servers are quite complex, and it would be easy for the attacker
+to miss the right allocation and induce a different failure. There are
+almost certainly other more appealing and less noticeable attacks.
+Nevertheless we have been auditing and fixing all our compare
+functions. The lack of a clear attack helped us choose do that without
+an embargo shroud and the associated fuss. In any case, I fear there
+is greater danger for a project like Samba from a bad sort that
+*doesn't* crash the server (more on this later).
 
-   This overflow can be triggered directly by a user running a
-   command which invokes the commit formatting machinery (e.g., git
-   log --format=...). It may also be triggered indirectly through
-   git archive via the export-subst mechanism, which expands format
-   specifiers inside of files within the repository during a git
-   archive.
+The thing I found interesting, and which led me to write, is that we
+knew all the pieces of this, but never put them together.
 
-   This integer overflow can result in arbitrary heap writes, which
-   may result in remote code execution.
+For a start, we were well aware that glibc qsort() uses mergesort by
+default, because (as the glibc people discovered when they tried to
+change it) we had inadvertently come to rely on it. This caused bugs
+on other platforms [2] and even led us to write our own stable sort
+for when we really need it.
 
-* CVE-2022-23521:
+[2] https://lists.samba.org/archive/samba-technical/2018-March/126023.html
 
-    gitattributes are a mechanism to allow defining attributes for
-    paths. These attributes can be defined by adding a `.gitattributes`
-    file to the repository, which contains a set of file patterns and
-    the attributes that should be set for paths matching this pattern.
+We have also been fixing bugs in ldb_qsort() comparison functions
+without fully realising that we were dealing with a class of problem.
+For example, in the bug we called CVE-2019-14861 [3], we have comments
+like "This looks like a bug in ldb_qsort()" and "when I patch
+ldb_qsort() for qsort_r() the problem goes away". But when we find the
+problem in the compare function we say "I'm assuming that the issue is
+due to the unstable sort in dns_name_compare()", and sort of forget
+that ldb_qsort() is *also* the problem.
 
-    When parsing gitattributes, multiple integer overflows can occur
-    when there is a huge number of path patterns, a huge number of
-    attributes for a single pattern, or when the declared attribute
-    names are huge.
+[3] https://bugzilla.samba.org/show_bug.cgi?id=14138, fixed in
+    https://gitlab.com/samba-team/samba/-/commit/defb23732515e3c638d0081f5e4043fbb35d303c
 
-    These overflows can be triggered via a crafted `.gitattributes` file
-    that may be part of the commit history. Git silently splits lines
-    longer than 2KB when parsing gitattributes from a file, but not when
-    parsing them from the index. Consequentially, the failure mode
-    depends on whether the file exists in the working tree, the index or
-    both.
+The problem we fixed in dns_name_compare() was this:
 
-    This integer overflow can result in arbitrary heap reads and writes,
-    which may result in remote code execution.
+        /* '@' record and the search_name record gets preference */
+        if (name1[0] == '@') {
+                return -1;
+        }
+        if (search_name && strcasecmp(name1, search_name) == 0) {
+                return -1;
+        }
 
-Credit for finding CVE-2022-41903 goes to Joern Schneeweisz of GitLab.
-An initial fix was authored by Markus Vervier of X41 D-Sec. Credit for
-finding CVE-2022-23521 goes to Markus Vervier and Eric Sesterhenn of X41
-D-Sec. This work was sponsored by OSTIF.
+which tries to unconditionally squish names starting with "@" and
+whatever search_name is to the start of the array (which is the
+problem end for these buggy quicksorts). When the array has both
+search_name and an @-name, or multiple @-names, the comparison was
+non-transitive.
 
-The proposed fixes have been polished and extended to cover additional
-findings by Patrick Steinhardt of GitLab, with help from others on the
-Git security mailing list.
+Git says I reviewed the CVE-2019-14861 patches, though I don't
+remember anything (I mean, CVSS 5.3, authenticated client can crash
+the server, who cares). But mistrust of ldb_qsort() lingered, and I
+saw what the Qualys report meant for it.
+
+The CVE-2019-14861 patch fixed the explicit attempt to push multiple
+values into one spot, but it left this in the same function:
+
+        if (name1 == NULL || name2 == NULL) {
+                return 0;
+        }
+
+which is non-transitive, given we otherwise compare name1 and name2.
+For example, consider names {"a", NULL, "b"}. Then we have
+
+   "a" < "b"
+   "a" == NULL
+   "b" == NULL
+
+meaning the order in which we compare things will affect how they end
+up. Perhaps this was never enough to go out of bounds, and perhaps
+there was never going to be a NULL in this list. In any case, now we
+go:
+
+       if (name1 == name2) {
+               /* this includes the both NULL case */
+               return 0;
+       }
+       if (name1 == NULL) {
+               return -1;
+       }
+       if (name2 == NULL) {
+               return 1;
+       }
+
+which is transitive, sorting NULLs to the beginning of the list for
+easy discovery (we check in the next loop).
+
+I found a 2006 bug report [4] with the name "SEGV crash due to random
+libads/dns.c qsort() comparison function".
+
+[4] https://bugzilla.samba.org/show_bug.cgi?id=3959 fixed in
+    https://gitlab.com/samba-team/samba/-/commit/18feaab9d556c4bd41a19823b3982e2bc30a2055
+
+To quote from the bug:
+
+   The qsort() used in libads/dns.c is regularly trashing the list of
+   Domain Controllers. This is because the comparison function
+   dnssrvcmp() is using rand(). AFAIK, that's not recommended --
+   repeated calls to the qsort() comparison function with the same
+   args _must_ return the same, consistent results. [....]
+
+   Hence this:
+
+	int bad_compare(const void *l, const void *r) {
+		return (rand() % 3) - 1;
+	}
+
+   is a terrible function to use, and causes real qsort()s to run off
+   into the weeds.
+
+We weren't doing that, exactly, FWIW. It is good to be reminded that
+in 2006 it was normal for a qsort to "run off into the weeds". The
+problem for projects like Samba is it is easy for us to pick up little
+pieces of 2006 and carry them along with as we go.
+
+We also have several commits like this one from 2009 [5]:
+
+    librpc: fixed the GUID_compare() function
+
+    When comparing two unsigned values you can't just subtract
+    them.
+
+    Imagine you are comparing: "uint32_t u1" and "uint32_t u2". If you use
+    "u1 - u2" and u2 is zero, then the signed integer result will depend
+    on the top bit of u1.
+
+    This error occurs in a few places in Samba. For DRS replication it
+    resulted in corrupt uptodateness vectors.
+
+[5] https://gitlab.com/samba-team/samba/-/commit/a106fefcfb0cb60ce439884d8cd0c920d2fb193a
+
+What I am getting at is we have been all over this class of bug, but
+in a shamefully ad-hoc and folkloric way -- "you can't use rand()",
+"you can't subtract unsigned values", "you can't push two things into
+the same place", "you can't subtract" -- all of which are incomplete
+(and/or overreaching; you can safely subtract char, for example).
+Somehow we never got to the obvious position that all comparisons have
+to be transitive. Thanks to Qualys for the clarity.
+
+Thanks I guess also to C for being so unsafe and report-worthy. What
+worries me more about a bad sort in Samba AD is the ability to hide
+things without crashing. Attackers are likely to prefer a persistent
+unseen presence over bringing down a server process. Being in the
+wrong place in a sorted list might not seem like great hiding, but we
+do more complicated things with the sorted arrays, including binary
+search. The comparison in the binary search will visit a subset of
+values in a different order that the sort, so will likely step over or
+be thrown awry by the missorted element. That means the bad comparison
+could make something appear to vanish in some circumstances and not
+others. (I didn't look for actual instances of this, I just fixed the
+comparison functions).
+
+As I mentioned, ldb_qsort() and most comparison functions are fixed in
+4.19.7 and 4.20.2 (both released earlier this month). One particularly
+complicated comparison function required an API change in the public
+libldb, so it will appear in 4.21 (probably September). That one isn't
+used with ldb_qsort(), so it is likely safe or safe-ish, depending on
+your libc.
+
+Douglas
