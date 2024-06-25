@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1163" "Friday" "4" "October" "2019" "10:33:25" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<CAP+3qq42G5=pb8CmhTbEhuXpThr7S882-_1pPAPNV0cCc9QW_A@mail.gmail.com>" "43" "[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption" nil nil nil "10" "2019100401:33:25" "[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption" (number mark "U       aajisaka@apa Oct  4   43/1163  " thread-indent "\"[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1697 invoked by uid 550); 4 Oct 2019 07:03:40 -0000
+Received: (qmail 27745 invoked by uid 550); 25 Jun 2024 18:38:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19933 invoked from network); 4 Oct 2019 01:34:43 -0000
-X-Gm-Message-State: APjAAAVYUTSIYmRNE8E+QlI805okOWBAumaN0IE7z3IT9u6cf4dAWPhA
-	yvq65pLyQhL0eLk5VN2bWn3gCEqJDpCqZ84HRAc=
-X-Google-Smtp-Source: APXvYqx8303leyk0/e6/LVDXjijDwzWxv60q8g6ABVZ9GMLtEFpMbb4DVYoY2QuuQGYmF8FONeWt96UUHyewiQfqfXc=
-X-Received: by 2002:a19:ef17:: with SMTP id n23mr7024379lfh.109.1570152869638;
- Thu, 03 Oct 2019 18:34:29 -0700 (PDT)
+Received: (qmail 7262 invoked from network); 25 Jun 2024 17:54:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rafaelgss.dev; s=google; t=1719338062; x=1719942862; darn=lists.openwall.com;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=z2ewyXNMwpHa9vCnISu5zJoH7Jm8dxjuDOKfkmisNkk=;
+        b=lU4g/Ajo50ZEbZsg/xBXlQhoh6JbzBo5FiVnTXcwOTmqsBJqDHmc79qTb7ODKhgC1m
+         xGnKNM58N63JEJic+KNxVp0E+uT866ar5LSsqWAH0K8KYiJEd0lRC8OeqUXmGWk1ybFj
+         nXFopUEluqVKkM1OEic4WTRhvDYs/ScCss5i6QyKvaO6VC2ikHMfzIYDbEcJg+ghPj4Y
+         GpP62D7YAgdrvpvDyanbiu24Or8oCHFuoBOz3P14F85wKzu2SZXSw8KFHyEqKc3zmk5g
+         6x4nTyCfcOgSquuT4ELqjDy6VdclHD51LI+1iEL6l+FCUXJfG5+6Ki5HSsNDbrYbRz8W
+         66hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719338062; x=1719942862;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=z2ewyXNMwpHa9vCnISu5zJoH7Jm8dxjuDOKfkmisNkk=;
+        b=mu9MsY6uFHDtIgUQJKjVg8hMsMtHZbh4prNC0QShhF5aTMoz5UX3D9ntK16wiWPt40
+         nGvG/xorzL+pw33wgJuCzxoqqbzZ4JANjLKBa7U6OWmQS0ROUptXMWH2+MJ1E5ozrTIk
+         Oqs6h90uxSBFEAto9Avozq6WAJmsqGc6umQWWFSIwZ4f1WLjEgsPnmA72BEeFTveSxIr
+         SJu0v8Zx147VmwKQV/hzrKkD+EbAzz4GKgoypPdNPGCYyANDwyH+WwEsMy2T5f24dOLo
+         fsxBgs+tKUTty7ixWEpMvn4KODbkMT1iLU2NQqf+SgPRoTItihhCxK9xplpxuUxLPLrf
+         j3WQ==
+X-Gm-Message-State: AOJu0YzalhHvEZiW6jPZcV90TIFu/8oFE5qx7NTpcAR9oW/HQkXanL1H
+	KizsHFxKXHnh9VI2ZtAuVF+BuDLHjf4ZF0t3Hrh/ObmRhSiOvlBMSW0YPYZLQr/cIUy2q/ALTQT
+	JKPNrWpdPTEpynpeKLQ==
+X-Google-Smtp-Source: AGHT+IHIMS0vFCcYs8gnmfIPJKu3AObn1WReGInSpXm97HXDHyROTAL24EtMSi7vY8+q/fe2Y95wDrvbHg==
+X-Received: by 2002:a05:6820:1b8d:b0:5bb:16a:e08e with SMTP id 006d021491bc7-5c1eecc784emr755207eaf.1.1719338061954;
+        Tue, 25 Jun 2024 10:54:21 -0700 (PDT)
+Date: Tue, 25 Jun 2024 10:54:21 -0700 (PDT)
+From: Rafael Gonzaga <work@rafaelgss.dev>
+To:  <oss-security@lists.openwall.com>
+Message-Id: <519892a2-6a90-45fb-a3c3-99a0159bb210n@googlegroups.com>
+In-Reply-To: <46450232-0958-4f83-917e-0627346bf519n@googlegroups.com>
+References: <46450232-0958-4f83-917e-0627346bf519n@googlegroups.com>
 MIME-Version: 1.0
-From: Akira Ajisaka <aajisaka@apache.org>
-Date: Fri, 4 Oct 2019 10:33:25 +0900
-X-Gmail-Original-Message-ID: <CAP+3qq42G5=pb8CmhTbEhuXpThr7S882-_1pPAPNV0cCc9QW_A@mail.gmail.com>
-Message-ID: <CAP+3qq42G5=pb8CmhTbEhuXpThr7S882-_1pPAPNV0cCc9QW_A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000009b73305940bb4f8"
-Subject: [oss-security] CVE-2018-11768: Apache Hadoop HDFS FSImage Corruption
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_344129_283865812.1719338061769"
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, July
+ 2024
 
---00000000000009b73305940bb4f8
-Content-Type: text/plain; charset="UTF-8"
+------=_Part_344129_283865812.1719338061769
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_344130_607456733.1719338061769"
+
+------=_Part_344130_607456733.1719338061769
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-CVE-2018-11768: HDFS FSImage Corruption
 
 
-Severity: Critical
+---------- Mensagem encaminhada ---------
+De: Rafael Gonzaga <work@rafaelgss.dev>
+Data: ter=C3=A7a-feira, 25 de junho de 2024 =C3=A0s 14:53:37 UTC-3
+Assunto: Node.js security updates for all active release lines, July 2024
+Para: nodejs-sec <nodejs-sec@googlegroups.com>
 
 
-Vendor: The Apache Software Foundation
+The Node.js project will release new versions of all supported release=20
+lines on or shortly after July 2nd, 2024
+For more information see:=20
+https://nodejs.org/en/blog/vulnerability/july-2024-security-releases
 
+------=_Part_344130_607456733.1719338061769
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Versions affected:
+<br /><br /><div><div dir=3D"auto">---------- Mensagem encaminhada --------=
+-<br />De: <span dir=3D"auto">Rafael Gonzaga &lt;work@rafaelgss.dev&gt;</sp=
+an><br />Data: ter=C3=A7a-feira, 25 de junho de 2024 =C3=A0s 14:53:37 UTC-3=
+<br />Assunto: Node.js security updates for all active release lines, July =
+2024<br />Para: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@googlegroups.c=
+om&gt;</span><br /></div><br /><br />The Node.js project will release new v=
+ersions of all supported release lines on or shortly after July 2nd, 2024<b=
+r />For more information see:=C2=A0<a href=3D"https://nodejs.org/en/blog/vu=
+lnerability/july-2024-security-releases" target=3D"_blank" rel=3D"nofollow"=
+>https://nodejs.org/en/blog/vulnerability/july-2024-security-releases</a><b=
+r /></div>=
 
-3.1.0 to 3.1.1, 3.0.0-alpha1 to 3.0.3, 2.9.0 to 2.9.1, 2.0.0-alpha to 2.8.4
+------=_Part_344130_607456733.1719338061769--
 
-
-Description:
-
-There is a mismatch in the size of the fields used to store user/group
-information between memory and disk representation. This causes the
-user/group information to be corrupted across storing in fsimage and
-reading back from fsimage.
-
-
-Mitigation:
-
-Users should upgrade to Apache Hadoop 2.8.5, 2.9.2, 3.1.2 or upper. This
-vulnerability fix contains a fsimage layout change, so once the image is
-saved in the new layout format you cannot go back to a version that doesn=
-=E2=80=99t
-support the newer layout. This means that once 2.7.x users upgraded to the
-fixed version, they cannot downgrade to 2.7.x because there is no fixed
-version in 2.7.x. We suggest downgrade to 2.8.5 or upper version that
-contains the vulnerability fix.
-
-
-Credit:
-
-This issue was discovered by Ekanth Sethuramalingam.
-
---00000000000009b73305940bb4f8--
+------=_Part_344129_283865812.1719338061769--
