@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["13188" "Monday" "1" "May" "2017" "12:05:44" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<600131.444024981-sendEmail@localhost>" "183" "[oss-security] libarchive: two heap-based buffer overflow read" nil nil nil "5" "2017050112:05:44" "[oss-security] libarchive: two heap-based buffer overflow read" (number mark "U       ago@gentoo.o May  1  183/13188 " thread-indent "\"[oss-security] libarchive: two heap-based buffer overflow read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28216 invoked by uid 550); 1 May 2017 12:06:05 -0000
+Received: (qmail 32068 invoked by uid 550); 27 Jun 2024 15:31:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,195 +7,143 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28198 invoked from network); 1 May 2017 12:06:04 -0000
-Message-ID: <600131.444024981-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 12:05:44 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-802118.906824948"
-Subject: [oss-security] libarchive: two heap-based buffer overflow read
+Received: (qmail 30127 invoked from network); 27 Jun 2024 15:31:07 -0000
+Date: Thu, 27 Jun 2024 17:31:02 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240627153102.GA26917@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2024-5535: OpenSSL: SSL_select_next_proto buffer overread
 
-------MIME delimiter for sendEmail-802118.906824948
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+----- Forwarded message from Matt Caswell <matt@openssl.org> -----
 
-Description:
-libarchive is a multi-format archive and compression library.
+Date: Thu, 27 Jun 2024 10:24:27 +0000
+From: Matt Caswell <matt@openssl.org>
+To: openssl-project@openssl.org, openssl-users@openssl.org,
+ openssl-announce@openssl.org
+Subject: OpenSSL Security Advisory
 
-In the 2016 I reported two heap-based buffer over-read to libarchive. They appear to have already been fixed in the trunk when I reported them; here are the details:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-# bsdtar -t -f $FILE
-=================================================================                                                                                                                              
-==27838==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff05 at pc 0x7fad7b060778 bp 0x7ffe35698a10 sp 0x7ffe35698a08                                                      
-READ of size 1 at 0x61500000ff05 thread T0                                                                                                                                                     
-    #0 0x7fad7b060777 in archive_le32dec /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20                                                       
-    #1 0x7fad7b060777 in cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:669                                         
-    #2 0x7fad7b060777 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903                     
-    #3 0x7fad7affa45b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
-    #4 0x7fad7affa100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
-    #5 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
-    #6 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
-    #7 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
-    #8 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #9 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)                                                                                                                                            
-                                                                                                                                                                                               
-0x61500000ff05 is located 5 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)                                                                                              
-allocated by thread T0 here:                                                                                                                                                                   
-    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                       
-    #1 0x7fad7aff5854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17                                            
-    #2 0x7fad7b0db8cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6                           
-    #3 0x7fad7afef670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10                                                           
-    #4 0x7fad7afef670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529                                                         
-    #5 0x7fad7b0162e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10                               
-    #6 0x7fad7b015e8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9                                 
-    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6                                                                                  
-    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
-    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
-    #10 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                       
-                                                                                                                                                                                               
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20 in archive_le32dec
-Shadow bytes around the buggy address:
-  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27838==ABORTING
+OpenSSL Security Advisory [27th June 2024]
+==========================================
 
-Affected version:
-3.2.2
-Fixed version:
-3.3.0
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00105-libarchive-heapoverflow-archive_le32dec
-CVE:
-CVE-2016-10349
+SSL_select_next_proto buffer overread (CVE-2024-5535)
+=====================================================
 
-#############################
+Severity: Low
 
-# bsdtar -t -f $FILE
-==21129==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff00 at pc 0x7fa070bd7827 bp 0x7fffb7183a30 sp 0x7fffb7183a28                                                      
-READ of size 1 at 0x61500000ff00 thread T0                                                                                                                                                     
-    #0 0x7fa070bd7826 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9                   
-    #1 0x7fa070b7145b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
-    #2 0x7fa070b71100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
-    #3 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
-    #4 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
-    #5 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
-    #6 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #7 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)
+Issue summary: Calling the OpenSSL API function SSL_select_next_proto with an
+empty supported client protocols buffer may cause a crash or memory contents to
+be sent to the peer.
 
-0x61500000ff00 is located 0 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)
-allocated by thread T0 here:
-    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7fa070b6c854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17
-    #2 0x7fa070c528cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6
-    #3 0x7fa070b66670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10
-    #4 0x7fa070b66670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529
-    #5 0x7fa070b8d2e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10
-    #6 0x7fa070b8ce8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9
-    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6
-    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2
-    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
-    #10 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+Impact summary: A buffer overread can have a range of potential consequences
+such as unexpected application beahviour or a crash. In particular this issue
+could result in up to 255 bytes of arbitrary private data from memory being sent
+to the peer leading to a loss of confidentiality. However, only applications
+that directly call the SSL_select_next_proto function with a 0 length list of
+supported client protocols are affected by this issue. This would normally never
+be a valid scenario and is typically not under attacker control but may occur by
+accident in the case of a configuration or programming error in the calling
+application.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9 in 
-archive_read_format_cab_read_header
-Shadow bytes around the buggy address:
-  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==21129==ABORTING
+The OpenSSL API function SSL_select_next_proto is typically used by TLS
+applications that support ALPN (Application Layer Protocol Negotiation) or NPN
+(Next Protocol Negotiation). NPN is older, was never standardised and
+is deprecated in favour of ALPN. We believe that ALPN is significantly more
+widely deployed than NPN. The SSL_select_next_proto function accepts a list of
+protocols from the server and a list of protocols from the client and returns
+the first protocol that appears in the server list that also appears in the
+client list. In the case of no overlap between the two lists it returns the
+first item in the client list. In either case it will signal whether an overlap
+between the two lists was found. In the case where SSL_select_next_proto is
+called with a zero length client list it fails to notice this condition and
+returns the memory immediately following the client list pointer (and reports
+that there was no overlap in the lists).
 
-Affected version:
-3.2.2
-Fixed version:
-3.3.0
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00106-libarchive-heapoverflow-archive_read_format_cab_read_header
-CVE:
-CVE-2016-10350
+This function is typically called from a server side application callback for
+ALPN or a client side application callback for NPN. In the case of ALPN the list
+of protocols supplied by the client is guaranteed by libssl to never be zero in
+length. The list of server protocols comes from the application and should never
+normally be expected to be of zero length. In this case if the
+SSL_select_next_proto function has been called as expected (with the list
+supplied by the client passed in the client/client_len parameters), then the
+application will not be vulnerable to this issue. If the application has
+accidentally been configured with a zero length server list, and has
+accidentally passed that zero length server list in the client/client_len
+parameters, and has additionally failed to correctly handle a "no overlap"
+response (which would normally result in a handshake failure in ALPN) then it
+will be vulnerable to this problem.
 
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
+In the case of NPN, the protocol permits the client to opportunistically select
+a protocol when there is no overlap. OpenSSL returns the first client protocol
+in the no overlap case in support of this. The list of client protocols comes
+from the application and should never normally be expected to be of zero length.
+However if the SSL_select_next_proto function is accidentally called with a
+client_len of 0 then an invalid memory pointer will be returned instead. If the
+application uses this output as the opportunistic protocol then the loss of
+confidentiality will occur.
 
-Timeline:
-2016-12-06: bugs discovered and reported to upstream
-2017-05-01: blog post about the issue
-2017-05-01: CVE assigned
+This issue has been assessed as Low severity because applications are most
+likely to be vulnerable if they are using NPN instead of ALPN - but NPN is not
+widely used. It also requires an application configuration or programming error.
+Finally, this issue would not typically be under attacker control making active
+exploitation unlikely.
 
-Note:
-This bug was found with American Fuzzy Lop.
+The FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/01/libarchive-two-heap-based-buffer-overflow-read/
+OpenSSL 3.3, 3.2, 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+OpenSSL 3.3 users should upgrade to OpenSSL 3.3.2 once it is released.
 
+OpenSSL 3.2 users should upgrade to OpenSSL 3.2.3 once it is released.
 
-------MIME delimiter for sendEmail-802118.906824948--
+OpenSSL 3.1 users should upgrade to OpenSSL 3.1.7 once it is released.
 
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.15 once it is released.
+
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1za once it is released
+(premium support customers only).
+
+OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zk once it is released
+(premium support customers only).
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit e86ac436f0 (for 3.3),
+commit 99fb785a5f (for 3.2), commit 4ada436a19 (for 3.1) and commit cf6f91f612
+(for 3.0) in the OpenSSL git repository. It is available to premium support
+customers in commit b78ec0824d (for 1.1.1) and commit 99472514130 for (1.0.2).
+
+This issue was reported on 2nd May 2024 by Joseph Birr-Pixton. Additional
+analysis was provided by David Benjamin (Google). The fix was developed by
+Matt Caswell.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20240627.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmZ9PXcACgkQ2cTSbQ5g
+RJEIfQgAvZAwWKfgrrsYeS2MpgADl2oJXLiKWt02H6r6YqnFV1pyWcBnf2wY3ynC
+68lBa6cifxzr2j44+mpQtMOm+/imho7CFaolJjseB/fU5oCnSqRm5k78KR8FbrwI
+Plt+eajpSwL2NlkKeu48BqcR6JSdq5GzlnEQdD7mBtM67983hN9KJo+Z2AVWBmch
+WX9eWOEn2EX1cUb7L/3N0Q8gSMLskIGK5eM81wGvHkBtDDXp0DHxbLTMsxART8Ly
+0xFoUfbTTyLNfXHlORXtusBjmFrqU5D5WXVagCMOn2ODfUzwXjaC2ZVDlD9lsBUP
+cAREgXKTeGbcFXldAIXxzA2MVASkeg==
+=A6hJ
+-----END PGP SIGNATURE-----
+
+----- End forwarded message -----
