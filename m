@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1630" "Tuesday" "1" "January" "2019" "11:15:40" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20190101111540.20e73fbc@computer>" "43" "[oss-security] wget / chromium: URL metadata and potential password leaks via extended filesystem attributes" "^Date:" nil nil "1" "2019010110:15:40" "[oss-security] wget / chromium: URL metadata and potential password leaks via extended filesystem attributes" (number mark "        hanno@hboeck Jan  1   43/1630  " thread-indent "\"[oss-security] wget / chromium: URL metadata and potential password leaks via extended filesystem attributes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15970 invoked by uid 550); 1 Jan 2019 10:15:54 -0000
+Received: (qmail 7680 invoked by uid 550); 2 Jul 2024 13:08:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +6,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15938 invoked from network); 1 Jan 2019 10:15:54 -0000
-Message-ID: <20190101111540.20e73fbc@computer>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 1 Jan 2019 11:15:40 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] wget / chromium: URL metadata and potential password leaks via
- extended filesystem attributes
-To: oss-security@lists.openwall.com
+Received: (qmail 30049 invoked from network); 1 Jul 2024 23:47:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1719877662;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oXUZUWN22ItAxgFy46SnSSHj+KJJsmQcdR7pzpwYY1E=;
+	b=g0Z0Rn07ytaSt9LpgC3uF5LVDIJWLPAiYLOzVPHMe/Nuw28zZ/nxzujsi0D31DiWOnr+up
+	/TaiTLkt7UwycYusPmZAn40iQt4i40jI0pBEwv6+PF/xxYows8xIuQKi2I+NzLSiZJfque
+	spm914EmNO8VqodF6GTln1TIP5+xll/rrztJp5nEq9OWPRhedJ0Y+blufaqtpfoS+/d+vk
+	ch5FAoumIfZPVP536hvUa2S+SjP83xEr/yl2wF2bwXPr4VN6V1tuTOUCOcKgqXNde5CVUr
+	AG1ZFbyGxs9jpyGKDlcMVekaWzFd2/XlcXcg1MYJStTxxSIe/jwHQr+rKXPgBQ==
+Date: Tue, 2 Jul 2024 08:47:22 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Damien Miller <djm@cvs.openbsd.org>, oss-security@lists.openwall.com
+Message-ID: <ZoNACurP_90GPyp5@codewreck.org>
+References: <d2ed9e542682bf82@cvs.openbsd.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d2ed9e542682bf82@cvs.openbsd.org>
+Subject: Re: [oss-security] Announce: OpenSSH 9.8 released
 
-Hi,
+Damien Miller wrote on Mon, Jul 01, 2024 at 02:10:04AM -0600:
+> OpenSSH 9.8 has just been released. It will be available from the
+> mirrors listed at https://www.openssh.com/ shortly.
 
-Via some twitter discussions [1] I recently learned about a worrying
-behavior of wget and Chromium / Chrome.
+Thanks for all the work towards this release.
 
-The URL of downloads gets stored via filesystem attributes on systems
-that support Unix extended attributes.
+Just a paperwork question as I couldn't find the information anywhere,
+was there any CVE assigned to the 2nd security issue?
 
-You can see these attributes on Linux systems by running
-getfattr -d [filename]
-(The download URL is stored in a variable "user.xdg.origin.url")
+I'm asking because I tried updating the alpine package[1], and given the
+first issue is a slightly different problem on musl it probably needs a
+different label than CVE-2024-6387 ; I'm honestly still not quite sure
+how all this works after all these years but at the very least a search
+on cve.mitre.org[2] didn't turn up anything, so I assume redhat (who
+issued the first CVE) didn't process the second problem?
 
-This is worrying for a number of reasons:
-* In combination with HTTP authentication a username and password can
-  be part of the URL (HTTP authentication can be accessed via an URL of
-  the form https://[username]:[password]@[hostname]/).
-* Sometimes URLs may contain secret tokens, e.g. private file shares on
-  a file hosting service.
-* In general storing metadata at unexpected places should be avoided.
+(although to be fair the non-safety is still a problem on alpine, so
+that CVE might still apply, it's just no longer a free/malloc race with
+syslog but something that hasn't been studied as extensively... labeling
+is hard.)
 
-What's limiting this issue a bit is that tar does not by default store
-these extended attributes. I haven't tested other archiving tools.
+[1] https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/68482#note_417509
+[2] https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=openssh
 
-wget has released an update (1.20.1) and CVE-2018-20483 got assigned
-[2]. It changes the default behavior: extended attributes only get
-stored if a user explicitly enables it with a parameter. I believe this
-is a good solution.
+Damien Miller wrote on Mon, Jul 01, 2024 at 02:10:04AM -0600:
+> 1) Race condition in sshd(8)
 
-It's been reported to Chrome as well. (Currently private bug report,
-but given this was already discussed on Twitter I don't think this
-needs to be kept confidential.)
+Looking at other announces I assume CVE-2024-6387 is specific to this.
 
-It may be worthwhile checking if other tools share this behavior.
+> 2) Logic error in ssh(1) ObscureKeystrokeTiming
 
-[1] https://twitter.com/gynvael/status/1077671412847046657
-[2] https://lists.gnu.org/archive/html/bug-wget/2018-12/msg00034.html
+I couldn't find anything on this one.
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Thanks,
+-- 
+Dominique Martinet | Asmadeus
