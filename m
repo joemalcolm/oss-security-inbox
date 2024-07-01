@@ -1,4 +1,4 @@
-Received: (qmail 29902 invoked by uid 550); 27 Jan 2026 20:01:09 -0000
+Received: (qmail 5770 invoked by uid 550); 1 Jul 2024 13:56:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,37 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29863 invoked from network); 27 Jan 2026 20:01:08 -0000
-Date: Tue, 27 Jan 2026 15:00:59 -0500
-From: Jan Schaumann <jschauma@netmeister.org>
+Received: (qmail 7477 invoked from network); 1 Jul 2024 12:47:38 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <aXkZe4SPTxXKAUGX@netmeister.org>
-References: <87343rqa3o.fsf@gentoo.org>
+Message-ID: <c59b9c19-6b04-b13f-c267-47c41b28724f@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 01 Jul 2024 12:42:30 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87343rqa3o.fsf@gentoo.org>
-Subject: Re: [oss-security] GnuPG security release
+Subject: [oss-security] CVE-2024-38476: Apache HTTP Server may use exploitable/malicious
+ backend application output to run local handlers via internal redirect 
 
-Sam James <sam@gentoo.org> wrote:
+Severity: important
 
-> > A crafted CMS (S/MIME) EnvelopedData message carrying an oversized
-> > wrapped session key can cause a stack buffer overflow in gpg-agent
-> > during the PKDECRYPT--kem=CMS handling. This can easily be used for a
-> > DoS but, worse, the memory corruption can very likley also be used to
-> > mount a remote code execution attack.
-> >
-> > A CVE-id has not been assigned. We track this bug as T8044 under
-> > https://dev.gnupg.org/T8044. This vulnerability was discovered by:
-> > OpenAI Security Research. Their report was received on 2026-01-18;
+Affected versions:
 
-This vulnerability sounds very similar to the just
-announced OpenSSL vulnerability CVE-2025-15467.  That
-vulnerability was noted as having been discovered
-Stanislav Fort (Aisle Research).
+- Apache HTTP Server 2.4.0 through 2.4.59
 
-Is it a coincident that these two issues were detected
-shortly after one another by different parties?
+Description:
 
--Jan
+Vulnerability in core of Apache HTTP Server 2.4.59 and earlier are vulnerab=
+ly to information disclosure, SSRF or local script execution via=C2=A0backe=
+nd applications whose response headers are malicious or exploitable.
+
+Users are recommended to upgrade to version 2.4.60, which fixes this issue.
+
+Credit:
+
+Orange Tsai (@orange_8361) from DEVCORE (finder)
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-38476
+
+Timeline:
+
+2024-04-01: reported
+
