@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["361" "Thursday" "28" "April" "2016" "16:20:08" "+0800" "das das" "scusec2010@gmail.com" "<CAAjTPb8nHfmXkq2nCG8d++73O2ecAY31gOt4Wu=x_JPj91E6ig@mail.gmail.com>" "8" "Re: [oss-security] CVE request:SQL injection in TeamPass" nil nil nil "4" "2016042808:20:08" "[oss-security] CVE request:SQL injection in TeamPass" (number mark "U       scusec2010@g Apr 28    8/361   " thread-indent "\"Re: [oss-security] CVE request:SQL injection in TeamPass\"\n") "<CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>" ("<CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22039 invoked by uid 550); 28 Apr 2016 08:32:00 -0000
+Received: (qmail 17794 invoked by uid 550); 2 Jul 2024 15:01:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +7,161 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6018 invoked from network); 28 Apr 2016 08:20:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=wT/F0hIBo6mhjnWMUVo6Ugq/mGhyKsf3EKZkxujifTQ=;
-        b=W+JhN8v7nPdNbFGmg9Lh1Y/6Q6lUMnrPmJEETcYeGT8LP7uS9CaT2inks27dREhKVC
-         0Hg7YYFiTJkn+liA0nfPcZj6oS3dOCL6bhRczGeCB7/0CLZ9RF3jlNFOXE+2gQ6SxF2k
-         t0P8FQe/KPuU8VsLxDDM/cwKm0MmTY9bVN62UpiE4ZOb/pHLS2HISmrowpfIuSlm55cV
-         45HsNCrYZGlGUfYPjRZ4NIdC6mndEHIVWO43NxEYKnkMbEDgB3n32Jcko6OIjnv/bA/W
-         fT7Y60PmtN4+PRe9O+sWNwa6IscSeiBi2MuFLvdM3AppDbhX4YbLUao6B6r2T2CFGFk2
-         a4Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=wT/F0hIBo6mhjnWMUVo6Ugq/mGhyKsf3EKZkxujifTQ=;
-        b=OMVmqyOW3gPnUd63GrVFF25eh14lQJBKy5oQpcsiiaqCQ26A8BCBkCS7LoRzh8uYSS
-         Jos4A3poMe601JBEClolloJC46nFRFDONqz0WIFdHAS9lBA0OpXlDPzUvC1CWgvNbq7d
-         OfL9EP6XJXc+BTEBCK+r2TDHt7I342P5yIJen7+qRoXIlebr15Vf6QY6HAry9OqCs1xw
-         8n3eKF7RBDHDoZ5sMBOX2mi3ceuzf/qYEfcrGMP2x2kuNnHNlUMn0ADK7K0wa32jqe3v
-         /vM1aMMIPW23RG8Lghj6nsVsQXWb7z9PW+6ta/8IRao03fNnjgpWc+LL5oxEMAfyIEc7
-         AqPw==
-X-Gm-Message-State: AOPr4FVzwsPa18FaXZ8fcLwzhu3UgLMMIExqEIXAIkYFmArn/BLs8Sjg1bEvve6FThj7M1t7YFWjXjDeHXXj2g==
-MIME-Version: 1.0
-X-Received: by 10.157.33.76 with SMTP id l12mr5720237otd.32.1461831608388;
- Thu, 28 Apr 2016 01:20:08 -0700 (PDT)
-Date: Thu, 28 Apr 2016 16:20:08 +0800
-Message-ID: <CAAjTPb8nHfmXkq2nCG8d++73O2ecAY31gOt4Wu=x_JPj91E6ig@mail.gmail.com>
-In-Reply-To: <CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>
-From: das das <scusec2010@gmail.com>
+Received: (qmail 17755 invoked from network); 2 Jul 2024 15:01:31 -0000
+Date: Tue, 2 Jul 2024 15:01:21 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] CVE request:SQL injection in TeamPass
+Message-ID: <20240702150121.fxt4445gwlrxwk3r@yuggoth.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hryna5gby4w6a6ts"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2024-001] OpenStack Cinder, Glance, Nova: Arbitrary file
+ access through custom QCOW2 external data (CVE-2024-32498)
 
-I sent you an email about the vulnerability found in Teampass,
-http://www.openwall.com/lists/oss-security/2016/04/14/1
+--hryna5gby4w6a6ts
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-however,I haven't received any reply yet.Does cve still accept such
-vulnerabilities in Teampass?Because There are some Teampass
-vulnerabilities witch are found latey,and I don't know whether they
-should be submitted.
-Waiting for your reply.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2024-001: Arbitrary file access through custom QCOW2 external data
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+:Date: July 02, 2024
+:CVE: CVE-2024-32498
+
+
+Affects
+~~~~~~~
+- Cinder: <22.1.3, >=3D23.0.0 <23.1.1, =3D=3D24.0.0
+- Glance: <26.0.1, =3D=3D27.0.0, >=3D28.0.0 <28.0.2
+- Nova: <27.3.1, >=3D28.0.0 <28.1.1, >=3D29.0.0 <29.0.3
+
+
+Description
+~~~~~~~~~~~
+Martin Kaesberger reported a vulnerability in QCOW2 image processing
+for Cinder, Glance and Nova. By supplying a specially created QCOW2
+image which references a specific data file path, an authenticated
+user may convince systems to return a copy of that file's contents
+from the server resulting in unauthorized access to potentially
+sensitive data. All Cinder deployments are affected; only Glance
+deployments with image conversion enabled are affected; all Nova
+deployments are affected.
+
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/923247 (2023.1/antelope(cinder))
+- https://review.opendev.org/923277 (2023.1/antelope(glance))
+- https://review.opendev.org/923278 (2023.1/antelope(glance))
+- https://review.opendev.org/923279 (2023.1/antelope(glance))
+- https://review.opendev.org/923280 (2023.1/antelope(glance))
+- https://review.opendev.org/923281 (2023.1/antelope(glance))
+- https://review.opendev.org/923282 (2023.1/antelope(glance))
+- https://review.opendev.org/923283 (2023.1/antelope(glance))
+- https://review.opendev.org/923288 (2023.1/antelope(nova))
+- https://review.opendev.org/923289 (2023.1/antelope(nova))
+- https://review.opendev.org/923290 (2023.1/antelope(nova))
+- https://review.opendev.org/923281 (2023.1/antelope(nova))
+- https://review.opendev.org/923246 (2023.2/bobcat(cinder))
+- https://review.opendev.org/923266 (2023.2/bobcat(glance))
+- https://review.opendev.org/923267 (2023.2/bobcat(glance))
+- https://review.opendev.org/923268 (2023.2/bobcat(glance))
+- https://review.opendev.org/923269 (2023.2/bobcat(glance))
+- https://review.opendev.org/923270 (2023.2/bobcat(glance))
+- https://review.opendev.org/923271 (2023.2/bobcat(glance))
+- https://review.opendev.org/923272 (2023.2/bobcat(glance))
+- https://review.opendev.org/923284 (2023.2/bobcat(nova))
+- https://review.opendev.org/923285 (2023.2/bobcat(nova))
+- https://review.opendev.org/923286 (2023.2/bobcat(nova))
+- https://review.opendev.org/923287 (2023.2/bobcat(nova))
+- https://review.opendev.org/923245 (2024.1/caracal(cinder))
+- https://review.opendev.org/923259 (2024.1/caracal(glance))
+- https://review.opendev.org/923260 (2024.1/caracal(glance))
+- https://review.opendev.org/923261 (2024.1/caracal(glance))
+- https://review.opendev.org/923262 (2024.1/caracal(glance))
+- https://review.opendev.org/923263 (2024.1/caracal(glance))
+- https://review.opendev.org/923264 (2024.1/caracal(glance))
+- https://review.opendev.org/923265 (2024.1/caracal(glance))
+- https://review.opendev.org/923273 (2024.1/caracal(nova))
+- https://review.opendev.org/923274 (2024.1/caracal(nova))
+- https://review.opendev.org/923275 (2024.1/caracal(nova))
+- https://review.opendev.org/923276 (2024.1/caracal(nova))
+- https://review.opendev.org/923244 (2024.2/dalmatian(cinder))
+- https://review.opendev.org/923248 (2024.2/dalmatian(glance))
+- https://review.opendev.org/923249 (2024.2/dalmatian(glance))
+- https://review.opendev.org/923250 (2024.2/dalmatian(glance))
+- https://review.opendev.org/923251 (2024.2/dalmatian(glance))
+- https://review.opendev.org/923252 (2024.2/dalmatian(glance))
+- https://review.opendev.org/923253 (2024.2/dalmatian(glance))
+- https://review.opendev.org/923254 (2024.2/dalmatian(glance))
+- https://review.opendev.org/923255 (2024.2/dalmatian(nova))
+- https://review.opendev.org/923256 (2024.2/dalmatian(nova))
+- https://review.opendev.org/923257 (2024.2/dalmatian(nova))
+- https://review.opendev.org/923258 (2024.2/dalmatian(nova))
+
+
+Credits
+~~~~~~~
+- Martin Kaesberger (CVE-2024-32498)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2059809
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2024-32498
+
+
+Notes
+~~~~~
+- Due to the scope of the problem and complexity of the resulting
+  fixes, regressions and additional bypasses were reported in the
+  original bug by downstream stakeholders during the coordinated
+  disclosure period. As a result, our initially chosen publication
+  date was rescheduled, which put the advisory four days past our
+  promised ninety day maximum embargo length. Additional revised
+  patches and regression fixes were supplied to stakeholders as soon
+  as possible, but we understand the unfortunate timing of these
+  last-minute changes resulted in a lot of additional work for
+  everyone involved.
+
+--=20
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+--hryna5gby4w6a6ts
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmaEFkFfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCnqjA//TfeF9vC3XWvntu7B/32G8ZhrLBvuNITg9C+HMUXUUuEb0DVEUgL8264n
+MTlJVYCnk4oztLE6vwqa9034CefInE+4UTBr+xxHfBNxqnxfYOKWdpoatEXy0Vi5
+EpbDwiiCRIoHPbAPvJFLMr7vE9m3Qo2DcyEU62onBRnOMCUMVpH/Sis+YsMOShxy
+cNUC+3YjdjOpvMHhN4ybGQOv5Dy5JkJ02opvMNmy8aV8b+sCs0tOhbGfdlgEqqLq
+pKvqG9sv168DZhQLbJrKa55wlo6gh2SboGZywS1n382M/apYNIC7duwu9l2P4KMy
+gkPIE71yVeoEzDmVhUt/1TFag7ZSK6y6CrozEnfB6WWQ7nrSRNtwz9FyOiI3fB9m
+Eo0g4Ai43JQWX0jRx6G9SYmhvlG5Js4sQ7iwtVbsCzf1dZVwWt1iLNeMTeJo8U+2
+Nt18n0ZNnODqWsfGl8OD64ylUeni8j9KW3UROfokYvAqBkZbqaHgQOD/PcAKFoKW
+WuOGU1okdQNX7yEk+IBXzyiRj4H2ml/jtwoy0L4Vovy3OZQiMdrV3KNOad8DVrtx
+PvuBO/GdOP64QBi38p9atoaeHJDrU53R5yYEv6dU/qjmAuzJ2cNqt57u68bDduze
+PfVkYsTWFOwKVpbsNT4SDuBhO0hs7GcCIDKZgqBN0l7yVx0lMVk=
+=idBF
+-----END PGP SIGNATURE-----
+
+--hryna5gby4w6a6ts--
