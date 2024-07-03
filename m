@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["891" "Friday" "20" "March" "2015" "08:54:29" "-0700" "Anthony Liguori" "anthony@codemonkey.ws" "<CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>" "22" "Re: [oss-security] membership request to the closed linux-distros security mailing list" nil nil nil "3" "2015032015:54:29" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        anthony@code Mar 20   22/891   " thread-indent "\"Re: [oss-security] membership request to the closed linux-distros security mailing list\"\n") "<20150320155026.GF3718@symphytum.spacehopper.org>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>" "<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>" "<20150320155026.GF3718@symphytum.spacehopper.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19717 invoked by uid 550); 20 Mar 2015 15:54:41 -0000
+Received: (qmail 18116 invoked by uid 550); 3 Jul 2024 17:37:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19695 invoked from network); 20 Mar 2015 15:54:40 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=YYIBXjuWPAirXhbxBz7g2qOomiH99VlpfuFbxEVHHGg=;
-        b=g/TRVpsgmmZIEF0MuKOafGUx+129SoJHF5hyMF9cZ+TePSy7hdTgCqiHcrUPjxYseG
-         WBEQvamBONCl5lgCMN/VgAbJXD41obULX2loOjJyVfrXBVMpPz8PhWqXNATMVp7lVg9F
-         rCGoP+o/JUvb+Gv9oTZR6mumSjkT0bibdiUROnR3yLEpFUQPa5wdsj2alKpVC7has9L0
-         oLtvBCmTD2aMxrC7zgH2ERJjMq5IsUfhqSnWArDWnnQW0I0KhqEhb+8YpvFMPyA+N9zH
-         T6+jGaLAUJQZQWq3h5RKQVPWCNNh1GUzxrPReKxliwAaalYvLvh/RWB0vydWCY92H5pe
-         4Iug==
-X-Gm-Message-State: ALoCoQmgFN2nNW92xYBpxGPwJcDIJkKj385GlLvOuwCastEFTxI9vmeIThw9X2nqjjDKx/lnyBdh
-MIME-Version: 1.0
-X-Received: by 10.140.150.19 with SMTP id 19mr57560280qhw.69.1426866869265;
- Fri, 20 Mar 2015 08:54:29 -0700 (PDT)
-In-Reply-To: <20150320155026.GF3718@symphytum.spacehopper.org>
-References: <550C19ED.9030901@enea.com>
-	<20150320145413.GA10416@openwall.com>
-	<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>
-	<20150320155026.GF3718@symphytum.spacehopper.org>
-Message-ID: <CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 20 Mar 2015 08:54:29 -0700
-From: Anthony Liguori <anthony@codemonkey.ws>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] membership request to the closed linux-distros
- security mailing list
+Received: (qmail 3798 invoked from network); 3 Jul 2024 16:18:47 -0000
+Message-ID: <5a4f0d9d-7bbf-489d-bac2-ed5789105882@linuxlounge.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxlounge.net;
+	s=mail; t=1720023518;
+	bh=YtO6bpverdwuJ4IkVhlJIld2F658IFrD5MskqFfetfo=;
+	h=Date:To:From:Subject;
+	b=tCcAwmxP0a73cCgHZGn1YbJT50ncVtuGoG+v62t14oux0FXYC+yMT0XPDwaLn8SON
+	 dIv85MhhlbiU1BnalXSmpfcmNst96Zyum3dtXquKOXfxbO2nZb7qmURrtmPmtJiy/4
+	 y1YWlULtIto/emWRGgDGc+SL6Q7HjCcnNWiwA8vk=
+Date: Wed, 3 Jul 2024 18:18:36 +0200
+MIME-Version: 1.0
 To: oss-security@lists.openwall.com
+Content-Language: en-US
+From: Martin Weinelt <martin@linuxlounge.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2024-39844: ZNC modtcl RCE
 
-On Fri, Mar 20, 2015 at 8:50 AM, Stuart Henderson <stu@spacehopper.org> wrote:
-> On 2015/03/20 08:16, Anthony Liguori wrote:
->>
->> I think the alternative is to formalize what already appears to be the
->> existing practice: disclose distros@ on the existence of a
->> vulnerability but require direct contact for the details of the
->> vulnerability if the submitter/upstream thinks the impact is high.
->
-> Are private lists even needed if this policy is taken?
+Hi,
 
-I think there's a lot of value in being able to just send a low-medium
-impact issue to a single list of groups that have gone through some
-level of vetting without needing to respond directly to individuals
-and making value judgements.
+ZNC before 1.9.1 has a remote code execution vulnerability in its modtcl 
+module, that can for example be triggered through a prepared kick message
 
-I also think it's helpful to have a single point of contact so that an
-upstream isn't dealing with 10 different people from a single
-organization asking for details.
+https://wiki.znc.in/ChangeLog/1.9.1
 
-Regards,
 
-Anthony Liguori
+Alternatively the following patch needs to be applied to mitigate this 
+vulnerability:
+
+https://github.com/znc/znc/commit/8cbf8d628174ddf23da680f3f117dc54da0eb06e
+
+
+The vulnerability was discovered and reported by Johannes Kuhn 
+(DasBrain). The patch was created by glguy.
+
+
+---
+
+Martin
