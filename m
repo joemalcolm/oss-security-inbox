@@ -1,4 +1,4 @@
-Received: (qmail 30239 invoked by uid 550); 8 May 2026 01:34:14 -0000
+Received: (qmail 15812 invoked by uid 550); 3 Jul 2024 15:31:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,63 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20023 invoked from network); 8 May 2026 01:24:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=benhays.org; s=MBO0001;
-	t=1778203462;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dLyHSi+AkVfiAWL7tR3TNaQdOn8+gsTltBEe1FOgHgo=;
-	b=aczz9fTTgj5REe/M4vJOIEtBGI8YwfVUpvXVkRZuz644tc3ipeAkAl56eaH5NXNGYhcAcm
-	AqKc6zSZxp9BwYzPVysU/cTlH7yZUlBBYWHWbfQddhHB1PcThzenwoF/oPymy5bzkSk2Ch
-	eYwvUdDMo3A6q70Fy+thPI3dBnkyp0E9OTeNZ+moUVAA8NwBmSSXMWI1L1U9rDol7ygSbm
-	7HJ3D4Cu2Gn3CAVG+8cpp0nYs+Se4KTkJ+3LNyrSvYC2hPOAqvvHROiH/eKD8oNIG0zrQl
-	X6hSKxHFTDSpWr8+jx9opFnjwApLeG1SpeBpLNVx5k/uBGewwZ5sQrJV5f92pA==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of ben@benhays.org designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=ben@benhays.org
-Message-ID: <d9038011-c2e9-407c-b28b-8461e995df1f@benhays.org>
-Date: Thu, 7 May 2026 21:24:18 -0400
-MIME-Version: 1.0
+Received: (qmail 24173 invoked from network); 3 Jul 2024 15:14:16 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
 To: oss-security@lists.openwall.com
-References: <CAMrV8J7FfiB0ptMZFU+EKdRt1NPgtTe_YJWPFw7AQdB-vAQ75w@mail.gmail.com>
- <2b8f2e56-15be-4732-baf5-7a3df4f8a1fe@gmail.com>
- <20260507174811.GA4838@openwall.com>
- <6e6f95c6-3880-4b11-858b-82c47d991d3f@kernel.dk>
-Content-Language: en-US
-From: Benjamin Hays <ben@benhays.org>
-Cc: axboe@kernel.dk
-In-Reply-To: <6e6f95c6-3880-4b11-858b-82c47d991d3f@kernel.dk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Re: CVE request: io_uring zcrx freelist OOB write
+Message-ID: <2916fda0-53ca-aa0a-8f20-068d72e55233@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 03 Jul 2024 15:09:30 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-39884: Apache HTTP Server: source code disclosure with
+ handlers configured via AddType 
 
-On 5/7/26 18:28, Jens Axboe wrote:
-> I won't comment too much on this to avoid offending anyone, but I'm a
-> bit puzzled by:
->
-> "Once we have the address of modprobe_path (from KASLR step above), we
-> write our script path via /proc/sys/kernel/modprobe: c
->
-> int fd = open("/proc/sys/kernel/modprobe", O_WRONLY);
-> write(fd, "/var/tmp/evil.sh", 16);
->
-> This sysctl entry writes directly into modprobe_path in kernel memory
-> and is writable with CAP_SYS_ADMIN, which we already have via
-> CAP_NET_ADMIN on container configurations that grant both."
->
-> as surely the point of a local exploit is, in fact, to gain root in the
-> first place. If you already have CAP_SYS_ADMIN, what is the point?
->
-> But hey, someone wrote a blog post about something that sounds
-> dangerous.
+Severity: important
 
-I'm not the original author of the blog post, so I can't speak for their 
-intent; however, I imagine the impact for the proposed scenario would a 
-container escape of some kind? It's not exactly uncommon to see 
-containers with lax permissions such as the above, given under the 
-assumption that the underlying containerization technologies will 
-provide a sufficient level of security.
+Affected versions:
+
+- Apache HTTP Server 2.4.60
+
+Description:
+
+A regression in the core of Apache HTTP Server 2.4.60 ignores some use of t=
+he legacy content-type based configuration of handlers.=C2=A0 =C2=A0"AddTyp=
+e" and similar configuration, under some circumstances where files are requ=
+ested indirectly, result in source code disclosure of local content. For ex=
+ample, PHP scripts may be served instead of interpreted.
+
+Users are recommended to upgrade to version 2.4.61, which fixes this issue.
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-39884
+
+Timeline:
+
+2024-07-01: reported
 
