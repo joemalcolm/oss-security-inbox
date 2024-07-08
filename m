@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1756" "Monday" "24" "October" "2016" "11:14:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161024151435.03B366C55E7@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream" nil nil nil "10" "2016102415:14:35" "[oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream" (number mark "U       cve-assign@m Oct 24   44/1756  " thread-indent "\"[oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream\"\n") "<alpine.LFD.2.20.1610241602370.6422@wniryva>" ("<alpine.LFD.2.20.1610241602370.6422@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1796 invoked by uid 550); 24 Oct 2016 15:14:47 -0000
+Received: (qmail 16293 invoked by uid 550); 8 Jul 2024 20:15:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1778 invoked from network); 24 Oct 2016 15:14:46 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, psirt@huawei.com
-In-Reply-To: <alpine.LFD.2.20.1610241602370.6422@wniryva>
-Message-Id: <20161024151435.03B366C55E7@smtpvmsrv1.mitre.org>
-Date: Mon, 24 Oct 2016 11:14:35 -0400 (EDT)
-Subject: [oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream
+Received: (qmail 16275 invoked from network); 8 Jul 2024 20:15:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=dwheeler.com; s=selector2; h=Message-Id:In-Reply-To:To:References:Date:
+	Subject:Mime-Version:Content-Transfer-Encoding:Content-Type:From;
+	bh=iHUlsyVLuoHsdgsBWbgwgHe1/ZAoquiHPRC401qgx2c=; b=VSe5s8ZdFUAHt16CQAoMPxNrSy
+	/jUpQrq3qKHhxrU0wnvseU9pr3nRlUR+BBl+6v+I9VtuDv/xFnye3GOOIjJgCXXxLYL5mKDfV5qzh
+	7OiswsiHXJdaqkVCx01o2cxJe6rF7HxjA5JwAQcjpprCzuO6VaSdbETFJjzGJUxmXhno38HXhcftT
+	KAmumScgz96InCfIZXdhagyxnDD9neGxyo514hpprz9rGm/ATLDdi1+mbf38/ohWf1I5wgjqo3C1k
+	00YR+xo6E+he60Pd+ndB49mn0kAeHFKle3FI+KEdRK0d0P7ck78zkZWDRCFzbBbQr1UzWsgtlO+31
+	PfQfRi8Q==;
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6.1.1\))
+Date: Mon, 8 Jul 2024 16:14:40 -0400
+References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
+ <87y16bdc9p.fsf@oldenburg.str.redhat.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <87y16bdc9p.fsf@oldenburg.str.redhat.com>
+Message-Id: <D52A947C-0AEC-4310-B2C5-519BBE46037C@dwheeler.com>
+X-Mailer: Apple Mail (2.3731.700.6.1.1)
+Subject: Re: [oss-security] ASLRn't is still alive and well on x86 kernels,
+ despite CVE-2024-26621 patch
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> * Will Dormann:
+> - Modern (e.g. 6.x kernel) x86 platforms load a large-enough libc at
+>>   the same address every time. (i.e. no practical ASLR -- "ASLRn't")
 
-> Quick Emulator(Qemu) built with the Intel HDA controller emulation support is
-> vulnerable to an infinite loop issue. It could occur while processing the DMA
-> buffer stream while doing data transfer in 'intel_hda_xfer'.
-> 
-> A privileged user inside guest could use this flaw to consume excessive CPU
-> cycles on the host, resulting in DoS.
+For clarity, I'm going use the term "x86_32" to clarify that we're talking =
+about
+32-bit architectures & *excluding* the far-more-common 64-bit case.
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg04717.html
+> On Jul 8, 2024, at 1:28 PM, Florian Weimer <fweimer@redhat.com> wrote:
+> Please note that current glibc is not large enough to benefit from 2 MiB
+> hugepages because all load segments are smaller than 2 MiB, so it's just
+> not possible to use hugepages for libc.so.6.  This is with the default
+> -z separate-code in current binutils.  Even with -z noseparate-code, the
+> large readable-executable load segment is still a bit less than 2 MiB.
+> Unfortunately the kernel does not know this when we reserve the address
+> space for the entirety of libc.so.6.
 
->> If this
->> length and buffer pointer were to be same, 'copy' could be
->> set to zero(0), leading to an infinite loop.
+So clearly there needs to be a way to provide this information :-).
 
-Use CVE-2016-8909.
+> The kernel should not apply hugepage optimizations to mappings created
+> with MAP_DENYWRITE.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/audio/intel-hda.c but
-that may be an expected place for a later update.
+Shouldn't that be MAP_EXECUTABLE, not MAP_DENYWRITE?
+If you use MAP_DENYWRITE,
+a program that mmaps in a large non-code dataset won't have hugepage
+optimizations applied, which might be a significant performance regression.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Also, the mmap man page:
+https://man7.org/linux/man-pages/man2/mmap.2.html
+says that  MAP_EXECUTABLE and MAP_DENYWRITE are ignored.
+There's a risk that some programs are taking that to heart & not using thos=
+e flags
+even when they should. If one of those flags *will* have an effect now, the=
+n it'd be a good idea
+to document that :-).
 
-iQIcBAEBCAAGBQJYDiS2AAoJEHb/MwWLVhi2EdIP/13s4aqAkXD/OaxOK3qRouWo
-ONcmv+2QlJXZfy6Jm42tkh9Piw0GdGtaPbdGi6lWdE+skngIqsQn9agnQHNh3DZg
-YE0hU7meNnfXuGKJZZ2sQlKJtT5kfcoFYv0V0D9OL+EOkd5Aul+cUrw/dXHrUvag
-WUO2o2VwLfCnKKC7j8Y1lEDxfuy5uN8Wf312pvDusyEPKWfJ+JYRsmF2uCOSWgTg
-VxjHCDyMsvUTmqIVblfo+oVHD8u3yqONAPfX7Q/UeIk3QDo7sXT1qVCbt7dOAhJA
-9ieYKuDy7XKDoyQOCZIiOnfdV4Lz9FMVjZThDnrtD4hpoe79U7lV0RJGl0cXYg2o
-tWxz7QGJj3bPoxTDVFU/5CqfuD5/p00HDEhbz55FrPva2UTnddIYQ4Aqt5KZp55v
-D1G7GtnLnw+YxD4KJ81cTeCvArAg3mtTij2H3skhJ2xrxsN94CgvhhjxRqjCaUHJ
-1XDjVPJSuRHpV3kAApRGYuRC2oq8KzgeAMyYuRom8DbBlBIWcmoF1npwYY+Umv5+
-B384U55gEqpplZspdxEoJgQQIj/x1PdmEpJ0EE8Qsx3+FhN0OtmFHhLuwPNdWir0
-gKXY9Z/Jgdg+g6COXB6Tb0T7bNTVdUNfcx3+GyxamgpXfnnkTS38fSNg9QOCcv3X
-56I0ORxCBj7wQTmT5UFB
-=5rof
------END PGP SIGNATURE-----
+--- David A. Wheeler
+
