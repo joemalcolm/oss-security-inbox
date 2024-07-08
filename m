@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1835" "Monday" "14" "December" "2015" "16:37:45" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151214213745.7C3376C0176@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path" nil nil nil "12" "2015121421:37:45" "[oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path" (number mark "U       cve-assign@m Dec 14   44/1835  " thread-indent "\"[oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path\"\n") "<20151214150939.3f80b012@redhat.com>" ("<20151214150939.3f80b012@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1894 invoked by uid 550); 14 Dec 2015 21:37:57 -0000
+Received: (qmail 7263 invoked by uid 550); 8 Jul 2024 16:21:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,504 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1827 invoked from network); 14 Dec 2015 21:37:56 -0000
-From: cve-assign@mitre.org
-To: scorneli@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20151214150939.3f80b012@redhat.com>
-Message-Id: <20151214213745.7C3376C0176@smtpvmsrv1.mitre.org>
-Date: Mon, 14 Dec 2015 16:37:45 -0500 (EST)
-Subject: [oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path
+Received: (qmail 5928 invoked from network); 8 Jul 2024 16:21:12 -0000
+Date: Mon, 8 Jul 2024 18:21:06 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Qualys Security Advisory <qsa@qualys.com>
+Message-ID: <20240708162106.GA4920@openwall.com>
+References: <20240701083838.GA12787@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240701083838.GA12787@localhost.localdomain>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on glibc-based Linux systems
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> http://seclists.org/fulldisclosure/2015/Oct/4
-> https://bugzilla.redhat.com/show_bug.cgi?id=1276321
+Today is the coordinated release date to publicly disclose a related
+issue I found during review of Qualys' findings, with further analysis
+by Qualys.  My summary is:
 
-Use CVE-2015-8557.
+CVE-2024-6409: OpenSSH: Possible remote code execution in privsep child
+due to a race condition in signal handling
 
+OpenSSH versions 8.7 and 8.8 and the corresponding portable releases
+call cleanup_exit() from grace_alarm_handler() when running in the
+privsep child process.  cleanup_exit() was not meant to be called from a
+signal handler and may call other async-signal-unsafe functions.  The
+current understanding is that in those upstream versions cleanup_exit()
+would not actually call async-signal-unsafe functions under those
+conditions, but with downstream distribution patches it sometimes does.
+Specifically, openssh-7.6p1-audit.patch found in Red Hat's package of
+OpenSSH adds code to cleanup_exit() that exposes the issue.  Relevantly,
+this patch is found in RHEL 9 (and its rebuild/downstream
+distributions), where the package is based on OpenSSH 8.7p1.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1276321#c2
-> python-pygments-2.0.2-3.fc23 has been pushed to the Fedora 23 stable repository
+The audit patch is also found in Fedora, so the package versions that
+were based on 8.7p1 and 8.8p1 are affected.  Per change log, it appears
+that out of Fedora releases only 36 and 37 were affected, as well as
+some updates maybe starting with those for 35 and until those for 37.
+These versions are now end-of-life, and Fedora 38+ has moved to newer
+upstream OpenSSH that doesn't make the problematic cleanup_exit() call.
+
+The main difference from CVE-2024-6387 is that the race condition and
+RCE potential are triggered in the privsep child process, which runs
+with reduced privileges compared to the parent server process.  So
+immediate impact is lower.  However, there may be differences in
+exploitability of these vulnerabilities in a particular scenario, which
+could make either one of these a more attractive choice for an attacker,
+and if only one of these is fixed or mitigated then the other becomes
+more relevant.  In particular, the "LoginGraceTime 0" mitigation works
+against both issues, whereas the "-e" mitigation only works against
+CVE-2024-6387 and not (fully) against CVE-2024-6409.  It may also be
+possible to construct an exploit that would work against either
+vulnerability probabilistically, which could decrease attack duration or
+increase success rate.  That said, actual exploitation of CVE-2024-6409
+has not yet been attempted and thus has not been proven.
+
+I brought this extra issue to distros on June 26 and Qualys confirmed
+and completed most of the analysis later same day.  Qualys later found
+another issue with the audit patch, which is currently believed to be
+mostly non-security.  I include it closer to the end of this message.
+
+I'm sorry for not disclosing CVE-2024-6409 on the same day as
+CVE-2024-6387, which would have saved many of us time (me included).
+I agreed for the separate coordinated release date because apparently
+Red Hat already had CVE-2024-6387 in the pipeline and wasn't ready to
+add a fix for CVE-2024-6409 at the same time.
+
+I quote relevant excerpts from the distros list discussion below:
+
+On Wed, Jun 26, 2024 at 04:32:49AM +0200, Solar Designer wrote:
+> On Thu, Jun 20, 2024 at 01:26:52PM +0000, Qualys Security Advisory wrote:
+> > A few days after we started our work on amd64, we noticed the following
+> > bug report (in OpenSSH's public Bugzilla), about a deadlock in sshd's
+> > SIGALRM handler:
+> > 
+> >   https://bugzilla.mindrot.org/show_bug.cgi?id=3690
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1276321#c5
-> The old patch caused problems. Here's a better upstream patch
+> Here's another curious one:
+> 
+> https://bugzilla.mindrot.org/show_bug.cgi?id=3286#c7
+> 
+> In 2021, djm@ was wondering "why this is triggering when it wasn't
+> before" and "I still don't understand why this condition did not exist
+> previously."  I guess the reason was this same regression in the signal
+> handler.
+> 
+> The patch for the above issue conditionally replaced the call to
+> sigdie() with cleanup_exit(255), but I think that other call was also
+> async-signal-unsafe!
+> 
+> commit e3c032333be5fdbbaf2751f6f478e044922b4ec4
+> Author: djm@openbsd.org <djm@openbsd.org>
+> Date:   Fri May 7 03:09:38 2021 +0000
+> 
+>     upstream: don't sigdie() in signal handler in privsep child process;
+>     
+>     this can end up causing sandbox violations per bz3286; ok dtucker@
+>     
+>     OpenBSD-Commit-ID: a7f40b2141dca4287920da68ede812bff7ccfdda
 
-As far as we can tell, the old patch used shlex.quote whereas the new
-patch has a different solution involving subprocess.Popen. If
-python-pygments-2.0.2-3.fc23 had a vulnerability because shlex.quote
-didn't adequately protect against command injection, then there should
-be a second CVE ID for that vulnerability. Otherwise, we'll interpret
-"old patch caused problems" to mean usability problems.
+> -/* $OpenBSD: sshd.c,v 1.572 2021/04/03 06:18:41 djm Exp $ */
+> +/* $OpenBSD: sshd.c,v 1.573 2021/05/07 03:09:38 djm Exp $ */
+> 
+> So in OpenSSH 8.7p1 as used e.g. in RHEL 9, we have this:
+> 
+>         /* Log error and exit. */
+>         if (use_privsep && pmonitor != NULL && pmonitor->m_pid <= 0)
+>                 cleanup_exit(255); /* don't log in privsep child */
+>         else {
+>                 sigdie("Timeout before authentication for %s port %d",
+>                     ssh_remote_ipaddr(the_active_state),
+>                     ssh_remote_port(the_active_state));
+>         }
+> 
+> So if patching that version, I think not only the body of sshsigdie()
+> should be #if 0'ed out, but also the above call to cleanup_exit(255);
+> replaced with _exit(1).
+> 
+> Indeed, that's also the difference between sshlogdie(), which uses
+> cleanup_exit(255), and sshsigdie(), which uses _exit(1).
+> 
+> This extra problematic logic only existed in upstream OpenSSH(-portable)
+> for ~9 months, having been removed with:
+> 
+> commit 4e62c13ab419b4b224c8bc6a761e91fcf048012d
+> Author: dtucker@openbsd.org <dtucker@openbsd.org>
+> Date:   Tue Feb 1 07:57:32 2022 +0000
+> 
+>     upstream: Remove explicit kill of privsep preauth child's PID in
+>     
+>     SIGALRM handler. It's no longer needed since the child will get terminated by
+>     the SIGTERM to the process group that cleans up any auth helpers, it
+>     simplifies the signal handler and removes the risk of a race when updating
+>     the PID. Based on analysis by HerrSpace in github PR#289, ok djm@
+>     
+>     OpenBSD-Commit-ID: 2be1ffa28b4051ad9e33bb4371e2ec8a31d6d663
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> -/* $OpenBSD: sshd.c,v 1.582 2021/11/18 03:07:59 djm Exp $ */
+> +/* $OpenBSD: sshd.c,v 1.583 2022/02/01 07:57:32 dtucker Exp $ */
+> 
+> which obviously left the (even worse) sshdie() intact.
+> 
+> In other words, depending on what exact cleanups are done, it may (or
+> may not, I haven't checked) have briefly been possible to exploit a race
+> condition of this sort not only in the parent (worse), but also in the
+> privsep child (relatively mild).  An extra vulnerability nevertheless,
+> maybe with different exploitability conditions - maybe exploitable even
+> on *BSD where sshdie() is not?
 
-iQIbBAEBCAAGBQJWbzOhAAoJEL54rhJi8gl5AH4P93kGsVRmy5xreW4IaM1cI09g
-3WYA0b2JIDcrJXsNPT1KE4MFON5BKResTBbv+PKde0WRqHKgDUf4q5WexcaPFCjs
-WgMo0mIj1Ab0P6j1xGeu6WNzmAMFdE1e0+9rupmDd0V1Aq1PnvYTVIxmKugvaV00
-hK5tnY0jkYIyO7GfGTY3PGBmE8juFVA60aEsAozRGlETYHS3XqE3bMBzvHlarZ8o
-7ZRWV8VEoh+j3mxTV6ib7WLTZhT4Rzf+phwQSaEDrnGAJYy7RLh1VHZzsgdBdCyZ
-cBYBcV0hPfXg3sC81zxYUPTB8L3Z701nnAJ0kV3tzUQiHjFEgI4P8kNVslOy+jrX
-IuXFMlh4Vba1mmkMfGjf633MP0HVhqmIyBgngyV50dL8Kc4lSAnKB1Ict8ruwDI+
-bz9F/MEez5y1HTC1wniR3IwbxuMaobCjYfF7NhJe0gXcC7V+DpwMOUFTwIvIFeFc
-lrt4MyRCvh9DUzp70Kz++WGIEs59h4P9MpX/AzL2J/85UPJOPLvRVm+GSh1zIL13
-YNJRCpN0Q/SdBa5US2pPDccVcHpxKFXqu/ETS518yJDKpElXqKkmvXgy6P0yege9
-slhUQg1Ol6k4axkeo/BlO6z1CqHuT4EM1mzPM4ujINZXX2bKBRMxaZVyL1xVnL89
-XVfC0et5dVwCnahrD48=
-=sPew
------END PGP SIGNATURE-----
+As a side note, I wrote *BSD above because I had found that syslog_r()
+is also available on NetBSD, as well as on AIX and even Tru64, so
+_maybe_ some builds of OpenSSH for some of those systems were not
+affected by CVE-2024-6387.  We did not research this further.
+
+> Now, cleanup_exit() _might_ have actually be safe if called from this
+> place.  Upstream 8.7p1's is:
+> 
+> /* server specific fatal cleanup */
+> void
+> cleanup_exit(int i)
+> {
+>         if (the_active_state != NULL && the_authctxt != NULL) {
+>                 do_cleanup(the_active_state, the_authctxt);
+>                 if (use_privsep && privsep_is_preauth &&
+>                     pmonitor != NULL && pmonitor->m_pid > 1) {
+>                         debug("Killing privsep child %d", pmonitor->m_pid);
+>                         if (kill(pmonitor->m_pid, SIGKILL) != 0 &&
+>                             errno != ESRCH) {
+>                                 error_f("kill(%d): %s", pmonitor->m_pid,
+>                                     strerror(errno));
+>                         }
+>                 }
+>         }
+> #ifdef SSH_AUDIT_EVENTS
+>         /* done after do_cleanup so it can cancel the PAM auth 'thread' */
+>         if (the_active_state != NULL && (!use_privsep || mm_is_monitor()))
+>                 audit_event(the_active_state, SSH_CONNECTION_ABANDON);
+> #endif
+>         _exit(i);
+> }
+
+> Further, RHEL 9 patched this to:
+> 
+> /* server specific fatal cleanup */
+> void
+> cleanup_exit(int i)
+> {
+>         static int in_cleanup = 0;
+>         int is_privsep_child;
+> 
+>         /* cleanup_exit can be called at the very least from the privsep
+>            wrappers used for auditing.  Make sure we don't recurse
+>            indefinitely. */
+>         if (in_cleanup)
+>                 _exit(i);
+>         in_cleanup = 1;
+>         if (the_active_state != NULL && the_authctxt != NULL) {
+>                 do_cleanup(the_active_state, the_authctxt);
+>                 if (use_privsep && privsep_is_preauth &&
+>                     pmonitor != NULL && pmonitor->m_pid > 1) {
+>                         debug("Killing privsep child %d", pmonitor->m_pid);
+>                         if (kill(pmonitor->m_pid, SIGKILL) != 0 &&
+>                             errno != ESRCH) {
+>                                 error_f("kill(%d): %s", pmonitor->m_pid,
+>                                     strerror(errno));
+>                         }
+>                 }
+>         }
+>         is_privsep_child = use_privsep && pmonitor != NULL && pmonitor->m_pid == 0;
+>         if (sensitive_data.host_keys != NULL && the_active_state != NULL)
+>                 destroy_sensitive_data(the_active_state, is_privsep_child);
+>         if (the_active_state != NULL)
+>                 packet_destroy_all(the_active_state, 1, is_privsep_child);
+> #ifdef SSH_AUDIT_EVENTS
+>         /* done after do_cleanup so it can cancel the PAM auth 'thread' */
+>         if (the_active_state != NULL &&
+>             (the_authctxt == NULL || !the_authctxt->authenticated) &&
+>             (!use_privsep || mm_is_monitor()))
+>                 audit_event(the_active_state, SSH_CONNECTION_ABANDON);
+> #endif
+>         _exit(i);
+> }
+> 
+> from where it looks like other cleanup calls can be made even when
+> called from privsep child prior to authentication
+
+> In summary:
+> 
+> 1. I think the call to
+>                 cleanup_exit(255); /* don't log in privsep child */
+> should also be patched to _exit(1) in distro packages that have that
+> (perhaps those based on 8.7p1 and 8.8p1).
+> 
+> 2. The logic of upstream cleanup_exit() (but not necessarily distros')
+> is such that the call _may_ have been safe (unless the other race?)
+> 
+> 3. My analysis is incomplete.  I welcome further analysis by others -
+> Qualys, distros, and we could want to contact upstream (via Qualys?)
+> for comment even though the issue is already inadvertently fixed.
+> 
+> 4. If this is in fact an extra vulnerability (even if only exposed in a
+> distro?), should it perhaps get its own CVE?  It's different affected
+> versions range, which I think qualifies it for a different CVE.  (If
+> confirmed that this is in fact a vulnerability.)
+
+On Wed, Jun 26, 2024 at 11:06:43AM +0000, Qualys Security Advisory wrote:
+> On Wed, Jun 26, 2024 at 04:32:49AM +0200, Solar Designer wrote:
+> > Here's another curious one:
+> 
+> Well spotted! Yes, the version matches (8.5p1), this is definitely the
+> same root cause (sshsigdie() was called and it is doing something,
+> instead of just calling _exit(1)).
+> 
+> > Now, cleanup_exit() _might_ have actually be safe if called from this
+> > place.  Upstream 8.7p1's is:
+> 
+> Interesting, thanks! We have spent some time on this:
+> 
+> ------------------------------------------------------------------------
+> 2429 cleanup_exit(int i)
+> 2430 {
+> 2431         if (the_active_state != NULL && the_authctxt != NULL) {
+> 2432                 do_cleanup(the_active_state, the_authctxt);
+> 2433                 if (use_privsep && privsep_is_preauth &&
+> 2434                     pmonitor != NULL && pmonitor->m_pid > 1) {
+> 2435                         debug("Killing privsep child %d", pmonitor->m_pid);
+> 2436                         if (kill(pmonitor->m_pid, SIGKILL) != 0 &&
+> 2437                             errno != ESRCH) {
+> 2438                                 error_f("kill(%d): %s", pmonitor->m_pid,
+> 2439                                     strerror(errno));
+> 2440                         }
+> 2441                 }
+> 2442         }
+> 2443 #ifdef SSH_AUDIT_EVENTS
+> 2444         /* done after do_cleanup so it can cancel the PAM auth 'thread' */
+> 2445         if (the_active_state != NULL && (!use_privsep || mm_is_monitor()))
+> 2446                 audit_event(the_active_state, SSH_CONNECTION_ABANDON);
+> 2447 #endif
+> 2448         _exit(i);
+> 2449 }
+> ------------------------------------------------------------------------
+> 
+> - The block at lines 2431-2442 is actually entered in the unpriv child,
+>   pre-auth, because both the_active_state and the_authctxt are set. The
+>   block at lines 2433-2441 is not entered in the unpriv child, so we can
+>   forget about this one.
+> 
+> - The lines 2445-2446 is not executed in the unpriv child, so we can
+>   forget about this one too.
+> 
+> - This leaves us with the call to do_cleanup() at line 2432:
+> 
+> ------------------------------------------------------------------------
+> 2643 do_cleanup(struct ssh *ssh, Authctxt *authctxt)
+> 2644 {
+> ....
+> 2647         debug("do_cleanup");
+> ....
+> 2662         if (options.use_pam) {
+> 2663                 sshpam_cleanup();
+> 2664                 sshpam_thread_cleanup();
+> 2665         }
+> ....
+> 2668         if (!authctxt->authenticated)
+> 2669                 return;
+> ------------------------------------------------------------------------
+> 
+> - The debug() call at line 2647 is not ideal, because it calls
+>   snprintf(), but we do not consider this to be a practical problem,
+>   because we do not know of an snprintf() implementation that calls
+>   malloc() (unless the format string uses positional arguments or
+>   floating points, which is not the case here).
+> 
+> - The calls to PAM functions at lines 2662-2665 are no-ops in the unpriv
+>   child, so not a problem either.
+> 
+> - And then do_cleanup() returns at lines 2668-2669, so OK.
+> 
+> Summary: we consider this upstream version to be safe (from a practical
+> point of view, i.e. despite the few calls to snprintf()).
+> 
+> > Further, RHEL 9 patched this to:
+> 
+> Ouch, we had not seen this one; it is definitely a problem:
+> 
+> ------------------------------------------------------------------------
+> 2657 cleanup_exit(int i)
+> 2658 {
+> ....
+> 2681         if (sensitive_data.host_keys != NULL && the_active_state != NULL)
+> 2682                 destroy_sensitive_data(the_active_state, is_privsep_child);
+> 2683         if (the_active_state != NULL)
+> 2684                 packet_destroy_all(the_active_state, 1, is_privsep_child);
+> ------------------------------------------------------------------------
+> 
+> - The call to destroy_sensitive_data() may or may not be a problem,
+>   because the "sensitive data" (private keys) were already destroyed in
+>   the unpriv child at that point.
+> 
+> - But the call to packet_destroy_all() is definitely a problem, because
+>   it calls packet_destroy_state(), which calls free() everywhere.
+> 
+> Summary: this patched version of cleanup_exit() makes the unpriv child
+> vulnerable too.
+> 
+> > 1. I think the call to
+> >                 cleanup_exit(255); /* don't log in privsep child */
+> > should also be patched to _exit(1) in distro packages that have that
+> > (perhaps those based on 8.7p1 and 8.8p1).
+> 
+> Agreed (by "patched" you mean "replace the call to cleanup_exit(255)
+> with a call to _exit(1)", right?).
+> 
+> > 2. The logic of upstream cleanup_exit() (but not necessarily distros')
+> > is such that the call _may_ have been safe
+> 
+> Agreed as well.
+
+The below excepts are about an extra issue (beyond CVE-2024-6409) - the
+audit patch's logging of SSH host key fingerprints apparently being
+broken at least on RHEL 9.  This issue is only indirectly related to
+CVE-2024-6409 because it explains why more async-signal-unsafe calls are
+made than would have been otherwise.
+
+On Thu, Jul 04, 2024 at 01:40:34AM +0000, Qualys Security Advisory wrote:
+> we found more information on the following:
+> 
+> On Wed, Jun 26, 2024 at 11:06:43AM +0000, Qualys Security Advisory wrote:
+> > - The call to destroy_sensitive_data() may or may not be a problem,
+> >   because the "sensitive data" (private keys) were already destroyed in
+> >   the unpriv child at that point.
+> 
+> It is a problem: destroy_sensitive_data() calls malloc functions many
+> times (especially free()) because even if only the public keys remain in
+> sensitive_data.host_keys, they are still passed to sshkey_free().
+> 
+> In fact, destroy_sensitive_data() even ends up calling syslog() itself:
+> PRIVSEP(audit_destroy_sensitive_data()) calls mm_request_send(), which
+> can fail if the priv/parent process already _exit()ed, so fatal_f() is
+> called, which calls mm_log_handler(), which also fails because the priv/
+> parent process _exit()ed, so fatal_f() is called again, but this time it
+> calls syslog().
+> 
+> If you are wondering why destroy_sensitive_data() calls
+> PRIVSEP(audit_destroy_sensitive_data()) in the first place, we were
+> wondering too, because this should happen only if one of the keys is
+> private, and no private key should remain in the unpriv/child process!
+> This is actually a bug in sshkey_is_private(): for ed25519 keys, this
+> function checks ed25519_pk, which is the public key! It should check
+> ed25519_sk instead, which is the secret/private key.
+
+On Sun, Jul 07, 2024 at 11:21:37PM +0200, Solar Designer wrote:
+> Thank you for reporting this to distros.  I don't see this function in
+> any upstream version at all - do you?  I see it being added via
+> openssh-7.6p1-audit.patch in Red Hat's package.  I don't know if an
+> equivalent patch is maybe also added in some other distros?
+> 
+> As to security consequences, at first my concern was this could leave
+> secret host keys around in privsep child.  However, upon a closer look
+> the only thing audit_destroy_sensitive_data() does is log a message, so
+> the only impact is erroneous audit logging.
+
+> Actual processing of keys is untouched by this patch, so probably
+> remains correct.
+
+On Mon, Jul 08, 2024 at 05:23:22PM +0200, Solar Designer wrote:
+> On Mon, Jul 08, 2024 at 03:00:37PM +0000, Qualys Security Advisory wrote:
+> > On Mon, Jul 08, 2024 at 03:35:29PM +0200, Solar Designer wrote:
+> > > [...] with RH's original code
+> > > I saw the same key's destruction logged 3 times.  I think some of those
+> > > were not from the unprivileged child, and actually made sense.  So I was
+> > > hoping that fixing the check from pk to sk would suppress only the
+> > > erroneous logging from the unprivileged child, but in my testing it
+> > > suppressed all of it.
+> > 
+> > [...] I think that I have
+> > found the solution to this mystery, but I have not yet investigated the
+> > consequences (if any): the private host keys are "shielded" as soon as
+> > they are loaded (by sshkey_shield_private()), which means that, to the
+> > (non-buggy) tests in sshkey_is_private(), they look like public keys,
+> > but the private part is actually there, in another part of the key
+> > structure, in encrypted form.
+
+> The shielding was added upstream in:
+> 
+> commit 4f7a56d5e02e3d04ab69eac1213817a7536d0562
+> Author: djm@openbsd.org <djm@openbsd.org>
+> Date:   Fri Jun 21 04:21:04 2019 +0000
+> 
+>     upstream: Add protection for private keys at rest in RAM against
+>     
+>     speculation and memory sidechannel attacks like Spectre, Meltdown, Rowhammer
+>     and Rambleed. This change encrypts private keys when they are not in use with
+>     a symmetic key that is derived from a relatively large "prekey" consisting of
+>     random data (currently 16KB).
+> 
+> which is newer than 7.6p1 that openssh-7.6p1-audit.patch was presumably
+> based on.  So it is possible that this audit logging was more functional
+> initially (sans this bug for ed25519 you found), but mostly broke when
+> it was rebased on newer versions without consideration for the change
+> above.  However, that's just a guess, which I did not confirm.  A way to
+> confirm it could be to test a Red Hat package that already has the audit
+> patch, but does not yet have upstream's shielding.  Since the above
+> upstream commit isn't in 8.0 (it's about 1 week newer than V_8_0 tag),
+> maybe RHEL 8 is suitable for this test (its package is based on 8.0p1).
+> 
+> ... and indeed, on a RHEL 8 rebuild system I see "msg='op=destroy
+> kind=server fp=SHA256:" /var/log/audit/audit.log lines with 3 different
+> fingerprint values, presumably corresponding to the different key types.
+> This is different from the RHEL 9 rebuild system I checked before, where
+> only one fingerprint value would be seen despite of the system also
+> having 3 different host key types.
+
+In the public disclosure of CVE-2024-6387, Qualys wrote:
+
+On Mon, Jul 01, 2024 at 08:40:06AM +0000, Qualys Security Advisory wrote:
+> We decided to target Rocky Linux 9 (a Red Hat Enterprise Linux 9
+> derivative), from "Rocky-9.4-x86_64-minimal.iso", for two reasons:
+> 
+> - its OpenSSH version (8.7p1) is vulnerable to this signal handler race
+>   condition and its glibc is always mapped at a multiple of 2MB (because
+>   of the ASLR weakness discussed in the previous "Theory" subsection),
+>   which makes partial pointer overwrites much more powerful;
+> 
+> - the syslog() function (which is async-signal-unsafe but is called by
+>   sshd's SIGALRM handler) of this glibc version (2.34) internally calls
+>   __open_memstream(), which malloc()ates a FILE structure in the heap,
+>   and also calls calloc(), realloc(), and free() (which gives us some
+>   much-needed freedom).
+> 
+> With a heap corruption as a primitive, two FILE structures malloc()ated
+> in the heap, and 21 fixed bits in the glibc's addresses, we believe that
+> this signal handler race condition is exploitable on amd64 (probably not
+> in ~6-8 hours, but hopefully in less than a week). Only time will tell.
+
+FWIW, we patched CVE-2024-6387 in Rocky Linux SIG/Security and CIQ 9.2
+LTS on July 1, and here's the patch we're getting into both today:
+
+$ cat openssh-8.7p1-rocky-CVE-2024-6409.patch
+diff -urp openssh-8.7p1-38.el9_4.1-tree.orig/sshd.c openssh-8.7p1-38.el9_4.1-tree/sshd.c
+--- openssh-8.7p1-38.el9_4.1-tree.orig/sshd.c	2024-07-08 03:42:51.431994307 +0200
++++ openssh-8.7p1-38.el9_4.1-tree/sshd.c	2024-07-08 03:48:13.860316451 +0200
+@@ -384,7 +384,7 @@ grace_alarm_handler(int sig)
+ 
+ 	/* Log error and exit. */
+ 	if (use_privsep && pmonitor != NULL && pmonitor->m_pid <= 0)
+-		cleanup_exit(255); /* don't log in privsep child */
++		_exit(1); /* don't log in privsep child */
+ 	else {
+ 		sigdie("Timeout before authentication for %s port %d",
+ 		    ssh_remote_ipaddr(the_active_state),
+
+We'll update the Rocky Linux SIG/Security wiki shortly (didn't do this
+in advance in order to push this public disclosure out to all first):
+
+https://sig-security.rocky.page/packages/openssh/
+
+The weakening of ASLR bothers me, but is to be discussed separately.
+
+Alexander
