@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3711" "Sunday" "24" "January" "2016" "20:36:48" "-0800" "Andy Lutomirski" "luto@kernel.org" "<CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>" "94" "[oss-security] CVE Request: x86 Linux TLB flush bug" nil nil nil "1" "2016012504:36:48" "[oss-security] CVE Request: x86 Linux TLB flush bug" (number mark "U       luto@kernel. Jan 24   94/3711  " thread-indent "\"[oss-security] CVE Request: x86 Linux TLB flush bug\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5936 invoked by uid 550); 25 Jan 2016 04:37:23 -0000
+Received: (qmail 22171 invoked by uid 550); 8 Jul 2024 03:51:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5918 invoked from network); 25 Jan 2016 04:37:22 -0000
-X-Gm-Message-State: AG10YOSbZbbdhOL6FxvcqKdXC7zePkdwm9SouItfEy5dmroIBgn5suDxePyfHywIbEl4MH/KRuJBZWT02TZzcmVR
-X-Received: by 10.182.210.234 with SMTP id mx10mr11573927obc.47.1453696628119;
- Sun, 24 Jan 2016 20:37:08 -0800 (PST)
+Received: (qmail 23690 invoked from network); 8 Jul 2024 03:25:12 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: David Handermann <exceptionfactory@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <84ec392f-a9b7-ae51-9c71-5a7497f5eb20@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 08 Jul 2024 03:25:03 +0000
 MIME-Version: 1.0
-From: Andy Lutomirski <luto@kernel.org>
-Date: Sun, 24 Jan 2016 20:36:48 -0800
-X-Gmail-Original-Message-ID: <CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>
-Message-ID: <CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>
-To: oss security list <oss-security@lists.openwall.com>
-Content-Type: text/plain; charset=UTF-8
-X-Virus-Scanned: ClamAV using ClamSMTP
-Subject: [oss-security] CVE Request: x86 Linux TLB flush bug
+Subject: [oss-security] CVE-2024-37389: Apache NiFi: Improper Neutralization of Input in
+ Parameter Context Description 
 
-Linux on x86 and x86_64 had a race condition in the TLB flush logic.
-I don't know how exploitable it is.
+Affected versions:
 
-On x86, when changing a paging structure [1], the OS needs to ensure
-that the processor's TLB is flushed to evict any stale cached copies
-of the old paging data.  On SMP systems, the TLB flush needs to be
-propagated to other CPUs that share the paging structures.
+- Apache NiFi 1.10.0 through 1.26.0
+- Apache NiFi 2.0.0-M1 through 2.0.0-M3
 
-x86 has no hardware cross-core TLB flush mechanism.  Instead, Linux
-does the following dance:
+Description:
 
-CPU A:
-A1. Change the paging structure.
-A2. Flush local TLB, if applicable.
-A3. Check if other CPUs are sharing the paging structures; if so, send
-them IPIs to flush them.
+Apache NiFi 1.10.0 through 1.26.0 and 2.0.0-M1 through 2.0.0-M3 support a d=
+escription field in the Parameter Context configuration that is vulnerable =
+to cross-site scripting. An authenticated user, authorized to configure a P=
+arameter Context, can enter arbitrary JavaScript code, which the client bro=
+wser will execute within the session context of the authenticated user. Upg=
+rading to Apache NiFi 1.27.0 or 2.0.0-M4 is the recommended mitigation.
 
-At this point, if a physical page was unmapped, it can be safely reused.
+This issue is being tracked as NIFI-13374=20
 
-The check in step 3 interacts with context switches on remote cpus.
-When CPU B starts to use the paging structure that A is modifying, it
-does:
+Credit:
 
-CPU B:
+Akbar Kustirama (finder)
 
-B1. Set a bit indicating that CPU B is using the paging structures
-(LOCK-prefixed atomic insn).
-B2. Load the paging hierarchy root into CR3.
-B3. (implicit) Start filling the TLB.
+References:
 
-For this whole dance to work, Linux needs to avoid any outcome in
-which CPU B fills a TLB entry that CPU A modified if CPU A does not
-send an IPI to CPU B.  In a sequential consistency model, we're fine.
-CPU A will only fail to send the IPI if it sees the bit that CPU B
-sets being clear after modifying the paging structures and, if that
-happens, then CPU B hasn't filled its TLB yet.
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-37389
+https://issues.apache.org/jira/browse/NIFI-13374
 
-Real CPUs aren't sequentially consistent.  The work done by CPU B is
-well behaved.  B3 is a TLB fill, and it therefore does not follow the
-usual x86 memory ordering rules.  Fortunately, B2 is "serializing" and
-therefore orders everything.
+Timeline:
 
-Unfortunately, the work done by CPU A may have been incorrect.  A1 is
-an ordinary store and A3 is an ordinary load.  Therefore, x86 CPUs are
-permitted to reverse their order such that CPU A checks whether the
-paging structures are shared prior to modifying them.
+2024-06-07: reported
+2024-06-07: confirmed
+2024-06-07: resolved
 
-As a mitigating factor, A2, *if it occurs*, is serializing and
-prevents this problem.
-
-The upshot is that, in principle, when Linux invalidates a paging
-structure that is not in use locally, it could, in principle, race
-against another CPU that is switching to a process that uses the
-paging structure in question.
-
-I have not tried to exploit this.  Doing so would involve finding a
-code path that unmaps a page *no in use by the current task* and
-requests a TLB flush without any intervening memory barriers, implied
-or otherwise.
-
-A successful exploit would result in a user thread running with a
-stale cached virtual -> physical translation.  If the translation in
-question were writable and the physical page got reused for something
-critical (e.g. a page table), then this would permit privilege
-escalation without any syscalls whatsoever.
-
-There are some mitigating factors.  Code paths that would do this are
-not that common.  Actually triggering the race would involve the CPU
-speculating a load before a prior store in a different function, and
-that load would have to be speculated across a branch for which the
-not-taken side lead to a serializing instruction.  I have no idea
-whether actual microarchitectures do this.
-
-
-
-commit 4eaffdd5a5fe6ff9f95e1ab4de1ac904d5e0fa8b
-Author: Andy Lutomirski <luto@kernel.org>
-Date:   Tue Jan 12 12:47:40 2016 -0800
-
-    x86/mm: Improve switch_mm() barrier comments
-
-commit 71b3c126e61177eb693423f2e18a1914205b165e
-Author: Andy Lutomirski <luto@kernel.org>
-Date:   Wed Jan 6 12:21:01 2016 -0800
-
-    x86/mm: Add barriers and document switch_mm()-vs-flush synchronization
-
-
-If any of you try analyze this further, please let me know.
-
---Andy
-
-[1] There are some exceptions when adding entries for previously
-non-present pages.
