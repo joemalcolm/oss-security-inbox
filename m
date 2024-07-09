@@ -1,4 +1,4 @@
-Received: (qmail 9289 invoked by uid 550); 13 Aug 2022 06:35:11 -0000
+Received: (qmail 8130 invoked by uid 550); 9 Jul 2024 22:50:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +7,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3228 invoked from network); 12 Aug 2022 22:38:45 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: "Carl B. Marcum" <cmarcum@apache.org>
+Received: (qmail 7390 invoked from network); 9 Jul 2024 22:49:34 -0000
+Date: Wed, 10 Jul 2024 00:49:23 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <962c0ceb-9aef-7a4b-aff4-ac84839c8f21@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 12 Aug 2022 22:38:26 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-37400: Apache OpenOffice Static Initialization Vector
- Allows to Recover Passwords for Web Connections Without Knowing the Master
- Password 
+Cc: Qualys Security Advisory <qsa@qualys.com>
+Message-ID: <20240709224923.GA17147@openwall.com>
+References: <20240701083838.GA12787@localhost.localdomain> <20240708162106.GA4920@openwall.com> <67430275-b84d-462e-ab74-5a756c6d068f@mindrot.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <67430275-b84d-462e-ab74-5a756c6d068f@mindrot.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on glibc-based Linux systems
 
-Severity: important
+On Tue, Jul 09, 2024 at 09:52:58AM +1000, Damien Miller wrote:
+> On Mon, 8 Jul 2024, Solar Designer wrote:
+> > Today is the coordinated release date to publicly disclose a related
+> > issue I found during review of Qualys' findings, with further analysis
+> > by Qualys.  My summary is:
+> > 
+> > CVE-2024-6409: OpenSSH: Possible remote code execution in privsep child
+> > due to a race condition in signal handling
+> 
+> As an aside, who wrote the text of
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-6409 ?
 
-Description:
+I don't know for sure, but I guess someone from Red Hat did since the
+CVE was assigned by them as a CNA.  Also, the description is the same as
+what's in Red Hat Bugzilla.
 
-Apache OpenOffice supports the storage of passwords for web connections in =
-the user's configuration database. The stored passwords are encrypted with =
-a single master key provided by the user. A flaw in OpenOffice existed wher=
-e the required initialization vector for encryption was always the same whi=
-ch weakens the security of the encryption making them vulnerable if an atta=
-cker has access to the user's configuration data. This issue affects: Apach=
-e OpenOffice versions prior to 4.1.13.
-Reference: CVE-2022-26306 - LibreOffice
+> It's disappointing that this CVE states that this is a vulnerability
+> in OpenSSH sshd, and fails to make clear that this only affects Redhat
+> versions and users of their downstream patch.
 
-Credit:
+This was in the title, just not in the description.  And now I see I did
+it the other way around in my oss-security posting - should have been
+more careful to include this information in both the suggested title and
+in the description - sorry about that.  Meanwhile, looks like the
+CVE-2024-6409 record has been updated today, perhaps in response to your
+message, and now says Red Hat Enterprise Linux 9 also in the description.
 
-OpenSource Security GmbH on behalf of the German Federal Office for Informa=
-tion Security
+> This follows another critical failure to properly issue CVEs for OpenSSH:
+> CVE-2024-6387 only lists CPEs for Redhat systems as affected (see the
+> JSON dump of the entry: https://cveawg.mitre.org/api/cve/CVE-2024-6387 )
 
-References:
+The current revision (also updated today) starts with:
 
-https://www.openoffice.org/security/cves/CVE-2022-37400.html
+      "affected": [
+        {
+          "repo": "https://anongit.mindrot.org/openssh.git",
+          "versions": [
+            {
+              "status": "affected",
+              "version": "8.5p1",
+              "versionType": "custom",
+              "lessThanOrEqual": "9.7p1"
+            }
+          ],
+          "packageName": "OpenSSH",
+          "collectionURL": "https://www.openssh.com/",
+          "defaultStatus": "unaffected"
+        },
 
+and only then proceeds to give CPEs for Red Hat products.
+
+> This means that anyone using automation that consumes CVEs for detecting
+> vulnerabilities will be left exposed.
+
+Does the above look good enough now, or should there also be a CPE for
+upstream OpenSSH?
+
+> Moreover, the explanatory text for CVE-2024-6387 is also extremely lacking.
+> It fails to explain the consequence of the vulnerability (unauth RCE) and
+> just talks about mechanism.
+
+This is still the case, and this CVE was also assigned by Red Hat (in
+response to requests by Qualys and me in the distros list discussion),
+and the description is also the same as in Red Hat Bugzilla, so should
+probably be first improved in a database Red Hat uses internally.
+
+> I don't know if it's in anyone on this list's ability to get these
+> fixed, but IMO they are serious failures of the CVE process that make
+> it near-useless for consumers of this information.
+
+Apparently, someone in here noticed and started making edits.
+
+Alexander
