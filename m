@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1940" "Wednesday" "16" "March" "2016" "07:34:39" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty343o1sxiZpedxfPOROwbPU3iBr4wva=SqduCKpL8EM=w@mail.gmail.com>" "53" "=?UTF-8?B?UmU6IFtvc3Mtc2VjdXJpdHldIFJlOiBzZXJ2ZXIgYW5kIGNsaWVudCBzaWRlIHJlbW90ZQ==?==?UTF-8?B?IGNvZGUgZXhlY3V0aW9uIHRocm91Z2ggYSBidWZmZXIgb3ZlcmZsb3cgaW4gYWxsIGdpdCB2ZXJzaW9u?==?UTF-8?B?cyBiZWZvcmUgMi43LjEgKHVucHVibGlzaGVkIOG0hOG0oOG0hy0yMDE2LTIzMjQgYW5kIOG0hOG0oA==?==?UTF-8?B?4bSH4oCRMjAxNuKAkTIzMTUp?=" nil nil nil "3" "2016031613:34:39" "=?UTF-8?B?W29zcy1zZWN1cml0eV0=?= =?UTF-8?B?UmU6?= =?UTF-8?B?c2VydmVy?= =?UTF-8?B?YW5k?= =?UTF-8?B?Y2xpZW50?= =?UTF-8?B?c2lkZQ==?= =?UTF-8?B?cmVtb3Rl?= =?UTF-8?B?Y29kZQ==?= =?UTF-8?B?ZXhlY3V0aW9u?= =?UTF-8?B?dGhyb3VnaA==?= =?UTF-8?B?YQ==?= =?UTF-8?B?YnVmZmVy?= =?UTF-8?B?b3ZlcmZsb3c=?= =?UTF-8?B?aW4=?= =?UTF-8?B?YWxs?= =?UTF-8?B?Z2l0?= =?UTF-8?B?dmVyc2lvbg==?==?UTF-8?B?cw==?= =?UTF-8?B?YmVmb3Jl?= =?UTF-8?B?Mi43LjE=?= =?UTF-8?B?KHVucHVibGlzaGVk?= =?UTF-8?B?4bSE4bSg4bSHLTIwMTYtMjMyNA==?= =?UTF-8?B?YW5k?= =?UTF-8?B?4bSE4bSg?==?UTF-8?B?4bSH4oCRMjAxNuKAkTIzMTUp?=" (number mark "U       kseifried@re Mar 16   53/1940  " thread-indent "\"=?UTF-8?B?UmU6IFtvc3Mtc2VjdXJpdHldIFJlOiBzZXJ2ZXIgYW5kIGNsaWVudCBzaWRlIHJlbW90ZQ==?==?UTF-8?B?IGNvZGUgZXhlY3V0aW9uIHRocm91Z2ggYSBidWZmZXIgb3ZlcmZsb3cgaW4gYWxsIGdpdCB2ZXJzaW9u?==?UTF-8?B?cyBiZWZvcmUgMi43LjEgKHVucHVibGlzaGVkIOG0hOG0oOG0hy0yMDE2LTIzMjQgYW5kIOG0hOG0oA==?==?UTF-8?B?4bSH4oCRMjAxNuKAkTIzMTUp?=\"\n") "<a4b9fc1a-0d82-98fe-3835-7fec48f3ac4b@laposte.net>" ("<8828da2e-361e-f6cf-7180-cbf8e402a8f0@laposte.net>" "<746ae295-5647-b933-fd23-1e8db193ea33@laposte.net>" "<a4b9fc1a-0d82-98fe-3835-7fec48f3ac4b@laposte.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27972 invoked by uid 550); 16 Mar 2016 13:34:51 -0000
+Received: (qmail 3300 invoked by uid 550); 10 Jul 2024 20:54:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +7,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27945 invoked from network); 16 Mar 2016 13:34:51 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=T2AJJQ9t3rN18YAgj2bJnRfvkR50z5gUTkep+KFg6Fo=;
-        b=FDnt3JuhNZSJUJZLFBjISx2I1Hp+0QX5p7Oj24BwbrNYOge6bJmXHmw46MRGIMvXni
-         jMG2oEb72h9ZgIDJiI250EQFu3N/jxWBBSfZ2PbtHaNwY8UUXhuA7XpUNkbaa2TwiY7b
-         M45DkQqxIMRvzG4yJv1r/b+AhvT9R1a0lSyD2y6TkiCvxU3T21+L7x9ouHd2sgyeeyv2
-         iaC9630Tv9frTa5aQVt2yG/fIR5zUlAoTJevLpA+iy1P2c2N28U5BNlmUF9JmoZ/9Rs9
-         ZtDcGvy54WqcEZ3vk7b6nCd0UVJtUXG6CM5OUAJXDrm3cK1gqhE8kbXKK4Q1sp5UolOY
-         CKig==
-X-Gm-Message-State: AD7BkJJcvEFFsvM6ZnH8K9qiPqi43Z/L/kHQdSY2Vp7GZjQLjZ9/p4oiA77FapqkvIklK8W0Gr1+qnEvgVpHjToQ
-MIME-Version: 1.0
-X-Received: by 10.13.192.130 with SMTP id b124mr1991658ywd.218.1458135279501;
- Wed, 16 Mar 2016 06:34:39 -0700 (PDT)
-In-Reply-To: <a4b9fc1a-0d82-98fe-3835-7fec48f3ac4b@laposte.net>
-References: <8828da2e-361e-f6cf-7180-cbf8e402a8f0@laposte.net>
-	<746ae295-5647-b933-fd23-1e8db193ea33@laposte.net>
-	<a4b9fc1a-0d82-98fe-3835-7fec48f3ac4b@laposte.net>
-Date: Wed, 16 Mar 2016 07:34:39 -0600
-Message-ID: <CANO=Ty343o1sxiZpedxfPOROwbPU3iBr4wva=SqduCKpL8EM=w@mail.gmail.com>
-From: Kurt Seifried <kseifried@redhat.com>
-To: oss-security <oss-security@lists.openwall.com>, lael.cellier@laposte.net
-Cc: website@sytse.com
-Content-Type: multipart/alternative; boundary=001a114e46a05ec1ca052e2a9303
-Subject: =?UTF-8?B?UmU6IFtvc3Mtc2VjdXJpdHldIFJlOiBzZXJ2ZXIgYW5kIGNsaWVudCBzaWRlIHJlbW90ZQ==?=
-	=?UTF-8?B?IGNvZGUgZXhlY3V0aW9uIHRocm91Z2ggYSBidWZmZXIgb3ZlcmZsb3cgaW4gYWxsIGdpdCB2ZXJzaW9u?=
-	=?UTF-8?B?cyBiZWZvcmUgMi43LjEgKHVucHVibGlzaGVkIOG0hOG0oOG0hy0yMDE2LTIzMjQgYW5kIOG0hOG0oA==?=
-	=?UTF-8?B?4bSH4oCRMjAxNuKAkTIzMTUp?=
-
---001a114e46a05ec1ca052e2a9303
-Content-Type: text/plain; charset=UTF-8
+Received: (qmail 3282 invoked from network); 10 Jul 2024 20:54:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:References:In-Reply-To:Date:To:From:Subject:
+	Message-ID:Reply-To:Cc:Content-ID:Content-Description;
+	bh=jBYwf3v+k2GsNp2wVym1BNSUdfrLv0LnM4itgiyiLos=; b=nWEh+aKnnOs2x+UO5RJAf3QsT3
+	Yj4TS7mYc7/XtaOLShmwwfcwFCcr8iHcyB0noOUtThfNk8YB3hUjOSdt/GdqcoNK0ce7JuakhRvQe
+	2rSemdhK9mOQ3zuUvPZInQVfkisyUbstV6WinEoY/t2ouDzXwOj0fPwalxG5Z6+SO7HDSbPcFjacC
+	nGhH0PEVjzzKWw6i4B1ACZD7qpOGzbs3ESe48G9yBMPmjFR/xPOrxqqj3vHXkLim5gehSTILIo3Kz
+	d3p2t9qvospq3cRWloi0uPPnOJoPqQpGe9V+6XFzXhGBA3qOinmkrbGoaAKOv5d+EP7Wi76FOvSZV
+	rCWQejdA==;
+Message-ID: <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
+From: Yves-Alexis Perez <corsac@debian.org>
+To: oss-security@lists.openwall.com
+Date: Wed, 10 Jul 2024 22:54:19 +0200
+In-Reply-To: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
+References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.3-1 
+MIME-Version: 1.0
+X-Debian-User: corsac
+Subject: Re: [oss-security] ASLRn't is still alive and well on x86 kernels,
+ despite CVE-2024-26621 patch
 
-One thing to keep in mind, once the source code is updated publicly the cat
-is usually out of the bag (people that read the code commit can understand
-the security implications typically). So as far as I'm concerned that while
-inconvenient, what you did isn't really all that wrong (ideally git
-upstream should have notified distros with a heads up, but again, that's an
-optional step).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-If you need help handling a vulnerability/coordinating the embargo/etc you
-can reach out to Red Hat and we can at least point you in the right
-direction, if not directly help ourselves (e.g. if we ship it we're more
-than happy to help!), secalert@redhat.com for that.
+On Mon, 2024-07-08 at 12:37 -0400, Will Dormann wrote:
+> =C2=A0As reported in the Debian bug, running the program repeatedly with =
+a=20
+> 2MB file will report the same address every time on a vulnerable system,=
+=20
+> and will be randomized on a system that is behaving as expected.
+>=20
+> In testing some platforms that I had readily available, I've concluded:
+> =C2=A0 - Modern (e.g. 6.x kernel) x86 platforms load a large-enough libc =
+at=20
+> the same address every time. (i.e. no practical ASLR -- "ASLRn't")
+> =C2=A0 -=C2=A0 Modern (e.g. 6.x kernel and large-enough libc) x86_64 plat=
+forms=20
+> running 32-bit code will load a large-enough library at the same address=
+=20
+> every time.
+> =C2=A0 - Modern x86_64 systems with the CVE-2024-26621 patch will randomi=
+ze=20
+> the load address of large libraries loaded by 32-bit apps.
+> =C2=A0 - Modern x86 systems with the CVE-2024-26621 patch will NOT ranzom=
+ize=20
+> the load address of large libraries.=C2=A0 (i.e. is still vulnerable to=20
+> "ASLRn't" despite the patch)
 
-On Wed, Mar 16, 2016 at 4:47 AM, La=C3=ABl Cellier <lael.cellier@laposte.ne=
-t>
-wrote:
+Hey,
 
-> Oh=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=
-=A6=E2=80=A6=E2=80=A6 Big mistake. I might advertised too soon.
->
-> I saw changes were pushed in master, so I thought the next version (which
-> was 2.7.1) would be the one which will include the fix.
->
-> But as pointed out on
-> https://security-tracker.debian.org/tracker/CVE-2016-2324 no versions
-> including the fixes were released yet, and even 2.7.3 still include
-> path_name(). I didn=E2=80=99t checked the code (Sorrrry).
->
->
-> So the only way to fix it is to draw your compilers and compile the
-> current master branch at https://git.kernel.org/cgit/git/git.git/.
->
-> Or do like github did by using the patches at
-> http://thread.gmane.org/gmane.comp.version-control.git/286253 and
-> http://thread.gmane.org/gmane.comp.version-control.git/286008
->
->
-> I=E2=80=99m really sorry=E2=80=A6
->
+I'm testing on my Debian sid laptop with Linux kernel 6.9.7-1. This is amd64
+but running test-mmap built with -m32, and I get:
 
+for i in {0..10}; do ./test-mmap < zeros; done
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7df3=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7d98=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7d6f=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7de7=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7df6=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7cfd=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7d25=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7d48=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7dad=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7d7b=
+000
+mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf7df4=
+000
 
+So it *looks* to me like it's =E2=80=9Cproperly=E2=80=9D randomized (for a =
+32b process). I
+don't have a 32b install handy so I can't test but I'd assume the -m32 to
+exhibit the same behavior? This is with vm.mmap_rnd_compat_bits=3D8.
 
---=20
+Or am I doing something wrong?
+- --=20
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a114e46a05ec1ca052e2a9303--
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmaO9PsACgkQ3rYcyPpX
+RFtwbAf/esGTSILYL1Seffq43QtauizeyRAth/3U2o39SbC/KD5Bpx2wwT3+3WX5
+ag96yhhBWpf6ef3JgSlblYqCZeFLRFyVYbpLQm4GpfVHDOzvJI1qaF6wPlxyXetn
+CFy/mQq/CWVNNQ9BH4FvU0SRwaKa7ijszvkDk/RsqS/8e5nR5ufGDyH0LlZU8HJ4
+LTLQLLHUA1Xt9xXhBuuNm7iMh0HmesQKOQcPQM0/e6ea7I3enLJNm14gv3eYWUIO
+RnG+TqwpbGW1E4NlcxZ7qo7sXabmn6tKTg5gQh5X9ADDgW0rvpeKEtYda1rO8M79
+/od7a49ITS3XR7tjNswxNBdqelt8Tg=3D=3D
+=3D8zdL
+-----END PGP SIGNATURE-----
