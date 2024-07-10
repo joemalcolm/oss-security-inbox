@@ -1,4 +1,4 @@
-Received: (qmail 30654 invoked by uid 550); 19 Oct 2023 22:53:16 -0000
+Received: (qmail 18123 invoked by uid 550); 10 Jul 2024 16:25:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +7,155 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22386 invoked from network); 19 Oct 2023 22:44:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697755452; x=1698360252; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:subject:to
-         :from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qDQ0Sh8e45MdkJABU5JYBklY+cQ6mT2PQpU5oPkXb2c=;
-        b=TFUUjBUIDz1xUh4inyNmS/02WjQJd3PgRfTrYZAzSeTdLq9ccv+H/daIRek5wQVRmo
-         486CtFWR9Js0/CTWPRCu760muVUbHDpvLZ9a/mIQ+GA3xtMNKUDz1kJkGA6FQsp5EP+a
-         Rm+QDQFP5/Wdm3wqfVh8IRONsM8zAGp7pCAN8QBYIQGC1Ob21rPYesHezPxa4MHZfotc
-         rB8Rbs1JmcouYc8XpcHVvOuYoXk2dZUzmb9sVoY6xdNOTGlt0dNB3qC7XmDutS8v3EhI
-         CL0rC7ry6cdmeeJXwJw1GhrwcEnVV5tRzbuTxpMwt1RqZQ6PfJvxDZ1dPSQHFo/HaXAl
-         MSHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697755452; x=1698360252;
-        h=in-reply-to:content-disposition:mime-version:references:subject:to
-         :from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qDQ0Sh8e45MdkJABU5JYBklY+cQ6mT2PQpU5oPkXb2c=;
-        b=iB2duFLU/2P2wTJ0G3+wF8jY9PLmopASdTA323hoPgICxQp9jEqK6NwYLhvg+x8IXz
-         VG9bo5mZAnxG9EDpYwCq3dmpsOoc00hM+gf5JZ9cZw/c4rxJ1e3jBxD5AvpU9NV/64as
-         6DReCezZ076noqwbOSHGkS5O3FSzXBTCuagFOr1dQnQXwNg6B9pMP2oRUs2WtfKdqZCY
-         boESOrt/6iaI1EujEP6nQw1TVjAgeUv1tLx+STrysNZKMeGKtv23bHETWUwjoMxSHHC1
-         ZxEMw6PbNvI6zBe5RR0yhDys61iER38BIep1Nf9PNRqD33oUVtq5TW7wJObeUbc1PXus
-         oQcA==
-X-Gm-Message-State: AOJu0YzFhVgvwjKLdMx1gFThdgs76VM66iXS3x1tN32hyH+tMGo+rlJA
-	Q6yr7E8VRptktpdVBs1H5ppcLoCp8Aw=
-X-Google-Smtp-Source: AGHT+IEEaWtVP8qQj1xniGHKAYFAFNbsw5r5zcDyakx6mt99JK8Qn7wDY4gkqTWA83kXXH74N/JoDQ==
-X-Received: by 2002:a05:600c:444a:b0:401:c338:ab94 with SMTP id v10-20020a05600c444a00b00401c338ab94mr143952wmn.29.1697755452168;
-        Thu, 19 Oct 2023 15:44:12 -0700 (PDT)
-Message-ID: <7039466aa03ec8a90e1ce3a2ae983421.a13627b7@limousine.hussar>
-Date: Fri, 20 Oct 2023 01:44:10 +0300
-From: Turistu <turistu@gmail.com>
+Received: (qmail 16218 invoked from network); 10 Jul 2024 16:24:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=michel-slm.name;
+	s=MBO0001; t=1720628641;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=u9ndWNUmYDSjskq/VGPR11ImKga7oWTFsCUdXUbaHc0=;
+	b=gFBfvZRv6Itu8S9FlJVHsX6p8iZUNNifmk8DozpK2cNWXOGh6QZjh5x2OB94t1LnhRzj9g
+	ylq0zhhplHbqIJRJFGjl6JdJWHwJEYpVXIE1hfhsisDO2Z7+epiPifzN+GBJ8rZDU+xa03
+	sLIC5deuw1AoGTUcIJaZcV3SWYsYHVXagbmE9bs7uy/BbSDKbhNgLqR6D4EKFSpVs6AmfH
+	NkdmJVxWxUs8p1p+PyOMRvk8OPQJybuQryW8O1CMp7jtpvUd1mf66J3uAKklwUdomit5WR
+	RIj/LjuFAGGM/ld4JgrgNr/G0X6/DG1vJx+I5hee81BWtr6prdcCQCiME48kOw==
+Date: Wed, 10 Jul 2024 11:23:56 -0500
+From: Michel Lind <michel@michel-slm.name>
 To: oss-security@lists.openwall.com
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
- <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
- <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
- <20231019165354.kkjoxdbedeodyfik@yuggoth.org>
+Cc: davide@cavalca.name, ngompa13@gmail.com
+Message-ID: <Zo61nFk8VulWf7_J@michel-fedora-PC198L6J>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="z/u/cca2vRs+WeWB"
+Content-Disposition: inline
+Subject: [oss-security] linux-distros application for CentOS Project's Hyperscale SIG
+
+--z/u/cca2vRs+WeWB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231019165354.kkjoxdbedeodyfik@yuggoth.org>
-Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
- anytime
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 19, 2023 at 04:53:55PM +0000, Jeremy Stanley wrote:
-> On 2023-10-19 17:04:10 +0100 (+0100), Sam Bull wrote:
-> [...]
-> > Also a problem with shell security. If you paste something with
+I am submitting this application on behalf of CentOS Project's Hyperscale S=
+IG.
 
-That's not a problem with "shell security". Paste is just a form of
-**trusted user input** (just as keyboard input). The bracketed-paste
-and other features are for convenience, they're not supposed to
-help against a rogue X11 app (who could just as well simulate keyboard
-input with the XTest X11 extension instead of complicating itself
-with setting up selections that the user has to paste).
+Myself (Michel Lind), as well as Davide Cavalca and Neal Gompa (SIG co-chai=
+rs), would be joining if approved.
+  https://sigs.centos.org/hyperscale/sig/membership/
 
-> > line breaks into bash, it executes them. If you paste the same
-> > into fish, it doesn't (it'll display the multi-line input and
-> > expect you to hit the enter key to execute it as a command).
-> 
-> That observation may be outdated. At least my bash 5.2.15 on Debian
-> does not execute pasted newlines, it treats it as a multi-line
-> command and waits for an actual enter keypress
 
-Indeed, as already described in my report. Bracketed-paste is the default
-in bash on all recent systems.
+1. Be an actively maintained Unix-like operating system distro with substan=
+tial use of Open Source components
 
-> (tested inside a few
-> different terminal emulators including vanilla xterm, so pretty sure
-> it's not being mitigated at that layer).
+  We actively maintain CentOS Stream Hyperscale https://sigs.centos.org/hyp=
+erscale/communication/reports/. It is based on CentOS Stream with key packa=
+ges upgraded or rebuilt with additional features enabled, intended for larg=
+e-scale enterprise deployments but also potentially on modern desktops.
 
-It pretty much **is** mitigated at that layer. If xterm itself weren't
-filtering out the ESC (ascii 0x1b) character in the pasted data, then
-the bracketed-paste feature of bash or zsh could've been easily bypassed
-by inserting a "\x1b[201~" escape (= end of pasted data) in the payload.
-(As already mentioned in the report too).
+Hyperscale can be installed on x86_64 and aarch64 desktops via https://mirr=
+or.stream.centos.org/SIGs/9-stream/hyperscale/images/experimental/ - and Ce=
+ntOS Stream installations can be converted in place (see https://sigs.cento=
+s.org/hyperscale/content/repositories/main/).
 
-Anyways, the examples were meant just as ... examples, as like for
-illustration. I've just chosen them because they were the simplest
-and cutest.
+2. Have a userbase not limited to your own organization
 
-But there are a thousand more ways for an attacker to leverage that hole
-in Firefox. Many programs (including Firefox itself!) could be easily
-crashed by garbage data from the clipboard. Attacker-controlled data
-could find its way into shell scripts via `var=$(xsel)`, etc.
+  Our membership and deliverables are open to anyone who wishes to join; co=
+ntributors have included companies such as Meta, Datto, Twitter/X, and Inte=
+l, as well as individuals
+=20=20
+3. Have a publicly verifiable track record, dating back at least 1 year and=
+ continuing to present day, of fixing security issues (including some that =
+had been handled on (linux-)distros, meaning that membership would have bee=
+n relevant to you) and releasing the fixes within 10 days (and preferably m=
+uch less than that) of the issues being made public (if it takes you ages t=
+o fix an issue, your users wouldn't substantially benefit from the addition=
+al time, often around 7 days and sometimes up to 14 days, that list members=
+hip could give you)
+
+  Since we provide an overlay on top of CentOS Stream and EPEL, we generall=
+y inherit updates as they became available - and monitor issues as soon as =
+they are disclosed.
+
+Between the three of us we have a track record of pushing EPEL security upd=
+ates: https://bodhi.fedoraproject.org/updates/?search=3D&releases=3DEPEL-8&=
+releases=3DEPEL-9&releases=3DEPEL-9N&releases=3DEPEL-8N&type=3Dsecurity&use=
+r=3Dsalimma%2C+dcavalca%2C+ngompa
+
+  We are increasingly provided updates that our users need before they are =
+fixed in CentOS Stream, for example:
+=20=20
+  - pmix: https://cbs.centos.org/koji/buildinfo?buildID=3D50809 built on Se=
+p 15 2023 addressing https://nvd.nist.gov/vuln/detail/CVE-2023-41915 from S=
+ep 9 2023 (commit pushed for c9s on Nov 2 2023 - https://gitlab.com/redhat/=
+centos-stream/rpms/pmix/-/commit/d674de0cb5d716940f01e937f2a7bb79fbd81f5c)
+  - openssh: https://cbs.centos.org/koji/buildinfo?buildID=3D54523 built on=
+ Jul 2 2024 addressing CVE-2024-6387 from Jul 1 2024 (fixed in Stream Jul 4)
+
+4. Not be (only) downstream or a rebuild of another distro (or else we need=
+ convincing additional justification of how the list membership would enabl=
+e you to release fixes sooner, presumably not relying on the upstream distr=
+o having released their fixes first?)
+
+Our user base uses CentOS Stream in production, while the upstream project =
+mostly uses it for integrating changes into upcoming RHEL releases; as such=
+ we not only ship newer packages (e.g. kernel, systemd, qemu) with features=
+ not enabled in CentOS Stream and RHEL (e.g. Btrfs) but we also need to pat=
+ch security issues faster, given Stream receives urgent security fixes only=
+ after they are released for RHEL.
+
+See examples in previous points for some issues we fixed independently of u=
+pstream distro - as we ship more packages in the future to support more use=
+ cases, the need to release security fixes faster will only grow.
+
+5. Be a participant and preferably an active contributor in relevant public=
+ communities (most notably, if you're not watching for issues being made pu=
+blic on oss-security, which are a superset of those that had been handled o=
+n (linux-)distros, then there's no valid reason for you to be on (linux-)di=
+stros)
+
+We are individually members of oss-security, in addition to various distrib=
+ution development lists
+
+6. Accept the list policy (see above)
+
+accepted
+
+7. Be able and willing to contribute back (see above), preferably in specif=
+ic ways announced in advance (so that you're responsible for a specific are=
+a and so that we know what to expect from which member), and demonstrate ac=
+tual contributions once you've been a member for a while
+
+The three of us handle security related issues, with Neal Gompa focusing on=
+ issues related to release engineering, and Davide and I on updates in gene=
+ral especially those that are built with specific customizations.
+
+8. Be able and willing to handle PGP-encrypted e-mail
+
+We are able and willing
+
+9. Have someone already on the private list, or at least someone else who h=
+as been active on oss-security for years but is not affiliated with your di=
+stro nor your organization, vouch for at least one of the people requesting=
+ membership on behalf of your distro (then that one vouched-for person will=
+ be able to vouch for others on your team, in case you'd like multiple peop=
+le subscribed)
+
+Jonathan Wright from AlmaLinux can vouch for us
+
+Best regards,
+
+--=20
+ _o) Michel Lind
+_( ) identities: https://keyoxide.org/5dce2e7e9c3b1cffd335c1d78b229d2f7ccc0=
+4f2
+
+--z/u/cca2vRs+WeWB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRdzi5+nDsc/9M1wdeLIp0vfMwE8gUCZo61lwAKCRCLIp0vfMwE
+8lcxAQCQT1LuaDJeTdiDND3dcxqBXv4QAvfLttjd2NoPpNYo8AD/bLPXN6kqrzDJ
+zUaLyXXGYSRkMgIgVptBl1cCvXkWBQE=
+=97Wx
+-----END PGP SIGNATURE-----
+
+--z/u/cca2vRs+WeWB--
