@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6023" "Friday" "3" "June" "2016" "09:47:18" "+0000" "Xen.org security team" "security@xen.org" "<E1b8lhG-000336-Hz@xenbits.xenproject.org>" "148" "[oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion" nil nil nil "6" "2016060309:47:18" "[oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion" (number mark "U       security@xen Jun  3  148/6023  " thread-indent "\"[oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5366 invoked by uid 550); 3 Jun 2016 09:47:55 -0000
+Received: (qmail 11288 invoked by uid 550); 10 Jul 2024 21:49:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,164 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5304 invoked from network); 3 Jun 2016 09:47:42 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Message-Id: <E1b8lhG-000336-Hz@xenbits.xenproject.org>
-Date: Fri, 03 Jun 2016 09:47:18 +0000
-Subject: [oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion
+Received: (qmail 22263 invoked from network); 10 Jul 2024 21:44:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1720647854; x=1721314520; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=mVUm8Uw5XbKVw+WZag9axKtgewzdX4qG3ZpS50bQUuQ=;
+ b=gJ6UfoMgLjinhnqpTG/utvKFOOoFXIeBheaMphuNCLTrgZuEtaBYTb68KXnPfMFM5QLUvmNH
+  dN3vxrV18SPkUdzcWSpJndYU1y8l8nHj+76uQMgsb2E7GUWtTVixNLnLsAAYZDNnZv2u0iJGYC
+  sOW21e6Hv/TDBMiWJrlkkY0wLIKejnADHUDuQzLr+wjFV7EFyFLcxSdKmTQ5vaa1I3poe+rh66
+  X9ys91F3NXzonzQPcMBP7B3Rku3e3ROIr3mRrqCMQjItwYe5KP11e++TNoEwE6XT1Pu8dz41tC
+  F8TkWPNpswIoqeFWeDJOwOH6WDDrlel4Ndn6ih5lzHPMN/zA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1720647854; x=1721314520; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=mVUm8Uw5XbKVw+WZag9axKtgewzdX4qG3ZpS50bQUuQ=;
+ b=HGpoZ74TyH0DuH4AQqBQQ0JtZBcREjtTqim22ZfaSVH5t5RRAK1+EDXK0tVRv+xFNU/QD6po
+  Sb+aYIjxJyMuBg==
+Date: Wed, 10 Jul 2024 23:44:12 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20240710214412.8IXhxf8b@steffen%sdaoden.eu>
+In-Reply-To: <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
+References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
+ <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-621-g0d1e55f367
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] ASLRn't is still alive and well on x86
+ kernels, despite CVE-2024-26621 patch
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Yves-Alexis Perez wrote in
+ <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>:
+ ...
+ |mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) = 0xf7df\
+ |3000
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I thought on Linux MAP_DENYWRITE is actually an ignored flag.
 
-                    Xen Security Advisory XSA-181
-
-               arm: Host crash caused by VMID exhaustion
-
-ISSUE DESCRIPTION
-=================
-
-VMIDs are a finite hardware resource, and allocated as part of domain
-creation.  If no free VMIDs are available when trying to create a new domain,
-a bug in the error path causes a NULL pointer to be used, resulting in a Data
-Abort and host crash.
-
-IMPACT
-======
-
-Attempting to create too many concurrent domains causes a host crash rather
-than a graceful error.  A malicious device driver domain can hold references
-to domains, preventing its VMID being released.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.4 and later are affected.  Older Xen versions are unaffected.
-
-x86 systems are not affected.
-
-Only arm systems with less-privileged device driver domains can expose this
-vulnerability.
-
-MITIGATION
-==========
-
-There is no mitigation.  Not using driver domains reclassifies the problem,
-but does not fix it.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-The crash was discussed publicly on xen-devel, before it was appreciated
-that there was a security problem.
-
-CREDITS
-=======
-
-This issue was discovered by Aaron Cornelius of DornerWorks.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa181.patch           xen-unstable, Xen 4.6.x, 4.5.x
-xsa181-4.4.patch       Xen 4.4.x
-
-$ sha256sum xsa181*
-6756fcf44446675e5277f6d6c0e8a0aaa51a7909ad9a55af89a09367fded8733  xsa181.patch
-97a90c7cb42466647622cb2ed98de531b7ba2e174a1bc639a32a6f1b626d503f  xsa181-4.4.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJXUVIbAAoJEIP+FMlX6CvZAe8IAIwe1A/05KM9PfJTCwb23WEs
-pfSiEZy7KzmavYwzV4TLwzWuCNzkRAuEejvQ9dTFnk8ZBkCZIbAaMoCPJljK/8gg
-oBcn0cXE9Kz9kWBk+JCWHynboVh010p+7DGlcvrxmAwxJCUjGy4YcajDZ4uGJoHA
-pgJxIk/w4CIzF+AQYm7bRW8dHF3yym4V6dmR4pGqXeYS41XbMqpEenGBggoBeH+C
-TJLUzaNZfATcPK5NUCqBD7IiQtHyYJT8xEtIKDH4hfjEzffydHbErDb/lKk3fxK0
-ECzrhdWMExnkUX4VkC393QaqGf78P6sa+psfZt4I7DDFDI2uEvXYmgVXjOuvSpg=
-=hUSO
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa181.patch"
-Content-Disposition: attachment; filename="xsa181.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBlZTQ4OGUyMTMzZTU4MTk2N2QxM2Q1Mjg3ZDdiZDY1NGU5YjJlMmE2
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
-IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUaHUsIDIgSnVu
-IDIwMTYgMTQ6MTk6MDAgKzAxMDAKU3ViamVjdDogW1BBVENIXSB4ZW4vYXJt
-OiBEb24ndCBmcmVlIHAybS0+cm9vdCBpbiBwMm1fdGVhcmRvd24oKSBiZWZv
-cmUgaXQgaGFzCiBiZWVuIGFsbG9jYXRlZAoKSWYgcDJtX2luaXQoKSBkaWRu
-J3QgY29tcGxldGUgc3VjY2Vzc2Z1bGx5LCAoZS5nLiBkdWUgdG8gVk1JRApl
-eGhhdXN0aW9uKSwgcDJtX3RlYXJkb3duKCkgaXMgY2FsbGVkIGFuZCB1bmNv
-bmRpdGlvbmFsbHkgdHJpZXMgdG8gZnJlZQpwMm0tPnJvb3QgYmVmb3JlIGl0
-IGhhcyBiZWVuIGFsbG9jYXRlZC4gIGZyZWVfZG9taGVhcF9wYWdlcygpIGRv
-ZXNuJ3QKdG9sZXJhdGUgTlVMTCBwb2ludGVycy4KClRoaXMgaXMgWFNBLTE4
-MQoKUmVwb3J0ZWQtYnk6IEFhcm9uIENvcm5lbGl1cyA8QWFyb24uQ29ybmVs
-aXVzQGRvcm5lcndvcmtzLmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENv
-b3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6
-IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6
-IEp1bGllbiBHcmFsbCA8anVsaWVuLmdyYWxsQGFybS5jb20+Ci0tLQogeGVu
-L2FyY2gvYXJtL3AybS5jIHwgMyArKy0KIDEgZmlsZSBjaGFuZ2VkLCAyIGlu
-c2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS94ZW4v
-YXJjaC9hcm0vcDJtLmMgYi94ZW4vYXJjaC9hcm0vcDJtLmMKaW5kZXggODM4
-ZDAwNC4uNmExOWM1NyAxMDA2NDQKLS0tIGEveGVuL2FyY2gvYXJtL3AybS5j
-CisrKyBiL3hlbi9hcmNoL2FybS9wMm0uYwpAQCAtMTQwOCw3ICsxNDA4LDgg
-QEAgdm9pZCBwMm1fdGVhcmRvd24oc3RydWN0IGRvbWFpbiAqZCkKICAgICB3
-aGlsZSAoIChwZyA9IHBhZ2VfbGlzdF9yZW1vdmVfaGVhZCgmcDJtLT5wYWdl
-cykpICkKICAgICAgICAgZnJlZV9kb21oZWFwX3BhZ2UocGcpOwogCi0gICAg
-ZnJlZV9kb21oZWFwX3BhZ2VzKHAybS0+cm9vdCwgUDJNX1JPT1RfT1JERVIp
-OworICAgIGlmICggcDJtLT5yb290ICkKKyAgICAgICAgZnJlZV9kb21oZWFw
-X3BhZ2VzKHAybS0+cm9vdCwgUDJNX1JPT1RfT1JERVIpOwogCiAgICAgcDJt
-LT5yb290ID0gTlVMTDsKIAotLSAKMi4xLjQKCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa181-4.4.patch"
-Content-Disposition: attachment; filename="xsa181-4.4.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA2MDVhMjcxMWM0MTEyNDc5MjAxMTZhNTAyNmU3NzI4MTViMTE2OGNk
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
-IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUaHUsIDIgSnVu
-IDIwMTYgMTQ6MTk6MDAgKzAxMDAKU3ViamVjdDogW1BBVENIXSB4ZW4vYXJt
-OiBEb24ndCBmcmVlIHAybS0+Zmlyc3RfbGV2ZWwgaW4gcDJtX3RlYXJkb3du
-KCkgYmVmb3JlCiBpdCBoYXMgYmVlbiBhbGxvY2F0ZWQKCklmIHAybV9pbml0
-KCkgZGlkbid0IGNvbXBsZXRlIHN1Y2Nlc3NmdWxseSwgKGUuZy4gZHVlIHRv
-IFZNSUQKZXhoYXVzdGlvbiksIHAybV90ZWFyZG93bigpIGlzIGNhbGxlZCBh
-bmQgdW5jb25kaXRpb25hbGx5IHRyaWVzIHRvIGZyZWUKcDJtLT5maXJzdF9s
-ZXZlbCBiZWZvcmUgaXQgaGFzIGJlZW4gYWxsb2NhdGVkLiAgZnJlZV9kb21o
-ZWFwX3BhZ2VzKCkgZG9lc24ndAp0b2xlcmF0ZSBOVUxMIHBvaW50ZXJzLgoK
-VGhpcyBpcyBYU0EtMTgxCgpSZXBvcnRlZC1ieTogQWFyb24gQ29ybmVsaXVz
-IDxBYXJvbi5Db3JuZWxpdXNAZG9ybmVyd29ya3MuY29tPgpTaWduZWQtb2Zm
-LWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29t
-PgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29t
-PgpSZXZpZXdlZC1ieTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAYXJt
-LmNvbT4KLS0tCiB4ZW4vYXJjaC9hcm0vcDJtLmMgfCAzICsrLQogMSBmaWxl
-IGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQoKZGlm
-ZiAtLWdpdCBhL3hlbi9hcmNoL2FybS9wMm0uYyBiL3hlbi9hcmNoL2FybS9w
-Mm0uYwppbmRleCBhZmY3YTJjLi45Y2Y2ZjkxIDEwMDY0NAotLS0gYS94ZW4v
-YXJjaC9hcm0vcDJtLmMKKysrIGIveGVuL2FyY2gvYXJtL3AybS5jCkBAIC02
-MTUsNyArNjE1LDggQEAgdm9pZCBwMm1fdGVhcmRvd24oc3RydWN0IGRvbWFp
-biAqZCkKICAgICB3aGlsZSAoIChwZyA9IHBhZ2VfbGlzdF9yZW1vdmVfaGVh
-ZCgmcDJtLT5wYWdlcykpICkKICAgICAgICAgZnJlZV9kb21oZWFwX3BhZ2Uo
-cGcpOwogCi0gICAgZnJlZV9kb21oZWFwX3BhZ2VzKHAybS0+Zmlyc3RfbGV2
-ZWwsIFAyTV9GSVJTVF9PUkRFUik7CisgICAgaWYgKCBwMm0tPmZpcnN0X2xl
-dmVsICkKKyAgICAgICAgZnJlZV9kb21oZWFwX3BhZ2VzKHAybS0+Zmlyc3Rf
-bGV2ZWwsIFAyTV9GSVJTVF9PUkRFUik7CiAKICAgICBwMm0tPmZpcnN0X2xl
-dmVsID0gTlVMTDsKIAotLSAKMi4xLjQKCg==
-
---=separator--
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
