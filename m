@@ -1,4 +1,4 @@
-Received: (qmail 15468 invoked by uid 550); 1 Feb 2023 11:30:21 -0000
+Received: (qmail 17675 invoked by uid 550); 11 Jul 2024 17:41:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,129 +7,186 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24486 invoked from network); 1 Feb 2023 11:01:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3V1dOGF7a9Qh2VkMFcJCgk5BHeiA3tIjv3VGBtEEYPU=;
-        b=Ht8xLJBIyQhTMl9EE1jTi1UfGeiItrkJBrlt/PMFc+DfAG+lLj7/4rp3In1rmT6RQY
-         fJQmYQsYKGatLg0vhxBtnZP6BGvJes8JTji0Tc/S001xv3vP/M1JrNbkWt9k+A2IJ5o6
-         cXs4/KuaR/UAEEABpzFvjssEA17TlQ586m2fe78hCQvze/FPllwTK7U3dqglhvm3QfDl
-         oU9d1e8xV2PntXd+nP/+gxknAeS8mJ9TEE/9LFKT7TsGrn6o8PJ4GXMsFgU4RPOwu43J
-         BZlR2tw3EuN6/s+vZxsGKUhnbkdR9HkU2kK3FbhwxAnzXiI+Cm8vIRsY+jmnGRE5MuEK
-         RoGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3V1dOGF7a9Qh2VkMFcJCgk5BHeiA3tIjv3VGBtEEYPU=;
-        b=cgZI+zkR+NLgw3AZ57qf/U1KKKlrx5ml4XPaDHmRLO19TQcEAMZ0FqaAGzq+u5xiUM
-         WvgVAvokmD6lS8vqClujfHrGpynAeSre0W50zOV5akhtx1iDchAIR2Tx+GDc/zy2THsv
-         s9ypBF5EQQqZCuv/YnTunCqPDLzDy2ou+hObbNo3+5dczmw1ESO5iOpQV1aQupAExQEx
-         76PLgm18Nhi31jrWCfVWVv6RNym9+lCyvST2dYyxTxHc5Y4dvvdOEaARe+sjZo1kDFiF
-         pJpcAOxVE7ZVpCBZKnNeW2IqeTy8E0i+jfOe7p+bBAiiI0lOk5bOl6fgGqa8QKyAvQWw
-         H/HA==
-X-Gm-Message-State: AO0yUKVkV0CqELEC55GIoY4AcKIm3rnuqp6rXe+8ER9hgMfLTHr7hds3
-	H252TwNBqA1fEdW/Vuj8dlFI1bfIMRI=
-X-Google-Smtp-Source: AK7set/78rwIFIUNTVpvTA9h/zJZ9q4oAqgVJd36GkaF2yBI3G2sDcSHrtiEYSS1LNcbM3FrM7FqMQ==
-X-Received: by 2002:a05:6e02:1566:b0:310:b39f:1d11 with SMTP id k6-20020a056e02156600b00310b39f1d11mr1708299ilu.12.1675249250128;
-        Wed, 01 Feb 2023 03:00:50 -0800 (PST)
-Message-ID: <bfeb845f-4e9a-69fa-3c09-a97eed9d3247@gmail.com>
-Date: Wed, 1 Feb 2023 12:00:48 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Content-Language: en-US
+Received: (qmail 17427 invoked from network); 11 Jul 2024 17:41:01 -0000
+Date: Thu, 11 Jul 2024 19:40:40 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Django: CVE-2023-23969: Potential denial-of-service via
- Accept-Language headers.
+Cc: Rafael Gonzaga <work@rafaelgss.dev>
+Message-ID: <20240711174040.GA26749@openwall.com>
+References: <46450232-0958-4f83-917e-0627346bf519n@googlegroups.com> <519892a2-6a90-45fb-a3c3-99a0159bb210n@googlegroups.com> <20240626004509.GA16803@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240626004509.GA16803@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Fwd: Node.js security updates for all active release lines, July 2024
 
-https://www.djangoproject.com/weblog/2023/feb/01/security-releases/
+On Wed, Jun 26, 2024 at 02:45:09AM +0200, Solar Designer wrote:
+> On Tue, Jun 25, 2024 at 10:54:21AM -0700, Rafael Gonzaga wrote:
+> > ---------- Mensagem encaminhada ---------
+> > De: Rafael Gonzaga <work@rafaelgss.dev>
+> > Data: ter??a-feira, 25 de junho de 2024 ??s 14:53:37 UTC-3
+> > Assunto: Node.js security updates for all active release lines, July 2024
+> > Para: nodejs-sec <nodejs-sec@googlegroups.com>
+> > 
+> > The Node.js project will release new versions of all supported release
+> > lines on or shortly after July 2nd, 2024
+> > For more information see:
+> > https://nodejs.org/en/blog/vulnerability/july-2024-security-releases
+> 
+> Thanks.  I include below the Markdown source of the full blog post
+> above.  For further occasions or if someone else wants to help post
+> these in here, to obtain it on the blog post click "Edit this page",
+> which gets to GitHub, then click "Raw".
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.1.6 <https://docs.djangoproject.com/en/dev/releases/4.1.6/>`_,
-`Django 4.0.9 <https://docs.djangoproject.com/en/dev/releases/4.0.9/>`_, and
-`Django 3.2.17 <https://docs.djangoproject.com/en/dev/releases/3.2.17/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+That blog posted was since updated with the actual detail.  I quote the
+current revision below.
 
-CVE-2023-23969: Potential denial-of-service via ``Accept-Language`` headers
-===========================================================================
+Alexander
 
-The parsed values of ``Accept-Language`` headers are cached in order to 
-avoid
-repetitive parsing. This leads to a potential denial-of-service vector via
-excessive memory usage if large header values are sent.
+---
+date: 2024-07-08T03:00:00.000Z
+category: vulnerability
+title: Monday, July 8, 2024 Security Releases
+slug: july-2024-security-releases
+layout: blog-post
+author: Rafael Gonzaga
+---
 
-In order to avoid this vulnerability, the ``Accept-Language`` header is now
-parsed up to a maximum length.
+## Security releases available
 
-Thanks to Nick Pope for the report and patch.
+Updates are now available for the 22.x, 20.x, 18.x Node.js release lines for the
+following issues.
 
-This issue has severity "moderate" according to the Django security policy.
+## Bypass incomplete fix of CVE-2024-27980 (CVE-2024-36138) - (High)
 
-Affected supported versions
-===========================
+The CVE-2024-27980 was identified as an incomplete fix for the BatBadBut vulnerability.
+This vulnerability arises from improper handling of batch files with all
+possible extensions on Windows via `child_process.spawn` / `child_process.spawnSync`.
+A malicious command line argument can inject arbitrary commands and achieve code execution
+even if the shell option is not enabled.
 
-* Django main branch
-* Django 4.2 (currently at pre-release alpha status)
-* Django 4.1
-* Django 4.0
-* Django 3.2
+This vulnerability affects all users of `child_process.spawn` and `child_process.spawnSync`
+on Windows in all active release lines.
 
-Resolution
-==========
+Impact:
 
-Patches to resolve the issue have been applied to Django's main branch 
-and the
-4.2, 4.1, 4.0, and 3.2 release branches. The patches may be obtained 
-from the
-following changesets:
+- This vulnerability affects all Windows users in active release lines: 22.x, 20.x, 18.x
 
-* On the `main branch 
-<https://github.com/django/django/commit/8c660fb59239828583f17cdede3b64f208b8752c>`__
-* On the `4.2 release branch 
-<https://github.com/django/django/commit/8a7b22d4a623bcd95190d2f5a958472fb41e576d>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/9d7bd5a56b1ce0576e8e07a8001373576d277942>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/4452642f193533e288a52c02efb5bbc766a68f95>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/c7e0151fdf33e1b11d488b6f67b94fdf3a30614a>`__
+Thank you, to tianst for reporting this vulnerability and thank you RafaelGSS for fixing it.
 
-The following releases have been issued:
+## Bypass network import restriction via data URL (CVE-2024-22020) - (Medium)
 
-* Django 4.1.6 (`download Django 4.1.6 
-<https://www.djangoproject.com/m/releases/4.1/Django-4.1.6.tar.gz>`_ | 
-`4.1.6 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.1.6.checksum.txt>`_)
-* Django 4.0.9 (`download Django 4.0.9 
-<https://www.djangoproject.com/m/releases/4.0/Django-4.0.9.tar.gz>`_ | 
-`4.0.9 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.0.9.checksum.txt>`_)
-* Django 3.2.17 (`download Django 3.2.17 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.17.tar.gz>`_ | 
-`3.2.17 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.17.checksum.txt>`_)
+A security flaw in Node.js allows a bypass of network import restrictions.
 
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+By embedding non-network imports in data URLs, an attacker can execute arbitrary code, compromising system security.
 
-General notes regarding security reporting
-==========================================
+Verified on various platforms, the vulnerability is mitigated by forbidding data URLs in network imports.
 
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+Exploiting this flaw can violate network import security, posing a risk to developers and servers.
 
+Impact:
+
+- This vulnerability affects all users in active release lines: 22.x, 20.x, 18.x
+
+Thank you, to dittyroma for reporting this vulnerability and thank you RafaelGSS for fixing it.
+
+## fs.fchown/fchmod bypasses permission model (CVE-2024-36137) - (Low)
+
+A vulnerability has been identified in Node.js, affecting users of the experimental
+permission model when the `--allow-fs-write` flag is used.
+
+Node.js Permission Model do not operate on file descriptors, however, operations such
+as `fs.fchown` or `fs.fchmod` can use a "read-only" file descriptor to change the
+owner and permissions of a file.
+
+This vulnerability affects all users using the experimental permission model in Node.js 20 and Node.js 22.
+
+Please note that at the time this CVE was issued, the permission model is an experimental feature of Node.js.
+
+Impact:
+
+- This vulnerability affects all users in active release lines: 22.x, 20.x
+
+Thank you, to 4xpl0r3r for reporting this vulnerability and thank you RafaelGSS for fixing it.
+
+## fs.lstat bypasses permission model (CVE-2024-22018) - (Low)
+
+A vulnerability has been identified in Node.js, affecting users of the experimental permission model when
+the `--allow-fs-read` flag is used.
+This flaw arises from an inadequate permission model that fails to restrict file stats through the
+`fs.lstat` API. As a result, malicious actors can retrieve stats from files that they do not have explicit read access to.
+
+This vulnerability affects all users using the experimental permission model in Node.js 20 and Node.js 22.
+
+Please note that at the time this CVE was issued, the permission model is an experimental feature of Node.js.
+
+Impact:
+
+- This vulnerability affects all users in active release lines: 22.x, 20.x
+
+Thank you, to haxatron1 for reporting this vulnerability and thank you RafaelGSS for fixing it.
+
+## Permission model improperly processes UNC paths (CVE-2024-37372) - (low)
+
+The Permission Model assumes that any path starting with two backslashes \\ has a four-character prefix that can be ignored, which is not always true. This subtle bug leads to vulnerable edge cases.
+
+This vulnerability affects Windows users of the Node.js Permission Model in version v22.x and v20.x
+
+Impact:
+
+- This vulnerability affects all users in active release lines: 22.x, 20.x
+
+Thank you, to tniessen for reporting this vulnerability and thank you RafaelGSS for fixing it.
+
+## Downloads and release details
+
+- [Node.js v18.20.4](/blog/release/v18.20.4/)
+- [Node.js v20.15.1](/blog/release/v20.15.1/)
+- [Node.js v22.4.1](/blog/release/v22.4.1/)
+
+## (Update 04-Jul-2024) Security Release target July 8th
+
+Due to the U.S. National Holiday on July 4th, the Node.js Security Releases will
+be available on or shortly after Monday, July 8th, 2024.
+
+The release is being postponed to ensure that people have sufficient time to
+upgrade before the weekend, as releasing patches on a holiday would provide
+limited time for updates.
+
+## (Update 02-Jul-2024) Security Release target July 4th
+
+The Node.js Security Releases will be available on, or shortly after, Thursday, July 4th, 2024.
+
+# Summary
+
+The Node.js project will release new versions of the 22.x, 20.x, 18.x
+releases lines on or shortly after, Tuesday, July 2, 2024 in order to address:
+
+- 1 high severity issues.
+- 1 medium severity issues.
+- 3 low severity issues.
+
+Node.js fetch will be upgraded to undici v6.19.2 on Node.js 18.x and Node.js 20.x.
+Node.js 22.x already includes undici v6.19.2.
+
+## Impact
+
+The 22.x release line of Node.js is vulnerable to 1 high severity issues, 1 medium severity issues, 3 low severity issues.
+The 20.x release line of Node.js is vulnerable to 1 high severity issues, 1 medium severity issues, 3 low severity issues.
+The 18.x release line of Node.js is vulnerable to 1 high severity issues, 1 medium severity issues.
+
+It's important to note that End-of-Life versions are always affected when a security release occurs.
+To ensure your system's security, please use an up-to-date version as outlined in our
+[Release Schedule](https://github.com/nodejs/release#release-schedule).
+
+## Release timing
+
+Releases will be available on, or shortly after, Tuesday, July 2, 2024.
+
+## Contact and future updates
+
+The current Node.js security policy can be found at https://nodejs.org/en/security/.
+Please follow the process outlined in https://github.com/nodejs/node/blob/master/SECURITY.md if you wish to report a vulnerability in Node.js.
+
+Subscribe to the low-volume announcement-only nodejs-sec mailing list at https://groups.google.com/forum/#!forum/nodejs-sec to stay up to date on security vulnerabilities and security-related releases of Node.js and the projects maintained in the nodejs GitHub organization.
