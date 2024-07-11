@@ -1,4 +1,4 @@
-Received: (qmail 1705 invoked by uid 550); 1 Mar 2025 16:49:28 -0000
+Received: (qmail 17958 invoked by uid 550); 11 Jul 2024 19:06:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +7,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23837 invoked from network); 1 Mar 2025 12:39:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seestieto.com;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1740832751; x=
-	1740919151; bh=4zuOewigR5dqwOaGE9WVzHHQ78Q8qKtCD5G4qd3o9ag=; b=I
-	p0K1Ka6sS61x3/WJSS8dv9OIlrn7SRaQJ8Zv4A9ZSXFb84wAY+R40oYuFvhoOIl1
-	TPJyoMU4aWxjKKneE5uH/O1fE0iowhKlbU6Hy32xG+TR/qNhcFJUwgVhCLDHd3V5
-	UB6Zstz3bQ8rCBc7gAjzcci7jl+1BB4z324rn0FIUkciplkMi9q1KNANOrp+/QeM
-	OXmv1/4TZ7Hwet8eV+Hhgg42pVVZOHa6m8xMijB348JREdjUsVtDFVAru+UiPRqG
-	mwnwK/8FJ2Vl5coiP/uEyCDl6dHoPrKie2vimDqJkFcUGMgvmAgXlb4sz5I01fWh
-	MtcteNC2eKzDwyElXRHRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740832751; x=1740919151; bh=4zuOewigR5dqwOaGE9WVzHHQ78Q8qKtCD5G
-	4qd3o9ag=; b=xOFXtzpaUt2j7cDnZROtk62nap0ymf+a4TOAHmMKY0KCoHIljCX
-	Refgkgu/dFIYX/PJTj0A6RTMB2nHfDQED5KK2bLaaMLtUQuZYOfbKSNCAD57ZNKr
-	bnB5yoL3oB5pBPlBqf8BVTtItmb9ehV+8fx5izgs3waqMcBdX8J34qQlpHUGlpi4
-	5ckvPaEepB3rr5Ulwas7Vbihvsj0XG/dpgtARm/o01Wp6PJ1RkEuLv+2r6JTCupp
-	CinWU9hlagqNtZifkNzeaiv/WiT8fA0sUE8RWsv5LkD529P1dPnSyA82ntbJytk8
-	Wmt2UiOBigQvSkyq60cBuzIUR9+vf52AuzQ==
-X-ME-Sender: <xms:7__CZ_YglS7oWU8KHt6mw-OiEcI9LdSIznIa7Xp281sRefmi-hC45Q>
-    <xme:7__CZ-Yo2s8udbfEyN10sTrA2NReB_RkKVCX-dhhNDolBRSR0MtDgPqE4HFF6W-QK
-    DomeeJhEQ-a-w>
-X-ME-Received: <xmr:7__CZx9mCqDzvkBjrDiksGT1ZoASFEfVT1XPe9ZLEBqWtw1nmRfgrhiaUBbolV-bXkqvJiIGPva5kAet-bE_3hw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelfeefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefjvghnrhhikhcutehhlhhgrhgvnhcuoehprggslhhosehsvggvshhtih
-    gvthhordgtohhmqeenucggtffrrghtthgvrhhnpeelueeguddtvddukeeukeduleffudfh
-    leetffffgfetvdefveelgfffjedugfejhfenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehprggslhhosehsvggvshhtihgvthhordgtohhmpdhn
-    sggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqd
-    hsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdhrtghpthhtohep
-    mhgrnhhikhhulhhinhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:7__CZ1rBpMeNSyL-8yhJI5G_5KuehNay52mgh2gcSD65bMxEI7bGTQ>
-    <xmx:7__CZ6rzGI59Fxo2jmQ1LQURs4nCA_S2PlQLwWqylOaw_4wy606oKg>
-    <xmx:7__CZ7QXKXmf78M0USqZ_NX_r29bOZUHVAnFRuKpI5oIXGdkzSFKSA>
-    <xmx:7__CZyphWOYbUVsA3ncDyro66ugtim0CQ9ySzAWTqsvSE9k8VKdEuA>
-    <xmx:7__CZ9U_sUK9gIMZ9bT0GJDEQklT9g69aAF_-pVRkW2XQuDevFOqH591>
-Feedback-ID: i8ea641e4:Fastmail
-From: Henrik Ahlgren <pablo@seestieto.com>
-To: Max Nikulin <manikulin@gmail.com>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <5215a75e-e20c-46f3-adca-471b04e1dbab@gmail.com> (Max Nikulin's
-	message of "Thu, 27 Feb 2025 22:27:27 +0700")
-References: <a80334d5-1e6d-4303-a3b2-4f5a92344e24@oracle.com>
-	<5215a75e-e20c-46f3-adca-471b04e1dbab@gmail.com>
-Date: Sat, 01 Mar 2025 14:39:06 +0200
-Message-ID: <874j0d7wnp.fsf@noux.seestieto.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 17937 invoked from network); 11 Jul 2024 19:06:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:References:In-Reply-To:Date:To:From:Subject:
+	Message-ID:Reply-To:Cc:Content-ID:Content-Description;
+	bh=H8cnSqyskC6JvcsGBjn6gl4nD8PXK5TGDWudFRd7FUc=; b=OtehnDoiJJSfxrlvsLswGmGhFg
+	OnDLYKTrC51U6DtdpFb8ESRfetfFdxHYiCVDk+MLsrSsRcBBfPKmLiIrpvx1iOsbjrF3xSmrieen3
+	mIaHlPLmL4ncIS+Dwv4LOINPjjSV6nUHK0dRF8B4QEfzLqJlBQcox89rWTXOS461VCjOBXsHN+o7X
+	SobGbysEilwBukQQN7Xlf4VtPxoUTuthTEm4Md6OT6wAshvJpBmN74RZyf87DFGjg2IfaszvEdT1g
+	37yF1H0beHLDUBvMCazIna5+WtSab4JCogUd5hfGJ51SGtkTYw4jygDdNIvAzO/bnaeMKKUjFAsBo
+	zR6QqFeA==;
+Message-ID: <da14cfdfa8a410fd8589ad93f7e6a9eb271f52b1.camel@debian.org>
+From: Yves-Alexis Perez <corsac@debian.org>
+To: oss-security@lists.openwall.com
+Date: Thu, 11 Jul 2024 21:06:40 +0200
+In-Reply-To: <3a3e9afa77884b05733a5cdfc3eaa65defa45fa4.camel@corsac.net>
+References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
+	 <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
+	 <bda1ece8-8302-4a04-9f16-c78b51b0dbb2@analygence.com>
+	 <3a3e9afa77884b05733a5cdfc3eaa65defa45fa4.camel@corsac.net>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.3-1 
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: GNU Emacs 30.1 released with 2 CVE fixes
+X-Debian-User: corsac
+Subject: Re: [oss-security] ASLRn't is still alive and well on x86 kernels,
+ despite CVE-2024-26621 patch
 
-Max Nikulin <manikulin@gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->>> - Disable auto-completion features in untrusted .el files
->>> - UPDATE: Also set enable-local-eval to nil
->
-> It should work, however it is rather drastic measure that may cause
-> inconvenience.
+On Thu, 2024-07-11 at 09:07 +0200, Yves-Alexis Perez wrote:
+> > If you want to see the lack of randomization, try the test with an x86=
+=20
+> > kernel, not amd64.
+>=20
+> I don't have one at hand unfortunately, but I'll try setting up a VM or
+> something just to be sure. Thanks.
 
-I wanted to point out an interesting aspect of Emacs file local
-variables. It may be surprising to some that including `-*-
-eval:(foobar-mode) -*-` at the beginning of a file will happily evaluate
-the specified function, regardless of whether it is an "actual" minor
-mode created with `define-minor-mode'. The only requirement is that the
-name ends with "-mode."
+So I did try with an x86 VM and it does confirm your finding. On an unstable
+kernel the simple `cat /proc/self/maps |grep libc.so |head -n1` (with libc6=
+ on
+x86 beeing more than 2M) I get no randomness at all.
 
-This raises some questions about potential security implications. While
-I'm not certain how relevant this is or in what scenarios it could be
-exploited (if an attacker can define a new function, it's obviously
-game-over no matter what), it certainly feels concerning. Some users may
-expect the `-mode` convention to apply solely to well-known, built-in
-minor modes in Emacs, not for instance the user's own custom Lisp.
+Regards,
+- --=20
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmaQLUAACgkQ3rYcyPpX
+RFvWbAgAy9nuAhjaNtgT7zBs1/Th5E4/veuUQWdkh4CUbaRjpndmYI9fWGVxtyfh
+p1xc10mkxVi0onVw5hwd3fb3GxvSCtZEDfFG/8qfAC5wIn05/ZvKyZvaBySYMqSm
+au1tgM1A0CPrsbcf0wVJoE+hoQnGBl/d2fvd3cp9fDV3+ItYtbzH5XIgRugaGkfz
+3kx+CK8kM5FbtWZ12ZkERXbvIUf8vqTuGbfqR3M6g3w8eqBqzkmi8TQcbhOP1X4N
+G0aJe3K5omlz77wxrCxBfBCT37uhPT6ljfJYaRUWhGXzT3UACmqM9QXu30/XBgjd
+rl9bGcbbvQJ+h5WZady6GLEQZg/Qsw=3D=3D
+=3DMbeb
+-----END PGP SIGNATURE-----
