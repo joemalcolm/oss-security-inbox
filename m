@@ -1,4 +1,4 @@
-Received: (qmail 17696 invoked by uid 550); 2 Nov 2022 02:56:42 -0000
+Received: (qmail 7431 invoked by uid 550); 11 Jul 2024 12:39:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,118 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17603 invoked from network); 2 Nov 2022 02:56:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm3; t=1667357788; x=
-	1667444188; bh=4TUvBRWbFpDpAyTz19EUdu9LAoQ8VL0OK/J3IxFqRyQ=; b=K
-	aVx8yu4AJudJ59DxtOwHGlCxvBx505RI67zOws+ssbe184Q0hTv7Y+YQjz8POllh
-	6/f/6E4ANZ3do/9vROfKbtTwWIctSMk3xF5V00aWWZ8KkZn18yzRV4hTHKcGg9nl
-	8HdBO4dcdcuPVfvhneDZ1JaJ9c5SSGh909E0fqVObPkx/qnd9VT9yH5UQRTJI0jY
-	BiJpFVUf5H2zYmz+DWHWB/bBYbdHVmpZF9TS6hWbYDJIwzqgZs1NmUlGCUVIzY5o
-	o4p+q3ync2PYf2oTGMvgTBvSWJn6zYzoHvQ+COUMO+3wPlmMH8qKu0xr94SU8Gzc
-	aO6kn35QTgEPy+5vDKVQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1667357788; x=1667444188; bh=4TUvBRWbFpDpAyTz19EUdu9LAoQ8
-	VL0OK/J3IxFqRyQ=; b=t+HOo2egfOpYHKT+MwWMI9gsdO5i7jtgtkbdiwVF3dzH
-	N7JUj6Iw0dBGuEASP1x8uUhAlO3h5SOWrlsNUonM4Z0xKLl5gwviufS8Bo2F1IkA
-	LxhYQDPwet+x6Zk+MmP/YHDRw6pMluOrJePAFMccAsZ3APfXrW2sPofIGH5r6pdZ
-	rdJ7bwp5cGl35BlWao7VC0nHo/QpCSrOvVHW1fWoxFopTscwkXA4E8WUUfQgGXBS
-	1HDjssICfizxC6Z435IsRqQncSSL2TjSH1G9wGfdlASZdM2SPAeBg9ZOxxQgTWmL
-	bsdeETd14mc/gd/ZXc2/2F6MIgHYG4p99XaUASlptQ==
-X-ME-Sender: <xms:XNxhY8HFqjbM7bRzAnz2ggp-uCQ0Ae0dehyqQZxOMWESM9jmjhedrQ>
-    <xme:XNxhY1W1Q6h8AmkMKe7k-hwyOPdkrpjonqNARXd_p1IPj1J1mnwaUfxbNG4n4MywD
-    VBIiPsUAAZ3GUs>
-X-ME-Received: <xmr:XNxhY2LrelFCvdU7xTIVlzO0mOq1q9ASfcdCegXs-jtK3oeMBEu6b829FV_9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrudeigdehfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttdejnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    eukeeitedvfeffffehveelheeitdfgiedtueekieeuheejkefhtedttdevffejfeenucff
-    ohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhslhgr
-    sgdrtghomh
-X-ME-Proxy: <xmx:XNxhY-GwC2B8kINYEJ3GWCAk5wqUz8-eDrnZT5zpU4m1PjxEHvjR4A>
-    <xmx:XNxhYyU6lM_2EWLnyqUgjiDHN8_rExLudTDfxf0g9LIoagolm2_DwQ>
-    <xmx:XNxhYxOcXL-zPNKMOOIYP8VQPQZnlcOyBLnH5jUj6m2_3cCa4MjQUw>
-    <xmx:XNxhY6jHCx1d7Pb6vNm1hjGxtCog2ekpJIWKHy6TYD1TOLaZ67OHmg>
-Feedback-ID: iac594737:Fastmail
-Date: Tue, 1 Nov 2022 22:56:23 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Received: (qmail 26337 invoked from network); 11 Jul 2024 07:08:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=corsac.net; s=2021;
+	t=1720681600; bh=PawgDtHUKSKBR8Shbr7TW4MGPa08nxpDvlS9HZDrnYc=;
+	h=Subject:From:To:Date:In-Reply-To:References:From;
+	b=lG+lIhnmJ7203pl7c2QihyuIkoiv9tgtQMDes7J4+9pQPanSvHamgXgAhiVP/8L2i
+	 on679CFX592Gm6KeHK8K9+TE3xUbVQsAOL5+Q0XcGnXQO6ClQo/heZUf2VoQpIKfAk
+	 X/0OQZk8XdznDfX9nwBHRbR2NSc7De/SL+eORhuc14nnYWYyNgt+k2ZZiqSY7BWOq7
+	 3QMaOteokVdzwcKxL4rWbloLVDuSywTG5aBPuVNDLtIiUWyF9CaV/8KKDLBjOBHYMd
+	 iQyIkbAGVGjwjuQKX2waimErdQMu0+6s4XhCI+wW46DJSZygljO1g8LN98OuZsYKm8
+	 M8XkFQ0fDWECg==
+Message-ID: <3a3e9afa77884b05733a5cdfc3eaa65defa45fa4.camel@corsac.net>
+From: Yves-Alexis Perez <corsac@corsac.net>
 To: oss-security@lists.openwall.com
-Message-ID: <Y2HcWkqpp9KhX80r@itl-email>
-References: <20221101170833.GA10470@openwall.com>
- <Y2FhxvA/2e7xFUiF@itl-email>
- <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
- <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
- <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IwPaahApQ0LGX2Z+"
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
- Overflow (CVE-2022-3786)
-
---IwPaahApQ0LGX2Z+
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
+Date: Thu, 11 Jul 2024 09:07:57 +0200
+In-Reply-To: <bda1ece8-8302-4a04-9f16-c78b51b0dbb2@analygence.com>
+References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
+	 <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
+	 <bda1ece8-8302-4a04-9f16-c78b51b0dbb2@analygence.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 1 Nov 2022 22:56:23 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
- Overflow (CVE-2022-3786)
+User-Agent: Evolution 3.52.3-1 
+MIME-Version: 1.0
+Subject: Re: [oss-security] ASLRn't is still alive and well on x86 kernels,
+ despite CVE-2024-26621 patch
 
-On Tue, Nov 01, 2022 at 04:57:25PM -0400, Jeffrey Walton wrote:
-> On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
-> <pavan.maddamsetti@gmail.com> wrote:
-> >
-> > https://github.com/RustCrypto
->=20
-> I hope this does not start a war.. The problem with Rust is, it's only
-> guaranteed to work on i686 and x86_64.
->=20
-> Trying to compile Rust programs on armel, armhf, aarch64 and PowerPC
-> has been excruciatingly painful. The tool cannot compile its own
-> cargo's on those platforms. I gave up trying to use Rust on anything
-> but x86_64.
+On Wed, 2024-07-10 at 17:39 -0400, Will Dormann wrote:
+> Linux 6.9.7 was released in June2024, and the patches for CVE-2024-26621=
+=20
+> went in months before that.=C2=A0 This behavior matches my 3rd bullet poi=
+nt=20
+> above, so I think everything is as expected here.=C2=A0 ("... will random=
+ize=20
+> the load address of large libraries loaded by 32-bit apps.")
 
-Rust should certainly be able to compile its own Cargo, so this is an
-outright bug.  Please report it.  If the instructions are confusing
-enough that it is easy to make a mistake, that=E2=80=99s a bug in the
-documentation.
+Right.
+>=20
+> If you want to see the lack of randomization, try the test with an x86=20
+> kernel, not amd64.
+
+I don't have one at hand unfortunately, but I'll try setting up a VM or
+something just to be sure. Thanks.
+
+I think there are not a lof of *modern* IA-32 installations, especially on
+=E2=80=9Cgeneric=E2=80=9D distributions, but there might still be some in n=
+etwork appliances
+or something.
+
+I guess setting vm.mmap_rnd_bits (or CONFIG_ARCH_MMAP_RND_BITS) to 16 at le=
+ast
+helps on those platforms (like they did on Ubuntu) but I wonder if a fix (o=
+r a
+revert) in the kernel would be better (do we really need the alignment perfs
+on IA-32 kernels?)
+
+Regards,
 --=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
---IwPaahApQ0LGX2Z+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmNh3FkACgkQsoi1X/+c
-IsHAUg/9F6Q3sQM/KaFuuRxtuDkz2My3XdUD+qEf/FNoe9sViopdU5lLt9+ZNwtq
-GwcEJlycKN4VW/rNrDwDJZ2j7rJ1CGfeAz+2dFHzr5fI2itRw9q6hUgIfQD1UBTx
-u9tp05IMhmsyuKahu6jKrGqHMaKZGBXDiC+6LHnWcYLH+Tu7zykVWsH2yqJAGjoO
-NxBUn82fUGzUXkZoZBjaunAnOBNGyoFPgx/QhIOswjSEaQSikt9wCYnuyRpxnmkS
-nvnlFD7T39vYeevGkN06K+CjG4IR7tXkGQkT2eFcr5lv1voOKeSzwcI+znnT1nkx
-CQoWQMO3ePEXyjD3Im1dBE1xvzkDBBxaqoaqcs/0MChySd5e0UDpcS8JAbwblyIv
-cOLizjRU8lvGdWzzu7BaeW/7g5JP/fKgxF4HR6aHCJfAfbZ9EoKaeeFtIGDz0QkI
-sjmPC70Qo9khlA+LHGF014iCbaaANqbi/7gY8hh8AkEoPHdUpCKyw3DIUnQLOsZ1
-f2R8nWiA7btVrr/tHgE81896j9/sP10WfB9XzIeJ/huNgg4yX6lO+9VWMVNjvNFY
-g6PuMTVbtPfbtamEL3NNj1fI4WuvQAJO9KcyKKeocFHD2Z8QiRdYqlKGfGMLYjKm
-7GIhdHWZOM2oDDozYtyEkIMnZtQ3ffMarVft4Wo4IF1puohXrc0=
-=Drty
------END PGP SIGNATURE-----
-
---IwPaahApQ0LGX2Z+--
+Yves-Alexis
