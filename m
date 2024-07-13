@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1823" "Wednesday" "13" "February" "2019" "13:06:01" "+0400" "Loganaden Velvindron" "loganaden@gmail.com" "<CAOp4FwQjDa6+c7HsF94At4Azj4aeyEouOO_AW8jk2iZ4hjwrOA@mail.gmail.com>" "52" "Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)" "^Cc:" nil nil "2" "2019021309:06:01" "[oss-security] CVE-2019-5736: runc container breakout (all versions)" (number mark "        loganaden@gm Feb 13   52/1823  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)\"\n") "<20190213090320.lce4bdign5rzqjzm@mikami>" ("<20190211130520.xwi6vpay3sc56pza@yavin>" "<20190212163606.GA4443@openwall.com>" "<20190213090320.lce4bdign5rzqjzm@mikami>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7783 invoked by uid 550); 13 Feb 2019 11:16:39 -0000
+Received: (qmail 20415 invoked by uid 550); 13 Jul 2024 12:52:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +6,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12233 invoked from network); 13 Feb 2019 09:06:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SEOM5xapz2YSVfDTDhGJcZjR622p/ob79MufKNwCGBE=;
-        b=p+kdDF+kBBIiIW2ITIdz6OK6mFOaww8Fe+sjBXPcHgHxKxe9bg9iSHKIzwaNmAlLdK
-         4YZW2H0St2P+uhxSiMjBefgbsIycsHsOs97wzU9iRIkFH6V/2w+lwJutepumRkxH9l2M
-         ZDUjjM7jAGhVxpuekT3c7mSkG6Mck84bbVpv6ytpCglNYtgeP3ZaJALeFBQiwR/95D6Z
-         NQlA12XlgjkQwLGbVRKw4hW+Qh92EnSKdUyqISW7WWVKgc86t1qPe1K6AJ9X0RI5h3jT
-         BunWk4Oamonw05GdKzwO6BynvDRpXrxvSg1w63L4It9q50rfwwsBhigK9IYmSo7RwwQl
-         rHhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SEOM5xapz2YSVfDTDhGJcZjR622p/ob79MufKNwCGBE=;
-        b=T/7+flRzJsR/MCfw6npIVaxjE9MG5epYDneAny1v7ujlpjsOeUYolSWpVSqwhXEv+y
-         4u93hPkyo+0Wkh4uK8N1uLMt/ndF1wn+2d4jI2PCQyxlgQ4Dc3eFSNOimQtok2UGijTQ
-         E+qZrJad3EAJCjjdtYA3oHi3gitCn55uqgH81b6wKgZWh8t5SokSvrJDYtvKp7wMaefp
-         CwLAWGB60id86Cgf9zD6TSmPUL/mB4erb/dVE/IF9YXE2UpY0NvUuSqUfjDzyKIgJp3I
-         DgEbiRt+C4jJL+gEnE/Ls/aH7au3gfMgbJsmM271lbjSNCzGVuwjtgEhzJhpW9YnOmDN
-         uy9w==
-X-Gm-Message-State: AHQUAuZk5wNEiOUTxifRuZa3m+MLoMnIz/aDVhlTgfJQghOOdD/n6M26
-	hfFADdAAMHJWOQWZTkc76FAyCH6tOYFXM9X4BulTdQ==
-X-Google-Smtp-Source: AHgI3IarBt9iCtNYBJVh8I8CchAqko+7DPV9BQLkVIUH/1Nse0N5IGPT88pedrZVWQ1GLUBXvs9Nu5j37sYDflSDmiQ=
-X-Received: by 2002:a6b:7108:: with SMTP id q8mr4281813iog.7.1550048773109;
- Wed, 13 Feb 2019 01:06:13 -0800 (PST)
-MIME-Version: 1.0
-References: <20190211130520.xwi6vpay3sc56pza@yavin> <20190212163606.GA4443@openwall.com>
- <20190213090320.lce4bdign5rzqjzm@mikami>
-In-Reply-To: <20190213090320.lce4bdign5rzqjzm@mikami>
-Message-ID: <CAOp4FwQjDa6+c7HsF94At4Azj4aeyEouOO_AW8jk2iZ4hjwrOA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000817d170581c2da96"
-Cc: Solar Designer <solar@openwall.com>, Aleksa Sarai <cyphar@cyphar.com>, dev@opencontainers.org, 
-	Christian Brauner <christian.brauner@ubuntu.com>
-Date: Wed, 13 Feb 2019 13:06:01 +0400
-From: Loganaden Velvindron <loganaden@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)
+Received: (qmail 20397 invoked from network); 13 Jul 2024 12:52:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=9GLMpbPaS/Qb3KtO8jhI6ZLKxDbRxQO9D+jaWtND+Cw=; b=G73H9M+LAm+noFDPSMpJANFswD
+	CQaqZ/HNXMO4+GsTJMAwS85905sfqRAffE9N6moXPi7RG1UVjvYf8xR6RPBVjFpCTxNxkDt9ccDzs
+	c8FCxdptBPUlVaYGAOYiSt630b6/NyFd6AWyTjHy9aQD3Ln4SwtszQDTOSTjmRVW7W7NYW8GNKXCa
+	Fiav54jgzehqNkkVKoul2feHoJQbh7s2s7CqB+zIm2oAezRix6wREc7fXNN0rCQ45JaFZF2YQifFO
+	RmsLP89yxtklCHCbXgWnlQowYYWs6USRGdIQZu4X3TeoSDbvgAGsWFlW1j26m/4pMYUzODrQCsuoQ
+	efwXYDsw==;
+Date: Sat, 13 Jul 2024 13:52:26 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
+Message-ID: <ZpJ4imxZbVpeHijv@remnant.pseudorandom.co.uk>
+References: <CAN_LGv0tC7ef+0BV=m7i_9caO2g+B-SkqENT=w-=uif7ntsqjw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAN_LGv0tC7ef+0BV=m7i_9caO2g+B-SkqENT=w-=uif7ntsqjw@mail.gmail.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] backtrace_symbols() misuse by Ceph and its
+ supposedly-safe use
 
---000000000000817d170581c2da96
-Content-Type: text/plain; charset="UTF-8"
+On Fri, 12 Jul 2024 at 17:37:59 +0800, Alexander Patrakov wrote:
+> Ceph daemons, however, have a signal handler that catches SIGABRT and
+> SIGSEGV and tries to format and log a backtrace.
+...
+> What would be a good solution (as in: something that does not convert
+> crashes into deadlocks) here? I understand that, after memory
+> corruption, we are already in the UB territory, but is there anything
+> better possible than what is implemented?
 
-I think that someone already posted a PoC on github, AFAIK.
+Let it crash, and have a kernel core-dump collection hook collect it and
+do post-mortem analysis? systemd-coredump and corekeeper are the
+implementations of this that I've used myself, but I'm sure there are
+plenty more available.
 
-On Wed, Feb 13, 2019 at 1:04 PM Aleksa Sarai <asarai@suse.de> wrote:
+This has the additional benefit that it works for every daemon your
+system might be relying on, not just Ceph itself (I don't know how
+self-contained Ceph is).
 
-> On 2019-02-12, Solar Designer <solar@openwall.com> wrote:
-> >  static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
-> >  {
-> >         struct task_struct *task;
-> > @@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
-> > struct path *exe_path)
-> >         exe_file = get_task_exe_file(task);
-> >         put_task_struct(task);
-> >         if (exe_file) {
-> > -               *exe_path = exe_file->f_path;
-> > -               path_get(&exe_file->f_path);
-> > +               int result;
-> > +
-> > +               result = path_in_ve(&exe_file->f_path);
-> > +               if (result == 0) {
-> > +                       *exe_path = exe_file->f_path;
-> > +                       path_get(&exe_file->f_path);
-> > +               }
-> >                 fput(exe_file);
-> > -               return 0;
-> > +               return result;
-> >         } else
-> >                 return -ENOENT;
-> >  }
-> > ---
-> >
-> > This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
-> > elsewhere, but maybe a similar approach could be used upstream?
->
-> I have just sent v5 of my AT_THIS_ROOT patchset to LKML[1] -- which
-> allows userspace processes to block resolution of magic links. While
-> blocking access through /proc/self/exe helps block this issues, being
-> able to block (from userspace) resolution of all magic links would
-> massively help avoid problems like this.
->
-> [1]: https://marc.info/?l=linux-api&m=155002737629350&w=2
->
-> --
-> Aleksa Sarai
-> Senior Software Engineer (Containers)
-> SUSE Linux GmbH
-> <https://www.cyphar.com/>
->
+The other way to do this is to go to heroic efforts
+to avoid heap allocations, like Google's Breakpad does:
+https://chromium.googlesource.com/breakpad/breakpad/+/HEAD/docs/client_design.md#exception-basics
+This is necessary because Breakpad is typically used by leaf applications
+(Chrome, games, etc.) that want to be able to report crashes to their
+vendor, independent of how the underlying OS is set up. Of course, by the
+time you're in UB territory, literally anything could be happening (for
+example memory corruption could conceivably have overwritten the stack
+of Breakpad's crash-handler thread, if you're spectacularly unlucky)
+but this is more about "pragmatic compromises that usually work" than
+being 100% correct.
 
---000000000000817d170581c2da96--
+But if you control the machine at OS level (as you typically would for
+a server) it seems more reliable to let the daemon crash and dump core,
+and let a trusted OS-level component that is not already in an undefined
+state process the core dump.
+
+This seems like it applies extra-strongly if you suspect that the crash
+might be caused by a malicious actor who is manipulating the memory
+corruption to their benefit, rather than an accident.
+
+    smcv
