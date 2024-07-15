@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6510" "Thursday" "18" "August" "2016" "17:43:50" "+0100" "Ben Hutchings" "ben@decadent.org.uk" "<1471538630.13300.95.camel@decadent.org.uk>" "163" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016081816:43:50" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        ben@decadent Aug 18  163/6510  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160818151654.GK2701@suse.de>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>" "<20160818145724.GA32181@kroah.com>" "<20160818151654.GK2701@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9859 invoked by uid 550); 18 Aug 2016 16:55:50 -0000
+Received: (qmail 18138 invoked by uid 550); 16 Jul 2024 00:10:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,188 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5570 invoked from network); 18 Aug 2016 16:44:17 -0000
-Message-ID: <1471538630.13300.95.camel@decadent.org.uk>
-In-Reply-To: <20160818151654.GK2701@suse.de>
-References: <20160818142216.GH2701@suse.de>
-	 <20160818143014.GA27854@kroah.com> <20160818143957.GI2701@suse.de>
-	 <20160818145724.GA32181@kroah.com> <20160818151654.GK2701@suse.de>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-1r+d8SaZLBATMht7SF2n"
-X-Mailer: Evolution 3.20.4-1 
-Mime-Version: 1.0
-X-SA-Exim-Connect-IP: 82.70.136.246
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
-Cc: OSS Security List <oss-security@lists.openwall.com>,
- cve-assign@mitre.org,  security@kernel.org
-Date: Thu, 18 Aug 2016 17:43:50 +0100
-From: Ben Hutchings <ben@decadent.org.uk>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in
- malicious USB devices
-To: Marcus Meissner <meissner@suse.de>, Greg KH <greg@kroah.com>
+Received: (qmail 17767 invoked from network); 15 Jul 2024 23:41:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1721086860; x=1721753526; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=J0fkhOfIh36jw5UtRWqlXHSrsTuuucHHP97VWu7myro=;
+ b=PEjnBzttImJIK9xLGDFXsyM0i538NT7TKWtlp59oCPjrFdIW4tYhFGouC+b9F9TFef+DgSHt
+  Nj8ImUVWLl5Vzgi6bFZPb+IvKifiy9WqrZHQtxoI6Z9L3AetFdEM7LZLHqm/sq13+FE4hp8YXZ
+  BeVqs2leCC6Z521KPjycghERV4dVBHmkV4Gm8LrKvRaiPClHWyqrfRDVu7RF6pdg6eD7vU6FH3
+  aa4u5Kr2OqqD+0ypWLrDBIetmZoSiDRbM5vQ2jDSGXzlmmq7nENfzkCJJkLUnO4Gx8PBULymH4
+  wbW5P2wFdWV5mp7NO9OWZoM+i4EpgMrCgJe58jPCk5V/c2Mw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1721086860; x=1721753526; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=J0fkhOfIh36jw5UtRWqlXHSrsTuuucHHP97VWu7myro=;
+ b=IjTBX+87Cd8enZ8EKyI84hYaUJDAczoTTdSmsn4RaMRVNtk7tDSM3lhAEDdIhtDc/V6t/6DH
+  SF2la7277PkxDA==
+Date: Tue, 16 Jul 2024 01:40:59 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20240715234059.ThiJfcS3@steffen%sdaoden.eu>
+In-Reply-To: <66946BDB.4070709@gmail.com>
+References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
+ <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
+ <20240710214412.8IXhxf8b@steffen%sdaoden.eu>
+ <83F0CF09-6257-4949-9332-E6990CFE14C7@dwheeler.com>
+ <20240712170603.XJ6iwd6q@steffen%sdaoden.eu> <6691E39C.8090600@gmail.com>
+ <20240713205858.LSnJJGoo@steffen%sdaoden.eu> <66946BDB.4070709@gmail.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-621-g0d1e55f367
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] ASLRn't is still alive and well on x86
+ kernels, despite CVE-2024-26621 patch
 
---=-1r+d8SaZLBATMht7SF2n
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Jacob Bachmeyer wrote in
+ <66946BDB.4070709@gmail.com>:
+ |Steffen Nurpmeso wrote:
+ |> [...]
+ |>
+ |> Some findings:
+ |>   . I note that the mentioned files are writable by only root (and
+ |>   i would assume MAP_DENYWRITE to only work if i could do so
+ |>   myself).
+ |>   
+ |
+ |I believe that most executables are writable only by root, but available 
+ |to unprivileged users.  Since the purpose of MAP_DENYWRITE seems to have 
+ |been ensuring that executables cannot change out from underneath running 
+ |programs, it would need to work when unprivileged users map the file; 
+ |thus the DoS problem.
 
-On Thu, 2016-08-18 at 17:16 +0200, Marcus Meissner wrote:
-> On Thu, Aug 18, 2016 at 04:57:24PM +0200, Greg KH wrote:
-> >=20
-> > On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
-> > >=20
-> > > On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
-> > > >=20
-> > > > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
-> > > > >=20
-> > > > > Hi,
-> > > > >=20
-> > > > > I think this does not have a CVE yet, please assign.
-> > > > >=20
-> > > > > https://www.spinics.net/lists/linux-usb/msg144177.html
-> > > > >=20
-> > > > > Headline:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Li=
-nux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
-> > > > > Platforms:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Ubuntu
-> > > > > Versions:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Li=
-nux Kernel 4.4.0-22-generic
-> > > >=20
-> > > > Huh?=C2=A0=C2=A0It's much more pervasive than just that single plat=
-form or single
-> > > > version.
-> > >=20
-> > > That was the quote from the original e-mail. I read further on it aff=
-ects
-> > > more kernel versions.
-> > > =C2=A0
-> > > >=20
-> > > > >=20
-> > > > > CVSS Score:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A04.7
-> > > > > CVSS Vector:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0AV:L/AC:M/Au:N/C:=
-N/I:N/A:C
-> > > > > Filed Defects:=C2=A0=C2=A0=C2=A0=C2=A0
-> > > > > Related Defects:=C2=A0=C2=A0
-> > > > > CWE Tags:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> > > > > Cycle:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0
-> > > > > Found by:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Ja=
-ke Lamberson
-> > > > >=20
-> > > > >=20
-> > > > > Linux Kernel panics when using an OHCI controller if a USB device=
- reports being=C2=A0
-> > > > > a generic HID keyboard and reports a wMaxPacketSize of over 4095.=
- The OHCI
-> > > > > controller driver fails to reserve bandwidth for the device, caus=
-ing the=C2=A0
-> > > > > keyboard handler to fail when attaching to the HID. Later, when t=
-he device is=C2=A0
-> > > > > removed, the system crashes due to a null pointer dereference in =
-a linked list=C2=A0
-> > > > > of endpoint descriptors. The crash can be re-created using a Face=
-dancer and UMAP=C2=A0
-> > > > > software. Given an appropriately configured Facedancer and UMAP s=
-etup, the crash=C2=A0
-> > > > > can be re-created with:=C2=A0
-> > > > > sudo board=3Dfacedancer21 python3 umap.py -P /dev/serial_device_h=
-ere -f 03:00:00:E:0046 -l LOG
-> > > > >=20
-> > > > > Note: OHCI is a USB 1.1 controller standard that can be included =
-with devices
-> > > > > that support either USB 1.1 or 2.0 as their highest USB spec. USB=
- 3.0 devices
-> > > > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them=
- immune to
-> > > > > this particular bug.
-> > > > >=20
-> > > > > -----------------
-> > > > >=20
-> > > > > The proposed fixing patch is here:
-> > > > > https://www.spinics.net/lists/linux-usb/msg144269.html
-> > > > >=20
-> > > > >=20
-> > > > > It has not yet been committed to the USB tree or to Linus Tree as=
- far as I see.
-> > > >=20
-> > > > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe =
-in
-> > > > the usb tree and in linux-next and will be sent to Linus tomorrow.
-> > >=20
-> > > Ah sorry, only looked briefly.
-> >=20
-> > This was also asked about 2 hours ago on the linux-usb mailing list, why
-> > all of the sudden interest in something that we had been discussing for
-> > weeks now in public?
->=20
-> No one asked for a CVE before.
->=20
-> If that email request was from Oliver Neukum, he pinged me on it, so I
-> started acting on it, so that explains this parallelism.
-> =C2=A0
-> >=20
-> > >=20
-> > > >=20
-> > > > And are we really assigning CVE numbers for when you use an active
-> > > > "hardware test probe"?=C2=A0=C2=A0If so, how many are people going =
-to be assigning
-> > > > for these same problems on other operating systems?=C2=A0=C2=A0:)
-> > >=20
-> > > I think attaching malicious USB devices and crashing the kernel should
-> > > probably get CVE ids, or do you think it should not?
-> >=20
-> > I don't know, that's why I'm asking, it requires "physical presence"
-> > which is much different from most threat models that people work to
-> > protect against.
->=20
-> There has been quite a number of CVEs assigned to malicious USB devices
-> this year already, this does not seem to be different.
->=20
-> (e.g. CVE-2016-2384, CVE-2016-2188, CVE-2016-2187 etc.)
+I have to reread mandatory-locking.txt and locks.txt from Linux
+src.  I just realized that lslocks(1) aka /proc/locks shows me
+locks held by PID 1130 which "i" cannot see due to
 
-An attacker that has physical access to a USB port can short VCC to GND
-and likely destroy chips.=C2=A0=C2=A0If that is prevented by current limiti=
-ng
-they can still destroy the port with glue or corrosive liquid. =C2=A0The
-possibility of crashing the OS is (usually) a much less serious DoS and
-doesn't seem to me to be worth worrying about.
+  $ findmnt /proc
+  TARGET SOURCE FSTYPE OPTIONS
+  /proc  none   proc   rw,nosuid,nodev,noexec,relatime,gid=10,hidepid=invisible
+  $ cat /proc/locks
+  1: FLOCK  ADVISORY  WRITE 1130 00:15:354719 0 EOF
+  2: FLOCK  ADVISORY  WRITE 1130 00:15:354609 0 EOF
 
-However, physical access to a USB port doesn't necessarily mean (easy) phys=
-ical access to the rest of the machine. =C2=A0So vulnerabilities that allow=
- a USB device to corrupt memory (such as CVE-2016-2384) can lead to a real =
-privilege escalation and so are more concerning.
+I have the gut feeling in the end there will be nothing in /proc
+nor /sys.
 
-Ben.
+ |>   . Capabilities have become more fine-grained.
+ |>   . I always whimper when i have to rm(1) a running executable before
+ |>   placing an updated variant on Linux, on BSDs i simply over-cp(1)
+ |>   (and i do not understand as long as one gets either the one or
+ |>   the other when executing the path).
+ |>   
+ |Simple solution:
+ |    - write the new executable under a temporary name
+ |    - use link(2) to create a new name for the existing executable
+ |    - use rename(2) to atomically replace the existing executable
+ |    - use unlink(2) to remove the old version after any needed checks
+ |
+ |You can dispense with link(2) and unlink(2) if you do not want to 
+ |preserve a backup of the old executable.  Using this method will change 
+ |the executable's inode number (meaning that it really is a different 
+ |file) and that means that the old version can remain on disk for as long 
+ |as it remains in use, even after its last name has been removed.
 
---=20
-Ben Hutchings
-Klipstein's 4th Law of Prototyping and Production:
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0A fail-sa=
-fe circuit will destroy
-others.=
+Thank you.  Whimpering is not that bad, The Cure boys were crying.
 
---=-1r+d8SaZLBATMht7SF2n
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCgAGBQJXteXGAAoJEOe/yOyVhhEJTwgP/3wfD0NAxnZ1jUIGrb2eR6V2
-EptBYjoyJiDZ5efKf8/ea2wGzz81igEGyl8AQ4dIcE58fGUgs5kwFswwhYCS6Qjn
-mwvYdH9t2cA1btiyvHeFlZRA5zrZp+MVaSDHhB3icfJFtxDfNjk8cqwYD36BVUEy
-EoNTI9RNGIHwE5eof1folPWlzQfQsRh6grSeMGNBkRsL+p2ieveS0KidVfDZ/p2H
-JvJ1QN5XrwlckZZFdMQ0UyH0tRV7ScZu9C/RM7jgWnaNu9dBNcIEHlmdn5OPjtrS
-m91vw0fG77x/TC06arQYLVEfgr8XkY4bxPTDZU5NdguRMO9FJ3cZJDJjZbP4uqE1
-guztltLNgeTcUhkTIlYaBT1CmJfHV/D+eNcJQAhTwOM73/84qTJiCiD2SXZ07GYH
-xTpaHkUSC4vLWvH1uhUR+ZsXzk3lEBy2xqbfqhOLGJZv9mmSKBnWbdQSW0fGahu/
-EuxL6MhRdr1QvafuyjIW5ImPeh9XNIMeDtufH2Z2YK5YonCmgWofft9c4CAxLrsL
-SzfyMwHKQmc7+qsGAtix8ESYhODg0fLsloWrSkQlKS3q7vkmCkz/lg2SoFZdEC3f
-Q0BLtyZ6lotCHEVbs3WEPpd7KGWyfY+c1RqN34eYrEBMBbVymyy7M33ra0XA/83B
-000RnI2Brsoi4CSkmD+w
-=5Bc4
------END PGP SIGNATURE-----
-
---=-1r+d8SaZLBATMht7SF2n--
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
