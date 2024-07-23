@@ -1,4 +1,4 @@
-Received: (qmail 26200 invoked by uid 550); 5 Feb 2025 08:21:52 -0000
+Received: (qmail 12282 invoked by uid 550); 23 Jul 2024 15:00:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,124 +7,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26161 invoked from network); 5 Feb 2025 08:21:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1738743702; bh=nrX57kacBDidDk5c/FbYpq2D8hu0y0Rs/KeZLPgLSXA=;
-	h=Date:From:To:Subject:From;
-	b=qEQhZrvSGlrPzdhJ5Jxmp60SE8ymjPSOpXmAVwFbalbz3+egryCMEceKgV1E7zqBv
-	 icuDxpbNQzGJsMzvC/BxcnkEExx7RSA//oO4TMq34TuzSXQkOFY2CUIdP6BV0mmjsd
-	 ZKIcq7nlEB22U/+W1Wk3/dWwUsZRj4DGaojCEF/rgGlB1Vq5EG5LBZM8Ypl8ISNNWR
-	 OLyndj6h+/kPl5AgH+MLYDhkxcoIY5PnGb27gUSgWYizD41r5qa5xLDA+LJ2KFVvvU
-	 MguCe5EXWDcwZQENEpwPM4/7on5njVNjKw2pslWbBS/YWrvac7u2gKigOPFYBQp/mI
-	 uz74kwle3veWA==
-Date: Wed, 5 Feb 2025 09:21:42 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <9s413pp0-or33-59o0-pq82-40s270002npp@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 12251 invoked from network); 23 Jul 2024 15:00:30 -0000
+Date: Tue, 23 Jul 2024 15:00:19 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20240723150019.ljs3rfx4dlzu56sm@yuggoth.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2025-0725: gzip integer overflow
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ppjiffyrseghqnnw"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2024-002] OpenStack Nova: Incomplete file access fix and
+ regression for QCOW2 backing files and VMDK flat descriptors
+ (CVE-2024-40767)
 
-gzip integer overflow
-=====================
+--ppjiffyrseghqnnw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Project curl Security Advisory, February 5th 2025 -
-[Permalink](https://curl.se/docs/CVE-2025-0725.html)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2024-002: Incomplete file access fix and regression for QCOW2
+               backing files and VMDK flat descriptors
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-VULNERABILITY
--------------
+:Date: July 23, 2024
+:CVE: CVE-2024-40767
 
-When libcurl is asked to perform automatic gzip decompression of
-content-encoded HTTP responses with the `CURLOPT_ACCEPT_ENCODING` option,
-**using zlib 1.2.0.3 or older**, an attacker-controlled integer overflow would
-make libcurl perform a buffer overflow.
+Affects
+~~~~~~~
+- Nova: <27.4.1, >=3D28.0.0 <28.2.1, >=3D29.0.0 <29.1.1
 
-INFO
-----
+Description
+~~~~~~~~~~~
+Arnaud Morin (OVH) reported a vulnerability in Nova. By supplying a
+raw format image which is actually a specially crafted QCOW2 image
+with a backing file path or VMDK flat image with a descriptor file
+path, an authenticated user may convince systems to return a copy of
+the referenced file=E2=80=99s contents from the server resulting in
+unauthorized access to potentially sensitive data. All Nova
+deployments are affected.
 
-This problem can only trigger when using a run-time zlib version 1.2.0.3 or
-older. zlib 1.2.0.4 was relased on August 10, 2003. This means zlib versions
-that do not trigger this problem have been available and used for more than
-twenty-one years already. A zlib version 1.2.0.3 or earlier still in use is
-vulnerable to a wide range of security problems and a user using this is
-already in a spectacularly bad position.
+Patches
+~~~~~~~
+- https://review.opendev.org/924734 (2023.1/antelope)
+- https://review.opendev.org/924733 (2023.2/bobcat)
+- https://review.opendev.org/924732 (2024.1/caracal)
+- https://review.opendev.org/924731 (2024.2/dalmatian)
 
-libcurl featured code that at run-time takes a different code path for zlib
-versions before 1.0.2.4 because of lack of functionality in those old
-versions, and this rarely used piece of code contained the vulnerable code
-path.
+Credits
+~~~~~~~
+- Arnaud Morin from OVH (CVE-2024-40767)
 
-This bug is considered a *C mistake*. It is likely to have been avoided had we
-not been using C.
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2071734
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2024-40767
 
-This flaw also affects the curl command line tool.
+Notes
+~~~~~
+- The patches linked above should apply cleanly to the public state
+  of their respective branches at time of disclosure, and depend on
+  some commits which merged after the `OSSA-2024-001
+  <https://security.openstack.org/ossa/OSSA-2024-001.html>`_ fixes
+  as well as the final states of the Nova changes linked from that
+  advisory (those did see some minor adjustments before they
+  merged).
+- The QCOW2 issue is due to an incomplete fix in OSSA-2024-001
+  affecting systems where the ``use_cow_images`` configuration
+  option is disabled, while the VMDK issue is a regression of the
+  earlier `OSSA-2023-002
+  <https://security.openstack.org/ossa/OSSA-2023-002.html>`_
+  vulnerability reintroduced by the new implementation in
+  OSSA-2024-001. Both problems were identified in the final hours
+  before OSSA-2024-001 publication but, due to time constraints,
+  were redacted from that bug and moved to a separate report.
+- Neither the methods introduced in these patches nor the fixes for
+  OSSA-2024-001 are capable of blocking malicious images which are
+  already resident in Nova's cache. At this time we do not have
+  useful operator guidance for identifying and removing such
+  existing images from the cache but strongly caution, if you do
+  attempt to use the qemu-img tool to find them, to make sure you're
+  using a version of it patched for `QEMU CVE-2024-4467
+  <https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2024-4467>`_.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2025-0725 to this issue.
+--=20
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-CWE-680: Integer Overflow to Buffer Overflow
+--ppjiffyrseghqnnw
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Severity: Low
+-----BEGIN PGP SIGNATURE-----
 
-While the impact of this problem is potentially huge, we struggled with
-setting a severity combined with the knowledge that a user vulnerable to this
-is using **an over twenty years old and vulnerable zlib** and has practially
-"given up" all security. If there actually exist users vulnerable to this flaw
-in the world, they most likely already have worse problems than this to deal
-with.
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmafxYNfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCnTGw//bdzkcb9fHh8Qipvcx4iQSLPqar84jCrtCFJkJghpUNBeCQRsz2iGS5jk
+4DUgaHR4SV+n9uufIZ4USMxMwVWsSNOFn8xHAWF/LKh7lU/GY+7/cMiUsAxVkllt
+yvYx+Lvj+815a9gIgrzq9fBoZhXqeqwTOM/az7JprQ6GNLg8Ytye+s4gg5NPekWg
+Qz8U6h7L/p0SDOnkirfqSrm/NKX/88v80ItCPpvs8u2+2ZAYc6/oKnthZk3BnDPY
+K8dPKHHG1YpYWGzFko6s4UNWQNywYzPW6jafYorKwPv2hQ+2o+isjXvDg8nWrEhW
+99SXfwoIAkgscsNwTxqsRl/TigjEBVWEw+ePP5xQo+lJ79PIym2HawrOsQtLRYij
+dB9j5KouzDoPKDJ/Y9l43lddUj/zzOH5keIpt5IXNA0xOV0UHgimjqzZf30VoJ1x
+szPSibb9ZsrNAVPr7rrObSzrLv+NfSN6y1Tv8gMQfi7/Dk/uqbz9sEZ8l9L3Tj7x
+hYc8i6Utu5I25c0uXX/40tta0OnxIdO8DhZ56dBwqVFErfgPcNmApb1+7u5yk0uJ
+toVGTVQWMlzSlwJZteTno74zmarI8g9TB04U0P7zxUy5vcbIvkujS/+IBUTWPmD+
+rgDErnPp3v08se9bDC/Er3Nwnbmw7KSyn4YOkA4oWXfcKJgPHFM=
+=aoaI
+-----END PGP SIGNATURE-----
 
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.10.5 to and including 8.11.1
-- Not affected versions: curl < 7.10.5 and >= 8.12.0
-- Introduced-in: https://github.com/curl/curl/commit/019c4088cfcca0d2b7c5cc4f
-
-libcurl is used by many applications, but not always advertised as such!
-
-SOLUTION
-------------
-
-Starting in version 8.12.0, libcurl no longer supports zlib < 1.2.0.4. Using
-such a version will now instead cause a run-time error.
-
-- Fixed-in: https://github.com/curl/curl/commit/76f83f0db23846e254d940ec7
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 8.12.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Use a modern zlib
-
-  D - Avoid using the `CURLOPT_ACCEPT_ENCODING` option
-
-TIMELINE
----------
-
-This issue was reported to the curl project on January 23, 2025. We contacted
-distros@openwall on January 28, 2025.
-
-curl 8.12.0 was released on February 5 2025 around 08:00 UTC, coordinated with
-the publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: z2_
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+--ppjiffyrseghqnnw--
