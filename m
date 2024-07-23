@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4841" "Tuesday" "13" "September" "2016" "22:11:42" "+0300" "watashiwaher" "watashiwaher@gmail.com" "<CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>" "144" "[oss-security] libxml with CGI fix" nil nil nil "9" "2016091319:11:42" "[oss-security] libxml with CGI fix" (number mark "U       watashiwaher Sep 13  144/4841  " thread-indent "\"[oss-security] libxml with CGI fix\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21747 invoked by uid 550); 13 Sep 2016 19:14:32 -0000
+Received: (qmail 30609 invoked by uid 550); 23 Jul 2024 19:24:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,179 +7,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19520 invoked from network); 13 Sep 2016 19:11:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Q9Jep7J9jE6CDrNcKdCC4wPx40TxZZMVQMCE9/N1rFg=;
-        b=ng9dT+qJIK+6IEgoXnipPFvSsjaFtr5y/wP4knr76L3Z0T13hLmd8aFkICg9i2EvF2
-         dju85IXM1E3d7NFjGFjzkGe8V4bRvxQRGKMHSOWJ6J20qEByPHNIUzH11pGyj3lUsaMP
-         DRCB20brr9xKdlj32/FQQIdJUyJ+uG5NYnSnGYB8fp9wr8c5iruqEfEq9FkuA5R24wrz
-         zLeiO0Vid1U1csmdx+14Tw6AVYWwjGT6FEZre9IcdwaTR0e8LMWAykf8SjEgHTjVCcqg
-         TtlJZdCeAuuDBShza4x5Tqe90mmXDwduk/O39RbXnqP7Z5FLGqfYOUdVdvHs9sxEfdzS
-         8bZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Q9Jep7J9jE6CDrNcKdCC4wPx40TxZZMVQMCE9/N1rFg=;
-        b=eBGjxk7u7kBc+LeCiLSYNfMr6lBhSooPDt+cR6SaeZaQDVB63WlMsYy/xdgwZeXd2i
-         dnLkdnKeSYWLy6fESbib9YA6MDOJFmTJ2oDViaoh18s0LZMRvDqonRgjjZEpiHtqm/Q/
-         S5p5IoL2zqrlmFI5oWaxU1Cv0hkc+agN+mFGjIcU9NJghMjhUkI+co12hAnnwQTW50/p
-         prtW9Frd4xi69nZGll6/p8rQJj+quqGX3DslzDw4Cvbw7rKlmrm5/lbZ6GzWZyYgR3m3
-         5XDos48ZGiN3NG9BqwjumBIfWW5xRC3RM9yvVLAQsNLoTk1U02x8AV2y3dCuSUeHQsN4
-         hsiw==
-X-Gm-Message-State: AE9vXwPX9oVCOAu+DXEMwGdn7kpRPbgeCuiBwZll2jJlx/wDGHrckwTNe2fGXclv1eGQ0ZxgydmdydGES4LwZQ==
-X-Received: by 10.107.33.17 with SMTP id h17mr4177338ioh.81.1473793902658;
- Tue, 13 Sep 2016 12:11:42 -0700 (PDT)
-MIME-Version: 1.0
-From: watashiwaher <watashiwaher@gmail.com>
-Date: Tue, 13 Sep 2016 22:11:42 +0300
-Message-ID: <CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>
+Received: (qmail 28140 invoked from network); 23 Jul 2024 19:23:23 -0000
+Date: Tue, 23 Jul 2024 21:23:10 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1140c2260a873e053c686225
-Subject: [oss-security] libxml with CGI fix
+Message-ID: <20240723192310.GA23154@openwall.com>
+References: <Zo61nFk8VulWf7_J@michel-fedora-PC198L6J> <Zo7mU_N9joNTZ4gV@itl-email> <Zo759RRNseuva6zO@aeon> <Zo8fJWNFia9y2BS8@michel-fedora-PC198L6J>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zo8fJWNFia9y2BS8@michel-fedora-PC198L6J>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros application for CentOS Project's Hyperscale SIG
 
---001a1140c2260a873e053c686225
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hi, huys! There is a known httpoxy vulnerability ( https://httpoxy.org/ ).
-There is a problem with CGI usage in all application which use libxml2
-library. Attacker can make requests via attacker proxy from target server
-using this vulnerability. I reported this problem in the 5th august, but
-developers didn't reply me at all, and I don't know if they want to
-response.
+I've finally reviewed the links and re-read the thread.  Looks like
+we're OK to proceed with adding CentOS Project's Hyperscale SIG as a
+linux-distros member.
 
-So here is my original report to libxml2 team (with patch):
+Michel, please e-mail me off-list with PGP keys for all of you who need
+to be subscribed for Hyperscale.  I also need to know who will be
+managing this subscription on your end (informing me of any changes in
+who's to stay subscribed).
 
-There is a security problem in libxml2.
->
-> Problem:
-> There is a httpoxy vulnerability in libxml2 ( http://libpoxy.org )
-> It affects the usage of libxml2 inside CGI applications.
->
-> libxml2 is used in many popular products. So if someone of these popular =
-products will be used inside CGI script, attacker will be able to override =
-HTTP_PROXY environment variable by placing Proxy header with desired proxy =
-name. It will affect the usage of xmlNanoHTTPInit function inside nanohttp.=
-c. Requests will go through proxies of the attacker.
->
-> Possible solutions:
-> I found 2 possible solutions.
-> 1) Use HTTP_PROXY variable in lower case
->    (Curl style)
->    It works because CGI variables are sent only in upper case.
->    But doesn't work on windows because getenv is not case
->    sensitive in the Windows operating system.
-> 2) Do not accept HTTP_PROXY variable when REQUEST_METHOD environment vari=
-able defined.
->    (Python style)
->    It works because REQUEST_METHOD variable indicates that CGI is used.
->    But there is a problem with windows (we can't use HTTP_PROXY in CGI at=
- all)
->    and with other operation systems (where HTTP_PROXY is already used in =
-uppercase )
->
-> I made a mall patch that uses both solutions in the same time. It doesn't=
- accept HTTP_PROXY when REQUEST_METHOD defined. In non windows OS it accept=
-s it in lower case anyway, in windows it doesn't accept it.
->
-> Example of vulnerability (what I found):
+On Wed, Jul 10, 2024 at 06:54:13PM -0500, Michel Lind wrote:
+> All three of us are Fedora developers - but AIUI, we will not and can not use
+> membership here to contribute Fedora patches - until the embargo is
+> over.
+> 
+> For Hyperscale itself we plan to use the head start to have local builds
+> ready to go, and commit and do a public build as soon as the embargo is
+> over; if it needs collaboration we can use private Git repos and E2EE
+> private chats to discuss the fix among ourselves.
+> 
+> This is, to the best of my knowledge, similar to how AlmaLinux handles
+> embargoed security issues - the fix is ready to go but is only made
+> available once the embargo is lifted.
+> 
+> Now - wearing our Fedora hats, we certainly would try and help get this
+> fixed in Fedora once the embargo is over (as we've done before) - and
+> knowing a CVE is going to be made public would certainly help (e.g.
+> trying to make sure one of us is around) - but we won't be participating
+> in the list wearing our Fedora hat, or discuss embargoed issues with
+> people not on the list.
 
-First time I found httpoxy vulnerability in perlmagick
+This understanding is correct.  The membership and embargoed info is
+only for the specific distro "except with the reporter's explicit
+approval".  This exception means that you may occasionally ask whoever
+reported the issue to linux-distros for permission to use the
+information e.g. also for preparing a fix for Fedora even though you're
+subscribed for Hyperscale.  To avoid miscoordination, please keep such
+requests also CC'ed to the list.  Uses of this exception have been very
+rare so far, and it is expected that you wouldn't use it often, or else
+it'd make more sense to discuss the additional distro becoming a member.
 
-( http://www.imagemagick.org/script/perl-magick.php )
+> > I am curious what this could mean for Fedora Asahi Remix [0], as the
+> > applicants maintain both distros.
+> > 
+> > Is there interest in the Asahi SIG applying as well?
+> > 
+> > I heartily endorse the applicants membership request and appreciate
+> > their work. Hooray for ARM \o/
+> 
+> So... if this works for Hyperscale, we could potentially discuss with
+> other Fedora developers about having Fedora itself be represented in
+> linux-distros. Something to bring up at Flock! There's already some
+> discussion of this in the Fedora Security Matrix room w.r.t. last week's
+> OpenSSH CVE.
 
+FWIW, Fedora's fix for CVE-2024-6387 was quite timely as-is:
 
+commit dcbca7b947cf82c30d6f477a26efd2f765204fe6
+Author:     Gordon Messmer <gordon.messmer@gmail.com>
+AuthorDate: Mon Jul 1 20:49:16 2024 -0700
+Commit:     Gordon Messmer <gordon.messmer@gmail.com>
+CommitDate: Tue Jul 2 00:48:16 2024 -0700
 
-Code like this was used inside CGI script:
-> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-> Image::Magick->New()->Get('http://somesite.com/somefile.txt');
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    Patch 9.6p1 for CVE-2024-6387
 
+* Mon Jul 01 2024 Gordon Messmer <gordon.messmer@gmail.com> - 9.6p1-12
+- Patch 9.6p1 for CVE-2024-6387
 
+On one hand, this confirms that Fedora cares.  On the other, for an
+issue with a trivial patch, I don't know if Fedora could have done much
+or anything more to prepare.
 
-Actually this code called ImageMagick to download this file.
-> Inside Imagemagick code was like this:
-> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-> char
-> buffer[MaxBufferExtent],
-> *type; int
-> bytes; void
-> *context; type=3D(char *) NULL;
-> context=3DxmlNanoHTTPMethod(filename,(const char *) NULL,
-> (const char *) NULL,&type,(const char *) NULL,0);
-> if (context !=3D (void *) NULL)
-> {
-> ssize_t
-> count; while ((bytes=3DxmlNanoHTTPRead(context,buffer,MaxBufferExtent)) >=
- 0)
-> count=3D(ssize_t) fwrite(buffer,bytes,1,file);
-> (void) count;
-> xmlNanoHTTPClose(context);
-> xmlFree(type);
-> xmlNanoHTTPCleanup();
-> }
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+OpenSSH 9.8 released on July 1 also fixed "Logic error in ssh(1)
+ObscureKeystrokeTiming", which became CVE-2024-39894 by July 3:
 
+https://www.openwall.com/lists/oss-security/2024/07/03/6
 
+Per upstream, this issue affects "9.5 through 9.7 (inclusive)", so I
+guess Fedora's package based on 9.6p1 is vulnerable.  There doesn't
+appear to be a fix in the package yet.  I see this is being tracked in:
 
-And finally xmlNanoHTTPInit inside libxml2 function used environment
-> variable HTTP_PROXY. I want to say that developers of any software which
-> uses libxml2 may not know about httpoxy vulnerability and about the
-> possibility of usage HTTP_PROXY variable with libxml2 library.
+https://bugzilla.redhat.com/show_bug.cgi?id=2295615
 
+which is assigned to Dmitry Belyavskiy, who is also the maintainer of
+the OpenSSH package in RHEL and CentOS Stream.  RHEL is not affected and
+the issue is low severity, so will probably take a long while to fix in
+Fedora via Red Hat.  Maybe something the community could do quicker?
+This is not directly related to possible linux-distros membership; this
+issue wasn't even on linux-distros.
 
-> Example of vulnerability (what I found):
->
-> First time I found httpoxy vulnerability in perlmagick
-> ( http://www.imagemagick.org/script/perl-magick.php )
->
-> Code like this was used inside CGI script:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=
->>>>>>>>>>
-> Image::Magick->New()->Get('http://somesite.com/somefile.txt');
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->
-> Actually this code called ImageMagick to download this file.
-> Inside Imagemagick code was like this:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=
->>>>>>
-> char
->   buffer[MaxBufferExtent],
->   *type;
->
-> int
->   bytes;
->
-> void
->   *context;
->
-> type=3D(char *) NULL;
-> context=3DxmlNanoHTTPMethod(filename,(const char *) NULL,
->   (const char *) NULL,&type,(const char *) NULL,0);
-> if (context !=3D (void *) NULL)
->   {
->     ssize_t
->       count;
->
->     while ((bytes=3DxmlNanoHTTPRead(context,buffer,MaxBufferExtent)) > 0)
->       count=3D(ssize_t) fwrite(buffer,bytes,1,file);
->     (void) count;
->     xmlNanoHTTPClose(context);
->     xmlFree(type);
->     xmlNanoHTTPCleanup();
->   }
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->
-> And finally xmlNanoHTTPInit inside libxml2 function used environment vari=
-able HTTP_PROXY.
->
-> I want to say that developers of any software which uses libxml2 may not =
-know about httpoxy vulnerability and about the possibility of usage HTTP_PR=
-OXY variable with libxml2 library.
-> The easiest way to fix possible vulnerability everywhere is just to fix i=
-t inside libxml2.
->
->
-Patch address: https://bugzilla.gnome.org/attachment.cgi?id=3D332806
-
---001a1140c2260a873e053c686225--
+Alexander
