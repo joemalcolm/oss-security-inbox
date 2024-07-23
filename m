@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1365" "Tuesday" "3" "July" "2018" "10:11:45" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180703081145.GA8116@f195.suse.de>" "36" "Re: [oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" "^Date:" nil nil "7" "2018070308:11:45" "[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" (number mark "        mgerstner@su Jul  3   36/1365  " thread-indent "\"Re: [oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()\"\n") "<20180702173254.GC2555@espresso.pseudorandom.co.uk>" ("<20180702122122.GD8324@f195.suse.de>" "<20180702141024.iudvf2tx7fsf3q66@jwilk.net>" "<20180702173254.GC2555@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9419 invoked by uid 550); 3 Jul 2018 08:11:59 -0000
+Received: (qmail 25606 invoked by uid 550); 23 Jul 2024 16:31:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9388 invoked from network); 3 Jul 2018 08:11:58 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20180703081145.GA8116@f195.suse.de>
-References: <20180702122122.GD8324@f195.suse.de>
- <20180702141024.iudvf2tx7fsf3q66@jwilk.net>
- <20180702173254.GC2555@espresso.pseudorandom.co.uk>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="SLDf9lqlvOQaIe6s"
-Content-Disposition: inline
-In-Reply-To: <20180702173254.GC2555@espresso.pseudorandom.co.uk>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Date: Tue, 3 Jul 2018 10:11:45 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accountsservice: insufficient path check in
- user_change_icon_file_authorized_cb()
+Received: (qmail 9955 invoked from network); 23 Jul 2024 16:23:12 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Andrew Lamb <alamb@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <325aa1fb-ab3d-5f76-b9d6-b57dfaac80d6@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 23 Jul 2024 16:21:24 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-41178: Apache Arrow Rust Object Store: AWS
+ WebIdentityToken exposure in log files 
 
---SLDf9lqlvOQaIe6s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Severity: moderate
 
-> It might be a good idea to double-check that the result of
-> g_file_get_path() starts with "/", doesn't contain "/../" and (just for
-> completeness) doesn't end with "/..".
+Affected versions:
 
-I tested the patch initially and and an isolated test case shows that it
-does cover all these cases. No system calls appear to be performed.
+- Apache Arrow Rust Object Store 0.5.0 through 0.10.1
 
-Regards
+Description:
 
-Matthias
+Exposure of temporary credentials in logs=C2=A0in Apache Arrow Rust Object =
+Store, version 0.10.1 and earlier on all platforms using AWS WebIdentityTok=
+ens.=20
 
---SLDf9lqlvOQaIe6s
-Content-Type: application/pgp-signature; name="signature.asc"
+On certain error conditions, the logs may contain the OIDC token passed to =
+ AssumeRoleWithWebIdentity https://docs.aws.amazon.com/STS/latest/APIRefere=
+nce/API_AssumeRoleWithWebIdentity.html . This allows someone with access to=
+ the logs to impersonate that identity, including performing their own call=
+s to AssumeRoleWithWebIdentity, until the OIDC token expires. Typically OID=
+C tokens are valid for up to an hour, although this will vary depending on =
+the issuer.
 
------BEGIN PGP SIGNATURE-----
+Users are recommended to use a different AWS authentication mechanism, disa=
+ble logging or upgrade to version 0.10.2, which fixes this issue.
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAls7L8EACgkQFMQFyXGS
-NVPhzg/+Iu2HKXF0kh39DkPGPZdpA1+qMDHYRq8XwyM8F/b9jLmlcYm+foeeIPor
-6VKTBmQJmFn2np+p/+/ghNaG8kZo0Pwfv45Fx6zW6K1b1eW+ITiKRWmUApYRR7od
-P5n/ZieOw7vZzcAf88tDvSbcE1Zx2CVrUGSDLFMqQkiL+ogurjaW0UbQP7WhO2S5
-ZEeY2+8qk7GrUO02XHqfaQg/PQ5J0fy8v+gqnX0hSTu8IYBqiQ+cVdx5jGtvGnqk
-umtqbUHVPLk7g8aCG46y2gLV9akQVnlT3NpFVXEi1VcGHf7nGS0lw+vPmxDaqx73
-mxG8AOJ6LNAWXN/N1ZHHbJE9+7obHaq1CbgSY+I+Jza/IYQYpvJsdkCiUBoDGNjd
-wEE2QaA+9niSZAF2Bdzh8XUK3YgLY0ZRS//SMtPHm5yxdamV4IPY4ggNYlu82vyO
-I7RUiY1QuVk7uALlMKihOFAhgGKtII8h+wggop6vhxUrHVprwL1ekTQD3zPIzGoB
-GgZOcnhvUQMD5BT9Odctqmb442YpAi6jnmUDpuNQGbCSXpGCaxZzvby3kxhmctb3
-LqyCN+9w+WSHPotkflD2O12hcAtGbhFn08TS8QMp6h6FPae/tPvBHM6r6EOQE0/1
-1u7gYoqVp/lX+ioW8iI3hVF/FEJbbZa1wQB0KIHjPNJUFdHwzkc=
-=WLo+
------END PGP SIGNATURE-----
+Details:
 
---SLDf9lqlvOQaIe6s--
+When using AWS WebIdentityTokens with the object_store crate, in the event =
+of a failure and automatic retry, the underlying reqwest error, including t=
+he full URL with the credentials, potentially in the parameters, is written=
+ to the logs.=C2=A0
+
+Thanks to Paul=C2=A0Hatcherian for reporting this vulnerability
+
+Credit:
+
+Paul=C2=A0Hatcherian (finder)
+
+References:
+
+https://arrow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-41178
+
