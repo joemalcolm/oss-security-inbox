@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3691" "Thursday" "30" "May" "2019" "18:58:59" "+0800" "huangwen" "huangwen@venustech.com.cn" "<000f01d516d6$af59d490$0e0d7db0$@com.cn>" "167" "[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbCBXaWZpIERyaXZlciBtd2lmaQ==?==?gb2312?B?ZXggbXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZSBIZWFwIA==?==?gb2312?B?T3ZlcmZsb3c=?=" nil nil nil "5" "2019053010:58:59" "[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbA==?= =?gb2312?B?V2lmaQ==?= =?gb2312?B?RHJpdmVy?= =?gb2312?B?bXdpZmk=?==?gb2312?B?ZXg=?= =?gb2312?B?bXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZQ==?= =?gb2312?B?SGVhcA==?= =?gb2312?B?T3ZlcmZsb3c=?=" (number mark "U       huangwen@ven May 30  167/3691  " thread-indent "\"[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbA==?= =?gb2312?B?V2lmaQ==?= =?gb2312?B?RHJpdmVy?= =?gb2312?B?bXdpZmk=?==?gb2312?B?ZXg=?= =?gb2312?B?bXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZQ==?= =?gb2312?B?SGVhcA==?= =?gb2312?B?T3ZlcmZsb3c=?=\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbA==?= =?gb2312?B?V2lmaQ==?= =?gb2312?B?RHJpdmVy?= =?gb2312?B?bXdpZmk=?==?gb2312?B?ZXg=?= =?gb2312?B?bXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZQ==?= =?gb2312?B?SGVhcA==?= =?gb2312?B?T3ZlcmZsb3c=?=" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30647 invoked by uid 550); 30 May 2019 12:21:57 -0000
+Received: (qmail 17801 invoked by uid 550); 23 Jul 2024 14:56:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,191 +7,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11858 invoked from network); 30 May 2019 10:59:15 -0000
-From: "huangwen" <huangwen@venustech.com.cn>
-To: <oss-security@lists.openwall.com>
-Date: Thu, 30 May 2019 18:58:59 +0800
-Message-ID: <000f01d516d6$af59d490$0e0d7db0$@com.cn>
+Received: (qmail 15910 invoked from network); 23 Jul 2024 13:59:18 -0000
+ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org 8E8FD3AB275
+Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.31
+ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1721743148; cv=none; b=Gn8P27zM+Ms/4xoZ93bJPMZvgqEcS2dlOxDP4AjrYYyLmFYueo81YKVQgwnJrps1O81GnsA0KqEt6Z/7MzJUjbpuTl7R2bFiHn2mcWixCZjaJIQzBpg7yAj/N2KHzpRGew5xjBVmEay9GKW7TIat/WLlwFxI09J3htcWqC9MFIg=
+ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1721743148;
+	c=relaxed/relaxed; bh=//s9tFWi9tjRRBMGofR//qtX5qOyX1dxx/SwSCSVio4=;
+	h=DKIM-Signature:DKIM-Signature:Date:From:To:Message-ID:Subject:
+	 MIME-Version; b=EAQMIdNYK+eCAt8+JYO9X9pv+wdhJXSeQ9n8ziRWBnNug4xkp2pTgdeoDA4g41Q2wOlkSk+flVsHz8AzcXuTnpxKmUop57VQUj2W53vuCp/EbyOBdNJYKpvfVBlvfiYokgWLn/ZfVZi4VWe1T07Eu3gE5bz4hVafD1vDfHVYf/8=
+ARC-Authentication-Results: i=1; mx.pao1.isc.org
+DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org 8E8FD3AB275
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
+	t=1721743148; bh=8QnJlOYJJKQAYb7vnKM7QULw/u8uHzLBiYhNIN3JZ94=;
+	h=Date:From:To:Cc:Subject;
+	b=AH3TVhe/7dhLAtfLHFZHvCMeo/XWsKXi1rNnjtuNnn0NBGTgQrngr/3Jl3fLZWIGF
+	 umwS9rRHcCT62r1ccJA2GStxBj7ir9RzvstHoZVm22aqE5zKRamMn9x5j6bMtAUCyH
+	 QqY+AU3MRVGAI1ZIYAA5gS8IWTMLpj2M1pA0Izjk=
+DKIM-Filter: OpenDKIM Filter v2.10.3 zimbrang.isc.org 60E75E64607
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
+	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1721743148;
+	bh=//s9tFWi9tjRRBMGofR//qtX5qOyX1dxx/SwSCSVio4=;
+	h=Date:From:To:Message-ID:MIME-Version;
+	b=jLFkkJEolmmf/QpSqLst8Qd1W25FBXpDil9zaEn1tSjn9s6ds+Uqj6asE0MuXdBMl
+	 ++oAI8Zx5LaCD7JhFVQnVrBETx7SuqI0h4/oMRENPSMLEP+JIWfU4XreoJ4nHsXhm8
+	 OnmXpZaAZl1svSYLUEAIOqLarO8gAvXgOz1duFmA=
+Date: Tue, 23 Jul 2024 13:59:07 +0000 (UTC)
+From: Aram Sargsyan <aram@isc.org>
+To: oss-security@lists.openwall.com
+Cc: security-officer@isc.org
+Message-ID: <2129473434.508234.1721743147880.JavaMail.zimbra@isc.org>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_000_0010_01D51719.BD7D1490"
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AdUW1q56iF2D4BQjT0yqpH9mVWgpRA==
-Content-Language: zh-cn
-x-cr-hashedpuzzle: BSzf Bpq4 EKU5 Ef8x EyZK FU0t FW6v Gtpb G24y G8st HD+m IwfH J+1/ KCMp KlZw K8Vl;1;bwBzAHMALQBzAGUAYwB1AHIAaQB0AHkAQABsAGkAcwB0AHMALgBvAHAAZQBuAHcAYQBsAGwALgBjAG8AbQA=;Sosha1_v1;7;{C516DB79-7245-47B8-8643-67B566B52DAB};aAB1AGEAbgBnAHcAZQBuAEAAdgBlAG4AdQBzAHQAZQBjAGgALgBjAG8AbQAuAGMAbgA=;Thu, 30 May 2019 10:58:58 GMT;QwBWAEUALQAyADAAMQA5AC0AMwA4ADQANgAa/00AYQByAHYAZQBsAGwAIABXAGkAZgBpACAARAByAGkAdgBlAHIAIABtAHcAaQBmAGkAZQB4ACAAbQB3AGkAZgBpAGUAeABfAHUAcABkAGEAdABlAF8AYgBzAHMAXwBkAGUAcwBjAF8AdwBpAHQAaABfAGkAZQAgAEgAZQBhAHAAIABPAHYAZQByAGYAbABvAHcA
-x-cr-puzzleid: {C516DB79-7245-47B8-8643-67B566B52DAB}
-X-FangMail-Miltered: at mailgateway1 with ID 5CEFB776.000 by FangMail milter!
-X-FangMail-Envelope: 1559213942/52B7C1FF5B/5CEFB776.000/36.110.117.222/[36.110.117.222]/DESKTOPJ0GVDJH/<huangwen@venustech.com.cn>
-X-FangMail-Bounce-Flag: 1559213942.5CEFB776.000
-X-FangMail-Outinfo: 1559213942/5CEFB776.000/52B7C1FF5B/huangwen@venustech.com.cn/1
-Subject: [oss-security] =?gb2312?B?Q1ZFLTIwMTktMzg0NqO6TWFydmVsbCBXaWZpIERyaXZlciBtd2lmaQ==?=
-	=?gb2312?B?ZXggbXdpZmlleF91cGRhdGVfYnNzX2Rlc2Nfd2l0aF9pZSBIZWFwIA==?=
-	=?gb2312?B?T3ZlcmZsb3c=?=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [149.20.2.31]
+X-Mailer: Zimbra 9.0.0_GA_4612 (ZimbraWebClient - FF128 (Linux)/9.0.0_GA_4612)
+Thread-Index: JD9DE4HOiTiZqdjZh295DI/KQ8Zi6g==
+Thread-Topic: ISC has disclosed four vulnerabilities in BIND 9 (CVE-2024-0760, CVE-2024-1737, CVE-2024-1975, CVE-2024-4076)
+Subject: [oss-security] ISC has disclosed four vulnerabilities in BIND 9 (CVE-2024-0760,
+ CVE-2024-1737, CVE-2024-1975, CVE-2024-4076)
 
-------=_NextPart_000_0010_01D51719.BD7D1490
-Content-Type: text/plain;
-	charset="gb2312"
-Content-Transfer-Encoding: quoted-printable
+On 23 July 2024 we (Internet Systems Consortium) disclosed four vulnerabilities affecting our BIND 9 software:
 
-Hi,
+- CVE-2024-0760:        A flood of DNS messages over TCP may make the server unstable https://kb.isc.org/docs/cve-2024-0760
+- CVE-2024-1737:        BIND's database will be slow if a very large number of RRs exist at the same name https://kb.isc.org/docs/cve-2024-1737
+- CVE-2024-1975:        SIG(0) can be used to exhaust CPU resources https://kb.isc.org/docs/cve-2024-1975
+- CVE-2024-4076:        Assertion failure when serving both stale cache data and authoritative zone content https://kb.isc.org/docs/cve-2024-4076
 
-There is a heap overflow in marvell wifi driver in Linux kernel allows
-remote attackers to cause a denial of service(system crash) or possibly
-execute arbitrary code.
+New versions of BIND 9 are available from https://www.isc.org/downloads
 
-=20
+Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of each published release directory:
 
-Description
+- https://downloads.isc.org/isc/bind9/9.18.28/patches/
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-The problem is inside mwifiex_update_bss_desc_with_ie function in
-drivers/net/wireless/marvell/mwifiex/scan.c.=20
-
-When STA connects to AP, mwifiex_update_bss_desc_with_ie function will be
-called to update bss descriptor.In mwifiex_update_bss_desc_with_ie function,
-the IEs of beacon packet is parsed. When processing WLAN_EID_SUPP_RATES
-element,it does not check the length of rates data before calling memcpy,the
-dst buffer bss_entry->data_rates is a array with size
-MWIFIEX_SUPPORTED_RATES(14).=20
-
-Remote attacker can build a fakeAP sending malicous beacon packet with long
-WLAN_EID_SUPP_RATES element(element_len>14)=A3=ACwhen victim STA connects t=
-o the
-fakeAP, will trigger the heap buffer overflow.
-
-=20
-
-int mwifiex_update_bss_desc_with_ie(struct mwifiex_adapter *adapter,
-
-                                       struct mwifiex_bssdescriptor
-*bss_entry)
-
-{
-
-.....
-
-         /* Process variable IE */
-
-         while (bytes_left >=3D 2) {
-
-                  element_id =3D *current_ptr;
-
-                  element_len =3D *(current_ptr + 1);
-
-                  total_ie_len =3D element_len + sizeof(struct
-ieee_types_header);
-
-=20
-
-                  if (bytes_left < total_ie_len) {
-
-                          mwifiex_dbg(adapter, ERROR,
-
-                                       "err: InterpretIE: in processing\t"
-
-                                       "IE, bytes left < IE length\n");
-
-                          return -1;
-
-                  }
-
-                  switch (element_id) {
-
-                  case WLAN_EID_SSID:
-
-                          bss_entry->ssid.ssid_len =3D element_len;
-
-                          memcpy(bss_entry->ssid.ssid, (current_ptr + 2),=
-=20=20=20
-
-                                 element_len);
-
-                          mwifiex_dbg(adapter, INFO,
-
-                                       "info: InterpretIE: ssid: %-32s\n",
-
-                                       bss_entry->ssid.ssid);
-
-                          break;
-
-=20
-
-                  case WLAN_EID_SUPP_RATES:
-
-                          memcpy(bss_entry->data_rates, current_ptr + 2,
-//overflow!!!!!!!!!!!
-
-                                 element_len);
-
-                          memcpy(bss_entry->supported_rates, current_ptr +
-2,
-
-                                 element_len);
-
-                          rate_size =3D element_len;
-
-                          found_data_rate_ie =3D true;
-
-                          break;
-
-=20
-
-                  case WLAN_EID_FH_PARAMS:
-
-                          fh_param_set =3D
-
-                                   (struct ieee_types_fh_param_set *)
-current_ptr;
-
-                          memcpy(&bss_entry->phy_param_set.fh_param_set,
-
-                                 fh_param_set,
-
-                                 sizeof(struct ieee_types_fh_param_set));=20
-
-                          break;
-
-                  ......
-
-         }
-
-}
-
-=20
-
-=20
-
-Credit
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-This issue was discovered by huangwen of ADLab of Venustech
-
-=20
-
-=20
-
-Patch
-
-=3D=3D=3D=3D=3D
-
-https://lore.kernel.org/linux-wireless/20190529125220.17066-1-tiwai@suse.de/
-
-https://lore.kernel.org/linux-wireless/20190529125220.17066-2-tiwai@suse.de/
-
-https://lore.kernel.org/linux-wireless/20190529125220.17066-3-tiwai@suse.de/
-
-=20
-
-=20
-
-=20
-
-=20
-
-=20
-
-
-------=_NextPart_000_0010_01D51719.BD7D1490--
-
+With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
