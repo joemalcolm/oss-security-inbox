@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1195" "Monday" "13" "April" "2015" "13:11:23" "+0200" "=?utf-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20150413111123.GU1846@frisco.mine.nu>" "34" "[oss-security] CVE request for buffer overflow in ppp" nil nil nil "4" "2015041311:11:23" "[oss-security] CVE request for buffer overflow in ppp" (number mark "        seb@debian.o Apr 13   34/1195  " thread-indent "\"[oss-security] CVE request for buffer overflow in ppp\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32436 invoked by uid 550); 13 Apr 2015 11:11:37 -0000
+Received: (qmail 11917 invoked by uid 550); 26 Jul 2024 19:46:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +6,129 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32418 invoked from network); 13 Apr 2015 11:11:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=MVPMAJJbh0GO/DopbUy0f17IjxWCSqztuDUr2z8ZetM=;
-        b=cKHXiRg8SM/f/D3A4/UiFJHoNnsRbBgYcghyiy7ihLaveL6n23pGlAVloNrC8rR/as
-         SctdrmhFkzxDQ5ZMpP/ZIIyKw3+pw+TBl9UWE1fIBbwHV2MgkSXbWAX+I9UA1HAJ9gaG
-         hjsbOvld+eyJ1Ihr1S4/u690BvdS6tkRxdA+JVV6bxDj9/CnRGdhrYZXAtgdpX8UcllZ
-         DlnmbuIAyGiWUKmQ/WXbgkLIDV/9c6A1NdAylm2Ce6/JDRh3aGXurDgdFtKPMNMtzftH
-         CExvl/gkDDhw3mHWhgJjhlnqvuRCvMoAqmLZBOMzdcl2d85HuFzByEPdL4UKgve5V+3x
-         b/xA==
-X-Received: by 10.180.88.8 with SMTP id bc8mr20261052wib.19.1428923486062;
-        Mon, 13 Apr 2015 04:11:26 -0700 (PDT)
-Message-ID: <20150413111123.GU1846@frisco.mine.nu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: cve-assign@mitre.org
-Date: Mon, 13 Apr 2015 13:11:23 +0200
-From: =?utf-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: =?UTF-8?Q?S=C3=A9bastien_Delafond?= <sdelafond@gmail.com>
-Subject: [oss-security] CVE request for buffer overflow in ppp
+Received: (qmail 10081 invoked from network); 26 Jul 2024 19:46:12 -0000
+Date: Fri, 26 Jul 2024 21:46:06 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: sebastian@centricular.com
+Message-ID: <20240726194606.GA12556@openwall.com>
+References: <2309f1ae-1898-41f4-a369-c964498e9128@oracle.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2309f1ae-1898-41f4-a369-c964498e9128@oracle.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] GStreamer Security Advisory 2024-0003: Orc compiler stack-based buffer overflow
 
-Hi,
+On Fri, Jul 26, 2024 at 11:57:09AM -0700, Alan Coopersmith wrote:
+> https://gstreamer.freedesktop.org/security/sa-2024-0003.html reports:
 
-the Debian Security Team is requesting a CVE for a buffer overflow issue
-in ppp, described in the Debian BTS:
+> >Patches: 
+> >https://gitlab.freedesktop.org/gstreamer/orc/-/merge_requests/191.patch
+> 
+> The commit message on the fix states:
+> 
+> >vasprintf() is a GNU/BSD extension and would allocate as much memory as 
+> >required
+> >on the heap, similar to g_strdup_printf(). It's ridiculous that such a 
+> >function
+> >is still not provided as part of standard C.
+> 
+> Note that asprintf() and vasprintf() are part of the POSIX.1-2024 standard
+> which was officially published last month, so these are no longer
+> system-specific extensions:
+> 
+> https://pubs.opengroup.org/onlinepubs/9799919799/functions/asprintf.html
+> https://pubs.opengroup.org/onlinepubs/9799919799/functions/vasprintf.html
+> 
+> though they are not yet part of the C standard itself.
 
-  https://bugs.debian.org/782450
+Unfortunately, *asprintf() are not that easy to use safely:
 
-This has DoS implications, as detailed by the initial reporter:
+"For asprintf(), if memory allocation was not possible, or if some other
+error occurs, the function shall return a negative value, and the
+contents of the location referenced by ptr are undefined, but shall not
+refer to allocated memory."
 
-  Moreover, when ppp is compiled with GCC's Object Size Checking
-  Built-in Functions, the call to sprintf gets replaced by
-  __sprintf_chk():
-  https://gcc.gnu.org/onlinedocs/gcc/Object-Size-Checking.html
+Indeed, 191.patch referenced above is unsafe, e.g.:
 
-  If that is the case, pppd consistently crashes with a SIGABRT upon
-  successful authentication if its own pid is greater than 65535.
+-  vsprintf (text, format, args);
++#ifdef HAVE_VASPRINTF
++  char *text;
++  vasprintf (&text, format, args);
++#else
++  char text[ORC_ERROR_LENGTH] = { '\0' };
++  vsnprintf (text, sizeof (text), format, args);
++#endif
+ 
+   orc_vector_append (&parser->errors,
+                      orc_parse_error_new (orc_parse_get_error_where (parser),
+                                           parser->line_number, -1, text));
++
++#ifdef HAVE_VASPRINTF
++  free (text);
++#endif
 
-  https://bugs.launchpad.net/ubuntu/+source/ppp/+bug/291743
+If vasprintf() fails, "char *text" may remain uninitialized (or have any
+other value that "shall not refer to allocated memory").  It may happen
+to be a valid pointer to something else, perhaps if a pointer had been
+on that stack location before.  Then some other data would be accessed
+in place of the intended text, and eventually something else would be
+freed, which may happen to be an exploitable vulnerability e.g. via heap
+spraying and chunk unlinking.
 
-  As you can see from the reports, pppd's pid is always greater than
-  65535. Users complain that the bug shows up "after a few hours".
+As I recall, on *BSD's *asprintf() also reset the pointer to NULL.  On
+upstream glibc, it does not.  We failed to get this change past Ulrich
+back then:
 
-  A possible attack scenario against a VPN server running xl2tpd
-  follows.
+https://sourceware.org/legacy-ml/libc-alpha/2001-12/msg00045.html
 
-  xl2tpd starts a new pppd process for each connection attempt. A remote
-  attacker could repeatedly connect to the remote server, even with
-  invalid credentials, in order to increase the pid of pppd at every
-  attempt. After pppd's pid reaches 65535, each and every subsequent
-  connection attempt would fail, resulting in a denial of service.
+> "Dmitry V. Levin" <ldv@alt-linux.org> writes:
+> 
+> > I'm talking about already written software which rely on zeroing
+> > result_ptr.
+> 
+> There is no such software using glibc.  Changing this (which is
+> completely unnecessary) will create an incompatibility.  Newly
+> developed code might check only for the NULL pointer value and these
+> programs would then fail with older glibc versions.
+> 
+> > In this case no: former asprintf implementation in bad written program
+> > usually results to free(unitialized_pointer), while suggested feature will
+> > lead to free(0). See the difference?
+> 
+> Crap.  If the return value says "failed; don't use the result" you
+> cannot use the pointer value.  It's that easy.  The interface is
+> completely in line with other interfaces which behave the same.
+> 
+> -- 
+> ---------------.                          ,-.   1325 Chesapeake Terrace
+> Ulrich Drepper  \    ,-------------------'   \  Sunnyvale, CA 94089 USA
+> Red Hat          `--' drepper at redhat.com   `------------------------
 
-Cheers,
+but distros carried it as a patch in ALT Linux, Owl, and more recently
+in Rocky Linux SIG/Security.  I think glibc upstream should revisit
+merging it (or equivalent):
 
---Seb
+https://sig-security.rocky.page/packages/glibc/
+
+"In asprintf(3)/vasprintf(3) reset the pointer to NULL on error, like
+BSDs do, so that the caller wouldn't access memory over an uninitialized
+or stale pointer (ALT Linux)"
+
+The patches are currently in:
+
+https://git.rockylinux.org/sig/security/src/glibc
+
+glibc-2.34-alt-asprintf.patch and glibc-2.34-rocky-asprintf.patch (the
+latter revises documentation)
+
+Regardless, users of these functions must be checking the return value.
+
+Also seen in 191.patch context is that the original code did not and
+still does not check return value from malloc(), which is also a bug.
+However, that is at worst a crash, whereas the impact of not checking
+the return value from *asprintf() is potentially worse.
+
+Alexander
