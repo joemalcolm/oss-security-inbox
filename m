@@ -1,4 +1,4 @@
-Received: (qmail 25715 invoked by uid 550); 7 Jul 2023 21:46:58 -0000
+Received: (qmail 5974 invoked by uid 550); 27 Jul 2024 19:59:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,101 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24486 invoked from network); 7 Jul 2023 21:46:27 -0000
-Date: Fri, 7 Jul 2023 23:46:18 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 5956 invoked from network); 27 Jul 2024 19:59:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722110381; x=1722715181; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=giJXZoe+gqCZ1z6v0gNt/FvdjZAglLMDmGYMv8nholc=;
+        b=HxhV2K8d2rKTU5sfrQUhssCj5JkfW+IwkixcL9XJ9B5VTl7clY0Q3oaAT5u0satALo
+         XmOvR+SqMxHfgbEvF69//REqq82wayzuuaiixK2nBr+Bvu3qqjs8Iwxf/etXobfuoTj/
+         saqLZL+Xs9HF/9sC4E6V4jOjAOAHWJIMZzirV0XaRnb3WqsRUnfQNZowSrrZzj50L78D
+         oF+6yAIGYqieNeIaCDfrpRXN6bz2OqwqCXe9+Y5IZWP5grVI7oDtgle5BZFaDbsV1eJC
+         vkf7ytJ0SJO+ieYgxEwk8MtjbjdMbEtCFEaQXIq1CGw8WoWgRDWeT+nVDM0oZep3B+Op
+         jO/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722110381; x=1722715181;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=giJXZoe+gqCZ1z6v0gNt/FvdjZAglLMDmGYMv8nholc=;
+        b=KD+rN0RbtdMiUfk5hx35VBt3mrVmyfauiv1E84Q6v3ZK1NDtmp/rtx6IpLbGLAraQN
+         axzC4xazc0W/KB1modXbkjYbHZj5KHfr9L5nIIM3ec+nXTXQUwwBJqgrtNZB3n+VYVeZ
+         MbyKSP9vB1+YqyR4ck7KlhVOMHd4KJxSWngMdPMWdNuBZhHmBfvOqOocrAR03fGve3/A
+         zrGtZ5bYpQiUSkKXNII5Z+lr03y4Pi+VgW4zYvFt56iNMidGzrG7Wd4+beT19PcqNofR
+         E1BepsbpP/nkPf1S91guK9fQPL0zx7yAmXH8TD8d4Qzp+33QHB3umTp2pqQDYegs1bW1
+         YvLQ==
+X-Gm-Message-State: AOJu0Yw+1LazrFC0/bKxUbFEAmFqG6fhegPQ8pIN69gPEgEG+DP/vssC
+	sCMJUjDJhs25af4Dzcz1ukFy/rFFdzKuEJrL9MHTzwifOvkF9WtIsk7bJoXn
+X-Google-Smtp-Source: AGHT+IEXqPY7gNAYjcUBwz6tzEMQ8wrEdS/JpVML+JqpyNLFLaEd/eL6jCxTIHCCXThMcGVwEk4znA==
+X-Received: by 2002:a5d:6d09:0:b0:367:9621:6fa with SMTP id ffacd0b85a97d-36b5d2cbd69mr2720797f8f.37.1722110381050;
+        Sat, 27 Jul 2024 12:59:41 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 27 Jul 2024 21:59:38 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Cc: Ruihan Li <lrh2000@pku.edu.cn>
-Message-ID: <20230707214618.GA29306@openwall.com>
-References: <xhhkp3aknwwlmrmmqmr532yfq3ioqh6jbkrxfqf6ovlj2szsai@f3sjwakyq323>
-Mime-Version: 1.0
+Cc: Dongli Zhang <dongli.zhang@oracle.com>
+Message-ID: <ZqVRqu8NTnfCwsx4@eldamar.lan>
+References: <9C169F9F-D2C0-40F9-92B2-5FBDEBDD4FDE@oracle.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xhhkp3aknwwlmrmmqmr532yfq3ioqh6jbkrxfqf6ovlj2szsai@f3sjwakyq323>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] StackRot (CVE-2023-3269): Linux kernel privilege escalation vulnerability
+In-Reply-To: <9C169F9F-D2C0-40F9-92B2-5FBDEBDD4FDE@oracle.com>
+Subject: Re: [oss-security] linux kernel: virtio-net host dos
 
-On Wed, Jul 05, 2023 at 08:12:01PM +0800, Ruihan Li wrote:
-> I reported this vulnerability to the Linux kernel security team on June 15th.
-> Following that, the process of addressing this bug was led by Linus Torvalds.
-> Given its complexity, it took nearly two weeks to develop a set of patches that
-> received consensus.
+Hi,
+
+On Wed, Jul 24, 2024 at 05:23:47PM +0000, John Haxby wrote:
+> Hello,
 > 
-> On June 28th, during the merge window for Linux kernel 5.5, the fix was merged
-> into Linus' tree. Linus provided a [comprehensive merge message][fix] to
-> elucidate the patch series from a technical perspective.
+> We recently have discovered a Denial-of-Service (DoS) attack issue that 
+> a KVM guest VM using virtio-net can crash the Linux host by sending a 
+> short packet (i.e.  size < ETH_HLEN). The packet may traverse through 
+> vhost-net, macvtap and vlan without any validation/drop. When this 
+> packet is presented to mlx5 driver on the host side, the host panic 
+> happens, since mlx5_core assumes the frame size is always >= ETH_HLEN.
 > 
->  [fix]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9471f1f2f50282b9e8f59198ec6bb738b4ccc009
+> Patches have been posted to netdev with the following cover letter.
+> I'll post the commit IDs when I have them.
 > 
-> These patches were subsequently backported to stable kernels ([6.1.37][6.1],
-> [6.3.11][6.3], and [6.4.1][6.4]), effectively resolving the "Stack Rot" bug on
-> July 1st.
+> jch
 > 
->  [6.1]: https://lore.kernel.org/stable/2023070133-create-stainless-9a8c@gregkh/T/
->  [6.3]: https://lore.kernel.org/stable/2023070146-endearing-bounding-d21a@gregkh/T/
->  [6.4]: https://lore.kernel.org/stable/2023070140-eldercare-landlord-133c@gregkh/T/
-
-Thank you very much Ruihan Li!  This is impressive work both by you and
-by the kernel maintainers.
-
-For the oss-security community, I need to acknowledge and explain that
-we made a rare exception from the linux-distros policy on 14 days
-maximum embargo time, and why we did that.  We also made use of the
-exception pre-granted for "Linux kernel issues concurrently or very
-recently handled by the Linux kernel security team", where a "silent"
-fix is possible without us treating that as embargo end.
-
-Ruihan Li brought the issue to linux-distros at the same time with
-contacting the Linux kernel security team on June 15th.  This meant the
-latest date for public disclosure would be June 29th.  As it happened,
-this issue was genuinely taking almost the full 14 days to fix,
-including patch review, testing on multiple platforms, and adjustments
-to the initial fixes.  The fix seemed ready on June 28th, and making the
-information fully public on the 29th was within consideration.  However,
-we decided to allocate an extra 6 days beyond the usual maximum of 14,
-until July 5th.  The intent was for the "silent" fix (committed by Linus
-on June 28th) to propagate to stable kernels, to prepared distro updates
-(not to be released with the fix documented until July 5th), and for it
-to stabilize in case more issues are found and addressed in this period
-(which wasn't unlikely given the complexity).
-
-Many of the distros present on linux-distros only used kernels older
-than 6.1, so were not affected.  This meant two things: on one hand, few
-distros would benefit from the delay, but on the other also few would
-possibly be hurt by the delay.  For many, this just did not matter.
-
-I didn't keep track, but apparently there were first compile-time and
-then runtime issues with the fix on sparc32, parisc, ia64, as addressed
-in this thread:
-
-https://lore.kernel.org/all/CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com/#t
-
-Linus also promptly found (and informed linux-distros on June 29th) that
-a runtime warning message temporarily introduced along with the fix (but
-with a separate commit) was getting triggered too commonly.  This is
-finally fixed in:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6cd06ab12d1afdab3847e7981f301bd0404aaa5c
-
-I'm not currently aware of any other issues found and addressed during
-the extra 6 days, so I'm not sure whether this delay was of sufficient
-benefit.  However, we didn't know in advance - it could well have been.
-
-> ## Exploit
+> ~~~
 > 
-> **The complete exploit code and a comprehensive write-up will be made publicly
-> available no later than the end of July.**
+> Message-Id: <20240724170452.16837-1-dongli.zhang@oracle.com>
+> Date: Wed, 24 Jul 2024 10:04:50 -0700
+> From: Dongli Zhang <dongli.zhang@oracle.com>
+> To: <netdev@vger.kernel.org>
+> Subject: [PATCH net 0/2] tap/tun: harden by dropping short frame
+> 
+> This is to harden all of tap/tun to avoid any short frame smaller than the
+> Ethernet header (ETH_HLEN).
+> 
+> While the xen-netback already rejects short frame smaller than ETH_HLEN ...
+> 
+>  914 static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+>  915                                      int budget,
+>  916                                      unsigned *copy_ops,
+>  917                                      unsigned *map_ops)
+>  918 {
+> ... ...
+> 1007                 if (unlikely(txreq.size < ETH_HLEN)) {
+> 1008                         netdev_dbg(queue->vif->dev,
+> 1009                                    "Bad packet size: %d\n", txreq.size);
+> 1010                         xenvif_tx_err(queue, &txreq, extra_count, idx);
+> 1011                         break;
+> 1012                 }
+> 
+> ... the short frame may not be dropped by vhost-net/tap/tun.
+> 
+> This fixes CVE-2024-41090 and CVE-2024-41091.
 
-The complete exploit code wasn't posted to linux-distros, so it is not
-subject to the policy on maximum of 7 days between vulnerability
-disclosure on oss-security and posting of the exploit to oss-security.
+The respective upstream commits are:
 
-Some details on triggering the bug were on linux-distros.  Normally,
-they would be subject to the policy and so brought to oss-security no
-later than July 12th, which Ruihan Li did not object to doing, but
-expressed a preference to post the complete exploit by the end of July
-instead.  I agreed to make this exception.
+CVE-2024-41090:
+https://git.kernel.org/linus/ed7f2afdd0e043a397677e597ced0830b83ba0b3
 
-Thanks,
+CVE-2024-41091:
+https://git.kernel.org/linus/049584807f1d797fc3078b68035450a9769eb5c3
 
-Alexander
+FWIW, they were as well backported to current stable series: 6.10.2,
+6.9.12, 6.6.43, 6.1.102, 5.15.164, 5.10.223 and 5.4.281.
+
+Regards,
+Salvatore
