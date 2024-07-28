@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2293" "Wednesday" "7" "June" "2017" "16:31:01" "-0400" "Velmurugan Periasamy" "vel@apache.org" "<ECBAEA0F-C443-4B00-8928-E8577E20001C@apache.org>" "44" "[oss-security] CVE update - fixed in Apache Ranger 0.7.1" "^Cc:" nil nil "6" "2017060720:31:01" "[oss-security] CVE update - fixed in Apache Ranger 0.7.1" (number mark "        vel@apache.o Jun  7   44/2293  " thread-indent "\"[oss-security] CVE update - fixed in Apache Ranger 0.7.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 4042 invoked by uid 550); 7 Jun 2017 20:31:20 -0000
+Received: (qmail 9533 invoked by uid 550); 28 Jul 2024 19:43:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +6,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3986 invoked from network); 7 Jun 2017 20:31:17 -0000
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <ECBAEA0F-C443-4B00-8928-E8577E20001C@apache.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Cc: private@ranger.apache.org,
- dev@ranger.apache.org,
- user@ranger.apache.org
-Date: Wed, 7 Jun 2017 16:31:01 -0400
-From: Velmurugan Periasamy <vel@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE update - fixed in Apache Ranger 0.7.1
-To: security <security@apache.org>,
- oss-security@lists.openwall.com,
- bugtraq@securityfocus.com
+Received: (qmail 6018 invoked from network); 28 Jul 2024 19:42:31 -0000
+Date: Sun, 28 Jul 2024 21:42:23 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20240728194223.GA20674@openwall.com>
+References: <d2ed9e542682bf82@cvs.openbsd.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d2ed9e542682bf82@cvs.openbsd.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Announce: OpenSSH 9.8 released
 
-Hello:
+Some nitpicks:
 
-Please find below details on CVEs fixed in Ranger 0.7.1 release. Release de=
-tails can be found at https://cwiki.apache.org/confluence/display/RANGER/0.=
-7.1+Release+-+Apache+Ranger=20
+CVE-2006-5051 found by Mark Dowd, which was the original bug that got
+relatively recently reintroduced as CVE-2024-6387, still has in its
+description an erroneous reference to GSSAPI:
 
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------------------------------------
-CVE-2017-7676: Apache Ranger policy evaluation ignores characters after =E2=
-=80=98*=E2=80=99 wildcard character
-Severity: Critical
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.x/0.6.x/0.7.0 versions of Apache Ranger
-Users affected: Environments that use Ranger policies with characters after=
- =E2=80=98*=E2=80=99 wildcard character =E2=80=93 like my*test, test*.txt
-Description: Policy resource matcher ignores characters after =E2=80=98*=E2=
-=80=99 wildcard character, which can result in unintended behavior.
-Fix detail: Ranger policy resource matcher was updated to correctly handle =
-wildcard matches.
-Mitigation: Users should upgrade to 0.7.1 or later version of Apache Ranger=
- with the fix.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------------------------------------
-CVE-2017-7677: Apache Ranger Hive Authorizer should check for RWX permissio=
-n when external location is specified
-Severity: Critical
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.x/0.6.x/0.7.0 versions of Apache Ranger
-Users affected: Environments that use external location for hive tables=20
-Description: In environments that use external location for hive tables, Ap=
-ache Ranger Hive Authorizer should check for RWX permission for the externa=
-l location specified for create table.
-Fix detail: Ranger Hive Authorizer was updated to correctly handle permissi=
-on check with external location.
-Mitigation: Users should upgrade to 0.7.1 or later version of Apache Ranger=
- with the fix.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------------------------------------
+> Signal handler race condition in OpenSSH before 4.4 allows remote
+> attackers to cause a denial of service (crash), and possibly execute
+> arbitrary code if GSSAPI authentication is enabled, via unspecified
+> vectors that lead to a double-free.
 
-Thank you,
-Velmurugan Periasamy=
+It was understood back in 2006 that this bug's exposure did not in fact
+depend on GSSAPI:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=208347
+
+> Josh Bressers 2006-09-28 15:17:17 UTC
+> 
+> I've done some analysis of this issue and received a mail from Mark Dowd
+> regarding this vulnerability.  The upstream details are misleading.
+> 
+> The problem is that the signal handling in openssh does quite a lot and can
+> introduce a race condition during cleanup.  This flaw could possibly cause a
+> double free condition within the kerberos cleanup code.  The GSSAPI code is
+> completely harmless, upstream calling this issue a GSSAPI issue leads me to
+> believe they did not analyze, nor try to understand this issue.
+> 
+> There is also PAM cleanup code which is executed.  This PAM source hasn't been
+> investigated so the possible outcome is currently unknown.
+
+I suggest removing " if GSSAPI authentication is enabled" from
+CVE-2006-5051 description.  Maybe someone reading this can correct that.
+
+Maybe I pay too much attention to historical detail, but this error in
+CVE-2006-5051 did cause the question of GSSAPI (ir)relevance to come up
+in CVE-2024-6387 discussions at least twice (that I know of).
+
+On Mon, Jul 01, 2024 at 02:10:04AM -0600, Damien Miller wrote:
+> 2) Logic error in ssh(1) ObscureKeystrokeTiming
+> 
+> In OpenSSH version 9.5 through 9.7 (inclusive), when connected to an
+> OpenSSH server version 9.5 or later, a logic error in the ssh(1)
+> ObscureKeystrokeTiming feature (on by default) rendered this feature
+> ineffective - a passive observer could still detect which network
+> packets contained real keystrokes when the countermeasure was active
+> because both fake and real keystroke packets were being sent
+> unconditionally.
+> 
+> This bug was found by Philippos Giavridis and also independently by
+> Jacky Wei En Kung, Daniel Hugenroth and Alastair Beresford of the
+> University of Cambridge Computer Lab.
+> 
+> Worse, the unconditional sending of both fake and real keystroke
+> packets broke another long-standing timing attack mitigation. Since
+> OpenSSH 2.9.9 sshd(8) has sent fake keystoke echo packets for
+> traffic received on TTYs in echo-off mode, such as when entering a
+> password into su(8) or sudo(8). This bug rendered these fake
+> keystroke echoes ineffective and could allow a passive observer of
+> a SSH session to once again detect when echo was off and obtain
+> fairly limited timing information about keystrokes in this situation
+> (20ms granularity by default).
+> 
+> This additional implication of the bug was identified by Jacky Wei
+> En Kung, Daniel Hugenroth and Alastair Beresford and we thank them
+> for their detailed analysis.
+> 
+> This bug does not affect connections when ObscureKeystrokeTiming
+> was disabled or sessions where no TTY was requested.
+
+Dug Song and I designed the original fake keystroke echo packets
+mitigation, and per our advisory/article back then this was "initially
+applied to OpenSSH starting with version 2.5.0.  OpenSSH 2.5.2 contains
+the more complete versions of the fixes and solves certain
+interoperability issues associated with the earlier versions."
+
+https://www.openwall.com/articles/SSH-Traffic-Analysis
+
+After the 9.8 release, I've added an update (clearly marked as such) to
+the article above to refer to the issue reintroduction and the new fix.
+I was also surprised by the reference to 2.9.9 above, so I checked
+OpenSSH-portable commits.  To me, our original references to 2.5.x look
+correct, and I have no idea where 2.9.9 came from.
+
+Luckily, those old version references are not part of the CVE-2024-39894
+description, so nothing to correct there.
+
+Alexander
