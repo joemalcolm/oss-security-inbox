@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["567" "Friday" "25" "March" "2016" "15:57:27" "+0600" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8jvA+FVb08pKqfTWFPZLjJJadPRLfQfDvHscT240ULjoA@mail.gmail.com>" "19" "[oss-security] [CVE-2016-2164] Arbitrary file read via SOAP API" nil nil nil "3" "2016032509:57:27" "[oss-security] [CVE-2016-2164] Arbitrary file read via SOAP API" (number mark "U       solomax@apac Mar 25   19/567   " thread-indent "\"[oss-security] [CVE-2016-2164] Arbitrary file read via SOAP API\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 8117 invoked by uid 550); 25 Mar 2016 10:35:15 -0000
+Received: (qmail 15633 invoked by uid 550); 31 Jul 2024 07:19:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +7,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11320 invoked from network); 25 Mar 2016 09:57:40 -0000
-X-Gm-Message-State: AD7BkJIm/bL0OJcL+IqIXtD0pBxGJoh0DqVlMsP3i9zbRBTo1g2ACYaoC6MDHZXqIN6tOO4lPuk/J/X7Lcsh+Q==
+Received: (qmail 15615 invoked from network); 31 Jul 2024 07:19:57 -0000
+Date: Wed, 31 Jul 2024 09:19:47 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <p721n399-8rq8-rs03-1084-3np038sr9032@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-X-Received: by 10.66.140.14 with SMTP id rc14mr19707536pab.65.1458899847983;
- Fri, 25 Mar 2016 02:57:27 -0700 (PDT)
-Date: Fri, 25 Mar 2016 15:57:27 +0600
-X-Gmail-Original-Message-ID: <CAJmbs8jvA+FVb08pKqfTWFPZLjJJadPRLfQfDvHscT240ULjoA@mail.gmail.com>
-Message-ID: <CAJmbs8jvA+FVb08pKqfTWFPZLjJJadPRLfQfDvHscT240ULjoA@mail.gmail.com>
-From: Maxim Solodovnik <solomax@apache.org>
-To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	security@openmeetings.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] [CVE-2016-2164] Arbitrary file read via SOAP API
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-7264 ASN.1 date parser overread
 
-Severity: Critical
+ASN.1 date parser overread
+==========================
 
-Vendor: The Apache Software Foundation
+Project curl Security Advisory, July 31st 2024 -
+[Permalink](https://curl.se/docs/CVE-2024-7264.html)
 
-Versions Affected: Apache OpenMeetings 1.9.x - 3.0.7
+VULNERABILITY
+-------------
 
-Description:
-When attempting to upload a file via the API using the
-importFileByInternalUserId
-or importFile methods in the FileService, it is possible to read arbitrary
-files from the system. This is due to that Java's URL class is used without
-checking what protocol handler is specified in the API call.
+libcurl's ASN1 parser code has the `GTime2str()` function, used for parsing an
+ASN.1 Generalized Time field. If given an syntactically incorrect field, the
+parser might end up using -1 for the length of the *time fraction*, leading to
+a `strlen()` getting performed on a pointer to a heap buffer area that is not
+(purposely) null terminated.
 
-All users are recommended to upgrade to Apache OpenMeetings 3.1.1
+This flaw most likely leads to a crash, but can also lead to heap contents
+getting returned to the application when
+[CURLINFO_CERTINFO](https://curl.se/libcurl/c/CURLINFO_CERTINFO.html) is used.
 
-Credit: This issue was identified by Andreas Lindh
+INFO
+----
 
+The ANS.1 parsing is done *after* a successful TLS handshake, which then also
+means that the used TLS library has parsed the certificate. If the TLS library
+rejects the bad date string, then it cannot reach and trigger libcurl's bug.
+We can however not be sure that there are not circumstances in which the bad
+data still gets parsed by libcurl.
 
-Apache OpenMeetings Team
+This bug is considered a *C mistake* (likely to have been avoided had we not
+been using C).
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2024-7264 to this issue.
+
+CWE-125: Out-of-bounds Read
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+The vulnerable code can only be reached when curl is built to use GnuTLS,
+Schannel, Secure Transport or mbedTLS. Builds using other TLS backends are not
+vulnerable.
+
+- Affected versions: curl 7.32.0 to and including 8.9.0
+- Not affected versions: curl < 7.32.0 and >= 8.9.1
+- Introduced-in: https://github.com/curl/curl/commit/3a24cb7bc45
+
+libcurl is used by many applications, but not always advertised as such!
+
+This parser bug was actually introduced in curl 7.32.0 but was then used only
+by the GSKit TLS backend which is no longer supported. The functionality was
+later brought to other TLS backends in different versions, so this bug affects
+curl built with different backends starting in different versions:
+
+- GnuTLS since 7.42.0
+- Schannel since 7.50.0
+- Secure Transport since 7.79.0
+- mbedTLS since 8.9.0
+
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/27959ecce75cdb2
+
+Note that this fixing commit was a follow-up to this previous incomplete fix:
+https://github.com/curl/curl/commit/3c914bc680155b321
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 8.9.1
+
+  B - Apply the patch to your version and rebuild
+
+  C - Build your libcurl with an unaffected TLS backend
+
+TIMELINE
+---------
+
+This issue was reported to the curl project on July 30, 2024. We contacted
+distros@openwall on July 30, 2024.
+
+curl 8.9.1 was released on July 31 2024 around 06:00 UTC, coordinated with
+the publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Dov Murik (Transmit Security)
+- Patched-by: Daniel Stenberg
+- Patched-by: Stefan Eissing
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
