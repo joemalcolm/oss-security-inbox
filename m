@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["600" "Thursday" "14" "April" "2016" "13:26:49" "-0400" "Naser Farhadi" "n4ser.farhadi@gmail.com" "<68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>" "22" "[oss-security] CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution" nil nil nil "4" "2016041417:26:49" "[oss-security] CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution" (number mark "U       n4ser.farhad Apr 14   22/600   " thread-indent "\"[oss-security] CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11334 invoked by uid 550); 14 Apr 2016 17:32:49 -0000
+Received: (qmail 5180 invoked by uid 550); 2 Aug 2024 00:00:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7400 invoked from network); 14 Apr 2016 17:27:07 -0000
+Received: (qmail 7669 invoked from network); 1 Aug 2024 23:06:11 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:message-id:date:to:mime-version;
-        bh=BK0tRlHyNbSzKUvrwyDlgBGn9YUPTwL1otUyd0WO/4U=;
-        b=0kVkRmoy2E/x1rnvA0K8tAhPvtz2in6oTdAp4xd0Qji4l/hI8hJ15yALwZ27qQZG2r
-         4NkLabBZ8tHqCNTNNdTH0+YVjT6HIXvDgHY3H3/LlqLHUbigcgstD8pWcZIeVhU1+fGN
-         tF723V4QxB7xPsWTJET/O/xvayBjq0UcTKi3ScECcRvVUDzNsXxcliA/e4utSwwtQman
-         gdPZ43HNfd0S7oUr18mwQ2YLI3MR9dZV265ihTjAvgVNYrFLG+yE43mWPAMDkUGPd8q8
-         yG43ynngboLMM2ZuNz5rhzd61WVckbGY2BD077su2eTsysnbRcKOXRvvhsd21iskbBRV
-         w3XA==
+        d=yngvason.is; s=google; t=1722553563; x=1723158363; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+R0O02ExO9sy5vQHxTdPDsjrzO/ig0FxQ+vtIlsQzAw=;
+        b=Zr+l20GLlFgAG0EAip+7TN8N5gfexeJcoDHPVrjnxo6rF9I6cCaeUlpx1b7QWBrJK4
+         PF0bd0issklTiwi7yHEEQO0/8Pj1uSqAqbVmS76rQy8+IbkqkicoPFzd03M36XmPTu20
+         l24lxnAjkSeYwgDXZ/gK4a3gobosShfJPU4Lc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:subject:message-id:date:to:mime-version;
-        bh=BK0tRlHyNbSzKUvrwyDlgBGn9YUPTwL1otUyd0WO/4U=;
-        b=aXM8aVbqsUHrFFNqIA3RMUdzoobveabFb6MnRfe3ro6bBhOd8G/WVAlVnzAiHtzXwC
-         hq6xGiTlKwsFa6lcgA7SrQlXSWzLsOmIfExmM4MAmhUV41nzNYriwvRWJ2YUnhhKkbMq
-         hgqBj59PJyWlhmUr7vldmHJUtujbTcwEs0IOJAxejHQivBK8Sn1VXMjCUdD0N1HsXcMU
-         lyB0v2IfIaiA1V1rm1L0YK5kPXY2luDJxIQ5HCpSseZhCWj2PU/pAALfORPiIAhqqNyA
-         1AyYKVzm6t/vbRsbvMraRTgxQM1IyW0fSuTzqOrkMnP8hChhazuCDwVY4Y7iwiS+YXDX
-         FR7g==
-X-Gm-Message-State: AOPr4FU1i9cccGRP3/mFAnPAwDmpYQpGNJ/iTXMqUvtZMeubPwsLljZUY0Us2WID4i5XNg==
-X-Received: by 10.112.10.109 with SMTP id h13mr6966395lbb.58.1460654816642;
-        Thu, 14 Apr 2016 10:26:56 -0700 (PDT)
-From: Naser Farhadi <n4ser.farhadi@gmail.com>
-Content-Type: multipart/alternative; boundary="Apple-Mail=_CF1CFDC4-4032-43B3-B154-7267C3DC7351"
-Message-Id: <68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>
-Date: Thu, 14 Apr 2016 13:26:49 -0400
+        d=1e100.net; s=20230601; t=1722553563; x=1723158363;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+R0O02ExO9sy5vQHxTdPDsjrzO/ig0FxQ+vtIlsQzAw=;
+        b=B9oaLdGOkcJBklWNmQ5zMYV6UtY1V/K1LwNdzbuSz/V+YNC/W+t5ENIInuLA61/mQ6
+         cj2aj1Kjgoezb0GInKpbg1O+gk/3Shg9HyXH+1YL6sS27V2ATBkxRa8RaOdTNLB/fYM7
+         qT4zd4h6TPP53FUvAvpBBxEmVs4MPkFguspOxWVEOl0qh8SoF3Dcbr11jOII8MrgyQFH
+         Hsudjn14KJVm/FJOBr15Xrj4UPbVBoobUUQNDflVCQTtLQxSWcbkdX4ibqDrITLiRHRn
+         NxPE45wxwsXjx7Aow/IWUgIeONF03xN7ZW4q21xCLLERFVl3hSeQHaLeX3/UxY3U82VM
+         Bn4w==
+X-Gm-Message-State: AOJu0Yygkf6yUPQgq3N1VS+Hq8dBKgskrLAg1ROsimR8yRuji0yHsNvl
+	DHAlwpKjmV3dnDkjvl+DoBslgrtHzXk/jhFwhPF+Sq81KySn9zJcZ+Vh2rtUrS94U2wn+C3okiD
+	Xd17DNRmvexOqzqK/tKq3r0WZiUr0+qJJKq6IFZr/MKFS4BKlC8wV5Q==
+X-Google-Smtp-Source: AGHT+IGBRciev/Gl0cQf9n1U9lBXDA7cKGWsHWuneqBFps8HAYfOQ+HmHD/SMZqeWUam2A/YwZhrdH5ddMMzp/DgdtM=
+X-Received: by 2002:a05:6358:50c3:b0:1aa:b7fa:4f59 with SMTP id
+ e5c5f4694b2df-1af3bac330bmr156878255d.30.1722553563548; Thu, 01 Aug 2024
+ 16:06:03 -0700 (PDT)
+MIME-Version: 1.0
+From: Andri Yngvason <andri@yngvason.is>
+Date: Thu, 1 Aug 2024 23:05:27 +0000
+Message-ID: <CAFNQBQwnnA_=sZCvYf=sRzz2SXfqJB5_JEFYjCC+pcGekN9WFw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Subject: [oss-security] CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution
+Cc: Dane Bouchie <dbouchie@iradimed.com>, Travis Wise <travis@wavesquared.com>, 
+	security@raspberrypi.com, Simon Long <simon@raspberrypi.com>, 
+	=?UTF-8?Q?Moritz_M=C3=BChlenhoff?= <jmm@inutil.org>, 
+	Salvatore Bonaccorso <carnil@debian.org>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Neat VNC Security Vulnerability
 
---Apple-Mail=_CF1CFDC4-4032-43B3-B154-7267C3DC7351
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Hi,
 
-Hi
+It has come to my attention that there is a security vulnerability in Neat VNC.
 
-OpenCart is prone to an remote code-execution vulnerability.
-
-https://www.exploit-db.com/exploits/39679/ <https://www.exploit-db.com/expl=
-oits/39679/>
-http://seclists.org/bugtraq/2016/Apr/61 <http://seclists.org/bugtraq/2016/A=
-pr/61>
-https://github.com/opencart/opencart/issues/4220 <https://github.com/openca=
-rt/opencart/issues/4220>
-
-Could a CVE please be assigned to this issue?
+I've released a new version that fixes the vulnerability:
+https://github.com/any1/neatvnc/releases/tag/v0.8.1
 
 Regards,
-Naser=
-
---Apple-Mail=_CF1CFDC4-4032-43B3-B154-7267C3DC7351--
+Andri
