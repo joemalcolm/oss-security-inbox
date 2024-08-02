@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1782" "Monday" "29" "August" "2016" "17:51:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160829215135.463377BC071@smtpvmsrv1.mitre.org>" "47" "[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" nil nil nil "8" "2016082921:51:35" "[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" (number mark "U       cve-assign@m Aug 29   47/1782  " thread-indent "\"[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin\"\n") "<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>" ("<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7450 invoked by uid 550); 29 Aug 2016 21:51:49 -0000
+Received: (qmail 15372 invoked by uid 550); 2 Aug 2024 14:39:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +7,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7424 invoked from network); 29 Aug 2016 21:51:47 -0000
-From: cve-assign@mitre.org
-To: dregad@mantisbt.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>
-Message-Id: <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
-Date: Mon, 29 Aug 2016 17:51:35 -0400 (EDT)
-Subject: [oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin
+Received: (qmail 13993 invoked from network); 2 Aug 2024 14:39:18 -0000
+Date: Fri, 2 Aug 2024 16:39:13 +0200
+From: Solar Designer <solar@openwall.com>
+To: Andri Yngvason <andri@yngvason.is>
+Cc: oss-security@lists.openwall.com, Dane Bouchie <dbouchie@iradimed.com>,
+	Travis Wise <travis@wavesquared.com>, security@raspberrypi.com,
+	Simon Long <simon@raspberrypi.com>,
+	Moritz M??hlenhoff <jmm@inutil.org>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Message-ID: <20240802143913.GA11135@openwall.com>
+References: <CAFNQBQwnnA_=sZCvYf=sRzz2SXfqJB5_JEFYjCC+pcGekN9WFw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFNQBQwnnA_=sZCvYf=sRzz2SXfqJB5_JEFYjCC+pcGekN9WFw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Neat VNC Security Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Andri,
 
-> MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
-> users' avatars using Gravatar.
+On Thu, Aug 01, 2024 at 11:05:27PM +0000, Andri Yngvason wrote:
+> It has come to my attention that there is a security vulnerability in Neat VNC.
 > 
-> Instead of adding the Gravatar web site to the list of allowed image
-> sources in MantisBT's Content Security Policy, the plugin was replacing
-> the whole policy by:
-> 
->    img-src 'self' http://www.gravatar.com/
-> 
-> instead of the more strict default one of:
-> 
->    default-src 'self'; frame-ancestors 'none'; style-src 'self';
->    script-src 'self'
-> 
-> Relaxed policy allows execution of remote and inline scripts, e.g.
-> potentially enabling XSS attacks.
-> 
-> https://github.com/mantisbt/mantisbt/commit/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
-> https://mantisbt.org/bugs/view.php?id=21263
+> I've released a new version that fixes the vulnerability:
+> https://github.com/any1/neatvnc/releases/tag/v0.8.1
 
-Use CVE-2016-7111.
+Thank you very much for bringing this to oss-security!
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On oss-security, we need a description of the vulnerability, not just a
+note that some vulnerability existed.
 
-iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
-6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
-gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
-SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
-JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
-APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
-PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
-LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
-EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
-Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
-+2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
-2Rs4hh+EhmuT20OUq14x
-=U1Gg
------END PGP SIGNATURE-----
+The release notes mention:
+
+"The vulnerability was reported by Dane Bouchie and Travis Wise."
+
+Dane and/or Travis, maybe you can provide the missing detail here?
+
+The fix commit appears to be:
+
+Add sanity check for chosen security type
+https://github.com/any1/neatvnc/commit/cc71650a69abc2573a0d96d082409d2468802d47
+
+Skimming it, I see it increases the size of buf in on_version_message()
+from 3 to 32 security types.  That function is also split in two and
+otherwise refactored.  A number of "security->types[security->n++]"
+lines got replaced with ADD_SECURITY_TYPE(), which has an assert()
+against the new maximum.  There were 4 of those lines, so I can see how
+a buffer for 3 could be too small.  So there was a bug.  However, none
+of this looks like attacker-controlled input, or is it?  Now, even
+without attacker-controlled input an out-of-bounds write is undefined
+behavior, so theoretically could result in an exploitable vulnerability
+via some other correctly processed input, but was there any analysis
+whether it commonly or realistically does in this case?
+
+I see the commit also adds an is_allowed_security_type() check to the
+beginning of on_security_message().  However, the rest of that function
+only has a switch statement covering a few known security types and:
+
+	default:
+		security_handshake_failed(client, NULL,
+				"Unsupported security type");
+
+The action on failing the added pre-check is almost the same.  So I
+don't immediately see how not pre-checking could have been problematic.
+
+Maybe I'm missing some bigger issue also fixed by those changes?
+
+Don't get me wrong, fixing a bug and defensive programming is great, but
+we also need the security impact documented.
+
+Alexander
