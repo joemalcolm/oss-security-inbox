@@ -1,4 +1,4 @@
-Received: (qmail 15508 invoked by uid 550); 24 Mar 2026 12:05:59 -0000
+Received: (qmail 11707 invoked by uid 550); 2 Aug 2024 14:01:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,265 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15465 invoked from network); 24 Mar 2026 12:05:59 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 11835 invoked from network); 2 Aug 2024 03:48:08 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Heping Wang <peacewong@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <807216e0-677e-c550-8e53-3aa3a0a28b16@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 02 Aug 2024 03:47:02 +0000
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.510 (Entity 5.510)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1w50W0-00Bwo0-1i@xenbits.xenproject.org>
-Date: Tue, 24 Mar 2026 12:05:44 +0000
-Subject: [oss-security] Xen Security Advisory 482 v2 - Linux privcmd driver can
- circumvent kernel lockdown
+Subject: [oss-security] CVE-2024-27181: Apache Linkis Basic management services: Privilege
+ Escalation Attack vulnerability 
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Severity: important
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Affected versions:
 
-                    Xen Security Advisory XSA-482
-                              version 2
+- Apache Linkis Basic management services 1.3.2 before 1.6.0
 
-          Linux privcmd driver can circumvent kernel lockdown
+Description:
 
-UPDATES IN VERSION 2
-====================
+In Apache Linkis <=3D 1.5.0,
 
-Public release.
+Privilege Escalation in Basic management services where the attacking user =
+is=20
 
-ISSUE DESCRIPTION
-=================
+a trusted account
 
-The Linux kernel's privcmd driver can be abused to circumvent kernel
-lockdown (secure boot), e.g. by modifying page tables to enable user
-mode to modify kernel memory.
+ allows access to Linkis's Token information. Users are advised to upgrade =
+to version 1.6.0, which fixes this issue.
 
-The CNA covering Linux has refused to assign a CVE at this juncture.
+Credit:
 
-IMPACT
-======
+superx (reporter)
 
-An administrator of an unprivileged guest booted in secure mode is able
-to perform actions on the kernel which should not be possible in secure
-mode.
+References:
 
-VULNERABLE SYSTEMS
-==================
+https://linkis.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2024-27181
 
-PV, PVH and HVM guests running Linux using secure boot are vulnerable.
-
-BSD based systems are believed not to be vulnerable due to a lack of
-secure boot support.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Teddy Astie of Vates.
-
-RESOLUTION
-==========
-
-Applying the set of attached patches resolves this issue.
-
-xsa482-linux-?.patch           Linux
-
-$ sha256sum xsa482*
-a4e67d2c773e2e13252337e4b64c08b342c0eb2e0e92271a79dc588ac34e7c3a  xsa482-linux-1.patch
-dd952c1fc49ceb47803b78e15cfe3f7f11a845b29c6b2a80afa7a9eaa60a00ec  xsa482-linux-2.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of patches or mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because the patches need to be applied to the guests.
-
-Deployment is permitted only AFTER the embargo ends.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmnCffYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZLUIIAIU0v7T3tT1Jc2UeanX2sj2aycfKjpCCoAxTtFcG
-qKdhneXhKQ3ofWH3SSRmuNfA6L1jVPyh7bUYLMpNQp4WfsCUj0RNcjXhdxYIldTP
-KLi+mhekZzjarClj+X9eQOQf0DaGGy1dG1SUfETHuumOcm7CVbRDKF9nXVv6g4Dd
-CCnDuXjK2M9Q91shdDAUI7I41oQL3k85UTpPwwtAs1subKCJsgbKIBdikw3Bdm4c
-TBkqTyjFCiLiLXcqcY7qQo/IcfJ9mn0z3Jc0M4V12Am6DdLrypO0LU3YcVRH3qT9
-/5L5It2HKjoFRp+6yEb7yfBkavXQgaGwCSnROUC7dn41pM8=
-=mibo
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa482-linux-1.patch"
-Content-Disposition: attachment; filename="xsa482-linux-1.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAyNjVmMjA1MmZjYjUyYjllMjZlMTQ2Nzg5MzU5ZjQ1MjJjZWVkZDFiIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6
-IFRodSwgOSBPY3QgMjAyNSAxNjo1NDo1OCArMDIwMApTdWJqZWN0OiBbUEFUQ0ggdjMgMS8yXSB4
-ZW4vcHJpdmNtZDogcmVzdHJpY3QgdXNhZ2UgaW4gdW5wcml2aWxlZ2VkIGRvbVUKClRoZSBYZW4g
-cHJpdmNtZCBkcml2ZXIgYWxsb3dzIHRvIGlzc3VlIGFyYml0cmFyeSBoeXBlcmNhbGxzIGZyb20K
-dXNlciBzcGFjZSBwcm9jZXNzZXMuIFRoaXMgaXMgbm9ybWFsbHkgbm8gcHJvYmxlbSwgYXMgYWNj
-ZXNzIGlzCnVzdWFsbHkgbGltaXRlZCB0byByb290IGFuZCB0aGUgaHlwZXJ2aXNvciB3aWxsIGRl
-bnkgYW55IGh5cGVyY2FsbHMKYWZmZWN0aW5nIG90aGVyIGRvbWFpbnMuCgpJbiBjYXNlIHRoZSBn
-dWVzdCBpcyBib290ZWQgdXNpbmcgc2VjdXJlIGJvb3QsIGhvd2V2ZXIsIHRoZSBwcml2Y21kCmRy
-aXZlciB3b3VsZCBiZSBlbmFibGluZyBhIHJvb3QgdXNlciBwcm9jZXNzIHRvIG1vZGlmeSBlLmcu
-IGtlcm5lbAptZW1vcnkgY29udGVudHMsIHRodXMgYnJlYWtpbmcgdGhlIHNlY3VyZSBib290IGZl
-YXR1cmUuCgpUaGUgb25seSBrbm93biBjYXNlIHdoZXJlIGFuIHVucHJpdmlsZWdlZCBkb21VIGlz
-IHJlYWxseSBuZWVkaW5nIHRvCnVzZSB0aGUgcHJpdmNtZCBkcml2ZXIgaXMgdGhlIGNhc2Ugd2hl
-biBpdCBpcyBhY3RpbmcgYXMgdGhlIGRldmljZQptb2RlbCBmb3IgYW5vdGhlciBndWVzdC4gSW4g
-dGhpcyBjYXNlIGFsbCBoeXBlcmNhbGxzIGlzc3VlZCB2aWEgdGhlCnByaXZjbWQgZHJpdmVyIHdp
-bGwgdGFyZ2V0IHRoYXQgb3RoZXIgZ3Vlc3QuCgpGb3J0dW5hdGVseSB0aGUgcHJpdmNtZCBkcml2
-ZXIgY2FuIGFscmVhZHkgYmUgbG9ja2VkIGRvd24gdG8gYWxsb3cKb25seSBoeXBlcmNhbGxzIHRh
-cmdldGluZyBhIHNwZWNpZmljIGRvbWFpbiwgYnV0IHRoaXMgbW9kZSBjYW4gYmUKYWN0aXZhdGVk
-IGZyb20gdXNlciBsYW5kIG9ubHkgdG9kYXkuCgpUaGUgdGFyZ2V0IGRvbWFpbiBjYW4gYmUgb2J0
-YWluZWQgZnJvbSBYZW5zdG9yZSwgc28gd2hlbiBub3QgcnVubmluZwppbiBkb20wIHJlc3RyaWN0
-IHRoZSBwcml2Y21kIGRyaXZlciB0byB0aGF0IHRhcmdldCBkb21haW4gZnJvbSB0aGUKYmVnaW5u
-aW5nLCByZXNvbHZpbmcgdGhlIHBvdGVudGlhbCBwcm9ibGVtIG9mIGJyZWFraW5nIHNlY3VyZSBi
-b290LgoKVGhpcyBpcyBYU0EtNDgyIC8gQ1ZFID8/PwoKUmVwb3J0ZWQtYnk6IFRlZGR5IEFzdGll
-IDx0ZWRkeS5hc3RpZUB2YXRlcy50ZWNoPgpGaXhlczogMWM1ZGUxOTM5YzIwICgieGVuOiBhZGQg
-cHJpdmNtZCBkcml2ZXIiKQpTaWduZWQtb2ZmLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3Vz
-ZS5jb20+Ci0tLQogZHJpdmVycy94ZW4vcHJpdmNtZC5jIHwgNjAgKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKy0tLQogMSBmaWxlIGNoYW5nZWQsIDU3IGluc2VydGlvbnMo
-KyksIDMgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94ZW4vcHJpdmNtZC5jIGIv
-ZHJpdmVycy94ZW4vcHJpdmNtZC5jCmluZGV4IDE3NTljYzE4NzUzZi4uYTgzYmFkNjlmNGYyIDEw
-MDY0NAotLS0gYS9kcml2ZXJzL3hlbi9wcml2Y21kLmMKKysrIGIvZHJpdmVycy94ZW4vcHJpdmNt
-ZC5jCkBAIC0xMiw2ICsxMiw3IEBACiAjaW5jbHVkZSA8bGludXgvZXZlbnRmZC5oPgogI2luY2x1
-ZGUgPGxpbnV4L2ZpbGUuaD4KICNpbmNsdWRlIDxsaW51eC9rZXJuZWwuaD4KKyNpbmNsdWRlIDxs
-aW51eC9rc3RydG94Lmg+CiAjaW5jbHVkZSA8bGludXgvbW9kdWxlLmg+CiAjaW5jbHVkZSA8bGlu
-dXgvbXV0ZXguaD4KICNpbmNsdWRlIDxsaW51eC9wb2xsLmg+CkBAIC0zMCw3ICszMSw5IEBACiAj
-aW5jbHVkZSA8bGludXgvc2VxX2ZpbGUuaD4KICNpbmNsdWRlIDxsaW51eC9taXNjZGV2aWNlLmg+
-CiAjaW5jbHVkZSA8bGludXgvbW9kdWxlcGFyYW0uaD4KKyNpbmNsdWRlIDxsaW51eC9ub3RpZmll
-ci5oPgogI2luY2x1ZGUgPGxpbnV4L3ZpcnRpb19tbWlvLmg+CisjaW5jbHVkZSA8bGludXgvd2Fp
-dC5oPgogCiAjaW5jbHVkZSA8YXNtL3hlbi9oeXBlcnZpc29yLmg+CiAjaW5jbHVkZSA8YXNtL3hl
-bi9oeXBlcmNhbGwuaD4KQEAgLTQ2LDYgKzQ5LDcgQEAKICNpbmNsdWRlIDx4ZW4vcGFnZS5oPgog
-I2luY2x1ZGUgPHhlbi94ZW4tb3BzLmg+CiAjaW5jbHVkZSA8eGVuL2JhbGxvb24uaD4KKyNpbmNs
-dWRlIDx4ZW4veGVuYnVzLmg+CiAjaWZkZWYgQ09ORklHX1hFTl9BQ1BJCiAjaW5jbHVkZSA8eGVu
-L2FjcGkuaD4KICNlbmRpZgpAQCAtNzIsNiArNzYsMTEgQEAgc3RydWN0IHByaXZjbWRfZGF0YSB7
-CiAJZG9taWRfdCBkb21pZDsKIH07CiAKKy8qIERPTUlEX0lOVkFMSUQgaW1wbGllcyBubyByZXN0
-cmljdGlvbiAqLworc3RhdGljIGRvbWlkX3QgdGFyZ2V0X2RvbWFpbiA9IERPTUlEX0lOVkFMSUQ7
-CitzdGF0aWMgYm9vbCByZXN0cmljdF93YWl0Oworc3RhdGljIERFQ0xBUkVfV0FJVF9RVUVVRV9I
-RUFEKHJlc3RyaWN0X3dhaXRfd3EpOworCiBzdGF0aWMgaW50IHByaXZjbWRfdm1hX3JhbmdlX2lz
-X21hcHBlZCgKICAgICAgICAgICAgICAgIHN0cnVjdCB2bV9hcmVhX3N0cnVjdCAqdm1hLAogICAg
-ICAgICAgICAgICAgdW5zaWduZWQgbG9uZyBhZGRyLApAQCAtMTU2MywxMyArMTU3MiwxNiBAQCBz
-dGF0aWMgbG9uZyBwcml2Y21kX2lvY3RsKHN0cnVjdCBmaWxlICpmaWxlLAogCiBzdGF0aWMgaW50
-IHByaXZjbWRfb3BlbihzdHJ1Y3QgaW5vZGUgKmlubywgc3RydWN0IGZpbGUgKmZpbGUpCiB7Ci0J
-c3RydWN0IHByaXZjbWRfZGF0YSAqZGF0YSA9IGt6YWxsb2Nfb2JqKCpkYXRhKTsKKwlzdHJ1Y3Qg
-cHJpdmNtZF9kYXRhICpkYXRhOworCisJaWYgKHdhaXRfZXZlbnRfaW50ZXJydXB0aWJsZShyZXN0
-cmljdF93YWl0X3dxLCAhcmVzdHJpY3Rfd2FpdCkgPCAwKQorCQlyZXR1cm4gLUVJTlRSOwogCisJ
-ZGF0YSA9IGt6YWxsb2Nfb2JqKCpkYXRhKTsKIAlpZiAoIWRhdGEpCiAJCXJldHVybiAtRU5PTUVN
-OwogCi0JLyogRE9NSURfSU5WQUxJRCBpbXBsaWVzIG5vIHJlc3RyaWN0aW9uICovCi0JZGF0YS0+
-ZG9taWQgPSBET01JRF9JTlZBTElEOworCWRhdGEtPmRvbWlkID0gdGFyZ2V0X2RvbWFpbjsKIAog
-CWZpbGUtPnByaXZhdGVfZGF0YSA9IGRhdGE7CiAJcmV0dXJuIDA7CkBAIC0xNjYyLDYgKzE2NzQs
-NDUgQEAgc3RhdGljIHN0cnVjdCBtaXNjZGV2aWNlIHByaXZjbWRfZGV2ID0gewogCS5mb3BzID0g
-Jnhlbl9wcml2Y21kX2ZvcHMsCiB9OwogCitzdGF0aWMgaW50IGluaXRfcmVzdHJpY3Qoc3RydWN0
-IG5vdGlmaWVyX2Jsb2NrICpub3RpZmllciwKKwkJCSB1bnNpZ25lZCBsb25nIGV2ZW50LAorCQkJ
-IHZvaWQgKmRhdGEpCit7CisJY2hhciAqdGFyZ2V0OworCXVuc2lnbmVkIGludCBkb21pZDsKKwor
-CS8qIERlZmF1bHQgdG8gYW4gZ3VhcmFudGVlZCB1bnVzZWQgZG9tYWluLWlkLiAqLworCXRhcmdl
-dF9kb21haW4gPSBET01JRF9JRExFOworCisJdGFyZ2V0ID0geGVuYnVzX3JlYWQoWEJUX05JTCwg
-InRhcmdldCIsICIiLCBOVUxMKTsKKwlpZiAoSVNfRVJSKHRhcmdldCkgfHwga3N0cnRvdWludCh0
-YXJnZXQsIDEwLCAmZG9taWQpKSB7CisJCXByX2VycigiTm8gdGFyZ2V0IGRvbWFpbiBmb3VuZCwg
-YmxvY2tpbmcgYWxsIGh5cGVyY2FsbHNcbiIpOworCQlnb3RvIG91dDsKKwl9CisKKwl0YXJnZXRf
-ZG9tYWluID0gZG9taWQ7CisKKyBvdXQ6CisJaWYgKCFJU19FUlIodGFyZ2V0KSkKKwkJa2ZyZWUo
-dGFyZ2V0KTsKKworCXJlc3RyaWN0X3dhaXQgPSBmYWxzZTsKKwl3YWtlX3VwX2FsbCgmcmVzdHJp
-Y3Rfd2FpdF93cSk7CisKKwlyZXR1cm4gTk9USUZZX0RPTkU7Cit9CisKK3N0YXRpYyBzdHJ1Y3Qg
-bm90aWZpZXJfYmxvY2sgeGVuc3RvcmVfbm90aWZpZXIgPSB7CisJLm5vdGlmaWVyX2NhbGwgPSBp
-bml0X3Jlc3RyaWN0LAorfTsKKworc3RhdGljIHZvaWQgX19pbml0IHJlc3RyaWN0X2RyaXZlcih2
-b2lkKQoreworCXJlc3RyaWN0X3dhaXQgPSB0cnVlOworCisJcmVnaXN0ZXJfeGVuc3RvcmVfbm90
-aWZpZXIoJnhlbnN0b3JlX25vdGlmaWVyKTsKK30KKwogc3RhdGljIGludCBfX2luaXQgcHJpdmNt
-ZF9pbml0KHZvaWQpCiB7CiAJaW50IGVycjsKQEAgLTE2NjksNiArMTcyMCw5IEBAIHN0YXRpYyBp
-bnQgX19pbml0IHByaXZjbWRfaW5pdCh2b2lkKQogCWlmICgheGVuX2RvbWFpbigpKQogCQlyZXR1
-cm4gLUVOT0RFVjsKIAorCWlmICgheGVuX2luaXRpYWxfZG9tYWluKCkpCisJCXJlc3RyaWN0X2Ry
-aXZlcigpOworCiAJZXJyID0gbWlzY19yZWdpc3RlcigmcHJpdmNtZF9kZXYpOwogCWlmIChlcnIg
-IT0gMCkgewogCQlwcl9lcnIoIkNvdWxkIG5vdCByZWdpc3RlciBYZW4gcHJpdmNtZCBkZXZpY2Vc
-biIpOwotLSAKMi41My4wCgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa482-linux-2.patch"
-Content-Disposition: attachment; filename="xsa482-linux-2.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA2ZjY5MThmZTFkZDQ1OTBlMDBmZjk1OTAwODZmYWIwOGQ5Mjg0MDViIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6
-IFR1ZSwgMTQgT2N0IDIwMjUgMTM6Mjg6MTUgKzAyMDAKU3ViamVjdDogW1BBVENIIHYzIDIvMl0g
-eGVuL3ByaXZjbWQ6IGFkZCBib290IGNvbnRyb2wgZm9yIHJlc3RyaWN0ZWQgdXNhZ2UgaW4KIGRv
-bVUKCldoZW4gcnVubmluZyBpbiBhbiB1bnByaXZpbGVnZWQgZG9tVSB1bmRlciBYZW4sIHRoZSBw
-cml2Y21kIGRyaXZlcgppcyByZXN0cmljdGVkIHRvIGFsbG93IG9ubHkgaHlwZXJjYWxscyBhZ2Fp
-bnN0IGEgdGFyZ2V0IGRvbWFpbiwgZm9yCndoaWNoIHRoZSBjdXJyZW50IGRvbVUgaXMgYWN0aW5n
-IGFzIGEgZGV2aWNlIG1vZGVsLgoKQWRkIGEgYm9vdCBwYXJhbWV0ZXIgInVucmVzdHJpY3RlZCIg
-dG8gYWxsb3cgYWxsIGh5cGVyY2FsbHMgKHRoZQpoeXBlcnZpc29yIHdpbGwgc3RpbGwgcmVmdXNl
-IGRlc3RydWN0aXZlIGh5cGVyY2FsbHMgYWZmZWN0aW5nIG90aGVyCmd1ZXN0cykuCgpNYWtlIHRo
-aXMgbmV3IHBhcmFtZXRlciBlZmZlY3RpdmUgb25seSBpbiBjYXNlIHRoZSBkb21VIHdhc24ndCBz
-dGFydGVkCnVzaW5nIHNlY3VyZSBib290LCBhcyBvdGhlcndpc2UgaHlwZXJjYWxscyB0YXJnZXRp
-bmcgdGhlIGRvbVUgaXRzZWxmCm1pZ2h0IHJlc3VsdCBpbiB2aW9sYXRpbmcgdGhlIHNlY3VyZSBi
-b290IGZ1bmN0aW9uYWxpdHkuCgpUaGlzIGlzIGFjaGlldmVkIGJ5IGFkZGluZyBhbm90aGVyIGxv
-Y2tkb3duIHJlYXNvbiwgd2hpY2ggY2FuIGJlCnRlc3RlZCB0byBub3QgYmVpbmcgc2V0IHdoZW4g
-YXBwbHlpbmcgdGhlICJ1bnJlc3RyaWN0ZWQiIG9wdGlvbi4KClRoaXMgaXMgcGFydCBvZiBYU0Et
-NDgyIC8gQ1ZFLT8/PwoKU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2Uu
-Y29tPgotLS0KIGRyaXZlcnMveGVuL3ByaXZjbWQuYyAgICB8IDEzICsrKysrKysrKysrKysKIGlu
-Y2x1ZGUvbGludXgvc2VjdXJpdHkuaCB8ICAxICsKIHNlY3VyaXR5L3NlY3VyaXR5LmMgICAgICB8
-ICAxICsKIDMgZmlsZXMgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2Ry
-aXZlcnMveGVuL3ByaXZjbWQuYyBiL2RyaXZlcnMveGVuL3ByaXZjbWQuYwppbmRleCBhODNiYWQ2
-OWY0ZjIuLmJiZjllZTIxMzA2YyAxMDA2NDQKLS0tIGEvZHJpdmVycy94ZW4vcHJpdmNtZC5jCisr
-KyBiL2RyaXZlcnMveGVuL3ByaXZjbWQuYwpAQCAtMzIsNiArMzIsNyBAQAogI2luY2x1ZGUgPGxp
-bnV4L21pc2NkZXZpY2UuaD4KICNpbmNsdWRlIDxsaW51eC9tb2R1bGVwYXJhbS5oPgogI2luY2x1
-ZGUgPGxpbnV4L25vdGlmaWVyLmg+CisjaW5jbHVkZSA8bGludXgvc2VjdXJpdHkuaD4KICNpbmNs
-dWRlIDxsaW51eC92aXJ0aW9fbW1pby5oPgogI2luY2x1ZGUgPGxpbnV4L3dhaXQuaD4KIApAQCAt
-NzIsNiArNzMsMTEgQEAgbW9kdWxlX3BhcmFtX25hbWVkKGRtX29wX2J1Zl9tYXhfc2l6ZSwgcHJp
-dmNtZF9kbV9vcF9idWZfbWF4X3NpemUsIHVpbnQsCiBNT0RVTEVfUEFSTV9ERVNDKGRtX29wX2J1
-Zl9tYXhfc2l6ZSwKIAkJICJNYXhpbXVtIHNpemUgb2YgYSBkbV9vcCBoeXBlcmNhbGwgYnVmZmVy
-Iik7CiAKK3N0YXRpYyBib29sIHVucmVzdHJpY3RlZDsKK21vZHVsZV9wYXJhbSh1bnJlc3RyaWN0
-ZWQsIGJvb2wsIDApOworTU9EVUxFX1BBUk1fREVTQyh1bnJlc3RyaWN0ZWQsCisJIkRvbid0IHJl
-c3RyaWN0IGh5cGVyY2FsbHMgdG8gdGFyZ2V0IGRvbWFpbiBpZiBydW5uaW5nIGluIGEgZG9tVSIp
-OworCiBzdHJ1Y3QgcHJpdmNtZF9kYXRhIHsKIAlkb21pZF90IGRvbWlkOwogfTsKQEAgLTE3MDgs
-NiArMTcxNCwxMyBAQCBzdGF0aWMgc3RydWN0IG5vdGlmaWVyX2Jsb2NrIHhlbnN0b3JlX25vdGlm
-aWVyID0gewogCiBzdGF0aWMgdm9pZCBfX2luaXQgcmVzdHJpY3RfZHJpdmVyKHZvaWQpCiB7CisJ
-aWYgKHVucmVzdHJpY3RlZCkgeworCQlpZiAoc2VjdXJpdHlfbG9ja2VkX2Rvd24oTE9DS0RPV05f
-WEVOX1VTRVJfQUNUSU9OUykpCisJCQlwcl93YXJuKCJLZXJuZWwgaXMgbG9ja2VkIGRvd24sIHBh
-cmFtZXRlciBcInVucmVzdHJpY3RlZFwiIGlnbm9yZWRcbiIpOworCQllbHNlCisJCQlyZXR1cm47
-CisJfQorCiAJcmVzdHJpY3Rfd2FpdCA9IHRydWU7CiAKIAlyZWdpc3Rlcl94ZW5zdG9yZV9ub3Rp
-ZmllcigmeGVuc3RvcmVfbm90aWZpZXIpOwpkaWZmIC0tZ2l0IGEvaW5jbHVkZS9saW51eC9zZWN1
-cml0eS5oIGIvaW5jbHVkZS9saW51eC9zZWN1cml0eS5oCmluZGV4IDgzYTY0NmQ3MmY2Zi4uZWU4
-OGRkMmQyZDFmIDEwMDY0NAotLS0gYS9pbmNsdWRlL2xpbnV4L3NlY3VyaXR5LmgKKysrIGIvaW5j
-bHVkZS9saW51eC9zZWN1cml0eS5oCkBAIC0xNDUsNiArMTQ1LDcgQEAgZW51bSBsb2NrZG93bl9y
-ZWFzb24gewogCUxPQ0tET1dOX0JQRl9XUklURV9VU0VSLAogCUxPQ0tET1dOX0RCR19XUklURV9L
-RVJORUwsCiAJTE9DS0RPV05fUlRBU19FUlJPUl9JTkpFQ1RJT04sCisJTE9DS0RPV05fWEVOX1VT
-RVJfQUNUSU9OUywKIAlMT0NLRE9XTl9JTlRFR1JJVFlfTUFYLAogCUxPQ0tET1dOX0tDT1JFLAog
-CUxPQ0tET1dOX0tQUk9CRVMsCmRpZmYgLS1naXQgYS9zZWN1cml0eS9zZWN1cml0eS5jIGIvc2Vj
-dXJpdHkvc2VjdXJpdHkuYwppbmRleCA2N2FmOTIyOGM0ZTkuLmEyNmMxNDc0ZTJlNCAxMDA2NDQK
-LS0tIGEvc2VjdXJpdHkvc2VjdXJpdHkuYworKysgYi9zZWN1cml0eS9zZWN1cml0eS5jCkBAIC02
-MSw2ICs2MSw3IEBAIGNvbnN0IGNoYXIgKmNvbnN0IGxvY2tkb3duX3JlYXNvbnNbTE9DS0RPV05f
-Q09ORklERU5USUFMSVRZX01BWCArIDFdID0gewogCVtMT0NLRE9XTl9CUEZfV1JJVEVfVVNFUl0g
-PSAidXNlIG9mIGJwZiB0byB3cml0ZSB1c2VyIFJBTSIsCiAJW0xPQ0tET1dOX0RCR19XUklURV9L
-RVJORUxdID0gInVzZSBvZiBrZ2RiL2tkYiB0byB3cml0ZSBrZXJuZWwgUkFNIiwKIAlbTE9DS0RP
-V05fUlRBU19FUlJPUl9JTkpFQ1RJT05dID0gIlJUQVMgZXJyb3IgaW5qZWN0aW9uIiwKKwlbTE9D
-S0RPV05fWEVOX1VTRVJfQUNUSU9OU10gPSAiWGVuIGd1ZXN0IHVzZXIgYWN0aW9uIiwKIAlbTE9D
-S0RPV05fSU5URUdSSVRZX01BWF0gPSAiaW50ZWdyaXR5IiwKIAlbTE9DS0RPV05fS0NPUkVdID0g
-Ii9wcm9jL2tjb3JlIGFjY2VzcyIsCiAJW0xPQ0tET1dOX0tQUk9CRVNdID0gInVzZSBvZiBrcHJv
-YmVzIiwKLS0gCjIuNTMuMAoK
-
---=separator--
