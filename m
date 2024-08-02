@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1550" "Thursday" "18" "June" "2015" "08:19:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150618121911.34D933AE104@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: various issues in PHP" nil nil nil "6" "2015061812:19:11" "[oss-security] Re: CVE Request: various issues in PHP" (number mark "        cve-assign@m Jun 18   37/1550  " thread-indent "\"[oss-security] Re: CVE Request: various issues in PHP\"\n") "<20150618110200.7c5d78b2@redhat.com>" ("<20150618110200.7c5d78b2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3501 invoked by uid 550); 18 Jun 2015 12:19:24 -0000
+Received: (qmail 3739 invoked by uid 550); 2 Aug 2024 15:02:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3459 invoked from network); 18 Jun 2015 12:19:23 -0000
-In-Reply-To: <20150618110200.7c5d78b2@redhat.com>
-Message-Id: <20150618121911.34D933AE104@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, kaplanlior@gmail.com, security@php.net
-Date: Thu, 18 Jun 2015 08:19:11 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: various issues in PHP
-To: thoger@redhat.com
+Received: (qmail 26266 invoked from network); 2 Aug 2024 15:00:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=yngvason.is; s=google; t=1722610846; x=1723215646; darn=lists.openwall.com;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fmViqBkKF36MNqbPRAijcvjTkFpugKBhXmiPtv7B+N8=;
+        b=LeY2ixAXaJ9pnwxhDkE5Ly4MELHHabvmFZodjmNFM/Tzfst3wXIoaqbtHkdxwAj8jP
+         0B8YBlHJ1GnHpD4JCTlBXE4MFisPmCK/QAyVNRRNkmJDVuYlKWiXB71q9LQ8IhuzG3z8
+         nM9oq1+62VstiHprd3e+o+RRqEo9zCFQ8HwiA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722610846; x=1723215646;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fmViqBkKF36MNqbPRAijcvjTkFpugKBhXmiPtv7B+N8=;
+        b=ipLkN7wX4Z3hlC6DpEGRa2jTca9lnIoePbV5l+6+4GwwjOMYoV7VT9XkStXxEfwiDG
+         NbB7UPFx7+1U8mCUIdMnkvtbFG+TKtnkk6hrxTwLkHZ42Ca2UBtzcniNkWJYiqHxcWuP
+         KZgmP681fXCSMNv7Og+XSCg0yfnn4vZ7C9yfN7R9E/+vb+/RNFlSuCIU3EPIAbimsQMg
+         lZQydG7DE2LTk+Hv9qmx3mxadXL5u5YwCkRD9x/uZV4OKiixbQT0k1/Cbej+8TQi9qTU
+         wHXQ1xyO2UcIQitvx9pn4HpAap74LXlsJCMaC0vEL+zJAR3vB0b3gSRcEwZ72oY11CMM
+         rTWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXhGakohzpLERCrLI3sI/5x5xVQp1rsvYrdsc37U4vg+S0mdD4i2+9ciEXP58r/3wmVSPtDX40/siTtf+ACCC809VUqEO5kTc7yuUksbG84
+X-Gm-Message-State: AOJu0YyGIswbA2cR1+EhcvTK+hsj4xnr6rr4uPZDNT9mXn5w8u+7rad+
+	o2JzHYB6DExLbGTU9ugnD3ZbQJuwhhGpRERe/BCH+5J/zWDKEJLlts0TZGqzl8WaEvyyu2n2WTP
+	IKyT10PS/rvVpxUFX0EspN0i5etOCGnQGdZF+VA==
+X-Google-Smtp-Source: AGHT+IHs6UtsTKEWK84PbvSTifQICC7obsFDPWiwC+Wzjf6y5RVumQwoA4DcJjCe2rHdLjcpsGL/Km+LXYHMxtU//Ew=
+X-Received: by 2002:a0d:c803:0:b0:672:b4dd:eb41 with SMTP id
+ 00721157ae682-6896077655bmr42060007b3.15.1722610846577; Fri, 02 Aug 2024
+ 08:00:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAFNQBQwnnA_=sZCvYf=sRzz2SXfqJB5_JEFYjCC+pcGekN9WFw@mail.gmail.com>
+ <20240802143913.GA11135@openwall.com> <SA1PR22MB2978E752B5A2B186F0B4D9B9B5B32@SA1PR22MB2978.namprd22.prod.outlook.com>
+ <20240802145338.GA12405@openwall.com>
+In-Reply-To: <20240802145338.GA12405@openwall.com>
+From: Andri Yngvason <andri@yngvason.is>
+Date: Fri, 2 Aug 2024 15:00:10 +0000
+Message-ID: <CAFNQBQwdQMYSu4cO_WwiupeQJOEyK=mSgHikCNFK4qqbNjTM=A@mail.gmail.com>
+To: Solar Designer <solar@openwall.com>
+Cc: Dane Bouchie <dbouchie@iradimed.com>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, Travis Wise <travis@wavesquared.com>, 
+	"security@raspberrypi.com" <security@raspberrypi.com>, Simon Long <simon@raspberrypi.com>, 
+	"Moritz M??hlenhoff" <jmm@inutil.org>, Salvatore Bonaccorso <carnil@debian.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Neat VNC Security Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+f=C3=B6s., 2. =C3=A1g=C3=BA. 2024 kl. 14:53 skrifa=C3=B0i Solar Designer <s=
+olar@openwall.com>:
+>
+> On Fri, Aug 02, 2024 at 02:41:18PM +0000, Dane Bouchie wrote:
+> > The client chooses the security type, so they can pass in "None" to the=
+ switch statement. is_allowed_security_type() now prevents that.
+>
+> Oh, so was the issue a trivial authentication bypass?  Evidently, logic
+> errors like this are easy to miss in plain sight.
+>
 
-> same reporter, same type, same affected (released)
-> versions, and the same PHP extension
+Yes, and yes.
 
-Vulnerabilities with different disclosure dates aren't merged. (This
-doesn't mean that we would want to have separate CVEs for a
-developer's efforts to completely fix one type of problem in a single
-piece of code, before any changes were in a release, even if the
-efforts took a while. However, even in the case of a single piece of
-code, multiple CVEs can occur if there is a CVE assignment at a time
-when development work seems finished, and then this work continues.)
+>         switch (type) {
+>         case RFB_SECURITY_TYPE_NONE:
+>                 security_handshake_ok(client, NULL);
+>                 client->state =3D VNC_CLIENT_STATE_WAITING_FOR_INIT;
+>                 break;
+>
+> Should the above RFB_SECURITY_TYPE_NONE support continue to exist in the
+> code at all, if RFB_SECURITY_TYPE_NONE is never added to the allowed
+> security types array that the code now pre-checks against?  Maybe it
+> should be #if 0'ed out, leaving it only as an example for debugging?
+>
 
-> issue affecting different module of the code base
-> is not a typical reason for split.
+It is added to the list if no authentication is required.
 
-"different module" would be relevant if it were known that the code in
-one module was originally introduced in one version, and this was not
-the same version as for the other code.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVgrW7AAoJEKllVAevmvmsUz4H/0sh6svZ2GQV4/docwDrfdZA
-JVV7P8NFja6XlKMQsGDvSrsollGjA2TZf7y7D56mXIjK6hv57tS5bzTcH2ofQSfY
-Au0IOyM+/MDu8pnt1pXAyBvYbwaMQOvZRFMA96imL46/KPwnKPUACrnXfu6BpXU4
-u186I9Na+8RKc47yajjg3ddUjTl1aMGjXXbEXK1c9XtnKjU1zk7Gd0HCRqcMRW6b
-+4ojMyyPigXNbPXb1YtFUS3BZ25p7jLVzNHvaBeKEddJuHtyyq7lHZbAYDbi0Ykb
-K7h1uCtg9XpzkRvEQnJzBEFCsgEMQs9PURNhWd2S+wVSCzSL+AxgPm0a/hbpZ5o=
-=QwlQ
------END PGP SIGNATURE-----
+Regards,
+Andri
