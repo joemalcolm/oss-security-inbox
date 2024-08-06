@@ -1,4 +1,4 @@
-Received: (qmail 15435 invoked by uid 550); 26 Sep 2024 11:09:53 -0000
+Received: (qmail 8005 invoked by uid 550); 6 Aug 2024 15:16:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,66 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20198 invoked from network); 26 Sep 2024 07:37:45 -0000
+Received: (qmail 30094 invoked from network); 6 Aug 2024 15:15:07 -0000
 Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0YycAFY/FT0hoQaQQCXgFZZB9obn/tHKyIesFh8Vy0HQHMQMwlgh
-	2B1WiGN9Tlw/bh6X9HRfYNv7qHrKLJ+uvEOvEgpLubUpS/M7/tPFf87tGg+ATBStUvGfkHyJE52
-	ObfIkq8MlFP95IpRFDnFELj1DNvE=
-X-Google-Smtp-Source: AGHT+IHLzjUVB9naRx4rn1oXTyGnXADtEI9bNb9/l7IoP6fhfrdoSKmelofiJy9nWFRrten7wNhcQn7FyJ0qyhuPobc=
-X-Received: by 2002:a05:6512:3f07:b0:52e:9b68:d2d4 with SMTP id
- 2adb3069b0e04-53877567801mr3489187e87.56.1727336233900; Thu, 26 Sep 2024
- 00:37:13 -0700 (PDT)
-MIME-Version: 1.0
-From: Slawomir Jaranowski <sjaranowski@apache.org>
-Date: Thu, 26 Sep 2024 09:37:03 +0200
-X-Gmail-Original-Message-ID: <CAGjJkv1D5_YvpR-Yo1OSa8iN+nuVX8L=O6p7UmRmKqLY-eQGbQ@mail.gmail.com>
-Message-ID: <CAGjJkv1D5_YvpR-Yo1OSa8iN+nuVX8L=O6p7UmRmKqLY-eQGbQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+From: Rohit Yadav <rohit@apache.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2024-47197: Maven Archetype Plugin: Maven Archetype
- integration-test may package local settings into the published artifact,
- possibly containing credentials
+Message-ID: <b57aea4a-11c6-3720-8fa4-2eba7834cb1a@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 06 Aug 2024 15:11:48 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-42062: Apache CloudStack: User Key Exposure to Domain
+ Admins 
 
-Severity: low
+Severity: critical
 
 Affected versions:
 
-- Maven Archetype Plugin 3.2.1 before 3.3.0
+- Apache CloudStack 4.10.0 through 4.18.2.2
+- Apache CloudStack 4.19.0.0 through 4.19.1.0
 
 Description:
 
-Exposure of Sensitive Information to an Unauthorized Actor, Insecure
-Storage of Sensitive Information vulnerability in Maven Archetype
-Plugin.
+CloudStack account-users by default use username and password based authent=
+ication for API and UI access. Account-users can=C2=A0generate and register=
+ randomised API and secret keys and use them for the purpose of API-based a=
+utomation and integrations.=C2=A0Due to an access permission validation iss=
+ue that affects Apache CloudStack versions 4.10.0 up to 4.19.1.0, domain ad=
+min accounts were found to be able to query all registered account-users AP=
+I and secret keys in an environment, including that of a root admin.=C2=A0A=
+n attacker who has domain admin access can exploit this to gain root admin =
+and other-account privileges and perform malicious operations that can resu=
+lt in compromise of resources integrity and confidentiality, data loss,=C2=
+=A0denial of service=C2=A0and availability of CloudStack managed infrastruc=
+ture.
 
-This issue affects Maven Archetype Plugin: from 3.2.1 before 3.3.0.
-
-Users are recommended to upgrade to version 3.3.0, which fixes the issue.
-
-Archetype integration testing creates a file
-called ./target/classes/archetype-it/archetype-settings.xml
-This file contains all the content from the users ~/.m2/settings.xml file,
-which often contains information they do not want to publish. We
-expect that on many developer machines, this also contains
-credentials.
-
-When the user runs mvn verify again (without a mvn clean), this file
-becomes part of
-the final artifact.
-
-If a developer were to publish this into Maven Central or any other
-remote repository (whether as a release
-or a snapshot) their credentials would be published without them knowing.
-
-This issue is being tracked as ARCHETYPE-657
+Users are recommended to upgrade to Apache CloudStack 4.18.2.3 or 4.19.1.1,=
+ or later, which addresses this issue.=C2=A0Additionally, all account-user =
+API and secret keys should be regenerated.
 
 Credit:
 
-Niels Basjes (reporter)
+Fabricio Duarte (finder)
 
 References:
 
-https://maven.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2024-47197
-https://issues.apache.org/jira/browse/ARCHETYPE-657
+https://cloudstack.apache.org/blog/security-release-advisory-4.19.1.1-4.18.=
+2.3
+https://lists.apache.org/thread/lxqtfd6407prbw3801hb4fz3ot3t8wlj
+https://www.shapeblue.com/shapeblue-security-advisory-apache-cloudstack-sec=
+urity-releases-4-18-2-3-and-4-19-1-1/
+https://cloudstack.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-42062
+
