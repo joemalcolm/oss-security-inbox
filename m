@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1117" "Saturday" "19" "November" "2016" "16:14:27" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1681368.mmIYxGAJKb@arcadia>" "47" "[oss-security] libdwarf: negation overflow in dwarf_leb.c" nil nil nil "11" "2016111915:14:27" "[oss-security] libdwarf: negation overflow in dwarf_leb.c" (number mark "U       ago@gentoo.o Nov 19   47/1117  " thread-indent "\"[oss-security] libdwarf: negation overflow in dwarf_leb.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32521 invoked by uid 550); 19 Nov 2016 15:13:27 -0000
+Received: (qmail 30059 invoked by uid 550); 6 Aug 2024 17:24:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32503 invoked from network); 19 Nov 2016 15:13:26 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 23803 invoked from network); 6 Aug 2024 17:15:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dorfdsl.de;
+	s=default; t=1722964507;
+	bh=suahyKYHP9/3nqpnTmwdgSZebxvvIfTqnOtzTx7rFwk=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=Ewzbz/Xy6E1TkQ8mcJ1ztglJudHmF25ADsmOoFrXEPaA+k91rziuamFISjm6X+F+N
+	 +iX4wUERSquyNGZBoRPpq1SX1MFtnsVvvMcCb8iZuM3pRYe2k7imoREfUyY4+IyHJ0
+	 wgqHAEtT5b7Ttu5ynZsDVA0FgP0C7ZDGCEbT9RETsBCAISJleUxgRUUqrdUPFRulMC
+	 CyxHu1r6KjKYYCywb0WzLl6Hhf5KiphdPKpj3EdcqYwMA+LN+2cdyWiiveW+F/Ottt
+	 vNjr1ScLhIMz6VQ/Kk8SX0VpQBJvH4sTSg7KGX6efURkGHwsrkBw81u134rjuUv+5W
+	 gBcDCuTyBG3AQ==
+Date: Tue, 6 Aug 2024 19:15:04 +0200
+From: Marco Moock <mm@dorfdsl.de>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sat, 19 Nov 2016 16:14:27 +0100
-Message-ID: <1681368.mmIYxGAJKb@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Message-ID: <20240806191504.0df85cf8@dorfdsl.de>
+In-Reply-To: <ZrJQpDftQthxOT2g@symphytum.spacehopper.org>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
+	<20240806171232.6bd08942@zbook>
+	<ZrJQpDftQthxOT2g@symphytum.spacehopper.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libdwarf: negation overflow in dwarf_leb.c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
-If suitable for a CVE please assign one. Thanks.
+Am 06.08.2024 um 17:34:44 Uhr schrieb Stuart Henderson:
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+> On 2024/08/06 17:12, Marco Moock wrote:
 
-A fuzz with the Undefined Behavior Sanitizer shows a negation that cannot be 
-represented as long long.
+> > Is it reasonable to output that on STDERR any time those protocols
+> > are used?=20=20
+>=20
+> From a library?!
 
-The complete UBSan output:
+openssl is also sometimes used as a normal binary to test connections
+etc.
 
-# dwarfdump $FILE
-dwarf_leb.c:306:19: runtime error: negation of -9223372036854775808 cannot be 
-represented in type 'Dwarf_Signed' (aka 'long long'); cast to an unsigned type 
-to negate this value to itself
+--=20
+Gru=C3=9F
+Marco
 
-Affected version:
-20161021
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/4f19e1050cd8e9ddf2cb6caa061ff2fec4c9b5f9/#diff-5
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00050-libdwarf-negate-itself
-
-Timeline:
-2016-11-11: bug discovered and reported to upstream
-2016-11-11: upstream released a patch
-2016-11-19: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/19/libdwarf-negation-overflow-in-dwarf_leb-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Send unsolicited bulk mail to 1722958484muell@cartoonies.org
