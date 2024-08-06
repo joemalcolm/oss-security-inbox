@@ -1,4 +1,4 @@
-Received: (qmail 21913 invoked by uid 550); 21 Dec 2022 17:13:42 -0000
+Received: (qmail 13554 invoked by uid 550); 6 Aug 2024 18:58:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +7,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21878 invoked from network); 21 Dec 2022 17:13:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UdeYIubiwGV2eGT6zxXjlVbpErxiQ7MWCX4wagFxSSw=;
-        b=ITdTpsBPWNbuieM59Y+XFuWn22ADkXVq4aQ22z4gULjneBJyONXt/tlubLQSpDQqdu
-         BLzz4amw1ze06BJAoUqiKr63H1JvqE44yVMC7rUmaL0rnRlFyAtWuU0XVD9kHfmpzqCQ
-         kc2ENBxCbKLF53qBIZsAlbBGwssDhz/yw2MKYrH2mmZsZ6PDUCCiolQKkKl+aO0sKIJL
-         RLJlRrZKcvmbH1aoQOLn1BipwtVYBVyvn+aP16WLJ0F7TxN1JX6IzJAaJHn4YYC8JjGV
-         Sc+Nnh9WGW64sIlZckTMLO/ttsNakaV8Cabeu+7T/9m9PDqaYZxTZxbFMXIKcdKEmlK4
-         TWCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UdeYIubiwGV2eGT6zxXjlVbpErxiQ7MWCX4wagFxSSw=;
-        b=uVpRNYyh7Sksgn3lRBRUHIfJHN7e2YshYJp2ienjUACO9yceFk1ppUnOxmafCrTdoa
-         4fYhql0ipVF5ZcEZqkRNhQNsl0byj+wmikd6ULPmXeLP2ptGuPzMSMOWl3FpO2ChX9if
-         SDTOiWRspeS2XyL1zcM7wK8GubduTXc1oOXu3sheHKQI2+OcbGpYeNEHJ8icQ06xw3Vi
-         ScpYiqLsoQrrCxyBiVZu9dbK+8hOQKb3+XNaAxg8xu014F0CEOrzi2HrgcavEWRDBovo
-         4TG6HKD4oyGuNRIs1x88VxgMl5FlELK9vgaZKXwBWSMWVEIFDjwvQ9Pv439Y1w60CEhy
-         4JnQ==
-X-Gm-Message-State: AFqh2kr1YPnelwxuYot3n8Ez8PsdJNZw88srHcfmWb95M8k+TaDp7pi6
-	eI+FxAfrEmfD/kdmWjQO+QTAiBCY34ZhaKyBN3HXXtQLChit9tIe
-X-Google-Smtp-Source: AMrXdXuvpxbC8Jb1UwIrnk6xaMQI53N+tqw4qjcrBnl0FTBnnODbDFppEsKXrExrxgri0l3asGg1IpGXcJmbyN0aSOs=
-X-Received: by 2002:a05:6870:4256:b0:148:5f4a:7f19 with SMTP id
- v22-20020a056870425600b001485f4a7f19mr214666oac.120.1671642808681; Wed, 21
- Dec 2022 09:13:28 -0800 (PST)
-MIME-Version: 1.0
-From: Dmitry Vyukov <dvyukov@google.com>
-Date: Wed, 21 Dec 2022 18:13:17 +0100
-Message-ID: <CACT4Y+aqb9V=WO0gsN1DgqimrjHiY3x+KvKGiz7b95jh9gubhw@mail.gmail.com>
+Received: (qmail 28007 invoked from network); 6 Aug 2024 18:48:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1722970098;
+	 x=1723056498; bh=Zpp4wcMsj2B2TGcfnXlJ9ljxed2RuwDLPVJJybbksuM=; b=
+	BV7udk6GKN/IzXWng2FDofWzC8+DbKJGrC6CL3bFESAgyfYDMeONPiztdEzFLAOB
+	6xs93jA7RMq9ggY3H0FNMHX4fh931d46sinyjrKtupsTWg1GckNd7Puy1D2vsidb
+	EguPvv5BJb9XmR4NbXJ4bsHxyPwkZYSqT7Si2Xe3QtSl5iDpFnE75AcUtFKjK03R
+	fSwJTHNpVDlVVY4d7wmOChL4XW/obRslZVfXf90UyVnZcRX5YXyEcgY23JlzbktP
+	tW+404tMcsviZEsAtewKV3bkkfFk+1IU8TIP5wUkJv+7EESTORte/dU/w7xsKLlB
+	0PeTDv75gBv9Sz9dtXf2mg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1722970098; x=1723056498; bh=Zpp4wcMsj2B2TGcfnXlJ9ljxed2R
+	uwDLPVJJybbksuM=; b=howhvBHnLjo7N8AxQVXuPgYRsEhMPLRLB+V1Ctm3Q0Yl
+	8aIgy5Wv/16q7LV2Qqy8Qlq1dUajz/D4e9X+FRA9Q9Dzs4VPm+IWcHObmrMITdAI
+	+EetIAcqD5N3lPhtknQbW/1rzo+ceCsyb2UIA+rs9J0fAkwaOIPfPqyLfjB8wRmY
+	A7s/b1dNV2dYJsOSpcD7fW4mVNTlvMVxNhkmVhasJyH46qI8Pno8DI/d72+zZDt/
+	IPQOjefsY4XDNFBz5HXY//mOPer2lG1QrTOTf/6VgNoHznkciwpSqVS7F3xGkxE5
+	svaW0Mof7lrRNhX9fham4gZE4L9pqWyLNS7hT5HTpQ==
+X-ME-Sender: <xms:8m-yZh06zGi0YqXqD2lbj1HmQYUGxP5faXs5aj4s5s_7NSX55HJXoA>
+    <xme:8m-yZoHo3BuQ49NO_zGMYq6H1BR95ZirkbtlqeJTp6PdUFEH1Y31bnI22Ot6qbJRq
+    90hEm1N3Tqq-WU>
+X-ME-Received: <xmr:8m-yZh49P4KtT2o4zTDOg3aQ7oINfRLdOGVtQxADAg4oYfQfUo1fZn7G7JVpMwmNquQpUtzOqR3yhXW2LwSP39w6h6h9cEd1cWUtxzDxEjpS47_c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeekgdduvdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
+    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
+    epiefgieefvdfgjeelfeeifefgjedvvdefleegleeifeegfffhgffffeffhfeuudehnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhise
+    hinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomhdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:8m-yZu1lYebNx6vkpTGsCQhZqfo5UiMAv0Xn0y2uXBYDkmvJrbogmA>
+    <xmx:8m-yZkEYy1F-fSqhEHi22ADY509-JMeB1zOt_56jyIIJZS7Lte7DPw>
+    <xmx:8m-yZv9VFobo8TMRZfK0jESz99lN5g1ToZI_tsMUlUtJ18plAWHgqw>
+    <xmx:8m-yZhlJdwSMBGwkCosEc_ALF1CxrvFWUkCW0HCt41ArkKz4Fx2JDw>
+    <xmx:8m-yZvOfv7DBcuyxMqkRD25142Rb2vYojLGpWwccKGgzSHBFWWuG-aDG>
+Feedback-ID: iac594737:Fastmail
+Date: Tue, 6 Aug 2024 14:48:14 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [Linux] /proc/pid/stat parsing bugs
+Message-ID: <ZrJv8PDeCxQQJVxH@itl-email>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
+ <20240806171232.6bd08942@zbook>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YWSf49jythUrEuU1"
+Content-Disposition: inline
+In-Reply-To: <20240806171232.6bd08942@zbook>
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
-Hello,
+--YWSf49jythUrEuU1
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 6 Aug 2024 14:48:14 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
-This is not a single vulnerability, the list of affected software is
-large, but it's not a security issue for all of it.
+On Tue, Aug 06, 2024 at 05:12:32PM +0200, Marco Moock wrote:
+> Am Tue, 6 Aug 2024 05:02:14 -0400
+> schrieb Neil Horman <nhorman@openssl.org>:
+>=20
+> > 1) Are distributions/users comfortable with this approach in the time
+> > frame proposed?
+>=20
+> As a user, this is acceptable for me, but I know there are still
+> machines outside that only offer such old versions.
+> Some of them can't be upgraded easily because the vendor doesn't
+> provide any new versions.
 
-It occurred to me that most of the Linux procfs /proc/pid/stat and
-/proc/pid/task/tid/stat parsing code out there is buggy. The fine
-contains a set of numbers about the task:
-https://man7.org/linux/man-pages/man5/proc.5.html
+Can those machines be put behind a proxy?
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-e.g. $ cat /proc/self/stat
-1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
-0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
-93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
-0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
-140737444559765 140737444559765 140737444564971 0
+--YWSf49jythUrEuU1
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Most of the code splits it by space and takes an N-th field.
-The problem is that the process name "(cat)" can contain spaces (and
-brackets). Potentially some important software (containers/sandboxes)
-can be tricked into getting wrong data, and I've seen cases close to
-stack overflows (buffer for a fixed number of fields is allocated on
-stack).
+-----BEGIN PGP SIGNATURE-----
 
-Some examples:
-OpenJDK:
-https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
-https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmayb/AACgkQsoi1X/+c
+IsFEEhAAs2WjuriDmKSB0LNfxiLYpjMd+AEPG5YT7d9KvwxNXr3XpNBIBBL3bDTv
+s/Gs6J8hhvQtlCTvNvhL8WX3BI0ltqkLZUERGnUgaIp6IjH/kMCTD8/ty4eWCcxb
+WltodeWbbs0laTepxVyCuQd5rAEW2k5jRwK3jAZ0/o2lIPfZBIf6Y/5ItrM8B9Na
+wK8oSwZ4xV4pADkfODGJpLGMqltSEfXqFs9Xsa5KknyiCysTPf3TZ+lsgRsLok1j
+az6ephi5Sa1219hQv0dVnjdpI8DbBaarL4DoXYBn14OSMmH78cOGgrYqxrKewrv+
+etMkCnLpJAQw3Q0vd5GFWU/R/juyN4tft67Am+0aIxa5panxdNY8NCLcTEVT46B3
+ykB+tFEUAYKbNc5byVejQ76Rq2lrvYtSjPhvXt+1aSzagzffUw+sNrCnxej4QHrT
+ZNZDGQrWgMQK1wppGcHie0EPZyVBEVL5z+SzRIrGV/Y6Wjgho0RpKQAsVIPhsZIP
+M4BYErTigveBKQ16xX0O2k9HAziF5ZiwWdLbBQah3UOEQYIla3hIMLrKejrYPrey
+IJyhH32/URhk5xDyYw6VnLjFpR/gBLmCgsrczFWJ5rhMPbTxSm4xfiDu0x5JTndv
+SL0SHpmP8t21W5cVu4ewV6tNrb4hlPrNxMFcIQEzsewslNsPHG8=
+=XSQh
+-----END PGP SIGNATURE-----
 
-Ansible:
-https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
-
-Libuv:
-https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
-
-bdwgc:
-https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
-
-But really most of the code that does it:
-https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
-
-The only way to parse it is to do strrchr(')') first (fortunately it
-contains just one unescaped string).
-
-Thanks
+--YWSf49jythUrEuU1--
