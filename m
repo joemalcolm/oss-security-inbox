@@ -1,4 +1,4 @@
-Received: (qmail 14255 invoked by uid 550); 30 Jan 2023 16:49:38 -0000
+Received: (qmail 3530 invoked by uid 550); 6 Aug 2024 15:10:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,163 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11316 invoked from network); 30 Jan 2023 16:43:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=markhack.com; s=dkim; h=Sender:Content-Transfer-Encoding:MIME-Version:
-	Content-Type:References:In-Reply-To:Date:To:From:Subject:Message-ID:Reply-To:
-	Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=6mmec0iMStkKIiIIVY6gHm+DsGFWm7Gizs8cjMDIa6U=; b=m/nyC3x49Igj32UfdGzVDA6z5b
-	c+2F25Sc2nxHXrbZm+gxDwlZZz0QCe41thwAQqs7OhjUeCPq6CLaWVYGy0KXJ6NKPefeuJFWmdEyW
-	KG/NpOVvZ7jPvw5CA2gfrIblxPqj653u1uUxnAO/nxvIpe65nFlBXj/DCbZHCwiwskThc4u3HwF5v
-	LHafTn51PtZ3znkqPVV7Cob+3QGh/FPwqUcinT1aNTxbZreOXPcm9W6/luZgpA0h+cW/IupdY0dZV
-	/FNy5hvvqH1lr4Xpt4CS+h2c3R8bK0XzVifFZZEaz1IV0i7VcIt0/Cj6jK0yNSWXdbvxKrxxTbHwb
-	jaEc0KLg==;
-X-Authority-Analysis: v=2.3 cv=H7JAP9Qi c=1 sm=1 tr=0
- a=UH8/iCWBfdUmbm4Ft4Vi3Q==:117 a=0LpTLZtb7PxyfqalD3XYnQ==:17
- a=IkcTkHD0fZMA:10 a=RvmDmJFTN0MA:10 a=sdm2wQysh9cA:10 a=JqEG_dyiAAAA:8
- a=QyXUC8HyAAAA:8 a=pbhzjRZzFm-yFbFTmSQA:9 a=QEXdDO2ut3YA:10 a=_UPsMtDdQXcA:10
- a=bXa89YNWa_sA:10 a=m-7u6X-4zz0A:10 a=MmexTcOajuwA:10 a=lPgG1GnSO3sA:10
-Message-ID: <ef62abb418ad781fa159cc57b2270e05b0f88d49.camel@markhack.com>
-From: Mark Hack <markhack@markhack.com>
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
-Date: Mon, 30 Jan 2023 10:43:16 -0600
-In-Reply-To: <Y9L5/9/Oi732Y+a5@gmail.com>
-References: <Y9GEU0G9N5etu+H3@sol.localdomain>
-	 <20230125214445.GA8487@openwall.com> <Y9L5/9/Oi732Y+a5@gmail.com>
+Received: (qmail 3497 invoked from network); 6 Aug 2024 15:10:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1722957010; bh=Oi1fuOiOwYj1J8/gitDsbwMy8PTyiCTk5wrw7ykhvoM=;
+	h=Subject:From:To:Date;
+	b=d2eYJxLiFwT7au0/UO9aNLZIFBR330CAfAJpBpkumQTRZopoLRkonsRzcFxn3ZX/N
+	 3Q+QleSH4zM5yck6xHqh9lSTuh5MBxVTD9Fuhm7Z0FavCTpjd0lfUL9T/7smPmrJi3
+	 KHCYyQwBOCq97ojodJGT+kLIJG2WU9DuRPYBb6fI=
+Message-ID: <c4c734f10429230cd935943fd025597b223e027c.camel@orlitzky.com>
+From: Michael Orlitzky <michael@orlitzky.com>
+To: oss-security@lists.openwall.com
+Date: Tue, 06 Aug 2024 11:10:06 -0400
+Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual;
+ keydata=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
 Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5-0ubuntu1 
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EN-UserInfo: 9a4d7356ca47e8f598bc04fc7024e3f1:931c98230c6409dcc37fa7e93b490c27
-X-EN-AuthUser: markhack@markhack.com
-Sender:  Mark Hack <markhack@markhack.com>
-X-EN-OrigIP: 75.81.95.68
-X-EN-OrigHost: 075-081-095-068.res.spectrum.com
-Subject: Re: [oss-security] Data operand dependent timing on Intel and Arm
- CPUs
+Subject: [oss-security] Tracking down a lost CVE request (MITRE)
 
-This is a concern, but if you look into the crypto implementations,
-data blinding is applied to mitigate both instruction and power side
-channel attacks
+Couldn't think of a better place to ask this. I requested a CVE back in
+March for an issue with the installed permissions in Nagios's NDOUtils.
+I think the request ID was #1620090.
 
-Regards
+I received a confirmation, but never got a follow-up response. I've
+since replied to the CVE-Request@ address, and have filled out the form
+with an "other" request asking for an update, but haven't heard back.=20
+New requests are obviously still being issued -- is there some way to
+find out what happened to this one?
 
-Mark Hack
+FWIW:
 
-
-
-On Thu, 2023-01-26 at 22:09 +0000, Eric Biggers wrote:
-> On Wed, Jan 25, 2023 at 10:44:45PM +0100, Solar Designer wrote:
-> > Hi Eric,
-> > 
-> > Thank you for bringing this up in here.
-> > 
-> > There was also a brief Twitter thread on it in August 2022, started
-> > by
-> > Adam Langley:
-> > 
-> > https://twitter.com/agl__/status/1561374334714671104
-> > 
-> > In it Adam Langley, wrote:
-> > > It appears that Intel doesn't guarantee constant-time execution
-> > > of _any_
-> > > instructions on Ice Lake or later unless a configuration bit is
-> > > set:
-> > > https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
-> > > 
-> > > Ice Lake was released in 2019 but this information is only a few
-> > > months
-> > > old. So hopefully multiplication etc actually is always constant-
-> > > time on
-> > > existing chips and this is just preparing for the future?
-> > > 
-> > > I guess the steady state is that every OS sets this DOITM bit all
-> > > the
-> > > time, but Intel get to publish benchmarks based on variable-time
-> > > instructions and claim that they're using the default
-> > > configuration?
-> > 
-> > My reply was:
-> > > Reading between the lines, I think this is a vulnerability and
-> > > mitigations disclosure for 6th to 12th gen (fixed in 13th?),
-> > > disguised
-> > > as a feature. They discovered that "data values may delay
-> > > instruction
-> > > retirement by, at most, one cycle" for vector multiplication and
-> > > bit
-> > > count.
-> > 
-> > On Wed, Jan 25, 2023 at 11:34:43AM -0800, Eric Biggers wrote:
-> > > I'd like to draw people's attention to the fact that on recent
-> > > Intel and Arm
-> > > CPUs, by default the execution time of instructions may depend on
-> > > the data
-> > > values operated on.  This even includes instructions like
-> > > additions, XORs, and
-> > > AES instructions, that are traditionally assumed to be constant-
-> > > time with
-> > > respect to the data values operated on.
-> > 
-> > FWIW, I'm not aware of any indication that e.g. "additions, XORs,
-> > and
-> > AES instructions" have data-dependent timing on CPUs released so
-> > far.
-> 
-> Sure.  To be clear, I don't have specific knowledge of how particular
-> instructions behave on particular CPUs.  Research into the real-world 
-> behavior
-> is absolutely needed.  I'm just going off what the Intel
-> documentation is saying
-> is possible / allowed now.  Additions, XORs, and AES-NI instructions
-> all show in
-> the following list of instructions:
-> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/resources/data-operand-independent-timing-instructions.html
-> 
-> Now, that list is titled "Data Operand Independent Timing
-> Instructions".  That
-> sounds good; it means they have data operand independent timing,
-> right?
-> 
-> Actually, not necessarily.  If you read the documentation fully,
-> specifically
-> the "Data Operand Independent Timing Mode (DOITM)" section of
-> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html,
-> it says that the instructions in that list are only guaranteed to
-> have data
-> operand independent timing ***if the DOITM flag is enabled***.
-> 
-> Also, Intel writes:
-> 
-> 	"For Intel® Core™ family processors based on microarchitectures
-> before
-> 	Ice Lake and Intel Atom® family processors based on
-> microarchitectures
-> 	before Gracemont that do not enumerate IA32_UARCH_MISC_CTL,
-> developers
-> 	may assume that the instructions listed here operate as if
-> DOITM is
-> 	enabled."
-> 
-> So, Intel is saying that on older CPUs, the instructions in that list
-> are
-> guaranteed to always have data operand independent timing.  But on
-> newer CPUs it
-> is ***explicitly not guaranteed by default***.
-> 
-> I'd be happy if people looked into this and found that in the real
-> world, data
-> operand independent timing by default is actually still the status
-> quo.
-> 
-> Of course, that would mean that while enabling DOITM would not
-> currently be
-> important, the overhead of enabling it would also be very small.
-> 
-> Conversely, if DOITM gets more expensive in the future, surely that
-> could only
-> be the result of it becoming much more important to enable anyway...
-> 
-> - Eric
+Before NDOUtils-2.1.4 (released five days ago), the upstream Makefile
+would install the "ndo2db" daemon executable with the same owner/group
+that it is intended eventually to run as (namely: "nagios"). But the
+daemon is designed to be started as root and drop privileges to that
+user. If the "nagios" user can edit a binary that root will run, he can
+gain root privileges.
 
