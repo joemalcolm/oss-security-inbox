@@ -1,4 +1,4 @@
-Received: (qmail 24391 invoked by uid 550); 22 Jul 2024 12:27:30 -0000
+Received: (qmail 5776 invoked by uid 550); 7 Aug 2024 15:16:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1412 invoked from network); 22 Jul 2024 08:07:10 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Rongtong Jin <jinrongtong@apache.org>
+Received: (qmail 8004 invoked from network); 7 Aug 2024 14:41:00 -0000
+Date: Wed, 7 Aug 2024 16:40:47 +0200
+From: niekt0 <niekt0@kyberia.cz>
 To: oss-security@lists.openwall.com
-Message-ID: <9926ba38-7a93-266b-4410-296dc0c361f7@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 22 Jul 2024 08:06:58 +0000
+Message-ID: <20240807144047.GA12108@test>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
+ <20240806171232.6bd08942@zbook>
+ <ZrJv8PDeCxQQJVxH@itl-email>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-23321: Apache RocketMQ: Unauthorized Exposure of
- Sensitive Data 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZrJv8PDeCxQQJVxH@itl-email>
+X-Mailer: iPhone Mail (8G4)
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
-Severity: moderate
+Hi,
 
-Affected versions:
+as a penetration tester, I would appreciate something like a package 
+"ssl-obsolete", that would contain old, working code. While it is probably not
+necessary to fix cryptography related bugs (we know that this part is broken),
+it would be probably still nice to fix RCE bugs.
 
-- Apache RocketMQ 4.5.2 through 5.2.0
+There are still MANY devices out there, that does not receive any updates,
+sometimes because they are in an "air-gaped" environment, or they are some sort
+of an embedded device, etc, etc. It is still very useful, to have some handy 
+way how to speak to those devices, there may be still hundreds of millions of 
+them. (installing a special 5 years old instance of while OS does not seems 
+like a handy way to me)
 
-Description:
+n.
 
-For RocketMQ versions 5.2.0 and below, under certain conditions, there is a=
- risk of exposure of sensitive Information to an unauthorized actor even if=
- RocketMQ is enabled with authentication and authorization functions.
+On Tue, Aug 06, 2024 at 02:48:14PM -0400, Demi Marie Obenour wrote:
+> On Tue, Aug 06, 2024 at 05:12:32PM +0200, Marco Moock wrote:
+> > Am Tue, 6 Aug 2024 05:02:14 -0400
+> > schrieb Neil Horman <nhorman@openssl.org>:
+> > 
+> > > 1) Are distributions/users comfortable with this approach in the time
+> > > frame proposed?
+> > 
+> > As a user, this is acceptable for me, but I know there are still
+> > machines outside that only offer such old versions.
+> > Some of them can't be upgraded easily because the vendor doesn't
+> > provide any new versions.
+> 
+> Can those machines be put behind a proxy?
+> -- 
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
+> Invisible Things Lab
 
-An attacker, possessing regular user privileges or listed in the IP whiteli=
-st, could potentially acquire the administrator's account and password thro=
-ugh specific interfaces. Such an action would grant them full control over =
-RocketMQ, provided they have access to the broker IP address list.
-
-To mitigate these security threats, it is strongly advised that users upgra=
-de to version 5.3.0 or newer. Additionally, we recommend users to use Rocke=
-tMQ ACL 2.0 instead of the original RocketMQ ACL when upgrading to version =
-Apache RocketMQ 5.3.0.
-
-Credit:
-
-BaoChengZhang (LengJingQiCaiSecurityLab) (finder)
-
-References:
-
-https://rocketmq.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-23321
 
