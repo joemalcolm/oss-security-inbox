@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1017" "Saturday" "26" "December" "2015" "14:02:26" "+0000" "Sevan Janiyan" "venture37@geeklan.co.uk" "<567E9DF2.3080909@geeklan.co.uk>" "25" "Re: [oss-security] Being vulnerable to POODLE" nil nil nil "12" "2015122614:02:26" "[oss-security] Being vulnerable to POODLE" (number mark "U       venture37@ge Dec 26   25/1017  " thread-indent "\"Re: [oss-security] Being vulnerable to POODLE\"\n") "<567E7481.607@gmail.com>" ("<567E41B4.2010606@geeklan.co.uk>" "<20151226104143.GA26606@gremlin.ru>" "<567E7481.607@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3574 invoked by uid 550); 26 Dec 2015 14:19:21 -0000
+Received: (qmail 14023 invoked by uid 550); 8 Aug 2024 12:56:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +6,206 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28238 invoked from network); 26 Dec 2015 14:02:40 -0000
-References: <567E41B4.2010606@geeklan.co.uk>
- <20151226104143.GA26606@gremlin.ru> <567E7481.607@gmail.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <567E9DF2.3080909@geeklan.co.uk>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.0
-MIME-Version: 1.0
-In-Reply-To: <567E7481.607@gmail.com>
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: 7bit
-Date: Sat, 26 Dec 2015 14:02:26 +0000
-From: Sevan Janiyan <venture37@geeklan.co.uk>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Being vulnerable to POODLE
-To: oss-security@lists.openwall.com
+Received: (qmail 3392 invoked from network); 7 Aug 2024 23:49:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=korelogic.com;
+	s=mail; t=1723074564;
+	bh=txbE2yiCV7eiwfQqOglaURSnFK8iC855Ns+5Kw+g6S8=;
+	h=Date:To:From:Subject;
+	b=SfICBUQ6bBVfwDWThESZb5b5MfxIfRzHdBXWjwIseskuvKVit1DTtG5dSeVJpNsU/
+	 dc3g0xUH81UEyMKDsTAecW+FSmtrvG1vI+yGd/6jX3yXkjdCJau8YwYrym342dNzkV
+	 wxM2hAfJPs+c0xBc6AI+RRlsYn2fMsipSmwnN7lM=
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.103.11 at mail.korelogic.com
+Message-ID: <87af73b2-eeeb-4861-9620-be7d7e895b88@korelogic.com>
+Date: Wed, 7 Aug 2024 18:49:23 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: fulldisclosure@seclists.org, oss-security@lists.openwall.com
+From: KoreLogic Disclosures <disclosures@korelogic.com>
+Autocrypt: addr=disclosures@korelogic.com; keydata=
+ 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
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------Intez2YTDs0VgDEOlLapjRvq"
+Subject: [oss-security] KL-001-2024-006: Open WebUI Arbitrary File Upload + Path Traversal
 
+--------------Intez2YTDs0VgDEOlLapjRvq
+Content-Type: multipart/mixed; boundary="------------MzvJGoGmO7p5Oi5TaXe4NJMo";
+ protected-headers="v1"
+From: KoreLogic Disclosures <disclosures@korelogic.com>
+To: fulldisclosure@seclists.org, oss-security@lists.openwall.com
+Message-ID: <87af73b2-eeeb-4861-9620-be7d7e895b88@korelogic.com>
+Subject: KL-001-2024-006: Open WebUI Arbitrary File Upload + Path Traversal
 
+--------------MzvJGoGmO7p5Oi5TaXe4NJMo
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-On 26/12/2015 11:05, Gsunde Orangen wrote:
-> Nope, it is not a vulnerability specific to OpenSSL, but a design
-> weakness in the SSLv3 protocol - so all implementations of SSLv3 are
-> affected. I would use the same CVE-2014-3566 for all software that still
-> uses SSLv3.
-> This is different to "POODLE TLS", where some implementations (but not
-> OpenSSL) contained a similar vulnerability in their implementation of
-> the TLS 1.0 protocol (although the TLS 1.0 standard itself does not have
-> it). In this case different CVE IDs are suggested - see Mitre's
-> statement at [1]
-> "POODLE TLS" is references in multiple CVEs, see [2]
-> 
-> [1] http://seclists.org/oss-sec/2014/q4/1003
-> [2] https://web.nvd.nist.gov/view/vuln/search-results?query=poodle%20tls
+S0wtMDAxLTIwMjQtMDA2OiBPcGVuIFdlYlVJIEFyYml0cmFyeSBGaWxlIFVwbG9hZCArIFBhdGgg
+VHJhdmVyc2FsDQoNClRpdGxlOiBPcGVuIFdlYlVJIEFyYml0cmFyeSBGaWxlIFVwbG9hZCArIFBh
+dGggVHJhdmVyc2FsDQpBZHZpc29yeSBJRDogS0wtMDAxLTIwMjQtMDA2DQpQdWJsaWNhdGlvbiBE
+YXRlOiAyMDI0LjA4LkQwNg0KUHVibGljYXRpb24gVVJMOiBodHRwczovL2tvcmVsb2dpYy5jb20v
+UmVzb3VyY2VzL0Fkdmlzb3JpZXMvS0wtMDAxLTIwMjQtMDA2LnR4dA0KDQoNCjEuIFZ1bG5lcmFi
+aWxpdHkgRGV0YWlscw0KDQogwqDCoMKgwqAgQWZmZWN0ZWQgVmVuZG9yOiBPcGVuIFdlYlVJDQog
+wqDCoMKgwqAgQWZmZWN0ZWQgUHJvZHVjdDogT3BlbiBXZWJVSQ0KIMKgwqDCoMKgIEFmZmVjdGVk
+IFZlcnNpb246IDAuMS4xMDUNCiDCoMKgwqDCoCBQbGF0Zm9ybTogRGViaWFuIDEyDQogwqDCoMKg
+wqAgQ1dFIENsYXNzaWZpY2F0aW9uOiBDV0UtMjI6IEltcHJvcGVyIExpbWl0YXRpb24gb2YgYSBQ
+YXRobmFtZSB0byBhDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIFJlc3RyaWN0ZWQgRGlyZWN0b3J5ICgnUGF0aCBUcmF2ZXJzYWwnKSwNCiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgQ1dFLTQzNDogVW5yZXN0
+cmljdGVkIFVwbG9hZCBvZiBGaWxlIHdpdGggRGFuZ2Vyb3VzDQogwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFR5cGUNCiDCoMKgwqDCoCBDVkUgSUQ6IENW
+RS0yMDI0LTY3MDcNCg0KDQoyLiBWdWxuZXJhYmlsaXR5IERlc2NyaXB0aW9uDQoNCiDCoMKgwqDC
+oCBBdHRhY2tlciBjb250cm9sbGVkIGZpbGVzIGNhbiBiZSB1cGxvYWRlZCB0byBhcmJpdHJhcnkN
+CiDCoMKgwqDCoCBsb2NhdGlvbnMgb24gdGhlIHdlYiBzZXJ2ZXIncyBmaWxlc3lzdGVtIGJ5IGFi
+dXNpbmcgYQ0KIMKgwqDCoMKgIHBhdGggdHJhdmVyc2FsIHZ1bG5lcmFiaWxpdHkuDQoNCg0KMy4g
+VGVjaG5pY2FsIERlc2NyaXB0aW9uDQoNCiDCoMKgIFdoZW4gYXR0YWNoaW5nIGZpbGVzIHRvIGEg
+cHJvbXB0IGJ5IGNsaWNraW5nIHRoZQ0KIMKgwqAgcGx1cyBzaWduICgrKSBvbiB0aGUgbGVmdCBv
+ZiB0aGUgbWVzc2FnZSBpbnB1dCBib3gNCiDCoMKgIHdoZW4gdXNpbmcgdGhlIE9wZW4gV2ViVUkg
+SFRUUCBpbnRlcmZhY2UsIHRoZSBmaWxlDQogwqDCoCBpcyB1cGxvYWRlZCB0byBhIHN0YXRpYyB1
+cGxvYWQgZGlyZWN0b3J5Lg0KDQogwqDCoCBUaGUgbmFtZSBvZiB0aGUgZmlsZSBpcyBkZXJpdmVk
+IGZyb20gdGhlIG9yaWdpbmFsDQogwqDCoCBIVFRQIHVwbG9hZCByZXF1ZXN0IGFuZCBpcyBub3Qg
+dmFsaWRhdGVkIG9yIHNhbml0aXplZC4NCiDCoMKgIFRoaXMgYWxsb3dzIGZvciB1c2VycyB0byB1
+cGxvYWQgZmlsZXMgd2l0aCBuYW1lcw0KIMKgwqAgY29udGFpbmluZyBkb3Qtc2VnbWVudHMgaW4g
+dGhlIGZpbGUgcGF0aCBhbmQgdHJhdmVyc2UNCiDCoMKgIG91dCBvZiB0aGUgaW50ZW5kZWQgdXBs
+b2FkcyBkaXJlY3RvcnkuIEVmZmVjdGl2ZWx5LCB1c2Vycw0KIMKgwqAgY2FuIHVwbG9hZCBmaWxl
+cyBhbnl3aGVyZSBvbiB0aGUgZmlsZXN5c3RlbSB0aGUNCiDCoMKgIHVzZXIgcnVubmluZyB0aGUg
+d2ViIHNlcnZlciBoYXMgcGVybWlzc2lvbi4NCg0KIMKgwqAgVGhpcyBjYW4gYmUgdmlzdWFsaXpl
+ZCBieSBleGFtaW5pbmcgdGhlIHB5dGhvbiBjb2RlDQogwqDCoCBmb3IgdGhlICIvcmFnL2FwaS92
+MS9kb2MiIEFQSSByb3V0ZToNCg0KIMKgwqDCoMKgwqAgQGFwcC5wb3N0KCIvZG9jIikNCiDCoMKg
+wqDCoMKgIGRlZiBzdG9yZV9kb2MoDQogwqDCoMKgwqDCoMKgwqDCoMKgIGNvbGxlY3Rpb25fbmFt
+ZTogT3B0aW9uYWxbc3RyXSA9IEZvcm0oTm9uZSksDQogwqDCoMKgwqDCoMKgwqDCoMKgIGZpbGU6
+IFVwbG9hZEZpbGUgPSBGaWxlKC4uLiksDQogwqDCoMKgwqDCoMKgwqDCoMKgIHVzZXI9RGVwZW5k
+cyhnZXRfY3VycmVudF91c2VyKSwNCiDCoMKgwqDCoMKgICk6DQogwqDCoMKgwqDCoMKgwqDCoMKg
+ICMgImh0dHBzOi8vd3d3Lmd1dGVuYmVyZy5vcmcvZmlsZXMvMTcyNy8xNzI3LWgvMTcyNy1oLmh0
+bSINCg0KIMKgwqDCoMKgwqDCoMKgwqDCoCBwcmludChmaWxlLmNvbnRlbnRfdHlwZSkNCiDCoMKg
+wqDCoMKgwqDCoMKgwqAgdHJ5Og0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZpbGVuYW1l
+ID0gZmlsZS5maWxlbmFtZQ0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZpbGVfcGF0aCA9
+IGYie1VQTE9BRF9ESVJ9L3tmaWxlbmFtZX0iDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+Y29udGVudHMgPSBmaWxlLmZpbGUucmVhZCgpDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+d2l0aCBvcGVuKGZpbGVfcGF0aCwgIndiIikgYXMgZjoNCiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIGYud3JpdGUoY29udGVudHMpDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBmLmNsb3NlKCkNCg0KIMKgwqAgVGhlICJmaWxlIiB2YXJpYWJsZSBpcyBhIHJl
+cHJlc2VudGF0aW9uIG9mIHRoZSBtdWx0aXBhcnQNCiDCoMKgIGZvcm0gZGF0YSBjb250YWluZWQg
+d2l0aGluIHRoZSBIVFRQIFBPU1QgcmVxdWVzdC4gVGhlDQogwqDCoCAiZmlsZW5hbWUiIHZhcmlh
+YmxlIGlzIGRlcml2ZWQgZnJvbSB0aGUgdXBsb2FkZWQgZmlsZSBuYW1lDQogwqDCoCBhbmQgaXMg
+bm90IHZhbGlkYXRlZCBiZWZvcmUgd3JpdGluZyB0aGUgZmlsZSBjb250ZW50cw0KIMKgwqAgdG8g
+ZGlzay4NCg0KIMKgwqDCoCBUaGlzIGNhbiBiZSB1c2VkIHRvIHVwbG9hZCBtYWxpY2lvdXMgbW9k
+ZWxzLiBUaGVzZSBtb2RlbHMNCiDCoMKgwqAgYXJlIG9mdGVuIGRpc3RyaWJ1dGVkIGFzIHBpY2ts
+ZWQgcHl0aG9uIG9iamVjdHMgYW5kIGNhbg0KIMKgwqDCoCBiZSBsZXZlcmFnZWQgdG8gZXhlY3V0
+ZSBhcmJpdHJhcnkgcHl0aG9uIGJ5dGVjb2RlIG9uY2UNCiDCoMKgwqAgZGVzZXJpYWxpemVkLiBB
+bHRlcm5hdGl2ZWx5LCBhbiBhdHRhY2tlciBjYW4gbGV2ZXJhZ2UgZXhpc3RpbmcNCiDCoMKgwqAg
+c2VydmljZXMsIHN1Y2ggYXMgU1NILCB0byB1cGxvYWQgYW4gYXR0YWNrZXIgY29udHJvbGxlZA0K
+IMKgwqDCoCAiYXV0aG9yaXplZF9rZXlzIiBmaWxlIHRvIHJlbW90ZWx5IGNvbm5lY3QgdG8gdGhl
+IG1hY2hpbmUuDQoNCg0KNC4gTWl0aWdhdGlvbiBhbmQgUmVtZWRpYXRpb24gUmVjb21tZW5kYXRp
+b24NCg0KIMKgwqDCoMKgIFRoaXMgaXNzdWUgd2FzIHJlbWVkaWF0ZWQgaW4gT3BlbiBXZWJVSSBy
+ZWxlYXNlIHYwLjEuMTE3IG9uIDIwMjQuMDQuMDMuDQoNCg0KNS4gQ3JlZGl0DQoNCiDCoMKgwqDC
+oCBUaGlzIHZ1bG5lcmFiaWxpdHkgd2FzIGRpc2NvdmVyZWQgYnkgSmFnZ2FyIEhlbnJ5IGFuZCBT
+ZWFuDQogwqDCoMKgwqAgU2VncmV0aSBvZiBLb3JlTG9naWMsIEluYy4NCg0KDQo2LiBEaXNjbG9z
+dXJlIFRpbWVsaW5lDQoNCiDCoMKgwqDCoCAyMDI0LjAzLjA1IC0gS29yZUxvZ2ljIHJlcXVlc3Rz
+IHNlY3VyZSBjb21tdW5pY2F0aW9ucyBjaGFubmVsIGFuZCBwb2ludA0KIMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgb2YgY29udGFjdCBmcm9tIE9wZW5XZWJVSS5jb20gdmlhIGVt
+YWlsLg0KIMKgwqDCoMKgIDIwMjQuMDMuMTIgLSBLb3JlTG9naWMgc3VibWl0cyB2dWxuZXJhYmls
+aXR5IGRldGFpbHMgYW5kIHN1Z2dlc3RlZCBwYXRjaA0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgdG8gbWFpbnRhaW5lciB2aWEgR2l0aHViIFNlY3VyaXR5ICdSZXBvcnQgYSB2
+dWxuZXJhYmlsaXR5Jw0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgd2ViIGZv
+cm0uDQogwqDCoMKgwqAgMjAyNC4wNC4wMSAtIEtvcmVMb2dpYyBvcGVucyBEaXNjdXNzaW9uICMx
+Mzg1IHZpYSBHaXRIdWIgdG8gcmVxdWVzdCBhbg0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgdXBkYXRlIGZyb20gdGhlIG1haW50YWluZXIuDQogwqDCoMKgwqAgMjAyNC4wNC4w
+MSAtIE1haW50YWluZXIgb3BlbnMgYSBwcml2YXRlIGZvcmsgYW5kIG1lcmdlcyBLb3JlTG9naWMn
+cyBwYXRjaC4NCiDCoMKgwqDCoCAyMDI0LjA0LjAzIC0gTWFpbnRhaW5lciByZWxlYXNlcyB2MC4x
+LjExNy4NCiDCoMKgwqDCoCAyMDI0LjA4LjA2IC0gS29yZUxvZ2ljIHB1YmxpYyBkaXNjbG9zdXJl
+Lg0KDQoNCjcuIFByb29mIG9mIENvbmNlcHQNCg0KIMKgwqAgRXhlY3V0ZSB0aGUgZm9sbG93aW5n
+IGNVUkwgY29tbWFuZDoNCg0KIMKgwqDCoMKgwqAgVEFSR0VUX1VSST0naHR0cHM6Ly9yZWRhY3Rl
+ZC5jb20nOyBKV1Q9J3JlZGFjdGVkJzsgTE9DQUxfRklMRT0nL3RtcC9maWxlX3RvX3VwbG9hZC50
+eHQnXA0KIMKgwqDCoMKgwqAgY3VybCAtSCAiQXV0aG9yaXphdGlvbjogQmVhcmVyICRKV1QiIC1G
+ICJmaWxlPSRMT0NBTF9GSUxFO2ZpbGVuYW1lPS4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uLy4u
+L3RtcC9wd25lZC50eHQiIA0KIiRUQVJHRVRfVVJJL3JhZy9hcGkvdjEvZG9jIg0KDQogwqDCoCBW
+ZXJpZnkgdGhlIGZpbGUgInB3bmVkLnR4dCIgZXhpc3RzIGluIHRoZSAvdG1wLyBkaXJlY3Rvcnkg
+b24NCiDCoMKgIHRoZSBtYWNoaW5lIGhvc3RpbmcgdGhlIHdlYiBzZXJ2ZXI6DQoNCiDCoMKgwqDC
+oMKgIG9sbGFtYUB3ZWJzZXJ2ZXI6fiQgY2F0IC90bXAvcHduZWQudHh0DQogwqDCoMKgwqDCoCBr
+b3JlbG9naWMNCiDCoMKgwqDCoMKgIG9sbGFtYUB3ZWJzZXJ2ZXI6fiQNCg0KDQpUaGUgY29udGVu
+dHMgb2YgdGhpcyBhZHZpc29yeSBhcmUgY29weXJpZ2h0KGMpIDIwMjQNCktvcmVMb2dpYywgSW5j
+LiBhbmQgYXJlIGxpY2Vuc2VkIHVuZGVyIGEgQ3JlYXRpdmUgQ29tbW9ucw0KQXR0cmlidXRpb24g
+U2hhcmUtQWxpa2UgNC4wIChVbml0ZWQgU3RhdGVzKSBMaWNlbnNlOg0KaHR0cDovL2NyZWF0aXZl
+Y29tbW9ucy5vcmcvbGljZW5zZXMvYnktc2EvNC4wLw0KDQpLb3JlTG9naWMsIEluYy4gaXMgYSBm
+b3VuZGVyLW93bmVkIGFuZCBvcGVyYXRlZCBjb21wYW55IHdpdGggYQ0KcHJvdmVuIHRyYWNrIHJl
+Y29yZCBvZiBwcm92aWRpbmcgc2VjdXJpdHkgc2VydmljZXMgdG8gZW50aXRpZXMNCnJhbmdpbmcg
+ZnJvbSBGb3J0dW5lIDUwMCB0byBzbWFsbCBhbmQgbWlkLXNpemVkIGNvbXBhbmllcy4gV2UNCmFy
+ZSBhIGhpZ2hseSBza2lsbGVkIHRlYW0gb2Ygc2VuaW9yIHNlY3VyaXR5IGNvbnN1bHRhbnRzIGRv
+aW5nDQpieS1oYW5kIHNlY3VyaXR5IGFzc2Vzc21lbnRzIGZvciB0aGUgbW9zdCBpbXBvcnRhbnQg
+bmV0d29ya3MgaW4NCnRoZSBVLlMuIGFuZCBhcm91bmQgdGhlIHdvcmxkLiBXZSBhcmUgYWxzbyBk
+ZXZlbG9wZXJzIG9mIHZhcmlvdXMNCnRvb2xzIGFuZCByZXNvdXJjZXMgYWltZWQgYXQgaGVscGlu
+ZyB0aGUgc2VjdXJpdHkgY29tbXVuaXR5Lg0KaHR0cHM6Ly93d3cua29yZWxvZ2ljLmNvbS9hYm91
+dC1rb3JlbG9naWMuaHRtbA0KDQpPdXIgcHVibGljIHZ1bG5lcmFiaWxpdHkgZGlzY2xvc3VyZSBw
+b2xpY3kgaXMgYXZhaWxhYmxlIGF0Og0KaHR0cHM6Ly9rb3JlbG9naWMuY29tL0tvcmVMb2dpYy1Q
+dWJsaWMtVnVsbmVyYWJpbGl0eS1EaXNjbG9zdXJlLVBvbGljeQ0KDQo=
 
-Ok, so in this case, changing the source code to set the context options
-to exclude SSLv2 & v3 was all that was made. The code base is a consumer
-of the OpenSSL API & relies on that to establish SSL, it does not
-implement any crypto itself locally.
+--------------MzvJGoGmO7p5Oi5TaXe4NJMo--
 
+--------------Intez2YTDs0VgDEOlLapjRvq
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Sevan
+wsF5BAABCAAjFiEEB12WYZwbVwYTJ/b2DKLsCTlWkekFAma0CAMFAwAAAAAACgkQDKLsCTlWkeky
+bA/9F+MUzQBJ+7FE7NumGUJSLPhtYjI0jmHo+ju97ql1+4ar63JUhKyF56t/3/acr9y+M+shCJmu
+zcSq0Pa5o6RW3lUiaXNN/HmrbG1uPOAqyyjoWQxMazxs7aguKKYQgNWNzpzo9f/TrshwLUFImnAy
+za8mSjDR7izKPBV8FD7THRLfH3fDGkmP5/WBbnzDOFf44CArwqnnsRdGegUr/rdHHHyU0Ceo5lco
+k1r3lf9aFqdB/oZJHTscZ4fQvcrt51uMB0uGN3/aoSsFgk1iGD+XVhKVWmKzo+wAIpn4wTiPHdYM
+oiiLpXU/D9obsWF7n0Fa5xw/xI9mMzGxnq8+LD0MbxyyAr50siRSpjN9b1K91ymgkLBLXV35CPax
+musdasVPUXFITL/IDTD96lP6HgaCcCj7yklcuqPIrVNlxSfl3UGgl7PJ7UJk1lSOpQ15L2ASXidu
+Vq+GjErnrqUZDBJ4kS92fEelf+AgQGHQi3hq6af2NkhEosOizqnKZkHZrKkl5TXxOCF38u7jFyW1
+Yx32JnuvCjJzlGyyd7JFuIaj8gNS6m4usdxwkhgfUMr4qp2Nebv1bYCHvPXocUihHiaJes+FIkch
+qa1YSjVh1yKlqXCX/vsyQYIqSlSWAeWsWw7jeldUYIrO8RU7yiH200PqZk90MDcB+wceF/kBucuh
++3I=
+=wwts
+-----END PGP SIGNATURE-----
+
+--------------Intez2YTDs0VgDEOlLapjRvq--
