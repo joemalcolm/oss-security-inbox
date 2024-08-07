@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2301" "Wednesday" "6" "February" "2019" "08:12:33" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1902060809030.28483@tvnag.unkk.fr>" "84" "[oss-security] [SECURITY ADVISORY] curl: NTLMv2 type-3 header stack buffer overflow" "^Date:" nil nil "2" "2019020607:12:33" "[oss-security] [SECURITY ADVISORY] curl: NTLMv2 type-3 header stack buffer overflow" (number mark "U       daniel@haxx. Feb  6   84/2301  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: NTLMv2 type-3 header stack buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19747 invoked by uid 550); 6 Feb 2019 07:12:46 -0000
+Received: (qmail 24358 invoked by uid 550); 7 Aug 2024 19:28:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +6,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19661 invoked from network); 6 Feb 2019 07:12:46 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-Message-ID: <alpine.DEB.2.20.1902060809030.28483@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Date: Wed, 6 Feb 2019 08:12:33 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY ADVISORY] curl: NTLMv2 type-3 header stack buffer
- overflow
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
+Received: (qmail 23615 invoked from network); 7 Aug 2024 19:08:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dorfdsl.de;
+	s=default; t=1723057722;
+	bh=wZunMb/z8ZtNBcnYH85V8CPa3Ha7e0bw+xVhm4QrOBw=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=wcVkDvzl954VzwXJ39hNM0S8qJrnxByjI1HbaPMB2YkebNBeX0cZAKBM80c0tdjvV
+	 1RxBZlx4FOh/wxwIQnJjTHNya3Akc/X4H6doiTJEtgHfroHCKxiKGF8DDVJZXEi614
+	 jiQ1d9E9zxrVMUunyvQdPljnTkuKribNlPTogU+hrGUkLfCMmxfEK8fMsnuBSyOJyT
+	 IZPgY7NQxoUBNj6tj98ND8JkCxUnqslXhi9AQI8lIlfm+URWtklcEYnx5MWyX4gCkJ
+	 kDOEV4RoUMrEBlHfAxMc5y1MES4HlK/VsyLmSri+NRc5J4ievCf3a8AeIwSLTHEs3k
+	 fF93RZ0XzMpQQ==
+Date: Wed, 7 Aug 2024 21:08:40 +0200
+From: Marco Moock <mm@dorfdsl.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20240807210840.1eece9c3@zbook>
+In-Reply-To: <ZrJv8PDeCxQQJVxH@itl-email>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
+	<20240806171232.6bd08942@zbook>
+	<ZrJv8PDeCxQQJVxH@itl-email>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
-NTLMv2 type-3 header stack buffer overflow
-==========================================
+Am Tue, 6 Aug 2024 14:48:14 -0400
+schrieb Demi Marie Obenour <demi@invisiblethingslab.com>:
 
-Project curl Security Advisory, February 6th 2019 -
-[Permalink](https://curl.haxx.se/docs/CVE-2019-3822.html)
+> On Tue, Aug 06, 2024 at 05:12:32PM +0200, Marco Moock wrote:
+> > Am Tue, 6 Aug 2024 05:02:14 -0400
+> > schrieb Neil Horman <nhorman@openssl.org>:
+> >   
+> > > 1) Are distributions/users comfortable with this approach in the
+> > > time frame proposed?  
+> > 
+> > As a user, this is acceptable for me, but I know there are still
+> > machines outside that only offer such old versions.
+> > Some of them can't be upgraded easily because the vendor doesn't
+> > provide any new versions.  
+> 
+> Can those machines be put behind a proxy?
 
-VULNERABILITY
--------------
-
-libcurl contains a stack based buffer overflow vulnerability.
-
-The function creating an outgoing NTLM type-3 header
-(`lib/vauth/ntlm.c:Curl_auth_create_ntlm_type3_message()`), generates the
-request HTTP header contents based on previously received data. The check that
-exists to prevent the local buffer from getting overflowed is implemented
-wrongly (using unsigned math) and as such it does not prevent the overflow
-from happening.
-
-This output data can grow larger than the local buffer if very large "nt
-response" data is extracted from a previous NTLMv2 header provided by the
-malicious or broken HTTP server.
-
-Such a "large value" needs to be around 1000 bytes or more. The actual payload
-data copied to the target buffer comes from the NTLMv2 type-2 response header.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in [commit
-86724581b6c](https://github.com/curl/curl/commit/86724581b6c), January 2014.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2019-3822 to this issue.
-
-CWE-121: Stack-based Buffer Overflow
-
-Severity: 7.3 (High)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.36.0 to and including 7.63.0
-- Not affected versions: libcurl < 7.36.0 and >= 7.64.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [patch for CVE-2019-3822](https://github.com/curl/curl/commit/50c9484278c63b958655a717844f0721263939cc)
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.64.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Turn off NTLM authentication
-
-TIME LINE
----------
-
-It was reported to the curl project on December 30, 2018. We contacted
-distros@openwall on January 28.
-
-curl 7.64.0 was released on February 6 2019, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Wenxiang Qian of Tencent Blade Team. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Yes, but the proxy must support old and new versions and this will be
+hard when support will be dropped. :-)
