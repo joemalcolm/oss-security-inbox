@@ -1,4 +1,4 @@
-Received: (qmail 13772 invoked by uid 550); 23 Jan 2026 19:53:45 -0000
+Received: (qmail 2017 invoked by uid 550); 12 Aug 2024 12:56:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +7,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14166 invoked from network); 23 Jan 2026 18:22:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=behlendorf.com;
- h=Content-Type: MIME-Version: References: Message-ID: In-Reply-To:
- Subject: To: From: Date; q=dns/txt; s=fe-c91d36cdc9; t=1769192511;
- bh=PUaV/hu2QcZEr06s2z4euUYyd4/Kdjwn/l+LnDaeiLc=;
- b=BXmWvCo1Ys3Irfsetdo2kX7ncOGNGCg0EqfiCBFUbhdm+LSfls6PCMnidfr3wkxlokqt2kANV
- CYgtDnCcqqCG+FbBBkURW0aSoWLgzRLrfbLX8W9SV87FdMa9qKHBtDu4EIid50mcZzvtChV08P3
- wQHpsy2n4YxxtwJ1mGOBRuA=
-X-Forward-Email-ID: 6973bc39a3f68025883bb0f7
-X-Forward-Email-Sender: rfc822; brian@behlendorf.com,
- smtp.forwardemail.net, 149.28.215.223
-X-Forward-Email-Version: 2.5.3
-X-Forward-Email-Website: https://forwardemail.net
-X-Complaints-To: abuse@forwardemail.net
-X-Report-Abuse: abuse@forwardemail.net
-X-Report-Abuse-To: abuse@forwardemail.net
-Date: Fri, 23 Jan 2026 10:21:44 -0800 (PST)
-From: Brian Behlendorf <brian@behlendorf.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-In-Reply-To: <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
-Message-ID: <01b8770e-38a5-8dca-fa64-712264d6e7a7@behlendorf.com>
-References: <D5B9E3F5-6C07-40DB-8303-15BE77956988@edvina.net> <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
+Received: (qmail 1984 invoked from network); 12 Aug 2024 12:56:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Reply-To:Cc
+	:Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References; bh=KC2uDUJwFBdqc5V0nGZxqHJGF1IXxRxHVg870gxYx4M=;
+	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1723467388;
+	x=1724115388; b=jCiF1kcyPCeXmQJZlyZOSqqiZ+l1PukPTxClwpc6Fjmp94liYMJugfeNgqgvr
+	bJEz7ZovTEz+DK5/Em0QIKGWl5Q14Ec29k9xDBqVx/5YJcqSVu1YODtuwsNBKnwmZOuT+vHvLmkp2
+	GoVxWbyOK16gPzwlvgvmkaWi0IBOP+GlFnzojKAypf0eX4y3exOgXSF/qHv00OfbiXdeVv3wYLcqX
+	aovoEhuTp3CqJbeEnrmk+JB9gg/g6jdE2PIk5l6OqTCrrlZ3Rm4WkPGskZQMlIxearCMKQ2l1Q+4Y
+	/sHwFAsXMTwKx5Ko9mKaBECK2NWje7FdJrrqjoGE5VVcip696w==;
+Date: Mon, 12 Aug 2024 15:56:14 +0300
+From: Valtteri Vuorikoski <vuori@notcom.org>
+To: oss-security@lists.openwall.com
+Message-ID: <q4worg73f2pve6qws3mllfepjw6l4rbidw5nr7ltuuqk2otpro@6hl4ptg26an7>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Subject: Re: [oss-security] Vulnerability management and Open Source: FOSDEM
- BoF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20240323-4-c04f3b
+Subject: [oss-security] CVE-2024-42008 and more: XSS vulnerabilities in Roundcube webmail
 
-On Fri, 23 Jan 2026, Peter Gutmann wrote:
-> In the meantime I think the cURL folks approach is worth a mention:
->
-> https://curl.se/.well-known/security.txt
+Not associated with Roundcube but didn't see posts about this yet.
 
-In fact Daniel will be presenting at a keynote there:
+On August 4, the Roundcube project released versions 1.6.8 and 1.5.8 (LTS) of
+their webmail client with fixes for several XSS vulnerabilities in HTML e-mail
+display. From the announcement page at
+<https://roundcube.net/news/2024/08/04/security-updates-1.6.8-and-1.5.8>:
 
-https://fosdem.org/2026/schedule/event/B7YKQ7-oss-in-spite-of-ai/
+    Fix XSS vulnerability in post-processing of sanitized HTML content [CVE-2024-42009]
+    Fix XSS vulnerability in serving of attachments other than HTML or SVG [CVE-2024-42008]
+    Fix information leak (access to remote content) via insufficient CSS filtering [CVE-2024-42010]
 
-Brian
+Links to both releases are on the abovementioned page.
 
+ -Valtteri
+ 
