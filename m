@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1459" "Thursday" "11" "July" "2019" "09:33:26" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20190711093326.328948dc@jabberwock.cb.piermont.com>" "34" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Cc:" nil nil "7" "2019071113:33:26" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        perry@piermo Jul 11   34/1459  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7407 invoked by uid 550); 11 Jul 2019 13:33:39 -0000
+Received: (qmail 5716 invoked by uid 550); 14 Aug 2024 11:35:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +6,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7384 invoked from network); 11 Jul 2019 13:33:39 -0000
-Message-ID: <20190711093326.328948dc@jabberwock.cb.piermont.com>
-In-Reply-To: <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
-References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
-	<20190709113036.0f12d057@jabberwock.cb.piermont.com>
-	<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com
-Date: Thu, 11 Jul 2019 09:33:26 -0400
-From: "Perry E. Metzger" <perry@piermont.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Privileged File Access from Desktop Applications
-To: Malte Kraus <malte.kraus@suse.com>
+Received: (qmail 11816 invoked from network); 14 Aug 2024 01:33:29 -0000
+Date: Tue, 13 Aug 2024 21:32:14 -0400
+From: "Mike O'Connor" <mjo@dojo.mi.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ZrwJHjO8c5IFN-JZ@dojo.mi.org>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
+X-Greylist: inspected by milter-greylist-4.5.11 (angus.mystery.com [127.0.0.1]); Tue, 13 Aug 2024 21:33:21 -0400 (EDT) for IP:'127.0.0.1' DOMAIN:'localhost' HELO:'angus.mystery.com' FROM:'mjo@dojo.mi.org' RCPT:''
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.11 (angus.mystery.com [127.0.0.1]); Tue, 13 Aug 2024 21:33:21 -0400 (EDT)
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
-On Thu, 11 Jul 2019 07:51:17 +0000 Malte Kraus <malte.kraus@suse.com>
-wrote:
-> Hi Perry,
-> 
-> On Tue, 2019-07-09 at 11:30 -0400,  Perry E. Metzger wrote:
-> > Can you explain (or point to) a description of why this is a
-> > problem?  
-> I'm not sure what exactly breaks, just that it does, see e.g. [1]
-> [2] [3]. Since we're talking about root it's not a matter of
-> technical impossibility, but a decision not to write the code to
-> make it work.
-> 
-> From a security perspective that seems like a great improvement.
-> Even if it should be the case that some programs don't follow best
-> practices re "least privileges", at least it's not the whole
-> application running as root.
-> 
-> 1: 
-> https://wiki.archlinux.org/index.php/Running_GUI_applications_as_root#Wayland
-> 2: 
-> https://wiki.debian.org/Wayland#I.27m_accustomed_to_running_various_programs_.28e.g._synaptic.29_as_root_in_my_X_session.__How_will_this_work_under_Wayland.3F
-> 3: 
-> https://fedoraproject.org/wiki/How_to_debug_Wayland_problems#Graphical_applications_can.27t_be_run_as_root_from_terminal
-> 
+:OpenSSL is currently considering the deprecation of the TLS 1.0/1.1
+:protocols.  Currently TLS1.1 and TLS 1.0 are disabled at run time, and
+:requires enablement by reducing the ssl security level value.
+:
+:The current proposal under consideration is to explicitly disable TLS
+:1.0/1.1 at build time, in our 4.0 release (tentatively scheduled to release
+:in the next 12-18 months), with an eye to completely remove the impacted
+:code in a future major release.  The default configuration could be
+:overridden to re-enable TLS 1.0/1.1 at build time.
+:
+:Questions to the community are:
+:
+:1) Are distributions/users comfortable with this approach in the time frame
+:proposed?
 
-So these links seem to say that things have been structured so you
-*can't* run GUI apps as root, not that there is a special or unusual
-security problem in Wayland if you run an application as root; if
-you logged in as root, you could run GUI applications as root. That's
-rather different from the original statement. Am I misunderstanding?
+Not really.  Entities who control the OpenSSL they run on their
+systems, OSes, etc. don't necessarily control all the broken things
+that said systems/OSes need to interact with.   
 
-Perry
+:2) Would builders of OpenSSL consider using the default configuration (with
+:TLS1.0/1.1 disabled in 4.0), or would they ship with these protocols
+:re-enabled in their builds?
+
+Either it'd be re-enabled in the build, or there'll be a fork that
+supports TLS 1.0/1.1 in relative perpetuity.  It was only recently
+that some mainstream Linuxes stopped shipping a compat openssl 0.9.8
+and all the stale protocol baggage that goes along with that, for
+support of some "business critical" commercial apps.  
+
+:3) If the deprecated protocols are re-enabled, what would constitute a
+:reasonable warning mechanism to inform users that these protocols are going
+:away at some point in the future to pressure users to update to a newer,
+:more secure protocol?
+
+I'd be inclined to position such a move and associated warning message
+in terms of PQC, which AFAIK doesn't and won't support TLS 1.0/1.1.
+As PQC gets "refined", it wouldn't surprise me to see the quantum
+computing boogeyman drive out TLS 1.0/1.1 in critical applications.
+Let PQC be the spike that kills TLS 1.0/1.1 dead.  
+
+I've been leery to post this for fear of going too far down some
+"quantum" rat's nest.  So please, be gentle.
+
+
+Take FWIW...
+-Mike
+
 -- 
-Perry E. Metzger		perry@piermont.com
+ Michael J. O'Connor                                          mjo@dojo.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"You can't teach an old dogma new tricks."                    -Dorothy Parker
