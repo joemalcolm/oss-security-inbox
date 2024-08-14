@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1423" "Friday" "12" "February" "2016" "23:48:16" "-0700" "Scotty Bauer" "sbauer@eng.utah.edu" "<56BED1B0.30900@eng.utah.edu>" "35" "Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" "^Date:" nil nil "2" "2016021306:48:16" "[oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" (number mark "        sbauer@eng.u Feb 12   35/1423  " thread-indent "\"Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software\"\n") "<9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>" ("<9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28647 invoked by uid 550); 13 Feb 2016 06:48:40 -0000
+Received: (qmail 32372 invoked by uid 550); 14 Aug 2024 16:23:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28627 invoked from network); 13 Feb 2016 06:48:40 -0000
-References: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
-Message-ID: <56BED1B0.30900@eng.utah.edu>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-MIME-Version: 1.0
-In-Reply-To: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-UCE-Score: -1.9 (-)
-Date: Fri, 12 Feb 2016 23:48:16 -0700
-From: Scotty Bauer <sbauer@eng.utah.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thoughts about security of Linux distributor
- collaboration platforms, bugtrackers for opensource software
+Received: (qmail 32150 invoked from network); 14 Aug 2024 16:22:56 -0000
+Date: Wed, 14 Aug 2024 18:22:49 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: nginx@nginx.org
+Message-ID: <20240814162249.GA8235@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2024-7347: nginx: ngx_http_mp4_module: Worker process crash by using a specially crafted mp4 file
 
-I assume most severe linux bugs are going through the distros list which does exactly as you describe in your mail...
+I'd appreciate it if the nginx project starts posting these in here, but
+meanwhile I'm forwarding.
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+----- Forwarded message from F5SIRT via nginx-announce <nginx-announce@nginx.org> -----
 
-On 02/12/2016 10:52 PM, halfdog wrote:
-> Hello List,
-> 
-> As just written in a mail to another list, this might also be
-> interesting for discussion here.:
-> 
-> As it would be the most natural thing for e.g. NSA, China, ... (those
-> with capabilities to monitor large amount of network traffic) to just
-> record all mails from large-scale Linux distribution collaboration and
-> issue tracking systems containing the keyword "security", and as this is
-> very cheap way to get to near-zero day material, I would assume, that
-> this is already done. This is like serving them zero days on a golden
-> plate.
-> 
-> Hence really critical security material perhaps should not go to such
-> platforms, e.g. Ubuntu Launchpad, or the platform should be modified to
-> send security issues only in encrypted mails without talkative title,
-> members without mail public key registered should get only message "Bug
-> [Number]: Info changed" including the HTTPS link to the issue in the
-> platform.
-> 
-> What do you think?
-> 
-> Does someone have a link to anyone having access to the selector lists
-> leaked by Snowden to ask them, which of the distros are already in scope
-> or otherwise to discard this e-mail as pure paranoia?
-> 
-> Kind regards,
-> hd
-> 
-> 
+To: "nginx-announce@nginx.org" <nginx-announce@nginx.org>, "nginx@nginx.org"
+ <nginx@nginx.org>
+Date: Wed, 14 Aug 2024 15:07:13 +0000
+Subject: [nginx-announce] nginx security advisory (CVE-2024-7347)
+From: F5SIRT via nginx-announce <nginx-announce@nginx.org>
+
+
+A security issue was identified in the ngx_http_mp4_module, which might allow an attacker to cause a worker process crash by using a specially crafted mp4 file (CVE-2024-7347). The issue only affects nginx if it is built with the ngx_http_mp4_module (the module is not built by default) and the “mp4” directive is used in the configuration file. Further, the attack is only possible if an attacker is able to trigger processing of a specially crafted mp4 file with the ngx_http_mp4_module.
+ 
+The issue affects nginx 1.5.13+.
+The issue is fixed in 1.27.1, 1.26.2.
+ 
+Patch for the issue can be found here: https://nginx.org/download/patch.2024.mp4.txt
+ 
+Thanks to Nils Bars for the initial report.
+ 
+ 
+_______________________________________________
+nginx-announce mailing list
+nginx-announce@nginx.org
+https://mailman.nginx.org/mailman/listinfo/nginx-announce
+
+----- End forwarded message -----
