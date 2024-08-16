@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3049" "Tuesday" "5" "July" "2016" "18:41:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160705224122.7C5C242E012@smtpvbsrv1.mitre.org>" "75" "[oss-security] Re: Browsing and attaching images considered harmful in Linux" "^Cc:" nil nil "7" "2016070522:41:22" "[oss-security] Re: Browsing and attaching images considered harmful in Linux" (number mark "        cve-assign@m Jul  5   75/3049  " thread-indent "\"[oss-security] Re: Browsing and attaching images considered harmful in Linux\"\n") "<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>" ("<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17729 invoked by uid 550); 5 Jul 2016 22:41:39 -0000
+Received: (qmail 24495 invoked by uid 550); 16 Aug 2024 17:46:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +6,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17685 invoked from network); 5 Jul 2016 22:41:34 -0000
-In-Reply-To: <CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>
-Message-Id: <20160705224122.7C5C242E012@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  5 Jul 2016 18:41:22 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Browsing and attaching images considered harmful in Linux
-To: gustavo.grieco@gmail.com
+Received: (qmail 19688 invoked from network); 16 Aug 2024 17:08:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723828078; x=1724432878; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=j7cZjZZFwaaoWf1Hxr848Yq25bv6YTu1iQKqwfWAiqo=;
+        b=pq6FA0q1wGD52QnQtSZ1Ml3oT2yrGTpA3xY/fit5YAcOhBYXW1xVhZSP22A3oPbVIk
+         iqpRpm5Hbnh9rKVsXLqldxXfJfAnoJ2JEYTBVaLaILTGxvP34kJPCKCQ2kPPKbR0FklV
+         Hs4F7r/yEXdE6rbrLtvsoz/eowXdqya6I0J3BcgsroG+Ht2+Z76nxpK0s1ulcSICZbAU
+         Cs88HkJObSFgC8+7FO8a9Wyluv3SmBXEXJX5OLJu+Z8+mZuP9FnR/ajjlpAm8Ls39itr
+         sFDfRVU+x7ufqv0bUXMJaabNjySpEK+TRGmeBopqeILmpPnW3ghfCohfSS8+jrnZiGMH
+         RPfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723828078; x=1724432878;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j7cZjZZFwaaoWf1Hxr848Yq25bv6YTu1iQKqwfWAiqo=;
+        b=DO5pAGkyBS10bD7y8psaZO4xiOJOwSWODEc0PqDhi0tz8TkKbfhtSNKrdqCsrUdyjD
+         cQtx1BHUVMC9PMaQyy6/kyNd9dneXPnVQ6nFlexC0qm8lwZL8kOxpgDawdPX4cwa2nXW
+         y2bSIlPgZHT7vsKJBg1ISE/YEAZ3gND6eXzLY1TExDfy5nEaVhjLNBibTFkIGC2xK+R6
+         6/yi/ZVTvLLdI1uS/BNUhz4HIQDo5Axz8gjI6uJZScWdd+O75muR1q4qKqjpg4RtzFbb
+         GAohESqrqD+wDFz86Jwe23o1ecfiursz4H7N9GfIs7OUjojGRqz7uQJYTY38xLRn8SPI
+         cBLg==
+X-Gm-Message-State: AOJu0YwpgitoBhnYiMBlHoGcXNhKbL1jgHHKlsIXR2Kotvt3SvpYBegw
+	KUMr3ZFmqNh9FFhgLAAnufpF1UKqiN6k5jTJ9YdhJUqoYoAUUNftghAiYaGzDcHe28elbOPlNze
+	cdr5SZK4LkP0HSeq7OCA3b1Ss2r9UnP8s+BO9tvMPwgyEhhzrSj+I
+X-Google-Smtp-Source: AGHT+IFwTC42exOyCmL/UILrtX7+x3GPqWSEizfdaBoh5yEiJbekwUMnDWnIXqZPhWO2TKcZynA+naDJ7XMQ9niJYDs=
+X-Received: by 2002:a05:622a:46ce:b0:447:d7fd:63f with SMTP id
+ d75a77b69052e-45377060c29mr1576641cf.19.1723828077482; Fri, 16 Aug 2024
+ 10:07:57 -0700 (PDT)
+MIME-Version: 1.0
+From: Craig Ingram <cjingram@google.com>
+Date: Fri, 16 Aug 2024 13:07:46 -0400
+Message-ID: <CAHXwHVzF6HFyzWf+MyQ8+UxhdSZhLntDs8CcETTnr8czmxkHvg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000036d839061fd00087"
+Subject: [oss-security] [kubernetes] CVE-2024-7646: Ingress-nginx Annotation Validation Bypass
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000036d839061fd00087
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> I would like to bring the attention of the oss-security list to the
-> existence of many security issues in the gdk-pixbuf library and its
-> dependencies causing a that attaching a corrupted image file in Linux
-> has become a risky business. For instance, there is a read
-> out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
-> svg images), which can be easily triggered if you try to attach a svg
-> in Firefox.
+Hello Kubernetes Community,
 
-> librsvg2 (2.40.2-1 with debug symbols)
+A security issue was discovered in ingress-nginx where an actor with
+permission to create Ingress objects (in the `networking.k8s.io` or
+`extensions` API group) can bypass annotation validation to inject
+arbitrary commands and obtain the credentials of the ingress-nginx
+controller. In the default configuration, that credential has access to all
+secrets in the cluster.
 
-> 1. Download and unpack boom.tar.gz somewhere.
-> 2. gdb --args /usr/lib/firefox/firefox
-> 3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
-> directory in Firefox.
-> 
-> Result:
-> 
-> Program received signal SIGSEGV, Segmentation fault.
+This issue has been rated High (8.8)
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U=
+/C:H/I:H/A:H>
+and assigned CVE-2024-7646.
 
-> 0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
-> (pattern=pattern@entry=0x7ffffffea110) at rsvg-paint-server.c:645
+Am I vulnerable?
 
-> It is interesting to note that rcx looks controllable:
-> 
-> (gdb) x/i $rip
-> => 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
-> (gdb) info registers
-> ...
-> rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
-> ...
-> 
-> Fortunately, this issue is already solved in the last revision of
-> librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
-> suitable). Nevertheless, I reported such vulnerability to Mozilla more
-> than a month ago hoping that they will disable the svg support in the
-> open/attach widget. After some discussion, it was marked as WONTFIX.
-> While i understand why, i still feel it can be productive to discuss
-> this here.
-> 
-> (the same trick can be used to crash Chrome/Chromium, since the code
-> to open/attach an image is almost the same, so this is not a Firefox
-> specific issue)
+This bug affects ingress-nginx. If you do not have ingress-nginx installed
+on your cluster, you are not affected. You can check this by running
+`kubectl get po -A` and looking for `ingress-nginx-controller`.
 
-Use CVE-2016-6163 for this specific "read out-of-bounds in librsvg2 (a
-dependency of gdk-pixbuf used to render svg images)."
+Multi-tenant environments where non-admin users have permissions to create
+Ingress objects are most affected by this issue.
 
-(We cannot assign CVE IDs for the more general topic of "many security
-issues in the gdk-pixbuf library and its dependencies" without
-additional information.)
+Affected Versions
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ingress-nginx controller < v1.11.2
 
-iQIcBAEBCAAGBQJXfDX+AAoJEHb/MwWLVhi2UEAP/1iLYtrHAOrC5eEye9BjJJS3
-8aZCZiBarS2FJIUWDs/W7H/8KkKNluhZJuKTQcWFcbMKzhNVNXoi2jLqD9p7O1NO
-c4/SDM8eSPLzSPHpk6m1ZU2N9WO/qA4xI4JW8Aq6AkeCSQMjsSbSraU/xXwhRHj0
-Ho4JCtlBi7YgDfzt1fOApf4lW9/0A0bVk877JdkOozXIq1nn5qHsiplqkHhw6QpN
-1Yo32YH6QMHP5ZLMrhtUorZ9BaGbFIHrrowOD9TGS35sEjO9rXmo4H+auuHQRbup
-kkPBiU8EoEy23+lxIN8twdRMpICDAAqSFr4ZmVjCywZ7I2cGAh0wzO4rwPA268aj
-9esSjut6wxZmpejy1YvJgrgkj0SYWn5jH5Obc8QYZoEBlT3l5DtDYRjN4JUsWm9n
-ben8vr+7d10F4ROkauebqop7TCexuAs50FTvrkhxDqHLeCI4yuXTRZCMBnaqf6eG
-1pqj7h0E0Wf7Zhp53J5zMGCRgn0UhG3onEauT/Ge95FisuAkAZFwz5jQBJT3iFzD
-bLraASJNVVS28xrgyLfXL/1TrIs2fkMYF0bo/RVGQlqz1vMm0VFgjU3vVgSVlgZ8
-hLdH4FFDsj6Rx2v30CHRWkdt7ILB0aVSaIUUwt+VhmBagchg1bWCjoGw/YKNpvOx
-Bcb0TMBIqWVr/5eNilJr
-=iGCG
------END PGP SIGNATURE-----
+How do I mitigate this vulnerability?
+
+This issue can be mitigated by upgrading to the fixed version.
+
+Fixed Versions
+
+ingress-nginx controller v1.11.2
+
+Detection
+
+Review your Kubernetes audit logs for Ingress objects created with
+annotations (e.g. `nginx.ingress.kubernetes.io/auth-tls-verify-client`)
+that contain carriage returns (`\r`).
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+
+Additional Details
+
+See the GitHub issue for more details:
+
+https://github.com/kubernetes/kubernetes/issues/126744
+
+Acknowledgements
+
+This vulnerability was reported by Andr=C3=A9 Storfjord Kristiansen @dev-bi=
+o.
+
+The issue was fixed and coordinated by the fix team:
+
+Andr=C3=A9 Storfjord Kristiansen @dev-bio
+
+Jintao Zhang @tao12345666333
+
+Marco Ebert @Gacko
+
+Thank You,
+
+Craig Ingram on behalf of the Kubernetes Security Response Committee
+
+
+--
+
+Craig Ingram
+Security Engineer
+cjingram@google.com
+
+--=20
+
+Craig Ingram
+Security Engineer
+cjingram@google.com
+
+--00000000000036d839061fd00087--
