@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5433" "Monday" "18" "June" "2018" "11:08:36" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180618090836.GB8123@f195.suse.de>" "125" "[oss-security] cantata: cantata-mounter D-Bus service local privilege escalation and other security issues" "^Date:" nil nil "6" "2018061809:08:36" "[oss-security] cantata: cantata-mounter D-Bus service local privilege escalation and other security issues" (number mark "        mgerstner@su Jun 18  125/5433  " thread-indent "\"[oss-security] cantata: cantata-mounter D-Bus service local privilege escalation and other security issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 8162 invoked by uid 550); 18 Jun 2018 09:50:15 -0000
+Received: (qmail 12101 invoked by uid 550); 16 Aug 2024 13:57:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,143 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3985 invoked from network); 18 Jun 2018 09:08:52 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20180618090836.GB8123@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="VrqPEDrXMn8OVzN4"
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Date: Mon, 18 Jun 2018 11:08:36 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] cantata: cantata-mounter D-Bus service local privilege escalation
- and other security issues
+Received: (qmail 24039 invoked from network); 16 Aug 2024 04:04:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723781042; x=1724385842; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
+         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BkTBXQkUHM6JzF0frSGUBXP65j0KI4e70rVB7QkFjpw=;
+        b=T4YEThXFhiq3JeM77ToE85nGTBOm0mfGujiSdt+nxsNXU2I8NXOVNk4qIecB18xhOi
+         78X37/vCn+rimG4YnMbTtMPAjZdT7IV/bbW/ZxoNTBG1g5ErwuUOo5Dmza1mXQlU2IaM
+         oGt+janRle9/fb2Rakg6Dm432+LU4dVGnaQ/1iiQQpEpZ1wrJVxws+c7uGT+bvL9Pr8m
+         Xu1cL4TYaAmVbbjdqRV5MdW1gQeuTZ59XPmfwOrF3FR1B1EbrDPO//ewQus15L17uR1J
+         u4S7ZC28b9gqBpe7QxlL6lFM8xKoHJiaTSiY/VRGnFGPjJWI4PrvjPjFHesVmqKEHcjK
+         xvzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723781042; x=1724385842;
+        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
+         :mime-version:user-agent:reply-to:from:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BkTBXQkUHM6JzF0frSGUBXP65j0KI4e70rVB7QkFjpw=;
+        b=urNJ9Q6vmGXiBmNNp19NxyiMLr3nbQooPtpR/bTi1K2yZx2bsZ9Sd3DE9r+IMUypC3
+         L2U1pyE4DpL1jKgSgXEFYv2X3GsiXv4OSb+eATaw9ogtHy2I414C9Z/c94xK1glP1sJU
+         v5AzkwCRc6mke2Lsq6zwRjtbbyaKkymL9nvwzz1oxO8Eg4t9vGPGkK7HKW+mt6VrgB+H
+         lKvy2zbphuz59hDQB3H8mqnkhFb/xMg7pmG2lrcWcEFYeitxv4CoYBig3tfiI4piEqY/
+         Q/mmWXn5i3MaEKoMBQkdjleX4TavR3jYj2HdsmV3yYwmEDY/nswZVnyi6rtv34mIDToD
+         oCyQ==
+X-Gm-Message-State: AOJu0YwNmOJBN3khdpKGYbRqy21byiYOPU6s6hxFDr7ZLCDEoO3Ixkm6
+	aZyp3MFGHvgsWSYf0DA3pIW2K5NabC2RIqk4MEH+oDARQZOKeN57u6M76Q==
+X-Google-Smtp-Source: AGHT+IHOcez6Z/0NPVIoZ/iyfnue8KHNbL0CiCidHHU3an8St7ShuX+9CKVKD64rsnpc8V36XZPKCg==
+X-Received: by 2002:a05:6808:180e:b0:3da:a721:283 with SMTP id 5614622812f47-3dd3ad19d79mr1678092b6e.7.1723781042097;
+        Thu, 15 Aug 2024 21:04:02 -0700 (PDT)
+Message-ID: <66BECFB0.3080704@gmail.com>
+Date: Thu, 15 Aug 2024 23:04:00 -0500
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+MIME-Version: 1.0
 To: oss-security@lists.openwall.com
+CC: Neil Horman <nhorman@openssl.org>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com> <20240815111847.406cf6c1@computer>
+In-Reply-To: <20240815111847.406cf6c1@computer>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
---VrqPEDrXMn8OVzN4
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hanno Böck wrote:
+> Hello,
+>
+> I have no particular insight on the prevalence of TLS 1.0/1.1 these
+> days, but I want to make a more general comment.
+> My impression of OpenSSL is that it has a strong tendency to ship
+> "bloat", i.e., features that either barely anyone needs, but that still
+> get added (remember Heartbeat extension?), or that should've been
+> deprecated long ago.
+>
+> If this effort to deprecate old protocols is a sign that this is
+> changing, I welcome this. I'd recommend to have a look at other things
+> in the OpenSSL codebase that should be trimmed.
+>   
 
-Hello list,
+That actually raises another question:  what is actually to be gained 
+from deprecating TLS1.0/1.1?  Did the protocol significantly change or 
+is the only major difference new cipher suites?
 
-this is a report about local privilege and local denial of service
-issues found in cantata, a graphical client for MPD
-(<https://github.com/CDrummond/cantata/wiki/About-Cantata>).
+In other words, what non-trivial code paths would dropping TLS1.0/1.1 
+entirely allow removing?  (Concatenating SHA1+MD5 is trivial.)
 
-cantata supports a D-Bus helper daemon "cantata-mounter" for mounting
-remote samba shares by calling `mount.cifs` on Linux systems. This
-daemon is configured for on-demand activation, running as root and its
-D-Bus interface is accessible by unprivileged users by default.
+> I also think there's probably potential to remove some obsolete
+> ciphers (DSA?).
 
-The daemon code is part of cantata since version 2.0.0 and it is built
-by default in versions 2.3.0 and 2.3.1. Before 2.3.0 it was only built
-if `-DENABLE_REMOTE_DEVICES=3DON` was passed to the cmake invocation.
+While DSA is definitely obsolete (advances in conventional computing 
+have begun to approach the ability to plausibly solve 1024-bit keys, and 
+DSA keys *MUST* be 1024-bit, supposedly to facilitate smartcard 
+implementations), OpenSSL is also a general cryptographic library and 
+applications can use its primitives for other purposes.  In particular, 
+this means that dropping TLS1.0/1.1 cipher suites does *not* mean you 
+can drop the ciphers that were used in those suites.
 
-Due to the issues explained below the upstream maintainer decided to
-drop the D-Bus service completely from future versions. This already
-happened through upstream commit afc4f8315d3e96574925fb530a7004cc9e6ce3d3.
-Therefore there are no fixes available except not building and shipping
-the D-Bus service in question.
 
-Following are four distinct security issues found in the
-cantata-mounter D-Bus service:
 
-A) The mount target path check in mounter.cpp `mpOk()` is insufficient.
-  A regular user can this way mount a CIFS filesystem anywhere, and not
-  just beneath /home by passing relative path components. Example D-Bus
-  call:
-
-  dbus-send --system --print-reply --dest=3Dmpd.cantata.mounter /Mounter mp=
-d.cantata.mounter.mount 'string:smb://workgroup\user:password@host:port/pat=
-h?domain=3Ddomain' string:/home/../usr/bin int32:$$ int32:0 int32:0
-
-  By replacing data in system paths like /usr/bin by data from an
-  attacker controlled samba share, a local attacker can cause root to
-  execute modified programs or to read modified configuration files.
-  Therefore it opens the avenue for a local root escalation.
-
-B) Arbitrary unmounts can be performed by regular users the same way.
-  For example this D-Bus call unmounts /sys/kernel/security:
-
-  dbus-send --system --print-reply --dest=3Dmpd.cantata.mounter /Mounter mp=
-d.cantata.mounter.umount string:/home/../sys/kernel/security int32:$$
-
-  This allows for a local denial of service and possible further
-  unspecified kinds of system manipulation.
-
-C) A regular user can inject additional mount options like file_mode=3D by
-  manipulating e.g. the domain parameter of the samba URL. This D-Bus
-  call injects the 'file_mode=3D777' parameter:
-
-  dbus-send --system --print-reply --dest=3Dmpd.cantata.mounter /Mounter mp=
-d.cantata.mounter.mount 'string:smb://workgroup\user@host:port/path?domain=
-=3Ddomain,file_mode=3D777' string:/home/user int32:$$ int32:0 int32:0
-
-  This way the user can use all options that mount.cifs offers to e.g.
-  produce files with arbitrary ownership and mode.
-
-D) The wrapper script 'mount.cifs.wrapper' uses the shell to forward the
-  arguments to the actual mount.cifs binary. The shell evaluates
-  wildcards which can also be injected like this:
-
-  dbus-send --system --print-reply --dest=3Dmpd.cantata.mounter /Mounter mp=
-d.cantata.mounter.mount 'string:smb://workgroup\user:password@host:port/pat=
-h?domain=3Ddomain' 'string:/home/../tmp/*' int32:$$ int32:0 int32:0
-
-  In this case all files in /tmp/* will be expanded and passed to
-  mount.cifs as parameters. This shouldn't allow further attack vectors,
-  because there are no additional arguments that mount.cifs supports.
-  But it still shouldn't happen.
-
-  The reason for "Calling mount.cifs directly from DBUS service seems to
-  mess things up?" which is stated in 'mount.cifs.wrapper' most probably
-  is that the D-Bus service has an empty PATH variable and can't find
-  mount.cifs. At least it is this way on openSUSE Tumbleweed where I
-  tested this.
-
-Furthermore the mount D-Bus method allows unprivileged users to specify
-the owner uid and gid of the mounted samba shared (passed as `uid=3D` and
-`gid=3D` mount.cifs parameters). The daemon should instead determine the
-callers uid and gid and use them, because this way the user can produce
-files with arbitrary user and group ownership, which is normally not
-possible.
-
-Cheers
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
---VrqPEDrXMn8OVzN4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAlsndpMACgkQFMQFyXGS
-NVPIhg//fBoH2kIUNFSeZNXCw/W9fPV04oJkwEalELZLxMSWpoH8gb9AxUt0jJQv
-IK6X6/5WG9GkPdMq5PBPwtJOic5kMxQRw2PKejYa2bZcuIl58uUJg4S0RreXUZcc
-Z9twWfqJtEdHzNxyXwKsfck8QGNO7zEZVsG0q2zlGvcWhm0Wj6SiaAKhzBQA+whe
-y9uRFef63W/hC0TvgHgM6WOxpAdQ7+NQJQhIAWqP7rvbM7r5qJ5YkURfLjZo5GGZ
-XSNF7xJjSXk+w+v3i2Oy88a8wgPmopEZ11R37hEBIBACGNrB9vQurD7tQyrD8hWX
-uZGEIdpmDrnRNCq/TiI5qZ7Pg76i4nfXqfehjhAn57je0pylwxnVxKtMi1cp97uw
-SXHQ45EVHQLoaj3xok1WH80n55E8vd31JzHwnmkuke824HsrQeoe1yCxhyROsbA3
-9pIUqVBbGNjHRcMlqrEdpX6GJzxQAupYZWQOgXCeHZloXVr6qBQwEoL2KtkwRYAp
-KpD+MZANmDdGW6Uk/GMQEhLQIKTfwUW5ftjdnae/A2uTGIC5mZSBOe9uF1OX7e4O
-qTN4iOUVRzDmxiQgIwpo7iXArF1HIeId8vzvjtUbQC9WapPeeGCSrcQ7ld8epnoa
-7gNp8HDoQ35kDvA7YGx/QdSVOFe9bkb9cWFvSwTk72l/u91CXss=
-=Y2ps
------END PGP SIGNATURE-----
-
---VrqPEDrXMn8OVzN4--
+-- Jacob
