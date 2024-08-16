@@ -1,4 +1,4 @@
-Received: (qmail 22413 invoked by uid 550); 16 Feb 2023 14:56:25 -0000
+Received: (qmail 11499 invoked by uid 550); 16 Aug 2024 21:05:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,465 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22383 invoked from network); 16 Feb 2023 14:56:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1676559373; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=qFLRgABNJdbCchhEWhgjH9p5v2ni2rcPiaPz3pcPiAI=;
-	b=ahkiXTVMC3YQ0wym77ZwlItaCxlYXTUnIGCCFd25fyfRrUHMu4CNAih3Cof8bT/KkI7VVF
-	/oUlrf839aiHA5iXn3jMcbW5Bdj7JQnGJnWDUyLXvP3HL30eogKXlqJE2VoJY38uFS2aQh
-	cn7KGRvNUpawkhqr45Zz2QdP91VrzB8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1676559373;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=qFLRgABNJdbCchhEWhgjH9p5v2ni2rcPiaPz3pcPiAI=;
-	b=dfyNws6+EHwbab89ac/nUyRdOM4pCp/jKb4ZpPmYUR2R4iFGtV2e0/2ocbyqd4yUdCtoyI
-	F6SPQOchZt9aToBg==
-Date: Thu, 16 Feb 2023 15:56:12 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 11465 invoked from network); 16 Aug 2024 21:05:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=dwheeler.com; s=selector2; h=Date:To:References:Message-Id:Subject:
+	Mime-Version:Content-Type:From;
+	bh=wyKfziqrshfV0xA5yzw6T1SETkak5D1FEorQABtwRGg=; b=HS7rLwvOm5orjPOxaWuH6G8VvG
+	5+ofTrn7r5+sCEwdbFmFcPmf55yNlPFSG0SzfwniFJi0KnX3E+Dnfz6KsvapcyfWivzivbhAdgpPg
+	ItJsK88Od236p1siV18UPsG1Xift607w9ADhRZt0hjc45rR0VmD6BdN2CyM7QICrf/pzLfWiccKrR
+	kEF6GTMsFeL+SCQLbpShtHzNTiO3Z5Cf3JUb//z4zUW8MEbXG7m2deYAT2yXJ+k2Rwh2+yQpkA63Z
+	nsdUajHwKP1k9T84R5WtXuli465esQhRGx3noPtMGay5NbSPaCqM0rC4C4MyL1rN+9w3ljg8DPViQ
+	ImXIhF9Q==;
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_D69511B6-430C-4AC9-8374-40ECFDF68046"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6.1.1\))
+Message-Id: <24243143-1A4D-4B71-A6C4-C8140C09A1CE@dwheeler.com>
+References: <E0230074-77BD-4A07-9838-92BB263C598E@linuxfoundation.org>
 To: oss-security@lists.openwall.com
-Message-ID: <Y+5EDY4sEFoKuJ+Z@kasco.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="7814Gp+3Ac9s1+nz"
-Content-Disposition: inline
-Subject: [oss-security] EternalTerminal: Review report and findings (predictable /tmp file
- paths and file permission issues, 3 CVEs)
+Date: Fri, 16 Aug 2024 17:04:52 -0400
+X-Mailer: Apple Mail (2.3731.700.6.1.1)
+Subject: [oss-security] AI Cyber Challenge (AIxCC) semi-final results from DEF CON 32 (2024)
 
---7814Gp+3Ac9s1+nz
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
+--Apple-Mail=_D69511B6-430C-4AC9-8374-40ECFDF68046
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 16 Feb 2023 15:56:12 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: EternalTerminal: Review report and findings (predictable /tmp file
- paths and file permission issues, 3 CVEs)
-
-Hello list,
-
-this is a report about a review of the EternalTerminal [1] codebase I
-performed and three CVE assignments that happened in this context.
-EternalTerminal is an SSH-like remote terminal solution that survives
-connection loss and IP roaming. Following is my detailed report which is ba=
-sed
-on the v6.2.1 upstream release.
-
-I publish this report today, because the maximum embargo period of 90 days =
-we
-offered upstream has been exceeded. Not all issues mentioned in this report
-are currently fixed upstream.
-
-[1]: https://github.com/MisterTea/EternalTerminal
-
-1) Review Motivation
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-There have been a number of CVE assignments for EternalTerminal in August
-2022:
-
-CVE-2022-24952: DoS triggered remotely by invalid sequence numbers.
-CVE-2022-24951: race condition allows local attacker to hijack IPC socket.
-CVE-2022-24950: race condition allows authenticated attacker to hijack other
-                user's SSH authorization socket.
-
-In light of these issues I have been asked to have a closer look if there
-might linger more issues in the project.
-
-2) Basic Design Overview
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-EternalTerminal initially uses a regular SSH connection to establish a 256 =
-bit
-shared secret between client and server. The client invokes the executable
-`etterminal` on the remote node via SSH. This creates a random `clientid` /
-`passkey` pair which is passed (still on the remote node) to the privileged
-`etserver` component via a UNIX domain socket. At this point the `etserver`
-component has an entry for the `clientid` and its copy of the shared key for
-that client. The `clientid` / `passkey` pair is also written to stdout and
-consumed via the SSH connection by the `et` client process. This way the
-client gets its copy of the shared key. The `etterminal` helper program on =
-the
-server side then backgrounds and keeps running. It implements the PTY that
-will later be used for running the EternalTerminal session.
-
-In a second step the client talks to the `etserver` remote instance via IP
-port 2022. A Google Protocol Buffer based protocol is used here. An initial
-cleartext message is sent that just states the `clientid` and the protocol
-version of the client. If the server accepts the parameters then both parti=
-es
-switch over to a libsodium secretbox encryption based on the 256 bit shared
-secret `passkey` and an incrementally increasing nonce value. The server now
-attaches the session to the PTY provided by the instance of `etterminal` th=
-at
-was started earlier via regular SSH.
-
-If the connection is lost then the client can connect to the remote node on
-port 2022 again using the same `clientid` to resume a terminal session.
-
-3) Issues
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-3.a) World Readable Logfiles and Predictable Logfile Names in /tmp
-------------------------------------------------------------------
-
-Both etserver and etclient create logfiles directly in the "/tmp"
-directory. For reference some example files:
-
-    $ ls -lh /tmp/etserver*
-    -rw-r--r-- 1 root root 393 Nov 18 13:44 /tmp/etserver-2022-11-18_13-44.=
-log
-    -rw-r----- 1 root root   0 Nov 18 13:44 /tmp/etserver_stderr_2022-11-18=
-_01-44
-
-    $ ls -lh /tmp/etclient*
-    -rw-r--r-- 1 someuser users 1.8K Nov 18 13:45 /tmp/etclient-2022-11-18_=
-13_44_52.log
-    -rw-r----- 1 someuser users   78 Nov 18 13:44 /tmp/etclient_stderr_2022=
--11-18_01-44
-
-This has the following problems:
-
-- The stdout logfile is world-readable and the stderr logfile is still group
-  readable. This can pose an information leak, depending on the logger
-  configuration and what is exactly output during runtime by etserver and
-  etclient. Other users on the system can deduce what is happening this way,
-  including the `clientid`s used.
-
-- The filenames of these logfiles are pretty predictable, with only minute
-  timestamp granularity on the server and second timestamp granularity on t=
-he
-  client side. This means a local attacker can prepare symlink attacks or
-  precreate these files. Luckily on most current Linux systems this is prev=
-ented
-  by the Linux kernel's symlink protection in world writable directories. E=
-ven
-  with the protection it still poses a denial-of-service risk, because the
-  EternalTerminal processes can fail to start if these files are precreated=
- by
-  other users. Without the kernel protection, file creation in privileged
-  locations and logfile spoofing would be the impact.
-
-### Upstream Fix
-
-Upstream addressed some of the problems (open() flags, creation mode) in th=
-is
-commit which is part of release 6.2.2:
-
-https://github.com/MisterTea/EternalTerminal/commit/92c4c6ada445c1925a8b397=
-f4171ca7735cbda16
-
-### Further Suggestions
-
-- Ideally the logfiles should go into a dedicated directory e.g. in
-  /var/log/et for the server side.
-- For the client side a set of logfiles can be kept in the home
-  directory, but old logs should be deleted after some time.
-  Alternatively client logs can be placed into `/run/user/<uid>/et-logs`
-  or a similar location.
-
-### CVE Assignments
-
-Mitre assigned the following CVEs:
-
-- CVE-2022-48257 for the "predictable log filename" aspect.
-- CVE-2022-48258 for the "world readable log files" aspect.
-
-3.b) TelemetryService Uses Fixed Paths in /tmp
-----------------------------------------------
-
-The TelemetryService class is instantiated using a database path in
-"/tmp/.sentry-native-et" for the client and "/tmp/.sentry-native-etserver" =
-for
-the server. This is a directory within which further files and directories
-will be queried and created during runtime.
-
-Similar to issue 3.a) this allows other users on the system to pre-create t=
-his
-parent directory which will be used by the `etclient` or `etserver` process.
-
-For example in etserver the following system call sequence with regard
-to this database directory can be observed during startup:
-
-```
-    mkdir("/tmp//.sentry-native-etserver", 0700) =3D -1 EEXIST (File exists)
-    readlink("/tmp/.sentry-native-etserver", 0x7ffda847e750, 1023) =3D -1 E=
-INVAL (Invalid argument)
-    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
-38054a86d7e1.run.lock", O_RDONLY|O_CREAT|O_TRUNC, 0666) =3D 5
-    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
-d87-38054a86d7e1.run.lock", {st_mode=3DS_IFREG|0644, st_size=3D0, ...}, 0) =
-=3D 0
-    mkdir("/tmp/.sentry-native-etserver", 0700) =3D -1 EEXIST (File exists)
-    mkdir("/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-38054a86d7e=
-1.run", 0700) =3D 0
-    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/user-consent", O_RDONLY)=
- =3D -1 ENOENT (No such file or directory)
-    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/last_crash", 0x7ffda=
-847fdb0, 0) =3D -1 ENOENT (No such file or directory)
-    openat(AT_FDCWD, "/tmp/.sentry-native-etserver", O_RDONLY|O_NONBLOCK|O_=
-CLOEXEC|O_DIRECTORY) =3D 6
-    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
-d87-38054a86d7e1.run", {st_mode=3DS_IFDIR|0700, st_size=3D40, ...}, 0) =3D 0
-    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
-38054a86d7e1.run.lock", O_RDONLY|O_CREAT|O_TRUNC, 0666) =3D 7
-    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
-d87-38054a86d7e1.run.lock", {st_mode=3DS_IFREG|0644, st_size=3D0, ...}, 0) =
-=3D 0
-    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
-d87-38054a86d7e1.run/session.json", 0x7ffda847faa0, 0) =3D -1 ENOENT (No su=
-ch file or directory)
-    unlink("/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-38054a86d7=
-e1.run/session.json") =3D -1 ENOENT (No such file or directory)
-    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
-38054a86d7e1.run/session.json", O_RDWR|O_CREAT|O_TRUNC, 0664) =3D 6
-    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
-38054a86d7e1.run/session.json", O_RDWR|O_CREAT|O_TRUNC, 0664) =3D 6
-```
-
-A local attacker can create "/tmp/.sentry-native-etserver" with mode 0777
-before `etserver` starts. The attacker will then control the complete
-directory tree. Even though the TelemetryService backend uses UUIDs, they c=
-an
-be deduced by waiting for the `.run.lock` file being created, from this time
-on the local attacker knows the UUID and can try to win a race condition by
-pre-creating also the `<UUID>.run` directory. The information placed there
-will then leak to the attacker, but the attacker can also compromise the da=
-ta
-integrity by changing it.
-
-Again, without the Linux kernel's symlink protection mechanism this
-issue would provide a lot of possibilities to exploit symlink attacks. And =
-in
-the more deeply nested file paths below "/tmp/.sentry-native-etserver" the
-symlink protection might not even be triggered.
-
-### Upstream Fix
-
-I do not know of any upstream efforts to fix this.
-
-### Suggested Fix
-
-- The client should create this directory in "/run/user/<UID>/sentry-native=
--et"
-  instead.
-- The server should create this directory in e.g. "/run/etserver/sentry-nat=
-ive-etserver"
-  instead.
-
-### CVE Assignments
-
-Mitre assigned the following CVE:
-
-- CVE-2023-23558 for the fixed "/tmp" path usage of the TelemetryService co=
-mponent
-
-3.c) Registration of Server Sessions via Local IPC Socket Allows for Simple=
- Reverse Shells
----------------------------------------------------------------------------=
----------------
-
-The socket on the `etserver` side at "/var/run/etserver.idpasskey.fifo" is
-world accessible and allows any local user to register a future session with
-EternalTerminal that can later be accessed remotely on port 2022. To do so
-the local user only needs to get out the clientid and idpasskey registered =
-at
-the socket, which can also have static values, because the clientid and
-passkey are selected by the client side, not by the privileged server side.
-
-Usually only certain user accounts are allowed to log into a machine, based=
- on
-policies found e.g. in the SSH configuration, PAM stack configuration and so
-on. Especially users without a valid account (no valid shell set, no passwo=
-rd
-assigned, locked, etc.) should not be able to log into a machine neither
-locally nor remotely. These login policies can easily be circumvented by us=
-ing
-the `etserver` features.
-
-A reverse shell can of course also be created in other ways as soon as a
-local user account can execute arbitrary code. What makes it special
-with `etserver` is that it will be very well hidden since it is using a
-regular facility of the system. What makes this more problematic is that
-there is no time limit, a local user account can register such a session
-and access it days or event months later remotely, provided that the
-`etserver` instance isn't restarted.
-
-Since all that is needed to register a session is access to the local IPC
-socket, this even has the potential to allow isolated container processes to
-escape network isolation. Even if the process has a detached networking sta=
-ck
-(separate Linux network namespace), the mere access to `etserver`'s IPC soc=
-ket
-allows to create a remote connection to the container from the outside.
-Depending on container configurations or other vulnerabilities in container
-setups this can be a realistic threat.
-
-### CVE Assignments
-
-Since this is not a tangible vulnerability on its own I did not request a
-dedicated CVE for it. I still believe that the topic should be addressed in
-some form.
-
-### Upstream Fix
-
-I do not know of any upstream efforts to improve this aspect of
-EternalTerminal.
-
-## Suggested Fixes
-
-- Ideally there would be a tighter coupling between the SSH authentication
-  part and the connection to port 2022. For example a small PAM module could
-  write out a kind of auth cookie during SSH login for the user account con=
-text
-  that will be verified again once the connection on port 2022 is coming in.
-  This should also be time limited so that the session doesn't remain valid
-  forever but only for a few minutes or so, if no one actually connects to
-  port 2022.
-
-4) Other Suggestions
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-4.a) srand(1) Calls
--------------------
-
-Currently the following source locations (corresponding to the three main
-programs) contain a call to `srand(1)`:
-
-    terminal/TerminalServerMain.cpp:    srand(1);
-    terminal/TerminalClientMain.cpp:    srand(1);
-    terminal/TerminalMain.cpp:    srand(1);
-
-Luckily the C `rand()` function is only used for non-sensitive things in the
-codebase as far as I could see. Still this is bad practice, especially in a
-program that is also doing cryptography. Things could get mixed up in the
-future. I suggest to create a common init function that properly seeds the
-random number generator using real random data e.g. obtained from libsodium.
-
-### Upstream Fix
-
-I do not know of any upstream efforts to improve on this.
-
-4.b) Telemetry Enabled by Default
----------------------------------
-
-I found it a bit irritating that the telemetry service is sending out
-crash data by default without explicit user opt-in. Even though it is
-anonymised I don't think an OSS program should send out data to third party
-remote servers without explicit consent.
-
-There should be at least a compile time option to influence this default
-so that integrators of the package can decide which way to go here.
-
-### Upstream Fix
-
-Upstream made the Telemetry opt-in (changed the defaults) via this commit
-which is part of release 6.2.2:
-
-https://github.com/MisterTea/EternalTerminal/commit/7289e04475a8418d376cbc7=
-ecbcc580e23c42bb7
-
-4.c) Busy-wait Loop in TerminalServer::run()
---------------------------------------------
-
-Currently the while loop there `select()`s with a timeout of 10.000
-usec. I can see no purpose for that in the code, but it creates notable
-CPU load even in idle in etserver and also makes analyzing the program
-harder due to the massive load of system calls resulting from the busy loop.
-
-### Upstream Fix
-
-I do not know of any upstream efforts to improve on this.
-
-4.d) TerminalUserInfo in etserver Receives User Controlled uid/gid Values
--------------------------------------------------------------------------
-
-Currently the `etterminal` program sends the client's uid and gid values to
-the privileged `etserver` via a local UNIX domain socket. This information
-ends up in the TerminalUserInfo protobuf structure. Currently `etserver` us=
-es
-this information only for the jump host configuration in a non-sensitive way
-as far as I can see.
-
-For prudence I suggest to change this logic though. The uid and gid values =
-can
-be forged by the client and future code changes might miss this fact and
-consider this information to be trusted. The safe way to obtain this
-information would be to use the `SO_PEERCRED` socket option on the UNIX dom=
-ain
-socket connection on the privileged end. This way the information is obtain=
-ed
-from the kernel and can be trusted.
-
-If it is intentional that clients can set this data then naming the fields
-differently and documenting that this is untrusted data is recommended.
-
-### Upstream Fix
-
-I do not know of any upstream efforts to improve on this.
-
-Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-2022-11-18: I shared an initial report with the upstream author(s) offering
-            coordinated disclosure according to the openSUSE disclosure
-            policy. Some discussions about fixing parts of the issues start=
-ed
-            but died down again.
-            No statement about the desired duration of an embargo period (or
-            any at all) was made by upstream. No confirmation of the
-            individual issues or wishes regarding CVE assigments have been
-            stated.
-2023-01-09: I learned from upstream that information about issue 3.a) was
-            already public in form of an upstream GitHub pull request. I as=
-ked
-            about plans for fixes for the remaining findings and about
-            upstream's desires for a prolonged embargo period and CVE
-            assignments but got no answers.
-2023-01-13: I requested the three CVEs mentioned in this report from Mitre =
-for
-            the issues that I deemed critical and concrete enough to assign
-            CVEs.
-2023-01-18: Upstream released version 6.2.2 containing fixes for issue 3.a),
-            i.e. for CVE-2022-48257 and CVE-2022-48258.
-2023-02-16: The maximum embargo period we offer (90 days) has been exceeded
-            and lacking further details from upstream I published all
-            information I have.
-
-Best Regards
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moer=
-man
-
---7814Gp+3Ac9s1+nz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmPuRAwACgkQFMQFyXGS
-NVNoHxAAj+JhIiyW3WFt9d8IuWIhbMmijUSQW+F2LhJtlde2DVZdil4O97jiA2lJ
-8m7I/UnFuo6Q9CeKQg64Z5ujixMrDA4Qb4KNvKTq6t2FKAs8wDQS1pdEXEzgOfNW
-Fi/BusvCkk/FZgIM6Hakplx3CmtrzhxuTcuNY0/KCNb/tCndRb1PzC+E0btXOBXn
-OAN3Q8tvAHUVxHzdC/XTspYEYORheCSQs0wVLpfnYCidUF626IQGjnS2itJ3Uywp
-e2yl/q6oxiQWaxkWglFRQo8ksyNDnpcxJFX7PxRz40y+NPc7eGKWEkOvE8sXlMGs
-3a1YjB/CEhi1ovMBP3r4Gmq+xhwu3ULRbaqNhueowVTeLMg8QbR29T9zNuNhjlPi
-IYXLt9nJ42+uVAqw4s6XPd5EGAVsecwDFFJJciLysPusfjDduVHFa3/rxntT6gKh
-GJloznzv1is8s/vSMhmKm5Kjj2KbTxBZOBn/Uv1UopYWOZuhPbVHqsW4Jww3gvOX
-uro0Rl6luZ3h7Ci06qjN3W5E7janjI+oLPyqUCzwkW9H28n5nwTb6d3ayCpxRTgy
-ghydKslTkbOf2sALHG8VbEvjE6p14RVJc2afpjcTlROkDrqEv9vQxqHOvTZqtApb
-UI8BeQXEbgbxDuW7NybhhZl4ZYYslKFaBdriJcnDFrgI1f8FVtA=
-=5esp
------END PGP SIGNATURE-----
-
---7814Gp+3Ac9s1+nz--
+Content-Type: text/plain;
+	charset=us-ascii
+
+All, FYI:
+
+DARPA and ARPA-H are running a research competition called the "AI Cyber Ch=
+allenge" (AIxCC).
+Its goal is to create automated tools that find and *fix* vulnerabilities i=
+n software.
+General information is here: <https://aicyberchallenge.com/>
+
+The AIxCC semifinal competition was last week at DEF CON 32 (2024).
+All competitors were given an identical set of Challenge Projects, which we=
+re
+real-world OSS projects seeded with synthetic vulnerabilities.
+The projects were Jenkins, Linux kernel, Nginx, SQLite3, and Apache Tika.
+There were 7 winners; each winner received $2 million US as a reward, and t=
+hose
+teams will be allowed to compete in the finals at next year's DEF CON.
+
+An official summary is here: <https://www.darpa.mil/news-events/2024-08-11>.
+Some other interesting links related to the semifinals include:
+<https://blog.trailofbits.com/2024/08/09/trail-of-bits-buttercup-heads-to-d=
+arpas-aixcc/>
+<https://www.youtube.com/watch?v=3DsQKGWZvuLko>
+
+One of the competing teams, Team Atlanta, even found a real-world bug in SQ=
+Lite3.
+This was reported to SQLite through their usual process; it's fixed in trun=
+k. More info
+about that specifically is here:
+- <https://x.com/TeamAtlanta24/status/1822739301463130271>=20
+- <https://sqlite.org/forum/forumpost/81670d1056>
+
+The tools must be released by next year as open source software, with an OS=
+I-approved license,
+as a condition for accepting prize money or competing in the final competit=
+ion. Exact text is in the
+"Open-Source Requirement" section in its rules <https://aicyberchallenge.co=
+m/rules/>.
+The challenge problems were all based on real-world OSS, and the
+hope is that in the long term such tools can automatically find & fix vulne=
+rabilities in all
+software including OSS.
+
+Full disclosure: I work for the Open Source Security Foundation (OpenSSF) a=
+nd I
+have been working with DARPA & ARPA-H supporting this. That said, I thought=
+ others in this mailing
+list would want to know about it. No research is *guaranteed* to produce so=
+mething
+leading to useful results, but I think this is a promising approach. We def=
+initely could *use*
+tools that automatically find & fix vulnerabilities, if they're good enough=
+!!
+
+--- David A. Wheeler
+
+
+--Apple-Mail=_D69511B6-430C-4AC9-8374-40ECFDF68046--
