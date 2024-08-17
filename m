@@ -1,4 +1,4 @@
-Received: (qmail 31898 invoked by uid 550); 1 Nov 2022 11:53:48 -0000
+Received: (qmail 22349 invoked by uid 550); 17 Aug 2024 17:10:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,29 +7,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31877 invoked from network); 1 Nov 2022 11:53:48 -0000
-Date: Tue, 1 Nov 2022 12:53:36 +0100 (CET)
-From: Jan Engelhardt <jengelh@inai.de>
-To: oss-security@lists.openwall.com
-In-Reply-To: <CAGUWgD_OwgwKVQ+kxLv00dvDnNC9ZU9gWEarwPjSxg7kxK3rbA@mail.gmail.com>
-Message-ID: <n7n0r558-o321-679p-5soo-4noso91q1q27@vanv.qr>
-References: <CAGUWgD_OwgwKVQ+kxLv00dvDnNC9ZU9gWEarwPjSxg7kxK3rbA@mail.gmail.com>
-User-Agent: Alpine 2.25 (LSU 592 2021-09-18)
+Received: (qmail 27997 invoked from network); 17 Aug 2024 15:56:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+	s=20191114; t=1723910172;
+	bh=FW4Rtyh8r6fKpJGsz9C2GsN1N9DDm5fwxdou/Sd1Gf8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Xoc11i2p2N434ckky24HXkjOzqrVWYsNNl5e/7melw7Ro1aP476Sm1bITVRumqhfL
+	 sZLHDOL20OjWkUdxoKsqIKvVDpcRdAFIuR0gTMTk19niDAGcyr9bfhiW+gQ89jL/7V
+	 HeA9Gfz4c8lH7sRgQx5/Zwf+juHaVqA2gpCjb1/c=
+Date: Sat, 17 Aug 2024 17:56:11 +0200
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+To: landlock@lists.linux.dev, oss-security@lists.openwall.com
+Cc: Jann Horn <jannh@google.com>, 
+	=?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>, Paul Moore <paul@paul-moore.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-security-module@vger.kernel.org
+Message-ID: <20240817.shahka3Ee1iy@digikod.net>
+References: <2024081754-CVE-2024-42318-f0c9@gregkh>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Subject: Re: [oss-security] Is third party javascript on a login page considered
- dangerous?
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2024081754-CVE-2024-42318-f0c9@gregkh>
+X-Infomaniak-Routing: alpha
+Subject: [oss-security] Landlock Houdini fix: CVE-2024-42318
 
-On Monday 2022-10-31 10:16, Georgi Guninski wrote:
+Hi,
 
->In short, is third party javascript on a login page considered dangerous?
+On July 24, Jann Horn reported [1] a security issue in Landlock [2].  He
+provided a fix and a proof of concept.  Many thanks for all this work!
+He discovered a logical bug that makes it possible for a process to
+escape its sandbox and bypass any Landlock restrictions.  This is due to
+a missing LSM hook implementation for the special case of keyctl(2)'s
+KEYCTL_SESSION_TO_PARENT.  This issue is now identified as
+CVE-2024-42318 [2].
 
-Any code should be treated as potentially dangerous.
-The less you have overall, the better.
-I do not see why a login page of all things needs code.
+[1] https://bugs.chromium.org/p/project-zero/issues/detail?id=2566
+[2] https://landlock.io/
+[3] https://cve.org/CVERecord/?id=CVE-2024-42318
 
-Input form, fields for username / password / other authentication 
-tokens, a submit button. Boom, done. If there is a REST interface or 
-somesuch, authentication tokens are also provided at once when a client 
-makes a request (i.e. with no code execution apriori) - so why would 
-your login page need any.
+The issue was fixed a few hours later [4] and we developed a dedicated
+test [5] to make sure the fix works as expected and that the issue never
+happens again. This was merged in Linux 6.11-rc1 [6] published July 28.
+
+[4] https://git.kernel.org/torvalds/c/39705a6c29f8a2b93cf5b99528a55366c50014d1
+[5] https://git.kernel.org/torvalds/c/cc374782b6ca0fd634482391da977542443d3368
+[6] https://git.kernel.org/torvalds/c/86b405ad8d0d2994a7ffbacb8fcf83be8afb952c
+
+The fix has also been backported to:
+- Linux 6.10.3 (released on August 3)
+- Linux 6.6.44 (released on August 3)
+- Linux 6.1.103 (released on August 3)
+- Linux 5.15.165 (will be released in a few days, but in the meantime
+  you can cherry-pick
+  https://git.kernel.org/stable/c/0d74fd54db0bd0c0c224bef0da8fc95ea9c9f36c)
+
+This vulnerability only impacts sandboxing put in place by Landlock, but
+the kernel is not at risk, nor system services.  The impact is limited
+thanks to the stackable LSM infrastructure.
+
+To fix this vulnerability, only the kernel needs to be updated, not the
+sandboxed programs which will automatically be well-sandboxed with an
+up-to-date kernel.  Sandboxing with Landlock is really an investment to
+leverage current and future Landlock features.
+
+To exploit this vulnerability, an attacker needs to have full code
+execution including the ability to perform arbitrary syscalls,
+especially keyctl(2).  Complementary security mechanisms can be put in
+place to avoid arbitrary code execution or arbitrary syscalls (e.g.
+with seccomp filters).
+
+To test the fix, here are simple steps to run on an up-to-date kernel
+source tree (Linux 6.6.44 to run these tests with an unprivileged user):
+  make alldefconfig
+  make TARGETS=landlock kselftest-install
+  ./tools/testing/selftests/kselftest_install/landlock/base_test
+  # The global.cred_transfer test should pass.
+
+Landlock is a defense-in-depth security mechanism.  Even if it is
+already useful to protect users and applications, it should not be the
+only security layer for the system, mainly because it is not a full
+feature access control system yet.  As explained in the documentation
+[7], some actions may not be restricted yet, which may also be the case
+for other security modules.  We are working to extend the access control
+types [8], but it takes time and resources to build a new unprivileged
+access control system properly handling Linux specificities.
+
+[7] https://docs.kernel.org/userspace-api/landlock.html#filesystem-flags
+[8] https://github.com/orgs/landlock-lsm/projects/1
+
+Looking at the other side, it is interesting to note that Landlock can
+also limit the impact of similar potential vulnerabilities affecting
+other access control systems.
+
+This issue also started a discussion to improve (or remove) the
+KEYCTL_SESSION_TO_PARENT special case [9].
+
+[9] https://lore.kernel.org/r/20240805-remove-cred-transfer-v2-0-a2aa1d45e6b8@google.com
+
+We are two official reviewers for Landlock, but contributors and other
+reviewers such as Jann (who previously reviewed the initial Landlock
+code) also work on making changes as safe and secure as possible.  The
+Linux kernel needs more eyes, time, and experts to proactively find
+these kind of issues.  If you are interested, reward programs [10] may
+help.
+
+[10] https://alpha-omega.dev/
+
+Regards,
+ Mickaël
