@@ -1,4 +1,4 @@
-Received: (qmail 15900 invoked by uid 550); 9 Jan 2024 16:40:34 -0000
+Received: (qmail 23648 invoked by uid 550); 17 Aug 2024 17:08:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +7,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11517 invoked from network); 9 Jan 2024 16:38:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1704818380; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=UuikfIdknSIb7u7GRLh0jJBJP+BkYhtnXnjDlgCNW54=;
-	b=m0xfPvRai1H6kZ2DMzlQf1aqo34nNvKE+K+/Ky4tP7CZ5Cp8aCXvutQPYE0kP4YUAAOPZi
-	H/Tsyq+M4giyCiY8O2J7idSBDBEbcTOm9VExyOWFFbZDSDbSnRm/A3N4lCqGuev0lpOlZ8
-	Lf3ScK3tKmS7h6Mp1Wppwv9cJ2G2PAOuFukqfx4uDK5qyY0Ai09lEg5tNPepHsIxtssi7O
-	ZD1tjSoJGfeBzOKjPsmtjzHX1wFBbuXJ02015M/aRByodCsUWop6uhs+oKxPM0OpepogdK
-	JJKGXZ1Lix252DXGNFVbyx8aw6STIiMtdO6GdjXpQ4giE3CVzijLw207mJLtUQ==
-Date: Tue, 9 Jan 2024 16:39:40 +0000
-From: Tomas Mraz <tomas@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZZ12zJ/s2udpuPw7@openssl.org>
+Received: (qmail 1116 invoked from network); 17 Aug 2024 05:04:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723871083; x=1724475883; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
+         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NC+74FlS0iNvR/eZzYt4eJ23ZY9vcDMv64XQ7giBzzA=;
+        b=IMap/TNkHmuzMYroaQ9CEEezKVFHKkIx5HkTs4PdQCvqnhwTx4yYlrk7lZ16ZLryS8
+         mcnp/setO+RPKSOVYys5hpB1Yb0ysr9W+bdWCfe5Vw2283Ua9toQs3zDeNRnUSm8/IFr
+         SZDnYFg++Jnanq+7SefAQaG59+e6TRFaTYG0y307RmB+UfsuZcZmuEIW/lwZSyQk+TDu
+         2Hc7cme8qqz554ho/INXG2weAIW0vMgcoyP5C2hWLL6JHn531oAQPEtDjZYg0Tx/X9n4
+         RGPS6n0lCuFZDh0OUTgYFWfAidJzs6Y3OzGP36asWJR48jpbAH6SNzGuqQkz33QnnmUW
+         FVxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723871083; x=1724475883;
+        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
+         :mime-version:user-agent:reply-to:from:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NC+74FlS0iNvR/eZzYt4eJ23ZY9vcDMv64XQ7giBzzA=;
+        b=OgN23LJmzZjETO8/uSISwKRx9S9+eeSwdpeaOqUMy1h+pIAIf5Wgl7pZVHB+1FUSue
+         N5cVdcsXqo5SpJP6giRQ3wSsLMN6niCaqoZ+fYUjuYOYbQrplKiLhaxOtbLkP6Q1iaWh
+         NK8GE7dfddjuFbt7RegsjeIg9DbQgAobEV7jiLouuEV/DKpCnsyTQW7MDWfetw59MTDi
+         0XeTaJ/tJwNNiiIHJVL7DiF+uHmdgg5qpCShQqsG692CnV/Prgdvy9kTbwYTuTItPPI8
+         s4DWTObiERHtXue7TiSANrT9kPLptvNXqvn6xvjdxA7kh3a1v3Il35SNwJVL50T3oTaZ
+         yiiA==
+X-Gm-Message-State: AOJu0YxN5JJh53aEfJocuJELYHNWpZGTXZHRAWe3UYRIfJe7MHDcNJgm
+	VhOEX22Za2K1G/Z0hma/+Y6ntRje3e9qXso2ZCu2RrSNnwWnpE512HkRzA==
+X-Google-Smtp-Source: AGHT+IFlNkFhZaQcwP0Zio4GF4M7tNwm9HiHQhYFwDLmxg8OUwVSqgojkwsq3NdQw7LoL/DaD/rbEw==
+X-Received: by 2002:a05:6830:6dcc:b0:70a:98d8:34a with SMTP id 46e09a7af769-70cb32335c3mr2082570a34.1.1723871083519;
+        Fri, 16 Aug 2024 22:04:43 -0700 (PDT)
+Message-ID: <66C02F68.1050609@gmail.com>
+Date: Sat, 17 Aug 2024 00:04:40 -0500
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 SeaMonkey/1.1.17 Mnenhy/0.7.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+To: oss-security@lists.openwall.com
+CC: Neil Horman <nhorman@openssl.org>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com> <20240815111847.406cf6c1@computer> <66BECFB0.3080704@gmail.com> <CAH8yC8ndnyhyMNaQu3N_uUM_yXhd32PwR9odEOeoDe7jC5fQLw@mail.gmail.com>
+In-Reply-To: <CAH8yC8ndnyhyMNaQu3N_uUM_yXhd32PwR9odEOeoDe7jC5fQLw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
+ 1.0/1.1
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jeffrey Walton wrote:
+> On Fri, Aug 16, 2024 at 10:01 AM Jacob Bachmeyer <jcb62281@gmail.com> wrote:
+>   
+>> Hanno Böck wrote:
+>>     
+>>> Hello,
+>>>
+>>> I have no particular insight on the prevalence of TLS 1.0/1.1 these
+>>> days, but I want to make a more general comment.
+>>> My impression of OpenSSL is that it has a strong tendency to ship
+>>> "bloat", i.e., features that either barely anyone needs, but that still
+>>> get added (remember Heartbeat extension?), or that should've been
+>>> deprecated long ago.
+>>>
+>>> If this effort to deprecate old protocols is a sign that this is
+>>> changing, I welcome this. I'd recommend to have a look at other things
+>>> in the OpenSSL codebase that should be trimmed.
+>>>
+>>>       
+>> That actually raises another question:  what is actually to be gained
+>> from deprecating TLS1.0/1.1?  Did the protocol significantly change or
+>> is the only major difference new cipher suites?
+>>     
+>
+> The big selling point of TLS 1.2 is the authenticated encryption
+> modes, like CCM and GCM. Prior to TLS v1.2, SSL and TLS relied solely
+> on Authenticate then Encrypt (AtE), which was provably secure under a
+> couple of constructions. Otherwise it leaked information. At TLS v1.2,
+> proper Authenticated Encryption modes became available. CCM and GCM
+> are provably secure, and do not leak information due to the ways the
+> ciphers are combined.
+>   
 
-OpenSSL Security Advisory [9th January 2024]
-============================================
+Those are good reasons to support TLS1.2 and to use only Authenticated 
+Encryption modes over the open Internet.  But TLS1.2 also includes 
+cipher suites not using Authenticated Encryption, so you still need to 
+support the two-layer AtE protocol form that was used with TLS1.0/1.1.
 
-POLY1305 MAC implementation corrupts vector registers on PowerPC (CVE-2023-6129)
-================================================================================
+> If SSL/TLS used Encrypt then Authenticate (EtA) like IPSec, then a lot
+> of the troubles would have been sidestepped. Also see Krawczyk's The
+> Order of Encryption and Authentication for Protecting Communications,
+> <https://www.iacr.org/archive/crypto2001/21390309.pdf>.
+>   
 
-Severity: Low
+The AtE mode has problems, but is still supported in TLS1.2.  (Why was 
+EtA not also introduced in TLS1.2?)
 
-Issue summary: The POLY1305 MAC (message authentication code) implementation
-contains a bug that might corrupt the internal state of applications running
-on PowerPC CPU based platforms if the CPU provides vector instructions.
+>> In other words, what non-trivial code paths would dropping TLS1.0/1.1
+>> entirely allow removing?  (Concatenating SHA1+MD5 is trivial.)
+>>     
+>
+> As far as I know, MD5+SHA1 is used in two places. [...]
+>   
 
-Impact summary: If an attacker can influence whether the POLY1305 MAC
-algorithm is used, the application state might be corrupted with various
-application dependent consequences.
+Yes, but the support for it is trivial.  What, if any, non-trivial code 
+paths could *actually* be removed if support for TLS1.0/1.1 were removed?
 
-The POLY1305 MAC (message authentication code) implementation in OpenSSL for
-PowerPC CPUs restores the contents of vector registers in a different order
-than they are saved. Thus the contents of some of these vector registers
-are corrupted when returning to the caller. The vulnerable code is used only
-on newer PowerPC processors supporting the PowerISA 2.07 instructions.
+In other words, what *actual* benefit towards hardening OpenSSL is to be 
+had by completely removing TLS1.0/1.1?
 
-The consequences of this kind of internal application state corruption can
-be various - from no consequences, if the calling application does not
-depend on the contents of non-volatile XMM registers at all, to the worst
-consequences, where the attacker could get complete control of the application
-process. However unless the compiler uses the vector registers for storing
-pointers, the most likely consequence, if any, would be an incorrect result
-of some application dependent calculations or a crash leading to a denial of
-service.
 
-The POLY1305 MAC algorithm is most frequently used as part of the
-CHACHA20-POLY1305 AEAD (authenticated encryption with associated data)
-algorithm. The most common usage of this AEAD cipher is with TLS protocol
-versions 1.2 and 1.3. If this cipher is enabled on the server a malicious
-client can influence whether this AEAD cipher is used. This implies that
-TLS server applications using OpenSSL can be potentially impacted. However
-we are currently not aware of any concrete application that would be affected
-by this issue therefore we consider this a Low severity security issue.
-
-OpenSSL versions 3.0.0 to 3.0.12, 3.1.0 to 3.1.4 and 3.2.0 are vulnerable to
-this issue. The FIPS provider is not affected because the POLY1305 MAC
-algorithm is not FIPS approved and the FIPS provider does not implement it.
-
-OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 5b139f95 (for 3.2),
-commit f3fc5808 (for 3.1) and commit 050d263 (for 3.0) in the OpenSSL git
-repository.
-
-This issue was reported on 9th October 2023 by Sverker Eriksson (Ericsson).
-The fix was developed by Rohan McLure (IBM).
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20240109.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmWddmsACgkQUnRmohyn
-nm3nyBAAokn+TaX6ctAfk5TddGFSLabmBWOieIt52qAEqVxOnOn3IK/Ezuv6x3Gk
-SrXzuTY9w8mAezME2ZUrDULuixji0u/n84RRXCqJaAo0s4bPl5BY9munrG+2dBsh
-rusDdd8bzYdeDtRLjVeYjqMreVrpDSVx8JKto/nKcxK1w/yrzCXwpTe+n6pDu8PI
-OXQAcnDvFXWN7I7x23XQrv/Gx2crwNo3GuV1Seoih+595dAjjeyTsxChQCAwAooV
-MoCrHjdur6l9ALlQBj3Y4zZkBcyuUV4ngiNiptBVcBQB+ktcaVzMp2C6AVz3xARJ
-eiVXBAflL/UVkYcskgBeZfuDxS/NBcImpyKyjrfp5HQPh7ahqeyLdQraQBh82VjJ
-ArpKzLP/Ngl6QsCikkJZKEGAP7hTlaXShmNyKy7qIGmMNadMV4epL+lNxEEXk9aP
-f65obbiumGsBypY/4BzIEv2Kr9EXXeVJiHibscAaWch5e3q9e0eQuLXO/TOHpxLf
-NEhOXVSpBt6sp4C6hgztRTIX3/2H/xTH4ZqVwJezhra2x9ytrIDhiQVzOvE5tDdH
-Kzr+ydZhp7H/3NrhO2LgIHC67McU3MQNv44xUx9UTm1WaspZiZtqgP+vrgEfffs4
-Vx9Uv06OxZmTD/X2OHzgNhkqN5FwHaRUhnWmRzt63XThHO1Rxm4=
-=8de2
------END PGP SIGNATURE-----
+-- Jacob
