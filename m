@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4310" "Tuesday" "4" "October" "2016" "17:22:17" "+0200" "Marcus Meissner" "meissner@suse.de" "<20161004152217.GJ21798@suse.de>" "130" "Re: [oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" nil nil nil "10" "2016100415:22:17" "[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" (number mark "U       meissner@sus Oct  4  130/4310  " thread-indent "\"Re: [oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries\"\n") "<20161004144653.GB20328@paperthin-usb.laas.fr>" ("<20161004144653.GB20328@paperthin-usb.laas.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24251 invoked by uid 550); 4 Oct 2016 15:22:31 -0000
+Received: (qmail 28147 invoked by uid 550); 20 Aug 2024 12:48:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,151 +7,177 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24233 invoked from network); 4 Oct 2016 15:22:30 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 4 Oct 2016 17:22:17 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Message-ID: <20161004152217.GJ21798@suse.de>
-References: <20161004144653.GB20328@paperthin-usb.laas.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161004144653.GB20328@paperthin-usb.laas.fr>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] X.Org security advisory: Protocol handling issues
- in X Window System client libraries
+Received: (qmail 6015 invoked from network); 19 Aug 2024 21:18:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1724102302; x=1724768968; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=ThTKnPhZ/MaX+ovfTeDIyRc9ul/WLvygpM0s0NZD53o=;
+ b=ddf28klf/siU4GWSCR5+P103iXrdDLEAjuNa6u2qgJFMHJkEvSDMt/zNglRwjGgKIXVQVcNF
+  C9GztnUzlmUrbDuL9st89MKC0jBz2KV6HATXYwZkcOXVH/oXa/K3qViDyS+pJUrtIIXtXt9yXL
+  tp918hrqpBDAe5kiipVV2wIE6OC8vN42gOZ+qe0TWapECxCOEo78xvyIX3uyhYo69BVydWTxSw
+  NET3XmxdvNDvAFiybX4IfjHCSBWLfXnoFsi8WJd0PmP1wU3cPPqcLhtHs+MhrfODnKqCQ1qAsu
+  pY3ZU7L/bg1pUxWlt1XqUJ4a1vaavKbbRAZv3PtSlklUUg3A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1724102302; x=1724768968; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=ThTKnPhZ/MaX+ovfTeDIyRc9ul/WLvygpM0s0NZD53o=;
+ b=4gWxdeaL05JW0cDkqGTh+7Nx0gdBRn5fEskD/ebqmUWaTJf/CWctkHyCI2o0HAOMQedzuVMv
+  A4vookohAoEzAg==
+Date: Mon, 19 Aug 2024 20:14:12 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20240819181412.tVrtAtA9@steffen%sdaoden.eu>
+In-Reply-To: <66C2ACB0.2040203@gmail.com>
+References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
+ <20240815111847.406cf6c1@computer> <66BECFB0.3080704@gmail.com>
+ <CAH8yC8ndnyhyMNaQu3N_uUM_yXhd32PwR9odEOeoDe7jC5fQLw@mail.gmail.com>
+ <66C02F68.1050609@gmail.com>
+ <ME0P300MB0713D8A7D829DC25E6520BA3EE832@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
+ <66C2ACB0.2040203@gmail.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-599-g5c75a327b2
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] feedback requested regarding deprecation
+ of TLS 1.0/1.1
 
-Hi,
+Jacob Bachmeyer wrote in
+ <66C2ACB0.2040203@gmail.com>:
+ |Peter Gutmann wrote:
+ |> Jacob Bachmeyer <jcb62281@gmail.com> writes:
+ |>> The AtE mode has problems, but is still supported in TLS1.2.  (Why \
+ |>> was EtA
+ |>> not also introduced in TLS1.2?)
+ |>>     
+ |> It was:
+ |>
+ |> https://datatracker.ietf.org/doc/html/rfc7366
+ |>
+ |> So you don't need any new modes, just an extension to signal its \
+ |> presence and
+ |> swapping the order of the processing operations if present.
+ |
+ |I see.  TLS1.2 supports *both* AtE and EtA.
+ |
+ |My question (here expressed yet another way) still stands unanswered:  
+ |excluding cipher suites (and the use of concatenated SHA1+MD5) what, if 
+ |any, parts of TLS1.0/1.1 are not also required to implement TLS1.2?
+ |
+ |Removing support for TLS1.0/1.1 has definite costs in compatibility, 
+ |costs that hit particularly hard with legacy embedded devices for which 
+ |no updates will be available.  Given that TLS1.2 is to remain supported, 
+ |what benefits to maintainability are to be had?  How much of the 
+ |TLS1.0/1.1 support does *not* overlap with the TLS1.2 support?  How much 
+ |of it *should* overlap if the code were to be optimally refactored?
 
-Mitre, can you assign CVE ids for the issues without?
+A primitive view on that is
 
-Ciao, Marcus
-On Tue, Oct 04, 2016 at 04:46:53PM +0200, Matthieu Herrb wrote:
-> X.Org security advisory: October 4, 2016
-> 
-> Protocol handling issues in X Window System client libraries
-> ============================================================
-> 
-> Description
-> 
-> Tobias Stoeckmann from the OpenBSD project has discovered a number of
-> issues in the way various X client libraries handle the responses they
-> receive from servers, and has worked with X.Org's security team to
-> analyze, confirm, and fix these issues. These issue come in addition
-> to the ones discovered by Ilja van Sprundel in 2013.
-> 
-> Most of these issues stem from the client libraries trusting the
-> server to send correct protocol data, and not verifying that the
-> values will not overflow or cause other damage. Most of the time X
-> clients & servers are run by the same user, with the server more
-> privileged than the clients, so this is not a problem, but there are
-> scenarios in which a privileged client can be connected to an
-> unprivileged server, for instance, connecting a setuid X client (such
-> as a screen lock program) to a virtual X server (such as Xvfb or
-> Xephyr) which the user has modified to return invalid data,
-> potentially allowing the user to escalate their privileges.
-> 
-> The X.Org security team would like to take this opportunity to remind
-> X client authors that current best practices suggest separating code
-> that requires privileges from the GUI, to reduce the attack surface of
-> issues like this.
-> 
-> 
-> Affected libraries and CVE Ids
-> 
-> libX11 - insufficient validation of data from the X server
-> 	 can cause out of boundary memory read (XGetImage())
-> 	 or write (XListFonts()).
-> 	 Affected versions libX11 <= 1.6.3
-> 
-> libXfixes - insufficient validation of data from the X server
-> 	can cause an integer overflow on 32 bit architectures.
-> 	Affected versions : libXfixes <= 5.0.2
-> 
-> libXi - insufficient validation of data from the X server
-> 	can cause out of boundary memory access or
-> 	endless loops (Denial of Service).
-> 	Affected versions libXi <= 1.7.6
-> 
-> libXrandr - insufficient validation of data from the X server
-> 	can cause out of boundary memory writes.
-> 	Affected versions: libXrandr <= 1.5.0
-> 
-> libXrender - insufficient validation of data from the X server
-> 	can cause out of boundary memory writes.
-> 	Affected version: libXrender <= 0.9.9
-> 
-> XRecord - insufficient validation of data from the X server
->         can cause out of boundary memory access or
-> 	endless loops (Denial of Service).
-> 	 Affected version libXtst <= 1.2.2
-> 
-> libXv - insufficient validation of data from the X server
->         can cause out of boundary memory and memory corruption.
-> 	CVE-2016-5407
-> 	affected versions libXv <= 1.0.10
-> 
-> libXvMC - insufficient validation of data from the X server
-> 	can cause a one byte buffer read underrun.
-> 	Affected versions: libXvMC <= 1.0.9
-> 
-> 
-> Fixes
-> 
-> Fixes are available in the following git commits.
-> 
-> lib/libX11
-> 8ea762f Validation of server responses in XGetImage()
-> 8c29f16 The validation of server responses avoids out of boundary accesses.
-> 
-> libXfixes
-> 61c1039 Integer overflow on illegal server response
-> 
-> libXi
-> 19a9cd6 Properly validate server responses.
-> 
-> libXrandr
-> a0df3e1 Avoid out of boundary accesses on illegal responses
-> 
-> libXrender
-> 9362c7d Validate lengths while parsing server data.
-> 8fad00b Avoid OOB write in XRenderQueryFilters
-> 
-> lib/libXtst
-> 9556ad6 Out of boundary access and endless loop in libXtst
-> 
-> libXv
-> 87b3c94 Protocol handling issues in libXv
-> 
-> libXvMC
-> 2cd95e7 Avoid buffer underflow on empty strings.
-> 
-> 
-> They will also be available in these modules releases from X.Org:
-> 
->  * libX11 1.6.4
->  * libXfixes 5.0.3
->  * libXi 1.7.7
->  * libXrandr 1.5.1
->  * libXrender 0.9.10
->  * libXtst 1.2.3
->  * libXv 1.0.11
->  * libXvMC 1.0.10
-> 
-> Thanks
-> 
-> X.Org thanks Tobias Stoeckmann for reporting these issues to our
-> security team and assisting them in understanding them and evaluating
-> our fixes.
-> 
-> -- 
-> Matthieu Herrb
+  # git grep -i tls_v master -- \
+      crypto lib include engines ssl apps dev exporters external providers |
+    wc -l
+  72
 
+but you must cut things like
 
+  master:crypto/evp/e_aes_cbc_hmac_sha256.c:        else if (key->aux.tls_ver >= TLS1_1_VERSION)
+  master:providers/implementations/ciphers/cipher_aes_cbc_hmac_sha1_hw.c:        else if (ctx->aux.tls_ver >= TLS1_1_VERSION)
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+(-E 'TLS.+_VERSION' isn't that much better, for the remove party.)
+
+My own gut feeling says btw that no logical argument of whoever
+can change anything on this topic, there is a pimple to go, the
+cancel culture requires a victim, the next announcement (ie web
+page to which the otherwise hollow email message points) shall
+have an effective advertising-niveau-compatible entry.
+
+Ie, it seems for OpenSSL TLSv1 all share the same implementation:
+
+  git show master:ssl/record/methods/tls1_meth.c
+says
+  /* TLSv1.0, TLSv1.1 and TLSv1.2 all use the same funcs */
+and also
+        /* For TLSv1.1 and later explicit IV */
+
+and
+
+  git show master:ssl/t1_lib.c
+
+shows only flag differences in between
+
+  SSL3_ENC_METHOD const TLSv1_1_enc_data = {
+and
+  SSL3_ENC_METHOD const TLSv1_2_enc_data = {
+
+in particular 0 vs
+
+    SSL_ENC_FLAG_SIGALGS | SSL_ENC_FLAG_SHA256_PRF
+        | SSL_ENC_FLAG_TLS1_2_CIPHERS,
+
+So it *could* be "removing support of TLSv1.0 and v1.1" is in fact
+only a small mostly housekeeping diff at first.
+
+By the way i found your question on additional aka redundant
+checksums (wherever) very interesting, given that Antonio
+Diaz Diaz (author of plzip plus support libraries) swears on
+CRC-32 for long time storage, with absolutely impressive numbers
+on reliability (i think here: [1])
+
+  [1] https://www.nongnu.org/lzip/safety_of_the_lzip_format.html#lzma_crc
+
+(Ie, i asked for maybe xxhash support or what, eh, as it was
+a public list:
+
+  > While CRC-32 is ok, i guess people (including me) doubt its
+  > viability for long-term archiving, especially when compared with
+  > other algorithms.  It is not so terrible as years ago, since most
+  > people surely have lots of copies, and the filesystems use
+  > checksumming.  But as a standalone archive, CRC-32 fails badly,
+  > for example smhash says "insecure, 8590x collisions, distrib,
+  > PerlinNoise":
+
+  The tests performed by smhasher are 100% unrelated to error detection in a
+  decompressor context. CRC32 is probably optimal to detect errors in lzip
+  members. See
+  http://www.nongnu.org/lzip/manual/lzip_manual.html#Quality-assurance
+
+  "Lzip, like gzip and bzip2, uses a CRC32 to check the integrity of the
+  decompressed data because it provides optimal accuracy in the detection of
+  errors up to a compressed size of about 16 GiB, a size larger than that of
+  most files. In the case of lzip, the additional detection capability of the
+  decompressor reduces the probability of undetected errors several million
+  times more, resulting in a combined integrity checking optimally accurate
+  for any member size produced by lzip."
+
+  See also http://www.nongnu.org/lzip/safety_of_the_lzip_format.html#lzma_crc
+  '4.1 Interaction between LZMA compression and CRC32' and '7 Conclusions':
+
+  "After 14 years of testing, the MTBF of lzip can only be estimated because
+  not even one false negative has ever been observed. If one were to
+  continuously decompress corrupt lzip files of about one megabyte in size (10
+  decompressions per second), each of them containing the kind of corruption
+  most difficult to detect (one random bit flip), then a false negative would
+  be expected to happen every 694 million years."
+
+The linked site claims (and that thus likely means: announces
+facts) that the error detection is "good enough for avionics", if
+i recall correctly.)
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
