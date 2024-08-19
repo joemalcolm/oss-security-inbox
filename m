@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["656" "Thursday" "12" "October" "2017" "14:05:39" "+0200" "Roman Medina-Heigl Hernandez" "roman@rs-labs.com" "<a54bb6fe-9c95-a0d9-1c70-c0deefb802db@rs-labs.com>" "27" "Re: [oss-security] Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra" "^Date:" nil nil "10" "2017101212:05:39" "[oss-security] Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra" (number mark "        roman@rs-lab Oct 12   27/656   " thread-indent "\"Re: [oss-security] Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra\"\n") "<CAPshzHa=n0hn+JSdb+D4WZqXQjcFF0D8ffepOqjtysHAb3=W9Q@mail.gmail.com>" ("<87h8v5b2rf.fsf@xps13.shealevy.com>" "<CANO=Ty2wCpT6iaGt05=+quEZYbWCgtxroceUs7YPk=6=Y1vQYg@mail.gmail.com>" "<CAPshzHa=n0hn+JSdb+D4WZqXQjcFF0D8ffepOqjtysHAb3=W9Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12117 invoked by uid 550); 12 Oct 2017 12:51:51 -0000
+Received: (qmail 15666 invoked by uid 550); 19 Aug 2024 21:02:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3228 invoked from network); 12 Oct 2017 12:08:14 -0000
-X-Virus-Scanned: Powered by H&S
-References: <87h8v5b2rf.fsf@xps13.shealevy.com>
- <CANO=Ty2wCpT6iaGt05=+quEZYbWCgtxroceUs7YPk=6=Y1vQYg@mail.gmail.com>
- <CAPshzHa=n0hn+JSdb+D4WZqXQjcFF0D8ffepOqjtysHAb3=W9Q@mail.gmail.com>
-Message-ID: <a54bb6fe-9c95-a0d9-1c70-c0deefb802db@rs-labs.com>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <CAPshzHa=n0hn+JSdb+D4WZqXQjcFF0D8ffepOqjtysHAb3=W9Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: es-ES
-Date: Thu, 12 Oct 2017 14:05:39 +0200
-From: Roman Medina-Heigl Hernandez <roman@rs-labs.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Privilege escalation with kill(-1, SIGKILL) in XNU
- kernel of macOS High Sierra
+Received: (qmail 15639 invoked from network); 19 Aug 2024 21:02:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=dwheeler.com; s=selector1; h=Message-Id:In-Reply-To:To:References:Date:
+	Subject:Mime-Version:Content-Transfer-Encoding:Content-Type:From;
+	bh=UwHwBaS4oOZhxupkVt9lacHbHRzeGn2k52hhqUaWyuU=; b=VYp5ca2ZbwvuGRbnAmAJJv+JzP
+	c4E6dLBkz1AbEmgxakuONascLCQfGrZ1jXgPAnv0B2FjZx0sIEoMSs62jQX6fm3dj954cs+KCYghg
+	m+o/G4mN/Pz+vdu/l4iIC9b+U3xX/gJaM5s0/xYLgGOiv0O7tIAwjpJiT2JoFN3EBqGroUJd1sl/M
+	VwVJhyiJVPwuWbQSncejEbEJaDL5jlTDgwmX7CPNoTKYJwf4E/qzkdp1yT1B8qo43Hi47upcmdMS1
+	DGgCkHNXtBMef+UMGrRPl1KDWkzjEsOQ69BA3joBT6DNOhy5HDn3CZ42OcBXHwT3sh8Ox46ssglSV
+	mNTbqwmQ==;
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6.1.1\))
+Date: Mon, 19 Aug 2024 17:02:29 -0400
+References: <E0230074-77BD-4A07-9838-92BB263C598E@linuxfoundation.org>
+ <24243143-1A4D-4B71-A6C4-C8140C09A1CE@dwheeler.com>
+ <CAKfVa+kDOncGMgh+otnTQoToBtT2bqH3paTWD6ie9wZ6DLfRYw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+In-Reply-To: <CAKfVa+kDOncGMgh+otnTQoToBtT2bqH3paTWD6ie9wZ6DLfRYw@mail.gmail.com>
+Message-Id: <2C67A739-491E-4672-94F1-5C78DBC55C97@dwheeler.com>
+X-Mailer: Apple Mail (2.3731.700.6.1.1)
+Subject: Re: [oss-security] AI Cyber Challenge (AIxCC) semi-final results from
+ DEF CON 32 (2024)
 
-More teachable moments:
 
-DoS != Privilege escalation
+> On Aug 17, 2024, at 4:32 PM, Alfredo Ortega <ortegaalfredo@gmail.com> wro=
+te:
+>=20
+> I found a real bug (OpenBSD IPv6 Multicast Forwarding Cache sysctl
+> kernel heap overflow) using Mistral-Medium almost 6 months ago:
+> https://github.com/ortegaalfredo/vulns-ai/blob/main/openbsd_mfc6_sysctl_o=
+verflow.txt
+>=20
+> The simple tool that did it is also released as open-source here:
+>=20
+> https://github.com/ortegaalfredo/autokaker
+>=20
+> About to release the second version, and a vscode plugin, next week.
 
-Saludos,
--Román
+That's even more evidence that LLMs can find at least some vulnerabilities.
 
-El 12/10/2017 a las 12:52, Hunger escribió:
-> On Thu, Oct 12, 2017 at 4:00 AM, Kurt Seifried <kseifried@redhat.com> wrote:
->
->> So I normally wouldn't accept this posting (and no doubt Solar will be
->> annoyed because this isn't Open Source per se, and he's 100% right) but
->> this posting does provide a good teachable moment.
->>
->
-> And here's the teachable moment for you...
->
->
-> The XNU kernel is Open Source:
->
-> https://opensource.apple.com/source/xnu/xnu-4570.1.46/
->
-> The Apple Public Source License 2.0 approved by the OSI:
->
-> https://opensource.org/licenses/APSL-2.0
->
+Also - here's a visualization that tries to show how AIxCC competitors
+did against the challenge problems:
+https://dashboard.aicyberchallenge.com/collectivesolvehealth
+
+You can see that the tools found & fixed many of the seeded vulnerabilities=
+ in
+nginx, a few in all but one of the others, and they struggled with the
+Linux kernel. The Linux kernel is *huge* compared to most projects, so that
+isn't too surprising. The final competition is in about a year, so there's =
+hope that
+the tools will make improvements in that time as part of the challenge.
+
+To be honest, even finding and fixing *some* problems automatically is a big
+win, especially if false reports are rare. Still, the better the tools are =
+at finding and
+fixing vulnerabilities, the better off we are.
+
+--- David A. Wheeler
 
