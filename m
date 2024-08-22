@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1531" "Thursday" "18" "June" "2015" "17:13:58" "+0200" "Vasyl Kaigorodov" "vkaigoro@redhat.com" "<20150618151358.GA18454@mail.corp.redhat.com>" "50" "[oss-security] CVE request: pure-ftpd denial of service in glob_()" nil nil nil "6" "2015061815:13:58" "[oss-security] CVE request: pure-ftpd denial of service in glob_()" (number mark "U       vkaigoro@red Jun 18   50/1531  " thread-indent "\"[oss-security] CVE request: pure-ftpd denial of service in glob_()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15472 invoked by uid 550); 18 Jun 2015 15:00:25 -0000
+Received: (qmail 32168 invoked by uid 550); 22 Aug 2024 20:04:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15441 invoked from network); 18 Jun 2015 15:00:24 -0000
-Date: Thu, 18 Jun 2015 17:13:58 +0200
-From: Vasyl Kaigorodov <vkaigoro@redhat.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20150618151358.GA18454@mail.corp.redhat.com>
+Received: (qmail 32685 invoked from network); 22 Aug 2024 19:20:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1724354408; x=1724959208; i=andreas.stieger@gmx.de;
+	bh=5h9vtc1+R6JUnGuyaujpgHs/kVqgC/vlohBFgyb5jiA=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=JuPoUtfOLA8Jnc5zWHAiZdh91I8AyuxiaXyYS8/LeZ9v6etg4IexjSTUObE9RXU8
+	 dSexamwusMwKIEyge4EvSeWmsutaMqyWf0BF0N5krkRbhVTnT4WNYAj8OJIcovZUt
+	 HNj1vAJ7SpzdD5492KI0r/qx0a6CQoSifPtmDHbv2FRorRqUwo108PR7iNp0HR/qk
+	 43IoL9xNW2RnXtkHT+mxU97+JZi7KhAJlksRSVbjAZQ0PaY5e2uVtiBTO/WImbcMU
+	 v8N9Q/PAB8CIHaolCLXwEnzrp29JzlARwNlgYoiE+qmaP2qr9kQeIw+HMLJ/9PcOh
+	 lbCZmqno97Al8epKaA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Message-ID: <1e072614-f38c-42ae-8710-d399326731a9@gmx.de>
+Date: Thu, 22 Aug 2024 21:20:07 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Subject: [oss-security] CVE request: pure-ftpd denial of service in glob_()
-
---Q68bSM7Ycu6FN28Q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Andreas Stieger <Andreas.Stieger@gmx.de>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:t7ggLLmQndwvzAXjwJpC67JOusT0vMksGddP7szHDj0FKbkTThb
+ LTj5OFCrXdoqQZOGcTo4BOJV9o5OdvPY4kU42W6wiyf2x0PtTur8ZNHEeeqqtCZ9diW7fGX
+ yRrX0jSrOaNnNoJdNa4VZLWjEZJJNRFYIRdqsOAE8f1/eTCCTy+BtN86cxf3V3C6yRgVhEb
+ OxLDP2+pz6EwF6slMb8jg==
+UI-OutboundReport: notjunk:1;M01:P0:WuMTo0FrVm4=;SxRBhwhWofe5nKdPI6/AxpWfoAY
+ X+GX4DVZDzmCSJANw/lEjpvqFJDndjnLcRJgZL1WvAM6OJ9/WkppsLDE/obPMH6BZrvzQSGqV
+ gxeofm7snJd1/448Nk4IjSCUxIR5ndY9dV0mfBsdoAzwOS8ZVWeLJkb6FCt2Ll8U2e98luPqs
+ 7gp1ke3UY61kVtbw7hW6GSfwytjCzk4YdhXf6AYJ/h7kQwsX8MS1n66/nTTytANvKleF6Nj7m
+ NxhvcXsC1NGlaL5bZFWx/qqNYvU9/mvKCIAeNDUtTaVtjJJEO4O2S0rybfYcPVl3lW57fSV2B
+ IM+/7/QWzR3oqr3XpMH+B/G5H+TeM/wX80yL9kQ0dK0el+JLbw/c/ORd9oUOSOy8vVLs9PdaI
+ GzDW836ouTmW/EhycA5BMZYJ0YLXb21z2OaBQiZpT3BlGytva01eBPoadgG8WraEToCl2IGjl
+ mF8zPyCWaKTcBflMg42Xy8zY1iMGjgJ/QW5fuSqREdkrvGhF0vJ7LyPeF0bvsJcofu6LWlqFb
+ kAgZupBAcWXh2h17SoqUIWxzRqXfUwggQi7uTN3m2qTo1Isremmz0ZaqdUpVM493z2d7huRri
+ P3IQVNGhh/QZdOV031wSShzUemJm1wuOVBNVHP5w4Qm9DUIr6xQn3KAcQDyGFOTI2y6XwuS+6
+ vEcl/E9XGuh03wBkfCNFtvouwUYP7/cP6zWSj1+c3/dC3J4Nux1O6KwX787hYBzcryQwoRmaS
+ 3oJWT5PjlT2NFGtS2/6T6/e7+1mqDuN7COr+19UUM3bLGIFcs8hiZwm5oc3er8wxegCHzTtCZ
+ +S8CpKhWtecfM0wAE42yk4Wg==
+Subject: [oss-security] gh:facebook/rocksdb v9.5.2 - SupplyChainAttackPoC for Meta BB
 
-Hello,
+Around 2024-08-21, the following tag appeared:
+https://github.com/facebook/rocksdb/releases/tag/v9.5.2
 
-Version 1.0.40 of pure-FTPd fixes a potential denial of service issue.
+The GitHub release is titled "v9.5.2 - SupplyChainAttackPoC for Meta
+BB". This might be an an extremely unlucky choice of a release label, a
+joke, or what it sais it is. The two previous tags claimed in the
+release notes were not pushed.
 
-=46rom the NEWS file:
+ From the archive pages I see the short commit for this tag changed from
+d1826fb to a7e70f9.
 
- - The process handling a user session could be crashed by trying to
- match a file pattern longer than the maximum length for a path. This
- has been fixed. Upgrading is recommended.
+https://web.archive.org/web/20240821151922/https://github.com/facebook/rock=
+sdb/releases/tag/v9.5.2
 
-Upstream commit that fixes this:
-https://github.com/jedisct1/pure-ftpd/commit/0627004e23a24108785dc1506c5767=
-392b90f807
+https://web.archive.org/web/20240822053615/https://github.com/facebook/rock=
+sdb/releases/tag/v9.5.2
 
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=3D552254
-https://bugzilla.redhat.com/1233267
+Similarly the cached preview images, and possibly the github internal
+title, seem to changed in the 14 minutes timestamp diff between two
+social media posts:
 
-Can a CVE be assigned to this please?
+https://x.com/RocksDB/status/1826276807060173257
 
-Thanks.
---=20
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-Free/Busy status: https://url.corp.redhat.com/vk-free-busy-status
+https://www.facebook.com/groups/rocksdb.dev/posts/8216045841827191/
 
-Come talk to Red Hat Product Security at the Summit!
-Red Hat Summit 2015 - https://www.redhat.com/summit/
+The diff points to a fat-fingered release that missed some changes and
+was quickly corrected.
+https://github.com/facebook/rocksdb/compare/d1826fb..a7e70f9
 
---Q68bSM7Ycu6FN28Q
-Content-Type: application/pgp-signature
+Violates at least the principle to never reuse release numbers or make
+changes to public tags. Let's not do that. The only other thing I saw
+that the project stopped using the meta git bot not so recently. That's
+all I know.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Andreas
 
-iQEcBAEBAgAGBQJVguA2AAoJECF7+fyrtugoCqcIAMT7aHMqaZrxU+PB3f1vEQW4
-cYB1PiBB0m1q3xZmi/Ycu9LbTGozjmv1rzjlO1+3VMMzhXgj9zQbEiAYzMC5lOq2
-dYktKiTTyM8iIAxtoHJpxZxtKOde+smsLFbJax80DvRmQMAA51solhHnVWRy70H0
-avK2vsSQtsbfontGTu1Oo6yQdw1enWxET7jC6ViLnG8mxYQhjciGv3uys8/9AfBO
-sDWIIKo8KYk6l5pIsvBW0TVjvVWdA2kTQI4RarxFraUgpQo0PHL62zbRJMkrnjFO
-w1ge7ayTFTKmsSXZl1UHSTi+9d+zQe3oOsyPeM++1jiMy2haRxzH/BFejTFqG0U=
-=Kvyi
------END PGP SIGNATURE-----
-
---Q68bSM7Ycu6FN28Q--
