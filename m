@@ -1,4 +1,4 @@
-Received: (qmail 20455 invoked by uid 550); 8 Mar 2026 02:58:35 -0000
+Received: (qmail 26443 invoked by uid 550); 23 Aug 2024 15:41:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +7,116 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28330 invoked from network); 8 Mar 2026 01:21:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1772932883;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=UT2i8VdOTdrKLeNVrzi5nT4bm/eTeZR0iQGxjpnmXrU=;
-	b=VoTmjZh7MexvZXXsRQpcYjaY7q20kmG8snakT0xmtLnwJDOdoM4H8kcbWtYiSCAQ0DUIrP
-	0gzc2Fh0jPnohmDJPIWcoXpZPgs4S3D85rymDzp3cKht90cmA0iW7FMOWKNIZCWDyO52Y0
-	ZhAeE3weNYzHygBXpurBXjtqZ29oSHVQokQixReZhmWnYDZYbn3Y0AyFatAZOUwiGZANFL
-	X73Ivq9CVqfJg431tADtEFo4sdnu3dzfLbG78gJpuYHoHvDWBrgfF7Fl7bfy89hrVfyVda
-	K7GjqE5+GqHxcAD5KoY/NFodn+hXPRRV1h76DLspLlA5/EbCAqgVZjQTwzsTcw==
-MIME-Version: 1.0
-Date: Sat, 07 Mar 2026 21:21:23 -0400
-From: Timothy Legge <timlegge@cpansec.org>
+Received: (qmail 19497 invoked from network); 23 Aug 2024 15:38:28 -0000
+Authentication-Results: ext-mx-out011.mykolab.com (amavis);
+ dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+ header.d=kolabnow.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+	in-reply-to:content-transfer-encoding:content-disposition
+	:content-type:content-type:mime-version:references:message-id
+	:subject:subject:from:from:date:date:received:received:received;
+	 s=dkim20240523; t=1724427497; x=1726241898; bh=86pPlofiDqzXsgTQ
+	hQB5r/hlMaKRFylGgtk6m9iv6/E=; b=b2ig0nRdMH2wQ52c+ly0/4IjeWRGPh62
+	X7uiW5+F/9x5P+Yb3f/idpTgsubmlT0h5mMu1FOdkyOuM/+siNT+wSd2wKLLS00J
+	bf8/7OIQYGYBrc+tER2cH2aWiY8oHYbUuvMmyrgHAR82gJtnBSuqszifq0Klybl0
+	wG/JkADxyyao1wHOo0hBaa7heATWvkzFj7Oie+fFhT2KpYw8gjmKrcl/S2n0f10j
+	pBEyScGkpiiba95tV8ZIWRf5TjvgkIU1bUkVJW426HcUD0s5XWpv2qIO1iieH34D
+	0OEzFaOlAx8nhm3YyU+I5ZK/HTiZw8hAfGEIEL1905tbQU8YMOmOMA==
+X-Virus-Scanned: amavis at mykolab.com
+Date: Fri, 23 Aug 2024 17:38:16 +0200
+From: Fay Stegerman <flx@obfusk.net>
 To: oss-security@lists.openwall.com
-Message-ID: <94bb6667510951550cb10e1e1d57e47a@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: timlegge@cpansec.org
-X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeefkedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhepggffhffvuffkgigtgfesthejjhdttddtvdenucfhrhhomhepvfhimhhothhhhicunfgvghhgvgcuoehtihhmlhgvghhgvgestghprghnshgvtgdrohhrgheqnecuggftrfgrthhtvghrnhepjeehveeffefhkeejjedvudfhgedvtdejteffkeetteduiedvueelkeehuefhkeevnecuffhomhgrihhnpehmvghtrggtphgrnhdrohhrghdpghhithhhuhgsrdgtohhmnecukfhppedutddrvddttddrvddtuddrjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedutddrvddttddrvddtuddrjedphhgvlhhopehrohhunhgutghusggvrdhgrghnughirdhnvghtpdhmrghilhhfrhhomhepthhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgpdhqihgupeeuvdeiuefhudfhvefhjedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-X-GND-State: clean
-Subject: [oss-security] CVE-2026-30909: Crypt::NaCl::Sodium versions through 2.002 for Perl
- has potential integer overflows
+Message-ID: <Zsis6Gx2qq_laiC7@nihonium>
+References: <CAADqWPQNv110yAGhdYGYi7FyzpO2MB9v=sQWsV_cd+=XmB-FUA@mail.gmail.com>
+ <aafef56c-c8eb-4c11-9c87-cdee03f97616@oracle.com>
+ <Zsep2UnG7WHvlEnh@nihonium>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zsep2UnG7WHvlEnh@nihonium>
+Subject: Re: [oss-security] CPython: CVE-2024-8088: Infinite loop when
+ iterating over zip archive entry names
 
-========================================================================
-CVE-2026-30909                                       CPAN Security Group
-========================================================================
+* Fay Stegerman <flx@obfusk.net> [2024-08-22 23:12]:
+> * Alan Coopersmith <alan.coopersmith@oracle.com> [2024-08-22 20:56]:
+> > -------- Forwarded Message --------
+> > Subject: 	[Security-announce][CVE-2024-8088] Infinite loop when iterating
+> > over zip archive entry names
+> > Date: 	Thu, 22 Aug 2024 13:40:20 -0500
+> > From: 	Seth Larson <seth@python.org>
+> > Reply-To: 	security-sig@python.org
+> > To: 	security-announce@python.org
+> >
+> > There is a HIGH severity vulnerability affecting the CPython "zipfile" module.
+> >
+> > When iterating over names of entries in a zip archive (for example, methods
+> > of "zipfile.ZipFile" like "namelist()", "iterdir()", "extractall()", etc)
+> > the process can be put into an infinite loop with a maliciously crafted
+> > zip archive. This defect applies when reading only metadata or extracting
+> > the contents of the zip archive. Programs that are not handling
+> > user-controlled zip archives are not affected.
+> >
+> > Please see the linked CVE ID for the latest information on affected versions:
+> >
+> > * https://www.cve.org/CVERecord?id=CVE-2024-8088
+> > * https://github.com/python/cpython/pull/122906
+> > * https://github.com/python/cpython/issues/122905
+>
+> A small correction/addendum based on reading the vulnerability report and the PR
+> that fixes this (as well as being quite familiar with Python zipfile.ZipFile
+> internals and confused how this would affect it): it's not zipfile.ZipFile and
+> its methods that are affected, at least not directly, but zipfile.Path.  The
+> issue being this code in zipfile._path._ancestry():
+>
+>   path = path.rstrip(posixpath.sep)
+>   while path and path != posixpath.sep:
+>       yield path
+>       path, tail = posixpath.split(path)
+>
+> Which results in an infinite loop because for example posixpath.split("//") ==
+> ("//", "") but "//" != posixpath.sep:
+>
+>   >>> it = zipfile._path._parents("//foo")
+>   >>> next(it)
+>   '//'
+>   >>> next(it)
+>   '//'
+>   >>> next(it)
+>   '//'
+>
+> The infinite loop has been fixed by sanitising the paths.
 
-         CVE ID:  CVE-2026-30909
-   Distribution:  Crypt-NaCl-Sodium
-       Versions:  through 2.002
+Forgot to mention this: the infinite loop is triggered when zipfile.Path adds
+"implied directories" -- using _parents(), which calls _ancestry() -- in the
+overridden .namelist() for the custom zipfile.ZipFile subclass it wraps.  Which
+is (indirectly) used by almost all of the zipfile.Path methods like .iterdir(),
+.glob(), .exists(), .joinpath() etc.
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-NaCl-Sodium
-       VCS Repo:  https://github.com/cpan-authors/crypt-nacl-sodium
+  >>> zf = zipfile.ZipFile(io.BytesIO(), "w")
+  >>> zf.filename = "foo.zip"
+  >>> zf.writestr("a/b/c", "abc")
+  >>> zf.writestr("d/e", "de")
+  >>> zf.namelist()
+  ['a/b/c', 'd/e']
+  >>> zf.__class__
+  <class 'zipfile.ZipFile'>
 
+  >>> p = zipfile.Path(zf)
+  >>> p.root.namelist()
+  ['a/b/c', 'd/e', 'a/b/', 'a/', 'd/']
+  >>> list(p.iterdir())
+  [Path('foo.zip', 'a/'), Path('foo.zip', 'd/')]
+  >>> zf.__class__
+  <class 'zipfile._path.CompleteDirs'>
 
-Crypt::NaCl::Sodium versions through 2.002 for Perl has potential
-integer overflows
+  >>> zf.writestr("//oops", "oops")
+  >>> # infinite loop via joinpath -> resolve_dir -> _name_set -> namelist ->
+  >>> # _implied_dirs -> _ancestry
+  >>> p / "foo"
 
-Description
------------
-Crypt::NaCl::Sodium versions through 2.002 for Perl has potential
-integer overflows.
+As zipfile.Path modifies the class of the original ZipFile, calling .namelist()
+or .extractall() on the original ZipFile used to create the Path afterwards is
+also affected even though zipfile.ZipFile as such is not.
 
-bin2hex, encrypt, aes256gcm_encrypt_afternm and seal functions do not
-check that output size will be less than SIZE_MAX, which could lead to
-integer wraparound causing an undersized output buffer.
-
-Encountering this issue is unlikely as the message length would need to
-be very large.
-
-For bin2hex() the bin_len would have to be > SIZE_MAX / 2
-For encrypt() the msg_len would need to be > SIZE_MAX - 16U
-For aes256gcm_encrypt_afternm() the msg_len would need to be > SIZE_MAX 
-- 16U
-For seal() the enc_len would need to be > SIZE_MAX - 64U
-
-Problem types
--------------
-- CWE-190 Integer Overflow or Wraparound
-
-Solutions
----------
-Upgrade to version 2.003
-
-
-References
-----------
-https://metacpan.org/release/TIMLEGGE/Crypt-NaCl-Sodium-2.002/source/Sodium.xs#L2116
-https://metacpan.org/release/TIMLEGGE/Crypt-NaCl-Sodium-2.002/source/Sodium.xs#L2310
-https://metacpan.org/release/TIMLEGGE/Crypt-NaCl-Sodium-2.002/source/Sodium.xs#L3304
-https://metacpan.org/release/TIMLEGGE/Crypt-NaCl-Sodium-2.002/source/Sodium.xs#L942
-https://github.com/cpan-authors/crypt-nacl-sodium/pull/24.patch
-https://metacpan.org/release/TIMLEGGE/Crypt-NaCl-Sodium-2.003/source/Changes
-
-Credits
--------
-Brad Barden <perlmodules@5c30.org>, finder
+- Fay
