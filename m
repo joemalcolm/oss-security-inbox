@@ -1,4 +1,4 @@
-Received: (qmail 3212 invoked by uid 550); 28 Mar 2024 09:10:34 -0000
+Received: (qmail 28577 invoked by uid 550); 2 Sep 2024 13:34:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +7,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27677 invoked from network); 28 Mar 2024 09:05:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1711617039;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ypRL8ks9bSYp4s5uM48KhnMgVuD9Gd9U7P+SLWS6gQY=;
-	b=QtP/PUK4fwe1o0VSBsqJKbwBYL3Y0pHsuFw9wpEbsCIjVYI1sklKGMwTi6eK2qxL4Il4a8
-	7htCbYkr/lBBe9bvi1fC10nAJg5AuuQZ2UHi7qKZmK2bSJ08Kh7Q2E0CsrujXpGqcNhsCM
-	zUxJgZlQnv1KREwK7KIwpz/FlkyGmmw=
-X-MC-Unique: 4KcToQRMPVa-gdK_tDau0A-1
-Date: Thu, 28 Mar 2024 10:10:27 +0100
-From: Karel Zak <kzak@redhat.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com,
-	"Skyler Ferrante (RIT Student)" <sjf5462@rit.edu>
-Message-ID: <20240328091027.dttlp5qscwemhris@ws.net.home>
-References: <CAEOG19rkUU8Pam5N67xyE9upepp_MahcnY48nek-VBAwo_NyAg@mail.gmail.com>
- <20240327213041.qyr7sglmxgdmtcb4@jwilk.net>
- <ZgSlAmss1tT8M2vZ@itl-email>
- <20240327232935.GA17111@openwall.com>
-MIME-Version: 1.0
-In-Reply-To: <20240327232935.GA17111@openwall.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
+Received: (qmail 27918 invoked from network); 2 Sep 2024 13:34:47 -0000
+Date: Mon, 2 Sep 2024 15:34:35 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: 2639161967 <2639161967@qq.com>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>
+Message-ID: <20240902133435.GA29502@openwall.com>
+References: <tencent_BB0764F9635412BA90A36B3B19EDEEF09905@qq.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in
- util-linux wall
+In-Reply-To: <tencent_BB0764F9635412BA90A36B3B19EDEEF09905@qq.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux kernel: memory leak in arch/powerpc/platforms/powernv/opal-irqchip.c: opal_event_init()
 
-On Thu, Mar 28, 2024 at 12:29:35AM +0100, Solar Designer wrote:
-> > > 
-> > > ?? https://github.com/util-linux/util-linux/commit/404b0781f52f7c04
-> > >   ("wall: fix escape sequence Injection [CVE-2024-28085]")
-> > 
-> > Would enforcing UTF-8 validity (regardless of user locale) be a
-> > solution?
-> 
-> Not a complete solution. 
+Hi,
 
-There is only one real solution: do not allow non-root users to write
-to foreign file descriptors. Do not install wall(1) with suid. That's
-all.
+This bug report is misaddressed.  Per upstream's preference and common
+sense (given how many issue reports there are against the Linux kernel),
+most Linux kernel (maybe-)issues should first be reported to Linux
+kernel maintainers/lists or (if you're reasonably sure of significant
+security relevance) to the Linux kernel security team, and only then (if
+relevant) maybe also to general security lists.  Occasional exceptions
+exist, such as for publicly exploited issues, but if you're new to this
+chances are that you should play by the rules, not claim an exception.
 
-For now, it is enabled by default in the upstream tree, but I will
-disable it in the next releases and explicit --enable-* will be
-required. We also need to add more information to the man pages.
+The original Subject line on this message was just "memory leak".  That
+was also inappropriate since it should contain at least the affected
+project's name (when applicable).  I've edited the Subject line prior to
+approving this message (as a moderator).
 
-    Karel
+2639161967 also sent this message to linux-distros.  That was also
+inappropriate for the reasons stated above (where it's not just
+upstream's preference, but also part of the current instructions for
+issue reporters), and additionally because linux-distros is only for
+non-public issues, so it makes no sense to send anything to the public
+oss-security and the private linux-distros at the same time.
 
-I'm currently not aware of a safe way to allow
-> multi-byte characters coming from concurrent writers, see:
-> 
-> https://www.openwall.com/lists/oss-security/2015/09/20/1
-> 
-> and the next message in that thread.
-> 
-> In fact, even plain ASCII isn't entirely safe if it just happens to be
-> injected into the middle of a control sequence that the target user's
-> program was printing, thereby altering its effect.
-> 
-> That said, perhaps write(1)/wall(1) just shouldn't allow bytes from both
-> C0 and C1 ranges (except for TAB, LF, space) regardless of locale
-> settings, at least when the programs are running SUID/SGID.  That is,
-> unless the invoking user - which in this case is likely root - could
-> have directly written to the target user's tty anyway.  In other words,
-> mostly revert those offending commits.  Or just revert them completely.
-> 
-> Alexander
-> 
+On Mon, Sep 02, 2024 at 09:54:52AM +0800, 2639161967 wrote:
+> in the newest linux release version, in&nbsp;/arch/powerpc/platforms/powernv/opal-irqchip.c&nbsp;file , the&nbsp;
+> opal_event_init function, the variable "name"defined in line 270, and is alloced memory in line 274 or 276, but not free, cause many times memory leak, and most old release versions have the problem.
 
--- 
- Karel Zak  <kzak@redhat.com>
- http://karelzak.blogspot.com
+The code in question is:
 
+int __init opal_event_init(void)
+{
+[...]
+	/* Install interrupt handlers */
+	for (i = 0; i < opal_irq_count; i++) {
+		struct resource *r = &opal_irqs[i];
+		const char *name;
+
+		/* Prefix name */
+		if (r->name && strlen(r->name))
+			name = kasprintf(GFP_KERNEL, "opal-%s", r->name);
+		else
+			name = kasprintf(GFP_KERNEL, "opal");
+
+		if (!name)
+			continue;
+		/* Install interrupt handler */
+		rc = request_irq(r->start, opal_interrupt, r->flags & IRQD_TRIGGER_MASK,
+				 name, NULL);
+		if (rc) {
+			pr_warn("Error %d requesting OPAL irq %d\n", rc, (int)r->start);
+			continue;
+		}
+	}
+
+As I understand, the "memory leak" is actually a non-issue, because
+opal_event_init() is only called on initialization and request_irq()
+retains a pointer to name.  So this is part of building data structures
+that will normally remain around during the system's uptime.  Even if
+this were an unintentional memory leak, it's pretty clearly not a
+security issue because the leak would not be attacker-triggerable.
+
+Perhaps name could reasonably be freed when request_irq() fails, so
+inside the "if (rc) {" block.  Perhaps with some effort, these could
+also be freed in opal_event_shutdown(), but it's safer not to bother.
+Perhaps a source code comment may reasonably be added.
+
+This "problem" report could be slightly less useless if you included the
+methodology you used to find this, so that others could adjust it to
+find and report real issues, even if usually non-security ones (so not
+report them to here, but to appropriate Linux kernel maintainers and
+lists, as per the MAINTAINERS file).
+
+I'm CC'ing this to some maintainers in case they want to add to the "if
+(rc) {" block, if only to silence static analysis tools, but other than
+that I see nothing to do on this report.
+
+Alexander
