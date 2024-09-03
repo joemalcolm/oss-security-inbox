@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4564" "Tuesday" "31" "January" "2017" "10:22:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<5a83fed905374f2fa03babb6c7c1da61@imshyb01.MITRE.ORG>" "122" "[oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee" nil nil nil "1" "2017013115:22:47" "[oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee" (number mark "U       cve-assign@m Jan 31  122/4564  " thread-indent "\"[oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee\"\n") "<CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>" ("<CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13814 invoked by uid 550); 31 Jan 2017 15:23:00 -0000
+Received: (qmail 23767 invoked by uid 550); 3 Sep 2024 19:08:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,136 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13784 invoked from network); 31 Jan 2017 15:22:59 -0000
-From: <cve-assign@mitre.org>
-To: <dx@dxzone.com.ar>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>
-Message-ID: <5a83fed905374f2fa03babb6c7c1da61@imshyb01.MITRE.ORG>
-Date: Tue, 31 Jan 2017 10:22:47 -0500
+Received: (qmail 31945 invoked from network); 3 Sep 2024 17:06:46 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jacques Le Roux <jleroux@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <48b22647-65c0-2c49-dd78-e5cef87eafe6@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 03 Sep 2024 17:05:47 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee
+Subject: [oss-security] CVE-2024-45507: Apache OFBiz: Prevent use of URLs in files when
+ loading them from Java or Groovy, leading to a RCE 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important
 
-> I've just released BitlBee 3.5.1 which includes fixes for these issues:
-> 
-> a) bitlbee-libpurple: Use after free when expiring file transfer requests.
-> b) Null pointer dereference with file transfer request from unknown contacts.
-> c) Incomplete fix for issue (b), which left bitlbee-libpurple affected.
-> 
-> I have already requested three CVEs to the distros mailing list when
-> the issue was not public, but did not receive any reply at the time of
-> this writing. If it is appropriate, I'd like to request them in this
-> list instead.
-> 
-> The first two were already public (fixed in 3.5, released 2017-01-08) but were
-> not considered security issues before. The third issue is what 3.5.1
-> fixes.
+Affected versions:
 
-> https://bugs.bitlbee.org/ticket/1281
-> 
-> # bitlbee-libpurple: Use after free when expiring file transfer requests
-> 
-> Pending file transfer requests expire after 120 seconds, which may
-> result in use after free if the corresponding account is disconnected.
-> A malicious remote server could force this disconnection.
-> 
-> This results in denial of service (remote crash of the BitlBee
-> instance), or remote code execution (theoretically).
-> 
-> * Authentication: None
-> 
-> ## Unaffected versions
-> 
-> bitlbee (non-libpurple builds), any version
-> 
-> bitlbee-libpurple 3.5
-> 
-> This affects any libpurple protocol when used through BitlBee. It does
-> not affect other libpurple-based clients such as pidgin.
-> 
-> This is a very visible issue - all file transfer request attempts and
-> all disconnections will be logged in the control channel and visible
-> by the targeted user. File transfer requests look like this:
-> 
->     <@root> [account] - File transfer request from [username] for [filename] (0 kb).
->     <@root> Accept the file transfer if you'd like the file. If you don't, issue the 'transfer reject' command.
-> 
-> Cancelling the file transfer request using the "transfer reject"
-> command before the disconnection happens can prevent this. However,
-> using that command after the account is disconnected will result in an
-> immediate crash.
+- Apache OFBiz before 18.12.16
 
-> [] Original bugfix commit:
-> 
-> https://github.com/bitlbee/bitlbee/commit/ea902752503fc5b356d6513911081ec932d804f2
+Description:
 
-Use CVE-2016-10188.
+Server-Side Request Forgery (SSRF), Improper Control of Generation of Code =
+('Code Injection') vulnerability in Apache OFBiz.
 
+This issue affects Apache OFBiz: before 18.12.16.
 
-> https://bugs.bitlbee.org/ticket/1282
-> 
-> # Null pointer dereference with file transfer request from unknown contacts
-> 
-> Receiving a file transfer request from a contact not in the contact
-> list results in a null pointer dereference, leading to remote DoS by
-> malicious remote clients.
-> 
-> * Authentication: None
-> 
-> ## Unaffected versions
-> 
-> bitlbee-libpurple 3.5.1 or newer
-> 
-> bitlbee (non-libpurple builds) 3.5 or newer
-> 
-> The issue from 3.4.2 and older only affects the jabber protocol, which
-> is the only non-purple protocol which implements file transfers.
-> 
-> The issue that is still present in 3.5 affects any libpurple protocol
-> that implements file transfers when used through BitlBee. It does not
-> affect other libpurple-based clients such as pidgin.
-> 
-> There's no visible effect of the issue other than the crash.
+Users are recommended to upgrade to version 18.12.16, which fixes the issue.
 
-> [] Incomplete fix commit included in 3.5:
-> 
-> https://github.com/bitlbee/bitlbee/commit/701ab8129ba9ea64f569daedca9a8603abad740f
+Credit:
 
-Use CVE-2016-10189 for the issue with Jabber file transfers that was
-fixed by this commit.
+=E5=AD=99=E7=9B=B8 (Sun Xiang) (finder)
 
+References:
 
-> [] Libpurple specific bugfix commit included in 3.5.1:
-> 
-> https://github.com/bitlbee/bitlbee/commit/30d598ce7cd3f136ee9d7097f39fa9818a272441
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://issues.apache.org/jira/browse/OFBIZ-13132
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-45507
 
-Use CVE-2017-5668.
-
-CVE-2017-5668 exists because of an incomplete fix for CVE-2016-10189.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYkKkNAAoJEHb/MwWLVhi2n7sP/iWiXN3EZmIeerbEEWv9chVf
-JZD3ly+EoNbnY0YsVl1HE0XJ0L6FQ3ZLQYqP2dcuqh6dn0mI/oosMOS8lC/Hs+GW
-fhDpu0TbLNMyu187/NZNfFg638voaEjvqkjM7xgb5xPlyk7ZfmqjIRvGBe/F4XfE
-O/0+B/1llLgs5nWxUhhk3KfhQpRc27oH+qa2eKnmRn69GkeV1wMl04Od4D8y5IYY
-OvUdv1WsFsgzw6Ls+QBJrw1nFeaT4nf7pST7pv+ufZmI0eyDG55Bi7e74qsEaowm
-2Xv8erIPGKTB2keQFCptaX0IjxU8XrdwZPkQ2pCycFQirCbfCzsUNTwchDbz5RKG
-h3nOwI0wexQaaphZE1oeCqBqla7GScTCimSPhfv7JY4nm8zAeGu5bQwaxWOOtEm9
-YcDVRWFkIYJlOIrAxywR4bw/t28wfI9EMiUMec3XpkuJdJ+VuGkMuTYjWS9Iuwpm
-tSgThfWipSAyiaR6vzIomHo7nX8+PE/N5sA5IfGVFsoav1ebtCzUNiukh2fCkSAW
-k09zwGWVwqZlvtoEKMqWdxhSjMKCzo7RkoUDxILL9QODEbCH+pvzSkv4/rf/FTfI
-V1jrlx+UqwfLO2mFySEUpNFC+lofz+mz+/RqyQe0H4cUwxY/3stH18ce5pCOj1/Z
-9uHI/HHKLDmYKe5N+7jD
-=oUx2
------END PGP SIGNATURE-----
