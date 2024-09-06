@@ -1,4 +1,4 @@
-Received: (qmail 13340 invoked by uid 550); 21 May 2026 16:08:26 -0000
+Received: (qmail 3876 invoked by uid 550); 6 Sep 2024 11:40:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,113 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10100 invoked from network); 21 May 2026 05:26:35 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1779341182; cv=none; 
-	d=zohomailcloud.ca; s=zohoarc; 
-	b=DAmN0aR0FcOLWWHkddx7BwVf/kqLLAKu6n/wVE4KA0uWwVZ/RQWFZ61I48E3lr1BlEWPS5TTEOHMxJ+/92vopuo0vmjQ0Gwv5iKXyxYez06BsXyrsvX9bE63jFiFiHF/VCn58ZT+DPNZE1qL6jPE/XqwxvpS7BKcumYYt2SZUG4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomailcloud.ca; s=zohoarc; 
-	t=1779341182; h=Content-Type:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=Vy3V4FYJ583vZr7PoegSmD/iJkKsDEgS12bn3SSgU0s=; 
-	b=F756Iz7uta3bPhqtAAuhVJonwBRGWk/nYZBMJWrTXXOOrywf4as5KJol9O35WICpt9km1PWH5Q7If5iNCCJ1D2+DUXZoHoKeKuG3I8k+dBp77xtRt9sipr/7BAqpX4oRTv3O1cy7Z+JV2YUH12+3MXfd0akno+/sRkqXqzGUIWE=
-ARC-Authentication-Results: i=1; mx.zohomailcloud.ca;
-	dkim=pass  header.i=roiai.ca;
-	spf=pass  smtp.mailfrom=sales@roiai.ca;
-	dmarc=pass header.from=<sales@roiai.ca>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779341182;
-	s=zmail; d=roiai.ca; i=sales@roiai.ca;
-	h=Date:Date:From:From:To:To:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To:Cc;
-	bh=Vy3V4FYJ583vZr7PoegSmD/iJkKsDEgS12bn3SSgU0s=;
-	b=NGXs+1k2ngnmqTUGOLIR5x+zr8mYiIMZgGtEqypnfrNeZz1C+tyJabQCWk58xfi9
-	Bx9WE+DfNY7A3VPHKEJOxDXUhfKYtU1JIeJplAd9S1QEv2qDKPXX/k7iXESnRxWOgsO
-	waR5T7rKCnX2L6OuAA6E9Ida80VEWwrdmpxpE5pg=
-Date: Wed, 20 May 2026 22:26:21 -0700
-From: ROI AI <sales@roiai.ca>
-To: "oss-security" <oss-security@lists.openwall.com>
-Message-Id: <19e48ffc072.20eeee58126634.4537984379441699684@roiai.ca>
-In-Reply-To: <ed61471e-5674-4ad6-9b4c-729027f1073f@oracle.com>
-References: <afDLFWVMK-r70PB0@yuggoth.org> <ed61471e-5674-4ad6-9b4c-729027f1073f@oracle.com>
+Received: (qmail 24536 invoked from network); 6 Sep 2024 10:30:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+	s=201909; t=1725618601;
+	bh=C+7VKlBLUM+gRO+v7q/DNa240NdaVdhGABTToZbBcJU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=QtbQzhfdU9KrOkcN98cSlcIJQfPgPXyEPQ5R31cuNvxQX5Cowen108ylCMHKzzzD2
+	 R1ChFXF5cJghBNCtJMq6c4AkOIO1oQXYCvfKnyT45ZxEe9mteF4mUe4fyrrzC7iF7t
+	 4T1sRJHlCiwWkLOM6OmMINKchQnFOhgSe4IOKR/HcWrilvcpGklvZtAXEAk+qMEo/W
+	 teZG8oLkZb+z82p3cehLGbFXCcLFLAqhC+/c8N4ObzBvWaxpbvdpyJqdh3ZnZRpn8O
+	 Fjk1ehBx18I/9cJ4y82g6rW90ug3yBzlDyUamMtKkiPX8S4NRD0aqGIHWJjNN+m+6T
+	 iyHNSo0bF4y6w==
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+Cc: 2639161967 <2639161967@qq.com>, Benjamin Herrenschmidt
+ <benh@kernel.crashing.org>, Nicholas Piggin <npiggin@gmail.com>,
+ linuxppc-dev@lists.ozlabs.org
+In-Reply-To: <20240902133435.GA29502@openwall.com>
+References: <tencent_BB0764F9635412BA90A36B3B19EDEEF09905@qq.com>
+ <20240902133435.GA29502@openwall.com>
+Date: Fri, 06 Sep 2024 20:29:59 +1000
+Message-ID: <87wmjp3wig.fsf@mail.lhotse>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_189705_1863805582.1779341181042"
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+Content-Type: text/plain
+Subject: Re: [oss-security] Linux kernel: memory leak in
+ arch/powerpc/platforms/powernv/opal-irqchip.c: opal_event_init()
 
-------=_Part_189705_1863805582.1779341181042
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Solar Designer <solar@openwall.com> writes:
+> Hi,
+>
+> This bug report is misaddressed.  Per upstream's preference and common
+> sense (given how many issue reports there are against the Linux kernel),
+> most Linux kernel (maybe-)issues should first be reported to Linux
+> kernel maintainers/lists or (if you're reasonably sure of significant
+> security relevance) to the Linux kernel security team, and only then (if
+> relevant) maybe also to general security lists.  Occasional exceptions
+> exist, such as for publicly exploited issues, but if you're new to this
+> chances are that you should play by the rules, not claim an exception.
 
-People are shooting the messengers here.=C2=A0 =C2=A0The fact is - we are g=
-oing through a generational security event due to the advancement of LLMs.
+This was also reported to security@kernel.org, and I replied saying
+there was no real security impact and that it should be reported to
+linuxppc-dev@lists.ozlabs.org.
 
+> On Mon, Sep 02, 2024 at 09:54:52AM +0800, 2639161967 wrote:
+>> in the newest linux release version, in&nbsp;/arch/powerpc/platforms/powernv/opal-irqchip.c&nbsp;file , the&nbsp;
+>> opal_event_init function, the variable "name"defined in line 270, and is alloced memory in line 274 or 276, but not free, cause many times memory leak, and most old release versions have the problem.
+>
+> The code in question is:
+>
+> int __init opal_event_init(void)
+> {
+> [...]
+> 	/* Install interrupt handlers */
+> 	for (i = 0; i < opal_irq_count; i++) {
+> 		struct resource *r = &opal_irqs[i];
+> 		const char *name;
+>
+> 		/* Prefix name */
+> 		if (r->name && strlen(r->name))
+> 			name = kasprintf(GFP_KERNEL, "opal-%s", r->name);
+> 		else
+> 			name = kasprintf(GFP_KERNEL, "opal");
+>
+> 		if (!name)
+> 			continue;
+> 		/* Install interrupt handler */
+> 		rc = request_irq(r->start, opal_interrupt, r->flags & IRQD_TRIGGER_MASK,
+> 				 name, NULL);
+> 		if (rc) {
+> 			pr_warn("Error %d requesting OPAL irq %d\n", rc, (int)r->start);
+> 			continue;
+> 		}
+> 	}
+...
+>
+> I'm CC'ing this to some maintainers in case they want to add to the "if
+> (rc) {" block, if only to silence static analysis tools, but other than
+> that I see nothing to do on this report.
 
+If the request_irq() fails it's either some sort of firmware
+misconfiguration, or ENOMEM, both which are possibly fatal to the
+machine.
 
-It is also both trivial and extremely effective to use Agentic analysis to =
-filter security reports.
+But still, it would be reasonable to kfree() name in the error path, as
+you say if only to keep the static analysis clean.
 
+Thanks for looking at it and sorry for the noise on your lists.
 
-
-As for 'duplicates', people are claiming this when I have seen little evide=
-nce.=C2=A0 I reported a dozen or so to one major project and no one has yet=
- claimed invalid or duplicate.=C2=A0=C2=A0
-
-
-
-Moreover, if 'duplicates' are found, then that is a good signal for priorit=
-ization.
-
-
-
-Let's stop talking about how the vulns are found and start fixing them with=
- urgency.
-
-
-ROI AI
-
-
-
-
-
-
-
-
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-To: <oss-security@lists.openwall.com>
-Date: Wed, 20 May 2026 10:52:37 -0700
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
-
-
-
-On 4/28/26 07:58, Jeremy Stanley wrote:=20
-> I'm sorely tempted, both due to the increased volume and the risk of prem=
-ature=20
-> disclosure, to just assume that any vulnerability reported as a result of=
-=20
-> research using an LLM is trivially discoverable by others, and give up tr=
-ying to=20
-> pretend there's any point to working it under embargo.=20
-=20
-Other maintainers under similar floods seem to agree:=20
-=20
-Linux kernel:=20
- - https://lkml.org/lkml/2026/5/17/896=20=20
- - https://docs.kernel.org/process/security-bugs.html=20=20
-=20
-DNS servers (BIND, Unbound, PowerDNS):=20
-- https://indico.dns-oarc.net/event/56/contributions/1233/=20=20
-- https://indico.dns-oarc.net/event/56/contributions/1233/attachments/1180/=
-2539/presentation.pdf=20=20
-=20
---=20
- -Alan Coopersmith- mailto:alan.coopersmith@oracle.com=20=20
- Oracle Solaris Engineering - https://blogs.oracle.com/solaris
-Confidential communication. No warranties or commitments unless in a signed=
- agreement. If received in error, notify sender and delete. Unauthorized us=
-e prohibited.
-
-
-
-
-------=_Part_189705_1863805582.1779341181042--
+cheers
