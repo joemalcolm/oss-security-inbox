@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["886" "Thursday" "16" "November" "2017" "16:23:55" "+0100" "Daniel Beck" "ml@beckweb.net" "<5561A290-C77D-4593-B8C7-ECC323C9E3BB@beckweb.net>" "24" "[oss-security] Reflected Cross-Site Scripting Vulnerability in Jenkins Delivery Pipeline Plugin" nil nil nil "11" "2017111615:23:55" "[oss-security] Reflected Cross-Site Scripting Vulnerability in Jenkins Delivery Pipeline Plugin" (number mark "U       ml@beckweb.n Nov 16   24/886   " thread-indent "\"[oss-security] Reflected Cross-Site Scripting Vulnerability in Jenkins Delivery Pipeline Plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3443 invoked by uid 550); 16 Nov 2017 15:24:09 -0000
+Received: (qmail 21709 invoked by uid 550); 7 Sep 2024 13:11:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +7,175 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3425 invoked from network); 16 Nov 2017 15:24:09 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <5561A290-C77D-4593-B8C7-ECC323C9E3BB@beckweb.net>
-Date: Thu, 16 Nov 2017 16:23:55 +0100
+Received: (qmail 18056 invoked from network); 7 Sep 2024 10:55:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sigma-star.at; s=google; t=1725706500; x=1726311300; darn=lists.openwall.com;
+        h=to:message-id:subject:date:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yWqZSYquikdRsQ+vwQaNVH/kNnSR5Gd2wMjOLoEe6MQ=;
+        b=ajOH0usGygE06cuHOP8pW9FT3cPPJlKOEtguJjBFP7fLsfKHFk/L76EjApycdpiaEH
+         xArDYdXiKYIhO7zC6LizM+ML+kIQSu8dDcCm8m4BdRc5KuoKc6IABKcYtbe07ZIdQ4Cn
+         YVCUEOYpDO2/kSbEPIYPwbhIbJz1SV4HEi9muZ9XFSSFp9WAZPXfdswa8S1aUG2uzd06
+         eEmvCri5VOnFPGsGH8YD92Mnh93qex8tOEf9Sm5h4ZY5XEdw76Ap+0rUiyfnaSI+giaH
+         lC/PreAeS+Kri9R97kB7Sjz0SUIF1JCTX0NrUU7J3sliijAjhQzDo5xJ27mh2QG27baf
+         Lfdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725706500; x=1726311300;
+        h=to:message-id:subject:date:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yWqZSYquikdRsQ+vwQaNVH/kNnSR5Gd2wMjOLoEe6MQ=;
+        b=j2xnZX/iWvHVd9sDw2zaZBumTPEzup8S1o7qoMr4cbw63t2aKj2MAP38mJSm7uwN3k
+         QpACJgmP6EefApADEC3OqbdLGIpuDRPfCXStasYfmnHFx3sDXDibWiawE5eNgMyNm7fU
+         oxT9XRUwylCVahksmFJjy6MNiRvIHflg6rtVp9W4WstUcX/WuRQKhOr8sBLdG+f1EtYx
+         EJQpaF2+p0cqyP2E2AIXanSkBiJeApLQmU1/k8J66BEi5LxkutJfz67281Ca1pJaYHxh
+         0QRIWH/B6YE/YVAITZDNQJvMdUl77SUqtwkD6fMv7OCT10L0C5/1ukFMroJO7cd48eEd
+         NxtQ==
+X-Gm-Message-State: AOJu0YyexjGqOR20wBZlB0KV2xQcdy4IT1hYAjCjVs35CJSVRaeh/RYH
+	ZHgX7eB7M1tDUx6Fq1oVCy0zSUB8pn4k9O+zOqmfWKPZd8rh3xWxiko1blfi8RLJeDjXmT+keaX
+	j
+X-Google-Smtp-Source: AGHT+IGw+PLQ/JirWD9Ov1512VPLklmCFko1VZrr+AHYrTXTFKjX7X0kWRethJmdJe++9/ipk+BUQA==
+X-Received: by 2002:a17:906:f595:b0:a8d:1655:a42c with SMTP id a640c23a62f3a-a8d24512872mr109035366b.1.1725706498981;
+        Sat, 07 Sep 2024 03:54:58 -0700 (PDT)
+From: David Gstir <david@sigma-star.at>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Date: Sat, 7 Sep 2024 12:54:44 +0200
+Message-Id: <18957144-3F90-4803-AA90-53D6900BDD80@sigma-star.at>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1510845849;5f5e08d2;
-X-HE-SMSGID: 1eFM1D-0001gB-US
-Subject: [oss-security] Reflected Cross-Site Scripting Vulnerability in Jenkins Delivery
- Pipeline Plugin
+X-Mailer: Apple Mail (2.3776.700.51)
+Subject: [oss-security] CVE-2024-45751: CHAP authentication bypass in user-space Linux target
+ framework (tgt) up to v1.0.92
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases contain fixes for security vulnerabilities:
+## Summary
 
-* Delivery Pipeline Plugin 1.0.8
+The user-space iSCSI target daemon of the Linux target framework (tgt)  use=
+s an insecure
+random number generator to generate CHAP authentication callenges. This res=
+ults in
+predictable challenges which an attacker capable of recording network traff=
+ic between
+iSCSI target and initiator can abuse to bypass CHAP authentication by repla=
+ying
+previous responses.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2017-11-16/
+- *Identifier:*                   sigma-star-sa-2024-001
+- *Type of vulnerability (CWE):*  Use of cryptographically weak pseud-random
+                                 number generator ([CWE-338](https://cwe.mi=
+tre.org/data/definitions/338.html))
+- *Vendor:*                       -
+- *Product/Software:*             [The Linux target framework (tgt)](https:=
+//github.com/fujita/tgt)
+- *Affected versions:*            <=3D 1.0.92
+- *Fixed versions:*               1.0.93
+- *CVE ID:*                       CVE-2024-45751
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+## Affected Product and Vendor
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+> The Linux target framework (tgt) is a user space SCSI target framework th=
+at
+> supports the iSCSI and iSER transport protocols and that supports multiple
+> methods for accessing block storage. Tgt consists of user-space daemon an=
+d tools.
 
----
+Source: https://github.com/fujita/tgt/blob/e393a80b02b8cb90709c75f9bd91542e=
+a3a78d58/README.md
 
-SECURITY-640
-Delivery Pipeline Plugin used the unescaped content of the query parameter 
-`fullscreen` in its JavaScript, resulting in a cross-site scripting 
-vulnerability through specially crafted URLs.
+## Description
+
+`tgt` supports CHAP for authenticating initiators. As defined in the [CHAP =
+specification](https://datatracker.ietf.org/doc/html/rfc1994#section-2)
+the target generates a random challenge and sends it to the initiator. `tgt=
+` fails
+to use a cryptographically secure random number generator for this. Instead=
+ it
+simply uses the [`rand()`](https://man7.org/linux/man-pages/man3/srand.3.ht=
+ml) call without
+setting a seed using `srand()` first. Thus the default seed (equivalent to =
+`srand(1)`) will be used.
+This results in a predictable sequence of numbers being returned by subsequ=
+ent
+calls to `rand()`.
+
+Note that even though `tgt` generates a random length for each challenge,
+this does not affect the predictability of challenges as these lengths will
+also be generated using predictable output of `rand()`.
+
+```c
+static int chap_initiator_auth_create_challenge(struct iscsi_connection *co=
+nn)
+{
+	char *value, *p;
+	char text[CHAP_CHALLENGE_MAX * 2 + 8];
+	static int chap_id;
+	int i;
+
+	[...]
+
+	/*
+	 * FIXME: does a random challenge length provide any benefits security-
+	 * wise, or should we rather always use the max. allowed length of
+	 * 1024 for the (unencoded) challenge?
+	 */
+	conn->auth.chap.challenge_size =3D (rand() % (CHAP_CHALLENGE_MAX / 2)) + C=
+HAP_CHALLENGE_MAX / 2;
+
+	conn->auth.chap.challenge =3D malloc(conn->auth.chap.challenge_size);
+	if (!conn->auth.chap.challenge)
+		return CHAP_TARGET_ERROR;
+
+	p =3D text;
+	strcpy(p, "0x");
+	p +=3D 2;
+	for (i =3D 0; i < conn->auth.chap.challenge_size; i++) {
+		conn->auth.chap.challenge[i] =3D rand();
+		sprintf(p, "%.2hhx", conn->auth.chap.challenge[i]);
+		p +=3D 2;
+	}
+	text_key_add(conn, "CHAP_C",  text);
+
+	return 0;
+}
+```
+
+Source: https://github.com/fujita/tgt/blob/v1.0.92/usr/iscsi/chap.c#L333
+
+## Impact
+
+An attacker who is able to recording network traffic between iSCSI target
+and initiator can apply a replay attack to bypass the CHAP authentication.
+All the attacker has to do is wait for the server or the service to restart
+and replay with a previously record CHAP session which fits into the sequen=
+ce.
+
+Having bypassed CHAP authentication, an attacker has full user privileges a=
+nd
+can modify the iSCSI target at will within that user privileges.
+
+## Mitigation
+
+We recommend replacing the pseudo-random number generator (`rand()`)  with
+`getrandom()`as this will yield cryptographically secure pseudo-random numb=
+ers
+fitting for CHAP challenges.
+
+Version 1.0.93 contains this fix.
+
+## Patches
+
+- https://github.com/fujita/tgt/pull/67/commits/abd8e0d987ab56013d360077202=
+bf2aca20a42dd (chap: Use proper entropy source)
+
+## Disclosure Timeline
+
+- 2024-09-03: Vulnerability disclosed to vendor
+- 2024-09-04: Patch submitted to vendor and version 1.0.93 released by vend=
+or
+- 2024-09-07: Advisory published
+
+## Credits
+
+- Richard Weinberger ([sigma star gmbh](https://sigma-star.at)
+- David Gstir ([sigma star gmbh](https://sigma-star.at)
 
