@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1348" "Saturday" "10" "October" "2015" "11:31:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151010153131.BF9B76C003E@smtpvmsrv1.mitre.org>" "34" "[oss-security] Re: CVE Request: Buffer overflow in global memory affecting optipng 0.7.5" nil nil nil "10" "2015101015:31:31" "[oss-security] Re: CVE Request: Buffer overflow in global memory affecting optipng 0.7.5" (number mark "U       cve-assign@m Oct 10   34/1348  " thread-indent "\"[oss-security] Re: CVE Request: Buffer overflow in global memory affecting optipng 0.7.5\"\n") "<CACn5sdQ+sMDwN2CwzSzAXnjFvHjHOx1aAbfADeJTgrxt0W-1BQ@mail.gmail.com>" ("<CACn5sdQ+sMDwN2CwzSzAXnjFvHjHOx1aAbfADeJTgrxt0W-1BQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9493 invoked by uid 550); 10 Oct 2015 15:31:44 -0000
+Received: (qmail 12055 invoked by uid 550); 23 Sep 2024 15:10:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9449 invoked from network); 10 Oct 2015 15:31:43 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdQ+sMDwN2CwzSzAXnjFvHjHOx1aAbfADeJTgrxt0W-1BQ@mail.gmail.com>
-Message-Id: <20151010153131.BF9B76C003E@smtpvmsrv1.mitre.org>
-Date: Sat, 10 Oct 2015 11:31:31 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Buffer overflow in global memory affecting optipng 0.7.5
+x-ms-reactions: disallow
+Received: (qmail 31963 invoked from network); 23 Sep 2024 13:01:30 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <73fe1723-9772-41ed-8320-28c577f5b84e@apache.org>
+Date: Mon, 23 Sep 2024 13:59:43 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2024-38286: Apache Tomcat: Denial of Service
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Affected versions:
 
-> We found a buffer overflow in global memory affecting optipng 0.7.5 using a
-> gif file.
+- Apache Tomcat 11.0.0-M1 through 11.0.0-M20
+- Apache Tomcat 10.1.0-M1 through 10.1.24
+- Apache Tomcat 9.0.13 through 9.0.89
 
-> ==11221== ERROR: AddressSanitizer: global-buffer-overflow on address
-> 0x00000069541e at pc 0x46d24b bp 0x7fffffffaee0 sp 0x7fffffffaed8
-> READ of size 1
+Description:
 
-Use CVE-2015-7802 for this buffer over-read issue.
+Allocation of Resources Without Limits or Throttling vulnerability in 
+Apache Tomcat.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.0-M20, 
+from 10.1.0-M1 through 10.1.24, from 9.0.13 through 9.0.89. Older, 
+unsupported versions may also be affected.
 
-iQIcBAEBCAAGBQJWGS6GAAoJEL54rhJi8gl5UwoP/AgottMcRVtXVhreCFrX8rIl
-Vk+bRtZpwzHbla52LucI062z54u1xCp9AoaXrwzuLO2PsUXD5OVv1TedVrILdaOb
-AXHgdQuu4m0i6MeiiSdqyt/qiWiwpjmOuTIwe/8wvmv8J+J1/7io/bM5O7PhlRQY
-ScjkqqFnl7pHMv2R6JwAHarL0WkJIG7LFb44PsK0HzwEz2q30mZFcJd90IX4/mZQ
-te3CSCqRhfaXfaQVRaSbDpPogz8quPYVS3haAeayi9Wq9iZQggpxkD72XQ0i96jK
-IXGEpIx51NztV5BMvcM1IEbwQJqd61vJqfV4H4PE60zJlhpnZWQQiAahwJKZ/hqw
-tN5GVAqq/hfPviHTY4ct2EKJVUnVdRsI1YU0yMZ/Hz57mqXGT3M4dPXHEkBBZuXS
-DXd5/ZWiHbiL1ziIz8xOPxTQ9kGro9+C0Vi2YTCZwxQshAdIoSf2em+QMLWenwdC
-Js/DSBF8f1QNr45jhSZoZ7ogB8EgmcruNm5PQHVqm7YLqImSJHm8ZOjfEg23WJNs
-KyPTEf7cSoRi/LtSVt7iLo5IiJv1jN2mqASSBND72L2Py7Ww0D6NWtOfKc0ze8er
-zdrRmPgweFphgBfl+YM9eYNYFopRuhRW7y8+lXZRpQaPKXmCWjzxbyNIA7HhR7yl
-nXXSajrnL8xL2gw+CPnp
-=G+VU
------END PGP SIGNATURE-----
+Users are recommended to upgrade to version 11.0.0-M21, 10.1.25, or 
+9.0.90, which fixes the issue.
+
+Apache Tomcat, under certain configurations on any platform, allows an 
+attacker to cause an OutOfMemoryError by abusing the TLS handshake process.
+
+Credit:
+
+Ozaki, North Grid Corporation (reporter)
+
+References:
+
+https://lists.apache.org/thread/wms60cvbsz3fpbz9psxtfx8r41jl6d4s
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2024-38286
+
+Timeline:
+
+2024-06-04: Issue reported to Apache Tomcat Security Team
