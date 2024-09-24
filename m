@@ -1,4 +1,4 @@
-Received: (qmail 3539 invoked by uid 550); 6 Sep 2023 09:58:24 -0000
+Received: (qmail 29705 invoked by uid 550); 24 Sep 2024 15:37:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,34 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28223 invoked from network); 6 Sep 2023 09:11:16 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <d4c80a00-82dd-d901-70dc-a7a42f0a83f2@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 Sep 2023 09:10:14 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-36388: Apache Superset: Improper API permission for low
- privilege users allows for SSRF 
+x-ms-reactions: disallow
+Received: (qmail 28411 invoked from network); 24 Sep 2024 15:37:02 -0000
+Date: Tue, 24 Sep 2024 17:36:52 +0200
+From: Solar Designer <solar@openwall.com>
+To: Joel GUITTET <jguittet@witekio.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20240924153652.GA26720@openwall.com>
+References: <AM9P192MB131684EA6145690A492F481FD7682@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <AM9P192MB131684EA6145690A492F481FD7682@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-42154: Linux kernel: tcp_metrics: validate source addr length
 
-Affected versions:
+Hi Joel,
 
-- Apache Superset through 2.1.0
+When you bring issues to this list, please include in the Subject and
+start your messages with information on the issue itself - at least the
+affected project and vulnerability type when applicable.  As a
+moderator, I've edited the Subject line to contain such information.
 
-Description:
+On Tue, Sep 24, 2024 at 09:12:46AM +0000, Joel GUITTET wrote:
+> I'm working on a medical product actually and have trouble about the CVE-2024-42154. It is regarding NETLINK socket which can be used only locally, but it is classified with "NETWORK" flag. NETWORK flag is annoying because it means more difficult to justify the CVE.
+> 
+> I already ask the NIST why the NETWOKR flag was set for this CVE, they answer me that it's linked to socket and without more public reference they are just setting the NETWORK flag, in case of.
+> 
+> Can I ask you your opinion about this CVE and the pertinence of the NETWORK flag here?
 
-Improper REST API permission in Apache Superset up to and including 2.1.0 a=
-llows for an authenticated Gamma users to test network connections, possibl=
-e SSRF.
+I didn't fully analyze this issue, but at a glance:
 
-Credit:
+1. NIST NVD commonly inflates CVSS scores.  You could reasonably dispute
+their CVSS vector and they may correct it and the score:
 
-https://github.com/vin01 (finder)
+https://nvd.nist.gov/vuln/detail/CVE-2024-42154
 
-References:
+Base Score:  9.8 CRITICAL
+Vector:  CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-36388
+2. There are other sources for CVSS vectors/scores, notably Red Hat:
 
+https://access.redhat.com/security/cve/CVE-2024-42154
+
+CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N
+
+leading to a score of 2.5.  Indeed, they treat this issue as local, not
+network, which is probably correct, although some other components of
+this CVSS vector look weird to me.
+
+You could use Red Hat as your source of severity scores.
+
+3. The CVE description originates from Linux kernel CNA, which in turn
+reuses the commit message:
+
+https://lists.openwall.net/linux-cve-announce/2024/07/30/76
+
+> tcp_metrics: validate source addr length
+> 
+> I don't see anything checking that TCP_METRICS_ATTR_SADDR_IPV4
+> is at least 4 bytes long, and the policy doesn't have an entry
+> for this attribute at all (neither does it for IPv6 but v6 is
+> manually validated).
+
+The code change is:
+
++++ b/net/ipv4/tcp_metrics.c
+@@ -624,6 +624,7 @@ static const struct nla_policy tcp_metrics_nl_policy[TCP_METRICS_ATTR_MAX + 1] =
+ 	[TCP_METRICS_ATTR_ADDR_IPV4]	= { .type = NLA_U32, },
+ 	[TCP_METRICS_ATTR_ADDR_IPV6]	= { .type = NLA_BINARY,
+ 					    .len = sizeof(struct in6_addr), },
++	[TCP_METRICS_ATTR_SADDR_IPV4]	= { .type = NLA_U32, },
+ 	/* Following attributes are not received for GET/DEL,
+ 	 * we keep them for reference
+ 	 */
+
+It would require more context to review and to assess the bug's impact,
+but my _guess_ is it may have been merely over-read potential, so local
+infoleak maybe?  Besides code review, it could make sense to locate the
+corresponding syzbot report, if one exists, and see what type of crash
+it was - if it was.
+
+Somehow Red Hat's description lists possibilities worse than over-read,
+so either my guess is wrong or they didn't analyze the issue to identify
+specific impact:
+
+> A vulnerability was found in the Linux kernel's tcp_metrics subsystem,
+> where insufficient validation of the length of the source address for
+> TCP metrics could lead to buffer overflows, memory corruption, or
+> crashes.
+
+I hope this helps.
+
+Alexander
