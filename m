@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2131" "Monday" "11" "July" "2016" "15:18:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160711191842.9D88F42E004@smtpvbsrv1.mitre.org>" "57" "[oss-security] Re: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel - Linux kernel" nil nil nil "7" "2016071119:18:42" "[oss-security] Re: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel - Linux kernel" (number mark "U       cve-assign@m Jul 11   57/2131  " thread-indent "\"[oss-security] Re: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel - Linux kernel\"\n") "<150590619.3922934.1468259391266.JavaMail.zimbra@redhat.com>" ("<150590619.3922934.1468259391266.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25720 invoked by uid 550); 11 Jul 2016 19:18:55 -0000
+Received: (qmail 32191 invoked by uid 550); 24 Sep 2024 12:14:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +7,181 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25699 invoked from network); 11 Jul 2016 19:18:54 -0000
-From: cve-assign@mitre.org
-To: caiqian@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <150590619.3922934.1468259391266.JavaMail.zimbra@redhat.com>
-Message-Id: <20160711191842.9D88F42E004@smtpvbsrv1.mitre.org>
-Date: Mon, 11 Jul 2016 15:18:42 -0400 (EDT)
-Subject: [oss-security] Re: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel - Linux kernel
+x-ms-reactions: disallow
+Received: (qmail 32173 invoked from network); 24 Sep 2024 12:14:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=Pikb5xGF7Yi594aVvQQ4PAPf66I5y1EIaZtzhUUSOlk=; b=Jn4C93CUQsFNZdVUvjh57+fVvi
+	APFu4294TgL6hsimOjBiL6sxQ+JN2brDn0FiKUpg5Si5kwws0s5K/eegXgN/LK7uhmidmYouKhjK0
+	9VWA88KyaVM4nS39D1SNUvIroFS7dOVJ3A/sU60PEothV/BnKTDw/IZfxxzjqk+5xOwM=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1st4QL-0005gb-N8@xenbits.xenproject.org>
+Date: Tue, 24 Sep 2024 12:13:45 +0000
+Subject: [oss-security] Xen Security Advisory 462 v2 (CVE-2024-45817) - x86: Deadlock in
+ vlapic_error()
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I am requesting a CVE for this flaw.
-> 
-> An unprivileged user could run an exploit using rename syscall on
-> overlayfs on top of xfs to crash the kernel caused a denial of
-> service.
-> 
-> Exploit:
-> https://github.com/linux-test-project/ltp/blob/master/testcases/kernel/syscalls/rename/rename13.c
-> 
-> Patch can be found here with more in depth description
+            Xen Security Advisory CVE-2024-45817 / XSA-462
+                               version 2
 
-As far as we can tell, there are circumstances in which each of the
-two parts of the patch could be relevant, and thus we are assigning
-two CVE IDs.
+                    x86: Deadlock in vlapic_error()
+
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+In x86's APIC (Advanced Programmable Interrupt Controller) architecture,
+error conditions are reported in a status register.  Furthermore, the OS
+can opt to receive an interrupt when a new error occurs.
+
+It is possible to configure the error interrupt with an illegal vector,
+which generates an error when an error interrupt is raised.
+
+This case causes Xen to recurse through vlapic_error().  The recursion
+itself is bounded; errors accumulate in the the status register and only
+generate an interrupt when a new status bit becomes set.
+
+However, the lock protecting this state in Xen will try to be taken
+recursively, and deadlock.
+
+IMPACT
+======
+
+A buggy or malicious HVM or PVH guest can deadlock Xen, leading to a
+DoS.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.5 and onwards are vulnerable.  Xen 4.4 and older are not vulnerable.
+
+Only x86 systems running HVM or PVH guests are vulnerable.
+Architectures other than x86 are not vulnerable.
+
+Only HVM or PVH guests can leverage the vulnerability.  PV guests cannot
+leverage the vulnerability.
+
+MITIGATION
+==========
+
+Not running untrusted HVM or PVH VMs will avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered after a BUGSENG team working on MISRA C
+compliance of Xen pointed attention to ECLAIR reports for MISRA C Rule
+17.2 (Functions shall not call themselves, either directly or
+indirectly).
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa462.patch           xen-unstable - Xen 4.16.x
+
+$ sha256sum xsa462*
+c8cb03fdcfffa7e043b1d82643efde0f93bff5ce484887c6f59207777ee95be7  xsa462.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=11f3710417d026ea2f4fcf362d866342c5274185
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-This patch is present in 4.6 but not in 4.5.5.
-
-Use CVE-2016-6197.
-
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=54d5ca871e72f2bb172ec9323497f01cd5091ec7
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9409e22acdfc9153f88d9b1ed2bd2a5b34d2d3ca
-
-These patches are present in both 4.6 and 4.5.5.
-(https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.5.5 lists
-them.)
-
-Use CVE-2016-6198.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXg+/uAAoJEHb/MwWLVhi2ixYQAJxC7wXlFmCX+ZuJueWhtsPU
-PxN8mRCizwA4IuOrYO1EwtrdoGUSQAePX0YBl35NZJ8/K2OcV1J+rwLOkeHP67ep
-KXGn3iSjL15B1NeRxztpKwnV3alkuOVljQIM0IRasfYK8oCEX/g+UstyxW0AJNqe
-HBFzdgG+XERbqN0uLd5uBtLzz/nCK37e6xWA43augQU+cI5B+URYpcy2n50wiQVG
-o3WOreou1RSveyJSbVU4csN6xpgn6KFOi5+sdV0vjyR92BxICFCoJ1lIHHmVm+LF
-kT63D7zKFdY3kFqBIKaHhUmnti3a4jddWxnCfAJYcJ7L0+md4DpDJ/uEQTJ1BNXQ
-Yw1a3jev4ji2Ajbvlf2lhQHvC1at3jTiQBEHJBOZjLVsxZ2jl35TU3PmLVyR5JHN
-cdo2oYVsiNpcfHhkDHQNQAugard2aWYRz+IeF2V1dGNT8JyAL0cAO11c5+Hj/nyc
-zGx+NfMq9wPn5RQT1+79IABxbQrJyd1ppfwPiWhyVNwkInkJC3WzZIeXanLaJkLc
-wwXyTNGcx9s+zxXlM2tnlyhLCB66iY798T2oBs6mR5ID8NRkGYzli8sb4ZcoiAuJ
-rYonHjVJnmYW6Tuz3Yc9Jj9i/UtnSYFWfshfHs8HpKwoA4XPUYw6CM2dNO7e4H9/
-xARF3BLpcTyZdqCS/3ao
-=aGT3
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmbymG8MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ+MYIALQiqD84Ryme+mKRunKqDuH3P3pTX9bvxFp8sRZd
+B0A3ysBKsC+eSJHsuH+vaTPG25e72+cqSs1Wr1PHs+p99UA4QxG8vT8pbAIAyr3f
+lHVJvHfqMYA3xxNwS82us2Hjiv0t4spBBDje9TgcRvJf8nAcrPrQ+k6eycTTTGiz
+kMT5pjkaiKTf0+uZ13krzHHCTyDwYKYJJly0FOv4TbNH+Bxj0i7b630BUtxGibMT
+Cm5ay+CK3QSIJUGG6OjSAfFQWxZJ0W7gg1RNsH/ExsvsMw9sE2mX0YbHKaYD6yWf
+wEmwQvAwYeaa91fcRnkr9dTZMYy5ObeUQLqJz1EJJ1indyU=
+=dr22
 -----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa462.patch"
+Content-Disposition: attachment; filename="xsa462.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0OiB4ODYvdkxBUElD
+OiBwcmV2ZW50IHVuZHVlIHJlY3Vyc2lvbiBvZiB2bGFwaWNfZXJyb3IoKQoKV2l0aCB0aGUgZXJy
+b3IgdmVjdG9yIHNldCB0byBhbiBpbGxlZ2FsIHZhbHVlLCB0aGUgZnVuY3Rpb24gaW52b2tpbmcK
+dmxhcGljX3NldF9pcnEoKSB3b3VsZCBicmluZyBleGVjdXRpb24gYmFjayBoZXJlLCB3aXRoIHRo
+ZSBub24tcmVjdXJzaXZlCmxvY2sgYWxyZWFkeSBoZWxkLiBBdm9pZCB0aGUgY2FsbCBpbiB0aGlz
+IGNhc2UsIG1lcmVseSBmdXJ0aGVyIHVwZGF0aW5nCkVTUiAoaWYgbmVjZXNzYXJ5KS4KClRoaXMg
+aXMgWFNBLTQ2MiAvIENWRS0yMDI0LTQ1ODE3LgoKRml4ZXM6IDVmMzJkMTg2YThiMSAoIng4Ni92
+bGFwaWM6IGRvbid0IHNpbGVudGx5IGFjY2VwdCBiYWQgdmVjdG9ycyIpClJlcG9ydGVkLWJ5OiBG
+ZWRlcmljbyBTZXJhZmluaSA8ZmVkZXJpY28uc2VyYWZpbmlAYnVnc2VuZy5jb20+ClJlcG9ydGVk
+LWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpTaWduZWQtb2Zm
+LWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClNpZ25lZC1vZmYtYnk6IEFuZHJl
+dyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcg
+Q29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgoKZGlmZiAtLWdpdCBhL3hlbi9hcmNo
+L3g4Ni9odm0vdmxhcGljLmMgYi94ZW4vYXJjaC94ODYvaHZtL3ZsYXBpYy5jCmluZGV4IDJlYzk1
+OTQyNzEzZS4uODc1OGM0MjE3ZmFiIDEwMDY0NAotLS0gYS94ZW4vYXJjaC94ODYvaHZtL3ZsYXBp
+Yy5jCisrKyBiL3hlbi9hcmNoL3g4Ni9odm0vdmxhcGljLmMKQEAgLTExMiw5ICsxMTIsMjQgQEAg
+c3RhdGljIHZvaWQgdmxhcGljX2Vycm9yKHN0cnVjdCB2bGFwaWMgKnZsYXBpYywgdW5zaWduZWQg
+aW50IGVycm1hc2spCiAgICAgaWYgKCAoZXNyICYgZXJybWFzaykgIT0gZXJybWFzayApCiAgICAg
+ewogICAgICAgICB1aW50MzJfdCBsdnRlcnIgPSB2bGFwaWNfZ2V0X3JlZyh2bGFwaWMsIEFQSUNf
+TFZURVJSKTsKKyAgICAgICAgYm9vbCBpbmogPSBmYWxzZTsKIAotICAgICAgICB2bGFwaWNfc2V0
+X3JlZyh2bGFwaWMsIEFQSUNfRVNSLCBlc3IgfCBlcnJtYXNrKTsKICAgICAgICAgaWYgKCAhKGx2
+dGVyciAmIEFQSUNfTFZUX01BU0tFRCkgKQorICAgICAgICB7CisgICAgICAgICAgICAvKgorICAg
+ICAgICAgICAgICogSWYgTFZURVJSIGlzIHVubWFza2VkIGFuZCBoYXMgYW4gaWxsZWdhbCB2ZWN0
+b3IsIHZsYXBpY19zZXRfaXJxKCkKKyAgICAgICAgICAgICAqIHdpbGwgZW5kIHVwIGJhY2sgaGVy
+ZS4gIEJyZWFrIHRoZSBjeWNsZSBieSBvbmx5IGluamVjdGluZyBMVlRFUlIKKyAgICAgICAgICAg
+ICAqIGlmIGl0IHdpbGwgc3VjY2VlZCwgYW5kIGZvbGRpbmcgaW4gUkVDVklMTCBvdGhlcndpc2Uu
+CisgICAgICAgICAgICAgKi8KKyAgICAgICAgICAgIGlmICggKGx2dGVyciAmIEFQSUNfVkVDVE9S
+X01BU0spID49IDE2ICkKKyAgICAgICAgICAgICAgICAgaW5qID0gdHJ1ZTsKKyAgICAgICAgICAg
+IGVsc2UKKyAgICAgICAgICAgICAgICAgZXJybWFzayB8PSBBUElDX0VTUl9SRUNWSUxMOworICAg
+ICAgICB9CisKKyAgICAgICAgdmxhcGljX3NldF9yZWcodmxhcGljLCBBUElDX0VTUiwgZXNyIHwg
+ZXJybWFzayk7CisKKyAgICAgICAgaWYgKCBpbmogKQogICAgICAgICAgICAgdmxhcGljX3NldF9p
+cnEodmxhcGljLCBsdnRlcnIgJiBBUElDX1ZFQ1RPUl9NQVNLLCAwKTsKICAgICB9CiAgICAgc3Bp
+bl91bmxvY2tfaXJxcmVzdG9yZSgmdmxhcGljLT5lc3JfbG9jaywgZmxhZ3MpOwo=
+
+--=separator--
