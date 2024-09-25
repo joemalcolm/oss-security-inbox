@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9919" "Monday" "5" "October" "2015" "17:00:52" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9q0Xxcm7VyO-W+VkFLYW5x0Y_BgR8mbgENb1SUEFHnQbQ@mail.gmail.com>" "255" "[oss-security] CVE Request: OpenSMTPD <= 5.7.2 buffer overflow" nil nil nil "10" "2015100515:00:52" "[oss-security] CVE Request: OpenSMTPD <= 5.7.2 buffer overflow" (number mark "        Jason@zx2c4. Oct  5  255/9919  " thread-indent "\"[oss-security] CVE Request: OpenSMTPD <= 5.7.2 buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 25973 invoked by uid 550); 5 Oct 2015 15:01:08 -0000
+Received: (qmail 16183 invoked by uid 550); 25 Sep 2024 14:28:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,278 +6,132 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25949 invoked from network); 5 Oct 2015 15:01:07 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:date:message-id:subject:from:to:content-type; s=mail; bh=Ws1hhT
-	1U0frxShzAlavP3Qu10Rc=; b=EMqy68X+8EP5Vl5CLQPpMLpZgjI8KJAzbivPRs
-	Zz/r13lvl7d92pLxNDNY7NXO5opXCtdQMBSS19k2iJU1+aOJz/UoEfKApwVQisep
-	4t5LQzryY0ZJq4Eg/0Pcbirmb1J0MZgBuxlT0VqR/fAG0gdMteR0Z6JIfxxFWuOD
-	WoN54X9h0j/FDxHS4k9/GhgEk5UFXce+j3yKcFXXiRswUBDn7VvKhGBIXjBxQWF1
-	TGi3wYe0puidUmWHaVRJb28lPOrRMloGu0x1eFB4gqDOBhDhmFK8207FfFKgiNDw
-	N9L4fIn/QocIm91k1d1Mg0emwaicU7Vn78fdfnYQTK1eMVqg==
-MIME-Version: 1.0
-X-Received: by 10.112.14.9 with SMTP id l9mr11956308lbc.91.1444057252966; Mon,
- 05 Oct 2015 08:00:52 -0700 (PDT)
-Message-ID: <CAHmME9q0Xxcm7VyO-W+VkFLYW5x0Y_BgR8mbgENb1SUEFHnQbQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 5 Oct 2015 17:00:52 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: OpenSMTPD <= 5.7.2 buffer overflow
-To: oss-security <oss-security@lists.openwall.com>, cve-assign@mitre.org
+x-ms-reactions: disallow
+Received: (qmail 18187 invoked from network); 25 Sep 2024 14:21:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=WYEyqWw+TUVvCUeruau0lG61nJ3IoQ5iLZXO7f6M/6o=; b=VYhDcAipeyOb/wngKxFftYCaIp
+	HvlplDYpirkI5zrHm07aFypTPLqhFBEds7L8T36nZLG9vmdWjyAV8+L3YU3iNrOiJlCgJtqcbf3cP
+	4DGFQn6F1tqQRJxKY4AfrHLG5NedfXVLNOM9ttEnKPKLXBIlFzJXLY0i/g3XGG2SDP1FMqs14xg7G
+	/CD1o3TVuzjBoLnb7EQZs84Uu5xc1zr7YTYggD6bVbiFz9m1BonIsTFNJtfyZ5+y9vx/ltlFMzxoY
+	p2Me8JoXEwEMcsSLOBS+HeK4YdLelEEXkGZaiQXLob0d15f0PdmBM7uIe0Lk64nn+TL0RdQp82dsi
+	Yiz6SwBQ==;
+Date: Wed, 25 Sep 2024 17:20:49 +0300
+Message-ID: <20240925172049.GB1308139@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="0qEHseAFsV1GvIh7"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0005
 
-Hello,
+--0qEHseAFsV1GvIh7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-As reported in [1], OpenSMTPD <= 5.7.2 has a remotely exploitable
-buffer overflow. This overflow requires a CVE. A PoC is attached to
-[1].
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjQtMDAwNQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogU2VwdGVtYmVyIDI1LCAyMDI0CkFkdmlzb3J5IElEICAgICAgICAg
+ICAgIDogV1NBLTIwMjQtMDAwNQpXZWJLaXRHVEsgQWR2aXNvcnkgVVJMICA6IGh0dHBzOi8vd2Vi
+a2l0Z3RrLm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDA1Lmh0bWwKV1BFIFdlYktpdCBBZHZpc29y
+eSBVUkwgOiBodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMjQtMDAwNS5odG1s
+CkNWRSBpZGVudGlmaWVycyAgICAgICAgIDogQ1ZFLTIwMjQtMjMyNzEsIENWRS0yMDI0LTI3ODA4
+LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI0LTI3ODIwLCBDVkUtMjAyNC0yNzgz
+MCwKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNC0yNzgzMywgQ1ZFLTIwMjQtMjc4
+MzgsCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjQtMjc4NTAsIENWRS0yMDI0LTI3
+ODUxLAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI0LTQwODU3LCBDVkUtMjAyNC00
+MDg2NiwKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNC00NDE4Ny4KClNldmVyYWwg
+dnVsbmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJL
+aXQuCgpDVkUtMjAyNC0yMzI3MQogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBiZWZvcmUgMi40Mi41LgogICAgQ3JlZGl0IHRvIEphbWVzIExlZSAoQFdpbmRv
+d3NyY2VyKS4KICAgIEltcGFjdDogQSBtYWxpY2lvdXMgd2Vic2l0ZSBtYXkgY2F1c2UgdW5leHBl
+Y3RlZCBjcm9zcy1vcmlnaW4KICAgIGJlaGF2aW9yLiBEZXNjcmlwdGlvbjogQSBsb2dpYyBpc3N1
+ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQKICAgIGNoZWNrcy4KICAgIFdlYktpdCBCdWd6
+aWxsYTogMjY1ODEyCgpDVkUtMjAyNC0yNzgwOAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktp
+dEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40NC4yLgogICAgQ3JlZGl0IHRvIEx1a2FzIEJl
+cm5oYXJkIG9mIENJU1BBIEhlbG1ob2x0eiBDZW50ZXIgZm9yIEluZm9ybWF0aW9uIFNlY3VyaXR5
+LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFyYml0cmFy
+eSBjb2RlIGV4ZWN1dGlvbi4KICAgIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3Nl
+ZCB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjY4
+MjIxCgpDVkUtMjAyNC0yNzgyMAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBiZWZvcmUgMi40NC4yLgogICAgQ3JlZGl0IHRvIEplZmYgSm9obnNvbiBvZiB1
+bmRlcnBhc3NhcHAuY29tLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIHdlYiBjb250ZW50IG1heSBs
+ZWFkIHRvIGFyYml0cmFyeSBjb2RlIGV4ZWN1dGlvbi4KICAgIERlc2NyaXB0aW9uOiBUaGUgaXNz
+dWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktp
+dCBCdWd6aWxsYTogMjcwMTM5CgpDVkUtMjAyNC0yNzgzMAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6
+IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40NC4zLgogICAgQ3JlZGl0IHRvIEpv
+ZSBSdXRrb3dza2kgKEBKb2UxMjM4Nykgb2YgQ3Jhd2xlc3MgYW5kIEBhYnJhaGFtanVsaW90Lgog
+ICAgSW1wYWN0OiBBIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2VicGFnZSBtYXkgYmUgYWJsZSB0byBm
+aW5nZXJwcmludCB0aGUKICAgIHVzZXIuIERlc2NyaXB0aW9uOiBUaGlzIGlzc3VlIHdhcyBhZGRy
+ZXNzZWQgdGhyb3VnaCBpbXByb3ZlZCBzdGF0ZQogICAgbWFuYWdlbWVudC4KICAgIFdlYktpdCBC
+dWd6aWxsYTogMjcxMTU5CgpDVkUtMjAyNC0yNzgzMwogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdl
+YktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40NC4yLgogICAgQ3JlZGl0IHRvIE1hbmZy
+ZWQgUGF1bCAoQF9tYW5mcCkgd29ya2luZyB3aXRoIFRyZW5kIE1pY3JvIFplcm8gRGF5IEluaXRp
+YXRpdmUuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29u
+dGVudCBtYXkgbGVhZCB0bwogICAgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBEZXNjcmlwdGlv
+bjogQW4gaW50ZWdlciBvdmVyZmxvdyB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIGlu
+cHV0IHZhbGlkYXRpb24uCiAgICBXZWJLaXQgQnVnemlsbGE6IDI3MTQ5MQoKQ1ZFLTIwMjQtMjc4
+MzgKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3Jl
+IDIuNDQuMy4KICAgIENyZWRpdCB0byBFbWlsaW8gQ29ib3Mgb2YgTW96aWxsYS4KICAgIEltcGFj
+dDogQSBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYnBhZ2UgbWF5IGJlIGFibGUgdG8gZmluZ2VycHJp
+bnQgdGhlCiAgICB1c2VyLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgYnkg
+YWRkaW5nIGFkZGl0aW9uYWwKICAgIGxvZ2ljLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjIzMzcK
+CkNWRS0yMDI0LTI3ODUwCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUg
+V2ViS2l0IGJlZm9yZSAyLjQ0LjIuCiAgICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2VhcmNo
+ZXIuCiAgICBJbXBhY3Q6IEEgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWJwYWdlIG1heSBiZSBhYmxl
+IHRvIGZpbmdlcnByaW50IHRoZQogICAgdXNlci4gRGVzY3JpcHRpb246IFRoaXMgaXNzdWUgd2Fz
+IGFkZHJlc3NlZCB3aXRoIGltcHJvdmVtZW50cyB0byB0aGUKICAgIG5vaXNlIGluamVjdGlvbiBh
+bGdvcml0aG0uCiAgICBXZWJLaXQgQnVnemlsbGE6IDI3MDc2NwoKQ1ZFLTIwMjQtMjc4NTEKICAg
+IFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDQu
+My4KICAgIENyZWRpdCB0byBOYW4gV2FuZyAoQGV0ZXJuYWxzYWt1cmExMykgb2YgMzYwIFZ1bG5l
+cmFiaWxpdHkgUmVzZWFyY2ggSW5zdGl0dXRlLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGlj
+aW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIGFyYml0cmFyeSBjb2Rl
+IGV4ZWN1dGlvbi4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAg
+IGltcHJvdmVkIGJvdW5kcyBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI3MjEwNgoKQ1ZF
+LTIwMjQtNDA4NTcKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJL
+aXQgYmVmb3JlIDIuNDYuMC4KICAgIENyZWRpdCB0byBSb24gTWFzYXMuCiAgICBJbXBhY3Q6IFBy
+b2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0bwogICAg
+dW5pdmVyc2FsIGNyb3NzIHNpdGUgc2NyaXB0aW5nLiBEZXNjcmlwdGlvbjogVGhpcyBpc3N1ZSB3
+YXMKICAgIGFkZHJlc3NlZCB0aHJvdWdoIGltcHJvdmVkIHN0YXRlIG1hbmFnZW1lbnQuCiAgICBX
+ZWJLaXQgQnVnemlsbGE6IDI2ODcyNAoKQ1ZFLTIwMjQtNDA4NjYKICAgIFZlcnNpb25zIGFmZmVj
+dGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDYuMC4KICAgIENyZWRpdCB0
+byBIYWZpaXpoIGFuZCBZb0tvIEtobyAoQHlva29hY2MpIG9mIEhha1RyYWsuCiAgICBJbXBhY3Q6
+IFZpc2l0aW5nIGEgbWFsaWNpb3VzIHdlYnNpdGUgbWF5IGxlYWQgdG8gYWRkcmVzcyBiYXIKICAg
+IHNwb29maW5nLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXBy
+b3ZlZCBVSS4KICAgIFdlYktpdCBCdWd6aWxsYTogMjc5NDUxCgpDVkUtMjAyNC00NDE4NwogICAg
+VmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40Ni4w
+LgogICAgQ3JlZGl0IHRvIE5hcmVuZHJhIEJoYXRpLCBNYW5hZ2VyIG9mIEN5YmVyIFNlY3VyaXR5
+IGF0IFN1bWEgU29mdCBQdnQuIEx0ZCwKICAgIFB1bmUgKEluZGlhKS4KICAgIEltcGFjdDogQSBt
+YWxpY2lvdXMgd2Vic2l0ZSBtYXkgZXhmaWx0cmF0ZSBkYXRhIGNyb3NzLW9yaWdpbi4KICAgIERl
+c2NyaXB0aW9uOiBBIGNyb3NzLW9yaWdpbiBpc3N1ZSBleGlzdGVkIHdpdGggImlmcmFtZSIgZWxl
+bWVudHMuCiAgICBUaGlzIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCB0cmFja2luZyBvZiBz
+ZWN1cml0eSBvcmlnaW5zLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNzk0NTIKCldlIHJlY29tbWVu
+ZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBXZWJLaXRHVEsgYW5k
+IFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1
+bm5pbmcgc2FmZSB2ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMg
+Zm9yIGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVhc2VzLgoKRnVydGhl
+ciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgc2VjdXJpdHkgYWR2
+aXNvcmllcwpjYW4gYmUgZm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5o
+dG1sIG9yCmh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KClRoZSBXZWJLaXRHVEsgYW5k
+IFdQRSBXZWJLaXQgdGVhbSwK
 
-OpenSMTPD 5.7.3 was released with fixes, and the release notes follow
-below. There may be other vulnerabilities also fixed by this release.
-A full diff follows for analysis and additional CVE assignment, in
-case that is necessary.
+--0qEHseAFsV1GvIh7
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Jason
+-----BEGIN PGP SIGNATURE-----
 
-[1] http://seclists.org/oss-sec/2015/q4/25
+iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZvQcQQAKCRCRxVnb5MkS
+O2cMAJ0QkG0s4TSzPFs3T9xPItaKy7m5uACfaZJCa/V+juCKzNLSHyi2HlEfCAY=
+=6k76
+-----END PGP SIGNATURE-----
 
-
----------- Forwarded message ----------
-From: Gilles Chehade <gilles@poolp.org>
-Date: Mon, Oct 5, 2015 at 3:30 PM
-Subject: Announce: OpenSMTPD 5.7.3 released
-To: misc@opensmtpd.org
-
-[snipped]
-
-Issues fixed in this release (since 5.7.2):
-===========================================
-
-- fix an mda buffer truncation bug which allows a user to create forward
-  files that pass session checks but fail delivery later down the chain,
-  within the user mda [0]
-- fix remote buffer overflow in unprivileged pony process [1]
-- reworked offline enqueue to better protect against hardlink attacks [2]
-
-
-[0] reported by Holger Jahn
-[1] reported by Jason A. Donenfeld
-[2] reported by Qualys Security
-
------- DIFF -----
-
-diff -ru opensmtpd-5.7.2p1/smtpd/enqueue.c opensmtpd-5.7.3p1/smtpd/enqueue.c
---- opensmtpd-5.7.2p1/smtpd/enqueue.c        2015-10-02 01:46:21.000000000 +0200
-+++ opensmtpd-5.7.3p1/smtpd/enqueue.c        2015-10-05 13:33:41.000000000 +0200
-@@ -795,12 +795,25 @@
-         FILE        *fp;
-         int         i, fd, ch;
-         mode_t         omode;
-+        uint64_t        rnd;
-+        int         ret;
-
-         if (ckdir(PATH_SPOOL PATH_OFFLINE, 01777, 0, 0, 0) == 0)
-                 errx(EX_UNAVAILABLE, "error in offline directory setup");
-
--        if (! bsnprintf(path, sizeof(path), "%s%s/%lld.XXXXXXXXXX", PATH_SPOOL,
--                PATH_OFFLINE, (long long int) time(NULL)))
-+        do {
-+                rnd = generate_uid();
-+                if (! bsnprintf(path, sizeof(path),
-"%s%s/%016"PRIx64, PATH_SPOOL,
-+                        PATH_OFFLINE, rnd))
-+                        err(EX_UNAVAILABLE, "snprintf");
-+                ret = mkdir(path, 0700);
-+                if (ret == -1)
-+                        if (errno != EEXIST)
-+                                err(EX_UNAVAILABLE, "mkdir");
-+        } while (ret == -1);
-+
-+        if (! bsnprintf(path, sizeof(path),
-"%s%s/%016"PRIx64"/%lld.XXXXXXXXXX", PATH_SPOOL,
-+                PATH_OFFLINE, rnd, (long long int) time(NULL)))
-                 err(EX_UNAVAILABLE, "snprintf");
-
-         omode = umask(7077);
-diff -ru opensmtpd-5.7.2p1/smtpd/filter.c opensmtpd-5.7.3p1/smtpd/filter.c
---- opensmtpd-5.7.2p1/smtpd/filter.c        2015-10-02 01:46:21.000000000 +0200
-+++ opensmtpd-5.7.3p1/smtpd/filter.c        2015-10-05 13:33:41.000000000 +0200
-@@ -728,7 +728,6 @@
-         struct filter_session        *s = io->arg;
-         size_t                         len, n;
-         char                        *data;
--        char                        buf[65535];
-
-         log_trace(TRACE_FILTERS, "filter: filter_tx_io(%p, %s)", s,
-io_strevent(evt));
-
-@@ -736,10 +735,9 @@
-         case IO_DATAIN:
-                 data = iobuf_data(&s->ibuf);
-                 len = iobuf_len(&s->ibuf);
--                memmove(buf, data, len);
--                buf[len] = 0;
--                log_trace(TRACE_FILTERS, "filter: filter_tx_io:
-datain (%zu) for req %016"PRIx64": %s",
--                    len, s->id, buf);
-+
-+                log_trace(TRACE_FILTERS, "filter: filter_tx_io:
-datain (%zu) for req %016"PRIx64"",
-+                    len, s->id);
-
-                 n = fwrite(data, 1, len, s->ofile);
-                 if (n != len) {
-diff -ru opensmtpd-5.7.2p1/smtpd/mda.c opensmtpd-5.7.3p1/smtpd/mda.c
---- opensmtpd-5.7.2p1/smtpd/mda.c        2015-10-02 01:46:21.000000000 +0200
-+++ opensmtpd-5.7.3p1/smtpd/mda.c        2015-10-05 13:33:41.000000000 +0200
-@@ -286,8 +286,17 @@
-                                 deliver.userinfo = *userinfo;
-                                 (void)strlcpy(deliver.user, userinfo->username,
-                                     sizeof(deliver.user));
--                                (void)strlcpy(deliver.to, e->buffer,
--                                    sizeof(deliver.to));
-+                                if (strlcpy(deliver.to, e->buffer,
-+                                        sizeof(deliver.to))
-+                                    >= sizeof(deliver.to)) {
-+                                        mda_queue_tempfail(e->id,
-+                                            "mda command too long",
-+                                            ESC_OTHER_MAIL_SYSTEM_STATUS);
-+                                        mda_log(e, "TempFail",
-+                                            "mda command too long");
-+                                        mda_done(s);
-+                                        return;
-+                                }
-                                 break;
-
-                         case A_MBOX:
-diff -ru opensmtpd-5.7.2p1/smtpd/smtpd.c opensmtpd-5.7.3p1/smtpd/smtpd.c
---- opensmtpd-5.7.2p1/smtpd/smtpd.c        2015-10-02 01:46:21.000000000 +0200
-+++ opensmtpd-5.7.3p1/smtpd/smtpd.c        2015-10-05 13:33:41.000000000 +0200
-@@ -50,9 +50,11 @@
- #include <errno.h>
- #include <event.h>
- #include <fcntl.h>
-+#include <fts.h>
- #include <grp.h> /* needed for setgroups */
- #include <imsg.h>
- #include <inttypes.h>
-+#include <libgen.h>
- #ifdef HAVE_LOGIN_CAP_H
- #include <login_cap.h>
- #endif
-@@ -440,8 +442,10 @@
-                                             "couldn't enqueue offline "
-                                             "message %s; smtpctl %s",
-                                             child->path, cause);
--                                else
-+                                else {
-                                         unlink(child->path);
-+                                        rmdir(dirname(child->path));
-+                                }
-                                 free(child->path);
-                                 offline_done();
-                                 break;
-@@ -1075,28 +1079,43 @@
- static void
- offline_scan(int fd, short ev, void *arg)
- {
--        DIR                *dir = arg;
--        struct dirent        *d;
-+        char                *path_argv[2];
-+        FTS                *fts = arg;
-+        FTSENT                *e;
-         int                 n = 0;
-
--        if (dir == NULL) {
-+        path_argv[0] = PATH_SPOOL PATH_OFFLINE;
-+        path_argv[1] = NULL;
-+
-+        if (fts == NULL) {
-                 log_debug("debug: smtpd: scanning offline queue...");
--                if ((dir = opendir(PATH_SPOOL PATH_OFFLINE)) == NULL)
--                        errx(1, "smtpd: opendir");
-+                fts = fts_open(path_argv, FTS_PHYSICAL | FTS_NOCHDIR, NULL);
-+                if (fts == NULL) {
-+                        log_warn("fts_open: %s", path_argv[0]);
-+                        return;
-+                }
-         }
-
--        while ((d = readdir(dir)) != NULL) {
--                if (d->d_type != DT_REG)
-+        while ((e = fts_read(fts)) != NULL) {
-+                if (e->fts_info != FTS_F)
-+                        continue;
-+
-+                /* offline files must be at depth 2 */
-+                if (e->fts_level != 2)
-+                        continue;
-+
-+                /* offline file owner must match parent directory owner */
-+                if (e->fts_statp->st_uid != e->fts_parent->fts_statp->st_uid)
-                         continue;
-
--                if (offline_add(d->d_name)) {
-+                if (offline_add(e->fts_accpath)) {
-                         log_warnx("warn: smtpd: "
--                            "could not add offline message %s", d->d_name);
-+                            "could not add offline message %s", e->fts_name);
-                         continue;
-                 }
-
-                 if ((n++) == OFFLINE_READMAX) {
--                        evtimer_set(&offline_ev, offline_scan, dir);
-+                        evtimer_set(&offline_ev, offline_scan, fts);
-                         offline_timeout.tv_sec = 0;
-                         offline_timeout.tv_usec = 100000;
-                         evtimer_add(&offline_ev, &offline_timeout);
-@@ -1105,24 +1124,19 @@
-         }
-
-         log_debug("debug: smtpd: offline scanning done");
--        closedir(dir);
-+        fts_close(fts);
- }
-
- static int
- offline_enqueue(char *name)
- {
--        char                 t[PATH_MAX], *path;
-+        char                *path;
-         struct stat         sb;
-         pid_t                 pid;
-         struct child        *child;
-         struct passwd        *pw;
-
--        if (!bsnprintf(t, sizeof t, "%s/%s", PATH_SPOOL PATH_OFFLINE, name)) {
--                log_warnx("warn: smtpd: path name too long");
--                return (-1);
--        }
--
--        if ((path = strdup(t)) == NULL) {
-+        if ((path = strdup(name)) == NULL) {
-                 log_warn("warn: smtpd: strdup");
-                 return (-1);
-         }
-diff -ru opensmtpd-5.7.2p1/smtpd/smtpd.h opensmtpd-5.7.3p1/smtpd/smtpd.h
---- opensmtpd-5.7.2p1/smtpd/smtpd.h        2015-10-02 01:46:21.000000000 +0200
-+++ opensmtpd-5.7.3p1/smtpd/smtpd.h        2015-10-05 13:33:41.000000000 +0200
-@@ -67,7 +67,7 @@
- #ifndef SMTPD_NAME
- #define        SMTPD_NAME                 "OpenSMTPD"
- #endif
--#define        SMTPD_VERSION                 "5.7.2p1"
-+#define        SMTPD_VERSION                 "5.7.3p1"
- #define SMTPD_SESSION_TIMEOUT         300
- #define SMTPD_BACKLOG                 5
-
-@@ -684,7 +684,7 @@
- };
-
- struct deliver {
--        char                        to[SMTPD_MAXMAILADDRSIZE];
-+        char                        to[EXPAND_BUFFER];
-         char                        from[SMTPD_MAXMAILADDRSIZE];
-         char                        dest[SMTPD_MAXMAILADDRSIZE];
-         char                        user[SMTPD_VUSERNAME_SIZE];
+--0qEHseAFsV1GvIh7--
