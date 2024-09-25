@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1504" "Wednesday" "12" "July" "2017" "10:31:17" "+0000" "Sean Owen" "srowen@apache.org" "<CAEccTywUwRDdXZBHeUnuF6Sg+-U1Zd+MMqz_F9QDNRPts9O46Q@mail.gmail.com>" "48" "[oss-security] CVE-2017-7678 Apache Spark XSS web UI MHTML vulnerability" nil nil nil "7" "2017071210:31:17" "[oss-security] CVE-2017-7678 Apache Spark XSS web UI MHTML vulnerability" (number mark "U       srowen@apach Jul 12   48/1504  " thread-indent "\"[oss-security] CVE-2017-7678 Apache Spark XSS web UI MHTML vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21966 invoked by uid 550); 12 Jul 2017 10:54:18 -0000
+Received: (qmail 9511 invoked by uid 550); 25 Sep 2024 22:23:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10035 invoked from network); 12 Jul 2017 10:31:41 -0000
-X-Gm-Message-State: AIVw111UIHUht23/9TWeWwngODYxi4VWNtnEwuvuApKu2yO4A0OEydno
-	5W9LVjSzJ0JboJ1WxZtorqVGsesrsw==
-X-Received: by 10.159.39.227 with SMTP id b90mr2787927uab.105.1499855487764;
- Wed, 12 Jul 2017 03:31:27 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 12022 invoked from network); 25 Sep 2024 22:07:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727302058; x=1727906858; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2GldeWiPy1Dt4dSVc8FjRb8FSYGQ1LwugGVj1MhIdMM=;
+        b=LoSJGLbP3HMvXO1q857U9lISrNXHdunWPZp7pdPtvlUCpS9rm45FOkFU63rV/Rb747
+         tcTAuEbb7tg8m8us0Da5wLIldY6MbOXq5jaE5m0HmQK3YDzp3LI7o53p3OSccSOS997L
+         9hZixf63kw2tMPCo0YjnPSG18erk/ujmSLY+vwxx6ZS+qe3XSOzyQGWnjEpSh7NVKXVi
+         IbOe66+4GnffgVJfvJs6jzGl0Lzcrfy5fb9pi93gmpPL+1DGEvMVzPLVmqbkfVAl1Zko
+         OacnRQcga4pEB1FERNwTE1d+MANOOdmpDmBkfMFssB4ye94DVPYJlAvMJiLBH88oc252
+         R6Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727302058; x=1727906858;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2GldeWiPy1Dt4dSVc8FjRb8FSYGQ1LwugGVj1MhIdMM=;
+        b=QQMRavDFrgDQ8Enp7A43ObNv16IBK4bHB3LqQ7eK75Ow6X/zqU1MzN2Px3pVvSREwe
+         J//7b/M+MA3E0wJCZ87bgs7jCqhQLtEIiUC+pgjJgmO8RAeSkyLBq/p6HCLJmWdDLnSd
+         m8Oz0+p1tAskSOO24Yrz+xQ0hVh9LXmJR+DdyZfLwh+7ay9O16rlcQ4pj6NDMMaTSAuX
+         ugNvIZBEL61bWngGeCsS9V7weiy3Syx5mjtprxzyxYyq2ZC31fECquQkIZKxar5px2oj
+         zIrg6A0+so3OVG74dPOjHQqq/ZICpDv6DF6UEenXWyzv/doZ1muBckuDcYSYU9EnukmM
+         j3MQ==
+X-Gm-Message-State: AOJu0YzcjyL/MeGQPviF/XQK/Icr49vYGldjwB7XIIcfw1ZedcrAjsaF
+	oAK6fM1R4eaD0iW36+rpv/cvBAekPlpvGS5mA1qevP1KAmJJBlYEAASd4l8L+Qlyc+skXIGFY7f
+	Tsr8chpwd/5FWBKBjFzb5AkQtFc7X+RJI
+X-Google-Smtp-Source: AGHT+IGVIuPB1jyuuijc4OORrgM+ABNox3zifhRk3ULuJ38Cg+TLwaegMgUonBrLOHHzmFlaei3qzh6nXkRpRQSr2EA=
+X-Received: by 2002:a05:6902:1682:b0:e1d:a51f:e6d1 with SMTP id
+ 3f1490d57ef6-e24d7debdf0mr3399858276.9.1727302057713; Wed, 25 Sep 2024
+ 15:07:37 -0700 (PDT)
 MIME-Version: 1.0
-From: Sean Owen <srowen@apache.org>
-Date: Wed, 12 Jul 2017 10:31:17 +0000
-X-Gmail-Original-Message-ID: <CAEccTywUwRDdXZBHeUnuF6Sg+-U1Zd+MMqz_F9QDNRPts9O46Q@mail.gmail.com>
-Message-ID: <CAEccTywUwRDdXZBHeUnuF6Sg+-U1Zd+MMqz_F9QDNRPts9O46Q@mail.gmail.com>
+References: <16a2094c-dfa6-a448-b9c7-76ba2dc86f66@apache.org>
+ <20240925152119.GA787@openwall.com> <BY3PR13MB4769D5EB969804CD5B905A748B692@BY3PR13MB4769.namprd13.prod.outlook.com>
+In-Reply-To: <BY3PR13MB4769D5EB969804CD5B905A748B692@BY3PR13MB4769.namprd13.prod.outlook.com>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Wed, 25 Sep 2024 18:07:01 -0400
+Message-ID: <CAH8yC8kdMD1-UH87ur9jKZenc0+HLDXhebtWpB7Ffkj4J7tD3g@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="94eb2c1244a2900ff705541c51c7"
-Subject: [oss-security] CVE-2017-7678 Apache Spark XSS web UI MHTML vulnerability
-
---94eb2c1244a2900ff705541c51c7
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2024-40761: Apache Answer: Avatar URL leaked
+ user email addresses
 
-Severity: Low
+On Wed, Sep 25, 2024 at 5:45=E2=80=AFPM Goldberg, Adam <Adam.Goldberg@sony.=
+com> wrote:
+>
+> > On Wed, Sep 25, 2024 at 06:28:16AM +0000, Enxin Xie wrote:
+> > > Using the MD5 value of a user's email to access Gravatar is insecure =
+and can lead to the leakage of user email. The official recommendation is t=
+o use SHA256 instead.
+>
+> > For practical purposes, this sounds like almost no change to me.  I've
+> > just checked and https://urldefense.com/v3/__https://docs.gravatar.com/=
+api/avatars/hash/__;!!JmoZiZGBv3RvKRSx!6zoU_J4wgUshOcGT7WCRwWgz0hjESorDYcuC=
+X8cOARG6zrVpuLHmeayYJmf2ZnIO1QaQVFfeopQ2u6GQ6g$ does say:
+>
+> > > All URLs on Gravatar are based on the use of the hashed value of an
+> > > email address. Images and profiles are both accessed via the hash of =
+an
+> > > email, and it is considered the primary way of identifying an identity
+> > > within the system. To ensure a consistent and accurate hash, the
+> > > following steps should be taken to create a hash:
+> > >
+> > > 1. Trim leading and trailing whitespace from an email address
+> > > 2. Force all characters to lower-case
+> > > 3. hash the final string with SHA256
+>
+> Note that this is a recommendation, "the following steps *should* ...", w=
+hich doesn't require that those three steps be taken.
+>
+> > So Gravatar URLs by design allow for quick checking of email addresses
+> > against them, and thus allow to infer not-too-cryptic addresses.  Both
+> > MD5 and SHA-256 are very fast, with speeds in many billion per second
+> > per GPU, with SHA-256 being only a few times slower than MD5.  MD5's
+> > cryptographic weaknesses are irrelevant to this use case.
+>
+> > So I think this CVE should either be rejected (as the issue is with
+> > Gravatar, not with implementations) or considered unfixable (within
+> > spec) and thus not fixed.
+>
+> See above, it seems to be an implementation issue (at least in part -- an=
+ application must take specific actions in order to create the hash in a se=
+cure way).
 
-Vendor: The Apache Software Foundation
+I believe this is a use case for Aumasson and Bernstein's SipHash,
+<https://eprint.iacr.org/2012/351>. Wikipedia has a nice description
+of how SIpHash differs from a hash like SHA; see
+<https://en.wikipedia.org/wiki/SipHash>.
 
-Versions Affected:
-Versions of Apache Spark before 2.2.0
-
-Description:
-It is possible for an attacker to take advantage of a user's trust in the
-server to trick them into visiting a link that points to a shared Spark
-cluster and submits data including MHTML to the Spark master, or history
-server. This data, which could contain a script, would then be reflected
-back to the user and could be evaluated and executed by MS Windows-based
-clients. It is not an attack on Spark itself, but on the user, who may then
-execute the script inadvertently when viewing elements of the Spark web UIs.
-
-Mitigation:
-Update to Apache Spark 2.2.0 or later.
-
-Example:
-Request:
-GET
-/app/?appId=Content-Type:%20multipart/related;%20boundary=_AppScan%0d%0a--
-_AppScan%0d%0aContent-Location:foo%0d%0aContent-Transfer-
-Encoding:base64%0d%0a%0d%0aPGh0bWw%2bPHNjcmlwdD5hbGVydCgiWFNTIik8L3NjcmlwdD48L2h0bWw%2b%0d%0a
-HTTP/1.1
-
-Excerpt from response:
-<div class="row-fluid">No running application with ID Content-Type:
-multipart/related;
-boundary=_AppScan
---_AppScan
-Content-Location:foo
-Content-Transfer-Encoding:base64
-PGh0bWw+PHNjcmlwdD5hbGVydCgiWFNTIik8L3NjcmlwdD48L2h0bWw+
-</div>
-
-Result: In the above payload the BASE64 data decodes as:
-<html><script>alert("XSS")</script></html>
-
-Credit:
-Mike Kasper, Nicholas Marion
-IBM z Systems Center for Secure Engineering
-
---94eb2c1244a2900ff705541c51c7--
+Jeff
