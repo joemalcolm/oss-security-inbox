@@ -1,4 +1,4 @@
-Received: (qmail 32618 invoked by uid 550); 3 Mar 2026 17:25:01 -0000
+Received: (qmail 13340 invoked by uid 550); 25 Sep 2024 14:28:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,212 +8,196 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 30101 invoked from network); 3 Mar 2026 14:31:41 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1772548292; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gsEPCU0lKwPEoSECAsFXD3GF+aY4DVdz8paJNfaykTVFnacQi3Ty7pdlrr72liarYM
-         UxNRpD4YdvK4qDKkBcK1XDrS6W8iIy/a7oP28Ud80s10ZxO5ktIn1kVEDKr/pPhw95DF
-         Wl6wlqPhBIf+vELO+lAUW1jLpXuFrKUQdfbf3EukhksoPZNdiAjcyIlbIxYlfyxCGkrn
-         CZ3twDX6q3w9H1vpXL5MD1tpGIDlacGUZBZydydczoNyECHFgx3NWaiTS739/6+IUZG8
-         6U7cgVpfq0Ahj1bH2mg8SzfI6bffJlEsjC0FAg4Gvl0sys8AnayiZVPNPWoh11UaMcXa
-         xYdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=7ZSk8CmQ39d6fAqrQgFEXtNnJtpsrD42O9cnUmIXz9E=;
-        fh=8rp2Mw3EogNhapyIKgUnFY6d3XGPtMxU1NaBJHOY45c=;
-        b=IIN9Kfc0T5m5ylIS6Zm+RmakxtN7aV3u1+4L7qIymB2+Rcr/eMe35qo3/fJlngh0a5
-         FSI7D7geR59lpTKtFa0P355YfuQ/n1st8u1tV6SedI6waWITusKgfoTQnDXkYostFfSF
-         Hn4IlQBfrymRt4dZ0vTV3Ix503IThfFN+YluNOKCQU0ItxyncFaopFP7ipVJKPUzysqL
-         6IOIzmmMEuy5NKGkL1qZumaGkk+6dOs3oeoGAt+edlnOtpzdCPYDLdzk66Q92SSi+qeB
-         LxEUrHny8sqZS58FkO+Fi78QSOOQPZKGAohwC/mK4ciwllAKp45yRVi1vrZQCoB0U+Aa
-         4DKA==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=djangoproject.com; s=google; t=1772548292; x=1773153092; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7ZSk8CmQ39d6fAqrQgFEXtNnJtpsrD42O9cnUmIXz9E=;
-        b=Q3ekLrJ2dPEUcrZDl9qWoHUlqq166voO7VJR7UQMNyXT6yUxex1gulCOp0CPwr+mQ8
-         AJNpBaALI+4SWK/Jh55/JGnbkh/guETrwxYTdYRHKiLYo5zu0kn2xlFzfwntC5NXwiuF
-         RQkKuLGlsr8xEaYm4LixQ0dHOKqoehMhw/+Wg=
+Received: (qmail 13574 invoked from network); 25 Sep 2024 09:01:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1727254895;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9Hl1+V1vFRgtNhYUH5X1tCDOMopg7hUbHRqlXVPQ9Gk=;
+	b=EOxHa/djVO/LTQU2/qMjRBFrbqutVKCnpzHlQTqrJq6ieNDXSsk06XX3H8mWAmmpzUfdZA
+	4MsVFbi51/WP/dKnKNMFwtyuicBtoxpYK40hRz0WGiu5Hek/4Nbg6qtE4AoAKA8kGuZ9h0
+	A+2fjD0mZ1A2qP8bt1c6OapkHeY4gPs=
+X-MC-Unique: tFRPPDxiP-KXBEAiYjedvQ-1
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772548292; x=1773153092;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7ZSk8CmQ39d6fAqrQgFEXtNnJtpsrD42O9cnUmIXz9E=;
-        b=VhdGdK972MwA87zPcH/csohdbmR466ClN7oZUSgdPSvgMHDpepk6iwRjTgmsR/Eev9
-         Xbn4kO8KpcXwCAPpNFzVWY5hwwx9HpmL97iSzTUnPhg2KHTP9sBpdA6dF4VO9eKItT94
-         Q2hFP36354YyM0btrCbQINy5B2/gYaurX4WElElemUSENa14MRENvhNKu+BTkW+8xHYv
-         VkHYmJlMPMjsIkSSc+0MhheccoLMs6by2HDHTSui91bvXcP4Fj3adjkOjU2M04XSaN64
-         O8CtSfjGGmqcmJvB8x2Jj+xXEfsmJrcH1QPNdyJg4ouNDpd8zsZIP9Q/OjW+jf6dxhcw
-         DjEQ==
-X-Gm-Message-State: AOJu0YwM2WMk9UOxQXm2in1gyZYCg+HLeWBZpySLdChd9Nvw7prvQGzr
-	07JMHZN5UEelqnoye78XraU5jjm29dqOHdIYpYwuIi7GMFyQQ4phd5A7msVhOCDqxtd2l7OOLQD
-	MgMko47ntZLTxTIyiwTP1mUSquJO+R7rSKlNvuOOvo5FM+MmbJHP055M=
-X-Gm-Gg: ATEYQzwnEaXCfgxyDd1kU1bRXnCluKd9IaeDp4JYK/ebdGdqFn792YcMjYoRJ/GHdpV
-	c+mzN0agsCyTT1QU/MDK4LzzjnW5knI+CpaRJJauJRyubIT6j194Pn9CwDwlVWZH8P48qpyIxty
-	PlmY6ZhTns96HRrc2ds4BWT2HxKKiothXIPQHNKeQTqKp81OmXHZVgUnjqxjMKQoUOTK0Ued3tT
-	1BWEJpueUDGYrWK/B2XdcEP2KhufFBH6fuP9APzbiM5Qfh1DzaIwEeNY8nLrDJrAS4WCTooamKe
-	05Gf32fLIT8H2vZI
-X-Received: by 2002:a05:651c:2113:b0:38a:195f:34ec with SMTP id
- 38308e7fff4ca-38a195f36f6mr31316971fa.38.1772548291470; Tue, 03 Mar 2026
- 06:31:31 -0800 (PST)
+        d=1e100.net; s=20230601; t=1727254891; x=1727859691;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9Hl1+V1vFRgtNhYUH5X1tCDOMopg7hUbHRqlXVPQ9Gk=;
+        b=VqD6aLStivwTcyMZO6KTHiArqBJ5vdwMTE7Y6ZrRyhRGN9ld7cw1QGEwpLK4gscIX0
+         /619GfcJqP4k2lzfKGM312d7v1AobArJndjEjgEb6USdOZRU6EB281O5I5roDacUZVFO
+         CrI7vGWO9REwsXAw78OZ4cwpeJ6//BuUTdrwhic4j5iRcBk0q7r2QCV4socKrvmaI0vM
+         yH7HemcbJ7r8fVoGXyRfafl63Zm675Xq3TZl6ZYQcHvWsr3IxRmSblYT3jEQUfBT1BuS
+         9elDs5kr2S5+AvJkDJ7k+3+2Pd9ht52ICivFEa92qmgV9MbAXAqIof+dwlq44wl0Ycno
+         cbzw==
+X-Gm-Message-State: AOJu0Yx47OtFc6bUq9UMpHS1vcuxJ7+qa8OmARjJyHozwuyta9SHj5ux
+	qEf7jx3Zn4LPzs8T3tS/KzA1/hiwPlXbBdQQwllYtKzmSG8VnWrZmj+jPbv0YUxtO+1Mvlazszk
+	ZOTF7EMewdmGgGpO3xRGe4QflpMH8brIjGU/TTXLTMYoKYKdQWfK6tn/nnQTqy7f0um80SAVHht
+	zh4M44lXCjosckyWIPZfLDnLjrVIWvkJXqNP6whz5+O2vreNykiuc=
+X-Received: by 2002:a05:6122:a1f:b0:4f5:312a:6573 with SMTP id 71dfb90a1353d-505c40c3626mr1117564e0c.5.1727254890628;
+        Wed, 25 Sep 2024 02:01:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlGLXwtVxfzfNeWfSihdVOUkh3W0XtnIn73FO61TqSRpiZQxTw72zWZK+K7RjUk0HZQvmuHQyYefNmE155BiI=
+X-Received: by 2002:a05:6122:a1f:b0:4f5:312a:6573 with SMTP id
+ 71dfb90a1353d-505c40c3626mr1117552e0c.5.1727254890274; Wed, 25 Sep 2024
+ 02:01:30 -0700 (PDT)
 MIME-Version: 1.0
-From: Natalia Bidart <nataliabidart@djangoproject.com>
-Date: Tue, 3 Mar 2026 11:31:15 -0300
-X-Gm-Features: AaiRm51vdkkB8jM1TrDGMAh51p-HNo_fu_6b5F66UUaLbpcUYmsx0YTwLrxluwE
-Message-ID: <CAJVoTUuWioa5xfKUootC9Kkm2zWS0sSbR66jnyVXcRjO2-03sg@mail.gmail.com>
+References: <AM9P192MB131684EA6145690A492F481FD7682@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM>
+ <20240924153652.GA26720@openwall.com>
+In-Reply-To: <20240924153652.GA26720@openwall.com>
+From: Sandipan Roy <saroy@redhat.com>
+Date: Wed, 25 Sep 2024 14:31:19 +0530
+Message-ID: <CAJ33NAVY_jKsLqGZpuWTXUFTAkkg60qH2hd3uhVmyaDGX7P2cg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Django Security Team <security@djangoproject.com>
-Content-Type: multipart/alternative; boundary="00000000000042b91c064c1f8f2a"
-Subject: [oss-security] Django CVE-2026-25673 and CVE-2026-25674
+Cc: Joel GUITTET <jguittet@witekio.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="0000000000002c0c240622edde51"
+Subject: Re: [oss-security] CVE-2024-42154: Linux kernel: tcp_metrics:
+ validate source addr length
 
---00000000000042b91c064c1f8f2a
+--0000000000002c0c240622edde51
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-* Announce:
-https://www.djangoproject.com/weblog/2026/mar/03/security-releases/
+Hello Alexander and Joel,
 
-* CVE JSON Record for CVE-2026-25673:
-https://www.cve.org/CVERecord?id=CVE-2026-25673
+Thank you for your quick review.
 
-* CVE JSON Record for CVE-2026-25674:
-https://www.cve.org/CVERecord?id=CVE-2026-25674
+Regarding the CVE, Red Hat is still in the analysis phase. Our assessment
+is based on our own kernel build, which may differ from the default
+configuration upstream.
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/stable/internals/security/>`_, the
-Django team
-is issuing releases for
-`Django 6.0.3 <https://docs.djangoproject.com/en/stable/releases/6.0.3/>`_,
-`Django 5.2.12 <https://docs.djangoproject.com/en/stable/releases/5.2.12/>`_,
-and
-`Django 4.2.29 <https://docs.djangoproject.com/en/stable/releases/4.2.29/
->`_.
-These releases address the security issues detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+According to our latest analysis, the CVSS score is 4.4:
 
-CVE-2026-25673: Potential denial-of-service vulnerability in ``URLField``
-via Unicode normalization on Windows
-==============================================================================================================
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N
 
-The ``django.forms.URLField`` form field's ``to_python()`` method used
-``urllib.parse.urlsplit()`` to determine whether to prepend a URL scheme to
-the submitted value. On Windows, ``urlsplit()`` performs
-NFKC normalization (``unicodedata.normalize``), which can be
-disproportionately slow for large inputs containing certain characters.
+The impact level is considered moderate for Red Hat due to the following
+reasons:
 
-``URLField.to_python()`` now uses a simplified scheme detection, avoiding
-Unicode normalization entirely and deferring URL validation to the
-appropriate
-layers. As a result, while leading and trailing whitespace is still
-stripped by
-default, characters such as newlines, tabs, and other control characters
-within
-the value are no longer handled by ``URLField.to_python()``. When using the
-default ``URLValidator``, these values will continue to raise
-``ValidationError``
-during validation, but if you rely on custom validators, ensure they do not
-depend on the previous behavior of ``URLField.to_python()``.
+1. Missed check existed before and worked correctly (because by default it
+worked for int32 value, even if it was not specified exactly).
 
-This issue has severity "moderate" according to the Django Security Policy.
+2. Even if for some specific case a fail could happen, still it can lead
+only to incorrect memory read.
 
-Thanks to Seokchan Yoon for the report.
+3. Even if memory corruption happens, it should not lead to anything apart
+from incorrect tcp-ip statistics output to the local user.
 
-CVE-2026-25674: Potential incorrect permissions on newly created file
-system objects
-====================================================================================
+Additionally, It can lead to incorrect statistics output for commands like
+"ip tcp_metrics show", but actually no security impact (or very low
+security impact).
 
-Django's file-system storage and file-based cache backends used the process
-``umask`` to control permissions when creating directories. In
-multi-threaded
-environments, one thread's temporary umask change can affect other threads'
-file and directory creation, resulting in file system objects being created
-with unintended permissions.
+Thanks
+Sandipan Roy
 
-Django now applies the requested permissions via ``os.chmod()`` after
-``os.mkdir()``, removing the dependency on the process-wide umask.
+On Tue, Sep 24, 2024 at 9:10=E2=80=AFPM Solar Designer <solar@openwall.com>=
+ wrote:
 
-This issue has severity "low" according to the Django Security Policy.
+> Hi Joel,
+>
+> When you bring issues to this list, please include in the Subject and
+> start your messages with information on the issue itself - at least the
+> affected project and vulnerability type when applicable.  As a
+> moderator, I've edited the Subject line to contain such information.
+>
+> On Tue, Sep 24, 2024 at 09:12:46AM +0000, Joel GUITTET wrote:
+> > I'm working on a medical product actually and have trouble about the
+> CVE-2024-42154. It is regarding NETLINK socket which can be used only
+> locally, but it is classified with "NETWORK" flag. NETWORK flag is annoyi=
+ng
+> because it means more difficult to justify the CVE.
+> >
+> > I already ask the NIST why the NETWOKR flag was set for this CVE, they
+> answer me that it's linked to socket and without more public reference th=
+ey
+> are just setting the NETWORK flag, in case of.
+> >
+> > Can I ask you your opinion about this CVE and the pertinence of the
+> NETWORK flag here?
+>
+> I didn't fully analyze this issue, but at a glance:
+>
+> 1. NIST NVD commonly inflates CVSS scores.  You could reasonably dispute
+> their CVSS vector and they may correct it and the score:
+>
+> https://nvd.nist.gov/vuln/detail/CVE-2024-42154
+>
+> Base Score:  9.8 CRITICAL
+> Vector:  CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+>
+> 2. There are other sources for CVSS vectors/scores, notably Red Hat:
+>
+> https://access.redhat.com/security/cve/CVE-2024-42154
+>
+> CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N
+>
+> leading to a score of 2.5.  Indeed, they treat this issue as local, not
+> network, which is probably correct, although some other components of
+> this CVSS vector look weird to me.
+>
+> You could use Red Hat as your source of severity scores.
+>
+> 3. The CVE description originates from Linux kernel CNA, which in turn
+> reuses the commit message:
+>
+> https://lists.openwall.net/linux-cve-announce/2024/07/30/76
+>
+> > tcp_metrics: validate source addr length
+> >
+> > I don't see anything checking that TCP_METRICS_ATTR_SADDR_IPV4
+> > is at least 4 bytes long, and the policy doesn't have an entry
+> > for this attribute at all (neither does it for IPv6 but v6 is
+> > manually validated).
+>
+> The code change is:
+>
+> +++ b/net/ipv4/tcp_metrics.c
+> @@ -624,6 +624,7 @@ static const struct nla_policy
+> tcp_metrics_nl_policy[TCP_METRICS_ATTR_MAX + 1] =3D
+>         [TCP_METRICS_ATTR_ADDR_IPV4]    =3D { .type =3D NLA_U32, },
+>         [TCP_METRICS_ATTR_ADDR_IPV6]    =3D { .type =3D NLA_BINARY,
+>                                             .len =3D sizeof(struct
+> in6_addr), },
+> +       [TCP_METRICS_ATTR_SADDR_IPV4]   =3D { .type =3D NLA_U32, },
+>         /* Following attributes are not received for GET/DEL,
+>          * we keep them for reference
+>          */
+>
+> It would require more context to review and to assess the bug's impact,
+> but my _guess_ is it may have been merely over-read potential, so local
+> infoleak maybe?  Besides code review, it could make sense to locate the
+> corresponding syzbot report, if one exists, and see what type of crash
+> it was - if it was.
+>
+> Somehow Red Hat's description lists possibilities worse than over-read,
+> so either my guess is wrong or they didn't analyze the issue to identify
+> specific impact:
+>
+> > A vulnerability was found in the Linux kernel's tcp_metrics subsystem,
+> > where insufficient validation of the length of the source address for
+> > TCP metrics could lead to buffer overflows, memory corruption, or
+> > crashes.
+>
+> I hope this helps.
+>
+> Alexander
+>
+>
 
-Thanks to Tarek Nakkouch for the report.
+--=20
+*Sandipan Roy*
 
-Affected supported versions
-===========================
+Product Security Engineer, Product Security
 
-* Django main
-* Django 6.0
-* Django 5.2
-* Django 4.2
+Secure Engineering - Incident Response
 
-Resolution
-==========
+Email: sandipan@redhat.com
 
-Patches to resolve the issue have been applied to Django's
-main, 6.0, 5.2, and 4.2 branches.
-The patches may be obtained from the following changesets.
+PGP:0x4B5C7470051BB332 <https://bytehackr.fedorapeople.org/saroy.asc>
 
-CVE-2026-25673: Potential denial-of-service vulnerability in ``URLField``
-via Unicode normalization on Windows
---------------------------------------------------------------------------------------------------------------
+*secalert@redhat.com <secalert@redhat.com>* For Urgent Response.
+<https://www.redhat.com/>
 
-* On the `main branch <
-https://github.com/django/django/commit/951ffb3832cd83ba672c1e3deae2bda128eb9cca
->`__
-* On the `6.0 branch <
-https://github.com/django/django/commit/b1444d9acf43db9de96e0da2b4737ad56af0eb76
->`__
-* On the `5.2 branch <
-https://github.com/django/django/commit/4d3c184686626d224d9a87451410ecf802b41f7c
->`__
-* On the `4.2 branch <
-https://github.com/django/django/commit/b3e8ec8cc310489fe80174b14b11edb970d682ea
->`__
+--0000000000002c0c240622edde51--
 
-CVE-2026-25674: Potential incorrect permissions on newly created file
-system objects
-------------------------------------------------------------------------------------
-
-* On the `main branch <
-https://github.com/django/django/commit/019e44f67a8dace67b786e2818938c8691132988
->`__
-* On the `6.0 branch <
-https://github.com/django/django/commit/264d5c70ef3281a8869cb2ad45a3a52d5adbe790
->`__
-* On the `5.2 branch <
-https://github.com/django/django/commit/b07ed2a1e445efde54fc64cb8c37e0f4f7fe53e5
->`__
-* On the `4.2 branch <
-https://github.com/django/django/commit/54b50bf7d6dcbf02d4c01f853627cc9299d4934d
->`__
-
-The following releases have been issued
-=======================================
-
-* Django 6.0.3 (`download Django 6.0.3
-  <https://www.djangoproject.com/download/6.0.3/tarball/>`_ |
-  `6.0.3 checksums
-  <https://www.djangoproject.com/download/6.0.3/checksum/>`_)
-* Django 5.2.12 (`download Django 5.2.12
-  <https://www.djangoproject.com/download/5.2.12/tarball/>`_ |
-  `5.2.12 checksums
-  <https://www.djangoproject.com/download/5.2.12/checksum/>`_)
-* Django 4.2.29 (`download Django 4.2.29
-  <https://www.djangoproject.com/download/4.2.29/tarball/>`_ |
-  `4.2.29 checksums
-  <https://www.djangoproject.com/download/4.2.29/checksum/>`_)
-
-The PGP key ID used for this release is Natalia Bidart: `2EE82A8D9470983E <
-https://github.com/nessita.gpg>`_
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via private
-email
-to ``security@djangoproject.com``, and not via Django's Trac instance, nor
-via
-the Django Forum. Please see `our security policies
-<https://www.djangoproject.com/security/>`_ for further information.
-
---00000000000042b91c064c1f8f2a--
