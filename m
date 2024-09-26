@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3414" "Friday" "11" "August" "2017" "00:01:25" "+0200" "Solar Designer" "solar@openwall.com" "<20170810220125.GA22552@openwall.com>" "68" "Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" nil nil nil "8" "2017081022:01:25" "[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" (number mark "U       solar@openwa Aug 11   68/3414  " thread-indent "\"Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()\"\n") "<486401008.39761758.1502114136819.JavaMail.zimbra@redhat.com>" ("<465481173.38534111.1501765671454.JavaMail.zimbra@redhat.com>" "<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>" "<20170805110417.GA10944@grsecurity.net>" "<486401008.39761758.1502114136819.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3941 invoked by uid 550); 10 Aug 2017 22:04:17 -0000
+Received: (qmail 3944 invoked by uid 550); 26 Sep 2024 23:50:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +7,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3148 invoked from network); 10 Aug 2017 22:01:45 -0000
-Date: Fri, 11 Aug 2017 00:01:25 +0200
+x-ms-reactions: disallow
+Received: (qmail 1653 invoked from network); 26 Sep 2024 23:49:57 -0000
+Date: Fri, 27 Sep 2024 01:49:52 +0200
 From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: Brad Spengler <spender@grsecurity.net>,
-	Vladis Dronov <vdronov@redhat.com>
-Message-ID: <20170810220125.GA22552@openwall.com>
-References: <465481173.38534111.1501765671454.JavaMail.zimbra@redhat.com> <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com> <20170805110417.GA10944@grsecurity.net> <486401008.39761758.1502114136819.JavaMail.zimbra@redhat.com>
+Cc: Simone Margaritelli <evilsocket@gmail.com>,
+	Zdenek Dohnal <zdohnal@redhat.com>
+Message-ID: <20240926234952.GA12532@openwall.com>
+References: <20240926221125.GA10895@openwall.com> <5bf73ba2-d643-40a0-9397-65a2e56dd436@oracle.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <486401008.39761758.1502114136819.JavaMail.zimbra@redhat.com>
+In-Reply-To: <5bf73ba2-d643-40a0-9397-65a2e56dd436@oracle.com>
 User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()
+Subject: Re: [oss-security] CUPS printing system vulnerabilities
 
-Hi,
+On Thu, Sep 26, 2024 at 03:43:23PM -0700, Alan Coopersmith wrote:
+> On 9/26/24 15:11, Solar Designer wrote:
+> >A lot of drama around the disclosure of those issues was going on for
+> >maybe a month now, with public tweets about the disclosure process and
+> >the issues affecting many distros but excluding detail on the issues
+> >(not even CUPS was specifically mentioned until very recently).  Per
+> >those tweets, the issues were communicated to some distro vendors via
+> >CERT/CC VINCE and a vendor planned to bring them to the distros list on
+> >September 30 with public disclosure on October 6.  Unfortunately, the
+> >information leaked prematurely and thus Simone decided on full public
+> >disclosure today at 20:00 UTC pre-announcing it only 2 hours in advance.
+> 
+> Once it was learned that the information was leaked, the vendors suggested
+> ending the embargo today, and both evilsocket & OpenPrinting agreed to it,
+> with the coordinated end at 20:00 UTC.
 
-Thank you for asking the right questions, Brad.  Thank you for providing
-additional detail, Vladis.  I'll add some more:
+Thanks Alan!  On Twitter, Alan further clarified that "once it was clear
+the info was out there, the distro makers wanted to end the embargo so
+they could publish advisories telling users to disable cups-browsed
+instead of waiting for patches to be available - those with VINCE access
+had hours of prior notice, not just two."
 
-On Mon, Aug 07, 2017 at 09:55:36AM -0400, Vladis Dronov wrote:
-> As for the timeline as we understand it, we were notified about the flaw, we've discovered the flaw
-> being actually already fixed in the upstream, we've notified linux-distros@ and in a week we've made
-> this public announce.
+I apologize to Simone for the unnecessary and wrong guess on whose
+decision it was.  I didn't have that information and shouldn't have
+included a guess.
 
-For linux-distros, cases like this are a gray area.  On one hand, we
-state that the list is for non-public security issues only, and if
-anything already public is wrongly sent to that list then it should be
-posted to oss-security right away.  On the other hand, sometimes it
-happens that (at least) the reporter considers the issue semi-public
-rather than fully public - typically when public information about the
-issue is incomplete, relatively obscure, or/and is in a relatively
-obscure place.  Then it's sometimes tough to decide between insisting on
-immediate posting to oss-security or leaving distros some time to
-prepare updates before the issue turns from semi-public to fully public
-(if this is even a valid distinction, on which opinions vary).
-Sometimes the issue being semi-public results in a shorter
-(semi-)embargo period than what would normally be used for a similar
-issue that is considered fully private.
+> OpenPrinting has started publishing fixes as well now:
+> 
+> CVE-2024-47175: https://github.com/OpenPrinting/libppd/commit/d681747ebf
+> CVE-2024-47076: 
+> https://github.com/OpenPrinting/libcupsfilters/commit/95576ec3
+> 
+> and a temporary workaround for CVE-2024-47176 in:
+> https://github.com/OpenPrinting/cups-browsed/commit/1debe6b140c
 
-In this specific case, the issue itself was never sent to the
-linux-distros list itself.  Instead, Red Hat posted the following on
-July 26:
+Thanks.  I guess also this from a few days ago? -
 
-| we've been informed of a local privilege escalation issue in the Linux
-| kernel. CVE-2017-7533 has been assigned to this issue. The unembargo
-| date is set to August 3rd (Thursday next week) 15:00 UTC.
-|  
-| For detailed information please email Vladis Dronov [1]
-|  
-|   [1] vdronov@redhat.com
-|       http://pgp.mit.edu/pks/lookup?op=vindex&search=0x716C2F9F0F3B68F8
+https://github.com/OpenPrinting/cups/commit/8361420cbbfa2e729545c4c537c49fc6322c9631
 
-This kind of indirect disclosure is unusual, but it happens from time to
-time.  I did e-mail Vladis for the detail, and learned from the helpful
-reply that the issue was actually semi-public.  There was no discussion
-(that I am aware of) on whether this specific issue being semi-public
-required bringing it to oss-security earlier than initially proposed.
-Even if there were, it'd only affect the last one week out of two months.
+"Escape localized strings in PPDs", which is similar to the last hunk in
+"Prevent PPD generation based on invalid IPP response" CVE-2024-47175
+libppd commit referenced by Alan above.
 
-We could insist that semi-public issues being brought to (linux-)distros
-be posted to oss-security right away, but this would result in distros
-who learn of such issues from elsewhere choosing not to inform their
-fellow distros, or at least not via the (linux-)distros list, as the
-distros would not want to make things worse for themselves and for most
-of their users (except for some advanced users, who could apply
-workarounds) by making issues fully public before updates are ready.
+Possibly unrelated to today's disclosure but also security-relevant is:
 
-My reconstruction of the timeline is as follows:
+https://github.com/OpenPrinting/cups/commit/e3467edf3be2d20a022495d9726a741e36768caf
 
-2017-05-31 postings to linux-fsdevel by Leilei Lin of Alibaba Group
-2017-07-06 private Bug created in Red Hat Bugzilla (now public, edited)
-2017-07-07 upstream fix
-2017-07-26 notification to linux-distros
-2017-08-03 posting to oss-security, full-disclosure, Bugtraq
+"Update httpConnectURI to do X.509 pinning, and use it when doing the IPP"
 
-Indeed, I am unhappy about a two-month timeline like this and about
-semi-public issues in general (the worst state an issue can be in),
-but I think the last week was actually the least problematic: multiple
-distros were finally aware and could work on fixes, still before the
-issue got widespread attention.
+Zdenek, I hope you will soon clarify which commits fix what issues, to
+assist with distro backports.  I understand you're still busy getting
+these in now and it's probably night time for you, so follow up when you
+have a moment later, please.
+
+Thanks,
 
 Alexander
