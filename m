@@ -1,4 +1,4 @@
-Received: (qmail 16141 invoked by uid 550); 26 Dec 2025 22:41:34 -0000
+Received: (qmail 20311 invoked by uid 550); 27 Sep 2024 16:42:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,94 +8,96 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 27840 invoked from network); 26 Dec 2025 21:57:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1766786251; x=1767045451;
-	bh=uCpPwaVhKTQdRpOzC7E5FnorhyqUOONff0CUSr6LDoc=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=AwnQAWa/X674EIdKoLUrrHjax4uAn25JVqkO7X60BLwdK1qXqRwBBXHEtIS1cj3bD
-	 pxxmeg+wihVqsa9adAOymxMZPv1cssHsGPVBuGIXggsFqyUPjoxkV3PPgtfrNyMuqE
-	 k5eOWOEn4i0ZnKhao+BSBm5isj+gnzehYcIFgfPMHcacNEVaqTWQ/WxO0zJah/XEb8
-	 Ce/4WOUv5w5Wn3oCZCboykqwnUl3dvX3dmo+z/GuHeBvE24j3Nz/9IevjLxvxYH3dy
-	 ULwYrmBx8Bq0vbdv/tgAi1ph/JQl0s/vto1r3E1vJkeI8TQAZnJzSoLWvFKLKTKVjG
-	 x3gs2rZ1MAijA==
-Date: Fri, 26 Dec 2025 21:57:26 +0000
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: Joseph Goydish II <newt0ns_law@proton.me>
-Cc: Apple Product Security <product-security@apple.com>
-Message-ID: <jq8xQxO7VyzQbtSsLz_p4DUzIOsf476KniI3gerokeyM90-zpczEWoWDiBQH0AYnpCr51vbCQX9qyBPuOqr20UplDsFlLbBRU0h2_swCBk4=@proton.me>
-Feedback-ID: 171741277:user:proton
-X-Pm-Message-ID: 06649e40327a686bf757ab547afbad44e1b81359
+Received: (qmail 28157 invoked from network); 27 Sep 2024 15:48:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sambull.org; h=
+	cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1727452109; x=1727538509; bh=6qn8Gvci7b
+	9dm+JvcmqJmH/c5tiM409yVTYcc7z2agc=; b=T2O8ot7ldZ8+KOeYFHS+TZyQha
+	AWlcgpQVUfcJ6CyFoVc5lco3QMdeuEq8YN2uNzx4Cufv4UPhCW1wsHwp/Nf5NEYU
+	qJbXhD0K2yBJ7Fnc+VyBTQ/QuoQjxcrK1Q5XaMYVV0NRmG9Gn9TSW1j8mj0lxNBs
+	4M3uQ0T+3waYGs6rzYklz8k9TP85Fgj2y3nm1VxKC7mfllo28iCo3yUaDcXkVOrs
+	Ddcyh+NcIXDTPVFVqRNsI1h8JJpE3EwfpllBKE0zg/h1ou+BcbPeFJoYs4BGW8Ge
+	NLzZauZoO2Gkq7J1rgldCFtY4m7XT2SNXNu7bP29fhhbKiLT1pspz3TqLswg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727452109; x=1727538509; bh=6qn8Gvci7b9dm+JvcmqJmH/c5tiM
+	409yVTYcc7z2agc=; b=WIIiyHT9oxziwPwiZiBBrl5ZqLi8VQMzz7svVFkgWTk8
+	HZ5s3uDOTGvOoOKgz7tM5B8a7YLdt0L1RYRv1ZN1YDlF8m946iwZqVyX75NuVJBC
+	thZhR55BvjTIv8iM6hYkjX326hSnIrNmpYeA9LkutMdYgzKuva706jUCQJdexhkh
+	FqZc0M/WRxQbI/5W4IUFMNt0AzbeDUu2q48Kq2Qu3wWsKOJnbWrZkn8DTjbmh+te
+	Gm99MGUUYzq2Dwk79BWW6J/AoKBlhTRu0QuG2LUE0eu93OTA/hCEVDGt0oCqK9wT
+	ERHLjHKQRVOnPhkjCVg3UxrmMlJf524GC3QFCgZ70w==
+X-ME-Sender: <xms:zdP2ZiJ5BhJrbvEJ595ebpJHp1hkOb5h9EqRipCFi3zZrX7-uBNeLw>
+    <xme:zdP2ZqI75OyoqUG-TI4LpprnzeaZ2asaYFYqV8dZ9vJ1loFdKhL0DD-1JwC--QczN
+    FCvB_8bdU7OCw>
+X-ME-Received: <xmr:zdP2ZitIeVfF6Ste_T_v_koI5O3LEhXAI6VsYeLGNlQlR83kEK9bGnFaSsM7wBVzHpUiUaCciG996hz6oUw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtledgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhvf
+    ffjghftggfggesghdtreertderjeenucfhrhhomhepufgrmhcuuehulhhluceolehmudel
+    lehisehsrghmsghulhhlrdhorhhgqeenucggtffrrghtthgvrhhnpeekfeethfejgeehhf
+    egieffgfdugfdvgfdujedtheefhffgudeiveejjeehgfduvdenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeelmhduleelihesshgrmhgsuhhllh
+    drohhrghdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
+X-ME-Proxy: <xmx:zdP2ZnbIAUzVCfNp2c6NqFXd0EAD1cQYBjvswgk73FozGDvMT7ULNw>
+    <xmx:zdP2ZpYi6FNdcryuFetK-hpbzszPlkwRCBoPn87l4ZThDH70kAuocQ>
+    <xmx:zdP2ZjAaGMDCZ36b-uxwRvvKza9vn8c8-OIgpeQZRxztLnR2pVd9HQ>
+    <xmx:zdP2ZvbXp6guNsrqpR9btirUpntlrBz8X_jeyvXL1X4Sas2GF8POtA>
+    <xmx:zdP2Zoms4OSz3E1o7ejl-xsZoBie00tK7ZF-27P8JTvHM2CPpFyVfHOY>
+Feedback-ID: ie6294588:Fastmail
+Message-ID: <c64de78736f4c74f1185db288e23fcf716b335a8.camel@sambull.org>
+From: Sam Bull <9m199i@sambull.org>
+To: oss-security@lists.openwall.com
+Date: Fri, 27 Sep 2024 16:48:25 +0100
+In-Reply-To: <dbf738ce-d236-4c8b-864d-900d4e7c3238@rub.de>
+References: <16a2094c-dfa6-a448-b9c7-76ba2dc86f66@apache.org>
+	 <ZvR8tR8v-6gpjLsP@itl-email>
+	 <CAN_LGv2QzuonfGdOsN88Qpe479xupfceCLYkv0yQFtRdf3CFNQ@mail.gmail.com>
+	 <dbf738ce-d236-4c8b-864d-900d4e7c3238@rub.de>
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-iP3ed/iCsm9eOehEEoo9"
+User-Agent: Evolution 3.36.5-0ubuntu1 
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1=_34hJExqkJr34xBgsH9TcGrPvYvxNQwgQDwpiUAbZxs"
-Subject: [oss-security] [Advisory] WebKit/iOS 26.2: Gigacage Boundary Violation via Logic Flaw enabling OOB Access
+Subject: Re: [oss-security] CVE-2024-40761: Apache Answer: Avatar URL leaked
+ user email addresses
 
---b1=_34hJExqkJr34xBgsH9TcGrPvYvxNQwgQDwpiUAbZxs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+--=-iP3ed/iCsm9eOehEEoo9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-W0NWRSBQZW5kaW5nXSBXZWJLaXQgSlNDIEludGVnZXIgT3ZlcmZsb3cg4oCTIE9PQiBXcml0ZSB2
-aWEgR2lnYWNhZ2UgKGlPUyAyNi4yKQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLUZ1bGwgYWR2aXNvcnksIFBvQywgYW5k
-IGxvZ3M6CltodHRwczovL2dpdGh1Yi5jb20vSkdveWQvMGRheS1HaWdhQ2FnZS1XZWJraXRdCi0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tCjEuIEV4ZWN1dGl2ZSBTdW1tYXJ5CgpBIGNyaXRpY2FsIHZ1bG5lcmFiaWxpdHkg
-ZXhpc3RzIGluIHRoZSBXZWJLaXQgSmF2YVNjcmlwdENvcmUgKEpTQykKZW5naW5lLiBJbnRlZ2Vy
-IG92ZXJmbG93IGluIG1lbW9yeSBvZmZzZXQgY2FsY3VsYXRpb25zIGZvcgpBcnJheUJ1ZmZlciwg
-VHlwZWRBcnJheSwgYW5kIFdlYkFzc2VtYmx5IGVuYWJsZXMgb3V0LW9mLWJvdW5kcwooT09CKSBt
-ZW1vcnkgYWNjZXNzLiBHaWdhY2FnZSBjdXJyZW50bHkgbWl0aWdhdGVzIHRoaXMgdmlhIHByb2Nl
-c3MKdGVybWluYXRpb24sIGJ1dCB0aGUgdW5kZXJseWluZyBsb2dpYyBmbGF3IGNvdWxkIGJlIHVz
-ZWQgZm9yIHJlbW90ZQpjb2RlIGV4ZWN1dGlvbiBpZiBjb21iaW5lZCB3aXRoIGEgbWl0aWdhdGlv
-biBieXBhc3MuCgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoyLiBFbnZpcm9ubWVudCBEZXRhaWxzCgpPUzogaU9TIDI2
-LjIgKEJ1aWxkIDIzQzU1KQpXZWJLaXQ6IDg2MjMuMS4xNC4xMC45CkNyYXNoOiBFWENfR1VBUkQg
-KE5hbWVzcGFjZSAzMTogR2lnYWNhZ2UgUHJpbWl0aXZlIFBhcnRpdGlvbikKT2Zmc2V0OiAweEFE
-RDc0NzZDCkRldmljZTogaVBob25lIDE1LDMgKGlQaG9uZSAxNCBQcm8gTWF4KQpVVUlEOiBhZjI1
-ZmE3OC1hZTNlLTNiZjQtYjMyMC00NDA0ZDNhMzZhNzcKCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCjMuIFRlY2huaWNh
-bCBBbmFseXNpcyAoQ1dFLTE5MCkKClZ1bG5lcmFiaWxpdHkgb2NjdXJzIGR1cmluZyBvZmZzZXQg
-Y2FsY3VsYXRpb24gZm9yIFR5cGVkQXJyYXkgYW5kCkRhdGFWaWV3LiBJZiAnaW5kZXggKiBlbGVt
-ZW50U2l6ZScgd3JhcHMgYXQgdGhlIDMyLWJpdCBib3VuZGFyeSwgdGhlCm92ZXJmbG93ZWQgdmFs
-dWUgY2FuIHBhc3MgaW5pdGlhbCBib3VuZHMgY2hlY2tzLiBXaGVuIGFkZGVkIHRvIHRoZQpHaWdh
-Y2FnZSBiYXNlIHBvaW50ZXIsIHRoaXMgY2FuIGV4Y2VlZCB0aGUgMTZHQiBib3VuZGFyeSwgdHJp
-Z2dlcmluZwphIGd1YXJkIHZpb2xhdGlvbi4KClRoZSBmbGF3IGlzIGFsc28gcmVhY2hhYmxlIHZp
-YSB0aGUgV2ViQXNzZW1ibHkgSklULCB3aGljaCBtYXkgZWxpZGUKYm91bmRzIGNoZWNrczsgd3Jh
-cGFyb3VuZCBpbiAzMi1iaXQgYXJpdGhtZXRpYyBwZXJtaXRzIHVuc2FuaXRpemVkCkpJVGVkIG1l
-bW9yeSBhY2Nlc3MuCgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo0LiBQcm9vZiBvZiBDb25jZXB0IChQb0MpCgpKYXZh
-U2NyaXB0IChEYXRhVmlldyB2ZWN0b3IpOgoKY29uc3QgYnVmZmVyID0gbmV3IEFycmF5QnVmZmVy
-KDEwMjQpOwpjb25zdCB2aWV3ID0gbmV3IERhdGFWaWV3KGJ1ZmZlcik7Ci8vIDB4RkZGRkZGRkUg
-KyA0IHdyYXBzIGF0IDMyLWJpdHMKdmlldy5zZXRVaW50MzIoMHhGRkZGRkZGRSwgMHg0MTQxNDE0
-MSk7CgpXZWJBc3NlbWJseSAoSklUIHZlY3Rvcik6Cgo7OyAoaTMyLmFkZCAoaTMyLmNvbnN0IDB4
-RkZGRkZGRkYpIChpMzIuY29uc3QgMHg1KSkgd3JhcHMgdG8gMHg0CihpMzIubG9hZCBvZmZzZXQ9
-MCkKClJlcHJvZHVjdGlvbiBTdGVwczoKCjEuIEhvc3QgUG9DIEhUTUwgb24gSFRUUFMgc2VydmVy
-LgoyLiBBY2Nlc3Mgd2l0aCBNb2JpbGUgU2FmYXJpIG9uIGlPUyAyNi4yLgozLiBPYnNlcnZlIHRl
-cm1pbmF0aW9uIG9mIFdlYkNvbnRlbnQgcHJvY2Vzcy4KNC4gQ29uZmlybSBvZmZzZXQgMHhBREQ3
-NDc2QyBpbiBjcmFzaCBsb2cuCgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo1LiBSZW1lZGlhdGlvbgoKSW1wbGVtZW50
-IGNoZWNrZWQgYXJpdGhtZXRpYyBpbiB0aGUgZm9sbG93aW5nIGNvbXBvbmVudHM6CgotIFNvdXJj
-ZS9KYXZhU2NyaXB0Q29yZS9ydW50aW1lL0pTQXJyYXlCdWZmZXJWaWV3LmNwcAotIFNvdXJjZS9K
-YXZhU2NyaXB0Q29yZS9ydW50aW1lL0pTRGF0YVZpZXcuY3BwCgpQcm9wb3NlZCBmaXg6CgpzaXpl
-X3QgYnl0ZU9mZnNldDsKaWYgKF9fYnVpbHRpbl9tdWxfb3ZlcmZsb3coc3RhdGljX2Nhc3Q8c2l6
-ZV90PihpbmRleCksCm1fZWxlbWVudFNpemUsICZieXRlT2Zmc2V0KSkgewpyZXR1cm4gdGhyb3dP
-dmVyZmxvd0Vycm9yKCk7Cn0KCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCjYuIFN1cHBvcnRpbmcgRXZpZGVuY2UKCkNv
-bnNpc3RlbnQgY3Jhc2ggb2Zmc2V0IGFuZCBuYW1lc3BhY2UgMzEgdmlvbGF0aW9uIGZvdW5kIGlu
-OgoKRXhjVXNlckZhdWx0X01vYmlsZVNhZmFyaS0yMDI1LTEyLTI1LTEzMTQzMi5pcHMKRXhjVXNl
-ckZhdWx0X1NhZmFyaVZpZXdTZXJ2aWNlLTIwMjUtMTItMjUtMDYyOTQ1LmlwcwoKLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0KNy4gRGlzY2xvc3VyZQoKQXBwbGUgU2VjdXJpdHkgaXMgYmVpbmcgbm90aWZpZWQgYXQgdGhl
-IHNhbWUgdGltZSBhcyB0aGlzIHB1YmxpYwptYWlsaW5nIGxpc3QgcG9zdCwgYXMgdGhleSBhcmUg
-Q0MnZCBvbiB0aGlzIGVtYWlsLiBUaGlzIGlzIG5vdCBhCmNvb3JkaW5hdGVkIGRpc2Nsb3N1cmU7
-IG5vdGlmaWNhdGlvbiB0byBBcHBsZSBhbmQgdGhlIGJyb2FkZXJjb21tdW5pdHkgaXMgb2NjdXJy
-aW5nIHNpbXVsdGFuZW91c2x5LgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo4LiBMZWdhbCBEaXNjbGFpbWVyCgpQcm92
-aWRlZCBmb3IgYXV0aG9yaXplZCBzZWN1cml0eSByZXNlYXJjaCBvbmx5LgpVbmF1dGhvcml6ZWQg
-dXNlIGlzIHByb2hpYml0ZWQgYW5kIG1heSBiZSB1bmxhd2Z1bC4KCi0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpUaGFu
-ayB5b3UsCkpvc2VwaCBHb3lkaXNoIElJ
+For WordPress websites that I host, I have code which caches the gravatar i=
+mages on the
+server and serves them directly.
 
---b1=_34hJExqkJr34xBgsH9TcGrPvYvxNQwgQDwpiUAbZxs--
+My main goal was to disallow Gravatar tracking users across our websites (e=
+nforced with a
+Content-Security-Policy in addition to rewriting the image URLs). But, it d=
+oes also
+rewrite the hashes used when served to the client. So, this could be used t=
+o avoid leaking
+user addresses.
+
+Not sure if that can apply to this software as well, but thought it was wor=
+th noting.
+
+Sam
+
+--=-iP3ed/iCsm9eOehEEoo9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQS7LDpjuw7VQ6ct5tdf6SjNlibOKwUCZvbTyQAKCRBf6SjNlibO
+K5ClAKCl+T8/hO13Kem846avt67E5woEWQCeO5eh/5lmxp1xQh5m0ylVbSpBcbI=
+=MUHQ
+-----END PGP SIGNATURE-----
+
+--=-iP3ed/iCsm9eOehEEoo9--
 
