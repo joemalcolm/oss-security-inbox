@@ -1,4 +1,4 @@
-Received: (qmail 32581 invoked by uid 550); 3 Nov 2025 19:41:08 -0000
+Received: (qmail 20294 invoked by uid 550); 27 Sep 2024 00:13:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,323 +8,128 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 14187 invoked from network); 3 Nov 2025 19:10:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762197019; x=1762801819; darn=lists.openwall.com;
-        h=in-reply-to:autocrypt:from:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NPasRFO9fv6D3Sy41VMf4ueOZB25cO4pOx+O3+5bVyo=;
-        b=CJplNfZGeU0Bc6UfaQgR1yXACMf3GQ9ZfXe2La2UtiuCqvKiCc/hU3BADqZzYAtPQc
-         f+m2B8YMOSiJna4UxkfyqwoG+xVfjHcn6WcRIJbJLtfsL1WmlWcDR0sOzg7m6GmLSp4x
-         U1PX4gFXDvRYDbfTTzTgqcEQUnS+YaS5xacnnKok1MZkyPyNTedYHdFB0Z68j4D9j2SL
-         jOaO7UikHHx0uAmuksRO175Sm1TuMmJ4tK87F9IjfVtLCjtfXrCRMaAeL5bD4cJnQqTV
-         3c82rrL4d5kSWwPnZrfAhCF20yu+ozgiyM5QjyWkBp73ZEb6SL1s4V9pPWjlvbQlswoI
-         ZATg==
+Received: (qmail 7351 invoked from network); 27 Sep 2024 00:10:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1727395797;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XzMBVjih/oDJCfffUYdMaRuxM96m55fLrmOvs3ETlyo=;
+	b=UNiagGnW11GjWnM9eYyq+afarK8dIqQNy8O8UgVIG/SNqS976vE7V0NleSOlJNXQdnkM0U
+	gV39N5uMXKJldlAr3r0D6r0Oarr4zbaBjiutTLEEfNtbl3mPJO6lHLP37XEfQsqsAKoiNk
+	A9KdsWm1cnjmGrJYlUIvje3xQVQ/sVY=
+X-MC-Unique: JoqfNmgPP7WGgs3BvfFUYA-1
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762197019; x=1762801819;
-        h=in-reply-to:autocrypt:from:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=NPasRFO9fv6D3Sy41VMf4ueOZB25cO4pOx+O3+5bVyo=;
-        b=ILsLL2E0kN579vEq6E1xHWTx8zOtSt6A2s+VWW4j6U4VR1h74mjKqmINEi8x+tEY2m
-         dZgRy45qyIQOFhiEKGMt7n3NZlk0GNbABrAS3zA6XZoeNQWDXHmG6mD7Gz4HiCbBErXK
-         +/8PS2t2D7kZn+3XHSLgL4z0MlTCloB+1ka8WOXpY/bv8bQkjLEpurnM513qbq5ZyaMb
-         Jh0x2+AjKSmRIZJAkg4J8rEOMrt/jwPbb0TOyuJm/IvOSKZOT54C4SJ+gsZUQ+wzaN+Z
-         jl6wwp+AmOB8ZGjBDu9paBgDpr2GK58xl+IQI0CAnlmtlRf4wLwhkfrG4ycLnFvYca2y
-         8uDA==
-X-Gm-Message-State: AOJu0Yzl7qLVULAdaXky47j4PNKF7eGZW4Sear8d1WjorutJn+6MVJ7p
-	6DhpinwEVkxQPT8gQSrHWEbzYR63K7Zier8iYevQbKrrUTlQdEYXDMbV8bNtpA==
-X-Gm-Gg: ASbGncskG9eTc2BXksc7AGQaq/YY2c3k+K+ZtHru8wfgaV3dRHtS4gWjtplz0c8dAae
-	jOMIepbEGBcJFQyjGy2kV5YeAXGB/QoUYFfGQnaOYXVLCB3BZg3wlIkFxzqs/RidW4SjcTgwi+N
-	Rwjs9BgscZ9TPtQSG6mEiyMMOHcQ3+UORE5IvZUJMcsQqZb+/GnfzB3gMLuxiSmnBUh+hgJY4eh
-	LzqJdeSukVpTMy3M8yoOvUBFCKpibQjb1zaLLiNQ0ucRugKESMATzWJ27KvqN5jHibUW2VMgSoq
-	IDujXmdyjPbpNUxej73dv0HOyPbRf0hIzqNXXEoEgMhJeVxDUCXcaBDin1LmtRfSSDR50V1ncmg
-	3Qtmsr0OsG86yJqzTdy8W2t/TmVvGF3C7DxU0OHW4Eq9SWSMc1Sv1VfZ6a2F7hnA8c+hPkzL0fp
-	tIqBmYlidCbp/C63J0XYHEjFztY2Lwd2lpMCH9xE5EGy7QjLSlvq5EiKotPkkf03ZuKZP7xrNiA
-	7CpJQyFOwUFjpI/9p5kKsMOwUJs/aaWOEQuPQ==
-X-Google-Smtp-Source: AGHT+IGxe9CTakepOfC4R5KeTqOPJk7z8RBlBiUMYZoxkwfC2YJ7k+A6LYSsswHqd1tgJPmTdRjPUA==
-X-Received: by 2002:a05:690e:4083:b0:63e:914:28c8 with SMTP id 956f58d0204a3-63f9a284e42mr8612212d50.68.1762197018388;
-        Mon, 03 Nov 2025 11:10:18 -0800 (PST)
-Message-ID: <b9817c28-053f-49a9-94f8-36b497da23ce@gmail.com>
-Date: Mon, 3 Nov 2025 14:10:12 -0500
+        d=1e100.net; s=20230601; t=1727395794; x=1728000594;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XzMBVjih/oDJCfffUYdMaRuxM96m55fLrmOvs3ETlyo=;
+        b=Fg+GrVqoQIC7tA8dKEnsISf3SysU080iO6ekQJjlP4ItrGgtoinQnk1UlvByvUv6Qi
+         6h3Fw5N/Qm1ELCuY1SwMIYY1V/EiN3JSVoqRo3zmN5ddMcLlWo/xlhknCygbuWQ31MVr
+         eLZLjUh4/jjSh7rNbncMHJrLemV6XihyJ5eUFjFYcoXydVxUr0S6KCgtSfh3M7+IXyh4
+         eVjFu0y3n2BpwhUtbgWxiivfYJSuk5q+c+wwA7DeM7izc3KADduCDK+umHMZzQ+CWna/
+         YhAb16RFtrQrXqvmLjsL+xLN8cUuz1TzuFSzBVISt18IP34o3hBE1gRaL1s2hUs6xDXL
+         eGuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWrNnJENzTytgRklAElADy3GEIM6DFLV0K0BhITEOf3bbfdZny3EjFqYettKNWDQHQRccIFexxubTOSkbQ=@lists.openwall.com
+X-Gm-Message-State: AOJu0YxYQOoTDOYDrWz98PN1dkdYkp6YMpJEwfa8TQgQYT1Tf7zbuIAb
+	o3rT9m6y55nDV02n/z746WR+IOfsWRF4og7NsFmUk6zYDDjdKwrfloj+fsNDnovufyMV0eVNT3U
+	WQhCuzv+73zTUiN49BCnEtcqWaqWRTZtHLmKHom3iiigAi3Il1LeNc4S2P51pg2TpKEc2rGdFpg
+	==
+X-Received: by 2002:a05:600c:1d20:b0:42c:b995:20b6 with SMTP id 5b1f17b1804b1-42f5840e0c9mr8220705e9.2.1727395794591;
+        Thu, 26 Sep 2024 17:09:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhloCvgz/QKO2e6AhT8PnEUVD6zirwgkKqlH1a63SKsQUFoFCJ8QCjFjBbiHWs9+gh46N75A==
+X-Received: by 2002:a05:600c:1d20:b0:42c:b995:20b6 with SMTP id 5b1f17b1804b1-42f5840e0c9mr8220595e9.2.1727395794132;
+        Thu, 26 Sep 2024 17:09:54 -0700 (PDT)
+Message-ID: <e8047bef-b5b9-40c4-8027-cf140d031559@redhat.com>
+Date: Fri, 27 Sep 2024 02:09:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Russ Allbery <eagle@eyrie.org>,
- Peter Gutmann <pgut001@cs.auckland.ac.nz>
-References: <aP_msOoiyHJ_M4Yx@mertle>
- <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
- <20251028014909.GA6430@openwall.com>
- <76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
- <20251101030054.GA3031@openwall.com> <875xbtlf4z.fsf@hope.eyrie.org>
- <ME0P300MB071302891271CE8EBFA6BBAAEEC7A@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
- <87fravyp43.fsf@hope.eyrie.org>
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com,
+ Michael Sweet <msweet@msweet.org>
+Cc: Simone Margaritelli <evilsocket@gmail.com>
+References: <20240926221125.GA10895@openwall.com>
+ <5bf73ba2-d643-40a0-9397-65a2e56dd436@oracle.com>
+ <20240926234952.GA12532@openwall.com>
+From: Zdenek Dohnal <zdohnal@redhat.com>
+In-Reply-To: <20240926234952.GA12532@openwall.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
-Autocrypt: addr=demiobenour@gmail.com; keydata=
- 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
- +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <87fravyp43.fsf@hope.eyrie.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------sdDvFebOna6r80gwWfYLoGsu"
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CUPS printing system vulnerabilities
 
---------------sdDvFebOna6r80gwWfYLoGsu
-Content-Type: multipart/mixed; boundary="------------4c9fjepygzUUChgsZOG8RI0I";
- protected-headers="v1"
-From: Demi Marie Obenour <demiobenour@gmail.com>
-To: oss-security@lists.openwall.com, Russ Allbery <eagle@eyrie.org>,
- Peter Gutmann <pgut001@cs.auckland.ac.nz>
-Message-ID: <b9817c28-053f-49a9-94f8-36b497da23ce@gmail.com>
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
-References: <aP_msOoiyHJ_M4Yx@mertle>
- <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
- <20251028014909.GA6430@openwall.com>
- <76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
- <20251101030054.GA3031@openwall.com> <875xbtlf4z.fsf@hope.eyrie.org>
- <ME0P300MB071302891271CE8EBFA6BBAAEEC7A@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
- <87fravyp43.fsf@hope.eyrie.org>
-In-Reply-To: <87fravyp43.fsf@hope.eyrie.org>
+Hi Alex,
 
---------------4c9fjepygzUUChgsZOG8RI0I
-Content-Type: multipart/mixed; boundary="------------FAmYvbv9SOsIJkXmbYmP2dca"
+Mike has more info about those commits, I've added him in the loop here.
 
---------------FAmYvbv9SOsIJkXmbYmP2dca
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I'm sorry that I cannot provide much more info - there is Fedora commit 
+from Justin https://src.fedoraproject.org/rpms/cups/c/d0eba90f305d which 
+should cover Mike's fixes, but I don't know which was for which issue.
 
-On 11/3/25 12:58, Russ Allbery wrote:
-> Peter Gutmann <pgut001@cs.auckland.ac.nz> writes:
->=20
->> Even before getting into that, how do you document that people shouldn't
->> do certain things with their config files, or by extension which bits
->> are inside and outside the security boundary? "If an unauthorised party
->> can modify your config files then bad things can happen" seems
->> redundant, "We take no responsibility for what happens if you fail to
->> take unspecified steps to secure your config files" might be correct but
->> will be perceived as blame-the- victim... how do you document this for
->> users?
->=20
-> This is true. Helping users understand trust boundaries is probably the
-> hardest part of writing effective security documentation. They can be very
-> complicated and even many security people struggle with security boundary
-> analysis.
 
-(snip)
+Zdenek
 
-> The implication is that if you want to generate a configuration from some
-> untrusted source, ensuring that configuration is fully trusted and vetted
-> and will parse correctly and will not trigger any bugs in the software is
-> 100% your problem, not my problem as the software maintainer, and any
-> security issues that result will not be accepted as CVEs because this is
-> not a feature the software provides.
->=20
-> This is not a particularly *friendly* policy, because that sort of
-> verification is hard (and is very likely to break in insecure ways with
-> future software releases), but I think it's a fairly *realistic* policy
-> for a lot of single-maintainer free software projects that gets one out of
-> the rather terrifying world of attempting to reason about a complex and
-> porous security boundary.
->=20
-> I'm probably overcomplicating this problem by combining it with the
-> problem of how to describe a more complicated security boundary, and my
-> problem can probably be addressed by relatively simple declarations in the
-> documentation and SECURITY.md. :)
-What if there was a way to direct security vulnerabilities reported
-in certain cases to someone other than the main maintainer?  I think
-this would be very useful for Linux filesystems: Google cares about
-crafted F2FS and ext4 images, but upstream doesn't.  It would also
-work in use-cases like this one: such reports would be directed at
-whoever maintains the config generator.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)=
+On 9/27/24 01:49, Solar Designer wrote:
+> On Thu, Sep 26, 2024 at 03:43:23PM -0700, Alan Coopersmith wrote:
+>> On 9/26/24 15:11, Solar Designer wrote:
+>>> A lot of drama around the disclosure of those issues was going on for
+>>> maybe a month now, with public tweets about the disclosure process and
+>>> the issues affecting many distros but excluding detail on the issues
+>>> (not even CUPS was specifically mentioned until very recently).  Per
+>>> those tweets, the issues were communicated to some distro vendors via
+>>> CERT/CC VINCE and a vendor planned to bring them to the distros list on
+>>> September 30 with public disclosure on October 6.  Unfortunately, the
+>>> information leaked prematurely and thus Simone decided on full public
+>>> disclosure today at 20:00 UTC pre-announcing it only 2 hours in advance.
+>> Once it was learned that the information was leaked, the vendors suggested
+>> ending the embargo today, and both evilsocket & OpenPrinting agreed to it,
+>> with the coordinated end at 20:00 UTC.
+> Thanks Alan!  On Twitter, Alan further clarified that "once it was clear
+> the info was out there, the distro makers wanted to end the embargo so
+> they could publish advisories telling users to disable cups-browsed
+> instead of waiting for patches to be available - those with VINCE access
+> had hours of prior notice, not just two."
+>
+> I apologize to Simone for the unnecessary and wrong guess on whose
+> decision it was.  I didn't have that information and shouldn't have
+> included a guess.
+>
+>> OpenPrinting has started publishing fixes as well now:
+>>
+>> CVE-2024-47175: https://github.com/OpenPrinting/libppd/commit/d681747ebf
+>> CVE-2024-47076:
+>> https://github.com/OpenPrinting/libcupsfilters/commit/95576ec3
+>>
+>> and a temporary workaround for CVE-2024-47176 in:
+>> https://github.com/OpenPrinting/cups-browsed/commit/1debe6b140c
+> Thanks.  I guess also this from a few days ago? -
+>
+> https://github.com/OpenPrinting/cups/commit/8361420cbbfa2e729545c4c537c49fc6322c9631
+>
+> "Escape localized strings in PPDs", which is similar to the last hunk in
+> "Prevent PPD generation based on invalid IPP response" CVE-2024-47175
+> libppd commit referenced by Alan above.
+>
+> Possibly unrelated to today's disclosure but also security-relevant is:
+>
+> https://github.com/OpenPrinting/cups/commit/e3467edf3be2d20a022495d9726a741e36768caf
+>
+> "Update httpConnectURI to do X.509 pinning, and use it when doing the IPP"
+>
+> Zdenek, I hope you will soon clarify which commits fix what issues, to
+> assist with distro backports.  I understand you're still busy getting
+> these in now and it's probably night time for you, so follow up when you
+> have a moment later, please.
+>
+> Thanks,
+>
+> Alexander
+>
+-- 
+Zdenek Dohnal
+Senior Software Engineer
+Red Hat, BRQ-TPBC
 
---------------FAmYvbv9SOsIJkXmbYmP2dca
-Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
-
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49y=0A=
-B+l2nipdaq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYf=0A=
-bWpr/si88QKgyGSVZ7GeNW1UnzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/=0A=
-UorR+FaSuVwT7rqzGrTlscnTDlPWgRzrQ3jssesI7sZLm82E3pJSgaUoCdCOlL7M=0A=
-MPCJwI8JpPlBedRpe9tfVyfu3euTPLPxwcV3L/cfWPGSL4PofBtB8NUU6QwYiQ9H=0A=
-zx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR6h3nBc3eyuZ+q62HS1pJ5EvU=0A=
-T1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl5FMWo8TCniHynNXs=0A=
-BtDQbabt7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2Bkg1b//r=0A=
-6bTBswMBXVJ5H44Qf0+eKeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C=0A=
-9a1P1MYVysLvkLvS4H+crmxA/i08Tc1h+x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nS=0A=
-m9BBff0Nm0bSNRS8InXdO1Aq3362QKX2NOwcL5YaStwODNyZUqF7izjK4QARAQAB=0A=
-zTxEZW1pIE9iZW5vdXIgKElUTCBFbWFpbCBLZXkpIDxhdGhlbmFAaW52aXNpYmxl=0A=
-dGhpbmdzbGFiLmNvbT7CwY4EEwEIADgWIQR2h02fEza6IlkHHHGyiLVf/5wiwQUC=0A=
-X6YJvQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCyiLVf/5wiwWRhD/0Y=0A=
-R+YYC5Kduv/2LBgQJIygMsFiRHbR4+tWXuTFqgrxxFSlMktZ6gQrQCWe38WnOXkB=0A=
-oY6n/5lSJdfnuGd2UagZ/9dkaGMUkqt+5WshLFly4BnP7pSsWReKgMP7etRTwn3S=0A=
-zk1OwFx2lzY1EnnconPLfPBc6rWG2moA6l0WX+3WNR1B1ndqpl2hPSjT2jUCBWDV=0A=
-rGOUSX7r5f1WgtBeNYnEXPBCUUM51pFGESmfHIXQrqFDA7nBNiIVFDJTmQzuEqIy=0A=
-Jl67pKNgooij5mKzRhFKHfjLRAH4mmWZlB9UjDStAfFBAoDFHwd1HL5VQCNQdqEc=0A=
-/9lZDApqWuCPadZN+pGouqLysesIYsNxUhJ7dtWOWHl0vs7/3qkWmWun/2uOJMQh=0A=
-ra2u8nA9g91FbOobWqjrDd6x3ZJoGQf4zLqjmn/P514gb697788e573WN/MpQ5XI=0A=
-Fl7aM2d6/GJiq6LC9T2gSUW4rbPBiqOCeiUx7Kd/sVm41p9TOA7fEG4bYddCfDsN=0A=
-xaQJH6VRK3NOuBUGeL+iQEVF5Xs6Yp+U+jwvv2M5Lel3EqAYo5xXTx4ls0xaxDCu=0A=
-fudcAh8CMMqx3fguSb7Mi31WlnZpk0fDuWQVNKyDP7lYpwc4nCCGNKCj622ZSocH=0A=
-AcQmX28L8pJdLYacv9pU3jPy4fHcQYvmTavTqowGnM08RGVtaSBNYXJpZSBPYmVu=0A=
-b3VyIChsb3ZlciBvZiBjb2RpbmcpIDxkZW1pb2Jlbm91ckBnbWFpbC5jb20+wsF4=0A=
-BBMBAgAiBQJafgNKAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCyiLVf=0A=
-/5wiwYa/EACv8a2+MMou9cSCNoZBQaU+fTmyzft9hUE+0d5W2UY1RY3OsjFIzm9R=0A=
-/4SVccfsqOYLEo+S0vQMIIIqFEq3FCpXXwPzyimotps05VA8U3Bd7yseojFygOgK=0A=
-sAMOAee2RCaDDOnoJue01dfZMzzHPO/TVdp3OvnpWipfv5G1Xg96rwbhMLE3tg6N=0A=
-xwAHa31Bv4/Xq8CJOoIWvx6fcmZQpz01/lSvsYn0KrfEbTKkuUf0vM9JrCTCP2oz=0A=
-VNN5BYzqaq2M4r+jmSyeXLim922VOWqGkUEQ85BSEemqrRS06IU6NtEMsF8EWt/b=0A=
-hWjk/9GDKTcnpdJHTrMxTspExBiNrvpI2t+YPU5B/dJJAUxvmhFrbSIbdB8umBZs=0A=
-I3AMYrEmpAbh5x7jEjoskUC7uN3o9vpg1oCLS2ePDLtAtyBtbHnkA4xGD7ar8mem=0A=
-xpH9lY/i+sC6CyyIUWcUDnnagKyJP0m9ks0GLsTeOCA0bft2XA6rD6aaCnMUsndT=0A=
-ctrab42CV5XypjmC4U1rPJ8JQJUh1/3P48/8sMH+3krxpJ06KNWNFaUbaMTGiltZ=0A=
-7x9DngklSYrX0T+2G4kVXNmjaljwkoLahwLla2gUWwBSyofXdqyhQdwZsp01KXNQ=0A=
-UCyT/Pg+aDcm/E7OMV3d4lf7g/CSxiX2GSEe6BlhSz+Lmd7ZJ3g32M1ARGVtaSBN=0A=
-YXJpZSBPYmVub3VyIChJVEwgRW1haWwgS2V5KSA8ZGVtaUBpbnZpc2libGV0aGlu=0A=
-Z3NsYWIuY29tPsLBjgQTAQgAOBYhBHaHTZ8TNroiWQcccbKItV//nCLBBQJgOEV+=0A=
-AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJELKItV//nCLBKwoP/1WSnFdv=0A=
-SAD0g7fD0WlF+oi7ISFT7oqJnchFLOwVHK4Jg0e4hGn1ekWsF3Ha5tFLh4V/7UUu=0A=
-obYJpTfBAA2CckspYBqLtKGjFxcaqjjpO1I2W/jeNELVtSYuCOZICjdNGw2Hl9yH=0A=
-KRZiBkqc9u8lQcHDZKq4LIpVJj6ZQV/nxttDX90ax2No1nLLQXFbr5wb465LAPpU=0A=
-lXwunYDij7xJGye+VUASQh9datye6orZYuJvNo8Tr3mAQxxkfR46LzWgxFCPEAZJ=0A=
-5P56Nc0IMHdJZj0Uc9+1jxERhOGppp5jlLgYGK7faGB/jTV6LaRQ4Ad+xiqokDWp=0A=
-mUOZsmA+bMbtPfYjDZBz5mlyHcIRKIFpE1l3Y8F7PhJuzzMUKkJi90CYakCV4x/a=0A=
-Zs4pzk5E96c2VQx01RIEJ7fzHF7lwFdtfTS4YsLtAbQFsKayqwkGcVv2B1AHeqdo=0A=
-TMX+cgDvjd1ZganGlWA8Sv9RkNSMchn1hMuTwERTyFTr2dKPnQdA1F480+jUap41=0A=
-ClXgn227WkCIMrNhQGNyJsnwyzi5wS8rBVRQ3BOTMyvGM07j3axUOYaejEpg7wKi=0A=
-wTPZGLGH1sz5GljD/916v5+v2xLbOo5606j9dWf5/tAhbPuqrQgWv41wuKDi+dDD=0A=
-EKkODF7DHes8No+QcHTDyETMn1RYm7t0RKR4zsFNBFp+A0oBEAC9ynZI9LU+uJkM=0A=
-eEJeJyQ/8VFkCJQPQZEsIGzOTlPnwvVna0AS86n2Z+rK7R/usYs5iJCZ55/JISWd=0A=
-8xD57ue0eB47bcJvVqGlObI2DEG8TwaW0O0duRhDgzMEL4t1KdRAepIESBEA/iPp=0A=
-I4gfUbVEIEQuqdqQyO4GAe+MkD0Hy5JH/0qgFmbaSegNTdQg5iqYjRZ3ttiswalq=0A=
-l1/iSyv1WYeC1OAs+2BLOAT2NEggSiVOtxEfgewsQtCWi8H1SoirakIfo45Hz0tk=0A=
-/Ad9ZWh2PvOGt97Ka85o4TLJxgJJqGEnqcFUZnJJriwoaRIS8N2C8/nEM53jb1sH=0A=
-0gYddMU3QxY7dYNLIUrRKQeNkF30dK7V6JRH7pleRlf+wQcNfRAIUrNlatj9Txwi=0A=
-vQrKnC9aIFFHEy/0mAgtrQShcMRmMgVlRoOA5B8RTulRLCmkafvwuhs6dCxN0GNA=0A=
-ORIVVFxjx9Vn7OqYPgwiofZ6SbEl0hgPyWBQvE85klFLZLoj7p+joDY1XNQztmfA=0A=
-rnJ9x+YV4igjWImINAZSlmEcYtd+xy3Li/8oeYDAqrsnrOjb+WvGhCykJk4urBog=0A=
-2LNtcyCjkTs7F+WeXGUo0NDhbd3Z6AyFfqeF7uJ3D5hlpX2nI9no/ugPrrTVoVZA=0A=
-grrnNz0iZG2DVx46x913pVKHl5mlYQARAQABwsFfBBgBAgAJBQJafgNKAhsMAAoJ=0A=
-ELKItV//nCLBwNIP/AiIHE8boIqReFQyaMzxq6lE4YZCZNj65B/nkDOvodSiwfwj=0A=
-jVVE2V3iEzxMHbgyTCGA67+Bo/d5aQGjgn0TPtsGzelyQHipaUzEyrsceUGWYoKX=0A=
-YyVWKEfyh0cDfnd9diAm3VeNqchtcMpoehETH8frRHnJdBcjf112PzQSdKC6kqU0=0A=
-Q196c4Vp5HDOQfNiDnTf7gZSj0BraHOByy9LEDCLhQiCmr+2E0rW4tBtDAn2HkT9=0A=
-uf32ZGqJCn1O+2uVfFhGu6vPE5qkqrbSE8TG+03H8ecU2q50zgHWPdHMOBvy3Ehz=0A=
-fAh2VmOSTcRK+tSUe/u3wdLRDPwv/DTzGI36Kgky9MsDC5gpIwNbOJP2G/q1wT1o=0A=
-Gkw4IXfWv2ufWiXqJ+k7HEi2N1sree7Dy9KBCqb+ca1vFhYPDJfhP75I/VnzHVss=0A=
-Z/rYZ9+51yDoUABoNdJNSGUYl+Yh9Pw9pE3Kt4EFzUlFZWbE4xKL/NPno+z4J9aW=0A=
-emLLszcYz/u3XnbOvUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPt=0A=
-hZlDnTnOT+C+OTsh8+m5tos8HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj=0A=
-6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E+MYSfkEjBz0E8CLOcAw7JIwAaeBTzsFN=0A=
-BGbyLVgBEACqClxh50hmBepTSVlan6EBq3OAoxhrAhWZYEwN78k+ENhK68KhqC5R=0A=
-IsHzlL7QHW1gmfVBQZ63GnWiraM6wOJqFTL4ZWvRslga9u28FJ5XyK860mZLgYhK=0A=
-9BzoUk4s+dat9jVUbq6LpQ1Ot5I9vrdzo2p1jtQ8h9WCIiFxSYy8s8pZ3hHh5T64=0A=
-GIj1m/kY7lG3VIdUgoNiREGf/iOMjUFjwwE9ZoJ26j9p7p1U+TkKeF6wgswEB1T3=0A=
-J8KCAtvmRtqJDq558IU5jhg5fgN+xHB8cgvUWulgK9FIF9oFxcuxtaf/juhHWKMO=0A=
-RtL0bHfNdXoBdpUDZE+mLBUAxF6KSsRrvx6AQyJs7VjgXJDtQVWvH0PUmTrEswgb=0A=
-49nNU+dLLZQAZagxqnZ9Dp5l6GqaGZCHERJcLmdY/EmMzSf5YazJ6c0vO8rdW27M=0A=
-kn73qcWAplQn5mOXaqbfzWkAUPyUXppuRHfrjxTDz3GyJJVOeMmMrTxH4uCaGpOX=0A=
-Z8tN6829J1roGw4oKDRUQsaBAeEDqizXMPRc+6U9vI5FXzbAsb+8lKW65G7JWHym=0A=
-YPOGUt2hK4DdTA1PmVo0DxH00eWWeKxqvmGyX+Dhcg+5e191rPsMRGsDlH6KihI6=0A=
-+3JIuc0y6ngdjcp6aalbuvPIGFrCRx3tnRtNc7He6cBWQoH9RPwluwARAQABwsOs=0A=
-BBgBCgAgFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmbyLVgCGwICQAkQsoi1X/+c=0A=
-IsHBdCAEGQEKAB0WIQSilC2pUlbVp66j3+yzNoc6synyUwUCZvItWAAKCRCzNoc6=0A=
-synyU85gD/0T1QDtPhovkGwoqv4jUbEMMvpeYQf+oWgm/TjWPeLwdjl7AtY0G9Ml=0A=
-ZoyGniYkoHi37Gnn/ShLT3B5vtyI58ap2+SSa8SnGftdAKRLiWFWCiAEklm9FRk8=0A=
-N3hwxhmSFF1KR/AIDS4g+HIsZn7YEMubBSgLlZZ9zHl4O4vwuXlREBEW97iL/FSt=0A=
-VownU2V39t7PtFvGZNk+DJH7eLO3jmNRYB0PL4JOyyda3NH/J92iwrFmjFWWmmWb=0A=
-/Xz8l9DIs+Z59pRCVTTwbBEZhcUc7rVMCcIYL+q1WxBG2e6lMn15OQJ5WfiE6E0I=0A=
-sGirAEDnXWx92JNGx5l+mMpdpsWhBZ5iGTtttZesibNkQfd48/eCgFi4cxJUC4PT=0A=
-UQwfD9AMgzwSTGJrkI5XGy+XqxwOjL8UA0iIrtTpMh49zw46uV6kwFQCgkf32jZM=0A=
-OLwLTNSzclbnA7GRd8tKwezQ/XqeK3dal2n+cOr+o+Eka7yGmGWNUqFbIe8cjj9T=0A=
-JeF3mgOCmZOwMI+wIcQYRSf+e5VTMO6TNWH5BI3vqeHSt7HkYuPlHT0pGum88d4a=0A=
-pWqhulH4rUhEMtirX1hYx8Q4HlUOQqLtxzmwOYWkhl1C+yPObAvUDNiHCLf9w28n=0A=
-uihgEkzHt9J4VKYulyJM9fe3ENcyU6rpXD7iANQqcr87ogKXFxknZ97uEACvSucc=0A=
-RbnnAgRqZ7GDzgoBerJ2zrmhLkeREZ08iz1zze1JgyW3HEwdr2UbyAuqvSADCSUU=0A=
-GN0vtQHsPzWl8onRc7lOPqPDF8OO+UfN9NAfA4wl3QyChD1GXl9rwKQOkbvdlYFV=0A=
-UFx9u86LNi4ssTmU8p9NtHIGpz1SYMVYNoYy9NU7EVqypGMguDCL7gJt6GUmA0sw=0A=
-p+YCroXiwL2BJ7RwRqTpgQuFL1gShkA17D5jK4mDPEetq1d8kz9rQYvAR/sTKBsR=0A=
-ImC3xSfn8zpWoNTTB6lnwyP5Ng1bu6esS7+SpYprFTe7ZqGZF6xhvBPf1Ldi9UAm=0A=
-U2xPN1/eeWxEa2kusidmFKPmN8lcT4miiAvwGxEnY7Oww9CgZlUB+LP4dl5VPjEt=0A=
-sFeAhrgxLdpVTjPRRwTd9VQF3/XYl83j5wySIQKIPXgT3sG3ngAhDhC8I8GpM36r=0A=
-8WJJ3x2yVzyJUbBPO0GBhWE2xPNIfhxVoU4cGGhpFqz7dPKSTRDGq++MrFgKKGpI=0A=
-ZwT3CPTSSKc7ySndEXWkOYArDIdtyxdE1p5/c3aoz4utzUU7NDHQ+vVIwlnZSMiZ=0A=
-jek2IJP3SZ+COOIHCVxpUaZ4lnzWT4eDqABhMLpIzw6NmGfg+kLBJhouqz81WITr=0A=
-EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D=0A=
-=3Dx94R=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
-
---------------FAmYvbv9SOsIJkXmbYmP2dca--
-
---------------4c9fjepygzUUChgsZOG8RI0I--
-
---------------sdDvFebOna6r80gwWfYLoGsu
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmkI/hUACgkQszaHOrMp
-8lO9CxAAkTV6ECrjeEW8YoXzOfwojGiWk/UaZsa66+xUgtSzvtpfIxidfXwrmhLQ
-1ZttbieGIBnSf7voMZ1McrXnGk4Fk6Ba1YPCF2SB82iMl6ceU6E7PYLSdfacx4G6
-T0z84DmQtI2UpIHY76bzhiG4/ebQPEN4dFOI9GsR1mW4+kSBAzUsJpH6OCcHAvxk
-xtgilz6R9KIuDPOASeQq19KryT7u2Zx+Vi4xJqZytvoWzKVm5h5HsA42kESRiHuJ
-u53RSXbRuqGGqobkiLx/j1T6yaKSFwwVAkU4BOSqW5iTuP66oe8yKyUOCNQO7Qsd
-9p28cXGZhOEus5laaE8NKsK8k5a1QZTx3BsF5VXTC7qAnST1qOw4wUmnWwdpigsL
-E9xhoT5pVSVTBb2Fq7m+elPJs1Nxb7HPPKazn+NlH3NbrV0kg+sDJdfnCwNdpvc8
-l9d0/ix7Z9Ou2lbult08KiaQDI3r/UnizofImL4cHbWI9y13KrNRKcBrlilyxm68
-9+NqmFr6SHrZWUc46/n5yjJYNe7QTMkbUjm3LMa4jRb4hlHlyqA+bCA252uBbx4u
-pPG9fpux4BVaEbu7PchaIbdPonz9fX2eOsljVPxaWLNWRhTGc04ZlXE/R2VJgoHT
-qYWrBPZF89ViZvKW9Dwo8bt+/I9HCdKihOzty40v6JfhF+E54rc=
-=qNkG
------END PGP SIGNATURE-----
-
---------------sdDvFebOna6r80gwWfYLoGsu--
