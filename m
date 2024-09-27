@@ -1,4 +1,4 @@
-Received: (qmail 17907 invoked by uid 550); 4 Jul 2022 10:04:04 -0000
+Received: (qmail 19951 invoked by uid 550); 27 Sep 2024 12:26:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,128 +7,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30370 invoked from network); 4 Jul 2022 08:13:46 -0000
+x-ms-reactions: disallow
+Received: (qmail 19928 invoked from network); 27 Sep 2024 12:26:31 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:to:from
-         :subject:content-transfer-encoding;
-        bh=yblLWs5l8Ze1vVdhRTaqBhtV/KomDJ9B9J2cSDHqm3c=;
-        b=CMHyEdEx5Y6NJgzZLqRRqQTolFCHSzD0idStrctA0z+1FrEf7EyrKPhTSeCZcjwrnt
-         iaoQe/xhJLoPX03l0eVK6yifVAcvqJz3R9G5K31VPkxOx1daiBP5M4eKJFxCP110+/FT
-         kHIbTxTtFJ55/8pIKmmyYZaMbaTguH8e02NZzpkKGWLMnJNahubvpVHSHKhlLjupQOtM
-         GR4qF1P0BmS0LtAIHAyIfF6f4CToEIgrNx0V1z8WEZiXl/G3/JnGAwy3Qf7FynGWWD9q
-         fIEQzG1/9kgtXSpaeoAjCxVOjyeOjdY4rItAoqX7zsoPZMVBcFZBhqDMK0BjZSLXCFVF
-         MklA==
+        d=gmail.com; s=20230601; t=1727439982; x=1728044782; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1Yt9Wbn+QQvDUraxq5d6hJ4uHlFE/Fy5VEtk/lpA+9s=;
+        b=OCYA2MKNVh7HlXBHuJAyntVViyHF8sd9eupinYZ7b2nJymhM5nkEcOL63bqrCRVfLS
+         3AGpdiJfKhTPIIYlMW6y8XjwkDzFEZFFdwS1411I2DxajocEzQ1lDyTQFXXFBqf75goY
+         VNJzjfH8g2bnm9mQv0RVhDuZmsWgmfxsnru7B4DMyVxzlA0dunXo+lSflO/RraRPc3v2
+         8oimg87exrUlAKqVCyWhG+HN7t46+L2lKhWDqW+0Sw38du0qY5+NdVcDHGIggPeO+D73
+         jAkmFxLWRiZI1U+Qx7idJNFOQMrv85/lzQ600J0uZGXP7qB6fi57+JE1JZwMGi01v9fy
+         GWmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:from:subject:content-transfer-encoding;
-        bh=yblLWs5l8Ze1vVdhRTaqBhtV/KomDJ9B9J2cSDHqm3c=;
-        b=5ctk+/Ds5wCZXdTiNEacUb1wz4BS9y1o1LMsTmxUWsGT3H4KeWRzkuG9xZsczfG6Ak
-         DoAiM5jSjQbbK0G+jKZ4WCQfZvm02kq+TNudN83k41SgiKRhUDrtbTHavUeli9Hyh2DK
-         9HQjXIjwbByhnWYmgcd6RapXf8yV2XASmZwI6V3aZBTYLfXP1nBd2ElBVAllm7Tyyl6r
-         2euA9M8ekueibpQJWml9z+StU9pByTKJbZtcr4BB4FC784xxEsbqON4h9XQyEqOwRVcm
-         H7+9f1CdT3dGpQpbvx5fJubK18FWjBXi0ZwmmIe17psS3n+hf10giF13IjJq/1/EYrhC
-         D02w==
-X-Gm-Message-State: AJIora/D+B8KWu1sgUDVS/srrZ977Iis2Yb/FPAuEd0E123NMNmMTPQz
-	zETSI7aHKkErGfgxSIRVZ9vUi/ySRjo=
-X-Google-Smtp-Source: AGRyM1ucptJ5nrTXkbevz7ybZ/tMeFtT2V5yYCIOphnFPXQcBm13rdgWWn5W+xvHp3VK/k/cbOkCIA==
-X-Received: by 2002:a2e:1453:0:b0:25a:725a:db92 with SMTP id 19-20020a2e1453000000b0025a725adb92mr16338235lju.483.1656922414471;
-        Mon, 04 Jul 2022 01:13:34 -0700 (PDT)
-Message-ID: <e6d51d15-43ea-9b1a-c9a7-8b6a2589c851@gmail.com>
-Date: Mon, 4 Jul 2022 10:13:32 +0200
+        d=1e100.net; s=20230601; t=1727439982; x=1728044782;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1Yt9Wbn+QQvDUraxq5d6hJ4uHlFE/Fy5VEtk/lpA+9s=;
+        b=Dm+1tLbNhppJIfgHrFuRAGaZGKonKDgvG//GK5zsbTY2wZre1e54WlhdfGj6W8gP9y
+         vdc0yjJvnc5sLrDg8c/AASv94drpIKeHWHfPuQ7ngaGvBZBFuctiaKxa60z2sr1JmgnL
+         OLChHCGX/KRVWo7qW7gnf3ACEx3JK5VuDB5R4XD4Dqxe5qpSNzkGP+BYJ3rmoetBrObT
+         Gu4cenqUThddhNXHasj7HLg94y3Y89eVZ9+DeZV94CT2ABixyr5rNTBlxQdzcMt8I5Zv
+         z9GrUWqsZ7m2a71bv0Wt7LTJPupaGrk7OTlLTJWOtplwK9dwCXz8laDLs7mfgohxE1Sg
+         fC4A==
+X-Gm-Message-State: AOJu0YyHGbed/7U8ua+an50iufO+CKGVsZSb1ORWMh4ihVW3+t4j7/bK
+	YgA/TJ6DWTIGY9+brjSZqQ85vVpV/f74Ct5gHPr/xRnmBi+HjxCFJdFdJIIPJOD12TAtVcB59o/
+	TI4Hv/q+nhJmzTbCuul3Md1togBul8lVm
+X-Google-Smtp-Source: AGHT+IGGOSiZv1Tisdyc2QDzY0t1WA1SZ8zoBAiTvVMVIqFNb1eheZo5w/l5q2eBQtcCsfDzD2toAeoLNrP2ur/EmZ0=
+X-Received: by 2002:a05:6214:451b:b0:6c4:79df:a2e1 with SMTP id
+ 6a1803df08f44-6cb3b5e0d20mr55557496d6.23.1727439981578; Fri, 27 Sep 2024
+ 05:26:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Content-Language: en-US
+References: <16a2094c-dfa6-a448-b9c7-76ba2dc86f66@apache.org> <ZvR8tR8v-6gpjLsP@itl-email>
+In-Reply-To: <ZvR8tR8v-6gpjLsP@itl-email>
+From: Alexander Patrakov <patrakov@gmail.com>
+Date: Fri, 27 Sep 2024 20:25:54 +0800
+Message-ID: <CAN_LGv2QzuonfGdOsN88Qpe479xupfceCLYkv0yQFtRdf3CFNQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Django: CVE-2022-34265: Potential SQL injection via Trunc(kind) and
- Extract(lookup_name) arguments.
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2024-40761: Apache Answer: Avatar URL leaked
+ user email addresses
 
-https://www.djangoproject.com/weblog/2022/jul/04/security-releases/
+On Thu, Sep 26, 2024 at 5:19=E2=80=AFAM Demi Marie Obenour
+<demi@invisiblethingslab.com> wrote:
+>
+> On Wed, Sep 25, 2024 at 06:28:16AM +0000, Enxin Xie wrote:
+> > Severity: low
+> >
+> > Affected versions:
+> >
+> > - Apache Answer through 1.3.5
+> >
+> > Description:
+> >
+> > Inadequate Encryption Strength vulnerability in Apache Answer.
+> >
+> > This issue affects Apache Answer: through 1.3.5.
+> >
+> > Using the MD5 value of a user's email to access Gravatar is insecure an=
+d can lead to the leakage of user email. The official recommendation is to =
+use SHA256 instead.
+> > Users are recommended to upgrade to version 1.4.0, which fixes the issu=
+e.
+> >
+> > Credit:
+> >
+> > =E5=BC=A0=E5=B2=B3=E7=86=99 (reporter)
+> >
+> > References:
+> >
+> > https://answer.incubator.apache.org
+> > https://www.cve.org/CVERecord?id=3DCVE-2024-40761
+>
+> What is the specific property of SHA256 required here?  Email addresses
+> have low entropy and I suspect they can be easily brute-forced, so
+> leaking the SHA256 has is still bad.  Instead, I would use a seeded PRF
+> with a seed only known to the server, ensuring that the resulting value
+> does not leak any information about the email.
+> --
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
+> Invisible Things Lab
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.0.6 <https://docs.djangoproject.com/en/dev/releases/4.0.6/>`_ and
-`Django 3.2.14 <https://docs.djangoproject.com/en/dev/releases/3.2.14/>`_.
-These release addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+I don't think that a seeded PRF (with a per-server seed) would meet
+the requirements here. The problem is that Gravatar would have no way
+of understanding which email is in question. Indeed, that would
+require storing all emails hashed with all registered server seeds.
 
-CVE-2022-34265: Potential SQL injection via ``Trunc(kind)`` and 
-``Extract(lookup_name)`` arguments
-==================================================================================================
+What would work is an email hash encrypted symmetrically with a
+per-server key. Then Gravatar (who also knows this key) would decrypt
+the email hash and look up the avatar image.
 
-``Trunc()`` and ``Extract()`` database functions were
-subject to SQL injection if untrusted data was used as a
-``kind``/``lookup_name`` value.
+Note that all of the above talks about a hypothetical improved version
+of Gravatar, not what we have right now.
 
-Applications that constrain the lookup name and kind choice to a known safe
-list are unaffected.
-
-This security release mitigates the issue, but we have identified 
-improvements
-to the Database API methods related to date extract and truncate that 
-would be
-beneficial to add to Django 4.1 before it's final release. This will 
-impact 3rd
-party database backends using Django 4.1 release candidate 1 or newer, 
-until they
-are able to update to the API changes. We apologize for the inconvenience.
-
-Thanks Takuto Yoshikai (Aeye Security Lab) for the report.
-
-This issue has severity "high" according to the Django security policy.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 4.1 (currently at beta status)
-* Django 4.0
-* Django 3.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch 
-and to
-the 4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
-following changesets:
-
-* On the `main branch 
-<https://github.com/django/django/commit/54eb8a374d5d98594b264e8ec22337819b37443c>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/284b188a4194e8fa5d72a73b09a869d7dd9f0dc5>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/0dc9c016fadb71a067e5a42be30164e3f96c0492>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/a9010fe5555e6086a9d9ae50069579400ef0685e>`__
-
-The following releases have been issued:
-
-* Django 4.0.6 (`download Django 4.0.6 
-<https://www.djangoproject.com/m/releases/4.0/Django-4.0.6.tar.gz>`_ | 
-`4.0.6 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.0.6.checksum.txt>`_)
-* Django 3.2.14 (`download Django 3.2.14 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.14.tar.gz>`_ | 
-`3.2.14 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.14.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+--=20
+Alexander Patrakov
