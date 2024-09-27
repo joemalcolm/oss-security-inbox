@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5083" "Saturday" "2" "September" "2017" "18:41:51" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<803014.236127154-sendEmail@localhost>" "75" "[oss-security] libzip: memory allocation failure in _zip_cdir_grow (zip_dirent.c)" nil nil nil "9" "2017090218:41:51" "[oss-security] libzip: memory allocation failure in _zip_cdir_grow (zip_dirent.c)" (number mark "U       ago@gentoo.o Sep  2   75/5083  " thread-indent "\"[oss-security] libzip: memory allocation failure in _zip_cdir_grow (zip_dirent.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 18059 invoked by uid 550); 2 Sep 2017 18:42:08 -0000
+Received: (qmail 19873 invoked by uid 550); 27 Sep 2024 00:25:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +7,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18019 invoked from network); 2 Sep 2017 18:42:07 -0000
-Message-ID: <803014.236127154-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Sat, 2 Sep 2017 18:41:51 +0000
+x-ms-reactions: disallow
+Received: (qmail 13321 invoked from network); 27 Sep 2024 00:23:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1727396607;
+	bh=495VcIpvA+XZHandvgguRDILKLt2EPV8m9EB/d+3/RE=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=k+6yPu6GZ/GmvlDrlMeXL4Sy1IjT7INnn1p42RYSV+HW/ZPIj5Ven4Tm8/tvxJdI3
+	 4T7MxZ/ZdqWJR3xNHZwBDh3HbQ+es4JsxoN2fNXrIk1olHfslYFjaLJK0uc1lyUmLx
+	 E56J67J1FAn25l8Y+ayiOkSj+XAaxoHZjz7xkDm8un3ym768ji5/xSSZmL+DH66HUm
+	 rxwMLGMeM1m62QT4YP0v6TQz7ac/5f3bWc8uVquD+QXvCrr84pdVfZDFYmmBVyfxbK
+	 4Bh98r4y6Ri2GZYgjU36odGKAM4iZi7mUSl4665KwHet4FmNWByNoQxXAo2zDY2EPZ
+	 YJxmOcmqU/MhQ==
+Date: Thu, 26 Sep 2024 17:23:24 -0700
+From: Mark Esler <mark.esler@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <ZvX6_CRRRbCHSkzZ@aeon>
+References: <20240926221125.GA10895@openwall.com>
+ <5bf73ba2-d643-40a0-9397-65a2e56dd436@oracle.com>
+ <20240926234952.GA12532@openwall.com>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-573906.669699685"
-Subject: [oss-security] libzip: memory allocation failure in _zip_cdir_grow (zip_dirent.c)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="eVMDXJ87//D+9746"
+Content-Disposition: inline
+In-Reply-To: <20240926234952.GA12532@openwall.com>
+Subject: Re: [oss-security] CUPS printing system vulnerabilities
 
-------MIME delimiter for sendEmail-573906.669699685
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--eVMDXJ87//D+9746
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Description:
-libzip is a library for manipulating zip archives.
+On Fri, Sep 27, 2024 at 01:49:52AM +0200, Solar Designer wrote:
+> Thanks Alan!  On Twitter, Alan further clarified that "once it was clear
+> the info was out there, the distro makers wanted to end the embargo so
+> they could publish advisories telling users to disable cups-browsed
+> instead of waiting for patches to be available - those with VINCE access
+> had hours of prior notice, not just two."
 
-The relevant ASan output of the issue:
+I don't believe this is how distro security teams saw it. Once a
+vulnerability is leaked embargo no longer exists. In this case, the
+original disclosure report was fully leaked online. Since the embargo
+was broken and PoCs were posted, certainly nobody would want the
+originally agreed to coordinated release date (CRD) of October 6th to be
+kept. The intention of holding to a same day CRD (20:00 UTC) was to
+stage the available patches for release and limit impact.
 
-# ziptool $FILE cat index
-==16798==ERROR: AddressSanitizer failed to allocate 0xc0a96a2000 (827476025344) bytes of LargeMmapAllocator (error code: 12)
-==16798==Process memory map follows:
-==16798==End of process memory map.
-==16798==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
-    #0 0x4da9ef in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
-    #1 0x4f5755 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
-    #2 0x4e4d82 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
-    #3 0x4ee685 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
-    #4 0x42608a in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
-    #5 0x42608a in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
-    #6 0x42608a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
-    #7 0x420d3f in __asan::asan_realloc(void*, unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:791
-    #8 0x4d0df1 in realloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:93
-    #9 0x7f4edab1b7e5 in _zip_cdir_grow /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_dirent.c:108:37
-    #10 0x7f4edab1b7e5 in _zip_cdir_new /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_dirent.c:82
-    #11 0x7f4edab390d0 in _zip_read_eocd64 /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:854:13
-    #12 0x7f4edab390d0 in _zip_read_cdir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:285
-    #13 0x7f4edab390d0 in _zip_find_central_dir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:613
-    #14 0x7f4edab390d0 in _zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:200
-    #15 0x7f4edab369b7 in zip_open_from_source /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:148:11
-    #16 0x7f4edab35e93 in zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:74:15
-    #17 0x513392 in read_from_file /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:698:13
-    #18 0x513392 in main /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:1113
-    #19 0x7f4ed9c43680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #20 0x41b058 in _init (/usr/bin/ziptool+0x41b058)
+--eVMDXJ87//D+9746
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Affected version:
-1.2.0
+-----BEGIN PGP SIGNATURE-----
 
-Fixed version:
-1.3.0
+iQIzBAABCgAdFiEE0ZC278nRi4l3b3GjszvZgG6FIMYFAmb1+voACgkQszvZgG6F
+IMbC+w/8CNL8PyMZcjy27rM/R5mLfXcpXhV4vafrTHMQ4aTrMKbHp2tC4hFE3eOn
+OzVwQCMnCbUjSGx5HzMm9KbEbN+U7jzYsDk1DAr2Qjhl+uErtYn+HRekrw4tlFXW
+ZuzofnOtvZcfQuvoWZPusKFI6fQovLHAVTUZHSCAiG3zrMDKt2ViqkUPmrGQE6d6
+euOW5eJ6YUX1xbiJZ26BYubR8J9IrwzE+Nd0ahd+LQH9WBoU5xtWZ3OJnEuunhwR
+E0EmccxesrnN3G9zjm6E8l9KsHkhUljT1Yr0IrFKsCOidK4HyWyamp8TwfXNxNCV
+5fZeIumi7cohpiN7nFq6buoHwIyrX6MzYI+xcPVEFblW2eGKTGiwxVH3notij+dQ
+ntsjMhwbyr/JL1SEnpRKo0Ldm2lOxgRP/2lgdGi09uqOkErUbAsvxCoSibvcMpuc
+mQIxmpbLK6AvIIsLTOMtXEVxJMl7s/scuHPs77atYx3zShfZtyIwOFTZ6UlTwbBb
+M8lqvxZXKcqcftrM97aIqRxj9CwkPknINueLi7kFw3nG1raC79s/Qa3UYdfdLyWY
+5Q709J67+H6YPPVPPKUKzCCxsrx06WDTAwiJoE0PyXDBrunPZOYmo4U5M4wH1mkR
+n6eaQH8xmSTusJjuYn+lLkzQ/Z3ki5guxJ+v+LC3kuxUYnG1oVY=
+=h7Bt
+-----END PGP SIGNATURE-----
 
-Commit fix:
-https://github.com/nih-at/libzip/commit/9b46957ec98d85a572e9ef98301247f39338a3b5
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14107
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00330-libzip-memallocfailure-_zip_cdir_grow
-
-Timeline:
-2017-08-24: bug discovered and reported to upstream
-2017-08-29: upstream released a fix
-2017-09-01: blog post about the issue
-2017-09-01: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/01/libzip-memory-allocation-failure-in-_zip_cdir_grow-zip_dirent-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-573906.669699685--
-
+--eVMDXJ87//D+9746--
