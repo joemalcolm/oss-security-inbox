@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2761" "Tuesday" "28" "April" "2015" "23:32:55" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55406D07.4080607@redhat.com>" "73" "[oss-security] Re: Limited DoS in mailman (requires non standard config)" nil nil nil "4" "2015042905:32:55" "[oss-security] Re: Limited DoS in mailman (requires non standard config)" (number mark "        kseifried@re Apr 28   73/2761  " thread-indent "\"[oss-security] Re: Limited DoS in mailman (requires non standard config)\"\n") "<553FC853.3080009@msapiro.net>" ("<553FBD80.4000809@redhat.com>" "<553FC853.3080009@msapiro.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9679 invoked by uid 550); 29 Apr 2015 05:33:11 -0000
+Received: (qmail 13769 invoked by uid 550); 3 Oct 2024 17:54:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +6,148 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9657 invoked from network); 29 Apr 2015 05:33:10 -0000
-Message-ID: <55406D07.4080607@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <553FBD80.4000809@redhat.com> <553FC853.3080009@msapiro.net>
-In-Reply-To: <553FC853.3080009@msapiro.net>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="RdqpbN2OV7uIWqTcOWGKkhMXOiNEtKPLw"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Date: Tue, 28 Apr 2015 23:32:55 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Limited DoS in mailman (requires non standard config)
-To: Mark Sapiro <mark@msapiro.net>, mailman-security@python.org,
-        "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 13734 invoked from network); 3 Oct 2024 17:54:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+	t=1727978057; bh=kVj8f0bqkuHia9xWqmsdrLqyPrCq3kQE1315LWTWuu8=;
+	h=To:From:Subject:Date:Message-id:Content-Type:MIME-Version;
+	b=w2heKvm/1jt4HadzgWLcvRl2HedJSFtyQoFBTMa3ngQUb7FAwpcuaRaf/xHXuoeeI
+	 ZT182IyeI8KftKqNnYDUmDXLDR9IRCP3fAFY8X7XUEjQistVfets31B2UbWK0dATMM
+	 6F68vkO1t68VCgtS4jo8N2jrkNpopWNwVRQcmhL3cESRyAOzY0xl7UdMBmXcQ9SZdT
+	 Lyw3/jy0ukpsF127iOojTvNrYFEsayroPZoSD5CfZBIHzE4Wv9GooJIQFaxGmfxIxw
+	 76iewNxgym5b8P7/7ZsygMIEKo21wrLtXmqsEr8hRYZOnJK/Go9a73ob9VEyup5g8m
+	 cfWakSQLEYRuA==
+To: oss-security@lists.openwall.com
+From: Larry Cashdollar <larry0@me.com>
+Date: Thu, 3 Oct 2024 17:54:15 +0000 (UTC)
+X-Mailer: iCloud MailClientcurrent MailServer2416B19.10000-master-0-afff60057808
+Message-id: <175c118b-0771-425c-bc9d-d7da8ec5f40b@me.com>
+Content-Type: multipart/alternative; boundary=Apple-Webmail-42--97a49891-170c-4aba-a901-fce4d84a296c
+MIME-Version: 1.0
+X-Proofpoint-ORIG-GUID: _WVc7sgeq47ujQ3_2whoICSD0x1zfDvS
+X-Proofpoint-GUID: _WVc7sgeq47ujQ3_2whoICSD0x1zfDvS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-03_15,2024-10-03_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 mlxlogscore=999
+ adultscore=0 clxscore=1011 bulkscore=0 mlxscore=0 spamscore=0
+ suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2308100000 definitions=main-2410030128
+Subject: [oss-security] cups-browsed vulnerable to DDoS amplification attack
 
---RdqpbN2OV7uIWqTcOWGKkhMXOiNEtKPLw
-Content-Type: text/plain; charset=utf-8
+--Apple-Webmail-42--97a49891-170c-4aba-a901-fce4d84a296c
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+    charset=utf-8;
+    format=flowed
 
-CentOS 6.6 with mailman-2.1.12-18.el6.x86_64
+Hello, oss-security, So while reading Evilsocket's blog post I noticed an a=
+ttack vector that was not discussed DDoS. The problem arises when an attack=
+er sends a crafted packet specifying the address of a target as a printer t=
+o be added. For each packet sent, the vulnerable CUPS server will generate =
+a larger and partially attacker-controlled IPP/HTTP request directed at the=
+ specified target. As a result, not only is the target affected, but the ho=
+st of the CUPS server also becomes a victim, as the attack consumes its net=
+work bandwidth and CPU resources. A simple script can be used to send the m=
+alicious UDP packet to a vulnerable instance of CUPS. The crafted payload d=
+irects CUPS to send an IPP/HTTP request to the target and port specified by=
+ the attacker. The vulnerability appears when cups-browsed attempts to fetc=
+h the URI specified to download the IPP attributes file. This PPD file URI =
+is somewhat arbitrary and can be modified by the attacker. In testing, we f=
+ound this URI payload can be padded out to 989 bytes. This padding will be =
+included twice in the IPP/HTTP request: once in the HTTP headers, and again=
+ in the POST data that will be directed at the targeted system. By using th=
+is padding technique, attackers could further exacerbate the impact of CUPS=
+-supported DDoS attacks by consuming additional bandwidth and resources on =
+the targeted networks and systems. The attacking system only needs to send =
+a single packet to a vulnerable and exposed CUPS service with internet conn=
+ectivity to cause the system running CUPS to begin the attack. It seems upd=
+ating to the latest cups version mitigates this issue for most linux system=
+s. I've requested a CVE ID to be able to discern between the RCE and the Do=
+S vulnerability. Attack requests appear like the following in server logs: =
+x.x.x.x- - [03/Oct/2024:09:58:01 +0000] "POST /printers/ HTTP/1.1" 404 462 =
+"-" "CUPS/2.4.2 (Linux 6.1.0-25-amd64; x86_64) IPP/2.0" Or x.x.x.x - - [03/=
+Oct/2024:09:58:01 +0000] "POST /classes/ HTTP/1.1" 404 462 "-" "CUPS/2.4.2 =
+(Linux 6.1.0-25-amd64; x86_64) IPP/2.0" Additional details can be found her=
+e: https://www.akamai.com/blog/security-research/october-cups-ddos-threat T=
+hanks, Larry Cashdollar=
 
-Which is.. ergh. I did not realize how old this is.
-
-On 04/28/2015 11:50 AM, Mark Sapiro wrote:
-> On 04/28/2015 10:04 AM, Kurt Seifried wrote:
->> So I recently ran into a flaw in mailman where I had imported a text
->> list of email addresses of people that wanted to sign up. It turns out
->> one of the addresses was in the form "user@domain.tld/random", not sure
->> how that snuck in but anyways. When sending email to this list it fails
->> due to that address being present:
->=20
->=20
-> What Mailman version is this?
->=20
-> I don't think any recent version would add that address to a list
-> regardless of how it was attempted to be added.
->=20
->=20
->> from mailman posts log:
->>
->> Apr 28 16:46:23 2015 (29704) post to testing from testing-request@XXX,
->> size=3D1786, message-id=3D<mailman.0.1430239582.16535.testing@XXX>, 1 fa=
-ilures
->>
->> from smtp-failure log:
->>
->> smtp-failure:Apr 28 16:46:44 2015 (29704) All recipients refused:
->> {'kurt@seifried.org/foo': (501, '5.1.3 Bad recipient address syntax')},
->> msgid: <CAEo5KB7F3LNCv7Q09ppqBRgUZTaGizyRHx1WS81w8K7S8Yhk7A@YYY>
->=20
->=20
-> And I think the only address refused was the one kurt@seifried.org/foo
-> address. The 'All recipients refused:' refers to all recipients in that
-> SMTP transaction, not necessarily every list member.
->=20
-> What does your MTA log say about this delivery? And what does Mailman's
-> 'smtp' log say?
->=20
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+--Apple-Webmail-42--97a49891-170c-4aba-a901-fce4d84a296c
+Content-Type: multipart/related;
+    type="text/html";
+    boundary=Apple-Webmail-86--97a49891-170c-4aba-a901-fce4d84a296c
 
 
---RdqpbN2OV7uIWqTcOWGKkhMXOiNEtKPLw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+--Apple-Webmail-86--97a49891-170c-4aba-a901-fce4d84a296c
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+    charset=utf-8;
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+<html><body><div style=3D"font-size: 16px; font-style: normal; font-variant=
+-caps: normal; font-weight: 400; letter-spacing: normal; text-align: start;=
+ text-indent: 0px; text-transform: none; white-space: normal; word-spacing:=
+ 0px; -webkit-text-stroke-width: 0px; text-decoration: none; box-sizing: bo=
+rder-box; clear: none; float: left; width: 671px; color: rgb(38, 42, 46); f=
+ont-family: Roboto, Helvetica, Arial, sans-serif; font-variant-ligatures: n=
+ormal; orphans: 2; widows: 2; background-color: rgb(255, 255, 255); text-de=
+coration-thickness: initial; text-decoration-style: initial; text-decoratio=
+n-color: initial;" class=3D"text aem-GridColumn aem-GridColumn--default--12=
+"><div style=3D"box-sizing: border-box;" data-cmp-data-layer=3D"{&quot;text=
+-49add82f97&quot;:{&quot;@type&quot;:&quot;akamai/components/text&quot;,&qu=
+ot;repo:modifyDate&quot;:&quot;2024-10-01T20:26:08Z&quot;,&quot;xdm:text&qu=
+ot;:&quot;<p>While reviewing the technical write-up about the vulnerabiliti=
+es, we discovered that another attack vector was not discussed: DDoS. DDoS =
+continues to be a viable attack vector used to harass and disrupt victims a=
+cross the internet, from major industries and governments to small content =
+creators, online shops, and gamers. Although the original analysis focused =
+on the RCE, which could have a more severe outcome, DDoS amplification is a=
+lso easily abused in this case.</p>\r\n<p>The problem arises when an attack=
+er sends a crafted packet specifying the address of a target as a printer t=
+o be added. For each packet sent, the vulnerable CUPS server will generate =
+a larger and partially attacker-controlled IPP/HTTP request directed at the=
+ specified target. <b>As a result, not only is the target affected, but the=
+ host of the CUPS server also becomes a victim, as the attack consumes its =
+network bandwidth and CPU resources</b>.</p>\r\n&quot;}}" class=3D"cmp-text=
+"></div></div><div>Hello, oss-security,<br></div><div><br></div><div>So whi=
+le reading Evilsocket's blog post I noticed an&nbsp;attack vector that was =
+not discussed DDoS. &nbsp;The problem arises when an attacker sends a craft=
+ed packet specifying the address of a target as a printer to be added. For =
+each packet sent, the vulnerable CUPS server will generate a larger and par=
+tially attacker-controlled IPP/HTTP request directed at the specified targe=
+t.&nbsp;As a result, not only is the target affected, but the host of the C=
+UPS server also becomes a victim, as the attack consumes its network bandwi=
+dth and CPU resources.<br></div><div>A simple script can be used to send th=
+e malicious UDP packet to a vulnerable instance of CUPS. The crafted payloa=
+d directs CUPS to send an IPP/HTTP request to the target and port specified=
+ by the attacker.&nbsp;The vulnerability appears when&nbsp;cups-browsed&nbs=
+p;attempts to fetch the URI specified to download the IPP attributes file.<=
+br></div><div><div><br></div></div><div>This PPD file URI is somewhat arbit=
+rary and can be modified by the attacker. In testing, we found this URI pay=
+load can be padded out to 989 bytes. This padding will be included twice in=
+ the IPP/HTTP request: once in the HTTP headers, and again in the POST data=
+ that will be directed at the targeted system.<br></div><div><div><br></div=
+></div><div>By using this padding technique, attackers could further exacer=
+bate the impact of CUPS-supported DDoS attacks by consuming additional band=
+width and resources on the targeted networks and systems.<br></div><div><di=
+v><br></div></div><div>The attacking system only needs to send a single pac=
+ket to a vulnerable and exposed CUPS service with internet connectivity to =
+cause the system running CUPS to begin the attack.<br></div><div><br></div>=
+<div>It seems updating to the latest cups version mitigates this issue for =
+most linux systems. &nbsp;I've requested a CVE ID to be able to discern bet=
+ween the RCE and the DoS vulnerability.<br></div><div><br></div><div>Attack=
+ requests appear like the following in server logs:</div><div><br></div><di=
+v>x.x.x.x- - [03/Oct/2024:09:58:01 +0000] "POST /printers/ HTTP/1.1" 404 46=
+2 "-" "CUPS/2.4.2 (Linux 6.1.0-25-amd64; x86_64) IPP/2.0"<br></div><div>Or&=
+nbsp;<br></div><div>x.x.x.x - - [03/Oct/2024:09:58:01 +0000] "POST /classes=
+/ HTTP/1.1" 404 462 "-" "CUPS/2.4.2 (Linux 6.1.0-25-amd64; x86_64) IPP/2.0"=
+<br></div><div><br></div><div>Additional details can be found here:&nbsp;<a=
+ rel=3D"noopener noreferrer" href=3D"https://www.akamai.com/blog/security-r=
+esearch/october-cups-ddos-threat">https://www.akamai.com/blog/security-rese=
+arch/october-cups-ddos-threat</a><br></div><div><br></div><div><br></div><d=
+iv>Thanks,<br></div><div>Larry Cashdollar</div></body></html>=
 
-iQIcBAEBAgAGBQJVQG0HAAoJEBYNRVNeJnmTZZQP/A71dqI/LYnXdfud3NM0OQww
-5SqnxuLb9YqClKUwAp5Itc+H6mtpC8ebz8gHI7SCNtiGqcGzEMnhQpsEVlDQUGkb
-FvCZl+MWl4piq001oCcxoeieHjas42kqgUpMN8K1wO9Qs+EGk/mBbQTrNgEOnXJ0
-JP9v1MEV3jEDyKf028V34o2ufUFjK2IwYLOD/hgovhaZfwj6o5vNNpLh5zBJI9fG
-nee2pcMjynEb+ccIHp5sC+sevPu15sJsXWu1lFR5PhYp0z+bnSCp9Phw1ZOaiTu/
-YSlFXUraVQGXiAO3aGJhbWMdvZsrMkxERHBcnHO/7ucJOKQmuZTxO8Nc0CDJChN7
-9lEax7hjmPpEHJGfA+Xcu00h/OL8aiRWi0FbC6jqMWS2ogRETGl8HDlEMwNqRyJh
-1UuysRmJ7K1VowNwb23ohcqFWyJz4O9KIxHren188vQ26XH5Mx037LKuTv8ltxoc
-X/2fjkTRJa3W5jiwJhbS7I1paLP9ATB8ZMKqWjxva4tBqqgKJydh42AOvVJht+kT
-d5VCgkLLiXpN1OiLJpiBQpkUwf6ZMsI1JyeNDcJIIM+hZnydHb9T5hLNp6B61K5x
-N5a5jLAwoLC36nFy+sFYmtKC4t2HsMElfpQkCZhk7so4sfR0hJoj8pwSte8BxO3n
-8pA/ldM6aeXJ+0wNU9E8
-=9w8L
------END PGP SIGNATURE-----
+--Apple-Webmail-86--97a49891-170c-4aba-a901-fce4d84a296c--
 
---RdqpbN2OV7uIWqTcOWGKkhMXOiNEtKPLw--
+--Apple-Webmail-42--97a49891-170c-4aba-a901-fce4d84a296c--
+
