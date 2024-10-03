@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1680" "Friday" "22" "June" "2018" "12:26:07" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20180622192607.GA27571@hunt>" "60" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062219:26:07" "[oss-security] Intel hyper-threading security issues" (number mark "        seth.arnold@ Jun 22   60/1680  " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<87vaabea58.fsf@concordia.ellerman.id.au>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621093754.GY53290@symphytum.spacehopper.org>" "<CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>" "<CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>" "<718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>" "<20180621125049.GA14978@openwall.com>" "<87vaabea58.fsf@concordia.ellerman.id.au>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9896 invoked by uid 550); 22 Jun 2018 19:26:21 -0000
+Received: (qmail 30499 invoked by uid 550); 3 Oct 2024 16:07:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +6,139 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9869 invoked from network); 22 Jun 2018 19:26:20 -0000
-Message-ID: <20180622192607.GA27571@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
- <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>
- <20180621093754.GY53290@symphytum.spacehopper.org>
- <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>
- <CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>
- <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>
- <20180621125049.GA14978@openwall.com>
- <87vaabea58.fsf@concordia.ellerman.id.au>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
-Content-Disposition: inline
-In-Reply-To: <87vaabea58.fsf@concordia.ellerman.id.au>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Date: Fri, 22 Jun 2018 12:26:07 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Intel hyper-threading security issues
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 26468 invoked from network); 3 Oct 2024 11:55:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=powerdns.com;
+	s=202306; t=1727956537;
+	bh=VdAwLjT3vnJdkiG4Tp+ALosXVx97USpIOZYm1aFessE=;
+	h=Date:From:To:Subject:From;
+	b=CAbK6FWOAQQQc0IGCKF9MZL+Sir1VgA5k+W0+TDLEVzDBxRZ+HjEFCgYQccQKL2Q4
+	 94uv0VFOn7sgljH3hLRhBV5+UQ2xHVkLClq6YAZ/G8xd4IPmoSP08Nrb3XHa1WKPHH
+	 E2vGfoo3hRolPCq89WJTv/ekkBqIQy/h7HJ/E5HFN33vPnH+NlHfBgrTlkYP8Z8KKe
+	 t/QlPPA5ibk7F0H3zkaD9FEdSHSDTKZPYeVqMyy3BYqnoKD7GuOsahZXXE1b9PD7iB
+	 WCNMV1f1Jy8GHbc3lGNggOg+FrimuBKis6SE+MUYRNszzWzLFJYaw6HNjg0UDCrHQ2
+	 jnHECi1AZu3VQ==
+Date: Thu, 3 Oct 2024 13:55:36 +0200 (CEST)
+From: Otto Moerbeek <otto.moerbeek@powerdns.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <389505725.2464.1727956536978@appsuite.open-xchange.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2463_440522597.1727956536977"
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v7.10.6-Rev69
+X-Originating-Client: open-xchange-appsuite
+Subject: [oss-security] PowerDNS Security Advisory 2024-04
 
---ReaqsoxgOBHFXBhH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------=_Part_2463_440522597.1727956536977
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 22, 2018 at 02:08:03PM +1000, Michael Ellerman wrote:
-> See the script below for example, which shows CPUs grouped by core.
+   Hello,
 
-> #!/usr/bin/python3
->=20
-> import os
-> import glob
->=20
-> by_core =3D {}
->=20
-> for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
->     num =3D int(path.split('/')[5].replace('cpu', ''))
->     core_id =3D int(open(path).read(), 10)
->     by_core.setdefault(core_id, []).append(num)
->=20
-> for core in sorted(by_core.keys()):
->     print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[cor=
-e])])))
->=20
+   Today we have released PowerDNS Recursor 4.9.9, 5.0.9 and 5.1.2.
 
-Note that this gives misleading results on multi-socket systems:
+   These releases fix PowerDNS Security Advisory 2024-04: Crafted
+   responses can lead to a denial of service due to cache inefficiencies
+   in the Recursor.
+     __________________________________________________________________
 
-0: 0, 8, 16, 24
-1: 1, 9, 17, 25
-2: 2, 10, 18, 26
-3: 3, 11, 19, 27
-4: 4, 12, 20, 28
-5: 5, 13, 21, 29
-6: 6, 14, 22, 30
-7: 7, 15, 23, 31
+   PowerDNS Security Advisory 2024-04: Crafted responses can lead to a denial of
+   service due to cache inefficiencies in the Recursor
 
-This system has two sockets, eight cores per socket, two threads per core.
+   CVE: CVE-2024-25590
+   Date: 3rd of October 2024.
+   Affects: PowerDNS Recursor up to and including 4.9.8, 5.0.8 and 5.1.1
+   Not affected: PowerDNS Recursor 4.9.9, 5.0.9 and 5.1.2
+   Severity: High
+   Impact: Denial of service
+   Exploit: This problem can be triggered by an attacker publishing a crafted zone
+   Risk of system compromise: None
+   Solution: Upgrade to patched version
 
-Solar's cpuinfo reports;
-$ ./cpuinfo
-Found 32 logical processors across 16 physical cores
 
-Thanks
+   An attacker can publish a zone containing specific Resource Record
+   Sets. Repeatedly processing and caching results for these sets can lead
+   to a denial of service.
 
---ReaqsoxgOBHFXBhH
-Content-Type: application/pgp-signature; name="signature.asc"
+   CVSS Score: 7.5, see CVSS Calculator[1]
 
------BEGIN PGP SIGNATURE-----
+   The remedy is: upgrade to a patched version.
 
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAlstTUoACgkQ8yFyWZ2N
-LpdhHwf/b3IjdS/4VgG+ypXls8jwvFzAlZCynIYEOX/QOhlvJjOHgGpNXJsTGrkK
-vuxxmHMSZntma6qFm1lBVheKcYkQ+mHYtFCHaiVQ27NxancaSaSBeFE3Cltii3uo
-V7aJ5xsPNJGS/8sjpkWWaREpdqHl/AS0mj2GeZcZwfULtRibqbiBLtmC0BgzBbED
-Q3OLqWyz0I5R1cvnyoH9Euj2W/ms5DtS3NqKCvZ7d6sCyXvmaWovdvYjHUtgDA0X
-bSkVNuvhmcB/r3uktES2hy6GXIrKLls5v15L0EBrXcwRekKLtx3Uc4JFeMefr3Dt
-gmFouwm19wLhALXlWt20ckPncUpYPw==
-=Q+Bd
------END PGP SIGNATURE-----
+   We would like to thank Toshifumi Sakaguchi for bringing this issue to
+   our attention and assisting in validating the patches.
+     __________________________________________________________________
 
---ReaqsoxgOBHFXBhH--
+   Please refer to the changelogs  (4.9.9[2], 5.0.9[3], 5.1.2[4]) and
+   upgrade guide[5] for additional details.
+
+   Please send us all feedback and issues you might have via the mailing
+   list[6], or in case of a bug, via GitHub[7].
+
+   The tarballs (4.9.9[8], 5.0.9[9], 5.1.2[10]) (with signature files
+   4.9.9[11], 5.0.9[12], 5.1.2[13]) are available from our
+   download server[14] and packages for several distributions are
+   available from our repository[15].
+
+   We are grateful to the PowerDNS community for the reporting of bugs,
+   issues, feature requests, and especially to the submitters of fixes and
+   implementations of features.
+
+References
+
+   1. https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H&version=3.1
+   2. https://doc.powerdns.com/recursor/changelog/4.9.html#change-4.9.9
+   3. https://doc.powerdns.com/recursor/changelog/5.0.html#change-5.0.9
+   4. https://doc.powerdns.com/recursor/changelog/5.1.html#change-5.1.2
+   5. https://docs.powerdns.com/recursor/upgrade.html
+   6. https://mailman.powerdns.com/mailman/listinfo/pdns-users
+   7. https://github.com/PowerDNS/pdns/issues/new/choose
+   8. https://downloads.powerdns.com/releases/pdns-recursor-4.9.9.tar.bz2
+   9. https://downloads.powerdns.com/releases/pdns-recursor-5.0.9.tar.bz2
+  10. https://downloads.powerdns.com/releases/pdns-recursor-5.1.2.tar.bz2
+  11. https://downloads.powerdns.com/releases/pdns-recursor-4.9.9.tar.bz2.sig
+  12. https://downloads.powerdns.com/releases/pdns-recursor-5.0.9.tar.bz2.sig
+  13. https://downloads.powerdns.com/releases/pdns-recursor-5.1.2.tar.bz2.sig
+  14. https://downloads.powerdns.com/releases/
+  15. https://repo.powerdns.com/
+
+
+--
+
+kind regards,
+Otto Moerbeek
+Senior Developer PowerDNS
+
+
+Phone: +49 2761 75252 00 Fax: +49 2761 75252 30
+Email: otto.moerbeek@open-xchange.com
+
+
+-------------------------------------------------------------------------------------
+Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366
+Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin
+Chairman of the Board: Dr. Paul-Josef Patt
+
+PowerDNS.COM BV, Koninginnegracht 5, 2514 AA Den Haag, The Netherlands
+Managing Director: Robert Brandt
+-------------------------------------------------------------------------------------
+------=_Part_2463_440522597.1727956536977
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=signature.asc
+X-Part-Id: 88d4ad91b93045cfb1f43c90033fa3db
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0NClZlcnNpb246IEJDUEcgdjEuNjUNCg0KaVFF
+Y0JBQUJDZ0FHQlFKbS9vV25BQW9KRU9yS3VRc1pZK3dydy9ZSCt3WFBLZ1JnYzJTZmlrZ3BtZWVa
+NnZaZw0KeGYwaHR4WVh1SGFHMlJFak54R2FBUUJNYjVFR1VsTTRCWm5TSFU0Zk56V09lUjRpZ05h
+bzlDNDUwQzRjKzlsZg0Kb1lXa1lkalI5ZEhvRnVFYkVKS3F4cnZOSE9HRk9JUXYvWG5aM3A0eUc2
+WjNDbnphWWRCMHR0dkZJYTdPRTJWTQ0Kd2xUT21oRWpZSmRCQUdRTXNBd3ZXZ3NuYlVTVG5NTTNw
+Qlora2hFKzIyMmNMdkhUTHpYNFkvQldHOXQvSjVBSA0KTjlYOE52ejMrSU5ucG5YNHBXZlduOXc2
+UUU0eEIvOWI1ODlXcktLVVhkb0JFYi9vQnd0MkFIOVhMVmFjVjVyNw0KWVc4eXpuYk4xR2w0MFZW
+czRtNHZCQWtLU0RGaEp5akt2NE03cFJTa2RYMm5SL2JlRklXOUVYWmRFVWRuYWtFPQ0KPTFsMHgN
+Ci0tLS0tRU5EIFBHUCBTSUdOQVRVUkUtLS0tLQ0K
+
+------=_Part_2463_440522597.1727956536977--
