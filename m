@@ -1,4 +1,4 @@
-Received: (qmail 16057 invoked by uid 550); 15 Jul 2024 00:31:26 -0000
+Received: (qmail 19832 invoked by uid 550); 4 Oct 2024 12:27:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +7,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1967 invoked from network); 15 Jul 2024 00:23:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721002974; x=1721607774; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nNMpZp7TNlGSHnnpYWGMbKYLzaYDt6Rrg5TlWjSkaH8=;
-        b=dWQWfDxwNT36BTDqU0dOsE49eb5wL9mv2ywJwqrwobr/mnOW2Gkgaij4Z7HBPKgaXp
-         SAxHIrs+DhEbsvYCoS7oRhb1xSU1K6nUieTq8swRFGNfyN9a/afSStqGopuze1f3NrkV
-         lj50SGVFF196Iloh9p+RAU3SijxUyp9KolYFR04l2M0qShaUSYks04ERtHHWmeEi6UWD
-         qZcXkWSfDwMffdomjDalKMEmuvRfrA6W/GHK8kLYZfp3AK6YCsXpeckM36FlIahihpyh
-         GAKjIkizvzB3jYO9YfwYdcAfho4EciHdciTZChWs6dVP/sk7FGowvv6lXesbtSlsmu/G
-         mLwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721002974; x=1721607774;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nNMpZp7TNlGSHnnpYWGMbKYLzaYDt6Rrg5TlWjSkaH8=;
-        b=TRPHxMW6+ksyBE55N8tHfkSWNbPQYaK/+zgx73s4XuvLvbOEjQK5DsmxIr+dKJzfDM
-         23nAatfF/8EhwzmfPpxO5bAf7wbiZlGDLCLBzrRaJxUYJf4zssySh7CrfVM5p/Gskg8X
-         1SVi6g0RTwwLHI1Zj8byh+EU5OF7T3wEnioc/K5cQUstCPnhzLXkvzw2D7ytOnm7Mz4O
-         zDkS3jF5w19U4QI/4Remik5ajZdSgLW3ZWs4IRQwRGsGScTv6qTXs9kKkt+QCUgKUZrJ
-         ntibowST0yQE9rV8a6zFPmRK6gDTuwDrC0DXzCOkBktHSO97HuVNgSaxD5rgXkcsVO+5
-         rINA==
-X-Gm-Message-State: AOJu0YzaH0sSe03Bit0F8aFd9cvPZ5zi3YDJy8RiOP5YYBvv405ygN2i
-	Kt0R8NXbss0FotD0WrGNjf/MElV79/JX85If9xXMTj6VseqG7aOXJoIBBQ==
-X-Google-Smtp-Source: AGHT+IGGjmphTyN6vb/VoVB5NF7CiYGi/y6LQner7VymaYW9Fz1Ei0oeyGAhGOjes0DNjazwSOg/9Q==
-X-Received: by 2002:a05:6808:14cf:b0:3da:aba0:8243 with SMTP id 5614622812f47-3daaba08b76mr11611170b6e.28.1721002973560;
-        Sun, 14 Jul 2024 17:22:53 -0700 (PDT)
-Message-ID: <66946BDB.4070709@gmail.com>
-Date: Sun, 14 Jul 2024 19:22:51 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 SeaMonkey/1.1.17 Mnenhy/0.7.6.0
-MIME-Version: 1.0
+x-ms-reactions: disallow
+Received: (qmail 19792 invoked from network); 4 Oct 2024 12:27:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+	t=1728044857; bh=2q3y1aGxxC5T8HXi+U+0v45nSRhRpMm5ca86WRo1CFM=;
+	h=From:To:Subject:MIME-Version:Date:Message-ID:Content-Type;
+	b=xjJMbwR5kR32NPpWkeZVQ8eWnz9tSUPjRluR0+u0flSI0wyDftYlzfv0bSQI/8w/O
+	 T5uclNRrenA6zVGFm6z9qk38PkzkqO+kXF7noTjDiAc5Cg+4YwaesIhsGeILbQcYZ+
+	 6ZYDY3FPPOI1JE3nCdufzsquAMXlu9pBmzEQmb2HYAulmb8RTHgmxbyawEvehtTty9
+	 1glTPFJyAknZFji0J2CYrgLa8bHxKYsV5v1qoe/z5NTSywYC5VOKubBAezQZMwYy6e
+	 1clrZS/aHIP1H+2v+8w4+bLIinubI5+GGb3UpBSDuMWeuPwhJOQ7hfcVL9pxc2nTc8
+	 LRn9wI4qzJCXA==
+From: larry0@me.com
 To: oss-security@lists.openwall.com
-References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com> <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org> <20240710214412.8IXhxf8b@steffen%sdaoden.eu> <83F0CF09-6257-4949-9332-E6990CFE14C7@dwheeler.com> <20240712170603.XJ6iwd6q@steffen%sdaoden.eu> <6691E39C.8090600@gmail.com> <20240713205858.LSnJJGoo@steffen%sdaoden.eu>
-In-Reply-To: <20240713205858.LSnJJGoo@steffen%sdaoden.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] ASLRn't is still alive and well on x86 kernels,
- despite CVE-2024-26621 patch
+MIME-Version: 1.0
+X-Mailer: Mail.Ru Mailer 1.0
+X-SenderField-ReMsg: 17279818982001526801
+Date: Fri, 04 Oct 2024 15:27:32 +0300
+X-Letter-Fingerprint: B6SaGdACfQmKjcgMQ0iZKHqStceA2Lq1
+X-Priority: 3 (Normal)
+Message-ID: <1728044852.266451931@f125.i.mail.ru>
+Content-Type: multipart/alternative;
+	boundary="--ALT--4c22e7b308054617aa7d4a689218856b1728044852"
+In-Reply-To: <c04ebb34-521b-42d1-bd50-c2ea9d0e78f7@app.fastmail.com>
+References: <175c118b-0771-425c-bc9d-d7da8ec5f40b@me.com>
+ <c04ebb34-521b-42d1-bd50-c2ea9d0e78f7@app.fastmail.com>
+Authentication-Results: f191.i.mail.ru; auth=pass smtp.auth=larry0@me.com smtp.mailfrom=larry0@me.com
+X-Mailru-Src: fe
+X-7564579A: B8F34718100C35BD
+X-77F55803: 119C1F4DF6A9251C969CAEB1290DE2A916C3273DA75380A65414895432B1EA68AA58F7AA52DA7B4B7FEECB1FA3D91BC1791B66515356476FDA8209840CF9F61D83F5067A33008722
+X-7FA49CB5: 70AAF3C13DB70168C09775C1D3CA48CFE1713BA350DC5B2FB2086D80B0504778CF19DD082D7633A06830A0AE1C35374264CD17681C2FEB7A176DF2183F8FC7C059E9FDA37C8E6689C4224003CC836476101E9EAE1CD2240ABFD28B28ED4578739E625A9149C048EEC24E1E72F37C03A029508FF2E8683A3EB287FD4696A6DC2FA8DF7F3B2552694A4E2F5AFA99E116B42401471946AA11AF0E30A4C9C8E338DAC8F626AC60F7C5938F08D7030A58E5AD1A62830130A00468AEEEE3FBA3A834EE7353EFBB553375669EE6824C75C491FA2009C82DA5FA853FD6D10B08DBAD9F4D1DF9E95F17B0083B26EA987F6312C9EC4B6963042765DA4BC26CFBAC0749D213D2E47CDBA5A96583C09775C1D3CA48CF17B107DEF921CE79117882F4460429724CE54428C33FAD30A8DF7F3B2552694AC26CFBAC0749D213D2E47CDBA5A9658378DA827A17800CE71AE4D56B06699BBC9FA2833FD35BB23DF004C906525384302BEBFE083D3B9BA71A620F70A64A45A98AA50765F79006372E808ACE2090B5E1725E5C173C3A84C3C5EA940A35A165FF2DBA43225CD8A89F05DF73978FA004956D8C47C27EEC5E9FB5C8C57E37DE458BEDA766A37F9254B7
+X-C1DE0DAB: 0D63561A33F958A5E689F1E60BFBE8C78D061842665E03C6064A0C88EC71CD91F87CCE6106E1FC07E67D4AC08A07B9B04CB6874B0BCFF0B8CB5012B2E24CD356
+X-C8649E89: 1C3962B70DF3F0AD75DCE07D45A7499577DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3455049D7B43D89D64C3B8FBD08C4216AFAE2E0FABE8953A3C67D2B24FA209A8F98A0D8171FAC9A6311D7E09C32AA3244CDB888F91BBADECDAA42057EBB31B5F80408A6A02710B7304BC4AF6B5DE6957CB5DA084F8E80FEBD386533F5C967D5B7A6DEFB659808BE026
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u8Y3PrTqANeitKFiSd6Yd7yPpbiiZ/d5BsxIjK0jGQgCHUM3Ry2Lt2G3MDkMauH3h0dBdQGj+BB/iPzQYh7XS329fgu+/vnDh7w9vL7r1wArFbzOoMmjnQA==
+X-Mailru-MI: 80010000000000000800
+X-Mailru-Sender: 688466AD60A6312E5515A69CB34D3B56E7A454A42FB79047AA991965355E1F3EFF2A4E693A2E2139DB2C3BB88C2E5E6ACB0E562D0E9D40F1109A936D8A02D04098D56EB411B7666E3DDE9B364B0DF289AE208404248635DF
+X-Mras: Ok
+X-Proofpoint-GUID: ItaojUEMYqD0zVCvsi2ljxIvGFRC-NNL
+X-Proofpoint-ORIG-GUID: ItaojUEMYqD0zVCvsi2ljxIvGFRC-NNL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-04_09,2024-10-03_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=999
+ clxscore=1015 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2410040091
+Subject: =?UTF-8?B?UmVbMl06IFtvc3Mtc2VjdXJpdHldIGN1cHMtYnJvd3NlZCB2dWxuZXJhYmxl?=
+ =?UTF-8?B?IHRvIEREb1MgYW1wbGlmaWNhdGlvbiBhdHRhY2s=?=
 
-Steffen Nurpmeso wrote:
-> [...]
->
-> Some findings:
->   . I note that the mentioned files are writable by only root (and
->   i would assume MAP_DENYWRITE to only work if i could do so
->   myself).
->   
+----ALT--4c22e7b308054617aa7d4a689218856b1728044852
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-I believe that most executables are writable only by root, but available 
-to unprivileged users.  Since the purpose of MAP_DENYWRITE seems to have 
-been ensuring that executables cannot change out from underneath running 
-programs, it would need to work when unprivileged users map the file; 
-thus the DoS problem.
+CgpIZWxsbyBvc3Mtc2VjdXJpdHksCgoKVGh1cnNkYXksIE9jdG9iZXIgMywgMjAyNCBhdCAyOjU4
+4oCvUE0gLTA0OjAwIGZyb20gcGV0ZXJAN2JpdHMubmwgIDxwZXRlckA3Yml0cy5ubD46Cj5IZWxs
+bywKPgo+T24gVGh1LCBPY3QgMywgMjAyNCwgYXQgMTk6NTQsIExhcnJ5IENhc2hkb2xsYXIgd3Jv
+dGU6Cj4+IEkndmUgcmVxdWVzdGVkIGEgQ1ZFIElEIHRvIGJlIGFibGUgdG8gZGlzY2VybiBiZXR3
+ZWVuIHRoZSBSQ0UgYW5kIHRoZSBEb1MgdnVsbmVyYWJpbGl0eS4KPgo+SSByZXBvcnRlZCB0aGlz
+IGFzICBodHRwczovL2dpdGh1Yi5jb20vT3BlblByaW50aW5nL2N1cHMtZmlsdGVycy9zZWN1cml0
+eS9hZHZpc29yaWVzL0dIU0EtcnE4Ni1jN2c2LXIyaDggbGFzdCB3ZWVrLCBhbmQgaW4gdGhlIGVk
+aXRzIGF0IHRoZSB0b3AgKGJ5IHVwc3RyZWFtLCBhYm92ZSB0aGUgU3VtbWFyeSBoZWFkaW5nKSBp
+dCBsb29rcyBsaWtlIHRoZXkgZGlkIG5vdCB3YW50IChvciBkaWQgbm90IGNvbnNpZGVyKSB0byBy
+ZXF1ZXN0IGEgc2VwYXJhdGUgQ1ZFIGZvciB0aGlzLiBQbGVhc2UgZG8gY29vcmRpbmF0ZSB3aXRo
+IHRoZW0gaWYgeW91IGRlY2lkZSB0byBnbyBhaGVhZCB3aXRoIHRoaXMgcmVxdWVzdC4KPgo+KEkg
+ZGlkIG5vdGljZSwgYW5kIGNhbiBzZWUgdmFsdWUgaW4sIFdpbGwgRG9ybWFubidzIHN1Z2dlc3Rp
+b24gaW4gdGhlIG90aGVyIHRocmVhZCB0aGF0IGl0IG1pZ2h0IG1ha2Ugc2Vuc2UgdG8gaGF2ZSBt
+b3JlIGZpbmUtZ3JhaW5lZCBDVkVzIGZvciB0aGlzIGNvbGxlY3Rpb24gb2YgcHJvYmxlbXMuKQo+
+Cj4tLSAKPsKgwqBQZXRlciB2YW4gRGlqawo+wqDCoCBwZXRlckA3Yml0cy5ubApUaGlzIHZ1bG5l
+cmFiaWxpdHkgaGFzIGJlZW4gYXNzaWduZWQgQ1ZFLTIwMjQtNDc4NTAuCgpUaGFua3MsCkxhcnJ5
+IEMk
 
->   . Capabilities have become more fine-grained.
->   . I always whimper when i have to rm(1) a running executable before
->   placing an updated variant on Linux, on BSDs i simply over-cp(1)
->   (and i do not understand as long as one gets either the one or
->   the other when executing the path).
->   
-Simple solution:
-    - write the new executable under a temporary name
-    - use link(2) to create a new name for the existing executable
-    - use rename(2) to atomically replace the existing executable
-    - use unlink(2) to remove the old version after any needed checks
-
-You can dispense with link(2) and unlink(2) if you do not want to 
-preserve a backup of the old executable.  Using this method will change 
-the executable's inode number (meaning that it really is a different 
-file) and that means that the old version can remain on disk for as long 
-as it remains in use, even after its last name has been removed.
-
-
--- Jacob
+----ALT--4c22e7b308054617aa7d4a689218856b1728044852--
