@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1107" "Friday" "28" "August" "2015" "05:32:36" "+0200" "pcheng pcheng" "pcheng@gmx.com" "<trinity-ddfb0472-ffff-435b-9f9b-606ca08a9c4a-1440732755137@3capp-mailcom-lxa06>" "25" "[oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp" nil nil nil "8" "2015082803:32:36" "[oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp" (number mark "U       pcheng@gmx.c Aug 28   25/1107  " thread-indent "\"[oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12069 invoked by uid 550); 28 Aug 2015 03:33:08 -0000
+Received: (qmail 19887 invoked by uid 550); 8 Oct 2024 20:58:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11987 invoked from network); 28 Aug 2015 03:33:00 -0000
-MIME-Version: 1.0
-Message-ID: <trinity-ddfb0472-ffff-435b-9f9b-606ca08a9c4a-1440732755137@3capp-mailcom-lxa06>
-From: "pcheng pcheng" <pcheng@gmx.com>
-To: oss-security@lists.openwall.com
-Cc: carnil@debian.org, ghedo@debian.org
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 28 Aug 2015 05:32:36 +0200
-Importance: normal
-Sensitivity: Normal
-X-Priority: 3
-X-Provags-ID: V03:K0:zc2ESDB+I8oZaOOLISEbKI4iP7Z1q2Jyw0c+92YMdA0
- KPH+J0XLOzHfjHL3yDAHtr4nkRdBylGc+j5ddFyA+d33eeUimU
- w5Jur89KOAuPLpVEklUhTbqV344eJrQ2E7dc3mFgeWwWMs6fBd
- LsUBfXPnN6s2q76psAPB/KwckOEb5btdFlFMu3JdacB+3nBe+d
- +Vw1Bnked/u9f/I0qcOoPgZIbffqC8Al2vVisvtLxBaST0kK/G
- exkgtZXbFWZ1NGwhFBvSkYCXNYi9c+Dq1P/Yw9sEWdMQWkfWGV
- BmtxDWXoWsuQA4Lzm8X9tRoVVaY
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kRdYH7s3u5I=:7jP1rEPacVNCYs/71+2l22
- ++46c+TCSLYLMzgI5Y3tLDCj9QcM0zT7AvjXYlBWmAwoVDkJ6UvmG0zsWs3DcEDw04JET1c0l
- q7wY7bpoql5UBa4oy7wS4azGI2bBpzLQjwj55xrZ/SIFF/09V/b5JwrZJyltTESXOrAlV8TDc
- bK4UPzyT0So2END1/1KD7wKG8tl6RKxVCYiTpJqHZXL/h/A2/qQ19U7/qnqJCtXwl1tjtyTG+
- M3Q9kLP2xELKXNlatyjELqr4OLxYf89HCQMcEDUUFahuaccm4+sizdsZcekhLnPnc84YPIVe/
- XBiV2/wF62kHymSYfEYJN593awSdhzBY8AaoN5X+ytSNFrIPh08nrIICLo5a+bd1RbCnEhOGe
- d+kUie1MVSYbG925nVnxAIlETtDEra3V6ASJLJFvuYlpwJVVcLHEJT+6J2al5t7h+WWmJizty
- XvTUSd/jig==
-Subject: [oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp
+x-ms-reactions: disallow
+Received: (qmail 16268 invoked from network); 8 Oct 2024 20:57:16 -0000
+Date: Tue, 8 Oct 2024 22:56:59 +0200
+From: Solar Designer <solar@openwall.com>
+To: Simon Josefsson <simon@josefsson.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20241008205659.GA7086@openwall.com>
+References: <Zv-9gAGM_X7QQShJ@suse.com> <878qv251x7.fsf@kaka.sjd.se> <20241008025402.GA2904@openwall.com> <878quzt99y.fsf@kaka.sjd.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <878quzt99y.fsf@kaka.sjd.se>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-47191: Local root exploit in the PAM module pam_oath.so
 
-The following bug was reported to upstream and Debian security team. CVE-2015-0852 was assigned by Debian security team.
+On Tue, Oct 08, 2024 at 08:10:17AM +0200, Simon Josefsson wrote:
+> I noticed that that there are Linux-PAM helpers to drop privileges:
+> 
+> https://github.com/linux-pam/linux-pam/blob/master/libpam/pam_modutil_priv.c#L52
 
-Name : FreeImage
-Affected Version: <= 3.17.0
-URL : http://freeimage.sourceforge.net/
+This currently switches fsuid/fsgid (so for the current thread only),
+but uses initgroups() and setgroups() libc functions (so affects all
+threads).  Code last modified 4 years ago, which pre-dates our
+recognition of the supplementary groups vs. threads problem and its fix
+in tcb.  Maybe Linux-PAM should implement a similar change now.
 
-Description :
-An integer overflow issue in the FreeImage project was reported and fixed recently.
-Upstream fix: Revision 1.18 http://freeimage.cvs.sourceforge.net/viewvc/freeimage/FreeImage/Source/FreeImage/PluginPCX.cpp?view=log&pathrev=MAIN
+> I have found another implementation of this in yubico-pam:
+> 
+> https://github.com/Yubico/yubico-pam/blob/master/drop_privs.c
 
-Details:
+This currently switches euid/egid/groups, so doesn't try to be MT-safe.
 
-The PluginPCX.cpp file(version 3.17.0) has:
+(On Linux, it is also possible to switch euid/egid via direct syscalls
+for the current thread only, but there's no point because switching of
+fsuid/fsgid is more appropriate for this purpose anyway.)
 
-371 unsigned width = header.window[2] - header.window[0] + 1;
-372 unsigned height = header.window[3] - header.window[1] + 1;
-373 unsigned bitcount = header.bpp * header.planes;
+A couple of nitpicks on your upstream oath-toolkit code:
 
-However, it's possible that header.window[2] < header.window[0], and also header.window[3] < header.window[1]. In this two cases, width and height can be overflowed. And this can lead further issue in the rest of the code. Take the following lines for example:
+1. You restore egid/euid in this same order as you set them.  This
+unnecessarily introduces an extra temporary state.  I suggest that you
+restore them in reverse order, so set egid/euid ... restore euid/egid.
+(The SUSE patch doesn't have this "problem".)
 
-568 for (x = 0; x < width; x++) {
-569 bits[x * 3 + FI_RGBA_RED] = pline[x];
-570 }
+2. After uses of asprintf() you first check the pointer for NULL and
+only then check the return value.  Strictly speaking, this is undefined
+behavior because the pointer may be uninitialized if the return value
+indicates an error.  Of course, this shouldn't matter in practice unless
+a compiler is aware and deliberately exploits the UB (e.g. optimize
+everything out because this is UB anyway) or the environment (hardware
+or a software "sanitizer") is such that uninitialized reads are trapped,
+but to make it correct I suggest that you simply drop the NULL checks.
 
-The write operation on buffer bits can help an attacker to corrupt the heap.
+> Btw, do you have any thoughts on WHICH user to drop privileges to?  The
+> SUSE patch drops privs to the credential file owner.  My patch drops
+> privs to the PAM user that is being authenticated.  I think there are
+> reasonable arguments for both choices, and for all reasonable
+> configurations that I'm aware of, I don't think the choice matters.
+
+Thank you for bringing this up.
+
+I think that for reasonable configurations in absence of attacks this
+difference is unimportant, however there are different risks involved.
+
+In particular, I worry that the SUSE approach could be susceptible to
+hard link attacks (when the fs.protected_hardlinks sysctl is not set).
+Would this allow to overwrite someone else's file (the original issue)
+if the user can hard link that file?  I currently don't see why not, so
+it's probably a vulnerability.
+
+Would it allow to have the log in process temporarily switch to another
+user (of the attacker's choosing)?  This sounds relatively minor.
+
+In general, switching to a user not only drops privileges for file
+access, but also potentially exposes the process as that user's.
+fsuid/fsgid switching is the safest in this respect (these were meant
+just for file access purposes), but with other IDs (depending on which)
+there may be extra exposure of the partially privileged log in process
+to the user via /proc, kill(), setpriority(), etc. ... but thankfully
+and hopefully not also via ptrace() on modern systems anymore.
+
+Alexander
