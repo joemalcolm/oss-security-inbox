@@ -1,4 +1,4 @@
-Received: (qmail 1260 invoked by uid 550); 28 Apr 2026 23:02:04 -0000
+Received: (qmail 7262 invoked by uid 550); 8 Oct 2024 02:54:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,100 +8,114 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 20268 invoked from network); 28 Apr 2026 22:48:16 -0000
-To: MOHAMED AZIZ RAHMOUNI <mohamedaziz.rahmouni@insat.ucar.tn>,
- oss-security@lists.openwall.com, secalert@redhat.com
-References: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
-From: Dmitry Butskoy <buc@buc.spb.ru>
-Message-ID: <a6a3fbc7-c275-a4ae-3f54-229c5d74bdaa@buc.spb.ru>
-Date: Wed, 29 Apr 2026 01:48:07 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
- Thunderbird/128.0
-MIME-Version: 1.0
-In-Reply-To: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] =?UTF-8?Q?Re:_[SECURITY]_Out-of-Bounds_Read_in_MPLS_Extension_Parsi?=
- =?UTF-8?Q?ng_=e2=80=94_traceroute_2.1.2?=
+Received: (qmail 5417 invoked from network); 8 Oct 2024 02:54:03 -0000
+Date: Tue, 8 Oct 2024 04:54:02 +0200
+From: Solar Designer <solar@openwall.com>
+To: Simon Josefsson <simon@josefsson.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20241008025402.GA2904@openwall.com>
+References: <Zv-9gAGM_X7QQShJ@suse.com> <878qv251x7.fsf@kaka.sjd.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <878qv251x7.fsf@kaka.sjd.se>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-47191: Local root exploit in the PAM module pam_oath.so
 
-MOHAMED,
+Hi,
 
- From the appearing of this fragment of code in 2.0.12 (2008 year), the 
-statement "n -= hlen;" is present here. Including the current version of 
-2.1.6, see line 1423 of traceroute/traceroute.c :
+Great work by the SUSE Security Team and upstream!
 
->         if (!err &&
->             af == AF_INET &&
->             /*  XXX: Assume that the presence of an extra header means
->                 that it is not a raw socket...
->             */
->             ops->header_len == 0
->         ) {
->             struct iphdr *ip = (struct iphdr *) bufp;
->             int hlen;
->
->             if (n < sizeof (struct iphdr))  return;
->
->             hlen = ip->ihl << 2;
->             if (n < hlen)  return;
->
->             bufp += hlen;
->             n -= hlen;
->         }
+On Sat, Oct 05, 2024 at 11:33:56AM +0200, Simon Josefsson wrote:
+> Solution
+> --------
+> 
+> Version 2.6.12 contains the following liboath patch to use `fopen(wx)`:
+> 
+> https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/3235a52f6b87cd1c5da6508f421ac261f5e33a70
+> 
+> Some non-glibc and non-ISO C11 platforms needs the following patch to
+> enable gnulib's `fopen(wx)` workaround:
+> 
+> https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/3271139989fde35ab0163b558fc29e80c3a280e5
+> 
+> Then `pam_oath.c` is modified to call seteuid()/setegid() as follows:
+> 
+> https://gitlab.com/jas/oath-toolkit/-/commit/95ef255e6a401949ce3f67609bf8aac2029db418
 
-What source did you use? Why is your report for version 2.1.2 when the 
-latest version is 2.1.6?
+This link requires authentication.  I guess you meant to post:
 
-Note again, that the version of 2.1.2 has this statement as well.
+https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/95ef255e6a401949ce3f67609bf8aac2029db418
 
-Could you please find out where you got this inherently corrupted code 
-based on an old version?
+> A patch that applies cleanly to version 2.6.7 found in Debian 12.x
+> bookworm is available here:
+> 
+> https://salsa.debian.org/debian/oath-toolkit/-/blob/debian/bookworm-security/debian/patches/pam_oath-seteuid.patch
+> 
+> We recommend you to upgrade to version 2.6.12.
+> 
+> If that is unpractical we recommended you to apply the patches on top
+> of your earlier version.
 
+I note a few things:
 
-Best regards,
-Dmitry Butskoy
-http://traceroute.sf.net
+1. Neither the SUSE nor the upstream patches change the supplementary
+groups.  SUSE patches fork() and then in the child setgid() and
+setuid().  Upstream doesn't fork(), but switches with setegid() and
+seteuid(), and then back.  If the intent is solely to avoid the need for
+fchown(), then that's sufficient.  Hopefully, along with SUSE's openat()
+and flags magic or with upstream's fopen(, "x"), nothing more is needed.
+However, if the intent is to avoid even trying to access files in user's
+directory with potentially excessive privileges, then supplementary
+groups should also be switched or dropped.
 
+I'm sorry I didn't get around to bringing this maybe-issue up in the
+pre-disclosure thread on the distros list (which Johannes Segitz from
+SUSE kindly started on September 27).  I feel it was not essential to
+discuss/address pre-disclosure, and is fine to discuss in public now.
 
-MOHAMED AZIZ RAHMOUNI wrote:
-> Hello,
->
-> I am reporting a security vulnerability I discovered in traceroute 
-> 2.1.2 during manual code review and dynamic fuzzing.
->
-> Summary:
-> An out-of-bounds read exists in traceroute/traceroute.c. After 
-> recvmsg() returns, bufp is advanced past the IPv4 header (bufp += 
-> hlen) but n is not decremented accordingly. The subsequent call:
->
->     handle_extensions(pb, bufp + offs, n - offs, step);
->
-> passes a len value that is hlen bytes (20 for IPv4, 40 for IPv6) 
-> larger than the actual data available from bufp + offs. This causes 
-> the MPLS extension parser to read past the received packet boundary 
-> into uninitialized stack memory within buf[1280].
->
-> The vulnerability is remotely triggerable by any on-path network 
-> device that can send a crafted ICMP Time Exceeded response with MPLS 
-> extensions to a traceroute -e invocation. I have confirmed the issue 
-> with a working proof of concept.
->
-> Proposed fix (single line addition after line 1427):
->
->     bufp += hlen;
->     n -= hlen;   // add this line
->
-> I have attached a full technical report including root cause analysis, 
-> proof of concept code, memory layout analysis, and impact assessment.
->
-> I am following a 90-day responsible disclosure policy. I intend to 
-> publish details publicly on 2026-07-27 unless a patch is available 
-> sooner, at which point I will coordinate the disclosure timeline with you.
->
-> Please confirm receipt of this report.
->
-> Regards,
-> Security researcher Zyyz
->
-> Mohamed Aziz Rahmouni
+2. Switching task credentials from library code is tricky, given that
+the program could have threads that don't expect this.  set*id() and
+setgroups() libc calls would typically affect all threads.  On Linux,
+it's possible to affect the current thread only, which e.g. we do in
+tcb[1] by using setfs*id() and direct setgroups() syscall (the latter
+only in our recent git code at this time, previously we used the libc
+function).  I assume Simon is aware of the Linux specific way, but
+deliberately chose not to do this in upstream oath-toolkit for
+portability to non-Linux.
 
+[1] https://www.openwall.com/tcb/ and https://github.com/openwall/tcb
+
+3. There's similar concern about the program's signal handlers, which
+isn't addressed by switching credentials only of the current thread.
+Maybe such library code should be temporarily blocking signals?  This
+becomes tricky and dirty.  In tcb, we just accept this risk for now
+(that a signal handler may run with unexpectedly dropped privileges).
+
+4. As Simon also noted:
+
+> SUSE's alternative patch and advisory can be found via:
+> 
+> https://security.opensuse.org/2024/10/04/oath-toolkit-vulnerability.html
+> 
+> It rely on Linux kernel specific features and uses fork() which was
+> determined to be contrary to the liboath design, which aims to be
+> portable to macOS and *BSD and beyond.
+
+I agree fork() from library code is tricky, but not so much because of
+portability concerns.  Again, the program using the library may not
+expect it to ever have an extra child process.  Sure the library should
+use waitpid() on this specific process, yet the program could receive
+unexpected SIGCHLD.  The combination of the program's threads and our
+fork() could also have unexpected consequences.
+
+In tcb, we chose to make usage of fork() a PAM module option, so that by
+enabling it the distro or sysadmin acknowledges that it's acceptable in
+the specific PAM configuration.  Our usage of fork() is for a different
+reason, though: "Using this option one can be sure that after a call to
+pam_end(3) there is no sensitive data left in the process' address
+space."  I wonder if this property would also be relevant in
+oath-toolkit patches if more processing is moved to the child process,
+or if this would be excessive under the relevant threat models.
+
+Alexander
