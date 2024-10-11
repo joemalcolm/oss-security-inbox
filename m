@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["398" "Monday" "10" "April" "2017" "08:29:31" "+0100" "Simon McVittie" "smcv@debian.org" "<20170410072931.o5ptcv5uyhw34gxf@perpetual.pseudorandom.co.uk>" "11" "Re: [oss-security] CVE-2017-7592: libtiff: left shift" "^Date:" nil nil "4" "2017041007:29:31" "[oss-security] CVE-2017-7592: libtiff: left shift" (number mark "        smcv@debian. Apr 10   11/398   " thread-indent "\"Re: [oss-security] CVE-2017-7592: libtiff: left shift\"\n") "<457875.000636221-sendEmail@localhost>" ("<457875.000636221-sendEmail@localhost>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15395 invoked by uid 550); 10 Apr 2017 07:29:45 -0000
+Received: (qmail 3747 invoked by uid 550); 12 Oct 2024 00:27:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,28 +6,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14316 invoked from network); 10 Apr 2017 07:29:44 -0000
-Message-ID: <20170410072931.o5ptcv5uyhw34gxf@perpetual.pseudorandom.co.uk>
-References: <457875.000636221-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <457875.000636221-sendEmail@localhost>
-User-Agent: NeoMutt/20170306 (1.8.0)
-Date: Mon, 10 Apr 2017 08:29:31 +0100
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-7592: libtiff: left shift
+x-ms-reactions: disallow
+Received: (qmail 24365 invoked from network); 11 Oct 2024 21:51:48 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: "David M. Johnson" <snoopdave@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <f4ffd3f9-6884-1f24-fe24-f16bb0c716e3@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 11 Oct 2024 21:51:39 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-46911: Apache Roller: Weakness in CSRF protection allows
+ privilege escalation 
 
-On Mon, 10 Apr 2017 at 07:03:25 +0000, Agostino Sarubbo wrote:
-> Since there is no cast, *(pp+1) is treated as int, so
-> UndefinedBehaviorSanitizer says:
-> runtime error: left shift of 134 by 24 places cannot be represented in type
-> 'int'
+Severity: important
 
-This is a bug, but how is it a security vulnerability? Can an attacker
-exploit it for DoS or code execution or something with a malformed TIFF
-image?
+Affected versions:
 
-    S
+- Apache Roller 1.0.0 before 6.1.4
+
+Description:
+
+Cross-site Resource Forgery (CSRF), Privilege escalation vulnerability in A=
+pache Roller. On multi-blog/user Roller websites, by default weblog owners =
+are trusted to publish arbitrary weblog content and this combined with a de=
+ficiency in Roller's CSRF protections allowed an escalation of privileges a=
+ttack. This issue affects Apache Roller before 6.1.4.
+
+Roller users who run multi-blog/user Roller websites are recommended to upg=
+rade to version 6.1.4, which fixes the issue.
+
+Roller 6.1.4 release announcement:=C2=A0 https://lists.apache.org/thread/3c=
+3f6rwqptyw6wdc95654fq5vlosqdpw
+
+Credit:
+
+Chi Tran from EEVEE (finder)
+
+References:
+
+https://roller.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-46911
+
