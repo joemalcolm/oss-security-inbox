@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2658" "Wednesday" "27" "January" "2016" "07:59:36" "-0800" "Adam Jacobs" "AJacobs@mocana.com" "<50DADDE6B33B1B47904E685AAFDC182448CF2B4300@yugi.mocana.local>" "73" "[oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^CC:" nil nil "1" "2016012715:59:36" "[oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        AJacobs@moca Jan 27   73/2658  " thread-indent "\"[oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<2413003.GtkKFizscD@chimera>" ("<2413003.GtkKFizscD@chimera>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28489 invoked by uid 550); 27 Jan 2016 16:01:08 -0000
+Received: (qmail 28246 invoked by uid 550); 14 Oct 2024 15:42:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +6,151 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28188 invoked from network); 27 Jan 2016 16:00:04 -0000
-X-ASG-Debug-ID: 1453910392-088e3111f3789b10001-Ebmqpw
-X-Barracuda-Envelope-From: AJacobs@mocana.com
-Thread-Topic: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for
-	scanning purposes
-X-ASG-Orig-Subj: RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for
-	scanning purposes
-Thread-Index: AdFZG0hvU9GoMf+0S8S5RZECn2p0FwAAHAns
-Message-ID: <50DADDE6B33B1B47904E685AAFDC182448CF2B4300@yugi.mocana.local>
-References: <2413003.GtkKFizscD@chimera>
-In-Reply-To: <2413003.GtkKFizscD@chimera>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-acceptlanguage: en-US
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-Barracuda-Connect: UNKNOWN[10.200.16.9]
-X-Barracuda-Start-Time: 1453910392
-X-Barracuda-Encrypted: RC4-MD5
-X-Barracuda-URL: https://10.200.40.6:443/cgi-mod/mark.cgi
-X-Barracuda-Scan-Msg-Size: 2684
-X-Virus-Scanned: by bsmtpd at mocana.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.50
-X-Barracuda-Spam-Status: No, SCORE=0.50 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE7568M
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.26500
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.50 BSF_RULE7568M          Custom Rule 7568M
-CC: "team@security.debian.org" <team@security.debian.org>,
-	"secalert@redhat.com" <secalert@redhat.com>
-Date: Wed, 27 Jan 2016 07:59:36 -0800
-From: Adam Jacobs <AJacobs@mocana.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for
-	scanning purposes
-To: Luca BRUNO <lucab@debian.org>, "pool@lists.ntp.org" <pool@lists.ntp.org>,
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	"linuxbrad@gmail.com" <linuxbrad@gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 1474 invoked from network); 14 Oct 2024 15:24:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1728919485;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=DtRyHHD21/QV9ki6vUgMGnfCzSVB5QPvRTgdepK4oSc=;
+	b=XoE0WAjAxrRbM7GmO08GtO/vDt4UAv0Dt0ipnKbgVQmxrbnk0yKIQWAcmMA4LwnBoLbu3t
+	6aGxXpBI4peDytWFdQ6LyJuS80olVFoM9ttALRB47G3NZDNaGQ2Q6f/61y3LZHFa+5I0Ga
+	Q+W186W+OYbznTBFlZA5k0pl4dKT+GI=
+X-MC-Unique: yyjM3gYTN46xjw5EL2varw-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728919481; x=1729524281;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DtRyHHD21/QV9ki6vUgMGnfCzSVB5QPvRTgdepK4oSc=;
+        b=M2pFklTVJBA60A65KXHVSH6Wr0JJQRXA/KJcOz/eV2kR56skTJm+V8GJGf4Sdevy+J
+         Q2uRq3coduwDdAtf46nU1qOxULJbXw/jofuoiLRFwFJJAUa6m8vd/T2lJrud0SxZDo0I
+         j8dG0nF1Ulb/ePOFvy+8aSRl8byCZIgTta7DtAYCScJ5YQtx5LcpbvMxt2jM81BRWtUV
+         tedAFsEPkkcI2yRbpi3ChBPAZuJa0yNwAu1VUyIOMGBcBUtdzKb/EQdhEIAMORmU1PV2
+         UeycmIlDkLUCSh7XZibzXoTy5g6MV8/78dnlEYsNMdNWscXII6r/t8clJJwzE70BvHrE
+         62qw==
+X-Gm-Message-State: AOJu0YxJHfCCSWkNB8tLTSIYirMAfkJOL+qVizpvTuaLgRA9WqBisiXd
+	uBuBABIvPc0/I645o9W+DL3i2x4JOE92gNuQqSE8XnxtF6OYffnonOWUjutKnlPAc0AxyNCSX4n
+	iWB0rt9ip8+gcb/i1oAPFqLgNBdagEJW9kjs9DksIWqM7b/Ake3Hn5rtVgkv1uaDHWgpoNe1zjs
+	rIWQzhTzJx0PFAtaEf+5oxSiD7/QWtmbwjZ+2+je13G/dl8rVnyfc=
+X-Received: by 2002:a2e:4e02:0:b0:2fb:5810:3403 with SMTP id 38308e7fff4ca-2fb58103bd3mr7885341fa.10.1728919480995;
+        Mon, 14 Oct 2024 08:24:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxBxMmbPgx+7I+U3HKrw/26JoKJ1ce/EYGS5auttR0qlKNxF5/IILHlB3LpZa4BAUShck0Zhoy/pzeydlCDdA=
+X-Received: by 2002:a2e:4e02:0:b0:2fb:5810:3403 with SMTP id
+ 38308e7fff4ca-2fb58103bd3mr7885101fa.10.1728919480308; Mon, 14 Oct 2024
+ 08:24:40 -0700 (PDT)
+MIME-Version: 1.0
+From: Joel Smith <joelsmith@redhat.com>
+Date: Mon, 14 Oct 2024 09:24:28 -0600
+Message-ID: <CAEftUapV2VARqJBVpugRkKX0CPnxz=EYOpPzuAg29aYhHJPzSg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="0000000000007830770624716fb6"
+Subject: [oss-security] [kubernetes] CVE-2024-9486 and CVE-2024-9594: VM images built with
+ Kubernetes Image Builder use default credentials
 
-Infuriating!
+--0000000000007830770624716fb6
+Content-Type: text/plain; charset="UTF-8"
 
-________________________________________
-From: pool [pool-bounces+ajacobs=3Dmocana.com@lists.ntp.org] On Behalf Of L=
-uca BRUNO [lucab@debian.org]
-Sent: Wednesday, January 27, 2016 03:24
-To: pool@lists.ntp.org; oss-security@lists.openwall.com; linuxbrad@gmail.com
-Cc: team@security.debian.org; secalert@redhat.com
-Subject: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for  sca=
-nning purposes
+Hello Kubernetes Community,
 
-[cross-posted to pool-ntp and oss-sec]
+A security issue was discovered in Kubernetes where an unauthorized user
+may be able to ssh to a node VM which uses a VM image built with the
+Kubernetes Image Builder project (
+https://github.com/kubernetes-sigs/image-builder).
 
-Hi,
-while reviewing network logs this morning I spotted some anomalies related
-to scan probes, ntp.org pools and IPv6.
+For images built with the Proxmox provider, this issue has been rated
+Critical (
+https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H)
+(9.8), and assigned CVE-2024-9486.
 
-It looks like Brad already observed and blogged about this some days ago,
-but I haven't seen this discussed in the usual ntp-pools, Debian and
-oss-sec ML, so I'm reposting this here:
-http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network=
-.html
+For images built with the Nutanix, OVA, QEMU or raw providers, this issue
+has been rated Medium (
+https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H)
+(6.3), and assigned CVE-2024-9594.
 
-In summary, some machines (which seem related to the shodan.io scanning pro=
-ject)
-are actively participating in pool.ntp.org as IPv6 endpoints.
-However, clients connecting to them for NTP timesync, are subsequently scan=
-ned
-by probes originating from *.scan6.shodan.io hosts.
+Am I vulnerable?
 
-Confirming original report from Brad, I can add that those scanners seem to
-implement some kind of rate-limiting: they will timeout NTP and won't re-sc=
-an
-recent clients when doing multiple/subsequent NTP requests.
-Moreover, this is not targeted/restricted to the Debian pool only, but plag=
-ue
-the whole IPv6 pool, as seen on a sample query to the RedHat pool:
+Clusters using virtual machine images built with Kubernetes Image Builder (
+https://github.com/kubernetes-sigs/image-builder) version v0.1.37 or
+earlier are affected.
 
-```
-$ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E ':[[:xdigit:]]00[[:xdigi=
-t:]]$'
-2a03:b0c0:3:d0::18:b001
-$ dig +short -x 2a03:b0c0:3:d0::18:b001
-analog.data.shodan.io.
-```
-(Upon querying this server for NTP, the machine immediately got IPv6-scanned
-by rock.scan6.shodan.io)
+CVE-2024-9486: VMs using images built with the Proxmox provider are
+confirmed to be vulnerable.
 
-pool.ntp.org services are the default NTP servers in many default configura=
-tions
-(at least most of Linux distro) and I guess that this kind of behavior is d=
-angerously
-increasing the exposure level of way too many systems.
+CVE-2024-9594: VMs using images built with the Nutanix, OVA, QEMU or raw
+providers were vulnerable during the build process and are affected only if
+an attacker was able to reach the VM where the image build was happening
+and used the vulnerability to modify the image at the time the image build
+was occurring.
 
-For ntp.org admins: can those rogue server be expunged from the pools, and =
-the whole
-shodan.io situation clarified? (Brad's post has a comprehensive endpoints l=
-ist and
-helper tools for detection)
+VMs using images built with all other providers are not affected.
 
-For oss-sec crowd: is there anything we can do to improve the situation and=
- avoid
-similar cases in the future? Should crowd-sourced and fundamental services =
-like this
-be encouraged to move to a stronger WoT?
+To determine the version of Image Builder you are using, use one of the
+following methods:
 
-Ciao, Luca
+* For git clones of the image builder repository:
+    cd <local path to image builder repo>
 
---
- .''`.  ** Debian GNU/Linux **  | Luca Bruno (kaeso)
-: :'  :   The Universal O.S.    | lucab (AT) debian.org
-`. `'`                          | GPG: 0xBB1A3A854F3BBEBF
-  `-     http://www.debian.org  | Debian GNU/Linux Developer=
+    make version
+
+* For installations using a tarball download:
+    cd <local path to install location>
+
+    grep -o v0\\.[0-9.]* RELEASE.md | head -1
+
+* For a container image release:
+
+    docker run --rm <image pull spec> version
+  or
+    podman run --rm <image pull spec> version
+
+  or look at the image tag specified, in the case of an official image such
+as
+registry.k8s.io/scl-image-builder/cluster-node-image-builder-amd64:v0.1.37
+
+How do I mitigate this vulnerability?
+
+Rebuild any affected images using a fixed version of Image Builder.
+Re-deploy the fixed images to any affected VMs.
+
+Prior to upgrading, this vulnerability can be mitigated by disabling the
+builder account on affected VMs:
+
+usermod -L builder
+
+Fixed Versions
+
+Kubernetes Image Builder versions >= v0.1.38
+
+Detection
+
+The linux command "last builder" can be used to view logins to the affected
+"builder" account.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+
+Additional Details
+
+See the GitHub issues for more details:
+
+https://github.com/kubernetes/kubernetes/issues/128006
+
+https://github.com/kubernetes/kubernetes/issues/128007
+
+Acknowledgements
+
+This vulnerability was reported by Nicolai Rybnikar @rybnico from Rybnikar
+Enterprises GmbH.
+
+The issue was fixed and coordinated by Marcus Noble of the Image Builder
+project.
+
+Thank You,
+
+Joel Smith on behalf of the Kubernetes Security Response Committee
+
+--0000000000007830770624716fb6--
+
