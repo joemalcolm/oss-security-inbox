@@ -1,4 +1,4 @@
-Received: (qmail 9579 invoked by uid 550); 17 Apr 2023 23:38:32 -0000
+Received: (qmail 9683 invoked by uid 550); 15 Oct 2024 20:22:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,64 +7,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28432 invoked from network); 17 Apr 2023 22:53:44 -0000
-Date: Tue, 18 Apr 2023 00:53:30 +0200
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+x-ms-reactions: disallow
+Received: (qmail 9397 invoked from network); 15 Oct 2024 20:22:02 -0000
+Date: Tue, 15 Oct 2024 22:21:35 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20230417225330.ckXBw%steffen@sdaoden.eu>
-In-Reply-To: <20230417064047.dhrrkuzjmtx4yhgj@jwilk.net>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
- <20230416205727.0XQJ2%steffen@sdaoden.eu>
- <20230417064047.dhrrkuzjmtx4yhgj@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-450-g9589f04a75
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth:
- Unauthorized management command execution
+Message-ID: <20241015202135.GA8875@openwall.com>
+References: <Zv-9gAGM_X7QQShJ@suse.com> <878qv251x7.fsf@kaka.sjd.se> <20241008025402.GA2904@openwall.com> <878quzt99y.fsf@kaka.sjd.se> <20241008205659.GA7086@openwall.com> <Zw5VcOQzbCUChikG@kasco.suse.de> <Zw6_0fzKlkBIbRSj@itl-email>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zw6_0fzKlkBIbRSj@itl-email>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-47191: Local root exploit in the PAM module pam_oath.so
 
-Jakub Wilk wrote in
- <20230417064047.dhrrkuzjmtx4yhgj@jwilk.net>:
- |* Steffen Nurpmeso <steffen@sdaoden.eu>, 2023-04-16 22:57:
- |>have you verified that they do not use isatty(3)
- |
- |I'm pretty sure they do. But isatty(3) is implemented using the TCGETS 
- |ioctl, so that doesn't help.
+On Tue, Oct 15, 2024 at 03:17:34PM -0400, Demi Marie Obenour wrote:
+> What about opening the path one portion at a time using openat() with
+> O_NOFOLLOW (and, as applicable, O_DIRECTORY),
 
-Well everbody knows how this is implemented, most of the time.
-There never was any systemcall that comes otherwise near of doing
-that (except maybe fcntl).  Plan9, maybe.
+As I understand, the SUSE patch already does that.
 
-By the way out of interest and because of ringing in my ear for
-one target i implemented sandboxing for an iteration of a very
-simple non-front-line server to be released tomorrow,
-pledge/unveil, seccomp(2) (glibc and musl), and capsicum(4) on
-FreeBSD.  seccomp(2) i find so expensive (i'd wish there would be
-a first-level bitset or so), and very hard to do (argument
-checking rather constant-only, of course: one could dynamically
-build the filter, even use a library that aids in doing so, but
-still), that i though the enormous capabilities of Linux regarding
-"ip netns", "unshare" and "capsh", in conjunction with overlayfs,
-ie containment, and keeping the server lean, seems more appealing.
-All the libraries one has to use today, mostly evolving targets,
-and blockboxes from my application's point of view.  Yes,
-i wondered how to create a bigger one i have on my TODO list,
-which requires DNS lookups (and that potentially leads to the
-black hole of TLS, HTTP, HTTP/2, QUIC).  How to write this
-securely with containment as above?
-The musl client of the simple even needs a SYS_ioctl clearance for
-normal writing to stdout (__stdout_write()).
+> ensuring that each portion
+> is not "." or "..", does not contain "/", and is owned by either the
+> target user or root?  This solves all race conditions and does not
+> require spawning another process.
 
-Ciao!
+The detail here may be different.  And importantly, the final path
+component must be owned strictly by the target user (not by root, unless
+the target user is root).
 
-(P.S.: it is great that QUIC will come "for free" with OpenSSL!)
+On Tue, Oct 15, 2024 at 01:43:42PM +0200, Matthias Gerstner wrote:
+> thanks for bringing up the potential problems with the patch we (SUSE)
+> suggested. The missing drop of the ancillary group list has indeed been
+> overlooked and will result in a lack of protection, since the
+> "unprivileged" process will likely still be a member of the root group.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Both the SUSE and the upstream patch try to do two things at once: drop
+privileges and access files safer.  Maybe I missed, but I think neither
+of you specified whether these two things are intended as required
+complementary parts (and what attacks would work if only one part worked
+as intended) or as defense-in-depth.  You could want to clarify this.
+
+> I will adjust the patch to contain this and one or two other adjustments
+> and can then share it again here on the list.
+
+Thanks.
+
+> Indeed the patch does not take care of hard link attacks. Our products
+> don't have any supported configuration without protected_hardlinks
+> enabled, so we didn't have this in mind.
+> 
+> The change to address this concern should be rather small, though, so I
+> will try to incorporate it in a new version of the patch.
+
+I guess it's checks of st_uid and st_nlink?  There are still some really
+subtle issues like side effects on open() of a device file, which can be
+hard linked too, but privilege dropping should mostly prevent them.  I'd
+also add O_NOCTTY.
+
+> On Tue, Oct 08, 2024 at 10:56:59PM +0200, Solar Designer wrote:
+> > In general, switching to a user not only drops privileges for file
+> > access, but also potentially exposes the process as that user's.
+> > fsuid/fsgid switching is the safest in this respect (these were meant
+> > just for file access purposes), but with other IDs (depending on which)
+> > there may be extra exposure of the partially privileged log in process
+> > to the user via /proc, kill(), setpriority(), etc. ... but thankfully
+> > and hopefully not also via ptrace() on modern systems anymore.
+> 
+> On modern Linux there shouldn't be a problem with dropping UID/GID, as
+> the kernel will set the process's suid_dumpable attribute to the setting
+> found in sys.fs.suid_dumpable, which should be 0. When this happens no
+> ptrace() etc. will be possible on the end on the user/group that the
+> process drops privileges to.
+
+Yes, I am well aware of that, which is why I primarily mentioned other
+exposures.  Linux's "dumpable" also affects much of /proc, but does not
+affect e.g. kill() and setpriority().  And I was speaking in general,
+not only about your patch, so not only about Linux.
+
+> Dropping only the fsuid and fsgid on Linux would avoid any potential
+> ptrace() dangers. The system calls are marked deprecated, though,
+> and have unfortunate error handling. What makes me feel a bit uneasy
+> about this approach is that the programmer has to make sure that
+> the privilege drop context only ever deals with file system operations.
+
+Yes, that's a trade-off.
+
+Alexander
