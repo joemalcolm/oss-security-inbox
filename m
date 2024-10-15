@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2615" "Thursday" "29" "August" "2019" "14:42:44" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" nil "77" nil nil nil nil "8" nil nil (number mark "U       fungi@yuggot Aug 29   77/2615  " thread-indent "\"[oss-security] [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning (CVE-2019-15753)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning (CVE-2019-15753)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13355 invoked by uid 550); 29 Aug 2019 14:42:59 -0000
+Received: (qmail 12022 invoked by uid 550); 15 Oct 2024 19:02:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,97 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13317 invoked from network); 29 Aug 2019 14:42:58 -0000
-Date: Thu, 29 Aug 2019 14:42:44 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
+x-ms-reactions: disallow
+Received: (qmail 5389 invoked from network); 15 Oct 2024 18:32:18 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Daniel Augusto Veronezi Salvador <gutoveronezi@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20190829144244.4cvuomwersv65t4o@yuggoth.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2mabyim7sklanip5"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: [oss-security] [OSSA-2019-004] Ageing time of 0 disables linuxbridge MAC learning
- (CVE-2019-15753)
-
---2mabyim7sklanip5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Message-ID: <426f18fd-2fb7-fe9b-6be2-2f575b8a783f@apache.org>
 Content-Transfer-Encoding: quoted-printable
+Date: Tue, 15 Oct 2024 18:30:52 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-45219: Apache CloudStack: Uploaded and registered
+ templates and volumes can be used to abuse KVM-based infrastructure 
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2019-004: Ageing time of 0 disables linuxbridge MAC learning
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity: important
 
-:Date: August 29, 2019
-:CVE: CVE-2019-15753
+Affected versions:
 
+- Apache CloudStack 4.0.0 through 4.18.2.3
+- Apache CloudStack 4.19.0.0 through 4.19.1.1
 
-Affects
-~~~~~~~
-- Os-vif: >=3D1.15.0<1.15.2, 1.16.0
+Description:
 
-
-Description
-~~~~~~~~~~~
-James Denton with Rackspace reported a vulnerability in os-vif, the
-Nova/Neutron network integration library. A hard-coded MAC ageing
-time
-of 0 disables MAC learning in linuxbridge, forcing obligatory
-Ethernet
-flooding for non-local destinations which both impedes network
-performance and allows users to possibly view the content of packets
-for instances belonging to other tenants sharing the same network.
-Only deployments using the linuxbridge backend are affected.
+Account users in Apache CloudStack by default are allowed to upload and reg=
+ister templates for deploying instances and volumes for attaching them as d=
+ata disks to their existing instances. Due to missing validation checks for=
+ KVM-compatible templates or volumes in CloudStack 4.0.0 through 4.18.2.3 a=
+nd 4.19.0.0 through 4.19.1.1, an attacker that can upload or register templ=
+ates and volumes, can use them to deploy malicious instances or attach uplo=
+aded volumes to their existing instances on KVM-based environments and expl=
+oit this to gain access to the host filesystems that could result in the co=
+mpromise of resource integrity and confidentiality, data loss, denial of se=
+rvice, and availability of KVM-based infrastructure managed by CloudStack.
 
 
-Patches
-~~~~~~~
-- https://review.opendev.org/678098 (Stein)
-- https://review.opendev.org/672834 (Train)
+Users are recommended to upgrade to Apache CloudStack 4.18.2.4 or 4.19.1.2,=
+ or later, which addresses this issue.=20
+
+Additionally, all user-uploaded or registered KVM-compatible templates and =
+volumes can be scanned and checked that they are flat files that should not=
+ be using any additional or unnecessary features. For example, operators ca=
+n run this on their secondary storage(s) and inspect output. An empty outpu=
+t for the disk being validated means it has no references to the host files=
+ystems; on the other hand, if the output for the disk being validated is no=
+t empty, it might indicate a compromised disk.
 
 
-Credits
-~~~~~~~
-- James Denton from Rackspace (CVE-2019-15753)
+for file in $(find /path/to/storage/ -type f -regex [a-f0-9\-]*.*); do echo=
+ "Retrieving file [$file] info. If the output is not empty, that might indi=
+cate a compromised disk; check it carefully."; qemu-img info -U $file | gre=
+p file: ; printf "\n\n"; done
+The command can also be run for the file-based primary storages; however, b=
+ear in mind that (i) volumes created from templates will have references fo=
+r the templates at first and (ii) volumes can be consolidated while migrati=
+ng, losing their references to the templates. Therefore, the command execut=
+ion for the primary storages can show both false positives and false negati=
+ves.
+
+For checking the whole template/volume features of each disk, operators can=
+ run the following command:
 
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1837252
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-15753
+for file in $(find /path/to/storage/ -type f -regex [a-f0-9\-]*.*); do echo=
+ "Retrieving file [$file] info."; qemu-img info -U $file; printf "\n\n"; do=
+ne
 
---=20
-Jeremy Stanley, on behalf of the OpenStack VMT
+Credit:
 
---2mabyim7sklanip5
-Content-Type: application/pgp-signature; name="signature.asc"
+Daniel Augusto Veronezi Salvador <gutoveronezi@apache.org> (reporter)
 
------BEGIN PGP SIGNATURE-----
+References:
 
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl1n5GRfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCmerw//aaj2lbq53scVY0wvL+oHBoUd5K+iWWr599oeg2s9WPq66eTXyLOE1fHe
-n6fu0MOGWc04ll6YJ4yy3KJP+qRHXNU8ArIbrRdUhAIITp4X0unTJa41TOY3V/CY
-X0O0DjpzUA9CDGydMCzktEHwBBuM3BkOwMuebOKpEpjrjX5JixaUB11C3obhGI9n
-zk7tGu54BU0I94NdglN4Mv6LRsP3pyIvef/TyvJB2/nQsInu/UOFNd5T1owAND8P
-+wmT92WT+QrAGIT7ZEvU3aeVVr71BP2O1lX83/y1PCX3qaTWGholJgt3sJId1GEd
-XyA17O5w6FiSRwg8p8XrI2ypwE8PNCxQIsuKUouNqKr8lvNdzEONlrJefeS5kkDb
-U485J+UTXoA36CSg7LZ/BmBB8iPUr34Sblg+mDJckv4QI5BveLmaqLrTp2cmimub
-JiGpR3GpD6S4pgxnt+y8EQ3TaYjLdoADhRNyt0NPhFKS7IFcwf4Udt0QhyT8sYsb
-KmFtWj/HZ8U8MpF1o+2umbu4gss/rJTXwxCeN8cZ/PJTWOMql0hUZF423w50BNoC
-IwbYkOuodkbYh3Z8IIh83SD3PI0KxydagpXG0K/McnIuQCkGHKcveTQTYEIPOWe0
-8iGZugtHipJGi2hIpgkgBm+IqM2ZKWCWr+7HJXSDSgd5CicsaoM=
-=8nFF
------END PGP SIGNATURE-----
+https://cloudstack.apache.org/blog/security-release-advisory-4.18.2.4-4.19.=
+1.2
+https://lists.apache.org/thread/ktsfjcnj22x4kg49ctock3d9tq7jnvlo
+https://cloudstack.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-45219
 
---2mabyim7sklanip5--
