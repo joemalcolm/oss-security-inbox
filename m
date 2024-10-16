@@ -1,4 +1,4 @@
-Received: (qmail 1333 invoked by uid 550); 15 Apr 2026 22:51:36 -0000
+Received: (qmail 13325 invoked by uid 550); 16 Oct 2024 17:13:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,630 +8,168 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 1309 invoked from network); 15 Apr 2026 22:51:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=corp-2025-04-25; bh=Nzu9nL0xqPvZdry7
-	Wo7AM5YFES+lF0kEoP90J4oKRgg=; b=SnexfIKiyOoh8HePCoILmNNf++JsywNV
-	SWKQkkvoryZxvapfL60qLPj0+9z8rxU9Up51gZio51JIeIj7j51Sa2xzLSTUBl4E
-	oycfahP8ULXuyl13y28eV7gGhZMRc++40OikMZhTJ6jh1czUPZZTj+IYhdHU4COM
-	C+cRUU5UiyLT0bm6BidC0Uiht9QKggn+UENXv8eQHj4jTn1TWsCLzChKXakZmetV
-	kebXMFCg40cJUQz9wywthEyrmc23G5CsDzwsTFXLofyB0uzzRuGBlGXVi1L4mpnL
-	0EF671XpPR+jn3yU6pfL4db4f8j37Xh5vyNEtAh65/wL1pGvV/5zaA==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mnT4evU4F3vXJKm5k3CrizYJjg4/Mqzj/rMtykJAHlHaelMoSCvlwNsyVbgvYS6BibKTgPxcSt90UMqLtVgVbUXnqrQrCyIYKHaOFxyT0kWRVR0fmybG9tReW1eJ1i8qNPBErCDUSsEKfsf9uqKGidBeWrXq5Gs4wDlEy7se78A6TYeAv/Kj6L21+SySVeUg8IxsLvsKfS5rZdpwiFZWMxRr+yEGmvJiyCLO1CvhY5tBBQgkwYhJzk/Kl5lt6kG0QWFpRpn4J8psI+0xLQ61s3fpZ8Dcs3fXg1fK2SGPXca2gMldv07F1NTEKMTZV9DugKhvY23y2XcK2noBccCTaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Nzu9nL0xqPvZdry7Wo7AM5YFES+lF0kEoP90J4oKRgg=;
- b=jGVGmxwvODJsNtCWDTDL05wKuBU968hpRSTaQDSm/YcJlbH1nw/8BXmaRNZurNP5uygkLyoflpr3ue6aGT6pEcC5NHOGggEtBiGrX1yBv1DkFqvOoVDKBWcKs1bafdhw/mGivECJ5RPZ+aYby3+D8VqNPg2LAKH+9Fd+Cx2GCaMfOdSVEf2Mi6i0LxCNu29bIPqxG8/BYVcWCWgKg9/DpcUrQpQIu2RGLKpN7frQF+uCOQHPXvCdK3yxgsGuFzyLZsrx5mMg9z7em19Igl0acNA/LqMhdoPWc0DvZS+1wrkeMCibwxoxyvYpwCJrYZssPsIy3djqAP0IricyLAum8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+Received: (qmail 30103 invoked from network); 16 Oct 2024 17:08:47 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Nzu9nL0xqPvZdry7Wo7AM5YFES+lF0kEoP90J4oKRgg=;
- b=XYbpVlLAhU/xLOUD7nI+PgI2q3y/1j2JtaYgBHAmXbgMy2f42+m4axtCg/eX/Oj/O8W4hBDRJgNe4lO80uuIVi0qkgBJlozKJ+tISx3hzkjWp8OqXL3/IgkEu6M+ZVfJVmSJfGYkmlj92B8rf+DP9+Fd86bJBdrQngaA+Xirhsg=
-Message-ID: <c9bd5dbd-7b11-4637-80cd-5dec79dd491f@oracle.com>
-Date: Wed, 15 Apr 2026 15:51:15 -0700
-User-Agent: Mozilla Thunderbird
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-Content-Language: en-US
+        d=openssl.org; s=google; t=1729098519; x=1729703319; darn=lists.openwall.com;
+        h=mime-version:user-agent:autocrypt:date:to:from:subject:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Dc3dBS8krrXng4Yf09CvoyOBi5iVuIitY1VvbLUCiE8=;
+        b=BgOzIM3U7rSOeHYUXsYyzJSt7TVkADvfZJxNIeipKSTP8zsjgHppwb9TR5bcnNFD4D
+         gNx9GiW/4vb04nacfAwsfX607WtAKh344J/pDsZ886JdYvgf743ulKl/3a+PAchZ4a9N
+         NAzbXLb0OScSWJ70sy1Br6PDJ2Wi6J53rBdc1yrgwcp6CQArYY0DFBS64NRpidLTbYNB
+         JgCQBbbit3H0LU/dVWXPOywwnADZPVmONi7VUz+CEYet3mhKQyyhLIKTj9hkCVrjq1NU
+         C29cTH4VesN0n6Wm/ax7JU6ltFgv1DnTFppL0ifp511PDYpU481MetJmNZpN0hG1x9d0
+         mr9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729098519; x=1729703319;
+        h=mime-version:user-agent:autocrypt:date:to:from:subject:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dc3dBS8krrXng4Yf09CvoyOBi5iVuIitY1VvbLUCiE8=;
+        b=dMwIY3mSvGhDRbGA8tmTzSHrlqIq21Xe1oUfMOapeFhnTJ3MjhlcMKRhIyzXgOMD1V
+         L3mzjc1cULaxfdCz1ZHpn4nxDvYdQhfz7ZglZsII+svTduGSG0+fSfWP7pm0MLrmPsVh
+         8ivN809DW8WEcEieD/af1FsQONTjWQt31ywyD9LziUCiQ6Ha9viSxkM0/ufd2VEOlwa1
+         P1QPXl0h0gNB+xc9cQitFQVd5vYSYdU+B/IXZycwmwcW5uPRwUYi1ffdU7/7sLSchohi
+         wxnRuNKWyVBnyuX7dk9bqtOfYtaixJSFKgXe8dJrXpl+VK03DZigTxw5eVSJl9nMXXTk
+         +vIw==
+X-Gm-Message-State: AOJu0YyeFrPr4GDkT44ngNzdTNmLs1xgjfU9+/3WCbuojxyOrII05dUV
+	Fbjfs7S7paFkeuHA6CgyMfJBEcIze1+kGlM8C/oyAS5JQx5Ze4qfx7FKap8QjG/gz9yZuYFX2u8
+	qfig=
+X-Google-Smtp-Source: AGHT+IF2qqF+Ea6MJ3ry9x+yIUNP1kHmhhyJXIoaV3OVMm5tD4ZlrTYLbyThMiw/4bU/bmUJF/RS4w==
+X-Received: by 2002:a05:600c:3b9b:b0:42c:be90:fa2f with SMTP id 5b1f17b1804b1-4311df42661mr171267955e9.25.1729098519333;
+        Wed, 16 Oct 2024 10:08:39 -0700 (PDT)
+Message-ID: <a1a68f6f1e98d46bb9766614636de4d8eb90a33d.camel@openssl.org>
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
-Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
- 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
- 5V9JclVH6u5Gug==
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: DS7P220CA0016.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:223::8)
- To CH3PR10MB6739.namprd10.prod.outlook.com (2603:10b6:610:147::6)
+Date: Wed, 16 Oct 2024 19:08:37 +0200
+Autocrypt: addr=tomas@openssl.org; prefer-encrypt=mutual; keydata=mQINBGDxTCUBEACi0J1AgwXxjrAV/Gam5o4aZSVcPFBcO0bfWML5mT8ZUc3xO1cr55DscbkXb27OK/FSdrq1YP7+pCtSZOstNPY/7k4VzNS1o8VoMzJZ3LAiXI5WB/LHF8XSyzGuFEco/VT1hjTvb8EW2KlcBCR6Y22z5Wm1rVLqu7Q8b/ff1+M/kaWM6BFiUKqfBZdqJuDDNFRGqFr0JjCol0D1v1vollm612OARKpzuUSOERdc11utidkGihagpJDyP5a+qHZ4GNzZkZ+BBduuZDMUdEKgK28Pi0P0Nm17XRzX1Of1uXojMvroov7K/Bkbpv+uvZoiSEAeD+G/+Tyk9VLhmyji9P+0lwYyHb3ACgS3wElz7CZwFgB3kjJvMX93OlCAMruFht/+6hQu0zx1KPxx+55j/w7oSVzH8ZmYND5kM4zlGVnJxJk6aBu8laOARZw7EENz3c+hdgo+C+kXostNsbiuQTQnlFFaIM7Uy029wWnlCKSEmyElW9ZBHnPhcihi8WbfoRdTcdfMraxCEIU1G/oVxYKfzV2koZTSkwPpqJYckyjHs7Zez5A3zVlAXPFEVLECEr02ESpWxFabk8itAz0oMZSn5tb3lBHs1XFqDvJaqME1unasjj06YUuDgKHxCWZLxo/cfJRrVxlRcsDgZ3s4PjxKkAmzUXt5yb7K3EVWDQri0wARAQABtBtUb23DocWhIE1yw6F6IDx0bUB0OG0uaW5mbz6JAlQEEwEIAD4WIQSiH6t0sAiKo2EVJYa47xprqdotXAUCYPFMkQIbAwUJEswDAAULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRC47xprqdotXEGoD/9CyRFM8tzcdQsQBeQewKGTGdJvPx9saDLO6EVyU9lEy8vLKMHnmAk+9myVBf0UHxCjVZblvXEL
+ 6U/eCINW8TBu9ZH56AMkPQgvfZkEKrpBoP2yfkA9/2rfChec7jkFUwArW KAB8hyLPiABXdm3vRZMhiBAsFTv9rdrr89WnAvcd9OXPxrEM7mNkkCDUlRkfRwdxSezStmJ/18bM5lrlR4Dj9MYUOieYICsu/nh1u9C+QDOGruo/xku7B87qVSnKM4My28/RtSeGjTBNw3QPEmumArINNUDNZbe3e+Im23l6tyP7nmtLbo0wPcRB9q4K1GlmecqzSgLsdf8YCOZKax9DLaA2fWVJCyp22UjkCmHkVgeXmByndWVdfYyJO4LGJhM7BfmWGa/yIRKRKZGlJavRY+UAkfqkXCbzhFDIMyRTU3zqJfJcXrVDslvB1mMbBGIR7gmL2HSToNvN5E2xiEamHbSOv0ze0Vw5A1M8S71i+jLUSenGTgjLdu52+K7SGLtyhG/kA5NpvMyCLBOYZ+4HPgbIwKLlcm5SRJ6z4sKLSZmU7HLMp69jXfGQqjYbJoUEHsCsLOeVMGiOVZqoZWQWcMHy9VvOA0FVx41xrpdDLft9ad+cM/oaiYXEWhqYRnBM5eIH0B3HOk/kmLZ6crNE+X5xG1qhoZgAurMMriPFbQhVG9tw6HFoSBNcsOheiA8dG9tYXNAb3BlbnNzbC5vcmc+iQJUBBMBCAA+FiEEoh+rdLAIiqNhFSWGuO8aa6naLVwFAmDxTCUCGwMFCRLMAwAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQuO8aa6naLVyVHw//ahSVEV68q/P1ISiSAGEGsHN64EgnjGkoutH4D4bXgX/VTwOcPODii7Z2RXD3KbxqWh7kcY/pnITkqNh5GM+3rHk7Fm34Lg4gTX9bANCFuv1nyI6nxpYsP4pC5/5gPBoC84DzxIhG2R/oGfidbbcb9eRPHVlUmCCyXJ+1S1/BIGHPd7moj23HOsBt6gc+VA+xVuqYOgIxIc+o+MkAav3QFFC/Z3668fKe
+ uePGrJQEeQO3tZFj0jJK1w+hAnZSfC0Xmj44lq7ywrX9THJgECZF1/Tyx7 T7ZF830/exnXBFrTxd6qbvZPICt0Av3T6AAiLA1FNfprmqpUQdwKMy1RW0idpANAapx74Qfu3CAf2ZAGrIiNYyfVz8CSZ82RpURRiZ1IOjEV//xSL5clYvoRbdQ0NrVjKOqXrtbDQwzjWCi+/zYRXnSYSEaGFIkLXBLlqrU4zlJ+xK5GgtsqvIc1oGAntmn8tbFL8g7VI7pXVUzc1dYnODDwvkGeWRMNrh3z9qBC5Sts1JS2SKbQcL4M6sOanMY9JwR6Gg00ciV61w1n/w7Mkug39bfFInaHOlt8zRISm2m702+ILVo4Yf0HsyTbckUoOEmdmcfhMYAJ4BXYSlJNNV8rS3BKmB4zozumR6T9P/hO0/Mme7CMOQJwQv5pE26qeTbG5P7KaDdFpez2W0H1RvbcOhxaEgTXLDoXogPHRvbWFzQGFybGV0by5jej6JAlQEEwEIAD4WIQSiH6t0sAiKo2EVJYa47xprqdotXAUCYPFMagIbAwUJEswDAAULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRC47xprqdotXHrLD/4xu3Rb/2BCJ+6eO8APqvuNyqK45PCy6XW/mIVRKV4Cyt8lDTnIIbPnvlMUpUuIw1fU4aSoARIEwp+lfLxFnuXY7y1XDlDRv8Md95LGSgzq2bdqhs8/VQXdrq9dNB4wN4mxgpTI3ITEAnLZQBwQiP41e4PUrxSB6/6hAg56+dJYeJDXgWR/+oGBJwdVKpHPu8v9IKKZN5BHMTtNKio/XfED2rbKFhTgVujk9JXV+ZtfRC/seCrtv2sgcJqG7EMo93A1fHCTfUMScQdQKiwClyt16REPEFBEaK+mdoELvWwkaEApd17vpX6odoJn6F6FomRYp6AcxBE7SCxFHTWtjLCYXjblck3/lv7638gClZew4D5Pp9+tH68ZkfJ+
+ 6ZEqQ6tdrPSeHopl+2lJW4Q19l4jKP5BktqKNrpQdPN6CatPVIniNmnMESJ +nxQDl8eAq/SEQJyrbxsU9185AyfFpAv/kBO8FpI7Q/feJA9iX9RgqhSFj8fifPFV6eVG6GzhDWARlr3OT5IueNWhSpF3uZryvZ9hZk93zngZ8oU9uye/VGEpDoPWZNKO5XCyr4F906jsEa8DDhqsgSKx5C6ayG3l+SjgSMr7aL8k7qt6YhejnHzmLmSTnFeC551ujpPbIImtVoKjcifhUnUperS2m83DOrGdSPLZlweAXKBxQfTdALkCDQRg8UwlARAA38noHKkdi7OrBUMfyGsJAnSz0jV8V2K7rS5p4tNA94HYlXBXi31ZmwzqZUwRRkkYihuTZjkUXMuwe1s+VKzsxe0uGUtrTmKIxeqhmxLsRgj4YM07o4/WPyH06fYiTkScr/R1YZCCVJj+vLD7lKF0CMdJ3iEJG8HF9fsUkY2u8iQinwDGVO80FDK5HiuW46d9LUtcUOVpNbFEBkEl0H8bIBsKoqaR9uRdlsxkUD3cTaySssnroI+Borzev4NSLr4TK84pORnDQ5TpLSTvFPhnV/QBtL843kbzCMu/Eq75OZ3YscsxRMyJJDv8rSLDj6mazX4w4FYUNfxpL+mhF7Q1Lvv1EiT4fLg4bv6L1Gl/jBT5nZAdtRiu6fqHv5HJK/4TbtBYKA24B2bYXxwizFDcHSYBqmp/YQIiQ1s9+0OW/+IOrMDEChs0nOWwpCtxGYQ8g6o3GLdM/4fzl6TAdN3DB09vm7ymB6GkO6ZyLId9hnsDd42XpG5tAwhZCBDPFRut5QmQqMfAuiqRMcNp8l4ojv7acgjivel5B8Q3SNnkdJcdMe7jnbQVQEc262+4eoLLSdCuG+hcR8PjChiTbs47BIoe7Vl0QVrqIkd4BbR/qlI4yQQwNG0Va/T+FWk0NuED6MCzDMPj5dgOT7Fl0M425r2Kc73fQwYjYGwt
+ DWSi0VMAEQEAAYkCPAQYAQgAJhYhBKIfq3SwCIqjYRUlhrjvGmup2i1cBQJg 8UwlAhsMBQkSzAMAAAoJELjvGmup2i1cFTYP/i8X/kWuQ/PvyNKXtg3vuBz+xOkEYyFDGFnEql/7zET+iKD38X3QEwpoUB+UKGIQw9z4OPRWsIbA/bExNU7gnuXDttOvdEG4RO5WrxLdeC2ZOVfChFAv3Ve2gaMCOF+ClduL8MTJnr7fhDAxivjviuwqIywFwxKdZMO6pGqQVgBoXgtFsPpGRZyT4LuTimz8oh+UQqJIS6+mOTVOmJvChK37Mh5kjq6xItZsZwAOqdcd7QYKVSpwxhsiAvNXJdBDNS9+vADOLxe99b7xCE/4HmhlPrLxgEM0dANwhMLg5hpUdidlZL60+09Bkrh24CVlF3+UHEo9s1Z57m58+HkAsUAg2kFY/QKccpWP8/d8FwKvPZlhofmJCaqFJsneXIUomhBCCtydZuc5Yj3UN2Ga8TYYjKfUkkQVPZhCpEfnZ0NfmA6Xk5zBPs/FXWNzTduFmw4LKUGirVh32IPdTRuCKojvV0ZmtdmppDO6KAJHGW/ycX3tJQYsMK6+oLl6OZ5xAFiYsKuAiJFwj4VdJWdmFRiR4FuD2xcKVryYKDEXVGEfZL3P1uWssR/av6X/w/T4haaZpO8JtnuQitSxsa/sU0K5tUDdRdzM+sNHuFAL/E0BfVFcwY2Y+u73BW2CefvZSd6gP90thjrlT9kUs15ACer1zdUkpDZMh2O8Zsn+TirHuQINBGDxTKgBEACmJZGseN0S70WnbJ3sr3dWm22wBYZ5mjpp0DuQqt0H4MXDJB1BAgYXUyjHMpvetw7azGhT9Kdj9OnF1VtI7bvUwtRyqgRzkX67G5eynhPHmzqJdj3FPBB4GLykBRBIuVZz/KhqQXixqEb7n7Q1QOl2MIR69HDacdVsxvLMAKAHRVESuGljqA4ErsuQfBcAReHWk3zfo/Wz
+ cMssieOgznQgZAksnfz90F5Z/2WomsOJ/eVn0GvuHbEdWFqP7TyJYoVdv4wOR bqVc65P4DynMcpvPVNWGimJ3005zDzCzTRWer1HT92GT4VPzVckLoaagGLYaOMqks0zN8EToiQmOGeAxj1bPmxJ9eHJ3THtkZ1LfD1KIhdejHDfnCgLX9R7pBVqyb+V0I1I0frfLwblvvA0Dzj9+FVr39O6DzPLNGP2nkZ7tvXIxu1XL1F63x7XEHfI4kfyuPCZ3Xehw0GsViEPhvX4/QNJyvhNu6tHdLiDDNrAHaO4hOgQtAax5HydCDyToWTm9nwxpiyUxTbNrsdrfv0Lz4D2HQLaahuq3Dsarw3MMfYfgGCnLQJ7wHJadEcQitlwri9kNPMF9b6VgkEcWU1zSaF5XaKHq+ObP3jRxqTMu8YXrlQDr22xLxD/exYfZAsVPLB1wRRk2BlFadycBos4j+fDXJ16DDwX6zUAsQARAQABiQRyBBgBCAAmFiEEoh+rdLAIiqNhFSWGuO8aa6naLVwFAmDxTKgCGwIFCQtHNQACQAkQuO8aa6naLVzBdCAEGQEIAB0WIQTccDJmKviF4vR/JD9SdGaiHKeebQUCYPFMqAAKCRBSdGaiHKeebe/5D/42lhC477Rrnv6i3C+43fGgyw6aKKeCd3q7l95+LyoKMeBgnGdlCGKGTgw7KJjjoLEkiYUojozXcflKWy5oYxuXXt/lXx0TutQMP0P20Pj6FV7nThSwB2poocWETzHJYnbiK30uYhdjfnxxDuCb8TMD/AIoR7PVn8hSXHqGsboGcC4ToViEtNC3lZwIZsDXsjvYzUfnStfx9rTyo6DivPI0Q56zPVq4jem3VU7L9UmjtX6g7bLPg00YGqMI3WYw6YGXW8GV1nPihkm+qgIWDHgGPiHwseKXKDY5ZlXheHt9QYfb9Eh18BiEJPPj3k3Wx0Md7D1Bzc8/S9XLPCgIljaagKJnXorSjbXmuBgA
+ lxjYoIKK2GPD6S0dn8TXTxyYkkTRlcb2wVV0XoAcQSh9phGBcS/AU7AQGfK0Cr aXV4+aVN7p67n+FIxiVqf3dimwXa2iX6PDsX5qymArYk9aoHgWy6nGe+8C/MYGtNMZ8IvjPsrz/pCZiskEHLHRb+WQWx5sR87PRJj9G+xoZDcsSZCRuf4LPZzY/CYi5gmKy6cc0LWsfqUXVrX0PaWl7zYSHdOxcSyCO3Lb6yG4ewoJf+ydJr7PJKoxuwTqj/wCq65Pu2R0c7Wth+vd9+8h5fwdWPo0qbV7KTq7IIRxvTyOoFY4by3Ok23o8i+LKtBGsr6dxIuPD/0ZPguFkqd8szmlUAVXSNWp/b2VWGREcN6I2Z2muqm9bflwBLssfbC/bEaPj7AZomaSyu6ImPYq00BZr7tS93jG+e2svcX2QbmoLTiJPH2eeDiqWJkAjXAbFP98ApLXrkvmx1NdG9zLCiSyHG2w+AJdwf8na/8kLoEafjijyqj8IsYhpMGTpXw19jhio0XIxoxEBBJD0+TQpdDGzB3EBJpjNNNv3eCa6g7tesi7tp7WWml4vccHmFDT/MXVxXMKstd9+wRk1Vb/X/1VqaJxM5Y/x1X/KU3zp3s298mTwvs75giwQpiEoQN8JchmsXtie71IJaJHwsCrFmkHHb/qWiaZAntGUqscGRZQbILxYdiv+zE5HLS7FJ68YVx8rawUyeksmELoLzfQ7TkHpIVNZOsP1z80LZIMNZAKvVO53cZnrfgGjBOVBGAmkYlzazjA4xoBGeFW2v8ZlCF8LM6FxocBUwFfQURx74uS2KESfMQkmBz9vNMf63d8hbxtLhzrliXALMwInWhjIAuUPUGVnrCEVJVRmui5hW7x2IngCV/36Fxg5T8advKLdsVtEaEFXPyUHdNwR4/Tb6BJIUPuIOLZa3eGSZhhpPuTdgYzaSxd1DblIYzVpbh2vFqoCPmxnjw5dMw1P2KtrdMv+j9enoZGFUTy
+ I6UkpsaioL7ByEeY4g==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-HqPmRgmz3NRfUjZ2DbUx"
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR10MB6739:EE_|CYYPR10MB7626:EE_
-X-MS-Office365-Filtering-Correlation-Id: 782c4988-aa9e-46c7-d670-08de9b4180f3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	+GJ5U0A6N+qj8tZMXkyERK/Q841A3PEboWkmbUEFW7nXYh1EaT10Q6NhIycPN8tFrPQrLn0w7STBtv4LM2nWx88G7l38QKKfqsvqG/zsrjtX/A/TVs5ZZEmAdWkFvc5B+HyjLrenrKsbsqasDWedetCeqC1NBCKu9uGJQYac4M8gjdbtVm1NRw4a4J1hSdCltAd1K7P3ZW/gARpn2ZYPQvMQxjztZWEAE27cY42DuP0plyAusxvpuQIwucdc5uymXLN87iiaZuJ/9MfXvDTsdgARMoGp8aWb/xcUxV6KyZelcCQEkeh5La5iGn/yLCfIeK8z1kuD1FmrKjhGbak9qLSUeuoARjc7MU18xRrQaCG+HqXha+hXtlOuY+zqPLVIjARdHDX82Pe+osG4ONjE3a32yy6iWrD79DHI9R1rLy2g8VS6OrU0ix/UCaG3Kj53Wp9mY5wps1LWgV+bRg4kV/3KaVCoz4BehIYZMw6bCNVEeYI1WPhajwK8hXEfOHkjdwj/8c4/3yOxCKmJm64pQdVJ23D0ntOO4SjOFr0DPStyVvD8LAzWh1wKmjz0TjlSaJDu+/Boo/TRuC0GOx01lj3bDUIHmxu1zs+XyX87dgk5cjhxLZh7yr/02POCI6OyABDFrTWMNz4sdZcFZwGcIZUMvwzDobxK9Q4FIXxHn/8N3FIEX8uJw7/6nLM3DCXw
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR10MB6739.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(18002099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?QTJaVW5PR0hpSXovZFRqTm1GNEtoby8zSklPL0h2UGlxclJmNFhueXFsTHIx?=
- =?utf-8?B?RXBYQi9PeG82U0t4eTY4WjhvUEQ2RkVRS015ZG1FRFZWMUhINmE2S05NRlRV?=
- =?utf-8?B?a1JvS1FSYU16QWFVclgrUnJCZnhQQUpUVUNSV2d2SE5hY2VoSDdJMTBDSmEz?=
- =?utf-8?B?anNmRW84VksybUFmMmhqUW1jWEQwZnpsTHRYdkY1YVlYcW9xQ0F2UkpzVExx?=
- =?utf-8?B?d2t6dVgwbHhDdHpHVGlXWXZ3TzJDbXZqVkpuNWZMUXV0WnphT1VRdjI1TGNq?=
- =?utf-8?B?UHZiK3FVWkt2cFpXZklhVjRqNGRZMTg3WnJMRHM0cHExQkF5RmtiZU9HTHFV?=
- =?utf-8?B?Z1FuY0RYcXlQZXR0UFN3end0bnhQQnNjU2lHZ0xKc3pPbGczSVlNdDhoRmhh?=
- =?utf-8?B?VjFPdFpWdzkxWXFPV2RtS3lTc3N4WTFXd1c1d042ZWdIbzRGdzRsK1ZIWE1G?=
- =?utf-8?B?RWxpLzA3TUttNEdnOGh4Q1BJSFJpZ0dPQXJQSDU2aUV0dmJZTlpqOVhQMG1B?=
- =?utf-8?B?SkdXZVMycXh4RWkrWUZMYWRQV2VWNEhBQlNVc3ZBTEVxODVGS1JqWnNibVB5?=
- =?utf-8?B?YUJXM2hrRTdmLzJoVzZuWm5FeDFHMElMTWNHajJ2TWtzNzZsOGFSamZlUDVE?=
- =?utf-8?B?T3JESEJqUC9tMWlMSlp1K1BLekZWVjQxVlRxaXgzdlB5eDlvcngrUUk4T0xW?=
- =?utf-8?B?OVJ5UVpoN1pUbUE4UEJsY1Q5RjNRNkRERHdwdXp6Yml6UVdMeDgrNHlxek8r?=
- =?utf-8?B?VzBpelZzMjMyaU1wdjRCN09FWW5mVlBMVU1ZWHpVd2JHMG9qaEF5L1dEZ2NR?=
- =?utf-8?B?R2VCSCtuQlpTNytyMnRjZnUxMnBpSGpmQ0syclc5aTY0T2xLZmVyRENZTkRR?=
- =?utf-8?B?bjhhejRnclpTWEJVb2w3ZGh5QXpmd1FqR0VoRkRpRCtxYVpSUGhDdEI1ZWZo?=
- =?utf-8?B?bnU3Z3ROQ1ZZeWlvTmRvc1V4RXYwdGxtdXBEQ2lELzA2dTdFNUZKRzk0emcx?=
- =?utf-8?B?ZmxkdStTNWpSRzZ1K0E0WkN1NXY2dGtnWVJKaW1Tek5aMVNYUW9KWERtVEtO?=
- =?utf-8?B?K1lqTHJIR0dEbDZEbHZKQmtRYWw0dmRubGpIeVFvc1cxSFRBbHZPcVgwWXZy?=
- =?utf-8?B?cElNTXVTdCtiU0VVZVFwNDRNU1JvQUtIdU9pNkRHMGtRcVg0d2xWY2g0RDND?=
- =?utf-8?B?NktXWllWeC81SmRWbG1naXBGdWxPVER3M20zcTFrNU52dVBMakVtR0tpWmpL?=
- =?utf-8?B?a2hIc3lBMUIzVEhlTktUdEhVMnBMdFhSRElFb3Y3SVgrOGUzQU93d2c0SFlt?=
- =?utf-8?B?NVNkaTVqdk81ZjZUZ3ZjWlZYdDROdTdrRE9TQWtCYk1vQWhNRUZVN29FR0JL?=
- =?utf-8?B?WFY2NVN3SC9Bb3o3UXF3c0srVUFCSmhWWTBEMGxVWjgzL1FQaUZVbTBXNWFS?=
- =?utf-8?B?YVB4TjJJb0dsaFRYZllnWXRScWk0enlWQ3ExYi96OU5oL0tUWTZpcGNxYWlx?=
- =?utf-8?B?Y0FleVlyWVBVQ2c3cTNvb0VYR3F6OStHckxiNUdEL1JjNDh3UzlKM1FhVkta?=
- =?utf-8?B?cjN5WlBUUTQwOEwrcG5DUkJtNXVSWmRZYTF1d3dPZXlHS1U2dGlRbHA1dzhE?=
- =?utf-8?B?bm1NaXA2Rys5bnRMNzF1cHJMVU5JcUhUOVRObnUzc0tLNlZ4TXNuSWs3Z01D?=
- =?utf-8?B?WkhqQkgxbTIvcUpMNHZoRW9mcFRSRlhUcEo5cVM4bjJIWGsyWm45d1FLZWNw?=
- =?utf-8?B?ak5nQjBSZlAwYk5sNmlvbmVNVG5HTE84NmtYdXRKSW1GMDZUOVlIeGowQVE4?=
- =?utf-8?B?SWUyRzgxYnc5QWw2RzhyVU5NOTBYUUxPMFBFSk9Nczh0cy9zdXFCZUY4YTJp?=
- =?utf-8?B?NkloNlQzOWJFQWFPRmJGTGRSNkZSbFFYUjk0enVLd05pQ3hqZkRKVUFCMXY4?=
- =?utf-8?B?cUtrSVpJcTg3bEN1Ry84UDRBZHJaU0FiMGppc1pwT1pLdHlrb0tSUE5JNzRV?=
- =?utf-8?B?NzRzWEVhK0xhZDJWaWRVRHYzK2w3dmgwZHlSUjNjMGtoamdVNnh3aEsvZ0hH?=
- =?utf-8?B?ekdBbjBySU1UQ1JUKzRicFZLamM5dFo0UGxGUncxbnB4VzhnYWQvakZFZTlR?=
- =?utf-8?B?Z2FhT0d6dzdtdTVBcFFUTGdZV1picjV2S01qTlpCMnhNSGZmSlJvclN5WW1G?=
- =?utf-8?B?dlhJbDU0SkRISU16OGFPcFMrRXRMK2dBbDR3eFY0SmJ3a01YV0F0VlZic2g4?=
- =?utf-8?B?RFRIa3NTVCtNYjUrWkdENWxNSnZRSmozY2JvOHJ3U1BsMG0ydHRlb0R4bGVy?=
- =?utf-8?B?NUh5aUlKNUZUMW5QWDVUTkRMR0xVMmQ3STJaZ1ltMEFPczJyS1VFQkJtTFRm?=
- =?utf-8?Q?Cpe21onVW0IA/2VA=3D?=
-X-Exchange-RoutingPolicyChecked:
-	rT9j82w+vah8mnl8FyF0dFDF0BFH0iEWwAEbqee0sbbpKrFHd2KO/46e3sI0xEakKa/4mDp1r+/v7A/jCBRFTLLEUJ1sAGwqnyCzWvmyWbj0psXN6rq/D5oPvfS/hRWYOF9m6AWw/oWhgx81AnUUJMRmKdedzQMno0cyASvd5nqmtp4kZV+ROGIYiAEpiHxSpVN5swkNqG+UidJV+Vr10BVHJ7aUypO/jg18F5L28sEhmU+NeLBZhuhRWnqmO1Ein5FTdp4qwQJhPRw92flZ1OKFbyjhKImCHXS1yceYvsKE4AAN/Be83pzMnJQ8t6bc/ForffqcB0tYGj820gwoRw==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	5ysc8SidiDR8keQhQFboNnAdYL57xMFzFVSorsRp5x9varROL95N1hyiNlS+LxboT3zhFY1jFdYuNmBscgRZ+Rx1bXQG/xdwkMv3/bB58N0JlukyeEono4kD5HOnt0Ix64GCyueHoIuuZFQJv1oXpY/TyLsyhTGHDYKVXYEm9ARSpYveU3GQ48/qTq8gret0DEEgzjtTqGwP7pGO6oVmQh7idONJg9eVS/quQh9P0YpMiQPYrkZtfHDiiIG/kWw79pJmDesnsjscIBs8Iotb79Kpz31fS8QVcEpWzTISM4pxvWyA3p1bIt1rKryhaSrpLaM/WIomjVBn2G1XgI4nhnEZHpMpL9WGamahtupvPZ8XUrHXrHrXq8xboVkvjiLUQIE880Nq04F2O2aPrrTJSaqv96s49AySa4vdsoymbT4bfbYPUfb2fBqoBNPdZOBY+EIucywh+9UYSlvdCA7IQApZBpjQavFMNss9/gCCYak21tII/hLmrmkaTdOi/EmJLtWkST/FyKsSvMTbaSo/kryl8lJHOIsq/PJ8twaUgR47/jhAV/OlFbsdLNvHBVju/gnC/46chwIjOe6VJm+RRwxoFhpAHHy3ZUYdf6NldE0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 782c4988-aa9e-46c7-d670-08de9b4180f3
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB6739.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2026 22:51:17.4212
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Iq+IYE8mYaWqq/tDe6nHp2wpuEvbU0bjiWKzcVGm2U6pUd8YgxBCqBnSl2uPyDAxtNJ6R34CvjdEKVISqt035NtA1joD9A3RyLdvA/ZYWV8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR10MB7626
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-15_01,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- phishscore=0 mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2604070000 definitions=main-2604150214
-X-Authority-Analysis: v=2.4 cv=JKYLdcKb c=1 sm=1 tr=0 ts=69e0166e b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=A5OVakUREuEA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=7Gl3-_t3PgB9XO-mQDs3:22 a=NEAV23lmAAAA:8
- a=_1otn6OxAAAA:8 a=rP-kOlJ0AAAA:8 a=yPCof4ZbAAAA:8 a=TTE5zqixDkWCdXYbAfgA:9
- a=6ssvGwiw8Rvneg90:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=-tclTu8cu5AEE0ILzAKm:22 a=A60uPr_FG5abr3nATN9e:22
-X-Proofpoint-ORIG-GUID: bESzMR0AujXKdxXCXdxTpe82NbHL2Hab
-X-Proofpoint-GUID: bESzMR0AujXKdxXCXdxTpe82NbHL2Hab
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDIxNCBTYWx0ZWRfXyuyPN6Rok8mt
- DP+mywTBuhpzlAVK04pp2yZkRYoGRXMR+5GHxT4O3ebrIcbAgvNlBoeKwFJUTGzaUoArdl2RINJ
- HT3uUb5XnkhHvN2+/mEge45v/QwzKDmneuxOo2ubYyN+6g9KeSQYgzaiyFnbCQDamefGQBkCrQa
- S74syk2MLvaLHNaZfxcNtzFrvu37AiIf/lt3bhfoGU9RNllnbzKt25Dg05P8FXqlsRQZZHC/4es
- plJulP3oT1vs0sIY0jAMvVqDxYghYFLSxIvKjZXW2qaz9uouzR4vI5Zz/F8EOxqupoGdYKWQxPH
- UVo4bspjNyMRjYk+kfYUaIe7VxoIz6J/T5WrsARSRxj3OX9BY7xgQJhXUFMzbbTibpN/Ed5W5hD
- W0GytO7Ql4RK0ZO3o02y7hFY1nEfcto+2eEef+7ptdxaRTlXC4kh7owa0h0JX5Iycd9Hq9nyOvZ
- m6XQwoCvShnnURhCr7w==
-Subject: [oss-security] 7 vulnerabilities disclosed & patched in jq
+Subject: [oss-security] CVE-2024-9143: OpenSSL: Low-level invalid GF(2^m) parameters lead to OOB memory access
 
-7 vulnerabilities have been posted to https://github.com/jqlang/jq/security -
-6 this week and one in March that I don't see in the list archives.  Fixes
-appear to be available in their github repo, but not yet in a release.
+--=-HqPmRgmz3NRfUjZ2DbUx
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://github.com/jqlang/jq/security/advisories/GHSA-q3h9-m34w-h76f reports:
-> Integer overflow in jvp_string_append and jvp_string_copy_replace_bad allows
-> heap buffer overflow
-> 
-> Affected versions: 1.8.1
-> 
-> Summary
-> -------
-> An integer overflow in jvp_string_append() in src/jv.c causes a heap buffer
-> overflow when concatenating strings whose combined length exceeds 2^31 bytes.
-> 
-> Details
-> -------
-> The internal function jvp_string_append() computes the new buffer allocation
-> size as:
-> 
->     // src/jv.c:1187
->     uint32_t allocsz = (currlen + len) * 2;
->     if (allocsz < 32) allocsz = 32;
-> 
-> Both currlen and len are uint32_t. When currlen + len >= 2^31, the
-> multiplication by 2 overflows the 32-bit unsigned integer, wrapping allocsz to
-> a small value (potentially 0, clamped to 32). The subsequent memcpy operations
-> copy currlen + len bytes into the undersized buffer, causing a heap buffer
-> overflow. The length_hashed field ((currlen + len) << 1) suffers the same
-> overflow, corrupting the stored string length.
-> 
-> Arrays and objects already have size limits, but strings have no equivalent
-> bounds check. We have to limit the size of string so that the length does not
-> overflow.
-> 
-> Similar vulnerability exists in jvp_string_copy_replace_bad, too.
-> 
-[See GHSA for PoC]
-> 
-> Impact
-> ------
-> CWE-190 (Integer Overflow or Wraparound) leading to
-> CWE-122 (Heap-based Buffer Overflow).
-> 
-> Any user or system that evaluates untrusted jq queries is affected. Attacker
-> can easily crash the jq process by sending a crafted jq query. If the system
-> uses a fixed jq query (that does not concatenate the input strings many times),
-> attacker needs to send a huge JSON input to make it crash. Heap corruption may
-> allow further exploitation depending on the allocator and environment.
-> All versions of jq through 1.8.1 and current master version are affected.
-> 
-> Fix
-> ---
-> This issue was fixed by
-> https://github.com/jqlang/jq/commit/e47e56d226519635768e6aab2f38f0ab037c09e5
-> 
-> Severity: High - 8.2 / 10
-> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H
-> CVE ID: CVE-2026-32316
+OpenSSL Security Advisory [16th October 2024]
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-https://github.com/jqlang/jq/security/advisories/GHSA-2hhh-px8h-355p says:
-> Out-of-Bounds Read in jv_parse_sized() Error Formatting for Non-NUL-Terminated
-> Counted Buffers
-> 
-> Summary
-> -------
-> libjq exposes jv_parse_sized(const char *string, int length) as a counted-buffer
-> JSON parsing API, but its parse-error path later treats the same buffer as a
-> NUL-terminated C string. If a caller passes malformed JSON in a
-> non-NUL-terminated buffer, the error construction logic can read past the
-> caller-supplied length, causing an out-of-bounds read.
-> 
-> Details
-> -------
-> The vulnerable path is:
-> 
-> jv_parse_sized()
->  -> jv_parse_sized_custom_flags()
->   -> jv_parser_set_buf(&parser, string, length, 0)
->    -> parse failure
->     -> jv_string_fmt("%s (while parsing '%s')", ..., string)
-> 
-> Relevant code:
-> 
->     src/jv.h (line 245)
->     src/jv_parse.c (line 865)
->     src/jv_parse.c (line 896)
->     src/jv.c (line 1528)
-> 
-> The parser correctly accepts a (pointer, length) pair, but when building the
-> error message it formats string with %s, which causes vsnprintf() to continue
-> reading memory until a \0 is found. This makes the error path ignore the
-> explicit buffer length and turns a counted-buffer API into an unbounded read
-> sink.
-> 
-> Reachability:
-> 
-> Real external source: any libjq consumer calling jv_parse_sized() with a
-> counted buffer.
-> 
-> In-project internal uses such as fromjson and lexer paths also reach
-> jv_parse_sized(), but those pass jq-managed strings that are already
-> NUL-terminated, so the practical attack surface is the public API rather
-> than the normal jq CLI path.
-> 
-[See GHSA for PoC]
-> 
-> Impact
-> ------
-> 
-> Only libjq is affected. A caller that uses jv_parse_sized() on untrusted
-> malformed JSON in a non-NUL-terminated buffer can trigger an out-of-bounds
-> read during error construction. Depending on memory layout and how the
-> returned error string is logged or exposed, this can lead to memory disclosure
-> or process termination.
-> 
-> Severity:   Moderate
-> CVE ID:     CVE-2026-39979
-> Weaknesses: CWE-125 Out-of-bounds Read
-> Credits:    @HO-9 Reporter
+Low-level invalid GF(2^m) parameters lead to OOB memory access (CVE-2024-91=
+43)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
 
-https://github.com/jqlang/jq/commit/2f09060afab23fe9390cce7cb860b10416e1bf5f
-states that it fixes CVE-2026-39979.
+Severity: Low
+
+Issue summary: Use of the low-level GF(2^m) elliptic curve APIs with untrus=
+ted
+explicit values for the field polynomial can lead to out-of-bounds memory r=
+eads
+or writes.
+
+Impact summary: Out of bound memory writes can lead to an application crash=
+ or
+even a possibility of a remote code execution, however, in all the protocols
+involving Elliptic Curve Cryptography that we're aware of, either only "nam=
+ed
+curves" are supported, or, if explicit curve parameters are supported, they
+specify an X9.62 encoding of binary (GF(2^m)) curves that can't represent
+problematic input values. Thus the likelihood of existence of a vulnerable
+application is low.
+
+In particular, the X9.62 encoding is used for ECC keys in X.509 certificate=
+s,
+so problematic inputs cannot occur in the context of processing X.509
+certificates.=C2=A0 Any problematic use-cases would have to be using an "ex=
+otic"
+curve encoding.
+
+The affected APIs include: EC_GROUP_new_curve_GF2m(), EC_GROUP_new_from_par=
+ams(),
+and various supporting BN_GF2m_*() functions.
+
+Applications working with "exotic" explicit binary (GF(2^m)) curve paramete=
+rs,
+that make it possible to represent invalid field polynomials with a zero
+constant term, via the above or similar APIs, may terminate abruptly as a
+result of reading or writing outside of array bounds.=C2=A0 Remote code exe=
+cution
+cannot easily be ruled out.
+
+The FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue.
+
+OpenSSL 3.3, 3.2, 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+
+OpenSSL 3.3 users should upgrade to OpenSSL 3.3.3 once it is released.
+
+OpenSSL 3.2 users should upgrade to OpenSSL 3.2.4 once it is released.
+
+OpenSSL 3.1 users should upgrade to OpenSSL 3.1.8 once it is released.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.16 once it is released.
+
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1zb once it is released
+(premium support customers only).
+
+OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zl once it is released
+(premium support customers only).
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next release of each
+branch, once it becomes available. The fix is also available in commit
+c0d3e4d3 (for 3.3), commit bc7e04d7 (for 3.2), commit fdf67233 (for 3.1)
+and commit 72ae83ad (for 3.0) in the OpenSSL git repository. It is available
+to premium support customers in commit 8efc0cba (for 1.1.1) and in commit
+9d576994 (for 1.0.2).
+
+This issue was reported on 16th September 2024 by Google OSS-Fuzz-Gen.
+The fix was developed by Viktor Dukhovni.
+
+General Advisory Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+URL for this Security Advisory:
+https://openssl-library.org/news/secadv/20241016.txt
+
+Note: the online version of the advisory may be updated with additional det=
+ails
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://openssl-library.org/policies/general/security-policy/
 
 
-https://github.com/jqlang/jq/security/advisories/GHSA-32cx-cvvh-2wj9 advises:
-> Embedded-NUL Truncation in jq CLI JSON Input Path Causes Prefix-Only Validation
-> of Malformed Input
-> 
-> Summary
-> -------
-> The normal jq CLI JSON input path uses fgets() and then derives the valid byte
-> length with strlen() when parsing JSON input without a newline. If the input
-> contains an embedded NUL byte, jq truncates the already-read buffer at the NUL
-> and passes only the benign prefix to the JSON parser. As a result, jq may
-> accept malformed input by validating only the prefix before the NUL.
-> 
-> Details
-> -------
-> The reachable CLI path is:
-> 
-> CLI file/stdin input
->  -> jq_util_input_add_input() / stdin default
->   -> jq_util_input_set_parser(..., jv_parser_new(...))
->    -> jq_util_input_next_input() -> jq_util_input_read_more()
->     -> strlen(state->buf)
->      -> jv_parser_set_buf(state->parser, state->buf, state->buf_valid_len,
->                           !is_last)
-> 
-> Relevant code:
-> 
->     src/main.c (line 361)
->     src/main.c (line 653)
->     src/main.c (line 664)
->     src/main.c (line 671)
->     src/util.c (line 315)
->     src/util.c (line 320)
->     src/util.c (line 432)
-> 
-> The flaw is that the code does not use the actual number of bytes read by
-> fgets(). Instead it uses strlen(state->buf), which stops at the first embedded
-> NUL. Trailing bytes after the NUL may already have been consumed from the
-> input stream, but they are silently excluded from parsing.
-> 
-> This is realistically reachable because it affects the stock jq CLI file
-> and stdin parsing path used by end users.
-> 
-[See GHSA for PoC]
-> 
-> Observed error:
-> 
-> jq: Bad JSON in --slurpfile ...: Invalid numeric literal at line 1, column 17
-> 
-> Impact
-> 
-> This issue can cause validation bypass in workflows that rely on jq to validate
-> untrusted JSON before forwarding, storing, or otherwise acting on the original
-> bytes. An attacker can place a benign JSON prefix before an embedded NUL and
-> append malicious trailing data after it. jq may accept the prefix as valid
-> JSON while silently ignoring the suffix, creating a parser differential
-> between jq and downstream components that process the full input.
-> 
-> Severity:   Low
-> CVE ID:     CVE-2026-33948
-> Weaknesses: No CWEs
-> Credits:    @HO-9
+--=-HqPmRgmz3NRfUjZ2DbUx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-https://github.com/jqlang/jq/commit/6374ae0bcdfe33a18eb0ae6db28493b1f34a0a5b
-says it fixes CVE-2026-33948.
+-----BEGIN PGP SIGNATURE-----
 
+iQJGBAABCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmcP8xUSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tJ44P/RftVojvBxJh2jeYH2BNFZhbfdgBj7MW
+zz+/qIRMG/fb61xftYoQdrZxRIioWR9WQvbDFpM+CqnfYFDgIe7uQKPhND7VQIIp
+i3dG7Tp9ibUfzvAfI1rhexOzbecrWmpBi9FSgz8kNx1KjXWgeRvrplStjPcxWTGc
+N0ied+XZk8GsTEjQfcnZsaY//JJH9Sv7nurXlHu2FWkzIsYTblbkNUldBjjP6/gg
+o3RcRMGe3dbrI+oxtqj+mIbFJbntjmmCyf5K5pgTQWjBz9Pc3oKxN/esX2h7+3Mk
+Eq3N25FPTmz8MYRE1MfreIjv/0spv8GJAGseN8Tl0lDDf+D8adiFrkr3FaVWKYKh
+ky+d975XvQVenP7BiSLplpSQmo4u/upQS/vPfp9HyMG/xej70ov3hjfmgODJbNlh
+agzhgKuFvrhhxKyfpv3c+2Z3qFV358XmihktQXulx8xA050ue800yNoj+zOiry4O
+pTYUyAQSg2Wzc/xO4BHJoBrYpirsdlbypNoS67J0L+OYeBAWoPupIWQvInnTOzcg
+YI1JeJkXg1X6sZ1s1GB9dW5+e0b1jJAVJXqiF1EwFNqRAUIsN1uZL8z3zwYUk9sa
+OLT1SPvCreJ16qPTJLigccz11UbgJkZklMxLQBBrhTeBVYw76cXcR1hLmymzRJq4
++zimuAO/9Cv8
+=WLR5
+-----END PGP SIGNATURE-----
 
-https://github.com/jqlang/jq/security/advisories/GHSA-xwrw-4f8h-rjvg states:
-> Unbounded Recursion in jv_setpath() / jv_getpath() / delpaths_sorted()
-> 
-> Affected versions:  <= 1.8.1
-> 
-> Summary
-> -------
-> The jv_setpath(), jv_getpath(), and delpaths_sorted() functions in
-> src/jv_aux.c use unbounded recursion where the recursion depth equals the
-> length of a caller-supplied path array. There is no depth limit check.
-> When a path array with ~60,000 or more elements is supplied — either constructed
-> by a jq filter expression or provided directly in attacker-controlled JSON input
-> — the C call stack is exhausted, causing a segmentation fault (SIGSEGV) and
-> immediate process crash.
-> 
-> This vulnerability bypasses the MAX_PARSING_DEPTH (10,000) limit that protects
-> the JSON parser, because path arrays can be constructed programmatically to
-> arbitrary lengths without being constrained by parsing depth. Critically, the
-> path array can be sourced entirely from attacker-controlled JSON input, making
-> this exploitable in scenarios where a trusted jq filter processes untrusted data.
-> 
-[See GHSA for code analysis and PoC]
-> 
-> Impact
-> ------
-> - Denial of Service (Crash): Any jq process that calls setpath, getpath, or
->   delpaths with a sufficiently long path array will crash with SIGSEGV.
->   This is an unrecoverable crash — no error handling is possible.
-> - Bypass of existing depth limits: The JSON parser's MAX_PARSING_DEPTH (10,000)
->   does not protect against this because path arrays are constructed at the jq
->   runtime level, not during JSON parsing. An attacker can embed a flat array
->   of 65,000 integers in a JSON document (only ~200 KB) that causes a crash
->   when used as a path.
-> - Affected real-world scenarios:
->   - Web services using jq to transform or extract data from user-submitted JSON
->   - CI/CD pipelines processing untrusted configuration or API responses with jq
->   - Shell scripts that use setpath/getpath/delpaths on paths derived from input
->     data
->   - Any application embedding libjq where path arguments can be influenced by
->     external input
-> - Note: Unlike memory corruption vulnerabilities, stack overflow from recursion
->   is generally not exploitable for code execution on modern systems with guard
->   pages. The impact is limited to denial of service.
-> 
-> Severity: Moderate - 6.2 / 10
-> CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-> CVE ID: CVE-2026-33947
-> Weaknesses: CWE-674 Uncontrolled Recursion
-> Credits: @bg0d-glitch
-
-https://github.com/jqlang/jq/commit/fb59f1491058d58bdc3e8dd28f1773d1ac690a1f
-declares that it fixes CVE-2026-33947.
-
-
-https://github.com/jqlang/jq/security/advisories/GHSA-6gc3-3g9p-xx28 announces:
-> jq _strindices missing runtime type checks lead to crash and limited memory
-> disclosure
-> 
-> Affected versions: 1.8.1-dev commit 69785bf
-> 
-> Summary
-> -------
-> _strindices is the C builtin used by indices / index / rindex for string inputs.
-> Its wrapper passes both arguments straight to jv_string_indexes() without
-> checking that they are strings, and jv_string_indexes() itself only uses
-> assert(). In release builds those checks disappear under -DNDEBUG.
-> _strindices(0) is enough to crash jq, and the same bug also gives an attacker
-> controlled pointer dereference and a limited read/probe primitive.
-> 
-> Details
-> -------
-> commit 69785bf77f86e2ea1b4a20ca86775916889e91c9, _strindices is implemented
-> in src/builtin.c like this
-> 
->     static jv f_string_indexes(jq_state *jq, jv a, jv b) {
->       return jv_string_indexes(a, b);
->     }
-> 
-> jv_string_indexes() in src/jv.c then blindly assumes both given args are strings:
-> 
->     jv jv_string_indexes(jv j, jv k) {
->       assert(JVP_HAS_KIND(j, JV_KIND_STRING));
->       assert(JVP_HAS_KIND(k, JV_KIND_STRING));
->       const char *jstr = jv_string_value(j);
->       const char *idxstr = jv_string_value(k);
->     }
-> 
-> In a debug build the assertions fire. In a normal release build they are
-> compiled out, and jq dereferences j.u.ptr as if it were a valid jvp_string *.
-> 
-> When the assertions are gone, jv_string_value() treats j.u.ptr as a string
-> header and jv_string_length_bytes() reads a length from that same fake object.
-> This results in either 1. an easy crash with invalid input 2. a limited read
-> primitive when a crafted number is used so its bit pattern is treated as a
-> pointer. The number being crafted matters because default jq builds use decnum.
-> A plain numeric literal doesn't give control of u.ptr, but arithmetic such as
-> this does: (<bit-cast double> + 0) reaches jv_number(double) and stores the
-> IEEE-754 bits of that double in the same union field which is later read as u.ptr
-> 
-> PoC
-> ---
-> Crash:
->    jq -n '_strindices(0)'
-> 
-> Controlled pointer dereference:
-> 
->     import struct, subprocess
-> 
->     def as_double(u64):
->         return struct.unpack("<d", struct.pack("<Q", u64))[0]
-> 
->     # because we want jstr = addr, the fake jvp_string sits 16 bytes earlier
->     addr = 0x4141414141414151
->     expr = f"({as_double(addr - 16)!r} + 0) | _strindices(\"\\u0000\")"
->     result = subprocess.run(["jq", "-n", expr])
->     print(result.returncode)  # sigsegv in python
-> 
-> Impact
-> ------
-> 
-> Anything that runs untrusted jq filters against a release build can be crashed
-> very easily. If the system uses a fixed jq query (such that does not use the
-> internal _strindices filter), it is not affected. The same bug also gives
-> limited read behavior because values which are not strings can be treated as
-> fake string objects and walked by _strindices. In a real deployment that means
-> an attacker can use the exit status as a mapped/unmapped probe, and in favorable
-> cases can get some bytes back through the _strindices position output.
-> 
-> Severity: Moderate - 6.1 / 10
-> CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H
-> CVE ID: CVE-2026-39956
-> Weaknesses:
->  CWE-125 Out-of-bounds Read
->  CWE-476 NULL Pointer Dereference
->  CWE-843 Access of Resource Using Incompatible Type ('Type Confusion')
-> Credits: @tlsbollei Reporter
-
-https://github.com/jqlang/jq/commit/fdf8ef0f0810e3d365cdd5160de43db46f57ed03
-claims to fix CVE-2026-39956.
-
-
-https://github.com/jqlang/jq/security/advisories/GHSA-wwj8-gxm6-jc29 expresses:
-> Algorithmic complexity DoS via hardcoded MurmurHash3 seed
-> 
-> Summary
-> -------
-> jq uses MurmurHash3 with a compile-time constant seed 0x432A9843 (src/jv.c:1200)
-> for all JSON object hash table operations. Since the seed is hardcoded and
-> publicly visible in source, an attacker can precompute hash collisions offline
-> and construct a JSON object where all keys hash to the same bucket.
-> This degrades operations from O(1) to O(n), making any jq expression O(n^2).
-> Only ~100KB of crafted JSON needed — far more practical than the heap overflow
-> issues.
-> 
-> Details
-> -------
-> File: src/jv.c, line 1200
-> 
->     static const uint32_t HASH_SEED = 0x432A9843;
-> 
-> Used at line 1219:
-> 
->     static uint32_t jvp_val_hash(jv val) {
->         uint32_t h1 = HASH_SEED;
->         // ... MurmurHash3 body ...
->     }
-> 
-> Many languages randomize hash seeds at startup to prevent this (Python 3.3+,
-> Ruby 1.9+, Perl 5.18+). jq does not.
-> 
-[See GHSA for PoC]
-> 
-> Severity: High - 7.5 / 10
-> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-> CVE ID: CVE-2026-40164
-> Weaknesses:
->  CWE-328 Use of Weak Hash
->  CWE-407 Inefficient Algorithmic Complexity
-> Credits: @AsafMeizner Reporter
-
-https://github.com/jqlang/jq/commit/0c7d133c3c7e37c00b6d46b658a02244fdd3c784
-appears to mitigate this, but does not list the CVE id.
-
-
-https://github.com/jqlang/jq/security/advisories/GHSA-gf4g-95wj-4q4r discloses:
-> jq args2obj() Heap-Use-After-Free Vulnerability Report
-> 
-> Affected versions: 1.8.1 (commit ref:b33a763)
-> 
-> Summary
-> -------
-> A potential heap-use-after-free vulnerability exists in jq's args2obj()
-> function at src/execute.c:1218. The bug is in the public jq_compile_args()
-> API's array argument processing path: when called with an array of 2+ named
-> argument entries, freed heap memory is read (CWE-416); with 1+ entries, a
-> double-free occurs (CWE-415). The standard jq CLI binary is not affected,
-> as it always passes an object (not an array) to args2obj(). It appears the
-> bug was introduced in commit b279713e (2017-02-26) and affects jq HEAD
-> (jq-1.8.1-32-gb33a763).
-> 
-> Details
-> -------
-> Root cause: The strings kk ("name") and vk ("value") are allocated once before
-> the loop but passed directly to jv_object_get(), which consumes (frees) both
-> its arguments. On the first iteration, kk and vk are freed. On subsequent
-> iterations, they are dangling pointers — jvp_string_hash() reads from freed
-> heap memory. After the loop, jv_free(kk) / jv_free(vk) trigger a double-free.
-> 
->     // src/execute.c:1208-1223
->     jv kk = jv_string("name");
->     jv vk = jv_string("value");
->     jv_array_foreach(args, i, v)
->       r = jv_object_set(r, jv_object_get(jv_copy(v), kk), jv_object_get(v, vk));
->     jv_free(kk);   // double-free: already freed by jv_object_get()
->     jv_free(vk);
-> 
-> Git history: Commit b279713e refactored inline array processing in
-> jq_compile_args() into the args2obj() helper. The original code created fresh
-> jv_string("name") / jv_string("value") on each iteration; the refactored
-> version hoisted them into locals but failed to account for jv_object_get()
-> consuming its key argument.
-> 
-> [See GHSA for PoC]
-> 
-> Impact
-> 
-> CWE-416 (Use After Free) / CWE-415 (Double Free). The vulnerability is
-> reachable through the public jq_compile_args() API when called with array
-> arguments — not through the CLI binary. Heap corruption from the UAF and
-> double-free may lead to arbitrary code execution via corrupted heap metadata,
-> though no exploit has been demonstrated. All downstream consumers of
-> jq_compile_args() that pass array arguments have been affected since
-> commit b279713e (2017-02-26).
-> 
-> My name is Scott Seal, and I work at Trail of Bits. Per the instructions of
-> my employer, I am required to provide the following disclosure:
-> 
->     This bug was found as part of follow-on research from DARPA's AI Cyber
->     Challenge (AIXCC), where Trail of Bits built Buttercup, a Cyber Reasoning
->     System that combines static analysis, fuzzing, and large language models
->     to find and fix vulnerabilities.
-> 
->     https://www.darpa.mil/research/programs/ai-cyber
->     https://www.trailofbits.com/buttercup/
-> 
-> Severity: Low
-> CVE ID: No known CVE
-> Weaknesses
->  CWE-415 Double Free
->  CWE-416 Use After Free
-> Credits: @sseal Reporter
-
-https://github.com/jqlang/jq/commit/3985b80ce50bd75c6eb5a97cb3348c3f835ca8e0
-includes "Fixes GHSA-gf4g-95wj-4q4r."
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@oracle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
-
+--=-HqPmRgmz3NRfUjZ2DbUx--
