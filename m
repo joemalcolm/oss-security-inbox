@@ -1,4 +1,4 @@
-Received: (qmail 24218 invoked by uid 550); 6 Apr 2026 03:12:16 -0000
+Received: (qmail 5611 invoked by uid 550); 18 Oct 2024 01:47:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,41 +8,75 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 14051 invoked from network); 6 Apr 2026 02:54:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=samba.org;
-	s=42; h=To:From:Date:Message-ID:CC;
-	bh=9xqSXy8HmH2JPUtRBe9NTDrroq0jsQoPZDD0AhUhK7U=; b=0jE/wASprm29dvoumdYFuSpD7t
-	f9WN5C+HlB32W8kG0Sngj9K6xwMTvCh1AqWXfYV9MdwLqgHB75FLGCMHvKXvrAHWKDowJKHVj4uA5
-	3eU8l2VS4ajf+JEsNDbW2P+EwSpuuNoHu+OKxdRR/+horip5JICD27u6sSZVNN22B4XBA7Y6j/nf4
-	e2CNTyA7nEETecvm68y7XdPiABYeMiqLfaybFz+ZXSslqGeMv4KbLvSj6fnRy7FjryyGurfLwy2//
-	bvSuz/1tlUPRY5EI26fXZ5jzauqYnp3iHXRsMqhh/i8CT5IGAPRNYwczHVwCZ2qwpYhO10aB1/V6U
-	nskTVZbPIgOWhKk7XNtD15Op0ualMm7X1pFk4AjHw6/uH1+BBpYdZnPVPzr2MtUSd8HeYSojXkQKA
-	PJcKbLcBiZhEGcP1dgkSWGz3uARLtm0SgxdjRePv6tbaGcaxYCJzISKsdsR7EW+QYhXMjzRg2NHYq
-	Fv8XHALOOLXFSMP7AnSzKGCg;
-Message-ID: <d9b75448-c072-40ec-9740-1c68d4cee279@samba.org>
-Date: Mon, 6 Apr 2026 14:53:49 +1200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Douglas Bagnall <dbagnall@samba.org>
-To: samba-technical <samba-technical@lists.samba.org>,
- samba <samba@lists.samba.org>, oss-security@lists.openwall.com
-Content-Language: en-NZ
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Heads-up: Upcoming Samba security releases (2026-04-09)
+Received: (qmail 5402 invoked from network); 18 Oct 2024 01:46:56 -0000
+Date: Fri, 18 Oct 2024 03:46:42 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20241018014642.GA23101@openwall.com>
+References: <Zv-9gAGM_X7QQShJ@suse.com> <878qv251x7.fsf@kaka.sjd.se> <20241008025402.GA2904@openwall.com> <878quzt99y.fsf@kaka.sjd.se> <20241008205659.GA7086@openwall.com> <Zw5VcOQzbCUChikG@kasco.suse.de> <Zw6_0fzKlkBIbRSj@itl-email> <20241015202135.GA8875@openwall.com> <ZxDKuqteocmdBDNx@kasco.suse.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZxDKuqteocmdBDNx@kasco.suse.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-47191: Local root exploit in the PAM module pam_oath.so
 
-This is a heads-up that there will be Samba security updates for
-4.22, 4.23, and 4.24 on Thursday, April 9, 2026. Please make sure
-that your Samba servers will be updated soon after the release!
+On Thu, Oct 17, 2024 at 10:28:41AM +0200, Matthias Gerstner wrote:
+> - setgroups() is invoked to drop supplementary group membership.
 
-Impacted components:
- - File Services, CVSS 10.0, affecting some configurations
- - File Services, CVSS 10.0, affecting some configurations
- - File Services, CVSS 7.1 affecting some configurations
- - File Services, CVSS 6.5 affecting uncommon configurations
- - AD DC CVSS 8.0, affecting some configurations
- - AD DC CVSS 7.5, affecting uncommon configurations
+Looks good to me.
 
-cheers,
-Douglas Bagnall
-Samba Team and Catalyst IT
+> - the usersfile is checked for additional hard-links; if the link count
+>   is larger than one, then the file is rejected. This prevents possible
+>   hard link attacks on the end of the unprivileged user.
+
+There's a subtle issue here - another user's (or root's) temporary file
+may be hard-linked and st_nlink may be back to 1 after the file is
+unlinked by its original creator/user.  For example, tmpfile(3) unlinks
+the file right away, yet the calling program is expected to proceed to
+use it.  In that case, an attacker winning the race could manipulate
+content of another user's temporary file, which that user's program
+could then read back and use.
+
+>   With the Linux
+>   kernel sysctl protected_hardlinks set to 1 (the usual default on most
+>   distributions), this attack will not work either way.
+
+Right.
+
+> In our case it is only a check of st_nlink. This is because we are
+> dropping privileges to the owner of the file. If one would drop
+> privileges to the to-be-authenticated user, then a check of st_uid would
+> be in order as well.
+
+Right.  It appears that given your decision to allow any file owner, you
+cannot fully prevent hard link attacks without protected_hardlinks.
+
+> - O_NOCTTY has been added to the open() call of the usersfile. This
+>   makes this aspect explicit, although the code already checks that the
+>   file is a regular file, so the situation shouldn't arise in the first
+>   place.
+
+Oh, I had thought you'd only be able to reliably post-check for regular
+file, which would be too late against side-effects on open().  However,
+now I realize that you first open with O_PATH, which presumably avoids
+side-effects(*), then check fstat(), and only then if everything looks
+good you reopen via /proc/self/fd/fd for actual usage.  That's quite a
+hack, but yes, O_NOCTTY on reopen should be redundant.
+
+(*) The man page says "Opening a file or directory with the O_PATH flag
+requires no permissions on the object itself", so we'd have bigger
+problems regardless of your usage if there were side-effects.
+
+> The reason why we accept different ownership of the file is for
+> increased backward compatibility. The usersfile feature in pam-oath
+> allows for potentially complex scenarios regarding to the ownership of
+> the file and it was not previously clearly specified which scenarios are
+> supported. When only supporting the simple scenario of the usersfile
+> being located directly beneath the to-be-authenticated user's home
+> directory, then a lot of things become simpler, as it has been done
+> in the upstream approach in a couple of aspects.
+
+OK, this makes sense.
+
+Alexander
