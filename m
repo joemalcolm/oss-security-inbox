@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1148" "Friday" "19" "August" "2016" "09:31:54" "+0200" "Greg KH" "greg@kroah.com" "<20160819073154.GA21382@kroah.com>" "31" "Re: [oss-security] CVE-2016-6327 | Linux kernel crash in infiniband subsystem." "^Date:" nil nil "8" "2016081907:31:54" "[oss-security] CVE-2016-6327 | Linux kernel crash in infiniband subsystem." (number mark "        greg@kroah.c Aug 19   31/1148  " thread-indent "\"Re: [oss-security] CVE-2016-6327 | Linux kernel crash in infiniband subsystem.\"\n") "<CALJHwhQEOavmdQ_dqNS2k5b1SFuvKUBTuQtOySi6zUfgSQ3-1Q@mail.gmail.com>" ("<CALJHwhQEOavmdQ_dqNS2k5b1SFuvKUBTuQtOySi6zUfgSQ3-1Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 10075 invoked by uid 550); 19 Aug 2016 07:31:57 -0000
+Received: (qmail 27968 invoked by uid 550); 23 Oct 2024 15:25:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +6,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10050 invoked from network); 19 Aug 2016 07:31:57 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=NlzJPopB9Hvn2MdUrwUMuN+9elY=; b=acQ8B
-	A2+HChsyJSUkPdyuHHo7rVOzqaDYGVMu1q2POH2lo92MtGVo5d5XxXVO4Zu7On+w
-	cxdcKIF5TwXBoYV9jVRlG3+1sTnbVNAicm0tCXp2t6sHPDD34jHtUVzA+/f2VbIJ
-	MUEOGE2NWENGmhOzGI9GlvSAVQpaPVf8F3JZg4=
-X-Sasl-enc: /kE6iJhBALeg4p+RQ9NXRr4USAFlM/NyPPs3w7sSGFmC 1471591904
-Message-ID: <20160819073154.GA21382@kroah.com>
-References: <CALJHwhQEOavmdQ_dqNS2k5b1SFuvKUBTuQtOySi6zUfgSQ3-1Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALJHwhQEOavmdQ_dqNS2k5b1SFuvKUBTuQtOySi6zUfgSQ3-1Q@mail.gmail.com>
-User-Agent: Mutt/1.7.0 (2016-08-17)
-Date: Fri, 19 Aug 2016 09:31:54 +0200
-From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-6327 | Linux kernel crash in infiniband
- subsystem.
+x-ms-reactions: disallow
+Received: (qmail 27690 invoked from network); 23 Oct 2024 09:10:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=christopher-kunz.de;
+	s=202409; t=1729674628;
+	bh=g3LHPJvbmCXZbAKIP2vBQmKxAU51kXRP5ZtnBo6l2jQ=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=yiqF9ougeyxi1coRMOAO+PSnT+WEpJLPJjpSJslspYn0BD/JoEvcxoGjgMJ3JZTtH
+	 fgZ7SSVBBVxLydZNjaCeG1+KZ9mHTaOdpb0e5feara4ZmFYrG3YwxqUAkLwkit9V5W
+	 VdIkbh7oiiQgLX/p1o19JIlAe2o53pcmmclTjw+egd7x+XVaJHO+pKIGOOiJSsK3Ca
+	 +nRXl2bIDhOQ7dTlfm9eNxUZOMyS0DJHUsp7+4URPJManlzjlTjBoOxInhqjO1xV/8
+	 Kokp+IpKgsaJgvt17KabPAAAcflwkL+xcQjv9g1xdtNiy8Pe7Xyi9TDrIWLnNV1sKn
+	 rwbVDm2TkR8Rw==
+Authentication-Results: mail.absynth.de;
+	auth=pass smtp.auth=info@christopher-kunz.de smtp.mailfrom=info@christopher-kunz.de
+Message-ID: <93820967-9c9c-4a21-8611-418d56dfd645@christopher-kunz.de>
+Date: Wed, 23 Oct 2024 11:10:28 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+References: <a1a68f6f1e98d46bb9766614636de4d8eb90a33d.camel@openssl.org>
+From: "Dr. Christopher Kunz" <info@christopher-kunz.de>
+Autocrypt: addr=info@christopher-kunz.de; keydata=
+ xsDiBD3U55kRBADKaqmPY/RBZ0luAFvOsa2lqQN8qXEimlCrbe0+WWywWDYNO/0c5B1FhUt2
+ heF12OV9u1ldDdynB/awdV3NYaoizce86XQzQGcPpIOlEgI9iTTc1FSP9zDkkljLMrMB8WGK
+ Q8WH6yLT+BOTIoK/rMs9DEN0hcsxOZY1wTEzhOfewwCg/7fHkook6P1/O/iOG3k/r90Um98D
+ /AvzlFtPaRn5qiCWjeopDW1RAJNLvWwKs1HHv8m1UOtMNisqObD3SuHn9lp4FfGAu7gaJoqI
+ /l6Rk02dgmBq+gyV+qg8PYXMlhh0xEfEO/TPPjx+nZnDRvO59tOj0pg2GLpIvQtdlwow1Iq4
+ r2XfHUk1b827GZGAg1+ckkkNSG24A/9l238stiojp+GYwpuYkGrxROSYX+0slzRc40DHjtrb
+ Jidz2Usmilyvt5WA1iBmAKw3L2TLQKpLtxAkGWSrDfdnl38VrYGMEM6WVctY6TxrqzrQLhaw
+ W+17goNN73S3uP3C0YrdVjZc5jl0xlfli4zP7HmxL1YyRlLQ22aVcdDmS80rQ2hyaXN0b3Bo
+ ZXIgS3VueiA8aW5mb0BjaHJpc3RvcGhlci1rdW56LmRlPsJ4BBMRAgA4AhsDBgsJCAcDAgMV
+ AgMDFgIBAh4BAheAFiEEyIKO0X3RkBHAiOpQXPou6zl6ysEFAmWdKLICGQEACgkQXPou6zl6
+ ysEHsQCfeqMRH0HyzVzl6XyNrxXdi0kSacYAnjXCcViWthCxB04fgluoiFw7b02TzsFNBD3U
+ 55kQCAD2Qle3CH8IF3KiutapQvMF6PlTETlPtvFuuUs4INoBp1ajFOmPQFXz0AfGy0OplK33
+ TGSGSfgMg71l6RfUodNQ+PVZX9x2Uk89PY3bzpnhV5JZzf24rnRPxfx2vIPFRzBhznzJZv8V
+ +bv9kV7HAarTW56NoKVyOtQa8L9GAFgr5fSI/VhOSdvNILSd5JEHNmszbDgNRR0PfIizHHxb
+ LY7288kjwEPwpVsYjY67VYy4XTjTNP18F1dDox0YbN4zISy1Kv884bEpQBgRjXyEpwpy1obE
+ AxnIByl6ypUM2Zafq9AKUJsCRtMIPWakXUGfnHy9iUsiGSa6q6Jew1XpMgs7AAICB/97dSwj
+ NNOvwX1CYynQFaXrajIBF9fSZcOJNZ5vh/+ejkl2nobkQicbI97dKYttanBaF4O//lPjNcbO
+ iXkiqEI8FQPyp5I+KIkVy6MiNM09zd0qHVwlihok2JG5wSGXfUsXjk3iPsxIVhWZSrB2q0By
+ Av95xcvUtxQl5cCGGqTxBIsGjiN4wkDS0FNXFH2hOuH5pCl+cbDdZmYTc1O+aeSygvLN76gs
+ tBgDODp8p2Fiu7RL99SRLTIHdniSvOr/bm4BDRYY0D6P/MoZQydZPMmZAOv3qnOkPox/9e5/
+ zP8cmLm08gbez8wjfl6Rl5OjngTIatupEWXZK022C2+LJBeFwkwEGBECAAwFAj3U55kFGwwA
+ AAAACgkQXPou6zl6ysHXxgCgw8C3Y9WTlhK6j3KgyciAF6X+odsAnja8RhnAa3HRM8YZbeaW
+ DC6HBdDe
+In-Reply-To: <a1a68f6f1e98d46bb9766614636de4d8eb90a33d.camel@openssl.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2024-9143: OpenSSL: Low-level invalid GF(2^m)
+ parameters lead to OOB memory access
 
-On Fri, Aug 19, 2016 at 05:10:30PM +1000, Wade Mealing wrote:
-> System using the infiniband support module ib_srpt were vulnerable to
-> a denial of service by system crash by a local attacker who is able to
-> abort writes to a device using this initiator.
-> 
-> There were multiple areas in which aborting a scsi command are able to
-> be handled, moving this to the correct location in the state machine
-> ensured that this condition was never triggered through this code
-> path.
-> 
-> The null pointer situation was enabled via a non attacker controlled
-> meset() call, and this is not a use after free.  From my undestanding
-> it is a denial of service only.
-> 
-> Thanks,
-> 
-> Wade Mealing
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1354525
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=51093254bf87
+Am 16.10.24 um 19:08 schrieb Tomas Mraz:
+> OpenSSL Security Advisory [16th October 2024]
+> =============================================
+>
+> Low-level invalid GF(2^m) parameters lead to OOB memory access (CVE-2024-9143)
+> ==============================================================================
+>
+> Severity: Low
 
-For those playing at home, this was fixed in the 4.6 Linux kernel
-release, as well as the 4.4.7 stable release (released on April 12,
-2016), and all other stable releases around the same time, so the only
-ones to worry about this are those who have not updated their kernel in
-a long time.
 
-thanks,
+Good morning everyone,
 
-greg k-h
+while OpenSSL rates this issue as "low severity", SuSE assesses it as 
+"moderate", with a CVSS 3.1 of 7.0 
+(CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H).
+
+I'm curious about these two quite different assessments. Could OpenSSL 
+and SuSE maybe elaborate a little?
+
+Thanks,
+
+--cku
+
 
