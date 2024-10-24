@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2722" "Tuesday" "30" "June" "2015" "15:03:36" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150630190336.8434972E3F4@smtpvbsrv1.mitre.org>" "59" "[oss-security] Re: Question about world readable config files and commented warnings" nil nil nil "6" "2015063019:03:36" "[oss-security] Re: Question about world readable config files and commented warnings" (number mark "        cve-assign@m Jun 30   59/2722  " thread-indent "\"[oss-security] Re: Question about world readable config files and commented warnings\"\n") "<5592C4B8.4080803@redhat.com>" ("<5592C4B8.4080803@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 10146 invoked by uid 550); 30 Jun 2015 19:03:48 -0000
+Received: (qmail 5755 invoked by uid 550); 24 Oct 2024 09:44:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10124 invoked from network); 30 Jun 2015 19:03:48 -0000
-In-Reply-To: <5592C4B8.4080803@redhat.com>
-Message-Id: <20150630190336.8434972E3F4@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, seth.arnold@canonical.com
-Date: Tue, 30 Jun 2015 15:03:36 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Question about world readable config files and commented warnings
-To: kseifried@redhat.com
+x-ms-reactions: disallow
+Received: (qmail 11493 invoked from network); 24 Oct 2024 07:55:41 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: multipart/alternative;
+ boundary="------------gfQDnmcJX8yR0CGBa9ZVsC1R"
+Message-ID: <e80016d8-a542-418c-a52f-293fe9ec1151@apache.org>
+Date: Thu, 24 Oct 2024 09:54:05 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Francesco_Chicchiricc=C3=B2?= <ilgrosso@apache.org>
+To: oss-security@lists.openwall.com
+Content-Language: it
+Subject: [oss-security] CVE-2024-45031: Apache Syncope: Stored XSS in Console and Enduser
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--------------gfQDnmcJX8yR0CGBa9ZVsC1R
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> so does a situation where the author creates the config file with
-> that warning, and then a vendor repackages and ships it, still world
-> readable, still with the warning, warrant a CVE?
+Severity: moderate
 
-No, in general, repackaging doesn't mean that there can be new CVEs as
-a result of a reevaluation of whether any part of a product's
-configuration/behavior would have been chosen differently if it had
-been the repackager's own original code.
+Affected versions:
 
-There can, however, be new CVEs for new interaction errors. For
-example, if a Linux distribution shipped that product with upstream's
-standard default config-file permissions, but simultaneously shipped a
-setup tool that required a password in the database URI (without
-addressing file permissions during setup, and without showing the file
-contents to the user), then there would need to be a CVE for
-something, because there is no way to use that combination safely.
-Most likely the CVE would name the setup tool as the primary affected
-product/component.
+- Apache Syncope 2.1 through 2.1.14
+- Apache Syncope 3.0 through 3.0.8
 
-This would apply in essentially the same way if it weren't a
-standalone setup tool, but were instead a module for a larger
-configuration-management product. If a module is intended to modify
-configuration files, it seems that the module author has (at least
-some) responsibility for avoiding introduction of vulnerabilities into
-the configuration. This configuration-management module topic may have
-some open questions. However, as far as we know, people haven't been
-submitting many CVE requests about vulnerabilities that were caused
-when a module didn't incorporate complete knowledge of
-configuration-file semantics.
+Description:
 
-> Date: Tue, 30 Jun 2015 11:04:04 -0700
-> From: Seth Arnold <seth.arnold@canonical.com>
-> 
-> Did the vendor also fill in a password? If so, that's worth a CVE to me.
+When editing objects in the Syncope Console, incomplete HTML tags could be used to bypass HTML sanitization. This made it possible to inject stored XSS payloads which would trigger for other users during ordinary usage of the application.
+XSS payloads could also be injected in Syncope Enduser when editing “Personal Information” or “User Requests”: such payloads would trigger for administrators in Syncope Console, thus enabling session hijacking.
 
-We agree that this is a straightforward case that would have a CVE.
-This is, more or less, an extreme example of the setup-tool case
-described above: either way, the vendor has forced the product into an
-always-unsafe state.
+Users are recommended to upgrade to version 3.0.9, which fixes this issue.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Credit:
 
-iQEcBAEBAgAGBQJVkuc9AAoJEKllVAevmvmslpIIAIJw7DtVFdhBLVJubK4FGbwP
-K5lkOO6LCwxojpLsXbj60mFJ7W7jaloLCYINYLBkKC2MalQ1t/sbcXClZ4LDkPUA
-zC/fGYR1q1WOX/rz4IUM0BHpKunQsRBeuKMSn2Hj+fF1Aa90CnFQ45lAMhF+ybZK
-vBNkws5v0UuIgKxVRqvQejsegWlLGlcaqfQ7Gd7Bgd78Mi0Q5dbpckjauofKUZB1
-1K+lMAqvdX8hoy+i5QA23tx1xTtbp1d1StlnmbZkCtjYK2K9SwGMuZYou/dwSwQj
-RMnc7me+aISzZ0jDjoXqoGYewIvy80mnMzbb5GX3vcnUUwOs9zZomnF+ymx3Bwg=
-=0CLn
------END PGP SIGNATURE-----
+Kasper Karlsson, Omegapoint (finder)
+Pontus Hanssen, Omegapoint (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2024-45031
+
+--------------gfQDnmcJX8yR0CGBa9ZVsC1R--
