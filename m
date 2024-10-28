@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["269" "Tuesday" "18" "October" "2016" "19:09:35" "+0200" "Moritz Muehlenhoff" "jmm@debian.org" "<20161018170935.GA26921@inutil.org>" "9" "[oss-security] CVE request for tor" nil nil nil "10" "2016101817:09:35" "[oss-security] CVE request for tor" (number mark "U       jmm@debian.o Oct 18    9/269   " thread-indent "\"[oss-security] CVE request for tor\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21568 invoked by uid 550); 18 Oct 2016 17:09:47 -0000
+Received: (qmail 13536 invoked by uid 550); 28 Oct 2024 20:14:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,26 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21550 invoked from network); 18 Oct 2016 17:09:47 -0000
-Date: Tue, 18 Oct 2016 19:09:35 +0200
-From: Moritz Muehlenhoff <jmm@debian.org>
+x-ms-reactions: disallow
+Received: (qmail 31841 invoked from network); 28 Oct 2024 19:35:37 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: David Handermann <exceptionfactory@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20161018170935.GA26921@inutil.org>
+Message-ID: <5554dc12-26ae-13a7-6693-7dbff66cf62b@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 28 Oct 2024 19:34:26 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: jmm@inutil.org
-X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
-Subject: [oss-security] CVE request for tor
+Subject: [oss-security] CVE-2024-45477: Apache NiFi: Improper Neutralization of Input in
+ Parameter Description 
 
-Hi,
-please assign a CVE ID for
-https://blog.torproject.org/blog/tor-0289-released-important-fixes
+Affected versions:
 
-Fix: https://github.com/torproject/tor/commit/3cea86eb2fbb65949673eb4ba8ebb695c87a57ce
-Bug: https://trac.torproject.org/projects/tor/ticket/20384
+- Apache NiFi 1.10.0 through 1.27.0
+- Apache NiFi 2.0.0-M1 through 2.0.0-M3
 
-Cheers,
-        Moritz
+Description:
+
+Apache NiFi 1.10.0 through 1.27.0 and 2.0.0-M1 through 2.0.0-M3 support a d=
+escription field for Parameters in a Parameter Context configuration that i=
+s vulnerable to cross-site scripting. An authenticated user, authorized to =
+configure a Parameter Context, can enter arbitrary JavaScript code, which t=
+he client browser will execute within the session context of the authentica=
+ted user. Upgrading to Apache NiFi 1.28.0 or 2.0.0-M4 is the recommended mi=
+tigation.
+
+This issue is being tracked as NIFI-13675=20
+
+Credit:
+
+Muhammad Hazim Bin Nor Aizi (finder)
+
+References:
+
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-45477
+https://issues.apache.org/jira/browse/NIFI-13675
+
+Timeline:
+
+2024-08-23: reported
+2024-08-23: confirmed
+2024-08-25: resolved
+
