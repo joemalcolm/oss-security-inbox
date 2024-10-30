@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7904" "Saturday" "29" "April" "2017" "16:44:13" "+0200" "Securify B.V." "lists@securify.nl" "<68c416cf-44b4-1d43-441e-8262b0b88e82@securify.nl>" "169" "[oss-security] SyntaxHighlight MediaWiki extension allows injection of arbitrary Pygments options" nil nil nil "4" "2017042914:44:13" "[oss-security] SyntaxHighlight MediaWiki extension allows injection of arbitrary Pygments options" (number mark "U       lists@securi Apr 29  169/7904  " thread-indent "\"[oss-security] SyntaxHighlight MediaWiki extension allows injection of arbitrary Pygments options\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5318 invoked by uid 550); 29 Apr 2017 14:44:28 -0000
+Received: (qmail 17761 invoked by uid 550); 30 Oct 2024 02:13:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,187 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5275 invoked from network); 29 Apr 2017 14:44:25 -0000
-X-Virus-Scanned: amavisd-new at edge2.intern.zimbra-login.net
-From: "Securify B.V." <lists@securify.nl>
-To: oss-security@lists.openwall.com
-Organization: Securify B.V.
-Message-ID: <68c416cf-44b4-1d43-441e-8262b0b88e82@securify.nl>
-Date: Sat, 29 Apr 2017 16:44:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+x-ms-reactions: disallow
+Received: (qmail 9510 invoked from network); 30 Oct 2024 02:09:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730254146; x=1730858946; darn=lists.openwall.com;
+        h=in-reply-to:from:references:to:content-language:subject:reply-to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MKxu+6PfCSD+ryVeXKw5bazxzpaQzRgV8YZdqe9+r8w=;
+        b=WSStlKyNL4TsoXw9Jn0VtT7MmCT1rYi+B9qCLTzeSBds2sqWdwtVZPW9ANJH5iFBZW
+         Fbdh3r1v6o3TQbUJO3QXzSKsGbdG286ptp+sssANTlhtUfD/2Bq81xH1tkCoJO5Uuhoy
+         o0Ps5Av4uz2MMRQW0bgNumARGxB9uApPWP9c3+ZzqRAcjBRtun3XLdaZcR754s9TVo9B
+         HKS1O6nDgFeLyNpV1eWEtwbQDpE6uN/kzAT+iU3fqgsANq3/lzw7oFAb7DYORrlj7fiC
+         2xibSO74l/M89aafg6z3inBTivan1/3OtBXbgzPv0MoIM4JbTR2byrdluPatifcTnkmZ
+         AvOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730254146; x=1730858946;
+        h=in-reply-to:from:references:to:content-language:subject:reply-to
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MKxu+6PfCSD+ryVeXKw5bazxzpaQzRgV8YZdqe9+r8w=;
+        b=OOOnK2yXa/0qu3QTwQ2CcEsZ6yXNR+4pqq8tzitup6mZCifbDyGIM1E9WSdO2lxmV4
+         9FncVecyHKQ0tWT7NSRiWnkFCzDeEnBJw79YAutsEJT9xuU3iLCdYePpPvJMi4IB3oIG
+         F99ReBwlMPfhLu78jW6nsLiJFjQ9hU890/NE1dor4mSVGmtm4L7RPj9nmluTCAhmQOdC
+         7f42ZqJYISvVvSka8lThe2gM+SDM+9E7gGwwtOfndWYGuMwejTGoekMvueJ2PCNevT9P
+         pDyA96i7jsEWLBdglQznUkVmI2ZKMED42JBe8HSKVN8fDAPoV5NYgzEKDzLgoNzMdWt4
+         Fi1A==
+X-Gm-Message-State: AOJu0Yx2EeOyUVAr3XH7f9KwW+kuiu0bCgZEKGjOByZsT1GtM0+G+yGE
+	QoXfdZ5TVWCgnDZumzC5mX08xhwnXvHlvVj6wLXYu269U7l3tCSNUanEcQ==
+X-Google-Smtp-Source: AGHT+IGQ82O7EDQrwHex7PzqYiDo6fwAtMRh8jvVMZtnYy09nPXb28dEU9vIomQK+hcon3SSa+LXEQ==
+X-Received: by 2002:a05:6820:1b8f:b0:5eb:d1ac:21c6 with SMTP id 006d021491bc7-5ec23a66c3bmr9552275eaf.5.1730254145146;
+        Tue, 29 Oct 2024 19:09:05 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------r2C0sLBxAgu7kUxyGHCXkfKR"
+Message-ID: <95ddd38e-2e23-4dee-b03c-a376d8cb9814@gmail.com>
+Date: Tue, 29 Oct 2024 21:09:01 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] SyntaxHighlight MediaWiki extension allows injection of arbitrary
- Pygments options
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+References: <AM9P192MB13169D3C23104FC22ECCFD3AD74B2@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM>
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <AM9P192MB13169D3C23104FC22ECCFD3AD74B2@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM>
+Subject: Re: [oss-security] CVE-2024-36905: Linux kernel: Divide-by-zero on
+ shutdown of TCP_SYN_RECV sockets
 
-------------------------------------------------------------------------
-SyntaxHighlight MediaWiki extension allows injection of arbitrary
-Pygments options
-------------------------------------------------------------------------
-Yorick Koster, February 2017
+--------------r2C0sLBxAgu7kUxyGHCXkfKR
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-A vulnerability was found in the SyntaxHighlight MediaWiki extension.
-Using this vulnerability it is possible for an anonymous attacker to
-pass arbitrary options to the Pygments library. By specifying specially
-crafted options, it is possible for an attacker to trigger a (stored)
-Cross-Site Scripting condition. In addition, it allows the creating of
-arbitrary files containing user-controllable data. Depending on the
-server configuration, this can be used by an anonymous attacker to
-execute arbitrary PHP code.
+On 10/29/24 08:03, Joel GUITTET wrote:
+> We would like to ask your advice about the CVE-2024-36905 (tcp shutdown vulnerability).
+> NIST indicates a network vector while AWS and Red Hat indicates local attack vector.
+> Our cybersecurity team has difficulties to justify that a local vector is appropriate here.
+> Can you help us to understand this specific point for this CVE ? The hypothesis we have is that a TCP socket need to be open/closed quickly, and maybe it's not possible remotely ?
 
-------------------------------------------------------------------------
-See also
-------------------------------------------------------------------------
-- CVE-2017-0372 [2]
-- T158689 [3]: Parameters injection in SyntaxHighlight results in
-multiple vulnerabilities
-- Fix REL1_28 [4]: SECURITY: Escape start argument before passing to
-pygments
-- Fix REL1_27 [5]: SECURITY: Escape start argument before passing to
-pygments
-- MediaWiki-announce [6]: Security Release: 1.28.1 / 1.27.2 / 1.23.16
-(fix not included in this release)
+ From my understanding of Git commit 
+94062790aedb505bdda209b10bea47b294d6394f 
+(<URL:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=94062790aedb505bdda209b10bea47b294d6394f>), 
+this appears to be a race condition where a program (running locally) 
+calls connect(2) and then shutdown(2) without actually attempting to 
+transfer any data, with a further constraint that certain packets (I am 
+unsure precisely what) must have been transferred such that the TCP 
+connection is half-opened.  It *might* be possible to cause this crash 
+remotely if a program attempts to set up a unidirectional TCP connection 
+(achieved by shutting down the undesired direction) but I am unsure if 
+any such programs are actually in use.
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was tested on SyntaxHighlight version 2.0 as bundled with
-MediaWiki version 1.28.0.
+I would need to further study the Linux networking code to be sure, but 
+a comment updated in the patch seems to imply that this is an edge case 
+that was previously believed to be impossible to reach.  I suspect NIST 
+labeled it "network" because TCP is involved, but as of this writing 
+<URL:https://nvd.nist.gov/vuln/detail/CVE-2024-36905> says "This 
+vulnerability is currently awaiting analysis." so I would expect NIST's 
+indication to be revised after that analysis is completed.
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-This issue was supposed to be fixed in MediaWiki version 1.28.1 and
-version 1.27.2. It appears that the fix was pushed to the git
-repository, but for some reason it was not included in the release
-packages. It is advised to apply the patch committed to Github.
-
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
-
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-The SyntaxHighlight [7] extension for MediaWiki [8] allows formatting of
-source code using the <syntaxhighlight> tag. Version 2.0 uses the Python
-Pygments [9] library to format the code. SyntaxHighlight is bundled with
-MediaWiki version 1.21 and later. Version 2.0 is bundled with MediaWiki
-1.26.0 and later (other versions may or may not include this version as
-well).
-
-The <syntaxhighlight> tag supports various parameters. It was found that
-the start parameter is not validated and/or sanitized. This allows an
-attacker to pass arbitrary options to the Lexer and/or Formatter that is
-used when Pygments is invoked. By specifying specially crafted options,
-it is possible for an attacker to trigger a (stored) Cross-Site
-Scripting condition. In addition, the HTML formatter allows the creating
-of arbitrary files containing user-controllable data. Depending on the
-server configuration, this can be used by an attacker to execute
-arbitrary PHP code.
-
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-The SyntaxHighlight extension utilizes Pygments to format source code.
-Pygments is a Python library, a copy is provided with the extension. In
-order to use Pygments, the extension invokes it using Symfony's [10]
-ProcessBuilder [11] component. This component performs escaping of
-command line arguments to prevent command injection.
-
-SyntaxHighlight_GeSHi.class.php:
-
-$optionPairs = array();
-foreach ( $options as $k => $v ) {
-	$optionPairs[] = "{$k}={$v}";
-}
-$builder = new ProcessBuilder();
-$builder->setPrefix( $wgPygmentizePath );
-$process = $builder
-	->add( '-l' )->add( $lexer )
-	->add( '-f' )->add( 'html' )
-	->add( '-O' )->add( implode( ',', $optionPairs ) )
-	->getProcess();
-	
-$process->setInput( $code );
-$process->run();
-
-The used Lexer is specified through the lang parameter, the Formatter is
-always set to the HtmlFormatter. Additional options for the Lexer and/or
-Formatter are provided using the -O command line argument. These options
-can be controlled by the parameters that are supported by the
-<syntaxhighlight> tag. Each option is a key value pair, the options are
-comma separated.
-
-It was found that no input validation and/or sanitization is done on the
-start parameter. This parameter is used to define the first line number
-of a code block. If line numbers are enabled, the numbering will start
-with the value provided in the start parameter. Normally, this value
-should only contain numbers. Due to the lack of validation/sanitization,
-it can be set to any value.
-
-SyntaxHighlight_GeSHi.class.php:
-
-// Starting line number
-if ( isset( $args['start'] ) ) {
-	$options['linenostart'] = $args['start'];
-}
-
-Since Lexer/Formatter options are comma separated, it is possible for an
-attacker to provide arbitrary options when invoking Pygments. Depending
-on the options supported by the Lexer or Formatter, this allows the
-attacker to perform various types of attacks. For example it is possible
-for an attacker to trigger a (stored) Cross-Site Scripting condition by
-passing a specially crafted prestyles option to the HTML Formatter.
-
-<syntaxhighlight lang="java" 
-start='0,prestyles="&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;'>
-	string foo="bar";
-</syntaxhighlight>
+Again, this issue is probably only remotely exploitable if the host is 
+running a very unusual client program, but a local exploit can supply 
+the required oddly-behaving program.
 
 
-When the option full is passed to the HTML Formatter, it is possible to
-specify a local CSS file using the cssfile option. If the CSS file does
-not exist it will be created - provided that Pygments has write
-privileges on the provided path. This CSS file contains the styles that
-are used for formatting the source code. Providing additional options,
-it is possible to control parts of the CSS. One such option is the
-classprefix option.
-
-Combining these options can result in execution of arbitrary PHP code,
-provided that a writeable folder exists within the webserver's document
-root that allows the execution of PHP files. The proof of concept below
-will try to create a PHP file name foo.php in the images folder located
-within the document root.
-
-<syntaxhighlight lang='java' 
-start='0,full=1,title=,cssfile=images/foo.php,classprefix=&lt;?php
-phpinfo();exit; ?&gt;'>
-</syntaxhighlight>
-
-Unless the Wiki is configured as private, it is possible to exploit this
-issue without logging into the Wiki. If the Wiki is set to private, an
-account with read access is required to exploit this vulnerability.
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://www.securify.nl/advisory/SFY20170201/syntaxhighlight_mediawiki_extension_allows_injection_of_arbitrary_pygments_options.html
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0372
-[3] https://phabricator.wikimedia.org/T158689
-[4] 
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
-[5] 
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
-[6] 
-https://lists.wikimedia.org/pipermail/mediawiki-announce/2017-April/000207.html
-[7] https://www.mediawiki.org/wiki/Extension:SyntaxHighlight
-[8] https://www.mediawiki.org
-[9] http://pygments.org/
-[10] https://symfony.com/
-[11] 
-http://api.symfony.com/3.2/Symfony/Component/Process/ProcessBuilder.html
+-- Jacob
+--------------r2C0sLBxAgu7kUxyGHCXkfKR--
