@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["601" "Saturday" "23" "September" "2017" "20:50:19" "+0200" "=?UTF-8?B?VGlsbCBEw7ZyZ2Vz?=" "doerges@pre-sense.de" "<9669ba15-3aaf-8d2d-c97b-0d9bd2fc6646@pre-sense.de>" "16" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092318:50:19" "[oss-security] Why send bugs embargoed to distros?" (number mark "        doerges@pre- Sep 23   16/601   " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 6023 invoked by uid 550); 23 Sep 2017 19:09:10 -0000
+Received: (qmail 12193 invoked by uid 550); 30 Oct 2024 23:45:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +6,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27759 invoked from network); 23 Sep 2017 18:50:31 -0000
-References: <20170923134418.6e460656@pc1>
-Organization: PRESENSE Technologies GmbH
-Message-ID: <9669ba15-3aaf-8d2d-c97b-0d9bd2fc6646@pre-sense.de>
-User-Agent: Thunderbird
-MIME-Version: 1.0
-In-Reply-To: <20170923134418.6e460656@pc1>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 8bit
-Date: Sat, 23 Sep 2017 20:50:19 +0200
-From: =?UTF-8?Q?Till_D=c3=b6rges?= <doerges@pre-sense.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Why send bugs embargoed to distros?
-To: oss-security@lists.openwall.com, =?UTF-8?Q?Hanno_B=c3=b6ck?=
- <hanno@hboeck.de>
+x-ms-reactions: disallow
+Received: (qmail 8006 invoked from network); 30 Oct 2024 23:43:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730331794; x=1730936594; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cYBFu+A1QnJ/xATefymIXpO07qbJ7sptsDDJvZ7U+ow=;
+        b=Gxj0SBCmvz3TU+ogKaEV6cCPL5//PEnEOAsnyq7uQ1CBh8AzPB4q0cznAcFZDy5/da
+         Hnxi7YRmatSYmiNVkZ1+IZPyYRJTNdo5s9fDqXzIfAK9ICg37aBSJ9L2Ou96KInsjPo5
+         CLyFf0miQDkwsbZli51+oGFMkrXyYTEViMrYXdk2Vtu6EMuoNGekaMw0JuUCuUCNWk1t
+         i68qKMqzs7AHhzJbpHESfZ87RWUV5n5CsEig5gxUFjYm1PIu8GZ5cyjJ/FERuftUCYMz
+         vWRMfTxLfL7mt0w2CaQMZLK/f3/urEVNmdRSrSVXmPWUAVCVjbeRFBV3knD1Re4n7808
+         iNzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730331794; x=1730936594;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cYBFu+A1QnJ/xATefymIXpO07qbJ7sptsDDJvZ7U+ow=;
+        b=Arlsrqxs3oVQpADXSlittOS335zTJNIKvKM3Da3oQN9iKS79f4GIsYjARO8kxMEwAV
+         Owpe0BaCORRRoPoU2Kg6HEDM83+CqKiqQ+oKBQzGKAY6gjwp0pKzO2CwtMdHZY4WCyWF
+         5mSG/nY0E1j9Liv5Nm8Df5LxzMGWUAnZszO/Z3xGHTexKRyUq8QdEfHTc+QSjcvHqkgM
+         zTVSSfa/iCa9M5OlE0x2oQ8YNa+/VTokS0NdFpCbeutCSk4yw8LJhL4a/eZF/ENeVa3I
+         A0ZOnKa1GBOzXQmhfCheDP0phQrw2bTKYW24dA6PlRKA7u/FkW1hmygJR3IakOSNLpDT
+         h8/Q==
+X-Gm-Message-State: AOJu0YzlT0FgeiS3loBa3SYX/K3GpIEmAefXgWYqx4PdyMS5g3W6GM7Y
+	nWjnr+Qvfq/pZ9rKtWEji2i+Wft5I3FfnxgUwX9HKJ8eJwUSDP1iFRzVJwiTrVWHPeSxmFwX3dd
+	/duVI6IQ0diT42bFvUJ6YgqC+kh+Yj/Mz
+X-Google-Smtp-Source: AGHT+IHcvKZDuiFRm6pSm4+o+Rfr92mP2xJ0DTquJeZXPcPYIEAFb3ktL9sLCj6E9CdKDn97zHYZOwAKbZNhHleqZbI=
+X-Received: by 2002:adf:ea43:0:b0:37d:633a:b361 with SMTP id
+ ffacd0b85a97d-38061206c0cmr13258981f8f.51.1730331793540; Wed, 30 Oct 2024
+ 16:43:13 -0700 (PDT)
+MIME-Version: 1.0
+From: Sec Guy <0xsee4@gmail.com>
+Date: Thu, 31 Oct 2024 00:43:02 +0100
+Message-ID: <CANOyCOFT24kym0XnyUnVMeKn=GG07s8y7wpVSLWfHMeW0nriww@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000e5cc850625ba43d2"
+Subject: [oss-security] qBittorrent RCE, Browser Hijacking vulnerabilities
 
-Am 23.09.2017 um 13:44 schrieb Hanno Böck:
+--000000000000e5cc850625ba43d2
+Content-Type: text/plain; charset="UTF-8"
 
-> Also I haven't found any info about updated opensuse packages.
+Hi all,
 
-JFTR, there are:
+qBittorrent, on all platforms, did not verify any SSL certificates in its
+DownloadManager class from 2010 until October 2024. If it failed to verify
+a cert, it simply logged an error and proceeded.
 
-  https://bugzilla.opensuse.org/show_bug.cgi?id=CVE-2017-9798
+To be exploitable, this bug requires either MITM access or DNS spoofing
+attacks, but under those conditions (seen regularly in some countries),
+impacts are severe.
 
-Regards -- Till
--- 
-Dipl.-Inform. Till Dörges                  doerges@pre-sense.de
-                                  Tel. +49 - 40 - 244 2407 - 14
-                                  Fax  +49 - 40 - 244 2407 - 24
-PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
-Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
-Till Dörges, Jürgen Sander               USt-IdNr.: DE263765024
+The primary impact is single-click RCE for Windows builds from 2015 onward,
+when prompted to update python the exe is downloaded from a hardcoded URL,
+executed, and then deleted afterwards.
+
+The secondary impact for all platforms is the update RSS feed can be
+poisoned with malicious update URLs which the user will open in their
+browser if they accept the prompt to update. This is browser hijacking and
+arbitrary exe delivery to a user who would likely trust whatever URL this
+software sent them to.
+
+The tertiary impact is this means that an older CVE (CVE-2019-13640
+<https://www.cvedetails.com/cve/CVE-2019-13640/>) which allowed remote
+command execution via shell metacharacters could have been exploited by
+(government) attackers conducting either MITM or DNS spoofing attacks at
+the time, instead of only by the author of the feed.
+
+Full write up is here:
+https://sharpsec.run/rce-vulnerability-in-qbittorrent/
+I have applied for a CVE but have had no response yet. Mitigation is to use
+any other torrent client. The latest release is patched against this issue.
+
+Credit: Jordan Sharp (finder)
+
+--000000000000e5cc850625ba43d2--
