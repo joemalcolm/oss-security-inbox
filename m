@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4015" "Tuesday" "29" "August" "2017" "22:02:28" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<4388229.gHBqzp8EGK@wanheda>" "92" "Re: [oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho.." nil nil nil "8" "2017082920:02:28" "[oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho.." (number mark "U       ago@gentoo.o Aug 29   92/4015  " thread-indent "\"Re: [oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho..\"\n") "<0295d4de82454ac79e4bc834c30d39b3@imshyb01.MITRE.ORG>" ("<0295d4de82454ac79e4bc834c30d39b3@imshyb01.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26192 invoked by uid 550); 29 Aug 2017 20:02:45 -0000
+Received: (qmail 28501 invoked by uid 550); 31 Oct 2024 04:34:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +7,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26153 invoked from network); 29 Aug 2017 20:02:44 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-request@mitre.org
-Date: Tue, 29 Aug 2017 22:02:28 +0200
-Message-ID: <4388229.gHBqzp8EGK@wanheda>
-In-Reply-To: <0295d4de82454ac79e4bc834c30d39b3@imshyb01.MITRE.ORG>
-References: <0295d4de82454ac79e4bc834c30d39b3@imshyb01.MITRE.ORG>
+x-ms-reactions: disallow
+Received: (qmail 18036 invoked from network); 31 Oct 2024 04:28:03 -0000
+Message-ID: <c0f13ad0-6b77-4071-b59e-db67aae48120@gentoo.org>
+Date: Thu, 31 Oct 2024 00:27:51 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Sec Guy <0xsee4@gmail.com>, oss-security@lists.openwall.com
+References: <CANOyCOFT24kym0XnyUnVMeKn=GG07s8y7wpVSLWfHMeW0nriww@mail.gmail.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <CANOyCOFT24kym0XnyUnVMeKn=GG07s8y7wpVSLWfHMeW0nriww@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------aXcgrH0iqcqR5ftDXqjIzUCY"
+Subject: [oss-security] Re: qBittorrent RCE, Browser Hijacking vulnerabilities
+
+--------------aXcgrH0iqcqR5ftDXqjIzUCY
+Content-Type: multipart/mixed; boundary="------------ExywLXw3UcJBodSF2LRXOYD0";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Sec Guy <0xsee4@gmail.com>, oss-security@lists.openwall.com
+Message-ID: <c0f13ad0-6b77-4071-b59e-db67aae48120@gentoo.org>
+Subject: Re: qBittorrent RCE, Browser Hijacking vulnerabilities
+References: <CANOyCOFT24kym0XnyUnVMeKn=GG07s8y7wpVSLWfHMeW0nriww@mail.gmail.com>
+In-Reply-To: <CANOyCOFT24kym0XnyUnVMeKn=GG07s8y7wpVSLWfHMeW0nriww@mail.gmail.com>
+
+--------------ExywLXw3UcJBodSF2LRXOYD0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho..
 
-Hello Mitre, I'm glad to see your response here.
-
-
-On marted=C3=AC 29 agosto 2017 21:23:50 CEST cve-request@mitre.org wrote:
-> > https://nvd.nist.gov/vuln/detail/CVE-2017-13753 duplicate of:
-> > https://nvd.nist.gov/vuln/detail/CVE-2016-9396
->=20
-> Yes, these are duplicates; we will reject CVE-2017-13753 and update
-> CVE-2016-9396.
-The problem is not about this duplicate but from some assignments in the la=
-st=20
-two months from people I mentioned, see the first post here from a partial=
-=20
-list: https://marc.info/?l=3Doss-security&m=3D150401081512049&w=3D2
-
-> This occurred because the MITRE CVE team inadvertently populated
-> CVE-2016-9396 with incorrect version information,=20
-This is right
-
-> and because the code
-> changed between the two tested versions.
-from https://blogs.gentoo.org/ago/2016/11/16/jasper-multiple-assertion-fail=
-ure/ we have:=20
-libjasper/jpc/jpc_t1cod.c:144: int JPC_NOMINALGAIN(int, int, int, int):=20
-Assertion `qmfbid =3D=3D 0x01=E2=80=B2 failed.
-form https://bugzilla.redhat.com/show_bug.cgi?id=3D1485272 we have:
-libjasper/jpc/jpc_t1cod.c:144: int JPC_NOMINALGAIN(int, int, int, int):=20
-Assertion `qmfbid =3D=3D JPC_COX_RFT' failed.
-
-they looks to be similar.
-
-> Specifically, CVE-2016-9396 had said "in JasPer before 1.900.12" but
-> actually there was no reference stating that 1.900.12 was a fixed
-> version. Also, the CVE-2017-13753 reference said "Assertion `qmfbid =3D=3D
-> JPC_COX_RFT' failed" but the CVE-2016-9396 reference said "Assertion
-> `qmfbid =3D=3D 0x01' failed." These happen to be the same (there's a
-> "#define JPC_COX_RFT 0x01" elsewhere), but it initially looked like
-> the new report was about a different assertion that was problematic in
-> 1.900.12 and later versions.
->From your side looks to be correct, What I'm trying to point out is to not=
-=20
-trust at all cve-requests that never went under upstream eyes.
+On 10/30/24 7:43 PM, Sec Guy wrote:
+> The secondary impact for all platforms is the update RSS feed can be
+> poisoned with malicious update URLs which the user will open in their
+> browser if they accept the prompt to update. This is browser hijacking and
+> arbitrary exe delivery to a user who would likely trust whatever URL this
+> software sent them to.
 
 
->=20
-> > months later we have:
-> > https://nvd.nist.gov/vuln/detail/CVE-2017-11720
-> > "There is a division-by-zero vulnerability in LAME 3.99.5, caused by a
-> > malformed input file."
->=20
-> When we worked on your CVE ID request for the
-> https://blogs.gentoo.org/ago/2017/06/17/lame-divide-by-zero-in-parse_wave=
-_he
-> ader-get_audio-c/ report, we had the information about the affected
-> source-code pathname frontend/get_audio.c, and we had found the
-> https://bugs.debian.org/777159 information about "this is all in the
-> frontend code in frontend/get_audio.c:parse_wave_header() and not in
-> the library." By contrast, the CVE-2017-11720 request had less
-> technical detail about the source-code location, and the requester had
-> checked the "Has vendor confirmed or acknowledged the vulnerability?"
-This is right from your side, but looks to be false in the reality. The cve=
-=20
-was issued on 07/28/2017 while the first comment from upstream was on=20
-08/13/2017 (https://sourceforge.net/p/lame/bugs/460/). Again do not entirel=
-y=20
-trust request that never went under upstream eyes.
+I researched this for our tracking ticket: https://bugs.gentoo.org/942569
 
-> Yes box on our https://cveform.mitre.org web site. In general, if a
-> problem is only a divide-by-zero in a command-line program, but the
-> upstream vendor decided to categorize it as a vulnerability, then it
-> gets a CVE. Admittedly, there was no direct proof of "decided to
-> categorize it as a vulnerability" here. Also, if a CVE is already
-> populated, and is about this type of valid crash report, then we do
-> not retroactively reject it, even if we learn more about exploitation
-> relevance. We will update CVE-2017-11720 with your reference, to help
-> to show that you were the original discoverer.
+The update RSS feed is activated here:
 
-As said to Henri in my previous email, the problem is not the FPE itself or=
-=20
-something technical.
-As you can clearly see I'm trying to include the asan output on each bug I=
-=20
-find, to make it easily-comparable and sometimes you can easily understand =
-the=20
-cause/nature of the issue. Unfortunately people do not do the same and this=
-=20
-causes the presence of duplicates.
+https://github.com/qbittorrent/qBittorrent/blob/84d895231cb5b67661042deae22=
+d14b5f386342b/src/gui/mainwindow.cpp#L308C1-L316
+
+Dialog:
+https://github.com/qbittorrent/qBittorrent/blob/84d895231cb5b67661042deae22=
+d14b5f386342b/src/gui/mainwindow.cpp#L1628-L1682
+
+CheckProgramUpdate:
+https://github.com/qbittorrent/qBittorrent/blob/84d895231cb5b67661042deae22=
+d14b5f386342b/src/gui/mainwindow.cpp#L1857-L1875
+
+
+Settings loader:
+https://github.com/qbittorrent/qBittorrent/blob/84d895231cb5b67661042deae22=
+d14b5f386342b/src/gui/mainwindow.cpp#L1413-L1430
+
+
+Prefs window:
+https://github.com/qbittorrent/qBittorrent/blob/84d895231cb5b67661042deae22=
+d14b5f386342b/src/base/preferences.cpp#L1372-L1385
+
+All this code is conditionally compiled under the condition:
+
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+
+
+So, this secondary impact is, like the first impact, only an impact on
+certain platforms -- two this time, instead of just one.
 
 
 --=20
-Agostino Sarubbo
-Gentoo Linux Developer
+Eli Schwartz
+
+--------------ExywLXw3UcJBodSF2LRXOYD0--
+
+--------------aXcgrH0iqcqR5ftDXqjIzUCY
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZyMHRwUDAAAAAAAKCRCEp9ErcA0vV4SR
+AQDePfw8wdGg3z23GfL6IWRuoe2XYDvGmmI45aAsodakAAEAjtplPR90rxsisGn5I6UUTkGyLY+d
+Le2u9Uxi9Oy1UQg=
+=y40m
+-----END PGP SIGNATURE-----
+
+--------------aXcgrH0iqcqR5ftDXqjIzUCY--
