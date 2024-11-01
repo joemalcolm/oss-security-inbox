@@ -1,4 +1,4 @@
-Received: (qmail 32688 invoked by uid 550); 12 Mar 2024 13:19:39 -0000
+Received: (qmail 25964 invoked by uid 550); 1 Nov 2024 00:53:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,119 +7,196 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32669 invoked from network); 12 Mar 2024 13:19:39 -0000
+x-ms-reactions: disallow
+Received: (qmail 25946 invoked from network); 1 Nov 2024 00:53:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mvista.com; s=google; t=1710249818; x=1710854618; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P/VlbrJ1cxVJtu5lyXpi3Yvg4CoJgCTgGV5KUFhps5A=;
-        b=gzRqiFqKguDBkcB+j+e8+fv3vi86ZuPnTgbD2BlogNeKJiRxEcPdXMlnnLSL4rSnxk
-         mP/LTjY+CzjTyvxAu6f9TTRsRl1XKtbSaXJi6Vd5pUsRh+RTQvgFMoTiguWKsGO+K8li
-         VAVAGfKmxWnNhcHCXDiY5833X5P4VgN6eu3KY=
+        d=gmail.com; s=20230601; t=1730422375; x=1731027175; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bO3vYmOilOsPBDwge7MHfHBsZg0k92eMuGiKAspa5RQ=;
+        b=S/qdxxXz8boZEY2nNTIsX1gPSNF+lmMc4O9xyhX1zEO5HGyZiyOLPBVoFQ3POPQMNJ
+         +kA011VRpHkDAgqrJedwsmzq5i1z1JQnjEmSi2+b0iDW3akf4wM/roXIZ3GYMfAd6WEO
+         vJ6mNEjK/bYWt2vPOaPJqnYdPkB6I5sy3HWBXz42tymdEJulAGxhv+Jqtv3xSROiArh9
+         d9KdYVNKQOaDLbYzDsJPtLh+Ov8e1bOf617SaSqAsbcqZc/+XZecPJ6ekX3hP0L16P6a
+         5MRXnssk2YNuLsn6KlYGlT2VI1CqLSxIsIJYqQjkeXHEvoOVTQbMv77BqSpYf+qLSnIe
+         /O+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710249818; x=1710854618;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P/VlbrJ1cxVJtu5lyXpi3Yvg4CoJgCTgGV5KUFhps5A=;
-        b=HMjBAhT7IcIFpziiQOnvTpRL+sv7SDKap06ywzAUW8IwIwxKlIwWsU+EPaefeC0kp6
-         67qGmDJzoqpLhGQIAAVWZaBGIci5LsezfWoPPQBq7HbzMtw55EVyIfneTcyLbxnL4yj7
-         ZpE9EAhGVhKwwia1JfehgLcSbgx4OOmHpjvvruqhlFCynrj9qbzCBp2Uq+fD29b0HJRR
-         qbEJwI/1s5W0ON7unsTl/H7qyv2wJ/ptZ1huNPbv8zJkd1sElgJC7z18yYDTI6Av6BOl
-         y1uqluNREFUtm2kpiLIDxA9OO9QZehb5H2DBFrpiC7JMy9L9yuiR1sK+GTMbdcB06W31
-         u1yQ==
-X-Gm-Message-State: AOJu0Yw67sO5GpSHe73ht9nsF9RN3QrsvzTtkYN3Hko//TC8Mu3mhFnj
-	Qm8PBhZt6qfmy4UJPsFba4hGmyZCPe6etiD/PpObPUs1Dx3RUCef8xtvVgRxb/pjzI+/YyLAGur
-	wPGHwlKUiVE23lkEjmVQeJjQXM3+tJ0MWmAAjv15vwD/CSUI716Y=
-X-Google-Smtp-Source: AGHT+IE7nuuWzaOoVG23+ji546fAZ3KY55kDbp/OLyi6z5Pv+IQlGJmt8AshTXqk0JLvIT44/I9Sq6Gn+kYia275TY0=
-X-Received: by 2002:a2e:7c10:0:b0:2d4:24cc:b499 with SMTP id
- x16-20020a2e7c10000000b002d424ccb499mr2534611ljc.15.1710249817843; Tue, 12
- Mar 2024 06:23:37 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1730422375; x=1731027175;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bO3vYmOilOsPBDwge7MHfHBsZg0k92eMuGiKAspa5RQ=;
+        b=w+dhyLdkSjY8vzMPxBYzt5PHIwcUibftECXWz1nZwV8CT17j8fGPsgVcmrrY8ycCeZ
+         pX72KbefhbetxZtremyDk+pn9w1PFBG6gDXZZByMcraJv1+MY8Uwez2HNidYgyGc6gV7
+         pgev7eeDONxV6n4d6LtZvrJAXeCFSkWqDCvKyA3RAAacv7TJH6Psmf+arDmbnVbZK6XK
+         sZcOEc39/7j7FMRFBxKNXS3IORRmHPOoSU4KtjIYjrXiTUUnoxKPdnocWIYRNHEwe2K/
+         29Eu2Q/iGm1Lr0SnFTBeM8jAD+KJ9SXTPOFTT6RWkgXHgzq4r94tTwkobzGmVj53Cm2I
+         kHBQ==
+X-Gm-Message-State: AOJu0YwjXLnCE3xO2mQspQBRnGxTj4Mx1p60+aycy05XEvOBcqL9qhZg
+	rzzQ6dI/tvlTyDiEMQDFXKjvplYbddfbe2UEQQ+HGbrxyNJvyVwQDdoLIyH5KHe+0y60Ng5brms
+	2N8QiZFYB43xoT57bnQ9NDyXQwhhLCJbmA4k=
+X-Google-Smtp-Source: AGHT+IGgn2qCQ4yu2i54Vhdk6vA0kgpN0c8sT+H1t4nacj/taDA8NCpHlbY6qmL3iolEtqU9hrhgPsIUwK/SXACV/Yg=
+X-Received: by 2002:a05:6214:3990:b0:6cb:ef1f:d1ab with SMTP id
+ 6a1803df08f44-6d1856fa3dfmr318428626d6.30.1730422375046; Thu, 31 Oct 2024
+ 17:52:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <gb6h5yblly7xer6jg6sgn7syzrze3jviotrmfsp3ifgy6rg2jr@igvcqdasmnof>
-In-Reply-To: <gb6h5yblly7xer6jg6sgn7syzrze3jviotrmfsp3ifgy6rg2jr@igvcqdasmnof>
-From: Armin Kuster <akuster@mvista.com>
-Date: Tue, 12 Mar 2024 09:23:26 -0400
-Message-ID: <CAKLnGtQHn4SdNEDND-9g7TbF6A6SbpYbW4Z8Tsf9W4ssuDf71A@mail.gmail.com>
+References: <20241030183237.4e46db4f@plasteblaster> <CAOGQQ28MtkwOyqSZNw7pnTqD3chm9q7q6b9H_MFNE9zRHPoMsQ@mail.gmail.com>
+ <CAOGQQ28MhqvZF9Jq8Hka-jyZzmhxey6riwAwn-4uxL8PKn6hWg@mail.gmail.com>
+In-Reply-To: <CAOGQQ28MhqvZF9Jq8Hka-jyZzmhxey6riwAwn-4uxL8PKn6hWg@mail.gmail.com>
+From: Alexander Patrakov <patrakov@gmail.com>
+Date: Fri, 1 Nov 2024 08:52:28 +0800
+Message-ID: <CAN_LGv0ruQFGn4R-VwRSm2Cj_=d5UEcHqKigKV3ciVaDqkPSJw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000decba30613769051"
-Subject: Re: [oss-security] Certificate policy: OCSP becomes optional and CRLs
- mandatory for public CAs on Friday
-
---000000000000decba30613769051
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] mpg123 buffer overflow in versions before 1.32.8
+ (Frankenstein's Monster)
 
-On Mon, Mar 11, 2024 at 4:35=E2=80=AFPM Valtteri Vuorikoski <vuori@notcom.o=
-rg>
+Hello,
+
+Is there any way to check if any of my MP3 files contain the stuff
+that triggers the bug? Would, for example, Checkmate
+(https://github.com/Sjord/checkmate) flag them without also being
+exposed to security risks?
+
+On Fri, Nov 1, 2024 at 1:42=E2=80=AFAM Marco Benatto <mbenatto@redhat.com> =
 wrote:
+>
+> Hello,
+>
+> I just filed the details for the CVE above.
+>
+> Description:
+> There's a out-of-bounds write issue in mpg123, the vulnerability is
+> located when handling crafted streams. During the decoding of PCM the
+> libmpg123 may write past the end of a heap located buffer, as
+> consequence heap corruption may happen and arbitrary code execution is
+> not discarded. The complexity required to exploit this flaw is
+> considered high as the payload needs to be validated by the MPEG
+> decoder and by the PCM synth before being executed. Additionally to
+> successfully execute the attack,the user needs to scan through the
+> stream making web live stream content (such as web radios) a very
+> unlikely attack vector.
+>
+> CVSS: 6.7 CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H
+>
+> Severity (according to the Red Hat severity policy): Moderate
+>
+> Please let me know if there's any concern or different opinion
+> regarding the scoring or description of this issue.
+>
+> Thanks,
+>
+> Marco Benatto
+> Red Hat Product Security
+> secalert@redhat.com for urgent response
+>
+> On Wed, Oct 30, 2024 at 8:00=E2=80=AFPM Marco Benatto <mbenatto@redhat.co=
+m> wrote:
+> >
+> > Hello,
+> >
+> > I went ahead and assigned CVE-2024-10573 for this issue.
+> > I'll try to come up with the cvss and severity analysis by tomorrow.
+> >
+> > Please let me know if there's anything else I could help with.
+> >
+> > Thanks,
+> >
+> > Marco Benatto
+> > Red Hat Product Security
+> > secalert@redhat.com for urgent response
+> >
+> > On Wed, Oct 30, 2024 at 2:42=E2=80=AFPM Dr. Thomas Orgis
+> > <thomas.orgis@uni-hamburg.de> wrote:
+> > >
+> > > Dear list,
+> > >
+> > > as upstream of mpg123, I recently fixed a possibly serious issue that
+> > > resulted in writing past a buffer on the heap under certain use cases.
+> > > The fixed release is 1.32.8.
+> > >
+> > > There is no CVE for this (that I know of). If someone allocates one,
+> > > I'd be fine with that, but I am prioritizing my time in coordination
+> > > with demanding RL and focussed on getting the fix prepared. The bug
+> > > report
+> > >
+> > >         https://mpg123.org/bugs/322
+> > >
+> > > has always been public, so I got the fix out and decided that I do
+> > > spend a moment on this note here, seeing that distros still ship
+> > > vulnerable versions, notably Debian stable / oldstable =C2=AD=E2=80=
+=94 despite
+> > > the unstable repo duly having picked up my new release. I guess if
+> > > there is no CVE to grep in announcements people don't notice that it's
+> > > an important security fix? My bad, then =E2=80=A6
+> > >
+> > > Observing that versions 1.26.x and 1.31.x are still in the wild, I
+> > > ported the recent security fix to those release series. Please see
+> > > recent commits to
+> > >
+> > >         svn://scm.orgis.org/mpg123/branches/1.26-fixes and
+> > >         svn://scm.orgis.org/mpg123/branches/1.31-fixes
+> > >
+> > > Current code is also visible under
+> > >
+> > >         https://scm.orgis.org/mpg123/branches/1.26-fixes/ and
+> > >         https://scm.orgis.org/mpg123/branches/1.31-fixes/
+> > >
+> > > I am quoting the initial release announcement, also avaiable under
+> > >
+> > >         https://mpg123.org/cgi-bin/news.cgi#2024-10-26
+> > >
+> > > Releasing mpg123 version 1.32.8: Frankenstein's Monster
+> > >
+> > > This is an important security update! There is possible buffer overfl=
+ow
+> > > (writing of decoded PCM samples beyond allocated output buffer) for
+> > > streams that change output properties together with certain usage of
+> > > libmpg123. This needed seeking around in the stream (including scanni=
+ng
+> > > it before actual decoding) to trigger. So, your usual web radio stream
+> > > as obvious attack vector is unlikely, as you won't seek around in it.
+> > > If you do work with stream dumps, usage of MPG123_NO_FRANKENSTEIN or
+> > > the --no-frankenstein option to the mpg123 application is a workaround
+> > > to avoid the formerly dangerous situation in earlier mpg123 releases.
+> > > This also means that mpg123 will not decode streams of concatenated
+> > > files with either varying format or leading Info frames past the first
+> > > track anymore.
+> > >
+> > > With this release, the parser has been improved not to store certain
+> > > stream properties before actual MPEG frame data matching that property
+> > > has been stored. This avoids the inconsistency that triggered the
+> > > overflow. Also note that if you always use a fixed decoding buffer for
+> > > full stereo of the maximum of 1152 samples per frame, times two and
+> > > your choice of encoding, your application is also not susceptible.
+> > >
+> > > Exploitation of this is not trivial, but I cannot rule out the
+> > > possibility of gaining code execution. Your exploit payload needs to
+> > > pass through an MPEG decoder and PCM synth before possibly reaching t=
+he
+> > > CPU. Some heap corruption can follow at the least. So update or
+> > > mitigate. If you run 1.32.x, there is no excuse not to get the the
+> > > latest bugfix release now.
+> > >
+> > > Basically any version of mpg123 is affected by this, at least those
+> > > that explicitly support so-called Frankenstein streams.
+> > >
+> > > Thanks to kkkkk123 for bringing this heir to the initial bug 322 to my
+> > > attention.
+> > >
+> > >
+> > > Alrighty then,
+> > >
+> > > Thomas
+> > >
+> > > --
+> > > Dr. Thomas Orgis
+> > > HPC @ Universit=C3=A4t Hamburg
+> > >
+>
 
-> This is more of a meta-security
 
-
-By "meta-security" do you mean the Yocto/OE meta layer by that name?
-https://git.yoctoproject.org/meta-security
-
-- Armin
-
-
-> issue, but posting it since I expect
-> that this change will affect development priorities of
-> certificate and TLS-related OSS projects to some degree.
->
-> Last July, the CA/Browser Forum approved ballot SC-063
-> <
-> https://cabforum.org/2023/07/14/ballot-sc-063-v4-make-ocsp-optional-requi=
-re-crls-and-incentivize-automation/
-> >.
-> The central changes to existing policy are:
->
->   * Makes providing OCSP services optional for CA/B-approved CAs,
->   i.e. those which ship in most browser and OS trust stores.
->
->   * Requires CAs to provide CRLs that are updated in a timely manner.
->
->   * (New policies related to short-lived certificates, not discussed
->   further in this post.)
->
-> The first two changes come into effect on 2024-03-15 which is this
-> Friday. CAs that provide OCSP services are free to continue doing so
-> under prior guidelines.
->
-> The proposal provides the following rationale for these changes (slightly
-> edited for brevity):
->
->   OCSP requests reveal details of individuals=E2=80=99 browsing history t=
-o the
->   operator of the OCSP responder. These can be exposed accidentally
->   (e.g., via data breach of logs) or intentionally (e.g., via
->   subpoena). Due to privacy concerns, several certificate consumer
->   products represented in the CA/Browser Forum do not perform online
->   OCSP checks by default - or have signaled interest in transitioning to
->   privacy-preserving methods of communicating revocation status. [=E2=80=
-=A6]
->   Concern surrounding OCSP is further elevated considering the
->   disproportionately high cost of offering these services reliably at
->   the global scale of the Web PKI.
->
->   Given this ballot makes operating OCSP services optional
->   for CAs, allow relying party software applications and certificate
->   consumer user agents to consistently and reliably evaluate certificate
->   revocation status using a privacy-preserving check [using CRLs].
->
-> Personal opinion: It seems unlikely that most CAs will stop offering
-> OCSP now or even in the short-to-medium term. However OCSP support
-> (including OCSP stapling support) in open-source software has overall
-> been limited outside of HTTPS-related projects with a lot of developer
-> resources, and I suppose could have even less resources dedicated to
-> it in the future as a result of this change. Meanwhile some projects
-> may need to implement updates to handle large and relatively
-> rapidly-updating CRLs efficiently. In addition, I guess that OS level
-> mechanisms similar to root certificate stores may be needed to
-> centralize CRL updates; having each application pull down potentially
-> large CRL updates once a week seems inefficient.
->
->  -Valtteri
->
->
-
---000000000000decba30613769051--
+--=20
+Alexander Patrakov
