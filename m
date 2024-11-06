@@ -1,4 +1,4 @@
-Received: (qmail 25987 invoked by uid 550); 9 Mar 2023 07:15:28 -0000
+Received: (qmail 23732 invoked by uid 550); 6 Nov 2024 07:25:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +7,147 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25965 invoked from network); 9 Mar 2023 07:15:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678346116;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QP0Ynf73M6bkly+UyYp97iJ2LTNpin8bOuCvOVZLFQw=;
-        b=JTeX/IeH4rVMSDAJnyj2/M5ZY/4sw/l/xTznyx/c+mEk3IMssTJIvZnVni7KtSiLnT
-         wIRSyT39umRojmbIELjMbiUBRd+eNU+3HBPqoitL/ShF3HnysVCa+tr1cW+Z0ziqNdbt
-         OKW2NOvtUVS1BIa/ltzHaqouFZ25/H/dJ2tPUfB4fPS0LCUkx/APyHSGpCbWgwonbQr3
-         VWHflWlyc2uV49fU00fI8+6x0p/eYjZTAOh8ZnSy8igN8s5NBSVDS1zc80UnmGTiHTXo
-         Qo+NTCA7WSynrX1IlSsXCRxDu3xJyuW70Tg0RzIX70qY5MvzpIeahYFr2/n5yO5jOFDW
-         j3AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678346116;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QP0Ynf73M6bkly+UyYp97iJ2LTNpin8bOuCvOVZLFQw=;
-        b=NnzizIZlhKtrdqPqYT4SiXMGj50eiXp+swyc0zyiBiLZVwo68WOJm7KZ/vnsN6SF80
-         F1GYl1DdqD31CwO1Esc12O5x/w9liwyK7p3PECbGkDf1m2Y55P9nupc/G9sAuzRc5vaT
-         UPkbRNQ0RAmK0K48VRtQ182yWKT/YH8ZSz44hXLiPLya3Ci2TvsroEdJ8yUGc8AZhsxk
-         3qW2RHezei3mh9wgvqPBDXmwo1VEwu18tELnC5FF5PSgdkVOv2gUe5k92WX/w++ETozJ
-         7a+VJDZKXVk7r2rBLRw3KpljJpcFqg1Ww5SUYYKuxuR6hCgJr1hkmwDd/qGPiORlY/FI
-         oE1w==
-X-Gm-Message-State: AO0yUKVJ6MJ/k6uxpWEjhHyDaTR6231ML6ZYEBKcs7HTilyNjVywvA17
-	dabGcxbrUY23A2aO1eRJmJnS//jNHbeqcg==
-X-Google-Smtp-Source: AK7set/1dIMgNbL1F9BUcUA61m/j9zu3PsVKJihC0YnhaUj7+yaYDYTWzGAh/+fqCSYc3g/iijwpaA==
-X-Received: by 2002:a05:600c:3d8f:b0:3e2:91c:7cb7 with SMTP id bi15-20020a05600c3d8f00b003e2091c7cb7mr19441147wmb.39.1678346116302;
-        Wed, 08 Mar 2023 23:15:16 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 9 Mar 2023 08:15:14 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZAmHgoA8GvuVpS2V@eldamar.lan>
-References: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
+x-ms-reactions: disallow
+Received: (qmail 23710 invoked from network); 6 Nov 2024 07:25:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1730877904; bh=d2Gy/wdHsUo2iD8xLwXJJnP0YreqJE0CbG2ih4wIvlQ=;
+	h=Date:From:To:Subject:From;
+	b=igascI9XooXrh1+eonADWMV2Im3mU/LmZEW2SPcNMj7aOsZYj4DgctbjAzKiTOyLI
+	 RHgnHS9yNC/K3Dw1oZGtb+k0I5W3OfoelJEY/I+LPEMLdw15Z7K3NO3MNzWhnp+mnv
+	 WRHi2QBBAHeQ2f/bhGUvoPg4S6BZziwinGwWeRdDwZKadZj6hWZgMhZejPrFENDSff
+	 o9pTwCC22LGLkVDZVFhMwHk5nTTotaD9qM1yKfNOKh3RWnwn5uPngb5GJiwq5pr0gP
+	 04jtsqnSQfW/pP9j5J63xBsRp+whzFvIAO6j0VtDme/gCyExlVz6AN08jyCu5BNdVV
+	 dyUM7C+RON+Pg==
+Date: Wed, 6 Nov 2024 08:25:04 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <3qr88394-q263-22p3-5oo4-538s9rr591n3@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
-Subject: Re: [oss-security] Shell command and Emacs Lisp code injection in
- emacsclient-mail.desktop
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISTORY] curl: CVE-2024-9681 HSTS subdomain overwrites
+ parent cache entry
 
-Hi,
+HSTS subdomain overwrites parent cache entry
+============================================
 
-On Wed, Mar 08, 2023 at 12:37:29PM +0100, Gabriel Corona wrote:
-> emacsclient-mail.desktop is vulnerable to shell command
-> injections and Emacs Lisp injections through a crafted
-> mailto: URI.
+Project curl Security Advisory, November 6th 2024 -
+[Permalink](https://curl.se/docs/CVE-2024-9681.html)
 
-Two CVEs are assigned by MITRE:
+VULNERABILITY
+-------------
 
-> 
-> This has been introduced in Emacs 28.1:
-> 
-> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=b1b05c828d67930bb3b897fe98e1992db42cf23c
-> 
-> A fix for shell command injection is currently included
-> in the upcoming 28.3 branch:
-> 
-> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=d32091199ae5de590a83f1542a01d75fba000467
+When curl is asked to use HSTS, the expiry time for a subdomain might
+overwrite a parent domain's cache entry, making it end sooner or later than
+otherwise intended.
 
-CVE-2023-27985
+This affects curl using applications that enable HSTS and use URLs with the
+insecure `HTTP://` scheme and perform transfers with hosts like
+`x.example.com` as well as `example.com` where the first host is a subdomain
+of the second host.
 
-> 
-> A fix for both is currently included in the upcoming 29.1 branch:
-> 
-> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=3c1693d08b0a71d40a77e7b40c0ebc42dca2d2cc
+(The HSTS cache either needs to have been populated manually or there needs to
+have been previous HTTPS accesses done as the cache needs to have entries for
+the domains involved to trigger this problem.)
 
-CVE-2023-27986
+When `x.example.com` responds with `Strict-Transport-Security:` headers, this
+bug can make the subdomain's expiry timeout *bleed over* and get set for the
+parent domain `example.com` in curl's HSTS cache.
 
-Regards,
-Salvatore
+The result of a triggered bug is that HTTP accesses to `example.com` get
+converted to HTTPS for a different period of time than what was asked for by
+the origin server. If `example.com` for example stops supporting HTTPS at its
+expiry time, curl might then fail to access `http://example.com` until the
+(wrongly set) timeout expires. This bug can also expire the parent's entry
+*earlier*, thus making curl inadvertently switch back to insecure HTTP earlier
+than otherwise intended.
+
+INFO
+----
+
+When triggered, this is a potential minor DoS security problem when trying to
+use HTTPS when that no longer works or a cleartext transmission of data that
+was otherwise intended to *possibly* be protected.
+
+But:
+
+`example.com` as per above is deliberately setup for HSTS, and servers should
+probably expect that clients will try upgrading to HTTPS for a while outside
+of the time range set in its headers.
+
+The access that fails in this scenario tries to use plain HTTP to the domain.
+Clear text, unprotected, vulnerable. HTTP is an insecure protocol and as such
+applications should **not** rely on nor trust such responses, which reduces
+the severity of this issue.
+
+Even without this problem, servers occasionally set HSTS headers but have
+problems with their HTTPS offering so this is a scenario that an application
+ends up in now and then completely without involving curl issues and therefore
+needs to have logic for. An application can for example work around the
+situation by simply toggling off HSTS.
+
+This bug is **not** considered a *C mistake* (ie not likely to have been
+avoided had we not been using C).
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2024-9681 to this issue.
+
+CWE-1025: Comparison Using Wrong Factors
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+The vulnerable code can only be reached when curl is told to use HSTS.
+
+- Affected versions: curl 7.74.0 to and including 8.10.1
+- Not affected versions: curl < 7.74.0 and >= 8.11.0
+- Introduced-in: https://github.com/curl/curl/commit/7385610d0c74c6a25
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/a94973805df96269bf
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 8.11.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Avoid relying on HSTS
+
+TIMELINE
+---------
+
+This issue was reported to the curl project on October 7, 2024. We contacted
+distros@openwall on October 29, 2024.
+
+curl 8.11.0 was released on November 6 2024 around 06:00 UTC, coordinated with
+the publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: newfunction
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
