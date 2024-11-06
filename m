@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1692" "Friday" "25" "October" "2019" "20:52:02" "+0200" "Julien Lepiller" "security@lepiller.eu" "<20191025205144.231de493@sybil.lepiller.eu>" "43" "Re: [oss-security] Formal verification of open source software" "^Date:" nil nil "10" "2019102518:52:02" "[oss-security] Formal verification of open source software" (number mark "        security@lep Oct 25   43/1692  " thread-indent "\"Re: [oss-security] Formal verification of open source software\"\n") "<CAGUWgD-Dhg-ORKcT5=rV5Dpz=6J0DAaOOHA5SaZ=HMPfvuZBmw@mail.gmail.com>" ("<CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>" "<20191025141540.10b322fe@computer>" "<CAGUWgD-Dhg-ORKcT5=rV5Dpz=6J0DAaOOHA5SaZ=HMPfvuZBmw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Formal verification of open source software" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1825 invoked by uid 550); 25 Oct 2019 18:59:34 -0000
+Received: (qmail 25937 invoked by uid 550); 6 Nov 2024 04:12:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,174 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32079 invoked from network); 25 Oct 2019 18:52:18 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=lepiller.eu; h=date:from
-	:to:subject:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; s=dkim; bh=eiBDMe5jAxw8
-	lFyItHV3vTl8GBA=; b=YgMRDj3n0guXSYD4/jTVSQ+5f5Pww12wo7LwA48O7owL
-	2IzxhUzPcd+UzH3xL3rpJodxPz1ag/csZY0J8TjPzjczmQ4YP/Y8EaO4GQBO+MWR
-	zwjooIdKxRR3udGZr1GBj2rGuL/WpCh8rVN5X+odACUS3Crb4I4hqNcVe3lBp552
-	izYCadyOFt/MOY5mgPPsKFWhtDUg+ieT3DLqZzdFPxlM8sc+m1mUcxBnQrtSDbyr
-	aVpyDv43C117J+ZETfwZua8c7zSkaSnwn4br+SXHC0cMok5FnoW7Of8SLrxDkk8o
-	VoX4kjfT8jh/ESOo19MEMMyXOxW0aw4NbH5CTueY0g==
-Message-ID: <20191025205144.231de493@sybil.lepiller.eu>
-In-Reply-To: <CAGUWgD-Dhg-ORKcT5=rV5Dpz=6J0DAaOOHA5SaZ=HMPfvuZBmw@mail.gmail.com>
-References: <CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>
-	<20191025141540.10b322fe@computer>
-	<CAGUWgD-Dhg-ORKcT5=rV5Dpz=6J0DAaOOHA5SaZ=HMPfvuZBmw@mail.gmail.com>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 25 Oct 2019 20:52:02 +0200
-From: Julien Lepiller <security@lepiller.eu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Formal verification of open source software
+x-ms-reactions: disallow
+Received: (qmail 25668 invoked from network); 6 Nov 2024 04:12:19 -0000
+Date: Wed, 6 Nov 2024 05:12:15 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Alexander Hu <hu@open-source-company.com>
+Message-ID: <20241106041215.GA4432@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] shell wildcard expansion (un)safety
 
-Le Fri, 25 Oct 2019 18:37:44 +0300,
-Georgi Guninski <gguninski@gmail.com> a =C3=A9crit :
+Hi,
 
-> On Fri, Oct 25, 2019 at 3:17 PM Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
-> >
-> >
-> > There's been a lot of work in the crypto community in this
-> > direction. Most of it is code under OSS licenses:
-> >=20=20
->=20
-> Thanks for the links.
->=20
-> Are there known bugs in formally verified software or hardware?
+Alexander Hu, CC'ed here, sent a message titled "shell expansion bug" to
+the distros list and a few other distro security contacts and shell
+maintainers.  The message described known and correct behavior (not a
+bug), even if unexpected by some and risky.  This was pointed out in the
+resulting thread.  Since this was on the distros list, I am now bringing
+it to oss-security for transparency and consistency.
 
-Hi, I think it's my first time writing to the list :)
+My summary and additional thoughts are:
 
-CompCert is not FOSS, but it's a verified compiler. This paper:
-https://www.cs.utah.edu/~regehr/papers/pldi11-preprint.pdf
-tried to find bugs in multiple C compilers. Here is what they say about
-CompCert:
+Filenames may contain strings that are special to certain programs.
+Shells expand wildcards without care (nor reliable knowledge) of what
+programs the expanded results may be passed to, nor those programs'
+specific processing of any strings.  The example given is of filename
+"--version", which ends up processed as an option by GNU grep.
 
-"The striking thing about our CompCert results is that the middle-
- end bugs we found in all other compilers are absent. As of early 2011,
- the under-development version of CompCert is the only compiler we
- have tested for which Csmith cannot find wrong-code errors. This is
- not for lack of trying: we have devoted about six CPU-years to the
- task. The apparent unbreakability of CompCert supports a strong
- argument that developing compiler optimizations within a proof
- framework, where safety checks are explicit and machine-checked,
- has tangible benefits for compiler users"
+Since this issue and other related ones were known for decades,
+getopt(3) and getopt_long(3), which are used by many programs, will stop
+processing options upon seeing a plain "--" argument.  It is to be used
+to separate options from further arguments (typically filenames).
 
-(they have found a few bugs in unverified parts of the compiler,
-though)
+In other words, this is known unreliable/unsafe:
 
-So there is a real impact of formal methods on program correctness. I
-don't know much about other verified software, so I'll be happy to read
-anything about bugs in them.
+grep text *
 
->=20
-> Is there any software which comes with monetary warranty?
->=20
-> Are loops sizes in C code serious problem for verification?
-> (something like infinity in math. IIRC Coq have problem with this).
+whereas this is more reliable/safer:
+
+grep text -- *
+
+This avoids the issue described above, although it may not necessarily
+be exactly what's intended either - e.g., it omits filenames starting
+with a dot and it will fail when the number of filenames is too large.
+
+Processing arbitrary/untrusted directories reliably is tricky.  For
+recursive processing, over the years we gained things like:
+
+grep -r text .
+
+where you don't need shell wildcard expansion, but instead pass a
+directory name, such as "." for the current directory, and even:
+
+find . -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 grep text --
+
+where you can limit the recursion (or effectively disable it as in the
+example above), while also avoiding wildcard expansion (although you can
+still do wildcard matching with "-name").  The "-print0" and "-0"
+options deal with a related issue where filenames could contain linefeed
+characters, so we separate them by NULs instead, which filenames cannot
+contain (as NULs wouldn't get through POSIX's C string focused APIs).
+
+So there's no bug in the shells here, but bugs of this kind are common
+in shell usage (omitting the "--" argument where it's needed, usage of
+wildcard expansion where that is unnecessary, etc.)
+
+Can the shells do anything to mitigate this?  I think not without
+breaking compatibility.  The only not-too-unreasonable change I can
+think of is wildcard expansion prefixing filenames with "./", maybe only
+those that start with "-" and maybe not when used with builtin "echo".
+Since this didn't feel too unreasonable, I actually tested many shells
+to see whether any possibly already do this (with "/bin/echo *") - but I
+found none that do, at least not by default.  I expect this would break
+e.g. explicit comparisons of expanded filenames for equality (to some
+expected filenames the script or another program checks for later) and
+uses of the filesystem as poor man's database (which scripts sometimes
+do).  Maybe an opt-in mode or a future shell that doesn't need to stay
+100% compatible with prior shells could do this, but even then I worry
+that it would encourage practices that would remain unsafe elsewhere.
+
+I'll include some excerpts from the distros list discussion below:
+
+On Thu, Oct 31, 2024 at 02:00:48PM +0100, Alexander Hu wrote:
+> all tested *nix shells i have tested so far have the following behaviour:
+> 
+> 
+> 1.
+> create a folder (not neccessary, but easier to clean up later)
+> 
+> 2.
+> inside the folder, create a file with your favourite text editor containing "test" (without ") as string and the filename should start with --
+> (in my case, i chose --version)
+> 
+> 3.
+> grep -lir "test" *
+> (or any other binary and command you'd like to play with)
+> 
+> 4.
+> With different filenames you get more interesting results.
+> 
+> 
+> This is also very interesting with "virus scanners" i.e. for webhosting companies.
+> Some of them simply stop to work, because the command ends there :-)
+
+On Fri, Nov 01, 2024 at 04:31:05AM +0100, Solar Designer wrote:
+> First of all, thank you for trying to do the right thing, but:
+> 
+> Unfortunately, your message is problematic with respect to distros list
+> intent and policy.  We require actionable information on a non-public
+> issue, with a specific proposed public disclosure date/time.  Your
+> message is about a publicly known (non-)issue (see below) and lacks any
+> proposal for public disclosure (if the issue weren't already public).
+> 
+> Now that this has been on the distros list, we need to also bring it to
+> oss-security for transparency and consistency.  Would you like to do
+> that, or should someone from the distros list take care of it?
+> 
+> On Thu, Oct 31, 2024 at 02:00:48PM +0100, Alexander Hu wrote:
+> > all tested *nix shells i have tested so far have the following behaviour:
+> 
+> This is well-known correct behavior, even if surprising to many and
+> indeed risky.  Many programs such as GNU grep support the "--" separator
+> between options and filenames, which should be used in such cases for
+> safety, e.g.:
+> 
+> grep whattofind -- *
+
+On Fri, Nov 01, 2024 at 11:01:39PM +0100, Solar Designer wrote:
+> On Fri, Nov 01, 2024 at 11:33:56AM +0100, Alexander Hu wrote:
+> > description of a bug which shows that all shells on *nix systems will evaluate the filename instead of listing it
+> 
+> Actually, the problem is precisely the opposite - that shells list
+> filenames as-is, without any mangling to mitigate possible incorrect
+> processing by the program the filenames are passed to.  They could
+> theoretically replace e.g. --version with ./--version to mitigate the
+> problem, but this is a moderately-compatibility-breaking change that
+> could have undesired side-effects in other uses.
+> 
+> > This is very interesting for example to hide malware; just insert base64 instead of test, and all web-scanners will fail after searching with the wildcard * for this string.
+> 
+> That would be a bug in such web-scanner - inappropriate usage of the
+> combination of the shell and grep.
+> 
+> > ANY filename, even with an encoded "/" for funny other tricks with other binaries like find or rm.
+> 
+> Filenames with embedded "/" are normally impossible to create without
+> direct block device access, so they're a form of filesystem corruption.
+> I do agree that processing of filenames in shell scripts, as well as by
+> many other/compiled programs, is not robust against such corruption, nor
+> would it make a lot of sense to clutter all programs with precautions
+> against filesystem corruption.  If anything, the kernel could be
+> hardened to detect such corruption before returning filenames to
+> userspace, but that would have performance impact.  So the current
+> practice is to only enforce this on creation of new files.
+> 
+> > Which can be easily avoided if the shells whould simply list the files instead of adding them as a option to the initial command.
+> 
+> Shells are simply listing the files.  They have no idea the string ends
+> up misinterpreted as an option.  It's separation of duties.
+> 
+> > The text amount to read how to report a bug is a utterly text-wall, and even after that it seems that i did it wrong...
+> 
+> Yes, the length of the distros list's instructions/policy bothers me
+> too.  I shortened it a bit in edits I made a few months ago.
+> Unfortunately, I don't see what else I can reasonably shorten or drop
+> without adverse effects.  Suggestions are welcome.
+
+Alexander
