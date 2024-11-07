@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1591" "Tuesday" "31" "October" "2017" "13:50:36" "+0100" "=?UTF-8?B?U3RlZmFuIELDvGhsZXI=?=" "stbuehler@lighttpd.net" "<c5658eb7-b673-0543-8104-47e35f5a18a0@lighttpd.net>" "34" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103112:50:36" "[oss-security] Fw: Security risk of vim swap files" (number mark "        stbuehler@li Oct 31   34/1591  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171031123745.GA10823@openwall.com>" ("<20171031132352.2df6d2ad@pc1>" "<20171031123745.GA10823@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3655 invoked by uid 550); 31 Oct 2017 13:31:30 -0000
+Received: (qmail 9761 invoked by uid 550); 7 Nov 2024 09:21:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3498 invoked from network); 31 Oct 2017 12:50:49 -0000
-References: <20171031132352.2df6d2ad@pc1>
- <20171031123745.GA10823@openwall.com>
-Message-ID: <c5658eb7-b673-0543-8104-47e35f5a18a0@lighttpd.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <20171031123745.GA10823@openwall.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Date: Tue, 31 Oct 2017 13:50:36 +0100
-From: =?UTF-8?Q?Stefan_B=c3=bchler?= <stbuehler@lighttpd.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fw: Security risk of vim swap files
+x-ms-reactions: disallow
+Received: (qmail 9743 invoked from network); 7 Nov 2024 09:21:40 -0000
+Authentication-Results:garm.ovh; auth=pass (GARM-101G004e77d54a5-9ffc-4c39-9209-3a41cc7d017d,
+                    FF1ED9190CE1D8155BD1F5405040E299EB659B1F) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp:37.248.224.32
+Date: Thu, 7 Nov 2024 10:20:43 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
+Message-ID: <20241107092043.nkeldhmhc3sbur3o@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20241106041215.GA4432@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20241106041215.GA4432@openwall.com>
+X-Ovh-Tracer-Id: 9699064748788231377
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrtdeggddtvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpefhtdffhfdvudeufeehudeiieejfeefheefgfegieejfefggffgtdeuhfdthffhveenucffohhmrghinhepshhouhhrtggvfigrrhgvrdhorhhgnecukfhppeduvdejrddtrddtrddupdefjedrvdegkedrvddvgedrfedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhoheefgegmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=Z5sdX/Ys9vq72YPf0AmosIPAOhZnGS8UefJ8CUlXeEA=;
+ c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
+ t=1730971291; v=1;
+ b=pU3L1HQt/T5fNplZljeBFpassceZp/mrEuLMuhrTs3fM5NwP8DJAt6WZl0R6HBXRbrqM1IYU
+ nvmiwqd3SytI62c3w45qjvYEZiI9NLgb/RLNXR62uRLWkOaJ1Rca1HEWkVxGPe3cwpat2q+j3+4
+ 0zwgxPQGv5eFwKLGc+ZILIHktLud8nKcZOycSiwxMvNTNsvljwDaeyx3hYZfF/BE6z45zBuj6NY
+ GmfuryAfPLOEkSDSRwhQQXxtQha5rhk88FZ9cbcLy+ocG0Hk8FQJrn5lQ6VRYZ1diyVige+m0lm
+ UMuk/DR20JN5L+/h96HXYMF5JGrGgAxlkZ0gOUvIYVzfQ==
+Subject: Re: [oss-security] shell wildcard expansion (un)safety
 
-On 10/31/2017 01:37 PM, Solar Designer wrote:
-> On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno B??ck wrote:
->> I think vim should change the behavior of swap files:
->> 1. they should be stored in /tmp by default
->> 2. they should have secure permissions (tmp file security is
->> a tricky thing and needs careful consideration to avoid symlink attacks
->> and the like, but there are dedicated functions for this like mkstemp).
->> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
->> they shouldn't be called /tmp/.test.txt.swp, but more something
->> like /tmp/.vim_swap.123782173)
+* Solar Designer <solar@openwall.com>, 2024-11-06 05:12:
+>Can the shells do anything to mitigate this?
+
+Bash and glibc's getopt() tried to mitigate this back in 1996/1997, but 
+it didn't work out.
+
+* https://sourceware.org/cgit/glibc/commit/?id=bf079e19f50d64aa5e05b5e1
+>author	Zack Weinberg <zackw@panix.com>	2017-03-29 16:58:58 -0400
+[...]
+>getopt: remove USE_NONOPTION_FLAGS
+>
+>glibc's implementation of getopt includes code to parse an environment 
+>variable named _XXX_GNU_nonoption_argv_flags_ (where XXX is the current 
+>process's PID in decimal); but all of it has been #ifdefed out since 
+>2001, with no official way to turn it back on.
 > 
-> Out of these, I think only 2 should be done: the files should be mode
-> 0600 or 0400 even if the original file's permissions and/or the umask
-> are more relaxed.
-> 
-> 1 and 3 go against intended use for these files - recovery of an edit in
-> progress if the editor or the entire system crashes (and comes back up
-> e.g. after a power-cycle).  /tmp contents might not survive a reboot,
-> and randomized filenames would prevent vim itself from detecting the
-> problem and offering recovery, which it does now.
+>According to commentary in our config.h.in, bash version 2.0 set this 
+>environment variable to indicate argv elements that were the result of 
+>glob expansion and therefore should not be treated as options, but the 
+>feature was "disabled later" because "it caused problems". According 
+>to bash's CHANGES file, "later" was release 2.01; it gives no more 
+>detail about what the problems were.
+>
+>Version 2.0 of bash was released on the last day of 1996, and version 
+>2.01 in June of 1997. Twenty years later, I think it is safe to assume 
+>that this environment variable isn't coming back.
 
-You could keep the .test.txt.swp file, but make it a symlink and encode
-information where to find the real swap file (/var/tmp/, /tmp, ...) in
-the symlink.
-
-It shouldn't link directly to the swap file, but perhaps look like
-"swap:///var/tmp/.vim_swap.random_id".
-
-Instead of a symlink you could of course just create a normal text file
-with the real swap filename in it, but then it might be easier for an
-attacker to find the real filename and read that file.
-
-cheers,
-Stefan
+-- 
+Jakub Wilk
