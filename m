@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1162" "Wednesday" "5" "October" "2016" "10:04:03" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>" "29" "Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100517:04:03" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        taviso@googl Oct  5   29/1162  " thread-indent "\"Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<20161005184753.417dd846@pc1>" "<CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12200 invoked by uid 550); 5 Oct 2016 17:04:36 -0000
+Received: (qmail 28310 invoked by uid 550); 7 Nov 2024 21:21:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12182 invoked from network); 5 Oct 2016 17:04:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=zso0ZAN6NuMTwQxsv57MfeMLzzyg31IzpLr3Sglld+I=;
-        b=MAA8b19TuKwEUGQ+SmaFLgynwyFZvin7Svk0yqRzVoFXCkQireOMq7tG71l7t9OU5L
-         CJ3lAqPfqLbPKfddJ4fM/Yz/xlUt46aFLnfy5gDQuLLpzwMzgT0JB2OGTxstPfqQDJ3x
-         f70ytYNTFZKjLCOm+yOThClbb6CsY0sBctw/JbrzImGMSm1DW+m3JrxptQBzxGPQhsIM
-         zTz7n+HR4z2yxXV39FcYL4yr+L4PE4IJF2Yzb6KKg2SrQ6wSI4aP2jSC/QmFnUReeP/g
-         DgtBPjZi7g1OW/ZOeaXsKK3zPRh5dXGj1j7M4RwliBw0SuqvY/ggHMq8VdJzmUGgR7E5
-         qjfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=zso0ZAN6NuMTwQxsv57MfeMLzzyg31IzpLr3Sglld+I=;
-        b=mTDIJguO+q1JzW1DdbaxNSWSKHHTS5mhVVCtgqzRfGLUptmax2SXFmq8Gkbq8jqzit
-         UZ85ecDVUfS4slcfrNhNB2fkPzv9sL0T8/yIrdYOFq8bv9vZF8f2nLjf9SiqONPZtQ8H
-         Ny8T0h/2dtOC52yWdfDuIZW6YlLnPW1BlGr/0l80vrsTLHsORvjdbJkogc/VZW/ppzJY
-         1BR0Ds8w9br6Eo5D2dpocPekP9dRnP1dA2e2bqzQgLxxX26Uwi2idsWr49isk2jo/NfC
-         6u8mz5L+2pa8AXDQ9edSTSl0WxEZ6bA+5hu22fTWBczzO9vtu5rxQ80GBlkFf3k1rn47
-         58BQ==
-X-Gm-Message-State: AA6/9RnlSic8kBfCeHAOtRMLjajRtDGYgzGOYaFA2O4zKEl0wokHZ3xf7EVYTH9U59ayAtHQgJmlWE5N6HDk/6Le
-X-Received: by 10.176.64.39 with SMTP id h36mr7714087uad.12.1475687063734;
- Wed, 05 Oct 2016 10:04:23 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>
-References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
- <20161005184753.417dd846@pc1> <CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>
-Message-ID: <CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 5 Oct 2016 10:04:03 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems
+x-ms-reactions: disallow
+Received: (qmail 6085 invoked from network); 7 Nov 2024 21:04:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1731013461; x=1731680127; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  mime-version:content-type:content-transfer-encoding:author:from:subject:
+  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
+  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
+  mime-version:content-type:content-transfer-encoding:content-disposition:
+  content-id:content-description:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=+Z+j55KdhEuz/yZBxNTpmFU+/fOi+1tjfDVBDvpzFH0=;
+ b=kIdrr69LmwOXNdiib/f+0iJ1ppkcOf5t87gtMHpDG5cBq+95He4KjNS9UuTiZ3rGP09v90k8
+  8XvQ/TBQ94p61iRXPVytZwgiVD0KysRSOoItZGVC8l+hyzBBrxF1y7r64AvFNowx4STiG85THC
+  2nWIM0CrstgY4V8xNZYwU4eNYvKD7DZlP0CGwGJuHSIZ2fj1v989rd7BW966b5ryyiCdojxjia
+  WKk+q848JduGHkSK9J5ETelk6VuGfyPM5e2/T9rzL2qG/8WRKDrQKdmSc0KzT91hOTgk+gn3Od
+  nchc1wbqJNuoG7bVsmc7cuHzGRny7aP2A/YkBPbWWbQtqQ9Q==
+DKIM-Signature: v=1; a=adaed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1731013461; x=1731680127; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  mime-version:content-type:content-transfer-encoding:author:from:subject:
+  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
+  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
+  mime-version:content-type:content-transfer-encoding:content-disposition:
+  content-id:content-description:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=+Z+j55KdhEuz/yZBxNTpmFU+/fOi+1tjfDVBDvpzFH0=;
+ b=O/ThTog6vys1LlVLNS97oxE6hyaUUdhFXLAFMqLoN5FciSby3ysCPgP31g4jkAscgERJSsqO
+  5cGsH6iQxuuUAA==
+Date: Thu, 07 Nov 2024 22:04:20 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
+Message-ID: <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>
+In-Reply-To: <20241107041658.GA10363@openwall.com>
+References: <20241106041215.GA4432@openwall.com>
+ <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
+ <20241107000819.z6Ygg103@steffen%sdaoden.eu>
+ <20241107041658.GA10363@openwall.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-623-g805238bd9b
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] shell wildcard expansion (un)safety
 
-On Wed, Oct 5, 2016 at 9:54 AM, Tavis Ormandy <taviso@google.com> wrote:
-> On Wed, Oct 5, 2016 at 9:47 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
->> On Wed, 5 Oct 2016 09:13:03 -0700
->> Tavis Ormandy <taviso@google.com> wrote:
->>
->>> If you're using ImageMagick, I would recommend disabling the PS, EPS,
->>> PDF and XPS coders in policy.xml. Applications like gimp, evince,
->>> claws, and most other applications that generate thumbnails of PDF/PS
->>> documents should probably not do so without a prompt (NOTE: A lot of
->>> packages do this
->>
->> I was surprised to see evince in this list. It uses poppler for pdf and
->> libspectre for postscript, so there seems to be no use of
->> ghostscript (maybe in an older version).
->> Also for claws the only use of ghostscript is in a plugin that's not
->> enabled by default.
->
-> It might be an old version but the version I have on RHEL7 and Ubuntu
-> LTS both invoke gs by default.
->
-> $ evince --version
-> GNOME Document Viewer 3.14.2
+Solar Designer wrote in
+ <20241107041658.GA10363@openwall.com>:
+ |On Thu, Nov 07, 2024 at 01:08:19AM +0100, Steffen Nurpmeso wrote:
+ |> David A. Wheeler wrote in
+ |>  <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>:
+ |>|> On Nov 5, 2024, at 11:12 PM, Solar Designer <solar@openwall.com> wrot=
+e:
+ |>|
+ |>|> ... over the years we gained things like ...
+ |>|>=20
+ |>|> find . -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 grep text --
+ |>|
+ |>|The "-print0" and "-0" options have been widely implemented, but
+ |>|POSIX 2024 finally formally adds them. So I urge using them where they
+ |>|make sense, as they counter embedded linefeed characters in filenames.
+ |>=20
+ |> To add that the POSIX core developers mention (APPLICATION USAGE):
+ |>=20
+ |>   It should be noted that using find with -print0 to pipe input to
+ |>   xargs -r0 is less safe than using find with -exec because if
+ |>   find -print0 is terminated after it has written a partial
+ |>   pathname, the partial pathname may be processed as if it was
+ |>   a complete pathname.
+ |
+ |Shouldn't that behavior be treated as an xargs implementation bug or at
+ |least shortcoming, and fixed as such?  I hope POSIX doesn't require it?
 
-Oops, I think I may be wrong about that, I just saw that some of my
-test cases repro and assumed it was using ghostscript.
+Now, i am not a POSIX core developer.  POSIX.1-2024 was developed
+for over a decade (even almost one and a half) with many hundreds
+of issues fixed through discussions in regular meetings.
+A first thought is that the now really included (four decades too
+late!) sh(1)ell's "pipefail" option was agreed upon long after the
+text above appeared for the -print0/-r0 addition.  If that is true
+the above text is anyway a correct statement less the partial
+pathname because the undesired "termination" will not be reflected
+in the exit status of the pipe.
 
-Maybe there are poppler issues as well, sigh.
+ |In other words, if the input stream to "xargs -0" doesn't end in a NUL,
+ |xargs must not process the last maybe-partial string.  I've just checked
 
-Tavis.
+Other than that i would agree.
+
+ |GNU findutils xargs (not the latest version, though) and it does have
+ |this problem - something we'd want to fix?
+
+=46rom a glance "git show master:findutils/xargs.c::process0_stdin()"
+of busybox also does
+
+                int c =3D getchar();
+                if (c =3D=3D EOF) {
+                        if (p =3D=3D s)
+                                goto ret;
+                        c =3D '\0';
+                }
+                *p++ =3D c;
+                if (c =3D=3D '\0') {   /* NUL or EOF detected */
+
+ ...
+
+So then the above paragraph even reflects code reality.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
+|
+|And in Fall, feel "The Dropbear Bard"s ball(s).
+|
+|The banded bear
+|without a care,
+|Banged on himself fore'er and e'er
+|
+|Farewell, dear collar bear
