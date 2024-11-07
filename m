@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2408" "Thursday" "22" "April" "2021" "18:25:19" "+0200" "Marcus Meissner" "meissner@suse.de" nil "55" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       meissner@sus Apr 22   55/2408  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13738 invoked by uid 550); 22 Apr 2021 16:25:32 -0000
+Received: (qmail 15770 invoked by uid 550); 7 Nov 2024 04:17:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,80 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13719 invoked from network); 22 Apr 2021 16:25:31 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 22 Apr 2021 18:25:19 +0200
-From: Marcus Meissner <meissner@suse.de>
+x-ms-reactions: disallow
+Received: (qmail 14180 invoked from network); 7 Nov 2024 04:17:02 -0000
+Date: Thu, 7 Nov 2024 05:16:58 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20210422162518.GC10297@suse.de>
-References: <20210422065959.GI13079@scully.more-magic.net>
- <BN7PR14MB243454DA1540F0722C1FA2DEFB469@BN7PR14MB2434.namprd14.prod.outlook.com>
- <20210422151142.GB10297@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Message-ID: <20241107041658.GA10363@openwall.com>
+References: <20241106041215.GA4432@openwall.com> <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com> <20241107000819.z6Ygg103@steffen%sdaoden.eu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210422151142.GB10297@suse.de>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
- =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
- =?iso-8859-1?Q?g?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+In-Reply-To: <20241107000819.z6Ygg103@steffen%sdaoden.eu>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] shell wildcard expansion (un)safety
 
-Hi,
-
-to follow the "give complete content" requirement, here their statement on their website:
-
-https://cse.umn.edu/cs/statement-cse-linux-kernel-research-april-21-2021
-
-"
-Statement from CS&E on Linux Kernel research - April 21, 2021
-
-Leadership in the University of Minnesota Department of Computer Science & Engineering learned today about the details of research being conducted by one of its faculty members and graduate students into the security of the Linux Kernel. The research method used raised serious concerns in the Linux Kernel community and, as of today, this has resulted in the University being banned from contributing to the Linux Kernel.
-
-We take this situation extremely seriously. We have immediately suspended this line of research. We will investigate the research method and the process by which this research method was approved, determine appropriate remedial action, and safeguard against future issues, if needed. We will report our findings back to the community as soon as practical.
-
-Sincerely,
-
-Mats Heimdahl, Department Head
-Loren Terveen, Associate Department Head
-"
-
-Ciao, Marcus
-
-On Thu, Apr 22, 2021 at 05:11:42PM +0200, Marcus Meissner wrote:
-> Hi,
+On Thu, Nov 07, 2024 at 01:08:19AM +0100, Steffen Nurpmeso wrote:
+> David A. Wheeler wrote in
+>  <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>:
+>  |> On Nov 5, 2024, at 11:12 PM, Solar Designer <solar@openwall.com> wrote:
+>  |
+>  |> ... over the years we gained things like ...
+>  |> 
+>  |> find . -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 grep text --
+>  |
+>  |The "-print0" and "-0" options have been widely implemented, but
+>  |POSIX 2024 finally formally adds them. So I urge using them where they
+>  |make sense, as they counter embedded linefeed characters in filenames.
 > 
-> https://twitter.com/UMNComputerSci/status/1384948683821694976
+> To add that the POSIX core developers mention (APPLICATION USAGE):
 > 
-> Ciao, Marcus
-> 
-> 
-> On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
-> > Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
-> > 
-> > 
-> > ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@more-magic.net> wrote:
-> > 
-> >     Hi all,
-> > 
-> >     Probably a lot of you know this already but I consider it serious enough
-> >     to point out to the OSS security community at large.
-> > 
-> >     The university of Minnesota has been banned from making any commits to
-> >     the Linux kernel after it was found out they'd been submitting bogus
-> >     patches to the LKML to knowingly introduce security issues:
-> >     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
-> > 
-> >     They also published a paper:
-> >     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
-> > 
-> >     I don't know the scope of this research, but it could involve other OSS
-> >     projects, now or in the future, as well.  Hence this e-mail.  If you feel
-> >     it's spam or needless drama, feel free to ignore.
-> > 
-> >     Cheers,
-> >     Peter
-> 
+>   It should be noted that using find with -print0 to pipe input to
+>   xargs -r0 is less safe than using find with -exec because if
+>   find -print0 is terminated after it has written a partial
+>   pathname, the partial pathname may be processed as if it was
+>   a complete pathname.
+
+Shouldn't that behavior be treated as an xargs implementation bug or at
+least shortcoming, and fixed as such?  I hope POSIX doesn't require it?
+
+In other words, if the input stream to "xargs -0" doesn't end in a NUL,
+xargs must not process the last maybe-partial string.  I've just checked
+GNU findutils xargs (not the latest version, though) and it does have
+this problem - something we'd want to fix?
+
+This reminds me, a specific example given was:
+
+On Thu, Oct 31, 2024 at 02:00:48PM +0100, Alexander Hu wrote:
+> grep -lir "test" *
+
+The "-l" option would make grep print relative pathnames.  Presumably,
+that would then be processed by some other program.  However, we have
+the problem with potential linefeed characters embedded in filenames.
+For this, GNU grep also has the "-Z" option, to output a NUL-delimited
+stream, and the other program should expect that (e.g. via "xargs -0",
+or directly support that kind of input).
+
+So a command like that could be rewritten e.g. as:
+
+grep -lZirF test . | xargs -r0 otherprogram --
+
+Alexander
