@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3031" "Tuesday" "22" "March" "2016" "23:58:39" "+0300" "Solar Designer" "solar@openwall.com" "<20160322205839.GA30835@openwall.com>" "58" "Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" "^Date:" nil nil "3" "2016032220:58:39" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" (number mark "        solar@openwa Mar 22   58/3031  " thread-indent "\"Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption\"\n") "<20150609112639.GA20540@openwall.com>" ("<20150606113057.GA23470@openwall.com>" "<20150609112639.GA20540@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24549 invoked by uid 550); 22 Mar 2016 20:58:46 -0000
+Received: (qmail 32342 invoked by uid 550); 7 Nov 2024 21:46:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +6,129 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24531 invoked from network); 22 Mar 2016 20:58:45 -0000
-Message-ID: <20160322205839.GA30835@openwall.com>
-References: <20150606113057.GA23470@openwall.com> <20150609112639.GA20540@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150609112639.GA20540@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Tue, 22 Mar 2016 23:58:39 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
+x-ms-reactions: disallow
+Received: (qmail 17425 invoked from network); 7 Nov 2024 21:42:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1731015721; x=1731682387; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=5N2OLEX04QFoeDB6Nc2SH1R3VNa8iT8RO9ARJaYnZ6U=;
+ b=d4AemZX+d+xi6J4w53KCyL5ihwAZT+E6yDPhLm1gl1Mv8cJCf085FsUY75tOnbRm2M0C5qZz
+  DqyyXVsTMF2rHcO8Wmpi7FT6NzVz+lDBO91JpNhopHGwBchCW7osg0RKRagztbvl+kOaXKjp2P
+  pJskwkru3KGNliQKJtE17UKjEPTfghMt2n8wJ5RxNZ+/zEfNkaYC/ngg77CGl9iw//XOIJSArX
+  g6JYjkjjBPI2kTzgJU4OzwANZllaMCrf/2JFLfdG4kUn7sq2Eqw+t6Vrr6eCsYyqa+l4P+N+r5
+  PD5QCaKbeNiqK5eFD2cpFbRGjdcx+mmRe9Xay1Z0MF4BWIrw==
+DKIM-Signature: v=1; a=adaed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1731015721; x=1731682387; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=5N2OLEX04QFoeDB6Nc2SH1R3VNa8iT8RO9ARJaYnZ6U=;
+ b=JBigl8waybmzpusI4BuhsR9+WRz6NKDFt+YiK9O4a20VIbJqzLqFVbFTCJfkGFvO2N7/rXG9
+  KNwL59TJRWT6AA==
+Date: Thu, 07 Nov 2024 22:41:59 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
+Message-ID: <20241107214159.XFJ1n5cL@steffen%sdaoden.eu>
+In-Reply-To: <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>
+References: <20241106041215.GA4432@openwall.com>
+ <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
+ <20241107000819.z6Ygg103@steffen%sdaoden.eu>
+ <20241107041658.GA10363@openwall.com>
+ <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-623-g805238bd9b
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] shell wildcard expansion (un)safety
 
-On Tue, Jun 09, 2015 at 02:26:39PM +0300, Solar Designer wrote:
-> On Sat, Jun 06, 2015 at 02:30:57PM +0300, Solar Designer wrote:
-> > The possibility of "struct iovec *iov" going out of range and the
-> > subsequent out of bounds metadata accesses feel much more severe than
-> > the out of bounds accesses to actual data in the userspace.
-> > "iov->iov_base += copy;" and "iov->iov_len -= copy;" might then be
-> > corrupting kernel memory.  It feels relatively unimportant what the
-> > resulting values of iov_base and iov_len will be for their intended
-> > purpose, since we use copy_from_user() / copy_to_user() on them anyway.
-> > It feels more important that these "+=" and "-=" operators directly
-> > modify individual words in kernel memory, albeit only slightly(?) out of
-> > bounds of the original iov array.  So maybe it's this risk that needs
-> > to be evaluated further.
-> 
-> Upon a closer look, it appears that this is in fact the impact Red Hat
-> had in mind as well.  I was not reading closely enough.  The "Doc Text"
-> field at https://bugzilla.redhat.com/show_bug.cgi?id=1202855 says:
-> 
-> "It was found that the Linux kernel's implementation of vectored pipe
-> read and write functionality did not take into account the I/O vectors
-> that were already processed when retrying after a failed atomic access
-> operation, potentially resulting in memory corruption due to an I/O
-> vector array overrun."
-> 
-> So we're on the same page regarding "I/O vector array overrun" (rather
-> than I/O data overrun) being the security issue here.
+Steffen Nurpmeso wrote in
+ <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>:
+ |Solar Designer wrote in
+ | <20241107041658.GA10363@openwall.com>:
+ ||On Thu, Nov 07, 2024 at 01:08:19AM +0100, Steffen Nurpmeso wrote:
+ ||> David A. Wheeler wrote in
+ ||>  <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>:
+ ||>|> On Nov 5, 2024, at 11:12 PM, Solar Designer <solar@openwall.com> \
+ ||>|> wrote:
+ ||>|
+ ||>|> ... over the years we gained things like ...
+ ||>|> 
+ ||>|> find . -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 grep text --
+ ||>|
+ ||>|The "-print0" and "-0" options have been widely implemented, but
+ ||>|POSIX 2024 finally formally adds them. So I urge using them where they
+ ||>|make sense, as they counter embedded linefeed characters in filenames.
+ ||> 
+ ||> To add that the POSIX core developers mention (APPLICATION USAGE):
+ ||> 
+ ||>   It should be noted that using find with -print0 to pipe input to
+ ||>   xargs -r0 is less safe than using find with -exec because if
+ ||>   find -print0 is terminated after it has written a partial
+ ||>   pathname, the partial pathname may be processed as if it was
+ ||>   a complete pathname.
+ ||
+ ||Shouldn't that behavior be treated as an xargs implementation bug or at
+ ||least shortcoming, and fixed as such?  I hope POSIX doesn't require it?
 
-Apparently, this vulnerability is being used to root older Android
-devices, and as a result it has just been fixed for older Android:
+POSIX.1-2024 says, for xargs, on page 3600, lines 123174 ff.:
 
-https://source.android.com/security/advisory/2016-03-18.html
+  If the -0 option is specified, the application shall ensure that
+  arguments in the standard input are delimited by null bytes.
+  If multiple adjacent null bytes occur in the input, each null
+  byte shall be treated as a delimiter.
+  If the standard input is not empty and does not end with a null
+  byte, xargs should ignore the trailing non-null bytes (as this
+  can signal incomplete data) but may use them as the last
+  argument passed to utility.
 
-"Google has become aware of a rooting application using an unpatched
-local elevation of privilege vulnerability in the kernel on some Android
-devices (CVE-2015-1805).  For this application to affect a device, the
-user must first install it.  We already block installation of rooting
-applications that use this vulnerability - both within Google Play and
-outside of Google Play - using Verify Apps, and have updated our systems
-to detect applications that use this specific vulnerability.
+So it standardizes behaviour as it exists in real life
+applications.
+(This is pretty unfortunate.)
 
-To provide a final layer of defense for this issue, partners were
-provided with a patch for this issue on March 16, 2016.  Nexus updates
-are being created and will be released within a few days.  Source code
-patches for this issue have been released to the Android Open Source
-Project (AOSP) repository."
+  ...
+ |A first thought is that the now really included (four decades too
+ |late!) sh(1)ell's "pipefail" option was agreed upon long after the
+ |text above appeared for the -print0/-r0 addition.  If that is true
+ |the above text is anyway a correct statement less the partial
+ |pathname because the undesired "termination" will not be reflected
+ |in the exit status of the pipe.
+ |
+ ||In other words, if the input stream to "xargs -0" doesn't end in a NUL,
+ ||xargs must not process the last maybe-partial string.  I've just checked
+ |
+ |Other than that i would agree.
+ |
+ ||GNU findutils xargs (not the latest version, though) and it does have
+ ||this problem - something we'd want to fix?
+ |
+ |From a glance "git show master:findutils/xargs.c::process0_stdin()"
+ |of busybox also does
+ ...
+ |So then the above paragraph even reflects code reality.
 
-The advisory above includes a bit more information, including links to
-AOSP commits, but no information on how the vulnerability is exploited,
-nor even the names of the "rooting applications".
-
-I heard of this from a tweet by @DaveManouchehri, asking for "the APK
-(or name) of the app that's exploiting CVE-2015-1805" - unfortunately, I
-have no answer.
-
-The primary reason I am posting this is so that other distros know the
-vulnerability was apparently shown to be exploitable.
-
-Alexander
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
+|
+|And in Fall, feel "The Dropbear Bard"s ball(s).
+|
+|The banded bear
+|without a care,
+|Banged on himself fore'er and e'er
+|
+|Farewell, dear collar bear
