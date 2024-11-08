@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["556" "Tuesday" "2" "June" "2015" "23:27:49" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.11.1506022313530.14742@wniryva>" "20" "[oss-security] CVE request Linux kernel: fs: udf kernel oops" nil nil nil "6" "2015060217:57:49" "[oss-security] CVE request Linux kernel: fs: udf kernel oops" (number mark "        ppandit@redh Jun  2   20/556   " thread-indent "\"[oss-security] CVE request Linux kernel: fs: udf kernel oops\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14120 invoked by uid 550); 2 Jun 2015 17:58:12 -0000
+Received: (qmail 9479 invoked by uid 550); 8 Nov 2024 00:19:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +6,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14095 invoked from network); 2 Jun 2015 17:58:12 -0000
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.11.1506022313530.14742@wniryva>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-cc: Carl Henrik Lunde <chlunde@ping.uio.no>
-Date: Tue, 2 Jun 2015 23:27:49 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request Linux kernel: fs: udf kernel oops
-To: oss security list <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 6011 invoked from network); 8 Nov 2024 00:18:00 -0000
+Date: Fri, 8 Nov 2024 01:17:59 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20241108001759.GA15331@openwall.com>
+References: <20241106041215.GA4432@openwall.com> <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com> <20241107000819.z6Ygg103@steffen%sdaoden.eu> <20241107041658.GA10363@openwall.com> <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu> <20241107214159.XFJ1n5cL@steffen%sdaoden.eu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241107214159.XFJ1n5cL@steffen%sdaoden.eu>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] shell wildcard expansion (un)safety
 
-   Hello,
+On Thu, Nov 07, 2024 at 10:41:59PM +0100, Steffen Nurpmeso wrote:
+> Steffen Nurpmeso wrote in
+>  <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>:
+>  |Solar Designer wrote in
+>  | <20241107041658.GA10363@openwall.com>:
+>  ||On Thu, Nov 07, 2024 at 01:08:19AM +0100, Steffen Nurpmeso wrote:
+>  ||> To add that the POSIX core developers mention (APPLICATION USAGE):
+>  ||> 
+>  ||>   It should be noted that using find with -print0 to pipe input to
+>  ||>   xargs -r0 is less safe than using find with -exec because if
+>  ||>   find -print0 is terminated after it has written a partial
+>  ||>   pathname, the partial pathname may be processed as if it was
+>  ||>   a complete pathname.
+>  ||
+>  ||Shouldn't that behavior be treated as an xargs implementation bug or at
+>  ||least shortcoming, and fixed as such?  I hope POSIX doesn't require it?
+> 
+> POSIX.1-2024 says, for xargs, on page 3600, lines 123174 ff.:
+> 
+>   If the -0 option is specified, the application shall ensure that
+>   arguments in the standard input are delimited by null bytes.
+>   If multiple adjacent null bytes occur in the input, each null
+>   byte shall be treated as a delimiter.
+>   If the standard input is not empty and does not end with a null
+>   byte, xargs should ignore the trailing non-null bytes (as this
+>   can signal incomplete data) but may use them as the last
+>   argument passed to utility.
+> 
+> So it standardizes behaviour as it exists in real life
+> applications.
+> (This is pretty unfortunate.)
 
-Linux kernel built with the UDF file system(CONFIG_UDF_FS) support is 
-vulnerable to a crash. It could occur while fetching inode information from a 
-corrupted/malicious udf file system image.
+Actually, to me the above reads like it merely allows the current
+behavior ("may"), but encourages change ("should").  That's good.
 
-An unprivileged user could use this flaw to crash the kernel resulting in 
-DoS.
+My only complaint is that "ignore" doesn't suggest this resulting in a
+non-zero exit status from xargs.  POSIX allows exit status in the range
+of 1 to 125 if, among other possibilities, "some other error occurred".
+So I think a non-zero exit status in that range on this condition isn't
+too far from being compliant.
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/23b133bdc452aa441fcb9b82cbf6dd05cfd342d0
+>   ...
+>  |A first thought is that the now really included (four decades too
+>  |late!) sh(1)ell's "pipefail" option was agreed upon long after the
+>  |text above appeared for the -print0/-r0 addition.  If that is true
+>  |the above text is anyway a correct statement less the partial
+>  |pathname because the undesired "termination" will not be reflected
+>  |in the exit status of the pipe.
 
+It will be when "pipefail" is present and enabled, and even if not it's
+extra and different impact - not indicating error to further commands
+(which may or may not matter in a given case) vs. also processing of an
+unintended file (truncated filename) by this very command.
 
-Thank you 'Carl H Lunde' for reporting this issue.
+>  ||In other words, if the input stream to "xargs -0" doesn't end in a NUL,
+>  ||xargs must not process the last maybe-partial string.  I've just checked
+>  |
+>  |Other than that i would agree.
+>  |
+>  ||GNU findutils xargs (not the latest version, though) and it does have
+>  ||this problem - something we'd want to fix?
+>  |
+>  |From a glance "git show master:findutils/xargs.c::process0_stdin()"
+>  |of busybox also does
+>  ...
+>  |So then the above paragraph even reflects code reality.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+So it looks like we can fix/enhance xargs in this way in both GNU
+findutils and Busybox findutils and perhaps elsewhere.  It would also be
+interesting to know if any implementations exist that already "ignore
+the trailing non-null bytes".
+
+Another reason for this safer behavior is that it's also more consistent
+with respect to empty strings.  If "trailing non-null bytes" are passed
+"as the last argument", then this only occurs if the last argument is
+non-empty.  Yet xargs otherwise does support empty arguments, except for
+the last non-null-terminated one.  We'd be removing this inconsistency.
+
+Alexander
