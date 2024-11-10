@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1202" "Tuesday" "17" "October" "2017" "17:44:33" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1327005831.21431439.1508276673309.JavaMail.zimbra@redhat.com>" "30" "Re: [oss-security] CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors" nil nil nil "10" "2017101721:44:33" "[oss-security] CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors" (number mark "U       vdronov@redh Oct 17   30/1202  " thread-indent "\"Re: [oss-security] CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors\"\n") "<1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>" ("<2113704961.13214334.1506089666956.JavaMail.zimbra@redhat.com>" "<466141472.14007261.1506337465946.JavaMail.zimbra@redhat.com>" "<1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17881 invoked by uid 550); 17 Oct 2017 21:44:46 -0000
+Received: (qmail 32049 invoked by uid 550); 10 Nov 2024 19:39:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17851 invoked from network); 17 Oct 2017 21:44:45 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 8E4CF37E79
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
-Date: Tue, 17 Oct 2017 17:44:33 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
+x-ms-reactions: disallow
+Received: (qmail 13540 invoked from network); 10 Nov 2024 18:42:25 -0000
+Authentication-Results: ext-mx-out011.mykolab.com (amavis);
+ dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+ header.d=kolabnow.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+	in-reply-to:content-disposition:content-type:content-type
+	:mime-version:references:message-id:subject:subject:from:from
+	:date:date:received:received:received; s=dkim20240523; t=
+	1731264135; x=1733078536; bh=bZHgMjy1KdcrPyeqf8l4b5boLwy5lDGFcnF
+	4oqJdj1I=; b=BnjUi5Tmn6SnuHy/wOsNEmGRc+FqTA8cI/B/7IeJMZu4tByRqk5
+	/3qqpKVSH4qJeZmPN7KKXokOYRux6xWEyquloXVo7nv/njd0i9cH7IJk7wf2L00W
+	exL4Bnz59W/gXBxDIC2F7KV6rCCPhL81iAyXtDbICSe83iIRLAzuvxwyxiHzwFW0
+	bT6O1gJWKW9/9ccz1mXuN/HkSGWxuWDCHGUiBjoL/7WPnf1gunhtqciUqRXMHfoW
+	7XSVRD1zxqJMqFKzKrupRdi6pSOL4R3wDGj+W+yQqcJkpaPea1JzSxhRIoEA9eXN
+	cbE6qXhlF3gEV6xnVs+AcCDrhBNb/e/ccOg==
+X-Virus-Scanned: amavis at mykolab.com
+Date: Sun, 10 Nov 2024 19:42:13 +0100
+From: Fay Stegerman <flx@obfusk.net>
 To: oss-security@lists.openwall.com
-Message-ID: <1327005831.21431439.1508276673309.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>
-References: <2113704961.13214334.1506089666956.JavaMail.zimbra@redhat.com> <466141472.14007261.1506337465946.JavaMail.zimbra@redhat.com> <1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>
+Message-ID: <ZzD-hesVF30H4dLW@nihonium>
+References: <20241106041215.GA4432@openwall.com>
+ <CAGUWgD_T4vUhBfkmjm+8ELcuiOD9dx1vSC4HnKG88Py7ip+zPw@mail.gmail.com>
+ <CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
+ <21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.227, 10.4.195.14]
-Thread-Topic: CVE-2017-14489: Linux kernel: scsi: nlmsg is not properly parsed in iscsi_if_rx()
-Thread-Index: gkd0qV23MyyXWIu3XbwzK7w8u71B1FTIlwG+kChVwnopHe6FJw==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 17 Oct 2017 21:44:33 +0000 (UTC)
-Subject: Re: [oss-security] CVE-2017-12190: Linux kernel: block: memory leak
- when merging small consecutive buffers in SCSI IO vectors
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
+Subject: Re: [oss-security] shell wildcard expansion (un)safety
 
-Hello, oss-security@,
+* Eli Schwartz <eschwartz@gentoo.org> [2024-11-10 00:59]:
+[...]
+> Overall, wildcards are just a classic "here is a programming language
+> footgun, we cannot fix it because the language is backwards compatible
+> to the 90s and earlier" which amounts to:
+>
+> people love bash because it's "simple" and "easy" and "anyone can write
+> a bash script without knowing what they are doing".
+[...]
 
-If somebody could help me a bit with this CVE? Could you please run a reproducer
-from (it does only a number of disk reads and allocates a memory):
+Obviously, shell scripts and wildcards are one of the easiest ways to trip up
+here.  But the underlying issue is that CLI interfaces mix options and
+arguments: the lack of a clean separation between data and code/commands
+(another example is e.g. printing unescaped control characters to stdout,
+something discussed on this list before, and far too common IME, as I recently
+found out playing with control characters in X.509 certificate DNs).
 
-https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495887.html
+This isn't just a shell problem, it's just that shell scripts call external
+programs much more frequently.  I certainly don't call external tools like grep
+or find from Python the way I do in shell scripts, but it's not exactly uncommon
+to have to call some external program (e.g. git) to do something.
 
-and check if the issue reproduces on your system? The system should have a scsi
-disk, so for a virtual machine a virtio disk (/dev/vda) won't work, but a virtual
-scsi disk (/dev/sda) should.
+And when I do I always make sure to use "--" before any arguments that come from
+external sources (user, filesystem) to ensure they're not interpreted as
+options, because that problem isn't limited to shell scripts (and for shell
+scripts shellcheck can at least provide warnings in common cases).
 
-Please, check a value of 'Active(anon)' in /proc/meminfo before and after running
-a reproducer, it should jump up for 40Mb and should not decrease, like this:
+Nor is it limited to wildcards: e.g. you would have the exact same problem if
+you're reading the arguments as lines from a file instead, or getting them from
+an HTTP request.  The real problem isn't that a wildcard can expand to things
+that start with dashes, the problem is that it matters because the program
+receiving the arguments will interpret those as options.  That's the footgun.
 
-(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
-Active(anon):      39156 kB
-Inactive(anon):     8368 kB
-Active(anon):      79268 kB
-Inactive(anon):     8368 kB
-(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
-Active(anon):      79268 kB
-Inactive(anon):     8368 kB
-Active(anon):     119156 kB
-Inactive(anon):     8368 kB
+Everything that deals with data from external sources and passes it to something
+that may interpret some of that data as code/commands has to
+validate/sanitise/escape that data.  Ideally one would use an interface that
+doesn't mix data and code/commands, which "--" more or less provides (but it's
+easy to forget, and of course not all programs support it).
 
-If the issue in not reproduced, 'Active(anon)' should jump up shortly but return to
-the previous before-the-run value on an idle system.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+- Fay
