@@ -1,4 +1,4 @@
-Received: (qmail 7405 invoked by uid 550); 16 Jan 2026 17:11:11 -0000
+Received: (qmail 5514 invoked by uid 550); 12 Nov 2024 16:40:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,128 +8,94 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 7767 invoked from network); 16 Jan 2026 16:56:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=michel-slm.name;
-	 h=cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1768582564; x=1768668964; bh=QjdeWVOtPM
-	aQy4S8tKJyQN48wztsAxf8YtB044oJie8=; b=F2CwMftCR4qQ+0+oXhGR+jDpCc
-	TUTbjfSCPgBALSWn2BJGj+UqgMxQ/T0eQIzYjUvOJKfRT+RvI6U3RMUa6POX6ytg
-	tqfa/vrN5XqafHE8s0SHoTRD7nqWsgMfu3Uj/7V9gu7hWcQ38i0ce1IoOcd1JAQ0
-	pf0eueVgNfs3k0T2+x3acs9rmmt3eZYygY9OpiaMWXtzo4DIZ+ssKFih9HsME53x
-	XOjXqRj8/jt6ix8EBvIZlz3YfBrC6rRkEf/wzNSlxKITKLjo1WDkHwD3yqbJbREw
-	UgFhXpZebGuOBS6cn2gUP2KQnVLNy+Mykid/JXjvTxdiEmDJluSRfAXnhurA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1768582564; x=1768668964; bh=QjdeWVOtPMaQy4S8tKJyQN48wztsAxf8YtB
-	044oJie8=; b=ksvCINAMVxvjdldecBQK7trdD34rArPrIgGf6T4otSREFmf6VX7
-	Wi5ZeCt22o9C9lUnWBRlgpDVVSm6zVFluJS4YrRcJoCc1I8mvC+VRxd+4YUaE4CY
-	3WUl+zPb+SJ7YHuALkjKaMZQnOb981K7XbeROZbym3NIatQWL7n4YAFUZSIRAb3B
-	FQDeEWcabMWJfihJZTG3kUTJETH3YlafGS7fhqkxiBGhTapi3/VGPV5k5PH819KN
-	ronS1dvZVLX55dSMI9A5VQyyDSTv3ZtumwZY8PPeLKyGjgjzzQ8XVoHOg4NjAyAY
-	QLtO9mTH8ebOvmmNS6vFRvCcgz5UG/l72tg==
-X-ME-Sender: <xms:pG1qaalLuWHaFnmrc51F9NpVlImyzQWrIKBw_nphSk3w0k4If86DIg>
-    <xme:pG1qaYwhSwphHXR_4-uAPnC_PslPPLzGh8VxRS8G6OZ7GitbU-x6WtgogZxFVBw2L
-    4iNJga8HmVgwXlkbmzZ35tjnfHwF2yGqbyXn0bPixeLNRib2uQTFqw>
-X-ME-Received: <xmr:pG1qaeR7U7M0LH2krR6tfNqod3TKJKytIOhvOQqO8hOa_E9wn_OYJzyIlrTBGyvkaVU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdelgeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefkuffhvfffjghftggfggesghdtreertd
-    erjeenucfhrhhomhepofhitghhvghlucfnihhnugcuoehmihgthhgvlhesmhhitghhvghl
-    qdhslhhmrdhnrghmvgeqnecuggftrfgrthhtvghrnhepuefgvddvtdeggedttdeliedtve
-    egfefgfedtueffteeigfeguefhhfevgfeiveegnecuffhomhgrihhnpehnohguvghjshdr
-    ohhrghdpgidrtghomhdpnhhithhtvghrrdhnvghtpdhthhgvhhgrtghkvghrnhgvfihsrd
-    gtohhmpdhsuhhsvgdrtghomhdpghhithhlrggsrdgtohhmpdhkvgihohigihguvgdrohhr
-    ghdpfhgvughorhgrphhrohhjvggtthdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehmihgthhgvlhesmhhitghhvghlqdhslhhmrdhn
-    rghmvgdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-X-ME-Proxy: <xmx:pG1qaTsZgLIlWvpYNtwQjcD-gaJs-7ITaQokUzkvLJuCBDRsELvL2w>
-    <xmx:pG1qaYu1viRQgpEEkM8ptmeQwUGvHwWMWGRAC2-nI4QaHtH5sSKwTA>
-    <xmx:pG1qaRwbHaSYi0Gh3JC0OdaNDUJypGzTP87KT6kQetLNrcpRHb0KiQ>
-    <xmx:pG1qaWi8jltboRy2BdZeP2j3ya-eOuPO7SxZYRwWMfI36kpscDelSA>
-    <xmx:pG1qaR9Gr91-3VFNx0tzrb7jiaA_cSiDY1-Ux31TTDk98FGOIWWZmBHg>
-Feedback-ID: i71264891:Fastmail
-Message-ID: <1ce0f2e4f6ac2d3d78bd1316cd51bfe91bd8edbd.camel@michel-slm.name>
-From: Michel Lind <michel@michel-slm.name>
+Received: (qmail 25983 invoked from network); 12 Nov 2024 15:12:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1731424352;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QC+ihCu6DucPpe7oAfOdHuqMn5stxZjB7XLOIcU8HWU=;
+	b=h3piVBt1Hk/vfbvgeAKrsV0Tp7N9yE2q/E4rdot+lWeqaGfVFJQ+ULXUKx49tVePGCek19
+	YFZ3veOZWRqKweQVPCtgY6ROegW2SgRvfF+hl3RqgJjXi+y2FOBvQZ0QpJPHFrqNjhoa0f
+	l/bMPTtDbBgR8HHHVA8/OuszMisCj+A=
+X-MC-Unique: qe6BwEjYNSqK_MrBJjnDDw-1
+X-Mimecast-MFC-AGG-ID: qe6BwEjYNSqK_MrBJjnDDw
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731424350; x=1732029150;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version
+         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DN53Xz1YBoAXlXPTcjRmH/dQHVkQCz07/TbTkl5AfDI=;
+        b=TPrp1G1KBdmy62EgU0WdjvYnrnJl4A1l3lPMx/RP5uEWulaxJY2M2C8JRQ/o2/1v88
+         y/g/TufH+xk8VG4PNRUbpLO7tL2v24OuuQxl0dDW7J+77fOm3b0+3IgIePpjuro3ktiP
+         hOOdgfmKbXEyJ+YecxzY9Lcc7f7kcBKnH6xt1L1oCyO4k4bHnS2dU1rfSbDrXa0DTCoW
+         jfu2a19hH57rV3Mh7XRzFyDAxrzVOCurxLh+gZpt/7/PzdxAed9+fGsQ2BlUYW9npARf
+         TNnA6StXhaTKFHSKU4AuyX2302Ar9aj+NjqH1lToHIZ3hd2kNKRxROFHACgyCFfy3EJx
+         o1Jg==
+X-Gm-Message-State: AOJu0Yy1q1ZbMk4cpBD8DPAyRsprHs3chlnQxQtGUM6nnk23NjmjJFnE
+	rw1k+URtmynbvvhpA561yRxM6Tx10IVSDgJuEeZ9n906UAUsKZ/k2XUkbnuLovAbaYWEZdV1FJX
+	yeBliTgleDuZzVSkc4y4GWBmXc/GoJlKL+kKwiJ6PoyXQc5GVRuYUBz3TF82QtK2eTya7Do/EB2
+	aQtS34LJz4mLg4rBvAtQ0K/sq+vVvBbLcdSgL0S2TmGVhRwAZOIQ==
+X-Received: by 2002:a05:600c:3c9d:b0:430:4db0:3fef with SMTP id 5b1f17b1804b1-432cce77f66mr24118105e9.15.1731424349903;
+        Tue, 12 Nov 2024 07:12:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEHrtqqQIRu24xHRkEXNDfTbg4Ig4gw7eIUeRM13mKhuZ75Y6TaN7gJ81m+/9Wjt4xjnw6sTw==
+X-Received: by 2002:a05:600c:3c9d:b0:430:4db0:3fef with SMTP id 5b1f17b1804b1-432cce77f66mr24117875e9.15.1731424349423;
+        Tue, 12 Nov 2024 07:12:29 -0800 (PST)
+From: Clemens Lang <cllang@redhat.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.200.121\))
+Date: Tue, 12 Nov 2024 16:12:18 +0100
+References: <AM9P192MB13169D3C23104FC22ECCFD3AD74B2@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM>
+ <95ddd38e-2e23-4dee-b03c-a376d8cb9814@gmail.com>
+ <20241112145853.GA6243@openwall.com>
 To: oss-security@lists.openwall.com
-Date: Fri, 16 Jan 2026 16:55:53 +0000
-In-Reply-To: <aWb05sqft073wame@netmeister.org>
-References: <aWZdhW5WioYfH8Iy@netmeister.org>
-	 <3323802b-3be3-4bad-8b70-8ff90758407b@oracle.com>
-	 <aWb05sqft073wame@netmeister.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-x+QYfZRI1/jH4o27Swlb"
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
-MIME-Version: 1.0
-Subject: Re: [oss-security] NodeJS Security Releases (CVE-2025-55131,
- CVE-2025-55130, CVE-2025-59465, and others)
-
---=-x+QYfZRI1/jH4o27Swlb
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20241112145853.GA6243@openwall.com>
+Message-Id: <D8A3DC3C-8463-4A6A-A3E6-CE3CD7D1BD4D@redhat.com>
+X-Mailer: Apple Mail (2.3826.200.121)
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: Bkfq20hgqypzY93ywxB25rBWZCl17f7akr8t7RgMuc8_1731424350
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain;
+	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2024-36905: Linux kernel: Divide-by-zero on
+ shutdown of TCP_SYN_RECV sockets
 
-On Tue, 2026-01-13 at 20:44 -0500, Jan Schaumann wrote:
-> Alan Coopersmith <alan.coopersmith@oracle.com> wrote:
+Hi,
+
+> On 12. Nov 2024, at 15:58, Solar Designer <solar@openwall.com> wrote:
 >=20
-> > The node.js team has also published a much more in-depth discussion
-> > at:
-> > https://nodejs.org/en/blog/vulnerability/january-2026-dos-mitigation-as=
-ync-hooks
->=20
-> Thanks for that - this link would have been useful for
-> the NodeJS team to share on their nodejs-sec mailing
-> list.
->=20
-> > with a shorter intro in the thread starting at:
-> > https://x.com/matteocollina/status/2011137343323865196
->=20
-> Here's a link that doesn't require an account on, uhm,
-> _that_ platform:
->=20
-> https://nitter.net/matteocollina/status/2011137343323865196#m
->=20
-> -Jan
-Do we know if older releases are available?
+> So a question for this list/thread may be - where/how may we dispute
+> CISA-ADP analysis?  Maybe someone would reply with specific contact info
+> for them, and Joel would proceed with that.
 
-The analysis seems to be ... inconsistent on this
+I think the source for the CISA-ADP data is at [1]. For this specific CVE, =
+the relevant file would be [2]. Their readme has a section at the bottom, w=
+here they encourage feedback:
 
-* The NodeJS blog post does not mention old releases
-* The Hacker News indicates versions from 8.x and up are all affected
-https://thehackernews.com/2026/01/critical-nodejs-vulnerability-can-cause.h=
-tml
-* SUSE thinks versions 20 and below are not affected
-https://www.suse.com/security/cve/CVE-2025-59466.html
-* I can't find a RHEL security advisory yet, but el9/c9s ships NodeJS
-16 as a normal 'ursine' RPM and maintained versions are only shipped as
-modular RPMs in streams (thankfully EL10 does away with modularity)
+> We want to hear from you, the IT cybersecurity professional community, ab=
+out Vulnrichment and ADP! If you see something, please feel free to say som=
+ething in the Issues, or even better, open a Pull Request with your suggest=
+ed fix.
 
-RHEL/CentOS's nodejs 16 does seem to get CVE fixes backported in 2024,
-after that branch has gone EOL -
-https://gitlab.com/redhat/centos-stream/rpms/nodejs/-/commits/c9s?ref_type=
-=3Dheads
+I=E2=80=99m aware of at last one prior case where a similar case of (IMHO) =
+overblown CVSS scores was discussed in an issue on this particular GitHub p=
+roject [3].
 
-Best regards,
+Somebody seems to already have opened a ticket for this CVE, too: [4]
 
 
+[1]: https://github.com/cisagov/vulnrichment
+[2]: https://github.com/cisagov/vulnrichment/blob/develop/2024/36xxx/CVE-20=
+24-36905.json
+[3]: https://github.com/cisagov/vulnrichment/issues/93
+[4]: https://github.com/cisagov/vulnrichment/issues/130
+
+
+HTH,
+Clemens
 --=20
-=C2=A0_o) Michel Lind
-_( ) https://keyoxide.org/5dce2e7e9c3b1cffd335c1d78b229d2f7ccc04f2
-     README:    https://fedoraproject.org/wiki/User:Salimma#README
+Clemens Lang
+RHEL Crypto Team
+Red Hat
 
---=-x+QYfZRI1/jH4o27Swlb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRdzi5+nDsc/9M1wdeLIp0vfMwE8gUCaWptmQAKCRCLIp0vfMwE
-8r2IAQCjm+Mh2buR6q6ZrH77J1HCX+IvkzGt0Msh3YtD2yvaDAD+PTPHB6sdHSoK
-eL3oj0fzyVGxQpOvoFEPSSmQCYd8ogU=
-=GFB7
------END PGP SIGNATURE-----
-
---=-x+QYfZRI1/jH4o27Swlb--
