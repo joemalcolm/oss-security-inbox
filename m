@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1261" "Thursday" "12" "January" "2017" "21:51:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<8a06802e079a484ab1e93eba1be86b9c@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: invalid free in GNU ed before 1.14.1" "^CC:" nil nil "1" "2017011302:51:26" "[oss-security] Re: invalid free in GNU ed before 1.14.1" (number mark "        cve-assign@m Jan 12   36/1261  " thread-indent "\"[oss-security] Re: invalid free in GNU ed before 1.14.1\"\n") "<20170112121405.563ee9ee@pc1>" ("<20170112121405.563ee9ee@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14082 invoked by uid 550); 13 Jan 2017 02:51:39 -0000
+Received: (qmail 15947 invoked by uid 550); 12 Nov 2024 15:00:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14053 invoked from network); 13 Jan 2017 02:51:37 -0000
-In-Reply-To: <20170112121405.563ee9ee@pc1>
-Message-ID: <8a06802e079a484ab1e93eba1be86b9c@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-Date: Thu, 12 Jan 2017 21:51:26 -0500
-From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: invalid free in GNU ed before 1.14.1
-To: <hanno@hboeck.de>
+x-ms-reactions: disallow
+Received: (qmail 13329 invoked from network); 12 Nov 2024 14:58:56 -0000
+Date: Tue, 12 Nov 2024 15:58:53 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20241112145853.GA6243@openwall.com>
+References: <AM9P192MB13169D3C23104FC22ECCFD3AD74B2@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM> <95ddd38e-2e23-4dee-b03c-a376d8cb9814@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=koi8-r
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <95ddd38e-2e23-4dee-b03c-a376d8cb9814@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-36905: Linux kernel: Divide-by-zero on shutdown of TCP_SYN_RECV sockets
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Oct 29, 2024 at 09:09:01PM -0500, Jacob Bachmeyer wrote:
+> On 10/29/24 08:03, Joel GUITTET wrote:
+> >We would like to ask your advice about the CVE-2024-36905 (tcp shutdown
+> >vulnerability).
+> >NIST indicates a network vector while AWS and Red Hat indicates local
+> >attack vector.
+> >Our cybersecurity team has difficulties to justify that a local vector is
+> >appropriate here.
+> >Can you help us to understand this specific point for this CVE ? The
+> >hypothesis we have is that a TCP socket need to be open/closed quickly,
+> >and maybe it's not possible remotely ?
+>
+> From my understanding of Git commit
+> 94062790aedb505bdda209b10bea47b294d6394f
+> (<URL:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=94062790aedb505bdda209b10bea47b294d6394f>),
+> this appears to be a race condition where a program (running locally) calls
+> connect(2) and then shutdown(2) without actually attempting to transfer any
+> data, with a further constraint that certain packets (I am unsure precisely
+> what) must have been transferred such that the TCP connection is
+> half-opened.š It *might* be possible to cause this crash remotely if a
+> program attempts to set up a unidirectional TCP connection (achieved by
+> shutting down the undesired direction) but I am unsure if any such programs
+> are actually in use.
+>
+> I would need to further study the Linux networking code to be sure, but
+> a comment updated in the patch seems to imply that this is an edge case
+> that was previously believed to be impossible to reach.š I suspect NIST
+> labeled it "network" because TCP is involved, but as of this writing
+> <URL:https://nvd.nist.gov/vuln/detail/CVE-2024-36905> says "This
+> vulnerability is currently awaiting analysis." so I would expect NIST's
+> indication to be revised after that analysis is completed.
 
-> Reproducer:
-> echo -e "H\n?\{" | ed
+NIST doesn't appear to provide their own CVSS vectors/scores lately.
+However, they republish (with attribution) some third-party ones, this
+time from CISA-ADP.  The CISA-ADP CVSS vector for this vulnerability
+specifies that it not only is network-reachable, but also that it has
+High impact not only on Availability, but also on Confidentiality and
+Integrity.  This results in a CVSSv3.1 score of 9.8.  Even merely
+correcting the vector not to claim any Confidentiality and Integrity
+impact (as a divide-by-zero generally does not have that) would bring
+the score down significantly.
 
-> regex.c
+So a question for this list/thread may be - where/how may we dispute
+CISA-ADP analysis?  Maybe someone would reply with specific contact info
+for them, and Joel would proceed with that.
 
-> https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
+Also, this bug existed since prehistoric times.  The commit referenced
+above says:
 
->> AddressSanitizer: attempting free on address which was not malloc()-ed
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 
-Use CVE-2017-5357.
+This is git commit from 2005, which says "Initial git repository build."
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If the issue were in fact network-reachable with low access complexity
+and no user interaction required (as the CISA-ADP CVSS vector claims),
+then we'd have had plenty of Linux systems on the Internet crashing with
+divide-by-zero in the kernel very often.  Since we didn't notice that,
+and since the bug doesn't involve e.g. any magic numbers, this disproves
+that it's easily triggerable over network in typical setups.
 
-iQIcBAEBCAAGBQJYeEBbAAoJEHb/MwWLVhi2hdIP/2rMN3IGuLZtCtyVTrzgrBpp
-sl4OhNcEXzUGurEXVVKEnPrfVmxYN5oh9wSStmEVYJihVnSqM+QjnogbcIEAv/HO
-YvhnDcED/PiQUf++YftLw3phrRetGxYcnYowIsqLQKYjV7pzmog8KvEb/SesKmb3
-tjcyyGRoproc/GHSAsoxR7Ogl0KUHUrlS4f74cUGK+eBj//n5j9vzpsz3IvklrCZ
-xkmMShar9OnnIV6ctmHf9wgRUoJGudn3IJflOWa+jkkGaoTBeqFgeD1ik8zgXTFi
-NDMILwwUTQ+gt2r8UWHqh3oNekbOMCKTP247KEMsZNIj3yWoqAO30z1vvNAFSDF3
-rCmnrizLIRX7eKtpzuLNaoAOV7XNCw5HZrmXnRUMbOyFi/WxK1Ukzk8MyoILr56Z
-LED/+N0CNHy9Ah8dDh+m7k0PwDREoPPSC/L+pSqqk2B8OfJzACrilJZb6oygkdpR
-ijFgki262csSSoiRMxjRU0YOs+rG0NW/QTPxo2MJpot9DhX3Nx9VRplH43k42H2m
-d4dGz6p5VyqxylnIUnRmErd7GhIbsiCc3ANxxuNz3YruNe+lcVtjhTzO3wsO242i
-wmajPlqv6uuOgYMDJY9viWJdzERA+kAJHrnpi1fUNDpOsjkH+80MigQ4dSfNBSEn
-nLRgu4i8m2hr6YWi29Sm
-=m+vX
------END PGP SIGNATURE-----
+> Again, this issue is probably only remotely exploitable if the host is
+> running a very unusual client program, but a local exploit can supply
+> the required oddly-behaving program.
+
+Joel wasn't subscribed to oss-security at the time, but has since
+subscribed and wanted to post a follow-up question, which I am doing to
+add it to the thread:
+
+"Thanks for your reply Jacob.
+Anyone able to comment about Red Hat or AWS justifications on this CVE ?"
+
+To me, the above is already that kind of comment, but perhaps Joel would
+like to hear specifically from Red Hat and AWS.
+
+Alexander
