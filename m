@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4063" "Thursday" "13" "June" "2019" "22:37:36" "+0200" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<3ba520ae-e49e-9754-13f3-5401cda63bcd@x41-dsec.de>" "103" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2019-004: Type confusion in Thunderbird" nil nil nil "6" "2019061320:37:36" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2019-004: Type confusion in Thunderbird" (number mark "U       advisories@x Jun 13  103/4063  " thread-indent "\"[oss-security] X41 D-Sec GmbH Security Advisory X41-2019-004: Type confusion in Thunderbird\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] X41 D-Sec GmbH Security Advisory X41-2019-004: Type confusion in Thunderbird" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19711 invoked by uid 550); 13 Jun 2019 20:38:43 -0000
+Received: (qmail 15540 invoked by uid 550); 12 Nov 2024 18:10:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,164 +7,187 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16062 invoked from network); 13 Jun 2019 20:37:58 -0000
-From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
-To: oss-security@lists.openwall.com
-Openpgp: preference=signencrypt
-Autocrypt: addr=advisories@x41-dsec.de; prefer-encrypt=mutual; keydata=
- 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
- S5yAdSfAS//MdarwnFJC6O/YHWYwRw==
-Message-ID: <3ba520ae-e49e-9754-13f3-5401cda63bcd@x41-dsec.de>
-Date: Thu, 13 Jun 2019 22:37:36 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+x-ms-reactions: disallow
+Received: (qmail 15484 invoked from network); 12 Nov 2024 18:10:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=corp-2023-11-20; bh=gTyCz7zxpAsfY2UP
+	CLkxR9lE+P3kkn3LasE6pKcBHQI=; b=UrPEBtyT4g8byjcP3H/Ov1seU0/S8wqz
+	vyEsIptcUOV/KEeX79Xb1mrRRK91wVQRr5e7yqGr8Eq4yYPZZjwRZ+l9CfYtWnQg
+	EhaggKXCQDsS8PZszdCtd4Dy+GpGlB+QNRN0hCvZh097em7p+gu94KX1R8JggHQJ
+	XcA+rHSPQNiT+45dsk9hRE1/dkpnErJq7AdvgKQR7UGlRaKRl8OZKAqlUMZuA/HE
+	8b0jwCUkj5xEt94m0dvBXZQwQJm6v2HL+UeM2mmZsTGntVhRDEemMRp4pUs40/Fx
+	HOhHPnH2bPQ6t1ohSdQiQMJP1tOsTo/4okUFIvsYJwuUgiTMrugyPA==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ISuUUSQpYjYqJbpXQNR2fnbbJef73uFwohws/RMhYcO5KSoBty9XsiJimuAFgUR1YlkuIOv3AuEp3w2yYo3phCSlQXADkxr5KjD2Xw/JDbxKeUCoQIW6iepr9yVgd7dSFqZYZIkBB7V748YbMGu9Rr6QeYpAomYaTEENRafyfY4zTABZ7ns8x0CtC0r1rTRJBCTyC1JrIJzOvKWzmlD9s/vLUHTXS8/Tz7atcbjTyHLecKUxRWukJejRUQqFA6rFNdbZT3QGpj7ctlMjn4TxlE/F3k8Knb8EQdyWplpco08BjAH3epCBIA5C0mz25c3CuvhUmcn69IBNEgmZBytNsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gTyCz7zxpAsfY2UPCLkxR9lE+P3kkn3LasE6pKcBHQI=;
+ b=cy/xi082oGRZk2KxB4ASyLartFmh+46JQYCIFiPs+ZYa0KCsP9/pumJO/bMPsY1OcaQzv4lWbjtZkfMkt9JABmdWGnJ/Jq3X0bj8h/JisZs7pOSd9IizwP61D5AHtJWYNHtL1vKn1QJYSNdAfr9LO4KV/oAMfY18pLilf//rmaxQlPRt1sLCsJmaJs1d6VHMNxDfED4Aidyl4qrCfNDJ7zhgKg+lYCXPN5Qh7NB6jprbGIlTjb2UYJXFzowsTBSjWj5hqbnF82GyqAWbfDAmgHNB8WQI+fF6+uFIVQlRl8zn7u4ZBog99iHV8hYGX6dY5d73YGOn96Gzl8m6IcIcVA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gTyCz7zxpAsfY2UPCLkxR9lE+P3kkn3LasE6pKcBHQI=;
+ b=RTYCG8WIE5ont9E0RhfVya/rsbBi35MqaXHn2H6Jz3ZP+Di9Fd3JU/Gl/xVGSrfvLNEHukIK+Cl6hvQzgl6rDR5pMbiN0w735h4HZDL223DbLxvyQ/y3hE6RGWc663FI5RpnXrJNzdsZFDQLntBBCO/plphku460rBuANyIa9ho=
+Message-ID: <4f2c7f2f-ad50-4c1b-b48b-17f287cdd043@oracle.com>
+Date: Tue, 12 Nov 2024 10:09:53 -0800
+User-Agent: Mozilla Thunderbird
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] X41 D-Sec GmbH Security Advisory X41-2019-004: Type confusion in
- Thunderbird
+To: oss-security@lists.openwall.com
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
+ q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
+ RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
+ /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
+ PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
+ vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
+ GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
+ ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
+ ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
+ AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
+ DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
+ bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
+ yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
+ Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
+ XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
+ R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
+ EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
+ 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
+ 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
+ 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
+ LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
+ AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
+ uoPzepWFbgvLuHIMvyjRog==
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR04CA0009.namprd04.prod.outlook.com
+ (2603:10b6:a03:40::22) To DS7PR10MB5005.namprd10.prod.outlook.com
+ (2603:10b6:5:3ac::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|DM4PR10MB6840:EE_
+X-MS-Office365-Filtering-Correlation-Id: ac05e2a4-dabc-4ab7-7d1b-08dd034535ed
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?OVZ5ZWhjME1SU3RHVFBoRzBpektWQ21wb0VOTVBoSmtNTzN1MVR4bHY1aVV5?=
+ =?utf-8?B?d1FtbXJ3b2crcTJoeFNEanlmbUF4bVRjUVFQMFMyMU5tWGdLQ0ZuYjd6Wmxw?=
+ =?utf-8?B?djRHbDdQdm5UMWVHUjhsOFVrTnJINmVJbHpmYXFWQzdwdEcxY0IyVi9QUjlW?=
+ =?utf-8?B?Y1ptUERkN1Iwb3Q3ZUxoWWhuMC9oTFlaZHMvNnUxc29ZYjdDMVRaTm0yMlhY?=
+ =?utf-8?B?WVJ3K05TcnB6TE5NRGlwK3RYMGY2VHFpZ3h0K21Dck4yWDE1YndST1dMazZz?=
+ =?utf-8?B?RDgyVDFkM3JDNWt3WmxNMjVnZDhzd0szYTdCYlJSN21haTlQTExmdkQrclA5?=
+ =?utf-8?B?TW5hRVBDZ2RMRFNVeFF0czdsT250WUZmbmwwLyt4S0N3VFozTmNVK1psQjdG?=
+ =?utf-8?B?U2RuZEtiUkVMWjZHblZhQkRtWENQY0dIRWdKRkE4TWdXZnZDNk9FTExJZFJS?=
+ =?utf-8?B?MlQ4K3B6eUloS3kvVENPS2VOelkvUTJNQXlxaDV2OEpyZkNkanNUQWxWQUhR?=
+ =?utf-8?B?NVFrZHdSbFF0K3Z1QXNpczZtOFRjT1ZXS2pxa0lWOWRzZEErMFVHdDkzRWlZ?=
+ =?utf-8?B?aUI5bXV2cWNGQlhrNEdwNjJROG95VnBOVEZQdzdTa0RRdW1BcG5sUDFXbkJm?=
+ =?utf-8?B?azFOcitVYk16cFJ1Z0VmNEhVc2lNbVE0WWtTQzk0VGI3dUFOMi9rbFhiaTBG?=
+ =?utf-8?B?cE5yL0h3NHR1NTJhZkFtL2ZIZ204Uy9nUHNiQU5BUkQxNDQzN29YRW54bzAy?=
+ =?utf-8?B?QnI4ZlkyelZtUUk4VjVFc0I0bzNvUCt1UUpBKzF1VWVkUmZjUUV2dklzQWZO?=
+ =?utf-8?B?U2RVUkVSdXhiTXVGVUx6ai90WGtvbmJRR3NYdkFpQ0VWU0NsclFHeTlrOXNs?=
+ =?utf-8?B?Ry9RbE9NemtIcFpacXk2NllrSFR2a0p2NUJtZUJrTGd6OWdHM0NyQlVVWEdx?=
+ =?utf-8?B?d1pmVW1TNE5NRFVlcUZaRCtKNmNha3d3SHBiUmZrUStkZk9vZ0ZjWGpsclhG?=
+ =?utf-8?B?eTJQYzVXbGpsOS9Ub3hSM2VkYUo4amFUMXgyMVRsc0lYTUZxT0RXRzB1MlNY?=
+ =?utf-8?B?OVZjdEZ4eUZ2VG01Q241dTBmZ3RhNlRBOTdiTDlDU2V2Y2ZhaWEzd0Mvc1cy?=
+ =?utf-8?B?NTgram1ya2xmeDViTFdyKzlzTk9WVVlSSXNVWUlDWHJkR2N0a3VpZXNld2dw?=
+ =?utf-8?B?Y3JCTTBpMms3VE04VE1oZDRzNEtCeGpLSDdiMzhTdXpzUTBueGtic3JMNlZu?=
+ =?utf-8?B?NTdObmxCckM3ZUY3T2VUOHduNU9iK1ZRM3NxVlhRRHN1WlJPY1lub3l2NStH?=
+ =?utf-8?B?ZkdWTGhiWDVjZHlpeHdrdHd4dnEvTmlGb1hORmVWNEFXMm1YUEZicVpPcEpl?=
+ =?utf-8?B?TnJaZVROVUFwdjlTMjdqYXRzZkpJdHM4NU02YVhBV2dOUFRPdUdHMkFXbExL?=
+ =?utf-8?B?RGFlRUpIQkd3RGhQd05aY2RMM2JSYzd4TVpqN1VLSnZKV0xBL1daVDRPMjFY?=
+ =?utf-8?B?N0RtZFBlRWVGaXZDSERzU1dibVFZQWg2OUVUeTk1aVlRVzhjbkRKcjloakNX?=
+ =?utf-8?B?OS9zREZZVWpKcDIvWG5HcHFCbVplVkhjdndUbzNIQkNZd0FubW03RzRFZmRZ?=
+ =?utf-8?B?Vk1ydVNTQ3dsdExnV1hvMWh1bG8wQzNUWU9IWkcvWTUyR0VXclY3S0pwQ3hX?=
+ =?utf-8?B?UzgyZU1qclNaM2xhSjFFUTR1UHRyTGpzcXBHTFdhWFg4T1dRUU0rTVRnPT0=?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?anhlR1hWUnUxTGd2QXJXZHpqZkNxNHZSK1FpT2hYLzliK29KSXF5YXRIY3Ru?=
+ =?utf-8?B?eUllaFVYcUhMMVBKbnFybjRUQkdRQUdaaEoxcjdna0tCTXV6THVUWmtUaXZU?=
+ =?utf-8?B?Q0VxYnlkaTYyaUU5NFRhMFk1N0hRMkJPSWdFNnhpd3F3ZVVFVEs4MTAzYWsw?=
+ =?utf-8?B?V0s0RUpTZ0lXaTA0cU1aekpmQ3ZMM015SW1sc2NOdE1GMStDRXFoVDlEa29h?=
+ =?utf-8?B?amNMTDRId01nNTRuS2tPakVxUHo4ZFNtWUlRcmk4SVpvOTlNTU13ZDZORVhF?=
+ =?utf-8?B?dmhQSk1SMHd5dUtBSDRYWm4xd1IrenRqZEpzdG80aE1TWWFUdkpCVjNSSkc2?=
+ =?utf-8?B?Wm9QQ3RYTGswVWVzM2lZV0ZobHhKWjhicXBrR1g2b3YwK2tJc3RkcEM0WXo5?=
+ =?utf-8?B?c2pGTmZPZjgrUTFqT0M2R0dKTzVxamJvMGIzRHFNYnF6Q0JsOVFXMzUrYlU3?=
+ =?utf-8?B?QkRDcGkzaXFzaWx1K3FVVkplU1A5QUZZaEc4UkVJSmxOV1lVS3Zld01vYUNj?=
+ =?utf-8?B?RDM2R21CeTdGRk5tcVZZWC9BSjBLTmRDMHk3TW04NHIvZE9mdWQzZU1rRk8w?=
+ =?utf-8?B?dFc5MXErSTJkQXd4TzRsa3JhU2p4UXZPbjBrdCtrT1pOM0VyQjJ2VXZEbkFk?=
+ =?utf-8?B?WDcvTnY1ejczd3YvSWgvWkJKbmszWFcxZUFJMzVWck9ISnlZOEx5OVJiU1g5?=
+ =?utf-8?B?TWpXdkxPd0Rsd3JCNVNYcWVaR2owS0pweEJRZEd5OFJmN214VHVBSDBUazRS?=
+ =?utf-8?B?STRRTWVnMzdENHhsNExqU0tlU3MxbGdBb0VxL2xtL0g5VkRMbUJhWFpQV1Yv?=
+ =?utf-8?B?MEFNQjZZTzZFV2hzYXpYd0l0NHR6MEZMc25KZDdYcDVzblpIOW9Kb09YSGxl?=
+ =?utf-8?B?eHJrdGpmV1lrK1hXWU9xMUZDSmR4N285NDhqYXhPeVhnWnNnL0JHekhGUlNQ?=
+ =?utf-8?B?K2wwcmo2RlNBNFVnMXlKY1BjWWN3Mm11ZzYrY1o4U3lCNTcxdEdhVjNDYjVS?=
+ =?utf-8?B?UEJpdk5taFVrMExHMzcramYzY2o0TVhNeUJZTUdNeHl5TmhLOUYvZjdEVEU1?=
+ =?utf-8?B?SDJaSldkWHhocVM1OW9BTVpNaEZab2xGd2FCRVpuMUpDNjU5QTM0NStMZkNC?=
+ =?utf-8?B?dXdPb0lrV09GdnZ4WDFIK3Y4RzJZSWxGRVNmVGpWVmhnc3ZQMjg0TGJUMXpq?=
+ =?utf-8?B?UmRBM3I3cGw1TVdrSlJ1TEhHci93WDh1dUkzUU43VTBIK1duRWxxcnBsd2ZT?=
+ =?utf-8?B?ZUdETm5WdFBxcG9wdS9ITzR0NXlRTmtLREx0ejlod1RKeDcxTjRvaDBKQkU1?=
+ =?utf-8?B?eC94aUxSSkxxYlVDcHhVWUs4aXRUWm5GNHhzdERGdVdaRGZFYUs5ZGtqeURl?=
+ =?utf-8?B?RkJyUVdMMVZYczdzZUFzODVsWWNrRUNSdnpXRTBEVEJOWWdPdmg2Tjl0T1U3?=
+ =?utf-8?B?d1VOQXNDS1NyVDZoUC9ZOHhtOXJTMDl3eFRjT1ZXeWFodmNPSEFNZlpESnYr?=
+ =?utf-8?B?RGcyTldHU0JJejZrVGU4MHBVTGo4S01kWFNYOUhnbGRaMHNucS9rWmZJQzNo?=
+ =?utf-8?B?OG5QTkZaeTdSSTNTbEl3TTRoVDJNZTZaQ1p0Tys0c3VXbi9jQk80eW1oUnVS?=
+ =?utf-8?B?RDNDTStqTitUUkMyOTNsRnVqYUZGbkQ0cTc5c29RN1llZE1zM3BPcjFuaHY4?=
+ =?utf-8?B?YzZ6MndXbGJPTTFyVXNDVXpGR21nVzZ5QnJmRCtkaEU3L0M5d2ZNQ1ZqdzhO?=
+ =?utf-8?B?SVphSVdpSzRXc0pFUThSTVR5VmpTaDhvOVRZOTFDWld2alBVaE9NV3FoOFF4?=
+ =?utf-8?B?ZFNlc21icFBVaEoraGdaV1N5eXRQM1d0djZqcnF4amdaSFRCT1lQaWRKYXpo?=
+ =?utf-8?B?OU5QaS9oTHBBQlc4aTUzZllRZHR3cGhOcVNET2Z1cHR6YmFtRy9ZaHozVGxw?=
+ =?utf-8?B?cXNzcXV3Nmx6ajRmSmdZNWdPdzgxN3JWMEx3aUF3aTRpb1ZyQXVqV2c1WUti?=
+ =?utf-8?B?YVQwSTJQWUdDdGQ2RUt1ZVl0YzJndUVPWkdrYU1nWDNJME95ckZyM0NBSWpH?=
+ =?utf-8?B?U0VtQlVpMURsUE1xRG1NaDJ2Y0RTbUc1Y0hkTXMyZXQvYnU4UVBNV3Rjc3R5?=
+ =?utf-8?B?SnozTG5vT3NqS3lPUWEvUDFFbWVHM0s5Z2V2U0lZd1BCTzFvOHlGMmU5TWxJ?=
+ =?utf-8?B?eFE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	kTf2FObNd+4KxI/OHJ3GvaN79LWrPWfaLTjRBCl4quEcjetoDnAAw9Kv92FoPtIwtbO1FCRCMFdHAb0DjZXun/7hB89rnLYSnZliwqJkEnebtS8uqHphg3DWMNTUHpvM0t74IL+iALpjHLMLWWYEUx53qbQep9RcrjaMlT8zCb2/ptTxKgh2sSp7e1OYAKt4LFpwDHrdvkJv0HaCrQ5dZu1C2uGiq+NWd5ZUFOGA7DxPaRiBnu+84Kjz9CQt8u24rDCe+DjPyzJ5IEQ9ELJJIzxbE7+qTNeywiDg3QPuoev4nXUM/7Uwsf4SSAmX2kZSCe3U9KfxigMaxDtSkiNCzkjZet0U5LP9nUPsY3EsuSJBT4Fg6L1ORA+kjtSNa4R1Zy6nDEsPy4jjUievHnXY0R9zTQzL+GpGIuL3fxKdGfZWTITnhT91NuD6E2utW6MW1OQsGlTvxqscSIozFsjbKEaDOjx6cl6zinOriDh2/WvLZipkgzaOBYN/I/TMIK7PCsYnhmSockpfFv35sGVOzeG1myuN35FsBOr6K0TGtTuzZNO5rVDhSroF5sG/BDCxNUpk8y1ByAJBUXoeXnHtqlly2SEzgrVSs0CICMNxIKc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac05e2a4-dabc-4ab7-7d1b-08dd034535ed
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 18:09:55.0192
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7pjuRTKd9RFFHHnUHvrPobHgUr8cRguqyc4bzAk98Sc9mrq6mqG2nOqOrFPcFySDqAyoSN0TxMS7eHQun9s1gSkOXgh5LoxX4DwACn6RO+Q=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB6840
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-11-12_08,2024-11-12_02,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 malwarescore=0
+ adultscore=0 phishscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2409260000 definitions=main-2411120145
+X-Proofpoint-ORIG-GUID: RzQcO3oxOdV4bSx8rpwRviCnq1WK-vfr
+X-Proofpoint-GUID: RzQcO3oxOdV4bSx8rpwRviCnq1WK-vfr
+Subject: [oss-security] CVE-2024-52533: Buffer overflow in socks proxy code in glib < 2.82.1
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Another CVE was issued by Mitre yesterday for another bug listed on
+  https://gitlab.gnome.org/Teams/Releng/security/-/wikis/home
 
-X41 D-Sec GmbH Security Advisory: X41-2019-004
+https://gitlab.gnome.org/GNOME/glib/-/issues/3461 reports that:
+"set_connect_msg() receives a buffer of size SOCKS4_CONN_MSG_LEN but it writes
+  up to SOCKS4_CONN_MSG_LEN + 1 bytes to it. This is because SOCKS4_CONN_MSG_LEN
+  doesn't account for the trailing nul character that set_connect_msg() appends
+  after the hostname."
 
-Type confusion in Thunderbird
-=============================
-Severity Rating: Medium
-Confirmed Affected Versions: All versions affected
-Confirmed Patched Versions: Thunderbird ESR 60.7.XXX
-Vendor: Thunderbird
-Vendor URL: https://www.thunderbird.net/
-Vendor Reference: https://bugzilla.mozilla.org/show_bug.cgi?id=1555646
-Vector: Incoming mail with calendar attachment
-Credit: X41 D-SEC GmbH, Luis Merino
-Status: Public
-CVE: CVE-2019-11706
-CWE: 843
-CVSS Score: 6.5
-CVSS Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H/E:U/RL:O
-Advisory-URL:
-https://www.x41-dsec.de/lab/advisories/x41-2019-004-thunderbird
+The fix was made by https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4281
+which was then backported to the glib-2.82.1 release made on Sep. 19.
 
-Summary and Impact
-==================
-A type confusion has been identified in the Thunderbird email
-client. The issue is present in the libical implementation, which was
-forked from upstream libical version 0.47.
-The issue can be triggered remotely, when an attacker sends an specially
-crafted calendar attachment and does not require user interaction. It
-might be used by a remote attacker to crash the process or leak
-information from the client system via calendar replies.
-X41 did not perform a full test or audit on the software.
+https://www.cve.org/CVERecord?id=CVE-2024-52533 says that NVD has assigned
+a CVSS score of 9.8, but https://access.redhat.com/security/cve/CVE-2024-52533
+suggests a score of 7.0 instead.
 
-Product Description
-===================
-Thunderbird is a free and open source email, newsfeed, chat, and
-calendaring client, that's easy to set up and customize.
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-Analysis
-========
-A type confusion in icalproperty.c
-icaltimezone_get_vtimezone_properties() can be triggered while parsing a
-malformed calendar attachment. Missing sanity checks allows a TZID
-property to be parsed as ICALFLOATVALUE but it is later used as a
-string.
-The bug manifests with strdup(tzid); being called with tzid containing
-a bad pointer obtained by casting to char* from a float value, which
-typically means segfaulting by dereferencing a non-mapped memory page.
-An attacker might be able to deliver an input file containing specially
-crafted float values as TZID properties which could point to arbitrary
-memory positions.
-Certain conditions could allow to exfiltrate information via a calendar
-reply or other undetermined impact.
-
-Proof of Concept
-================
-A reproducer eml file can be found in
-
-https://github.com/x41sec/advisories/tree/master/X41-2019-004
-
-Workarounds
-===========
-A fix is available from upstream. Alternatively, libical can be replaced
-by icaljs, a JavaScript implementation of ical parsing, by setting
-calendar.icaljs = true in Thunderbird configuration.
-
-Timeline
-========
-2019-05-30 Issues reported to the vendor
-2019-06-07 Vendor reply
-2019-06-12 CVE IDs assigned
-2019-06-13 Patched Version released
-2019-06-13 Advisory released
-
-About X41 D-SEC GmbH
-====================
-X41 is an expert provider for application security services.
-Having extensive industry experience and expertise in the area of
-information security, a strong core security team of world class
-security experts enables X41 to perform premium security services.
-Fields of expertise in the area of application security are security
-centered code reviews, binary reverse engineering and vulnerability
-discovery.
-
-Custom research and a IT security consulting and support services are
-core competencies of X41.
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAl0CtA8ACgkQo5Klpg50
-CxBOsRAAgrlacP0odW8SZzyesjFmr5qc/b/31jDQmItPlbwOIkyIQyWcxJkXqwRe
-5nQlGY/hqYsJqK/V3FEfiC3AKNi/03beFnsVv31EVR2X766QMj/cg4nype8F7jOr
-NkiGos46xn33F1LXkRT/7YkNul7IhH7woYC5XxrTPTeHDFfWfq7/PbsT5iVwD33+
-56tkKYjT5NPrk3uJv1hc10e06KM5RftzdOS4ETVrJlz9cfmtvxfqzoI85eZ65/cP
-HieZp3lq4+52hlmKBuTojWrodZ/YThQQFLI/mst4ddpkaGX2axr5WdJbQ+fH3hDy
-wba85ejj0w6+/5f7kc04xcgO3cEsPciLALqlBYwSbOVA/M7K5h8TFgh+NGz0naGt
-rooiyg5sT1lxcZzItUZks9bdxW35SEE8KE2nMvPXS9DujPo3jDEbWE1/SjP3HgBE
-Ehnkur/cNamIOhw7m5iU0vfWjMiybrhgD1D/zQTn74gs8fKz+DGHURKEaSfpKVfq
-ISbYPaHrGbBG1piA+fhX/pzagazXWlfwVNH2Fddu/aMSD4492J2JQSDx+Yt7J/7j
-B+fLMIV88PE31jGViedVd1gREp4qxMN8yH7b0ht7BlCPqHeTQvPr0mWygYIL1z/b
-9lO7/XALTENBH9bllzsS6y1b3JqM0+WU59SoPGpFj90rm/5/qGc=
-=pect
------END PGP SIGNATURE-----
