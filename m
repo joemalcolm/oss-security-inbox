@@ -1,4 +1,4 @@
-Received: (qmail 21974 invoked by uid 550); 30 Dec 2025 19:12:01 -0000
+Received: (qmail 30149 invoked by uid 550); 12 Nov 2024 17:59:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,399 +8,172 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 24031 invoked from network); 30 Dec 2025 11:29:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767094182; x=1767698982; darn=lists.openwall.com;
-        h=in-reply-to:autocrypt:from:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r0OTid5cqZDJhf2Es7haiRRxXs9Euo8Oe0uvCsdY+Eg=;
-        b=Eaq0OoAms99yNnJd4JGqciTLNxS1t4klV3lIrEcMAGfmlXjNw6CCBJ6KnzdbyVR+qd
-         Mv14xULZ2Yd8haE+BkiuuBTdCFksOypU4VvXKXF2y971qJyYX6ZQvYt2zASrgpUiLtJZ
-         or/coSeJUyrQEpMIeeJmobBaB+RlrPnmmDk3WY3UTUkj1BgrXmgTyKM94SatTILPH2Na
-         QnE2owXQz+yCWwxBhbQLonZ90e78AQtd2/1ss04VLm+HPTlydDZrKzds/loU8p+ZgVfF
-         Ij1Vt07oKOrjbJCkHCcVCpTtZx322kRlb0dXlSIEnrRQETY43LyKGqZkY8++bkpJvdFo
-         S1cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767094182; x=1767698982;
-        h=in-reply-to:autocrypt:from:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r0OTid5cqZDJhf2Es7haiRRxXs9Euo8Oe0uvCsdY+Eg=;
-        b=Ql45ZgqMgzXH0oksVjKPBN9thWaS4PjJqSoDddeJrCmpdeudMulfBQpTkog1Zi0fQo
-         5TwKm04lKpzR2wwXPKu2cbvkpeeqO69gpjx4CgoLXI3/vG5dXqRMGGTRobTQbF/KnigM
-         /k5DUWjsyYHsVEe00rGyyYxlx2Ey128MF3anX449hR7/Hu9imMVTH5xZwBDuy+TTt0tJ
-         8caYAPvOOvzKHxsQV/iNL8LC0BbqaD9IqZK+76y0WLPxG/S0tdAaQ+LTSfZy3nKyrNSr
-         gw6Ts+jQ950X8HHfnqcQpilzXI40hVMYXjz68SUOnUFaAjYX1STj2hBaoEdeLiuq8sbt
-         3pow==
-X-Gm-Message-State: AOJu0YwjSt0+AgNpwS1BBuckFh64vi/MwQCZJjzlQIWgOL1m3ye6vHC3
-	iMwDDAupygB8qZe+hLFwl7gRnnBaFdLf6JNjlwMLReWbpDFOrXTMphsveaFiPo0H
-X-Gm-Gg: AY/fxX5kBHBBrbClFKlS8RP8i9ofCQHh7s2cdyb0T+eH9YaI/HGVXj9y9Q7Fa5jFj7n
-	u3b02To5EENwELZce0DorlJiXHtJUnzpdv1FCQtw9xnlDmwiMyfAmTp9cWvkAOQw82XBqM+zuvy
-	zwmxgKKpTDvqQ58X4SIwV//yMZKbBBSytE4LQvT7bUqLGKsWYjA2mCJqr7rBdJIAz1H22q62ijo
-	kD5eLc6igQqCSDCr5hVp8oAEOGOVh1rnXNkff9kwDVWkmmF2yTSYA4psP7tqaRX/QzkQIqINYhA
-	vCLXCxGC9n7JJ6ZC8oyImSyL8ZpTRWjIi6oZdEPMRlmViO6Lq9rY8a4n31FSq0CLw26X1y4el/i
-	a4abJYigmbp2LSIsWHwI9NKutNiBWAt0eO9vP8LkE00NaNzzuMS83dfAUfA3/E43M5x3FhHq0GQ
-	I9f6yc/t0qmVY7gGTqTszVsIN6ncduH39Oy74jAiPbXnL+K8uih6bF+x0xCyiLLP9xX3a98ylFT
-	pLb3RxOlSk91gXFwDIM+fviL/dRtg==
-X-Google-Smtp-Source: AGHT+IGDWInGIgTxmVPzmdVpx1+ADodXRhh8EUAxob3xl2TKZ8XgADC1uGeFyb5rbDEsogmGEkzJbQ==
-X-Received: by 2002:a05:690c:6089:b0:786:a817:77a0 with SMTP id 00721157ae682-78fb40afe48mr254033587b3.31.1767094181694;
-        Tue, 30 Dec 2025 03:29:41 -0800 (PST)
-Message-ID: <c3b701f4-057b-41ca-9848-1e205e79fd48@gmail.com>
-Date: Tue, 30 Dec 2025 06:29:36 -0500
+Received: (qmail 27670 invoked from network); 12 Nov 2024 17:31:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hexsys.org;
+	s=protonmail2; t=1731432696; x=1731691896;
+	bh=2EN6RsPL/5aIF7B8qvyXLyRIuhQEpqcK4d6IxkAk9os=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=pmRxlLh42quV4HIQK16Tp40jpXxiZ65eomUzdJczVHqTV+dF9kCYVwVwVHlVE48+R
+	 YbaJWbwatznB22pZVKw/tyjzx/Mp/bNJNsCK+XqoiRRzq60P7RLIRnhEf6NufgOAhU
+	 a5pDTZvEgRYsKfKlBzX7kF26g936mxRobUs0a6o7454+smhgUmh9sxPXqvK/DGBJ5j
+	 aPa30VizQO8pNQTSTG7wPgDSDcKyikB7fuzj9Cy09jMaZuLdPhaUFhGweg7fbfUosa
+	 7Pw2J1J8XklWss90JsjMIzGJMlt5cixesoSmVzDZDIYZ3cFlWW5q22lQyljhY3wQ6Q
+	 e+MhVtb9Z0VMA==
+Date: Tue, 12 Nov 2024 17:31:32 +0000
+To: oss-security@lists.openwall.com
+From: Ali Polatel <alip@hexsys.org>
+Message-ID: <yPOEyvOUfuKsklWzFpBdmDaFvVBey86L51kH7CwV-FzPfbHqBtd-TjZDy4CzpGRPcSnI0SG6ASuvbVrziaGJa9hpTLR9tPWf22iAD4CPVOI=@hexsys.org>
+In-Reply-To: <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
+References: <20241106041215.GA4432@openwall.com> <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
+Feedback-ID: 105281019:user:proton
+X-Pm-Message-ID: 84db6fc2d4f2080f404bbd223b0151d292ce4247
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, "Lexi Groves (49016)"
- <contact@gpg.fail>, jcb62281@gmail.com, Solar Designer <solar@openwall.com>
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
- <20251228042744.GA629@openwall.com>
- <0009d6cc-143e-41e6-b240-eb526a9cb306@gmail.com>
- <d892df77-a488-4a51-af35-697897e3984e@gpg.fail>
-Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
-Autocrypt: addr=demiobenour@gmail.com; keydata=
- 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
- +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <d892df77-a488-4a51-af35-697897e3984e@gpg.fail>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------gpMdAhKWnOJTlfOaq4MqR0da"
-Subject: Re: [oss-security] Many vulnerabilities in GnuPG
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54"; charset=utf-8
+Subject: Re: [oss-security] shell wildcard expansion (un)safety
 
---------------gpMdAhKWnOJTlfOaq4MqR0da
-Content-Type: multipart/mixed; boundary="------------qLJREWrd6ykPn1yStwoFnOpa";
- protected-headers="v1"
-Message-ID: <c3b701f4-057b-41ca-9848-1e205e79fd48@gmail.com>
-Date: Tue, 30 Dec 2025 06:29:36 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [oss-security] Many vulnerabilities in GnuPG
-To: oss-security@lists.openwall.com, "Lexi Groves (49016)"
- <contact@gpg.fail>, jcb62281@gmail.com, Solar Designer <solar@openwall.com>
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
- <20251228042744.GA629@openwall.com>
- <0009d6cc-143e-41e6-b240-eb526a9cb306@gmail.com>
- <d892df77-a488-4a51-af35-697897e3984e@gpg.fail>
-Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
-Autocrypt: addr=demiobenour@gmail.com; keydata=
- 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
- +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <d892df77-a488-4a51-af35-697897e3984e@gpg.fail>
+--------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54
+Content-Type: multipart/mixed;boundary=---------------------391fa675981a2d1918f9e96bfde16e44
 
---------------qLJREWrd6ykPn1yStwoFnOpa
-Content-Type: multipart/mixed; boundary="------------FkWAxWnJBP3bntGT6bExXxgs"
-
---------------FkWAxWnJBP3bntGT6bExXxgs
-Content-Type: text/plain; charset=UTF-8
+-----------------------391fa675981a2d1918f9e96bfde16e44
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-On 12/29/25 11:57, Lexi Groves (49016) wrote:
-> Hi! Thanks for the comment. Some clarifications from us:
+On Wednesday, November 6th, 2024 at 15:44, David A. Wheeler <dwheeler@dwhee=
+ler.com> wrote:
 
-(snip)
+> Long ago I wrong a really long essay about POSIX filename issues.
+> Some people here may find it interesting:
+> https://dwheeler.com/essays/fixing-unix-linux-filenames.html
 
->  > > Given a signed document, you can either check the signature or=20
-> check the signature and recover the original document. To check the=20
-> signature use the --verify option. To verify the signature and extract=20
-> the document use the --decrypt option. The signed document to verify and=
-=20
-> recover is input and the recovered document is output.
->  > >
->  > > ```
->  > > blake% gpg --output doc --decrypt doc.sig
->  > > gpg: Signature made Fri Jun=C2=A0 4 12:02:38 1999 CDT using DSA key =
-ID=20
-> BB7576AC
->  > > gpg: Good signature from "Alice (Judge) <alice@cyb.org>"
->  > > ```
+Thank you. Around six months ago I added a restriction on filenames with
+control characters to Sydbox[1] after I had read about a vulnerability
+here on this list. I think it was about tar but my memory may not serve
+me right. Sydbox is secure by default, so at first this feature was
+enabled without any way to turn it off. After a few months of testing
+with fellow Exherbo Linux developers, we have noticed some package tests
+(nvim was one of them) actually rely on creating paths with control charact=
+ers as
+part of their test suites, so I added a setting to disable this feature
+which was set by our package manager.
+
+Having read your article, and three versions of your Safename LSM
+patch-sets, and having felt immensely thankful and enlightened for a
+while, I have proceeded to replace the control characters restrictions
+above with an implementation that is very similar to yours. A
+possibly incomplete list of what Sydbox does different is:
+1. Existing bad files are hidden.
+2. Tilde prefix is forbidden, I have noticed you have dropped this in
+your third version with reasons irrelevant to Sydbox.
+3. "$" and "`" characters are forbidden.=20
+
+
+Finally, I am sharing the relevant part of the syd(7)[2] manual page
+as food for thought. Note, 3.28.0 has not been released at the time
+of writing so this is also in part a request for feedback :). You may
+find the code changes here[3]. Sydbox is GPL-3.0-or-later and Safename
+LSM is GPL-2.0 so I have taken the liberty to rewrite most of the main
+logic from C to Rust and added unit tests. The file src/path.rs includes
+an attribution to you and your work in the copyright header. Thank you!
+
+--8<--
+## Enhanced Path Integrity Measures
+
+As of version 3.17.4, Syd incorporates crucial enhancements to maintain
+the integrity of file system paths by systematically denying and masking
+paths that contain control characters. These modifications are essential
+for preventing the exploitation of terminal-based vulnerabilities and
+for maintaining robustness in logging activities. Paths identified with
+control characters are not only denied during sandbox access check but
+are also sanitized when logged to ensure that potentially harmful data
+does not compromise log integrity or facilitate inadvertent security
+breaches. Such measures underscore Syd's ongoing commitment to
+fortifying security by adhering to rigorous, up-to-date standards for
+handling untrusted input efficiently.
+
+As of version 3.18.6, this restriction can be relaxed by using the
+setting "trace/allow_unsafe_filename:1". This setting may be toggled
+from within the sandbox during runtime prior to locking the sandbox.
+
+As of version 3.28.0, Syd has enhanced its path integrity measures by
+incorporating an implementation based on David A. Wheeler's Safename
+Linux Security Module (LSM) patches. This update not only prevents the
+creation of filenames containing potentially harmful characters but also
+hides existing files with such names. Invalid filenames are now denied
+with an "EINVAL" error when necessary. In alignment with Wheeler's
+recommendations on restricting dangerous filenames, the validation now
+enforces stricter rules:
+
+- *Control Characters*: Filenames containing control characters (bytes 0x00=
+=E2=80=930x1F and 0x7F) are denied.
+- *UTF-8 Encoding*: Filenames must be valid UTF-8 sequences.
+- *Forbidden Characters*: The following characters are disallowed in
+  filenames as they may interfere with shell operations or be
+  misinterpreted by programs: \*, ?, :, [, ], ", <, >, |, (, ), {, }, &, ',
+  !, \\, ;, $, and `.
+- *Leading Characters*: Filenames cannot start with a space ( ), dash (-), =
+or tilde (~).
+- *Trailing Characters*: Filenames cannot end with a space ( ).
+
+These measures mitigate security risks associated with malicious
+filenames by ensuring that both new and existing filenames adhere to
+stringent validation rules. This enhancement strengthens overall system
+robustness by preventing potential exploitation through untrusted input
+in file operations. For more information, refer to the following links:
+
+- https://dwheeler.com/essays/fixing-unix-linux-filenames.html
+- https://lwn.net/Articles/686021/
+- https://lwn.net/Articles/686789/
+- https://lwn.net/Articles/686792/
+-->8--
+
+[1]: https://sydbox.exherbolinux.org
+[2]: http://man.exherbolinux.org/syd.7.html#Enhanced_Path_Integrity_Measures
+[3]: https://gitlab.exherbo.org/sydbox/sydbox/-/compare/7a6cc9b9cddc5d074d6=
+f72b2b1a3f9aef065fed6...50fb41f21c1ce7e9556c778707a731d1a56e152c
+
 >=20
-> We assumed that the manual was the source of truth and assumed that=20
-> using `--decrypt` was the standard way to do this; we may have been=20
-> biased here, because apparently the common knowledge about this=20
-> (according to some other documentation that we did not see) was using=20
-> `--output/-o`. However, due to the nature of the attack, setting the=20
-> wrong output file while hashing the correct file, `--output` works the=20
-> same way:
->=20
-> ```
-> $ gpg --output x --verify msg.txt.sig msg.txt
-> gpg: Signature made Mon 29 Dec 2025 02:59:11 PM CET
-> gpg:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 using EDDSA k=
-ey EE6EADB4CBB063887A3BE2B413AEBEC571BA1447
-> gpg: Good signature from "39c3 demo <demo@gpg.fail>" [ultimate]
-> $ cat msg.txt
-> asdf
-> $ cat x
-> Malicious
-> ```
 
-Does this work with 'gpgv'?
+> --- David A. Wheeler
 
-I think most software update tools use `msg.txt` directly and so are
-not vulnerable, *unless* the signature uses text mode in which case
-a different attack might work.  Can you see if APT is vulnerable?
+Best regards,
+Ali Polatel=
 
-(snip)
+-----------------------391fa675981a2d1918f9e96bfde16e44
+Content-Type: application/pgp-keys; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
 
->  > Item 5:=C2=A0 Memory Corruption in ASCII-Armor Parsing
->  >
->  > This is a serious memory-safety error in GPG.
->=20
-> Yes. We did not have the time to try to exploit it, but we agreed that=20
-> there is potential for remote code execution. We think that it is=20
-> irresponsible to not release the fix on the 2.4 branch, which is what=20
-> most users in the wild use.
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWmdRSmRSWUpLd1lCQkFI
+YVJ3OEJBUWRBbjlaVnJMbi9tclpseThqTE9qVklwTmRWSXhTSVZ4WmUKL2ZDeDZpcTNPM1hOSVdG
+c2FYQkFhR1Y0YzNsekxtOXlaeUE4WVd4cGNFQm9aWGh6ZVhNdWIzSm5Qc0tNCkJCQVdDZ0ErQllK
+bUJBbDFCQXNKQndnSmtCY2phUTFHWTNTNkF4VUlDZ1FXQUFJQkFoa0JBcHNEQWg0QgpGaUVFd2ky
+cDNrbUo2K2VhOUErdEZ5TnBEVVpqZExvQUFFaDlBUUNVRlB2YytPL1FzYzdpVDF0STcvMTAKakJW
+aklPa2xyL01DU2lzZ2w0SzRqQUQvZkRaejVuVStqbzBmcjh3QXNLdFU0M1UrVWd5alVuNHhuczVQ
+CnVzcFViZy9PT0FSbUJBbDFFZ29yQmdFRUFaZFZBUVVCQVFkQXFrait2ejdsbjQyNmhmQS9wSWZz
+elJKbQpWWHpLc1VJOWJQd3dqZEdQUlNRREFRZ0h3bmdFR0JZS0FDb0ZnbVlFQ1hVSmtCY2phUTFH
+WTNTNkFwc00KRmlFRXdpMnAza21KNitlYTlBK3RGeU5wRFVaamRMb0FBTHNMQVAwWUVEUkw1OVdi
+UndSTFdpN0RlRjY2ClRCSzZtdmZGeG5maG9rM3JKSU1lWXdFQTZGNi85c1J6SzJqbExCRk9kbHlu
+ZGdZbEpxUFVpZk1CZGU5ego2QkZFY1FnPQo9NFhXSgotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
+TE9DSy0tLS0tCg==
 
-I totally agree.  This is why I referred to this vulnerability as
-a zero-day.
+-----------------------391fa675981a2d1918f9e96bfde16e44--
 
-(snip)
-
->  > Item 9:=C2=A0 GnuPG Output Fails To Distinguish Signature Verification=
-=20
-> Success From Message Content
->  >
->  > I think this is actually an old problem, previously affecting=20
-> Thunderbird and Git IIRC, and the existing --status-fd mechanism in GPG=20
-> is meant for exactly this case, at least for automated processing.
->=20
-> The general concept yes, we just found that in practice `--verify` just=20
-> does not work with encrypted and signed payloads, which further makes=20
-> this harder to avoid on the CLI specifically.
-
-Also GnuPG does not fail on the first write error to the status
-line unless --exit-on-status-write-error is passed.  Even then,
-some errors are not handled properly and can cause corrupt output
-(possibly right before an exit).
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)=
-
---------------FkWAxWnJBP3bntGT6bExXxgs
-Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
-
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49y=0A=
-B+l2nipdaq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYf=0A=
-bWpr/si88QKgyGSVZ7GeNW1UnzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/=0A=
-UorR+FaSuVwT7rqzGrTlscnTDlPWgRzrQ3jssesI7sZLm82E3pJSgaUoCdCOlL7M=0A=
-MPCJwI8JpPlBedRpe9tfVyfu3euTPLPxwcV3L/cfWPGSL4PofBtB8NUU6QwYiQ9H=0A=
-zx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR6h3nBc3eyuZ+q62HS1pJ5EvU=0A=
-T1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl5FMWo8TCniHynNXs=0A=
-BtDQbabt7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2Bkg1b//r=0A=
-6bTBswMBXVJ5H44Qf0+eKeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C=0A=
-9a1P1MYVysLvkLvS4H+crmxA/i08Tc1h+x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nS=0A=
-m9BBff0Nm0bSNRS8InXdO1Aq3362QKX2NOwcL5YaStwODNyZUqF7izjK4QARAQAB=0A=
-zTxEZW1pIE9iZW5vdXIgKElUTCBFbWFpbCBLZXkpIDxhdGhlbmFAaW52aXNpYmxl=0A=
-dGhpbmdzbGFiLmNvbT7CwY4EEwEIADgWIQR2h02fEza6IlkHHHGyiLVf/5wiwQUC=0A=
-X6YJvQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCyiLVf/5wiwWRhD/0Y=0A=
-R+YYC5Kduv/2LBgQJIygMsFiRHbR4+tWXuTFqgrxxFSlMktZ6gQrQCWe38WnOXkB=0A=
-oY6n/5lSJdfnuGd2UagZ/9dkaGMUkqt+5WshLFly4BnP7pSsWReKgMP7etRTwn3S=0A=
-zk1OwFx2lzY1EnnconPLfPBc6rWG2moA6l0WX+3WNR1B1ndqpl2hPSjT2jUCBWDV=0A=
-rGOUSX7r5f1WgtBeNYnEXPBCUUM51pFGESmfHIXQrqFDA7nBNiIVFDJTmQzuEqIy=0A=
-Jl67pKNgooij5mKzRhFKHfjLRAH4mmWZlB9UjDStAfFBAoDFHwd1HL5VQCNQdqEc=0A=
-/9lZDApqWuCPadZN+pGouqLysesIYsNxUhJ7dtWOWHl0vs7/3qkWmWun/2uOJMQh=0A=
-ra2u8nA9g91FbOobWqjrDd6x3ZJoGQf4zLqjmn/P514gb697788e573WN/MpQ5XI=0A=
-Fl7aM2d6/GJiq6LC9T2gSUW4rbPBiqOCeiUx7Kd/sVm41p9TOA7fEG4bYddCfDsN=0A=
-xaQJH6VRK3NOuBUGeL+iQEVF5Xs6Yp+U+jwvv2M5Lel3EqAYo5xXTx4ls0xaxDCu=0A=
-fudcAh8CMMqx3fguSb7Mi31WlnZpk0fDuWQVNKyDP7lYpwc4nCCGNKCj622ZSocH=0A=
-AcQmX28L8pJdLYacv9pU3jPy4fHcQYvmTavTqowGnM08RGVtaSBNYXJpZSBPYmVu=0A=
-b3VyIChsb3ZlciBvZiBjb2RpbmcpIDxkZW1pb2Jlbm91ckBnbWFpbC5jb20+wsF4=0A=
-BBMBAgAiBQJafgNKAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCyiLVf=0A=
-/5wiwYa/EACv8a2+MMou9cSCNoZBQaU+fTmyzft9hUE+0d5W2UY1RY3OsjFIzm9R=0A=
-/4SVccfsqOYLEo+S0vQMIIIqFEq3FCpXXwPzyimotps05VA8U3Bd7yseojFygOgK=0A=
-sAMOAee2RCaDDOnoJue01dfZMzzHPO/TVdp3OvnpWipfv5G1Xg96rwbhMLE3tg6N=0A=
-xwAHa31Bv4/Xq8CJOoIWvx6fcmZQpz01/lSvsYn0KrfEbTKkuUf0vM9JrCTCP2oz=0A=
-VNN5BYzqaq2M4r+jmSyeXLim922VOWqGkUEQ85BSEemqrRS06IU6NtEMsF8EWt/b=0A=
-hWjk/9GDKTcnpdJHTrMxTspExBiNrvpI2t+YPU5B/dJJAUxvmhFrbSIbdB8umBZs=0A=
-I3AMYrEmpAbh5x7jEjoskUC7uN3o9vpg1oCLS2ePDLtAtyBtbHnkA4xGD7ar8mem=0A=
-xpH9lY/i+sC6CyyIUWcUDnnagKyJP0m9ks0GLsTeOCA0bft2XA6rD6aaCnMUsndT=0A=
-ctrab42CV5XypjmC4U1rPJ8JQJUh1/3P48/8sMH+3krxpJ06KNWNFaUbaMTGiltZ=0A=
-7x9DngklSYrX0T+2G4kVXNmjaljwkoLahwLla2gUWwBSyofXdqyhQdwZsp01KXNQ=0A=
-UCyT/Pg+aDcm/E7OMV3d4lf7g/CSxiX2GSEe6BlhSz+Lmd7ZJ3g32M1ARGVtaSBN=0A=
-YXJpZSBPYmVub3VyIChJVEwgRW1haWwgS2V5KSA8ZGVtaUBpbnZpc2libGV0aGlu=0A=
-Z3NsYWIuY29tPsLBjgQTAQgAOBYhBHaHTZ8TNroiWQcccbKItV//nCLBBQJgOEV+=0A=
-AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJELKItV//nCLBKwoP/1WSnFdv=0A=
-SAD0g7fD0WlF+oi7ISFT7oqJnchFLOwVHK4Jg0e4hGn1ekWsF3Ha5tFLh4V/7UUu=0A=
-obYJpTfBAA2CckspYBqLtKGjFxcaqjjpO1I2W/jeNELVtSYuCOZICjdNGw2Hl9yH=0A=
-KRZiBkqc9u8lQcHDZKq4LIpVJj6ZQV/nxttDX90ax2No1nLLQXFbr5wb465LAPpU=0A=
-lXwunYDij7xJGye+VUASQh9datye6orZYuJvNo8Tr3mAQxxkfR46LzWgxFCPEAZJ=0A=
-5P56Nc0IMHdJZj0Uc9+1jxERhOGppp5jlLgYGK7faGB/jTV6LaRQ4Ad+xiqokDWp=0A=
-mUOZsmA+bMbtPfYjDZBz5mlyHcIRKIFpE1l3Y8F7PhJuzzMUKkJi90CYakCV4x/a=0A=
-Zs4pzk5E96c2VQx01RIEJ7fzHF7lwFdtfTS4YsLtAbQFsKayqwkGcVv2B1AHeqdo=0A=
-TMX+cgDvjd1ZganGlWA8Sv9RkNSMchn1hMuTwERTyFTr2dKPnQdA1F480+jUap41=0A=
-ClXgn227WkCIMrNhQGNyJsnwyzi5wS8rBVRQ3BOTMyvGM07j3axUOYaejEpg7wKi=0A=
-wTPZGLGH1sz5GljD/916v5+v2xLbOo5606j9dWf5/tAhbPuqrQgWv41wuKDi+dDD=0A=
-EKkODF7DHes8No+QcHTDyETMn1RYm7t0RKR4zsFNBFp+A0oBEAC9ynZI9LU+uJkM=0A=
-eEJeJyQ/8VFkCJQPQZEsIGzOTlPnwvVna0AS86n2Z+rK7R/usYs5iJCZ55/JISWd=0A=
-8xD57ue0eB47bcJvVqGlObI2DEG8TwaW0O0duRhDgzMEL4t1KdRAepIESBEA/iPp=0A=
-I4gfUbVEIEQuqdqQyO4GAe+MkD0Hy5JH/0qgFmbaSegNTdQg5iqYjRZ3ttiswalq=0A=
-l1/iSyv1WYeC1OAs+2BLOAT2NEggSiVOtxEfgewsQtCWi8H1SoirakIfo45Hz0tk=0A=
-/Ad9ZWh2PvOGt97Ka85o4TLJxgJJqGEnqcFUZnJJriwoaRIS8N2C8/nEM53jb1sH=0A=
-0gYddMU3QxY7dYNLIUrRKQeNkF30dK7V6JRH7pleRlf+wQcNfRAIUrNlatj9Txwi=0A=
-vQrKnC9aIFFHEy/0mAgtrQShcMRmMgVlRoOA5B8RTulRLCmkafvwuhs6dCxN0GNA=0A=
-ORIVVFxjx9Vn7OqYPgwiofZ6SbEl0hgPyWBQvE85klFLZLoj7p+joDY1XNQztmfA=0A=
-rnJ9x+YV4igjWImINAZSlmEcYtd+xy3Li/8oeYDAqrsnrOjb+WvGhCykJk4urBog=0A=
-2LNtcyCjkTs7F+WeXGUo0NDhbd3Z6AyFfqeF7uJ3D5hlpX2nI9no/ugPrrTVoVZA=0A=
-grrnNz0iZG2DVx46x913pVKHl5mlYQARAQABwsFfBBgBAgAJBQJafgNKAhsMAAoJ=0A=
-ELKItV//nCLBwNIP/AiIHE8boIqReFQyaMzxq6lE4YZCZNj65B/nkDOvodSiwfwj=0A=
-jVVE2V3iEzxMHbgyTCGA67+Bo/d5aQGjgn0TPtsGzelyQHipaUzEyrsceUGWYoKX=0A=
-YyVWKEfyh0cDfnd9diAm3VeNqchtcMpoehETH8frRHnJdBcjf112PzQSdKC6kqU0=0A=
-Q196c4Vp5HDOQfNiDnTf7gZSj0BraHOByy9LEDCLhQiCmr+2E0rW4tBtDAn2HkT9=0A=
-uf32ZGqJCn1O+2uVfFhGu6vPE5qkqrbSE8TG+03H8ecU2q50zgHWPdHMOBvy3Ehz=0A=
-fAh2VmOSTcRK+tSUe/u3wdLRDPwv/DTzGI36Kgky9MsDC5gpIwNbOJP2G/q1wT1o=0A=
-Gkw4IXfWv2ufWiXqJ+k7HEi2N1sree7Dy9KBCqb+ca1vFhYPDJfhP75I/VnzHVss=0A=
-Z/rYZ9+51yDoUABoNdJNSGUYl+Yh9Pw9pE3Kt4EFzUlFZWbE4xKL/NPno+z4J9aW=0A=
-emLLszcYz/u3XnbOvUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPt=0A=
-hZlDnTnOT+C+OTsh8+m5tos8HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj=0A=
-6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E+MYSfkEjBz0E8CLOcAw7JIwAaeBTzsFN=0A=
-BGbyLVgBEACqClxh50hmBepTSVlan6EBq3OAoxhrAhWZYEwN78k+ENhK68KhqC5R=0A=
-IsHzlL7QHW1gmfVBQZ63GnWiraM6wOJqFTL4ZWvRslga9u28FJ5XyK860mZLgYhK=0A=
-9BzoUk4s+dat9jVUbq6LpQ1Ot5I9vrdzo2p1jtQ8h9WCIiFxSYy8s8pZ3hHh5T64=0A=
-GIj1m/kY7lG3VIdUgoNiREGf/iOMjUFjwwE9ZoJ26j9p7p1U+TkKeF6wgswEB1T3=0A=
-J8KCAtvmRtqJDq558IU5jhg5fgN+xHB8cgvUWulgK9FIF9oFxcuxtaf/juhHWKMO=0A=
-RtL0bHfNdXoBdpUDZE+mLBUAxF6KSsRrvx6AQyJs7VjgXJDtQVWvH0PUmTrEswgb=0A=
-49nNU+dLLZQAZagxqnZ9Dp5l6GqaGZCHERJcLmdY/EmMzSf5YazJ6c0vO8rdW27M=0A=
-kn73qcWAplQn5mOXaqbfzWkAUPyUXppuRHfrjxTDz3GyJJVOeMmMrTxH4uCaGpOX=0A=
-Z8tN6829J1roGw4oKDRUQsaBAeEDqizXMPRc+6U9vI5FXzbAsb+8lKW65G7JWHym=0A=
-YPOGUt2hK4DdTA1PmVo0DxH00eWWeKxqvmGyX+Dhcg+5e191rPsMRGsDlH6KihI6=0A=
-+3JIuc0y6ngdjcp6aalbuvPIGFrCRx3tnRtNc7He6cBWQoH9RPwluwARAQABwsOs=0A=
-BBgBCgAgFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmbyLVgCGwICQAkQsoi1X/+c=0A=
-IsHBdCAEGQEKAB0WIQSilC2pUlbVp66j3+yzNoc6synyUwUCZvItWAAKCRCzNoc6=0A=
-synyU85gD/0T1QDtPhovkGwoqv4jUbEMMvpeYQf+oWgm/TjWPeLwdjl7AtY0G9Ml=0A=
-ZoyGniYkoHi37Gnn/ShLT3B5vtyI58ap2+SSa8SnGftdAKRLiWFWCiAEklm9FRk8=0A=
-N3hwxhmSFF1KR/AIDS4g+HIsZn7YEMubBSgLlZZ9zHl4O4vwuXlREBEW97iL/FSt=0A=
-VownU2V39t7PtFvGZNk+DJH7eLO3jmNRYB0PL4JOyyda3NH/J92iwrFmjFWWmmWb=0A=
-/Xz8l9DIs+Z59pRCVTTwbBEZhcUc7rVMCcIYL+q1WxBG2e6lMn15OQJ5WfiE6E0I=0A=
-sGirAEDnXWx92JNGx5l+mMpdpsWhBZ5iGTtttZesibNkQfd48/eCgFi4cxJUC4PT=0A=
-UQwfD9AMgzwSTGJrkI5XGy+XqxwOjL8UA0iIrtTpMh49zw46uV6kwFQCgkf32jZM=0A=
-OLwLTNSzclbnA7GRd8tKwezQ/XqeK3dal2n+cOr+o+Eka7yGmGWNUqFbIe8cjj9T=0A=
-JeF3mgOCmZOwMI+wIcQYRSf+e5VTMO6TNWH5BI3vqeHSt7HkYuPlHT0pGum88d4a=0A=
-pWqhulH4rUhEMtirX1hYx8Q4HlUOQqLtxzmwOYWkhl1C+yPObAvUDNiHCLf9w28n=0A=
-uihgEkzHt9J4VKYulyJM9fe3ENcyU6rpXD7iANQqcr87ogKXFxknZ97uEACvSucc=0A=
-RbnnAgRqZ7GDzgoBerJ2zrmhLkeREZ08iz1zze1JgyW3HEwdr2UbyAuqvSADCSUU=0A=
-GN0vtQHsPzWl8onRc7lOPqPDF8OO+UfN9NAfA4wl3QyChD1GXl9rwKQOkbvdlYFV=0A=
-UFx9u86LNi4ssTmU8p9NtHIGpz1SYMVYNoYy9NU7EVqypGMguDCL7gJt6GUmA0sw=0A=
-p+YCroXiwL2BJ7RwRqTpgQuFL1gShkA17D5jK4mDPEetq1d8kz9rQYvAR/sTKBsR=0A=
-ImC3xSfn8zpWoNTTB6lnwyP5Ng1bu6esS7+SpYprFTe7ZqGZF6xhvBPf1Ldi9UAm=0A=
-U2xPN1/eeWxEa2kusidmFKPmN8lcT4miiAvwGxEnY7Oww9CgZlUB+LP4dl5VPjEt=0A=
-sFeAhrgxLdpVTjPRRwTd9VQF3/XYl83j5wySIQKIPXgT3sG3ngAhDhC8I8GpM36r=0A=
-8WJJ3x2yVzyJUbBPO0GBhWE2xPNIfhxVoU4cGGhpFqz7dPKSTRDGq++MrFgKKGpI=0A=
-ZwT3CPTSSKc7ySndEXWkOYArDIdtyxdE1p5/c3aoz4utzUU7NDHQ+vVIwlnZSMiZ=0A=
-jek2IJP3SZ+COOIHCVxpUaZ4lnzWT4eDqABhMLpIzw6NmGfg+kLBJhouqz81WITr=0A=
-EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D=0A=
-=3Dx94R=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
-
---------------FkWAxWnJBP3bntGT6bExXxgs--
-
---------------qLJREWrd6ykPn1yStwoFnOpa--
-
---------------gpMdAhKWnOJTlfOaq4MqR0da
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+--------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54
+Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmlTt6EACgkQszaHOrMp
-8lMpMg/+JWR9GH/27d1j5EHsJJeoESo7ehi02tLjU8BFoiRlnvAmED7czv9SzUyg
-n557FDAFlX0HXZyjn4AoVw07B82UCEP5OnHo7+SDFTgyPys+fro9uN4eyx8wpyGc
-euCNpUHvXHgm79fWqQcXJR7hdk56z5TfbRVZYVb9ViBPdOCyXqfNrVt4kyXkWtx7
-pP+iMy3wkBjF4DkRzDNAl13C/2oBfLDXzau4xqp6L0bv80qZaMYmz0s5dxfL3UAP
-VNydNZWET1RqOuy6SMYMgvBP0gLJlMh+p5DRvaMJkO71XxWOVURz/bf/2jJ9Geix
-0REajvhwQwXNQ635wvByBw89glvKR0Cpc1yv9GdIGZ8MdAGy0Eb1g9KTcy3tPpHj
-Ju9Q9664Vgr+N5OWf0Dr4ZkBGnNAfGDUXk5qGwdOy8uD9zWkSa199TYFRSDPpxiE
-U+94GNUaqPWX5EgxbM9oYgaaOS+7EDudjHh8RD5uJdzTbjqmVUaRr4PAA7fUIm8D
-zZvyCUJXCCQkzP752G1K3R68JcmPaKVnMUlyWCGY8G1YpXBwnVMs38x/+UUrq9Ff
-fTjYUJCCxvjbfhCPGEl0bsGKX6YTvfmKuEtuTkzKfAvxlDXFtBLInKyO9YQmP0aA
-rOLiRhkDqquZaF548VKMPJMHs+65bfxKLhsc+3XWn1EJ1azyv9I=
-=yHl/
+wnUEARYKACcFgmczkNwJkBcjaQ1GY3S6FiEEwi2p3kmJ6+ea9A+tFyNpDUZj
+dLoAACzjAP9SD+5VobsxpkTN5ChAqIC0z9yi+sS5eklsVbg55qJ45gEAhWJg
+VI5QwGoUztk+TYaTSxnHYhaSmd0hL1DkfNlI7AU=
+=Mtsk
 -----END PGP SIGNATURE-----
 
---------------gpMdAhKWnOJTlfOaq4MqR0da--
+
+--------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54--
+
