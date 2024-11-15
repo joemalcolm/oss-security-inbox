@@ -1,4 +1,4 @@
-Received: (qmail 9573 invoked by uid 550); 29 Apr 2026 00:57:22 -0000
+Received: (qmail 20351 invoked by uid 550); 15 Nov 2024 06:59:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,90 +8,46 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 3433 invoked from network); 29 Apr 2026 00:23:19 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed;
-	d=umbrellix.net; s=umbrellix.net; x=1778026989; h=Date:From:To:
-	Cc:Subject:Message-ID:In-Reply-To:References:Organization:
-	X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=2rw74ptd+sLv1kBuTymDdpMw7YU=; b=l1VDKLW+QJ9WC9yDLJBLDmcCHvFhQ
-	GNhADYcwXXl6y2DB6bP5v2ncRemjD7nJLGF2HnbBvaGcRh/ZTVn0aeaMAVHVS78y
-	gDrnteYgS97mi6r+7kAG4HVrRbMWcGxCKasxoYQhloNagiUhPQ1yLgW3IRlwO1yh
-	QpvqRqTwAxQxO4=
-Date: Wed, 29 Apr 2026 00:23:05 +0000
-From: Ellenor Bjornsdottir <ellenor/securesoftware@umbrellix.net>
-To: MOHAMED AZIZ RAHMOUNI <mohamedaziz.rahmouni@insat.ucar.tn>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20260429002305.68ba7d1b@stansted.bc.ca.umbrellix.net>
-In-Reply-To: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
-References: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
-Organization: Umbrellix
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.50; x86_64-unknown-linux-musl)
+Received: (qmail 9829 invoked from network); 15 Nov 2024 06:56:25 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <8011b6a8-aa8b-28d6-c866-b8e9020d7b87@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 15 Nov 2024 06:54:39 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] [SECURITY] Out-of-Bounds Read in MPLS Extension
- Parsing =?UTF-8?B?4oCU?= traceroute 2.1.2
+Subject: [oss-security] CVE-2024-45784: Apache Airflow: Sensitive configuration values are
+ not masked in the logs by default 
 
-FYI:
+Severity: moderate
 
-As Alan Coopersmith just said, oss-security is a public mailing list.
-You would need to have emailed only individual persons and private
-mailing lists (like secalert@redhat.com and Mr Butskoy) related to the
-development and distribution of the program in question for this to
-have been coordinated disclosure. The public message to
-oss-security@lists.openwall.com would then need to be posted in July,
-not this month.
+Affected versions:
 
-Remember that for the next vulnerability you try to do coordinated
-disclosure for.
+- Apache Airflow before 2.10.3
 
-On Tue, 28 Apr 2026 23:03:58 +0100
-MOHAMED AZIZ RAHMOUNI <mohamedaziz.rahmouni@insat.ucar.tn> wrote:
+Description:
 
-> Hello,
-> 
-> I am reporting a security vulnerability I discovered in traceroute
-> 2.1.2 during manual code review and dynamic fuzzing.
-> 
-> Summary:
-> An out-of-bounds read exists in traceroute/traceroute.c. After
-> recvmsg() returns, bufp is advanced past the IPv4 header (bufp +=
-> hlen) but n is not decremented accordingly. The subsequent call:
-> 
->     handle_extensions(pb, bufp + offs, n - offs, step);
-> 
-> passes a len value that is hlen bytes (20 for IPv4, 40 for IPv6)
-> larger than the actual data available from bufp + offs. This causes
-> the MPLS extension parser to read past the received packet boundary
-> into uninitialized stack memory within buf[1280].
-> 
-> The vulnerability is remotely triggerable by any on-path network
-> device that can send a crafted ICMP Time Exceeded response with MPLS
-> extensions to a traceroute -e invocation. I have confirmed the issue
-> with a working proof of concept.
-> 
-> Proposed fix (single line addition after line 1427):
-> 
->     bufp += hlen;
->     n -= hlen;   // add this line
-> 
-> I have attached a full technical report including root cause analysis,
-> proof of concept code, memory layout analysis, and impact assessment.
-> 
-> Please confirm receipt of this report.
-> 
-> Regards,
-> Security researcher Zyyz
-> 
-> Mohamed Aziz Rahmouni
+Apache Airflow versions before 2.10.3 contain a vulnerability that could ex=
+pose sensitive configuration variables in task logs. This vulnerability all=
+ows DAG authors to unintentionally or intentionally log sensitive configura=
+tion variables. Unauthorized users could access these logs, potentially exp=
+osing critical data that could be exploited to compromise the security of t=
+he Airflow deployment. In version 2.10.3, secrets are now masked in task lo=
+gs to prevent sensitive configuration variables from being exposed in the l=
+ogging output. Users should upgrade to Airflow 2.10.3 or the latest version=
+ to eliminate this vulnerability.=C2=A0If you suspect that DAG authors coul=
+d have logged the secret values to the logs and that your logs are not addi=
+tionally protected, it is also recommended that you update those secrets.
 
+Credit:
 
+Saurabh Banawar (finder)
+Amogh Desai (remediation developer)
 
--- 
-Ellenor et al Bjornsdottir, sysadmin umbrellix.net.
+References:
 
-This is my laptop, and as such I might be on the go; by the time you
-get this message I could already be back on my bike.
+https://github.com/apache/airflow/pull/43040
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-45784
 
-Please consider the environment before you ask an AI to summarize this
-email or write me a response. 
