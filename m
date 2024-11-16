@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5925" "Wednesday" "9" "October" "2019" "07:53:36" "+0200" "=?UTF-8?B?R3VpbGxhdW1lIFF1w6lyw6k=?=" "guillaume@quere.eu" "<740749273.376258.1570600416658@email.ionos.fr>" "136" "[oss-security] Re: Multiple vulnerabilities in Centreon-Web and Centreon-VM" nil nil nil "10" "2019100905:53:36" "[oss-security] Re: Multiple vulnerabilities in Centreon-Web and Centreon-VM" (number mark "U       guillaume@qu Oct  9  136/5925  " thread-indent "\"[oss-security] Re: Multiple vulnerabilities in Centreon-Web and Centreon-VM\"\n") "<1231027090.320367.1570526433648@email.ionos.fr>" ("<1231027090.320367.1570526433648@email.ionos.fr>") nil nil nil nil nil nil nil "[oss-security] Re: Multiple vulnerabilities in Centreon-Web and Centreon-VM" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19766 invoked by uid 550); 9 Oct 2019 05:55:33 -0000
+Received: (qmail 1581 invoked by uid 550); 16 Nov 2024 23:40:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,173 +7,176 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19491 invoked from network); 9 Oct 2019 05:53:48 -0000
-Date: Wed, 9 Oct 2019 07:53:36 +0200 (CEST)
-From: =?UTF-8?Q?Guillaume_Qu=C3=A9r=C3=A9?= <guillaume@quere.eu>
+x-ms-reactions: disallow
+Received: (qmail 31913 invoked from network); 16 Nov 2024 23:39:35 -0000
+Date: Sun, 17 Nov 2024 00:39:27 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <740749273.376258.1570600416658@email.ionos.fr>
-In-Reply-To: <1231027090.320367.1570526433648@email.ionos.fr>
-References: <1231027090.320367.1570526433648@email.ionos.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.8.4-Rev62
-X-Originating-Client: open-xchange-appsuite
-X-Provags-ID: V03:K1:SCeKQjh1Z4Qr9OZ/0clex4BIMdcmlgVCW7bbflIaMF24sjjwIgE
- e1llLovgNr6rx9m7imgfq0kLmEds6VvCaCDLpvoy22duTqbx9pAZcGfabzdPA9MBd9h0gtW
- GtauvuXFa4cCLQDE6Cph9oFfTr/SteJlOsIEiYBHsQ464zCIlueTSr2M5gnL+sA/nqz/E9t
- 28LOPGcegC9pcS5CJ+36A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Kab0LWqe6RU=:T2i2kErgcMAsttqKsmvYYx
- gRqa4oERcnZaM1iryQs7RxpLFwxfeJRygqWWEZS0X/c0DStUAkMBTUn5cHnUFXo2vBQi08ZVL
- bqT/mbuQ9pkepFu7N4izTc0PozME9doL5zPFbaCtXteTLw6AMYxghsZZvdYmLLBQP4SlLzGEx
- dCMHqcRj+Ck5FDS7+yzS0wxMN1rUMHrBKR2oFtEkLhtIzDVwetGE7V3PVmICz9XHPpRBCGpcC
- VkR5cZNn+BIhJcLObWiY9vwEWMG/56z8TU7KE68QxQJOWRimAvJTFC08sqPya4M24FNKyLxQK
- 5FKj17FzBrAp0q2GmLLchyceOVGl5JUyfekVs2WrDH27tYd49ejK4OaFi0PvgOMWpN9IqxXUN
- NvM0IGgBF6+cY45PZgKAQE2DZx4Vk82E8BtnkMeKvdLoVYXKsdFMrVMQjgk9lGK9ZVbO9RgXC
- JHjpiDbOgAHr3IcTwpUuXjcebNnNKpLsvRjdq5ltdRf3feEQ31drPkx6glKVk7iGHeX4YIEfK
- a0KWsAzGQhPSTlvLyW150Sx2xad2DH3sft8O71IVvDv3r//S7IJ32H1ysmnnffpo82aSofJpI
- VbzceNQb20NguRBWw1puc50jjvCeZhs1FsmCh1yZ/+bcRs7A8wxuQCjxQEEasZPloNFdGNBKy
- YZQ5MuRNOZ2d6lEyMuqhN9fP3jD3obmWfc0+3E1BmPBSd7EqLT91QuQRubFGdONG13ZVH2BZl
- 6hBIwYODB6TA1qbjiAWTh0+PeS7dHwC+3iHoPdp/X+6K0lCPootgcLsn9nnHR82gWhfekRdeJ
- IsFziIda3NrDB6eoxwiYNV7bs+VFh0fs/MxAgHUNjq3vrD5uE4PX+90/7jT8Ql3L2Ns1nyP47
- r6Lp/Kc2Cf+WEEj0TSh5l3Y7jTMk4Kb24SsQGcT/k=
-Subject: [oss-security] Re: Multiple vulnerabilities in Centreon-Web and Centreon-VM
+Message-ID: <20241116233927.GA703@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] PostgreSQL: 4 CVEs fixed in 17.1, 16.5, 15.9, 14.14, 13.17, 12.21
 
-Hello,
+Hi,
 
-My advisory posted yesterday contains a problematic typo: CVE-2019-17017 sh=
-ould have been written CVE-2019-17107. Sorry for the inconvenience it may h=
-ave caused.
+As announced in:
 
-Here is the corrected context:
-> High impact
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> CVE-2019-17107: Authenticated RCE in minPlayCommand.php
-> -------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7099
-> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
+https://www.postgresql.org/about/news/postgresql-171-165-159-1414-1317-and-1221-released-2955/
+https://www.postgresql.org/message-id/173159332163.1547975.13346191756810493274%40wrigleys.postgresql.org
 
-Original advisory follows.
-Guillaume Qu=C3=A9r=C3=A9
+new PostgreSQL updates to all supported versions fix 4 CVEs and 35
+non-security bugs.
 
-> Centreon
-> =3D=3D=3D=3D=3D=3D=3D=3D
-> "Centreon is the N=C2=B01 Open Source IT Infrastructure Monitoring Soluti=
-on."
->=20
-> Multiple vulnerabilites were discovered in Centreon-Web in december 2018 =
-and fixed in early 2019 over the course of two minor releases on both branc=
-hes in versions 2.8.27/2.8.28 and 18.10.4/18.10.5.
->=20
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/=
-centreon-2.8/centreon-2.8.27.html
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/=
-centreon-2.8/centreon-2.8.28.html
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/=
-centreon-18.10/centreon-18.10.4.html
-> https://documentation.centreon.com/docs/centreon/en/latest/release_notes/=
-centreon-18.10/centreon-18.10.5.html
->=20
-> Additional vulnerabilities were found in Centreon-VM that have not yet be=
-en fixed.
->=20
->=20
-> High impact
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> CVE-2019-17017: Authenticated RCE in minPlayCommand.php
-> -------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7099
-> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7245)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7232)
->=20
-> CVE-2018-21023: Authenticated RCE in getStats.php
-> -------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7083
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7271)
-> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7195)
->=20
-> CVE-2018-21024: Arbitrary File Upload in licenseUpload.php
-> ----------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7085
-> Did not affect branch 2.8.x
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7171)
->=20
-> CVE-2018-21021: Authenticated SQL injection in img_gantt.php
-> ------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7086
-> Fixed in 2.8.27     (https://github.com/centreon/centreon/pull/7169)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7086)
->=20
-> CVE-2018-21022: Authenticated SQL injection in makeXML_ListServices.php
-> -----------------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7087
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7229)
-> Fixed in 18.10.4    (https://github.com/centreon/centreon/pull/7229)
->=20
-> CVE-2019-17108: Stored XSS in brokerPerformance.php
-> ---------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7101
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7226)
-> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7227)
->=20
->=20
-> Medium impact
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> CVE-2018-21025: Privilege Escalation in Centreon-VM
-> ---------------------------------------------------
-> Details: https://github.com/centreon/centreon/issues/7082
-> Not yet fixed.
-> While checking if this was still possible in centreon-vm-19.04-2 (it is),=
- I found another similar privesc which didn't exist at the time:
-> ```
-> [root@centreon-central ~]# grep centreon_autodisco /etc/cron.d/centreon-a=
-uto-disco
-> 30 22 * * * root /usr/share/centreon/www/modules/centreon-autodiscovery-s=
-erver//cron/centreon_autodisco --config=3D'/etc/centreon/conf.pm' --config-=
-extra=3D'/etc/centreon/centreon_autodisco.pm' --severity=3Derror >> /var/lo=
-g/centreon/centreon_auto_discovery.log 2>&1
-> [root@centreon-central ~]# ls -la /usr/share/centreon/www/modules/centreo=
-n-autodiscovery-server//cron/centreon_autodisco
-> -rwxr-xr-x 1 apache apache 4995482 24 avril 13:48 /usr/share/centreon/www=
-/modules/centreon-autodiscovery-server//cron/centreon_autodisco
-> ```
->=20
-> CVE-2019-17104: Unsecured cookies in Centreon-VM
-> ------------------------------------------------
-> Details: https://github.com/centreon/centreon/issues/7097
-> Not yet fixed.
->=20
-> CVE-2019-17106: Display of cleartext external passwords in modules
-> ------------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/issues/7098
-> Not yet fixed.
->=20
->=20
-> Low impact
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> CVE-2018-21020: Type juggling on authentication in centreonAuth.class.php
-> -------------------------------------------------------------------------
-> Details: https://github.com/centreon/centreon/pull/7084
-> Fixed in 2.8.28     (https://github.com/centreon/centreon/pull/7084)
-> Fixed in 18.10.5    (https://github.com/centreon/centreon/pull/7219)
->=20
-> CVE-2019-17105: Usage of a predictable generator for a security token in =
-index.php
-> -------------------------------------------------------------------------=
----------
-> Details: https://github.com/centreon/centreon/pull/7100
-> Not fixed in 2.8.x  (https://github.com/centreon/centreon/pull/7224)
-> Fixed in 18.10.5    (commit 4faf5919f89bd06a5c25152c39ba3f25a4f16a81)
->=20
->=20
-> Acknowledgements
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> Thanks to Centreon for their quick and enthusiastic response as well as t=
-heir commitment to patching.
->=20
-> Guillaume Qu=C3=A9r=C3=A9
+CVE-2024-10976 PostgreSQL row security below e.g. subqueries disregards user ID changes (CVSS 4.2)
+CVE-2024-10977 PostgreSQL libpq retains an error message from man-in-the-middle (CVSS 3.1)
+CVE-2024-10978 PostgreSQL SET ROLE, SET SESSION AUTHORIZATION reset to wrong user ID (CVSS 4.2)
+CVE-2024-10979 PostgreSQL PL/Perl environment variable changes execute arbitrary code (CVSS 8.8)
+
+CVE-2024-10979 is pretty serious, so I'll copy its description to here:
+
+---
+Incorrect control of environment variables in PostgreSQL
+[PL/Perl](https://www.postgresql.org/docs/current/plperl.html) allows an
+unprivileged database user to change sensitive process environment variables
+(e.g. `PATH`). That often suffices to enable arbitrary code execution, even if
+the attacker lacks a database server operating system user. Versions before
+PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 are affected.
+
+The PostgreSQL project thanks Coby Abrams for reporting this problem.
+---
+
+Descriptions of all 4 are included in the (truncated) forwarded message:
+
+----- Forwarded message from PostgreSQL Global Development Group <announce-noreplypostgresql!org> -----
+
+From: PostgreSQL Global Development Group <announce-noreply () postgresql ! org>
+Date: Thu, 14 Nov 2024 14:08:41 +0000
+To: postgresql-announce
+Subject: PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 Released!
+X-MARC-Message: https://marc.info/?l=postgresql-announce&m=173159323709237
+
+The PostgreSQL Global Development Group has released an update to all supported
+versions of PostgreSQL, including 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21.
+This release fixes 4 security vulnerabilities and over 35 bugs reported over the
+last several months.
+
+For the full list of changes, please review the
+[release notes](https://www.postgresql.org/docs/release/).
+
+PostgreSQL 12 EOL Notice
+------------------------
+
+**This is the final release of PostgreSQL 12**. PostgreSQL 12 is now end-of-life
+and will no longer receive security and bug fixes. If you are
+running PostgreSQL 12 in a production environment, we suggest that you make
+plans to upgrade to a newer, supported version of PostgreSQL. Please see our
+[versioning policy](https://www.postgresql.org/support/versioning/) for more
+information.
+
+Security Issues
+---------------
+
+### [CVE-2024-10976](https://www.postgresql.org/support/security/CVE-2024-10976/): \
+PostgreSQL row security below e.g. subqueries disregards user ID changes
+
+CVSS v3.1 Base Score: \
+[4.2](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N)
+
+
+Supported, Vulnerable Versions: 12 - 17.
+
+Incomplete tracking in PostgreSQL of tables with row security allows a reused
+query to view or change different rows from those intended.
+[CVE-2023-2455](https://www.postgresql.org/support/security/CVE-2023-2455/) and
+[CVE-2016-2193](https://www.postgresql.org/support/security/CVE-2016-2193/)
+fixed most interaction between row security and user ID changes.
+They missed cases where a subquery, WITH query, security invoker view, or
+SQL-language function references a table with a row-level security policy.
+This has the same consequences as the two earlier CVEs.
+That is to say, it leads to potentially incorrect policies being applied in
+cases where role-specific policies are used and a given query is planned under
+one role and then executed under other roles. This scenario can happen under
+security definer functions or when a common user and query is planned initially
+and then re-used across multiple SET ROLEs.
+
+Applying an incorrect policy may permit a user to complete otherwise-forbidden
+reads and modifications. This affects only databases that have used
+[`CREATE POLICY`](https://www.postgresql.org/docs/current/sql-createpolicy.html)
+to define a row security policy. An attacker must tailor an attack to a
+particular application's pattern of query plan reuse, user ID changes, and
+role-specific row security policies. Versions before
+PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 are affected.
+
+The PostgreSQL project thanks Wolfgang Walther for reporting this problem.
+
+### [CVE-2024-10977](https://www.postgresql.org/support/security/CVE-2024-10977/): \
+PostgreSQL libpq retains an error message from man-in-the-middle
+
+CVSS v3.1 Base Score: \
+[3.1](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N)
+
+
+Supported, Vulnerable Versions: 12 - 17.
+
+Client use of server error message in PostgreSQL allows a server not trusted
+under current SSL or GSS settings to furnish arbitrary non-NUL bytes to the
+libpq application. For example, a man-in-the-middle attacker could send a long
+error message that a human or screen-scraper user of psql mistakes for valid
+query results. This is probably not a concern for clients where the user
+interface unambiguously indicates the boundary between one error message and
+other text. Versions before PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21
+are affected.
+
+The PostgreSQL project thanks Jacob Champion for reporting this problem.
+
+### [CVE-2024-10978](https://www.postgresql.org/support/security/CVE-2024-10978/): \
+PostgreSQL SET ROLE, SET SESSION AUTHORIZATION reset to wrong user ID
+
+CVSS v3.1 Base Score: \
+[4.2](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N)
+
+
+Supported, Vulnerable Versions: 12 - 17.
+
+Incorrect privilege assignment in PostgreSQL allows a less-privileged
+application user to view or change different rows from those intended. An attack
+requires the application to use
+[`SET ROLE`](https://www.postgresql.org/docs/current/sql-set-role.html),
+[`SET SESSION AUTHORIZATION`](https://www.postgresql.org/docs/current/sql-set-session-authorization.html),
+ or an equivalent feature. The problem arises when an application query uses
+parameters from the attacker or conveys query results to the attacker. If that
+query reacts to `current_setting('role')` or the current user ID, it may modify
+or return data as though the session had not used `SET ROLE` or
+`SET SESSION AUTHORIZATION`.  The attacker does not control which incorrect user
+ID applies. Query text from less-privileged sources is not a concern here,
+because `SET ROLE` and `SET SESSION AUTHORIZATION` are not sandboxes for unvetted
+queries. Versions before PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21
+are affected.
+
+The PostgreSQL project thanks Tom Lane for reporting this problem.
+
+### [CVE-2024-10979](https://www.postgresql.org/support/security/CVE-2024-10979/): \
+PostgreSQL PL/Perl environment variable changes execute arbitrary code
+
+CVSS v3.1 Base Score: \
+[8.8](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
+
+
+Supported, Vulnerable Versions: 12 - 17.
+
+Incorrect control of environment variables in PostgreSQL
+[PL/Perl](https://www.postgresql.org/docs/current/plperl.html) allows an
+unprivileged database user to change sensitive process environment variables
+(e.g. `PATH`). That often suffices to enable arbitrary code execution, even if
+the attacker lacks a database server operating system user. Versions before
+PostgreSQL 17.1, 16.5, 15.9, 14.14, 13.17, and 12.21 are affected.
+
+The PostgreSQL project thanks Coby Abrams for reporting this problem.
+
+----- Truncated forwarded message -----
+
+The full message was much longer, also describing non-security changes.
+
+Alexander
