@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1877" "Tuesday" "27" "October" "2015" "11:45:34" "+0100" "Patrick Uiterwijk" "puiterwijk@redhat.com" "<20151027104534.GA1620@bofh.thuis.puiterwijk.org>" "48" "[oss-security] Multiple CVE info for Ipsilon" nil nil nil "10" "2015102710:45:34" "[oss-security] Multiple CVE info for Ipsilon" (number mark "U       puiterwijk@r Oct 27   48/1877  " thread-indent "\"[oss-security] Multiple CVE info for Ipsilon\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1991 invoked by uid 550); 27 Oct 2015 12:27:09 -0000
+Received: (qmail 30226 invoked by uid 550); 18 Nov 2024 19:02:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22446 invoked from network); 27 Oct 2015 10:47:20 -0000
-Date: Tue, 27 Oct 2015 11:45:34 +0100
-From: Patrick Uiterwijk <puiterwijk@redhat.com>
+x-ms-reactions: disallow
+Received: (qmail 24011 invoked from network); 18 Nov 2024 18:41:23 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Greg Harris <gharris@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20151027104534.GA1620@bofh.thuis.puiterwijk.org>
+Message-ID: <1aaba0dd-1a3d-50f4-e803-84675dcce1cb@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 18 Nov 2024 18:39:08 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Subject: [oss-security] Multiple CVE info for Ipsilon
+Subject: [oss-security] CVE-2024-31141: Apache Kafka Clients: Privilege escalation to
+ filesystem read-access via automatic ConfigProvider 
 
-Hi,
+Severity: moderate
 
-I would like to provide information about multiple CVE's related to Ipsilon.
+Affected versions:
 
+- Apache Kafka Clients 2.3.0 through 3.5.2
+- Apache Kafka Clients 3.6.0 through 3.6.2
+- Apache Kafka Clients 3.7.0 through 3.7.1
 
-CVE-2015-5216:
-Versions affected: 0.1.0 to 1.0.0
-Fixed in versions: 1.0.1, 1.1.0
 Description:
-ipsilon does not escape HTML when processing http(s) request responses,
-and that js code could potentially be injected into Python exception message template.
 
-Mitigation: Users of Ipsilon should update to version 1.0.1 or later.
-Credit: This issue was discovered by Michael Scherer of Red Hat.
-References: https://bugzilla.redhat.com/show_bug.cgi?id=1255170
-Upstream patch: https://pagure.io/ipsilon/a503aa9c2a30a74e709d1c88099befd50fb2eb16
+Files or Directories Accessible to External Parties, Improper Privilege Man=
+agement vulnerability in Apache Kafka Clients.
 
+Apache Kafka Clients accept configuration data for customizing behavior, an=
+d includes ConfigProvider plugins in order to manipulate these configuratio=
+ns. Apache Kafka also provides FileConfigProvider, DirectoryConfigProvider,=
+ and EnvVarConfigProvider implementations which include the ability to read=
+ from disk or environment variables.
+In applications where Apache Kafka Clients configurations can be specified =
+by an untrusted party, attackers may use these ConfigProviders to read arbi=
+trary contents of the disk and environment variables.
 
-CVE-2015-5217:
-Versions affected: 0.1.0 to 1.0.0
-Fixed in versions: 1.0.1, 1.1.0
-Description:
-It was found that Ipsilon does not properly authorize change of the name of the provider.
-Non-admin users could change the name to a duplicate value which could possibly lead to DoS attack.
-
-Mitigation: Users of Ipsilon should update to version 1.0.1 or later.
-Credit: This issue was discovered by Patrick Uiterwijk of Red Hat.
-References: https://bugzilla.redhat.com/show_bug.cgi?id=1255172
-Upstream patch: https://pagure.io/ipsilon/826e6339441546f596320f3d73304ab5f7c10de6
+In particular, this flaw may be used in Apache Kafka Connect to escalate fr=
+om REST API access to filesystem/environment access, which may be undesirab=
+le in certain environments, including SaaS products.
+This issue affects Apache Kafka Clients: from 2.3.0 through 3.5.2, 3.6.2, 3=
+.7.1.
 
 
-CVE-2015-5301:
-Versions affected: 0.1.0 to 1.0.1 and 1.1.0
-Fixed in versions: 1.0.2, 1.1.1
-Description:
-It was found that Ipsilon does not check whether a user is authorized to delete a service provider.
-This makes it possible for any authenticated user to delete any service provider, causing a denial of service.
-
-Mitigation: Users of Ipsilon should update to version 1.0.2 or 1.1.1 or later.
-Credit: This issue was discovered by Patrick Uiterwijk and Rob Crittenden of Red Hat.
-References: https://bugzilla.redhat.com/show_bug.cgi?id=1271530
-Upstream patch: https://pagure.io/ipsilon/9dec97c3c83928d231ea10f4160523a13803e594
+Users with affected applications are recommended to upgrade kafka-clients t=
+o version >=3D3.8.0, and set the JVM system property "org.apache.kafka.auto=
+matic.config.providers=3Dnone".
+Users of Kafka Connect with one of the listed ConfigProvider implementation=
+s specified in their worker config are also recommended to add appropriate =
+"allowlist.pattern" and "allowed.paths" to restrict their operation to appr=
+opriate bounds.
 
 
----
-With kind regards,
-Patrick Uiterwijk
-Fedora Infra
+For users of Kafka Clients or Kafka Connect in environments that trust user=
+s with disk and environment variable access, it is not recommended to set t=
+he system property.
+For users of the Kafka Broker, Kafka MirrorMaker 2.0, Kafka Streams, and Ka=
+fka command-line tools, it is not recommended to set the system property.
+
+Credit:
+
+Greg Harris (finder)
+Mickael Maison (remediation reviewer)
+Chris Egerton (remediation reviewer)
+
+References:
+
+https://kafka.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-31141
+
