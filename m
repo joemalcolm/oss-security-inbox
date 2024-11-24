@@ -1,4 +1,4 @@
-Received: (qmail 22344 invoked by uid 550); 14 Oct 2025 18:29:27 -0000
+Received: (qmail 1789 invoked by uid 550); 24 Nov 2024 17:44:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,106 +8,78 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 11330 invoked from network); 14 Oct 2025 17:12:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1760461940;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=X4RLgZcmBHdx8g5B/qJo0xmw3IRSPNVpcO5qdwND6Vs=;
-	b=SQaqxiBRSFr0kOD0rx3s2mmBG8rLt0ionvjOVuNNeYtcOAvFHw53L7FOHFc2sIkE+Vt8xa
-	fZaMk1RxIkzkNMoMzlxHn0xXicHLjoAaqFK8XcraHkGAWg6JQLA5lSZVDpKzGJgo3J2KF2
-	wjJmlZUDF5rFdvFhE2OmCUpO7RUCraY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1760461940;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=X4RLgZcmBHdx8g5B/qJo0xmw3IRSPNVpcO5qdwND6Vs=;
-	b=RXR6Mbjo461QqZP59tz075zk9xJrU8MmFNOnV4n2HLQmDSplksM/n6DMvwDuh9+8zIPsnX
-	HriINv94Zzt8WC/aN/mlwVugCDjXKmkPwqPC4IH3fJ9U2CegHobeUZsMErPVKEZHrIcECi
-	QFC5WP7rZbS5wYEBUdImYG9q1lTcycY=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=bbb smtp.mailfrom=bbb@iki.fi
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1760461940; a=rsa-sha256; cv=none;
-	b=imtoHHs6xRGsIY9ngYU11vzTfAe5cnVzDHpIucrHsV/hbS+Z8BJNVPRHX2/i5AfDDAvr4/
-	0bO0EG4EnaZ3duyva+qH0baB9o9ViIcXudJpX4UkFmFZ2LDiPaHm/XASDQAdBbpW137Z95
-	1A7hVI0mCbncqecDn45Q0UL854H6BF0=
-Date: Tue, 14 Oct 2025 13:12:18 -0400 (EDT)
-From: Billy Brumley <bbb@iki.fi>
-To: oss-security@lists.openwall.com
-In-Reply-To: <26073564-c863-4012-b943-295dec9a5111@gmail.com>
-Message-ID: <99b8ce87-c95b-4679-62ee-6576764f38e9@iki.fi>
-References: <fd686bd9-d2a7-89f9-f438-7ed38e127591@iki.fi>  <CAH8yC8nZDxYF1NyGjHn8yOADBioNwPB4WTjUZGPmbRTvPLq2tw@mail.gmail.com>  <ME0P300MB0713AA2595680B38B28287AEEEEAA@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>  <CAFRnB2XECXsKDSuvBCeWHwC9apboBdvhYCEFrUo2TuonHs1yFw@mail.gmail.com>
- <26073564-c863-4012-b943-295dec9a5111@gmail.com>
+Received: (qmail 14232 invoked from network); 24 Nov 2024 11:52:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+	s=20191114; t=1732449154;
+	bh=YjV6HXT6UcY9E6iUiQctzQbMrFAlVMbwVd+sFrtpG/c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=je+SwSI/zYYN7/H5HkbzDtVEJ0jUW6X47IpyIEyq4CWPUz34ogor2uu5biySfK9p4
+	 H5UuNmHcE/Uhiuzr5Whfwum/7at1uv82pDWw6HXe16SoBmOlTiN+Fv6F9pnfp2q4t4
+	 gkKO7wPX7MM5w5LMwULyJAeuKl2Vud1ZYXeu7hZ8=
+Date: Sun, 24 Nov 2024 12:52:32 +0100
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+To: Ali Polatel <alip@hexsys.org>
+Cc: oss-security@lists.openwall.com, 
+	=?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>
+Message-ID: <20241124.ahQuohdaiN2A@digikod.net>
+References: <ykmy97joESH91bCHsZwXrM1OS3YcckmX8UcuxUQ6ogsxZjKI9lox0cTS-HuVaVUgn7fcmBdjRV4kdvZU3X5J6j8Ro1OJKzl1DHnka9f6g-M=@hexsys.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256; boundary="1757367822-53280776-1760461940=:25770"
-Subject: Re: [oss-security] BoringSSL private key loading is not constant
- time
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ykmy97joESH91bCHsZwXrM1OS3YcckmX8UcuxUQ6ogsxZjKI9lox0cTS-HuVaVUgn7fcmBdjRV4kdvZU3X5J6j8Ro1OJKzl1DHnka9f6g-M=@hexsys.org>
+X-Infomaniak-Routing: alpha
+Subject: Re: [oss-security] Article: State of Sandboxing in Linux
 
---1757367822-53280776-1760461940=:25770
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+On Mon, May 20, 2024 at 09:42:38AM +0000, Ali Polatel wrote:
+> Hello list,
+> 
+> I want to share an article I wrote on Linux Sandboxing:
+> https://git.sr.ht/~alip/syd/tree/main/item/doc/toctou-or-gtfo.md
 
-> It appears to be the number of trailing zero bytes in an elliptic
-> curve secret key.  That lets an attacker narrow the search space,
-> but that is all.
+Nice article!  I somehow miss this email...
 
-Thank you, that's accurate from the science perspective.
+> 
+> There's nothing new in there except something I discovered on Landlock which may be a bug or a feature.
+> TL;DR Landlock allows you to chdir into a directory that's not allowlisted. That's it though, you can
+> not list/read anything in there so I'd not say this is anything more than a potential info leak (as in
+> you discovered the dir existed). That said, I am not quite sure.
+> 
+> Very small PoC for those who do no want to read the article:
+> (-plib turns all seccomp sandboxing off so we apply a very simple landlock sandbox
+> only allowing /usr, busybox is static linked)
+> 
+> ⇒ syd -plib -msandbox/lock:on -m allow/lock/read+/lib -m allow/lock/read+/usr busybox sh
+> ~/src/syd/syd-3 $ cd /tmp
+> /tmp $ busybox ls
+> ls: can't open '.': Permission denied
+> /tmp $
+> 
+> I could enter /tmp although that's not allowlisted by Landlock.
 
-Yet more importantly, the implementation is not constant time in the 
-accepted model we've been using since 2004. It seems BoringSSL has their 
-own definition for that, better suiting their business model -- 
-"alternative facts"
+This is neither a bug nor a feature, but a current limitation
+highlighted in the documentation:
+https://docs.kernel.org/userspace-api/landlock.html#filesystem-flags
+This limitation is due to the current path-based LSM hooks (e.g. also
+used by AppArmor and Tomoyo), but we plan to address that:
+https://github.com/landlock-lsm/linux/issues/9
 
-BBB
+Sandboxer tools using Landlock may mislead users to think this kind of
+access may be denied but if we take a look at the Landlock filesystem
+access rights, none of them control path walk.  It should be noted that
+Landlock still provides the required access rights to protect users'
+data.  Only access to metadata cannot be controlled yet.
 
--- 
-Dr. Billy B. Brumley, D.Sc. (Tech.)
-Research Director, ESL Global Cybersecurity Institute (GCI)
-Kevin O'Sullivan Endowed Professor, Department of Cybersecurity (CSEC)
-Director, Platform Security Laboratory (PLATSEC)
-Rochester Institute of Technology
-Cybersecurity Hall 70-1770
-100 Lomb Memorial Drive
-Rochester, NY, 14623-5608, USA
-S/MIME public key: https://people.rit.edu/bbbics/bbbics@rit.edu.crt
-S/MIME public key: https://people.rit.edu/bbbics/bbb@iki.fi.crt
-https://www.rit.edu/directory/bbbics-billy-brumley
-https://www.rit.edu/cybersecurity/
---1757367822-53280776-1760461940=:25770
-Content-Type: application/pkcs7-signature; name=smime.p7s
-Content-Transfer-Encoding: BASE64
-Content-Description: S/MIME Cryptographic Signature
-Content-Disposition: attachment; filename=smime.p7s
+Thanks to incremental development, Landlock is gaining more and more
+features with new kernel versions:
+https://docs.kernel.org/userspace-api/landlock.html#previous-limitations
+You can find more information about Landlock's development in the
+related article:
+https://landlock.io/talks/2024-06-06_landlock-article.pdf
 
-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
-
---1757367822-53280776-1760461940=:25770--
-
+> 
+> Best regards,
+> Ali Polatel
+> 
+> PS: Initially I've sent this e-mail using the wrong e-mail address (was not subscribed
+> to the list), so this is a resend. I apologize if you end up receiving it twice.
