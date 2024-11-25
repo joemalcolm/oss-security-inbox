@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6042" "Friday" "10" "April" "2015" "17:38:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150410213841.D3FF26C000C@smtpvmsrv1.mitre.org>" "134" "[oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown" nil nil nil "4" "2015041021:38:41" "[oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown" (number mark "        cve-assign@m Apr 10  134/6042  " thread-indent "\"[oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown\"\n") "<CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>" ("<CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14212 invoked by uid 550); 10 Apr 2015 21:38:54 -0000
+Received: (qmail 11742 invoked by uid 550); 25 Nov 2024 16:25:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,147 +6,153 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14191 invoked from network); 10 Apr 2015 21:38:53 -0000
-In-Reply-To: <CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>
-Message-Id: <20150410213841.D3FF26C000C@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 10 Apr 2015 17:38:41 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown
-To: admin@shubh.am
+x-ms-reactions: disallow
+Received: (qmail 32499 invoked from network); 25 Nov 2024 05:50:53 -0000
+Message-ID: <b411aa8f-77dc-4542-89b6-9f2cb0f5b031@gentoo.org>
+Date: Mon, 25 Nov 2024 00:50:37 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <ykmy97joESH91bCHsZwXrM1OS3YcckmX8UcuxUQ6ogsxZjKI9lox0cTS-HuVaVUgn7fcmBdjRV4kdvZU3X5J6j8Ro1OJKzl1DHnka9f6g-M=@hexsys.org>
+ <20240520120909.GA8629@openwall.com>
+ <CAAiePB65qp8UeYHGZsH3g+mbCe76jCS=MJ5EeM4f=F2x-FfyDw@mail.gmail.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <CAAiePB65qp8UeYHGZsH3g+mbCe76jCS=MJ5EeM4f=F2x-FfyDw@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------08dwBVCaO86ke1lW2XlzfNYT"
+Subject: Re: [oss-security] Article: State of Sandboxing in Linux
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--------------08dwBVCaO86ke1lW2XlzfNYT
+Content-Type: multipart/mixed; boundary="------------65qB9lQN0RBu0W4f03ZrwoF0";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <b411aa8f-77dc-4542-89b6-9f2cb0f5b031@gentoo.org>
+Subject: Re: [oss-security] Article: State of Sandboxing in Linux
+References: <ykmy97joESH91bCHsZwXrM1OS3YcckmX8UcuxUQ6ogsxZjKI9lox0cTS-HuVaVUgn7fcmBdjRV4kdvZU3X5J6j8Ro1OJKzl1DHnka9f6g-M=@hexsys.org>
+ <20240520120909.GA8629@openwall.com>
+ <CAAiePB65qp8UeYHGZsH3g+mbCe76jCS=MJ5EeM4f=F2x-FfyDw@mail.gmail.com>
+In-Reply-To: <CAAiePB65qp8UeYHGZsH3g+mbCe76jCS=MJ5EeM4f=F2x-FfyDw@mail.gmail.com>
 
-> Could I please get a CVE for a Persistent XSS flaw found in NodeBB versions
-> < 0.70. The Github repository for this project can be found here:
-> https://github.com/NodeBB/NodeBB.
-> 
-> The vulnerability allows for an attacker to insert malicious links within
-> forum posts and threads - that lead to the execution of attacker-defined
-> JavaScript on click. This vulnerability not only affects NodeBB but also
-> affects any project which uses the markdown-it project before 4.1.0.
+--------------65qB9lQN0RBu0W4f03ZrwoF0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-We have done a limited amount of research on this, and currently feel
-that the last sentence above doesn't precisely describe the situation.
-Instead, we feel that there are two independent vulnerabilities.
-
-> NodeBB -
-> https://github.com/julianlam/nodebb-plugin-markdown/commit/ab7f2684750882f7baefbfa31db8d5aac71e6ec3
-
-It appears that, in this single commit, NodeBB had both of these changes:
-
-  1. the Markdown component was changed from remarkable to markdown-it
-
-  2. a workaround was added for the markdown-it vulnerability involving
-     data: URLs
-
-Based on references such as:
-
-  https://www.reddit.com/r/javascript/comments/2qa0hp/markdown_parser_done_right_100_commonmark_support/
-  http://stackoverflow.com/questions/1690601/markdown-and-xss
-
-we think the situation is:
-
-  A. A possibly prevailing opinion is that there is no requirement
-     that an implementation of the Markdown language have any
-     functionality related to preventing XSS attacks. The rationale is
-     that XSS prevention is arguably a responsibility of a code layer
-     than occurs after Markdown is converted to HTML.
-
-  B. remarkable is an implementation of the Markdown language that, by
-     design, intentionally chose not to try to prevent XSS. Therefore,
-     there cannot be a CVE ID for XSS in remarkable.
-
-  C. markdown-it is another implementation of the Markdown language
-     that has a substantial amount of code in common with remarkable.
-     (For purposes of this CVE request, the reasons behind the similar
-     and/or dissimilar code are not really relevant.)
-
-  D. markdown-it made a choice to try to prevent some types of XSS
-     attacks, e.g., by blocking javascript: URLs. This might be
-     considered an advertised security property. Then, it was reported
-     that roughly similar types of attacks with data: URLs were not
-     prevented. This can be considered an incomplete list of dangerous
-     protocols. The markdown-it maintainer made a commit that might be
-     considered a required security update. Thus, it's at least
-     plausible that an associated CVE should exist.
-
-  E. The markdown-it maintainer also added a comment suggesting that
-     XSS prevention was not intended to cover all cases ("This
-     validator does not pretent to functionality of full weight
-     sanitizers. It's a tradeoff between default security, simplicity
-     and usability. If you need different setup - override validator
-     method as you wish. Or replace it with dummy function and use
-     external sanitizer."). This potentially can become a major
-     complication for CVE assignment. Specifically, if the vendor is
-     specifically documenting that XSS prevention is intentionally
-     incomplete, we do not think that every future XSS report can have
-     a CVE ID. This raises the question of: if there may not be CVE ID
-     assignments in the future, is it actually useful to have a CVE ID
-     assignment for the data: issue.
-
-  F. Regardless of the status of markdown-it CVEs, there is a
-     vulnerability in versions of NodeBB before
-     ab7f2684750882f7baefbfa31db8d5aac71e6ec3, because these versions
-     apparently omitted both of these:
-
-     -- a Markdown language implementation that was capable of
-        preventing XSS with either javascript: URLs or data: URLs
-
-     -- a secondary code layer that was capable of preventing XSS with
-        either javascript: URLs or data: URLs
-
-Our decision, at least for now, is to have one CVE ID for D and one
-CVE ID for F. Specifically:
-
-  - item D
-    
-    fix: https://github.com/markdown-it/markdown-it/commit/f76d3beb46abd121892a2e2e5c78376354c214e3
-
-    short description: an earlier version of markdown-it blocked
-                       javascript: but not data:
-
-    Use CVE-2015-3295. Note that this CVE is not applicable to any
-    version of NodeBB. There was never a version of NodeBB that used
-    markdown-it with javascript: blocking and no data: blocking.
-
- 
-  - item F
-
-    fix: https://github.com/julianlam/nodebb-plugin-markdown/commit/ab7f2684750882f7baefbfa31db8d5aac71e6ec3
-
-    short description: an earlier version of NodeBB had no
-                       protection against either javascript: or data:
-                       XSS attacks
-
-    Use CVE-2015-3296.
+On 11/24/24 7:12 PM, Evan Carroll wrote:
+> A lot of words on that one,
+>=20
+> Not sure if you're the author of the paper. But off the get go, I'm
+> extremely confused. I wanted to give my critique on the paper instead of
+> the technology. My experience with "user-space sandboxing" is kernel
+> user-namespaces. My interface to them is podman. It's not clear what this
+> "sandbox" offers that podman's rootless mode does not. I believe I'm in t=
+he
+> majority with experience in containerization. But you're grounding this
+> paper in "two prime examples of sandbox: Gentoo's sandbox and Exherbo's
+> sydbox" -- things most people have probably never used. This for me raises
+> the question: when would I want "Gentoo's sandbox and Exherbo's sydbox"
+> over kernel user-namespaces and podman?
+>=20
+> I don't see that answer immediately and so my desire to continue reading
+> drops significantly. This is only constructive criticism, maybe I'm not
+> your desired audience but the title was interesting enough for me to jump
+> in.
 
 
-It's possible that other NodeBB XSS issues will be reported in the
-future, and will have other CVE IDs. NodeBB is ultimately responsible
-for an XSS prevention strategy, regardless of whether it involves
-incorporating different third-party HTML sanitization components or
-their own unique code. In other words, we don't feel that the NodeBB
-security policy could be "we block only the types of XSS attacks that
-happen to be covered by markdown-it." At the moment, we have not heard
-of any NodeBB XSS attack that isn't addressed by the
-ab7f2684750882f7baefbfa31db8d5aac71e6ec3 patch.
+You might want "sydbox", though I wouldn't know.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+I can definitely tell you that you do not want Gentoo's sandbox, which
+isn't a security technology at all. It's an LD_PRELOAD mechanism, and
+thus easily defeated by malicious software, which assumes that it is
+being used as a "sandbox" for innocent software that is perhaps badly
+written to run inside, and interjects code on regular file accesses to
+check whether the software was "expected" to attempt to read or write in
+that location.
+
+On a mismatch, it errors out verbosely and tells you that the relevant
+software was badly written and tried to, say, install the software to
+/usr/bin upon running `make DESTDIR=3D$PWD/rootimage/ install`, which is
+obviously wrong because the software has a bad Makefile that doesn't
+respect $DESTDIR.
+
+Of course, it can also tell you about more interesting sandbox
+violations, such as "attempted to download source code from
+https://crates.io and save it to /home/eschwartz/.cargo" which is
+another thing that well-meaning software might do but really shouldn't be.
+
+You wouldn't imagine in a million years using this as a security
+boundary. But you might use it to help catch common mistakes when
+building software.
+
+It dates back to 2002, when it was forked from the same codebase that
+was also incorporated into Debian's "checkinstall" package.
+
+...
+
+My understanding is that sydbox is intended to be more of a competitor
+to bubblewrap, and happens to include profiles which exherbo uses to
+make it do similar tasks to Gentoo's sandbox, but that sydbox itself is
+much more powerful and flexible than sandbox.
+
+...
+
+By the way, you mention "when would I want [...] over kernel
+user-namespaces", which I think is a complete and utter misunderstanding
+of the problem domain.
+
+sydbox documents that one of the technologies it uses in its source code
+is user namespaces. Generally, "user namespaces" isn't a program you
+use, it's a technique you can make use of in the source code of another
+program entirely... such as sydbox or at a high level, podman.
+
+
+=46rom looking through the sydbox homepage, and very quickly checking for
+keywords such as "podman", I got pointed to this link:
+
+https://man.exherbolinux.org/syd-oci.1.html
+
+It suggests that the relevance of this software to podman is that you
+can use "sydbox" as an OCI runtime for podman, to replace "crun" or
+"runc", via:
+
+podman run --runtime=3Dsyd-oci
+
+
+Take that as you will. Since you're a podman user, but you don't say
+anything about whether you are a crun user or a runc user, I take it you
+don't care how you get your namespaces and would be perfectly fine using
+sydbox too, but won't be changing anything unless podman's own default
+changes?
+
+
+--=20
+Eli Schwartz
+
+--------------65qB9lQN0RBu0W4f03ZrwoF0--
+
+--------------08dwBVCaO86ke1lW2XlzfNYT
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVKEGJAAoJEKllVAevmvms+FoH/R3yE8vdw8RIy2d9G/qSHvQo
-bpL3W/U4a/gehD7j6VuDS1az5zbwBVBz/zC+k2QmsQf3PcdJqj/FJB1XOtIiQ8kS
-5ln6wOuKWqai0tQFJwKnujX2erZEDlevrGxF+iF/FGm+91H+lWkk40iWfZ9C4Glz
-bmc2HEKmmJhKNLSDjP1714peFJx8tfgJGo1u9Fxo1oo7JngMmEzINzG5U1C+tqCT
-4iZPfFS8k3+OtcxNO6VdsOLvb6QfQapbndQ9DjseBX3LGWMxi1bImb2StzFkG6Hk
-znb19grc2HgWjvQJ/ZC/lsYweNjfktgZKS8TDG7iHHZwOiGPoqV0VE+Pv3iqwmg=
-=fP1z
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZ0QQLQUDAAAAAAAKCRCEp9ErcA0vV6Fw
+AP47LSS+i3ktxUMcW67EEosuUdVGtIfiBJ9xfUQNqqGRGQEA+E1m/XyB0cKKC2tpEVwwAm7owPNF
+LS68cHdmDkPSxQE=
+=jxjG
 -----END PGP SIGNATURE-----
+
+--------------08dwBVCaO86ke1lW2XlzfNYT--
