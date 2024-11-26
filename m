@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4142" "Sunday" "7" "May" "2017" "10:10:17" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<952229.668011086-sendEmail@localhost>" "101" "[oss-security] libpcre: heap-based buffer overflow write in pcre2test.c" "^Date:" nil nil "5" "2017050710:10:17" "[oss-security] libpcre: heap-based buffer overflow write in pcre2test.c" (number mark "        ago@gentoo.o May  7  101/4142  " thread-indent "\"[oss-security] libpcre: heap-based buffer overflow write in pcre2test.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23554 invoked by uid 550); 7 May 2017 10:10:37 -0000
+Received: (qmail 5564 invoked by uid 550); 26 Nov 2024 10:56:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +6,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22506 invoked from network); 7 May 2017 10:10:36 -0000
-Message-ID: <952229.668011086-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-228696.871855394"
-Date: Sun, 7 May 2017 10:10:17 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] libpcre: heap-based buffer overflow write in pcre2test.c
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 20382 invoked from network); 26 Nov 2024 08:19:09 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Szymon Janc <janc@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <d3ebb402-92f1-981e-019b-e33b7414befc@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 26 Nov 2024 08:17:18 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-47250: Apache NimBLE: Lack of input validation in HCI
+ advertising report could lead to potential out-of-bound access 
 
-------MIME delimiter for sendEmail-228696.871855394
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Severity: low
+
+Affected versions:
+
+- Apache NimBLE through 1.7.0
 
 Description:
-libpcre is a perl-compatible regular expression library.
 
-A fuzz on pcre2 via pcre2test revealed an overflow in that command-line utility.
+Out-of-bounds Read vulnerability in Apache NimBLE.
 
-# pcre2test -d -i -32 $FILE
-==30932==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61100000a000 at pc 0x7f2d8c3aea0f bp 0x7ffeea6b6e20 sp 0x7ffeea6b6e18   
-WRITE of size 4 at 0x61100000a000 thread T0  
-    #0 0x7f2d8c3aea0e in pcre2_get_error_message_32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13
-    #1 0x53b7c5 in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:5169:3    
-    #2 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
-    #3 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
-    #4 0x41d5b8 in _init (/usr/bin/pcre2test+0x41d5b8) 
+Missing proper validation of HCI advertising report could lead to out-of-bo=
+und access when parsing HCI event and thus bogus GAP 'device found' events =
+being sent.
+This issue requires broken or bogus Bluetooth controller and thus severity =
+is considered low.
+This issue affects Apache NimBLE: through 1.7.0.
 
-0x61100000a000 is located 0 bytes to the right of 256-byte region [0x611000009f00,0x61100000a000)   
-allocated by thread T0 here:  
-    #0 0x4d6378 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64    
-    #1 0x54c522 in to32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:2911:27    
-    #2 0x53962e in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:4998:43   
-    #3 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
-    #4 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13 in 
-pcre2_get_error_message_32    
-Shadow bytes around the buggy address:  
-  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff9400:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9450: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==30932==ABORTING
-
-Affected version:
-10.23
-
-Fixed version:
-N/A
-
-Commit fix:
-https://vcs.pcre.org/pcre2/code/trunk/src/pcre2test.c?r1=692&r2=697
+Users are recommended to upgrade to version 1.8.0, which fixes the issue.
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-CVE-2017-8786
+Eunkyu Lee (reporter)
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00220-pcre2-heapoverflow-pcre2_get_error_message_32
+References:
 
-Timeline:
-2017-03-17: bug discovered and reported to upstream
-2017-03-21: upstream released a patch
-2017-04-29: blog post about the issue
-2017-05-05: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libpcre-heap-based-buffer-overflow-write-in-pcre2test-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-228696.871855394--
+https://mynewt.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-47250
 
