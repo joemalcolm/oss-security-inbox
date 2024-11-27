@@ -1,4 +1,4 @@
-Received: (qmail 1072 invoked by uid 550); 23 Jun 2024 19:42:47 -0000
+Received: (qmail 5785 invoked by uid 550); 27 Nov 2024 16:34:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1051 invoked from network); 23 Jun 2024 19:42:46 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: Ihor Radchenko <yantar92@posteo.net>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <87wmmguk44.fsf@localhost> (Ihor Radchenko's message of "Sun, 23
-	Jun 2024 08:41:15 +0000")
-Organization: The Eyrie
-References: <87wmmguk44.fsf@localhost>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Sun, 23 Jun 2024 12:42:36 -0700
-Message-ID: <87h6djh2dv.fsf@hope.eyrie.org>
+x-ms-reactions: disallow
+Received: (qmail 32751 invoked from network); 27 Nov 2024 13:41:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=8uo9Zg2Q3b2FyoRSXk4uvIefkZb/P7IWg/nOXeg2jBc=; b=IcNJn/WNUzmnE/jBXr0t1rpt8o
+	dSIcCwhgmQAwLw+JsgAp/oZGqBULAV81FU/uPRi+Ur8RYjB8I6s5rC4wEdrYM8KlZhkD/rKVM76EX
+	9XfQEW/DC7bjdPl7ZHQSFHt/k0vqdLtgjFmBR6BG1k/Y8u9yiZAcUV0jxqzUcxvskvaiIrDKK1AJk
+	I/JP3ngBamAxQytVBuKf5EMpgtS0CB2hSeS9PaTNnnu9bjENGBgA+53ixiIreHQQ3wPuM97EHC2mV
+	kMU+mGDeeRbxuo0q4cZ+lUYHHtfLCgNlEbyEggC5FrVd3elUN62Eo+zLqiAk/4QuB9tlbB6zUsWgP
+	sjR43FNQ==;
+Date: Wed, 27 Nov 2024 15:40:50 +0200
+Message-ID: <20241127154050.GD1511343@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Arbitrary shell command evaluation in Org mode
- (GNU Emacs)
+Content-Type: multipart/signed; boundary="KTivM/Yky/wrQp6y"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0007
 
-Ihor Radchenko <yantar92@posteo.net> writes:
+--KTivM/Yky/wrQp6y
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-> Here is a vulnerability in Emacs Org mode.
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjQtMDAwNwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogTm92ZW1iZXIgMjcsIDIwMjQKQWR2aXNvcnkgSUQgICAgICAgICAg
+ICAgOiBXU0EtMjAyNC0wMDA3CldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
+aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI0LTAwMDcuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
+IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDA3Lmh0bWwK
+Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC00NDMwOCwgQ1ZFLTIwMjQtNDQzMDku
+CgpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2NvdmVyZWQgaW4gV2ViS2l0R1RLIGFu
+ZCBXUEUgV2ViS2l0LgoKQ1ZFLTIwMjQtNDQzMDgKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJL
+aXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDYuNC4KICAgIENyZWRpdCB0byBDbMOpbWVu
+dCBMZWNpZ25lIGFuZCBCZW5vw650IFNldmVucyBvZiBHb29nbGUncyBUaHJlYXQgQW5hbHlzaXMg
+R3JvdXAuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29u
+dGVudCBtYXkgbGVhZCB0bwogICAgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBBcHBsZSBpcyBh
+d2FyZSBvZiBhIHJlcG9ydCB0aGF0IHRoaXMgaXNzdWUKICAgIG1heSBoYXZlIGJlZW4gYWN0aXZl
+bHkgZXhwbG9pdGVkIG9uIEludGVsLWJhc2VkIE1hYyBzeXN0ZW1zLgogICAgRGVzY3JpcHRpb246
+IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgY2hlY2tzLgogICAgV2ViS2l0
+IEJ1Z3ppbGxhOiAyODMwNjMKCkNWRS0yMDI0LTQ0MzA5CiAgICBWZXJzaW9ucyBhZmZlY3RlZDog
+V2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjQuCiAgICBDcmVkaXQgdG8gQ2zD
+qW1lbnQgTGVjaWduZSBhbmQgQmVub8OudCBTZXZlbnMgb2YgR29vZ2xlJ3MgVGhyZWF0IEFuYWx5
+c2lzIEdyb3VwLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2Vi
+IGNvbnRlbnQgbWF5IGxlYWQgdG8gYQogICAgY3Jvc3Mgc2l0ZSBzY3JpcHRpbmcgYXR0YWNrLiBB
+cHBsZSBpcyBhd2FyZSBvZiBhIHJlcG9ydCB0aGF0IHRoaXMKICAgIGlzc3VlIG1heSBoYXZlIGJl
+ZW4gYWN0aXZlbHkgZXhwbG9pdGVkIG9uIEludGVsLWJhc2VkIE1hYyBzeXN0ZW1zLgogICAgRGVz
+Y3JpcHRpb246IEEgY29va2llIG1hbmFnZW1lbnQgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGlt
+cHJvdmVkCiAgICBzdGF0ZSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyODMwOTUK
+CldlIHJlY29tbWVuZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBX
+ZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhh
+dCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBv
+dXIgd2Vic2l0ZXMgZm9yIGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVh
+c2VzLgoKRnVydGhlciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQg
+c2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUgZm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9y
+Zy9zZWN1cml0eS5odG1sIG9yCmh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KClRoZSBX
+ZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgdGVhbSwK
 
-> Reproducer is the following .org file:
+--KTivM/Yky/wrQp6y
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> #+LINK: shell %(shell-command-to-string)
-> [[shell:touch ~/hacked.txt]]
+-----BEGIN PGP SIGNATURE-----
 
-> When sent by email and previewed in Emacs or when opened in Emacs as a
-> file, the above Org file will evaluate "touch ~/hacked.txt" without any
-> prompts.
+iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZ0chYgAKCRCRxVnb5MkS
+O9QIAJ9x+2BvpIAWpe6J90fD15l0CG2PxwCdGWYqT+qGSdSdonMV3xXTyzllesk=
+=JkgI
+-----END PGP SIGNATURE-----
 
-> The fix is attached. It is against Org mode git repository.
-> The fix can be applied to older versions of Org mode/Emacs if deemed
-> necessary.
-
-For those who want to disable automatic parsing of Org files in incoming
-email messages with Emacs-based mail readers that use emacs-mime, I
-believe this needs to be done with two bits of configuration.
-
-The following (or the equivalent via customize) will disable autodetection
-of Org files inline in text/plain parts, such as in the message that I'm
-responding to:
-
-(custom-set-variables
- '(mm-uu-configure-list
-   '((org-src-code-block . disabled)
-     (org-meta-line . disabled))))
-
-In order to disable automatic previewing of org-mode attachments, you need
-to customize mm-automatic-display to remove text/x-org from the list of
-MIME types that are automatically previewed.  (This part I have not
-tested.)
-
-There are probably other ways to do this; those are just the ones that I
-found.
-
--- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+--KTivM/Yky/wrQp6y--
