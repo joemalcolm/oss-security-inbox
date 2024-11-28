@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1208" "Wednesday" "12" "August" "2015" "14:32:41" "+0200" "Florian Weimer" "fweimer@redhat.com" "<55CB3CE9.1030104@redhat.com>" "35" "[oss-security] Is CVE-2015-4650 a duplicate, leak, or just a typo?" nil nil nil "8" "2015081212:32:41" "[oss-security] Is CVE-2015-4650 a duplicate, leak, or just a typo?" (number mark "        fweimer@redh Aug 12   35/1208  " thread-indent "\"[oss-security] Is CVE-2015-4650 a duplicate, leak, or just a typo?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3239 invoked by uid 550); 12 Aug 2015 12:32:56 -0000
+Received: (qmail 32153 invoked by uid 550); 28 Nov 2024 12:14:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3218 invoked from network); 12 Aug 2015 12:32:55 -0000
-X-Enigmail-Draft-Status: N1110
-Message-ID: <55CB3CE9.1030104@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Cc: oss-security@lists.openwall.com
-Date: Wed, 12 Aug 2015 14:32:41 +0200
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Is CVE-2015-4650 a duplicate, leak, or just a typo?
-To: ISC Security Officer <security-officer@isc.org>,
-        Assign a CVE Identifier <cve-assign@mitre.org>
+x-ms-reactions: disallow
+Received: (qmail 32135 invoked from network); 28 Nov 2024 12:14:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=VLjGr0fgncfM6m9cdADlGkdNtpjgAHMqTmFM7xMS4ws=; b=WSpPz/yxYzBgNtDEmQDSKcW582
+	bgRVzeWA0n8oZWr42F1I/zFSPwtu3V4tsSFYY7IFPVyv31CIxWnWcBNXShNoWl9UNine5IJrRH90z
+	qm5KwJVIwba/3uRVwvmuv9lqtqB/41YaVHztWx0ja2VC+P3cI3VlOQG4wWFsDKqLRKIxWLGhft4T7
+	4xPBEQ+uhYRSPeKz/pltLjs3s1zxnZTO7glIZeNP3E0g2lpHQEniz8p/quzRwy4r+w8rcEyZuCtpN
+	T3IV+qUwbZnIJll5NocmeR/7JRqXEDKjnoGRJ/IiWpdrdsiQjMQ2yHKYcORRXm6OCkyBVrkrwNfft
+	3VOJI3yg==;
+Date: Thu, 28 Nov 2024 12:14:07 +0000
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Z0hejwSEFfhScLbR@remnant.pseudorandom.co.uk>
+References: <Z0g4nBTW-VFYm4cu@kasco.suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z0g4nBTW-VFYm4cu@kasco.suse.de>
+X-Debian-User: smcv
+Subject: Re: [oss-security] tuned: local root exploit in D-Bus method
+ instance_create and other issues in tuned >= 2.23 (CVE-2024-52336,
+ CVE-2024-52337)
 
-Some documents use CVE-2015-4650 to refer to a vulnerability in BIND.
-Apparently, they source back to
+On Thu, 28 Nov 2024 at 10:32:09 +0100, Matthias Gerstner wrote:
+> The new D-Bus methods `HoldProfile()` and `ReleaseProfile()` use a
+> cookie to identify a profile hold. The cookie is simply a continuously
+> increasing integer starting at zero. This means other users in the
+> system can easily release the profile holds of any other users.
 
-<https://www.alienvault.com/forums/discussion/5706/security-advisory-alienvault-v5-1-addresses-6-vulnerabilities>
+This should be easily resolvable if the authors of tuned want to do so,
+without needing to resort to relying on hard-to-predict cookie values.
+Clients of the D-Bus system bus can identify other clients of the system
+bus, by calling the GetConnectionCredentials method on the message bus
+itself (this is how polkit works).
 
-which says:
+So, if tuned's design constraints allow a model where a cookie is only
+considered valid to release if it was allocated by the same uid that
+made the original request, that would be straightforward to implement.
+Pseudocode:
 
-“
-Debian Security Update
-AlienVault ID: ENG-101265
-Description: name.c in named in ISC BIND 9.7.x through 9.9.x before
-9.9.7-P1 and 9.10.x before 9.10.2-P2, when configured as a recursive
-resolver with DNSSEC validation, allows remote attackers to cause a
-denial of service (REQUIRE assertion failure and daemon exit) by
-constructing crafted zone data and then making a query for a name in
-that zone.
-CVE ID: CVE-2015-4650
-CVSS v2 Base Score: 7.8
-CVSS v2 Vector: (AV:N/AC:L/Au:N/C:N/I:N/A:N)
-”
+    HoldProfile() -> cookie:
+        get the caller's unique bus name (looks like e.g. :1.23)
+        call GetConnectionCredentials(":1.23") to get the UnixUserID
+        allocate a cookie
+        store {cookie: uid} in a hash table
+        return cookie
 
-That description seems to match CVE-2015-4620, so I'm leaning towards typo:
+    ReleaseProfile(cookie):
+        get the caller's unique bus name (looks like e.g. :1.23)
+        call GetConnectionCredentials(":1.23") to get the UnixUserID
 
-<https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-4620>
+        look up the cookie's corresponding uid in the hash table
 
-I don't know how this came into being.  Debian does not appear
-responsible, the immutable list archives use the correct ID:
+        if cookie not found || caller_uid != cookie_uid:
+            error "No such cookie owned by this uid"
 
-<https://lists.debian.org/debian-lts-announce/2015/07/msg00008.html>
-<https://lists.debian.org/debian-security-announce/2015/msg00200.html>
+        ... continue to release the profile
 
-Comments appreciated.
+Any good-quality D-Bus client library should have API to get the unique
+bus name of the caller while handling an incoming method call. The most
+commonly-used client libraries (dbus' libdbus, GLib's GDBus, systemd's
+sd-bus) can certainly do that.
 
--- 
-Florian Weimer / Red Hat Product Security
+Treating each uid as a trust domain is the most common way to handle
+system bus security, but on Linux, various other fields are conditionally
+available in the result of GetConnectionCredentials if tuned wants to
+implement some more complicated security model (for example looking at
+the SELinux/AppArmor/Smack security label, which is available on D-Bus as
+the LinuxSecurityLabel credential).
+
+(Behind the scenes, this is implemented by the message bus using
+SO_PEERCRED, SO_PEERSEC, etc. on each client connection, or the closest
+available equivalent of SO_PEERCRED on various non-Linux OSs.)
+
+Or, if the tuned authors want to implement a model where only the same
+bus connection that initially called HoldProfile can call ReleaseProfile,
+that's even simpler, because it doesn't need GetConnectionCredentials:
+tuned could remember the unique bus name of the caller of HoldProfile,
+and only allow ReleaseProfile to be called by a matching unique bus
+name. If this is the chosen model, it will probably also want to watch for
+NameOwnerChanged signals, so that it can automatically release the profile
+when the requester disconnects from the message bus. In particular,
+if the requester crashes, this disconnection will happen automatically
+when the kernel cleans up its resources, which is not directly
+security-relevant but seems likely to be desirable anyway.
+
+    smcv
