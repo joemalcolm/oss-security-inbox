@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4957" "Tuesday" "19" "January" "2021" "15:30:39" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<YAbtDzwSAq3kkWxB@f195.suse.de>" "107" "[oss-security] segv_handler junkcode snippet / openSUSE segv_handler package potential local root exploit" nil nil nil "1" "2021011914:30:39" "[oss-security] segv_handler junkcode snippet / openSUSE segv_handler package potential local root exploit" (number mark "U       mgerstner@su Jan 19  107/4957  " thread-indent "\"[oss-security] segv_handler junkcode snippet / openSUSE segv_handler package potential local root exploit\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] segv_handler junkcode snippet / openSUSE segv_handler package potential local root exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 29888 invoked by uid 550); 19 Jan 2021 14:30:52 -0000
+Received: (qmail 4077 invoked by uid 550); 30 Nov 2024 17:51:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,123 +7,206 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29830 invoked from network); 19 Jan 2021 14:30:51 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 19 Jan 2021 15:30:39 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <YAbtDzwSAq3kkWxB@f195.suse.de>
+x-ms-reactions: disallow
+Received: (qmail 13642 invoked from network); 30 Nov 2024 08:32:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732955550; x=1733560350; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=f9Zzp/Z1DdsMiXq4DSf3c0/MnwJIXIQ8xRQux7KWRFM=;
+        b=Uas6qd2h0lQlJPLfMFxKbSnjsXasqoVN7ADH8zVUIdLPO6Xzq1Cs7QwzYdWEuhPhGP
+         G1RKf9cRqpZbgIu8bM0l1skiCVeZTi8bb6siuux0e5auQGK9TtYPgMyM1fbRpLi745xt
+         kI9pPCtvpb4InEFq0frHHAi9hJn4cxTtmwgdX5ObhDetimice7e04TiFwptmhQQsme7E
+         RxjQcaQsgq3mbwT9BgE8pKsun/QkO4Zr0T5B2XwJ7Dc9xC7hmCTt9eNNSpgfinbd8mhc
+         NOTPDsgM0oSKSLs/BAUjP8zCPwGLQX0mcZGrulSlYvk0zX+CAGxBpI7bJwHt4Z13WTvf
+         4wuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732955550; x=1733560350;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f9Zzp/Z1DdsMiXq4DSf3c0/MnwJIXIQ8xRQux7KWRFM=;
+        b=TCBLX9pzD/UxT9MzMfG0LrWDTNrehuo+RIoLcXQgFI0vtgNZfnJQUxoL9bJrfR6o/X
+         FxxZql7AIzndxQNYBqSPGRDhnkHXNiGfCQNYX2Lfvn4oLuZcM4K2x0wbjkAH7iCv8b2G
+         Tl0m+2CFJGoSAele8CgQ80j3ohdJwxj01JSBxVvQPPN5Yz1Af9pBgBzdhV8c6SamJzOZ
+         pC8ipr4Hc12OLkMn54JNTaIDwwMdhAF3WLCOGGrMHVaGfXXmUTFs2Vvu7SgmqQNDlCPk
+         L/j4GnHgwV/Q+LgqOGWlrne+mypURMEgZgfS12HnPQInkoYVLPuVAQk36NBM92eBhU2v
+         rPXQ==
+X-Gm-Message-State: AOJu0Yzpz0xsQxRumflMyrTEnsFel3JrUL7QW/2/WLVpixEfu9yr857Z
+	U2/viH32InIEFDUWJg9lyEN3Mq3Tu9A8KgFNWyfiYRk83Lwqsy0OXEOAgMKWAPcc7voAUZqP2gS
+	5Ah9NDvHpM1ruqkK85qBBKY79MxE=
+X-Gm-Gg: ASbGncsqzS1u5d5IU0Co5EWewsk5vTAkaP3+BgPN9H+VGZfk5UIBI3P2NWVDuYO3Z5M
+	kbSl+1EhA+mwjGH7lrN1xGuSxwuRqpr27
+X-Google-Smtp-Source: AGHT+IHxURxrvBaNpeuNyE1NPeT4BQgVkDGjaE7T4oLZ3UV7rOpF6lPjj4BLH4lXHwUwQnGGM3IonNuB4BpB6Di0Jz8=
+X-Received: by 2002:a50:cd9d:0:b0:5d0:ca1f:2fc1 with SMTP id
+ 4fb4d7f45d1cf-5d0ca1f32d4mr1461325a12.23.1732955549474; Sat, 30 Nov 2024
+ 00:32:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="qciJQxT86hkR/wV6"
-Content-Disposition: inline
-Subject: [oss-security] segv_handler junkcode snippet / openSUSE segv_handler package
- potential local root exploit
+References: <20241129044032.GA5009@openwall.com> <CABBYNZKNpv7ArhxYoZhO8S5zdqFj9ydMb+eg9tyzDF-i+g=N5g@mail.gmail.com>
+ <CAH_BBqfhd=4MP8XRWTvfcqFkQtZzwCOtqACtio0tGLKBp+vE0Q@mail.gmail.com> <20241130054634.GA12730@openwall.com>
+In-Reply-To: <20241130054634.GA12730@openwall.com>
+From: tianshu qiu <jimuchutianshu97@gmail.com>
+Date: Sat, 30 Nov 2024 16:32:17 +0800
+Message-ID: <CAH_BBqfO2dUX+H7RAUDfPJUG=oofYP9+SLJU07MUWkW8CW6Huw@mail.gmail.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Marcel Holtmann <marcel@holtmann.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000f02a4406281d27f3"
+Subject: Re: [oss-security] Linux: Race can lead to UAF in net/bluetooth/sco.c:
+ sco_sock_connect()
 
---qciJQxT86hkR/wV6
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+--000000000000f02a4406281d27f3
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello list,
+The diagrams needs to be displayed correctly in full screen. The
+diagrams above are correct. The second diagram is the timeline  for race.
+After careful analysis and debugging,i guess the commit:
+https://github.com/torvalds/linux/commit/e6720779ae612a14ac4ba7fe4fd5b27d90=
+0d932c
+ has solved the UAF.
+The introduction of kref object ensures the dangling sco_conn object being
+freed in the function sco_conn_del when asynchronous hci event thread is
+invoked, which stops
+the subsequent exploit chain.
 
-I stumbled over this old code from samba / "junkcode" [1]. The code
-demonstrates the idea how to establish a temporary or global
-segmentation fault handler via an LD_PRELOAD library. This code ended up
-in an openSUSE package "segv_handler" for a long time e.g. in [2]. I am
-not aware of any other cases where this code has been released for
-production use.
+I'm not sure if this commit is related to the email I sent, because i sent
+the first email to security@kernel.org on  November 14th, and the commit
+was on  November 15th.
 
-The documentation suggests to install the library globally via
-/etc/ld.so.preload. If done this way the code will be used by all
-programs in the system, including setuid-root programs.
+On Sat, Nov 30, 2024 at 1:46=E2=80=AFPM Solar Designer <solar@openwall.com>=
+ wrote:
 
-The code has various issues:
+> On Sat, Nov 30, 2024 at 01:18:18PM +0800, tianshu qiu wrote:
+> > The bug was introduced on Apr 11, 2023:
+> >
+> https://github.com/torvalds/linux/commit/9a8ec9e8ebb5a7c0cfbce2d6b4a6b67b=
+2b78e8f3
+> > The latest affected version is Linux-6.11.5
+>
+> I guess you actually mean the latest _known_ affected?  So later
+> versions may also be affected, but you haven't confirmed that?
+>
+> There were a couple of very wide diagrams in your message, which were
+> not properly formatted in its text/plain part.  The below is my attempt
+> at resurrecting them from the text/html part (normally filtered out when
+> relaying through this mailing list), but a very wide window is still
+> needed to view them properly.
+>
+> First:
+>
+>
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>    sco_sock_timeout Register Thread
+> sco_sock_timeout Cancelled Thread
+>
+>    # sco_sock_connect
+>    #     sco_connect
+>    #          sco_sock_set_timer
+>  #hci_rx_work
+>
+>             #     hci_event_packet
+>
+>             #         hci_event_func
+>
+>             #             hci_conn_complete_evt
+>
+>             #                 hci_sco_setup
+>
+>             #                     hci_connect_cfm
+>
+>             #                         sco_connect_cfm
+>
+>             #                             sco_conn_del
+>
+>             #                                 sco_sock_clear_timer
+>
+>             #                                     cancel_delayed_work
+>
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>
+> Second:
+>
+>
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>                         main thread
+>                              thread 1
+>
+>            thread 2
+>    # fd =3D socket(AF_BLUETOOTH,
+>     SOCK_SEQPACKET | SOCK_NONBLOCK ,
+>     BTPROTO_SCO)
+>
+>                           # sco_sock_connect
+>
+>  # sco_sock_connect
+>
+>                           #     sco_connect
+>
+>     #     sco_connect
+>
+>                           #         hci_connect_sco
+>
+>  #         hci_connect_sco
+>
+>                           #             hci_connect_acl
+>
+>   #             hci_connect_acl
+>
+>                           #                 hci_acl_create_connection
+>                                                                        #
+>              hci_acl_create_connection
+>
+>                           #                     hci_send_cmd(hdev,
+> HCI_OP_CREATE_CONN, sizeof(cp), &cp);           #
+> hci_send_cmd(hdev, HCI_OP_CREATE_CONN, sizeof(cp), &cp);
+>
+>                           # hci_conn_complete_evt =EF=BC=88Asynchronous H=
+CI
+> events=EF=BC=89
+>
+>    # close(fd)
+>    # struct sock is freed
+>
+>
+>
+>              # hci_conn_complete_evt =EF=BC=88Asynchronous HCI events=EF=
+=BC=89
+>
+>
+>
+>              # ..........
+>
+>
+>
+>              #         sco_conn_del
+>
+>
+>         Deference freed "struct sock".   ----------------->        #
+>         sock_hold(sk)
+>
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Alexander
+>
 
-1) the accompanying "backtrace" script is invoked via the `system()`
-  library call and the command line constructed in line 22 does not escape
-  any special characters. Thus if an executable name (as obtained from
-  /proc/self/exe) contains special characters, then this will have side
-  effects. It should not be a big security issue, because the "root" user
-  should not typically run executables that are named by potential
-  attackers.
-2) the "backtrace" script uses a predictable temporary file in
-  "/tmp/gdb.$$".  The contents of this file will be used as a command
-  source file to `gdb -x`.  Thus if an unprivileged local attacker manages
-  to precreate this file it can try to win a race condition and feed
-  arbitrary commands to the `gdb` invoked potentially by the "root" user.
-  This can allow for a full local root exploit.
-3) the "backtrace" script invokes the "cat" and "gdb" commands using
-  non-absolute path names. In the context of a setuid-root binary that
-  does not sanitize the PATH environment variable this would allow an
-  unprivileged user to execute arbitrary commands.
-4) the hardcoded directory path for backtraces in /var/log/segv would
-  need to be setup as a sticky-bit directory with mode 1777 to work for
-  all users in the system. Then segv_handler.c line 24 would become
-  subject to possible symlink attacks, however, when the path
-  "/var/log/segv/segv_<exe>.<pid>.out" is created. The openSUSE package in =
-[2]
-  uses the /tmp/ directory for this purpose and is thus affected.
-5) The backtraces created in /var/log/segv will be created with the
-  umask of the process running the segfault handler. If the directory
-  /var/log/segv is world-readable and the created backtrace files are also
-  world readable then this poses an information leak towards other users
-  in the system. Data found in stack variables or pointer values can be
-  used for further attacks.
-
-Some of the issues can be mitigated by protection mechanisms. The bash
-shell by default drops privileges when invoked in a setuid-root context
-which would mitigate issues 1), 2) and 3) (in fact this means that
-segv_handler will not work for setuid-root programs at all in this
-case). The kernel's symlink protection would protect against 4).
-
-I contacted the code's author Andrew Tridgell ("Tridge") on 2021-01-07
-about these concerns and suggested to remove this example code, document
-the issues or fix the code. He expressed that he would like to adjust
-the code but we did not come to a conclusion yet.
-
-I could not find any trace that this code or the openSUSE package are in
-active use anywhere, therefore we will remove this package from
-openSUSE. I suggest to use the Linux kernel's core_pattern feature
-instead (see `man 5 core`) or one of the integrated crash handlers like
-provided by systemd (coredumpctl) or Ubuntu (apport).
-
-[1]: https://www.samba.org/ftp/unpacked/junkcode/segv_handler/
-[2]: https://build.opensuse.org/package/show/openSUSE:Leap:15.0/segv_handler
-
-Cheers
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
-
---qciJQxT86hkR/wV6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmAG7QwACgkQFMQFyXGS
-NVNbTBAAgIHxxBsXV7+TdQ+wB/nX8XsHIAG7We335lRvKmjlTVT+fJKx64qOD6zW
-QrnE6cGaBRYhri50GG44KLVW4eaGetBZpCdn+NOotsk83u0Ao+pgJeIg8ME10Rye
-o3NODXxjRrFcIRwfbIeItVzscESwxDAvMAfTxhRKzHiuleULCVDnQn6oGdEyRZgA
-vnRPjh3z2JuazgFBbAd73Ksacb0JIPfNZ5zzBnPvZ246WM0tKCRIbchOF4e7ACW7
-i2u9l2OWG11VU0I0vtLyHkYy09gVjuhK0usmGaW4zc3BFBfjyTQHXsvcERQt+1G9
-O/44xunU1l/tLF4BDCLWDl1v4jpNodljjiRpue0xG30VTyZ4JcbP9TdBRtcDC6fm
-lcWvFSUsiA4NMyqOeOWzUVeeEc1gx7uHYlI49BZTKw1QarjRlCWcG7rCedMkBo6K
-kyvTGMv05VyJ0lktPs0XkiI+TG2hO+ivPS40ePlfKsNOCQ6FGUBslfdqcnqqJNE6
-c6Da8IiOwrMcGZ80DsIh45kgXI/ibH9xCsxOoysBtT5U07KqmMzx8/VJEV1+viD9
-53/weNh5ZoldZf+T0cD+XiGn2tg3ZrLXc3YhXXvVCQTMwPVI39gADPLbZ96GMJvC
-d3/GSVeMwiO1xnh90SmwcmZwzB3vYcUM6xtXvGE9NBgsaFXSIsY=
-=4hrR
------END PGP SIGNATURE-----
-
---qciJQxT86hkR/wV6--
+--000000000000f02a4406281d27f3--
