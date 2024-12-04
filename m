@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["935" "Wednesday" "23" "January" "2019" "11:17:46" "+0100" "Daniel Beck" "ml@beckweb.net" "<33ACD1E8-76A6-46A3-8CA9-10E78E9F5FC5@beckweb.net>" "27" "Re: [oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "1" "2019012310:17:46" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jan 23   27/935   " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins\"\n") "<7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>" ("<7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9390 invoked by uid 550); 23 Jan 2019 10:18:00 -0000
+Received: (qmail 32353 invoked by uid 550); 4 Dec 2024 09:14:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9370 invoked from network); 23 Jan 2019 10:17:59 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Date: Wed, 23 Jan 2019 11:17:46 +0100
-References: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
+x-ms-reactions: disallow
+Received: (qmail 32335 invoked from network); 4 Dec 2024 09:14:53 -0000
+Authentication-Results:garm.ovh; auth=pass (GARM-101G004e9da6f50-5b42-4617-adc3-3d5dd7e79794,
+                    C17FDE371EBC8762A4F60DEE2185EA8363F3FB3C) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp:5.172.255.220
+Date: Wed, 4 Dec 2024 10:14:39 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
-In-Reply-To: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
-Message-Id: <33ACD1E8-76A6-46A3-8CA9-10E78E9F5FC5@beckweb.net>
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1548238679;9d497ab8;
-X-HE-SMSGID: 1gmFbP-0006dO-Vp
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins
+Message-ID: <20241204091439.zagujeidn25nouor@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20241119162429.GA12472@localhost.localdomain>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="jg2l5pwiaqaptgvk"
+Content-Disposition: inline
+In-Reply-To: <20241119162429.GA12472@localhost.localdomain>
+X-Ovh-Tracer-Id: 2126543450590227665
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrieehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujgesmhdtreertddtvdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepleevuefgleevjeejfefhvdfgheejffelfffhhffgueevffekvddvudejfeefjeeknecukfhppeduvdejrddtrddtrddupdehrddujedvrddvheehrddvvddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhoheefgegmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=uhfNFSUQuWSYQd0Vy7C24eLavIgpJjemJyYe/0/lR3s=;
+ c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
+ t=1733303684; v=1;
+ b=FfNRKHXKw+EJRE1uBavD4i84hEagik5gfKU5NHJiP+5n0RgO1AXgjDFqT0IJCF6XtZoUAMkH
+ IAeinkD4y4OtwAVUb0YnRKU71qzBZZab13T9jbpprKMFCb2Fi9GhoqJeAwyXfcX+9VVH/2LZjSS
+ b3eYOnm+7S3Bjy8282sbuZwJABICuruC0cDbGKjDfKL46SthvCTAHI6Hjqb5PMUI70HuqfClazG
+ WrcdOEyhVozQcUNlU7xicodMEfYCtiOaMRAc9NZo/Ab4RdPK5tlx1tqInsCFS8gR8Dne9vsGyRv
+ N1lVHBao93zpmXEwiydcnMVhvX9ztbd82Ah8QWVeuaZag==
+Subject: Re: [oss-security] Local Privilege Escalations in needrestart
 
+--jg2l5pwiaqaptgvk
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
+* Qualys Security Advisory <qsa@qualys.com>, 2024-11-19 16:25:
+>We therefore grepped the ScanDeps module for one of the oldest pitfalls 
+>of the Perl programming language: the two-argument form of open(),
 
-> On 16. Jan 2019, at 17:51, Daniel Beck <ml@beckweb.net> wrote:
-> 
-> SECURITY-868
-> Users with the Overall/RunScripts permission (typically administrators) 
-> were able to use the Jenkins script console to craft a 'Remember me' 
-> cookie that would never expire.
-> 
-> This allowed attackers access to a Jenkins instance while the 
-> corresponding user in the configured security realm exists, for example to 
-> persist access after another successful attack. 
+When looking for this kind of vulnerabilities a few years ago, I patched 
+my Perl interpreter to issue runtime warnings against suspicious 
+two-argument open() calls.
 
-CVE-2019-1003003
+The patch still applies cleanly, and apparently even works, so I've 
+attached it here. Maybe someone will find it useful.
 
-> SECURITY-901
-> When using an external security realm such as LDAP or Active Directory, 
-> deleting a user from the security realm does not result in the user losing 
-> access to Jenkins.
-> 
-> While deleting the user record from Jenkins did invalidate the 'Remember 
-> me' cookie, there was no way to invalidate active sessions besides 
-> restarting Jenkins or terminating sessions through other means, such as 
-> Monitoring Plugin.
+-- 
+Jakub Wilk
 
-CVE-2019-1003004
+--jg2l5pwiaqaptgvk
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="perl-two-arg-open.patch"
+Content-Transfer-Encoding: quoted-printable
 
+From: Jakub Wilk <jwilk@jwilk.net>
+Date: Sat, 26 Jan 2019 17:48:21 +0100
+Subject: [PATCH] Warn against suspicious two-argument open() calls.
+
+$ perl -e 'print <>' /etc/issue
+two-argument open(..., "/etc/issue") at -e line 1.
+Debian GNU/Linux 9 \n \l
+
+$ perl -e 'print <<>>' /etc/issue
+Debian GNU/Linux 9 \n \l
+---
+ doio.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+--- a/doio.c
++++ b/doio.c
+@@ -491,6 +491,9 @@
+     bool was_fdopen =3D FALSE;
+     char *type  =3D NULL;
+=20
++    if (num_svs =3D=3D 0 && oname[0] !=3D '<' && oname[0] !=3D '>')
++	Perl_ck_warner_d(aTHX_ packWARN(WARN_DEPRECATED), "two-argument open(...,=
+ \"%s\")", oname);
++
+     PERL_ARGS_ASSERT_DO_OPEN6;
+=20
+     /* For ease of blame back to 5.000, keep the existing indenting. */
+
+--jg2l5pwiaqaptgvk--
