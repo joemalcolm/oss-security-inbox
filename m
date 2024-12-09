@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4108" "Friday" "16" "June" "2017" "08:15:59" "+0200" "Andrej Nemec" "anemec@redhat.com" "<0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>" "146" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061606:15:59" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        anemec@redha Jun 16  146/4108  " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<tencent_18C312B86EA079DA42B11D83@qq.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30144 invoked by uid 550); 16 Jun 2017 06:16:11 -0000
+Received: (qmail 27943 invoked by uid 550); 9 Dec 2024 01:10:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,171 +6,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30126 invoked from network); 16 Jun 2017 06:16:11 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com F067085541
-Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=anemec@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com F067085541
-References: <tencent_18C312B86EA079DA42B11D83@qq.com>
-Message-ID: <0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
-MIME-Version: 1.0
-In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc"
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Fri, 16 Jun 2017 06:15:59 +0000 (UTC)
-Date: Fri, 16 Jun 2017 08:15:59 +0200
-From: Andrej Nemec <anemec@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 28386 invoked from network); 9 Dec 2024 00:10:47 -0000
+Authentication-Results: apache.org; auth=none
+X-Forwarded-Encrypted: i=1; AJvYcCVgB3u9XCFetoLTQGz1e70BTuzqNDWCGZOaxaH+0a031rzjofOFFH3wAivIFaXccILdJHEnhQuuh03SHSM=@lists.openwall.com
+X-Gm-Message-State: AOJu0YzqjW1mb3Y58xU40LN/9fRauApAXULkCoz9vbg1ixvlABzDZY3M
+	yhP9UTc5HTimt7oL+EMl/ggnxxRObCmyxqd1di66snX36Nr0BglYpd4TCCiObZS9dPKW2AaAsT1
+	YMM3KQ0p2nXrGex/SXCxijI2vHDg=
+X-Google-Smtp-Source: AGHT+IGPfUJBHgEzMB89K4SDllJcFcDBwvgWSSOQmsR2zmlEbynTBa+XQLiD8MgLyjtqnA8yjKhSRUClWkLRBmzNXCA=
+X-Received: by 2002:a05:690c:103:b0:6ef:7fc0:a392 with SMTP id
+ 00721157ae682-6efe3bf5517mr112642037b3.2.1733703037899; Sun, 08 Dec 2024
+ 16:10:37 -0800 (PST)
+MIME-Version: 1.0
+From: Daniel Sahlberg <dsahlberg@apache.org>
+Date: Mon, 9 Dec 2024 01:10:28 +0100
+X-Gmail-Original-Message-ID: <CAMHy98M-NHGKcE09p8vhnN2p18+tQH6=0xV=sCEjLVqvo3F3Ew@mail.gmail.com>
+Message-ID: <CAMHy98M-NHGKcE09p8vhnN2p18+tQH6=0xV=sCEjLVqvo3F3Ew@mail.gmail.com>
+To: announce@subversion.apache.org, Subversion <users@subversion.apache.org>, 
+	Subversion Development <dev@subversion.apache.org>
+Cc: Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b8646a0628cb316b"
+Subject: [oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.14.5 released
 
---0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc
-Content-Type: multipart/mixed; boundary="Rg3KPuNsOFv1sqCwpSxAmsHaXrh3W3VVG";
- protected-headers="v1"
-From: Andrej Nemec <anemec@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>
-Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
-References: <tencent_18C312B86EA079DA42B11D83@qq.com>
-In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com>
+--000000000000b8646a0628cb316b
+Content-Type: text/plain; charset="UTF-8"
 
---Rg3KPuNsOFv1sqCwpSxAmsHaXrh3W3VVG
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+I'm happy to announce the release of Apache Subversion 1.14.5.
 
-Hello,
+This is a stable bugfix and security release of the Apache Subversion
+open source version control system.
 
-Unfortunately, CVE assignments are not done through this list anymore.
-You need to visit [1] and request the CVEs by filing out the form. Could
-you please look at it and let the list know about the assigned CVEs?
+Among regular bug fixes, this release fixes CVE-2024-46901:
 
-Thanks!
+mod_dav_svn denial-of-service via control characters in paths
 
-[1] https://cveform.mitre.org/
+It has been discovered that the patch for CVE-2013-1968 was incomplete
+and unintentionally left mod_dav_svn vulnerable to control characters
+in filenames.
 
-Best Regards,
+If a path or a revision-property which contains control characters is
+committed to a repository then SVN operations served by mod_dav_svn
+can be disrupted.
 
---=20
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+Reported by:
+HaoZi, WordPress China
 
+Full advisory:
+https://subversion.apache.org/security/CVE-2024-46901-advisory.txt
+https://subversion.apache.org/security/CVE-2024-46901-advisory.txt.asc
 
-On 06/16/2017 05:53 AM, fefe wrote:
-> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
->
->
-> one is about line 2682 of get_subexp.c :
->
->
-> 		if (BE (bkref_str_off >=3D mctx->input.valid_len, 0))
-> 		{
-> 		  /* If we are at the end of the input, we cannot match.  */
-> 		  if (bkref_str_off >=3D mctx->input.len)
-> 		    break;
->
->
-> 		  err =3D extend_buffers (mctx);
-> 		  if (BE (err !=3D REG1_NOERROR, 0))
-> 		    return err;
->
->
-> 		  buf =3D (const char *) re_string_get_buffer (&mctx->input);
-> 		}
-> 	      if (buf [bkref_str_off++] !=3D buf[sl_str - 1])
-> 		break; /* We don't need to search this sub expression
->=20=09=09
-> "bkref_str_off >=3D mctx->input.valid_len" , when  bkref_str_off =3D=3D m=
-ctx->input.valid_len, "buf [bkref_str_off++] !=3D buf[sl_str - 1]" case Out=
- of one bit bounds read
->
->
-> The poc code like:
->=20=09
-> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB =
-)=3D=3D0)
-> 	{=09=09
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
->
->
->
->
->
->
-> The another is aout line 1837 of regexce.c :
->
->
-> 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int bounda=
-ries,
-> 			     int subexp_idx, int from_node, int bkref_idx)
->                 .......
->
->
-> 		  cpos =3D
-> 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
-> 						 dst, bkref_idx);
->
->
->=20=09=09
-> check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack e=
-xhaustion.
->
->
-> The poc code like:=09
->=20=09
-> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3=
-F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\x=
-BD", REG_EXTENDED|REG_ICASE | REG_NOSUB )=3D=3D0)
-> 	{=09=09
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
->
->
->
->
-> A large number of embedded devices uses uclibc instead of glibc.
-> Could you assign CVE id for those?
->
->
-> Thank you
->
->
-> Benjin Liu
-> Codesafe Team of Qihoo 360
+Please choose the mirror closest to you by visiting:
 
+    https://subversion.apache.org/download.cgi#recommended-release
 
+SHA-512 checksums are available at:
 
---Rg3KPuNsOFv1sqCwpSxAmsHaXrh3W3VVG--
+    https://www.apache.org/dist/subversion/subversion-1.14.5.tar.bz2.sha512
+    https://www.apache.org/dist/subversion/subversion-1.14.5.tar.gz.sha512
+    https://www.apache.org/dist/subversion/subversion-1.14.5.zip.sha512
 
---0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+PGP Signatures are available at:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+    https://www.apache.org/dist/subversion/subversion-1.14.5.tar.bz2.asc
+    https://www.apache.org/dist/subversion/subversion-1.14.5.tar.gz.asc
+    https://www.apache.org/dist/subversion/subversion-1.14.5.zip.asc
 
-iQIcBAEBCgAGBQJZQ3efAAoJEIkERKHVe23a9YsP/3SNWm47HeJjGNWax8Zv8W80
-gLAfTU+gjY/StI7VTVvCEo80htVyFpfz/6rEF5AWzsDre9EIbPv6hBImZT0uTfSv
-cdsP0FsAgFak5gV8GvVySz7yfHbgoCWmc+uirRpnIJJ///ecfrdInhAaN1xRYbMY
-Qo4Ok/BO9vPspnqCU4wN2Cuw9rhAIEpHdL7sUUhq4m86SCg7gbbNS6HKQKZhIzzW
-41vIocYaPyjnDZp+bBzEkDphsNzQM7PXGc4qFu7rsCPJCLlet//GnmCFe5yywrHq
-/nnkDrO+1uqXBOF5iiEOZPo8LIPv0udUoPk1mNzZoUPi/HHNCvSpK58YWckhoozS
-od+MNUbvRWvjQJVRiYY96PLICUf2wOBD7f9et868o1mKRWUHEil95ZySmWKP+Ffd
-D6w/t7fsNAZiN0BhbANNZxc3Q+daw9lLrF10g//6iYm9Wffv/4Am3lSNtiZNruFf
-MGV4TVXyMutr9WPVij59lSq3g8Jzdge1i/dujI75hAb+LTx3AkVdCc6LjhmXh40l
-5rv4dq0r9jMqAy7gaTZ21j7qMHjdNyVG7KIJJe52cuak8CrX7gubUqWEpJ/MctVs
-xqcfvdsv1UVUFg4QcGil6keyYL2IXGrvVevRCGmBBQXI+AuR2jecGPn0CRDUAShU
-BFPm2XuvMHzjV4ctjIDc
-=atQJ
------END PGP SIGNATURE-----
+For this release, the following people have provided PGP signatures:
 
---0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc--
+   Stefan Sperling [rsa2048/4F7DBAA99A59B973] with fingerprint:
+    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
+   Nathan Hartman (CODE SIGNING KEY) [rsa4096/583F00ADF981C39F] with
+fingerprint:
+    3F8E 467C B336 6E30 13E1  120D 583F 00AD F981 C39F
+   Daniel Sahlberg [ed25519/2B4822B4B6340BAC] with fingerprint:
+    7DC8 A7BF 3747 8FF4 8E33  E85E 2B48 22B4 B634 0BAC
+   Timofei Zhakov (CODE SIGNING KEY) [rsa4096/2A56BB6322864335] with
+fingerprint:
+    B593 8A45 4FEA DBD4 3565  E85F 2A56 BB63 2286 4335
+   Johan Corveleyn [rsa4096/B59CE6D6010C8AAD] with fingerprint:
+    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
+   Evgeny Kotkov [rsa4096/B64FFF1209F9FA74] with fingerprint:
+    E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74
+
+These public keys are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.14.5.KEYS
+
+Release notes for the 1.14.x release series may be found at:
+
+    https://subversion.apache.org/docs/release-notes/1.14.html
+
+You can find the list of changes between 1.14.5 and earlier versions at:
+
+    https://svn.apache.org/repos/asf/subversion/tags/1.14.5/CHANGES
+
+Questions, comments, and bug reports to users@subversion.apache.org.
+
+Thanks,
+- The Subversion Team
+
+--
+To unsubscribe, please see:
+
+    https://subversion.apache.org/mailing-lists.html#unsubscribing
+
+--000000000000b8646a0628cb316b--
