@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6149" "Tuesday" "6" "November" "2018" "20:21:31" "+0100" "Solar Designer" "solar@openwall.com" "<20181106192131.GA14967@openwall.com>" "149" "Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" "^Date:" nil nil "11" "2018110619:21:31" "[oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" (number mark "        solar@openwa Nov  6  149/6149  " thread-indent "\"Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures\"\n") "<CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>" ("<CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>" "<20181102114655.GA2758@openwall.com>" "<CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27859 invoked by uid 550); 6 Nov 2018 19:23:53 -0000
+Received: (qmail 32589 invoked by uid 550); 12 Dec 2024 15:55:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,166 +6,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25897 invoked from network); 6 Nov 2018 19:21:50 -0000
-Message-ID: <20181106192131.GA14967@openwall.com>
-References: <CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com> <20181102114655.GA2758@openwall.com> <CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Tue, 6 Nov 2018 20:21:31 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+x-ms-reactions: disallow
+Received: (qmail 1332 invoked from network); 12 Dec 2024 14:10:33 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Daniel Gaspar <dpgaspar@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <14c22304-1c6a-d3d8-312d-d5c5975fb290@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 12 Dec 2024 14:09:29 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-55633: Apache Superset: SQLLab Improper readonly query
+ validation allows unauthorized write access 
 
-On Fri, Nov 02, 2018 at 04:42:33PM +0200, Billy Brumley wrote:
-> It's coming -- I promise. I submitted it as an IACR eprint yesterday
-> ("Port Contention for Fun and Profit") -- currently under moderation,
-> but will eventually pop out here:
-> 
-> https://eprint.iacr.org/
-> 
-> (Side note: I have raised this issue several times with IACR. I can't
-> get a permalink from them until I submit and it clears the mod queue.
-> But I can't submit stuff that's still under embargo. It's a catch 22.
-> Ofc there are technical solutions from IACR side but they won't
-> address it. Share your opinion: @IACR_News current co-editor is
-> @Leptan.)
+Affected versions:
 
-I pinged @Leptan on Twitter earlier today with:
+- Apache Superset before 4.1.0
 
-"@Leptan Any chance you could push "Port Contention for Fun and Profit"
-through @IACR_News moderation? It's in mainstream news since Friday, but
-the paper is still not public. I think moderation should be quick (one
-day) at least in cases like this. Thanks!"
+Description:
 
-And promptly heard back with:
+Improper Authorization vulnerability in Apache Superset. On Postgres analyt=
+ic databases an attacker with SQLLab access can=C2=A0craft a specially desi=
+gned SQL DML statement=C2=A0that is Incorrectly identified as a read-only q=
+uery, enabling its execution. Non postgres analytics database connections a=
+nd postgres analytics database connections set with a readonly user (advise=
+d) are not vulnerable.=C2=A0
 
-"Done. Special cases where publication should be timed with the
-mainstream news requires to let us know because we cannot guess..."
+This issue affects Apache Superset: before 4.1.0.
 
-Cesar Pereida Garcia already posted the link to oss-security (thanks!),
-but unfortunately not (reliably) to this thread (no In-Reply-To header),
-so here it is again for those browsing the thread in archives:
+Users are recommended to upgrade to version 4.1.0, which fixes the issue.
 
-https://eprint.iacr.org/2018/1060
+Credit:
 
-> The code in question certainly had lots of SCA issues :) I was the
-> first to show it vulnerable with an L1 dcache SMT attack (ASIACRYPT
-> 2009). OpenSSL didn't respond during disclosure. Side note:
-> openssl-security is so much better since HeartBleed. They're really on
-> top of things, and being GitHub-based now the code is constantly
-> improving. If you're reading, go contribute to the project!
-> 
-> If there's something good about a vulnerability being unpatched for
-> almost a decade: that code path sparked quite a lot of academic work
-> in microarchitecture attacks.
+Beto de Almeida (remediation developer)
+Daniel Gaspar (coordinator)
+James Ford (Striveworks) (finder)
 
-> For the 1.1.0 branch, at
-> 
-> https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
-> 
-> everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
+References:
 
-https://github.com/openssl/openssl/commit/aab7c770353b1dc4ba045938c8fb446dd1c4531e
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2024-55633
 
-Per my reading, this introduces a closer-to-constant-time implementation
-and invokes it in some special cases ("the common cases where the scalar
-is secret") at the start of ec_wNAF_mul, letting that function fall
-through to its old presumably non-constant-time code in other cases.
-Further commits don't change that.  For someone like me not familiar
-with ECC nor with this codebase it's tricky to figure out which
-side-channel leaks and where exactly were in the old/generic
-implementation (but I tried, below) and whether it's somehow safe to use
-in cases where it's still reachable.
-
-The paper says:
-
-"In OpenSSL 1.1.0h and below, P-384 calls ecdsa_sign_setup @
-crypto/ec/ecdsa_ossl.c when generating an ECDSA signature.  There, the
-underlying ec_wNAF_mul function gets called to perform scalar
-multiplications, where r = [k]G is the relevant computation for this
-work.  That function first transforms the scalar representation, the
-actual scalar multiplication algorithm executes a series of double and
-add operations.  To perform double and add operations, OpenSSL calls
-ec_GFp_simple_dbl and ec_GFp_simple_add respectively.  There, these
-methods have several function calls to simpler and lower level
-Montgomery arithmetic, e.g. shift, add, subtract, multiply, and square
-operations.  A single ECC double (or add) operation performs several
-calls to these arithmetic functions."
-
-I assume ec_GFp_simple_dbl and ec_GFp_simple_add are in fact called via
-EC_POINT_dbl and EC_POINT_add (via function pointer indirection inside
-them, which I didn't follow), respectively.  This code skips the call to
-EC_POINT_add when digit is 0, and the setting and handling of is_neg is
-also potentially leaky:
-
-    for (k = max_len - 1; k >= 0; k--) {
-        if (!r_is_at_infinity) {
-            if (!EC_POINT_dbl(group, r, r, ctx))
-                goto err;
-        }
-
-        for (i = 0; i < totalnum; i++) {
-            if (wNAF_len[i] > (size_t)k) {
-                int digit = wNAF[i][k];
-                int is_neg;
-
-                if (digit) {
-                    is_neg = digit < 0;
-
-                    if (is_neg)
-                        digit = -digit;
-
-                    if (is_neg != r_is_inverted) {
-                        if (!r_is_at_infinity) {
-                            if (!EC_POINT_invert(group, r, ctx))
-                                goto err;
-                        }
-                        r_is_inverted = !r_is_inverted;
-                    }
-
-                    /* digit > 0 */
-
-                    if (r_is_at_infinity) {
-                        if (!EC_POINT_copy(r, val_sub[i][digit >> 1]))
-                            goto err;
-                        r_is_at_infinity = 0;
-                    } else {
-                        if (!EC_POINT_add
-                            (group, r, r, val_sub[i][digit >> 1], ctx))
-                            goto err;
-                    }
-                }
-            }
-        }
-    }
-
-Wikipedia confirms that this is a known issue in double-and-add, and
-Montgomery ladder is a way to avoid it:
-
-https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication#Point_multiplication
-
-Also, while the newly introduced implementation is still called
-ec_mul_consttime in OpenSSL_1_1_0-stable, it's renamed to
-ec_scalar_mul_ladder in OpenSSL_1_1_1-stable and has this comment on it:
-
- * NB: This says nothing about the constant-timeness of the ladder step
- * implementation (i.e., the default implementation is based on EC_POINT_add and
- * EC_POINT_dbl, which of course are not constant time themselves) or the
- * underlying multiprecision arithmetic.
-
-Is this still an issue needing fixing, or is it e.g. believed to be
-sufficiently mitigated by blinding?
-
-Thanks,
-
-Alexander
-
-P.S. Congrats on receiving the grant for "SCARE: Side-Channel Aware
-Engineering", and I hope we'll see more excellent research from your
-team in the next 5 years:
-
-https://pervasive.cs.tut.fi/?p=2747
