@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1646" "Monday" "5" "October" "2015" "21:03:19" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20151006040319.GH16643@hunt>" "48" "[oss-security] CVE Request: Audio File Library" nil nil nil "10" "2015100604:03:19" "[oss-security] CVE Request: Audio File Library" (number mark "U       seth.arnold@ Oct  5   48/1646  " thread-indent "\"[oss-security] CVE Request: Audio File Library\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31834 invoked by uid 550); 6 Oct 2015 04:03:35 -0000
+Received: (qmail 22389 invoked by uid 550); 17 Dec 2024 15:55:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31816 invoked from network); 6 Oct 2015 04:03:34 -0000
-Date: Mon, 5 Oct 2015 21:03:19 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
-To: oss-security@lists.openwall.com
-Cc: michael@68k.org, security@ubuntu.com
-Message-ID: <20151006040319.GH16643@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com, michael@68k.org,
-	security@ubuntu.com
+x-ms-reactions: disallow
+Received: (qmail 20159 invoked from network); 17 Dec 2024 12:47:18 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <c34c3b29-70af-458f-8757-88810ad44f43@apache.org>
+Date: Tue, 17 Dec 2024 12:46:54 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jRdC2OsRnuV8iIl8"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] CVE Request: Audio File Library
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2024-54677: Apache Tomcat: DoS in examples web application
 
---jRdC2OsRnuV8iIl8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Severity: low
 
-Hello MITRE, all,
+Affected versions:
 
-Fabrizio Gennari reported an issue in The Audio File library to the Ubuntu
-bugtracker:
-https://bugs.launchpad.net/ubuntu/+source/audiofile/+bug/1502721
+- Apache Tomcat 11.0.0-M1 through 11.0.1
+- Apache Tomcat 10.1.0-M1 through 10.1.33
+- Apache Tomcat 9.0.0.M1 through 9.9.97
 
-His description included, in part:
+Description:
 
-        When libaudiofile is used to change both the number of channels of
-	an audio file (e.g. from stereo to mono) and the sample format
-	(e.g. from 16-bit samples to 8-bit samples), the output file will
-	contain corrupted data.
+Uncontrolled Resource Consumption vulnerability in the examples web 
+application provided with Apache Tomcat leads to denial of service.
 
-	If the new sample format is smaller than the old one, there is a
-	risk of buffer overflow: e.g. when the input file has 16-bit
-	samples and the output file has 8-bit samples, afReadFrames will
-	treat the buffer to read the samples (argument void *data) as a
-	pointer to int16_t instead of int8_t, therefore it will write past
-	its end.
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 
+10.1.0-M1 through 10.1.33, from 9.0.0.M1 through 9.9.97.
 
-He proposed a solution and test case to the Audio File library:
-https://github.com/mpruett/audiofile/pull/25/files
+Users are recommended to upgrade to version 11.0.2, 10.1.34 or 9.0.98, 
+which fixes the issue.
 
-Please assign a CVE as appropriate.
+References:
 
-Thanks
-
---jRdC2OsRnuV8iIl8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJWE0gHAAoJEPMhclmdjS6Xu2IH/i8VpRm27dsJ5+S9bPUOpAbN
-Pc/+TYA6kugubGtCRuNrE+k/Q4ydCR6QeQdmGxJRnhtmUR7C187jn1gbzvVvZzTk
-B7S2WnY6LOD6ebLsRCtpNTSKu73ed7kwtP4gVWugg52lTuu71f5TEYW44rfL/ND8
-yFYxYYnSYmMkTGDBXOpU/tSNTSS7FPCJ8CfhbthF3+SVALIXkJsyHDnWnZJSfwgn
-5cP1Fl+q0zb7p1IeNQAzFG5fAgMSJ4cPbpMxFMwIPctNKJXZxyIepoD52wqlaeu/
-UvCeTama5qGsf45kIGJ7RbuAALqvkioUBbD0upPB+CfKKcYwp04O3Vhl3g4AXtU=
-=/Lsx
------END PGP SIGNATURE-----
-
---jRdC2OsRnuV8iIl8--
+https://lists.apache.org/thread/tdtbbxpg5trdwc2wnopcth9ccvdftq2n
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2024-54677
