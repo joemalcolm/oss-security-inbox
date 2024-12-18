@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1603" "Wednesday" "19" "August" "2020" "17:55:16" "+0200" "Greg KH" "greg@kroah.com" "<20200819155516.GA3690413@kroah.com>" "30" "Re: [oss-security] Linux Kernel 5.7.9 DRM  Double Free" nil nil nil "8" "2020081915:55:16" "[oss-security] Linux Kernel 5.7.9 DRM Double Free" (number mark "U       greg@kroah.c Aug 19   30/1603  " thread-indent "\"Re: [oss-security] Linux Kernel 5.7.9 DRM Double Free\"\n") "<DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>" ("<DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel 5.7.9 DRM Double Free" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1716 invoked by uid 550); 19 Aug 2020 15:55:09 -0000
+Received: (qmail 5494 invoked by uid 550); 18 Dec 2024 15:08:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1691 invoked from network); 19 Aug 2020 15:55:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
-	date:from:to:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=fm1; bh=KKmWcFdichfBn5lvgRQUtxcCbVf
-	gdv92RjBg/T8Rg9o=; b=FX9j+81Jvs1cTHIrHzMhUMnEeU6mVxXvFi79nb+s6CP
-	4wU5YWC9l7Vzq077yKaxqrLe7Pyyjxp1RmFFtyZUCt0zYsBwgEbeeJNOiS+zdJyA
-	ICtI8eyAtdbpFzF6+btgx9M82ucqujcQndOj3CfGGzxLNYCJYqJb9YM0wcZm1r98
-	rnsQI2gXvPRmQ8+r+DgkJXYjvII5xsnisrIxQQlszj9OJdSXzqYvg7x4PcnZD6zg
-	hGzrNw/zqFt4Bx9cNxd0otjtPWKO5Kath/eUkX3OvAYrTaDaLIxAGWTeOGyYpYBD
-	KUYs5roauxatk2VavqNdvm/xoPZRKLuxrq/nDhv7/AQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=KKmWcF
-	dichfBn5lvgRQUtxcCbVfgdv92RjBg/T8Rg9o=; b=ih3EdGUTU6uKDKfR3M2fvu
-	oftlLzJx+m6tvava4lpo185/Gv7vXbwTGw8PcOc5xuCrWiC0wv710sAEUCgSmrY3
-	e2q51abAuR3zpOfbzYUOeuyq6HJOzWnLwoqT0+8oAEBhhYuFunoNuDc2Y/JnS3db
-	BuJtvrsb4byrnGj5fNVVOyemoySGvJJTcdqZ5Ijo2jzAN7xZHXc9u5GzNSFVLeJp
-	X8kFsFpPezqiW2fdv8y8+2q6eobxriGRs3yKmLxdrLZdsnWy7Etfbr0zIiwYy+rd
-	E/t+wmB/ZlaoejlQyX9ouLQD8FDypHYNUU0bD/Vc4tMobhuTOzSACa6gg56/Sg+g
-	==
-X-ME-Sender: <xms:Tks9X9YhxW80nr51--nz-hrvyNCMgST-k1vS5GAckEMMWp8egXyNrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddtkedgieelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
-    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
-    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
-    eggeevueduudekvdetnecukfhppeekfedrkeeirdekledruddtjeenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtg
-    homh
-X-ME-Proxy: <xmx:Tks9X0bIk8A962Rzt0FXhaWaQqAayjO5h9N6sUF0FiTkV3txnPJ2vw>
-    <xmx:Tks9X_-BwxAil6hTBf4TMxfLp4V601WYdQDOiey3kMuDp6pEw6i55w>
-    <xmx:Tks9X7rfAAiqgYnB-DRWdOmIkeGe3mEf6AZokqRMY2xF3mYTvAztLw>
-    <xmx:Tks9Xx6MOdAKx8K7cd8R_W1TCkOwNXGWeMwW98w0eoTn0TLYePZn3g>
-Date: Wed, 19 Aug 2020 17:55:16 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20200819155516.GA3690413@kroah.com>
-References: <DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>
+x-ms-reactions: disallow
+Received: (qmail 3385 invoked from network); 18 Dec 2024 07:36:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734507405; x=1735112205; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=enjNQ1PYtBt7cK6VicROP/B8EgWnu0svS4eATXrGlQw=;
+        b=Fl5mQTs7sOrnYEg0EOYDavoQscFjLbSmDTW0GsM62FTs4rozYTLcfv9trJxZ2CjSOs
+         kpMN6YqFg2SWp3mKasqmDIQdZF94oI2LGMBqWcE6GQHoTcU8VtnxDgL5NITtjo8GGBXG
+         oF4rJLrTPUIIFjozcXf3DdFBUx7ucTIESqPzHVUNKhXpTDwbMFy1wjbsVQjKuwifgtzX
+         v3qjEoECJKnLEUIvGwo9/arZcq1XCBrmQ67ZlIRFHHWbj/w/6dtDAiDxnX/NjXvNgHQz
+         RLpANPe1eTe3ThCnt5R5lQSSyEjkZ4Q8LKmdbVkFpsoqarb94EVL7PhcZLTtphobbL+i
+         B1fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734507405; x=1735112205;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=enjNQ1PYtBt7cK6VicROP/B8EgWnu0svS4eATXrGlQw=;
+        b=cJCmF6TPMuDi2w/stqrkyo8dY4y/p0zGJQ9XvTFAbGhnYtUdJkL7mj9KNPBS7EUvMK
+         hBTx0tpWtEYGhi/nSrasRovt+XflGAYXkNBJ2LT0wiJQShTyjUjWJN+NuOrHwBo91ENy
+         aBP5c7GgBDRWQV4juIIJEjjgpgzmX6BBrC/4NHcPtzYZUXZueeAewHAuLepzT1r+xWsC
+         uEFp5WUzJytbu0P2Y4bYiiNALhkHXy5yZH5VI5iL4LzOnskJXvkHEaKnvfbMXbtAL+Lv
+         RZhtb6op5bbS7pJW47d73yPU1FeZxReiK3ZGVjdRVKUBg95GxLaIZHa4fU3XBZWIhp90
+         J9ig==
+X-Gm-Message-State: AOJu0YyMXdUFhe9Wn9XqSsxUSO16CeaSD4NlX57sBJ+u62ZxcJ3+cDGe
+	xaYNNkvdTmD0C4BJd2CtGucD/wKlrdjn21YE199XFHlb2+srdWYlSSKrq3m8uApj+zOpsSy98x3
+	IgdYKSVm4cgTi9vOvIvdz7YArpvXPuG3+Ch0=
+X-Gm-Gg: ASbGncv0BAVzMr+kVwHvXtLUCPcZh7a2LKmQiZB8GixBJkpeLOkHZS/8NokLj9RZRl3
+	B/XchC7k/q2OzBQVkAqA3iTGu+l35BsmV0IVpBA==
+X-Google-Smtp-Source: AGHT+IFpk8I6Lh8QhfZ4u+TY2w70UJuGeN2QtK5CQ4DSKq/cDrwV2EPc3+VpJlwxWyBGgfp345jA0iXk+Uw2C2AgNIQ=
+X-Received: by 2002:a05:6512:1246:b0:540:25a6:c390 with SMTP id
+ 2adb3069b0e04-541e674c045mr560039e87.23.1734507404965; Tue, 17 Dec 2024
+ 23:36:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DM5PR0102MB347783E567BB3BD5C77AFE50805D0@DM5PR0102MB3477.prod.exchangelabs.com>
-Subject: Re: [oss-security] Linux Kernel 5.7.9 DRM  Double Free
+References: <9130b415-d545-4dba-8d0f-69d098f56095@apache.org>
+In-Reply-To: <9130b415-d545-4dba-8d0f-69d098f56095@apache.org>
+From: Nick Boyce <nick.boyce@gmail.com>
+Date: Wed, 18 Dec 2024 07:36:06 +0000
+Message-ID: <CACqxkWJbU2MPEiC=kEibYktDVVnGFRhsxi-967MvUr2MjjahTw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2024-50379: Apache Tomcat: RCE due to TOCTOU
+ issue in JSP compilation
 
-On Wed, Aug 19, 2020 at 03:42:33PM +0000, zdi-disclosures@trendmicro.com wrote:
-> The specific flaw exists within DRM memory management. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to escalate privileges and execute code in the context of the kernel.
+> This issue affects Apache Tomcat: from 11.0.0-M1
+> through 11.0.1, from 10.1.0-M1 through 10.1.33,
+> from 9.0.0.M1 through 9.0.97
+>
+> Users are recommended to upgrade to version 11.0.2,
+> 10.1.34 or 9.0.08
 
-Note, this "vulnerability" was only accessible by root, so there's not
-all that many privileges that could really be escalated there.  Don't
-know why the original poster did not say that here, as they acknowledged
-it in the "bug report" they sent many of us.
+Should that last fixed version be 9.0.98 ?
 
-> 
-> This has been already addressed in the upstream commit 5de5b6ecf97a021f29403aa272cb4e03318ef586
-
-It was already "addressed" before this problem was pointed out to
-anyone, so this was not fixed in relation to this being reported.
-
-Also, the fix is now in the 4.19.140, 5.4.59, 5.7.16, 5.8.2 kernel
-releases for those that care.
-
-And finally, it was pointed out that any kernel running with the
-CONFIG_SLAB_FREELIST_HARDENED=y option would not have any problems with
-this issue before it was fixed.
-
-> TREND MICRO EMAIL NOTICE
-> 
-> The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
-
-Very odd email footer for a public mailing list :)
-
-thanks,
-
-greg k-h
+Nick
