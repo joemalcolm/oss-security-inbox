@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2226" "Thursday" "23" "June" "2016" "08:59:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160623125926.22C04B2E154@smtpvbsrv1.mitre.org>" "49" "[oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" nil nil nil "6" "2016062312:59:26" "[oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" (number mark "U       cve-assign@m Jun 23   49/2226  " thread-indent "\"[oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client\"\n") "<20160623121432.GH26237@suse.de>" ("<20160623121432.GH26237@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17480 invoked by uid 550); 23 Jun 2016 12:59:38 -0000
+Received: (qmail 19939 invoked by uid 550); 18 Dec 2024 15:10:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +7,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17459 invoked from network); 23 Jun 2016 12:59:37 -0000
-From: cve-assign@mitre.org
-To: meissner@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160623121432.GH26237@suse.de>
-Message-Id: <20160623125926.22C04B2E154@smtpvbsrv1.mitre.org>
-Date: Thu, 23 Jun 2016 08:59:26 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+x-ms-reactions: disallow
+Received: (qmail 7953 invoked from network); 18 Dec 2024 13:23:10 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AOJu0YzJtD+9VsfV59Kn5QD9zBRKRIDursG9A7YyG39PV+n4yyLohEE6
+	wSnGMhYOploEW64G8MEIJda7IUBch2ONzxt3Z2E/UI8yCIVSmkOZc4M7v9X9Dt91zNbab1v6KfW
+	mneNGtOS5M7H3yVUY1x6OCe2YHLI=
+X-Google-Smtp-Source: AGHT+IGY2QPgA/IgxaDNEMhE1eRJSfOhc9K8+au2h8hjzNuvy+/OpuIX6O65jo/bD5gDbv97UJk7C3GbgBoDjHJYpMg=
+X-Received: by 2002:a05:6512:15a8:b0:540:2f1e:90e9 with SMTP id
+ 2adb3069b0e04-541f46cc1eamr951131e87.54.1734528178124; Wed, 18 Dec 2024
+ 05:22:58 -0800 (PST)
+MIME-Version: 1.0
+From: Manikumar <manikumar@apache.org>
+Date: Wed, 18 Dec 2024 18:52:45 +0530
+X-Gmail-Original-Message-ID: <CAMVt_AwsEegeGHs7S8kEUxyyik1udHOyto+7-R6THm3X8=yfog@mail.gmail.com>
+Message-ID: <CAMVt_AwsEegeGHs7S8kEUxyyik1udHOyto+7-R6THm3X8=yfog@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000e906c506298b4fbc"
+Subject: [oss-security] CVE-2024-56128: Apache Kafka: SCRAM authentication vulnerable to
+ replay attacks when used without encryption
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000e906c506298b4fbc
+Content-Type: text/plain; charset="UTF-8"
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=20018
+Severity: low
 
-When we looked at this last week, we concluded that it was intentional
-glibc behavior and therefore a glibc CVE ID should not exist.
+Affected versions:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1303699 Comment 4 is a
-private comment, but there is apparently a copy of it in the public
-https://bugzilla.redhat.com/show_bug.cgi?id=1347549 Comment 3:
+- Apache Kafka 0.10.2.0 before 3.7.2
+- Apache Kafka 3.8.0
 
-   This flexible behaviour is allowed because it makes parsing
-   space-separated lists of addresses (as C strings) easier to manage.
-   You advance the pointer between the address blocks and call
-   inet_aton. In this case getaddrinfo uses inet_aton to determine the
-   validity of the input string, and so considers "127.0.0.1\r\nspam"
-   a valid name parameter and it is immediately converted into the
-   address structure for 127.0.0.1.
+Description:
 
-The remaining concern is that there's a potentially important
-enhancement to glibc in which functionality would be added that is
-similar to the current inet_addr/inet_aton behavior but with
-"127.0.0.1\r\nspam" rejected as an invalid address. The current
-behavior possibly belongs on a list of glibc oddities but, we think,
-not on the CVE list.
+Incorrect Implementation of Authentication Algorithm in Apache Kafka's
+SCRAM implementation.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Issue Summary:
+Apache Kafka's implementation of the Salted Challenge Response
+Authentication Mechanism (SCRAM) did not fully adhere to the
+requirements of RFC 5802 [1].
+Specifically, as per RFC 5802, the server must verify that the nonce
+sent by the client in the second message matches the nonce sent by the
+server in its first message.
+However, Kafka's SCRAM implementation did not perform this validation.
 
-iQIcBAEBCAAGBQJXa9zNAAoJEHb/MwWLVhi2GWgP/ih9d8dC9pwcQfZ7pSBMkJdI
-r91yFb1D4VcJsxT7cVAnQjAXW8hgz9i27Olm3E3djuoBob68DBKE+0UKSQVy1j7P
-mbVT+sGgXFnYE1cv3HWXSIWowc4+AQVwQfqOJaXwS5wP8+CPx6CCvfOP3SYSrki0
-Eo4MVK/3Ea3FlNwGcXjB9QgNSPm+hHFzK86Ln4JaKNhoD9iQk3skK1q5IclLqm43
-nw1Tg9/778awoWcdvOy6s1I3zz6oUKOc9UnSEzDF8DZDQNBl2+f+IsAiPulggxcG
-dIIcJwGjaqOUNhRtTc9ZlnmfeEDaOKmFzDvY6sAz3CRU9bIHOrx+DBwbQuNpZ5O3
-xU49+NZr1eiS3s16e02QCdh6j9WVZynpXrfNkRoWRaRvb8P3xUOSkqfNVAYIwg1Y
-VaJ090zphhc3K7L8rnmnm0LwJkPlg0yUgv5baQ2RYZ/VneZY7p0HogknBNwxLyUR
-NiJAwyYJAOu/WJNreBdOFRh2pqwATxmFyfaqOPv+Lk/9zDGqH1rVHVQyxvWJoz0k
-6DpzYI7QVzFPVkKl+EItJiE3wsZNPl6q6+E8i/4cAnfj6XK9CrFVHBP4v3RURm7l
-1+2bk/9QZpldSFypHEzSC3QfNr3GDoTJZOSEAZfomiA7ovcj2yC7+3c17nuUmqvj
-axI4BNa4v14fnvU6J7S5
-=2hPX
------END PGP SIGNATURE-----
+Impact:
+This vulnerability is exploitable only when an attacker has plaintext
+access to the SCRAM authentication exchange. However, the usage of
+SCRAM over plaintext is strongly
+discouraged as it is considered an insecure practice [2]. Apache Kafka
+recommends deploying SCRAM exclusively with TLS encryption to protect
+SCRAM exchanges from interception [3].
+Deployments using SCRAM with TLS are not affected by this issue.
+
+How to Detect If You Are Impacted:
+If your deployment uses SCRAM authentication over plaintext
+communication channels (without TLS encryption), you are likely
+impacted.
+To check if TLS is enabled, review your server.properties
+configuration file for listeners property. If you have SASL_PLAINTEXT
+in the listeners, then you are likely impacted.
+
+Fix Details:
+The issue has been addressed by introducing nonce verification in the
+final message of the SCRAM authentication exchange to ensure
+compliance with RFC 5802.
+
+Affected Versions:
+Apache Kafka versions 0.10.2.0 through 3.9.0, excluding the fixed
+versions below.
+
+Fixed Versions:
+3.9.0
+3.8.1
+3.7.2
+
+Users are advised to upgrade to 3.7.2 or later to mitigate this issue.
+
+Recommendations for Mitigation:
+Users unable to upgrade to the fixed versions can mitigate the issue by:
+- Using TLS with SCRAM Authentication:
+Always deploy SCRAM over TLS to encrypt authentication exchanges and
+protect against interception.
+- Considering Alternative Authentication Mechanisms:
+Evaluate alternative authentication mechanisms, such as PLAIN,
+Kerberos or OAuth with TLS, which provide additional layers of
+security.
+
+Credit:
+
+Tim Fox (timvolpe@gmail.com) (finder)
+Vikas Singh <vikas@confluent.io> (remediation developer)
+
+References:
+https://datatracker.ietf.org/doc/html/rfc5802https://datatracker.ietf.org/doc/html/rfc5802#section-9https://kafka.apache.org/documentation/#security_sasl_scram_securityhttps://kafka.apache.org/https://www.cve.org/CVERecord?id=CVE-2024-56128
+
+--000000000000e906c506298b4fbc--
