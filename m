@@ -1,4 +1,4 @@
-Received: (qmail 19740 invoked by uid 550); 16 Nov 2023 22:17:26 -0000
+Received: (qmail 1639 invoked by uid 550); 21 Dec 2024 16:58:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,170 +7,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19699 invoked from network); 16 Nov 2023 22:17:25 -0000
-Date: Thu, 16 Nov 2023 23:17:11 +0100
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZVaU5z45gNgRiY1s@256bit.org>
+x-ms-reactions: disallow
+Received: (qmail 7205 invoked from network); 21 Dec 2024 14:29:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734791375; x=1735396175; darn=lists.openwall.com;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ujGrHTP82LfZhLO5gWEuna/p5fhCQYWNN7MpjpEcXPQ=;
+        b=J0fav13NI/8H9eeppyvi6zDqLXzHfAhiHnheRfYUr35WlU3FVrxF0IwL08ZikJApX5
+         70nmrxFtlyhzmRjXccmGADCVCeZ90oXSKGDF6BRHC9fZz7uGdPvP+Kv2GbvD/0/rVICI
+         gullAg10Ojed9pelg68mXOAtgz4XXUrktd5Anl5wcst41xzKdmammqnLFbkCak7ImJph
+         79HLHIzQ5siDedEp1UYSEugPfXGoQvJ3NAkikfetKURJnqk5RS0ByMsy6jHy+x/tNtVF
+         eO2LJepOrm05Zm3NDRuvbixoOLKkKo4YKXIvyr7OrjO5I66PKzW15bLtHA/5cj91a/L+
+         K+ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734791375; x=1735396175;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ujGrHTP82LfZhLO5gWEuna/p5fhCQYWNN7MpjpEcXPQ=;
+        b=lfJxuDIQYOfpou5Kx41NNGorRk7O6k4FENFMzAAj9QsJyzgGcIfGJgFqRLkxxvjTAK
+         aeYgG52i0oPXSNMAwBoAM8XsMB2fadbAFHHM8EVoanA4uF9Y+L0Z7LWgDsemfJrKikJv
+         KkpmBrnO4MIeOuAZ3OqLYGEdy9ZgZGnA8nTEs/SVnEfGq09LfqQxhZilGfzMh0DiRvR4
+         wEnSYQCSNjHR0/VKhq32j1HoM3GScULFH7id6KBuV7GHLuaNQSfax5Pfa0Uuyan9s7Dw
+         yYexWRgNoTBMs7m1wjkh4b2q8dLk+rJQajI+66bXuYHrrOSoE6EfYo0C9hiccoP6y1+Z
+         E5BA==
+X-Gm-Message-State: AOJu0Yzq/KoxfQncI2smeT/POlzc5ZnTikkWZtpq/Kg+hzxDQ3wg5hp9
+	3ms9sBk1rhF/RHEPQnJxqRLkiRwx4qGaqfS1IynOXPuwH9NB1yoGFD0AKcZ+wjLDNDOLVC9Doho
+	r3bn+m/BMtTGXVKWj8mj9WjKNOS4IcI93
+X-Gm-Gg: ASbGnctt1cDXVPfbYRiyswb9rgGGElov1LfO0TwMIsJHnu9B7MGkfkCwOHjkS8i/LhE
+	++fHn3JnhZSrJR72cMJF+kr+/MzNkyjBhAOLurUw=
+X-Google-Smtp-Source: AGHT+IGO4xvTGDpVKxdtCx1Ygtw/KvMXfXhMxaks9mkf0JjJOYwYsjpba+RavyBbsDH1k2FB2gtWDhDDD/iha8LUbyI=
+X-Received: by 2002:a05:6402:5193:b0:5d0:b455:36ad with SMTP id
+ 4fb4d7f45d1cf-5d81ddf7fc1mr6603842a12.27.1734791374398; Sat, 21 Dec 2024
+ 06:29:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] several minor security issues in Vim
- v9.0.2106-v9.0.2112
+From: Yuri Gribov <tetra2005@gmail.com>
+Date: Sat, 21 Dec 2024 17:29:23 +0300
+Message-ID: <CAJOtW+5UMd0=ADz6cZdCo_zFaJrkQjzbNQ7N7CZr_UmL1f+sqw@mail.gmail.com>
+In-Reply-To: <20240625121358.GA4177@localhost.localdomain>
+To: oss-security@lists.openwall.com
+Cc: Qualys Security Advisory <qsa@qualys.com>, Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Re: Out-of-bounds read & write in the glibc's qsort()
 
-CVE-2023-48231: Use-After-Free in win_close()
-=============================================
-Date: 16.11.2023
-Severity: Low
+Hi colleagues,
 
-When closing a window, vim may try to access already freed window
-structure. So before trying to access any window related variable
-verify that the window to be closed is still valid and if not, return.
+I've recently come across discussion of invalid qsort comparators (and
+unpleasant consequences which they may have) at
+https://www.openwall.com/lists/oss-security/2024/01/30/7 and
+https://www.openwall.com/lists/oss-security/2024/06/24/3
 
-Impact is low, since it is not very easy to make use of this
-and execute some payload (in particular not, without the
-user noticing).
+I myself have run into similar issues in the past and ended up
+developing a dynamic checker to detect them automatically:
+https://github.com/yugr/sortcheck (and its C++ analog at
+https://github.com/yugr/sortcheckxx for std::sort and other relevant
+STL APIs).
 
-The Vim project would like to thank Fabian Toepfer for reporting this issue
-which is now fixed in Vim patch 9.0.2106.
+Even with very basic setup (semi-automatic testing of Debian packages,
+no fuzzing) the tool was able to find numerous bugs in open-source
+programs (see e.g.
+https://github.com/yugr/sortcheck?tab=3Dreadme-ov-file#what-are-current-res=
+ults).
+I believe many (10x) more bugs are still out there, waiting for more
+patient testers.
 
-URLs: https://github.com/vim/vim/commit/25aabc2b8ee1e19ced6f4da9d866cf9378fc4c5a
-      https://github.com/vim/vim/security/advisories/GHSA-8g46-v9ff-c765
+Please let me know if someone is interested in applying these tools to
+their programs/distros.
 
---------------------------------------------------------------------------------
+Best regards,
+Yury "yugr" Gribov
 
-CVE-2023-48232: Floating point Exception in adjust_plines_for_skipcol()
-=======================================================================
-Date: 16.11.2023
-Severity: Low
+PS: In case anyone wants more background on comparators, here is a
+presentation with some general theory, most popular errors and
+overview of existing tooling:
+https://github.com/yugr/CppRussia/blob/master/2023/EN.pdf
 
-A floating point exception may occur when calculating the line offset for overlong
-lines and smooth scrolling is enabled and the cpo-settings include the 'n' flag.
-
-This may happen when a window border is present and when the wrapped line continues
-on the next physical line directly in the window border because the 'cpo' setting includes
-the 'n' flag.
-
-Impact is rather low, since we do not expect many users to have those non-default setting
-set.
-
-The Vim project would like to thank Fabian Toepfer for reporting this issue
-which is now fixed in Vim patch 9.0.2107.
-
-URLs: https://github.com/vim/vim/commit/cb0b99f0672d8446585d26e998343dceca17d1ce
-      https://github.com/vim/vim/security/advisories/GHSA-f6cx-x634-hqpw
-
-
---------------------------------------------------------------------------------
-
-CVE-2023-48233: overflow with count for :s command
-==================================================
-Date: 16.11.2023
-Severity: Low
-
-If the count after the :s command is larger than what fits into a
-(signed) long variable, abort with e_value_too_large.
-
-Impact is low, user interaction is required and a crash may not even happen.
-
-The Vim project would like to thank Fabian Toepfer for reporting this issue
-which is now fixed in Vim patch 9.0.2108.
-
-URLs: https://github.com/vim/vim/commit/ac63787734fda2e294e477af52b3bd601517fa78
-      https://github.com/vim/vim/security/advisories/GHSA-3xx4-hcq6-r2vj
-
-
---------------------------------------------------------------------------------
-
-CVE-2023-48234: overflow in nv_z_get_count
-==========================================
-Date: 16.11.2023
-Severity: Low
-
-When getting the count for a normal mode z command, it may overflow for large
-counts given. So let's verify that the result can be safely stored, else abort
-the z command.
-
-Impact is low, user interaction is required and a crash may not even happen.
-
-The Vim project would like to thank Fabian Toepfer for reporting this issue
-which is now fixed in Vim patch 9.0.2109.
-
-URLs: https://github.com/vim/vim/commit/58f9befca1fa172068effad7f2ea5a9d6a7b0cca
-      https://github.com/vim/vim/security/advisories/GHSA-59gw-c949-6phq
-
--------------------------------------------------------------------------------
-
-CVE-2023-48235: overflow in ex address parsing
-==============================================
-Date: 16.11.2023
-Severity: Low
-
-When parsing relative ex addresses one may unintentionally cause an
-overflow. Ironacially this happens in the existing overflow check, because
-the line number becomes negative and LONG_MAX - lnum will cause the overflow.
-
-So verify that lnum is actually positive before doing the actual overflow
-check.
-
-Impact is low, user interaction is required and a crash may not even happen.
-
-The Vim project would like to thank Fabian Toepfer for reporting this issue
-which is now fixed in Vim patch 9.0.2110.
-
-URLs: https://github.com/vim/vim/commit/060623e4a3bc72b011e7cd92bedb3bfb64e06200
-      https://github.com/vim/vim/security/advisories/GHSA-6g74-hr6q-pr8g
-
--------------------------------------------------------------------------------
-
-CVE-2023-48236: overflow in get_number
-======================================
-Date: 16.11.2023
-Severity: Low
-
-When using the z= command, we may overflow the count with values larger
-than MAX_INT. So verify that we do not overflow and in case when an
-overflow is detected, simply return 0
-
-Impact is low, user interaction is required and a crash may not even happen.
-
-The Vim project would like to thank Fabian Toepfer for reporting this issue
-which is now fixed in Vim patch 9.0.2111.
-
-URLs: https://github.com/vim/vim/commit/73b2d3790cad5694fc0ed0db2926e4220c48d968
-      https://github.com/vim/vim/security/advisories/GHSA-pr4c-932v-8hx5
-
-
-
--------------------------------------------------------------------------------
-
-CVE-2023-48237: overflow in shift_line
-======================================
-Date: 16.11.2023
-Severity: Low
-
-When shifting lines in operator pending mode and using a very large
-value, we may overflow the size of integer. Fix this by using a long long
-variable, testing if the result would be larger than INT_MAX and if so,
-indent by INT_MAX value.
-
-Impact is low, user interaction is required and a crash may not even happen.
-
-The Vim project would like to thank Fabian Toepfer for reporting this issue
-which is now fixed in Vim patch 9.0.2112.
-
-URLs: https://github.com/vim/vim/commit/6bf131888a3d1de62bbfa8a7ea03c0ddccfd496e
-      https://github.com/vim/vim/security/advisories/GHSA-f2m2-v387-gv87
-
-
-
-Thanks,
-Christian
--- 
-Es gibt Augenblicke, in denen man nicht nur sehen, sondern ein Auge
-zudrücken muß.
-		-- Benjamin Franklin
+<https://www.avast.com/sig-email?utm_medium=3Demail&utm_source=3Dlink&utm_c=
+ampaign=3Dsig-email&utm_content=3Dwebmail>
+=D0=9D=D0=B8=D0=BA=D0=B0=D0=BA=D0=B8=D1=85 =D0=B2=D0=B8=D1=80=D1=83=D1=81=
+=D0=BE=D0=B2.www.avast.com
+<https://www.avast.com/sig-email?utm_medium=3Demail&utm_source=3Dlink&utm_c=
+ampaign=3Dsig-email&utm_content=3Dwebmail>
+<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
