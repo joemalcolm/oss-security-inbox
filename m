@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5866" "Tuesday" "24" "October" "2017" "20:30:07" "+0200" "Solar Designer" "solar@openwall.com" "<20171024183007.GA4656@openwall.com>" "143" "Re: [oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters" nil nil nil "10" "2017102418:30:07" "[oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters" (number mark "U       solar@openwa Oct 24  143/5866  " thread-indent "\"Re: [oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters\"\n") "<51096780.5070204@redhat.com>" ("<540932871.18362792.1359546030409.JavaMail.root@redhat.com>" "<51096780.5070204@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28537 invoked by uid 550); 24 Oct 2017 18:30:35 -0000
+Received: (qmail 24050 invoked by uid 550); 21 Dec 2024 00:58:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,164 +7,133 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28261 invoked from network); 24 Oct 2017 18:30:20 -0000
-Date: Tue, 24 Oct 2017 20:30:07 +0200
+x-ms-reactions: disallow
+Received: (qmail 23777 invoked from network); 21 Dec 2024 00:58:09 -0000
+Date: Sat, 21 Dec 2024 01:58:05 +0100
 From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: Jan Lieskovsky <jlieskov@redhat.com>, Jeff Law <law@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>,
-	Andreas Schwab <schwab@suse.de>,
-	Carlos O'Donell <carlos@systemhalted.org>
-Message-ID: <20171024183007.GA4656@openwall.com>
-References: <540932871.18362792.1359546030409.JavaMail.root@redhat.com> <51096780.5070204@redhat.com>
+Cc: Victoria Risk <vicky@isc.org>, security-officer@isc.org
+Message-ID: <20241221005805.GA27101@openwall.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <51096780.5070204@redhat.com>
 User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters
+Subject: [oss-security] Fwd: Operational Notification: BIND 9.20 defect in QPzone implementation
 
 Hi,
 
-I'm not sure it makes sense to add to this old thread, but FWIW:
+I am forwarding in here ISC's Operational Notification for a
+non-security issue in BIND 9.  I do so because this was sent to the
+distros list and we have a rule that anything passing through distros
+must be posted to oss-security when embargo ends.  When there's no
+embargo, it means right now.  While normally a non-security issue would
+be off-topic for oss-security (except e.g. when the issue is with a
+security fix), we must post it this time since it was on distros and we
+don't want to make/explain exceptions.
 
-On Wed, Jan 30, 2013 at 11:33:36AM -0700, Kurt Seifried wrote:
-> On 01/30/2013 04:40 AM, Jan Lieskovsky wrote:
-> > a security flaw was found in the regular expression matching 
-> > routine of glibc, the GNU libc libraries, processed multibyte 
-> > characters input. If an application utilized the glibc's regular 
-> > expression matching mechanism, an attacker could provide a
-> > specially-crafted input that, when processed would lead to that
-> > executable crash.
-> > 
-> > Upstream bug report: [1]
-> > http://sourceware.org/bugzilla/show_bug.cgi?id=15078
-> > 
-> > Relevant patch: [2]
-> > http://sourceware.org/ml/libc-alpha/2013-01/msg00967.html
-> > 
-> > More background: * (from Paolo): Jan 30 11:34:19 <bonzini> iankko:
-> > it is a memset(foo, 0, ...) that overruns the buffer, so it's not
-> > controllable by the attacker
-> > 
-> > * but the denial of service scenario / attack vector is valid
-> > (consider network facing application using glibc's regexp matching
-> > on untrusted input)
-> > 
-> > Could you allocate a CVE id for this?
-> > 
-> > Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> > Security Response Team
-> 
-> Please use CVE-2013-0242 for this issue.
+This is not intended use for the distros list, which is for embargoed
+information only.  Unfortunately, it is tricky to notify distros of
+non-security issues, so I kind of understand why the ISC sent this to
+the distros list.
 
-In a follow-up to Andreas Schwab's libc-alpha posting referenced above,
-Carlos O'Donell points out that the "Double the lengthes of the
-buffers." comment in extend_buffers() hadn't been true since MIN() was
-added by:
+Somehow all mailing lists set up for this purpose (and more) end up low
+traffic and with few participants and eventually die off.  The latest is:
 
-https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=8887a920a4b81a500f54893250085e0d1a52cf9a
+https://lore.kernel.org/distributions/
 
----
-commit 8887a920a4b81a500f54893250085e0d1a52cf9a
-Author: Ulrich Drepper <drepper@gmail.com>
-Date:   Sat May 28 17:14:30 2011 -0400
+the previous was:
 
-    Fix unnecessary overallocation due to incomplete character
+https://lists.freedesktop.org/mailman/listinfo/distributions
 
-    When incomplete characters are found at the end of a string the
-    code ran amok and allocated lots of memory.  Stricter limits
-    are now in place.
----
+and before it there was:
 
-That commit includes this change:
+https://www.openwall.com/lists/xvendor/
 
-   /* Double the lengthes of the buffers.  */
--  ret = re_string_realloc_buffers (pstr, pstr->bufs_len * 2);
-+  ret = re_string_realloc_buffers (pstr, MIN (pstr->len, pstr->bufs_len * 2));
-
-Andreas' commit fixing the issue reported in 2013 is:
-
-https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a445af0bc722d620afed7683cd320c0e4c7c6059
-
----
-commit a445af0bc722d620afed7683cd320c0e4c7c6059
-Author: Andreas Schwab <schwab@suse.de>
-Date:   Tue Jan 29 14:45:15 2013 +0100
-
-    Fix buffer overrun in regexp matcher
----
-
-and it further changes the code to:
-
-+  /* Double the lengthes of the buffers, but allocate at least MIN_LEN.  */
-+  ret = re_string_realloc_buffers (pstr,
-+                                  MAX (min_len,
-+                                       MIN (pstr->len, pstr->bufs_len * 2)));
-
-Carlos also wrote that "MIN() never yields anything near double the
-length", but Andreas disagreed by "That is not true, otherwise the bug
-would not have happend.  bufs_len starts out pretty small (MB_CUR_MAX)."
-
-I don't follow the logic behind "otherwise the bug would not have
-happend".  The bug was reported against glibc after the 2011 commit, and
-I found no evidence of it manifesting itself against pre-2011 glibc.
-"bufs_len starts out pretty small (MB_CUR_MAX)" makes sense to me, but
-isn't convincing that this size was necessarily too small.
-
-I failed to visibly trigger the bug in pre-2011 glibc with bug-regex34.c
-(yes, with a en_US.UTF-8 locale built) as included in the 2013 commit,
-as well as with its revisions e.g. adding the below hack near the end of
-do_test():
-
-  /* Additional attempt to trigger a buffer overflow on older glibc */
-  re_compile_pattern ("[^y]y", 5, &r);
-  while (1) {
-    char *q;
-    int n = asprintf(&q, "%s%s", s, s);
-    if (n < 0 || n > 10000000)
-      break;
-    q[n] = 'y';
-    re_search (&r, q, strlen (q), 0, strlen (q), 0);
-    q[n] = 'x';
-    s = q;
-  }
-
-as well as other tricks (e.g., so that the string length increases one
-char at a time rather than by powers of 2).  Watching such tests run
-under ltrace, they appear to work as intended - sane return values, and
-indeed no crash.  This doesn't convincingly say there were no out of
-bounds accesses, though - maybe they just happened to be benign here.
-
-This makes me question whether the issue fully existed (as in allowing
-one to trigger a "buffer overrun" as the Subject says) prior to the 2011
-commit.  Maybe the doubling of buffer size (without the MIN()
-constraint) happened to be sufficient, and thus the issue only fully
-existed in the 2011 to 2013 period (as it relates to upstream glibc)?
-
-Looking at how Red Hat patched it in their older distros, I see that
-for RHEL5 and RHEL6 glibc-rh905874.patch effectively makes both changes
-at once (even though it does not reference the 2011 commit):
-
--  /* Double the lengthes of the buffers.  */
--  ret = re_string_realloc_buffers (pstr, pstr->bufs_len * 2);
-+  /* Double the lengthes of the buffers, but allocate at least MIN_LEN.  */
-+  ret = re_string_realloc_buffers (pstr,
-+                                  MAX (min_len,
-+                                       MIN (pstr->len, pstr->bufs_len * 2)));
-
-This implies there was never a RHEL5 or RHEL6 package of glibc with one
-change without the other, and thus maybe (only if the guess above that
-the buffer doubling happened to be sufficient is right) never a package
-vulnerable to this issue.
-
-Of course, I don't recommend anyone to rely on this without proper
-analysis (the above analysis isn't sufficiently complete yet), and now
-that the issue has been patched it is probably not worth further
-analysis.  Thus, now this is mostly a curiosity and a remaining
-uncertainty whether backporting the fix to pre-2011 glibc was needed or
-not.  This could be of practical relevance to someone intending to use
-the bug against older unpatched systems in a penetration test, though.
+I think all 3 of these are technically still operational.
 
 Alexander
+
+----- Forwarded message from Victoria Risk <vicky@isc.org> -----
+
+From: Victoria Risk <vicky@isc.org>
+To: distros
+Subject: Operational Notification: BIND 9.20 defect in QPzone implementation
+Date: Thu, 19 Dec 2024 11:22:30 -0500
+
+To the packagers and redistributors of BIND 9,
+
+Recent versions of BIND have a serious defect that can be remediated by rebuilding packages for BIND9, with a different compile-time flag setting.  This is not a CVE: ISC has issued a public Operational Notice, (https://kb.isc.org/docs/operational-notification-bind-920-defect-in-qpzone-implementation) there is no embargo on this information.
+If you have questions, please ask them by sending email to bind-security at isc.org <https://lists.isc.org/mailman/listinfo/isc-os-security> or opening a confidential GitLab issue at https://gitlab.isc.org/isc-projects/bind9/-/issues/new?issue[confidential]=true
+
+Thank you, and sorry about the timing of this!
+
+Vicky Risk
+
+-----------
+
+Posting date: 19 December 2024
+
+Program impacted: BIND
+
+Versions affected:
+
+BIND
+
+9.20.0 -> 9.20.4
+Description:
+
+ISC received several reports concerning an assertion failure involving DNSSEC-signed zones using NSEC3. Upon investigation, ISC engineers found a serious bug in the QPzone implementation which had been introduced in BIND 9.20.
+
+QPzone uses the QPDB in-memory database for holding and serving authoritative zone content.
+
+Although this specific assertion only occurs in 9.20.4, the underlying defect has been present in QPzone since 9.20.0 and could potentially lead to other unexpected interactions and outcomes.
+
+This defect affects authoritative zones that have been signed using NSEC3 and all servers that are either primary or secondary for these zones. (Zones whose DNSSEC-management involves an independent DNSSEC-signer would therefore also be affected.)
+
+Servers hosting only authoritative zones that are unsigned or that are DNSSEC-signed with NSEC are unaffected.
+
+BIND 9.20 resolvers are unaffected.
+
+Impact:
+
+Authoritative servers hosting zones that have been DNSSEC-signed using NSEC3 may experience assertion failures or other unexpected events or outcomes when those zones are queried.
+
+Solution:
+
+ISC is not updating or withdrawing the BIND 9.20 source code distributions, but has instead updated all 9.20.4 packaged distributions to use the older RBTDB database implementation instead of the new QPDB for authoritative zones.
+
+If you are running a BIND 9.20 server that hosts authoritative zones that are DNSSEC-signed with NSEC3, we recommend:
+
+Recompiling BIND 9.20 with --with-zonedb=RBTDB
+
+or
+
+Installing the latest BIND 9.20.4 packages provided by ISC
+
+Note for users of ISC BIND 9.20 packages
+All ISC previously-released BIND 9.20 packages (9.20.0 - 9.20.4) were built using the affected code. If you are affected by this bug, you will need to upgrade to the latest ISC 9.20.4 package (released on 19 December 2024).
+
+If using BIND 9.20 packages provided by your OS vendor, please refer to them for advice on upgrading.
+
+Acknowledgements:
+ISC would like to thank all of the users of BIND who very promptly brought this problem to our attention and provided additional information to assist with troubleshooting.
+
+Do you still have questions?
+Questions regarding this notification should be mailed to bind-security@isc.org <mailto:bind-security@isc.org> or posted as confidential GitLab issues at https://gitlab.isc.org/isc-projects/bind9/-/issues/new?issue[confidential]=true.
+
+Note:
+ISC patches only currently supported versions. When possible we indicate EOL versions affected. For current information on which versions are actively supported, please see https://www.isc.org/download/.
+
+ISC Security Vulnerability Disclosure Policy:
+Details of our current security advisory policy and practice can be found in the ISC Software Defect and Security Vulnerability Disclosure Policy at https://kb.isc.org/docs/aa-00861.
+
+The Knowledgebase article https://kb.isc.org/docs/operational-notification-bind-920-defect-in-qpzone-implementation is the complete and official operational notification document.
+
+How to Submit a Bug Report to ISC:
+If you have encountered a problem with BIND (or with any other ISC software), details on how to submit a report can be found at https://www.isc.org/reportbug/.
+
+Legal Disclaimer:
+Internet Systems Consortium (ISC) is providing this notice on an "AS IS" basis. No warranty or guarantee of any kind is expressed in this notice and none should be implied. ISC expressly excludes and disclaims any warranties regarding this notice or materials referred to in this notice, including, without limitation, any implied warranty of merchantability, fitness for a particular purpose, absence of hidden defects, or of non-infringement. Your use or reliance on this notice or materials referred to in this notice is at your own risk. ISC may change this notice at any time. A stand-alone copy or paraphrase of the text of this document that omits the document URL is an uncontrolled copy. Uncontrolled copies may lack important information, be out of date, or contain factual errors.
+-- 
+
+----- End forwarded message -----
