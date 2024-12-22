@@ -1,4 +1,4 @@
-Received: (qmail 7813 invoked by uid 550); 28 Mar 2026 19:09:42 -0000
+Received: (qmail 6012 invoked by uid 550); 22 Dec 2024 19:40:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,88 +8,91 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 23950 invoked from network); 28 Mar 2026 18:58:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1774724272;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=VQnlUBSERin6qfW+Q7uvw+8tmwBQfP8/mkX2gaZt2xw=;
-	b=GaJ+CriedLiLzv28CcidrIF6jkigzLhtG02XL5JYKUhjZYJ6D8TgfH6i7QdyRBw3TdkyyT
-	YXdtmDXY/f5UA4FNoqZ8TFS9v+Z+V7sPflUHt2rUheodc1UVA+DPZjmp5REw9XJ6f/1JO6
-	O+S2juFooekRNaEUQVq5eyK1Yl43TmLaIxFe3n6vVJkuhYHhL/KMF7ObPWXXWnjeOLimoL
-	e8pxlGLWkcxHccWX7o+pjz/rXnmAUJc71i76Y+FUAdEkISiSUpAkhWgL+2e+UkBYoUmUsI
-	Pajhs75Qz0ZuErQqYiVN1zZlI7/59gnjNnL2RA7NwLDcNU2h4FBXzJwIqLWkUg==
-Message-ID: <1f65be16-a94e-400f-a93e-4c84aeb8613d@cpansec.org>
-Date: Sat, 28 Mar 2026 18:57:51 +0000
+Received: (qmail 32341 invoked from network); 22 Dec 2024 19:21:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=ZVb+nddG7Q8K3W83TdWTGNCLdasMnoXmZX/dRcm7fWo=; b=Njq22Sph1gBLF57RQbgw/BQKF5
+	7C3vk962RzN4x4TIkZsuEKRHR2iHtVA1ICYMPB+cj0WBSmRipLxPH7pkMF2zjA++E5cu/2Rmcz/zn
+	A7g7TGzDWWFVyhFQkLeKyU2u27ulFSHaNli0qg8V5MG+He/C/vdg0mOBg68fvOXAaCHRREfoOVUDf
+	Y31BtKINaaKVWFz9GdY7SLxcfJofpsphS+B+uAgmSIwQnjs6j+wd7V6zyIf8ikA/urVYVLXSWyoWe
+	mPd2jPIsiA/c5Yu+xbQvb7KaSPJADo4J/mkq3/vzY/3VoszvisW3NUnHxd4a7Q6RA3+yxDD0Cq/jQ
+	j56feTHw==;
+Date: Sun, 22 Dec 2024 21:21:22 +0200
+Message-ID: <20241222212122.GD236434@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB, en-ZA
-References: <2adc7b51-5f5c-4fb9-ba2c-8ddb429ef498@cpansec.org>
-From: Robert Rothenberg <rrwo@cpansec.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <2adc7b51-5f5c-4fb9-ba2c-8ddb429ef498@cpansec.org>
-X-Forwarded-Message-Id: <2adc7b51-5f5c-4fb9-ba2c-8ddb429ef498@cpansec.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTFJmq/2vbuxjo/WREeNyPrqP4Jm/WPbBQW7TLrjTDFvTT+eW2WtTMRsSix4PfZXsBtTYIlmMtRdtpZLop4UGn5oqAYQrlZii+UlEujY4nGvOk3ljMQcmz/r2yG8rLEuautHjaCWHzYrvpf/qYzhm6eajO6ku5W38lrVO2WqlFmG3th7L4luhBql85WR1B2DZVmfhwCuWlowC8PnljXDNXC0pYvFIg3HvGcyir3ZpLLwsPhD1HY2OLftPwETlDkbwKpxrr2uSD9nm1/aelB19SzO2GVaW+NCmpGPDJKtgrryFaKAdWH+lT8VYwpI10E0rDP/2sMJLTk3jQ05RvcNgwFEOB5p5vcz94t5VV7sBuNAyj/QplHIzBehgl00PLa5AJ79zVn1ST/TMzZepjEM/lRy1zwSXU6JXRSdTxuMC7rkQNYcriox5m/W5C1UiRZPOLDlbuzrP+xPPkqGawRjCVx9TFVQmMWl8GW13JBrVFag4s6PgPOQFlb3JQFwmNzfP9WIwtWW6g2GjdU+CUvtQ1vJplB2z5dIGKAZpoBZ3uipKlO4l21fYYZDmskm6IVnCOaRKnvqPv6qfTGk0RTYlzfZhZ/mSUCW4R21hckIaNPVcn24XQVW46wFKlLMo2gR9N2oGZO+XOS01yTNF1okKCjYUPaTzg+oZ66kcIswIRjEjw
-X-GND-State: clean
-X-GND-Score: 0
-Subject: [oss-security] CVE-2026-3256: HTTP::Session versions through 0.53 for Perl defaults
- to using insecurely generated session ids
+Content-Type: multipart/signed; boundary="Ps6ZXBfygoRwES2s"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0008
 
-========================================================================
-CVE-2026-3256                                        CPAN Security Group
-========================================================================
+--Ps6ZXBfygoRwES2s
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-         CVE ID:  CVE-2026-3256
-   Distribution:  http-session
-       Versions:  through 0.53
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjQtMDAwOAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogRGVjZW1iZXIgMjIsIDIwMjQKQWR2aXNvcnkgSUQgICAgICAgICAg
+ICAgOiBXU0EtMjAyNC0wMDA4CldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
+aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI0LTAwMDguaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
+IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDA4Lmh0bWwK
+Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC01NDQ3OSwgQ1ZFLTIwMjQtNTQ1MDIs
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjQtNTQ1MDUsIENWRS0yMDI0LTU0NTA4
+LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI0LTU0NTM0LgoKU2V2ZXJhbCB2dWxu
+ZXJhYmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdC4K
+CkNWRS0yMDI0LTU0NDc5CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUg
+V2ViS2l0IGJlZm9yZSAyLjQ2LjUuCiAgICBDcmVkaXQgdG8gU2V1bmdoeXVuIExlZS4KICAgIElt
+cGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFk
+IHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2ggRGVzY3JpcHRpb246IFRoZSBpc3N1
+ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIGNoZWNrcy4KICAgIFdlYktpdCBCdWd6
+aWxsYTogMjc4NDk3CgpDVkUtMjAyNC01NDUwMgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktp
+dEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40Ni41LgogICAgQ3JlZGl0IHRvIEJyZW5kb24g
+VGlzemthIG9mIEdvb2dsZSBQcm9qZWN0IFplcm8uCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFs
+aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3Rl
+ZCBwcm9jZXNzIGNyYXNoIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRo
+CiAgICBpbXByb3ZlZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI4MTkxMgoKQ1ZFLTIw
+MjQtNTQ1MDUKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQg
+YmVmb3JlIDIuNDYuNS4KICAgIENyZWRpdCB0byBHYXJ5IEt3b25nLgogICAgSW1wYWN0OiBQcm9j
+ZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIG1l
+bW9yeSBjb3JydXB0aW9uIERlc2NyaXB0aW9uOiBBIHR5cGUgY29uZnVzaW9uIGlzc3VlIHdhcyBh
+ZGRyZXNzZWQKICAgIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1
+Z3ppbGxhOiAyODI2NjEKCkNWRS0yMDI0LTU0NTA4CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2Vi
+S2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjUuCiAgICBDcmVkaXQgdG8gbGluankg
+b2YgSEtVUzNMYWIgYW5kIGNobHVvIG9mIFdIVVNlY0xhYiwgWGlhbmd3ZWkgWmhhbmcgb2YgVGVu
+Y2VudAogICAgU2VjdXJpdHkgWVVORElORyBMQUIuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFs
+aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3Rl
+ZCBwcm9jZXNzIGNyYXNoIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRo
+CiAgICBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI4MjE4
+MAoKQ1ZFLTIwMjQtNTQ1MzQKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQ
+RSBXZWJLaXQgYmVmb3JlIDIuNDYuMC4KICAgIENyZWRpdCB0byBUYXNoaXRhIFNvZnR3YXJlIFNl
+Y3VyaXR5LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNv
+bnRlbnQgbWF5IGxlYWQgdG8KICAgIG1lbW9yeSBjb3JydXB0aW9uIERlc2NyaXB0aW9uOiBUaGUg
+aXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkCiAgICBtZW1vcnkgaGFuZGxpbmcuCiAg
+ICBXZWJLaXQgQnVnemlsbGE6IDI3Nzk2NwoKV2UgcmVjb21tZW5kIHVwZGF0aW5nIHRvIHRoZSBs
+YXRlc3Qgc3RhYmxlIHZlcnNpb25zIG9mIFdlYktpdEdUSyBhbmQgV1BFCldlYktpdC4gSXQgaXMg
+dGhlIGJlc3Qgd2F5IHRvIGVuc3VyZSB0aGF0IHlvdSBhcmUgcnVubmluZyBzYWZlIHZlcnNpb25z
+Cm9mIFdlYktpdC4gUGxlYXNlIGNoZWNrIG91ciB3ZWJzaXRlcyBmb3IgaW5mb3JtYXRpb24gYWJv
+dXQgdGhlIGxhdGVzdApzdGFibGUgcmVsZWFzZXMuCgpGdXJ0aGVyIGluZm9ybWF0aW9uIGFib3V0
+IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBzZWN1cml0eSBhZHZpc29yaWVzCmNhbiBiZSBmb3Vu
+ZCBhdDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5Lmh0bWwgb3IKaHR0cHM6Ly93cGV3
+ZWJraXQub3JnL3NlY3VyaXR5LgoKVGhlIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCB0ZWFtLAo=
 
-       MetaCPAN:  https://metacpan.org/dist/http-session
-       VCS Repo:  https://github.com/tokuhirom/http-session
+--Ps6ZXBfygoRwES2s
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-HTTP::Session versions through 0.53 for Perl defaults to using
-insecurely generated session ids
+iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZ2hmsgAKCRCRxVnb5MkS
+O6qBAJ4gLMBW4Y0wP+46RW3fo7WLDt6bIACfe8gaUCUewyXI1zXkzwN3tz2O8Ok=
+=bknK
+-----END PGP SIGNATURE-----
 
-Description
------------
-HTTP::Session versions through 0.53 for Perl defaults to using
-insecurely generated session ids.
-
-HTTP::Session defaults to using HTTP::Session::ID::SHA1 to generate
-session ids using a SHA-1 hash seeded with the built-in rand function,
-the high resolution epoch time, and the PID. The PID will come from a
-small set of numbers, and the epoch time may be guessed, if it is not
-leaked from the HTTP Date header. The built-in rand function is
-unsuitable for cryptographic usage.
-
-The distribution includes HTTP::session::ID::MD5 which contains a
-similar flaw, but uses the MD5 hash instead.
-
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-Workarounds
------------
-Users on systems with a /dev/urandom device should configure the module
-to use HTTP::Session::ID::Urandom.
-
-Users on systems without a /dev/urandom (such as Windows) device will
-need to create custom ID modules that make use of module such as
-Crypt::SysRandom or Crypt::URandom.
-
-
-References
-----------
-https://metacpan.org/release/KTAT/http-session-0.53/source/lib/HTTP/Session/ID/SHA1.pm
-https://metacpan.org/release/KTAT/http-session-0.53/source/lib/HTTP/Session/ID/MD5.pm
-https://security.metacpan.org/docs/guides/random-data-for-security.html
-
-
-
+--Ps6ZXBfygoRwES2s--
