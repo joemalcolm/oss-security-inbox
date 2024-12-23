@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2497" "Friday" "10" "June" "2016" "12:43:27" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160610164327.253166C0780@smtpvmsrv1.mitre.org>" "64" "[oss-security] Re: CVE request for vulnerability in OpenStack Neutron" nil nil nil "6" "2016061016:43:27" "[oss-security] Re: CVE request for vulnerability in OpenStack Neutron" (number mark "U       cve-assign@m Jun 10   64/2497  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Neutron\"\n") "<575AD7A7.8090302@redhat.com>" ("<575AD7A7.8090302@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1679 invoked by uid 550); 10 Jun 2016 16:43:39 -0000
+Received: (qmail 17862 invoked by uid 550); 23 Dec 2024 21:37:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1657 invoked from network); 10 Jun 2016 16:43:39 -0000
-From: cve-assign@mitre.org
-To: tdecacqu@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <575AD7A7.8090302@redhat.com>
-Message-Id: <20160610164327.253166C0780@smtpvmsrv1.mitre.org>
-Date: Fri, 10 Jun 2016 12:43:27 -0400 (EDT)
-Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Neutron
+x-ms-reactions: disallow
+Received: (qmail 17833 invoked from network); 23 Dec 2024 21:37:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1734989815;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DOv6QTRygj9A+cU9N9QpJXLf6l8nrOgfBmdFwNNUdtk=;
+	b=Hnbxa7BaAHnrD4RqR7Vq2yRlAHGq1Y0Pbj7nlmoWNfHvw335WzoKII0P7ekxSMZDz8V6jG
+	krpYKt+dC9nhscmIb/hgvnGWOH71Vfhy9dxubrEP0FgMyFnbB/mWJ9T8DlcrMTyQJaFKH3
+	ceDsv8YWVa6tjrBokzeBwnrj0a9L23Q=
+X-MC-Unique: QdHN15KVN0Caf1M97iWZYA-1
+X-Mimecast-MFC-AGG-ID: QdHN15KVN0Caf1M97iWZYA
+From: Florian Weimer <fweimer@redhat.com>
+To: Yuri Gribov <tetra2005@gmail.com>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <CAJOtW+6vveBkwzYhzLonwUppsZvSy6c5K35ys8dxCA6U0i0sAA@mail.gmail.com>
+	(Yuri Gribov's message of "Mon, 23 Dec 2024 22:33:31 +0300")
+References: <CAJOtW+5UMd0=ADz6cZdCo_zFaJrkQjzbNQ7N7CZr_UmL1f+sqw@mail.gmail.com>
+	<87zfkmmgvc.fsf@oldenburg.str.redhat.com>
+	<CAJOtW+6vveBkwzYhzLonwUppsZvSy6c5K35ys8dxCA6U0i0sAA@mail.gmail.com>
+Date: Mon, 23 Dec 2024 22:36:48 +0100
+Message-ID: <878qs6m68f.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: _5OK9584XetsijDIZU2BA1bo91S1uZs3C4HwfWmpDoA_1734989812
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Re: Out-of-bounds read & write in the glibc's
+ qsort()
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Yuri Gribov:
 
-> Title: Neutron IPTables firewall anti-spoof protection bypass
+> On Mon, Dec 23, 2024 at 8:47=E2=80=AFPM Florian Weimer <fweimer@redhat.co=
+m> wrote:
+>> It's a bit odd that you disable reflexivity checks by default, but quite
+>> a few of the issues reported are in this category.
+>
+> I think back then I wanted to make default settings free of false
+> positives. Often sorted arrays may only contain unique elements and in
+> such cases reflexivity checks are useless.
 
-> independently reported vulnerabilities in Neutron
-> anti-spoof protection. By forging DHCP discovery messages or non-IP
-> traffic, such as ARP or ICMPv6, an instance may spoof IP or MAC source
-> addresses on attached networks resulting in denial of services and/or
-> traffic interception. Moreover when L2population isn't used, other
-> tenants attached to a shared network are also vulnerable. Neutron
-> setups using the IPTables firewall driver are affected.
+Are they?  In the longstanding glibc quicksort implementation (usually
+hidden behind a merge sort), reflexivity was required to rediscover an
+element that the implementation assumed to be there and dependent upon
+for loop termination.  Other quicksort implementations seem to have
+similar requirements.  For monomorphizing implementations such as
+std::sort for C++ not doing the pointer (iterator) check actually makes
+sense from a performance perspective.
 
-> The dhcp fix has been included in the 8.0.0 release and this
-> request probably needs more than one CVE.
+Thanks,
+Florian
 
->> https://bugs.launchpad.net/neutron/+bug/1502933/comments/21
-
->> Just to be clear, the ICMPv6 source address spoof isn't addressed by
->> bug 1558658 patch (I39dc0e23fc118ede19ef2d986b29fc5a8e48ff78).
-
->> Since both issues abuse the same fundamental flaw, it seems like a
->> good opportunity to bundle both fix in a single advisory.
-
->> However, because we need different patch, this will likely requires 2
->> different CVE numbers...
-
-> https://bugs.launchpad.net/bugs/1558658 (DHCP spoofing because the rule had only
->                                          -p udp -m udp --sport 68 --dport 67)
-
-Use CVE-2016-5362.
-
-
-> https://bugs.launchpad.net/bugs/1558658 (MAC source address spoofing)
-
-Use CVE-2016-5363.
-
-
-> https://bugs.launchpad.net/bugs/1502933 (ICMPv6 source address spoofing)
-
-Use CVE-2015-8914.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXWuzyAAoJEHb/MwWLVhi2bBAQAKsmBq6+BILn7sflHZr1biSs
-1bGOleiu+F947NAp5zzqjv9riowFneB7fCTPJ3uSXueCSNEyGFDIVPR80M7MWKdv
-vtTUnLT8GLl9P2ZkvdYLaIW12UQq2OQF5nA0kuz8piVJx5Mx6M9rMypw83cKlIfw
-iovaJMZuI6ZSsYmdm8RJiEyhRO+fyTXSYi/i7/6UqGUnZuBU4//KvkTqE3ZHWw6K
-4HRaFIDVFljIHJpLgdIyLDBoMymxf7yYSvMVAX7f74drOLkQd+LyMYnLzR6dLCtc
-sFR31f3f1v+lFSYTXdklEF/toSu6pNHauffcmxAWLpn3vOLJbzKpZZ2I23uDPQSZ
-cOJ0ygs+ZbIXABaRsfBiU6bk0uiXvGqyifcFZnoayWPpCyN65qrdJlgMYBjhprVa
-g1TEnJ7I+H/6FVTbvpdHo+m0YVS2oF3/Wy2B2FrpdCC43aTPYCzEWNmlQfl8MY39
-aGdLugde8eOhWOJQugnqe94CxbAdcR2H/BTh28XaABhLdDwrnU6XSWY56pzcu1ys
-ctYo8aPPsgHr9SC6c7noBfO3RMQGqkLOFakjjPGUmMHQ3Fz/Rz3pljVFZYwaQ8aS
-BPvpQ2DtsHo9VSDt/t6srftFNWC2B91lbOj68aKm32rXq4rDuuNtS3pbmFpphjgv
-WUQ3XjzlzzoHO3TR4PHY
-=5QDQ
------END PGP SIGNATURE-----
