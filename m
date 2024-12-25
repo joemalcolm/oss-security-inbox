@@ -1,4 +1,4 @@
-Received: (qmail 32191 invoked by uid 550); 24 Sep 2024 12:14:04 -0000
+Received: (qmail 19499 invoked by uid 550); 26 Dec 2024 00:11:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,180 +8,131 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 32173 invoked from network); 24 Sep 2024 12:14:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=Pikb5xGF7Yi594aVvQQ4PAPf66I5y1EIaZtzhUUSOlk=; b=Jn4C93CUQsFNZdVUvjh57+fVvi
-	APFu4294TgL6hsimOjBiL6sxQ+JN2brDn0FiKUpg5Si5kwws0s5K/eegXgN/LK7uhmidmYouKhjK0
-	9VWA88KyaVM4nS39D1SNUvIroFS7dOVJ3A/sU60PEothV/BnKTDw/IZfxxzjqk+5xOwM=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 20160 invoked from network); 25 Dec 2024 23:04:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1735167878;
+	 x=1735254278; bh=8ocg9WnYaWircmx4PzDgegxw3+Ogin65L0XCdsyYSGA=; b=
+	C+tz8lP6B5Tkrk9DL/nttbYiRR+JUK90bYodedNv4ggixLzbVgCtrqZHqAZ2YcEd
+	zmVQqDJEFnTNiOOY5RVfJ/83BBtGLekvKPRDDf32jSsr0UTCcK+ClPzPLS/T62+m
+	OVjFuS7DzVAO7TRIWEVhK+7+QY5Ej3C84BVpIn2VvgvENCOP6AaKawUkwyB69wjl
+	UZgs3H3OGkZGlaxS2LrzRdj4BYm3jcV47S1tITegMK1GKqGqAa7P/voRJ4c1DvPF
+	XsOXzDeo8IFwtzFA6Kjtw8hBFWJyXCRIMgintxGQA06RVSS46wsIpZ7gcPI4fDTB
+	zHNQK+DQzDntLKNRJRh1HA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735167878; x=1735254278; bh=8ocg9WnYaWircmx4PzDgegxw3+Ogin65L0X
+	CdsyYSGA=; b=wbkN2ArvxKwthyV//c8fV72imGPXuQnxqktIexjo5eUiYNsE0AK
+	DBGA7oZzp7xJrkeCNzW9reh0OcXiKcNtaiJB9B7phoBqECGPly0PRKIRIkxqR3IY
+	wTCB7oKUDFKRLCw+lKOmeXjfi/e699DFQbT+oVhecMW5Lt609Lqh9XqT41yvjaBL
+	4U+NoaKFAdeBB0A0SkXxCWNPtx6RvX1gaSm0AUNUOLp1q2RJwDOaTiHTKQC69qM5
+	jj9jZP25p07a2T4W3l97PaOSXsKy8LlrgBN9NNqnSYMw/+qWLxBJoGoj5QFUBSSH
+	u84dkZNyYJR3dTNk4Sj39k3r7GSk41iUKQw==
+X-ME-Sender: <xms:hY9sZ4gRp310tfrxGFsr_e6A7dz6bJspZMel7NfzA7V8V3JiTcpo_Q>
+    <xme:hY9sZxDDOPvzanMGuFn_OQwZmySvew_TwPXZPf6ukHZlfVy7oUXUhUONvg7hfuQqy
+    xZlHVsqT9C5XFk>
+X-ME-Received: <xmr:hY9sZwHGi6DRVFaP50MKK6CMoAOOOaXFG62vAjAeOjt0fxMSdiibtEEtYg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddujedgtdeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecu
+    hfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihesihhnvhhish
+    hisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeeigfeifedv
+    gfejleefieefgfejvddvfeelgeelieefgeffhffgffeffffhueduheenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhi
+    sghlvghthhhinhhgshhlrggsrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepsh
+    hmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhp
+    vghnfigrlhhlrdgtohhmpdhrtghpthhtohephigrihhrmhesjhhfrhhoghdrtghomh
+X-ME-Proxy: <xmx:hY9sZ5SgN5sev2vBAWlDtgHrMA35oZTiHQIdmGzgQnUcnq3Mf02Xxg>
+    <xmx:hY9sZ1wbqK2h6EvbTx6QViNBThNUL2QI6vZUAC-KGO9P5zsZuc6pCQ>
+    <xmx:hY9sZ37q3nrmWU2eHakxnRj5ypa0LYqWtHfNREAYHuoRwtFoYugd7A>
+    <xmx:hY9sZyydXHpC14mItyQu2pgmA_SHR2uK-069nE8uZuHovG2yg1asDQ>
+    <xmx:ho9sZw-4wKARXPT8Kq3wi0i48veB_6Lx3-L0yYqLbE2u367J7AyRxycS>
+Feedback-ID: iac594737:Fastmail
+Date: Wed, 25 Dec 2024 18:04:22 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com, Yair Mizrahi <yairm@jfrog.com>
+Message-ID: <Z2yPhPjJ0MEBl6Uh@itl-email>
+References: <CALXx8ZniT0BHhhVgqZK4z+gsRUuOJGSZJRzFbjfA2BQUdRPmew@mail.gmail.com>
+ <20241225181321.GA12547@openwall.com>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1st4QL-0005gb-N8@xenbits.xenproject.org>
-Date: Tue, 24 Sep 2024 12:13:45 +0000
-Subject: [oss-security] Xen Security Advisory 462 v2 (CVE-2024-45817) - x86: Deadlock in
- vlapic_error()
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Wgi8BEB4pVIwiynY"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20241225181321.GA12547@openwall.com>
+Subject: Re: [oss-security] CVE-2024-40896 Analysis: libxml2 XXE due to type
+ confusion
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Wgi8BEB4pVIwiynY
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 25 Dec 2024 18:04:22 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com, Yair Mizrahi <yairm@jfrog.com>
+Subject: Re: [oss-security] CVE-2024-40896 Analysis: libxml2 XXE due to type
+ confusion
 
-            Xen Security Advisory CVE-2024-45817 / XSA-462
-                               version 2
+On Wed, Dec 25, 2024 at 07:13:21PM +0100, Solar Designer wrote:
+> Hi,
+>=20
+> Thank you for bringing this in here.
+>=20
+> On Wed, Dec 25, 2024 at 11:52:06AM +0200, Yair Mizrahi wrote:
+> > libxml2, CVE-2024-40896, was published recently and given a "Critical"
+> > (9.1) severity by CISA. Interestingly - This vulnerability is a regress=
+ion
+> > of an issue that was identified over a decade ago - CVE-2012-0037, which
+> > was given a "Medium" (6.5) severity.
+> >=20
+> > Is the massive increase in CVSS over the exact same issue justified? We
+> > believe that it's inflated.
+>=20
+> I think both CVSS vectors are "buggy", and CVSS is quite poor at scoring
+> library code vulnerabilities.
+>=20
+> CVE-2012-0037  NIST NVD CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N
+> CVE-2024-40896 CISA-ADP CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H
+>=20
+> The differences are whether user interaction is required or not (can't
+> know that for library code, so have to assume either best or worst case)
+> and what impact there is (again can't know it for library code, but
+> these two test vectors somehow assume different impacts).  Given how
+> poor CVSS base score is for scoring library code in general, I'm afraid
+> this issue would more "reasonably" (per CVSS spec) be scored 10.0 as
+> AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H, because such exposed usage of the
+> library is realistic, SSRF would be a change of scope (right?), and the
+> worst impacts of all 3 kinds are quite possible.
 
-                    x86: Deadlock in vlapic_error()
+If SSRF is a scope change, shouldn't that mean that RCE is also a scope
+change?  It's usable for SSRF after all.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-UPDATES IN VERSION 2
-====================
+--Wgi8BEB4pVIwiynY
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-In x86's APIC (Advanced Programmable Interrupt Controller) architecture,
-error conditions are reported in a status register.  Furthermore, the OS
-can opt to receive an interrupt when a new error occurs.
-
-It is possible to configure the error interrupt with an illegal vector,
-which generates an error when an error interrupt is raised.
-
-This case causes Xen to recurse through vlapic_error().  The recursion
-itself is bounded; errors accumulate in the the status register and only
-generate an interrupt when a new status bit becomes set.
-
-However, the lock protecting this state in Xen will try to be taken
-recursively, and deadlock.
-
-IMPACT
-======
-
-A buggy or malicious HVM or PVH guest can deadlock Xen, leading to a
-DoS.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.5 and onwards are vulnerable.  Xen 4.4 and older are not vulnerable.
-
-Only x86 systems running HVM or PVH guests are vulnerable.
-Architectures other than x86 are not vulnerable.
-
-Only HVM or PVH guests can leverage the vulnerability.  PV guests cannot
-leverage the vulnerability.
-
-MITIGATION
-==========
-
-Not running untrusted HVM or PVH VMs will avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered after a BUGSENG team working on MISRA C
-compliance of Xen pointed attention to ECLAIR reports for MISRA C Rule
-17.2 (Functions shall not call themselves, either directly or
-indirectly).
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa462.patch           xen-unstable - Xen 4.16.x
-
-$ sha256sum xsa462*
-c8cb03fdcfffa7e043b1d82643efde0f93bff5ce484887c6f59207777ee95be7  xsa462.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmbymG8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ+MYIALQiqD84Ryme+mKRunKqDuH3P3pTX9bvxFp8sRZd
-B0A3ysBKsC+eSJHsuH+vaTPG25e72+cqSs1Wr1PHs+p99UA4QxG8vT8pbAIAyr3f
-lHVJvHfqMYA3xxNwS82us2Hjiv0t4spBBDje9TgcRvJf8nAcrPrQ+k6eycTTTGiz
-kMT5pjkaiKTf0+uZ13krzHHCTyDwYKYJJly0FOv4TbNH+Bxj0i7b630BUtxGibMT
-Cm5ay+CK3QSIJUGG6OjSAfFQWxZJ0W7gg1RNsH/ExsvsMw9sE2mX0YbHKaYD6yWf
-wEmwQvAwYeaa91fcRnkr9dTZMYy5ObeUQLqJz1EJJ1indyU=
-=dr22
+iQIzBAEBCAAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmdsj38ACgkQszaHOrMp
+8lPd/w/+L5wwY1rUc8ODFCFGXgh0Juhp86zvOw9L7C5aLc1dJpqPxdVVa/MdFxDl
+5gSDwTH0mDDMHpZbIJTPC/J5TXLoxT1Zv+xBPvYGBz+M4qVIctD1xJTU1tbYwbjr
+ug/VeYujbieUc6/6VsVUNBdksteiDrZHMY2lUziKpu/eAwkVSAuc+GW/iWV0ioam
+9mopE3U69ZhNAeWn+cD4wad4rEcjhS7H7aO9a0s/oacnDaObqlI14TaP0jjloLhv
+cQQYYEYClMPE+/TTNuMNo2Uo9THa8MxemPphZgbF9AS/W5vyrA8G85z/5H3IXLZs
+CEI9t+dOxlUdWhTiOEPL1YLX5ANdPDsWNIJK3RJm9tlz/8t44jh8BzPYS9Nheeg9
++lgN3o6BougvNXvB3vMlpWhw7TTlM39IIkx+448dpkUiBwVWls8dbIVkzCmGmNtZ
+WXkTBdwCMBXB8RAz66M6jwOTBu7Ju1rmO+n5IlBonpVIiea683qsyoNH+YIn5HwS
+jQ+azKpfaUeUsqQNavJ3pQvKrqsJeuR66/9CQjgFSfWcFTUdmQGWzxCminWxTUFc
+nW0lQ9ciAN3BRyEyC6Aa0dd14UcITyIWeYhfdFXc092qIy3OWsZULIXn1DHNPAhT
+KBxxBJkNj9P32XSsVoKeUSOd8LHNjRbSWlYrL5Tyq767HQF8DoQ=
+=84+n
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa462.patch"
-Content-Disposition: attachment; filename="xsa462.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0OiB4ODYvdkxBUElD
-OiBwcmV2ZW50IHVuZHVlIHJlY3Vyc2lvbiBvZiB2bGFwaWNfZXJyb3IoKQoKV2l0aCB0aGUgZXJy
-b3IgdmVjdG9yIHNldCB0byBhbiBpbGxlZ2FsIHZhbHVlLCB0aGUgZnVuY3Rpb24gaW52b2tpbmcK
-dmxhcGljX3NldF9pcnEoKSB3b3VsZCBicmluZyBleGVjdXRpb24gYmFjayBoZXJlLCB3aXRoIHRo
-ZSBub24tcmVjdXJzaXZlCmxvY2sgYWxyZWFkeSBoZWxkLiBBdm9pZCB0aGUgY2FsbCBpbiB0aGlz
-IGNhc2UsIG1lcmVseSBmdXJ0aGVyIHVwZGF0aW5nCkVTUiAoaWYgbmVjZXNzYXJ5KS4KClRoaXMg
-aXMgWFNBLTQ2MiAvIENWRS0yMDI0LTQ1ODE3LgoKRml4ZXM6IDVmMzJkMTg2YThiMSAoIng4Ni92
-bGFwaWM6IGRvbid0IHNpbGVudGx5IGFjY2VwdCBiYWQgdmVjdG9ycyIpClJlcG9ydGVkLWJ5OiBG
-ZWRlcmljbyBTZXJhZmluaSA8ZmVkZXJpY28uc2VyYWZpbmlAYnVnc2VuZy5jb20+ClJlcG9ydGVk
-LWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpTaWduZWQtb2Zm
-LWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClNpZ25lZC1vZmYtYnk6IEFuZHJl
-dyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcg
-Q29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgoKZGlmZiAtLWdpdCBhL3hlbi9hcmNo
-L3g4Ni9odm0vdmxhcGljLmMgYi94ZW4vYXJjaC94ODYvaHZtL3ZsYXBpYy5jCmluZGV4IDJlYzk1
-OTQyNzEzZS4uODc1OGM0MjE3ZmFiIDEwMDY0NAotLS0gYS94ZW4vYXJjaC94ODYvaHZtL3ZsYXBp
-Yy5jCisrKyBiL3hlbi9hcmNoL3g4Ni9odm0vdmxhcGljLmMKQEAgLTExMiw5ICsxMTIsMjQgQEAg
-c3RhdGljIHZvaWQgdmxhcGljX2Vycm9yKHN0cnVjdCB2bGFwaWMgKnZsYXBpYywgdW5zaWduZWQg
-aW50IGVycm1hc2spCiAgICAgaWYgKCAoZXNyICYgZXJybWFzaykgIT0gZXJybWFzayApCiAgICAg
-ewogICAgICAgICB1aW50MzJfdCBsdnRlcnIgPSB2bGFwaWNfZ2V0X3JlZyh2bGFwaWMsIEFQSUNf
-TFZURVJSKTsKKyAgICAgICAgYm9vbCBpbmogPSBmYWxzZTsKIAotICAgICAgICB2bGFwaWNfc2V0
-X3JlZyh2bGFwaWMsIEFQSUNfRVNSLCBlc3IgfCBlcnJtYXNrKTsKICAgICAgICAgaWYgKCAhKGx2
-dGVyciAmIEFQSUNfTFZUX01BU0tFRCkgKQorICAgICAgICB7CisgICAgICAgICAgICAvKgorICAg
-ICAgICAgICAgICogSWYgTFZURVJSIGlzIHVubWFza2VkIGFuZCBoYXMgYW4gaWxsZWdhbCB2ZWN0
-b3IsIHZsYXBpY19zZXRfaXJxKCkKKyAgICAgICAgICAgICAqIHdpbGwgZW5kIHVwIGJhY2sgaGVy
-ZS4gIEJyZWFrIHRoZSBjeWNsZSBieSBvbmx5IGluamVjdGluZyBMVlRFUlIKKyAgICAgICAgICAg
-ICAqIGlmIGl0IHdpbGwgc3VjY2VlZCwgYW5kIGZvbGRpbmcgaW4gUkVDVklMTCBvdGhlcndpc2Uu
-CisgICAgICAgICAgICAgKi8KKyAgICAgICAgICAgIGlmICggKGx2dGVyciAmIEFQSUNfVkVDVE9S
-X01BU0spID49IDE2ICkKKyAgICAgICAgICAgICAgICAgaW5qID0gdHJ1ZTsKKyAgICAgICAgICAg
-IGVsc2UKKyAgICAgICAgICAgICAgICAgZXJybWFzayB8PSBBUElDX0VTUl9SRUNWSUxMOworICAg
-ICAgICB9CisKKyAgICAgICAgdmxhcGljX3NldF9yZWcodmxhcGljLCBBUElDX0VTUiwgZXNyIHwg
-ZXJybWFzayk7CisKKyAgICAgICAgaWYgKCBpbmogKQogICAgICAgICAgICAgdmxhcGljX3NldF9p
-cnEodmxhcGljLCBsdnRlcnIgJiBBUElDX1ZFQ1RPUl9NQVNLLCAwKTsKICAgICB9CiAgICAgc3Bp
-bl91bmxvY2tfaXJxcmVzdG9yZSgmdmxhcGljLT5lc3JfbG9jaywgZmxhZ3MpOwo=
-
---=separator--
+--Wgi8BEB4pVIwiynY--
