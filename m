@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2079" "Friday" "11" "March" "2016" "11:49:15" "+0800" "Paul Wise" "pabs3@bonedaddy.net" "<1457668155.3681.17.camel@bonedaddy.net>" "57" "[oss-security] debbugs for cve-assign@mitre.org?" nil nil nil "3" "2016031103:49:15" "[oss-security] debbugs for cve-assign@mitre.org?" (number mark "U       pabs3@boneda Mar 11   57/2079  " thread-indent "\"[oss-security] debbugs for cve-assign@mitre.org?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16053 invoked by uid 550); 11 Mar 2016 03:49:34 -0000
+Received: (qmail 24509 invoked by uid 550); 25 Dec 2024 18:13:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16030 invoked from network); 11 Mar 2016 03:49:33 -0000
-Message-ID: <1457668155.3681.17.camel@bonedaddy.net>
-From: Paul Wise <pabs3@bonedaddy.net>
-To: oss-security <oss-security@lists.openwall.com>, cve <cve@mitre.org>
-Date: Fri, 11 Mar 2016 11:49:15 +0800
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-qUBR4mlhFt/NQn29YGaj"
-X-Mailer: Evolution 3.18.5.1-1 
+x-ms-reactions: disallow
+Received: (qmail 23831 invoked from network); 25 Dec 2024 18:13:31 -0000
+Date: Wed, 25 Dec 2024 19:13:21 +0100
+From: Solar Designer <solar@openwall.com>
+To: Yair Mizrahi <yairm@jfrog.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20241225181321.GA12547@openwall.com>
+References: <CALXx8ZniT0BHhhVgqZK4z+gsRUuOJGSZJRzFbjfA2BQUdRPmew@mail.gmail.com>
 Mime-Version: 1.0
-Subject: [oss-security] debbugs for cve-assign@mitre.org?
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALXx8ZniT0BHhhVgqZK4z+gsRUuOJGSZJRzFbjfA2BQUdRPmew@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-40896 Analysis: libxml2 XXE due to type confusion
 
---=-qUBR4mlhFt/NQn29YGaj
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hi all,
+Thank you for bringing this in here.
 
-I would like to suggest using debbugs for=C2=A0cve-assign@mitre.org.
+On Wed, Dec 25, 2024 at 11:52:06AM +0200, Yair Mizrahi wrote:
+> libxml2, CVE-2024-40896, was published recently and given a "Critical"
+> (9.1) severity by CISA. Interestingly - This vulnerability is a regression
+> of an issue that was identified over a decade ago - CVE-2012-0037, which
+> was given a "Medium" (6.5) severity.
+> 
+> Is the massive increase in CVSS over the exact same issue justified? We
+> believe that it's inflated.
 
-debbugs is based on email so it is the lowest friction for researchers
-and doesn't change their workflow except they now get an immediate CVE
-after sending a detailed report to the submission address.
+I think both CVSS vectors are "buggy", and CVSS is quite poor at scoring
+library code vulnerabilities.
 
-The Debian project doesn't have much of a problem with spam other than
-spammers occasionally harvesting bug email addresses and replying to
-them. This could be mitigated by not putting bug number email addresses
-on the bug reports. Debian does that for transparency though. Spammers
-haven't learnt to file bug reports yet though.
+CVE-2012-0037  NIST NVD CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N
+CVE-2024-40896 CISA-ADP CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H
 
-One thing that would need adding is support for private bugs and
-authenticated commands to change bugs between public and private.
+The differences are whether user interaction is required or not (can't
+know that for library code, so have to assume either best or worst case)
+and what impact there is (again can't know it for library code, but
+these two test vectors somehow assume different impacts).  Given how
+poor CVSS base score is for scoring library code in general, I'm afraid
+this issue would more "reasonably" (per CVSS spec) be scored 10.0 as
+AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H, because such exposed usage of the
+library is realistic, SSRF would be a change of scope (right?), and the
+worst impacts of all 3 kinds are quite possible.
 
-One other thing that would need adding is some support for the CVE ID
-syntax. Nice URLs could be provided by mod_rewrite.
+What this tells us is that CVSS base scores are pretty much unusable for
+ranking library and interpreter vulnerabilities.  Adding temporal and
+exploitability metrics may improve things, but also mostly when applied
+not just to the libraries, but to their specific uses.  Since this is
+generally too hard, I think a future revision of CVSS should have
+adjustments in the base score for issues that are not directly exposed.
 
-debbugs is also used by the GNU project.
+I propose updating the spec to either use AC:H for them (list such
+condition) or add new AV or AC type Indirect (document it as meaning the
+issue isn't directly exposed as a vulnerability by the software it's
+in).  Indirect should be scored lower than AV:N/AC:L.
 
---=20
-bye,
-pabs
+> CVE-2012-0037 allowed attackers to perform XXE attacks on vulnerable
+> applications that use Raptor, an RDF parsing and serializing library, which
+> uses libxml2. XXE attacks may have severe consequences, such as leakage of
+> arbitrary local files from the victim machine and SSRF.
+> 
+> The vulnerability was fixed in Raptor by parsing XML entities and making
+> sure they don't contain file URIs or network URIs. A crucial part of this
+> patch was letting libxml2 know not to re-parse the XML entities, as that
+> would have rendered the fix ineffective.
+> 
+> [1] In order to do this, Raptor used the "checked" field of libxml2's
+> `XmlEntity` struct.
 
-http://bonedaddy.net/pabs3/
+CVE-2012-0037 was (per its description) against Raptor.  CVE-2024-40896
+is (per its) against libxml2.  As I understand from your description,
+libxml2 2.11.0+ was at fault for no longer providing functionality for
+Raptor to be safe, but Raptor was at fault for silently accepting that
+with a code change of their own instead of sounding the alarm.  Perhaps
+when CVE-2012-0037 was fixed, a source code comment should have been
+added to Raptor about the importance of that fix, which would have
+guarded against its silent removal in 2023 (for the case of building
+against libxml2 2.11.0+).  So this looks to me like more of a failure by
+Raptor than by libxml2.
 
+As I understand, CVE-2024-40896 is against libxml2 because that's where
+the issue is hopefully-fully addressed this time, even if the "fix" is
+hardening for/against dangerous uses by third-party code such as Raptor.
+It would indeed be weird to file this CVE against Raptor when fixes
+would then be against libxml2.  So this discrepancy is understandable,
+even if unfortunate.
 
---=-qUBR4mlhFt/NQn29YGaj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+Disclaimer: I am not familiar with these libraries, so the above is
+based on my reading of what the previous message said.
 
------BEGIN PGP SIGNATURE-----
-
-iQIcBAABCgAGBQJW4kA7AAoJEDEWul6f+mmjvK4QAI7nvcjR1qP8R5F9B2llN28Q
-HSvOHGR+ZKc2GdvVuK81aIKHxgaTd/SAHQ2ui5vAQC0oVnY1k4ZSUbAnfFRHRRnX
-Sl6QG+Gx/AQ9u9MPOaTGiAwy1xuJX9MJpsKaFsjMJOhsXC4xfCqAsEs0xhr+EEwF
-NMR4jW5BtKrK1fq6i7+0YQMTCx3A+dqOp8d/YM29asxxBIBrs49fnSULDo5SXmp2
-S65/HBVmvEH7FaHrYaolcjcv8RLGs+Ffe0361hcFDQu67TSDCbdfwqfiCAmwgwTv
-cGKG6eWF2XkTMn1hkhdSMA51wwj8kB15pD1Qpe5Q97IpGqAaoQDjO89U49i6ialP
-R7BrlazQpY700oks8ZbjxPSxjpMNGMusChxb4cE2ObMRHMdZXZjsS74HRmYCWiPb
-sprnsLG1WG63h1x/tnU8KXxgJxoQVmc36WOjRBCsEHsHurM9VHHHgNTY2PJT0sXr
-VnDmuamP7SsJ2+bjuq/mj60s9gLqoFsZQ/Pr+3BQ/f3XB61Zeyp/XqGYkq9IMlZy
-NEikh3zmRcrBTuh46T623vpO7vmRRerBfiNZuITiz8CNHC/Gc1Z5BZmPIwfk5E4o
-+AmC7lAABj6iMd7O9w0gl3x2GawtaY89o/E1VSwuiNbZE9D+q9y1waWH3gPmfrjj
-WQO9i43nCDfD7JwqV9cR
-=OWcm
------END PGP SIGNATURE-----
-
---=-qUBR4mlhFt/NQn29YGaj--
-
+Alexander
