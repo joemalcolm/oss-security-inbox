@@ -1,4 +1,4 @@
-Received: (qmail 7656 invoked by uid 550); 10 Jun 2023 09:51:42 -0000
+Received: (qmail 5204 invoked by uid 550); 26 Dec 2024 02:24:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +7,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7621 invoked from network); 10 Jun 2023 09:51:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Date:To:From:Subject:Message-ID:Reply-To:Cc:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=aMKjZo0DaIdlSEsie5MYk+LjVy1lX+xydXwaV/2wJBo=; b=pTIsMBsZyYTxUHrz6VgoXc9KI3
-	MY+2XiXxNuzkuBM/PYlgY+vrMbDW1VocT3U3VHbrQz1W2a6/x57ZYPooJzV3DvPol9ab+Mu5RR2jH
-	9pc+uzhYP3OQQ+SW2FvfjmNvlcwriYNp2eiwlKnWS06TirTvpyhjMFeNC+q1pfxFJG2syDUrb2fn0
-	RbF2oJQOgB/pcjjKTbQauysEWOCxEN3TmNeQv3ykvegOLGGDIbihnblM8Sml978EgvEGhvSgEKkkf
-	nlmXeDhXRc1UD2EExSHJrYVn/5tKWX8J1JJfZOOhghQgxRcJ5cVrsyMEQwFF1Al/I2N5M8OnzJqus
-	v9bFggUw==;
-Message-ID: <b43dbbf1358a42df945de86dee00f452109a7a2e.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
+x-ms-reactions: disallow
+Received: (qmail 3330 invoked from network); 26 Dec 2024 02:23:33 -0000
+Date: Thu, 26 Dec 2024 03:23:28 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Date: Sat, 10 Jun 2023 11:51:21 +0200
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.48.2-1 
-MIME-Version: 1.0
-X-Debian-User: corsac
-Subject: [oss-security] Solar Designer talk about 15 years of oss-security at SSTIC
- conference
+Cc: Yair Mizrahi <yairm@jfrog.com>
+Message-ID: <20241226022328.GA16481@openwall.com>
+References: <CALXx8ZniT0BHhhVgqZK4z+gsRUuOJGSZJRzFbjfA2BQUdRPmew@mail.gmail.com> <20241225181321.GA12547@openwall.com> <Z2yPhPjJ0MEBl6Uh@itl-email>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z2yPhPjJ0MEBl6Uh@itl-email>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-40896 Analysis: libxml2 XXE due to type confusion
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+After I sent the previous message, I realized that there may be more to
+what component these CVEs are against.
 
-Hi all,
+CVE-2012-0037 was against "Redland Raptor (aka libraptor) before 2.0.7,
+as used by OpenOffice 3.3 and 3.4 Beta, LibreOffice before 3.4.6 and
+3.5.x before 3.5.1, and other products, allows user-assisted remote
+attackers to read arbitrary files via a crafted XML external entity
+(XXE) declaration and reference in an RDF document."
 
-while conference talks aren't really the list focus, I guess there might be=
- an
-exception for this one.
+... and this very description explains why it scored lower - it was for
+specific common uses of the Raptor library.  Specifying that user
+interaction is required was reasonable in context of needing to load a
+file into a desktop application.
 
-Earlier this week, Solar Designer made the opening keynote of the SSTIC
-conference in Rennes (France). A retrospective about the open-source securi=
-ty
-community and coordination around vulnerabilities, attack surface etc.
+Now that the issue was instead addressed in libxml2, the CVSS vector may
+be different because that library is used in many more places and ways.
+A relevant question (to those more familiar with this than I am) would
+be whether affected uses other than by Raptor likely exist (and are
+likely addressed by the same change in libxml2) and where/what they are.
+Ditto about uses of Raptor other than by those desktop office projects.
 
-For interested people, the video replay is available at
-https://www.sstic.org/2023/presentation/ouverture_2023/
+On Wed, Dec 25, 2024 at 06:04:22PM -0500, Demi Marie Obenour wrote:
+> On Wed, Dec 25, 2024 at 07:13:21PM +0100, Solar Designer wrote:
+> > On Wed, Dec 25, 2024 at 11:52:06AM +0200, Yair Mizrahi wrote:
+> > > libxml2, CVE-2024-40896, was published recently and given a "Critical"
+> > > (9.1) severity by CISA. Interestingly - This vulnerability is a regression
+> > > of an issue that was identified over a decade ago - CVE-2012-0037, which
+> > > was given a "Medium" (6.5) severity.
+> > > 
+> > > Is the massive increase in CVSS over the exact same issue justified? We
+> > > believe that it's inflated.
+> > 
+> > I think both CVSS vectors are "buggy", and CVSS is quite poor at scoring
+> > library code vulnerabilities.
+> > 
+> > CVE-2012-0037  NIST NVD CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N
+> > CVE-2024-40896 CISA-ADP CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H
+> > 
+> > The differences are whether user interaction is required or not (can't
+> > know that for library code, so have to assume either best or worst case)
+> > and what impact there is (again can't know it for library code, but
+> > these two test vectors somehow assume different impacts).  Given how
+> > poor CVSS base score is for scoring library code in general, I'm afraid
+> > this issue would more "reasonably" (per CVSS spec) be scored 10.0 as
+> > AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H, because such exposed usage of the
+> > library is realistic, SSRF would be a change of scope (right?), and the
+> > worst impacts of all 3 kinds are quite possible.
+> 
+> If SSRF is a scope change, shouldn't that mean that RCE is also a scope
+> change?  It's usable for SSRF after all.
 
-Many thanks to Solar Designer for the talk and all the years of managing os=
-s-
-security (and the distros list).
+That's a good point.  I am no CVSS expert, but I guess the answer is no.
+I am also unsure whether SSRF is a scope change - maybe a CVSS "lawyer"
+will comment on that.
 
-Regards,
-- --=20
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+Apparently, CVSS distinguishes direct vs. secondary impact.  Relevantly,
+looking at the examples https://www.first.org/cvss/v3.1/examples I see
+that while high impact on integrity usually goes along with high impact
+on availability, this is not always the case.  In one example of
+I:H/A:N, the comment says "Any availability impact is secondary."  It
+may be similar for RCE not implying scope change (secondary ability to
+perform SSRF) even if SSRF does (direct).
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmSER5oACgkQ3rYcyPpX
-RFs8UggAh23FhFo9nbg+hPovw5sZ1cQuHxcCpVmnWE5COhUSzmF1/JVSEZMLWxez
-dOeVEgvCJWOl92u0lwTiTfK+tG4eNi0R2UO+uQHW+pv/5dPMV1ti/DmpwD/BhS6w
-FzzpUdMM05E9hZEDjOfsXJkBn4pMg3kCzrSuK/KlOdkp9/qI7dCD4J27KwZX2VDB
-tih4MjBexSUkdaX/hhvWq7n9plvs5Jbf8U4vy4jBaHFlVdJohu3QVrPb5H7p7mAW
-YVkUhhPX8GSBBtkAoIYcnrDZQv4762PVkixV6dRZlhowjbzsBJ198PRk1Ct7Pepo
-gRAM0FC7qE4GMyXTFhU2b80wLSTB9Q=3D=3D
-=3DK4GU
------END PGP SIGNATURE-----
+There isn't an example for SSRF on the v3.1 page above, but there is on
+the v4.0 page, which also includes a v3.1 vector for reference:
+
+https://www.first.org/cvss/v4.0/examples#Server-Side-Request-Forgery-SSRF-CVE-2024-1233
+
+In there, the v3.1 vector has scope unchanged, without explanation.  In
+v4.0, there's no such component, but instead it's separate impact
+triples for vulnerable and subsequent system.  In all of these cases,
+the impacts range from None to Low, never High.  The v3.1 vector is
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L giving a score of 7.3.
+But that's for SSRF that isn't a result of XXE, so maybe a reasonable
+vector for CVE-2024-40896 would be
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:L giving a score of 8.6, or
+maybe lower if only some relevant uses of libxml2 would be considered.
+
+So yeah, maybe the older vector for CVE-2012-0037 leading to a score of
+6.5 is valid usage of CVSS after all.  But I am not sure it's reusable
+when we're talking libxml2 rather than Raptor as in "office" projects.
+
+Meanwhile, Red Hat's vector+score for CVE-2024-40896 is the same as
+CISA's, and Red Hat's own threat impact score for it is Critical
+(separate from CVSS severity name, just happens to be named the same).
+But none of Red Hat's products are reported affected, which suggests
+that a more specific analysis (than CISA's) probably was not performed.
+In other cases, Red Hat's scores are often lower.
+
+Alexander
