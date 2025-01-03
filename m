@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1160" "Saturday" "7" "May" "2016" "06:22:32" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160507042232.GA5286@eldamar.local>" "32" "[oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" "^Cc:" nil nil "5" "2016050704:22:32" "[oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" (number mark "        carnil@debia May  7   32/1160  " thread-indent "\"[oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22409 invoked by uid 550); 7 May 2016 04:22:46 -0000
+Received: (qmail 11801 invoked by uid 550); 3 Jan 2025 15:07:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +6,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22384 invoked from network); 7 May 2016 04:22:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=rs6zpIE41C7lkhaCXOv0bYJNO6O50jAeNnlZNzNPBjY=;
-        b=mzWxtIYmczLMZOWhvsFQmoovEKX6JX4ut22xLN0LQxPHQQhHT4h40DatzXK90Nbm8A
-         cbKPvMFtk9Hu/aKWJ9/t21Na5379hMfzKOwLEFY6qOTkD0LE8RcSJoDgP3ubW55d9wrY
-         OtLQhgCHbCpjs3Mj37Apey4DTX5cvnEPGfQAxpcJ8Y3k+3W6sTVCianz2l12XvyYBM+I
-         bpWGX9vzSbe0g6aYZBTKqD8N5SXVWxzk1UjecLpytxBF+aP1uI2A+/+LZ8ZQCccu/1g9
-         72tcvnrqwnMGVzl0fe+iGg8yA1gGsbNRNNrXPTOOdsaDQykz+8y5S1lU8CbY9sJMC1CF
-         tJKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=rs6zpIE41C7lkhaCXOv0bYJNO6O50jAeNnlZNzNPBjY=;
-        b=BMdwdpUQCfTHcNPUevwdY+JQU9V+VQHtmZDgo3/Y11gZzQugAnKcpItJG/PoQkCshP
-         eifPokyJm3tEPBqBJFI+c+Unnqs8c7F2GY3PsPcewrAxfCFaghDxk62if+P1faekOzzb
-         x23UPXCVmuijODY+7yqF/o7w461c5KRbnimwOD8YnuJnwpORKNZhU8WDXC+3QEcdpz0Z
-         OYT2tLNTpeHuQzLn1ZdJJFpbQOQr3C5qAAkQGsVEh0PoiVEprwybF3ed9w3Yy6p6/5SB
-         mREv3vIRTqT2Qlz3cj+vxLoWlofIOZsAcM67SqAz9x9bKzXOdA2T+3m9XxGXSeLOcyhk
-         0PGg==
-X-Gm-Message-State: AOPr4FVSrU1YfaxP1AIfiL3+0dtayISJsJ9fhrAqJw/eGWVv5PqDV8SFJQNEvHLuTZb6pQ==
-X-Received: by 10.194.203.138 with SMTP id kq10mr23353266wjc.155.1462594954318;
-        Fri, 06 May 2016 21:22:34 -0700 (PDT)
-Message-ID: <20160507042232.GA5286@eldamar.local>
+Reply-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 11765 invoked from network); 3 Jan 2025 15:07:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
+	s=2024; t=1735916855;
+	bh=AbEyU+ED4ChReknPWYiRLP95I8qtPgJHhfBO4G89fXM=;
+	h=From:To:Subject:Content-Type:From:To:Subject;
+	b=zQVKzKzWqVSVXaeO1dy82+b3XNpJ01evn2+4m8IVdDw8bezVAEL7ytX4sf+w+FTtG
+	 +H1CCN9V5n4C/dKKTlQcAg6XiEg1ZuQK9u7EYu4NhN4NM/qQ4PsX8SlefRvFUuYDit
+	 3GCxW+P3mdfzkeRzfX7FiieQJrJuXR0U38Y9ttJQ=
+Date: Fri, 3 Jan 2025 10:07:35 -0500
+From: Jan Schaumann <jschauma@netmeister.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Z3f9N0Qo-qIJXfJO@netmeister.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Cc: Doug Ledford <dledford@redhat.com>,
-	Red Hat Security Response Team <secalert@redhat.com>,
-	Ben Hutchings <benh@debian.org>
-Date: Sat, 7 May 2016 06:22:32 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write()
- interface'
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Subject: [oss-security] iTerm2 < 3.5.11 logs input/ouput to /tmp/framer.txt on remote host
 
-Hi
+iterm2 (https://iterm2.com), a popular Terminal.app
+replacement for macOS, announced a vulnerability in
+versions < 3.5.11 whereby input/output from an SSH
+connection may be logged to the file /tmp/framer.txt
+on the remote host.  To the best of my knowledge,
+there is no CVE associated with this vulnerability.
 
-Jann Horn reported an issue in the infiniband stack. It has been fixed
-in v4.6-rc6 with commit e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
+The announcement (below) notes that this file "may be
+readable by other users", presumably depending on the
+user's umask on that system.
 
-https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
+iterm2 is published under the GPL with source code
+available here:
+https://github.com/gnachman/iTerm2
 
-> IB/security: Restrict use of the write() interface
-> The drivers/infiniband stack uses write() as a replacement for
-> bi-directional ioctl().  This is not safe. There are ways to
-> trigger write calls that result in the return structure that
-> is normally written to user space being shunted off to user
-> specified kernel memory instead.
-> 
-> For the immediate repair, detect and deny suspicious accesses to
-> the write API.
-> 
-> For long term, update the user space libraries and the kernel API
-> to something that doesn't present the same security vulnerabilities
-> (likely a structured ioctl() interface).
-> 
-> The impacted uAPI interfaces are generally only available if
-> hardware from drivers/infiniband is installed in the system.
 
-Could you assign a CVE for this issue?
+Announcement and change log:
+https://iterm2.com/downloads/stable/iTerm2-3_5_11.changelog
 
-I'm just to avoid possible duplication as well Cc'ing Red Hat's
-secalert, since the commit was signed off by Doug Ledford
-<dledford@redhat.com>.
+---
 
-Regards,
-Salvatore
+Version 3.5.11 of iTerm2 was built on January 2, 2025.
+
+This release contains a critical security fix. I
+strongly recommend updating immediately.
+
+Who is affected?
+----------------
+You may be affected if you used the SSH
+integration feature in any of the following
+versions:
+
+* 3.5.6
+* 3.5.7
+* 3.5.8
+* 3.5.9
+* 3.5.10
+* Any beta versions of 3.5.6 and later.
+
+What is the issue?
+------------------
+A bug in the SSH integration feature caused input
+and output to be logged to a file on the remote
+host. This file, /tmp/framer.txt, may be readable
+by other users on the remote host.
+
+When does this occur?
+---------------------
+The issue occurs if both of the following conditions
+are true:
+
+1. Either:
+   a) You used the it2ssh command, or
+   b) In Settings > Profiles > General, the
+      Command popup menu was set to "SSH" (not
+      "Login Shell", "Command", or "Custom
+      Command") AND "SSH Integration" was checked
+      in the SSH configuration dialog. That dialog
+      is shown when you click the Configure button
+      next to the ssh arguments field in Settings.
+2. The remote host has Python 3.7 or later
+   installed in its default search path.
+
+What should you do?
+-------------------
+* Upgrade immediately to version 3.5.11.
+* Delete /tmp/framer.txt on affected hosts.
+
+How I'm addressing this
+-----------------------
+I deeply regret this mistake and will take steps
+to ensure it never happens again.
+
+The code to write to log files in SSH integration
+has been deleted and will not be publicly released
+again.
+
+If you have questions you can contact me at
+gnachman@gmail.com.
+
+SHA-256 of the zip file is
+You can use the following to verify the zip file on
+https://keybase.io/verify:
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+655e32b4a9466104f1b0d8847e852515bc332bdf434801762e01b9625caa43e2
+-----BEGIN PGP SIGNATURE-----
+
+iHUEAREIAB0WIQSAPIQGkYVsjnBRo2J0Et0TaFtKrAUCZ3br8gAKCRB0Et0TaFtK
+rLntAQDqPcKkRA23Wo5/XuB2lymF8n+0GK3E+ZT3MYbTNgsnSQD/Xgt7V9QhP42n
+QmQpnmb804FrHkCnqIJMvcBAim6AbBM=
+=Zlrw
+-----END PGP SIGNATURE-----
+
+---
