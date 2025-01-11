@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["293" "Thursday" "14" "April" "2016" "19:23:53" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160414172353.GA5117@eldamar.local>" "11" "[oss-security] CVE Request: imlib2: integer overflow resulting in insufficient heap allocation" "^Cc:" nil nil "4" "2016041417:23:53" "[oss-security] CVE Request: imlib2: integer overflow resulting in insufficient heap allocation" (number mark "        carnil@debia Apr 14   11/293   " thread-indent "\"[oss-security] CVE Request: imlib2: integer overflow resulting in insufficient heap allocation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28426 invoked by uid 550); 14 Apr 2016 17:24:17 -0000
+Received: (qmail 22338 invoked by uid 550); 11 Jan 2025 14:35:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28404 invoked from network); 14 Apr 2016 17:24:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=DbTnxuStwqc3cXfUcmcLKBQUMRwlx77kXcW/8zHZcAc=;
-        b=djmE234LmjJBPki4hzAXx7N2lu4vJo2tUj7uzG/axkfJYZbFE3NVXBLDIWe7CYfSpn
-         UXzkezWutMjnwcHR8EL7H+IjXa8Rt4x4V3LBejhwhgyQxdmQM1FuNwebJSQBqyQ5a4dw
-         fZSC7jOoP7GaiRv3AVL3FomM2DCAl2VxNX+hieKnSeFLl4JrnMq7wPaN4aUjR5Q5Aiso
-         btzL850O30spGgfoGN7sOWGflxsUUfahpd7roVHd9xF95+Ak5ZdMONS1NjyY/Ik6kms7
-         j7kUTr8kpkma5c4a2QOjIxvW9oPAT5JdpfE8OG0FHKZIsVnLqNApqbtv7lYaYjCBqwFc
-         ONnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=DbTnxuStwqc3cXfUcmcLKBQUMRwlx77kXcW/8zHZcAc=;
-        b=QvHuKmQZ8PoK2PZepB3Wv6KiKVJV3/E25LZRa57MN/XRm6h/srzerXn3m8ssC5/TRE
-         uDhhFlKi1tw0raUoQyLyYAqsGo5bJ7S3PBYNWEZLBo3Bg+EHJaLTyKn+p0mwrTV6pdj7
-         bP8zBTrvAyg0UXUovOaJZaEnlGyASaU8l+/EChM4h0fd6C3pQvq8OMasARxCbFc9RF/A
-         khvKtqJipaypUwnribSsY8SwIf2VXlJVXYQzSiHq3DIGtlu/5dkLc5BGytyFr7yStxY1
-         LqiKAOds3VkqOFfnlmso3wZEuAoY8EXAj7M4mcW679rtfWsED/gc4ai4F0+XprMZCAck
-         RkLQ==
-X-Gm-Message-State: AOPr4FU/CN8khp4WdFyAAHrbcIqWeaYdHpNiAvdH3bTQXupelGZSf8enr4fBNJVpNEXGhA==
-X-Received: by 10.28.228.68 with SMTP id b65mr17848658wmh.47.1460654645198;
-        Thu, 14 Apr 2016 10:24:05 -0700 (PDT)
-Message-ID: <20160414172353.GA5117@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Thu, 14 Apr 2016 19:23:53 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: imlib2: integer overflow resulting in insufficient heap
- allocation
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 22283 invoked from network); 11 Jan 2025 14:35:39 -0000
+Date: Sat, 11 Jan 2025 15:35:30 +0100
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Z4KBsizUbDyCPXFi@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] heap-buffer-overflow in Vim < 9.1.1003
 
-Hi
+heap-buffer-overflow with visual mode in Vim < 9.1.1003
+=======================================================
+Date: 11.01.2025
+Severity: Medium
+CVE: CVE-2025-22134
+CWE: Heap-based Buffer Overflow (CWE-122)
 
-Yuriy M. Kaminskiy discovered an integer overflow in imlib2, which
-result in insufficient heap allocation. The upstream fix is in
+When switching to other buffers using the :all command and visual mode
+still being active, this may cause a heap-buffer overflow, because Vim
+does not properly end visual mode and therefore may try to access
+beyond the end of a line in a buffer.
 
-https://git.enlightenment.org/legacy/imlib2.git/commit/?id=7eba2e4c8ac0e20838947f10f29d0efe1add8227
+In Patch 9.1.1003 Vim will correctly reset the visual mode before
+opening other windows and buffers and therefore fix this bug.  In
+addition it does verify that it won't try to access a position if the
+position is greater than the corresponding buffer line.
 
-Can you assign a CVE for this issue?
+Impact is medium since the user must have switched on visual mode when
+executing the :all ex command.
 
-Regards,
-Salvatore
+The issue has been fixed as of Vim patch v9.1.1003
+
+The Vim project would like to thank github user gandalf4a for reporting
+this issue.
+
+References:
+https://github.com/vim/vim/commit/c9a1e257f1630a0866447e53a564f7ff96a80ead
+https://github.com/vim/vim/security/advisories/GHSA-5rgf-26wj-48v8
+
+Thanks,
+Christian
+-- 
+Children are unpredictable.  You never know what inconsistency they're
+going to catch you in next.
+		-- Franklin P. Jones
