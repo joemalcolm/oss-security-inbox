@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2808" "Wednesday" "10" "February" "2021" "14:36:33" "+0100" "Stefan Sperling" "stsp@apache.org" "<YCPhYWmJGVjfi6K3@byrne.stsp.name>" "76" "[oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.14.1 released" nil nil nil "2" "2021021013:36:33" "[oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.14.1 released" (number mark "U       stsp@apache. Feb 10   76/2808  " thread-indent "\"[oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.14.1 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.14.1 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25652 invoked by uid 550); 10 Feb 2021 13:50:02 -0000
+Received: (qmail 3440 invoked by uid 550); 15 Jan 2025 15:29:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,97 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9729 invoked from network); 10 Feb 2021 13:36:51 -0000
-Date: Wed, 10 Feb 2021 14:36:33 +0100
-From: Stefan Sperling <stsp@apache.org>
-To: announce@subversion.apache.org, users@subversion.apache.org,
-	dev@subversion.apache.org, announce@apache.org
-Cc: security@apache.org, oss-security@lists.openwall.com,
-	bugtraq@securityfocus.com
-Message-ID: <YCPhYWmJGVjfi6K3@byrne.stsp.name>
-Mail-Followup-To: announce@subversion.apache.org,
-	users@subversion.apache.org, dev@subversion.apache.org,
-	announce@apache.org, security@apache.org,
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+x-ms-reactions: disallow
+Received: (qmail 13971 invoked from network); 15 Jan 2025 06:21:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736922091; x=1737526891; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AoGZaZRkZnpwxuE0hsj+i5C45xO9zWpobLNHmo93H3o=;
+        b=PO2Q5BKFsshlAfx2RIGpt/F43Bp4orikunuo//A8goxB5GdNPbRKhG6T45qWaa2+/3
+         A5M75Lry6i9I8hk+cipCeFjMUnQjH1exiHaVjnQXKMpGsuszq+Za320dEusSnAf/UDsm
+         wU5PG42QwNWPaqmvQ+og3JL+DABr6cyZSaxAUtCQ4AVDk7QWpDgErMwDSyy+rqyIjTtS
+         lhcSL3SSL3A9skMmdPesEZdjctEIsqkXXhMER4UAjynbXGHjqQgkk6zqVc0hyMWDsgkl
+         Hh7BM5ax8LzhdevXYvnPTSfkTPM+b1BJ3BWGbP5T8NqpnbKXUUon7hphP1Fwfl6BPm0I
+         FECw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736922091; x=1737526891;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AoGZaZRkZnpwxuE0hsj+i5C45xO9zWpobLNHmo93H3o=;
+        b=AmzIuLiZ2T8YqhhgAl282k58L1EAFBy8clZ7QoFh3hfioxiM7s/zY9rMLZiYaiipUX
+         V+8tBMxGYJYQeb8ohs2tB516/H69HUdImkqB9eyqaB4kj1A2kjPj/yIVH26xcJlmplkW
+         nBbZ9/uuP4JA++8CiRM4ptmsISrj9AI/mOz9+Mou2PlWxGKGF+RSzbblNda1A2p73wXT
+         qbk9Gdr438ykePdPhF4C8wt+a2hghpmmKI+V2EHN2nJisF+ABONOnb6Fs3azpiGuxflX
+         69TORhFenWSNOvMPzJx3VyrdhtrdUUu9TZeEPIhIMAcNPW3jaah/DRJ5Tx4caNo7mHWq
+         roBA==
+X-Gm-Message-State: AOJu0Yz5L3HjYVh3134jgO1S6y8isNr8/SRLye7is8R/S1q2C5l21u/e
+	nNY/1HseOygAfJ1Tc3xoZRyLwQXkf1Do/m+yF7ER4K0I96LhXhkqLmrDk1wzIbJZO1gp+SpqvBU
+	80ygHD8xXm25LX/PVs+51sw0zrv+ZV8uK5XU=
+X-Gm-Gg: ASbGncv1AeMG1ywHfaDpr0OP1xVbq++p9eR8XILPezKo2XyQ5kEooUSoaL/x9x2C3tb
+	LBL37MhaAmp91xcDi05AQASdofrDos2n26Q7BNhF2vDwFjkpqswSP/vgc/ZC/lRN533lD
+X-Google-Smtp-Source: AGHT+IH1yJF4BMYTDnetZMTJPlOYb0Ae+LhRHiFy3AIXU69x+AlJ59WzBS30tRN7YBWgeYwSxl1AFXEnDOJIwKgDwT4=
+X-Received: by 2002:a05:6871:6216:b0:296:e4bb:80f5 with SMTP id
+ 586e51a60fabf-2aa069844ccmr16611550fac.36.1736922090964; Tue, 14 Jan 2025
+ 22:21:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.14.1 released
+From: Soatok Dreamseeker <soatok.dhole@gmail.com>
+Date: Wed, 15 Jan 2025 01:21:20 -0500
+X-Gm-Features: AbW1kvbBasGq7_2EN0OB3wbTWS2Yd2hktulEV7zpF-WNRi_cNC5pyOCYkP6V8-8
+Message-ID: <CAOvwWh2tea8QjHf63Efhxh7-ESa2zoDv-e1Cwf2T=WRVuWZRmw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000003c1328062bb8b02e"
+Subject: [oss-security] Session (a fork of the Signal private messaging app) is sus
 
-I'm happy to announce the release of Apache Subversion 1.14.1.
-Please choose the mirror closest to you by visiting:
+--0000000000003c1328062bb8b02e
+Content-Type: text/plain; charset="UTF-8"
 
-    https://subversion.apache.org/download.cgi#recommended-release
+Full details here:
+https://soatok.blog/2025/01/14/dont-use-session-signal-fork/
 
-This is a stable bugfix and security release of the Apache Subversion
-open source version control system.
+At a glance, what I found is the following:
 
-THIS RELEASE CONTAINS AN IMPORTANT SECURITY FIX:
+   1. Session only uses 128 bits of entropy for Ed25519 keys. This means
+   their ECDLP is at most 64 bits, which is pretty reasonably in the realm of
+   possibility for nation state attackers to exploit.
+   2. Session has an Ed25519 verification algorithm that verifies a
+   signature for a message against a public key provided by the message. This
+   is amateur hour.
+   3. Session uses an X25519 public key as the symmetric key for AES-GCM as
+   part of their encryption for onion routing.
 
-  CVE-2020-17525
-  "Remote unauthenticated denial-of-service in Subversion mod_authz_svn"
+Additional gripes about their source code were also included in the blog
+post.
 
-The full security advisory for CVE-2020-17525 is available at:
-  https://subversion.apache.org/security/CVE-2020-17525-advisory.txt
+Happy hacking!
+Soatok
 
-A brief summary of this advisory follows:
-
-  Subversion's mod_authz_svn module will crash if the server is using
-  in-repository authz rules with the AuthzSVNReposRelativeAccessFile
-  option and a client sends a request for a non-existing repository URL.
-
-  This can lead to disruption for users of the service.
-
-  We recommend all users to upgrade to the 1.10.7 or 1.14.1 release
-  of the Subversion mod_dav_svn server.
-
-  As a workaround, the use of in-repository authz rules files with
-  the AuthzSVNReposRelativeAccessFile can be avoided by switching
-  to an alternative configuration which fetches an authz rules file
-  from the server's filesystem, rather than from an SVN repository.
-
-  This issue was reported by Thomas Åkesson.
-
-SHA-512 checksums are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.14.1.tar.bz2.sha512
-    https://www.apache.org/dist/subversion/subversion-1.14.1.tar.gz.sha512
-    https://www.apache.org/dist/subversion/subversion-1.14.1.zip.sha512
-
-PGP Signatures are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.14.1.tar.bz2.asc
-    https://www.apache.org/dist/subversion/subversion-1.14.1.tar.gz.asc
-    https://www.apache.org/dist/subversion/subversion-1.14.1.zip.asc
-
-For this release, the following people have provided PGP signatures:
-
-   Stefan Sperling [2048R/4F7DBAA99A59B973] with fingerprint:
-    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
-   Branko Čibej [4096R/1BCA6586A347943F] with fingerprint:
-    BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F
-   Johan Corveleyn [4096R/B59CE6D6010C8AAD] with fingerprint:
-    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
-
-These public keys are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.14.1.KEYS
-
-Release notes for the 1.14.x release series may be found at:
-
-    https://subversion.apache.org/docs/release-notes/1.14.html
-
-You can find the list of changes between 1.14.1 and earlier versions at:
-
-    https://svn.apache.org/repos/asf/subversion/tags/1.14.1/CHANGES
-
-Questions, comments, and bug reports to users@subversion.apache.org.
-
-Thanks,
-- The Subversion Team
-
---
-To unsubscribe, please see:
-
-    https://subversion.apache.org/mailing-lists.html#unsubscribing
+--0000000000003c1328062bb8b02e--
