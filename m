@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1848" "Thursday" "8" "October" "2020" "00:30:01" "+0000" "Seth Arnold" "seth.arnold@canonical.com" "<20201008003001.GE378617@millbarge>" "62" "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil "10" "2020100800:30:01" "[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" (number mark "U       seth.arnold@ Oct  8   62/1848  " thread-indent "\"Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022\"\n") "<alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>" ("<CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>" "<alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>") nil nil nil nil nil nil nil "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27926 invoked by uid 550); 8 Oct 2020 00:30:16 -0000
+Received: (qmail 3416 invoked by uid 550); 16 Jan 2025 00:40:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +7,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27908 invoked from network); 8 Oct 2020 00:30:15 -0000
-Date: Thu, 8 Oct 2020 00:30:01 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20201008003001.GE378617@millbarge>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
- <alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>
+x-ms-reactions: disallow
+Received: (qmail 25922 invoked from network); 15 Jan 2025 22:12:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1736979136; x=1768515136;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=Uw8dcUI21zZluW43GjPk1GHnfIJLicEvf/vv30w3w2E=;
+  b=b/oKbvkUNw/4aMSNKWxPicLsBffRqn8JJWwJWE7AgNtax0EDHbJipgwx
+   6kGAkWbSi90FMiN9BZsT1rhwKr0BLTVV+nvgeqpM8ghMgOYybGmtmgKQq
+   i4kQgFVi679xtsewhH638e+y2tQ/nrCgSVyN+SiFvkPiSvJIz73Ba+kq6
+   I=;
+X-IronPort-AV: E=Sophos;i="6.13,207,1732579200"; 
+   d="scan'208,217";a="689545177"
+X-Farcaster-Flow-ID: fdea9631-6bb2-4129-9ad2-b20634548430
+From: "Vellore Rajakumar, Sri Saran Balaji" <srajakum@amazon.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [kubernetes] CVE-2024-9042: Command Injection affecting Windows
+ nodes via nodes/*/logs/query API
+Thread-Index: AQHbZ5p95NuXpgNIDEahWoNbVEE8rg==
+Date: Wed, 15 Jan 2025 22:11:57 +0000
+Message-ID: <3E7469E3-7A05-4823-843A-FEE4B752EBE9@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Microsoft-MacOutlook/16.91.24111020
+x-originating-ip: [10.13.138.196]
+Content-Type: multipart/alternative;
+	boundary="_000_3E7469E37A054823843AFEE4B752EBE9amazoncom_"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8TaQrIeukR7mmbKf"
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.20.2010071604290.15793@scrappy.simplesystems.org>
-Subject: Re: [oss-security] Debian FEATURE: /home/loser is with permissions
- 755, default umask 0022
+Subject: [oss-security] [kubernetes] CVE-2024-9042: Command Injection affecting Windows nodes
+ via nodes/*/logs/query API
+X-Spam: Yes
 
---8TaQrIeukR7mmbKf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--_000_3E7469E37A054823843AFEE4B752EBE9amazoncom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-On Wed, Oct 07, 2020 at 04:09:59PM -0500, Bob Friesenhahn wrote:
-> Ubuntu Linux (a Debian derivative) has changed the default.  However, we
-> found that the Ubuntu default caused problems for us while building our
-> software, and so we changed them back.
+SGVsbG8gS3ViZXJuZXRlcyBDb21tdW5pdHksDQpBIHNlY3VyaXR5IHZ1bG5lcmFiaWxpdHkgaGFz
+IGJlZW4gZGlzY292ZXJlZCBpbiBLdWJlcm5ldGVzIHdpbmRvd3Mgbm9kZXMgdGhhdCBjb3VsZCBh
+bGxvdyBhIHVzZXIgd2l0aCB0aGUgYWJpbGl0eSB0byBxdWVyeSBhIG5vZGUncyAnL2xvZ3MnIGVu
+ZHBvaW50IHRvIGV4ZWN1dGUgYXJiaXRyYXJ5IGNvbW1hbmRzIG9uIHRoZSBob3N0Lg0KDQpUaGlz
+IGlzc3VlIGhhcyBiZWVuIHJhdGVkIE1lZGl1bSB3aXRoIGEgQ1ZTUyB2My4xIHNjb3JlIG9mIDUu
+OSAoQ1ZTUzozLjEvQVY6Ti9BQzpIL1BSOkgvVUk6Ti9TOlUvQzpIL0k6SC9BOk48aHR0cHM6Ly93
+d3cuZmlyc3Qub3JnL2N2c3MvY2FsY3VsYXRvci8zLjEjQ1ZTUzozLjEvQVY6Ti9BQzpIL1BSOkgv
+VUk6Ti9TOlUvQzpIL0k6SC9BOk4+KSBhbmQgYXNzaWduZWQgQ1ZFLTIwMjQtOTA0Mi4NCg0KQW0g
+SSB2dWxuZXJhYmxlPw0KVGhpcyBDVkUgYWZmZWN0cyBvbmx5IFdpbmRvd3Mgd29ya2VyIG5vZGVz
+LiBZb3VyIHdvcmtlciBub2RlIGlzIHZ1bG5lcmFibGUgdG8gdGhpcyBpc3N1ZSBpZiBpdCBpcyBy
+dW5uaW5nIG9uZSBvZiB0aGUgYWZmZWN0ZWQgdmVyc2lvbnMgbGlzdGVkIGJlbG93Lg0KDQpBZmZl
+Y3RlZCBDb21wb25lbnRzDQoNCiAgKiAgIEt1YmVsZXQNCg0KQWZmZWN0ZWQgVmVyc2lvbnMNCg0K
+ICAqICAgdjEuMzIuMA0KICAqICAgdjEuMzEuMCB0byB2MS4zMS40DQogICogICB2MS4zMC4wIHRv
+IHYxLjMwLjgNCiAgKiAgIDw9djEuMjkuMTINCg0KSG93IGRvIEkgbWl0aWdhdGUgdGhpcyB2dWxu
+ZXJhYmlsaXR5Pw0KVG8gbWl0aWdhdGUgdGhpcyB2dWxuZXJhYmlsaXR5LCB5b3UgbmVlZCB0byB1
+cGdyYWRlIHRoZSBLdWJlbGV0IG9uIHlvdXIgV2luZG93cyB3b3JrZXIgbm9kZXMgdG8gb25lIG9m
+IHRoZSBmaXhlZCB2ZXJzaW9ucyBsaXN0ZWQgYmVsb3cuDQoNCkZpeGVkIFZlcnNpb25zDQoNCiAg
+KiAgIHYxLjMyLjENCiAgKiAgIHYxLjMxLjUNCiAgKiAgIHYxLjMwLjkNCiAgKiAgIHYxLjI5LjEz
+DQoNCkRldGVjdGlvbg0KVG8gZGV0ZWN0IHdoZXRoZXIgdGhpcyB2dWxuZXJhYmlsaXR5IGhhcyBi
+ZWVuIGV4cGxvaXRlZCwgeW91IGNhbiBleGFtaW5lIHlvdXIgY2x1c3RlcidzIGF1ZGl0IGxvZ3Mg
+dG8gc2VhcmNoIGZvciBub2RlICdsb2dzJyBxdWVyaWVzIHdpdGggc3VzcGljaW91cyBpbnB1dHMu
+DQoNCklmIHlvdSBmaW5kIGV2aWRlbmNlIHRoYXQgdGhpcyB2dWxuZXJhYmlsaXR5IGhhcyBiZWVu
+IGV4cGxvaXRlZCwgcGxlYXNlIGNvbnRhY3Qgc2VjdXJpdHlAa3ViZXJuZXRlcy5pbzxtYWlsdG86
+c2VjdXJpdHlAa3ViZXJuZXRlcy5pbz4NCg0KQWNrbm93bGVkZ2VtZW50cw0KVGhpcyB2dWxuZXJh
+YmlsaXR5IHdhcyByZXBvcnRlZCBieSBQZWxlZCwgVG9tZXIgYW5kIG1pdGlnYXRlZCBieSBBcmF2
+aW5kaCBQdXRoaXlhcHJhbWJpbC4NCg0KVGhhbmsgWW91LA0KQmFsYWppIG9uIGJlaGFsZiBvZiB0
+aGUgS3ViZXJuZXRlcyBTZWN1cml0eSBSZXNwb25zZSBDb21taXR0ZWUNCg0K
 
-Hello Bob, can you please share some details on this?
-
-I expect Ubuntu home directories to be 755 by default:
-https://wiki.ubuntu.com/SecurityTeam/Policies#Permissive_Home_Directory_Access
-
-And while it is very difficult to say "the umask", given that every
-process's umask setting depends upon the actions of not only itself but
-also its nearest parent to use the umask(2) syscall, but:
-
-$ grep ^UMASK /etc/login.defs
-UMASK		022
-
-$ systemctl show -p UMask '*' | sort -u
-
-UMask=0022
-
-I'd certainly expect the default settings to be a umask of 0022, there's a
-variety of umasks on the systems I've got easy access to:
-
-$ sudo grep -h Umask /proc/*/status | sort -u
-Umask:	0000
-Umask:	0002
-Umask:	0022
-Umask:	0077
-Umask:	0777
-$ sudo grep -h Umask /proc/*/status | sort -u
-Umask:	0000
-Umask:	0002
-Umask:	0022
-Umask:	0077
-$ sudo grep -h Umask /proc/*/status | sort -u
-Umask:	0000
-Umask:	0002
-Umask:	0022
-
-Thanks
-
---8TaQrIeukR7mmbKf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl9+XYUACgkQ8yFyWZ2N
-LpfYeAf+MYbfTaLX4o41iY8skoMGygn3z0bm5cRRZmULYV9T1gKXDeCNXp3mdfN9
-KNw7YDR9exXqBPqjifijroMyzY4z5J0zMb4y/UEhnY97mpulK8uh5aazcptncsjF
-zg8d0WbyeBQWSBa3KAh8MeCHOiepFs4JiEUxE53A4L1BPKsvEmcHvrBA+WXjW6yv
-/Xf35p2bAkAPVoPszjXeYztl1vfW3fB3fZKFHI4dp+c+ucTjIUy4xFuxRz39BiDn
-IcljaEx2CooAJMpR2D8SXiDuq/AltSlU/VSx+CvtQzzYOWLJUYbAWIIYXN5z54VS
-gZ3I6G7a4qZ+71PzpengbLaqtdIjRQ==
-=c336
------END PGP SIGNATURE-----
-
---8TaQrIeukR7mmbKf--
+--_000_3E7469E37A054823843AFEE4B752EBE9amazoncom_--
