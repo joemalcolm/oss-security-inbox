@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1102" "Friday" "27" "March" "2015" "13:24:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150327172417.8602A6C0007@smtpvmsrv1.mitre.org>" "32" "[oss-security] Re: CVE request: Erlang POODLE TLS vulnerability" nil nil nil "3" "2015032717:24:17" "[oss-security] Re: CVE request: Erlang POODLE TLS vulnerability" (number mark "        cve-assign@m Mar 27   32/1102  " thread-indent "\"[oss-security] Re: CVE request: Erlang POODLE TLS vulnerability\"\n") "<20150327143927.60a73799@pc1.fritz.box>" ("<20150327143927.60a73799@pc1.fritz.box>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20289 invoked by uid 550); 27 Mar 2015 17:24:30 -0000
+Received: (qmail 32237 invoked by uid 550); 16 Jan 2025 19:17:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20265 invoked from network); 27 Mar 2015 17:24:29 -0000
-In-Reply-To: <20150327143927.60a73799@pc1.fritz.box>
-Message-Id: <20150327172417.8602A6C0007@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 27 Mar 2015 13:24:17 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Erlang POODLE TLS vulnerability
-To: hanno@hboeck.de
+x-ms-reactions: disallow
+Received: (qmail 32213 invoked from network); 16 Jan 2025 19:17:10 -0000
+From: Russ Allbery <eagle@eyrie.org>
+To: Matthias Gerstner <mgerstner@suse.de>
+Cc: Jacob Bachmeyer <jcb62281@gmail.com>,  oss-security@lists.openwall.com
+In-Reply-To: <Z4jejSMgNUpzFI6T@kasco.suse.de> (Matthias Gerstner's message of
+	"Thu, 16 Jan 2025 11:25:17 +0100")
+Organization: The Eyrie
+References: <Z4ekKFlPfkdWqeW2@kasco.suse.de>
+	<5124504d-3d37-42ad-8bf7-fbbb7f8d0317@gmail.com>
+	<Z4jejSMgNUpzFI6T@kasco.suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 16 Jan 2025 11:16:59 -0800
+Message-ID: <87a5bqk1qs.fsf@hope.eyrie.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: Re: [oss-security] Re: pam-u2f: problematic PAM_IGNORE return
+ values in pam_sm_authenticate() (CVE-2025-23013)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Matthias Gerstner <mgerstner@suse.de> writes:
 
-> From the release notes of Erlang 18.0-rc1:
-> http://www.erlang.org/news/85
-> "ssl: ... added padding check for
-> TLS-1.0 due to the Poodle vulnerability."
-> 
-> This indicates that Erlang was vulnerable to the TLS-variant of the
-> poodle vulnerability due to missing padding checks
-> 
-> this clearly is an implementation error and thus should be considered a
-> vuln.
+> I could not find anything conclusive about this topic in the PAM
+> documentation and development guides. Actually not even about the exact
+> behavior and purpose of PAM_IGNORE.
 
-Use CVE-2015-2774.
+In one of my old modules (now orphaned), I see I have this piece of
+terrifying code:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+int
+pam_sm_authenticate(pam_handle_t *pamh UNUSED, int flags UNUSED,
+                    int argc UNUSED, const char *argv[] UNUSED)
+{
+    /*
+     * We want to return PAM_IGNORE here, but Linux PAM 0.99.7.1 (at least)
+     * has a bug that causes PAM_IGNORE to result in authentication failure
+     * when the module is marked [default=done].  So we return PAM_SUCCESS,
+     * which is dangerous but works in that case.
+     */
+    return PAM_SUCCESS;
+}
 
-iQEcBAEBAgAGBQJVFZGTAAoJEKllVAevmvmsrb8H/jlkxOnhkQ0hIZ/XURZYf31O
-i2LIOF4W5YkEmuI8W1EI9s+3UDf0gbJ4tQ54djwG0BF9I48T1jrl+MxWcco0nK8Q
-p2jDrqj28gjlPnxoOslUoTSMZqvHrl591OCRpkLn+1ggK8wL75gpEhEscGrux64u
-GaAjg5fklTUqf9aGWwYADk2bRZS6lOVwHHErHn8bvXsiST3vvhqIL03xNJBIl4MH
-2/Km1nigVtBEthhhkXAtAl5Vds7BKxUUJOdNAvqPIu7s17b3bG464txNGrpdk7I+
-+ImUdaTHg+XS/9MrqhF8GylUMgtBeYuibp3xBqOZEEZzfzHtfJg8zFKmrjJE3g8=
-=mfFG
------END PGP SIGNATURE-----
+This has been a long-standing problem, and it would be great to get it
+sorted out somehow and clearly documented and to try to signal to all PAM
+modules that they can drop bug workarounds like this.
+
+The situation with expected return statuses and behavior of pam_setcred is
+if anything even worse than pam_authenticate. The above problem was in a
+module that did not want to implement authentication at all, but since it
+had to provide a pam_setcred implementation, was required to also
+implement pam_authenticate because pam_setcred otherwise wasn't called. In
+this case, this was specifically called out in the documentation:
+
+    Note that this is not an authentication module and will always return
+    PAM_SUCCESS to any authentication attempt, so never make this module
+    sufficient in your authentication stack. It's only listed as an auth
+    module because it provides a pam_setcred implementation and some
+    programs need to call pam_setcred rather than pam_open_session (screen
+    savers, for instance, to refresh credentials).
+
+But of course who knows if anyone reads the documentation.
+
+My experience as a PAM module maintainer is that I kept making educated
+guesses then iterating if I got a bug report, which for a
+security-sensitive piece of software is not a comfortable place to be.
+It's a recipe for erring on the side of failing open, which is the
+opposite of what should be happening, but one tends to only get bug
+reports when logins fail.
+
+-- 
+Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
