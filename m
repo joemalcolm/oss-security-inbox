@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4089" "Wednesday" "27" "September" "2017" "21:41:02" "+0200" "Solar Designer" "solar@openwall.com" "<20170927194101.GA6268@openwall.com>" "85" "Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" nil nil nil "9" "2017092719:41:02" "[oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" (number mark "U       solar@openwa Sep 27   85/4089  " thread-indent "\"Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing\"\n") "<20170918193159.GL2409@yuggoth.org>" ("<6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>" "<20170917130410.GA8650@openwall.com>" "<20170918193159.GL2409@yuggoth.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16279 invoked by uid 550); 27 Sep 2017 19:46:27 -0000
+Received: (qmail 9413 invoked by uid 550); 16 Jan 2025 16:56:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,101 +7,131 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11939 invoked from network); 27 Sep 2017 19:41:32 -0000
-Date: Wed, 27 Sep 2017 21:41:02 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 27996 invoked from network); 16 Jan 2025 16:51:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1737046308; x=1737712974; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  mime-version:content-type:content-transfer-encoding:author:from:subject:
+  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
+  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
+  mime-version:content-type:content-transfer-encoding:content-disposition:
+  content-id:content-description:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=MH8nEqO1aIf5wYo3Afi/s6Dy58BocZZbEvD/CKryRAk=;
+ b=mqLrjYOLYnKL4zD5qOCPmzczu7x9jNh7uatOU3hiOomg9U2ei5IIQCEf1PrpKWjbk11BzX4F
+  aC61x9kduSMC7o9OkvFFHG3UdlPGn3hcIqBCRMYEaBaMoHcThnSzy1jjt+HyXCKjZ0aEHIMMAH
+  xamDkQ3VkLRCNJBL3EACaXGyIOWLZHHKDnDEJF3Sot/kwExCHNjM/VKXJdYRHViaLri2D3lCwf
+  xr8PkMEQxwIKYd5DIbZeC/k9t4UIED6nRz/FhgxQci6vBY4as0ApttWJddCbzKg2l2yin/CJIw
+  pcvnkaOVkYJ6vHJnhLxFhlnmurOASQg09SVoVvdmMoHra8/A==
+DKIM-Signature: v=1; a=adaed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=orange; t=1737046308; x=1737712974; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  mime-version:content-type:content-transfer-encoding:author:from:subject:
+  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
+  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
+  mime-version:content-type:content-transfer-encoding:content-disposition:
+  content-id:content-description:message-id:mail-followup-to:openpgp:
+  blahblahblah; bh=MH8nEqO1aIf5wYo3Afi/s6Dy58BocZZbEvD/CKryRAk=;
+ b=Wbxwa9SxZnzDCZQKWbxfzhEvszJwktFWi9FhVyp5oBB1hOfIlg6veBrQHvoN5hmFEmoAKGYg
+  BIwuAJD1pLKXBg==
+Date: Thu, 16 Jan 2025 17:25:21 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
-Message-ID: <20170927194101.GA6268@openwall.com>
-References: <6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com> <20170917130410.GA8650@openwall.com> <20170918193159.GL2409@yuggoth.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170918193159.GL2409@yuggoth.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing
+Message-ID: <20250116162521.wJ5wghpL@steffen%sdaoden.eu>
+In-Reply-To: <Z4jejSMgNUpzFI6T@kasco.suse.de>
+References: <Z4ekKFlPfkdWqeW2@kasco.suse.de>
+ <5124504d-3d37-42ad-8bf7-fbbb7f8d0317@gmail.com>
+ <Z4jejSMgNUpzFI6T@kasco.suse.de>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-636-gc7c14cee09-dirty
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] pam-u2f: problematic PAM_IGNORE return
+ values in pam_sm_authenticate() (CVE-2025-23013)
 
-On Mon, Sep 18, 2017 at 07:32:00PM +0000, Jeremy Stanley wrote:
-> On 2017-09-17 15:04:10 +0200 (+0200), Solar Designer wrote:
-> [...]
-> > the wording of the advisory and in the discussion at
-> > https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
-> > 
-> > I assume that sha512_crypt refers to the algorithm introduced in
-> > glibc 2.7 and now used by many Linux distros and more. It is
-> > typically called sha512crypt without the underscore. I also assume
-> > that pbkdf2_sha512 refers to PBKDF2-HMAC-SHA512.
-> 
-> Yes, or more specifically these:
-> 
-> https://passlib.readthedocs.io/en/stable/lib/passlib.hash.sha512_crypt.html
-> https://passlib.readthedocs.io/en/stable/lib/passlib.hash.pbkdf2_digest.html
+Matthias Gerstner wrote in
+ <Z4jejSMgNUpzFI6T@kasco.suse.de>:
+ |On Wed, Jan 15, 2025 at 11:58:00PM -0600, Jacob Bachmeyer wrote:
+ |> On 1/15/25 06:03, Matthias Gerstner wrote:
+ |>> There exist utility modules that don't
+ ...
+ |> This looks to me like a logic error in PAM.=C2=A0 Why are utility modul=
+es=20
+ ...
+ |I suppose libpam has no way of differentiating the "importance" or
+ |purpose of the modules it runs. It could be argued that such utility
 
-These say that sha512_crypt defaults to rounds=656000, which is very
-high, whereas pbkdf2_sha512 defaults to rounds=29000, which is also high
-but is relatively lower.
+PAM is also massively underdocumented regarding things like *id
+handling, environmental status in which modules run, that sessions
+can be escaped via simple daemonization (not that it matters to
+pam at all that mechanisms exist to overcome this, ie, on whatever
+result / status code / xy side), and similar things.
 
-Now, we can't directly compare these: even an optimal implementation of
-PBKDF2-HMAC needs two computations of the hash per iteration, but OTOH
-sha512crypt may call SHA-512's compression function more times when the
-password is long (this dependency on length is an issue on its own, but
-that's separate).  That said, overall your pbkdf2_sha512 is likely ~10x
-quicker to crack than your sha512_crypt with these default settings.
+For example that PAM_USER can return NULL or an empty string in
+the PAM_SUCCESS status code case is more than just astonishing to
+the occasional programmer who would expect that "sane behaviour"
+also depends on some context, *here* not making sense on POSIX?
 
-Yet the advisory continues to recommend pbkdf2_sha512 over sha512_crypt.
-I understand that maybe you just haven't gotten around to correcting it
-yet.  Also, Morgan has since posted another confused comment to 1668503,
-saying "we should be using bcrypt, scrypt, or at *least* pbkdf2 instead
-of sha512_crypt", which continues to imply that "pbkdf2" is necessarily
-a better choice.
+Also system(3) should be a pretty much safe system call if
+a session opener program uses it, in that environmental attack
+surface could only come from system side aka first level
+administrator configuration, unless i am very much mistaken.
+Ie RFC 86 writes
 
-The advisory says that "sha512_crypt algorithm has a low computational
-cost factor", but your 656000 is actually very high.  (I did not verify
-that you actually use a value this high, though.)  So the problem, if
-any, is really not what the advisory says.  Rather, it can be that
-modern hashes starting with scrypt also use memory, and there's bcrypt,
-which is inefficient on GPUs - these are good things that you were
-missing on with sha512_crypt (and would also miss with pbkdf2_sha512).
+  Authentication software deserves special attention because
+  authentication forms a very critical component of any secure
+  computer system.
 
-Per this page:
+and for session-in-session, for example su(1), we read
 
-https://passlib.readthedocs.io/en/stable/lib/passlib.hash.bcrypt.html
+   The current environment is passed to the new shell. The value of $PATH
+   is reset to /bin:/usr/bin for normal users, or
+   /sbin:/bin:/usr/sbin:/usr/bin for the superuser. This may be changed
+   with the ENV_PATH and ENV_SUPATH definitions in /etc/login.defs.
 
-your bcrypt defaults to cost factor 12.  It is non-obvious whether this
-is higher or lower than sha512crypt's 656000.  I just ran some tests
-with John the Ripper -jumbo on a 2x E5-2670 v1 machine, and sha512crypt
-with 656000 is crackable at ~85 c/s (at candidate password length 8)
-whereas bcrypt with 12 is crackable at ~130 c/s.  So for cracking on
-these CPUs supporting AVX but not yet AVX2, the bcrypt is slightly
-weaker.  However, for cracking on newer CPUs supporting AVX2, it'd be
-the other way around (I'd expect ~165 vs. ~130).  For cracking on GPUs,
-sha512crypt would be many times faster than bcrypt.
+There is no notion of signal handling, and i blindly assume that
+PAM takes care for closing sessions with that "set right".
+(not ducking.)
 
-So you can't just say that you're addressing "a low computational cost
-factor".  You're addressing other issues.
+Unfortunately my pam_xdg (not what became the same in FreeBSD)
+that used it never was brought up in public.  I finally unrolled
+the system(3) with fork(2)/execve(2), but there is possibility
+left since i still do not care for signals therein.
 
-Also, for your defensive use (that is, non-parallelized computation of
-one password hash) bcrypt cost factor 12 is probably way faster than
-sha512crypt's 656000.  You could want to bring the default for bcrypt on
-par with sha512crypt's 656000 if you really could afford a value this
-high before (double-check it first).  My estimate is that bcrypt cost 14
-or 15 will be it.
+  ...
+ |the often already pretty complex PAM stacks we see on Linux
+ |distributions.
+ ...
 
-And at cost factors this high (yes, all of these are unusually high) you
-really should consider scrypt and on, where a lot of memory could be
-filled (if affordable) in that time, resulting in a quadratic growth of
-cost of some kinds of attacks.
+Really, in my opinion someone with money (some summer of code
+maybe) should iterate PAM, so that certain conditions are in
+a defined state for running module code, and that mode should be
+addressible so that mode<>module is locked (ie module code only
+runs if right mode).  Maybe via some dlopen(3) availability check,
+and when run it returns a flag mask of states is preassumes, or
+something.
 
-I hope this helps.
+ --End of <Z4jejSMgNUpzFI6T@kasco.suse.de>
 
-And while I am at it:
+Just my one cent.
 
-On Mon, Sep 18, 2017 at 02:00:09PM -0400, Jordan Glover wrote:
-> What number of iterations is considered secure for sha512crypt/pbkdf2 these days?
-
-You'd use as many iterations as you can afford without running into
-other issues.  It's not like one number is secure and another is not.
-
-I suppose an advisory could be issued if the number of iterations is
-many times lower than what's affordable for the given use case.
-
-Alexander
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
+|
+|In Fall and Winter, feel "The Dropbear Bard"s pint(er).
+|
+|The banded bear
+|without a care,
+|Banged on himself for e'er and e'er
+|
+|Farewell, dear collar bear
