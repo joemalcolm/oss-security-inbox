@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5350" "Tuesday" "26" "September" "2017" "07:03:41" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<146142.067478166-sendEmail@localhost>" "107" "[oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)" nil nil nil "9" "2017092607:03:41" "[oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)" (number mark "U       ago@gentoo.o Sep 26  107/5350  " thread-indent "\"[oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3877 invoked by uid 550); 26 Sep 2017 07:04:29 -0000
+Received: (qmail 5548 invoked by uid 550); 18 Jan 2025 20:02:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,119 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3849 invoked from network); 26 Sep 2017 07:04:28 -0000
-Message-ID: <146142.067478166-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Tue, 26 Sep 2017 07:03:41 +0000
+x-ms-reactions: disallow
+Received: (qmail 5530 invoked from network); 18 Jan 2025 20:02:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737230542; x=1737835342; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a9nPmMQ8ct3IBdhlKUoLM+qDZ3JU2RPYn6okCI3Hbfw=;
+        b=drvyrR/joHyS9rdCl8HYReCmKZ43U5cEvkluu90Ua2R7l6o9KbNiurci6gh5yuIGyJ
+         T01ijuQY+a8CAOyfq6HRIYE5dJv1Cg6E/7ZxV1Kew8RH69cixpxHrhD4vNi5uy4ld82j
+         TS7F++ZmTKyH9NxnwBqXDreORxs4wUGGF5j6ACgPQzYwVgIWGIP+gxsVnAXtJQ7QQud0
+         5rNolyRZtlBkYrD8Lms1D6YXNwCPsJUXHhF94KMqJfOYnJVAjo61J4qWC4ZzlkX7AqcK
+         aW8+yhGyO24TrKtsxjLVr3+KRqWDTHCI8S2O6PKLB0v/uM5bYQjoR0H/DDaR4lparBSf
+         J4bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737230542; x=1737835342;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=a9nPmMQ8ct3IBdhlKUoLM+qDZ3JU2RPYn6okCI3Hbfw=;
+        b=Tr6uN/MfKnrEl6wzW73W0xc8Xt2O/WLEL47HJyGg68xKy0LWdPffiitDQ5/cxN6WYv
+         ZtQmIjEmCmdSLh7dBp948pvmvOjYWBAYgxK3yNsxMZtFtWnqr/aenbIYkY3Z08Mso9S0
+         gkAaTanHtiX/zpdQx3AfW7iNECv+e9bGMsGhdFjn9L6pAhLxxXQgVUw+rmSgWvuw9qvY
+         dALuPEnlxiw1fNvhk1Nbw0wD92eZaCHugg1hDCAJVBZzo2k2y8RstphwnA+a8RsNloMR
+         KZG34JqoWrcCxRAQpLe6g+YYAMAOq0YoRwedISpea5C3qrU7MyBPjD0VAwA0pUZg6gEo
+         djug==
+X-Gm-Message-State: AOJu0YxrC7alf5MODAArrz1zW/JZpeHuOsjWt6Xec+QNdpUCrRUQasFa
+	W8AbPdjXuKPmHTuGc51eMGQ3nCGukhRn/C0PL1GeRhWZiZfFcxLxvbqehPZG
+X-Gm-Gg: ASbGncuJw0/+70w9blCxF0K1jPSJtxLRJzanFj4cYzrkRcmaqSeXBTIvAAFYQ4kSR/t
+	7Afu5ollLfPFvSqtnjBXZJQxN5Fi+JqylS6OLa+86/hMU97eFHEQ7ZNKmRL0BKYgHdwPFQ06p6Y
+	ogcBt5gSOFfe7xpF+KIVECQmeGOulBRB4doUPALjYrDubjlH/bUPAZgGLVrNFNSHylu0c0UV8Ry
+	74kB2TtL+gBLt96IlorMZ91Wz0DYnackXHqgE9MYFbNThT+sa4l2cBzYiayJiiypjKetvzafWFn
+	pPHTw7uqrQHdDXoEr7xfADrXVYg=
+X-Google-Smtp-Source: AGHT+IFFI3of6RumNSiKBTnhXtFOC9utbMguYHwEIEpC9XpPpv2Ac6iu+6mDqg6uW/GB+jUFZzQUPw==
+X-Received: by 2002:a17:906:c154:b0:aa6:834b:d136 with SMTP id a640c23a62f3a-ab38b165f91mr738936866b.33.1737230541974;
+        Sat, 18 Jan 2025 12:02:21 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 18 Jan 2025 21:02:20 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Z4wIzDp5HFrLvOpK@eldamar.lan>
+References: <a1fe6b3c-a51b-01e4-a65a-2a416fdcc1e7@gmx.de>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-530402.071614848"
-Subject: [oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a1fe6b3c-a51b-01e4-a65a-2a416fdcc1e7@gmx.de>
+Subject: Re: [oss-security] git: 2 vulnerabilities fixed
 
-------MIME delimiter for sendEmail-530402.071614848
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Description:
-binutils is a set of tools necessary to build programs.
+On Tue, Jan 14, 2025 at 07:02:40PM +0100, Johannes Schindelin wrote:
+> Team,
+> 
+> The Git project released new security bug-fix versions today, January
+> 14th, 2025: v2.48.1, v2.47.1, v2.46.3, v2.45.3, v2.44.3, v2.43.6, v2.42.4,
+> v2.41.3, and v2.40.4.
 
-The complete ASan output of the issue:
+Small heads-up here: I think in the above version listing it should be
+v2.47.2 instead. The other versions are correct.
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==40547==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a000000574 at pc 0x0000004c1ca8 bp 0x7ffc34f58d10 sp 0x7ffc34f584c0
-WRITE of size 6 at 0x61a000000574 thread T0
-    #0 0x4c1ca7 in __asan_memcpy /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_interceptors.cc:466
-    #1 0x7f6df2a247e5 in _bfd_x86_elf_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elfxx-x86.c:1946:3
-    #2 0x7f6df29f7b7a in elf_x86_64_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf64-x86-64.c:4963:10
-    #3 0x513df5 in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1155:21
-    #4 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #5 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #6 0x7f6df19d1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #7 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
-
-0x61a000000574 is located 0 bytes to the right of 1268-byte region [0x61a000000080,0x61a000000574)
-allocated by thread T0 here:
-    #0 0x4d8e08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67
-    #1 0x7f6df299dd5c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
-    #2 0x7f6df299dd5c in bfd_zmalloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:278
-    #3 0x7f6df2a23e29 in _bfd_x86_elf_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elfxx-x86.c:1829:26
-    #4 0x7f6df29f7b7a in elf_x86_64_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf64-x86-64.c:4963:10
-    #5 0x513df5 in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1155:21
-    #6 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #7 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #8 0x7f6df19d1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_interceptors.cc:466 in __asan_memcpy
-Shadow bytes around the buggy address:
-  0x0c347fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c347fff80a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00[04]fa
-  0x0c347fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==40547==ABORTING
-
-Affected version:
-2.29.51.20170921 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=61e3bf5f83f7e505b6bc51ef65426e5b31e6e360
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=56933f9e3e90eebf1018ed7417d6c1184b91db6b
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14729
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00367-binutils-heapoverflow-_bfd_x86_elf_get_synthetic_symtab
-
-Timeline:
-2017-09-21: bug discovered and reported to upstream
-2017-09-22: upstream released a patch
-2017-09-25: blog post about the issue
-2017-09-25: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/25/binutils-heap-based-buffer-overflow-in-_bfd_x86_elf_get_synthetic_symtab-elfxx-x86-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-530402.071614848--
-
+Regards,
+Salvatore
