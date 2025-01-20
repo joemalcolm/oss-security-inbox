@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3402" "Thursday" "10" "March" "2016" "14:48:00" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<56E17B10.1090800@igalia.com>" "75" "Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" nil nil nil "3" "2016031013:48:00" "[oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "U       clopez@igali Mar 10   75/3402  " thread-indent "\"Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<56E112D4.1070302@oracle.com>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>" "<CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>" "<20160305000740.GB1250@sentinelchicken.org>" "<56DC7B1E.4050507@oracle.com>" "<56E0BE38.6030400@igalia.com>" "<56E112D4.1070302@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23973 invoked by uid 550); 10 Mar 2016 13:48:19 -0000
+Received: (qmail 22327 invoked by uid 550); 20 Jan 2025 14:33:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +7,153 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23955 invoked from network); 10 Mar 2016 13:48:18 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BlCgBkeuFW/5tjdVtWCBkBAQEBCwECBAEBgw28HQ4UGYFAhg8CgT84FAEBAQEBAQFkJ4RBAQEBAQMjVRELGAkMCgQHAgIJAwIBAgFFEwgCiCQBrhCPJAELFgiGGIRCgTcBgl5jDYI0gToFlzyDGIFliHuOf45qHgFDghAggTU7iEglgRQBAQE
-X-IPAS-Result: A2BlCgBkeuFW/5tjdVtWCBkBAQEBCwECBAEBgw28HQ4UGYFAhg8CgT84FAEBAQEBAQFkJ4RBAQEBAQMjVRELGAkMCgQHAgIJAwIBAgFFEwgCiCQBrhCPJAELFgiGGIRCgTcBgl5jDYI0gToFlzyDGIFliHuOf45qHgFDghAggTU7iEglgRQBAQE
-X-IronPort-AV: E=Sophos;i="5.24,316,1454972400"; 
-   d="asc'?scan'208";a="27927837"
+x-ms-reactions: disallow
+Received: (qmail 9333 invoked from network); 20 Jan 2025 13:37:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openssl.org; s=google; t=1737380247; x=1737985047; darn=lists.openwall.com;
+        h=mime-version:user-agent:date:to:from:subject:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3iHPmXE3a9I5W3RoCuwuzbhTJLToKq9gmfj83CXuMis=;
+        b=aZ8zT97ikVLdMcxzXgDv/GrWrQqD79JGl7D8PWjHgiH4yumLUi2mYihe2UDgmY8uqX
+         qUpEyP1rCu9kCpX6EkAv2T/UX1/U+fFPIpO4fmtGof2cpbPw9UpZ4Il2MkI0G0wIQ1G1
+         zx0vmYHwwXamARju8liAIygf9XnOqRKimy3vp0IQFQRba+stw6WhmSSSjlVXCC1SNDP7
+         nAT0J1XBWqZ/w48Ps7R0ZvBhK8Cjnjtwge3ApVDe1rU5aZhD77yP7RaiHO4fpWTXSycw
+         vg/W6mfwyIZdfh9Ex6NPVXHuxdCFJIhgoaXaWpHQgQFNmgFE3pjqd5FUL7KVLs7V3owC
+         /nng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737380247; x=1737985047;
+        h=mime-version:user-agent:date:to:from:subject:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3iHPmXE3a9I5W3RoCuwuzbhTJLToKq9gmfj83CXuMis=;
+        b=o1xNXmDefT2L9vA3gjcfgc0sKvVZZQWH6PctCUM4URFd9skHAeK5I4K4+STYyDPMdA
+         TM1zV5Xnyzh3DSJu/qm05wdkBHs9qO9N4ndmbcwUcBsA/bM1Kmub5Oge5MVIjHW04p/o
+         XFjdu8NPF6xSSQZxe2qgyIhBjv1ZdTYd1+E7hmKQtYzkD4yxintvfSGm4fJAt1+yDTdR
+         hd9GANhu/udB1rAH7hy8N6ZrStU3xYfZYmeInRO1/vxGwRGgagrO7tomzKVJVF+Pjq0p
+         FUnVGha3DaWS2cWVxjCesOiULa0v/MDz59FzQ0ftj0HUlHFeuXZygMMSHaAl9b/S3NmS
+         1X6w==
+X-Gm-Message-State: AOJu0YyJu/2ZC7HkL+eSYouDdxjkBEFa3+S8xFy9b3gYwcDk+lpzdlla
+	b9HLfKcW2PY1gWJz9UH08aYuS8yD83SNR/N50x65cZv76IFUR1INdvDC7R0j5u3BJSAz5jsq9Wd
+	I
+X-Gm-Gg: ASbGncsrD4V03JB1mtlJQQvwIX/n5I9VlJVVPNK55QBCcnkEXYi5HD727Dxp3KLHthp
+	hpkq092Fp4P8L/wgctSPDMW7v+RIfq3+kaHSmuxVXY0TCKMkMgig1xB+TYo1KKv1qbJ9wieHCRc
+	fhdLbAkOuoGkirhGcLL8pexMo6c/LZjvBSqf+LeWkAkCtGo9TfVh7l2bTh2ngEs6sgYVcQo/pU6
+	oAZPtpnVhq1PnaEQBmn9NW3GUSO3nBUg1/iFVaJAR6Ewkfo7K7XFliYfscUsU++MW+0MRli2w==
+X-Google-Smtp-Source: AGHT+IEHpltWcWn/WF1XNrEhdp9LSZE7bAjpCQ2eejFClhc1OSU/ANsqc4D7paO/28Wm5ZAXdnmspw==
+X-Received: by 2002:a05:6402:27c9:b0:5d3:cff5:635e with SMTP id 4fb4d7f45d1cf-5db7db0787cmr26626517a12.26.1737380247551;
+        Mon, 20 Jan 2025 05:37:27 -0800 (PST)
+Message-ID: <19648147a97551f40744fddcc2a58890c2b59b76.camel@openssl.org>
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
-References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>
- <56D9DD1F.1030302@cert.org>
- <6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>
- <CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>
- <20160305000740.GB1250@sentinelchicken.org> <56DC7B1E.4050507@oracle.com>
- <56E0BE38.6030400@igalia.com> <56E112D4.1070302@oracle.com>
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
- url=http://key.neutrino.es
-X-Enigmail-Draft-Status: N1110
-Organization: Igalia S.L.
-Message-ID: <56E17B10.1090800@igalia.com>
-Date: Thu, 10 Mar 2016 14:48:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.6.0
+Date: Mon, 20 Jan 2025 14:37:26 +0100
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-dpoU9pZrRxRa1Y2/3fMg"
+User-Agent: Evolution 3.54.2 (3.54.2-1.fc41) 
 MIME-Version: 1.0
-In-Reply-To: <56E112D4.1070302@oracle.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="mSEIcLxPuGUsbsIXTrb3n2faOAnlvNvA0"
-Subject: Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct
- impact to researchers/companies
+Subject: [oss-security] CVE-2024-13176: OpenSSL: Timing side-channel in ECDSA signature computation
 
---mSEIcLxPuGUsbsIXTrb3n2faOAnlvNvA0
-Content-Type: text/plain; charset=utf-8
+--=-dpoU9pZrRxRa1Y2/3fMg
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 10/03/16 07:23, Alan Coopersmith wrote:
-> On 03/ 9/16 04:22 PM, Carlos Alberto Lopez Perez wrote:
->> On 06/03/16 19:46, Alan Coopersmith wrote:
->>> On 03/ 4/16 04:07 PM, Tim wrote:
->>>> * No moderation required.  Let the public decide if they believe the
->>>>     researcher or vendor.  If a moderator does bother to look over the
->>>>     content, they could deduplicate/link issues together and address
->>>> any
->>>>     confusion, but beyond that, it isn't their job to decide what is a
->>>>     vulnerability and what isn't.
->>>
->>> If the site displays *any* user-submitted text, you need at least enough
->>> moderation to filter out spammers & trolls.
->>>
->>
->> I don't think you need that level of moderation if you implement basic
->> measures against spammers like requiring the creation of an account with
->> e-mail verification.
->>
->> Just look to all the public bugzillas out there that allow commenting
->> (mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
->> with spam. But you have to create an account first to do any comment.
->=20
-> I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
-> I've had to deal with spam there, and I've seen reports of spams in other
-> public bugzillas for open source projects.
->=20
-> github requires account creation as well, and I'm sure we've all seen out
-> of control comment threads there that had to be locked down to stop abuse.
->=20
+OpenSSL Security Advisory [20th January 2025]
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Then the next level is to require not only e-mail validation but also to
-solve a captcha for creating a new account.
+Timing side-channel in ECDSA signature computation (CVE-2024-13176)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Or even harder, to require any account with less than 10 comments to
-solve a captcha for any new comment. That way the annoyance for legit
-users is temporal (up to the 10th comment), meanwhile for spammers is
-not, because their account is probably going to be blocked before they
-reach the 10th comment and have to start again with a new account.
+Severity: Low
 
-I'm not saying that some level of moderation is required. Of course it
-is. But I think that if proper antispam measures are implemented, then
-the level of moderation required is relatively low, and can be done by
-the bugzilla admins without much effort.
+Issue summary: A timing side-channel which could potentially allow recoveri=
+ng
+the private key exists in the ECDSA signature computation.
+
+Impact summary: A timing side-channel in ECDSA signature computations
+could allow recovering the private key by an attacker. However, measuring
+the timing would require either local access to the signing application or
+a very fast network connection with low latency.
+
+There is a timing signal of around 300 nanoseconds when the top word of
+the inverted ECDSA nonce value is zero. This can happen with significant
+probability only for some of the supported elliptic curves. In particular
+the NIST P-521 curve is affected. To be able to measure this leak, the atta=
+cker
+process must either be located in the same physical computer or must
+have a very fast network connection with low latency. For that reason
+the severity of this vulnerability is Low.
+
+The FIPS modules in 3.4, 3.3, 3.2, 3.1 and 3.0 are affected by this issue.
+
+OpenSSL 3.4, 3.3, 3.2, 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this iss=
+ue.
+
+OpenSSL 3.4 users should upgrade to OpenSSL 3.4.1 once it is released.
+
+OpenSSL 3.3 users should upgrade to OpenSSL 3.3.3 once it is released.
+
+OpenSSL 3.2 users should upgrade to OpenSSL 3.2.4 once it is released.
+
+OpenSSL 3.1 users should upgrade to OpenSSL 3.1.8 once it is released.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.16 once it is released.
+
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1zb once it is released
+(premium support customers only).
+
+OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zl once it is released
+(premium support customers only).
+
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next release of each
+branch, once it becomes available. The fix is also available in commit
+77c608f4 (for 3.4), commit 392dcb33 (for 3.3), commit 4b1cb94 (for 3.2),
+commit 2af62e74 (for 3.1) and commit 07272b05 (for 3.0) in the OpenSSL git
+repository.
+
+It is available to premium support customers in commit a2639000 (for 1.1.1)=
+ and in
+commit 0d5fd1ab (for 1.0.2).
+
+This issue was reported on 4th September 2024 by George Pantelakis and
+Alicja Kario (Red Hat).
+The fix was developed by Tomas Mraz.
+
+General Advisory Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+URL for this Security Advisory:
+https://openssl-library.org/news/secadv/20250120.txt
+
+Note: the online version of the advisory may be updated with additional det=
+ails
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://openssl-library.org/policies/general/security-policy/
 
 
---mSEIcLxPuGUsbsIXTrb3n2faOAnlvNvA0
+--=-dpoU9pZrRxRa1Y2/3fMg
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: You can fetch my GnuPG key from http://key.neutrino.es
 
-iQIcBAEBCgAGBQJW4XsRAAoJEJZQic5rlfiCgMMQAJaIiMR/LpGnSNuw8m1vzDNA
-dK5Fo/x3/vrK7wyPh2awwfVHbt/9fZOUxzXRt3opkgF3g/vWq8PbpThEJbJi9wGE
-p22LAVm95U13LnVoLP2nah5guL8JJqPOoBtCeaaN9kMiftomfpPVGg22Cua4EKPc
-QADJ3LdVscgnnrRqeorRl+9vCVnmUHaWTCrniUYFDom+1STLlX3hYDGWuLxlOBYR
-qWKQLheU44mL1oeFyGKiy+A16Y9S6WLh0f2XlRJWNup+NKs/X7yQfA0u8LCOfQ/m
-NVO1D+y54oJFiLJzNBPt3MbgPjZ176O7dy6KbohlfKw9gcUgxjkx75RblGJWVznx
-FgVYhnpXhvIx8K24qyJbPlpb59uIQA0J97q1yjjT3wAbfndX3LoacMsmKqXA3Cy0
-QJIfoHl1i71OmANHHX0xH/PtSwDXH8NsRyM20er5Ho1EFHj0YDZYIVtfxbPCPzQ0
-Hq++i/GDyEsS8eKZENRvK2FFR3jHY3vxwgIhQbxClBRgsuXKNJri7WFth6akofc1
-lp0WjG2FfBNTzKfQwfAhhsosOKhZUaOGHqxf6vaW+/23uJrTS9oTm5HkvU0DkEeJ
-tfmC/X6DNX4nT6j1EF8DIxRHCVgO4ZAxFdals5mIUvxKRQpRHrOm56iwm4jVVli8
-ycplk9HblZFgVW+w5a52
-=JHJc
+iQJGBAABCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmeOUZYSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55trNEP+QGef3tDlrlahT8IXFoq2zd5F/1w5ZB7
+y8+oW0jMsrg6ZTyxiggXToeu84YsvsJVAN4PI8Z/j5V4BDbCNysBmTJYFMfFnVh/
+2Ita+vsyISq6jzR4mOFh9iCMVYa/4FSkuF/p54EBI1LLG9tGgnz1MFZZUoxsOtkg
+soxig23VANq6JmVv0TRCwOx9fcOVkaDb4wMii3NTyU39QqIeTsaRbX6CC1LoNt4m
+JQXuH+tl9Lns2iilOQlV0UhZbQMfVgs9r+AqC441xJ9fC3tCyhK/nkN8q3iQSIPH
+cD1JoMviM1ykXo6UrmfVaZk52UnB3UiXwGTPhufZFbF0SrUY0j4qPocASkUzCsi0
+CrZLuDQydGyR8pTYGxg+6v55ND53vXYaqaSgy16j2DeeD/SXfVLMPvABTTnkmUFm
+TA7e+9RtkNCS7wLek6RD7CBVkYGzOW4G5rJsdgohMaLryXmO0Nnhqnw5dCcwP7t0
+qPbPevBUZ6j8VN4c8/aJg97AhDazrLdijbb9HmfdjFXyMKDGyNgJC7ZmFO9628mN
+Z7iUQVlOJCUxbyOaRr2eufLepHdmuapTXnCTMkX6w0KaKbesGNDLa3gujqjcIqV4
+n8lTpBVCv1+84xJH1WF2TLy4N9Kq8fagBa/uVmoG92GYWrt43Uiqywe6agXsFOh0
+KWPueL6rNHtH
+=crIw
 -----END PGP SIGNATURE-----
 
---mSEIcLxPuGUsbsIXTrb3n2faOAnlvNvA0--
+--=-dpoU9pZrRxRa1Y2/3fMg--
