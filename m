@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["720" "Thursday" "15" "June" "2017" "21:35:29" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<3a481763-0461-fca6-72d3-15c3bbe1120f@redhat.com>" "27" "Re: [oss-security] Do I have to inform someone about CVE?" "^Date:" nil nil "6" "2017061603:35:29" "[oss-security] Do I have to inform someone about CVE?" (number mark "        kseifried@re Jun 15   27/720   " thread-indent "\"Re: [oss-security] Do I have to inform someone about CVE?\"\n") "<q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>" ("<q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13771 invoked by uid 550); 16 Jun 2017 03:35:45 -0000
+Received: (qmail 5750 invoked by uid 550); 21 Jan 2025 20:12:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +6,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13748 invoked from network); 16 Jun 2017 03:35:44 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=7m6GbNxYPyUPcU6SPZAqOZcEnZPYyQnoMdTdGbBO9W8=;
-        b=reRiqchSH1Pdy0GO8b49KRC80oMZG5VN9yXo/bWvKez1ya93Rn8mMrhdaTJcOCgDg9
-         cU8GJL0loU7dCkJ43hm8bL1MrwVe/kw1OZ+XvTsUscJM/GnMWKyltp1gVPoL/SOyXzES
-         sqW6HtjYhtyf6SvMD37jq6z+o3ymf2qLNRZpgeLMydlsTkGpKWUscF8OGLnEVMtMcREf
-         Y4A6D95Q23zoiwDgY2mdBzaf46/yYhs6dASIfVz6NWNeVo5/gLQlRAiQ5jan7akOiaYn
-         oAyZCcPwMBQv0cQnLlbe5KQgD8yhgUuzyDd+msCt+2J+XqPTNm5+zNn1dJg80a5oct48
-         Wzig==
-X-Gm-Message-State: AKS2vOxwMC+YCb5iDCddvSuxLsjhIp9JZj9k4R0OIa+FOT2ME7l6qTI5
-	Tig3qhnFoiYecqesPrRmgw==
-X-Received: by 10.36.77.9 with SMTP id l9mr8678330itb.95.1497584132117;
-        Thu, 15 Jun 2017 20:35:32 -0700 (PDT)
-References: <q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>
-Message-ID: <3a481763-0461-fca6-72d3-15c3bbe1120f@redhat.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-Date: Thu, 15 Jun 2017 21:35:29 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Do I have to inform someone about CVE?
+x-ms-reactions: disallow
+Received: (qmail 5723 invoked from network); 21 Jan 2025 20:12:37 -0000
+Date: Tue, 21 Jan 2025 15:12:28 -0500
+From: Jan Schaumann <jschauma@netmeister.org>
 To: oss-security@lists.openwall.com
+Message-ID: <Z4__rJ3_SmmtEIsG@netmeister.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] Node.js security updates: CVE-2025-23083, CVE-2025-23084,
+ CVE-2025-23085
 
-When you have a CVE the simple rule is:
+[Forwarding here because I seem to recall that the
+NodeJS team doesn't usually post their announcements
+to this list; I have no other affiliation with
+NodeJS.]
 
-If you got it publicly the CNA (CVE Numbering Authority) you got it from
-should have published it to their upstream (e.g. MITRE).
+https://nodejs.org/en/blog/vulnerability/january-2025-security-releases
 
-If you got it embargoed and it's now public you should tell the CNA you
-got it from that it is public, and ideally also tell MITRE
-(https://cveform.mitre.org/).
+Tuesday, January 21, 2025 Security Releases
 
-Rule of thumb is: when it goes public, tell the issuer, and/or MITRE so
-they can publish it.
+Security releases available
+
+Updates are now available for the 23.x, 22.x, 20.x,
+18.x Node.js release lines for the following issues.
+
+This security release includes the following
+dependency updates to address public vulnerabilities:
+
+* undici (v7.2.3, v6.21.1, v5.28.5) on v23.x, v22.x, .x, v18.x.
 
 
-On 2017-06-15 6:02 PM, Qhdwns123 wrote:
-> Hi.
->
-> I received a CVE.
->
-> Do I have to inform someone about CVE?
->
-> Thanks.
+Worker permission bypass via InternalWorker leak in
+diagnostics (CVE-2025-23083) - (high)
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+With the aid of the diagnostics_channel utility, an
+event can be hooked into whenever a worker thread is
+created. This is not limited only to workers but also
+exposes internal workers, where an instance of them
+can be fetched, and its constructor can be grabbed and
+reinstated for malicious usage.
+
+This vulnerability affects Permission Model users
+(--permission) on Node.js v20, v22, and v23.
+
+Impact:
+
+    This vulnerability affects all users in active
+release lines: 20.x, 22.x, 23.x
+
+Thank you, to leodog896 for reporting this
+vulnerability and thank you RafaelGSS for fixing it.
+
+
+Path traversal by drive name in Windows environment
+(CVE-2025-23084) - (medium)
+
+A vulnerability has been identified in Node.js,
+specifically affecting the handling of drive names in
+the Windows environment. Certain Node.js functions do
+not treat drive names as special on Windows. As a
+result, although Node.js assumes a relative path, it
+actually refers to the root directory.
+
+On Windows, a path that does not start with the file
+separator is treated as relative to the current
+directory.
+
+This vulnerability affects Windows users of path.join
+API.
+
+Impact:
+
+    This vulnerability affects all users in active
+release lines: 18.x, 20.x, 22.x, 23.x
+
+Thank you, to taise for reporting this vulnerability
+and thank you tniessen for fixing it.
+
+
+GOAWAY HTTP/2 frames cause memory leak outside heap
+(CVE-2025-23085) - (medium)
+
+A memory leak could occur when a remote peer abruptly
+closes the socket without sending a GOAWAY
+notification. Additionally, if an invalid header was
+detected by nghttp2, causing the connection to be
+terminated by the peer, the same leak was triggered.
+This flaw could lead to increased memory consumption
+and potential denial of service under certain
+conditions.
+
+This vulnerability affects HTTP/2 Server users on
+Node.js v18.x, v20.x, v22.x and v23.x.
+
+Impact:
+
+    This vulnerability affects all users in active
+release lines: 18.x, 20.x, 22.x, 23.x
+
+Thank you, to newtmitch for reporting this
+vulnerability and thank you RafaelGSS for fixing it.
+Downloads and release details
+
+Node.js v18.20.6 - https://nodejs.org/en/blog/release/v18.20.6/
+Node.js v20.18.2 - https://nodejs.org/en/blog/release/v20.18.2/
+Node.js v22.13.1 - https://nodejs.org/en/blog/release/v22.13.1/
+Node.js v23.6.1 - https://nodejs.org/en/blog/release/v23.6.1/
 
