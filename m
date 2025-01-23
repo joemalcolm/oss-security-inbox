@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5454" "Monday" "28" "August" "2017" "15:00:20" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<506975.984989793-sendEmail@localhost>" "77" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" "^Date:" nil nil "8" "2017082815:00:20" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" (number mark "        ago@gentoo.o Aug 28   77/5454  " thread-indent "\"[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 10130 invoked by uid 550); 28 Aug 2017 15:00:37 -0000
+Received: (qmail 32754 invoked by uid 550); 23 Jan 2025 17:51:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +6,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10060 invoked from network); 28 Aug 2017 15:00:36 -0000
-Message-ID: <506975.984989793-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-483171.291257353"
-Date: Mon, 28 Aug 2017 15:00:20 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 19643 invoked from network); 23 Jan 2025 17:49:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1737654534;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9DI01qEQSZxSj5ftix0M9PYODCEOohmi4yRNswPDu88=;
+	b=cZ0EfbSQixz2ngqi8rQrPViJ8ciNueAPSzQe6Au5tasZegp2Zp09r3WT7N2ixNn/mOcxK+
+	/LJVHk2G07NJbavq+PxuxhwYCgYcCjh52cV8qgxhVEl1l7flXPSmF3a0yn7DeVMf+Y5F5/
+	lLJ7Y9FDPjUjmE+F0WnxZDpTf+xJ2+w=
+X-MC-Unique: W0uZWJkNN_qbDcKLmTc-wQ-1
+X-Mimecast-MFC-AGG-ID: W0uZWJkNN_qbDcKLmTc-wQ
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737654530; x=1738259330;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9DI01qEQSZxSj5ftix0M9PYODCEOohmi4yRNswPDu88=;
+        b=b9N5Zb+Yl98hteP2JQhGjJijMpFZ5tKLQrAEx47O/ypIPnI2pp17FOIZAxRz/FqO2Y
+         7IS55krh/48xXIipfp0WfKjJSCXOCdv6tvRbJGyw2sAIcGoyR51n+997BA1H5ezaw5/V
+         59wuNskvIyZO87FXH3WBz6HC0kX00cibD7m1c2t/UdiTKDTmur6xxaHRkINmcMlqV0Y1
+         yyF1VDJsSdZyisYr68Rc7hSxvzAEnBGGbv8QpIOI9cNH0PcoT/92c3MAzOnJESgh1HEo
+         QrP/uFrQR7O6Kf0E67BbOATBaH4I1nMl/xhZFVzJmRu9/5g948ZZOGv/0IJxSn5bCVYI
+         k9dQ==
+X-Gm-Message-State: AOJu0Ywag3RaZkbvFbz14u4Pu1iWdf03wrIm/64lDxcZqukqOVYLldN2
+	QlnTyPgcSt8Fa+H0tvbsPY29Rju3AZvjfU3lxuFzXzftdIBxg3+2a4Q1ur7t4BwSRQqJbEcWGxn
+	eQ54Ml3stt+9D3Jg2bavPm/Y7pyg+ZrfG7Jp7UxDOgJQrr+7Ednkb6qWpSsDTjjMbB+rYiRpwIF
+	9LSoL5wa/0PmoZ1fbETgPl8QxZFYFAOvjFqlcaEAbstvwTNJY5
+X-Gm-Gg: ASbGncs5qztntArxahIAon4qWNr7WYhFw+YMpSFKHb4JukmY9mSfU8diSJ+Hl6eN71d
+	/cDwlSiHiEs0rj6oXEQQz+anlA7dR6MuET3z6wf169fqtYVn7mi6G
+X-Received: by 2002:a05:6871:6287:b0:29e:4340:b1b with SMTP id 586e51a60fabf-2b1c0a6a928mr15442165fac.9.1737654530719;
+        Thu, 23 Jan 2025 09:48:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXkWLes26qt+l8VxFz4r/Wi6lmD/Ihqqu2p8gEnzdfzrgFSqXqwbEKIM8LpX7eUybfkCf3Ol9VvzyAyH7CF3s=
+X-Received: by 2002:a05:6871:6287:b0:29e:4340:b1b with SMTP id
+ 586e51a60fabf-2b1c0a6a928mr15442155fac.9.1737654530285; Thu, 23 Jan 2025
+ 09:48:50 -0800 (PST)
+MIME-Version: 1.0
+References: <Z5DF00lM-3Q36mhh@kasco.suse.de> <Z5I8r_p6IC8A2ttG@kasco.suse.de>
+In-Reply-To: <Z5I8r_p6IC8A2ttG@kasco.suse.de>
+From: Pete Allor <pallor@redhat.com>
+Date: Thu, 23 Jan 2025 12:48:39 -0500
+X-Gm-Features: AbW1kvbHSkuHenwKO7vKxPRgMIzZ7ZEGNWwBZqruL2klgrh5snHygMGKalMjPWc
+Message-ID: <CAEFCzXUSfA3MdvcNHg88dfZZEGLujZG+EG8s9ydA=AWGYDzcqg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: b8as4XMikqwRkrcLVrTrynBwxl8I7zFPxU-OcrUQdUI_1737654531
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000053207062c633976"
+Subject: Re: [oss-security] issue with stuck Mitre CVE requests
 
-------MIME delimiter for sendEmail-483171.291257353
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--000000000000053207062c633976
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
-
-The relevant ASan output of the issue:
-
-# gm convert -clip -negate $FILE out
-==15168==End of process memory map.
-==15168==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" 
-(0x0, 0x0)
-    #0 0x4d966f in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
-    #1 0x4f43d5 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
-    #2 0x4e3a02 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
-    #3 0x4ed305 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
-    #4 0x420a02 in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
-    #5 0x420a02 in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
-    #6 0x420a02 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
-    #7 0x420a02 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:782
-    #8 0x4cf664 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:67
-    #9 0x7fe7563f4171 in MagickRealloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:471:18
-    #10 0x7fe7564ca47c in OpenCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3155:7
-    #11 0x7fe7564c62c7 in ModifyCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:2955:18
-    #12 0x7fe7564dfb44 in SetCacheNexus /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3886:7
-    #13 0x7fe7564df028 in SetCacheViewPixels /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3965:10
-    #14 0x7fe74fbbe2fe in ReadPNMImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/pnm.c:628:19
-    #15 0x7fe756011e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #16 0x7fe755ea4f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #17 0x7fe755ee10c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #18 0x7fe755f8c85b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #19 0x7fe755f89991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #20 0x7fe7547f4680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #21 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
-
-/usr/bin/gm convert: abort due to signal 6 (SIGABRT) "Abort"...
-
-Affected version:
-1.3.26
-
-Fixed version:
-N/A
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/3bbf7a13643d
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-Waiting for a CVE assignment
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00331-graphicsmagick-memallocfailure-MagickRealloc
-
-Timeline:
-2017-07-12: bug discovered and reported to upstream privately
-2017-08-16: bug reported to the public upstream bugtracker
-2017-08-20: upstream released a fix
-2017-08-28: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/28/graphicsmagick-memory-allocation-failure-in-magickrealloc-memory-c-2/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+A little comment on the inside helps.   Glad to do so.
 
 
-------MIME delimiter for sendEmail-483171.291257353--
+On Thu, Jan 23, 2025 at 7:57=E2=80=AFAM Matthias Gerstner <mgerstner@suse.d=
+e> wrote:
+
+> Hi list,
+>
+> thank you all for your input so far.
+>
+> It seems this thread somehow reached Mitre and my stuck CVE request got
+> a CVE assignment by now. The reply also contains some additional
+> information which I believe will be interesting to share in this thread
+> as well:
+>
+> > On Thu, Jan 23, 2025 at 01:14:13AM -0500, cve-request@mitre.org wrote:
+> >
+> > If you encounter unexpected behavior with CVE ID requests (e.g., one
+> > answered and another not answered), then please report this as a
+> > separate issue by using:
+> >
+> >    https://cveform.mitre.org
+> >
+> >    Request type:  Other
+> >    Type of comment:  Issue
+> >
+> > "Request type: Other" items are read every day.
+>
+> Additionally Mitre expressed that they are working on improvements to
+> prevent such situations in the future.
+>
+> Best Regards
+>
+> Matthias
+>
+> --
+> Matthias Gerstner <matthias.gerstner@suse.de>
+> Security Engineer
+> https://www.suse.com/security
+> GPG Key ID: 0x14C405C971923553
+>
+> SUSE Software Solutions Germany GmbH
+> HRB 36809, AG N=C3=BCrnberg
+> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+>
+
+--000000000000053207062c633976--
 
