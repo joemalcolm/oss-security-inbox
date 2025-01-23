@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["426" "Wednesday" "20" "May" "2015" "17:51:04" "+0200" "=?UTF-8?B?QWRyacOhbiBNLiBGLg==?=" "adrimf85@gmail.com" "<CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>" "20" "[oss-security] CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." nil nil nil "5" "2015052015:51:04" "[oss-security] CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." (number mark "        adrimf85@gma May 20   20/426   " thread-indent "\"[oss-security] CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24316 invoked by uid 550); 20 May 2015 15:51:38 -0000
+Received: (qmail 23837 invoked by uid 550); 23 Jan 2025 02:42:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24291 invoked from network); 20 May 2015 15:51:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=knrLGngsFBZs379HaYRziC8hFcWpUsJ7z5ngSC9aFAQ=;
-        b=vM9I6VpckuHkz2mzrevnM4/mpQdawcdZKDt/zQdQmJanp2KfNvl89E7ZHfWeVXFKyU
-         wns9mi6uDuq2mqbyA1qitaBCvxEVTX2Itoy/IHcD/tZrZZt9NnVRkrABa4iqyAQWhX9z
-         o3bglLcFZ561149NgpKUMMMXI8Bg4GKMTdhIxiC8nCqPAHXxyT9CGIMpcUcqldZAGiUO
-         ZqC4MKufHausZnGKUmb/L6DJo4ht9sRQGFYzi6OP4u2GvrJtC3FYa7PJSOoi2AiaGWbA
-         Q+4W6U4RBiqwPwLEnTIlJdcLaVhUfovgpq8rBLt/8+ImLhtE5tgat20/c677apOPrVi2
-         Sk1Q==
-X-Received: by 10.112.168.102 with SMTP id zv6mr26438623lbb.45.1432137086233;
- Wed, 20 May 2015 08:51:26 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11c33d324b7429051685663d
-Cc: cve-assign@mitre.org
-Date: Wed, 20 May 2015 17:51:04 +0200
-From: =?UTF-8?B?QWRyacOhbiBNLiBGLg==?= <adrimf85@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Multiple SQL injection vulnerabilities in GigPress -
- WordPress plugins.
+x-ms-reactions: disallow
+Received: (qmail 21510 invoked from network); 23 Jan 2025 02:42:25 -0000
+Date: Thu, 23 Jan 2025 03:42:22 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20250123024222.GA16803@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Oracle January 2025 Critical Patch Update
 
---001a11c33d324b7429051685663d
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Hi!
+Once in a while, Oracle publishes what they call Critical Patch Update
+documents, which list many vulnerabilities addressed across many Oracle
+products, some of them Open Source and some not.  This is great, but it
+would be even better if Oracle also communicated to oss-security about
+those vulnerabilities in its Open Source products, perhaps one message
+per product (e.g., MySQL separately from VirtualBox).  I hope someone
+from Oracle reads this and will get the wheels moving.  Anyone?
 
-I discovered multiple SQLi in a WordPress plugin:
+Meanwhile, the latest Critical Patch Update is:
 
-* Multiple SQL injection vulnerabilities in GigPress.
-* vulnerable version: 2.3.8
-* patched version: 2.3.9
-* vendor: https://wordpress.org/plugins/gigpress/
-* changelog: https://wordpress.org/plugins/gigpress/changelog/
+https://blogs.oracle.com/security/post/january-2025-cpu-released
+https://www.oracle.com/security-alerts/cpujan2025.html
 
-I request a CVE for the same.
+For MySQL, it says:
 
-Thanks!
+https://www.oracle.com/security-alerts/cpujan2025.html#AppendixMSQL
 
-A.
+"Oracle MySQL Risk Matrix
 
---001a11c33d324b7429051685663d--
+This Critical Patch Update contains 39 new security patches, plus
+additional third party patches noted below, for Oracle MySQL.  4 of
+these vulnerabilities may be remotely exploitable without
+authentication, i.e., may be exploited over a network without requiring
+user credentials.  The English text form of this Risk Matrix can be
+found here."
+
+and links to:
+
+https://www.oracle.com/security-alerts/cpujan2025verbose.html#MSQL
+
+and lists additional information on some CVEs not included in the matrix
+itself (duplicate or not vulnerable).  With so many CVEs, all of this is
+rather long, but I imagine someone from Oracle - or someone external -
+could copy-paste the "English text form of this Risk Matrix" and the
+extra notes on a few CVEs to a separate message focusing on MySQL.
+
+Similarly, there's info on a couple of VirtualBox CVEs here, which would
+ideally be a separate message with copy-pasted detail:
+
+https://www.oracle.com/security-alerts/cpujan2025.html#AppendixOVIR
+https://www.oracle.com/security-alerts/cpujan2025verbose.html#OVIR
+
+Perhaps there's more Open Source software listed in there, which needs
+similar treatment.  Not only this time, but each time, please.
+
+Alexander
