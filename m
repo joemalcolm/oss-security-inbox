@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["639" "Wednesday" "8" "April" "2020" "21:26:07" "-0400" "Stuart D Gathman" "stuart@gathman.org" "<alpine.LRH.2.21.2004082122240.17854@mail.gathman.org>" "13" "Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack" nil nil nil "4" "2020040901:26:07" "[oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack" (number mark "U       stuart@gathm Apr  8   13/639   " thread-indent "\"Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack\"\n") "<87h7xt3a5s.fsf@silverfish.pri>" ("<20191218181602.GA62521@tc-lan-adapter.local>" "<CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com>" "<87h7xt3a5s.fsf@silverfish.pri>") nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30124 invoked by uid 550); 9 Apr 2020 11:18:35 -0000
+Received: (qmail 14263 invoked by uid 550); 24 Jan 2025 00:11:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +7,175 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3736 invoked from network); 9 Apr 2020 01:26:58 -0000
-Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::1010" (mail.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
- i=@gathman.org; q=dns/txt; s=default; t=1586395572; 
- h=date : from : to : subject : in-reply-to : message-id : 
- references : mime-version : content-type : date : from : 
- subject; bh=zQBEeANpkc7g9kjcYXWmLTC4zAht8eug8lEQu6NkXP0=; 
- b=bxKNoc+k0/BmUSSKCcqyKIDO//hYE/wrbJT5QbZC00EJRVwj0nBJ1vxz
- yWkECqh+fhL358KcPb5Xbs8pidnrPQKF0ebaWX/NLrGFp0AHnXEF5nfmMh
- QWSaTs1RkoTcZvqyeZLVXSZtfA6Fyn0FPonVuIc4Mob6a+ooiQTEZDmt4=
-Date: Wed, 8 Apr 2020 21:26:07 -0400 (EDT)
-From: Stuart D Gathman <stuart@gathman.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <87h7xt3a5s.fsf@silverfish.pri>
-Message-ID: <alpine.LRH.2.21.2004082122240.17854@mail.gathman.org>
-References: <20191218181602.GA62521@tc-lan-adapter.local> <CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com> <87h7xt3a5s.fsf@silverfish.pri>
-User-Agent: Alpine 2.21 (LRH 202 2017-01-01)
+x-ms-reactions: disallow
+Received: (qmail 26211 invoked from network); 24 Jan 2025 00:08:28 -0000
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 1.3.0 at rivendell.linuxfromscratch.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfromscratch.org;
+	s=cert4; t=1737677299;
+	bh=B77npU6KT/qeuN9dqo8jfpJ4LB08oEVuQcaUxnrBf/s=;
+	h=Date:Subject:To:References:From:In-Reply-To;
+	b=XVoWtXUJuVHivTnVXATiKDKl8kS8mWC3j/rcCeL7bed7E2RUyskM1F4tg2xPRtztx
+	 xnuN5AXlTMPmsDuuaTU6BWtLJvJKQDBaSnFg1pBJHBHbrjMBiHyuT/vdbE4cjpZZpu
+	 KQonlA4FpoJmlVKdz+vBJqhkIQ2T9PzLmBRzzVBcg5Q4xiUY2DENE+0aIIz/kOejQR
+	 VdnXhrkJ8QFECTScH7khkCr3ZkiJmLa/LsfjkW+fVhfojfhYp5s/KS/NDqjMTtIQ1x
+	 lSVWrZhxuoPPkF8qSYRDAnF0ZFp+rWoRNOiNH404qkLJ8X5tewbxzWDUMsQ+uQlgba
+	 8gOkAtOhf5iIQ==
+Message-ID: <e6c0aa51-2e58-40ed-965d-3e0328ef6fa9@linuxfromscratch.org>
+Date: Thu, 23 Jan 2025 18:08:18 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Subject: Re: [oss-security] [CVE-2019-16782] Possible Information Leak /
- Session Hijack Vulnerability in Rack
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <20250123024222.GA16803@openwall.com>
+ <31A9EE0D-3415-46F5-BDC0-8AF758D9A0AC@edvina.net>
+ <5c74b424-0c6d-49e8-b53e-bd637a1f9ebb@oracle.com>
+ <20250123235736.GA22781@openwall.com>
+Content-Language: en-US
+From: "Douglas R. Reno" <renodr@linuxfromscratch.org>
+In-Reply-To: <20250123235736.GA22781@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Re: [External] : Fwd: [oss-security] Oracle
+ January 2025 Critical Patch Update
 
-On Thu, 9 Apr 2020, Brian May wrote:
+Hi Solar,
 
->> 1. The attacker could send various bogus session ids, starting with
->> all possible valid bytes. The database, if it uses a trie (yes,
->> strawman example - is it used by any real-world database?) as a data
->> structure to speed up looking up sessions, will terminate the
->> comparison early on invalid bytes, thus disclosing them.
+As a maintainer of Linux From Scratch and the person in charge of 
+security there, I monitor this list
+as well as a few others. Every quarter we also check the Oracle Critical 
+Product Update pages
+for vulnerabilities pertaining to MySQL and Java SE (which also impact 
+OpenJDK).
 
-Not real-world as the number of installations is maybe 6 now, but
-the one I wrote removes leading duplicates from index records (replacing
-with a dup count).  I believe that timing the lookups could disclose
-bytes as described.  It's super efficient, though.  :-)
+I'd like to volunteer to bring these to oss-security quarterly since I 
+already check these
+every quarter, I could do it after my initial reading!
+
+Thank you,
+
+Douglas Reno
+Linux From Scratch
+
+On 1/23/25 5:57 PM, Solar Designer wrote:
+> Bruce,
+>
+> Thank you very much for your reply.  My reading of it is that Oracle is
+> already doing a lot (publication in 3 formats) and isn't willing to do
+> more (also separately send info pertaining to Oracle's Open Source
+> projects to oss-security).  Is that correct?
+>
+> If so, maybe someone external should start doing that... or someone from
+> Oracle on one's own time... or people with the individual projects
+> (e.g., someone involved in MySQL and someone involved in VirtualBox
+> development)?
+>
+> Related to the last point/idea, I notice that the individual projects do
+> not appear to include security/CVE info in their release announcements.
+> For example, here are the recent ones for MySQL and VirtualBox with no
+> mention of the security issues/fixes at all:
+>
+> https://dev.mysql.com/doc/relnotes/mysql/9.2/en/news-9-2-0.html
+> https://dev.mysql.com/doc/refman/9.2/en/mysql-nutshell.html
+>
+> https://www.virtualbox.org/wiki/Changelog-7.1
+> https://www.virtualbox.org/wiki/Changelog-7.0
+>
+> Maybe that's because the embargo end is coordinated centrally for the
+> Critical Patch Update, and the projects end up never being given a green
+> light to release the info on their own as well?  Or just do not go back
+> and add previously-suppressed change log entries?  If so, could this be
+> corrected?  Just guessing here, I could as well be wrong about it.
+>
+> Thanks again,
+>
+> Alexander
+>
+> On Thu, Jan 23, 2025 at 06:47:29AM -0800, Bruce Lowenthal wrote:
+>> Olle, Solar Designer, oss-security list:
+>>
+>> I am responsible for the content and publication of Oracle Critical
+>> Patch Updates.   These are published quarterly in three formats: Tabular
+>> format HTML "AKA risk matrix", English Language HTML format and Oasis
+>> Standard CSAF format via references at Oracle's Critical Patch Updates,
+>> Security Alerts and Bulletins home page at
+>>
+>>   * https://www.oracle.com/security-alerts/
+>>
+>> This home page references individual quarterly reports and provides
+>> other information regarding our security program.   In addition, that
+>> page provides instructions allowing anyone to sign up to receive eMail
+>> announcing when Oracle Critical Patch Updates and other security
+>> advisories are published.    See:
+>>
+>>   * Instructions for subscribing to email notifications
+>>     <https://www.oracle.com/security-alerts/securityemail.html>of
+>>     Critical Patch Update Advisories and Security Alerts.
+>>
+>> If you have any questions, feel free to contact me directly.
+>>
+>> Bruce
+>> -----
+>>
+>> On 1/22/25 11:50 PM, Olle E. Johansson wrote:
+>>> Bruce,
+>>> For your information.
+>>>
+>>> /O
+>>>
+>>>> Begin forwarded message:
+>>>>
+>>>> *From: *Solar Designer <solar@openwall.com>
+>>>> *Subject: **[oss-security] Oracle January 2025 Critical Patch Update*
+>>>> *Date: *23 January 2025 at 03:42:22 CET
+>>>> *To: *oss-security@lists.openwall.com
+>>>> *Reply-To: *oss-security@lists.openwall.com
+>>>>
+>>>> Hi,
+>>>>
+>>>> Once in a while, Oracle publishes what they call Critical Patch Update
+>>>> documents, which list many vulnerabilities addressed across many Oracle
+>>>> products, some of them Open Source and some not.  This is great, but it
+>>>> would be even better if Oracle also communicated to oss-security about
+>>>> those vulnerabilities in its Open Source products, perhaps one message
+>>>> per product (e.g., MySQL separately from VirtualBox).  I hope someone
+>>> >from Oracle reads this and will get the wheels moving.  Anyone?
+>>>> Meanwhile, the latest Critical Patch Update is:
+>>>>
+>>>> https://blogs.oracle.com/security/post/january-2025-cpu-released
+>>>> https://www.oracle.com/security-alerts/cpujan2025.html
+>>>>
+>>>> For MySQL, it says:
+>>>>
+>>>> https://www.oracle.com/security-alerts/cpujan2025.html#AppendixMSQL
+>>>>
+>>>> "Oracle MySQL Risk Matrix
+>>>>
+>>>> This Critical Patch Update contains 39 new security patches, plus
+>>>> additional third party patches noted below, for Oracle MySQL.  4 of
+>>>> these vulnerabilities may be remotely exploitable without
+>>>> authentication, i.e., may be exploited over a network without requiring
+>>>> user credentials.  The English text form of this Risk Matrix can be
+>>>> found here."
+>>>>
+>>>> and links to:
+>>>>
+>>>> https://www.oracle.com/security-alerts/cpujan2025verbose.html#MSQL
+>>>>
+>>>> and lists additional information on some CVEs not included in the matrix
+>>>> itself (duplicate or not vulnerable).  With so many CVEs, all of this is
+>>>> rather long, but I imagine someone from Oracle - or someone external -
+>>>> could copy-paste the "English text form of this Risk Matrix" and the
+>>>> extra notes on a few CVEs to a separate message focusing on MySQL.
+>>>>
+>>>> Similarly, there's info on a couple of VirtualBox CVEs here, which would
+>>>> ideally be a separate message with copy-pasted detail:
+>>>>
+>>>> https://www.oracle.com/security-alerts/cpujan2025.html#AppendixOVIR
+>>>> https://www.oracle.com/security-alerts/cpujan2025verbose.html#OVIR
+>>>>
+>>>> Perhaps there's more Open Source software listed in there, which needs
+>>>> similar treatment.  Not only this time, but each time, please.
+>>>>
+>>>> Alexander
+
 
