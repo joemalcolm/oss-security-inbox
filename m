@@ -1,4 +1,4 @@
-Received: (qmail 7400 invoked by uid 550); 30 Mar 2024 16:22:48 -0000
+Received: (qmail 26016 invoked by uid 550); 25 Jan 2025 01:47:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +7,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18086 invoked from network); 30 Mar 2024 16:18:18 -0000
-Message-ID: <fc8936e9-4e95-4aef-ac30-f2d99817f3f7@nil.im>
-Date: Sat, 30 Mar 2024 17:17:38 +0100
+x-ms-reactions: disallow
+Received: (qmail 32578 invoked from network); 25 Jan 2025 01:24:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1737768279;
+	bh=/Tu2syLLjv2vF8CBoQpBYtMJXK4zQeORzuU+jKQUaWI=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=hcA+8UA5h5AD8GzSOZtsyzq9ZE5cZijBPvyx3mondczpuqfRmSP+JTJQe++8etOV6
+	 +FhBImWhiQzC98GZXzkXBllcOHnufTu3iQyrgfMDu4nud4doTG4N8dUrWpFqN3cSqB
+	 dxQtZiuWPg89jf0xJVM1cnfipNMlvJ7aOakkI50PnasqaL2jfIIK6NvA59ziIA8dLu
+	 ojz1JpfMaysmzS9+Sua4moTxN3fJqeQqRwxiwW6AwcRGJMAdHiMlabswYXfLJfbGX3
+	 z3YScblVxLJt0sNMUQD+kS3SBnibraSWPhQ/qdT/Ryvt2zz6xV2n6uawnYws/OT5Xz
+	 Mv8U5ydXSobGA==
+Date: Sat, 25 Jan 2025 01:24:36 +0000
+From: Mark Esler <mark.esler@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <Z5Q9VKUg_v3MBrmh@aeon>
+References: <Z5DF00lM-3Q36mhh@kasco.suse.de>
+ <2025012206-remember-glare-da7d@gregkh>
+ <Z5D-Io-ch6YXKAAn@imap.suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: "Rein Fernhout (Levitating)" <me@levitati.ng>,
- oss-security@lists.openwall.com
-References: <f0a95b6f-8738-4ca6-9462-35bdca04293a@nil.im>
- <12bfdf5d8ee20d341ce5ac206dc72b7b@purelymail.com>
-Content-Language: en-US
-From: Jonathan Schleifer <js@nil.im>
-In-Reply-To: <12bfdf5d8ee20d341ce5ac206dc72b7b@purelymail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Ns7K60e17n8IXe2z"
+Content-Disposition: inline
+In-Reply-To: <Z5D-Io-ch6YXKAAn@imap.suse.de>
+Subject: Re: [oss-security] issue with stuck Mitre CVE requests
 
-Am 30.03.24 um 16:10 schrieb Rein Fernhout (Levitating):
+--Ns7K60e17n8IXe2z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> The script attached by Andres was from 5.6.0.
-> I extracted the script from both versions and I can verify your diff.
-> I attached the two versions I extracted.
-> 
-> It definitely does look like the 5.6.1 version looks for 2 extra scripts 
-> to execute.
-> I don't get any matches on the greps either though.
+On Wed, Jan 22, 2025 at 03:18:10PM +0100, Johannes Segitz wrote:
+> We're not empowered to do this. We are a CNA for code that we own (e.g.
+> zypper), but not for arbitrary open source projects.
 
-My main worry is that when I extracted it, I replaced the sed in here:
+The text of SUSE's scope [0] is similar to Canonical's [1]. We
+understand "All Canonical issues (including Ubuntu Linux) only" as
+including all software we distribute. It does not require us to be the
+author of that code.
 
-sed \"r\n\" $gl_am_configmake | eval $gl_path_map | $gl_localedir_prefix 
--d 2>/dev/null
+Mark
 
-With a simple cat, as I could not make sed work. This worries me as it 
-means there is probably some other transformation that I'm missing that 
-would have made the sed work. Which means there's transformations I'm 
-missing and those could as well mutate some of the test files or 
-resulting payloads. So it could either change the grep itself, or create 
-files that match the grep.
+[0] https://www.cve.org/PartnerInformation/ListofPartners/partner/canonical
+[1] https://www.cve.org/PartnerInformation/ListofPartners/partner/suse
 
-Which means I'm not sure that actually no files match and it actually 
-executes nothing.
 
-> I also want to look more into the object file.
+--Ns7K60e17n8IXe2z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I think it's time to coordinate things.
+-----BEGIN PGP SIGNATURE-----
 
-I created a chat room for this on Matrix, IRC and Discord -- all bridged 
-together so it's essentially one chat room. Those interested, please join:
+iQIzBAABCgAdFiEE0ZC278nRi4l3b3GjszvZgG6FIMYFAmeUPVIACgkQszvZgG6F
+IMYFUg//YCJa1kM0LaFmoMTdM31Z29Djh4UPwgzUfnlG0aADD5IgXJvzddiVUzLl
+pAKAgdnS1HeWbk26cI77vRsU76esr3cghObwiHCVSR1H8TGYjIOR5zXsTb+DkYNG
+owhNoMz+WYWIDFASopJtFxpeZnKYULsz82DeoD766D3VOkiORh4tXWiuxwzEKnua
+N3EREYIuE3bP1ef8J9hO1Cb7q2pWgyX5WBxXePXIvwUHJ2xEsKYxx7btitPnwa79
+BFFQBvYzjH4TH8hW5lWe3dBRtPgZ3HIcVvJaoWdmf6pZp14zbaZAO7bOe0qORW/B
+Vl29wwztEvTtoJ7YCkhs9X7YDTX1XpRRYmz1egcJ3Op2pCULafUTDdW6wFgyMidO
+GQCC9dBV6y4q8qgTAiDf/4/4s4NdiTyBdSKAEGQqaddFVc/8UmITF9iyK06ccGS2
+XTErn9xgYiJgHrn42uysWrjphbUR8w5AZPGgJW4e9l4kXpuXvsmoRMZ9JBan4xJ6
+aGiOCo36aQl03VqpFOq+g2QsJuuEozG0vusFqONPSv9iiQzsQLf8Nm5iJpiv+5iw
+mtA2hr3KkPq1WL3OZctl5/JcY3UsnRf9aQhJsGf+54I5ncAUwWaoJnCcVtUsKqec
+zpcVv2JV4hPat4temh9VBxzGEB9Airlm8Aq4vnAaVEwSaNFAFfo=
+=7Mou
+-----END PGP SIGNATURE-----
 
-Matrix: #xz-backdoor-reversing:nil.im
-IRC: #xz-backdoor-reversing on irc.oftc.net
-Discord: https://discord.gg/XqTshWbR5F
-
--- 
-Jonathan
-
+--Ns7K60e17n8IXe2z--
