@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["377" "Friday" "16" "October" "2015" "12:06:23" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<5155028.TVvpLGB06T@willoughby>" "13" "Re: [oss-security] Qualys Security Advisory - LibreSSL (CVE-2015-5333 and CVE-2015-5334)" nil nil nil "10" "2015101610:06:23" "[oss-security] Qualys Security Advisory - LibreSSL (CVE-2015-5333 and CVE-2015-5334)" (number mark "        ago@gentoo.o Oct 16   13/377   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - LibreSSL (CVE-2015-5333 and CVE-2015-5334)\"\n") "<20151016005416.GB12993@localhost.localdomain>" ("<20151016005416.GB12993@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 25630 invoked by uid 550); 16 Oct 2015 10:06:44 -0000
+Received: (qmail 5480 invoked by uid 550); 26 Jan 2025 12:34:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,31 +6,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25612 invoked from network); 16 Oct 2015 10:06:44 -0000
-Message-ID: <5155028.TVvpLGB06T@willoughby>
-User-Agent: KMail/4.14.8 (Linux/3.14.46-gentoo; KDE/4.14.8; x86_64; ; )
-In-Reply-To: <20151016005416.GB12993@localhost.localdomain>
-References: <20151016005416.GB12993@localhost.localdomain>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Cc: oss-security@lists.openwall.com
-Date: Fri, 16 Oct 2015 12:06:23 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - LibreSSL (CVE-2015-5333 and CVE-2015-5334)
-To: Qualys Security Advisory <qsa@qualys.com>
+x-ms-reactions: disallow
+Received: (qmail 27858 invoked from network); 26 Jan 2025 11:57:36 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jason Gerlowski <gerlowskija@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <4c705481-0880-5c30-8d2a-f812d6545cd3@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 26 Jan 2025 11:57:25 +0000
+MIME-Version: 1.0
+Subject: [oss-security] =?UTF-8?Q?CVE-2025-24814=3A_Apache_Solr=3A_Core-cr?=
+ =?UTF-8?Q?eation_with_=22trusted=22_configset_can_?=
+ =?UTF-8?Q?use_arbitrary_untrusted_files=20?=
 
-On Thursday 15 October 2015 17:54:16 Qualys Security Advisory wrote:
-> We would like to thank the LibreSSL team for their great work and
-> their incredibly quick response,
+Severity: moderate
 
-Are these issues fixed upstream?
-If yes, is there a release which fixes the issues?
-If there isn't a release, do we have the link of the commit/diff?
+Affected versions:
 
-Thanks.
+- Apache Solr through 9.7
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Description:
+
+Core creation allows users to replace "trusted" configset files with arbitr=
+ary configuration
+
+Solr instances that (1) use the "FileSystemConfigSetService" component (the=
+ default in "standalone" or "user-managed" mode), and (2) are running witho=
+ut authentication and authorization are vulnerable to a sort of privilege e=
+scalation wherein individual "trusted" configset files can be ignored in fa=
+vor of potentially-untrusted replacements available elsewhere on the filesy=
+stem.=C2=A0 These replacement config files are treated as "trusted" and can=
+ use "<lib>" tags to add to Solr's classpath, which an attacker might use t=
+o load malicious code as a searchComponent or other plugin.
+
+This issue affects all Apache Solr versions up through Solr 9.7.=C2=A0 User=
+s can protect against the vulnerability by enabling authentication and auth=
+orization on their Solr clusters or switching to SolrCloud (and away from "=
+FileSystemConfigSetService").=C2=A0 Users are also recommended to upgrade t=
+o Solr 9.8.0, which mitigates this issue by disabling use of "<lib>" tags b=
+y default.
+
+Credit:
+
+pwn null (finder)
+
+References:
+
+https://solr.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2025-24814
+
