@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1697" "Wednesday" "12" "August" "2015" "23:48:05" "+0300" "Solar Designer" "solar@openwall.com" "<20150812204805.GA12880@openwall.com>" "37" "Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" nil nil nil "8" "2015081220:48:05" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" (number mark "        solar@openwa Aug 12   37/1697  " thread-indent "\"Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities\"\n") "<55CBA372.6080102@bluefrostsecurity.de>" ("<55CA41A6.600@bluefrostsecurity.de>" "<20150812161103.GA11200@openwall.com>" "<55CBA372.6080102@bluefrostsecurity.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9268 invoked by uid 550); 12 Aug 2015 20:48:13 -0000
+Received: (qmail 16233 invoked by uid 550); 27 Jan 2025 16:13:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9230 invoked from network); 12 Aug 2015 20:48:13 -0000
-Message-ID: <20150812204805.GA12880@openwall.com>
-References: <55CA41A6.600@bluefrostsecurity.de> <20150812161103.GA11200@openwall.com> <55CBA372.6080102@bluefrostsecurity.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <55CBA372.6080102@bluefrostsecurity.de>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Wed, 12 Aug 2015 23:48:05 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities
-To: Moritz Jodeit <moritz@bluefrostsecurity.de>
+x-ms-reactions: disallow
+Received: (qmail 4008 invoked from network); 27 Jan 2025 08:13:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1737965609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
+	b=QOUv2qx+6pP8JaB757LkH0XQKB7ZtiPGca6VvNzk2CDScgO1HohETPmoM1dZmPXixvnfFv
+	ZDkGeX4bI7dbV0vxDBEM7X+0EnpG+a8B9MoGFMOIQleuZ0OWRigqfDEQnfgSXCulAtQGWR
+	qj63t3QCgQyv16q7+wUTKSHnLpyPAyg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1737965609;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
+	b=Dt4gKp1w+bVnnr7PuWJYJm2BaHAkoLLPc7APiVt+YZAHkZT+Oc5vGD85929Hb9BGhgIZY4
+	F0fx7M86q3+kI8CA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1737965609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
+	b=QOUv2qx+6pP8JaB757LkH0XQKB7ZtiPGca6VvNzk2CDScgO1HohETPmoM1dZmPXixvnfFv
+	ZDkGeX4bI7dbV0vxDBEM7X+0EnpG+a8B9MoGFMOIQleuZ0OWRigqfDEQnfgSXCulAtQGWR
+	qj63t3QCgQyv16q7+wUTKSHnLpyPAyg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1737965609;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
+	b=Dt4gKp1w+bVnnr7PuWJYJm2BaHAkoLLPc7APiVt+YZAHkZT+Oc5vGD85929Hb9BGhgIZY4
+	F0fx7M86q3+kI8CA==
+Date: Mon, 27 Jan 2025 09:13:28 +0100
+From: Johannes Segitz <jsegitz@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <Z5dAKLJ-Lm6i5LyM@suse.com>
+References: <Z5DF00lM-3Q36mhh@kasco.suse.de>
+ <2025012206-remember-glare-da7d@gregkh>
+ <Z5D-Io-ch6YXKAAn@imap.suse.de>
+ <Z5Q9VKUg_v3MBrmh@aeon>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="k4b4r9tlX2+LA7rd"
+Content-Disposition: inline
+In-Reply-To: <Z5Q9VKUg_v3MBrmh@aeon>
+Subject: Re: [oss-security] issue with stuck Mitre CVE requests
 
-On Wed, Aug 12, 2015 at 09:50:10PM +0200, Moritz Jodeit wrote:
-> The vulnerable code for the two privsep issues was introduced with the merge of the
-> FreeBSD PAM code in 2003:
-> 
-> https://github.com/openssh/openssh-portable/commit/4f9f42a9bb6a6aa8f6100d873dc6344f2f9994de
-> 
-> The user impersonation issue was fixed by the following commit:
-> 
-> https://github.com/openssh/openssh-portable/commit/d4697fe9a28dab7255c60433e4dd23cf7fce8a8b
-> 
-> While the use-after-free is fixed by this commit:
-> 
-> https://github.com/openssh/openssh-portable/commit/5e75f5198769056089fb06c4d738ab0e5abc66f7
+--k4b4r9tlX2+LA7rd
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thank you!
+On Sat, Jan 25, 2025 at 01:24:36AM +0000, Mark Esler wrote:
+> On Wed, Jan 22, 2025 at 03:18:10PM +0100, Johannes Segitz wrote:
+> > We're not empowered to do this. We are a CNA for code that we own (e.g.
+> > zypper), but not for arbitrary open source projects.
+>=20
+> The text of SUSE's scope [0] is similar to Canonical's [1]. We
+> understand "All Canonical issues (including Ubuntu Linux) only" as
+> including all software we distribute. It does not require us to be the
+> author of that code.
 
-Are systems with "keyboard interactive" and "challenge-response"
-authentication disabled (all of PAMAuthenticationViaKbdInt,
-KbdInteractiveAuthentication, and ChallengeResponseAuthentication, as
-applicable to a given sshd version, set to no) affected by these issues
-as well?  The code appears to be specific to this mode, but it isn't
-immediately clear whether or not these configuration settings prevent
-the vulnerable code from being reached in the privsep monitor even when
-the privsep child is compromised.  If the settings do not currently
-prevent the code from being reached (I hope they do), then this should
-be corrected as a hardening measure.
+Interesting. I'll reach out to MITRE to clarify this and will report back
+(might take a while, I'll be away for some weeks starting tomorrow). When I
+was introduced to this > 10 years ago I was told not to allocate for
+anything for which we're not clearly upstream.
 
-And this is another reminder to all of us that enabling "keyboard
-interactive" or "challenge-response" authentication in sshd is extra
-risk, and it shouldn't be done unless necessary on a given system.
+Johannes
+--=20
+GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Frankenstra=DFe 146, 90461 N=FCrnberg=
+, Germany
+Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich (HRB 36809=
+, AG N=FCrnberg)
 
-Upstream sshd_config man page lists ChallengeResponseAuthentication
-as enabled by default, whereas Debian/Ubuntu (at least some versions)
-have it set to no in their default /etc/ssh/sshd_config (and enable
-UsePAM instead).
+--k4b4r9tlX2+LA7rd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Alexander
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEJQ9D9ffObx6cWU+VvCfdnSzE/WYFAmeXQCgACgkQvCfdnSzE
+/Was/xAAiTae2hhXYxT2iPhy2N+7KwtofK6WuOsmmJYvXbrgpZnVPR/7qYJL0niH
+dn4Fgz9M4M+6UxwzyzurnYTpkSPqST8QxQWyG5SFTNORXisQi//zseQsedsNeOTY
+q2Cqk/KfpG7UaF1xTWQR8BtEknbZu/0Ox7EAPPRmQUIy5zS8cMpa9CyzIYw1rskm
+HZm+Z0rRSQVYvxe1dcPwvtcPCSNmEvZMDzDq/0n1ke392PxE8mPUoVZrKRdjUXb8
+7WQK4ng3Ih5h1wF1CGGz5ySi8THe5f97UHqRhZjvdGUipmNgSt3t5MkAZRm5l+il
+zUEkrZ0G+V2r74RloMhxKvLm1l29QB2che5T/lBuou1DmHc+n8u3z+nFp7KS5KRe
+Ms4xKV6dK7zageCQ6S8+80O7swZwLyIWVgVbDMNm0rkpEx4zFVQbkH5RTal5GKjc
+10QJNU2Wnqf0p23nc8k9g96WTtSTJJXQpjBPWnMoggUx/unJPa8WHZf8VLce3Pqk
+bKZcPHxhr0EM5As32pq+Xz9zINwitssQr/RZOfkU+xm541QujVrGOvCyWCLJTP7u
+Ds0AQHyAqcTlfxr1BfnnCmJ7YGWEd/Kscvq7WQj9km7TH27r9c9PVyzBucRtGjUn
+y1cLfCEsNK6vWyfqpvPggPXMN1Q0uFdIFjSjuLVP8TFT4THe0kI=
+=M6Qz
+-----END PGP SIGNATURE-----
+
+--k4b4r9tlX2+LA7rd--
