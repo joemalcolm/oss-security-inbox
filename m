@@ -1,4 +1,4 @@
-Received: (qmail 7649 invoked by uid 550); 26 May 2026 00:30:50 -0000
+Received: (qmail 5266 invoked by uid 550); 27 Jan 2025 06:34:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,86 +8,64 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 14186 invoked from network); 26 May 2026 00:25:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1779755129;
+Received: (qmail 5229 invoked from network); 27 Jan 2025 06:34:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1737959674;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=31IxseTpMt3bBtqWnIHhqGdSpXO0naoBvgqaPBuVr3Q=;
-	b=l4ehteWTK0gzJlepCLBM39PGnCBUU8MLY5ElYBUpDHfCFgyOtfF4gRJZ0JiCaZF6YC7V72
-	/QnInMI5kTAfX8dLImcub3YfwZ+Qyo0RkOhoy1P8l2RocBxZCW0mUkY25bz5a0HpsawaWl
-	BrfU135vDlByQYkphAKhnHEnQngLuA26T/qKYhjGvsEZUiXTgVXNvxByq4mA060/UQ7lxq
-	8AzCBqw5NiqyH8/sv9Q/+YMugD6tLQNjlOrAf+GhNNzzd1zK4bv9C0k7ACZUomHSk+ccUD
-	gsPfgypjSxBI2xaagd9zENl++BOIobIBj6uBDs7gnpwigFksoMWoG2mP6mU59Q==
-From: Stig Palmquist <stig@stig.io>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Message-Id: <A0927582-6F48-48F2-987A-1DCE47177038@stig.io>
-Date: Tue, 26 May 2026 02:25:17 +0200
-To: cve-announce@security.metacpan.org,
- oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2026-42497: Archive::Tar versions before 3.08 for Perl extract
- hardlinks to attacker controlled paths outside the extraction directory
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CZEWEzncxiHWspAWr3JSfgGNIuUskoAY9haONERFGoA=;
+	b=W42nZSCQGsTBlBbeIsSjcg1C7knd53G3pggjHknRUZt19xXEqNTuVoW5TVKlglYCQjCUle
+	a0JfJIyNQpRAdpB9kY4qwXbeDYpBz4tKByvbJdUnfgBJxLBQudW3hhBPF8Hkkr8ypUzOlu
+	ssFJzeTvAMadAUh9AcMP/1E11BUoPHc=
+X-MC-Unique: Xr1yLbayOZaDE7QnpsjK6Q-1
+X-Mimecast-MFC-AGG-ID: Xr1yLbayOZaDE7QnpsjK6Q
+From: Florian Weimer <fweimer@redhat.com>
+To: Pete Allor <pallor@redhat.com>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <CAEFCzXX4sU9ps3PLcgjOS84+bKAb1qXy_koJdGNMqKokEsDbgg@mail.gmail.com>
+	(Pete Allor's message of "Sat, 25 Jan 2025 08:43:25 -0500")
+References: <Z4__rJ3_SmmtEIsG@netmeister.org>
+	<0a34f769-2a8d-4726-b9d7-6238ec3846e7@oracle.com>
+	<2025012512-likely-strainer-4e6d@gregkh>
+	<CAEFCzXX4sU9ps3PLcgjOS84+bKAb1qXy_koJdGNMqKokEsDbgg@mail.gmail.com>
+Date: Mon, 27 Jan 2025 07:34:27 +0100
+Message-ID: <87bjvssr2k.fsf@oldenburg3.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: PzMXLcjaSs9c6RwPZRqoDh-F-cw-1o47Wep5QYyT4U0_1737959672
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
+Subject: Re: [oss-security] Node.js EOL CVEs: CVE-2025-23087,
+ CVE-2025-23088, CVE-2025-23089
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-CVE-2026-42497                                       CPAN Security Group
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+* Pete Allor:
 
-        CVE ID:  CVE-2026-42497
-  Distribution:  Archive-Tar
-      Versions:  before 3.08
+> I do agree with Greg K-H that open source projects should become CNAs.
+> But do want to note that missing elements of the CVE when submitting
+> allows CISA-ADP to 'vulnrich' your data.  Here is where
+> misinterpretation and/or lack of understanding by CISA confuses
+> downstream users and once you gain that 'critical' stigma in the
+> system, you have to be persistent to get that changed.
+>
+> Is that a problem?  I think so and so do a number of PSIRTs so now we
+> have to contend with CISA-ADP and NVD to adjust their scores when the
+> CNA is 'the authoritative source' within the CVE Program.
 
-      MetaCPAN:  https://metacpan.org/dist/Archive-Tar
-      VCS Repo:  https://github.com/jib/archive-tar-new
+The larger problem is that component scoring tends to be higher than
+whole-system scoring.  If a security component fails in its security
+function, it certainly deserves an impact rating that reflects that it's
+totally broken due to the vulnerability.  But if this component is
+integrated into a larger system, impact is often lower and might even be
+insignificant due to the way the component is used.
 
+The current system does not really reflect that.  One way to deal with
+it could be to treat everything as a fork, but not to decouple from
+upstream changes, but to make it clear that the upstream impact ratings
+do not apply.
 
-Archive::Tar versions before 3.08 for Perl extract hardlinks to
-attacker controlled paths outside the extraction directory
-
-Description
------------
-Archive::Tar versions before 3.08 for Perl extract hardlinks to
-attacker controlled paths outside the extraction directory.
-
-_make_special_file() passes the tar header's linkname to link() without
-validating it against absolute paths or .. segments, creating a
-hardlink that shares the victim file's inode.
-
-A subsequent write through the extracted name modifies the victim file,
-and the post-extraction chmod, chown, and utime block in
-_extract_file() (guarded only against symlinks via -l) applies the tar
-header's mode, owner, and timestamps to the shared inode during
-extraction alone.
-
-Problem types
--------------
-- CWE-59 Improper Link Resolution Before File Access ('Link Following')
-- CWE-732 Incorrect Permission Assignment for Critical Resource
-
-Solutions
----------
-Upgrade to Archive::Tar 3.08 or later.
-
-
-References
-----------
-https://github.com/jib/archive-tar-new/commit/17c873492a05eddc0de18c1485e0b=
-2cccd5a9158.patch
-https://metacpan.org/release/BINGOS/Archive-Tar-3.08/changes
-https://www.cve.org/CVERecord?id=3DCVE-2026-42496
-
-Timeline
---------
-- 2026-04-12: Issue reported.
-- 2026-05-10: Version 3.06 released, disabling hardlink extraction by
-  default.
-- 2026-05-22: Version 3.08 released.
-
+Thanks,
+Florian
 
