@@ -1,4 +1,4 @@
-Received: (qmail 26528 invoked by uid 550); 9 Apr 2026 21:16:05 -0000
+Received: (qmail 24399 invoked by uid 550); 28 Jan 2025 09:47:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,57 +8,67 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 22151 invoked from network); 9 Apr 2026 19:48:27 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1775764048; bh=Ai72KMnLYJNWBfytJN/h42seE8prus21k2mF0lkcLPc=;
-	h=Date:To:From:Subject:From;
-	b=jeZnAzX1jZ1Ef4H/fHNGQQLfJrNcObrO8/BHJmx2kAIdJJfpLIMPMJGqFR0bfYGEl
-	 huNzqqTMcGUhx3xAivGHcj8+QpD1kJkyCS9DRygMe/ZqQ9tRozrKGrcxIomBkltYWb
-	 GAdyWmusZssCmqxdcLVpNKS8duH1nkJBWRv8pqjDhJCxxH7wBoETUZ1w31Hfhwnp72
-	 xFOuSMzAroobZQg57C8f7vbTPDBihNVN951ie62UytxWjaxiE6/VBbIBtFdFOHceXU
-	 Fa9X0KbUoytlyfD7oJNm8HMG47Uz8xTPLylsmzevfIE0FYl2vo0gfLnZZFOXrIsn2o
-	 QDowCba8yq51g==
-Message-ID: <ea2f3133-20cc-41e2-b8af-be42727d4a97@apache.org>
-Date: Thu, 9 Apr 2026 20:47:28 +0100
+Received: (qmail 24371 invoked from network); 28 Jan 2025 09:47:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1738057628;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9Fa9Gn2j6uwU2eerTqX1yvVSQJ17+O0mUDbHeKKK0s8=;
+	b=GHmrFGEmf4BvMnjxejYTexSXwwOFu3Y8XfrJu+PIp9kX7k6zIn01d9VIbR7HQmouOzsGsM
+	NbVViiz/gyhGOa23JuXjK73PAbMXaUB5L7J0IlBHCcUdMLtfiq6ysR3kcHuKRL8np0GCE5
+	wGS/nhe6cHuVO1SYKly5Y3EQFqMQEsQ=
+X-MC-Unique: QUCZuTIQOP-HcrGeVw5ryw-1
+X-Mimecast-MFC-AGG-ID: QUCZuTIQOP-HcrGeVw5ryw
+From: Florian Weimer <fweimer@redhat.com>
+To: Pete Allor <pallor@redhat.com>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <CAEFCzXXNvs6vLnqv+1y4Ob9=j9CHms5LMYHkXBQhcOcwd_0T-w@mail.gmail.com>
+	(Pete Allor's message of "Mon, 27 Jan 2025 18:02:35 -0500")
+References: <Z4__rJ3_SmmtEIsG@netmeister.org>
+	<0a34f769-2a8d-4726-b9d7-6238ec3846e7@oracle.com>
+	<2025012512-likely-strainer-4e6d@gregkh>
+	<CAEFCzXX4sU9ps3PLcgjOS84+bKAb1qXy_koJdGNMqKokEsDbgg@mail.gmail.com>
+	<87bjvssr2k.fsf@oldenburg3.str.redhat.com>
+	<CAEFCzXXNvs6vLnqv+1y4Ob9=j9CHms5LMYHkXBQhcOcwd_0T-w@mail.gmail.com>
+Date: Tue, 28 Jan 2025 10:47:01 +0100
+Message-ID: <87sep3jmne.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2026-25854: Apache Tomcat: Occasionally open redirect
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: cumA0TJcKTZKXEt03qJXDJzxcdkY66ovoQMrzzqSDS8_1738057626
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Node.js EOL CVEs: CVE-2025-23087,
+ CVE-2025-23088, CVE-2025-23089
 
-Severity: low
+* Pete Allor:
 
-Affected versions:
+> It is why I would advocate for a CVSS review (as we do at Red Hat) and
+> then assign a 'Severity Rating' as that now involves how the component
+> is used within our software which changes HOW a
+> customer/downstream/user should actually view that CVE.
 
-- Apache Tomcat 11.0.0-M1 through 11.0.18
-- Apache Tomcat 10.1.0-M1 through 10.1.52
-- Apache Tomcat 9.0.0.M23 through 9.0.115
-- Apache Tomcat 8.5.30 through 8.5.100
-- Apache Tomcat through 7.0.109 unaffected
+But is this really how it works these days?  For example, if we use a
+component to render the in-program documentation (traditionally called
+=E2=80=9Conline help=E2=80=9D, but we would consider this offline today), a=
+nd the
+upstream for this component documents publicly that a vulnerability is
+being actively exploited for (user-initiated) remote code execution, we
+must fix the component even if it's just used in an offline
+documentation viewer.  CVSS impact review does not change that, as far
+as I know.
 
-Description:
+Hence the suggestion of a fork, so that upstream's exploitation
+announcements do not carry over 1:1 to the product.
 
-Occasional URL redirection to untrusted Site ('Open Redirect') 
-vulnerability in Apache Tomcat via the LoadBalancerDrainingValve.
+I think this fix-regardless-of-impact requirement is new.
+Legitimate-looking sources for inflated impact ratings have been around
+for more than a decade, on the other hand.
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 
-10.1.0-M1 through 10.1.52, from 9.0.0.M23 through 9.0.115, from 8.5.30 
-through 8.5.100.
-Other, unsupported versions may also be affected
+Thanks,
+Florian
 
-Users are recommended to upgrade to version 11.0.20, 10.1.53 or 9.0.116, 
-which fix the issue.
-
-Credit:
-
-gregk4sec (https://github.com/gregk4sec) (finder)
-
-References:
-
-https://lists.apache.org/thread/ghct3b6o74bp2vm7q875s1zh0dqrz3h0
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-25854
