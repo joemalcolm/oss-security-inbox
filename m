@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["675" "Thursday" "6" "July" "2017" "23:10:24" "+0200" "Solar Designer" "solar@openwall.com" "<20170706211024.GB9171@openwall.com>" "18" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070621:10:24" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jul  6   18/675   " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<ca9bedc0-1bd2-e13d-3df2-67fdc4d463bd@redhat.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<362f16f9-ae35-ecc0-71b7-d5f72ffd9403@gentoo.org>" "<ca9bedc0-1bd2-e13d-3df2-67fdc4d463bd@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7639 invoked by uid 550); 6 Jul 2017 21:10:50 -0000
+Received: (qmail 7720 invoked by uid 550); 3 Feb 2025 23:18:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +6,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7199 invoked from network); 6 Jul 2017 21:10:28 -0000
-Message-ID: <20170706211024.GB9171@openwall.com>
-References: <20170628200239.GA25525@openwall.com> <20170630132209.GA4625@openwall.com> <362f16f9-ae35-ecc0-71b7-d5f72ffd9403@gentoo.org> <ca9bedc0-1bd2-e13d-3df2-67fdc4d463bd@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ca9bedc0-1bd2-e13d-3df2-67fdc4d463bd@redhat.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 6 Jul 2017 23:10:24 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+x-ms-reactions: disallow
+Received: (qmail 19740 invoked from network); 3 Feb 2025 23:09:07 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Paulo Motta <paulo@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <123cd316-92c2-6712-9408-6ced9502dae5@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 03 Feb 2025 23:08:58 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-27137: Apache Cassandra: unrestricted deserialization of
+ JMX authentication credentials 
 
-On Thu, Jul 06, 2017 at 02:52:58PM -0600, kseifried@redhat.com wrote:
-> Ah sorry I didn't realize Red Hat should probably reply to this, we
-> already do a lot of this work, we're happy to keep doing it.
+Severity: moderate
 
-Yes, please - and let's make this more specific and more explicit - in
-other words, I'd like you to volunteer for specific tasks.
+Affected versions:
 
-> I'm not
-> clear on some of the things though (e.g. the tracking progress, if there
-> isn't any then what? sometimes these things take time or new
-> complications are found).
+- Apache Cassandra 4.0.2 before 4.0.15
+- Apache Cassandra 4.1.0 before 4.1.8
+- Apache Cassandra 5.0-beta1 before 5.0.3
 
-If you're supposed to track progress and there's no visible progress for
-a while for no apparent reason, please bring this up and ask why not.
+Description:
 
-Thanks,
+In Apache Cassandra it is possible for a local attacker without access
+ to the Apache Cassandra process or configuration files to manipulate=20
+the RMI registry to perform a man-in-the-middle attack and capture user=20
+names and passwords used to access the JMX interface. The attacker can=20
+then use these credentials to access the JMX interface and perform=20
+unauthorized operations.
 
-Alexander
+
+This is same vulnerability that CVE-2020-13946 was issued for, but the Java=
+ option was changed in JDK10.
+
+
+This issue affects Apache Cassandra from 4.0.2 through 5.0.2 running Java 1=
+1.
+
+
+Operators are recommended to upgrade to a release equal to or later than 4.=
+0.15, 4.1.8, or 5.0.3 which fixes the issue.
+
+References:
+
+https://cassandra.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-27137
+
