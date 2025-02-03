@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1843" "Thursday" "9" "April" "2015" "22:11:54" "+0200" "Robert Scheck" "robert@fedoraproject.org" "<20150409201154.GA23755@hurricane.linuxnetz.de>" "51" "[oss-security] CVE request: Incorrect default permissions in Zarafa (zarafa-search-plus)" nil nil nil "4" "2015040920:11:54" "[oss-security] CVE request: Incorrect default permissions in Zarafa (zarafa-search-plus)" (number mark "        robert@fedor Apr  9   51/1843  " thread-indent "\"[oss-security] CVE request: Incorrect default permissions in Zarafa (zarafa-search-plus)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29846 invoked by uid 550); 9 Apr 2015 20:12:10 -0000
+Received: (qmail 14310 invoked by uid 550); 3 Feb 2025 23:38:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29828 invoked from network); 9 Apr 2015 20:12:10 -0000
-Message-ID: <20150409201154.GA23755@hurricane.linuxnetz.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
-Content-Disposition: inline
-X-GnuPG-Key: 0xCE3E1F56, available at http://pgp.uni-mainz.de/
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Scanned-By: MIMEDefang 2.76 on 127.0.0.1
-Cc: CVE assignment team <cve-assign@mitre.org>
-Date: Thu, 9 Apr 2015 22:11:54 +0200
-From: Robert Scheck <robert@fedoraproject.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Incorrect default permissions in Zarafa
- (zarafa-search-plus)
-To: Open Source Security Mailing List <oss-security@lists.openwall.com>
-
---opJtzjQTFsWo+cga
+x-ms-reactions: disallow
+Received: (qmail 24300 invoked from network); 3 Feb 2025 23:20:23 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: Paulo Motta <paulo@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ef1196a8-7382-5ca2-ac1f-f6bf86ca0cbd@apache.org>
 Content-Transfer-Encoding: quoted-printable
+Date: Mon, 03 Feb 2025 23:19:11 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-24860: Apache Cassandra: CassandraNetworkAuthorizer and
+ CassandraCIDRAuthorizer can be bypassed allowing access to different
+ network regions 
 
-Good evening,
+Severity: moderate
 
-it was discovered that zarafa-search-plus (part of Zarafa >=3D 7.2.0) creat=
-es
-the directory /var/lib/zarafa/search/ read- and writable for world, as well
-as all sub-directories and files it creates afterwards:
+Affected versions:
 
- - https://forums.zarafa.com/showthread.php?11304-Zarafa-7-2-Problems-Bugs-=
-with-the-new-search
- - https://bugzilla.redhat.com/show_bug.cgi?id=3D1206838
- - https://jira.zarafa.com/browse/ZCP-13160
+- Apache Cassandra 4.0.0 through 4.0.15
+- Apache Cassandra 4.1.0 through 4.1.7
+- Apache Cassandra 5.0.0 through 5.0.2
 
-In difference to the ZCP-13160 ("change this to the same permissions as the
-other folders in the directory") the thus proposed 755 is not enough, it
-must be e.g. 750, otherwise data is still readable for local system users.
+Description:
 
-As I unfortunately wasn't aware of the forum posting when I did my analysis
-I also cross-checked releases before the rewrite (thanks Martin Prpi=C4=8D)=
-. The
-predecessors of zarafa-search-plus are creating the /var/lib/zarafa/search/
-or /var/lib/zarafa/index/ directory with the correct permissions, however
-some of the sub-directories and files (also created by the search daemon)
-are world-readable (see comment #2 of RHBZ#1206838 for details) through. I
-am not sure how this should be treated, given that all Zarafa search/index
-daemons do not seem to have built-in permission checks (like e.g. fetchmail
-has) and thus also accept an existing directory with incorrect permissions.
+Incorrect Authorization vulnerability in Apache Cassandra allowing users to=
+ access a datacenter or IP/CIDR groups they should not be able to when usin=
+g CassandraNetworkAuthorizer or CassandraCIDRAuthorizer.
+
+Users with restricted data center access can update their own permissions v=
+ia data control language (DCL) statements on affected versions.
 
 
-With kind regards
 
-Robert Scheck
---=20
-Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
 
---opJtzjQTFsWo+cga
-Content-Type: application/pgp-signature
+This issue affects Apache Cassandra: from 4.0.0 through 4.0.15 and from 4.1=
+.0 through 4.1.7 for CassandraNetworkAuthorizer, and from 5.0.0 through 5.0=
+.2 for both CassandraNetworkAuthorizer and CassandraCIDRAuthorizer.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iEYEARECAAYFAlUm3QoACgkQUwMgnc4+H1aYJgCfcucPaOYjSDG4z4ThJlEQsMZN
-sncAn22fkCs5RM+vId1r0+JvSIq80K3/
-=cjvu
------END PGP SIGNATURE-----
 
---opJtzjQTFsWo+cga--
+
+Operators using=C2=A0CassandraNetworkAuthorizer or=C2=A0CassandraCIDRAuthor=
+izer on affected versions should review data access rules for potential bre=
+aches. Users are recommended to upgrade to versions 4.0.16, 4.1.8, 5.0.3, w=
+hich fixes the issue.
+
+This issue was reported by Stefan Miklosovic
+
+References:
+
+https://cassandra.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-24860
+
