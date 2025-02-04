@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["741" "Wednesday" "4" "April" "2018" "19:15:16" "+0300" "Alexander Popov" "alex.popov@linux.com" "<b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>" "21" "[oss-security] Linux Kernel Defence Map" "^Cc:" nil nil "4" "2018040416:15:16" "[oss-security] Linux Kernel Defence Map" (number mark "        alex.popov@l Apr  4   21/741   " thread-indent "\"[oss-security] Linux Kernel Defence Map\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29846 invoked by uid 550); 4 Apr 2018 16:15:31 -0000
+Received: (qmail 11936 invoked by uid 550); 4 Feb 2025 10:11:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +6,148 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29812 invoked from network); 4 Apr 2018 16:15:30 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:to:cc:from:subject:message-id:date
-         :user-agent:mime-version:content-language:content-transfer-encoding;
-        bh=bWS/YOBha2dn4Bm4hXYZzKmzPfyp7WC+g6OkiWDGavE=;
-        b=Pyyxi11CSRJeaG8aCJJlbAOf52OsV912yJKbZw+ZdNEXdThyRWgx24iChRNrvJXT9O
-         Qk8CSkIiyhZ2oxL0SdIq8MWABOVy1M34KpLZ3VFs+Jf/a+ZRaeMBgwnbBgY5FhJO/d0V
-         l58IUk+rVAMrBK70CBnbqlhXw5rsXMbScVCsQ1OE1g0dECw4TlPpDFlzBfgUrQ/Y1liF
-         YkZsb19u1TMzNDyCcWZC8eWvuA+kwCnQJn0YJYIpqnuVhIE//bhc0a6UWG+wcMawwqFG
-         ET8Rm6cC7GSFFQu/DHwpqpb9R6lp5VnYTiXeyD2vLV1s3F1uq8MGbE6n/oM3gv3cvOYO
-         ww7g==
-X-Gm-Message-State: ALQs6tDmzgmNInl6oDw+MtcHLHhwfxaI8DouhOQFAptGbi4TIoE1WbAi
-	VaFMNXdZ7beMBbGD82cqL4Q=
-X-Google-Smtp-Source: AIpwx4+C47Mm4unkxqEaA6V3cpomIXL0hsJqYyRlfPiKFgofKcCxo9V5BPImf9zzHyqCebBHrvaYAA==
-X-Received: by 10.46.155.204 with SMTP id w12mr9712262ljj.76.1522858519500;
-        Wed, 04 Apr 2018 09:15:19 -0700 (PDT)
-Message-ID: <b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Cc: Kees Cook <keescook@chromium.org>, James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>, Brad Spengler
- <spender@grsecurity.net>, PaX Team <pageexec@freemail.hu>
-Date: Wed, 4 Apr 2018 19:15:16 +0300
-From: Alexander Popov <alex.popov@linux.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Linux Kernel Defence Map
+x-ms-reactions: disallow
+Received: (qmail 10108 invoked from network); 4 Feb 2025 10:10:35 -0000
+Date: Tue, 4 Feb 2025 11:10:28 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20250204101028.GA20864@openwall.com>
+References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
 
-Linux kernel security is a very complex area. It would be nice to have some
-graphical representation of its current state. So I've created a Linux Kernel
-Defence Map showing the relations between:
- - vulnerability classes / exploitation techniques,
- - kernel defences,
- - bug detection means.
+On Wed, Jan 22, 2025 at 07:52:48AM -0800, Tavis Ormandy wrote:
+> On Tue, Jan 21, 2025 at 11:38:16PM -0500, Demi Marie Obenour wrote:
+> > On Tue, Jan 21, 2025 at 06:31:31PM -0800, Tavis Ormandy wrote:
+> > > It looks like an OEM leaked the patch for a major upcoming CPU
+> > > vulnerability, i.e. "AMD Microcode Signature Verification
+> > > Vulnerability":
+> > > 
+> > > https://rog.asus.com/motherboards/rog-strix/rog-strix-x870-i-gaming-wifi/helpdesk_bios/
+> > > 
+> > > I'm not thrilled about this - the patch is *not* currently in
+> > > linux-firmware, so this is the only publicly available patch.
+> > > 
+> > > However, other people are discussing how to extract them:
+> > > 
+> > > https://winraid.level1techs.com/t/offer-intel-amd-via-cpu-microcode-archives-1995-present/102857/53
+> > 
+> > Is this fix effective, or can it be bypassed via a downgrade attack?
+> 
+> I'm not sure yet, the vendor has been really excruciating to deal with,
+> this is the first time I've been allowed to see the patch!! :(
 
-Link:
-   https://github.com/a13xp0p0v/linux-kernel-defence-map
+Much of the info is finally public (with more planned for March):
 
-N.B. The node connections don't mean "full mitigation". These connections
-represent some kind of relation. So ideally, this map should help to navigate in
-documentation and Linux kernel sources.
+https://github.com/google/security-research/security/advisories/GHSA-4xq7-4mgh-gp6w
 
-I wrote it in DOT language and generated the picture using GraphViz. So it is
-very pleasant to maintain this map with git.
+> AMD: Microcode Signature Verification Vulnerability
+> sirdarckcat published GHSA-4xq7-4mgh-gp6w Feb 3, 2025
+> 
+> Package
+> AMD CPUs
+> 
+> Affected versions
+> Zen 1-4 CPUs
+> 
+> Patched versions
+> Naples/Rome/Milan PI 2024-12-13 and Genoa 2024-12-16
+> 
+> Description
+> 
+> Summary
+> 
+> Google Security Team has identified a security vulnerability in some AMD
+> Zen-based CPUs. This vulnerability allows an adversary with local
+> administrator privileges (ring 0 from outside a VM) to load malicious
+> microcode patches. We have demonstrated the ability to craft arbitrary
+> malicious microcode patches on Zen 1 through Zen 4 CPUs. The
+> vulnerability is that the CPU uses an insecure hash function in the
+> signature validation for microcode updates. This vulnerability could be
+> used by an adversary to compromise confidential computing workloads
+> protected by the newest version of AMD Secure Encrypted Virtualization,
+> SEV-SNP or to compromise Dynamic Root of Trust Measurement.
+> 
+> AMD SEV-SNP users can verify the fix by confirming TCB values for SNP in
+> their attestation reports (can be observed from a VM, consult AMD's
+> security bulletin for further details).
+> 
+> Severity
+> 
+> HIGH - Improper signature verification in AMD CPU ROM microcode patch
+> loader may allow an attacker with local administrator privilege to load
+> malicious CPU microcode resulting in loss of confidentiality and
+> integrity of a confidential guest running under AMD SEV-SNP.
+> 
+> Proof of Concept
+> 
+> A test payload for Milan and Genoa CPUs that makes the RDRAND
+> instruction return 4 can be downloaded here (applying it requires the
+> user to be root from outside of a VM).
+> 
+> Timeline
+> 
+> Date reported: September 25, 2024
+> Date fixed: December 17, 2024
+> Date disclosed: February 3, 2025
+> 
+> Google notified AMD of this vulnerability on September 25, 2024. AMD
+> subsequently provided an embargoed fix to its customers on December 17,
+> 2024. To coordinate with AMD, we made a one-off exception to our
+> standard vulnerability disclosure policy and delayed public disclosure
+> until today, February 3, 2025. This joint disclosure occurs 46 days
+> after AMD shared the fix with its customers and 131 days after Google's
+> initial report. Due to the deep supply chain, sequence and coordination
+> required to fix this issue, we will not be sharing full details at this
+> time in order to give users time to re-establish trust on their
+> confidential-compute workloads. We will share additional details and
+> tools on March 5, 2025.
 
-I would be grateful for any feedback.
+> CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:N
+> CVE-2024-56161
+> 
+> Credits
+> 
+>     @josheads josheads Finder
+>     @spq spq Finder
+>     @matrizzo matrizzo Finder
+>     @sirdarckcat sirdarckcat Finder
+>     @taviso taviso Finder
 
-Best regards,
+There's a PoC in:
+
+https://github.com/google/security-research/tree/master/pocs/cpus/entrysign
+
+> Tested on AMD EPYC 7B13 64-Core Processor (Milan) and AMD Ryzen 9 7940HS
+> w/ Radeon 780M Graphics (Phoenix).
+
+> We've provided these PoCs to demonstrate that this vulnerability allows
+> an adversary to produce arbitrary microcode patches. They cause the
+> RDRAND instruction to always return the constant 4, but also set the
+> carry flag (CF) to 0 to indicate that the returned value is invalid.
+> Because correct use of the RDRAND instruction requires checking that CF
+> is 1, this PoC can not be used to compromise correctly functioning
+> confidential computing workloads. Additional tools and resources will be
+> made public on March 5.
+
+The corresponding AMD security bulletin is:
+
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3019.html
+
+> AMD SEV Confidential Computing Vulnerability
+
+> AMD has made available a mitigation for this issue which requires
+> updating microcode on all impacted platforms to help prevent an attacker
+> from loading malicious microcode. Additionally, an SEV firmware update
+> is required for some platforms to support SEV-SNP attestation. Updating
+> the system BIOS image and rebooting the platform will enable attestation
+> of the mitigation. A confidential guest can verify the mitigation has
+> been enabled on the target platform through the SEV-SNP attestation
+> report.
+
 Alexander
