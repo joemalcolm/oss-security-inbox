@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2230" "Friday" "4" "December" "2015" "23:34:29" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151205043429.AB3DD72E158@smtpvbsrv1.mitre.org>" "56" "[oss-security] Re: CVE Request: PHPMailer Message Injection Vulnerability" nil nil nil "12" "2015120504:34:29" "[oss-security] Re: CVE Request: PHPMailer Message Injection Vulnerability" (number mark "U       cve-assign@m Dec  4   56/2230  " thread-indent "\"[oss-security] Re: CVE Request: PHPMailer Message Injection Vulnerability\"\n") "<5661E3BE.1050203@gmail.com>" ("<5661E3BE.1050203@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20259 invoked by uid 550); 5 Dec 2015 04:34:42 -0000
+Received: (qmail 25899 invoked by uid 550); 5 Feb 2025 08:21:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +7,125 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20237 invoked from network); 5 Dec 2015 04:34:41 -0000
-From: cve-assign@mitre.org
-To: gsunde.orangen@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <5661E3BE.1050203@gmail.com>
-Message-Id: <20151205043429.AB3DD72E158@smtpvbsrv1.mitre.org>
-Date: Fri,  4 Dec 2015 23:34:29 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: PHPMailer Message Injection Vulnerability
+x-ms-reactions: disallow
+Received: (qmail 25839 invoked from network); 5 Feb 2025 08:21:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1738743699; bh=poXfzVRjR5SaZ+dzj0iC5+roUc/bJAVKicW93HVvxNM=;
+	h=Date:From:To:Subject:From;
+	b=0tFak9sTu1nWMC/iQjAtOZ/iXi2HoRatUz0dl2e3EYuwfEkQ69H0+7AX+ClZrQwly
+	 QSPGdqz6/bTc4zctOsYx8ubL+blybiPkK4i7gHx0H7BmEuJkO6lGXcN6vYePwThpBL
+	 Tqpb7HkzvdFA5QKPRWCvZ8OyaTGPu9G2lQSt6gSYpp9SK5i99pbY3u5deWwI3czBSn
+	 5wN3myxsoYSOlVohpA5klzb46/TOLIzLL6dS8ToySYgb4XjHwcdCJoQQUlguehsoPD
+	 fJCA5evftLVHYTHhNhe7EHcqSgchGUF5GWN7iGNhKoXXalGTAMmaxbQIEsbOiIhq0X
+	 /Hm9njx2THIOw==
+Date: Wed, 5 Feb 2025 09:21:39 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <217qs799-s199-2990-25rr-p0385p14803o@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2025-0665: eventfd double close
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+eventfd double close
+====================
 
-> https://github.com/PHPMailer/PHPMailer/releases/tag/v5.2.14
-> This release contains an important security update.
-> Takeshi Terada discovered that PHPMailer accepted addresses containing line breaks.
+Project curl Security Advisory, February 5th 2025 -
+[Permalink](https://curl.se/docs/CVE-2025-0665.html)
 
-Use CVE-2015-8476. Our understanding is that this is not the same as
-CVE-2012-0796, which is:
+VULNERABILITY
+-------------
 
-  https://git.moodle.org/gw?p=moodle.git;a=commit;h=62988bf0bbc73df655f51884aaf1f523928abff9
+libcurl would wrongly close the same eventfd file descriptor twice when taking
+down a connection channel after having completed a threaded name resolve.
 
-This is related to the same original codebase. The Moodle
-class.phpmailer.php file refers to Andy Prevost and Marcus Bointon,
-who are listed in the
-https://github.com/PHPMailer/PHPMailer/blob/master/README.md History
-section. However, 62988bf0bbc73df655f51884aaf1f523928abff9 is about
-the From and Sender headers. The change for PHPMailer 5.2.14 is:
+INFO
+----
 
-  https://github.com/PHPMailer/PHPMailer/commit/6687a96a18b8f12148881e4ddde795ae477284b0
+This flaw requires libcurl to get built with the threaded resolver
 
-which mentions:
+It requires that *eventfd* is used in the curl build. This feature is only
+used on 64-bit architectures.
 
-  Reject line breaks in addresses
-  Reject line breaks in all commands
-  
-and gives an attack string beginning with:
+The eventfd socket is used for inter-thread messaging and since the
+communication was originally written to use `socketpair()` only, there was two
+`close()` calls done and the superfluous one was left accidentally used
+because of an `#ifdef` mistake.
 
-  \r\n RCPT TO:websec02@d.mbsd.jp\r\n DATA \\\nSubject: spam
+This bug was reported (and fixed) immediately after the 8.11.1 release, but
+the security impact was not considered until later. This bug causes libcurl to
+act unreliably which many users will have noticed and either avoided eventfd
+or the vulnerable version, thus somewhat reducing the impact of this problem.
 
-This attack string suggests that "MAIL FROM" had already been sent.
-Thus, we think the "PHPMailer before 5.2.14" finding is a different
-vulnerability.
+It can also be worth noting that both `close()` calls are typically called
+within a few dozens of instructions, severely limiting the ability for an
+external party to control which other file descriptor this can be made to
+affect.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This bug is **not** considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
 
-iQIcBAEBCAAGBQJWYmkCAAoJEL54rhJi8gl5BrUQAJNkrgz/dEqZPZ2JLQ4z5ezr
-LXc82Js/NSxRSRuvSOAJPRT/M30fLjwpqRVdAo0Vi0Nqou1+UYCchPs5SydAIT3B
-yx9PVf973w1Q0Ee/3EaQZkCzeZQhCeNErTTKtnNuttW1LEqwo19ohcqZ0oTd0MyL
-/h1riUtP8L79/XDf13WPbOZDwei3OhLfvEog1fDsHFXUgzOFoK00cTbrHZSf3XkG
-a26hd8OkOPClYni8adl6mE20SrDJp02eJRgvqfQe9/JmHJDeNWDQ6q4Ok5XVWNUc
-59bEOKq+VhaNru9+7M1rZWY2s48lra1cvKpGAvlWZgyCakpCg7kRS31JDHZuMzo3
-9MGNrOyKFhLE1JWy8ug9YN/vG1eb8W19H7CA9Nz50aRagcIuyuerh+ljCMLfCdye
-/V65TyQck7JcRG1sgdg+fVSJhXqS/2Ri2FijHHVxA8dNcnp26J0F7uuwLMX9tPjP
-kU1/3Gum2noD/Zfh5Gv5HASjSRoCtQzmaPKJfNwZeb4Qv188Rfyi5722mARMo5G8
-kSjaDEz2bsNA3D1LbcQBdilRe+KcyyC3zG1ocfBO345F06o5KvwJsWXu8Zv1Bmy4
-BU6R1sjGU4ntIZDyPxMVL19wM4wFY69JXJoW50NR6iE7sPo+XW/nhqlVdL9vaWie
-q762sA15AGFoDFckU/Aq
-=ATt/
------END PGP SIGNATURE-----
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-0665 to this issue.
+
+CWE-1341: Multiple Releases of Same Resource or Handle
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected version: curl 8.11.1
+- Not affected versions: curl < 8.11.1 and >= 8.12.0
+- Introduced-in: https://github.com/curl/curl/commit/92124838c6b7e09e3f35f
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/ff5091aa9f73802e894b1cbdf
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 8.12.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Disable eventfd use in your build
+
+  D - Use the c-ares resolver backend
+
+TIMELINE
+---------
+
+This issue was reported to the curl project on January 22, 2025. We contacted
+distros@openwall on January 28, 2025.
+
+curl 8.12.0 was released on February 5 2025 around 08:00 UTC, coordinated with
+the publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Ankom Coper
+- Patched-by: Andy Pan
+
+The [original bug](https://github.com/curl/curl/issues/15725) was first
+reported as a "normal" bug, by:
+
+- Reported-by: Christian Heusel
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
