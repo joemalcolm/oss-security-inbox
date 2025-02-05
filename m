@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1771" "Sunday" "6" "March" "2016" "21:12:03" "+0200" "Elad Alfassa" "elad@fedoraproject.org" "<CAN0s7yS36t6L-xuwAqXH493TsmcQT5rb2LJ-Z3FYA8AsFE_+sw@mail.gmail.com>" "38" "[oss-security] Transmission BT 2.90 Mac malware. Website compromised?" nil nil nil "3" "2016030619:12:03" "[oss-security] Transmission BT 2.90 Mac malware. Website compromised?" (number mark "U       elad@fedorap Mar  6   38/1771  " thread-indent "\"[oss-security] Transmission BT 2.90 Mac malware. Website compromised?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26306 invoked by uid 550); 6 Mar 2016 19:12:24 -0000
+Received: (qmail 24145 invoked by uid 550); 5 Feb 2025 08:21:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +7,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26241 invoked from network); 6 Mar 2016 19:12:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to;
-        bh=Dpx4rMVj1X+D0NNwlfHxGofQnQjrwUZPCrMak6rvZFA=;
-        b=Icw0k/IkXeRRjjvEVPBGswqQVv40PKePZdVrDXaVg7uzW0aDhIkcvpUviNIhavh195
-         8RIdpZKoLLf0mUJchBpevlFLr+R+MOyhI/HU30JnU7y9YACxFN1uOKVEKFcGgiPqSHRr
-         xeJ7BfqzWKuuKT9RLzDDg4KJ/QBv2bObQQ/riy5kWEdXkz85UnVunzyndG6CaciCPVNm
-         HKqXQLQ6XFdtisRC8G2YonZqfXzCmDYueKZSKa/iuo+cfgmKCmmiNZ0J0ylUk4QI61aK
-         LZVz+Y1dCXVKGUbaEmGv8P52rZRYHQ8K/WS1yM4pbUiLOT8Feg4s0EzulqrHViP/an2W
-         EF4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to;
-        bh=Dpx4rMVj1X+D0NNwlfHxGofQnQjrwUZPCrMak6rvZFA=;
-        b=MTB/iUNML0wpeG4nwmJoogiPhKqExz6jntpBMIjweG+7Ry8aOh3jiRu1UBC4MJ8++T
-         JAdbCXkh5MlunalVOldbCcNckWVRBW/oxqIYJBpdRajyFVwrNn8CeMulzlN0q67mukGn
-         GyEc0c5toxqHVmY0PTxRlTDu65M6BGiFTCqPXLa4usj/7icI77CYEfoCg7huS1yoRbRO
-         AdoM7Zy/BuV3lko8nEB57G6w8Pa8YkH35vb1UPgIJNjA7SrLN4C6PKipw/T7K1E7QR7t
-         XhCLs6b0hkkeGG/iGYQHPgW3h0gIvzSJ5APsIGqu1wnCbSYw+6lE0kYgyQn96IO6gp3o
-         s77Q==
-X-Gm-Message-State: AD7BkJLTYZzYDHcrYVOZ61DDZ1yqH6P1AdZpevW4ojqvUtAXF/3jyV7XkGHOOo8rqXPh1TLQGZv953hr7taIzw==
+x-ms-reactions: disallow
+Received: (qmail 24121 invoked from network); 5 Feb 2025 08:21:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1738743695; bh=yLSHaEHys866sMerSwgZ0VAZl9K3tPNZuQpwE2VLZwg=;
+	h=Date:From:To:Subject:From;
+	b=gb83N0PzmTHQruvmFjcOyKKorrVeFaf8EIPFzO+9PNkQHFrvF5egWMdnTTcm79tMi
+	 gqY/9YRXQbNE+9gow/i5a318OTJlzu3UyLNiGq1f2CEBF9n7i2SZpBthC1p0ZlveoX
+	 0+66q0rwHdsaEeLhlytP3/+CSPZnV8FWY3DjPdQ4s6EQlLBLFkqwH0ByUBBbZUEb1y
+	 tJT5fItuRwQ6O2WIgN6UnIM1ICzw1TY3sXSFq0o6Wy5hSiKFLVgCT3AV/uNfD5+qav
+	 09qePgBEDeKJixaderD8lcw0hpg6mr1CxnbKdWDDYNbWaMBTfzh1OQ/dSqs6MbNtAf
+	 bRs0CLCbVyCww==
+Date: Wed, 5 Feb 2025 09:21:35 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <136r5447-qs76-r869-0o1n-5188nr17961s@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-X-Received: by 10.50.65.1 with SMTP id t1mr8861930igs.34.1457291523771; Sun,
- 06 Mar 2016 11:12:03 -0800 (PST)
-Sender: eladalfassa@gmail.com
-Date: Sun, 6 Mar 2016 21:12:03 +0200
-X-Google-Sender-Auth: YqrH5IxdhVYD5wPFktmKYtDrTx0
-Message-ID: <CAN0s7yS36t6L-xuwAqXH493TsmcQT5rb2LJ-Z3FYA8AsFE_+sw@mail.gmail.com>
-From: Elad Alfassa <elad@fedoraproject.org>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] Transmission BT 2.90 Mac malware. Website compromised?
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2025-0167: netrc and default credential
+ leak
 
-Hello oss-security.
+netrc and default credential leak
+==================================
 
-According to these three links,
-https://www.reddit.com/r/netsec/comments/498bb7/transmissionbt_290_for_osx_contains_malware/
-http://www.cnbc.com/2016/03/06/reuters-america-apple-users-targeted-in-first-known-mac-ransomware-campaign.html
-https://forum.transmissionbt.com/viewtopic.php?f=4&t=17834
+Project curl Security Advisory, February 5th 2025 -
+[Permalink](https://curl.se/docs/CVE-2025-0167.html)
 
-and the project homepage https://www.transmissionbt.com/
+VULNERABILITY
+-------------
 
-The mac build of version 2.90 of the popular Transmission bittorent
-client was infected by malware. However, there's not much information
-about the source of the actual malware:
+When asked to use a `.netrc` file for credentials **and** to follow HTTP
+redirects, curl could leak the password used for the first host to the
+followed-to host under certain circumstances.
 
-* How did it get to the official download location? Was it a
-compromised server or someone with access abusing it to distribute
-malware? What steps did the transmission project take to ensure that
-the attacker no longer has access to their server? When were the
-infected files uploaded to the server? And, most importantly, are
-builds for other platforms and source code archive download affected
-in any way?
+This flaw only manifests itself if the netrc file has a `default` entry that
+omits both login and password. A rare circumstance.
 
-Transmission is included in many Linux distributions (default in some
-of them). If the source code archives (which are not signed, there's
-only a checksum on their website, but if it was compromised then it's
-not exactly useful) used by these distributions to build Transmission
-were tampered with as well this might mean malicious code is already
-inside the Transmission packages in these distributions. While the
-malware mentioned in the link above is Mac specific, it is still
-possible that other downloads have been infected by different types of
-malware.
+INFO
+----
 
-Since I couldn't find any security related email address or mailing
-list for the transmission project specifically, I'm sending this to
-oss-security in hopes that relevant people will see this and will shed
-more light on this story.
+A curl transfer with `nn.tld` that redirects to `zz.tld`, using a `.netrc`
+file with an *empty* `default` entry like below, would make curl pass on
+`maryspassword` as password even in the transfer to the second and separate
+host `zz.tld`.
+
+~~~
+machine nn.tld
+   login mary
+   password maryspassword
+
+default
+~~~
+
+This bug is **not** considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
+
+This flaw also affects the curl command line tool.
+
+This flaw is similar, but not identical, to
+[CVE-2024-11053](https://curl.se/docs/CVE-2024-11053.html).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-0167 to this issue.
+
+CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.76.0 to and including 8.11.1
+- Not affected versions: curl < 7.76.0 and >= 8.12.0
+- Introduced-in: https://github.com/curl/curl/commit/46620b97431e19c53ce82e5
+
+libcurl is used by many applications, but not always advertised as such!
+
+SOLUTION
+------------
+
+- Fixed-in: https://github.com/curl/curl/commit/0e120c5b925e8ca75d5319e
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 8.12.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Avoid using netrc together with redirects
+
+TIMELINE
+---------
+
+This issue was reported to the curl project on December 30, 2024. We contacted
+distros@openwall on January 28, 2025.
+
+curl 8.12.0 was released on February 5 2025 around 08:00 UTC, coordinated with
+the publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Yihang Zhou
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
 
 -- 
--Elad.
+
+  / daniel.haxx.se
