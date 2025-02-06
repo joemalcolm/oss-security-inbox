@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["673" "Monday" "12" "August" "2019" "14:05:38" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD-q2un4oTy--0CiqQfcmjmw2aAbUwnk=0mHQCvn=o7jLQ@mail.gmail.com>" "21" "[oss-security] gnu/linux rediscovers macro malware" nil nil nil "8" "2019081211:05:38" "[oss-security] gnu/linux rediscovers macro malware" (number mark "U       gguninski@gm Aug 12   21/673   " thread-indent "\"[oss-security] gnu/linux rediscovers macro malware\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] gnu/linux rediscovers macro malware" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17756 invoked by uid 550); 12 Aug 2019 11:43:12 -0000
+Received: (qmail 30336 invoked by uid 550); 6 Feb 2025 21:37:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26185 invoked from network); 12 Aug 2019 11:06:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=sAt/uTJttnyzE5ehH8PA2Oz0e1TJrRNXb/JPDQ8/Fpg=;
-        b=t/QVh223mjnD6lSW2kLmNG67pDXz4bMDiU63K1XH7HWg8JF4vOekbLKbuWMIrzH6OE
-         +GL61EoD+zhO/gjSpulPPM0RGG3RiagLc3Tp6cLobQWezsITbxe1H06K8gp7XCxAh0RS
-         4uDgLCPmuNZbOUNBYt9OF/ilKgPVqbq+OCMzsQQFcSmy5uelOElH17/l/b4+P3CUVLFJ
-         ulppSIzBZYzJGLTlzJOLOjRbKAzhwhEaqx5hilbaNZfJHUWbBpu1TI1uKNJ1rjNffsaU
-         H29ql6PshJlq92yH56BF/zlXKBwfXJ0LMx4enJeC/H/TuLxaszfE7baIN+unr4t8I2ho
-         8xaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=sAt/uTJttnyzE5ehH8PA2Oz0e1TJrRNXb/JPDQ8/Fpg=;
-        b=DB07JofK/sU8rjgqpA8wmflne9EyWG3PTPGCnfAbADqUYthYT2lI+eJOXL7MLZtJKZ
-         8Eb05WhoyTR4gbh99s9WKcsTtyh2IPbB+WJVZI3C1xcvexsd6SN21yF+zPn5AeVdHZt/
-         w6QrRoqRL/GDyK49HLw7WuUmRt7j8rBWycFHcH0PCXSp4jhDXKYPmI0x2q+EEhwPYnz0
-         kZWSfM4YxJNl1BzDNhZJVsEt9XnDVFuCB1+pY4SR2ZhK0GNpTaG0u350mOGR4Tz+R8Xm
-         rRJE2eGV/vu4geTAXU3dMiK4X5GdA29euFonUTDlA0T9nbexI7m90QljNOR/s8W3fsAV
-         DzTQ==
-X-Gm-Message-State: APjAAAUilWiO50uwaHCLxe2tthrrldTfOyaAC0jEgAUBXmDY4O4AeYsy
-	x1zE9+CLigfMiV5DQtUy5lzl/srgAskM58LQVs2h/ILX
-X-Google-Smtp-Source: APXvYqyNQB4iSrjFWivtSxqxa5tXRqHdBMvzcPDnIFfkwaRSwa1vfj29YOfe0htHCbDVU4TCrrfdXiUi18oCcg/z8Sk=
-X-Received: by 2002:a5d:9448:: with SMTP id x8mr36685747ior.102.1565607950156;
- Mon, 12 Aug 2019 04:05:50 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 30060 invoked from network); 6 Feb 2025 21:28:34 -0000
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 1.3.0 at rivendell.linuxfromscratch.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfromscratch.org;
+	s=cert4; t=1738877305;
+	bh=h3qifux00cG+FxTdaD69rX0F6bH09xWwEwy0nocCwcI=;
+	h=Date:Subject:To:References:From:In-Reply-To;
+	b=a1Dpl0wDnTylDBzmdCYkf3+gMblCrvi79ph3Tvwe345sS3lQ+DCtrLKvslBkaubTP
+	 1478P8skODmv/Lqd4Sjt5f/dy3g1aZysgcUIdm+gAMLgo5tv30s1im3k8SNNvOLUbr
+	 63r/JE+BIPerRJhAUFefQDiQZuEg94QoJ2Bz0dp9oSn+Q0oH3ncNOiVIMiPaCPLGr2
+	 RFI9Apt9A/U9LcvoLKyiI8UR7LbO/ep88rZGqQFNkZHAGZBDrHzdW3dRozxJo6GUee
+	 PNHPCl6YyYAf1wKQk1QnO7cw+TLcvW39DxycLN48OH3oEl1ecpM/M7RNt76/2FBwca
+	 cqdyqkD8rj7gg==
+Message-ID: <0ffab6a0-3e06-4722-89bb-531cc84e44ff@linuxfromscratch.org>
+Date: Thu, 6 Feb 2025 15:28:48 -0600
 MIME-Version: 1.0
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Mon, 12 Aug 2019 14:05:38 +0300
-Message-ID: <CAGUWgD-q2un4oTy--0CiqQfcmjmw2aAbUwnk=0mHQCvn=o7jLQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000ba0973058fe98199"
-Subject: [oss-security] gnu/linux rediscovers macro malware
-
---000000000000ba0973058fe98199
-Content-Type: text/plain; charset="UTF-8"
-
-https://j.ludost.net/blog/archives/2019/08/12/gnulinux_rediscovers_macro_malware/index.html
-
-gnu/linux rediscovers macro malware
-
-vim worm 2003:https://securiteam.com/unixfocus/5rp0l0a8us/
-
-libreoffice macro bug July
-2019:https://www.theregister.co.uk/2019/07/30/libreoffice_macro_vulnerability/
-
-expect problems with digitally signed vulnerable mobile code
-like .jar or when linux includes ActiveX in the kernel
-with signed ActiveX (2002):http://www.guninski.com/signedactivex2.html
+References: <Z6TNVqmdQvyPUnFY@kasco.suse.de>
+Content-Language: en-US
+From: "Douglas R. Reno" <renodr@linuxfromscratch.org>
+In-Reply-To: <Z6TNVqmdQvyPUnFY@kasco.suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] pam_pkcs11: Possible Authentication Bypass in Error Situations
+ (CVE-2025-24531)
 
 
-we believe gnu/linux will lose the malware war like m$ did
-since last century.
+On 2/6/25 8:55 AM, Matthias Gerstner wrote:
+> 4) Affected Distributions and Configurations
+> ============================================
+>
+> The issue was introduced in pam_pkcs11 version 0.6.12, released in July
+> 2021. Any PAM stack that relies on pam_pkcs11 as the only
+> authentication factor will be affected by the issue.
+>
+> On openSUSE Tumbleweed the issue became apparent only due to the
+> mentioned changes in GDM [7], which cause YubiKeys to be treated as
+> smart cards in some situations. We believe plugging in any kind of
+> mismatching smart card (or YubiKey) on openSUSE Tumbleweed with GDM as a
+> display manager will allow to bypass login.
+>
+> Similar situations could occur on other Linux distributions if GDM smart
+> card login is enabled and smart cards are autodetected. Even then, an
+> affected "gdm-smartcard" PAM stack still needs to be in place for the
+> issue to trigger. gdm-smartcard PAM stacks relying on pam_pkcs11 are
+> found in the GDM repository for:
+>
+> - Arch Linux [22]
+> - Exherbo Linux [23]
+> - Linux from Scratch [24]
 
---000000000000ba0973058fe98199--
+Hello Matthias!
+
+I wanted to chime in here on behalf of my official capacity at Linux 
+ From Scratch. We don't carry the pam_pkcs11 module, so I don't think 
+our users are affected by this particular vulnerability either.
+
+Douglas Reno
+Linux From Scratch
+
