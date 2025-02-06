@@ -1,4 +1,4 @@
-Received: (qmail 1890 invoked by uid 550); 27 Mar 2024 23:25:14 -0000
+Received: (qmail 13917 invoked by uid 550); 7 Feb 2025 00:34:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1511 invoked from network); 27 Mar 2024 23:24:53 -0000
-Date: Thu, 28 Mar 2024 00:29:35 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Karel Zak <kzak@redhat.com>,
-	"Skyler Ferrante (RIT Student)" <sjf5462@rit.edu>
-Message-ID: <20240327232935.GA17111@openwall.com>
-References: <CAEOG19rkUU8Pam5N67xyE9upepp_MahcnY48nek-VBAwo_NyAg@mail.gmail.com> <20240327213041.qyr7sglmxgdmtcb4@jwilk.net> <ZgSlAmss1tT8M2vZ@itl-email>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZgSlAmss1tT8M2vZ@itl-email>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in util-linux wall
+x-ms-reactions: disallow
+Received: (qmail 2032 invoked from network); 6 Feb 2025 23:04:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738883076; x=1739487876; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hFEhj39b4l7Ri0zpQ/g3jH0aFcMFGxFsIvfyAk4wHPI=;
+        b=i8CS82skxzFkLSmKpGWqUiEekkeMyg6bR9bamNrV5Fjye/QJNozf4f+/ImRqZsUncn
+         H445pco+erZzV9t3KrhEm9wbYM1qXnCFv9QDYjCW0N9dx2B8HjKKeJbZ2DyG5s/n4VWd
+         oPztbMLm+G9aqgNCWXFYiXAcp6LNYvmwcXf4yLXjZC/ZCS06dc9ld7/gmhZtVz2DXts1
+         4CsXLi+jHkf1VKtDSytStAJaPZGPRuYBHR4tKJxrtZYivVIyNB7Go4q7ZgsvShvmtg4G
+         G3VUYS9L5npIrC7KVwETv1AG5jdsx6PllYg4ZTZEaQ2r5baUq6eJaxi+FAST4qvuf/zV
+         FR9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738883076; x=1739487876;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hFEhj39b4l7Ri0zpQ/g3jH0aFcMFGxFsIvfyAk4wHPI=;
+        b=TvZn1PMZUVIvlPflzPeK1Azu6lxzmFBlAB83EgpbYf8Xk2LULybTygwxlZr62atxzA
+         8IX+bD2XTAJV4/Jf1qEkUmm2CQkaajUcCqU95a8o0LHRRFtghkEAPo64zl8HAAxQqnDn
+         aNgJTUwUbAT2A8ZD+/Q1IaODxt7R8tNGRTPLirKGyK/SzNFfMX3HpTo+PFI1PTk3clJL
+         jTBX8IFxRr8J9Wfq7s+5q8GazuTDMUsLESAH3wWLQ/FVeflOaK/el5rpWdf7ntHlIktH
+         KLINl5tFFz439FDzZsaHIkxP+cjgFUKYBY5ifciGlK2A6LDAwVyweemM8faGkBavkv9b
+         CLqQ==
+X-Gm-Message-State: AOJu0YwyCwUMaax0uix6XoJwfzeq/5jHolDebZqxKNDLyWIlKKztq6Pd
+	YL87Tw3O1c3VDv6x3e6SwpHBbl0ALCSBC1UX98IMzGqevnoDeNZ7gZ3iF9bbBH30x8o1+9LVrqa
+	jPQrnY4qcRGd8muIMxJHNhMVlsazKhFnS
+X-Gm-Gg: ASbGnct0/8fqSpz/X5puQOQ1wd9iIos/OvJk8X+z8qcVQ47AaGUg4JGvIn3OE+lGe+N
+	9wKVkKhNYQv+TywEHGNToLMHnsmPmBzmS7q4EtPRU8sTqakVJRFh6+RyjKD273v9OJTWO+9605k
+	+Wo/9f5A/EYp3/wqv+6Naac3XfeCY=
+X-Google-Smtp-Source: AGHT+IEHDkAMYKLNntSnxZAAaiMKYtDwBm6pfnnb5lkFhl7238cBWbQUeBODeS+zYBmEbn+cHjpkFAY7mJJyOrOUgFM=
+X-Received: by 2002:a05:6402:1ec5:b0:5dc:545:40a7 with SMTP id
+ 4fb4d7f45d1cf-5de45005b92mr1526767a12.12.1738883076176; Thu, 06 Feb 2025
+ 15:04:36 -0800 (PST)
+MIME-Version: 1.0
+References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email>
+ <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net> <20250204101028.GA20864@openwall.com>
+ <32e961ce-1088-4e21-803a-3539a0ceaa3a@gmail.com>
+In-Reply-To: <32e961ce-1088-4e21-803a-3539a0ceaa3a@gmail.com>
+From: trinity pointard <trinity.pointard@gmail.com>
+Date: Fri, 7 Feb 2025 00:04:00 +0100
+X-Gm-Features: AWEUYZlbKS67Br5lYKVcxPMJSnqK-0A-nNNT0DE8DxvOxigh6hBi8cfoNDfxvCU
+Message-ID: <CANiTRwf0+j7AZGfURup2PqE-QG2WiWmKnmc0d8N8G7MAASPhiA@mail.gmail.com>
+To: oss-security@lists.openwall.com, "jcb62281@gmail.com" <jcb62281@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
 
-Hi,
+> If an attacker is able to control the hypervisor (necessary to load
+> rogue microcode) and the processor microcode, how can the VM trust that
+> it is actually verifying that attestation and not being sent down a "oh
+> yes it is exactly what you want it to be" garden path?
 
-CC's added for upstream and reporter of the original issue, neither of
-whom appears subscribed.
-
-On Wed, Mar 27, 2024 at 07:00:02PM -0400, Demi Marie Obenour wrote:
-> On Wed, Mar 27, 2024 at 10:30:41PM +0100, Jakub Wilk wrote:
-> > While looking through upstream git for a fix for this??, I stumbled upon
-> > another write(1)/wall(1) control character injection vulnerability,
-> > introduced last year in util-linux v2.39.
-> > 
-> > The offending commits are:
-> > 
-> > * https://github.com/util-linux/util-linux/commit/8a7b8456d1dc0e7c
-> >   ("write: correctly handle wide characters")
-> > * https://github.com/util-linux/util-linux/commit/aa13246a1bf1be9e
-> >   ("wall: use fputs_careful()")
-> > 
-> > The added comment says:
-> > 
-> > > The locale of the recipient is nominally unknown,
-> > > but it's a solid bet that the encoding is compatible with the author's.
-> > 
-> > Alas the bet is not that solid when writer's locale encoding is controlled
-> > by an attacker.
-> > 
-> > We can exploit this against terminal emulators that recognize C1 control
-> > characters, such as Linux VTs or screen(1):
-> > 
-> >    $ printf '\302\23331mMOO\302\2330m\n' | LC_ALL=kk_KZ wall
-> > 
-> > I don't see any good way to fix this on the util-linux's side. It should be
-> > fixed on the terminal emulators' side by disabling C1 support.
-> > 
-> > 
-> > ?? https://github.com/util-linux/util-linux/commit/404b0781f52f7c04
-> >   ("wall: fix escape sequence Injection [CVE-2024-28085]")
-> 
-> Would enforcing UTF-8 validity (regardless of user locale) be a
-> solution?
-
-Not a complete solution.  I'm currently not aware of a safe way to allow
-multi-byte characters coming from concurrent writers, see:
-
-https://www.openwall.com/lists/oss-security/2015/09/20/1
-
-and the next message in that thread.
-
-In fact, even plain ASCII isn't entirely safe if it just happens to be
-injected into the middle of a control sequence that the target user's
-program was printing, thereby altering its effect.
-
-That said, perhaps write(1)/wall(1) just shouldn't allow bytes from both
-C0 and C1 ranges (except for TAB, LF, space) regardless of locale
-settings, at least when the programs are running SUID/SGID.  That is,
-unless the invoking user - which in this case is likely root - could
-have directly written to the target user's tty anyway.  In other words,
-mostly revert those offending commits.  Or just revert them completely.
-
-Alexander
+Attestations are cryptographically signed by the cpu, and meant to be sent
+elsewhere and verified remotely. The key used to sign (VCEK) are dependent on
+the microcode version, so it shouldn't be possible to forge new-looking
+signature with old microcodes (i would hope this hold would someone be able to
+decrypt a microcode, though i couldn't find information on that subject).
