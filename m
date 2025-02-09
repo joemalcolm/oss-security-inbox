@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4048" "Tuesday" "15" "December" "2015" "18:10:13" "-0500" "Michael McNally" "mcnally@isc.org" "<56709DD5.8010609@isc.org>" "110" "[oss-security] CVE-2015-8461: A race condition when handling socket errors can lead to an assertion failure in resolver.c" "^Date:" nil nil "12" "2015121523:10:13" "[oss-security] CVE-2015-8461: A race condition when handling socket errors can lead to an assertion failure in resolver.c" (number mark "U       mcnally@isc. Dec 15  110/4048  " thread-indent "\"[oss-security] CVE-2015-8461: A race condition when handling socket errors can lead to an assertion failure in resolver.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1612 invoked by uid 550); 15 Dec 2015 23:10:40 -0000
+Received: (qmail 11331 invoked by uid 550); 9 Feb 2025 18:02:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,127 +6,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32424 invoked from network); 15 Dec 2015 23:10:30 -0000
-Message-ID: <56709DD5.8010609@isc.org>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
- Gecko/20100101 Thunderbird/38.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Tue, 15 Dec 2015 18:10:13 -0500
-From: Michael McNally <mcnally@isc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-8461: A race condition when handling socket errors can lead
- to an assertion failure in resolver.c
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 22447 invoked from network); 9 Feb 2025 11:48:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=m3J4YMaEYGzXQRiXdKyAAOKAKFGA3F/SXR9UML0K2H0=; b=We/v8FTovSyB5irpHrdMXdszL3
+	Li7dp0uyAtzeWlQiVDC6ZeEoQsb4jlKk3zEAy/tI044hiWGtYnPu3TJ9DzPQywvcIV3dsRbZ+lzMw
+	0GTI4u6zX8N3yMC5wOK4FrnNnhiCrVjBwR27Cqin/NLMNV/LwGiavGFpGUN5EQ/aAcq1DeFXwb7eS
+	5hqG3jtiK16/LmAk4AjKTioNh+NW0fS6my6ANW/vxjO/HAVeAXilGOei9nxTS8e4WwVSCql3ariYZ
+	+FWdwREX/Zq+XApXmc5ff8Gt6QgWYRgjaKUrRYp6gZxAFmv+I0xeidQgihhjSlmLRKocpt+l89DKN
+	QqJHvyag==;
+Date: Sun, 9 Feb 2025 13:48:39 +0200
+Message-ID: <20250209134839.GF813931@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="2IkFSnN+IsUD6MJc"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0001
 
-CVE:                CVE-2015-8461
-Document Version:   2.0
-Posting date:       15 December 2015
-Program Impacted:   BIND
-Versions affected:  9.9.8 -> 9.9.8-P1, 9.9.8-S1 -> 9.9.8-S2, 9.10.3 ->
-9.10.3-P1
-Severity:           Medium
-Exploitable:        Remotely
+--2IkFSnN+IsUD6MJc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-Description:
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwMQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogRmVicnVhcnkgMDksIDIwMjUKQWR2aXNvcnkgSUQgICAgICAgICAg
+ICAgOiBXU0EtMjAyNS0wMDAxCldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
+aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMDEuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
+IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDAxLmh0bWwK
+Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC0yNzg1NiwgQ1ZFLTIwMjQtNTQ1NDMs
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjQtNTQ2NTgsIENWRS0yMDI1LTI0MTQz
+LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTI0MTUwLCBDVkUtMjAyNS0yNDE1
+OCwKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS0yNDE2Mi4KClNldmVyYWwgdnVs
+bmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQu
+CgpDVkUtMjAyNC0yNzg1NgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBiZWZvcmUgMi40Ni4wLgogICAgQ3JlZGl0IHRvIE1ha3N5bWlsaWFuIE1vdHlsIG9m
+IEltbXVuaXR5IFN5c3RlbXMsIEp1bnN1bmcgTGVlIHdvcmtpbmcgd2l0aAogICAgVHJlbmQgTWlj
+cm8gWmVybyBEYXkgSW5pdGlhdGl2ZSwgYW5kIGFqYWpmeGhqLgogICAgSW1wYWN0OiBQcm9jZXNz
+aW5nIGEgZmlsZSBtYXkgbGVhZCB0byB1bmV4cGVjdGVkIGFwcCB0ZXJtaW5hdGlvbiBvcgogICAg
+YXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRy
+ZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgY2hlY2tzLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjg3
+NjUKCkNWRS0yMDI0LTU0NTQzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBX
+UEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjUuCiAgICBDcmVkaXQgdG8gTHVrYXMgQmVybmhhcmQsIEdh
+cnkgS3dvbmcsIGFuZCBhbiBhbm9ueW1vdXMgcmVzZWFyY2hlci4KICAgIEltcGFjdDogUHJvY2Vz
+c2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvCiAgICBtZW1v
+cnkgY29ycnVwdGlvbi4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgK
+ICAgIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjgyNDUw
+CgpDVkUtMjAyNC01NDY1OAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBiZWZvcmUgMi40NC4wLgogICAgQ3JlZGl0IHRvIGFuYnUxMDI0IG9mIFNlY0FOVC4K
+ICAgIEltcGFjdDogUHJvY2Vzc2luZyB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhIGRlbmlhbC1v
+Zi1zZXJ2aWNlLgogICAgRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgg
+aW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjM3NTgKCkNW
+RS0yMDI1LTI0MTQzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
+S2l0IGJlZm9yZSAyLjQ2LjYuCiAgICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2VhcmNoZXIu
+CiAgICBJbXBhY3Q6IEEgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWJwYWdlIG1heSBiZSBhYmxlIHRv
+IGZpbmdlcnByaW50IHRoZQogICAgdXNlci4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRk
+cmVzc2VkIHdpdGggaW1wcm92ZWQgYWNjZXNzCiAgICByZXN0cmljdGlvbnMgdG8gdGhlIGZpbGUg
+c3lzdGVtLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyODMxMTcKCkNWRS0yMDI1LTI0MTUwCiAgICBW
+ZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjYu
+CiAgICBDcmVkaXQgdG8gSm9oYW4gQ2FybHNzb24gKGpvYXhjYXIpLgogICAgSW1wYWN0OiBDb3B5
+aW5nIGEgVVJMIGZyb20gV2ViIEluc3BlY3RvciBtYXkgbGVhZCB0byBjb21tYW5kCiAgICBpbmpl
+Y3Rpb24uIERlc2NyaXB0aW9uOiBBIHByaXZhY3kgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGlt
+cHJvdmVkCiAgICBoYW5kbGluZyBvZiBmaWxlcy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjgzNzE4
+CgpDVkUtMjAyNS0yNDE1OAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCBiZWZvcmUgMi40Ni42LgogICAgQ3JlZGl0IHRvIFExSVEgKEBxMWlxRikgb2YgTlVT
+IEN1cmlPU2l0eSBhbmQgUDF1bWVyIChAcDF1bWVyKSBvZiBJbXBlcmlhbAogICAgR2xvYmFsIFNp
+bmdhcG9yZS4KICAgIEltcGFjdDogUHJvY2Vzc2luZyB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBh
+IGRlbmlhbC1vZi1zZXJ2aWNlLgogICAgRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVz
+c2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAy
+ODM4ODkKCkNWRS0yMDI1LTI0MTYyCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFu
+ZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjYuCiAgICBDcmVkaXQgdG8gbGluankgb2YgSEtVUzNM
+YWIgYW5kIGNobHVvIG9mIFdIVVNlY0xhYi4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lv
+dXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHBy
+b2Nlc3MgY3Jhc2guIERlc2NyaXB0aW9uOiBUaGlzIGlzc3VlIHdhcyBhZGRyZXNzZWQKICAgIHRo
+cm91Z2ggaW1wcm92ZWQgc3RhdGUgbWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTogMjg0
+MTU5CgpXZSByZWNvbW1lbmQgdXBkYXRpbmcgdG8gdGhlIGxhdGVzdCBzdGFibGUgdmVyc2lvbnMg
+b2YgV2ViS2l0R1RLIGFuZCBXUEUKV2ViS2l0LiBJdCBpcyB0aGUgYmVzdCB3YXkgdG8gZW5zdXJl
+IHRoYXQgeW91IGFyZSBydW5uaW5nIHNhZmUgdmVyc2lvbnMKb2YgV2ViS2l0LiBQbGVhc2UgY2hl
+Y2sgb3VyIHdlYnNpdGVzIGZvciBpbmZvcm1hdGlvbiBhYm91dCB0aGUgbGF0ZXN0CnN0YWJsZSBy
+ZWxlYXNlcy4KCkZ1cnRoZXIgaW5mb3JtYXRpb24gYWJvdXQgV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
+S2l0IHNlY3VyaXR5IGFkdmlzb3JpZXMKY2FuIGJlIGZvdW5kIGF0OiBodHRwczovL3dlYmtpdGd0
+ay5vcmcvc2VjdXJpdHkuaHRtbCBvcgpodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkuCgpU
+aGUgV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IHRlYW0sCg==
 
-   Beginning with the September 2015 maintenance releases 9.9.8 and
-   9.10.3, an error was introduced into BIND 9 which can cause a
-   server to exit after encountering an INSIST assertion failure
-   in resolver.c
+--2IkFSnN+IsUD6MJc
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Impact:
+-----BEGIN PGP SIGNATURE-----
 
-   An uncommonly occurring condition can cause affected servers to
-   exit with an INSIST failure depending on the outcome of a race
-   condition in resolver.c  While difficult to exploit reliably, a
-   malicious party could, through deliberate behavior, significantly
-   increase the probability of encountering the triggering condition,
-   resulting in denial-of-service to clients if successful.
+iFwEABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZ6iWFwAKCRCRxVnb5MkS
+Ow3oAJUSyojDw5PKZyrTbnuNqsG0CimpAJ99/qZlPL4L7QvokmHBQ0eThiDY+A==
+=C6mO
+-----END PGP SIGNATURE-----
 
-CVSS Score:         5.4
-CVSS Vector:        (AV:N/AC:H/Au:N/C:N/I:N/A:C)
-
-For more information on the Common Vulnerability Scoring System and
-to obtain your specific environmental score please visit:
-https://nvd.nist.gov/cvss.cfm?calculator&version=2&vector=(AV:N/AC:H/Au:N/C:N/I:N/A:C)
-
-Workarounds:        None.
-Active exploits:    None known.
-
-Solution:
-
-   Upgrade to the patched release most closely related to your
-   current version of BIND. Public open-source branches can be
-   downloaded from http://www.isc.org/downloads.
-
-     BIND 9 version 9.9.8-P2
-     BIND 9 version 9.10.3-P2
-
-   BIND 9 Supported Preview edition is a feature preview version
-   of BIND provided exclusively to eligible ISC Support customers.
-
-     BIND 9 version 9.9.8-S3
-
-Acknowledgements:
-
-   ISC would like to thank John O'Brien of the University of
-   Pennsylvania for discovering this issue.
-
-Document Revision History:
-
-   1.0 Advance Notification 8 December 2015
-   2.0 Public Disclosure, 15 December 2015
-
-Related Documents:
-
-   See our BIND9 Security Vulnerability Matrix at
-   https://kb.isc.org/article/AA-00913 for a complete listing of
-   Security Vulnerabilities and versions affected.
-
-If you'd like more information on ISC Subscription Support and
-Advance Security Notifications, please visit http://www.isc.org/support/.
-
-Do you still have questions?  Questions regarding this advisory
-should go to security-officer@isc.org.  To report a new issue,
-please encrypt your message using security-officer@isc.org's PGP
-key which can be found here:
-   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
-If you are unable to use encrypted email, you may also report new
-issues at: https://www.isc.org/community/report-bug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected.  (For current information on
-   which versions are actively supported, please see
-   http://www.isc.org/downloads/).
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here: https://kb.isc.org/article/AA-00861
-
-This Knowledge Base article https://kb.isc.org/article/AA-01319 is
-the complete and official security advisory document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time.  A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
-
-
-(c) 2001-2015 Internet Systems Consortium
-
+--2IkFSnN+IsUD6MJc--
