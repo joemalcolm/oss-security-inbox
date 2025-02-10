@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5088" "Thursday" "28" "July" "2016" "13:34:27" "+0200" "Andreas Stieger" "astieger@suse.com" "<02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>" "111" "[oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases" "^Cc:" nil nil "7" "2016072811:34:27" "[oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases" (number mark "U       astieger@sus Jul 28  111/5088  " thread-indent "\"[oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31924 invoked by uid 550); 28 Jul 2016 11:35:00 -0000
+Received: (qmail 10084 invoked by uid 550); 11 Feb 2025 14:16:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,129 +6,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31906 invoked from network); 28 Jul 2016 11:35:00 -0000
-Organization: SUSE Linux GmbH
-Message-ID: <02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Cc: cve-assign@mitre.org
-Date: Thu, 28 Jul 2016 13:34:27 +0200
-From: Andreas Stieger <astieger@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 19690 invoked from network); 10 Feb 2025 23:17:35 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AOJu0YxsEnqRzjbGoEhWpfKtA+wsPdS7Z00rKJ8KYHt0mWutLULr74qU
+	pEiqGJt8dVLONJAuxvbYgKMKpT/5v4BgszJXoNJz8EEt9OCdGFPvzRnIFLru6FTCuBc+e6BhnDs
+	whUjPoAlAL6Zg4ZH7bWfv+Qp+yYM=
+X-Google-Smtp-Source: AGHT+IGccK7agMsJy1xrAZgHfI6VMM4awdNy7nbgTu6YxLq8wYORnOZpbeI1mEYUrWplcSy3Qel0dK2M/VUpPQQGgJM=
+X-Received: by 2002:a05:6602:6a46:b0:844:cbd0:66ca with SMTP id
+ ca18e2360f4ac-854fd8801e8mr1409559139f.1.1739229420052; Mon, 10 Feb 2025
+ 15:17:00 -0800 (PST)
+MIME-Version: 1.0
+References: <c1f7a6bd-da0e-090b-df54-d6d309191239@apache.org>
+In-Reply-To: <c1f7a6bd-da0e-090b-df54-d6d309191239@apache.org>
+From: Paulo Motta <paulo@apache.org>
+Date: Mon, 10 Feb 2025 18:16:48 -0500
+X-Gmail-Original-Message-ID: <CAKaZCX4jroL_Hp++LC=nwf=o233mcRJi=Tvo5UvHkP1ALJZVrw@mail.gmail.com>
+X-Gm-Features: AWEUYZnjvP2ER3RnZ5uExJopi7U7mGA6o9crNtU5TMLKDyaazVcrYgHv8CF5low
+Message-ID: <CAKaZCX4jroL_Hp++LC=nwf=o233mcRJi=Tvo5UvHkP1ALJZVrw@mail.gmail.com>
+To: announce@apache.org, user@cassandra.apache.org, 
+	Cassandra DEV <dev@cassandra.apache.org>
+Cc: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Re: CVE-2025-23015: Apache Cassandra: User with MODIFY permission on
+ ALL KEYSPACES can escalate privileges to superuser via unsafe actions
 
-Hello
+A performance regression was detected in the security releases 3.0.31
+[1] and 3.11.18 [2]. Users affected by this vulnerability are
+recommended to upgrade to versions 3.0.32 and 3.11.19 instead.
 
-Wireshark 2.0.5 and 1.12.13 were announced to contain fixes of the usual
-dissector crash / endless loop read from wire or capture file type:
+Remaining versions are unaffected.
 
-https://www.wireshark.org/lists/wireshark-announce/201607/msg00001.html
+[1] - https://lists.apache.org/thread/yprngr9cmp9c43m1c56thv1v0v6y5ywq
+[2] - https://lists.apache.org/thread/hc9shwlm1kmxdxosbh3qo2xooqoo3sc6
 
-
-CORBA IDL dissector crash on 64-bit Windows (wnpa-sec-2016-39)
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5
-https://www.wireshark.org/security/wnpa-sec-2016-39.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12495
-
-NDS dissector crash (wnpa-sec-2016-40)
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 1.12.0 to 1.12.12, fixed in 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-40.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12576
-
-PacketBB dissector could divide by zero (wnpa-sec-2016-41)
-The PacketBB dissector could divide by zero. It may be possible to make
-Wireshark crash by injecting a malformed packet onto the wire or by
-convincing someone to read a malformed packet trace file. Affects 2.0.0
-to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-41.html
-\https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12577
-
-wnpa-sec-2016-42
-WSP infinite loop (wnpa-sec-2016-42)
-The WSP dissector could go into an infinite loop. It may be possible to
-make Wireshark consume excessive CPU resources by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to 1.12.12 , fixed in 2.0.5,
-1.12.13
-https://www.wireshark.org/security/wnpa-sec-2016-42.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12594
-
-MMSE infinite loop (wnpa-sec-2016-43)
-The MMSE dissector could go into an infinite loop. It may be possible to
-make Wireshark consume excessive CPU resources by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 1.12.0 to 1.12.12, fixed 1.12.13
-https://www.wireshark.org/security/wnpa-sec-2016-43.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12624
-
-RLC long loop (wnpa-sec-2016-44)
-The RLC dissector could go into a long loop. It may be possible to make
-Wireshark consume excessive CPU resources by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects  2.0.0 to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5,
-1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-44.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12624
-
-LDSS dissector crash (wnpa-sec-2016-45)
-The LDSS dissector could crash. It may be possible to make Wireshark
-crash by injecting a malformed packet onto the wire or by convincing
-someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
-1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-45.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12662
-
-RLC dissector crash (wnpa-sec-2016-46)
-The RLC dissector could crash. It may be possible to make Wireshark
-crash by injecting a malformed packet onto the wire or by convincing
-someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
-1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-46.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12664
-
-OpenFlow long loop (wnpa-sec-2016-47)
-The OpenFlow dissector (and possibly others) could go into a long loop.
-It may be possible to make Wireshark consume excessive CPU resources by
-injecting a malformed packet onto the wire or by convincing someone to
-read a malformed packet trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to
-1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-47.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12659
-
-MMSE, WAP, WBXML, and WSP infinite loop (wnpa-sec-2016-48)
-The MMSE, WAP, WBXML, and WSP dissectors could go into an infinite loop.
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5.
-https://www.wireshark.org/security/wnpa-sec-2016-48.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12661
-
-WBXML crash (wnpa-sec-2016-49)
-The WBXML dissector could crash. It may be possible to make Wireshark
-crash by injecting a malformed packet onto the wire or by convincing
-someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
-fixed in 2.0.5
-https://www.wireshark.org/security/wnpa-sec-2016-49.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12663
-
-
-Could CVE please be assigned?
-
-With kind regards,
-Andreas Stieger
-
---=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG N=C3=BCrnberg)
-
-
+On Mon, Feb 3, 2025 at 6:19=E2=80=AFPM Paulo Motta <paulo@apache.org> wrote:
+>
+> Severity: moderate
+>
+> Affected versions:
+>
+> - Apache Cassandra 3.0.0 through 3.0.30
+> - Apache Cassandra 3.1.0 through 3.11.17
+> - Apache Cassandra 4.0.0 through 4.0.15
+> - Apache Cassandra 4.1.0 through 4.1.7
+> - Apache Cassandra 5.0.0 through 5.0.2
+>
+> Description:
+>
+> Privilege Defined With Unsafe Actions vulnerability in Apache Cassandra. =
+An user with MODIFY permission ON ALL KEYSPACES can escalate privileges to =
+superuser within a targeted Cassandra cluster via unsafe actions to a syste=
+m resource. Operators granting data MODIFY permission on all keyspaces on a=
+ffected versions should review data access rules for potential breaches.
+>
+> This issue affects Apache Cassandra through 3.0.30, 3.11.17, 4.0.15, 4.1.=
+7, 5.0.2.
+>
+> Users are recommended to upgrade to versions 3.0.31, 3.11.18, 4.0.16, 4.1=
+.8, 5.0.3, which fixes the issue.
+>
+> This issue was reported by Adam Pond, Ali Mirheidari, Terry Thibault, and=
+ Will Brattain of Apple Services Engineering Security.
+>
+> References:
+>
+> https://cassandra.apache.org/
+> https://www.cve.org/CVERecord?id=3DCVE-2025-23015
+>
