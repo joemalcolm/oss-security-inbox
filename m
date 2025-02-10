@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["638" "Friday" "5" "February" "2016" "15:26:35" "+0100" "Daniel Fahlgren" "daniel@fahlgren.se" "<1454682395.12024.102.camel@fahlgren-laptop>" "21" "[oss-security] CVE Request uclibc-ng dns resolver issues" "^Cc:" nil nil "2" "2016020514:26:35" "[oss-security] CVE Request uclibc-ng dns resolver issues" (number mark "        daniel@fahlg Feb  5   21/638   " thread-indent "\"[oss-security] CVE Request uclibc-ng dns resolver issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5412 invoked by uid 550); 5 Feb 2016 14:27:41 -0000
+Received: (qmail 5260 invoked by uid 550); 10 Feb 2025 06:17:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +6,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5122 invoked from network); 5 Feb 2016 14:26:48 -0000
-Message-ID: <1454682395.12024.102.camel@fahlgren-laptop>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Cc: cve-assign@mitre.org
-Date: Fri, 05 Feb 2016 15:26:35 +0100
-From: Daniel Fahlgren <daniel@fahlgren.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request uclibc-ng dns resolver issues
+x-ms-reactions: disallow
+Received: (qmail 11744 invoked from network); 10 Feb 2025 05:52:48 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Carsten Ziegeler <cziegeler@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <015b75e0-4761-1cb4-0ff5-6d60fe54353c@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 10 Feb 2025 05:52:36 +0000
+MIME-Version: 1.0
+Subject: [oss-security] FELIX-6751: CVE-2025-25247: Apache Felix Webconsole: XSS in
+ services console 
 
-Hi,
+Severity: moderate
 
-Uclibc-ng 1.0.12 has been released which fixes some issues found in the
-dns resolver code.
+Affected versions:
 
-The first is a denial of service while parsing compressed items. An
-attacker can make the application end up in an infinit loop. Fixed by:
+- Apache Felix Webconsole Version 4.x through 4.9.8
+- Apache Felix Webconsole Version 5.x through 5.0.8
 
-http://repo.or.cz/uclibc-ng.git/commit/16719c1a7078421928e6d31dd1dec574825ef515
+Description:
 
-The other problem is that a crafted packet will make the parser
-terminate early. The buffer is never initialized and is later passed to
-strdup(). Fixed by:
+Improper Neutralization of Input During Web Page Generation ('Cross-site Sc=
+ripting') vulnerability in Apache Felix Webconsole.
 
-http://repo.or.cz/uclibc-ng.git/commit/bb01edff0377f2585ce304ecbadcb7b6cde372ac
+This issue affects Apache Felix Webconsole 4.x up to 4.9.8 and 5.x up to 5.=
+0.8.
 
-Can one or two CVEs be assigned for these issues?
+Users are recommended to upgrade to version 4.9.10 or 5.0.10 or higher, whi=
+ch fixes the issue.
 
-Best regards,
-Daniel Fahlgren
+Credit:
+
+Viktor Mares (me@viktormares.com) (finder)
+
+References:
+
+https://felix.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-25247
 
