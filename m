@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["965" "Wednesday" "5" "October" "2016" "13:12:19" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>" "24" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100520:12:19" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        taviso@googl Oct  5   24/965   " thread-indent "\"[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19584 invoked by uid 550); 5 Oct 2016 20:12:55 -0000
+Received: (qmail 20099 invoked by uid 550); 13 Feb 2025 23:48:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,123 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19566 invoked from network); 5 Oct 2016 20:12:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=ceHzYIW+FK8X8BE7OmFqHMjWvour3//uqDfKupvFgwk=;
-        b=aPVmJ6bNNiY54swuvtjKt1lz4AdkvzhjIhNwXmEqIEDta2Oohf1Tv9t/TAhLjVR3h/
-         nDuLG1kkhxXG/NtxB/EyMZMigOj1YTeEXDZEhUDnoK95xXrmXwAC8g1ZrkRvgOSxSKpL
-         qdE8lGcLwFfmQJFZnVizlevLnyPeu+DFurnn/60G0MtwzxqYKKo2ge37VJk2QZyXnPbV
-         K3BJckIcyairOGZBhZVSwwDcbfR7794dY6i9DyGyohbw2WSw92x/+dnq6YCujMYlxDJ7
-         ZI15ZrFCVDUC4ozlXcW/9S+silDFY8ZTZSzg5gHIRnVSEjWAX+i7Wl1rjYcAsVnoew6M
-         E9nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=ceHzYIW+FK8X8BE7OmFqHMjWvour3//uqDfKupvFgwk=;
-        b=KhWRTQaT5h3HHcvg9Lry0l9DfBXWZrdERImFVc3n61UrwLlmnBDmOI0iaKvF/v1ADO
-         wnqQZYDPUv8Lmrit7HVc29/L1TNuEmdfBHIbAvFDSyxaajnF75pMbehMDPSJvbZLaj7N
-         0yFvUvtJKaFHlNgjqoQr7+wijA45zPLu9xIzUPYaLPSWJ5avywQAmGuNWNNGr/GWcV50
-         3lswYtM9uIpSoLFVGPdmlF472WcvbNkk6y4VlYQm53QlLVtdrGqA1D5aR7MfCjDQGXlb
-         cAy4v5CkkXSiywCUjssHM2BNVKmQ1h2I7VmhDqBWC7CfzFhvYWsu6oTSkM/vourTqR8I
-         D14g==
-X-Gm-Message-State: AA6/9RlcyLeQbweKS907WlqBqF5QA44Sy7Q41e4AU90fjAoW4mWAcpetARbWUUevA7YZfSRT6ZwuMCm3T58iVBjp
-X-Received: by 10.176.1.207 with SMTP id 73mr7005418ual.41.1475698360803; Wed,
- 05 Oct 2016 13:12:40 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
-References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
-Message-ID: <CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 5 Oct 2016 13:12:19 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 13555 invoked from network); 13 Feb 2025 22:28:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739485720; x=1740090520; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iY/ckMNG3NG+IvQU5yxAT/as47oeiizE0KpkuYbwb24=;
+        b=jc5rrvC9A9eELTR1PZ2NiZwa4rIgwtXSRMhlXIoCuRCS40bhtNI1Y9uFcSgpWjXwR5
+         poyVtKW5e4hMPF6d7I9nUK+WWpzU2OPZ4zNHaZoM6/egiS7wk7+hnFLulWcOTYkAJ19n
+         yHhJ4urw6B3Eo5FxthmLyGgNnfgSIjf99x+KfApku+5u9qncC8Kc3aucJ4cwqq/+bTyR
+         +VZ5I0+fgYu/Qi2ab6esEKLsO0twAPal+D+oILiFNLWwnJYpipk4UKu397adliWmoY7U
+         I9YZGbF01n9fa9Uh+Gj0fOangRJfkiNCT4AUkx4H+uUIPmXTQ4K2GnG4o1vkiz9OCX8Q
+         /wqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739485720; x=1740090520;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iY/ckMNG3NG+IvQU5yxAT/as47oeiizE0KpkuYbwb24=;
+        b=dcgnC+Gjh8Tds/KFgOS2nK0EGjGmKaR+ECl9wqPRAC35vS08b7Fw4HacibRm289L34
+         RuJFcJ/KQYWwUNhbSLRosCEohanf8wbdsVQSI28CXpwSOR3G7v29GVDFv43tIt1bktxp
+         FvTZxEGkpRkelpRckJpx7v5+hW1UDdxbdXkc7vbUahSMWUKOs0vMTjQgvHh7RFsaf3kz
+         E1cT7yA1LXk7pj3yj0hG+uj3uznvKqkHpb0SZEOPXBSU4O1GkYy9lHZaUr/DhUOjXl6l
+         hv86D6/kf9RtkWA9dvQR0WjowP1A5cs0qALOCUx4wwuxhSHDrp7vyeLyW2nZdaPBTw5q
+         FHzA==
+X-Gm-Message-State: AOJu0YzKwS1kvDYEpPJmx04lmRAXaO1bLA9w1Q4KSevu2Xnsqhfgk4Y3
+	ahrvFkzBed+WK+yl20hTC168PFBSu8Xff6a+29FIhcfyv9W/lac9HerEcakUQ8OOFIgPZFXB+80
+	pNrw5UEWrdeUAdR8XS3VhlFBbNhwKqShF
+X-Gm-Gg: ASbGncs3hWUByiDb1ekV8rXuCCP7A1mcL75fmnUr8qgaGq0JLWfa5BBX5SRY/NcyYf/
+	nNlTZPyB075ojYel7rDXIAWacT+Vv3nm0ratz1dnNGmxS6qT3zS1srmz3QYUQAX/GM5J9QeRI
+X-Google-Smtp-Source: AGHT+IFjVGHf4fASDSSDz8/85rP3oqBhY2Tv0BqdhmZh4ARs6b1+/UPPfWhV/qpGyeL2kp+eaylR6YgNYxif1zO5IbE=
+X-Received: by 2002:a05:6512:2244:b0:545:11fa:caf0 with SMTP id
+ 2adb3069b0e04-5451dd84c15mr1772421e87.6.1739485719498; Thu, 13 Feb 2025
+ 14:28:39 -0800 (PST)
+MIME-Version: 1.0
+References: <20250213171546.GA3976@brightrain.aerifal.cx>
+In-Reply-To: <20250213171546.GA3976@brightrain.aerifal.cx>
+From: Daniel Gutson <danielgutson@gmail.com>
+Date: Thu, 13 Feb 2025 19:28:29 -0300
+X-Gm-Features: AWEUYZndLkNaE5MyHtM7dpFo8m3CM286f_WgL0_o1aMsiiN8ZestaTbAK1ZSQK4
+Message-ID: <CAFdMc-1uX4X1HNrR-hj0iGASCfRL6PfVdNsynOs4BdoS+QrGSw@mail.gmail.com>
+To: musl@lists.openwall.com
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000671add062e0d9497"
+Subject: [oss-security] Re: [musl] CVE-2025-26519: musl libc: input-controlled out-of-bounds
+ write primitive in iconv()
 
-On Wed, Oct 5, 2016 at 9:13 AM, Tavis Ormandy <taviso@google.com> wrote:
-> bug: type confusion in .initialize_dsc_parser allows remote code execution
-> id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
-> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
-> patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
+--000000000000671add062e0d9497
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It was pointed out to me that my testcase doesn't work on the 9.0x
-versions, because it doesn't allow encoding 64-bit integers, but it's
-still exploitable.
+Curious: is there any info about how this was discovered?
 
-For example, something like this should jump to 0x41414141:
+El jue, 13 feb 2025, 14:16, Rich Felker <dalias@libc.org> escribi=C3=B3:
 
-$ cat test.ps
-%!PS
-[16#1 16#2 16#3 16#41414141 [16#4]] .initialize_dsc_parser
-$ gdb -q -ex r --args gs -dSAFER -f test.ps
-GPL Ghostscript 9.05 (2012-02-08)
-Copyright (C) 2010 Artifex Software, Inc.  All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
+> Vulnerability description:
+>
+> A vulnerability has been identified in musl libc's implementation of
+> iconv that can result in out-of-bounds memory writes in applications
+> which process untrusted input using iconv and where the input charset
+> for the conversion is input-controlled.
+>
+> In order for the vulnerability to be exposed, an application must call
+> iconv_open with an output encoding of UTF-8 and and input encoding of
+> EUC-KR, and must subsequently process untrusted input using the
+> resulting conversion descriptor. The most common scenario in which
+> this occurs is using the declared MIME charset of untrusted input (for
+> example, in XML, HTML, or MIME-encoded email) as input to iconv_open
+> for converting arbitrary-encoding input to UTF-8.
+>
+> This issue was discovered and reported by Nick Wellnhofer. It arose as
+> a combination of incorrect input byte validation in the EUC-KR
+> decoder, and the fact that the UTF-8 output encoder assumed an
+> invariant that the input decoder never produces character codes which
+> are not valid Unicode Scalar Values.
+>
+>
+>
+> Affected versions:
+>
+> The vulnerable code has been present since EUC-KR support was added to
+> iconv in musl 0.9.13. All versions in the range 0.9.13 through 1.2.5
+> are affected.
+>
+> Future releases beginning with 1.2.6 will ship with the bug fixed.
+>
+>
+>
+> Mitigation:
+>
+> All users should apply the source patches included/attached below. The
+> first fixes the bug (incorrect input byte validation) responsible for
+> the vulnerability, and the second closes off the vector by which this
+> class of bug escalated to an out-of-bounds write. These patches should
+> apply cleanly to all versions affected by the bug.
+>
+> Users of musl libc based distributions should obtain an updated
+> package with the patch applied through their distributon's update
+> channels.
+>
+> Static-linked binaries that cannot easily be relinked may be patched
+> to inhibit the vulnerability, at the cost of disabling support for
+> decoding EUC-KR text, by searching the binary, using a
+> binary-clean/hex editor, for the byte sequence:
+>
+>         "euckr\0ksc5601\0ksx1001\0cp949\0"
+>
+> and replacing it with:
+>
+>         "-----\0-------\0-------\0-----\0"
+>
+> Since non-alphanumeric-ASCII characters are stripped from the charset
+> name by iconv_open, this change will render EUC-KR and all aliases for
+> it unmatchable, thereby making the vulnerable code unreachable.
+>
+>
+>
 
-Program received signal SIGSEGV, Segmentation fault.
-0x0000000041414141 in ?? ()
-
-Tavis.
+--000000000000671add062e0d9497--
