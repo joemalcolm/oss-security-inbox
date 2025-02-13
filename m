@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["269" "Saturday" "6" "July" "2019" "15:02:22" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>" "8" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070612:02:22" "[oss-security] linux-distros membership application - Microsoft" (number mark "U       gguninski@gm Jul  6    8/269   " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20014 invoked by uid 550); 6 Jul 2019 12:50:17 -0000
+Received: (qmail 14074 invoked by uid 550); 13 Feb 2025 21:03:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27748 invoked from network); 6 Jul 2019 12:02:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=lJ1OYp9/rCa2SkHTZ1X0CQy8AShQH5GgXbokajTuNJ0=;
-        b=NTm+0EIdbtdyAVUROlly5aKVEm1R0fApmbUtRYJanT6yb0tH+YEHMbA2SJt6KQtsFB
-         rLy5FK4gjbek7c2GB3ILUqKxWZJKS8l9DMsA+V9PUOcx5orOvSQ5cG/QJ8sfUB6fJ1nb
-         szDfq3iKxDHYmJlhSPCEpe5SEaz9OSeDKI6Gxu+egbjX5o3943/WOnmRAnrAbCXU1rPs
-         DJfqdv54LFt2Ktax2K1mcbYc7YZ9Ow/UL9SeUzghT00DDcZLGODBTiGh85noK0C97D6p
-         mrwDalLxuKk1U2yiYrlx8gyvqitixFb6GHt3o5hiMDv3sYWnPQxYhipsV7EJNELc42nH
-         W4zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=lJ1OYp9/rCa2SkHTZ1X0CQy8AShQH5GgXbokajTuNJ0=;
-        b=Nuh2bqUOUCdcmq2+8D3yTW6Xld51sI6zjy/YDeLIrsuR/ymt7/KS9sXOVCVHEc9rU9
-         meUYJsT+u8jxT9KUpx7wQRN+iayXJv20/rqfBDZQInKNQvx05ZQZW8WSGMng7SQhuPUD
-         JNDkXy80+KTeUMHpBJJaHpVzC6YptXUbHOQTfY2hAWFfGsxrq+f1PQqi+g+Cfv+d9djU
-         OYimn1ynD7D5NuINwCflMfnnrUI5JcTPUG21H7i1wOuFCwZ0TkQ3Uo1RBAYM8wWXINfv
-         jfW3t7veimxFn6DXs2zQd88uULeU42FZyFSUh5MoBKHrcoLpPSpL6ql00O8C8ThbdC/K
-         jgKw==
-X-Gm-Message-State: APjAAAW0vuu/YvPSbbNz1YqA0IAo8qDsS8jwPm8mccB6e70HyuQDxQ59
-	7wXHaGLsYYovnKXvaqCHn8CLEVwOtBskKiue/j9DEhii
-X-Google-Smtp-Source: APXvYqyk29DoN0mzMqUzxvHNmirFhOIM52Hu1Ih+hE4KV6kmkD4cMa0Q9HOUNrvlLhGjPNvsCGIaMQDO/MDqCJ1oSLE=
-X-Received: by 2002:a02:cd82:: with SMTP id l2mr10086656jap.96.1562414554796;
- Sat, 06 Jul 2019 05:02:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com>
- <20190627170508.GB11506@sasha-vm> <20190628125743.GA2187@openwall.com>
- <20190628170812.GG11506@sasha-vm> <21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>
-In-Reply-To: <21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>
-Message-ID: <CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000087d9ad058d01fc90"
-Date: Sat, 6 Jul 2019 15:02:22 +0300
-From: Georgi Guninski <gguninski@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application - Microsoft
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 14008 invoked from network); 13 Feb 2025 21:03:27 -0000
+Date: Thu, 13 Feb 2025 16:03:19 -0500
+From: Rich Felker <dalias@libc.org>
+To: musl@lists.openwall.com
+Cc: oss-security@lists.openwall.com
+Message-ID: <20250213210318.GE10433@brightrain.aerifal.cx>
+References: <20250213171546.GA3976@brightrain.aerifal.cx>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="p/1JFEOz/hVXxMAZ"
+Content-Disposition: inline
+In-Reply-To: <20250213171546.GA3976@brightrain.aerifal.cx>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] Re: [musl] CVE-2025-26519: musl libc: input-controlled out-of-bounds
+ write primitive in iconv()
 
---00000000000087d9ad058d01fc90
-Content-Type: text/plain; charset="UTF-8"
+--p/1JFEOz/hVXxMAZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I am against giving access to microsoft and blogged:
+On Thu, Feb 13, 2025 at 12:15:54PM -0500, Rich Felker wrote:
+> Vulnerability description:
+> 
+> A vulnerability has been identified in musl libc's implementation of
+> iconv that can result in out-of-bounds memory writes in applications
+> which process untrusted input using iconv and where the input charset
+> for the conversion is input-controlled.
+> 
+> In order for the vulnerability to be exposed, an application must call
+> iconv_open with an output encoding of UTF-8 and and input encoding of
+> EUC-KR, and must subsequently process untrusted input using the
+> resulting conversion descriptor. The most common scenario in which
+> this occurs is using the declared MIME charset of untrusted input (for
+> example, in XML, HTML, or MIME-encoded email) as input to iconv_open
+> for converting arbitrary-encoding input to UTF-8.
+> 
+> This issue was discovered and reported by Nick Wellnhofer. It arose as
+> a combination of incorrect input byte validation in the EUC-KR
+> decoder, and the fact that the UTF-8 output encoder assumed an
+> invariant that the input decoder never produces character codes which
+> are not valid Unicode Scalar Values.
 
-https://j.ludost.net/blog/archives/2019/07/06/on_microsoft_request_to_access_private_linux_bugs/index.html
+Addendum: I also have a test program that will check if your iconv is
+affected, attached. It runs over all 65536 byte pairs and looks for
+bogus changes to the output buffer pointer/remaining.
 
---00000000000087d9ad058d01fc90--
+--p/1JFEOz/hVXxMAZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="euckr_bug.c"
+
+#include <iconv.h>
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+
+#define T(x) ((x) || (e+=fail(r, errno, i, j, out1, pout, outb, #x)))
+
+int fail(int r, int err, int i, int j, char *start, char *end, size_t rem, char *pred)
+{
+	printf("%.2x %.2x: returned %d (%s), start %p end %p rem %zu: failed assertion: %s\n",
+		i, j, r, r<0?strerror(err):"", start, end, rem, pred);
+	return 1;
+}
+
+
+int main()
+{
+	iconv_t cd = iconv_open("UTF-8", "EUC-KR");
+	int e = 0;
+	for (int i=0; i<256; i++)
+		for (int j=0; j<256; j++) {
+			char in[3] = { i, j, 'x' };
+			char out[12] = "", *out1=out+4;
+			char *pin = in, *pout = out1;
+			size_t inb = sizeof in;
+			size_t outb = sizeof out - (out1-out);
+			errno = 0;
+			size_t r = iconv(cd, &pin, &inb, &pout, &outb);
+			T(pout>=out1 && pout<out+sizeof out);
+			T(outb <= sizeof out - (out1-out));
+			T(out1[-1]=='\0');
+		}
+	return !!e;
+}
+
+--p/1JFEOz/hVXxMAZ--
