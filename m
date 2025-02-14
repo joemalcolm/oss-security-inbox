@@ -1,4 +1,4 @@
-Received: (qmail 28614 invoked by uid 550); 2 May 2026 20:17:17 -0000
+Received: (qmail 11647 invoked by uid 550); 14 Feb 2025 14:42:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,63 +8,84 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 21698 invoked from network); 2 May 2026 20:05:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777752302;
-	bh=wqJVF1B+ONQCJtzzJY2RfJ7yOhZO2/KebuZvJjrxQAE=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=qK1FoMFtc/L944ELww7h7VyJXcLM1Yy6zcOQvU+mYqdmO8tyyzHmOCzPFxMzhxLb1
-	 yGvjhDjwZ+iB7qLF0zF3dp2qKftzbs8+5jUtXLpGs7dfOOj+fXX567gXmpjr8PMP0k
-	 2xCACex0E+I+MbZLYVA7VncEmjzxzTC0kFaWX3tqi5Z+WJZhbmr9IvsNwhytkva9Uh
-	 KjFFz7KshcIqUD2XbW4FLRaeoGFs5ZcVCr5v1IjuRuKRDitbsPanf6NKlUcT/E81rA
-	 7Bvo8bG+wfp+PszSfsUnv5NNnKaM0zKe6G3e3+DyY5UUNFKKcey34m1CVCMJjb0aEq
-	 1C40+nPZ3JefA==
-Date: Sat, 2 May 2026 20:05:00 +0000
-From: Eric Biggers <ebiggers@kernel.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20260502200500.GB229884@google.com>
-References: <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
- <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan>
- <2026043026-treat-devotion-23d7@gregkh>
- <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
- <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
- <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
- <20260501165221.27420-1-justin.swartz@risingedge.co.za>
- <56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
- <20260502185608.24115-1-justin.swartz@risingedge.co.za>
+Received: (qmail 1994 invoked from network); 14 Feb 2025 10:58:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739530695; x=1740135495; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gEJ71bcWsqnwr8i7CO8QYmIHNBNwGhG/IcDADFPu1fw=;
+        b=S1uaMy5UNoHoGU+ERaUhVHd8Dv/RPzZE6KdvocqaRrzMWVmoHou/IjeHRQnW1KfEk+
+         2UhrGfr06C2SCGEYxX0nCH9DDuW6xha1nlNS3Yt1rq9O9KZr/SUrvi7xz7T1BHs1NOTd
+         netMJW53paUrK/3mY/lfhzyag+waLPRY5cXy4q1PwogRi5e97WWk7W3V0Db+T1ulXe5F
+         1fLwIfZNIhzYOlTba6fZ9XV3PmRDObYespX5jSYHtc8V43/FPVXHHg0a6PrYMGnokGp6
+         6OwR+FYVZVpjd/Of34ioCLnH+d5HfYy4n8olUmlPnFFKQe8j81AhsLiMSa/mp8s/9J2d
+         Qqig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739530695; x=1740135495;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gEJ71bcWsqnwr8i7CO8QYmIHNBNwGhG/IcDADFPu1fw=;
+        b=HIGmS61h6xNtrpbkRDQbR1fGAodNA2qF0tki5zMbpBqm3EDPTbvElTVDNrenf5HKzm
+         en1kaIfumSKeZnZy52bgzBw6r+XB2XAFVA4QfWyjt7REpL/aYUKSVvnj+ki2EhKDxNsG
+         IQr8YkiJvdiaMiUUZUKZE9HXt5A3l3WaLVoXOypW/FgAqt2Ppbp7f3O+11lh6utW9X5D
+         +s7grpBYJ0kjdBLtryU0DtJp222nybROcBZIynn3aWSQ5k0cxwbroMiW+OlN8qFv1VUb
+         BsEPWSa8KH+f2vxGScZbk6okW3znQW/12Mu0aULf+Oj6IVpbuCQJOU6WSKmuDKQiqOrk
+         dovw==
+X-Forwarded-Encrypted: i=1; AJvYcCWWqJ/XmBDhqEdZIjjtE2yUmzxF546aCMfArlKuplrukWK37fWQGIkZAkraSKMo/cSKyeU9TkxT281qFLM=@lists.openwall.com
+X-Gm-Message-State: AOJu0YzTDGV3DgReg9e5x8IetuRYUHKrzJMnF+EOjjhcMh2o10aOf2Ui
+	I+3JhmJL9ACHFsQLM2ngelaZqyAfB6NjRYn2Q+p/QaPz1j6kWBqOoN1p5vXO839h+La+ruCiTc8
+	wOKgAs++p494ASFHrux04z0Cn39D1kp/3
+X-Gm-Gg: ASbGncvCgkKf/tPNLv/xKv/DhXlGitiqpVygnttfsOsEOzbC55sS5bXINXEzYc2+hdF
+	ZdSc+lmcMlHeP9d2kRyTP7Tn9B4f74Fb8NyJSrTymci1JwyyswoHolEVPsGiAc7uYURzWNEg/+g
+	==
+X-Google-Smtp-Source: AGHT+IHZ4gnv89bJuOKLUUbhBj+x1gR9z2Wi9dl7xPr67XzEybrq4pR6uzcNbpuAnbmXAgOnjRx2k4sJ+IMf00bVSFU=
+X-Received: by 2002:ac2:51c9:0:b0:545:550:83e6 with SMTP id
+ 2adb3069b0e04-5451e2f7bebmr2138499e87.5.1739530694768; Fri, 14 Feb 2025
+ 02:58:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260502185608.24115-1-justin.swartz@risingedge.co.za>
-Subject: Re: [oss-security] Re: Re: CVE-2026-31431: CopyFail: linux local
- privilege scalation
+References: <20250213171546.GA3976@brightrain.aerifal.cx> <CAFdMc-1uX4X1HNrR-hj0iGASCfRL6PfVdNsynOs4BdoS+QrGSw@mail.gmail.com>
+ <E3B21524-35E5-470E-811A-E1083454B56E@aevum.de>
+In-Reply-To: <E3B21524-35E5-470E-811A-E1083454B56E@aevum.de>
+From: Daniel Gutson <danielgutson@gmail.com>
+Date: Fri, 14 Feb 2025 07:58:01 -0300
+X-Gm-Features: AWEUYZlStUj4_cBFHlNreK_ZzBXZNxx1wv8YHx0_54ySbOQXtjIAwn9qNygUmaM
+Message-ID: <CAFdMc-1FwzW+qar=rkCctgo-jdv4StD3izqBFWt8-CJFDxG1Yg@mail.gmail.com>
+To: Nick Wellnhofer <wellnhofer@aevum.de>
+Cc: musl@lists.openwall.com, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000023410d062e180dd5"
+Subject: [oss-security] Re: [musl] CVE-2025-26519: musl libc: input-controlled out-of-bounds
+ write primitive in iconv()
 
-On Sat, May 02, 2026 at 08:56:08PM +0200, Justin Swartz wrote:
-> > Why do we need kernel modules for math?
-> 
-> To interact with cryptographic acceleration hardware, if present or
-> desired, and to provide support for kernel subsystems that rely on
-> encryption, like IPSec or WireGuard.
+--00000000000023410d062e180dd5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This has been covered before, but just so anyone doesn't get the wrong
-impression here:
+El vie, 14 feb 2025, 07:14, Nick Wellnhofer <wellnhofer@aevum.de> escribi=
+=C3=B3:
 
-The kernel implements crypto algorithms (either as built-in code or as
-modules, depending on the kconfig) so that the many kernel features that
-use cryptography, such as IPsec and WireGuard that were mentioned, can
-use them.  This is expected; cryptography is everywhere these days.
+> On Feb 13, 2025, at 23:28, Daniel Gutson <danielgutson@gmail.com> wrote:
+> >
+> > Curious: is there any info about how this was discovered?
+>
+> The bug was discovered with basic fuzz testing. As libxml2 maintainer, I
+> found more and more issues in various iconv implementations by accident
+> which is a strong indicator that all this code isn't tested enough. The
+> iconv API is also trivial to fuzz, so it seemed like a nice weekend proje=
+ct.
+>
 
-The problem here is specifically AF_ALG, which is an additional legacy
-interface that's built on top of the kernel's crypto code.  For some
-reason it exposes basically everything to unprivileged userspace
-programs, and in a bug-prone way as well (e.g., zero-copy support).
+Thanks, AFL?
 
-If you disable AF_ALG in your kernel, then IPsec, WireGuard, and any
-other kernel feature that uses cryptography will still work.
+My work is related to static checkers and linters (we will contribute an
+important patch to weggli soon), so I was wondering if you used something
+that used symbolic execution.
 
-What it does break are a small set of userspace programs that made the
-shortsighted decision to use AF_ALG, instead of simply following the
-standard practice of using a userspace crypto library.
+Nice job!
 
-- Eric
+
+> Nick
+>
+>
+
+--00000000000023410d062e180dd5--
