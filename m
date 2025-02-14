@@ -1,4 +1,4 @@
-Received: (qmail 26179 invoked by uid 550); 26 Sep 2024 11:07:21 -0000
+Received: (qmail 22076 invoked by uid 550); 14 Feb 2025 14:40:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,79 +8,171 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 28107 invoked from network); 26 Sep 2024 02:11:03 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0YxPanxENWTatSY3v/fT0XjZCXB2Zdf7htJ4+O2OUG6SfjhhWcgk
-	JMYLieCwbjyHuHaVy9V3V1TZkPk+ECHd22NJX1FcmWQg4WVmXYfXTCSMyD1RhrChbVg4O/CgxmP
-	K50HPUFSQeR6pUGX3HQkg3fEHpVY=
-X-Google-Smtp-Source: AGHT+IGVg/8OqxXKyrr4swe/scbdI9ADLXc9a5u7Me185i8rzxccmzzzEXuP4DJs2D8LqQqU9mH3DJRYXvPCem7E2MQ=
-X-Received: by 2002:a05:6402:1e89:b0:5c4:2ffc:cc2 with SMTP id
- 4fb4d7f45d1cf-5c72061fdaamr2961407a12.13.1727316650473; Wed, 25 Sep 2024
- 19:10:50 -0700 (PDT)
+Received: (qmail 21889 invoked from network); 14 Feb 2025 09:56:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.ch;
+	s=s31663417; t=1739526977; x=1740131777; i=sjw@gmx.ch;
+	bh=iQRZY33H4ehpGlWClchhgoaJkHs6VaZ9SQUh9LAGt88=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:References:
+	 From:Subject:In-Reply-To:Content-Type:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=W/qTscMQpPR+/dKEliUApF5byZni3EMaMSs+ZuP8mLdljMZqwt/TJn29M46JPDXC
+	 m1BVscSX2Jb2Tt5eMtl/DBFzmhV2xXH3uGiI89IezXSyOMpozgf6pgGo2BGmk7kr7
+	 j4GsMr3r4Krt1R+tbslfQbNYjOY+yk4uhwjL5OMS7B7J3MpPCTq/AysQZuP9Rcmj6
+	 ojpMVLbtq1jN1qRdMcXr7IlU3V2C6eOTooMzhctLd1NG/CDNbhxTfOEfHExhtRdp4
+	 0Bp30nwXXVF4OapPPcF2lNMzUl4ksAHlDGRb09BR017J1JA56gHspSMW9W/oKHO27
+	 wUKawqVG5jet064U2Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Message-ID: <61933854-d5d6-4cfc-ab88-8c08122aa499@gmx.ch>
+Date: Fri, 14 Feb 2025 10:56:09 +0100
 MIME-Version: 1.0
-References: <16a2094c-dfa6-a448-b9c7-76ba2dc86f66@apache.org> <20240925152119.GA787@openwall.com>
-In-Reply-To: <20240925152119.GA787@openwall.com>
-From: LinkinStar <linkinstar@apache.org>
-Date: Thu, 26 Sep 2024 10:10:38 +0800
-X-Gmail-Original-Message-ID: <CAF=YEMyfspxZsA6BiVrD8iKJBiE=EebQB=3YC=Zk-49h3ywm7A@mail.gmail.com>
-Message-ID: <CAF=YEMyfspxZsA6BiVrD8iKJBiE=EebQB=3YC=Zk-49h3ywm7A@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000005dcd830622fc3fbd"
-Subject: Re: [oss-security] CVE-2024-40761: Apache Answer: Avatar URL leaked
- user email addresses
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <8AvDbR3U4WQOKZyqLOKsFHlVjnI7D0bLNq2I57I3Cskpw3z0Mw4zJ3afH0kvFLj0P_g5GoBW91eXKo2dBqsF123LkhtQTaycnyIfqLoGpvE=@proton.me>
+Content-Language: en-MW
+From: sjw@gmx.ch
+Autocrypt: addr=sjw@gmx.ch; keydata=
+ xsFNBFHW4s8BEADA6j8INVTGPjS+V5GTHN3xU9RTddHOrEBI0wf79L8GRF1i1W/mGsrqrHsO
+ /kVemsuhS95HaJBNTW33F4aUtUAfULlv2t62q0BerTHInjO5CS+MamhaLrUpj1SkJ7tP2XLJ
+ H6Q8ehH/FHNRsn/osBxL7zCVYXqG5xdk5M4HXmM+ed8t2evbRDB4A9XjbMIycX4Fmw6B0X+3
+ telkQdkraiKhImeZW8TFo/r7+04XlvvDTMW+Ba/LMzLxT53mS9mkDZ6BRLXMQFxjZ+F1yvwa
+ 7L4QbIOqAFWqNoPOCy7NHuSYgM9mr1jpPGlKwVV4LnwMxVIfijMwR5LS9r4NU12xrcAc/lUO
+ JKa7YLGe0TxQBwDinABHa8X3wkwn+1K37t8ULInKnae+YePd3VvbWdaSU8EJBTQwtOFtetnz
+ BbrwmdjePwAoRtggfH1sPIT4kSeC7oB9C92DurGAsogHQeu0bkpGvdt9T0zZY/a/vrjSG3ym
+ uCQ7BZIHDqeZ4ENNjy9De8BsLgAwk6gI0gBS1x08c7/qHBGuaBmp/LHVLVRgyVdWgDqlTgRo
+ aSZgY3etV/E8eXIMYREPNzevJyITxqtwisTDCZJdNxiu1uacBeqvJdXB99qy3/REVk1XS8ef
+ I1SZmANty2I+FS2KD/JsX4d/lEUozK3WKFZQLSj2NgSPcUMz2QARAQABzRlKb25hcyBXaXRt
+ ZXIgPHNqd0BnbXguY2g+wsF8BBMBAgAmAhsjBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AF
+ AlJmiTsCGQEACgkQzoKyyG3Ou58fiA/8CJifk8zNBTpVg/2YXouQzLb4uvAVgnmdJpXQ2z0D
+ BUE8XYr6waNx2c4hsKhXDhCrdyCh4RAKdA9j0Lmu5MDdDDyJgn82P7e2i0IlpO+1+U5JeQ4r
+ crjZL3MYrpVkuSIsZVTDuhW9v5xp6qVvKHplIIvuWz54kJYMOAcYWgHCGOIpYmIkFrk9mEXj
+ 7Nb0jqjAaIH+B/3DbnUL2Pk4L6H+SP8x5Qo8wN6dr144NgtKNPWZ/lyrUHhTMkfQLpfB+R00
+ ls3jd7rPaiaDhcIM72RUMi8sR5L90H9/OFMXPcu8AKGSvSbDCeDdqo+qxP58WUqSerK7Vypc
+ 29rEEb+HdIE0cQXbeWN8Oj03HUAR9wG81sSVHWC1+/X2Es1m9NI8lC6wVyKgXOPBC+gTKf8P
+ JIyQzfpIAYHN4HVLcxV3dVBVHNmiPT2hnD8N42zAi2Nhce+/L/nbMHu1fpr6H6CiAk33bBaK
+ wAi3OkwnUj+K2gamzSR3RtQOvPnGplMCcLCT/ncj/O1y4b+o4GYVWh9GfrzuFK9++kj8Pon/
+ 5c37ej3LGwmJFMVZBmfk760tx8Blu7CyiBzuCKxSccn79OvpYbhYrZItO+5xWDDG5ZOh95as
+ nlFzPO11FPVO6XTfd5KqgzpUkk42oFPcz7Zj0ei5jvXwXRGpl7PpC5cpN24Csim81RbOwU0E
+ UdbizwEQALFrHMw/WGWvGXCHpXM/MNAmj6AIXHfzOJm0A0NLf1Y4gyTSn0Qch4aDTuHm3L0c
+ Z6qMrjq5/riyHXQcKK2+PL1mSWQxkhBPduItLshnsu2vd3wJ7btzwcZg3IXbtfOF2o9+LMEW
+ 2GcWN2KwAMl9GQi+vO2OAX05KUbxNkpqRcN7siVXisu6mktSQ5eb8q1LCqc1j1WNY5EVNOjG
+ VMBhiE9poZGmLE5otqpSjBPCpASe+D5CDNTcV2HA8rfDZ1K0VNrLzEaDKuC0bF2kYkcL1Yhh
+ jPQnT7jSceOyR04JyOOQICfW1qiqzcxByD0AAzEIQSkToHqrxJpmbZ7Hass0gYxFbsFQNNMH
+ ZxmpVSG7D9ji0lfYU2hspWybb2k6sFk/unCGK6bgycSU1Cu/g5hsdkekmDHqlhWd5j73mO1/
+ XZJJwgh8UJxEOj6d7B5Cfr9FE7dua66BmQiXumTCTgfXEa0ALISxqXQTSrR6chMQ4jlk71Fa
+ OnPhKKqccSxcy7qN/S51h8jvbgy3WpB5EC0XTNhVyue7s2qpGsr00ck3xsqZpbSvmc+OPlFa
+ FD784M0Q4PsifaGhodxbIGc62xwgT27vqGBDypH7wRCWEMeqCv2w2oKMMpoH6JH6n2pX7kAS
+ 6HC7oWTtvRUg7I6JqOeBse4wYa4UkTLvMY0gKQSoBusjABEBAAHCwV8EGAECAAkFAlHW4s8C
+ GwwACgkQzoKyyG3Ou58aog//cvIKYQzCA4Fvp8p8eNGtomNkP3pLFaVWv7br9Am62odhz85l
+ K9FxGuk4KI0m23USEhX3S0HKPc6PId9ka/ijWegU/zTkbCnw22YMizDuBnr4ecsoMSvJI4XL
+ LLCvsJxm+tgnGi3HWErSqrFbNOIU7arKlbBNNU0mawSHd9Sbvq+TpHbRYjzcNZq2w/djF3AY
+ Nsq96jptnzogLWdlKTzunqGI6GWrzhqB0oIk9fH04mXs1aiq4Qkm4Vv1sSyXMqL0gC2JM8d3
+ 3sGHthbf8iKbKekB+XH2eF13xcIfVHankAnrcAZkicTAvAOv8IYRq5DXPKlnPMRgQ8KeOona
+ gu+HgoJ7IM9bytJJmbmqUyC/Gb9meLJ3+PAZT2FMjfbZvO7Jbst8yAbrOOsXM7fmgD/43qF9
+ STcadMMdJKl2+CSRL+wmqAeJZsLGDkq3PRB0zp87fF/bFK6GkzQ9xofIypnNzXidzQrmsrBZ
+ EBdGx87Kxp4q3+m3npIT1LdrDet8mMTxxY8OO1jYpuaFQCXHjSyoczE1tEues6LUJLRTy4KI
+ 5HzEGYKoGzx7OjEbyIWXwTzUuKdNPbUh0Qdm6tP0r+IrA8oN7XFNjdzgN7SaualwsuKp/iMu
+ At445xJBt1FvZaxCeVmiuKUXReatW0PtpvO5tXvYg/SieusEUJAcvxvxzqI=
+In-Reply-To: <8AvDbR3U4WQOKZyqLOKsFHlVjnI7D0bLNq2I57I3Cskpw3z0Mw4zJ3afH0kvFLj0P_g5GoBW91eXKo2dBqsF123LkhtQTaycnyIfqLoGpvE=@proton.me>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------0YdkeSFE3hc3NGfOdPGWM7z9"
+X-Provags-ID: V03:K1:aFsrk5wL0+niw2m7qZJ5n72jCyiv7Rrnqo7xdzDIjTYSB/BJmEJ
+ x5aeiTBtUImhoWAB9tniVsSgjaz5hUU5uZVgCEVtjNQnCFjA3UchwF1UaczF4uBESQP1XhP
+ 5WphNv+JuqdsO2wbz0RB7FII9ngqlVLzWiOAwU92O8tZU3d79KEOz7g796tctqOvOrPZp7s
+ DcgHkvZzC25a3xWRAlacw==
+UI-OutboundReport: notjunk:1;M01:P0:7YnW+aQEw/U=;xOX2ILXOOqP5SOlZH21umyoqtlE
+ lv43y4YmwLxTNCnwkZxNqQ7Bgq0A7noq5etNUjFUB8HsPYWXZqrdu41n65Efv0xZ12LrHFanp
+ WO0uIJQEbR6QY8gFwWA6QklaIT9lYtuHEsyyIfVKJ8SST2rlD3D24koKiTq0ZbI2kRvglQIdu
+ cecN9JMBlRVycMg/1cBKjkg+Gm5raDPiH4CnjmF5obpCl95p1zWbhPOMNcixl6o3W16ZmTm+M
+ M48XElNpG42VgXaH9XXD28eXZ/JHCaw51cuwBwsVoiGpsTubOUZFfDLjQeRXo1WnN90nq5eRU
+ R8nA+OJcAb/xYD2/ilYcsjzndvsNpJQ4dr7JSf6NRrRkIuaOMEAX2EWtmwDvt23dRIEkpO27W
+ +HnM/Yv31Gy7ecAbxHMbODkuCvikmi2CT+/cVPW3TiTffBkKnctNkt+bC7EayZpBhiZZFy6Zz
+ i4Sny5DPFtXdVIOkYGAoQA8NIlKKC60scUzFV1sbNkeJiu4BYnysK60CIEZ3c06a7+xOEahSN
+ vMTGIxTrBoWseaU0X1Jn2mtaCIe20YeN6wy9NMIKIrLsFlCYdZwKqYtZuh0lpuHR7jnJkSR51
+ yei492n4vik/lorJJefDdf3zPC6fgs0Q1IwBn4zF7tfz7J1F/cF72qh2G7NHGyZyCOdjTe1+J
+ 4ZQB30RspO1Ac69DesdAluN63du/Gvpnsd1xMlY8w/IbpxYGgGR1zDmqkFbKGcE5uirY4EZd/
+ wONB9N5aBdq+PYIviPDzGRkklisvWmmQOWPeHa7YzeMSAEcK5fZH3LtojaJEWGhLGjSunkwOW
+ 0bGr9L5Wqt7xrgeqEzau10EalAXixRvw901q6yV9KgKg8uQarOh3tvphQ8IlzXto4Xs7N8kXZ
+ ozYnL/TC5GS5QQjZbPornhZl+e9bLpUtjyJCe3dPCBM9HNcGQrnSy9n6Q+gas85uBCgEENK5+
+ L6gG62gxgN33C7gClXTkH+lt5+P2DFad+o8yeLFOp+GlNAw71eIR8r3a4B1XUCrgZ+MojKKK0
+ TGe7ILw9MXR1Qly+5pt0NdE189XpN8kbBSHjYn7poiy8Pb/4fUQbNxoFcFBgX484+SiiFx5gf
+ L7smAvEqUgc+KWHbuNYduElb4yzL7LG9gHKIJifGhGkZ4fKIksksMY8IPyzDzYd7sCT9JKChL
+ g4zYmCbPacExUja9vpMhaK9tnGf3QeJEZx9kJY/r1/lKN8Cdclt1TU+NyHXjY8bhyozdqgaQk
+ smNuoG6llQim+Pv9dUG93CxwU7Imn0HlQ9ZIFi573JwK35swDQ12Yd/ZzzxTHMk6UFPoI/Ikz
+ PVEx4zLFOH3tYkf2JY08szXmH/0AjalZHnWUyRzodm0L9h5mO0avTOKTd3wXic1zQWtnCffSW
+ mkLMqgKVlXSzKaLDQpqEIr+rGMbiUxtClAyfAxD1OMWYZhTioCreLYB6SKGrfSHEwZs6jLwdc
+ 6pYYIng==
+Subject: Re: [oss-security] Monero 18.3.4 zero-day DoS vulnerability has been
+ dropped publicly on social network.
 
---0000000000005dcd830622fc3fbd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--------------0YdkeSFE3hc3NGfOdPGWM7z9
+Content-Type: multipart/mixed; boundary="------------NuxstHdRWyM06aHiRJvlKcH0";
+ protected-headers="v1"
+From: sjw@gmx.ch
+To: oss-security@lists.openwall.com
+Message-ID: <61933854-d5d6-4cfc-ab88-8c08122aa499@gmx.ch>
+Subject: Re: [oss-security] Monero 18.3.4 zero-day DoS vulnerability has been
+ dropped publicly on social network.
+References: <8AvDbR3U4WQOKZyqLOKsFHlVjnI7D0bLNq2I57I3Cskpw3z0Mw4zJ3afH0kvFLj0P_g5GoBW91eXKo2dBqsF123LkhtQTaycnyIfqLoGpvE=@proton.me>
+In-Reply-To: <8AvDbR3U4WQOKZyqLOKsFHlVjnI7D0bLNq2I57I3Cskpw3z0Mw4zJ3afH0kvFLj0P_g5GoBW91eXKo2dBqsF123LkhtQTaycnyIfqLoGpvE=@proton.me>
 
-Hi Alexander,
+--------------NuxstHdRWyM06aHiRJvlKcH0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-First of all, thank you very much for your feedback.
+SGksDQoNCkEgcGF0Y2ggWzFdIGhhcyBqdXN0IGJlZW4gbWVyZ2VkIHVwc3RyZWFtLiBUaGUgYXNz
+b2NpYXRlZCBQUiB3YXMgYWxyZWFkeSANCnB1YmxpYyBmb3Igd2Vla3MgYW5kIG1lbnRpb25zIGEg
+bWl0aWdhdGlvbiBzY3JpcHQgWzJdIHRoYXQgd2FzIGtub3duIGZvciANCnllYXJzIGFscmVhZHku
+IEFyZSB0aGV5IGFyZSByZWxhdGVkIHRvIHRoZSBzYW1lIERvUyB2dWxuZXJhYmlsaXR5IHRoYXQg
+DQppcyBub3cgZXhwbG9pdGVkIGluIHRoZSB3aWxkPw0KDQoNClsxXSANCmh0dHBzOi8vZ2l0aHVi
+LmNvbS9tb25lcm8tcHJvamVjdC9tb25lcm8vY29tbWl0L2VjNzRmZjRhM2QzY2EzOGI3OTEyYWY2
+ODAyMDlhNDVmZDE3MDFjM2QNClsyXSBodHRwczovL2dpdGh1Yi5jb20vR2luZ2Vyb3BvbG91cy9w
+MnIybl9kZWZlbmRlcg0KDQoNCg0KPiBIZWxsbywNCj4gDQo+IEFib3V0IGFuIGhvdXIgYWdvLCBh
+IGdyb3VwIGFwcGVhcmluZyB0byBiZSBuYW1lZCBXeVJDVjIgcG9zdGVkIGEgbm90ZSBvbiB0aGUg
+bm9zdHIgc29jaWFsIG5ldHdvcmssIHdoaWNoIGNhbiBiZSBmb3VuZCBhdCB0aGUgZm9sbG93aW5n
+IGxpbms6IGh0dHBzOi8vcHJpbWFsLm5ldC9lL25vdGUxdnpoMG1qOXJjeGF4OWNnY2RhcHVweXhl
+ZWhqcHJkNjhnZDlrazl3cnY5MzltOGtudWxyczQ3ODB4Nw0KPiANCj4+IE1vbmVybyBaZXJvLWRh
+eSB2dWxuZXJhYmlsaXR5IGFuZCBleHBsb2l0DQo+Pg0KPj4gVGFrZSBkb3duIHRoZSBYTVIgbmV0
+d29yayB3aXRoIHVzLCBtYWtlIHRoZSBmdXR1cmUgYSBiZXR0ZXIgYSBwbGFjZS4NCj4gU2F2ZSwg
+c2hhcmUsIHVzZS4NCj4+DQo+PiBodHRwczpbLy9dYW5vbnBhc3RlLm9yZy8/Y2NjYjc2MzlhZmJk
+MDY1MCNIYU1RQWZ6RmRDcU1EaDlNd051R1JHVUJYTGd0azV5SFdkQXpTN01idkVWTg0KPiANCj4g
+VGhlIHBhc3RlIGxpbmsgaW5jbHVkZXMgYSBsaXN0IG9mIG5vZGVzIHRoYXQgdGhlIGF0dGFja2Vy
+IGhhcyBpbnN0cnVjdGVkIHRvIHRhcmdldCwgYWxvbmcgd2l0aCBhIFB5dGhvbiBjb2RlIHRvIGxl
+dmVyYWdlIHRoZSBhdHRhY2suIEFjY29yZGluZyB0byB0aGVpciBleHBsYW5hdGlvbiwgdGhpcyB2
+dWxuZXJhYmlsaXR5IGlzIGV4cGVjdGVkIHRvIGJlIHBhdGNoZWQgaW4gdGhlIG5leHQgcmVsZWFz
+ZSBvZiBNb25lcm8uIEFueSBNb25lcm8gbm9kZSB0aGF0IGV4cG9zZXMgaXRzIFJQQyBwb3J0IGlz
+IHZ1bG5lcmFibGUgdG8gbWVtb3J5IGV4aGF1c3Rpb24uDQo+IA0KPiBJIGNhbiBjb25maXJtIHRo
+YXQgdGhlIFB5dGhvbiBjb2RlIHdvcmtzIGFuZCB1c2luZyBpdCBhZ2FpbnN0IGEgdGVzdCBub2Rl
+IGxlYWRzIHRvIGEgY3Jhc2ggZHVlIHRvIG1lbW9yeSBleGhhdXN0aW9uLiBUaGUgY29kZSBpcyBl
+eHRyZW1lbHkgc2ltcGxlLCBhcyBpdCBzcGFtcyByZXF1ZXN0cyB3aXRob3V0IGF0dGVtcHRpbmcg
+dG8gcmVhZCByZXNwb25zZXMsIGNhdXNpbmcgTW9uZXJvIHRvIGtlZXAgdGhlbSBpbmRlZmluaXRl
+bHkgaW4gbWVtb3J5IHVudGlsIGEgY3Jhc2ggb2NjdXJzLg0KPiANCj4gVGhlIGF0dGFja2VycyBj
+bGFpbSB0byBoYXZlIHRha2VuIGRvd24gOCBwdWJsaWMgbm9kZXMgYW5kIDEgc2VlZCBub2RlLCB3
+aGljaCBpcyB1c2VkIGFzIGEgcmVuZGV6dm91cyBwb2ludCBmb3IgbmV3IG5vZGVzIHRvIGNvbm5l
+Y3QgdG8gdGhlIG5ldHdvcmsuDQoNCg==
 
-Because *Gravatar recommends using sha-256*, we believe there must be a
-reason for its modification. Since the official recommendation is to change
-the encryption method, why not implement it according to the official
-requirements? You must admit that sha-256 is more difficult than md5, even
-if only slightly. Although this may not completely solve the problem, I
-believe following the official recommendation would be marginally better,
-wouldn't it? So I think this fix itself is acceptable.
+--------------NuxstHdRWyM06aHiRJvlKcH0--
 
-Best regards,
-LinkinStar
+--------------0YdkeSFE3hc3NGfOdPGWM7z9
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-On Wed, Sep 25, 2024 at 11:21=E2=80=AFPM Solar Designer <solar@openwall.com=
-> wrote:
+-----BEGIN PGP SIGNATURE-----
 
-> On Wed, Sep 25, 2024 at 06:28:16AM +0000, Enxin Xie wrote:
-> > Using the MD5 value of a user's email to access Gravatar is insecure and
-> can lead to the leakage of user email. The official recommendation is to
-> use SHA256 instead.
->
-> For practical purposes, this sounds like almost no change to me.  I've
-> just checked and https://docs.gravatar.com/api/avatars/hash/ does say:
->
-> > All URLs on Gravatar are based on the use of the hashed value of an
-> > email address. Images and profiles are both accessed via the hash of an
-> > email, and it is considered the primary way of identifying an identity
-> > within the system. To ensure a consistent and accurate hash, the
-> > following steps should be taken to create a hash:
-> >
-> > 1. Trim leading and trailing whitespace from an email address
-> > 2. Force all characters to lower-case
-> > 3. hash the final string with SHA256
->
-> So Gravatar URLs by design allow for quick checking of email addresses
-> against them, and thus allow to infer not-too-cryptic addresses.  Both
-> MD5 and SHA-256 are very fast, with speeds in many billion per second
-> per GPU, with SHA-256 being only a few times slower than MD5.  MD5's
-> cryptographic weaknesses are irrelevant to this use case.
->
-> So I think this CVE should either be rejected (as the issue is with
-> Gravatar, not with implementations) or considered unfixable (within
-> spec) and thus not fixed.
->
-> Alexander
->
+wsF5BAABCAAjFiEEf0BaT/qj9Rv+/e4vzoKyyG3Ou58FAmevEzkFAwAAAAAACgkQzoKyyG3Ou5+V
+GQ/+KgsCJuadGsfTxrX4UtCBnVXG7XKnho1/TaQwj4Ao+pTnwP43gTCrtRqBx7Zbmh4+pCd+gzMW
+yjSemtLfnFnpkjvn566wTV49+Q5nhDqrEyoFVLg3j3s0spMjl2i2ELa7ucHOIb0vBIVUU5IkFoWm
+kCaCnvX6R0QQrK31XTFi9Atm6/RRgMSRxCUK7t3Djf4YoiAPw5K+O6hKXuM51o8gIxYLnjl39ZOY
+jPTDmJHChG3/2HJ6tYIawbdu6ih8z8VKry82oL1cQL2C28i5C9QC2aTCNZZHfHB1tX9Eom1hKC/J
+HXQFXc1GEniH7hm4BxUmgRBT5sL9dOOLXbM7tBAI5IWE5Y6b0oubAeU1YGnrFww6ApX27da+Lcfo
+Du33M+SNSbiXFf3WBv7P68x7oW0XOAFxNrHzmHo9r8BXCW+FZ2t9Kvyzf2N2R18SSaGEZ3DqmNoD
+9v3scvKhDCiofkA2+x/jJ5n2T2o/0BierCcRqINuhXtmSh+AtlG5iDQFzYIwsqlTra05JvH5bDA7
+NYOQGDV0TuENyS9xyAnUEln7IsJet/NBJfiLUHgpjip9t7Pqg0M1BroIelVR/V2A+y/ZMuTxflYS
+yVb5xTM269nmb3uIvW/Z/jUHSWsozGlUxsQvgP5h7lmS183k92fd1+IGSqUpHf18+DfnLwVIuXXM
+mg4=
+=MBq3
+-----END PGP SIGNATURE-----
 
---0000000000005dcd830622fc3fbd--
+--------------0YdkeSFE3hc3NGfOdPGWM7z9--
