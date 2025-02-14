@@ -1,4 +1,4 @@
-Received: (qmail 21950 invoked by uid 550); 23 Mar 2024 14:10:24 -0000
+Received: (qmail 11469 invoked by uid 550); 14 Feb 2025 14:39:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +7,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21639 invoked from network); 23 Mar 2024 14:10:01 -0000
-Date: Sat, 23 Mar 2024 15:14:35 +0100
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 15571 invoked from network); 14 Feb 2025 07:36:35 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Nikita Amelchev <namelchev@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20240323141435.GA24889@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Firefox 124.0.1 fixes two critical JavaScript engine vulnerabilities
+Message-ID: <83a1572b-ac91-f4fe-bbe3-047b72bc94b2@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 14 Feb 2025 07:36:25 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-52577: Apache Ignite: Possible RCE when deserializing
+ incoming messages by the server node 
 
-Hi,
+Affected versions:
 
-As successfully demonstrated by Manfred Paul at Pwn2Own:
+- Apache Ignite 2.6.0 before 2.17.0
 
-https://www.mozilla.org/en-US/security/advisories/mfsa2024-15/
+Description:
 
-> # CVE-2024-29943: Out-of-bounds access via Range Analysis bypass
-> 
-> Reporter	Manfred Paul via Trend Micro's Zero Day Initiative
-> Impact	critical
-> Description
-> An attacker was able to perform an out-of-bounds read or write on a
-> JavaScript object by fooling range-based bounds check elimination.
-> 
-> References	Bug 1886849
-> 
-> # CVE-2024-29944: Privileged JavaScript Execution via Event Handlers
-> 
-> Reporter	Manfred Paul via Trend Micro's Zero Day Initiative
-> Impact	critical
-> Description
-> An attacker was able to inject an event handler into a privileged object
-> that would allow arbitrary JavaScript execution in the parent process.
-> Note: This vulnerability affects Desktop Firefox only, it does not
-> affect mobile versions of Firefox.
-> 
-> References	Bug 1886852
+In Apache Ignite versions from 2.6.0 and before 2.17.0, configured Class Se=
+rialization Filters are ignored for some Ignite endpoints. The vulnerabilit=
+y could be exploited if an attacker manually crafts an Ignite message conta=
+ining a vulnerable object whose class is present in the Ignite server class=
+path and sends it to Ignite server endpoints. Deserialization of such a mes=
+sage by the Ignite server may result in the execution of arbitrary code on =
+the Apache Ignite server side.
 
-There's a third-party write-up by @maxpl0it on the first bug above here:
+This issue is being tracked as IGNITE-23594=20
 
-https://twitter.com/maxpl0it/status/1771258714541978060
+Credit:
 
-> @_manfp's Firefox renderer bug is a beauty that takes advantage of an
-> optimisation implemented just 3 months ago. Let's break it down!
-> 
-> In JavaScript, you can get a list of property names of an object using
-> Object.keys(o). A common pattern to count the number of properties an
-> object has is to use Object.keys(o).length.
-> 
-> Now, this can actually end up being quite slow for large objects, since
-> Object.keys(o) constructs a whole new array with the property names in it.
-> 
-> If we're just interested in the length of this array and not the array
-> itself, this means we're spending considerable time constructing arrays
-> when we don't need to.
-> 
-> Thankfully, 3 months ago, Mozilla added a nice optimisation that means
-> the pattern of Object.keys(o).length no longer creates this array,
-> saving us from wasting a LOT of memory.
-> https://github.com/mozilla/gecko-dev/commit/eec1c03d31ad59280f99e9eafcd0eeb10e6a1ed5
-> 
-> So where's the bug? In the Range Analysis part of the just-in-time
-> compiler! The range that was given to the new MObjectKeysLength JIT node
-> was between 0 and NativeObject::MAX_SLOTS_COUNT, which is (1 << 28) - 1.
-> However, the number of properties we can add is much larger.
-> 
-> Here is a test case that shows this behaviour. The returned value should
-> never be larger than (1 << 28) - 1, which is 268435455. The trigger
-> shows that we can in fact go larger than this, a value that is not taken
-> into account by the range analysis.
-> 
-> This can lead to an incorrect elimination of a bounds check for an array
-> access and therefore an out-of-bounds read and write primitive.
-> Definitely one of the neatest Firefox bugs I've seen in a while!
+zhattatey (zhattatey@gmail.com) (finder)
+zhattatey (zhattatey@gmail.com) (reporter)
+Mikhail Petrov (mpetrov@apache.org) (remediation developer)
+Alex Plehanov (plehanov.alex@gmail.com) (remediation reviewer)
 
-The Twitter thread above includes some screenshots, which I did not
-include here.  They're helpful, but not essential for understanding.
+References:
 
-Alexander
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2024-52577
+https://ignite.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-52577
+https://issues.apache.org/jira/browse/IGNITE-23594
+
