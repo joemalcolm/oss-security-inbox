@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4857" "Thursday" "31" "December" "2015" "02:09:43" "+0900" "Jihyeok Seo" "limeburst@member.fsf.org" "<EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>" "93" "[oss-security] CVE Request: Squashfs 4.2 Race Condition" nil nil nil "12" "2015123017:09:43" "[oss-security] CVE Request: Squashfs 4.2 Race Condition" (number mark "U       limeburst@me Dec 31   93/4857  " thread-indent "\"[oss-security] CVE Request: Squashfs 4.2 Race Condition\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3256 invoked by uid 550); 30 Dec 2015 17:35:35 -0000
+Received: (qmail 17943 invoked by uid 550); 16 Feb 2025 18:42:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,114 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23715 invoked from network); 30 Dec 2015 17:09:57 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=/W
-	DuA1Pa1N2UMudOBEIz3VkZf4Y=; b=T62B4iGryGkD2iG+HOHcmwKX346aUiUfJm
-	JAyAg/9r1DEjfO97NhwpFrC8EiHQMG1PRnY/tC7cxg1TSLdcZI36hY5Y+X1FmGv0
-	T1KNJqFc/x6p9BU0lJmM065mp5Mywcy/wt3g1+j/nR1Uyrztw9EmnbXfCwII5AEX
-	WYHszHPig=
-X-Sasl-enc: geBccgvJqGzZqgHh7tOLL+ofeLs3kzJug7cMMKgX+hsW 1451495385
-From: Jihyeok Seo <limeburst@member.fsf.org>
-Content-Type: multipart/mixed; boundary="Apple-Mail=_F1515D57-33E6-47A5-881F-FF20B80D5263"
-Message-Id: <EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>
-Date: Thu, 31 Dec 2015 02:09:43 +0900
+x-ms-reactions: disallow
+Received: (qmail 16346 invoked from network); 16 Feb 2025 18:22:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reciperadar.com; s=google; t=1739730162; x=1740334962; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9gBFb84INxnWHp9FY2QZmq+guTw3RRrSPeZNxqDwAF8=;
+        b=S1Xo2n2zKEG8skNyWXqYrNcuEF+y0cj9vP+IUiWVEOD+9OG4DuSh8uDKKmCoMjK2SJ
+         /DC7f4W57Rt6iana/gg2n6/4kpSdCQmF2HslArPhwH4QKzBwEDBY2VgMUZeVMUPR4vCs
+         HPc/tHtEY70o9ps05k6oNl+yScTyj5MJFZYYupP2kESD6OYq3v2CA2RVG16Te7idxkpi
+         Z0LOQJgSLVUo7iKswNvpuMZs20Utu8ICHIP5QltNtoq7HT86WwkeGePcQdRMXw3exBWm
+         woxvwIqFVT1e4DQ8IYGLi1eSiS4hbGZITMDALH/ly/y1Z00KO7+xyDMRc2EeDXRHSLcp
+         yOrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739730162; x=1740334962;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9gBFb84INxnWHp9FY2QZmq+guTw3RRrSPeZNxqDwAF8=;
+        b=vxiIJK5aYFBRYiduYiSVFxjnrqD8sQh1iMeK5Fx8lPVixTFk9GXsj1MwJqG1RfUBPJ
+         yV3cxZy+yNAsT7appMeL7Tms8XAQdHwILx949D3C7UPgS9dIEPbYNQo5XpcRtNaapdYf
+         nQLRfXwuI/sAUKOEXtztARai/tctx86oE0bWGylDSiI8bVfMWzmbUhX8U7ezvrZH5vGq
+         uKOUp+XNPXdk+4RJ/p6nQpDAMxlNwfD2Ex+1pUo9v7/PcNEoPfXtf5VR1Zwx6wz/NyE7
+         9DM4JcH5+gW6gN8gsn7NxoA3RtwNkzzhRQecUUXrqNGG42QGRZGKl3GCuLhJ4d/Ehk1R
+         lKug==
+X-Gm-Message-State: AOJu0YwbCdS4YfDguyGvudIFG5Ul7++aAt4yN1W0J3/N2/1u/fnODXit
+	wmzJPMo4YYUaqf4f4soOmR0fzZpnwZConVLcdl+4u2ytQeqDrCvLqR9GUEgZldoVxB0NWhn6W/F
+	NTPEO34aoVQV1hi2pkBm/+OzMjs/L5DOpbaWBFE76iG9hcSJLB+s=
+X-Gm-Gg: ASbGnctIqk4ASHaAH76LVuE/rgKmGWcc3U37IlQdw2tSRUuoG/1kG7AJMYbfIUo6C2c
+	uCF75eb2c0IGwH/ACMPltTdNB5e6Lgx4y+DC1hbeSW+k7421nt5TRn3uxSCl9+8PoQxx1bWAG
+X-Google-Smtp-Source: AGHT+IElcRqbi3hcj5I/bkEZM7xReJVATdlId5u2btTJsaHZb5371gw+XqdadlLpLzxk8TE6LgAt60EIdnyeUnhQBkQ=
+X-Received: by 2002:a05:6902:1007:b0:e58:9c24:5bcb with SMTP id
+ 3f1490d57ef6-e5dc90427f5mr3702980276.18.1739730162263; Sun, 16 Feb 2025
+ 10:22:42 -0800 (PST)
+MIME-Version: 1.0
+References: <20250216161818.GA12372@openwall.com>
+In-Reply-To: <20250216161818.GA12372@openwall.com>
+From: James Addison <james@reciperadar.com>
+Date: Sun, 16 Feb 2025 18:22:30 +0000
+X-Gm-Features: AWEUYZmeqdJ7HjELiYvDAqtNP1etFItPqWp165APL1g3Wy-IcXMD1FZQg3a7uy8
+Message-ID: <CAF3AkiMDf-RTf0Z0z-fyc5Fi65no5yxSrc6JPvW_43wGRLK47w@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-X-Mailer: Apple Mail (2.3112)
-Subject: [oss-security] CVE Request: Squashfs 4.2 Race Condition
-
---Apple-Mail=_F1515D57-33E6-47A5-881F-FF20B80D5263
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Subject: Re: [oss-security] CVE-2025-1094: PostgreSQL: Quoting APIs miss
+ neutralizing quoting syntax in text that fails encoding validation, enabling
+ psql SQL injection
 
-A malformed Squashfs filesystem can cause a race condition in unsquashfs. V=
-ersions below 4.3 are affected.
+On Sun, Feb 16, 2025 at 4:22=E2=80=AFPM Solar Designer <solar@openwall.com>=
+ wrote:
+>
+> Hi,
+>
+> As announced on February 13 in:
+>
+> https://www.postgresql.org/about/news/postgresql-173-167-1511-1416-and-13=
+19-released-3015/
+> https://www.postgresql.org/message-id/173945575457.197393.617578684265523=
+0205%40wrigleys.postgresql.org
+>
+> > The PostgreSQL Global Development Group has released an update to all s=
+upported
+> > versions of PostgreSQL, including 17.3, 16.7, 15.11, 14.16, and 13.19.
+> > This release fixes 1 security vulnerability and over 70 bugs reported o=
+ver the
+> > last several months.
+> > [ ... snip ... ]
 
-This is caused by the decompress thread attempting to access a shared queue=
-, resulting in a SIGSEGV.
+For anyone considering upgrading: please note also that the fix for
+this vulnerability introduced a regression[1] that should be addressed
+by subsequent upcoming releases of PostgreSQL on Thursday 2025-02-20
+(a few days from now).
 
-    struct cache_entry *entry =3D queue_get(to_deflate);
-
-I have attached a sample filesystem image illustrating this case.
-
-
---Apple-Mail=_F1515D57-33E6-47A5-881F-FF20B80D5263
-Content-Disposition: attachment;
-	filename=attachment
-Content-Type: application/octet-stream;
-	name="attachment"
-Content-Transfer-Encoding: base64
-
-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
-Vksp1dX/Ae+Xt9gsAHjaMGJYwgAEB47nB4MZSKBfgZEwP1hYMa0xjAkqDqLl
-gZgZiAH8BicaAHjaMCjAMOCbmJ2alpmTCgAOKAMpDwB42ktggIB2TggNAAoA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAA
-AAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAwAAAAAAAAAAAAADAAAAAwAAAwAAAAAAAAAAAAAAAAAAAwAAAAAAAA
-AAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAMDAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAA
-AAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAwAAAAAAAA
-AAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAADAA
-AAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAADAAMDAAAAAAAAAAMAAAAAAAAAAA
-AAAAADAAAAAwAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAwAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAA
-MAAwAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAwMDAAAAAAADAAAAAAAAAAADAAMAAAAAAAADAAAAAAAAAAAAAAADAA
-AAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
---Apple-Mail=_F1515D57-33E6-47A5-881F-FF20B80D5263--
+[1] - https://www.postgresql.org/message-id/272abbd9-d24c-49f1-8b61-8372190=
+6aa3b@postgresql.org
