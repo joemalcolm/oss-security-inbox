@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1471" "Wednesday" "6" "July" "2016" "07:03:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160706110353.A6EF56C0CFF@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: Malicious primary DNS servers can crash secondaries" "^Cc:" nil nil "7" "2016070611:03:53" "[oss-security] Re: Malicious primary DNS servers can crash secondaries" (number mark "        cve-assign@m Jul  6   38/1471  " thread-indent "\"[oss-security] Re: Malicious primary DNS servers can crash secondaries\"\n") "<03907aa5-5c2d-8bac-9053-7130e3159d62@redhat.com>" ("<03907aa5-5c2d-8bac-9053-7130e3159d62@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12204 invoked by uid 550); 6 Jul 2016 11:04:06 -0000
+Received: (qmail 15918 invoked by uid 550); 16 Feb 2025 15:13:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12186 invoked from network); 6 Jul 2016 11:04:05 -0000
-In-Reply-To: <03907aa5-5c2d-8bac-9053-7130e3159d62@redhat.com>
-Message-Id: <20160706110353.A6EF56C0CFF@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  6 Jul 2016 07:03:53 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Malicious primary DNS servers can crash secondaries
-To: fweimer@redhat.com
+x-ms-reactions: disallow
+Received: (qmail 15888 invoked from network); 16 Feb 2025 15:13:55 -0000
+Date: Sun, 16 Feb 2025 16:13:44 +0100
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Z7IAqKFGQA0690pG@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] heap use-after-free in str_to_reg() in Vim <
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A heap use-after-free was found in str_to_reg() in Vim < 9.1.1115
+==================================================================
+Date: 16.02.2025
+Severity: Medium
+CVE: *not yet assigned
+CWE: Use-after-free (CWE-416)
 
-> https://lists.dns-oarc.net/pipermail/dns-operations/2016-July/015058.html
-> 
-> BIND 9, knot DNS and Power
-> DNS slave servers received unlimited zone information and died.
-> NSD slave DNS server received unlimited zone data and /tmp became full.
+Vim allows to redirect screen messages using the `:redir` ex command to
+register, variables and files. It also allows to show the contents of
+registers using the `:registers` or `:display` ex command.
 
-For consistency, it seems best to provide all of the CVE IDs together:
+When redirecting the output of `:display` to a register, Vim will free 
+the register content before storing the new content in the
+register. Now when redirecting the `:display` command to a register that
+is being displayed, Vim will free the content while shortly afterwards
+trying to access it, which leads to a use-after-free.
 
-BIND 9:    CVE-2016-6170
-Knot DNS:  CVE-2016-6171
-PowerDNS:  CVE-2016-6172
-NSD:       CVE-2016-6173
+Vim pre 9.1.1115 checks in the ex_display() function, that it does not
+try to redirect to a register while displaying this register at the same
+time. However this check is not complete, and so Vim does not check the
+`+` and `*` registers (which typically donate the X11/clipboard
+registers, and when a clipboard connection is not possible will fall
+back to use register 0 instead.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+In Patch 9.1.1115 Vim will therefore skip outputting to register zero
+when trying to redirect to the clipboard registers `*` or `+`.
 
-iQIcBAEBCAAGBQJXfOSvAAoJEHb/MwWLVhi2D40P/Re3q1hB5fMa1xURAlXul+9U
-FordlgC0zRFq/HuE3ZnDqpuCAmcExpp8fxClIwGKFHu0R1bfqYqnlPlsnLShpGfr
-uAN2Ca0KFR/km6TYSpEXk4nRsLB23ynpB+/7+6i8SHzeVYm/T1d2RVy09jBtqzYl
-gCcgSezWDa+CtwoF5aY7MwN5esYu54tPgGX6bvI8RnMhzg8hC+vF3btspcwMQyli
-uA4/mbZKwQgxiXbDdfKeHcDrnpcaWSBEQtEwSEr3QYnEve3AeUCnxRDMqAYUCWy1
-fgPO5ZEWRjzSjXKFvTucupgVMGWjHFReWRqL+K9E4Lw3PtGeeKs1L0gIfizcbWrE
-H3CGmIomD6mBqxg5LaQeYVGWikG6Xym11J+IIP3Y8FV3UkWpdEhA3dk3HSGmYHh+
-PUwFYHcQUfuIkqYR6B3XnaYOa0VBIqhV34ECKY9TQF54oFaEVt1hMj5zrPIFS5ML
-y2z+HsvhGYYwEydwvE110n5BR0cJKtELwAHT/YHPh62Fd+j5K7zaayaQvoccIE6Q
-C75Ez05wugIZUmuRMWcEc4HZ2Ak88Mcc3ke92WSR6dA6o30ZRSXN71F92aAVUuzZ
-vH6e6yJO+lRxpC1xTRiQglgn5sANOWCsW5R8+ZgYG/K7Hc1h+7RTkAux+qn52Bch
-kp4BKN3bOsKMC/RXfK4X
-=R3BK
------END PGP SIGNATURE-----
+Impact is medium since this is a rather unusual situation and a user
+must explicitly run this command.
+
+The Vim project would like to thank github user @fizz-is-on-the-way
+for reporting this issue.
+
+The issue has been fixed as of Vim patch v9.1.1115
+
+References:
+https://github.com/vim/vim/commit/c0f0e2380e5954f4a52a131bf6b8
+https://github.com/vim/vim/security/advisories/GHSA-63p5-mwg2-787v
+
+Thanks,
+Christian
