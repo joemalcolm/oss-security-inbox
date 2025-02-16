@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3586" "Wednesday" "12" "October" "2016" "15:27:32" "+0200" "Sysdream Labs" "labs@sysdream.com" "<956e00cf-2553-d3fe-83f1-00e3c0b1075a@sysdream.com>" "120" "[oss-security] CVE-2016-7981: SPIP 3.1.2 Reflected Cross-Site Scripting" nil nil nil "10" "2016101213:27:32" "[oss-security] CVE-2016-7981: SPIP 3.1.2 Reflected Cross-Site Scripting" (number mark "U       labs@sysdrea Oct 12  120/3586  " thread-indent "\"[oss-security] CVE-2016-7981: SPIP 3.1.2 Reflected Cross-Site Scripting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5172 invoked by uid 550); 12 Oct 2016 13:27:47 -0000
+Received: (qmail 9233 invoked by uid 550); 16 Feb 2025 16:20:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,138 +7,138 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4070 invoked from network); 12 Oct 2016 13:27:46 -0000
-X-Virus-Scanned: amavisd-new at sysdream.com
-From: Sysdream Labs <labs@sysdream.com>
+x-ms-reactions: disallow
+Received: (qmail 7521 invoked from network); 16 Feb 2025 16:19:17 -0000
+Date: Sun, 16 Feb 2025 17:18:18 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: fulldisclosure@seclists.org, spip-team-owner@rezo.net
-Message-ID: <956e00cf-2553-d3fe-83f1-00e3c0b1075a@sysdream.com>
-Date: Wed, 12 Oct 2016 15:27:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="wBmNFBaetvR0R1ScfHS5LSepb15NonxSq"
-Subject: [oss-security] CVE-2016-7981: SPIP 3.1.2 Reflected Cross-Site Scripting
-
---wBmNFBaetvR0R1ScfHS5LSepb15NonxSq
-Content-Type: multipart/mixed; boundary="USTB0M4Nkq0TT4rBsFIA4odDlTM2fL3kE"
-From: Sysdream Labs <labs@sysdream.com>
-To: oss-security@lists.openwall.com
-Cc: fulldisclosure@seclists.org, spip-team-owner@rezo.net
-Message-ID: <956e00cf-2553-d3fe-83f1-00e3c0b1075a@sysdream.com>
-Subject: CVE-2016-7981: SPIP 3.1.2 Reflected Cross-Site Scripting
-
---USTB0M4Nkq0TT4rBsFIA4odDlTM2fL3kE
+Message-ID: <20250216161818.GA12372@openwall.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2025-1094: PostgreSQL: Quoting APIs miss neutralizing quoting syntax in text that fails encoding validation, enabling psql SQL injection
 
-## SPIP 3.1.2 Reflected Cross-Site Scripting (CVE-2016-7981)
+Hi,
 
-### Product Description
+As announced on February 13 in:
 
-SPIP is a publishing system for the Internet, which put importance on colla=
-borative working, multilingual environments and ease of use. It is free sof=
-tware, distributed under the GNU/GPL licence.
+https://www.postgresql.org/about/news/postgresql-173-167-1511-1416-and-1319-released-3015/
+https://www.postgresql.org/message-id/173945575457.197393.6175786842655230205%40wrigleys.postgresql.org
 
-### Vulnerability Description
+> The PostgreSQL Global Development Group has released an update to all supported
+> versions of PostgreSQL, including 17.3, 16.7, 15.11, 14.16, and 13.19.
+> This release fixes 1 security vulnerability and over 70 bugs reported over the
+> last several months.
+> 
+> For the full list of changes, please review the
+> [release notes](https://www.postgresql.org/docs/release/).
+> 
+> Security Issues
+> ---------------
+> 
+> ### [CVE-2025-1094](https://www.postgresql.org/support/security/CVE-2025-1094/): PostgreSQL quoting APIs miss neutralizing quoting syntax in text that fails encoding validation
+> 
+> CVSS v3.1 Base Score: [8.1](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)
+> 
+> Supported, Vulnerable Versions: 13 - 17. 
+> 
+> Improper neutralization of quoting syntax in PostgreSQL [`libpq`](https://www.postgresql.org/docs/current/libpq.html)
+> functions `PQescapeLiteral()`, `PQescapeIdentifier()`, `PQescapeString()`, and
+> `PQescapeStringConn()` allows a database input provider to achieve SQL
+> injection in certain usage patterns. Specifically, SQL injection requires the
+> application to use the function result to construct input to psql, the
+> PostgreSQL interactive terminal. Similarly, improper neutralization of quoting
+> syntax in PostgreSQL command line utility programs allows a source of command
+> line arguments to achieve SQL injection when [`client_encoding`](https://www.postgresql.org/docs/current/runtime-config-client.html#GUC-CLIENT-ENCODING)
+> is `BIG5` and
+> [`server_encoding`](https://www.postgresql.org/docs/current/runtime-config-preset.html#GUC-SERVER-ENCODING)
+> is one of `EUC_TW` or `MULE_INTERNAL`. Versions before PostgreSQL 17.3, 16.7,
+> 15.11, 14.16, and 13.19 are affected.
+> 
+> The PostgreSQL project thanks Stephen Fewer, Principal Security Researcher,
+> Rapid7 for reporting this problem.
 
-The `var_url` parameter of the `valider_xml` file is not correctly sanitize=
-d and can be used to trigger a reflected XSS vulnerability.
+This vulnerability is related to BeyondTrust CVE-2024-12356:
 
-**Access Vector**: remote
+https://infosec.exchange/@catc0n/113997298617317751
 
-**Security Risk**: medium
+In Caitlin Condon's words in the thread above:
 
-**Vulnerability**: CWE-79
+> New #Rapid7 vuln disclosure c/o @stephenfewer: CVE-2025-1094 is a SQL injection flaw in PostgreSQL's psql interactive tool that was discovered while analyzing BeyondTrust RS CVE-2024-12356. The bug is interesting - thread on its relation to BeyondTrust exploitation https://www.rapid7.com/blog/post/2025/02/13/cve-2025-1094-postgresql-psql-sql-injection-fixed/
+> CVE-2025-1094: PostgreSQL psql SQL injection (FIXED) | Rapid7 Blog
+> 
+> CVE-2024-12356, as you may recall, is a zero-day bug that has garnered broad attention in recent weeks as a result of its link to a high-profile attack on the U.S. Treasury Department that was attributed to Chinese state-sponsored adversaries. https://www.nytimes.com/2024/12/30/us/politics/china-hack-treasury.html
+> The Treasury Department said it had worked with the F.B.I., the intelligence community and other investigators to determine the impact of the breach.
+> The New York Times б╥ Dec 30, 202
+> China Hacked Treasury Dept. in 'Major' Breach, U.S. Says
+> By Ana Swanson
+> 
+> In every scenario Rapid7 tested during analysis of BeyondTrust Remote Support CVE-2024-12356, a successful exploit for CVE-2024-12356 *had* to include exploitation of PostgreSQL CVE-2025-1094 in order to achieve remote code execution.
+> 
+> CVE-2024-12356 was patched in December 2024, and the patch successfully neutralized what we believe to be the original exploit chain (including CVE-2025-1094). So neither CVE-2024-12356 nor CVE-2025-1094 was exploitable in BeyondTrust RS post-patch.
+> 
+> The BeyondTrust patch for CVE-2024-12356 did not address the root cause of CVE-2025-1094 in PostgreSQL psql, however - so CVE-2025-1094 remained a zero-day vulnerability until it was reported to the PostgreSQL dev group and remediated in today's release. https://www.postgresql.org/support/security/CVE-2025-1094/
+> PostgreSQL: CVE-2025-1094: PostgreSQL quoting APIs miss neutralizing quoting syntax in text that fails encoding validation
+> 
+> Finally, plot twist! @stephenfewer also discovered that before BeyondTrust's patch was released, it was possible to exploit CVE-2025-1094 against a vulnerable Remote Support target without leveraging CVE-2024-12356 at all.
+> 
+> CVE-2025-1094 affects all supported versions of PostgreSQL and is non-trivial to exploit. We wouldn't expect to see it exploited in PostgreSQL implementations more broadly (outside known-vulnerable BeyondTrust RS and PRA versions), given the complexity of the exploit pattern.
+> 
+> But with the above said, it's clear that the adversaries who perpetrated the December attack *really* knew the target technology, which is yet another example of an 0day exploit trend Rapid7 started tracking in 2023.
+> 
+> Full analysis of BeyondTrust PRA and RS CVE-2024-12356 in AttackerKB c/o @stephenfewer, and our sincere thanks to the PostgreSQL development group for their quick response and timely resolution. https://attackerkb.com/topics/G5s8ZWAbYH/cve-2024-12356/rapid7-analysis
+> 
+> One teeny tiny last semi-personal note - this is one of the most straightforward disclosure timelines we've been able to put in a CVD blog in a while, which is extra nice (and unfortunately not the norm in recent years) and also makes me extra grateful to the PostgreSQL dev group
 
-**CVSS Base Score**: 6.8 (Medium)
+The referenced Rapid7 blog post:
 
-**CVE-ID**: CVE-2016-7981
+https://www.rapid7.com/blog/post/2025/02/13/cve-2025-1094-postgresql-psql-sql-injection-fixed/
 
-### Proof of Concept
+> CVE-2025-1094: PostgreSQL psql SQL injection (FIXED)
+> 
+>     Feb 13, 2025 3 min read Stephen Fewer
+> 
+> Last updated at Fri, 14 Feb 2025 02:54:50 GMT
+> 
+> Rapid7 discovered a high-severity SQL injection vulnerability, CVE-2025-1094, affecting the PostgreSQL interactive tool psql. This discovery was made while Rapid7 was performing research into the recent exploitation of CVE-2024-12356 - an unauthenticated remote code execution (RCE) vulnerability that affects both BeyondTrust Privileged Remote Access (PRA) and BeyondTrust Remote Support (RS). Rapid7 discovered that in every scenario we tested, a successful exploit for CVE-2024-12356 had to include exploitation of CVE-2025-1094 in order to achieve remote code execution. While CVE-2024-12356 was patched by BeyondTrust in December 2024, and this patch successfully blocks exploitation of both CVE-2024-12356 and CVE-2025-1094, the patch did not address the root cause of CVE-2025-1094, which remained a zero-day until Rapid7 discovered and reported it to PostgreSQL.
+> 
+> All supported versions before PostgreSQL 17.3, 16.7, 15.11, 14.16, and 13.19 are affected. CVE-2025-1094 has a CVSS 3.1 base score of 8.1 (High). More information is available in the PostgreSQL advisory.
+> Impact
+> 
+> CVE-2025-1094 arises from an incorrect assumption that when attacker-controlled untrusted input has been safely escaped via PostgreSQL's string escaping routines, it cannot be leveraged to generate a successful SQL injection attack. Rapid7 found that SQL injection is, in fact, still possible in a certain scenario when escaped untrusted input is included as part of a SQL statement executed by the interactive psql tool.
+> 
+> Because of how PostgreSQL string escaping routines handle invalid UTF-8 characters, in combination with how invalid byte sequences within the invalid UTF-8 characters are processed by psql, an attacker can leverage CVE-2025-1094 to generate a SQL injection.
+> 
+> An attacker who can generate a SQL injection via CVE-2025-1094 can then achieve arbitrary code execution (ACE) by leveraging the interactive tool's ability to run meta-commands. Meta-commands extend the interactive tools functionality, by providing a wide variety of additional operations that the interactive tool can perform. The meta-command, identified by the exclamation mark symbol, allows for an operating system shell command to be executed. An attacker can leverage CVE-2025-1094 to perform this meta-command, thus controlling the operating system shell command that is executed.
+> 
+> Alternatively, an attacker who can generate a SQL injection via CVE-2025-1094 can execute arbitrary attacker-controlled SQL statements.
+> Credit
+> 
+> This vulnerability was discovered by Stephen Fewer, Principal Security Researcher at Rapid7 and is being disclosed in accordance with Rapid7's vulnerability disclosure policy.
+> Analysis
+> 
+> A technical analysis of CVE-2025-1094, as it relates to the exploitation of the BeyondTrust vulnerability CVE-2024-12356, is available in AttackerKB.
+> 
+> A Metasploit exploit module that exploits CVE-2025-1094 against a vulnerable BeyondTrust Privileged Remote Access (PRA) and Remote Support (RS) target is available here.
+> Vendor Statement
+> 
+>     The PostgreSQL Global Development Group provides information on security vulnerability reporting, releases processes, and known vulnerability fixes at https://www.postgresql.org/support/security/.
+> 
+> Remediation
+> 
+> To remediate CVE-2025-1094, PostgreSQL users should upgrade to PostgreSQL 17.3, 16.7, 15.11, 14.16, or 13.19. For additional details, please see the PostgreSQL advisory.
+> Rapid7 customers
+> 
+> InsightVM and Nexpose customers can assess their exposure to CVE-2025-1094 with an authenticated vulnerability check available in today's (February 13) content release.
+> 
+> For CVE-2024-12356 affecting BeyondTrust Privileged Remote Access (PRA) and Remote Support (RS) products, InsightVM and Nexpose customers have been able to assess exposure with authenticated checks for Windows systems (Scan Engine only checks) as of the February 10, 2025 content release.
+> Disclosure timeline
+> 
+>     January 27, 2025: Rapid7 makes initial contact with the PostgreSQL security team and discloses vulnerability details.
+>     January 29, 2025: The PostgreSQL development group confirms the finding; Rapid7 and PostgreSQL developers agree on a coordinated disclosure date.
+>     February 11, 2025: The PostgreSQL development group provides a CVE ID and affected versions.
+>     February 13, 2025: This disclosure.
 
-    http://spip-dev.srv/ecrire/?exec=3Dvalider_xml&var_url=3D%22%3E%3Ch1%3E=
-XSS!%3C/h1%3E
-
-### Vulnerable code
-
-The `$url variable` is not properly sanitized in `valider_xml.php`, line 13=
-4 :
-
-    $res =3D
-      "<div style=3D'text-align: center'>" . $err . "</div>" .
-      "<div style=3D'margin: 10px; text-align: left'>" . $texte . '</div>';
-    $bandeau =3D "<a href=3D'$url_aff'>$url</a>";
-
-The Cross-Site Scripting vulnerability is triggered on line 146 :
-
-    echo "<h1>", $titre, '<br>', $bandeau, '</h1>',
-
-
-### Timeline (dd/mm/yyyy)
-
-* 15/09/2016 : Initial discovery
-* 26/09/2016 : Contact with SPIP Team
-* 27/09/2016 : Answer from SPIP Team, sent advisory details
-* 27/09/2016 : Incorrect fix from SPIP Team.
-* 27/09/2016 : New proof of concept for bypassing fixes for XSS sent.
-* 27/09/2016 : Fixes issued for XSS (23185).
-* 30/09/2016 : SPIP 3.1.3 Released
-
-### Fixes
-
-* https://core.spip.net/projects/spip/repository/revisions/23200
-* https://core.spip.net/projects/spip/repository/revisions/23201
-* https://core.spip.net/projects/spip/repository/revisions/23202
-
-
-### Affected versions
-
-* Version <=3D 3.1.2
-
-### Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
---=20
-SYSDREAM Labs <labs@sysdream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-
---USTB0M4Nkq0TT4rBsFIA4odDlTM2fL3kE--
-
---wBmNFBaetvR0R1ScfHS5LSepb15NonxSq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJX/jpEAAoJEI60jNnVslmhrGAQAMmSMNyxNaxyZuWy4a3bn2LI
-HRdMzIly3Ga1QDLspgH8OKrMt1V+4K+t0kMSlIs4VO2qd0kcZmYiIWAHE4I4WAks
-H8jt+u/aW+7fljg6Aw2AclY2i6PkixJEnC47+8lLC9E1h/vROrxMhcdniii0iIhC
-bK/kT3HAj3mfae0vhbCMEMtgYktIB0MdC+Ftem5snF9uTMkDF7Ivx3C2r58iBNoJ
-GcUt60m85DDgkpjHzZPKBtwilivTP+n/9LSmGNaWHGddJSfGOvdlsEomk8FJRMoy
-t+SdjKvn5lYswyUgFDm/+DX9V0v5OC1DhkQe2wDo3x54gZsWwTr3SS+7y5Wx3AFS
-hvTMcbu1KEvr+FCwQ+nOXazwhc1ACH6IeCmju/qgtwl6ZxEQaIZ7XOQ2zh5URoDi
-1FGKKImdjddmbMtQpx4Znp4rBLI7XihArBlQCmVlJOxFoHcXuXJyCO9BueBut5Y3
-oYoiAcNpE5hDodCNy0GnFYk9KsMFpCBKkELfJqb3WOx2hDrx1hR5EqIY9/YTgh+s
-CBYwU+GMRX938Shyt4Nu4ZYs5tNvp6ZquorhMwQL4gLjQgP0vGkLCPWfZUTwQMGP
-MQK5v/cU4VqcywNzYfqCAxGLpplQXaGtAAp9fwB3xOP67UxUhFSgSb2bP5HMWK8H
-ET+HH5EfAryORFthiZz1
-=D0Mw
------END PGP SIGNATURE-----
-
---wBmNFBaetvR0R1ScfHS5LSepb15NonxSq--
+Alexander
