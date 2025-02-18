@@ -1,4 +1,4 @@
-Received: (qmail 8130 invoked by uid 550); 9 Jul 2024 22:50:16 -0000
+Received: (qmail 29925 invoked by uid 550); 18 Feb 2025 22:31:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +7,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7390 invoked from network); 9 Jul 2024 22:49:34 -0000
-Date: Wed, 10 Jul 2024 00:49:23 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 29883 invoked from network); 18 Feb 2025 22:31:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=VTg6AVynp9
+	S/U9SGa2VnbGKBT/C2wXcr4XUi4FgGjA0=; h=subject:to:date:from;
+	d=openbsd.org; b=HugFz5AI1fZgI80699pNECA6aOvddXTYrbIAaphQc7mnyfhYWJEoS
+	73/11yugx5rFuxg/DVYdtQdaqm37RYYTI/V7nfSdDuZHfcShQDhWA/Dmy0bi1Oxy9vIsud
+	mQgvyjtzFo1kQ15Hay70EjoCaa6RvracLwx+e3SKr4wCm8hvu29FMGOjVNrIBh+Ne5R8kj
+	LcmdIvEx0dzLl2rupOEeTj9RSOcW0hG9g3Sw/wRx5k5azldIg2usJm8WTEG7Kfiu14T4Iz
+	elVfk8D+bB8BFbJxmZSwF19L5CP0B2IL0gFGa912E9pseOUgC9eh0PgWDNmu4b8KtQm1pa
+	Go6vxzM3Q==
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Tue, 18 Feb 2025 15:30:59 -0700 (MST)
 To: oss-security@lists.openwall.com
-Cc: Qualys Security Advisory <qsa@qualys.com>
-Message-ID: <20240709224923.GA17147@openwall.com>
-References: <20240701083838.GA12787@localhost.localdomain> <20240708162106.GA4920@openwall.com> <67430275-b84d-462e-ab74-5a756c6d068f@mindrot.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <67430275-b84d-462e-ab74-5a756c6d068f@mindrot.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on glibc-based Linux systems
+Message-ID: <f3c2a961c36d1833@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 9.9p2 released
 
-On Tue, Jul 09, 2024 at 09:52:58AM +1000, Damien Miller wrote:
-> On Mon, 8 Jul 2024, Solar Designer wrote:
-> > Today is the coordinated release date to publicly disclose a related
-> > issue I found during review of Qualys' findings, with further analysis
-> > by Qualys.  My summary is:
-> > 
-> > CVE-2024-6409: OpenSSH: Possible remote code execution in privsep child
-> > due to a race condition in signal handling
-> 
-> As an aside, who wrote the text of
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-6409 ?
+OpenSSH 9.9p2 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-I don't know for sure, but I guess someone from Red Hat did since the
-CVE was assigned by them as a CNA.  Also, the description is the same as
-what's in Red Hat Bugzilla.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-> It's disappointing that this CVE states that this is a vulnerability
-> in OpenSSH sshd, and fails to make clear that this only affects Redhat
-> versions and users of their downstream patch.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-This was in the title, just not in the description.  And now I see I did
-it the other way around in my oss-security posting - should have been
-more careful to include this information in both the suggested title and
-in the description - sorry about that.  Meanwhile, looks like the
-CVE-2024-6409 record has been updated today, perhaps in response to your
-message, and now says Red Hat Enterprise Linux 9 also in the description.
+Changes since OpenSSH 9.9p1
+===========================
 
-> This follows another critical failure to properly issue CVEs for OpenSSH:
-> CVE-2024-6387 only lists CPEs for Redhat systems as affected (see the
-> JSON dump of the entry: https://cveawg.mitre.org/api/cve/CVE-2024-6387 )
+This release fixes two security bugs.
 
-The current revision (also updated today) starts with:
+Security
+========
 
-      "affected": [
-        {
-          "repo": "https://anongit.mindrot.org/openssh.git",
-          "versions": [
-            {
-              "status": "affected",
-              "version": "8.5p1",
-              "versionType": "custom",
-              "lessThanOrEqual": "9.7p1"
-            }
-          ],
-          "packageName": "OpenSSH",
-          "collectionURL": "https://www.openssh.com/",
-          "defaultStatus": "unaffected"
-        },
+* Fix CVE-2025-26465 - ssh(1) in OpenSSH versions 6.8p1 to 9.9p1
+  (inclusive) contained a logic error that allowed an on-path
+  attacker (a.k.a MITM) to impersonate any server when the
+  VerifyHostKeyDNS option is enabled. This option is off by default.
 
-and only then proceeds to give CPEs for Red Hat products.
+* Fix CVE-2025-26466 - sshd(8) in OpenSSH versions 9.5p1 to 9.9p1
+  (inclusive) is vulnerable to a memory/CPU denial-of-service related
+  to the handling of SSH2_MSG_PING packets. This condition may be
+  mitigated using the existing PerSourcePenalties feature.
 
-> This means that anyone using automation that consumes CVEs for detecting
-> vulnerabilities will be left exposed.
+Both vulnerabilities were discovered and demonstrated to be exploitable
+by the Qualys Security Advisory team. We thank them for their detailed
+review of OpenSSH.
 
-Does the above look good enough now, or should there also be a CPE for
-upstream OpenSSH?
+For OpenBSD, fixes to these problems are available as errata; refer
+to https://www.openbsd.org/errata.html
+ 
+Bugfixes
+========
 
-> Moreover, the explanatory text for CVE-2024-6387 is also extremely lacking.
-> It fails to explain the consequence of the vulnerability (unauth RCE) and
-> just talks about mechanism.
+ * ssh(1), sshd(8): fix regression in Match directive that caused
+   failures when predicates and their arguments were separated by '='
+   characters instead of whitespace (bz3739).
 
-This is still the case, and this CVE was also assigned by Red Hat (in
-response to requests by Qualys and me in the distros list discussion),
-and the description is also the same as in Red Hat Bugzilla, so should
-probably be first improved in a database Red Hat uses internally.
+ * sshd(8): fix the "Match invalid-user" predicate, which was matching
+   incorrectly in the initial pass of config evaluation.
 
-> I don't know if it's in anyone on this list's ability to get these
-> fixed, but IMO they are serious failures of the CVE process that make
-> it near-useless for consumers of this information.
+ * ssh(1), sshd(8), ssh-keyscan(1): fix mlkem768x25519-sha256 key
+   exchange on big-endian systems.
 
-Apparently, someone in here noticed and started making edits.
+ * Fix a number of build problems on particular operating systems /
+   configurations.
 
-Alexander
+Checksums:
+==========
+
+ - SHA1 (openssh-9.9p2.tar.gz) = edefe960645780dee78059c444d4261667ad3056
+ - SHA256 (openssh-9.9p2.tar.gz) = karbYD4IzChe3fll4RmdAlhfqU2ZTWyuW0Hhch4hVnM=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
+
+
