@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["16429" "Monday" "22" "June" "2015" "15:46:54" "+0530" "Abhishek Ghosh" "dr.abhishek_ghosh@hotmail.com" "<BLU436-SMTP2332801710A346418F7192FC4A10@phx.gbl>" "298" "[oss-security] Re: Wordpress Plugin: FTP To Zip 1.8" nil nil nil "6" "2015062210:16:54" "[oss-security] Re: Wordpress Plugin: FTP To Zip 1.8" (number mark "U       dr.abhishek_ Jun 22  298/16429 " thread-indent "\"[oss-security] Re: Wordpress Plugin: FTP To Zip 1.8\"\n") "<CAN6thH4XYHF8EMR6RLtqVEU39WcCxK32Tv9AGXSdKKraO=+z8g@mail.gmail.com>" ("<CAN6thH4XYHF8EMR6RLtqVEU39WcCxK32Tv9AGXSdKKraO=+z8g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3254 invoked by uid 550); 22 Jun 2015 17:25:13 -0000
+Received: (qmail 11664 invoked by uid 550); 21 Feb 2025 17:55:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,321 +7,141 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25674 invoked from network); 22 Jun 2015 10:17:44 -0000
-X-TMN: [mwuA9YUf5xllTgRvVC9BijIE+ml7NSG+]
-X-Originating-Email: [dr.abhishek_ghosh@hotmail.com]
-Message-ID: <BLU436-SMTP2332801710A346418F7192FC4A10@phx.gbl>
-MIME-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_F85467BD-01B8-447B-8FA2-D717CC353CAF";
-	protocol="application/pgp-signature"; micalg=pgp-sha512
-X-Pgp-Agent: GPGMail 2.5
-From: Abhishek Ghosh <dr.abhishek_ghosh@hotmail.com>
-In-Reply-To: <CAN6thH4XYHF8EMR6RLtqVEU39WcCxK32Tv9AGXSdKKraO=+z8g@mail.gmail.com>
-Date: Mon, 22 Jun 2015 15:46:54 +0530
-CC: OSS Securty <oss-security@lists.openwall.com>,
- cve-assign@mitre.org
-References: <CAN6thH4XYHF8EMR6RLtqVEU39WcCxK32Tv9AGXSdKKraO=+z8g@mail.gmail.com>
-To: 0pc0deFR <0pc0defr@gmail.com>
-X-Mailer: Apple Mail (2.2098)
-X-OriginalArrivalTime: 22 Jun 2015 10:17:30.0996 (UTC) FILETIME=[A5E3D340:01D0ACD4]
-Subject: [oss-security] Re: Wordpress Plugin: FTP To Zip 1.8
-
---Apple-Mail=_F85467BD-01B8-447B-8FA2-D717CC353CAF
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_2C98B338-DEC0-4623-B708-FFE56D3280A5"
-
-
---Apple-Mail=_2C98B338-DEC0-4623-B708-FFE56D3280A5
+x-ms-reactions: disallow
+Received: (qmail 11617 invoked from network); 21 Feb 2025 17:55:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=cc
+	:content-id:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	qualyscom; bh=YTkcYXF03EOa4rSBDQt9836gCcQeP+BhUdO6VRj9zXc=; b=No
+	P2D4lp+r/U+/tr3fI9Mgi/vCL6KF9Ipk8K1Z1jni4sDDnBgsTBVrth0wYDFhVJB4
+	RJAA+sHm3yd6dFsbWf4oJ7mxr4DjnDMc1tujVYVM5dkHGgIGVi9ZLd8g0xZXqhS8
+	9Z5PZNgNzrOu9S8WVwh2lztBIKAU64wXUonvjhCr3RZXYN9wDQTRMbTkUmJ0G2kv
+	0aOz+gUMbRRF7/LsOriM+o3fR9JcRTus83Dj7+LEwec43nSHlW8QFmMabShHZmaV
+	9/wiaJq2vDSz8bezugZmf+V7GY7ahUbn7jK7TEAdKXmOtRt7UzTCfQaGwwfXNs8I
+	jwK2LQ5qyYq91a4oNzTQ==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B58IHPwKcyHpS2CJHfYdrtf+m/XNaXTE8u6Thn9w7pKVavSSidEHtwgNYMUifknDa3f2/HeivaPto2mbj7KRZZqRv2/ZA1nd5ytS0/UiEUabUnuwYsIT6c+84CZwuprFE4vwLzHjgctRRlyQHvkJUkxdsrR10O++IKehWYmH5AuJqI+4wbsVlNWMBx5y7H8RaU22cSAHfyERUlEFeh/VF2eBW6RgEQ5S11HfdOMLWU9eeBjsEuEN/lYhtSzLzYUHHavHLsxJIEOKhxbf35hehmwgme4rMi6C2W0jHhitTAF7uK6hcKq002sfR0nL7coXTEcwPYWEgDfNUtupyTpl6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YTkcYXF03EOa4rSBDQt9836gCcQeP+BhUdO6VRj9zXc=;
+ b=esrXx6WxEb4Qic8ziZVhp//k4D0LCeVq2NDZArA1GPfHdCEKPn1KgLPBVNWg1KhSRGghkkXrD6NnjVHN5pN5+VtEZEAzPuis9KSXMY5/pYb8882jVwwoR1eK8Vi32i3YNspNDn/S0F99vM0WXr/Ve21epBPlY5MJkpNy72QFeBoTOzPPwrg5SrxhHpHxiWowYOkO/gPh2tgOcDIsjJioWTdlj0V79EgbHXsbErwxGeWh92IFcVw89eavLPWx3YIGs7McomOaDWJSGsYfRPsiXkagv6CBToZw9InV16KL8cIPFIYjFmYfu/8QDsWn/+TRH3XiI1S7WdoApBisypbEgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
+ dkim=pass header.d=qualys.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YTkcYXF03EOa4rSBDQt9836gCcQeP+BhUdO6VRj9zXc=;
+ b=fXPhtrFwgZq9tQiJNKiaEoNYH6kPmhdcWAqQaTFTvYCbKkvd36P7F6C/qeMf8KPAvL+MI+sh6Y3NDEFi+xBlnHfKo5BlAYEN0xUr39i0QgBxMnhtDzL2RnCVKD0S4Bn63eaz1Ig+t88LEV/PbZjF4YLThP28snk6KaH3vz8xRZmOUMb36qX73cS8GR3sJCyRPTX/iZGzFZNkIXFuYcxHNAOnXgnbSyZxmhen4t01GwPq0ILZijECliNe7rBGRdKXUg6Xpn03fUhKyLK5rQblsW6W6FNcAryI0SbT+yYJmqqdTasdVQSSwTUdT3YdhtkC3MqFq+cPJauu5x76Np5JtA==
+From: Qualys Security Advisory <qsa@qualys.com>
+To: Jordy Zomer <jordy@pwning.systems>
+CC: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [oss-security] MitM attack against OpenSSH's
+ VerifyHostKeyDNS-enabled client
+Thread-Index: AQHbhFtXVbPRNnZ9ukOo2d2n1ltThbNSCpqA
+Date: Fri, 21 Feb 2025 17:54:53 +0000
+Message-ID: <20250221175431.GB2391@localhost.localdomain>
+References: <1167011785.77274.1740140560949@privateemail.com>
+In-Reply-To: <1167011785.77274.1740140560949@privateemail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR06MB6910:EE_|CO1PR06MB10628:EE_
+x-ms-office365-filtering-correlation-id: 9f8c141b-e61b-4773-5c0d-08dd52a0d870
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?PGGG/jB/Zgt+GCEvnHwhwurESIDniRnLZCpXalBTqg3pjwUden/v0CtQ69Lb?=
+ =?us-ascii?Q?EPMCRtDyIS9xmN/d7Bl7gIgo1BAXPuBGqb/gUwjefb07J/KyefhrCDAix5wK?=
+ =?us-ascii?Q?cH7n/Q6JX48NQS6zwgb5qcxbFgo9Zls/HJNOgI7lPitZCO2LPC7hzRGm46mH?=
+ =?us-ascii?Q?+kkpwzFg+5GEOkFZPwwkv3smaM0R9sgh9sUvYN1juuKIC0NbFB+6m+p8Rmv2?=
+ =?us-ascii?Q?QkpIFMGI2bBEvbrfIM3wGif5gq5jL1BM9g9izsDhGkNXg28xvII+liAq54TV?=
+ =?us-ascii?Q?KtgNY/+x70DnfeCGSKSQgtos+qNpp3IQtnrejy2dimBxyNS4S+zHTtaeB+la?=
+ =?us-ascii?Q?toLxPPAkWtCR20saNrrpNwbRp15NWw+yfUqdxRjUiNwE1JHDmNdcrqv3MV6M?=
+ =?us-ascii?Q?b30m6/Yb+FjkBdFK1PKX76cJGdou8kWNIHHKZsVu+EEMiySPdLd4ZOdY/jFC?=
+ =?us-ascii?Q?MJoPTFAhVlMmE5/HVHHjNeYMKJJEquA3e6dPYU2cfAiIQCd0OS0zGOm5+ya1?=
+ =?us-ascii?Q?KT3Bnk1Pu9247+CT4oGwMgjuFlmFqimUcdiErqN2zcB10QPlM2146S/GMVko?=
+ =?us-ascii?Q?cSRHJd5uJ32o7QMnYD58ntPqiC0G9+d8a8Yq8l7uVLkVxkBdLOCNKb0a5H/v?=
+ =?us-ascii?Q?23yOEOSinACWBupNrF9IgiiGi4M70xNHdCXync6aKCUPLJQUsFUtCGbdBw/G?=
+ =?us-ascii?Q?tjKcoW+RuIRq9PElZWOl/BRPwoVIKlxseTAKx+Kmz+eJJk9TzG6AWOnfMmcO?=
+ =?us-ascii?Q?7oqARKFyuw3OncWD14Bs/W/pXDqEiNTzLukHSuLgYj+FxxuzDvtYN2wlfkO5?=
+ =?us-ascii?Q?4CTcvCMzg0CRkWgW5xui3qjeP2/xc77HO+t3moWrOOdMAfCEazpuHt8k65Fs?=
+ =?us-ascii?Q?jLJOscQynJ2dU5GqdlMTlbrDIqXfQnULNLm1bg2jUExwZo3IYz8PMv6MXwKX?=
+ =?us-ascii?Q?4/q+JiTw6ZWuNgkZ685mRs5Rx6CluOg/nOFl/HEmxtTsdKDc8TIeTFYVIc1U?=
+ =?us-ascii?Q?OaFjoUpal/xZ0Ql0EWqlamojzqDSBQ6uUie7LyZSzSty0g4UpP4X7U0HY6Ju?=
+ =?us-ascii?Q?OrUq4B3wrZS+guFORV8UfzdpkfFER20a6Annif59EarEkLYMGFFGgW7ULiCA?=
+ =?us-ascii?Q?nhLLwhjSsotzBE+Sz450c1wtwNMN3vMnS54grXEbrTyDISxrUP1xUP4qMPiV?=
+ =?us-ascii?Q?RcHqgK6YRPbAwGVAbaobZoE65PBH3CHKNtOHsPzUcY07vuNvlPW7+A3N5Jq9?=
+ =?us-ascii?Q?mc6kg6HcIMkDOiRtTTeVgYEoKX2oN5ynQQfVTqryT3du7vj+AWyzYiOKffiL?=
+ =?us-ascii?Q?5TI8n8y/aE3g3yW0jMgB/cqAQwQkusW8PCVXiK3dodUPhWrHwpyTM2EgdN5m?=
+ =?us-ascii?Q?bpPp3koQDIS9OXM3j847RWj0sMM2SkCDtIjqWVcemSgTgXaJJ0N3G9crQ/jk?=
+ =?us-ascii?Q?iztFt7l4u74goX8uIuIdK+nawwtzI85S?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR06MB6910.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?AP6RH/FlEOoA6E7yY/O4fG/MR3I1N67WCv8vz31VQWQgb+mJlROXJJfprYRB?=
+ =?us-ascii?Q?jKJ909l6pl9Q9GoU1FUf9l/L/ZhEH5tx4DuBqQmpRKzoxH5m/AAd8mUsvWal?=
+ =?us-ascii?Q?oMvt8LYyUcl///EB2x7MvaE2Ttgv+RnmOC52pIEUT0spdSj4111YLdBzx7fj?=
+ =?us-ascii?Q?2ePPpWMQtRrg5WofRGiRSyVXgHyqlObC5OohjwPyu7GYpE4qWc4HaaTacYAc?=
+ =?us-ascii?Q?QQ8mtfbEEjykXxC6ZsKpRmntQq3Ttrmb+eWQ6cVbRs4dKvDSwmb5mYMDJZk8?=
+ =?us-ascii?Q?DfLt4M3T7M/fqUfveFaSfXT6Pm8qIkOZ+J17i1MmwmfCQCak+k1UK1vLtoxV?=
+ =?us-ascii?Q?2skK0hDx7BykPui5Q1pBg0JUZYbQuiDQjDI6TeyTBusPB7obbVZJhVZVkP/o?=
+ =?us-ascii?Q?N0TW+iKgu5jg5sYBT3BsmiQLidb+HFNple1wUcBs0qLd0Z/jrg/ffKNUbsmr?=
+ =?us-ascii?Q?G1P376ZDj4eniWaEkBdJ4ky7kftuCWDjz3YQcR/gEIzppzRqfGDg8PcsWneJ?=
+ =?us-ascii?Q?Q4Vmo3O643uljgt08dBYWke3AgjoaCFsX3F+u7IlDELrJMHGsplUA/qTJ4Mx?=
+ =?us-ascii?Q?F9YJaytLbAWdalhY1qL05m5X7Gp8MSaRsQGFptM4X432Qb4L+/5+hYBRuj3r?=
+ =?us-ascii?Q?OmZIzwxKMM7IJphiKuJwIRZoESfHEP7r0CqDDIfNEbkpR9F6CBeAE53piK9J?=
+ =?us-ascii?Q?AciMC1G8SXfHip77YRLlhsf2pMPeDH4qHcSoH0z8+E9wqslZ/JeosLtmyR/d?=
+ =?us-ascii?Q?SF1VJHWR6e0ySA705vkgcWLtLFRcI/wIFkvhqRiXpsE/V3Z8oeYOID4ZqPXY?=
+ =?us-ascii?Q?IUbXglB0NjWCiagQvvVjLa/D3qnk4GxQBi+dLL0KLhJ377YQcg9EoBJPdJrU?=
+ =?us-ascii?Q?zk06DYKrXE6dHYwifbCnc0wEafeaSH8Ppggb6gGEeaEuhisfW0JqQEXwr25B?=
+ =?us-ascii?Q?YzKDj/zEnkHX1GkQYv2D55Mr5T1lL2FEDn9WpOgKLLcW3NFl9CmGs2TdQsI1?=
+ =?us-ascii?Q?JMrdckpd18fBjnyQwM0Jys2T2PLRU/6ZqpREWBMa+aZyHgY0hYkYl+NBQ0YN?=
+ =?us-ascii?Q?uh1z72oSs9BlRLRgr4DBvBwVAJlZ5DpVUN5Nbd0LpaT98YolA1M6vDg1yj3L?=
+ =?us-ascii?Q?ZoXV115F1Frn+WiFGvDE5t8kYkQn/zCYlfGPLHG/CAJmR0FQFUtA7Zg+Y2NW?=
+ =?us-ascii?Q?d1iGxVLd8K24AJ8+XtVDA9FE2k/Lzd93+rWVBauIf5D9XueZHUYcde5zGH5x?=
+ =?us-ascii?Q?QWZnTO2REZslxjtawH58c246zvJMMwmQpQToFSjcrWDhgK3ypHatUWbILfPb?=
+ =?us-ascii?Q?2vTMfeWbWHTt1CRYHk8BrVUI2nVAHcwy35iv3bieJOduohb61M3lxwBKDk8F?=
+ =?us-ascii?Q?KvhMmpJQyQV1JyvzecryT7eVpjzf7Gq5yaiuj8Q1y+iF5I5QmwtILAvOjY13?=
+ =?us-ascii?Q?57d6E4uFZVJ/zyHrrKljqJuLp1h8eBiPLgRXUsEEfPD/E9WkQbaVPt8UuJSY?=
+ =?us-ascii?Q?iawwlhkrlS/f3o35LIhDtR96j7hbp7LOHovA0Klx3beKJ3rFKkhhpVjRSRut?=
+ =?us-ascii?Q?FqUzJwbsUJf1pZdIkCqUm01kDcwZvUhQ6ZkWSTA7tyPVecpJyqbVqkWTkNcv?=
+ =?us-ascii?Q?Lz2y2Jdtzwl8vAFn9p6W7e0=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <30A61F58AA094A4189F89809CE0DE0EB@namprd06.prod.outlook.com>
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+MIME-Version: 1.0
+X-OriginatorOrg: qualys.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR06MB6910.namprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f8c141b-e61b-4773-5c0d-08dd52a0d870
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 17:54:53.5335
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: YiuGFir7n1gPFpokdfFkBFGUVIMiphsIIjsBJgH+z+vxaAybbaGpEOotFfge4ZuBEffqLFQgDeFhsP02BFzWcyrahv75GppPZ/ANgAI1nwc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR06MB10628
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
+Subject: Re: [oss-security] MitM attack against OpenSSH's
+ VerifyHostKeyDNS-enabled client
 
-Hello,
+Hi Jordy,
 
-I am the developer of the Plugin. The plugin's intended function is to crea=
-te zip without any password prompt which OP in this public mail thinking as=
- flaw!
+On Fri, Feb 21, 2025 at 01:22:40PM +0100, Jordy Zomer wrote:
+> Hope that's helpful, please reach out if you have any questions :)
 
-The person's report is baseless and proves the fact that he/she has not rea=
-d the README file - http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8/re=
-adme.txt <http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8/readme.txt> =
- Even if a new user installs the plugin WITHOUT reading the long descriptio=
-n, the script of the plugin even if ran by a just an ordinary person, it wi=
-ll only zip the wp-content directory. wp-content directory holds only theme=
-s, plugins and uploads. wp-content directory is NOT intended for keeping pe=
-rsonal data or sensitive data related to WordPress installation (with defau=
-lt settings). WordPress configuration file holding the database details res=
-ides one level up from wp-content directory. Usage direction is written in =
-"Installation" part, which the person who created this public mail has not =
-read. It is clearly written in the readme file :
+Woo-hoo, awesome work, thank you very much for sharing it! We are
+looking into it now (and learning from it).
 
+Thanks again! With best regards,
 
-This Plugin is intended for the advanced users - either block the downloada=
-ble zip file via .htaccess or take an alternative measure.
-
-
-In shared hosting environments, aPaaS and PaaS, in case of hack on an insta=
-llation get hacked and ways are not great even to login and there is no com=
-pression option is offered by the host; the user will have the capability t=
-o take a faster file level backup of the whole FTP content and wget it from=
- different provider. The description clearly says the intention :
-
-
-FTP to Zip takes browser based FTP backup of WordPress plus other folders.
-
-
-It is not for keeping unsecured, it is clearly written :
-
-
-This Plugin is intended for the advanced users - either block the downloada=
-ble zip file via .htaccess or take an alternative measure.
-
-
-The person has not manually checked the code :
-
-http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8/backup.php <http://plu=
-gins.svn.wordpress.org/ftp-to-zip/tags/1.8/backup.php>
-
-http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8/run.php <http://plugin=
-s.svn.wordpress.org/ftp-to-zip/tags/1.8/run.php>
-
-
-These are normal PHP functions. There absolutely no security issue in the c=
-ode themselves.
-It holds true for all the WordPress Plugins - if there is any major flaw, r=
-eporting to WordPress dot ORG or personally contacting the plugin developer=
- is always better.
-
-Most importantly, if I discover a real security flaw, the first work is to =
-preserve the secrecy still the bug is fixed. None of us open a public mail =
-and describe the flaw. If it was a genuine security risk - the users would =
-be targeted by some script kiddies.
-
-In the same way, HyperDB needs manual installation, this is not for the ord=
-inary users : https://wordpress.org/plugins/hyperdb/ <https://wordpress.org=
-/plugins/hyperdb/>
-
-wget =E2=80=94ing WordPress tar ball, uncompressing it also dangerous in on=
-e sense. Quite practical fact - if the server admin wget WordPress here htt=
-p://www.openwall.com/Owl/ <http://www.openwall.com/Owl/> and left it for pu=
-blic, I can run the installer file with a database on HP Cloud!  Without pr=
-ior contacting anyone shouting "Open CVE" can prove to be fatal for your fr=
-eelancing. WordPress offers an official support forum for each plugin - htt=
-ps://wordpress.org/support/plugin/ftp-to-zip <https://wordpress.org/support=
-/plugin/ftp-to-zip>
-
-
-Without stepwise prior works, OP's opening a public mail is appearing like =
-as if WordPress Plugin curators are careless. Which is quite pathetic and n=
-ot true.
-
-If "automatic control" was required, I could put the PHP snippet inside any=
- one these example wordpress plugin https://github.com/Abhishek-Ghosh/Basic=
--WordPress-Plugin-Frameworks <https://github.com/Abhishek-Ghosh/Basic-WordP=
-ress-Plugin-Frameworks> - what would demand login to WordPress to execute t=
-he script. For that work, there are many plugins.
-
-Even if someone keeps the plugin like OP without understanding, actually th=
-e outsider will never know the credentials related to WordPress. From WordP=
-ress, if serious security flaw is present, official email is sent. In extre=
-me, they are removed. You are welcome to WordPress development, but kindly =
-do not insult the core WordPress developers who are maintaining the plugin =
-repository via another Free Software project. For Free Software projects we=
- do not need to use a Third Party Free Software project for reporting bug. =
-At least read the lines :
-
-
-The Plugin is fail proof and is powerful, but usage must be judicial.
-
-
-
-Regards,
-
-Dr. Abhishek Ghosh; M.S., PhD (PDT)
-
-Contact website - https://thecustomizewindows.com/ <https://thecustomizewin=
-dows.com/>
-
-[ further public mails will not be answered ]
-
-
-> On 21-Jun-2015, at 5:20 pm, 0pc0deFR <0pc0defr@gmail.com> wrote:
->=20
-> Hello,
->=20
-> The FTP To Zip 1.8 wordpress plugin is vulnerable to unauthenticated exec=
-ution. With vulnerability, you can create a zip archive for Wordpress insta=
-ll and you can download this archive (http://domain.tld/wp-content/plugins/=
-ftp-to-zip/backup.php <http://domain.tld/wp-content/plugins/ftp-to-zip/back=
-up.php>).
-> A need CVE please.
->=20
-> Download plugin: https://downloads.wordpress.org/plugin/ftp-to-zip.1.8.zip
->  <https://downloads.wordpress.org/plugin/ftp-to-zip.1.8.zip>
-> --
-> Cordialement,
->=20
-> K=C3=A9vin FALCOZ alias 0pc0deFR - Consultant Expert WordPress - http://w=
-ordpress-expertise.fr <http://wordpress-expertise.fr/>
->=20
-> --
-> Regards,
->=20
-> K=C3=A9vin FALCOZ aka 0pc0deFR - WordPress Expert Consultant - http://wor=
-dpress-expertise.fr <http://wordpress-expertise.fr/>
-
-
---Apple-Mail=_2C98B338-DEC0-4623-B708-FFE56D3280A5
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html charset=
-=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
-pace; -webkit-line-break: after-white-space;" class=3D"">Hello,<div class=
-=3D""><br class=3D""></div><div class=3D"">I am the developer of the Plugin=
-.&nbsp;<b class=3D"">The plugin's intended function is to create zip withou=
-t any password prompt which OP in this public mail thinking as flaw!&nbsp;<=
-/b></div><div class=3D""><br class=3D""></div><div class=3D"">The person's =
-report is baseless and proves the fact that he/she has not read the README =
-file -&nbsp;<a href=3D"http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8=
-/readme.txt" class=3D"">http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.=
-8/readme.txt</a>&nbsp; Even if a new user installs the plugin WITHOUT readi=
-ng the long description, the script of the plugin even if ran by a just an =
-ordinary person, it will only zip the wp-content directory. wp-content dire=
-ctory holds only themes, plugins and uploads. wp-content directory is NOT i=
-ntended for keeping personal data or sensitive data related to WordPress in=
-stallation (with default settings). WordPress configuration file holding th=
-e database details resides one level up from wp-content directory. Usage di=
-rection is written in "Installation" part, which the person who created thi=
-s public mail has not read. It is clearly written in the readme file :<div =
-class=3D""><br class=3D""></div><div class=3D""><br class=3D""></div><div c=
-lass=3D""><b class=3D"">This Plugin is intended for the advanced users - ei=
-ther block the downloadable zip file via .htaccess or take an alternative m=
-easure.</b></div><div class=3D""><br class=3D""></div><div class=3D""><br c=
-lass=3D""></div><div class=3D"">In shared hosting environments, aPaaS and P=
-aaS, in case of hack on an installation get hacked and ways are not great e=
-ven to login and there is no compression option is offered by the host; the=
- user will have the capability to take a faster file level backup of the wh=
-ole FTP content and wget it from different provider. The description clearl=
-y says the intention :</div><div class=3D""><br class=3D""></div><div class=
-=3D""><b class=3D""><br class=3D""></b></div><div class=3D""><b class=3D"">=
-FTP to Zip takes browser based FTP backup of WordPress plus other folders.<=
-/b></div><div class=3D""><br class=3D""></div><div class=3D""><br class=3D"=
-"></div><div class=3D"">It is not for keeping unsecured, it is clearly writ=
-ten :</div><div class=3D""><br class=3D""></div><div class=3D""><br class=
-=3D""></div><div class=3D""><b class=3D"">This Plugin is intended for the a=
-dvanced users - either block the downloadable zip file via .htaccess or tak=
-e an alternative measure.&nbsp;</b></div><div class=3D""><br class=3D""></d=
-iv><div class=3D""><br class=3D""></div><div class=3D"">The person has not =
-manually checked the code :</div><div class=3D""><br class=3D""></div><div =
-class=3D""><a href=3D"http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8/=
-backup.php" class=3D"">http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8=
-/backup.php</a>&nbsp;</div><div class=3D""><br class=3D""></div><div class=
-=3D""><a href=3D"http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8/run.p=
-hp" class=3D"">http://plugins.svn.wordpress.org/ftp-to-zip/tags/1.8/run.php=
-</a>&nbsp;</div><div class=3D""><br class=3D""></div><div class=3D""><br cl=
-ass=3D""></div><div class=3D"">These are normal PHP functions. There absolu=
-tely no security issue in the code themselves.&nbsp;</div><div class=3D"">I=
-t holds true for all the WordPress Plugins - if there is any major flaw, re=
-porting to WordPress dot ORG or personally contacting the plugin developer =
-is always better.&nbsp;</div><div class=3D""><br class=3D""></div><div clas=
-s=3D"">Most importantly, if I discover a real security flaw, the first work=
- is to preserve the secrecy still the bug is fixed. None of us open a publi=
-c mail and describe the flaw. If it was a genuine security risk - the users=
- would be targeted by some script kiddies.&nbsp;</div><div class=3D""><br c=
-lass=3D""></div><div class=3D"">In the same way, HyperDB needs manual insta=
-llation, this is not for the ordinary users :&nbsp;<a href=3D"https://wordp=
-ress.org/plugins/hyperdb/" class=3D"">https://wordpress.org/plugins/hyperdb=
-/</a>&nbsp;</div><div class=3D""><br class=3D""></div><div class=3D"">wget =
-=E2=80=94ing WordPress tar ball, uncompressing it also dangerous in one sen=
-se. Quite practical fact - if the server admin wget WordPress here&nbsp;<a =
-href=3D"http://www.openwall.com/Owl/" class=3D"">http://www.openwall.com/Ow=
-l/</a>&nbsp;and left it for public, I can run the installer file with a dat=
-abase on HP Cloud! &nbsp;Without prior contacting anyone shouting "Open CVE=
-" can prove to be fatal for your freelancing. WordPress offers an official =
-support forum for each plugin -&nbsp;<a href=3D"https://wordpress.org/suppo=
-rt/plugin/ftp-to-zip" class=3D"">https://wordpress.org/support/plugin/ftp-t=
-o-zip</a>&nbsp;</div><div class=3D""><br class=3D""></div><div class=3D""><=
-br class=3D""></div><div class=3D"">Without stepwise prior works, OP's open=
-ing a public mail is appearing like as if WordPress Plugin curators are car=
-eless. Which is quite pathetic and not true.</div><div class=3D""><br class=
-=3D""></div><div class=3D"">If "automatic control" was required, I could pu=
-t the PHP snippet inside any one these example wordpress plugin&nbsp;<a hre=
-f=3D"https://github.com/Abhishek-Ghosh/Basic-WordPress-Plugin-Frameworks" c=
-lass=3D"">https://github.com/Abhishek-Ghosh/Basic-WordPress-Plugin-Framewor=
-ks</a>&nbsp;- what would demand login to WordPress to execute the script. F=
-or that work, there are many plugins.&nbsp;</div><div class=3D""><br class=
-=3D""></div><div class=3D"">Even if someone keeps the plugin like OP withou=
-t understanding, actually the outsider will never know the&nbsp;credentials=
- related to WordPress. From WordPress, if serious security flaw is present,=
- official email is sent. In extreme, they are removed. You are welcome to W=
-ordPress development, but kindly do not insult the core WordPress developer=
-s who are maintaining the plugin repository via another Free Software proje=
-ct. For Free Software projects we do not need to use a Third Party Free Sof=
-tware project for reporting bug. At least read the lines :</div><div class=
-=3D""><br class=3D""></div><div class=3D""><br class=3D""></div><div class=
-=3D""><b class=3D"">The Plugin is fail proof and is powerful, but usage mus=
-t be judicial.</b></div><div class=3D""><br class=3D""></div><div class=3D"=
-"><br class=3D""></div><div class=3D""><br class=3D""></div><div class=3D""=
->Regards,</div><div class=3D""><br class=3D""></div><div class=3D"">Dr. Abh=
-ishek Ghosh; M.S., PhD (PDT)</div><div class=3D""><br class=3D""></div><div=
- class=3D"">Contact website -&nbsp;<a href=3D"https://thecustomizewindows.c=
-om/" class=3D"">https://thecustomizewindows.com/</a>&nbsp;</div><div class=
-=3D""><br class=3D""></div><div class=3D"">[ further public mails will not =
-be answered ]</div><div class=3D""><br class=3D""></div><div class=3D""><br=
- class=3D""><div><blockquote type=3D"cite" class=3D""><div class=3D"">On 21=
--Jun-2015, at 5:20 pm, 0pc0deFR &lt;<a href=3D"mailto:0pc0defr@gmail.com" c=
-lass=3D"">0pc0defr@gmail.com</a>&gt; wrote:</div><br class=3D"Apple-interch=
-ange-newline"><div class=3D""><div dir=3D"ltr" class=3D""><div class=3D""><=
-div class=3D""><div class=3D"">Hello,<br class=3D""><br class=3D""></div>Th=
-e FTP To Zip 1.8 wordpress plugin is vulnerable to unauthenticated executio=
-n. With vulnerability, you can create a zip archive for Wordpress install a=
-nd you can download this archive (<a href=3D"http://domain.tld/wp-content/p=
-lugins/ftp-to-zip/backup.php" class=3D"">http://domain.tld/wp-content/plugi=
-ns/ftp-to-zip/backup.php</a>).<br class=3D""></div>A need CVE please.<br cl=
-ass=3D""><br class=3D""></div>Download plugin: <a href=3D"https://downloads=
-.wordpress.org/plugin/ftp-to-zip.1.8.zip" class=3D"">https://downloads.word=
-press.org/plugin/ftp-to-zip.1.8.zip<br class=3D""></a><br class=3D""><div c=
-lass=3D""><div class=3D""><div class=3D""><div class=3D""><div class=3D""><=
-div class=3D"gmail_signature"><div dir=3D"ltr" class=3D""><div class=3D""><=
-div dir=3D"ltr" class=3D""><div class=3D""><div class=3D""><div class=3D"">=
---<br class=3D"">Cordialement,<br class=3D""><br class=3D"">K=C3=A9vin FALC=
-OZ alias 0pc0deFR - Consultant Expert WordPress - <a href=3D"http://wordpre=
-ss-expertise.fr" target=3D"_blank" class=3D"">http://wordpress-expertise.fr=
-</a><br class=3D""><br class=3D"">--<br class=3D""></div>Regards,<br class=
-=3D""></div><br class=3D""></div>K=C3=A9vin FALCOZ aka 0pc0deFR - WordPress=
- Expert Consultant - <a href=3D"http://wordpress-expertise.fr/" target=3D"_=
-blank" class=3D"">http://wordpress-expertise.fr</a><br class=3D""></div></d=
-iv></div></div></div>
-</div></div></div></div></div>
-</div></blockquote></div><br class=3D""></div></div></body></html>=
-
---Apple-Mail=_2C98B338-DEC0-4623-B708-FFE56D3280A5--
-
---Apple-Mail=_F85467BD-01B8-447B-8FA2-D717CC353CAF
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJVh+CzAAoJEB+cuQv6MGAL77QP/RSRwxJmsQq3WRJE61KV7RPL
-1zfv857sX6YtGYltyWmLpkpA5aTfmUYbpE3WGgAMnCED1wltm4LP/x5nwcorg/TJ
-TomXCVopWy1v2avfJqGkKaYhqi3gdM8bXqts0JoEQ3569gDA0DaEjM1LScNWRRDg
-UuzSBvd7AphZlSL+ViihSW6brm+kC6YzI6631r3cAof8Uh768qffVmHaP0gf+TuI
-SL0paNfChhjlgbXyy8/oEw8dAg87Nv5uGB38LmfOp/go7ucaSFnsd6/gx5WpAtRa
-NSglpJzft+GmXqPLQWRTJYamrwpO6g1+uFm2Oo27X1Qat+HVW1BaMaTmcppdKk2T
-1BbkUd+YMB/kbX8yrWWZx8vc//RzWAkSitXXf/oQH70hLYxWvMgMr8Il+1GEko0y
-mODZuwDZExz8DbwT4LeGuym0SuagL8er1lGXAS6PoqCG41+MfNqaO+nehXvRse3a
-uJTLgbteFmMUN7kIN3ef8s9DFU56a+r4/+BUYUD73CnHDmDyc0+G0pZPw4mAucVH
-NsblPgcHBoo/40riDpyp/tnmJAoEauU3EqdjY20FA5UxWCoV3o1bg4uq51WNoMZX
-qUAkhsTsCMricTW212bwENvXjSvvUioUc7lgtucUGPZ9+Xdzg3bzuB80/K64tHiu
-Z7OClOJUTkUr+hLIV3in
-=fFWp
------END PGP SIGNATURE-----
-
---Apple-Mail=_F85467BD-01B8-447B-8FA2-D717CC353CAF--
+--=20
+the Qualys Security Advisory team=
