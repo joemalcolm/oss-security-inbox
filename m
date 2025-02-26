@@ -1,4 +1,4 @@
-Received: (qmail 3784 invoked by uid 550); 15 May 2026 19:16:13 -0000
+Received: (qmail 7863 invoked by uid 550); 26 Feb 2025 23:46:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,172 +8,224 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 32694 invoked from network); 15 May 2026 11:34:18 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1778844848; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VnvtqQ7pNDCfzTKgjh8WsDDI+3hXfUou5qw569kGPAlF20O8AR0FFNfKj5/jxnZRnm
-         SllYvDNFujtUICIlefHodOP/bDGa8gv3h5uf+Ejw0s/xXkD83byMi8ZXiQNPq8AsMpw2
-         QU0QNYF+ST6M3u+ci3xlM6iIAz8e9Cb+EPx0uGa4BKZLQOgcqgWTOS3B/xZjJ03snzqR
-         RCcvlsZpEjWYgTmR8O8pWFqtLO/ZeFmlFh+w0tFkoxSMw49uVR+ZF5m9tWGdwf7YEzzQ
-         0knRB5oTdJVaLENNf1PxMsBuSX19VE8Nkhe+rCe1Ijk8w6IjTaywdnU3l0OcOIH0roCa
-         VniQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=O3rGe4W0x5IPMFCCVtpn1y5eTbM9pYCDIphQ+zBfes8=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=NKSmcXMaGe1/dQCtuUj77uOuhYbw0tQpq8Lc+hiyNXDvA4n3N07KX07rjHZxEsR1L3
-         Y7oiiRRHMZAFP0uRyOD4CFlk0mspcjIv+zpp3h6CsAC1NwNSAeddbFXS2TvTMGUC+GKv
-         wveuCwaSSQd2HBzW6Ltx3gl1HuAxXQYJ2XdOCwdSb39w1/Gk5KoUeJAZLbuBQkO2tQKC
-         4Sk4tmzCtmBycSchEWzwFUnRofUAJpXcoxz6XMioCxvVkL5D/D4b3pw2TWsAwjFk7tjn
-         BSrAhzwsDIu7QsY+i4TvdtC/n+4P9xmkYTWkzktk+xqC/dor4b2eeQkTe6Ftzo86kXKZ
-         1sqw==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: (qmail 7830 invoked from network); 26 Feb 2025 23:46:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=corp-2023-11-20; bh=dNclpoGcsPb1BGZ8
+	44N8ZS7N6jrrWdjx+ThDqo49VDk=; b=S526QqbZo4UzkhB02WmKcB19kxgau3J8
+	/ufed8CdskYhrVKYXSG8foK2j+Az/askpAhljugBS6ULdGP86x0obNijhF59Mb9O
+	k5omyE6ooB4B0yb3qmoWqpyGAya5x566t1Rmj71FhMni7kY4PhEO1yCPGcQCzwRE
+	tuvBWjoy5vzgABhaiQ3Rdnm+VdDayFxIl/NlKHho9jSi6uMO8YgNkR4zY1ITKo2I
+	jPzJhYRCpPO/bYEjI/cER6PdOJtCLsTX+hJTxj7eXfGcJhoFgHRSG+SkIU1BAbkl
+	zz8VdpsDWcjIC4pS5uMiV5JloLUGXg0p8TVQTgukdD3xwwckWo0orw==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lrDuG5EkUkQFPOI0ZaAjeu/iwGfsj3P+p3HCd1TkXLbFVuBgCfh08FffKST/M2LElZuGjKskYYpRR69VqoUln35EsiUwiWPP0hvFovSMwqQkabGPGpbJnip+2EORE6RdjuZIgqZ8UBc5s/0vQMga2gDbxjvwmhGV7CR/shY50jx8Bjk5jkNeqefnwY8g4ZOXv6FsyeO1ILvZ8tdFUEQvv84HWLO79XXVsh8UUizc0JxqIN7WaDsOQCTu0dq+m9CwzXRAU1aRkHFeG57bONXd+mmGGxpPTnsLt18hEsflJ9zYPuMFG3YASASY4D9M63P3xtXPD+UCB+f6v9RCxhuyKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dNclpoGcsPb1BGZ844N8ZS7N6jrrWdjx+ThDqo49VDk=;
+ b=shXjJs0T/T1I4b9fC37BmJc7cTctRgvAQv1VH0o8z7QLMgMchad1sf1CYR6yypO0pW6T16YJBJHkflj8c+Y6o4sexpr0a67fOvUCnApmwclX7z+poForxx6YyuEe2fiGS+vfe4+tcF2XY7XdwaGvKesjsJYLmr2Z2mLg2o96dtVhXr/jHy/HekaZL0/UJQR4/IzZtrkD6Mi/5XnNMqA7um3Nha3wYkRVQQkDxQeg2Bvggl6Pa6JAYTOtcJlliYY4sKFENYLGD22GufNJW2csMPB6G8oVdWX2hTQPAsQlsxdvIQ3FeC6KwTebmOCGd64YANdCnmo9ASrgWCriqUm4Yw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=isovalent.com; s=google; t=1778844848; x=1779449648; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O3rGe4W0x5IPMFCCVtpn1y5eTbM9pYCDIphQ+zBfes8=;
-        b=VPhZga6IBhXf4UH9HEcDGi2B/HylCGnMN+iDHR2BKAB7vQlyfaqwGaTECOGig6bT6U
-         4yby+9eUI9Y+IjHsZAo6392Vp7XF/AU8tiU87oDyzqmbklhbLyAfbDiPPsnl58ARcAMk
-         bR0SG0urPuFAixgzyN7NSqk98w6oWErtShuvZGlvB9sAXLysT08A5Zo/xqedTBnkgD7O
-         lWaIOMDtsfFSn2DLmcuO3Iw1jSfHm6hUxmArq80w2r/ilpwlQqe1gvuYOBpYRfLhZbFh
-         QwWvfqAQSRKjl9kebadMT34HQaH/pzVP8iyEB0F7VwmCowB0ZDbh1ev1/QWQ7S1tSP4x
-         AtkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778844848; x=1779449648;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=O3rGe4W0x5IPMFCCVtpn1y5eTbM9pYCDIphQ+zBfes8=;
-        b=OmE2qKodMbeF+QENmbtXboW4Ma64JtoR3LMOZ94cHlnfSNdNCqetZyBA62F6vmH5RE
-         uqoy8PN6A59dy5pd1D8HYzeGT4Yi0Ij0V/UEzW7DC3uge1hvQaOyL79w/rL7Wkh1dqJ5
-         d0l4TsBoMLJBuXOzGChtRmi08iiGpc8rov8PDCxOEBmZEfK5blMTt+8Uaje3ShAfDK8b
-         Z14Qg0tyD2yV58ZVrsc3cXGZi6yn/u3QJS2vLiV9T6Fnx+Fblgq0v9QgPXHO4DWwDTSM
-         Crt14ELgeJtR4uhhEK7OAdJLx1AFM3ILV4+V0vhQNcQ19VsOpP0xsGEsI4Rpqgu5ZzLg
-         hEuw==
-X-Gm-Message-State: AOJu0YxgFahu9pEYGOufNJM3LdtJpC0pG4xT/pbwaYdwZZfLgS7SpoLe
-	xUbqkbmL5qzs2RD3etfGyrM6sgmPvgIVDCSzBwuzbGs+oHXvIuGoJ/CswpvA27VKJZDgXn9/waI
-	7PN0tZ9MpOa+w4PnacMMoDU/CPngLsuTbVWkvb1Uck617mbv/a07XN3g=
-X-Gm-Gg: Acq92OEMdyvrVpb/bwFkp5Cj8yDLWt6cn/xu389YKUe99fg/DLQy837nYyhcwNIlN8Z
-	RlGaSrkiKIN4n3ivXfseeZ8ojvIVwI4mlaDD5NRL7rc/GBTT4KolPb7vYwS2Y6hEcCbn/3qR3vj
-	ngGG+zby2lR2iDbWUPCiIstcaf1PZl2z4oT/mef2xk4gNTMDKvoeD5Ybo0PkpKyBAO5ZfY96bXa
-	66clGaKT4sodsqlvFKMNbObPX0nDY/adPKyxx4bh/xoraNEV+/z/SP8a5fLfc+26DLDfLquug4y
-	zO3gNA==
-X-Received: by 2002:a05:6214:ca2:b0:8bd:eee8:2fa6 with SMTP id
- 6a1803df08f44-8ca0fbe979dmr63185596d6.35.1778844848147; Fri, 15 May 2026
- 04:34:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260515022033.GA10889@localhost.localdomain> <87cxyxe76j.fsf@gentoo.org>
- <agarKP9wHQMGuV_D@eldamar.lan> <20260515102305.GA21592@localhost.localdomain>
-In-Reply-To: <20260515102305.GA21592@localhost.localdomain>
-From: David Gonzalez <daferna3@isovalent.com>
-Date: Fri, 15 May 2026 13:33:56 +0200
-X-Gm-Features: AVHnY4Jt2x_EB1iQJcXXa7H8HWwtJ7eW4mKqVlggW0VPA7uBbfxJGptgn4CtEXQ
-Message-ID: <CAEe76QznAL=sQitMxsac-FqvwNdiC2B9kP96qC53_Q4BVJLk7Q@mail.gmail.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dNclpoGcsPb1BGZ844N8ZS7N6jrrWdjx+ThDqo49VDk=;
+ b=yosAAO7Nvjlqw8k6zkggwpbkBggoShrsmkMDBu8hgg+rM9pefFX//JeLUzpcFP0FSOiEux+4VNExMC0I2Ggd2xztAaFEXFneOBqhDp7RJyqX2BZFhaU/XkO494hlhKdBaQ/uPziiLZiaex+G3DBuexbL8ATcmQCrRyGqOCdP71c=
+Message-ID: <a80334d5-1e6d-4303-a3b2-4f5a92344e24@oracle.com>
+Date: Wed, 26 Feb 2025 15:45:45 -0800
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Logic bug in the Linux kernel's
- __ptrace_may_access() function
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
+ q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
+ RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
+ /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
+ PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
+ vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
+ GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
+ ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
+ ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
+ AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
+ DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
+ bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
+ yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
+ Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
+ XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
+ R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
+ EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
+ 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
+ 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
+ 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
+ LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
+ AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
+ uoPzepWFbgvLuHIMvyjRog==
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR02CA0066.namprd02.prod.outlook.com
+ (2603:10b6:a03:54::43) To DS7PR10MB5005.namprd10.prod.outlook.com
+ (2603:10b6:5:3ac::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|IA3PR10MB8163:EE_
+X-MS-Office365-Filtering-Correlation-Id: 46a8b2e5-6e3f-49aa-0f7d-08dd56bfb1c2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cUNtdjMrZEs0MzAwYWZKaXVXd3VoVXRMc09Mb0Q1cjYwM21rblU2VENmWFM2?=
+ =?utf-8?B?V2FZcGR2ZmIxMExpM28zTWZ2RlZRL2J2cXNMSExCVUxrRnA2QXFRa0g0aGtJ?=
+ =?utf-8?B?Mk5JbWI3NkVHM0JIZXhobVBBR0pORTFMaVZZL1Mvc2NsSXd3ZWdia3JYb2ZL?=
+ =?utf-8?B?ZmhvZlhvcC8za21sVHJJWXNKVE45eDJyaGgxSm5hekd2SkdEZjNpT0ZrQnk5?=
+ =?utf-8?B?bEZWRjlrbE9VdnVMZXVzOTF2K1BpNkRHTEJ2MHFaYjlVcXh3Z1BEZU5IQzBl?=
+ =?utf-8?B?L2J5VmZodzUrTmRtOExKaU9MWitGRmtZR1creWFUS3RudDBzVk5UbjVvYkUz?=
+ =?utf-8?B?ckY2QW9CVnNSc3RNbndtQzlWd1RpWm9LbnlCRnRING5YSkdEbFN4dVBxbjJz?=
+ =?utf-8?B?VDB4a3BYVFhiOHZYRnRUbXYwYnd1ZHpWZ3lpaUxHU1gydWhiL29qYXl2dVpU?=
+ =?utf-8?B?T3U3M0VHejhOdElPMFZCYU1hTXhSN3pHTWoyQW5MdXBnUmlCdVdEVThQdUFF?=
+ =?utf-8?B?NjF5cENJU3pnbUx4dytLQ21PaDRlOFloUnZPQUxrbVNPT2ZXZ1EydkthTTNl?=
+ =?utf-8?B?UDhHb3dlV3ZaK1ZqTW10K2djbVJ2Y1RCRjM5VjB1ZWVXZVE3Uy9ycms5S2Ev?=
+ =?utf-8?B?ZFJRMjA2dmRTWTZ6ZFZoaDJDYitMcDU1SUJIdFlYb2dFSktqakNtbHFVKzd4?=
+ =?utf-8?B?cTR3UjhRT1BHVnR2b2VYRlFwSmRacFdmdjl6dWxXVDMzNytwVklkRWRBV01y?=
+ =?utf-8?B?VGwvaytaV1kzaEpXSVNoUjJLU1lOZUt2YW9ySDdKR1FwNWc3QzZNT0htcWxo?=
+ =?utf-8?B?OEpLL044aDNtcCtaTlNIdDNqNlFpRjZ4ZFdUUEtuOGNtQWpTU1hkV3FIb3Aw?=
+ =?utf-8?B?Q3dmOHF3MENtaFhtTUVpT1RHcHRQeDQ1cXErTExQOFYxZ2t1azNGQWMzNUtq?=
+ =?utf-8?B?M2xlb01TU1lKTnJlUXZZRitLMkRqbER6b3E4eXNvcmxUWlBwRUxXLy9Gb1gr?=
+ =?utf-8?B?MHV2aUtUbTVydnJMRG5EbFpvQ1ppRVZ4bGdYNGxZa1VtcDFYQ3lFTVQwVW00?=
+ =?utf-8?B?Q0NwdFlEaCtwQUd4VnFWOUx4OEVhblBFbnFKT1RXY3Rpd1RKV1dodndTSTF1?=
+ =?utf-8?B?T29TbFR5SThOcitpSEtCSXlXR1F1aG1jbkJPNTVZZjl6bzk4OGcwQUM0Q2Rs?=
+ =?utf-8?B?SXZVeGpwY2VsOVhlem1iTjN6cTZXNktxY0U3cGswbGdqaTl0UCtBTHJla1pS?=
+ =?utf-8?B?eEdpRmVtOUhrVTBkWm9YV3Z2Sk9lT3dOZmt0VFd4UzA5bjVVWmREbklwQUxu?=
+ =?utf-8?B?eThKLzRBanZqRC9Qb3lvMzVTN1VQYmFoQ25MMWZ0aTV2dUx4ZWZoVE9pelJu?=
+ =?utf-8?B?a2FEdkFoOCs4Mzc1SG9BUWE4Z2lId0Y3OUlCeW5qMXZ6MzJMR2k2VnlnSnlm?=
+ =?utf-8?B?QnlHWktRdU03N2xzd0ZGazhwcFd6ZkpxcTJiakJpQVZPUEpJSFdETnozNVFS?=
+ =?utf-8?B?T2tQM0hSWjJ0TEkrM3JER1dzVlRJNzdCMkIzbjNpZWpIc1p6dFpyd1dEQVAv?=
+ =?utf-8?B?ZkJxb1cvWmp4S2doOHp3MjBERGQ5MmpCd3FxUzlheWk2Q09WMWd3M05ad2N4?=
+ =?utf-8?B?THdiWnNhSjdWbWlYVzFCSFdZZTRLb3BRZ0tJVGRnTlMyeHlMQnZpT1crNUtE?=
+ =?utf-8?B?T3dMeWhuUElzN0JyYVRCaXVFSnN0WW1JR1Q3bDVJeFRENGQ0WThvVjZPM1dU?=
+ =?utf-8?B?QVpDbEkwTGRraUxHcURlTG9EOGM3RHV1TDNaTEdDdUU3Ri9GbjQrL0d0a2pM?=
+ =?utf-8?B?aFUwaFNFNkhEdy9lZmVZUT09?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QlhFU0VLWHovdFB4cncra1FLSlZSdHJSb2RpYUFJOGE3QmJrK04rMGJxVVk5?=
+ =?utf-8?B?Q29PaENoSDZKWjU4V0JZMWtmajhrL3NpTmQ0eTFocGQ3dFNzcDdxaUExSjB6?=
+ =?utf-8?B?Y2Y0ZkZBQ25lbFZQTUFBM2FQV3Jmc29YUkkrMi9haUtjdUdOSzI3QjU4RTFz?=
+ =?utf-8?B?RkJzS3VHMm1UR1NCNisvUlprUy95ODBOcFgwdk44RUlpcmcwNVVDbE9EaGRQ?=
+ =?utf-8?B?Ry94b0dVRDBkVDZ1VUN3Z3ZYT2F5c2RkbVhYK3gxRGh4NU16Qk5renNqUVZY?=
+ =?utf-8?B?cDNCTHYxUWNVR1RXWVRoV1ZNekJvQ0I5Y3NOa0l3L1FaVkxyeWU4aEJVQmRw?=
+ =?utf-8?B?TTdGOG9mbXBIeXNtb04ybG80QWNXYXVCN3VHWElwSkVmdlZXKzE4aUFNKzFG?=
+ =?utf-8?B?RGQ2cFNZaFV2c0F1S3AweXdUd2ZRTG11cTMvL3RXRVZWMUdIVEp4RllXWmdY?=
+ =?utf-8?B?TEx6cWVmUUtmVXhRYk1DcEJpVE54TkVFb0FUZHV1V2ZHbnRlejNCZ29VSkI5?=
+ =?utf-8?B?RmlFeHREYXJIMnhYdldNWjZxZFZlczU4OHhkYnRFTXo0T1A0M3dPVlZQQkdF?=
+ =?utf-8?B?aEhGQ0RncUUrQTQrZzl1ak10dkh4R09uR3VkeW54TDBZbnFSQU1zRUNIcllM?=
+ =?utf-8?B?dzByRllYYjVlZ0JvUjJreFRJNVJQTkFuRVh3d29pMmUrS2VSNnh0eG1vRWZh?=
+ =?utf-8?B?SXJyREFjNzlYclZCTzc2YU9lazFTUS9pajNCclZrRW9oV25VNnpoSkpUVnFB?=
+ =?utf-8?B?Y1EzWDRqeHcwdnhNUVBXRDdOVHYzQTNpZGg2UXBjVmtRczJ2ZHNlTHd5S21P?=
+ =?utf-8?B?aGJkSjArNWpTUSs2Yk1sa0VPckhGWTdXSm4vSXZ6NnJsemZTTGhpRmR6WFFo?=
+ =?utf-8?B?ajFpQ3hrMjlvVGpVemtuRHNYYkhrSFY0TEtId2dzSWNzc3Nta1FlWi9Ha2Ru?=
+ =?utf-8?B?L0F0dkFURjF1Q05ZaXZxbkUvdnh4QnhMNit2RWZZUmpiQmZOWXZCc0RjMnFr?=
+ =?utf-8?B?QXdZek5PRlAzNGpHa1lFeVlYenorSEUyaS9nMXBiSE9DTUFoVy80THVQTzRy?=
+ =?utf-8?B?WlV1SUpJTnhnYWN1ZklLaU4rUTc1Y1U1QzJHU09Ub3U1cERzT1BOR041dVZa?=
+ =?utf-8?B?V25QY0wwdkc2Um4rOVRyT25lMmE2MEpmM1JtL0l5U0djUnZNMFhXaHpwQ0o0?=
+ =?utf-8?B?eFM1cVNGa21tdFk4Nkh5TFZXWEQwRFh0dnkreExvamFMOVY0aUpIcWJodDRG?=
+ =?utf-8?B?bHNkNDBBa1RNMWN2SFcwWWc1OTFBVk1JenduUnNYVU4wK08wbkd6TC9ONmd6?=
+ =?utf-8?B?WXQ1Q1J6bzJHdFl5dzF6YmZUR3NTS2x5QXZLYTl0UWU0NTUweEt0REhkR255?=
+ =?utf-8?B?OWMrWmpQa1Vwcll3MU9uOThkVGJzUE1rQ2plNk9PMlp5WGJHaCsraFRGUFE1?=
+ =?utf-8?B?R0dPMXFuWjNYb3RxbmkyOUVUd3I0RGVDOHhqSXR2NnkzK25LSWN0RExTNjNn?=
+ =?utf-8?B?bStxZ0oyYytaQjU2aDMrZjNGc3RBSnhsMFhwYTlmVllkT3pIWFVoazFiSWU0?=
+ =?utf-8?B?bnJuTEZ5bHdicEpsbUF3aFFIY21BZG05b24yUmdZR2QwaXFZazBBR0FqanpC?=
+ =?utf-8?B?WVhLYkRXR0JmbFRQWlQ5dFhSRW1iUFVzWFFycTdnL3dCenEvSVlhcXFYTkhj?=
+ =?utf-8?B?d3NOQTI4VmQvb1lpN051bEo0Z29Sa3drWW1JSTNSbXBXS3oyQXM2N0ZLVVY5?=
+ =?utf-8?B?S0RVN2h1b0VxaFlxaEwzMEhiMFF4Tk81ajZHUThYL01pZmk5dG96RURzdytv?=
+ =?utf-8?B?Y2lWaDdFcnpmQ05DZVgwRittUU5oMkR4eW5LSm1vSy95Tk0yMG1tWGlKOEJx?=
+ =?utf-8?B?SUdOVWRNMzVrNFBCYk1GV2gvc0hvVjZ2cUcrUGNWb2xGdlhlVTRseFkzWmp1?=
+ =?utf-8?B?ZW1lZ0V6aU9uMnY4MlhpZGVYbnFkSFpHbnhaejd4MUZxdTRFeUZaSDF0VGJH?=
+ =?utf-8?B?dzZjK2hWQUFoZVB4SUJET016RjdXdm9hZ3JwRWJ3S05IdjN3RXJEdkRLdU1p?=
+ =?utf-8?B?VWlaZzN2OUFFamlmOUdhaVh5V1lLWThBRjRKaDFVeVkxWUFpU1MzUndMdDhr?=
+ =?utf-8?B?UG9KbHJPclFkNVN1aVZ2L2VMd29Icy90ZkhvaTFQZElmU1JmYjZsS0RHb3Rx?=
+ =?utf-8?B?NVE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	7t7JJBsDmHUc8dI+5DS0gtoqMnxFLyJloaSrHCAuktcQxCZ6dnFVYH/Ryqa7RvfhnsfmOP3Z6U5kz4N1RhXrUkmarEA/67oO7G60WGScJsw0hRZHCTgmp7IJx1QZXOODIMlqJHeE845p6dzfrS3ALZ/n0Vdz2wwD8RtKwEJVw5XnFq2uUb5tKOsba+ydKUhs9ZYzEOTyZxBXVgAq7gOVERWayL1DIFl3ImFIme6VdRFZjxc0u2dhc0KaA5oyqXobigWBWzHXoRFkWksgxbwmSKlDfNquWobvzfU8lHOGBtennJsXbrbkXWQQ37RcV5vGSnUUHplICVWzJ00mhlQlVnTrtHNqqYvg+g2EtToZfcLVW3X41s4FRUIpmzjRRBKFy+4oCHvO6WbGMOEP5PNfZz9ERPDOHwrHJlB8zw/nSuRoYZXRd0q74bkTmWlQYnzu1TVlEOCexCO3dEjaVck7AXQoHbUJvJ8LWU1u0m+V023lo+Hv4gVz+voOgFiM+o25g7T07T3N/vbMOs+bOl7GzJv/8m09LnThv/uaZjU+XxHHluPXtTB/rJ98+pQLjgoqOO8bHbZvMT9bj5GE6v9156U6UQ6p44oGCwhxm7rGsFM=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46a8b2e5-6e3f-49aa-0f7d-08dd56bfb1c2
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2025 23:45:47.9377
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5710J22XnxePYkLTik8sSu1KtAbyVSCr3QVUJfswui/XbfKussSPMLyfOfUKs3Tp0oPeompmzgMZxU3pQMl8WYFDfRSsT5YVq/TT3by/6lY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR10MB8163
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-26_07,2025-02-26_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 spamscore=0 mlxscore=0
+ adultscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
+ definitions=main-2502260185
+X-Proofpoint-ORIG-GUID: SlIBP09Z7nin7rTkif9AgjEDzJJnk5xm
+X-Proofpoint-GUID: SlIBP09Z7nin7rTkif9AgjEDzJJnk5xm
+Subject: [oss-security] GNU Emacs 30.1 released with 2 CVE fixes
 
-[Resending since I don't think my previous response
-made it due to incorrect type]
+https://lists.gnu.org/archive/html/info-gnu/2025-02/msg00009.html
+announces the release of GNU Emacs 30.1.  Among the changes listed in
+https://git.savannah.gnu.org/cgit/emacs.git/tree/etc/NEWS?h=emacs-30.1
+are these notes:
 
-Hi!
+> ** Fix shell injection vulnerability in man.el (CVE-2025-1244).
+> We urge all users to upgrade immediately.
 
-From my tests, yama.ptrace_scope of 2 and 3 should mitigate the attack
-(as Qualys just confirmed)
-Looking at the call graph for sys_pidfd_getfd we can see:
+This was reported in https://debbugs.gnu.org/cgi/bugreport.cgi?bug=66390
 
-sys_pidfd_getfd ->
-    pidfd_getfd ->
-        __pidfd_fget ->
-            ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS) ->
-                __ptrace_may_access
+> ** New user option 'trusted-content' to allow potentially dangerous features.
+> This option lists those files and directories whose content Emacs should
+> consider as sufficiently trusted to run any part of the code contained
+> therein even without any explicit user request.
+> 
+> For example, Flymake's backend for Emacs Lisp consults this option
+> and disables itself with an "untrusted content" warning if the file
+> is not listed.
+> 
+> Emacs Lisp authors should note that a major or minor mode must never set
+> this option to the ':all' value.
+> 
+> This option is used to fix CVE-2024-53920.  See below for details.
+[...]
+> *** 'elisp-flymake-byte-compile' is disabled for untrusted files.
+> For security reasons, this backend can be used only in those files
+> specified as trusted according to 'trusted-content' and emits an
+> "untrusted content" warning otherwise.
+> This fixes CVE-2024-53920.
 
-If ptrace_may_access returns an error, the file is not returned.
-https://elixir.bootlin.com/linux/v6.19/source/kernel/pid.c#L839
+CVE-2024-53920 is further described in
+https://eshelyaron.com/posts/2024-11-27-emacs-aritrary-code-execution-and-how-to-avoid-it.html
+which offers this "TL;DR" summary:
 
-Inside __ptrace_may_access we can see that indeed if mm is NULL,
-this end check is skipped (the race the exploit tries to win):
-https://elixir.bootlin.com/linux/v6.19/source/kernel/ptrace.c#L341
+> Viewing or editing Emacs Lisp code in Emacs can run arbitrary code.
+> The vulnerability stems from unsafe Lisp macro-expansion, which runs
+> unrestricted Emacs Lisp code. Most common configurations are
+> vulnerable (see details below). The best security measures are:
+> 
+> - Avoid visiting untrusted .el files in Emacs
+> - Disable automatic error checking (with Flymake or Flycheck) in untrusted .el files
+> - Disable auto-completion features in untrusted .el files
+> - UPDATE: Also set enable-local-eval to nil
+> 
+> This is a long-standing vulnerability which has been known for several
+> years, but has not been addressed thus far. Emacs maintainers are
+> working on countermeasures that will hopefully make their way into
+> future Emacs versions. This advisory is intended to help users of
+> existing Emacs versions protect themselves.
+> 
+> UPDATE: Mitigations are implemented in Emacs 30.
 
-This is still guarded by the LSM hook though (ptrace_access_check)
-YAMA ptrace check yama_ptrace_access_check hooks there:
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-LSM_HOOK_INIT(ptrace_access_check, yama_ptrace_access_check)
-
-And values 2 and 3 should be sufficient to deny the request:
-https://elixir.bootlin.com/linux/v6.19/source/security/yama/yama_lsm.c#L370
-(1 doesn't work since the attacker process is the parent
-so the call is allowed)
-
-$ ./chage_pwn
-[*] round 0
-fd 6 -> /etc/shadow (round=0 try=201)
-[+] Success! Reading /etc/shadow...
-================REDACTED===============
-$ sudo sysctl -w kernel.yama.ptrace_scope=2
-kernel.yama.ptrace_scope = 2
-$ ./chage_pwn
-[*] round 0
-[!] no hit in this round
-[*] round 1
-[!] no hit in this round
-[*] round 2
-[!] no hit in this round
-[*] round 3
-[!] no hit in this round
-[*] round 4
-[!] no hit in this round
-[*] round 5
-...
-^C
-$ sudo sysctl -w kernel.yama.ptrace_scope=3
-kernel.yama.ptrace_scope = 3
-$ ./chage_pwne
-[*] round 0
-[!] no hit in this round
-[*] round 1
-[!] no hit in this round
-[*] round 2
-[!] no hit in this round
-[*] round 3
-[!] no hit in this round
-[*] round 4
-[!] no hit in this round
-[*] round 5
-...
-^C
-
-Also verified with eBPF (Tetragon) by hooking and blocking
-in the same LSM hook:
-
-$ cat /proc/sys/kernel/yama/ptrace_scope
-cat: /proc/sys/kernel/yama/ptrace_scope: No such file or directory
-$ ./chage_pwn
-[*] round 0
-fd 6 -> /etc/shadow (round=0 try=20)
-[+] Success! Reading /etc/shadow...
-================REDACTED===============
-$ sudo tetra tp add ../policy.yaml
-tracing policy "../policy.yaml" added
-$ ./chage_pwn
-[*] round 0
-[!] no hit in this round
-[*] round 1
-[!] no hit in this round
-[*] round 2
-[!] no hit in this round
-[*] round 3
-[!] no hit in this round
-[*] round 4
-...
-
-Any LSM using the security_ptrace_access_check should be able
-to detect/block this attack as I understand it.
-Let me know if I'm missing something or anything here is wrong.
-
-Thanks!
-David
