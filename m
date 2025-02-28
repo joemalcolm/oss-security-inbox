@@ -1,4 +1,4 @@
-Received: (qmail 26050 invoked by uid 550); 1 May 2026 06:11:37 -0000
+Received: (qmail 29963 invoked by uid 550); 28 Feb 2025 02:43:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,158 +8,163 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 26025 invoked from network); 1 May 2026 06:11:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1777615886; x=1777702286; bh=JP+kvCLYXJ
-	8tOVu0o7g5NItU+b3qhMfPArN1W1GKtJU=; b=r2p8Jqc1RKGIf58HFzUt4kKaUk
-	3n7UQm6BBgeGn5YieQlpm7JQLpwENIMIOfKI7Tpe2/LVD3LhTWpzyhwnIEIoOi9+
-	vOMawYgEeNAXZBowxeD+9nV1kXWYpi+573hyObqUYJK/olOKlXaD481B12vvDslr
-	W/TlVGwtqyQyzYvMpq0mCXCFem6RwVJbaT4nyM5cAVXGkuBclcoTo4FSPM19VVVV
-	7A2zZC4mtlPvmacwNuHIcOkw640gYV0QukmE0WqjdWVy8JwIbjSJU0LPCZ0g4oMG
-	xLgQ4654+gEyotTEM74gOv07b1zqSjGHfXvS55vB72Xb3AkQhk7vHaPui4iw==
+Received: (qmail 24318 invoked from network); 28 Feb 2025 02:42:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:cc:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1740710542;
+	 x=1740796942; bh=KRuMioT/iwaFL+xLzxI2xkmzeNQHgYh117nRbQzQ09U=; b=
+	ExZwlSmcCbl40WwFoLDDvb1cTxtNsa+xlBzQqN8Tto82+V0W7ez27UadX22tCfqJ
+	VDBFOzb5DDASU/AVwwowTUNJJ/MtbT+uCaeSlCeg7J91rCu8s1uxvQqE0f0aXmYA
+	yImpZCPGbmrMi+bZX5asDpyr4+aA7WrY/lBXlA77BHRfkx50X4X0xX3yR1iuT7Wl
+	bozlpYzMiUUKVzGyI1u+cMVPKaxQiOEGz9n4A5cli3NoDQkMDq5wVXl3GwDrK90b
+	xTlJCQBLGtjEyfP7DJLRy0g7cJbq11WiSVgvE9LGW8GFjs78HJzealvqtpPHFgg+
+	2Cbz3iGZUe2OEJsaU25gAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777615886; x=1777702286; bh=JP+kvCLYXJ8tOVu0o7g5NItU+b3qhMfPArN
-	1W1GKtJU=; b=vCvFRdIGW3pqs8RdGLMY06evSauaSB3//iLCmGdlwQy5OvtTehj
-	+DNz6kk3bJymMLhIBONdSMrxrPlCkSpN3kwBFHVUS2sAbUdX4bTjrHmHLzCSzgcD
-	a1vJuUSh5gQfdM5S/mwYp0LVOJdAG9nlsrJTogOwdnBnQsI8QaOAUTD3GqxCnY3S
-	nUinwxdcUUTbaB5EQ/43PC27ZbCns/ekjO3gvaA6KOwAmQeYQ1kXA9/ojSOrjSod
-	yGrwkS+Adls2HWeJfvM3LpPO7TyGD+kMTxTGQ96Ai97QG6Gawt10KejZ6HWhrAvV
-	ziR31ZeEN4EBvM740kNvVFebBKD9vvEBMvQ==
-X-ME-Sender: <xms:DUT0aWOV0xjpDy8Q4Aa6vsTddIEQak2TwGEWFhioZmpO8C-6h951iA>
-    <xme:DUT0aSybsRQjBo79oP5MjJvfljGr_qfL-A64HH7LExJ3x4ftU-Dn1NA8R4Ajv1LIR
-    pyz38Ffiey2le8B8i9_t2GkDHn6L0wEP7dQhu_DiU2vQkQMrH0>
-X-ME-Received: <xmr:DUT0aXvP2ULmnzmiM7JmvfBaRsD28xjNblOs_4Y5H6sMyNtywQ3prPqLiHbl4GQkExxWPNOgmFoMslZ-fPvbXLh5HA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekleeghecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecu
-    ggftrfgrthhtvghrnhepgeehueehgfdtledutdelkeefgeejteegieekheefudeiffdvud
-    effeelvedttddvnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtg
-    homhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740710542; x=1740796942; bh=KRuMioT/iwaFL+xLzxI2xkmzeNQHgYh117n
+	RbQzQ09U=; b=chHJCm19zEAShNlLBYNN6XM0cbkbIS+hQUHVsduUJTDWe1x//Xf
+	VGbe+eIrB34fgLKzd2yY/yQ3CEQSx1uDVVbeWICyT+di0WrHLice2V3Muy/NEKTW
+	2gIUZzQP/OncCv+1OcyeK96ZERb9zWaYsvm0SLIdqLlAMc0H9SOxRyCrj0DeI0as
+	L9bRL2o6+ZFBKX4uqzJczszF2wqde5MjdK6gBsfOp7ouagQxuV7R2ASZEZRLRhcG
+	azQIco1wSXGG0KiGL9zvzpP5DanBJaramTpDj+t4aKt3wn4RWQvGM7RxmhlnN1Ev
+	2OWqqWtAoFSzTEx3k2wmO6M2EYSMB5ix4mg==
+X-ME-Sender: <xms:jSLBZ4jRHlNKA7GpdhW3FoLcKdMuu69M80tmWLRX3N-ll4UB1oTCQQ>
+    <xme:jSLBZxCDtXUoBpesBhwfWLUf-S-el7YrvQj-arUsp_9_TXSQRmnAM5zlapAdzUK6A
+    525bf3l4A6pCqs>
+X-ME-Received: <xmr:jSLBZwGGKdw5pcxDqKedq7JRbOlWkN7IzxB9B5ou_4st_U8Qpotj1XgByEMNcgeP_BQcRwA3cgPKIDge9gehAM1ZfTxzFtWd2Lc6TPtwKm-X8XtW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekledvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdej
+    necuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihesihhnvh
+    hishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeelfeej
+    ueekheekgeeitdegkeekleetvdfhuddufefgffehffehueevvdeileefhfenucffohhmrg
+    hinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtg
+    homhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
     ohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdprhgtph
-    htthhopegtohhnthgrtghtsehthhgvohhrihdrihho
-X-ME-Proxy: <xmx:DUT0aT4nIGVNu7UlZbeN8ucBUgpBOX4768O5nLsMnBwGSDcqMnCkFw>
-    <xmx:DUT0aeR8BWtE3SsRpDKZCgmNyJYQVuSTdngbiamd-o69YbJFFcd5xQ>
-    <xmx:DUT0aarr53SmVkReCJo9WeWpIJwGxSVigbRUJbAXkrhyxqJSJLsrcQ>
-    <xmx:DUT0aUKmRHQaJEkGOdd9bntWxD1ujDD4W4Cy7d7Y39y4yyLlIiMbxA>
-    <xmx:DkT0aZgfm3ZuoblIeU6P36G5BZAaEXDBqrQf684IJzz-t6ugii_n4iDz>
-Feedback-ID: i787e41f1:Fastmail
-Date: Fri, 1 May 2026 08:11:24 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Cc: contact@theori.io
-Message-ID: <2026050155-yelp-bonnet-bfd2@gregkh>
-References: <afJorKIje4O6dXbH@netmeister.org>
- <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
- <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan>
- <2026043026-treat-devotion-23d7@gregkh>
- <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
- <2026043018-drinkable-flinch-632b@gregkh>
- <20260501032146.GA31617@openwall.com>
+    htthhopehsvggtuhhrihhthiesgigvnhdrohhrghdprhgtphhtthhopeigvghnqdgrnhhn
+    ohhunhgtvgeslhhishhtshdrgigvnhdrohhrghdprhgtphhtthhopeigvghnqdguvghvvg
+    hlsehlihhsthhsrdigvghnrdhorhhgpdhrtghpthhtohepgigvnhdquhhsvghrsheslhhi
+    shhtshdrgigvnhdrohhrghdprhgtphhtthhopehsvggtuhhrihhthidqthgvrghmqdhmvg
+    hmsggvrhhsseigvghnrdhorhhg
+X-ME-Proxy: <xmx:jSLBZ5Rg4rdy732wNrIC5V8yym6rzaaCZ2V-2Aj-8Q4yDCQSIYHVjw>
+    <xmx:jSLBZ1zb20p_62QA5jiNwR1k7VMmr0YqGyGbz8vVC-6X7ucx4yDGuQ>
+    <xmx:jSLBZ36qZ-jfIocaxEc7WCnDSDpcOq8wAcr56DC8M3DPnsvtyX1smw>
+    <xmx:jSLBZyxdFvqdzg_ubAi4EgR2Nrh9f1ugw6yN7cIi46baNcROG7mmVw>
+    <xmx:jiLBZ8mog_Xj8gRVyUE2hkdbfcZtOq3N07hEfmmwrqhl8JmGMQyNGuwJ>
+Feedback-ID: iac594737:Fastmail
+Date: Thu, 27 Feb 2025 21:42:15 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com,
+	"Xen.org security team" <security@xen.org>,
+	xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+	xen-users@lists.xen.org
+Cc: "Xen.org security team" <security-team-members@xen.org>
+Message-ID: <Z8Eii3DYNDoKNNhg@itl-email>
+References: <E1tndOO-00CM3B-2R@xenbits.xenproject.org>
+ <5ecf18f8-e8e9-431d-bb59-4631a598574e@vates.tech>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="u4WqJNsiBbcBAZsp"
 Content-Disposition: inline
-In-Reply-To: <20260501032146.GA31617@openwall.com>
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+In-Reply-To: <5ecf18f8-e8e9-431d-bb59-4631a598574e@vates.tech>
+Subject: Re: [oss-security] Re: Xen Security Advisory 467 v1 (CVE-2025-1713)
+ - deadlock potential with VT-d and legacy PCI device pass-through
 
-On Fri, May 01, 2026 at 05:21:46AM +0200, Solar Designer wrote:
-> Hi Greg,
-> 
-> Thank you for commenting on this.
-> 
-> On Thu, Apr 30, 2026 at 06:52:15PM +0200, Greg KH wrote:
-> > On Thu, Apr 30, 2026 at 03:17:45AM -0400, cyber security wrote:
-> > > That is very terrifying, is it is 10.0 score?
-> > 
-> > There is a score in the CVE entry, does that not show up properly for
-> > people somehow?
-> 
-> It does.  I guess someone top-posting a one-liner couldn't have bothered
-> to check before posting or just wanted to share the emotions or provoke
-> a discussion of CVSS scoring.  Luckily, your reply actually adds value:
+--u4WqJNsiBbcBAZsp
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 27 Feb 2025 21:42:15 -0500
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com,
+	"Xen.org security team" <security@xen.org>,
+	xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+	xen-users@lists.xen.org
+Cc: "Xen.org security team" <security-team-members@xen.org>
+Subject: Re: [oss-security] Re: Xen Security Advisory 467 v1 (CVE-2025-1713)
+ - deadlock potential with VT-d and legacy PCI device pass-through
 
-My reply was snarky, sorry about that, it was a long day...
+On Thu, Feb 27, 2025 at 03:33:18PM +0000, Teddy Astie wrote:
+> Hello,
+>=20
+> Le 27/02/2025 =C3=A0 13:57, Xen.org security team a =C3=A9crit :
+> >              Xen Security Advisory CVE-2025-1713 / XSA-467
+> >
+> >      deadlock potential with VT-d and legacy PCI device pass-through
+> >
+> > ISSUE DESCRIPTION
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > When setting up interrupt remapping for legacy PCI(-X) devices,
+> > including PCI(-X) bridges, a lookup of the upstream bridge is required.
+> > This lookup, itself involving acquiring of a lock, is done in a context
+> > where acquiring that lock is unsafe.  This can lead to a deadlock.
+> >
+> > IMPACT
+> > =3D=3D=3D=3D=3D=3D
+> >
+> > The passing through of certain kinds of devices to an unprivileged guest
+> > can result in a Denial of Service (DoS) affecting the entire host.
+> >
+> > Note: Normal usage of such devices by a privileged domain can also
+> >        trigger the issue.  In such a scenario, the deadlock is not
+> >        considered a security issue, but just a plain bug.
+> >
+> > VULNERABLE SYSTEMS
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > Xen versions 4.0 and later are affected.  Xen versions 3.4 and earlier
+> > are not directly affected, but had other issues.
+> >
+> > Systems with Intel IOMMU hardware (VT-d) are affected.  Systems using
+> > AMD or non-x86 hardware are not affected.
+> >
+> > Only systems where certain kinds of devices are passed through to an
+> > unprivileged guest are vulnerable.
+> >
+> > MITIGATION
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > Avoiding the passing through of the affected device types will avoid
+> > the vulnerability.
+> >
+>=20
+> Is disabling interrupt remapping another way of mitigating this
+> vulnerability (e.g iommu=3Dno-intremap) ?
 
-> > This was one of the few CVE ids that we have provided a score for, why
-> > people ignored that is confusing.  You should contact your distro if you
-> > are paying for support to find out why this happened as it should have
-> > been covered by your support contract.
-> 
-> That's interesting perspective.  I just went to see whether a distro
-> vendor could reasonably use this as a signal to prioritize this CVE fix.
-> Here's what I did (after looking with my eyes to see the pattern first):
-> 
-> git clone https://git.kernel.org/pub/scm/linux/security/vulns.git
-> cd vulns
-> git log | grep -B3 'Add CVSS' | grep -c 'Apr 25 .* 2026'
-> 
-> This says 168.  That's how many CVEs your team (this time, Sasha Levin)
-> kindly scored on Saturday, April 25.  So ~4 days prior to this one CVE
-> making the news, ~2 days of which were the weekend.  This CVE got a CVSS
-> score of 7.8.  The rest of the 168 got scores from 7.1 to 9.8.  By the
-> score alone, this one really does not stand out.  To me, this is usual
-> noise, with little signal in there.
+No, as this allows other attacks that allow denial of service at the
+very least.  See
+https://lore.kernel.org/xen-devel/19915.58644.191837.671729@mariner.uk.xens=
+ource.com/.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-The scores should be the signal, what else can we do here?  And is the
-9.8 being also ignored?
+--u4WqJNsiBbcBAZsp
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Now, your team's message may be: distros can't possibly fix all kernel
-> CVEs, not even those you provide high CVSS scores for, and especially
-> not quickly enough, other than by staying with mainline or upstream
-> stable/longterm kernels.  Is this your actual and only message - not
-> that distros should have magically seen the needle in the haystack?
+-----BEGIN PGP SIGNATURE-----
 
-No, our teams constant message is "you must update to the latest release
-to get all fixes needed to keep a system secure of all currently-known
-issues".  That has not changed for decades now.
+iQIzBAEBCAAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmfBIocACgkQszaHOrMp
+8lN21RAAgeRJeppbhMy4o0dW5D21W0odLP3HkoV4puZ08aMX1WqDUy+TR0WpdseY
+yUdBXE88hzIVYYkhOFg92ciXw+Hz7IUSxp7RJO1BPve179JAlC/JeMDoYLpM3Il9
+b6o25sWh2BleFtOgiG/TPdQeavRemvUxOb9kw0iA5MpCdoaLXvvqVeX3gWj0ZDGv
+l0t/RSVVVYOCUnB69Jhxv8K36Vid4Z9AjKzLZ5uAkn8MAlHRhRVsHrOrn74XMJVI
+2rG/VfmLz3w/S5T036qLf8dTimOSbfTzm6Oj6PAfLX8vu0FiXaT7MSLNN0xWCFcs
+J3dxFaT0Q8NyrCAiJc5y7BHF5CmhqC+E6Ff16qvyD3HcrrCiS4CEriLCvbVc+AUA
+ljRoj4ncFb4XvbECGS4/Uafh9sP479n+UsCOUdPx/ixwMtuRZUsPfujeZobsrMuq
++bC2K9NnkAoHsKtnPqWSkE1HbhF8rDWJsX9fYaUyJmdAhpjpLKjs5sEgOeGlcWeg
+T8YOhMCOjk2vlpt/i1K0xJnGGLXoCwJQefZruNHRZXymnv2uVtDB3Yt/RhXgjqd8
+++IF+sQz6zlMNiYS8GRIrrFP8Hs0t+K6oEU+WM3+sEFaYIdowtezwtVbTUr7qYx0
+XIZhNczwISio36T+sOtKC5awPxLyXfjkdJr0hSe3y5jX3r8cJXg=
+=U+LW
+-----END PGP SIGNATURE-----
 
-> The scoring reasoning for this CVE does not hint at its severity and the
-> threat being imminent.  It's as obscure as most of the rest of 168 are
-> (which for most of them is probably a result of actually not having
-> exploitability and impact analysis).
-
-Why do you think that we knew this was "imminent"?  The CVE team has no
-such knowlege as no one is obligated to tell us that they are about to
-let loose a trivial exploit.
-
-> I understand not wanting to draw attention to a CVE that wasn't fully
-> disclosed by the researchers yet, but you can't simultaneously say that
-> _this_ was the heads-up to distros - it wasn't.
-
-Again, I was being snarky as we all knew this would eventually happen
-and it finally did.
-
-> Please don't get me wrong, I appreciate the extra effort your team is
-> taking to process some kernel bugs as CVEs and even to score them.  I
-> understand that with so many, quality can't be perfect.
-> 
-> It's just that instead of drowning in the CVE/CVSS noise, we need a
-> high-quality signal for CVEs that matter the most.  Things that would
-> certainly have been CVEs even prior to Linux CNA setup.  They may not
-> score the highest per CVSS, but in many cases - like in this one - your
-> team has the knowledge that an issue is to become high-profile, so a
-> timely direct heads-up to linux-distros would be appreciated.  Where by
-> "timely" I mean, say, a week (and never more than 14 days) before
-> planned full public disclosure.  We don't normally like to sit on
-> semi-embargoed issues with public fixes, but we did introduce an
-> exception for "Linux kernel issues concurrently or very recently handled
-> by the Linux kernel security team" specifically to accommodate the way
-> your team works.
-> 
-> How does this sound to you?
-
-Nope, sorry, we are NOT allowed to notify anyone about anything "ahead
-of time" otherwise we will have to tell everyone about everything.
-That's the only policy by which all the legal/governmental agencies
-have agreed to allow us to operate in, so we are stuck with it.
-
-greg k-h
+--u4WqJNsiBbcBAZsp--
