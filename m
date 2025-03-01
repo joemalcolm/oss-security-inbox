@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8352" "Tuesday" "13" "June" "2017" "12:32:10" "+0000" "Fiedler Roman" "Roman.Fiedler@ait.ac.at" "<2ECE9D9EEF1F524185270138AE23265955AB0414@S0MSMAIL112.arc.local>" "156" "Re: [oss-security] Vixie/ISC Cron group crontab to root escalation" "^Date:" nil nil "6" "2017061312:32:10" "[oss-security] Vixie/ISC Cron group crontab to root escalation" (number mark "        Roman.Fiedle Jun 13  156/8352  " thread-indent "\"Re: [oss-security] Vixie/ISC Cron group crontab to root escalation\"\n") "<20170613112638.axsgfjy5ntrzylb3@jwilk.net>" ("<2ECE9D9EEF1F524185270138AE23265955AB00AF@S0MSMAIL112.arc.local>" "<20170613112638.axsgfjy5ntrzylb3@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3469 invoked by uid 550); 13 Jun 2017 14:25:57 -0000
+Received: (qmail 28378 invoked by uid 550); 1 Mar 2025 18:41:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,181 +6,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1850 invoked from network); 13 Jun 2017 12:32:23 -0000
-Thread-Topic: [oss-security] Vixie/ISC Cron group crontab to root escalation
-Thread-Index: AQHS5Df4Gq0vG1HiKUmofplEgRmF9KIit0ng
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955AB0414@S0MSMAIL112.arc.local>
-References: <2ECE9D9EEF1F524185270138AE23265955AB00AF@S0MSMAIL112.arc.local>
- <20170613112638.axsgfjy5ntrzylb3@jwilk.net>
-In-Reply-To: <20170613112638.axsgfjy5ntrzylb3@jwilk.net>
-Accept-Language: en-US, de-AT
-Content-Language: de-DE
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.30.249.121]
-Content-Type: multipart/signed; micalg=2.16.840.1.101.3.4.2.1;
-	protocol="application/x-pkcs7-signature";
-	boundary="----=_NextPart_000_00AD_01D2E451.D6FE7550"
-MIME-Version: 1.0
-Date: Tue, 13 Jun 2017 12:32:10 +0000
-From: Fiedler Roman <Roman.Fiedler@ait.ac.at>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalation
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-
-------=_NextPart_000_00AD_01D2E451.D6FE7550
-Content-Type: text/plain;
-	charset="UTF-8"
+x-ms-reactions: disallow
+Received: (qmail 13662 invoked from network); 1 Mar 2025 18:18:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740853074; x=1741457874; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=j0DAYaYNQjn7YYTFfyaVeT83XuZDrMjoMOyi33GgCZA=;
+        b=N9E5ZldjDqb20gwmfmMHygauAkC9rjaaIvKHyAHnLgLLQzRc/Zzfe9RQacT/VlQXp8
+         XfB8Bm1Kx1kXGLS8X8928kONjNVKmsJ+kj28EQkPpg4XP4eioPQIWvs7s5RzUsQneX47
+         4j1oe/pJFzA111aRz04K8ZAhkxDXuibh4QHb6q44vUbtShvC3MhJsYEK00jfl3cEuWcm
+         InD9doYbHJW1m2dwI1AXpYwYmmeMjDkvxj/Ax05bihHQz5eahu6wai6x7q9tw9PV/DSR
+         teYooMt+Da2WYnVtI8bQkt3s+e2/9cusUmzFnWMSMucDlD4uDtbHZ8rqRVZG7yoArsvs
+         Lk8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740853074; x=1741457874;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j0DAYaYNQjn7YYTFfyaVeT83XuZDrMjoMOyi33GgCZA=;
+        b=jPVXvGKTyxPy2KUtMD0PUcwFOjvqhU2npIZ+0KsLrv5ugKFJn/YNQQPDYojgtpdfwk
+         cDBwDQ+GEJdV3P4aGtGEtPhTP9HpWvQyRHFlOQracVPE8sHtXMC9J2Z/Nl6zlig9J/5o
+         y5HZVvKBvyPAk1gFU8EYQEW6SpaOCYaZGSN0ESZMsmZEtX4A3VoY9ATpX6tqCmFmeENs
+         xRmq7a0H1VkG7mlYx0t0N9ZxBrla3VhQMIoZWTU2i8LdzLbjA2iujhbFE0QNfsnqqB4C
+         1WQ3v6cPe6hFF6BO839Nzm49Z1e2Flm2qVCD0X4/b2mMoL8T3UkbWfD50PrRkDJOpEh8
+         E1kQ==
+X-Gm-Message-State: AOJu0Yw7u9/ffeNJglod9h1vlmZnUmsynDYM/fSp2Y1EpIHDLxbaGVCn
+	dUng7fdkibP1uSJq5sqpx9/59I4pkmmqX9V2f1NkXUwf4+yo68Vq
+X-Gm-Gg: ASbGncum042OWktuEoy9YpWYuRiFJF4EIcr5epLJT7Y7djw1gF9VYnZXAs3vQjX+r7X
+	QBl/xhRcWW/C4M63i5TanRLRlFTEGJ/E4EGnWlAz+h9amtiyeneNeHdX560nkck3FD9AquRKgBD
+	DBO3OW5jpE9OvUQqKWIHSg9qPgig+vfTBnX00TzYRHMITomnYILzyLKAwl6B/PuiJGdz2Y5PvL1
+	1F/VjBnj148BT8Q3EhhPObPYimLTbtkp8+ROB60oT0FO+yszZ8pR0QOWM3piv+iQFB3x6PH9baJ
+	C9GgEPk5StGRzjxMI+23IaEluf+qLkPIfPCpPMH1mKlKzcnoxQP4qBYiSd/2YZVQya4=
+X-Google-Smtp-Source: AGHT+IHPKdWQxPS1FMfVaH+JB0cg5bmAloio1WpH/A262zPa2B9JjhuCfcklbWVWmE0xaCQlxfaUNw==
+X-Received: by 2002:a2e:b8d1:0:b0:306:10d6:28b0 with SMTP id 38308e7fff4ca-30b931fb7dcmr28674181fa.1.1740853073835;
+        Sat, 01 Mar 2025 10:17:53 -0800 (PST)
+Sender: Maxim Nikulin <m.a.nikulin@gmail.com>
+Message-ID: <14c3bf23-eadb-475d-9fd7-d4f97e70c7a1@gmail.com>
+Date: Sun, 2 Mar 2025 01:17:52 +0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Henrik Ahlgren <pablo@seestieto.com>
+Cc: oss-security@lists.openwall.com
+References: <a80334d5-1e6d-4303-a3b2-4f5a92344e24@oracle.com>
+ <5215a75e-e20c-46f3-adca-471b04e1dbab@gmail.com>
+ <874j0d7wnp.fsf@noux.seestieto.com>
+Content-Language: en-US, ru-RU
+From: Max Nikulin <manikulin@gmail.com>
+In-Reply-To: <874j0d7wnp.fsf@noux.seestieto.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: GNU Emacs 30.1 released with 2 CVE fixes
 
-> From: Jakub Wilk [mailto:jwilk@jwilk.net]
->
-> * Fiedler Roman <Roman.Fiedler@ait.ac.at>, 2017-06-13, 07:45:
-> >>>Thanks, perhaps a comment in the code can't hurt...
-> >>>Or even O_NODEV which does not exist, or O_PATH (linux only)..
-> >>
-> >>As there is a O_DIRECTORY it would be more orthogonal to have
-> O_REGULAR (open
-> >>only a regular file). But that becomes more and more icky as we're
-> running
-> >>out of 32 bits of O_*)
-> >
-> >Why not stop that at all and have an O_POLICY,
->
-> With help of O_PATH, you can implement almost any sanity check in
-> userspace.
-> No need to reinvent this particular wheel.
 
-Well, partially: what O_PATH can do, you could also do before O_PATH using 
-repeated single-level open(NO_FOLLOW)/fstat-checks. So you had to do all the 
-verification by yourself. fts [1] does that the same in a secure manner. But 
-often implementation was too complex using syscalls or not easy to do using 
-the library, so not many programmers did it. The resulting programs were more 
-prone to be vulnerable.
+>>>> - Disable auto-completion features in untrusted .el files
+>>>> - UPDATE: Also set enable-local-eval to nil
+>>
+> Max Nikulin writes:
+>> It should work, however it is rather drastic measure that may cause
+>> inconvenience.
 
-With O_PATH/fts und own fstat calls, you can also do all the things mentioned 
-above, but again, I fear, not many will use them, there for convenience 
-syscalls/libraries should help out.
+It is more tricky. At least in Emacs-28, enable-local-eval helps to 
+mitigate the variant from the blog post
 
-So decision could be a) do nothing, b) blow up libc or c) blow up syscall 
-interface. Specific libraries or programming best practices might not be easy 
-enough to be applied.
+;; -*- eval: (flymake-mode 1) -*-
 
-LG Roman
+however the user option has no effect for the case reported in the Emacs 
+bug#37656 ("deprecated" feature)
 
-[1] https://www.freebsd.org/cgi/man.cgi?query=fts&sektion=3
+;; -*- mode: emacs-lisp; mode: flymake -*-
 
-------=_NextPart_000_00AD_01D2E451.D6FE7550
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
+Neither
+     emacs -Q --eval '(setq enable-local-eval nil)' poc.txt
+nor
+     emacs -Q --eval '(setq enable-local-variables :safe)' poc.txt
+prevents execution of code from the file.
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
-9w0BBwEAAKCCDL0wggX9MIID5aADAgECAgkAkvp1Fx1x2IMwDQYJKoZIhvcN
-AQELBQAwgawxCzAJBgNVBAYTAkFUMQ8wDQYDVQQIDAZWaWVubmExDzANBgNV
-BAcMBlZpZW5uYTEyMDAGA1UECgwpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBv
-ZiBUZWNobm9sb2d5IEdtYkgxLTArBgNVBAsMJENlbnRlciBmb3IgRGlnaXRh
-bCBTYWZldHkgJiBTZWN1cml0eTEYMBYGA1UEAwwPQUlUIERTUyByb290IENB
-MB4XDTE3MDMwOTE1MTI1NloXDTI3MDMxMDE1MTI1NlowgawxCzAJBgNVBAYT
-AkFUMQ8wDQYDVQQIDAZWaWVubmExDzANBgNVBAcMBlZpZW5uYTEyMDAGA1UE
-CgwpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5IEdtYkgx
-LTArBgNVBAsMJENlbnRlciBmb3IgRGlnaXRhbCBTYWZldHkgJiBTZWN1cml0
-eTEYMBYGA1UEAwwPQUlUIERTUyByb290IENBMIICIjANBgkqhkiG9w0BAQEF
-AAOCAg8AMIICCgKCAgEAxGoc+0dcZdumBz9T9+kB4HCojrjmR6k8jkDwW9jn
-X0tLqBuwlfWf7oTBfHRH0phPhShdTs0WRVqEGScWgnf2F8iS85aytRHRnW9r
-jeJH8xOxqFsugZbmOWGhw8kM9iw6GMyPKhfKh0Z6wUS8zAu3ZMj8QA2SZzkx
-iazZA8AjmfOjhkUStD5rYxEQueFSq5zgIN6sdQnTLbiLlRlSklGIgViBen8N
-fy9maZnXnyQSeqv+AJvusw4tq/qPA9fwXSf/4Fo+YgzbcoRpkpZ3GA3eArb6
-38l4uqLZekynVpzPO6fltw1nV0WNj02gw+NckHuHGBMTFWLzGtMx4TSvzXRd
-Ry4bApphNyefO8digyBC1Wzl2mL/w97tpTLMo9RHa1DMRd4CBV2YbdRkHAhR
-dsuAId2CXgFBS26OJjnccfgviqBlAKyDKR30D6DImvjFOS88IQ8uyP6Aedl+
-eQd5+4rCrf4Aclk+idD46d7QkxPJvyCIhLzjeWQU+O1GWEwiy1aKkA9WLF7K
-s88pJ2y7esHciEidwemSrS2ffaToa/K4VqBkmn3ppHjmj6D2gSdQstEhChPK
-xToF/LCQBQc6o0vpH4eUFkHM/aKxBu9sKwZDMIMumNPyox2l/ewa526uuS5O
-joPg83YDnxxDQ1XWrx4yIo+j1FtqROV4sEVFSgJZjV8CAwEAAaMgMB4wDwYD
-VR0TAQH/BAUwAwEB/zALBgNVHQ8EBAMCAQYwDQYJKoZIhvcNAQELBQADggIB
-AHNwDZs17W6Lg4Cxvax++h2WeTLGlnX+l1iybi5cG65rcwDrRdqPv/T7FUzy
-H7c2hLLFuyGZuCXrhrPkmknVYPNOt0SQtbZuf6mSC7HVgdcEwgBRVldfY7qy
-3KLMX6H2zZJF3eWWEWvctHGn1O9BD1I4vvSMD2FwSmy3hQq94/c/Wl2Tj6+Z
-eONFKS4vT2wNIFesBXDJRmKLermIenV7EkiBO5qxnN5Q25+W3WEkrbuiPO5s
-1KSQ1QxL88f+R9MJl8AJEXA2gzOBxKqMabJ/+NGUTt0yy7PJX0QucJ/ESwic
-VQBjMKmfJxRuPkqYRpd9BQ7mp2jNzqmMiXZsdfH7NZ7UKkNevNkA13fV7k3M
-D1oeZhe5MeVObzyB+hO7sb8fiNV5QSR1c3/uyAt3OEs7s1JD7vL8dmHULh5C
-sVHvdr8V7Zjm4wta+7DaLBtz0mhgb9OagLZy5vS6GSKqiuf996epsTAgBFpj
-JMOYYOEOlOzvnF11irl+7YMcHdOaHk+lccqwEe1oDNIjysM9aj8Uu2S9aEf6
-NACA5UB4DG27yptRsXMQwOu10/lQ1Ju5H6Ed4Od5+HoTFJvVfxuelHvggce9
-En1vQ9JTIm10MV1HwdkxQObweGZH4mt/HJkHKPm/X3hJCztmpOugQ50lMitC
-BOk095ufDatc6TWbeie9/nFoMIIGuDCCBKCgAwIBAgIhAPyFSUbhuCR1JHvV
-d3fEehZlFVSMVIrD5sezDgn+++vfMA0GCSqGSIb3DQEBCwUAMIGsMQswCQYD
-VQQGEwJBVDEPMA0GA1UECAwGVmllbm5hMQ8wDQYDVQQHDAZWaWVubmExMjAw
-BgNVBAoMKUFJVCBBdXN0cmlhbiBJbnN0aXR1dGUgb2YgVGVjaG5vbG9neSBH
-bWJIMS0wKwYDVQQLDCRDZW50ZXIgZm9yIERpZ2l0YWwgU2FmZXR5ICYgU2Vj
-dXJpdHkxGDAWBgNVBAMMD0FJVCBEU1Mgcm9vdCBDQTAeFw0xNzA2MDgwODU2
-MDJaFw0yMDA2MDgwODU2MDJaMIHSMQswCQYDVQQGEwJBVDEPMA0GA1UECAwG
-Vmllbm5hMQ8wDQYDVQQHDAZWaWVubmExMjAwBgNVBAoMKUFJVCBBdXN0cmlh
-biBJbnN0aXR1dGUgb2YgVGVjaG5vbG9neSBHbWJIMS0wKwYDVQQLDCRDZW50
-ZXIgZm9yIERpZ2l0YWwgU2FmZXR5ICYgU2VjdXJpdHkxFjAUBgNVBAMMDVJv
-bWFuIEZpZWRsZXIxJjAkBgkqhkiG9w0BCQEWF3JvbWFuLmZpZWRsZXJAYWl0
-LmFjLmF0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2vuUrQTa
-CeYHx0XlnnFZbwNJIAYGtwcX+WNnTOVQpRk9aAImyomxvowzTyfXZVhNjqHw
-sBKN4+Xa7LA0GimyRN6v2eBelrrtJ7ziX+nvGVPlUy/EXgzY/knBX+DD2SCm
-rdMao4U+M3+zk0UhZLn0LnuKKxE9rL78E+8dszLTWh3W9jMYuD3Gx91vFxC5
-JfU8Bv7+4CZ/aMpG1j6ebRdyZhNb5H8O5RERPLszKNcEvc9pAeKxjMI/77kn
-BT92EDxVULD9HLaD/HLWsPP2H6/ELoe/RJ8Yxh2TSICKJGUk95Ryo9qWP+9X
-3zVfiVuwd00O2RX5Z4R9cVFawFRmrxC7yzHoJaHc6rpcw8ca7H9DBC5l4N4B
-wW/JJpdVaIlOKa0HkMZmxZ4rAuQakuvKj7w/6UR+dnoP4Ao5p5uozOfCY8OM
-8OOoh/tnI90Ubil1+niquspba1GiEPDuOzDmLb0le2LzOKf1PSckne2crUtD
-L1PS9lcbFjiiZN93qYPJoqp7QY9tSxF6wyiW9FY14s+TifpEWLjECMn4d4gA
-z+LWo+xG1suBelvPdSCusUFDWRGctewfi8rgOKR3Lb6HSE/1jppsMfNm1xbH
-aCv/y4XvrokA7OY+XdupTvf5SDQVDmilPocTlihqi4czUC7gKsRrP8Rgf3cx
-/xMGQAfoCgwpTY8CAwEAAaOBnDCBmTAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB
-/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwIgYDVR0R
-BBswGYEXcm9tYW4uZmllZGxlckBhaXQuYWMuYXQwNgYDVR0fBC8wLTAroCmg
-J4YlaHR0cDovL2Rzcy5haXQuYWMuYXQvQWl0RHNzUm9vdENhLmNybDANBgkq
-hkiG9w0BAQsFAAOCAgEAlmfH6IKcvELSCvkJN73s+fBUvZsreH+VM4nv6mwO
-G2otjCOimXdoJPIKAdQJMG02miEhSxcnhaCzM7D2NQcI5+Uj4kEsTNXaZ3PT
-p8pClVuVhvUX3xWTRaXypBu7+EYReGXDLrzQHAUS59T1vPTjGWz/uyzZV0T0
-l/h2Nu48JAgUZWqegXtS6A2L0dkyHpLg9v1DWynzSHe/TaiMvLcGhRFX25bv
-QKqmQpOSDJvyDjUzIEBl7ta+pFSCcFvOeJXl9Pyx9Jz1LrKlyHb20gq6BXxR
-dRl1l3h4H+Dxcm+dSh3tgMGxn649Jrr7aESqTgAWgv1JNfTXu0X1TB2ApD3d
-gzvpb6S+VMpzTUPG347m0kMzQ1VsZXbnXMceAd5PGEeCw8mfBY1SCscK87cC
-e4MARvGhKLsbOOn8gti2/iTEyDGTSvKRP1IStFzJdXRApz+tZu9K9vaWx/53
-jV+yhtZCGIXr1XkFp/RYsWap8Ml2q06h0Tgr1fardKPTrVXPs2THDVVN9eV9
-uUJHkqAxnHp8hg5zPVcc6p+Q1ZzxUyG2b4Q1FJ9jSk0upeIIDkv39mUh/q5x
-j35Oe+i3B0Juw3nA3dE7TH6T+XtD8v216UF0XzEiWwtnQxyxd+GQbO+fIzr1
-eyN1QUAY+d2CrAmlfr5zRBstbxx2nqx9xEXlE995gSYxggXPMIIFywIBATCB
-0jCBrDELMAkGA1UEBhMCQVQxDzANBgNVBAgMBlZpZW5uYTEPMA0GA1UEBwwG
-Vmllbm5hMTIwMAYDVQQKDClBSVQgQXVzdHJpYW4gSW5zdGl0dXRlIG9mIFRl
-Y2hub2xvZ3kgR21iSDEtMCsGA1UECwwkQ2VudGVyIGZvciBEaWdpdGFsIFNh
-ZmV0eSAmIFNlY3VyaXR5MRgwFgYDVQQDDA9BSVQgRFNTIHJvb3QgQ0ECIQD8
-hUlG4bgkdSR71Xd3xHoWZRVUjFSKw+bHsw4J/vvr3zANBglghkgBZQMEAgEF
-AKCCAs0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMTcwNjEzMTIzMjA5WjAvBgkqhkiG9w0BCQQxIgQgbHOMWy5ioYrzqKZc
-H+bHepdAilmCqiNGaGkpACB8c90wgZMGCSqGSIb3DQEJDzGBhTCBgjALBglg
-hkgBZQMEASowCwYJYIZIAWUDBAEWMAoGCCqGSIb3DQMHMAsGCWCGSAFlAwQB
-AjAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwCwYJYIZIAWUDBAIB
-MAsGCWCGSAFlAwQCAzALBglghkgBZQMEAgIwBwYFKw4DAhowgeMGCSsGAQQB
-gjcQBDGB1TCB0jCBrDELMAkGA1UEBhMCQVQxDzANBgNVBAgMBlZpZW5uYTEP
-MA0GA1UEBwwGVmllbm5hMTIwMAYDVQQKDClBSVQgQXVzdHJpYW4gSW5zdGl0
-dXRlIG9mIFRlY2hub2xvZ3kgR21iSDEtMCsGA1UECwwkQ2VudGVyIGZvciBE
-aWdpdGFsIFNhZmV0eSAmIFNlY3VyaXR5MRgwFgYDVQQDDA9BSVQgRFNTIHJv
-b3QgQ0ECIQD8hUlG4bgkdSR71Xd3xHoWZRVUjFSKw+bHsw4J/vvr3zCB5QYL
-KoZIhvcNAQkQAgsxgdWggdIwgawxCzAJBgNVBAYTAkFUMQ8wDQYDVQQIDAZW
-aWVubmExDzANBgNVBAcMBlZpZW5uYTEyMDAGA1UECgwpQUlUIEF1c3RyaWFu
-IEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5IEdtYkgxLTArBgNVBAsMJENlbnRl
-ciBmb3IgRGlnaXRhbCBTYWZldHkgJiBTZWN1cml0eTEYMBYGA1UEAwwPQUlU
-IERTUyByb290IENBAiEA/IVJRuG4JHUke9V3d8R6FmUVVIxUisPmx7MOCf77
-698wDQYJKoZIhvcNAQEBBQAEggIAFcXqMBDzQmtGaEdenUnbdtaQKQ3LOVba
-vx+IqH4i5hy4N6KuWUoTBHdCDyShBS+3Y6v4uPAun8QHrAh0y8TyeBjTacef
-VgKB967+7H3vZu9j1CASjUmxCAVZ7E7iLretGgGV78HbKGz1WDB8RsHS+ueI
-L721mJxfQhdl9jZ1fv4igkM3dLmpWtj00/XMUakeujoWWAvBBYwXS2SJWXMG
-Ilk11cPfWO6XAspwAbZsceCzWNuZPcRpI7Mj5RPE7vcma6sIwFqTK9PJD69c
-iAqna5y4pEaU76yuZh6Zpe9u5+lREx+9d+JDjyzjG5BvS/EwLZCbxcnQfPy8
-dmFSKWiasLg/c8dbfCZQIcfzRS3lq1tHmbkcfA1KpcADRCPnMwRO1Pvc/wx2
-Nk1Gnx7wZ3yqE666GBKpz9LAsucvYIQmfpOdEzn3y+zJxVGTozrmbB2bfyPH
-VjMKYXCO2b88egV2JR9qtlSLKbRZZ0vqjsyDNPliQwtyVdboFFoBKYugDiYz
-KyjpiMzTQ9psA3t7+qgDySMj0QeL7nImPS0YGnURLMIt4PBBt1XGgFW9GJce
-Zb/Jyy59U/tqW8zC0C53d4KoM04clPeDe7uAyHD2CL2Th8hmY2PV8nivUvYk
-efMk0sglgUfm9HK4UXIOigmE61PAwr3l9ytx7vPZM9HLB5cOitkAAAAAAAA=
+Unfortunately
+     emacs -Q --eval '(setq enable-local-variables nil)' poc.txt
+or a similar form in init.el disables file-specific major modes as well. 
+So "mode: outline" is ignored in files like "NEWS". enable-local-eval 
+affects "eval: (...)", but not "mode: ...". These settings are described in
+<https://www.gnu.org/software/emacs/manual/html_node/emacs/Safe-File-Variables.html>
+and in doc strings
+<https://git.savannah.gnu.org/cgit/emacs.git/tree/lisp/files.el?h=emacs-30.1#n669>
 
-------=_NextPart_000_00AD_01D2E451.D6FE7550--
+So setting enable-local-variables to nil is a better recommendation, but 
+the price is inconvenience. An attack can not be prevented by setting 
+enable-local-eval.
+
+On 01/03/2025 19:39, Henrik Ahlgren wrote:
+
+> I wanted to point out an interesting aspect of Emacs file local
+> variables. It may be surprising to some that including `-*-
+> eval:(foobar-mode) -*-` at the beginning of a file will happily evaluate
+> the specified function, regardless of whether it is an "actual" minor
+> mode created with `define-minor-mode'. The only requirement is that the
+> name ends with "-mode."
+> 
+> This raises some questions about potential security implications.
+
+Language encourage this kind of tricks. Function names at least have to 
+have -mode suffix. In the case of CVE-2025-1244, "man:" URL scheme 
+causing attempt to load url-man.el (does not exist) then call to the 
+url-man function from url-misc.el, see url-scheme-get-property in 
+lisp/url/url-methods.el. The url package is a mix of functions 
+implementing some URL schemes (url-info, url-http, etc.), API functions, 
+and helpers having url-* names. There are no settings in url similar to 
+browse-url-handlers and eww-use-browse-url that define explicit mapping 
+(e.g. to browse-url-man) and limit schemes available through browse-url.el.
