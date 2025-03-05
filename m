@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2589" "Wednesday" "4" "July" "2018" "18:56:35" "+0200" "Uwe Schindler" "uschindler@apache.org" "<0cdc01d413b7$f97ba580$ec72f080$@apache.org>" "65" "[oss-security] [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)" nil nil nil "7" "2018070416:56:35" "[oss-security] [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)" (number mark "U       uschindler@a Jul  4   65/2589  " thread-indent "\"[oss-security] [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14125 invoked by uid 550); 4 Jul 2018 17:15:36 -0000
+Received: (qmail 18035 invoked by uid 550); 5 Mar 2025 19:11:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +7,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23759 invoked from network); 4 Jul 2018 16:56:52 -0000
-From: "Uwe Schindler" <uschindler@apache.org>
-To: <announce@apache.org>,
-	<general@lucene.apache.org>,
-	<dev@lucene.apache.org>,
-	<solr-user@lucene.apache.org>
-Cc: "'security'" <security@apache.org>,
-	<oss-security@lists.openwall.com>
-Date: Wed, 4 Jul 2018 18:56:35 +0200
-Message-ID: <0cdc01d413b7$f97ba580$ec72f080$@apache.org>
+x-ms-reactions: disallow
+Received: (qmail 18017 invoked from network); 5 Mar 2025 19:11:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=citrix.com; s=google; t=1741201886; x=1741806686; darn=lists.openwall.com;
+        h=content-transfer-encoding:autocrypt:subject:from:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DZaame9Ci028tUxlPLSZYIhVkogn4h4VCrJpnOsb3QI=;
+        b=RELc6Nb99XPKWE6jk/Z9ni+T9VFWeDRlMu7FfOgSUXKv/dv9pZ2jd1lOssipy6iakU
+         xPRwehRztmVPsrkyfkkb0q1gvQbPoTqSJcPOxpw6ejbRkz4KPQaF0J/VwMbj+P4g8dgT
+         7VWXht+b4syLWv9zcy3grPWkJmqJsP8ZRm3Qo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741201886; x=1741806686;
+        h=content-transfer-encoding:autocrypt:subject:from:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DZaame9Ci028tUxlPLSZYIhVkogn4h4VCrJpnOsb3QI=;
+        b=N69uhf2M6gCVY355uFGZf07bxhEIuXkk5dcI0DOcob0L/8XUVjsjyKNlawm5CfP7Hd
+         09zeIFIhHr8xCTlSk3nWHMEYNN8oJ1fcqrAOy16VWDsMg4Ssj5r99T2I5ugpp3O3tN3R
+         QQfBj8KvJMPassH1MhOV/qfT6FEjeP6APgdf7Wk+VV4fVMjySK+l3DsroUFCPd7jSswx
+         XR2lAsSqYm7VLEZ131peRKD1cPplFlC0daj+Lqw6FALqOtOhGMFHvOJq8jB+KofBSBQU
+         ZaluscjEfARHwdTBnoSHk2JaGHTiaHnsH+ihYAhKK8zYi3MFJ6sz+qlxBcZtSK4n4GDE
+         9plg==
+X-Forwarded-Encrypted: i=1; AJvYcCWbbnrOpeOLaUNgoJIRr0s05sGKzDgFucHLioW1wfnUsyp+fitr2OP6D7gCeq5kv4ljkkEQC5A43RNtAlw=@lists.openwall.com
+X-Gm-Message-State: AOJu0YwmOhMx10FAxx0Fzb726tb0eaLvih8obi50kKspqsLkVgeKdgUR
+	aWAnchxWZs67rafx36+wyGLp0MLi/eH+lykN3ZiyLOs++61szUo9cR8Ja3DTmmU=
+X-Gm-Gg: ASbGncvDb4aT8SEmt//Aq61gty75GjVvaKpJJcMVeNkOXyCAR9vCCFSuS981vHnGNxI
+	NqCcyWzdC3VoBqGC+1h2H5bQVGMZ60QlfC26uw4RhJ9uRhWN6GYKq6I04dV5dPSRviVOWqAq6x/
+	Z4JkvYSapwGBWEnUIrkWNrIQIt4drzCwVitrZDYMbWcohHOHWAx2jw5ds8Taw1sC/cKm28daDwS
+	LI8sPJooOsh/kDre6+QnGv8G2js/E0LVP8moNQLpFvrJuSf3M0QyYzAOBeEMo1k5q4GZvrXW9CP
+	M9eYHOX13F2Gzato5kj8FWT0ukSb/6ID08NhM7ECqpP9lmdDEtmWYSnG3f3UxMV/xwW5AkcRktt
+	+9CLmZMEd
+X-Google-Smtp-Source: AGHT+IE4Oj0YBaW1g1qsSSQnSSCOaSMQmxLzlg0vhrLzGeXWTn120/RwT20dUywm3p5AOlyDXi21Kw==
+X-Received: by 2002:a17:907:3f25:b0:ac1:fcda:78c1 with SMTP id a640c23a62f3a-ac20d97e6b7mr466336266b.34.1741201885183;
+        Wed, 05 Mar 2025 11:11:25 -0800 (PST)
+Message-ID: <b3afc964-2840-4583-bb39-e05d390d3e55@citrix.com>
+Date: Wed, 5 Mar 2025 19:11:23 +0000
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: de
-Thread-Index: AdQTt7EH63+O1TMZSbOqqFPB4d9m8A==
-Subject: [oss-security] [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: "xen-announce@lists.xen.org" <xen-announce@lists.xen.org>,
+ Xen-devel <xen-devel@lists.xen.org>,
+ "xen-users@lists.xen.org" <xen-users@lists.xen.org>,
+ "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Cc: "Xen.org security team" <security-team-members@xen.org>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
+ 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
+ 6+ahAA==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] Xen Security Notice 2 (CVE-2024-35347) AMD CPU Microcode Signature
+ Verification Vulnerability
 
-CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload
-(exchange rate provider config / enum field config / TIKA parsecontext)
+See:
 
-Severity: High
+https://bughunters.google.com/blog/5424842357473280/zen-and-the-art-of-microcode-hacking
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7033.html
 
-Vendor:
-The Apache Software Foundation
+Right now there are four known but (reasonably) benign microcodes from a
+non-AMD source.  However, there is a tool to sign arbitrary microcode.
 
-Versions Affected:
-Solr 6.0.0 to 6.6.4
-Solr 7.0.0 to 7.3.1
+In Xen, we've provided a stopgap mitigation to perform extra checks on
+microcode load on affected CPU families.  This is a SHA2 digest check
+against hashes with believed-good provenance.  This is staging only for
+now, in case it is overly disruptive.
 
-Description:
-The details of this vulnerability were reported by mail to the Apache
-security mailing list.
-This vulnerability relates to an XML external entity expansion (XXE) in Solr
-config files (currency.xml, enumsConfig.xml referred from schema.xml,
-TIKA parsecontext config file). In addition, Xinclude functionality provided
-in these config files is also affected in a similar way. The vulnerability =
-can
-be used as XXE using file/ftp/http protocols in order to read arbitrary
-local files from the Solr server or the internal network. The manipulated
-files can be uploaded as configsets using Solr's API, allowing to exploit
-that vulnerability. See [1] for more details.
+This will not protect against an already-compromised platform, but it
+will prevent an uncompromised system becoming compromised via Xen's
+microcode loading capabilities.
 
-Mitigation:
-Users are advised to upgrade to either Solr 6.6.5 or Solr 7.4.0 releases bo=
-th
-of which address the vulnerability. Once upgrade is complete, no other steps
-are required. Those releases only allow external entities and Xincludes that
-refer to local files / zookeeper resources below the Solr instance directory
-(using Solr's ResourceLoader); usage of absolute URLs is denied. Keep in
-mind, that external entities and XInclude are explicitly supported to better
-structure config files in large installations. Before Solr 6 this was no
-problem, as config files were not accessible through the APIs.
+On affected systems, the only complete fix is a firmware update.  This
+is a very firmly recommended course of action.
 
-If users are unable to upgrade to Solr 6.6.5 or Solr 7.4.0 then they are
-advised to make sure that Solr instances are only used locally without acce=
-ss
-to public internet, so the vulnerability cannot be exploited. In addition,
-reverse proxies should be guarded to not allow end users to reach the
-configset APIs. Please refer to [2] on how to correctly secure Solr servers.
+Sincerely,
 
-Solr 5.x and earlier are not affected by this vulnerability; those versions
-do not allow to upload configsets via the API. Nevertheless, users should
-upgrade those versions as soon as possible, because there may be other ways
-to inject config files through file upload functionality of the old web
-interface. Those versions are no longer maintained, so no deep analysis was
-done.
-
-Credit:
-Yuyang Xiao, Ishan Chattopadhyaya
-
-References:
-[1] https://issues.apache.org/jira/browse/SOLR-12450
-[2] https://wiki.apache.org/solr/SolrSecurity
-
------
-Uwe Schindler
-uschindler@apache.org=20
-ASF Member, Apache Lucene PMC / Committer
-Bremen, Germany
-http://lucene.apache.org/
-
+~Andrew, on behalf of the Xen Security Team.
 
