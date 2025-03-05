@@ -1,4 +1,4 @@
-Received: (qmail 26039 invoked by uid 550); 3 Apr 2024 19:59:15 -0000
+Received: (qmail 25963 invoked by uid 550); 5 Mar 2025 17:42:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,122 +7,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5279 invoked from network); 3 Apr 2024 19:51:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1712173904;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XYlhqVHRWUUajq9SoWDzIjK303Xb5Of9QVBBBJ4Tcyo=;
-	b=VF5FsNdpKuldurT+l3hE+FkDPPDRRkK1JaTYs8vMiSfS4elAD7/GBUDZSdX29W9Im1/tpk
-	C2iydCO1DzcMB5G4ybOD7ZhkN2z9sYfzmbcVVFgak2f2JPSXv60lnje/HkN2ReyDmGtVjw
-	dTM/otnxDkALNBxS59Xd9I6GhXSDi8g=
-X-MC-Unique: OyGTDXKPNQKI6TGmJAgUnA-1
+x-ms-reactions: disallow
+Received: (qmail 22465 invoked from network); 5 Mar 2025 17:17:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudbees.com; s=google; t=1741195038; x=1741799838; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Mj32Hq4aBzO0TmIvvk7DZc8/py4Ti5sdSfiUhV8l+Ow=;
+        b=WlQ+FO+PY7c7fu67QGF9iczYTZ+sXOJx89ixgP674WByS23+cp/v3qF1QvnyZUagLC
+         +VcbbuVIuWqjkUOcxn9YcnWKlR4hmYv4HnvgRmfF0WLe6UNQAh0T7PcqkxzC0qjig7H8
+         SabEUgI2DCg3Ue0MfKrh8/rabwDU1ODowsviE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712173901; x=1712778701;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XYlhqVHRWUUajq9SoWDzIjK303Xb5Of9QVBBBJ4Tcyo=;
-        b=fnvhtOBRCaSRahZQDh7OKEe0PVzC+pCQY9a7lBaiXstF61tzWB3HCG1bVMJqsP2c4x
-         xP2YWJTgTyG/0KuOHajsgr7QNn+mgXUvXz1I20NtD+5vNliibCZ+904Bt9QL6dzpFYvB
-         gGZC5P5imG6Mj/HUA1IezBuXTplCnSJNDt10E9Pm03Sm52oMOQJIyzy29AXT/Kr3rc+W
-         HYn6aTQuXVDRZ31lHS6aWTquCujwsbDakDCtdX3Y4H+Ycg6fNPBb/FKEPe98sPnT6yWk
-         uUbboXo9T7C2LQ2gL09QglsW/+VDFP1jYXYpTBP+nCImj1OEujrIm8RKQ5MO06q6biEq
-         FZUQ==
-X-Gm-Message-State: AOJu0YyeWVtddOfclHtvkS0n4MzLjqlDpeXEWRczIrOMXUK5aGYo2vrO
-	eSa6tX7GLMaRYABkwat20nbDMbQPOaP15lPiQftlPj0FormVJNjdAhtKxcIgm8rMUQYWEdAzz3F
-	1CNPmphR/WDmPknrTrW4dUTpiARrneIjPVT0IvQeGHU8/T3fYFigek/uv1ysyZwWZylc4GW5GL6
-	jo95s02RrqYtfQSGzMh8qI1xztA1f4JHIDHB+XKitr
-X-Received: by 2002:a5d:660a:0:b0:341:a640:b516 with SMTP id n10-20020a5d660a000000b00341a640b516mr292121wru.70.1712173901189;
-        Wed, 03 Apr 2024 12:51:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1b7uHI7a5Z7ARmgipz5JT7l8XzF1JKu1P4G6mxKD50idjfd1Iqe58OVAzwkDpuCALmUd+6qd7+V2T4KUnvfs=
-X-Received: by 2002:a5d:660a:0:b0:341:a640:b516 with SMTP id
- n10-20020a5d660a000000b00341a640b516mr292116wru.70.1712173900830; Wed, 03 Apr
- 2024 12:51:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741195038; x=1741799838;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Mj32Hq4aBzO0TmIvvk7DZc8/py4Ti5sdSfiUhV8l+Ow=;
+        b=Z2TLB6/9DQs8XkbBgqpnWRoGC/BZK1R/ZpfanntkCEz9MsgB6lDqGL0XoxNOVN6ZwJ
+         3iMRDDWtLIzdaVxC5wI8dXDx+YXFsWYT6V56OFH7T2rjXPRQl03kFPpE1vZi10OqKlOx
+         1BXqoexjLCbEMu25EQvfIayqiCvo8kcJkSENXqCNxjp4si3dg51XRt+yqFwRDVVC275P
+         wD6DO0ASUaGomB232mdF/ClmV1DFVnKl+MGYQWfgMPnw/7o4fkd/MseRznup3u53aHY0
+         3BBXzvSjTik/ilsMqy5PRxR0R4cxjQ4+h7tXgTB9dqMUIwmeP8IDWMoaEnquG2SOmWEf
+         Ik6g==
+X-Gm-Message-State: AOJu0YwzfoM9ILXeNtgp9YTD5kUPjvFqK6MjW6yAGvQ5ZD4+3hmRuSs/
+	0okxCWEBQaI4ai3yhMGaFYHKY/SnKqVW74jvhbABb19gP7QYreYpQu53y23Z0qhJjiEu+mPeOFe
+	btBzZRk9EIYyAWQTM2b+hvlDeXFLx0YdU/YHSnW81Sm3A2Jo+tMsKg34u
+X-Gm-Gg: ASbGncvSqcsnxp9LNb3Gzt5rnW/5Dt/jmiEQCH8XWF1cyQut8yALRIzKLpdxiPfDr1i
+	aH4v1iBo8wN7mr7bbUzkqgDOVqsPagtwYUc4kpnSwK+lCMqao5f2hsQU2wq0cMWAGs1xwZZ8JF4
+	GJjS+NCvqFkelZkNBpTmPyVHd7l6IXQelt+bsJ42c2TApwinCKD5pXFM6Caw==
+X-Google-Smtp-Source: AGHT+IEYJkOLI/UqfbR1e5kKaofmH3CDnMi36c8K5/BCWmmB8eBPI2WEhVFbmiuV3egp6V4/XwLHl5MAX/S7my7/8YM=
+X-Received: by 2002:a05:651c:b12:b0:30b:c91d:3600 with SMTP id
+ 38308e7fff4ca-30bd7a1dee0mr14599371fa.8.1741195037710; Wed, 05 Mar 2025
+ 09:17:17 -0800 (PST)
 MIME-Version: 1.0
-References: <4323cf07-8f42-46f8-b075-c12e50a917e7n@googlegroups.com>
- <7e6a9e00-1caf-4523-b969-fdb410b240f7n@googlegroups.com> <9f41b1da-6faa-4364-aed8-60ff5eaf7c06n@googlegroups.com>
- <20240403164804.GA10525@openwall.com> <CAH0iFcZaZtAfhVwopR1vFgXuQJSvugL8Bz8OmQYS+kpq4VqGiA@mail.gmail.com>
- <20240403194214.GA12525@openwall.com>
-In-Reply-To: <20240403194214.GA12525@openwall.com>
-From: Michael Dawson <midawson@redhat.com>
-Date: Wed, 3 Apr 2024 15:51:28 -0400
-Message-ID: <CAH0iFcYE5SrCZWWjoHx-iM1oHkzq0FXkAZ==4H26Cuw3rDyU3Q@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000273af60615368d99"
-Subject: Re: [oss-security] Fwd: Node.js security update for all active
- release lines
+From: Kevin Guerroudj <kguerroudj@cloudbees.com>
+Date: Wed, 5 Mar 2025 18:17:07 +0100
+X-Gm-Features: AQ5f1JrIyNLMZHYO-4UQco-_eTM-s0Pi50J15tNq-YqD6KXpLRVUjPtbrPt4JaA
+Message-ID: <CAKG2iZijXv6DD60je8CTXrbyX_iNi3BOiZP43ORPOBm7YoJuww@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b5341c062f9b8f46"
+Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
---000000000000273af60615368d99
+--000000000000b5341c062f9b8f46
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-The reason we post the link in the nodejs-sec posts is to reduce the work
-for the security stewards and avoid problems with cut/paste. Markdown does
-not paste into gmail and work is required to reformat etc.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-I can understand that you'd prefer that we do more work so that your
-organization can do less work but at this point that is not something I'd
-support. We don't do any extra steps for any other organization and
-explaining why a forward is needed versus somebody from openwall
-subscribing to the mailing list is something I already don't know how to
-explain.
+The following releases contain fixes for security vulnerabilities:
 
-I'm not going to rush to remove what we have been doing from the
-security release process, but trying to explain why I don't think asking
-for more makes sense.  You can always open an issue in the nodejs/node repo
-to discussion/make a case if you think it make sense.
+* Jenkins 2.500
+* Jenkins LTS 2.492.2
 
-On Wed, Apr 3, 2024 at 3:42=E2=80=AFPM Solar Designer <solar@openwall.com> =
-wrote:
 
-> On Wed, Apr 03, 2024 at 02:01:11PM -0400, Michael Dawson wrote:
-> > Sorry I don't remember the context as to why we agreed to send this
-> forward
-> > in the first place.
->
-> As I can find, these just started arriving in July 2021.  And that was
-> appreciated.  Now I merely suggested how to do it a bit better.
->
-> > As opposed to expanding any work that's a one off for the community
-> > security stewards, since it sounds like it may not be meeting your need=
-s,
-> > I'd propose that we just remove it from our security release steps and
-> you
-> > can subscribe to the nodejs-sec mailing list like everybody else. From
-> that
-> > you could generate some automation to pull down the content from the
-> > original post.
->
-> That's not the outcome I wanted, especially not knowing who would setup
-> and maintain said automation.  We do have an outstanding task to create
-> some tools for this sort of automation, but no one approached it yet and
-> it's meant to help prepare drafts for manual posting, so there would be
-> some per-message work anyway.
->
-> So please continue these postings as-is for now, and we'll hopefully be
-> adding follow-ups with the actual content like I did.  You could also
-> want to start including the Markdown files in nodejs-sec postings, so
-> simply forwarding them in here would do what's desired, but that's your
-> call indeed.
->
-> BTW, the previous update (for February) somehow wasn't sent in here.
-> Per my off-list suggestion, an oss-security contributor later sent a
-> detailed report:
->
-> https://www.openwall.com/lists/oss-security/2024/03/11/1
->
-> but we're not sure we'll do it each time.
->
-> Thanks,
->
-> Alexander
->
->
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2025-03-05/
 
---000000000000273af60615368d99--
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3495 / CVE-2025-27622
+Jenkins 2.499 and earlier, LTS 2.492.1 and earlier does not redact
+encrypted values of secrets when accessing `config.xml` of agents via REST
+API or CLI.
+
+This allows attackers with Agent/Extended Read permission to view encrypted
+values of secrets.
+
+
+SECURITY-3496 / CVE-2025-27623
+Jenkins 2.499 and earlier, LTS 2.492.1 and earlier does not redact
+encrypted values of secrets when accessing `config.xml` of views via REST
+API or CLI.
+
+This allows attackers with View/Read permission to view encrypted values of
+secrets.
+
+
+SECURITY-3498 / CVE-2025-27624
+Jenkins 2.499 and earlier, LTS 2.492.1 and earlier does not require POST
+requests for the HTTP endpoint toggling collapsed/expanded status of
+sidepanel widgets (e.g., Build Queue and Build Executor Status widgets),
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to have users toggle their
+collapsed/expanded status of sidepanel widgets.
+
+Additionally, as the API accepts any string as the identifier of the panel
+ID to be toggled, attacker-controlled content can be stored in the victim's
+user profile in Jenkins.
+
+
+SECURITY-3501 / CVE-2025-27625
+Various features in Jenkins redirect users to partially user-controlled
+URLs inside Jenkins. To prevent open redirect vulnerabilities, Jenkins
+limits redirections to safe URLs (neither absolute nor
+scheme-relative/network-path reference).
+
+In Jenkins 2.499 and earlier, LTS 2.492.1 and earlier, redirects starting
+with backslash (`\`) characters are considered safe.
+
+This allows attackers to perform phishing attacks by having users go to a
+Jenkins URL that will forward them to a different site, because browsers
+interpret these characters as part of scheme-relative redirects.
+
+--000000000000b5341c062f9b8f46--
