@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3420" "Monday" "11" "November" "2019" "17:49:45" "+0100" "Wolfgang Frisch" "wolfgang.frisch@suse.com" "<2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>" "93" "[oss-security] CVE-2019-2201: libjpeg-turbo: code execution" "^Date:" nil nil "11" "2019111116:49:45" "[oss-security] CVE-2019-2201: libjpeg-turbo: code execution" (number mark "        wolfgang.fri Nov 11   93/3420  " thread-indent "\"[oss-security] CVE-2019-2201: libjpeg-turbo: code execution\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-2201: libjpeg-turbo: code execution" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30613 invoked by uid 550); 11 Nov 2019 16:51:54 -0000
+Received: (qmail 1876 invoked by uid 550); 6 Mar 2025 03:30:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,166 +6,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30227 invoked from network); 11 Nov 2019 16:50:44 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Autocrypt: addr=wolfgang.frisch@suse.com; keydata=
- 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
-Organization: SUSE Software Solutions Germany GmbH
-Message-ID: <2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="x6Ttfq5nHRlJuDi4PPvtFIDdXlJABdVSd"
-Date: Mon, 11 Nov 2019 17:49:45 +0100
-From: Wolfgang Frisch <wolfgang.frisch@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-2201: libjpeg-turbo: code execution
+x-ms-reactions: disallow
+Received: (qmail 1497 invoked from network); 6 Mar 2025 03:30:06 -0000
+Date: Thu, 6 Mar 2025 04:30:00 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Tavis Ormandy <taviso@gmail.com>
+Message-ID: <20250306033000.GA4987@openwall.com>
+References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net> <20250204101028.GA20864@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250204101028.GA20864@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
 
---x6Ttfq5nHRlJuDi4PPvtFIDdXlJABdVSd
-Content-Type: multipart/mixed; boundary="eHkcAnNBhcLRrt1sjXudCe02iYWRnzIHM"
+On Tue, Feb 04, 2025 at 11:10:28AM +0100, Solar Designer wrote:
+> On Wed, Jan 22, 2025 at 07:52:48AM -0800, Tavis Ormandy wrote:
+> > On Tue, Jan 21, 2025 at 11:38:16PM -0500, Demi Marie Obenour wrote:
+> > > On Tue, Jan 21, 2025 at 06:31:31PM -0800, Tavis Ormandy wrote:
+> > > > It looks like an OEM leaked the patch for a major upcoming CPU
+> > > > vulnerability, i.e. "AMD Microcode Signature Verification
+> > > > Vulnerability":
+> > > > 
+> > > > https://rog.asus.com/motherboards/rog-strix/rog-strix-x870-i-gaming-wifi/helpdesk_bios/
+> > > > 
+> > > > I'm not thrilled about this - the patch is *not* currently in
+> > > > linux-firmware, so this is the only publicly available patch.
 
---eHkcAnNBhcLRrt1sjXudCe02iYWRnzIHM
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Tavis also posted a screenshot to Twitter at the time, from which it
+could be seen that ASUS had indeed listed a relevant change in there.
+That mention was deleted from the web page within a day or so.
 
-Hi,
+> > > > However, other people are discussing how to extract them:
+> > > > 
+> > > > https://winraid.level1techs.com/t/offer-intel-amd-via-cpu-microcode-archives-1995-present/102857/53
+> > > 
+> > > Is this fix effective, or can it be bypassed via a downgrade attack?
+> > 
+> > I'm not sure yet, the vendor has been really excruciating to deal with,
+> > this is the first time I've been allowed to see the patch!! :(
+> 
+> Much of the info is finally public (with more planned for March):
+> 
+> https://github.com/google/security-research/security/advisories/GHSA-4xq7-4mgh-gp6w
 
-there is an integer overflow and subsequent heap corruption in
-libjpeg-turbo 2.0.3 and earlier. While I did not have anything to do
-with the discovery of the issue [1][2], I'd like to raise attention due
-to the high possible impact.
+> > Google notified AMD of this vulnerability on September 25, 2024. AMD
+> > subsequently provided an embargoed fix to its customers on December 17,
+> > 2024. To coordinate with AMD, we made a one-off exception to our
+> > standard vulnerability disclosure policy and delayed public disclosure
+> > until today, February 3, 2025. This joint disclosure occurs 46 days
+> > after AMD shared the fix with its customers and 131 days after Google's
+> > initial report. Due to the deep supply chain, sequence and coordination
+> > required to fix this issue, we will not be sharing full details at this
+> > time in order to give users time to re-establish trust on their
+> > confidential-compute workloads. We will share additional details and
+> > tools on March 5, 2025.
+> 
+> > CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:N
+> > CVE-2024-56161
 
-Steps to reproduce:
-- Create a JPEG image, size 26755 x 26755, RGB with 8 bits per channel.
-- Run gdb tjbench
+As mentioned in a Xen Security Notice in here earlier today:
 
->(gdb) run reproducer.jpeg
->
-> Image size: 26755 x 26755
->=20
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> (gdb) bt
-> #0  0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> #1  0x0000555555558f7a in memset (__len=3D18446744071562074395, __ch=3D12=
-7, __dest=3D<optimized out>) at /usr/include/bits/string_fortified.h:71
-> #2  decomp (srcBuf=3D0x0, jpegBuf=3D0x7fffffffd8e0, jpegSize=3D0x7fffffff=
-d8e8, dstBuf=3D<optimized out>, w=3D26755, h=3D26755, subsamp=3D2, jpegQual=
-=3D0,=20
->     fileName=3D0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26=
-755", tilew=3D26755, tileh=3D26755) at /usr/src/debug/libjpeg-turbo-2.0.3-5=
-6.1.x86_64/tjbench.c:174
-> #3  0x0000555555557103 in decompTest (fileName=3D0x7fffffffdfaa "CVE-2019=
--2201-reproducer-SEGFAULT-26755x26755") at /usr/src/debug/libjpeg-turbo-2.0=
-.3-56.1.x86_64/tjbench.c:712
-> #4  main (argc=3D<optimized out>, argv=3D<optimized out>) at /usr/src/deb=
-ug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:1003
+https://www.openwall.com/lists/oss-security/2025/03/05/3
 
-We identified that it crashed on writing to a libc.so mapping.
+the Google team did in fact "share additional details and tools" now:
 
-The reproducer is also described in our bug report [3].
+https://bughunters.google.com/blog/5424842357473280/zen-and-the-art-of-microcode-hacking
+https://github.com/google/security-research/tree/master/pocs/cpus/entrysign/zentool
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7033.html
 
-[1] https://source.android.com/security/bulletin/2019-11-01
-[2] https://github.com/libjpeg-turbo/libjpeg-turbo/issues/361
-[3] https://bugzilla.suse.com/show_bug.cgi?id=3D1156402
+This is an exciting read with a lot of detail, but for this posting I'll
+focus on what the vulnerability and its fix are:
 
-Best regards,
-Wolfgang Frisch
+> The root cause of the EntrySign vulnerability is that the AMD Zen
+> microcode signature verification algorithm uses the CMAC function as a
+> hash function; however, CMAC is a message authentication code and does
+> not necessarily provide the same security guarantees as a cryptographic
+> hash function.
 
---=20
-Wolfgang Frisch <wolfgang.frisch@suse.com>
-Security Engineer
-OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 Nuremberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Managing Director: Felix Imend=C3=B6rffer
+> The weakness of using CMAC as a hash function is that anyone who has the
+> encryption key is able to observe the intermediate values of the
+> encryption and calculate a way to "correct" the difference so that the
+> final output remains the same, even if the inputs are completely
+> different.
 
+> Secure hash functions are designed in such a way that there is no secret
+> key, and there is no way to use knowledge of the intermediate state in
+> order to generate a collision. However, CMAC was not designed as a hash
+> function, and therefore it is a weak hash function against an adversary
+> who has the key. Remember that every AMD Zen CPU has to have the same
+> AES-CMAC key in order to successfully calculate the hash of the AMD
+> public key and the microcode patch contents. Therefore, the key only
+> needs to be revealed from a single CPU in order to compromise all other
+> CPUs using the same key. This opens up the potential for hardware
+> attacks (e.g., reading the key from ROM with a scanning electron
+> microscope), side-channel attacks (e.g., using Correlation Power
+> Analysis to leak the key during validation), or other software or
+> hardware attacks that can somehow reveal the key. In summary, it is a
+> safe assumption that such a key will not remain secret forever.
+> 
+> Forging On
+> We noticed that the key from an old Zen 1 CPU was the example key of the
+> NIST SP 800-38B publication (Appendix D.1 2b7e1516 28aed2a6 abf71588
+> 09cf4f3c) and was reused until at least Zen 4 CPUs. Using this key we
+> could break the two usages of AES-CMAC: the RSA public key and the
+> microcode patch contents. We were able to forge new public keys which
+> generated the same hash as the authentic AMD key. Additionally, we
+> calculated collisions for signatures, and were able to generate a
+> microcode patch that shares the same signature as another message that
+> was legitimately signed.
 
+> Vulnerability Mitigation
+> The fix released by AMD modifies the microcode validation routine to use
+> a custom secure hash function. This is paired with an AMD Secure
+> Processor update which ensures the patch validation routine is updated
+> before the x86 cores can attempt to install a tampered microcode patch.
+> We plan to provide additional details in the upcoming months on how we
+> reverse engineered the microcode update process, which led to us
+> identifying the validation algorithms, extracting the CMAC key, and
+> discovering some file format details.
 
-
-
-
-
-
---eHkcAnNBhcLRrt1sjXudCe02iYWRnzIHM--
-
---x6Ttfq5nHRlJuDi4PPvtFIDdXlJABdVSd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEYqBDpiSp/H/7pxro7t22gcnlyyMFAl3JkSkACgkQ7t22gcnl
-yyOlsBAAk7z3QSWeIqc5J6SJBIEWZ4etSgvuVP+3aBscFobli0nkkbadfyzrquEf
-O3qMXLvHwplG1Qas7IGjrMzQ4HT/Eu2Tmlm6KfYkAcUvDAqjjpmw+isom8dcI0aU
-EB9BYUEX9ZNOFO5RXpJ36kYYeEBelGozB8tmE2vuYzdh4JNWVl3mX6ms+c2ySvxk
-uE6VkFUUBkTmT1MA6QY2uWcGH+3NG1u3WPNVTvzbTQSFmfeDgAcVT3q0DixSF16Q
-hIt7NC5D0116IMN5hg3Q7qkkvFb/+mLordIosPxmI7xMIPo8gbqeRAmSOb9oJ01m
-L6r7iU1Zpg/XcDM0hC0YdZZhqio0C4tr4UbxUynLdUPIBJZ1MeslMhTFgGELTuqj
-79Q8OnCzl63h0IYir0h6lBR9ZigDfdz1tu4kv0/udjCHijc5TYj58LilUvUqSVyc
-DhQCTcjIvzNWLCjoSSuD65vXVYjv0VG1EKz4jr2/n7bs7t7HQkdfsv1RW7m4rO5N
-hhOTKDN2DtTT6j+IaFRtWB6RKYWDWrQvQBoEyPU2LBbzEoWiYbtJ14X326UZVMBv
-UzoYwwXLNGLz2cfKRFrV5+qDAO/6OPzzRz5TgzMVyC1zZEt5g64iIsDZQIMPN/Kr
-yg3nA3fpFhUrzti3dlh9mWB9dMR26Ka0HILaUKuWzE2luDmyYqE=
-=3AqZ
------END PGP SIGNATURE-----
-
---x6Ttfq5nHRlJuDi4PPvtFIDdXlJABdVSd--
+Alexander
