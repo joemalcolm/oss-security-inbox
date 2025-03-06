@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8026" "Wednesday" "25" "July" "2018" "17:00:15" "+0000" "Xen.org security team" "security@xen.org" "<E1fiN95-0005te-ML@xenbits.xenproject.org>" "179" "[oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path" nil nil nil "7" "2018072517:00:15" "[oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path" (number mark "U       security@xen Jul 25  179/8026  " thread-indent "\"[oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32444 invoked by uid 550); 25 Jul 2018 17:00:38 -0000
+Received: (qmail 26399 invoked by uid 550); 6 Mar 2025 06:05:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,196 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32408 invoked from network); 25 Jul 2018 17:00:37 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fiN95-0005te-ML@xenbits.xenproject.org>
-Date: Wed, 25 Jul 2018 17:00:15 +0000
-Subject: [oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV
- syscall return path
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+x-ms-reactions: disallow
+Received: (qmail 26176 invoked from network); 6 Mar 2025 06:05:06 -0000
+Date: Thu, 6 Mar 2025 07:04:54 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Tavis Ormandy <taviso@gmail.com>
+Message-ID: <20250306060454.GA6918@openwall.com>
+References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net> <20250204101028.GA20864@openwall.com> <20250306033000.GA4987@openwall.com> <6f9ffc49-ad46-45eb-9d6f-7d58769c3671@gmail.com> <20250306053416.GA6682@openwall.com> <97c9b035-2a68-4182-93c8-0495abdd193f@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <97c9b035-2a68-4182-93c8-0495abdd193f@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Mar 05, 2025 at 11:50:45PM -0600, Jacob Bachmeyer wrote:
+> On 3/5/25 23:34, Solar Designer wrote:
+> >The real issue is the use of CMAC without understanding its properties,
+> >not the key choice.
+> 
+> The fact that it is called a "key" (and not a "public key") should be 
+> the hint that it must be kept secret, which means do not use an example 
+> value, just like you do not set your password to "password" or your PIN 
+> to 1-2-3-4-5 unless you really mean to have no security on that system.
 
-                    Xen Security Advisory XSA-274
+... or you mean not to use this specific authentication factor, relying
+on some other(s) - like the console being protected physically.  A risky
+thing to do ("what can possibly go wrong?"), but the analogy is there.
 
-         Linux: Uninitialized state in PV syscall return path
+> >Indeed, HMAC wouldn't be any weaker than its underlying hash on its own
+> >even when used with a publicly known example key.  So I can see how they
+> >could have (wrongly) expected the same from CMAC.
+> 
+> If the system is no weaker if the HMAC key is known, then you should not 
+> be using HMAC and you should be using a plain digest instead.  (Or am I 
+> missing something?  What would HMAC with a known key give you that a 
+> plain digest does not?)
 
-ISSUE DESCRIPTION
-=================
+My point is that sometimes a building block you readily have or can
+create most cheaply provides excessive functionality, or so they
+thought.  Perhaps they could implement CMAC-AES easier than implement
+SHA-256 (if they already had AES, but not yet SHA-256), and thought it's
+as good as an HMAC.
 
-Linux has a `failsafe` callback, invoked by Xen under certain
-conditions.  Normally in this failsafe callback, error_entry is paired
-with error_exit; and error_entry uses %ebx to communicate to
-error_exit whether to use the user or kernel return path.
-
-Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
-error_entry being called first, leaving %ebx with an invalid value.
-
-IMPACT
-======
-
-A rogue user-space program could crash a guest kernel.  Privilege
-escalation cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Only 64-bit x86 PV Linux systems are vulnerable.
-
-All versions of Linux are vulnerable.
-
-MITIGATION
-==========
-
-Switching to HVM or PVH guests will mitigate this issue.
-
-CREDITS
-=======
-
-This issue was discovered by M. Vefa Bicakci, and recognized as a
-security issue by Andy Lutorminski.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-NB this patch has not been accepted into Linux upstream yet.  An
-updated advisory will be sent if the fix upstreamed looks
-significantly different.
-
-xsa274-linux-4.17.patch           Linux 4.17
-
-$ sha256sum xsa274*
-0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
-$
-
-NOTE ON THE LACK OF EMBARGO
-===========================
-
-The patch for this issue was published on linux-kernel without being
-first reported to the XenProject Security Team.
-
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAltYp7EMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZipwIAINGjP6d5vABI2CEdbromimlXiwGvTUBWOoIsvu1
-bfLyeab334UBIpmouz+UhgKXFdujIFNpWqGpCc68xoNSsJiY+95GykbkxfghxzkL
-GQXzGloJVrHSzRGT+wUlTg9qCpbj1YVr1YtnACa34eXJTGhUBnOl0L3gBRbrjILb
-esECY3/EAKcnB8z1d2AzCRamYVGvfMO8xcolYrP1DzlNYQPnfrKvZu/7vkiyhbrO
-M9nM6+9MdS63JPGp5dX8xRO3TzyRDpgpSpkoMY8Lqhrr5/oLC9dhtdm/yK2kNtJ/
-JluBn6q+EfZKoW/UcwTsehiTOOTKb/WYhC3e1jsRpm/+drU=
-=7MDt
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa274-linux-4.17.patch"
-Content-Disposition: attachment; filename="xsa274-linux-4.17.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA4ZGY2MzUwMDdlMDczNzg4NzUyMmVlYmVlODg2MTU1NjAyYjg4MDli
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmR5IEx1dG9taXJz
-a2kgPGx1dG9Aa2VybmVsLm9yZz4KRGF0ZTogU3VuLCAyMiBKdWwgMjAxOCAx
-MTowNTowOSAtMDcwMApTdWJqZWN0OiBbUEFUQ0hdIHg4Ni9lbnRyeS82NDog
-UmVtb3ZlICVlYnggaGFuZGxpbmcgZnJvbSBlcnJvcl9lbnRyeS9leGl0Cgpl
-cnJvcl9lbnRyeSBhbmQgZXJyb3JfZXhpdCBjb21tdW5pY2F0ZSB0aGUgdXNl
-ciB2cyBrZXJuZWwgc3RhdHVzIG9mCnRoZSBmcmFtZSB1c2luZyAlZWJ4LiAg
-VGhpcyBpcyB1bm5lY2Vzc2FyeSAtLSB0aGUgaW5mb3JtYXRpb24gaXMgaW4K
-cmVncy0+Y3MuICBKdXN0IHVzZSByZWdzLT5jcy4KClRoaXMgbWFrZXMgZXJy
-b3JfZW50cnkgc2ltcGxlciBhbmQgbWFrZXMgZXJyb3JfZXhpdCBtb3JlIHJv
-YnVzdC4KCkl0IGFsc28gZml4ZXMgYSBuYXN0eSBidWcuICBCZWZvcmUgYWxs
-IHRoZSBTcGVjdHJlIG5vbnNlbnNlLCBUaGUKeGVuX2ZhaWxzYWZlX2NhbGxi
-YWNrIGVudHJ5IHBvaW50IHJldHVybmVkIGxpa2UgdGhpczoKCiAgICAgICAg
-QUxMT0NfUFRfR1BSRUdTX09OX1NUQUNLCiAgICAgICAgU0FWRV9DX1JFR1MK
-ICAgICAgICBTQVZFX0VYVFJBX1JFR1MKICAgICAgICBFTkNPREVfRlJBTUVf
-UE9JTlRFUgogICAgICAgIGptcCAgICAgZXJyb3JfZXhpdAoKQW5kIGl0IGRp
-ZCBub3QgZ28gdGhyb3VnaCBlcnJvcl9lbnRyeS4gIFRoaXMgd2FzIGJvZ3Vz
-OiBSQlgKY29udGFpbmVkIGdhcmJhZ2UsIGFuZCBlcnJvcl9leGl0IGV4cGVj
-dGVkIGEgZmxhZyBpbiBSQlguCkZvcnR1bmF0ZWx5LCBpdCBnZW5lcmFsbHkg
-Y29udGFpbmVkICpub256ZXJvKiBnYXJiYWdlLCBzbyB0aGUKY29ycmVjdCBj
-b2RlIHBhdGggd2FzIHVzZWQuICBBcyBwYXJ0IG9mIHRoZSBTcGVjdHJlIGZp
-eGVzLCBjb2RlIHdhcwphZGRlZCB0byBjbGVhciBSQlggdG8gbWl0aWdhdGUg
-Y2VydGFpbiBzcGVjdWxhdGlvbiBhdHRhY2tzLiAgTm93LApkZXBlbmRpbmcg
-b24ga2VybmVsIGNvbmZpZ3VyYXRpb24sIFJCWCBnb3QgemVyb2VkIGFuZCwg
-d2hlbiBydW5uaW5nCnNvbWUgV2luZSB3b3JrbG9hZHMsIHRoZSBrZXJuZWwg
-Y3Jhc2hlcy4gIFRoaXMgd2FzIGludHJvZHVjZWQgYnk6CgogICAgY29tbWl0
-IDNhYzZkOGM3ODdiOCAoIng4Ni9lbnRyeS82NDogQ2xlYXIgcmVnaXN0ZXJz
-IGZvcgogICAgZXhjZXB0aW9ucy9pbnRlcnJ1cHRzLCB0byByZWR1Y2Ugc3Bl
-Y3VsYXRpb24gYXR0YWNrIHN1cmZhY2UiKQoKV2l0aCB0aGlzIHBhdGNoIGFw
-cGxpZWQsIFJCWCBpcyBubyBsb25nZXIgbmVlZGVkIGFzIGEgZmxhZywgYW5k
-IHRoZQpwcm9ibGVtIGdvZXMgYXdheS4KCkkgc3VzcGVjdCB0aGF0IG1hbGlj
-aW91cyB1c2Vyc3BhY2UgY291bGQgdXNlIHRoaXMgYnVnIHRvIGNyYXNoIHRo
-ZQprZXJuZWwgZXZlbiB3aXRob3V0IHRoZSBvZmZlbmRpbmcgcGF0Y2ggYXBw
-bGllZCwgdGhvdWdoLgoKW0hpc3RvcmljYWwgbm90ZTogSSB3cm90ZSB0aGlz
-IHBhdGNoIGFzIGEgY2xlYW51cCBiZWZvcmUgSSB3YXMgYXdhcmUKIG9mIHRo
-ZSBidWcgaXQgZml4ZWQuXQoKW05vdGUgdG8gc3RhYmxlIG1haW50YWluZXJz
-OiB0aGlzIHNob3VsZCBwcm9iYWJseSBnZXQgYXBwbGllZCB0byBhbGwKIGtl
-cm5lbHMuICBJZiB5b3UncmUgbmVydm91cyBhYm91dCB0aGF0LCBhIG1vcmUg
-Y29uc2VydmF0aXZlIGZpeCB0bwogYWRkIHhvcmwgJWVieCwlZWJ4OyBpbmNs
-ICVlYnggYmVmb3JlIHRoZSBqdW1wIHRvIGVycm9yX2V4aXQgc2hvdWxkCiBh
-bHNvIGZpeCB0aGUgcHJvYmxlbS5dCgpDYzogQnJpYW4gR2Vyc3QgPGJyZ2Vy
-c3RAZ21haWwuY29tPgpDYzogQm9yaXNsYXYgUGV0a292IDxicEBhbGllbjgu
-ZGU+CkNjOiBEb21pbmlrIEJyb2Rvd3NraSA8bGludXhAZG9taW5pa2Jyb2Rv
-d3NraS5uZXQ+CkNjOiBJbmdvIE1vbG5hciA8bWluZ29AcmVkaGF0LmNvbT4K
-Q2M6ICJILiBQZXRlciBBbnZpbiIgPGhwYUB6eXRvci5jb20+CkNjOiBUaG9t
-YXMgR2xlaXhuZXIgPHRnbHhAbGludXRyb25peC5kZT4KQ2M6IEJvcmlzIE9z
-dHJvdnNreSA8Ym9yaXMub3N0cm92c2t5QG9yYWNsZS5jb20+CkNjOiBKdWVy
-Z2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkNjOiB4ZW4tZGV2ZWxAbGlz
-dHMueGVucHJvamVjdC5vcmcKQ2M6IHg4NkBrZXJuZWwub3JnCkNjOiBzdGFi
-bGVAdmdlci5rZXJuZWwub3JnCkZpeGVzOiAzYWM2ZDhjNzg3YjggKCJ4ODYv
-ZW50cnkvNjQ6IENsZWFyIHJlZ2lzdGVycyBmb3IgZXhjZXB0aW9ucy9pbnRl
-cnJ1cHRzLCB0byByZWR1Y2Ugc3BlY3VsYXRpb24gYXR0YWNrIHN1cmZhY2Ui
-KQpSZXBvcnRlZC1hbmQtdGVzdGVkLWJ5OiAiTS4gVmVmYSBCaWNha2NpIiA8
-bS52LmJAcnVuYm94LmNvbT4KU2lnbmVkLW9mZi1ieTogQW5keSBMdXRvbWly
-c2tpIDxsdXRvQGtlcm5lbC5vcmc+Ci0tLQogYXJjaC94ODYvZW50cnkvZW50
-cnlfNjQuUyB8IDE4ICsrKystLS0tLS0tLS0tLS0tLQogMSBmaWxlIGNoYW5n
-ZWQsIDQgaW5zZXJ0aW9ucygrKSwgMTQgZGVsZXRpb25zKC0pCgpkaWZmIC0t
-Z2l0IGEvYXJjaC94ODYvZW50cnkvZW50cnlfNjQuUyBiL2FyY2gveDg2L2Vu
-dHJ5L2VudHJ5XzY0LlMKaW5kZXggNzNhNTIyZDUzYjUzLi44YWU3ZmZkYThm
-OTggMTAwNjQ0Ci0tLSBhL2FyY2gveDg2L2VudHJ5L2VudHJ5XzY0LlMKKysr
-IGIvYXJjaC94ODYvZW50cnkvZW50cnlfNjQuUwpAQCAtOTgxLDcgKzk4MSw3
-IEBAIEVOVFJZKFxzeW0pCiAKIAljYWxsCVxkb19zeW0KIAotCWptcAllcnJv
-cl9leGl0CQkJLyogJWVieDogbm8gc3dhcGdzIGZsYWcgKi8KKwlqbXAJZXJy
-b3JfZXhpdAogCS5lbmRpZgogRU5EKFxzeW0pCiAuZW5kbQpAQCAtMTIyMiw3
-ICsxMjIyLDYgQEAgRU5EKHBhcmFub2lkX2V4aXQpCiAKIC8qCiAgKiBTYXZl
-IGFsbCByZWdpc3RlcnMgaW4gcHRfcmVncywgYW5kIHN3aXRjaCBHUyBpZiBu
-ZWVkZWQuCi0gKiBSZXR1cm46IEVCWD0wOiBjYW1lIGZyb20gdXNlciBtb2Rl
-OyBFQlg9MTogb3RoZXJ3aXNlCiAgKi8KIEVOVFJZKGVycm9yX2VudHJ5KQog
-CVVOV0lORF9ISU5UX0ZVTkMKQEAgLTEyNjksNyArMTI2OCw2IEBAIEVOVFJZ
-KGVycm9yX2VudHJ5KQogCSAqIGZvciB0aGVzZSBoZXJlIHRvby4KIAkgKi8K
-IC5MZXJyb3Jfa2VybmVsc3BhY2U6Ci0JaW5jbAklZWJ4CiAJbGVhcQluYXRp
-dmVfaXJxX3JldHVybl9pcmV0KCVyaXApLCAlcmN4CiAJY21wcQklcmN4LCBS
-SVArOCglcnNwKQogCWplCS5MZXJyb3JfYmFkX2lyZXQKQEAgLTEzMDMsMjgg
-KzEzMDEsMjAgQEAgRU5UUlkoZXJyb3JfZW50cnkpCiAKIAkvKgogCSAqIFBy
-ZXRlbmQgdGhhdCB0aGUgZXhjZXB0aW9uIGNhbWUgZnJvbSB1c2VyIG1vZGU6
-IHNldCB1cCBwdF9yZWdzCi0JICogYXMgaWYgd2UgZmF1bHRlZCBpbW1lZGlh
-dGVseSBhZnRlciBJUkVUIGFuZCBjbGVhciBFQlggc28gdGhhdAotCSAqIGVy
-cm9yX2V4aXQga25vd3MgdGhhdCB3ZSB3aWxsIGJlIHJldHVybmluZyB0byB1
-c2VyIG1vZGUuCisJICogYXMgaWYgd2UgZmF1bHRlZCBpbW1lZGlhdGVseSBh
-ZnRlciBJUkVULgogCSAqLwogCW1vdgklcnNwLCAlcmRpCiAJY2FsbAlmaXh1
-cF9iYWRfaXJldAogCW1vdgklcmF4LCAlcnNwCi0JZGVjbAklZWJ4CiAJam1w
-CS5MZXJyb3JfZW50cnlfZnJvbV91c2VybW9kZV9hZnRlcl9zd2FwZ3MKIEVO
-RChlcnJvcl9lbnRyeSkKIAotCi0vKgotICogT24gZW50cnksIEVCWCBpcyBh
-ICJyZXR1cm4gdG8ga2VybmVsIG1vZGUiIGZsYWc6Ci0gKiAgIDE6IGFscmVh
-ZHkgaW4ga2VybmVsIG1vZGUsIGRvbid0IG5lZWQgU1dBUEdTCi0gKiAgIDA6
-IHVzZXIgZ3NiYXNlIGlzIGxvYWRlZCwgd2UgbmVlZCBTV0FQR1MgYW5kIHN0
-YW5kYXJkIHByZXBhcmF0aW9uIGZvciByZXR1cm4gdG8gdXNlcm1vZGUKLSAq
-LwogRU5UUlkoZXJyb3JfZXhpdCkKIAlVTldJTkRfSElOVF9SRUdTCiAJRElT
-QUJMRV9JTlRFUlJVUFRTKENMQlJfQU5ZKQogCVRSQUNFX0lSUVNfT0ZGCi0J
-dGVzdGwJJWVieCwgJWVieAotCWpueglyZXRpbnRfa2VybmVsCisJdGVzdGIJ
-JDMsIENTKCVyc3ApCisJanoJcmV0aW50X2tlcm5lbAogCWptcAlyZXRpbnRf
-dXNlcgogRU5EKGVycm9yX2V4aXQpCiAKLS0gCjIuMTguMAoK
-
---=separator--
+Alexander
