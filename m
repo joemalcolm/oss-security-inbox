@@ -1,4 +1,4 @@
-Received: (qmail 17677 invoked by uid 550); 6 Oct 2024 15:45:59 -0000
+Received: (qmail 3696 invoked by uid 550); 12 Mar 2025 11:25:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,63 +8,316 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 17647 invoked from network); 6 Oct 2024 15:45:59 -0000
-Date: Sun, 6 Oct 2024 17:45:49 +0200
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 3654 invoked from network); 12 Mar 2025 11:25:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1741778734; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qwR7ZzSUOCEabYwA4pc2KQPfG6xg7gmJvxSmdGpJqWQ=;
+	b=myj5LK9N2yoNZD4nWeckKdn1SBcm8F4OLbCeuylGEU14IS3TqXQIJ+C1NknDxnBARfw82+
+	0EJRoOqD6j2JYk526PxnKoSWc1Co3GZ2sFTKzwFjmrbjlE7Nmse7J2KVNVygScvmNm7tF0
+	ae2uzX8TI6fUhkqTZ4qWv/HsmFkG1iE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1741778734;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qwR7ZzSUOCEabYwA4pc2KQPfG6xg7gmJvxSmdGpJqWQ=;
+	b=d9DzMCMJmInmACCHkLqMX81vOymdpKjultP2kAJbwRazOTwccwxTjGJ4teI5LQOWl4Du1U
+	a9pE3irZ8UVZ2mAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1741778734; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qwR7ZzSUOCEabYwA4pc2KQPfG6xg7gmJvxSmdGpJqWQ=;
+	b=myj5LK9N2yoNZD4nWeckKdn1SBcm8F4OLbCeuylGEU14IS3TqXQIJ+C1NknDxnBARfw82+
+	0EJRoOqD6j2JYk526PxnKoSWc1Co3GZ2sFTKzwFjmrbjlE7Nmse7J2KVNVygScvmNm7tF0
+	ae2uzX8TI6fUhkqTZ4qWv/HsmFkG1iE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1741778734;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qwR7ZzSUOCEabYwA4pc2KQPfG6xg7gmJvxSmdGpJqWQ=;
+	b=d9DzMCMJmInmACCHkLqMX81vOymdpKjultP2kAJbwRazOTwccwxTjGJ4teI5LQOWl4Du1U
+	a9pE3irZ8UVZ2mAQ==
+Date: Wed, 12 Mar 2025 12:25:33 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-Message-ID: <ZwKwrSltz1Zj7wCR@256bit.org>
+Message-ID: <Z9FvLdhrDZa16UCA@kasco.suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="S+gIknDQjXm0uzYk"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] use-after-free when closing buffers in Vim < 9.1.0764
+Subject: [oss-security] Below: World Writable Directory in /var/log/below Allows Local
+ Privilege Escalation (CVE-2025-27591)
 
-use-after-free when closing buffers in Vim < 9.1.0764
-=====================================================
-Date: 06.10.2024
-Severity: Low
-CVE: <not-yet-assigned>
-CWE: Use After Free (CWE-416)
+--S+gIknDQjXm0uzYk
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 12 Mar 2025 12:25:33 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Below: World Writable Directory in /var/log/below Allows Local
+ Privilege Escalation (CVE-2025-27591)
 
-When closing a buffer (visible in a window) a BufWinLeave auto command
-can cause an use-after-free if this auto command happens to re-open the
-same buffer in a new split window.
+Hello list,
 
-While vim already has some logic to determine such a case, so that a
-simple: 
+this is a report about a local root exploit issue in Below. We shared
+this report with the linux-distros mailing list on 2025-03-07 and
+suggested an embargo of 5 days, which ends today. Please find the full
+report below. We also offer a rendered version of this report on our
+blog [1].
 
-```
-au BufWinLeave foobar :vsp foobar
-```
+1) Introduction
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-is already detected and such an auto command is aborted with E1159, a
-slightly more complicated ex command to first edit another file and
-then split the window and edit the original file again, confuses Vims
-referencing counting and may still cause Vim to free the buffer
-structure although it is still referenced in another window.
+Below [2] is a tool for recording and displaying system data like
+hardware utilization and cgroup information on Linux. In January 2025,
+Below was packaged and submitted to openSUSE Tumbleweed. Below runs as a
+systemd service with `root` privileges. The SUSE security team monitors
+additions and changes to systemd service unit files in openSUSE
+Tumbleweed, and through this we noticed problematic log directory
+permissions applied in Below's code.
 
-Patch 9.1.0764 changes that behaviour by checking if the newly to be
-edited buffer is locked and aborts if such a case is detected.
+The version we reviewed in this context was v0.8.1 [3] and this report
+is based on that version.
 
-Impact is low since the user must have intentionally set up such a
-strange auto command and run some buffer unload commands. However this
-may lead to a crash.
+Upstream released a bugfix in version v0.9.0 [4] and a security advisory
+[5] on GitHub.
 
-The Vim project would like to thank github user gandalf4a for reporting
-this issue.
+2) Symlink Attack in `/var/log/below/error_root.log`
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
 
-The issue has been fixed as of Vim patch v9.1.0764
+Below's systemd service runs with full `root` privileges. It attempts to
+create a world-writable directory in `/var/log/below`. Even if the
+directory already exists, the Rust code ensures [6] that it receives
+mode 0777 permissions:
 
-References:
-https://github.com/vim/vim/commit/51b62387be93c65fa56bbabe1c3
-https://github.com/vim/vim/security/advisories/GHSA-rj48-v4mq-j4vg
+    if perm.mode() & 0o777 !=3D 0o777 {
+        perm.set_mode(0o777);
+        match dir.set_permissions(perm) {
+            Ok(()) =3D> {}
+            Err(e) =3D> {
+                bail!(
+                    "Failed to set permissions on {}: {}",
+                    path.to_string_lossy(),
+                    e
+                );
+            }
+        }
+    }
 
-Thanks,
-Christian
--- 
-Schweigend Zeit vergehen lassen macht einzelne Menschen und Völker
-wieder jung.
-		-- Cesare Pavese
+This logic leads to different outcomes depending on the packaging on Linux
+distributions:
+
+- in openSUSE Tumbleweed the directory was packaged with 01755
+  permissions (below.spec [7] line 73), thus causing the
+  `set_permissions()` call to run, resulting in a directory with mode
+  0777 during runtime.
+- in Gentoo Linux the directory is created with mode 01755 resulting in
+  the same outcome as on openSUSE Tumbleweed (below.ebuild [8]).  Where
+  the 01755 mode is exactly coming from is not fully clear, maybe the
+  `cargo` build process assigns these permissions during installation.
+- in Fedora Linux the directory is packaged with 01777 permissions, thus
+  the `set_permissions()` code will not run, because the `if` condition
+  masks out the sticky bit. The directory stays at mode 01777
+  (rust-below.spec [9]).
+- the Arch Linux AUR package [10] (maybe wrongly) does not pre-create
+  the log directory. Thus the `set_permissions()` code will run and
+  create the directory with mode 0777.
+
+Below creates a log file in `/var/log/below/error_root.log` and assigns
+mode 0666 to it. This (somewhat confusingly) happens via a `log_dir`
+variable [11], which has been changed to point to the `error_root.log`
+file. The 0666 permission assignment to the logfile happens in
+`logging::setup()` [12], also accompanied by a somewhat strange comment
+in the code.
+
+A local unprivileged attacker can stage a symlink attack in this
+location and cause an arbitrary file in the system to obtain 0666
+permissions, likely leading to a full local root exploit, if done right,
+e.g. by pointing the symlink to `/etc/shadow`. Even if the file already
+exists it can be removed and replaced by a symlink, because of the
+world-writable directory permissions. The attack is thus not limited to
+scenarios in which the file has not yet been created by Below.
+
+We believe the actual intention of this code might have been to assign
+mode 01777 (i.e. carrying a sticky bit). The sticky bit is neither
+contained in the `if` condition nor in the `set_permissions()` call,
+though. With the sticky bit set the Linux kernel's `protected_symlinks`
+logic, which is enabled on most Linux distributions, would protect from
+symlink attacks.
+
+3) Further Issues
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Even on Fedora Linux, where `/var/log/below` has "safe" 01777
+permissions, there is a time window during which problems can arise. As
+long as `below.service` has not been started, another local user can
+pre-create `/var/log/below/error_root.log` and e.g. place a FIFO special
+file there. This will pose a local DoS against the below service, since
+it will fail to open the path and thus fail to start.
+
+If `/var/log/below` were to be deleted for any reason, then Below would
+still recreate it using the bad 0777 mode permissions, which can also
+happen on distributions that initially package `/var/log/below` using
+permissions that do not trigger the `set_permissions()` call in Below's
+code.
+
+Below applies many world-writable and world-readable permissions under
+`/var/log/below`. This seems a strange choice. For some reason the
+internal state data of Below is also stored within the log directory in
+`/var/log/below/store`. The data is fully world-readable, which could
+result in information leaks, if Below stores system information there
+that would not otherwise be accessible to unprivileged local users. We
+did not check if this applies, though. By pre-creating this directory
+before `below.service` runs for the first time, an unprivileged user can
+control all of its contents, possibly violating the integrity of Below
+in various ways.
+
+The world-writable logfile `error_root.log` makes no sense to us as
+well. Why should arbitrary users in the system be able to modify the log
+data of Below? This allows log spoofing by local users. Even making the
+logfile world-readable is considered bad style by some people these
+days. Why `/var/log/below` should be world-writable in the first place
+is also unclear to us. Ideally only `root` or a dedicated `below`
+service user should be allowed to write there.
+
+4) Bugfix
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Upstream published a bugfix in commit 10e73a21d67 [13] which is part of
+Below v0.9.0 [4]. The commit basically removes all problematic
+permission assignments from the code, stating that these directories are
+better setup by systemd. This seems to refer to an added systemd
+directive `LogsDirectory=3Dbelow` in the `below.service` file.
+
+With this change no world-writable directories or files should turn up
+in `/var/log/below` anymore, and the most severe issues from this report
+are addressed. The possible matter of world-readable log and store files
+remains, though.
+
+We did not get any details from upstream about the design decisions in
+Below that led to this issue or about any further changes that upstream
+intends to perform to improve security in this area.
+
+5) CVE Assignment
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Upstream assigned CVE-2025-27591 for this issue.
+
+6) Hardening Suggestions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+It could be considered to apply hardening directives in Below's systemd
+service unit that prevent some attack types. Most prominently,
+restricting write access for the daemon to a range of well known
+locations comes to mind.
+
+7) Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2025-01-20: We noticed the issue and started tracking it privately in bsc#1=
+236109 [14].
+2025-01-20: We shared the information with Meta via its security bug report=
+ system [15], offering coordinated disclosure.
+2025-01-21: We received an initial automated reply from Meta.
+2025-02-21: We received an update that the report would be forwarded to the=
+ appropriate engineering team.
+2025-02-26: We were awarded a bug bounty for the report but did not receive=
+ any details about the publication, bugfix or CVE assignment. We will donat=
+e the bug bounty to open source projects and other non-profit organizations.
+2025-02-26: Our Below packager updated the openSUSE Tumbleweed package to t=
+he newly released version v0.9.0 [4], which happened to already contain the=
+ bugfix for the issue.
+2025-02-27: We identified commit 10e73a21d67 [13] as the likely bugfix and =
+inquired with upstream once more about technical details and whether this i=
+s the complete bugfix they intended to apply.
+2025-02-28: We received an automated reply about the bugfix status of the i=
+ssue.
+2025-03-03: We received a confirmation that commit 10e73a21d67 [13] is the =
+intended bugfix and that further steps (including a possible CVE assignment=
+) are handled internally.
+2025-03-03: We inquired whether it is okay for us to publish the full repor=
+t at this time.
+2025-03-07: We did not get a response about publication from upstream so fa=
+r. Since the bugfix was public but not clearly marked as a security issue w=
+e shared this report with the linux-distros [16] mailing list, suggesting a=
+n embargo of 5 days before general publication.
+2025-03-08: Michel Lind, a member of the linux-distros mailing list who is =
+also a Meta engineer, involved upstream internally about the impending disc=
+losure.
+2025-03-08: Upstream reached out to us stating that a GitHub security advis=
+ory on the issue is planned in the following week. They also shared the CVE=
+ assignment with us. They asked us to postpone publication on our end until=
+ that happens.
+2025-03-10: We responded that postponing publication is okay with us. We al=
+so pointed out that the linux-distros mailing list has a maximum embargo pe=
+riod of 14 days, which limited the maximum postponement to 2025-03-21.
+2025-03-12: Upstream published a GitHub advisory [5]. Thus general publicat=
+ion could happen on the date originally proposed by us on the linux-distros=
+ mailing list.
+
+[1]: https://security.opensuse.org/2025/03/12/below-world-writable-log-dir.=
+html
+[2]: https://github.com/facebookincubator/below
+[3]: https://github.com/facebookincubator/below/releases/tag/v0.8.1
+[4]: https://github.com/facebookincubator/below/releases/tag/v0.9.0
+[5]: https://github.com/facebookincubator/below/security/advisories/GHSA-9m=
+c5-7qhg-fp3w
+[6]: https://github.com/facebookincubator/below/blob/v0.8.1/below/src/main.=
+rs#L379
+[7]: https://build.opensuse.org/projects/openSUSE:Factory/packages/below/fi=
+les/below.spec?expand=3D1&rev=3D5e78e7f743f87bea8648eeee673c649b
+[8]: https://github.com/gentoo/gentoo/blob/master/sys-process/below/below-0=
+.8.1-r1.ebuild#L344
+[9]: https://src.fedoraproject.org/rpms/rust-below/blob/6ae58353b5d12e58462=
+425c20a2aedfbae2e769a/f/rust-below.spec#_108
+[10]: https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=3Dbelow#n34
+[11]: https://github.com/facebookincubator/below/blob/v0.8.1/below/src/main=
+.rs#L552
+[12]: https://github.com/facebookincubator/below/blob/v0.8.1/below/src/open=
+_source/logging.rs#L68
+[13]: https://github.com/facebookincubator/below/commit/10e73a21d67baa2cd61=
+3ee92ce999cda145e1a83
+[14]: https://bugzilla.suse.com/show_bug.cgi?id=3D1236109
+[15]: https://bugbounty.meta.com
+[16]: https://oss-security.openwall.org/wiki/mailing-lists/distros
+
+Best Regards
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+
+--S+gIknDQjXm0uzYk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmfRby0ACgkQFMQFyXGS
+NVMVKRAAwgFSRAF/HOpW2HIl2HsnQeu2NsOARL9sPCEmZbUE5mrh56BCq4ucOzyQ
+kDmwWSyrGuO42yclmHQLOIGNEQJo/RphkLq9237000j1+9dptBB9PXzHQoHl3bCy
+zRKiaGnjIEgqP4QVx/sTpFezEk4ACgBnTNZxf24U6wXUSIhWLun7/G16CWH8De2E
+OHuoTwxNeQe0a5kYaPk9b5ALKLpaBDwv6a+r47E/2HnlLCmaH8RL9LkIl32eekPU
+S0aZf2VmHxmr71+GXicoSi/44VHoGHNICNvSHdN5QmsOgiMzmMua3YCQMtqHqxat
+yOYomHg1xloP/1XVOcnJ/gyMVFn6ct7b6X1RuBbMW3+Ugdj0wQ9gHenzXURCGq11
+Ki6NhXBhETmjfHb1hPqTfQvTAGlZiyRysp8cjJt+fRCO11C56PewgWSjVIBwrjvM
+L1Xe5PSLGcYJ1uRDhEkNpGCMq8OiQlwap/YnM9Q49i25G98bCMDz/EuP4KzRhs4U
+F7IlcwRP8n8t2PZluVm49GcdBdXn25S01vtpou/Xz8lXDyHhyTt9jWKsGaIDyEBF
+0vZcp35vvlutjueVABP4DZ6J8RqB/tsTn67DyjnO672Vt8njCu5zB0HjE0t0PYAF
+XKcssB2lcJ1v+Y3WsoH0SdsW5srhMIKNPKSr8jpEaesIX+g6qTQ=
+=bc2H
+-----END PGP SIGNATURE-----
+
+--S+gIknDQjXm0uzYk--
