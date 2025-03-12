@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2294" "Thursday" "23" "April" "2015" "21:10:59" "+0200" "Florian Weimer" "fweimer@redhat.com" "<553943C3.5060704@redhat.com>" "51" "Re: [oss-security] Problems in automatic crash analysis frameworks" nil nil nil "4" "2015042319:10:59" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        fweimer@redh Apr 23   51/2294  " thread-indent "\"Re: [oss-security] Problems in automatic crash analysis frameworks\"\n") "<55315C2B.6050207@redhat.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "<55315C2B.6050207@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19764 invoked by uid 550); 23 Apr 2015 19:11:14 -0000
+Received: (qmail 24296 invoked by uid 550); 13 Mar 2025 01:20:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +6,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19746 invoked from network); 23 Apr 2015 19:11:14 -0000
-Message-ID: <553943C3.5060704@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com> <55315C2B.6050207@redhat.com>
-In-Reply-To: <55315C2B.6050207@redhat.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Thu, 23 Apr 2015 21:10:59 +0200
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Problems in automatic crash analysis frameworks
+x-ms-reactions: disallow
+Received: (qmail 30095 invoked from network); 12 Mar 2025 23:10:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=catalyst.net.nz;
+	s=default; t=1741821016;
+	bh=hMcv2Mem6O5rmwBdBvCzkl7YHksABqPG+0XGXHGws/Q=;
+	h=Date:To:From:Subject:From;
+	b=SDAK4KXbUEGBn0yKT5KcYOrin1tprg7sJXyD995/z6xB7ipjDDZxNEND+hOJFjXSD
+	 DVQQN4dqVXjrQRiwp8GCIKpYN/Ykx4pyz7H6vlo3EB04WtG5dX5fSW35daTPt7f/oD
+	 0HG5dIFMInVPfzy/RqPYzeGOSqNHVcoBUt/31I8eQtU99y6EK+jLZN+gPvHCO4Cc8e
+	 j1R3x6uOFDbpp70nAkwJCVTEYf1JfvvLZp3KZY53V+on59y5ZXVm9GMPvna9lvJ7bJ
+	 3sL3o5qFMEAWCz3NITLusir3u3WfGUPEklMBZqG5x0PxXnFc4dh3Z9YZ/de2lQn27S
+	 oej5CFcLVraKg==
+Message-ID: <fb7e1223-278e-4c06-92d6-0d40ee4f7e4b@catalyst.net.nz>
+In-Reply-To: <fccc1170fe964f6f5b68a9211959f24a9ee4bc53.camel@michel-slm.name>
+Date: Thu, 13 Mar 2025 12:10:14 +1300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+Content-Language: en-NZ
+From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-27363: out of bounds write in FreeType <= 2.13.0
 
-On 04/17/2015 09:16 PM, Florian Weimer wrote:
-> A quick update on the abrt situation.
+I don't know much about this bug, which seems to have been announced
+by Facebook yesterday.
 
-Another update.  We now have a public tracking bug listing the issues:
+https://nvd.nist.gov/vuln/detail/CVE-2025-27363
 
-  <https://bugzilla.redhat.com/show_bug.cgi?id=1214172>
+> An out of bounds write exists in FreeType versions 2.13.0 and below when attempting to parse font subglyph structures
+> related to TrueType GX and variable font files. The vulnerable code assigns a signed short value to an unsigned long
+> and then adds a static value causing it to wrap around and allocate too small of a heap buffer. The code then writes
+> up to 6 signed long integers out of bounds relative to this buffer. This may result in arbitrary code execution. This
+> vulnerability may have been exploited in the wild.
 
-Previously, all the bugs were public, but it was difficult to find them.
+The latest version of FreeType is 2.13.3 which is NOT affected, according
+to the announcement. Recent distro versions (e.g. Ubuntu 24.04 with 2.13.2)
+also look safe.
 
-The main fix is to switch problem directory ownership to root:abrt, and
-move the directory tree back to /var/spool/abrt, where it was in Red Hat
-Enterprise Linux 6.  This should make it impossible to exploit the race
-conditions in the libreport event handling scripts:
-<https://bugzilla.redhat.com/show_bug.cgi?id=1213408>
+However, older distro versions seem to  have affected libraries. For example
+Debian Bookworm has "2.12.1+dfsg-5+deb12u3", which is less than "2.13.0".
 
-The other abrt-hook-ccpp fixes are still needed, though.
+The bug would not be too concerning if people only used trusted fonts,
+as used to be routine. But webpages now embed fonts, and the affected
+"variable font files" format is widely used in browsers. It allows
+parametric adjustment of font properties, described here:
 
-The problem report directory handling code in libreport is racy, in part
-by design.  This should be fixed by the changed problem directory
-ownership, so we did not assign a separate CVE ID for this.
-<https://bugzilla.redhat.com/show_bug.cgi?id=1214745>
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/Variable_fonts_guide
 
-There appear to be some buffer overflow/stack overflow issues in the
-problem directory code in libreport.  With the problem directory
-permission changes, this should no longer cross a trust boundary.
-<https://bugzilla.redhat.com/show_bug.cgi?id=1214749>
+However, it looks like the browsers themselves might be embedding
+unaffected recent versions of FreeType. For example, I see Mozilla
+have a commit with the message:
 
-In addition, we have identified several issues in abrt-dbus.
+> Bug 1912903 - Update freetype2 to 2.13.3.
 
-The ChownProblemDir, DeleteElement, and DeleteProblem methods can be
-abused to modified unintended parts of the file system because of
-missing input validation on the problem directory argument to those
-D-Bus method calls.  For ChownProblemDir, this will allow privilege
-escalation to root.  CVE-2015-3150:
-<https://bugzilla.redhat.com/show_bug.cgi?id=1214451>
+https://github.com/mozilla/gecko-dev/commit/026f6a947085020cd189dd9af3da00be433a44f8
 
-The NewProblem, GetInfo and SetElement methods have directory traversal
-vulnerabilities which allow local attackers to read and write arbitrary
-files on the system.  For NewProblem, it's the analyzer name which is
-folded into a path, unchecked; GetInfo and SetElement do not check the
-file name in the problem report directory.  CVE-2015-3151:
-<https://bugzilla.redhat.com/show_bug.cgi?id=1214451>
+I know there's some tension between bundling and unbundling tendencies
+in the packaging of browsers, so I am not sure how exposed anyone is.
+
+Anyway, I don't see patches for 2.11.x and 2.12.x in stable/LTS releases,
+and the FreeType website seems pretty quiet about this.
 
 
-I'm still unsure about the libreport event handling scripts.  Some of
-them are clearly supposed to run with a user environment because they
-reference files such as ~/.vimrc.  I have not figured out yet how this
-mechanism is supposed to work.
-
--- 
-Florian Weimer / Red Hat Product Security
+Douglas
