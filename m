@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["335" "Wednesday" "30" "March" "2022" "14:31:41" "-0400" "Jeffrey Walton" "noloader@gmail.com" nil "11" nil "^Date:" nil nil "3" nil nil (number mark "        noloader@gma Mar 30   11/335   " thread-indent "\"[oss-security] SpringShell and recent OpenJDK updates\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] SpringShell and recent OpenJDK updates" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17783 invoked by uid 550); 30 Mar 2022 18:54:34 -0000
+Received: (qmail 9894 invoked by uid 550); 12 Mar 2025 21:22:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28125 invoked from network); 30 Mar 2022 18:32:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=WN/1UOztNjveCk1PwnBuOQKwlPJK/glvCwV4ATTreIk=;
-        b=lDZksB9layLs17w7FVba9F54stRZiPu0uFW4L28OfJg4cyBxOVspVPS3DvY/n+iri/
-         q4hm2gNYSi9vMbEzweGDBlfNd7lBM+vsTIPGstWhoIRFr7cGbKmbnDA0Zd0EOW/mLbjP
-         PxuepaV+nbLDYdtH/7MP8tPAJbClkyHY/tNfGPE+H2td00LDMltYn8QvGMxpybE2L0EZ
-         Qq5S7pqW39vN6VV80eeocbTquU7NWye25GVOhHfWy1ZGHPYxCeemh8OQCaZvQLk1FYCH
-         wNFav0WGOLeNmRc7t9ZNyt8g2q80bm8iZgBNdyjPfA0ZJwlfu2O1PAphOirtcK+bgY40
-         5uhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=WN/1UOztNjveCk1PwnBuOQKwlPJK/glvCwV4ATTreIk=;
-        b=egww6AXvJRNHZNHVxlKj1yqpruFqKqZ9xHQII71x/cTiJRABCNgW7D7Q7GyOEpYji+
-         LMj4XxlMbPrTFLJptGlRVVR7klpc8xK5sFNAhO1NL/RG9JpG6tzR4IV5/kRyx/G184kU
-         DYXuR29MhBpxfR5zKMRQ07OMFeR+ZdZzJcJfrGVfbgHYK6rUwqWUApDSZs+zmDRU1410
-         XU/5D9TdRhZhFeTeJ34lu52Nij/ShpDXtzuf8Uc9MmOXprDeRAvrvQqbjkPh9BrDKEq+
-         hW61Na3tZb8WJ9h+Cy7ev78RRy3aGpwAG02Txz9YQWT0PAcjshR6jfRHCPhLER9XGiX1
-         SmUg==
-X-Gm-Message-State: AOAM531By3v4DyiJeY2CUSqk6ZkwYLrAqJDtcZlC7HWYibdCN9H62pSH
-	8d53mFNf5P3Lx98ezjHdzpwLGO+zvh7CZZSxyZ9gnizHs7I=
-X-Google-Smtp-Source: ABdhPJzHHFToz4VEQJay4fWTabn32isay6EIKvbbnTCZ4r6mLXl/ImFPYeE0ddZqUq4UmhT9C5D7yXIa01rYLtGUmZs=
-X-Received: by 2002:a17:90a:380f:b0:1bd:4aa6:651 with SMTP id
- w15-20020a17090a380f00b001bd4aa60651mr881595pjb.83.1648665112697; Wed, 30 Mar
- 2022 11:31:52 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAH8yC8ngu__9q3C-pDGEAOnM=ZvuXt0m2V=BmJHH_bVa4CE1eQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Wed, 30 Mar 2022 14:31:41 -0400
-From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] SpringShell and recent OpenJDK updates
+x-ms-reactions: disallow
+Received: (qmail 9855 invoked from network); 12 Mar 2025 21:22:33 -0000
+Date: Wed, 12 Mar 2025 22:22:23 +0100
+From: Christian Brabandt <cb@256bit.org>
 To: oss-security@lists.openwall.com
+Message-ID: <Z9H7D+X11A121Mkg@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] potential data loss with zip.vim and special crafted
+ zip files in Vim < v9.1.1198
 
-Hi Everyone,
+potential data loss with zip.vim and special crafted zip files
+==============================================================
+Date: 12.03.2025
+Severity: Medium
+CVE: *not-yet-assigned*
+CWE: Improper Neutralization of Argument Delimiters in a Command
+     ('Argument Injection') (CWE-88)
 
-I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell? [2]
+# Summary
+potential data loss with zip.vim and special crafted zip files
 
-Or stepping back a bit, did the SpringShell folks work with distros?
-Or did they really drop a 0-day?
+# Description
+Vim is distributed with the zip.vim plugin, that allows easy editing and
+viewing of zip archives.
 
-[1] https://ubuntu.com/security/notices/USN-5313-2
-[2] https://www.cyberkendra.com/2022/03/springshell-rce-0-day-vulnerability.html
+To view and extract zip files, vim uses the unzip(1) command, usually
+provided by Info-ZIP[1], latest version on Debian is 6.0 from April
+2009.
 
-Jeff
+If an attacker creates an archive which contains a file `-d/tmp`, and a
+Vim user views such a file and tries to extract such filename from the
+archive, Vim will essentially run the following unzip command:
+
+unzip -o <archive.zip> member-filename
+
+However, since the member-filename is called `-d/tmp`, this is seen by
+the unzip command as an additional argument and it therefore happily
+extracts the whole archive into the mentioned directory, overwriting
+existing files because of the `-o`.
+
+Unfortunately, the latest released unzip version does not support `--`
+as and end-of-argument marker, so we cannot use this to mark the
+beginning of the member-files for unzip. Well, apparently there exists
+some 6.10 beta release[2], that hasn't made it to an official release
+yet which supports the use of the `--` marker since 2010 (but this isn't
+widely known).
+
+Therefore, Vim will try to work-around it by using the `[-]` glob when a
+filename starts with a `-` to protect unzip from parsing the filename as
+an argument, which is just an ugly work-around.
+
+# Impact
+Impact is **moderate** because a user must be made to view such an 
+archive with Vim and then press 'x' to extract such a strange filename.
+
+The Vim project would like to thank @Ry0taK (GMO Flatt Security Inc) and
+@takumi-san-ai for reporting this issue.
+
+The issue has been fixed as of Vim patch v9.1.1198
+
+[1]: http://www.info-zip.org/pub/infozip/
+[2]: http://antinode.info/ftp/info-zip/unzip610c25c.zip
+
+[Commit](https://github.com/vim/vim/commit/f209dcd3defb95bae21b2740910e6aa7bb940531)
+[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-693p-m996-3rmf)
+
+Thanks,
+Christian
+-- 
+I'm very old-fashioned.  I believe that people should marry for life,
+like pigeons and Catholics.
+		-- Woody Allen
