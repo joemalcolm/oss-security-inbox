@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2088" "Friday" "15" "June" "2018" "13:36:05" "+0000" "Liguori, Anthony" "aliguori@amazon.com" "<7ea0793c-b5c5-429c-adbe-96bb8437bd69@amazon.com>" "38" "Re: [oss-security] Re: Intel FP security issue" "^Date:" nil nil "6" "2018061513:36:05" "[oss-security] Re: Intel FP security issue" (number mark "        aliguori@ama Jun 15   38/2088  " thread-indent "\"Re: [oss-security] Re: Intel FP security issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7617 invoked by uid 550); 15 Jun 2018 14:04:21 -0000
+Received: (qmail 15958 invoked by uid 550); 13 Mar 2025 05:17:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +6,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11638 invoked from network); 15 Jun 2018 13:36:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1529069779; x=1560605779;
-  h=from:to:subject:date:message-id:mime-version;
-  bh=WiFxenf+tKg8aQS6TpG2FwNazmnpRsZB7UUyc8WpkYM=;
-  b=lfaUp0xcfPRLBsdhnGau2DGV1/e3O934MAJLiJHTfk7VSEAkPJ9aMVCl
-   82mVP8F2G8YnNJaSmEpBKTDcGASSNRwUCxpRKwtHRcozXPCwVYLyoBzzQ
-   4XbAtuxKiKSq5Yyxujt2H9Jh6WeO0mZpLKKgvV0hh57WZWtQXZiUsk03c
-   8=;
-X-IronPort-AV: E=Sophos;i="5.51,227,1526342400"; 
-   d="scan'208,217";a="724172455"
-Thread-Topic: [oss-security] Re: Intel FP security issue
-Thread-Index: AQHUBK3PC0RaVuVqiEymmOgNi2+ehg==
-Message-ID: <7ea0793c-b5c5-429c-adbe-96bb8437bd69@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-Content-Type: multipart/alternative;
-	boundary="_000_7ea0793cb5c5429cadbe96bb8437bd69amazoncom_"
-MIME-Version: 1.0
-Date: Fri, 15 Jun 2018 13:36:05 +0000
-From: "Liguori, Anthony" <aliguori@amazon.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Intel FP security issue
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 30352 invoked from network); 13 Mar 2025 05:03:36 -0000
+Message-ID: <359120da-2525-40d4-a93d-c9ba1051347e@gentoo.org>
+Date: Thu, 13 Mar 2025 01:03:21 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <Z9H7D+X11A121Mkg@256bit.org>
+ <20250313041407.GA20847@openwall.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <20250313041407.GA20847@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------0vj0dirfhmljVCCk54jjKjSC"
+Subject: Re: [oss-security] [vim-security] potential data loss with zip.vim
+ and special crafted zip files in Vim < v9.1.1198
 
---_000_7ea0793cb5c5429cadbe96bb8437bd69amazoncom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--------------0vj0dirfhmljVCCk54jjKjSC
+Content-Type: multipart/mixed; boundary="------------F4WPK3yEtSaJqISbyxhahN4F";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <359120da-2525-40d4-a93d-c9ba1051347e@gentoo.org>
+Subject: Re: [oss-security] [vim-security] potential data loss with zip.vim
+ and special crafted zip files in Vim < v9.1.1198
+References: <Z9H7D+X11A121Mkg@256bit.org>
+ <20250313041407.GA20847@openwall.com>
+In-Reply-To: <20250313041407.GA20847@openwall.com>
 
-T24gSnVuIDE1LCAyMDE4IDY6MjYgQU0sIE1hcmN1cyBNZWlzc25lciA8bWVp
-c3NuZXJAc3VzZS5kZT4gd3JvdGU6DQo+DQo+IEhpLA0KPg0KPiBPbiBXZWQs
-IEp1biAxMywgMjAxOCBhdCAxMTowNzoxOFBNICswNDAwLCBMb2dhbmFkZW4g
-VmVsdmluZHJvbiB3cm90ZToNCj4gPiBPbiBXZWQsIEp1biAxMywgMjAxOCBh
-dCA3OjM0IFBNLCBMb2dhbmFkZW4gVmVsdmluZHJvbg0KPiA+IDxsb2dhbmFk
-ZW5AZ21haWwuY29tPiB3cm90ZToNCj4gPiA+IEhpIEFsbCwNCj4gPiA+DQo+
-ID4gPiBCb3RoIE9wZW5CU0QgYW5kIERyYWdvbmZseUJTRCBoYXZlIGdvbmUg
-YWhlYWQgYW5kIGNvbW1pdHRlZCBmaXhlcyBmb3INCj4gPiA+IHRoZSBydW1v
-cmVkIEludGVsIEZQIGlzc3VlOg0KPiA+ID4NCj4gPiA+IE9wZW5CU0Q6IGh0
-dHBzOi8vbWFyYy5pbmZvLz9sPW9wZW5ic2QtY3ZzJm09MTUyODE4MDc2MDEz
-MTU4Jnc9Mg0KPiA+ID4gRHJhZ29uZmx5QlNEOiBodHRwOi8vbGlzdHMuZHJh
-Z29uZmx5YnNkLm9yZy9waXBlcm1haWwvY29tbWl0cy8yMDE4LUp1bmUvNjcy
-MzI0Lmh0bWwNCj4gPiA+DQo+ID4gPiBJIHRoaW5rIHRoYXQgdGhlIGNhdCBp
-cyBhbHJlYWR5IG91dCBvZiB0aGUgYmFnLCBhbmQgcmVsZWFzaW5nIGRldGFp
-bHMNCj4gPiA+IG9mIHRoaXMgc2VjdXJpdHkgcHJvYmxlbSBtYWtlcyBzZW5z
-ZS4gU2luY2UgdGhpcyBoYXMgZ29uZSBwdWJsaWMsIElzDQo+ID4gPiB0aGVy
-ZSBhIHJlYXNvbiB0byBrZWVwIHRoaXMgdW5kZXIgZW1iYXJnbyA/DQo+ID4g
-Pg0KPiA+DQo+ID4gRnJlZUJTRCBhcHBlYXJzIHRvIGJlIG1vdmluZyBpbiB0
-aGlzIGRpcmVjdGlvbiB0b286DQo+ID4gaHR0cHM6Ly9zdm53ZWIuZnJlZWJz
-ZC5vcmcvYmFzZT92aWV3PXJldmlzaW9uJnJldmlzaW9uPTMzNTA3Mg0KPg0K
-PiBGb3IgdGhlIHJlY29yZCwgdGhpcyBpcyBodHRwczovL3d3dy5pbnRlbC5j
-b20vY29udGVudC93d3cvdXMvZW4vc2VjdXJpdHktY2VudGVyL2Fkdmlzb3J5
-L2ludGVsLXNhLTAwMTQ1Lmh0bWwNCj4gYWthIENWRS0yMDE4LTM2NjUgd2l0
-aCBjb2RlbmFtZSAiTGF6eSBGUFUgU2F2ZS9SZXN0b3JlIi4NCj4NCj4gWEVO
-IGFkdmlzb3J5IGh0dHBzOi8veGVuYml0cy54ZW4ub3JnL3hzYS9hZHZpc29y
-eS0yNjcuaHRtbCB3YXMgcG9zdGVkIGhlcmUgdG9vLCBkZXNjcmliaW5nIGl0
-IGEgYml0IGJldHRlci4NCj4NCj4gRnVsbCBkZXRhaWxzIGFyZSBwbGFubmVk
-IHRvIGJlIHJlbGVhc2VkIEp1bmUgMjd0aC4NCg0KVGhlIGRpc2NvdmVyIHNl
-bnQgYSBwb3N0IGhlcmUgYnV0IEkgc3VzcGVjdCBpdCdzIHN0dWNrIGluIHRo
-ZSBtb2RlcmF0aW9uIHF1ZXVlLiAgSSdsbCByZXBvc3QgbGF0ZXIgdG9kYXku
-DQoNClJlZ2FyZHMsDQoNCkFudGhvbnkgTGlndW9yaQ0KDQo+DQo+IENpYW8s
-IE1hcmN1cw0KDQo=
+--------------F4WPK3yEtSaJqISbyxhahN4F
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
---_000_7ea0793cb5c5429cadbe96bb8437bd69amazoncom_--
+On 3/13/25 12:14 AM, Solar Designer wrote:
+> On Wed, Mar 12, 2025 at 10:22:23PM +0100, Christian Brabandt wrote:
+>> Therefore, Vim will try to work-around it by using the `[-]` glob when a
+>> filename starts with a `-` to protect unzip from parsing the filename as
+>> an argument, which is just an ugly work-around.
+>=20
+> I was puzzled by this.  I expected that if you were running unzip via
+> the shell, then the glob pattern would be expanded back to a simple dash
+> before being passed to unzip, and if you were running unzip directly
+> then the glob pattern would never be expanded, so the brackets would
+> break the intended behavior.  However, it appears that unzip itself
+> expands glob patterns even for archive names (not only for matching
+> files in archives)?  I guess this is unexpected by many unzip users, and
+> it likely allows for other attacks on unzip and on the zip.vim plugin,
+> by providing a filename that includes glob patterns in it so that a
+> different archive would be processed.
+
+
+It certainly surprised me! That being said, given the potential danger
+is I guess limited to extracting multiple archives you didn't expect but
+you still cannot control the location (without using the
+member-named-leading-dash-d trick as well) and you also have to convince
+the user to have multiple zip archives in the same directory, it seems
+harder to pull anything off like this.
+
+Note: unzip won't re-parse globs in a directory segment, only the final
+filename segment.
+
+
+> Otherwise, a workaround for the original issue would be to prefix the
+> filename with ./ as we most recently discussed in this thread:
+>=20
+> https://www.openwall.com/lists/oss-security/2024/11/06/1
+
+
+unzip will not permit you to run:
+
+```
+unzip foo.zip ./dir1/member
+```
+
+in order to extract an archive member named "dir1/member". There is no
+./ member in the archive, it's not resolved like a filesystem path.
+
+It will print a diagnostic: "caution: filename not matched:
+./dir1/member" and exit 11 (no matching files were found.)
+
+
+--=20
+Eli Schwartz
+
+--------------F4WPK3yEtSaJqISbyxhahN4F--
+
+--------------0vj0dirfhmljVCCk54jjKjSC
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZ9JnGQUDAAAAAAAKCRCEp9ErcA0vV4za
+AQCV79Yj+SeFslya1ZNgd1oFerLv9lTD0VogAjS3dG/uvgD/cKiL3ERifHzjEU5aYbxQ0PLKZHUG
+sTFMCqB9gS1dcQQ=
+=/woV
+-----END PGP SIGNATURE-----
+
+--------------0vj0dirfhmljVCCk54jjKjSC--
