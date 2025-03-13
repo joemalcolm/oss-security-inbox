@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["464" "Tuesday" "9" "July" "2019" "11:30:36" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "13" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Cc:" nil nil "7" "2019070915:30:36" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        perry@piermo Jul  9   13/464   " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9754 invoked by uid 550); 9 Jul 2019 15:30:49 -0000
+Received: (qmail 3404 invoked by uid 550); 13 Mar 2025 04:14:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +6,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9733 invoked from network); 9 Jul 2019 15:30:48 -0000
-Message-ID: <20190709113036.0f12d057@jabberwock.cb.piermont.com>
-In-Reply-To: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
-References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com
-Date: Tue, 9 Jul 2019 11:30:36 -0400
-From: "Perry E. Metzger" <perry@piermont.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Privileged File Access from Desktop Applications
-To: Malte Kraus <malte.kraus@suse.com>
+x-ms-reactions: disallow
+Received: (qmail 1410 invoked from network); 13 Mar 2025 04:14:27 -0000
+Date: Thu, 13 Mar 2025 05:14:07 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20250313041407.GA20847@openwall.com>
+References: <Z9H7D+X11A121Mkg@256bit.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z9H7D+X11A121Mkg@256bit.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] [vim-security] potential data loss with zip.vim and special crafted zip files in Vim < v9.1.1198
 
-On Tue, 9 Jul 2019 13:58:37 +0000 Malte Kraus <malte.kraus@suse.com>
-wrote:
-> With Wayland, it's no longer supported to run graphical
-> applications as root.
+On Wed, Mar 12, 2025 at 10:22:23PM +0100, Christian Brabandt wrote:
+> Therefore, Vim will try to work-around it by using the `[-]` glob when a
+> filename starts with a `-` to protect unzip from parsing the filename as
+> an argument, which is just an ugly work-around.
 
-Can you explain (or point to) a description of why this is a problem?
-(It seems like preventing people from editing administrative files as
-root and requiring that they use a dbus based file i/o system is
-likely to be a source of bugs for years to come...)
+I was puzzled by this.  I expected that if you were running unzip via
+the shell, then the glob pattern would be expanded back to a simple dash
+before being passed to unzip, and if you were running unzip directly
+then the glob pattern would never be expanded, so the brackets would
+break the intended behavior.  However, it appears that unzip itself
+expands glob patterns even for archive names (not only for matching
+files in archives)?  I guess this is unexpected by many unzip users, and
+it likely allows for other attacks on unzip and on the zip.vim plugin,
+by providing a filename that includes glob patterns in it so that a
+different archive would be processed.
 
-Perry
--- 
-Perry E. Metzger		perry@piermont.com
+Otherwise, a workaround for the original issue would be to prefix the
+filename with ./ as we most recently discussed in this thread:
+
+https://www.openwall.com/lists/oss-security/2024/11/06/1
+
+Alexander
