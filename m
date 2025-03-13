@@ -1,4 +1,4 @@
-Received: (qmail 24202 invoked by uid 550); 9 Jun 2025 14:58:16 -0000
+Received: (qmail 11301 invoked by uid 550); 13 Mar 2025 18:48:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,56 +8,85 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 30671 invoked from network); 9 Jun 2025 11:48:47 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Luke Chen <showuon@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <4fd90015-fe56-728a-4413-4fc0b4b22b6d@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 09 Jun 2025 11:42:21 +0000
+Received: (qmail 30001 invoked from network); 13 Mar 2025 16:14:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1741882479; x=1773418479;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=SeLTNQW21+JjaiofStbko6iGftYXy7enEotd7k+9sik=;
+  b=uTgVtfkXghs0zQ+EyBv3fD25zgX7i6wuxeJk4YSeCLzD2D0SQXh9qquc
+   rO4OJy1+6FI7Yfr/3pOgo7A/qPwIttPzm8GTB69zRvwRsdtZywdFuouE9
+   89qlXYwbrBG1ecYRaRuc2qwxcohaJn5f5CBXfPhHUuhUw4q1B0KbB39FI
+   A=;
+X-IronPort-AV: E=Sophos;i="6.14,245,1736812800"; 
+   d="scan'208,217";a="480163386"
+X-Farcaster-Flow-ID: 2bf687ca-c9e0-4ec6-a61a-d8497273f250
+From: "Vellore Rajakumar, Sri Saran Balaji" <srajakum@amazon.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [kubernetes] CVE-2025-1767: GitRepo Volume Inadvertent Local
+ Repository Access
+Thread-Index: AQHblDL8FM6uy0BONE+8o+I6OvMaJw==
+Date: Thu, 13 Mar 2025 16:14:24 +0000
+Message-ID: <3CF0EED5-09AE-4973-ACAA-CD19215780C3@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Microsoft-MacOutlook/16.94.25020927
+x-originating-ip: [10.13.138.67]
+Content-Type: multipart/alternative;
+	boundary="_000_3CF0EED509AE4973ACAACD19215780C3amazoncom_"
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-27817: Apache Kafka Client: Arbitrary file read and SSRF
- vulnerability 
+Subject: [oss-security] [kubernetes] CVE-2025-1767: GitRepo Volume Inadvertent Local
+ Repository Access
+X-Spam: Yes
 
-Severity: important=20
+--_000_3CF0EED509AE4973ACAACD19215780C3amazoncom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Affected versions:
+SXNzdWUgRGV0YWlscw0KDQpBIHNlY3VyaXR5IHZ1bG5lcmFiaWxpdHkgd2FzIGRpc2NvdmVyZWQg
+aW4gS3ViZXJuZXRlcyB0aGF0IGNvdWxkIGFsbG93IGEgdXNlciB3aXRoIGNyZWF0ZSBwb2QgcGVy
+bWlzc2lvbiB0byBleHBsb2l0IGdpdFJlcG8gdm9sdW1lcyB0byBhY2Nlc3MgbG9jYWwgZ2l0IHJl
+cG9zaXRvcmllcyBiZWxvbmdpbmcgdG8gb3RoZXIgcG9kcyBvbiB0aGUgc2FtZSBub2RlLg0KDQpU
+aGlzIGlzc3VlIGhhcyBiZWVuIHJhdGVkIE1lZGl1bSAoQ1ZTUzozLjEvQVY6Ti9BQzpML1BSOkgv
+VUk6Ti9TOlUvQzpIL0k6SC9BOk48aHR0cHM6Ly93d3cuZmlyc3Qub3JnL2N2c3MvY2FsY3VsYXRv
+ci8zLjEjQ1ZTUzozLjEvQVY6Ti9BQzpML1BSOkgvVUk6Ti9TOlUvQzpIL0k6SC9BOk4+KSAoc2Nv
+cmU6IDYuNSksIGFuZCBhc3NpZ25lZCBDVkUtMjAyNS0xNzY3Lg0KDQpBbSBJIHZ1bG5lcmFibGU/
+DQoNClRoaXMgQ1ZFIG9ubHkgYWZmZWN0cyBLdWJlcm5ldGVzIGNsdXN0ZXJzIHRoYXQgdXRpbGl6
+ZSB0aGUgaW4tdHJlZSBnaXRSZXBvIHZvbHVtZSB0byBjbG9uZSBnaXQgcmVwb3NpdG9yaWVzIGZy
+b20gb3RoZXIgcG9kcyB3aXRoaW4gdGhlIHNhbWUgbm9kZS4gU2luY2UgdGhlIGluLXRyZWUgZ2l0
+UmVwbyB2b2x1bWUgZmVhdHVyZSBoYXMgYmVlbiBkZXByZWNhdGVkIGFuZCB3aWxsIG5vdCByZWNl
+aXZlIHNlY3VyaXR5IHVwZGF0ZXMgdXBzdHJlYW0sIGFueSBjbHVzdGVyIHN0aWxsIHVzaW5nIHRo
+aXMgZmVhdHVyZSByZW1haW5zIHZ1bG5lcmFibGUuDQoNCkFmZmVjdGVkIENvbXBvbmVudHMNCg0K
+ICAqICAga3ViZWxldA0KDQoNCkFmZmVjdGVkIFZlcnNpb25zDQoNCiAgKiAgIEFsbCB2ZXJzaW9u
+cyBvZiBLdWJlcm5ldGVzDQoNCkhvdyBkbyBJIG1pdGlnYXRlIHRoaXMgdnVsbmVyYWJpbGl0eT8N
+Cg0KVG8gbWl0aWdhdGUgdGhpcyB2dWxuZXJhYmlsaXR5LCB5b3UgbXVzdCB1c2UgYW4gaW5pdCBj
+b250YWluZXIgdG8gcGVyZm9ybSBnaXQgY2xvbmUgb3BlcmF0aW9uIGFuZCB0aGVuIG1vdW50IHRo
+ZSBkaXJlY3RvcnkgaW50byB0aGUgUG9kJ3MgY29udGFpbmVyLiBBbiBleGFtcGxlIG9mIHRoaXMg
+YXBwcm9hY2ggaXMgcHJvdmlkZWQgaGVyZTxodHRwczovL2dpc3QuZ2l0aHViLmNvbS90YWxsY2xh
+aXIvODQ5NjAxYTE2Y2ViZWVlNTgxZWYyYmU1MGMzNTE4NDE+Lg0KDQpOb3RlOiBZb3UgY2FuIGFs
+c28gcmVzdHJpY3QgdGhlIHVzZSBvZiBnaXRSZXBvIHZvbHVtZXMgaW4geW91ciBjbHVzdGVyIHVz
+aW5nIHBvbGljaWVzIHN1Y2ggYXMgVmFsaWRhdGluZ0FkbWlzc2lvblBvbGljeSBvciB0aHJvdWdo
+IFJlc3RyaWN0ZWQgcG9kIHNlY3VyaXR5IHN0YW5kYXJkIHBvbGljeS4gWW91IGNhbiB1c2UgdGhl
+IGZvbGxvd2luZyBDb21tb24gRXhwcmVzc2lvbiBMYW5ndWFnZSAoQ0VMKSBleHByZXNzaW9uIGFz
+IHBhcnQgb2YgYSBwb2xpY3kgdG8gcmVqZWN0IHVzZSBvZiBnaXRSZXBvIHZvbHVtZXM6IGBoYXMo
+b2JqZWN0LnNwZWMudm9sdW1lcykgfHwgIW9iamVjdC5zcGVjLnZvbHVtZXMuZXhpc3RzKHYsIGhh
+cyh2LmdpdFJlcG8pKWANCg0KRGV0ZWN0aW9uDQpUbyBkZXRlY3Qgd2hldGhlciB0aGlzIHZ1bG5l
+cmFiaWxpdHkgaGFzIGJlZW4gZXhwbG9pdGVkLCB5b3UgY2FuIHVzZSB0aGUgZm9sbG93aW5nIGNv
+bW1hbmQgdG8gbGlzdCBhbGwgcG9kcyB0aGF0IHVzZSB0aGUgaW4tdHJlZSBnaXRSZXBvIHZvbHVt
+ZSBhbmQgY2xvbmVzIHRvIGEgLmdpdCBzdWJkaXJlY3RvcnkuDQoNCmBrdWJlY3RsIGdldCBwb2Rz
+IC0tYWxsLW5hbWVzcGFjZXMgLW8ganNvbiB8IGpxICcuaXRlbXNbXSB8IHNlbGVjdCguc3BlYy52
+b2x1bWVzW10uZ2l0UmVwby5yZXBvc2l0b3J5IHwgdGVzdCgiXi8iKSkgfCB7bmFtZTogLm1ldGFk
+YXRhLm5hbWUsIG5hbWVzcGFjZTogLm1ldGFkYXRhLm5hbWVzcGFjZSwgcmVwb3NpdG9yeTogKC5z
+cGVjLnZvbHVtZXNbXSB8IHNlbGVjdCguZ2l0UmVwbykgfCAuZ2l0UmVwby5yZXBvc2l0b3J5KX0n
+YA0KDQpJZiB5b3UgZmluZCBldmlkZW5jZSB0aGF0IHRoaXMgdnVsbmVyYWJpbGl0eSBoYXMgYmVl
+biBleHBsb2l0ZWQsIHBsZWFzZSBjb250YWN0IHNlY3VyaXR5QGt1YmVybmV0ZXMuaW88bWFpbHRv
+OnNlY3VyaXR5QGt1YmVybmV0ZXMuaW8+DQoNCkFkZGl0aW9uYWwgRGV0YWlscw0KU2VlIEt1YmVy
+bmV0ZXMgSXNzdWUgIzEzMDc4NjxodHRwczovL2dpdGh1Yi5jb20va3ViZXJuZXRlcy9rdWJlcm5l
+dGVzL3B1bGwvMTMwNzg2PiBmb3IgbW9yZSBkZXRhaWxzLg0KDQpBY2tub3dsZWRnZW1lbnRzDQpU
+aGlzIHZ1bG5lcmFiaWxpdHkgd2FzIHJlcG9ydGVkIGJ5IENocmlzdG9waGUgSGF1cXVpZXJ0Lg0K
+DQpUaGFuayBZb3UsDQoNCkJhbGFqaSBvbiBiZWhhbGYgb2YgdGhlIEt1YmVybmV0ZXMgU2VjdXJp
+dHkgUmVzcG9uc2UgQ29tbWl0dGVlDQoNCg==
 
-- Apache Kafka Client 3.1.0 through 3.9.0
-
-Description:
-
-A possible arbitrary file read and SSRF vulnerability has been identified i=
-n Apache Kafka Client. Apache Kafka Clients accept configuration data for s=
-etting the SASL/OAUTHBEARER connection with the brokers, including "sasl.oa=
-uthbearer.token.endpoint.url" and "sasl.oauthbearer.jwks.endpoint.url". Apa=
-che Kafka allows clients to read an arbitrary file and return the content i=
-n the error log, or sending requests to an unintended location. In applicat=
-ions where Apache Kafka Clients configurations can be specified by an untru=
-sted party, attackers may use the "sasl.oauthbearer.token.endpoint.url" and=
- "sasl.oauthbearer.jwks.endpoint.url" configuratin to read arbitrary conten=
-ts of the disk and environment variables or make requests to an unintended =
-location. In particular, this flaw may be used in Apache Kafka Connect to e=
-scalate from REST API access to filesystem/environment/URL access, which ma=
-y be undesirable in certain environments, including SaaS products.=20
-
-Since Apache Kafka 3.9.1/4.0.0, we have added a system property ("-Dorg.apa=
-che.kafka.sasl.oauthbearer.allowed.urls") to set the allowed urls in SASL J=
-AAS configuration. In 3.9.1, it accepts all urls by default for backward co=
-mpatibility. However in 4.0.0 and newer, the default value is empty list an=
-d users have to set the allowed urls explicitly.
-
-Credit:
-
-=E7=BD=97=E9=91=AB <lx2317103712@gmail.com> (finder)
-1ue (https://github.com/luelueking) (finder)
-4ra1n (https://github.com/4ra1n) (finder)
-enokiy <846800628@qq.com> (finder)
-VulTeam of ThreatBook (finder)
-
-References:
-
-https://kafka.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-27817
-
+--_000_3CF0EED509AE4973ACAACD19215780C3amazoncom_--
