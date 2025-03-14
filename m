@@ -1,4 +1,4 @@
-Received: (qmail 1031 invoked by uid 550); 16 Apr 2026 19:25:40 -0000
+Received: (qmail 3276 invoked by uid 550); 14 Mar 2025 18:53:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,81 +8,78 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 19472 invoked from network); 16 Apr 2026 19:23:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776367380; x=1776972180; darn=lists.openwall.com;
-        h=mime-version:content-transfer-encoding:references:in-reply-to
-         :subject:cc:to:from:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3DxHgAFutbnYRNcUrr2WsJRJ4+XYrXaBTHdSuYmauGI=;
-        b=GMMJV26eOfiS7OJlZ9C8xYZzyZ8Dh8KK9IC08cSY5KX5SogCXV+ctbXgqHmfqT/07U
-         AaViVuT4QJtgr2koXwL4uGb0eUQ0aPKdzWqo4LZlup00QRCUR0m5yVAEPFKMBwvgJJg7
-         o0ZAq4QaUjkCKT+QIHwq0hqUZHPHxfLrMhDONprRa2PFu9twBsK4wJoq3FLEjfVGx702
-         o0iLSWzVbKhsjT2lYXqIkQONPB0/Ieh0ylawoBP/RN7fSc3QNOPI021HNc4Dq+R7N0r0
-         jaYklujd9g5xSHDJ8uUV9+xSCKNOyHDvoSG37NwsVA5U7NhhQmZXFBkO8tHV7cuMljUf
-         Rhlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776367380; x=1776972180;
-        h=mime-version:content-transfer-encoding:references:in-reply-to
-         :subject:cc:to:from:date:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3DxHgAFutbnYRNcUrr2WsJRJ4+XYrXaBTHdSuYmauGI=;
-        b=F3id4soRvZb3oEsEYmOaopEb9XNneADdTrHakUTxg+Nw3NPo7hjy0uGje2N1J64WQi
-         uZU4rpKPO9APWIJU19NJOgVSyH0OMUpA/mY1X+7oiym50Uj2R+Xxskn4sbar7apPOMLh
-         omJswzRifq/HRCd5Q/I00p0mXe6Q4Wh46Cg54OLdMaS9u6L8faRjm4SZEeuoj+QaseRw
-         9OP/m28gCKSwyAuS8Yrx8ptX8VKNuMQZRcLLGkUe7Fvnmykx66YNw8jVUFVmhF2CZ+TA
-         fNm/TiMzH6n7S4Ue63E2g2gMvtqjbNZccEDKMUIMbYxLVgKqKqTbtk5L8ZdJBfpPxjnF
-         +GOQ==
-X-Gm-Message-State: AOJu0Yw+VSE4cNZb/OAey8RvmwNIponKHc206JIS5T3WT8Pj4i5RYToS
-	pEhPYsEDXFoIWy65ri682CAASjCr4kNbkXZKFhrMPfo+pKSZmFlD57Hgn82Cu4Qr
-X-Gm-Gg: AeBDieveL4VihpFQ4IuOeiFZGNJHVl+nzAuspP9fK+CWJ9OrF602ifGbRPPie/2G4VA
-	vKYg/v6UTh0jBNMuYvgfPAE8Wh6JLhW7y+Dhs0xWQf4u8O349WDCKuVk2SvbsZmRZmMadLXPwkq
-	PtFaoH+48iglqRG6GgseVXxIab/JdjGfEI4XoL6HBKNrjSnRmqAc4WLj2DaH48KJKRxPLStFiyu
-	AXz6OUG7glUlDIz4Vtrrr0Zdtcp4oTzLIoIOm4ObcHxQPu9fu7YW7CwBIwCAiLmL37C3qImbk1s
-	Ch0p/pnY45tFmfP//74FudrRQyRl5+U04ztQyvpO+dC3HDYWHjyCsEZbMsI+8hW0l8NltOxXFfS
-	65IIBZ6VKlU7HhQuOwrNau+LQzTxJ5/cLrFSdaBFjJEgCnDJL3DhvGZcMly0dpEUTZmCSZysz/K
-	53EB2NM5Go3UDa4firpkduUnetBvtnIuyOfbwunxLZFVkb8kmjji2n9njvGG9Rk6xmUAw=
-X-Received: by 2002:a17:90a:d2d0:b0:35d:a542:2dbf with SMTP id 98e67ed59e1d1-3613e006955mr703502a91.20.1776367379805;
-        Thu, 16 Apr 2026 12:22:59 -0700 (PDT)
-Message-ID: <69e13713.170a0220.289f9f.6db1@mx.google.com>
-Date: Thu, 16 Apr 2026 12:22:59 -0700 (PDT)
-From: yangjincheng1998@gmail.com
+Received: (qmail 3255 invoked from network); 14 Mar 2025 18:53:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1741978406; bh=S377WoJTu2wNaeyLgbePzg6jE3hdhwm6+LU9PgnkKR4=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=YvVFhLZ47STgtr5sfL5iPii3IQlQB2FqU2ITTkGdaUwh7q16POOyiSsoPW5JwhXmp
+	 M3bdspDSTgs0lEb5ufX475nzNnQmnTqBg+aBSzR2uOQtS6cph/2HeUDvIFHpnKOeum
+	 3iEp1D1ZrbvxQTeeReP4ANzmvO42cGxiec8U+wV+/rONO+8d/Sf+P/2shIDd1ADvGn
+	 ikDYsaji8pQnTZ5NBiuftx6Q3uVOFZgJE2G0qN5lQYW2CEM7HCOT45emwFuiBiD/js
+	 tZjJFLbxt88lR2eEOKW5g/BVkzMcl+HEO3AxY6/R8WWl2cAPlJCfca/RpcrdTyWeUS
+	 PYZ9nYzKWC4hw==
+Original-Subject: expat vulnerability CVE-2024-8176 / impact of recursion stack
+ overflow vulnerabilities
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date: Fri, 14 Mar 2025 19:53:24 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-Cc: alan.coopersmith@oracle.com
-In-Reply-To: <7ddbe893-6bf2-4142-bbcd-c382a21dbed8@oracle.com>
-References: <69e0d549.170a0220.2844e6.1a9b@mx.google.com>
- <7ddbe893-6bf2-4142-bbcd-c382a21dbed8@oracle.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Message-ID: <20250314195324.02b25dae@hboeck.de>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Subject: Re: [oss-security] Apache Kvrocks affected by CVE-2024-31449 and
- CVE-2025-49844 (Redis Lua); fixed but no formal advisory
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] expat vulnerability CVE-2024-8176 / impact of recursion stack
+ overflow vulnerabilities
 
-Hi Alan,
+Hello,
 
-Good catch -- sorry for the confusion. The "Duplicate - please ignore"
-titles on #3433 and #3434 are my own housekeeping rename, done on
-2026-04-11, AFTER the Kvrocks maintainers had already closed both
-issues on 2026-04-09 via a single fix PR. The original bodies were
-the actual vulnerability reports.
+A vulnerability (CVE-2024-8176) has been fixed in expat, a widely used
+xml parser library:
+https://blog.hartwork.org/posts/expat-2-7-0-released/
+Info about the vuln has been posted here already. expat 2.7.0 fixes
+multiple variations of stack overflows due to recursion and can be
+triggered by using a large number of nested entities. Scripts to
+generate example payloads for testing can be found in the project's
+issue tracker: https://github.com/libexpat/libexpat/issues/893
 
-The authoritative, non-renamed evidence on the Kvrocks side is:
+I had some discussions with the maintainer of expat before this was
+published about the security impact. We believe that this is likely, in
+most cases, "only" a crash/denial of service type of bug.
 
-  https://github.com/apache/kvrocks/pull/3435
-  Title: "fix(script): upgrade Lua version to fix CVE-2024-31449
-         and CVE-2025-49844"
-  Author: jihuayu (Kvrocks committer)
-  Merged: 2026-04-09 03:57 UTC
-  Auto-closed #3433 and #3434.
+Here is what I believe to be the case:
 
-So the Kvrocks project itself, in its own fix PR title, names both
-CVEs as applicable to apache/kvrocks. The downstream impact is not
-in doubt -- what remains pending is a formal ASF advisory / GHSA /
-Kvrocks-specific CVE ID, which was the original subject of my post.
+* Recursion stack overflow can lead to a stack clash, which might
+  enable memory corruption and code execution. There has been some
+  detailed investigation of this type of vulnerability by Qualys in
+  2017:
+  https://blog.qualys.com/vulnerabilities-threat-research/2017/06/19/the-st=
+ack-clash
+  https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt
 
-Off-list update: ASF Security has since confirmed they plan to
-coordinate with Kvrocks to publish CVEs for these issues.
+* As a response to this research, it was concluded that existing
+  countermeasures for these types of vulnerabilities are insufficient,
+  and a new compiler flag -fstack-clash-protection was introduced:
+  https://developers.redhat.com/blog/2020/05/22/stack-clash-mitigation-in-g=
+cc-part-3
+  The -fstack-clash-protection flag is available in recent versions of
+  gcc and clang, and many distributions have it enabled by default.
+  There also have been changes to glibc and the Linux kernel in
+  response:
+  https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2017-1000366 (glibc)
+  https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2017-1000364 (Linux
+  kernel)
 
-Best,
-Jincheng Yang
-Xidian University
+I believe from the above that current systems should not be vulnerable
+to this type of vulnerability. I am unsure about systems that do not
+apply -fstack-clash-protection. My understanding of these types of
+vulnerabilities is limited, and by posting this here, I hope that
+people more familiar with it will have a closer look. I am also not
+sure how widely these mitigations have been applied and whether there
+are major distributions not using -fstack-clash-protection by default.
+
+--=20
+Hanno B=C3=B6ck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
