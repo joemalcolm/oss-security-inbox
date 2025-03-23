@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["936" "Saturday" "23" "December" "2017" "09:10:28" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20171223081028.GA17654@lorien.valinor.li>" "24" "Re: [oss-security] Linux >=4.9: eBPF memory corruption bugs" "^Date:" nil nil "12" "2017122308:10:28" "[oss-security] Linux >=4.9: eBPF memory corruption bugs" (number mark "        carnil@debia Dec 23   24/936   " thread-indent "\"Re: [oss-security] Linux >=4.9: eBPF memory corruption bugs\"\n") "<CAG48ez35=x3BPJ_sUdxbzjoo+8GLxLGrdhz9r52Y+wqfdbqBUw@mail.gmail.com>" ("<CAG48ez35=x3BPJ_sUdxbzjoo+8GLxLGrdhz9r52Y+wqfdbqBUw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16186 invoked by uid 550); 23 Dec 2017 08:10:42 -0000
+Received: (qmail 5196 invoked by uid 550); 23 Mar 2025 16:23:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16168 invoked from network); 23 Dec 2017 08:10:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=h4Oy/mK4PvHSgDqxol0+tJyyBWs2Ss2XA9nF//Tim/M=;
-        b=edF+F4wPciOnYeKMLVJLYISPesi/ez8LLsuzlpoAaMLk4taN4NW/E7/zy3OkmCIfef
-         DH1k6c4YC5/4xiz+74IJSWBkVlo0WqLtb2IDQ84JL4zoTvpprra8x+4hzfPZrFkT2xi0
-         +ZMfOGHOz/vPHWyvUbFHusFWq8dF8R3prkvU/+QoCiUh5TQNRQbHpKtYeDXTV2MeP0UK
-         YaQ1JNaB94L9CJYC+sEiuLLShHlWJJoy8xCSUh/3dhhL647TG/ycNl5QEFYg71CTjld+
-         hXfbZBCpaItUggm47NuUg7pLT+/ZoYv8r9qvElHGPRmvED3qXJXgaAQNaIFw1NEjs0y0
-         U3gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=h4Oy/mK4PvHSgDqxol0+tJyyBWs2Ss2XA9nF//Tim/M=;
-        b=uMWQqaoqfqEEiT5Dci5WbOAhuYWgGG1dMpjeNcUSXYYSzbaMgVocx/82bEni8hbLS9
-         mufzK5cR8A7lDx6B+GFcRR2GXZWzJA/E2/y22sioYVRvYzGP6pkZEwn3U5V38E0i6xhD
-         bzhksmalrnZtKeyT3iFoe14TgL3ZMOsXVZlcOEjv1PUI2zgCuaknnWL22mrQpZB4cpVz
-         2ZTKs0ogR+r4jXknMRLLuVBeca2FeD0bFUoDTQimWpcmLUwQTWeRV8FxpXMgZWMFIU+A
-         1nYEYfevQc9IhYoyj6SlkU02/ewBfLAx7x9bPO5C5jMC8TFYZJ6i1VMcyyfGHpef1f2j
-         w54Q==
-X-Gm-Message-State: AKGB3mJGq1CGOC6+Z9YPgcVaBWoXQNjTtl18aFaqsTe4urGC+TrjU69e
-	bFnkCG4bAefXwYsr+ImFjIY6Vw==
-X-Google-Smtp-Source: ACJfBotBhGLuPY5K6RIkEUHjLbn+p/iSb7CaPtv/OVQY3kE2bHpGw8Uxi2kNhgsgxSvfhkeapSb4Lw==
-X-Received: by 10.223.188.141 with SMTP id g13mr18273385wrh.169.1514016629997;
-        Sat, 23 Dec 2017 00:10:29 -0800 (PST)
-Message-ID: <20171223081028.GA17654@lorien.valinor.li>
-References: <CAG48ez35=x3BPJ_sUdxbzjoo+8GLxLGrdhz9r52Y+wqfdbqBUw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG48ez35=x3BPJ_sUdxbzjoo+8GLxLGrdhz9r52Y+wqfdbqBUw@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-Date: Sat, 23 Dec 2017 09:10:28 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] Linux >=4.9: eBPF memory corruption bugs
+x-ms-reactions: disallow
+Received: (qmail 16315 invoked from network); 23 Mar 2025 13:32:12 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: "Gary D. Gregory" <ggregory@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <feeee9a5-f774-6b87-ca7d-df57abc0ea02@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 23 Mar 2025 13:29:52 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-27553: Apache Commons VFS: Possible path traversal issue
+ when using NameScope.DESCENDENT 
 
-Hi
+Severity: low
 
-MITRE has assigned 6 more CVEs for:
+Affected versions:
 
-CVE-2017-17857 [bpf: fix missing error return in check_stack_boundary()]
-Fixed by: https://git.kernel.org/linus/ea25f914dc164c8d56b36147ecc86bc65f83c469
+- Apache Commons VFS before 2.10.0
 
-CVE-2017-17856 [bpf: force strict alignment checks for stack pointers]
-Fixed by: https://git.kernel.org/linus/a5ec6ae161d72f01411169a938fa5f8baea16e8f
+Description:
 
-CVE-2017-17855 [bpf: don't prune branches when a scalar is replaced with a pointer]
-Fixed by: https://git.kernel.org/linus/179d1c5602997fef5a940c6ddcf31212cbfebd14
+Relative Path Traversal vulnerability in Apache Commons VFS before 2.10.0.
 
-CVE-2017-17854 [bpf: fix integer overflows]
-Fixed by: https://git.kernel.org/linus/bb7f0f989ca7de1153bd128a40a71709e339fa03
+The FileObject API in Commons VFS has a 'resolveFile' method that
+takes a 'scope' parameter. Specifying 'NameScope.DESCENDENT' promises that =
+"an exception is thrown if the resolved file is not a descendent of
+the base file". However, when the path contains encoded ".."
+characters (for example, "%2E%2E/bar.txt"), it might return file objects th=
+at are not
+a descendent of the base file, without throwing an exception.
+This issue affects Apache Commons VFS: before 2.10.0.
 
-CVE-2017-17853 [bpf/verifier: fix bounds calculation on BPF_RSH]
-Fixed by: https://git.kernel.org/linus/4374f256ce8182019353c0c639bb8d0695b4c941
+Users are recommended to upgrade to version 2.10.0, which fixes the issue.
 
-CVE-2017-17852 [bpf: fix 32-bit ALU op verification]
-Fixed by: https://git.kernel.org/linus/468f6eafa6c44cb2c5d8aad35e12f06c240a812a
+Credit:
 
-Regards,
-Salvatore
+Arnout Engelen (finder)
+
+References:
+
+https://commons.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-27553
+
