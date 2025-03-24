@@ -1,4 +1,4 @@
-Received: (qmail 15658 invoked by uid 550); 15 Mar 2023 23:18:52 -0000
+Received: (qmail 15862 invoked by uid 550); 24 Mar 2025 17:33:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,130 +7,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15627 invoked from network); 15 Mar 2023 23:18:51 -0000
-From: Damien Miller <djm@cvs.openbsd.org>
-Date: Wed, 15 Mar 2023 17:18:38 -0600 (MDT)
+x-ms-reactions: disallow
+Received: (qmail 7430 invoked from network); 24 Mar 2025 17:25:00 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Josh Thompson <jfthomps@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <488129326b383c39@cvs.openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 9.3 released
+Message-ID: <ba02432d-f966-8f3c-13d6-46448d84a9f9@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 24 Mar 2025 17:24:08 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-53679: Apache VCL: XSS vulnerability in User Lookup
+ impacting user privileges 
 
-OpenSSH 9.3 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+Affected versions:
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+- Apache VCL 2.1 through 2.5.1
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+Description:
 
-Changes since OpenSSH 9.2
-=========================
+Improper Neutralization of Input During Web Page Generation ('Cross-site Sc=
+ripting') vulnerability in Apache VCL in the User Lookup form. A user with =
+sufficient rights to be able to view this part of the site can craft a URL =
+or be tricked in to clicking a URL that will give a specified user elevated=
+ rights.
 
-This release fixes a number of security bugs.
 
-Security
-========
 
-This release contains fixes for a security problem and a memory
-safety problem. The memory safety problem is not believed to be
-exploitable, but we report most network-reachable memory faults as
-security bugs.
+This issue affects all versions of Apache VCL through 2.5.1.
 
- * ssh-add(1): when adding smartcard keys to ssh-agent(1) with the
-   per-hop desination constraints (ssh-add -h ...) added in OpenSSH
-   8.9, a logic error prevented the constraints from being
-   communicated to the agent. This resulted in the keys being added
-   without constraints. The common cases of non-smartcard keys and
-   keys without destination constraints are unaffected. This problem
-   was reported by Luci Stanescu.
 
- * ssh(1): Portable OpenSSH provides an implementation of the
-   getrrsetbyname(3) function if the standard library does not
-   provide it, for use by the VerifyHostKeyDNS feature. A
-   specifically crafted DNS response could cause this function to
-   perform an out-of-bounds read of adjacent stack data, but this
-   condition does not appear to be exploitable beyond denial-of-
-   service to the ssh(1) client.
 
-   The getrrsetbyname(3) replacement is only included if the system's
-   standard library lacks this function and portable OpenSSH was not
-   compiled with the ldns library (--with-ldns). getrrsetbyname(3) is
-   only invoked if using VerifyHostKeyDNS to fetch SSHFP records. This
-   problem was found by the Coverity static analyzer.
+Users are recommended to upgrade to version 2.5.2, which fixes the issue.
 
-New features
-------------
+Credit:
 
- * ssh-keygen(1), ssh-keyscan(1): accept -Ohashalg=sha1|sha256 when
-   outputting SSHFP fingerprints to allow algorithm selection. bz3493
-    
- * sshd(8): add a `sshd -G` option that parses and prints the
-   effective configuration without attempting to load private keys
-   and perform other checks. This allows usage of the option before
-   keys have been generated and for configuration evaluation and
-   verification by unprivileged users.
+Chiencp and Nothing from TeamTonTac (finder)
 
-Bugfixes
---------
+References:
 
- * scp(1), sftp(1): fix progressmeter corruption on wide displays;
-   bz3534
-
- * ssh-add(1), ssh-keygen(1): use RSA/SHA256 when testing usability
-   of private keys as some systems are starting to disable RSA/SHA1
-   in libcrypto.
-
- * sftp-server(8): fix a memory leak. GHPR363
-
- * ssh(1), sshd(8), ssh-keyscan(1): remove vestigal protocol
-   compatibility code and simplify what's left.
-
- * Fix a number of low-impact Coverity static analysis findings.
-   These include several reported via bz2687
-
- * ssh_config(5), sshd_config(5): mention that some options are not
-   first-match-wins.
-
- * Rework logging for the regression tests. Regression tests will now
-   capture separate logs for each ssh and sshd invocation in a test.
-
- * ssh(1): make `ssh -Q CASignatureAlgorithms` work as the manpage
-   says it should; bz3532.
-
- * ssh(1): ensure that there is a terminating newline when adding a
-   new entry to known_hosts; bz3529
-
-Portability
------------
-
- * sshd(8): harden Linux seccomp sandbox. Move to an allowlist of
-   mmap(2), madvise(2) and futex(2) flags, removing some concerning
-   kernel attack surface.
-
- * sshd(8): improve Linux seccomp-bpf sandbox for older systems;
-   bz3537
-
-Checksums:
-==========
-
-- SHA1 (openssh-9.3.tar.gz) = 5f9d2f73ddfe94f3f0a78bdf46704b6ad7b66ec7
-- SHA256 (openssh-9.3.tar.gz) = eRcXkFZByz70DUBUcyIdvU0pVxP2X280FrmV8pyUdrk=
-
-- SHA1 (openssh-9.3p1.tar.gz) = 610959871bf8d6baafc3525811948f85b5dd84ab
-- SHA256 (openssh-9.3p1.tar.gz) = 6bq6dwGnalHz2Fpiw4OjydzZf6kAuFm8fbEUwYaK+Kg=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
+https://vcl.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-53679
 
