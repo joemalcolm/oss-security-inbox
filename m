@@ -1,4 +1,4 @@
-Received: (qmail 27698 invoked by uid 550); 21 May 2024 16:26:20 -0000
+Received: (qmail 28419 invoked by uid 550); 26 Mar 2025 23:57:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +7,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27665 invoked from network); 21 May 2024 16:26:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : references : from : to : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=/uXXE80WrHMmE8wJ07b9Th6hOQfSBD7IG3wdxXE7hT8=;
- b=HLrNBtmGx5wGP1RQcTfCLbksHaaKay19anAC9LTyIr0rthi3pOWds8z7GX2103UWv4eU
- VBonzUBYQAQ/voGWNZJ02NaZ67tG1P2zGt/ga94wy+/IUQVuzRoLJ1Toaod6TI21Aj77
- 5twChXQqDcgWUUuJO2TZs6HewgH9UWF1ym7WJJKO9U68MUl98Pu4WpK17SNifBjX8yDN
- HsOMwvwTe6F19/NWQFVLxnLvhyJXb3MrynTdIv/oTshokqgNd+hx/yFyfc/3PEfdl4YX
- eKplfVMtTjGG7ZlomDi9C2r7glMuT+8DBhbVRFROIcbxh7l0Hsv7E0oTxxmM0DWzG+fb nQ== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Hen+AqswgB7Csz4/wfwsKHUo7/TAJII8vG9puboy2DFGFAKzIjFb7r1uwFnzlp0GMtRov9a1emY+bu9kxd0eh3Qa4UQ9+y446KIs1M1euFKnBCpLM4xnOvGkOGksEObM4KcPMJgaHqS87ZzHtK4cfJc7ZkaijUx1EttaGkqpQoDP507hDwAw5Hrz/WxBJBSndntGcQqJBmp2WcTpDcNWKlUE0TfUFEeN94lifmUtkdpsfTbdKwOhX60u8yXjH5my6p/6yKmILH3Is+cV45qIpRjjBuHAcppnSEbJynqTuAKft1j4+LOEUMLdSMXov3f+0AKBIg3zuWBHp+5Nlu89Hg==
+x-ms-reactions: disallow
+Received: (qmail 28386 invoked from network); 26 Mar 2025 23:57:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2023-11-20; bh=1uubKZ5JfyusoVkFZ1xLwlYvtYITOGZpdO/pOgSVTAk=; b=
+	PH8np9duseG6TGbS8BfYzXsNprEY50TxBdG7m32M7DGmliuUHuIMMstIe92EBPb/
+	lfNeHziGQCGcWzICk7Nb7R886qwO/j2OePZKgS/kiwmQkOFS9Wh3nRW90/08Ct5F
+	La6Vql93qQ41hgR4jMbkOA5PG/RQC7e3vrVFrAXI5BhJ9dZ+fDW0qJbpsnx3Gdb6
+	2LYJqkWq3YdXJv68Cj5rUKhqjVpzPJff3zda0Xrp4JxjrJcZVSEHXnZxGAghdsoI
+	79Bl8ZvHkH/9XuKuKpV21GIUY6uVmrb0knxtn2WsZIrTZtXDy5IfNI90KStSp4EF
+	UR0NWzsMIQ8/GrBxuVOwZQ==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WWpb9BVglWE6F/+GF+3ok2fQG0eHq+wBybhhxBUT0aKzgS0mWTjyCCwjOtvq1PxI21XjslfpjukkwFoh5ifKCdzqKqlHX/2G3phud2xRs1IctABr4kMiSWEwKYOolJv59ERcRRr20pbdyctNuKuiRfdrnEKRRQx5xWyS8m3bUYRDPNxsHOcd1wjCmaTmgyVn/M1/TCnlxfT5cvz/npHSwxkD02BI5rSwfHMec2IBmbDEvjpfQIhBMK5qzLOh/3NzoCuEpd4EBTpBrSdtZVK9KBGC4V0aXskA4nzxkVntcoPX+5mZ3uMjPboKeLJyOrHC++gtwuPiUebkeKSpSh1raA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
+ s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/uXXE80WrHMmE8wJ07b9Th6hOQfSBD7IG3wdxXE7hT8=;
- b=Kw4GmGsXQNDdFhy5U7oWE5DNMeWIo5rYiee/O53I2KIf6ReHxrcUaVR4gZOJD6vFBbasir7McnF5HahwjLKJ38KrflR8oUiotPEvik/zyrtB2RCTZ9wUvFpzINTYVN3qsoxD/qF0/YnLN3K0QHaVwQPvSx8iAdg3Y8wzYA3qKVfvoCNlM43qHDS7c/wWJ0kAxYeDsx5Z3j8LncOT8IPEvyiMg4EncXLdDp4/KvJlcJI7hdyE6rCu4T9CrtldLfB2rYrQWfw132bxe0dWSS7i6+G3w8nGRtLXILVDqAd5Jbh6juxVR1GXUkJBaBrcEhEXgJb9pV3yqvY4/v9+5nXm8w==
+ bh=1uubKZ5JfyusoVkFZ1xLwlYvtYITOGZpdO/pOgSVTAk=;
+ b=eNHVOae1GFvZG0LHH4UHzGF8o8u0Uvd9XiEakyEum4rjosUmfAlOWPjGc14YLgCZ1siMWOsuMIRGQZ/B5N8sVotjEKMsaNOOE/RDz9cKdqCkh6IL0LtmG/7RdbqovNO1zGqMOhFaNey0okgCbljHOMuHRuQrhqJcKuSNWzD1ivVtXHrQAlEZ++Yehvht2TU7G1q2wdDaIz5iDjDC8nb8VDrE6SkVn2L3+PU8dnOWxf2/oS5xwdOsEr/PwPtOkRdM0zezDxEpOhDB0KceglcDNqIiqEYi+S2KT+qYfdQ/UCcPoJMA+cz6uSl809D+HF84qmOSFezN4vggvcDOZv2/jw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/uXXE80WrHMmE8wJ07b9Th6hOQfSBD7IG3wdxXE7hT8=;
- b=bg1dbTE3ahySHrQZTD25dIBQVLU6JfSxEMf2WbEkprRx29pOEi69tffPBnW0fC8xOdNARDKORtMAaqh/1W2Pz+GvrqrbSNj662qmZpDH/iYy3XsZmh1u8bSXmN1F0QKxamJhnw8/+neGVzPH34j2lu3Dg3cVyZpWQiRfetnbB8c=
-Message-ID: <ceb67382-6a84-4e9a-9d02-23444d39b23e@oracle.com>
-Date: Tue, 21 May 2024 09:26:01 -0700
+ bh=1uubKZ5JfyusoVkFZ1xLwlYvtYITOGZpdO/pOgSVTAk=;
+ b=k/c6HTxXU/SlUn6jPDRX9fn/GcVvitepcdJedPJ3CnFWei336eXvTls80zvwMdjhdURI5UEjMbN+ZTsIG/kHVzPNM2L+GRZsw+CbRsefHEUr7ONQHFNbWpNoAg6G1QcJ6zyxgkhohv6bYp/jw4H5NHh+02kAvSz0JBK4oiy9wAY=
+Message-ID: <d33e63e7-0b29-44b6-ba50-e53f1958d2f7@oracle.com>
+Date: Wed, 26 Mar 2025 16:56:59 -0700
 User-Agent: Mozilla Thunderbird
-References: <08d43dc1-5e81-73cf-1563-b48f5eb28a6f@sangoma.com>
+To: oss-security@lists.openwall.com
+References: <20250326230703.GA7131@openwall.com>
 From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Content-Language: en-US
-To: oss-security@lists.openwall.com
 Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
  xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
  q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
@@ -63,274 +65,131 @@ Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
  LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
  AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
  uoPzepWFbgvLuHIMvyjRog==
-In-Reply-To: <08d43dc1-5e81-73cf-1563-b48f5eb28a6f@sangoma.com>
-X-Forwarded-Message-Id: <08d43dc1-5e81-73cf-1563-b48f5eb28a6f@sangoma.com>
+In-Reply-To: <20250326230703.GA7131@openwall.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO2P265CA0514.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:13b::21) To DS7PR10MB5005.namprd10.prod.outlook.com
+X-ClientProxiedBy: SJ0PR05CA0004.namprd05.prod.outlook.com
+ (2603:10b6:a03:33b::9) To DS7PR10MB5005.namprd10.prod.outlook.com
  (2603:10b6:5:3ac::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|SA2PR10MB4698:EE_
-X-MS-Office365-Filtering-Correlation-Id: b3f036a9-cf26-446b-1013-08dc79b2b745
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|SA1PR10MB7754:EE_
+X-MS-Office365-Filtering-Correlation-Id: bef2133b-486d-424e-7088-08dd6cc1e6e5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|366007|1800799015;
-X-Microsoft-Antispam-Message-Info: 
-	=?utf-8?B?Z1VRWXJpMXdKWUJqZHdSUytmRFRpVG1XVGMranM4WXlzUmtZTFZKNFg2c2Jq?=
- =?utf-8?B?TCtNWENEZURYZk1wZFhCQ2k3bDg3OTRwSEo2amIvVERVRWhhSk5ObWJzRmVF?=
- =?utf-8?B?czR4WHRQRHc3TER2aGxMb2RUZjRRblBCMllqK1FZeUs4UmVJWUNhTmo1N1FB?=
- =?utf-8?B?Tk1uaWN5VlZ5Vk95WHdIOVZiTHZxeG1SU3k1UFh5N1lLRlBKZmJML01jYkY3?=
- =?utf-8?B?RmFxMkM1eDExc3gvS0h2L0tQS1pXUFMxVDNiaGZwdWs1L2lCMjYwMm5QQzkx?=
- =?utf-8?B?ZVlIN2dCZnVNV2d0b21FUG5xNzg1QzdvNDN4YjNFZ0FkaTFIdmdsaEhFZ2FF?=
- =?utf-8?B?bzRpTmFLNGZoeGw5K2lPUkxvSzZZZXJpUnJsaDNkY1oyQS8vRHJiMmx1cUkv?=
- =?utf-8?B?ZjhFWms4RzB4SU90dmRtWVdzQjIwRnVoOWdGOGtlSVJGS2ZrT1BLWENlZGZ1?=
- =?utf-8?B?OGRuZzZ4NlU5T1J1bEtLN0k2TkVQSHdjWnBnOC9pYko2Y25WZHJlV05mSGxr?=
- =?utf-8?B?UnJoV2VCWWlvYVJ4aGtaKzNkaUNxWStBUDB0ZFdHSkhLaC92a3RTNXYxaDJz?=
- =?utf-8?B?ajBFdkdkTUFpT1IrQ3NLSnpZd0x4QjZ4OFdJSjJYL3prZ1lqakJMMHBLRGRS?=
- =?utf-8?B?LzlZYVBmWHVLNzYxNzZBSFljVWI5RU93RGVvS3N6MEgrMG5PeXpweWNZaW9s?=
- =?utf-8?B?cUVWRC9JTlV4cGx5SEZXdHFxV3RGcGVuQ0tpclk0bXJCTjFlbTFWS0k0Q0NL?=
- =?utf-8?B?eGFmejNxLzMvQ2kvR0lUK1FtdFk5ckFxbGYraVJJQnpBdGlRdEltQnh6Q2hD?=
- =?utf-8?B?N2g4Wm1USmFnR1cxQXRZSDZwb0prN3FCSHlIVWZmODllbko2UnB6dzdXVU42?=
- =?utf-8?B?MW9COXIzMVh4aTh0czd2K2swUDBiNm0zcmVLbFo2Tjc4RmV2QUovRVY4bFRF?=
- =?utf-8?B?Rm50RGdlRlM1aUhhcHdBbWhFTXZ5SkhydGJ0dFZyTlZMWS8rT2xNWFR0aUdG?=
- =?utf-8?B?SFhYbzNpU0g2RHM4Tm92TVJlQUxGQVZFMk91ems4Uk95Vnh0VVV3cElNeGdT?=
- =?utf-8?B?WTU4TTRMUWF5TzU1Z1JXeXA1enNZYmxaWHZaeWt2VFp0dW0raUEwMzk3OG9s?=
- =?utf-8?B?U1NrMEFVQjR4bjhjRzdsTGJkNlRjRkx1YlFhNmszaGdGUmNyVmp1VjRmcGV1?=
- =?utf-8?B?MkhyK1RhWG1RclpjaysrM3NFWHl2bW8wWDBZc2VYTlFPekVkamFXZUZNYlEv?=
- =?utf-8?B?dU9kZzg3RXN6YkJINlBadWZiWGxlbEUybmNvUUd6bUppckE2OHZuL0pFcTRr?=
- =?utf-8?B?djNIMStKb1pxU0RlUmZlUFlNSDlkYmh6aWVvV0MrYVNXWDhhNGRYTldZcmox?=
- =?utf-8?B?RnlaYTBGZTlNOG0zcTJOdEhTNy9uZDVzZUVhMDBnY3BqLzAyL0QrVy8weFpJ?=
- =?utf-8?B?N1NrQ3p1Ync4QzZSOXlpQ1FrTUZoYmMrVlpjWHQyb1ZtbHZmYnJodGpZZjNs?=
- =?utf-8?B?MWRyNmNybzlMbHIvcHcvQ1JTeWtLak1GY1FQSlZOQk5raDNyOWhsNW9FWjl4?=
- =?utf-8?B?SXQ4aHppVkk4b084amlHNnVpb3VxS0UyL2IzVFhYR0pwNk1kSXl0Zmtac1JW?=
- =?utf-8?Q?4svvvL5ttwNJHFugnR4OqSMwVjw1wM1LI5Q10NbCqts4=3D?=
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(366007)(1800799015);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Q3RReEUyd0VwZi80UVh6dDNoblpBbHdZS21GbGFETHk1bjVFYURVM0RiUU1l?=
+ =?utf-8?B?L2JmUzZwNnlFWFRscVVoSUlGTlVDQ0FsYm9rNzdmTWcrY2hIUHYwcm9YVzJj?=
+ =?utf-8?B?aVJ4VUMwYUZnNFI2NGFlN011WDlkZnJPUHFqcHlzbzVkbDFNRlR0T1MwSUFK?=
+ =?utf-8?B?S09LSnhsUHAvS2tkZkR1NGZxczZYOGpmT3dHMHJyblZpOTd1ZFoxYW1aVjFU?=
+ =?utf-8?B?dENTV3lwRFFURXVoVXd5ZUl4U3FnelI2MmExZE1HR2xtWC9NekNLckFjWTA0?=
+ =?utf-8?B?MUVOcExKQnhMYzg0bGhPY3dHNFVKZXFYMWlIcURVVnJrdHIvRkliN0p4WXhJ?=
+ =?utf-8?B?NUJXT0FzbklEMlZpcEc2c0s4MitoSi8zU1J5dlc0ajdlb1FIdUtZUUNsdGVG?=
+ =?utf-8?B?bkpvdHdvSjBiT1c1bHU4R0xRTnhDaUFuNFRqNE4xVWhMU0hXS2lqbCtlZXhx?=
+ =?utf-8?B?OUZhVHdxTDFXRlF0VW1yNC91dnNwMEJxb1JDUG4rM2JhVlhhYndreDRHM05I?=
+ =?utf-8?B?ajVLVktKejZRaGVHTWtWZ2RLUUQ1YjdqUE9DcWFIc1NBWEJKNkZkOUNlNitB?=
+ =?utf-8?B?OHkvK1dmRDNWblVKVFR6T3N3WjBaeFNQdnA3UHgwbFhjdCtyQVpaMjRYcVZT?=
+ =?utf-8?B?ZWpGcVArU3JuaFVzT050L2U3eWRVelBPSEdNOEE4ZUduRDBwZW1yTS9RZy9z?=
+ =?utf-8?B?SU1OU2IrRjBBODBNOFlVenpTME0rdjNVcUlUcHhEZGRXZ2RhUTlNZHB3UmRs?=
+ =?utf-8?B?QlIxaCtVRjBnbi9XODJhUDAwMEpzK2EvbjdJanlqYVJWY2dYdmxHK2tjN0JC?=
+ =?utf-8?B?M1dmNHMyRjRYTC9JTzBTYmJLeUxleHNzS1dINHZ5VUVLRTU2N3VkU0pGQyt4?=
+ =?utf-8?B?dGdGVnRtaVRXZEk4RUtuM3V1SXJSV0kxUEZqdjNFL2tVT0dIdjlTQW5XVEtI?=
+ =?utf-8?B?MDMrZU12VFdqWnJ0dGYwZ1VERE1NeHlTUUZOZ0h2WTBpUEllYXNVZ1pqaG9a?=
+ =?utf-8?B?VVBaenpVY2hhL2drMWxqTytPQzluOGZFNHgxN1Y1Rmg4M0h2bmJFYWNyY3ZY?=
+ =?utf-8?B?T0hHbnRGNHZGcy9qdHpocEloNkFqRnkzL1VrWnppU3BYZHQxWXZsTUpIbkdI?=
+ =?utf-8?B?VUdxR0IrWU5qK3ozdnErQTlxemdCVDdDdGNacFVldVdrdERiZlFoY1k2WG5H?=
+ =?utf-8?B?OWlZU0RnZWNGSHVEWWlvblNqUFpGalJnQkRSTmx6REE3emNZODlPMFpQTzVk?=
+ =?utf-8?B?cWkrekhEZVJvM0pKNHpaTG5MOGNibC9kRFRrbld4RlZnNnlsSSsxTjl4bE1O?=
+ =?utf-8?B?TUErNkZXODdQdmd2ZXZFbUdjSHpKekJUNVBmVm93NnA3YlJRSUI4Z1A4eXBO?=
+ =?utf-8?B?UVN1eVNKQmpudUJaRXlnTm45Y1FjTDJzamovSFdDRUlrdmtvMUxhT3diamJk?=
+ =?utf-8?B?NjZlK29reW01b0pyb205alBDZmt4OUt5aGgyM2xoOUVnZytrbm0yOWhlMzdJ?=
+ =?utf-8?B?UWpjdGM4d21lWHp2QnlqRjY2WGpWaVhxZ3RtVURIQmFmMzltZWdsOXFHUUVF?=
+ =?utf-8?B?Rld0MnNVSlFOZ2xWU2hiZXFmdC95SVRxNGFvMjhXZjNhc1VWUHFmRkd0amZB?=
+ =?utf-8?B?cS9DbGtCTS9YeHN3YVdCV2dHV2FBc0dtQjE0ZEt5NEVTVmhuNHZ2SUFyOUVH?=
+ =?utf-8?B?QnJJbU0rTld5QVVSVGJHRy9ET0J4RHBpckc4NTNyRm9TNHBSZjVXNDlPRnlM?=
+ =?utf-8?B?SXJZVlNzMEgvb1A3aVNIQXpUZk13NkRSVllSU1JkM3k4OXNMV1pnOFBGQ0Yx?=
+ =?utf-8?B?aEZXUXA0U0VET3V5MmZzUT09?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?akQxRzhWbjl0Nm5IWjliTzQ4Zlk2WjFIV2t1Q3BjRGZ5SDNjU0RwYnFCNita?=
- =?utf-8?B?Y1BqaXI1RFZ4Tm1KU0gzYmE3Ny9SWUttNnlQRGF0Q0FmUklKRmFncXF0ZTA0?=
- =?utf-8?B?T3ZMNElHcGU3QklFRFBGa3Irb1FkanFabmcveVdQTEhRZDNtc1ptWENId1U4?=
- =?utf-8?B?c1B2ZFAybDZYMmpKYURINEtNREovaGppMUVDdkJqTlNnaUtMMFphd3lWeVZC?=
- =?utf-8?B?WlN6VC9YQ1BsK04vSkFlT2dFdk14aUVXbmM1NytiWisxdVpESkc3bEVNMXpX?=
- =?utf-8?B?d25VZWNPZVhIMXVuQm52VldwWWgrdzhjeTJ1Zzl2VVcxL3ZxWGFuMWVscjhL?=
- =?utf-8?B?QkFUZzhHM2huWElVQzlHcGdvQ3FXbHQ1UGhOTFFQeGNYR1lOZWdhaGxNNDJM?=
- =?utf-8?B?SGFiTkhLRTZnWkJ3VFpTbjdBeHdnZzhpcmdtVVNZUHk4Wm8xWWZrV2VvRWRn?=
- =?utf-8?B?dG1LYk0xS000N3BGR0tUOERKTjZYcmdJUWJ0QlFWV1N2VmROcmhEd2hrWUVL?=
- =?utf-8?B?djdnK0ZENUZDRDVFZVpWeTlGQkxLYmszdXVMZFVkRUlvek5LRDBOWXZUVHFW?=
- =?utf-8?B?VzZzaUF4RElzMGp1TEtmdkNKZzZSQnhBUnc0ZXlGdGNvYUluMDByblFuN1pS?=
- =?utf-8?B?MVc2SDYxZTVYT0FvUmdWSThSOThFcVZpZ3JjaHVYS1MzY0tzN3pzMDFNQXJU?=
- =?utf-8?B?LzBHRTJuT3dSYzUvN0dnamJCc09RYXZZL1RnaE9Cd1pPMkpIN3N5UTVjZ1lo?=
- =?utf-8?B?TVI5bXY4RGQzamgvWS8wWCsrbmxSellaTEJwQnl2d1NVWUEvaE9wbXJsbmFh?=
- =?utf-8?B?TXlsWHpJQWJRNHdQcE95ZDJ0NTY0SnVTTmJLN3FML0d5dDNYNVlsZWQ5RkpJ?=
- =?utf-8?B?RzAvdHVaclJMRHBSbFB1em8weDRqTFVJWndIQW4wcHFqZXhHK2licXFXZkFT?=
- =?utf-8?B?Kzd0TDNLNDltS0c4enFJc2s0bmt6UUVEaDl2dFFMZ3NhQU5zTURGTVNObHNv?=
- =?utf-8?B?eEkzRkV6M0tyalI2L3pyV2JqR2dINVVhUXVoVXdSOXdUQktDaVNhZkRHZlhQ?=
- =?utf-8?B?TFg4cHU3RnVNUTUxdm9TZEVDMzJ2UGpuY2xxNk5ESWpmaUpjejZlazlXRGxB?=
- =?utf-8?B?Q2lmdVYwb3d0N0NaMVphSGhNV0QydS92Z012UmtoeG1JUEhpOVRaRUF1VXV4?=
- =?utf-8?B?NndidklTRGEwcm5qSXROcnJaTmpXN1hzQjEzTDNGNWJoWkpycmM4dDM4L0xt?=
- =?utf-8?B?c2l4WVhvOEdQTzhoV2ZGamZ1Q3JWTzlsWndkK0ZlY0dJZXhFRWtTUldKSy8x?=
- =?utf-8?B?b3dlc0tsVEVvaFVpOWVuSDhJN05ValBsVEgxOW5xTzZrTUxCNWFtdFNwN0gr?=
- =?utf-8?B?RkNVQzc1U1dpcTVZcld2ZmptREx0QVB3ZFZjWmRQY1lmdVBvR1BVY3R5YndQ?=
- =?utf-8?B?WXd0RzNSYWhvczJVdkpVcGNmYlZFZENWTFVwMmVxaXBSaGh1ZTY2NEx2a3Vv?=
- =?utf-8?B?SzE3ajFtRUJPTWhTUlVBWkRwY3Z0bGhxUm9jZ2N4dExxaWNCckJleG1aekUr?=
- =?utf-8?B?Q3BjL3p0ZFBTdjIvSUhWQVZvazFvVGdjTXdCODdkNFN1ZEgzRitXaFVtS1Y1?=
- =?utf-8?B?aGtBMHByRUE4VVFZN3BDa1NPNW5zOVRGdGRQeS9XWGlSbUdnTGFoUlFRSXBQ?=
- =?utf-8?B?VnN3K1Z3RUhRVW1CM01iYXlvNmdoWTNpc1NaMVE2WHRUaTVTajYzZ0VtTjJP?=
- =?utf-8?B?bExDbENyMFFXak4vOXVuaW0zamRmTTVsUzZzV3NWMjNhcVVLVXNrM290YVVK?=
- =?utf-8?B?RzE1Mm9LYU5KdzM5MXlSWVpBcWpiVW5BU0dIU2lEMElkOFVGMTRCTkorTFNw?=
- =?utf-8?B?M2E3Mlh3QXJ1TmZZekVGbVNldTlJOGdBMGVNK3EzSU1lb2RKQVpyOGZieEZp?=
- =?utf-8?B?MWkzN2xrODM5Z3VNRjAwZ2EwZERrM3pPeHBMK25tWW5Ec3dwRlZPcnlTK1RL?=
- =?utf-8?B?VExyMTdjb0s1SVRHdjUrUkQvUm9vWmJzdDJ2L1NMcWFXMHNxZVVFNGV0dXkv?=
- =?utf-8?B?VW8yKzdicEh4Ym42TDZqOFAzM0NsREdJRWFmeEsrYzJXRVpGMFlnTWZYdUdI?=
- =?utf-8?B?eDNwRTZuUElOMzVjRzY0OVFGaHB4VmJNMVBJNFlhZXZPQ05UQUpQNlBab0tO?=
- =?utf-8?B?QUE9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?R0NENUJLNWRWdWdXbjA4eFdjdnY2bkxiWEVsaDFEdWhwVkpsNGV0dTFTVFRU?=
+ =?utf-8?B?YnlQeHcySHBteWtFcDVVTHMrTlIzc0ZaWFZZbEttbld0MDRKV296TzBQdlNL?=
+ =?utf-8?B?YU1VMFFGdGdpVEZaSm9KSUZnN3h3Y3YvSFB3UkhVOXZBRTQzUW5HN001RlBx?=
+ =?utf-8?B?SWJIalh0L1BQZDg3eXVhTUNXRG1Na2o4aHROelM3S0tKdkhkUzQ4SVA2OVJv?=
+ =?utf-8?B?Z3JEUVBzZmh0VS9vTEJjc1I4MDN5OGlpMlRMZ3VPS0ZKWlRub2tieXJTQ2du?=
+ =?utf-8?B?aGdSRXBSaFUvRDJwbHhYWm9NQVgyZ1dNb0ZYTExXdVJUemNMR2JxdUVYVnFj?=
+ =?utf-8?B?NVJqbzNJSVlGaHJqUmh4V0FDVzdMbEJ1OEMyTHJYNE90cmt6Mkg5cHUvdHRK?=
+ =?utf-8?B?OSt6SytKeFZpMlVJUG41ajJMblMwbGxCd2g2VDZEdGRSN1pnbUxJdWRyVlZG?=
+ =?utf-8?B?MENrR1l1S1VuaVpsOWwvM3EvTFNoWVNhTnRQUlhLOFMzZEJJaFpuWExTZy9m?=
+ =?utf-8?B?cHhNRm9CTnF6Vlp6U3JPc3VkcTZMRDBYNFM1VDRvQnhNTmdGL1lWSkxrRFRV?=
+ =?utf-8?B?d0orVUxCTGNYdnNscEJvVHdyZU5BRlRQcnRvMzhHajdqZmxRNWhxWGNiSVJ1?=
+ =?utf-8?B?TGdjZWxDTzFvV25DQkdQU2VKVW5Rc3NibTZ1S3RWZ1hYNllPSmVWR3JZVUZ4?=
+ =?utf-8?B?UFNwL1E2K2dUK0dTZzdzZFVndmJGNDFwN1hHMS9KSW5Lamp4M1AraG1mbWx5?=
+ =?utf-8?B?U0NWcklJUElncUFBNTRtQUpBMmZJQndRZDlRMG5WVDRzVXZXZ0JmbDI0UnBj?=
+ =?utf-8?B?ZDFhQ2ZyQ3Zqa1phcVl1WThmVHdVVUFvWmduQ0o3UXZidklNLy83K3E2ZTR6?=
+ =?utf-8?B?VjNwMjFKSVRrZmhGM0VJa2p5MHpReTZNQVROOEliNDFUSkZXczNlRjhrbk9s?=
+ =?utf-8?B?eGVCaGw5YkdyUExTNytQSGJ6YmhKakJwRWNBWnVqWFNud0I5SkRWRHVEaDN0?=
+ =?utf-8?B?TGxzeXNDSVo4SkUwdFRtekpFbzRDSW5hU1RzSSswclI0dFloT3dYdFdDKzcy?=
+ =?utf-8?B?VlhFZ2dLL0F0YzNtZ2pLamVjVWd2d2FPMGJ1N1F2NC8zdDRhc2NUNWE5ejFP?=
+ =?utf-8?B?dndvQUJTRWgzYmxreHRxdEQwRERCREFFN0VFZW0yaWJtSm9yVVBOL1o2U1N1?=
+ =?utf-8?B?cGJYcGRVc1pDYW9lZmxlVGNxMUNScm5aQlBqKy9FN291RlJOUEZZTVpiOGl1?=
+ =?utf-8?B?d05xWVVIaWZzL3BySm44RDdXbHpzeVRtN2lFc0RkNHJpVm52MWp3MTRLZGFM?=
+ =?utf-8?B?dmVmQ0ZHcDFPTlF0L3RBTWFCUi9zOVBJTG9yd01GNE0zOHdhckczV0I3SUZZ?=
+ =?utf-8?B?Z1J5MFJVa0FSS0pHTmhjMktWY2N6WHJIYkl4SDJZU3N6SkpTcnkwcUZmcm9F?=
+ =?utf-8?B?MnlVL29xR3VEcVhNdlo2Ym5SbmNXT01xbHM5ZGRwaE1Xd1RjZk56Qkk5U2x4?=
+ =?utf-8?B?azl0bktMWEliSkVVaVJocUtNOGpvMmw5KzVvdUg4cVJYbFdNMXZjazdXVUMz?=
+ =?utf-8?B?NFJHSitzN1pWUXJZTUVwK1JMMjNaMllSYmtETTNqR01JUTNYd2FHZVJmR2Z2?=
+ =?utf-8?B?bThyM0lzWW5YbXlTMHEzbXZvVWZxeW5HQU8xVWJqTVhqbEJYKytiV3RUajE4?=
+ =?utf-8?B?TG9mbWJjamI4dlJlamhMd3U3emhOTjFPTmNkSHZaODBHSXovZDROd2tXUElP?=
+ =?utf-8?B?RXJESksxV2djV1JiY21OREN4NlM2anYwSk5uemZDY3B6MGpWZW92ODJ6dUxX?=
+ =?utf-8?B?MnVIQkhQTG1uMnNLcmZleXEzYWpEdVpCWkdZUjlaRHUrSUFHOTR2bVFZTFkx?=
+ =?utf-8?B?UHRuaFZuUGl6Mk1RcFAyTVhScmNaTUk2dnRKYWNwQzlXWEcyWFlxeVBlNkpD?=
+ =?utf-8?B?MkdaV3F0MlJOUzE5ZkRVWWRxQ20rcWhzd3l1L2VyUDNSWThHN1dmcXFWc09E?=
+ =?utf-8?B?UlBMZjA2ZUVQUzVCckgxcXYzOUxVSnp0NDFKZm1nMTR2aUdZcWtCWXpXWWh0?=
+ =?utf-8?B?YjlDc3o5dHQxZTJLSjY3Uk9obHBFN3p6ZCtNN1pITXdMMll4VEx3U0ZzUUs3?=
+ =?utf-8?B?LzJ5c29YTTNpL2E0TUtJelFIQ1FvbjAvblg1OEJ2K0I0SlRUeXhzVTVWd3hi?=
+ =?utf-8?B?ZFE9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	L86LF/pqD3qH9e2bdzo0ILDwf2LPggdIyecU8EOS2KLkaeYwsdUOjhZjnuir50Pq5q65MZnkznu47bq3DdX1hRSRJhuYE0IMgSHuk3vfAGZy/QjakxTKmGrVj99L12rl4C9EEo5JH+cttgkuD0+tlPj9dqqSLHlgUlq1Q2KQvgq4XxCiR6syGge/A86SYx6rSgVNUh5M3tN3PxO6D1FYWz7Gt7PXSVN3nlg5TMVbUYPrLozsfSMZam4l7A09MSI+9kJMpVBFuoBQiUZ3CVuDDjkNanbrrj8Uqe4jrGjayWK2/AIvbeOfad3ug6dAfOwFanU2MQPwuv4AfNSfdzsJy1iuz1nQ1nR7t6rOx/V+cMdtjG+l6KGX58KY11zNPYSDGVDr6sRXeMBFlEjwS1aLQ+IhsrwhMRnhQslT/jaBHy03qhU4JDyzFXm6PL2nDSxQURrhX25SPkeI0JY1zIJPabrPfxrmnhOapMD6vi6anJyKXciwRTl4I7noThehzkhJGsRboaEObVGoMv7WO6XXLuxZMTF5zHnLyLlB1MeOssr4LRu0mqmVNbaWde/K4pQvYZUmBfITnCK6suIVBwLIoAVeo1616BD60cwQ8s3mpB4=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	6WfD2Fa6C9RuEHyTVKeS1LYnOqC5nZlBnWBm1qjBCN4RPL8V7U2SIFkSXwb8KgEmupnF5/FBNJ4s+2sponGuQGtFl2QSy8Bwd0WZQp6FNbLu9/YW9wps0I3+XyDtIiXKeI33+qD/++xcWsz8VnbAm42+TdtackZYu1GJynYB3wtFOaf4fUNVQhLFsOJa6I+hj8d+Kl4D2hLF3BciD6ztQtF1hEMCCy7wBB4wxOqw7UHfp4cyS2sK6IaDxd7FKOxj818haB/f87r9F/uz8GTEInEA8uI8OUSykLk41rnCs3VV4KLwe5XFlmKbSFNsV0l0Mi3W2Q+02xlEqtm3LktZGZ+Li3JBIu/V+axWyfRZ44a2AYVlV59kFMvccrW4C9riNY9RbeR+DjLPWXRWeQ0hAs0mGato1q9etmtUAsod5VWAUJ0FFNAamx/3laZS/T+bah+dkoCmoSZsmC92G5Dx8KnE+IH+HqNrUiTtusOZQ2OdfL7TpUuSXudaNjDHlQi2eHOvY8ARvw/1Kweeovh+s4Hw6JBGUDMPMO0V1crEMQeZTRTcd/+wsvF+YaT1Hz0WnL5RhYawhnLDUjC4+Ccb3gxeaoGgVHFulIATCgVQ+ss=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3f036a9-cf26-446b-1013-08dc79b2b745
+X-MS-Exchange-CrossTenant-Network-Message-Id: bef2133b-486d-424e-7088-08dd6cc1e6e5
 X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2024 16:26:06.7672
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Mar 2025 23:57:02.0872
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: or0xuwdaZtnVaUXUm4B8EPS7mX+LSLLqYmZVJexsdcM59N+6RpBaVtHWkj8JjWTWWAXXEuIpS2D9hCJoJ9MZfim3wY2HGh19YuyIs1XzcgA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4698
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4eVveLiFOkNAXMB1hz3xiw0R3bf12EcJnv87EZApseLRu9r9JGqjUK7fF82tL2jzZC08AYdNLGBoHfSqjwUFcjYOTYCPVHnko2rmNxnrGt0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB7754
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-21_10,2024-05-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 adultscore=0
- mlxlogscore=999 bulkscore=0 spamscore=0 malwarescore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405210124
-X-Proofpoint-GUID: W_xqgyXJxH3F9gMdn-AtqfgflvOHWlki
-X-Proofpoint-ORIG-GUID: W_xqgyXJxH3F9gMdn-AtqfgflvOHWlki
-Subject: [oss-security] asterisk security releases 18.23.1, 20.8.1, & 21.3.1
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-26_09,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 spamscore=0 adultscore=0
+ mlxlogscore=827 mlxscore=0 phishscore=0 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
+ definitions=main-2503260149
+X-Proofpoint-GUID: WiUHwJtb3uWIWDL-3HozrTNWpfoFlYMC
+X-Proofpoint-ORIG-GUID: WiUHwJtb3uWIWDL-3HozrTNWpfoFlYMC
+Subject: Re: [oss-security] atop: Heap corruption
 
-All three releases address
-https://github.com/asterisk/asterisk/security/advisories/GHSA-qqxj-v78h-hrf9
-"res_pjsip_endpoint_identifier_ip: wrongly matches ALL unauthorized SIP requests"
-"ALL unauthorized SIP requests are identified as PJSIP Endpoint of local asterisk server."
-"Impact: Unauthorized access/calls"
+On 3/26/25 16:07, Solar Designer wrote:
+> Hi,
+> 
+> This (or rather an earlier vague warning) made it to various tech news
+> sites today:
+> 
+> https://rachelbythebay.com/w/2025/03/26/atop/
 
--------- Forwarded Message --------
-Subject: [FD] asterisk release 18.23.1
-Date: Fri, 17 May 2024 16:46:28 +0000
-From: Asterisk Development Team via Fulldisclosure <fulldisclosure@seclists.org>
-Reply-To: no-reply@sangoma.com
-To: asterisk-dev@groups.io, voipsec@voipsa.org, fulldisclosure@seclists.org, asterisk+news@discoursemail.com
-CC: Asterisk Development Team <asteriskteamsa@sangoma.com>
+CVE-2025-31160 appears to have been issued by Mitre to track this:
 
-The Asterisk Development Team would like to announce security release
-Asterisk 18.23.1.
+https://www.cve.org/CVERecord?id=CVE-2025-31160
 
-The release artifacts are available for immediate download at
-https://github.com/asterisk/asterisk/releases/tag/18.23.1
-and
-https://downloads.asterisk.org/pub/telephony/asterisk
+but only listing the above blog and the ycombinator threads for details.
 
-Repository: https://github.com/asterisk/asterisk
-Tag: 18.23.1
-
-
-## Change Log for Release asterisk-18.23.1
-
-### Links:
-
-  - [Full ChangeLog](https://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-18.23.1.md)
-  - [GitHub Diff](https://github.com/asterisk/asterisk/compare/18.23.0...18.23.1)
-  - [Tarball](https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-18.23.1.tar.gz)
-  - [Downloads](https://downloads.asterisk.org/pub/telephony/asterisk)
-
-### Summary:
-
-- Commits: 1
-- Commit Authors: 1
-- Issues Resolved: 0
-- Security Advisories Resolved: 1
-   - [GHSA-qqxj-v78h-hrf9](https://github.com/asterisk/asterisk/security/advisories/GHSA-qqxj-v78h-hrf9): res_pjsip_endpoint_identifier_ip: wrongly matches ALL unauthorized SIP requests
-
-### User Notes:
-
-
-### Upgrade Notes:
-
-
-### Commit Authors:
-
-- George Joseph: (1)
-_______________________________________________
-Sent through the Full Disclosure mailing list
-https://nmap.org/mailman/listinfo/fulldisclosure
-Web Archives & RSS: https://seclists.org/fulldisclosure/
-
--------- Forwarded Message --------
-Subject: [FD] asterisk release 20.8.1
-Date: Fri, 17 May 2024 16:50:51 +0000
-From: Asterisk Development Team via Fulldisclosure <fulldisclosure@seclists.org>
-Reply-To: no-reply@sangoma.com
-To: asterisk-dev@groups.io, voipsec@voipsa.org, fulldisclosure@seclists.org, asterisk+news@discoursemail.com
-CC: Asterisk Development Team <asteriskteamsa@sangoma.com>
-
-
-The Asterisk Development Team would like to announce security release
-Asterisk 20.8.1.
-
-The release artifacts are available for immediate download at
-https://github.com/asterisk/asterisk/releases/tag/20.8.1
-and
-https://downloads.asterisk.org/pub/telephony/asterisk
-
-Repository: https://github.com/asterisk/asterisk
-Tag: 20.8.1
-
-
-## Change Log for Release asterisk-20.8.1
-
-### Links:
-
-  - [Full ChangeLog](https://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-20.8.1.md)
-  - [GitHub Diff](https://github.com/asterisk/asterisk/compare/20.8.0...20.8.1)
-  - [Tarball](https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-20.8.1.tar.gz)
-  - [Downloads](https://downloads.asterisk.org/pub/telephony/asterisk)
-
-### Summary:
-
-- Commits: 1
-- Commit Authors: 1
-- Issues Resolved: 0
-- Security Advisories Resolved: 1
-   - [GHSA-qqxj-v78h-hrf9](https://github.com/asterisk/asterisk/security/advisories/GHSA-qqxj-v78h-hrf9): res_pjsip_endpoint_identifier_ip: wrongly matches ALL unauthorized SIP requests
-
-### User Notes:
-
-
-### Upgrade Notes:
-
-
-### Commit Authors:
-
-- George Joseph: (1)
-_______________________________________________
-Sent through the Full Disclosure mailing list
-https://nmap.org/mailman/listinfo/fulldisclosure
-Web Archives & RSS: https://seclists.org/fulldisclosure/
-
-
--------- Forwarded Message --------
-Subject: [FD] asterisk release 21.3.1
-Date: Fri, 17 May 2024 16:50:04 +0000
-From: Asterisk Development Team via Fulldisclosure <fulldisclosure@seclists.org>
-Reply-To: no-reply@sangoma.com
-To: asterisk-dev@groups.io, voipsec@voipsa.org, fulldisclosure@seclists.org, asterisk+news@discoursemail.com
-CC: Asterisk Development Team <asteriskteamsa@sangoma.com>
-
-The Asterisk Development Team would like to announce security release
-Asterisk 21.3.1.
-
-The release artifacts are available for immediate download at
-https://github.com/asterisk/asterisk/releases/tag/21.3.1
-and
-https://downloads.asterisk.org/pub/telephony/asterisk
-
-Repository: https://github.com/asterisk/asterisk
-Tag: 21.3.1
-
-
-## Change Log for Release asterisk-21.3.1
-
-### Links:
-
-  - [Full ChangeLog](https://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-21.3.1.md)
-  - [GitHub Diff](https://github.com/asterisk/asterisk/compare/21.3.0...21.3.1)
-  - [Tarball](https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-21.3.1.tar.gz)
-  - [Downloads](https://downloads.asterisk.org/pub/telephony/asterisk)
-
-### Summary:
-
-- Commits: 1
-- Commit Authors: 1
-- Issues Resolved: 0
-- Security Advisories Resolved: 1
-   - [GHSA-qqxj-v78h-hrf9](https://github.com/asterisk/asterisk/security/advisories/GHSA-qqxj-v78h-hrf9): res_pjsip_endpoint_identifier_ip: wrongly matches ALL unauthorized SIP requests
-
-### User Notes:
-
-
-### Upgrade Notes:
-
-
-### Commit Authors:
-
-- George Joseph: (1)
-_______________________________________________
-Sent through the Full Disclosure mailing list
-https://nmap.org/mailman/listinfo/fulldisclosure
-Web Archives & RSS: https://seclists.org/fulldisclosure/
-
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
