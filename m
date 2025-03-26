@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1746" "Thursday" "9" "July" "2015" "10:31:13" "+0200" "Vasyl Kaigorodov" "vkaigoro@redhat.com" "<20150709083112.GH6144@mail.corp.redhat.com>" "51" "[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()" nil nil nil "7" "2015070908:31:13" "[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()" (number mark "        vkaigoro@red Jul  9   51/1746  " thread-indent "\"[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()\"\n") "<20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>" ("<20150618151358.GA18454@mail.corp.redhat.com>" "<20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 10157 invoked by uid 550); 9 Jul 2015 08:31:32 -0000
+Received: (qmail 14238 invoked by uid 550); 26 Mar 2025 14:58:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10129 invoked from network); 9 Jul 2015 08:31:31 -0000
-Message-ID: <20150709083112.GH6144@mail.corp.redhat.com>
-References: <20150618151358.GA18454@mail.corp.redhat.com>
- <20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cfJ13FhsvNR/yOpm"
-Content-Disposition: inline
-In-Reply-To: <20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Cc: oss-security@lists.openwall.com
-Date: Thu, 9 Jul 2015 10:31:13 +0200
-From: Vasyl Kaigorodov <vkaigoro@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: pure-ftpd denial of service in glob_()
-To: cve-assign@mitre.org
-
---cfJ13FhsvNR/yOpm
-Content-Type: text/plain; charset=utf-8
+x-ms-reactions: disallow
+Received: (qmail 14200 invoked from network); 26 Mar 2025 14:58:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Reply-To:Cc
+	:Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References; bh=t8CTORsCGecxG2uHyKd9qK8DciKa7ujzzKXeBMIEsnA=;
+	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1743001085;
+	x=1743649085; b=nV9wdt9HnUZRDE9anOWfPZebQbx7lpBRZH6Gx8MAPQ++fg3zTzzOGi38T3FDi
+	FdEMmWZNsTqkEf7zgVZmuYZtkbqjWQOC18XZ5gxKoUSm4jTHpxLThu+5VN49mKtUSmJa2nrlxfEXN
+	Wui6knyrzNh+u+JYY3vR9ulgarF44C24oPGWmwDfSYw3r5SN67tT2YiI9ibGVEJl16fHtoDY32pVp
+	yG/jAeLSE1uUs9x2CcRwzUHIMRj83uALIHPf4ue/cwPKZhE9qR02W6b2m5dzkUggjEpjzfRaZ10n7
+	zhECNl1msf1VdBql48J8rSzPqxxT/0PjvcEeadS8eRGGvFBhbg==;
+Date: Wed, 26 Mar 2025 16:57:48 +0200
+From: Valtteri Vuorikoski <vuori@notcom.org>
+To: oss-security@lists.openwall.com
+Message-ID: <snxv44vulcov44kxrth6lpsxkarsaftrhgrn7dpil7em56y4bh@7pxdvapkdcxc>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+User-Agent: NeoMutt/20241002-60-525451
+Subject: [oss-security] CVE-2025-30232: UAF in Exim 4.96 to 4.98.1
 
-On Thu, 18 Jun 2015, cve-assign@mitre.org wrote:
+The Exim project has announced a potentially (locally-?)exploitable UAF in
+versions 4.96 through 4.98.1.
 
->=20
-> > https://github.com/jedisct1/pure-ftpd/commit/0627004e23a24108785dc1506c=
-5767392b90f807
->=20
-> Can you clarify the security impact? We have not looked into the code
-> paths or the overall product design. Is this a process that is
-> specific to one FTP client? Is the problem that the gl_errfunc
-> assignment doesn't occur and there is always a dereference of a NULL
-> function pointer? Is there a commonly relevant consequence other than
-> the ability of an FTP client to conduct a DoS attack against its own
-> session?
+Bulletin posted to <https://exim.org/static/doc/security/CVE-2025-30232.txt>:
 
-As per [1]:
+> # CVE 2025-30232
 
-It won't crash the whole service, only the user session. It is
-not going to block and dump a core file either, except if compiled in
-DEBUG mode.
+> ## Timeline
 
-It appears that there's no security impact here, please disregard this
-CVE request.
+> - 2025/03/13 Report received
+> - 2025/03/18 ACK sent to reporter
+> - 2025/03/19 CVE assigned
+> - 2025/03/19 Distros heads-up mail, to <distros@vs.openwall.org> and <exim-maintainers@lists.exim.org>
+> - 2025/03/21 14:00 UTC Security Release available for (only) Distros
+> - 2025/03/25 14:00 UTC Public heads-up notification, to <exim-announce@lists.exim.org>
+> - 2025/03/26 14:00 UTC Published the changes on https://code.exim.org/exim/exim.git
 
-[1]: https://github.com/jedisct1/pure-ftpd/commit/0627004e23a24108785dc1506=
-c5767392b90f807#commitcomment-11764342
 
---=20
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+> ## Details
 
---cfJ13FhsvNR/yOpm
-Content-Type: application/pgp-signature
+> A use-after-free is possible, with potential for privilege escalation.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> The following conditions have to be met for being vulnerable:
 
-iQEcBAEBAgAGBQJVnjFQAAoJECF7+fyrtugoOjwH/3hj2ucZUPa6f/T4ENJF5ynW
-CU1khVKf0tLr+e6GOOYwAlGD4xK7mpHHVU6bLTYvh9lu5RUInBCsr++WgAoiJ0AJ
-HknEJUzYOavUzltuHgh7czCX5N2l1OBI6YwxTkdPliGiJtRVWMe470Yvwb61yyYB
-F0z7Wsyx9q2kP3HEnIskYqWV8n/wrd1bUAmm1GlcTAZ5l3WTkP4apR4uQkoGMyWe
-/4JitRX1YzCzFK0yMmpnix3wZ+24AEN5MhbFXwmdkgadd5mFaa4jNOifJgafyXoA
-nIq63M+u+hbGnF8xkfWl+zCuucml8jkivP+jaCF+dowQuGhlPLJ34RGUuvPSL+A=
-=hVrn
------END PGP SIGNATURE-----
+> - Exim Version
+>      - 4.96
+>      - 4.97
+>      - 4.98
+>      - 4.98.1
+>  - Command-line access
 
---cfJ13FhsvNR/yOpm--
+> ## Acknowledgements
+
+> Thanks to Trend Micro for reporting this issue in a responsible manner.
+> - Ref: ZDI-CAN-26250
+> - Email: <zdi-disclosures@trendmicro.com>
+
+At least Debian bookworm ships with 4.96. Security tracker lists bookworm as
+vulnerable with version 4.96-15+deb12u6, but apt upgrade just now installed
+4.96-15+deb12u7 containing a binary dated 4 days ago from the security
+repository.
+
+ -Valtteri
+ 
