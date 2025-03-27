@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["786" "Wednesday" "11" "January" "2017" "11:36:27" "+0000" "=?utf-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?=" "cmn@dwim.me" "<A6967F04-154F-41FF-A7A3-1D227B4BF6D7@dwim.me>" "30" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" nil nil nil "1" "2017011111:36:27" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" (number mark "U       cmn@dwim.me  Jan 11   30/786   " thread-indent "\"[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6\"\n") "<f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>" ("<f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5393 invoked by uid 550); 11 Jan 2017 14:01:51 -0000
+Received: (qmail 1760 invoked by uid 550); 27 Mar 2025 17:57:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,241 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24247 invoked from network); 11 Jan 2017 11:36:44 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=dwim.me; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=Nkb0XliBydRcp4g
-	js69p7dPLnH4=; b=Z52CScbUW0Eh3zU8D7FFlfYJAeLjCN2KvhHKSHlN4+95tDX
-	gBD2KIe8Sh9wzodttoW6deHsxRJ8o/FUnzBrQsTg2QT+OPZD8Tbb3ODy2Su6+hsh
-	vIpploAULHtE6e3ofEvpAd7IFq0Z/fg22JInYlK+4f3680+Ivb3ybo1yQlag=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
-	smtpout; bh=Nkb0XliBydRcp4gjs69p7dPLnH4=; b=mWVK3cVfX70+yreqGYlN
-	TYoSUFqgr5BiiUyjLfLr2bcFTiKGiKLpRu3/buioDX7/WysOc/IXbOYfL3c2cyEn
-	WfcbwgibArh11B/HHccBB4QlYFvZYCohxc6k00gibvhbCg9ti9oNnWbR9lnBC7bP
-	SGdVA0skh+OG+Ef2WemICIg=
-X-ME-Sender: <xms:vhh2WPxytxZnY35yO6wz-JUjY0HyNzEXnKj_dc6KHFr18gUf6YnawQ>
-X-Sasl-enc: SiVM3X/EXgH9nStERnVtsgoEVOlJAy5D//HeWAB6wtiQ 1484134589
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
-From: =?utf-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>
-In-Reply-To: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
-Date: Wed, 11 Jan 2017 11:36:27 +0000
-Cc: Andreas Stieger <astieger@suse.com>,
- oss-security@lists.openwall.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A6967F04-154F-41FF-A7A3-1D227B4BF6D7@dwim.me>
-References: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
-To: cve-assign@mitre.org
-X-Mailer: Apple Mail (2.3259)
-Subject: [oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
+x-ms-reactions: disallow
+Received: (qmail 9564 invoked from network); 27 Mar 2025 09:11:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1743066666; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
+	bh=yHiWtmg8Ew2QZ1wgK8LaI5my1Qww+lSy09eps+Giy1o=;
+	b=FQG/6CYBR/myKk0Np29A9EP4OOOuvi3xpAoTWmQaI78URhdw2WuKrbBfp8xXCjvmQ0nTLj
+	b392DFZzSKBf25/pTXVuX3gi9c7uBY9/Yl27iiPQpCR0GrhUgcH8j9EbyHSuomzpAx7k6n
+	AHGNqYZXffLZoETFsPwlWQkmorfDn0A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1743066666;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
+	bh=yHiWtmg8Ew2QZ1wgK8LaI5my1Qww+lSy09eps+Giy1o=;
+	b=mMRnd90FD+Ey2gE0sPQaVAyAhNLFGDc3/l8bg8kIKcQ+aJZUMFiiCoS5uddadk8H8HMVdv
+	/rcVdGCmqpdrsaCQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1743066665; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
+	bh=yHiWtmg8Ew2QZ1wgK8LaI5my1Qww+lSy09eps+Giy1o=;
+	b=tAVbU4I5k+tcSdiF8LHgNlvgi9IU8/kWXeg/Uz1BxQ6JQvTc23V+a0723m6uOUueZ7lzhh
+	S3uFAPIVhiCb8uHfmkoFsHFKF+IjpRZTB/q22qMwk4edD9NIeZFehRgMcFBkcNiXdeRbOJ
+	6yekNUA/b9gphcd9ClDDw9fyKt/d5+Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1743066665;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
+	bh=yHiWtmg8Ew2QZ1wgK8LaI5my1Qww+lSy09eps+Giy1o=;
+	b=On+ef8KxVtuDczNLOv4BaLnYxW1kMtUhwhDy2sPKsWp2gBk6+w96gcjzvTOhgy2c7s1HH0
+	urCu8ci0tB9iMfCg==
+Message-ID: <7555c072-80b4-4703-94a2-b5239aaabbf8@suse.de>
+Date: Thu, 27 Mar 2025 10:11:04 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Wolfgang Frisch <wfrisch@suse.de>
+To: oss-security@lists.openwall.com
+Content-Language: en-US
+Autocrypt: addr=wfrisch@suse.de; keydata=
+ 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
+ 8EkeLjVeq9OfvZuaWJgQnBubH8J3LV8=
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------0GnqyuSdOcUH73eLJCHNw85Z"
+Subject: [oss-security] wait3() system call as a side-channel in setuid programs
+ (nvidia-modprobe CVE-2024-0149)
 
+--------------0GnqyuSdOcUH73eLJCHNw85Z
+Content-Type: multipart/mixed; boundary="------------f0yzVex5Tnny0jbC5OuKD02h";
+ protected-headers="v1"
+From: Wolfgang Frisch <wfrisch@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <7555c072-80b4-4703-94a2-b5239aaabbf8@suse.de>
+Subject: wait3() system call as a side-channel in setuid programs
+ (nvidia-modprobe CVE-2024-0149)
 
-> On 11 Jan 2017, at 03:41, cve-assign@mitre.org wrote:
->=20
->=20
->=20
->> https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75=
-c92ccc90fe
->=20
-> Use CVE-2017-5338.
->=20
->=20
->> https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f=
-3fc17a293e
->=20
-> Use CVE-2017-5339.
->=20
->=20
->> https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd1534303=
-69deec64c0
->=20
-> This has no CVE ID; it does not seem to be a vulnerability fix.
+--------------f0yzVex5Tnny0jbC5OuKD02h
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-CVE-2017-5338 and CVE-2017-5339 were also assigned to commits which are not=
- fixing a vulnerability but adding tests to prevent a regression in this ar=
-ea. They=E2=80=99re different commits mostly as an artefact of the timing o=
-f the flaw being detected and when we were able to deal with it.
+SGVsbG8gb3NzLXNlYywNCg0KdGhpcyByZXBvcnQgZGV0YWlscyBhbiBpbmZvcm1hdGlvbiBkaXNj
+bG9zdXJlIHZ1bG5lcmFiaWxpdHkgaW4NCm52aWRpYS1tb2Rwcm9iZSBbMV0uIFdoaWxlIHRoZSBp
+bW1lZGlhdGUgaW1wYWN0IG9mIHRoZSBidWcgaXRzZWxmIGlzDQpsaW1pdGVkLCBpdCBoaWdobGln
+aHRzIG9uZSBvZiB0aGUgbWFueSBwaXRmYWxscyB0byBiZSBhd2FyZSBvZiB3aGVuDQp3cml0aW5n
+IG9yIHJldmlld2luZyBzZXR1aWQgcHJvZ3JhbXMuIFlvdSBjYW4gYWxzbyBmaW5kIGEgcmVuZGVy
+ZWQNCnZlcnNpb24gb2YgdGhpcyByZXBvcnQgb24gb3VyIGJsb2cgWzJdLg0KDQoxKSBJbnRyb2R1
+Y3Rpb24NCj09PT09PT09PT09PT09PQ0KDQpudmlkaWEtbW9kcHJvYmUgaXMgYSBzZXR1aWQtcm9v
+dCBoZWxwZXIgdXRpbGl0eSBmb3IgdGhlIHByb3ByaWV0YXJ5DQpOdmlkaWEgR1BVIGRpc3BsYXkg
+ZHJpdmVyIHRoYXQgbG9hZHMga2VybmVsIG1vZHVsZXMgYW5kIGNyZWF0ZXMNCmNoYXJhY3RlciBk
+ZXZpY2VzIHJlcXVpcmVkIGZvciB1c2Vyc3BhY2UgR1BVIGFjY2Vzcy4gTm9ybWFsbHksIGRyaXZl
+cnMNCmRvIHRoaXMgdmlhIHVkZXYuIEhvd2V2ZXIsIGtlcm5lbCBsaWNlbnNpbmcgcmVzdHJpY3Rp
+b25zIHByb2hpYml0DQpOdmlkaWEncyBwcm9wcmlldGFyeSBrZXJuZWwgbW9kdWxlIGZyb20gZ2Vu
+ZXJhdGluZyB1ZXZlbnRzLCB3aGljaCBhcmUNCnJlcXVpcmVkIGZvciB1ZGV2IHRvIHdvcmsuIFRo
+ZXJlZm9yZSB0aGlzIHNwZWNpYWwgaGVscGVyIGlzIG5lZWRlZC4NCg0KV2UgcmV2aWV3ZWQgbnZp
+ZGlhLW1vZHByb2JlIGFzIHBhcnQgb2Ygb3VyIHdoaXRlbGlzdGluZyBwcm9jZXNzLCB3aGljaA0K
+cmVxdWlyZXMgYW4gYXVkaXQgZm9yIGFsbCBuZXdseSBpbnRyb2R1Y2VkIHNldHVpZCBiaW5hcmll
+cyBpbiBvcGVuU1VTRS4NClRoZSB2ZXJzaW9uIHdlIHJldmlld2VkIHdhcyA1NTAuMTI3LjA1IFsz
+XSBhbmQgdGhpcyByZXBvcnQgaXMgYmFzZWQgb24NCnRoYXQgdmVyc2lvbi4gIFVwc3RyZWFtIHJl
+bGVhc2VkIGEgYnVnZml4IGluIHZlcnNpb24gNTUwLjE0NC4wMyBbNF0gYW5kDQphIHNlY3VyaXR5
+IGFkdmlzb3J5IFs1XS4NCg0KMikgYHdhaXQzKClgIGFzIGEgU2lkZSBDaGFubmVsIGluIFNldHVp
+ZCBQcm9ncmFtcw0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PQ0KDQpUaGUgYHdhaXQzKClgIHN5c3RlbSBjYWxsIGFsbG93cyB0aGUgY2FsbGluZyBwcm9j
+ZXNzIHRvIG9idGFpbiBzdGF0dXMNCmluZm9ybWF0aW9uIGZvciBjaGlsZCBwcm9jZXNzZXMsIHNp
+bWlsYXIgdG8gYHdhaXRwaWQoKWAuIFVubGlrZQ0KYHdhaXRwaWQoKWAsIGB3YWl0MygpYCBhbHNv
+IHJldHVybnMgcmVzb3VyY2UgdXNhZ2UgaW5mb3JtYXRpb24uIFRoZQ0KbWVhc3VyZW1lbnRzIHJl
+dHVybmVkIGJ5IHRoaXMgY2FsbCBpbmNsdWRlIENQVSB0aW1lLCBtZW1vcnkgY29uc3VtcHRpb24N
+CmFuZCBsb3dlci1sZXZlbCBpbmZvcm1hdGlvbiBzdWNoIGFzIHRoZSBudW1iZXIgb2YgbWlub3Ig
+YW5kIG1ham9yIHBhZ2UNCmZhdWx0cyB0aGF0IG9jY3VycmVkIGR1cmluZyB0aGUgY2hpbGQncyBy
+dW50aW1lLiBTZWUgYWxzbw0KYG1hbiAyIGdldHJ1c2FnZWAgWzZdLg0KDQpQZXJoYXBzIHN1cnBy
+aXNpbmdseSwgYHdhaXQzKClgIGFsc28gd29ya3MgZm9yIHNldHVpZCBzdWItcHJvY2Vzc2VzLA0K
+bGVha2luZyBxdWl0ZSBhIGJpdCBvZiBpbmZvcm1hdGlvbiBhYm91dCB0aGUgYmVoYXZpb3Igb2Yg
+dGhlIHRhcmdldA0KcHJvZ3JhbSwgd2hpY2ggaXMgcnVubmluZyB3aXRoIGVsZXZhdGVkIHByaXZp
+bGVnZXMuDQoNCkEgY29udmVuaWVudCB3YXkgdG8gdHJ5IHRoaXMgb3V0IGlzIEdOVSBUaW1lIFs3
+XSwgYSBzbWFsbCB1dGlsaXR5IHRoYXQNCnNwYXducyBhIHRhcmdldCBwcm9jZXNzIGFuZCBwcmlu
+dHMgdGhlIG91dHB1dCBvZiBgd2FpdDMoKWAsIGZvciBleGFtcGxlOg0KDQpgYGBzaA0KL3Vzci9i
+aW4vdGltZSAtdiBudmlkaWEtbW9kcHJvYmUNCmBgYA0KDQozKSBGaWxlIEV4aXN0ZW5jZSBUZXN0
+IChDVkUtMjAyNC0wMTQ5KQ0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0N
+Cg0KSW4gdGhlIGNhc2Ugb2YgbnZpZGlhLW1vZHByb2JlLCB3ZSBjYW4gbGV2ZXJhZ2UgYHdhaXQz
+KClgIGZvciBhIGZpbGUNCmV4aXN0ZW5jZSB0ZXN0Lg0KDQpXaGVuIGV4ZWN1dGVkIHdpdGggdGhl
+IG9wdGlvbiBgLWYgTlZJRElBLUNBUEFCSUxJVFktREVWSUNFLUZJTEVgIChhbg0KYXJiaXRyYXJ5
+IHBhdGgpLCBudmlkaWEtbW9kcHJvYmUgcGVyZm9ybXMgdGhlIGZvbGxvd2luZyBzdGVwczoNCg0K
+LSBhdHRlbXB0IHRvIG9wZW4gdGhlIHN1cHBsaWVkIHBhdGggYXMgcm9vdA0KICAgIC0gaWYgdGhl
+IHBhdGggZG9lcyBleGlzdDoNCiAgICAgIC0gcmVhZCBvbmUgb3IgbW9yZSBsaW5lcw0KICAgICAg
+LSBwYXJzZSBlYWNoIGxpbmUgKGltcGxlbWVudGVkIHNhZmVseSkNCiAgICAgIC0gZXhpdCBzaWxl
+bnRseSwgcmV0dXJuIGNvZGUgMA0KICAgIC0gaWYgdGhlIHBhdGggZG9lcyBub3QgZXhpc3Q6DQog
+ICAgICAtIGV4aXQgc2lsZW50bHksIHJldHVybiBjb2RlIDANCg0KSXQgdHVybnMgb3V0IHRoYXQg
+cmVhZGluZyB0aGUgZmlyc3QgbGluZSBvZiB0aGUgc3VwcGxpZWQgcGF0aCBzb21ldGltZXMNCmNh
+dXNlcyBhIG1pbm9yIHBhZ2UgZmF1bHQuIFRoZSBudW1iZXIgb2YgcGFnZSBmYXVsdHMgaXMgbm90
+IHBlcmZlY3RseQ0KY29uc3RhbnQgYWNyb3NzIG11bHRpcGxlIGV4ZWN1dGlvbnMsIGRlcGVuZGlu
+ZyBvbiB3aGV0aGVyIHRoZSBwYWdlDQptYXBwZWQgYnkgdGhlIGtlcm5lbCBpcyBkaXJ0eSBvciBu
+b3QuIEhvd2V2ZXIsIGlmIHRoZSBmaWxlIGRvZXMgbm90DQpleGlzdCwgaXQgY2Fubm90IGJlIHJl
+YWQsIGFuZCB0aGVyZWZvcmUgbm8gcGFnZSBmYXVsdHMgd2lsbCBiZQ0KdHJpZ2dlcmVkLiBXZSBj
+YW4gZXhlY3V0ZSBudmlkaWEtbW9kcHJvYmUgcmVwZWF0ZWRseSwgY2FsY3VsYXRlIHRoZQ0KbWVk
+aWFuIG51bWJlciBvZiBwYWdlIGZhdWx0cywgYW5kIGluZmVyIHdoZXRoZXIgdGhlIHN1cHBsaWVk
+IHBhdGggZXhpc3RzDQpvciBub3QsIGV2ZW4gaWYgdGhlIGNhbGxlciBkb2VzIG5vdCBoYXZlIHRo
+ZSBuZWNlc3NhcnkgZmlsZSBzeXN0ZW0NCnBlcm1pc3Npb25zLg0KDQpTaW1wbGlmaWVkIGV4YW1w
+bGU6DQoNCmBgYA0KJCAvdXNyL2Jpbi90aW1lIC1xIC0tZm9ybWF0PSVSIG52aWRpYS1tb2Rwcm9i
+ZSAtZiAvcm9vdC8uYmFzaF9oaXN0b3J5DQo4MA0KDQokIC91c3IvYmluL3RpbWUgLXEgLS1mb3Jt
+YXQ9JVIgbnZpZGlhLW1vZHByb2JlIC1mIC9yb290L2RvZXMvbm90L2V4aXN0DQo3OQ0KYGBgDQoN
+ClRoZSBvdXRwdXQgZmx1Y3R1YXRlcywgYnV0IGl0IG9ubHkgdGFrZXMgYSBmZXcgcmVwZXRpdGlv
+bnMgdG8gZ2V0IGENCnJlbGlhYmxlIHNpZ25hbCBmcm9tIHRoZSBtZWRpYW4uDQoNCjQpIEJ1Z2Zp
+eA0KPT09PT09PT09DQoNClVwc3RyZWFtIHB1Ymxpc2hlZCBhIGJ1Z2ZpeCBbOF0uIFRoaXMgY29t
+bWl0IGxpbWl0cyB0aGUgcXVlcmllZCBwYXRoIHRvDQpmaWxlcyBiZWxvdyBgL3Byb2MvZHJpdmVy
+L252aWRpYWAgYmVmb3JlIGF0dGVtcHRpbmcgdG8gcmVhZCBmcm9tIGl0LA0KZWxpbWluYXRpbmcg
+dGhlIGluZm9ybWF0aW9uIGxlYWsuDQoNCjUpIENWRSBBc3NpZ25tZW50DQo9PT09PT09PT09PT09
+PT09PQ0KDQpVcHN0cmVhbSBhc3NpZ25lZCBDVkUtMjAyNC0wMTQ5IGZvciB0aGlzIGlzc3VlLg0K
+DQo2KSBPdGhlciBQYWNrYWdlcw0KPT09PT09PT09PT09PT09PT0NCg0KQ29uc2lkZXJpbmcgdGhl
+IHJlbGF0aXZlbHkgb2JzY3VyZSBuYXR1cmUgb2YgdGhpcyBzaWRlIGNoYW5uZWwgYXR0YWNrLA0K
+d2UgZGVjaWRlZCB0byBicmllZmx5IGxvb2sgaW50byBhIGNvdXBsZSBvZiBvdGhlciBwYWNrYWdl
+cyBleGhpYml0aW5nDQpzaW1pbGFyIHVzYWdlIHBhdHRlcm5zOg0KDQotIGBzaGFkb3dgDQogICAg
+LSBgY2hzaGA6IG5lZ2F0aXZlDQotIGB1dGlsLWxpbnV4YA0KICAgIC0gYG1vdW50IC1UYDogbmVn
+YXRpdmUNCiAgICAtIGB1bW91bnRgOiBuZWdhdGl2ZQ0KDQpFdmVuIHRob3VnaCB3ZSBkaWQgbm90
+IGZpbmQgYWRkaXRpb25hbCBpbnN0YW5jZXMgb2YgdGhpcyBwcm9ibGVtLCBhbmQNCnRoZSBzZXZl
+cml0eSBvZiB0aGlzIHZ1bG5lcmFiaWxpdHkgaXMgcmF0aGVyIGxvdywgaXQncyBzdGlsbCBvbmUg
+b2YgbWFueQ0KcGl0ZmFsbHMgdG8ga2VlcCBpbiBtaW5kIHdoZW4gd3JpdGluZyBvciBhdWRpdGlu
+ZyBzZXR1aWQgcHJvZ3JhbXMuDQoNCjcpIFRpbWVsaW5lDQo9PT09PT09PT09PQ0KDQoyMDI0LTEw
+LTAyOiBXZSBub3RpY2VkIHRoZSBpc3N1ZSBhbmQgc3RhcnRlZCB0cmFja2luZyBpdCBwcml2YXRl
+bHkgaW4gWzldLg0KMjAyNC0xMC0wOTogV2Ugc2hhcmVkIHRoZSBpbmZvcm1hdGlvbiB3aXRoIE5W
+SURJQSBQU0lSVCB2aWEgZW1haWwsIA0Kb2ZmZXJpbmcgY29vcmRpbmF0ZWQgZGlzY2xvc3VyZS4N
+CjIwMjQtMTAtMTI6IFdlIHJlY2VpdmVkIGFuIGluaXRpYWwgY29uZmlybWF0aW9uIGZyb20gTnZp
+ZGlhLg0KMjAyNC0xMC0yMjogV2UgYWdyZWVkIG9uIDIwMjUtMDEtMTYgYXMgdGhlIENvb3JkaW5h
+dGVkIFJlbGVhc2UgRGF0ZS4NCjIwMjUtMDEtMTY6IENWRS0yMDI0LTAxNDkgd2FzIGFzc2lnbmVk
+IGJ5IE52aWRpYS4NCjIwMjUtMDEtMTY6IE52aWRpYSByZWxlYXNlZCB0aGUgZml4IGFzIHBhcnQg
+b2YgdmVyc2lvbiA1NTAuMTQ0LjAzIFs0XQ0KDQo4KSBSZWZlcmVuY2VzDQo9PT09PT09PT09PT09
+DQoNClsxXTogaHR0cHM6Ly9naXRodWIuY29tL05WSURJQS9udmlkaWEtbW9kcHJvYmUNClsyXTog
+aHR0cHM6Ly9zZWN1cml0eS5vcGVuc3VzZS5vcmcvMjAyNS8wMy8yNi9udmlkaWEtbW9kcHJvYmUu
+aHRtbA0KWzNdOiBodHRwczovL2dpdGh1Yi5jb20vTlZJRElBL252aWRpYS1tb2Rwcm9iZS9yZWxl
+YXNlcy90YWcvNTUwLjEyNy4wNQ0KWzRdOiBodHRwczovL2dpdGh1Yi5jb20vTlZJRElBL252aWRp
+YS1tb2Rwcm9iZS9yZWxlYXNlcy90YWcvNTUwLjE0NC4wMw0KWzVdOiANCmh0dHBzOi8vbnZpZGlh
+LmN1c3RoZWxwLmNvbS9hcHAvYW5zd2Vycy9kZXRhaWwvYV9pZC81NjE0L34vc2VjdXJpdHktYnVs
+bGV0aW4lM0EtbnZpZGlhLWdwdS1kaXNwbGF5LWRyaXZlci0tLWphbnVhcnktMjAyNQ0KWzZdOiBo
+dHRwczovL21hbnBhZ2VzLm9wZW5zdXNlLm9yZy9UdW1ibGV3ZWVkL21hbi1wYWdlcy9nZXRydXNh
+Z2UuMi5lbi5odG1sDQpbN106IGh0dHBzOi8vd3d3LmdudS5vcmcvc29mdHdhcmUvdGltZS8NCls4
+XTogDQpodHRwczovL2dpdGh1Yi5jb20vTlZJRElBL252aWRpYS1tb2Rwcm9iZS9jb21taXQvODNi
+Nzc3YzVmYmJjZGZkNDgwMDRiMGIwOTljZjBhOGE5ZWU5MzU5Zg0KWzldOiBodHRwczovL2J1Z3pp
+bGxhLm9wZW5zdXNlLm9yZy9zaG93X2J1Zy5jZ2k/aWQ9MTIzMTI1Nw0KDQoNCkFsbCB0aGUgYmVz
+dCwNCldvbGZnYW5nDQoNCg0KLS0gDQpXb2xmZ2FuZyBGcmlzY2ggPHdvbGZnYW5nLmZyaXNjaEBz
+dXNlLmNvbT4NClNlY3VyaXR5IEVuZ2luZWVyDQpPcGVuUEdQIGZpbmdlcnByaW50OiBBMkU2IEI3
+RDQgNTNFOSA1NDRGIEJDMTMgIEQyNkIgRDlCMyA1NkJEIDRENEEgMkQxNQ0KU1VTRSBTb2Z0d2Fy
+ZSBTb2x1dGlvbnMgR2VybWFueSBHbWJILCBGcmFua2Vuc3RyYcOfZSAxNDYsIDkwNDYxIE7DvHJu
+YmVyZw0KDQo=
 
+--------------f0yzVex5Tnny0jbC5OuKD02h--
 
-   cmn
+--------------0GnqyuSdOcUH73eLJCHNw85Z
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEEYqBDpiSp/H/7pxro7t22gcnlyyMFAmflFigFAwAAAAAACgkQ7t22gcnlyyPM
+NQ//VW/WaIq54wAm7mL3JCwQcNKTIXHHJ95/pjpCTkMp63rZR6QvKzUZ2BQWDn8A/7dlOyu1vN2t
+n17mB2XOuhJOJDDVSLfU46Oeg9XgT3rwYUJcg0CTu/8sBc881zYpTiYLgLV/0gD0MpuEbnwGieDz
+kkaUlUxCS7NAP3ah5ukAIUVJwr/nDrOvgekaEtg/Fvt/E/RdCQ4luKRmdp0tIQrS5bOdH8REvUc4
+Ef7XCuGXU2jZNc9etQWPzFOV5P7O175BT/ylWCd9IfWy/iAwQpdY9vn5axlUYymqwsaZJZGpnmFs
+Wy8UJ18WVVrzUOav4wF3nZAhE304bWYee/iw/5DVOUU2U0sPvaqlJ9skkcHcYQfCqLSBfBqX9/OX
+5hm8ZtRG/9QRuB3sgGyEhWEoiZniYXreCXB28t//+MKHUqz07QX7b4+h/ihTSynWe9M/uRoLi4+Y
+QdMUSEpTAosttLcXukmZWRdnnJmIX0DvikOLlD6fxbKpCtTIlpJkuiae2MKCvE0yI5SN2h3TV37d
+9xRRsATR7pkz8rGW6Frjr6/SblaL0yNI5Yw7GWU8YaEQKczvRLiM+UjfVQIeL2UPWzeT8wWtbb1z
++PnwSJTbjJ1tEhFTEU54nyaAGfg1t+Os0AWKjglffrP8/v9FaswYuB9FwPZJO5nu+3Co7H4UA07G
+ft8=
+=hL6E
+-----END PGP SIGNATURE-----
+
+--------------0GnqyuSdOcUH73eLJCHNw85Z--
