@@ -1,4 +1,4 @@
-Received: (qmail 1842 invoked by uid 550); 1 Aug 2024 20:45:47 -0000
+Received: (qmail 3564 invoked by uid 550); 3 Apr 2025 16:29:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1782 invoked from network); 1 Aug 2024 20:45:47 -0000
-Date: Thu, 1 Aug 2024 22:45:31 +0200
-From: Christian Brabandt <cb@256bit.org>
+x-ms-reactions: disallow
+Received: (qmail 32262 invoked from network); 3 Apr 2025 15:18:43 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <Zqvz6w+ReGkspALf@256bit.org>
+Cc: Lasse Collin <lasse.collin@tukaani.org>,  Sebastian Andrzej Siewior
+ <sebastian@breakpoint.cc>
+In-Reply-To: <871pu9gu5r.fsf@gentoo.org>
+Organization: Gentoo
+References: <87bjthw108.fsf@gentoo.org> <871pu9gu5r.fsf@gentoo.org>
+User-Agent: mu4e 1.12.9; emacs 31.0.50
+Date: Thu, 03 Apr 2025 16:18:28 +0100
+Message-ID: <87sempff3v.fsf@gentoo.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] double-free in dialog_changed() in Vim < v9.1.0648
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: [oss-security] Re: XZ Utils: Threaded decoder frees memory too early (CVE-2025-31115)
 
+--=-=-=
+Content-Type: text/plain
 
-double-free in dialog_changed() in Vim < v9.1.0648
-==================================================
-Date: 01.08.2024
-Severity: Low
-CVE: <not-yet-assigned>
-CWE: Double Free (CWE-416)
+Sam James <sam@gentoo.org> writes:
 
-When abandoning a buffer, Vim may ask the user what to do with the
-modified buffer. If the user wants the changed buffer to be saved, Vim
-may create a new Untitled file, if the buffer did not have a name yet.
+> # Impact
+>
+> The threaded .xz decoder in liblzma has a bug that can at least result
+> in a crash (denial of service).  The effects include heap use after free
+> and writing to an address based on the null pointer plus an offset.
+>
+> This affects XZ Utils versions from 5.3.3alpha to 5.8.0. Applications
+> and libraries that use the lzma_stream_decoder_mt function are affected.
 
-However, when setting the buffer name to Unnamed, Vim will falsely free
-a pointer twice, leading to a double-free and possibly later to a
-heap-use-after-free, which can lead to a crash.
+Our belief is that it's highly impractical to exploit on 64-bit systems
+where xz was built with PIE (=> ASLR), but that on 32-bit systems,
+especially without PIE, it may be doable.
 
-The Vim project would like to thank github user SuyueGuo for reporting this issue.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The issue has been fixed as of Vim patch v9.1.0648
+-----BEGIN PGP SIGNATURE-----
 
-URLs: https://github.com/vim/vim/commit/b29f4abcd4b3382fa746e
-      https://github.com/vim/vim/security/GHSA-46pw-v7qw-xc2f
-
-Thanks,
-Chris
--- 
-Denk immer daran, daß die Menge, die bei Deiner Krönung gejubelt hat,
-auch klatschen wird, wenn man Dich köpft.
-		-- Terry Pratchett, "Ab die Post"
+iOUEARYKAI0WIQQlpruI3Zt2TGtVQcJzhAn1IN+RkAUCZ+6mxV8UgAAAAAAuAChp
+c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0MjVB
+NkJCODhERDlCNzY0QzZCNTU0MUMyNzM4NDA5RjUyMERGOTE5MA8cc2FtQGdlbnRv
+by5vcmcACgkQc4QJ9SDfkZCzPQEAzpzK1sPr7rY9j9M8b/RrprNU7nKmc5Os5NYb
+EImoPpUBALN6BvU2q3doVoCdcamefr+dvJOrmO8l4eaa6mAoJbgG
+=jWyA
+-----END PGP SIGNATURE-----
+--=-=-=--
