@@ -1,4 +1,4 @@
-Received: (qmail 16124 invoked by uid 550); 28 Feb 2024 14:06:14 -0000
+Received: (qmail 5186 invoked by uid 550); 3 Apr 2025 17:22:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9394 invoked from network); 28 Feb 2024 10:40:42 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
+x-ms-reactions: disallow
+Received: (qmail 19480 invoked from network); 3 Apr 2025 17:04:54 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <aafa44b7-a57c-d264-ea53-801959ea46cc@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 28 Feb 2024 10:44:04 +0000
+Cc: Lasse Collin <lasse.collin@tukaani.org>,  Sebastian Andrzej Siewior
+ <sebastian@breakpoint.cc>
+In-Reply-To: <87sempff3v.fsf@gentoo.org>
+Organization: Gentoo
+References: <87bjthw108.fsf@gentoo.org> <871pu9gu5r.fsf@gentoo.org>
+	<87sempff3v.fsf@gentoo.org>
+User-Agent: mu4e 1.12.9; emacs 31.0.50
+Date: Thu, 03 Apr 2025 18:04:41 +0100
+Message-ID: <8734epfa6u.fsf@gentoo.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-26016: Apache Superset: Improper authorization validation
- on dashboards and charts import 
+Content-Type: text/plain
+Subject: Re: [oss-security] XZ Utils: Threaded decoder frees memory too
+ early (CVE-2025-31115)
 
-Affected versions:
+Sam James <sam@gentoo.org> writes:
 
-- Apache Superset before 3.0.4
-- Apache Superset 3.1.0 before 3.1.1
+> Sam James <sam@gentoo.org> writes:
+>
+>> # Impact
+>>
+>> The threaded .xz decoder in liblzma has a bug that can at least result
+>> in a crash (denial of service).  The effects include heap use after free
+>> and writing to an address based on the null pointer plus an offset.
+>>
+>> This affects XZ Utils versions from 5.3.3alpha to 5.8.0. Applications
+>> and libraries that use the lzma_stream_decoder_mt function are affected.
+>
+> Our belief is that it's highly impractical to exploit on 64-bit systems
+> where xz was built with PIE (=> ASLR), but that on 32-bit systems,
+> especially without PIE, it may be doable.
 
-Description:
-
-A low privilege authenticated user could import an existing dashboard or ch=
-art that they do not have access to and then modify its metadata, thereby g=
-aining ownership of the object. However, it's important to note that access=
- to the analytical data of these charts and dashboards would still be subje=
-ct to validation based on data access privileges.
-
-This issue affects Apache Superset: before 3.0.4, from 3.1.0 before 3.1.1.U=
-sers are recommended to upgrade to version 3.1.1, which fixes the issue.
-
-Credit:
-
-Daniel Vaz Gaspar (remediation developer)
-Matt Freyre (finder)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-26016
-
+I should correct myself here: it's easy to exploit the *crash* (though
+for liblzma users, it depends on how they ingest files), but not easy to
+take over the process.
