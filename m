@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["902" "Tuesday" "28" "July" "2015" "17:01:11" "+0100" "Kiall Mac Innes" "kiall@macinnes.ie" "<55B7A747.3050806@macinnes.ie>" "32" "[oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" nil nil nil "7" "2015072816:01:11" "[oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" (number mark "        kiall@macinn Jul 28   32/902   " thread-indent "\"[oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 4025 invoked by uid 550); 28 Jul 2015 16:43:52 -0000
+Received: (qmail 26423 invoked by uid 550); 7 Apr 2025 16:03:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26269 invoked from network); 28 Jul 2015 16:01:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=macinnes.ie;
-	s=default; t=1438099273;
-	bh=kA+ytzhPTa2HN54V1xB6VM97sg5+GP6kjhumW4gGDeE=;
-	h=Date:From:To:Subject;
-	b=BQMMEQn1gkLSgzWTuss+R4FQQMbv0H6ByK59knOjqBSwa43PYw6biX5NgEQjkvcIf
-	 tI3Od0EVet2mYxhhPa2CbrqHOC3te0OGngk+cYGnKlYS8bCeT9uFCsLreqJscdz4r9
-	 TAPC5zZdbXlDhBCbgqwrXUWKHPpQ/wnjrZq5Y96Q=
-Message-ID: <55B7A747.3050806@macinnes.ie>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Tue, 28 Jul 2015 17:01:11 +0100
-From: Kiall Mac Innes <kiall@macinnes.ie>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling
- of large RecordSets
+x-ms-reactions: disallow
+Received: (qmail 26405 invoked from network); 7 Apr 2025 16:03:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1744041826; bh=aKSr+8T73lPypJT2Yd42BmJXTGuZGKF64hkSzosQwNw=;
+	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=Tgjfy1aLehlIcxiZ3r2c0lNUym14m6ehyqUpaL62L0P6eOdcqKJTem5DZ7KmETcBj
+	 LyIPbsJXJESgqx+w2GsX9Ia8h7SjPhBOLxb+haA27obJG4TXipV3UcRBJsFLkfACwX
+	 rVUATZspxEVSNE1EhY6rNBgkGoIx3aPyZ0+RkTuwil7gYlguNg18crx8cLv0cfMbmr
+	 Gpknxz+eNwqGsPhrCl+MjyvxVO2Em8wTjp+ShPa2YbSCYOYmkTZIZq5NRkXdDz7vwU
+	 4zCO7Ytcqr07iTd83+TQ9zJPgUOBn/snB7s6PV9Dd/Rdr6juQrVz7Wl1SDX4dqMRWl
+	 VO55966nY7XGA==
+Original-Subject: Re: [oss-security] CVE-2025-31344: giflib: The giflib open-source
+ component has a buffer overflow vulnerability.
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date: Mon, 7 Apr 2025 18:03:44 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20250407180344.3cba0427@hboeck.de>
+In-Reply-To: 
+ <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
+References: 
+ <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2025-31344: giflib: The giflib open-source
+ component has a buffer overflow vulnerability.
 
-Hi,
+On Mon, 07 Apr 2025 21:15:25 +0800
+=E6=9D=8E=E4=BA=9A=E6=9D=B0 <liyajie@openeuler.sh> wrote:
 
-Can I please have a CVE assigned for the following issue:
+> In the function DumpScreen2RGB of the giflib software, an attempt is
+> made to access the color map through ColorMapEntry. The size of
+> ColorMap is 6 bytes (from 0x602000000030 to 0x602000000036). However,
+> when accessing ColorMap->Colors[GifRow[j]], the value of GifRow[j]
+> exceeds the actual number of colors stored. The address pointed to by
+> ColorMapEntry, 0x602000000039, goes beyond the allocated memory range
+> for color data. As a result, accessing ColorMapEntry->Red leads to
+> out-of-bounds access, causing a heap-buffer-overflow.
 
-Launchpad Number: 1471161
-CVE: TBA
-Date: July 28, 2015
-Title: Designate mDNS DoS through incorrect handling of large RecordSets
-Reporter: Florian Weimer (Red Hat)
-Products: Designate
-Versions: 2015.1.0 through 1.0.0.0b1
+I...
+think I reported this in 2016 already:
+https://sourceforge.net/p/giflib/bugs/79/
 
-Description:
-Florian Weimer from Red Hat reported a vulnerability in Designate.
-By creating a single RecordSet that exceeds the configured max allowed
-DNS packet size, an authenticated user may cause the Designate mDNS
-service to enter an infinite loop, triggering a DoS.
+The bug was closed without a fix, yet with giflib's author claiming
+multiple times that it was fixed.
 
-Liberty (development branch) fix:
-https://review.openstack.org/206578
-
-Kilo fix:
-https://review.openstack.org/206580
-
-Notes:
-This fix will be included in a future 1.0.0.0b2 release.
-
-References:
-https://launchpad.net/bugs/1471161
-http://lists.openstack.org/pipermail/openstack/2015-July/013548.html
-
--- Kiall Mac Innes, OpenStack Designate PTL
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
