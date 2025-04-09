@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["514" "Monday" "10" "December" "2018" "01:50:37" "+0100" "Daniel Beck" "ml@beckweb.net" "<DEF7ECE9-A4B6-46B2-8485-481FCE9D138D@beckweb.net>" "18" "Re: [oss-security] Script sandbox bypass in multiple Jenkins plugins" nil nil nil "12" "2018121000:50:37" "[oss-security] Script sandbox bypass in multiple Jenkins plugins" (number mark "U       ml@beckweb.n Dec 10   18/514   " thread-indent "\"Re: [oss-security] Script sandbox bypass in multiple Jenkins plugins\"\n") "<34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>" ("<34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27822 invoked by uid 550); 10 Dec 2018 00:50:51 -0000
+Received: (qmail 9745 invoked by uid 550); 9 Apr 2025 23:23:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +7,30 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27750 invoked from network); 10 Dec 2018 00:50:50 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Date: Mon, 10 Dec 2018 01:50:37 +0100
-References: <34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>
+x-ms-reactions: disallow
+Received: (qmail 9706 invoked from network); 9 Apr 2025 23:23:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=RKB2mKzDuJ
+	dIWBTSyzC0aFpNAtP569raWsohqV/bia4=; h=subject:to:date:from;
+	d=openbsd.org; b=7dTRG1a9mmi2zDNjvKoAucsmiIGAsI73YBiH+IwGah8LYEgap6PTT
+	r4TuKRZEXA+zMJBpfoI8CowA4CnBvyDA6KgwljCpnOPP7ek0Mr1ZuLmC7paxmP/tGRKBwH
+	0d8LEVJk0K51vuJ4NtgQsIRdtGrXpljyfI+lkJeiRdEDvz+WE0d/w+MGvZNHcCeUoQfi1j
+	dAnX3HhQCY00n0tFO+0wfAhbBk2rbEexRA4NiljmgU2PrZ19ofz1LM7JZh+Tc+MD0DqxeU
+	N0YqwCBAZaG4lrWPPCviDY6E2+Sd7AKEgUaWRasKbC/K28IxpCf7dRLJduQzmIpTzUaZql
+	E9yniNkbA==
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Wed, 9 Apr 2025 17:23:28 -0600 (MDT)
 To: oss-security@lists.openwall.com
-In-Reply-To: <34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>
-Message-Id: <DEF7ECE9-A4B6-46B2-8485-481FCE9D138D@beckweb.net>
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1544403050;b625f48f;
-X-HE-SMSGID: 1gW9mQ-0006PI-VV
-Subject: Re: [oss-security] Script sandbox bypass in multiple Jenkins plugins
+Message-ID: <9a8c0ee92f234cd7@cvs.openbsd.org>
+Subject: [oss-security] Re: Announce: OpenSSH 10.0 released
 
+Regarding the Portable OpenSSH 10.0 release:
 
+Due to an error in the release process, the recent Portable OpenSSH
+release identifies itself as 10.0p2 rather than the intended 10.0p1.
 
-> On 29. Oct 2018, at 14:42, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> SECURITY-1186
-> The Groovy Sandbox library used by Script Security Plugin and Pipeline Gr=
-oovy
-> Plugin did not apply sandbox restrictions to finalize methods. This could=
- be
-> used to invoke arbitrary constructors and methods, bypassing sandbox
-> protection.
->=20
-> Finalize methods are now prohibited in classes subject to sandbox securit=
-y.
+We do not intend to make a new release to fix this mistake. This
+portable OpenSSH release will henceforth be knows as 10.0p2 and no
+release numbered 10.0p1 will be made.
 
-CVE-2018-1000865 (Script Security Plugin) and CVE-2018-1000866 (Pipeline: G=
-roovy Plugin)
-
+Sorry for the confusion,
+Damien Miller
