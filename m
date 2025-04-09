@@ -1,4 +1,4 @@
-Received: (qmail 7195 invoked by uid 550); 13 May 2024 10:18:09 -0000
+Received: (qmail 19967 invoked by uid 550); 9 Apr 2025 21:04:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,162 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6138 invoked from network); 13 May 2024 10:18:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=powerdns.com;
-	s=202306; t=1715595479;
-	bh=3H/ckgLAHLkjLWv6jJcvw/Wp+Nus/104JIbV+LmCHN0=;
-	h=Date:To:From:Subject:From;
-	b=i2mk2YtCbIHitg6vqWzXFege19Wi0YTHNkW8Dfb4RGq8FNMevzaurDatz23Krg3L+
-	 b98LzziXkoqWDcNG+5r7tiJNELZqzYsj6rNIffKwRf62qZE+bsfEb5hmT9f6H5XwVS
-	 WlHDXQ1Fw/LhJ9jh0kO+KmFnCdLkY9vpJs4fxNw618Wn/eVWj/1EEsTg0DB5zgI7Bp
-	 0pPwOnnqQwp2bjgbhJ74/L74nb4zO2Dg1yxnjNXcVFPXBo/c6UFNuERAP6+PZUWqgy
-	 e/MCpev9dJb/HftDSiyETWbnjoxzq6MB0cKIFs3uKrqb5O8G6E9iyuLVDa+Zl45HWn
-	 iV5Bz67epYgEw==
-Message-ID: <ac174af1-c176-46be-8125-544cc145df48@powerdns.com>
-Date: Mon, 13 May 2024 12:17:58 +0200
+x-ms-reactions: disallow
+Received: (qmail 19932 invoked from network); 9 Apr 2025 21:04:03 -0000
+Message-ID: <3bbeb032-ee9c-47ef-bcbf-6c9912041c73@pipping.org>
+Date: Wed, 9 Apr 2025 23:03:54 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
+Content-Language: en-US
+From: Sebastian Pipping <sebastian@pipping.org>
 To: oss-security@lists.openwall.com
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-Autocrypt: addr=remi.gacogne@powerdns.com; keydata=
- xsBNBFY4pAcBCACIU5HRkBG3VcBfJaqetxIoKdLRxW3XmeCwruLFt6DN3q8bTtsNuQMJHa8O
- Y0aKWJoXjOQSbBoKSGVAFKTmpCUfH4vhErt8DWqyglRfio2L3cTe48GZjiObdXLZxnsINAx2
- WbcpoCRKTjdWX0MH2Jg/yf5PS6nb+glclRsDQmVGQjt92v23nNdsCp8I9rjP1+bQy5iHB1Ii
- QuFJ6DBQJhgWQzksT2azZ83aADvc4/+Fg7VFYSzZHkp98NfyzUkiUzYi0I5Oy4KvyoXeS/CX
- 9WtQGM1vjZAXXiD+ODJ0OvB2EsCUT6t4i9pWWh/+LnNtRWIVn8PJeQbCAO2wJlMxX28BABEB
- AAHNKFJlbWkgR2Fjb2duZSA8cmVtaS5nYWNvZ25lQHBvd2VyZG5zLmNvbT7CwH0EEwEKACcF
- AlawcTICGwMFCRLMAwAFCwkIBwQFFQoJCAsFFgIDAQACHgECF4AACgkQogjtT4r1hEZ0zgf+
- Iy73sdDPkxOYi/xVJIvBB8o+uuPLDgh51Bx50vrJTBNm+9YgLyycQpQyYyw+NyY+xS9Ibtiz
- p8PuT0Ga4S8gdVhGtbQtLS7yJD7swlSTyOBR+/gHoJgaxmDeueeB8tAv2ERfJjhp4C+fIa7p
- iU4Iwe7wvgrw6dO9eFkBv0oHCqpOI5CM/yHqdr493Qon3YfpCZGiv558yE9Xrojs6fMSwcol
- WwjnZW72KFXraryXKiIThwoJb9OOZWXAKfZD/aZv5BMxzN+D4ZB+kq0f7qHbITh+Kd1MdMBo
- MFG6Lg7x1LY5SvhgfHGF3UZ8tLb3RgWFDuwrBTcz6EQvArw/lWPA5c7ATQRWOKQHAQgAjr1x
- EZh1yglszi94+HLNFcgRPgRNktg2vxOGf64dAreJvL5iDrS2lrFMknh5BNuj7nJZ2r40OOS9
- 1oH1qkVk+v9Cyo/3xwCpCOPQCkhzHpuQWXoMGMw/3/0tG6zTxnYdC999faCH0lLA8oDwHCHl
- ZSHgsH9+qSNyjaJXvS+HVoGYzyuanU6OTM7EM5c7RCPhNjT9JzHLISnwaxgDpwi7Ez6yudcr
- g6DqS/uUwkyNtWyesx1DF9y2VJUNwa4NKIJkSH+niEoxK9NBfBAmAKc4o5+KPs6BvpvpiYY9
- gTKaaLypPHNcveQTDFv/26XHyzrCZmwuGlcYBjboH/BWzKbhuQARAQABwsBxBBgBAgAbBQJW
- OKQHAhsMBAsJCAcGFQgCCQoLBQkSzAMAAAoJEKII7U+K9YRGXJQH/3PtQG0AkrXOpkOMXFLT
- KdCEViNNHN94VIaceVn60zbmXzxhYeKz7K345/EqATi3P3/yDHcht7j3uYPhvaMjy3smN6vE
- wX7Ue40PbFDWmm8mHpLdlOfPXF0SRUD8KTSD6+W2VJfEcDI6DDfUmCx9yYZ1U5u+O8Aj+1l2
- gdQbgAioPnQgqzf43qgnRcsfNmsVsXg7EbHspRpJOR1XyXl/9KrDP7p6kjwWTQ1NoRjCw0qa
- X93odLeKIpd2riShlB7GteUTps0IfuiL94CA58PV2YvZapN1KmwDohHU8rndN7zte7jbCyv1
- Vv9tP6Ns0TvycBAqlOZYdgabrT+Pccb4jCc=
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------LHXC0qm7YErCfZq52bEsrAkZ"
-Subject: [oss-security] PowerDNS Security Advisory 2024-03: Transfer requests received over
- DoH can lead to a denial of service in DNSdist
-
---------------LHXC0qm7YErCfZq52bEsrAkZ
-Content-Type: multipart/mixed; boundary="------------3wSqcNArESS8xg1ak4gfxhZh";
- protected-headers="v1"
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ac174af1-c176-46be-8125-544cc145df48@powerdns.com>
-Subject: PowerDNS Security Advisory 2024-03: Transfer requests received over
- DoH can lead to a denial of service in DNSdist
-
---------------3wSqcNArESS8xg1ak4gfxhZh
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] xmlrpc-c bundles a (very old and) vulnerable copy of libexpat
 
-SGkgYWxsLA0KDQpXZSByZWxlYXNlZCBQb3dlckROUyBETlNkaXN0IDEuOS40
-IHRvZGF5LiBUaGlzIHJlbGVhc2UgZml4ZXMgDQpDVkUtMjAyNC0yNTU4MSwg
-YSBkZW5pYWwgb2Ygc2VydmljZSBzZWN1cml0eSBpc3N1ZSBhZmZlY3Rpbmcg
-dmVyc2lvbnMgDQoxLjkuMCwgMS45LjEsIDEuOS4yIGFuZCAxLjkuMyBvbmx5
-LiBFYXJsaWVyIHZlcnNpb25zIGFyZSBub3QgYWZmZWN0ZWQuDQoNCldoZW4g
-aW5jb21pbmcgRE5TIG92ZXIgSFRUUFMgc3VwcG9ydCBpcyBlbmFibGVkIHVz
-aW5nIHRoZSBuZ2h0dHAyIA0KcHJvdmlkZXIsIGFuZCBxdWVyaWVzIGFyZSBy
-b3V0ZWQgdG8gYSB0Y3Atb25seSBvciBETlMgb3ZlciBUTFMgYmFja2VuZCwg
-DQphbiBhdHRhY2tlciBjYW4gdHJpZ2dlciBhbiBhc3NlcnRpb24gZmFpbHVy
-ZSBpbiBETlNkaXN0IGJ5IHNlbmRpbmcgYSANCnJlcXVlc3QgZm9yIGEgem9u
-ZSB0cmFuc2ZlciAoQVhGUiBvciBJWEZSKSBvdmVyIEROUyBvdmVyIEhUVFBT
-LCBjYXVzaW5nIA0KdGhlIHByb2Nlc3MgdG8gc3RvcCBhbmQgdGh1cyBsZWFk
-aW5nIHRvIGEgRGVuaWFsIG9mIFNlcnZpY2UuDQoNCkROUyBvdmVyIEhUVFBT
-IGlzIG5vdCBlbmFibGVkIGJ5IGRlZmF1bHQsIGFuZCBiYWNrZW5kcyBhcmUg
-dXNpbmcgcGxhaW4gDQpETlMgKERvNTMpIGJ5IGRlZmF1bHQuDQoNClR3byB3
-b3JrLWFyb3VuZHMgYXJlIGF2YWlsYWJsZToNCi0gcmVmdXNlIGluY29taW5n
-IFhGUiByZXF1ZXN0cyB2aWEgYSBETlNkaXN0IHJ1bGU6IA0KYWRkQWN0aW9u
-KE9yUnVsZSh7UVR5cGVSdWxlKEROU1FUeXBlLkFYRlIpLCBRVHlwZVJ1bGUo
-RE5TUVR5cGUuSVhGUil9KSwgDQpSQ29kZUFjdGlvbihETlNSQ29kZS5SRUZV
-U0VEKSkNCi0gc3dpdGNoIHRvIHRoZSBsZWdhY3kgaDJvIHByb3ZpZGVyIGJ5
-IHNldHRpbmcgbGlicmFyeT0naDJvJyBpbiB0aGUgDQphZGRET0hMb2NhbCBk
-aXJlY3RpdmUNCg0KV2Ugd291bGQgbGlrZSB0byB0aGFuayBEYW5pZWwgU3Rp
-cm5pbWFubiBmcm9tIFN3aXRjaCBmb3IgZmluZGluZyBhbmQgDQpzdWJzZXF1
-ZW50bHkgcmVwb3J0aW5nIHRoaXMgaXNzdWUuDQoNClRoZSBmdWxsIHNlY3Vy
-aXR5IGFkdmlzb3J5IGlzIHByb3ZpZGVkIGJlbG93LCBhbmQgY2FuIGFsc28g
-YmUNCmZvdW5kIGF0DQpodHRwczovL2Ruc2Rpc3Qub3JnL3NlY3VyaXR5LWFk
-dmlzb3JpZXMvcG93ZXJkbnMtYWR2aXNvcnktZm9yLWRuc2Rpc3QtMjAyNC0w
-My5odG1sDQoNCkEgbWluaW1hbCBwYXRjaCBjYW4gYWxzbyBiZSBmb3VuZCBo
-ZXJlOg0KaHR0cHM6Ly9kb3dubG9hZHMucG93ZXJkbnMuY29tL3BhdGNoZXMv
-MjAyNC0wMy8NCg0KUGxlYXNlIGZlZWwgZnJlZSB0byBjb250YWN0IG1lIGRp
-cmVjdGx5IGlmIHlvdSBoYXZlIGFueSBxdWVzdGlvbi4NCg0KQmVzdCByZWdh
-cmRzLA0KDQotLSANClJlbWkgR2Fjb2duZQ0KUG93ZXJETlMuQ09NIEJWIC0g
-aHR0cHM6Ly93d3cucG93ZXJkbnMuY29tLw0KDQpQb3dlckROUyBTZWN1cml0
-eSBBZHZpc29yeSAyMDI0LTAzOiBUcmFuc2ZlciByZXF1ZXN0cyByZWNlaXZl
-ZCBvdmVyIERvSCANCmNhbiBsZWFkIHRvIGEgZGVuaWFsIG9mIHNlcnZpY2Ug
-aW4gRE5TZGlzdA0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCi0gQ1ZF
-OiBDVkUtMjAyNC0yNTU4MQ0KLSBEYXRlOiBNYXkgMTN0aCAyMDI0DQotIEFm
-ZmVjdHM6IFBvd2VyRE5TIEROU2Rpc3QgMS45LjAsIDEuOS4xLCAxLjkuMiBh
-bmQgMS45LjMsIGVhcmxpZXIgDQp2ZXJzaW9ucyBhcmUgbm90IGFmZmVjdGVk
-DQotIE5vdCBhZmZlY3RlZDogUG93ZXJETlMgRE5TZGlzdCAxLjkuNA0KLSBT
-ZXZlcml0eTogSGlnaCAob25seSBpbiBzcGVjaWZpYyBjb25maWd1cmF0aW9u
-cywgc2VlIGJlbG93KQ0KLSBJbXBhY3Q6IERlbmlhbCBvZiBzZXJ2aWNlDQot
-IEV4cGxvaXQ6IFRoaXMgcHJvYmxlbSBjYW4gYmUgdHJpZ2dlcmVkIGJ5IGEg
-cmVtb3RlLCB1bmF1dGhlbnRpY2F0ZWQgDQphdHRhY2tlciBzZW5kaW5nIGEg
-RE5TIHF1ZXJ5DQotIFJpc2sgb2Ygc3lzdGVtIGNvbXByb21pc2U6IE5vbmUN
-Ci0gU29sdXRpb246IFVwZ3JhZGUgdG8gcGF0Y2hlZCB2ZXJzaW9uIG9yIGFw
-cGx5IHRoZSB3b3JrYXJvdW5kIGRlc2NyaWJlZCANCmJlbG93DQoNCldoZW4g
-aW5jb21pbmcgRE5TIG92ZXIgSFRUUFMgc3VwcG9ydCBpcyBlbmFibGVkIHVz
-aW5nIHRoZSBuZ2h0dHAyIA0KcHJvdmlkZXIsIGFuZCBxdWVyaWVzIGFyZSBy
-b3V0ZWQgdG8gYSB0Y3Atb25seSBvcg0KRE5TIG92ZXIgVExTIGJhY2tlbmQs
-IGFuIGF0dGFja2VyIGNhbiB0cmlnZ2VyIGFuIGFzc2VydGlvbiBmYWlsdXJl
-IGluIA0KRE5TZGlzdCBieSBzZW5kaW5nIGEgcmVxdWVzdCBmb3IgYSB6b25l
-IHRyYW5zZmVyDQooQVhGUiBvciBJWEZSKSBvdmVyIEROUyBvdmVyIEhUVFBT
-LCBjYXVzaW5nIHRoZSBwcm9jZXNzIHRvIHN0b3AgYW5kIHRodXMgDQpsZWFk
-aW5nIHRvIGEgRGVuaWFsIG9mIFNlcnZpY2UuDQpETlMgb3ZlciBIVFRQUyBp
-cyBub3QgZW5hYmxlZCBieSBkZWZhdWx0LCBhbmQgYmFja2VuZHMgYXJlIHVz
-aW5nIHBsYWluIA0KRE5TIChEbzUzKSBieSBkZWZhdWx0Lg0KDQpgQ1ZTUyBT
-Y29yZTogNy41IA0KPGh0dHBzOi8vbnZkLm5pc3QuZ292L3Z1bG4tbWV0cmlj
-cy9jdnNzL3YzLWNhbGN1bGF0b3I/dmVjdG9yPUFWOk4vQUM6TC9QUjpOL1VJ
-Ok4vUzpVL0M6Ti9JOk4vQTpIJnZlcnNpb249My4xPmBfXywgDQpvbmx5IGZv
-ciBjb25maWd1cmF0aW9ucyB3aGVyZSBpbmNvbWluZyBEb0ggaXMgZW5hYmxl
-ZCBhbmQgYSBUQ1Atb25seS9Eb1QgDQpiYWNrZW5kIGlzIGVuYWJsZWQuDQoN
-ClR3byB3b3JrYXJvdW5kcyBhcmUgYXZhaWxhYmxlOg0KLSByZWZ1c2UgaW5j
-b21pbmcgWEZSIHJlcXVlc3RzIHZpYSBhIEROU2Rpc3QgcnVsZTogDQpgYGFk
-ZEFjdGlvbihPclJ1bGUoe1FUeXBlUnVsZShETlNRVHlwZS5BWEZSKSwgDQpR
-VHlwZVJ1bGUoRE5TUVR5cGUuSVhGUil9KSwgUkNvZGVBY3Rpb24oRE5TUkNv
-ZGUuUkVGVVNFRCkpYGANCi0gc3dpdGNoIHRvIHRoZSBsZWdhY3kgaDJvIHBy
-b3ZpZGVyIGJ5IHNldHRpbmcgYGBsaWJyYXJ5PSdoMm8nYGAgaW4gdGhlIA0K
-YGBhZGRET0hMb2NhbGBgIGRpcmVjdGl2ZQ0KDQpGb3IgdGhvc2UgdW5hYmxl
-IHRvIHVwZ3JhZGUgdG8gYSBuZXcgdmVyc2lvbiwgYSBtaW5pbWFsIHBhdGNo
-IGlzIA0KYGF2YWlsYWJsZSBmb3IgMS45LjMgPGh0dHBzOi8vZG93bmxvYWRz
-LnBvd2VyZG5zLmNvbS9wYXRjaGVzLzIwMjQtMDM+YF9fDQoNCldlIHdvdWxk
-IGxpa2UgdG8gdGhhbmsgRGFuaWVsIFN0aXJuaW1hbm4gZnJvbSBTd2l0Y2gg
-Zm9yIGZpbmRpbmcgYW5kIA0Kc3Vic2VxdWVudGx5IHJlcG9ydGluZyB0aGlz
-IGlzc3VlLg0K
+Hello oss-security!
 
---------------3wSqcNArESS8xg1ak4gfxhZh--
 
---------------LHXC0qm7YErCfZq52bEsrAkZ
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Red Hat and OpenWrt [1] and Gentoo [2] are already aware, but maybe this
+matter is of interest to more of you:
 
------BEGIN PGP SIGNATURE-----
+It has come to my attention through [0] that xmlrpc-c bundles a (very
+old and) vulnerable copy of libexpat.  I reached out to upstream and
+they made a few minor related changes:
 
-iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAmZB6NYACgkQogjtT4r1
-hEZEogf9E+E3nE7rPX0k/Mto6cue13UHOD4f7eJz5QLGFf2pBYU0ogQom+Zun5tr
-6m0PuBHaPu85OvbuvuMzFOyMBWpS9OtkocJ0mTanI5JL9rsHTgtS9Bj7TW9m0CDL
-fXJl5URvPI1R8HaFrO3A+czbNcgyU6H/f1A5My7NvgnpAvxAHQGXyyLrUPj2odUh
-kkPANm+a35DuLpcyzAzD7QrT9LWToSZfF5/zXkfSN9UPwfTdB/i6Ea14fuz/hkHJ
-J/CC9rp17kjujf2t8598JAH3tmHBHEBPJ2uj95/wzp6o2tSGsThVdYjRHt1lBx0p
-e9w7X2+pYlCjsTSnCrtqOFdLOAOgJw==
-=imU0
------END PGP SIGNATURE-----
+- The configure script started to default to libxml2 rather than
+   libexpat at [3].
 
---------------LHXC0qm7YErCfZq52bEsrAkZ--
+- Also there is a new readme now [4] that warns that the bundled Expat
+   is "unfit for use in a setting where the communication partner is not
+   friendly" and a similar new note [5] in the main readme saying…
+
+     "When the Expat developer pointed out in 2025 the likelihood that
+     the Xmlrpc-c fork of Expat contained dozens of security exposure
+     bugs, the Xmlrpc-c maintainer decided to make external Libxml2 the
+     default."
+
+So upstream has no plans of deleting that super vulnerable bundle in 
+favor of using system libexpat.
+
+I did offer a patch to use system libexpat [6] to the point where folder
+lib/expat/ could be fully deleted in packaging (to be accident proof),
+but there was no interest from upstream.  That patch hence went into
+Gentoo packaging downstream [6] instead.
+
+If you need help with porting that patch to different versions of
+xmlrpc-c, I may be able to help.
+
+Best
+
+
+
+Sebastian
+
+
+[0] https://github.com/signalwire/freeswitch/pull/2768
+[1] https://github.com/openwrt/packages/issues/26263
+[2] https://bugs.gentoo.org/952113
+[3] 
+https://sourceforge.net/p/xmlrpc-c/code/3290/tree//trunk/configure.ac?diff=50c5155b5fcbc9098bb77a4a:3289
+[4] 
+https://sourceforge.net/p/xmlrpc-c/code/3307/tree//trunk/lib/expat/README
+[5] 
+https://sourceforge.net/p/xmlrpc-c/code/3290/tree//trunk/README?diff=50c5155b5fcbc9098bb77a4a:3289
+[6] 
+https://raw.githubusercontent.com/gentoo/gentoo/61b6130343a41b49da1ffe7376ab5d2077a37411/dev-libs/xmlrpc-c/files/xmlrpc-c-1.59.03-use-system-expat.patch
+
