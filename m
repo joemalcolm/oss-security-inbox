@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4861" "Thursday" "7" "December" "2017" "06:32:11" "+0000" "halfdog" "me@halfdog.net" "<fake-VM-id.f9f8a5d0fb4e55357c5853f87c264422@talos.iv>" "101" "[oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017120706:32:11" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec  7  101/4861  " thread-indent "\"[oss-security] Recommendations GnuPG-2 replacement\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5325 invoked by uid 550); 7 Dec 2017 06:32:51 -0000
+Received: (qmail 1033 invoked by uid 550); 10 Apr 2025 00:20:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5288 invoked from network); 7 Dec 2017 06:32:50 -0000
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Date: Thu, 07 Dec 2017 06:32:11 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Recommendations GnuPG-2 replacement
-To: oss-security@lists.openwall.com
-Message-ID: <20171207063211.3FQeObposdv-pQSF9oHsUG6f31uWEFTILn3bSOqzGNs@z>
+x-ms-reactions: disallow
+Received: (qmail 32754 invoked from network); 10 Apr 2025 00:20:57 -0000
+Message-ID: <6a68cc9b-1667-4afe-9400-070315bf7563@pipping.org>
+Date: Thu, 10 Apr 2025 02:20:48 +0200
+MIME-Version: 1.0
+To: oss-security@lists.openwall.com, =?UTF-8?Q?Bernhard_Rosenkr=C3=A4nzer?=
+ <bero@lindev.ch>
+References: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
+ <94ed5662-d24b-40e4-b832-6228a7e473df@pipping.org>
+ <543-67f6e580-2d-5396a400@170623133>
+Content-Language: en-US
+From: Sebastian Pipping <sebastian@pipping.org>
+In-Reply-To: <543-67f6e580-2d-5396a400@170623133>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-2025-31344: giflib: The giflib open-source
+ component has a buffer overflow vulnerability.
 
-Hello list,
-
-Are there recommendations for open-source light-weight replacements
-of GnuPG2 suitable for use on Debian? I would like discontinue
-using GnuPG project, as the GnuPG design regarding security seems
-to be moving in a direction, that does not match my personal security
-needs any more.
-
-The two main events causing me considering the change were related
-to the Debian Jessie to Stretch switch - thus giving a small
-impression on the current needs:
-
-Event 1:
-
-While gpg1 was a light-weight tool, just doing what said, the
-new gpg2 cannot really work without gpg-agent, pinentry frontend.
-Both are very nice for desktop usecases. As I also used it during
-machine setup for generating material related to disk encryption,
-the agent first did not want to start -- the primitive /dev/ttyX
-via openvt was not the environment gpg tools were expecting
-for password input, thus failing. gpg2 by default will not ask
-the passphrase any more on the terminal, it was started from,
-but tries to work out using various information, where passphrase
-input should be delegated to.
-
-After getting gpg and agent running, I noticed, that not reliably
-stopping the gpg-agent on initrd would introduce a private key
-data leak via /proc from early boot process to running system
-when stopping fails. This is also more annoying as it is not possible
-to instruct gpg, that a single private key should NOT be cached,
-and you have to configure gpg-agent beforehand, something not
-quite funny and little error prone on limited functionality systems
-like on an initrd systems.
-
-Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-fiddling with functionality I do not need and cannot disable,
-provides a keymanagement that cannot be configured easily to
-protect against the threats it should mitigate (theft of key material)
-and creating additional attack surface without any recognizable
-benefit.
-
-Event 2:
-
-After getting everything working, which was little anoying as
-building of initrds, testing via QEmu is not very user friendly
-regarding debugging for less experienced users - but at least not
-GnuPG's fault at any reason - I noticed, that the password protection
-of the key was significantly lower than expected. Getting back
-to the developers, we found out, that the specification of the
-"--s2k-count" parameter, which specifies the number of rounds
-of key deriviation function to unlock the private key, has changed
-from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
-cause any warning or error. Thus previous audited procedures continue
-to work but do not produce the same results any more. Of course,
-I could have compared documentation of all parameters of (at least
-security-related) programs after Jessie to Stretch upgrade, but
-I assumed, that security critical parameters would not change
-their meaning without any noticable effect - so just my fault.
-
-Still, this would just be a minor mishap, but what reduced my
-trust in GPG, was the comment of a developer: it was assumed,
-that they know better, where there software will be run without
-specifying that "where" in the documentation. Also his replies
-matched that picture, e.g. "(gpg-agent will) ... calibrate the
-S2K count to match the current machine", assuming that this is
-good reason to change "--s2k-count" meaning and ignore the parameter.
-I had the impression, that it did not come to mind, that someone
-might have used such a parameter for a reason, e.g. because speed
-calibration might not be the best idea, while the system is taking
-in data at the maximum speed the ethernet adapter, disk controller
-can do during system setup.
-
-Another bonmot on the mathematical complexity of private key
-unlocking: "For user experience 100ms is a good value; your
-suggested 1000ms is an annoying long delay which would most user
-only increase the cache time." But the discussion was not on
-user defaults. If I deem it a good idea to requirea longer KDF
-computation time for material with higher sensitivity, e.g. to
-to unlock data storage once at startup, and therefore tell the
-software to perform that computation, it should accept that
-decision. Thus someone not understanding or accepting the
-existance of such choices in alternative usecase might not be
-the right person to develop the software, I want to use.
+Hello Bernhard,
 
 
-Result:
+On 09.04.25 23:23, Bernhard Rosenkränzer wrote:
+> On Wednesday, April 09, 2025 23:11 CEST, Sebastian Pipping <sebastian@pipping.org> wrote:
+>>     https://github.com/openwrt/packages/issues/26277
+> 
+> Except for https://sourceforge.net/p/giflib/bugs/179/, all the issues seem to be in gif2rgb, which is, according to the giflib maintainer, "old and crappy code", and TBH, other than as a no-dependency test tool for giflib, it is fairly useless (just use ImageMagick or a similar tool to do the gif to rgb conversion).
+> Simply removing the gif2rgb tool is probably an acceptable solution.
 
-For all steps regarding system startup, I switched to LUKS only,
-using detached headers for special features. For release signing,
-mail sign/encrypt, a good light-weight solution is still needed.
+I understand your take (and I believe Red Hat does just that: not 
+include it with packaging [1]).
 
-hd
+I would like to note that gif2rgb is currently shipped with e.g. Ubuntu
+[2] and so just dropping that tool will break something somewhere.
 
-PS: I do not know, how much the gpg-agent calibration under
-increased system load reduced the KDF complexity, as I failed
-to extract the KDF rounds value from the gpg data structures,
-but the value seems to be at least below 70ms due to total time
-measurements for gpg-agent (math, interprocess communication,
-filesystem) to unlock a key on an idle system.
+On a side note ImageMagick (7.1.1.38) seems to ignore logical screen
+size (section "18. Logical Screen Descriptor" of the spec [3]) in GIF
+files:
 
+   # file max_size.gif
+   max_size.gif: GIF image data, version 89a, 65535 x 65535
+                                              ^^^^^^^^^^^^^
+   # magick max_size.gif max_size.png
+
+   # file max_size.png
+   max_size.png: PNG image data, 1 x 1, 8-bit gray+alpha, non-interlaced
+                                 ^^^^^
+Either I misunderstand the GIF spec or ImageMagick goes against
+the spec and mis-converts this image.  (I tried other sizes to
+be sure it's not an integer overflow issue but intention.)
+So ImageMagick so far would not be my goto for GIF.  Happy to learn what
+I'm missing.
+
+So far I'm personally in favor of collaborative repair rather than
+removal.  I'm probably biased because sibling tool gifbuild already
+proved useful to me.
+
+Best
+
+
+
+Sebastian
+
+
+[1] https://github.com/openela-main/giflib/blob/el9/SPECS/giflib.spec
+[2] https://packages.ubuntu.com/oracular/amd64/giflib-tools/filelist
+[3] https://www.w3.org/Graphics/GIF/spec-gif89a.txt
 
