@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3353" "Monday" "12" "July" "2021" "19:16:14" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" nil "96" "[oss-security] [OSSA-2021-001] Neutron: Anti-spoofing bypass for Open vSwitch networks (CVE-2021-20267)" nil nil nil "7" nil nil (number mark "U       fungi@yuggot Jul 12   96/3353  " thread-indent "\"[oss-security] [OSSA-2021-001] Neutron: Anti-spoofing bypass for Open vSwitch networks (CVE-2021-20267)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2021-001] Neutron: Anti-spoofing bypass for Open vSwitch networks (CVE-2021-20267)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1960 invoked by uid 550); 12 Jul 2021 19:16:28 -0000
+Received: (qmail 7909 invoked by uid 550); 10 Apr 2025 13:43:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,116 +7,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1930 invoked from network); 12 Jul 2021 19:16:27 -0000
-Date: Mon, 12 Jul 2021 19:16:14 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
+x-ms-reactions: disallow
+Received: (qmail 13899 invoked from network); 10 Apr 2025 13:32:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1744291958;
+	bh=MCXFhYZse2XHv2jeMGCHmJQzuc0LiTOI8iW5s1l9DiU=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=OSlCu+HvWY1S9Rzwuu1MRHAfe2GtqEc8a3kVdE8HOHjy312gnIst7hOVtIn6OX1o8
+	 Y1YptGe1cSAyf++i+8RC7sM5vEfAzGQV5wZHJjWpZI5vIhzxf8R+Dr7BQ3yXsQuzoT
+	 mOzsexdGXJYelvwDfhz0LnM7/920zdtM0ecBCbf8=
+Date: Thu, 10 Apr 2025 15:31:03 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20210712191614.z2bgvg2tvuiwa3wi@yuggoth.org>
+Message-ID: <2025041003-saddling-dart-5b8b@gregkh>
+References: <VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kqgpulezlj2hxltg"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: [oss-security] [OSSA-2021-001] Neutron: Anti-spoofing bypass for Open vSwitch
- networks (CVE-2021-20267)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
+Subject: Re: [oss-security] CVE-2024-50217: Linux kernel: btrfs:
+ Use-after-free of block device file in __btrfs_free_extra_devids()
 
---kqgpulezlj2hxltg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Apr 10, 2025 at 12:22:46PM +0000, akendo@akendo.eu wrote:
+> Hey everyone,
+> 
+> Not too sure how or whom to ask about: But I saw that there is CVE-2024-50217 that affects every kernel since 4.8.
+> 
+> However, it is only fixed on more recent version of the linux kernel like 6.11 or 6.12. Any reason this wasn’t backported to older kernel versions?
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2021-001: Anti-spoofing bypass for Open vSwitch networks
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+That's usually because no one has taken the time to do so.  Same for the
+thousands of other "unfixed" CVEs in older stable kernel trees.
 
-:Date: July 12, 2021
-:CVE: CVE-2021-20267
+As an example, for the latest 5.4.y stable kernel release, I see that
+there are currently 1110 unfixed CVEs as of right now.
 
+Feel free to send backports to the stable@vger.kernel.org mailing list
+if you wish to see specific commits applied to older stable kernel
+releases.
 
-Affects
-~~~~~~~
-- Neutron: <16.3.3, >=3D17.0.0 <17.1.3, =3D18.0.0
+thanks,
 
-
-Description
-~~~~~~~~~~~
-David Sinquin with Gandi.net reported a vulnerability in Neutron's
-default Open vSwitch firewall rules. By sending carefully crafted
-packets, anyone in control of a server instance connected to the
-virtual switch can impersonate the IPv6 addresses of other systems
-on the network, resulting in denial of service or in some cases
-possibly interception of traffic intended for other destinations.
-Only deployments using the Open vSwitch driver are affected.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/777873 (Queens)
-- https://review.opendev.org/791470 (Queens)
-- https://review.opendev.org/777786 (Rocky)
-- https://review.opendev.org/791469 (Rocky)
-- https://review.opendev.org/777872 (Stein)
-- https://review.opendev.org/791500 (Stein)
-- https://review.opendev.org/777785 (Train)
-- https://review.opendev.org/791468 (Train)
-- https://review.opendev.org/777784 (Ussuri)
-- https://review.opendev.org/791467 (Ussuri)
-- https://review.opendev.org/777783 (Victoria)
-- https://review.opendev.org/791465 (Victoria)
-- https://review.opendev.org/776599 (Wallaby)
-- https://review.opendev.org/791464 (Wallaby)
-- https://review.opendev.org/783743 (Xena)
-
-
-Credits
-~~~~~~~
-- David Sinquin from Gandi.net (CVE-2021-20267)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1902917
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-20267
-
-
-Notes
-~~~~~
-- The stable/train, stable/stein, stable/rocky, and stable/queens
-  branches are under extended maintenance and will receive no new
-  point releases, but patches for them are provided as a courtesy.
-
-
---=20
-Jeremy Stanley
-
---kqgpulezlj2hxltg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmDslP5fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCnz0hAAlPimjgyANoRl8JaNVEptXTqxOHaOvcakn29DGLN9phlMuhfju1vAUksd
-DcHg3Qo/hFQd0wzomKrUy6Gro5pkZSGfxAKdaUayIk6uoECsUVwpvz6U9zaIMplE
-PRJjLl4MYeu8wFp/p5+Fk8gwyo0uii8mtg9vnXlQta8a57MllWShglQTN+kIfH/4
-tolevBSVHnOPmjioEtfV/s+9y4WEtMDOLwL7zRTiafPZuLc6SnljJIYdyrU9eZ9a
-BZr5DQxFTVBPBQSvm4Q1/Jr7zp+0pSrb+mCodvB6XaA136GUwhSZqkcMCw4vecvd
-Qb6N5/utIWC038Ge1oTDMSADNUdSvTEzN5tx++231coxRtd4/KOPtyPAE7C/SJui
-+C6VAThr7ePyoutyaQILnwtMp0B1vtm6rbI8G5M9tduByAWVE0S3laUiorUFV+TS
-XjVNIug2wVXN2Yga99bXT09Yp2zmzLdnyKZe0PacPqhETKEMJHC6dEqCUJe/Y+4L
-6VodkEyMRYK+TwEhVIxW98AUlIhvgEcYcCGsKfaBWFWNTfGQfzXhgURk7KnvEgzf
-LVB2bfhIayhUuu7geEkHs04Q8JtNFF4LWU52f9cMIEAX3U7hl0GrmewKSVMa5o3d
-hPwROsgbHyxld+zNoyXeqUw5xJy1lzAA6vITP5nngCaTuyj+hPg=
-=Ysqk
------END PGP SIGNATURE-----
-
---kqgpulezlj2hxltg--
+greg k-h
