@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["828" "Monday" "20" "July" "2020" "10:57:21" "-0400" "Phil Pennock" "oss-security-phil@spodhuis.org" "<20200720145721.GA105966@fullerene.field.pennock-tech.net>" "19" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" "^Cc:" nil nil "7" "2020072014:57:21" "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" (number mark "        oss-security Jul 20   19/828   " thread-indent "\"[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens\"\n") "<CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>" ("<CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>" "<CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24070 invoked by uid 550); 20 Jul 2020 15:12:10 -0000
+Received: (qmail 26583 invoked by uid 550); 10 Apr 2025 13:18:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20154 invoked from network); 20 Jul 2020 14:57:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202005; h=In-Reply-To:Content-Type:MIME-Version:References
-	:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
-	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=SfpWKD2a6LdAE3bDsMOuLewgpHJmQTb14rJh+v4CFA8=; b=Z64Jlb4Df/32PH/NCnkJJxqOPr
-	jttdxsKGYU2NTNfh2TyI3Kz8sKlznijAMh0h2olj3CVL3ztHfXcW9T5qnqJTQ6Wi3Kk3euXpApiNN
-	a/0gDWjfRLzygKfBLYwcYt6GRu2VyOLdpuoemP6riGgGBqmy3JC99euwy4dl+S4pvdz36OJuQB7rb
-	jrK5UyUBvEyBfU8qPTF0mzIf7jHwnAGxeTXocAbuGkftwex+Xd/zb95uz/8JsAeRF+CoEJ/IuwT8y
-	nbc0MOSdURk5lR3VKbF4HUARyfsIJNUlXAZaIu5PXMbWX1bAAZA9kQZzLFFgvwMHtevqqdC0LIvhP
-	WHzZjvlw==;
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202005e2; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	 bh=SfpWKD2a6LdAE3bDsMOuLewgpHJmQTb14rJh+v4CFA8=; b=TZDRfOC+kKNsXt3e2GFuS6Jym
-	SoO00Bbi9E4N801iwr5507FhRVIFmR/svPu+dHt/AiJhhWhYhC53q2/PXY+AQ==;
-Message-ID: <20200720145721.GA105966@fullerene.field.pennock-tech.net>
-References: <CAH8yC8m+ZK9AZcYZ0vrSgSTjGsi1F5=hEX9phvSSxhuMbRDEFg@mail.gmail.com>
- <CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8=HihpJA+tHrk6TbXhiOOOC43ZDYTY+kpyESwDn0cc7zw@mail.gmail.com>
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/keys-2013rsa-2020cv25519.asc
-Cc: Jeffrey Walton <noloader@gmail.com>
-Date: Mon, 20 Jul 2020 10:57:21 -0400
-From: Phil Pennock <oss-security-phil@spodhuis.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Perl 5.32.0 mishandling of rpath and runpath tokens
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 18185 invoked from network); 10 Apr 2025 12:22:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akendo.eu; s=MBO0001;
+	t=1744287767;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=itzkq4TgG/Gdc6PRDMtr6uJWR0nlc5bmjvnYKleaYd0=;
+	b=By2QJ3GsjzZYJsBO2QhBDlr0dzpNFa421QsXnaaorsTuc1DRfEEFLWXH4Lqyq6Gfm2QqsR
+	hCnHo8EJRGIhhNJNVPMWMfi8zfhd6N6mF4+2O7Pwgn7TY7mlnkt3cqS3XP64A1eR9qPQMt
+	Av7xrGbcIBGS/dE2Lx/b+0q6KBJktnN5lqMKepPVsGiRS0/DDXwLJqiRCKEZ72Er9SK9xe
+	THr5B24HujemKf37viAXQNRohLXXktRoERM+n0wJX4CQSMM8eVC/oD4MibISHXp3TUkOAR
+	4aLZjlfz15/nptyL2pLpXl6t91zlnrFQQEF831z1Zva5MWYMt2tJX7Xve01S2w==
+From: "akendo@akendo.eu" <akendo@akendo.eu>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: Kernel CVE-2024-50217
+Thread-Index: AQHbqhLyJDDKZBF9g0aSSOJ7H+RjcQ==
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Thu, 10 Apr 2025 12:22:46 +0000
+Message-ID:
+	<VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator:
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+x-ms-reactions: allow
+Content-Type: multipart/alternative;
+	boundary="_000_VI0P189MB276612AABA4D5DB2B4018524AEB72VI0P189MB2766EURP_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-50217: Linux kernel: btrfs: Use-after-free of block device file in __btrfs_free_extra_devids()
 
-On 2020-07-20 at 04:33 -0400, Jeffrey Walton wrote:
-> On Mon, Jul 20, 2020 at 4:21 AM Jeffrey Walton <noloader@gmail.com> wrote:
-> >     -Wl,-R,$ORIGIN/../lib -Wl,-R,$HOME/tmp/ok2delete/lib
-> 
-> My bad... It does not matter how this $ORIGIN token is quoted. Perl
-> always expands it.
+--_000_VI0P189MB276612AABA4D5DB2B4018524AEB72VI0P189MB2766EURP_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 
-I've encountered this in build systems before, where the quoting is
-inconsistent and apparently can result in different levels of dequoting
-for a target depending upon how it was reached.
+Hey everyone,
 
-What I've used for building those has been to specify %ORIGIN instead of
-$ORIGIN and then binary-edit the resulting binary to switch that % back
-to a $.  All quoting issues disappear and all binary offsets are stable.
-Just make sure the binary-edit step is before any binary signing. :)
+Not too sure how or whom to ask about: But I saw that there is CVE-2024-502=
+17 that affects every kernel since 4.8.
 
-At some point, it's also worth considering static linking.
+However, it is only fixed on more recent version of the linux kernel like 6=
+.11 or 6.12. Any reason this wasn=92t backported to older kernel versions?
 
--Phil
+
+Best regards,
+Akendo
+
+--_000_VI0P189MB276612AABA4D5DB2B4018524AEB72VI0P189MB2766EURP_--
