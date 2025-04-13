@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1088" "Tuesday" "16" "June" "2015" "21:04:52" "+1000" "Michael Samuel" "mik@miknet.net" "<CACYkhxirraZ9g4HForJBSSTfckHXuinkrz3zwagW_jq0JKLUwA@mail.gmail.com>" "37" "Re: [oss-security] PostgreSQL - Predictable cancel key" nil nil nil "6" "2015061611:04:52" "[oss-security] PostgreSQL - Predictable cancel key" (number mark "        mik@miknet.n Jun 16   37/1088  " thread-indent "\"Re: [oss-security] PostgreSQL - Predictable cancel key\"\n") "<557FF729.9000109@reactos.org>" ("<20150613093351.GF11230@mail.waldi.eu.org>" "<557E8DA5.6080707@reactos.org>" "<20150615182632.GA22032@mail.waldi.eu.org>" "<557FF729.9000109@reactos.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32087 invoked by uid 550); 16 Jun 2015 11:05:25 -0000
+Received: (qmail 22084 invoked by uid 550); 13 Apr 2025 19:51:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +6,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32066 invoked from network); 16 Jun 2015 11:05:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=miknet.net; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=lJe8JKQ66EoqW9Ie5DN25pStC7A3w8jiF29suFbM7Xs=;
-        b=3JyPINuUaIqSdNfCVigFKLm8r3er8nPcqKSEHwurGh5F+9sQOFk5yspXLXOOErEgqd
-         Ggpi6LkrU/kPIO/k9HgsGzTkVb3XobOtsaxsWpAEVqbBTU2/fD1gpVJMct8Q3N0gp/d5
-         jwyuR6+RRqOpMov7D/h+m2Cm2/dfnmgE3k7mE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=lJe8JKQ66EoqW9Ie5DN25pStC7A3w8jiF29suFbM7Xs=;
-        b=fz764MTN76ogNeuXw+Bo/deyuq6tW5If7b17O21SiqbVQHYF70c4Nj4LZCYQY2+gxZ
-         WoMf7+YoNi3DBUXP6aHpIgIkDflnDdLQH15H6V6KATNP8zCjiF2cMEb9gxpJ4FA5buV1
-         CKNgzXJA8CIZatNSTFpguUNGtoKoMqj7luhh31nTsQUkECe3ttTT2RaBydh4+AJgcA3F
-         XYXGvk+hM8AwsQ6bN1s9QLVF6YQtpVDeKViTxoAPyLlMYF0t27XTJg0n+Dh0glUi+o7T
-         tgf2KpA3tY1tXl8+UiABxtnXZL/jOTil5pp/gi5GQcnZS32tqK3/XMLMAa5VLhmpOwyB
-         LKaQ==
-X-Gm-Message-State: ALoCoQmBWIC086I2irUE3wppBZH+S8Hf+v/i8cpOs+HNQqVw/QhLce6vZyjBr8D71z/nyLnouyE0
-X-Received: by 10.50.138.136 with SMTP id qq8mr27088221igb.27.1434452713214;
- Tue, 16 Jun 2015 04:05:13 -0700 (PDT)
-MIME-Version: 1.0
-X-Originating-IP: [202.147.141.11]
-In-Reply-To: <557FF729.9000109@reactos.org>
-References: <20150613093351.GF11230@mail.waldi.eu.org> <557E8DA5.6080707@reactos.org>
- <20150615182632.GA22032@mail.waldi.eu.org> <557FF729.9000109@reactos.org>
-Message-ID: <CACYkhxirraZ9g4HForJBSSTfckHXuinkrz3zwagW_jq0JKLUwA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e0111be1c6b2b770518a08cc9
-Date: Tue, 16 Jun 2015 21:04:52 +1000
-From: Michael Samuel <mik@miknet.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] PostgreSQL - Predictable cancel key
+x-ms-reactions: disallow
+Received: (qmail 3319 invoked from network); 13 Apr 2025 19:32:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
+	t=1744572752;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NyNABuKJ7+uVTWIv0SbDHwrwyvtCsSyF/BFPLpwYRvg=;
+	b=FQU99Cl26s1Bj3Xa+8MV9dQfJWFsyt3Z0SK/JzKiw5j3MkToEArkDqKy09WUTG+5h7Qtke
+	JjpxAbBHnsb9GJCijjm6+d+rehiSGlZITWR0ekw8DsQmEbWW5AosvjYkFyXX0V+JCGeI9a
+	fkX7MKYG70SpfoTQf2wtbbn85nq9OnXmmz/ESYSux87vOhtQc/LKAhbOGqB9nhP8ma6xT3
+	68NdogkVMgDsLD0e4TRDvnhr/+LFOnYbnB0nZHVCdf95RBVeA/IVQRRLhhA3BcaZCR6DMh
+	9fmRrjT4jRJdwXKUIus88P80GfG2OOjTuOCK5lkzTwZsg5oqTl2aT/d/kbWJUg==
+Date: Sun, 13 Apr 2025 21:32:31 +0200
+From: Stig Palmquist <stig@stig.io>
 To: oss-security@lists.openwall.com
+Message-ID: <ra5dq7grenapn6i4u4wjdogxpxaqhqpbhwu3hhj4bovr42pad6@zta4tml47irw>
+References: <gawci7t5wtkbk3kj3d3wjqqyy6jshli6mnyimynu5cngjvtm72@chxdlvz3vhsi>
+ <20250413144759.GA18912@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250413144759.GA18912@openwall.com>
+Subject: Re: [oss-security] CVE-2024-56406: Perl 5.34, 5.36, 5.38 and 5.40
+ are vulnerable to a heap buffer overflow when transliterating non-ASCII
+ bytes
 
---089e0111be1c6b2b770518a08cc9
-Content-Type: text/plain; charset=UTF-8
+On 2025-04-13 16:47, Solar Designer wrote:
+[..]
+> As it was mentioned in the advance notification to distros, the issue
+> was introduced in:
+> 
+> https://github.com/Perl/perl5/commit/a311ee08b6781f83a7785f578a26bbc21a7ae457
+> 
+> which is part of tags v5.33.1 to v5.41.10, so I guess those versions are
+> also affected.  The fix commit is effectively a revert of the bug commit.
 
-Hi,
+Hi Alexander,
 
-On 16 June 2015 at 20:15, Pierre Schweitzer <pierre@reactos.org> wrote:
+Thank you for the feedback. We only considered release branches for the
+affected versions.
 
-> Well, I've thought about it, but that's still one million seeds and
-> the cancel key you're looking for might have been generated after
-> several random() call. So, that means perhaps 10 millions values to
-> explore? (If we make the hypothesis that for a given initialization,
-> it will only draw 10 PRN)
->
+To fix this, the CVE record has been updated to take into account
+development versions and release candidates:
 
-This is CPU, maybe GPU territory. 2^15-2 * 10m =~ 2^38 work offline.
+      Versions:  from 5.41.0 through 5.41.10
+                 from 5.39.0 before 5.40.2-RC1
+                 from 5.33.1 before 5.38.4-RC1
 
-
-> How relevant would still be your cancel key once you found it?
-
-
-In the postmaster mainloop:
-
-ConnCreate()
-    RandomSalt() -- the md5Salt craziness in the original post
-BackendStartup()
-    MyCancelKey = PostmasterRandom();
-
-No other calls to random(), srandom() that I can see, and the other calls
-to PostmasterRandom() are generating cancel keys for worker procs.
-
-So if you brute the md5Salt you have a pretty good chance of guessing
-something that was/is/will be a cancel key of another session.
-
-Regards,
-  Michael
-
---089e0111be1c6b2b770518a08cc9--
+Best,
+-- 
+Stig Palmquist
