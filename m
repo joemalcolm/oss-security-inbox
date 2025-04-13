@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["587" "Wednesday" "23" "January" "2019" "14:21:30" "-0800" "Mike Jumper" "mjumper@apache.org" "<CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>" "17" "[oss-security] CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie" nil nil nil "1" "2019012322:21:30" "[oss-security] CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie" (number mark "U       mjumper@apac Jan 23   17/587   " thread-indent "\"[oss-security] CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28349 invoked by uid 550); 24 Jan 2019 07:31:02 -0000
+Received: (qmail 13648 invoked by uid 550); 13 Apr 2025 01:43:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22283 invoked from network); 23 Jan 2019 22:22:23 -0000
-X-Gm-Message-State: AJcUukdZDZjSKZlA0usY1Y6SXBqLIMaYQZwIGgNts2zkS6vBVC5TiPni
-	6TkrDIajst+aUD7C5LuKPfr550GtLcIAoXqwMf4c7w==
-X-Google-Smtp-Source: ALg8bN4XB4nPLvU+Zrwlg4rJdu/zUidtlI1poywZaOLC7YWzSu9gdROqwin70pk1d+QfWgRE1fdg/fEm7W7bzQ72M0M=
-X-Received: by 2002:aca:af53:: with SMTP id y80mr2617837oie.170.1548282129047;
- Wed, 23 Jan 2019 14:22:09 -0800 (PST)
-MIME-Version: 1.0
-From: Mike Jumper <mjumper@apache.org>
-Date: Wed, 23 Jan 2019 14:21:30 -0800
-X-Gmail-Original-Message-ID: <CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>
-Message-ID: <CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 13337 invoked from network); 13 Apr 2025 01:43:32 -0000
+Date: Sun, 13 Apr 2025 03:41:42 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
+Message-ID: <20250413014142.GA17270@openwall.com>
+References: <2add2962-34f5-4b4c-abfe-f780501c3a4e@oracle.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2add2962-34f5-4b4c-abfe-f780501c3a4e@oracle.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Security audit of PHP
 
-CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
+Hi,
 
-Versions affected:
-Apache Guacamole 0.9.4 through 0.9.14
+Thank you for bringing this in here, Alan!
 
-Description:
-Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
-of the user's session token. This cookie lacked the "secure" flag,
-which could allow an attacker eavesdropping on the network to
-intercept the user's session token if unencrypted HTTP requests are
-made to the same domain.
+On Sat, Apr 12, 2025 at 08:58:59AM -0700, Alan Coopersmith wrote:
+> https://blog.quarkslab.com/security-audit-of-php-src.html announces the
+> completion of a security audit of PHP by Quarkslab, thanks to funding
+> provided by Sovereign Tech Fund to The Open Source Technology Improvement 
+> Fund.
+> 
+> The blog provides details and a link to the audit report for more.
+> The summary it provides of the findings is:
+> 
+> >    2 security issues considered as high severity;
+> >    6 security issues considered as medium severity;
+> >    9 security issues considered as low severity;
+> >    10 issues considered informative.
 
-Mitigation:
-Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
+The PHP Foundation's blog post gives slightly different breakdown by
+severity, with "3 High-severity" and "5 Medium-severity".
 
-Credit:
-We would like to thank Ross Golder for reporting this issue.
+> CVE-2024-8928 is still marked reserved & not yet published, the report 
+> lists it as "Details to be shared after fixes are applied".
+> 
+> The Quarkslab blog also points to corresponding blogs from the PHP 
+> Foundation
+> and the Open Source Technology Improvement Fund at:
+> https://thephp.foundation/blog/2025/04/10/php-core-security-audit-results/
+> https://ostif.org/php-audit-complete/
+
+This mystery CVE is listed with a brief description in the PHP
+Foundation's blog post above:
+
+CVE-2024-8928: Memory-related vulnerability in PHP's filter handling,
+leading to segmentation faults.
+
+Alexander
