@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["416" "Friday" "31" "July" "2015" "12:04:05" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<55BB16DD.2000206@redhat.com>" "13" "[oss-security] CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" nil nil nil "7" "2015073106:34:05" "[oss-security] CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" (number mark "        huzaifas@red Jul 31   13/416   " thread-indent "\"[oss-security] CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9551 invoked by uid 550); 31 Jul 2015 06:21:23 -0000
+Received: (qmail 26147 invoked by uid 550); 13 Apr 2025 14:48:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,31 +6,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9520 invoked from network); 31 Jul 2015 06:21:21 -0000
-Message-ID: <55BB16DD.2000206@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Date: Fri, 31 Jul 2015 12:04:05 +0530
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: freeradius: the EAP-PWD module performs insufficient
- validation on packets received from an EAP peer
+x-ms-reactions: disallow
+Received: (qmail 25872 invoked from network); 13 Apr 2025 14:48:03 -0000
+Date: Sun, 13 Apr 2025 16:47:59 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Stig Palmquist <stig@stig.io>
+Message-ID: <20250413144759.GA18912@openwall.com>
+References: <gawci7t5wtkbk3kj3d3wjqqyy6jshli6mnyimynu5cngjvtm72@chxdlvz3vhsi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <gawci7t5wtkbk3kj3d3wjqqyy6jshli6mnyimynu5cngjvtm72@chxdlvz3vhsi>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2024-56406: Perl 5.34, 5.36, 5.38 and 5.40 are vulnerable to a heap buffer overflow when transliterating non-ASCII bytes
 
-The FreeRADIUS project has reported a flaw that affects the EAP-PWD
-module of the freeradius package versions 3.0 up to 3.0.8. This module
-is not enabled by default, so administrators must have manually enabled
-it for their servers to be vulnerable.
+Hi Stig,
 
-Reference:
-http://freeradius.org/security.html#eap-pwd-2015
+Thank you for handling this disclosure so well!
 
-Can a CVE id be please assigned to this flaw?
+On Sun, Apr 13, 2025 at 03:23:25PM +0200, Stig Palmquist wrote:
+> Perl 5.34, 5.36, 5.38 and 5.40 are vulnerable to a heap buffer overflow
+> when transliterating non-ASCII bytes
+> 
+> Description
+> -----------
+> A heap buffer overflow vulnerability was discovered in Perl. 
+> 
+> When there are non-ASCII bytes in the left-hand-side of the `tr`
+> operator, `S_do_trans_invmap` can overflow the destination pointer `d`.
+> 
+>    $ perl -e '$_ = "\x{FF}" x 1000000; tr/\xFF/\x{100}/;' 
+>    Segmentation fault (core dumped)
 
+Running this command on distro packages based on 5.32.1 (like in EL9)
+does not segfault (produces no output), which is as expected for a
+version that didn't yet have the bug (and assuming no bug backport).
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+> https://github.com/Perl/perl5/commit/87f42aa0e0096e9a346c9672aa3a0bd3bef8c1dd.patch
+
+As it was mentioned in the advance notification to distros, the issue
+was introduced in:
+
+https://github.com/Perl/perl5/commit/a311ee08b6781f83a7785f578a26bbc21a7ae457
+
+which is part of tags v5.33.1 to v5.41.10, so I guess those versions are
+also affected.  The fix commit is effectively a revert of the bug commit.
+
+Alexander
