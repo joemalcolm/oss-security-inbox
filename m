@@ -1,4 +1,4 @@
-Received: (qmail 4015 invoked by uid 550); 28 Jan 2026 16:13:51 -0000
+Received: (qmail 7447 invoked by uid 550); 16 Apr 2025 18:55:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,127 +8,85 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 7687 invoked from network); 28 Jan 2026 07:57:38 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1769587047; cv=none;
-        d=google.com; s=arc-20240605;
-        b=aSM9RLj15GubGdiRg+5nlZ6LwLZw7Q9Sm6JdedF1FUenNNBAoBIoDLrWFi6ZD+G/n8
-         owGebOSiFf5uZWNdrSLOgewMZuEflYLRSLL4eb3yr8R6Gf+B9EQv1JBH3Y7f01IrnIz6
-         d6vMJrnCoKUwk716Q0wPmYzPkXJ3PwTKZ00n5U++vKx0R8J7Tj0z1wcHwrF6rNzK57TQ
-         5FpX8mKBw8p9mV6VK63gmiGtv74NuoJUorVDUwZ7wVxc7s1DNP88pQzurZv3r8J57jPT
-         eibhQUlghjjXiOqvnMVlj0FfaUkN+0Gz6fjvNcb7zEimBZL/oJMGSFU8dElpmMzB//LW
-         P0Wg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=JawCjF/0ksuKf5VcEE0WZSO8BevcV4XOLyQ2BBBh2vY=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=Jj9LhwyE2PzEqcCEDZVfehjc3RSa8EGkmTXgJuQS471vRToh8dWVdDig1JMZOIC0++
-         Q82aByHJnsMdxQ9XuwnLmC8i6mgtAbMs0HEoLt7mznA84+hSb/0S2KuFyDumjbalcjt0
-         tMQ9jkm0UilxKANUATZTZYy2MHevigeK/PhfBK3ZgMd/qcUcDgP2kwD6Q9nQTgA0Mjyl
-         /wu4vcizHxVVHlyRRFF6g12/aeXrNvDY/MstMtzvukm5TtrXhBJIYIgUV0r9zi0gnQN7
-         EPJXJLFSUT1gNZ2cby4JN+Zmx91CZpSUnnozNf6lUnGZcETTFTHoaIJTk+DPsUl5J9Dg
-         ns/A==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769587047; x=1770191847; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JawCjF/0ksuKf5VcEE0WZSO8BevcV4XOLyQ2BBBh2vY=;
-        b=SlPKho9FGTNDQKb4Rz7rwlWoUOW48ZUxcjSbaA8AFY1mIXmY4yEQayYK/0ea7Abf8A
-         UAFmS6pEuFJc1QX/0RZ+9Ci2n9KkJePQDAypi16/ZR9/8FMaAAQOoQGD1laK8BKscHM+
-         8MhVgoOpYgR4nW3jn0wNnGMeeRY6BzjdJ8UisUykjis9S3OU8Eo6RuT9k7/eVExDm0LR
-         K2xujQHLr87golZvJevvXd1E3z4ZKnep4ZsO0lauBjRLAEHhwT4apM5R+Mk+io53FyIc
-         /7Uscs28sSavVqBAaPNdb4uvGYHj9DY7gHNWzt/fISxdK+HPH7mv1R+8pb6l6vOCY1TX
-         uh/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769587047; x=1770191847;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=JawCjF/0ksuKf5VcEE0WZSO8BevcV4XOLyQ2BBBh2vY=;
-        b=grjr7PNCcieWqhZVqdbXilT+sSGfkjPsHdQghJ09cq4jqKhzqjKMLa/a+1kapwJ02s
-         qeNHPTvervzDYdQLQJbZwBT0tiGCh1+SH7gxB7htYqWBnL1BIr+tWbEF+T8AUxhUrPKA
-         VkRaFV1tDFGymdjHgy9QNOQVh8qjDBjBAiWNlUlAFGi95WCRmC+/ycOlveacHOfoXqq4
-         8pKZmamdKECevqdcK+lD+NfniMb9DCO9EUVJFBU6XCmeaMNIniDZr7QzYulwskI8mdxb
-         PVskvxk3dFuBUgSP5vj3T9kfU4v9Ny0R8JmD5xrZvrixxZlAP1GwwSME9iKCnycEZB7Y
-         N1FA==
-X-Gm-Message-State: AOJu0YyW3CC5H/8/g0+l6mkJVr+3S0IQX4JQbDLc4UhweSYo7H56AXxo
-	zAqg82Wc5bzI4cMsIO9vw1QpS85xnC/9ZUzoMz84bFnWPObuGVzIZyqRHsh7nfTlvMl5jCnCVfh
-	Zp90ksq+6vlGIx3Mm6N7tPIato2wVJUiHDn/Zd9jQ3A==
-X-Gm-Gg: AZuq6aKx2WmTup6VnGhyLr9fnmdhVL8G/q+Ic31+p8ZzKr2XCh3zt+5W7q2Qd+0L6k1
-	7hto8lYnwaxce8GgOR8+1Z+8J6sSGOgI4LVl7Tsp0d8mh1uT2eENkTyWpupqtI6WFakM5VQ6aJu
-	1E3h4+ctrNXTXqbx30GS+jryPo2JCuN/xbckYXvK/jgBe0F+hSVFSLeiMoHAwcymopg48daPmLY
-	6JuFdO0ncDYEsrtmFl3XXOvqT+sH5vP5hOQlMg6Pcuixz8luDiq6jUzbAHUwy7R3J4H+Jqq
-X-Received: by 2002:a05:651c:b0f:b0:380:a1c:7039 with SMTP id
- 38308e7fff4ca-3862af0bbefmr2345721fa.0.1769587046453; Tue, 27 Jan 2026
- 23:57:26 -0800 (PST)
+Received: (qmail 5575 invoked from network); 16 Apr 2025 14:57:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1744815442; x=1745420242; i=rolf.reintjes@web.de;
+	bh=nmFvaAXT/E8DUIcVt5eNvbG6p1XHCxpk6DhuaWmVdE8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=JeOF078Sq6Ffl6+bJi9+3fNeefKad6p3xi2qevsSCrTVy7Bc3bwfTgRwrRkoF+Mn
+	 ZkHYa8hAe6W/WlRbrR7C9SelshOgTs12ED0k6tgEgPptd5xxQOoZnL8Kn/usyQUDc
+	 IxQbKQ+qjOhuXaiTStLnHJbVx/aDj/W2vg4K1Z4vFAKnUWkWa9l4HiL/h+cJvAqfz
+	 wVGh9Jm+QmBCbzoANTs45KkohiwRx7ZvxIsiJovouWjA6Jo3VuMHmzJvAEKkNET+d
+	 xqwjtc7cRphsYp+tqrVBztOGpo7eoyyoa9vy9wVsNB6XgSiL+UpyOy/inG6bGHXAR
+	 hG5Ul4RTMjMxKdUy/Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Message-ID: <ebb379a4-03d6-491f-9e93-fc724f597a81@web.de>
+Date: Wed, 16 Apr 2025 16:57:20 +0200
 MIME-Version: 1.0
-References: <CAPmip_w_x-4qSOH-8TAUH9vtz6M+oh+fCcwptqsp7zqj6OBmpQ@mail.gmail.com>
-In-Reply-To: <CAPmip_w_x-4qSOH-8TAUH9vtz6M+oh+fCcwptqsp7zqj6OBmpQ@mail.gmail.com>
-From: cyber security <cs7778503@gmail.com>
-Date: Wed, 28 Jan 2026 07:57:15 -0800
-X-Gm-Features: AZwV_Qio_2k2GQ2Jds1ibSnf96O9_Dz_v5t_9swivLiKlf0WoM4KYgosXe9gQIA
-Message-ID: <CAPmip_yNY76cDYU3v=34vYnR2JxyGmDjpjW5d11tzSqSnXrzcw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Clarification: rbash escape via history built-ins
+From: Rolf Reintjes <rolf.reintjes@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:YStarg2piOuQZ1zb+qOuMX+9pYvBGcl/1hlStYCdFtXtyfzv2Pa
+ HBZCg3z/RAro7g2PBjiyghdB7HmDL1bo4ZG2YNIrRRnGnmeVz5KtifGwKo6ya2/u1ApyxJ6
+ MO3BkdUz99ZsiH97DFHXxNH1KLszBYQ9y/ikjI83Ykuy/4H2oG9WDtoSTCpTrWZGackZa6k
+ Fr+y8dpXQEc5TpaSLGXCw==
+UI-OutboundReport: notjunk:1;M01:P0:9vEK0UV52QI=;dR9cMvr6bPmyeW7YLJE6h0wzhcb
+ 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
+Subject: [oss-security] CVE program averts swift end
 
-Subject: [oss-security] Follow-up: rbash escape via history built-ins
+Hello,
 
-In my earlier message I described how `history -w` can overwrite startup
-files in $HOME, breaking confinement in restricted bash.
+any comments on this?:
 
-To add one clarification: even if administrators place users in an
-unwritable subdirectory (e.g., $HOME/restricted), symlinks from that
-directory back into writable $HOME files (such as .profile) can re-expose
-the same vulnerability. This means that simply making the working
-directory unwritable is insufficient if symlinks escape into writable
-locations.
+https://www.csoonline.com/article/3963190/cve-program-faces-swift-end-after-dhs-fails-to-renew-contract-leaving-security-flaw-tracking-in-limbo.html
 
-Recommendation: Restricted environments should ensure $HOME itself is
-unwritable, or that the non-writable directory lacks symlinks into
-writable paths. This complements the earlier advice about history-writing
-built-ins.
+Best regards
 
--- RelunSec
+Rolf
 
-On Tue, Jan 27, 2026 at 3:33=E2=80=AFPM cyber security <cs7778503@gmail.com=
-> wrote:
->
-> Summary:
-> Restricted Bash (rbash) blocks output redirection to prevent file modific=
-ation.
-> However, history-writing built-ins (`history -w`, `history -a`) can overw=
-rite
-> startup files such as .profile if the restricted user is left in $HOME.
-> This allows PATH resets and escape from confinement.
->
-> Steps to reproduce:
-> 1. Start rbash in $HOME with writable .profile.
-> 2. Run: history -w .profile
-> 3. On next login, .profile is sourced, PATH is reset, confinement is brok=
-en.
->
-> Discussion:
-> The Bash manual notes administrators must configure restricted environmen=
-ts
-> carefully (unwritable $HOME, different working directory, restricted PATH=
-).
-> However, this particular escape vector is not documented in common guides
-> (e.g., https://0xffsec.com/handbook/shells/restricted-shells/).
->
-> Recommendation:
-> While consistent with current design, administrators should be aware that
-> history-writing built-ins can modify files in the current directory.
-> Restricted environments should ensure $HOME is unwritable or place users
-> in a safe subdirectory.
->
-> References:
-> GNU Bash manual:
-> https://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.h=
-tml
->
-> -- RelunSec
