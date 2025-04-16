@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1034" "Saturday" "24" "June" "2017" "16:57:14" "+0200" "Solar Designer" "solar@openwall.com" "<20170624145714.GA30830@openwall.com>" "19" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062414:57:14" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 24   19/1034  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>" "<20170621122526.GA32701@grsecurity.net>" "<20170621135727.GA12852@openwall.com>" "<20170621212742.GA28766@grsecurity.net>" "<20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3501 invoked by uid 550); 24 Jun 2017 14:57:35 -0000
+Received: (qmail 15442 invoked by uid 550); 16 Apr 2025 22:59:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +6,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3279 invoked from network); 24 Jun 2017 14:57:17 -0000
-Message-ID: <20170624145714.GA30830@openwall.com>
-References: <20170619152843.GC7769@localhost.localdomain> <14558692.afnJ5aRU9J@wanheda> <20170621122526.GA32701@grsecurity.net> <20170621135727.GA12852@openwall.com> <20170621212742.GA28766@grsecurity.net> <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
-User-Agent: Mutt/1.4.2.3i
-Date: Sat, 24 Jun 2017 16:57:14 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+x-ms-reactions: disallow
+Received: (qmail 19912 invoked from network); 16 Apr 2025 19:38:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=behlendorf.com;
+ h=Content-Type: MIME-Version: References: Message-ID: In-Reply-To:
+ Subject: To: From: Date; q=dns/txt; s=fe-c91d36cdc9; t=1744832323;
+ bh=9JrXLLAjktVmIM68Kpe1nOzmmIMUo5gBNjbBo1kciPw=;
+ b=IeUJeDJu9lNb72S/A9ykW8K338D/UgGa4LjDCddyE63y20eBVAJnjmMYYWJoF3iQv8kdiOrkw
+ HvRZIOQV/gEikmWf1Wi7075z56+/FHmkRkr0tl6fU1vXGDNSGjtC8/P3jmRs4b8IhItHxc3zPmE
+ W6UX+sXIjsWr6XapybRz4iY=
+X-Forward-Email-ID: 6800073f042f8c9b32125d00
+X-Forward-Email-Sender: rfc822; brian@behlendorf.com,
+ smtp.forwardemail.net, 149.28.215.223
+X-Forward-Email-Version: 1.0.2
+X-Forward-Email-Website: https://forwardemail.net
+X-Complaints-To: abuse@forwardemail.net
+X-Report-Abuse: abuse@forwardemail.net
+X-Report-Abuse-To: abuse@forwardemail.net
+Date: Wed, 16 Apr 2025 12:38:38 -0700 (PDT)
+From: Brian Behlendorf <brian@behlendorf.com>
 To: oss-security@lists.openwall.com
+In-Reply-To: <ebb379a4-03d6-491f-9e93-fc724f597a81@web.de>
+Message-ID: <3440a686-5dca-fd31-70a0-4f47da438ee5@behlendorf.com>
+References: <ebb379a4-03d6-491f-9e93-fc724f597a81@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: Re: [oss-security] CVE program averts swift end
 
-On Wed, Jun 21, 2017 at 08:26:05PM -0400, Mike O'Connor wrote:
-> In the past, I've proposed that the embargo mailing list archives
-> themselves have an "embargo", after which they become public.  That
-> way, there's after-the-fact transparency, and it gives the folks who
-> care a good idea of what happened.  Is there anything sensitive at
-> this point in, say, the March 2017 linux-distros archives??
+On Wed, 16 Apr 2025, Rolf Reintjes wrote:
+> any comments on this?:
+>
+> https://www.csoonline.com/article/3963190/cve-program-faces-swift-end-after-dhs-fails-to-renew-contract-leaving-security-flaw-tracking-in-limbo.html
 
-There shouldn't be anything sensitive in old archives, such as in your
-example.  Technically, we can easily extract and make public the message
-Subjects.  For full messages, we need a way to mass-decrypt an mbox
-containing PGP/MIME messages.  Maybe I should list implementing a
-program that would do that(*) as one of the options that a new distros
-list member could choose as their contribution back to the community.
+Dodged a bullet for now, it seems, but it'll be a long time before USG 
+sustainance funding for something this obvious can be taken for granted. 
+At this point might USG funding even be unreliable enough to account for 
+as a receivable on a balance sheet even in the presence of a signed 
+contract and for work performed.
 
-(*) Mutt hack maybe?  Mutt processes those messages great, so having it
-output them in decrypted form into another mbox and automatically loop
-over all messages in the input mbox might do the trick.
+For critical infrastructure that requires sustained funding, it seems more 
+important than ever to move to RAID - a Redundant Array of Independent 
+Donors - so as to avoid the complete and total cut-off of any one (or a 
+handful) of financial supporters that could collapse the system. I assume 
+(hope?) that MITRE is pursuing alternative sources right now; if not, 
+someone else should be.
 
-Alexander
+Brian
+
