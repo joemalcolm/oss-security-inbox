@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2711" "Wednesday" "4" "October" "2017" "08:06:26" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1710040802440.5528@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY ADVISORY] curl: FTP PWD response parser out of bounds read" "^Date:" nil nil "10" "2017100406:06:26" "[oss-security] [SECURITY ADVISORY] curl: FTP PWD response parser out of bounds read" (number mark "U       daniel@haxx. Oct  4   89/2711  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: FTP PWD response parser out of bounds read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13847 invoked by uid 550); 4 Oct 2017 06:06:39 -0000
+Received: (qmail 24481 invoked by uid 550); 16 Apr 2025 17:37:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +6,188 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13807 invoked from network); 4 Oct 2017 06:06:38 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-Message-ID: <alpine.DEB.2.20.1710040802440.5528@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Date: Wed, 4 Oct 2017 08:06:26 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY ADVISORY] curl: FTP PWD response parser out of bounds
- read
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 25854 invoked from network); 16 Apr 2025 17:29:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rub.de; s=mail-2024;
+	t=1744824543; bh=+59Zf/IvCCP9hgDVlk9/U5WrXwhtIJaPjx4t3jFbxyw=;
+	h=Date:To:From:Subject:From;
+	b=DODmuGYwFSX/Xv/9Gb+eq4m2+NQAft4hzV0JImpJm4PMfike7+KP7/FhNw5uM8pC2
+	 /pATO3Jg7NfPA4lviilzSPSMzSBZtA/Ou5BHn2j4qfRYpd+JMbaXlu0KfWjSzANeXI
+	 dLlDNSJqiOcHovytY/OYPHY3SkG9gfKhNf4tfa2sP2r69Gz0mRN9X2S4gxFQSjbDza
+	 eHvpsIdxzdmh2X/daILG/7VUrZFGmpduXKj1lQ+DmBmzWlAHqdzSXaHFT4SXy0LlhG
+	 0gi/gWVLJ7+CdtTIlY6w1bTsHI9WaFyxb0UdKGSbkl/ZZdo3fmOo3Js60/R6Ip2vbn
+	 ss07jfetyZA0Q==
+X-Envelope-Sender: <fabian.baeumer@rub.de>
+X-RUB-Notes: Internal origin=134.147.42.236
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 1.0.8 at mx3.mail.ruhr-uni-bochum.de
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 1.4.1 at mail2.mail.ruhr-uni-bochum.de
+Message-ID: <088f2e26-c56c-4045-a822-359d468cad2f@rub.de>
+Date: Wed, 16 Apr 2025 19:28:58 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB, de-DE
+To: oss-security@lists.openwall.com
+From: =?UTF-8?Q?Fabian_B=C3=A4umer?= <fabian.baeumer@rub.de>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms090001090605000708040803"
+Subject: [oss-security] CVE-2025-32433: Unauthenticated Remote Code Execution in Erlang/OTP
+ SSH
 
-FTP PWD response parser out of bounds read
-==========================================
+--------------ms090001090605000708040803
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Project curl Security Advisory, October 4th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_20171004.html)
+SGkgYWxsLA0KDQp3ZSAoRmFiaWFuIELDpHVtZXIsIE1hcmN1cyBCcmlua21hbm4sIE1hcmNlbCBN
+YWVocmVuLCBKw7ZyZyBTY2h3ZW5rIChSdWhyIA0KVW5pdmVyc2l0eSBCb2NodW0pKSBmb3VuZCBh
+IGNyaXRpY2FsIHNlY3VyaXR5IHZ1bG5lcmFiaWxpdHkgaW4gdGhlIA0KRXJsYW5nL09UUCBTU0gg
+aW1wbGVtZW50YXRpb24uIFRoZSB2dWxuZXJhYmlsaXR5IGFsbG93cyBhbiBhdHRhY2tlciB3aXRo
+IA0KbmV0d29yayBhY2Nlc3MgdG8gYW4gRXJsYW5nL09UUCBTU0ggc2VydmVyIHRvIGV4ZWN1dGUg
+YXJiaXRyYXJ5IGNvZGUgDQp3aXRob3V0IHByaW9yIGF1dGhlbnRpY2F0aW9uLiBUaGlzIHZ1bG5l
+cmFiaWxpdHkgaGFzIGJlZW4gYXNzaWduZWQgDQpDVkUtMjAyNS0zMjQzMyB3aXRoIGFuIGVzdGlt
+YXRlZCBDVlNTdjMgb2YgMTAuMCANCihDVlNTOjMuMS9BVjpOL0FDOkwvUFI6Ti9VSTpOL1M6Qy9D
+OkgvSTpIL0E6SCkuIFRoZSBpc3N1ZSBpcyBjYXVzZWQgYnkgYSANCmZsYXcgaW4gdGhlIFNTSCBw
+cm90b2NvbCBtZXNzYWdlIGhhbmRsaW5nIHdoaWNoIGFsbG93cyBhbiBhdHRhY2tlciB0byANCnNl
+bmQgY29ubmVjdGlvbiBwcm90b2NvbCBtZXNzYWdlcyBwcmlvciB0byBhdXRoZW50aWNhdGlvbi4N
+Cg0KIyMjIEFtIEkgYWZmZWN0ZWQ/DQoNCkFsbCB1c2VycyBydW5uaW5nIGFuIFNTSCBzZXJ2ZXIg
+YmFzZWQgb24gdGhlIEVybGFuZy9PVFAgU1NIIGxpYnJhcnkgYXJlIA0KbGlrZWx5IHRvIGJlIGFm
+ZmVjdGVkIGJ5IHRoaXMgdnVsbmVyYWJpbGl0eS4gSWYgeW91ciBhcHBsaWNhdGlvbiB1c2VzIA0K
+RXJsYW5nL09UUCBTU0ggdG8gcHJvdmlkZSByZW1vdGUgYWNjZXNzLCBhc3N1bWUgeW91IGFyZSBh
+ZmZlY3RlZC4NCg0KIyMjIEltcGFjdA0KDQpUaGUgdnVsbmVyYWJpbGl0eSBhbGxvd3MgYW4gYXR0
+YWNrZXIgdG8gZXhlY3V0ZSBhcmJpdHJhcnkgY29kZSBpbiB0aGUgDQpjb250ZXh0IG9mIHRoZSBT
+U0ggZGFlbW9uLiBJZiB5b3VyIFNTSCBkYWVtb24gaXMgcnVubmluZyBhcyByb290LCB0aGUgDQph
+dHRhY2tlciBoYXMgZnVsbCBhY2Nlc3MgdG8geW91ciBkZXZpY2UuIENvbnNlcXVlbnRseSwgdGhp
+cyANCnZ1bG5lcmFiaWxpdHkgbWF5IGxlYWQgdG8gZnVsbCBjb21wcm9taXNlIG9mIGhvc3RzLCBh
+bGxvd2luZyBmb3IgDQp1bmF1dGhvcml6ZWQgYWNjZXNzIHRvIGFuZCBtYW5pcHVsYXRpb24gb2Yg
+c2Vuc2l0aXZlIGRhdGEgYnkgdGhpcmQgDQpwYXJ0aWVzLCBvciBkZW5pYWwtb2Ytc2VydmljZSBh
+dHRhY2tzLg0KDQojIyMgTWl0aWdhdGlvbg0KDQpVc2VycyBhcmUgYWR2aXNlZCB0byB1cGRhdGUg
+dG8gdGhlIGxhdGVzdCBhdmFpbGFibGUgRXJsYW5nL09UUCByZWxlYXNlLiANCkZpeGVkIHZlcnNp
+b25zIGFyZSBPVFAtMjcuMy4zLCBPVFAtMjYuMi41LjExLCBhbmQgT1RQLTI1LjMuMi4yMC4gQXMg
+YSANCnRlbXBvcmFyeSB3b3JrYXJvdW5kLCBhY2Nlc3MgdG8gdnVsbmVyYWJsZSBTU0ggc2VydmVy
+cyBjYW4gYmUgcHJldmVudGVkIA0KYnkgc3VpdGFibGUgZmlyZXdhbGwgcnVsZXMuDQoNCiMjIyBB
+ZHZpc29yeQ0KDQpBbiBvZmZpY2lhbCBhZHZpc29yeSBpcyBhdmFpbGFibGUgb24gR2l0SHViOiAN
+Cmh0dHBzOi8vZ2l0aHViLmNvbS9lcmxhbmcvb3RwL3NlY3VyaXR5L2Fkdmlzb3JpZXMvR0hTQS0z
+N2NwLWZncTUtN3djMg0KDQpCZXN0IHJlZ2FyZHMsDQoNCkZhYmlhbiBCw6R1bWVyDQoNCi0tIA0K
+TS4gU2MuIEZhYmlhbiBCw6R1bWVyDQoNCkNoYWlyIGZvciBOZXR3b3JrIGFuZCBEYXRhIFNlY3Vy
+aXR5DQpSdWhyIFVuaXZlcnNpdHkgQm9jaHVtDQpVbml2ZXJzaXTDpHRzc3RyLiAxNTAsIEJ1aWxk
+aW5nIE1DIDQvMTQ1DQo0NDc4MCBCb2NodW0NCkdlcm1hbnkNCg0K
 
-VULNERABILITY
--------------
+--------------ms090001090605000708040803
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: Kryptografische S/MIME-Signatur
 
-libcurl may read outside of a heap allocated buffer when doing FTP.
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCCEeww
+ggUSMIID+qADAgECAgkA4wvV+K8l2YEwDQYJKoZIhvcNAQELBQAwgYIxCzAJBgNVBAYTAkRFMSsw
+KQYDVQQKDCJULVN5c3RlbXMgRW50ZXJwcmlzZSBTZXJ2aWNlcyBHbWJIMR8wHQYDVQQLDBZULVN5
+c3RlbXMgVHJ1c3QgQ2VudGVyMSUwIwYDVQQDDBxULVRlbGVTZWMgR2xvYmFsUm9vdCBDbGFzcyAy
+MB4XDTE2MDIyMjEzMzgyMloXDTMxMDIyMjIzNTk1OVowgZUxCzAJBgNVBAYTAkRFMUUwQwYDVQQK
+EzxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVuIEZvcnNjaHVuZ3NuZXR6ZXMg
+ZS4gVi4xEDAOBgNVBAsTB0RGTi1QS0kxLTArBgNVBAMTJERGTi1WZXJlaW4gQ2VydGlmaWNhdGlv
+biBBdXRob3JpdHkgMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtg1/9moUHN0vqH
+l4pzq5lN6mc5WqFggEcVToyVsuXPztNXS43O+FZsFVV2B+pG/cgDRWM+cNSrVICxI5y+NyipCf8F
+XRgPxJiZN7Mg9mZ4F4fCnQ7MSjLnFp2uDo0peQcAIFTcFV9Kltd4tjTTwXS1nem/wHdN6r1ZB+Ba
+L2w8pQDcNb1lDY9/Mm3yWmpLYgHurDg0WUU2SQXaeMpqbVvAgWsRzNI8qIv4cRrKO+KA3Ra0Z3qL
+NupOkSk9s1FcragMvp0049ENF4N1xDkesJQLEvHVaY4l9Lg9K7/AjsMeO6W/VRCrKq4Xl14zzsjz
+9AkH4wKGMUZrAcUQDBHHWekCAwEAAaOCAXQwggFwMA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQU
+k+PYMiba1fFKpZFK4OpL4qIMz+EwHwYDVR0jBBgwFoAUv1kgNgB5oKAia4zV8mHSuCzLgkowEgYD
+VR0TAQH/BAgwBgEB/wIBAjAzBgNVHSAELDAqMA8GDSsGAQQBga0hgiwBAQQwDQYLKwYBBAGBrSGC
+LB4wCAYGZ4EMAQICMEwGA1UdHwRFMEMwQaA/oD2GO2h0dHA6Ly9wa2kwMzM2LnRlbGVzZWMuZGUv
+cmwvVGVsZVNlY19HbG9iYWxSb290X0NsYXNzXzIuY3JsMIGGBggrBgEFBQcBAQR6MHgwLAYIKwYB
+BQUHMAGGIGh0dHA6Ly9vY3NwMDMzNi50ZWxlc2VjLmRlL29jc3ByMEgGCCsGAQUFBzAChjxodHRw
+Oi8vcGtpMDMzNi50ZWxlc2VjLmRlL2NydC9UZWxlU2VjX0dsb2JhbFJvb3RfQ2xhc3NfMi5jZXIw
+DQYJKoZIhvcNAQELBQADggEBAIcL/z4Cm2XIVi3WO5qYi3FP2ropqiH5Ri71sqQPrhE4eTizDnS6
+dl2e6BiClmLbTDPo3flq3zK9LExHYFV/53RrtCyD2HlrtrdNUAtmB7Xts5et6u5/MOaZ/SLick0+
+hFvu+c+Z6n/XUjkurJgARH5pO7917tALOxrN5fcPImxHhPalR6D90Bo0fa3SPXez7vTXTf/D6OWS
+T1k+kEcQSrCFWMBvf/iu7QhCnh7U3xQuTY+8npTD5+32GPg8SecmqKc22CzeIs2LgtjZeOJVEqM7
+h0S2EQvVDFKvaYwPBt/QolOLV5h7z/0HJPT8vcP9SpIClxvyt7bPZYoaorVyGTkwggWsMIIElKAD
+AgECAgcbY7rQHiw9MA0GCSqGSIb3DQEBCwUAMIGVMQswCQYDVQQGEwJERTFFMEMGA1UEChM8VmVy
+ZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVzIGUuIFYu
+MRAwDgYDVQQLEwdERk4tUEtJMS0wKwYDVQQDEyRERk4tVmVyZWluIENlcnRpZmljYXRpb24gQXV0
+aG9yaXR5IDIwHhcNMTYwNTI0MTEzODQwWhcNMzEwMjIyMjM1OTU5WjCBjTELMAkGA1UEBhMCREUx
+RTBDBgNVBAoMPFZlcmVpbiB6dXIgRm9lcmRlcnVuZyBlaW5lcyBEZXV0c2NoZW4gRm9yc2NodW5n
+c25ldHplcyBlLiBWLjEQMA4GA1UECwwHREZOLVBLSTElMCMGA1UEAwwcREZOLVZlcmVpbiBHbG9i
+YWwgSXNzdWluZyBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJ07eRxH3h+Gy8Zp
+1xCeOdfZojDbchwFfylfS2jxrRnWTOFrG7ELf6Gr4HuLi9gtzm6IOhDuV+UefwRRNuu6cG1joL6W
+LkDh0YNMZj0cZGnlm6Stcq5oOVGHecwX064vXWNxSzl660Knl5BpBb+Q/6RAcL0D57+eGIgfn5mI
+TQ5HjUhfZZkQ0tkqSe3BuS0dnxLLFdM/fx5ULzquk1enfnjK1UriGuXtQX1TX8izKvWKMKztFwUk
+P7agCwf9TRqaA1KgNpzeJIdl5Of6x5ZzJBTN0OgbaJ4YWa52fvfRCng8h0uwN89Tyjo4EPPLR22M
+ZD08WkVKusqAfLjz56dMTM0CAwEAAaOCAgUwggIBMBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0P
+AQH/BAQDAgEGMCkGA1UdIAQiMCAwDQYLKwYBBAGBrSGCLB4wDwYNKwYBBAGBrSGCLAEBBDAdBgNV
+HQ4EFgQUazqYi/nyU4na4K2yMh4JH+iqO3QwHwYDVR0jBBgwFoAUk+PYMiba1fFKpZFK4OpL4qIM
+z+EwgY8GA1UdHwSBhzCBhDBAoD6gPIY6aHR0cDovL2NkcDEucGNhLmRmbi5kZS9nbG9iYWwtcm9v
+dC1nMi1jYS9wdWIvY3JsL2NhY3JsLmNybDBAoD6gPIY6aHR0cDovL2NkcDIucGNhLmRmbi5kZS9n
+bG9iYWwtcm9vdC1nMi1jYS9wdWIvY3JsL2NhY3JsLmNybDCB3QYIKwYBBQUHAQEEgdAwgc0wMwYI
+KwYBBQUHMAGGJ2h0dHA6Ly9vY3NwLnBjYS5kZm4uZGUvT0NTUC1TZXJ2ZXIvT0NTUDBKBggrBgEF
+BQcwAoY+aHR0cDovL2NkcDEucGNhLmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1jYS9wdWIvY2FjZXJ0
+L2NhY2VydC5jcnQwSgYIKwYBBQUHMAKGPmh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFsLXJv
+b3QtZzItY2EvcHViL2NhY2VydC9jYWNlcnQuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQCBeEWkTqR/
+DlXwCbFqPnjMaDWpHPOVnj/z+N9rOHeJLI21rT7H8pTNoAauusyosa0zCLYkhmI2THhuUPDVbmCN
+T1IxQ5dGdfBi5G5mUcFCMWdQ5UnnOR7Ln8qGSN4IFP8VSytmm6A4nwDO/afr0X9XLchMX9wQEZc+
+lgQCXISoKTlslPwQkgZ7nu7YRrQbtQMMONncsKk/cQYLsgMHM8KNSGMlJTx6e1du94oFOO+4oK4v
+9NsH1VuEGMGpuEvObJAaguS5Pfp38dIfMwK/U+d2+dwmJUFvL6Yb+qQTkPp8ftkLYF3sv8pBoGH7
+EUkp2KgtdRXYShjqFu9VNCIaE40GMIIHIjCCBgqgAwIBAgIMKEY6FiZdyM744mtLMA0GCSqGSIb3
+DQEBCwUAMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVp
+bmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUw
+IwYDVQQDDBxERk4tVmVyZWluIEdsb2JhbCBJc3N1aW5nIENBMB4XDTIzMDMzMTEwNTcxM1oXDTI2
+MDMzMDEwNTcxM1owgZoxCzAJBgNVBAYTAkRFMSEwHwYDVQQKDBhSdWhyLVVuaXZlcnNpdGFldCBC
+b2NodW0xLDAqBgNVBAsMI0NoYWlyIGZvciBOZXR3b3JrIGFuZCBEYXRhIFNlY3VyaXR5MRAwDgYD
+VQQEDAdCYWV1bWVyMQ8wDQYDVQQqDAZGYWJpYW4xFzAVBgNVBAMMDkZhYmlhbiBCYWV1bWVyMIIC
+IjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAtUXof3QfwCyKSjiHcwXSMnDhFiuJW24OoEiy
+77FbR0TMr6oJHCiVMnr9j/tSQEktkoLWOSOziyC38nc8/Bdr5goeZ5XBCsp5PmgGN8s+i17vQVV/
+5e6sRu39wImM0AFZ/b0/rxJ4RVhqknnxocxwDweMjGxWRolSy69wSh96kdW0UcBGXS3TTiA9p6xY
+UO9/VuF4uJIrzRrbwzhXqbDCIzTnthiOGnUzjQcALf/7omQy+A/x1OXSLi35gKXXALKWFbbHEJjW
+H4ION4bwGyHIw/MyqGbPeSf47X5M2Wu5jHqknhQogw+5oVYNmaoT7+Zw8KyNA4yeQ2wDTjwziiCg
+ENpK21oY1n/8klBvHw/qVXccOzYrOZYoQkBO1GpThbySbz1k0WCT/47bFfXupqPzBbKp5NqHdoxU
+ucR7n8He0e9liWi2xVIg4x9QH/6zm4NPcDNmprVtozZQ2/WBZMn1ungqtVeiBp1NseBgjJXCW41a
+CUH9EDdR6fto+5M5+SQWm6mGVWgaEXNudZ5b1Q5KnldMYFfwOciZJMPgDZYmP4cp3p++nYF80Axv
+F7AK8lo2y8Z+/EgB1XAqn7H0V8v41p1H2nbHNJwnLga2OiLQZmys+RZQwCuQNWFpV56X9mGD+NrF
+e9Z3i6PXAYQ8jb9Fw1P2mpyweHfT1liGw9pM8o8CAwEAAaOCAnEwggJtMD4GA1UdIAQ3MDUwDwYN
+KwYBBAGBrSGCLAEBBDAQBg4rBgEEAYGtIYIsAQEECzAQBg4rBgEEAYGtIYIsAgEECzAJBgNVHRME
+AjAAMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwHQYDVR0O
+BBYEFNYVlkZ24IxVgUdDwzqJo3NFXWTfMB8GA1UdIwQYMBaAFGs6mIv58lOJ2uCtsjIeCR/oqjt0
+MEMGA1UdEQQ8MDqBFWZhYmlhbi5iYWV1bWVyQHJ1Yi5kZYEhZmFiaWFuLmJhZXVtZXJAcnVoci11
+bmktYm9jaHVtLmRlMIGNBgNVHR8EgYUwgYIwP6A9oDuGOWh0dHA6Ly9jZHAxLnBjYS5kZm4uZGUv
+ZGZuLWNhLWdsb2JhbC1nMi9wdWIvY3JsL2NhY3JsLmNybDA/oD2gO4Y5aHR0cDovL2NkcDIucGNh
+LmRmbi5kZS9kZm4tY2EtZ2xvYmFsLWcyL3B1Yi9jcmwvY2FjcmwuY3JsMIHbBggrBgEFBQcBAQSB
+zjCByzAzBggrBgEFBQcwAYYnaHR0cDovL29jc3AucGNhLmRmbi5kZS9PQ1NQLVNlcnZlci9PQ1NQ
+MEkGCCsGAQUFBzAChj1odHRwOi8vY2RwMS5wY2EuZGZuLmRlL2Rmbi1jYS1nbG9iYWwtZzIvcHVi
+L2NhY2VydC9jYWNlcnQuY3J0MEkGCCsGAQUFBzAChj1odHRwOi8vY2RwMi5wY2EuZGZuLmRlL2Rm
+bi1jYS1nbG9iYWwtZzIvcHViL2NhY2VydC9jYWNlcnQuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQA2
+TUR/4UBApxuFbGVWzAkFxAfnGjlYUhVRhCext7xKms1E6tf6umVjXcSmdry1ELR2j0+6lbwrunNU
+mNud5kC8Q8qhzCoY7iWMdh4eO/evWOCG0sWqhvKfCpSG2FZz6xsd6+VK0OGZAGcsoZwqMLKS6gzs
+G3R37PIPwqPmjL1J5GuPguDVO/HCIyN2/+PDP/WLoYPii5Z93EDpxFXxQK9kC76WL6S3qejPgWqp
+FbLT8ADBgMFT40/JVUW49pRdu5TFNLc3QF6LdWIO3HU5fm4x1AwK/U1vsJnStXH9Ogsk6GusC61E
+52ZAQpGDClMQWBnRJoO9mi8SWKWmmSgvLuqpMYIGGDCCBhQCAQEwgZ4wgY0xCzAJBgNVBAYTAkRF
+MUUwQwYDVQQKDDxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVuIEZvcnNjaHVu
+Z3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsMB0RGTi1QS0kxJTAjBgNVBAMMHERGTi1WZXJlaW4gR2xv
+YmFsIElzc3VpbmcgQ0ECDChGOhYmXcjO+OJrSzANBglghkgBZQMEAgMFAKCCA0owGAYJKoZIhvcN
+AQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjUwNDE2MTcyODU4WjBPBgkqhkiG9w0B
+CQQxQgRAsx2Xe9dBa/39p5ReMDejtQZBXT6Lm0uDsgjo/53+K9Am6WMDaJq8OpdE0eq0WuO/2yp9
+ryHOlR3dt8tNPvbcPDCBrwYJKwYBBAGCNxAEMYGhMIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UE
+Cgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVz
+IGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWluIEdsb2JhbCBJc3N1
+aW5nIENBAgwoRjoWJl3Izvjia0swgbEGCyqGSIb3DQEJEAILMYGhoIGeMIGNMQswCQYDVQQGEwJE
+RTFFMEMGA1UECgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1
+bmdzbmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWluIEds
+b2JhbCBJc3N1aW5nIENBAgwoRjoWJl3Izvjia0swggFXBgkqhkiG9w0BCQ8xggFIMIIBRDALBglg
+hkgBZQMEASowCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMA0GCCqGSIb3DQMCAgEFMA0GCCqGSIb3
+DQMCAgEFMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgEFMAcGBSsOAwIaMAsGCWCGSAFlAwQCATALBglg
+hkgBZQMEAgIwCwYJYIZIAWUDBAIDMAsGCWCGSAFlAwQCBDALBglghkgBZQMEAgcwCwYJYIZIAWUD
+BAIIMAsGCWCGSAFlAwQCCTALBglghkgBZQMEAgowCwYJKoZIhvcNAQEBMAsGCSuBBRCGSD8AAjAI
+BgYrgQQBCwAwCAYGK4EEAQsBMAgGBiuBBAELAjAIBgYrgQQBCwMwCwYJK4EFEIZIPwADMAgGBiuB
+BAEOADAIBgYrgQQBDgEwCAYGK4EEAQ4CMAgGBiuBBAEOAzANBgkqhkiG9w0BAQEFAASCAgCI94gb
+8qQjEU40AAk47cB3WBfc9xpqUm6zIhTDvH2MstSmVoGF6nE+pKX6rQy/QMf0n0hTKi9fCZ+zWZtE
+V50k2gTKYY6rp7wEvYHLn7XOpB0HeVjlbrob9HX2jm8br5ClFxdU6WbVXj8odWm9ooiA3wRyqeLp
+Ev7ZUJ4Rikl8/sKO2aoFH3VTpOE7u2sUZtiEbRJrLza3ZC6tCOigYpTNPhdzo0GefV0+EOZZmqzg
+vMEqNT5Z0O7RoAsRseYOwe3FxDbwiPBqsT/PaEQuafqgmFAuyT28UG4NS8XBlYzyvg97Xno75u+t
+eqVEf7t9L7roTdWJCANVpwFkNJkdd1nmVJg4UWH8vGbStSeEJSB8KkjiVIS5KjNgQS/fgUusYvkT
+wVGiA9Bsa3YymJnz4x63357HAKCSScsRHCf8rMmXi4J1z2Cv7KPmsbJSxMnEitlze4AdrjZizV3x
+KW3OXaMWrQyylUhpNzI+1FiHDmF7+4Fw5CTXASi0b49HmzgW7rBICKjdh3AJW9nvG0bi6u1JJopJ
+RPItA8gN1LtVG57mDKL6yX8IOV/iZNDx921QIXJQ0nEfzyszEYAMkBSRfJGD0XtVIct0QqLmyPKS
+C2ZpZ+HfhsDMEVKD/CKO/dh7hwGR18Xob4i/prZItgW3/+mP/hqD38U6aFCO5PAthDWOzgAAAAAA
+AA==
 
-When libcurl connects to an FTP server and successfully logs in (anonymous or
-not), it asks the server for the current directory with the `PWD` command. The
-server then responds with a 257 response containing the path, inside double
-quotes. The returned path name is then kept by libcurl for subsequent uses.
-
-Due to a flaw in the string parser for this directory name, a directory name
-passed like this but without a closing double quote would lead to libcurl not
-adding a trailing NUL byte to the buffer holding the name. When libcurl would
-then later access the string, it could read beyond the allocated heap buffer
-and crash or wrongly access data beyond the buffer, thinking it was part of
-the path.
-
-A malicious server could abuse this fact and effectively prevent libcurl-based
-clients to work with it - the PWD command is always issued on new FTP
-connections and the mistake has a high chance of causing a segfault.
-
-The simple fact that this issue has remained undiscovered for this long could
-suggest that malformed PWD responses are rare in benign servers.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in commit
-[415d2e7cb7](https://github.com/curl/curl/commit/415d2e7cb7), March 2005.
-
-In libcurl version 7.56.0, the parser always zero terminates the string but
-also rejects it if not terminated properly with a final double quote.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-1000254 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.7 to and including 7.55.1
-- Not affected versions: libcurl < 7.7 and >= 7.56.0
-
-curl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [patch for CVE-2017-1000254](https://curl.haxx.se/CVE-2017-1000254.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.56.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Switch off FTP in `CURLOPT_PROTOCOLS`
-
-TIME LINE
----------
-
-It was reported to the curl project on September 24, 2017.  We contacted
-distros@openwall on September 25.
-
-curl 7.56.0 was released on October 4 2017, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Max Dymond. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+--------------ms090001090605000708040803--
