@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["822" "Thursday" "22" "June" "2017" "09:23:41" "-0700" "Eduardo Valentin" "eduval@amazon.com" "<20170622162341.GC11634@u40b0340c692b58f6553c.ant.amazon.com>" "29" "Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels" nil nil nil "6" "2017062216:23:41" "[oss-security] stackguard fix in Red Hat and Ubuntu kernels" (number mark "U       eduval@amazo Jun 22   29/822   " thread-indent "\"Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels\"\n") "<20170622133812.GA1672@kroah.com>" ("<20170622121330.GA18550@openwall.com>" "<20170622121833.GI32005@suse.de>" "<20170622133812.GA1672@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27844 invoked by uid 550); 22 Jun 2017 16:35:18 -0000
+Received: (qmail 11304 invoked by uid 550); 17 Apr 2025 15:41:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20458 invoked from network); 22 Jun 2017 16:23:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1498148637; x=1529684637;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=bBD3exPTNCwis7q3S6JNiC9UpgAG/roKbApbsOstjoI=;
-  b=urv5Q4sNz9QY+V6rDx1QfOrCUEYgVmTJr042yyN5Y15Ye5ClilPxPh5I
-   JSr3cCoVluyZSBdCTjBuSwDIK6G3g7x8uHmwEmzc0NZeDVIb+HYSX5TRX
-   dCbtY2GsnOF6OZotheFvmnDUNwBqZaqAcw6Rg7eY+EaYUPUVJhodHkCGr
-   U=;
-X-IronPort-AV: E=Sophos;i="5.39,373,1493683200"; 
-   d="scan'208";a="676033299"
-Date: Thu, 22 Jun 2017 09:23:41 -0700
-From: Eduardo Valentin <eduval@amazon.com>
-To: <oss-security@lists.openwall.com>
-CC: Vasily Averin <vvs@virtuozzo.com>,
-        Konstantin Khorenko
-	<khorenko@virtuozzo.com>
-Message-ID: <20170622162341.GC11634@u40b0340c692b58f6553c.ant.amazon.com>
-References: <20170622121330.GA18550@openwall.com>
- <20170622121833.GI32005@suse.de> <20170622133812.GA1672@kroah.com>
+x-ms-reactions: disallow
+Received: (qmail 10137 invoked from network); 17 Apr 2025 07:27:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=innerheight.com;
+	s=2024; t=1744874814;
+	bh=vFjnd/dW/yC4L0dSaJWNjl0oTM0MJLJChbvrSJqOcQc=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=Rmql2B/Z+H/tznoJoFCDBLFQYXbnld/GTGnKIB0WEHyiu8Zr3GbtbXTPrTfTEWH6/
+	 Pk4AsFkN4zC6S4AxROmi60Z50YXZtcQhqCWEhrlyvdtlimW/ebFu4cxxjpDeWPZYes
+	 G7u+uWQQF51pYDw6kl44Kmdv6b3j4H3IYGajFd7U=
+Content-Type: multipart/alternative;
+ boundary="------------ZsoPK0yLubHweOSCFVVC5WUb"
+Message-ID: <0861ac60-20f3-4fb6-ba6d-28f9506823b8@innerheight.com>
+Date: Thu, 17 Apr 2025 09:26:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20170622133812.GA1672@kroah.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <ebb379a4-03d6-491f-9e93-fc724f597a81@web.de>
+ <20250416210535.5173a7ef@ryz.dorfdsl.de>
+Content-Language: en-US
+From: Jan Klopper <janklopper@innerheight.com>
+In-Reply-To: <20250416210535.5173a7ef@ryz.dorfdsl.de>
+Subject: Re: [oss-security] CVE program averts swift end
 
-On Thu, Jun 22, 2017 at 09:38:13PM +0800, Greg KH wrote:
-> On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
-> 
-> The patches upstream in Linus's tree should resolve these crashes,
-> correct?  If not, please let the kernel developers know, as we ended up
+--------------ZsoPK0yLubHweOSCFVVC5WUb
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-We could not repro the segv with the upstream version at our end. So, I think upstream is fine for this case.
+That is a bit of a short-sighted response.
 
-> going with a different set of changes than the distros shipped, and are
+We cannot query your brain for information, and thinking that you can 
+actively avoid any issues by updating to the newest version is not only 
+a fantastic dream, its also a potential route to getting compromised, as 
+not every new version of every bit of software is safe, or solves all 
+known problems.
 
-Just to my understanding, do you know why we ended up having a version for linux-distro and another for upstream?
+Having a query-able and well maintained list of known issues helps in 
+cases where you know what software you are using, and what risks you are 
+running by using them, regardless of the possibility of updates, 
+mitigations or your ability to keep track of mailing lists for every 
+software you use.
 
-> still working on getting these backported to older stable kernels at the
-> moment.
+Yes, money is spend, and a bit much at that, but when you start 
+factoring in the people running the thing, and the maintenance the 
+lists, hardware, surrounding communication and everything else costs I'm 
+not sure there's a cheaper option available. Besides, its a public 
+service, moving this to volunteer driven solutions isn't going to 
+provide the time critical responses this needs, and moving it to a 
+company means there will be profit to be made, or competing lists that 
+need to be bought because of balkanization.
 
-Thanks!!
-
-> 
-> thanks,
-> 
-> greg k-h
-> 
-
--- 
-All the best,
-Eduardo Valentin
+On 4/16/25 21:05, Marco Moock wrote:
+> Am 16.04.2025 um 16:57:20 Uhr schrieb Rolf Reintjes:
+>
+>> any comments on this?:
+>>
+>> https://www.csoonline.com/article/3963190/cve-program-faces-swift-end-after-dhs-fails-to-renew-contract-leaving-security-flaw-tracking-in-limbo.html
+> I don't see a real use-case for such databases - especially if they
+> consume that much money. I subscribe to the security mailing lists or
+> newsgroups for the operating systems and software I use and install new
+> versions immediately - if possible automated.
+>
+>
+--------------ZsoPK0yLubHweOSCFVVC5WUb--
