@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1062" "Saturday" "23" "April" "2016" "17:03:50" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160423150350.GA28424@eldamar.local>" "36" "[oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF" nil nil nil "4" "2016042315:03:50" "[oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF" (number mark "U       carnil@debia Apr 23   36/1062  " thread-indent "\"[oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20031 invoked by uid 550); 23 Apr 2016 15:04:05 -0000
+Received: (qmail 17808 invoked by uid 550); 21 Apr 2025 17:46:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +7,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20013 invoked from network); 23 Apr 2016 15:04:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=+fq/FiimXK1gxmRAZ3Fi7mj2djNk43no+5TRA/DF9iw=;
-        b=tZ6JWuk/lZOdSjzhwnxLHYfW4rxeTKIwcoIIP+U81xzgGWosmGEeaiWmoF37LpCk4q
-         2rS2m3HzsdJwBVMCSRl2/8nHvn43YeADkErX9u2jURkrCeRm7BI8aiPfRlSX1nliPAZl
-         m/lFEt530HbyaluwVO2sRNCi0qDQoFk7v+/YyJ6yLzc9MFew8bMbPX/Y03/MDS0CUPOX
-         vKeIl5qHyUw8ogp5xtLcRyLY03Ez9BhZVOb0rZPIq0N9ilE80Sz2HOqPTrtEwGmsn0aU
-         FVJqRK0FjKDpgDMGcdM8ImT6F1hB9MrFsIIaqba+jOsTVE9sj803Gtdb6mXTkUFPAiYU
-         EG2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=+fq/FiimXK1gxmRAZ3Fi7mj2djNk43no+5TRA/DF9iw=;
-        b=Notxsfni7ZIQDJpOr+iLmNxSlWo5RzZ387FZ8SPBKGsIMCp3KjcWkMN9gZA4QC8jyF
-         kjQKR4Typkr96qSmCzyEViD1nZ0+XnZYNltMhDgmEqgJZQRr4leAJrCEGNmoe9VYc0VO
-         oTXtosAlYdPcl+z7C8Zh673LTWs+BJYD7m00hi78WhPTqjso+TcaWRa52tGrnONXXXSt
-         dEIFkFX9XbncwBawPU1Q/4Sw+HvnzHNaFQGc7/9FnCYdgGqvPOueqaXQTyHWfyXrlKCE
-         QSzJ4lJeRHzPA8F2KfGIP6y1ZMNiIuUmTfrqWOjy6K+ZuxGEX3ZLJVORb1VFqKkUlNGZ
-         nuiw==
-X-Gm-Message-State: AOPr4FXWHTLcpwt/SwRpLcGh/y+TM5xYbxy31peNrqm3EZddXPQgHUZCUDcl8zSE61wdMw==
-X-Received: by 10.194.3.105 with SMTP id b9mr27225711wjb.140.1461423833651;
-        Sat, 23 Apr 2016 08:03:53 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sat, 23 Apr 2016 17:03:50 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160423150350.GA28424@eldamar.local>
+x-ms-reactions: disallow
+Received: (qmail 17775 invoked from network); 21 Apr 2025 17:46:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
+	To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description; bh=wY3I/jhgX09rLTvphPg1EMw5kQ1EQMR+n8Y2b0hHxBU=;
+	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1745257568;
+	x=1745905568; b=yqPEgyLkjeaeSKt6Fmtv/4yDxYDYGubRrMpyFYEJhlk5/sDO0/LAcpUAv/7hK
+	EqzgV89Re3pQUHXmoV0l9SkjpsDEzAre3kxpDUwizsHLCuYZBHRoD3gxjG+dEheGbioxQVYfiuudy
+	Y9B2pMFupMLqSZnrTEwFPPfZahwqbkVt2NkOMpdhUABOwTmdskKADUGrlsYEmn5DXdnPfv09hjso2
+	el8Eabw3e/hlc8Ocl5OdNjb5xHABkcxibfCKEmvZhbSmPDybwf9uT9486WNblePiLYf63qU71kxm+
+	/K9whVeVN3BxfPTW2AgKf7W6O3g6hzfhyIjaDuje26TVX4tjhQ==;
+Date: Mon, 21 Apr 2025 20:45:55 +0300
+From: Valtteri Vuorikoski <vuori@notcom.org>
+To: oss-security@lists.openwall.com
+Message-ID: <66imbuhbqi4yjbtmpmvvri7sttmw3tmhtemh6pqjcp5kazdai3@cbzrad3k7t4l>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <62e9c3e0-dd06-4d88-8192-1d0add89d0c8@oracle.com>
+ <ewvs55pqvqybv7telryghfmp4sypf2rcjximilprzn5a3pkaie@vcsibbkueub3>
+ <43f96a10-24af-423b-bb21-f2f4001f5ed9@thomas-ward.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and
- protection for download urs against CSRF
+In-Reply-To: <43f96a10-24af-423b-bb21-f2f4001f5ed9@thomas-ward.net>
+User-Agent: NeoMutt/20241002-60-525451
+Subject: Re: [oss-security] 3 new CVE's in old branch of GNU mailman
 
-Hi
+On Mon, Apr 21, 2025 at 12:52:24PM -0400, Thomas Ward wrote:
+> Direct quoting the CVE:
+> 
+> > *Affected Software:* GNU Mailman 2.1.39 (bundled with cPanel/WHM)
+> 
+> I think that this would be a modified bundled version based on "Affected
+> Software" specifically mentioning the GNU Mailman 2.1.39 that is
+> specifically bundled with cPanel/WHM.
+> 
+> Especially if you can't reproduce it in pure MM 2.1.39.
 
-Roundcube recently released new versions:
+Yes, it says that, but IMO the wording in these CVEs could be a lot less
+ambiguous. The focus of the text is on "GNU Mailman" and I don't think it's very
+clear whether the parenthesized "bundled with" bit means that:
 
-https://github.com/roundcube/roundcubemail/wiki/Changelog
+a) The vulnerability exists in mainline GNU Mailman, but it was discovered while
+probing cPanel and/or reported through that vendor;
 
-There are at least the following two fixes:
+b) The vulnerability exists in mainline GNU Mailman, but is only exposed when
+it is installed in a certain manner, which happens to be how cPanel does it,
+but could also happen elsewhere; or
 
-Fix XSS issue in SVG images handling (#4949):
----------------------------------------------
+c) The vulnerability does not exist in the mainline version, but is due to
+additional code authored by cPanel LLC.
 
-Upstream issue:
-  https://github.com/roundcube/roundcubemail/issues/4949
+So at the moment it seems to me that the correct interpretation is c). Hard to
+tell because the modified source doesn't seem to be available in despite Mailman
+being GPL. Maybe someone needs to ask cPanel LLC to mail them a CD?
 
-Fix for master branch:
-  https://github.com/roundcube/roundcubemail/commit/40d7342dd9c9bd2a1d613edc848ed95a4d71aa18
+I think this distinction is relevant because there are unfortunately quite a few
+Mailman 2 instances still running despite its EOL status. I looked through the
+mainline code a bit and luckily (again IMO) the codebase appears reasonably
+security-conscious especially given its fairly advanced age, modulo a few nits
+(likely non-consequential, but in particularly the method called do_command
+(there's only one) may warrant scrutiny).
 
-Fix for 1.1 branch:
-  https://github.com/roundcube/roundcubemail/commit/7bbefdb63b12e2344cf1cb87aeb6e3933b4063e0
-
-Protect download urls against CSRF using unique request tokens (#4957):
------------------------------------------------------------------------
-
-Upstrema issue:
-  https://github.com/roundcube/roundcubemail/issues/4957
-
-Fix for master branch:
-  https://github.com/roundcube/roundcubemail/commit/4a408843b0ef816daf70a472a02b78cd6073a4d5
-
-Fix for the 1.1 brach:
-  https://github.com/roundcube/roundcubemail/commit/699af1e5206ed9114322adaa3c25c1c969640a53
-
-Could you assign CVEs for those issues?
-
-Regards,
-Salvatore
+ -Valtteri
+ 
