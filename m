@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2702" "Wednesday" "6" "September" "2017" "17:15:00" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87ingva5rf.fsf@fifthhorseman.net>" "66" "Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Date:" nil nil "9" "2017090621:15:00" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        dkg@fifthhor Sep  6   66/2702  " thread-indent "\"Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") "<2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>" ("<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" "<87wp63jgxn.fsf@fifthhorseman.net>" "<2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11415 invoked by uid 550); 6 Sep 2017 22:01:47 -0000
+Received: (qmail 16269 invoked by uid 550); 21 Apr 2025 18:54:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +6,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11388 invoked from network); 6 Sep 2017 22:01:46 -0000
-In-Reply-To: <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>
-References: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com> <87wp63jgxn.fsf@fifthhorseman.net> <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>
-Message-ID: <87ingva5rf.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Wed, 06 Sep 2017 17:15:00 -0400
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
-To: Michael Orlitzky <michael@orlitzky.com>, oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 14155 invoked from network); 21 Apr 2025 18:38:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jwp.email; s=hera;
+	t=1745260676; x=1745941076;
+	bh=nqC6jw7ENlmD55CTfS1bAA3ixq2L2n5pNGK609wKIF0=;
+	h=Message-ID:Subject:From:To:Date:From;
+	z=Message-ID:=20<596d144262ebcecc94c455cf2999ccb1d67bb869.camel@jwp
+	 .email>|Subject:=20Re:=20[oss-security]=203=20new=20CVE's=20in=20o
+	 ld=20branch=20of=20GNU=20mailman|From:=20"Jim=20P."=20<oss-securit
+	 y@jwp.email>|To:=20oss-security@lists.openwall.com|Date:=20Mon,=20
+	 21=20Apr=202025=2014:37:55=20-0400;
+	b=hKBOMJkPMx8eY3DecIX16myzo3DsA4x/tAr0GPfWMoR7VKEd2WhnCrAt+fiXDhtA7
+	 bcmyDbBQEbACG/GPj/ZEwpAsW/85peJZUvPtJYDVbyvKurc6OzPw5bxdGQ4a0vzXQj
+	 fh/ykAdHScjUI8czA9rUozzOVfH0bAQfuls+TadKVBdcL8xyb882jfPmQRznFug1ZL
+	 dBezr2ViNMy93mek4E9GDxRB7lF/Fk+mN7IRpivUqr5kH2+1czadlOf+kr0ktPjyaH
+	 AR81wdBMFvi00rqD8btqQ5d/6pHv+fAHnlZ0voBLr7ly9rY4LruU6H79JmuzGqVtB8
+	 K6ehC9ai+2Y6Q==
+Message-ID: <596d144262ebcecc94c455cf2999ccb1d67bb869.camel@jwp.email>
+From: "Jim P." <oss-security@jwp.email>
+To: oss-security@lists.openwall.com
+Date: Mon, 21 Apr 2025 14:37:55 -0400
+In-Reply-To: <66imbuhbqi4yjbtmpmvvri7sttmw3tmhtemh6pqjcp5kazdai3@cbzrad3k7t4l>
+References: <62e9c3e0-dd06-4d88-8192-1d0add89d0c8@oracle.com>
+	 <ewvs55pqvqybv7telryghfmp4sypf2rcjximilprzn5a3pkaie@vcsibbkueub3>
+	 <43f96a10-24af-423b-bb21-f2f4001f5ed9@thomas-ward.net>
+	 <66imbuhbqi4yjbtmpmvvri7sttmw3tmhtemh6pqjcp5kazdai3@cbzrad3k7t4l>
+Content-Type: text/plain; charset="UTF-7"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Subject: Re: [oss-security] 3 new CVE's in old branch of GNU mailman
 
---=-=-=
-Content-Type: text/plain
+On Mon, 2025-04-21 at 20:45 +-0300, Valtteri Vuorikoski wrote:
++AD4=20
++AD4 So at the moment it seems to me that the correct interpretation is c).=
+ Hard to
++AD4 tell because the modified source doesn't seem to be available in despi=
+te Mailman
++AD4 being GPL. Maybe someone needs to ask cPanel LLC to mail them a CD?
 
-On Fri 2017-08-18 13:12:03 -0400, Michael Orlitzky wrote:
-> I'm scared to reply because this is guaranteed to turn into a "you
-> should just use systemd, grandpa" holy war.
+cPanel's fork of mailman2-python3 is located here:=20
+https://github.com/cpanel/mailman2-python3
 
-I'm pleasantly surprised to see that that didn't happen :) And thanks
-for your thoughtful response.
 
-fwiw, i wasn't thinking specifically of systemd -- there are several
-process managers that do more sensible things, including those in the
-daemontools lineage (e.g. runit) and others.  Even sysvinit's /sbin/init
-itself can monitor single-process daemons without any trouble or need
-for a pidfile.
+-Jim P.
 
-> If we had it all to do over again, I would probably agree with you. But
-> there are still users with simple init systems, and many of those users
-> are happy (or stuck) that way. If you want to convince upstreams to
-> delete their PID file code and drop support for the associated init
-> systems, you'll have to offer them something to make up for the users
-> they'll lose.
->
-> For some projects, "the code gets simpler and to hell with those users"
-> will suffice. But for big projects where actual money is involved,
-> you'll have a harder time.
-
-Yup, these are the tradeoffs.
-
-But i think future reports of problems with pidfiles (e.g. your helpful
-cleanup of mimedefang -- thanks!)  should always include the suggestion
-to disable pidfiles entirely and to encourage developers who must
-implement them to ensure that they're only an extra feature, for use
-with otherwise limited service managers, and perhaps to be compile-time
-disabled.
-
-Having a pidfile by default ought to be treated as an increase in the
-attack surface in general, since they're so easy to get wrong.
-
-Thanks for your work in tracking these down and cleaning them up,
-Michael.
-
-Regards,
-
-          --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlmwZVQACgkQFJitxsGS
-Mjcy/BAAxDAyagxFnnmpfI80w9/eLCmBJPoFx3LITCDvKLsKPDhTy1ID5ixd7QzQ
-JbKm2VzSd6IgVD0lIcjXRypl2RDeUPBMmZhdwr3HibSCC8SusYQiyFLI7aAJgPm/
-zVr9wYnXnOzu1bd3Wca91wGZTOP5X+T4WF/DCG+5uLxmllr0nrkbxjpush3tH/dD
-uzgIR73cyxXni20OVhZ1cgRwqp5lu5Gwlh49QZ99YFeiPLpK+N9xUthKCspe3yAP
-CrXmxjHO12X+rLWm2yjbYEuPZG8dCTRb0IrkPGWFGJmphcTAEbPdmbnbfJpfUu0h
-YCNCtfRNzAywrbgrRFtEQ4h+8drBTSSoGyfBeWJOGgnf/yH7gLxXzPqyA2gdciwB
-gzeKtYmV68iLkxTYuaM+ClONKMjfylgD8ZulNMdWYBdNG0+IWiN8arwP1dD4b2UV
-ZYVJGduVog59JQu9Beq6wPdInRiJ4cCVKl2XeDUfy3rPyDk62FVKCbz2PylgIt9G
-2JCIBi/4yB+FRfUYXHAE+kkAfl7R2i0FApxxlZ9q+qI/xejp4wduFBlahvKg3/O1
-St7XZru0iJKGl7YB8Rw0nuvUh/RGSSokLcMbZmSlUBdE+SxdJWBlbJ+f3rBofD2N
-fpTSjaByQ8LTghjFoi8MTtb9ymwSRdAOXQCI5FEa6cj78DhUwZk=
-=O1jk
------END PGP SIGNATURE-----
---=-=-=--
