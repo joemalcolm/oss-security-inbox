@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4817" "Friday" "12" "August" "2016" "07:18:53" "+0000" "=?gb2312?B?s8LI8Of5?=" "chenruiqi@360.cn" "<6D072F0A5597B449BEE8A9770E0BDBEA018D293C@EX01.corp.qihoo.net>" "82" "[oss-security] CVE request: XSS vuln in b2evolution v6.7.4" nil nil nil "8" "2016081207:18:53" "[oss-security] CVE request: XSS vuln in b2evolution v6.7.4" (number mark "U       chenruiqi@36 Aug 12   82/4817  " thread-indent "\"[oss-security] CVE request: XSS vuln in b2evolution v6.7.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9526 invoked by uid 550); 12 Aug 2016 07:58:03 -0000
+Received: (qmail 30691 invoked by uid 550); 23 Apr 2025 20:47:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22485 invoked from network); 12 Aug 2016 07:19:06 -0000
-From: =?gb2312?B?s8LI8Of5?= <chenruiqi@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE request: XSS vuln in b2evolution v6.7.4
-Thread-Index: AdH0aXpuEXmfrDxxQBuMcE/ER9vjNw==
-Date: Fri, 12 Aug 2016 07:18:53 +0000
-Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018D293C@EX01.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.254.8.63]
-Content-Type: multipart/alternative;
-	boundary="_000_6D072F0A5597B449BEE8A9770E0BDBEA018D293CEX01corpqihoone_"
+x-ms-reactions: disallow
+Received: (qmail 30668 invoked from network); 23 Apr 2025 20:47:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745441239; x=1746046039; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VDsNZNder93r3rjllc8KxRm6jjqqCsH0NEu1U7KTDME=;
+        b=gF+NKxT5aRi0lkDjTJVko8qAbvWW6rTSAwMVP03qKt48qjHlaH0bkeQEGnosUOy8Tl
+         STcqAI+SzN9bKsrpUngWOBHlybPnO6avJ0n0yCDOlSt7UDJ0j5G6x0a26nxfyhMys7kV
+         Ennlp/vAdAwww7MkVc3TyhbqwzCyEjfzvd/jsPuz7VNnzzWw97XaCLmG19FFnwXeJvph
+         PmRWDTjDxqLWbnj8PzG24/iOWH/VkzPVxq1axyJ2SLgtb4RUusEZfYS2ISLB9xczQwFf
+         /4onL19W5We0Hq2yGncve4gMploNn5ALF24CkTYeQfOzIylrc5Jy3F0ikQFGfaiIkfUT
+         5aJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745441239; x=1746046039;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VDsNZNder93r3rjllc8KxRm6jjqqCsH0NEu1U7KTDME=;
+        b=LkE1BiLO8xJ264T1eetVuQR85dje8S+VXkBD5qWLj0ufhOG+udlOFyX8InIDasMsDB
+         Xn0GtVVIF3NdURhB7a1gvUYtG0TyosjX+IZFTlBDc1oj1/nIXMx3M/T9bl7gJWwktwLQ
+         E/jOwNMxSxNTq0qAcoM6iavXr0w1ZrQRct3qQjKif06p0S2ofhHnLHwQAegQQLXDdqFk
+         W078o9wKw8w2V9bah2Mup6qWWL2o3xW4FQ4j6SbVncODoS7c4FCxSzP1LPzRY6CqPke2
+         LkvhtNxl9p4iJFWzPyeS+5Lgk0s76aX+KzKrfC/sbvyfOyAXoSYq4bwEPCC/WTp+uPa8
+         a/sg==
+X-Gm-Message-State: AOJu0YyrCvYHnCdqf54bU7AsuCIU08Qp80wlWhDYp8xvpDvYCoUjLJbO
+	ZIOpfU1vzLM7o/u+u9KAydNjYcYzvc9HliXXglcg6p6BQ23wxuncAPrjxpng
+X-Gm-Gg: ASbGnctkEowh7NyaefUVnksaTAWr017h3JAiH5YiYU5SrEEOh4sfhZYLIy26S1kGIH/
+	UjSra31pqXjoA7ykK6DltDk3WigOKWwEPQ69RO0jFVns95HQVTRGXwO7I6X0JR6rOC2SwjTSwvq
+	faz+MvdfuZ/Ie0uyQBSATmTg6l2lh2ZezOWYSdDxRljje9cWzP8tj3wiDHLB2fO3OM3xYxJI9fJ
+	lV1tTeiY7Hj7nses3q2Gkrtg/WEhWNjzIcBrReaPY79YPBmBW6YDXbnXTyRAAkEoqeN+J4wBXzC
+	/kPrgDiJmfKNf4fx1dH31tEF7LLhct7MER2YermhBKs5366/t+QFoiWfxltIN/5vlZ8I66ogdg=
+	=
+X-Google-Smtp-Source: AGHT+IGH05isj9kplXC2gRfoX3OWOZSaJnUps7gKDDHuFTjJSNviy4lKrw4/+iLPakalJ1XRIva2dA==
+X-Received: by 2002:a17:907:a088:b0:ac3:3fe4:3378 with SMTP id a640c23a62f3a-ace570e6d27mr18263966b.12.1745441239353;
+        Wed, 23 Apr 2025 13:47:19 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 23 Apr 2025 22:47:17 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aAlR1aTrs_8mvChM@eldamar.lan>
+References: <575DB6B1-8A9A-46C6-AA2C-9D0695E1FF85@contoso.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE request: XSS vuln in b2evolution v6.7.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <575DB6B1-8A9A-46C6-AA2C-9D0695E1FF85@contoso.com>
+Subject: Re: [oss-security] vulnerabilities in busybox tar and cpio tools
 
---_000_6D072F0A5597B449BEE8A9770E0BDBEA018D293CEX01corpqihoone_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Hi,
 
-SSBmb3VuZCBhIFhTUyB2dWxuIGluIGIyZXZvbHV0aW9uIHY2LjcuNA0KDQpU
-aXRsZTogU3RvcmVkIFhTUyBpbiBiMmV2b2x1dGlvbiB2ZXJzaW9uIDYuNy40
-DQpBdXRob3I6IENoZW4gUnVpcWksIENoZW5ydWlxaUAzNjAuY24sIEBDb2Rl
-c2FmZSBUZWFtDQpEYXRlOiAyMDE2LTA4LTA5DQpEb3dubG9hZCBTaXRlOiBo
-dHRwOi8vYjJldm9sdXRpb24ubmV0L2Rvd25sb2Fkcy8NClZlbmRvcjogYjJl
-dm9sdXRpb24ubmV0DQpWZW5kb3IgTm90aWZpZWQ6IDIwMTYtMDgtMDkNClZl
-bmRvciBDb250YWN0OiBodHRwOi8vYjJldm9sdXRpb24ubmV0Lz9kaXNwPW1z
-Z2Zvcm0NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpEaXNjcmlwdGlvbjoNCmIyZXZvbHV0
-aW9uIGlzIGEgY29udGVudCBhbmQgY29tbXVuaXR5IG1hbmFnZW1lbnQgc3lz
-dGVtIHdyaXR0ZW4gaW4gUEhQIGFuZCBiYWNrZWQgYnkgYSBNeVNRTCBkYXRh
-YmFzZS4gSXQgaXMgZGlzdHJpYnV0ZWQgYXMgZnJlZSBzb2Z0d2FyZSB1bmRl
-ciB0aGUgR05VIEdlbmVyYWwgUHVibGljIExpY2Vuc2UuDQpiMmV2b2x1dGlv
-biBvcmlnaW5hbGx5IHN0YXJ0ZWQgYXMgYSBtdWx0aS11c2VyIG11bHRpLWJs
-b2cgZW5naW5lIHdoZW4gRnJhbj9vaXMgUGxhbnF1ZSBmb3JrZWQgYjJldm9s
-dXRpb24gZnJvbSB2ZXJzaW9uIDAuNi4xIG9mIGIyL2NhZmVsb2cgaW4gMjAw
-My5bMl0gQSBtb3JlIHdpZGVseSBrbm93biBmb3JrIG9mIGIyL2NhZmVsb2cg
-aXMgV29yZFByZXNzLiBiMmV2b2x1dGlvbiBpcyBhdmFpbGFibGUgaW4gd2Vi
-IGhvc3QgY29udHJvbCBwYW5lbHMgYXMgYSAib25lIGNsaWNrIGluc3RhbGwi
-IHdlYiBhcHAuWzNdKFdpa2kpDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVnVsbmVy
-YWJpbGl0eToNClRoZXJlIGlzIHN0b3JlZCBYU1MgaW4gYjJldm9sdXRpb24g
-dmVyc2lvbiA2LjcuNA0KQW55IHVzZXIgY2FuIGVkaXQgaGlzIG9yIGhlciB0
-d2l0dGVyIGluZm9tYXRpb24gYXQgJ1VzZXIgUHJvZmlsZScgd2l0aCBzb21l
-IGV2aWwgY29kZS4NCkFuZCB3aGVuIHRoZSBhZG1pbiBzZWUgdGhlIHVzZXIg
-cHJvZmlsZSBhdCBiYWNrLW9mZmljZSwgdGhlIHBhZ2UgaXMgbGFjayBvZiBm
-aWx0ZXIgdG8gcHJvdGVjdCB0aGUgYWRtaW4uDQoNClN0ZXAgMSA6IFJlZ2lz
-dGVyIGEgdXNlciBvZiB0aGUgd2ViLXNpdGUNClN0ZXAgMiA6IEVkaXQgdGhl
-IHR3aXR0ZXIgYXQgaHR0cDovLzE5Mi4xNjguMjA0LjEyOC9iMmV2b2x1dGlv
-bi9pbmRleC5waHA/ZGlzcD1wcm9maWxlIHdpdGggc29tZXRoaW5nIGxpa2Ug
-aHR0cHM6Ly90d2l0dGVyLmNvbS9rZXZpbm8ib25tb3VzZW92ZXI9ImFsZXJ0
-KDEpIm9uZXJyb3I9MQ0KU3RlcCAzIDogU2F2ZSB0aGUgY2hhbmdlcw0KU3Rl
-cCA0IDogVGhlIGFkbWluIHZpZXcgdGhlIHByb2ZpbGUgaW4gYmFjay1vZmZp
-Y2UgYXQgaHR0cDovLzE5Mi4xNjguMjA0LjEyOC9iMmV2b2x1dGlvbi9hZG1p
-bi5waHA/Y3RybD11c2VycyAsIHdoZW4gdGhlIG1vdXNlIG92ZXIgdGhlIGNv
-bnRlbnQsIHRoZSBYU1MgY29kZSBydW5zLg0KDQotLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
-UG9DIENvZGU6DQpQT1NUIC9iMmV2b2x1dGlvbi9odHNydi9wcm9maWxlX3Vw
-ZGF0ZS5waHAgSFRUUC8xLjENCkhvc3Q6IDE5Mi4xNjguMjA0LjEyOA0KVXNl
-ci1BZ2VudDogTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV09XNjQ7
-IHJ2OjQ3LjApIEdlY2tvLzIwMTAwMTAxIEZpcmVmb3gvNDcuMA0KQWNjZXB0
-OiB0ZXh0L2h0bWwsYXBwbGljYXRpb24veGh0bWwreG1sLGFwcGxpY2F0aW9u
-L3htbDtxPTAuOSwqLyo7cT0wLjgNCkFjY2VwdC1MYW5ndWFnZTogemgtQ04s
-emg7cT0wLjgsZW4tVVM7cT0wLjUsZW47cT0wLjMNCkFjY2VwdC1FbmNvZGlu
-ZzogZ3ppcCwgZGVmbGF0ZQ0KUmVmZXJlcjogaHR0cDovLzE5Mi4xNjguMjA0
-LjEyOC9iMmV2b2x1dGlvbi9pbmRleC5waHA/ZGlzcD1wcm9maWxlDQpDb29r
-aWU6IHNlc3Npb25fYjJldm9fMTkyXzE2OF8yMDRfMTI4PTQ5X0kwRW5WSGdE
-WEJLanNKZDBlOGZFaEs2R2E4MnhFR0R0OyBfX3NtVG9rZW49QWh1TlRaTkM4
-QmFNZkFWUVY3WnBUVzVhOyBldm9fc3R5bGU9VmFyaWF0aW9uDQpDb25uZWN0
-aW9uOiBjbG9zZQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi94LXd3dy1m
-b3JtLXVybGVuY29kZWQNCkNvbnRlbnQtTGVuZ3RoOiA2NTMNCg0KZWRpdGVk
-X3VzZXJfbG9naW49a2V2aW5vJmVkaXRlZF91c2VyX2ZpcnN0bmFtZT1rZXZp
-bm8mZWRpdGVkX3VzZXJfbGFzdG5hbWU9a2V2aW5vJmVkaXRlZF91c2VyX25p
-Y2tuYW1lPWtldmlubyZlZGl0ZWRfdXNlcl9nZW5kZXI9TSZlZGl0ZWRfdXNl
-cl9jdHJ5X0lEPSZlZGl0ZWRfdXNlcl9yZ25fSUQ9JmVkaXRlZF91c2VyX3N1
-YnJnX0lEPSZlZGl0ZWRfdXNlcl9jaXR5X0lEPSZlZGl0ZWRfdXNlcl9hZ2Vf
-bWluPSZlZGl0ZWRfdXNlcl9hZ2VfbWF4PSZvcmdhbml6YXRpb25zJTVCJTVE
-PSZ1Zl8zOD1rZXZpbm8mdWZfMzk9a2V2aW5vJnVmXzQwPWtldmlubyZ1Zl80
-MT1odHRwcyUzQSUyRiUyRnR3aXR0ZXIuY29tJTJGa2V2aW5vJTIyb25tb3Vz
-ZW92ZXIlM0QlMjJhbGVydCUyODElMjklMjJvbmVycm9yJTNEJTIyMSZ1Zl80
-Mj1odHRwcyUzQSUyRiUyRmZhY2Vib29rLmNvbSUyRmtldmlubyZ1Zl80Mz1o
-dHRwJTNBJTJGJTJGa2V2aW5vLm5ldCUyRmtldmlubyZuZXdfZmllbGRfdHlw
-ZT0zJmFjdGlvbkFycmF5JTVCdXBkYXRlJTVEPVNhdmUrQ2hhbmdlcyUyMSZj
-cnVtYl91c2VyPUNRN0xqQkRLbU1pbjh6cUJEbDA1MG5ORWJtSU5tSUdpJnVz
-ZXJfdGFiPXByb2ZpbGUmaWRlbnRpdHlfZm9ybT0xJnVzZXJfSUQ9OCZibG9n
-PTEmb3JpZ191c2VyX0lEPTgNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkZpeCBDb2Rl
-Og0KVXBkYXRlIHRvIHRoZSB2ZXJzaW9uIDYuNy41DQpodHRwczovL2dpdGh1
-Yi5jb20vYjJldm9sdXRpb24vYjJldm9sdXRpb24vY29tbWl0LzgzYzQwMTI5
-ZjQ3MWI2NTk3NTU0OTFhMDJiMmFkOTgxOTk1ZDM3YzENCg0KQ291bGQgeW91
-IGFzc2lnbiBDVkUgaWQgZm9yIHRoaXM/DQoNClRoYW5rIHlvdQ0KDQpDaGVu
-IFJ1aXFpDQpDb2Rlc2FmZSBUZWFtDQo=
+On Wed, Apr 23, 2025 at 02:11:44PM +0000, Ian Norton wrote:
+> 
+> https://bugs.busybox.net/show_bug.cgi?id=16018  (awaiting CVE)
+> 
+> Busybox's cpio and tar tools will print un-escaped filenames when listing and unpacking
+> cpio and tar files. Malicious files containing filenames with terminal escapes can be used
+> to mask or modify earlier or later files in the archive from anyone running busybox tar or cpio
+> from a terminal.
 
---_000_6D072F0A5597B449BEE8A9770E0BDBEA018D293CEX01corpqihoone_--
+FTR, this one has assigned CVE-2025-46394 .
+
+Regards,
+Salvatore
