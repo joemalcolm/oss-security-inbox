@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12924" "Tuesday" "18" "May" "2021" "16:03:17" "+0000" "Unparalleled IT Security Research" "info@unparalleled.eu" nil "324" "[oss-security] libx11 API Protocol Command Injection" nil nil nil "5" nil nil (number mark "U       info@unparal May 18  324/12924 " thread-indent "\"[oss-security] libx11 API Protocol Command Injection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] libx11 API Protocol Command Injection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22262 invoked by uid 550); 18 May 2021 16:28:30 -0000
+Received: (qmail 27833 invoked by uid 550); 23 Apr 2025 14:34:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,336 +7,169 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10028 invoked from network); 18 May 2021 16:10:37 -0000
-From: Unparalleled IT Security Research <info@unparalleled.eu>
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 12195 invoked from network); 23 Apr 2025 14:11:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=entrust.com; h=
+	content-id:content-transfer-encoding:content-type:date:from
+	:message-id:mime-version:subject:to; s=mail1; bh=j79j35xo9kAASsu
+	yRAFzu/QcN33PudORPCbmrv274sg=; b=RpVkrQbhI2sbt4frcG6GrzV3JstRnIu
+	WIAlxvXPvcisfXeZhJ3hkmRtTGqkLjfv+vCQoMU0pG7Crc/bH7a4g/lfqnD0hdKq
+	nZDEI4TQxv7cx1foFUMjd12SVyl41+y5hLcnX9mkDvh3zOFK1BuXZzw8FGPRc0q1
+	peiLtoGNKfvhp8fmeuSjsySl26OaDuJM90ObWGcBAclAoomS04JC9tanR1hVO9Rg
+	lOg7zMei2DnlJGRxiy3IK1duSl5+njKRDeHOt4/IiDVYpiOaWbu6esIMUeelf5LS
+	une4/vsG62kpnB+idJiTx2KKrDdODDrRdvoIBcgXF0eUhcunckURLLQ==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=q7qm3xROAUC9YGBwfBpbSfWaAZ5FELpTSVhigSYTtQRZIganQzPn4XMtxykviHu19QF2tcMWUzFi8HhiggTivUs1h6r8IcdCTvhbe8JTaqooRoktI5yDaQC0k7APbXaZrnsY8HFj2BXQseEv+lKtLfxf3HfdSM1+0Zp6UUAlFcb7yLuqrMFybbqtrvQGesH8uDoJG9j+hAZAV8aQFRvZskRpjHnUzilXnBAY+TT1hk4oIg2ED6txvV1L6pFOd3eUVb9bYCXqJPuzL10DzMAAofHc3DCRgOP3S1O+DuAaDxtHpnUtF6KUW+MI1XpiDKnd8PZRUcDidTBdQ94HQD/uOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=j79j35xo9kAASsuyRAFzu/QcN33PudORPCbmrv274sg=;
+ b=Xcyt/DlDDOxtgsURC9qoScGmOZkG8zbpKMVs1Cjb3bfA5t51R4cqdswy0MsY9l5U8O6uhY3kX8rGhuHuG6DhB+FljNZd1DsdTVMbim2sY8aQJRk6OpZCIx5jjGVhLWm6DI+isYj9gm3kN/tOeocqQlzivDZBmLjXaeo6otGWGf1lkXBbAbBA1Kcbqx91LmMdV90zAQrojNStsIxIa5nUjp0sfwb3np+qHbXmsrwXdMPH43/xAK5HCEuZIS7EBkrZtV0Zt3upmCPQXe742P3PSKxxeNM0jSAhl+bCrnyyxxJeRRgBR+LhhSjKzh7AQUWw350igtKmVmBD6ygSif24cA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=entrust.com; dmarc=pass action=none header.from=entrust.com;
+ dkim=pass header.d=entrust.com; arc=none
+From: Ian Norton <Ian.Norton@entrust.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: vulnerabilities in busybox tar and cpio tools
+Thread-Index: AQHbtFmkl+BdM4wytEmLvMKbRfTJ5g==
+Date: Wed, 23 Apr 2025 14:11:44 +0000
+Message-ID: <575DB6B1-8A9A-46C6-AA2C-9D0695E1FF85@contoso.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Microsoft-MacOutlook/16.96.25042021
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7PR11MB6931:EE_|IA1PR11MB6195:EE_
+x-ms-office365-filtering-correlation-id: 6d790edf-9943-44b8-149c-08dd8270c742
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?eG54NWxXY0ZWRkR6Y1ZPMlFMZ3dCajdwaVNUNFV6elNVQTZaakdDUHhQWng1?=
+ =?utf-8?B?dGFOWjRoK1cwS0RoVzNyeGR0Mkt2WXhhci82b2VOSCttN21JSm5QaEdXazlS?=
+ =?utf-8?B?eHRwZjFERXg0ajJEbjBKM2Vhd3RDdEVleXB6clA1RWxmK1lVQ0hRSm55TjE3?=
+ =?utf-8?B?L3JPOE1PTXlnTzUyM2VOMmhxenRWQVdseDZGalhSdDRXR3FNa0FzQzJPZlcz?=
+ =?utf-8?B?YjhBSksrSWQrNkY1TDVxUUlVbS9xVFRlaTJubTM0M3JsQ0w4QkFjZmJFTXAy?=
+ =?utf-8?B?WmN4b3RzQW5SS1pxbTlmZU1QRHU0OHA5b1p6anIxU29neWtpdXVLeURDcnlS?=
+ =?utf-8?B?WXdOY2VuZnhGRmdwR1FiY2M0cUlwWGxQRTg5eHdSSGVFa0xEbmNuUC9jOURa?=
+ =?utf-8?B?T1BpajRCTkFUbXJnRjlvM0VlNHRXNzRQQzJ6UTZzSkhvQXNJUS9TandXLzhK?=
+ =?utf-8?B?dkVlQ2NsVm1hS0gxNW5aUjR2azlhV1JFZWF6ODByc0NnQzE4cVFvRjNpYjcr?=
+ =?utf-8?B?N0RNcGN4d2NiMEdYeEl1dGtqaFExaFZwNE5VV244NElkZ0dOTDhmbS9Id0sx?=
+ =?utf-8?B?bzhZZE14SDZJcHFuUi9xbVE2VE12UnhUVlZ2WFN6TWxWSktlQ0xkMC9xZzRL?=
+ =?utf-8?B?M2QxRXczRkh3N0FoU21Vc3RmTlVlbk9HbXYrWHY0V09qZWV0SzRIY1B0Z21k?=
+ =?utf-8?B?K0ZyTllkdGlmdlhwQ1lNMUQwd1pkQ1BNWW1kUW9ON2dMeWJ4anJMTnR5K05r?=
+ =?utf-8?B?Rjh3NTEyY2JKL1IzNW9DeDArS3l0cEtTQkNtTWVhcllQWGovcHI1TlE3d3ll?=
+ =?utf-8?B?VUJIcldsZEFGanBheWs2U2FhOCtOZHk5Q0FrcTV6QTFwc0hyMXFqdXFkK1A0?=
+ =?utf-8?B?TGtNVWZ6bWhzVWJ4dklLQ0ZXTnduRENYMmRGb2JPZEkvTHozY3IyQjFiaEo2?=
+ =?utf-8?B?c3h2V1RpZmJZNVpIWHh5WTZ3anpqWTJRZExRMEwxSkZSczc5Sm82akRTQmlM?=
+ =?utf-8?B?NHNTQWhKeXJVQjRYcFI1ekxEWWYreVZtc1R1b0VoT002elJNUGVmc29NNHhO?=
+ =?utf-8?B?Y2VhZUtBcDZNK1dvRTYzOEI3R3BibmRJeHdaT0J1bWQyRlJjSHpVN2ZTS2sx?=
+ =?utf-8?B?NGZ4Nk51Nzh1dndCVmJxVzNuenBqNlBEaUlLNk5td3U5bytPOVhVVTcyZGNa?=
+ =?utf-8?B?ZUthNnVUc29GeTZwcVZaalk3ZVNyTGVQdEVsUllZVnRoS0VGRFdyRmp0K2Jl?=
+ =?utf-8?B?MnJhOEdsdFFpVUJaRHlQUmR4UWR2MTVmeWlHS1VIVUI0UEYvb2FrVXh1eGVS?=
+ =?utf-8?B?VERGU1JkSUkyZGhpOUhjQVpENXFXRlNVRGdYcndGSitYYzk4WWdaK3NONUlJ?=
+ =?utf-8?B?RUt1TWpzMGtuVDE2QVhkbG5IL3VuVVBZUENmMUIwcjU4Q2UzUURaRXJvOGdD?=
+ =?utf-8?B?cHlYWThTbCtqOTNVWVBJd1h0eFB0T0VYZkxSZ3Y2TG10Z3FNZFczUy9ld0xL?=
+ =?utf-8?B?VkM5c1o1TFFrOUhqOGcyU3VVQUszd2JqK0F5VGI1aFVETzVQbllCV2xPQ0F6?=
+ =?utf-8?B?TjgvMFNSVGwzM2JrS0hDVitUZEMxOEpadDhQTUd1TS9QeVFQVlhZd052TDJ2?=
+ =?utf-8?B?MGtQVHVjd1ZDZkpMRCtXaitUR3RzcDRrem9SemprOWFicDQxd0JNN0hnNmN5?=
+ =?utf-8?B?MzlhR2htTVFDd0M1a0pOc2VJeVl1amdwV1hBc25lL1ZOVktiSFcrWDdKYlhZ?=
+ =?utf-8?B?ZUExQ29pSk9sY3Y1R0hRbkVNSStlM01DQW5kUFc5ZjF3VGkrL3ZnL28yYzU3?=
+ =?utf-8?B?czBSZUVnMldHSFNsYXlXUUJlV1FUOThjRkRzZW9VVm0vbGZvK0RJZjM5MDlk?=
+ =?utf-8?B?dmlHRkRzYWUzOU1uNHd2OEczRXoxRFBjaHZQVDlqMTlVSzQrVHVHVEZkRWpR?=
+ =?utf-8?Q?MCse5/yqyTk=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6931.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?R3hiQlQxaWdTc3I4UmRYSkNmcHBSVDZQWEZlRXFkSGV2MVRMRmo1QlEvbUFK?=
+ =?utf-8?B?VkQ4K2hNTGxFaXJmdnl4NlVDMTBTTTdodzlNLzBlUGdBd010VURMdGZDVEQ4?=
+ =?utf-8?B?NVAxZFhxMXJwR3NqVTZobTlRREhaaUljVGN6c1hPNWFlQTNOUlJCbEdSVFZr?=
+ =?utf-8?B?NEZqcC9ONG1WSG5odkMvMVRCY01uRHlGN3dodG8rTXJZNmh2QmRiZUF2ZmJV?=
+ =?utf-8?B?U3c2Y1lNK052bVViQ1hkWEd4bzJLU3hBaDZFbFNadEttUDMrcHZkMGFGWjJp?=
+ =?utf-8?B?VmdPblFiQnJMRWtHOGYwZWtvWTVjWVR3c1FkNTR5QzduODlPRUQrbHZDamVy?=
+ =?utf-8?B?M2hTUk5JcXpmVlZWaDk1MjV3bGo2Mk9UTTc5RE41OUgvUzdIUWlWS2MxdnFh?=
+ =?utf-8?B?MzNKVUQ2UHpNOVhZQXlOUGt1T2lEMGt2ZkE1MzNTS21GblR6SjYzTUZhMkNJ?=
+ =?utf-8?B?a2tEZjkzcTM4S0VxeHZzVDBVL3RHTkNDLzExRzQxYVMvTjh5Zk1XWWNhWGNl?=
+ =?utf-8?B?bWZZaTFmQ2xwSHo5aURxWHBjVjhZdGhzYVcrc0p2UHVJSnBSeHhiVHpkdDVC?=
+ =?utf-8?B?bG0xeldMeW5UT1RpR3l3M2VWbUpSOXV1QlowZjNzR1FUQlE5eTl4aXZqa3Bh?=
+ =?utf-8?B?bWNoeFk2d0YrSE14aEYxSFlZVjBoZWpjTXNSSXMrOU5QVkZUenRuMVd0dENa?=
+ =?utf-8?B?RFRFUCtiRFNhdkNidEhjSjFVREV5YWFHWWZFaTg1RGR4TmpVTjZMQVJ2T29Z?=
+ =?utf-8?B?QUZxazQ0eUFpU2drWTJUc2ZGc1pjQXkyT2UwUXlnYldvUzl0MFdiR2p3OEFK?=
+ =?utf-8?B?S0lWN1RxMmV6N3BzenhsWXVDVVZaeVJmTFpSY2cvUGlsazQ4d1RhNWdBNVpx?=
+ =?utf-8?B?TGY2RERyVFhMV2h5OU9rWFd1NlRDTjk2Vkh5dUt1WGtLamxJRDNvOTdiNXhR?=
+ =?utf-8?B?RzM3N1MvNERUcVdudS83K3NLcjdDVElkbG52VFR6QzZmRWhmRUlGbElYNng2?=
+ =?utf-8?B?QmhoaGgzWjREWitaZVkzaG9TZVo4N3BKQ3BTa1hIaytIaHRGaEloTitvUVYv?=
+ =?utf-8?B?MXVrbk83a0Q1M1NPcXluZUthcE1TNGZXc1R6cS9jM3VUKzF3S0ljd2xyaE1X?=
+ =?utf-8?B?NVAzNnYxMVl5SHZLVlF3K1FHVit6R0pyUm4xTXVkNzM5RzdSaHJIYmFVdVlr?=
+ =?utf-8?B?VkNOc1ZzOCtxYjUreE5nQXhhMWgxUU04SGlJL2ZnRFdTL0RkVEFaaVlJZXh3?=
+ =?utf-8?B?YkkrZkxHdW1tQWZlM0p1QmM4RDhjcWpMUWo1VjhrZ1RNaXJBdGh4L2ZtTFNI?=
+ =?utf-8?B?ZjBkNUk1QXFvMUhwYlIzVUV1UENveHk2Mk93SGI3MEd3cDd2VDZFVjZ1bG9o?=
+ =?utf-8?B?TzBzZ2o4MWZXUXM1L2VwVHdRelNXSForZm8zT0lCbFk0citOYnZaQWw1SDZF?=
+ =?utf-8?B?bFlVV1dVclQ3cDNYZmMyaEovTmp0bnE5R2RFR0hCbXc2U2RmdzNXZkVjMU9K?=
+ =?utf-8?B?ZGRDSTJmZytNVDZ5QXlZWldkQ3ZGSnFJKzlsT1dRVXBXZVBXajF4dWJZQVZX?=
+ =?utf-8?B?V2hndmErSzJjcTdCamFYd1V5SVR4YUsxQmNEejk3UXI2OFJSRFUvQVNvR25V?=
+ =?utf-8?B?R2lwNEZhTFM2OVhvVFJrcUtXRHl5NWZVOXBRK3hTSGpWRmttK0pZTGNnYUg3?=
+ =?utf-8?B?Mmg0L25maGRoYTlNN3ArK2lKcVgxSmhtd1g2Q05hZVpJTERPTDJjRlh1d24y?=
+ =?utf-8?B?b0g1eGFmSHppRXdjS2RoQU5Ka0VyaHJZSFRXN0lPVnFQS1RHTGltZmovZCth?=
+ =?utf-8?B?RWF1TVlOc2c4Vis0bytNUWtVckdqYU8vczdBWXQxQkswV3JXWkYxeXU4enBp?=
+ =?utf-8?B?aHJVeXVnZjd1bVZ1WWhIdWM2Nkw1UzE3dTRjK2pUanhyeWczRStLZGh1dWYr?=
+ =?utf-8?B?NjlId1ZZTkx2cFl4MTNucXdwR2NSdEQ5aFVCcFhMWWxjcmc2Y3RWbHlIQ3ZN?=
+ =?utf-8?B?ejJzZ2puc2hQMEUyMVdhYTRqN3NubGRaQjZaREpNV1ZCQ05JTitxZm14QXR0?=
+ =?utf-8?B?UVN2dWQ4VXRyL0FaSEVGT3RrTjdKRmJVSHZIUGppTjJ6SUxqTmxrcDZTa0E4?=
+ =?utf-8?B?aFIxWU85emRDSVh0WktGVjV5TDRVTmhDeGpVSmNKcldvcDZ0L0FtTDdPeGpG?=
+ =?utf-8?B?QUE9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <920FC29B3317A54B85D44FE7D6941C41@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="----- =_aaaaaaaaaa0"
-Date: Tue, 18 May 2021 16:03:17 +0000
-Message-ID: <1344-1621353797.024973@P5sK.WRwe.lknU>
-Subject: [oss-security] libx11 API Protocol Command Injection
-
-------- =_aaaaaaaaaa0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Hello list,
-
-Due to missing request length checks in libX11 injection of X
-protocol commands is possible, e.g. by using long color names
-in color lookup API calls. The color names in some cases may
-be (remotely) attacker controlled, e.g. when xterm receives OCS
-(operating system command sequences) from an SSH session to
-a compromised server or a careless "tail -f" on a log file containing
-OCS. A crafted OCS color name can be used to disable X server
-authentication, mess up the keyboard layout, ...
-
-Luckily only very few data flow pathes were found to trigger
-such bogus color lookup calls. Color specifications in PDF, HTML,
-SVG, ... were not suitable to reach the API in a problematic way
-for those applications tested.
-
-See the attached UNPAR-2021-1 advisory or the blog entry describing
-how exploitation works in detail:
-
-https://unparalleled.eu/blog/2021/20210518-using-xterm-to-navigate-the-huge=
--color-space/
-
-
-Kind regards,
-
-| |  DI Roman Fiedler
-| /  roman.fiedler at unparalleled.eu  +43 677 63 29 28 29
-/ |  Unparalleled IT Services e.U.     FN: 516074h           VAT: ATU750505=
-24
-| |  https://unparalleled.eu/          Felix-Dahn-Platz 4, 8010 Graz, Austr=
-ia
-
-------- =_aaaaaaaaaa0
-Content-Type: text/plain; name="advisory-unpar-2021-1.txt";
-	charset="us-ascii"
-Content-Description: advisory-unpar-2021-1.txt
-Content-Disposition: attachment; filename="advisory-unpar-2021-1.txt"
-Content-Transfer-Encoding: quoted-printable
-
-libx11 API Protocol Command Injection
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Advisory:     UNPAR-2021-1
-Component:    libx11
-Vendor:       X.Org Foundation (https://x.org/)
-Version(s):   unclear, maybe since X10R2 or X10R3 [1] (Jan, Feb 1986)
-Weakness(es): Inappropriate Encoding for Output Context (CWE-838)
-CVE:          CVE-2021-31535
-CVSS:         Base score 9.3: AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
-Author:       Roman Fiedler
-
-
-Summary:
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-The X Window System is a client-server based windowing system
-common on Unix-like systems. Using the communication protocol
-defined by the X protocol specification enables clients to perform
-output of graphical data, receive keyboard and mouse input, change
-shared properties affecting window manager behaviour.
-
-To ease development of graphical client software, libX11 [2]
-provides a C-API for invoking X server functions remotely. The
-libX11 library itself makes use of the XCB library (X protocol
-C-language Binding) [3] to encode the data structures for transport
-and to facilitate transmission of requests, parsing of responses.
-
-The libX11 request "XLookupColor" intended for server side color
-lookup contains a flaw allowing to a client to send color name
-requests with a color name longer than the maximum size allowed
-by the protocol and also the maximal packet size for normalsized
-packets. The user-controlled data exceeding the maximum size
-is then interpreted by the server as additional X protocol requests
-and executed, e.g. to disable X server authorization completely.
-
-Timeline:
-* 20210212: Contacted XOrg and Xterm
-* 20210316: Refined XOrg patch available
-* 20210326: Mitigation on xterm side in patch #367 [4]
-* 20210518: Disclosure=20
-
-
-Details:
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-The X Window System Protocol specification, release 6.8 [5],
-page 72 and 168 defines a request and encoding to query the server
-for the color specification of a given color name and the closest
-specification supported by the hardware. This function was maybe
-historically intended for optimizing color palette use while
-full 16-bit RGB color hardware was not available or to improve
-optimal color selection for ancient monitors.
-
-The protocol encoding of the LookupColor request is:
-
-byte(s) value          meaning
-1       92             opcode
-1                      unused
-2       3+(n+p)/4      request length
-4       COLORMAP       cmap
-2       n              length of name
-2                      unused=20
-n       STRING8        name
-p                      unused, p=3Dpad(n)
-
-As seen the name length may not exceed 2^16 bytes, the request
-length itself 2^18 bytes. The code of the Xlib client API function
-does not honor that:
-
-35 Status
-36 XLookupColor (
-37         register Display *dpy,
-38         Colormap cmap,
-39         _Xconst char *spec,
-40         XColor *def,
-41         XColor *scr)
-...
-81         n =3D (int) strlen (spec);
-82         LockDisplay(dpy);
-83         GetReq (LookupColor, req);
-84         req->cmap =3D cmap;
-85         req->nbytes =3D n;
-86         req->length +=3D (n + 3) >> 2;
-87         Data (dpy, spec, (long)n);
-88         if (!_XReply (dpy, (xReply *) &reply, 0, xTrue)) {
-
-Therefore providing a color name longer than 2^18 bytes will
-overflow both the name length and request length fields. Thus
-the server will parse and execute a lookup request shorter than
-intended by the client. The remaining unprocessed color name
-data is then immediately executed as additional request(s) due
-to the asynchronous nature of the the protocol.
-
-
-Impact:
-=3D=3D=3D=3D=3D=3D=3D
-
-When triggering an X client application to perform a LookupColor
-request with a crafted color name, protocol command injection
-will result. The impact of this is from loss of procotol reading
-frame, thus client application abort when the synchronization
-error is detected (DoS) to deactivation of X server access control.
-When the later happens, the attacker takes full control of the
-graphics server communication including keyboard and mouse input
-data and therefore can instruct other X applications, e.g. graphical
-terminals to execute arbitrary keyboard input (RCE).
-
-
-Vulnerable Systems:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-As the vulnerability is triggered by a client application submitting
-overlong color names to Xlib but there is no common pattern,
-why or how an application would do that, the number of vulnerable
-configurations is hard to estimate. Even for a plain Debian codebase
-search for XLookupColor [6] there are more than 200 hits, some
-of them being not applications but libraries or components used
-in more complex software, e.g. the mono environment. Following
-two examples illustrate, how different an attack path can be:
-
-1) xterm:
-
-xterm supports operating system command sequences (OCS) [7] to
-change the background or font color. Unlike other requests, e.g.
-to modify window properties, color requests are not deemed risky
-and therefore are executed by xterm. By adding a crafted OCS e.g.
-to a logfile that is then mindlessly displayed by plain "cat"
-(a user error) but also when connecting via SSH to a remote and
-maybe less trusted server, that prints the malicious OCS embedded
-in remote ".profile" or ".bashrc", the OCS will inject X protocol
-data on the LOCAL host running xterm, even when X forwarding
-is disabled for SSH.
-
-The tool "enjoy-all-the-colors.py" [8] demonstrates such an attack,
-where the injected command will disable X server authorization
-completely. Afterwards an attacker being able to reach one X
-server control socket, e.g. UNIX-domain "/tmp/.X11-unix/X0" or
-TCP port 6000 (when X server was started without "-nolisten tcp"),
-can then take full control of the screen session of the currently
-connected user. The effect on the X server can be seen running
-"xhost" before and after invoking "enjoy-all-the-colors.py".
-
-2) Modification of ".Xdefaults":
-
-Adding malicious color names as generated by "enjoy-all-the-colors.py"
-to the .Xdefaults causes applications processing such settings
-to execute injected X commands on startup. This can be shown e.g.
-by setting the property "x11-ssh-askpass.Background" and then
-run "/usr/lib/ssh/x11-ssh-askpass":
-
-$ python3 -c 'print("x11-ssh-askpass.Background:\tAAAA" + "A"*(1<<18))' >> =
-.Xdefaults
-$ /usr/lib/ssh/x11-ssh-askpass --help
-Warning: Color name "AAAAAA...
-X Error of failed request:  BadValue (integer parameter out of range for op=
-eration)
-  Major opcode of failed request:  65 (X_PolyLine)
-  Value in failed request:  0x41
-  Serial number of failed request:  16
-  Current serial number in output stream:  16
-
-
-To detect entrypoints or make it easier to estimate if an application
-is vulnerable, the "x-proto-sniffer.py" [9] was created. It intercepts
-X requests, downgrades the connection, e.g. by disabling the shared
-memory extension, to ease following the command flow and watches
-out for e.g. XColorLookup requests. Due to its invasive nature,
-the behaviour of the subject under test is modified, the X application
-may react flaky and thus the results may only give hints to dig
-deeper but they shall not been seen as an audit report declaring
-an application to be secure.
-
-
-Mitigation:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-While fixes are not applied yet, xterm should not be used to
-display less trusted data, e.g. from SSH connections to less
-trusted remote machines.
-
-To avoid attacks via .Xdefaults on kiosk type machines, where
-graphical user has no permission to execute arbitrary operating
-system commands or sometimes not even to send hardware keyboard
-keystrokes, the .Xdefaults must not be modifiable by the user.
-But also changing of "HOME" environment variable to an untrusted
-location has to be prevented.
-
-
-Fix:
-=3D=3D=3D=3D
-
-x.org provided patches to refuse processing of request data longer
-than the maximum request size and return 0 (color not found). See
-commit 8d2e02ae650f00c4a53deb625211a0527126c605 in [12].
-
-In parallel xterm patch #367 [4] disables processing of nearly
-arbitrary long OCS strings, thus preventing remote X command
-injection via e.g.  SSH even on systems with Xlib not (yet) patched.
-
-
-Proof of Concept:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-The tool "enjoy-all-the-colors.py" [8] creates an xterm OCS sequence
-containing a color name, that when sent via Xlib XLookupColor
-will be seen as 3-4 different requests:
-
-* a (truncated) XLookupColor request
-* two XQueryTextExtents requests of different size consuming
-  most of the remaining color data
-* the start of an "SetAccessControl" command with the complete
-  request data frame not consisting only of color name data but
-  also the first few bytes of the next successive non-rogue client
-  request. Only the data of the next request contains the required
-  bytes otherwise forbidden in the color name that are needed
-  to form a sane "SetAccessControl" comand to disable authorization.
-
-See [10] for more information on the attack method itself.
-
-
-Notes:
-=3D=3D=3D=3D=3D=3D
-
-=46rom historic perspective it would be interesting, from when
-on the bug was really exploitable. The code in "XGetColor.c"
-of [1] seems vulnerable. The source code comment is older,
-the copyright seems to have been added 1985 already, so maybe
-X10R2 or older. As a 256kb long color name is not a big thing
-nowadays, other parts of the historic X protocol implementation
-may have caused memory allocations of such size to fail or not
-to be processed in an exploitable way due to other limits.
-
-Therefore a software stack as described in [11] would be interesting
-to test X server behaviour in realistic 1985/1986 environment.
-There was not way found yet to get hold of such a stack with
-acceptable effort yet.
-
-
-Credits:
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-Thanks to Thomas Dickey to add mitigation code to xterm by shortening
-color name length before passing it on to Xlib and x.org developers,
-especially Matthieu Herrb for analyzing the problem on Xlib side
-and providing patches not only for the XLookupColor vector but
-also other similar requests, even when no way of exploitation
-is known for those yet.
-
-
-Revision History:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-* 20210518: UNPAR-2021-1 advisory released
-
-
-References:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[1] https://www.x.org/releases/X10R3/ (source comment of XGetColor.c
-    may indicate file was already present in previous release)
-[2] https://en.wikipedia.org/wiki/Xlib
-[3] https://en.wikipedia.org/wiki/XCB
-[4] https://invisible-island.net/xterm/xterm.log.html
-[5] https://www.x.org/releases/current/doc/xproto/x11protocol.pdf
-[6] https://codesearch.debian.net/search?q=3DXLookupColor&literal=3D1
-[7] https://en.wikipedia.org/wiki/ANSI_escape_code#OSC_(Operating_System_Co=
-mmand)_sequences
-[8] https://unparalleled.eu/blog/2021/20210518-using-xterm-to-navigate-the-=
-huge-color-space/enjoy-all-the-colors.py
-[9] https://unparalleled.eu/blog/2021/20210518-using-xterm-to-navigate-the-=
-huge-color-space/x-proto-sniffer.py
-[10] https://unparalleled.eu/blog/2021/20210518-using-xterm-to-navigate-the=
--huge-color-space/
-[11] https://retrocomputing.stackexchange.com/questions/3069/what-software-=
-stack-could-i-use-to-get-x10-the-version-of-x-before-x11-up-and
-[12] https://gitlab.freedesktop.org/xorg/lib/libx11
-
-------- =_aaaaaaaaaa0--
-
+X-OriginatorOrg: entrust.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6931.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6d790edf-9943-44b8-149c-08dd8270c742
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2025 14:11:44.6200
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f46cf439-27ef-4acf-a800-15072bb7ddc1
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: a3KLf7VFmKkLDcrIuNJvOGjTcW8T02lM/9TvoJIQyDW5pXrXbDKmoBUzwuAOjNWglqRdR3OwS3POTriuQ37x1g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6195
+X-Proofpoint-GUID: JJY3dw1ITI_XIHhJqXrWcs9_PYPi2P2-
+X-Authority-Analysis: v=2.4 cv=d8z1yQjE c=1 sm=1 tr=0 ts=6808f525 cx=c_pps a=yF+kfS/uWKtSACHbTM5LMQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=XR8D0OoHHMoA:10 a=FEbzDYiKvWYA:10 a=J0Tn2xNtAAAA:8 a=xNf9USuDAAAA:8 a=x_2bjO5H88iSBYRrssYA:9 a=QEXdDO2ut3YA:10 a=1_rcOv93f9wA:10 a=WnsSiIrTN5sA:10 a=9ZcRxastL33iXWX1AWsW:22
+X-Proofpoint-ORIG-GUID: JJY3dw1ITI_XIHhJqXrWcs9_PYPi2P2-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDEwMCBTYWx0ZWRfX6QVSKXTQcSWr i/Ob2xu0rje22ByCoNBYrA4Qp/u62iSok9r1jU6VLJrJsJPsB2FTLwzssVsZpPsJomZpSPJBYxN RnRLRYmHTTaTxBmmPpNp8wCnkEpjsPBHmitJPCCiz07yxBFEEemkyaWzSjgpPgZs4kXHSboSmSZ
+ EHA57NJujgPAJHeIvRH2AvF5Pivzo7ah1K5boNWwNyw7HMYos7Q3Xl7S4Ev+a0NuAwnmVkxXOwR 72gsV0UfzN4NLOSBm0CpuT8WYAKMoqokhPkCi5ahgzaAK0ebch3IZXcfnsoxFmMMdCHwwmsfwvQ Cn0Gq4+vo3pXF+s82cSG36Cap3EMYA4sYmzdPAsdBKpjiGCEi/GAafe+oiy5TP86Xy6Ci4HZBsk
+ KgAPi+Sgl91ppO9Mohv9wuy3unLBsBB8YmBuMbWgketbGsFdRJz4zc6aF/vWuv9nQLLDHLew
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
+ definitions=2025-04-23_08,2025-04-22_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ adultscore=0 lowpriorityscore=0 mlxlogscore=648 clxscore=1034
+ impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2504070000
+ definitions=main-2504230100
+Subject: [oss-security] vulnerabilities in busybox tar and cpio tools
+
+DQpodHRwczovL2J1Z3MuYnVzeWJveC5uZXQvc2hvd19idWcuY2dpP2lkPTE2MDE4ICAoYXdhaXRp
+bmcgQ1ZFKQ0KDQpCdXN5Ym94J3MgY3BpbyBhbmQgdGFyIHRvb2xzIHdpbGwgcHJpbnQgdW4tZXNj
+YXBlZCBmaWxlbmFtZXMgd2hlbiBsaXN0aW5nIGFuZCB1bnBhY2tpbmcNCmNwaW8gYW5kIHRhciBm
+aWxlcy4gTWFsaWNpb3VzIGZpbGVzIGNvbnRhaW5pbmcgZmlsZW5hbWVzIHdpdGggdGVybWluYWwg
+ZXNjYXBlcyBjYW4gYmUgdXNlZA0KdG8gbWFzayBvciBtb2RpZnkgZWFybGllciBvciBsYXRlciBm
+aWxlcyBpbiB0aGUgYXJjaGl2ZSBmcm9tIGFueW9uZSBydW5uaW5nIGJ1c3lib3ggdGFyIG9yIGNw
+aW8NCmZyb20gYSB0ZXJtaW5hbC4NCg0Kc2VlIGFsc28gaHR0cHM6Ly9saXN0cy5idXN5Ym94Lm5l
+dC9waXBlcm1haWwvYnVzeWJveC8yMDI0LUp1bHkvMDkwODA2Lmh0bWwNCg0KDQpodHRwczovL3Nl
+Y3VyaXR5LXRyYWNrZXIuZGViaWFuLm9yZy90cmFja2VyL0NWRS0yMDIzLTM5ODEwDQoNCkEgdW5w
+YWNraW5nIGEgY3BpbyBhcmNoaXZlIGNhbiBlc2NhcGUgdGhlIHdvcmtpbmcgZGlyZWN0b3J5LiBE
+dWUgdG8gIzE2MDE4IGl0IGlzIHBvc3NpYmxlIHRvDQptYXNrIHRoZXNlIHRyYXZlcnNhbHMgZnJv
+bSBhbnlvbmUgdXNpbmcgY3BpbyB0byBpbnNwZWN0IGEgZmlsZSBiZWZvcmUgdW5wYWNraW5nLg0K
+DQpzZWUgYWxzbyBodHRwczovL2xpc3RzLmJ1c3lib3gubmV0L3BpcGVybWFpbC9idXN5Ym94LzIw
+MjQtSnVseS8wOTA4NTEuaHRtbA0KDQoNCg0KDQpBbnkgZW1haWwgYW5kIGZpbGVzL2F0dGFjaG1l
+bnRzIHRyYW5zbWl0dGVkIHdpdGggaXQgYXJlIGludGVuZGVkIHNvbGVseSBmb3IgdGhlIHVzZSBv
+ZiB0aGUgaW5kaXZpZHVhbCBvciBlbnRpdHkgdG8gd2hvbSB0aGV5IGFyZSBhZGRyZXNzZWQuIElm
+IHRoaXMgbWVzc2FnZSBoYXMgYmVlbiBzZW50IHRvIHlvdSBpbiBlcnJvciwgeW91IG11c3Qgbm90
+IGNvcHksIGRpc3RyaWJ1dGUgb3IgZGlzY2xvc2Ugb2YgdGhlIGluZm9ybWF0aW9uIGl0IGNvbnRh
+aW5zLiBQbGVhc2Ugbm90aWZ5IEVudHJ1c3QgaW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSB0aGUgbWVz
+c2FnZSBmcm9tIHlvdXIgc3lzdGVtLg0KDQo=
