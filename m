@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["451" "Wednesday" "28" "September" "2016" "21:51:03" "+0200" "Pere Orga" "pere@orga.cat" "<CAMYtjAr7Lezwt7K7JxF=_mJmmc9=GfzxtW3d=TbL3wV2+dJ=0w@mail.gmail.com>" "17" "[oss-security] CVE Requests for Drupal Core - SA-CORE-2016-004" "^Cc:" nil nil "9" "2016092819:51:03" "[oss-security] CVE Requests for Drupal Core - SA-CORE-2016-004" (number mark "U       pere@orga.ca Sep 28   17/451   " thread-indent "\"[oss-security] CVE Requests for Drupal Core - SA-CORE-2016-004\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16067 invoked by uid 550); 28 Sep 2016 19:51:40 -0000
+Received: (qmail 18167 invoked by uid 550); 24 Apr 2025 23:57:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16046 invoked from network); 28 Sep 2016 19:51:39 -0000
-X-Gm-Message-State: AA6/9RmAaogXBVX7yu2fZKKrTZ2mQeI5GAai8Lrn1q4HD5BAroPPvz77qAAdHWHWRLdwbSyBAGZZe+gppwU3BQ==
-X-Received: by 10.36.131.75 with SMTP id d72mr1740476ite.122.1475092283663;
- Wed, 28 Sep 2016 12:51:23 -0700 (PDT)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAMYtjAr7Lezwt7K7JxF=_mJmmc9=GfzxtW3d=TbL3wV2+dJ=0w@mail.gmail.com>
-Message-ID: <CAMYtjAr7Lezwt7K7JxF=_mJmmc9=GfzxtW3d=TbL3wV2+dJ=0w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: Drupal Security Team <security@drupal.org>
-Date: Wed, 28 Sep 2016 21:51:03 +0200
-From: Pere Orga <pere@orga.cat>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Requests for Drupal Core - SA-CORE-2016-004
+x-ms-reactions: disallow
+Received: (qmail 18005 invoked from network); 24 Apr 2025 23:57:39 -0000
+Date: Fri, 25 Apr 2025 01:57:37 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20250424235737.GA24954@openwall.com>
+References: <575DB6B1-8A9A-46C6-AA2C-9D0695E1FF85@contoso.com> <068a922d-d77d-45d2-9b18-e07e41c9a907@suse.de> <aAlSF2Z3LlN-avD6@eldamar.lan> <CAEo4CeMgzPGBc3KgijU6HLkUcj1kcQj=8_jGUWojZ7jBdgAWxA@mail.gmail.com> <47b612ea-0e3f-4b53-a711-8d089538fb65@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <47b612ea-0e3f-4b53-a711-8d089538fb65@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] vulnerabilities in busybox tar and cpio tools
 
-Hi
+On Thu, Apr 24, 2025 at 07:09:44PM -0400, Demi Marie Obenour wrote:
+> On 4/24/25 3:09 AM, Albert Veli wrote:
+> > On Wed, Apr 23, 2025 at 10:51 PM Salvatore Bonaccorso <carnil@debian.org> wrote:
+> >> FTR, this one has assigned CVE-2025-46394
+> >> ...
+> >> FTR, this one has CVE-2024-58251 assigned.
+> > 
+> > From what I can tell the latest release is busybox-1.37.0. Are these fixed
+> > in this release? If not, do you have any link to patches I can apply to fix
+> > these issues?
+> > 
+> > Regards,
+> > Albert
+> 
+> This message was marked as spam by GMail.  The ARC-Authentication-Results
+> header indicates that the mailing list is not configured in a DMARC-compatible
+> way.  Specifically, the mailing list did not rewrite the From: header but did
+> modify the message body, so the DKIM signature check failed.
 
-Please can I have CVE IDs assigned to the following Drupal
-vulnerabilities (see https://www.drupal.org/SA-CORE-2016-004):
+This was a special case - DKIM-breaking message body modification
+shouldn't normally happen here.
 
-Users without "Administer comments" can set comment visibility on
-nodes they can edit
-Cross-site Scripting in http exceptions
-Full config export can be downloaded without administrative permissions
+However, the list is indeed not DMARC-compatible: we insert
+[oss-security] into the Subject when it's not already near the beginning
+of that header (may break DKIM), and we relay messages from the list
+server's IP address (may be against the From header domain's SPF,
+although recipient servers may look at envelope-from instead, which we
+do rewrite, so SPF will match in that respect).
 
-Versions affected are all Drupal 8.x versions prior to 8.1.10.
+For now, this is simply how it is.  Most delivery problems occur when
+the sender's domain has strict DMARC policy ("p=reject"), so e.g. when
+someone from google.com posts, the message doesn't get through to
+subscribers on gmail.com.  For gmail.com to gmail.com, everything is
+usually "fine" for now.
 
-Thanks
+Yes, we may need to bite the bullet and add From header rewriting.
 
--- 
-Pere Orga on behalf of the Drupal Security team
-
+Alexander
