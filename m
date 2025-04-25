@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["901" "Friday" "19" "May" "2017" "22:36:40" "+0200" "Martin" "martin_s@apache.org" "<1622774.CTg74Sxca6@golgafrichnam>" "29" "[oss-security] [SECURITY] CVE-2017-5657: Apache Archiva CSRF vulnerability for REST endpoints" nil nil nil "5" "2017051920:36:40" "[oss-security] [SECURITY] CVE-2017-5657: Apache Archiva CSRF vulnerability for REST endpoints" (number mark "U       martin_s@apa May 19   29/901   " thread-indent "\"[oss-security] [SECURITY] CVE-2017-5657: Apache Archiva CSRF vulnerability for REST endpoints\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27985 invoked by uid 550); 19 May 2017 20:56:11 -0000
+Received: (qmail 1087 invoked by uid 550); 25 Apr 2025 15:51:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9919 invoked from network); 19 May 2017 20:36:56 -0000
-From: Martin <martin_s@apache.org>
-To: users@archiva.apache.org, users@maven.apache.org, announce@apache.org
-Cc: oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Date: Fri, 19 May 2017 22:36:40 +0200
-Message-ID: <1622774.CTg74Sxca6@golgafrichnam>
+x-ms-reactions: disallow
+Received: (qmail 17651 invoked from network); 25 Apr 2025 07:46:25 -0000
+Date: Fri, 25 Apr 2025 09:46:15 +0200 (CEST)
+From: Jan Engelhardt <ej@inai.de>
+To: Florian Westphal <fw@strlen.de>
+cc: Sunny73Cr <Sunny73Cr@protonmail.com>, 
+    "netfilter-devel@vger.kernel.org" <netfilter-devel@vger.kernel.org>, 
+    oss-security@lists.openwall.com
+In-Reply-To: <20250425062231.GA7332@breakpoint.cc>
+Message-ID: <sqo7nqpr-151q-4sr4-1o40-r95r62179s29@vanv.qr>
+References: <1EYtBL_6T4QRNdyaUOoY2OO_FLzCtCfv4Q7gBf28RHR_k_LB-t0IN5R7v12bgaOOSKputo826H9PZ-2EmksldVLnGVoXyMQVemTy3tMra10=@protonmail.com> <20250425062231.GA7332@breakpoint.cc>
+User-Agent: Alpine 2.26 (LSU 649 2022-06-02)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Subject: [oss-security] [SECURITY] CVE-2017-5657: Apache Archiva CSRF vulnerability for REST endpoints
+Content-Type: text/plain; charset=US-ASCII
+Subject: [oss-security] Re: Trailing dot in Cygwin filenames [was: failed to clone
+ iptables,ipset,nftables]
 
-CVE-2017-5657: Apache Archiva CSRF vulnerabilities for various REST endpoints
+On Friday 2025-04-25 08:22, Florian Westphal wrote:
 
-Severity: Important
+>Sunny73Cr <Sunny73Cr@protonmail.com> wrote:
+>> error: invalid path 'src/json.'
+>
+>There is indeed a bogus file of that name, no idea
+>why its there or why cygwin git chokes on it.
 
-Vendor:
-The Apache Software Foundation
+There is some prior record -
+https://github.com/libgit2/libgit2/issues/6968
 
-Versions Affected:
-    Archiva 2.0.0 - 2.2.1
-    The unsupported versions 1.x are also affected.  
+"foo" and "foo." are equivalent in DOS, and there is a normalization
+phase from "foo." to "foo". This carried forward into contemporary
+Windows cmd.exe, explorer.exe (File Explorer), the usual file access
+APIs.
 
-Several REST service endpoints of Apache Archiva are not protected against 
-Cross Site Request Forgery (CSRF) attacks. A malicious site opened in the same 
-browser as the archiva site, may send HTML response that performs arbitrary 
-actions on archiva services, with the same rights as the active archiva 
-session (e.g. adminstrator rights).
+	echo abc >x
+	echo def >y.
 
-Mitigation:
-  All users are recommended to upgrade to Archiva 2.2.3 or higher, 
-  where additional measures are taken to verify the origin of REST requests.
+creates "y" not "y." in cmd.
 
-References:
-http://archiva.apache.org/security.html#CVE-2017-5657
+But Cygwin does something unusual, it *actually* creates a file with
+the 2-char sequence "y.", through whatever means. Explorer *shows* it
+with the dot, but practially no application other than Cygwin can
+open it, because all normal APIs and fs lookup mechanisms are
+rummaging for "y" as per the earlier equivalance, and either
 
-The newest Archiva version can be downloaded from:
-http://archiva.apache.org/download.cgi
+1. there is no file "y", so some programs can/may/will throw an error
+2. or, come to think of it, there is an evil file (hi oss-security)
 
+  [in cgwin]
+  echo good >y
+  echo evil >y.
 
-
+If you now try to open "y." with notepad.exe from Explorer, you always 
+get the "good" variant. Only inside Cygwin, e.g. with cat.exe, can "y" 
+be distinguished from "y.".
