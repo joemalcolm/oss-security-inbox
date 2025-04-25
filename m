@@ -1,4 +1,4 @@
-Received: (qmail 9561 invoked by uid 550); 13 Dec 2023 14:59:18 -0000
+Received: (qmail 5164 invoked by uid 550); 25 Apr 2025 15:48:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,145 +7,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11517 invoked from network); 13 Dec 2023 14:11:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1702476709;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=yMDlmIBfkDwSnk84fdtoBhsKgZG8MDN4dihKTIV7hBk=;
-	b=BLqN4JdRDnWt8ZIRPDufr7NaPOKMa6i96hNFz2/X/qf1IoBjNprOC6uFmKiBn/NEbFlxT3
-	GFVVp/GZaHL6PbgyqVNv/h6uAmBYPL1+LlO0C4trQMCg0yVu1MVurjvC4ajcnPlSGZSEeb
-	hi9s5uzJeJ66YGEmo+TjI/98tAyPAaA=
-X-MC-Unique: -rrCI1sZPxWhFzTtMwVemA-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702476706; x=1703081506;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yMDlmIBfkDwSnk84fdtoBhsKgZG8MDN4dihKTIV7hBk=;
-        b=bfRC+siHptewrmbxiKFEzNC0BUPXh+FNWfcPz3RDRLbdQ9Mk65U0KkIDW0oq2bnpTR
-         T7rcUaWpjO1Xfd0B1MdjQoStxeQR4F+1XzRa++vX12Vky6LMl07kP0kUFEyqa+Bz/3s7
-         WtwB0Qq9X5ninE4GXArAtuOgfpN4TaVzrkNNfx06F/tBW0bqJSh68jCahd3tFVEVVqRs
-         oyyQ/1euo/JLQBdIa+W1qRMBWJJQ0DlYPGRDck7t+578UV2fGanfHNWs00WloFQysJwA
-         JHgg6iWnIAKdWWaNluIrM+vWhZJCH+Fik6KR6cY+7rrRr4OlrsK8Dq46wrlxPtOOpEYo
-         EQsg==
-X-Gm-Message-State: AOJu0Yyv37iD0cVAc/hlkWW/En8xpmlnRvo6iA3Y6KS8PjWSTBeQggGV
-	Tu2G2BTNqJ8hgfauOHfNQHvjQY7or53G50eMGUyJI1LeoDAvt9LCd6GanjeXsG3MgYJArZ9TJaW
-	IjN5CjWfHCLAVnND9K4ujrB5w889D+9XornU1rNIDzXTZ4I4YbIhyZO8=
-X-Received: by 2002:a05:651c:1252:b0:2cc:3804:436 with SMTP id h18-20020a05651c125200b002cc38040436mr342634ljh.77.1702476706373;
-        Wed, 13 Dec 2023 06:11:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEb/lLTt8Pxhcnil62LgrzsKyCSzQzXnu+EUCOKpbYPk2eFXED9iMUxhdmTghAkMt61QPMOe1KBtXRR51RzOjQ=
-X-Received: by 2002:a05:651c:1252:b0:2cc:3804:436 with SMTP id
- h18-20020a05651c125200b002cc38040436mr342631ljh.77.1702476706107; Wed, 13 Dec
- 2023 06:11:46 -0800 (PST)
-MIME-Version: 1.0
-From: Jakub Jelen <jjelen@redhat.com>
-Date: Wed, 13 Dec 2023 15:11:35 +0100
-Message-ID: <CAHrFiA_XB=rFrdC8+8KTwbi9-Jwf6fiGwNEEngmApg-v_VzZWg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2023-40661: Dynamic analyzers reports in pkcs15-init in OpenSC
- before 0.24.0
+x-ms-reactions: disallow
+Received: (qmail 21927 invoked from network); 25 Apr 2025 07:18:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=deepin.org;
+	s=ukjg2408; t=1745565474;
+	bh=dBrfyZKuRQNFhzqv9R6awPV3UBnBHxlUWLEHiczLHZs=;
+	h=From:To:Subject:Mime-Version:Date:Message-ID;
+	b=ubb0yWVpcBOAhxVd7S2spNTeyybsrJ3EukMux5tKy1SJfICwZznn77TfcPMQSp6vU
+	 nwrqZ7hBemT+cMKpURKEFjjKIxPwX3BzIpO5dLNN9rhHAtf1ZnxyZgpOtWntFgYUjg
+	 VipZPluIuoK6Eg7P2UuGKdCYNWAZ4dpYrykiCz+Y=
+EX-QQ-RecipientCnt: 1
+X-QQ-GoodBg: 2
+X-QQ-SSF: 0040000000000010
+X-QQ-FEAT: D4aqtcRDiqS1uDIXxvn4gK/xYrdr6vDfpwOuPrOIIuM=
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-Originating-IP: 8TNrPM/KJcGKHh8i/1C525hgq2xEL1Sj30Ktqc/clXSYQkc/we7ODjaq0T+ikPmR
+X-Originating-IP: 255.255.247.166
+X-QQ-STYLE: 
+X-QQ-mid: lv3sz3a-0t1745565473t4f3381f8
+From: "=?utf-8?B?eGlhb2xpbg==?=" <dongxiaolin@deepin.org>
+To: "=?utf-8?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_680B3720_CB665340_3C9675ED"
+Content-Transfer-Encoding: 8Bit
+Date: Fri, 25 Apr 2025 15:17:52 +0800
+X-Priority: 3
+Message-ID: <tencent_43AA27D65C46DEB244310CDB@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-BIZMAIL-ID: 17727276734540088166
+X-QQ-SENDSIZE: 520
+Feedback-ID: lv:deepin.org:qybglogicsvrgz:qybglogicsvrgz8a-0
+X-QQ-XMAILINFO: N+v2p8NjVRtQ1RHehmX8f/9qhj8L7ZauGemFn480hy5hFRr2c4y5MGF/
+	ZE9gJCJDiu4iw2rQv5kthKVl7QI0JN2pPJfHGgBVnXvBmuZrUJxAtkTMeIIM0uAKBsfLEhe
+	RpKU7xQBWStEO6deMER0iE6IVyyCSw2gqQoRSLzGezF0l330/aiCQN7wv75/ylC8wm5yPI0
+	wRH7QedVvUoDI2vvv9Q37c6GpbHoI64/v7t64B4YH9XOzP8imgxWpW9py6icQPVDbj7/zDD
+	DvYUnL5YwhvjuilrZqVMqYSFN050VG3JMcXwsyz7duh3eyzIAf8gq/PJSs5g0MyXFM0sEfc
+	JkHy+gNVXlh/dmiFamLkJsocwlLLquU7r+cAtIrlcfdrFUvfLzjqBnkofUvV6Bkh5u5lwiu
+	MxP83sLhZ9PNiqI7SF+xewxxZY5PfBOP3pJ4PayzQQWzUtlikRleNJW0dbD1wjjx4/1S4zp
+	N7s4DVmqD4w9RRmZtZkH/DIA6El8noT9j0xtrQkDLUeMshEAetcd109IlRpTZ8X3kjBJvxw
+	ekrDr36NpQtZ/7vkFO22kjJk13pZ/gLhHN23R2Y/pf+SRefWYsH1YtSdhsic0uK4I3xrftD
+	jdDRYD/r6R0Mw+XyQq/mRwKM5NOkHEZsqzVQDhbZTLbWNCA0ShKRDiYg1Sc0kXzOlXu0Tcy
+	XPi/K2Z6ZoNdBuAKTIrwC3qt9KeSsNeWAMaWl/g6RXJiUsD6KweviuCtNizOoge6JA0RRqm
+	b1K5HgY9uAPm/Z7F/mq26UnoWcA9oZZQlmIfXE+MhjhdgHpcEVuvbjgr5cPzgq4ExOJqXBM
+	3GtWGaDI5WYZElXcc4B1L25MsnnS40UVVy20eDTq55Ii7TteXUc5SJeE/uxujkXId2erH39
+	PVQS0DcSHzosDM4XhXCGROsSma9u+oz85MMa2K4oY6iLSMyFjBolRKgZ67h9EpmfURqja4k
+	gmg3BfZVm21gJTG3ceBCFZL4QabM4XlXrXKbSHGNgmR3C+HNZGbJCo6e5f7pUapsuXCoYqX
+	n+X4vEAlHpNV4W7g1KdAwERCUicjxcQPWeAEMGTg==
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-QQ-RECHKSPAM: 0
+Subject: [oss-security] CVE-2024-56431: libtheora: incorrect bitwise shift in huffdec.c
+X-Spam: Yes
 
-This advisory summarizes automatically reported issues that are
-security relevant that were reported since the release of OpenSC
-0.23.0 and that are relevant to the handling the card enrollment
-process using pkcs15-init.
+------=_NextPart_680B3720_CB665340_3C9675ED
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-All of these require physical access to the computer at the time user
-or administrator would be enrolling the cards (generating keys and
-loading certificates, other card/token management) operations. The
-attack requires crafted USB device or smart card that would present
-the system with specially crafted responses to the APDUs so they are
-considered a high-complexity and low-severity. This issue is not
-exploitable just by using a PKCS#11 module as done in most of the
-end-user deployments.
+U2V2ZXJpdHk6Jm5ic3A7DQotIG1vZGVyYXRlDQoNCg0KQWZmZWN0ZWQgdmVyc2lvbnM6DQotIGxp
+YnRoZW9yYSB0aHJvdWdoIDEuMi4wDQoNCg0KRml4ZWQgc29mdHdhcmU6DQotIHYxLjIuMA0KDQoN
+CkRlc2NyaXB0aW9uOg0KQSBmbGF3IHdhcyBmb3VuZCBpbiBUaGVvcmEgKGxpYnRoZW9yYSkuIEFu
+IGluY29ycmVjdCBiaXR3aXNlIHNoaWZ0IG1heSBiZSB0cmlnZ2VyZWQgdmlhIHNwZWNpYWxseS1j
+cmFmdGVkIGlucHV0LCBwb3RlbnRpYWxseSByZXN1bHRpbmcgaW4gYW4gYXBwbGljYXRpb24gY3Jh
+c2guDQoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KUmVmZXJlbmNlczoNCmh0dHBzOi8vZ2l0aHViLmNvbS9hZHZpc29yaWVz
+L0dIU0EtOHhwOC1nbW1qLXhjOHcNCmh0dHBzOi8vZ2l0aHViLmNvbS9VbmlvblRlY2gtU29mdHdh
+cmUvb3BlbmZoZS1Qb0MNCmh0dHBzOi8vZ2l0bGFiLnhpcGgub3JnL3hpcGgvdGhlb3JhLy0vbWVy
+Z2VfcmVxdWVzdHMvMjgNCmh0dHBzOi8vZ2l0bGFiLnhpcGgub3JnL3hpcGgvdGhlb3JhLy0vY29t
+bWl0LzU2NjVmODZiOGZkODM0NWJiMDk0Njk5OTBlNzkyMjE1NjJhYzIwNGI=
 
-Security-related oss-fuzz issues
-
-Stack buffer overflow in sc_pkcs15_get_lastupdate in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60769
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60527
-fixed with 245efe608d083fd4e4ec96793fdefd218e26fde7
-
-Heap buffer overflow in setcos_create_key in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60672
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=64181
-fixed with
-440ca666eff10cc7011901252d20f3fc4ea23651
-4013a807492568bf9907cfb3df41f130ac83c7b9
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60650 Heap
-buffer overflow in cosm_new_file in pkcs15init
-fixed with 41d61da8481582e12710b5858f8b635e0a71ab5e
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60616 Heap
-double free in sc_pkcs15_free_object_content
-fixed with 638a5007a5d240d6fa901aa822cfeef94fe36e85
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=58932 Stack
-buffer overflow in cflex_delete_file in pkcs15init
-fixed with c449a181a6988cc1e8dc8764d23574e48cdc3fa6
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=56213 Heap
-buffer overflow in sc_hsm_write_ef in pkcs15init
-not in any released version, fixed with dd138d0600a1acd7991989127f36827e5836b24e
-
-Stack buffer overflow while parsing pkcs15 profile files
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=55998
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=55851
-fixed with 5631e9843c832a99769def85b7b9b68b4e3e3959
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=54312 Stack
-buffer overflow in muscle driver in pkcs15init
-fixed with df5a176bfdf8c52ba89c7fef1f82f6f3b9312bc1
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=53927 Stack
-buffer overflow in cardos driver in pkcs15init
-fixed with 578aed8391ef117ca64a9e0cba8e5c264368a0ec
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=64215 Heap
-buffer overflow in epass2003 driver in pkcs15init
-fixed with 609164045facaeae193feb48d9c2fc5cc4321e8a
-
-Heap buffer overflow in iasecc driver in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63949
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63587
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63163
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=61797
-fixed with
-8fc2c20c3f895569eeb58328bb882aec07325d3b
-fbda61d0d276dc98b9d1d1e6810bbd21d19e3859
-83b9129bd3cfc6ac57d5554e015c3df85f5076dc
-2a4921ab23fd0853f327517636c50de947548161
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63104 Stack
-buffer overflow in entersafe driver in pkcs15init
-fixed with 50f0985f6343eeac4044661d56807ee9286db42c
-
-Heap buffer overflow in oberthur driver in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60650
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62613
-fixed with 41d61da8481582e12710b5858f8b635e0a71ab5e
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=61750 Stack
-buffer overflow in idprime driver in pkcs15init
-fixed with fa8ad362852dbefad5b6796c32f2a33859b8a8e0
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60971 Heap
-buffer overflow in test_verify
-fixed with ffbff25ec6c6d0ad3f8df76f57210698f7947fc3
-
-Originally reported by OSS-fuzz automated service
-
-
-
-The full release notes for the 0.24.0 is available in announce list:
-
-https://sourceforge.net/p/opensc/mailman/message/58712583/
-
-and on github:
-
-https://github.com/OpenSC/OpenSC/releases/tag/0.24.0
+------=_NextPart_680B3720_CB665340_3C9675ED--
 
