@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1712" "Thursday" "8" "August" "2019" "12:15:54" "-0400" "Velmurugan Periasamy" "vel@apache.org" "<09D4A543-35B4-4416-A0E3-CF88CFDFDE12@apache.org>" "35" "[oss-security] CVE update - fixed in Apache Ranger 2.0.0" nil nil nil "8" "2019080816:15:54" "[oss-security] CVE update - fixed in Apache Ranger 2.0.0" (number mark "U       vel@apache.o Aug  8   35/1712  " thread-indent "\"[oss-security] CVE update - fixed in Apache Ranger 2.0.0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE update - fixed in Apache Ranger 2.0.0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25856 invoked by uid 550); 8 Aug 2019 16:16:10 -0000
+Received: (qmail 14006 invoked by uid 550); 28 Apr 2025 19:40:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25819 invoked from network); 8 Aug 2019 16:16:10 -0000
-From: Velmurugan Periasamy <vel@apache.org>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <09D4A543-35B4-4416-A0E3-CF88CFDFDE12@apache.org>
-Date: Thu, 8 Aug 2019 12:15:54 -0400
-Cc: private@ranger.apache.org,
- dev@ranger.apache.org,
- user@ranger.apache.org
-To: security@apache.org,
- oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.11)
-Subject: [oss-security] CVE update - fixed in Apache Ranger 2.0.0
+x-ms-reactions: disallow
+Received: (qmail 30504 invoked from network); 28 Apr 2025 19:19:59 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <663abb59-5876-4f74-a929-8417f5ae8afa@apache.org>
+Date: Mon, 28 Apr 2025 20:18:09 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-31651: Apache Tomcat: Bypass of rules in Rewrite Valve
 
-Hello:
+Severity: low
 
-Please find below details on CVE fixed in Ranger 2.0.0 release. Release det=
-ails can be found at https://cwiki.apache.org/confluence/display/RANGER/2.0=
-.0+Release+-+Apache+Ranger
+Affected versions:
 
-=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
-=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
-=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
-=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
-=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
-=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
-=E2=80=94
-CVE-2019-12397: Apache Ranger cross site scripting issue
-Severity: Normal
-Vendor: The Apache Software Foundation
-Versions Affected: 0.7.0 to 1.2.0 versions of Apache Ranger, prior to 2.0.0
-Users affected: All users of ranger policy admin tool
-Description: Apache Ranger was found to be vulnerable to a Cross-Site Scrip=
-ting in policy import functionality.=20
-Fix detail: Added logic to sanitize the user input.
-Mitigation: Users should upgrade to 2.0.0 or later version of Apache Ranger=
- with the fix.
-Credit: Jan Kaszycki from STM Solutions
-=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
-=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
-=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
-=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
-=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
-=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
-=E2=80=94
+- Apache Tomcat 11.0.0-M1 through 11.0.5
+- Apache Tomcat 10.1.0-M1 through 10.1.39
+- Apache Tomcat 9.0.0.M1 through 9.0.102
 
-Thank you,
-Velmurugan Periasamy
+Description:
 
+Improper Neutralization of Escape, Meta, or Control Sequences 
+vulnerability in Apache Tomcat. For a subset of unlikely rewrite rule 
+configurations, it was possible
+for a specially crafted request to bypass some rewrite rules. If those
+rewrite rules effectively enforced security constraints, those
+constraints could be bypassed.
+
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.5, from 
+10.1.0-M1 through 10.1.39, from 9.0.0.M1 through 9.0.102.
+
+Users are recommended to upgrade to version [FIXED_VERSION], which fixes 
+the issue.
+
+Credit:
+
+COSCO Shipping Lines DIC (finder)
+
+References:
+
+https://lists.apache.org/list.html?announce@tomcat.apache.org
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2025-31651
