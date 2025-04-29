@@ -1,4 +1,4 @@
-Received: (qmail 3484 invoked by uid 550); 11 May 2026 14:58:23 -0000
+Received: (qmail 24027 invoked by uid 550); 29 Apr 2025 11:39:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,78 +8,129 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 15892 invoked from network); 11 May 2026 07:25:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1778484347;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=AxBZMExAuPOrdDvtPE4siw4tTG6LohpnS02HZlHnVRs=;
-	b=w+3OkLcQHvN1TaJl4tDVLUpRXpcPUTLvLjbnm9WSFzlSGDvNae4ItJf4JT2VDSR/KWZnKQ
-	0tCPnYpOA9U38YnZJLyoE4JXxU0Hf8yrvxXuX3+4YrYebZ2udA7CtDfVnf0o64uGb8ARy5
-	b4GHyoyCvKit1QfIn7lENDEkp7fulybGu92n+ECaJFkVje3NEOdYQqOrL0WQYnRSrOztUH
-	SMbBrC7zIkFs+KrBmBLGd86eFHpSj1LKe0uhr0jwUmaE8Ro3tsdcuRzZr7hsL5EjluxNfr
-	2gFeZG7V2S0SvE6F6RylgUis+/Ljuc89jFiRwo/nT5SPTqTqBApxO8qVQGlbww==
-From: Stig Palmquist <stig@stig.io>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Message-Id: <A7758CF9-10E3-4268-8D53-3B68828B2146@stig.io>
-Date: Mon, 11 May 2026 09:25:34 +0200
-To: cve-announce@security.metacpan.org,
- oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2026-5084: WebDyne::Session versions through 2.075 for Perl
- generates the session id insecurely
+Received: (qmail 23982 invoked from network); 29 Apr 2025 11:39:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=powerdns.com; h=
+	cc:content-type:content-type:date:from:from:message-id
+	:mime-version:reply-to:subject:subject:to:to; s=s1dus; bh=ujdW6m
+	T/lr2yMCZ4NKovFRQAuWcgv94g40eiIo1D6ko=; b=bCZvlGq+Txf3sCZqdHqaKv
+	HQbm2g9DExTTMLQjVjv9gZLLxlj1LdSi5dQPsIjVZ3fwHR90z4Spjl+Eft+h7lMB
+	H4Mgsm4lMgUxMaZANxIFwP0j2sLmqtEQpva57yV4+uhuYUNECVzrsik3VNk+Lrt0
+	+/hUdVbpfNP/M23cEjvzzNe/7HZsRmII1csfdd80HkE43AgSEuNWpaAWhkERZFKI
+	NYCj5tWYYq+qx7Az0KahIyo66iFdd8aWalOhe3mK+gHs9vmkPONuZrB/efbE8M1u
+	/QEYgjvUceKw2K8XeCWu3PtALID5aOY7cISsI4aeChmlqoM8EaYTS5Uye35ncuDg
+	==
+Message-ID: <3ea22ba2-6be3-42d6-8b4d-d98dcf4e4b2f@powerdns.com>
+Date: Tue, 29 Apr 2025 13:39:36 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+To: oss-security@lists.openwall.com
+Content-Language: en-GB
+Autocrypt: addr=remi.gacogne@powerdns.com; keydata=
+ xsBNBFY4pAcBCACIU5HRkBG3VcBfJaqetxIoKdLRxW3XmeCwruLFt6DN3q8bTtsNuQMJHa8O
+ Y0aKWJoXjOQSbBoKSGVAFKTmpCUfH4vhErt8DWqyglRfio2L3cTe48GZjiObdXLZxnsINAx2
+ WbcpoCRKTjdWX0MH2Jg/yf5PS6nb+glclRsDQmVGQjt92v23nNdsCp8I9rjP1+bQy5iHB1Ii
+ QuFJ6DBQJhgWQzksT2azZ83aADvc4/+Fg7VFYSzZHkp98NfyzUkiUzYi0I5Oy4KvyoXeS/CX
+ 9WtQGM1vjZAXXiD+ODJ0OvB2EsCUT6t4i9pWWh/+LnNtRWIVn8PJeQbCAO2wJlMxX28BABEB
+ AAHNKFJlbWkgR2Fjb2duZSA8cmVtaS5nYWNvZ25lQHBvd2VyZG5zLmNvbT7CwHoEEwECACQF
+ AmQFuwECGwMCngEFFgIDAQAGFQgCCQoLBAsJCAcFFgIDAQAACgkQogjtT4r1hEbbRwf/WrCn
+ Bu+XJrUiY5eCt7WT13MYWV7CuSnAMnQSiBh/aadd3KITlsIvd4qihxtAyQRc2ar7G3GEOIQu
+ WO8d+Z05uHKff5nizhZJgCeQqNOU30EZ+vUQHi+ClbeQ9DcJllsN+ss35IjG3VbRj5dDnXFh
+ fVG1CUisvWSMY73OQQtTTRKU+C7qKughT30UhT1aDey0RqvIAEXiEE7uttKLnM7c6DAB6RXD
+ ZywLdpHWXnQ4T+JobN6j2Z4KQH3y9k+uT05pU/M0zglZo3iNKHmJBhRi2K9XB0jdRgZD5UuT
+ Zdy8tWHW3oNROmu8qlKa66qtMt/Nr/im1g+PJG4gM5sMRSbQr87ATQRWOKQHAQgAjr1xEZh1
+ yglszi94+HLNFcgRPgRNktg2vxOGf64dAreJvL5iDrS2lrFMknh5BNuj7nJZ2r40OOS91oH1
+ qkVk+v9Cyo/3xwCpCOPQCkhzHpuQWXoMGMw/3/0tG6zTxnYdC999faCH0lLA8oDwHCHlZSHg
+ sH9+qSNyjaJXvS+HVoGYzyuanU6OTM7EM5c7RCPhNjT9JzHLISnwaxgDpwi7Ez6yudcrg6Dq
+ S/uUwkyNtWyesx1DF9y2VJUNwa4NKIJkSH+niEoxK9NBfBAmAKc4o5+KPs6BvpvpiYY9gTKa
+ aLypPHNcveQTDFv/26XHyzrCZmwuGlcYBjboH/BWzKbhuQARAQABwsBxBBgBAgAbBQJWOKQH
+ AhsMBAsJCAcGFQgCCQoLBQkSzAMAAAoJEKII7U+K9YRGXJQH/3PtQG0AkrXOpkOMXFLTKdCE
+ ViNNHN94VIaceVn60zbmXzxhYeKz7K345/EqATi3P3/yDHcht7j3uYPhvaMjy3smN6vEwX7U
+ e40PbFDWmm8mHpLdlOfPXF0SRUD8KTSD6+W2VJfEcDI6DDfUmCx9yYZ1U5u+O8Aj+1l2gdQb
+ gAioPnQgqzf43qgnRcsfNmsVsXg7EbHspRpJOR1XyXl/9KrDP7p6kjwWTQ1NoRjCw0qaX93o
+ dLeKIpd2riShlB7GteUTps0IfuiL94CA58PV2YvZapN1KmwDohHU8rndN7zte7jbCyv1Vv9t
+ P6Ns0TvycBAqlOZYdgabrT+Pccb4jCc=
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------CCJM1JGhOa10wgzwYo7zodCd"
+Subject: [oss-security] PowerDNS Security Advisory 2025-02: Denial of service via crafted DoH
+ exchange
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-CVE-2026-5084                                        CPAN Security Group
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--------------CCJM1JGhOa10wgzwYo7zodCd
+Content-Type: multipart/mixed; boundary="------------5xhZob1tvJM0WVh6to11qvxg";
+ protected-headers="v1"
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+To: oss-security@lists.openwall.com
+Message-ID: <3ea22ba2-6be3-42d6-8b4d-d98dcf4e4b2f@powerdns.com>
+Subject: PowerDNS Security Advisory 2025-02: Denial of service via crafted DoH
+ exchange
 
-        CVE ID:  CVE-2026-5084
-  Distribution:  WebDyne
-      Versions:  through 2.075
+--------------5xhZob1tvJM0WVh6to11qvxg
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-      MetaCPAN:  https://metacpan.org/dist/WebDyne
-      VCS Repo:  https://github.com/aspeer/WebDyne
+SGkgYWxsLA0KDQpXZSByZWxlYXNlZCBQb3dlckROUyBETlNkaXN0IDEuOS45IHRvZGF5LCBhbiBl
+bWVyZ2VuY3kgcmVsZWFzZSBmaXhpbmcgYSANCnNlY3VyaXR5IGlzc3VlIHRyYWNrZWQgYXMgQ1ZF
+LTIwMjUtMzAxOTQgd2hlcmUgYSByZW1vdGUsIHVuYXV0aGVudGljYXRlZCANCmF0dGFja2VyIGNh
+biBjYXVzZSBhIGRlbmlhbCBvZiBzZXJ2aWNlIHZpYSBhIGNyYWZ0ZWQgRE5TIG92ZXIgSFRUUFMg
+DQpjb25uZWN0aW9uLiBUaGUgaXNzdWUgd2FzIHJlcG9ydGVkIHRvIHVzIHZpYSBvdXIgcHVibGlj
+IEdpdEh1YiB0cmFja2VyLCANCnNvIG9uY2UgaXQgd2FzIGNsZWFyIHRoYXQgdGhlIGlzc3VlIGhh
+ZCBhIHNlY3VyaXR5IGltcGFjdCB3ZSBwcmVwYXJlZCB0byANCnJlbGVhc2UgYSBuZXcgdmVyc2lv
+biBhcyBzb29uIGFzIHBvc3NpYmxlLg0KDQpXaGlsZSB3ZSBhZHZpc2UgdXBncmFkaW5nIHRvIGEg
+Zml4ZWQgdmVyc2lvbiwgYSB3b3JrLWFyb3VuZCBpcyB0byANCnRlbXBvcmFyaWx5IHN3aXRjaCB0
+byB0aGUgaDJvIHByb3ZpZGVyIHVudGlsIEROU2Rpc3QgaGFzIGJlZW4gdXBncmFkZWQuDQoNCldl
+IHdvdWxkIGxpa2UgdG8gdGhhbmsgQ2hhcmxlcyBIb3dlcyBmb3IgYnJpbmdpbmcgdGhpcyBpc3N1
+ZSB0byBvdXIgDQphdHRlbnRpb24uDQoNClRoZSBmdWxsIHNlY3VyaXR5IGFkdmlzb3J5IGlzIHBy
+b3ZpZGVkIGJlbG93LCBhbmQgY2FuIGFsc28gYmUNCmZvdW5kIGF0DQpodHRwczovL3d3dy5kbnNk
+aXN0Lm9yZy9zZWN1cml0eS1hZHZpc29yaWVzL3Bvd2VyZG5zLWFkdmlzb3J5LWZvci1kbnNkaXN0
+LTIwMjUtMDIuaHRtbA0KDQpBIG1pbmltYWwgcGF0Y2ggY2FuIGFsc28gYmUgZm91bmQgaGVyZToN
+Cmh0dHBzOi8vZG93bmxvYWRzLnBvd2VyZG5zLmNvbS9wYXRjaGVzLzIwMjUtMDIvDQoNClBsZWFz
+ZSBmZWVsIGZyZWUgdG8gY29udGFjdCBtZSBkaXJlY3RseSBpZiB5b3UgaGF2ZSBhbnkgcXVlc3Rp
+b24uDQoNClBvd2VyRE5TIFNlY3VyaXR5IEFkdmlzb3J5IDIwMjUtMDIgZm9yIEROU2Rpc3Q6IERl
+bmlhbCBvZiBzZXJ2aWNlIHZpYSANCmNyYWZ0ZWQgRG9IIGV4Y2hhbmdlDQoNCi0gQ1ZFOiBDVkUt
+MjAyNS0zMDE5NA0KLSBEYXRlOiAyMDI1LTA0LTI5VDEyOjAwOjAwKzAyOjAwDQotIERpc2NvdmVy
+eSBkYXRlOiAyMDI1LTA0LTI1VDIxOjU1OjAwKzAyOjAwDQotIEFmZmVjdHM6IFBvd2VyRE5TIERO
+U2Rpc3QgZnJvbSAxLjkuMCB1cCB0byAxLjkuOA0KLSBOb3QgYWZmZWN0ZWQ6IFBvd2VyRE5TIERO
+U2Rpc3QgMS45LjkgYW5kIHZlcnNpb25zIGJlZm9yZSAxLjkuMA0KLSBTZXZlcml0eTogSGlnaA0K
+LSBJbXBhY3Q6IERlbmlhbCBvZiBzZXJ2aWNlDQotIEV4cGxvaXQ6IFRoaXMgcHJvYmxlbSBjYW4g
+YmUgdHJpZ2dlcmVkIGJ5IGFuIGF0dGFja2VyIGNyYWZ0aW5nIGEgRG9IIA0KZXhjaGFuZ2UNCi0g
+UmlzayBvZiBzeXN0ZW0gY29tcHJvbWlzZTogTm9uZQ0KLSBTb2x1dGlvbjogVXBncmFkZSB0byBw
+YXRjaGVkIHZlcnNpb24gb3IgdGVtcG9yYXJpbHkgc3dpdGNoIHRvIHRoZSBoMm8gDQpwcm92aWRl
+cg0KLSBDV0U6IENXRS00MTYNCi0gQ1ZTUzogQ1ZTUzozLjEvQVY6Ti9BQzpML1BSOk4vVUk6Ti9T
+OlUvQzpOL0k6Ti9BOkgNCi0gTGFzdCBhZmZlY3RlZDogMS45LjgNCi0gRmlyc3QgZml4ZWQ6IDEu
+OS45DQotIEludGVybmFsIElEOiAyOTcNCg0KV2hlbiBETlNkaXN0IGlzIGNvbmZpZ3VyZWQgdG8g
+cHJvdmlkZSBEb0ggdmlhIHRoZSBuZ2h0dHAyIHByb3ZpZGVyLCBhbiANCmF0dGFja2VyIGNhbiBj
+YXVzZSBhIGRlbmlhbCBvZiBzZXJ2aWNlIGJ5IGNyYWZ0aW5nIGEgRG9IIGV4Y2hhbmdlIHRoYXQg
+DQp0cmlnZ2VycyBhbiBpbGxlZ2FsIG1lbW9yeSBhY2Nlc3MgKGRvdWJsZS1mcmVlKSBhbmQgY3Jh
+c2ggb2YgRE5TZGlzdCwgDQpjYXVzaW5nIGEgZGVuaWFsIG9mIHNlcnZpY2UuDQoNCkNWU1MgU2Nv
+cmU6IDcuNSBBVjpOL0FDOkwvUFI6Ti9VSTpOL1M6VS9DOk4vSTpOL0E6SCwgb25seSBmb3IgDQpj
+b25maWd1cmF0aW9ucyB3aGVyZSBpbmNvbWluZyBEb0ggaXMgZW5hYmxlZCB2aWEgdGhlIG5naHR0
+cDIgcHJvdmlkZXIuDQoNClRoZSByZW1lZHkgaXM6IHVwZ3JhZGUgdG8gdGhlIHBhdGNoZWQgMS45
+LjkgdmVyc2lvbi4NCg0KQSB3b3JrYXJvdW5kIGlzIHRvIHRlbXBvcmFyaWx5IHN3aXRjaCB0byB0
+aGUgaDJvIHByb3ZpZGVyIHVudGlsIEROU2Rpc3QgDQpoYXMgYmVlbiB1cGdyYWRlZCB0byBhIGZp
+eGVkIHZlcnNpb24uDQoNCldlIHdvdWxkIGxpa2UgdG8gdGhhbmsgQ2hhcmxlcyBIb3dlcyBmb3Ig
+YnJpbmdpbmcgdGhpcyBpc3N1ZSB0byBvdXIgDQphdHRlbnRpb24uDQoNCg0KQmVzdCByZWdhcmRz
+LA0KLS0gDQpSZW1pIEdhY29nbmUNClBvd2VyRE5TLkNPTSBCViAtIGh0dHBzOi8vd3d3LnBvd2Vy
+ZG5zLmNvbS8NCg==
 
+--------------5xhZob1tvJM0WVh6to11qvxg--
 
-WebDyne::Session versions through 2.075 for Perl generates the session
-id insecurely
+--------------CCJM1JGhOa10wgzwYo7zodCd
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-Description
------------
-WebDyne::Session versions through 2.075 for Perl generates the session
-id insecurely.
+-----BEGIN PGP SIGNATURE-----
 
-The session handler generates the session id from an MD5 hash seeded
-with a call to the built-in rand() function. The rand function is
-passed a maximum value based on the process id, the epoch time and the
-reference address of the object, but this information will have no
-effect on the overall quality of the seed of the message digest.
+iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAmgQunkACgkQogjtT4r1
+hEYfHwf/W+N/sO/GDUhHe7yciUFYr1lm4djykDSfLU37+fPASVZ5ccnMwwtzr+D5
+r/y+1txyLXIrDpuDRzZpzyz0gUfUe4wPQ585VcBnnroAFxDgJ2VMY/TtsIHkbitm
+Fo+/ZZ2cmXWMgiCb+x6Xnx4XMHIF9fmgqUe2eNFpafpv2omTGy41Nllee4j8EDk2
+FcPlbe7H3RmvwPp1wmt5m58YrAfDGfxPXaavtHzh+vldCwBxSPiG/cmWrB4ovslS
+ZRc7CAQGHV5EZpenOur07ibvmjsmPArJtBULkyMZvXfkA1jNNFkzya2uhRyDPWaa
+C+5ZiBLr4nHBnqnWkkDG47QaejuEeg==
+=pN6R
+-----END PGP SIGNATURE-----
 
-The rand function is seeded by 32-bits and is predictable. It is
-considered unsuitable for cryptographic purposes.
-
-Predictable session ids could allow an attacker to gain access to
-systems.
-
-Note that WebDyne::Session versions 1.042 and earlier appear to be in
-separate distributions from WebDyne.
-
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-References
-----------
-https://metacpan.org/release/ASPEER/WebDyne-2.075/source/lib/WebDyne/Sessio=
-n.pm#L120
-https://webdyne.org
-https://security.metacpan.org/docs/guides/random-data-for-security.html
+--------------CCJM1JGhOa10wgzwYo7zodCd--
 
