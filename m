@@ -1,4 +1,4 @@
-Received: (qmail 17536 invoked by uid 550); 6 Nov 2023 15:54:07 -0000
+Received: (qmail 19769 invoked by uid 550); 8 May 2025 18:44:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +7,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13572 invoked from network); 6 Nov 2023 15:52:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1699285951; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=psCaVn0KYeQCkDLPb/vNlj70WvC1VcyntVgtKdaoh48=;
-	b=SxcYMHY2IdMGyEgrWQgiHbzOm24gfnGfu2JGqyCYU8DSjmMEd8riTrEEPt5yNLnnWwV936
-	2ZQyScJDZNQvUJVRgHjNf2qAK5QwFLYxDPQ1JTXSg88+3vCkuVXl36ACaFpX8u4C6sUkBH
-	im5X0Gu4HRCqcymlY6aL9qhrnAhLGh00mpxT4PtpqgPBRY8v4BOp3hZDSvGpQuTzO2iHwc
-	rjrTliptpKFYkTMgz+ntTHzDsGDsAq5ZHxRXTlKvPXRUGRN4ZjCVVzbIcdSCy62b0pCfYX
-	VDvGt71jyxOgDAm81JM974olsF4BH3PI94MS4RvcbW/htOudRhguUbGjlumNZg==
-Date: Mon, 6 Nov 2023 15:52:31 +0000
-From: Richard Levitte <levitte@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZUkLvzta7YHSu/2l@openssl.org>
+x-ms-reactions: disallow
+Received: (qmail 13626 invoked from network); 8 May 2025 18:44:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rafaelgss.dev; s=google; t=1746729848; x=1747334648; darn=lists.openwall.com;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CYCDGwGNIZB9f/Rf6k3hvkmwt8c3LJQXu84RG/x5i/U=;
+        b=g0DFair3Hd7tUJC1k69zAhi6Q0JRUpBki1X6yt5yx74GEqr2mse4AFPVXEZq3YbdhN
+         F5Fnf/UEK7pM9LoPs4Odmfnu1PXWKj1JrK2mTAsxY4VgwFSXeOLdYqX2ZjDhgH0XkdkA
+         UfKG5DYgWgWKEcDnQUaUiMqqpt87rgSFndgV40qXdRF/Kfb8RUlUjakiSI2EXns7G/D+
+         utcn0Bt/Ok2eq+L7LbXmV9ScKHo/XfKUU/bxR2viRMb31FcF5xXzY/TrGi42rKdXwKY2
+         eDW8ilmv2Fpld+dPb5sajBXGyAkSWWz3SWg+HJRgs69VuOYNs/42C1QOVhlimPwlPw5W
+         t7XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746729848; x=1747334648;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CYCDGwGNIZB9f/Rf6k3hvkmwt8c3LJQXu84RG/x5i/U=;
+        b=qpvfBPisnrHOSwG89T+Lns6/AA5XuQtQ31z7OqLWdpvDefhUZE4cdAM9UMo/lrwQUs
+         9j1+1a5qPTfhRppi8z9PIARMQ84n2J0fWpXuiAveb8/GA2DFmEUniw2c7C9oBHUJ8Y/t
+         hb4iryOjTIV65fvQGftKJp5DrkUeA62rIX/uRtwBiT8X/BC5Yu9qCCJKtTZ1zKRVY3j6
+         WDDpJXIBgkpVX7HZ0mhMW2r8vnJhbiNa/cqJWMQD39hVnDcbVVP6wbGi04CELpcickYQ
+         hNOnPoEpa9VBZpduf9HM6imiI+92dJMrVVGTQ6jC+yObAWf5mNO1Y4y2hTosxa+sZEIF
+         Nsyw==
+X-Gm-Message-State: AOJu0YwWhpiXi6tH6HGQqcK45bmQIbIUzc9GmhmjRwgqU+ffaJKFfVhz
+	Bk8YOa9+4jFcS3MF6/nY3Z+/e1LQrRNzIn1Is1BuM/p1s0/QqM9MUCiF9cLdPE24YbDWl4UdIJd
+	yg/r4xbl020SkvKpmKg==
+X-Google-Smtp-Source: AGHT+IGMV1n7/JR+8d9iH6IvQAUSYJ3hU7soW3Ex1mQ4rVAfwDAhefQwrUb7WBHzQuRU2ViWC/zKpGXTAA==
+X-Received: by 2002:a05:6808:23d0:b0:3f3:d699:e1a8 with SMTP id 5614622812f47-403779e8fa8mr2923737b6e.13.1746729848292;
+        Thu, 08 May 2025 11:44:08 -0700 (PDT)
+Date: Thu, 8 May 2025 11:44:07 -0700 (PDT)
+From: Rafael Gonzaga <work@rafaelgss.dev>
+To:  <oss-security@lists.openwall.com>
+Message-Id: <7c2dbb67-70e4-4db0-9148-f4ae368e1571n@googlegroups.com>
+In-Reply-To: <1914b7d5-1e22-4c3d-94f8-ca2814a1853an@googlegroups.com>
+References: <1914b7d5-1e22-4c3d-94f8-ca2814a1853an@googlegroups.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1034_1435713495.1746729847883"
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, May
+ 2025
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+------=_Part_1034_1435713495.1746729847883
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1035_938403037.1746729847883"
 
-OpenSSL Security Advisory [6th November 2023]
-=============================================
+------=_Part_1035_938403037.1746729847883
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Excessive time spent in DH check / generation with large Q parameter value (CVE-2023-5678)
-==========================================================================================
 
-Severity: Low
 
-Issue summary: Generating excessively long X9.42 DH keys or checking
-excessively long X9.42 DH keys or parameters may be very slow.
+---------- Mensagem encaminhada ---------
+De: Rafael Gonzaga <work@rafaelgss.dev>
+Data: quinta-feira, 8 de maio de 2025 =C3=A0s 15:42:50 UTC-3
+Assunto: Node.js security updates for all active release lines, May 2025
+Para: nodejs-sec <nodejs-sec@googlegroups.com>
 
-Impact summary: Applications that use the functions DH_generate_key() to
-generate an X9.42 DH key may experience long delays.  Likewise, applications
-that use DH_check_pub_key(), DH_check_pub_key_ex() or EVP_PKEY_public_check()
-to check an X9.42 DH key or X9.42 DH parameters may experience long delays.
-Where the key or parameters that are being checked have been obtained from
-an untrusted source this may lead to a Denial of Service.
 
-While DH_check() performs all the necessary checks (as of CVE-2023-3817),
-DH_check_pub_key() doesn't make any of these checks, and is therefore
-vulnerable for excessively large P and Q parameters.
+The Node.js project will release new versions of all supported release=20
+lines on or shortly after May 14th, 2025
 
-Likewise, while DH_generate_key() performs a check for an excessively large
-P, it doesn't check for an excessively large Q.
+For more information, see:=20
+https://nodejs.org/en/blog/vulnerability/may-2025-security-releases
 
-An application that calls DH_generate_key() or DH_check_pub_key() and
-supplies a key or parameters obtained from an untrusted source could be
-vulnerable to a Denial of Service attack.
+------=_Part_1035_938403037.1746729847883
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-DH_generate_key() and DH_check_pub_key() are also called by a number of
-other OpenSSL functions.  An application calling any of those other
-functions may similarly be affected.  The other functions affected by this
-are DH_check_pub_key_ex(), EVP_PKEY_public_check(), and EVP_PKEY_generate().
+<br /><br /><div><div dir=3D"auto">---------- Mensagem encaminhada --------=
+-<br />De: <span dir=3D"auto">Rafael Gonzaga &lt;work@rafaelgss.dev&gt;</sp=
+an><br />Data: quinta-feira, 8 de maio de 2025 =C3=A0s 15:42:50 UTC-3<br />=
+Assunto: Node.js security updates for all active release lines, May 2025<br=
+ />Para: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@googlegroups.com&gt;<=
+/span><br /></div><br /><br />The Node.js project will release new versions=
+ of all supported release lines on or shortly after May 14th, 2025<div><br =
+/>For more information, see:=C2=A0<a href=3D"https://nodejs.org/en/blog/vul=
+nerability/may-2025-security-releases" target=3D"_blank" rel=3D"nofollow">h=
+ttps://nodejs.org/en/blog/vulnerability/may-2025-security-releases</a></div=
+></div>=
 
-Also vulnerable are the OpenSSL pkey command line application when using the
-"-pubcheck" option, as well as the OpenSSL genpkey command line application.
+------=_Part_1035_938403037.1746729847883--
 
-The OpenSSL SSL/TLS implementation is not affected by this issue.
-
-The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
-
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available.
-The fix is also available in commit ddeb4b6c6d527e54ce9a99cba785c0f7776e54b6
-(for 3.1) and commit db925ae2e65d0d925adef429afc37f75bd1c2017 (for 3.0).
-It is available to premium support customers in commit
-710fee740904b6290fef0dd5536fbcedbc38ff0c (for 1.1.1) and in commit
-34efaef6c103d636ab507a0cc34dca4d3aecc055 (for 1.0.2). 
-
-This issue was reported on 16th August 2023 by David Benjamin (Google). The
-fix was developed by Richard Levitte.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20231106.txt
-
-Note: the online version of the advisory may be updated with additional
-details over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/general/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEeVOsH7w9yLOykjk+1enkP3357owFAmVJCvoACgkQ1enkP335
-7oytjRAAl2eNIEk0dNel7QoTFCTyXFl7IWUqWqNqx1WEr4oD/2SnFiOtQzOGl1U2
-+Wr7y0GBz1cfY7xj5yw3JBajnq8v92rWHXfLheN4makflwhHwjx/faX/uTGey5Xp
-+5ZdKZTnkSMC4gY4gS3/SWlmyHZAYVjs/OJIlKXNYRl0q+91OBydQEcixvetIF+c
-tdog1im+92xvkOtm6RfYJXEg84keft4twzw+xxeiFQ8c856SvBOSEtIhewpF9gyo
-mP2QS8/Ne6zeLXuw52pbwc/nXSXR1qPSwv+PDcDMIaVtAKYthdMbsugW05pNori1
-+bjbDQ9lM+No+jtbkWXObGKuXciWCnqGmKxgBIDCmpvTKSVJ2Bfnewy08a+nMkG4
-ZNmvOpF53dqVAaJRMPPZURW5697cYteF1WDWen48rx+eEP96KGB0u/jPitF1yGWC
-larXfkpeoL8nK8c8BZS9wF1J8xUfH1TBzl78YdQInI6yNH1cIXCYquGPVYgJQU4O
-TIQwqYCghL2+c46AkooepW5E7ltWK7LHB/64BU7BiTZeMKH+DO8L1YvFgliZLpzo
-v9n3amunUylXzdcDznt01PtIwzTsEAKioxl0Xq7k9EQyNAdx3BL21MifkjxofUTV
-54AyaYXtBVHNxqsZrdv6wVGc7F23vqmhmtS5IpgPkxtDQzKWdYk=
-=FBln
------END PGP SIGNATURE-----
+------=_Part_1034_1435713495.1746729847883--
