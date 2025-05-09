@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2519" "Tuesday" "10" "November" "2020" "21:43:21" "+0300" "Vladimir D. Seleznev" "vseleznv@altlinux.org" "<20201110184321.GA2311015@portlab>" "46" "Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" nil nil nil "11" "2020111018:43:21" "[oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" (number mark "U       vseleznv@alt Nov 10   46/2519  " thread-indent "\"Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11\"\n") "<d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>" ("<606c5dc2-b39c-2547-d00c-9c44778303b9@gmail.com>" "<20201110164347.GA2236829@portlab>" "<d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] The importance of mutual authentication: Local Privilege Escalation in X11" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23764 invoked by uid 550); 10 Nov 2020 18:51:44 -0000
+Received: (qmail 16128 invoked by uid 550); 9 May 2025 09:37:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15829 invoked from network); 10 Nov 2020 18:43:33 -0000
-Date: Tue, 10 Nov 2020 21:43:21 +0300
-From: "Vladimir D. Seleznev" <vseleznv@altlinux.org>
+x-ms-reactions: disallow
+Received: (qmail 16103 invoked from network); 9 May 2025 09:37:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Reply-To:Cc
+	:Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References; bh=jBakJ1mNMp6f6vZ67YdP7dGUtOfYGk2cMaCEQtodu0M=;
+	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1746783433;
+	x=1747431433; b=HpkUe2FlF9Rdm5Jxm0/Q8DXgV1ng6oYBrgJIPcj+2LVa4dRxAhfZtEj7q9/VK
+	80gdye/D4cbT4bE2Zo14Id1nq0LoaACyi2fahHtRRiz/9DO7Lk2olzOLODykHW95rs+dlwRouo64q
+	9GAJNh+FJ0JKGrIhI74uVqouBT3Zuk0/aRmKWBW+VO4ebqq4JvZ9vgE9NYWXhFu1HulUmjUSmRk1e
+	ozcnV5cAVnay57/8xoJ/5QDmczVY70cUomgadcdJNv3yROAFvgNtu50kV+zyL1cCXMGaCHwpk0sBM
+	YVcnK/DD89Kam2x/9AYRPOYNxhf8xJdLixtCdlR6DOiiAX4HLQ==;
+Date: Fri, 9 May 2025 12:36:56 +0300
+From: Valtteri Vuorikoski <vuori@notcom.org>
 To: oss-security@lists.openwall.com
-Cc: "Demi M. Obenour" <demiobenour@gmail.com>
-Message-ID: <20201110184321.GA2311015@portlab>
-References: <606c5dc2-b39c-2547-d00c-9c44778303b9@gmail.com>
- <20201110164347.GA2236829@portlab>
- <d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>
+Message-ID: <kqi2nuwafj3rm6e3xykryy5norff6q25qeoogw4ida32uveduo@t7loixt57w25>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d4b7741b-24aa-c4ca-adb7-71db69dc27ce@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] The importance of mutual authentication: Local
- Privilege Escalation in X11
+User-Agent: NeoMutt/20241002-60-525451
+Subject: [oss-security] CVE-2025-1948 & CVE-2024-13009: DoS and infoleak in Jetty
 
-On Tue, Nov 10, 2020 at 12:51:27PM -0500, Demi M. Obenour wrote:
-> On 11/10/20 11:43 AM, Vladimir D. Seleznev wrote:
-> > On Mon, Nov 09, 2020 at 11:00:50AM -0500, Demi M. Obenour wrote:
-> >> [...skip...]
-> >> ### Placing the X socket in a secure directory
-> >>
-> >> X11 is usually used with AF_UNIX sockets.  In this case, performing
-> >> the attack requires that either the directory containing the X socket
-> >> be writable by an attacker, or that the abstract namespace is in use.
-> >> If neither condition is met, the attack is thwarted.  In this case, the
-> >> server is implicitly authenticated by being able to write to a location
-> >> on the file system.  On systems other than macOS, placing the X socket
-> >> in a non-default directory requires changes to X.  On Linux, this also
-> >> requires that abstract sockets be disabled in the X client libraries.
-> >>
-> >> A user’s home directory is a safe location on virtually all systems.
-> >> /run/user/$UID is a good choice when it is secure and available,
-> >> such as on systemd-based Linux distributions.  /tmp/.X11-unix can
-> >> be made safer by ensuring that it is created before any untrusted
-> >> code runs and ensuring that untrusted code cannot write to it.
-> >> For example, it could be owned by root and have 0755 permissions.
-> >> For this to be effective, untrusted code must not be allowed to start
-> >> if creating /tmp/.X11-unix fails; this can be enforced by dropping
-> >> into single-user mode in this case.  Furthermore, if the standard
-> >> location for lock files (/tmp/.X*-lock) is used, there is still a
-> >> potential denial of service, as anyone can create a lock file and
-> >> prevent the legitimate server from starting.
-> > 
-> > This contravenes the ability to run X11 client from another user. The
-> > idea is that X11 server allows any clients with right credentials
-> > regardless of theirs processes UID or GID to connect to the server.
-> 
-> Indeed it does, and I mention cryptographic authentication mechanisms
-> below.  Instead of /tmp, /run/X11 would work just as well.  It is
-> the mutual authentication that matters.
+The Jetty project [1] has announced two security issues classified as "high": a
+memory exhaustion issue with crafted HTTP/2 requests (12.x series, fixed in
+12.0.17) as CVE-2025-1948, and a cross-request data corruption issue with
+potential information leakage when gzip compression is enabled (9.4.x, fixed in
+9.4.57, security patch to an otherwise EoL release) as CVE-2024-13009.
 
-Do I understand you correctly: you propose to forbid running X11 clients
-which processes belong to another users? In that case it is a bad idea:
-I would like to run untrusted clients with special UIDs. Or if I
-understand you wrongly, please explain how client of other user can
-connect to the socket placed in /run/user/$UID with these strict access
-permissions 0700?
+CVE-2025-1948 details: <https://github.com/jetty/jetty.project/security/advisories/GHSA-889j-63jv-qhr8>
 
--- 
-   WBR,
-   Vladimir D. Seleznev
+CVE-2024-13009 details: <https://github.com/jetty/jetty.project/security/advisories/GHSA-q4rv-gq96-w7c5>
+
+[1] Description from project README: "Eclipse Jetty is a lightweight, highly
+scalable, Java-based web server and Servlet engine. Jetty's goal is to support
+web protocols (HTTP/1, HTTP/2, HTTP/3, WebSocket, etc.) in a high volume low
+latency way that provides maximum performance while retaining the ease of use
+and compatibility with years of Servlet development."
