@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3779" "Monday" "5" "September" "2016" "17:57:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160905215759.E575734E018@smtpvbsrv1.mitre.org>" "92" "[oss-security] Re: CVE request: Plone multiple vulnerabilities" nil nil nil "9" "2016090521:57:59" "[oss-security] Re: CVE request: Plone multiple vulnerabilities" (number mark "U       cve-assign@m Sep  5   92/3779  " thread-indent "\"[oss-security] Re: CVE request: Plone multiple vulnerabilities\"\n") "<CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>" ("<CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11981 invoked by uid 550); 5 Sep 2016 21:58:13 -0000
+Received: (qmail 32365 invoked by uid 550); 12 May 2025 19:20:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,104 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11956 invoked from network); 5 Sep 2016 21:58:12 -0000
-From: cve-assign@mitre.org
-To: nathan.van.gheem@plone.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>
-Message-Id: <20160905215759.E575734E018@smtpvbsrv1.mitre.org>
-Date: Mon,  5 Sep 2016 17:57:59 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Plone multiple vulnerabilities
+x-ms-reactions: disallow
+Received: (qmail 22199 invoked from network); 12 May 2025 18:47:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747075659; x=1747680459; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GPd13qeE9LQuM2FFCzM6i3PwzEmQvTOGFt3fqXoNPCs=;
+        b=YS0eQAqe9bQYN+1+zQGITmpmuNmJ/tjbeLzdAMKfFAbJPzOfvB3SSUbbDvcHOW/cxV
+         ixkkcoDAW/SaltlgpYAqMytUcLU7wTQ4GAYRGX/BRlXvvvbTEZPuyGpPPlcMShGYH4da
+         WAiQ+E5XWN5LLC/544IVWwELKbLobomCUXR8UvKwkJMcL176tj0aJKuDqwL/SV/EvE/Q
+         JWIsd+AdC2tx/qp0I7DnxU2AI+9CbIRdbcximvzd45Kemf/i6GNNgCm3DR87A4Obcd7f
+         1kY+bR1HhK1mDjsuXxEvYgqhJ0kN1Fr5crefcRrdlAY8P4pJolJ4iPLYZgP/YH+TJVkV
+         k9nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747075659; x=1747680459;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GPd13qeE9LQuM2FFCzM6i3PwzEmQvTOGFt3fqXoNPCs=;
+        b=G2HWIvq4Mg8mRRLCO7DSgxuVvH4cCyQBz4wyJ7olMD15BNB9T11aSjiIpbWTaFBeLe
+         aFcXSQTZcxFjm6Tls1uGuThe6clfGI1Nps/fbDT/QMnhW8RY/iRxGJ/nZKl7fj+07EmO
+         sZYiRBz/0U14m3zaOqZSa3IQwa7wU+GBEhN544D4L2VNplFsp3Q8B0z1tyfUW2FTV19h
+         +AB3fkDzDPAWI+04NdTVPycHFc4Ty/SRo6ucC9pl3cbeZMsKo7h7yZIo/p9c8rhXDO4N
+         7R9xgm8LFLzNficoMSuVAZHsaFiBzmI32YpFjj4B9ZmDTo60pTj7BiRmqLFgsaUEZx3p
+         sxig==
+X-Gm-Message-State: AOJu0YwdvUWz/PCnjX74I1VB7gdVmJ+LzFWaQKa0JZJmEOYeABAh7/dN
+	BYgAVbJjh1cnuwTEelbC3Kik2WTN8DbX42v/6V3o7XpuW+mw5AhpxWoawTLJ
+X-Gm-Gg: ASbGncta8UcfABeEQNA1PfsD9Ng9zHCL4nn7hRXA9lp1GgoPye6M+VBfXZN8quaHELN
+	qG2jk9vP/TtmgECKCdGjxdi36xBWlfES7oNMhXL6d0z2njA5qCfon+EO9tkmmL0Vjse0afP3T5p
+	lj7TrEwhZwJ6cgVL5nuxxehjoKasrOYWOOOrG2DySuvAucvwHq39CFnYXU8LUzZ9hoDcU1O9hNt
+	KmgX7AxYz/U/SdzcOd097RcT899uxnPGQurlyF3QiiFb1XmHAd3qSAcPYiKkE1cR5FVmaHP6iZ8
+	hxJO0jNzAbRXQ+/gYhkslZRBDItDK75VCG1hncRqRJJsJgIz6ERSkM10aIIvjvHsT9N4a60JFSg
+	Kahqk4QvaJoNOvwdqiuDzA2yzI1M=
+X-Google-Smtp-Source: AGHT+IGnrj3dV6rNPFGNH/uYJqmvjZU/xRaoAJMKw+bykMOhdnSvdsadwH3zXjb6SuAwKDkymbkSTw==
+X-Received: by 2002:a05:6512:6401:b0:54a:c4af:18 with SMTP id 2adb3069b0e04-54fc67c5defmr4510857e87.22.1747075659268;
+        Mon, 12 May 2025 11:47:39 -0700 (PDT)
+Message-ID: <42b72ad8-61d2-48f6-9d29-0774149e344e@gmail.com>
+Date: Mon, 12 May 2025 20:47:38 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+References: <23c5cd0c-2a9b-4caa-a936-381210400cc2@oracle.com>
+From: Albert Veli <albert.veli@gmail.com>
+In-Reply-To: <23c5cd0c-2a9b-4caa-a936-381210400cc2@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Dropbear SSH 2025.88 fixes CVE-2025-47203
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi!
 
-> All of these vulnerabilities have been patched with the hotfix release
-> package https://plone.org/security/hotfix/20160830 and are being
-> incorporated upstream.
+On 2025-05-09 18:15, Alan Coopersmith wrote:
+> https://lists.ucc.gu.uwa.edu.au/pipermail/dropbear/2025q2/002385.html
+> announces the release of Dropbear SSH 2025.88 including this fix:
+>
+>> - Security: Don't allow dbclient hostname arguments to be interpreted
+>>   by the shell.
+>>
+>>   dbclient hostname arguments with a comma (for multihop) would be
+>>   passed to the shell which could result in running arbitrary shell
+>>   commands locally. That could be a security issue in situations
+>>   where dbclient is passed untrusted hostname arguments.
+>>
+>>   Now the multihop command is executed directly, no shell is involved.
+>>   Thanks to Marcin Nowak for the report, tracked as CVE-2025-47203
 
-> 1. *filesystem information leak*: https://plone.org/security/hotfix/20160830/filesystem-information-leak
-> 
-> Managers had the ability to find read files from the file system that the
-> system user running the plone process had access to
+I'm currently triaging CVE-2025-47203 to determine whether an embedded 
+system we maintain is actually affected. It runs 2024.86, and is built 
+with DROPBEAR_CLI_PROXYCMD and DROPBEAR_CLI_MULTIHOP enabled.
 
->> By using relative paths and guessing locations on a server Plone is
->> installed on, an attacker can read data from a target server that the
->> process running plone has permission to read. The attacker needs
->> administrator privileges on the Plone site to perform this attack.
+However, despite attempting various multihop hostname inputs containing 
+shell metacharacters (e.g. semicolons, backticks, pipes, $(cmd)), I’ve 
+been unable to trigger any shell execution or command injection. All 
+such inputs are interpreted literally as hostnames.
 
-Use CVE-2016-7135.
+I have two main questions:
 
+1. Is there a reliable way to confirm from the command line whether I'm 
+vulnerable?
 
-> 2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
-> 
-> z3c.form will currently accept data from GET requests when the form is
-> supposed to be POST. This allows a user to inject a potential XSS attack
-> into a form. With certain widgets in Plone admin forms, the input is
-> expected to be safe and can cause a reflexive XSS attack. Additionally,
-> there is potential for an attack that will trick a user into saving a
-> persistent XSS.
+2. Both dbclient and ssh are symlinks to the same dropbear binary. Does 
+this CVE apply equally to both, or is it specific to dbclient?
 
-Use CVE-2016-7136 for the entire "accept data from GET requests when
-the form is supposed to be POST" issue, which apparently has security
-relevance for two different reasons ("reflexive XSS" and "saving a
-persistent XSS").
+Thanks in advance,
 
+Albert
 
-> 3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-redirection-in-plone
-> 
-> In multiple places, Plone blindly uses the referer header to redirect a
-> user to the next page after a particular action. An attacker could utilize
-> this to draw a user into a redirection attack.
-
-Use CVE-2016-7137.
-
-
-> 4. *Non-Persistent XSS in Plone*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
-> 
-> Plone's URL checking infrastructure includes a method for checking if URLs
-> valid and located in the Plone site. By passing javascript into this
-> specially crafted url, XSS can be achieved.
-
-Use CVE-2016-7138.
-
-
-> 5. *Non-persistent XSS in Plone*:
-> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
-> 
-> Plone has unescaped user input in a page template that is open to XSS.
-
-Use CVE-2016-7139. (There were two issues numbered "5" in the
-http://openwall.com/lists/oss-security/2016/09/05/4 post.)
-
-
-> 5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
-> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
-> 
-> In multiple places, Zope2's ZMI pages do not properly escape user input
-
-Use CVE-2016-7140. (There were two issues numbered "5" in the
-http://openwall.com/lists/oss-security/2016/09/05/4 post.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXzen4AAoJEHb/MwWLVhi2ikwP/RabVzndqLmnRSGFkekMvJoT
-svRXT3P+gz9rIRa8vG2JLljYOQz4E5IyXYIljoQhGn840uf8UBZcVvtC1P1IeHJc
-noAhNDXg7I13tWyaIc/h2eVCOjnRC2P/qj5fuw+9TyPBiEPZ/CIs5emDNzrRwyp1
-TbBDzhyWUXHYQmtYMzJt2XzYJxHFsC4O8wx7VDx7pvGgKzqHWW50CnOi69aw6AbI
-FN5InkQAUM/7ttDUcOnHG2MNMqwoTtPFLxzGBLURi3B86lhnVwEXe5vl+nCgjdCX
-r42ANgFPx+xNcIuuToTHtY/pguzCTG2NUFsU8I3Zn5U7jXLs95kkDBsUr7zwWWNi
-ftOwUQ79zIKaZL9eQq5cjLdB+gZqWIYaquj4d9lM04nFc7RjYYynhFzQWQmOVxeh
-8+JTJ230pfnK8jpdxDACQmRZyuAh1Lo3YjLLMd2BnvgtVdWHfe4bXfb7dQiGhCsV
-x0+mIgrIxEMrPuOTEGG8WmSPyqJyJpU90QxYQvjPcqKIAF9vqpFdJtiaXv977jfN
-+38Tb1GvvBfSWjDFk6F+DX3isS0qwIQXhuWyVCqOCQYA7/NUVLPCvhNli9dG1Vf4
-gPvBLIvmbYNF73uT/A7aZ96+3hBLuUTnhfReTqO7T7HUsf+DtrMh1P4OI13GCzA3
-MHGqeXXgdxru82us5feg
-=UxLJ
------END PGP SIGNATURE-----
