@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4773" "Thursday" "3" "January" "2019" "07:42:01" "+0000" "halfdog" "me@halfdog.net" "<10950-1546501321.837517@7NMx.Y9CH.RDhT>" "115" "Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Date:" nil nil "1" "2019010307:42:01" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "U       me@halfdog.n Jan  3  115/4773  " thread-indent "\"Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<nn5zv8prfe.fsf@armitage.lysator.liu.se>" "<20190101124110.GA15804@espresso.pseudorandom.co.uk>" "<CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13584 invoked by uid 550); 3 Jan 2019 07:42:38 -0000
+Received: (qmail 4030 invoked by uid 550); 13 May 2025 15:19:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,133 +6,140 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13566 invoked from network); 3 Jan 2019 07:42:37 -0000
-In-reply-to: <CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>
-References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com> <nn5zv8prfe.fsf@armitage.lysator.liu.se> <20190101124110.GA15804@espresso.pseudorandom.co.uk> <CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>
-Comments: In-reply-to Jeffrey Walton <noloader@gmail.com>
-   message dated "Wed, 02 Jan 2019 16:53:16 -0500."
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Message-ID: <10950-1546501321.837517@7NMx.Y9CH.RDhT>
-Date: Thu, 03 Jan 2019 07:42:01 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)
+x-ms-reactions: disallow
+Received: (qmail 6121 invoked from network); 13 May 2025 14:58:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=varnish-software.com; s=google; t=1747148289; x=1747753089; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=5R23UT/WKVamTmiRTgXPfw4it3LEWmml3u/M88OWySU=;
+        b=fGg0Pswz3bYkm79ODvLlGFZplMWbcjrz+1gMYEs3qJ96r7ONGTCZTZ+Mj1UMpsbszq
+         HlXTe7HYU+pdPnGPwr1CcGzdf2ah9EPqw6f/5p1y6F7dQvtCE/fP2Ni4KqCTSEw7eThJ
+         TQvhBTlnaFlceaur8EhdpuJHQ5yZ8LK0xyW5rL81GBfkE6m+2d1EtR9cLAECXMi1Eny/
+         YsWKXG0mXZ4+Hqg+PQvbBfWe4UiExvXs5ZW9hGiztAdZ2HslZjXeHASdwWRBlB/1oT4W
+         CeU6x9i33MtZxISEKiIEYSqPrmhgydcCmSOryNNaeBY9Ib7mfs/7QafzsGJtqBvoOb03
+         9NRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747148289; x=1747753089;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5R23UT/WKVamTmiRTgXPfw4it3LEWmml3u/M88OWySU=;
+        b=RBSMMy1THWwLze78ASz8F76ufp+O86C8tkLM+MYuxm3mNPs/RLc85OMg1JGrnSyXEs
+         D/Vz7uVhdwp7fWGnPSBwtzCys6l6LlmsyUTwaW+MkLegSt3pHBLDnrJoOitgf1Cx9fms
+         IUdd5ldGQtKZ7Jj2lT48g5PQc4kzqWIYJEnGccRDTIfIcmCtsOqFMN1emj4wWlwWGn8C
+         Fi/eNeaPyDPxHibFYyE/SBqJmcEVglGa4b0VmDqDq9G+nDiRlq+yzppXEH0DGXbHozk8
+         XJfZAYkx2+c7MdaxzV+DXNeumw8974rvsBUVF0ZEZ5mbKWil+Ln3Z0AJiC7s5lwDEXMK
+         oKWA==
+X-Gm-Message-State: AOJu0YxtzwK9snXwZ/6zKc16vvSBzb9nxZZTQY0sjFyZMxCc6KLMRYmp
+	ChS2FPerscWS6P2aFb5D4V1G1sUuA/osFVVMiBPB+s9GoQjVAkI8Ezudi5N3uf2EsiZWjGErTR1
+	5pUlYVdLkXy0XoyFrBIZGgvDna0jVHjS/qLsdo2qLALa5Z2jNQokqLw==
+X-Gm-Gg: ASbGnctSFq3bURKSUQnfivrWYKlVUYMnGdCaoe/x6ZxFVu4A9kHCIhhWnSCLs+Boxs2
+	2vUneqzo2RdVPwQH2wBxp2lls+LqLAhSfM6go2cAuVwCm5r+NjA9fvOG+bIXRdOMJH2B0DaXf3D
+	V3c37f8At/KjrGhdH+qR7LNiusF21eqGFZPMs=
+X-Google-Smtp-Source: AGHT+IGt9SDNTvE3r7OQXirrmtpU0Jnyeed1Bu1pvdBgy2QLk1WSvFSxVmEyKCEqoNi6UCKDaLwTJmILURaNoEtglus=
+X-Received: by 2002:a05:6512:260f:b0:54e:a28b:7b31 with SMTP id
+ 2adb3069b0e04-54fc67ae50emr4796042e87.4.1747148288894; Tue, 13 May 2025
+ 07:58:08 -0700 (PDT)
+MIME-Version: 1.0
+From: Asad Ahmed <asadsa@varnish-software.com>
+Date: Tue, 13 May 2025 16:57:33 +0200
+X-Gm-Features: AX0GCFszE7kv9lW5WhmI2GeO92rWRXpXJa5nuWOqsHxcM2Xg5HDPwUUloAErJ_k
+Message-ID: <CA+NO1zTqeNPvwupEFgcr6T4NgU3V93vtJ8eEpmAHYMGjvpR6YQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000213dfd063505a92d"
+Subject: [oss-security] VSV00016: Varnish Cache 6.0, 7.6, 7.7 - Request Smuggling Attack
 
-Jeffrey Walton writes:
-> On Tue, Jan 1, 2019 at 7:42 AM Simon McVittie <smcv@debian.org>
-> wrote:
->>
->> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
->> > A security sensitive application can easily disable generation
->> of core > files, using setrlimit (on the linux kernel, prctl
->> may also be useful).
->>
->> If you want to avoid core dumps being recorded on Linux in
->> the presence of system configuration that writes them into
->> a pipe to a command instead of to a core file (systemd-coredump,
->> corekeeper, abrt, apport etc., using a string starting with
->> | in /proc/sys/kernel/core_pattern), then you need to use
->> prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents the
->> kernel from creating core dump files itself, but does not
->> prevent it from writing them to pipes.
->
-> This is kind of interesting. It looks like systems running
-> systemd with coredumpctl store the dumps in journald. Systemd
-> does not appear to offer a way to clear them, so a
-> '/var/log/journal/*/*' is needed.
+--000000000000213dfd063505a92d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Such system stores them if the admin wanted that, see "man coredump.conf".
-So unless the "Storage=" setting is "none" but ignored, you
-should be able to retrieve the dumps. With "Storage=External"
-they end up on disk, where you should also have means to delete
-them.
+Hello there,
 
-I prefer a setup, where cores are encrypted immediately during
-core dump piping and then (like all other forensically relevant
-data) synchronized timely to other machine(s), e.g. via pipeline
-procedures built around guerilla-backup toolbox (which I did
-not manage to find a Debian package sponsor yet).
+We released Varnish Cache 7.7.1, 7.6.3, and 6.0.14 yesterday (sorry for the
+delay).
 
-> $ cat coredump.c #include <stdio.h> #include <assert.h>
->
-> int main(int argc, char* argv[]) { char password[128];
-> printf("Please enter your password:\n"); if(fgets(password,
-> sizeof(password), stdin) != NULL) { /* do some real work, detect
-> an error condition, then... */ assert(0); }
->
-> return 0; }
->
->
-> $ gcc coredump.c -o coredump.exe $ ./coredump.exe Please enter
-> your password: supersecretpassword coredump.exe: coredump.c:11:
-> main: Assertion `0' failed. Aborted (core dumped)
->
->
-> $ coredumpctl list TIME                            PID   UID
->   GID SIG COREFILE  EXE Wed 2019-01-02 16:23:15 EST   10827
->  1000  1000   6 present   /home/jwalton/...
->
->
-> $ coredumpctl -o coredump.exe.core dump 10827 PID: 10827
-> (coredump.exe) UID: 1000 (jwalton) GID: 1000 (jwalton) Signal:
-> 6 (ABRT)
->
->
-> $ strings coredump.exe.core | grep supersecret supersecretpassword
-> supersecretpassword
-
-No matter which way your program was crashed (by your code or
-a library, by bug or API misuse, via SEGV, abort or whatsoever):
-a application processing sensitive data was not prepared to protect
-it. It could have happened also without even using any libraries
-at all.
+These releases fixes a vulnerability reported to us, which got the name
+VSV00016.
 
 
-See e.g. "ssh-agent", which (beside other means I think) uses
-the SGID-approach approach to protect against this and other
-dumpable/ptrace-may-attach related security issues, thus also
-preventing normal dumps. The art of secure programming would
-somehow be knowing all typical risks on your target platform(s)
-and mitigate them appropriately.
+*CVE*: Not assigned yet, expect a follow-up here.
 
+A client-side desync vulnerability can be triggered in Varnish Cache. This
+vulnerability can be triggered under specific circumstances involving
+malformed HTTP/1 chunked requests.
 
-The use of systemd-coredump here is just another red herring (same
-as abort()): A program processing sensitive information wanted to
-be dumpable, so the information can be retrieved by normal users.
-That is just exactly the idea behind coredumps for debugging et
-al.
+An attacker can abuse a flaw in Varnish=E2=80=99s handling of chunked trans=
+fer
+encoding which allows certain malformed HTTP/1 requests to exploit improper
+framing of the message body to smuggle additional requests. Specifically,
+Varnish incorrectly permits CRLF to be skipped to delimit chunk boundaries.
+Impact <https://varnish-cache.org/security/VSV00016.html#impact>
 
-I think if your application would have coredump/ptrace protection
-in place, systemd-coredump could still dump the file for the
-root-user, but that also would be just very useful behaviour
-(it allow forensics, IOC-generation also for SUID-crashes) and
-usually not a security risk at all: only root can read them
-(and root could usually ptrace your program, read all you
-supersensitive IO, manipulate the binary, ... anyway).
+The primary risk of this vulnerability is enabling HTTP request smuggling
+attacks, which could have consequences for downstream systems. Specifically:
 
+*Cache Poisoning*: A downstream cache positioned in front of Varnish could
+cache incorrect or malicious content if it allows the aforementioned
+malformed HTTP/1 requests to pass through unhandled. This can lead to
+unintended responses being served to users, potentially exposing sensitive
+information or delivering harmful payloads.
 
-In case your application is even that super-super-sensitive, that
-the benefit from core-dump-analysis would still be eliminated
-by possible data leackage via cores, then you should e.g. use
-the kernel to store your sensitive material for you (see keyrings)
-or when even that is too risky, use the appropriate TEMPEST-
-and tamper-resistent HSM (maybe even one that has to be unlocked
-by multiple actors using their HSMs at the same time, a similar
-procedure like firing nukes in movies - Thales explained such
-a design to me once). Of course such HSM schemes make only sense
-with the appropriate physical protection, either by prohibiting
-access or burning down your own place before your would let someone
-leave with your HSM.
+*Security Risks*: Bypass of WAF type products downstream from Varnish could
+be achieved if these products are configured to not inspect request bodies
+and in addition allow the aforementioned malformed HTTP/1 requests to pass
+through.
 
+The vulnerability has been given a severity rating of *low/medium*.
+Versions affected
+<https://varnish-cache.org/security/VSV00016.html#versions-affected>
 
-And finally, looking at the incomplete list of mitigations and
-knowing what they imply on usability, management and debugging
-of your software, decide if it is really worth taking them (damage
-costs lower than mitigation costs).
+   -
 
-hd
+   Varnish Cache releases up to and including 7.7.0.
+   -
 
+   Varnish Cache 6.0 LTS series up to and including 6.0.13.
 
+Versions not affected
+<https://varnish-cache.org/security/VSV00016.html#versions-not-affected>
+
+   -
+
+   Varnish Cache 7.7.1 (released 2025-05-12)
+   -
+
+   Varnish Cache 7.6.3 (released 2025-05-12)
+   -
+
+   Varnish Cache 6.0 LTS version 6.0.14 (released 2025-05-12)
+
+Solution <https://varnish-cache.org/security/VSV00016.html#solution>
+
+The recommended solution is to upgrade Varnish to one of the versions where
+this issue has been resolved, and then ensure that Varnish is restarted.
+Thankyous and credits
+<https://varnish-cache.org/security/VSV00016.html#thankyous-and-credits>
+
+Ben Kallus at Dartmouth College for finding and reporting the issue to the
+project in a responsible manner.
+Nils Goroll (UPLEX), Dridi Boukelmoune (Varnish Software) and Poul-Henning
+Kamp for the patches.
+Varnish Software for handling this security incident.
+
+References:
+
+- https://varnish-cache.org/security/VSV00016.html#vsv00016
+- https://varnish-cache.org/security/index.html
+-
+https://varnish-cache.org/lists/pipermail/varnish-announce/2025-May/000767.=
+html
+- https://github.com/varnishcache/varnish-cache
+- https://varnish-cache.org/releases/rel7.7.1.html#rel7-7-1
+- https://varnish-cache.org/releases/rel7.6.3.html#rel7-6-3
+- https://varnish-cache.org/releases/rel6.0.14.html#rel6-0-14
+
+--=20
+Asad
+
+--000000000000213dfd063505a92d--
