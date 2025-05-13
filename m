@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1461" "Tuesday" "17" "March" "2015" "08:56:24" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<55084EA8.1020003@oracle.com>" "29" "Re: [oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont" nil nil nil "3" "2015031715:56:24" "[oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont" (number mark "        alan.coopers Mar 17   29/1461  " thread-indent "\"Re: [oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont\"\n") "<550845D3.1020509@tao.at>" ("<20150317150833.GA2934@also.us.oracle.com>" "<5508443E.401@oracle.com>" "<550845D3.1020509@tao.at>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28021 invoked by uid 550); 17 Mar 2015 15:57:04 -0000
+Received: (qmail 3774 invoked by uid 550); 13 May 2025 19:14:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28000 invoked from network); 17 Mar 2015 15:57:04 -0000
-Message-ID: <55084EA8.1020003@oracle.com>
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:17.0) Gecko/20150125 Thunderbird/17.0.11
-MIME-Version: 1.0
-References: <20150317150833.GA2934@also.us.oracle.com> <5508443E.401@oracle.com> <550845D3.1020509@tao.at>
-In-Reply-To: <550845D3.1020509@tao.at>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: acsinet21.oracle.com [141.146.126.237]
-CC: Sven Schwedas <sven.schwedas@tao.at>,
-        "X.Org Security Team" <xorg-security@lists.x.org>
-Date: Tue, 17 Mar 2015 08:56:24 -0700
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More
- BDF file parsing issues in libXfont
+x-ms-reactions: disallow
+Received: (qmail 3744 invoked from network); 13 May 2025 19:14:12 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3e; t=1747163643; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KK03wgrhWz9vwseJrALSPbj385SsUEfcIpqxQ1MgQy4=;
+	b=mKFvw+xBndwTzJjZvpD5e02Enq7GbuyejTBuAaRJs/V+UAB6Wap0zuOgOeSYIBKI+NEnOO
+	J/YyBUAPeLju56DQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1747163643; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KK03wgrhWz9vwseJrALSPbj385SsUEfcIpqxQ1MgQy4=;
+	b=VpjtIItoMbhSkDmfcrclKkcxwAdrRToGrPmzfYraiEvGRd68FQjB69WyvdcHmwSuoJO/As
+	BWHzRI6bC2AzROvvh8XS/2hPM4MCaVOVfheQ5jcIirWu+WhvikriV5VhdnTgKI39k1ZFVb
+	QClSqrl3YupnPA2yUJsf0QPaa0ZmeUBvztBBQZCrqeSGcOvhe8lkbzOTmmHeyJV8GunZK1
+	ngOtj7h10NmkDIb/pCMVDScJMsdaaPj3iCcQXXF0a2XjUFa4IlhNeKF/qdT4d0tui8rrwb
+	Plskgx+GcUPLM/oA7+Qx/1Gbh6QUl3w9iQLQH9BBBj5+Mm6PQWnkdmqxuDeESA==
+Date: Tue, 13 May 2025 20:14:03 +0100
+From: Stuart Henderson <stu@spacehopper.org>
 To: oss-security@lists.openwall.com
+Message-ID: <sko4t7okzipikk7b3lwj3qgml5h7uc5t62tkj44wlu37zz27ja@mpse257ps566>
+References: <A398F21D-1899-4061-A56A-8CDD5A31904E@graemef.net>
+ <3f3dottw366msbyl7vknhxldyftyvkdz2an2iw5i5rdk24fc6k@drfe7sruxmtc>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3f3dottw366msbyl7vknhxldyftyvkdz2an2iw5i5rdk24fc6k@drfe7sruxmtc>
+Subject: Re: [oss-security] EU Vulnerability Database
 
-On 03/17/15 08:18 AM, Sven Schwedas wrote:
-> On 2015-03-17 16:11, Alan Coopersmith wrote:
->> As libXfont is used by the X server to read font files, and an unprivileged
->> user with access to the X server can tell the X server to read a given font
->> file from a path of their choosing, these vulnerabilities have the
->> potential
->
-> Can this be exploited by any current browser's web fonts implementation,
-> or will this require local access? (Loading fonts from user-writeable
-> ~/.fonts seems to be enabled by default.)
+On 2025/05/13 20:01, Stuart Henderson wrote:
+> On 2025/05/13 19:43, Graeme Fowler wrote:
+> > EUVD is in beta testing - given all the shenanigans with MITRE and CVE, it might be worth checking out.
+> > 
+> > https://euvd.enisa.europa.eu/about
+> > 
+> > Graeme
+> 
+> what a helpful website:
+> 
+> 403 Forbidden
+> Microsoft-Azure-Application-Gateway/v2
+> 
 
-I am not aware of any current browser which meets any of these criteria,
-much less all of them:
-  - supports the ancient BDF bitmap font format in its webfonts, instead of
-    scalable font formats such as OpenType, TrueType, or Postscript Type 1.
-  - uses the old X server-side font technology instead of rendering on
-    the client side, where it can do complex text layout & antialiasing
-  - downloads a BDF font from a website, stores to a local directory,
-    runs mkfontdir in that directory, and adds it to the X font path.
-
-The primary exploit path X.Org is aware of these would be a local user who
-can login to an X session already, running "xset +fp" to add a directory
-under their control to the font path of that X server in order to execute
-code with the privileges of the X server (often root).
-
--- 
-	-Alan Coopersmith-              alan.coopersmith@oracle.com
-	  X.Org Security Response Team - xorg-security@lists.x.org
-
+Hmm. Works after clearing cookies for europa.eu...
