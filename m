@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2772" "Tuesday" "1" "November" "2016" "10:58:28" "+0200" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>" "67" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" nil nil nil "11" "2016110108:58:28" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" (number mark "U       kaplanlior@g Nov  1   67/2772  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12\"\n") "<20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>" ("<CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>" "<20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22494 invoked by uid 550); 1 Nov 2016 08:58:42 -0000
+Received: (qmail 32044 invoked by uid 550); 13 May 2025 22:50:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22461 invoked from network); 1 Nov 2016 08:58:40 -0000
+x-ms-reactions: disallow
+Received: (qmail 27659 invoked from network); 13 May 2025 22:48:52 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Owb1dKSZfwxL2vfBy0dCFHlO4jvmmDLFNUCJxZkYHLw=;
-        b=dheu/2ftMeEhjRURqZAoWkVcgf6wXPnszNwfDlMLhbHMJfCp23iwWx8voH2LpHjqQQ
-         wQfjlJENAxbUtz4Pxd7R3shS+C2AG2GYW8XU1V4XWD4u6j9HfkhPKDVo199W3omjXlsm
-         5HDFGAXWgdcfLAgMupg6HJF4Pi7YcJ9Iw09DAOMRHhYviJqwRLItPFabVudJSFjbDdc+
-         qV7fqdVOvn6M7H03OjjsYNAuTGYFLIa0LfkUinLkWQQEipCYjlq6pveLAcKpcM+GL/LN
-         mBHM86eC5zC9qmUG65Un8tRHg633HCZwa+n6V8sVcIFdBtOywo0UFlDByyct0XUKgaF+
-         61SA==
+        d=chainguard.dev; s=google; t=1747176523; x=1747781323; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1oR8HYTdl63Ne+1D0Nfi0SPFjhf8X655RYqRT1xF6uE=;
+        b=iM5qQaAHEH3xrl0EAk3zdSjNHduN0KngpHq9xjLpw/V1F/noho7rndOLVl/76rhkuT
+         jAKNj/2Sbkmu2cW3g+F7FnTcFEKZIrzmNVwnyymch986RewVsaX924SzHm7m6gszuVGI
+         ZgUSyAuOZobT47HCIjrxeGfhncrS19xsp707hAp70fFsyN2YVFdhzys+Xiln8BN8GvRD
+         fE1fBPJIW8Q27fTgxVkAgUPBXZXUWS7fbolY5U5n1vszMcyq9zGmoxEUwMa1XItPD8UP
+         TlC0oyOg69w7Ne31OGR390OzVpqMnCZQseeVY+cYKFJd7OaG+Jh7p6GQbvZhtsziVSA8
+         qClw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Owb1dKSZfwxL2vfBy0dCFHlO4jvmmDLFNUCJxZkYHLw=;
-        b=HB13se5npoRFpem5/fUWLkhrcvk64TJv7pIZptURbydCalpj+kw17evn5lrM+YGMIa
-         A3OYHGd0mkr6zQ9ruC9VtQFwGE0/8u9RH7Rva+DnltURvnpkSOeA13KgYVoBuIkpPCkB
-         GSoX6ALHgSK/Le9TXfmNO3XXn6VDGXhYutKxz/1XbuE8R3SdsXBnP2H9fNl1chQbQ9uz
-         X9pryoRIeFgrdLd8EZOvJhKL7PFfvDLC6FPBf6it0PztBzUp5IrbySpjI6IaYshXDbp3
-         oSiKxNQuPAU74PWxgeM2B9glv3CL1PR2fzBOmPeeAB+FWNUhOLIEED5SLffcvBONJojY
-         q1nQ==
-X-Gm-Message-State: ABUngvcizsEW8G65ajz+/6h7TOGKw6oHkBphSRiY0Z4/fdKOKCxdG1zldrX/oQ2Wv6gOVuImx594cTZ+iaYA7g==
-X-Received: by 10.31.151.13 with SMTP id z13mr8453882vkd.41.1477990708832;
- Tue, 01 Nov 2016 01:58:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747176523; x=1747781323;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1oR8HYTdl63Ne+1D0Nfi0SPFjhf8X655RYqRT1xF6uE=;
+        b=ZDUe3c+u/CCkopI9OM2zsJUGoO6AI3S0aNOwiRDcZ5mENahmLr4NoBOl3EAANvM2Mf
+         FLQRSI1PHUpNmMZYoKVc5E775qARW52ZmTeppvGOgpf0OSIhlByZscQ5lDOYZUJrbBZN
+         JgCPYm22zuoEcaAjFvenhpaMCejyudJ1+Sh1ZE/ikO/nvInk27CdiwvwU6MgfWyQszVE
+         CrJ7t0lg+sziCq2HfqIhVtg0OyJhBqkg9dEI+h9LbuXDXXgTewb2F1IOJ4Rzf7Gny/po
+         mPg5T/qcrx6z9jRzDN/HHIlnUCxcvSj7DzaeFRss0iu/JaQfLryCLXluxhgZ/YCHAUxh
+         I0NQ==
+X-Gm-Message-State: AOJu0Yw6k7HBn/7Y2tFhW8bfakyMM9HWW8cX8M8fcVlQxmbeLrBKfo3D
+	Td1fGT//H2UGdfkjV3U3Qg7SAlN3o0KLH7LZ4oImdNjV1+wSce6Zmal58HfGlww4ZwO7IGcZtTF
+	EKSVRtLTQtEFeTVLvhAWYTpglwv314bV+E9eaENugFqLHjNleMBw=
+X-Gm-Gg: ASbGnct+tBDQKeDFc9OVn5jB16nKyJbZZAEQLXtP2n0Dk4VKx0QP/+zZMgFdLmnxx72
+	yiql/b68KWVY2ahqqm9tMSOSE6dpSnQ4NAzsr1ov+D9hK+juz31qp/+bsaJGA7B5wTPoi09+5hy
+	itmzVhWs92UxRpw+HRr8QyYls46Ox6GPNT0sLocgZQz3YUQg==
+X-Google-Smtp-Source: AGHT+IF20wr+B0i7M/FowYMhjUkqE3y6rz8QzZaTm9GaFOS/t4PZtLKVGMTrWYpO6qkz/ZeQfG1pd59iaRgTbPnVY2w=
+X-Received: by 2002:a05:620a:2551:b0:7ca:efbd:f4f4 with SMTP id
+ af79cd13be357-7cd28863985mr195613985a.56.1747176522507; Tue, 13 May 2025
+ 15:48:42 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>
-References: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
- <20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>
-From: Lior Kaplan <kaplanlior@gmail.com>
-Date: Tue, 1 Nov 2016 10:58:28 +0200
-Message-ID: <CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1140fd582e6e020540398766
-Subject: [oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12
+References: <aCISrQTbLQjaxBZS@kasco.suse.de>
+In-Reply-To: <aCISrQTbLQjaxBZS@kasco.suse.de>
+From: Mark Esler <mark.esler@chainguard.dev>
+Date: Tue, 13 May 2025 15:48:31 -0700
+X-Gm-Features: AX0GCFsGBdrd0McasWmbCTBSt2W2KgmpkhbacsFCYraAWq8-2slqMzxnoZl5yyE
+Message-ID: <CAK84RTXnye4-qBA0Yfachi-8gQHZc2bdcSS=9Zi4cfpaDhCFmg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000fbfb9406350c3b90"
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen (mostly
+ affecting release 5.0.0 and setuid-root installations)
 
---001a1140fd582e6e020540398766
-Content-Type: text/plain; charset=UTF-8
+--000000000000fbfb9406350c3b90
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Oct 18, 2016 at 7:34 PM, <cve-assign@mitre.org> wrote:
+Cheers for the report Matthias and SUSE Security!
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > Please assign a CVE for the following issue:
-> >
-> > Bug #73147    Use After Free in unserialize()
-> > https://bugs.php.net/bug.php?id=73147
-> > http://git.php.net/?p=php-src.git;a=commit;h=
-> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f
->
-> Can you clarify what should be the scope of this CVE?
-> zend_unset_property doesn't exist at all in PHP 7.0.11. The
-> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
-> zend_unset_property for PHP 7.0.12, and arranges for
-> zend_unset_property to be called only from
-> "ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
->
-> We're not sure whether that affects anything outside of the CURLFile
-> implementation. However, 73147 discusses other concerns such as "The
-> similar bug can be also triggered via Exception::__toString with
-> DateInterval::__wakeup" and "The problem is that every __wakeup that
-> modifies any property would produce the same problem."
->
-> There seems to be a related code change between 7.0.11 and 7.0.12 that
-> arranges for additional calls to zend_unset_property:
->
->   http://git.php.net/?p=php-src.git;a=blobdiff;f=Zend/zend_exceptions.c;h=
-> f21968733581a3cb672d039bec16ce6f17a93db9;hp=95d18f45fbea8808c00975b5df4619
-> d5d6745ab0;hb=689a9b8def07875641b3132a82c701fb7acb676c;hpb=
-> 4165d976066129000d947ffa3be73f91e9867635
->
-> So, some of the options include:
->
-> 1. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f is a complete security
-> patch that fixes everything discussed in 73147, including the "other
-> concerns" mentioned above.
->
-> 2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
-> implementation. The "other concerns" mentioned above are
-> vulnerabilities that still exist in 7.0.12.
->
-> 3. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
-> above Zend/zend_exceptions.c diff is a complete security patch that
-> fixes everything discussed in 73147, including the "other concerns"
-> mentioned above. There only needs to be one CVE ID associated with
-> this complete security patch.
->
-> 4. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
-> above Zend/zend_exceptions.c diff is a complete security patch that
-> fixes everything discussed in 73147, including the "other concerns"
-> mentioned above. There should be one CVE ID for the security fix to
-> the CURLFile implementation, and a separate CVE ID for the security
-> fix found in Zend/zend_exceptions.c.
->
-> Which of the above (1 through 4) is correct and/or preferred?
->
+Could you please comment on the affectedness of upstream screen 5.0.1?
 
-I've asked Stas (who fixed the issue) and #2 is the current situation.
+https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=464c8d8f945f53f8cbb854517279349e09d74756
 
-Kaplan
+This version was released ~an hour before your initial oss post. It appears
+that upstream landed the patches, which may be worth mentioning in your
+timeline.
 
---001a1140fd582e6e020540398766--
+Kind regards,
+Mark
+
+--000000000000fbfb9406350c3b90--
