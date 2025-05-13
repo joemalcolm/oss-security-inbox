@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2020" "Wednesday" "8" "June" "2016" "20:47:23" "+0300" "Solar Designer" "solar@openwall.com" "<20160608174723.GA14819@openwall.com>" "51" "[oss-security] CVE-2016-2177: OpenSSL undefined pointer arithmetic" nil nil nil "6" "2016060817:47:23" "[oss-security] CVE-2016-2177: OpenSSL undefined pointer arithmetic" (number mark "U       solar@openwa Jun  8   51/2020  " thread-indent "\"[oss-security] CVE-2016-2177: OpenSSL undefined pointer arithmetic\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26186 invoked by uid 550); 8 Jun 2016 17:47:31 -0000
+Received: (qmail 13973 invoked by uid 550); 13 May 2025 15:17:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26168 invoked from network); 8 Jun 2016 17:47:31 -0000
-Date: Wed, 8 Jun 2016 20:47:23 +0300
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20160608174723.GA14819@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2016-2177: OpenSSL undefined pointer arithmetic
+x-ms-reactions: disallow
+Received: (qmail 27825 invoked from network); 13 May 2025 10:49:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747133386; x=1747738186; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=OCjZMirvF/zy6a+Z7/47oiGb6xEHo0Uh8Xr0huoIWcc=;
+        b=cB/KqWE6elWRlPuNWArMAmWzd5KUxisAPCZeLQlQ6vJ0rmoN7QMRUfY5qCSYtdt64n
+         3uq3fosRcL5R2ObLMgYCUG4Ulz4uRtyxUXbkAYG+pAtUAll9xgubQ3gq8T6dJFohZc5q
+         zAk8n0Dg3442eixIWqh0oaFvnNYPvykkNX2kBTKypi/GeFjkN0w/R3rkcw+C0k3tgFn5
+         7O84lW8BHE/LtyvxZiHT0XyoNmWwhDdAWYrjnST7OLXSdbt2wAsLQ4LOU3s8hFvnI27s
+         5hCGb9DmvmqW0805vS+Jju2w+8r6wFsluWfzNuv4VMyNGEt8zlkls6vtaeWP4dbjfSp9
+         VEIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747133386; x=1747738186;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OCjZMirvF/zy6a+Z7/47oiGb6xEHo0Uh8Xr0huoIWcc=;
+        b=J+w/ksLS2Tq5qIQzxgcewpMP7XzUOMFrNe3zMEeagWd0mtrgJG+5apRx+pmMcInJnj
+         +/kFMJ7IZTCMMtBlShyYpcUiqhJhSHBd+kvEWKGsm8RchWCSvvT7uTQTYUCMt3iz4GHn
+         SHnfsu61W1z+qnZpNG6jLCp6/Q9lWHcCjiX/hWB118zWgdspWZQZQu5G4BoT9ritaUqW
+         mbdvyhsxxfeKlgRqVFYXASYA0Bs9aIf8In0wIj0jBOQ9Kk05vl8vHPW5/BsnyqRiLtNR
+         X+EQ51et45HaXC1dC2w6Zi65UONB+Hgqm1ChwLq4tQPSZ1vCU0zKUAvKPUA/HkcFKlnB
+         XfJg==
+X-Forwarded-Encrypted: i=1; AJvYcCXhVp0i9NVg/v3aHoziGH5sGAmXn2yzkdBX+JdFAI/2RW8STxsUOngBJzvTzRoWmGKdXxNEqxhFqoO7L3E=@lists.openwall.com
+X-Gm-Message-State: AOJu0YwWz1n2H+w3PN8MvAAunHyOYeEkaGMHwK3yTv3LAYu6HyZXBw6i
+	ARpoJju14wYiTutlLS//hckca1bypKtchD3zumwBYuNb3Ea9wXiG
+X-Gm-Gg: ASbGncuN7ovPhsDEn+59jRWwXVT5mJ4CQSi+4Erdc5BzHpNRTHDRUZvvXEAndv1YODf
+	HrLk0jnzt+ctTcFSukrcRA/zFtxppgozaB26gbVUuaIJraBfQNsNCLcHnlBsz3cMOol86jC3ipH
+	xG0wjWhisKAFPzo/N6iX4rGZvhnQ3PrTMrujxxUPHwK8EsAGYX9walixWEZQaHxlFXP7UmOnQm3
+	UtthPU1cmedq71krbL9BAfD4e1GqG7GoaeqQuaSMhWuyX1S2Afb+7yf8u2A3GnEHOWP6p36sya4
+	gBz98E7I6oJAHAVkAlK02V1OORlwXXandBlzfiANd57CHrDqYEDtIThTx6jR+eeNQ5kXGUDv8nT
+	bfGgygERw8i3hG/sJWqcUnUm7Mqc=
+X-Google-Smtp-Source: AGHT+IFCBy7sa36EE9Q2/aZNlKDlhNvr1/5CRvn/XJ5Hi0vDUzYvzSUcQmQ96H35z8eQj77ROgm02w==
+X-Received: by 2002:a05:6512:6802:b0:549:8b24:989f with SMTP id 2adb3069b0e04-54fc67605d7mr5228128e87.0.1747133386009;
+        Tue, 13 May 2025 03:49:46 -0700 (PDT)
+Message-ID: <c26387d6-44a0-46a4-9673-a1d14624c465@gmail.com>
+Date: Tue, 13 May 2025 12:49:44 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Matt Johnston <matt@ucc.asn.au>, oss-security@lists.openwall.com
+References: <23c5cd0c-2a9b-4caa-a936-381210400cc2@oracle.com>
+ <42b72ad8-61d2-48f6-9d29-0774149e344e@gmail.com>
+ <f4a0fa7f299ca02b5cf46a805d9c989c@ucc.asn.au>
+Content-Language: en-GB
+From: Albert Veli <albert.veli@gmail.com>
+In-Reply-To: <f4a0fa7f299ca02b5cf46a805d9c989c@ucc.asn.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Dropbear SSH 2025.88 fixes CVE-2025-47203
 
-Hi,
+Thanks, this worked.
 
-More off Twitter:
-
-<guidovranken> @solardiz Here is another very recent OpenSSL CVE that hasnt been released officially yet https://github.com/openssl/openssl/commit/a004e72b95835136d3f1ea90517f706c24c03da7
-
-| Avoid some undefined pointer arithmetic
-| 
-| A common idiom in the codebase is:
-| 
-| if (p + len > limit)
-| {
-|     return; /* Too long */
-| }
-| 
-| Where "p" points to some malloc'd data of SIZE bytes and
-| limit == p + SIZE
-| 
-| "len" here could be from some externally supplied data (e.g. from a TLS
-| message).
-| 
-| The rules of C pointer arithmetic are such that "p + len" is only well
-| defined where len <= SIZE. Therefore the above idiom is actually
-| undefined behaviour.
-| 
-| For example this could cause problems if some malloc implementation
-| provides an address for "p" such that "p + len" actually overflows for
-| values of len that are too big and therefore p + len < limit!
-| 
-| Issue reported by Guido Vranken.
-| 
-| CVE-2016-2177
-
-The commit message above gives pointer wraparound as an example of when
-and how this UB could manifest itself, but I think even more likely is
-that an optimizing C compiler would remove the check because it can't
-be reliably true (it can be either false or UB).  A valid pointer is at
-most one element beyond the end of an object, so in the example given
-above "p + len > limit" is never reliably true.  In the actual code
-being patched, there are different instances of the problem, and some of
-the checks look like they're effectively ">= limit" rather than "> limit".
-Those ">=" checks are more lucky, as they can't be completely removed
-(but can still misbehave if the pointer advances further).
-
-In fact, there are so many instances that someone should re-review the
-patch and possibly look for even more instances of the problem (maybe in
-an automated way different from what might have been used so far).  The
-commit has "Reviewed-by: Rich Salz", which is great, but I think it
-needs more eyes than the committer's and one other person's.
-
-Alexander
+On 2025-05-13 02:47, Matt Johnston wrote:
+> dbclient 'localhost,|touch 123 '
+>
+Although I have a custom CLI as login shell in /etc/passwd, but if I 
+change it to /bin/sh then it works.
+>> 2. Both dbclient and ssh are symlinks to the same dropbear binary.
+>> Does this CVE apply equally to both, or is it specific to dbclient?
+>
+> It applies to both.
+Thanks. That means I am vulnerable (except for the login shell part that 
+complicates it).
