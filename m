@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["789" "Saturday" "30" "June" "2018" "09:25:08" "+0300" "Georgi Guninski" "guninski@guninski.com" "<20180630062508.oynnfspfl3ak35b7@sivokote.iziade.m$>" "32" "[oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)" "^Date:" nil nil "6" "2018063006:25:08" "[oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)" (number mark "        guninski@gun Jun 30   32/789   " thread-indent "\"[oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17548 invoked by uid 550); 30 Jun 2018 09:53:10 -0000
+Received: (qmail 19865 invoked by uid 550); 14 May 2025 02:44:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5419 invoked from network); 30 Jun 2018 06:25:21 -0000
-Message-ID: <20180630062508.oynnfspfl3ak35b7@sivokote.iziade.m$>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-header: best read with a sniffer
-Date: Sat, 30 Jun 2018 09:25:08 +0300
-From: Georgi Guninski <guninski@guninski.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)
+x-ms-reactions: disallow
+Received: (qmail 32333 invoked from network); 14 May 2025 01:32:34 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Haonan Hou <haonan@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <f7a59c48-7050-c513-fed6-df5dbf383c69@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 14 May 2025 01:32:24 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-24780: Apache IoTDB: Remote Code Execution with untrusted
+ URI of User-defined function 
 
+Severity: moderate
 
- From
-https://j.ludost.net/blog/archives/2018/06/30/bug_on_on_mips_kernels_4_17_2_and_earlier_old_but_alive/index.html
+Affected versions:
 
-This is old but alive.
+- Apache IoTDB 1.0.0 before 1.3.4
 
-On mips linux kernel 4.17.2 and earlier unprivileged user can trigger
-BUG_ON() possibly causing denial of service on the whole machine.
+Description:
 
-Suggested patches from 2013 are in the thread at:
-https://www.spinics.net/lists/mips/msg73398.html
+Remote Code Execution with untrusted URI of UDF vulnerability in Apache IoT=
+DB. The attacker who has=C2=A0privilege to create UDF can register maliciou=
+s function from=C2=A0untrusted URI.
 
+This issue affects Apache IoTDB: from 1.0.0 before 1.3.4.
 
-in 4.17.2 ./kernel/exit.c
+Users are recommended to upgrade to version 1.3.4, which fixes the issue.
 
-do_group_exit(int exit_code)
-{
-	struct signal_struct *sig = current->signal;
+Credit:
 
-	BUG_ON(exit_code & 0x80);
+Y4 tacker (finder)
+Nbxiglk (finder)
 
-|do_group_exit| is called from
+References:
 
-./kernel/signal.c:2482:		do_group_exit(ksig->info.si_signo);
-
-Appears to me si_signo can be 0x80 (in decimal 128) because of:
-
-arch/mips/include/uapi/asm/signal.h:15:#define _NSIG		128
-
-Probably testcase will be:
-$kill -128 `pidof program`
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2024-24780
 
