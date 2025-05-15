@@ -1,4 +1,4 @@
-Received: (qmail 13733 invoked by uid 550); 17 Apr 2026 15:54:37 -0000
+Received: (qmail 1715 invoked by uid 550); 15 May 2025 17:06:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,39 +8,108 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 18279 invoked from network); 17 Apr 2026 10:29:07 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Rahul Vats <rahulvats@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <b67b94b2-7f13-6c8a-70c6-c7ee6cbddd8f@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Apr 2026 10:28:55 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-30898: Apache Airflow: Bad example of BashOperator shell
- injection via dag_run.conf 
-
-Severity: low=20
-
-Affected versions:
-
-- Apache Airflow (apache-airflow) before 3.2.0
-
-Description:
-
-An example of BashOperator in Airflow documentation suggested a way of pass=
-ing dag_run.conf in the way that could cause unsanitized user input to be u=
-sed to escalate privileges of UI user to allow execute code on worker. User=
-s should review if any of their own DAGs have adopted this incorrect advice.
-
-Credit:
-
-Peyton Kennedy (p80n-sec) from Endor Labs (finder)
-Kevin Yang (remediation developer)
-
+Received: (qmail 18320 invoked from network); 15 May 2025 08:52:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=ysFMQ+eVsJ+D7/kQbdTPqgqtBzZgTjmBnYEPfrOrpeU=; b=HToeMCUOsL5GHGivCG/bJpEWn9
+	SKx+TXP9v2R+grnuvwxs0sWh6OOj9O5Mdsathbflk7hDQYM1jYGUi1zg3JUJ7ZXWlTN9kccZbxV7p
+	pMnhfPwf27ilGMMp625KzwCavUCajHSSDHJT9V+DOzggIDaqrZ8DQHjrAle2rCxmF+staUIuc/0lF
+	Ef2ykiy5tpgHHa5cF6drFb532HocfOkwqpQ6Eja/6+mWXSx4Rg/weFen/Hk3Zvj9DL1kv8qDUgT/8
+	/tbEIspJgjd3gjQxxRBrlf9hZLj1Fvj14r6V2mbuRmggiSduwV4dy+GcJsjLKSKbgroxfdPZKeLlL
+	kal2i+xw==;
+Date: Thu, 15 May 2025 11:52:25 +0300
+Message-ID: <20250515115225.GB566333@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
 References:
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="5qdpqpuzNa4xwmzK"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0004
 
-https://github.com/apache/airflow/pull/64129
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-30898
+--5qdpqpuzNa4xwmzK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwNAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogTWF5IDE1LCAyMDI1CkFkdmlzb3J5IElEICAgICAgICAgICAgIDog
+V1NBLTIwMjUtMDAwNApXZWJLaXRHVEsgQWR2aXNvcnkgVVJMICA6IGh0dHBzOi8vd2Via2l0Z3Rr
+Lm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDA0Lmh0bWwKV1BFIFdlYktpdCBBZHZpc29yeSBVUkwg
+OiBodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMjUtMDAwNC5odG1sCkNWRSBp
+ZGVudGlmaWVycyAgICAgICAgIDogQ1ZFLTIwMjMtNDI4NzUsIENWRS0yMDIzLTQyOTcwLAogICAg
+ICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTI0MjIzLCBDVkUtMjAyNS0zMTIwNCwKICAg
+ICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS0zMTIwNSwgQ1ZFLTIwMjUtMzEyMDYsCiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtMzEyMTUsIENWRS0yMDI1LTMxMjU3LgoK
+U2V2ZXJhbCB2dWxuZXJhYmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdC4KCkNWRS0yMDIzLTQyODc1CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0
+R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQyLjAuCiAgICBDcmVkaXQgdG8g7J207KSA7ISx
+IChKdW5zdW5nIExlZSkuCiAgICBJbXBhY3Q6IFByb2Nlc3Npbmcgd2ViIGNvbnRlbnQgbWF5IGxl
+YWQgdG8gYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLgogICAgRGVzY3JpcHRpb246IFRoZSBpc3N1
+ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0
+IEJ1Z3ppbGxhOiAyNTk2MDYKCkNWRS0yMDIzLTQyOTcwCiAgICBWZXJzaW9ucyBhZmZlY3RlZDog
+V2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQyLjAuCiAgICBDcmVkaXQgdG8g7J20
+7KSA7ISxIChKdW5zdW5nIExlZSkgb2YgQ3Jvc3MgUmVwdWJsaWMuCiAgICBJbXBhY3Q6IFByb2Nl
+c3Npbmcgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLgog
+ICAgRGVzY3JpcHRpb246IEEgdXNlLWFmdGVyLWZyZWUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRo
+IGltcHJvdmVkCiAgICBtZW1vcnkgbWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTogMjU5
+NTgzCgpDVkUtMjAyNS0yNDIyMwogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBiZWZvcmUgMi40OC4yLgogICAgQ3JlZGl0IHRvIHJoZXphIChAZ2luZ2dpbEJl
+c2VsKSBhbmQgYW4gYW5vbnltb3VzIHJlc2VhcmNoZXIuCiAgICBJbXBhY3Q6IFByb2Nlc3Npbmcg
+bWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0bwogICAgbWVtb3J5IGNv
+cnJ1cHRpb24uIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBp
+bXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI4NzU3NwoKQ1ZF
+LTIwMjUtMzEyMDQKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJL
+aXQgYmVmb3JlIDIuNDguMi4KICAgIENyZWRpdCB0byBOYW4gV2FuZyAoQGV0ZXJuYWxzYWt1cmEx
+MykuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVu
+dCBtYXkgbGVhZCB0bwogICAgbWVtb3J5IGNvcnJ1cHRpb24uIERlc2NyaXB0aW9uOiBUaGUgaXNz
+dWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBX
+ZWJLaXQgQnVnemlsbGE6IDI5MTUwNgoKQ1ZFLTIwMjUtMzEyMDUKICAgIFZlcnNpb25zIGFmZmVj
+dGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDguMi4KICAgIENyZWRpdCB0
+byBJdmFuIEZyYXRyaWMgb2YgR29vZ2xlIFByb2plY3QgWmVyby4KICAgIEltcGFjdDogQSBtYWxp
+Y2lvdXMgd2Vic2l0ZSBtYXkgZXhmaWx0cmF0ZSBkYXRhIGNyb3NzLW9yaWdpbi4KICAgIERlc2Ny
+aXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIGNoZWNrcy4KICAg
+IFdlYktpdCBCdWd6aWxsYTogMjkwOTkyCgpDVkUtMjAyNS0zMTIwNgogICAgVmVyc2lvbnMgYWZm
+ZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC4yLgogICAgQ3JlZGl0
+IHRvIGFuIGFub255bW91cyByZXNlYXJjaGVyLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGlj
+aW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQg
+U2FmYXJpIGNyYXNoLiBEZXNjcmlwdGlvbjogQSB0eXBlIGNvbmZ1c2lvbiBpc3N1ZSB3YXMKICAg
+IGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIHN0YXRlIGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3pp
+bGxhOiAyOTA4MzQKCkNWRS0yMDI1LTMxMjE1CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0
+R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ4LjIuCiAgICBDcmVkaXQgdG8gSmltaW5nIFdh
+bmcgYW5kIEppa2FpIFJlbi4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFm
+dGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jh
+c2guIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3Zl
+ZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI4ODgxNAoKQ1ZFLTIwMjUtMzEyNTcKICAg
+IFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDgu
+Mi4KICAgIENyZWRpdCB0byBKdWVyZ2VuIFNjaG1pZWQgb2YgTHluY2sgR21iSC4KICAgIEltcGFj
+dDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRv
+IGFuCiAgICB1bmV4cGVjdGVkIFNhZmFyaSBjcmFzaC4gRGVzY3JpcHRpb246IFRoaXMgaXNzdWUg
+d2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBXZWJL
+aXQgQnVnemlsbGE6IDI5MDk4NQoKV2UgcmVjb21tZW5kIHVwZGF0aW5nIHRvIHRoZSBsYXRlc3Qg
+c3RhYmxlIHZlcnNpb25zIG9mIFdlYktpdEdUSyBhbmQgV1BFCldlYktpdC4gSXQgaXMgdGhlIGJl
+c3Qgd2F5IHRvIGVuc3VyZSB0aGF0IHlvdSBhcmUgcnVubmluZyBzYWZlIHZlcnNpb25zCm9mIFdl
+YktpdC4gUGxlYXNlIGNoZWNrIG91ciB3ZWJzaXRlcyBmb3IgaW5mb3JtYXRpb24gYWJvdXQgdGhl
+IGxhdGVzdApzdGFibGUgcmVsZWFzZXMuCgpGdXJ0aGVyIGluZm9ybWF0aW9uIGFib3V0IFdlYktp
+dEdUSyBhbmQgV1BFIFdlYktpdCBzZWN1cml0eSBhZHZpc29yaWVzCmNhbiBiZSBmb3VuZCBhdDog
+aHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5Lmh0bWwgb3IKaHR0cHM6Ly93cGV3ZWJraXQu
+b3JnL3NlY3VyaXR5LgoKVGhlIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCB0ZWFtLAo=
+
+--5qdpqpuzNa4xwmzK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaCWrSQAKCRCRxVnb5MkS
+O0V4AJsFPez1KCRw5N+Nd8G1XV1zs19MugCfVQnXEx9YS0Y15C5civ9A/q7GKv8=
+=pOO3
+-----END PGP SIGNATURE-----
+
+--5qdpqpuzNa4xwmzK--
