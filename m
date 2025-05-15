@@ -1,4 +1,4 @@
-Received: (qmail 1689 invoked by uid 550); 20 Mar 2024 17:19:36 -0000
+Received: (qmail 30351 invoked by uid 550); 15 May 2025 17:06:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,68 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1652 invoked from network); 20 Mar 2024 17:19:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
-	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
-	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
-	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=hWWBiETmPb4WjoLzVOwQetKjDfuHOzQlAS7t/bftnYE=; t=1710955447; x=1711387447;
-	 b=ysARhqeOEP/wkleZh7ZPkOZOy2sbHELr8KNly2DYgRx24T3vd9pzBwrjGdGmvx4GdtJY+1SvwA
-	+od582mtv0PNCIOJfCeAX+z71qvzbX82SDQ6p+X26kOcKEbvC6NuspEJ9w20vya0q4IfNHzG7gXu/
-	0mS+m/6TiUMOI38rHPeavnEH7QTEyNwhwlwkTLQAELcnf54xcCtfsQAjRqUVi8BJ3IVpGWqrbtCrh
-	I4iNHmw1EVAL9Z13AnyRhz8O1AMATMdeX7qvE1TXIhzdtMnaM6pjg3mL7r+omoHcWqz3TeEapob+Z
-	a59hLi0Bgh3vx5DtMSvMViQsgFAZ6EB5czN/g==;
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
-Message-Id: <3A91075D-2407-4EB2-934C-3F04258301E9@beckweb.net>
-Date: Wed, 20 Mar 2024 18:23:45 +0100
+x-ms-reactions: disallow
+Received: (qmail 26198 invoked from network); 15 May 2025 07:27:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=varnish-software.com; s=google; t=1747294056; x=1747898856; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wcQF5wBZg8VLzsj17wfu21n9hxsLztq07xwJ/VPj3sc=;
+        b=WmhLBTHBHvKBuOprTbU4F1WnVKFcEho3biLAgD2bjuVSIdXHq3owYcvTocLT+UJ22g
+         Pak7Dxsh63LE0zuMlH+tAS6sgWhfXjhAIIs2UtRPcN3YPl1nhSUC4JEFVg38BnGydScH
+         qQHe8iGlPaGTPz8ZH8djgGSviO5SvGzUrrxwheKcMxkHWPv95bxj3EjnxDQe96TW8Ajj
+         5Co3IUVHny2qODVe3es2EGxZwDX/AV8Hnu4nryOOSIFC+99P33ALqTIFsduYVLfwS/t2
+         iEjB4RgZy11RB+X2XlPsgib84CY3ESPwwW9Kovs97biqQjrfvwlmVY9XLBT2+NbR2u8v
+         xXfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747294056; x=1747898856;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wcQF5wBZg8VLzsj17wfu21n9hxsLztq07xwJ/VPj3sc=;
+        b=Ny8g6uKJ1tn3BE8udbG9eq+kliNsdg6/ZAY70Is2hoXW9oxOkysYRlJVl+PFxdlBOu
+         Yobc/BLMvLq3CcNPJQlXzvatclGxskhtnF/ntYou6F/BwgaG0uHOnvr7jhl3jdlmq4Om
+         Ss6DeM2yqI5ljjI7M0ULmDis6zxXoFORpNGzN9tQWpFvWGZChMBTbEJVR7/u9ktSO1KA
+         mFHHSCMrCDEDmPNVdCmxWQvZ3jgubtDI0ZR5JAalUzktMaQ6Sa5RTiRZAwQNKeEbLntw
+         mVGxZ8pQ65gns17x77cAkR0V1a3h/01WXkRBF/roovs90IEQLng3YfDrEuo3R8YnMph2
+         tW6Q==
+X-Gm-Message-State: AOJu0Yx2m1Yfec6FA+0qBStjQw36Vtbr2WkVHtSuadKKS+lO712jP3NW
+	yHoqLn3sJPgZX2mY+SrpF/Ttvn0/dfgVROPh0lTC12D7TT5CDme8K4HW4w0LunW80RkRTcWcYSY
+	0dAG46KeAWkngleqeqix+BfcOJTBMJ2V2Vpkduf8xcd9gN0McK5vEpw==
+X-Gm-Gg: ASbGncumUyn/e1Ct2NCn40QNd6n9xTftqkPPD/H0PRKie/xzHzuDFTCmARQi1VwMW9c
+	AWzAsLsH64iu+L/q8DdoFG9DTGPFVJw1IZSi0Ixgxh0VDYBg8L9bL2l6S20/6TzqNS376Uxl3N0
+	Fj8y+Rl0wFFDACZztxJa5Bic51mQlInutPwGA=
+X-Google-Smtp-Source: AGHT+IGbkk3OHDRSKrR7WvCByL9vqyrcuvpYM2AdIwHQrqYGpFWR1kmfRq6JA/wJ0ZrfT6DqDV0m2iWt8SK9LkbeAdo=
+X-Received: by 2002:a2e:a584:0:b0:30b:f138:1b9f with SMTP id
+ 38308e7fff4ca-327ed1195b9mr28842301fa.17.1747294055406; Thu, 15 May 2025
+ 00:27:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <CA+NO1zTqeNPvwupEFgcr6T4NgU3V93vtJ8eEpmAHYMGjvpR6YQ@mail.gmail.com>
+In-Reply-To: <CA+NO1zTqeNPvwupEFgcr6T4NgU3V93vtJ8eEpmAHYMGjvpR6YQ@mail.gmail.com>
+From: Asad Ahmed <asadsa@varnish-software.com>
+Date: Thu, 15 May 2025 09:26:59 +0200
+X-Gm-Features: AX0GCFtFj7Oqc_rUzFYaOrniKfbZ5ieVIwKVBy8BNNnim21P6JgvOFRYYxwAFTc
+Message-ID: <CA+NO1zRy_UT2sEHK9-8Xy9W24Ci9AEg6XwEn5RkOpsYi0T23uA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3774.300.61.1.2)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1710955448;0e81e87e;
-X-HE-SMSGID: 1rmzfQ-0001N0-MS
-Subject: [oss-security] Vulnerability in Jenkins
+Content-Type: multipart/alternative; boundary="0000000000007db263063527992b"
+Subject: [oss-security] Re: VSV00016: Varnish Cache 6.0, 7.6, 7.7 - Request Smuggling Attack
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--0000000000007db263063527992b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The following releases contain fixes for security vulnerabilities:
+Hello again,
 
-* Jenkins 2.444
-* Jenkins LTS 2.440.2
+On Tue, May 13, 2025 at 4:57=E2=80=AFPM Asad Ahmed <asadsa@varnish-software=
+.com>
+wrote:
 
+> *CVE*: Not assigned yet, expect a follow-up here.
+>
+CVE-2025-47905 <https://www.cve.org/CVERecord?id=3DCVE-2025-47905>
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2024-03-20/
+References:
+>
+> - https://varnish-cache.org/security/VSV00016.html#vsv00016
+> - https://varnish-cache.org/security/index.html
+> -
+> https://varnish-cache.org/lists/pipermail/varnish-announce/2025-May/00076=
+7.html
+> - https://github.com/varnishcache/varnish-cache
+> - https://varnish-cache.org/releases/rel7.7.1.html#rel7-7-1
+> - https://varnish-cache.org/releases/rel7.6.3.html#rel7-6-3
+> - https://varnish-cache.org/releases/rel6.0.14.html#rel6-0-14
+>
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+A follow-up announcement to share an update to the release notes:
+-
+https://varnish-cache.org/lists/pipermail/varnish-announce/2025-May/000768.=
+html
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+--=20
+Asad
 
----
-
-SECURITY-3379 / CVE-2024-22201
-Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
-servlet server when started using `java -jar jenkins.war`. This is how
-Jenkins is run when using any of the installers or packages, but not when
-run using servlet containers such as Tomcat.
-
-Jenkins 2.443 and earlier, LTS 2.440.1 and earlier bundles versions of
-Jetty affected by the security vulnerability CVE-2024-22201. This
-vulnerability allows unauthenticated attackers to cause a denial of
-service.
-
-NOTE: This only affects instances that enable HTTP/2, typically using the
-`--http2Port` argument to `java -jar jenkins.war` or corresponding options
-in service configuration files. It is disabled by default in all native
-installers and the Docker images provided by the Jenkins project.
-
-
-
+--0000000000007db263063527992b--
