@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6281" "Tuesday" "8" "September" "2015" "13:45:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150908174553.E20E352E7ED@smtpvbsrv1.mitre.org>" "145" "[oss-security] Re: CVE Request: PHP remote exploits (even more)" nil nil nil "9" "2015090817:45:53" "[oss-security] Re: CVE Request: PHP remote exploits (even more)" (number mark "        cve-assign@m Sep  8  145/6281  " thread-indent "\"[oss-security] Re: CVE Request: PHP remote exploits (even more)\"\n") "<20150907125124.GH5993@suse.de>" ("<20150907125124.GH5993@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7887 invoked by uid 550); 8 Sep 2015 17:46:07 -0000
+Received: (qmail 18200 invoked by uid 550); 16 May 2025 17:14:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,158 +6,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7867 invoked from network); 8 Sep 2015 17:46:06 -0000
-In-Reply-To: <20150907125124.GH5993@suse.de>
-Message-Id: <20150908174553.E20E352E7ED@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  8 Sep 2015 13:45:53 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: PHP remote exploits (even more)
-To: meissner@suse.de
+x-ms-reactions: disallow
+Received: (qmail 5292 invoked from network); 16 May 2025 16:32:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netbsd.org;
+	s=20240131; t=1747413117;
+	bh=MCiltId1skLyUvmq/2j2lOV947NcppFocyJRJPG02JU=;
+	h=To:In-reply-to:Subject:Date:From;
+	b=sAQ+FR6GXNuKNB6hrDalc+vdpz4PVCPJmO4EGQ3ICgyYTnVxH8mbr28KCwyg6rgKR
+	 HET1Q9c2QRDBPKVVm+ywhbuJ2k7J844UzJCTYQLI5KqUU6B5TZBn/AlxcGkec2Y2gC
+	 aMcmSqfjrUlXu7MbSGAioXJCHfPaJB0P7YIuHRUo=
+To: oss-security@lists.openwall.com
+In-reply-to: <c72f7000-a909-478d-a487-bf4d5b244223@gentoo.org> (eschwartz@gentoo.org)
+Date: Fri, 16 May 2025 16:31:56 +0000
+From: Taylor R Campbell <riastradh@NetBSD.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250516163157.BA80D8564D@mail.netbsd.org>
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen (mostly
+	affecting release 5.0.0 and setuid-root installations)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-The CVE IDs in this message apply to PHP before 5.4.45, 5.5.x before
-5.5.29, and 5.6.x before 5.6.13.
-
-
->         https://bugs.php.net/bug.php?id=70172   Use After Free Vulnerability in unserialize()
->                 Given attacker input to unserialize() we should consider this a security issue.
-
->         https://bugs.php.net/bug.php?id=70365   yet another use-after-free vulnerability in unserialize() with SplObjectStorage
->                 I would also say this can be attacker driven, so needs a CVE.
+> Date: Fri, 16 May 2025 11:34:29 -0400
+> From: Eli Schwartz <eschwartz@gentoo.org>
 > 
->         https://bugs.php.net/bug.php?id=70366   yet another use-after-free vulnerability in unserialize() with SplDoublyLinkedL
->                 Same.
-
-Use CVE-2015-6834 for this set of taoguangchen@icloud.com
-use-after-free discoveries. Note that the scope of CVE-2015-6834 does
-not include any subsequent work on these bugs after the release of
-5.6.13. For example, 70172 has an apparently pending "2015-09-04
-08:50" comment. The code as shipped in 5.6.13 has ext/standard/var.c
-with:
-
-   var_push_dtor_no_addref(&var_hash, &return_value);
-   /* FIXME: old_rval is not freed in some scenarios, see bug #70172
-      var_push_dtor_no_addref(&var_hash, &old_rval); */
-
- 
->         https://bugs.php.net/bug.php?id=70219   Use after free vulnerability in session deserializer
->                 Same.
-
-Our feeling is that this discovery is somewhat specific to the
-implementation details of session_decode, and that the use-after-free
-is resultant. Use CVE-2015-6835. Also, note the "2015-08-17 01:07"
-comment of "Also I understand that this requires control over the
-session content, which for most applications would mean the security
-is already overridden, as session usually contains all security data."
-
-
->         https://bugs.php.net/bug.php?id=70388   SOAP serialize_function_call() type confusion / RCE
->                 Definitely, even the summary has enough indication for me.
-
-Use CVE-2015-6836 for this andrea.palazzo@truel.it discovery.
+> On 5/16/25 11:01 AM, Jan Schaumann wrote:
+> > I think it's useful to clarify here that NetBSD does
+> > _not_ ship with GNU screen(1) at all.  NetBSD's
+> > third-party package manager pkgsrc[1] includes
+> > screen(1), allowing users to install additional
+> > software on top of the base OS.
+> > 
+> > That package as included in _pkgsrc_ was installed
+> > setuid[2], but a NetBSD base installation does not
+> > include that package.  (NetBSD happens to include
+> > tmux(1) _in the base OS_, but not screen(1).)
+> > 
+> > This distinction between a base OS and add-on software
+> > that is optionally available for users to choose tends
+> > to cause confusion for some people, so I figured
+> > it's worth noting.
 > 
+> This is a nonsensical claim, but if I accept it as stated then I will
+> counter-assert that zero (0) Linux distros are vulnerable as they don't
+> preinstall screen in the base OS.
 > 
->         https://bugs.php.net/bug.php?id=69782   NULL pointer dereference
->                 Denial of service, these queries might be fed from remote.
+> The definition of "the NetBSD base installation" is "nobody uses it".
+> People use computing devices in order to run software on it. You cannot
+> consider your OS in a bubble and go "well ackshually it's perfectly
+> secure unless you use the builtin software to install official software,
+> but we don't support that as a secure option".
 
-It appears that some copies of ext/xsl/xsltprocessor.c have one of the
-cases fixed, but not the other. We would like to assign, and maintain,
-two separate CVE IDs for this, regardless of ultimate cause. The PHP
-5.6.13 release has a check for a NULL return value both in the "if
-(error == 1)" code block and on the later "if (obj == NULL ||
-obj->stringval == NULL)" line. However, the current
-http://git.php.net/?p=php-src.git;a=blob;f=ext/xsl/xsltprocessor.c
-code (i.e.,
-http://git.php.net/?p=php-src.git;a=blob;f=ext/xsl/xsltprocessor.c;h=ee52336c4ebd46b2a42046a00b938dcff5461308;hb=HEAD)
-has the former but not the latter.
+It is not nonsensical, and it is not the inconsequential pedantry you
+are suggesting.  Please consider avoiding sarcastic disparagement when
+publicly discussing the factual matters of security reports.
 
-Use CVE-2015-6837 for the vulnerability fixed by the:
+The report says that `NetBSD 10.1' is affected.  This is not quite
+right, _and it matters_ even if you set aside the fact that NetBSD
+10.1 itself (which does ship tmux!) does not ship screen, because:
 
-  -      xmlXPathFreeObject(obj);
-  +
-  +      if (obj) {
-  +          xmlXPathFreeObject(obj);
-  +      }
+(a) the same pkgsrc packages are available on, e.g., NetBSD 9.x (which
+    is not EOL); and
 
-patch.
+(b) pkgsrc is used on platforms other than NetBSD, including macOS,
+    SmartOS, and various Linux distributions (e.g., for unprivileged
+    use on HPC clusters where it is more flexible and up-to-date than
+    the Linux distribution's package manager).
 
+That is why it would be more accurate for the report to say
+`pkgsrc-2025Q1', not `NetBSD 10.1'.
 
-Use CVE-2015-6838 for the vulnerability fixed by the:
-  
-  -   if (obj->stringval == NULL) {
-  -      php_error_docref(NULL, E_WARNING, "Handler name must be a string");
-  -      xmlXPathFreeObject(obj);
-  +   if (obj == NULL || obj->stringval == NULL) {
-  +      if (obj && obj->stringval == NULL) {
-  +         php_error_docref(NULL, E_WARNING, "Handler name must be a string");
-  +         xmlXPathFreeObject(obj);
-  +      }
-
-patch.
-
-(Also, neither copy of the code made a change related to "obj =
-valuePop(ctxt); switch (obj->type)" -- if this is a remaining
-vulnerability, it would have its own CVE ID.)
-
-
-> Perhaps CVEs also for:
->         https://bugs.php.net/bug.php?id=70385   Buffer over-read in exif_read_data with TIFF IFD tag byte value of 32 bytes
-> 
->         Questionable. It seems no crash was observed, so no denial of service. At most a information leak.
-
-It says "potential data leak" but there's no example of a plausible
-PHP application in which a client user may obtain private information.
-
-
->         https://bugs.php.net/bug.php?id=70312   HAVAL gives wrong hashes in specific cases
-> 
->         Questionable. I am not sure this is attacker driveable or if an attacker could do anything with this.
-
-This might be primarily an interoperability bug. 70312 doesn't attempt
-to show that the hashes produced by PHP's HAVAL implementation had
-weaker security properties than those produced by a correct
-implementation. (One might also argue that applications requiring
-especially good hash properties should not be using HAVAL at all.)
-
-
->         https://bugs.php.net/bug.php?id=70345
-> 
->         Various PCRE issues caused by the regexp string. There has been a tendency to either declare this CVE worthy or
->         declare that its not attacker driven usually.
-
-There is related discussion at the end of the
-http://www.openwall.com/lists/oss-security/2015/03/11/8 post. A
-regular expression can be untrusted input from an attacker, but in a
-typical PHP application it is not. Also, 70345 doesn't have much
-impact analysis beyond "exploitation to achieve arbitrary code
-execution might be possible, but not trivial." In addition, there is
-an overlap with the security fixes available in the unreleased PCRE
-8.38 (see the
-http://vcs.pcre.org/pcre/code/trunk/ChangeLog?view=markup page).
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJV7xy6AAoJEL54rhJi8gl5pxYP+wQBwYyvuTbVMDi7pPoyMJjI
-I6h2kkEDQ7GxE6Tc5kC9wF2AeyWcNbs5/PuBzAIcKr7YCaRuxX/tlHqZ68gYmlwN
-q1vUGOM23InUSuIFYz0em9vXAw22Y1sujKZRj00v2R2/dxi1vonJehVdXM9ft5cu
-zx6v63oLe23loLrHNVID9IcAAwnBPmB8aa1m3fGx5vbbL35CPzXR8rNLeWjG++JP
-CMYlRQdCMnCPiT9gH5EqwABjwP/NDvh0gKYZM25KQ2GaUkRNHYFQOKNAdB/KAEys
-fhyYtfYhUS7rwBfQ0cU6nmZm1AeGoZ7o0/I4jgT/ANiYDfRFYsIEuAwIM+ubumpl
-JtrI6ocDySZVvAC2yh+n9z1jAuJw8lsSSaNy+8fD/JdDJ080OXEYSJ8e81pMFbde
-Ngj282U8M+n8P9FueP61O0U5jbHwlKxhCyXmVePuiB8xf8JYRD+OMWxBXbRtzSCC
-lo7GbaHrzk6q70rQdEFxZWk+6CCPmNP9iNxPCZSvYhq62Nbh3Vh4LiqB9bIk1PVV
-6NN+uXiaBvH+OUNpA96HaG913fGhE3SzPbqY+fCSj+QOPUf/ZjEf1J6fa9GiMuxU
-GFFqzKTLTwhW8IQqFYQ86dYBFt2+fUUSltWPuxSoMsbOn1ChC2OThgC6xfCmYOqt
-yClKtAjpIOMDRaivspjp
-=ha5T
------END PGP SIGNATURE-----
+All that said, I think any further discussion of this point -- and any
+other distributor-specific matters -- can reasonably be taken off-list
+to keep the thread focussed on the details of the screen
+vulnerabilities themselves.
