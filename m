@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["656" "Monday" "1" "March" "2021" "11:15:46" "+0000" "Mark Thomas" "markt@apache.org" nil "15" "[oss-security] CVE-2021-25329: Apache Tomcat Incomplete fix for CVE-2020-9484" nil nil nil "3" nil nil (number mark "U       markt@apache Mar  1   15/656   " thread-indent "\"[oss-security] CVE-2021-25329: Apache Tomcat Incomplete fix for CVE-2020-9484\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-25329: Apache Tomcat Incomplete fix for CVE-2020-9484" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16006 invoked by uid 550); 1 Mar 2021 12:31:09 -0000
+Received: (qmail 10035 invoked by uid 550); 16 May 2025 08:32:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,31 +7,117 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17788 invoked from network); 1 Mar 2021 11:16:02 -0000
+x-ms-reactions: disallow
+Received: (qmail 10004 invoked from network); 16 May 2025 08:32:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1747384356; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2ezF5Waz/qHlj2rXCZiLRJ/3GY3JzDdbUGfAZYD8TfU=;
+	b=X21Nf6Xs9IcWeMsL56TnHgAOnCSCMQkylbfeu67xR+mDYK7EsvsFEH5WIuYuqEcZj2AEET
+	Oz9LiLzxxGN3cUBXjxT62SARfjlFcfxojdPtc1R+ZO62kvHpmjcVQPxoW7BJ2bTMBpuj+a
+	NihvSTz1AHOHvT8xGcX8266ZzzypIYE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1747384356;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2ezF5Waz/qHlj2rXCZiLRJ/3GY3JzDdbUGfAZYD8TfU=;
+	b=Nou++7J3/4nF7G5A0ECtA1KfG9idWqBnsXilQGBVxUXgtcO5cL5wFT+gyzLhDrLQqI11i6
+	ENb17odnjvB2UaAA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1747384356; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2ezF5Waz/qHlj2rXCZiLRJ/3GY3JzDdbUGfAZYD8TfU=;
+	b=X21Nf6Xs9IcWeMsL56TnHgAOnCSCMQkylbfeu67xR+mDYK7EsvsFEH5WIuYuqEcZj2AEET
+	Oz9LiLzxxGN3cUBXjxT62SARfjlFcfxojdPtc1R+ZO62kvHpmjcVQPxoW7BJ2bTMBpuj+a
+	NihvSTz1AHOHvT8xGcX8266ZzzypIYE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1747384356;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2ezF5Waz/qHlj2rXCZiLRJ/3GY3JzDdbUGfAZYD8TfU=;
+	b=Nou++7J3/4nF7G5A0ECtA1KfG9idWqBnsXilQGBVxUXgtcO5cL5wFT+gyzLhDrLQqI11i6
+	ENb17odnjvB2UaAA==
+Date: Fri, 16 May 2025 10:32:35 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Message-ID: <1d9e46e1-2201-5fb9-b5dc-791ce8f7e461@apache.org>
-Date: Mon, 1 Mar 2021 11:15:46 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+Message-ID: <aCb4I6AwLnGeruFC@kasco.suse.de>
+References: <aCISrQTbLQjaxBZS@kasco.suse.de>
+ <CAK84RTXnye4-qBA0Yfachi-8gQHZc2bdcSS=9Zi4cfpaDhCFmg@mail.gmail.com>
+ <aCR-A6lIgS2h8efj@kasco.suse.de>
+ <yxzsn67mzkjf2bxwkjah6u5q54yg2mqj7tlysm7mjeo4xytwhr@24dslwvnetyr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2021-25329: Apache Tomcat Incomplete fix for CVE-2020-9484
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="hl4sVRz/oCcOGu/R"
+Content-Disposition: inline
+In-Reply-To: <yxzsn67mzkjf2bxwkjah6u5q54yg2mqj7tlysm7mjeo4xytwhr@24dslwvnetyr>
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen
+ (mostly affecting release 5.0.0 and setuid-root installations)
 
-The fix for CVE-2020-9484 was incomplete. When using Apache Tomcat 
-10.0.0-M1 to 10.0.0, 9.0.0.M1 to 9.0.41, 8.5.0 to 8.5.61 or 7.0.0. to 
-7.0.107 with a configuration edge case that was highly unlikely to be 
-used, the Tomcat instance was still vulnerable to CVE-2020-9494. Note 
-that both the previously published prerequisites for CVE-2020-9484 and 
-the previously published mitigations for CVE-2020-9484 also apply to 
-this issue.
+--hl4sVRz/oCcOGu/R
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 16 May 2025 10:32:35 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen
+ (mostly affecting release 5.0.0 and setuid-root installations)
 
-Credit:
+Hi,
 
-This issue was identified by Trung Pham of Viettel Cyber Security.
+On Thu, May 15, 2025 at 04:09:51PM +0100, Stuart Henderson wrote:
+> On 2025/05/14 13:26, Matthias Gerstner wrote:
+> > Indeed, this is the bugfix release announced by upstream here:
+> >=20
+> > https://lists.gnu.org/archive/html/screen-users/2025-05/msg00005.html
+>=20
+> There are two different versions of the tar.gz; at present, some of the
+> gnu.org mirrors have one, some have another. The earlier one includes
+> .o and other generated files, also there are differences to some source
+> and headers around WINESC_WIN_CARET.
+>=20
+> It would probably be helpful to make a 5.0.2 release to make it a little
+> more clear.
 
-References:
+these inconsistencies confirm the impressions we gained during the
+coordinated disclosure. We believe that there are no well established
+(release, development) processes existing in the GNU Screen upstream
+project anymore.
 
-https://lists.apache.org/thread.html/rfe62fbf9d4c314f166fe8c668e50e5d9dd882a99447f26f0367474bf%40%3Cannounce.tomcat.apache.org%3E
+I don't think this list is the right place bring forward these issues,
+however. You can try on the screen-devel mailing list [1], where some
+issues with the release tarball already seem to be discussed.
+
+[1]: https://lists.gnu.org/archive/html/screen-devel
+
+Cheers
+
+Matthias
+
+--hl4sVRz/oCcOGu/R
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmgm+CMACgkQFMQFyXGS
+NVO52A//Z5K8AoTBDl3mUA5k1PHKCsjKyJT9A+S9r6/wqGG1NyUSeCC3u9JcO4mq
+HTf4XeyTiOS/WhFrYR3bl3BTw2kx94mlgWaYTZmA9rIafzuRZLEYxfGS+nKluX0N
+4sDW/W5rMmeijMs30FmbMYYK29/wCAa/NVfrycBaauBkdDFSiUzrzuioHSurQvBQ
+K8RTZ6nmuORZ57haLOJXaERaH6zgg7gT/KBcdWZ+5Lp1F/qtO7uqV4WLjS3pTs+N
+Cn8lU01SHVlcZdukcF9UrmkFEG+V2/BwhmCb27Coi5KmqNthKVmOPd/QFY0PaTAZ
+cthKAHlH7vkwLQg9yhoMWvQeTX+YZWJ3zaFZNzTEjWBfsyfsqyFNs5ehnLO8RO3G
+dniH9WK0VqDPfNPkOTPPPIYbltlbKtX4dLa6nuPutkx2Z3TFXtjF/u9z5XNjgHDy
+ZHQD0QqcZB33Dwn0sGYuSbuVtkHPS6qrqBFhNYYEiDJnZdWasuoTwCZMSqK4olFP
+VzfO2HAe8slB6aiSFc84oPEoHoUP/mIZfRZ9aGLD08gBKhH7KDAovMPv8/p07gfc
++EXP8m6sBKr28cGVvClwMez4jsS4bJ2Blw0I/kbQVpM4tCj8+plMZhuqUlOq7tCQ
+1hzEb0+zTCDDE7fibt82b0cXvyAnehcpgXAjm1CZhNL8EfOrYck=
+=BITe
+-----END PGP SIGNATURE-----
+
+--hl4sVRz/oCcOGu/R--
