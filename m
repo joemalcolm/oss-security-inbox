@@ -1,4 +1,4 @@
-Received: (qmail 3102 invoked by uid 550); 1 Jun 2026 04:36:31 -0000
+Received: (qmail 8162 invoked by uid 550); 16 May 2025 16:02:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,79 +8,98 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 7484 invoked from network); 31 May 2026 19:50:12 -0000
-Date: Sun, 31 May 2026 21:50:01 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjcj.net; s=dkim;
-	t=1780257003;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=zrdGgS4m9mMHapiSBCb5txqhkwzjKE15PUR1T+/aJ9c=;
-	b=cXTPEHkuLxlxYA2jnYwGeH2SCiA72ikHvNPZtXtFKxNCeelPkMXzlT/jzguSt4DdGO6SsL
-	OTEiaePQ/kLnsOQu1f9RlkoyszUC99+9To/pheit3BF6yIaG0fptVpTEEcsA7WN0YNEVus
-	7FU/K1glw6UQcweBP3EcqiKnfBMO1BPBPvkYaudRNTVNs/qWlxNyJdb7KOZieSiyq+Fu2I
-	wKTkVm+XCUsR21qUkCGgcVUeSqj4Bmm9pPmaNaMXoNSMpz4jCxpmVRA81+sBzmRvRHZ1ug
-	47D7gnM3vpAId94fPUwS9CdChMizKp5tlnG2oPsyDpu217Hccd3/IkNSSjENSQ==
-Authentication-Results: pjcj.com;
-	auth=pass smtp.mailfrom=paul@pjcj.net
-From: Paul Johnson <paul@pjcj.net>
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Message-ID: <ahyQUB4ccRjl5ZAI@pjcj.com>
+Received: (qmail 11425 invoked from network); 16 May 2025 15:34:43 -0000
+Message-ID: <c72f7000-a909-478d-a487-bf4d5b244223@gentoo.org>
+Date: Fri, 16 May 2025 11:34:29 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Subject: [oss-security] CVE-2026-8796: Sereal::Decoder versions before 5.005 for Perl allow
- heap out-of-bounds read via crafted input
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <aCISrQTbLQjaxBZS@kasco.suse.de> <aCdTYYH_N9dXOYf8@netmeister.org>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <aCdTYYH_N9dXOYf8@netmeister.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------l3R57gAN3GrSZ4salk1ppecH"
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen (mostly
+ affecting release 5.0.0 and setuid-root installations)
 
-========================================================================
-CVE-2026-8796                                        CPAN Security Group
-========================================================================
+--------------l3R57gAN3GrSZ4salk1ppecH
+Content-Type: multipart/mixed; boundary="------------0iyriSxRzfksUgkjQyGeqnwN";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <c72f7000-a909-478d-a487-bf4d5b244223@gentoo.org>
+Subject: Re: [oss-security] screen: Multiple Security Issues in Screen (mostly
+ affecting release 5.0.0 and setuid-root installations)
+References: <aCISrQTbLQjaxBZS@kasco.suse.de> <aCdTYYH_N9dXOYf8@netmeister.org>
+In-Reply-To: <aCdTYYH_N9dXOYf8@netmeister.org>
 
-        CVE ID:  CVE-2026-8796
-  Distribution:  Sereal-Decoder
-      Versions:  before 5.005
+--------------0iyriSxRzfksUgkjQyGeqnwN
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-      MetaCPAN:  https://metacpan.org/dist/Sereal-Decoder
-      VCS Repo:  https://github.com/Sereal/Sereal
-
-
-Sereal::Decoder versions before 5.005 for Perl allow heap out-of-bounds
-read via crafted input
-
-Description
------------
-Sereal::Decoder versions before 5.005 for Perl allow heap out-of-bounds
-read via crafted input.
-
-In Perl/Decoder/srl_decoder.c, srl_read_object() and srl_read_hash()
-process a COPY tag, a back-reference whose target byte the decoder
-re-decodes as a fresh tag. When that target byte matches the
-SHORT_BINARY pattern (an inline string whose length is encoded in the
-low bits of the tag), the resulting read is not bounded to precede the
-COPY tag's own offset and can run past the end of the input buffer. An
-attacker controlled COPY offset can land inside a previously decoded
-value rather than on a tag boundary, planting a byte that the decoder
-reads as a SHORT_BINARY tag and consuming up to 31 following bytes from
-the heap as a class name (OBJECT path) or hash key (HASH path).
-
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
-
-Solutions
----------
-Upgrade to Sereal::Decoder 5.005 or later.
+On 5/16/25 11:01 AM, Jan Schaumann wrote:
+> Matthias Gerstner <mgerstner@suse.de> wrote:
+>> we were surprised to find a local root exploit in
+>> the Screen 5.0.0 major version update affecting distributions that ship
+>> it as setuid-root (Arch Linux and NetBSD).
+>=20
+> I think it's useful to clarify here that NetBSD does
+> _not_ ship with GNU screen(1) at all.  NetBSD's
+> third-party package manager pkgsrc[1] includes
+> screen(1), allowing users to install additional
+> software on top of the base OS.
+>=20
+> That package as included in _pkgsrc_ was installed
+> setuid[2], but a NetBSD base installation does not
+> include that package.  (NetBSD happens to include
+> tmux(1) _in the base OS_, but not screen(1).)
+>=20
+> This distinction between a base OS and add-on software
+> that is optionally available for users to choose tends
+> to cause confusion for some people, so I figured
+> it's worth noting.
 
 
-References
-----------
-https://github.com/Sereal/Sereal/commit/303a2c69cdba80bf37a3ff43461e0aa78198a7a3.patch
-https://metacpan.org/release/YVES/Sereal-Decoder-5.005/changes
+This is a nonsensical claim, but if I accept it as stated then I will
+counter-assert that zero (0) Linux distros are vulnerable as they don't
+preinstall screen in the base OS.
 
-Timeline
---------
-- 2026-05-13: Issue reported.
-- 2026-05-19: Fix released in Sereal::Decoder 5.005.
-- 2026-05-20: Fix verified against proofs of concept.
+The definition of "the NetBSD base installation" is "nobody uses it".
+People use computing devices in order to run software on it. You cannot
+consider your OS in a bubble and go "well ackshually it's perfectly
+secure unless you use the builtin software to install official software,
+but we don't support that as a secure option".
 
--- 
-Paul Johnson - paul@pjcj.net
+Yes, this applies to other BSDs too. You know who I'm talking about. :P
+
+
+--=20
+Eli Schwartz
+
+--------------0iyriSxRzfksUgkjQyGeqnwN--
+
+--------------l3R57gAN3GrSZ4salk1ppecH
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaCdbBQUDAAAAAAAKCRCEp9ErcA0vV+1A
+AQDg3Da5rr/QTMnYP4KAq7FIvJTm6zsg4NhgkEXrTYUupQEAp6kFBOVM7X1XJugb906TheeytsaA
+kY9hSi5/kJTUAgU=
+=lZpy
+-----END PGP SIGNATURE-----
+
+--------------l3R57gAN3GrSZ4salk1ppecH--
