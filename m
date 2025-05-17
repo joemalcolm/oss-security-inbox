@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3418" "Thursday" "13" "January" "2022" "15:23:11" "+0100" "Jonas =?ISO-8859-1?Q?Sch=E4fer?=" "jonas@wielicki.name" nil "93" "Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)" "^Date:" nil nil "1" nil nil (number mark "        jonas@wielic Jan 13   93/3418  " thread-indent "\"Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 8006 invoked by uid 550); 13 Jan 2022 14:25:37 -0000
+Received: (qmail 30289 invoked by uid 550); 17 May 2025 13:22:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,109 +6,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7269 invoked from network); 13 Jan 2022 14:23:29 -0000
-Message-ID: <5103793.L7788WgU49@sinistra>
-In-Reply-To: <2193597.LkMCQtBBq3@sinistra>
-References: <2193597.LkMCQtBBq3@sinistra>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart5705833.3ygDmjqg1a"; micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Clacks-Overhead: GNU Terry Pratchett
-Date: Thu, 13 Jan 2022 15:23:11 +0100
-From: Jonas =?ISO-8859-1?Q?Sch=E4fer?= <jonas@wielicki.name>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)
+x-ms-reactions: disallow
+Received: (qmail 15851 invoked from network); 17 May 2025 13:19:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netbsd.org;
+	s=20240131; t=1747487965;
+	bh=DB3ohylWzuevlMY7FWdB3JbWoUR7Nzp1V+jlYZfgyss=;
+	h=To:CC:In-reply-to:Subject:Date:From;
+	b=V5i6IIM2IaY6z/rznz553+DEKGTt0Gfe6YsOiSMhRVN+qgikGffcXlG6Q+qV4u8jZ
+	 1CaW1Rb7RrRx4rVrqin/fTffatdjzDsBInW06YDih91I3ICIrfHITB+N0+Xrkm3Wpq
+	 6RnMjn5S58zPJzBck6tznYLT38XRVbUcJzVeb/Os=
 To: oss-security@lists.openwall.com
+CC: oss-security@lists.openwall.com, Eli Schwartz <eschwartz@gentoo.org>
+In-reply-to: <8ea7f8f5-7645-4d5d-af38-d0b434636e40@gmail.com> (jcb62281@gmail.com)
+Date: Sat, 17 May 2025 13:19:21 +0000
+From: Taylor R Campbell <riastradh@NetBSD.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250517131925.B156484E93@mail.netbsd.org>
+Subject: Re: [oss-security] describing affected systems (was: screen: Multiple
+	Security Issues in Screen (mostly affecting release 5.0.0 and setuid-root
+	installations))
 
---nextPart5705833.3ygDmjqg1a
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Jonas =?ISO-8859-1?Q?Sch=E4fer?= <jonas@wielicki.name>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)
-Date: Thu, 13 Jan 2022 15:23:11 +0100
-Message-ID: <5103793.L7788WgU49@sinistra>
-In-Reply-To: <2193597.LkMCQtBBq3@sinistra>
-References: <2193597.LkMCQtBBq3@sinistra>
+> Date: Fri, 16 May 2025 21:52:14 -0500
+> From: Jacob Bachmeyer <jcb62281@gmail.com>
+> 
+> On 5/16/25 13:07, Eli Schwartz wrote:
+> > On 5/16/25 12:31 PM, Taylor R Campbell wrote:
+> > [...]
+> >> (a) the same pkgsrc packages are available on, e.g., NetBSD 9.x (which
+> >>      is not EOL); and
+> >>
+> >> (b) pkgsrc is used on platforms other than NetBSD, including macOS,
+> >>      SmartOS, and various Linux distributions (e.g., for unprivileged
+> >>      use on HPC clusters where it is more flexible and up-to-date than
+> >>      the Linux distribution's package manager).
+> >>
+> >> That is why it would be more accurate for the report to say
+> >> `pkgsrc-2025Q1', not `NetBSD 10.1'.
+> >
+> > I strongly dispute this. It should instead list both, as both are
+> > affected.
+> 
+> Would "systems using pkgsrc-2025Q1, notably including NetBSD 9.x and 
+> NetBSD 10.1" have been a fair way of describing that set?
 
-Hi, quick update:
+Sure, that's fine, or just `...notably including NetBSD' instead of
+specifying versions since NetBSD and pkgsrc versions advance
+independently.
 
-On Donnerstag, 13. Januar 2022 15:01:11 CET Jonas Sch=C3=A4fer wrote:
-> If neither patching nor upgrading is an option, it is possible to unload
-> the websocket module using:
->=20
-> ```
-> prosodyctl shell module unload websocket
-> ```
+If I gave anyone the impression that I'm trying to conceal its impact
+on NetBSD users, as Eli has insinuated with fabricated quotes, I
+apologize (for that and for all the off-topic noise this minor point
+has generated) -- we did not escape this, and we are working to
+address it for all pkgsrc users on NetBSD or otherwise.
 
-This only works on recent Prosody trunk. On 0.11.x and earlier, you need to=
-=20
-
-- use module:unload("websocket") from the telnet console, OR
-- unload the module via an XMPP Ad-Hoc command OR
-- if neither of these online ways are available, remove the module from the=
-=20
-configuration and restart prosody.
-
-kind regards,
-Jonas
-
->=20
-> However, note well that third-party modules may also use the vulnerable
-> internal APIs to parse XML. Unloading websocket does not protect those
-> other modules; only the patch or the upgrade can do that.
->=20
-> **Fix**
->=20
-> This issue is fixed in Prosody 0.11.12 by restricting the available XML
-> features in the internal XML API.
->=20
-> **Attribution**
->=20
-> The issue was discovered during internal code review by Matthew Wild
-> during the development of another feature. The patch was developed by
-> Jonas Sch=C3=A4fer. A proof-of-concept exploit was developed by Jonas Sch=
-=C3=A4fer
-> and Kim Alvefur and will be published soon to allow administrators to
-> check their instances.
->=20
-> **Timeline**
->=20
-> 2022-01-10: Discovery of the issue, development of an exploit as well as
-> an initial patch. Sharing of this information with Jitsi and Snikket
-> developers. Heads-up sent to the Snikket group chat.
->=20
-> 2022-01-11: Refinement of the patch, release preparation. Heads-up sent
-> to the Prosody group chat. Patch shared confidentially with Jitsi.
->=20
-> 2022-01-12: Continued release preparation, notification of distros@.
->=20
-> 2022-01-13: Coordinated Snikket and Prosody release with a
-> fix, publication of the advisory.
-
-
---nextPart5705833.3ygDmjqg1a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEG/EPV+Xzd5wEoQQIwGIDJZdiWIoFAmHgNc8ACgkQwGIDJZdi
-WIoLPBAAjlICMwEqOUJWPSIal+S/ORBiZFygUjXaAkHFRznOSi1yb9kzNg0ghHYq
-CCWFBIU7NFn15nSRPFfTZ0zZTKcjka1NMj1b6L+5ynv4H8QBo8oPtIvMIKnK3GyL
-6eTMMsI2/Sfykn8gFPF0syzESklo5/HRIN9hD/AryiLYWE1Y3aq06HRo0xwFCaaH
-npAdS/PurQq1LakHSFAdzylndz5qNOhdPpEtTE5baBPU/l+6BxiZrIcfOfC8WQ6G
-aXnQPnvQVXd21vkyQ1p82BRWH5hXCvMxlfC9ExzMIF3bgmrx5IvSAiNHTUNdf/8x
-T73K0CJUe5EY4KiyIKt+vEwFdkiXhovoJX3wsRjbvoX0ya16XIAkEja3ceL7Furd
-sQ3ijvMdmyIVyD1DCRkxyObuQT0m2iFG5vPbYjrX4JWniWG0KFOsjmBvTzIrvhXG
-nQX1dFdrkMK/+0seJCoToS/ktHvvNtY7xYfan+RAxPPIwyazjv18OaDcqG0wDiZ5
-2wGUYKawQ2tDiaFkwfaPghIGaR3U6YUvxa5hUE3NMb9QcXNCKVm3fYty69lj/Ne4
-QFpdqXAw/4/I2fjEUsmC6beD7cp3SZgIbcqe5m/Xv1smUe/1LqrHe+Um+qVMJAb/
-y7bFFGmOULo7dzgssNf2Xd/nxHmYa/OVVNw1NkDWb0ZBV8GnT/4=
-=OU9f
------END PGP SIGNATURE-----
-
---nextPart5705833.3ygDmjqg1a--
-
-
-
+This will be my last message on the subject in this thread; I'm sure
+everyone is tired of hearing about it now.
