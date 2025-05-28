@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2637" "Friday" "2" "October" "2015" "13:13:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151002171339.1A8176C0006@smtpvmsrv1.mitre.org>" "63" "[oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" nil nil nil "10" "2015100217:13:39" "[oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" (number mark "        cve-assign@m Oct  2   63/2637  " thread-indent "\"[oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1\"\n") "<CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>" ("<CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11567 invoked by uid 550); 2 Oct 2015 17:13:51 -0000
+Received: (qmail 11502 invoked by uid 550); 28 May 2025 18:23:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +6,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11545 invoked from network); 2 Oct 2015 17:13:51 -0000
-In-Reply-To: <CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>
-Message-Id: <20151002171339.1A8176C0006@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  2 Oct 2015 13:13:39 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1
-To: gustavo.grieco@gmail.com
+x-ms-reactions: disallow
+Received: (qmail 10213 invoked from network); 28 May 2025 18:23:18 -0000
+Date: Wed, 28 May 2025 20:22:02 +0200
+From: Solar Designer <solar@openwall.com>
+To: Jounee Kim <Jokim@bn.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20250528182202.GA23489@openwall.com>
+References: <2f8f64a2-118d-458e-9f1a-182d4d88ad17@isc.org> <DS0PR11MB75805E0CCE45FBDCE7F9BC78D367A@DS0PR11MB7580.namprd11.prod.outlook.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DS0PR11MB75805E0CCE45FBDCE7F9BC78D367A@DS0PR11MB7580.namprd11.prod.outlook.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] how to unsubscribe (Re: ISC has disclosed three vulnerabilities in Kea (CVE-2025-32801, CVE-2025-32802, CVE-2025-32803))
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, May 28, 2025 at 05:54:41PM +0000, Jounee Kim wrote:
+> UNSUBSCRIBE
 
-> We found a heap overflow and a DoS in the gdk-pixbuf implementation
-> triggered by the scaling of tga file. These issues are only fixed in the
-> recent release of gdk-pixbuf 2.32.1
-> 
-> it was fixed in 2.32.0 with the 3 commits
-> starting with
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=19f9685dbff7d1f929c61cf99188df917a18811d
+I am sorry for letting this one through, which happened in error.  Of
+course, we (the moderators) normally reject misaddressed unsubscription
+requests like that (but do unsubscribe the people manually, and we did
+this time too).
 
-This means:
+If anyone else wants to unsubscribe, the robot address to do that is
+listed in this header:
 
-https://git.gnome.org/browse/gdk-pixbuf/commit/?id=19f9685dbff7d1f929c61cf99188df917a18811d
-https://git.gnome.org/browse/gdk-pixbuf/commit/?id=edf6fb8d856574bc3bb3a703037f56533229267c
-https://git.gnome.org/browse/gdk-pixbuf/commit/?id=6ddca835100107e6b5841ce9d56074f6d98c387e
+List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 
-Use CVE-2015-7673. Apparently the cause of the issue was use of heap
-memory after an allocation failure.
+So you send any message to oss-security-unsubscribe@lists.openwall.com,
+wait for the automated confirmation request to be sent back to you, and
+"reply" to that.
 
-The original CVE request said "< 2.32.1" and "only fixed in ...
-2.32.1" but then a followup message said "fixed in 2.32.0" instead. We
-think the latter is correct.
+You can also complete the first step above by entering your e-mail
+address into the form at the bottom of:
 
-The entry in the 2.32.0 changelog is shown in:
-https://git.gnome.org/browse/gdk-pixbuf/commit/?id=02a76ac6956ee1418da926d6f2cedb78525495b7
+https://www.openwall.com/lists/oss-security/
 
-Responding to:
+and clicking Unsubscribe.  Then similarly wait for and "reply" to the
+confirmation request.
 
-> From: Kurt Seifried <kseifried@redhat.com>
-> Date: Thu, 1 Oct 2015 08:04:12 -0600
-> 
-> I know on our end there was some
-> confusion as to whether or not this is the same flaw or closely related to
-> https://www.mozilla.org/en-US/security/advisories/mfsa2015-88/
-
-CVE-2015-4491 from mfsa2015-88 has different affected versions. Also, that
-CVE is only for an integer overflow. If missing allocation-failure checking
-before ffec86ed5010c5a2be14f47b33bcf4ed3169a199
-is separately exploitable, then another CVE ID could be assigned.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWDro2AAoJEL54rhJi8gl5D54QAK/Vzop01NHL5zZpZlBwzrGZ
-8dLEBvFTqXPjItMwhmLGNV/R9M59T3LEtRyENG45lMyDECuKsMVoL696Q87h16+c
-Gweir8ZcVC19QxMBpwn4ITiXZ3JRnLgHqEZAp+6eI4zlW4GFkpyXxF3E3YR/U3mv
-Bace8L3FoAq9jVqgMsHdVzZWyeUpKL9FZbRDE9wsimOg1mFIrZ/ZLW5qlFDdoxVt
-GqbeBpr2F+8678HQh+DIaDfyLmqSj0RCO4qBtOOoQzQ9VU+JL8TvMJE2883rwVq+
-+JHf81c8ABZmqYrn/oh8AMr8WggesZRd1Q/0r+Tb7/w1FGv/qPa6JsNglrOxDxT3
-AEBfTUrllJpmfrX8VQFTTNecagLwPMC3s1j48lV8ZghOj3/mL4n68Tp5sV6f/b6Z
-olX0pqH6E5iSy8BNBtrRF7r0yLfUewqwKlvOhT04zl3M26O2RD5HYWuxSxokXtkn
-kUGd/zhryOX5Duz+c7HAG9ZBl26zC9BCyaSbzlo6yj3HPi+AxtQKSLxFl+dQmtIg
-sWgQAKn056s6BWtdTbInUIzTV86LQ7Oa00QKobcLrVHwFi2mEZIRjmdDuR3oin7M
-DRdB89E4SdLGFe8cIw3oG60noyRObJitB2hjSoxuUdO/ZFAbUTbgfz0b44grS/YD
-njkGj067RRjmWP+GKRGp
-=cZzu
------END PGP SIGNATURE-----
+Alexander
