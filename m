@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1659" "Thursday" "8" "December" "2016" "01:36:58" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e70a1c4d0998472088fc16181d68f78c@imshyb02.MITRE.ORG>" "42" "[oss-security] Re: CVE request Qemu: display: virtio-gpu: memory leakage when destroying gpu resource" nil nil nil "12" "2016120806:36:58" "[oss-security] Re: CVE request Qemu: display: virtio-gpu: memory leakage when destroying gpu resource" (number mark "U       cve-assign@m Dec  8   42/1659  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: virtio-gpu: memory leakage when destroying gpu resource\"\n") "<alpine.LFD.2.20.1612070146350.9956@wniryva>" ("<alpine.LFD.2.20.1612070146350.9956@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17595 invoked by uid 550); 8 Dec 2016 06:37:10 -0000
+Received: (qmail 22256 invoked by uid 550); 28 May 2025 05:49:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +7,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17570 invoked from network); 8 Dec 2016 06:37:10 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liq3ea@gmail.com>
-In-Reply-To: <alpine.LFD.2.20.1612070146350.9956@wniryva>
-Message-ID: <e70a1c4d0998472088fc16181d68f78c@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:36:58 -0500
+x-ms-reactions: disallow
+Received: (qmail 22213 invoked from network); 28 May 2025 05:49:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1748411384; bh=Quq/sZziNMPy5xHmB1MiiD+YmPF8HmIPbJYS5aTRlKI=;
+	h=Date:From:To:Subject:From;
+	b=PVyBo07OmMmqZTsLPWLrWLIYItsgoreBkB//un8mJdR/zt7BYGiM+FqfJZNXE+4zH
+	 sMlAzfCc/zuJO7uDZOuzKQTmQOpBW7BGTTur76qUh8qad/s5Nihv/pPM6rsbl+qTzA
+	 /Fn+BLWkTKFynlAM69Z7LxJeCP/2/YEZ0d1KXli6x+HuU52YmTGPGCSXmEAqvPkQUi
+	 kbyfwtH0w8km74T7r/IUQ6jJfuUBBCCaMAW2MftNVAGvQxqPWhetypI4FgekUy6LPI
+	 j5Z/nDw5kN0XbdvvvekhZr+5DHjO67oOnB2etMRQBvU/I4LqHXal5D5ZZGVkNglSIi
+	 vRE4qZjOdrSiQ==
+Date: Wed, 28 May 2025 07:49:44 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <89242r01-767o-4733-op49-24r002r3217r@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Qemu: display: virtio-gpu: memory leakage when destroying gpu resource
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: No QUIC certificate pinning with wolfSSL
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+No QUIC certificate pinning with wolfSSL
+========================================
 
-> Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
-> vulnerable to a memory leakage issue. It could occur while destroying gpu
-> resource object in 'virtio_gpu_resource_destroy'
-> 
-> A guest user/process could use this flaw to leak host memory bytes, resulting
-> in DoS for a host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg05043.html
+Project curl Security Advisory, May 28 2025 -
+[Permalink](https://curl.se/docs/CVE-2025-5025.html)
 
->> the 'iov' and 'addrs' field in resource is not freed
+VULNERABILITY
+-------------
 
-Use CVE-2016-9912.
+libcurl supports *pinning* of the server certificate public key for HTTPS
+transfers. Due to an omission, this check is not performed when connecting
+with QUIC for HTTP/3, when the TLS backend is wolfSSL.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu.c but
-that may be an expected place for a later update.
+Documentation says the option works with wolfSSL, failing to specify that it
+does not for QUIC and HTTP/3.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Since pinning makes the transfer succeed if the pin is fine, users could
+unwittingly connect to an impostor server without noticing.
 
-iQIcBAEBCAAGBQJYSPwEAAoJEHb/MwWLVhi2PNkQAJ04jluxiwMJkFYyHnxywbvq
-uhCBuwqncHIs/MUMLdYrNB3NvUQm1W4DmF1iVOKpP/r4jhXbZ52cS89hEbCfFL/W
-rPsr5H1tVLyUmXEroMxoyT9RJRlNlMp4FXTYCmbsZStqW+KLsXc/IiiUqfPJfw00
-qo2AHZc4xMpSqYKSUPwZYN4UG4uosve1mYcmII7CTg2nTFqeFeufq6A+N8/HKpFC
-dYp4fcGkM1B8V4W2FL95oWalMUmDjFGnVfXQrlSnJB1XcOEFqsebcUq7xFcE2psi
-FCYkoz098xv1TIYWCwIj3Oscl/AH8SDtrXokXbtYqxbeq0mKIkaTqtLsj4CiooxY
-KhuJs27nJZJZZve15r2CZ6g8poHMZH+WdSWrF4tZNlgDsOojLnrI8+vPqknfM91B
-8AxAuEGPcGSFa9JHSP8EhJ7Jr1aahoL4OqJQSSesqk9PckKQREsLqS5cnMEQj+OE
-mHe4a2bPj900Okq5SXnnZt1t8T8WyIzgC2rgfDuMuCfoC38NF1dRjQ8TcK0oL6r6
-sK52vKKO9Rmo/JLdVkjjgvu0UZZ5c21FfhJbKROkWYE9TmNc+Kuf2f5ypk1bHzA6
-A3fB5mNz2nwV95JyQgr+TVyfT1Pf0mZfl1U/gRJE0M7t3m3DYQiYXeWJ9heRKgQj
-+G1h8Edu8sXg+DMskaTQ
-=vdtL
------END PGP SIGNATURE-----
+INFO
+----
+
+curl can get built to use one out of twelve different TLS libraries. The
+selection is done both at build-time and also optionallt at run-time. This
+vulnerability only affects curl made to use this specific TLS backend.
+
+This flaw requires wolfSSL to be used as the TLS backend for QUIC to trigger.
+
+The pinning option still works fine with wolfSSL for TCP-based TLS, meaning
+for HTTP/1 and HTTP/2.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-5025 to this issue.
+
+CWE-295: Improper Certificate Validation
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 8.5.0 to and including 8.13.0
+- Not affected versions: curl < 8.5.0 and >= 8.14.0
+- Introduced-in: https://github.com/curl/curl/commit/5f78cf503c786a1d48d1352
+
+Beware that while curl versions before 8.5.0 are not strictly considered
+vulnerable to this flaw, certificate pinning for QUIC with wolfSSL did not
+work correctly then either but before then HTTP/3 support was labeled
+experimental and not presumed to work 100%.
+
+libcurl is used by many applications, but not always advertised as such!
+
+This bug is **not** considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
+
+This flaw also affects the curl command line tool.
+
+SOLUTION
+------------
+
+Starting in curl 8.14.0, this mistake is fixed.
+
+- Fixed-in: https://github.com/curl/curl/commit/e1f65937a96a451292e92313396
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.14.0
+
+  B - Apply the patch to your local version
+
+  C - Avoid using HTTP/3 or certificate pinning with curl built to use wolfSSL
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 19, 2025. We contacted
+distros@openwall on May 22, 2025.
+
+curl 8.14.0 was released on May 28 2025 around 07:00 UTC, coordinated with the
+publication of this advisory.
+
+The curl security team is not aware of any active exploits using this
+vulnerability.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Stefan Eissing
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
