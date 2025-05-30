@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3688" "Monday" "13" "July" "2015" "17:37:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150713213749.9F6046C0164@smtpvmsrv1.mitre.org>" "93" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" nil nil nil "7" "2015071321:37:49" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" (number mark "        cve-assign@m Jul 13   93/3688  " thread-indent "\"[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow\"\n") "<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>" ("<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16000 invoked by uid 550); 13 Jul 2015 21:38:04 -0000
+Received: (qmail 7993 invoked by uid 550); 30 May 2025 21:30:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15938 invoked from network); 13 Jul 2015 21:38:01 -0000
-In-Reply-To: <CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>
-Message-Id: <20150713213749.9F6046C0164@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@debian.org
-Date: Mon, 13 Jul 2015 17:37:49 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow
-To: fernando@null-life.com
+x-ms-reactions: disallow
+Received: (qmail 20150 invoked from network); 30 May 2025 08:18:03 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Daniel Gaspar <dpgaspar@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <89e1b57e-ac38-b475-49f5-a7ca921731e6@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 30 May 2025 08:17:51 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-48912: Apache Superset: Improper authorization bypass on
+ row level security via SQL Injection 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Affected versions:
 
-One complication here is that the CVE request was sent to oss-security
-without mentioning that a CVE request had been sent privately to one
-Linux distribution a few weeks before that. See:
+- Apache Superset before 4.1.2
 
-  https://github.com/htacg/tidy-html5/issues/217#issue-84488886
+Description:
 
-  I contacted Debian about the issue on May 17, so far I have not
-  received a response about a CVE assignment.
-  ...
-  Date: Sun, May 17, 2015 at 8:11 PM
-  Subject: tidy heap-buffer-overflow
-  To: security@debian.org
+An authenticated malicious actor using specially crafted requests could byp=
+ass row level security configuration by injecting SQL into 'sqlExpression' =
+fields. This allowed the execution of sub-queries to evade parsing defenses=
+ ultimately granting unauthorized access to data.
 
-(added security@debian.org to the Cc line)
+This issue affects Apache Superset: before 4.1.2.
 
-Our only question for Debian is: did Debian already assign any CVE
-ID(s) for this? If not, then MITRE will.
+Users are recommended to upgrade to version 4.1.2, which fixes the issue.
 
-(To clarify: we're definitely not suggesting that Debian did something
-wrong. At least from MITRE's perspective, Debian isn't required to
-process CVE requests in arbitrary private reports about software
-shipped by Debian, and especially not in cases where the report is
-about code that's also shipped by the upstream author. The only issue
-is that Debian is allowed to process the CVE request if they want to.
-In that situation, they can choose the public disclosure date, and
-MITRE should/would typically not be informed about the vulnerability
-or its CVE ID before the public disclosure date. Probably none of this
-caused any significant problem in the current case. However, in
-general, the existence of a previous CVE request is important.)
+Credit:
 
-Now, going back to the vulnerability report itself: we think two CVE
-IDs might be best. The original discovery was about memory corruption,
-and then the vendor mentioned an attack variation in which a small
-file can lead to a 4 Gb allocation, which potentially would be
-successful on some platform and cause a DoS.
+Pedro Sousa (coordinator)
+Beto de Almeida (remediation developer)
+Mirakl Security (finder)
 
-In other words, the first CVE would be for
-https://github.com/htacg/tidy-html5/issues/217 with:
+References:
 
-  AddressSanitizer: heap-buffer-overflow
-  WRITE of size 1
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2025-48912
 
-  tmbstr cp = s = (tmbstr) TidyAlloc( allocator, 1+len );
-  Notice the plus 1, so it arrives at TidyAlloc with a ZERO!!!
-
-  Now it seems malloc does not mind a zero value, malloc(0), and
-  dutifully returns a pointer
-
-  Then tmbstrndup does the corruption, with -
-
-  while ( len-- > 0 && (*cp++ = *str++) ) /**/;
-
-  Of course ( len-- > 0 ) will be true until the 4294967295 expires ;=))
-
-  But thankfully the corruption stops when a 0 is reached in the lexer
-  with (*cp++ = *str++). As indicated in this case it is storing the
-  attribute "href", but that is 4+ bytes of corruption.
-
-
-The second CVE would be for
-https://github.com/htacg/tidy-html5/issues/217#issuecomment-108565501
-with:
-
-  In some cases this bug could exibit a different problem like parsing
-  the snippet <a <?xm \0xd?> href="">.
-
-  Now the lexer buffer will contain 2, or more IsWhite() chars and len
-  would be reduced to -2, or less, which means the malloc buffer
-  allocation would be a giant 4,294,967,295 byte allocation, a value
-  lots of OSes will reject
-
-We'll try to send these CVE IDs tomorrow if there's no other
-information and no duplication.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVpC8NAAoJEKllVAevmvmsePwIAK9BAACprS1lfeOqHqbJ1xAb
-0gKqEsEyh1kyYsC0gJPYIPGSesMEcymL902i1vs0+hiMkkcN1oxPWNMxNDSPwaXi
-0yJnGJCddezkkHIBhgaIr7YbDkCWhWEJGEnq5eoe7gssWuZnlGuReQXBFmaSilI8
-GLM0UX68n7jUgen5wNzivw/Yxrrur8BUwz+w09QEFQVv5HxEE6xj6O891yzeaw6g
-VowSDOzYtB7TZQHLA4lvT7Q8Ux38jdjE4v5XcHkGHdTw9mwkBk0Qi6m7ku7txsNf
-78bZPZt8Zm6eKK3z+kdtRyY1begfOyqfWCdr8SlpRFRisCXdd1C/jiFgrKfyvg4=
-=6u7g
------END PGP SIGNATURE-----
